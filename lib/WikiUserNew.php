@@ -1,51 +1,89 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.1 2003-12-02 05:46:36 carstenklapp Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.2 2003-12-03 21:45:48 carstenklapp Exp $');
 
 // This is a complete rewrite of the old WikiUser code but it is not
-// implemented yet.  Much of the existing UserPreferences class should
+// implemented yet. Much of the existing UserPreferences class should
 // work fine with this but a few other parts of PhpWiki need to be
-// refitted. --Carsten
+// refitted: main.php, config.php, index.php. --Carsten
 
 
 // Returns a user object, which contains the user's preferences.
 //
-// Given no name, returns an anonymous user object (who may or may not
-// have a cookie).  Given a user name, returns a bogo user object (who
-// may or may not have a cookie and/or NamesakePage).
+// Given no name, returns an _AnonUser (anonymous user) object, who
+// may or may not have a cookie. Given a user name, returns a
+// _BogoUser object, who may or may not have a cookie and/or
+// NamesakePage, a _PassUser object or an _AdminUser object.
 //
-// Takes care of all preference loading/storing in the user's page and
-// any cookies.
+// Takes care of passwords, all preference loading/storing in the
+// user's page and any cookies. main.php will query the user object to
+// verify the password as appropriate.
+
+
+define('WIKIAUTH_ANON', 0);       // Not signed in.
+define('WIKIAUTH_BOGO', 1);       // Any valid WikiWord is enough.
+define('WIKIAUTH_USER', 2);       // Bogo user with a password.
+define('WIKIAUTH_ADMIN', 10);     // UserName == ADMIN_USER.
+define('WIKIAUTH_FORBIDDEN', -1); // Completely not allowed.
+
+if (!defined('COOKIE_EXPIRATION_DAYS')) define('COOKIE_EXPIRATION_DAYS', 365);
+if (!defined('COOKIE_DOMAIN'))          define('COOKIE_DOMAIN', '/');
+
+if (!defined('EDITWIDTH_MIN_COLS'))     define('EDITWIDTH_MIN_COLS',     30);
+if (!defined('EDITWIDTH_MAX_COLS'))     define('EDITWIDTH_MAX_COLS',    150);
+if (!defined('EDITWIDTH_DEFAULT_COLS')) define('EDITWIDTH_DEFAULT_COLS', 80);
+
+if (!defined('EDITHEIGHT_MIN_ROWS'))     define('EDITHEIGHT_MIN_ROWS',      5);
+if (!defined('EDITHEIGHT_MAX_ROWS'))     define('EDITHEIGHT_MAX_ROWS',     80);
+if (!defined('EDITHEIGHT_DEFAULT_ROWS')) define('EDITHEIGHT_DEFAULT_ROWS', 22);
+
+define('TIMEOFFSET_MIN_HOURS', -26);
+define('TIMEOFFSET_MAX_HOURS',  26);
+if (!defined('TIMEOFFSET_DEFAULT_HOURS')) define('TIMEOFFSET_DEFAULT_HOURS', 0);
+
+
 function WikiUser ($UserName = '') {
-    if ($UserName) {
-        return new _BogoUser($UserName);
+//TODO: check sessionvar for username & save username into sessionvar
+//TODO: how to implement PassUser?
+    switch ($UserName) {
+        case (ADMIN_USER):
+            return new _AdminUser($UserName);
+            break;
+        case (true):
+            return new _BogoUser($UserName);
+            break;
+        default:
+            // check for autologin pref in cookie and upgrade user object
+            $_AnonUser = new _AnonUser();
+            if ($UserName = $_AnonUser->UserName && $_AnonUser->_prefs->get('autologin')) {
+                if ($UserName == ADMIN_USER)
+                    return new _AdminUser($UserName);
+                else
+                    return new _BogoUser($UserName);
+            }
+            return $_AnonUser;
     }
-    else {
-        // check for autologin pref in cookie and upgrade user object
-        $_AnonUser = new _AnonUser();
-        if ($_AnonUser->UserName && $_AnonUser->_prefs->get('autologin')) {
-            return new _BogoUser($_AnonUser->UserName);
-        }
-        return $_AnonUser;
-    }
+
     // For the future... think about...
-    // if (isa($user, 'AdminUser'))
-    // if (isa($user, 'DeactivatedUser'))
+    // if (isa($user, '_AdminUser'))
+    // if (isa($user, '_DeactivatedUser'))
     // etc.
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 // Base _WikiUser class.
-class _WikiUser ($UserName = '') {
-    var $UserName = '';
-
-    var $_prefs  = false;
+class _WikiUser
+{
+    var $_level = WIKIAUTH_FORBIDDEN;
+    var $_prefs = false;
     var _HomePagehandle = false;
 
+    var $UserName = '';
+
     // constructor
-    function WikiUser($UserName) {
+    function _WikiUser($UserName = '') {
         if ($UserName) {
             $this->UserName = $UserName;
-            global $dbi;
             $this->_HomePagehandle = $this->hasHomePage();
         }
         $this->loadPreferences();
@@ -59,7 +97,8 @@ class _WikiUser ($UserName = '') {
             else {
                 // check db again (maybe someone else created it since
                 // we logged in.)
-                $this->_HomePagehandle = $dbi->getPage($this->UserName);
+                global $request;
+                $this->_HomePagehandle = $request->getPage($this->UserName);
                 return $this->_HomePagehandle;
             }
         }
@@ -67,31 +106,25 @@ class _WikiUser ($UserName = '') {
         return false;
     }
 
-
-    // TODO: move these two methods into UserPreferences class
-    function pack($nonpacked) {
-        return serialize($nonpacked);
-    }
-    function unpack($packed) {
-        if (!$packed)
-            return false;
-        if (substr($packed,0,2) == "O:") {
-            // Looks like a serialized object
-            return unserialize($packed);
-        }
-        //trigger_error("DEBUG: Can't unpack bad UserPreferences",
-        //E_USER_WARNING);
+    function checkPass($submitted_password) {
+        // By definition, an undefined user class cannot sign in.
         return false;
     }
+
 }
 
-class _AnonUser extends _WikiUser {
+class _AnonUser
+extends _WikiUser
+{
+    var $_level = WIKIAUTH_ANON;
+
     // Anon only gets to load and save prefs in a cookie, that's it.
     function loadPreferences() {
         global $request;
         if ($cookie = $request->getCookieVar(WIKI_NAME)) {
-            if (! $unboxedcookie = $this->unpack($cookie)) {
-                trigger_error(_("Format of UserPreferences cookie not recognised. Default preferences will be used instead."),
+            if (! $unboxedcookie = $this->_prefs->unpack($cookie)) {
+                trigger_error(_("Format of UserPreferences cookie not recognised.") . " "
+                              . _("Default preferences will be used."),
                               E_USER_WARNING);
             }
             // TODO: try reading userid from old PhpWiki cookie
@@ -105,8 +138,8 @@ class _AnonUser extends _WikiUser {
             /**
              * Only keep the cookie if it matches the UserName who is
              * signing in or if this really is an Anon login (no
-             * username). (Remember, _BogoUser inherits this function
-             * too!).
+             * username). (Remember, _BogoUser and higher inherit this
+             * function too!).
              */
             if (! $this->UserName || $this->UserName == $unboxedcookie['userid']) {
                 $this->_prefs = new UserPreferences($unboxedcookie);
@@ -115,18 +148,21 @@ class _AnonUser extends _WikiUser {
         }
     }
     function savePreferences() {
-        // Allow for multiple wikis in same domain.  Encode only the
+        // Allow for multiple wikis in same domain. Encode only the
         // _prefs array of the UserPreference object. Ideally the
         // prefs array should just be imploded into a single string or
         // something so it is completely human readable by the end
         // user. In that case stricter error checking will be needed
         // when loading the cookie.
-        setcookie(WIKI_NAME, $this->pack($this->_prefs->getAll()), 365, '/');
+        setcookie(WIKI_NAME, $this->_prefs->pack($this->_prefs->getAll()),
+                  COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
     }
 }
 
-class _BogoUser extends _AnonUser {
-    var $_level  = WIKIAUTH_BOGO;
+class _BogoUser
+extends _AnonUser
+{
+    var $_level = WIKIAUTH_BOGO;
 
     function _BogoUser($UserName) {
         $this->_username = $UserName;
@@ -140,7 +176,7 @@ class _BogoUser extends _AnonUser {
         // User may have deleted cookie, retrieve from his
         // NamesakePage if there is one.
         if ((! $this->_prefs) && $this->_HomePagehandle) {
-            if ($restored_from_page = $this->unpack($this->_HomePagehandle->get('_prefs'))) {
+            if ($restored_from_page = $this->_prefs->unpack($this->_HomePagehandle->get('_prefs'))) {
                 $this->_prefs = new UserPreferences($restored_from_page);
             }
         }
@@ -148,13 +184,323 @@ class _BogoUser extends _AnonUser {
     function savePreferences() {
         _AnonUser::savePreferences();
         // Encode only the _prefs array of the UserPreference object
-        $serialized = $this->pack($this->_prefs->getAll());
+        $serialized = $this->_prefs->pack($this->_prefs->getAll());
         $this->_HomePagehandle->set('_prefs', $serialized);
+    }
+
+    function checkPass($submitted_password) {
+        // By definition, BogoUser has an empty password.
+        return true;
+    }
+
+    function _checkPass($submitted_password, $stored_password) {
+}
+
+class _PassUser
+extends _BogoUser
+{
+    var $_level = WIKIAUTH_USER;
+
+    //TODO: if (ALLOW_USER_PASSWORDS)
+
+    function loadPreferences() {
+        //TODO:
+        //
+        // We don't necessarily have to read the cookie first. Since
+        // the user has a password, the prefs stored in the homepage
+        // cannot be arbitrarily altered by other Bogo users.
+    }
+
+    //TODO: alternatively obtain $stored_password from external auth
+    function checkPass($submitted_password) {
+        $stored_password = $this->_prefs->get('passwd');
+        return $this->_checkPass($submitted_password, $stored_password);
+    }
+
+    //TODO: remove crypt() function check from config.php:396
+    function _checkPass($submitted_password, $stored_password) {
+        if(!empty($submitted_password)) {
+            if (defined('ENCRYPTED_PASSWD') && ENCRYPTED_PASSWD) {
+                // Verify against encrypted password.
+                if (function_exists('crypt')) {
+                    if (crypt($submitted_password, $stored_password) == $stored_password )
+                        return true; // matches encrypted password
+                    else
+                        return false;
+                }
+                else {
+                    trigger_error(_("The crypt function is not available in this version of PHP.") . " "
+                                  . _("Please set ENCRYPTED_PASSWD to false in index.php and change ADMIN_PASSWD."),
+                                  E_USER_WARNING);
+                    return false;
+                }
+            }
+            else {
+                // Verify against cleartext password.
+                if ($submitted_password == $stored_password)
+                    return true;
+                else {
+                    // Check whether we forgot to enable ENCRYPTED_PASSWD
+                    if (function_exists('crypt')) {
+                        if (crypt($submitted_password, $stored_password) == $stored_password) {
+                            trigger_error(_("Please set ENCRYPTED_PASSWD to true in index.php."),
+                                          E_USER_WARNING);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+}
+
+class _AdminUser
+extends _PassUser
+{
+    var $_level = WIKIAUTH_ADMIN;
+
+    function checkPass($submitted_password) {
+        $stored_password = ADMIN_PASSWD;
+        return $this->_checkPass($submitted_password, $stored_password);
+    }
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+class _UserPreference
+{
+    function _UserPreference ($default_value) {
+        $this->default_value = $default_value;
+    }
+
+    function sanify ($value) {
+        return (string)$value;
+    }
+
+    function update ($value) {
+    }
+}
+
+class _UserPreference_numeric
+extends _UserPreference
+{
+    function _UserPreference_numeric ($default, $minval = false,
+                                      $maxval = false) {
+        $this->_UserPreference((double)$default);
+        $this->_minval = (double)$minval;
+        $this->_maxval = (double)$maxval;
+    }
+
+    function sanify ($value) {
+        $value = (double)$value;
+        if ($this->_minval !== false && $value < $this->_minval)
+            $value = $this->_minval;
+        if ($this->_maxval !== false && $value > $this->_maxval)
+            $value = $this->_maxval;
+        return $value;
+    }
+}
+
+class _UserPreference_int
+extends _UserPreference_numeric
+{
+    function _UserPreference_int ($default, $minval = false, $maxval = false) {
+        $this->_UserPreference_numeric((int)$default, (int)$minval,
+                                       (int)$maxval);
+    }
+
+    function sanify ($value) {
+        return (int)parent::sanify((int)$value);
+    }
+}
+
+class _UserPreference_bool
+extends _UserPreference
+{
+    function _UserPreference_bool ($default = false) {
+        $this->_UserPreference((bool)$default);
+    }
+
+    function sanify ($value) {
+        if (is_array($value)) {
+            /* This allows for constructs like:
+             *
+             *   <input type="hidden" name="pref[boolPref][]" value="0" />
+             *   <input type="checkbox" name="pref[boolPref][]" value="1" />
+             *
+             * (If the checkbox is not checked, only the hidden input
+             * gets sent. If the checkbox is sent, both inputs get
+             * sent.)
+             */
+            foreach ($value as $val) {
+                if ($val)
+                    return true;
+            }
+            return false;
+        }
+        return (bool) $value;
+    }
+}
+
+class _UserPreference_language
+extends _UserPreference
+{
+    function _UserPreference_language ($default = DEFAULT_LANGUAGE) {
+        $this->_UserPreference($default);
+    }
+
+    // FIXME: check for valid locale
+    function sanify ($value) {
+        // Revert to DEFAULT_LANGUAGE if user does not specify
+        // language in UserPreferences or chooses <system language>.
+        if ($value == '' or empty($value))
+            $value = DEFAULT_LANGUAGE;
+
+        return (string) $value;
+    }
+}
+
+class _UserPreference_theme
+extends _UserPreference
+{
+    function _UserPreference_theme ($default = THEME) {
+        $this->_UserPreference($default);
+    }
+
+    function sanify ($value) {
+        if (file_exists($this->_themefile($value)))
+            return $value;
+        return $this->default_value;
+    }
+
+    function update ($newvalue) {
+        global $Theme;
+        include_once($this->_themefile($newvalue));
+        if (empty($Theme))
+            include_once($this->_themefile(THEME));
+    }
+
+    function _themefile ($theme) {
+        return "themes/$theme/themeinfo.php";
+    }
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+// don't save default preferences for efficiency.
+class UserPreferences
+{
+    function UserPreferences ($saved_prefs = false) {
+        // userid stored too, to ensure the prefs are being loaded for
+        // the correct (currently signing in) userid if stored in a
+        // cookie.
+        $this->_prefs
+            = array(
+                    'userid'        => new _UserPreference(''),
+                    'passwd'        => new _UserPreference(''),
+                    'autologin'     => new _UserPreference_bool(),
+                    'email'         => new _UserPreference(''),
+                    'emailVerified' => new _UserPreference_bool(),
+                    'notifyPages'   => new _UserPreference(''),
+                    'theme'         => new _UserPreference_theme(THEME),
+                    'lang'          => new _UserPreference_language(DEFAULT_LANGUAGE),
+                    'editWidth'     => new _UserPreference_int(EDITWIDTH_DEFAULT_COLS,
+                                                               EDITWIDTH_MIN_COLS,
+                                                               EDITWIDTH_MAX_COLS),
+                    'noLinkIcons'   => new _UserPreference_bool(),
+                    'editHeight'    => new _UserPreference_int(EDITHEIGHT_DEFAULT_ROWS,
+                                                               EDITHEIGHT_MIN_ROWS,
+                                                               EDITHEIGHT_DEFAULT_ROWS),
+                    'timeOffset'    => new _UserPreference_numeric(TIMEOFFSET_DEFAULT_HOURS,
+                                                                   TIMEOFFSET_MIN_HOURS,
+                                                                   TIMEOFFSET_MAX_HOURS),
+                    'relativeDates' => new _UserPreference_bool()
+                    );
+
+        if (is_array($saved_prefs)) {
+            foreach ($saved_prefs as $name => $value)
+                $this->set($name, $value);
+        }
+    }
+
+    function _getPref ($name) {
+        if (!isset($this->_prefs[$name])) {
+            if ($name == 'passwd2') return false;
+            trigger_error("$name: unknown preference", E_USER_NOTICE);
+            return false;
+        }
+        return $this->_prefs[$name];
+    }
+
+    function get ($name) {
+        if (isset($this->_prefs[$name]))
+            return $this->_prefs[$name];
+        if (!($pref = $this->_getPref($name)))
+            return false;
+        return $pref->default_value;
+    }
+
+    function set ($name, $value) {
+        if (!($pref = $this->_getPref($name)))
+            return false;
+
+        $newvalue = $pref->sanify($value);
+        $oldvalue = $this->get($name);
+
+        // update on changes
+        if ($newvalue != $oldvalue)
+            $pref->update($newvalue);
+
+        // don't set default values to save space (in cookies, db and
+        // sesssion)
+        if ($value == $pref->default_value)
+            unset($this->_prefs[$name]);
+        else
+            $this->_prefs[$name] = $newvalue;
+    }
+
+    function getAll() {
+        return $this->_prefs;
+    }
+
+    function pack($nonpacked) {
+        return serialize($nonpacked);
+    }
+    function unpack($packed) {
+        if (!$packed)
+            return false;
+        if (substr($packed, 0, 2) == "O:") {
+            // Looks like a serialized object
+            return unserialize($packed);
+        }
+        //trigger_error("DEBUG: Can't unpack bad UserPreferences",
+        //E_USER_WARNING);
+        return false;
+    }
+
+    function hash () {
+        return hash($this->_prefs);
     }
 }
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2003/12/02 05:46:36  carstenklapp
+// Complete rewrite of WikiUser.php.
+//
+// This should make it easier to hook in user permission groups etc. some
+// time in the future. Most importantly, to finally get UserPreferences
+// fully working properly for all classes of users: AnonUser, BogoUser,
+// AdminUser; whether they have a NamesakePage (PersonalHomePage) or not,
+// want a cookie or not, and to bring back optional AutoLogin with the
+// UserName stored in a cookie--something that was lost after PhpWiki had
+// dropped the default http auth login method.
+//
+// Added WikiUser classes which will (almost) work together with existing
+// UserPreferences class. Other parts of PhpWiki need to be updated yet
+// before this code can be hooked up.
+//
 
 // Local Variables:
 // mode: php
