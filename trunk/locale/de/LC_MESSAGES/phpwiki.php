@@ -92,6 +92,8 @@ $locale["Current version"] =
    "Aktuelle Seite:";
 $locale["Archived version"] =
    "Archivierte Seite:";
+$locale["RecentChanges"] =
+   "FrischeSeiten";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kann deine Veränderungen nicht speichern, da ein andererBenützer die Seite verändert und gespeichert hat, während du diese Seiteeditiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würdendie Veränderungen des anderen Benützers verloren gehen.";
 $locale["In order to recover from this situation follow these steps:"] =
@@ -112,21 +114,23 @@ $locale["Thank you for editing %s."] =
    "Danke für das Editieren von %s.";
 $locale["Your careful attention to detail is much appreciated."] =
    "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt.";
+$locale["%d pages match your query."] =
+   "%d Seiten wurden gefunden.";
+$locale["Title Search Results"] =
+   "Volltext-Suchresultate";
 $locale["Inserting page %s, version %s from %s"] =
    "Füge Seite %s ein, Version %s vom %s";
 $locale["WikiFatalError"] =
    "FatalerWikiFehler";
+$locale["Search"] =
+   "Suche";
+$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
+   "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten.";
 $locale["%d best incoming links:"] =
    "Die %d besten hereinkommenden Links:";
 $locale["%d best outgoing links:"] =
    "Die %d besten hinausgehenden Links:";
 $locale["%d most popular nearby:"] =
    "Die %d meistbesuchten Seiten in der Nähe:";
-$locale["Search"] =
-   "Suche";
-$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
-   "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten.";
-$locale["RecentChanges"] =
-   "FrischeSeiten";
 
 ;?>
