@@ -452,7 +452,7 @@ msgstr ""
 #: ../lib/plugin/MostPopular.php:42
 #, fuzzy, c-format
 msgid "The %s most popular pages of this wiki:"
-msgstr "Le %s pagine piu` popolari di questo wiki sono:"
+msgstr "Le %s pagine più popolari di questo wiki sono:"
 
 #: ../lib/plugin/PageHistory.php:71
 #, c-format
@@ -1391,7 +1391,7 @@ msgstr ""
 #~ msgstr "WikiDiff::_check: fallito"
 
 #~ msgid "WikiDiff::_check: edit sequence is non-optimal"
-#~ msgstr "WikiDiff::_check: la sequenza di editazione non e` ottimale"
+#~ msgstr "WikiDiff::_check: la sequenza di editazione non è ottimale"
 
 #~ msgid "WikiDiff Okay: LCS = %s"
 #~ msgstr "WikiDiff Ok: LCS = %s"
@@ -1434,7 +1434,7 @@ msgstr ""
 #~ msgstr "Non posso cancellare '%s' dalla tabella '%s'"
 
 #~ msgid "Page name '%s' is not in the database"
-#~ msgstr "La pagina '%s' non e` presente nel database"
+#~ msgstr "La pagina '%s' non è presente nel database"
 
 #, fuzzy
 #~ msgid "Show the page source"

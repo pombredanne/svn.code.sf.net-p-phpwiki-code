@@ -1396,9 +1396,8 @@ msgstr "Terug naar %s"
 #~ msgid "Currently archived versions of"
 #~ msgstr "Actuele versie:"
 
-#, fuzzy
 #~ msgid "References:"
-#~ msgstr "!Referenties"
+#~ msgstr "Referenties:"
 
 #~ msgid "Current page:"
 #~ msgstr "Huidige pagina:"
@@ -1431,13 +1430,13 @@ msgstr "Terug naar %s"
 #~ msgstr "MySQL fout: %s"
 
 #~ msgid "Error writing page '%s'"
-#~ msgstr "Fout bij schrijven pagina `%s'"
+#~ msgstr "Fout bij schrijven pagina '%s'"
 
 #~ msgid "Cannot delete '%s' from table '%s'"
 #~ msgstr "Kan '%s' niet verwijderen uit tabel '%s'"
 
 #~ msgid "Page name '%s' is not in the database"
-#~ msgstr "Pagina naam `%s' staat niet in de data base"
+#~ msgstr "Pagina naam '%s' staat niet in de data base"
 
 #~ msgid "Show the page source"
 #~ msgstr "Toon de pagina bron tekst"

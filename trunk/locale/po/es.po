@@ -1510,7 +1510,7 @@ msgstr ""
 
 # lib/mysql.php:116
 #~ msgid "Error writing page '%s'"
-#~ msgstr "Error al escribir la página `%s'"
+#~ msgstr "Error al escribir la página '%s'"
 
 # lib/mysql.php:156
 #~ msgid "Cannot delete '%s' from table '%s'"
@@ -1518,7 +1518,7 @@ msgstr ""
 
 # lib/pageinfo.php:36
 #~ msgid "Page name '%s' is not in the database"
-#~ msgstr "El nombre de la página `%s' no está en la base de datos"
+#~ msgstr "El nombre de la página '%s' no está en la base de datos"
 
 # lib/pageinfo.php:21
 #, fuzzy
