@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.24 2004-02-28 21:14:08 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.25 2004-02-28 22:25:07 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1087,6 +1087,8 @@ extends _PassUser
  *    This makes only sense if HttpAuth is the last method in USER_AUTH_ORDER,
  *    since the other methods cannot be transparently called after this enforced 
  *    external dialog.
+ *    Try the available auth methods (most likely Bogo) and sent this header back.
+ *    header('Authorization: Basic '.base64_encode("$userid:$passwd")."\r\n";
  */
 class _HttpAuthPassUser
 extends _PassUser
@@ -1184,7 +1186,7 @@ extends _PassUser
 class _DbPassUser
 extends _PassUser
 {
-    var $_authselect, $_authupdate;
+    var $_authselect, $_authupdate, $_authcreate;
 
     // This can only be called from _PassUser, because the parent class 
     // sets the auth_dbi and pref methods, before this class is initialized.
@@ -1332,7 +1334,7 @@ extends _DbPassUser
         // maybe the user is allowed to create himself. Generally not wanted in 
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
-        if (!$this->_authcreate and !empty($DBAuthParams['auth_create'])) {
+        if (!isset($this->_authcreate) and !empty($DBAuthParams['auth_create'])) {
             $this->_authcreate = str_replace(array('"$userid"','"$password"'),array('%s','%s'),
                                               $DBAuthParams['auth_create']);
         }
@@ -2215,6 +2217,15 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/02/28 21:14:08  rurban
+// generally more PHPDOC docs
+//   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
+// fxied WikiUserNew pref handling: empty theme not stored, save only
+//   changed prefs, sql prefs improved, fixed password update,
+//   removed REPLACE sql (dangerous)
+// moved gettext init after the locale was guessed
+// + some minor changes
+//
 // Revision 1.23  2004/02/27 13:21:17  rurban
 // several performance improvements, esp. with peardb
 // simplified loops

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.6 2004-02-24 15:20:05 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.7 2004-02-28 22:25:07 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -136,12 +136,20 @@ function pagePermissionsAclFormat($perm_tree,$editable=false) {
         return $perm->asTable($type);
 }
 
+/**
+ * Check permission per page.
+ * Returns true or false.
+ */
+function mayAccessPage ($access,$pagename) {
+    return _requiredAuthorityForPagename($access,$pagename);
+}
 
-// Check the permissions for the current action.
-// Walk down the inheritance tree. Collect all permissions until 
-// the minimum required level is gained, which is not 
-// overruled by more specific forbid rules.
-// Todo: cache result per access and page in session?
+/** Check the permissions for the current action.
+ * Walk down the inheritance tree. Collect all permissions until 
+ * the minimum required level is gained, which is not 
+ * overruled by more specific forbid rules.
+ * Todo: cache result per access and page in session?
+ */
 function requiredAuthorityForPage ($action) {
     if (_requiredAuthorityForPagename(action2access($action),
                                       $GLOBALS['request']->getArg('pagename')))
@@ -535,6 +543,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/02/24 15:20:05  rurban
+// fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
+//
 // Revision 1.5  2004/02/23 21:30:25  rurban
 // more PagePerm stuff: (working against 1.4.0)
 //   ACL editing and simplification of ACL's to simple rwx------ string
