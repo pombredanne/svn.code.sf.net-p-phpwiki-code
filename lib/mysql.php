@@ -1,22 +1,24 @@
-<?php rcs_id('$Id: mysql.php,v 1.4 2000-11-08 15:40:56 ahollosi Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.5 2000-11-09 02:57:51 wainstead Exp $');
 
    /*
       Database functions:
-
       OpenDataBase($dbname)
       CloseDataBase($dbi)
+      MakeDBHash($pagename, $pagehash)
+      MakePageHash($dbhash)
       RetrievePage($dbi, $pagename, $pagestore)
       InsertPage($dbi, $pagename, $pagehash)
-      SaveCopyToArchive($dbi, $pagename, $pagehash) 
+      SaveCopyToArchive($dbi, $pagename, $pagehash)
       IsWikiPage($dbi, $pagename)
       IsInArchive($dbi, $pagename)
+      RemovePage($dbi, $pagename)
+      IncreaseHitCount($dbi, $pagename)
+      GetHitCount($dbi, $pagename)
       InitTitleSearch($dbi, $search)
-      TitleSearchNextMatch($dbi, &$pos)
+      TitleSearchNextMatch($dbi, $res)
       InitFullSearch($dbi, $search)
-      FullSearchNextMatch($dbi, &$pos)
-      IncreaseHitCount($dbi, $pagename)  
-      GetHitCount($dbi, $pagename)   
-      InitMostPopular($dbi, $limit)   
+      FullSearchNextMatch($dbi, $res)
+      InitMostPopular($dbi, $limit)
       MostPopularNextMatch($dbi, $res)
       GetAllWikiPageNames($dbi)
       GetWikiPageLinks($dbi, $pagename)
