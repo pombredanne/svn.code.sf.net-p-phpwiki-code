@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.8 2002-01-12 06:00:56 carstenklapp Exp $
+$Id: editpage.html,v 1.9 2002-01-12 06:46:44 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
@@ -14,7 +14,7 @@ ${RCS_IDS}
 ${CSS}
 <title>${WIKI_NAME} - <?php printf(_("Edit: %s"),"${SPLIT_PAGE}"); ?></title>
 </head>
-<body>
+<body class="edit" background="themes/MacOSX/bggranular.png">
 <div>${LOGO}</div>
 <h1><?php printf(_("Edit: %s"),"<a class=\"backlinks\" href=\"${BROWSE}"._("BackLinks")."?page=${PAGE}\">${PAGE}</a>"); ?></h1>
 <?php printf(_("Return to %s."),"<a href=\"${BROWSE}${PAGEURL}\" class=\"wikilink\"><span class=\"wikiword\">${SPLIT_PAGE}</span></a>"); ?>
