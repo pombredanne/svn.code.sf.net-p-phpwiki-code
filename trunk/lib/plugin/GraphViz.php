@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GraphViz.php,v 1.1 2004-12-13 14:45:33 rurban Exp $');
+rcs_id('$Id: GraphViz.php,v 1.2 2004-12-14 21:34:22 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -90,7 +90,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getDefaultArguments() {
         return array(
@@ -144,7 +144,7 @@ extends WikiPluginCached
         //$other_imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
         //unset ($other_imgtypes[$def['imgtype']]);
         $imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
-        $imgtypes = array_merge($imgtypes, array("svg", "svgz", "imap", "cmapx", "ismap", "cmap");
+        $imgtypes = array_merge($imgtypes, array("svg", "svgz", "imap", "cmapx", "ismap", "cmap"));
         $helparr = array(
             '<?plugin GraphViz ' .
             'imgtype'           => ' = "' . $def['imgtype'] . "(default)|" . join('|',$imgtypes).'"',
@@ -227,6 +227,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/12/13 14:45:33  rurban
+// new generic GraphViz plugin: similar to Ploticus
+//
 
 // For emacs users
 // Local Variables:
