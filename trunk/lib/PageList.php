@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.18 2002-01-23 05:18:10 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.19 2002-01-25 08:19:26 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -98,6 +98,36 @@ class _PageList_Column_time extends _PageList_Column {
         global $Theme;
         $time = _PageList_Column::_getValue($page_handle, $revision_handle);
         return $Theme->formatDateTime($time);
+    }
+};
+
+class _PageList_Column_author extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        if ($this->_need_rev) {
+            if (!$revision_handle)
+                $revision_handle = $page_handle->getCurrentRevision();
+            $author = $revision_handle->get($this->_field);
+            return $this->_authorLink($author);
+        }
+        else {
+            $author = $page_handle->get($this->_field);
+            return $this->_authorLink($author);
+        }
+    }
+    // adapted from plugin/RecentChanges
+    function _authorLink($author) {
+        if ( ($url = $this->authorURL($author)) ) {
+            global $Theme;
+            return $Theme->linkExistingWikiWord($author);
+        } else
+            return $author;
+    }
+    function authorURL($author) {
+        global $WikiNameRegexp, $request;
+        $dbi = $request->getDbh();
+        if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
+            return WikiURL($author);
+        return false;
     }
 };
 
@@ -213,7 +243,7 @@ class PageList {
                             'summary'
                             => new _PageList_Column('rev:summary',  _("Last Summary")),
                             'author'
-                            => new _PageList_Column('rev:author',  _("Last Author")),
+                            => new _PageList_Column_author('rev:author',  _("Last Author")),
                             'locked'
                             => new _PageList_Column_bool('locked',  _("Locked"), _("locked")),
                             'minor'
