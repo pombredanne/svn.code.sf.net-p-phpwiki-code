@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.25 2003-03-04 01:52:40 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.26 2003-03-04 02:08:08 dairiki Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -692,7 +692,8 @@ class WikiDB_Page
 	$backend->lock();
 	$newrevision = $this->createRevision($version, $wikitext, $meta, $links);
 	if ($newrevision)
-	    $this->set('_cached_html', $formatted->pack());
+            if (!defined('WIKIDB_NOCACHE_MARKUP') or !WIKIDB_NOCACHE_MARKUP)
+                $this->set('_cached_html', $formatted->pack());
 	$backend->unlock();
 
 	// FIXME: probably should have some global state information
