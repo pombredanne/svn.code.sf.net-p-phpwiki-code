@@ -1,16 +1,21 @@
 <?php
-rcs_id('$Id: pgsql.php,v 1.7 2001-07-15 16:03:26 wainstead Exp $');
+rcs_id('$Id: pgsql.php,v 1.8 2001-07-18 04:59:47 uckelman Exp $');
 
    /*
       Database functions:
 
       OpenDataBase($table)
       CloseDataBase($dbi)
-      RetrievePage($dbi, $pagename, $pagestore)
-      InsertPage($dbi, $pagename, $pagehash)
-      SaveCopyToArchive($dbi, $pagename, $pagehash) 
+      RetrievePage($dbi, $pagename, $pagestore, $version)
+      RetrievePageVersions($dbi, $pagename, $curstore, $archstore)
+      GetMaxVersionNumber($dbi, $pagename, $pagestore)
+      InsertPage($dbi, $pagename, $pagehash, $clobber)
+      SelectStore($dbi, $pagename, $version, $curstore, $archstore)
+      IsVersionInWiki($dbi, $pagename, $version)
+      IsVersionInArchive($dbi, $pagename, $version)
       IsWikiPage($dbi, $pagename)
       IsInArchive($dbi, $pagename)
+      RemovePage($dbi, $pagename)
       InitTitleSearch($dbi, $search)
       TitleSearchNextMatch($dbi, $res)
       InitFullSearch($dbi, $search)
@@ -64,9 +69,10 @@ $HitCountPageStore = $DBParams['prefix']  . "hitcount";
 
 
    // Return hash of page + attributes or default
-   function RetrievePage($dbi, $pagename, $pagestore) {
+   function RetrievePage($dbi, $pagename, $pagestore, $version) {
       $pagename = addslashes($pagename);
-      $query = "select * from $pagestore where pagename='$pagename'";
+      $version = $version ? " and version=$version" : '';
+      $query = "select * from $pagestore where pagename='$pagename'$version";
       // echo "<p>$query<p>";
       $res = pg_exec($dbi['dbc'], $query);
 
@@ -94,8 +100,47 @@ $HitCountPageStore = $DBParams['prefix']  . "hitcount";
    }
 
 
+   // Return all versions of a page as an array of page hashes
+   function RetrievePageVersions($dbi, $pagename, $curstore, $archstore) {
+      $pagename = addslashes($pagename);
+      if (($page[0] = RetrievePage($dbi, $pagename, $curstore, 0)) != -1) {
+         $res = pg_exec($dbi['dbc'], "select * from $archstore where pagename='$pagename' order by version desc");
+         if (pg_numrows($res)) {
+            while ($array = pg_fetch_array($res, 0)) {
+               while (list($key, $val) = each($array)) {
+                  if (gettype($key) == "integer") {
+                     continue;
+                  }
+                  $dbhash[$key] = $val;
+               }
+
+               $dbhash['refs'] = unserialize($dbhash['refs']);
+               $dbhash['content'] = explode("\n", $dbhash['content']);
+
+               array_push($page, $dbhash);
+            }
+         
+            return $page;
+         }
+      }
+
+      // if we reach this the query failed
+      return -1;
+   }
+
+
+   // Get maximum version number of a page in pagestore
+   function GetMaxVersionNumber($dbi, $pagename, $pagestore) {
+      $pagename = addslashes($pagename);
+      if ($res = pg_exec($dbi['dbc'], "select max(version) from $pagestore where pagename='$pagename'")) {
+         return pg_result($res, 0, "version");
+      }
+      return -1;
+   }
+
+   
    // Either insert or replace a key/value (a page)
-   function InsertPage($dbi, $pagename, $pagehash) {
+   function InsertPage($dbi, $pagename, $pagehash, $clobber) {
       $pagename = addslashes($pagename);
 
       // update the wikilinks table
@@ -123,119 +168,109 @@ $HitCountPageStore = $DBParams['prefix']  . "hitcount";
       // record the time of modification
       $pagehash["lastmodified"] = time();
 
+      // Clobber existing page?
+      $clobber = $clobber ? 'replace' : 'insert';
 
-      if (IsWikiPage($dbi, $pagename)) {
+      $COLUMNS = "author, content, created, flags, " .
+                 "lastmodified, pagename, refs, version";
 
-         $PAIRS = "author='$pagehash[author]'," .
-                  "content='$pagehash[content]'," .
-                  "created=$pagehash[created]," .
-                  "flags=$pagehash[flags]," .
-                  "lastmodified=$pagehash[lastmodified]," .
-                  "pagename='$pagehash[pagename]'," .
-                  "refs='$pagehash[refs]'," .
-                  "version=$pagehash[version]";
+      $VALUES =  "'$pagehash[author]', '$pagehash[content]', " .
+                 "$pagehash[created], $pagehash[flags], " .
+                 "$pagehash[lastmodified], '$pagehash[pagename]', " .
+                 "'$pagehash[refs]', $pagehash[version]";
 
-         $query = "UPDATE $dbi[table] SET $PAIRS WHERE pagename='$pagename'";
-
-      } else {
-         // do an insert
-         // build up the column names and values for the query
-
-         $COLUMNS = "author, content, created, flags, " .
-                    "lastmodified, pagename, refs, version";
-
-         $VALUES =  "'$pagehash[author]', '$pagehash[content]', " .
-                    "$pagehash[created], $pagehash[flags], " .
-                    "$pagehash[lastmodified], '$pagehash[pagename]', " .
-                    "'$pagehash[refs]', $pagehash[version]";
-
-
-         $query = "INSERT INTO $dbi[table] ($COLUMNS) VALUES($VALUES)";
+      if (!pg_exec($dbi['dbc'], "$clobber into $dbi[table] ($COLUMNS) values ($VALUES)")) {
+         $msg = htmlspecialchars(sprintf(gettext("Error writing page '%s'"), $pagename));
+         $msg .= "<BR>";
+         $msg .= htmlspecialchars(sprintf(gettext("PostgreSQL error: %s"), pg_errormessage($dbi['dbc'])));
+         ExitWiki($msg);
       }
+   }
 
-      // echo "<p>Query: $query<p>\n";
-      $retval = pg_exec($dbi['dbc'], $query);
-      if ($retval == false) 
-         echo "Insert/update failed: " . pg_errormessage($dbi['dbc']);
+   
+   // Adds a page to the archive pagestore
+   function SavePageToArchive($pagename, $pagehash) {
+      global $ArchivePageStore;
+      $dbi = OpenDataBase($ArchivePageStore);
+      InsertPage($dbi, $pagename, $pagehash, false);
+   }   
 
+
+   // Returns store where version of page resides
+   function SelectStore($dbi, $pagename, $version, $curstore, $archstore) {
+      if ($version) {
+         if (IsVersionInWiki($dbi, $pagename, $version)) return $curstore;
+         elseif (IsVersionInArchive($dbi, $pagename, $version)) return $archstore;
+         else return -1;
+      }
+      elseif (IsWikiPage($dbi, $pagename)) return $curstore;
+      else return -1;
    }
 
 
-   function SaveCopyToArchive($dbi, $pagename, $pagehash) {
+   function IsVersionInWiki($dbi, $pagename, $version) {
+      $pagename = addslashes($pagename);
+      if ($res = pg_exec($dbi['dbc'], "select count(*) from $dbi[table] where pagename='$pagename' and version='$version'")) {
+         return pg_result($res, 0, "count");
+      }
+      return 0;
+   }
+
+
+   function IsVersionInArchive($dbi, $pagename, $version) {
       global $ArchivePageStore;
-      // echo "<p>save copy called<p>";
 
       $pagename = addslashes($pagename);
-      // echo "<p>dbi in SaveCopyToArchive: '$dbi' '$ArchivePageStore' '$dbi[dbc]'<p>";
-
-      // prepare the content for storage
-      if (!isset($pagehash["pagename"]))
-         $pagehash["pagename"] = $pagename;
-      if (!isset($pagehash["flags"]))
-         $pagehash["flags"] = 0;
-      $pagehash["author"] = addslashes($pagehash["author"]);
-      $pagehash["content"] = implode("\n", $pagehash["content"]);
-      $pagehash["content"] = addslashes($pagehash["content"]);
-      $pagehash["pagename"] = addslashes($pagehash["pagename"]);
-      $pagehash["refs"] = serialize($pagehash["refs"]);
-
-      if (IsInArchive($dbi, $pagename)) {
-
-         $PAIRS = "author='$pagehash[author]'," .
-                  "content='$pagehash[content]'," .
-                  "created=$pagehash[created]," .
-                  "flags=$pagehash[flags]," .
-                  "lastmodified=$pagehash[lastmodified]," .
-                  "pagename='$pagehash[pagename]'," .
-                  "refs='$pagehash[refs]'," .
-                  "version=$pagehash[version]";
-
-         $query = "UPDATE $ArchivePageStore SET $PAIRS WHERE pagename='$pagename'";
-
-      } else {
-         // do an insert
-         // build up the column names and values for the query
-
-         $COLUMNS = "author, content, created, flags, " .
-                    "lastmodified, pagename, refs, version";
-
-         $VALUES =  "'$pagehash[author]', '$pagehash[content]', " .
-                    "$pagehash[created], $pagehash[flags], " .
-                    "$pagehash[lastmodified], '$pagehash[pagename]', " .
-                    "'$pagehash[refs]', $pagehash[version]";
-
-
-         $query = "INSERT INTO $ArchivePageStore ($COLUMNS) VALUES($VALUES)";
+      if ($res = pg_exec($dbi['dbc'], "select count(*) from $ArchivePageStore where pagename='$pagename' and version='$version'")) {
+         return pg_result($res, 0, "count");
       }
-
-      // echo "<p>Query: $query<p>\n";
-      $retval = pg_exec($dbi['dbc'], $query);
-      if ($retval == false) 
-         echo "Insert/update failed: " . pg_errormessage($dbi['dbc']);
-
-
+      return 0;
    }
 
 
    function IsWikiPage($dbi, $pagename) {
-      global $WikiPageStore;   	
       $pagename = addslashes($pagename);
-      $query = "select count(*) from $WikiPageStore " .
-               "where pagename='$pagename'";
-      $res = pg_exec($query);
-      $array = pg_fetch_array($res, 0);
-      return $array[0];
+      if ($res = pg_exec($dbi['dbc'], "select count(*) from $dbi[table] where pagename='$pagename'")) {
+         return pg_result($res, 0, "count");
+      }
+      return 0;
    }
 
 
    function IsInArchive($dbi, $pagename) {
-	 global $ArchivePageStore;
+      global $ArchivePageStore;
+
       $pagename = addslashes($pagename);
-      $query = "select count(*) from $ArchivePageStore " .
-               "where pagename='$pagename'";
-      $res = pg_exec($query);
-      $array = pg_fetch_array($res, 0);
-      return $array[0];
+      if ($res = pg_exec($dbi['dbc'], "select count(*) from $ArchivePageStore where pagename='$pagename'")) {
+         return pg_result($res, 0, "count");
+      }
+      return 0;
+   }
+
+
+   function RemovePage($dbi, $pagename) {
+      global $WikiPageStore, $ArchivePageStore;
+      global $WikiLinksStore, $HitCountStore, $WikiScoreStore;
+
+      $pagename = addslashes($pagename);
+      $msg = gettext ("Cannot delete '%s' from table '%s'");
+      $msg .= "<br>\n";
+      $msg .= gettext ("PostgreSQL error: %s");
+
+      if (!pg_exec($dbi['dbc'], "delete from $WikiPageStore where pagename='$pagename'"))
+         ExitWiki(sprintf($msg, $pagename, $WikiPageStore, pg_errormessage()));
+
+      if (!pg_exec($dbi['dbc'], "delete from $ArchivePageStore where pagename='$pagename'"))
+         ExitWiki(sprintf($msg, $pagename, $ArchivePageStore, pg_errormessage()));
+
+      if (!pg_exec($dbi['dbc'], "delete from $WikiLinksStore where frompage='$pagename'"))
+         ExitWiki(sprintf($msg, $pagename, $WikiLinksStore, pg_errormessage()));
+
+      if (!pg_exec($dbi['dbc'], "delete from $HitCountStore where pagename='$pagename'"))
+         ExitWiki(sprintf($msg, $pagename, $HitCountStore, pg_errormessage()));
+
+      if (!pg_exec($dbi['dbc'], "delete from $WikiScoreStore where pagename='$pagename'"))
+         ExitWiki(sprintf($msg, $pagename, $WikiScoreStore, mysql_error()));
    }
 
 
