@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.14 2002-12-15 01:39:15 carstenklapp Exp $ -->
+<!-- $Id: body.tmpl,v 1.15 2003-11-20 19:52:36 carstenklapp Exp $ -->
 <body>
 <!-- Page title and logo -->
 <h1><a class="wikilink" 
@@ -13,5 +13,5 @@
 
 <?= $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
 
-<?php if (defined('DEBUG')) { ?><?= Template('debug') ?><?php } ?>
+<?php if (defined('DEBUG') && DEBUG) { ?><?= Template('debug') ?><?php } ?>
 </body>

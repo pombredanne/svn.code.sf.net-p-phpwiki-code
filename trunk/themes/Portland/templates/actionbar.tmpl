@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.18 2002-12-31 20:05:49 carstenklapp Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.19 2003-11-20 19:52:36 carstenklapp Exp $ -->
 <?php
   $Sep = $Theme->getButtonSeparator();
 
@@ -17,7 +17,7 @@
    ><?= $Theme->getLastModifiedMessage($revision) ?></a>
 	<?=$Sep?><?= Button("PageHistory", _("PageHistory")) ?>
     <?=$Sep?><?= Button("PageInfo", _("PageInfo")) ?>
-<?php if (defined('DEBUG') || $user->isAdmin()) { ?>
+<?php if (defined('DEBUG') && DEBUG || $user->isAdmin()) { ?>
 	<?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?> <!-- For debugging only, really -->
 <?php } ?>
 <br />
