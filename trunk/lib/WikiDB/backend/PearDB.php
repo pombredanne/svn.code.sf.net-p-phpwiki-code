@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.4 2001-09-20 18:25:15 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.5 2001-09-20 19:09:26 dairiki Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -690,7 +690,7 @@ extends WikiDB_backend
      */
     function _pear_notice_filter($err) {
         return ( $err->isNotice()
-                 && preg_match('|DB/common.php$|', $err->errfile)
+                 && preg_match('|DB[/\\]common.php$|', $err->errfile)
                  && $err->errline == 126
                  && preg_match('/Undefined offset: +0\b/', $err->errstr) );
     }
