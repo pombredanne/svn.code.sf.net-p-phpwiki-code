@@ -11,6 +11,11 @@
 	#8452b5; /magenta/
 */
 
+/* NS4 doesn't grok @import.  This allows us to put things which
+ * break NS4 in another file. As of OmniWeb 4.1, OW now @imports :-(
+ */
+@import url(WikiTrek-gravimetric.css);
+
 BODY {
 /* Mozilla ignores the background image, with or without a background color specified (?) */
         color :             #fff;
@@ -92,7 +97,6 @@ H2 , H3 , H4 {
 }
 
 .toolbar .wiki {
-        color :           #000;
         background :      #8452b5;
         text-decoration : none;
         font-weight :     bold;
@@ -104,7 +108,6 @@ H2 , H3 , H4 {
 }
 
 .wikiaction {
-        color :           #000;
         background :      #0b0;
         text-decoration : none;
         font-weight :     bold;
@@ -129,12 +132,10 @@ b.wikisummary {
 }
 
 .wiki:hover {
-        color :      #000;
         background : #6300ce;
 }
 
 .wikiaction:hover {
-        color :      #000;
         background : #ffcf00;
 }
 
