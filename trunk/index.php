@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true); // this will disappear with 1.4.0
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.131 2004-03-14 16:24:35 rurban Exp $');
+rcs_id('$Id: index.php,v 1.132 2004-04-01 15:57:10 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -517,7 +517,7 @@ if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', "ldap://localhost:389
 if (!defined('LDAP_BASE_DN')) define('LDAP_BASE_DN', "ou=Users,o=Development,dc=mycompany.com");
 // LDAP Auth Optional:
 // Some LDAP servers disallow anonymous binds, and need some more options,
-// such as the Windows Active Directory Server:
+// such as for the Windows Active Directory Server:
 // $LDAP_SET_OPTION = array('LDAP_OPT_PROTOCOL_VERSION' => 3,
 //                          'LDAP_OPT_REFERRALS' => 0);
 // define(LDAP_AUTH_USER, "CN=ldapuser,CN=Users,DC=uai,DC=int");
@@ -531,9 +531,10 @@ if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost:143/imap/n
 // Some IMAP_AUTH_HOST samples:
 //   "localhost", "localhost:143/imap/notls", 
 //   "localhost:993/imap/ssl/novalidate-cert" (SuSE refuses non-SSL conections)
-// POP3 auth: 
+
+// POP3 auth:
 //if (!defined('POP3_AUTH_HOST'))   define('POP3_AUTH_HOST', 'localhost');
-//if (!defined('POP3_AUTH_PORT'))   define('POP3_AUTH_HOST', '110');
+//if (!defined('POP3_AUTH_PORT'))   define('POP3_AUTH_PORT', '110');
 
 // File auth:
 //if (!defined('AUTH_USER_FILE')) define('AUTH_USER_FILE', '/etc/shadow'); // or '/etc/httpd/.htpasswd'
@@ -941,6 +942,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.131  2004/03/14 16:24:35  rurban
+// authenti(fi)cation spelling
+//
 // Revision 1.130  2004/03/09 17:16:43  rurban
 // fixed $LDAP_SET_OPTION
 //

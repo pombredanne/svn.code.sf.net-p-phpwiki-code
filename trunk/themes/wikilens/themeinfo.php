@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.1 2004-03-30 02:40:07 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.2 2004-04-01 15:57:20 rurban Exp $');
 /**
  */
 require_once('lib/Theme.php');
@@ -45,7 +45,7 @@ $Theme->setLinkIcon('https');
 $Theme->setLinkIcon('ftp');
 $Theme->setLinkIcon('mailto');
 //$Theme->setLinkIcon('interwiki');
-//$Theme->setLinkIcon('wikiuser');
+$Theme->setLinkIcon('wikiuser');
 //$Theme->setLinkIcon('*', 'url');
 
 //$Theme->setButtonSeparator("\n | ");

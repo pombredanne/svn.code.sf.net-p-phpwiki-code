@@ -1,4 +1,4 @@
- # $Id: Makefile,v 1.38 2004-02-26 21:23:27 rurban Exp $
+ # $Id: Makefile,v 1.39 2004-04-01 15:57:11 rurban Exp $
 #
 # locale/Makefile
 #
@@ -47,7 +47,7 @@ dep :
 #
 # The remainder of this file is auto-generated
 #
-# (Run 'make depend' to regenerate this section.)
+# (Run 'make dependo regenerate this section.)
 #
 po: po/de.po
 mo: de/LC_MESSAGES/phpwiki.mo de/LC_MESSAGES/phpwiki.php
@@ -64,16 +64,17 @@ mo: nl/LC_MESSAGES/phpwiki.mo nl/LC_MESSAGES/phpwiki.php
 po: po/sv.po
 mo: sv/LC_MESSAGES/phpwiki.mo sv/LC_MESSAGES/phpwiki.php
 #
+${POT_FILE}: ../lib/Amazon.php
 ${POT_FILE}: ../lib/ArchiveCleaner.php
 ${POT_FILE}: ../lib/BlockParser.php
 ${POT_FILE}: ../lib/CachedMarkup.php
 ${POT_FILE}: ../lib/DB_Session.php
-${POT_FILE}: ../lib/DB_Session_old.php
 ${POT_FILE}: ../lib/DbaDatabase.php
 ${POT_FILE}: ../lib/DbaListSet.php
 ${POT_FILE}: ../lib/DbaPartition.php
 ${POT_FILE}: ../lib/ErrorManager.php
 ${POT_FILE}: ../lib/FileFinder.php
+${POT_FILE}: ../lib/Google.php
 ${POT_FILE}: ../lib/HtmlElement.php
 ${POT_FILE}: ../lib/InlineParser.php
 ${POT_FILE}: ../lib/PageList.php
@@ -126,9 +127,13 @@ ${POT_FILE}: ../lib/diff3.php
 ${POT_FILE}: ../lib/difflib.php
 ${POT_FILE}: ../lib/display.php
 ${POT_FILE}: ../lib/editpage.php
+${POT_FILE}: ../lib/fpdf.php
+${POT_FILE}: ../lib/htmlarea.php
+${POT_FILE}: ../lib/htmlarea3/popups/insert_pagelink.php
 ${POT_FILE}: ../lib/imagecache.php
 ${POT_FILE}: ../lib/loadsave.php
 ${POT_FILE}: ../lib/main.php
+${POT_FILE}: ../lib/nusoap/nusoap.php
 ${POT_FILE}: ../lib/pear/Cache.php
 ${POT_FILE}: ../lib/pear/Cache/Container.php
 ${POT_FILE}: ../lib/pear/Cache/Container/file.php
@@ -151,6 +156,7 @@ ${POT_FILE}: ../lib/pear/DB/storage.php
 ${POT_FILE}: ../lib/pear/DB/sybase.php
 ${POT_FILE}: ../lib/pear/File_Passwd.php
 ${POT_FILE}: ../lib/pear/PEAR.php
+${POT_FILE}: ../lib/plugin/AddComment.php
 ${POT_FILE}: ../lib/plugin/AllPages.php
 ${POT_FILE}: ../lib/plugin/AllUsers.php
 ${POT_FILE}: ../lib/plugin/AuthorHistory.php
@@ -159,12 +165,15 @@ ${POT_FILE}: ../lib/plugin/CacheTest.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
 ${POT_FILE}: ../lib/plugin/CalendarList.php
 ${POT_FILE}: ../lib/plugin/Comment.php
+${POT_FILE}: ../lib/plugin/CreatePage.php
+${POT_FILE}: ../lib/plugin/CreateToc.php
 ${POT_FILE}: ../lib/plugin/Diff.php
 ${POT_FILE}: ../lib/plugin/EditMetaData.php
 ${POT_FILE}: ../lib/plugin/ExternalSearch.php
 ${POT_FILE}: ../lib/plugin/FrameInclude.php
 ${POT_FILE}: ../lib/plugin/FullTextSearch.php
 ${POT_FILE}: ../lib/plugin/FuzzyPages.php
+${POT_FILE}: ../lib/plugin/GooglePlugin.php
 ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/IncludeSiteMap.php
@@ -192,10 +201,12 @@ ${POT_FILE}: ../lib/plugin/RecentChangesCached.php
 ${POT_FILE}: ../lib/plugin/RedirectTo.php
 ${POT_FILE}: ../lib/plugin/RichTable.php
 ${POT_FILE}: ../lib/plugin/SiteMap.php
+${POT_FILE}: ../lib/plugin/SqlResult.php
 ${POT_FILE}: ../lib/plugin/SystemInfo.php
 ${POT_FILE}: ../lib/plugin/TexToPng.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
 ${POT_FILE}: ../lib/plugin/Transclude.php
+${POT_FILE}: ../lib/plugin/TranslateText.php
 ${POT_FILE}: ../lib/plugin/UnfoldSubpages.php
 ${POT_FILE}: ../lib/plugin/UpLoad.php
 ${POT_FILE}: ../lib/plugin/UserFileManagement.php
@@ -218,6 +229,7 @@ ${POT_FILE}: ../lib/plugin/WikiPoll.php
 ${POT_FILE}: ../lib/plugin/_AuthInfo.php
 ${POT_FILE}: ../lib/plugin/_BackendInfo.php
 ${POT_FILE}: ../lib/plugin/_PreferencesInfo.php
+${POT_FILE}: ../lib/plugin/_WikiTranslation.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/plugincache-config.php
 ${POT_FILE}: ../lib/prepend.php
@@ -250,16 +262,19 @@ ${POT_FILE}: ../themes/Sidebar/themeinfo.php
 ${POT_FILE}: ../themes/SpaceWiki/lib/RecentChanges.php
 ${POT_FILE}: ../themes/SpaceWiki/themeinfo.php
 ${POT_FILE}: ../themes/default/templates/actionbar.tmpl
+${POT_FILE}: ../themes/default/templates/addcomment.tmpl
 ${POT_FILE}: ../themes/default/templates/blogform.tmpl
 ${POT_FILE}: ../themes/default/templates/body.tmpl
 ${POT_FILE}: ../themes/default/templates/bottom.tmpl
 ${POT_FILE}: ../themes/default/templates/browse-footer.tmpl
 ${POT_FILE}: ../themes/default/templates/browse.tmpl
+${POT_FILE}: ../themes/default/templates/comment.tmpl
 ${POT_FILE}: ../themes/default/templates/content.tmpl
 ${POT_FILE}: ../themes/default/templates/debug.tmpl
 ${POT_FILE}: ../themes/default/templates/dialog.tmpl
 ${POT_FILE}: ../themes/default/templates/editpage.tmpl
-${POT_FILE}: ../themes/default/templates/forumform.tmpl
+${POT_FILE}: ../themes/default/templates/forum-thread.tmpl
+${POT_FILE}: ../themes/default/templates/forum-topics.tmpl
 ${POT_FILE}: ../themes/default/templates/frame-footer.tmpl
 ${POT_FILE}: ../themes/default/templates/frame-header.tmpl
 ${POT_FILE}: ../themes/default/templates/frameset.tmpl
@@ -277,7 +292,11 @@ ${POT_FILE}: ../themes/default/templates/savepage.tmpl
 ${POT_FILE}: ../themes/default/templates/signin.tmpl
 ${POT_FILE}: ../themes/default/templates/top.tmpl
 ${POT_FILE}: ../themes/default/templates/userprefs.tmpl
-${POT_FILE}: ../themes/default/templates/userregistration.tmpl
 ${POT_FILE}: ../themes/default/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/default/templates/wikiblog.tmpl
 ${POT_FILE}: ../themes/default/themeinfo.php
+${POT_FILE}: ../themes/smaller/templates/actionbar.tmpl
+${POT_FILE}: ../themes/smaller/templates/info.tmpl
+${POT_FILE}: ../themes/smaller/templates/navbar.tmpl
+${POT_FILE}: ../themes/smaller/templates/signin.tmpl
+${POT_FILE}: ../themes/smaller/themeinfo.php

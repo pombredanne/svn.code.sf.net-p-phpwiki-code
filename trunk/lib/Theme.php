@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.80 2004-03-30 02:14:03 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.81 2004-04-01 15:57:10 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -1183,8 +1183,56 @@ class PluginSidebarBox extends SidebarBox {
     }
 }
 
+// Various boxes which are no plugins
+class RelatedLinksBox extends SidebarBox {
+    function RelatedLinksBox($title = false, $body = '', $limit = 20) {
+        global $request;
+        $this->title = $title ? $title : _("Related Links");
+        $this->body = HTML($body);
+        $page = $request->getPage($request->getArg('pagename'));
+        $revision = $page->getCurrentRevision();
+        $page_content = $revision->getTransformedContent();
+        //$cache = &$page->_wikidb->_cache;
+        $counter = 0;
+        $sp = HTML::Raw('&middot; ');
+        foreach ($page_content->getWikiPageLinks() as $link) {
+            if (!$request->_dbi->isWikiPage($link)) continue;
+            $this->body->pushContent($sp,WikiLink($link), HTML::br());
+            $counter++;
+            if ($limit and $counter > $limit) continue;
+        }
+    }
+}
+
+class RelatedExternalLinksBox extends SidebarBox {
+    function RelatedExternalLinksBox($title = false, $body = '', $limit = 20) {
+        global $request;
+        $this->title = $title ? $title : _("External Links");
+        $this->body = HTML($body);
+        $page = $request->getPage($request->getArg('pagename'));
+        $cache = &$page->_wikidb->_cache;
+        $counter = 0;
+        $sp = HTML::Raw('&middot; ');
+        foreach ($cache->getWikiPageLinks() as $link) {
+            if ($link) {
+                $this->body->pushContent($sp, WikiLink($link), HTML::br());
+                $counter++;
+                if ($limit and $counter > $limit) continue;
+            }
+        }
+    }
+}
+
+
 
 // $Log: not supported by cvs2svn $
+// Revision 1.80  2004/03/30 02:14:03  rurban
+// fixed yet another Prefs bug
+// added generic PearDb_iter
+// $request->appendValidators no so strict as before
+// added some box plugin methods
+// PageList commalist for condensed output
+//
 // Revision 1.79  2004/03/24 19:39:02  rurban
 // php5 workaround code (plus some interim debugging code in XmlElement)
 //   php5 doesn't work yet with the current XmlElement class constructors,

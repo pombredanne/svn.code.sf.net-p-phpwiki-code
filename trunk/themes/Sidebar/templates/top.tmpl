@@ -1,6 +1,5 @@
 <?php // -*-html-*-
-rcs_id('$Id: top.tmpl,v 1.1 2004-03-26 03:45:44 rurban Exp $');
-
+rcs_id('$Id: top.tmpl,v 1.2 2004-04-01 15:57:20 rurban Exp $');
 global $HIDE_TOOLBARS;
 if (!$HIDE_TOOLBARS) {
 ?>
@@ -9,10 +8,4 @@ if (!$HIDE_TOOLBARS) {
     href="<?=WikiURL(HOME_PAGE)?>" target="_top"
     ><img src="<?=$Theme->getImageURL('logo')?>" id="logo-img"
       border="0" alt="<?=fmt(_("%s: %s"), WIKI_NAME, HOME_PAGE) ?>" /></a></div>
-
-<!-- The top navigation/search bar -->
-<div class="toolbar"><?= Template('navbar') ?></div>
 <?php } ?>
-
-<!-- Page title -->
-<h1><?= $HEADER ?></h1>
