@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.62 2004-06-27 10:26:02 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.63 2004-07-01 09:29:40 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -473,9 +473,10 @@ class Request_SessionVars {
                 // otherwise it will get lost.
                 unset($val->_HomePagehandle);
                 unset($val->_auth_dbi);
+                unset($val->_HomePagehandle);
         	if (isset($val->_group)) {
-          	    unset($val->_group->_request);
-            	    unset($val->_group->_user);
+          	    unset($val->_group->request);
+            	    unset($val->_group->user);
         	}
 	    }
         }
@@ -993,6 +994,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2004/06/27 10:26:02  rurban
+// oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
+//
 // Revision 1.61  2004/06/25 14:29:17  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.
