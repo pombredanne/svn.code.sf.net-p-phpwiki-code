@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21 2001-01-15 12:32:57 ahollosi Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.22 2001-02-04 18:19:30 ahollosi Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -75,37 +75,6 @@
       return "<img src=\"$url\" ALT=\"$alt\">";
    }
 
-   
-   function RenderQuickSearch($value = '') {
-      global $ScriptUrl;
-      return "<form action=\"$ScriptUrl\">\n" .
-	     "<input type=text size=30 name=search value=\"$value\">\n" .
-	     "<input type=submit value=\"". gettext("Search") .
-	     "\"></form>\n";
-   }
-
-   function RenderFullSearch($value = '') {
-      global $ScriptUrl;
-      return "<form action=\"$ScriptUrl\">\n" .
-	     "<input type=text size=30 name=full value=\"$value\">\n" .
-	     "<input type=submit value=\"". gettext("Search") .
-	     "\"></form>\n";
-   }
-
-   function RenderMostPopular() {
-      global $ScriptUrl, $dbi;
-      
-      $query = InitMostPopular($dbi, MOST_POPULAR_LIST_LENGTH);
-      $result = "<DL>\n";
-      while ($qhash = MostPopularNextMatch($dbi, $query)) {
-	 $result .= "<DD>$qhash[hits] ... " . LinkExistingWikiWord($qhash['pagename']) . "\n";
-      }
-      $result .= "</DL>\n";
-      
-      return $result;
-   }
-
-
    function ParseAdminTokens($line) {
       global $ScriptUrl;
       
@@ -157,99 +126,6 @@
 
    }  
    // end class definition
-
-
-   // I couldn't move this to lib/config.php because it wasn't declared yet.
-   $stack = new Stack;
-
-   /* 
-      Wiki HTML output can, at any given time, be in only one mode.
-      It will be something like Unordered List, Preformatted Text,
-      plain text etc. When we change modes we have to issue close tags
-      for one mode and start tags for another.
-
-      $tag ... HTML tag to insert
-      $tagtype ... ZERO_LEVEL - close all open tags before inserting $tag
-		   NESTED_LEVEL - close tags until depths match
-      $level ... nesting level (depth) of $tag
-		 nesting is arbitrary limited to 10 levels
-   */
-
-   function SetHTMLOutputMode($tag, $tagtype, $level)
-   {
-      global $stack;
-      $retvar = '';
-
-      if ($tagtype == ZERO_LEVEL) {
-         // empty the stack until $level == 0;
-         if ($tag == $stack->top()) {
-            return; // same tag? -> nothing to do
-         }
-         while ($stack->cnt() > 0) {
-            $closetag = $stack->pop();
-            $retvar .= "</$closetag>\n";
-         }
-   
-         if ($tag) {
-            $retvar .= "<$tag>\n";
-            $stack->push($tag);
-         }
-
-
-      } elseif ($tagtype == NESTED_LEVEL) {
-         if ($level < $stack->cnt()) {
-            // $tag has fewer nestings (old: tabs) than stack,
-	    // reduce stack to that tab count
-            while ($stack->cnt() > $level) {
-               $closetag = $stack->pop();
-               if ($closetag == false) {
-                  //echo "bounds error in tag stack";
-                  break;
-               }
-               $retvar .= "</$closetag>\n";
-            }
-
-	    // if list type isn't the same,
-	    // back up one more and push new tag
-	    if ($tag != $stack->top()) {
-	       $closetag = $stack->pop();
-	       $retvar .= "</$closetag><$tag>\n";
-	       $stack->push($tag);
-	    }
-   
-         } elseif ($level > $stack->cnt()) {
-            // we add the diff to the stack
-            // stack might be zero
-            while ($stack->cnt() < $level) {
-               $retvar .= "<$tag>\n";
-               $stack->push($tag);
-               if ($stack->cnt() > 10) {
-                  // arbitrarily limit tag nesting
-                  ExitWiki(gettext ("Stack bounds exceeded in SetHTMLOutputMode"));
-               }
-            }
-   
-         } else { // $level == $stack->cnt()
-            if ($tag == $stack->top()) {
-               return; // same tag? -> nothing to do
-            } else {
-	       // different tag - close old one, add new one
-               $closetag = $stack->pop();
-               $retvar .= "</$closetag>\n";
-               $retvar .= "<$tag>\n";
-               $stack->push($tag);
-            }
-         }
-
-   
-      } else { // unknown $tagtype
-         ExitWiki ("Passed bad tag type value in SetHTMLOutputMode");
-      }
-
-      return $retvar;
-   }
-   // end SetHTMLOutputMode
-
 
 
    function ParseAndLink($bracketlink) {
