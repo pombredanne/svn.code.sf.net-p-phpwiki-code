@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageType.php,v 1.4 2002-02-18 23:17:47 carstenklapp Exp $');
+<?php rcs_id('$Id: PageType.php,v 1.5 2002-02-18 23:50:55 carstenklapp Exp $');
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -98,9 +98,9 @@ class PageType {
     function _populateSections() {
         foreach ($this->_divs as $section => $data) {
             list($class, $function) = $data;
-            $this->_html->pushContent(HTML::div(array('class' => $class), $function));
+            if (!empty($function))
+                $this->_html->pushContent(HTML::div(array('class' => $class), $function));
         }
-
     }
 
     function _extractText() {
@@ -155,7 +155,8 @@ class interWikiMapPageType extends PageType {
         } else {
             $wikitext = $this->_content;
         }
-        return TransformText($wikitext, $this->_markup);
+        if (trim($wikitext))
+            return TransformText($wikitext, $this->_markup);
     }
 
     function _extractEndText() {
@@ -163,6 +164,7 @@ class interWikiMapPageType extends PageType {
         $v = strpos($this->_content, "</verbatim>");
         if ($v) {
             list($cruft, $endtext) = explode("</verbatim>", $this->_content);
+        if (trim($endtext))
             return TransformText($endtext, $this->_markup);
         } else {
             return "";
