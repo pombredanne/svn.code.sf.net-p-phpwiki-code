@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.33 2004-12-10 22:33:39 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.34 2004-12-11 09:39:28 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -352,6 +352,7 @@ function CheckDatabaseUpdate(&$request) {
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
     echo "<h3>",_("check for necessary database updates"),"</h3>\n";
 
+    $dbh = $request->getDbh(); 
     _upgrade_db_init($dbh);
 
     $tables = $dbh->_backend->listOfTables();
@@ -454,6 +455,7 @@ function CheckDatabaseUpdate(&$request) {
 function _upgrade_db_init (&$dbh) {
     global $request, $DBParams, $DBAuthParams;
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
+
     if (defined('DBADMIN_USER') and DBADMIN_USER) {
         // if need to connect as the root user, for alter permissions
         $AdminParams = $DBParams;
@@ -483,6 +485,7 @@ function _upgrade_db_init (&$dbh) {
 function _upgrade_cached_html (&$dbh) {
     global $DBParams;
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
+
     if (phpwiki_version() >= 1030.10) {
   	echo _("check for extra page.cached_html column")," ... ";
   	$database = $dbh->_backend->database();
@@ -598,6 +601,7 @@ function CheckConfigUpdate(&$request) {
  * Upgrade: Base class for multipage worksteps
  * identify, validate, display options, next step
  */
+/*
 class Upgrade {
 }
 
@@ -606,6 +610,7 @@ class Upgrade_CheckPgsrc extends Upgrade {
 
 class Upgrade_CheckDatabaseUpdate extends Upgrade {
 }
+*/
 
 // TODO: At which step are we? 
 // validate and do it again or go on with next step.
@@ -633,8 +638,12 @@ function DoUpgrade($request) {
 }
 
 
-/**
+/*
  $Log: not supported by cvs2svn $
+ Revision 1.33  2004/12/10 22:33:39  rurban
+ add WikiAdminUtils method for convert-cached-html
+ missed some vars.
+
  Revision 1.32  2004/12/10 22:15:00  rurban
  fix $page->get('_cached_html)
  refactor upgrade db helper _convert_cached_html() to be able to call them from WikiAdminUtils also.
