@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CalendarList.php,v 1.4 2004-12-06 18:32:39 rurban Exp $');
+rcs_id('$Id: CalendarList.php,v 1.5 2004-12-06 19:15:04 rurban Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
 define('SECONDS_PER_DAY', 24 * 3600);
@@ -45,6 +45,23 @@ extends WikiPlugin
                      'start_wday'   => '0');
     }
 
+    /**
+     * return links (static only as of action=edit) 
+     *
+     * @param string $argstr The plugin argument string.
+     * @param string $basepage The pagename the plugin is invoked from.
+     * @return array List of pagenames linked to (or false).
+     */
+    function getWikiPageLinks ($argstr, $basepage) {
+        if (isset($this->_links)) 
+            return $this->_links;
+        else {
+            global $request;	
+            $this->run($request->_dbi, $argstr, &$request, $basepage);
+            return $this->_links;
+        }
+    }
+
     function __date($dbi, $time) {
         $args = &$this->args;
         $date_string = strftime($args['date_format'], $time);
@@ -66,6 +83,7 @@ extends WikiPlugin
                                                      array('action' => 'edit')),
                                   'title' => sprintf(_("Edit %s"), $page_for_date)),
                             $date_string);
+            $this->_links[] = $page_for_date;
             $a = array(HTML::dt($link), HTML::dd($content));
         } else {
             $a = array();
@@ -76,6 +94,7 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $this->args = $this->getArgs($argstr, $request);
         $args       = &$this->args;
+        $this->_links = array();
 
         $now = localtime(time() + 3600 * $request->getPref('timeOffset'), 1);
         foreach ( array('month' => $now['tm_mon'] + 1,
@@ -148,6 +167,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/12/06 18:32:39  rurban
+// added order=reverse: feature request from #981109
+//
 // Revision 1.3  2004/09/22 13:36:45  rurban
 // Support ranges, based on a simple patch by JoshWand
 //   next_n_days, last_n_days, next_n
