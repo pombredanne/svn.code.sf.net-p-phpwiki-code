@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.68 2004-12-14 21:35:15 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.69 2004-12-23 14:07:34 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -130,7 +130,7 @@ function IniConfig($file) {
          'PASSWORD_LENGTH_MINIMUM', 'USER_AUTH_POLICY', 
          'GROUP_METHOD',
          'EDITING_POLICY', 'THEME', 'CHARSET',
-         'DEFAULT_LANGUAGE', 'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
+         'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
          'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR', /*'KEYWORDS',*/
          // extra logic:
          //'DATABASE_PREFIX', 'DATABASE_DSN', 'DATABASE_TYPE', 'DATABASE_DBHANDLER',
@@ -148,7 +148,7 @@ function IniConfig($file) {
     // These are not defined in config-default.ini and empty if not defined.
     $_IC_OPTIONAL_VALUE = array
         ( 
-         'DEBUG', 'TEMP_DIR',
+         'DEBUG', 'TEMP_DIR', 'DEFAULT_LANGUAGE', 
          'LDAP_AUTH_HOST','LDAP_SET_OPTION','LDAP_BASE_DN', 'LDAP_AUTH_USER',
          'LDAP_AUTH_PASSWORD','LDAP_SEARCH_FIELD','LDAP_OU_GROUP','LDAP_OU_USERS',
          'AUTH_USER_FILE','DBAUTH_AUTH_DSN',
@@ -484,9 +484,6 @@ function fixup_static_configs() {
     else
         $FieldSeparator = "\x81";
 
-    if (!defined('DEFAULT_LANGUAGE')) // not needed anymore
-        define('DEFAULT_LANGUAGE', 'en');
-
     $AllActionPages = explode(':',
                               'AllPages:BackLinks:CreatePage:DebugInfo:EditMetaData:FindPage:'
                               .'FullRecentChanges:FullTextSearch:FuzzyPages:InterWikiSearch:'
@@ -584,8 +581,8 @@ function fixup_dynamic_configs() {
         ini_set('include_path', INCLUDE_PATH);
     if (defined('SESSION_SAVE_PATH'))
         ini_set('session.save_path', SESSION_SAVE_PATH);
-    if (!defined('DEFAULT_LANGUAGE')) // not needed anymore
-        define('DEFAULT_LANGUAGE', 'en');
+    if (!defined('DEFAULT_LANGUAGE'))   // not needed anymore
+        define('DEFAULT_LANGUAGE', ''); // detect from client
 
     update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
  
@@ -614,13 +611,13 @@ function fixup_dynamic_configs() {
         $bindtextdomain_path = FindFile("locale", false, true);
         $chback = 0;
         if (isWindows())
-            $bindtextdomain_path = str_replace("/","\\",$bindtextdomain_path);
-        $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain);
+            $bindtextdomain_path = str_replace("/", "\\", $bindtextdomain_path);
+        $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
         if ($bindtextdomain_real != $bindtextdomain_path) {
             // this will happen with virtual_paths. chdir and try again.
             chdir($bindtextdomain_path);
             $chback = 1;
-            $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain);
+            $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
         }
         textdomain("phpwiki");
         if ($chback) { // change back
@@ -762,6 +759,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2004/12/14 21:35:15  rurban
+// support new BLOG_EMPTY_DEFAULT_PREFIX
+//
 // Revision 1.67  2004/11/30 09:51:35  rurban
 // changed KEYWORDS from pageprefix to search term. added installer detection.
 //
