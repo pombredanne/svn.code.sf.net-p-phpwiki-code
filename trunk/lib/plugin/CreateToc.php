@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.25 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.26 2004-09-20 14:07:16 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,8 @@ rcs_id('$Id: CreateToc.php,v 1.25 2004-07-08 20:30:07 rurban Exp $');
  * - bug #969495 "existing labels not honored" seems to be fixed.
  */
 
-define('TOC_FULL_SYNTAX',1);
+if (!defined('TOC_FULL_SYNTAX'))
+    define('TOC_FULL_SYNTAX',1);
 
 class WikiPlugin_CreateToc
 extends WikiPlugin
@@ -51,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
@@ -276,6 +277,10 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/07/08 20:30:07  rurban
+// plugin->run consistency: request as reference, added basepage.
+// encountered strange bug in AllPages (and the test) which destroys ->_dbi
+//
 // Revision 1.24  2004/06/28 13:27:03  rurban
 // CreateToc disabled for old markup and Apache2 only
 //
