@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.21 2002-01-25 14:46:49 dairiki Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.22 2002-01-26 22:08:40 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -168,15 +168,28 @@ class PageList {
      * a colon.  E.g. 'hits:Page Views'.
      */ 
     function addColumn ($column) {
-        if (($col = $this->_getColumn($new_columnname)))
-            array_push($this->_columns, $col);
+        if (($col = $this->_getColumn($new_columnname))) {
+           if(! $this->column_exists($col->_heading)) {
+                array_push($this->_columns, $col);
+            }
+        }
     }
 
     function insertColumn ($new_columnname) {
-        if (($col = $this->_getColumn($new_columnname)))
-            array_unshift($this->_columns, $col);
+        if (($col = $this->_getColumn($new_columnname))) {
+           if(! $this->column_exists($col->_heading)) {
+                array_unshift($this->_columns, $col);
+            }
+        }
     }
 
+    function column_exists ($heading) {
+        foreach ($this->_columns as $val) {
+            if ($val->_heading == $heading)
+                return true;
+        }
+        return false;
+    }
 
 
     function addPage ($page_handle) {
