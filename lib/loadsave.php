@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.119 2004-07-08 15:23:59 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.120 2004-07-08 19:04:42 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -209,8 +209,10 @@ function MakeWikiZip (&$request)
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	//if (! $request->getArg('start_debug'))
-        @set_time_limit(30); // Reset watchdog
+    	if (! $request->getArg('start_debug'))
+            @set_time_limit(30); // Reset watchdog
+        else    
+            @set_time_limit(240);
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -283,8 +285,10 @@ function DumpToDir (&$request)
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	//if (! $request->getArg('start_debug'))
-        @set_time_limit(30); // Reset watchdog.
+    	if (! $request->getArg('start_debug'))
+            @set_time_limit(30); // Reset watchdog.
+        else    
+            @set_time_limit(240);
 
         $pagename = $page->getName();
         if (!isa($request,'MockRequest')) {
@@ -386,8 +390,10 @@ function DumpHtmlToDir (&$request)
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	//if (!$request->getArg('start_debug'))
-        @set_time_limit(30); // Reset watchdog.
+    	if (! $request->getArg('start_debug'))
+            @set_time_limit(30); // Reset watchdog.
+        else    
+            @set_time_limit(240);
           
         $pagename = $page->getName();
         if (!isa($request,'MockRequest')) {
@@ -541,8 +547,10 @@ function MakeWikiZipHtml (&$request)
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	//if (! $request->getArg('start_debug'))
-        @set_time_limit(30); // Reset watchdog.
+    	if (! $request->getArg('start_debug'))
+            @set_time_limit(30); // Reset watchdog.
+        else    
+            @set_time_limit(240);
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -626,7 +634,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
     }
 
     $current = $page->getCurrentRevision();
-    if ( (! $current->hasDefaultContents())
+    if ( $current and (! $current->hasDefaultContents())
          && ($current->getPackedContent() != $content)
          && ($merging == true) ) {
         include_once('lib/editpage.php');
@@ -651,7 +659,10 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $mesg->pushContent(' ', fmt("from %s", $source));
 
 
-    //$current = $page->getCurrentRevision();
+    if (!$current) {
+    	//FIXME: This should not happen! (empty vdata, corrupt cache or db)
+    	$current = $page->getCurrentRevision();
+    }
     if ($current->getVersion() == 0) {
         $mesg->pushContent(' - ', _("new page"));
         $isnew = true;
@@ -879,8 +890,10 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $text  = implode("", file($filename));
     }
 
-    //if (! $request->getArg('start_debug'))
-    @set_time_limit(30); // Reset watchdog.
+   	if (! $request->getArg('start_debug'))
+        @set_time_limit(30); // Reset watchdog.
+    else    
+        @set_time_limit(240);
 
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
     $basename = basename("/dummy/" . $filename);
@@ -1157,6 +1170,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.119  2004/07/08 15:23:59  rurban
+ less verbose for tests
+
  Revision 1.118  2004/07/08 13:50:32  rurban
  various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.12 2004-06-30 19:59:07 dfrankow Exp $');
+rcs_id('$Id: RateIt.php,v 1.13 2004-07-08 19:04:44 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -94,7 +94,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function RatingWidgetJavascript() {
@@ -181,6 +181,7 @@ function deleteRating(actionImg, page, dimension) {
         $this->_request = & $request;
         $this->_dbi = & $dbi;
         $user = & $request->getUser();
+        if (!is_object($user)) return HTML();
         $this->userid = $user->UserName();
         $args = $this->getArgs($argstr, $request);
         $this->dimension = $args['dimension'];
@@ -198,10 +199,8 @@ function deleteRating(actionImg, page, dimension) {
         }
         $this->pagename = $args['pagename'];
 
-        if (RATING_STORAGE == 'SQL') {
-            $rdbi = RatingsDb::getTheRatingsDb();
-            $this->_rdbi =& $rdbi;
-        }
+        $rdbi = RatingsDb::getTheRatingsDb();
+        $this->_rdbi =& $rdbi;
 
         if ($args['mode'] === 'add') {
             if (!$user->isSignedIn())
@@ -244,7 +243,7 @@ function deleteRating(actionImg, page, dimension) {
             // $WikiTheme->addMoreHeaders($this->RatingWidgetJavascript()); 
             // or we change the header in the ob_buffer.
             //Todo: add a validator based on the users last rating mtime
-            $rating = $rdbi->getRating();
+            //$rating = $rdbi->getRating();
             /*
                 static $validated = 0;
             	if (!$validated) {
@@ -254,7 +253,7 @@ function deleteRating(actionImg, page, dimension) {
                   $validated = 1;
             	}
             */
-            $args['rating'] = $rating;
+            //$args['rating'] = $rating;
             return $this->RatingWidgetHtml($args['pagename'], $args['version'], $args['imgPrefix'], $args['dimension'], $args['small']);
         } else {
             if (!$user->isSignedIn())
@@ -265,11 +264,10 @@ function deleteRating(actionImg, page, dimension) {
                                     $rdbi->getNumUsers($this->pagename, $this->dimension),
                                     $rdbi->getAvg($this->pagename, $this->dimension)),
                             HTML::br());
-            if ($rating !== false) {
+            if ($rating) {
                 $html->pushContent(sprintf(_("Your rating was %.1f"),
                                            $rating));
-            }
-            else {
+            } else {
             	$pred = $rdbi->getPrediction($this->userid, $this->pagename, $this->dimension);
             	if (is_string($pred))
                     $html->pushContent(sprintf(_("%s prediction for you is %s stars"),
@@ -343,8 +341,8 @@ function deleteRating(actionImg, page, dimension) {
 
         $user = $request->getUser();
         $userid = $user->getId();
-        if (!isset($args['rating']))
-            $rating = $rdbi->getRating($userid, $pagename, $dimension);
+        //if (!isset($args['rating']))
+        $rating = $rdbi->getRating($userid, $pagename, $dimension);
         if (!$rating) {
             $pred = $rdbi->getPrediction($userid,$pagename,$dimension);
         }
@@ -402,6 +400,20 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/06/30 19:59:07  dfrankow
+// Make changes suitable so that wikilens theme (and wikilens.org) work properly.
+// + Remove predictions (for now)
+// + Use new RatingsDb singleton.
+// + Change RatingWidgetHtml() to use parameters like a normal PHP function
+//   so we can have PHP check that we're passing the right # of them.
+// + Change RatingWidgetHtml() to be callable static-ally
+//   (without a plugin object)
+// + Remove the "RateIt" button for now, because we don't use it on wikilens.org.
+//   Maybe if someone wants the button, there can be an arg or flag for it.
+// + Always show the cancel button, because UI widgets should not hide.
+// + Remove the "No opinion" button for now, because we don't yet store that.
+//   This is a useful thing, tho, for the future.
+//
 // Revision 1.11  2004/06/19 10:22:41  rurban
 // outcomment the pear specific methods to let all pages load
 //
