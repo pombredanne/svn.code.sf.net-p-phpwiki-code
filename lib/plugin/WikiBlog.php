@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.14 2004-03-29 21:33:32 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.15 2004-04-18 05:42:17 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -83,7 +83,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     // Arguments:
@@ -207,7 +207,7 @@ extends WikiPlugin
             elseif ($type == 'comment')
                 $pagename = "Comment";
             elseif ($type == 'wikiforum')
-                $pagename = "Topic";
+                $pagename = substr($summary,0,12);
 
             // Check intermediate pages. If not existing they should RedirectTo the parent page.
             $redirected = $parent . SUBPAGE_SEPARATOR . $pagename;
@@ -282,9 +282,15 @@ extends WikiPlugin
             if ($args['order'] == 'reverse')
                 $blogs = array_reverse($blogs);
            
+            if ($type == 'wikiblog')
+                $name = _("Blogs");
+            elseif ($type == 'comment')
+                $name = _("Comments");
+            elseif ($type == 'wikiforum')
+                $name = _("Messages");
             if (!$args['noheader'])
                 $html->pushContent(HTML::h4(array('class' => "$type-heading"),
-                                            fmt("Comments on %s:", WikiLink($parent))));
+                                            fmt("%s on %s:", $name, WikiLink($parent))));
             foreach ($blogs as $rev) {
                 if (!$rev->get($type)) {
                     // Ack! this is an old-style blog with data ctime in page meta-data.
@@ -350,6 +356,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/03/29 21:33:32  rurban
+// possible fix for problem reported by Whit Blauvelt
+//   Message-ID: <20040327211707.GA22374@free.transpect.com>
+// create intermediate redirect subpages for blog/comment/forum
+//
 // Revision 1.13  2004/03/15 10:59:40  rurban
 // fix also early attach type bug, attached as wikiblog pagetype
 //
