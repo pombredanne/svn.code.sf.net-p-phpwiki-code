@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.48 2002-01-31 03:18:42 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.49 2002-02-01 19:17:21 carstenklapp Exp $');
 /**
  */
 
@@ -95,6 +95,11 @@ extends _RecentChanges_Formatter
     function diffLink ($rev) {
         global $Theme;
         return $Theme->makeButton(_("(diff)"), $this->diffURL($rev), 'wiki-rc-action');
+    }
+
+    function historyLink ($rev) {
+        global $Theme;
+        return $Theme->makeButton(_("(hist)"), $this->historyURL($rev), 'wiki-rc-action');
     }
 
     function pageLink ($rev) {
@@ -202,9 +207,17 @@ extends _RecentChanges_Formatter
 
     function format_revision ($rev) {
         $class = 'rc-' . $this->importance($rev);
-        
+
+        $difflink = false;
+        $historylink = false;
+        if ($this->_show_difflinks)
+            $difflink = $this->diffLink($rev);
+        if ($this->_show_historylinks)
+            $historylink = $this->historyLink($rev);
+
         return HTML::li(array('class' => $class),
-                        $this->diffLink($rev), ' ',
+                        $difflink, ' ',
+                        $historylink, ' ',
                         $this->pageLink($rev), ' ',
                         $rev->get('is_minor_edit') ? $this->time($rev) : HTML::strong($this->time($rev)), ' ',
                         $this->summaryAsHTML($rev),
@@ -365,6 +378,8 @@ extends WikiPlugin
                      'limit'		=> false,
                      'format'		=> false,
                      'daylist'          => false,
+                     'difflinks'        => true,
+                     'historylinks'     => false,
                      'caption'          => ''
                      );
     }
@@ -428,6 +443,9 @@ extends WikiPlugin
         }
         
         $fmt = new $fmt_class($args);
+        $fmt->_show_difflinks = $args['difflinks'];
+        $fmt->_show_historylinks = $args['historylinks'];
+
         return $fmt->format($changes);
     }
 
