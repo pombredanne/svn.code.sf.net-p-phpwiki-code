@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.63 2004-03-24 19:39:02 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.64 2004-04-06 19:48:56 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -292,6 +292,7 @@ function speich() {
 
         // Force browse of current page version.
         $request->setArg('version', false);
+        //$request->setArg('action', false);
 
         $template = Template('savepage', $this->tokens);
         $template->replace('CONTENT', $newrevision->getTransformedContent());
@@ -624,6 +625,20 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.63  2004/03/24 19:39:02  rurban
+ php5 workaround code (plus some interim debugging code in XmlElement)
+   php5 doesn't work yet with the current XmlElement class constructors,
+   WikiUserNew does work better than php4.
+ rewrote WikiUserNew user upgrading to ease php5 update
+ fixed pref handling in WikiUserNew
+ added Email Notification
+ added simple Email verification
+ removed emailVerify userpref subclass: just a email property
+ changed pref binary storage layout: numarray => hash of non default values
+ print optimize message only if really done.
+ forced new cookie policy: delete pref cookies, use only WIKI_ID as plain string.
+   prefs should be stored in db or homepage, besides the current session.
+
  Revision 1.62  2004/03/17 18:41:05  rurban
  initial_content and template support for CreatePage
 
