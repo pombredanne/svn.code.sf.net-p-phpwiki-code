@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.100 2004-07-07 15:02:26 dfrankow Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.101 2004-07-08 19:04:41 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -695,20 +695,17 @@ class PageList {
     }
 
     function maxLen() {
-        global $DBParams, $request;
-        if ($DBParams['dbtype'] == 'SQL' or $DBParams['dbtype'] == 'ADODB') {
-            $dbi =& $request->getDbh();
+        global $request;
+        $dbi =& $request->getDbh();
+        if (isa($dbi,'WikiDB_SQL')) {
             extract($dbi->_backend->_table_names);
-            if ($DBParams['dbtype'] == 'SQL') {
-                //FIXME: LIMIT not portable
-                $res = $dbi->_backend->_dbh->getOne("SELECT max(length(pagename)) FROM $page_tbl");
-                if (DB::isError($res) || empty($res)) return false;
-                else return $res;
-            } elseif ($DBParams['dbtype'] == 'ADODB') {
-                //FIXME: LIMIT not portable
-                $row = $dbi->_backend->_dbh->getRow("SELECT max(length(pagename)) FROM $page_tbl");
-                return $row ? $row[0] : false;
-            }
+            $res = $dbi->_backend->_dbh->getOne("SELECT max(length(pagename)) FROM $page_tbl");
+            if (DB::isError($res) || empty($res)) return false;
+            else return $res;
+        } elseif (isa($dbi,'WikiDB_ADODB')) {
+            extract($dbi->_backend->_table_names);
+            $row = $dbi->_backend->_dbh->getRow("SELECT max(length(pagename)) FROM $page_tbl");
+            return $row ? $row[0] : false;
         } else 
             return false;
     }
@@ -1270,6 +1267,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2004/07/07 15:02:26  dfrankow
+// Take out if that prevents column sorting
+//
 // Revision 1.99  2004/07/02 18:49:02  dfrankow
 // Change one line so that if addPageList() is passed null, it is still
 // okay.  The unit tests do this (ask to list AllUsers where there are no

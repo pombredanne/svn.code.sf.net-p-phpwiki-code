@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.76 2004-07-08 17:31:43 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.77 2004-07-08 19:04:42 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1875,9 +1875,9 @@ class WikiDB_cache
     }
 	
     function get_latest_version($pagename)  {
-	if (defined('USECACHE') and USECACHE) {
+        if (defined('USECACHE') and USECACHE) {
             assert (is_string($pagename) && $pagename != '');
-            $cache = &$this->_glv_cache;	
+            $cache = &$this->_glv_cache;
             if (!isset($cache[$pagename])) {
                 $cache[$pagename] = $this->_backend->get_latest_version($pagename);
                 if (empty($cache[$pagename]))
@@ -1892,6 +1892,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.76  2004/07/08 17:31:43  rurban
+// improve numPages for file (fixing AllPagesTest)
+//
 // Revision 1.75  2004/07/05 13:56:22  rurban
 // sqlite autoincrement fix
 //

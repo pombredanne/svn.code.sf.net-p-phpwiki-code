@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: RatingsUser.php,v 1.3 2004-06-30 20:06:44 dfrankow Exp $');
+rcs_id('$Id: RatingsUser.php,v 1.4 2004-07-08 19:04:49 rurban Exp $');
 /* Copyright (C) 2004 Dan Frankowski
  *
  * This file is (not yet) part of PhpWiki.
@@ -354,8 +354,8 @@ class RatingsUser {
             // passing null as first parameter to indicate all dimensions
             $dbi = $this->_get_rating_dbi();
 
-            $rating_iter = $dbi->sql_get_rating(null, $this->_userid, null);
-            //$rating_iter = $dbi->get_rating(null, $this->_userid);
+            //$rating_iter = $dbi->sql_get_rating(null, $this->_userid, null);
+            $rating_iter = $dbi->get_rating_page(null, $this->_userid);
 
             while($rating = $rating_iter->next())
             {
@@ -425,6 +425,9 @@ class _UserRating
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/06/30 20:06:44  dfrankow
+// Use RatingsDb singleton.
+//
 // Revision 1.2  2004/06/21 17:01:41  rurban
 // fix typo and rating method call
 //
