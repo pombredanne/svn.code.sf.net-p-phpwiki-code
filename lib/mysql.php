@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.7 2000-11-18 13:50:36 ahollosi Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.8 2000-11-24 22:07:34 wainstead Exp $');
 
    /*
       Database functions:
@@ -149,7 +149,7 @@
 
 
    function RemovePage($dbi, $pagename) {
-      global $WikiPageStore, $ArchivePageStore
+      global $WikiPageStore, $ArchivePageStore;
       global $WikiLinksStore, $HitCountStore, $WikiScoreStore;
 
       $pagename = addslashes($pagename);
