@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.19 2004-03-17 22:21:42 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.20 2004-03-18 21:41:10 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -7,18 +7,18 @@ rcs_id('$Id: ADODB.php,v 1.19 2004-03-17 22:21:42 rurban Exp $');
  This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-PhpWiki is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with PhpWiki; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 */ 
 
@@ -39,10 +39,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
       Now at August 2002 PEAR/DB with our own page cache added, performance is comparable.
 */
 
-//require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
-//require_once('lib/FileFinder.php');
-//require_once('lib/ErrorManager.php');
 // Error handling - calls trigger_error.  NB - does not close the connection.  Does it need to?
 include_once('lib/WikiDB/adodb/adodb-errorhandler.inc.php');
 // include the main adodb file
@@ -53,52 +50,23 @@ extends WikiDB_backend
 {
 
     function WikiDB_backend_ADODB ($dbparams) {
-        // Find and include PEAR's DB.php.
-        //$pearFinder = new PearFileFinder;
-        //$pearFinder->includeOnce('DB.php');
-
-        // Install filter to handle bogus error notices from buggy DB.php's.
-//        global $ErrorManager;
-//        $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pear_notice_filter'));
-        
-        // Open connection to database
-//      $this->_dsn = $dbparams['dsn'];
-/*      $dboptions = array('persistent' => true,
-                           'debug' => 2);
-        $this->_dbh = DB::connect($this->_dsn, $dboptions);
-        $dbh = &$this->_dbh;
-        if (DB::isError($dbh)) {
-            trigger_error(sprintf("Can't connect to database: %s",
-                                  $this->_pear_error_message($dbh)),
-                          E_USER_ERROR);
-        }
-        $dbh->setErrorHandling(PEAR_ERROR_CALLBACK,
-                               array($this, '_pear_error_callback'));
+        /*
         $dbh->setFetchMode(ADODB_FETCH_ASSOC);
-*/
+        */
         $parsed = parseDSN($dbparams['dsn']);
         $this->_dbh = &ADONewConnection($parsed['phptype']); // Probably only MySql works just now
         $conn = $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
                                      $parsed['password'], $parsed['database']);
 
-//  Error handling not needed here -all dealt with by adodb-errorhandler.inc.php		
-/*	if ($conn === false)  {
-		trigger_error(sprintf("Can't connect to database: %s",
-                                      $this->_pear_error_message($conn)),
-                              E_USER_ERROR);
-        }
-*/
-
-
-//  Uncomment the following line to enable debugging output (not very pretty!)		
-//	$this->_dbh->debug = true;
+        //  Uncomment the following line to enable debugging output (not very pretty!)		
+        //	$this->_dbh->debug = true;
 		
 	$GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_ASSOC;
 
-//  The next line should speed up queries if enabled, but:
-//  1)  It only works with PHP >= 4.0.6; and
-//  2)  At the moment, I haven't figured out why the wrong results are returned'
-//	$GLOBALS['ADODB_COUNTRECS'] = false;
+        //  The next line should speed up queries if enabled, but:
+        //  1)  It only works with PHP >= 4.0.6; and
+        //  2)  At the moment, I haven't figured out why the wrong results are returned'
+        //$GLOBALS['ADODB_COUNTRECS'] = false;
 
         $prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
 
@@ -110,9 +78,11 @@ extends WikiDB_backend
                     'nonempty_tbl' => $prefix . 'nonempty');
         $page_tbl = $this->_table_names['page_tbl'];
         $version_tbl = $this->_table_names['version_tbl'];
-        $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, $page_tbl.hits as hits, $page_tbl.pagedata as pagedata";
+        $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, " .
+            "$page_tbl.hits as hits, $page_tbl.pagedata as pagedata";
         $this->version_tbl_fields = "$version_tbl.version as version, $version_tbl.mtime as mtime, ".
-            "$version_tbl.minor_edit as minor_edit, $version_tbl.content as content, $version_tbl.versiondata as versiondata";
+            "$version_tbl.minor_edit as minor_edit, $version_tbl.content as content, ".
+            "$version_tbl.versiondata as versiondata";
 
         $this->_expressions
             = array('maxmajor'     => "MAX(CASE WHEN minor_edit=0 THEN version END)",
@@ -139,9 +109,8 @@ extends WikiDB_backend
         $this->_dbh = false;
     }
 
-
     /*
-     * Test fast wikipage.
+     * Fast test for wikipage.
      */
     function is_wiki_page($pagename) {
         $dbh = &$this->_dbh;
@@ -164,13 +133,12 @@ extends WikiDB_backend
     function get_all_pagenames() {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-      //return $dbh->getCol("SELECT pagename"
-      //                    . " FROM $nonempty_tbl, $page_tbl"
-      //                    . " WHERE $nonempty_tbl.id=$page_tbl.id");
-	  
+        //return $dbh->getCol("SELECT pagename"
+        //                    . " FROM $nonempty_tbl, $page_tbl"
+        //                    . " WHERE $nonempty_tbl.id=$page_tbl.id");
 
-//Original code (above) return the column in an indexed array - 0 based
-//So, hopefully, does this
+        //Original code (above) return the column in an indexed array - 0 based
+        //So, hopefully, does this
         $result = $dbh->Execute("SELECT pagename"
                                 . " FROM $nonempty_tbl, $page_tbl"
                                 . " WHERE $nonempty_tbl.id=$page_tbl.id");
@@ -183,9 +151,6 @@ extends WikiDB_backend
     function get_pagedata($pagename) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-
-        //trigger_error("GET_PAGEDATA $pagename", E_USER_NOTICE);
-
         $result = $dbh->GetRow(sprintf("SELECT * FROM $page_tbl WHERE pagename=%s",
                                        $dbh->qstr($pagename)));
         if (!$result)
@@ -196,7 +161,7 @@ extends WikiDB_backend
     function  _extract_page_data(&$query_result) {
         extract($query_result);
         $data = empty($pagedata) ? array() : unserialize($pagedata);
-        $data['hits'] = $hits; // Where do we get the hits from here?
+        $data['hits'] = $hits;
         return $data;
     }
 
@@ -313,11 +278,9 @@ extends WikiDB_backend
         assert(!empty($pagename));
         assert($version > 0);
         
-        //trigger_error("GET_REVISION $pagename $version $want_content", E_USER_NOTICE);
         // FIXME: optimization: sometimes don't get page data?
-
         if ($want_content) {
-            $fields = "*";
+            $fields = $this->page_tbl_fields.','.$this->version_tbl_fields;
         } else {
             $fields =  $this->page_tbl_fields . ", "
                        . "mtime, minor_edit, versiondata,"
@@ -378,7 +341,6 @@ extends WikiDB_backend
 
         @$content = (string) $data['%content'];
         unset($data['%content']);
-
         unset($data['%pagedata']);
         
         $this->lock();
@@ -388,7 +350,6 @@ extends WikiDB_backend
         $dbh->Execute(sprintf("DELETE FROM $version_tbl"
                             . " WHERE id=%d AND version=%d",
                             $id, $version));
-
         $dbh->Execute(sprintf("INSERT INTO $version_tbl"
                             . " (id,version,mtime,minor_edit,content,versiondata)"
                             . " VALUES(%d,%d,%d,%d,%s,%s)",
@@ -434,7 +395,7 @@ extends WikiDB_backend
             $dbh->Execute("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id");
             $dbh->Execute("DELETE FROM $link_tbl     WHERE linkfrom=$id");
-			$rs = $dbh->Execute("SELECT COUNT(*) AS C FROM $link_tbl WHERE linkto=$id");
+            $rs = $dbh->Execute("SELECT COUNT(*) AS C FROM $link_tbl WHERE linkto=$id");
             $nlinks = $rs->fields['C'];
             if ($nlinks) {
                 // We're still in the link table (dangling link) so we can't delete this
@@ -496,12 +457,13 @@ extends WikiDB_backend
 
         $qpagename = $dbh->qstr($pagename);
         // removed ref to FETCH_MODE in next line        
-        $result = $dbh->Execute("SELECT $want.id as id, $want.pagename as pagename, $want.hits as hits, $want.pagedata as pagedata"
-                              . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
-                              . " WHERE linkfrom=linker.id AND linkto=linkee.id"
-                              . " AND $have.pagename=$qpagename"
-                              //. " GROUP BY $want.id"
-                              . " ORDER BY $want.pagename");
+        $result = $dbh->Execute("SELECT $want.id as id, $want.pagename as pagename,"
+                                . " $want.hits as hits, $want.pagedata as pagedata"
+                                . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
+                                . " WHERE linkfrom=linker.id AND linkto=linkee.id"
+                                . " AND $have.pagename=$qpagename"
+                                //. " GROUP BY $want.id"
+                                . " ORDER BY $want.pagename");
         
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
@@ -569,10 +531,10 @@ extends WikiDB_backend
         $search_clause = $search->makeSqlClause($callback);
         
         $result = $dbh->Execute("SELECT $fields FROM $table"
-                              . " WHERE $join_clause"
-                              . "  AND ($search_clause)"
-                              . " ORDER BY pagename");
-        
+                                . " WHERE $join_clause"
+                                . "  AND ($search_clause)"
+                                . " ORDER BY pagename");
+
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
@@ -638,7 +600,6 @@ extends WikiDB_backend
         $pick = array();
         if ($since)
             $pick[] = "mtime >= $since";
-		
         
         if ($include_all_revisions) {
             // Include all revisions of each page.
@@ -807,102 +768,19 @@ extends WikiDB_backend
     function _unlock_tables($write_lock) {
         trigger_error("virtual", E_USER_ERROR);
     }
-    
-    /**
-     * Callback for PEAR (DB) errors.
-     *
-     * @access protected
-     *
-     * @param A PEAR_error object.
-     */
-/*  function _pear_error_callback($error) {
-        if ($this->_is_false_error($error))
-            return;
-        
-        $this->_dbh->setErrorHandling(PEAR_ERROR_PRINT);	// prevent recursive loops.
-        $this->close();
-        trigger_error($this->_pear_error_message($error), E_USER_ERROR);
-    }
-*/
-    /**
-     * Detect false errors messages from PEAR DB.
-     *
-     * The version of PEAR DB which ships with PHP 4.0.6 has a bug in that
-     * it doesn't recognize "LOCK" and "UNLOCK" as SQL commands which don't
-     * return any data.  (So when a "LOCK" command doesn't return any data,
-     * DB reports it as an error, when in fact, it's not.)
-     *
-     * @access private
-     * @return bool True iff error is not really an error.
-     */
-/*    function _is_false_error($error) {
-        if ($error->getCode() != DB_ERROR)
-            return false;
-
-        $query = $this->_dbh->last_query;
-
-        if (! preg_match('/^\s*"?(INSERT|UPDATE|DELETE|REPLACE|CREATE'
-                         . '|DROP|ALTER|GRANT|REVOKE|LOCK|UNLOCK)\s/', $query)) {
-            // Last query was not of the sort which doesn't return any data.
-            //" <--kludge for brain-dead syntax coloring
-            return false;
-        }
-        
-        if (! in_array('ismanip', get_class_methods('DB'))) {
-            // Pear shipped with PHP 4.0.4pl1 (and before, presumably)
-            // does not have the DB::isManip method.
-            return true;
-        }
-        
-        if (DB::isManip($query)) {
-            // If Pear thinks it's an isManip then it wouldn't have thrown
-            // the error we're testing for....
-            return false;
-        }
-
-        return true;
-    }
-*/
-/*    function _pear_error_message($error) {
-        $class = get_class($this);
-        $message = "$class: fatal database error\n"
-             . "\t" . $error->getMessage() . "\n"
-             . "\t(" . $error->getDebugInfo() . ")\n";
-
-        // Prevent password from being exposed during a connection error
-        $safe_dsn = preg_replace('| ( :// .*? ) : .* (?=@) |xs',
-                                 '\\1:XXXXXXXX', $this->_dsn);
-        return str_replace($this->_dsn, $safe_dsn, $message);
-    }
-*/
-    /**
-     * Filter PHP errors notices from PEAR DB code.
-     *
-     * The PEAR DB code which ships with PHP 4.0.6 produces spurious
-     * errors and notices.  This is an error callback (for use with
-     * ErrorManager which will filter out those spurious messages.)
-     * @see _is_false_error, ErrorManager
-     * @access private
-     */
-/*    function _pear_notice_filter($err) {
-        return ( $err->isNotice()
-                 && preg_match('|DB[/\\\\]common.php$|', $err->errfile)
-                 && $err->errline == 126
-                 && preg_match('/Undefined offset: +0\b/', $err->errstr) );
-    }
-*/
 };
 
 class WikiDB_backend_ADODB_iter
 extends WikiDB_backend_iterator
 {
     function WikiDB_backend_ADODB_iter(&$backend, &$query_result) {
-// ADODB equivalent of this?  May not matter, since we should never get here
-/*        if (DB::isError($query_result)) {
-            // This shouldn't happen, I thought.
-            $backend->_pear_error_callback($query_result);
+        // ADODB equivalent of this?  May not matter, since we should never get here
+        /* 
+        if (DB::isError($query_result)) {
+             // This shouldn't happen, I thought.
+             $backend->_pear_error_callback($query_result);
         }
-*/        
+        */
         $this->_backend = &$backend;
         $this->_result = $query_result;
     }
@@ -1029,7 +907,7 @@ extends WikiDB_backend_iterator
 
         // Find protocol and hostspec
         // $dsn => protocol+hostspec/database
-        if (($pos=strpos($dsn, '/')) !== false) {
+        if (($pos = strpos($dsn, '/')) !== false) {
             $str = substr($dsn, 0, $pos);
             $dsn = substr($dsn, $pos + 1);
         } else {
@@ -1039,7 +917,7 @@ extends WikiDB_backend_iterator
 
         // Get protocol + hostspec
         // $str => protocol+hostspec
-        if (($pos=strpos($str, '+')) !== false) {
+        if (($pos = strpos($str, '+')) !== false) {
             $parsed['protocol'] = substr($str, 0, $pos);
             $parsed['hostspec'] = urldecode(substr($str, $pos + 1));
         } else {

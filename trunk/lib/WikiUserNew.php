@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.33 2004-03-16 15:42:04 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.34 2004-03-18 21:41:09 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -55,6 +55,12 @@ rcs_id('$Id: WikiUserNew.php,v 1.33 2004-03-16 15:42:04 rurban Exp $');
  *    objects are tried, but not used.
  * 4) Already gotten prefs are passed to the next object to avoid 
  *    duplicate getPreferences() calls.
+ * 2004-03-18 17:32:21 rurban
+ * 5) Major php-5 problem: $this re-assignment is disallowed by the parser
+ *    So we cannot just discrimate with 
+ *      if (!check_php_version(5))
+ *          $this = $user;
+ *
  */
 
 define('WIKIAUTH_FORBIDDEN', -1); // Completely not allowed.
@@ -266,7 +272,10 @@ function UserExists ($UserName) {
         $user = new _PassUser($UserName,$user->_prefs);
     while ($user = $user->nextClass()) {
         return $user->userExists($UserName);
-        $this = $user; // does this work on all PHP version?
+        // Does this work on all PHP version? In PHP5 not!
+        //FIXME: do UpgradeUser here for PHP5 compatibility
+        //if (!check_php_version(5))
+        //$this = $user;
     }
     $request->_user = $GLOBALS['ForbiddenUser'];
     return false;
@@ -735,24 +744,48 @@ extends _AnonUser
                 elseif (USER_AUTH_POLICY === 'old') {
                     // default: try to be smart
                     if (!empty($GLOBALS['PHP_AUTH_USER'])) {
-                    	$this = new _HttpAuthPassUser($UserName,$this->_prefs);
-                    	return $this;
+                        if (check_php_version(5))
+                            return new _HttpAuthPassUser($UserName,$this->_prefs);
+                        else {
+                            $user = new _HttpAuthPassUser($UserName,$this->_prefs);
+                            return UpgradeUser($user,$this);
+                        }
                     } elseif (!empty($DBAuthParams['auth_check']) and 
                               (!empty($DBAuthParams['auth_dsn']) or !empty($GLOBALS ['DBParams']['dsn']))) {
-                        $this = new _DbPassUser($UserName,$this->_prefs);
-                    	return $this;
+                        if (check_php_version(5))
+                            return new _DbPassUser($UserName,$this->_prefs);
+                        else {
+                            $user = new _DbPassUser($UserName,$this->_prefs);
+                            return UpgradeUser($user,$this);
+                        }
                     } elseif (defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and function_exists('ldap_open')) {
-			$this = new _LDAPPassUser($UserName,$this->_prefs);
-                    	return $this;
+                        if (check_php_version(5))
+                            return new _LDAPPassUser($UserName,$this->_prefs);
+                        else {
+                            $user = new _LDAPPassUser($UserName,$this->_prefs);
+                            return UpgradeUser($user,$this);
+                        }
                     } elseif (defined('IMAP_AUTH_HOST') and function_exists('imap_open')) {
-                        $this = new _IMAPPassUser($UserName,$this->_prefs);
-                    	return $this;
+                        if (check_php_version(5))
+                            return new _IMAPPassUser($UserName,$this->_prefs);
+                        else {
+                            $user = new _IMAPPassUser($UserName,$this->_prefs);
+                            return UpgradeUser($user,$this);
+                        }
                     } elseif (defined('AUTH_USER_FILE')) {
-                        $this = new _FilePassUser($UserName,$this->_prefs);
-                    	return $this;
+                        if (check_php_version(5))
+                            return new _FilePassUser($UserName,$this->_prefs);
+                        else {
+                            $user = new _FilePassUser($UserName,$this->_prefs);
+                            return UpgradeUser($user,$this);
+                        }
                     } else {
-                        $this = new _PersonalPagePassUser($UserName,$this->_prefs);
-                    	return $this;
+                        if (check_php_version(5))
+                            return new _PersonalPagePassUser($UserName,$this->_prefs);
+                        else {
+                            $user = new _PersonalPagePassUser($UserName,$this->_prefs);
+                            return UpgradeUser($user,$this);
+                        }
                     }
                 }
                 else 
@@ -878,12 +911,13 @@ extends _AnonUser
     function userExists() {
         //if ($this->_HomePagehandle) return true;
         while ($user = $this->nextClass()) {
+              UpgradeUser($this,$user);
               if ($user->userExists()) {
-                  $this = $user;
                   return true;
               }
-              $this = $user; // prevent endless loop. does this work on all PHP's?
+              // prevent endless loop. does this work on all PHP's?
               // it just has to set the classname, what it correctly does.
+              // $this = $user;
         }
         return false;
     }
@@ -994,16 +1028,11 @@ extends _AnonUser
     function _tryNextUser() {
         if (USER_AUTH_POLICY === 'strict') {
             while ($user = $this->nextClass()) {
+                $user = UpgradeUser($this, $user);
                 if ($user->userExists()) {
-                    $this = $user;
                     return true;
                 }
-                $this = $user;
             }
-            /*
-            if ($user = $this->nextClass())
-                return $user->userExists();
-            */
         }
         return false;
     }
@@ -1034,7 +1063,9 @@ extends _PassUser
         if ($this->_prefs->get('passwd')) {
             $user = new _PersonalPagePassUser($this->_userid);
             if ($user->checkPass($submitted_password)) {
-                $this = $user;
+                $user = UpgradeUser($this, $user);
+                //if (!check_php_version(5))
+                //    $this = $user;
                 $this->_level = WIKIAUTH_USER;
                 return $this->_level;
             } else {
@@ -1206,12 +1237,20 @@ extends _PassUser
         //$this->getAuthDbh();
         //$this->_auth_crypt_method = @$GLOBALS['DBAuthParams']['auth_crypt_method'];
         if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
-            $this = new _AdoDbPassUser($UserName,$this->_prefs);
-            return $this;
+            if (check_php_version(5))
+                return new _AdoDbPassUser($UserName,$this->_prefs);
+            else {
+                $user = new _AdoDbPassUser($UserName,$this->_prefs);
+                return UpgradeUser($user, $this);
+            }
         }
         elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
-            $this = new _PearDbPassUser($UserName,$this->_prefs);
-            return $this;
+            if (check_php_version(5))
+                return new _PearDbPassUser($UserName,$this->_prefs);
+            else {
+                $user = new _PearDbPassUser($UserName,$this->_prefs);
+                return UpgradeUser($user, $this);
+            }
         }
         return false;
     }
@@ -2303,6 +2342,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2004/03/16 15:42:04  rurban
+// more fixes for undefined property warnings
+//
 // Revision 1.32  2004/03/14 16:30:52  rurban
 // db-handle session revivification, dba fixes
 //

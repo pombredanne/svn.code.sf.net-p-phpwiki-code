@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.41 2004-03-17 19:35:59 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.42 2004-03-18 21:41:10 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -104,7 +104,8 @@ extends WikiDB_backend
 
         //trigger_error("GET_PAGEDATA $pagename", E_USER_NOTICE);
 
-        $result = $dbh->getRow(sprintf("SELECT * FROM $page_tbl WHERE pagename='%s'",
+        $result = $dbh->getRow(sprintf("SELECT %s FROM $page_tbl WHERE pagename='%s'",
+        							   $this->page_tbl_fields,
                                        $dbh->quoteString($pagename)),
                                DB_FETCHMODE_ASSOC);
         if (!$result)
@@ -233,11 +234,11 @@ extends WikiDB_backend
         // FIXME: optimization: sometimes don't get page data?
 
         if ($want_content) {
-            $fields = "*";
+            $fields = $this->page_tbl_fields . "," . $this->version_tbl_fields;
         }
         else {
             $fields = $this->page_tbl_fields . ","
-                       . "mtime,minor_edit,versiondata,"
+                       . "mtime, minor_edit, versiondata,"
                        . "content<>'' AS have_content";
         }
 
@@ -434,7 +435,9 @@ extends WikiDB_backend
         else         $orderby = '';
         if (strstr($orderby,' mtime')) {
             if ($include_deleted) {
-                $result = $dbh->query("SELECT * FROM $page_tbl, $recent_tbl, $version_tbl"
+                $result = $dbh->query("SELECT "
+                					  . $this->page_tbl_fields
+                					  . " FROM $page_tbl, $recent_tbl, $version_tbl"
                                       . " WHERE $page_tbl.id=$recent_tbl.id"
                                       . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
                                       . " $orderby $limit");
