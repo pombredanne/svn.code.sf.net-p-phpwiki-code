@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2002-01-29 09:08+0100\n"
+"POT-Creation-Date: 2002-01-29 12:22-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@mac.com>, Arno Hollosi <ahollosi@mail.com>\n"
@@ -14,11 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/config.php:297
+#: ../lib/config.php:283
 msgid "An unnamed PhpWiki"
 msgstr "Ein noch unbenanntes PhpWiki"
 
-#: ../lib/config.php:300
+#: ../lib/config.php:286
 msgid "HomePage"
 msgstr "StartSeite"
 
@@ -632,7 +632,9 @@ msgstr "Siehe %s"
 msgid ""
 "PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png."
 "php' for details."
-msgstr "PHP konnten keinen neues GD Bild erzeugen. Lese 'lib/plugin/text2png.php' für Details."
+msgstr ""
+"PHP konnten keinen neues GD Bild erzeugen. Lese 'lib/plugin/text2png.php' "
+"für Details."
 
 #: ../lib/plugin/text2png.php:141
 #, c-format
@@ -721,12 +723,15 @@ msgid "Someone has edited the page!"
 msgstr "Jemand hat die Seite verändert!"
 
 #: ../lib/removepage.php:45
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Since you started the deletion process, someone has saved a new version of %"
 "s.  Please check to make sure you still want to permanently remove the page "
 "from the database."
-msgstr "Während du den Löschungsprozess begonnen hast, hat jemand anderer eine neue Version von %s gespeichert. Bitte entscheide, ob du die Seite noch von der Datenbank permanent löschen willst."
+msgstr ""
+"Während du den Löschungsprozess begonnen hast, hat jemand anderer eine neue "
+"Version von %s gespeichert. Bitte entscheide, ob du die Seite noch von der "
+"Datenbank permanent löschen willst."
 
 #: ../lib/removepage.php:51
 #, c-format
@@ -739,25 +744,33 @@ msgstr "Seite löschen"
 
 #: ../lib/savepage.php:27 ../lib/savepage.php:55
 msgid "Use your browser's <b>Back</b> button to go back to the edit page."
-msgstr "Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseite zu gelangen."
+msgstr ""
+"Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseite zu "
+"gelangen."
 
 #: ../lib/savepage.php:28
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
-msgstr "Kopiere deine Veränderungen in die Zwischenablage oder an einen anderen temporären Platz (z.B. einen Texteditor)"
+msgstr ""
+"Kopiere deine Veränderungen in die Zwischenablage oder an einen anderen "
+"temporären Platz (z.B. einen Texteditor)"
 
 #: ../lib/savepage.php:29
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
-msgstr "<b>Aktualisiere</b> die Seite. Du solltest jetzt die neueste Version der Seite sehen. Deine Veränderungen sind verschwunden."
+msgstr ""
+"<b>Aktualisiere</b> die Seite. Du solltest jetzt die neueste Version der "
+"Seite sehen. Deine Veränderungen sind verschwunden."
 
 #: ../lib/savepage.php:30
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
-msgstr "Editiere die Seite erneut. Kopiere deine Veränderungen aus der Zwischenablage (oder aus dem Texteditor)"
+msgstr ""
+"Editiere die Seite erneut. Kopiere deine Veränderungen aus der "
+"Zwischenablage (oder aus dem Texteditor)"
 
 #: ../lib/savepage.php:31
 msgid "Press <b>Save</b> again."
@@ -768,7 +781,11 @@ msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
 "changes from the previous author would be lost."
-msgstr "PhpWiki kann deine Veränderungen nicht speichern, da ein anderer Benützer die Seite verändert und gespeichert hat, während du diese Seite editiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würden die Veränderungen des anderen Benützers verlorengehen."
+msgstr ""
+"PhpWiki kann deine Veränderungen nicht speichern, da ein anderer Benützer "
+"die Seite verändert und gespeichert hat, während du diese Seite editiert "
+"hast. Wenn die Seite jetzt gespeichert werden würde, dann würden die "
+"Veränderungen des anderen Benützers verlorengehen."
 
 #: ../lib/savepage.php:36
 msgid "In order to recover from this situation follow these steps:"
@@ -788,13 +805,17 @@ msgstr "Problem während dem Editieren von %s"
 msgid ""
 "This page has been locked by the administrator so your changes could not be "
 "saved."
-msgstr "Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen können nicht gespeichert werden."
+msgstr ""
+"Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen "
+"können nicht gespeichert werden."
 
 #: ../lib/savepage.php:57
 msgid ""
 "Copy your changes to the clipboard. You can try editing a different page or "
 "save your text in a text editor."
-msgstr "Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine andere Seite zu editieren oder dein Text in einem Texteditor speichern."
+msgstr ""
+"Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine "
+"andere Seite zu editieren oder dein Text in einem Texteditor speichern."
 
 #: ../lib/savepage.php:62
 #, c-format
@@ -906,22 +927,22 @@ msgstr "Seite Löschen"
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 
-#: ../lib/WikiDB.php:516
+#: ../lib/WikiDB.php:501
 #, c-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: Datum der aktuellsten Version ist %s"
 
-#: ../lib/WikiDB.php:543
+#: ../lib/WikiDB.php:528
 #, c-format
 msgid "Optimizing %s"
 msgstr "%s wird optimiert"
 
-#: ../lib/WikiDB.php:889
+#: ../lib/WikiDB.php:874
 #, c-format
 msgid "Describe %s here."
 msgstr "Beschreibe %s hier."
 
-#: ../lib/WikiDB.php:924
+#: ../lib/WikiDB.php:909
 #, c-format
 msgid "Acck! Revision %s of %s seems to have been deleted!"
 msgstr "Aua! Version %s von %s ist gelöscht!"
@@ -936,7 +957,10 @@ msgstr "%s: Konnte DBA Datenbank nicht öffnen."
 msgid ""
 "DBA files are in the %s directory. Please read the INSTALL file and move the "
 "DB file to a permanent location or risk losing all the pages!"
-msgstr "DBA Dateien befinden sich im Verzeichnis %s. Bitte erst lies die INSTALL Datei und verschiebe die DB Datei in das richtige Verzeichnis, oder sonst läufst du Gefahr dein ganzes Wiki zu verlieren!"
+msgstr ""
+"DBA Dateien befinden sich im Verzeichnis %s. Bitte erst lies die INSTALL "
+"Datei und verschiebe die DB Datei in das richtige Verzeichnis, oder sonst "
+"läufst du Gefahr dein ganzes Wiki zu verlieren!"
 
 #: ../lib/WikiPlugin.php:64
 #, c-format
@@ -1063,7 +1087,9 @@ msgstr "Warnung: Du editierst eine alte Version."
 #: ../themes/Portland/templates/editpage.tmpl:69
 #: ../themes/default/templates/editpage.tmpl:50
 msgid "Saving this page will overwrite the current version."
-msgstr "Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste Version überschrieben."
+msgstr ""
+"Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste "
+"Version überschrieben."
 
 #: ../themes/Portland/templates/editpage.tmpl:98
 #: ../themes/default/templates/editpage.tmpl:71
@@ -1091,7 +1117,6 @@ msgstr "Geringfügige Änderung"
 
 #: ../themes/Portland/templates/editpage.tmpl:104
 #: ../themes/default/templates/editpage.tmpl:92
-#, fuzzy
 msgid "Use new markup"
 msgstr "verwende neues Wiki Quelltextformat"
 
@@ -1118,8 +1143,14 @@ msgid "Synopsis"
 msgstr "Übersicht"
 
 #: ../themes/default/templates/login.tmpl:12
-msgid "You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."
-msgstr "Du darfst dich mit jedem WikiWort als Benutzernamen eintragen. (Auch deutsche Umlaute erlaubt). Der Benutzername wird als Link in FrischeSeiten zu deinem Benutzernamen verwendet, deine Homepage. Das Passwort ist optional."
+msgid ""
+"You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used "
+"too). The UserId will be used as a link in RecentChanges to your UserId "
+"page, your HomePage. You do not need to enter a password."
+msgstr ""
+"Du darfst dich mit jedem WikiWort als Benutzernamen eintragen. (Auch "
+"deutsche Umlaute erlaubt). Der Benutzername wird als Link in FrischeSeiten "
+"zu deinem Benutzernamen verwendet, deine Homepage. Das Passwort ist optional."
 
 #: ../themes/default/templates/login.tmpl:20
 msgid "UserId"
@@ -1145,7 +1176,9 @@ msgstr "Editieren abgebrochen."
 
 #: ../themes/default/templates/nochanges.tmpl:5
 msgid "You have not made any changes so no new version has been saved."
-msgstr "Du hast keine Änderungen gemacht, also ist keine neue Version gespeichert worden."
+msgstr ""
+"Du hast keine Änderungen gemacht, also ist keine neue Version gespeichert "
+"worden."
 
 #: ../themes/default/templates/savepage.tmpl:8
 #, c-format
@@ -1230,7 +1263,9 @@ msgstr "(Version %s. zuletzt am %s gespeichert)"
 #, c-format
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."
-msgstr "Ich mache nur geringfügige Änderungen. Bitte die übliche protokollieren zu %s umleiten."
+msgstr ""
+"Ich mache nur geringfügige Änderungen. Bitte die übliche protokollieren zu %"
+"s umleiten."
 
 #: ../themes/WikiTrek/lib/RecentChanges.php:54
 msgid "diff"
@@ -1408,7 +1443,9 @@ msgstr "Diff"
 #~ msgid ""
 #~ "Please enter your name as WordsStrungTogether (e.g. John Smith as "
 #~ "JohnSmith)."
-#~ msgstr "Gib bitte deinen Namen als ZusammenGesetztesHauptWort ein. (z.B. Hans Müller als HansMüller)."
+#~ msgstr ""
+#~ "Gib bitte deinen Namen als ZusammenGesetztesHauptWort ein. (z.B. Hans "
+#~ "Müller als HansMüller)."
 
 #~ msgid "Sign in:"
 #~ msgstr "Melde dich an:"
@@ -1472,16 +1509,21 @@ msgstr "Diff"
 
 #~ msgid ""
 #~ "You must set the administrator account and password before you can log in."
-#~ msgstr "Du mußt zuerst den Systemverwalter-Account mit einem Passwort schützen,bevor du dich anmelden kannst."
+#~ msgstr ""
+#~ "Du mußt zuerst den Systemverwalter-Account mit einem Passwort schützen,"
+#~ "bevor du dich anmelden kannst."
 
 #~ msgid "You entered an invalid login or password."
 #~ msgstr "Du hast ein ungültiges Login oder Passwort eingegeben."
 
 #~ msgid "You can log in using any valid WikiWord as a user ID."
-#~ msgstr "Du kannst dich mit irgendeinem gültigen WikiWort als Benutzername anmelden."
+#~ msgstr ""
+#~ "Du kannst dich mit irgendeinem gültigen WikiWort als Benutzername "
+#~ "anmelden."
 
 #~ msgid "(Any password will work, except, of course for the admin user.)"
-#~ msgstr "(Jedes Wort wird als Passwort akzeptiert, außer für den Systemverwalter.)"
+#~ msgstr ""
+#~ "(Jedes Wort wird als Passwort akzeptiert, außer für den Systemverwalter.)"
 
 #~ msgid "You are signed in as %s."
 #~ msgstr "Angemeldet als %s."

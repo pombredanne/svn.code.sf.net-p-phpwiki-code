@@ -18,6 +18,8 @@ $locale["%s: Bad action"] =
    "%s: Ungültige Aktion";
 $locale["%s: Can't open dba database"] =
    "%s: Konnte DBA Datenbank nicht öffnen.";
+$locale["%s: Date of new revision is %s"] =
+   "%s: Datum der aktuellsten Version ist %s";
 $locale["%s: argument index out of range"] =
    "%s: Ungültiger Index in Array";
 $locale["%s: error while handling error:"] =
@@ -133,7 +135,7 @@ $locale["EditText"] =
 $locale["Empty pagename!"] =
    "Leerer Seitenname!";
 $locale["Enter your UserId to sign in"] =
-   "Trage deinen Benutzernamen ein um zu anmelden";
+   "Trage deinen Benutzernamen ein, um dich anzumelden";
 $locale["Fatal PhpWiki Error"] =
    "FatalerWikiFehler";
 $locale["FindPage"] =
@@ -199,7 +201,7 @@ $locale["LikePages"] =
 $locale["List LikePages for %s"] =
    "GleicheSeite wie %s";
 $locale["List PageHistory for %s"] =
-   "Das Änderungsprotokoll für %s auslisten";
+   "Das Änderungsprotokoll für %s auflisten";
 $locale["List the most popular pages"] =
    "Die MeistBesuchten Seiten auflisten";
 $locale["Lists nested too deep in SetHTMLOutputMode"] =
@@ -255,15 +257,17 @@ $locale["Page Locked"] =
 $locale["Page Name"] =
    "Seitenname";
 $locale["Page names with prefix '%s'"] =
-   "Seitenamen mit Vorsatzwort »%s«";
+   "Seitenamen mit Prefix »%s«";
 $locale["Page names with suffix '%s'"] =
-   "Seitennamen mit Nachsatzwort »%s«";
+   "Seitennamen mit Suffix »%s«";
 $locale["PageHistory"] =
    "SeitenProtokoll";
 $locale["PageHistory for %s"] =
    "Änderungsprotokoll für Seite %s";
 $locale["Pages in this wiki (%d total):"] =
    "Seiten in dieser wiki (%d gesamt):";
+$locale["Password"] =
+   "Passwort";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kann deine Veränderungen nicht speichern, da ein anderer Benützer die Seite verändert und gespeichert hat, während du diese Seite editiert hast. Wenn die Seite jetzt gespeichert werden würde, dann würden die Veränderungen des anderen Benützers verlorengehen.";
 $locale["PhpWikiAdministration"] =
@@ -292,6 +296,8 @@ $locale["Problem while updating %s"] =
    "Problem während dem Editieren von %s";
 $locale["Querying backend directly for '%s'"] =
    "Direkte Datenbankabfrage nach »%s«";
+$locale["RandomPage"] =
+   "ZufallsSeite";
 $locale["RecentChanges"] =
    "FrischeSeiten";
 $locale["RecentEdits"] =
@@ -306,6 +312,8 @@ $locale["Remove the page now"] =
    "Lösche die Seite jetzt";
 $locale["Removed page '%s' succesfully."] =
    "Seite »%s« erfolgreich gelöscht.";
+$locale["Request Cancelled!"] =
+   "Anforderung abgebrochen!";
 $locale["Required form variables are missing."] =
    "Benötigen Form-Variablen sind Fehlend.";
 $locale["Return to %s"] =
@@ -340,6 +348,8 @@ $locale["Sign Out"] =
    "Abmelden";
 $locale["Simple Sample Plugin"] =
    "Einfaches Zusatzprogramm Beispiel";
+$locale["Since you started the deletion process, someone has saved a new version of %s.  Please check to make sure you still want to permanently remove the page from the database."] =
+   "Während du den Löschungsprozess begonnen hast, hat jemand anderer eine neue Version von %s gespeichert. Bitte entscheide, ob du die Seite noch von der Datenbank permanent löschen willst.";
 $locale["Skipping"] =
    "Wird ausgelassen";
 $locale["Someone has edited the page!"] =
@@ -390,8 +400,12 @@ $locale["Update Preferences"] =
    "Bestimme Einstellungen";
 $locale["Uploading %s"] =
    "%s wird hochgeladen";
+$locale["Use new markup"] =
+   "verwende neues Wiki Quelltextformat";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseite zu gelangen.";
+$locale["UserId"] =
+   "Benutzername";
 $locale["UserPreferences"] =
    "Einstellungen";
 $locale["Using directory '%s'"] =
@@ -427,7 +441,9 @@ $locale["You are signed in as %s"] =
 $locale["You are viewing an old revision of this page."] =
    "Du siehst eine alte Version dieser Seite.";
 $locale["You have not made any changes so no new version has been saved."] =
-   "Du hast keine Änderungen gemacht also ist keine neue Version gespeichert worden.";
+   "Du hast keine Änderungen gemacht, also ist keine neue Version gespeichert worden.";
+$locale["You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."] =
+   "Du darfst dich mit jedem WikiWort als Benutzernamen eintragen. (Auch deutsche Umlaute erlaubt). Der Benutzername wird als Link in FrischeSeiten zu deinem Benutzernamen verwendet, deine Homepage. Das Passwort ist optional.";
 $locale["You must be an administrator to %s this wiki"] =
    "Du mußt ein Systemverwalter sein in dieser wiki zu %s";
 $locale["You must log in to %s this wiki"] =
