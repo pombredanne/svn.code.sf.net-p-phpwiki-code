@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.28 2003-12-01 18:45:47 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.29 2003-12-05 01:31:51 carstenklapp Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -29,17 +29,17 @@ $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-//$Theme->addImageAlias('logo', 'logo.png');
+$Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
- * is not set, any signature defined in index.php will be used. If it
- * is not defined by index.php or in here then the "Thank you for
- * editing..." screen will be omitted.
+ * is set to false then the "Thank you for editing..." screen will
+ * be omitted.
  */
 
-// Comment this next line out to enable signature.
-$Theme->addImageAlias('signature', false);
+$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
+// Uncomment this next line to disable the signature.
+//$Theme->addImageAlias('signature', false);
 
 /*
  * Link icons.
@@ -49,6 +49,7 @@ $Theme->setLinkIcon('https');
 $Theme->setLinkIcon('ftp');
 $Theme->setLinkIcon('mailto');
 $Theme->setLinkIcon('interwiki');
+$Theme->setLinkIcon('wikiuser');
 $Theme->setLinkIcon('*', 'url');
 
 $Theme->setButtonSeparator("\n | ");

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.68 2003-03-04 01:53:30 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.69 2003-12-05 01:32:28 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -530,7 +530,9 @@ class Theme {
      * (To disable an image, alias the image to <code>false</code>.
      */
     function addImageAlias ($alias, $image_name) {
-        $this->_imageAliases[$alias] = $image_name;
+        // fall back to the PhpWiki-supplied image if not found
+        if ($this->_findFile("images/$image_name", true))
+            $this->_imageAliases[$alias] = $image_name;
     }
 
     function addImageAlt ($alias, $alt_text) {
@@ -1024,6 +1026,9 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2003/03/04 01:53:30  dairiki
+// Inconsequential decrufting.
+//
 // Revision 1.67  2003/02/26 03:40:22  dairiki
 // New action=create.  Essentially the same as action=edit, except that if the
 // page already exists, it falls back to action=browse.
