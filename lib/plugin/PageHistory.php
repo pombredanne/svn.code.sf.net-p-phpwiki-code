@@ -1,11 +1,11 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.18 2002-02-14 21:42:24 carstenklapp Exp $');
+rcs_id('$Id: PageHistory.php,v 1.19 2002-02-16 02:31:49 carstenklapp Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
 
 class _PageHistory_PageRevisionIter
-    extends WikiDB_PageRevisionIterator
+extends WikiDB_PageRevisionIterator
 {
     function _PageHistory_PageRevisionIter($rev_iter, $params) {
 
@@ -118,20 +118,20 @@ extends _RecentChanges_HtmlFormatter
                                $html),
                     "\n",
                     $this->_javascript('
-        var diffCkBoxes = document.forms["diff-select"].elements["versions[]"];
+                                       var diffCkBoxes = document.forms["diff-select"].elements["versions[]"];
 
-        function diffCkBox_onclick() {
-          // If two checkboxes are checked, submit form
-          var nchecked = 0;
-          for (i = 0; i < diffCkBoxes.length; i++)
-            if (diffCkBoxes[i].checked && ++nchecked >= 2)
-              this.form.submit();
-        }
+                                       function diffCkBox_onclick() {
+                                           // If two checkboxes are checked, submit form
+                                           var nchecked = 0;
+                                           for (i = 0; i < diffCkBoxes.length; i++)
+                                               if (diffCkBoxes[i].checked && ++nchecked >= 2)
+                                                   this.form.submit();
+                                       }
 
-        for (i = 0; i < diffCkBoxes.length; i++)
-          diffCkBoxes[i].onclick = diffCkBox_onclick;'));
+                                       for (i = 0; i < diffCkBoxes.length; i++)
+                                       diffCkBoxes[i].onclick = diffCkBox_onclick;'));
     }
-    
+
     function diffLink ($rev) {
         return HTML::input(array('type'  => 'checkbox',
                                  'name'  => 'versions[]',
@@ -149,13 +149,15 @@ extends _RecentChanges_HtmlFormatter
 
         $time = $this->time($rev);
         if ($rev->get('is_minor_edit')) {
-            $minor_flag = HTML::small(HTML::em(" (" . _("minor edit") . ")"));
+            $minor_flag = HTML(" ",
+                               HTML::span(array('class' => 'pageinfo-minoredit'),
+                                          "(" . _("minor edit") . ")"));
         }
         else {
-            $time = HTML::strong($time);
+            $time = HTML::strong(array('class' => 'pageinfo-majoredit'), $time);
             $minor_flag = '';
         }
-        
+
         return HTML::li(array('class' => $class),
                         $this->diffLink($rev), ' ',
                         $this->pageLink($rev), ' ',
@@ -202,7 +204,7 @@ extends _RecentChanges_RssFormatter
     function item_properties ($rev) {
         if (!($title = $this->summary($rev)))
             $title = sprintf(_("Version %d"), $rev->getVersion());
- 
+
         return array( 'title'		=> $title,
                       'link'		=> $this->pageURL($rev),
                       'dc:date'		=> $this->time($rev),
@@ -225,7 +227,7 @@ extends WikiPlugin_RecentChanges
     function getDescription () {
         return sprintf(_("List PageHistory for %s"),'[pagename]');
     }
-    
+
     function getDefaultArguments() {
         return array('days'		=> false,
                      'show_minor'	=> true,
@@ -287,5 +289,5 @@ extends WikiPlugin_RecentChanges
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
