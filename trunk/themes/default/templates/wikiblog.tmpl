@@ -1,5 +1,5 @@
 <?php // -*- php -*-
-rcs_id('$Id: wikiblog.tmpl,v 1.4 2005-02-02 18:56:46 rurban Exp $');
+rcs_id('$Id: wikiblog.tmpl,v 1.5 2005-02-04 11:48:01 rurban Exp $');
 $CDATE = $WikiTheme->formatDateTime($BLOG_CTIME);
 
 $buttons = $modified = '';
@@ -7,8 +7,9 @@ $buttons = $modified = '';
 if ($user->isAdmin() or $user->getId() == $BLOG_CREATOR) {
     $buttons = HTML::small(array('class' => 'floatleft'),
                            Button('edit', false, $page));
-    if ($user->isAdmin())
+    if ($user->isAdmin()) {
       $buttons->pushContent(Button('remove', false, $page));
+    }
 }
 
 // This is a hack, but since we only have a fake PageRevision,
