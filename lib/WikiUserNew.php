@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.9 2004-01-30 19:57:58 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.10 2004-02-01 09:14:11 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -622,7 +622,7 @@ extends _AnonUser
                         return new _HttpAuthUserClass($UserName);
                     } elseif (!empty($DBAuthParams['auth_check']) and ($DBAuthParams['auth_dsn'] or $GLOBALS ['DBParams']['dsn'])) {
                         return new _DbUserClass($UserName);
-                    } elseif (defined('LDAP_AUTH_HOST') and defined('LDAP_AUTH_SEARCH') and function_exists('ldap_open')) {
+                    } elseif (defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and function_exists('ldap_open')) {
                         return new _LDAPUserClass($UserName);
                     } elseif (defined('IMAP_AUTH_HOST') and function_exists('imap_open')) {
                         return new _IMAPUserClass($UserName);
@@ -1168,7 +1168,7 @@ extends _DbPassUser
 class _LDAPPassUser
 extends _PassUser
 /**
- * Define the vars LDAP_HOST and LDAP_AUTH_SEARCH in index.php
+ * Define the vars LDAP_HOST and LDAP_BASE_DN in index.php
  *
  * Preferences are handled in _PassUser
  */
@@ -1180,7 +1180,7 @@ extends _PassUser
             $r = @ldap_bind($ldap); // this is an anonymous bind
             $st_search = "uid=$userid";
             // Need to set the right root search information. see ../index.php
-            $sr = ldap_search($ldap, LDAP_AUTH_SEARCH,
+            $sr = ldap_search($ldap, LDAP_BASE_DN,
                               "$st_search");
             $info = ldap_get_entries($ldap, $sr); // there may be more hits with this userid. try every
             for ($i = 0; $i < $info["count"]; $i++) {
@@ -1216,7 +1216,7 @@ extends _PassUser
             $r = @ldap_bind($ldap); // this is an anonymous bind
             $st_search = "uid=$userid";
             // Need to set the right root search information. see ../index.php
-            $sr = ldap_search($ldap, LDAP_AUTH_SEARCH,
+            $sr = ldap_search($ldap, LDAP_BASE_DN,
                               "$st_search");
             $info = ldap_get_entries($ldap, $sr); // there may be more hits with this userid. try every
             if ($info["count"]) {
@@ -1708,6 +1708,9 @@ class UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/01/30 19:57:58  rurban
+// fixed DBAuthParams['pref_select']: wrong _auth_dbi object used.
+//
 // Revision 1.8  2004/01/30 18:46:15  rurban
 // fix "lib/WikiUserNew.php:572: Notice[8]: Undefined variable: DBParams"
 //

@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.18 2003-03-18 21:40:05 dairiki Exp $ -->
+<!-- $Id: configurator.php,v 1.19 2004-02-01 09:14:10 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -243,10 +243,9 @@ Part Null: Don't touch this!");
 
 $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
-define ('PHPWIKI_VERSION', '1.3.5pre');
+define ('PHPWIKI_VERSION', '1.3.8pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.18 2003-03-18 21:40:05 dairiki Exp $');", "");
-
+rcs_id('\$Id: configurator.php,v 1.19 2004-02-01 09:14:10 rurban Exp $');", "");
 
 $properties["Part One"] =
 new part('_partone', $SEPARATOR."\n", "
@@ -726,8 +725,7 @@ new boolean_define_optional('ALLOW_BOGO_LOGIN',
 If ALLOW_BOGO_LOGIN is true, users are allowed to login (with
 any/no password) using any userid which: 1) is not the ADMIN_USER,
 2) is a valid WikiWord (matches \$WikiNameRegexp.)
-If true, users may be created by themselves. Otherwise we need seperate auth. 
-This might be renamed to ALLOW_SELF_REGISTRATION");
+If true, users may be created by themselves. Otherwise we need seperate auth.");
 
 $properties["Require Sign In Before Editing"] =
 new boolean_define_optional('REQUIRE_SIGNIN_BEFORE_EDIT',
@@ -748,7 +746,7 @@ LDAP Authentication
 $properties["LDAP Host"] =
   new _define_optional('LDAP_AUTH_HOST', "localhost", "");
 $properties["LDAP Root Search"] =
-  new _define_optional('LDAP_AUTH_SEARCH', "ou=mycompany.com,o=My Company", "
+  new _define_optional('LDAP_BASE_DN', "ou=mycompany.com,o=My Company", "
 Give the right LDAP root search information in the next statement.");
 
 } else {
@@ -758,7 +756,7 @@ new unchangeable_define('ALLOW_LDAP_LOGIN', "
 if (!defined('ALLOW_LDAP_LOGIN')) define('ALLOW_LDAP_LOGIN', true and function_exists('ldap_connect'));
 if (!defined('LDAP_AUTH_HOST'))   define('LDAP_AUTH_HOST', 'localhost');
 // Give the right LDAP root search information in the next statement. 
-if (!defined('LDAP_AUTH_SEARCH')) define('LDAP_AUTH_SEARCH', 'ou=mycompany.com,o=My Company');
+if (!defined('LDAP_BASE_DN')) define('LDAP_BASE_DN', 'ou=mycompany.com,o=My Company');
 ", "
 Ignored. No LDAP support in this php. configure --with-ldap");
 }
