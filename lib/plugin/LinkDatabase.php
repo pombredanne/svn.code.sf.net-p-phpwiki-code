@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LinkDatabase.php,v 1.4 2004-12-06 19:50:05 rurban Exp $');
+rcs_id('$Id: LinkDatabase.php,v 1.5 2004-12-17 16:39:03 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
     function getExpire($dbi, $argarray, $request) {
         return '+900'; // 15 minutes
@@ -135,13 +135,13 @@ extends WikiPluginCached
             if (!headers_sent())
                 header("Content-Type: text/xml");
             $request->checkValidators();
-            echo "<?xml version=\"1.0\" encoding=\"$charset\"?>\n";
+            echo "<?xml version=\"1.0\" encoding=\"$charset\"?>";
             // As applet it prefers only "GraphXML.dtd", but then we must copy it to the webroot.
-            $dtd = SERVER_URL . $WikiTheme->_findData("GraphXML.dtd");
+            $dtd = $WikiTheme->_findData("GraphXML.dtd");
 	    echo "<!DOCTYPE GraphXML SYSTEM \"$dtd\">\n";
 	    echo "<GraphXML xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n";
-	    echo "<graph id=\"",WIKI_NAME,"\">\n";
-            echo '<style><line tag="node" class="main" colour="#ffffff"/><line tag="node" class="child" colour="blue"/><line tag="node" class="relation" colour="green"/></style>',"\n";
+	    echo "<graph id=\"",MangleXmlIdentifier(WIKI_NAME),"\">\n";
+            echo '<style><line tag="node" class="main" colour="#ffffff"/><line tag="node" class="child" colour="blue"/><line tag="node" class="relation" colour="green"/></style>',"\n\n";
             while ($page = $pages->next()) {
             	$pageid = MangleXmlIdentifier($page->getName());
             	$pagename = $page->getName();
@@ -157,7 +157,7 @@ extends WikiPluginCached
                 echo "\n";
             }
 	    echo "</graph>\n";
-	    echo "</GraphXML>\n\n";
+	    echo "</GraphXML>\n";
             unset($GLOBALS['ErrorManager']->_postponed_errors);
             $request->finish();
         } else {
@@ -178,6 +178,14 @@ class _PageList_Column_LinkDatabase_links extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/12/06 19:50:05  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.3  2004/11/30 23:44:00  rurban
 // some comments
 //

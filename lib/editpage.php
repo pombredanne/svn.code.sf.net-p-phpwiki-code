@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.87 2004-12-16 18:28:05 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.88 2004-12-17 16:39:03 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -53,8 +53,8 @@ class PageEditor
             $this->_initialEdit = true;
 
             // The edit request has specified some initial content from a template 
-            if (  ($template = $request->getArg('template')) and 
-                  $request->_dbi->isWikiPage($template)) {
+            if (  ($template = $request->getArg('template'))
+                   and $request->_dbi->isWikiPage($template)) {
                 $page = $request->_dbi->getPage($template);
                 $current = $page->getCurrentRevision();
                 $this->_content = $current->getPackedContent();
@@ -907,6 +907,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.87  2004/12/16 18:28:05  rurban
+ keep wikiblog summary = page title
+
  Revision 1.86  2004/12/11 14:50:15  rurban
  new edit_convert button, to get rid of old markup eventually
 
