@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.27 2002-02-18 08:47:28 carstenklapp Exp $');
+rcs_id('$Id: display.php,v 1.28 2002-02-25 03:33:10 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -23,13 +23,13 @@ function GleanDescription ($rev) {
         = pcre_fix_posix_classes("/[.?!]\s+[[:upper:])]"
                                  . ".*"
                                  . "[.?!]\s*([[:upper:])]|$)/sx");
-        
+
     $content = $rev->getPackedContent();
 
     // Iterate through paragraphs.
     while (preg_match('/(?: ^ \w .* $ \n? )+/mx', $content, $m)) {
         $paragraph = $m[0];
-        
+
         // Return paragraph if it contains at least two sentences.
         if (preg_match($two_sentences, $paragraph)) {
             return preg_replace("/\s*\n\s*/", " ", trim($paragraph));
@@ -43,7 +43,7 @@ function GleanDescription ($rev) {
 
 function actionPage(&$request, $action) {
     global $Theme;
-    
+
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
 
@@ -57,10 +57,12 @@ function actionPage(&$request, $action) {
     $splitname = split_pagename($pagename);
 
     $pagetitle = HTML(fmt("%s: %s", $actionpage->getName(),
-                      $Theme->linkExistingWikiWord($pagename, false, $version)));
+                          $Theme->linkExistingWikiWord($pagename, false, $version)));
 
-    $template = Template('browse', array('CONTENT' => TransformText($actionrev)));
-    
+    require_once('lib/PageType.php');
+    $transformedContent = PageType($actionrev);
+    $template = Template('browse', array('CONTENT' => $transformedContent));
+
     GeneratePage($template, $pagetitle, $revision);
     flush();
 }
@@ -86,12 +88,9 @@ function displayPage(&$request, $tmpl = 'browse') {
                          $splitname);
     $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
 
-    include_once('lib/BlockParser.php');
-
     require_once('lib/PageType.php');
     $transformedContent = PageType($revision);
     $template = Template('browse', array('CONTENT' => $transformedContent));
-//    $template = Template($tmpl, array('CONTENT' => TransformText($revision)));
 
     GeneratePage($template, $pagetitle, $revision,
                  array('ROBOTS_META'	=> 'index,follow',
@@ -109,5 +108,4 @@ function displayPage(&$request, $tmpl = 'browse') {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
 ?>
