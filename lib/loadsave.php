@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.47 2002-01-27 22:00:58 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.48 2002-01-27 22:20:11 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -61,7 +61,7 @@ function MailifyPage ($page, $nversions = 1)
     // This should just be entered by hand (or by script?)
     // in the actual pgsrc files, since only they should have
     // RCS ids.
-    //$head .= "X-Rcs-Id: \"\$Id\$\"\r\n";
+    //$head .= "X-Rcs-Id: \$Id\$\r\n";
     
     $iter = $page->getAllRevisions();
     $parts = array();
