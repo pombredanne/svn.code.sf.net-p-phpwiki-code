@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.45 2005-02-10 19:01:19 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.46 2005-02-12 17:22:18 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -174,7 +174,8 @@ function installTable(&$dbh, $table, $backend_type) {
     /*
     $schema = findFile("schemas/${backend_type}.sql");
     if (!$schema) {
-        echo "  ",_("FAILED"),": ",sprintf(_("no schema %s found"),"schemas/${backend_type}.sql")," ... <br />\n";
+        echo "  ",_("FAILED"),": ",sprintf(_("no schema %s found"),
+        "schemas/${backend_type}.sql")," ... <br />\n";
         return false;
     }
     */
@@ -288,7 +289,8 @@ CREATE TABLE $rating_tbl (
         rateeversion INT(11) NOT NULL,
         tstamp TIMESTAMP(14) NOT NULL,
 )");
-            $dbh->genericSqlQuery("CREATE UNIQUE INDEX rating ON $rating_tbl (dimension, raterpage, rateepage)");
+            $dbh->genericSqlQuery("CREATE UNIQUE INDEX rating"
+                                  ." ON $rating_tbl (dimension, raterpage, rateepage)");
         }
         echo "  ",_("CREATED");
         break;
@@ -425,11 +427,13 @@ function CheckDatabaseUpdate(&$request) {
             }
             while ($col = $iter->next()) {
                 if ($col["Field"] == 'sess_id' and !strstr(strtolower($col["Type"]), 'char(32)')) {
-            	    $dbh->genericSqlQuery("ALTER TABLE $session_tbl CHANGE sess_id sess_id CHAR(32) NOT NULL");
+            	    $dbh->genericSqlQuery("ALTER TABLE $session_tbl CHANGE sess_id"
+                                          ." sess_id CHAR(32) NOT NULL");
             	    echo "sess_id ", $col["Type"], " ", _("fixed"), " =&gt; CHAR(32) ";
             	}
             	if ($col["Field"] == 'sess_ip' and !strstr(strtolower($col["Type"]), 'char(15)')) {
-            	    $dbh->genericSqlQuery("ALTER TABLE $session_tbl CHANGE sess_ip sess_ip CHAR(15) NOT NULL");
+            	    $dbh->genericSqlQuery("ALTER TABLE $session_tbl CHANGE sess_ip"
+                                          ." sess_ip CHAR(15) NOT NULL");
             	    echo "sess_ip ", $col["Type"], " ", _("fixed"), " =&gt; CHAR(15) ";
             	}
             }
@@ -459,7 +463,8 @@ function CheckDatabaseUpdate(&$request) {
             }
             $row = $dbh->_backend->getRow($query);
             if (isset($row[0]) and $row[0] == 'N') {
-                $dbh->genericSqlQuery("UPDATE mysql.db SET lock_tables_priv='Y' WHERE mysql.user='$username'");
+                $dbh->genericSqlQuery("UPDATE mysql.db SET lock_tables_priv='Y'"
+                                      ." WHERE mysql.user='$username'");
                 $dbh->genericSqlQuery("FLUSH PRIVILEGES");
                 echo "mysql.db user='$username'", _("fixed"), "<br />\n";
             } elseif (!$row) {
@@ -467,12 +472,14 @@ function CheckDatabaseUpdate(&$request) {
                 $query = "SELECT lock_tables_priv FROM mysql.user WHERE user='$username'";
                 $row = $dbh->_backend->getRow($query);
                 if ($row and $row[0] == 'N') {
-                    $dbh->genericSqlQuery("UPDATE mysql.user SET lock_tables_priv='Y' WHERE mysql.user='$username'");
+                    $dbh->genericSqlQuery("UPDATE mysql.user SET lock_tables_priv='Y'"
+                                          ." WHERE mysql.user='$username'");
                     $dbh->genericSqlQuery("FLUSH PRIVILEGES");
                     echo "mysql.user user='$username'", _("fixed"), "<br />\n";
                 } elseif (!$row) {
                     echo " <b><font color=\"red\">", _("FAILED"), "</font></b>: ",
-                        "Neither mysql.db nor mysql.user has a user='$username' or the lock_tables_priv field",
+                        "Neither mysql.db nor mysql.user has a user='$username'"
+                        ." or the lock_tables_priv field",
                         "<br />\n";
                 } else {
                     echo _("OK"), "<br />\n";
@@ -488,7 +495,8 @@ function CheckDatabaseUpdate(&$request) {
 
     // 1.3.10 mysql requires page.id auto_increment
     // mysql, mysqli or mysqlt
-    if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql' and $DBParams['dbtype'] != 'PDO') {
+    if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql' 
+        and $DBParams['dbtype'] != 'PDO') {
   	echo _("check for mysql page.id auto_increment flag")," ...";
         assert(!empty($page_tbl));
   	$database = $dbh->_backend->database();
@@ -502,7 +510,8 @@ function CheckDatabaseUpdate(&$request) {
                     echo "<b>",_("ADDING"),"</b>"," ... ";
                     // MODIFY col_def valid since mysql 3.22.16,
                     // older mysql's need CHANGE old_col col_def
-                    $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE id id INT NOT NULL AUTO_INCREMENT");
+                    $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE id"
+                                          ." id INT NOT NULL AUTO_INCREMENT");
                     $fields = mysql_list_fields($database, $page_tbl);
                     if (!strstr(strtolower(mysql_field_flags($fields, $i)), "auto_increment"))
                         echo " <b><font color=\"red\">", _("FAILED"), "</font></b><br />\n";
@@ -522,12 +531,14 @@ function CheckDatabaseUpdate(&$request) {
     // "select * from page where LOWER(pagename) like '%search%'" does not apply LOWER!
     // Confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a; not yet tested for 4.1.2alpha,
     // On windows only, though utf8 would be useful elsewhere also.
-    // Illegal mix of collations (latin1_bin,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '='])
+    // Illegal mix of collations (latin1_bin,IMPLICIT) and 
+    // (utf8_general_ci, COERCIBLE) for operation '='])
     if (isWindows() and substr($backend_type,0,5) == 'mysql') {
   	echo _("check for mysql 4.1.x/5.0.0 binary search on windows problem")," ...";
         $mysql_version = $dbh->_backend->_serverinfo['version'];
         if ($mysql_version < 401.0) { 
-            echo sprintf(_("version <em>%s</em> not affected"), $mysql_version),"<br />\n";
+            echo sprintf(_("version <em>%s</em>"), $mysql_version)," ",
+                _("not affected"),"<br />\n";
         } elseif ($mysql_version >= 401.6) { // FIXME: since which version?
             $row = $dbh->_backend->getRow("SHOW CREATE TABLE $page_tbl");
             $result = join(" ", $row);
@@ -537,11 +548,12 @@ function CheckDatabaseUpdate(&$request) {
                 echo _("OK"), "<br />\n";
             } else {
                 //SET CHARACTER SET latin1
-                //$dbh->genericSqlQuery("ALTER DATABASE ".$dbh->_backend->database()." DEFAULT CHARACTER SET ".CHARSET." COLLATE ".CHARSET."_bin");
                 $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename "
-                                      ."pagename VARCHAR(100) CHARACTER SET ".CHARSET." COLLATE ".CHARSET."_bin NOT NULL");
-                                      //."pagename VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL");
-                echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";
+                                      ."pagename VARCHAR(100) CHARACTER SET ".CHARSET
+                                      ." COLLATE ".CHARSET."_bin NOT NULL");
+                echo sprintf(_("version <em>%s</em>"), $mysql_version), 
+                    "<b>",_("FIXED"),"</b>",
+                    "<br />\n";
             }
         } elseif ($DBParams['dbtype'] != 'PDO') {
             // check if already fixed
@@ -558,8 +570,11 @@ function CheckDatabaseUpdate(&$request) {
                     	// remove the binary flag
             	        if (strstr(strtolower($flags), "binary")) {
             	            // FIXME: on duplicate pagenames this will fail!
-                            $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL");
-                            echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";	
+                            $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename"
+                                                  ." pagename VARCHAR(100) NOT NULL");
+                            echo sprintf(_("version <em>%s</em>"), $mysql_version), 
+                                "<b>",_("FIXED"),"</b>"
+                                ,"<br />\n";	
             	        }
                     }
                     break;
@@ -579,7 +594,7 @@ function CheckDatabaseUpdate(&$request) {
         if ((DATABASE_TYPE == 'SQL' and $backend->AffectedRows()) 
             or (DATABASE_TYPE == 'ADODB' and $backend->Affected_Rows())
             or (DATABASE_TYPE == 'PDO' and $result))
-            echo "<b>",_("fixed"),"</b>", "<br />\n";
+            echo "<b>",_("FIXED"),"</b>", "<br />\n";
         else 
             echo _("OK"),"<br />\n";
     }
@@ -634,9 +649,9 @@ function _upgrade_db_init (&$dbh) {
         $form = HTML::form(array("method" => "post", 
                                  "action" => $request->getPostURL(),
                                  "accept-charset"=>$GLOBALS['charset']),
-                           HTML::p(_("Upgrade requires database privileges to CREATE and ALTER the phpwiki database."),
+HTML::p(_("Upgrade requires database privileges to CREATE and ALTER the phpwiki database."),
                                    HTML::br(),
-                           	   _("And on windows at least the privilege to SELECT FROM mysql, and possibly UPDATE mysql")),
+_("And on windows at least the privilege to SELECT FROM mysql, and possibly UPDATE mysql")),
                            HiddenInputs(array('action' => 'upgrade')),
                            HTML::table(array("cellspacing"=>4),
                                        HTML::tr(HTML::td(array('align'=>'right'),
@@ -654,7 +669,8 @@ function _upgrade_db_init (&$dbh) {
                                        HTML::tr(HTML::td(array('align'=>'center', 'colspan' => 2),
                                                          Button("submit:", _("Submit"), 'wikiaction'), 
                                                          HTML::raw('&nbsp;'),
-                                                         Button("submit:dbadmin[cancel]", _("Cancel"), 'button')))));
+                                                         Button("submit:dbadmin[cancel]", _("Cancel"), 
+                                                                'button')))));
         $form->printXml();
         echo "</div><!-- content -->\n";
         echo asXML(Template("bottom"));
@@ -800,7 +816,9 @@ function CheckConfigUpdate(&$request) {
     echo "<h3>",_("check for necessary config updates"),"</h3>\n";
     echo _("check for old CACHE_CONTROL = NONE")," ... ";
     if (defined('CACHE_CONTROL') and CACHE_CONTROL == '') {
-        echo "<br />&nbsp;&nbsp;",_("CACHE_CONTROL is set to 'NONE', and must be changed to 'NO_CACHE'")," ...";
+        echo "<br />&nbsp;&nbsp;",
+            _("CACHE_CONTROL is set to 'NONE', and must be changed to 'NO_CACHE'"),
+            " ...";
         fixConfigIni("/^\s*CACHE_CONTROL\s*=\s*NONE/","CACHE_CONTROL = NO_CACHE");
     } else {
         echo _("OK");
@@ -808,7 +826,9 @@ function CheckConfigUpdate(&$request) {
     echo "<br />\n";
     echo _("check for GROUP_METHOD = NONE")," ... ";
     if (defined('GROUP_METHOD') and GROUP_METHOD == '') {
-        echo "<br />&nbsp;&nbsp;",_("GROUP_METHOD is set to NONE, and must be changed to \"NONE\"")," ...";
+        echo "<br />&nbsp;&nbsp;",
+            _("GROUP_METHOD is set to NONE, and must be changed to \"NONE\""),
+            " ...";
         fixConfigIni("/^\s*GROUP_METHOD\s*=\s*NONE/","GROUP_METHOD = \"NONE\"");
     } else {
         echo _("OK");
@@ -862,6 +882,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.45  2005/02/10 19:01:19  rurban
+ add PDO support
+
  Revision 1.44  2005/02/07 15:40:42  rurban
  use defined CHARSET for db. more comments
 

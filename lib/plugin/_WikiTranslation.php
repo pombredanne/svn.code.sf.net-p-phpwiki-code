@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.15 2005-01-25 08:06:47 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.16 2005-02-12 17:24:24 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -95,15 +95,15 @@ $pgsrc_container =
     _("PhpWikiDocumentation") .','.
     _("PhpWikiPoll") .','.
     _("PloticusPlugin") .','.
-    _("PgrsrcTranslation") .','.
-    _("PgrsrcTranslation/de") .','.
-    _("PgrsrcTranslation/fr") .','.
-    _("PgrsrcTranslation/it") .','.
-    _("PgrsrcTranslation/es") .','.
-    _("PgrsrcTranslation/nl") .','.
-    _("PgrsrcTranslation/sv") .','.
-    _("PgrsrcTranslation/ja") .','.
-    _("PgrsrcTranslation/zh") .','.
+    _("PgsrcTranslation") .','.
+    _("PgsrcTranslation/de") .','.
+    _("PgsrcTranslation/fr") .','.
+    _("PgsrcTranslation/it") .','.
+    _("PgsrcTranslation/es") .','.
+    _("PgsrcTranslation/nl") .','.
+    _("PgsrcTranslation/sv") .','.
+    _("PgsrcTranslation/ja") .','.
+    _("PgsrcTranslation/zh") .','.
     _("RawHtmlPlugin") .','.
     _("RecentVisitors") .','.
     _("RedirectToPlugin") .','.
@@ -138,7 +138,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -459,6 +459,9 @@ class _PageList_Column_customlang extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2005/01/25 08:06:47  rurban
+// add fast_translate: setlocale() switching with the gettext extension is by far too slow; add default pagelist args
+//
 // Revision 1.14  2004/07/08 20:30:07  rurban
 // plugin->run consistency: request as reference, added basepage.
 // encountered strange bug in AllPages (and the test) which destroys ->_dbi

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.22 2004-11-23 15:17:20 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.23 2005-02-12 17:24:24 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,12 +43,12 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function getDescription() {
-        return _("Rename selected pages.");
+        return _("Rename selected pages");
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
@@ -274,6 +274,14 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/11/23 15:17:20  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.21  2004/11/01 10:43:59  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

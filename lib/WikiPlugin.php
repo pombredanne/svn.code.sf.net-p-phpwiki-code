@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.57 2004-12-13 13:22:58 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.58 2005-02-12 17:22:17 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.57 $");
+        //                    "\$Revision: 1.58 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -122,7 +122,7 @@ class WikiPlugin
                 and $arg == 'overwrite') // silence this warning
                 ;
             else
-                trigger_error(sprintf(_("argument '%s' not declared by plugin"),
+                trigger_error(sprintf(_("argument '%s' not declared by plugin."),
                                       $arg), E_USER_NOTICE);
         }
 
@@ -498,7 +498,7 @@ class WikiPluginLoader {
             
             if (!class_exists($plugin_class)) {
                 if ($include_failed)
-                    return $this->_error(sprintf(_("Include of '%s' failed"),
+                    return $this->_error(sprintf(_("Include of '%s' failed."),
                                                  $plugin_source));
                 return $this->_error(sprintf(_("%s: no such class"), $plugin_class));
             }
@@ -506,7 +506,7 @@ class WikiPluginLoader {
         $ErrorManager->popErrorHandler();
         $plugin = new $plugin_class;
         if (!is_subclass_of($plugin, "WikiPlugin"))
-            return $this->_error(sprintf(_("%s: not a subclass of WikiPlugin"),
+            return $this->_error(sprintf(_("%s: not a subclass of WikiPlugin."),
                                          $plugin_class));
 
         $plugin->_pi = $pi;

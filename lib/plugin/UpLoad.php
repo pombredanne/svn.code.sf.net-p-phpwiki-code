@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.17 2004-11-09 08:15:50 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.18 2005-02-12 17:24:24 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -141,7 +141,7 @@ ws[cfh]");
                            $userfile_name))
             {
             	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
-                $message->pushContent(fmt("Files with extension %s are not allowed",
+                $message->pushContent(fmt("Files with extension %s are not allowed.",
                                           join(", ", $this->disallowed_extensions)),HTML::br(),HTML::br());
             } 
             elseif (preg_match("/[^._a-zA-Z0-9-]/", $userfile_name))
@@ -152,12 +152,12 @@ ws[cfh]");
             }
             elseif (file_exists($file_dir . $userfile_name)) {
             	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
-                $message->pushContent(fmt("There is already a file with name %s uploaded",
+                $message->pushContent(fmt("There is already a file with name %s uploaded.",
                                           $userfile_name),HTML::br(),HTML::br());
             }
             elseif ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
             	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
-                $message->pushContent(_("Sorry but this file is too big"),HTML::br(),HTML::br());
+                $message->pushContent(_("Sorry but this file is too big."),HTML::br(),HTML::br());
             }
             elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name) or
                     (IsWindows() and rename($userfile_tmpname, $file_dir . $userfile_name))
@@ -207,11 +207,11 @@ ws[cfh]");
     	global $WikiTheme;
     	$user = $GLOBALS['request']->_user;
         if (!is_writable($upload_log)) {
-            $message->pushContent(_("Error: the upload log is not writable"));
+            $message->pushContent(_("Error: the upload log is not writable."));
             $message->pushContent(HTML::br());
         }
         elseif (!$log_handle = fopen ($upload_log, "a")) {
-            $message->pushContent(_("Error: can't open the upload logfile"));
+            $message->pushContent(_("Error: can't open the upload logfile."));
             $message->pushContent(HTML::br());
         }
         else {        // file size in KB; precision of 0.1
@@ -234,6 +234,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/11/09 08:15:50  rurban
+// trim filename
+//
 // Revision 1.16  2004/10/21 19:03:37  rurban
 // Be more stricter with uploads: Filenames may only contain alphanumeric
 // characters. Patch #1037825

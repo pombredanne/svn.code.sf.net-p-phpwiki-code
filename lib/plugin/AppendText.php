@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AppendText.php,v 1.5 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: AppendText.php,v 1.6 2005-02-12 17:24:23 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -54,7 +54,8 @@ extends WikiPlugin
     }
 
     function _fallback($addtext, $oldtext, $notfound, &$message) {
-        $message->pushContent(sprintf(_("%s not found. Appending at the end.\n"), $notfound));
+        $message->pushContent(sprintf(_("%s not found"), $notfound).". ".
+                              _("Appending at the end.")."\n");
         return $oldtext . "\n" . $addtext;
     }
 
@@ -136,6 +137,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/11/26 18:39:02  rurban
+// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
+//
 // Revision ext-1.4  2004/11/25 15:39:40  Pascal Giard <evilynux@gmail.com>
 // * Directly including modified page when AppendText got called from 
 //   the page to be modified.
