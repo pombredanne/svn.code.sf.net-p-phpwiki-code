@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.18 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.19 2004-06-19 11:49:42 rurban Exp $');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -339,7 +339,8 @@ extends WikiPlugin
             return $availableargs[$arg]();
         elseif (method_exists($this, $arg)) // any defined SystemInfo->method()
             return call_user_func_array(array(&$this, $arg), '');
-        elseif (defined($arg) && $arg != 'ADMIN_PASSWD') // any defined constant
+        elseif (defined($arg) && // any defined constant
+                !in_array($arg,array('ADMIN_PASSWD','DATABASE_DSN','DBAUTH_AUTH_DSN')))
             return constant($arg);
         else
             return $this->error(sprintf(_("unknown argument '%s' to SystemInfo"), $arg));
@@ -478,6 +479,14 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.17  2004/05/08 14:06:13  rurban
 // new support for inlined image attributes: [image.jpg size=50x30 align=right]
 // minor stability and portability fixes
