@@ -1,4 +1,4 @@
-<!-- $Id: setupwiki.php,v 1.3 2000-10-22 19:33:35 ahollosi Exp $ -->
+<!-- $Id: setupwiki.php,v 1.3.2.1 2001-11-14 17:42:01 dairiki Exp $ -->
 <?php
 require "lib/ziplib.php";
 
@@ -90,7 +90,7 @@ function LoadZipOrDir ($dbi, $zip_or_dir)
       // load default pages
       while ($fn = readdir($handle))
 	{
-	  if (filetype("$dir/$fn") != 'file')
+	  if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
 	      continue;
 	  $stat = stat("$dir/$fn");
 	  $mtime = $stat[9];
