@@ -18,8 +18,6 @@ $locale["- saved to database as version %d"] =
    "- salvata a base di dati a versione %d";
 $locale["1 day"] =
    "1 giorno";
-$locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
-   "<b>Aggiorna</b> la pagina. Dovresti vedere l'ultima versione senzamodifiche";
 $locale["Calendar"] =
    "Calendario";
 $locale["Contents"] =
@@ -50,8 +48,6 @@ $locale["GoodStyle"] =
    "BuonStile";
 $locale["HomePage"] =
    "PaginaPrincipale";
-$locale["In order to recover from this situation follow these steps:"] =
-   "Per risolvere questa situazione segui questi passi:";
 $locale["Include of '%s' failed"] =
    "Inserimento in '%s' fallito";
 $locale["Last"] =
@@ -80,18 +76,10 @@ $locale["Page Locked"] =
    "Pagina Bloccata";
 $locale["Page Name"] =
    "Nome Della Pagina";
-$locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
-   "PhpWiki non è riuscito a salvare i tuoi cambiamenti perchè un altro utente ha cambiato la pagina mentre la stavi modificando. Se il salvataggio viene comunque fatto, i cambiamenti dell'altro utente verranno persi.";
-$locale["Press <b>Save</b> again."] =
-   "Premi ancora <b>Salva</b>";
 $locale["Previous"] =
    "Precedente";
 $locale["Printer"] =
    "Stampante";
-$locale["Problem while editing %s"] =
-   "Si sono verificati problemi durante la modifica %s";
-$locale["Problem while updating %s"] =
-   "Problemi durante l'aggiornamento %s";
 $locale["Remove Page"] =
    "Rimuovi la Pagina";
 $locale["Remove page"] =
@@ -124,8 +112,6 @@ $locale["Title search results for '%s'"] =
    "Risultati della ricerca su tutto il testo '%s'";
 $locale["Unlock Page"] =
    "Sblocca la Pagina";
-$locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
-   "Usa il pulsante <b>Precedente</b> del tuo browser per tornarealla pagina di modifica";
 $locale["Version"] =
    "Versione";
 $locale["Version %d"] =

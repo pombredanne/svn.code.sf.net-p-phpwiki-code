@@ -1,7 +1,5 @@
 <?php
 
-$locale["%d pages link to %s:"] =
-   "Lien de %d pages à la %s :";
 $locale["%s bytes written"] =
    "%s octets enregistrés";
 $locale["%s days"] =
@@ -24,8 +22,6 @@ $locale["1 day"] =
    "1 jour";
 $locale["<%s: no such section>"] =
    "< %s : aucune une telle section >";
-$locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
-   "<b>Recharge</b> la page. Tu devrais alors voir la version actuelle de la page. Tes modifications n'y sont pas.";
 $locale["<no matches>"] =
    "< aucun d'résultat >";
 $locale["All %s are listed below."] =
@@ -94,8 +90,6 @@ $locale["HomePage"] =
    "Accueil";
 $locale["I'm sorry.  Version %d of %s is not in my database."] =
    "I'm sorry.  Version %d of %s n'est pas dans la base de données.";
-$locale["In order to recover from this situation follow these steps:"] =
-   "Pour remettre de l'ordre dans cette situation, suis ces étapes :";
 $locale["Include of '%s' failed"] =
    "L'insertion de ' %s ' a provoqué une erreur";
 $locale["IncludePage"] =
@@ -156,10 +150,6 @@ $locale["Page names with prefix '%s'"] =
    "Noms de page avec le préfixe ' %s '";
 $locale["Page names with suffix '%s'"] =
    "Noms de page avec le suffixe ' %s '";
-$locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
-   "PhpWiki n'a pu enregistrer tes modifications, parce qu'un autre utilisateur a édité et sauvegardé la page pendant que tu faisais de même. Si j'avais continué, j'aurais perdu les modifications dues à l'auteur précédent.";
-$locale["Press <b>Save</b> again."] =
-   "<b>Enregistrer</b> à nouveau.";
 $locale["Preview"] =
    "Prévision";
 $locale["Previous"] =
@@ -174,10 +164,6 @@ $locale["Previous Revision"] =
    "Révision Précédente";
 $locale["Printer"] =
    "Imprimante";
-$locale["Problem while editing %s"] =
-   "Problème pendant l'édition de %s";
-$locale["Problem while updating %s"] =
-   "Problème pendant la mise à jour de %s";
 $locale["RecentChanges"] =
    "DernièresModifs";
 $locale["RecentEdits"] =
@@ -240,8 +226,6 @@ $locale["This is a minor change."] =
    "C'est une modification minuscule.";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Cette page a été verrouillée par l'administrateur et ne peut pas être modifiée.";
-$locale["This page has been locked by the administrator so your changes could not be saved."] =
-   "Cette page a été verrouillée par l'administrateur et vos changements n'ont pas pu être sauvegardés.";
 $locale["Title Search"] =
    "Recherche par titre";
 $locale["Title search results for '%s'"] =
@@ -252,8 +236,6 @@ $locale["Unlock Page"] =
    "Déverrouiller la Page";
 $locale["Uploading %s"] =
    "Télécharger %s";
-$locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
-   "Utilise la fonction <b>Retour</b> de ton navigateur pour revenir à la page d'édition.";
 $locale["UserPreferences"] =
    "PréférencesUtilisateurs";
 $locale["Version"] =
@@ -306,8 +288,6 @@ $locale["new page"] =
    "nouvelle page";
 $locale["no page specified"] =
    "aucune page indiquée";
-$locale["previous major revision"] =
-   "précédente révision principale";
 $locale["previous revision"] =
    "révision précédente";
 $locale["recursive inclusion of page %s"] =

@@ -8,8 +8,6 @@ $locale["(last edited %s)"] =
    "(senast ändrad %s)";
 $locale["(version %s, saved on %s)"] =
    "(version %s, sparade %s)";
-$locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
-   "<b>Ladda om</b> sidan. Du kommer nu se den senaste versionen av sidan. Dina ändringar är inte där.";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Kopiera dina ändringar till urklippet eller till ett annat temporärt ställe (t.ex. en texteditor).";
 $locale["Describe %s here."] =
@@ -44,8 +42,6 @@ $locale["HomePage"] =
    "Framsida";
 $locale["I'm sorry.  Version %d of %s is not in my database."] =
    "Ledsen.  Version %d för %s finns inte i databasen";
-$locale["In order to recover from this situation follow these steps:"] =
-   "För att lösa situtationen, följ dessa steg:";
 $locale["Include of '%s' failed"] =
    "Insättning för '%s' misslyckades";
 $locale["Included from %s"] =
@@ -70,16 +66,8 @@ $locale["Page Locked"] =
    "Sidan är Låst";
 $locale["Page Name"] =
    "Namn på Sidan";
-$locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
-   "PhpWiki kan inte spara dina ändringar eftersom en annan användare ändrade och sparade sidan under tiden som du ändrade på sidan. Sparar du nu försvinner ändringarna gjorda av den förra användaren.";
-$locale["Press <b>Save</b> again."] =
-   "Klicka på <b>Spara</b> igen.";
 $locale["Previous Author"] =
    "Göregående Författare";
-$locale["Problem while editing %s"] =
-   "Har problem med att redigera %s";
-$locale["Problem while updating %s"] =
-   "Har problem med att uppdatera %s";
 $locale["RecentChanges"] =
    "SenasteÄndringar";
 $locale["Remove Page"] =
@@ -116,8 +104,6 @@ $locale["TitleSearch"] =
    "Titelsökningen";
 $locale["Unlock Page"] =
    "Lås upp Sida";
-$locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
-   "Använd webbläsarens <b>backaknapp</b> för att gå tillbaka till redigeringssidan.";
 $locale["Version"] =
    "Version";
 $locale["Version %d"] =
