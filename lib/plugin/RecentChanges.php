@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.24 2002-01-18 00:28:43 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.25 2002-01-18 23:38:30 lakka Exp $');
 /**
  */
 
@@ -368,7 +368,12 @@ extends WikiPlugin
         if (!$fmt_class) {
             if ($format == 'rss')
                 $fmt_class = '_RecentChanges_RssFormatter';
-            else
+            elseif ($format == 'rss091')
+						{
+						    include_once "lib/RSSWriter091.php";
+								$fmt_class = '_RecentChanges_RssFormatter091';
+					  }
+						else
                 $fmt_class = '_RecentChanges_HtmlFormatter';
         }
         
