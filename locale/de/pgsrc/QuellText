@@ -1,9 +1,9 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: QuellText,v 1.1 2002-01-10 23:16:00 rurban Exp $
+X-RCS_ID: $Id: QuellText,v 1.2 2002-01-11 07:42:27 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
-  pagename=SchaueQuelltext;
+  pagename=QuellText;
   flags=PAGE_LOCKED;
-  lastmodified=1009510399;
+  lastmodified=1009510400;
 Content-Transfer-Encoding: binary
 
 Begutachte die WikiFormatierung eine Seite, ohne sie zu ändern. Sehr nützlich um den Quelltext einer gesperrten Seite anzusehen oder zu kopieren (CutnPaste).
