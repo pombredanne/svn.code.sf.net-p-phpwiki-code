@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.62 2004-11-30 09:51:35 rurban Exp $');
+rcs_id('$Id: display.php,v 1.63 2004-11-30 17:48:38 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -12,6 +12,8 @@ function GleanKeywords ($page) {
     include_once("lib/TextSearchQuery.php");
     $search = new TextSearchQuery(KEYWORDS, true);
     $KeywordLinkRegexp = $search->asRegexp();
+    // iterate over the pagelinks (could be a large number) [15ms on PluginManager]
+    // or do a titleSearch and check the categories if they are linked?
     $links = $page->getPageLinks();
     $keywords[] = SplitPagename($page->getName());
     while ($link = $links->next()) {
@@ -221,6 +223,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2004/11/30 09:51:35  rurban
+// changed KEYWORDS from pageprefix to search term. added installer detection.
+//
 // Revision 1.61  2004/11/21 11:59:19  rurban
 // remove final \n to be ob_cache independent
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.130 2004-11-25 08:28:12 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.131 2004-11-30 17:48:38 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
@@ -1160,10 +1160,15 @@ function LoadFileOrDir (&$request)
     EndLoadDump($request);
 }
 
+/**
+ * HomePage was not found so first-time install is supposed to run.
+ * - import all pgsrc pages.
+ * - Todo: installer interface to edit config/config.ini settings
+ * - Todo: ask for existing old index.php to convert to config/config.ini
+ */
 function SetupWiki (&$request)
 {
     global $GenericPages, $LANG;
-
 
     //FIXME: This is a hack (err, "interim solution")
     // This is a bogo-bogo-login:  Login without
@@ -1246,6 +1251,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.130  2004/11/25 08:28:12  rurban
+ dont fatal on missing css or imgfiles and actually print the miss
+
  Revision 1.129  2004/11/25 08:11:40  rurban
  pass exclude to the get_all_pages backend
 
