@@ -1,16 +1,13 @@
-From hostmaster@dairiki.org  Tue Jan 8 18:00:00 2002
-Subject: RecentChanges
-From: hostmaster@dairiki.org (PhpWiki)
-Date: Tue, 8 Jan 2002 18:00:00 -0500
-Mime-Version: 1.0
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
+X-RCS_ID: $Id: RecentChanges,v 1.22 2002-01-09 05:50:18 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=RecentChanges;
-  flags=PAGE_LOCKED
+  flags=PAGE_LOCKED;
+  lastmodified=1010523612;
 Content-Transfer-Encoding: binary
-X-RCS_ID: $Id: RecentChanges,v 1.21 2002-01-08 23:17:21 carstenklapp Exp $
 
 Here's a list of recently changed pages on this wiki. (See RecentEdits for all recent minor edits and changes).
 
-<?plugin Toolbar name=RecentChanges days=1,3,7,30,90,-1 sep=| ?>
+<?plugin Toolbar name=RecentChanges days=1,3,7,30,90,-1 label="Show changes for: %s" sep=| ?>
 --------
-<?plugin RecentChanges days||=30?>
+<?plugin RecentChanges days||=2 show_all||=0 ?>
