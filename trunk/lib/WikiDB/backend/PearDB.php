@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.19 2002-01-28 04:01:56 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.20 2002-01-31 08:51:58 carstenklapp Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -714,7 +714,11 @@ extends WikiDB_backend
         $message = "$class: fatal database error\n"
              . "\t" . $error->getMessage() . "\n"
              . "\t(" . $error->getDebugInfo() . ")\n";
-
+        /////////////////////////////////////////////////////////////
+        // Quick and dirty hack to prevent mysql password
+        // from being exposed during a Fatal PhpWiki database Error
+        return str_replace($DBParams['dsn'], '', $message);
+        /////////////////////////////////////////////////////////////
         return $message;
     }
 
