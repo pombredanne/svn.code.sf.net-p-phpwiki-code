@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.10 2004-02-11 15:29:43 zorloc Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.11 2004-02-11 20:00:16 rurban Exp $');
 /*
- Copyright 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -67,23 +67,23 @@ extends WikiPlugin
                       */
                      'max_age' => 31,
 
-                     /* Pages to exclude */
+                     /* Pages or regex to exclude */
                      'exclude'  => '',
 
                      /* Columns to include in listing */
-                     'info'     => '',
+                     'info'     => 'most',
 
                      /* How to sort */
-                     'sortby'   => ''
+                     'sortby'   => 'pagename'
                      );
     }
 
-    function collectPages(&$list, &$dbi) {
+    function collectPages(&$list, &$dbi, $sortby) {
         extract($this->_args);
 
         $now = time();
         
-        $allPages = $dbi->getAllPages('include_deleted');
+        $allPages = $dbi->getAllPages('include_deleted',$sortby);
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
             $current = $pagehandle->getCurrentRevision();
@@ -157,7 +157,7 @@ extends WikiPlugin
         }
         if ($next_action == 'select') {
             // List all pages to select from.
-            $list = $this->collectPages($pages, $dbi);
+            $list = $this->collectPages($pages, $dbi, $args['sortby']);
         }
 
 
@@ -169,7 +169,7 @@ extends WikiPlugin
 
         $header = HTML::p();
         if ($next_action == 'verify') {
-            $button_label = _("Permanently remove selected pages");
+            $button_label = _("Yes");
             $header->pushContent(HTML::strong(
                 _("Are you sure you want to permanently remove the selected files?")));
         }

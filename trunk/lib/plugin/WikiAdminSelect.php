@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.7 2004-01-27 23:23:39 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.8 2004-02-11 20:00:16 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,19 +47,20 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
         return array('s'   => '*',
                      'only'    => '',
                      'exclude' => '',
-                     'info'    => 'all',
+                     'info'    => 'most',
+                     'sortby'  => 'pagename',
                      'debug'   => false);
     }
 
-    function collectPages(&$list, &$dbi) {
-        $allPages = $dbi->getAllPages();
+    function collectPages(&$list, &$dbi, $sortby) {
+        $allPages = $dbi->getAllPages(0,$sortby);
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
             if (empty($list[$pagename]))
@@ -68,6 +69,8 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, $request) {
+        if ($request->getArg('action') != 'browse')
+            return $this->disabled("(action != 'browse')");
         $args = $this->getArgs($argstr, $request);
         if (!empty($args['only']))
             $only = explodePageList($args['only']);
@@ -102,7 +105,7 @@ extends WikiPlugin
         //$uri = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']; // without s would be better.
         $uri = $request->getURLtoSelf(false, array('verify'));
         $form = HTML::form(array('action' => $uri, 'method' => 'POST'));
-        if ($request->getArg('submit') == 'WikiAdminSelect')
+        if ($request->getArg('WikiAdminSelect') == _("Go"))
             $p = false;
         else
             $p = $request->getArg('p');
@@ -139,13 +142,17 @@ extends WikiPlugin
             }
         } elseif (empty($args['s'])) {
             // List all pages to select from.
-            $this->collectPages($this->_list, $dbi);
+            $this->collectPages($this->_list, $dbi, $sortby);
         }
         $pagelist = new PageList_Selectable($info
                                             ? 'checkbox,' . $info
                                             : 'checkbox', $exclude);
         $pagelist->addPageList($this->_list);
         $form->pushContent($pagelist->getContent());
+        foreach ($args as $k => $v) {
+            if (!in_array($k,array('s','WikiAdminSelect','action')))
+                $form->pushContent(HiddenInputs(array($k => $v))); // plugin params
+        }
         foreach ($_GET as $k => $v) {
             if (!in_array($k,array('s','WikiAdminSelect','action')))
                 $form->pushContent(HiddenInputs(array($k => $v))); // debugging params, ...
@@ -172,10 +179,10 @@ extends WikiPlugin
             foreach ($actions as $f) {
                 $f = preg_replace('/.php$/','', $f);
                 $s = preg_replace('/^WikiAdmin/','', $f);
-//              if ($s != "Select") {
-                $form->pushContent(Button("submit:$f", _($s), "wikiadmin"));
-                $form->pushContent($Theme->getButtonSeparator());
-//              }
+                if (!in_array($s,array("Select","Utils"))) { // disable Select and Utils
+                    $form->pushContent(Button("submit:$f", _($s), "wikiadmin"));
+                    $form->pushContent($Theme->getButtonSeparator());
+                }
             }
             $form->pushContent(Button('submit:cancel', _("Cancel"), 'button'));
         }
@@ -188,6 +195,12 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/01/27 23:23:39  rurban
+// renamed ->Username => _userid for consistency
+// renamed mayCheckPassword => mayCheckPass
+// fixed recursion problem in WikiUserNew
+// fixed bogo login (but not quite 100% ready yet, password storage)
+//
 // Revision 1.6  2004/01/26 19:15:29  rurban
 // Interim fix
 //
