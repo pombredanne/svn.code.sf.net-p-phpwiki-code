@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.51 2004-05-02 21:26:38 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.52 2004-05-03 13:16:47 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -521,6 +521,8 @@ class Request_CookieVars {
     }
 
     function set($key, $val, $persist_days = false, $path = false) {
+    	// if already defined, ignore
+    	if (defined('MAIN_setUser') and $key = 'WIKI_ID') return;
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (is_numeric($persist_days)) {
             $expires = time() + (24 * 3600) * $persist_days;
@@ -974,6 +976,14 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2004/05/02 21:26:38  rurban
+// limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
+//   because they will not survive db sessions, if too large.
+// extended action=upgrade
+// some WikiTranslation button work
+// revert WIKIAUTH_UNOBTAINABLE (need it for main.php)
+// some temp. session debug statements
+//
 // Revision 1.50  2004/04/29 19:39:44  rurban
 // special support for formatted plugins (one-liners)
 //   like <small><plugin BlaBla ></small>

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.140 2004-05-02 21:26:38 rurban Exp $');
+rcs_id('$Id: main.php,v 1.141 2004-05-03 13:16:47 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -257,14 +257,17 @@ class WikiRequest extends Request {
     // login or logout or restore state
     function _setUser ($user) {
         $this->_user = $user;
-        $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(), 365);
+        define('MAIN_setUser',true);
+        $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(), COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
         $this->setSessionVar('wiki_user', $user);
         if ($user->isSignedIn())
             $user->_authhow = 'signin';
 
         // Save userid to prefs..
-        if (!($this->_prefs = $this->_user->getPreferences()))
-            $this->_prefs = $this->_user->_prefs;
+        if ( ! $this->_user->_prefs ) {
+            $this->_user->_prefs = $this->_user->getPreferences();
+            $this->_prefs =& $this->_user->_prefs;
+        }
         $this->_prefs->set('userid',
                            $user->isSignedIn() ? $user->getId() : '');
         $this->initializeTheme();
@@ -899,6 +902,14 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.140  2004/05/02 21:26:38  rurban
+// limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
+//   because they will not survive db sessions, if too large.
+// extended action=upgrade
+// some WikiTranslation button work
+// revert WIKIAUTH_UNOBTAINABLE (need it for main.php)
+// some temp. session debug statements
+//
 // Revision 1.139  2004/05/02 15:10:07  rurban
 // new finally reliable way to detect if /index.php is called directly
 //   and if to include lib/main.php
