@@ -1,4 +1,4 @@
-<!-- $Id: wiki_savepage.php3,v 1.12 2000-07-05 13:52:28 ahollosi Exp $ -->
+<!-- $Id: wiki_savepage.php3,v 1.13 2000-07-20 18:36:46 dairiki Exp $ -->
 <?
 
 /*
@@ -65,7 +65,7 @@
       if (get_magic_quotes_gpc())
          $content = stripslashes($content);
 
-      $pagehash["content"] = explode("\n", $content);
+      $pagehash["content"] = preg_split('/[ \t\r]*\n/', chop($content));
 
       // convert spaces to tabs at user request
       if ($convert) {
