@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.15 2004-02-22 23:20:33 rurban Exp $
+ * $Id: phpwiki.css,v 1.16 2004-02-26 01:34:35 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -46,7 +46,7 @@ body {
   /* ivory #ffe #fffff0*/
   background: #fffff0;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 80%;
+  font-size: 85%; /* The default is too large. But enlarge monospace below */
   margin: 1.5ex 1em;
 }
 
@@ -467,7 +467,7 @@ div.errors {
   padding: 0;
   text-decoration: underline;
 }
-.error { font-family: monospace; }
+.error { font-family: monospace; font-size: 120%; }
 .error ul { font-family: monospace; }
 
 /* Debug */
@@ -733,6 +733,18 @@ a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   color: black;
 }
 
+/* postnuke css:*/
+.gensmall{font-size:10px}
+.genmed{font-size:11px}
+td.cat{font-weight:bold;letter-spacing:1px;color:#000000;background: url(./images/cellpic1.png);height:27px}
+/*
+/* Main table cell colours and backgrounds */
+td.row1{background:#eaedf4;color:#000000}
+td.row2{background:#d9e2ec;color:#000000}
+td.row3{background:#cad9ea;color:#000000}
+td.spacerow{background:#cad9ea;color:#000000}
+/* This is the outline round the main forum tables */
+.forumline{background:#ffffff;color:#000000;border:1px solid #006699}
 
 /* For emacs users
  *
