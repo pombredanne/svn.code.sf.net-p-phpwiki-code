@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.40 2002-01-28 18:49:08 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.41 2002-01-28 18:59:14 dairiki Exp $');
 /**
  */
 
@@ -501,12 +501,12 @@ class buttonSet {
     function buttonSet() {
         $this->caption = "";
         $this->content = "";
-        $this->_b = HTML();
+        $this->_b = array();
     }
 
     function addButton($label, $url, $action) {
         global $Theme;
-        $this->_b->pushContent($Theme->makeButton($label, $url, $action));
+        $this->_b[] = $Theme->makeButton($label, $url, $action);
     }
 
     function getContent() {
