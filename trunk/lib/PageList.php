@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.91 2004-06-21 16:22:29 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.92 2004-06-21 17:01:39 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -979,7 +979,7 @@ class PageList {
     	if (is_array($col)) {// custom column object
     	    $params =& $col;
             $class_name = array_shift($params);
-            $$params[3] =& $this;
+            $params[3] =& $this;
             $col = new $class_name($params);
         }
         $heading = $col->getHeading();
@@ -1238,6 +1238,16 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.91  2004/06/21 16:22:29  rurban
+// add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
+// fixed dumping buttons locally (images/buttons/),
+// support pages arg for dumphtml,
+// optional directory arg for dumpserial + dumphtml,
+// fix a AllPages warning,
+// show dump warnings/errors on DEBUG,
+// don't warn just ignore on wikilens pagelist columns, if not loaded.
+// RateIt pagelist column is called "rating", not "ratingwidget" (Dan?)
+//
 // Revision 1.90  2004/06/18 14:38:21  rurban
 // adopt new PageList style
 //
