@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.60 2002-02-09 23:07:01 lakka Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.61 2002-02-10 08:20:21 lakka Exp $');
 /**
  */
 
@@ -158,7 +158,7 @@ extends _RecentChanges_Formatter
         else
             $edits = _("minor edits");
 
-        if ($timespan = $days != 0) {
+        if ($timespan = $days > 0) {
             if (intval($days) != $days)
                 $days = sprintf("%.1f", $days);
         }
@@ -183,16 +183,9 @@ extends _RecentChanges_Formatter
                 if (intval($days) == 1)
                     $desc = fmt("The %d most recent %s during the past day are listed below.",
                                 $limit, $edits);
-                elseif (intval($days) == -1)
-				    $desc = fmt("The %d oldest %s during the past day are listed below.",
-                                $limit, $edits);
-				elseif ($days > 1)
+                else
                     $desc = fmt("The %d most recent %s during the past %s days are listed below.",
                                 $limit, $edits, $days);
-				elseif ($days < -1)
-                    $desc = fmt("The %d oldest %s from the first %s days are listed below.",
-                                $limit, $edits, -$days);
-
             } else
                 $desc = fmt("The %d most recent %s are listed below.",
                             $limit, $edits);
@@ -215,15 +208,9 @@ extends _RecentChanges_Formatter
                 if (intval($days) == 1)
                     $desc = fmt("The most recent %s during the past day are listed below.",
                                 $edits);
-                elseif (intval($days) == -1)
-                    $desc = fmt("The oldest %s during the past day are listed below.",
-                                $edits);
-                elseif (intval($days) < -1)
-                    $desc = fmt("The oldest %s from the first %s days are listed below.",
-                                $edits, -$days);
                 else
                     $desc = fmt("The most recent %s during the past %s days are listed below.",
-                                $edits, -$days);
+                                $edits, $days);
             } else
                 $desc = fmt("All %s are listed below.", $edits);
         }
@@ -562,9 +549,9 @@ class DayButtonBar extends HtmlElement {
     function _makeDayButton ($days) {
         global $Theme, $request;
         
-        if (abs($days) == 1)
+        if ($days == 1)
             $label = _("1 day");
-        elseif ($days <= 0)
+        elseif ($days < 1)
             $label = "..."; //alldays
         else
             $label = sprintf(_("%s days"), abs($days));
