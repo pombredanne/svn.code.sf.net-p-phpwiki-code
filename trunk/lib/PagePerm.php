@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.31 2004-09-25 18:34:45 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.32 2004-09-25 18:56:09 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -81,15 +81,18 @@ function pagePermissions($pagename) {
     // Page not found (new page); returned inherited permissions, to be displayed in gray
     if (! $page->exists() ) {
         if ($pagename == '.') // stop recursion
-            return array('default',new PagePermission());
+            return array('default', new PagePermission());
         else {
-            return array('inherited',pagePermissions(getParentPage($pagename)));
+            return array('inherited', pagePermissions(getParentPage($pagename)));
         }
     } elseif ($perm = getPagePermissions($page)) {
         return array('page',$perm);
     // or no permissions defined; returned inherited permissions, to be displayed in gray
+    } elseif ($pagename == '.') { // stop recursion in pathological case. 
+    	// "." defined, without any acl
+        return array('default', new PagePermission());
     } else {
-        return array('inherited',pagePermissions(getParentPage($pagename)));
+        return array('inherited', pagePermissions(getParentPage($pagename)));
     }
 }
 
@@ -226,9 +229,12 @@ function _requiredAuthorityForPagename($access, $pagename) {
     // no ACL defined; check for special dotfile or walk down
     if (! ($perm = getPagePermissions($page))) { 
         if ($pagename == '.') {
-            trigger_error(". (dotpage == rootpage for inheriting pageperm ACLs) exists without any ACL!\n".
-                          "Please do ?action=setacl&pagename=.", E_USER_WARNING);
             $perm = new PagePermission();
+            if ($perm->isAuthorized('change', $request->_user)) {
+            	// warn the user to set ACL of ".", if he has permissions to do so.
+                trigger_error(". (dotpage == rootpage for inheriting pageperm ACLs) exists without any ACL!\n".
+                              "Please do ?action=setacl&pagename=.", E_USER_WARNING);
+            }
             return ($perm->isAuthorized($access, $request->_user) === true);
         } elseif ($pagename[0] == '.') {
             $perm = new PagePermission(PagePermission::dotPerms());
@@ -704,6 +710,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2004/09/25 18:34:45  rurban
+// fix and warn on too restrictive ACL handling without ACL in existing . (dotpage)
+//
 // Revision 1.30  2004/09/25 16:24:02  rurban
 // fix interesting PagePerm problem: -1 == true
 //
