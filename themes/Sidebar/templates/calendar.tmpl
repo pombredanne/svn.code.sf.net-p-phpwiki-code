@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-rcs_id('$Id: calendar.tmpl,v 1.1 2004-03-26 03:13:23 rurban Exp $');
+rcs_id('$Id: calendar.tmpl,v 1.2 2004-03-26 03:55:38 rurban Exp $');
 ?>
 <div id="calendar">
 <?= JavaScript('
@@ -10,7 +10,7 @@ rcs_id('$Id: calendar.tmpl,v 1.1 2004-03-26 03:13:23 rurban Exp $');
       var d = calendar.date.getDate();      // integer, 1..31
       m = m < 10 ? "0" + m : m; 
       d = d < 10 ? "0" + d : d; 
-      window.location = "' . $Theme->calendarBase() . SUBPAGE_SEPARATOR . '" + y + "-" + m + "-" + d;
+      window.location = "' . WikiUrl($Theme->calendarBase(),0,1) . SUBPAGE_SEPARATOR . '" + y + "-" + m + "-" + d;
     }
   };
   Calendar.setup({flat : "calendar", flatCallback : dateChanged, weekNumbers : false})') ?>
