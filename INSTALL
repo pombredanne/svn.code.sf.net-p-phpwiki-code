@@ -71,7 +71,7 @@ do this if your Wiki is publically accessible.
 
 Installing PHP is beyond the scope of this document :-)
 You should visit http://www.php.net/ if you don't have PHP.
-Note that I have the web server configured to allow index.php3
+Note that I have the web server configured to allow index.php
 as the root document of a directory.
 
 This web application was written under PHP version 3.0.12. I used
