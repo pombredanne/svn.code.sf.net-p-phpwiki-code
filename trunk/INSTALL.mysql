@@ -37,9 +37,6 @@ For more information on mySQL go to http://www.mysql.org/
 	c) set $mysql_user to "wikiuser" as used in step 2
 	d) set $mysql_pwd to "password" as used in step 2
 	e) set $mysql_db to "phpwiki" as used in step 1
-	f) set MAX_DBM_ATTEMPTS to a low number or to '1'.
-	   Retrying has not much sense when using mySQL.
-	   I use a value of 2.
 
 
 That's it. phpwiki should now work.
@@ -51,4 +48,4 @@ the necessary access rights for the phpwiki tables.
 /Arno
 ahollosi@iname.com
 
-$Id: INSTALL.mysql,v 1.3 2000-06-21 22:59:18 ahollosi Exp $
+$Id: INSTALL.mysql,v 1.4 2000-09-21 19:44:31 ahollosi Exp $

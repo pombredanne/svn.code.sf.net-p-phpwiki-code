@@ -24,27 +24,38 @@ http://www.foo.com/wiki/
 
 1. CONFIGURATION
 
-PhpWiki will create two DBM files in /tmp. One contains the pages of the
-live site and the other has the archived pages.
+The first time you run this Wiki it will load a set of basic pages from
+the pgsrc/ directory. These should be enough to get your Wiki started!
+
+PhpWiki will create some DBM files in /tmp. They contain the pages of the
+live site, archived pages, and some additional information.
 
 If you don't want the DBM files to live in /tmp you must make sure the web
-server can read/write to it.  It's probably a bad idea to leave it in
-/tmp. (Again, edit wiki_config.php3). 
+server can read/write to your chosen location.  It's probably a bad idea
+to leave it in /tmp. (Again, edit wiki_config.php3). 
 
 For example, you create a subdirectory called "pages" in the wiki
-directory made when you untarred PhpWiki. Move the DBM files there, and do 
+directory made when you untarred PhpWiki. Move the DBM files there.
+The files are called: wikipagesdb, wikiarchivedb, wikilinksdb,
+wikihottopicsdb, and wikihitcountdb. The files should already have proper
+rights and owners, as they were created by the web server. Otherwise
+change them accordingly so your web server can read/write the DBM files.
 
-bash$ chmod 666 wikidb wikiarchive
-
-so your web server can read/write the DBM files. Then you must do
+Then you must ensure that the web server can access the "pages" directory
+and can create new files in it. These can be achieved e.g. by doing
 
 bash$ chmod 777 pages
 
-on the "pages" directory to make sure the server can also create/set 
-the lock file (PHP has a built in locking mechanism for DBM file access).
+Note: this is insecure. The proper way is to let the directory be owned
+by the web servers GUID and give it read and write access. For example,
+if your web server runs as 'nobody' you would issue these commands
+(you may need to do this as 'root'):
 
-The first time you run this Wiki it will load a set of basic pages from
-the pgsrc/ directory. These should be enough to get your Wiki started!
+bash$ chown nobody:nogroup pages
+bash$ chmod 755 pages
+
+This is necessary so that the server can also create/set the lock file
+(PHP has a built in locking mechanism for DBM file access).
 
 
 2. ALLOWING EMBEDDED HTML
@@ -52,7 +63,7 @@ the pgsrc/ directory. These should be enough to get your Wiki started!
 PhpWiki ships with this featured disabled by default. According to CERT 
 (http://www.cert.org/advisories/CA-2000-02.html) malicious users can embed
 HTML in your pages that allow pure evil to happen. You can uncomment the 
-"elseif" in wiki_display.php3 to allow embedded HTML; but you should never
+"elseif" in wiki_transform.php3 to allow embedded HTML; but you should never
 do this if your Wiki is publically accessible.
 
 
