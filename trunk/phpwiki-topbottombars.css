@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-topbottombars.css,v 1.4 2002-02-12 07:27:57 carstenklapp Exp $
+ * $Id: phpwiki-topbottombars.css,v 1.5 2002-02-12 23:55:09 carstenklapp Exp $
  *
  */
 @import url("phpwiki.css");
@@ -17,8 +17,10 @@ div.wikitext { margin-top: 6ex; }
 
 /**
  * Common toolbar settings
+ * Note that div.toolbar is used for other toolbars besides
+ * #navbar and #actionbar, such as in editpage and removepage
  */
-div.toolbar {
+div#navbar, div#actionbar {
   background: ivory;
   margin: 0px;
   padding: 0px;
