@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.107 2004-01-27 23:23:39 rurban Exp $');
+rcs_id('$Id: main.php,v 1.108 2004-01-28 14:34:14 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -21,8 +21,9 @@ class WikiRequest extends Request {
 
         if (USE_DB_SESSION) {
             include_once('lib/DB_Session.php');
+            $prefix = isset($GLOBALS['DBParams']['prefix']) ? $GLOBALS['DBParams']['prefix'] : '';
             $this->_dbsession = & new DB_Session($this->getDbh(),
-                                                 $GLOBALS['DBParams']['db_session_table']);
+                                                 $prefix . $GLOBALS['DBParams']['db_session_table']);
         }
         
         $this->Request();
@@ -867,6 +868,12 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.107  2004/01/27 23:23:39  rurban
+// renamed ->Username => _userid for consistency
+// renamed mayCheckPassword => mayCheckPass
+// fixed recursion problem in WikiUserNew
+// fixed bogo login (but not quite 100% ready yet, password storage)
+//
 // Revision 1.106  2004/01/26 09:17:49  rurban
 // * changed stored pref representation as before.
 //   the array of objects is 1) bigger and 2)

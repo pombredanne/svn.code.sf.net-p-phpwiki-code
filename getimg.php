@@ -1,4 +1,4 @@
 <?php // -*-php-*-
-include ("index.php");
+include ("my-index.php");
 include "lib/imagecache.php";
 ?>

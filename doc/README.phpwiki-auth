@@ -87,16 +87,16 @@ $USER_AUTH_ORDER is an array of the following strings. You can en-/disable any a
 * __IMAP__:      Authenticate against IMAP_AUTH_HOST (e.g. an existing email account)
 * __File__:      Check username:crypted-passwords in .htaccess like files. Use Apache's htpasswd program to manage this file.
 
-Each method is a WikiUser (in fact a ~_PassUser) class, which defines the checkPass() and userExists() methods and optionally mayChangePassword() and storePass().
+Each method is a WikiUser (in fact a ~_PassUser) class, which defines the checkPass() and userExists() methods and optionally mayChangePass() and storePass().
 
 !! USER_AUTH_POLICY
 
-The available policies defines how and when each auth method from USER_AUTH_ORDER is tried, and what to do on failure. Some policies require to know it ad advance at initialization time, some have to check if a valid user exists and some simply check valid username - password pairs.
+The available policies defines how and when each auth method from USER_AUTH_ORDER is tried, and what to do on failure. Some policies require to know it at advance at initialization time, some have to check if a valid user exists and some simply check valid username - password pairs.
 
 ;__old__:   This policy checks all default USER_AUTH_ORDER methods, disables all not defined services (ldap, imap) and tries to use all available methods as in the previous PhpWiki releases with the stacked policy (slow).
 ;__first-only__: use only the first method in USER_AUTH_ORDER
 ;__strict__:    check if the user exists for all methods: on the first existing user, try the password. dont try the other methods on failure then
-__stacked__:    check the given user - password combination for all methods and return true on the first success.
+;__stacked__:    check the given user - password combination for all methods and return true on the first success.
 
 ! AUTH_FILE_* constants
 
@@ -180,7 +180,7 @@ are tried. If these methods fail (no such page or user exists) the Cookie method
 For some short time a serialized array of _UserPreference objects was stored which was "not a good thing".
 There is code to detect these objects and convert them automatically.
 
-To use the "PersonalPage" location a page with the same name as the userid must exist, the so called "HomePage". This does need be a WikiWord pagename but it sure helps.
+To use the "PersonalPage" location a page with the same name as the userid must exist, the so called "HomePage". This does not need be a WikiWord pagename but it sure helps.
 
 If $DBAuthParams~['pref_select'~] is defined, PersonalPage preferences are ignored and the preferences are read from the database. If $DBAuthParams~['pref_update'~] is defined, the preferences are stored back into the database.
 

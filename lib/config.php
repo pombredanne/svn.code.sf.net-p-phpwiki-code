@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.78 2004-01-26 09:17:49 rurban Exp $');
+rcs_id('$Id: config.php,v 1.79 2004-01-28 14:34:14 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -408,16 +408,19 @@ if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
         trigger_error(sprintf(_("You can use %s only with %s"), 
                                 'DB_Session', '$DBParams[\'dbtype\']: SQL'), 
                           E_USER_ERROR);
+        // this is flawed. constants cannot be changed.
         define('USE_DB_SESSION',false);
     }
     elseif (! $DBParams['db_session_table'] ) {
         trigger_error(_("Empty db_session_table. Turn USE_DB_SESSION off or define the table name."), 
                           E_USER_ERROR);
+        // this is flawed. constants cannot be changed.
         define('USE_DB_SESSION',false);
     }
 } else {
+    // default: true (since v1.3.8)
     if (!defined('USE_DB_SESSION'))
-        define('USE_DB_SESSION',false);
+        define('USE_DB_SESSION',true);
 }
 // legacy:
 if (!defined('ENABLE_USER_NEW')) define('ENABLE_USER_NEW',false);
