@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.26 2003-02-27 21:15:14 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.27 2003-02-27 22:48:44 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -98,21 +98,17 @@ extends _RecentChanges_HtmlFormatter
         return _("No revisions found");
     }
 
-    function _javascript($script) {
-        return HTML::script(array('language' => 'JavaScript',
-                                  'type'     => 'text/javascript'),
-                            new RawXml("<!-- //\n$script\n// -->"));
-    }
-
     function description() {
-        // Doesn't work (PHP bug?): $desc = parent::description() . "\n";
         $button = HTML::input(array('type'  => 'submit',
                                     'value' => _("compare revisions"),
                                     'class' => 'wikiaction'));
-        return array(_RecentChanges_HtmlFormatter::description(), "\n",
-                     $this->_javascript(sprintf('document.write("%s");',
-                                                _("Check any two boxes to compare revisions."))),
-                     HTML::noscript(fmt("Check any two boxes then %s.", $button)));
+
+        $js_desc = $no_js_desc = _RecentChanges_HtmlFormatter::description();
+
+        $js_desc->pushContent("\n", _("Check any two boxes to compare revisions."));
+        $no_js_desc->pushContent("\n", fmt("Check any two boxes then %s.", $button));
+
+        return IfJavaScript($js_desc, $no_js_desc);
     }
 
 
@@ -141,7 +137,7 @@ extends _RecentChanges_HtmlFormatter
                                      'name'   => 'diff-select'),
                                $html),
                     "\n",
-                    $this->_javascript('
+                    JavaScript('
         var diffCkBoxes = document.forms["diff-select"].elements["versions[]"];
 
         function diffCkBox_onclick() {
@@ -257,7 +253,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.26 $");
+                            "\$Revision: 1.27 $");
     }
 
     function getDefaultArguments() {
@@ -323,6 +319,19 @@ extends WikiPlugin_RecentChanges
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2003/02/27 21:15:14  dairiki
+// Javascript fix.
+//
+// Fix so that you can never have more than two checkboxes checked. (If this
+// happens, all but the current checkbox are unchecked.)
+//
+// It used to be that one could view a PageHistory, check two boxes to view
+// a diff, then hit the back button.  (The originally checked two boxes are
+// still checked at this point.)  Checking a third box resulted in viewing
+// a diff between a quasi-random pair of versions selected from the three
+// which were selected.   Now clicking the third box results in the first
+// two being unchecked.
+//
 // Revision 1.25  2003/02/17 02:19:01  dairiki
 // Fix so that PageHistory will work when the current revision
 // of a page has been "deleted".

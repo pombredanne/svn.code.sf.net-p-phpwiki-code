@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.75 2003-02-22 21:39:05 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.76 2003-02-27 22:48:44 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -241,7 +241,7 @@ extends _RecentChanges_Formatter
             } else
                 $desc = fmt("All %s are listed below.", $edits);
         }
-        return $desc;
+        return HTML::p(false, $desc);
     }
 
 
@@ -270,10 +270,10 @@ extends _RecentChanges_Formatter
             ."    window.sidebar.addPanel (\"" . sprintf("%s - %s", WIKI_NAME, $pagetitle) . "\",\n"
             ."       \"$sidebarurl\",\"\");\n"
             ."}\n";
-        $jsf = $this->_javascript($addsidebarjsfunc);
+        $jsf = JavaScript($addsidebarjsfunc);
 
         $addsidebarjsclick = " " . "<small style=\"font-weight:normal;\"><a href=\"javascript:addPanel();\">sidebar</a></small>";
-        $jsc = $this->_javascript("if ((typeof window.sidebar == 'object') &&\n"
+        $jsc = JavaScript("if ((typeof window.sidebar == 'object') &&\n"
                                 ."    (typeof window.sidebar.addPanel == 'function'))\n"
                                 ."   {\n"
                                 ."       document.write('$addsidebarjsclick');\n"
@@ -282,19 +282,13 @@ extends _RecentChanges_Formatter
         return HTML(new RawXML("\n"), $jsf, new RawXML("\n"), $jsc);
     }
 
-    function _javascript($script) {
-        return HTML::script(array('language' => 'JavaScript',
-                                  'type'     => 'text/javascript'),
-                            new RawXml("<!-- //\n$script\n// -->"));
-    }
-
     function format ($changes) {
         include_once('lib/InlineParser.php');
         
         $html = HTML(HTML::h2(false, $this->title()));
         if (($desc = $this->description()))
-            $html->pushContent(HTML::p(false, $desc));
-
+            $html->pushContent($desc);
+        
         if ($this->_args['daylist'])
             $html->pushContent(new DayButtonBar($this->_args));
 
@@ -608,7 +602,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.75 $");
+                            "\$Revision: 1.76 $");
     }
 
     function managesValidators() {
@@ -775,6 +769,11 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.75  2003/02/22 21:39:05  dairiki
+// Hackish fix for SF bug #622784.
+//
+// (The root of the problem is clearly a PHP bug.)
+//
 // Revision 1.74  2003/02/21 22:52:21  dairiki
 // Make sure to interpret relative links (like [/Subpage]) in summary
 // relative to correct basepage.
