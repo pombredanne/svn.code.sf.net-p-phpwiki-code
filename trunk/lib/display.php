@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.54 2004-09-17 14:19:41 rurban Exp $');
+rcs_id('$Id: display.php,v 1.55 2004-09-26 14:58:35 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -49,8 +49,6 @@ function actionPage(&$request, $action) {
     $actionpage = $dbi->getPage($action);
     $actionrev = $actionpage->getCurrentRevision();
 
-    // $splitname = SplitPagename($pagename);
-
     $pagetitle = HTML(fmt("%s: %s", 
                           $actionpage->getName(),
                           $WikiTheme->linkExistingWikiWord($pagename, false, $version)));
@@ -95,9 +93,8 @@ function displayPage(&$request, $template=false) {
         $revision = $page->getCurrentRevision();
     }
 
-    $splitname = SplitPagename($pagename);
     if (isSubPage($pagename)) {
-        $pages = explode(SUBPAGE_SEPARATOR,$pagename);
+        $pages = explode(SUBPAGE_SEPARATOR, $pagename);
         $last_page = array_pop($pages); // deletes last element from array as side-effect
         $pagetitle = HTML::span(HTML::a(array('href' => WikiURL($pages[0]),
                                               'class' => 'pagetitle'
@@ -121,7 +118,7 @@ function displayPage(&$request, $template=false) {
         $pagetitle = HTML::a(array('href' => WikiURL($pagename,
                                                      array('action' => _("BackLinks"))),
                                    'class' => 'backlinks'),
-                             $splitname);
+                             SplitPagename($pagename));
         $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
         if ($request->getArg('frame'))
             $pagetitle->setAttr('target', '_top');
@@ -149,7 +146,45 @@ function displayPage(&$request, $template=false) {
     }
 */
     $page_content = $revision->getTransformedContent();
-    
+
+    // if external searchengine (google) referrer, highlight the searchterm
+    // FIXME: move that to the transformer?
+    // OR: add the searchhightplugin line to the content?
+    if ($result = isExternalReferrer($request)) {
+    	if (DEBUG and !empty($result['query'])) {
+            include_once('lib/WikiPlugin.php');
+	    $loader = new WikiPluginLoader;
+            $xml = $loader->expandPI('<'.'?plugin SearchHighLight s="'.$result['query'].'"?'.'>', $request, $markup);
+            if ($xml) {
+              foreach (array_reverse($xml) as $line) {
+                array_unshift($page_content->_content, $line);
+              }
+              array_unshift($page_content->_content, 
+                            HTML::div(_("You searched for: "), HTML::strong($result['query'])));
+            }
+            if (0) {
+            require_once("lib/TextSearchQuery.php");
+            $query = new TextSearchQuery($result['query']);
+            $hilight_re = $query->getHighlightRegexp();
+            $matches = preg_grep("/$hilight_re/i", $revision->getContent());
+            // FIXME!
+            foreach ($page_content->_content as $line) {
+            	if (is_string($line)) {
+            	  $html = array();
+                  while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {
+                    $line = substr($line, strlen($m[0]));
+                    $html[] = $m[1];    // prematch
+                    $html[] = HTML::strong(array('class' => 'search-term'), $m[2]); // match
+                  }
+            	}
+                $html[] = $line;  // postmatch
+                //$html = HTML::dd(HTML::small(array('class' => 'search-context'),
+                //                             $html));
+            }
+            }
+        }
+    }
+   
     $toks['CONTENT'] = new Template('browse', $request, $page_content);
     
     $toks['TITLE'] = $pagetitle;
@@ -160,10 +195,9 @@ function displayPage(&$request, $template=false) {
     $toks['ROBOTS_META'] = 'index,follow';
     $toks['PAGE_DESCRIPTION'] = $page_content->getDescription();
     $toks['PAGE_KEYWORDS'] = GleanKeywords($page);
-    
     if (!$template)
         $template = new Template('html', $request);
-
+    
     $template->printExpansion($toks);
     $page->increaseHitCount();
 
@@ -173,6 +207,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2004/09/17 14:19:41  rurban
+// disable Content-Type header for now, until it is fixed
+//
 // Revision 1.53  2004/06/25 14:29:20  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.
