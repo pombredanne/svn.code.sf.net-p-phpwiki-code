@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.20 2002-01-25 08:30:58 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.21 2002-01-25 14:46:49 dairiki Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -103,31 +103,14 @@ class _PageList_Column_time extends _PageList_Column {
 
 class _PageList_Column_author extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
-        if ($this->_need_rev) {
-            if (!$revision_handle)
-                $revision_handle = $page_handle->getCurrentRevision();
-            $author = $revision_handle->get($this->_field);
-            return $this->_authorLink($author);
-        }
-        else {
-            $author = $page_handle->get($this->_field);
-            return $this->_authorLink($author);
-        }
-    }
-    // adapted from plugin/RecentChanges
-    function _authorLink($author) {
-        if ( $this->authorURL($author) ) {
-            global $Theme;
-            return $Theme->linkExistingWikiWord($author);
-        } else
-            return $author;
-    }
-    function authorURL($author) {
-        global $WikiNameRegexp, $request;
+        global $WikiNameRegexp, $request, $Theme;
         $dbi = $request->getDbh();
+
+        $author = _PageList_Column::_getValue($page_handle, $revision_handle);
         if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
-            return true;
-        return false;
+            return $Theme->linkExistingWikiWord($author);
+        else
+            return $author;
     }
 };
 
