@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.8 2002-02-01 19:54:03 carstenklapp Exp $ -->
+<!-- $Id: body.tmpl,v 1.9 2002-02-07 19:49:57 carstenklapp Exp $ -->
 <body>
 <!-- Page title and logo -->
 <h1><a class="wikilink" 
@@ -16,4 +16,8 @@
         src="http://www.w3.org/Icons/valid-xhtml10"
         alt="Valid XHTML 1.0!" height="31" width="88" />
 </a></div>
+<?php
+if (defined('DEBUG')){
+$t = round(getmicrotime()-$GLOBALS['debugclock'], 3); 
+echo "<p class=\"debug\">Page Execution took $t seconds</p>";} ?>
 </body>
