@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.13 2005-02-07 15:41:29 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.14 2005-04-01 14:32:44 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -43,12 +43,18 @@ extends WikiDB_backend_ADODB
             $this->_expressions['maxminor'] = "MAX(IF(minor_edit<>0,version,0))";
         }
 
+        // esp. needed for utf databases
         if ($this->_serverinfo['version'] > 401.0) {
             global $charset;
             //http://dev.mysql.com/doc/mysql/en/charset-connection.html
-            //SET NAMES 'latin1' or 'utf8'
-            mysql_query("SET NAMES '$charset'");
-            //SET CHARACTER SET latin1 for the default database.
+            if (strtolower($charset) == 'iso-8859-1') {
+                // mysql needs different names and doesn't resolve aliases
+                mysql_query("SET NAMES 'latin1'");
+                //mysql_query("SET CHARACTER SET latin1");
+            } else {
+                //SET NAMES 'latin1' or 'utf8'
+                mysql_query("SET NAMES '$charset'");
+            }
         }
     }
     
