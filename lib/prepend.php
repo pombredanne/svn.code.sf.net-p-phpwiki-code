@@ -5,9 +5,9 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.29 2004-12-22 19:03:15 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.30 2004-12-26 14:10:33 rurban Exp $');
 
-define ('PHPWIKI_VERSION', '1.3.11pre-20041222');
+define('PHPWIKI_VERSION', '1.3.11pre-20041223');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
@@ -101,7 +101,7 @@ function ExitWiki($errormsg = false)
     global $request;
     static $in_exit = 0;
 
-    if (is_object($request))
+    if (is_object($request) and method_exists($request,"finish"))
         $request->finish($errormsg); // NORETURN
 
     if ($in_exit)
