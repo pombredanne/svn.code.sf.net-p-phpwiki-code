@@ -1,5 +1,5 @@
--- $Id: mysql-1_3_11.sql,v 1.1 2004-11-10 19:22:26 rurban Exp $
--- phpwiki 1.3.11 upgrade
+-- $Id: mysql-1_3_11.sql,v 1.2 2005-01-25 08:12:41 rurban Exp $
+-- phpwiki 1.3.11 upgrade from 1.3.10
 
 -- only if you need fast log-analysis (spam prevention, recent referrers)
 -- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
@@ -21,3 +21,4 @@ CREATE TABLE accesslog (
 );
 CREATE INDEX log_time ON accesslog (time_stamp);
 CREATE INDEX log_host ON accesslog (remote_host);
+
