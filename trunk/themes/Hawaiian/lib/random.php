@@ -1,87 +1,109 @@
-<?php
-
-rcs_id('$Id: random.php,v 1.4 2002-01-23 08:23:50 carstenklapp Exp $');
-
-class ImageSet {
-
+<?php rcs_id('$Id: random.php,v 1.5 2002-01-23 11:32:18 carstenklapp Exp $');
+/**
+ */
+class randomImage {
     /**
-     * Constructor
+     * Usage:
+     *
+     * $imgSet = new randomImage($Theme->file("images/pictures"));
+     * $imgFile = "pictures/" . $imgSet->filename;
      */
-    function ImageSet ($dirname) {
-        if (empty($dirname)) {
-            trigger_error(sprintf(_("%s is empty."), 'dirname'),
+    function randomImage ($dirname) {
+
+        $this->filename ="";
+
+        $imageSet  = new imageSet($dirname);
+        $imageList = $imageSet->getFiles();
+        if (empty($imageList)) {
+            trigger_error(sprintf(_("%s is empty."), $dirname),
                           E_USER_NOTICE);
             return; // early return
         }
-        $this->dirname = $dirname;
-        $this->readAvailableImages($this->dirname);
-        //trigger_error(sprintf(_("%s images were found"),
-        //              count($this->imageList)),
-        //              E_USER_NOTICE);//debugging
-        if (empty($this->imageList)) {
-            trigger_error(sprintf(_("%s is empty."), $this->dirname),
-                          E_USER_NOTICE);
-            return; // early return
+
+        //FIXME:
+        //srand(seed()); // Start with a good seed.
+
+        if ($imageList) {
+            $this->filename = $imageList[array_rand($imageList)];
+            //trigger_error(sprintf(_("random image chosen: %s"), $imgname),
+            //              E_USER_NOTICE);//debugging
         }
-        $this->_srand(); // Start with a good seed.
     }
+};
 
-    function pickRandomImage() {
-        $imgname = $this->imageList[array_rand($this->imageList)];
-        //trigger_error(sprintf(_("random image chosen: %s"), $imgname),
-        //              E_USER_NOTICE);//debugging
-        return $imgname;
+
+/**
+ * Prepare a random seed.
+ * 
+ * How random do you want it? See
+ * http://download.php.net/manual/en/function.srand.php
+ * mt_srand ((double) microtime() * 1000000 / pi())
+ */
+function seed($seed = '') {
+    static $wascalled = FALSE;
+    if (!$wascalled) {
+        $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
+        srand($seed);
+        $wascalled = TRUE;
+        //trigger_error("new random seed", E_USER_NOTICE);//debugging
     }
+}
 
+
+class imageSet extends fileSet {
     /**
-     * Prepare a random seed.
-     * 
-     * How random do you want it? See
-     * http://download.php.net/manual/en/function.srand.php
-     * mt_srand ((double) microtime() * 1000000 / pi())
+     * Files are considered images when it's suffix matches one from $InlineImages.
      */
-    function _srand($seed = '') {
-        static $wascalled = FALSE;
-        if (!$wascalled) {
-            $seed = $seed === '' ? (double) microtime() * 1000000 : $seed;
-            srand($seed);
-            $wascalled = TRUE;
-            //trigger_error("new random seed", E_USER_NOTICE);//debugging
-        }
+    function _filenameSelector($filename) {
+        global $InlineImages;
+        return preg_match("/($InlineImages)$/i", $filename);
     }
+};
 
-
+class fileSet {
     /**
-     * Build an array in $this->imageList of image files from
-     * $dirname. Files are considered images when it's suffix matches
-     * one from $InlineImages.
+     * Build an array in $this->_fileList of files from $dirname.
      *
      * (This is a variation of function LoadDir in lib/loadsave.php)
      * See also http://www.php.net/manual/en/function.readdir.php
      */
-    function readAvailableImages() {
-        @ $handle = opendir($dir = $this->dirname);
-        if (empty($handle)) {
+    function getFiles() {
+        return $this->_fileList;
+    }
+
+    function _fileSelector($filename) {
+        // Default selects all filenames, override as needed.
+        return true;
+    }
+
+    function fileSet($directory) {
+        $this->_fileList = array();
+
+        if (empty($directory)) {
+            trigger_error(sprintf(_("%s is empty."), 'dirname'),
+                          E_USER_NOTICE);
+            return; // early return
+        }
+
+        @ $dir_handle = opendir($dir=$directory);
+        if (empty($dir_handle)) {
             trigger_error(sprintf(_("Unable to open directory '%s' for reading"),
                                   $dir), E_USER_NOTICE);
             return; // early return
         }
 
-        $this->imageList = array();
-        while ($fn = readdir($handle)) {
-
-            if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
+        while ($filename = readdir($dir_handle)) {
+            if ($filename[0] == '.' || filetype("$dir/$filename") != 'file')
                 continue;
-            global $InlineImages;
-            if (preg_match("/($InlineImages)$/i", $fn)) {
-                array_push($this->imageList, "$fn");
-            //trigger_error(sprintf(_("found image %s"), $fn), E_USER_NOTICE);//debugging
+            if ($this->_filenameSelector($filename)) {
+                array_push($this->_fileList, "$filename");
+            //trigger_error(sprintf(_("found file %s"), $filename), E_USER_NOTICE);//debugging
             }
         }
-        closedir($handle);
-    }
-
+        closedir($dir_handle);
+   }
 };
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
