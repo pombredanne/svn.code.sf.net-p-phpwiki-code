@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.211 2004-10-22 09:05:11 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.212 2004-10-22 09:15:39 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1516,7 +1516,7 @@ class Alert {
     /**
      * Show the alert box.
      */
-    function show(&$request) {
+    function show() {
         global $request;
 
         $tokens = $this->_tokens;
@@ -1789,6 +1789,10 @@ function longer_timeout($secs = 30) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.211  2004/10/22 09:05:11  rurban
+// added longer_timeout (HttpClient)
+// fixed warning
+//
 // Revision 1.210  2004/10/14 21:06:02  rurban
 // fix dumphtml with USE_PATH_INFO (again). fix some PageList refs
 //
