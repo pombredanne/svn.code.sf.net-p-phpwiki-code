@@ -36,10 +36,12 @@ class _WikiDiffEngine {
 	  // Compute xchanged and ychanged.
 	  $this->_compareseq(0, $xlim, 0, $ylim);
 
+	  $this->edits = array();
+
 	  while ($x < $xlim || $y < $ylim)
 	    {
 	      unset($edit);
-	      
+
 	      // Skip matching "snake".
 	      while ($x < $xlim && $y < $ylim
 		     && !$this->xchanged[$x] && !$this->ychanged[$y])
@@ -48,14 +50,14 @@ class _WikiDiffEngine {
 		  ++$y;
 		  ++$edit['cp'];
 		}
-	      
+
 	      // Find deletes.
 	      while ($x < $xlim && $this->xchanged[$x])
 		{
 		  ++$x;
 		  ++$edit['del'];
 		}
-	      
+
 
 	      // Find adds.
 	      while ($y < $ylim && $this->ychanged[$y])
@@ -328,7 +330,6 @@ class WikiDiffFormatter {
     function _format ($edits, $from_lines)
 	{
 	  $x = 0; $y = 0;
-	  $end_last_context = 0;
 	  $xlim = sizeof($from_lines);
 	  
 	  reset($edits);
@@ -338,7 +339,8 @@ class WikiDiffFormatter {
 	      $y += $edit['cp'];
 	      
 	      // Copy leading context.
-	      $cc = max($end_last_context, $x - $this->context_lines);
+	      if (!isset($cc))
+		  $cc = max(0, $x - $this->context_lines);
 	      if (!$hunks)
 		{
 		  $xoff = $cc;
@@ -362,19 +364,21 @@ class WikiDiffFormatter {
 	      $hunks[] = $hunk;
 	      $hunk = array();
 
-	      // Copy trailing context.
+	      // Update context pointer
 	      $cc = $x;
-	      while ($cc < min($x + $this->context_lines, $xlim))
-		  $hunk['context'][] = $from_lines[$cc++];
-	      $end_last_context = $cc;
-	      $xlen = $cc - $xoff;
-	      $ylen = $cc + $y - $x - $yoff;;
 	      
 	      if (!($edit = next($edits))
 		  || $edit['cp'] > 2 * $this->context_lines)
 		{
+		  // Copy trailing context
+		  while ($cc < min($x + $this->context_lines, $xlim))
+		    $hunk['context'][] = $from_lines[$cc++];
+		  $xlen = $cc - $xoff;
+		  $ylen = $cc + $y - $x - $yoff;;
+		  unset($cc);
 		  $hunks[] = $hunk;
 		  $hunk = array();
+
 		  $xbeg = $xlen ? $xoff + 1 : $xoff;
 		  $ybeg = $ylen ? $yoff + 1 : $yoff;
 		  $html .= $this->_emit_diff( $xbeg,$xlen,$ybeg,$ylen, $hunks );
@@ -403,16 +407,16 @@ class WikiDiffFormatter {
 	{
 	  $html = '<tr><td><table width="100%" bgcolor="white"'
 		. " cellspacing=0 border=0 cellpadding=4>\n"
-		. '<tr><td>'
+		. '<tr bgcolor="#cccccc"><td><tt>'
 		. $this->_diff_header($xbeg, $xlen, $ybeg, $ylen)
-		. "</td></tr>\n<tr><td>\n"
+		. "</tt></td></tr>\n<tr><td>\n"
 		. "<table width=\"100%\" cellspacing=0 border=0 cellpadding=2>\n";
 
 	  for (reset($hunks); $hunk = current($hunks); next($hunks))
 	    {
 	      $html .= $this->_emit_lines($hunk['context'],
 				 $this->context_prefix,
-				 '#cccccc');
+				 '#ffffff');
 	      $html .= $this->_emit_lines($hunk['deletes'],
 				 $this->deletes_prefix,
 				 '#ffcccc');
@@ -463,23 +467,30 @@ $wiki = RetrievePage($dbi, $pagename);
 $dba = OpenDataBase($ArchiveDataBase);
 $archive= RetrievePage($dba, $pagename);
 
-if((!is_array($wiki)) || (!is_array($archive))) {
-   $html = 'There exists no archived version of the page, or the page itself does not exist.';
-}
-else {
-   $html = "<table><tr><td>Current page: <td>version $wiki[version],"
-	 . "<td> last modified on "
-	 . date($datetimeformat, $wiki['lastmodified'])
-	 . "<td>by $wiki[author]\n"
-	 . "<tr><td>Archived page: <td>version $archive[version],"
-	 . "<td> last modified on "
-	 . date($datetimeformat, $archive['lastmodified'])
-	 . "<td> by $archive[author]</table><p>\n";
+$html = '<table><tr><td align="right">Current page:</td>';
+if (is_array($wiki))
+    $html .= "<td>version $wiki[version],</td><td>last modified on "
+           . date($datetimeformat, $wiki['lastmodified'])
+           . "</td><td>by $wiki[author]</td>";
+else
+    $html .= "<td colspan=3><em>None</em></td>";
+$html .= '</tr><tr><td align="right">Archived page:</td>';
+if (is_array($archive))
+    $html .= "<td>version $archive[version],</td><td>last modified on "
+	     . date($datetimeformat, $archive['lastmodified'])
+             . "</td><td>by $archive[author]</td>";
+else
+    $html .= "<td colspan=3><em>None</em></td>";
+$html .= "</tr></table><p>\n";
 
-   $diff = new WikiDiff($archive['content'], $wiki['content']);
-   $plain_fmt = new WikiDiffFormatter();
-   $html .= $plain_fmt->format($diff, $archive['content']);
-}
+
+if (is_array($wiki) && is_array($archive))
+  {
+    $diff = new WikiDiff($archive['content'], $wiki['content']);
+    //$fmt = new WikiDiffFormatter();
+    $fmt = new WikiUnifiedDiffFormatter();
+    $html .= $fmt->format($diff, $archive['content']);
+  }
 
 GeneratePage('MESSAGE', $html, 'Diff of '.htmlspecialchars($pagename), 0);
 ?>
