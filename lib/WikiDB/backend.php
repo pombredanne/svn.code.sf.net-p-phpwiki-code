@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.9 2004-07-09 10:06:49 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.10 2004-10-14 17:19:17 rurban Exp $');
 
 /*
   Pagedata
@@ -323,7 +323,7 @@ class WikiDB_backend
      * @param $limit integer  No more than this many pages
      * @return object A WikiDB_backend_iterator.
      */
-    function most_popular($limit) {
+    function most_popular($limit, $orderby='hits DESC') {
         // This is method fetches all pages, then
         // sorts them by hit count.
         // (Not very efficient.)
@@ -331,7 +331,7 @@ class WikiDB_backend
         // It is expected that most backends will overload
         // method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/MostPopularIter.php');
-        $pages = $this->get_all_pages(false, 'hits DESC', $limit);
+        $pages = $this->get_all_pages(false, $orderby, $limit);
         
         return new WikiDB_backend_dumb_MostPopularIter($this, $pages, $limit);
     }
