@@ -1,20 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: signin.tmpl,v 1.18 2002-09-16 21:51:18 dairiki Exp $ -->
-<script type="text/javascript">
-<!--
-function popup(mylink, windowname)
-{
-if (! window.focus) return true;
-var href;
-if (typeof(mylink) == 'string')
-   href=mylink;
-else
-   href=mylink.href;
-window.open(href, windowname, 'width=600,height=430,scrollbars=yes,resizable=yes,toolbar=yes');
-return false;
-}
-//-->
-</script>
+<!-- $Id: signin.tmpl,v 1.19 2002-09-17 19:32:11 dairiki Exp $ -->
 <?php
 
      $Sep = $Theme->getButtonSeparator();
@@ -34,9 +19,10 @@ return false;
   <?=$Sep?>
   <script language="JavaScript" type="text/javascript"><!--
     document.write('<input type="hidden" name="auth[logout]" value="0" />');
-    function SignOut() { 
-      document.forms["<?=$FORMNAME?>"].elements["auth[logout]"].value = 1;
-      document.forms["<?=$FORMNAME?>"].submit();
+    function SignOut(form) { 
+      var form = document.forms["<?=$FORMNAME?>"];
+      form.elements["auth[logout]"].value = 1;
+      form.submit();
     }
     document.write('<?=$SignOutB?>'); // -->
   </script>
@@ -44,12 +30,24 @@ return false;
     <?= Button("submit:auth[logout]", _("Sign Out"), 'wikiaction') ?>
   </noscript>
 <?php } else { ?>
+  <script type="text/javascript"> <!--
+    function SignIn(form) {
+      <?php /* (comment out:)
+      if (window.focus) {
+        window.open('/EditingPolicy.html',<!-- url -->
+                    'PleaseReadThisFirst',<!-- window name -->
+                    'width=600,height=430,scrollbars=yes,resizable=yes,toolbar=yes');
+      }
+      */ ?>
+      form.submit();
+    }
+    //-->
+    </script>
   <?php $SignInInput = HTML::input(array('type' => 'text',
                                          'name' => "auth[userid]",
                                          'size' => 12,
                                          'maxlength' => 256,
-					 //'onchange' => "popup('/EditingPolicy.html','PleaseReadThisFirst');this.form.submit();"));
-                                         'onchange' => "this.form.submit();"));
+                                         'onchange' => "SignIn(this.form);"));
         $SignInInput->addTooltip(_("Enter your UserId to sign in")) ?>
   <?= Button("submit:auth[login]", _("Sign In"), 'wikiaction')?>
   <?= $SignInInput ?>
