@@ -253,11 +253,10 @@
 
       if ($isNewDay) {
          $newpage[$k++] = "$currentdate\r";
-         $newpage[$k++] = "\t* $pagename ..... $remoteuser\r";
       } else {
          $newpage[$k++] = $recentchanges["text"][$i++];
-         $newpage[$k++] = "\t* $pagename ..... $remoteuser\r";
       }
+      $newpage[$k++] = "\t* [$pagename] ..... $remoteuser\r";
 
       // copy the rest of the page into the new array
       for (; $i < ($numlines + 1); $i++) {
