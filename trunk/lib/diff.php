@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.13 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.14 2001-11-14 21:05:38 dairiki Exp $');
 // diff.php
 //
 // A PHP diff engine for phpwiki.
@@ -1135,12 +1135,12 @@ function showDiff ($dbi, $request) {
                     PageInfoRow($pagename, gettext ("Newer page:"), $new)
                     . PageInfoRow($pagename, gettext ("Older page:"), $old));
 
-    $html .= "<p>\n";
 
     if ($new && $old) {
         $diff = new WikiDiff($old->getContent(), $new->getContent());
         if ($diff->isEmpty()) {
-            $html .= '<hr>[' . gettext ("Versions are identical") . ']';
+            $html .= Element('hr');
+            $html .= QElement('p', '[' . gettext ("Versions are identical") . ']');
         }
         else {
             //$fmt = new WikiDiffFormatter;

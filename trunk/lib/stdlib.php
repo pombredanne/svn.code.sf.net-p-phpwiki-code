@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.43 2001-10-29 18:41:11 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.44 2001-11-14 21:05:38 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -49,6 +49,13 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     return $url;
 }
 
+define('NO_END_TAG_PAT',
+       '/^' . join('|', array('area', 'base', 'basefont',
+                              'br', 'col', 'frame',
+                              'hr', 'img', 'input',
+                              'isindex', 'link', 'meta',
+                              'param')) . '$/i');
+
 function StartTag($tag, $args = '')
 {
    $s = "<$tag";
@@ -59,52 +66,47 @@ function StartTag($tag, $args = '')
 	 if (is_string($val) || is_numeric($val))
 	    $s .= sprintf(' %s="%s"', $key, htmlspecialchars($val));
 	 else if ($val)
-	    $s .= " $key";
+	    $s .= " $key=\"$key\"";
       }
    }
    return "$s>";
 }
 
    
-   define('NO_END_TAG_PAT',
-	  '/^' . join('|', array('area', 'base', 'basefont',
-				 'br', 'col', 'frame',
-				 'hr', 'image', 'input',
-				 'isindex', 'link', 'meta',
-				 'param')) . '$/i');
+function Element($tag, $args = '', $content = '')
+{
+    $html = "<$tag";
+    if (!is_array($args)) {
+        $content = $args;
+        $args = false;
+    }
+    $html = StartTag($tag, $args);
+    if (preg_match(NO_END_TAG_PAT, $tag)) {
+        assert(! $content);
+        return preg_replace('/>$/', " />", $html);
+    } else {
+        $html .= $content;
+        $html .= "</$tag>";//FIXME: newline might not always be desired.
+    }
+    return $html;
+}
 
-   function Element($tag, $args = '', $content = '')
-   {
-      $html = "<$tag";
-      if (!is_array($args))
-      {
-	 $content = $args;
-	 $args = false;
-      }
-      $html = StartTag($tag, $args);
-      if (!preg_match(NO_END_TAG_PAT, $tag))
-      {
-	 $html .= $content;
-	 $html .= "</$tag>";//FIXME: newline might not always be desired.
-      }
-      return $html;
-   }
-
-   function QElement($tag, $args = '', $content = '')
-   {
-      if (is_array($args))
-	 return Element($tag, $args, htmlspecialchars($content));
-      else
-      {
-	 $content = $args;
-	 return Element($tag, htmlspecialchars($content));
-      }
-   }
+function QElement($tag, $args = '', $content = '')
+{
+    if (is_array($args))
+        return Element($tag, $args, htmlspecialchars($content));
+    else {
+        $content = $args;
+        return Element($tag, htmlspecialchars($content));
+    }
+}
    
    function LinkURL($url, $linktext='') {
       // FIXME: Is this needed (or sufficient?)
       if(ereg("[<>\"]", $url)) {
-         return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
+          return Element('strong',
+                         QElement('u', array('class' => 'baduri'),
+                                  'BAD URL -- remove all of <, >, "'));
       }
 
       if (empty($linktext)) {
@@ -162,7 +164,9 @@ function LinkWikiWord($wikiword, $linktext='') {
       // FIXME: Is this needed (or sufficient?)
       //  As long as the src in htmlspecialchars()ed I think it's safe.
       if(ereg('[<>"]', $url)) {
-         return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
+         return Element('strong',
+                        QElement('u', array('class' => 'baduri'),
+                                 'BAD URL -- remove all of <, >, "'));
       }
       return Element('img', array('src' => $url, 'alt' => $alt));
    }
@@ -267,8 +271,9 @@ function LinkPhpwikiURL($url, $text = '') {
 	$args = array();
 
 	if (!preg_match('/^ phpwiki: ([^?]*) [?]? (.*) $/x', $url, $m))
-		return "<b><u>BAD phpwiki: URL</u></b>";
-
+            return Element('strong',
+                           QElement('u', array('class' => 'baduri'),
+                                    'BAD phpwiki: URL'));
 	if ($m[1])
 		$pagename = urldecode($m[1]);
 	$qargs = $m[2];
@@ -420,19 +425,18 @@ function ExtractWikiPageLinks($content)
       //FIXME: fix or toss?
       $links = GetWikiPageLinks($dbi, $pagename);
 
-      $txt = "<b>";
-      $txt .= sprintf (gettext ("%d best incoming links:"), NUM_RELATED_PAGES);
-      $txt .= "</b>\n";
+      $txt = QElement('strong',
+                      sprintf (gettext ("%d best incoming links:"), NUM_RELATED_PAGES));
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['in'][$i])) {
             list($name, $score) = $links['in'][$i];
 	    $txt .= LinkExistingWikiWord($name) . " ($score), ";
          }
       }
-
-      $txt .= "\n<br><b>";
-      $txt .= sprintf (gettext ("%d best outgoing links:"), NUM_RELATED_PAGES);
-      $txt .= "</b>\n";
+      
+      $txt .= "\n" . Element('br');
+      $txt .= Element('strong',
+                      sprintf (gettext ("%d best outgoing links:"), NUM_RELATED_PAGES));
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['out'][$i])) {
             list($name, $score) = $links['out'][$i];
@@ -441,9 +445,9 @@ function ExtractWikiPageLinks($content)
          }
       }
 
-      $txt .= "\n<br><b>";
-      $txt .= sprintf (gettext ("%d most popular nearby:"), NUM_RELATED_PAGES);
-      $txt .= "</b>\n";
+      $txt .= "\n" . Element('br');
+      $txt .= Element('strong',
+                      sprintf (gettext ("%d most popular nearby:"), NUM_RELATED_PAGES));
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['popular'][$i])) {
             list($name, $score) = $links['popular'][$i];
@@ -493,10 +497,10 @@ function split_pagename ($page) {
 }
 
 function NoSuchRevision ($page, $version) {
-    $html = "<p><b>" . gettext("Bad Version") . "</b>\n<p>";
-    $html .= sprintf(gettext("I'm sorry.  Version %d of %s is not in my database."),
-                     $version, htmlspecialchars($page->getName()));
-    $html .= "\n";
+    $html = Element('p', QElement('strong', gettext("Bad Version"))) . "\n";
+    $html .= QElement('p',
+                      sprintf(gettext("I'm sorry.  Version %d of %s is not in my database."),
+                              $version, $page->getName())) . "\n";
 
     include_once('lib/Template.php');
     echo GeneratePage('MESSAGE', $html, gettext("Bad Version"));

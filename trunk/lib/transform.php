@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.24 2001-11-14 17:54:45 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.25 2001-11-14 21:05:38 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 
 define('WT_SIMPLE_MARKUP', 0);
@@ -353,7 +353,7 @@ function wtt_footnotes($match, &$trfrm)
    // FIXME: should this set HTML mode?
    $ftnt = trim(substr($match,1,-1)) + 0;
    $fntext = "[$ftnt]";
-   $html = "<br>";
+   $html = Element('br');
 
    $fnlist = $trfrm->user_data['footnotes'][$ftnt];
    if (!is_array($fnlist))
@@ -449,7 +449,7 @@ function wtt_bumpylinks($match, &$trfrm)
 
    // %%% are linebreaks
    function wtm_linebreak($line, &$transformer) {
-      return str_replace('%%%', '<br>', $line);
+      return str_replace('%%%', Element('br'), $line);
    }
 
    // bold and italics
@@ -509,8 +509,8 @@ function wtm_plugin($line, &$transformer) {
       if (preg_match("/^([#*;]*\*)[^#]/", $line, $matches)) {
          $numtabs = strlen($matches[1]);
          $line = preg_replace("/^([#*]*\*)/", '', $line);
-         $html = $trfrm->SetHTMLMode('ul', $numtabs) . '<li>';
-         $line = $html . $line;
+         $html = $trfrm->SetHTMLMode('ul', $numtabs);
+         $line = $html . Element('li', $line);
       }
       return $line;
    }
@@ -520,8 +520,8 @@ function wtm_plugin($line, &$transformer) {
       if (preg_match("/^([#*;]*\#)/", $line, $matches)) {
          $numtabs = strlen($matches[1]);
          $line = preg_replace("/^([#*]*\#)/", "", $line);
-         $html = $trfrm->SetHTMLMode('ol', $numtabs) . '<li>';
-         $line = $html . $line;
+         $html = $trfrm->SetHTMLMode('ol', $numtabs);
+         $line = $html . Element('li', $line);
       }
       return $line;
    }
@@ -533,8 +533,8 @@ function wtm_plugin($line, &$transformer) {
          $numtabs = strlen($matches[1]);
          $line = $trfrm->SetHTMLMode('dl', $numtabs);
 	 if(trim($matches[2]))
-            $line .= '<dt>' . $matches[2];
-	 $line .= '<dd>' . $matches[3];
+            $line .= Element('dt', $matches[2]);
+	 $line .= Element('dd', $matches[3]);
       }
       return $line;
    }
@@ -549,11 +549,13 @@ function wtm_plugin($line, &$transformer) {
 
    // mode: headings, i.e. <h1>, <h2>, <h3>
    // lines starting with !,!!,!!! are headings
+   // Patch from steph/tara <tellme@climbtothestars.org>:
+   //    use <h2>, <h3>, <h4> since <h1> is page title.
    function wtm_headings($line, &$trfrm) {
       if (preg_match("/^(!{1,3})[^!]/", $line, $whichheading)) {
-	 if($whichheading[1] == '!') $heading = 'h3';
-	 elseif($whichheading[1] == '!!') $heading = 'h2';
-	 elseif($whichheading[1] == '!!!') $heading = 'h1';
+	 if($whichheading[1] == '!') $heading = 'h4';
+	 elseif($whichheading[1] == '!!') $heading = 'h3';
+	 elseif($whichheading[1] == '!!!') $heading = 'h2';
 	 $line = preg_replace("/^!+/", '', $line);
 	 $line = $trfrm->SetHTMLMode($heading) . $line;
       }
@@ -601,7 +603,7 @@ function wtm_table($line, &$trfrm)
    // allowed within <p>'s. (e.g. "<p><hr></p>" is not valid HTML.)
    function wtm_hr($line, &$trfrm) {
       if (preg_match('/^-{4,}(.*)$/', $line, $m)) {
-	 $line = $trfrm->SetHTMLMode('', 0) . '<hr>';
+         $line = $trfrm->SetHTMLMode('', 0) . Element('hr');
 	 if ($m[1])
 	    $line .= $trfrm->SetHTMLMode('p') . $m[1];
       }

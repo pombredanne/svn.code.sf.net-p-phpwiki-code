@@ -1,43 +1,38 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-  "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<html>
+<?php echo "<?xml version='1.0' encoding='ISO-8859-1'?>\n"; ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
 ${RCS_IDS}
 -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<!-- <meta name="robots" content="index,follow"> -->
-<base href="${BASE_URL}">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<!-- <meta name="robots" content="index,follow" /> -->
+<base href="${BASE_URL}" />
 <title>${SPLIT_PAGE}</title>
 <!--
 -->
-<link rel="stylesheet" title="phpwiki" href="${CSS_URL}" type="text/css">
+<link rel="stylesheet" title="phpwiki" href="${CSS_URL}" type="text/css" />
 </head>
 <body>
 <h1>
 <div><a class="wikilink" 
         href="${BROWSE}HomePage"
         ><img src="${LOGO}"
-              border=0 alt="[phpwiki]" 
-              align="right" width=50 height=50></a></div>
-<!--FIXME: this link is broken unless pages are in pathinfo -->
-<!--<a title="Get BackLinks for ${PAGE}"
-   onmouseover="window.status='Get BackLinks for ${PAGE}';return true;"
-   class="backlinks"
-   href="${BROWSE}BackLinks?page=${PAGEURL}"
-   ><span class="wikiword">${SPLIT_PAGE}</span></a>-->
+              border="0" alt="[phpwiki]" 
+              align="right" width="50" height="50" /></a></div>
 <?plugin-link BackLinks description="Get BackLinks for [pagename]"
                         page="[pagename]" class="backlinks"
                         linktext="${SPLIT_PAGE}" ?>
 </h1>
-<div class="br"><br clear="both" class="ignore"></div>
+<div class="br"><br clear="all" class="ignore" /></div>
 <?php if (! $IS_CURRENT) { ?>
-  <p><b>Note</b>: You are viewing an old revision of this page.
+  <p><strong>Note</strong>: You are viewing an old revision of this page.
      Click <a href="${BROWSE}${PAGEURL}">here</a> to view the current version.</p>
-  <hr class="ignore" noshade>
+  <hr class="ignore" noshade="noshade" />
 <?php } ?>
 <div class="wikitext">${CONTENT}</div>
-<hr class="ignore" noshade>
+<hr class="ignore" noshade="noshade" />
 <form action="<?php echo WikiURL('TitleSearch'); ?>" method="get">
 <!-- I would like not to have to use these tables, and managed to
      get this stuff to work more or less correctly using
@@ -45,7 +40,7 @@ ${RCS_IDS}
      to cause MSIE4.01/NT to hang. 
      So, we use tables...  -->
 <table class="toolbar" width="100%"
-       cellpadding=0 cellspacing=0 border=0><tr valign="baseline">
+       cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
   <td>
     <?php if ($IS_CURRENT) { ?>
       Last edited on ${LASTMODIFIED}
@@ -55,17 +50,16 @@ ${RCS_IDS}
   </td>
   <td align="right">
   <?php echo LinkExistingWikiWord('FindPage') ?> 
-  | <span><input type="hidden" name="auto_redirect" value="1">
+  | <span><input type="hidden" name="auto_redirect" value="1" />
     <input type="text"  name="s" size="12"
            title="Quick Search"
            onmouseover="window.status='Quick Search'; return true;"
-           onmouseout="window.status=''; return true;"></span>
-  <!-- | <a class="wikiaction" href="${BROWSE}LikePages?page=${PAGEURL}">LikePages</a> -->
+           onmouseout="window.status=''; return true;" /></span>
   | <?plugin-link LikePages page="[pagename]" description="List LikePages for [pagename]"?>
   </td>
 </tr></table>
 <table class="toolbar" width="100%"
-       cellpadding=0 cellspacing=0 border=0><tr valign="baseline">
+       cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
   <td>
     <?php if ($page->get('locked') && !$user->is_admin()) { ?>
       Page locked
@@ -104,7 +98,7 @@ ${RCS_IDS}
 </tr></table>
 
 <?php /*
-<hr class="ignore" noshade>
+<hr class="ignore" noshade="noshade" />
 <small>${RELATEDPAGES}</small>
 */ ?>
 <?php // FIXME:hack
