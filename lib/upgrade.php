@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.21 2004-07-03 16:51:05 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.22 2004-07-03 17:21:28 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -377,9 +377,9 @@ function CheckDatabaseUpdate(&$request) {
         mysql_free_result($fields);
     }
     // check for mysql 4.1.x/5.0.0a binary search bug.
-    //   related to http://bugs.mysql.com/bug.php?id=1491, but not exactly.
-    // "select * from page where LOWER(pagename) like 'search'" does not apply LOWER!
-    // confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a, not yet tested for 4.1.2alpha,
+    //   http://bugs.mysql.com/bug.php?id=4398
+    // "select * from page where LOWER(pagename) like '%search%'" does not apply LOWER!
+    // confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a; not yet tested for 4.1.2alpha,
     if (substr($backend_type,0,5) == 'mysql') {
   	echo _("check for mysql 4.1.x/5.0.0 binary search problem")," ...";
   	$result = mysql_query("SELECT VERSION()",$dbh->_backend->connection());
@@ -491,6 +491,12 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.21  2004/07/03 16:51:05  rurban
+ optional DBADMIN_USER:DBADMIN_PASSWD for action=upgrade (if no ALTER permission)
+ added atomic mysql REPLACE for PearDB as in ADODB
+ fixed _lock_tables typo links => link
+ fixes unserialize ADODB bug in line 180
+
  Revision 1.20  2004/07/03 14:48:18  rurban
  Tested new mysql 4.1.3-beta: binary search bug as fixed.
  => fixed action=upgrade,
