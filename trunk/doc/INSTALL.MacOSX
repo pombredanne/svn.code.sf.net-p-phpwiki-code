@@ -111,11 +111,6 @@ warnings about a depreciated user function with each page load.
 2.  Take the contents of the 'pear' folder from the official PHP 4.1
     tarball (php-4.1.0.tar.gz) and move it into '/System/Library/PHP'.
 
-A precompiled PHP 4.1 module for Apache and the PearDB support files
-are also available at:
-
-    <http://homepage.mac.com/carstenklapp/>
-
 
 PhpWiki Configuration Notes
 ---------------------------
@@ -360,6 +355,6 @@ ProgrammingTopics/TextDisplay/Tasks/TextDefaultsAndBindings.html>
 If you have problems after all of this, try contacting the
 phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
 
-Carsten Klapp <carstenklapp@yahoo.ca>
+Carsten Klapp <carstenklapp@users.sourceforge.net>
 
-$Id: INSTALL.MacOSX,v 1.15 2003-01-29 21:43:17 carstenklapp Exp $
+$Id: INSTALL.MacOSX,v 1.16 2003-01-29 21:49:18 carstenklapp Exp $
