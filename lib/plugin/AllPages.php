@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.31 2004-09-17 14:25:45 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.32 2004-10-05 17:00:04 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.31 $");
+                            "\$Revision: 1.32 $");
     }
 
     function getDefaultArguments() {
@@ -50,6 +50,7 @@ extends WikiPlugin
              array(
                    'noheader'      => false,
                    'include_empty' => false,
+                   //'pages'         => false, // DONT, this would be ListPages then.
                    'info'          => '',
                    'debug'         => false
                    ));
@@ -70,7 +71,7 @@ extends WikiPlugin
         	return HTML();
         }
         //extract($args);
-        $pages = isset($args['pages']) ? $args['pages'] : false;
+        //$pages = isset($args['pages']) ? $args['pages'] : false;
         // Todo: extend given _GET args
         // TODO: shouldn't the REQUEST sortby,limit override be handled in getArgs for all?
         if ($sorted = $request->getArg('sortby')) 
@@ -99,13 +100,15 @@ extends WikiPlugin
                 $caption = fmt("List of pages created by [%s] (%d total):", 
                                WikiLink($args['creator'], 'if_known'), 
                                count($pages));
+        //} elseif ($pages) {
+        //    $args['count'] = count($pages);
         } else {
-            if (! $request->getArg('count'))  $args['count'] = $dbi->numPages(false,$args['exclude']);
+            if (! $request->getArg('count'))  $args['count'] = $dbi->numPages($args['include_empty'],$args['exclude']);
             else $args['count'] = $request->getArg('count');
-            $pages = false;
+            //$pages = false; // ??
         }
-        if (empty($args['count']) and !empty($pages))
-            $args['count'] = count($pages);
+        //if (empty($args['count']) and !empty($pages))
+        //    $args['count'] = count($pages);
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         if (!$args['noheader']) $pagelist->setCaption($caption);
 
@@ -113,10 +116,10 @@ extends WikiPlugin
         if ($args['include_empty'])
             $pagelist->_addColumn('version');
 
-        if ($pages !== false)
+        /*if ($pages !== false)
             $pagelist->addPageList($pages);
-        else
-            $pagelist->addPages( $dbi->getAllPages($args['include_empty'], $args['sortby'], $args['limit']) );
+        else */
+        $pagelist->addPages( $dbi->getAllPages($args['include_empty'], $args['sortby'], $args['limit']) );
         if ($args['debug']) {
             return HTML($pagelist,
                         HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
@@ -132,6 +135,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2004/09/17 14:25:45  rurban
+// update comments
+//
 // Revision 1.30  2004/07/09 10:06:50  rurban
 // Use backend specific sortby and sortable_columns method, to be able to
 // select between native (Db backend) and custom (PageList) sorting.

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.91 2004-10-04 23:41:19 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.92 2004-10-05 17:00:04 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -299,12 +299,19 @@ class WikiDB {
     // Do we need this?
     //function nPages() { 
     //}
-    // Yes, for paging. Renamed.
+    /**
+     * Yes, for paging. Renamed.
+     *
+     * filter = true: include also empty pages
+     * exclude: comma-seperated list pagenames
+     */
     function numPages($filter=false, $exclude='') {
     	if (method_exists($this->_backend, 'numPages'))
+            // FIXME: currently are all args ignored.
             $count = $this->_backend->numPages($filter, $exclude);
         else {
-            $iter = $this->getAllPages();
+            // FIXME: exclude ignored.
+            $iter = $this->getAllPages($filter);
             $count = $iter->count();
             $iter->free();
         }
@@ -1992,6 +1999,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.91  2004/10/04 23:41:19  rurban
+// delete notify: fix, @unset syntax error
+//
 // Revision 1.90  2004/09/28 12:50:22  rurban
 // https://sourceforge.net/forum/forum.php?thread_id=1150924&forum_id=18929
 //
