@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.7 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.8 2002-01-23 05:13:38 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -17,8 +17,8 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('s'		=> false,
-                     'noheader'		=> false);
+        return array('s'	=> false,
+                     'noheader' => false);
     }
 
         
@@ -38,11 +38,12 @@ extends WikiPlugin
         $found = 0;
 
         $list = HTML::dl();
-        
+
+        global $Theme;
         while ($page = $pages->next()) {
             $count++;
             $name = $page->getName();
-            $list->pushContent(HTML::dt(LinkExistingWikiWord($name)));
+            $list->pushContent(HTML::dt($Theme->LinkExistingWikiWord($name)));
             if ($hilight_re)
                 $list->pushContent($this->showhits($page, $hilight_re));
         }
