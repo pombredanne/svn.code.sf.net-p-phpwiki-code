@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.232 2005-02-02 19:34:09 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.233 2005-02-02 20:40:12 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -586,6 +586,23 @@ class WikiPageName
     function WikiPageName($name, $basename=false, $anchor=false) {
         if (is_string($name)) {
             $this->shortName = $name;
+            if (strstr($name, ':')) {
+            	$this->shortName = substr(strstr($name, ':'), 1);
+	  	$map = getInterwikiMap(); // allow overrides to custom maps
+	  	$link = $map->link($name);
+	  	$url = $link->getAttr('href');
+	  	if (strstr($url, '?'))
+	  	    list($name,) = explode("?", $url);
+                // expand Talk or User, but not to absolute urls!
+	  	if (strstr($url, '//')) {
+            	    if ($m[1] == 'Talk')
+            	        $name = $name . SUBPAGE_SEPARATOR . _("Discussion");
+            	    elseif ($m[1] == 'User')
+            	        $name = $name;
+	  	} else {
+	  	    $name = $url;
+	  	}
+            }
         
             if ($name == '' or $name[0] == SUBPAGE_SEPARATOR) {
                 if ($basename)
@@ -603,6 +620,10 @@ class WikiPageName
         $this->anchor = (string)$anchor;
     }
 
+    function getName() {
+    	return $this->name;
+    }
+    
     function getParent() {
         $name = $this->name;
         if (!($tail = strrchr($name, SUBPAGE_SEPARATOR)))
@@ -1916,6 +1937,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.232  2005/02/02 19:34:09  rurban
+// more maps: Talk, User
+//
 // Revision 1.231  2005/01/30 19:48:52  rurban
 // enable ps memory on unix
 //

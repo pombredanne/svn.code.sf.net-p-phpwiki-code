@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.42 2005-02-02 19:36:56 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.43 2005-02-02 20:40:12 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -216,9 +216,9 @@ class PageType_interwikimap extends PageType
         if (empty($map["Talk"])) {
             $pagename = $GLOBALS['request']->getArg('pagename');
             if (string_ends_with($pagename, SUBPAGE_SEPARATOR._("Discussion")))
-                $map["Talk"] = WikiURL($pagename);
+                $map["Talk"] = "%s";
             else
-                $map["Talk"] = WikiURL($pagename.SUBPAGE_SEPARATOR._("Discussion"));
+                $map["Talk"] = "%s".SUBPAGE_SEPARATOR._("Discussion");
         }
         // User:ReiniUrban => ReiniUrban or Users/ReiniUrban
         // Can be easily overriden by a customized InterWikiMap: 
@@ -474,6 +474,9 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2005/02/02 19:36:56  rurban
+// more plans
+//
 // Revision 1.41  2005/02/02 19:34:09  rurban
 // more maps: Talk, User
 //
