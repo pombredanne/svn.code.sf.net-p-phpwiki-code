@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21.2.3 2001-03-02 21:26:03 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.4 2001-08-18 01:30:56 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -182,7 +182,10 @@
 
       if ($level > 10) {
 	  // arbitrarily limit tag nesting
-	  ExitWiki(gettext ("Nesting depth exceeded in SetHTMLOutputMode"));
+	  //ExitWiki(gettext ("Nesting depth exceeded in SetHTMLOutputMode"));
+	  // Now, instead of crapping out when we encounter a deeply
+	  // nested list item, we just clamp the the maximum depth.
+	  $level = 10;
       }
       
       if ($tagtype == ZERO_LEVEL) {
