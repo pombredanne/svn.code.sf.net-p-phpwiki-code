@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.2 2002-02-25 01:04:12 carstenklapp Exp $');
+rcs_id('$Id: WantedPages.php,v 1.3 2002-02-25 01:10:24 carstenklapp Exp $');
 /*
  This file is part of PhpWiki.
 
@@ -92,7 +92,8 @@ extends WikiPlugin
                     $pagelink = WikiLink($page);
                 else
                     $pagelink = WikiLink($page, 'unknown');
-                $caption = fmt("Wanted Pages for %s (%d total):", $pagelink);
+                $c = count($this->pagelist);
+                $caption = fmt("Wanted Pages for %s (%d total):", $pagelink, $c);
             }
             return $this->_generateList($caption);
 
@@ -149,7 +150,7 @@ extends WikiPlugin
         $list = HTML();
         $c = count($this->pagelist);
         if ($caption)
-            $list->pushContent(HTML::p(fmt($caption, $c)));
+            $list->pushContent(HTML::p($caption));
 
         if ($c > 0)
             $list->pushContent(HTML::ul($this->_rows));
