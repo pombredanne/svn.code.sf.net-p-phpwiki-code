@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.58 2004-04-20 17:08:28 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.59 2004-04-26 12:35:21 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2004,8 +2004,14 @@ extends _IMAPPassUser {
     function checkPass($submitted_password) {
         $userid = $this->_userid;
         $pass = $submitted_password;
-        $host = defined('POP3_AUTH_HOST') ? POP3_AUTH_HOST : 'localhost';
-        $port = defined('POP3_AUTH_PORT') ? POP3_AUTH_PORT : 110;
+        $host = defined('POP3_AUTH_HOST') ? POP3_AUTH_HOST : 'localhost:110';
+        if (defined('POP3_AUTH_PORT'))
+            $port = POP3_AUTH_PORT;
+        elseif (strstr($host,':')) {
+            list(,$port) = split(':',$host);
+        } else {
+            $port = 110;
+        }
         $retval = false;
         $fp = fsockopen($host, $port, $errno, $errstr, 10);
         if ($fp) {
@@ -2031,6 +2037,9 @@ extends _IMAPPassUser {
             // Get the sayonara message
             $line = fgets($fp, 1024);
             fclose($fp);
+        } else {
+            trigger_error(_("Couldn't connect to %s","POP3_AUTH_HOST ".$host.':'.$port),
+                          E_USER_WARNING);
         }
         $this->_authmethod = 'POP3';
         if ($retval) {
@@ -2064,7 +2073,7 @@ extends _PassUser
 
         $this->_userid = $UserName;
         // read the .htaccess style file. We use our own copy of the standard pear class.
-        include_once 'lib/pear/File_Passwd.php';
+        //include_once 'lib/pear/File_Passwd.php';
         $this->_may_change = defined('AUTH_USER_FILE_STORABLE') && AUTH_USER_FILE_STORABLE;
         if (empty($file) and defined('AUTH_USER_FILE'))
             $file = AUTH_USER_FILE;
@@ -2097,7 +2106,7 @@ extends _PassUser
     }
 
     function checkPass($submitted_password) {
-        include_once 'lib/pear/File_Passwd.php';
+        //include_once 'lib/pear/File_Passwd.php';
         if ($this->_file->verifyPassword($this->_userid,$submitted_password)) {
             $this->_authmethod = 'File';
             $this->_level = WIKIAUTH_USER;
@@ -2419,7 +2428,7 @@ extends _UserPreference
             list($ok,$msg) = ValidateMail($value);
             if ($ok and mail($value,"[".WIKI_NAME ."] "._("Email Verification"),
                      sprintf(_("Welcome to %s!\nYou email account is verified and\nwill be used to send pagechange notifications.\nSee %s"),
-                             WIKI_NAME, WikiUrl($GLOBALS['request']->getArg('pagename'),'',true))))
+                             WIKI_NAME, WikiURL($GLOBALS['request']->getArg('pagename'),'',true))))
                 $this->set('emailVerified',1);
         }
     }
@@ -2793,6 +2802,14 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2004/04/20 17:08:28  rurban
+// Some IniConfig fixes: prepend our private lib/pear dir
+//   switch from " to ' in the auth statements
+//   use error handling.
+// WikiUserNew changes for the new "'$variable'" syntax
+//   in the statements
+// TODO: optimization to put config vars into the session.
+//
 // Revision 1.57  2004/04/19 18:27:45  rurban
 // Prevent from some PHP5 warnings (ref args, no :: object init)
 //   php5 runs now through, just one wrong XmlElement object init missing
