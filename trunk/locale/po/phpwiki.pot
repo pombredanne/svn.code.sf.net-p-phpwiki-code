@@ -343,7 +343,7 @@ msgid "PageHistory"
 msgstr ""
 
 #: ../lib/plugin/PageHistory.php:204
-msgid "List PageHistory for [pagename]"
+msgid "List PageHistory for %s"
 msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:84

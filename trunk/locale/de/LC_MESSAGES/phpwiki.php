@@ -229,11 +229,11 @@ $locale["Thank you for editing %s."] =
 $locale["The %d most recent %s are listed below."] =
    "Die %d Jüngste %s sind unten auflistet.";
 $locale["The %d most recent %s during the past %.1f days are listed below."] =
-   "Die %d Jüngste %s innerhalb %,1f Tagen sind unten auflistet.";
+   "Die %d Jüngste %s innerhalb %.1f Tagen sind unten auflistet.";
 $locale["The %s most popular pages of this wiki:"] =
    "Die %s meistbesuchten Seiten dieses Wikis:";
 $locale["The most recent %s during the past %.1f days are listed below."] =
-   "Die Jüngste %s innerhalb %,1f Tagen sind unten auflistet.";
+   "Die Jüngste %s innerhalb %.1f Tagen sind unten auflistet.";
 $locale["These pages link to %s:"] =
    "Diese Seiten sind in Verbindung mit %s:";
 $locale["These pages share an initial or final title word with '%s'"] =
