@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.20 2004-03-18 21:41:10 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.21 2004-04-01 06:29:51 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -770,21 +770,46 @@ extends WikiDB_backend
     }
 };
 
-class WikiDB_backend_ADODB_iter
+class WikiDB_backend_ADODB_generic_iter
 extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_ADODB_iter(&$backend, &$query_result) {
-        // ADODB equivalent of this?  May not matter, since we should never get here
-        /* 
-        if (DB::isError($query_result)) {
-             // This shouldn't happen, I thought.
-             $backend->_pear_error_callback($query_result);
-        }
-        */
+    function WikiDB_backend_ADODB_generic_iter(&$backend, &$query_result) {
         $this->_backend = &$backend;
         $this->_result = $query_result;
     }
     
+    function count() {
+        if (!$this->_result)
+            return false;
+        return $this->_result->numRows();
+    }
+
+    function next() {
+        $result = &$this->_result;
+        if (!$result || $result->EOF) {
+            $this->free();
+            return false;
+        }
+        $backend = &$this->_backend;
+
+//      $record = $this->_result->fetchRow(DB_FETCHMODE_ASSOC);
+        $record = $result->fields;
+        $result->MoveNext();
+        return $record;
+    }
+
+    function free () {
+        if ($this->_result) {
+//          $this->_result->free();
+            $this->_result->Close();
+            $this->_result = false;
+        }
+    }
+}
+
+class WikiDB_backend_ADODB_iter
+extends WikiDB_backend_ADODB_generic_iter
+{
     function next() {
         $result = &$this->_result;
         if (!$result || $result->EOF) {
@@ -808,14 +833,6 @@ extends WikiDB_backend_iterator
         }
         
         return $rec;
-    }
-
-    function free () {
-        if ($this->_result) {
-//          $this->_result->free();
-            $this->_result->Close();
-            $this->_result = false;
-        }
     }
 }
 

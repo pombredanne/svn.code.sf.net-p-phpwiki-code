@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.2 2004-03-31 06:22:22 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.3 2004-04-01 06:29:51 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -23,7 +23,7 @@ rcs_id('$Id: RateIt.php,v 1.2 2004-03-31 06:22:22 rurban Exp $');
 //define('RATING_STORAGE','WIKIPAGE');
 define('RATING_STORAGE','SQL');
 // leave undefined for internal, slow php engine.
-define('RATING_EXTERNAL',PHPWIKI_DIR . 'suggest.exe');
+//define('RATING_EXTERNAL',PHPWIKI_DIR . 'suggest.exe');
 
 /**
  * RateIt: A recommender system, based on MovieLens and suggest.
@@ -99,7 +99,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function RatingWidgetJavascript() {
@@ -113,7 +113,7 @@ function displayRating(imgPrefix, ratingvalue, pred) {
     var imgName = imgPrefix + i;
     var imgSrc = '".$img."';
     if (pred)
-      document[imgName].title = '"._("Predicted value ")."'+ratingvalue;
+      document[imgName].title = '"._("Predicted rating ")."'+ratingvalue;
     else    
       document[imgName].title = '"._("Your rating ")."'+ratingvalue;
     if (i<=(ratingvalue*2)) {
@@ -125,7 +125,10 @@ function displayRating(imgPrefix, ratingvalue, pred) {
       document[imgName].src = imgSrc + ((i%2) ? 'Nk1' : 'Nk0') + '.png';
     }
   }
-  document[cancel].src = imgSrc + 'Cancel' + ((ratingvalue) ? '.png' : 'N.png');
+  if ((pred == 0) && (ratingvalue > 0))
+    document[cancel].src = imgSrc + 'Cancel.png';
+  else
+    document[cancel].src = imgSrc + 'CancelN.png';
 }
 function click(actionImg, pagename, version, imgPrefix, dimension, rating) {
   if (rating == 'X') {
@@ -208,6 +211,11 @@ function deleteRating(actionImg, page, dimension) {
 
         if (RATING_STORAGE == 'SQL') {
             $dbi = &$this->_dbi->_backend;
+            if (isa($dbi,'WikiDB_backend_PearDB'))
+                $this->dbtype = "PearDB";
+            else
+                $this->dbtype = "ADODB";
+            $this->iter_class = "WikiDB_backend_".$this->dbtype."_generic_iter";
             extract($dbi->_table_names);
             if (empty($rating_tbl)) {
                 $rating_tbl = (!empty($GLOBALS['DBParams']['prefix']) 
@@ -303,8 +311,13 @@ function deleteRating(actionImg, page, dimension) {
         if (!$request->_user->isSignedIn()) return;
         if (!isset($args)) $args = array();
         $args['small'] = 1;
+        $argstr = '';
+        foreach ($args as $key => $value)
+            $argstr .= $key."=".$value;
+        $widget = $this->run($request->_dbi, $argstr, $request, $basepage);
+
         return $this->makeBox(WikiLink(_("RateIt"),'',_("Rate It")),
-                              $this->RatingWidgetHtml($args));
+                              $widget);
     }
 
     function addRating($rating, $userid=null, $pagename=null, $dimension=null) {
@@ -433,7 +446,7 @@ function deleteRating(actionImg, page, dimension) {
                    . " FROM $rating_tbl r, $page_tbl p "
                    . $where. " GROUP BY raterpage";
             $result = $dbi->_dbh->query($query);
-            $iter = new WikiDB_backend_PearDB_generic_iter($this,$result);
+            $iter = new $this->iter_class($this,$result);
             $row = $iter->next();
             return $row['avg'];
         } else {
@@ -485,7 +498,7 @@ function deleteRating(actionImg, page, dimension) {
                             $orderby=null, $pageinfo = "ratee") {
         if (empty($dimension)) $dimension=null;
         $result = $this->_sql_get_rating_result($dimension, $rater, $ratee, $orderby, $pageinfo);
-        return new WikiDB_backend_PearDB_generic_iter($this, $result);
+        return new $this->iter_class($this, $result);
     }
 
     /**
@@ -495,7 +508,8 @@ function deleteRating(actionImg, page, dimension) {
                                   $orderby=null, $pageinfo = "ratee") {
         if (empty($dimension)) $dimension=null;
         $result = $this->_sql_get_rating_result($dimension, $rater, $ratee, $orderby, $pageinfo);
-        return new WikiDB_backend_PearDB_iter($this, $result);
+        
+        return new $this->iter_class($this, $result);
     }
 
     /**
@@ -680,6 +694,7 @@ function deleteRating(actionImg, page, dimension) {
             $img_attr['name'] = $imgPrefix . $i;
             $img_attr['border'] = 0;
             $a1->pushContent(HTML::img($img_attr));
+            $a1->addToolTip(_("Rate the topic of this page"));
             $html->pushContent($a1);
             //This adds a space between the rating smilies:
             // if (($i%2) == 0) $html->pushContent(' ');
@@ -694,7 +709,7 @@ function deleteRating(actionImg, page, dimension) {
             $a0->addToolTip($msg);
             $html->pushContent($a0);
         } elseif ($pred) {
-            $msg = _("Not seen");
+            $msg = _("No opinion");
             $html->pushContent(HTML::img(array('src' => $Theme->getImageUrl("RateItCancelN"),
                                                'name'=> $imgPrefix.'Cancel',
                                                'alt' => $msg)));
@@ -721,6 +736,12 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/03/31 06:22:22  rurban
+// shorter javascript,
+// added prediction buttons and display logic,
+// empty HTML if not signed in.
+// fixed deleting (empty dimension => 0)
+//
 // Revision 1.1  2004/03/30 02:38:06  rurban
 // RateIt support (currently no recommendation engine yet)
 //

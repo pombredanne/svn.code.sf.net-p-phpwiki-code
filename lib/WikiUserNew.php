@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.45 2004-03-30 02:14:03 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.46 2004-04-01 06:29:51 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1177,7 +1177,7 @@ extends _PassUser
     function userExists() {
         return $this->_HomePagehandle and $this->_HomePagehandle->exists();
     }
-        
+
     /** A PersonalPagePassUser requires PASSWORD_LENGTH_MINIMUM.
      *  BUT if the user already has a homepage with an empty password 
      *  stored, allow login but warn him to change it.
@@ -2640,6 +2640,13 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2004/03/30 02:14:03  rurban
+// fixed yet another Prefs bug
+// added generic PearDb_iter
+// $request->appendValidators no so strict as before
+// added some box plugin methods
+// PageList commalist for condensed output
+//
 // Revision 1.44  2004/03/27 22:01:03  rurban
 // two catches by Konstantin Zadorozhny
 //
