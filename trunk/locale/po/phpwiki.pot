@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-10-19 23:29+0200\n"
+"POT-Creation-Date: 2000-10-20 13:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,53 +14,205 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: ENCODING\n"
 
-#: ../lib/config.php:158
+#: lib/config.php:158
 msgid "./pgsrc"
 msgstr ""
 
-#: ../lib/config.php:168
+#: lib/config.php:168
 msgid "templates/browse.html"
 msgstr ""
 
-#: ../lib/config.php:169
+#: lib/config.php:169
 msgid "templates/editpage.html"
 msgstr ""
 
-#: ../lib/config.php:170
+#: lib/config.php:170
 msgid "templates/editlinks.html"
 msgstr ""
 
-#: ../lib/config.php:171
+#: lib/config.php:171
 msgid "templates/message.html"
 msgstr ""
 
-#: ../lib/diff.php:1017
+#: lib/diff.php:675
+#, c-format
+msgid "WikiDiff::apply: line count mismatch: %s != %s"
+msgstr ""
+
+#: lib/diff.php:735
+msgid "WikiDiff::_check: failed"
+msgstr ""
+
+#: lib/diff.php:745
+msgid "WikiDiff::_check: edit sequence is non-optimal"
+msgstr ""
+
+#: lib/diff.php:749
+#, c-format
+msgid "WikiDiff Okay: LCS = %s"
+msgstr ""
+
+#: lib/diff.php:988
+msgid "Current page:"
+msgstr ""
+
+#: lib/diff.php:992 lib/diff.php:1010
+#, c-format
+msgid "version %s"
+msgstr ""
+
+#: lib/diff.php:994 lib/diff.php:1012
+#, c-format
+msgid "last modified on %s"
+msgstr ""
+
+#: lib/diff.php:997 lib/diff.php:1015
+#, c-format
+msgid "by %s"
+msgstr ""
+
+#: lib/diff.php:1001 lib/diff.php:1019
+msgid "None"
+msgstr ""
+
+#: lib/diff.php:1006
+msgid "Archived page:"
+msgstr ""
+
+#: lib/diff.php:1028
+msgid "Versions are identical"
+msgstr ""
+
+#: lib/diff.php:1036
 #, c-format
 msgid "Diff of %s."
 msgstr ""
 
-#: ../lib/display.php:14
+#: lib/display.php:14
 msgid "FrontPage"
 msgstr ""
 
-#: ../lib/display.php:31 ../lib/editpage.php:49
+#: lib/display.php:31 lib/editpage.php:50
 #, c-format
 msgid "Describe %s here."
 msgstr ""
 
-#: ../lib/pageinfo.php:22 ../lib/pageinfo.php:66
+#: lib/editpage.php:19
+#, c-format
+msgid "Copy of %s"
+msgstr ""
+
+#: lib/editpage.php:23
+msgid "No page name passed into editpage!"
+msgstr ""
+
+#: lib/editpage.php:31
+msgid "This page has been locked by the administrator and cannot be edited."
+msgstr ""
+
+#: lib/editpage.php:33
+msgid "Sorry for the inconvinience."
+msgstr ""
+
+#: lib/editpage.php:35
+#, c-format
+msgid "Problem while editing %s"
+msgstr ""
+
+#: lib/fullsearch.php:15
+#, c-format
+msgid "Searching for \"%s\" ....."
+msgstr ""
+
+#: lib/fullsearch.php:44
+#, c-format
+msgid "%d matches found in %d pages."
+msgstr ""
+
+#: lib/fullsearch.php:47
+msgid "Full Text Search Results"
+msgstr ""
+
+#: lib/msql.php:29 lib/mysql.php:33
+msgid "Cannot establish connection to database, giving up."
+msgstr ""
+
+#: lib/msql.php:31 lib/msql.php:37
+#, c-format
+msgid "Error message: %s"
+msgstr ""
+
+#: lib/msql.php:35 lib/mysql.php:39
+#, c-format
+msgid "Cannot open database %s, giving up."
+msgstr ""
+
+#: lib/msql.php:200 lib/msql.php:276
+#, c-format
+msgid "Insert/update failed: %s"
+msgstr ""
+
+#: lib/msql.php:211 lib/msql.php:286
+#, c-format
+msgid "Delete on %s failed: %s"
+msgstr ""
+
+#: lib/msql.php:227 lib/msql.php:302
+#, c-format
+msgid "Insert into %s failed: %s"
+msgstr ""
+
+#: lib/mysql.php:35 lib/mysql.php:41 lib/mysql.php:115
+#, c-format
+msgid "MySQL error: %s"
+msgstr ""
+
+#: lib/mysql.php:113
+#, c-format
+msgid "Error writing page '%s'"
+msgstr ""
+
+#: lib/pageinfo.php:22 lib/pageinfo.php:66
 msgid "PageInfo"
 msgstr ""
 
-#: ../lib/savepage.php:60
+#: lib/savepage.php:60
 #, c-format
 msgid "Thank you for editing %s."
 msgstr ""
 
-#: ../lib/savepage.php:90
+#: lib/savepage.php:90
 msgid "Your careful attention to detail is much appreciated."
 msgstr ""
 
-#: ../lib/stdlib.php:318 ../lib/stdlib.php:380
+#: lib/setupwiki.php:21
+#, c-format
+msgid "Inserting page %s, version %s from %s"
+msgstr ""
+
+#: lib/stdlib.php:36
+msgid "WikiFatalError"
+msgstr ""
+
+#: lib/stdlib.php:53
+#, c-format
+msgid "%d best incoming links:"
+msgstr ""
+
+#: lib/stdlib.php:63
+#, c-format
+msgid "%d best outgoing links:"
+msgstr ""
+
+#: lib/stdlib.php:74
+#, c-format
+msgid "%d most popular nearby:"
+msgstr ""
+
+#: lib/stdlib.php:288
+msgid "Stack bounds exceeded in SetHTMLOutputMode"
+msgstr ""
+
+#: lib/stdlib.php:343 lib/stdlib.php:406
 msgid "RecentChanges"
 msgstr ""

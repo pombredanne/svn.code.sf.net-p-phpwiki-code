@@ -1,4 +1,4 @@
-<!-- $Id: test_dbmlib.php3,v 1.7 2000-08-29 02:37:42 aredridel Exp $ -->
+<!-- $Id: test_dbmlib.php3,v 1.8 2000-10-20 11:42:52 ahollosi Exp $ -->
 <html>
 <head>
 <title>Test bed for database library</title>
@@ -38,7 +38,7 @@
    // IsWikPage()
    // Test for pages to see if they are there
    //
-   $pagename = "TestPage";
+   $pagename = gettext ("TestPage");
    echo "Testing for existence of $pagename<br>\n";
    $res = IsWikiPage($dbi, $pagename);
    if ($res) {
@@ -72,7 +72,7 @@
    // retrieves and failed retrieves
    //
 
-   $pagename = "TestPage";
+   $pagename = gettext ("TestPage");
    echo "Retrieving page '$pagename'<br>\n";
    $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
    $type = gettype($pagehash);

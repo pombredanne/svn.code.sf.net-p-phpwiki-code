@@ -1,6 +1,6 @@
 
 
- New lists: astericks and hash marks
+ New lists: asterisks and hash marks
 * bullet
 * l1
 ** l2
@@ -56,6 +56,8 @@ __Link tests__
 # Link outside brackets: http://phpwiki.sourceforge.net/
 # Link with Wiki word: http://phpwiki.sourceforge.net/phpwiki/index.php?FrontPage
 # Two consecutive links: http://phpwiki.sourceforge.net/ http://phpwiki.sourceforge.net/phpwiki/
+# And what about a WikiLink and another WikiLinkWithSameStem on one line?
+# Other way around: WikiLinkWithSameStem plus WikiLink
 # [PhpWiki on Sourceforge | http://phpwiki.sourceforge.net/]
 # [URL with a WikiWord | http://phpwiki.sourceforge.net/phpwiki/index.php?RecentChanges]
 # Javascript: [boo! | javascript:alert('oops') ] 

@@ -1,6 +1,6 @@
-<!-- $Id: setupwiki.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
+<!-- $Id: setupwiki.php,v 1.2 2000-10-20 11:42:52 ahollosi Exp $ -->
 <?php
-require 'lib/ziplib.php';
+require "lib/ziplib.php";
 
 function SavePage ($dbi, $page, $source)
 {
@@ -18,8 +18,10 @@ function SavePage ($dbi, $page, $source)
       SaveCopyToArchive($dbi, $pagename, $current);
     }
 
-  printf("Inserting page <b>%s</b>, version %s from %s<br>\n",
-	 htmlspecialchars($pagename), $version, $source);
+  printf (gettext ("Inserting page %s, version %s from %s"),
+	 "<b>" . htmlspecialchars ($pagename) . "</b>", $version, $source);
+  print ("<br>\n");
+
   flush();
   InsertPage($dbi, $pagename, $page);
 }
