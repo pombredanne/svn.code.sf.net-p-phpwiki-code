@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.48 2002-08-17 17:03:05 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.49 2002-08-19 06:31:17 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -50,20 +50,12 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     }
     else {
         $pagename = $page_or_rev;
-        if (substr($pagename,0,1) == '/') { // relative link to page below
+        // "/SubPage" relative link
+        if (substr($pagename,0,1) == SUBPAGE_SEPARATOR) { // relative link to page below
             global $request;
             $page = $request->getArg('pagename');
             $label = substr($page_or_rev,1);
             $pagename = $page . $pagename;
-            /*
-            $pages = explode('/',$page);
-            if (!empty($pages)) {
-                array_pop($pages);// delete last element from array, the current subpage
-                $subpage = implode('/',$pages);
-                $label = substr($page_or_rev,1);
-                $pagename = $subpage . $pagename;
-            }
-            */
         }
     }
 
@@ -84,19 +76,18 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     else {
         $exists = true;
     }
-    // test external ImageLinks http://some/images/next.gif
-    // support "/SubPage" relative link
+    // Todo: test external ImageLinks http://some/images/next.gif
     if (is_string($page_or_rev) 
         and !$label 
-        and strchr(substr($page_or_rev,1), '/')) {
-        $pages = explode('/',$pagename);
+        and strchr(substr($page_or_rev,1), SUBPAGE_SEPARATOR)) {
+        $pages = explode(SUBPAGE_SEPARATOR,$pagename);
         $last_page = array_pop($pages); // deletes last element from array as side-effect
-        $link = HTML::span($Theme->linkExistingWikiWord($pages[0], $pages[0] . '/'));
-        $first_pages = $pages[0] . '/';
+        $link = HTML::span($Theme->linkExistingWikiWord($pages[0], $pages[0] . SUBPAGE_SEPARATOR));
+        $first_pages = $pages[0] . SUBPAGE_SEPARATOR;
         array_shift($pages);
         foreach ($pages as $page)  {
-            $link->pushContent($Theme->linkExistingWikiWord($first_pages . $page, $page . '/'));
-            $first_pages .= $page . '/';
+            $link->pushContent($Theme->linkExistingWikiWord($first_pages . $page, $page . SUBPAGE_SEPARATOR));
+            $first_pages .= $page . SUBPAGE_SEPARATOR;
         }
         $label = $last_page;
         if ($exists) {
