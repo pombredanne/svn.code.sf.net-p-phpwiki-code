@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.10 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.11 2004-12-22 18:33:31 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
