@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.57 2004-11-01 10:43:55 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.58 2004-11-03 16:50:31 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -115,7 +115,7 @@ function IniConfig($file) {
          'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
          'DISABLE_HTTP_REDIRECT',
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
-         'ENABLE_XHTML_XML', 'USE_DOUBLECLICKEDIT'
+         'ENABLE_XHTML_XML', 'ENABLE_DOUBLECLICKEDIT'
          );
 
     if(!file_exists($file)){
@@ -657,6 +657,12 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.57  2004/11/01 10:43:55  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.56  2004/10/21 20:20:53  rurban
 // From patch #970004 "Double clic to edit" by pixels.
 //
