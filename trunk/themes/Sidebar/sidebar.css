@@ -1,11 +1,11 @@
 /*
-  $Id: sidebar.css,v 1.6 2002-02-08 07:48:22 carstenklapp Exp $
+  $Id: sidebar.css,v 1.7 2002-02-09 03:49:38 carstenklapp Exp $
 */
 @import url("../../phpwiki.css");
 
 #navbar {
     line-height: 150%;
-    position: absolute;
+    position: fixed;
     top:    10ex; /*6ex*/
     width: 11em;
     left:   1em;
@@ -17,7 +17,7 @@ body {
 
 #actionbar {
     line-height: 150%;
-    position: absolute;
+    position: fixed;
     top:   38ex; /*31.5ex*/
     width: 11em;
     left:   1em;
@@ -27,14 +27,14 @@ body {
  * This confuses OmniWeb too.
  */
 #logo {
-    position: absolute;
+    position: fixed;
     left: 1em;
     top:  1ex;
 }
 
 /* ie5 mac sometimes ignores the bottom position of classes so id is used instead. */
 #xhtml-validator {
-    position: absolute;
+    position: fixed;
     left:   1em;
     bottom: 1ex;
 }
