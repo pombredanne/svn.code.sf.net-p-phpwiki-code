@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.11 2004-04-26 20:44:34 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.12 2004-04-27 16:16:27 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -100,7 +100,7 @@ function IniConfig($file) {
         } elseif (array_key_exists($item, $rsdef)) {
             define($item, $rsdef[$item]);
         // calculate them later:
-        } elseif (in_array($item,array('SERVER_NAME', 'SERVER_PORT',
+        } elseif (in_array($item,array('DATABASE_PREFIX', 'SERVER_NAME', 'SERVER_PORT',
          	'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH'))) {
             ;
         } else {
@@ -156,8 +156,10 @@ function IniConfig($file) {
     // Database
     global $DBParams;
     $DBParams['dbtype'] = @$rs['DATABASE_TYPE'];
-    $DBParams['prefix'] = @$rs['DATABASE_PREFIX'];
-    $DBParams['dsn'] = @$rs['DATABASE_DSN'];
+    if (isset($rs['DATABASE_DSN']))
+        $DBParams['dsn'] = $rs['DATABASE_DSN'];
+    if (isset($rs['DATABASE_PREFIX']))
+        $DBParams['prefix'] = $rs['DATABASE_PREFIX'];
     $DBParams['db_session_table'] = @$rs['DATABASE_SESSION_TABLE'];
     $DBParams['dba_handler'] = @$rs['DATABASE_DBA_HANDLER'];
     $DBParams['directory'] = @$rs['DATABASE_DIRECTORY'];
@@ -492,6 +494,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/04/26 20:44:34  rurban
+// locking table specific for better databases
+//
 // Revision 1.10  2004/04/26 13:22:32  rurban
 // calculate bool old or dynamic constants later
 //
