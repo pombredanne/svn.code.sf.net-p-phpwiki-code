@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.8 2003-02-17 05:53:35 dairiki Exp $
+ * $Id: phpwiki.css,v 1.9 2003-02-17 23:50:12 dairiki Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -516,7 +516,46 @@ span.redirectfrom {
   font-weight: normal;
   padding-left: 1em;
 }
+
+
+/*
+ * Vertical margins around block elements.
+ */
+
+p { margin: 2ex 0; }		/* Normal ("loose") paragraphs */
+li p, dd p, td p { margin: 1ex 0; } /* Paragraphs within lists are a little tighter. */
   
+ul, ol, dl { margin: 0.2ex 0; }	/* A little room around lists. */
+li ul, li ol, li dl,
+dd ul, dd ol, dd dl { margin: 0 0; } /* but not around sub-lists. */
+
+/* Normal ("loose") list elements */
+li { margin: 1.5ex 0; }
+dt { margin-top: 1.5ex; }
+dd { margin-bottom: 1.5ex; }
+
+  
+li.tight-top, dt.tight-top, dd.tight-top {
+  margin-top: 0.2ex;
+}
+li li.tight-top {
+  margin-top: 0;
+}
+li.tight-bottom, dd.tight-bottom {
+  margin-bottom: 0.2ex;
+}
+li li.tight-bottom {
+  margin-bottom: 0;
+}
+
+  
+.tight-top {
+  margin-top: 0;
+}
+.tight-bottom {
+  margin-bottom: 0;
+}
+
 
 /* For emacs users
  *
