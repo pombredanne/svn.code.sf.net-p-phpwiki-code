@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.173 2004-05-03 15:00:31 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.174 2004-05-06 12:02:05 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -448,7 +448,7 @@ class WikiPageName
     function isValid($strict = false) {
         if ($strict)
             return !isset($this->_errors);
-        return !empty($this->name);
+        return (is_string($this->name) and $this->name != '');
     }
 
     function getWarnings() {
@@ -1400,6 +1400,9 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.173  2004/05/03 15:00:31  rurban
+// added more database upgrading: session.sess_ip, page.id autp_increment
+//
 // Revision 1.172  2004/04/26 20:44:34  rurban
 // locking table specific for better databases
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.14 2004-05-01 15:59:29 rurban Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.15 2004-05-06 12:02:03 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -76,7 +76,8 @@ class CacheableMarkup extends XmlContent {
             if (!($item_links = $item->getWikiPageLinks($this->_basepage)))
                 continue;
             foreach ($item_links as $pagename)
-                $links[] = $pagename;
+                if (is_string($pagename) and $pagename != '')
+                    $links[] = $pagename;
         }
 
 	return array_unique($links);
@@ -284,11 +285,14 @@ class Cached_WikiLink extends Cached_Link {
     
     function getPagename($basepage) {
 	$page = new WikiPageName($this->_page, $basepage);
-	return $page->name;
+	if ($page->isValid()) return $page->name;
+	else return false;
     }
 
     function getWikiPageLinks($basepage) {
-        return array($this->getPagename($basepage));
+        if ($basepage == '') return false;
+        if ($link = $this->getPagename($basepage)) return array($link);
+        else return false;
     }
 
     function _getName($basepage) {
