@@ -432,8 +432,6 @@ $locale["Skipping"] =
    "Ignoré";
 $locale["So, your changes and those of the other author have been combined.  The result is shown below"] =
    "Ainsi donc, vos modifications et celles de l'autre auteur ont été combinées. Le résultat est affiché ci-dessous";
-$locale["Some of the changes could not automatically be combined.  Please look for sections beginning with <<<<<<< Your version, and ending with >>>>>>> Other version.  You will need to edit those sections by hand, and the click Save"] =
-   "Certaines modifications n'ont pas pu être combinées automatiquement. Veuillez regarder les sections commençant par <<<<<<< Votre version, et se terminant par >>>>>>> L'autre version. Vous devrez éditer ces sections à la main, puis cliquer sur Enregistrer";
 $locale["Someone has edited the page!"] =
    "Quelqu'un a édité la page !";
 $locale["Sorry for the inconvenience."] =

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.3.2-jeffs-hacks\n"
-"POT-Creation-Date: 2002-02-22 15:07-0500\n"
+"POT-Creation-Date: 2002-02-22 23:51-0500\n"
 "PO-Revision-Date: 2002-02-22 18:34+01:00\n"
 "Last-Translator: Roland Trique <roland.trique@free.fr>, Stéphane Gourichon "
 "<stephane.gourichon@lip6.fr>, Pascal <pascal@phpfrance.com>\n"
@@ -178,13 +178,14 @@ msgstr "Désolé pour la gène occasionnée."
 #: ../lib/editpage.php:245
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
-"sections beginning with <<<<<<< Your version, and ending with >>>>>>> Other "
-"version.  You will need to edit those sections by hand, and the click Save"
+"sections beginning with '<<<<<<< Your version', and ending with '>>>>>>> "
+"Other version'.  You will need to edit those sections by hand, and then "
+"click Save."
 msgstr ""
 "Certaines modifications n'ont pas pu être combinées automatiquement. "
-"Veuillez regarder les sections commençant par <<<<<<< Votre version, et se "
-"terminant par >>>>>>> L'autre version. Vous devrez éditer ces sections à la "
-"main, puis cliquer sur Enregistrer"
+"Veuillez regarder les sections commençant par '<<<<<<< Votre version', et se "
+"terminant par '>>>>>>> L'autre version'. Vous devrez éditer ces sections à la "
+"main, puis cliquer sur Enregistrer."
 
 #: ../lib/editpage.php:247
 msgid "Please check it through and click Save to save it."
@@ -396,30 +397,23 @@ msgstr "Vous devez vous connecter pour %s ce wiki"
 msgid "You must be an administrator to %s this wiki"
 msgstr "Vous devez être un administrateur pour %s ce wiki"
 
-#: ../lib/main.php:309 ../lib/plugin/PageHistory.php:224
-#: ../lib/plugin/RecentChanges.php:47
-#: ../themes/Portland/templates/actionbar.tmpl:18
-#: ../themes/default/templates/actionbar.tmpl:29
-msgid "PageHistory"
-msgstr "Historique"
-
-#: ../lib/main.php:345
+#: ../lib/main.php:346
 #, c-format
 msgid "%s: Bad action"
 msgstr "%s : Mauvaise action"
 
 # lib/stdlib.php:36
-#: ../lib/main.php:368
+#: ../lib/main.php:369
 msgid "Fatal PhpWiki Error"
 msgstr "Erreur Fatale de PhpWiki"
 
 # lib/fullsearch.php:48
-#: ../lib/main.php:455 ../lib/plugin/FullTextSearch.php:12
+#: ../lib/main.php:456 ../lib/plugin/FullTextSearch.php:12
 msgid "FullTextSearch"
 msgstr "RechercheEnTexteIntégral"
 
 # lib/fullsearch.php:48
-#: ../lib/main.php:458 ../lib/plugin/RecentChanges.php:340
+#: ../lib/main.php:459 ../lib/plugin/RecentChanges.php:340
 #: ../lib/plugin/TitleSearch.php:13
 msgid "TitleSearch"
 msgstr "RechercheParTitre"
@@ -455,7 +449,7 @@ msgid "Last Author"
 msgstr "Auteur Précédent"
 
 #: ../lib/PageList.php:271 ../themes/default/templates/editpage.tmpl:94
-#: ../themes/default/templates/info.tmpl:117
+#: ../themes/default/templates/info.tmpl:124
 msgid "Locked"
 msgstr "Verrouillée"
 
@@ -626,6 +620,16 @@ msgstr "%s(%d) : révision inexistante"
 msgid "Included from %s"
 msgstr "Inséré de %s"
 
+# lib/pageinfo.php:26 lib/pageinfo.php:75
+#: ../lib/plugin/Info.php:10 ../themes/default/templates/actionbar.tmpl:31
+msgid "Info"
+msgstr "InfosDeLaPage"
+
+#: ../lib/plugin/Info.php:14
+#, c-format
+msgid "Show extra page Info and statistics for %s"
+msgstr ""
+
 #: ../lib/plugin/LikePages.php:13 ../themes/Portland/templates/navbar.tmpl:10
 #: ../themes/default/templates/navbar.tmpl:20
 msgid "LikePages"
@@ -748,7 +752,7 @@ msgstr "Version %d"
 
 #: ../lib/plugin/PageHistory.php:154 ../themes/MacOSX/lib/RecentChanges.php:34
 #: ../themes/Portland/lib/RecentChanges.php:14
-#: ../themes/WikiTrek/lib/RecentChanges.php:34
+#: ../themes/SpaceWiki/lib/RecentChanges.php:34
 #: ../themes/default/templates/info.tmpl:17
 #: ../themes/default/templates/info.tmpl:21
 msgid "minor edit"
@@ -757,6 +761,12 @@ msgstr "édition mineure"
 #: ../lib/plugin/PageHistory.php:198
 msgid "History of changes."
 msgstr "Historique des changements."
+
+#: ../lib/plugin/PageHistory.php:224 ../lib/plugin/RecentChanges.php:47
+#: ../themes/Portland/templates/actionbar.tmpl:18
+#: ../themes/default/templates/actionbar.tmpl:29
+msgid "PageHistory"
+msgstr "Historique"
 
 #: ../lib/plugin/PageHistory.php:228
 #, c-format
@@ -1236,11 +1246,6 @@ msgstr "Éditer la Version Archivée"
 msgid "View Source"
 msgstr "Afficher la Source"
 
-# lib/pageinfo.php:26 lib/pageinfo.php:75
-#: ../themes/default/templates/actionbar.tmpl:31
-msgid "Info"
-msgstr "InfosDeLaPage"
-
 # lib/diff.php:1010 lib/diff.php:1028
 #: ../themes/Portland/templates/browse.tmpl:9
 #: ../themes/Portland/templates/viewsource.tmpl:5
@@ -1301,7 +1306,7 @@ msgstr "Ajuster"
 
 #: ../themes/Portland/templates/editpage.tmpl:60
 #: ../themes/default/templates/editpage.tmpl:70
-#: ../themes/default/templates/info.tmpl:70
+#: ../themes/default/templates/info.tmpl:77
 msgid "Summary:"
 msgstr "Résumé :"
 
@@ -1351,59 +1356,68 @@ msgstr "%s octets"
 msgid "%s Kb (%s bytes)"
 msgstr "%s Ko (%s octets)"
 
+#: ../themes/default/templates/info.tmpl:36
+msgid "1 word"
+msgstr "1 mot"
+
+#: ../themes/default/templates/info.tmpl:38
+#, c-format
+msgid "%s words"
+msgstr "%s mots"
+
 # lib/diff.php:1001 lib/diff.php:1019
-#: ../themes/default/templates/info.tmpl:35
+#: ../themes/default/templates/info.tmpl:42
 #, c-format
 msgid "Version %s"
 msgstr "Version %s"
 
-#: ../themes/default/templates/info.tmpl:36
+#: ../themes/default/templates/info.tmpl:43
 msgid "Original (1.2 or 1.0)"
 msgstr "Original (1.2 ou 1.0)"
 
 # lib/diff.php:1003 lib/diff.php:1021
-#: ../themes/default/templates/info.tmpl:63
+#: ../themes/default/templates/info.tmpl:70
 msgid "Last Modified:"
 msgstr "Dernière Modification :"
 
-#: ../themes/default/templates/info.tmpl:64
+#: ../themes/default/templates/info.tmpl:71
 msgid "Last Author:"
 msgstr "Auteur Précédent :"
 
-#: ../themes/default/templates/info.tmpl:65
+#: ../themes/default/templates/info.tmpl:72
 msgid "Last Summary:"
 msgstr "Dernier Résumé :"
 
-#: ../themes/default/templates/info.tmpl:68
+#: ../themes/default/templates/info.tmpl:75
 msgid "Saved on:"
 msgstr "Enregistrée le :"
 
-#: ../themes/default/templates/info.tmpl:69
+#: ../themes/default/templates/info.tmpl:76
 msgid "Author:"
 msgstr "Auteur :"
 
-#: ../themes/default/templates/info.tmpl:73
+#: ../themes/default/templates/info.tmpl:80
 #, c-format
 msgid "Statistics about %s."
 msgstr "Statistiques sur %s."
 
-#: ../themes/default/templates/info.tmpl:83
+#: ../themes/default/templates/info.tmpl:90
 msgid "Supplanted on:"
 msgstr "Remplacée le :"
 
-#: ../themes/default/templates/info.tmpl:95
+#: ../themes/default/templates/info.tmpl:102
 msgid "Page Version:"
 msgstr "Version de la Page :"
 
-#: ../themes/default/templates/info.tmpl:98
+#: ../themes/default/templates/info.tmpl:105
 msgid "Markup:"
 msgstr "Marquage :"
 
-#: ../themes/default/templates/info.tmpl:101
+#: ../themes/default/templates/info.tmpl:108
 msgid "Size:"
 msgstr "Taille :"
 
-#: ../themes/default/templates/info.tmpl:106
+#: ../themes/default/templates/info.tmpl:113
 msgid "Hits:"
 msgstr "Visites :"
 
@@ -1481,6 +1495,7 @@ msgstr "Vous êtes connecté en tant que %s"
 msgid "Enter your UserId to sign in"
 msgstr "Entrez votre identifiant utilisateur pour vous connecter"
 
+#: ../themes/default/templates/top-htmldump.tmpl:25
 #: ../themes/default/templates/top.tmpl:34
 msgid "The PhpWiki Programming Team"
 msgstr "L'Équipe de Développement de PhpWiki"
@@ -1549,7 +1564,7 @@ msgstr ""
 
 #: ../themes/Hawaiian/themeinfo.php:29 ../themes/MacOSX/themeinfo.php:82
 #: ../themes/Portland/themeinfo.php:48 ../themes/Sidebar/themeinfo.php:32
-#: ../themes/WikiTrek/themeinfo.php:53 ../themes/default/themeinfo.php:20
+#: ../themes/SpaceWiki/themeinfo.php:50 ../themes/default/themeinfo.php:20
 msgid "Printer"
 msgstr "Imprimante"
 
@@ -1559,7 +1574,7 @@ msgstr "Barres d'outils en haut et en bas"
 
 #: ../themes/Hawaiian/themeinfo.php:30 ../themes/MacOSX/themeinfo.php:83
 #: ../themes/Portland/themeinfo.php:49 ../themes/Sidebar/themeinfo.php:33
-#: ../themes/WikiTrek/themeinfo.php:54 ../themes/default/themeinfo.php:22
+#: ../themes/SpaceWiki/themeinfo.php:51 ../themes/default/themeinfo.php:22
 msgid "Modern"
 msgstr "Moderne"
 
@@ -1585,7 +1600,7 @@ msgstr ""
 msgid "Sidebar"
 msgstr "Sidebar"
 
-#: ../themes/WikiTrek/lib/RecentChanges.php:54
+#: ../themes/SpaceWiki/lib/RecentChanges.php:54
 msgid "diff"
 msgstr "diff"
 
