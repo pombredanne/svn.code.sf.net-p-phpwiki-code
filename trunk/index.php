@@ -1,5 +1,29 @@
-<?php
+<?php // -*-php-*-
 
+/*
+Copyright 2000??, 2001, 2002 $ThePhpWikiProgrammingTeam = array(
+"Steve Waistead",
+);
+
+This file is part of PhpWiki.
+
+PhpWiki is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+PhpWiki is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with PhpWiki; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
+
+
+/////////////////////////////////////////////////////////////////////
 /*
   This is the starting file for PhpWiki. All this file does
    is set configuration options, and at the end of the file 
@@ -39,7 +63,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.49 2002-01-03 05:10:33 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.50 2002-01-03 22:40:59 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
