@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.8 2002-02-14 06:21:41 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.9 2002-02-14 06:44:32 carstenklapp Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -11,11 +11,10 @@ class Theme_Sidebar extends Theme {
 
     function findTemplate ($name) {
         // hack for navbar.tmpl to hide the buttonseparator
-        // this breaks the buttons on the edit page
-        if ($name == "navbar") {
+        if ($name == "navbar" || $name == "actionbar" || $name == "signin") {
             //$old = $Theme->getButtonSeparator();
-            $this->setButtonSeparator(HTML::br());
-            //return "themes/default/templates/navbar.tmpl";
+            //$this->setButtonSeparator(HTML::br());
+            $this->setButtonSeparator(' ');
             //$Theme->setButtonSeparator($old);
         }
 
@@ -32,6 +31,7 @@ $Theme->setDefaultCSS(_("Sidebar"), 'sidebar.css');
 $Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+if (defined('DEBUG')) $Theme->addAlternateCSS("Sidebar debug", 'sidebar-debug.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
