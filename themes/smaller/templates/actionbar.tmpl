@@ -1,5 +1,5 @@
-<?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.1 2004-03-01 09:38:01 rurban Exp $ -->
+<?php // -*-php-*- ?>
+<!-- $Id: actionbar.tmpl,v 1.2 2004-06-08 13:15:23 rurban Exp $ -->
 <?php
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
@@ -9,41 +9,47 @@
 
   $Sep = $Theme->getButtonSeparator();
 ?>
-
 <!-- I would like not to have to use these tables, and managed to
      get this stuff to work more or less correctly using
      CSSs float:left; and float:right;.  However float:right; seems
      to cause MSIE4.01/NT to hang. 
      So, we use tables...  -->
-
 <table summary="Toolbar 1: Page actions and user login."
        width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr valign="baseline">
   <td>
   <div id="actionbuttons">
     <? if ( $user->isSignedIn()) { ?>
-    <?= $EditB ?><?=$Sep?>
-      <?php if ($user->isAdmin()) { ?>
+     <?= $EditB ?><?=$Sep?>
+     <?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>
       <?= Button($page->get('locked') ? 'unlock' : 'lock') ?><?=$Sep?>
-      <?= Button('remove') ?><?=$Sep?>
-      <?php } ?>
+      <?php if (ENABLE_PAGEPERM) { ?>
+        <?=$Sep?><?= Button('chown') ?>
+        <?=$Sep?><?= Button('setacl') ?>
+     <?php }} ?>
+     <?php if ($user->isAdmin() or mayAccessPage('remove',$page->getName())) { ?>
+      <?=$Sep?><?= Button('remove') ?>
+     <?php } ?>
     <?php } ?>
     <?= Button(array('action'=>'PageInfo'),_("Info"),$page->getName()) ?>
-<?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?> 
+<?php if (((defined('DEBUG') and DEBUG and $request->getArg('action') == 'browse')) || $user->isAdmin()) { ?> 
+      <!-- Buttons really only for debugging -->
       <?=$Sep?><?= Button(_("PageHistory")) ?>
       <?=$Sep?><?= Button("diff") ?> 
-      <!-- Buttons really only for debugging -->
 <?php
      $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $page->getName());
      $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
 ?>
     <?=$Sep?><?= $PurgeCache ?>
+    <!-- End debugging buttons -->
     <?php } ?>
   </div>
   </td>
+<?php if (empty($NOSIGNIN)) { ?>
   <td align="right">
     <div id="signin"><?= Template('signin') ?></div>
   </td>
+<?php } ?>
 </tr>
 </table>
