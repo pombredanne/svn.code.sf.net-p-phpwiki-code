@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.22 2004-05-12 10:49:54 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.23 2004-05-18 13:31:19 rurban Exp $');
 
 require_once(dirname(__FILE__).'/HtmlElement.php');
 if (isset($GLOBALS['ErrorManager'])) return;
@@ -89,6 +89,8 @@ class ErrorManager
      */
     function getPostponedErrorsAsHTML() {
         $flushed = $this->_flush_errors();
+        if (!$flushed)
+            return false;
         if ($flushed->isEmpty())
             return false;
         $html = HTML::div(array('class' => 'errors'),
@@ -185,6 +187,7 @@ class ErrorManager
         $in_handler = true;
 
         foreach ($this->_handlers as $handler) {
+            if (!$handler) continue;
             $result = $handler->call($error);
             if (!$result) {
                 continue;       // Handler did not handle error.
@@ -215,7 +218,13 @@ class ErrorManager
         }
         else if (($error->errno & error_reporting()) != 0) {
             if  (($error->errno & $this->_postpone_mask) != 0) {
-                $this->_postponed_errors[] = $error;
+                if (isa($error,'PhpErrorOnce')) {
+                    $error->removeDoublettes($this->_postponed_errors);
+                    if ( $error->_count < 2 )
+                        $this->_postponed_errors[] = $error;
+                } else {
+                    $this->_postponed_errors[] = $error;
+                }
             }
             else {
                 $error->printXML();
@@ -244,11 +253,13 @@ class ErrorManager
      */
     function _flush_errors($keep_mask = 0) {
         $errors = &$this->_postponed_errors;
+        if (empty($errors)) return '';
         $flushed = HTML();
-        foreach ($errors as $key => $error) {
+        for ($i=0; $i<count($errors); $i++) {
+            $error =& $errors[$i];
             if (($error->errno & $keep_mask) != 0)
                 continue;
-            unset($errors[$key]);
+            unset($errors[$i]);
             $flushed->pushContent($error);
         }
         return $flushed;
@@ -269,7 +280,7 @@ function ErrorManager_errorHandler($errno, $errstr, $errfile, $errline)
       $GLOBALS['ErrorManager'] = new ErrorManager;
     }
 	
-    $error = new PhpError($errno, $errstr, $errfile, $errline);
+    $error = new PhpErrorOnce($errno, $errstr, $errfile, $errline);
     $GLOBALS['ErrorManager']->handleError($error);
 }
 
@@ -351,7 +362,12 @@ class PhpError {
         else
             $what = 'Fatal';
 
-        $errfile = ereg_replace('^' . getcwd() . '/', '', $this->errfile);
+	$dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : getcwd();
+        if (substr(PHP_OS,0,3) == 'WIN') {
+           $dir = str_replace('/','\\',$dir);
+           $this->errfile = str_replace('/','\\',$this->errfile);
+        }
+        $errfile = preg_replace('|^' . preg_quote($dir) . '|', '', $this->errfile);
         $lines = explode("\n", $this->errstr);
 
         $msg = sprintf("%s:%d: %s[%d]: %s",
@@ -422,6 +438,72 @@ class PhpWikiError extends PhpError {
     }
 }
 
+/**
+ * A class representing a Php warning, printed only the first time.
+ *
+ * Similar to PhpError, except only the first same error message is printed, 
+ * with number of occurences.
+ */
+class PhpErrorOnce extends PhpError {
+
+    function PhpErrorOnce($errno, $errstr, $errfile, $errline) {
+        $this->_count = 1;
+        $this->PhpError($errno, $errstr, $errfile, $errline);
+    }
+
+    function _sameError($error) {
+        if (!$error) return false;
+        return ($this->errno == $error->errno and
+                $this->errfile == $error->errfile and
+                $this->errline == $error->errline);
+    }
+
+    // count similar handlers, increase _count and remove the rest
+    function removeDoublettes(&$errors) {
+        for ($i=0; $i < count($errors); $i++) {
+            if (!isset($errors[$i])) continue;
+            if ($this->_sameError($errors[$i])) {
+                $errors[$i]->_count++;
+                $this->_count++;
+                if ($i) unset($errors[$i]);
+            }
+        }
+        return $this->_count;
+    }
+    
+    function _getDetail($count=0) {
+    	if (!$count) $count = $this->_count;
+        if ($this->isNotice())
+            $what = 'Notice';
+        else if ($this->isWarning())
+            $what = 'Warning';
+        else
+            $what = 'Fatal';
+	$dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : getcwd();
+        if (substr(PHP_OS,0,3) == 'WIN') {
+           $dir = str_replace('/','\\',$dir);
+           $this->errfile = str_replace('/','\\',$this->errfile);
+        }
+        $errfile = preg_replace('|^' . preg_quote($dir) . '|', '', $this->errfile);
+        $lines = explode("\n", $this->errstr);
+        $msg = sprintf("%s:%d: %s[%d]: %s %s",
+                       $errfile, $this->errline,
+                       $what, $this->errno,
+                       array_shift($lines),
+                       $count > 1 ? sprintf(" (...repeated %d times)",$count) : ""
+                       );
+                       
+        $html = HTML::div(array('class' => 'error'), HTML::p($msg));
+        if ($lines) {
+            $list = HTML::ul();
+            foreach ($lines as $line)
+                $list->pushContent(HTML::li($line));
+            $html->pushContent($list);
+        }
+        
+        return $html;
+    }
+}
 
 if (!isset($GLOBALS['ErrorManager'])) {
     $GLOBALS['ErrorManager'] = new ErrorManager;

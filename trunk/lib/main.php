@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.148 2004-05-17 17:43:29 rurban Exp $');
+rcs_id('$Id: main.php,v 1.149 2004-05-18 13:31:19 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -23,7 +23,7 @@ class WikiRequest extends Request {
             include_once('lib/DB_Session.php');
             $prefix = isset($GLOBALS['DBParams']['prefix']) ? $GLOBALS['DBParams']['prefix'] : '';
             if (in_array('File',$GLOBALS['USER_AUTH_ORDER'])) {
-                include_once('lib/pear/File_Passwd.php');
+                include_once(dirname(__FILE__)."/pear/File_Passwd.php");
             }
             $dbi = $this->getDbh();
             $this->_dbsession = & new DB_Session($dbi,$prefix . $GLOBALS['DBParams']['db_session_table']);
@@ -862,9 +862,21 @@ function main () {
 
     global $request;
 
-    if (DEBUG and extension_loaded("apd"))
+    if ((DEBUG & 2) and extension_loaded("apd"))
         apd_set_session_trace(9);
+
+    // Postpone warnings
+    global $ErrorManager;
+    $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING);
     $request = new WikiRequest();
+
+    $action = $request->getArg('action');
+    if (substr($action, 0, 3) != 'zip') {
+    	if ($action == 'pdf')
+    	    $ErrorManager->setPostponedErrorMask(-1);
+    	else // reject postponing of warnings
+            $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
+    }
 
     /*
      * Allow for disabling of markup cache.
@@ -882,17 +894,6 @@ function main () {
     $request->updateAuthAndPrefs();
     $request->initializeLang();
     
-    // Enable the output of most of the warning messages.
-    // The warnings will screw up zip files though.
-    global $ErrorManager;
-    $action = $request->getArg('action');
-    if (substr($action, 0, 3) != 'zip') {
-    	if ($action == 'pdf')
-    	    $ErrorManager->setPostponedErrorMask(0);
-    	else
-            $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
-    }
-
     //FIXME:
     //if ($user->is_authenticated())
     //  $LogEntry->user = $user->getId();
@@ -933,6 +934,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.148  2004/05/17 17:43:29  rurban
+// CGI: no PATH_INFO fix
+//
 // Revision 1.147  2004/05/15 19:48:33  rurban
 // fix some too loose PagePerms for signed, but not authenticated users
 //  (admin, owner, creator)
