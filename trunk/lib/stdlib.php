@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.36 2001-03-02 00:16:53 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.37 2001-03-05 23:37:32 dairiki Exp $');
 
 
    /*
@@ -527,6 +527,10 @@ function StartTag($tag, $args = '')
 
       _dotoken('USERID', htmlspecialchars($user->id()), $page);
       _dotoken('PAGE', htmlspecialchars($name), $page);
+      _dotoken('SPLIT_PAGE',
+	       htmlspecialchars(
+		  preg_replace('/([[:lower:]])([[:upper:]])/', '\\1 \\2', $name)),
+	       $page);
       _dotoken('LOGO', htmlspecialchars(DataURL($logo)), $page);
       _dotoken('CSS_URL', htmlspecialchars(DataURL(CSS_URL)), $page);
 
@@ -537,10 +541,6 @@ function StartTag($tag, $args = '')
       _dotoken('EDIT_AREA_HEIGHT', $prefs['edit_area.height'], $page);
 
       // FIXME: Clean up this stuff
-      $browse_page = WikiURL($name);
-      _dotoken('BROWSE_PAGE', $browse_page, $page);
-      $arg_sep = strstr($browse_page, '?') ? '&amp;' : '?';
-      _dotoken('ACTION', $browse_page . $arg_sep . "action=", $page);
       _dotoken('BROWSE', WikiURL(''), $page);
 
       if (USE_PATH_INFO)
@@ -560,6 +560,12 @@ function StartTag($tag, $args = '')
       
       // invalid for messages (search results, error messages)
       if ($template != 'MESSAGE') {
+	 $browse_page = WikiURL($name);
+         _dotoken('BROWSE_PAGE', $browse_page, $page);
+
+	 $arg_sep = strstr($browse_page, '?') ? '&amp;' : '?';
+	 _dotoken('ACTION', $browse_page . $arg_sep . "action=", $page);
+
          _dotoken('PAGEURL', rawurlencode($name), $page);
 	 if (!empty($hash['lastmodified']))
 	    _dotoken('LASTMODIFIED',
