@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.19 2002-01-10 23:55:53 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.20 2002-01-11 01:46:47 dairiki Exp $');
 /**
  */
 
@@ -26,7 +26,9 @@ class _RecentChanges_Formatter
     }
 
     function time ($rev) {
-        return strtolower(strftime("%l:%M %p", $rev->get('mtime')));
+        return preg_replace('/^0/', ' ',
+                            strtolower(strftime("%I:%M %p",
+                                                $rev->get('mtime'))));
     }
 
     function diffURL ($rev) {
