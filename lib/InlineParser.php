@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.24 2003-02-21 04:09:53 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.25 2003-02-21 22:04:43 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -320,7 +320,7 @@ function LinkBracketLink($bracketlink) {
 
 class Markup_bracketlink  extends SimpleMarkup
 {
-    var $_match_regexp = "\\#? \\[ .*?\S.*? \\]";
+    var $_match_regexp = "\\#? \\[ .*? [^]\\s] .*? \\]";
     
     function markup ($match) {
         $link = LinkBracketLink($match);
