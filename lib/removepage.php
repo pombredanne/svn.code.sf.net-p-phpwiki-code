@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.21 2004-09-23 18:50:55 rurban Exp $');
+rcs_id('$Id: removepage.php,v 1.22 2004-11-16 17:22:45 rurban Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -50,7 +50,7 @@ function RemovePage (&$request) {
         $dbi = $request->getDbh();
         $dbi->deletePage($pagename);
         $dbi->touch();
-        $link = HTML::a(array('href' => 'javascript:history.go(-3)'), 
+        $link = HTML::a(array('href' => 'javascript:history.go(-2)'), 
                         _("Back to the previous page."));
         $html = HTML(HTML::h2(fmt("Removed page '%s' successfully.", $pagename)),
         	     HTML::div($link), HTML::hr());
