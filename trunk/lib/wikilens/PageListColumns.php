@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageListColumns.php,v 1.4 2004-06-30 20:12:09 dfrankow Exp $');
+rcs_id('$Id: PageListColumns.php,v 1.5 2004-07-07 15:01:44 dfrankow Exp $');
 
 /*
  Copyright 2004 Mike Cassano
@@ -51,6 +51,10 @@ class _PageList_Column_numbacklinks extends _PageList_Column_custom
             $total++;
         }
         return $total;
+    }
+    
+    function _getSortableValue ($page_handle, &$revision_handle) {
+        return $this->_getValue($page_handle, &$revision_handle);
     }
 };
 
@@ -196,6 +200,10 @@ class _PageList_Column_ratingvalue extends _PageList_Column {
         return false; 
           
     }
+    
+    function _getSortableValue ($page_handle, &$revision_handle) {
+        return $this->_getValue($page_handle, &$revision_handle);
+    }
 };
 
 /**
@@ -226,6 +234,10 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
         
         $tu = & RatingsUserFactory::getUser($active_userid);
         return $tu->get_rating($pagename, $this->_dimension);
+    }
+    
+    function _getSortableValue ($page_handle, &$revision_handle) {
+        return $this->_getValue($page_handle, &$revision_handle);
     }
 };
 
@@ -269,6 +281,10 @@ class _PageList_Column_prediction extends _PageList_Column
         $html = HTML();
         $pred = $this->_active_ratings_user->knn_uu_predict($pagename, $this->_users, $this->_dimension);
         return sprintf("%.1f", min(5, max(0, $pred)));
+    }
+    
+    function _getSortableValue ($page_handle, &$revision_handle) {
+        return $this->_getValue($page_handle, &$revision_handle);
     }
 };
 
@@ -356,6 +372,14 @@ $WikiTheme->addPageListColumn
     ));
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/06/30 20:12:09  dfrankow
+// + Change numbacklinks function to use existing core functions.
+//   It's slower, but it'll work.
+//
+// + Change ratingvalue column to get its specific user as column 5 (index 4).
+//
+// + ratingwidget column uses WikiPlugin_RateIt's RatingWidgetHtml
+//
 // Revision 1.3  2004/06/21 17:01:41  rurban
 // fix typo and rating method call
 //
