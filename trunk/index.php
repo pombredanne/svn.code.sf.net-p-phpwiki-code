@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.3-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.82 2002-02-24 20:35:09 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.83 2002-03-06 02:35:42 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -191,6 +191,9 @@ define('REQUIRE_SIGNIN_BEFORE_EDIT', false);
 //
 $DBParams = array(
    // Select the database type:
+   // Choose ADODB or SQL to use an SQL database with ADODB or PEAR.
+   // Choose dba to use one of the standard UNIX dbm libraries.
+   //'dbtype' => 'ADODB',
    //'dbtype' => 'SQL',
    'dbtype'   => 'dba',
    
