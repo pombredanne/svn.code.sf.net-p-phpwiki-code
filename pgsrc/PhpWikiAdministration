@@ -1,11 +1,9 @@
-From hostmaster@dairiki.org  Sun Jan 6 22:07:14 2002
-Subject: PhpWikiAdministration
-From: hostmaster@dairiki.org (PhpWiki)
-Date: Sun, 6 Jan 2002 22:07:14 -0500
-Mime-Version: 1.0 (Produced by PhpWiki 1.1.x)
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
+X-RCS_ID: $Id: PhpWikiAdministration,v 1.11 2002-01-09 06:35:17 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
-  flags=PAGE_LOCKED
+  flags=PAGE_LOCKED;
+  lastmodified=1010379143;
 Content-Transfer-Encoding: binary
 
 __Note__: Most of the actions on this page require administrative privileges.
@@ -18,7 +16,7 @@ __[Log In | phpwiki:?action=login]__
 
 This allows you to login.
 While you are logged in you will be able to ''lock'', ''unlock'' and ''delete'' pages.
-You will also be able edit ''locked'' pages.
+You will also be able to edit ''locked'' pages.
 
 ----------
 !! Cleanup
@@ -27,7 +25,6 @@ A Wiki SandBox is very easy to clean. Here you can restore it to pristine condit
 [ Rake the SandBox | phpwiki:?action=loadfile&source=pgsrc/SandBox ].
 
 ----------
-
 !! Making Snapshots or Backups
 
 ! ZIP files of database
@@ -55,7 +52,6 @@ directory, one page per file.
 Your server must have write permissions to the directory!
 
 -----------
-
 !! Restoring
 
 If you have dumped a set of pages from PhpWiki, you can reload them here.
@@ -80,11 +76,10 @@ You can also use this form to load from an http: or ftp: URL.
 [ Load | phpwiki:?action=loadfile&source=50(/tmp/wikidump) ]
 
 -----------
-
 !! Format of the files
 
 Currently the pages are stored, one per
-file, as MIME ([ RFC2045 | http://www.faqs.org/rfcs/rfc2045.html ]) e-mail 
+file, as MIME ([ RFC2045 | http://www.faqs.org/rfcs/rfc2045.html ]) e-mail
 ([ RFC822 | http://www.faqs.org/rfcs/rfc822.html ]) messages.
 The content-type ''application/x-phpwiki'' is used, and page meta-data
 is encoded in the content-type parameters.
@@ -110,4 +105,3 @@ The upload and load functions will automatically recognize each of these
 three types of files, and handle them accordingly.
 Note that when loading ''plain files'', the page name is deduced from the
 file name.
-
