@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.14 2004-03-08 19:30:01 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.15 2004-03-09 12:11:57 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -191,7 +191,7 @@ class WikiGroup{
 
         /* WikiDB users from prefs (not from users): */
         $dbi = _PassUser::getAuthDbh();
-        if ($dbi and $GLOBALS['DBAuthParams']['pref_select']) {
+        if ($dbi and !empty($GLOBALS['DBAuthParams']['pref_select'])) {
             //get prefs table
             $sql = str_replace(' prefs ',' userid ',$GLOBALS['DBAuthParams']['pref_select']);
             $sql = preg_replace('/WHERE.*/i','',$sql);
@@ -204,7 +204,7 @@ class WikiGroup{
         }
 
         /* WikiDB users from users: */
-        if ($dbi and $GLOBALS['DBAuthParams']['auth_user_exists']) {
+        if ($dbi and !empty($GLOBALS['DBAuthParams']['auth_user_exists'])) {
             $sql = preg_replace('/WHERE.*/i','',$GLOBALS['DBAuthParams']['auth_user_exists']);
             if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
                 $db_result = $dbi->Execute($sql);
@@ -847,6 +847,11 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/03/08 19:30:01  rurban
+// fixed Theme->getButtonURL
+// AllUsers uses now WikiGroup (also DB User and DB Pref users)
+// PageList fix for empty pagenames
+//
 // Revision 1.13  2004/03/08 18:17:09  rurban
 // added more WikiGroup::getMembersOf methods, esp. for special groups
 // fixed $LDAP_SET_OPTIONS
