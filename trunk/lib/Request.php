@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.76 2004-11-09 08:15:18 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.77 2004-11-09 17:11:04 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -408,8 +408,6 @@ class Request {
     }
 
     function finish() {
-        session_write_close();
-
         if (!empty($this->_accesslog)) {
             $this->_accesslog->push($this);
             if (empty($this->_do_chunked_output))
@@ -419,6 +417,12 @@ class Request {
             if ($RUNTIMER) $this->_accesslog->setDuration($RUNTIMER->getTime());
             // sql logging must be done before the db is closed.
             $this->_accesslog->write_sql();
+        }
+        
+        session_write_close();
+        if (!empty($this->_dbi)) {
+            $this->_dbi->close();
+            unset($this->_dbi);
         }
 
         if (!empty($this->_is_buffering_output)) {
@@ -441,10 +445,6 @@ class Request {
             while (@ob_end_flush());
             $this->_is_buffering_output = false;
         }
-        if (!empty($this->_dbi)) {
-            $this->_dbi->close();
-            unset($this->_dbi);
-        }
         exit;
     }
 
@@ -452,6 +452,27 @@ class Request {
         return $this->session->get($key);
     }
     function setSessionVar($key, $val) {
+        if ($key == 'wiki_user') {
+            if (empty($val->page))
+                $val->page = $this->getArg('pagename');
+            if (empty($val->action))
+                $val->action = $this->getArg('action');
+            // avoid recursive objects and session resource handles
+            // avoid overlarge session data (max 4000 byte!)
+            if (isset($val->_group)) {
+                unset($val->_group->_request);
+                unset($val->_group->_user);
+            }
+            if (ENABLE_USER_NEW) {
+                unset($val->_HomePagehandle);
+                unset($val->_auth_dbi);
+            } else {
+                unset($val->_dbi);
+                unset($val->_authdbi);
+                unset($val->_homepage);
+                unset($val->_request);
+            }
+        }
         return $this->session->set($key, $val);
     }
     function deleteSessionVar($key) {
@@ -750,7 +771,7 @@ class Request_AccessLog {
      * @param $logfile string  Log file name.
      */
     function Request_AccessLog ($logfile, $do_sql = false) {
-        global $request;
+        //global $request;
 
         $this->logfile = $logfile;
         if ($logfile and !is_writeable($logfile)) {
@@ -763,15 +784,17 @@ class Request_AccessLog {
                  , E_USER_NOTICE);
         }
         //$request->_accesslog =& $this;
-        if (empty($request->_accesslog->entries))
-            register_shutdown_function("Request_AccessLogEntry_shutdown_function");
+        //if (empty($request->_accesslog->entries))
+        register_shutdown_function("Request_AccessLogEntry_shutdown_function");
         
         if ($do_sql) {
             global $DBParams;
-            if (!in_array($DBParams['dbtype'], array('SQL','ADODB')))
+            if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) {
                 trigger_error("Unsupported database backend for ACCESS_LOG_SQL.\nNeed DATABASE_TYPE=SQL or ADODB");
-            $this->_dbi =& $request->_dbi;
-            $this->logtable = (!empty($DBParams['prefix']) ? $DBParams['prefix'] : '')."accesslog";
+            } else {
+                $this->_dbi =& $request->_dbi;
+                $this->logtable = (!empty($DBParams['prefix']) ? $DBParams['prefix'] : '')."accesslog";
+            }
         }
         $this->entries = array();
         $this->entries[] = & new Request_AccessLogEntry($this);
@@ -1284,6 +1307,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.76  2004/11/09 08:15:18  rurban
+// fix ADODB quoting style
+//
 // Revision 1.75  2004/11/07 18:34:28  rurban
 // more logging fixes
 //

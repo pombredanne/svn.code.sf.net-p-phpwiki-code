@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.67 2004-11-05 18:03:35 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.68 2004-11-09 17:11:04 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -14,7 +14,7 @@ class Template
     function Template ($name, &$request, $args = false) {
         global $WikiTheme;
 
-        $this->_request = $request;
+        $this->_request =& $request;
         $this->_name = $name;
         $request->_TemplatesProcessed[$name] = 1;
         $this->_basepage = $request->getArg('pagename');
@@ -270,6 +270,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.67  2004/11/05 18:03:35  rurban
+// shorten the template chain in errmsg
+//
 // Revision 1.66  2004/11/01 10:43:55  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

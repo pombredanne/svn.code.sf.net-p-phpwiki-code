@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.28 2004-11-06 17:02:33 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.29 2004-11-09 17:11:03 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -201,6 +201,7 @@ class FileFinder
      * @access private
      * @param $file string File to find.
      * @return string Directory which contains $file, or false.
+     * [5x,44ms]
      */
     function _search_path ($file) {
         foreach ($this->_path as $dir) {
@@ -568,6 +569,9 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/11/06 17:02:33  rurban
+// Workaround some php-win \\ duplication bug
+//
 // Revision 1.27  2004/10/14 19:23:58  rurban
 // remove debugging prints
 //

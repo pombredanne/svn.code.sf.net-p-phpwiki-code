@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.188 2004-11-07 16:02:52 rurban Exp $');
+rcs_id('$Id: main.php,v 1.189 2004-11-09 17:11:16 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -18,7 +18,7 @@ class WikiRequest extends Request {
     // var $_dbi;
 
     function WikiRequest () {
-        $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
+        $this->_dbi = WikiDB::open($GLOBALS['DBParams']); // first mysql request costs [958ms]! [670ms] is mysql_connect()
         //if ((DEBUG & _DEBUG_TRACE) or (time() % 50 == 0))
         //    $this->_dbi->_backend->optimize();
         if (in_array('File', $this->_dbi->getAuthParam('USER_AUTH_ORDER'))) {
@@ -47,7 +47,7 @@ class WikiRequest extends Request {
 // Fixme: Does pear reset the error mask to 1? We have to find the culprit
 //$x = error_reporting();
 $this->version = phpwiki_version();
-        $this->Request();
+        $this->Request(); // [90ms]
 
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
@@ -150,6 +150,7 @@ $this->version = phpwiki_version();
     // This really maybe should be part of the constructor, but since it
     // may involve HTML/template output, the global $request really needs
     // to be initialized before we do this stuff.
+    // [50ms]: 36ms is wikidb_page::exists
     function updateAuthAndPrefs () {
 
         if (isset($this->_user) and (!isa($this->_user,WikiUserClassname()))) {
@@ -208,7 +209,7 @@ $this->version = phpwiki_version();
             return WikiGroup::getGroup();
     }
 
-    function getPrefs () {
+    function & getPrefs () {
         return $this->_prefs;
     }
 
@@ -218,7 +219,7 @@ $this->version = phpwiki_version();
             return $this->_prefs->get($key);
         }
     }
-    function getDbh () {
+    function & getDbh () {
         return $this->_dbi;
     }
 
@@ -335,25 +336,6 @@ $this->version = phpwiki_version();
             $this->_prefs =& $this->_user->_prefs;
         }
         $this->_user->_group = $this->getGroup();
-        // avoid recursive objects and session resource handles
-        // avoid overlarge session data (max 4000 byte!)
-        if (isset($user->_group)) {
-            unset($user->_group->_request);
-            unset($user->_group->_user);
-        }
-        if (ENABLE_USER_NEW) {
-            unset($user->_HomePagehandle);
-            unset($user->_auth_dbi);
-        } else {
-            unset($user->_dbi);
-            unset($user->_authdbi);
-            unset($user->_homepage);
-            unset($user->_request);
-        }
-        if (empty($user->page))
-            $user->page = $this->getArg('pagename');
-        if (empty($user->action))
-            $user->action = $this->getArg('action');
         $this->setSessionVar('wiki_user', $user);
         $this->_prefs->set('userid',
                            $user->isSignedIn() ? $user->getId() : '');
@@ -614,7 +596,8 @@ TODO: check against these cases:
         SetupWiki($this);
         $this->finish();        // NORETURN
     }
-
+    
+    // [574ms] mainly template:printexpansion: 393ms and template::expandsubtemplate [100+70+60ms]
     function handleAction () {
         $action = $this->getArg('action');
         $method = "action_$action";
@@ -1141,6 +1124,11 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.188  2004/11/07 16:02:52  rurban
+// new sql access log (for spam prevention), and restructured access log class
+// dbh->quote (generic)
+// pear_db: mysql specific parts seperated (using replace)
+//
 // Revision 1.187  2004/11/05 22:08:52  rurban
 // Ok: Fix loading all required userclasses beforehand. This is much slower than before but safes a few bytes RAM
 //

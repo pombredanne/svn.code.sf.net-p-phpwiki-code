@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.57 2004-11-01 10:43:57 rurban Exp $');
+rcs_id('$Id: display.php,v 1.58 2004-11-09 17:11:16 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -10,16 +10,13 @@ require_once('lib/Template.php');
 function GleanKeywords ($page) {
     global $KeywordLinkRegexp;
 
-    $links = $page->getLinks(false);
-
+    $links = $page->getPageLinks();
     $keywords[] = SplitPagename($page->getName());
-    
-    while ($link = $links->next())
+    while ($link = $links->next()) {
         if (preg_match("/${KeywordLinkRegexp}/x", $link->getName(), $m))
             $keywords[] = SplitPagename($m[0]);
-
+    }
     $keywords[] = WIKI_NAME;
-    
     return join(', ', $keywords);
 }
 
@@ -218,6 +215,12 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.57  2004/11/01 10:43:57  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.56  2004/10/14 13:44:14  rurban
 // fix lib/display.php:159: Warning[2]: Argument to array_reverse() should be an array
 //

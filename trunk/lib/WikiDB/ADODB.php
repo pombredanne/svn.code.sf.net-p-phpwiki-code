@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.5 2004-10-14 19:19:34 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.6 2004-11-09 17:11:16 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -36,21 +36,12 @@ class WikiDB_ADODB extends WikiDB
      * @see WikiDB::isWikiPage
      */
     function isWikiPage ($pagename) {
-        /*
-        if (empty($this->_iwpcache))
-            $this->_iwpcache = array_flip($this->_backend->get_all_pagenames());
-        return isset($this->_iwpcache[$pagename]);
-        */
-
-        if (!isset($this->_iwpcache[$pagename]))
-            $this->_iwpcache[$pagename] = $this->_backend->is_wiki_page($pagename);
-        return $this->_iwpcache[$pagename];
-        
-        // Talk to the backend directly for max speed.
-        /*
-        $pagedata = $this->_cache->get_pagedata($pagename);
-        return !empty($pagedata[':non_default']);
-        */
+        $pagename = (string) $pagename;
+        if ($pagename === '') return false;
+        if (!array_key_exists($pagename, $this->_cache->_id_cache)) {
+            $this->_cache->_id_cache[$pagename] = $this->_backend->is_wiki_page($pagename);
+        }
+        return $this->_cache->_id_cache[$pagename];
     }
 };
   

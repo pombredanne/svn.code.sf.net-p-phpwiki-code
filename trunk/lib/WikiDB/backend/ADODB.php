@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.47 2004-11-06 17:11:42 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.48 2004-11-09 17:11:16 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -75,25 +75,22 @@ extends WikiDB_backend
         $parsed = parseDSN($dbparams['dsn']);
         $this->_dbparams = $dbparams;
         $this->_dbh = &ADONewConnection($parsed['phptype']);
+        if (DEBUG & _DEBUG_SQL) {
+            $this->_dbh->debug = true;
+            $GLOBALS['ADODB_OUTP'] = '_sql_debuglog';
+        }
         $this->_dsn = $parsed;
         if (!empty($parsed['persistent']))
             $conn = $this->_dbh->PConnect($parsed['hostspec'],$parsed['username'], 
-                                         $parsed['password'], $parsed['database']);
+                                          $parsed['password'], $parsed['database']);
         else
             $conn = $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
                                          $parsed['password'], $parsed['database']);
-
-        //$this->_dbh->debug = true;
         
         // Since 1.3.10 we use the faster ADODB_FETCH_NUM,
         // with some ASSOC based recordsets.
         $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
         $this->_dbh->SetFetchMode(ADODB_FETCH_NUM);
-
-        // Old comment:
-        //  With ADODB_COUNTRECS false it should speed up queries, but:
-        //  1)  It only works with PHP >= 4.0.6; and
-        //  2)  At the moment, I haven't figured out why the wrong results are returned'
         $GLOBALS['ADODB_COUNTRECS'] = false;
 
         $prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
@@ -234,6 +231,11 @@ extends WikiDB_backend
     }
 
     function _get_pageid($pagename, $create_if_missing = false) {
+
+        // check id_cache
+        global $request;
+        $cache =& $request->_dbi->_cache->_id_cache;
+        if ($cache[$pagename]) return $cache[$pagename];
         
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
@@ -507,8 +509,12 @@ extends WikiDB_backend
     
     /**
      * Find pages which link to or are linked from a page.
+     *
+     * Optimization: save request->_dbi->_iwpcache[] to avoid further iswikipage checks
+     * (linkExistingWikiWord or linkUnknownWikiWord)
+     * This is called on every page header GleanDescription, so we can store all the existing links.
      */
-    function get_links($pagename, $reversed = true) {
+    function get_links($pagename, $reversed=true, $include_empty=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
@@ -522,21 +528,23 @@ extends WikiDB_backend
         $result = $dbh->Execute("SELECT $want.id AS id, $want.pagename AS pagename,"
                                 . " $want.hits AS hits"
                                 . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee"
+                                . (!$include_empty ? ", $nonempty_tbl" : '')
                                 . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                                 . " AND $have.pagename=$qpagename"
+                                . (!$include_empty ? " AND $nonempty_tbl.id=$want.id" : "")
                                 //. " GROUP BY $want.id"
                                 . " ORDER BY $want.pagename");
         return new WikiDB_backend_ADODB_iter($this, $result, $this->page_tbl_field_list);
     }
 
-    function get_all_pages($include_deleted=false, $sortby=false, $limit=false) {
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = 'ORDER BY ' . $orderby;
         //$dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         if (strstr($orderby, 'mtime ')) { // was ' mtime'
-            if ($include_deleted) {
+            if ($include_empty) {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
                     ." FROM $page_tbl, $recent_tbl, $version_tbl"
@@ -554,7 +562,7 @@ extends WikiDB_backend
                     . " $orderby";
             }
         } else {
-            if ($include_deleted) {
+            if ($include_empty) {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
                     . " FROM $page_tbl $orderby";
@@ -605,7 +613,7 @@ extends WikiDB_backend
         $search_clause = $search->makeSqlClause($callback);
         $result = $dbh->Execute("SELECT $fields FROM $table"
                                 . " WHERE $join_clause"
-                                . "  AND ($search_clause)"
+                                . " AND ($search_clause)"
                                 . " ORDER BY pagename");
 
         return new WikiDB_backend_ADODB_iter($this, $result, $field_list);
@@ -932,7 +940,7 @@ extends WikiDB_backend_iterator
 
         if (is_null($field_list)) {
             // No field list passed, retrieve from DB
-            // WikiLiens is using the iterator behind the scene
+            // WikiLens is using the iterator behind the scene
             $field_list = array();
             $fields = $query_result->FieldCount();
             for ($i = 0; $i < $fields ; $i++) {
@@ -949,7 +957,7 @@ extends WikiDB_backend_iterator
             return false;
         }
         $count = $this->_result->numRows();
-        $this->_result->Close();
+        //$this->_result->Close();
         return $count;
     }
 
@@ -967,6 +975,7 @@ extends WikiDB_backend_iterator
         foreach ($this->_fields as $field) {
             $rec_assoc[$field] = $rec_num[$i++];
         }
+        // check if the cache can be populated here?
 
         $result->MoveNext();
         return $rec_assoc;
@@ -1001,16 +1010,11 @@ extends WikiDB_backend_ADODB_generic_iter
 
         $result->MoveNext();
         if (isset($rec_assoc['pagedata']))
-            $pagedata = $backend->_extract_page_data($rec_assoc['pagedata'], $rec_assoc['hits']);
-        else 
-            $pagedata = false;
-        $rec = array('pagename' => $rec_assoc['pagename'],
-                     'pagedata' => $pagedata);
+            $rec_assoc['pagedata'] = $backend->_extract_page_data($rec_assoc['pagedata'], $rec_assoc['hits']);
         if (!empty($rec_assoc['version'])) {
-            $rec['versiondata'] = $backend->_extract_version_data_assoc($rec_assoc);
-            $rec['version'] = $rec_assoc['version'];
+            $rec_assoc['versiondata'] = $backend->_extract_version_data_assoc($rec_assoc);
         }
-        return $rec;
+        return $rec_assoc;
     }
 }
 
@@ -1174,6 +1178,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2004/11/06 17:11:42  rurban
+// The optimized version doesn't query for pagedata anymore.
+//
 // Revision 1.46  2004/11/01 10:43:58  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

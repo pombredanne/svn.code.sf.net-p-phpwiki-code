@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.123 2004-11-05 21:03:27 rurban Exp $');
+rcs_id('$Id: config.php,v 1.124 2004-11-09 17:11:16 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -24,6 +24,7 @@ define ('_DEBUG_TRACE',     8); // test php memory usage, prints php debug backt
 define ('_DEBUG_INFO',     16);
 define ('_DEBUG_APD',      32);
 define ('_DEBUG_LOGIN',    64); // verbose login debug-msg (settings and reason for failure)
+define ('_DEBUG_SQL',     128);
 
 function isCGI() {
     return (substr(php_sapi_name(),0,3) == 'cgi' and 
@@ -117,6 +118,7 @@ function isBrowserKonqueror($version = false) {
  * @return string The new locale, or <code>false</code> if unable
  *  to set the requested locale.
  * @see setlocale
+ * [56ms]
  */
 function guessing_setlocale ($category, $locale) {
     if ($res = setlocale($category, $locale))
@@ -161,10 +163,10 @@ function guessing_setlocale ($category, $locale) {
     // and codeset  is  a  character  set or encoding identifier like
     // ISO-8859-1 or UTF-8.
 }
-
+// [99ms]
 function update_locale($loc) {
     //require_once(dirname(__FILE__)."/FileFinder.php");
-    $newlocale = guessing_setlocale(LC_ALL, $loc);
+    $newlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
     if (!$newlocale) {
         //trigger_error(sprintf(_("Can't setlocale(LC_ALL,'%s')"), $loc), E_USER_NOTICE);
         // => LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C;LC_NUMERIC=C;LC_TIME=C
@@ -191,6 +193,7 @@ function update_locale($loc) {
         global $locale;
         $locale = array();
         // do reinit to purge PHP's static cache
+        // [43ms]
         if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok', 'reinit')) ) {
             include($lcfile);
         }
@@ -407,6 +410,10 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.123  2004/11/05 21:03:27  rurban
+// new DEBUG flag: _DEBUG_LOGIN (64)
+//   verbose login debug-msg (settings and reason for failure)
+//
 // Revision 1.122  2004/10/14 17:49:58  rurban
 // fix warning in safe_wordwrap
 //

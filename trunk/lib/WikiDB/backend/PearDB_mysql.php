@@ -1,8 +1,10 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.8 2004-11-07 16:02:52 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.9 2004-11-09 17:11:17 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
+// The slowest function overall is mysql_connect with [680ms]
+// 2nd is db_mysql::simpleQuery with [257ms]
 class WikiDB_backend_PearDB_mysql
 extends WikiDB_backend_PearDB
 {
