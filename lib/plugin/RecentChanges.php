@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.15 2001-12-18 18:47:29 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.16 2001-12-26 10:38:11 carstenklapp Exp $');
 /**
  */
 
@@ -94,7 +94,7 @@ class _RecentChanges_HtmlFormatter
 extends _RecentChanges_Formatter
 {
     function diffLink ($rev) {
-        return QElement('a', array('href' => $this->diffURL($rev)),
+        return QElement('a', array('href' => $this->diffURL($rev), 'class' => 'wikiaction'),
                         _("(diff)"));
     }
 
