@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-printer.css,v 1.7 2002-02-01 22:29:24 carstenklapp Exp $
+ * $Id: phpwiki-printer.css,v 1.8 2002-02-03 21:32:41 carstenklapp Exp $
  *
  * PhpWiki style sheet for the printed page:
  * Black on white only, with no toolbar commands and no link icons.
@@ -7,7 +7,7 @@
  * appear according to your browser's default font settings.
  */
 body {
-        margin :     .5in;
+        margin :     1em;
         color :      black;
         background : white; 
 }
@@ -32,6 +32,8 @@ a {
         text-decoration : underline;
         font-weight :     bold;
 }
+
+p.editdate { font-size: smaller; margin-top: -1ex; }
 
 .rawurl {
         text-decoration : underline;
@@ -93,8 +95,8 @@ a {
  * Hide image borders for older browsers--newer broswers default to a zero
  * border around images anyway.
  */
-img {
-        border : none;
+img { vertical-align: baseline;
+      border : none;
 }
 
 /* Hide other non-essential page elements from the printer. */
