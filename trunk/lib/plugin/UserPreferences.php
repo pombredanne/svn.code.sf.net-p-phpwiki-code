@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.25 2004-04-07 23:13:19 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.26 2004-05-03 11:40:42 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
@@ -126,40 +126,8 @@ extends WikiPlugin
                     $args['errmsg'] = HTML(HTML::h2($errmsg), HTML::hr());
                 }
             }
-            $available_themes = array(); 
-            $dir_root = 'themes/';
-            if (defined('PHPWIKI_DIR'))
-                $dir_root = PHPWIKI_DIR . "/$dir_root";
-            $dir = dir($dir_root);
-            if ($dir) {
-                while($entry = $dir->read()) {
-                    if (is_dir($dir_root.$entry)
-                        && (substr($entry,0,1) != '.')
-                        && $entry != 'CVS') {
-                        array_push($available_themes, $entry);
-                    }
-                }
-                $dir->close();
-            }
-            $args['available_themes'] = $available_themes;
-
-            $available_languages = array('en');
-            $dir_root = 'locale/';
-            if (defined('PHPWIKI_DIR'))
-                $dir_root = PHPWIKI_DIR . "/$dir_root";
-            $dir = dir($dir_root);
-            if ($dir) {
-                while($entry = $dir->read()) {
-                    if (is_dir($dir_root.$entry)
-                        && (substr($entry,0,1) != '.')
-                        && $entry != 'po'
-                        && $entry != 'CVS') {
-                        array_push($available_languages, $entry);
-                    }
-                }
-                $dir->close();
-            }
-            $args['available_languages'] = $available_languages;
+            $args['available_themes'] = listAvailableThemes();
+            $args['available_languages'] = listAvailableLanguages();
 
             return Template('userprefs', $args);
         }
@@ -172,6 +140,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/04/07 23:13:19  rurban
+// fixed pear/File_Passwd for Windows
+// fixed FilePassUser sessions (filehandle revive) and password update
+//
 // Revision 1.24  2004/04/06 20:00:11  rurban
 // Cleanup of special PageList column types
 // Added support of plugin and theme specific Pagelist Types
