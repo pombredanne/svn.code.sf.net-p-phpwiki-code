@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.25 2005-04-01 15:22:20 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.26 2005-04-01 16:06:41 rurban Exp $');
 /*
- Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
@@ -133,7 +133,7 @@ extends WikiPlugin_WikiAdminSelect
             if ($post_args['action'] == 'verify') {
                 // Real action
                 return $this->renamePages($dbi, $request, array_keys($p), 
-                                          trim($post_args['from']), trim($post_args['to']), 
+                                          $post_args['from'], $post_args['to'], 
                                           !empty($post_args['updatelinks']));
             }
             if ($post_args['action'] == 'select') {
@@ -201,26 +201,21 @@ extends WikiPlugin_WikiAdminSelect
                                       'value' => 1));
         if (!empty($post_args[$name]))
             $checkbox->setAttr('checked', 'checked');
-        return HTML::div($checkbox, HTML::span($msg));
+        return HTML::div($checkbox, ' ', HTML::span($msg));
     }
 
     function renameForm(&$header, $post_args) {
         $header->pushContent(_("Rename")." "._("from").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_rename[from]',
-                                               'value' => trim($post_args['from']))));
+                                               'value' => $post_args['from'])));
         $header->pushContent(' '._("to").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_rename[to]',
-                                               'value' => trim($post_args['to']))));
+                                               'value' => $post_args['to'])));
         $header->pushContent($this->checkBox($post_args, 'regex', _("Regex?")));
         $header->pushContent($this->checkBox($post_args, 'icase', _("Case insensitive?")));
         $header->pushContent(HTML::br());
-        $checkbox = HTML::input(array('type' => 'checkbox',
-                                      'name' => 'admin_rename[updatelinks]',
-                                      'value' => 1));
-        if (!empty($post_args['updatelinks']))
-            $checkbox->setAttr('checked','checked');
-        $header->pushContent($checkbox);
-        $header->pushContent(_("Change pagename in all linked pages also?"));
+        $header->pushContent($this->checkBox($post_args, 'updatelinks', 
+                                             _("Change pagename in all linked pages also?")));
         $header->pushContent(HTML::p());
         return $header;
     }
@@ -235,8 +230,11 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
         global $request;
         $post_args = $request->getArg('admin_rename');
+        $options = array('regex' => @$post_args['regex'],
+                         'icase' => @$post_args['icase']);
         $value = WikiPlugin_WikiAdminRename::renameHelper($page_handle->getName(), 
-                                                          $post_args['from'], $post_args['to']);
+                                                          $post_args['from'], $post_args['to'],
+                                                          $options);
         $div = HTML::div(" => ",HTML::input(array('type' => 'text',
                                                   'name' => 'rename[]',
                                                   'value' => $value)));
@@ -250,6 +248,10 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2005/04/01 15:22:20  rurban
+// Implement icase and regex options.
+// Change checkbox case message from "Case-Sensitive" to "Case-Insensitive"
+//
 // Revision 1.24  2005/04/01 15:03:01  rurban
 // Optimize rename UI with one selected pagename
 //
