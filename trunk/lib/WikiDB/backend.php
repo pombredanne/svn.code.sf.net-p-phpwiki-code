@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.17 2004-11-27 14:39:05 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.18 2004-11-29 17:44:53 rurban Exp $');
 
 /*
   Pagedata
@@ -475,13 +475,13 @@ class WikiDB_backend
      * Duplicate the PageList function here to avoid loading the whole 
      * PageList.php, and it forces the backend specific sortable_columns()
      */
-    function sortby ($column, $action) {
+    function sortby ($column, $action, $sortable_columns=false) {
         if (empty($column)) return '';
         //support multiple comma-delimited sortby args: "+hits,+pagename"
         if (strstr($column,',')) {
             $result = array();
             foreach (explode(',',$column) as $col) {
-                $result[] = $this->sortby($col,$action);
+                $result[] = WikiDB_backend::sortby($col,$action);
             }
             return join(",",$result);
         }
@@ -507,7 +507,8 @@ class WikiDB_backend
                      strstr($GLOBALS['request']->getArg('sortby'),$column)));
         } elseif ($action == 'db') {
             // native sort possible?
-            $sortable_columns = $this->sortable_columns();
+            if (!empty($this) and !$sortable_columns)
+                $sortable_columns = $this->sortable_columns();
             if (in_array($column, $sortable_columns))
                 // asc or desc: +pagename, -pagename
                 return $column . ($order == '+' ? ' ASC' : ' DESC');
