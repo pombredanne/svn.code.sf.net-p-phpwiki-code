@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: top.tmpl,v 1.12 2002-02-21 21:18:30 carstenklapp Exp $
+/* $Id: top.tmpl,v 1.13 2002-03-25 14:28:16 carstenklapp Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff and the and <head>.
  */
@@ -9,7 +9,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: top.tmpl,v 1.12 2002-02-21 21:18:30 carstenklapp Exp $ -->
+<!-- $Id: top.tmpl,v 1.13 2002-03-25 14:28:16 carstenklapp Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php $ROBOTS_CONTENT = $ROBOTS_META ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
@@ -93,7 +93,9 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <title><?=WIKI_NAME?> - <?=AsString($TITLE)?></title>
 </head>
 <?= Template('body') ?>
+<?php if (defined('DEBUG')) { ?>
 <!-- phpwiki source:
 <?=$RCS_IDS?>
 -->
+<?php } ?>
 </html>
