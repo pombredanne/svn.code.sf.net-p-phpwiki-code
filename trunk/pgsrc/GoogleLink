@@ -1,9 +1,9 @@
 Date: Mon, 19 Apr 2004 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
-X-Rcs-Id: $Id: GoogleLink,v 1.1 2004-04-19 09:23:58 rurban Exp $
+X-Rcs-Id: $Id: GoogleLink,v 1.2 2004-05-02 15:10:08 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=GoogleLink;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pgsrc_version="2 $Revision: 1.2 $";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -13,6 +13,6 @@ Content-Transfer-Encoding: binary
 A new UserPreferences setting to optionally add a [G] link to unknown pages, 
 with a link to Google:[pagename]. Default: Off
 
-See MeatBall::GogglePrompt
+See MeatBall::GooglePrompt
 ----
 PhpWikiDocumentation

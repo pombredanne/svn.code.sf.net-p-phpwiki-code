@@ -1,9 +1,9 @@
 Date: Fri, 29 Apr 2004 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.25 2004-04-29 22:41:03 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.26 2004-05-02 15:10:08 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.25 $";
+  pgsrc_version="2 $Revision: 1.26 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -16,10 +16,12 @@ fixes:
 * POP3 auth
 * support wikiword links and image links in RichTable content,
   backlinks still not working.
-* fixed navbar links in theme smaller
+* fixed navbar links in theme smaller, and made them default
 * fixed dba session reading
 * fixed loading of localized pagenames on action=upgrade
 * fixed interwiki.map loading on certain PrettyWiki setups
+* re-enabled php-4.0.6 support (broken since ...),
+  <= 4.0.5 not supported anymore.
 changes:
 * pear not in our include_path anymore: either use your pear or our pear, 
   by adding it to your include_path or not. use now 1:1 copies of pear libs.
@@ -35,6 +37,7 @@ new:
 * PopularNearby plugin: same as the classic most popular footer
 * RelatedChanges plugin: only those which are links at the current page
 * new GoogleLink pref: add "[G]" lookup on unknown links
+* chinese language support by Yan-ren Tsai (druryl)
 
 1.2.3 (the classic version) 29.Apr 2004, Reini Urban:
 * added the most popular footer for dba

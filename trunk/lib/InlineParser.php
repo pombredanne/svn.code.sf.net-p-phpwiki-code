@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.39 2004-04-29 19:39:44 rurban Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.40 2004-05-02 15:10:05 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -89,7 +89,7 @@ class RegexpSet
      * look-ahead and look-behind assertions are okay.)
      */
     function RegexpSet ($regexps) {
-        $this->_regexps = $regexps;
+        $this->_regexps = array_unique($regexps);
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WhoIsOnline.php,v 1.5 2004-04-06 20:27:05 rurban Exp $');
+rcs_id('$Id: WhoIsOnline.php,v 1.6 2004-05-02 15:10:08 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -162,19 +162,19 @@ extends WikiPlugin
 
 	$sess_time = ini_get('session.gc_maxlifetime'); // in seconds
 
-        //TODO: get and sets max stats
-        $page = $dbi->getPage($request->getArg('pagename'));
+        //TODO: get and sets max stats in global_data
+        //$page = $dbi->getPage($request->getArg('pagename'));
         $stats = array(); $stats['max_online_num'] = 0;
-        if ($stats = $page->get('stats')) {
+        if ($stats = $dbi->get('stats')) {
             if ($num_users > $stats['max_online_num']) {
                 $stats['max_online_num'] = $num_users;
                 $stats['max_online_time'] = time();
-                $page->set('stats',$stats);
+                $dbi->set('stats',$stats);
             }
         } else {
             $stats['max_online_num'] = $num_users;
             $stats['max_online_time'] = time();
-            $page->set('stats',$stats);
+            $dbi->set('stats',$stats);
         }
         return array('SESSDATA_BOOL'    => !empty($dbsession),
                      'NUM_PAGES' 	=> $num_pages,
@@ -194,6 +194,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/04/06 20:27:05  rurban
+// fixed guests (no wiki_user session)
+// added ip (to help in ip-throttling)
+//
 // Revision 1.4  2004/03/30 02:14:04  rurban
 // fixed yet another Prefs bug
 // added generic PearDb_iter

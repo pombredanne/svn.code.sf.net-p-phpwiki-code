@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 require_once (dirname(__FILE__).'/lib/prepend.php');
-rcs_id('$Id: index.php,v 1.143 2004-05-01 16:04:56 rurban Exp $');
+rcs_id('$Id: index.php,v 1.144 2004-05-02 15:10:04 rurban Exp $');
 
 require_once(dirname(__FILE__).'/lib/IniConfig.php');
 IniConfig(dirname(__FILE__)."/config/config.ini");
@@ -49,25 +49,10 @@ IniConfig(dirname(__FILE__)."/config/config.ini");
 // is enough in the wiki file, plus the action definition in a .htaccess file
 ////////////////////////////////////////////////////////////////
 
-// If your lib/main.php is not loaded, comment that out, and  
-// uncomment the include "lib/main.php" line below.
-if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
-    if ($HTTP_SERVER_VARS['SCRIPT_NAME'] != VIRTUAL_PATH) {
-        include(dirname(__FILE__)."/lib/main.php");
-    }
-    elseif (defined('SCRIPT_NAME') and 
-            ($HTTP_SERVER_VARS['SCRIPT_NAME'] != SCRIPT_NAME)) {
-        include(dirname(__FILE__)."/lib/main.php");
-    }
-} else {
-    if (defined('SCRIPT_NAME') and 
-        ($HTTP_SERVER_VARS['SCRIPT_NAME'] == SCRIPT_NAME)) {
-        include(dirname(__FILE__)."/lib/main.php");
-    } elseif (strstr($HTTP_SERVER_VARS['PHP_SELF'],'index.php')) {
-        include(dirname(__FILE__)."/lib/main.php");
-    }
-}
-//include (dirname(__FILE__)."/lib/main.php");
+// If any page is empty, comment the if ... line out,
+// to force include "lib/main.php".
+if (SCRIPT_FILENAME == __FILE__)
+    include(dirname(__FILE__)."/lib/main.php");
 
 // (c-file-style: "gnu")
 // Local Variables:

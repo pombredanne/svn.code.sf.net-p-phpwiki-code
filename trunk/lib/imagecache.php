@@ -1,8 +1,8 @@
-<?php rcs_id('$Id: imagecache.php,v 1.3 2004-01-25 10:14:13 rurban Exp $');
+<?php rcs_id('$Id: imagecache.php,v 1.4 2004-05-02 15:10:07 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
- This file is (not yet) part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -28,33 +28,60 @@
 include "lib/config.php";
 require_once("lib/stdlib.php");
 require_once('lib/Request.php');
-if (ENABLE_USER_NEW)
-    require_once("lib/WikiUserNew.php");
-else  
-    require_once("lib/WikiUser.php");
+if (ENABLE_USER_NEW) require_once("lib/WikiUserNew.php");
+else                 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
 
 require_once "lib/WikiPluginCached.php";
 
 // -----------------------------------------------------------------------
 
-// FIXME: do I need this? What the hell does it? 
-
-function deduce_pagename ($request) {
+function deducePagename ($request) {
     if ($request->getArg('pagename'))
         return $request->getArg('pagename');
 
     if (USE_PATH_INFO) {
         $pathinfo = $request->get('PATH_INFO');
-        if (ereg('^' . PATH_INFO_PREFIX . '(..*)$', $pathinfo, $m))
-            return $m[1];
+        $tail = substr($pathinfo, strlen(PATH_INFO_PREFIX));
+        if ($tail != '' and $pathinfo == PATH_INFO_PREFIX . $tail) {
+            return $tail;
+        }
+    }
+    elseif ($this->isPost()) {
+        global $HTTP_GET_VARS;
+        if (isset($HTTP_GET_VARS['pagename'])) { 
+            return $HTTP_GET_VARS['pagename'];
+        }
     }
 
     $query_string = $request->get('QUERY_STRING');
     if (preg_match('/^[^&=]+$/', $query_string))
         return urldecode($query_string);
     
-    return gettext("HomePage");
+    return HOME_PAGE;
+}
+
+function deduceUsername() {
+    global $request, $HTTP_SERVER_VARS, $HTTP_ENV_VARS;
+    if (!empty($request->args['auth']) and !empty($request->args['auth']['userid']))
+        return $request->args['auth']['userid'];
+    if (!empty($HTTP_SERVER_VARS['PHP_AUTH_USER']))
+        return $HTTP_SERVER_VARS['PHP_AUTH_USER'];
+    if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
+        return $HTTP_ENV_VARS['REMOTE_USER'];
+    
+    if ($user = $request->getSessionVar('wiki_user')) {
+        $request->_user = $user;
+        $request->_user->_authhow = 'session';
+        return ENABLE_USER_NEW ? $user->UserName() : $request->_user;
+    }
+    if ($userid = $request->getCookieVar('WIKI_ID')) {
+        if (!empty($userid) and substr($userid,0,2) != 's:') {
+            $request->_user->authhow = 'cookie';
+            return $userid;
+        }
+    }
+    return false;
 }
 
 /**
@@ -66,16 +93,44 @@ function deduce_pagename ($request) {
  */
 function mainImageCache() {
     $request = new Request;   
-    //$request->setArg('pagename', deduce_pagename($request));
-    //$pagename = $request->getArg('pagename');
+    // normalize pagename
+    $request->setArg('pagename', deducePagename($request));
+    $pagename = $request->getArg('pagename');
 
     // assume that every user may use the cache    
     global $user; // FIXME: necessary ?
-    if (ENABLE_USER_NEW)
-        $user = WikiUser();
-    else
-        $user = new WikiUser($request, 'ANON_OK'); 
-
+    if (ENABLE_USER_NEW) {
+        $userid = deduceUsername();	
+        if (isset($request->_user) and 
+            !empty($request->_user->_authhow) and 
+            $request->_user->_authhow == 'session')
+        {
+            if (isset($request->_user) and 
+                ( ! isa($request->_user,WikiUserClassname())
+                  or (strtolower(get_class($request->_user)) == '_passuser')))
+            {
+                $request->_user = WikiUser($userid,$request->_user->_prefs);
+            }
+            unset($request->_user->_HomePagehandle);
+            $request->_user->hasHomePage();
+            // update the lockfile filehandle
+            if (  isa($request->_user,'_FilePassUser') and 
+                  $request->_user->_file->lockfile and 
+                  !$request->_user->_file->fplock  )
+	    {
+                $request->_user = new _FilePassUser($userid,$request->_user->_prefs,$request->_user->_file->filename);
+            }
+            $request->_prefs = & $request->_user->_prefs;
+        } else {
+            $user = WikiUser($userid);
+            $request->_user =& $user;
+            $request->_prefs =& $request->_user->_prefs;
+        }
+    } else {
+        $user = new WikiUser($request, deduceUsername());
+        $request->_user =& $user;
+        $request->_prefs = $request->_user->getPreferences();
+    }
     $dbi = WikiDB::open($GLOBALS['DBParams']);
     
     // Enable the output of most of the warning messages.

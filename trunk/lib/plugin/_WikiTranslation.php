@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.6 2004-04-21 04:29:50 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.7 2004-05-02 15:10:08 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -119,7 +119,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -135,6 +135,8 @@ extends WikiPlugin
                    'exclude'       => '',
                    'sortby'        => '',
                    'limit'         => 0,
+                   'nolinks'       => false,  // don't display any links (for development only)
+                   'noT'           => false,  // don't display the T link (for development only)
                    'debug'         => false
                  );
     }
@@ -215,6 +217,8 @@ extends WikiPlugin
         if (!$from_lang) $from_lang = $request->getPref('lang');
         if (!$from_lang) $from_lang = $GLOBALS['LANG'];
         $this->lang = $from_lang;
+        $this->noT = $noT;
+        $this->nolinks = $nolinks;
 
         if (empty($languages)) {
             // from lib/plugin/UserPreferences.php
@@ -245,6 +249,12 @@ extends WikiPlugin
             $languages = explode(',',$languages);
         } else {
             $languages = array($languages);
+        }
+        if (in_array('zh',$languages) or in_array('ja',$languages)) {
+            // if the current charset != utf-8 the text will not be displayed correctly
+            // but here we cannot change the header anymore. so we can decide to ignore them, 
+            // or display them with all the errors.
+            $GLOBALS['charset'] = 'utf-8';
         }
         $to_lang = $languages[0];
         if (!empty($string) and count($languages)==1) {
@@ -322,6 +332,23 @@ extends WikiPlugin
                 }
             }
             break;
+        // all Button texts, which need a localized .png
+        // where to get them from? templates/*.tmpl: Button() and WikiLink(?,'button')
+        // navbar links, actionpages, and admin requests
+        case 'buttons':
+            $buttons = $GLOBALS['AllActionPages'];
+            $fileset = new FileSet(FindFile("themes/MacOSX/buttons/en"), "*.png");
+            foreach ($fileset->getFiles() as $file) {
+                $b = urldecode(substr($file,0,-4));
+                if (!in_array($b,$buttons))
+                    $buttons[] = $b;
+            }
+            $count = 0;
+            foreach ($buttons as $button) {
+                $pagelist->addPage( $button );
+                if ($limit and ++$count > $limit) break;
+            }
+            break;
         }
         return $pagelist;
     }
@@ -332,6 +359,8 @@ class _PageList_Column_custom extends _PageList_Column {
         $this->_field = $field;
         $this->_from_lang = $from_lang;
         $this->_plugin =& $plugin;
+        $this->_noT = $plugin->noT;
+        $this->_nolinks = $plugin->nolinks;
         $this->_iscustom = substr($field, 0, 7) == 'custom:';
         if ($this->_iscustom)
             $this->_field = substr($field, 7);
@@ -354,7 +383,7 @@ class _PageList_Column_custom extends _PageList_Column {
         {    
             global $Theme;
             $link = $Theme->linkUnknownWikiWord($trans);
-            if ($this->dbi->isWikiPage($trans)) {
+            if (!($this->_noT or $this->_nolinks) and $this->dbi->isWikiPage($trans)) {
                 $url = WikiURL($trans, array('action' => 'TranslateText','lang' => $this->_field));
                 $button = $Theme->makeButton('T', $url);
                 $button->addTooltip(sprintf(_("Define the translation for %s in %s"), $trans, $this->_field));
@@ -369,7 +398,10 @@ class _PageList_Column_custom extends _PageList_Column {
             else                        // not existing: empty
                 return '';
         } elseif (is_object($page)) {
-            return WikiLink($trans,'auto');
+            if (!$this->_nolinks)
+                return WikiLink($trans,'auto');
+            else
+                return $trans;
         } else {
             return $trans;
         }
@@ -377,6 +409,9 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/04/21 04:29:50  rurban
+// write WikiURL consistently (not WikiUrl)
+//
 // Revision 1.5  2004/03/17 15:38:03  rurban
 // more translations
 //

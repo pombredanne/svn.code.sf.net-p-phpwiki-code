@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.138 2004-05-01 15:59:29 rurban Exp $');
+rcs_id('$Id: main.php,v 1.139 2004-05-02 15:10:07 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -94,7 +94,7 @@ class WikiRequest extends Request {
         // Load theme
         if ($user_theme = $this->getPref('theme'))
             include_once("themes/$user_theme/themeinfo.php");
-        if (empty($Theme) and defined ('THEME'))
+        if (empty($Theme) and defined('THEME'))
             include_once("themes/" . THEME . "/themeinfo.php");
         if (empty($Theme))
             include_once("themes/default/themeinfo.php");
@@ -324,6 +324,7 @@ class WikiRequest extends Request {
                     'verify'     => _("verify the current action"),
                     'viewsource' => _("view the source of this page"),
                     'xmlrpc'     => _("access this wiki via XML-RPC"),
+                    'soap'       => _("access this wiki via SOAP"),
                     'zip'        => _("download a zip dump from this wiki"),
                     'ziphtml'    => _("download an html zip dump from this wiki")
                     );
@@ -351,6 +352,7 @@ class WikiRequest extends Request {
                     'verify'     => _("Verify the current action"),
                     'viewsource' => _("Viewing the source of pages"),
                     'xmlrpc'     => _("XML-RPC access"),
+                    'soap'       => _("SOAP access"),
                     'zip'        => _("Downloading zip dumps"),
                     'ziphtml'    => _("Downloading html zip dumps")
                     );
@@ -403,6 +405,7 @@ class WikiRequest extends Request {
                 return WIKIAUTH_ANON;
 
             case 'edit':
+            case 'soap':
                 if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
                     return WIKIAUTH_BOGO;
                 return WIKIAUTH_ANON;
@@ -886,6 +889,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.138  2004/05/01 15:59:29  rurban
+// more php-4.0.6 compatibility: superglobals
+//
 // Revision 1.137  2004/04/29 19:39:44  rurban
 // special support for formatted plugins (one-liners)
 //   like <small><plugin BlaBla ></small>
