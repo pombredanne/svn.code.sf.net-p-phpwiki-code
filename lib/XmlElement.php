@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.12 2002-01-26 01:51:13 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.13 2002-01-26 03:04:51 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -252,8 +252,9 @@ class FormattedText {
     }
 
     function asString() {
-        $args = $this->_args;
-        array_unshift($args, $this->_fs);
+        $args[] = $this->_fs;
+        foreach ($this->_args as $arg)
+            $args[] = AsString($arg);
         return call_user_func_array('sprintf', $args);
     }
 }
