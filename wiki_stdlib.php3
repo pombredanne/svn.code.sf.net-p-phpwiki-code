@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.11 2000-06-07 10:50:01 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.12 2000-06-09 10:20:45 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -313,7 +313,7 @@
 
       // send back escaped ([[) bracket sets
       if (preg_match("/^\[/", $linkdata)) {
-         return htmlspecialchars($linkdata) . "]";
+         return htmlspecialchars(substr($bracketlink, 1));
       }
 
       // match the contents 
