@@ -1,4 +1,4 @@
-<?php // $Id: admin.php,v 1.2 2000-11-08 15:43:46 ahollosi Exp $
+<?php // $Id: admin.php,v 1.3 2000-11-08 16:48:34 ahollosi Exp $
 
    function rcs_id($id) {}   // otherwise this gets in the way
 
@@ -42,6 +42,8 @@
       include ('admin/loadserial.php');
    } elseif (isset($remove)) {
       if (function_exists('RemovePage')) {
+	 if (get_magic_quotes_gpc())
+	    $remove = stripslashes($remove);
 	 RemovePage($dbi, $remove);
 	 $html = "Removed page '" . htmlspecialchars($remove)
 		."' successfully.'";
