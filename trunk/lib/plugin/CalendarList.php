@@ -1,11 +1,11 @@
 <?php // -*-php-*-
-rcs_id('$Id: CalendarList.php,v 1.3 2004-09-22 13:36:45 rurban Exp $');
+rcs_id('$Id: CalendarList.php,v 1.4 2004-12-06 18:32:39 rurban Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
 define('SECONDS_PER_DAY', 24 * 3600);
 
 /**
- * This is a list of calendar appoinments. 
+ * This is a list of calendar appointments. 
  * Same arguments as Calendar, so no one is confused
  * Uses <dl><dd>DATE<dt>page contents...
  * Derived from Calendar.php by Martin Norbäck <martin@safelogic.se>
@@ -29,6 +29,7 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('prefix'       => '[pagename]',
                      'date_format'  => '%Y-%m-%d',
+                     'order' 	    => 'normal', // or reverse (counting backwards)
                      'year'         => '',
                      'month'        => '',
                      'month_offset' => 0,
@@ -67,7 +68,7 @@ extends WikiPlugin
                             $date_string);
             $a = array(HTML::dt($link), HTML::dd($content));
         } else {
-          $a = array();
+            $a = array();
         }
         return $a;
     }
@@ -89,7 +90,9 @@ extends WikiPlugin
                            $args['month'] + $args['month_offset'], // month (1-12)
                            $now['tm_mday'] - $args['last_n_days'],
                            $args['year']);
-        } elseif ($args['next_n_days'] || $args['next_n']/* || $args['last_n']*/) {
+        } elseif ($args['next_n_days'] or $args['next_n'] 
+                  or ($args['order'] == 'reverse')
+                 /* or $args['last_n']*/) {
             $time = mktime(0, 0, 0,                            // hh, mm, ss,
                            $args['month'] + $args['month_offset'], // month (1-12)
                            $now['tm_mday'] ,                   // starting today
@@ -110,11 +113,20 @@ extends WikiPlugin
         $cal = HTML::dl();
 
         $done = false;
-        $n = 0; $max = (180 * SECONDS_PER_DAY) + $time;
+        $n = 0; 
+        if ($args['order'] == "reverse")
+            $max = $time - (180 * SECONDS_PER_DAY);
+        else
+            $max = $time + (180 * SECONDS_PER_DAY);
         while (!$done) {
             $success = $cal->pushContent($this->__date($dbi, $time));
-            $time += SECONDS_PER_DAY;
-            if ($time >= $max) return $cal;
+            if ($args['order'] == "reverse") {
+                $time -= SECONDS_PER_DAY;
+                if ($time <= $max) return $cal;
+            } else {
+                $time += SECONDS_PER_DAY;
+                if ($time >= $max) return $cal;
+            }
 
             $t     = localtime($time, 1);
             if ($args['next_n_days']) {
@@ -126,8 +138,8 @@ extends WikiPlugin
                     $n++;
             } elseif ($args['last_n_days']) {
                 $done = ($t['tm_mday'] == $now['tm_mday']);
-            } else {
-                $done = ($t['tm_mday'] == 1);
+            } else { // stop at next/prev month
+                $done = ($t['tm_mon'] != $now['tm_mon']);
             }
         }
         return $cal;
@@ -136,6 +148,11 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/09/22 13:36:45  rurban
+// Support ranges, based on a simple patch by JoshWand
+//   next_n_days, last_n_days, next_n
+//   last_n not yet
+//
 // Revision 1.2  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
