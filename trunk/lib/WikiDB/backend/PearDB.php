@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.21 2002-01-31 10:47:38 carstenklapp Exp $');
+rcs_id('$Id: PearDB.php,v 1.22 2002-01-31 17:32:50 dairiki Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -20,13 +20,14 @@ extends WikiDB_backend
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pear_notice_filter'));
         
         // Open connection to database
-        $dsn = $dbparams['dsn'];
+        $this->_dsn = $dbparams['dsn'];
         $dboptions = array('persistent' => true,
                            'debug' => 2);
-        $this->_dbh = DB::connect($dsn, $dboptions);
+        $this->_dbh = DB::connect($this->_dsn, $dboptions);
         $dbh = &$this->_dbh;
         if (DB::isError($dbh)) {
-            trigger_error(sprintf("Can't connect to database: %s", $this->_pear_error_message($dbh)),
+            trigger_error(sprintf("Can't connect to database: %s",
+                                  $this->_pear_error_message($dbh)),
                           E_USER_ERROR);
         }
         $dbh->setErrorHandling(PEAR_ERROR_CALLBACK,
@@ -714,12 +715,11 @@ extends WikiDB_backend
         $message = "$class: fatal database error\n"
              . "\t" . $error->getMessage() . "\n"
              . "\t(" . $error->getDebugInfo() . ")\n";
-        /////////////////////////////////////////////////////////////
-        // Quick and dirty hack to prevent mysql password
-        // from being exposed during a Fatal PhpWiki database Error
-        global $DBParams; return str_replace($DBParams['dsn'], '', $message);
-        /////////////////////////////////////////////////////////////
-        return $message;
+
+        // Prevent password from being exposed during a connection error
+        $safe_dsn = preg_replace('| ( :// .*? ) : .* (?=@) |xs',
+                                 '\\1:XXXXXXXX', $this->_dsn);
+        return str_replace($this->_dsn, $safe_dsn, $message);
     }
 
     /**
