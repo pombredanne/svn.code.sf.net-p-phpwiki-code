@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.24 2000-08-07 22:47:40 wainstead Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.25 2000-08-10 15:23:35 wainstead Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
@@ -6,6 +6,7 @@
          LinkExistingWikiWord($wikiword) 
          LinkUnknownWikiWord($wikiword) 
          LinkURL($url)
+         LinkImage($url)
          RenderQuickSearch() 
          RenderFullSearch() 
          RenderMostPopular()
@@ -97,6 +98,15 @@
       }
       $enc_url = htmlspecialchars($url);
       return "<a href=\"$url\">$enc_url</a>";
+   }
+
+
+   function LinkImage($url) {
+      global $ScriptUrl;
+      if(ereg("[<>\"]", $url)) {
+         return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
+      }
+      return "<img src=\"$url\">";
    }
 
    
@@ -333,7 +343,7 @@
       global $ArchivePageStore;
 
       $adbi = OpenDataBase($ArchivePageStore);
-      $newpagename = $pagename;
+      $newpagename = $pagename; // what the hell does this do?
       InsertPage($adbi, $newpagename, $pagehash);
    }
 
@@ -342,7 +352,7 @@
       global $dbi, $AllowedProtocols;
 
       // $bracketlink will start and end with brackets; in between
-      // will be either a page name, a URL or both seperated by a pipe.
+      // will be either a page name, a URL or both separated by a pipe.
 
       // strip brackets and leading space
       preg_match("/(\[\s*)(.+?)(\s*\])/", $bracketlink, $match);
@@ -361,6 +371,10 @@
       // match the contents 
       preg_match("/([^|]+)(\|)?([^|]+)?/", $linkdata, $matches);
 
+
+      // if $matches[3] is set, this is a link in the form of:
+      // [some link name | http://blippy.com/]
+
       if (isset($matches[3])) {
          $URL = trim($matches[3]);
          $linkname = htmlspecialchars(trim($matches[1]));
@@ -368,16 +382,26 @@
          if (preg_match("#^($AllowedProtocols):#", $URL)) {
             return "<a href=\"$URL\">$linkname</a>";
          } else {
-            return "<b><u>BAD URL -- links have to start with one of " . 				                "$AllowedProtocols followed by ':'</u></b>";
+            return "<b><u>BAD URL -- links have to start with one of " . 
+                   "$AllowedProtocols followed by ':'</u></b>";
          }
       }
+
+
+      // otherwise this is just a Wiki page like this: [page name]
+      // or a URL in brackets: [http://foo.com/]
 
       if (isset($matches[1])) {
          $linkname = trim($matches[1]);
          if (IsWikiPage($dbi, $linkname)) {
             return LinkExistingWikiWord($linkname);
          } elseif (preg_match("#^($AllowedProtocols):#", $linkname)) {
-            return LinkURL($linkname);
+            // if it's an image, embed it; otherwise, it's a regular link
+            if (preg_match("/jpg$|png$|gif$/i", $linkname)) {
+               return LinkImage($linkname);
+            } else {
+               return LinkURL($linkname);
+            }
 	 } else {
             return LinkUnknownWikiWord($linkname);
          }
