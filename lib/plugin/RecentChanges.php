@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.67 2002-10-12 09:47:05 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.68 2002-10-30 23:14:28 dairiki Exp $');
 /**
  */
 
@@ -467,7 +467,7 @@ extends _RecentChanges_Formatter
     function image_properties () {
         global $Theme;
 
-        $img_url = $Theme->getImageURL('logo');
+        $img_url = SERVER_URL . $Theme->getImageURL('logo');
         if (!$img_url)
             return false;
 
@@ -489,8 +489,8 @@ extends _RecentChanges_Formatter
         $rc_url = WikiURL($request->getArg('pagename'), false, 'absurl');
 
         return array('title' => WIKI_NAME,
-                     'dc:description' => _("RecentChanges"),
                      'link' => $rc_url,
+                     'description' => _("RecentChanges"),
                      'dc:date' => Iso8601DateTime(time()));
 
         /* FIXME: other things one might like in <channel>:
