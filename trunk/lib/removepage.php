@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.20 2004-09-23 13:59:36 rurban Exp $');
+rcs_id('$Id: removepage.php,v 1.21 2004-09-23 18:50:55 rurban Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -15,10 +15,12 @@ function RemovePage (&$request) {
     $current = $page->getCurrentRevision();
     $version = $current->getVersion();
 
-    if (!$request->isPost() || !$request->getArg('verify')) {
+    if (!$version) {
+        $html = HTML(HTML::h2(_("Already deleted")),
+                     HTML::p(_("Sorry, this page is not in the database.")));
+    }
+    elseif (!$request->isPost() || !$request->getArg('verify')) {
 
-        // FIXME: button should be class wikiadmin
-        // Use the macosx button
         $removeB = Button('submit:verify', _("Remove Page"), 'wikiadmin');
         $cancelB = Button('submit:cancel', _("Cancel"), 'button'); // use generic wiki button look
         $sample = firstNWordsOfContent(100, $current->getPackedContent());
@@ -48,7 +50,10 @@ function RemovePage (&$request) {
         $dbi = $request->getDbh();
         $dbi->deletePage($pagename);
         $dbi->touch();
-        $html = HTML(HTML::h2(fmt("Removed page '%s' successfully.", $pagename)));
+        $link = HTML::a(array('href' => 'javascript:history.go(-3)'), 
+                        _("Back to the previous page."));
+        $html = HTML(HTML::h2(fmt("Removed page '%s' successfully.", $pagename)),
+        	     HTML::div($link), HTML::hr());
     }
 
     GeneratePage($html, _("Remove page"));
