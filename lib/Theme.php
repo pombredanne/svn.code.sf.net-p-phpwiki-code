@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.67 2003-02-26 03:40:22 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.68 2003-03-04 01:53:30 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -475,7 +475,7 @@ class Theme {
         }
         
         $url = WikiURL($wikiword, array('action' => 'create'));
-        //$link = HTML::span(HTML::a(array('href' => $url), '?'));
+
         $button = $this->makeButton('?', $url);
         $button->addTooltip(sprintf(_("Create: %s"), $wikiword));
         $link = HTML::span($button);
@@ -1024,6 +1024,15 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.67  2003/02/26 03:40:22  dairiki
+// New action=create.  Essentially the same as action=edit, except that if the
+// page already exists, it falls back to action=browse.
+//
+// This is for use in the "question mark" links for unknown wiki words
+// to avoid problems and confusion when following links from stale pages.
+// (If the "unknown page" has been created in the interim, the user probably
+// wants to view the page before editing it.)
+//
 // Revision 1.66  2003/02/26 00:10:26  dairiki
 // More/better/different checks for bad page names.
 //
