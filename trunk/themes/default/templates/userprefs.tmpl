@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.19 2002-02-08 22:03:04 dairiki Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.20 2002-02-08 23:02:55 carstenklapp Exp $ -->
 <?php
 
 $time = time();
@@ -8,7 +8,9 @@ $serverTime = $time - $offset;
 
 $timeOffsetInput = HTML::input(array('type' => "text",
                                      'size' => 6,
+                                     'maxlength' => 6,
                                      'name' => "pref[timeOffset]",
+                                     'class' => "numeric",
                                      'value' => $request->getPref('timeOffset')));
 
 $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
@@ -23,23 +25,25 @@ $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
   <input type="hidden" name="pagename" value="<?=$request->getArg('pagename')?>" />
   <h2><?=_("Edit Area Size")?></h2>
   <p><?=_("Height")?>
-     <input type="text" name="pref[editHeight]" size="4" maxlength="4"
+     <input type="text" name="pref[editHeight]" size="4" maxlength="4" class="numeric"
             value="<?=$request->getPref('editHeight')?>" />
      <?=_("Width")?>
-     <input type="text" name="pref[editWidth]" size="4" maxlength="4"
+     <input type="text" name="pref[editWidth]" size="4" maxlength="4" class="numeric"
             value="<?=$request->getPref('editWidth')?>" />
   </p>
   <p><?=_("Note that many browsers will automatically adjust the width of the editing area so that it fills the browser window.  In this case, the width preference will be ignored.")?></p>
 
   <h2><?=_("Time Zone")?></h2>
   <p>
-    <?=fmt("Add %s hours to the servers local time, when reporting times.",
+    <?=fmt("Add %s hours to the server's local time when reporting times.",
            $timeOffsetInput)?>
-    (<?=fmt("The current time at server is %s.",
+  </p>
+  <p>
+    <?=fmt("The current time at the server is %s.",
             HTML::strong($Theme->formatDateTime($serverTime)))?>
-    <?=fmt("With the current offset, that would be reported as %s.",
-           HTML::strong($Theme->formatDateTime($time)))?>)
-  </p> 
+    <?=fmt("With the current offset, this would be reported as %s.",
+           HTML::strong($Theme->formatDateTime($time)))?>
+  </p>
 
   <h2><?=_("Date Format")?></h2>
   <p><?=$RelativeDatesCB?>
