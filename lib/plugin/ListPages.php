@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListPages.php,v 1.5 2004-09-06 08:37:31 rurban Exp $');
+rcs_id('$Id: ListPages.php,v 1.6 2004-09-14 10:33:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -26,7 +26,8 @@ require_once('lib/PageList.php');
  * ListPages - List pages that are explicitly given as the pages argument.
  *
  * Mainly used to see some ratings and recommendations.
- * But also possible to list some Categories or Users.
+ * But also possible to list some Categories or Users, or as generic 
+ * frontend for plugin-list page lists.
  *
  * @author: Dan Frankowski
  */
@@ -43,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -56,13 +57,20 @@ extends WikiPlugin
 
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
+    // additional info args: 
+    //   top3recs      : recommendations
+    //   numbacklinks  : number of backlinks (links to the given page)
+    //   numpagelinks  : number of forward links (links at the given page)
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
+        if ($info)
+            $info = split(',', $info);
+        else
+            $info = array();
 
-        if (in_array('top3recs', split(',', $info))) {
-
+        if (in_array('top3recs', $info)) {
             require_once('lib/wikilens/Buddy.php');
             require_once('lib/wikilens/PageListColumns.php');
 
@@ -93,32 +101,28 @@ extends WikiPlugin
                 // out is... odd)
                 unset($user);
             }
-            //DONE:
-            //What we really want is passing the pagelist object to the column
-            //$top3 = new _PageList_Column_top3recs('top3recs', _("Top Recommendations"), 
-            //                                      'left', 0, $allowed_users);
             $options = array('dimension' => $dimension, 
                              'users' => $allowed_users);
-        } else {
-            $options = array();
+            $args = array_merge($options, $args);
         }
-
-        if (empty($pages))
+        if (empty($pages) and $pages != '0')
             return '';
 
-        $pagelist = new PageList($info, false, $options);
-        // FIXME: This should be not neccessary with the new custom pagelist columns
-        /*
-        if (!empty($options)) {
-            $pagelist->addColumnObject(new _PageList_Column_top3recs('custom:top3recs', _("Top Recommendations"), 
-                                                                     'left', $pagelist));
+        if (in_array('numbacklinks', $info)) {
+            $args['types']['numbacklinks'] = new _PageList_Column_ListPages_count('numbacklinks', _("#"), true);
         }
-        */
+        if (in_array('numpagelinks', $info)) {
+            $args['types']['numpagelinks'] = new _PageList_Column_ListPages_count('numpagelinks', _("#"));
+        }
+
+        $pagelist = new PageList($info, $exclude, $args);
+        $pages_array = is_string($pages) ? explodePageList($pages) : (is_array($pages) ? $pages : array());
+        $pagelist->addPageList($pages_array);
+        /*
         if (is_string($exclude) and !empty($exclude)) {
             $exclude = explodePageList($exclude);
             // $argstr = preg_replace("/exclude=\S*\s/", "", $argstr);
         }
-
         $pages_array = is_string($pages) ? explodePageList($pages) : (is_array($pages) ? $pages : array());
         foreach ($pages_array as $pagename) {
             if (empty($exclude) or !in_array($pagename, $exclude)) {
@@ -126,12 +130,28 @@ extends WikiPlugin
                 $pagelist->addPage($page);
             }
         }
-
+        */
         return $pagelist;
     }
 };
 
+// how many back-/forwardlinks for this page
+class _PageList_Column_ListPages_count extends _PageList_Column {
+    function _PageList_Column_ListPages_count($field, $display, $backwards = false) {
+        $this->_direction = $backwards;
+        return $this->_PageList_Column($field, $display, 'center');
+    }
+    function _getValue($page, &$revision_handle) {
+        $iter = $page->getLinks($this->_direction);
+        $count = $iter->count();
+        return $count;
+    }
+}
+
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/09/06 08:37:31  rurban
+// plugin-list support for pages and exclude args
+//
 // Revision 1.4  2004/07/08 20:30:07  rurban
 // plugin->run consistency: request as reference, added basepage.
 // encountered strange bug in AllPages (and the test) which destroys ->_dbi
