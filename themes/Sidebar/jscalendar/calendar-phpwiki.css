@@ -2,12 +2,19 @@
 
 div.calendar { position: relative; }
 
-.calendar, .calendar table {
+.calendar {
+  font-size: 9px;
+  color: #000;
+  cursor: default;
+  font-family: tahoma,verdana,sans-serif;
+}
+
+.calendar table {
   border: 1px solid #556;
   font-size: 9px;
   color: #000;
   cursor: default;
-  background: #eef;
+  /*background: #eef;*/
   font-family: tahoma,verdana,sans-serif;
 }
 
