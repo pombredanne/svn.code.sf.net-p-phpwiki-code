@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.66 2004-05-03 21:44:24 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.67 2004-05-04 22:26:40 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2406,15 +2406,18 @@ extends _UserPreference
 class _UserPreference_email
 extends _UserPreference
 {
-    function sanify ($value) {
+    function sanify($value) {
         // check for valid email address
         if ($this->get('email') == $value and $this->getraw('emailVerified'))
+            return $value;
+        // hack!
+        if ($value == 1 or $value === true)
             return $value;
         list($ok,$msg) = ValidateMail($value,'noconnect');
         if ($ok) {
             return $value;
         } else {
-            trigger_error($msg, E_USER_WARNING);
+            trigger_error("E-Mail Validation Error: ".$msg, E_USER_WARNING);
             return $this->default_value;
         }
     }
@@ -2423,9 +2426,12 @@ extends _UserPreference
      * Send a verification mail or for now just a notification email.
      * For true verification (value = 2), we'd need a mailserver hook.
      */
-    function update ($value) {
+    function update($value) {
     	if (!empty($this->_init)) return;
         $verified = $this->getraw('emailVerified');
+        // hack!
+        if (($value == 1 or $value === true) and $verified)
+            return;
         if (!empty($value) and !$verified) {
             list($ok,$msg) = ValidateMail($value);
             if ($ok and mail($value,"[".WIKI_NAME ."] "._("Email Verification"),
@@ -2447,11 +2453,11 @@ function ValidateMail($email, $noconnect=false) {
     // well, technically ".a.a.@host.com" is also valid
     if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email)) {
         $result[0] = false;
-        $result[1] = "$email is not properly formatted";
+        $result[1] = sprintf(_("E-Mail address '%s' is not properly formatted"),$email);
         return $result;
     }
     if ($noconnect)
-      return array(true,"$email is properly formatted");
+      return array(true,sprintf(_("E-Mail address '%s' is properly formatted"),$email));
 
     list ( $Username, $Domain ) = split ("@",$email);
     //Todo: getmxrr workaround on windows or manual input field to verify it manually
@@ -2492,7 +2498,7 @@ function ValidateMail($email, $noconnect=false) {
         return $result;
     }
     $result[0]=true;
-    $result[1]="$email appears to be valid.";
+    $result[1]="E-Mail address '$email' appears to be valid.";
     return $result;
 } // end of function 
 
@@ -2818,6 +2824,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2004/05/03 21:44:24  rurban
+// fixed sf,net bug #947264: LDAP options are constants, not strings!
+//
 // Revision 1.65  2004/05/03 13:16:47  rurban
 // fixed UserPreferences update, esp for boolean and int
 //
