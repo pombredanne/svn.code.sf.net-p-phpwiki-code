@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: index.php,v 1.1 2000-10-08 17:48:37 wainstead Exp $ -->
+<!-- $Id: index.php,v 1.2 2000-10-11 13:57:47 ahollosi Exp $ -->
 <?php
    /*
       The main page, i.e. the main loop.
@@ -13,6 +13,11 @@
    $dbi = OpenDataBase($WikiPageStore);
 
 
+   // Allow choice of submit buttons to determine type of search:
+   if ($searchtype == 'full')
+      $full = $searchstring;
+   elseif ($searchstring)       // default to title search
+      $search = $searchstring;
 
    if ($edit) {
       $admin_edit = 0;
