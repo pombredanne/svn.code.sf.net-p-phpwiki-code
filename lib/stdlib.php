@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.235 2005-02-04 11:54:48 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.236 2005-02-08 13:41:32 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1536,7 +1536,7 @@ function hash ($x) {
     trigger_error("Can't hash $x", E_USER_ERROR);
 }
 
-    
+
 /**
  * Seed the random number generator.
  *
@@ -1554,6 +1554,20 @@ function better_srand($seed = '') {
         $wascalled = TRUE;
         //trigger_error("new random seed", E_USER_NOTICE); //debugging
     }
+}
+
+function rand_ascii($length = 1) {
+    better_srand();
+    $s = "";
+    for ($i = 1; $i <= $length; $i++) {
+        // return only typeable 7 bit ascii, avoid quotes
+        if (function_exists('mt_rand'))
+            $s .= chr(mt_rand(40, 126)); 
+        else
+            // the usually bad glibc srand()
+            $s .= chr(rand(40, 126));
+    }
+    return $s;
 }
 
 /**
@@ -1942,6 +1956,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.235  2005/02/04 11:54:48  rurban
+// fix Talk: names
+//
 // Revision 1.234  2005/02/03 05:09:25  rurban
 // Talk: + User: fix
 //
