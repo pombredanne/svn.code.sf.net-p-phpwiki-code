@@ -1,24 +1,10 @@
-<!-- $Id: wiki_display.php3,v 1.6 2000-06-26 21:26:45 ahollosi Exp $ -->
+<!-- $Id: wiki_display.php3,v 1.6.2.1 2000-07-21 18:29:07 dairiki Exp $ -->
 <?
    /*
       display.php3: render a page. This has all the display 
       logic in it, except for the search boxes.
    */
  
-   // if we got GET data, the first item is always a page name
-   // if it wasn't this file would not have been included
-
-   if ($argv[0]) {
-      $pagename = rawurldecode($argv[0]);
-   } else { 
-      $pagename = "FrontPage"; 
-
-      // if there is no FrontPage, create a basic set of Wiki pages
-      if (! IsWikiPage($dbi, $pagename)) {
-         include "wiki_setupwiki.php3";
-      }
-   }
-
    $html = "";
    $enc_name = rawurlencode($pagename);
    $pagehash = RetrievePage($dbi, $pagename);

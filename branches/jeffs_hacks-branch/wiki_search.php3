@@ -1,20 +1,17 @@
-<!-- $Id: wiki_search.php3,v 1.5 2000-06-18 15:12:13 ahollosi Exp $ -->
+<!-- $Id: wiki_search.php3,v 1.5.2.1 2000-07-21 18:29:07 dairiki Exp $ -->
 <?
    // Title search: returns pages having a name matching the search term
 
    $found = 0;
 
-   if(get_magic_quotes_gpc())
-      $search = stripslashes($search);
-
-   $result = "<P><B>Searching for \"" . htmlspecialchars($search) .
+   $result = "<P><B>Searching for \"" . htmlspecialchars($search_term) .
 		"\" ....</B></P>\n";
 
    // quote regexp chars
-   $search = preg_quote($search);
+   $term = preg_quote($search_term);
 
    // search matching pages
-   $query = InitTitleSearch($dbi, $search);
+   $query = InitTitleSearch($dbi, $term);
    while ($page = TitleSearchNextMatch($dbi, $query)) {
       $found++;
       $result .= LinkExistingWikiWord($page) . "<br>\n";

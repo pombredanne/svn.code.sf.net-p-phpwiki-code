@@ -1,13 +1,10 @@
-<!-- $Id: wiki_pageinfo.php3,v 1.4 2000-07-15 21:00:38 ahollosi Exp $ -->
+<!-- $Id: wiki_pageinfo.php3,v 1.4.2.1 2000-07-21 18:29:07 dairiki Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?
-   if (get_magic_quotes_gpc()) {
-      $info = stripslashes($info);
-   }
-
-   $encname = htmlspecialchars($info);
-   $html = "<form action=\"$ScriptUrl\" METHOD=GET>\n" .
-	   "<input name=\"info\" value=\"$encname\">" .
+   $encname = htmlspecialchars($pagename);
+   $html = "<form action=\"$ScriptUrl\" METHOD=\"POST\">\n" .
+	   '<input type="hidden" name="action" value="info">' .
+	   "<input name=\"pagename\" value=\"$encname\">" .
 	   " Enter a page name\n" .
 	   "<input type=submit value=Go><br>\n" .
 	   "<input type=checkbox name=showpagesource";
@@ -18,7 +15,7 @@
    $html .= "> Show the page source and references\n</form>\n";
 
    // don't bother unless we were asked
-   if (! $info) {
+   if (! $pagename) {
       GeneratePage('MESSAGE', $html, "PageInfo", 0);
       exit;
    }
@@ -38,9 +35,7 @@
 	    if ($key > 0 || !$key) #key is an array index
 	       continue;
             if ((gettype($val) == "array") && ($showpagesource == "on")) {
-               $val = implode($val, "$FieldSeparator#BR#$FieldSeparator\n");
-	       $val = htmlspecialchars($val);
-	       $val = str_replace("$FieldSeparator#BR#$FieldSeparator", "<br>", $val);
+	      $val = nl2br(htmlspecialchars(implode("\n", $val)));
             }
 	    elseif (($key == 'lastmodified') || ($key == 'created'))
 	       $val = date($datetimeformat, $val);
@@ -57,11 +52,12 @@
 
    $html .= "<P><B>Current version</B></p>";
    // $dbi = OpenDataBase($WikiDataBase);   --- done by index.php3
-   $html .= ViewPageProps($info);
+   $html .= ViewPageProps($pagename);
+   CloseDataBase($dbi);
 
    $html .= "<P><B>Archived version</B></p>";
    $dbi = OpenDataBase($ArchiveDataBase);
-   $html .= ViewPageProps($info);
+   $html .= ViewPageProps($pagename);
 
-   GeneratePage('MESSAGE', $html, "PageInfo: '$info'", 0);
+   GeneratePage('MESSAGE', $html, "PageInfo: '$pagename'", 0);
 ?>

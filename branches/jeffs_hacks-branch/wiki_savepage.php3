@@ -1,4 +1,4 @@
-<!-- $Id: wiki_savepage.php3,v 1.13 2000-07-20 18:36:46 dairiki Exp $ -->
+<!-- $Id: wiki_savepage.php3,v 1.13.2.1 2000-07-21 18:29:07 dairiki Exp $ -->
 <?
 
 /*
@@ -29,7 +29,6 @@
       exit;
    }
 
-   $pagename = rawurldecode($post);
    $pagehash = RetrievePage($dbi, $pagename);
 
    // if this page doesn't exist yet, now's the time!
@@ -55,17 +54,14 @@
    $pagehash["author"] = $remoteuser;
 
    // create page header
-   $enc_url = rawurlencode($pagename);
-   $enc_name = htmlspecialchars($pagename);
-   $html = "Thank you for editing " .
-	"<a href=\"$ScriptUrl?$enc_url\">$enc_name</a><br>\n";
+   $html = sprintf("Thank you for editing %s<br>\n",
+		   LinkExistingWikiWord($pagename));
 
    if (! empty($content)) {
       // patch from Grant Morgan <grant@ryuuguu.com> for magic_quotes_gpc
-      if (get_magic_quotes_gpc())
-         $content = stripslashes($content);
-
-      $pagehash["content"] = preg_split('/[ \t\r]*\n/', chop($content));
+      $pagehash["content"]
+	   = preg_split('/[ \t\r]*\n/',
+			chop(strip_magic_quotes_gpc($content)));
 
       // convert spaces to tabs at user request
       if ($convert) {

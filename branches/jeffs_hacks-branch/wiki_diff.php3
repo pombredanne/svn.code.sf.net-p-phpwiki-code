@@ -1,4 +1,4 @@
-<!-- $Id: wiki_diff.php3,v 1.6 2000-07-15 21:00:38 ahollosi Exp $ -->
+<!-- $Id: wiki_diff.php3,v 1.6.2.1 2000-07-21 18:29:07 dairiki Exp $ -->
 <?
 // wiki_diff.php3
 //
@@ -960,41 +960,42 @@ class WikiUnifiedDiffFormatter extends WikiDiffFormatter
 
 /////////////////////////////////////////////////////////////////
 
-if ($diff)
+function PageInfoRow ($ident, $page)
 {
-  if (get_magic_quotes_gpc()) {
-     $diff = stripslashes($diff);
-  }
+  global $datetimeformat;
+  
+  $row = sprintf('<td align="right">%s:</td>', htmlspecialchars($ident));
+  if (is_array($page))
+    {
+      $row .= sprintf('<td>version %d</td>', $page['version']);
+      $row .= sprintf('<td>last modified on %s</td>',
+		      date($datetimeformat, $page['lastmodified']));
+      $row .= sprintf('<td>by %s</td>', htmlspecialchars($page['author']));
+    }
+  else
+      $row .= "<td colspan=3><em>None</em></td>";
+  return "<tr>$row</tr>";
+}
 
-  $pagename = $diff;
-
+      
+if ($pagename)
+{
   $wiki = RetrievePage($dbi, $pagename);
   $dba = OpenDataBase($ArchiveDataBase);
   $archive= RetrievePage($dba, $pagename);
+  CloseDataBase($dba);
 
-  $html = '<table><tr><td align="right">Current page:</td>';
-  if (is_array($wiki))
-      $html .= "<td>version $wiki[version],</td><td>last modified on "
-	  . date($datetimeformat, $wiki['lastmodified'])
-	  . "</td><td>by $wiki[author]</td>";
-  else
-      $html .= "<td colspan=3><em>None</em></td>";
-  $html .= '</tr><tr><td align="right">Archived page:</td>';
-  if (is_array($archive))
-      $html .= "<td>version $archive[version],</td><td>last modified on "
-	  . date($datetimeformat, $archive['lastmodified'])
-	  . "</td><td>by $archive[author]</td>";
-  else
-      $html .= "<td colspan=3><em>None</em></td>";
-  $html .= "</tr></table><p>\n";
-
+  $html = '<table>'
+       . PageInfoRow("Current page", $wiki)
+       . PageInfoRow("Archived page", $archive)
+       . "</table>";
 
   if (is_array($wiki) && is_array($archive))
     {
       $diff = new WikiDiff($archive['content'], $wiki['content']);
       //$fmt = new WikiDiffFormatter;
       $fmt = new WikiUnifiedDiffFormatter;
-      $html .= $fmt->format($diff, $archive['content']);
+      $html .= '<hr>' . $fmt->format($diff, $archive['content']);
     }
 
   GeneratePage('MESSAGE', $html, 'Diff of '.htmlspecialchars($pagename), 0);
