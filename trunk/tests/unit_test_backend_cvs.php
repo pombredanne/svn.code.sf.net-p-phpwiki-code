@@ -113,6 +113,7 @@ if ( $REMOVE_DEBUG ) {
     exec( "rm -fr " . $db_params[CVS_DOC_DIR], $cmdout, $retval );
     exec( "rm -fr " . $db_params[CVS_REPOSITORY], $cmdout, $retval );
     exec( "rm -f " . $db_params[CVS_DEBUG_FILE], $cmdout, $retval );
+    print "Test was succesful\n";
 } else {
     print "It appears something went wrong, nothing being removed\n";
 }
