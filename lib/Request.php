@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.6 2001-12-11 22:45:38 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.7 2002-01-09 16:57:20 carstenklapp Exp $');
 
 // FIXME: write log entry.
 
@@ -7,7 +7,7 @@ class Request {
     function Request() {
         $this->_fix_magic_quotes_gpc();
         $this->_fix_multipart_form_data();
-
+        
         switch($this->get('REQUEST_METHOD')) {
         case 'GET':
         case 'HEAD':
@@ -23,9 +23,10 @@ class Request {
         
         $this->session = new Request_SessionVars;
         $this->cookies = new Request_CookieVars;
-
+        
         if (ACCESS_LOG)
-            $this->_log_entry = & new Request_AccessLogEntry($this, ACCESS_LOG);
+            $this->_log_entry = & new Request_AccessLogEntry($this,
+                                                             ACCESS_LOG);
         
         $TheRequest = $this;
     }
@@ -158,7 +159,7 @@ class Request {
         elseif (is_string($var))
             $var = stripslashes($var);
     }
-
+    
     function _fix_multipart_form_data () {
         if (preg_match('|^multipart/form-data|', $this->get('CONTENT_TYPE')))
             $this->_strip_leading_nl($GLOBALS['HTTP_POST_VARS']);
@@ -178,14 +179,14 @@ class Request_SessionVars {
     function Request_SessionVars() {
         session_start();
     }
-
+    
     function get($key) {
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
         if (isset($vars[$key]))
             return $vars[$key];
         return false;
     }
-
+    
     function set($key, $val) {
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
         if (ini_get('register_globals')) {
@@ -206,7 +207,7 @@ class Request_SessionVars {
 }
 
 class Request_CookieVars {
-
+    
     function get($key) {
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (isset($vars[$key])) {
@@ -219,7 +220,7 @@ class Request_CookieVars {
         
     function set($key, $val, $persist_days = false) {
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
-
+        
         if (is_numeric($persist_days)) {
             $expires = time() + (24 * 3600) * $persist_days;
         }
@@ -231,7 +232,7 @@ class Request_CookieVars {
         $vars[$key] = $packedval;
         setcookie($key, $packedval, $expires, '/');
     }
-
+    
     function delete($key) {
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         setcookie($key);
@@ -242,7 +243,7 @@ class Request_CookieVars {
 class Request_UploadedFile {
     function getUploadedFile($postname) {
         global $HTTP_POST_FILES;
-
+        
         if (!isset($HTTP_POST_FILES[$postname]))
             return false;
         
@@ -331,15 +332,15 @@ class Request_AccessLogEntry
     function Request_AccessLogEntry ($request, $logfile) {
         $this->logfile = $logfile;
         
-        $this->host = $request->get('REMOTE_HOST');
+        $this->host  = $request->get('REMOTE_HOST');
         $this->ident = $request->get('REMOTE_IDENT');
         if (!$this->ident)
             $this->ident = '-';
         $this->user = '-';        // FIXME: get logged-in user name
         $this->time = time();
         $this->request = join(' ', array($request->get('REQUEST_METHOD'),
-                                       $request->get('REQUEST_URI'),
-                                       $request->get('SERVER_PROTOCOL')));
+                                         $request->get('REQUEST_URI'),
+                                         $request->get('SERVER_PROTOCOL')));
         $this->status = 200;
         $this->size = 0;
         $this->referer = (string) $request->get('HTTP_REFERER');
@@ -387,7 +388,7 @@ class Request_AccessLogEntry
             $offset = -$offset;
         }
         $offhours = floor($offset / 3600);
-        $offmins = $offset / 60 - $offhours * 60;
+        $offmins  = $offset / 60 - $offhours * 60;
         return sprintf("%s%02d%02d", $negoffset, $offhours, $offmins);
     }
 
