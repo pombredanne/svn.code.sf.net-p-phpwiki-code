@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PersonalPage.php,v 1.2 2004-11-05 20:53:36 rurban Exp $');
+rcs_id('$Id: PersonalPage.php,v 1.3 2004-11-05 22:09:39 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -33,11 +33,12 @@ extends _PassUser
                                         $this->_userid), E_USER_WARNING);
                   $this->_level = WIKIAUTH_BOGO;
             	} else {
-                  trigger_error(sprintf(
-                    _("PersonalPage login method:\n").
-                    _("You stored an empty password in your '%s' page.\n").
-                    _("Given password ignored.\n").
-                    _("Please set a password in UserPreferences."),
+            	  if (!empty($submitted_password))
+                    trigger_error(sprintf(
+                      _("PersonalPage login method:\n").
+                      _("You stored an empty password in your '%s' page.\n").
+                      _("Given password ignored.\n").
+                      _("Please set a password in UserPreferences."),
                                         $this->_userid), E_USER_WARNING);
                   $this->_level = WIKIAUTH_USER;
             	}
@@ -52,6 +53,13 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/11/05 20:53:36  rurban
+// login cleanup: better debug msg on failing login,
+// checked password less immediate login (bogo or anon),
+// checked olduser pref session error,
+// better PersonalPage without password warning on minimal password length=0
+//   (which is default now)
+//
 // Revision 1.1  2004/11/01 10:43:58  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
