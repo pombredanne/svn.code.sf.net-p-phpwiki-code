@@ -1,4 +1,4 @@
--- $Id: psql.sql,v 1.3 2002-09-09 15:26:23 rurban Exp $
+-- $Id: psql.sql,v 1.4 2003-03-04 01:44:58 dairiki Exp $
 
 \set QUIET
 
@@ -124,6 +124,8 @@ CREATE TABLE :link_tbl (
 CREATE INDEX :link_from ON :link_tbl (linkfrom);
 CREATE INDEX :link_to   ON :link_tbl (linkto);
 
+\echo Dropping :session_tbl
+DROP TABLE :session_tbl;
 \echo Creating :session_tbl
 CREATE TABLE :session_tbl (
     sess_id 	VARCHAR(32) NOT NULL DEFAULT '',
