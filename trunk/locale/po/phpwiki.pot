@@ -6,170 +6,172 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2001-12-19 10:48-0500\n"
+"POT-Creation-Date: 2001-12-21 02:13-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: ENCODING\n"
 
-#: ../templates/browse.html:34
+#: ../templates/browse.html:32
 msgid "Note:"
 msgstr ""
 
-#: ../templates/browse.html:34
+#: ../templates/browse.html:32
 msgid "You are viewing an old revision of this page."
 msgstr ""
 
-#: ../templates/browse.html:35
+#: ../templates/browse.html:33
 msgid "View the current version"
 msgstr ""
 
-#: ../templates/browse.html:50
+#: ../templates/browse.html:48
 #, c-format
 msgid "Last edited on %s."
 msgstr ""
 
-#: ../templates/browse.html:52
+#: ../templates/browse.html:50
 #, c-format
 msgid "Version %s, saved on %s."
 msgstr ""
 
 #: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
 #: ../lib/plugin/RecentChanges.php:264 ../lib/plugin/RecentChanges.php:309
-#: ../templates/browse.html:56
+#: ../templates/browse.html:54
 msgid "RecentChanges"
 msgstr ""
 
-#: ../templates/browse.html:57
+#: ../templates/browse.html:55
 msgid "FindPage"
 msgstr ""
 
-#: ../templates/browse.html:60
+#: ../templates/browse.html:58
 msgid "Quick Search"
 msgstr ""
 
-#: ../templates/browse.html:70
+#: ../templates/browse.html:68
 msgid "Page locked"
 msgstr ""
 
-#: ../templates/browse.html:73 ../templates/editpage.html:24
+#: ../templates/browse.html:71
 msgid "Edit"
 msgstr ""
 
-#: ../templates/browse.html:76
+#: ../templates/browse.html:74
 msgid "Edit old revision"
 msgstr ""
 
-#: ../templates/browse.html:81
+#: ../templates/browse.html:79
 msgid "Unlock page"
 msgstr ""
 
-#: ../templates/browse.html:83
+#: ../templates/browse.html:81
 msgid "Lock page"
 msgstr ""
 
-#: ../lib/removepage.php:20 ../templates/browse.html:85
+#: ../lib/removepage.php:20 ../templates/browse.html:83
 msgid "Remove page"
 msgstr ""
 
-#: ../templates/browse.html:89 ../templates/browse.html:92
+#: ../templates/browse.html:87 ../templates/browse.html:90
 msgid "Diff"
 msgstr ""
 
-#: ../templates/browse.html:97
+#: ../templates/browse.html:95
 #, c-format
 msgid "You are signed in as %s"
 msgstr ""
 
-#: ../templates/browse.html:98
+#: ../templates/browse.html:96
 msgid "SignOut"
 msgstr ""
 
-#: ../templates/browse.html:100 ../templates/editpage.html:74
+#: ../templates/browse.html:98 ../templates/editpage.html:72
 msgid "SignIn"
 msgstr ""
 
-#: ../templates/browse.html:117
+#: ../templates/browse.html:115
 msgid "PHP Warnings"
 msgstr ""
 
-#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:123
-#: ../templates/browse.html:124
+#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:121
+#: ../templates/browse.html:122
 msgid "DebugInfo"
 msgstr ""
 
-#: ../templates/editpage.html:15
-msgid "Edit:"
+#: ../templates/editpage.html:15 ../templates/editpage.html:24
+#: ../templates/editpage.html:25
+#, c-format
+msgid "Edit: %s"
 msgstr ""
 
-#: ../templates/editpage.html:29
+#: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:24
+msgid "BackLinks"
+msgstr ""
+
+#: ../templates/editpage.html:27
 msgid "Preview only!  Changes not saved."
 msgstr ""
 
-#: ../templates/editpage.html:35
+#: ../templates/editpage.html:33
 msgid "Warning: You are editing an old revision."
 msgstr ""
 
-#: ../templates/editpage.html:36
+#: ../templates/editpage.html:34
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 
-#: ../templates/editpage.html:56
+#: ../templates/editpage.html:54
 msgid "Summary:"
 msgstr ""
 
-#: ../templates/editpage.html:63
+#: ../templates/editpage.html:61
 msgid "This is a minor change."
 msgstr ""
 
-#: ../templates/editpage.html:66
+#: ../templates/editpage.html:64
 msgid "Preview"
 msgstr ""
 
-#: ../templates/editpage.html:67
+#: ../templates/editpage.html:65
 msgid "Save"
 msgstr ""
 
-#: ../templates/editpage.html:71
+#: ../templates/editpage.html:69
 #, c-format
 msgid "You are signed in as %s."
 msgstr ""
 
-#: ../templates/editpage.html:73
+#: ../templates/editpage.html:71
 #, c-format
 msgid "Author will be logged as %s."
 msgstr ""
 
-#: ../templates/editpage.html:80
+#: ../templates/editpage.html:78
 #, c-format
 msgid "You can change the size of the editing area in %s."
 msgstr ""
 
-#: ../templates/editpage.html:80
+#: ../templates/editpage.html:78
 msgid "UserPreferences"
 msgstr ""
 
-#: ../templates/editpage.html:81
+#: ../templates/editpage.html:79
 #, c-format
 msgid "See %s tips for editing."
 msgstr ""
 
-#: ../templates/editpage.html:81
+#: ../templates/editpage.html:79
 msgid "GoodStyle"
 msgstr ""
 
-#: ../templates/editpage.html:85
+#: ../templates/editpage.html:83
 msgid "TextFormattingRules"
 msgstr ""
 
-#: ../templates/editpage.html:85
+#: ../templates/editpage.html:83
 msgid "Synopsis"
-msgstr ""
-
-#: ../lib/plugin/BackLinks.php:9
-msgid "BackLinks"
 msgstr ""
 
 #: ../lib/plugin/BackLinks.php:13
@@ -450,20 +452,20 @@ msgstr ""
 msgid "You must be logged in as an administrator"
 msgstr ""
 
-#: ../lib/WikiUser.php:181
+#: ../lib/WikiUser.php:180
 msgid ""
 "You must set the administrator account and password before you can log in."
 msgstr ""
 
-#: ../lib/WikiUser.php:193
+#: ../lib/WikiUser.php:191
 msgid "You entered an invalid login or password."
 msgstr ""
 
-#: ../lib/WikiUser.php:196
+#: ../lib/WikiUser.php:194
 msgid "You can log in using any valid WikiWord as a user ID."
 msgstr ""
 
-#: ../lib/WikiUser.php:197
+#: ../lib/WikiUser.php:195
 msgid "(Any password will work, except, of course for the admin user.)"
 msgstr ""
 
