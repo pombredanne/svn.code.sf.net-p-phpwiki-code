@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.26 2002-01-17 20:35:44 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.27 2002-01-21 06:55:47 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -26,29 +26,36 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
     }
 
     function _start_diff() {
-        echo "<div class='diff'>\n";
+        $this->_top = HTML::div(array('class' => 'diff'));
     }
     function _end_diff() {
-        echo "</div>\n";
+        $val = $this->_top;
+        unset($this->_top);
+        return $val;
     }
     
     function _start_block($header) {
-        echo "<div class='block'>\n";
-        echo QElement('tt', $header);
+        $this->_block = HTML::div(array('class' => 'block'),
+                                  HTML::tt($header));
     }
 
     function _end_block() {
-        echo "</div>\n";
+        $this->_top->pushContent($this->_block);
+        unset($this->_block);
     }
 
-    function _lines($lines, $class, $prefix = '&nbsp;', $elem = false) {
+    function _lines($lines, $class, $prefix = false, $elem = false) {
+        if (!$prefix)
+            $prefix = new RawXml('&nbsp;');
+        
         foreach ($lines as $line) {
             if ($elem)
-                $line = QElement($elem, $line);
-                    
-            echo Element('div', array('class' => $class),
-                         Element('tt', array('class' => 'prefix'), $prefix)
-                         . " $line&nbsp;") . "\n";
+                $line = new HtmlElement($elem, $line);
+            $this->_block->pushContent(HTML::div(array('class' => $class),
+                                                 HTML::tt(array('class' => 'prefix'),
+                                                          $prefix),
+                                                 $line,
+                                                 new RawXml('&nbsp;')));
         }
     }
 
@@ -77,6 +84,13 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
                        $m);
         return array($m[0], $m[1]);
     }
+
+    function _explode_raw($lines) {
+        $split = explode("\n", $lines);
+        foreach ($split as $key => $val)
+            $split[$key] = new RawXml($split[$key]);
+        return $split;
+    }
     
     function _changed($orig, $final) {
         list ($orig_words, $orig_stripped) = $this->_split($orig);
@@ -100,8 +114,9 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
             }
         }
 
-        $this->_lines(explode("\n", $orig),  'original', '-');
-        $this->_lines(explode("\n", $final), 'final', '+');
+        // FIXME: this is a hack
+        $this->_lines($this->_explode_raw($orig),  'original', '-');
+        $this->_lines($this->_explode_raw($final), 'final', '+');
     }
 }
 
@@ -122,36 +137,39 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
     }
 
     function _start_diff() {
-        echo "\n<table width='100%' class='diff'";
-        echo " cellspacing='1' cellpadding='1' border='1'>\n";
-    }
-    function _end_diff() {
-        echo "</table>\n";
+        $this->_top = HTML::table(array('width' => '100%',
+                                        'class' => 'diff',
+                                        'cellspacing' => 1,
+                                        'cellpadding' => 1,
+                                        'border' => 1));
     }
     
     function _start_block($header) {
-        echo "<tr><td><table width='100%' class='block'";
-        echo " cellspacing='0' cellpadding='1' border='0'>\n";
-	echo Element('tr',
-                     Element('td', array('colspan' => 2),
-                             QElement('tt', $header))) . "\n";
+        $this->_block = HTML::table(array('width' => '100%',
+                                          'class' => 'block',
+                                          'cellspacing' => 0,
+                                          'cellpadding' => 1,
+                                          'border' => 0),
+                                    HTML::tr(HTML::td(array('colspan' => 2),
+                                                      HTML::tt($header))));
     }
 
     function _end_block() {
-        echo "</table></td></tr>\n";
+        $this->_top->pushContent(HTML::tr(HTML::td($this->_block)));
+        unset($this->_block);
     }
 
     function _lines($lines, $class, $prefix = '&nbsp;', $elem = false) {
-        $prefix = Element('td', array('class' => 'prefix', 'width' => "1%"), $prefix);
+        $prefix = HTML::td(array('class' => 'prefix', 'width' => "1%"), $prefix);
         foreach ($lines as $line) {
             if (! trim($line))
-                $line = '&nbsp';
+                $line = new RawXml('&nbsp');
             elseif ($elem)
-                $line = QElement($elem, $line);
-
-	    echo Element('tr', array('valign' => 'top'), 
-                         $prefix . Element('td', array('class' => $class),
-                                           $line)) . "\n";
+                $line = new HtmlElement($elem, $line);
+	    $this->_block->pushContent(HTML::tr(array('valign' => 'top'), 
+                                                $prefix,
+                                                HTML::td(array('class' => $class),
+                                                         $line)));
         }
     }
 }
@@ -163,24 +181,18 @@ function PageInfoRow ($pagename, $label, $rev)
 {
    global $Theme;
     
-   
-   $cols = QElement('td', array('align' => 'right'), $label);
-   
+   $row = HTML::tr(HTML::td(array('align' => 'right'), $label));
    if ($rev) {
        $url = WikiURL($pagename, array('version' => $rev->getVersion()));
-       $linked_version = QElement('a', array('href' => $url), $rev->getVersion());
-       $cols .= Element('td',
-                        __sprintf("version %s",$linked_version));
-
-       $cols .= QElement('td',
-                         __sprintf("last modified on %s",
-                                   $Theme->formatDateTime($rev->get('mtime'))));
-       $cols .= QElement('td',
-                         __sprintf("by %s", $rev->get('author')));
+       $linked_version = HTML::a(array('href' => $url), $rev->getVersion());
+       $row->pushContent(HTML::td(fmt("version %s",$linked_version)),
+                         HTML::td(fmt("last modified on %s",
+                                      $Theme->formatDateTime($rev->get('mtime')))),
+                         HTML::td(fmt("by %s", $rev->get('author'))));
    } else {
-       $cols .= QElement('td', array('colspan' => '3'), _("None"));
+       $row->pushContent(HTML::td(array('colspan' => '3'), _("None")));
    }
-   return Element('tr', $cols);
+   return $row;
 }
 
 function showDiff ($dbi, $request) {
@@ -199,7 +211,7 @@ function showDiff ($dbi, $request) {
     if ($version) {
         if (!($new = $page->getRevision($version)))
             NoSuchRevision($page, $version);
-        $new_version = sprintf(_("version %d"), $version);
+        $new_version = fmt("version %d", $version);
     }
     else {
         $new = $page->getCurrentRevision();
@@ -209,7 +221,7 @@ function showDiff ($dbi, $request) {
     if (preg_match('/^\d+$/', $previous)) {
         if ( !($old = $page->getRevision($previous)) )
             NoSuchRevision($page, $previous);
-        $old_version = sprintf(_("version %d"), $previous);
+        $old_version = fmt("version %d", $previous);
         $others = array('major', 'minor', 'author');
     }
     else {
@@ -243,16 +255,16 @@ function showDiff ($dbi, $request) {
     }
 
     $new_url = WikiURL($pagename, array('version' => $new->getVersion()));
-    $new_link = QElement('a', array('href' => $new_url), $new_version);
+    $new_link = HTML::a(array('href' => $new_url), $new_version);
     $old_url = WikiURL($pagename, array('version' => $old ? $old->getVersion() : 0));
-    $old_link = QElement('a', array('href' => $old_url), $old_version);
-    $page_link = LinkExistingWikiWord($pagename);
+    $old_link = HTML::a(array('href' => $old_url), $old_version);
+    global $Theme;
+    $page_link = $Theme->linkExistingWikiWord($pagename);
     
-    $html = Element('p',
-                    __sprintf("Differences between %s and %s of %s.",
-                              $new_link, $old_link, $page_link));
+    $html[] = HTML::p(fmt("Differences between %s and %s of %s.",
+                          $new_link, $old_link, $page_link));
 
-    $otherdiffs = array();
+    $otherdiffs = HTML::p(_("Other diffs:"));
     $label = array('major' => _("Previous Major Revision"),
                    'minor' => _("Previous Revision"),
                    'author'=> _("Previous Author"));
@@ -260,29 +272,29 @@ function showDiff ($dbi, $request) {
         $args = array('action' => 'diff', 'previous' => $other);
         if ($version)
             $args['version'] = $version;
-        $otherdiffs[] = QElement('a', array('href' => WikiURL($pagename, $args),
-                                            'class' => 'wikiaction'),
-                                 $label[$other]);
+        if (count($otherdiffs->getContent()) > 1)
+            $otherdiffs->pushContent(", ");
+        else
+            $otherdiffs->pushContent(" ");
+        $otherdiffs->pushContent(HTML::a(array('href' => WikiURL($pagename, $args),
+                                               'class' => 'wikiaction'),
+                                         $label[$other]));
     }
-    $html .= Element('p',
-                     htmlspecialchars(_("Other diffs:"))
-                     . " " . join(", ", $otherdiffs) . '.');
-            
+    $html[] = $otherdiffs;
+        
             
     if ($old and $old->getVersion() == 0)
         $old = false;
     
-    $html .= Element('table',
-                    PageInfoRow($pagename, _("Newer page:"), $new)
-                    . PageInfoRow($pagename, _("Older page:"), $old));
-
-
+    $html[] = HTML::Table(PageInfoRow($pagename, _("Newer page:"), $new),
+                          PageInfoRow($pagename, _("Older page:"), $old));
+    
     if ($new && $old) {
         $diff = new Diff($old->getContent(), $new->getContent());
         
         if ($diff->isEmpty()) {
-            $html .= Element('hr');
-            $html .= QElement('p', '[' . _("Versions are identical") . ']');
+            $html[] = HTML::hr();
+            $html[] = HTML::p('[', _("Versions are identical"), ']');
         }
         else {
             // New CSS formatted unified diffs (ugly in NS4).
@@ -290,13 +302,13 @@ function showDiff ($dbi, $request) {
 
             // Use this for old table-formatted diffs.
             //$fmt = new TableUnifiedDiffFormatter;
-            $html .= $fmt->format($diff);
+            $html[] = $fmt->format($diff);
         }
     }
     
     include_once('lib/Template.php');
     echo GeneratePage('MESSAGE', $html,
-                      sprintf(_("Diff: %s"), $pagename));
+                      sprintf(_("Diff: %s"), $pagename), $new);
 }
   
 // Local Variables:

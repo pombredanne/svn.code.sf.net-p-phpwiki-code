@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.14 2002-01-17 20:41:13 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.15 2002-01-21 06:55:47 dairiki Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/transform.php');
@@ -58,17 +58,16 @@ function displayPage($dbi, $request, $tmpl = 'browse') {
     $splitname = split_pagename($pagename);
     $title_tooltip = sprintf(_("BackLinks for %s"), $pagename);
 
-    
+
     $wrapper = new WikiTemplate('top');
     $wrapper->setPageRevisionTokens($revision);
     $wrapper->qreplace('TITLE', $splitname);
     $wrapper->replace('HEADER',
-                      QElement('a',
-                               array('href' => WikiURL(_("BackLinks"),
-                                                       array('page' => $pagename)),
-                                     'class' => 'backlinks',
-                                     'title' => $title_tooltip),
-                               $splitname));
+                      HTML::a(array('href' => WikiURL(_("BackLinks"),
+                                                      array('page' => $pagename)),
+                                    'class' => 'backlinks',
+                                    'title' => $title_tooltip),
+                              $splitname));
     $wrapper->qreplace('ROBOTS_META', 'index,follow');
 
     $template = new WikiTemplate($tmpl);

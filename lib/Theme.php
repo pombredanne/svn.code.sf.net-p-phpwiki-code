@@ -1,4 +1,6 @@
-<?php rcs_id('$Id: Theme.php,v 1.11 2002-01-20 03:36:17 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.12 2002-01-21 06:55:47 dairiki Exp $');
+
+require_once('lib/HtmlElement.php');
 
 class Theme {
     function Theme ($theme_name) {
@@ -96,52 +98,53 @@ class Theme {
     //
     ////////////////////////////////////////////////////////////////
 
+    var $_autosplitWikiWords = false;
+    
     function setAutosplitWikiWords($autosplit=false) {
         $this->_autosplitWikiWords = $autosplit ? true : false;
     }
 
-    function getAutoSplitWikiWords() {
-        if (! @$this->_autosplitWikiWords)
-            $this->setAutosplitWikiWords();
-        
-        return $this->_autosplitWikiWords;
-    }
-
-    function LinkExistingWikiWord($wikiword, $linktext = '', $version = false) {
-        if (empty($linktext)) {
-            $linktext = $wikiword;
-            if ($this->getAutoSplitWikiWords())
-                $linktext = split_pagename($linktext);
-            $class = 'wiki';
-        }
+    function maybeSplitWikiWord ($wikiword) {
+        if ($this->_autosplitWikiWords)
+            return split_pagename($wikiword);
         else
-            $class = 'named-wiki';
+            return $wikiword;
+    }
 
-        $attr = array();
+    function linkExistingWikiWord($wikiword, $linktext = '', $version = false) {
         if ($version !== false)
-            $attr['version'] = $version;
+            $url = WikiURL($wikiword, array('version' => $version));
+        else
+            $url = WikiURL($wikiword);
 
-        return QElement('a', array('href'  => WikiURL($wikiword, $attr),
-                                   'class' => $class),
-                        $linktext);
+        $link = HTML::a(array('href' => $url));
+
+        if (!empty($linktext)) {
+            $link->pushContent($linktext);
+            $link->setAttr('class', 'named-wiki');
+        }
+        else {
+            $link->pushContent($this->maybeSplitWikiWord($wikiword));
+            $link->setAttr('class', 'wiki');
+        }
+        return $link;
     }
 
-    function LinkUnknownWikiWord($wikiword, $linktext = '') {
-        if (empty($linktext)) {
-            $linktext = $wikiword;
-            if ($this->getAutoSplitWikiWords())
-                $linktext=split_pagename($linktext);
-            $class = 'wikiunknown';
-        } else
-            $class = 'named-wikiunknown';
+    function linkUnknownWikiWord($wikiword, $linktext = '') {
+        $url = WikiURL($wikiword, array('action' => 'edit'));
+        $link = HTML::span(HTML::a(array('href' => $url), '?'));
 
-        return Element('span', array('class' => $class),
-                       QElement('a',
-                                array('href' => WikiURL($wikiword,
-                                                        array('action' => 'edit'))),
-                                '?') . Element('u', $linktext));
+        if (!empty($linktext)) {
+            $link->pushContent(HTML::u($linktext));
+            $link->setAttr('class', 'named-wikiunknown');
+        }
+        else {
+            $link->pushContent(HTML::u($this->maybeSplitWikiWord($wikiword)));
+            $link->setAttr('class', 'wikiunknown');
+        }
+        
+        return $link;
     }
-
 
     ////////////////////////////////////////////////////////////////
     //
@@ -241,14 +244,14 @@ class Theme {
     ////////////////////////////////////////////////////////////////
     
     function _CSSlink($title, $css_file, $media, $is_alt = false) {
-        $attr = array('rel' 	=> $is_alt ? 'alternate stylesheet' : 'stylesheet',
-                      'title'	=> $title,
-                      'type'	=> 'text/css',
-                      'charset'	=> CHARSET);
-        $attr['href'] = $this->_findData($css_file);
+        $link = HTML::link(array('rel' 	  => $is_alt ? 'alternate stylesheet' : 'stylesheet',
+                                 'title'  => $title,
+                                 'type'	  => 'text/css',
+                                 'charset'=> CHARSET,
+                                 'href'	  => $this->_findData($css_file)));
         if ($media)
-            $attr['media'] = $media;
-        return Element('link', $attr);
+            $link->setAttr('media', $media);
+        return $link;
     }
 
     function setDefaultCSS ($title, $css_file, $media = false) {
@@ -265,9 +268,10 @@ class Theme {
      * @return string HTML for CSS.
      */
     function getCSS () {
-        $css = "$this->_defaultCSS\n";
+        $css[] = $this->_defaultCSS;
         if (!empty($this->_alternateCSS))
-            $css .= join("\n", $this->_alternateCSS) . "\n";
+            foreach ($this->_alternateCSS as $link)
+                $css[] = $link;
         return $css;
     }
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.6 2002-01-15 02:42:32 carstenklapp Exp $');
+rcs_id('$Id: BackLinks.php,v 1.7 2002-01-21 06:55:47 dairiki Exp $');
 /**
  */
 class WikiPlugin_BackLinks
@@ -26,56 +26,83 @@ extends WikiPlugin
     // anything else would be useful anyway).
 
     function run($dbi, $argstr, $request) {
-        $args = $this->getArgs($argstr, $request);
-        extract($args);
+        $this->_args = $this->getArgs($argstr, $request);
+        extract($this->_args);
         if (!$page)
             return '';
-              
+
         $p = $dbi->getPage($page);
         $backlinks = $p->getLinks();
-        $lines = array();
-        if ($info) {
-            $lines[] = $this->_tr(QElement('u', _(ucfirst($info))),
-                                  QElement('u', _("Page Name")));
-        }
+
+        if ($info)
+            $list = $this->_info_listing($backlinks);
+        else
+            $list = $this->_plain_listing($backlinks);
+        
+        if ($noheader)
+            return $list;
+        
+        global $Theme;
+        $pagelink = $Theme->linkExistingWikiWord($page);
+        
+        if ($list)
+            $head = fmt("These pages link to %s:", $pagelink);
+        else
+            $head = fmt("No pages link to %s.", $pagelink);
+
+        $head = HTML::p($head);
+
+        return array($head, $list);
+    }
+
+    function _plain_listing ($backlinks) {
+        extract($this->_args);
+
+        $ul = HTML::ul();
+        $n = 0;
         while ($backlink = $backlinks->next()) {
             $name = $backlink->getName();
             if ($exclude && $name == $exclude)
                 continue;
             if (!$include_self && $name == $page)
                 continue;
-            if ($info) {
-                $lines[] = $this->_tr($backlink->get($info),
-                                      LinkWikiWord($name));
-            } else {
-                $lines[] = Element('li', LinkWikiWord($name));
-            }
+            $ul->pushContent(HTML::li(_LinkWikiWord($name)));
+            $n++;
         }
-
-        $html = '';
-        if (!$noheader) {
-            $fs = $lines ? _("These pages link to %s:") : _("No pages link to %s.");
-            $header = sprintf(htmlspecialchars($fs),
-                              LinkExistingWikiWord($page));
-            $html = Element('p', $header) . "\n";
-        }
-        
-        if ($info) {
-            $html .= Element('blockquote',
-                             Element('table', array('cellpadding' => 0,
-                                                    'cellspacing' => 1,
-                                                    'border' => 0),
-                                     join("\n", $lines)));
-            return $html;
-        } else {
-            return $html . Element('ul', join("\n", $lines));
-        }
+        return $n ? $ul : '';
     }
+
+    function _info_listing ($backlinks) {
+        extract($this->_args);
+
+        $tab = HTML::table(array('cellpadding' => 0,
+                                 'cellspacing' => 1,
+                                 'border' => 0));
+        $tab->pushContent($this->_tr(HTML::u(_(ucfirst($info))),
+                                     HTML::u(_("Page Name"))));
+        $n = 0;
+        while ($backlink = $backlinks->next()) {
+            $name = $backlink->getName();
+            if ($exclude && $name == $exclude)
+                continue;
+            if (!$include_self && $name == $page)
+                continue;
+            $tab->pushContent($this->_tr($backlink->get($info),
+                                         _LinkWikiWord($name)));
+            $n++;
+        }
+        return $n ? HTML::blockquote($tab) : '';
+    }
+    
 
     function _tr ($col1, $col2) {
-        return "<tr><td align='right'>$col1&nbsp;&nbsp;</td>"
-            . "<td>&nbsp;&nbsp;$col2</td></tr>\n";
+        return HTML::tr(HTML::td(array('align' => 'right'),
+                                 $col1, new RawXml('&nbsp;&nbsp;')),
+                        HTML::td(new RawXml('&nbsp;&nbsp;'), $col2));
     }
+    
+        
+
 
 };
 

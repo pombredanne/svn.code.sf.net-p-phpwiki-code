@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.8 2002-01-11 20:57:08 dairiki Exp $');
+rcs_id('$Id: Calendar.php,v 1.9 2002-01-21 06:55:47 dairiki Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -51,28 +51,25 @@ extends WikiPlugin
         $next_url = WikiURL($pagename, array('month' => $t['tm_mon'] + 1,
                                              'year'  => $t['tm_year'] + 1900));
 
-        $prev = QElement('a', array('href'  => $prev_url,
-                                    'class' => 'cal-arrow',
-                                    'title' => gettext("Previous Month")),
-                         '<');
-        $next = QElement('a', array('href'  => $next_url,
-                                    'class' => 'cal-arrow',
-                                    'title' => gettext("Next Month")),
-                         '>');
+        $prev = HTML::a(array('href'  => $prev_url,
+                              'class' => 'cal-arrow',
+                              'title' => gettext("Previous Month")),
+                        '<');
+        $next = HTML::a(array('href'  => $next_url,
+                              'class' => 'cal-arrow',
+                              'title' => gettext("Next Month")),
+                        '>');
 
 
-        $row =  Element('td', array('align' => 'left'), $prev);
-        $row .= Element('td', array('align' => 'center'),
-                        QElement('strong', array('class' => 'cal-header'),
-                                 strftime($args['month_format'], $time)));
-        $row .= Element('td', array('align' => 'right'), $next);
-
-        $row =  Element('table', array('width' => '100%'),
-                        Element('tr', $row));
-
-        return Element('tr', Element('td', array('colspan' => 7,
-                                                 'align'   => 'center'),
-                                     $row));
+        $row = HTML::tr(HTML::td(array('align' => 'left'), $prev),
+                        HTML::td(array('align' => 'center'),
+                                 HTML::strong(array('class' => 'cal-header'),
+                                              strftime($args['month_format'], $time))),
+                        HTML::td(array('align' => 'right'), $next));
+        
+        return HTML::tr(HTML::td(array('colspan' => 7,
+                                       'align'   => 'center'),
+                                 HTML::table(array('width' => '100%'), $row)));
     }
 
 
@@ -85,13 +82,14 @@ extends WikiPlugin
         assert($t['tm_wday'] == $start_wday);
 
         $fs = $this->args['wday_format'];
+        $row = HTML::tr();
         for ($i = 0; $i < 7; $i++) {
-            $days[$i] = QElement('td', array('class' => 'cal-dayname',
+            $row->pushContent(HTML::td(array('class' => 'cal-dayname',
                                              'align' => 'center'),
-                                 strftime($fs, $time));
+                                       strftime($fs, $time)));
             $time += SECONDS_PER_DAY;
         }
-        return Element('tr', join('', $days));
+        return $row;
     }
 
     function __date($dbi, $time) {
@@ -102,22 +100,23 @@ extends WikiPlugin
         $t = localtime($time, 1);
 
         if ($dbi->isWikiPage($page_for_date)) {
-            $date = Element('a', array('class' => 'cal-day',
-                                       'href'  => WikiURL($page_for_date),
-                                       'title' => $page_for_date),
-                            QElement('strong', $t['tm_mday']));
+            $date = HTML::a(array('class' => 'cal-day',
+                                  'href'  => WikiURL($page_for_date),
+                                  'title' => $page_for_date),
+                            HTML::strong($t['tm_mday']));
         }
         else {
-            $date = QElement('a',
-                             array('class' => 'cal-hide',
-                                   'href'  => WikiURL($page_for_date,
-                                                      array('action' => 'edit')),
-                                   'title' => sprintf(_("Edit %s"), $page_for_date)),
-                             $t['tm_mday']);
+            $date = HTML::a(array('class' => 'cal-hide',
+                                  'href'  => WikiURL($page_for_date,
+                                                     array('action' => 'edit')),
+                                  'title' => sprintf(_("Edit %s"), $page_for_date)),
+                            $t['tm_mday']);
         }
 
-        return  Element('td', array('align' => 'center'),
-                        "&nbsp;${date}&nbsp;");
+        return  HTML::td(array('align' => 'center'),
+                         new RawXml("&nbsp;"),
+                         $date,
+                         new RawXml("&nbsp;"));
     }
 
     function run($dbi, $argstr, $request) {
@@ -139,21 +138,27 @@ extends WikiPlugin
                        1,                                      // mday (1-31)
                        $args['year']);
 
-        $rows[] = $this->__header($request->getArg('pagename'), $time);
-        $rows[] = $this->__daynames($args['start_wday']);
+        $cal = HTML::table(array('cellspacing' => 0,
+                                 'cellpadding' => 2,
+                                 'class'       => 'cal'),
+                           $this->__header($request->getArg('pagename'), $time),
+                           $this->__daynames($args['start_wday']));
 
+        $row = HTML::tr();
+        
         $t = localtime($time, 1);
         $col = (7 + $t['tm_wday'] - $args['start_wday']) % 7;
-        $row = $col > 0 ? Element('td', array('colspan' => $col)) : '';
+        if ($col > 0)
+            $row->pushContent(HTML::td(array('colspan' => $col)));
         $done = false;
 
         while (!$done) {
-            $row .= $this->__date($dbi, $time);
+            $row->pushContent($this->__date($dbi, $time));
 
             if (++$col % 7 == 0) {
-                $rows[] = Element('tr', $row);
-                $col    = 0;
-                $row    = '';
+                $cal->pushContent($row);
+                $col = 0;
+                $row = HTML::tr();
             }
 
             $time += SECONDS_PER_DAY;
@@ -161,15 +166,11 @@ extends WikiPlugin
             $done  = $t['tm_mday'] == 1;
         }
 
-        if ($row) {
-            $row   .= Element('td', array('colspan' => (42 - $col) % 7));
-            $rows[] = Element('tr', $row);
+        if ($row->getContent()) {
+            $row->pushContent(HTML::td(array('colspan' => (42 - $col) % 7)));
+            $cal->pushContent($row);
         }
-
-        return Element('table', array('cellspacing' => 0,
-                                      'cellpadding' => 2,
-                                      'class'       => 'cal'),
-                       "\n" . join("\n", $rows) . "\n");
+        return $cal;
     }
 };
 

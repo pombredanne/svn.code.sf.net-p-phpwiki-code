@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.31 2001-12-18 18:47:29 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.32 2002-01-21 06:55:47 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 
 define('WT_SIMPLE_MARKUP', 0);
@@ -355,7 +355,7 @@ function do_transform ($lines, $class = 'WikiPageTransform') {
         $lines = preg_split('/[ \t\r]*\n/', trim($lines));
 
     $trfm = new $class;
-    return $trfm->do_transform('', $lines);
+    return new RawXml($trfm->do_transform('', $lines));
 }
 
 class LinkTransform

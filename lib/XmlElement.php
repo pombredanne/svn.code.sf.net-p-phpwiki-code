@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.1 2002-01-21 01:48:50 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.2 2002-01-21 06:55:47 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -96,17 +96,8 @@ class XmlElement
         }
         else {
             echo "<" . $this->_startTag() . ">";
-            foreach ($this->_content as $c) {
-                if (is_object($c)) {
-                    if (method_exists($c, 'printxml')) {
-                        $c->printXML();
-                        continue;
-                    }
-                    elseif (method_exists($c, 'asstring'))
-                        $c = $c->asString();
-                }
-                echo $this->_quote($c);
-            }
+            foreach ($this->_content as $c)
+                PrintXML($c);
             echo "</$this->_tag>";
         }
     }
@@ -117,21 +108,19 @@ class XmlElement
         }
 
         $xml =  "<" . $this->_startTag() . ">";
-        foreach ($this->_content as $c) {
-            if (is_object($c)) {
-                if (method_exists($c, 'printxml')) {
-                    $xml .= $c->asXML();
-                    continue;
-                }
-                elseif (method_exists($c, 'asstring'))
-                    $c = $c->asString();
-            }
-            $xml .= $this->_quote($c);
-        }
+        foreach ($this->_content as $c)
+            $xml .= AsXML($c);
         $xml .= "</$this->_tag>";
         return $xml;
     }
 
+    function asString () {
+        $str = '';
+        foreach ($this->_content as $c)
+            $val .= AsString($c);
+        return trim($str);
+    }
+    
     function _quote ($string) {
         return str_replace('<', '&lt;',
                            str_replace('>', '&gt;',
@@ -157,19 +146,23 @@ class RawXml {
     }
 }
 
-class FormattedText extends RawXml {
+class FormattedText {
     function FormattedText ($fs /* , ... */) {
-        if ($fs !== false)
+        if ($fs !== false) {
             $this->_init(func_get_args());
+        }
     }
 
     function _init ($args) {
-        $fs = array_shift($args);
-        $qargs = array();
-        
-        // PHP's sprintf doesn't support variable with specifiers,
+        $this->_fs = array_shift($args);
+
+        // PHP's sprintf doesn't support variable width specifiers,
         // like sprintf("%*s", 10, "x"); --- so we won't either.
-        if (preg_match_all('/(?<!%)%(\d+)\$/x', $fs, $m)) {
+
+        if (! preg_match_all('/(?<!%)%(\d+)\$/x', $this->_fs, $m)) {
+            $this->_args  = $args;
+        }
+        else {
             // Format string has '%2$s' style argument reordering.
             // PHP doesn't support this.
             if (preg_match('/(?<!%)%[- ]?\d*[^- \d$]/x', $fmt))
@@ -178,42 +171,95 @@ class FormattedText extends RawXml {
                 trigger_error(sprintf(_("Can't mix '%s' with '%s' type format strings"),
                                       '%1\$s','%s'), E_USER_WARNING);
         
-            $fs = preg_replace('/(?<!%)%\d+\$/x', '%', $fs);
+            $this->_fs = preg_replace('/(?<!%)%\d+\$/x', '%', $this->_fs);
 
-            // Reorder arguments appropriately.
-            // FIXME: pay attention to format type?  (only quote %s args?)
+            $this->_args = array();
             foreach($m[1] as $argnum) {
                 if ($argnum < 1 || $argnum > count($args))
                     trigger_error(sprintf(_("%s: argument index out of range"), 
                                           $argnum), E_USER_WARNING);
-                $qargs[] = asXML($args[$argnum - 1]);
+                $this->_args[] = $args[$argnum - 1];
             }
         }
-        else {
-            // FIXME: pay attention to format type?  (only quote %s args?)
-            foreach ($args as $arg)
-                $qargs[] = asXML($arg);
-        }
+    }
 
-        $fs = XmlElement::_quote($fs);
-        
+    function asXML () {
         // Not all PHP's have vsprintf, so...
-        array_unshift($qargs, $fs);
-        $this->_xml = call_user_func_array('sprintf', $qargs);
+        $args[] = XmlElement::_quote($this->_fs);
+        foreach ($this->_args as $arg)
+            $args[] = AsXML($arg);
+        return call_user_func_array('sprintf', $args);
+    }
+
+    function printXML () {
+        // Not all PHP's have vsprintf, so...
+        $args[] = XmlElement::_quote($this->_fs);
+        foreach ($this->_args as $arg)
+            $args[] = AsXML($arg);
+        call_user_func_array('printf', $args);
+    }
+
+    function asString() {
+        $args = $this->_args;
+        array_unshift($args, $this->_fs);
+        return call_user_func_array('sprintf', $args);
     }
 }
 
-function asXML ($val) {
-    if (is_object($val) && method_exists($val, 'asxml'))
-        return $val->asXML();
-    return XmlElement::_quote($val);
+function PrintXML ($val) {
+    if (is_object($val)) {
+        if (method_exists($val, 'printxml'))
+            return $val->printXML();
+        elseif (method_exists($val, 'asxml')) {
+            echo $val->asXML();
+            return;
+        }
+        elseif (method_exists($val, 'asstring'))
+            $val = $val->asString();
+    }
+    elseif (is_array($val)) {
+        foreach ($val as $x)
+            PrintXML($x);
+    }
+        
+    echo (string)XmlElement::_quote($val);
 }
 
+function AsXML ($val) {
+    if (is_object($val)) {
+        if (method_exists($val, 'asxml'))
+            return $val->asXML();
+        elseif (method_exists($val, 'asstring'))
+            $val = $val->asString();
+    }
+    elseif (is_array($val)) {
+        $xml = '';
+        foreach ($val as $x)
+            $xml .= AsXML($x);
+        return $xml;
+    }
+    
+    return XmlElement::_quote((string)$val);
+}
+
+function AsString ($val) {
+    if (can($val, 'asString'))
+        return $val->asString();
+    elseif (is_array($val)) {
+        $str = '';
+        foreach ($val as $x)
+            $str .= AsString($x);
+        return $str;
+    }
+    return (string) $val;
+}
+
+    
 function fmt ($fs /* , ... */) {
     $s = new FormattedText(false);
+
     $args = func_get_args();
-    $fs = &$args[0];
-    $fs = gettext($fs);
+    $args[0] = gettext($args[0]);
     $s->_init($args);
     return $s;
 }

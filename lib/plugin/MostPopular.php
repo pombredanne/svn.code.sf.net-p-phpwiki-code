@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.8 2002-01-21 02:34:56 dairiki Exp $');
+rcs_id('$Id: MostPopular.php,v 1.9 2002-01-21 06:55:47 dairiki Exp $');
 /**
  */
 class WikiPlugin_MostPopular
@@ -23,40 +23,36 @@ extends WikiPlugin
 
         $pages = $dbi->mostPopular($limit);
         
-        $lines[] = $this->_tr(QElement('u', _("Hits")),
-                              QElement('u', _("Page Name")));
+        $table = HTML::table(array('cellpadding' => 0,
+                                   'cellspacing' => 1,
+                                   'border' => 0),
+                             $this->_tr(HTML::u(_("Hits")),
+                                        HTML::u(_("Page Name"))));
 
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
             if ($hits == 0)
                 break;
-            $lines[] = $this->_tr($hits,
-                                  LinkWikiWord($page->getName()));
+            $table->pushContent($this->_tr($hits,
+                                           _LinkWikiWord($page->getName())));
         }
         $pages->free();
+        $table = HTML::blockquote($table);
 
-        $html = '';
-        if (!$noheader) {
-            if ($limit > 0)
-                $msg = sprintf(_("The %s most popular pages of this wiki:"), $limit);
-            else
-                $msg = _("Visited pages on this wiki, ordered by popularity:");
-                
-            $html .= QElement('p', $msg);
-        }
-
-
-        $html .= Element('blockquote',
-                         Element('table', array('cellpadding' => 0,
-                                                'cellspacing' => 1,
-                                                'border' => 0),
-                                 join("\n", $lines)));
-        return $html;
+        if ($noheader)
+            return $table;
+        
+        if ($limit > 0)
+            $head = fmt("The %s most popular pages of this wiki:", $limit);
+        else
+            $head = _("Visited pages on this wiki, ordered by popularity:");
+        return array(HTML::p($head), $table);
     }
 
     function _tr ($col1, $col2) {
-        return "<tr><td align='right'>$col1&nbsp;&nbsp;</td>"
-            . "<td>&nbsp;&nbsp;$col2</td></tr>\n";
+        return HTML::tr(HTML::td(array('align' => 'right'),
+                                 $col1, new RawXml('&nbsp;&nbsp;')),
+                        HTML::td(new RawXml('&nbsp;&nbsp;'), $col2));
     }
 };
 

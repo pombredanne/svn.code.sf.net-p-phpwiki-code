@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.1 2002-01-21 01:50:10 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.2 2002-01-21 06:55:47 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -19,14 +19,6 @@ class HtmlElement extends XmlElement
         }
         XmlElement::printXML();
     }
-
-    function printHTML () {
-        $this->printXML();
-    }
-
-    function asHTML () {
-        return $this->asXML();
-    }
 };
 
 class HTML {
@@ -35,6 +27,31 @@ class HTML {
     }
 
 
+    function link (/*...*/) {
+        $el = new HtmlElement('link');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function style (/*...*/) {
+        $el = new HtmlElement('style');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function script (/*...*/) {
+        $el = new HtmlElement('script');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function noscript (/*...*/) {
+        $el = new HtmlElement('noscript');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    
     function a (/*...*/) {
         $el = new HtmlElement('a');
         $el->_init(func_get_args());
@@ -53,8 +70,128 @@ class HTML {
         return $el;
     }
 
+    function h1 (/*...*/) {
+        $el = new HtmlElement('h1');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function h2 (/*...*/) {
+        $el = new HtmlElement('h2');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function h3 (/*...*/) {
+        $el = new HtmlElement('h3');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function h4 (/*...*/) {
+        $el = new HtmlElement('h4');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function h5 (/*...*/) {
+        $el = new HtmlElement('h5');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function h6 (/*...*/) {
+        $el = new HtmlElement('h6');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function div (/*...*/) {
+        $el = new HtmlElement('div');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
     function p (/*...*/) {
         $el = new HtmlElement('p');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function blockquote (/*...*/) {
+        $el = new HtmlElement('blockquote');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function span (/*...*/) {
+        $el = new HtmlElement('span');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function em (/*...*/) {
+        $el = new HtmlElement('em');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function strong (/*...*/) {
+        $el = new HtmlElement('strong');
+        $el->_init(func_get_args());
+        return $el;
+    }
+    
+    function small (/*...*/) {
+        $el = new HtmlElement('small');
+        $el->_init(func_get_args());
+        return $el;
+    }
+    
+    function tt (/*...*/) {
+        $el = new HtmlElement('tt');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function u (/*...*/) {
+        $el = new HtmlElement('u');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function ul (/*...*/) {
+        $el = new HtmlElement('ul');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function ol (/*...*/) {
+        $el = new HtmlElement('ol');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function dl (/*...*/) {
+        $el = new HtmlElement('dl');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function li (/*...*/) {
+        $el = new HtmlElement('li');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function dt (/*...*/) {
+        $el = new HtmlElement('dt');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function dd (/*...*/) {
+        $el = new HtmlElement('dd');
         $el->_init(func_get_args());
         return $el;
     }
@@ -67,6 +204,30 @@ class HTML {
 
     function tr (/*...*/) {
         $el = new HtmlElement('tr');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function td (/*...*/) {
+        $el = new HtmlElement('td');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function th (/*...*/) {
+        $el = new HtmlElement('th');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function form (/*...*/) {
+        $el = new HtmlElement('form');
+        $el->_init(func_get_args());
+        return $el;
+    }
+
+    function input (/*...*/) {
+        $el = new HtmlElement('input');
         $el->_init(func_get_args());
         return $el;
     }

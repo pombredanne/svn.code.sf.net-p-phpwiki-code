@@ -1,5 +1,6 @@
 <?php
-rcs_id('$Id: main.php,v 1.25 2002-01-19 07:21:58 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.26 2002-01-21 06:55:47 dairiki Exp $');
+
 
 include "lib/config.php";
 include "lib/stdlib.php";

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.29 2002-01-19 07:21:58 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.30 2002-01-21 06:55:47 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -148,7 +148,8 @@ function savePage ($dbi, $request) {
     
     $wrapper = new WikiTemplate('top');
     $wrapper->qreplace('TITLE', sprintf(_("Saved: %s"), $pagename));
-    $wrapper->replace('HEADER', sprintf(_("Saved: %s"), LinkExistingWikiWord($pagename)));
+    $wrapper->replace('HEADER', fmt("Saved: %s",
+                                    $Theme->linkExistingWikiWord($pagename)));
     $wrapper->setPageRevisionTokens($newrevision);
 
     $template = new WikiTemplate('savepage');

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: signin.tmpl,v 1.1 2002-01-19 07:21:58 dairiki Exp $ -->
+<!-- $Id: signin.tmpl,v 1.2 2002-01-21 06:55:47 dairiki Exp $ -->
 <?php
 
      $Sep = $Theme->getButtonSeparator();
@@ -21,7 +21,7 @@
 
 <?php if ($user->isSignedIn()) {  ?>
 
-  <?=sprintf(_("You are signed in as %s"), LinkWikiWord($USERID))?>
+  <?= fmt("You are signed in as %s", _LinkWikiWord($user->getId())) ?>
   <?=$Sep?>
   <script language="JavaScript" type="text/javascript"><!--
     document.write('<input type="hidden" name="login[logout]" value="0" />');

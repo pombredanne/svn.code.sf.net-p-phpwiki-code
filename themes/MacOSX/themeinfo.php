@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.30 2002-01-19 22:32:02 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.31 2002-01-21 06:55:47 dairiki Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -54,9 +54,9 @@ class Theme_MacOSX extends Theme {
         // FIXME: this is a hack which will not be needed once
         //        we have dynamic CSS.
         $css = Theme::getCSS();
-        $css .= Element('style', array('type' => 'text/css'),
-                        sprintf("<!--\nbody {background-image: url(%s);}\n-->\n",
-                                $this->getImageURL('bgpaper8')));
+        $css[] = HTML::style(array('type' => 'text/css'),
+                             new RawXml(sprintf("<!--\nbody {background-image: url(%s);}\n-->\n",
+                                                $this->getImageURL('bgpaper8'))));
                                 //for non-browse pages, like former editpage, message etc.
                                 //$this->getImageURL('bggranular')));
         return $css;
@@ -76,19 +76,20 @@ class Theme_MacOSX extends Theme {
         return '_MacOSX_PageHistory_Formatter';
     }
 
-    function LinkUnknownWikiWord($wikiword, $linktext = '') {
-        if (empty($linktext)) {
-            $linktext = $wikiword;
-            if ($this->getAutoSplitWikiWords())
-                $linktext=split_pagename($linktext);
-            $class = 'wikiunknown';
-        } else
-            $class = 'named-wikiunknown';
+    function linkUnknownWikiWord($wikiword, $linktext = '') {
+        $url = WikiURL($wikiword, array('action' => 'edit'));
+        $link = HTML::span(HTML::a(array('href' => $url), '?'));
 
-        $qmark = $this->makeButton('?', WikiURL($wikiword, array('action' => 'edit')));
+        if (!empty($linktext)) {
+            $link->unshiftContent(HTML::u($linktext));
+            $link->setAttr('class', 'named-wikiunknown');
+        }
+        else {
+            $link->unshiftContent(HTML::u($this->maybeSplitWikiWord($wikiword)));
+            $link->setAttr('class', 'wikiunknown');
+        }
         
-        return Element('span', array('class' => $class),
-                       Element('u', $linktext) . $qmark->asHTML());
+        return $link;
     }
 }
 

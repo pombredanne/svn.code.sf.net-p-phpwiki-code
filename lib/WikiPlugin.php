@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.9 2002-01-12 06:29:10 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.10 2002-01-21 06:55:47 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -244,7 +244,7 @@ class WikiPluginLoader {
         }
         switch ($pi_name) {
         case 'plugin':
-            return $plugin->run($dbi, $plugin_args, $request);
+            return AsXml($plugin->run($dbi, $plugin_args, $request));
         case 'plugin-link':
             return $plugin->makeLink($plugin_args, $request);
         case 'plugin-form':
