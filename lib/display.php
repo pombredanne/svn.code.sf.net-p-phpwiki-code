@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.26 2002-02-16 02:09:01 carstenklapp Exp $');
+rcs_id('$Id: display.php,v 1.27 2002-02-18 08:47:28 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -87,7 +87,11 @@ function displayPage(&$request, $tmpl = 'browse') {
     $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
 
     include_once('lib/BlockParser.php');
-    $template = Template($tmpl, array('CONTENT' => TransformText($revision)));
+
+    require_once('lib/PageType.php');
+    $transformedContent = PageType($revision);
+    $template = Template('browse', array('CONTENT' => $transformedContent));
+//    $template = Template($tmpl, array('CONTENT' => TransformText($revision)));
 
     GeneratePage($template, $pagetitle, $revision,
                  array('ROBOTS_META'	=> 'index,follow',
