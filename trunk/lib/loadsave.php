@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.38 2002-01-25 05:01:10 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.39 2002-01-25 06:53:33 dairiki Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -31,6 +31,9 @@ function EndLoadDump(&$request)
 /**
  * For reference see:
  * http://www.oac.uci.edu/indiv/ehood/MIME/1521/rfc1521ToC.html
+ *
+ * Actually, RFC 1521 has been superceeded by RFC 2045 (& others).
+ * See: http://www.faqs.org/rfcs/rfc2045.html
  */
 function MailifyPage ($page, $nversions = 1)
 {
@@ -63,7 +66,7 @@ function MailifyPage ($page, $nversions = 1)
 
     // This might be better for actually emailing wiki pages--gateways
     // are allowed to arbitrarily discard any X-* headers.
-    // The $Id: loadsave.php,v 1.38 2002-01-25 05:01:10 carstenklapp Exp $ also contains : so the line must be quoted.
+    // The $Id: loadsave.php,v 1.39 2002-01-25 06:53:33 dairiki Exp $ also contains : so the line must be quoted.
     $head .= "Content-ID: \"rcs_id('$" ."Id" ."$" ."')\"\r\n";
 
     $iter = $page->getAllRevisions();
