@@ -28,11 +28,20 @@ body {
   width: 100%;
 }
 
-#flashheader {
+#flashheader, #yoursiteheader {
   padding-top: 19px;
   margin-left: 19px;
   width: 722px;
   height: 182px;
+  background-color: transparent;
+  font: bolder 67px/50px  Verdana, Arial, Helvetica, sans-serif;
+  letter-spacing: -0.1em;
+  font-variant: condensed; 
+}
+
+#yoursiteheader a:hover, #yoursiteheader a:link, #yoursiteheader a:visited {
+  text-decoration: none;
+  color: black;
 }
 
 #actionbar, #editbar {
@@ -85,7 +94,7 @@ li.LSRow {
   float: right;
 }
 
-#actionbuttons {
+#actionbuttons, .actionbuttons  {
   float: left;
   height: 20px;
   margin-top: 12px;
@@ -106,7 +115,7 @@ li.LSRow {
 }
 
 #pagetrail {
-  margin: 0px;
+  margin-left: 19px;
 }
 
 #pagetrail p {
@@ -130,7 +139,7 @@ li.LSRow {
 
 #pagetitle, #pagetitle a {
   color: black;
-  margin-top: 4px;
+  margin-top: 12px;
   margin-bottom: 4px;
 }
 
@@ -293,6 +302,7 @@ tr.evenrow {
 
 #sidebar {
   font: 1em 'Lucida Grande', Verdana, Arial, Sans-Serif;
+  /* top, right, bottom, left */
   padding: 20px 0 10px 0;
   margin-left: 535px;
   width: 200px;
@@ -500,7 +510,6 @@ img.alignleft {
   Special stylized non-IE bullets
   Do not work in Internet Explorer, which merely default to normal bullets. */
 
-
 html>body ul {
   margin-left: 0px;
   padding: 0 0 0 30px;
@@ -510,7 +519,7 @@ html>body ul {
   } 
 
 html>body li {
-  margin: 7px 0 8px 10px;
+  margin: 0 0 0 10px;
   }
 
 .narrowcolumn ul li:before, #sidebar ul ul li:before {

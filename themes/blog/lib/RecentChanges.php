@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RecentChanges.php,v 1.1 2004-12-15 17:47:32 rurban Exp $');
+<?php rcs_id('$Id: RecentChanges.php,v 1.2 2005-02-02 19:14:14 rurban Exp $');
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -16,7 +16,7 @@ extends _RecentChanges_BoxFormatter
             return '';
         if ($link_text and strlen($link_text) > 20)
             $link_text = substr($link_text,0,20)."...";
-        return WikiLink($rev,'auto',$link_text);
+        return WikiLink($rev->getPage(),'auto',$link_text);
     }
 }
 
@@ -42,6 +42,10 @@ extends _PageHistory_HtmlFormatter
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/12/15 17:47:32  rurban
+// fix RecentChanges links
+// fix footer layout
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

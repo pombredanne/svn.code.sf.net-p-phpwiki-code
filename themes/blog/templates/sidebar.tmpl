@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-rcs_id('$Id: sidebar.tmpl,v 1.1 2004-12-14 21:30:37 rurban Exp $');
+rcs_id('$Id: sidebar.tmpl,v 1.2 2005-02-02 19:14:14 rurban Exp $');
 ?>
 <div id="sidebar">
 <?php
@@ -29,7 +29,7 @@ $body = $box->body;
 if ($body->asString() != "")
     printXml($box->format());
 
-$box = new PluginSidebarBox("RecentChanges",array('limit'=>10)); 
+$box = new PluginSidebarBox("RecentChanges"); 
 printXml($box->format());
 
 $box = new PluginSidebarBox("WhoIsOnline"); 
@@ -41,8 +41,7 @@ $box = new PluginSidebarBox("RssFeed",
 printXml($box->format());
 */
 ?>
-
-<?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
+<?php if (0 and defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
 &middot; <?= Button(array('action'=>'pdf'), "Pdf") ?>
 <?php } ?>
 
