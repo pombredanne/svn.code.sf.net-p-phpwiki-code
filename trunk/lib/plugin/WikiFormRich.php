@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.7 2004-11-24 10:40:04 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.8 2004-11-24 10:58:50 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -36,8 +36,8 @@ rcs_id('$Id: WikiFormRich.php,v 1.7 2004-11-24 10:40:04 rurban Exp $');
  * values which are constants are evaluated.
  * The cancel button must be supported by the action. (which?)
 
- * TODO:
- * improve layout, 
+ * improve layout: nobr=1, class=wikiadmin
+ TODO:
  * add pulldown, possibly with <!plugin-list !>
 
  Samples:
@@ -54,15 +54,15 @@ rcs_id('$Id: WikiFormRich.php,v 1.7 2004-11-24 10:40:04 rurban Exp $');
             editbox[]  name=source value=DEFAULT_WIKI_PGSRC
             checkbox[] name=overwrite value=1
             editbox[]  name=exclude value="" ?>
-  <?plugin WikiFormRich action=TitleSearch
+  <?plugin WikiFormRich action=TitleSearch method=GET class=wikiadmin nobr=1
   	   editbox[] name=s text=""
   	   checkbox[] name=case_exact
   	  checkbox[] name=regex ?>
-  <?plugin WikiFormRich action=FullTextSearch
+  <?plugin WikiFormRich action=FullTextSearch method=GET class=wikiadmin nobr=1
   	   editbox[] name=s text=""
   	   checkbox[] name=case_exact
   	   checkbox[] name=regex ?>
-  <?plugin WikiFormRich action=FuzzyPages
+  <?plugin WikiFormRich action=FuzzyPages method=GET class=wikiadmin nobr=1
   	   editbox[] name=s text=""
   	   checkbox[] name=case_exact ?>
 */
@@ -78,7 +78,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -213,6 +213,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/11/24 10:40:04  rurban
+// better nobr, allow empty text=""
+//
 // Revision 1.5  2004/11/24 10:14:36  rurban
 // fill-in request args as with plugin-form
 //
