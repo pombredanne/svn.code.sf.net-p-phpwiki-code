@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.27 2002-11-04 03:15:59 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.28 2003-02-15 23:25:48 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -9,7 +9,7 @@ class WikiPlugin
 
 
     // FIXME: args?
-    function run ($argstr, $request) {
+    function run ($dbi, $argstr, $request) {
         trigger_error("WikiPlugin::run: pure virtual function",
                       E_USER_ERROR);
     }
@@ -238,6 +238,14 @@ class WikiPlugin
                         HTML::strong(fmt("Plugin %s failed.", $this->getName())), ' ',
                         $message);
     }
+
+    function disabled ($message='') {
+        $html[] = HTML::div(array('class' => 'title'),
+                            fmt("Plugin %s disabled.", $this->getName()),
+                            ' ', $message);
+        $html[] = HTML::pre($this->_pi);
+        return HTML::div(array('class' => 'disabled-plugin'), $html);
+    }
 }
 
 class WikiPluginLoader {
@@ -248,7 +256,7 @@ class WikiPluginLoader {
             return $this->_error(sprintf("Bad %s", 'PI'));
 
         list(, $pi_name, $plugin_name, $plugin_args) = $m;
-        $plugin = $this->getPlugin($plugin_name);
+        $plugin = $this->getPlugin($plugin_name, $pi);
         if (!is_object($plugin)) {
             return new HtmlElement($pi_name == 'plugin-link' ? 'span' : 'p',
                                    array('class' => 'plugin-error'),
@@ -281,7 +289,7 @@ class WikiPluginLoader {
         return $plugin->run($dbi, $plugin_args, $request);
     }
 
-    function getPlugin($plugin_name) {
+    function getPlugin($plugin_name, $pi) {
         global $ErrorManager;
 
         // Note that there seems to be no way to trap parse errors
@@ -305,6 +313,7 @@ class WikiPluginLoader {
             return $this->_error(sprintf("%s: not a subclass of WikiPlugin",
                                          $plugin_class));
 
+        $plugin->_pi = $pi;
         return $plugin;
     }
 
