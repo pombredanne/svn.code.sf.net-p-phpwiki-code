@@ -1,7 +1,7 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.37 2005-01-20 10:19:08 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.38 2005-01-25 07:57:02 rurban Exp $');
 /*
- Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -92,8 +92,8 @@ function doPgsrcUpdate(&$request,$pagename,$path,$filename) {
     }
 }
 
-/** need the english filename (required precondition: urlencode == urldecode)
- *  returns the plugin name.
+/** Need the english filename (required precondition: urlencode == urldecode).
+ *  Returns the plugin name.
  */ 
 function isActionPage($filename) {
     static $special = array("DebugInfo" 	=> "_BackendInfo",
@@ -343,21 +343,27 @@ CREATE TABLE $log_tbl (
 }
 
 /**
- * update from ~1.3.4 to current.
- * only session, user, pref and member
+ * Update from ~1.3.4 to current.
+ * Only session, user, pref and member
  * jeffs-hacks database api (around 1.3.2) later:
  *   people should export/import their pages if using that old versions.
  */
 function CheckDatabaseUpdate(&$request) {
     global $DBParams, $DBAuthParams;
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
-    echo "<h3>",_("check for necessary database updates"),"</h3>\n";
+    echo "<h3>",_("check for necessary database updates"), " - ", $DBParams['dbtype'], "</h3>\n";
 
     $dbh = $request->getDbh(); 
+    $dbadmin = $request->getArg('dbadmin');
     _upgrade_db_init($dbh);
+    if (isset($dbadmin['cancel'])) {
+        echo _("CANCEL")," <br />\n";
+        return;
+    }
 
     $tables = $dbh->_backend->listOfTables();
     $backend_type = $dbh->_backend->backendType();
+    echo "<h4>",_("Backend type: "),$backend_type,"</h4>\n";
     $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
     foreach (explode(':','session:user:pref:member') as $table) {
         echo sprintf(_("check for table %s"), $table)," ...";
@@ -376,6 +382,15 @@ function CheckDatabaseUpdate(&$request) {
     	    echo _("OK")," <br />\n";
         }
     }
+    if ((class_exists("RatingsUserFactory") or $dbh->isWikiPage(_("RateIt")))) {
+        $table = "rating";
+        echo sprintf(_("check for table %s"), $table)," ...";
+    	if (!in_array($prefix.$table, $tables)) {
+            installTable($dbh, $table, $backend_type);
+    	} else {
+    	    echo _("OK")," <br />\n";
+        }
+    }
     $backend = &$dbh->_backend->_dbh;
 
     // 1.3.8 added session.sess_ip
@@ -385,7 +400,7 @@ function CheckDatabaseUpdate(&$request) {
   	assert(!empty($DBParams['db_session_table']));
         $session_tbl = $prefix . $DBParams['db_session_table'];
         $sess_fields = $dbh->_backend->listOfFields($database, $session_tbl);
-        if (!strstr(strtolower(join(':', $sess_fields)),"sess_ip")) {
+        if (!strstr(strtolower(join(':', $sess_fields)), "sess_ip")) {
             // TODO: postgres test (should be able to add columns at the end, but not in between)
             echo "<b>",_("ADDING"),"</b>"," ... ";		
             $dbh->genericSqlQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
@@ -394,6 +409,52 @@ function CheckDatabaseUpdate(&$request) {
             echo _("OK");
         }
         echo "<br />\n";
+    }
+
+    // mysql >= 4.0.4 requires LOCK TABLE privileges
+    if (substr($backend_type,0,5) == 'mysql') {
+  	echo _("check for mysql LOCK TABLE privilege")," ...";
+        $mysql_version = $dbh->_backend->_serverinfo['version'];
+        if ($mysql_version > 400.40) {
+            if (function_exists('parseDSN')) // ADODB
+                $parseDSN = parseDSN($DBParams['dsn']);
+            else // pear
+                $parseDSN = DB::parseDSN($DBParams['dsn']);
+            $username = $dbh->_backend->qstr($parseDSN['username']);
+            // on db level
+            $query = "SELECT lock_tables_priv FROM mysql.db WHERE user='$username'";
+            //mysql_select_db("mysql", $dbh->_backend->connection());
+            $db_fields = $dbh->_backend->listOfFields("mysql", "db");
+            if (!strstr(strtolower(join(':', $db_fields)), "lock_tables_priv")) {
+            	die("lock_tables_priv missing. The DB Admin must run mysql_fix_privilege_tables");
+            }
+            $row = $backend->getRow($query);
+            if ($row and $row[0] == 'N') {
+                $dbh->genericSqlQuery("UPDATE mysql.db SET lock_tables_priv='Y' WHERE mysql.user='$username'");
+                $dbh->genericSqlQuery("FLUSH PRIVILEGES");
+                echo "mysql.db user='$username'", _("fixed"), "<br />\n";
+            } elseif (!$row) {
+                // or on user level
+                $query = "SELECT lock_tables_priv FROM mysql.user WHERE user='$username'";
+                $row = $backend->getRow($query);
+                if ($row and $row[0] == 'N') {
+                    $dbh->genericSqlQuery("UPDATE mysql.user SET lock_tables_priv='Y' WHERE mysql.user='$username'");
+                    $dbh->genericSqlQuery("FLUSH PRIVILEGES");
+                    echo "mysql.user user='$username'", _("fixed"), "<br />\n";
+                } elseif (!$row) {
+                    echo " <b><font color=\"red\">", _("FAILED"), "</font></b>: ",
+                        "Neither mysql.db nor mysql.user has a user='$username' or the lock_tables_priv field",
+                        "<br />\n";
+                } else {
+                    echo _("OK"), "<br />\n";
+                }
+            } else {
+                echo _("OK"), "<br />\n";
+            }
+            //mysql_select_db($dbh->_backend->database(), $dbh->_backend->connection());
+        } else {
+            echo sprintf(_("version <em>%s</em> not affected"), $mysql_version),"<br />\n";
+        }
     }
 
     // 1.3.10 mysql requires page.id auto_increment
@@ -428,23 +489,50 @@ function CheckDatabaseUpdate(&$request) {
         mysql_free_result($fields);
     }
 
-    // check for mysql 4.1.x/5.0.0a binary search problem.
+    // Check for mysql 4.1.x/5.0.0a binary search problem.
     //   http://bugs.mysql.com/bug.php?id=4398
     // "select * from page where LOWER(pagename) like '%search%'" does not apply LOWER!
-    // confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a; not yet tested for 4.1.2alpha,
-    // TODO: there's another known workaround, not yet applied. On windows only.
+    // Confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a; not yet tested for 4.1.2alpha,
+    // On windows only.
     if (isWindows() and substr($backend_type,0,5) == 'mysql') {
   	echo _("check for mysql 4.1.x/5.0.0 binary search on windows problem")," ...";
-  	$result = mysql_query("SELECT VERSION()", $dbh->_backend->connection());
-        $row = mysql_fetch_row($result);
-        $mysql_version = $row[0];
-        $arr = explode('.', $mysql_version);
-        $version = (string)(($arr[0] * 100) + $arr[1]) . "." . (integer)$arr[2];
-        if ($version >= 401.0) {
-            $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL");
-            echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";	
-        } else {
+        $mysql_version = $dbh->_backend->_serverinfo['version'];
+        if ($mysql_version < 401.0) { 
             echo sprintf(_("version <em>%s</em> not affected"), $mysql_version),"<br />\n";
+        } elseif ($mysql_version >= 401.6)  {
+            $row = $backend->getRow("SHOW CREATE TABLE $page_tbl");
+            $result = join(" ", $row);
+            if (strstr(strtolower($result), "character set") 
+                and strstr(strtolower($result), "collate")) 
+            {
+                echo _("OK"), "<br />\n";
+            } else {
+                $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename "
+                                     ."pagename VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL");
+                echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";
+            }
+        } else {
+            // check if already fixed
+            extract($dbh->_backend->_table_names);
+            assert(!empty($page_tbl));
+  	    $database = $dbh->_backend->database();
+  	    $fields = mysql_list_fields($database, $page_tbl, $dbh->_backend->connection());
+  	    $columns = mysql_num_fields($fields); 
+            for ($i = 0; $i < $columns; $i++) {
+                if (mysql_field_name($fields, $i) == 'pagename') {
+            	    $flags = mysql_field_flags($fields, $i);
+                    // I think it was fixed with 4.1.6, but I tested it only with 4.1.8
+                    if ($mysql_version > 401.0 and $mysql_version < 401.6) { 
+                    	// remove the binary flag
+            	        if (strstr(strtolower($flags), "binary")) {
+            	            // FIXME: on duplicate pagenames this will fail!
+                            $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL");
+                            echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";	
+            	        }
+                    }
+                    break;
+                }
+            }
         }
     }
 
@@ -457,8 +545,8 @@ function _upgrade_db_init (&$dbh) {
     global $request, $DBParams, $DBAuthParams;
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
 
-    if (defined('DBADMIN_USER') and DBADMIN_USER) {
-        // if need to connect as the root user, for alter permissions
+    if (DBADMIN_USER) {
+        // if need to connect as the root user, for CREATE and ALTER privileges
         $AdminParams = $DBParams;
         if ($DBParams['dbtype'] == 'SQL')
             $dsn = DB::parseDSN($AdminParams['dsn']);
@@ -471,8 +559,56 @@ function _upgrade_db_init (&$dbh) {
                                       $dsn['hostspec'],
                                       $dsn['database']);
         $dbh = WikiDB::open($AdminParams);
+    } elseif ($dbadmin = $request->getArg('dbadmin')) {
+        if (empty($dbadmin['user']) or isset($dbadmin['cancel']))
+            $dbh = &$request->_dbi;
+        else {
+            $AdminParams = $DBParams;
+            if ($DBParams['dbtype'] == 'SQL')
+                $dsn = DB::parseDSN($AdminParams['dsn']);
+            else
+                $dsn = parseDSN($AdminParams['dsn']);
+            $AdminParams['dsn'] = sprintf("%s://%s:%s@%s/%s",
+                                      $dsn['phptype'],
+                                      $dbadmin['user'],
+                                      $dbadmin['passwd'],
+                                      $dsn['hostspec'],
+                                      $dsn['database']);
+            $dbh = WikiDB::open($AdminParams);
+        }
     } else {
-        $dbh = &$request->_dbi;
+        // Check if the privileges are enough. Need CREATE and ALTER perms. 
+        // And on windows: SELECT FROM mysql, possibly: UPDATE mysql.
+        $form = HTML::form(array("method" => "post", 
+                                 "action" => $request->getPostURL(),
+                                 "accept-charset"=>$GLOBALS['charset']),
+                           HTML::p(_("Upgrade requires database privileges to CREATE and ALTER the phpwiki database."),
+                                   HTML::br(),
+                           	   _("And on windows at least the privilege to SELECT FROM mysql, and possibly UPDATE mysql")),
+                           HiddenInputs(array('action' => 'upgrade')),
+                           HTML::table(array("cellspacing"=>4),
+                                       HTML::tr(HTML::td(array('align'=>'right'),
+                                                         _("DB admin user:")),
+                                                HTML::td(HTML::input(array('name'=>"dbadmin[user]",
+                                                                           'size'=>12,
+                                                                           'maxlength'=>256,
+                                                                           'value'=>'root')))),
+                                       HTML::tr(HTML::td(array('align'=>'right'),
+                                                         _("DB admin password:")),
+                                                HTML::td(HTML::input(array('name'=>"dbadmin[passwd]",
+                                                                           'type'=>'password',
+                                                                           'size'=>12,
+                                                                           'maxlength'=>256)))),
+                                       HTML::tr(HTML::td(array('align'=>'center', 'colspan' => 2),
+                                                         Button("submit:", _("Submit"), 'wikiaction'), 
+                                                         HTML::raw('&nbsp;'),
+                                                         Button("submit:dbadmin[cancel]", _("Cancel"), 'button')))));
+        $form->printXml();
+        echo "</div><!-- content -->\n";
+        echo asXML(Template("bottom"));
+        echo "</body></html>\n";
+        $request->finish();
+        exit();
     }
 }
 
@@ -540,6 +676,32 @@ function _convert_cached_html (&$dbh) {
         }
     }
     return $count;
+}
+
+function CheckPluginUpdate(&$request) {
+    echo "<h3>",_("check for necessary plugin argument updates"),"</h3>\n";
+    $process = array('msg' => _("change RandomPage pages => numpages"),
+                     'match' => "/(<\?\s*plugin\s+ RandomPage\s+)pages/",
+                     'replace' => "\\1numpages");
+    $dbi = $request->getDbh();
+    $allpages = $dbi->getAllPages(false);
+    while ($page = $allpages->next()) {
+        $current = $page->getCurrentRevision();
+        $pagetext = $current->getPackedContent();
+        foreach ($process as $p) {
+            if (preg_match($p['match'], $pagetext)) {
+                echo $page->getName()," ",$p['msg']," ... ";
+                if ($newtext = preg_replace($p['match'], $p['replace'], $pagetext)) {
+                    $meta = $current->_data;
+                    $meta['summary'] = "upgrade: ".$p['msg'];
+                    $page->save($newtext, $current->getVersion() + 1, $meta);
+                    echo _("OK"), "<br />\n";
+                } else {
+                    echo " <b><font color=\"red\">", _("FAILED"), "</font></b><br />\n";
+                }
+            }
+        }
+    }
 }
 
 function fixConfigIni($match, $new) {
@@ -640,6 +802,7 @@ function DoUpgrade($request) {
     CheckActionPageUpdate($request);
     CheckPgsrcUpdate($request);
     //CheckThemeUpdate($request);
+    //CheckPluginUpdate($request);
     CheckConfigUpdate($request);
     EndLoadDump($request);
 }
@@ -647,6 +810,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.37  2005/01/20 10:19:08  rurban
+ add InterWikiMap to special pages
+
  Revision 1.36  2004/12/20 12:56:11  rurban
  patch #1088128 by Kai Krakow. avoid chicken & egg problem
 
