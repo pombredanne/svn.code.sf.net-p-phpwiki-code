@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.28 2004-04-12 17:33:27 rurban Exp $
+ * $Id: phpwiki.css,v 1.29 2004-04-14 10:51:02 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -232,6 +232,14 @@ textarea.wikiedit {
   margin-top: 1ex;
   text-align: left;
   font-size: smaller;
+}
+/**
+ * Search Results
+ */
+.search-context { background: white; }
+.search-term {
+  background: yellow;
+  font-weight: normal;
 }
 
 /* IncludePage plugin */
