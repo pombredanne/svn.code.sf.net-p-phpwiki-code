@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.87 2004-09-25 16:25:40 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.88 2004-09-25 18:16:40 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1855,15 +1855,22 @@ class WikiDB_cache
 
     function get_pagedata($pagename) {
         assert(is_string($pagename) && $pagename != '');
-        $cache = &$this->_pagedata_cache;
-
-        if (!isset($cache[$pagename]) || !is_array($cache[$pagename])) {
-            $cache[$pagename] = $this->_backend->get_pagedata($pagename);
-            if (empty($cache[$pagename]))
-                $cache[$pagename] = array();
+        if (defined('USECACHE') and USECACHE) {
+            $cache = &$this->_pagedata_cache;
+            if (!isset($cache[$pagename]) || !is_array($cache[$pagename])) {
+                $cache[$pagename] = $this->_backend->get_pagedata($pagename);
+                // Never keep a ['%pagedata']['_cached_html'] in cache, other than the current page.
+                if (isset($cache[$pagename]['_cached_html'])
+                    and $pagename != $GLOBALS['request']->getArg('pagename')) {
+                    unset($cache[$pagename]['_cached_html']);
+                }
+                if (empty($cache[$pagename]))
+                    $cache[$pagename] = array();
+            }
+            return $cache[$pagename];
+        } else {
+            return $this->_backend->get_pagedata($pagename);
         }
-
-        return $cache[$pagename];
     }
     
     function update_pagedata($pagename, $newdata) {
@@ -1871,7 +1878,9 @@ class WikiDB_cache
 
         $this->_backend->update_pagedata($pagename, $newdata);
 
-        if (is_array($this->_pagedata_cache[$pagename])) {
+        if (defined('USECACHE') and USECACHE
+            and is_array($this->_pagedata_cache[$pagename])) 
+        {
             $cachedata = &$this->_pagedata_cache[$pagename];
             foreach($newdata as $key => $val)
                 $cachedata[$key] = $val;
@@ -1908,7 +1917,7 @@ class WikiDB_cache
             if (!isset($cache[$pagename][$version][$nc])||
                 !(is_array ($cache[$pagename])) || !(is_array ($cache[$pagename][$version]))) {
                 $cache[$pagename][$version][$nc] = 
-                    $this->_backend->get_versiondata($pagename,$version, $need_content);
+                    $this->_backend->get_versiondata($pagename, $version, $need_content);
                 // If we have retrieved all data, we may as well set the cache for $need_content = false
                 if ($need_content){
                     $cache[$pagename][$version]['0'] =& $cache[$pagename][$version]['1'];
@@ -1918,7 +1927,8 @@ class WikiDB_cache
 	} else {
             $vdata = $this->_backend->get_versiondata($pagename, $version, $need_content);
 	}
-        // FIXME: ugly
+        // FIXME: ugly. 
+        // Rationale: never keep ['%pagedata']['_cached_html'] in cache.
         if ($vdata && !empty($vdata['%pagedata'])) {
             $this->_pagedata_cache[$pagename] = $vdata['%pagedata'];
             // only store _cached_html for the requested page
@@ -1939,7 +1949,6 @@ class WikiDB_cache
         $new = $this->_backend->set_versiondata($pagename, $version, $data);
         // Update the cache
         $this->_versiondata_cache[$pagename][$version]['1'] = $data;
-        // FIXME: hack
         $this->_versiondata_cache[$pagename][$version]['0'] = $data;
         // Is this necessary?
         unset($this->_glv_cache[$pagename]);
@@ -1948,6 +1957,7 @@ class WikiDB_cache
     function update_versiondata($pagename, $version, $data) {
         $new = $this->_backend->update_versiondata($pagename, $version, $data);
         // Update the cache
+        // FIXME: never keep ['%pagedata']['_cached_html'] in cache.
         $this->_versiondata_cache[$pagename][$version]['1'] = $data;
         // FIXME: hack
         $this->_versiondata_cache[$pagename][$version]['0'] = $data;
@@ -1980,6 +1990,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.87  2004/09/25 16:25:40  rurban
+// notify on rename and remove (to be improved)
+//
 // Revision 1.86  2004/09/23 18:52:06  rurban
 // only fortune at create
 //
