@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.26 2004-06-03 16:56:21 rurban Exp $
+ * $Id: sidebar.css,v 1.27 2004-06-11 09:01:52 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -157,8 +157,9 @@ div#xhtml-validator {
   clear: both;
 }
 
-/* Black Links (not yet working) */
+/* Black Links */
 div.box-title a, div.box-title a:visited, div.box-title a:link {
+  font-weight: normal;
   text-decoration: none;
   color: black;
 }
