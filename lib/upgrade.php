@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.13 2004-06-04 20:32:53 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.14 2004-06-07 18:38:18 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -336,9 +336,9 @@ function CheckDatabaseUpdate($request) {
                     $dbh->genericQuery("ALTER TABLE $page_tbl CHANGE id id INT NOT NULL AUTO_INCREMENT");
                     $fields = mysql_list_fields($database,$page_tbl);
                     if (!strstr(strtolower(mysql_field_flags($fields, $i)),"auto_increment"))
-                        echo " <b><font color=\"red\">",_("FAILED"),"</font></b><br />\n";		
+                        echo " <b><font color=\"red\">",_("FAILED"),"</font></b><br />\n";
                     else     
-                        echo _("OK"),"<br />\n";            		
+                        echo _("OK"),"<br />\n";
             	} else {
                     echo _("OK"),"<br />\n";            		
             	}
@@ -346,6 +346,23 @@ function CheckDatabaseUpdate($request) {
             }
         }
         mysql_free_result($fields);
+    }
+    // check for mysql 4.1.x binary search bug
+    // http://bugs.mysql.com/bug.php?id=1491
+    // not yet tested for 4.1.2alpha, but confirmed for 4.1.0alpha
+    if (substr($backend_type,0,5) == 'mysql') {
+  	echo _("check for mysql 4.1.x binary search bug")," ...";
+  	$result = mysql_query("SELECT VERSION()",$dbh->_backend->connection());
+        $row = mysql_fetch_row($result);
+        $mysql_version = $row[0];
+        $arr = explode('.',$mysql_version);
+        $version = (string)(($arr[0] * 100) + $arr[1]) . "." . $arr[2];
+        if ($version > 410.0 and $version < 420.0) {
+            $dbh->genericQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL;");
+            echo sprintf(_("version <em>%s</em> <b>FIXED</b>"),$mysql_version),"<br />\n";	
+        } else {
+            echo sprintf(_("version <em>%s</em> not affected"),$mysql_version),"<br />\n";	
+        }
     }
     return;
 }
@@ -389,6 +406,11 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.13  2004/06/04 20:32:53  rurban
+ Several locale related improvements suggested by Pierrick Meignen
+ LDAP fix by John Cole
+ reanable admin check without ENABLE_PAGEPERM in the admin plugins
+
  Revision 1.12  2004/05/18 13:59:15  rurban
  rename simpleQuery to genericQuery
 
