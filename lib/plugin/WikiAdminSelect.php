@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.16 2004-06-13 15:33:20 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.17 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -27,10 +27,10 @@ rcs_id('$Id: WikiAdminSelect.php,v 1.16 2004-06-13 15:33:20 rurban Exp $');
  * Usage:   <?plugin WikiAdminSelect?>
  * Author:  Reini Urban <rurban@x-ray.at>
  *
+ * This is the base class for most WikiAdmin* classes, using
+ * collectPages() and preSelectS().
  * "list" PagePermissions supported implicitly by PageList.
- * Just a framework, nothing more.
  */
-// maybe display more attributes with this class...
 require_once('lib/PageList.php');
 
 class WikiPlugin_WikiAdminSelect
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -64,6 +64,10 @@ extends WikiPlugin
                      'debug'   => false);
     }
 
+    /**
+     * Default collector for all WikiAdmin* plugins.
+     * preSelectS() is similar, but fills $this->_list
+     */
     function collectPages(&$list, &$dbi, $sortby, $limit=0) {
         $allPages = $dbi->getAllPages(0,$sortby,$limit);
         while ($pagehandle = $allPages->next()) {
@@ -75,9 +79,11 @@ extends WikiPlugin
     }
 
     /**
-     * Preselect a list of pagenames by:
-     * s: comma-seperated list of pagename wildcards
-     * author, owner, creator
+     * Preselect a list of pagenames by the supporting the follwing args:
+     * 's': comma-seperated list of pagename wildcards
+     * 'author', 'owner', 'creator': from WikiDB_Page
+     * 'only: forgot what the diffrrence to 's' was.
+     * Sets $this->_list, which is picked up by collectPages() and is a default for p[]
      */
     function preSelectS (&$args, &$request) {
         // override plugin argument by GET: probably not needed if s||="" is used
@@ -95,7 +101,7 @@ extends WikiPlugin
             $sl = explodePageList(empty($args['only']) ? $args['s'] : $args['only']);
         }
         $this->_list = array();
-        if ($sl) {
+        if (!empty($sl)) {
             $request->setArg('verify', 1);
             if (!empty($args['exclude']))
                 $exclude = explodePageList($args['exclude']);
@@ -212,7 +218,7 @@ extends WikiPlugin
                                       'wikiadmin'),
                                Button('submit:cancel', _("Cancel"), 'button'));
         } else {
-            global $Theme;
+            global $WikiTheme;
             $form->pushContent(HTML::input(array('type' => 'hidden',
                                                  'name' => 'action',
                                                  'value' => 'WikiAdminSelect'))
@@ -228,7 +234,7 @@ extends WikiPlugin
                 $s = preg_replace('/^WikiAdmin/','', $f);
                 if (!in_array($s,array("Select","Utils"))) { // disable Select and Utils
                     $form->pushContent(Button("submit:wikiadmin[$f]", _($s), "wikiadmin"));
-                    $form->pushContent($Theme->getButtonSeparator());
+                    $form->pushContent($WikiTheme->getButtonSeparator());
                 }
             }
             $form->pushContent(Button('submit:cancel', _("Cancel"), 'button'));
@@ -242,6 +248,10 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/06/13 15:33:20  rurban
+// new support for arguments owner, author, creator in most relevant
+// PageList plugins. in WikiAdmin* via preSelectS()
+//
 // Revision 1.15  2004/06/01 15:28:01  rurban
 // AdminUser only ADMIN_USER not member of Administrators
 // some RateIt improvements by dfrankow

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AuthorHistory.php,v 1.5 2004-02-28 21:14:08 rurban Exp $');
+rcs_id('$Id: AuthorHistory.php,v 1.6 2004-06-14 11:31:38 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -76,7 +76,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
     
     function getDefaultArguments() {
@@ -108,7 +108,7 @@ extends WikiPlugin
         
         $nbsp = HTML::raw('&nbsp;');
         
-        global $Theme; // date & time formatting
+        global $WikiTheme; // date & time formatting
         
         if (! ($page == 'all')) {
             $p = $dbi->getPage($page);
@@ -144,7 +144,7 @@ extends WikiPlugin
                                                             'if_known'), $nbsp),
                                    HTML::td($nbsp, $rev->get('summary')),
                                    HTML::td(array('align'=> 'right'),
-                                            $Theme->formatdatetime($rev->get('mtime')))
+                                            $WikiTheme->formatdatetime($rev->get('mtime')))
                                    );
                     
                     $class = $isminor ? 'evenrow' : 'oddrow';
@@ -201,7 +201,7 @@ extends WikiPlugin
                                        $includeminor ? (HTML::td($nbsp, ($isminor ? "minor" : "major"), $nbsp)) : "",
                                        HTML::td($nbsp, $rev->get('summary')),
                                        HTML::td(array('align'=> 'right'),
-                                                $Theme->formatdatetime($rev->get('mtime')), $nbsp)
+                                                $WikiTheme->formatdatetime($rev->get('mtime')), $nbsp)
                                        );
                         
                         $class = $isminor ? 'evenrow' : 'oddrow';
@@ -246,6 +246,15 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/02/28 21:14:08  rurban
+// generally more PHPDOC docs
+//   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
+// fxied WikiUserNew pref handling: empty theme not stored, save only
+//   changed prefs, sql prefs improved, fixed password update,
+//   removed REPLACE sql (dangerous)
+// moved gettext init after the locale was guessed
+// + some minor changes
+//
 // Revision 1.4  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //

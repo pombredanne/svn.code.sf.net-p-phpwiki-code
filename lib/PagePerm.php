@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.25 2004-06-08 13:51:57 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.26 2004-06-14 11:31:36 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -182,6 +182,7 @@ function action2access ($action) {
     case 'dumpserial':
     case 'dumphtml':
         return 'dump';
+    case 'revert':
     case 'edit':
         return 'edit';
     case 'create':
@@ -522,7 +523,7 @@ class PagePermission {
     
     /* type: page, default, inherited */
     function asEditableTable($type) {
-        global $Theme;
+        global $WikiTheme;
         if (!isset($this->_group)) { 
             $this->_group =& WikiGroup::getGroup($GLOBALS['request']);
         }
@@ -542,8 +543,8 @@ class PagePermission {
                 $allGroups[] = $group;
         }
         //array_unique(array_merge($this->_group->getAllGroupsIn(),
-        $deletesrc = $Theme->_findData('images/delete.png');
-        $addsrc = $Theme->_findData('images/add.png');
+        $deletesrc = $WikiTheme->_findData('images/delete.png');
+        $addsrc = $WikiTheme->_findData('images/add.png');
         $nbsp = HTML::raw('&nbsp;');
         foreach ($this->perm as $access => $groups) {
             //$permlist = HTML::table(array('class' => 'cal','valign' => 'top'));
@@ -698,6 +699,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/06/08 13:51:57  rurban
+// some comments only
+//
 // Revision 1.24  2004/06/08 10:54:46  rurban
 // better acl dump representation, read back acl and owner
 //
@@ -774,7 +778,7 @@ class PagePermission {
 // Revision 1.7  2004/02/28 22:25:07  rurban
 // First PagePerm implementation:
 //
-// $Theme->setAnonEditUnknownLinks(false);
+// $WikiTheme->setAnonEditUnknownLinks(false);
 //
 // Layout improvement with dangling links for mostly closed wiki's:
 // If false, only users with edit permissions will be presented the

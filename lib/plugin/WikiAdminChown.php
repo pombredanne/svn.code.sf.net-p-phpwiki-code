@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChown.php,v 1.4 2004-06-13 15:33:20 rurban Exp $');
+rcs_id('$Id: WikiAdminChown.php,v 1.5 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,25 +43,19 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
-        return array(
-                     's' 	=> false,
-                     'user' 	=> false,
-                     /* select pages by meta-data: */
-                     'author'   => false,
-                     'owner'    => false,
-                     'creator'  => false,
-                     /* Pages to exclude in listing */
-                     'exclude'  => '',
-                     /* Columns to include in listing */
-                     'info'     => 'pagename,owner,mtime',
-                     /* How to sort */
-                     'sortby'   => 'pagename',
-                     'limit'    => 0,
-                     );
+        return array_merge 
+            (
+             PageList::supportedArgs(),
+             array(
+                   's' 		=> false,
+                   'user' 	=> false,
+                   /* Columns to include in listing */
+                   'info'     => 'pagename,owner,mtime',
+                   ));
     }
 
     function chownPages(&$dbi, &$request, $pages, $newowner) {
@@ -150,7 +144,7 @@ extends WikiPlugin_WikiAdminSelect
             $args['info'] = "checkbox,pagename,owner,mtime";
         }
         */
-        $pagelist = new PageList_Selectable($args['info'], $exclude);
+        $pagelist = new PageList_Selectable($args['info'], $exclude, $args);
         $pagelist->addPageList($pages);
 
         $header = HTML::p();
@@ -195,6 +189,10 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/06/13 15:33:20  rurban
+// new support for arguments owner, author, creator in most relevant
+// PageList plugins. in WikiAdmin* via preSelectS()
+//
 // Revision 1.3  2004/06/08 10:05:11  rurban
 // simplified admin action shortcuts
 //

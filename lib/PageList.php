@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.87 2004-06-13 16:02:12 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.88 2004-06-14 11:31:35 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -105,12 +105,12 @@ class _PageList_Column_base {
     // new grid-style
     // see activeui.js 
     function button_heading () {
-        global $Theme, $request;
+        global $WikiTheme, $request;
         // allow sorting?
         if (in_array($this->_field,PageList::sortable_columns())) {
             // multiple comma-delimited sortby args: "+hits,+pagename"
             $src = false; 
-            $noimg_src = $Theme->getButtonURL('no_order');
+            $noimg_src = $WikiTheme->getButtonURL('no_order');
             if ($noimg_src)
                 $noimg = HTML::img(array('src' => $noimg_src,
                                          'width' => '7', 
@@ -123,7 +123,7 @@ class _PageList_Column_base {
                     $sortby = PageList::sortby($request->getArg('sortby'),'flip_order');
                     $request->setArg('sortby',$sortby);
                     $desc = (substr($sortby,0,1) == '-');      // asc or desc? (+pagename, -pagename)
-                    $src = $Theme->getButtonURL($desc ? 'asc_order' : 'desc_order');
+                    $src = $WikiTheme->getButtonURL($desc ? 'asc_order' : 'desc_order');
                 } else {
                     $sortby = PageList::sortby($this->_field,'init');
                 }
@@ -255,8 +255,8 @@ class _PageList_Column_checkbox extends _PageList_Column {
 class _PageList_Column_time extends _PageList_Column {
     function _PageList_Column_time ($field, $default_heading) {
         $this->_PageList_Column($field, $default_heading, 'right');
-        global $Theme;
-        $this->Theme = &$Theme;
+        global $WikiTheme;
+        $this->Theme = &$WikiTheme;
     }
 
     function _getValue ($page_handle, &$revision_handle) {
@@ -465,13 +465,13 @@ class PageList {
                      'creator'  => false, // current user by []
 
                      // for the sort buttons in <th>
-                     'sortby'            => '',   // same as for WikiDB::getAllPages
+                     'sortby'            => 'pagename', // same as for WikiDB::getAllPages
 
                      //PageList pager options:
                      // These options may also be given to _generate(List|Table) later
                      // But limit and offset might help the query WikiDB::getAllPages()
                      'cols'     => 1,       // side-by-side display of list (1-3)
-                     'limit'    => 50,      // number of rows
+                     'limit'    => 0,       // number of rows (pagesize)
                      'paging'   => 'auto',  // 'auto'  normal paging mode
                      //			    // 'smart' drop 'info' columns and enhance rows 
                      //                     //         when the list becomes large
@@ -988,7 +988,7 @@ function flipAll(formObj) {
 class PageList_Selectable
 extends PageList {
 
-    function PageList_Selectable ($columns=false, $exclude=false) {
+    function PageList_Selectable ($columns=false, $exclude=false, $options = false) {
         if ($columns) {
             if (!is_array($columns))
                 $columns = explode(',', $columns);
@@ -997,7 +997,7 @@ extends PageList {
         } else {
             $columns = array('checkbox','pagename');
         }
-        PageList::PageList($columns,$exclude);
+        PageList::PageList($columns, $exclude, $options);
     }
 
     function addPageList ($array) {
@@ -1010,11 +1010,12 @@ extends PageList {
     function addPageSelected ($pagename) {
         $this->_selected[$pagename] = 1;
     }
-    //Todo:
-    //insert javascript when clicked on Selected Select/Deselect all
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.87  2004/06/13 16:02:12  rurban
+// empty list of pages if user=[] and not authenticated.
+//
 // Revision 1.86  2004/06/13 15:51:37  rurban
 // Support pagelist filter for current author,owner,creator by []
 //

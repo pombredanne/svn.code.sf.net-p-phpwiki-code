@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf.php,v 1.3 2004-05-15 19:49:09 rurban Exp $');
+rcs_id('$Id: pdf.php,v 1.4 2004-06-14 11:31:37 rurban Exp $');
 
 // PDF functions taken from FPDF http://www.fpdf.org
 // Edited for PHPWebthings by Don Sebà 
@@ -54,7 +54,7 @@ class PDF extends FPDF {
         $this->SetFont('Arial','',9);
 	//URL - space from side - space from top - width
 	if (!DEBUG) {
-          $imgurl = $GLOBALS['Theme']->_findFile("images/logo.png"); // header and wikilogo
+          $imgurl = $GLOBALS['WikiTheme']->_findFile("images/logo.png"); // header and wikilogo
           if ($imgurl)
             $this->Image($imgurl,3,3);
         }
@@ -136,6 +136,9 @@ function ConvertAndDisplayPdf (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/05/15 19:49:09  rurban
+// moved action_pdf to lib/pdf.php
+//
 
 // Local Variables:
 // mode: php

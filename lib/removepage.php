@@ -1,9 +1,9 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.18 2004-05-13 11:03:47 rurban Exp $');
+rcs_id('$Id: removepage.php,v 1.19 2004-06-14 11:31:37 rurban Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
-    global $Theme;
+    global $WikiTheme;
 
     $page = $request->getPage();
     $pagelink = WikiLink($page);
@@ -31,7 +31,7 @@ function RemovePage (&$request) {
                                 
                                 HTML::div(array('class' => 'toolbar'),
                                           $removeB,
-                                          $Theme->getButtonSeparator(),
+                                          $WikiTheme->getButtonSeparator(),
                                           $cancelB)));
     }
     elseif ($request->getArg('currentversion') != $version) {

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.29 2004-05-18 16:23:40 rurban Exp $');
+rcs_id('$Id: PageHistory.php,v 1.30 2004-06-14 11:31:39 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -253,7 +253,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
 
     function getDefaultArguments() {
@@ -285,10 +285,10 @@ extends WikiPlugin_RecentChanges
     }
 
     function format ($changes, $args) {
-        global $Theme;
+        global $WikiTheme;
         $format = $args['format'];
 
-        $fmt_class = $Theme->getFormatter('PageHistory', $format);
+        $fmt_class = $WikiTheme->getFormatter('PageHistory', $format);
         if (!$fmt_class) {
             if ($format == 'rss')
                 $fmt_class = '_PageHistory_RssFormatter';
@@ -319,6 +319,9 @@ extends WikiPlugin_RecentChanges
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/05/18 16:23:40  rurban
+// rename split_pagename to SplitPagename
+//
 // Revision 1.28  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //

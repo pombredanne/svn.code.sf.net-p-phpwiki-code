@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.14 2004-06-13 15:33:20 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.15 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,40 +43,38 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
-        return array(
-                     's' 	=> false,
-                     /* select pages by meta-data: */
-                     'author'   => false,
-                     'owner'    => false,
-                     'creator'  => false,
-                     /* Pages to exclude */
-                     'exclude'  => '.',
-                     /* Columns to include in listing */
-                     'info'     => 'some',
-                     /* How to sort */
-                     'sortby'   => 'pagename',
-                     'limit'    => 0,
-                     );
+        return array_merge
+            (
+             PageList::supportedArgs(),
+             array(
+                   's' 	=> false,
+                   /* Columns to include in listing */
+                   'info'     => 'some',
+                   ));
     }
 
-    function replaceHelper(&$dbi, $pagename, $from, $to, $caseexact = true) {
+    function replaceHelper(&$dbi, $pagename, $from, $to, $caseexact = true, $regex = false) {
         $page = $dbi->getPage($pagename);
         if ($page->exists()) {// don't replace default contents
             $current = $page->getCurrentRevision();
             $version = $current->getVersion();
             $text = $current->getPackedContent();
-            if ($caseexact) {
-                $newtext = str_replace($from, $to, $text);
+            if ($regex) {
+                $newtext = preg_replace("/".$from."/".($caseexact?'':'i'), $to, $text);
             } else {
-                //not all PHP have this enabled. use a workaround
-                if (function_exists('str_ireplace'))
-                    $newtext = str_ireplace($from, $to, $text);
-                else { // see eof
-                    $newtext = stri_replace($from, $to, $text);
+                if ($caseexact) {
+                    $newtext = str_replace($from, $to, $text);
+                } else {
+                    //not all PHP have this enabled. use a workaround
+                    if (function_exists('str_ireplace'))
+                        $newtext = str_ireplace($from, $to, $text);
+                    else { // see eof
+                        $newtext = stri_replace($from, $to, $text);
+                    }
                 }
             }
             if ($text != $newtext) {
@@ -94,14 +92,16 @@ extends WikiPlugin_WikiAdminSelect
         $count = 0;
         $post_args = $request->getArg('admin_replace');
         $caseexact = !empty($post_args['caseexact']);
+        $regex = !empty($post_args['regex']);
         foreach ($pages as $pagename) {
             if (!mayAccessPage('edit',$pagename)) {
 		$ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
-            } elseif (($result = $this->replaceHelper(&$dbi,$pagename,$from,$to,$caseexact))) {
+            } elseif (($result = $this->replaceHelper(&$dbi, $pagename, $from, $to, $caseexact, $regex))) {
                 $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", $from, $to, WikiLink($pagename))));
                 $count++;
             } else {
-                $ul->pushContent(HTML::li(fmt("Search string '%s' not found in content of page '%s'.", $from, WikiLink($pagename))));
+                $ul->pushContent(HTML::li(fmt("Search string '%s' not found in content of page '%s'.", 
+                                              $from, WikiLink($pagename))));
             }
         }
         if ($count) {
@@ -164,9 +164,13 @@ extends WikiPlugin_WikiAdminSelect
             $args['info'] = "checkbox,pagename,hi_content";
         }
         $pagelist = new PageList_Selectable($args['info'], $exclude,
-                                            array('types' => array(
-                                                  'hi_content' // with highlighted search for SearchReplace
-                                                   => new _PageList_Column_content('rev:hi_content', _("Content")))));
+                                            array_merge
+                                            (
+                                             $args,
+                                             array('types' => array
+                                                   (
+                                                    'hi_content' // with highlighted search for SearchReplace
+                                                    => new _PageList_Column_content('rev:hi_content', _("Content"))))));
 
         $pagelist->addPageList($pages);
 
@@ -206,19 +210,29 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function replaceForm(&$header, $post_args) {
+        $header->pushContent(HTML::div(array('class'=>'hint'),
+                                       _("Replace all occurences of the given string in the content of all pages.")),
+                             HTML::br());
         $header->pushContent(_("Replace: "));
         $header->pushContent(HTML::input(array('name' => 'admin_replace[from]',
                                                'value' => $post_args['from'])));
         $header->pushContent(' '._("by").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_replace[to]',
                                                'value' => $post_args['to'])));
-        $header->pushContent(' '._("(no regex) Case-exact: "));
         $checkbox = HTML::input(array('type' => 'checkbox',
                                       'name' => 'admin_replace[caseexact]',
                                       'value' => 1));
         if (!empty($post_args['caseexact']))
             $checkbox->setAttr('checked','checked');
-        $header->pushContent($checkbox);
+        $header->pushContent(HTML::br(),$checkbox," ",_("case-exact"));
+        $checkbox_re = HTML::input(array('type' => 'checkbox',
+                                         'name' => 'admin_replace[regex]',
+                                         //'disabled' => 'disabled',
+                                         'value' => 1));
+        if (!empty($post_args['regex']))
+            $checkbox_re->setAttr('checked','checked');
+        $header->pushContent(HTML::br(),HTML::span(//array('style'=>'color: #aaa'),
+                                                   $checkbox_re," ",_("regex")));
         $header->pushContent(HTML::br());
         return $header;
     }
@@ -252,6 +266,10 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/06/13 15:33:20  rurban
+// new support for arguments owner, author, creator in most relevant
+// PageList plugins. in WikiAdmin* via preSelectS()
+//
 // Revision 1.13  2004/06/13 14:30:26  rurban
 // security fix: check permissions in SearchReplace
 //

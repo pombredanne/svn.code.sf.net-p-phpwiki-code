@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.12 2004-06-13 11:34:22 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.13 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -199,7 +199,7 @@ ws[cfh]");
     }
 
     function log ($userfile, $upload_log, &$message) {
-    	global $Theme;
+    	global $WikiTheme;
     	$user = $GLOBALS['request']->_user;
         if (!is_writable($upload_log)) {
             $message->pushContent(_("Error: the upload log is not writable"));
@@ -219,7 +219,7 @@ ws[cfh]");
                    "\n"
                    . "<tr><td><a href=\"$userfile_name\">$userfile_name</a></td>"
                    . "<td align=\"right\">$file_size kB</td>"
-                   . "<td>&nbsp;&nbsp;" . $Theme->formatDate(time()) . "</td>"
+                   . "<td>&nbsp;&nbsp;" . $WikiTheme->formatDate(time()) . "</td>"
                    . "<td>&nbsp;&nbsp;<em>" . $user->getId() . "</em></td></tr>");
             fclose($log_handle);
         }
@@ -229,6 +229,10 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/06/13 11:34:22  rurban
+// fixed bug #969532 (space in uploaded filenames)
+// improved upload error messages
+//
 // Revision 1.11  2004/06/11 09:07:30  rurban
 // support theme-specific LinkIconAttr: front or after or none
 //

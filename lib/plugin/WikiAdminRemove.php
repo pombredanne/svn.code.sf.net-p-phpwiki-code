@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.25 2004-06-13 15:33:20 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.26 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -46,16 +46,15 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
-        return array(
-                     's' 	=> false,
-                     /* select pages by meta-data: */
-                     'author'   => false,
-                     'owner'    => false,
-                     'creator'  => false,
+        return array_merge
+            (
+             PageList::supportedArgs(),
+             array(
+                   's' 	=> false,
                      /*
                       * Show only pages which have been 'deleted' this
                       * long (in days).  (negative or non-numeric
@@ -72,17 +71,9 @@ extends WikiPlugin_WikiAdminSelect
                       * FIXME: could use a better name.
                       */
                      'max_age' => 31,
-
-                     /* Pages or regex to exclude */
-                     'exclude'  => '',
-
                      /* Columns to include in listing */
                      'info'     => 'most',
-
-                     /* How to sort */
-                     'sortby'   => 'pagename',
-                     'limit'    => 0
-                     );
+                   ));
     }
 
     function collectPages(&$list, &$dbi, $sortby, $limit=0) {
@@ -249,6 +240,10 @@ class _PageList_Column_remove extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/06/13 15:33:20  rurban
+// new support for arguments owner, author, creator in most relevant
+// PageList plugins. in WikiAdmin* via preSelectS()
+//
 // Revision 1.24  2004/06/08 10:05:11  rurban
 // simplified admin action shortcuts
 //

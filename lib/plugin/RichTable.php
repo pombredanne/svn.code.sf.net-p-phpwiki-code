@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RichTable.php,v 1.4 2004-03-09 13:08:40 rurban Exp $');
+rcs_id('$Id: RichTable.php,v 1.5 2004-06-14 11:31:39 rurban Exp $');
 /**
   RichTablePlugin
   A PhpWiki plugin that allows insertion of tables using a richer syntax
@@ -42,11 +42,11 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-    	global $Theme;
+    	global $WikiTheme;
         include_once("lib/BlockParser.php");
 
         $lines = preg_split('/\n/', $argstr);
@@ -141,6 +141,10 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/03/09 13:08:40  rurban
+// fix undefined TransformText error: load BlockParser,
+// get rid of warnings
+//
 
 // For emacs users
 // Local Variables:

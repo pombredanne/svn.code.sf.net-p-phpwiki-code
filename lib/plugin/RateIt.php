@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.8 2004-06-01 15:28:01 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.9 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -110,12 +110,12 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function RatingWidgetJavascript() {
-        global $Theme;
-        $img   = substr($Theme->_findData("images/RateItNk0.png"),0,-7);
+        global $WikiTheme;
+        $img   = substr($WikiTheme->_findData("images/RateItNk0.png"),0,-7);
         $urlprefix = WikiURL("",0,1);
         $js = "
 function displayRating(imgPrefix, ratingvalue, pred) {
@@ -167,8 +167,8 @@ function deleteRating(actionImg, page, dimension) {
     }
 
     function actionImgPath() {
-        global $Theme;
-        return $Theme->_findFile("images/RateItAction.png");
+        global $WikiTheme;
+        return $WikiTheme->_findFile("images/RateItAction.png");
     }
 
     /**
@@ -192,14 +192,14 @@ function deleteRating(actionImg, page, dimension) {
     }
 
     function head() { // early side-effects (before body)
-        global $Theme;
-        $Theme->addMoreHeaders($this->RatingWidgetJavascript());
+        global $WikiTheme;
+        $WikiTheme->addMoreHeaders($this->RatingWidgetJavascript());
     }
 
     // todo: only for signed users
     // todo: set rating dbi for external rating database
     function run($dbi, $argstr, $request, $basepage) {
-        global $Theme;
+        global $WikiTheme;
         $this->_request = & $request;
         $this->_dbi = & $dbi;
         $user = & $request->getUser();
@@ -238,8 +238,8 @@ function deleteRating(actionImg, page, dimension) {
         if ($args['mode'] === 'add') {
             if (!$user->isSignedIn())
                 return $this->error(_("You must sign in"));
-            global $Theme;
-            $actionImg = $Theme->_path . $this->actionImgPath();
+            global $WikiTheme;
+            $actionImg = $WikiTheme->_path . $this->actionImgPath();
             $this->addRating($request->getArg('rating'));
             ob_end_clean();  // discard any previous output
             // delete the cache
@@ -256,8 +256,8 @@ function deleteRating(actionImg, page, dimension) {
         } elseif ($args['mode'] === 'delete') {
             if (!$user->isSignedIn())
                 return $this->error(_("You must sign in"));
-            global $Theme;
-            $actionImg = $Theme->_path . $this->actionImgPath();
+            global $WikiTheme;
+            $actionImg = $WikiTheme->_path . $this->actionImgPath();
             $this->deleteRating();
             ob_end_clean();  // discard any previous output
             // delete the cache
@@ -273,7 +273,7 @@ function deleteRating(actionImg, page, dimension) {
             exit();
         } elseif (! $args['show'] ) {
             // we must use the head method instead, because <body> is already printed.
-            // $Theme->addMoreHeaders($this->RatingWidgetJavascript()); 
+            // $WikiTheme->addMoreHeaders($this->RatingWidgetJavascript()); 
             // or we change the header in the ob_buffer.
 
             //Todo: add a validator based on the users last rating mtime
@@ -684,7 +684,7 @@ function deleteRating(actionImg, page, dimension) {
      *              And only the widget, but no value (for buddies) also.
      */
     function RatingWidgetHtml($args) {
-        global $Theme, $request;
+        global $WikiTheme, $request;
         extract($args);
         if (!$request->_user->isSignedIn()) return;
         $imgPrefix = $pagename . $imgPrefix;
@@ -700,8 +700,8 @@ function deleteRating(actionImg, page, dimension) {
     
         $html = HTML::span(array("id" => $id));
         for ($i=0; $i < 2; $i++) {
-            $nk[$i]   = $Theme->_findData("images/RateItNk$i.png");
-            $none[$i] = $Theme->_findData("images/RateItRk$i.png");
+            $nk[$i]   = $WikiTheme->_findData("images/RateItNk$i.png");
+            $none[$i] = $WikiTheme->_findData("images/RateItRk$i.png");
         }
         if (!$small) {
             $html->pushContent(Button(_("RateIt"),_("RateIt"), $pagename));
@@ -734,21 +734,21 @@ function deleteRating(actionImg, page, dimension) {
         $a0 = HTML::a(array('href' => 'javascript:click(\'' . $reActionImgName . '\',\'' . $rePagename . '\',\'' . $version . '\',\'' . $reImgPrefix . '\',\'' . $dimension . '\',\'X\')'));
         if ($rating) {
             $msg = _("Cancel rating");
-            $a0->pushContent(HTML::img(array('src' => $Theme->getImageUrl("RateItCancel"),
+            $a0->pushContent(HTML::img(array('src' => $WikiTheme->getImageUrl("RateItCancel"),
                                              'name'=> $imgPrefix.'Cancel',
                                              'alt' => $msg)));
             $a0->addToolTip($msg);
             $html->pushContent($a0);
         } elseif ($pred) {
             $msg = _("No opinion");
-            $html->pushContent(HTML::img(array('src' => $Theme->getImageUrl("RateItCancelN"),
+            $html->pushContent(HTML::img(array('src' => $WikiTheme->getImageUrl("RateItCancelN"),
                                                'name'=> $imgPrefix.'Cancel',
                                                'alt' => $msg)));
             //$a0->addToolTip($msg);
             //$html->pushContent($a0);
         }
         $img_attr = array();
-        $img_attr['src'] = $Theme->_findData("images/RateItAction.png");
+        $img_attr['src'] = $WikiTheme->_findData("images/RateItAction.png");
         $img_attr['name'] = $actionImgName;
         //$img_attr['class'] = 'k' . $i;
         $img_attr['border'] = 0;
@@ -767,6 +767,11 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/06/01 15:28:01  rurban
+// AdminUser only ADMIN_USER not member of Administrators
+// some RateIt improvements by dfrankow
+// edit_toolbar buttons
+//
 // Revision _1.2  2004/04/29 17:55:03  dfrankow
 // Check in escape() changes to protect against leading spaces in pagename.
 // This is untested with Reini's _("RateIt") additions to this plugin.

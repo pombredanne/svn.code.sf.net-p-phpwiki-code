@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.9 2004-06-13 15:33:20 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.10 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,25 +48,19 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
-        return array(
-                     's' 	=> false,
-                     'perm' 	=> false,
-                     /* select pages by meta-data: */
-                     'author'   => false,
-                     'owner'    => false,
-                     'creator'  => false,
-                     /* Pages to exclude in listing */
-                     'exclude'  => '',
-                     /* Columns to include in listing */
-                     'info'     => 'pagename,perm,mtime,author',
-                     /* How to sort */
-                     'sortby'   => 'pagename',
-                     'limit'    => 0,
-                     );
+        return array_merge
+            (
+             PageList::supportedArgs(),
+             array(
+                   's' 		=> false,
+                   'perm' 	=> false,
+                   /* Columns to include in listing */
+                   'info'     => 'pagename,perm,mtime,author',
+                   ));
     }
 
     // todo: change permstring to some kind of default ACL hash. 
@@ -149,7 +143,7 @@ extends WikiPlugin_WikiAdminSelect
         if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename,perm,author,mtime";
         }
-        $pagelist = new PageList_Selectable($args['info'], $exclude);
+        $pagelist = new PageList_Selectable($args['info'], $exclude, $args);
         $pagelist->addPageList($pages);
 
         $header = HTML::p();
@@ -207,6 +201,10 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/06/13 15:33:20  rurban
+// new support for arguments owner, author, creator in most relevant
+// PageList plugins. in WikiAdmin* via preSelectS()
+//
 // Revision 1.8  2004/06/04 20:32:54  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole

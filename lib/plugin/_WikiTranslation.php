@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.10 2004-05-03 21:57:47 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.11 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -46,6 +46,9 @@ rcs_id('$Id: _WikiTranslation.php,v 1.10 2004-05-03 21:57:47 rurban Exp $');
 $pgsrc_container = 
     _("AddCommentPlugin")  .','.
     _("AddingPages")  .','.
+    _("AllPagesCreatedByMe")  .','.
+    _("AllPagesLastEditedByMe")  .','.
+    _("AllPagesOwnedByMe")  .','.
     _("AuthorHistoryPlugin") .','.
     _("BackLinks") .','.
     _("CalendarListPlugin") .','.
@@ -55,9 +58,11 @@ $pgsrc_container =
     _("CommentPlugin")  .','.
     _("CreateTocPlugin")  .','.
     _("DebugInfo") .','.
+    _("EditMetaData") .','.
     _("EditMetaDataPlugin") .','.
     _("ExternalSearchPlugin") .','.
     _("FindPage") .','.
+    _("FoafViewerPlugin") .','.
     _("FrameIncludePlugin") .','.
     _("FullRecentChanges") .','.
     _("HelloWorldPlugin") .','.
@@ -82,11 +87,13 @@ $pgsrc_container =
     _("PhpWeatherPlugin") .','.
     _("PhpWiki") .','.
     _("PhpWikiAdministration/Chmod") .','.
+    _("PhpWikiAdministration/Chown") .','.
     _("PhpWikiAdministration/Remove") .','.
     _("PhpWikiAdministration/Rename") .','.
     _("PhpWikiAdministration/Replace") .','.
     _("PhpWikiDocumentation") .','.
     _("PhpWikiPoll") .','.
+    _("PloticusPlugin") .','.
     _("RawHtmlPlugin") .','.
     _("RecentVisitors") .','.
     _("RedirectToPlugin") .','.
@@ -98,6 +105,7 @@ $pgsrc_container =
     _("TranslateText") .','.
     _("UnfoldSubpagesPlugin") .','.
     _("UpLoad") .','.
+    _("UpLoadPlugin") .','.
     _("WabiSabi") .','.
     _("WikiBlogPlugin") .','.
     _("WikiPlugin") .','.
@@ -119,7 +127,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -367,15 +375,15 @@ class _PageList_Column_custom extends _PageList_Column {
              ($trans == $this->_plugin->translate($text, 'en', $this->_from_lang))
              ))
         {    
-            global $Theme;
-            $link = $Theme->linkUnknownWikiWord($trans);
+            global $WikiTheme;
+            $link = $WikiTheme->linkUnknownWikiWord($trans);
             if (!($this->_noT or $this->_nolinks) and $this->dbi->isWikiPage($trans)) {
                 $url = WikiURL($trans, array('action' => 'TranslateText','lang' => $this->_field));
-                $button = $Theme->makeButton('T', $url);
+                $button = $WikiTheme->makeButton('T', $url);
                 $button->addTooltip(sprintf(_("Define the translation for %s in %s"), $trans, $this->_field));
                 $link = HTML::span($button);
                 $link->setAttr('class', 'wikiunknown');
-                $text = HTML::span($Theme->maybeSplitWikiWord($trans));
+                $text = HTML::span($WikiTheme->maybeSplitWikiWord($trans));
                 $text->setAttr('style', 'text-decoration:line-through');
                 $link->pushContent($text);
                 return $link;
@@ -395,6 +403,12 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/05/03 21:57:47  rurban
+// locale updates: we previously lost some words because of wrong strings in
+//   PhotoAlbum, german rewording.
+// fixed $_SESSION registering (lost session vars, esp. prefs)
+// fixed ending slash in listAvailableLanguages/Themes
+//
 // Revision 1.9  2004/05/03 20:44:58  rurban
 // fixed gettext strings
 // new SqlResult plugin

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.59 2004-05-18 16:23:39 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.60 2004-06-14 11:31:36 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -12,14 +12,14 @@ class Template
      *
      */
     function Template ($name, &$request, $args = false) {
-        global $Theme;
+        global $WikiTheme;
 
         $this->_request = &$request;
         $this->_name = $name;
         $GLOBALS['TemplatesProcessed'][$name] = 1;
         $this->_basepage = $request->getArg('pagename');
         
-        $file = $Theme->findTemplate($name);
+        $file = $WikiTheme->findTemplate($name);
         if (!$file) {
             trigger_error("no template for $name found", E_USER_WARNING);
             return;
@@ -122,7 +122,7 @@ class Template
         if (!isset($page))
             $page = &$request->getPage();
         
-        global $Theme, $RCS_IDS, $charset;
+        global $WikiTheme, $RCS_IDS, $charset;
         
         //$this->_dump_template();
 
@@ -255,6 +255,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2004/05/18 16:23:39  rurban
+// rename split_pagename to SplitPagename
+//
 // Revision 1.58  2004/05/15 19:48:33  rurban
 // fix some too loose PagePerms for signed, but not authenticated users
 //  (admin, owner, creator)

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.91 2004-06-08 14:57:43 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.92 2004-06-14 11:31:36 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -480,7 +480,7 @@ class _WikiUser
         }
     }
 
-    /** Signed in but probably not password checked.
+    /** Signed in but not password checked or empty password.
      */
     function isSignedIn() {
         return (isa($this,'_BogoUser') or isa($this,'_PassUser'));
@@ -2472,13 +2472,13 @@ extends _UserPreference
     }
 
     function update ($newvalue) {
-        global $Theme;
+        global $WikiTheme;
         // invalidate etag to force fresh output
         if (! $this->_init )
             $GLOBALS['request']->setValidators(array('%mtime' => false));
         if ($newvalue)
             include_once($this->_themefile($newvalue));
-        if (empty($Theme))
+        if (empty($WikiTheme))
             include_once($this->_themefile(THEME));
     }
 
@@ -2989,6 +2989,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.91  2004/06/08 14:57:43  rurban
+// stupid ldap bug detected by John Cole
+//
 // Revision 1.90  2004/06/08 09:31:15  rurban
 // fixed typo detected by lucidcarbon (line 1663 assertion)
 //
@@ -3262,7 +3265,7 @@ extends UserPreferences
 // Revision 1.25  2004/02/28 22:25:07  rurban
 // First PagePerm implementation:
 //
-// $Theme->setAnonEditUnknownLinks(false);
+// $WikiTheme->setAnonEditUnknownLinks(false);
 //
 // Layout improvement with dangling links for mostly closed wiki's:
 // If false, only users with edit permissions will be presented the

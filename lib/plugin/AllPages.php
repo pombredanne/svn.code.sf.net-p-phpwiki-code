@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.24 2004-06-13 16:02:12 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.25 2004-06-14 11:31:38 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,23 +40,19 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
-        return array('noheader'      => false,
-                     'include_empty' => false,
-                     /* select pages by meta-data: */
-                     'author'   => false, // current user with '[]'
-                     'owner'    => false, // current user with '[]'
-                     'creator'  => false, // current user with '[]'
-                     'exclude'       => '',
-                     'info'          => '',
-                     'sortby'        => 'pagename',   // +mtime,-pagename
-                     'limit'         => 0,
-                     'paging'        => 'auto',
-                     'debug'         => false
-                     );
+        return array_merge
+            (
+             PageList::supportedArgs(),
+             array(
+                   'noheader'      => false,
+                   'include_empty' => false,
+                   'info'          => '',
+                   'debug'         => false
+                   ));
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor,markup or all
@@ -118,6 +114,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/06/13 16:02:12  rurban
+// empty list of pages if user=[] and not authenticated.
+//
 // Revision 1.23  2004/06/13 15:51:37  rurban
 // Support pagelist filter for current author,owner,creator by []
 //
