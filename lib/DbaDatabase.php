@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.14 2004-11-01 10:43:55 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.15 2004-11-11 18:28:12 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 
@@ -12,7 +12,7 @@ class DbaDatabase
         $this->_timeout = DBA_DATABASE_DEFAULT_TIMEOUT;
         $this->_dbh = false;
         if (function_exists("dba_handlers")) { // since 4.3.0
-            if (!in_array($handler,dba_handlers()))
+            if (!in_array($handler, dba_handlers()))
                 $this->_error(
                     sprintf(
                 	    _("The DBA handler %s is unsupported!")."\n".
@@ -47,7 +47,7 @@ class DbaDatabase
             // PHP 4.3.x Windows lock bug workaround: http://bugs.php.net/bug.php?id=23975
             if (isWindows()) {
                 $mode .= "-"; 			// suppress locking, or
-            } elseif ($handler != 'gdbm') { 	// gdbm does it internally
+            } elseif ($this->_handler != 'gdbm') { 	// gdbm does it internally
             	$mode .= "d"; 			// else use internal locking
             }
         }
