@@ -10,8 +10,6 @@ $locale["(version %s, saved on %s)"] =
    "(versie %s, bewaard op %s)";
 $locale["- saved to database as version %d"] =
    "- bewaard in de data base als versie %d";
-$locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
-   "<b>Reload</b> de pagina.  Je zou nu de meest recente versie van de pagina moeten zien.  Jouw veranderingen staan er nu niet meer.";
 $locale["Action %s is disallowed on this wiki"] =
    "Actie %s is niet beschikbaar in deze wiki";
 $locale["Complete."] =
@@ -46,8 +44,6 @@ $locale["Hits"] =
    "Teller";
 $locale["HomePage"] =
    "ThuisPagina";
-$locale["In order to recover from this situation follow these steps:"] =
-   "Om uit deze benarde situatie te geraken, volg je deze stappen:";
 $locale["Include of '%s' failed"] =
    "Insert van '%s' gefaald";
 $locale["Last Author"] =
@@ -78,16 +74,10 @@ $locale["Page Locked"] =
    "Sidan är Låst";
 $locale["Page Name"] =
    "Pagina Naam";
-$locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
-   "PhpWiki kan je veranderingen niet bewaren, want een andere gebruiker\nheeft de pagina veranderd terwijl jij de pagina ook aan het veranderen\nwas.  Als bewaren nu doorgang zou vinden, zouden de veranderingen van\nde vorige auteur verloren gaan.";
-$locale["Press <b>Save</b> again."] =
-   "Druk opnieuw op <b>Bewaar</b>.";
 $locale["Previous"] =
    "Vorige";
 $locale["Previous Author"] =
    "Vorige Auteur";
-$locale["Problem while editing %s"] =
-   "Probleem tijdens veranderen %s";
 $locale["RecentChanges"] =
    "RecenteVeranderingen";
 $locale["References"] =
@@ -128,8 +118,6 @@ $locale["The PhpWiki programming team"] =
    "Het PhpWiki programmeerteam";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Deze pagina is afgesloten door de beheerder en kan niet veranderd worden.";
-$locale["This page has been locked by the administrator so your changes could not be saved."] =
-   "Deze pagina is afgesloten door de beheerder en je veranderingen kan niet bewaar worden.";
 $locale["Title Search"] =
    "Titel Zoek";
 $locale["Title search results for '%s'"] =
@@ -138,8 +126,6 @@ $locale["TitleSearch"] =
    "TitelZoek";
 $locale["Unlock Page"] =
    "Sluit Pagina Af";
-$locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
-   "Gebruik de <b>Terug</b> knop van je bladeraar om terug te gaan naar de verander tekst pagina.";
 $locale["UserPreferences"] =
    "GebruikersVoorkeuren";
 $locale["Version"] =
