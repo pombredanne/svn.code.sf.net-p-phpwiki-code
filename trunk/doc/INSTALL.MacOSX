@@ -157,7 +157,7 @@ control panel or from the terminal:
 
 sudo apachectl graceful
 
-Next, edit the following lines 379, 387 and 412 of index.php to match
+Next, edit the following lines in part five of index.php to match
 the following:
 
 define('DATA_PATH', '/wiki');
