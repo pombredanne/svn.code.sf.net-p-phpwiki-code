@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.44 2004-04-02 15:06:56 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.45 2004-04-05 13:03:26 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -107,12 +107,12 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   $fill = "&nbsp;";
   // See also plugin _AuthInfo
 ?>
-<?= HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$pref->get('userid'), " from " . $request->_user->auth_how()),
+<?= HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$pref->get('userid'), " from " . (ENABLE_USER_NEW ? $request->_user->_authmethod : $request->_user->auth_how)),
 	      sprintf("%12s: [% 10s]  %16s: [% 10s] | %8s: [%2s]\n","getId",$user->getId(),"getAuthenticatedId",$user->getAuthenticatedId(),"isSignedIn", $user->isSignedIn()),
 	      //sprintf("%12s: [% 10s]\n",_("Password"),empty($pref->get('passwd')) ? _("<empty>") : _("<not empty>")),
 	      sprintf("%12s: [% 10s]  %15s: [% 8s]\n",
 		      _("Auth Level"),$user->_level,_("Auth Method"),$user->_authmethod),
-	      sprintf("%12s: [% 10s]\n",_("HomePage"),$user->homePage() ? $user->_homepage->_pagename : ''),
+	      sprintf("%12s: [% 10s]\n",_("HomePage"),$user->hasHomePage() ? (ENABLE_USER_NEW ? $user->_HomePagehandle->_pagename : $user->_homepage->_pagename ) : ''),
 	      sprintf("%12s: [% 10s]\n",_("E-Mail"),$pref->get('email')),
 	      //sprintf("%12s: [% 10s]\n",_("Notify"),$pref->get('notifyPages')),
 	      sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Theme"), $pref->get('theme'), _("Current Theme"),$Theme->_name),
