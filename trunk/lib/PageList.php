@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.94 2004-06-27 10:26:02 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.95 2004-06-28 19:00:01 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -511,7 +511,7 @@ class PageList {
                   'all' =>  array_diff(array_keys($this->_types), // all but...
                                        array('checkbox','remove','renamed_pagename',
                                              'content','hi_content','perm','acl')),
-                  'most' => array('pagename','mtime','author','size','hits'),
+                  'most' => array('pagename','mtime','author','hits'),
                   'some' => array('pagename','mtime','author')
                   );
         if ($columns) {
@@ -677,12 +677,12 @@ class PageList {
             extract($dbi->_backend->_table_names);
             if ($DBParams['dbtype'] == 'SQL') {
                 //FIXME: LIMIT not portable
-                $res = $dbi->_backend->_dbh->getOne("SELECT max(length(pagename)) FROM $page_tbl LIMIT 1");
+                $res = $dbi->_backend->_dbh->getOne("SELECT max(length(pagename)) FROM $page_tbl");
                 if (DB::isError($res) || empty($res)) return false;
                 else return $res;
             } elseif ($DBParams['dbtype'] == 'ADODB') {
                 //FIXME: LIMIT not portable
-                $row = $dbi->_backend->_dbh->getRow("SELECT max(length(pagename)) FROM $page_tbl LIMIT 1");
+                $row = $dbi->_backend->_dbh->getRow("SELECT max(length(pagename)) FROM $page_tbl");
                 return $row ? $row[0] : false;
             }
         } else 
@@ -1247,6 +1247,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.94  2004/06/27 10:26:02  rurban
+// oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
+//
 // Revision 1.93  2004/06/25 14:29:17  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.
