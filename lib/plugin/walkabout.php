@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: walkabout.php,v 1.3 2002-01-10 23:11:00 carstenklapp Exp $');
+rcs_id('$Id: walkabout.php,v 1.4 2002-01-11 06:39:06 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -7,7 +7,9 @@ rcs_id('$Id: walkabout.php,v 1.3 2002-01-10 23:11:00 carstenklapp Exp $');
  *
  * <?plugin walkabout parent=MyTableOfContents label="Visit more pages in MyTableOfContents: %s" sep=, ?>
  *
- * <?plugin walkabout parent=MyTableOfContents section=PartTwo ?>
+ * <?plugin walkabout parent=MyTableOfContents section=PartTwo loop=true ?>
+ *
+ * <?plugin walkabout parent=MyTableOfContents loop=1 ?>
  *
  *
  */
@@ -143,22 +145,50 @@ extends WikiPlugin
 
         $go = array ('previous','next');
         $links = array();
+        $max = count($c) - 1; //array is 0-based, count is 1-based!
 
         foreach ( $go as $go_item ) {
-
-            //these are temp placeholders to test the output
+            //yuck this smells, needs optimization.
             if ($go_item == 'previous') {
-                $text    = sprintf(_("%s: %s"), $directions[$go_item], '%s');
-                $action  = $c[$thispage - 1];
+                if ($loop) {
+                    if ($thispage == 0) {
+                        $action  = $c[$max];
+                    } else {
+                        $action  = $c[$thispage - 1];
+                    }
+                    $text    = sprintf(_("%s: %s"), $directions[$go_item], '%s');
+                    $links[] = sprintf($text, $this->mklinks($action, $action));
+                } else {
+                    if ($thispage == 0) {
+                        // skip it
+                    } else {
+                        $text    = sprintf(_("%s: %s"), $directions[$go_item], '%s');
+                        $action  = $c[$thispage - 1];
+                        $links[] = sprintf($text, $this->mklinks($action, $action));
+                    }
+                }
+            } else if ($go_item == 'next') {
+                if ($loop) {
+                    if ($thispage == $max) {
+                        $action  = $c[1];
+                    } else {
+                        $action  = $c[$thispage + 1];
+                    }
+                    $text    = sprintf(_("%s: %s"), $directions[$go_item], '%s');
+                    $links[] = sprintf($text, $this->mklinks($action, $action));
+                } else {
+                    if ($thispage == $max) {
+                        // skip it
+                    } else {
+                        $text    = sprintf(_("%s: %s"), $directions[$go_item], '%s');
+                        $action  = $c[$thispage + 1];
+                        $links[] = sprintf($text, $this->mklinks($action, $action));
+                    }
+                }
             }
-            else if ($go_item == 'next') {
-                $text    = sprintf(_("%s: %s"), $directions[$go_item], '%s');
-                $action  = $c[$thispage + 1];
-            }
-            $links[] = sprintf($text, $this->mklinks($action, $action));
         }
 
-        //final assembly
+        // Final assembly
         $links = join($sep, $links);
         $html  = sprintf(do_transform(_($label)),$links);
 
