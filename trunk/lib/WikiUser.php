@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.13 2002-01-24 01:26:55 dairiki Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.14 2002-02-24 20:36:23 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -140,6 +140,9 @@ class WikiUser
         global $WikiNameRegexp;
         
         if (!empty($userid) && $userid == ADMIN_USER) {
+            if (defined('ENCRYPTED_PASSWD') && ENCRYPTED_PASSWD)
+                if (!empty($passwd) && crypt($passwd, ADMIN_PASSWD) == ADMIN_PASSWD)
+                    return WIKIAUTH_ADMIN;
             if (!empty($passwd) && $passwd == ADMIN_PASSWD)
                 return WIKIAUTH_ADMIN;
             return false;

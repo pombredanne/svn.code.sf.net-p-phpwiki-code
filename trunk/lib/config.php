@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.56 2002-02-15 14:14:13 lakka Exp $');
+rcs_id('$Id: config.php,v 1.57 2002-02-24 20:36:23 carstenklapp Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -289,7 +289,14 @@ if (!defined('ACCESS_LOG'))
 if (empty($HTTP_SERVER_VARS['REMOTE_HOST']) && ENABLE_REVERSE_DNS)
      $HTTP_SERVER_VARS['REMOTE_HOST'] = gethostbyaddr($HTTP_SERVER_VARS['REMOTE_ADDR']);
 
-     
+// check whether the crypt() function is needed and present
+if (defined('ENCRYPTED_PASSWD') && !function_exists('crypt')) {
+    $error = sprintf(_("Encrypted passwords cannot be used: %s."),
+                     "'function crypt()' not available in this version of php");
+    trigger_error($error);
+}
+
+
 // For emacs users
 // Local Variables:
 // mode: php

@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.3-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.81 2002-02-24 06:07:44 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.82 2002-02-24 20:35:09 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -105,6 +105,9 @@ define('ENABLE_REVERSE_DNS', true);
 // pick a good password!
 define('ADMIN_USER', "");
 define('ADMIN_PASSWD', "");
+// If you used the passencrypt.php utility to encode the password
+// then uncomment this line:
+//define('ENCRYPTED_PASSWD', true);
 
 // If true, only the admin user can make zip dumps, else zip dumps
 // require no authentication.
