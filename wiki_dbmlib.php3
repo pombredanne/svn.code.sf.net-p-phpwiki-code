@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: wiki_dbmlib.php3,v 1.13 2000-09-04 05:47:35 wainstead Exp $');
+   rcs_id('$Id: wiki_dbmlib.php3,v 1.14 2000-09-23 14:29:08 ahollosi Exp $');
 
    /*
       Database functions:
@@ -182,7 +182,7 @@
 
       if (dbmexists($dbi['hitcount'], $pagename)) {
          // increase the hit count
-         echo "$pagename there, incrementing...<br>\n";
+         // echo "$pagename there, incrementing...<br>\n";
          $count = dbmfetch($dbi['hitcount'], $pagename);
          $count++;
          dbmreplace($dbi['hitcount'], $pagename, $count);
