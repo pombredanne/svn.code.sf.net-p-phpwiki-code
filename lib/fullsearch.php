@@ -1,10 +1,11 @@
 <?php
    // Search the text of pages for a match.
-   rcs_id('$Id: fullsearch.php,v 1.4 2000-12-30 21:09:13 ahollosi Exp $');
+   rcs_id('$Id: fullsearch.php,v 1.4.2.1 2001-11-07 20:30:47 dairiki Exp $');
 
    if(get_magic_quotes_gpc())
       $full = stripslashes($full);
-
+   $full = trim($full);
+      
    $html = "<P><B>"
 	   . sprintf(gettext ("Searching for \"%s\" ....."),
 		   htmlspecialchars($full))
@@ -24,8 +25,8 @@
 
       // print out all matching lines, highlighting the match
       for ($j = 0; $j < (count($pagehash["content"])); $j++) {
-         if ($hits = preg_match_all("/$full/i", $pagehash["content"][$j], $dummy)) {
-            $matched = preg_replace("/$full/i",
+         if ($hits = preg_match_all(":$full:i", $pagehash["content"][$j], $dummy)) {
+            $matched = preg_replace(":$full:i",
 				"${FieldSeparator}OT\\0${FieldSeparator}CT",
                                 $pagehash["content"][$j]);
 	    $matched = htmlspecialchars($matched);

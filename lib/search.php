@@ -1,6 +1,6 @@
 <?php
    // Title search: returns pages having a name matching the search term
-   rcs_id('$Id: search.php,v 1.3 2001-01-02 00:10:28 wainstead Exp $');
+   rcs_id('$Id: search.php,v 1.3.2.1 2001-11-07 20:30:47 dairiki Exp $');
 
    if(get_magic_quotes_gpc())
       $search = stripslashes($search);
@@ -10,8 +10,8 @@
 		     htmlspecialchars($search))
 	   . "</B></P>\n";
 
-   // quote regexp chars
-   $search = preg_quote($search);
+   // quote regexp chars (backends should do this...) 
+   //$search = preg_quote($search);
 
    // search matching pages
    $query = InitTitleSearch($dbi, $search);

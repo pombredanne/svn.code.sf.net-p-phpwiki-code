@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: msql.php,v 1.6.2.3 2001-11-07 18:58:14 dairiki Exp $');
+<?php rcs_id('$Id: msql.php,v 1.6.2.4 2001-11-07 20:30:47 dairiki Exp $');
 
    /*
       Database functions:
@@ -344,6 +344,7 @@
 
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
+      $search = preg_replace('/(?=[%_\\\\])/', "\\", $search);
       $search = addslashes($search);
       $query = "select pagename from $dbi[table] " .
                "where pagename clike '%$search%' order by pagename";
@@ -368,6 +369,7 @@
    function InitFullSearch($dbi, $search) {
       // select unique page names from wikipages, and then 
       // retrieve all pages that come back.
+      $search = preg_replace('/(?=[%_\\\\])/', "\\", $search);
       $search = addslashes($search);
       $query = "select distinct pagename from $dbi[page_table] " .
                "where line clike '%$search%' " .

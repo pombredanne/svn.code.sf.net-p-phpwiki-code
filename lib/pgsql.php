@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: pgsql.php,v 1.4.2.4 2001-11-07 18:58:14 dairiki Exp $');
+<?php rcs_id('$Id: pgsql.php,v 1.4.2.5 2001-11-07 20:30:47 dairiki Exp $');
 
    /*
       Database functions:
@@ -235,6 +235,7 @@
       $search_counter = 0;
 
       $search = strtolower($search);
+      $search = preg_replace('/(?=[%_\\\\])/', "\\", $search);
       $search = addslashes($search);
       $query = "select pagename from $dbi[table] where lower(pagename) " .
                "like '%$search%' order by pagename";
@@ -262,7 +263,7 @@
       global $search_counter;
       $search_counter = 0;
       $search = strtolower($search);
-      $search = addslashes($search);
+      $search = preg_replace('/(?=[%_\\\\])/', "\\", $search);
       $search = addslashes($search);
       $query = "select pagename,content from $dbi[table] " .
                "where lower(content) like '%$search%'";

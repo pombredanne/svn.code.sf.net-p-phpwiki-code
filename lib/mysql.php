@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.10.2.3 2001-11-07 18:54:07 dairiki Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.10.2.4 2001-11-07 20:30:47 dairiki Exp $');
 
    /*
       Database functions:
@@ -217,7 +217,10 @@
 
    function MakeSQLSearchClause($search, $column)
    {
-      $search = addslashes(preg_replace("/\s+/", " ", $search));
+      $search = preg_replace("/\s+/", " ", trim($search));
+      $search = preg_replace('/(?=[%_\\\\])/', "\\", $search);
+      $search = addslashes($search);
+      
       $term = strtok($search, ' ');
       $clause = '';
       while($term) {
@@ -231,6 +234,7 @@
 	 if ($term = strtok(' '))
 	    $clause .= 'AND ';
       }
+      
       return $clause;
    }
 

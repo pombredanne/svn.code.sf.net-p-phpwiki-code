@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.5 2001-11-06 20:43:45 dairiki Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.6 2001-11-07 20:30:47 dairiki Exp $');
    /*
       Database functions:
 
@@ -145,7 +145,7 @@
 
    // setup for title-search
    function InitTitleSearch($dbi, $search) { 
-      $pos['search'] = $search;
+      $pos['search'] = '=' . preg_quote($search) . '=i';
       $pos['data'] = GetAllWikiPageNames($dbi['wiki']);
 
       return $pos;
@@ -154,7 +154,7 @@
    // iterating through database
    function TitleSearchNextMatch($dbi, &$pos) { 
       while (list($key, $page) = each($pos['data'])) {
-         if (eregi($pos['search'], $page)) {
+         if (preg_match($pos['search'], $page)) {
             return $page;
          }
       }
@@ -171,10 +171,10 @@
       global $WikiPageStore;
       while (list($key, $page) = each($pos['data'])) {
          $pagedata = RetrievePage($dbi, $page, $WikiPageStore);
-         if (eregi($pos['search'], serialize($pagedata))) {
+         if (preg_match($pos['search'], serialize($pagedata))) {
 	        return $pagedata;
-		 }
-	  }
+         }
+      }
       return 0;
    }
 
