@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.9 2002-01-17 23:58:35 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.10 2002-01-18 22:19:38 carstenklapp Exp $
  *
  * This PhpWiki theme is experimental and will likely not appear as
  * part of any release. ("accessories not included"--download
@@ -183,11 +183,16 @@ img.rssicon {
         vertical-align : top;
 }
 
-/* this doesn't work! */
+/* Not all browsers support this, but it's a cool trick when is!
+ * It maybe better to do this with a new wiki Theme element.
+ * yes=OmniWeb 4.1sp28; No=IE5.1Mac, Mozilla0.97Mac, iCAB2.6Mac.
+ * For now this is also the same image as the thank-you signature.
+ */
 .wikitext hr {
-        background-image :  url("images/lights.gif");
+    background-image :   url("images/lights.gif");
+    background-repeat:   no-repeat;
+    background-position: center;
 }
-/* this image also used for the thank-you signature */
 
 /****************************************************************
  **
