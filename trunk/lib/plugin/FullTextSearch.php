@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.17 2004-02-26 04:03:39 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.18 2004-02-26 04:24:03 rurban Exp $');
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 require_once('lib/TextSearchQuery.php');
+require_once("lib/PageList.php");
 
 /**
  */
@@ -37,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -63,8 +64,17 @@ extends WikiPlugin
         $count = 0;
         $found = 0;
 
-        $list = $quiet ? HTML::ul() : HTML::dl();
+        if ($quiet) { // see how easy it is with PageList...
+            $list = new PageList(false,$exclude,$args);
+            while ($page = $pages->next() and (!$limit or ($count < $limit))) {
+                $list->addPage( $page );
+            }
+            return $list;
+        }
 
+        // Todo: we should better define a new PageListDL class for dl/dt/dd lists
+        // But the new column types must have a callback then. (showhits)
+        $list = HTML::dl();
         if (!$limit or !is_int($limit))
             $limit = 0;
         // expand all page wildcards to a list of pages which should be ignored
@@ -73,24 +83,17 @@ extends WikiPlugin
             $name = $page->getName();
             if ($exclude and in_array($name,$exclude)) continue;
             $count++;
-            if ($quiet)
-                $list->pushContent(HTML::li(WikiLink($name)));
-            else {
-                $list->pushContent(HTML::dt(WikiLink($name)));
-                if ($hilight_re)
-                    $list->pushContent($this->showhits($page, $hilight_re));
-            }
+            $list->pushContent(HTML::dt(WikiLink($name)));
+            if ($hilight_re)
+                $list->pushContent($this->showhits($page, $hilight_re));
         }
-        if (!$quiet) {
-            if ($count >= $limit)
-                $list->pushContent(HTML::dd(fmt("only %d pages displayed",$limit)));
-            if (!$list->getContent())
-                $list->pushContent(HTML::dd(_("<no matches>")));
-        }
+        if ($count >= $limit)
+            $list->pushContent(HTML::dd(fmt("only %d pages displayed",$limit)));
+        if (!$list->getContent())
+            $list->pushContent(HTML::dd(_("<no matches>")));
 
         if ($noheader)
             return $list;
-
         return HTML(HTML::p(fmt("Full text search results for '%s'", $s)),
                     $list);
     }
@@ -119,6 +122,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/02/26 04:03:39  rurban
+// added quiet, limit and exclude to FullTextSearch,
+// fixed explodePageList with previously unloaded PageList
+//
 // Revision 1.16  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
