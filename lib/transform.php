@@ -1,4 +1,4 @@
-<!-- $Id: transform.php,v 1.2 2000-10-11 14:08:56 ahollosi Exp $ -->
+<!-- $Id: transform.php,v 1.3 2000-10-23 16:52:05 ahollosi Exp $ -->
 <?php
    // expects $pagehash and $html to be set
 
@@ -199,7 +199,7 @@ your web server it is highly advised that you do not allow this.
          }
       }
 
-      // HTML modes: pre, unordered/ordered lists, term/def
+      // HTML modes: pre, unordered/ordered lists, term/def  (using TAB)
       if (preg_match("/(^\t+)(.*?)(:\t)(.*$)/", $tmpline, $matches)) {
          // this is a dictionary list item
          $numtabs = strlen($matches[1]);
@@ -209,7 +209,6 @@ your web server it is highly advised that you do not allow this.
             $tmpline = "<dt>" . $matches[2];
 	 $tmpline .= "<dd>" . $matches[4];
 
-      // oops, the \d needed to be \d+, thanks alister@minotaur.nu
       } elseif (preg_match("/(^\t+)(\*|\d+|#)/", $tmpline, $matches)) {
          // this is part of a list
          $numtabs = strlen($matches[1]);
@@ -223,28 +222,39 @@ your web server it is highly advised that you do not allow this.
          $html .= "<li>";
 
       // tabless markup for unordered and ordered lists
+      // list types can be mixed, so we only look at the last
+      // character. Changes e.g. from "**#*" to "###*" go unnoticed.
+      // and wouldn't make a difference to the HTML layout anyway.
 
-      // first, unordered lists: one or more astericks at the
-      // start of a line indicate a <UL> block
-
-      } elseif (preg_match("/^([*]+)/", $tmpline, $matches)) {
+      // unordered lists <UL>: "*"
+      } elseif (preg_match("/^([#*]*\*)[^#]/", $tmpline, $matches)) {
          // this is part of an unordered list
          $numtabs = strlen($matches[1]);
          $listtag = "ul";
 
-         $tmpline = preg_replace("/^([*]+)/", "", $tmpline);
+         $tmpline = preg_replace("/^([#*]*\*)/", "", $tmpline);
          $html .= SetHTMLOutputMode($listtag, SINGLE_DEPTH, $numtabs);
          $html .= "<li>";
 
-      // second, ordered lists <OL>
-      } elseif (preg_match("/^([#]+)/", $tmpline, $matches)) {
+      // ordered lists <OL>: "#"
+      } elseif (preg_match("/^([#*]*\#)/", $tmpline, $matches)) {
          // this is part of an ordered list
          $numtabs = strlen($matches[1]);
          $listtag = "ol";
 
-         $tmpline = preg_replace("/^([#]+)/", "", $tmpline);
+         $tmpline = preg_replace("/^([#*]*\#)/", "", $tmpline);
          $html .= SetHTMLOutputMode($listtag, SINGLE_DEPTH, $numtabs);
          $html .= "<li>";
+
+      // definition lists <DL>: ";text:text"
+      } elseif (preg_match("/(^;+)(.*?):(.*$)/", $tmpline, $matches)) {
+         // this is a dictionary list item
+         $numtabs = strlen($matches[1]);
+         $html .= SetHTMLOutputMode("dl", SINGLE_DEPTH, $numtabs);
+	 $tmpline = '';
+	 if(trim($matches[2]))
+            $tmpline = "<dt>" . $matches[2];
+	 $tmpline .= "<dd>" . $matches[3];
 
 
       } elseif (preg_match("/^\s+/", $tmpline)) {
