@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiPoll.php,v 1.2 2004-02-24 03:21:46 rurban Exp $');
+rcs_id('$Id: WikiPoll.php,v 1.3 2004-02-24 03:54:46 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -23,15 +23,21 @@ rcs_id('$Id: WikiPoll.php,v 1.2 2004-02-24 03:21:46 rurban Exp $');
  * This plugin provides configurable polls.
  *
  * Usage:
- * <?plugin WikiPoll
- *          question[1]="Do you like PhpWiki?"
- *            answer[1][1]="Yes" answer[1][2]="Do not know" answer[1][3]="No"
- *          question[2]="Did you install other wiki engines before?"
- *            answer[2][1]="Yes" answer[2][2]="No"
- *          question[3]="What wiki engine do you like most?"
- *            answer[3][1]="c2Wiki" answer[3][2]="MoinMoin" answer[3][3]="PhpWiki"
- *            answer[3][4]="usemod" answer[3][5]="Twiki" answer[3][6]="Other"
- * ?>
+<?plugin WikiPoll require_all=0 require_least=2
+           question[1]="Do you like PhpWiki?"
+             answer[1][1]="Yes" answer[1][2]="Do not know" answer[1][3]="No"
+           question[2]="Do you have PhpWiki installed by your own?"
+             answer[2][1]="Yes" answer[2][2]="No"
+           question[3]="Did you install any other wiki engine?"
+             answer[3][1]="Yes" answer[3][2]="No"
+           question[4]="What wiki engine do you like most?"
+             answer[4][1]="c2Wiki" answer[4][2]="MoinMoin" answer[4][3]="PhpWiki"
+             answer[4][4]="usemod" answer[4][5]="Twiki" answer[4][5]="guiki"
+             answer[4][6]="Other"
+           question[5]="Which PhpWiki version do you use?"
+             answer[5][1]="1.2.x" answer[5][2]="1.3. 1-2" answer[5][3]="1.3.3-4"
+             answer[5][4]="1.3.5-8"
+?>
  *
  * Administration:
  * <?plugin WikiPoll page=PhpWikiPoll admin=1 ?>
@@ -39,6 +45,7 @@ rcs_id('$Id: WikiPoll.php,v 1.2 2004-02-24 03:21:46 rurban Exp $');
  *
  * TODO:
  *     admin page (view and reset statistics)
+ *     for now only radio, support checkboxes (multiple selections) also?
  *
  * Author: ReiniUrban
  */
@@ -58,13 +65,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
         return array('page'        => '[pagename]',
                      'admin'       => false,
-                     'require_all' => 1, // if all questions must be answered
+                     'require_all' => 1,   // 1 if all questions must be answered
+                     'require_least' => 0, // how many at least
                     );
     }
 
@@ -146,7 +154,8 @@ extends WikiPlugin
         $disable_submit = false;
         if (isset($poll['ip'][$ip]) and ((time() - $poll['ip'][$ip]) < 20*60)) {
             //view at least the result or disable the Go button
-            $html = HTML(HTML::strong(_("Sorry! You must wait at least 20 minutes until you can vote again!")));
+            $html = HTML(HTML::strong(
+                        _("Sorry! You must wait at least 20 minutes until you can vote again!")));
             $html->pushContent($this->doPoll(&$page, &$request, $request->getArg('answer'),true));
             return $html;
         }
@@ -162,14 +171,17 @@ extends WikiPlugin
 
         if ($request->isPost()) {
             // checkme: check if all answers are answered
-            if ($request->getArg('answer') and 
-                  ($args['require_all'] and
-                   count($request->getArg('answer')) == count($question))) {
+            if ($request->getArg('answer') and (
+                 ($args['require_all'] and
+                  count($request->getArg('answer')) == count($question))
+                 or 
+                 ($args['require_least'] and
+                  count($request->getArg('answer')) >= $args['require_least']))) {
                 $page->set("poll",$poll);
                 // update statistics and present them the user
                 return $this->doPoll(&$page, &$request, $request->getArg('answer'));
             } else {
-            	$html->pushContent(HTML::p(HTML::strong(_("You must answer all questions!"))));
+                $html->pushContent(HTML::p(HTML::strong(_("Not enough questions answered!"))));
             }
         }
        
@@ -178,7 +190,7 @@ extends WikiPlugin
             if (!isset($question[$i])) break;
             $q = $question[$i]; 
             if (!isset($answer[$i]))
-            	trigger_error(fmt("missing %s for %s","answer"."[$i]","question"."[$i]"),
+            	trigger_error(fmt("Missing %s for %s","answer"."[$i]","question"."[$i]"),
             	              E_USER_ERROR);
             $a = $answer[$i];
             if (! is_array($a)) {
@@ -211,7 +223,8 @@ extends WikiPlugin
                                   'name' => "reset",
                                   'value' => _("Reset")))));
         else 
-             $html->pushContent(HTML::p(),HTML::strong(_("Sorry! You must wait at least 20 minutes until you can vote again!")));
+             $html->pushContent(HTML::p(),HTML::strong(
+                 _("Sorry! You must wait at least 20 minutes until you can vote again!")));
         return $html;
     }
 
@@ -226,7 +239,7 @@ extends WikiPlugin
             @$poll['data']['all'][$i]++;
             $q = $question[$i]; 
             if (!isset($answer[$i]))
-            	trigger_error(fmt("missing %s for %s","answer"."[$i]","question"."[$i]"),
+            	trigger_error(fmt("Missing %s for %s","answer"."[$i]","question"."[$i]"),
             	              E_USER_ERROR);
             if (!$readonly)
                 $page->set('poll',$poll);
@@ -299,6 +312,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/02/24 03:21:46  rurban
+// enabled require_all check in WikiPoll
+// better handling of <20 min visiting client: display results so far
+//
 //
 
 // For emacs users
