@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.36 2004-07-03 16:51:06 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.37 2004-07-04 10:24:43 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -760,6 +760,7 @@ extends WikiDB_backend
     function _update_recent_table($pageid = false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
+        extract($this->_expressions);
 
         $pageid = (int)$pageid;
 
@@ -1136,6 +1137,12 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2004/07/03 16:51:06  rurban
+// optional DBADMIN_USER:DBADMIN_PASSWD for action=upgrade (if no ALTER permission)
+// added atomic mysql REPLACE for PearDB as in ADODB
+// fixed _lock_tables typo links => link
+// fixes unserialize ADODB bug in line 180
+//
 // Revision 1.35  2004/06/28 14:45:12  rurban
 // fix adodb_sqlite to have the same dsn syntax as pear, use pconnect if requested
 //
