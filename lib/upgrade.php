@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.16 2004-06-16 10:38:58 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.17 2004-06-17 11:31:50 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -109,11 +109,19 @@ function CheckActionPageUpdate(&$request) {
     $path = FindFile('pgsrc');
     $pgsrc = new fileSet($path);
     // most actionpages have the same name as the plugin
+    $loc_path = FindLocalizedFile('pgsrc');
     foreach ($pgsrc->getFiles() as $filename) {
         if (substr($filename,-1,1) == '~') continue;
         $pagename = urldecode($filename);
         if (isActionPage($filename)) {
-            doPgsrcUpdate($request, $pagename, $path, $filename);
+            $translation = gettext($pagename);
+            if ($translation == $pagename)
+                doPgsrcUpdate($request, $pagename, $path, $filename);
+            elseif (FindLocalizedFile('pgsrc/'.urlencode($translation),1))
+                doPgsrcUpdate($request, $translation, $loc_path, 
+                              urlencode($translation));
+            else
+                doPgsrcUpdate($request, $pagename, $path, $filename);
         }
     }
 }
@@ -405,6 +413,15 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.16  2004/06/16 10:38:58  rurban
+ Disallow refernces in calls if the declaration is a reference
+ ("allow_call_time_pass_reference clean").
+   PhpWiki is now allow_call_time_pass_reference = Off clean,
+   but several external libraries may not.
+   In detail these libs look to be affected (not tested):
+   * Pear_DB odbc
+   * adodb oracle
+
  Revision 1.15  2004/06/07 19:50:40  rurban
  add owner field to mimified dump
 
