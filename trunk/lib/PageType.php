@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.24 2004-03-26 00:22:37 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.25 2004-03-26 01:04:16 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -431,9 +431,8 @@ class PageFormatter_pdf extends PageFormatter
         $template = new Template('pdf', $request, $tokens);
         $pdf->ConvertFromHTML($template);
 
-        // specify a filename and bool for download. 
-        // if empty it must be the first template used, no headers already sent.
-        $pdf->Output($pagename.".pdf",/*download*/ true);
+        // specify filename, destination
+        $pdf->Output($pagename.".pdf",'I'); // I for stdin or D for download
 
         // Output([string name [, string dest]])
         return $pdf;
