@@ -1,5 +1,5 @@
-<?php
-rcs_id('$Id: diff.php,v 1.40 2002-10-31 03:28:30 carstenklapp Exp $');
+<?php // -*-php-*-
+rcs_id('$Id: diff.php,v 1.41 2003-01-08 02:23:02 carstenklapp Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -23,21 +23,22 @@ class _HWLDF_WordAccumulator {
         if ($this->_group !== false) {
             if (!$this->_line)
                 $this->_line = HTML();
-            $this->_line->pushContent( $this->_tag
-                                       ? new HtmlElement($this->_tag, $this->_group)
-                                       : $this->_group );
+            $this->_line->pushContent($this->_tag
+                                      ? new HtmlElement($this->_tag,
+                                                        $this->_group)
+                                      : $this->_group);
         }
         $this->_group = '';
         $this->_tag = $new_tag;
     }
-    
+
     function _flushLine ($new_tag) {
         $this->_flushGroup($new_tag);
         if ($this->_line)
             $this->_lines[] = $this->_line;
         $this->_line = HTML();
     }
-                
+
     function addWords ($words, $tag = '') {
         if ($tag != $this->_tag)
             $this->_flushGroup($tag);
@@ -68,7 +69,7 @@ class WordLevelDiff extends MappedDiff
         list ($orig_words, $orig_stripped) = $this->_split($orig_lines);
         list ($final_words, $final_stripped) = $this->_split($final_lines);
 
-        
+
         $this->MappedDiff($orig_words, $final_words,
                           $orig_stripped, $final_stripped);
     }
@@ -85,7 +86,7 @@ class WordLevelDiff extends MappedDiff
 
     function orig () {
         $orig = new _HWLDF_WordAccumulator;
-        
+
         foreach ($this->edits as $edit) {
             if ($edit->type == 'copy')
                 $orig->addWords($edit->orig);
@@ -97,7 +98,7 @@ class WordLevelDiff extends MappedDiff
 
     function final () {
         $final = new _HWLDF_WordAccumulator;
-        
+
         foreach ($this->edits as $edit) {
             if ($edit->type == 'copy')
                 $final->addWords($edit->final);
@@ -132,7 +133,7 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
         unset($this->_top);
         return $val;
     }
-    
+
     function _start_block($header) {
         $this->_block = HTML::div(array('class' => 'block'),
                                   HTML::tt($header));
@@ -149,7 +150,7 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
         foreach ($lines as $line) {
             if ($elem)
                 $line = new HtmlElement($elem, $line);
-            
+
             $this->_block->pushContent(HTML::div(array('class' => $class),
                                                  HTML::tt(array('class' => 'prefix'),
                                                           $prefix),
@@ -198,7 +199,7 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
                                         'cellpadding' => 1,
                                         'border' => 1));
     }
-    
+
     function _start_block($header) {
         $this->_block = HTML::table(array('width' => '100%',
                                           'class' => 'block',
@@ -217,13 +218,14 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
     function _lines($lines, $class, $prefix = false, $elem = false) {
         if (!$prefix)
             $prefix = HTML::raw('&nbsp;');
-        $prefix = HTML::td(array('class' => 'prefix', 'width' => "1%"), $prefix);
+        $prefix = HTML::td(array('class' => 'prefix',
+                                 'width' => "1%"), $prefix);
         foreach ($lines as $line) {
             if (! trim($line))
                 $line = HTML::raw('&nbsp;');
             elseif ($elem)
                 $line = new HtmlElement($elem, $line);
-	    $this->_block->pushContent(HTML::tr(array('valign' => 'top'), 
+            $this->_block->pushContent(HTML::tr(array('valign' => 'top'),
                                                 $prefix,
                                                 HTML::td(array('class' => $class),
                                                          $line)));
@@ -231,7 +233,7 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
     }
 }
 
-    
+
 /////////////////////////////////////////////////////////////////
 
 function PageInfoRow ($label, $rev, &$request)
@@ -243,12 +245,14 @@ function PageInfoRow ($label, $rev, &$request)
         $author = $rev->get('author');
         $dbi = $request->getDbh();
 
-        $iswikipage = (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author));
+        $iswikipage = (preg_match("/^$WikiNameRegexp\$/", $author)
+                       && $dbi->isWikiPage($author));
         $authorlink = $iswikipage ? WikiLink($author) : $author;
 
         $linked_version = WikiLink($rev, 'existing', $rev->getVersion());
         $row->pushContent(HTML::td(fmt("version %s", $linked_version)),
-                          HTML::td($Theme->getLastModifiedMessage($rev, false)),
+                          HTML::td($Theme->getLastModifiedMessage($rev,
+                                                                  false)),
                           HTML::td(fmt("by %s", $authorlink)));
     } else {
         $row->pushContent(HTML::td(array('colspan' => '3'), _("None")));
@@ -267,9 +271,19 @@ function showDiff (&$request) {
         $version = $request->getArg('version');
         $previous = $request->getArg('previous');
     }
-    
+
+    // abort if page doesn't exist
+    $dbi = $request->getDbh();
+    if (! $dbi->isWikiPage($pagename)) {
+        $html = HTML(HTML::p(fmt("I'm sorry, there is no such page as %s.",
+                                WikiLink($pagename, 'unknown'))));
+        include_once('lib/Template.php');
+        GeneratePage($html, sprintf(_("Diff: %s"), $pagename), false);
+        return; //early return
+    }
+
     $page = $request->getPage();
-    
+
     if ($version) {
         if (!($new = $page->getRevision($version)))
             NoSuchRevision($request, $page, $version);
@@ -338,20 +352,23 @@ function showDiff (&$request) {
         $otherdiffs->pushContent(Button($args, $label[$other]));
     }
     $html->pushContent($otherdiffs);
-        
-            
+
+
     if ($old and $old->getVersion() == 0)
         $old = false;
-    
-    $html->pushContent(HTML::Table(PageInfoRow(_("Newer page:"), $new, $request),
-                                   PageInfoRow(_("Older page:"), $old, $request)));
-    
+
+    $html->pushContent(HTML::Table(PageInfoRow(_("Newer page:"), $new,
+                                               $request),
+                                   PageInfoRow(_("Older page:"), $old,
+                                               $request)));
+
     if ($new && $old) {
         $diff = new Diff($old->getContent(), $new->getContent());
-        
+
         if ($diff->isEmpty()) {
             $html->pushContent(HTML::hr(),
-                               HTML::p('[', _("Versions are identical"), ']'));
+                               HTML::p('[', _("Versions are identical"),
+                                       ']'));
         }
         else {
             // New CSS formatted unified diffs (ugly in NS4).
@@ -366,12 +383,14 @@ function showDiff (&$request) {
     include_once('lib/Template.php');
     GeneratePage($html, sprintf(_("Diff: %s"), $pagename), $new);
 }
-  
+
+// $Log: not supported by cvs2svn $
+
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
