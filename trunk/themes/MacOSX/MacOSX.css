@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.12 2002-01-19 09:52:31 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.13 2002-01-20 04:04:07 carstenklapp Exp $
 
   Classes:
 
@@ -128,7 +128,7 @@ p.error {
  */
 /* Wiki Links */
 a.wiki { text-decoration: none; }
-.wiki  { font-weight: bold; }
+.wiki  { font-weight: bold; color:#1d42be; } /*blue*/
 /* This is obscene in NS4
 b .wiki, STRONG .wiki { font-size: larger; }
 */
@@ -138,7 +138,7 @@ b .wiki, STRONG .wiki { font-size: larger; }
 { text-decoration: none; }
 
 .wikiunknown, .named-wikiunknown
-{color: #600; }
+{color: #555; }
 
 /* Interwiki links */
 a.interwiki { text-decoration: none; }
