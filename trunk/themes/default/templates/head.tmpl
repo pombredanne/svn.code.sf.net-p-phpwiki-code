@@ -1,8 +1,12 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.18 2004-06-14 11:26:52 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.19 2004-06-23 10:33:11 rurban Exp $');
 ?>
 <head>
+<?php if (strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml')) { ?>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=<?=CHARSET?>" />
+<?php } else { ?>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
+<?php } ?>
 <meta http-equiv="content-language" content="<?=$GLOBALS['LANG']?>" />
 <?php $ROBOTS_CONTENT = $ROBOTS_META ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
@@ -110,6 +114,9 @@ _("UserPreferences"))?>" />
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/06/14 11:26:52  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+//
 // Revision 1.17  2004/06/04 20:34:11  rurban
 // Put several _("") into new lines if inside attr="", so that xgettext
 // can pick it up. (Suggested by Pierrick Meignen)
