@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.11 2002-01-22 06:15:52 carstenklapp Exp $');
+rcs_id('$Id: LikePages.php,v 1.12 2002-01-27 04:23:26 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -27,7 +27,7 @@ extends WikiPlugin
                      'info'     => false
                      );
     }
-    // info arg now allows multiple columns info=mtime,hits,summary,author,locked,minor
+    // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor
 
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);

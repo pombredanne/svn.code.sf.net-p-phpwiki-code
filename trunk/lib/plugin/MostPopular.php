@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.15 2002-01-22 06:15:52 carstenklapp Exp $');
+rcs_id('$Id: MostPopular.php,v 1.16 2002-01-27 04:23:26 carstenklapp Exp $');
 /**
  */
 
@@ -22,7 +22,7 @@ extends WikiPlugin
                      'info'     => false
                     );
     }
-    // info arg now allows multiple columns info=mtime,hits,summary,author,locked,minor
+    // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));

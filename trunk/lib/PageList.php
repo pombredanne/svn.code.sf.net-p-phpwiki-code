@@ -1,9 +1,9 @@
-<?php rcs_id('$Id: PageList.php,v 1.25 2002-01-27 04:19:28 dairiki Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.26 2002-01-27 04:23:26 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
  *
- * BackLinks, LikePages, Mostpopular, TitleSearch
+ * AllPages, BackLinks, LikePages, Mostpopular, TitleSearch
  *
  * It also allows dynamic expansion of those plugins to include more
  * columns in their output.
@@ -14,12 +14,10 @@
  * 'mtime'   _("Last Modified")
  * 'hits'    _("Hits")
  * 'summary' _("Last Summary")
+ * 'Version' _("Version")),
  * 'author'  _("Last Author")),
  * 'locked'  _("Locked"), _("locked")
  * 'minor'   _("Minor Edit"), _("minor")
- *
- *
- * FIXME?: Make caption work properly with new HtmlElement
  *
  * FIXME: In this refactoring I have un-implemented _ctime, _cauthor, and
  * number-of-revision.  Note the _ctime and _cauthor as they were implemented
@@ -166,6 +164,7 @@ class PageList {
      * <li>mtime
      * <li>hits
      * <li>summary
+     * <li>version
      * <li>author
      * <li>locked
      * <li>minor
