@@ -1,9 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: AppendText.php,v 1.1 2004-11-24 09:25:35 rurban Exp $');
+rcs_id('$Id: AppendText.php,v 1.2 2004-11-25 08:29:43 rurban Exp $');
 /*
-Copyright 2004 Pascal Giard (QC/EMC)
+Copyright 2004 Pascal Giard <evilynux@gmail.com>
 
-This file is not (yet) part of PhpWiki.
+This file is part of PhpWiki.
 
 PhpWiki is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,8 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 /**
- * Append text to an existing page
- * TODO: support for lbound and hbound.
+ * Append text to an existing page.
  */
 class WikiPlugin_AppendText
 extends WikiPlugin
@@ -37,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -46,6 +45,11 @@ extends WikiPlugin
                      'before'   => '',  // Add before (ignores after if defined)
                      'after'    => '',  // Add after line beginning with this
                      );
+    }
+
+    function _fallback($addtext, $oldtext, $notfound, &$message) {
+        $message->pushContent(sprintf(_("%s not found. Appending at the end.\n"), $notfound));
+        return $oldtext . "\n" . $addtext;
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -72,33 +76,33 @@ extends WikiPlugin
         $oldtext = $current->getPackedContent();
         $text = $args['text'];
 
+        // If a "before" or "after" is specified but not found, we simply append text to the end.
         if (!empty($args['before'])) {
-            $before = preg_quote($args['before']);
-            if (preg_match("/\n${before}/", $oldtext)) {
-                $newtext = preg_replace("/(\n${before})/",
-                                        "\n${text}\\1",
-                                        $oldtext);
-            } else {
-                $message->pushContent(sprintf(_("%s not found. Appending at the end.\n",
-                                                $args['before'])));
-                $newtext = $oldtext . "\n" . $text;
-            }
+            $before = preg_quote($args['before'], "/");
+            // Insert before
+            $newtext =
+                ( preg_match("/\n${before}/", $oldtext) ) ?
+                preg_replace("/(\n${before})/",
+                             "\n" .  preg_quote($text, "/") . "\\1",
+                             $oldtext) :
+                $this->_fallback($text, $oldtext, $args['before'], &$message);
+
         } elseif (!empty($args['after'])) {
-            $after = preg_quote($args['after']);
-            if (preg_match("/\n${after}/", $oldtext)) {
-                $newtext = preg_replace("/(\n${after})/",
-                                        "\\1\n${text}",
-                                        $oldtext);
-            } else {
-                $message->pushContent(sprintf(_("%s not found. Appending at the end.\n",
-                                                $args['after'])));
-                $newtext = $oldtext . "\n" . $text;
-            }
+            // Insert after
+            $after = preg_quote($args['after'], "/");
+            $newtext = 
+                ( preg_match("/\n${after}/", $oldtext) ) ?
+                preg_replace("/(\n${after})/",
+                             "\\1\n" .  preg_quote($text, "/"),
+                             $oldtext) :
+                $this->_fallback($text, $oldtext, $args['after'], &$message);
+
         } else {
             // Append at the end
             $newtext = $oldtext .
                 "\n" . $text;
         }
+
         require_once("lib/loadsave.php");
         $meta = $current->_data;
         $meta['summary'] = sprintf(_("AppendText to %s"), $pagename);
@@ -113,6 +117,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/11/24 11:22:30  Pascal Giard <evilynux@gmail.com>
+// * Integrated rurban's modifications.
+//
+// Revision 1.1  2004/11/24 09:25:35  rurban
+// simple plugin by Pascal Giard (QC/EMC)
+//
 // Revision 1.0  2004/11/23 09:43:35  epasgia
 // * Initial version.
 //
