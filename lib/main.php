@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.15 2001-11-08 16:02:40 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.16 2001-11-09 17:58:09 dairiki Exp $');
 
 include "lib/config.php";
 include "lib/stdlib.php";
@@ -112,13 +112,17 @@ function main ($request) {
         break;
 
     case 'search':
-        $request->compress_output();
+        // This is obsolete: reformulate URL and redirect.
+        // FIXME: this whole section should probably be deleted.
         if ($request->getArg('searchtype') == 'full') {
-            include "lib/fullsearch.php";
+            $search_page = gettext('FullTextSearch');
         }
         else {
-            include "lib/search.php";
+            $search_page = gettext('TitleSearch');
         }
+        $request->redirect(WikiURL($search_page,
+                                   array('s' => $request->getArg('searchterm')),
+                                   'absolute_url'));
         break;
       
     case 'save':
