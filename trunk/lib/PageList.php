@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.86 2004-06-13 15:51:37 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.87 2004-06-13 16:02:12 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -458,6 +458,11 @@ class PageList {
         return array(//Currently supported options:
                      'info'              => 'pagename',
                      'exclude'           => '',          // also wildcards and comma-seperated lists
+
+                     /* select pages by meta-data: */
+                     'author'   => false, // current user by []
+                     'owner'    => false, // current user by []
+                     'creator'  => false, // current user by []
 
                      // for the sort buttons in <th>
                      'sortby'            => '',   // same as for WikiDB::getAllPages
@@ -1010,6 +1015,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.86  2004/06/13 15:51:37  rurban
+// Support pagelist filter for current author,owner,creator by []
+//
 // Revision 1.85  2004/06/13 15:33:19  rurban
 // new support for arguments owner, author, creator in most relevant
 // PageList plugins. in WikiAdmin* via preSelectS()
