@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.81 2005-01-17 08:53:09 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.82 2005-01-18 08:55:51 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -576,8 +576,8 @@ extends WikiDB_backend
         $row = $dbh->GetRow("SELECT IF($want.pagename,1,0) as result"
                                 . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
                                 . " WHERE linkfrom=linker.id AND linkto=linkee.id"
-                                . " AND $have.pagename=$qpagename"
-                                . " AND $want.pagename=$qlink"
+                                . " AND $have.pagename='$qpagename'"
+                                . " AND $want.pagename='$qlink'"
                                 . "LIMIT 1");
         return $row['result'];
     }
@@ -1218,6 +1218,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.81  2005/01/17 08:53:09  rurban
+// pagedata fix by Charles Corrigan
+//
 // Revision 1.80  2004/12/22 18:33:31  rurban
 // fix page _id_cache logic for _get_pageid create_if_missing
 //
