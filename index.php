@@ -80,7 +80,7 @@ if (!empty($include_path)) ini_set('include_path', $include_path);
 
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.94 2002-09-09 13:30:41 rurban Exp $');
+rcs_id('$Id: index.php,v 1.95 2002-09-09 15:26:08 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -183,6 +183,9 @@ $DBParams = array(
    //'dsn' => 'mysql://guest@:/var/lib/mysql/mysql.sock/test',
    //'dsn' => 'mysql://guest@localhost/test',
    //'dsn' => 'pgsql://localhost/test',
+
+   // experimental
+   'db_session_table'   => 'session',
    
    // Used by all DB types:
 
@@ -205,6 +208,8 @@ $DBParams = array(
    'timeout'   => 20,
    //'timeout' => 5
 );
+
+//define('USE_DB_SESSION',true);
 
 /////////////////////////////////////////////////////////////////////
 //

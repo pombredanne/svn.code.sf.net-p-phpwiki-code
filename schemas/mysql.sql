@@ -1,4 +1,4 @@
--- $Id: mysql.sql,v 1.2 2001-12-04 23:49:33 carstenklapp Exp $
+-- $Id: mysql.sql,v 1.3 2002-09-09 15:26:20 rurban Exp $
 
 drop table if exists page;
 CREATE TABLE page (
@@ -45,3 +45,10 @@ CREATE TABLE link (
         INDEX (linkto)
 );
 
+drop table if exists session;
+CREATE TABLE session (
+    sess_id varchar(32) not null default '',
+    sess_data blob not null,
+    sess_date timestamp,
+    PRIMARY KEY (sess_id)
+);
