@@ -1,5 +1,7 @@
-Executing ssh-askpass to query the password...
-1.1.8 
+1.1.8 10/25/00: 
+* Internationalization, with support for Dutch, and an architecture
+  to add more languages easily
+* Term/defintion tags updated to next and use tabless markup
 * MostPopular works for all implementations, except flat files
 * Flat file database support; it's not yet complete but the basic Wiki
   functionality is there, thanks to Ari
@@ -10,7 +12,6 @@ Executing ssh-askpass to query the password...
   memory leak problems for DBM-based Wikis.
 * Numerous bug fixes, as always
 * Some refactoring of the database interface
-* 
 
 1.1.7 07/15/00: A lot was added since the 1.1.6b release. Diffs are
     the handiwork of Jeff Dairiki, though Arno wrote the second
