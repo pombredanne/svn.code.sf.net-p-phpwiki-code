@@ -11,5 +11,5 @@ Content-Transfer-Encoding: binary
 <?plugin TitleSearch?>
 ----
 Search Again:
-<?plugin-form TitleSearch?>
+<?plugin-form TitleSearch auto_redirect=0?>
 <?plugin-form FullTextSearch?>
