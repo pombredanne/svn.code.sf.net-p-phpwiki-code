@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.129 2005-01-08 22:53:50 rurban Exp $');
+rcs_id('$Id: config.php,v 1.130 2005-01-29 20:36:44 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -57,10 +57,13 @@ set_magic_quotes_runtime(0);
  */
 function browserAgent() {
     static $HTTP_USER_AGENT = false;
+    if ($HTTP_USER_AGENT !== false) return $HTTP_USER_AGENT;
     if (!$HTTP_USER_AGENT)
         $HTTP_USER_AGENT = @$GLOBALS['HTTP_SERVER_VARS']['HTTP_USER_AGENT'];
     if (!$HTTP_USER_AGENT) // CGI
-        $HTTP_USER_AGENT = $GLOBALS['HTTP_ENV_VARS']['HTTP_USER_AGENT'];
+        $HTTP_USER_AGENT = @$GLOBALS['HTTP_ENV_VARS']['HTTP_USER_AGENT'];
+    if (!$HTTP_USER_AGENT) // local CGI testing
+        $HTTP_USER_AGENT = 'none';
     return $HTTP_USER_AGENT;
 }
 function browserDetect($match) {
@@ -433,6 +436,21 @@ if (!function_exists('is_a')) {
     }
 }
 
+/**
+ * safe php4 definition for clone.
+ * php5 copies objects by reference, but we need to clone "deep copy" in some places.
+ * (BlockParser)
+ * We need to eval it as workaround for the php5 parser.
+ * See http://www.acko.net/node/54
+ */
+if (!check_php_version(5)) {
+    eval('
+    function clone($object) {
+      return $object;
+    }
+    ');
+}
+
 /** 
  * wordwrap() might crash between 4.1.2 and php-4.3.0RC2, fixed in 4.3.0
  * See http://bugs.php.net/bug.php?id=20927 and 
@@ -506,6 +524,11 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.129  2005/01/08 22:53:50  rurban
+// hardcode list of langs (file access is slow)
+// fix client detection
+// set proper locale on empty locale
+//
 // Revision 1.128  2005/01/04 20:22:46  rurban
 // guess $LANG based on client
 //
