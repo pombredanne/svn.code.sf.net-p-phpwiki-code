@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GoTo.php,v 1.1 2004-04-12 13:16:54 rurban Exp $');
+rcs_id('$Id: GoTo.php,v 1.2 2004-04-12 16:21:01 rurban Exp $');
 
 /**
  *  Display a form with text entry box and 'Go' button.
@@ -64,6 +64,8 @@ extends WikiPlugin
 
     }
 };
+
+// $Log: not supported by cvs2svn $
         
 // Local Variables:
 // mode: php
