@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.6 2002-01-24 00:45:28 dairiki Exp $ -->
+<!-- $Id: login.tmpl,v 1.7 2002-01-24 21:05:28 carstenklapp Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -8,7 +8,7 @@
 <?php } ?>
 
 <?php if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) { ?>
-  <p>You may sign in using any WikiWord as a user id. You do not need to enter a password.   Yadda, yadda. (FIXME:)</p>
+  <p>You may sign in using any WikiWord as a user id. (ÀÖØöøÿßö etc. may be used too). You do not need to enter a password.   Yadda, yadda. (FIXME:)</p>
 <?php } ?>
 
 <form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>" name="login">
