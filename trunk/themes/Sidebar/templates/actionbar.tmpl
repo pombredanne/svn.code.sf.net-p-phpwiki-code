@@ -1,0 +1,28 @@
+<?php // -*-html-*- ?>
+<!-- $Id: actionbar.tmpl,v 1.1 2002-02-01 18:07:50 carstenklapp Exp $ -->
+<?php
+  if (!$page->get('locked') || $user->isAdmin())
+      $EditB = Button("edit",
+                      $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
+  else
+      $EditB = Button("viewsource", _("View Source"));
+
+  $Sep = $Theme->getButtonSeparator();
+?>
+
+<!-- I would like not to have to use these tables, and managed to
+     get this stuff to work more or less correctly using
+     CSSs float:left; and float:right;.  However float:right; seems
+     to cause MSIE4.01/NT to hang. 
+     So, we use tables...  -->
+
+
+    <?= $EditB ?> 
+    <?php if ($user->isAdmin()) { ?>
+     <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
+     <?=$Sep?><?= Button('remove') ?>
+    <?php } ?>
+   <?=$Sep?><?= Button(_("PageHistory")) ?>
+   <?=$Sep?><?= Button("diff") ?> 
+   <?=$Sep?><?= Button(_("DebugInfo")) ?> <!-- For debugging only, really -->
+    <?= Template('signin') ?>
