@@ -25,6 +25,14 @@
    $pagehash["version"]++;
    $pagehash["author"] = $remoteuser;
 
+   // create page header
+   echo WikiHeader("Thanks for $pagename Edits");
+   $enc_url = rawurlencode($pagename);
+   $enc_name = htmlspecialchars($pagename);
+   echo "Thank you for editing " .
+	"<a href=\"$ScriptUrl?$enc_url\">$enc_name</a><br>\n";
+
+
    if (! empty($text)) {
       // patch from Grant Morgan <grant@ryuuguu.com> for
       // magic_quotes_gpc
@@ -39,19 +47,17 @@
    }
 
    for ($i = 1; $i <= NUM_LINKS; $i++) {
-        if (! empty(${'r'.$i}))
+        if (! empty(${'r'.$i})) {
+	   if (preg_match("#^($AllowedProtocols):#", ${'r'.$i}))
               $pagehash['r'.$i] = ${'r'.$i};
+	   else
+	      echo "<P>Link [$i]: <B>unknown protocol</B>" .
+	           " - use one of $AllowedProtocols - link discarded.</P>\n";
+	}
    }
 
    InsertPage($dbi, $pagename, $pagehash);
    UpdateRecentChanges($dbi, $pagename);
-   echo WikiHeader("Thanks for $pagename Edits");
-?>
-Thank you for editing
-<?
-   $enc_name = rawurlencode($pagename);
-   echo "<a href=\"$ScriptUrl?$enc_name\">$pagename</a><br>\n";
-
 ?>
 Your careful attention to detail is much appreciated.<br>
 <img src="<? echo "$SignatureImg"; ?>"><br>
