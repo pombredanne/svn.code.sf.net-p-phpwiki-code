@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id carstenklapp Exp $');
+rcs_id('$Id: AuthorHistory.php,v 1.2 2003-12-08 22:44:58 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -76,7 +76,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     
     function getDefaultArguments() {
@@ -246,6 +246,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2003/12/08 22:43:30  carstenklapp
+// New experimental plugin to provide a different kind of
+// PageHistory. Functional as-is, but is in need of much cleanup and
+// refactoring. Probably very, very slow on wikis with many pages!
+//
 
 // For emacs users
 // Local Variables:
