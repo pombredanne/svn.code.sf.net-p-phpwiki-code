@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.35 2003-11-06 19:39:55 carstenklapp Exp $');
+<?php rcs_id('$Id: Request.php,v 1.36 2003-11-14 16:35:31 carstenklapp Exp $');
 // FIXME: write log entry.
 
 
@@ -609,6 +609,7 @@ class Request_AccessLogEntry
         if (!$time)
             $time = time();
         $offset = date("Z", $time);
+        $negoffset = "";
         if ($offset < 0) {
             $negoffset = "-";
             $offset = -$offset;
