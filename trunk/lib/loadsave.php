@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.99 2004-05-02 15:10:07 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.100 2004-05-02 21:26:38 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -850,16 +850,17 @@ function SetupWiki (&$request)
     $pgsrc = FindLocalizedFile(WIKI_PGSRC);
     $default_pgsrc = FindFile(DEFAULT_WIKI_PGSRC);
 
+    $request->setArg('overwrite',true);
     if ($default_pgsrc != $pgsrc)
         LoadAny($request, $default_pgsrc, $GenericPages);
-    $request->setArg('overwrite',true);
+    $request->setArg('overwrite',false);
     LoadAny($request, $pgsrc);
 
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder;
     foreach (array_merge(explode(':',constant('HOME_PAGE')
                                  .':OldTextFormattingRules:TextFormattingRules'),
-                         $GLOBALS['AllActionPages'])) as $f) {
+                         $GLOBALS['AllActionPages']) as $f) {
         $page = gettext($f);
         if (! $request->_dbi->isWikiPage($page) ) {
             // translated version provided?
@@ -905,6 +906,16 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.99  2004/05/02 15:10:07  rurban
+ new finally reliable way to detect if /index.php is called directly
+   and if to include lib/main.php
+ new global AllActionPages
+ SetupWiki now loads all mandatory pages: HOME_PAGE, action pages, and warns if not.
+ WikiTranslation what=buttons for Carsten to create the missing MacOSX buttons
+ PageGroupTestOne => subpages
+ renamed PhpWikiRss to PhpWikiRecentChanges
+ more docs, default configs, ...
+
  Revision 1.98  2004/04/29 23:25:12  rurban
  re-ordered locale init (as in 1.3.9)
  fixed loadfile with subpages, and merge/restore anyway

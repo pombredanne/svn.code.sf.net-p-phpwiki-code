@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.7 2004-05-02 15:10:08 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.8 2004-05-02 21:26:38 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -119,7 +119,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -212,13 +212,12 @@ extends WikiPlugin
     }
                 
     function run($dbi, $argstr, $request, $basepage) {
-        extract($this->getArgs($argstr, $request));
+        $this->args = $this->getArgs($argstr, $request);
+        extract($this->args);
         $this->request = &$request;
         if (!$from_lang) $from_lang = $request->getPref('lang');
         if (!$from_lang) $from_lang = $GLOBALS['LANG'];
         $this->lang = $from_lang;
-        $this->noT = $noT;
-        $this->nolinks = $nolinks;
 
         if (empty($languages)) {
             // from lib/plugin/UserPreferences.php
@@ -280,7 +279,7 @@ extends WikiPlugin
                 return $this->error(fmt("%s is empty",$pagename));
         }
         
-        $pagelist = new PageList('', $exclude, $this->getArgs($argstr, $request));
+        $pagelist = new PageList('', $exclude, $this->args);
         $pagelist->_columns[0]->_heading = "$from_lang";
         foreach ($languages as $lang) {
             if ($lang == $from_lang) continue;
@@ -359,8 +358,9 @@ class _PageList_Column_custom extends _PageList_Column {
         $this->_field = $field;
         $this->_from_lang = $from_lang;
         $this->_plugin =& $plugin;
-        $this->_noT = $plugin->noT;
-        $this->_nolinks = $plugin->nolinks;
+        $this->_what = $plugin->args['what'];
+        $this->_noT = $plugin->args['noT'];
+        $this->_nolinks = $plugin->args['nolinks'];
         $this->_iscustom = substr($field, 0, 7) == 'custom:';
         if ($this->_iscustom)
             $this->_field = substr($field, 7);
@@ -409,6 +409,16 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/05/02 15:10:08  rurban
+// new finally reliable way to detect if /index.php is called directly
+//   and if to include lib/main.php
+// new global AllActionPages
+// SetupWiki now loads all mandatory pages: HOME_PAGE, action pages, and warns if not.
+// WikiTranslation what=buttons for Carsten to create the missing MacOSX buttons
+// PageGroupTestOne => subpages
+// renamed PhpWikiRss to PhpWikiRecentChanges
+// more docs, default configs, ...
+//
 // Revision 1.6  2004/04/21 04:29:50  rurban
 // write WikiURL consistently (not WikiUrl)
 //
