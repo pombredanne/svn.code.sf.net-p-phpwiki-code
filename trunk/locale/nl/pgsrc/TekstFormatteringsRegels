@@ -1,4 +1,5 @@
 !Synopsis
+TekstFormatteringsRegels%%%
 __Nadruk:__ '__' voor schuin, _''_ voor vet, '__'_''_ voor beide.%%%
 __Lijsten:__ * voor punt lijsten, # voor genummerde lijsten, ''; Term : Definitie'' voor definitie lijsten.%%%
 __Verwijzingen:__ KapitaliseerEnSchrijfAanElkaar of gebruik vierkante haken [[pagina koppeling] of URL [[http://koel.wiki.int/].%%%
