@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.49 2004-07-13 13:07:27 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.50 2004-09-06 09:28:58 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -82,6 +82,7 @@ function IniConfig($file) {
          'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 'SERVER_NAME', 'SERVER_PORT',
          'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
          'WIKI_NAME_REGEXP',
+         //'PLUGIN_CACHED_CACHE_DIR',
          'PLUGIN_CACHED_DATABASE', 'PLUGIN_CACHED_FILENAME_PREFIX',
          'PLUGIN_CACHED_HIGHWATER', 'PLUGIN_CACHED_LOWWATER', 'PLUGIN_CACHED_MAXLIFETIME',
          'PLUGIN_CACHED_MAXARGLEN', 'PLUGIN_CACHED_IMGTYPES'
@@ -141,7 +142,8 @@ function IniConfig($file) {
         } elseif (in_array($item,
                            array('DATABASE_PREFIX', 'SERVER_NAME', 'SERVER_PORT',
                                  'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
-                                 'LDAP_AUTH_HOST','IMAP_AUTH_HOST','POP3_AUTH_HOST'))) 
+                                 'LDAP_AUTH_HOST','IMAP_AUTH_HOST','POP3_AUTH_HOST',
+                                 'PLUGIN_CACHED_CACHE_DIR'))) 
         {
             ;
         } else {
@@ -325,7 +327,9 @@ function IniConfig($file) {
 
     global $PLUGIN_CACHED_IMGTYPES;
     $PLUGIN_CACHED_IMGTYPES = preg_split('/\s*[|:]\s*/', PLUGIN_CACHED_IMGTYPES);
-    if (!defined('PLUGIN_CACHED_CACHE_DIR')) {
+    if (empty($rs['PLUGIN_CACHED_CACHE_DIR']) and !empty($rsdef['PLUGIN_CACHED_CACHE_DIR']))
+        $rs['PLUGIN_CACHED_CACHE_DIR'] = $rsdef['PLUGIN_CACHED_CACHE_DIR'];
+    if (empty($rs['PLUGIN_CACHED_CACHE_DIR'])) {
         if (!FindFile('/tmp/cache', 1)) {
             if (!FindFile('/tmp', 1)) {
                 mkdir('/tmp', 777);
@@ -335,6 +339,7 @@ function IniConfig($file) {
         // will throw an error if not exists.
         define('PLUGIN_CACHED_CACHE_DIR', FindFile('/tmp/cache',false,1)); 
     } else {
+        define('PLUGIN_CACHED_CACHE_DIR', $rs['PLUGIN_CACHED_CACHE_DIR']);
         // will throw an error if not exists.
         FindFile(PLUGIN_CACHED_CACHE_DIR);
     }
@@ -613,6 +618,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/07/13 13:07:27  rurban
+// improved DB_SESSION logic
+//
 // Revision 1.48  2004/07/05 13:09:37  rurban
 // ENABLE_RAW_HTML_LOCKEDONLY, ENABLE_RAW_HTML_SAFE
 //
