@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.109 2004-10-14 21:06:02 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.110 2004-10-15 11:05:10 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -510,7 +510,12 @@ class Theme {
         }
 
         $link = HTML::a(array('href' => $url));
-        
+
+        if (isa($wikiword, 'WikiPageName'))
+             $default_text = $wikiword->shortName;
+         else
+             $default_text = $wikiword;
+         
         if (!empty($linktext)) {
             $link->pushContent($linktext);
             $link->setAttr('class', 'named-wiki');
@@ -1357,6 +1362,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.109  2004/10/14 21:06:02  rurban
+// fix dumphtml with USE_PATH_INFO (again). fix some PageList refs
+//
 // Revision 1.108  2004/09/26 12:24:02  rurban
 // no anchor (PCRE memory), explicit ^ instead
 //
