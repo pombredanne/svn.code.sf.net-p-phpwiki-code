@@ -1,27 +1,8 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.1 2002-02-02 07:00:10 carstenklapp Exp $ -->
-<?php
+<!-- $Id: navbar.tmpl,v 1.2 2002-02-02 07:24:50 carstenklapp Exp $ -->
+<?php $old = $Theme->getButtonSeparator();
+      $Theme->setButtonSeparator(HTML::br()); ?>
 
-//$s = $Theme->getButtonSeparator();
-$s = HTML::br();
-?>
-<!-- The top navigation/search bar -->
-<form action="<?= WikiURL(_("TitleSearch"))?>"
-      method="get" accept-charset="<?=CHARSET?>">
-  <div class="toolbar" id="navbar">
-   <?= WikiLink(_("RecentChanges"), "button") ?>
-   <?=$s?><?= WikiLink(_("FindPage"), "button") ?>
-   <?=$s?><input type="hidden" name="auto_redirect" value="1" />
-      <input type="text"  name="s" size="12"
-             title='<?=_("Quick Search")?>'
-             onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
-             onmouseout="window.status=''; return true;" />
-    <?php if (!empty($revision)) { ?>
-     <?=$s?><?= Button(_("LikePages")) ?>
-     <?=$s?><?= Button(_("BackLinks")) ?>
-   <?php } ?>
-    <?php if (!empty($user) && $user->isAdmin()) { ?>
-     <?=$s?><?= WikiLink(_("PhpWikiAdministration"), "button") ?>
-    <?php } ?>
-  </div>
-</form>
+<?= Template('default-navbar') ?>
+
+<?php $Theme->setButtonSeparator($old); ?>
