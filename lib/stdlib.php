@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.104 2002-02-08 05:03:10 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.105 2002-02-08 15:31:34 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -149,8 +149,14 @@ class Stack {
 
 
 function MakeWikiForm ($pagename, $args, $class, $button_text = '') {
-    return HTML::p(HTML::em("MagicPhpWikiURL forms are no longer supported.  ",
-                            "Use the WikiFormPlugin instead."));
+    // HACK: so as to not completely break old PhpWikiAdministration pages.
+    trigger_error("MagicPhpWikiURL forms are no longer supported.  "
+                  . "Use the WikiFormPlugin instead.", E_USER_NOTICE);
+
+    global $request;
+    $loader = new WikiPluginLoader;
+    @$action = (string)$args['action'];
+    return $loader->expandPI("<?plugin WikiForm action=$action ?>", $request);
 }
 
 function SplitQueryArgs ($query_args = '') 
