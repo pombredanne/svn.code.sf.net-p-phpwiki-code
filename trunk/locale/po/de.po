@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-21 02:13-0500\n"
+"POT-Creation-Date: 2001-12-27 00:19-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Carsten Klapp <carstenklapp@mac.com>, Arno Hollosi "
 "<ahollosi@mail.com>\n"
@@ -14,165 +14,165 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../templates/browse.html:32
+#: ../templates/browse.html:34
 msgid "Note:"
 msgstr "Hinweis:"
 
-#: ../templates/browse.html:32
+#: ../templates/browse.html:34
 msgid "You are viewing an old revision of this page."
 msgstr "Du siehst eine alte Revision dieser Seite."
 
-#: ../templates/browse.html:33
+#: ../templates/browse.html:35
 msgid "View the current version"
 msgstr "Schaue die aktuellste Version"
 
-#: ../templates/browse.html:48
+#: ../templates/browse.html:50
 #, c-format
 msgid "Last edited on %s."
 msgstr "Zuletzt am %s verändert."
 
-#: ../templates/browse.html:50
+#: ../templates/browse.html:52
 #, c-format
 msgid "Version %s, saved on %s."
 msgstr "Version %s. zuletzt am %s gespeichert."
 
 #: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
 #: ../lib/plugin/RecentChanges.php:264 ../lib/plugin/RecentChanges.php:309
-#: ../templates/browse.html:54
+#: ../templates/browse.html:56
 msgid "RecentChanges"
 msgstr "FrischeSeiten"
 
-#: ../templates/browse.html:55
+#: ../templates/browse.html:57
 msgid "FindPage"
 msgstr "SeiteFinden"
 
-#: ../templates/browse.html:58
+#: ../templates/browse.html:60
 msgid "Quick Search"
 msgstr "Schnelle Suche"
 
-#: ../templates/browse.html:68
+#: ../templates/browse.html:70
 msgid "Page locked"
 msgstr "Seite gesperrt"
 
-#: ../templates/browse.html:71
+#: ../templates/browse.html:73
 msgid "Edit"
 msgstr "Editieren"
 
-#: ../templates/browse.html:74
+#: ../templates/browse.html:76
 msgid "Edit old revision"
 msgstr "Alte Revision editieren"
 
-#: ../templates/browse.html:79
+#: ../templates/browse.html:81
 msgid "Unlock page"
 msgstr "Seite freigeben"
 
-#: ../templates/browse.html:81
+#: ../templates/browse.html:83
 msgid "Lock page"
 msgstr "Seite sperren"
 
-#: ../lib/removepage.php:20 ../templates/browse.html:83
+#: ../lib/removepage.php:20 ../templates/browse.html:85
 msgid "Remove page"
 msgstr "Seite löschen"
 
-#: ../templates/browse.html:87 ../templates/browse.html:90
+#: ../templates/browse.html:89 ../templates/browse.html:92
 msgid "Diff"
 msgstr "Vergleichen"
 
-#: ../templates/browse.html:95
+#: ../templates/browse.html:97
 #, c-format
 msgid "You are signed in as %s"
 msgstr "Du bist als %s angemeldet"
 
-#: ../templates/browse.html:96
+#: ../templates/browse.html:98
 msgid "SignOut"
 msgstr "Ausmelden"
 
-#: ../templates/browse.html:98 ../templates/editpage.html:72
+#: ../templates/browse.html:100 ../templates/editpage.html:73
 msgid "SignIn"
 msgstr "Anmelden"
 
-#: ../templates/browse.html:115
+#: ../templates/browse.html:117
 msgid "PHP Warnings"
 msgstr "PHP Warnungen"
 
-#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:121
-#: ../templates/browse.html:122
+#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:123
+#: ../templates/browse.html:124
 msgid "DebugInfo"
 msgstr "DebugInfo"
 
-#: ../templates/editpage.html:15 ../templates/editpage.html:24
-#: ../templates/editpage.html:25
+#: ../templates/editpage.html:16 ../templates/editpage.html:25
+#: ../templates/editpage.html:26
 #, c-format
 msgid "Edit: %s"
 msgstr "Editiere: %s"
 
-#: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:24
+#: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:25
 msgid "BackLinks"
 msgstr "Querverbindungen"
 
-#: ../templates/editpage.html:27
+#: ../templates/editpage.html:28
 msgid "Preview only!  Changes not saved."
 msgstr "Nur die Vorschau!  Änderungen nicht gespeichert."
 
-#: ../templates/editpage.html:33
+#: ../templates/editpage.html:34
 msgid "Warning: You are editing an old revision."
 msgstr "Warnung: Du editierst eine alte Revision."
 
-#: ../templates/editpage.html:34
+#: ../templates/editpage.html:35
 msgid "Saving this page will overwrite the current version."
 msgstr ""
 "Wenn die Seite jetzt gespeichert werden würde, dann würde die aktuellste "
 "Version überschrieben."
 
-#: ../templates/editpage.html:54
+#: ../templates/editpage.html:55
 msgid "Summary:"
 msgstr "Kommentar:"
 
-#: ../templates/editpage.html:61
+#: ../templates/editpage.html:62
 msgid "This is a minor change."
 msgstr "Geringfügige Änderung"
 
-#: ../templates/editpage.html:64
+#: ../templates/editpage.html:65
 msgid "Preview"
 msgstr "Vorschauen"
 
-#: ../templates/editpage.html:65
+#: ../templates/editpage.html:66
 msgid "Save"
 msgstr "Speichern"
 
-#: ../templates/editpage.html:69
+#: ../templates/editpage.html:70
 #, c-format
 msgid "You are signed in as %s."
 msgstr "Du bist als %s angemeldet."
 
-#: ../templates/editpage.html:71
+#: ../templates/editpage.html:72
 #, c-format
 msgid "Author will be logged as %s."
 msgstr "%s wird als Author aufgezeichnet."
 
-#: ../templates/editpage.html:78
+#: ../templates/editpage.html:79
 #, c-format
 msgid "You can change the size of the editing area in %s."
 msgstr "Du kannst die Form-größe in %s spezifizieren."
 
-#: ../templates/editpage.html:78
+#: ../templates/editpage.html:79
 msgid "UserPreferences"
 msgstr "BenutzerEinstellungen"
 
-#: ../templates/editpage.html:79
+#: ../templates/editpage.html:80
 #, c-format
 msgid "See %s tips for editing."
 msgstr "Sehe %s tips fürs Editieren."
 
-#: ../templates/editpage.html:79
+#: ../templates/editpage.html:80
 msgid "GoodStyle"
 msgstr "GuterStil"
 
-#: ../templates/editpage.html:83
+#: ../templates/editpage.html:84
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
-#: ../templates/editpage.html:83
+#: ../templates/editpage.html:84
 msgid "Synopsis"
 msgstr "Übersicht"
 
@@ -436,6 +436,27 @@ msgstr "Die Datenbank wird direckt nach »%s« abgefragt"
 msgid "No pagedata for %s"
 msgstr "Keine Seitendatei für %s"
 
+#: ../lib/plugin/text2png.php:61
+msgid ""
+"Unable to create a new GD image stream. PHP must be compiled with support "
+"for the GD library version 1.6 or later to create PNG image files."
+msgstr ""
+
+#: ../lib/plugin/text2png.php:108
+#, c-format
+msgid "Image saved to cache file: %s"
+msgstr ""
+
+#: ../lib/plugin/text2png.php:111
+#, c-format
+msgid "Image loaded from cache file: %s"
+msgstr ""
+
+#: ../lib/loadsave.php:153 ../lib/plugin/text2png.php:118
+#, c-format
+msgid "couldn't open file '%s' for writing"
+msgstr "Datei »%s« konnte nich geöffnet werden um es auszuschreiben"
+
 #: ../lib/WikiDB.php:837
 #, c-format
 msgid "Describe [%s] here."
@@ -476,8 +497,9 @@ msgstr ""
 "natürlich nicht für den Systemverwalter.)"
 
 #: ../lib/diff.php:172
-msgid "version"
-msgstr "Version"
+#, fuzzy, c-format
+msgid "version %s"
+msgstr "Version %d."
 
 #: ../lib/diff.php:175
 #, c-format
@@ -517,7 +539,7 @@ msgstr "vorige Revision"
 #: ../lib/diff.php:251
 #, c-format
 msgid "Differences between %s and %s of %s."
-msgstr "Der Unterschiedsergebnis von %3$s, zwischen %1$s und %2$s."
+msgstr "Der Unterschiedsergebnis von %3$s, zwischen %1$s und %2$s"
 
 #: ../lib/diff.php:255
 msgid "Previous Major Revision"
@@ -603,11 +625,6 @@ msgstr "Die Seiten werden ausgeschrieben"
 #, c-format
 msgid "saved as %s"
 msgstr "als %s gespeichert"
-
-#: ../lib/loadsave.php:153
-#, c-format
-msgid "couldn't open file '%s' for writing"
-msgstr "Datei »%s« konnte nich geöffnet werden um es auszuschreiben"
 
 #: ../lib/loadsave.php:156
 #, c-format
@@ -790,43 +807,43 @@ msgstr ""
 msgid "Required form variables are missing."
 msgstr "Benötigen Form-Variablen sind Fehlend."
 
-#: ../lib/savepage.php:152
+#: ../lib/savepage.php:155
 #, c-format
 msgid "Thank you for editing %s."
 msgstr "Danke für das Editieren von %s."
 
-#: ../lib/savepage.php:155
+#: ../lib/savepage.php:158
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt."
 
-#: ../lib/stdlib.php:130
+#: ../lib/stdlib.php:134
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler -- aller Zeichen <, >, \" wegnehmen"
 
-#: ../lib/stdlib.php:336
+#: ../lib/stdlib.php:340
 msgid "Lock page to enable link"
 msgstr "Seite sperren um das Link zu verbinden"
 
-#: ../lib/stdlib.php:455
+#: ../lib/stdlib.php:459
 #, c-format
 msgid "%d best incoming links:"
 msgstr "Die %d besten hereinkommenden Links:"
 
-#: ../lib/stdlib.php:465
+#: ../lib/stdlib.php:469
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "Die %d besten hinausgehenden Links:"
 
-#: ../lib/stdlib.php:476
+#: ../lib/stdlib.php:480
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "Die %d meistbesuchten Seiten in der Nähe:"
 
-#: ../lib/stdlib.php:526 ../lib/stdlib.php:532
+#: ../lib/stdlib.php:530 ../lib/stdlib.php:536
 msgid "Bad Version"
 msgstr "Version nicht vorliegend"
 
-#: ../lib/stdlib.php:528
+#: ../lib/stdlib.php:532
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr "Es tut mir leid.  Version %d. von %s war nicht in meine Datenbank."
@@ -1030,6 +1047,9 @@ msgstr ""
 "DBA Dateien sind ins Verzeichnis %s. Bitte erst lies der INSTALL Datei und "
 "ziehe der DB Datei fort, sonnst bist du auf Gefahr des ganzes Wikis zu "
 "verlieren!"
+
+#~ msgid "version"
+#~ msgstr "Version"
 
 #~ msgid "Edit:"
 #~ msgstr "Editieren:"
