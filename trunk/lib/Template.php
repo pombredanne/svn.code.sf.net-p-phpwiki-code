@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.28 2002-01-24 00:45:28 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.29 2002-01-24 01:26:55 dairiki Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -64,16 +64,23 @@ class Template
     }
     
     function _print ($val) {
-        if (isa($val, 'Template')) {
-            // Expand sub-template with defaults from this template.
-            echo "<!-- Begin $val->_name -->\n";
-            $val->printExpansion($this->_vars);
-            echo "<!-- End $val->_name -->\n";
-        }
+        if (isa($val, 'Template'))
+            $this->_expandSubtemplate($val);
         else
             PrintXML($val);
     }
-    
+
+    function _expandSubtemplate (&$template) {
+        // FIXME: big hack!        
+        if (!$template->_request)
+            $template->_request = &$this->_request;
+        
+        echo "<!-- Begin $template->_name -->\n";
+        // Expand sub-template with defaults from this template.
+        $template->printExpansion($this->_vars);
+        echo "<!-- End $template->_name -->\n";
+    }
+        
     /**
      * Substitute HTML replacement text for tokens in template. 
      *
