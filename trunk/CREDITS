@@ -28,6 +28,7 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 
 ;[ Sandino Araico Sánchez | mailto:sandino@sandino.net ] :
 ;: contributed Spanish translation
+;: Pablo added some updates
 
 ;[ Jon Åslund | mailto:d98-jas@nada.kth.se ] :
 ;: contributed Swedish translation
@@ -38,13 +39,13 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 
 ! Patches
 
-;[Joel Uckelman | uckelman@iastate.edu ] :
+;[Joel Uckelman | mailto:uckelman@iastate.edu ] :
 ;: ported the dbmlib.php to the new dba_* interface, which is the default in PHP 4.0.4 and later.
 
-;[ Pablo Roca Rozas | proca@clavo.net ] :
+;[ Pablo Roca Rozas | mailto:proca@clavo.net ] :
 ;: contributed a new logo image file and updated the Spanish translation
 
-;[Scott R. Anderson | sra@diem.net ] :
+;[Scott R. Anderson | mailto:sra@diem.net ] :
 ;: contributed a patch to allow authorized users' names to appear in RecentChanges.
 
 ;[Neil Brown | mailto:neilb@cse.unsw.edu.au ] :
