@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.213 2004-11-01 10:43:57 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.214 2004-11-11 11:01:20 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -684,7 +684,7 @@ class WikiPageName
  *   multiple references to the same footnote.  But close enough,
  *   probably for now....
  * @bugs  Apache2 and IIS crash with OldTextFormattingRules or
- *   AnciennesR%E8glesDeFormatage. ( at the 2nd attempt to do the anchored block regex )
+ *   AnciennesR%E8glesDeFormatage. (at the 2nd attempt to do the anchored block regex)
  *   It only crashes with CreateToc so far, but other pages (not in pgsrc) are 
  *   also known to crash, even with Apache1.
  */
@@ -1775,7 +1775,7 @@ function loadPhpExtension($extension) {
         if (!@dl($soname))
             return false;
     }
-    return extension_loaded('cvsclient');
+    return extension_loaded($extension);
 }
 
 function string_starts_with($string, $prefix) {
@@ -1796,6 +1796,12 @@ function longer_timeout($secs = 30) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.213  2004/11/01 10:43:57  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.212  2004/10/22 09:15:39  rurban
 // Alert::show has no arg anymore
 //
