@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.23 2003-02-18 21:53:30 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.24 2003-02-21 04:09:53 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -27,9 +27,25 @@
 /**
  */
 
+/**
+ * This is the character used in wiki markup to escape characters with
+ * special meaning.
+ */
+define('ESCAPE_CHAR', '~');
+
 require_once('lib/HtmlElement.php');
+require_once('lib/CachedMarkup.php');
 require_once('lib/interwiki.php');
 require_once('lib/stdlib.php');
+
+
+function WikiEscape($text) {
+    return str_replace('#', ESCAPE_CHAR . '#', $text);
+}
+
+function UnWikiEscape($text) {
+    return preg_replace('/' . ESCAPE_CHAR . '(.)/', '\1', $text);
+}
 
 /**
  * Return type from RegexpSet::match and RegexpSet::nextMatch.
@@ -181,19 +197,6 @@ class SimpleMarkup
      * @return mixed The expansion of the matched text.
      */
     function markup ($match /*, $body */) {
-        // De-escape matched text.
-        $str = preg_replace('/' . ESCAPE_CHAR . '(.)/', '\1', $match);
-        return $this->_markup($str);
-    }
-
-    /** Markup matching text.
-     *
-     * @param string $match The text which matched the regexp
-     * with escaped charecters de-escaped.
-     *
-     * @return mixed The expansion of the matched text.
-     */
-    function _markup ($match) {
         trigger_error("pure virtual", E_USER_ERROR);
     }
 }
@@ -245,8 +248,73 @@ class Markup_escape  extends SimpleMarkup
         return ESCAPE_CHAR . ".";
     }
     
-    function _markup ($match) {
-        return $match;
+    function markup ($match) {
+        assert(strlen($match) == 2);
+        return $match[1];
+    }
+}
+
+function LinkBracketLink($bracketlink) {
+    global $request, $AllowedProtocols, $InlineImages;
+
+    include_once("lib/interwiki.php");
+    $intermap = InterWikiMap::GetMap($request);
+    
+    // $bracketlink will start and end with brackets; in between will
+    // be either a page name, a URL or both separated by a pipe.
+    
+    // strip brackets and leading space
+    preg_match('/(\#?) \[\s* (?: (.+?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
+	       $bracketlink, $matches);
+    list (, $hash, $label, $bar, $rawlink) = $matches;
+
+    $label = UnWikiEscape($label);
+    $link = UnWikiEscape($rawlink);
+
+    // if label looks like a url to an image, we want an image link.
+    if (preg_match("/\\.($InlineImages)$/i", $label)) {
+        $imgurl = $label;
+        if (! preg_match("#^($AllowedProtocols):#", $imgurl)) {
+            // linkname like 'images/next.gif'.
+            global $Theme;
+            $imgurl = $Theme->getImageURL($linkname);
+        }
+        $label = LinkImage($imgurl, $link);
+    }
+
+    if ($hash) {
+        // It's an anchor, not a link...
+        $id = MangleXmlIdentifier($link);
+        return HTML::a(array('name' => $id, 'id' => $id),
+                       $bar ? $label : $link);
+    }
+
+    if (preg_match("#^($AllowedProtocols):#", $link)) {
+        // if it's an image, embed it; otherwise, it's a regular link
+        if (preg_match("/\\.($InlineImages)$/i", $link))
+            // no image link, just the src. see [img|link] above
+            return LinkImage($link, $label);
+        else
+            return new Cached_ExternalLink($link, $label);
+    }
+    elseif (preg_match("/^phpwiki:/", $link))
+        return LinkPhpwikiURL($link, $label);
+    elseif (preg_match("/^" . $intermap->getRegexp() . ":/", $link))
+        return new Cached_InterwikiLink($link, $label);
+    else {
+        // Split anchor off end of pagename.
+        if (preg_match('/\A(.*)(?<!'.ESCAPE_CHAR.')#(.*?)\Z/', $rawlink, $m)) {
+            list(,$rawlink,$anchor) = $m;
+            $pagename = UnWikiEscape($rawlink);
+            $anchor = UnWikiEscape($anchor);
+            if (!$label)
+                $label = $link;
+        }
+        else {
+            $pagename = $link;
+            $anchor = false;
+        }
+        return new Cached_WikiLink($pagename, $label, $anchor);
     }
 }
 
@@ -268,8 +336,8 @@ class Markup_url extends SimpleMarkup
         return "(?<![[:alnum:]]) (?:$AllowedProtocols) : [^\s<>\"']+ (?<![ ,.?; \] \) ])";
     }
     
-    function _markup ($match) {
-        return LinkURL($match);
+    function markup ($match) {
+        return new Cached_ExternalLink(UnWikiEscape($match));
     }
 }
 
@@ -282,10 +350,10 @@ class Markup_interwiki extends SimpleMarkup
         return "(?<! [[:alnum:]])" . $map->getRegexp(). ": \S+ (?<![ ,.?;! \] \) \" \' ])";
     }
 
-    function _markup ($match) {
+    function markup ($match) {
         global $request;
         $map = InterWikiMap::GetMap($request);
-        return $map->link($match);
+        return new Cached_InterwikiLink(UnWikiEscape($match));
     }
 }
 
@@ -296,8 +364,8 @@ class Markup_wikiword extends SimpleMarkup
         return " $WikiNameRegexp";
     }
         
-    function _markup ($match) {
-        return WikiLink($match, 'auto');
+    function markup ($match) {
+        return new Cached_WikiLink($match);
     }
 }
 
@@ -305,7 +373,7 @@ class Markup_linebreak extends SimpleMarkup
 {
     var $_match_regexp = "(?: (?<! %) %%% (?! %) | <(?:br|BR)> )";
 
-    function _markup () {
+    function markup () {
         return HTML::br();
     }
 }
@@ -497,7 +565,7 @@ class LinkTransformer extends InlineTransformer
     }
 }
 
-function TransformInline($text, $markup = 2.0) {
+function TransformInline($text, $markup = 2.0, $basepage=false) {
     static $trfm;
     
     if (empty($trfm)) {
@@ -508,10 +576,13 @@ function TransformInline($text, $markup = 2.0) {
         $text = ConvertOldMarkup($text, 'inline');
     }
 
+    if ($basepage) {
+        return new CacheableMarkup($trfm->parse($text), $basepage);
+    }
     return $trfm->parse($text);
 }
 
-function TransformLinks($text, $markup = 2.0) {
+function TransformLinks($text, $markup = 2.0, $basepage = false) {
     static $trfm;
     
     if (empty($trfm)) {
@@ -522,6 +593,9 @@ function TransformLinks($text, $markup = 2.0) {
         $text = ConvertOldMarkup($text, 'links');
     }
     
+    if ($basepage) {
+        return new CacheableMarkup($trfm->parse($text), $basepage);
+    }
     return $trfm->parse($text);
 }
 
