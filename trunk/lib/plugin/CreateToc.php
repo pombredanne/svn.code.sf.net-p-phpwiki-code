@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.20 2004-05-11 13:57:46 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.21 2004-06-13 09:45:23 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -27,6 +27,12 @@ rcs_id('$Id: CreateToc.php,v 1.20 2004-05-11 13:57:46 rurban Exp $');
  *  <?plugin CreateToc headers=!!!,!! with_toclink||=1 
  *                     jshide||=1 ?>
  * @author:  Reini Urban
+ *
+ * Known problems: 
+ * - MacIE will not work with jshide.
+ * - Certain corner-edges will not work with TOC_FULL_SYNTAX. 
+ *   I believe I fixed all of them now, but who knows?
+ * - bug #969495 "existing labels not honored" seems to be fixed.
  */
 
 define('TOC_FULL_SYNTAX',1);
@@ -44,7 +50,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -184,6 +190,10 @@ extends WikiPlugin
         if (!$pagename) {
             return $this->error(_("no page specified"));
         }
+        if ($jshide and isBrowserIE() and browserDetect("Mac")) {
+            //trigger_error(_("jshide set to 0 on Mac IE"), E_USER_NOTICE);
+            $jshide = 0;
+        }
         $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
         $content = $current->getContent();
@@ -256,6 +266,11 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/05/11 13:57:46  rurban
+// enable TOC_FULL_SYNTAX per default
+// don't <a name>$header</a> to disable css formatting for such anchors
+//   => <a name></a>$header
+//
 // Revision 1.19  2004/05/08 16:59:27  rurban
 // requires optional TOC_FULL_SYNTAX constnat to enable full link and
 // wikiword syntax in headers.
