@@ -1,3 +1,6 @@
+Security fix needed: the info page allows the user to enter arbitrary 
+HTML.
+
 Full text search will return all pages when searching for "eat" 
 because it matches "created." (In a DBM-based installation). This
 should be corrected.
