@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.168 2004-06-17 10:39:18 rurban Exp $');
+rcs_id('$Id: main.php,v 1.169 2004-06-20 14:42:54 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -974,7 +974,7 @@ function main () {
 
     global $request;
 
-    if ((DEBUG & 4) and extension_loaded("apd"))
+    if ((DEBUG & _DEBUG_APD) and extension_loaded("apd"))
         apd_set_session_trace(9);
 
     // Postpone warnings
@@ -1036,7 +1036,7 @@ if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
    
     $request->handleAction();
 
-if (defined('DEBUG') and DEBUG & 4) phpinfo(INFO_VARIABLES);
+    if (DEBUG and DEBUG & _DEBUG_INFO) phpinfo(INFO_VARIABLES);
     $request->finish();
 }
 
@@ -1046,6 +1046,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.168  2004/06/17 10:39:18  rurban
+// fix reverse translation of possible actionpage
+//
 // Revision 1.167  2004/06/16 13:21:16  rurban
 // stabilize on failing ldap queries or bind
 //

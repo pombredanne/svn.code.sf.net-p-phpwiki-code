@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.98 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.99 2004-06-20 14:42:54 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -658,7 +658,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.98 $");
+                            "\$Revision: 1.99 $");
     }
 
     function managesValidators() {
@@ -796,7 +796,7 @@ extends WikiPlugin
 class DayButtonBar extends HtmlElement {
 
     function DayButtonBar ($plugin_args) {
-        $this->HtmlElement('p', array('class' => 'wiki-rc-action'));
+        $this->__construct('p', array('class' => 'wiki-rc-action'));
 
         // Display days selection buttons
         extract($plugin_args);
@@ -841,6 +841,14 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.98  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.97  2004/06/03 18:58:27  rurban
 // days links requires action=RelatedChanges arg
 //

@@ -1,8 +1,12 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.30 2004-06-19 12:33:25 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.31 2004-06-20 14:42:54 rurban Exp $');
 /**
  * Code for writing XML.
+ * @package Markup
  * @author: Jeff Dairiki
  *
+ * FIXME: This module is very php5 sensitive: It was fixed for 1.3.9, 
+ *        but is again broken with the 1.3.11 
+ *        allow_call_time_pass_reference clean fixes
  */
 
 /**
@@ -162,7 +166,7 @@ class XmlContent
     function _quote ($string) {
     	if (!$string) return $string;
         if (check_php_version(4,1) and isset($GLOBALS['charset']))
-            return htmlspecialchars($string,ENT_COMPAT,$GLOBALS['charset']);
+            return htmlspecialchars($string, ENT_COMPAT, $GLOBALS['charset']);
         else
             return htmlspecialchars($string);
     }
@@ -203,15 +207,18 @@ class XmlElement extends XmlContent
     /** Methods only needed for XmlParser,
      *  to be fully compatible to perl Html::Element
      */
-    function __destruct () {
-        foreach ($this->getChildren() as $node) {
-            $node->__destruct();
+    // doesn't yet work with php5 as __destruct()
+    function _destruct () {
+        if ($this->hasChildren()) {
+            foreach ($this->getChildren() as $node) {
+                $node->_destruct();
+            }
         }
         unset($this->_tag);
         unset($this->_attr);
         unset($this->_content);
     }
-
+    
     function getChildren () {
         return $this->_children;
     }
@@ -582,7 +589,9 @@ function fmt ($fs /* , ... */) {
     $s->_init($args);
     return $s;
 }
-    
+
+// $Log: not supported by cvs2svn $
+
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
