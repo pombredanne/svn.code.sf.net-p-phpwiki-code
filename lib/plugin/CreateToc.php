@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.16 2004-04-26 14:46:14 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.17 2004-04-26 19:43:03 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -23,7 +23,9 @@ rcs_id('$Id: CreateToc.php,v 1.16 2004-04-26 14:46:14 rurban Exp $');
 /**
  * CreateToc:  Automatically link to headers
  *
- * Usage:   <?plugin CreateToc headers=!!!,!! with_toclink||=1 jshide||=1 align=left noheaders=0 ?>
+ * Usage:   
+ *  <?plugin CreateToc headers=!!!,!! with_toclink||=1 
+ *                     jshide||=1 ?>
  * @author:  Reini Urban
  */
 
@@ -40,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -68,25 +70,34 @@ extends WikiPlugin
     		case 2: $h = "h3"; break;
     		case 3: $h = "h2"; break;
     	}
-    	$heading = preg_quote($heading);
-    	for ($j=$start_index; $j<count($content); $j++) {
+    	$theading = TransformInline($heading);
+    	$qheading = preg_quote($theading->asString());
+    	
+    	for ($j=$start_index; $j < count($content); $j++) {
             if (is_string($content[$j])) {
-    		if (preg_match("/<$h>$heading<\/$h>/",$content[$j])) {
+    		if (preg_match("/<$h>$qheading<\/$h>/",$content[$j])) {
     		    return $j;
     		}
-    	    } elseif (isa($content[$j],'cached_wikilink')) { 
-                // support single wikiword headers also
+    	    } elseif (isa($content[$j],'cached_wikilink')) {
+                // shortcut for single wikiword headers
     	    	$content[$j] = $content[$j]->asString();
-    	    	//TODO: To allow "!! WikiWord link"
-    	    	// Split heading into WikiWords and check against 
-    	    	// joined content (after cached_plugininvocation).
-    	    	// The first wikilink is the anchor then.
     	    	if ($content[$j] == $heading and 
-    	    	   substr($content[$j-1],-4,4) == "<$h>" and
-    	    	   substr($content[$j+1],0,5) == "</$h>") 
-    	    	{
-    		    return $j;
-    		}
+                    substr($content[$j-1],-4,4) == "<$h>" and
+                    substr($content[$j+1],0,5) == "</$h>") {
+    		    return $j; // single wikiword
+    		} else {
+    	    	    //DONE: To allow "!! WikiWord link"
+    	    	    // Split heading into WikiWords and check against 
+    	    	    // joined content (after cached_plugininvocation).
+    	    	    // The first wikilink is the anchor then.
+                    $joined = '';
+                    for ($k=max($j-1,$start_index); $k < count($content); $k++) {
+                        $joined .= is_string($content[$k]) ? $content[$k] 
+                                                           : $content[$k]->asString();
+                    }
+                    if (preg_match("/<$h>$qheading<\/$h>/",$joined))
+                        return $j;
+                }
     	    }
     	}
     	trigger_error("Heading <$h> $heading </$h> not found\n", E_USER_NOTICE);
@@ -101,9 +112,9 @@ extends WikiPlugin
 
         $s = str_replace(' ','_',$s);
         $i = 1;
-        $anchor = MangleXmlIdentifier($s);
+        $anchor = $s;
         while (!empty($anchors[$anchor])) {
-            $anchor = MangleXmlIdentifier(sprintf("%s_%d",$s,$i++));
+            $anchor = sprintf("%s_%d",$s,$i++);
         }
         $anchors[$anchor] = $i;
         return $anchor;
@@ -123,31 +134,33 @@ extends WikiPlugin
                     if (!strstr($content[$i],'#[')) {
                         $s = trim($match[2]);
                         $anchor = $this->_nextAnchor($s);
+                        $manchor = MangleXmlIdentifier($anchor);
                         $headers[] = array('text' => $s, 'anchor' => $anchor, 'level' => $level);
                         // Change original wikitext, but that is useless art...
-                        $content[$i] = $match[1]." #[|$anchor][$s|#TOC]";
+                        $content[$i] = $match[1]." #[|$manchor][$s|#TOC]";
                         // And now change the to be printed markup (XmlTree):
                         // Search <hn>$s</hn> line in markup
                         //Fixme: Find non-singleworded wikilink'ed headers also.
                         $j = $this->searchHeader($markup->_content, $j, $s, $match[1]);
-                        if (  $j and isset($markup->_content[$j]) and 
-                              is_string($markup->_content[$j])  ) 
-                        {
+                        if ($j and isset($markup->_content[$j])) {
                             $x = $markup->_content[$j];
-                            $heading = preg_quote($s);
-                            if ($x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
-                                                  "\$1<a name=\"$anchor\">\$2</a>\$3",$x,1)) {
-                                if ($backlink)
-                                    $x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
-                                                      "\$1<a href=\"$basepage#TOC\" name=\"$anchor\">\$2</a>\$3",
-                                                      $markup->_content[$j],1);
-                                $markup->_content[$j] = $x;
+                            if (is_string($markup->_content[$j])) {
+                                $x = $markup->_content[$j];
+                                $heading = preg_quote($s);
+                                if ($x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
+                                                      "\$1<a name=\"$manchor\">\$2</a>\$3",$x,1)) {
+                                    if ($backlink) {
+                                        $x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
+                                                          "\$1<a href=\"$basepage#TOC\" name=\"$manchor\">\$2</a>\$3",
+                                                          $markup->_content[$j],1);
+                                    }
+                                    $markup->_content[$j] = $x;
+                                }
                             }
-                        }
-                        elseif ($j and isa($markup->_content[$j],'cached_wikilink')) {
-                            $x =& $markup->_content[$j];
-                            $label = isset($x->_label) ? $x->_label : false;
-                            $x = HTML::a(array('name'=>$anchor),WikiLink($x->_page, 'auto', $label));
+                            elseif (isa($markup->_content[$j],'cached_wikilink')) {
+                                $label = isset($x->_label) ? $x->_label : false;
+                                $markup->_content[$j] = HTML::a(array('name'=>$manchor),WikiLink($x->_page, 'auto', $label));
+                            }
                         }
                     }
                 }
@@ -193,6 +206,7 @@ extends WikiPlugin
                 $levels[] = $level;
             }
         }
+    	require_once("lib/InlineParser.php");
         if ($headers = $this->extractHeaders(&$content, &$dbi->_markup, $with_toclink, $levels, $basepage)) {
             foreach ($headers as $h) {
                 // proper heading indent
@@ -236,6 +250,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/04/26 14:46:14  rurban
+// better comments
+//
 // Revision 1.14  2004/04/21 04:29:50  rurban
 // write WikiURL consistently (not WikiUrl)
 //
