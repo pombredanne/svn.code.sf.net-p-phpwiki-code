@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.9 2003-09-13 21:53:41 carstenklapp Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.10 2003-09-13 21:57:26 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -45,25 +45,26 @@ extends WikiPlugin
         $user = $request->getUser();
         // for a UserPage/Prefences plugin default to this userid
         if (isSubPage($pagename)) {
-            $pages  = explode(SUBPAGE_SEPARATOR,$pagename);
+            $pages  = explode(SUBPAGE_SEPARATOR, $pagename);
             $userid = $pages[0];
         } else {
             // take current user
             $userid = $user->_userid;
         }
-        return array('userid'		=> $userid, // current or the one from the SubPage
-                     'changePass'       => $user->mayChangePassword(),
-                     'appearance'     	=> true,
-                     'email'       	=> true,
-                     'notifyPages'     	=> true,
-                     'editAreaSize'     => true,
-                     'timeOffset'       => true,
-                     'theme'         => THEME,
-                     'lang'          => DEFAULT_LANGUAGE,
-                     'relativeDates'    => true
-                     );
+        return
+            array('userid'  => $userid, // current or the one from the SubPage
+                  'changePass'    => $user->mayChangePassword(),
+                  'appearance'    => true,
+                  'email'         => true,
+                  'notifyPages'   => true,
+                  'editAreaSize'  => true,
+                  'timeOffset'    => true,
+                  'theme'         => THEME,
+                  'lang'          => DEFAULT_LANGUAGE,
+                  'relativeDates' => true
+                  );
     }
-   
+
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
         $user = &$request->getUser();
@@ -78,19 +79,19 @@ extends WikiPlugin
         }
         if ($user->isAuthenticated() and $args['userid'] == $user->_userid) {
             if ($request->isPost()) {
-            	if ($request->_prefs) {
-            	  $pref = $request->_prefs;
-            	} else { // hmm. already handled somewhere else...
-            	  $pref = new UserPreferences($request->getArg('pref'));
+                if ($request->_prefs) {
+                    $pref = $request->_prefs;
+                } else { // hmm. already handled somewhere else...
+                    $pref = new UserPreferences($request->getArg('pref'));
                 }
-            	// Fixme: How to update the Theme? Correct update?
-            	$num = $request->_user->SetPreferences($pref);
+                // Fixme: How to update the Theme? Correct update?
+                $num = $request->_user->SetPreferences($pref);
                 if (!$num) {
                     $errmsg = _("No changes.");
                 } else {
                     $errmsg = fmt("%d UserPreferences fields successfully updated.", $num);
                 }
-                $args['errmsg'] = HTML(HTML::h2($errmsg),HTML::hr());
+                $args['errmsg'] = HTML(HTML::h2($errmsg), HTML::hr());
             }
             $available_themes = array(); 
             $dir_root = 'themes/';
@@ -99,9 +100,10 @@ extends WikiPlugin
             $dir = dir($dir_root);
             if ($dir) {
                 while($entry = $dir->read()) {
-                    if (is_dir($dir_root.$entry) and (substr($entry,0,1) != '.') and 
-                        $entry!='CVS') {
-                        array_push($available_themes,$entry);
+                    if (is_dir($dir_root.$entry)
+                        && (substr($entry,0,1) != '.')
+                        && $entry != 'CVS') {
+                        array_push($available_themes, $entry);
                     }
                 }
                 $dir->close();
@@ -115,9 +117,11 @@ extends WikiPlugin
             $dir = dir($dir_root);
             if ($dir) {
                 while($entry = $dir->read()) {
-                    if (is_dir($dir_root.$entry) and (substr($entry,0,1) != '.') and 
-                        $entry != 'po' and $entry != 'CVS') {
-                        array_push($available_languages,$entry);
+                    if (is_dir($dir_root.$entry)
+                        && (substr($entry,0,1) != '.')
+                        && $entry != 'po'
+                        && $entry != 'CVS') {
+                        array_push($available_languages, $entry);
                     }
                 }
                 $dir->close();
@@ -132,6 +136,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2003/09/13 21:53:41  carstenklapp
+// Added lang and theme arguments, getVersion(), copyright and cvs log.
+//
 
 // For emacs users
 // Local Variables:
