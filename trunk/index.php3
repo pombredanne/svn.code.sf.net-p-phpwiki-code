@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: index.php3,v 1.8 2000-08-07 22:47:40 wainstead Exp $ -->
+<!-- $Id: index.php3,v 1.9 2000-08-15 02:46:58 wainstead Exp $ -->
 <?
    /*
       The main page, i.e. the main loop.
@@ -10,16 +10,8 @@
    include "wiki_stdlib.php3";
 
    // All requests require the database
-   if ($copy) {
-      // we are editing a copy and want the archive
-      $dbi = OpenDataBase($ArchivePageStore);
-      include "wiki_editpage.php3";
-      CloseDataBase($dbi);
-      exit();
-   } else {
-      // live database
-      $dbi = OpenDataBase($WikiPageStore);
-   }
+   $dbi = OpenDataBase($WikiPageStore);
+
 
 
    if ($edit) {
@@ -27,6 +19,8 @@
       include "wiki_editpage.php3";
    } elseif ($links) {
       include "wiki_editlinks.php3";
+   } elseif ($copy) {
+      include "wiki_editpage.php3";
    } elseif ($search) {
       include "wiki_search.php3";
    } elseif ($full) {
