@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.131 2002-11-22 21:41:09 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.132 2003-01-04 22:19:43 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1089,7 +1089,7 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
     $list = explode(',',$input);
     // expand wildcards from list of $allnames
     if (preg_match('/[\?\*]/',$input)) {
-        for ($i = 0; $i <= sizeof($list); $i++) {
+        for ($i = 0; $i < sizeof($list); $i++) {
             $f = $list[$i];
             if (preg_match('/[\?\*]/',$f)) {
             	reset($allnames);
@@ -1196,6 +1196,7 @@ function subPageSlice($pagename, $pos) {
     return $pages[0];
 }
 
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:
