@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.51 2004-09-20 13:40:19 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.52 2004-10-04 23:38:07 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -456,8 +456,11 @@ function fix_configs() {
     //////////////////////////////////////////////////////////////////
     // Autodetect URL settings:
     //
-    if (!defined('SERVER_NAME')) define('SERVER_NAME', $HTTP_SERVER_VARS['SERVER_NAME']);
-    if (!defined('SERVER_PORT')) define('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT']);
+    foreach (array('SERVER_NAME','SERVER_PORT') as $var) {
+        //FIXME: for CGI without _SERVER
+        if (!defined($var) and !empty($HTTP_SERVER_VARS[$var]))
+            define($var, $HTTP_SERVER_VARS[$var]);
+    }
     if (!defined('SERVER_PROTOCOL')) {
         if (empty($HTTP_SERVER_VARS['HTTPS']) || $HTTP_SERVER_VARS['HTTPS'] == 'off')
             define('SERVER_PROTOCOL', 'http');
@@ -581,8 +584,8 @@ function fix_configs() {
     if (!isset($SCRIPT_FILENAME))
         $SCRIPT_FILENAME = dirname(__FILE__.'/../') . '/index.php';
     if (isWindows())
-        $SCRIPT_FILENAME = strtr($SCRIPT_FILENAME,'/','\\');
-    define('SCRIPT_FILENAME',$SCRIPT_FILENAME);
+        $SCRIPT_FILENAME = strtr($SCRIPT_FILENAME, '/', '\\');
+    define('SCRIPT_FILENAME', $SCRIPT_FILENAME);
 
     //////////////////////////////////////////////////////////////////
     // Select database
@@ -645,6 +648,10 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2004/09/20 13:40:19  rurban
+// define all config.ini settings, only the supported will be taken from -default.
+// support USE_EXTERNAL_HTML2PDF renderer (htmldoc tested)
+//
 // Revision 1.50  2004/09/06 09:28:58  rurban
 // fix PLUGIN_CACHED_CACHE_DIR fallback logic. ini entry did not work before
 //
