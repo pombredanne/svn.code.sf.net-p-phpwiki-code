@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.6 2002-01-31 05:10:28 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.7 2002-02-01 05:59:26 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -104,8 +104,11 @@ class RegexpSet
         $regexps = array_slice($this->_regexps, $prevMatch->regexp_ind + 1);
         if ($regexps) {
             $repeat = sprintf('{%d}', $pos);
-            if ( ($match = $this->_match($text, $regexps, $repeat)) )
+            if ( ($match = $this->_match($text, $regexps, $repeat)) ) {
+                $match->regexp_ind += $prevMatch->regexp_ind + 1;
                 return $match;
+            }
+            
         }
         
         // Failed.  Look for match after current position.
@@ -115,11 +118,11 @@ class RegexpSet
     
 
     function _match ($text, $regexps, $repeat) {
-    
         $pat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Axs";
 
-        if (! preg_match($pat, $text, $m))
+        if (! preg_match($pat, $text, $m)) {
             return false;
+        }
         
         $match = new RegexpSet_match;
         $match->postmatch = substr($text, strlen($m[0]));
@@ -137,7 +140,6 @@ class RegexpSet
                           HTML::dt("prematch"),
                           HTML::dd(HTML::pre($match->prematch))));
         */
-        
         return $match;
     }
 }
