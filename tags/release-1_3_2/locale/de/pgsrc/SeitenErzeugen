@@ -1,0 +1,32 @@
+From [no address given]  Tue Dec 18 22:49:54 2001
+Subject: SeitenErzeugen
+From: [no address given] (PhpWiki)
+Date: Sun, 16 Dec 2001 05:22:03 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.0-jeffs-hacks)
+Content-Type: application/x-phpwiki;
+  pagename=SeitenErzeugen;
+  flags="";
+  lastmodified=1008498123;
+Content-Transfer-Encoding: quoted-printable
+
+Um dem Wiki eine neue Seite hinzuzuf=FCgen mu=DFt du dir nur einen =
+sinnvollen Titel einfallen lassen, alle W=F6rter im Titel gro=DFschreiben =
+und sie AufDieseArtZusammenfuegen. Wiki erkennt dies automatisch als einen =
+Hyperlink. __Umlaute kannst du in Titeln auch verwenden: [[den Namen in =
+eckige Klammern so einschlie=DFen].__
+
+Dann kannst du das Fragezeichen am Ende des neuen Hyperlinks anklicken, =
+und Wiki =F6ffnet einen Editor zum Erstellen der neuen Seite.
+
+Wenn du ein Dokument mit aufwendigen Formatierungen zum Wiki hinzuf=FCgen =
+willst, ist es vielleicht einfacher, einen Link zu diesem Dokument ins =
+Wiki einzuf=FCgen statt das Dokument selbst. Zum Beispiel:
+
+ Die Homepage des PhpWiki Projektes: http://phpwiki.sourceforge.net/
+
+Wiki unterst=FCzt keine HTML-Tags (siehe TextFormatierungsRegeln). =
+<tags>werden einfach wie normaler Text angezeigt.</tags> Wiki soll so =
+einfach wie m=F6glich sein, damit es jeder benutzen kann.
+
+Es gibt eine Funktion, durch die der Systemverwalter HTML in Dokumenten =
+erlauben kann, das f=FChrt aber zu Sicherheitsrisiken.

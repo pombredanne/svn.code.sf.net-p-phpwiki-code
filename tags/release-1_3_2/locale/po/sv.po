@@ -1,0 +1,1136 @@
+# sv.po -- PhpWiki's Swedish language file
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# Jon Åslund <jooon@hem.passagen.se>, 2001.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: phpwiki 1.1.9\n"
+"POT-Creation-Date: 2001-12-19 10:48-0500\n"
+"PO-Revision-Date: 2001-01-27 01:58+0200\n"
+"Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../templates/browse.html:34
+#, fuzzy
+msgid "Note:"
+msgstr "ingen"
+
+#: ../templates/browse.html:34
+msgid "You are viewing an old revision of this page."
+msgstr ""
+
+#: ../templates/browse.html:35
+#, fuzzy
+msgid "View the current version"
+msgstr "Arkiverad version"
+
+#: ../templates/browse.html:50
+#, fuzzy, c-format
+msgid "Last edited on %s."
+msgstr "senast ändrad %s"
+
+#: ../templates/browse.html:52
+#, c-format
+msgid "Version %s, saved on %s."
+msgstr ""
+
+#: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
+#: ../lib/plugin/RecentChanges.php:264 ../lib/plugin/RecentChanges.php:309
+#: ../templates/browse.html:56
+msgid "RecentChanges"
+msgstr "SenasteÄndringar"
+
+#: ../templates/browse.html:57
+msgid "FindPage"
+msgstr ""
+
+#: ../templates/browse.html:60
+#, fuzzy
+msgid "Quick Search"
+msgstr "Snabb titelsökning:"
+
+#: ../templates/browse.html:70
+msgid "Page locked"
+msgstr ""
+
+#: ../templates/browse.html:73 ../templates/editpage.html:24
+msgid "Edit"
+msgstr ""
+
+#: ../templates/browse.html:76
+msgid "Edit old revision"
+msgstr ""
+
+#: ../templates/browse.html:81
+#, fuzzy
+msgid "Unlock page"
+msgstr "Ta bort sida"
+
+#: ../templates/browse.html:83
+#, fuzzy
+msgid "Lock page"
+msgstr "Ta bort sida"
+
+#: ../lib/removepage.php:20 ../templates/browse.html:85
+msgid "Remove page"
+msgstr "Ta bort sida"
+
+#: ../templates/browse.html:89 ../templates/browse.html:92
+#, fuzzy
+msgid "Diff"
+msgstr "Diff av %s."
+
+#: ../templates/browse.html:97
+#, c-format
+msgid "You are signed in as %s"
+msgstr ""
+
+#: ../templates/browse.html:98
+msgid "SignOut"
+msgstr ""
+
+#: ../templates/browse.html:100 ../templates/editpage.html:74
+msgid "SignIn"
+msgstr ""
+
+#: ../templates/browse.html:117
+msgid "PHP Warnings"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:123
+#: ../templates/browse.html:124
+msgid "DebugInfo"
+msgstr ""
+
+#: ../templates/editpage.html:15
+msgid "Edit:"
+msgstr ""
+
+#: ../templates/editpage.html:29
+msgid "Preview only!  Changes not saved."
+msgstr ""
+
+#: ../templates/editpage.html:35
+msgid "Warning: You are editing an old revision."
+msgstr ""
+
+#: ../templates/editpage.html:36
+msgid "Saving this page will overwrite the current version."
+msgstr ""
+
+#: ../templates/editpage.html:56
+msgid "Summary:"
+msgstr ""
+
+#: ../templates/editpage.html:63
+msgid "This is a minor change."
+msgstr ""
+
+#: ../templates/editpage.html:66
+msgid "Preview"
+msgstr ""
+
+#: ../templates/editpage.html:67
+msgid "Save"
+msgstr ""
+
+#: ../templates/editpage.html:71
+#, c-format
+msgid "You are signed in as %s."
+msgstr ""
+
+#: ../templates/editpage.html:73
+#, c-format
+msgid "Author will be logged as %s."
+msgstr ""
+
+#: ../templates/editpage.html:80
+#, c-format
+msgid "You can change the size of the editing area in %s."
+msgstr ""
+
+#: ../templates/editpage.html:80
+msgid "UserPreferences"
+msgstr ""
+
+#: ../templates/editpage.html:81
+#, fuzzy, c-format
+msgid "See %s tips for editing."
+msgstr "Tack för att du redigerade %s."
+
+#: ../templates/editpage.html:81
+msgid "GoodStyle"
+msgstr ""
+
+#: ../templates/editpage.html:85
+msgid "TextFormattingRules"
+msgstr ""
+
+#: ../templates/editpage.html:85
+msgid "Synopsis"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:9
+msgid "BackLinks"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:13
+#, c-format
+msgid "Get BackLinks for %s"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:44
+#, c-format
+msgid "These pages link to %s:"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:44
+#, c-format
+msgid "No pages link to %s."
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
+msgid "Calendar"
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:57
+msgid "Previous Month"
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:61
+msgid "Next Month"
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:114
+#, c-format
+msgid "Edit %s"
+msgstr ""
+
+#: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
+#, fuzzy
+msgid "FullTextSearch"
+msgstr "Sökresultat för fulltextsökning"
+
+#: ../lib/plugin/FullTextSearch.php:16
+#, fuzzy
+msgid "Full Text Search"
+msgstr "Sökresultat för fulltextsökning"
+
+#: ../lib/plugin/FullTextSearch.php:52
+#, c-format
+msgid "Full text search results for '%s'"
+msgstr ""
+
+#: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
+msgid "<no matches>"
+msgstr ""
+
+#: ../lib/plugin/HelloWorld.php:10
+msgid "HelloWorld"
+msgstr ""
+
+#: ../lib/plugin/HelloWorld.php:14
+msgid "Simple Sample Plugin"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:15
+msgid "IncludePage"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:58
+#, c-format
+msgid "<%s: no such section>"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:72
+msgid "no page specified"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:79
+#, c-format
+msgid "recursive inclusion of page %s"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:88
+#, c-format
+msgid "%s(%d): no such revision"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:111
+#, c-format
+msgid "Included from %s"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:12
+msgid "LikePages"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:16
+#, c-format
+msgid "List LikePages for %s"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:39
+#, c-format
+msgid "Page names with prefix '%s'"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:44
+#, c-format
+msgid "Page names with suffix '%s'"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:57
+#, c-format
+msgid "These pages share an initial or final title word with '%s'"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:93
+msgid "<none>"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:9
+msgid "MostPopular"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:13
+msgid "List the most popular pages"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:27
+msgid "Hits"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:28
+msgid "Page Name"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:42
+#, c-format
+msgid "The %s most popular pages of this wiki:"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:71
+#, c-format
+msgid "PageHistory for %s"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:86
+msgid "Check any two boxes to compare revisions."
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:88
+msgid "compare revisions"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:90
+#, c-format
+msgid "Check any two boxes then %s."
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:144 ../lib/plugin/PageHistory.php:182
+#, fuzzy, c-format
+msgid "Version %d"
+msgstr "version %s"
+
+#: ../lib/plugin/PageHistory.php:174
+msgid "History of changes."
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:42
+msgid "PageHistory"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:204
+#, c-format
+msgid "List PageHistory for %s"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:84
+msgid "Deleted."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:86
+#, fuzzy
+msgid "New page."
+msgstr "Ta bort sida"
+
+#: ../lib/plugin/RecentChanges.php:98
+msgid "(diff)"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:122
+msgid "RSS available"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:132
+msgid "edits"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:134
+msgid "major edits"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:136
+msgid "minor edits"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:140
+#, fuzzy, c-format
+msgid "The %d most recent %s during the past %.1f days are listed below."
+msgstr "De senaste ändrade sidorna listas nedan."
+
+#: ../lib/plugin/RecentChanges.php:143
+#, fuzzy, c-format
+msgid "The %d most recent %s are listed below."
+msgstr "De senaste ändrade sidorna listas nedan."
+
+#: ../lib/plugin/RecentChanges.php:148
+#, fuzzy, c-format
+msgid "The most recent %s during the past %.1f days are listed below."
+msgstr "De senaste ändrade sidorna listas nedan."
+
+#: ../lib/plugin/RecentChanges.php:151
+#, c-format
+msgid "All %s are listed below."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:159
+msgid "RecentEdits"
+msgstr ""
+
+#: ../lib/main.php:26 ../lib/main.php:85 ../lib/main.php:87
+#: ../lib/plugin/RecentChanges.php:247
+msgid "HomePage"
+msgstr "Framsida"
+
+#: ../lib/plugin/RecentChanges.php:252
+msgid "Search"
+msgstr "Sök"
+
+#: ../lib/plugin/RecentChanges.php:253 ../lib/plugin/TitleSearch.php:16
+#, fuzzy
+msgid "Title Search"
+msgstr "Sökresultat för fulltextsökning"
+
+#: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:255
+#: ../lib/plugin/TitleSearch.php:12
+#, fuzzy
+msgid "TitleSearch"
+msgstr "Sökresultat för fulltextsökning"
+
+#: ../lib/plugin/TitleSearch.php:48
+#, c-format
+msgid "Title search results for '%s'"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:14
+#, c-format
+msgid "Get debugging information for %s."
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:45
+#, c-format
+msgid "Querying backend directly for '%s'"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:51
+#, c-format
+msgid "No pagedata for %s"
+msgstr ""
+
+#: ../lib/WikiDB.php:837
+#, fuzzy, c-format
+msgid "Describe [%s] here."
+msgstr "Beskriv %s här."
+
+#: ../lib/WikiUser.php:97
+#, c-format
+msgid "to perform action '%s'"
+msgstr ""
+
+#: ../lib/WikiUser.php:99
+msgid "to do that"
+msgstr ""
+
+#: ../lib/WikiUser.php:100
+msgid "You must be logged in as an administrator"
+msgstr ""
+
+#: ../lib/WikiUser.php:181
+msgid ""
+"You must set the administrator account and password before you can log in."
+msgstr ""
+
+#: ../lib/WikiUser.php:193
+msgid "You entered an invalid login or password."
+msgstr "Du har angett ett otillåtet användarnamn eller lösenord."
+
+#: ../lib/WikiUser.php:196
+msgid "You can log in using any valid WikiWord as a user ID."
+msgstr ""
+
+#: ../lib/WikiUser.php:197
+msgid "(Any password will work, except, of course for the admin user.)"
+msgstr ""
+
+#: ../lib/diff.php:172
+#, fuzzy
+msgid "version"
+msgstr "version %s"
+
+#: ../lib/diff.php:175
+#, c-format
+msgid "last modified on %s"
+msgstr "senast ändrad %s"
+
+#: ../lib/diff.php:178
+#, c-format
+msgid "by %s"
+msgstr "av %s"
+
+#: ../lib/diff.php:180
+msgid "None"
+msgstr "ingen"
+
+#: ../lib/diff.php:201 ../lib/diff.php:211
+#, fuzzy, c-format
+msgid "version %d"
+msgstr "version %s"
+
+#: ../lib/diff.php:205
+#, fuzzy
+msgid "current version"
+msgstr "Arkiverad version"
+
+#: ../lib/diff.php:222
+msgid "previous major revision"
+msgstr ""
+
+#: ../lib/diff.php:231
+msgid "revision by previous author"
+msgstr ""
+
+#: ../lib/diff.php:238
+msgid "previous revision"
+msgstr ""
+
+#: ../lib/diff.php:251
+#, c-format
+msgid "Differences between %s and %s of %s."
+msgstr ""
+
+#: ../lib/diff.php:255
+msgid "Previous Major Revision"
+msgstr ""
+
+#: ../lib/diff.php:256
+msgid "Previous Revision"
+msgstr ""
+
+#: ../lib/diff.php:257
+msgid "Previous Author"
+msgstr ""
+
+#: ../lib/diff.php:267
+msgid "Other diffs:"
+msgstr ""
+
+#: ../lib/diff.php:275
+#, fuzzy
+msgid "Newer page:"
+msgstr "Ta bort sida"
+
+#: ../lib/diff.php:276
+msgid "Older page:"
+msgstr ""
+
+#: ../lib/diff.php:284
+msgid "Versions are identical"
+msgstr "Versionerna är identiska"
+
+#: ../lib/diff.php:298
+#, fuzzy, c-format
+msgid "Diff: %s"
+msgstr "Diff av %s."
+
+#: ../lib/editpage.php:26 ../lib/savepage.php:45
+msgid "This page has been locked by the administrator and cannot be edited."
+msgstr "Den här sidan är låst av administratören och kan ej redigeras."
+
+#: ../lib/editpage.php:28 ../lib/savepage.php:36 ../lib/savepage.php:47
+msgid "Sorry for the inconvenience."
+msgstr "Ledsen för allt besvär."
+
+#: ../lib/editpage.php:31 ../lib/savepage.php:50
+#, c-format
+msgid "Problem while editing %s"
+msgstr "Har problem med att redigera %s"
+
+#: ../lib/loadsave.php:17
+msgid "Complete."
+msgstr ""
+
+#: ../lib/loadsave.php:18
+#, c-format
+msgid "Return to %s"
+msgstr ""
+
+#: ../lib/loadsave.php:125
+msgid "You must specify a directory to dump to"
+msgstr ""
+
+#: ../lib/loadsave.php:130
+#, c-format
+msgid "Cannot create directory '%s'"
+msgstr ""
+
+#: ../lib/loadsave.php:132
+#, c-format
+msgid "Created directory '%s' for the page dump..."
+msgstr ""
+
+#: ../lib/loadsave.php:134
+#, c-format
+msgid "Using directory '%s'"
+msgstr ""
+
+#: ../lib/loadsave.php:137
+msgid "Dumping Pages"
+msgstr ""
+
+#: ../lib/loadsave.php:148
+#, fuzzy, c-format
+msgid "saved as %s"
+msgstr "version %s"
+
+#: ../lib/loadsave.php:153
+#, c-format
+msgid "couldn't open file '%s' for writing"
+msgstr ""
+
+#: ../lib/loadsave.php:156
+#, c-format
+msgid "%s bytes written"
+msgstr ""
+
+#: ../lib/loadsave.php:178
+#, fuzzy
+msgid "Empty pagename!"
+msgstr "Ange ett sidnamn"
+
+#: ../lib/loadsave.php:198
+#, c-format
+msgid "from %s"
+msgstr ""
+
+#: ../lib/loadsave.php:202
+#, fuzzy
+msgid "new page"
+msgstr "Ta bort sida"
+
+#: ../lib/loadsave.php:208
+#, c-format
+msgid "is identical to current version %d"
+msgstr ""
+
+#: ../lib/loadsave.php:210
+msgid "- skipped"
+msgstr ""
+
+#: ../lib/loadsave.php:221
+#, fuzzy, c-format
+msgid "- saved to database as version %d"
+msgstr "version %s"
+
+#: ../lib/loadsave.php:313
+#, c-format
+msgid "MIME file %s"
+msgstr ""
+
+#: ../lib/loadsave.php:316
+#, c-format
+msgid "Serialized file %s"
+msgstr ""
+
+#: ../lib/loadsave.php:327
+#, c-format
+msgid "plain file %s"
+msgstr ""
+
+#: ../lib/loadsave.php:341 ../lib/loadsave.php:360
+msgid "Skipping"
+msgstr ""
+
+#: ../lib/loadsave.php:399
+#, c-format
+msgid "Bad file type: %s"
+msgstr ""
+
+#: ../lib/loadsave.php:414
+#, c-format
+msgid "Loading '%s'"
+msgstr ""
+
+#: ../lib/loadsave.php:426
+msgid "The PhpWiki programming team"
+msgstr ""
+
+#: ../lib/loadsave.php:428
+msgid "Loading up virgin wiki"
+msgstr ""
+
+#: ../lib/loadsave.php:444
+msgid "No uploaded file to upload?"
+msgstr ""
+
+#: ../lib/loadsave.php:447
+#, c-format
+msgid "Uploading %s"
+msgstr ""
+
+#: ../lib/main.php:99
+#, c-format
+msgid "Action %s is disabled in this wiki."
+msgstr ""
+
+#: ../lib/prepend.php:31
+msgid "WikiFatalError"
+msgstr "WikiFatalError"
+
+#: ../lib/removepage.php:5
+#, c-format
+msgid "You are about to remove '%s' permanently!"
+msgstr "Du kommer att ta bort \"%s\" permanent!"
+
+#: ../lib/removepage.php:8
+#, fuzzy, c-format
+msgid "Click here to <a href=\"%s\">remove the page now</a>."
+msgstr "Klicka shär för <a href=\"%s\">att ta bort sidan nu</a>."
+
+#: ../lib/removepage.php:12
+#, fuzzy
+msgid "To cancel press the \"Back\" button of your browser."
+msgstr "Annars klicka på backaknappen i din webbläsare."
+
+#: ../lib/removepage.php:16
+#, fuzzy, c-format
+msgid "Removed page '%s' succesfully."
+msgstr "Tog bort sidan \"%s\"."
+
+#: ../lib/savepage.php:22
+msgid ""
+"PhpWiki is unable to save your changes, because another user edited and "
+"saved the page while you were editing the page too. If saving proceeded now "
+"changes from the previous author would be lost."
+msgstr ""
+"PhpWiki kan inte spara dina ändringar eftersom en annan användare ändrade "
+"och sparade sidan under tiden som du ändrade på sidan. Sparar du nu "
+"försvinner ändringarna gjorda av den förra användaren."
+
+#: ../lib/savepage.php:24
+msgid "In order to recover from this situation follow these steps:"
+msgstr "För att lösa situtationen, följ dessa steg:"
+
+#: ../lib/savepage.php:26
+msgid "Use your browser's <b>Back</b> button to go back to the edit page."
+msgstr ""
+"Använd webbläsarens <b>backaknapp</b> för att gå tillbaka till "
+"redigeringssidan."
+
+#: ../lib/savepage.php:28
+msgid ""
+"Copy your changes to the clipboard or to another temporary place (e.g. text "
+"editor)."
+msgstr ""
+"Kopiera dina ändringar till urklippet eller till ett annat temporärt ställe "
+"(t.ex. en texteditor)."
+
+#: ../lib/savepage.php:30
+msgid ""
+"<b>Reload</b> the page. You should now see the most current version of the "
+"page. Your changes are no longer there."
+msgstr ""
+"<b>Ladda om</b> sidan. Du kommer nu se den senaste versionen av sidan. Dina "
+"ändringar är inte där."
+
+#: ../lib/savepage.php:32
+msgid ""
+"Make changes to the file again. Paste your additions from the clipboard (or "
+"text editor)."
+msgstr ""
+"Ändra filen igen. Klistra in dina ändringar från urklippet (eller "
+"texteditorn)."
+
+#: ../lib/savepage.php:34
+msgid "Press <b>Save</b> again."
+msgstr "Klicka på <b>Spara</b> igen."
+
+#: ../lib/savepage.php:39
+#, c-format
+msgid "Problem while updating %s"
+msgstr "Har problem med att uppdatera %s"
+
+#: ../lib/savepage.php:55
+msgid "You have not made any changes."
+msgstr ""
+
+#: ../lib/savepage.php:56
+msgid "New version not saved."
+msgstr ""
+
+#: ../lib/savepage.php:58 ../lib/savepage.php:66
+#, c-format
+msgid "Edit aborted: %s"
+msgstr ""
+
+#: ../lib/savepage.php:63
+msgid "Bad form submission"
+msgstr ""
+
+#: ../lib/savepage.php:64
+msgid "Required form variables are missing."
+msgstr ""
+
+#: ../lib/savepage.php:152
+#, c-format
+msgid "Thank you for editing %s."
+msgstr "Tack för att du redigerade %s."
+
+#: ../lib/savepage.php:155
+msgid "Your careful attention to detail is much appreciated."
+msgstr "Din omstänksamhet för detaljer är mycket uppskattad."
+
+#: ../lib/stdlib.php:130
+msgid "BAD URL -- remove all of <, >, \""
+msgstr ""
+
+#: ../lib/stdlib.php:336
+msgid "Lock page to enable link"
+msgstr ""
+
+#: ../lib/stdlib.php:455
+#, c-format
+msgid "%d best incoming links:"
+msgstr "De %d mest använda ingående länkarna:"
+
+#: ../lib/stdlib.php:465
+#, c-format
+msgid "%d best outgoing links:"
+msgstr "De %d mest använda utgående länkarna:"
+
+#: ../lib/stdlib.php:476
+#, c-format
+msgid "%d most popular nearby:"
+msgstr "De %d mest populära grannarna:"
+
+#: ../lib/stdlib.php:526 ../lib/stdlib.php:532
+#, fuzzy
+msgid "Bad Version"
+msgstr "version %s"
+
+#: ../lib/stdlib.php:528
+#, c-format
+msgid "I'm sorry.  Version %d of %s is not in my database."
+msgstr ""
+
+#: ../lib/transform.php:108
+#, fuzzy
+msgid "Lists nested too deep in SetHTMLOutputMode"
+msgstr "Stackgräns överskriden i SetHTMLOutputMode"
+
+#: ../lib/ziplib.php:622
+#, c-format
+msgid "[%d] See [%s]"
+msgstr ""
+
+#: ../lib/ziplib.php:630
+msgid "!References"
+msgstr ""
+
+#: ../lib/ziplib.php:651
+#, c-format
+msgid "Can't parse %s"
+msgstr ""
+
+#: ../lib/ziplib.php:659
+#, c-format
+msgid "Bad %s"
+msgstr ""
+
+#: ../lib/ziplib.php:704
+#, c-format
+msgid "Unknown %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:26
+#, fuzzy, c-format
+msgid "Can't connect to database: %s"
+msgstr "Ger upp, kan ej skapa anslutning till databasen."
+
+#: ../lib/WikiDB/backend/PearDB.php:57
+msgid "WARNING: database still locked"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:711
+msgid "fatal database error"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:93
+#, c-format
+msgid "Creating new repository [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:128
+#, c-format
+msgid "Found [%s] in [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:182
+#, c-format
+msgid "Argument %s was not array"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:190
+msgid "no meta data found"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:243
+#, c-format
+msgid "FAILED for [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:337 ../lib/WikiDB/backend/cvs.php:347
+#: ../lib/WikiDB/backend/cvs.php:353 ../lib/WikiDB/backend/cvs.php:450
+#: ../lib/WikiDB/backend/cvs.php:456
+#, fuzzy
+msgid "Not Implemented"
+msgstr "Funktionen är ännu inte implementerad."
+
+#: ../lib/WikiDB/backend/cvs.php:520
+#, c-format
+msgid "Creating meta file for [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:614
+msgid "got revision information"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:619
+msgid "is initial release"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:622
+#, fuzzy
+msgid "returning old version"
+msgstr "Arkiverad version"
+
+#: ../lib/WikiDB/backend/cvs.php:689
+msgid "Unable to delete file, lock was not obtained."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:699
+msgid "Unable to open file"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:709
+#, fuzzy
+msgid "no message"
+msgstr "Framsida"
+
+#: ../lib/WikiDB/backend/cvs.php:749
+#, c-format
+msgid "unable to locate/open [%s], turning debug off"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:760
+#, c-format
+msgid "Preparing to execute [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:763
+#, c-format
+msgid "Command failed [%s], Output:"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:765
+#, c-format
+msgid "Command failed [%s], Return value: %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:768
+msgid "Done execution"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:782
+msgid "Unable to obtain read lock."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:789
+#, c-format
+msgid "Unable to open file '%s' for reading"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:808
+msgid "Timeout while obtaining lock."
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:817
+#, c-format
+msgid "Could not open file '%s' for writing"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:827
+#, c-format
+msgid "Copying from [%s] to [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:830
+msgid "Copying"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:835
+#, fuzzy, c-format
+msgid "Copied to [%s]"
+msgstr "Kopia av %s"
+
+#: ../lib/WikiDB/backend/cvs.php:837
+#, c-format
+msgid "Failed to copy [%s]"
+msgstr ""
+
+#: ../lib/WikiDB/backend/cvs.php:843
+msgid "Not copying"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dba.php:23
+#, c-format
+msgid "%s: Can't open dba database"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:330
+#, c-format
+msgid "Bad key in linktable: %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:352
+#, c-format
+msgid "Bad key %s in table"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:360
+#, c-format
+msgid "backlink entry missing for link %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/dbaBase.php:368
+#, c-format
+msgid "link entry missing for backlink %s"
+msgstr ""
+
+#: ../lib/WikiDB/dba.php:17
+#, c-format
+msgid ""
+"DBA files are in the %s directory. Please read the INSTALL file and move the "
+"DB file to a permanent location or risk losing all the pages!"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Version"
+#~ msgstr "version %s"
+
+#~ msgid "WikiDiff::apply: line count mismatch: %s != %s"
+#~ msgstr "WikiDiff::apply: radantalet stämmer inte: %s != %s"
+
+#~ msgid "WikiDiff::_check: failed"
+#~ msgstr "WikiDiff::_check: misslyckades"
+
+#~ msgid "WikiDiff::_check: edit sequence is non-optimal"
+#~ msgstr "WikiDiff::_check: ändringssekvensen är icke optimal"
+
+#~ msgid "WikiDiff Okay: LCS = %s"
+#~ msgstr "WikiDiff Ok: LCS = %s"
+
+#, fuzzy
+#~ msgid "Currently archived versions of"
+#~ msgstr "Nuvarande version"
+
+#~ msgid "Current page:"
+#~ msgstr "Nuvarande sida:"
+
+#~ msgid "Archived page:"
+#~ msgstr "Arkiverad sida:"
+
+#~ msgid "Searching for \"%s\" ....."
+#~ msgstr "Söker efter \"%s\" ....."
+
+#~ msgid "%d matches found in %d pages."
+#~ msgstr "%d träffar funna på %d sidor."
+
+#~ msgid "Error message: %s"
+#~ msgstr "Felmeddelande: %s"
+
+#~ msgid "Cannot open database %s, giving up."
+#~ msgstr "Ger upp, kan ej öppna databasen %s."
+
+#~ msgid "Insert/update failed: %s"
+#~ msgstr "Insättning/uppdatering misslyckades: %s"
+
+#~ msgid "Delete on %s failed: %s"
+#~ msgstr "Borttagning på %s misslyckades: %s"
+
+#~ msgid "Insert into %s failed: %s"
+#~ msgstr "Insättning till %s misslyckades: %s"
+
+#~ msgid "MySQL error: %s"
+#~ msgstr "MySQL-fel: %s"
+
+#~ msgid "Error writing page '%s'"
+#~ msgstr "Kunde inte spara sidan \"%s\""
+
+#~ msgid "Cannot delete '%s' from table '%s'"
+#~ msgstr "Kan ej ta bort \"%s\" från tabellen \"%s\""
+
+#~ msgid "Page name '%s' is not in the database"
+#~ msgstr "Sidnamnet \"%s\" finns inte i databasen"
+
+#, fuzzy
+#~ msgid "Show the page source"
+#~ msgstr "Visa källkoden och referenser för sidan"
+
+#~ msgid "PageInfo"
+#~ msgstr "Sidinformation för"
+
+#~ msgid "%d pages match your query."
+#~ msgstr "%d sidor matchar din fråga."
+
+#~ msgid "(first day for this Wiki)"
+#~ msgstr "(första dagen för den här Wikin)"
+
+#~ msgid "templates/browse.html"
+#~ msgstr "locale/sv/templates/browse.html"
+
+#~ msgid "templates/editpage.html"
+#~ msgstr "locale/sv/templates/editpage.html"
+
+#~ msgid "templates/editlinks.html"
+#~ msgstr "locale/sv/templates/editlinks.html"
+
+#~ msgid "templates/message.html"
+#~ msgstr "locale/sv/templates/message.html"
+
+#~ msgid "./pgsrc"
+#~ msgstr "locale/sv/pgsrc"
+
+#~ msgid "No page name passed into editpage!"
+#~ msgstr "Ingen sida är angiven!"
+
+#~ msgid "Go"
+#~ msgstr "\"Gå till sidan\""
+
+#~ msgid "Inserting page %s, version %s from %s"
+#~ msgstr "Sätter in sidan %s, version %s från %s"

@@ -1,0 +1,12 @@
+Mime-Version: 1.0
+Content-Type: application/x-phpwiki;
+  pagename=UserPreferences;
+  flags=PAGE_LOCKED
+Content-Transfer-Encoding: binary
+
+You can now set some user preferences.  The values of these preferences are currently stored in a cookie (so you must have cookies enabled to use this feature.)
+
+! !EditArea Dimensions.
+
+[Set Width | phpwiki:?action=setprefs&edit_area_width=3()]
+[Set Height | phpwiki:?action=setprefs&edit_area_height=3()]

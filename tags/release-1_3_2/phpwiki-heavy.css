@@ -1,0 +1,48 @@
+/* 
+ * phpwiki-heavy.css
+ *
+ * This is stuff which should be in phpwiki.css, but which breaks NS4.
+ */
+
+/* Hide the elements we put in just to get around NS4 bugs. */
+.ns4bug, DIV.br { display: none; }
+
+/* This makes spacings in NS4 too big. */
+.toolbar, DIV.toolbar { margin: 0.5ex 0ex; }
+
+/* This break NS4, but is necessary for IE4. */
+DIV.wikitext { width: auto; }
+
+/* Make Wikilinks inside <B> tags larger. */
+B .wiki, STRONG .wiki,
+B .wikipage, STRONG .wikipage
+{ font-size: larger; }
+
+/* This renders the ? invisible in OW4 */
+.wikiunknown A, .named-wikiunknown
+{ color: white; background-color: #600; }
+
+/* Make wikiaction links look like buttons */ 
+A.wikiaction, A.wikiadmin, INPUT.button
+{
+ border-style: outset;
+ border-width: thin;
+ color: #006;
+ padding-top: 0ex;
+ padding-bottom: 0ex;
+ padding-left: 0.2em;
+ padding-right: 0.2em;
+}
+
+/* Link icons */
+img.linkicon		{ vertical-align: middle; }
+
+/****************************************************************
+ **
+ ** Diff Output
+ **
+ *****************************************************************/
+.diff .block div { position: relative; padding-left: 1.5em; } 
+.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
+
+

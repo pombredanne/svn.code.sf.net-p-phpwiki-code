@@ -1,0 +1,15 @@
+From hostmaster@dairiki.org  Sat Feb 10 21:28:19 2001
+Subject: FullTextSearch
+From: hostmaster@dairiki.org (PhpWiki)
+Date: Wed, 12 Sep 2001 13:49:06 -0700
+Mime-Version: 1.0 (Produced by PhpWiki 1.1.x)
+Content-Type: application/x-phpwiki;
+  pagename=FullTextSearch;
+  flags=PAGE_LOCKED
+Content-Transfer-Encoding: binary
+
+<?plugin FullTextSearch?>
+----
+Search Again:
+<?plugin-form TitleSearch?>
+<?plugin-form FullTextSearch?>

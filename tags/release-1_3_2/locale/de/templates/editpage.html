@@ -1,0 +1,112 @@
+<?php echo "<?xml version='1.0' encoding='ISO-8859-1'?>\n"; ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<!-- phpwiki source:
+$Id: editpage.html,v 1.8 2001-12-01 14:51:06 carstenklapp Exp $
+${RCS_IDS}
+-->
+<base href="${BASE_URL}" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="stylesheet" title="phpwiki" href="${CSS_URL}" type="text/css" />
+
+<title>${SPLIT_PAGE} $_("Editieren") </title>
+</head>
+
+<body>
+<div><a class="wikilink"
+        href="${BROWSE}HomePage"
+        ><img src="${LOGO}" border="0" align="right"
+	     alt="[phpwiki]" width="50" height="50" /></a></div>
+<h1>
+<a href="${BROWSE}${PAGEURL}" 
+        class="wikilink"><span class="wikiword">${PAGE}</span></a> $_("Editieren")
+</h1>
+
+<?php if (!empty($PREVIEW_CONTENT)) { ?>
+  <p><strong>$_("Preview only!  Changes not saved.")</strong></p>
+  <div class="wikitext">${PREVIEW_CONTENT}</div>
+  <hr class="ignore" noshade />
+<?php } ?>
+
+<?php if (!$IS_CURRENT) { ?>
+  <p><strong>$_("Warning: You are editing an old revision.")
+        $_("Saving this page will overwrite the current version.")</strong></p>
+  <hr class="ignore" noshade />
+<?php } ?>
+
+<?php /*
+ * FIXME: Hack! 
+ * The URL used for the form action parameter is bogus.
+ * This is needed, otherwise the redirect to the real browser
+ * page won't work with some browsers (NS4).  (NS4 won't accept
+ * a redirect from a page to itself.)
+ */ ?>
+
+<form method="post" action="${BROWSE}EditPage">
+<textarea class="wikiedit"
+          name="content"
+          rows="${EDIT_AREA_HEIGHT}"
+          cols="${EDIT_AREA_WIDTH}"
+          wrap="virtual">$FORMVARS[content]</textarea>
+
+<div class="toolbar" style="text-align: center;">
+  $_("Der Auszug: ")<input type="text" class="wikitext"
+                       name="summary" value="$FORMVARS[summary]" size="50" />
+</div>
+<table class="toolbar" width="100%"
+       cellpadding="0" cellspacing="0" border="0"><tr valign="baseline">
+  <td>
+    <input type="checkbox" name="minor_edit" value="checked" $FORMVARS[minor_edit] />
+    Geringf&uuml;gige &Auml;nderung, alte Version nicht archivieren.
+  </td>
+  <td align="center">
+    <input type="submit" class="button" name="preview" value=_("Vorschauen") />
+    | <input type="submit" class="button" value=_("Speichern") />
+  </td>
+  <td align="right">
+    <?php if ($user->is_authenticated()) { ?>
+      $_("Du bist als") <?php echo LinkWikiWord($USERID); ?> $_("eingemeldet.")
+    <?php } else { ?>
+      $_("Der Autor wird als") <i>${USERID}</i> aufgenommen.
+    <?php } ?>
+  </td>
+</tr></table>
+<p style="clear: both; padding: 2ex 0ex 0ex;">
+  $_("You can change the size of the editing area in")
+  <?php echo LinkExistingWikiWord(_("UserPreferences")); ?>.
+  <?php echo LinkExistingWikiWord(_("GuterStil")) ?> lesen: Tips f&uuml;rs Editieren.
+</p>
+<hr noshade="noshade" />
+<small>
+<?php echo LinkExistingWikiWord(_("TextFormatierungsRegeln")) ?><br>
+<b>$_("Hervorhebung:")</b>
+  '' $_("für kursiv"),
+  __ $_("für starke Betonung"),
+  ''__ $_("für fett u. kursiv")
+<br /><b>$_("Listen:")</b>
+  * $_("für Ebenen"), #
+              $_("für numerierte Listen"),
+  ''; $_("Das Wort") : $_("Die Wortbestimmung")'' $_("für glossarähnliche Listen")
+<br /><b>$_("Querverweise:")</b>
+  $_("GroßbuchstabenZusammensetzen oder den Namen in eckige Klammern einschließen [ein Link] oder URL [http://cool.wiki.int/].")
+<br /><b>$_("Fußnoten:")</b>
+   $_("Benutze [1],[2],[3],...")
+<br /><b>$_("Das Erstellen eines Links verhindern:")</b>
+   $_("das Wort mit ein '!' beginnen: !NichtLinken,")
+   $_("Links so angeben: [[Text | URL] (zweimal '[')")
+<br /><b>$_("Verschiedenes:")</b>
+   "!", "!!", "!!!" $_("für Überschriften"),
+   "%%%" $_("makes a linebreak"),
+   "- - - -" $_("eine Linie zu zeichen.")
+</small>
+
+<input type="hidden" name="action" value="save" />
+<input type="hidden" name="pagename" value="$FORMVARS[pagename]" />
+<input type="hidden" name="editversion" value="$FORMVARS[editversion]" />
+<input type="hidden" name="version" value="$FORMVARS[version]" />
+</form>
+</body>
+</html>

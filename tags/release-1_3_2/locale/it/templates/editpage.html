@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- phpwiki source:
+###RCS_IDS###
+-->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+###ROBOTS_META###
+<base href="###BASE_URL###">
+<title>Edit: ###SPLIT_PAGE###</title>
+<link rel="stylesheet" title="phpwiki" href="###CSS_URL###" type="text/css">
+</head>
+
+<body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
+<form class="wikiaction" method="POST" action="###BROWSE_PAGE###">
+<h1><a class="wikilink" href="###BROWSE###PaginaPrincipale"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+Modifica <span="wikiword">###PAGE###</span>
+<input type="submit" value=" Save "></h1>
+
+<textarea name="content"
+          rows="###EDIT_AREA_HEIGHT###"
+          cols="###EDIT_AREA_WIDTH###"
+          wrap="virtual">###CONTENT###</textarea>
+<br>
+###IF:MINOR_EDIT_CHECKBOX###
+  ###MINOR_EDIT_CHECKBOX### This is a minor change, don't archive old version.
+  <br>
+###ENDIF:MINOR_EDIT_CHECKBOX###
+<input type="checkbox" name="convert" value="tabs" >
+Non posso scrivere le tabulazioni.
+Per favore <a class="wikilink" href="###BROWSE###ConvertiGliSpaziInTabs"><span class="wikiword">ConvertiGliSpaziInTab</span></a>
+per me quando salvo.
+<p>You can change the size of the editing area.
+See <a class="wikilink" href="###BROWSE###UserPreferences"><span class="wikiword">UserPreferences</span></a>.</p>
+<p><a class="wikilink" href="###BROWSE###BuonStile"><span class="wikiword">BuonStile</span></a> consigli per le modifiche.</p>
+
+###IF COPY###<br><a class="wikiaction" href="###ACTION###edit&amp;version=archive">ModificaCopia</a> dell'autore precedente
+
+<hr noshade>
+<small>
+<?php echo LinkExistingWikiWord(_("RegoleDiFormattazioneDelTestoTextFormattingRules")) ?><br>
+<b>Enfasi:</b> '' per corsivo, __ per grassetto, ''__ per entrambi
+<br><b>Liste:</b> * per liste puntate, # per liste numerate, ''; term : definition'' per liste di definizioni
+<br><b>Collegamenti:</b> UnisciParoleConInizialiInMaiuscolo o usa le parentesi quadre per un [collegamento ad una pagina] o un URL [http://cool.wiki.int/].
+<br><b>Footnotes:</b> Use [1],[2],[3],... 
+<br><b>Preventing linking:</b> Avoid linking with "!":
+!DoNotHyperlink, name links like [[text | URL] (double up on the "[")
+<br><b>Varie:</b>"!", "!!", "!!!" definisce le intestazioni,
+"%%%" va a capo, "- - - -" crea una linea orizzontale, usa "[" con "[["
+per le sequenze di escape
+</small>
+
+<input type="hidden" name="action" value="save">
+<input type="hidden" name="pagename" value="###PAGE###">
+<input type="hidden" name="editversion" value="###VERSION###">
+</form>
+</body>
+</html>

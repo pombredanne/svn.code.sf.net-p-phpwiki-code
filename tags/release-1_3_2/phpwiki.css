@@ -1,0 +1,277 @@
+/*
+  Classes:
+
+  DIV.wikitext - the transformed wiki page text.
+
+  A.wiki           - link to page in wiki.
+  A.named-wiki    - a named link to page in wiki (from e.g. [name|WikiPage]).
+  A.interwiki     - link to page in another wiki
+    SPAN.wikipage    - page name within interwiki link.
+  A.named-interwiki  - link to page in another wiki
+  A.url           - link to external URL from wiki page.
+  A.named-url     - link to external URL from wiki page.
+
+  .wikiunknown A, .wikiunknown U
+  .named-wikiunknown A, .named-wikiunknown U
+  
+  A.wikiaction
+  A.wikiadmin
+  .wikiunsafe
+
+  A.backlinks
+  
+TODO: Get rid of tables in wikiaction forms.
+*/
+
+/* NS4 & OmniWeb 4 don't grok @import.  This allows us to put things which
+ * break NS4 and OW4 in another file.
+ */
+@import url(phpwiki-heavy.css);
+
+BODY { background: ivory; } //#ffe
+
+BODY { font-family: arial, helvetica, sans-serif; }
+
+/*
+ * NS4, defaults from BODY don't always propagate correctly.
+ * So we need this:
+ */ 
+.wikitext, .toolbar, P, TD { font-family: arial, helvetica, sans-serif; }
+
+INPUT.button { font-family: arial, helvetica, sans-serif; }
+
+.wikitext PRE { font-family: monospace; }
+
+DIV.wikitext {
+ background: white;
+ border: thin;
+ border-color: black;
+ border-style: solid;
+ padding-left: 0.8em; 
+ padding-right: 0.8em; 
+ padding-top: 0px;
+ padding-bottom: 0px;
+ margin: 0.5ex 0px;
+ /* This breaks Netscape 4: (display does not go full width).
+    width: auto;
+ */
+ clear: both;
+}
+
+INPUT.wikitext { margin:0px; }
+
+DIV.toolbar { margin: 1ex 0ex; }
+
+/*
+ * This is a kluge for NS4 which doesn't honor the clear: settings on
+ * .tool-left and .tool-right.
+ *
+ * Putting in explicit <br clear="all"> messes up the formatting in
+ * other browsers.  Instead we'll put in a:
+ *
+ *  <div class="br"><br class="ignore" clear="all"></div>
+ *
+ * The clear:both on DIV.br seems to work.  And we'll disable the <br> altogether (in
+ * CSS aware browsers) by setting display:none.
+ *
+ * Actually, I haven't yet found a browser which doesn't put a line break
+ * between successive <div>'s.  This makes the <br class="ignore"> completely
+ * unnecessary. 
+ */
+DIV.br { clear:both; line-height: 0px; }
+.ignore { display: none; }
+ 
+DIV.errors {
+ background: #eee;
+ border: medium;
+ border-color: red;
+ border-style: solid;
+ padding-left: 0.8em; 
+ padding-right: 0.8em; 
+ padding-top: 0px;
+ padding-bottom: 0px;
+ margin: 1em;
+ /* This breaks Netscape 4: (display does not go full width).
+    width: auto;
+ */
+ clear: both;
+}
+
+.errors H4 {
+ color:red;
+ text-decoration: underline;
+ margin:0px;
+}
+
+P.error {
+ font-size: smaller;
+ font-family: monospace;
+ margin:0px;
+}
+.error UL
+{
+ font-size: smaller;
+ font-family: monospace;
+}
+
+/*
+ * Style for <hr>s in wiki markup.
+ */
+.wikitext HR {
+ background: #666;
+ height: 1px;
+ width: 90%;
+ margin-left:auto;
+ margin-right:auto;
+ align:center; /* for NS4 */
+}
+
+
+/*
+ * Link styles
+ */
+/* Wiki Links */
+A.wiki { text-decoration: none; }
+.wiki  { font-weight: bold; }
+/* This is obscene in NS4
+B .wiki, STRONG .wiki { font-size: larger; }
+*/
+
+/* Unknown links */
+.wikiunknown A, .named-wikiunknown A, .wikiunknown U
+{ text-decoration: none; }
+
+.wikiunknown, .named-wikiunknown
+{color: #600; }
+
+/* Interwiki links */
+A.interwiki { text-decoration: none; }
+.wikipage   { font-weight: bold; }
+
+.interwiki,
+I .interwiki .wikipage, EM .interwiki .wikipage
+{ font-style: oblique; }
+
+.interwiki .wikipage,
+I .interwiki, EM .interwiki  
+{ font-style: normal; }
+
+/*
+ * wikiaction, wikiadmin, wikiunsafe:
+ */
+A.wikiaction, A.wikiadmin       { text-decoration: none; }
+A.wikiaction, .wikiaction TABLE, SPAN.wikiaction  { background-color: #ddd; }
+A.wikiadmin, .wikiadmin TABLE   { background-color: #fdd; }
+.wikiunsafe                     { background-color: #ccc; }
+
+/*
+ * No border on external link icons.
+ */
+img.linkicon, img.rssicon	{ border: 0px; }
+img.rssicon		{ vertical-align: top; }
+/* This screws up NS4, moved to phpwiki-heavy.css 
+img.linkicon		{ vertical-align: middle; }
+*/
+
+ 
+/*
+ * Put a border around wikiaction forms:
+ * This doesn't work for NS4.
+ */
+.wikiaction TABLE, .wikiadmin TABLE
+{
+  border-style: ridge;
+  border-width: medium;
+}
+.wikiaction TABLE { border-color: #9cf; }
+.wikiadmin TABLE  { border-color: #f99; }
+
+/* Backlinks */
+A.backlinks { color: #006; }
+
+/* Make the textarea on the edit page full width */
+TEXTAREA.wikiedit { width: 100%; margin-top: 1ex; }
+
+
+/* Calendar plugin */
+
+a.cal-hide, a.cal-arrow { text-decoration: none; }
+.cal-arrow { font-weight: bold; }
+.cal-header { font-size: larger; }
+.cal-dayname { font-size: smaller; text-decoration: underline; }
+table.cal { border: thin solid black; } 
+
+
+/* IncludePage plugin */
+.transclusion-title {
+  font-style: oblique;
+  font-size: smaller; /* 0.75em; */
+  text-decoration: underline;
+  text-align: right;
+} 
+
+div.transclusion { 
+  background: #cfc;
+  border: thin;
+  border-style: solid;
+  padding-left: 0.8em; 
+  padding-right: 0.8em; 
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin: 0.5ex 0px;
+}
+
+/* The transclusion of the TextEditingRules Synopsis on templates/editpage.html */
+div.wiki-edithelp .transclusion {
+  font-size: smaller;
+  background: inherit;
+  padding: 0.5ex 0.5em;
+  margin: 0.2ex 5%;
+}
+div.wiki-edithelp .transclusion p {
+  margin: 0;
+}
+div.wiki-edithelp {
+  background: #fff8dc; /* darker ivory */
+  font-size: smaller;
+  padding: 0.05ex 1%;
+}
+  
+/****************************************************************
+ **
+ ** Diff Output
+ **
+ *****************************************************************/
+.diff .block	{ padding: 0.5ex 0.5em; margin: 0.5ex 0; }
+.diff .block tt	{ font-weight: bold; }
+.diff del,
+.diff ins	{ font-weight: bold; text-decoration: none; }
+
+/* These screw up NS4 --- moved to phpwiki-heavy.css
+.diff .block div { position: relative; padding-left: 1.5em; } 
+.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
+*/
+
+.diff .block	{ background: #ccc; }
+.diff .context	{ background: #fff; }
+.diff .original,
+.diff .deleted	{ background: #fcc; }
+.diff .final,
+.diff .added	{ background: #cfc; }
+/*
+.diff .original	{ background: #feb; }
+.diff .final	{ background: #efb; }
+*/
+/* These don't work in NS4 -- it completely ignores <del> and <ins>. */
+.diff del	{ background: #f99; }
+.diff ins	{ background: #9f9; }
+
+
+
+/* For emacs users
+ *
+ * Local Variables:
+ * mode: c
+ * c-file-style: cc-mode
+ * End:
+ */

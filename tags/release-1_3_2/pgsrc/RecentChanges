@@ -1,0 +1,16 @@
+From hostmaster@dairiki.org  Sat Feb 10 21:28:19 2001
+Subject: RecentChanges
+From: hostmaster@dairiki.org (PhpWiki)
+Date: Fri, 31 Aug 2001 22:07:14 -0700
+Mime-Version: 1.0
+Content-Type: application/x-phpwiki;
+  pagename=RecentChanges;
+  flags=PAGE_LOCKED
+Content-Transfer-Encoding: binary
+
+The most recently changed pages are listed below.  See RecentEdits for a list of all recent changes.
+
+Show changes for: [1 day|phpwiki:?days=1] | [3 days|phpwiki:?days=3] | [7 days|phpwiki:?days=7] | [30 days|phpwiki:?days=30] | [90 days|phpwiki:?days=90] | [...|phpwiki:?days=-1]
+--------
+<?plugin RecentChanges days||=30?>
+-------

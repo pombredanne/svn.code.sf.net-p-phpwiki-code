@@ -1,0 +1,6 @@
+LikePages are pages which share an initial or final word with that page.
+
+See also Wiki:LikePages and MeatBall:LikePages.
+----
+<?plugin LikePages?>
+

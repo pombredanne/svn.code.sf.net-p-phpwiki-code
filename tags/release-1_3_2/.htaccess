@@ -1,0 +1,7 @@
+# $Id: .htaccess,v 1.2 2001-11-08 16:35:05 dairiki Exp $
+<IfModule mod_php4.c>
+  php_flag register_globals off
+  php_flag track_vars on
+
+  php_flag allow_url_fopen off
+</IfModule>
