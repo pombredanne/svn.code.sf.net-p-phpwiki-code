@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.25 2004-11-27 14:39:04 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.26 2004-12-06 19:25:50 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / ....
@@ -618,6 +618,7 @@ extends DbSession
         for ($id = $dbh->firstkey(); $id !== false; $id = $dbh->nextkey()) {
             $result = $dbh->get($id);
             list($date,$ip,$packed) = explode(':', $result, 3);
+            if (!$packed) continue;
             $data = unserialize($packed);
             // session_data contains the <variable name> + "|" + <packed string>
             // we need just the wiki_user object (might be array as well)
