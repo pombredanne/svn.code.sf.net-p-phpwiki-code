@@ -265,9 +265,10 @@
       $newpage[$k++] = "\t* [$pagename] ..... $remoteuser\r";
 
       // copy the rest of the page into the new array
+      $pagename = preg_quote($pagename);
       for (; $i < ($numlines + 1); $i++) {
          // skip previous entry for $pagename
-         if (preg_match("/\b$pagename\b/", $recentchanges["text"][$i])) {
+         if (preg_match("/\[$pagename\]/", $recentchanges["text"][$i])) {
             continue;
          } else {
             $newpage[$k++] = $recentchanges["text"][$i];
