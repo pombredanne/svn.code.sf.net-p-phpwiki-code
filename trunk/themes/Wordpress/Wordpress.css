@@ -1,5 +1,5 @@
 /**
- * $Id: Wordpress.css,v 1.1 2004-04-10 08:02:22 rurban Exp $
+ * $Id: Wordpress.css,v 1.2 2004-05-14 10:52:44 rurban Exp $
  *
  * PhpWiki's Portland style sheet based on the original Wiki
  *
@@ -251,3 +251,29 @@ input {
         text-transform: capitalize;
 }
 
+th.gridbutton {
+  background: #e8e8e8 url(images/menu-background.gif) repeat-x;
+  color: black;
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  font-size: small;
+  font-weight: normal;
+  /*font-style: menu;*/
+  margin: 5px 0px;
+  max-height: 24px;
+  white-space: nowrap;
+  padding: 5px 0px 5px 0px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
+}
+input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
+  text-decoration: none;
+  font-size: small;
+  font-weight: normal;
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  color: black;
+}
+
+.wikipaging { 
+  font-size: x-small;
+}

@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.1 2004-04-10 08:02:22 rurban Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.2 2004-05-14 10:52:44 rurban Exp $ -->
 
 <div class="wikitext" id="viewform">
 
@@ -14,7 +14,7 @@
 <?php } ?>
 
 <!-- Dummy form else NS4 does not like the textarea -->
-<form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>">
+<form method="post" action="<?=$request->getPostURL()?>" accept-charset="<?=CHARSET?>">
 <!-- wrap=virtual is not HTML4, but without it NS4 does not wrap long lines -->
 <textarea class="wikiedit"
           name="content"

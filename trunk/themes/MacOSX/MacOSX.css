@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.38 2004-05-13 11:55:19 rurban Exp $
+ $Id: MacOSX.css,v 1.39 2004-05-14 10:52:44 rurban Exp $
 
  Classes:
 
@@ -438,14 +438,16 @@ div.wiki-message {
 th.gridbutton {
   background-color: threedlightshadow;
   color: black;
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  font-size: small;
   font-weight: normal;
   /*font-style: menu;*/
-  max-height: 18px;
   height: 18px;
+  white-space: nowrap;
+  max-height: 24px;
+  padding: 5px 0px 5px 0px;
   margin: 5px 0px;
   float: none;
-  white-space: nowrap;
-  padding-top: 5px;
   border-width: 1px;
   border-style: solid;
   border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
