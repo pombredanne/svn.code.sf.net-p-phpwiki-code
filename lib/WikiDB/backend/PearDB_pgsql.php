@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.8 2004-05-09 00:36:18 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.9 2004-06-11 09:07:30 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -50,10 +50,12 @@ extends WikiDB_backend_PearDB
         $dbh = &$this->_dbh;
         
         $dbh->query("BEGIN WORK");
-        foreach ($this->_table_names as $table) {
-            // FIXME: can we use less restrictive locking.
-            //        (postgres supports transactions, after all.)
-            $dbh->query("LOCK TABLE $table");
+        if (0) {
+            foreach ($this->_table_names as $table) {
+                // FIXME: can we use less restrictive locking.
+                //        (postgres supports transactions, after all.)
+                $dbh->query("LOCK TABLE $table");
+            }
         }
     }
 

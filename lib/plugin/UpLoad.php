@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.10 2004-04-12 10:19:18 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.11 2004-06-11 09:07:30 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -31,19 +31,12 @@ rcs_id('$Id: UpLoad.php,v 1.10 2004-04-12 10:19:18 rurban Exp $');
  * Note:    See also Jochen Kalmbach's plugin/UserFileManagement.php
  */
 
-    /* Change these config variables to your needs. Paths must end with "/".
-     */
-
 class WikiPlugin_UpLoad
 extends WikiPlugin
 {
-    //var $file_dir = PHPWIKI_DIR . "/img/";
-    //var $url_prefix = DATA_PATH . "/img/";
-    //what if the above are not set in index.php? seems to fail...
-
     var $disallowed_extensions;
-    // todo: use PagePerms instead
-    var $only_authenticated = true; // allow only authenticated users upload.
+    // TODO: use PagePerms instead
+    var $only_authenticated = true; // allow only authenticated users may upload.
 
     function getName () {
         return "UpLoad";
@@ -54,7 +47,7 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('logfile'  => 'file_list.txt',
+        return array('logfile'  => 'phpwiki-upload.log',
         	     // add a link of the fresh file automatically to the 
         	     // end of the page (or current page)
         	     'autolink' => true, 
@@ -231,16 +224,10 @@ ws[cfh]");
 
 }
 
-// (c-file-style: "gnu")
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:
-
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/04/12 10:19:18  rurban
+// fixed copyright year
+//
 // Revision 1.9  2004/04/12 10:18:22  rurban
 // removed the hairy regex line
 //
@@ -290,5 +277,13 @@ ws[cfh]");
 // ago. (This is the best UpLoad function I have seen for PhpWiki so
 // far. Cleaned up text formatting and typos from the version on the
 // mailing list. Still needs a few adjustments.)
-//
+
+// (c-file-style: "gnu")
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 ?>
