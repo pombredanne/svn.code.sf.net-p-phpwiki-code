@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.30 2001-12-12 23:51:25 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.31 2001-12-18 18:47:29 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 
 define('WT_SIMPLE_MARKUP', 0);
@@ -306,53 +306,83 @@ class WikiTransform
 
 //////////////////////////////////////////////////////////
 
-function do_transform ($lines) {
-   global $WikiNameRegexp, $AllowedProtocols, $InterWikiLinkRegexp;
+class WikiPageTransform
+extends WikiTransform {
+    function WikiPageTransform() {
+        global $WikiNameRegexp, $AllowedProtocols, $InterWikiLinkRegexp;
 
-if (is_string($lines))
-    $lines = preg_split('/[ \t\r]*\n/', trim($lines));
+        $this->WikiTransform();
+
+        // register functions
+        // functions are applied in order of registering
+
+        $this->register(WT_SIMPLE_MARKUP, 'wtm_plugin_link');
+        $this->register(WT_MODE_MARKUP, 'wtm_plugin');
  
-    
-$transform = new WikiTransform;
+        $this->register(WT_TOKENIZER, 'wtt_doublebrackets', '\[\[');
+        $this->register(WT_TOKENIZER, 'wtt_footnotes', '^\[\d+\]');
+        $this->register(WT_TOKENIZER, 'wtt_footnoterefs', '\[\d+\]');
+        $this->register(WT_TOKENIZER, 'wtt_bracketlinks', '\[.+?\]');
+        $this->register(WT_TOKENIZER, 'wtt_urls',
+                        "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]");
 
-// register functions
-// functions are applied in order of registering
+        if (function_exists('wtt_interwikilinks')) {
+            $this->register(WT_TOKENIZER, 'wtt_interwikilinks',
+                            pcre_fix_posix_classes("!?(?<![[:alnum:]])") .
+                            "$InterWikiLinkRegexp:[^\\s.,;?()]+");
+        }
+        $this->register(WT_TOKENIZER, 'wtt_bumpylinks', "!?$WikiNameRegexp");
 
-$transform->register(WT_SIMPLE_MARKUP, 'wtm_plugin_link');
-$transform->register(WT_MODE_MARKUP, 'wtm_plugin');
- 
-$transform->register(WT_TOKENIZER, 'wtt_doublebrackets', '\[\[');
-$transform->register(WT_TOKENIZER, 'wtt_footnotes', '^\[\d+\]');
-$transform->register(WT_TOKENIZER, 'wtt_footnoterefs', '\[\d+\]');
-$transform->register(WT_TOKENIZER, 'wtt_bracketlinks', '\[.+?\]');
-$transform->register(WT_TOKENIZER, 'wtt_urls',
-		     "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]");
+        if (function_exists('wtm_table')) {
+            $this->register(WT_MODE_MARKUP, 'wtm_table', '^\|');
+        }
+        $this->register(WT_SIMPLE_MARKUP, 'wtm_htmlchars');
+        $this->register(WT_SIMPLE_MARKUP, 'wtm_linebreak');
+        $this->register(WT_SIMPLE_MARKUP, 'wtm_bold_italics');
+        
+        $this->register(WT_MODE_MARKUP, 'wtm_list_ul');
+        $this->register(WT_MODE_MARKUP, 'wtm_list_ol');
+        $this->register(WT_MODE_MARKUP, 'wtm_list_dl');
+        $this->register(WT_MODE_MARKUP, 'wtm_preformatted');
+        $this->register(WT_MODE_MARKUP, 'wtm_headings');
+        $this->register(WT_MODE_MARKUP, 'wtm_hr');
+        $this->register(WT_MODE_MARKUP, 'wtm_paragraph');
+    }
+};
 
-if (function_exists('wtt_interwikilinks')) {
-   $transform->register(WT_TOKENIZER, 'wtt_interwikilinks',
-			pcre_fix_posix_classes("!?(?<![[:alnum:]])") .
-			"$InterWikiLinkRegexp:[^\\s.,;?()]+");
+function do_transform ($lines, $class = 'WikiPageTransform') {
+    if (is_string($lines))
+        $lines = preg_split('/[ \t\r]*\n/', trim($lines));
+
+    $trfm = new $class;
+    return $trfm->do_transform('', $lines);
 }
-$transform->register(WT_TOKENIZER, 'wtt_bumpylinks', "!?$WikiNameRegexp");
 
-if (function_exists('wtm_table')) {
-   $transform->register(WT_MODE_MARKUP, 'wtm_table', '^\|');
-}
-   $transform->register(WT_SIMPLE_MARKUP, 'wtm_htmlchars');
-   $transform->register(WT_SIMPLE_MARKUP, 'wtm_linebreak');
-   $transform->register(WT_SIMPLE_MARKUP, 'wtm_bold_italics');
+class LinkTransform
+extends WikiTransform {
+    function LinkTransform() {
+        global $WikiNameRegexp, $AllowedProtocols, $InterWikiLinkRegexp;
 
-   $transform->register(WT_MODE_MARKUP, 'wtm_list_ul');
-   $transform->register(WT_MODE_MARKUP, 'wtm_list_ol');
-   $transform->register(WT_MODE_MARKUP, 'wtm_list_dl');
-   $transform->register(WT_MODE_MARKUP, 'wtm_preformatted');
-   $transform->register(WT_MODE_MARKUP, 'wtm_headings');
-   $transform->register(WT_MODE_MARKUP, 'wtm_hr');
-   $transform->register(WT_MODE_MARKUP, 'wtm_paragraph');
+        $this->WikiTransform();
 
-//$html = $transform->do_transform($html, $pagehash['content']);
-   return $transform->do_transform('', $lines);
-}
+        // register functions
+        // functions are applied in order of registering
+
+        $this->register(WT_TOKENIZER, 'wtt_doublebrackets', '\[\[');
+        $this->register(WT_TOKENIZER, 'wtt_quotetoken', '\[\d+\]');
+        $this->register(WT_TOKENIZER, 'wtt_bracketlinks', '\[.+?\]');
+        $this->register(WT_TOKENIZER, 'wtt_urls',
+                        "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]");
+
+        if (function_exists('wtt_interwikilinks')) {
+            $this->register(WT_TOKENIZER, 'wtt_interwikilinks',
+                            pcre_fix_posix_classes("!?(?<![[:alnum:]])") .
+                            "$InterWikiLinkRegexp:[^\\s.,;?()]+");
+        }
+        $this->register(WT_TOKENIZER, 'wtt_bumpylinks', "!?$WikiNameRegexp");
+        $this->register(WT_SIMPLE_MARKUP, 'wtm_htmlchars');
+    }
+};
 
 /*
 Requirements for functions registered to WikiTransform:
@@ -470,6 +500,15 @@ function wtt_bumpylinks($match, &$trfrm)
    return LinkWikiWord($match);
 }
 
+
+// Just quote the token.
+function wtt_quotetoken($match, &$trfrm)
+{
+    return htmlspecialchars($match);
+}
+
+    
+     
 // end of tokenizer functions
 //////////////////////////////////////////////////////////
 
