@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.79 2004-06-01 15:27:59 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.80 2004-06-02 14:20:27 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1872,7 +1872,13 @@ extends _DbPassUser
             $rs = $dbh->Execute(sprintf($this->_authselect,
                                         $dbh->qstr($submitted_password),
                                         $dbh->qstr($this->_userid)));
-            $okay = $rs->fields['ok'];
+            if (isset($rs->fields['ok']))
+                $okay = $rs->fields['ok'];
+            elseif (isset($rs->fields[1]))
+                $okay = $rs->fields[1];
+            else {
+                $okay = reset($rs->fields);
+            }
             $rs->Close();
             $result = !empty($okay);
         }
@@ -2907,6 +2913,11 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.79  2004/06/01 15:27:59  rurban
+// AdminUser only ADMIN_USER not member of Administrators
+// some RateIt improvements by dfrankow
+// edit_toolbar buttons
+//
 // Revision 1.78  2004/05/27 17:49:06  rurban
 // renamed DB_Session to DbSession (in CVS also)
 // added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
