@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.45 2003-03-07 20:51:59 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.46 2003-03-07 21:46:55 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -164,16 +164,16 @@ function displayPage(&$request, $template=false) {
 
     // FIXME: should probably be in a template...
     header("Content-Type: text/html; charset=" . CHARSET); // FIXME: this gets done twice?
+
+    $page_content = $revision->getTransformedContent();
     
-    $toks['CONTENT'] = new Template('browse', $request,
-                                    $revision->getTransformedContent());
-        
+    $toks['CONTENT'] = new Template('browse', $request, $page_content);
     
     $toks['TITLE'] = $pagetitle;
     $toks['HEADER'] = $pageheader;
     $toks['revision'] = $revision;
     $toks['ROBOTS_META'] = 'index,follow';
-    $toks['PAGE_DESCRIPTION'] = GleanDescription($revision);
+    $toks['PAGE_DESCRIPTION'] = $page_content->getDescription();
     $toks['PAGE_KEYWORDS'] = GleanKeywords($page);
     
     if (!$template)
