@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.6 2004-09-07 13:26:31 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.7 2004-09-22 13:46:26 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -61,7 +61,7 @@ extends WikiPluginCached
     /**
      * Sets plugin type to MAP if -csmap (-map or -mapdemo or -csmapdemo not supported)
      * or HTML if the imagetype is not supported by GD (EPS, SVG, SVGZ) (not yet)
-     * or IMAGE if device = png, gif or jpeg
+     * or IMG_INLINE if device = png, gif or jpeg
      */
     function getPluginType() {
     	if (!empty($this->_args['-csmap']))
@@ -80,7 +80,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
     function getDefaultArguments() {
         return array(
@@ -208,6 +208,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/09/07 13:26:31  rurban
+// new WikiPluginCached option debug=static and some more sf.net defaults for VisualWiki
+//
 // Revision 1.5  2004/06/28 16:35:12  rurban
 // prevent from shell commands
 //

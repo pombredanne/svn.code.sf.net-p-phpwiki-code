@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.30 2004-09-08 13:38:00 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.31 2004-09-22 13:46:25 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -194,8 +194,13 @@ class PageType_interwikimap extends PageType
         foreach ($matches as $m) {
             $map[$m[1]] = $m[2];
         }
-        if (empty($map['Upload']))
-            $map['Upload'] = SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/uploads/';
+        // add virtual "Upload:" moniker
+        if (empty($map['Upload'])) $map['Upload'] = getUploadDataPath();
+
+        // maybe add other monikers also (SemanticWeb link predicates?)
+        // Should they be defined in a RDF? (strict mode)
+        // Or should the SemanticWeb lib add it by itself? 
+        // (adding only a subset dependent on the context = model)
         return $map;
     }
 
@@ -212,7 +217,6 @@ class PageType_interwikimap extends PageType
         return false;
     }
 
-    // Fixme!
     function _getMapFromFile ($filename) {
         if (defined('WARN_NONPUBLIC_INTERWIKIMAP') and WARN_NONPUBLIC_INTERWIKIMAP) {
             $error_html = sprintf(_("Loading InterWikiMap from external file %s."), $filename);

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.14 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.15 2004-09-22 13:46:26 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -98,9 +98,8 @@ ws[cfh]");
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
-        $file_dir = defined('PHPWIKI_DIR') ? 
-            PHPWIKI_DIR . "/uploads/" : "uploads/";
-        $url_prefix = SERVER_NAME . DATA_PATH; 
+        $file_dir = getUploadFilePath();
+        //$url_prefix = SERVER_NAME . DATA_PATH; 
 
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'enctype' => 'multipart/form-data',
@@ -229,6 +228,15 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.13  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
