@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.21 2002-02-11 01:20:48 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.22 2002-02-11 02:25:16 carstenklapp Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
 define('SECONDS_PER_DAY', 24 * 3600);
@@ -107,6 +107,9 @@ extends WikiPlugin
         if ($mday == $this->_today) {
             $mday = HTML::strong($mday);
             $td->setAttr('class', 'cal-today');
+        }
+        else if ($dbi->isWikiPage($page_for_date)) {
+            $td->setAttr('class', 'cal-day');
         }
 
         if ($dbi->isWikiPage($page_for_date)) {
