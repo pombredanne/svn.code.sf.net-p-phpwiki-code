@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.10 2002-01-07 09:05:46 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.11 2002-01-08 22:54:29 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -110,7 +110,9 @@ $URL_LINK_ICONS = array(
 $ToolbarImages = array(
 'RecentChanges' => array(
 '1 day'		=> "themes/$theme/locale/en/toolbars/RecentChanges/1day.png",
+'2 day'		=> "themes/$theme/locale/en/toolbars/RecentChanges/2day.png",
 '3 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/3days.png",
+'4 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/4day.png",
 '7 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/7days.png",
 '30 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/30days.png",
 '90 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/90days.png",
