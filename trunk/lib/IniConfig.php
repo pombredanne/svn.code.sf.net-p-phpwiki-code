@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.75 2005-01-30 21:52:09 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.76 2005-01-31 00:31:00 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -281,7 +281,8 @@ function IniConfig($file) {
         }
     }
     if (!in_array(DATABASE_TYPE, array('SQL','ADODB','dba','file','cvs')))
-        trigger_error(sprintf("Invalid DATABASE_TYPE=%s. Choose on of SQL,ADODB,dba,file,cvs", DATABASE_TYPE));
+        trigger_error(sprintf(_("Invalid DATABASE_TYPE=%s. Choose one of %s"), 
+                              DATABASE_TYPE, "SQL,ADODB,dba,file,cvs"));
     // USE_DB_SESSION default logic:
     if (!defined('USE_DB_SESSION')) {
         if ($DBParams['db_session_table']
@@ -771,6 +772,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.75  2005/01/30 21:52:09  rurban
+// print early warning on wrong DATABASE_TYPE
+//
 // Revision 1.74  2005/01/29 20:35:52  rurban
 // helper for local debugging (Zend Personal Edition)
 //
