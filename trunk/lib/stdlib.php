@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.35 2001-02-17 00:47:08 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.36 2001-03-02 00:16:53 dairiki Exp $');
 
 
    /*
@@ -12,7 +12,6 @@
          LinkInterWikiLink($link, $linktext)
          CookSpaces($pagearray) 
          class Stack (push(), pop(), cnt(), top())
-         SetHTMLOutputMode($newmode, $depth)
          UpdateRecentChanges($dbi, $pagename, $isnewpage) 
          ParseAndLink($bracketlink)
          ExtractWikiPageLinks($content)
@@ -73,7 +72,7 @@ function arrays_equal ($a, $b)
 
 function StartTag($tag, $args = '')
 {
-   $s = '';
+   $s = "<$tag";
    if (is_array($args))
    {
       while (list($key, $val) = each($args))
@@ -84,7 +83,7 @@ function StartTag($tag, $args = '')
 	    $s .= " $key";
       }
    }
-   return "<$tag $s>";
+   return "$s>";
 }
 
    
