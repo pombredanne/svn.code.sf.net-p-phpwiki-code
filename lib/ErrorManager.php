@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.33 2004-09-14 10:28:21 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.34 2004-09-24 18:52:19 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -102,8 +102,18 @@ class ErrorManager
             return false;
         if ($flushed->isEmpty())
             return false;
-        $html = HTML::div(array('class' => 'errors'),
-                          HTML::h4("PHP Warnings"));
+        // format it with the worst class (error, warning, notice)
+        //$class = 'notice';
+        $cur_err = new PhpError(0,"","","");
+        foreach ($flushed->_content as $err) {
+            if ($err and isa($err, 'PhpError') and $err->errno > $cur_err->errno) {
+                $cur_err = $err;
+            }
+        }
+        $class = $cur_err->getHtmlClass(); 
+        $html = HTML::div(array('class' => $class),
+                          HTML::h4(array('class' => 'errors'), 
+                                   "PHP " . $cur_err->getDescription()));
         $html->pushContent($flushed);
         return $html;
     }
@@ -387,19 +397,31 @@ class PhpError {
     function isNotice() {
         return ($this->errno & EM_NOTICE_ERRORS) != 0;
     }
+    function getHtmlClass() {
+        if ($this->isNotice()) {
+            return 'hint';
+        } elseif ($this->isWarning()) {
+            return 'errors';
+        } else {
+            return 'errors';
+        }
+    }
+    
+    function getDescription() {
+        if ($this->isNotice()) {
+            return 'Notice';
+        } elseif ($this->isWarning()) {
+            return 'Warning';
+        } else {
+            return 'Error';
+        }
+    }
 
     /**
      * Get a printable, HTML, message detailing this error.
      * @return object The detailed error message.
      */
     function _getDetail() {
-        if ($this->isNotice())
-            $what = 'Notice';
-        else if ($this->isWarning())
-            $what = 'Warning';
-        else
-            $what = 'Fatal';
-
         $dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__),0,-4);
         if (substr(PHP_OS,0,3) == 'WIN') {
            $dir = str_replace('/','\\',$dir);
@@ -412,11 +434,12 @@ class PhpError {
 
         $msg = sprintf("%s:%d: %s[%d]: %s",
                        $errfile, $this->errline,
-                       $what, $this->errno,
+                       $this->getDescription(), $this->errno,
                        array_shift($lines));
         
-        $html = HTML::div(array('class' => 'error'), HTML::p($msg));
-        
+        //$html = HTML::div(array('class' => $this->getHtmlClass()), HTML::p($msg));
+        // The class is now used for the div container.
+        $html = HTML::div(HTML::p($msg));
         if ($lines) {
             $list = HTML::ul();
             foreach ($lines as $line)
@@ -479,14 +502,8 @@ class PhpWikiError extends PhpError {
     }
 
     function _getDetail() {
-        if ($this->isNotice())
-            $what = 'Notice';
-        else if ($this->isWarning())
-            $what = 'Warning';
-        else
-            $what = 'Fatal';
-
-        return HTML::div(array('class' => 'error'), HTML::p("$what: $this->errstr"));
+        return HTML::div(//array('class' => $this->getHtmlClass()), 
+                         HTML::p($this->getDescription() . ": $this->errstr"));
     }
 }
 
@@ -525,12 +542,6 @@ class PhpErrorOnce extends PhpError {
     
     function _getDetail($count=0) {
     	if (!$count) $count = $this->_count;
-        if ($this->isNotice())
-            $what = 'Notice';
-        else if ($this->isWarning())
-            $what = 'Warning';
-        else
-            $what = 'Fatal';
 	$dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__),0,-4);
         if (substr(PHP_OS,0,3) == 'WIN') {
            $dir = str_replace('/','\\',$dir);
@@ -542,12 +553,12 @@ class PhpErrorOnce extends PhpError {
         $lines = explode("\n", $this->errstr);
         $msg = sprintf("%s:%d: %s[%d]: %s %s",
                        $errfile, $this->errline,
-                       $what, $this->errno,
+                       $this->getDescription(), $this->errno,
                        array_shift($lines),
                        $count > 1 ? sprintf(" (...repeated %d times)",$count) : ""
                        );
-                       
-        $html = HTML::div(array('class' => 'error'), HTML::p($msg));
+        $html = HTML::div(//array('class' => $this->getHtmlClass()), 
+                          HTML::p($msg));
         if ($lines) {
             $list = HTML::ul();
             foreach ($lines as $line)
@@ -566,6 +577,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2004/09/14 10:28:21  rurban
+// use assert, maybe we should only turn it off for releases
+//
 // Revision 1.32  2004/07/08 13:50:32  rurban
 // various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
 //
