@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true); // this will disappear with 1.4.0
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.130 2004-03-09 17:16:43 rurban Exp $');
+rcs_id('$Id: index.php,v 1.131 2004-03-14 16:24:35 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -425,8 +425,8 @@ $ExpireParams['author'] = array('max_age'  => 365,
 //
 /////////////////////////////////////////////////////////////////////
 // 
-// New user authentification configuration:
-// We support three basic authentification methods and a stacked array 
+// New user authentication configuration:
+// We support three basic authentication methods and a stacked array 
 // of advanced auth methods to get and check the passwords:
 //
 // ALLOW_ANON_USER         default true
@@ -451,7 +451,7 @@ if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT',
 // be able to store his preferences and password there.
 if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
 
-// True User Authentification:
+// True User Authentication:
 // To require user passwords:
 //   ALLOW_ANON_USER = false
 //   ALLOW_ANON_EDIT = false
@@ -476,7 +476,7 @@ if (!defined('ALLOW_USER_PASSWORDS')) define('ALLOW_USER_PASSWORDS', true);
 
 if (defined('ALLOW_USER_PASSWORDS')) {
 
-    // use the following order of authentification methods:
+    // use the following order of authentication methods:
     if (!isset($USER_AUTH_ORDER))
         $USER_AUTH_ORDER = 
             array(
@@ -941,6 +941,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.130  2004/03/09 17:16:43  rurban
+// fixed $LDAP_SET_OPTION
+//
 // Revision 1.129  2004/02/29 04:10:55  rurban
 // new POP3 auth (thanks to BiloBilo: pentothal at despammed dot com)
 // fixed syntax error in index.php
