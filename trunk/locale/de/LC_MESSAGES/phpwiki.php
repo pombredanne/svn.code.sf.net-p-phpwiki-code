@@ -1282,8 +1282,6 @@ $locale["Select the pages to search:"] =
    "Seiten auswählen";
 $locale["Select: "] =
    "Auswahl: ";
-$locale["Selected Pages: %s"] =
-   "Ausgewählte Seiten: %s";
 $locale["Selected page '%s' passed to '%s'."] =
    "Ausgewählte Seite »%s« an »%s« übergeben.";
 $locale["Serialized file %s"] =
@@ -1778,8 +1776,6 @@ $locale["home page"] =
    "Start Seite";
 $locale["illegal pagename"] =
    "ungültiger Seitenname";
-$locale["is identical to current version %d - skipped"] =
-   "ist identisch mit der aktuellen Version %d - übersprungen";
 $locale["latest comment by "] =
    "Letzter Kommentar von ";
 $locale["load files into this wiki"] =

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-04 21:24+0100\n"
+"POT-Creation-Date: 2004-06-08 20:50+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -48,7 +48,7 @@ msgstr ""
 msgid "%s: error while handling error:"
 msgstr ""
 
-#: ../lib/FileFinder.php:185 ../lib/loadsave.php:543
+#: ../lib/FileFinder.php:185 ../lib/loadsave.php:546
 #, c-format
 msgid "%s: file not found"
 msgstr ""
@@ -63,28 +63,28 @@ msgstr ""
 msgid "It's free however."
 msgstr ""
 
-#: ../lib/IniConfig.php:498
+#: ../lib/IniConfig.php:502
 #, fuzzy
 msgid "An unnamed PhpWiki"
 msgstr "Naamloos PhpWiki"
 
-#: ../lib/IniConfig.php:501 ../lib/upgrade.php:136
+#: ../lib/IniConfig.php:505 ../lib/upgrade.php:136
 #: ../themes/Wordpress/templates/actionbar.tmpl:21
 #: ../themes/default/templates/userprefs.tmpl:119
 msgid "HomePage"
 msgstr "ThuisPagina"
 
-#: ../lib/IniConfig.php:515
+#: ../lib/IniConfig.php:519
 #, c-format
 msgid "Encrypted passwords cannot be used: %s."
 msgstr ""
 
-#: ../lib/IniConfig.php:521
+#: ../lib/IniConfig.php:525
 msgid ""
 "The admin password cannot be empty. Please update your config/config.ini"
 msgstr ""
 
-#: ../lib/IniConfig.php:525
+#: ../lib/IniConfig.php:529
 msgid ""
 "Empty db_session_table. Turn USE_DB_SESSION off or define the table name."
 msgstr ""
@@ -131,7 +131,7 @@ msgstr "Pagina Naam"
 msgid "<no matches>"
 msgstr ""
 
-#: ../lib/PageList.php:670 ../lib/plugin/WikiAdminSearchReplace.php:163
+#: ../lib/PageList.php:670 ../lib/plugin/WikiAdminSearchReplace.php:164
 #, fuzzy
 msgid "Content"
 msgstr "Klaar."
@@ -209,79 +209,79 @@ msgstr ""
 msgid "Columns: %s."
 msgstr ""
 
-#: ../lib/PagePerm.php:265
+#: ../lib/PagePerm.php:272
 #, fuzzy
 msgid "List this page and all subpages"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/PagePerm.php:266
+#: ../lib/PagePerm.php:273
 msgid "View this page and all subpages"
 msgstr ""
 
-#: ../lib/PagePerm.php:267
+#: ../lib/PagePerm.php:274
 msgid "Edit this page and all subpages"
 msgstr ""
 
-#: ../lib/PagePerm.php:268
+#: ../lib/PagePerm.php:275
 #, fuzzy
 msgid "Create a new (sub)page"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/PagePerm.php:269
+#: ../lib/PagePerm.php:276
 msgid "Download the page contents"
 msgstr ""
 
-#: ../lib/PagePerm.php:270
+#: ../lib/PagePerm.php:277
 msgid "Change page attributes"
 msgstr ""
 
-#: ../lib/PagePerm.php:271
+#: ../lib/PagePerm.php:278
 #, fuzzy
 msgid "Remove this page"
 msgstr "Verwijder pagina"
 
-#: ../lib/PagePerm.php:320
+#: ../lib/PagePerm.php:327
 #, c-format
 msgid "Unsupported ACL access type %s ignored."
 msgstr ""
 
-#: ../lib/PagePerm.php:522
+#: ../lib/PagePerm.php:532
 msgid "Access"
 msgstr ""
 
-#: ../lib/PagePerm.php:524
+#: ../lib/PagePerm.php:534
 msgid "Group/User"
 msgstr ""
 
-#: ../lib/PagePerm.php:525
+#: ../lib/PagePerm.php:535
 msgid "Grant"
 msgstr ""
 
-#: ../lib/PagePerm.php:526
+#: ../lib/PagePerm.php:536
 msgid "Del/+"
 msgstr ""
 
-#: ../lib/PagePerm.php:527 ../lib/plugin/PluginManager.php:90
+#: ../lib/PagePerm.php:537 ../lib/plugin/PluginManager.php:90
 msgid "Description"
 msgstr ""
 
-#: ../lib/PagePerm.php:548
+#: ../lib/PagePerm.php:558
 msgid "Add this ACL"
 msgstr ""
 
-#: ../lib/PagePerm.php:572
+#: ../lib/PagePerm.php:582
 msgid "Allow / Deny"
 msgstr ""
 
-#: ../lib/PagePerm.php:584
+#: ../lib/PagePerm.php:594
 msgid "Delete this ACL"
 msgstr ""
 
-#: ../lib/PagePerm.php:610
+#: ../lib/PagePerm.php:620
 msgid "add "
 msgstr ""
 
-#: ../lib/PagePerm.php:614
+#: ../lib/PagePerm.php:624
 msgid "Check to add this Acl"
 msgstr ""
 
@@ -293,7 +293,7 @@ msgstr ""
 msgid "InterWikiMap"
 msgstr ""
 
-#: ../lib/PageType.php:218 ../lib/loadsave.php:554
+#: ../lib/PageType.php:218 ../lib/loadsave.php:557
 #, c-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr ""
@@ -306,7 +306,7 @@ msgstr ""
 msgid "InterWiki Address"
 msgstr ""
 
-#: ../lib/RSSWriter091.php:116 ../lib/loadsave.php:900
+#: ../lib/RSSWriter091.php:116 ../lib/loadsave.php:909
 #: ../lib/plugin/RecentChanges.php:260 ../lib/plugin/RecentChanges.php:275
 #: ../lib/plugin/RecentChanges.php:377 ../lib/plugin/RecentChanges.php:453
 #: ../lib/plugin/RecentChanges.php:586 ../lib/plugin/RecentChanges.php:656
@@ -322,7 +322,7 @@ msgstr ""
 msgid "RecentChanges"
 msgstr "RecenteVeranderingen"
 
-#: ../lib/Request.php:57 ../lib/main.php:892 ../lib/main.php:905
+#: ../lib/Request.php:57 ../lib/main.php:932 ../lib/main.php:945
 #, c-format
 msgid "%s is not writable."
 msgstr ""
@@ -331,7 +331,7 @@ msgstr ""
 msgid "The PhpWiki access log file"
 msgstr ""
 
-#: ../lib/Request.php:59 ../lib/main.php:895
+#: ../lib/Request.php:59 ../lib/main.php:935
 #, c-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
@@ -383,48 +383,48 @@ msgstr ""
 msgid "yesterday"
 msgstr ""
 
-#: ../lib/Theme.php:433 ../lib/Theme.php:435
+#: ../lib/Theme.php:439 ../lib/Theme.php:441
 #, fuzzy, c-format
 msgid "Owner: %s"
 msgstr "%s: %s"
 
-#: ../lib/Theme.php:446 ../lib/Theme.php:448 ../lib/diff.php:256
+#: ../lib/Theme.php:452 ../lib/Theme.php:454 ../lib/diff.php:256
 #: ../lib/plugin/Diff.php:75
 #, c-format
 msgid "by %s"
 msgstr "door %s"
 
-#: ../lib/Theme.php:551
+#: ../lib/Theme.php:557
 #, fuzzy, c-format
 msgid "Empty link to: %s"
 msgstr "Je bent ingelogd als %s."
 
-#: ../lib/Theme.php:563 ../themes/MacOSX/themeinfo.php:71
+#: ../lib/Theme.php:569 ../themes/MacOSX/themeinfo.php:71
 #, fuzzy, c-format
 msgid "Create: %s"
 msgstr "Bewaard: %s"
 
-#: ../lib/Theme.php:579
+#: ../lib/Theme.php:585
 #, c-format
 msgid "Google:%s"
 msgstr ""
 
-#: ../lib/Theme.php:603
+#: ../lib/Theme.php:609
 #, c-format
 msgid "'%s': Bad page name"
 msgstr ""
 
-#: ../lib/Theme.php:888 ../themes/Crao/templates/actionbar.tmpl:5
+#: ../lib/Theme.php:894 ../themes/Crao/templates/actionbar.tmpl:5
 #: ../themes/default/templates/actionbar.tmpl:5
 #: ../themes/smaller/templates/actionbar.tmpl:6
 msgid "Edit"
 msgstr "Verander"
 
-#: ../lib/Theme.php:889 ../lib/plugin/Diff.php:36
+#: ../lib/Theme.php:895 ../lib/plugin/Diff.php:36
 msgid "Diff"
 msgstr "Diff"
 
-#: ../lib/Theme.php:890 ../themes/Crao/templates/signin.tmpl:15
+#: ../lib/Theme.php:896 ../themes/Crao/templates/signin.tmpl:15
 #: ../themes/Crao/templates/signin.tmpl:31
 #: ../themes/Sidebar/templates/signin.tmpl:16
 #: ../themes/Sidebar/templates/signin.tmpl:30
@@ -435,34 +435,34 @@ msgstr "Diff"
 msgid "Sign Out"
 msgstr ""
 
-#: ../lib/Theme.php:891 ../lib/WikiUser.php:219 ../lib/WikiUserNew.php:478
+#: ../lib/Theme.php:897 ../lib/WikiUser.php:219 ../lib/WikiUserNew.php:477
 #: ../themes/Crao/templates/signin.tmpl:59
-#: ../themes/default/templates/login.tmpl:67
+#: ../themes/default/templates/login.tmpl:68
 msgid "Sign In"
 msgstr ""
 
-#: ../lib/Theme.php:892 ../themes/MacOSX/themeinfo.php:135
+#: ../lib/Theme.php:898 ../themes/MacOSX/themeinfo.php:135
 msgid "Lock Page"
 msgstr "Open Pagina"
 
-#: ../lib/Theme.php:893 ../themes/MacOSX/themeinfo.php:136
+#: ../lib/Theme.php:899 ../themes/MacOSX/themeinfo.php:136
 msgid "Unlock Page"
 msgstr "Sluit Pagina Af"
 
-#: ../lib/Theme.php:894 ../lib/removepage.php:22
+#: ../lib/Theme.php:900 ../lib/removepage.php:22
 msgid "Remove Page"
 msgstr "Verwijder Pagina"
 
-#: ../lib/Theme.php:1254
+#: ../lib/Theme.php:1260
 #, c-format
 msgid "%s: has no box method"
 msgstr ""
 
-#: ../lib/Theme.php:1273
+#: ../lib/Theme.php:1279
 msgid "Related Links"
 msgstr ""
 
-#: ../lib/Theme.php:1293
+#: ../lib/Theme.php:1299
 msgid "External Links"
 msgstr ""
 
@@ -471,52 +471,52 @@ msgstr ""
 msgid "renamed from %s"
 msgstr "van %s"
 
-#: ../lib/WikiDB.php:413
+#: ../lib/WikiDB.php:416
 msgid "WikiDB::renamePage() not yet implemented for this backend"
 msgstr ""
 
-#: ../lib/WikiDB.php:747
+#: ../lib/WikiDB.php:750
 #, c-format
 msgid "%s: Date of new revision is %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:809
+#: ../lib/WikiDB.php:812
 #, c-format
 msgid "Optimizing %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:873
+#: ../lib/WikiDB.php:876
 #, fuzzy
 msgid "Page change"
 msgstr "Pagina Naam"
 
-#: ../lib/WikiDB.php:897
+#: ../lib/WikiDB.php:900
 #, fuzzy
 msgid "New Page"
 msgstr "Nieuw pagina."
 
-#: ../lib/WikiDB.php:899
+#: ../lib/WikiDB.php:902
 #, fuzzy, c-format
 msgid "Edited by: %s"
 msgstr "Verander: %s"
 
-#: ../lib/WikiDB.php:906
+#: ../lib/WikiDB.php:909
 #, c-format
 msgid "PageChange Notification of %s sent to %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:909
+#: ../lib/WikiDB.php:912
 #, c-format
 msgid "PageChange Notification Error: Couldn't send %s to %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:1395 ../lib/WikiDB.php:1399
+#: ../lib/WikiDB.php:1398 ../lib/WikiDB.php:1402
 #: ../themes/default/templates/homepage.tmpl:7
 #, c-format
 msgid "Describe %s here."
 msgstr "Beschrijf %s hier."
 
-#: ../lib/WikiDB.php:1434
+#: ../lib/WikiDB.php:1437
 #, c-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr ""
@@ -608,7 +608,7 @@ msgstr ""
 msgid "No LDAP in this PHP version"
 msgstr ""
 
-#: ../lib/WikiGroup.php:977 ../lib/WikiUserNew.php:2039
+#: ../lib/WikiGroup.php:977 ../lib/WikiUserNew.php:2038
 #, c-format
 msgid "Unable to connect to LDAP server %s"
 msgstr ""
@@ -659,17 +659,17 @@ msgid ""
 "referring page."
 msgstr ""
 
-#: ../lib/WikiUser.php:187 ../lib/WikiUser.php:266 ../lib/WikiUserNew.php:556
-#: ../lib/WikiUserNew.php:1503 ../lib/WikiUserNew.php:1560
-#: ../lib/WikiUserNew.php:1768
+#: ../lib/WikiUser.php:187 ../lib/WikiUser.php:266 ../lib/WikiUserNew.php:555
+#: ../lib/WikiUserNew.php:1502 ../lib/WikiUserNew.php:1559
+#: ../lib/WikiUserNew.php:1767
 msgid "Invalid username."
 msgstr ""
 
-#: ../lib/WikiUser.php:191 ../lib/WikiUserNew.php:563
+#: ../lib/WikiUser.php:191 ../lib/WikiUserNew.php:562
 msgid "Invalid password or userid."
 msgstr ""
 
-#: ../lib/WikiUser.php:193 ../lib/WikiUserNew.php:576
+#: ../lib/WikiUser.php:193 ../lib/WikiUserNew.php:575
 msgid "Insufficient permissions."
 msgstr ""
 
@@ -706,89 +706,89 @@ msgid ""
 "password in your UserPreferences."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:561
+#: ../lib/WikiUserNew.php:560
 msgid "Invalid password."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:619
+#: ../lib/WikiUserNew.php:618
 msgid "Empty Preferences or format of UserPreferences cookie not recognised."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:623
+#: ../lib/WikiUserNew.php:622
 msgid "Default preferences will be used."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1169
+#: ../lib/WikiUserNew.php:1168
 msgid ""
 "The length of the stored password is shorter than the system policy allows. "
 "Sorry, you cannot login.\n"
 " You have to ask the System Administrator to reset your password."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1183 ../lib/pear/File_Passwd.php:209
+#: ../lib/WikiUserNew.php:1182 ../lib/pear/File_Passwd.php:209
 msgid "The crypt function is not available in this version of PHP."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1184
+#: ../lib/WikiUserNew.php:1183
 msgid ""
 "Please set ENCRYPTED_PASSWD to false in config/config.ini and probably "
 "change ADMIN_PASSWD."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1197
+#: ../lib/WikiUserNew.php:1196
 msgid "Please set ENCRYPTED_PASSWD to true in config/config.ini."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1328
+#: ../lib/WikiUserNew.php:1327
 #, c-format
 msgid ""
 "\n"
 "You stored an empty password in your '%s' page.\n"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1329
+#: ../lib/WikiUserNew.php:1328
 msgid "Your access permissions are only for a BogoUser.\n"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1330
+#: ../lib/WikiUserNew.php:1329
 msgid "Please set your password in UserPreferences."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1642 ../lib/WikiUserNew.php:1689
-#: ../lib/WikiUserNew.php:1729 ../lib/WikiUserNew.php:1849
-#: ../lib/WikiUserNew.php:1913 ../lib/WikiUserNew.php:1963
+#: ../lib/WikiUserNew.php:1641 ../lib/WikiUserNew.php:1688
+#: ../lib/WikiUserNew.php:1728 ../lib/WikiUserNew.php:1848
+#: ../lib/WikiUserNew.php:1912 ../lib/WikiUserNew.php:1962
 #, c-format
 msgid "Either %s is missing or DATABASE_TYPE != '%s'"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1653 ../lib/WikiUserNew.php:1864
+#: ../lib/WikiUserNew.php:1652 ../lib/WikiUserNew.php:1863
 #, c-format
 msgid "%s is missing"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1999 ../lib/WikiUserNew.php:2052
+#: ../lib/WikiUserNew.php:1998 ../lib/WikiUserNew.php:2051
 #, c-format
 msgid "Invalid username '%s' for LDAP Auth"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2084
+#: ../lib/WikiUserNew.php:2083
 msgid "Unable to connect to LDAP server "
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2117
+#: ../lib/WikiUserNew.php:2116
 msgid "Unable to connect to IMAP server "
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2184
+#: ../lib/WikiUserNew.php:2183
 #, fuzzy, c-format
 msgid "Couldn't connect to %s"
 msgstr "Kan verbinding naar data base niet tot stand brengen, geef op."
 
-#: ../lib/WikiUserNew.php:2596
+#: ../lib/WikiUserNew.php:2595
 msgid "Email Verification"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2597
+#: ../lib/WikiUserNew.php:2596
 #, c-format
 msgid ""
 "Welcome to %s!\n"
@@ -797,12 +797,12 @@ msgid ""
 "See %s"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2613
+#: ../lib/WikiUserNew.php:2612
 #, c-format
 msgid "E-Mail address '%s' is not properly formatted"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2617
+#: ../lib/WikiUserNew.php:2616
 #, c-format
 msgid "E-Mail address '%s' is properly formatted"
 msgstr ""
@@ -944,7 +944,7 @@ msgid "Undo disabled"
 msgstr "Insert van '%s' gefaald"
 
 #: ../lib/editpage.php:158 ../lib/editpage.php:305
-#: ../lib/plugin/WikiAdminSearchReplace.php:179
+#: ../lib/plugin/WikiAdminSearchReplace.php:180
 msgid "Search & Replace"
 msgstr ""
 
@@ -958,8 +958,8 @@ msgstr "Zoek"
 msgid "Replace with"
 msgstr ""
 
-#: ../lib/editpage.php:164 ../lib/upgrade.php:300 ../lib/upgrade.php:316
-#: ../lib/upgrade.php:341 ../lib/upgrade.php:343
+#: ../lib/editpage.php:164 ../lib/upgrade.php:300 ../lib/upgrade.php:315
+#: ../lib/upgrade.php:340 ../lib/upgrade.php:342
 msgid "OK"
 msgstr ""
 
@@ -1209,7 +1209,7 @@ msgstr "nieuw pagina"
 msgid "has edit conflicts - overwriting anyway"
 msgstr ""
 
-#: ../lib/loadsave.php:471 ../lib/loadsave.php:841 ../lib/loadsave.php:844
+#: ../lib/loadsave.php:471 ../lib/loadsave.php:849 ../lib/loadsave.php:852
 msgid "The PhpWiki programming team"
 msgstr "Het PhpWiki programmeerteam"
 
@@ -1217,37 +1217,37 @@ msgstr "Het PhpWiki programmeerteam"
 msgid "has edit conflicts - skipped"
 msgstr ""
 
-#: ../lib/loadsave.php:484
-#, c-format
-msgid "is identical to current version %d - skipped"
+#: ../lib/loadsave.php:487
+#, fuzzy, c-format
+msgid "content is identical to current version %d - no new revision created"
 msgstr "is gelijk aaan huidige versie %d - overgeslagen"
 
-#: ../lib/loadsave.php:494
+#: ../lib/loadsave.php:497
 #, c-format
 msgid "- saved to database as version %d"
 msgstr "- bewaard in de data base als versie %d"
 
-#: ../lib/loadsave.php:500 ../lib/loadsave.php:648
+#: ../lib/loadsave.php:503 ../lib/loadsave.php:656
 #, c-format
 msgid "MIME file %s"
 msgstr "MIME bestand %"
 
-#: ../lib/loadsave.php:501 ../lib/loadsave.php:653
+#: ../lib/loadsave.php:504 ../lib/loadsave.php:661
 #, c-format
 msgid "Serialized file %s"
 msgstr "Geserialiseerd bestand %s"
 
-#: ../lib/loadsave.php:502 ../lib/loadsave.php:667
+#: ../lib/loadsave.php:505 ../lib/loadsave.php:675
 #, c-format
 msgid "plain file %s"
 msgstr "plat bestand %"
 
-#: ../lib/loadsave.php:509
+#: ../lib/loadsave.php:512
 #, fuzzy
 msgid "Merge Edit"
 msgstr "Verander: %s"
 
-#: ../lib/loadsave.php:510 ../lib/loadsave.php:516
+#: ../lib/loadsave.php:513 ../lib/loadsave.php:519 ../lib/main.php:765
 #: ../lib/plugin/WikiAdminSelect.php:192 ../themes/Crao/templates/head.tmpl:79
 #: ../themes/Crao/templates/head.tmpl:80
 #: ../themes/Crao/templates/navbar.tmpl:45
@@ -1263,51 +1263,51 @@ msgstr "Verander: %s"
 msgid "PhpWikiAdministration"
 msgstr ""
 
-#: ../lib/loadsave.php:515
+#: ../lib/loadsave.php:518
 msgid "Restore Anyway"
 msgstr ""
 
-#: ../lib/loadsave.php:520
+#: ../lib/loadsave.php:523
 msgid " Sorry, cannot merge uploaded files."
 msgstr ""
 
-#: ../lib/loadsave.php:538
+#: ../lib/loadsave.php:541
 #, c-format
 msgid "%s: not defined"
 msgstr ""
 
-#: ../lib/loadsave.php:548
+#: ../lib/loadsave.php:551
 msgid "Default InterWiki map file not loaded."
 msgstr ""
 
-#: ../lib/loadsave.php:681 ../lib/loadsave.php:693
+#: ../lib/loadsave.php:689 ../lib/loadsave.php:701
 msgid "Skipping"
 msgstr "Overgeslagen"
 
-#: ../lib/loadsave.php:792
+#: ../lib/loadsave.php:800
 #, c-format
 msgid "Unable to load: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:799
+#: ../lib/loadsave.php:807
 #, c-format
 msgid "Bad file type: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:816
+#: ../lib/loadsave.php:824
 #, fuzzy, c-format
 msgid "Loading '%s'"
 msgstr "plat bestand %"
 
-#: ../lib/loadsave.php:847
+#: ../lib/loadsave.php:855
 msgid "Loading up virgin wiki"
 msgstr "Laden van maagdelijke wiki"
 
-#: ../lib/loadsave.php:891
+#: ../lib/loadsave.php:900
 msgid "No uploaded file to upload?"
 msgstr ""
 
-#: ../lib/loadsave.php:895
+#: ../lib/loadsave.php:904
 #, fuzzy, c-format
 msgid "Uploading %s"
 msgstr "plat bestand %"
@@ -1366,189 +1366,213 @@ msgstr "Je bent ingelogd als %s."
 msgid "You must log in to %s."
 msgstr "Je bent ingelogd als %s."
 
-#: ../lib/main.php:352 ../lib/plugin/PluginManager.php:65
+#: ../lib/main.php:352
+#, c-format
+msgid "Access for you is forbidden to %s."
+msgstr ""
+
+#: ../lib/main.php:354 ../lib/plugin/PluginManager.php:65
 #, fuzzy, c-format
 msgid "You must be an administrator to %s."
 msgstr "Je moet ingelogd zijn als beheerder om te %s in deze wiki"
 
-#: ../lib/main.php:364
+#: ../lib/main.php:366
 #, fuzzy
 msgid "view this page"
 msgstr "nieuw pagina"
 
-#: ../lib/main.php:365
+#: ../lib/main.php:367
 #, fuzzy
 msgid "diff this page"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:366
+#: ../lib/main.php:368
 #, fuzzy
 msgid "dump html pages"
 msgstr "Verwijder pagina"
 
-#: ../lib/main.php:367
+#: ../lib/main.php:369
 #, fuzzy
 msgid "dump serial pages"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:368
+#: ../lib/main.php:370
 #, fuzzy
 msgid "edit this page"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:369
+#: ../lib/main.php:371
 #, fuzzy
 msgid "create this page"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:370
+#: ../lib/main.php:372
 #, fuzzy
 msgid "load files into this wiki"
 msgstr "HTML is niet beschikbaar in deze wiki"
 
-#: ../lib/main.php:371
+#: ../lib/main.php:373
 #, fuzzy
 msgid "lock this page"
 msgstr "Sluit Pagina Af"
 
-#: ../lib/main.php:372
+#: ../lib/main.php:374
 #, fuzzy
 msgid "remove this page"
 msgstr "Verwijder pagina"
 
-#: ../lib/main.php:373
+#: ../lib/main.php:375
 #, fuzzy
 msgid "unlock this page"
 msgstr "Sluit Pagina Af"
 
-#: ../lib/main.php:374
+#: ../lib/main.php:376
 #, fuzzy
 msgid "upload a zip dump"
 msgstr "HTML is niet beschikbaar in deze wiki"
 
-#: ../lib/main.php:375
+#: ../lib/main.php:377
 #, fuzzy
 msgid "verify the current action"
 msgstr "huidige versie"
 
-#: ../lib/main.php:376
+#: ../lib/main.php:378
 #, fuzzy
 msgid "view the source of this page"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:377
+#: ../lib/main.php:379
 msgid "access this wiki via XML-RPC"
 msgstr ""
 
-#: ../lib/main.php:378
+#: ../lib/main.php:380
 msgid "access this wiki via SOAP"
 msgstr ""
 
-#: ../lib/main.php:379
+#: ../lib/main.php:381
 #, fuzzy
 msgid "download a zip dump from this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:380
+#: ../lib/main.php:382
 #, fuzzy
 msgid "download an html zip dump from this wiki"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:392
+#: ../lib/main.php:394
 #, fuzzy
 msgid "Browsing pages"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:393
+#: ../lib/main.php:395
 #, fuzzy
 msgid "Diffing pages"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:394
+#: ../lib/main.php:396
 #, fuzzy
 msgid "Dumping html pages"
 msgstr "Verwijder pagina"
 
-#: ../lib/main.php:395
+#: ../lib/main.php:397
 #, fuzzy
 msgid "Dumping serial pages"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:396
+#: ../lib/main.php:398
 #, fuzzy
 msgid "Editing pages"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:397
+#: ../lib/main.php:399
 #, fuzzy
 msgid "Creating pages"
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/main.php:398
+#: ../lib/main.php:400
 #, fuzzy
 msgid "Loading files"
 msgstr "plat bestand %"
 
-#: ../lib/main.php:399
+#: ../lib/main.php:401
 #, fuzzy
 msgid "Locking pages"
 msgstr "Open Pagina"
 
-#: ../lib/main.php:400
+#: ../lib/main.php:402
 #, fuzzy
 msgid "Removing pages"
 msgstr "Verwijder pagina"
 
-#: ../lib/main.php:401
+#: ../lib/main.php:403
 #, fuzzy
 msgid "Unlocking pages"
 msgstr "Sluit Pagina Af"
 
-#: ../lib/main.php:402
+#: ../lib/main.php:404
 msgid "Uploading zip dumps"
 msgstr ""
 
-#: ../lib/main.php:403
+#: ../lib/main.php:405
 #, fuzzy
 msgid "Verify the current action"
 msgstr "huidige versie"
 
-#: ../lib/main.php:404
+#: ../lib/main.php:406
 #, fuzzy
 msgid "Viewing the source of pages"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/main.php:405
+#: ../lib/main.php:407
 msgid "XML-RPC access"
 msgstr ""
 
-#: ../lib/main.php:406
+#: ../lib/main.php:408
 msgid "SOAP access"
 msgstr ""
 
-#: ../lib/main.php:407
+#: ../lib/main.php:409
 msgid "Downloading zip dumps"
 msgstr ""
 
-#: ../lib/main.php:408
+#: ../lib/main.php:410
 msgid "Downloading html zip dumps"
 msgstr ""
 
-#: ../lib/main.php:529
+#: ../lib/main.php:534
 #, c-format
 msgid "%s: Bad action"
 msgstr ""
 
-#: ../lib/main.php:546
+#: ../lib/main.php:551
 msgid "Fatal PhpWiki Error"
 msgstr "PhpWiki Fatale Fout"
 
-#: ../lib/main.php:769 ../lib/plugin/FullTextSearch.php:39
+#: ../lib/main.php:778
+msgid "Chown"
+msgstr ""
+
+#: ../lib/main.php:782 ../lib/plugin/WikiAdminSetAcl.php:188
+msgid "SetAcl"
+msgstr ""
+
+#: ../lib/main.php:786 ../lib/plugin/WikiAdminRename.php:215
+#, fuzzy
+msgid "Rename"
+msgstr "Verwijder Pagina"
+
+#: ../lib/main.php:790 ../lib/main.php:795 ../lib/plugin/PageDump.php:34
+#: ../themes/default/templates/actionbar.tmpl:37
+#: ../themes/smaller/templates/actionbar.tmpl:39
+msgid "PageDump"
+msgstr ""
+
+#: ../lib/main.php:809 ../lib/plugin/FullTextSearch.php:39
 #: ../lib/plugin/WantedPages.php:133
 msgid "FullTextSearch"
 msgstr "VolledigeTekstZoek"
 
-#: ../lib/main.php:772 ../lib/plugin/RecentChanges.php:576
+#: ../lib/main.php:812 ../lib/plugin/RecentChanges.php:576
 #: ../lib/plugin/TitleSearch.php:31 ../themes/Sidebar/templates/navbar.tmpl:20
 #: ../themes/default/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:15
@@ -1556,21 +1580,21 @@ msgstr "VolledigeTekstZoek"
 msgid "TitleSearch"
 msgstr "TitelZoek"
 
-#: ../lib/main.php:893
+#: ../lib/main.php:933
 msgid "The session.save_path directory"
 msgstr ""
 
-#: ../lib/main.php:896
+#: ../lib/main.php:936
 #, c-format
 msgid "the directory '%s'"
 msgstr ""
 
-#: ../lib/main.php:900
+#: ../lib/main.php:940
 #, c-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr ""
 
-#: ../lib/main.php:907
+#: ../lib/main.php:947
 msgid "Users will not be able to sign in."
 msgstr ""
 
@@ -2123,10 +2147,6 @@ msgstr ""
 msgid "Orphaned Pages in this wiki (%d total):"
 msgstr "De %d meestbezochte pagina's van deze Wiki:"
 
-#: ../lib/plugin/PageDump.php:34 ../themes/default/templates/actionbar.tmpl:32
-msgid "PageDump"
-msgstr ""
-
 #: ../lib/plugin/PageDump.php:37
 msgid "View a single page dump online."
 msgstr ""
@@ -2268,8 +2288,8 @@ msgstr ""
 #: ../themes/Crao/templates/actionbar.tmpl:17
 #: ../themes/Portland/templates/actionbar.tmpl:18
 #: ../themes/Wordpress/templates/actionbar.tmpl:68
-#: ../themes/default/templates/actionbar.tmpl:26
-#: ../themes/smaller/templates/actionbar.tmpl:33
+#: ../themes/default/templates/actionbar.tmpl:31
+#: ../themes/smaller/templates/actionbar.tmpl:37
 #: ../themes/smaller/templates/info.tmpl:168
 msgid "PageHistory"
 msgstr "PaginaGeschiedenis"
@@ -2282,7 +2302,7 @@ msgstr "PaginaGeschiedenis"
 #: ../lib/plugin/PageInfo.php:32 ../themes/Crao/templates/actionbar.tmpl:19
 #: ../themes/Portland/templates/actionbar.tmpl:19
 #: ../themes/Wordpress/templates/actionbar.tmpl:70
-#: ../themes/default/templates/actionbar.tmpl:28
+#: ../themes/default/templates/actionbar.tmpl:33
 #, fuzzy
 msgid "PageInfo"
 msgstr "PaginaInfo"
@@ -3117,12 +3137,12 @@ msgid "Translate"
 msgstr "van %s"
 
 #: ../lib/plugin/TranslateText.php:118 ../lib/plugin/UserPreferences.php:109
-#: ../lib/plugin/WikiAdminChmod.php:165 ../lib/plugin/WikiAdminRemove.php:219
-#: ../lib/plugin/WikiAdminRename.php:180
-#: ../lib/plugin/WikiAdminSearchReplace.php:186
+#: ../lib/plugin/WikiAdminChmod.php:165 ../lib/plugin/WikiAdminRemove.php:220
+#: ../lib/plugin/WikiAdminRename.php:198
+#: ../lib/plugin/WikiAdminSearchReplace.php:187
 #: ../lib/plugin/WikiAdminSelect.php:218 ../lib/plugin/WikiAdminSelect.php:239
-#: ../lib/plugin/WikiAdminSetAcl.php:189 ../lib/plugin/WikiAdminUtils.php:204
-#: ../lib/removepage.php:23 ../themes/default/templates/login.tmpl:69
+#: ../lib/plugin/WikiAdminSetAcl.php:194 ../lib/plugin/WikiAdminUtils.php:204
+#: ../lib/removepage.php:23 ../themes/default/templates/login.tmpl:70
 #: ../themes/default/templates/userprefs.tmpl:236
 msgid "Cancel"
 msgstr "Annuleer"
@@ -3231,9 +3251,9 @@ msgid "Do you really want to delete all your UserPreferences?"
 msgstr ""
 
 #: ../lib/plugin/UserPreferences.php:107 ../lib/plugin/WikiAdminChmod.php:152
-#: ../lib/plugin/WikiAdminRemove.php:193 ../lib/plugin/WikiAdminRename.php:167
-#: ../lib/plugin/WikiAdminSearchReplace.php:172
-#: ../lib/plugin/WikiAdminSetAcl.php:176
+#: ../lib/plugin/WikiAdminRemove.php:194 ../lib/plugin/WikiAdminRename.php:185
+#: ../lib/plugin/WikiAdminSearchReplace.php:173
+#: ../lib/plugin/WikiAdminSetAcl.php:181
 msgid "Yes"
 msgstr ""
 
@@ -3358,14 +3378,14 @@ msgstr ""
 msgid "Invalid chmod string"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:93 ../lib/plugin/WikiAdminSetAcl.php:110
+#: ../lib/plugin/WikiAdminChmod.php:93 ../lib/plugin/WikiAdminSetAcl.php:112
 #, c-format
 msgid "%s pages have been changed."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminChmod.php:96
 #: ../lib/plugin/WikiAdminSearchReplace.php:109
-#: ../lib/plugin/WikiAdminSetAcl.php:113
+#: ../lib/plugin/WikiAdminSetAcl.php:115
 msgid "No pages changed."
 msgstr ""
 
@@ -3378,7 +3398,7 @@ msgstr "Verwijder pagina"
 msgid "Chmod"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:161 ../lib/plugin/WikiAdminSetAcl.php:185
+#: ../lib/plugin/WikiAdminChmod.php:161 ../lib/plugin/WikiAdminSetAcl.php:190
 #, fuzzy
 msgid "Select the pages to change:"
 msgstr "Verwijder pagina"
@@ -3395,11 +3415,11 @@ msgstr ""
 msgid "(ugo : rwx)"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:195 ../lib/plugin/WikiAdminSetAcl.php:250
+#: ../lib/plugin/WikiAdminChmod.php:195 ../lib/plugin/WikiAdminSetAcl.php:258
 msgid "Propagate new permissions to all subpages?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminChmod.php:197 ../lib/plugin/WikiAdminSetAcl.php:252
+#: ../lib/plugin/WikiAdminChmod.php:197 ../lib/plugin/WikiAdminSetAcl.php:260
 msgid "(disable individual page permissions, enable inheritance)?"
 msgstr ""
 
@@ -3427,36 +3447,40 @@ msgstr "Pagina '%s' verwijderd."
 msgid "%d pages have been permanently removed."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:188 ../lib/plugin/WikiAdminRemove.php:240
+#: ../lib/plugin/WikiAdminRemove.php:134 ../lib/plugin/_WikiTranslation.php:85
+msgid "PhpWikiAdministration/Remove"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminRemove.php:189 ../lib/plugin/WikiAdminRemove.php:241
 #, fuzzy
 msgid "Remove"
 msgstr "Verwijder Pagina"
 
-#: ../lib/plugin/WikiAdminRemove.php:195
+#: ../lib/plugin/WikiAdminRemove.php:196
 msgid "Are you sure you want to permanently remove the selected files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:198
+#: ../lib/plugin/WikiAdminRemove.php:199
 #, fuzzy
 msgid "Remove selected pages"
 msgstr "Verwijder pagina"
 
-#: ../lib/plugin/WikiAdminRemove.php:199
+#: ../lib/plugin/WikiAdminRemove.php:200
 #, fuzzy
 msgid "Permanently remove the selected files:"
 msgstr "Verwijder pagina"
 
-#: ../lib/plugin/WikiAdminRemove.php:202
+#: ../lib/plugin/WikiAdminRemove.php:203
 #, c-format
 msgid "Also pages which have been deleted at least %s days."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:206
+#: ../lib/plugin/WikiAdminRemove.php:207
 #, fuzzy
 msgid "List all pages."
 msgstr "Fout bij schrijven pagina '%s'"
 
-#: ../lib/plugin/WikiAdminRemove.php:212
+#: ../lib/plugin/WikiAdminRemove.php:213
 #, c-format
 msgid "(Pages which have been deleted at least %s days are already checked.)"
 msgstr ""
@@ -3470,81 +3494,81 @@ msgstr ""
 msgid "Rename selected pages."
 msgstr "Verwijder pagina"
 
-#: ../lib/plugin/WikiAdminRename.php:80
+#: ../lib/plugin/WikiAdminRename.php:84 ../lib/plugin/WikiAdminRename.php:90
+#, fuzzy, c-format
+msgid "Replaced link in %s."
+msgstr "Je bent ingelogd als %s."
+
+#: ../lib/plugin/WikiAdminRename.php:97
 #, c-format
 msgid "Page %s already exists. Ignored."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:83 ../lib/plugin/WikiAdminSetAcl.php:101
+#: ../lib/plugin/WikiAdminRename.php:100 ../lib/plugin/WikiAdminSetAcl.php:103
 #, c-format
 msgid "Access denied to change page '%s'."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:87
+#: ../lib/plugin/WikiAdminRename.php:104
 #, fuzzy, c-format
 msgid "Renamed page '%s' to '%s'."
 msgstr "Pagina '%s' verwijderd."
 
-#: ../lib/plugin/WikiAdminRename.php:91 ../lib/plugin/WikiAdminRename.php:95
+#: ../lib/plugin/WikiAdminRename.php:108 ../lib/plugin/WikiAdminRename.php:112
 #, c-format
 msgid "Couldn't rename page '%s' to '%s'."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:101
+#: ../lib/plugin/WikiAdminRename.php:118
 #, c-format
 msgid "%s pages have been permanently renamed."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:104
+#: ../lib/plugin/WikiAdminRename.php:121
 msgid "No pages renamed."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:161
+#: ../lib/plugin/WikiAdminRename.php:127 ../lib/plugin/_WikiTranslation.php:86
+msgid "PhpWikiAdministration/Rename"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminRename.php:179
 msgid "Rename to"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:170
+#: ../lib/plugin/WikiAdminRename.php:188
 #, fuzzy
 msgid "Are you sure you want to permanently rename the selected files?"
 msgstr "Verwijder pagina"
 
-#: ../lib/plugin/WikiAdminRename.php:174
+#: ../lib/plugin/WikiAdminRename.php:192
 #, fuzzy
 msgid "Rename selected pages"
 msgstr "Verwijder pagina"
 
-#: ../lib/plugin/WikiAdminRename.php:175
+#: ../lib/plugin/WikiAdminRename.php:193
 #, fuzzy
 msgid "Select the pages to rename:"
 msgstr "Verwijder pagina"
 
-#: ../lib/plugin/WikiAdminRename.php:197
-#, fuzzy
-msgid "Rename"
-msgstr "Verwijder Pagina"
-
-#: ../lib/plugin/WikiAdminRename.php:197
+#: ../lib/plugin/WikiAdminRename.php:215
 #, fuzzy
 msgid "from"
 msgstr "van %s"
 
-#: ../lib/plugin/WikiAdminRename.php:200
+#: ../lib/plugin/WikiAdminRename.php:218
 msgid "to"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:203
+#: ../lib/plugin/WikiAdminRename.php:221
 msgid "(no regex, case-sensitive)"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:206
+#: ../lib/plugin/WikiAdminRename.php:230
 msgid "Change pagename in all linked pages also?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRename.php:207 ../lib/plugin/WikiAdminSetAcl.php:253
-msgid "(Currently not working)"
-msgstr ""
-
-#: ../lib/plugin/WikiAdminRename.php:231
+#: ../lib/plugin/WikiAdminRename.php:249
 msgid "This page already exists"
 msgstr ""
 
@@ -3580,30 +3604,30 @@ msgstr ""
 msgid "%s pages changed."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:170
+#: ../lib/plugin/WikiAdminSearchReplace.php:171
 msgid "Warning: The search string cannot be empty!"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:175
+#: ../lib/plugin/WikiAdminSearchReplace.php:176
 msgid ""
 "Are you sure you want to permanently search & replace text in the selected "
 "files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:181
+#: ../lib/plugin/WikiAdminSearchReplace.php:182
 #, fuzzy
 msgid "Select the pages to search:"
 msgstr "Verwijder pagina"
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:203
+#: ../lib/plugin/WikiAdminSearchReplace.php:204
 msgid "Replace: "
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:206
+#: ../lib/plugin/WikiAdminSearchReplace.php:207
 msgid "by"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSearchReplace.php:209
+#: ../lib/plugin/WikiAdminSearchReplace.php:210
 msgid "(no regex) Case-exact: "
 msgstr ""
 
@@ -3636,74 +3660,89 @@ msgstr "Verwijder pagina"
 msgid "WikiAdminSetAcl"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:95
+#: ../lib/plugin/WikiAdminSetAcl.php:97
 #, fuzzy, c-format
 msgid "ACL not changed for page '%s'."
 msgstr "Toon de pagina bron tekst '%s'."
 
-#: ../lib/plugin/WikiAdminSetAcl.php:98
+#: ../lib/plugin/WikiAdminSetAcl.php:100
 #, fuzzy, c-format
 msgid "ACL changed for page '%s'."
 msgstr "Toon de pagina bron tekst '%s'."
 
-#: ../lib/plugin/WikiAdminSetAcl.php:105
+#: ../lib/plugin/WikiAdminSetAcl.php:107
 msgid "Invalid ACL"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:170
+#: ../lib/plugin/WikiAdminSetAcl.php:123
+msgid "PhpWikiAdministration/SetAcl"
+msgstr ""
+
+#: ../lib/plugin/WikiAdminSetAcl.php:175
 #, fuzzy
 msgid "Permission"
 msgstr "Versie"
 
-#: ../lib/plugin/WikiAdminSetAcl.php:172
+#: ../lib/plugin/WikiAdminSetAcl.php:177
 msgid "ACL"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:180
+#: ../lib/plugin/WikiAdminSetAcl.php:185
 #, fuzzy
 msgid ""
 "Are you sure you want to permanently change access to the selected files?"
 msgstr "Verwijder pagina"
 
-#: ../lib/plugin/WikiAdminSetAcl.php:183
-msgid "SetAcl"
-msgstr ""
-
-#: ../lib/plugin/WikiAdminSetAcl.php:215
-#, fuzzy, c-format
-msgid "Selected Pages: %s"
+#: ../lib/plugin/WikiAdminSetAcl.php:220
+#, fuzzy
+msgid "Selected Pages: "
 msgstr "Verwijder pagina"
 
-#: ../lib/plugin/WikiAdminSetAcl.php:221
+#: ../lib/plugin/WikiAdminSetAcl.php:226
 #, c-format
 msgid "page permission inherited from %s"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:223
+#: ../lib/plugin/WikiAdminSetAcl.php:228
 msgid "invidual page permission"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:225
+#: ../lib/plugin/WikiAdminSetAcl.php:230
 msgid "default page permission"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:226
+#: ../lib/plugin/WikiAdminSetAcl.php:231
 #, fuzzy
 msgid "Type: "
 msgstr "Pagina Naam"
 
-#: ../lib/plugin/WikiAdminSetAcl.php:228
-msgid ""
-"Description: Selected Grant checkboxes allow access, unselected checkboxes "
-"deny access."
+#: ../lib/plugin/WikiAdminSetAcl.php:232
+msgid "getfacl: "
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:229
+#: ../lib/plugin/WikiAdminSetAcl.php:233
+msgid "ACL: "
+msgstr ""
+
+#: ../lib/plugin/WikiAdminSetAcl.php:235
+msgid "Description: "
+msgstr ""
+
+#: ../lib/plugin/WikiAdminSetAcl.php:236
+msgid ""
+"Selected Grant checkboxes allow access, unselected checkboxes deny access."
+msgstr ""
+
+#: ../lib/plugin/WikiAdminSetAcl.php:237
 msgid "To ignore delete the line."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminSetAcl.php:230
+#: ../lib/plugin/WikiAdminSetAcl.php:238
 msgid "To add check 'Add' near the dropdown list."
+msgstr ""
+
+#: ../lib/plugin/WikiAdminSetAcl.php:261
+msgid "(Currently not working)"
 msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:29
@@ -3900,7 +3939,7 @@ msgstr ""
 #: ../themes/Crao/templates/actionbar.tmpl:22
 #: ../themes/Portland/templates/actionbar.tmpl:21
 #: ../themes/Wordpress/templates/actionbar.tmpl:73
-#: ../themes/default/templates/actionbar.tmpl:31
+#: ../themes/default/templates/actionbar.tmpl:36
 #: ../themes/smaller/templates/info.tmpl:175
 msgid "DebugInfo"
 msgstr ""
@@ -4094,14 +4133,6 @@ msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:84
 msgid "PhpWikiAdministration/Chmod"
-msgstr ""
-
-#: ../lib/plugin/_WikiTranslation.php:85
-msgid "PhpWikiAdministration/Remove"
-msgstr ""
-
-#: ../lib/plugin/_WikiTranslation.php:86
-msgid "PhpWikiAdministration/Rename"
 msgstr ""
 
 #: ../lib/plugin/_WikiTranslation.php:87
@@ -4399,23 +4430,37 @@ msgstr ""
 msgid "check for new session.sess_ip column"
 msgstr ""
 
-#: ../lib/upgrade.php:313 ../lib/upgrade.php:333
+#: ../lib/upgrade.php:312 ../lib/upgrade.php:332
 msgid "ADDING"
 msgstr ""
 
-#: ../lib/upgrade.php:323
+#: ../lib/upgrade.php:322
 msgid "check for page.id auto_increment flag"
 msgstr ""
 
-#: ../lib/upgrade.php:339
+#: ../lib/upgrade.php:338
 msgid "FAILED"
 msgstr ""
 
-#: ../lib/upgrade.php:377
+#: ../lib/upgrade.php:353
+msgid "check for mysql 4.1.x binary search bug"
+msgstr ""
+
+#: ../lib/upgrade.php:361
+#, c-format
+msgid "version <em>%s</em> <b>FIXED</b>"
+msgstr ""
+
+#: ../lib/upgrade.php:363
+#, c-format
+msgid "version <em>%s</em> not affected"
+msgstr ""
+
+#: ../lib/upgrade.php:393
 msgid "Upgrade disabled: user != isAdmin"
 msgstr ""
 
-#: ../lib/upgrade.php:381
+#: ../lib/upgrade.php:397
 msgid "Upgrading this PhpWiki"
 msgstr ""
 
@@ -4432,12 +4477,12 @@ msgstr ""
 msgid "Unexpected EOF in zip file"
 msgstr ""
 
-#: ../lib/ziplib.php:688
+#: ../lib/ziplib.php:699
 #, c-format
 msgid "[%d] See [%s]"
 msgstr "[%d] Zie [%s]"
 
-#: ../lib/ziplib.php:695
+#: ../lib/ziplib.php:706
 msgid "References"
 msgstr "Referenties"
 
@@ -4460,15 +4505,15 @@ msgid "View Source"
 msgstr "Bron Tekst"
 
 #: ../themes/Crao/templates/actionbar.tmpl:24
-#: ../themes/default/templates/actionbar.tmpl:35
-#: ../themes/smaller/templates/actionbar.tmpl:38
+#: ../themes/default/templates/actionbar.tmpl:40
+#: ../themes/smaller/templates/actionbar.tmpl:42
 #: ../themes/smaller/templates/info.tmpl:178
 msgid "PurgeHtmlCache"
 msgstr ""
 
 #: ../themes/Crao/templates/actionbar.tmpl:25
-#: ../themes/default/templates/actionbar.tmpl:36
-#: ../themes/smaller/templates/actionbar.tmpl:39
+#: ../themes/default/templates/actionbar.tmpl:41
+#: ../themes/smaller/templates/actionbar.tmpl:43
 #: ../themes/smaller/templates/info.tmpl:179
 msgid ""
 "Purge HTML cache for this page. Regenerate from WikiMarkup when next "
@@ -4968,7 +5013,7 @@ msgstr ""
 msgid "Page Type:"
 msgstr "Pagina Naam"
 
-#: ../themes/default/templates/login.tmpl:39
+#: ../themes/default/templates/login.tmpl:40
 #, c-format
 msgid ""
 "You may sign in using any [WikiWord|AddingPages] as a user id. (Any "
@@ -4976,21 +5021,21 @@ msgid ""
 "in RecentChanges to your home page."
 msgstr ""
 
-#: ../themes/default/templates/login.tmpl:51
+#: ../themes/default/templates/login.tmpl:52
 msgid ""
 "Note: Only if you create your personal HomePage with same the pagename as "
 "your user id, you will be able to store your UserPreferences. Otherwise not."
 msgstr ""
 
-#: ../themes/default/templates/login.tmpl:54
+#: ../themes/default/templates/login.tmpl:55
 msgid "New users may use an empty password."
 msgstr ""
 
-#: ../themes/default/templates/login.tmpl:59
+#: ../themes/default/templates/login.tmpl:60
 msgid "UserId:"
 msgstr ""
 
-#: ../themes/default/templates/login.tmpl:63
+#: ../themes/default/templates/login.tmpl:64
 msgid "Password:"
 msgstr ""
 
@@ -5324,7 +5369,7 @@ msgstr ""
 msgid "Posted: %s"
 msgstr "PaginaGeschiedenis"
 
-#: ../themes/smaller/templates/actionbar.tmpl:31
+#: ../themes/smaller/templates/actionbar.tmpl:34
 #, fuzzy
 msgid "Info"
 msgstr "Vorige Auteur"

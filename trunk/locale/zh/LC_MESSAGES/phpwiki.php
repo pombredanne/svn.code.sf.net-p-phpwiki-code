@@ -1768,8 +1768,6 @@ $locale["illegal pagename"] =
    "不合法的頁面名稱";
 $locale["invidual page permission"] =
    "個別頁面權限";
-$locale["is identical to current version %d - skipped"] =
-   "與目前版本 %d 相同 - 跳過";
 $locale["load files into this wiki"] =
    "載入檔案到此 wiki";
 $locale["lock this page"] =
