@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: online.tmpl,v 1.3 2004-03-14 16:40:45 rurban Exp $ -->
+<!-- $Id: online.tmpl,v 1.4 2004-05-02 14:16:24 rurban Exp $ -->
 <?php
 // Formatting and idea borrowed from postnuke.
 
@@ -35,7 +35,8 @@ if ($MAX_ONLINE_TIME and $MAX_ONLINE_NUM)
       $link = WikiLink($user['name']);
       $s .= $link->asXML() . ", ";
     }
-    echo substr($s,0,-2);
+    if (!count($REGISTERED)) echo(htmlentities(_("<none>")));
+    else echo(htmlentities(substr($s,0,-2)));
 ?>
 <?php if (!empty($ADMINS) and $dispose_admin) { ?> 
     <br />
