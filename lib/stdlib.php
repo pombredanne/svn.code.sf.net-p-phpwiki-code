@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.115 2002-08-24 13:18:56 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.116 2002-08-27 21:51:31 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -26,6 +26,10 @@
     __sprintf ($fmt)
     __vsprintf ($fmt, $args)
     better_srand($seed = '')
+    count_all($arg)
+    isSubPage($pagename)
+    subPageSlice($pagename, $pos)
+    explodePageList($input, $perm = false)
 
   function: LinkInterWikiLink($link, $linktext)
   moved to: lib/interwiki.php
@@ -459,15 +463,24 @@ function split_pagename ($page) {
         foreach ($RE as $key => $val)
             $RE[$key] = pcre_fix_posix_classes($val);
     }
-    
-    foreach ($RE as $regexp)
-        $page = preg_replace($regexp, '\\1 \\2', $page);
-    return $page;
+    if (isSubPage($page)) {
+        $pages = explode(SUBPAGE_SEPARATOR,$page);
+        $new_page = $pages[0] ? split_pagename($pages[0]) : '';
+        for ($i=1; $i < sizeof($pages); $i++) {
+            $new_page .=  (SUBPAGE_SEPARATOR . ($pages[$i] ? split_pagename($pages[$i]) : ''));
+        }
+        return $new_page;
+    } else {
+        foreach ($RE as $regexp) {
+            $page = preg_replace($regexp, '\\1 \\2', $page);
+        }
+        return $page;
+    }
 }
 
 function NoSuchRevision (&$request, $page, $version) {
     $html = HTML(HTML::h2(_("Revision Not Found")),
-                 HTML::p(fmt("I'm sorry.  Version %d of %s is not in my database.",
+                 HTML::p(fmt("I'm sorry.  Version %d of %s is not in the database.",
                              $version, WikiLink($page, 'auto'))));
     include_once('lib/Template.php');
     GeneratePage($html, _("Bad Version"), $page->getCurrentRevision());
@@ -660,12 +673,18 @@ class fileSet {
     }
 
     function _filenameSelector($filename) {
-        // Default selects all filenames, override as needed.
-        return true;
+        if (! $this->_pattern)
+            return true;
+        else {
+            return glob_match ($this->_pattern, $filename, $this->_case);
+        }
     }
 
-    function fileSet($directory) {
+    function fileSet($directory, $filepattern = false) {
         $this->_fileList = array();
+        $this->_pattern = $filepattern;
+        $this->_case = !isWindows();
+        $this->_pathsep = '/';
 
         if (empty($directory)) {
             trigger_error(sprintf(_("%s is empty."), 'directoryname'),
@@ -681,7 +700,7 @@ class fileSet {
         }
 
         while ($filename = readdir($dir_handle)) {
-            if ($filename[0] == '.' || filetype("$dir/$filename") != 'file')
+            if ($filename[0] == '.' || filetype($dir . $this->_pathsep . $filename) != 'file')
                 continue;
             if ($this->_filenameSelector($filename)) {
                 array_push($this->_fileList, "$filename");
@@ -693,6 +712,75 @@ class fileSet {
     }
 };
 
+// File globbing
+
+// expands a list containing regex's to its matching entries
+class ListRegexExpand {
+    var $match, $list, $index, $case_sensitive;
+    function ListRegexExpand (&$list, $match, $case_sensitive = true) {
+    	$this->match = $match;
+    	$this->list = &$list;
+    	$this->case_sensitive = $case_sensitive;	
+    }
+    function listMatchCallback ($item, $key) {
+    	if (preg_match('/' . $this->match . ($this->case_sensitive ? '/' : '/i'), $item)) {
+	    unset($this->list[$this->index]);
+            $this->list[] = $item;
+        }
+    }
+    function expandRegex ($index, &$pages) {
+    	$this->index = $index;
+    	array_walk($pages, array($this, 'listMatchCallback'));
+        return $this->list;
+    }
+}
+
+// convert fileglob to regex style
+function glob_to_pcre ($glob) {
+    $re = preg_replace('/\./', '\\.', $glob);
+    $re = preg_replace(array('/\*/','/\?/'), array('.*','.'), $glob);
+    if (!preg_match('/^[\?\*]/',$glob))
+        $re = '^' . $re;
+    if (!preg_match('/[\?\*]$/',$glob))
+        $re = $re . '$';
+    return $re;
+}
+
+function glob_match ($glob, $against, $case_sensitive = true) {
+    return preg_match('/' . glob_to_pcre($glob) . ($case_sensitive ? '/' : '/i'), $against);
+}
+
+function explodeList($input, $allnames, $glob_style = true, $case_sensitive = true) {
+    $list = explode(',',$input);
+    // expand wildcards from list of $allnames
+    if (preg_match('/[\?\*]/',$input)) {
+        for ($i = 0; $i <= sizeof($list); $i++) {
+            $f = $list[$i];
+            if (preg_match('/[\?\*]/',$f)) {
+            	reset($allnames);
+            	$expand = new ListRegexExpand(&$list, $glob_style ? glob_to_pcre($f) : $f, $case_sensitive);
+            	$expand->expandRegex($i, &$allnames);
+            }
+        }
+    }
+    return $list;
+}
+
+// echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
+
+function explodePageList($input, $perm = false) {
+    $list = explode(',',$input);
+    // expand wildcards from list of all pages
+    if (preg_match('/[\?\*]/',$input)) {
+        $dbi = $GLOBALS['request']->_dbi;
+        $allPagehandles = $dbi->getAllPages($perm);
+        while ($pagehandle = $allPagehandles->next()) {
+            $allPages[] = $pagehandle->getName();
+        }
+        return explodeList($input, &$allPages);
+    }
+    return $list;
+}
 
 // Class introspections
 

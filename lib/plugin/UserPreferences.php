@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.5 2002-08-23 21:54:30 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.6 2002-08-27 21:51:31 rurban Exp $');
 /**
  * Plugin to allow any user to adjust his own preferences.
  * This must be used in the page "UserPreferences" or in a subpage of a
@@ -45,19 +45,26 @@ extends WikiPlugin
             foreach ($no_args as $key => $value) {
                 $no_args[$value] = false;
             }
-            $no_args['errmsg'] = _("Error: The page with the UserPreferences plugin must be valid WikiWord or a Preferences subpage of the users HomePage. Sorry, UserPreferences cannot be saved.");
+            $no_args['errmsg'] = HTML(HTML::h2(_("Error: The page with the UserPreferences plugin must be valid WikiWord or a Preferences subpage of the users HomePage. Sorry, UserPreferences cannot be saved."),HTML::hr()));
+            $no_args['isForm'] = false;
             return Template('userprefs', $no_args);
         }
         if ($user->isAuthenticated() and $args['userid'] == $user->_userid) {
             if ($request->isPost()) {
-            	if ($request->_prefs) 
+            	if ($request->_prefs) {
             	  $pref = $request->_prefs;
-            	else // hmm. already handled somewhere else...
+            	} else { // hmm. already handled somewhere else...
             	  $pref = new UserPreferences($request->getArg('pref'));
+                }
             	// Fixme: How to update the Theme? Correct update?
-            	$request->_user->SetPreferences($pref);
-            	$args['errmsg'] = _("Preferences successfully updated.");
-            } 
+            	$num = $request->_user->SetPreferences($pref);
+                if (!$num) {
+                    $errmsg = _("No changes.");
+                } else {
+                    $errmsg = fmt("%d UserPreferences fields successfully updated.", $num);
+                }
+                $args['errmsg'] = HTML(HTML::h2($errmsg),HTML::hr());
+            }
             $available_themes = array(); 
             $dir_root = PHPWIKI_DIR . '/themes/'; 
             $dir = dir($dir_root);

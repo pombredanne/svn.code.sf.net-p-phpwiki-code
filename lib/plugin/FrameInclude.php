@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FrameInclude.php,v 1.2 2002-08-24 13:18:56 rurban Exp $');
+rcs_id('$Id: FrameInclude.php,v 1.3 2002-08-27 21:51:31 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -73,7 +73,8 @@ extends WikiPlugin
     function run($dbi, $argstr, $request) {
     	global $Theme;
 
-        extract($this->getArgs($argstr, $request));
+        $args = ($this->getArgs($argstr, $request));
+        extract($args);
 
         if (!$src)
             return $this->error(sprintf(_("%s parameter missing"), 'src'));
@@ -100,7 +101,7 @@ extends WikiPlugin
         // include this into top.tmpl instead
         //$memo = HTML(HTML::p(array('class' => 'transclusion-title'),
         //                     fmt("Included frame from %s", $src)));
-        if ($Theme == 'Sidebar') {
+        if (isa($Theme,'Theme_Sidebar')) {
             // left also"\n".
             $lefturi = $request->getURLtoSelf('frame=navbar');
             $frameset = "\n".
@@ -119,13 +120,8 @@ extends WikiPlugin
                         "  $content\n".
                         "</FRAMESET>\n";
         }
-        // Other options:
-        // 1) either change the whole output stream to 
-        //    head, $frameset, <nobody>body</nobody> (buffered)
-        // 2) redirect to ?frameset=pagename
-        //    $request->setArg('framesrc', $src);
-        //    $request->redirect('frameset', $request->getName());
-        return $frameset; 
+        $args['FRAMESET'] = $frameset;
+        return printXML(new Template('frameset', $request, $args));
     }
 };
 

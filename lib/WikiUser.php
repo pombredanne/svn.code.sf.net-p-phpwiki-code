@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.19 2002-08-24 22:09:14 wainstead Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.20 2002-08-27 21:51:31 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -17,7 +17,7 @@ define('WIKIAUTH_ADMIN', 10);
 define('WIKIAUTH_FORBIDDEN', 11); // Completely not allowed.
 
 $UserPreferences = array(
-                         'userid'        => new _UserPreference(''),
+                         'userid'        => new _UserPreference(''), // really store this also?
                          'passwd'        => new _UserPreference(''),
                          'email'         => new _UserPreference(''),
                          'emailVerified' => new _UserPreference_bool(),
@@ -195,7 +195,7 @@ class WikiUser {
 
 	// WikiDB_User DB/File Authentification from $DBAuthParams 
         // Check if we have the user. If not try other methods.
-        if (ALLOW_USER_LOGIN and !empty($passwd)) {
+        if (ALLOW_USER_LOGIN) { // and !empty($passwd)) {
 	    $request = $this->_request;
 	    // first check if the user is known
 	    if ($this->exists($userid)) {
@@ -249,7 +249,7 @@ class WikiUser {
         // I'd rather prefer only to store the UserId in the cookie or session,
         // and get the preferences from the db or page.
         if (!($prefs = $this->_request->getCookieVar('WIKI_PREFS2')))
-            $prefs = $this->_request->getSessionVar('wiki_prefs');
+            $prefs = $this->request->getSessionVar('wiki_prefs');
 
         if (!$this->_userid and !empty($GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'])) {
             $this->_userid = $GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'];
@@ -265,6 +265,8 @@ class WikiUser {
 
     // No cookies anymore for all prefs, only the userid.
     // PHP creates a session cookie in memory, which is much more efficient.
+    //
+    // Return the number of changed entries?
     function setPreferences($prefs, $id_only = false) {
         // update the id
         $this->_request->setSessionVar('wiki_prefs', $prefs);
@@ -274,12 +276,24 @@ class WikiUser {
 
         // We must ensure that any password is encrypted. 
         // We don't need any plaintext password.
-        if (! $id_only and $this->isSignedIn() and ($homepage = $this->homePage())) {
-            if ($this->isAdmin()) 
-                $prefs->set('passwd',''); // this is already stored in index.php, 
-                                          // and it might be plaintext! well oh well
-            $homepage->set('pref',serialize($prefs->_prefs));
+        if (! $id_only ) {
+            if ($this->isSignedIn()) {
+                if ($this->isAdmin()) $prefs->set('passwd',''); // this is already stored in index.php, 
+                // and it might be plaintext! well oh well
+                if ($homepage = $this->homePage()) {
+                    $homepage->set('pref',serialize($prefs->_prefs));
+                    return sizeof($prefs->_prefs);
+                } else {
+                    trigger_error('No homepage for user found. Creating one...', E_USER_WARNING);
+                    $this->createHomepage($prefs);
+                    //$homepage->set('pref',serialize($prefs->_prefs));
+                    return sizeof($prefs->_prefs);
+                }
+            } else {
+                trigger_error('you must be signed in',E_USER_WARNING);
+            }
         }
+        return 0;
     }
 
     // check for homepage with user flag.
@@ -365,12 +379,12 @@ class WikiUser {
         $stored_passwd = $prefs->get('passwd'); // crypted
         if (empty($prefs->_prefs['passwd']))    // not stored in the page
             // allow empty passwords? At least store a '*' then.
-            // try other backend
+            // try other backend. hmm.
             $stored_passwd = $this->tryAuthBackends($this->_userid);
         if (empty($stored_passwd)) {
-            trigger_error(sprintf(_("WikiUser backend problem: Old UserPage %s. No password to check against! Update your UserPreferences."), $this->_userid), E_USER_NOTICE);
+            trigger_error(sprintf(_("Old UserPage %s without stored password updated with empty password. Set a password in your UserPreferences."), $this->_userid), E_USER_NOTICE);
+            $prefs->set('passwd','*'); 
             return true;
-            //return false;
         }
         if ($stored_passwd == '*')
             return true;
@@ -531,8 +545,8 @@ class UserPreferences {
                     include_once("themes/$value/themeinfo.php"); 
                     break;
                 case 'lang':
-                    $LANG = ($value == 'en') ? 'C' : $value;
                     update_locale ($LANG);
+                    $GLOBALS['LANG'] = $value;
                     break;
                 }
             }

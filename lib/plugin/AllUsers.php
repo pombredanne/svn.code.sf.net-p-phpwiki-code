@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.1 2002-08-23 18:29:30 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.2 2002-08-27 21:51:31 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -74,7 +74,7 @@ extends WikiPlugin
 
         if ($debug) {
             $time = round($time_end - $time_start, 3);
-            return HTML::p($pagelist, fmt("elapsed time: %s s", $time));
+            return HTML($pagelist,HTML::p(fmt("Elapsed time: %s s", $time)));
         } else {
             return $pagelist;
         }

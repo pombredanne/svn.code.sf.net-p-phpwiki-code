@@ -1,8 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: content.tmpl,v 1.1 2002-08-23 18:29:34 rurban Exp $ -->
+<!-- $Id: content.tmpl,v 1.2 2002-08-27 21:51:31 rurban Exp $ -->
 <?= $CONTENT ?>
-
-<?= $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
-
-<?php if (defined('DEBUG')) { ?><?= Template('debug') ?><?php } ?>
+<?= Template('bottom') ?>
 </body>

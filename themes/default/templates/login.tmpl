@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.16 2002-08-23 18:29:34 rurban Exp $ -->
+<!-- $Id: login.tmpl,v 1.17 2002-08-27 21:51:31 rurban Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -9,7 +9,7 @@
 
 <?php if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) { ?>
   <p><?= _("You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage.") ?>
-  <?php if (! $pass_required ) ?>
+  <?php if (empty($pass_required)) ?>
   <?= _("New users may use an empty password.") ?>
   </p>
 <?php } ?>
@@ -43,7 +43,8 @@
 
 <input type="hidden" name="auth[require_level]" value="<?=$require_level?>" />
 <input type="hidden" name="auth[login]" value="1" />
-<?= HiddenGets(array('auth')) ?>
+<?= HiddenPosts(array('auth')) ?>
+<? //HiddenGets(array('auth')) ?>
 </form>
 
 <script language="JavaScript" type="text/javascript">

@@ -1,10 +1,10 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.23 2002-08-19 11:32:29 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.24 2002-08-27 21:51:31 rurban Exp $');
 
 class WikiPlugin
 {
     function getDefaultArguments() {
-        return array();
+        return array('description' => $this->getDescription());
     }
 
 
@@ -132,7 +132,7 @@ class WikiPlugin
                      'description' => $this->getDescription(),
                      'class' => 'wikiaction');
     }
-    
+
     function makeLink($argstr, $request) {
         $defaults = $this->getDefaultArguments();
         $link_defaults = $this->getDefaultLinkArguments();
@@ -158,12 +158,12 @@ class WikiPlugin
     
     function getDefaultFormArguments() {
         return array('targetpage' => $this->getName(),
-                    'buttontext' => $this->getName(),
-                    'class' => 'wikiaction',
-                    'method' => 'get',
-                    'textinput' => 's',
-                    'description' => $this->getDescription(),
-                    'formsize' => 30);
+                     'buttontext' => $this->getName(),
+                     'class' => 'wikiaction',
+                     'method' => 'get',
+                     'textinput' => 's',
+                     'description' => $this->getDescription(),
+                     'formsize' => 30);
     }
     
     function makeForm($argstr, $request) {
@@ -240,7 +240,7 @@ class WikiPluginLoader {
     var $_errors;
 
     function expandPI($pi, $request) {
-        if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
+        if (!preg_match('/^\s*<\?(plugin(?:-form|-link|-head)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
             return $this->_error(sprintf("Bad %s", 'PI'));
 
         list(, $pi_name, $plugin_name, $plugin_args) = $m;
@@ -252,6 +252,7 @@ class WikiPluginLoader {
         }
         switch ($pi_name) {
             case 'plugin':
+            case 'plugin-head':
                 // FIXME: change API for run() (no $dbi needed).
                 $dbi = $request->getDbh();
                 return $plugin->run($dbi, $plugin_args, $request);

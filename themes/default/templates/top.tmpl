@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: top.tmpl,v 1.17 2002-08-23 18:29:34 rurban Exp $ -->
+<!-- $Id: top.tmpl,v 1.18 2002-08-27 21:51:31 rurban Exp $ -->
 <div id="navbar" class="toolbar">
 <?php
 global $HIDE_TOOLBARS;
@@ -19,5 +19,6 @@ if (!$HIDE_TOOLBARS) {
 <h1><?= $HEADER ?></h1>
 </div>
 <?php if ($request->getArg('frame')) { ?>
-<p class="transclusion-title"><?=sprintf(_("Included frame from %s"),$framesrc)?></p>
+<!-- The included frame url for safety -->
+<p class="transclusion-title"><?fmt("Included frame from %s",$framesrc)?></p>
 <?php } ?>

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.51 2002-08-24 13:18:56 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.52 2002-08-27 21:51:31 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -146,8 +146,6 @@ function Button ($action, $label = false, $page_or_rev = false) {
     else
         return $Theme->makeActionButton($action, $label, $page_or_rev);
 }
-
-
 
 
 class Theme {
@@ -459,6 +457,8 @@ class Theme {
     // Images and Icons
     //
     ////////////////////////////////////////////////////////////////
+    var $_imageAliases = array();
+    var $_imageAlt = array();
 
     /**
      *
@@ -466,6 +466,13 @@ class Theme {
      */
     function addImageAlias ($alias, $image_name) {
         $this->_imageAliases[$alias] = $image_name;
+    }
+
+    function addImageAlt ($alias, $alt_text) {
+        $this->_imageAlt[$alias] = $alt_text;
+    }
+    function getImageAlt ($alias) {
+        return $this->_imageAlt[$alias];
     }
 
     function getImageURL ($image) {

@@ -1,18 +1,27 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.7 2002-01-22 03:12:59 carstenklapp Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.8 2002-08-27 21:51:31 rurban Exp $');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
 /**
  * A class for finding files.
+ * 
+ * This should really provided by pear. We don't want really to mess around 
+ * with all the lousy systems. (WindowsNT, Win95, Mac, VMS, ...)
+ * But pear has only System and File, which do nothing.
+ * Anyway, in good PHP style we ignore the rest of the world and try to behave 
+ * as on unix only. That means we use / as pathsep in all our constants.
  */
 class FileFinder
 {
+    var $_pathsep, $_path;
+
     /**
      * Constructor.
      *
      * @param $path array A list of directories in which to search for files.
      */
     function FileFinder ($path = false) {
+        $this->_pathsep = $this->_get_syspath_separator();
         if ($path === false)
             $path = $this->_get_include_path();
         $this->_path = $path;
@@ -30,7 +39,7 @@ class FileFinder
                 return $file;
         }
         elseif ( ($dir = $this->_search_path($file)) ) {
-            return "$dir/$file";
+            return $dir . $this->_use_path_separator($dir) . $file;
         }
 
         return $missing_okay ? false : $this->_not_found($file);
@@ -61,14 +70,52 @@ class FileFinder
     }
 
     /**
+     * The system-dependent path-separator character. 
+     * UNIX:    /
+     * Windows: \
+     * Mac:     :
+     *
+     * @access private
+     * @return string path_separator.
+     */
+    function _get_syspath_separator () {
+        if (isWindows()) return '\\';  // anyway: we support only WinNT and use /
+        elseif (isMac()) return ':';   // MacOsX is /
+        // VMS or LispM is really weird, we ignore it.
+        else return '/';
+    }
+
+    /**
+     * The path-separator character of the given path. 
+     * Windows accepts / also, but gets confused with mixed path_separators,
+     * e.g "C:\Apache\phpwiki/locale/button"
+     * > dir C:\Apache\phpwiki/locale/button => 
+     *       Parameterformat nicht korrekt - "locale"
+     * So if there's any \\ in the path, either fix them to / (not in Win95!) 
+     * or use \\ for ours.
+     *
+     * @access private
+     * @return string path_separator.
+     */
+    function _use_path_separator ($path) {
+        if (isWindows()) {
+            return (strstr('\\',$path)) ? '\\' : '/';
+        } else {
+            return $this->_get_syspath_separator();
+        }
+    }
+
+    /**
      * Determine if path is absolute.
      *
      * @access private
      * @param $path string Path.
-     * @return bool True iff path is absolute. 
+     * @return bool True if path is absolute. 
      */
     function _is_abs($path) {
-        return ereg('^/', $path);
+        if (ereg('^/', $path)) return true;
+        elseif (isWindows() and (eregi('^[a-z]:[/\\]', $path))) return true;
+        else return false;
     }
 
     /**
@@ -93,7 +140,7 @@ class FileFinder
      */
     function _search_path ($file) {
         foreach ($this->_path as $dir) {
-            if (file_exists("$dir/$file"))
+            if (file_exists($dir . $this->_use_path_separator($dir) . $file))
                 return $dir;
         }
         return false;
@@ -102,12 +149,15 @@ class FileFinder
     /**
      * The system-dependent path-separator character. On UNIX systems,
      * this character is ':'; on Win32 systems it is ';'.
+     * Fixme:
+     * On Mac it cannot be : because this is the seperator there!
      *
      * @access private
      * @return string path_separator.
      */
-    function _get_path_separator () {
-        return preg_match('/^Windows/', php_uname()) ? ';' : ':';
+    function _get_ini_separator () {
+        return isWindows() ? ';' : ':';
+        // return preg_match('/^Windows/', php_uname()) 
     }
 
     /**
@@ -120,7 +170,7 @@ class FileFinder
         $path = ini_get('include_path');
         if (empty($path))
             $path = '.';
-        return explode($this->_get_path_separator(), $path);
+        return explode($this->_get_ini_separator(), $path);
     }
 
     /**
@@ -149,7 +199,39 @@ class FileFinder
          * This following line should be in the above if-block, but we
          * put it here, as it seems to work-around the bug.
          */
-        ini_set('include_path', implode($this->_get_path_separator(), $path));
+        ini_set('include_path', implode($this->_get_ini_separator(), $path));
+    }
+
+    // Return all the possible shortened locale specifiers for the given locale.
+    // Most specific first.
+    // de_DE.iso8859-1@euro => de_DE.iso8859-1, de_DE, de
+    // This code might needed somewhere else also.
+    function locale_versions ($lang) {
+        // Try less specific versions of the locale
+        $langs[] = $lang;
+        foreach (array('@', '.', '_') as $sep) {
+            if ( ($tail = strchr($lang, $sep)) )
+                $langs[] = substr($lang, 0, -strlen($tail));
+        }
+    }
+
+    /**
+     * Try to figure out the appropriate value for $LANG.
+     *
+     *@access private
+     *@return string The value of $LANG.
+     */
+    function _get_lang() {
+        if (!empty($GLOBALS['LANG']))
+            return $GLOBALS['LANG'];
+
+        foreach (array('LC_ALL', 'LC_MESSAGES', 'LC_RESPONSES', 'LANG') as $var) {
+            $lang = getenv($var);
+            if (!empty($lang))
+                return $lang;
+        }
+
+        return "C";
     }
 }
 
@@ -181,8 +263,10 @@ class PearFileFinder
      * A good set of defaults is provided, so you can probably leave
      * this parameter blank.
      */
-    function PearFileFinder ($path = false) {
-        $this->FileFinder(array('/usr/share/php4',
+    function PearFileFinder ($path = array()) {
+        $this->FileFinder(array_merge(
+                          $path,
+                          array('/usr/share/php4',
                                 '/usr/share/php',
                                 '/usr/lib/php4',
                                 '/usr/lib/php',
@@ -190,7 +274,9 @@ class PearFileFinder
                                 '/usr/local/share/php',
                                 '/usr/local/lib/php4',
                                 '/usr/local/lib/php',
-                                '/System/Library/PHP'));
+                                '/System/Library/PHP',
+                                '/Apache/pear'        // Windows
+                                )));
     }
 }
 
@@ -218,42 +304,15 @@ class LocalizedFileFinder
         $lang = $this->_get_lang();
         assert(!empty($lang));
 
-        // A locale can be, e.g. de_DE.iso8859-1@euro.
-        // Try less specific versions of the locale: 
-        $langs[] = $lang;
-        foreach (array('@', '.', '_') as $sep) {
-            if ( ($tail = strchr($lang, $sep)) )
-                $langs[] = substr($lang, 0, -strlen($tail));
-        }
-
-        foreach ($langs as $lang) {
+        if ($locales = $this->locale_versions($lang))
+          foreach ($locales as $lang) {
+            if ($lang == 'C') $lang='en';
             foreach ($include_path as $dir) {
                 $path[] = "$dir/locale/$lang";
             }
-        }
-
+          }
         $this->FileFinder(array_merge($path, $include_path));
     }
-
-    /**
-     * Try to figure out the appropriate value for $LANG.
-     *
-     *@access private
-     *@return string The value of $LANG.
-     */
-    function _get_lang() {
-        if (!empty($GLOBALS['LANG']))
-            return $GLOBALS['LANG'];
-
-        foreach (array('LC_ALL', 'LC_MESSAGES', 'LC_RESPONSES', 'LANG') as $var) {
-            $lang = getenv($var);
-            if (!empty($lang))
-                return $lang;
-        }
-
-        return "C";
-    }
-
 }
 
 /**
@@ -274,52 +333,42 @@ class LocalizedButtonFinder
      * Constructor.
      */
     function LocalizedButtonFinder () {
+        global $Theme;
         $include_path = $this->_get_include_path();
         $path = array();
 
         $lang = $this->_get_lang();
         assert(!empty($lang));
+        assert(!empty($Theme));
 
-        // A locale can be, e.g. de_DE.iso8859-1@euro.
-        // Try less specific versions of the locale: 
-        $langs[] = $lang;
-        foreach (array('@', '.', '_') as $sep) {
-            if ( ($tail = strchr($lang, $sep)) )
-                $langs[] = substr($lang, 0, -strlen($tail));
-        }
+        $langs = $this->locale_versions($lang);
 
         foreach ($langs as $lang) {
+            if ($lang == 'C') $lang='en';
             foreach ($include_path as $dir) {
-                // FIXME: sorry I know this is ugly but don't know yet what else to do
-                if ($lang=='C')
-                    $lang='en';
-                $path[] = "$dir/themes/".THEME."/buttons/$lang";
-
+                $path[] = $Theme->file("buttons/$lang");
             }
         }
 
         $this->FileFinder(array_merge($path, $include_path));
     }
 
-    /**
-     * Try to figure out the appropriate value for $LANG.
-     *
-     *@access private
-     *@return string The value of $LANG.
-     */
-    function _get_lang() {
-        if (!empty($GLOBALS['LANG']))
-            return $GLOBALS['LANG'];
+}
 
-        foreach (array('LC_ALL', 'LC_MESSAGES', 'LC_RESPONSES', 'LANG') as $var) {
-            $lang = getenv($var);
-            if (!empty($lang))
-                return $lang;
-        }
+function isWindows() {
+    //return preg_match('/^Windows/', php_uname());
+    return (substr(PHP_OS,0,3) == 'WIN');
+}
 
-        return "en";
-    }
+// So far not supported. This has really ugly pathname semantics
+// :path is relative, Desktop:path (I think) is absolute. Please fix this someone
+function isMac() {
+    return (substr(PHP_OS,0,3) == 'MAC'); // not tested!
+}
 
+// probably not needed, same behaviour as on unix.
+function isCygwin() {
+    return (substr(PHP_OS,0,6) == 'CYGWIN');
 }
 
 // Local Variables:

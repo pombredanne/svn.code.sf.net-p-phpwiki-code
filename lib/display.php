@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.35 2002-08-23 18:29:30 rurban Exp $');
+rcs_id('$Id: display.php,v 1.36 2002-08-27 21:51:31 rurban Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -92,7 +92,7 @@ function displayPage(&$request, $tmpl = 'browse') {
         $pages = explode(SUBPAGE_SEPARATOR,$pagename);
         $last_page = array_pop($pages); // deletes last element from array as side-effect
         $pagetitle = HTML::span(HTML::a(array('href' => WikiURL($pages[0]),
-                                              //'class' => 'backlinks'
+                                              'class' => 'pagetitle'
                                               ),
                                         split_pagename($pages[0] . SUBPAGE_SEPARATOR)));
         $first_pages = $pages[0] . SUBPAGE_SEPARATOR;

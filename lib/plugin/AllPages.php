@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.12 2002-02-15 17:53:01 carstenklapp Exp $');
+rcs_id('$Id: AllPages.php,v 1.13 2002-08-27 21:51:31 rurban Exp $');
 
 require_once('lib/PageList.php');
 
@@ -49,7 +49,7 @@ extends WikiPlugin
 
         if ($debug) {
             $time = round($time_end - $time_start, 3);
-            return HTML::p(fmt("elapsed time: %s s", $time), $pagelist);
+            return HTML($pagelist,HTML::p(fmt("Elapsed time: %s s", $time)));
         } else {
             return $pagelist;
         }

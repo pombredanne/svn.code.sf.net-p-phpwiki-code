@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.21 2002-08-24 13:18:56 rurban Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.22 2002-08-27 21:51:31 rurban Exp $');
 
 class InterWikiMap {
     function InterWikiMap (&$request) {
@@ -84,12 +84,16 @@ class InterWikiMap {
         return false;
     }
 
+    // Fixme!
     function _getMapFromFile ($filename) {
         if (defined('WARN_NONPUBLIC_INTERWIKIMAP') and WARN_NONPUBLIC_INTERWIKIMAP) {
             $error_html = sprintf(_("Loading InterWikiMap from external file %s."), $filename);
             trigger_error( $error_html, E_USER_NOTICE );
         }
-
+        if (!file_exists($filename)) {
+            $finder = new FileFinder();
+            $filename = $finder->findFile(INTERWIKI_MAP_FILE);
+        }
         @$fd = fopen ($filename, "rb");
         @$data = fread ($fd, filesize($filename));
         @fclose ($fd);

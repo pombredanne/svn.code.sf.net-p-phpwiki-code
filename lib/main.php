@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.70 2002-08-24 13:18:56 rurban Exp $');
+rcs_id('$Id: main.php,v 1.71 2002-08-27 21:51:31 rurban Exp $');
 
 define ('DEBUG', 1);
 define ('USE_PREFS_IN_PAGE', true);
@@ -273,6 +273,7 @@ class WikiRequest extends Request {
             case 'browse':
             case 'viewsource':
             case 'diff':
+            case 'select':
                 return WIKIAUTH_ANON;
 
             case 'zip':

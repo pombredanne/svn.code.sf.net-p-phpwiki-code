@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.23 2002-02-09 20:59:28 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.24 2002-08-27 21:51:31 rurban Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -43,7 +43,7 @@ $Theme->setLinkIcon('mailto');
 $Theme->setLinkIcon('interwiki');
 $Theme->setLinkIcon('*', 'url');
 
-//$Theme->setButtonSeparator(' | ');
+$Theme->setButtonSeparator("\n | ");
 
 /**
  * WikiWords can automatically be split by inserting spaces between
