@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.8 2003-02-26 23:59:48 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.9 2003-03-24 22:57:23 dairiki Exp $');
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the Portland Pattern Repository.
@@ -99,7 +99,7 @@ $Theme->setAutosplitWikiWords(false);
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-$Theme->setDateFormat("%B %e, %Y", false);
+$Theme->setDateFormat("%B %d, %Y", false);
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
