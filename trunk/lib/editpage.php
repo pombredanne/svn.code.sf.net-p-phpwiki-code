@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.88 2004-12-17 16:39:03 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.89 2005-01-21 14:07:49 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -35,7 +35,7 @@ class PageEditor
         
         $this->tokens = array();
         
-       $version = $request->getArg('version');
+        $version = $request->getArg('version');
         if ($version !== false) {
             $this->selected = $this->page->getRevision($version);
             $this->version = $version;
@@ -463,7 +463,8 @@ function undo_save() {
         // Save new revision
         $this->_content = $this->getContent();
         $newrevision = $page->save($this->_content, 
-        			   $this->version == -1 ? -1 : $this->_currentVersion + 1, // force new?
+        			   $this->version == -1 ? -1 : $this->_currentVersion + 1, 
+                                   // force new?
         			   $meta);
         if (!isa($newrevision, 'WikiDB_PageRevision')) {
             // Save failed.  (Concurrent updates).
@@ -907,6 +908,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.88  2004/12/17 16:39:03  rurban
+ minor reformatting
+
  Revision 1.87  2004/12/16 18:28:05  rurban
  keep wikiblog summary = page title
 
