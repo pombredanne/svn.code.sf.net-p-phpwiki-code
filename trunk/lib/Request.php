@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.4 2001-11-29 18:03:59 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.5 2001-12-11 18:41:03 dairiki Exp $');
 
 // FIXME: write log entry.
 
@@ -346,8 +346,6 @@ class Request_AccessLogEntry
      * @param $status integer  HTTP status code.
      */
     function setStatus ($status) {
-        trigger_error("setStatus: $status", E_USER_WARNING);
-        
         $this->status = $status;
     }
     
