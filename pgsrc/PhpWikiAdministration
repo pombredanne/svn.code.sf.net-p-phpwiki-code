@@ -1,9 +1,9 @@
 Date: Wed, 26 Nov 2003 18:34:06 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.7pre)
-X-Rcs-Id: $Id: PhpWikiAdministration,v 1.23 2003-11-26 17:46:18 carstenklapp Exp $
+X-Rcs-Id: $Id: PhpWikiAdministration,v 1.24 2004-02-15 18:10:27 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
-  pgsrc_version="2 $Revision: 1.23 $";
+  pgsrc_version="2 $Revision: 1.24 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -15,6 +15,7 @@ password in the PhpWiki config file._
 
 ----------
 !!! #[Contents]
+* [Page Explorer|#Page Explorer]
 * [Cleanup|#Cleanup]
 * [Making Snapshots or Backups|#Making Snapshots or Backups]
 * [Restoring|#Restoring]
@@ -23,14 +24,26 @@ password in the PhpWiki config file._
 * [PhpWiki Internals|#PhpWiki Internals]
 
 ----
+!!! #[|Page Explorer][Page Explorer|#Page Explorer]
+
+First select pages and then define the action:
+
+<?plugin-form WikiAdminSelect s="*" ?>
+
+or call the available ~WikiAdmin actions directly:
+
+[/Remove] | 
+  [/Rename] |
+    [/SearchReplace] |
+      [/Chmod]
+
+----
 !!! #[|Cleanup][Cleanup|#Contents]
 
 A Wiki SandBox is very easy to clean. Here you can restore it to
 pristine condition by loading the default from pgsrc.
 
   [Rake the SandBox|phpwiki:?action=loadfile&source=pgsrc/SandBox].
-
-  [/Remove] multiple pages.
 
 ----------
 

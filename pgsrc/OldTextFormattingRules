@@ -1,9 +1,9 @@
 Date: Thu, 28 Mar 2002 14:57:00 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: OldTextFormattingRules,v 1.2 2002-12-29 00:32:34 carstenklapp Exp $
+X-Rcs-Id: $Id: OldTextFormattingRules,v 1.3 2004-02-15 18:10:27 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=OldTextFormattingRules;
-  pgsrc_version="2 $Revision: 1.2 $";
+  pgsrc_version="2 $Revision: 1.3 $";
   flags=PAGE_LOCKED;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -16,6 +16,7 @@ __References:__ !JoinCapitalizedWords or use square brackets for a [[page link] 
 __Footnotes:__ Use [[1],[[2],[[3],...%%%
 __Preventing linking:__ Prefix with "!": !!DoNotHyperlink, name links like [[[[text | URL] (double up on the "[").%%%
 __Misc:__ "!", "!!", "!!!" make headings, "%%''''%" makes a linebreak, "-''''-''''-''''-" makes a horizontal rule.
+__Tables:__ »|« as first char, »|« for more columns, »|>« align right, »|<« align left, »|^« centered (default), »||« span columns, »|v« span rows
 
 ----
 ! Paragraphs
@@ -89,6 +90,7 @@ will not work''
 |> Marco      |< Polo      | Cheaper     |< Not available
 
 ;: Note that multiple __|__'s lead to spanned columns, and __v__'s can be used to span rows.  A __>__ generates a right justified column, __<__ a left justified column and __^__ a centered column (which is the default.)
+;: With the new TextFormatingsRules tables are only supported with the OldStyleTablePlugin.
 
 
 ! HTML Mark-Up Language
@@ -100,8 +102,7 @@ will not work''
 
 ! More detail than you want to know
 
-See [MagicPhpWikiURLs] for gory details on how to write
-various kind of wiki maintainance links.
+See [MagicPhpWikiURLs] for gory details on how to write various kind of wiki maintainance links. (''deprecated'')
 
 -----
 
