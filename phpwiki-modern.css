@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki-modern.css,v 1.10 2002-02-03 21:32:09 carstenklapp Exp $
+  $Id: phpwiki-modern.css,v 1.11 2002-02-08 07:52:22 carstenklapp Exp $
 
   Inspiration for this stylesheet:
 
@@ -75,7 +75,7 @@ div.wikitext {
  clear: both;
 }
 
-p.editdate { font-size: smaller; margin-bottom: -1ex; }
+p.editdate { font-size: smaller; margin-bottom: 0ex; }
 
 h1, h2, h3 { font-family: Arial, Helvetica, sans-serif; }
 
