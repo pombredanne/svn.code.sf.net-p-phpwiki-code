@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.43 2002-01-30 01:33:16 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.44 2002-02-02 02:10:07 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -48,6 +48,7 @@ class _UserPreference_int extends _UserPreference
 
 $UserPreferences = array('editWidth' => new _UserPreference_int(80, 30, 150),
                          'editHeight' => new _UserPreference_int(22, 5, 80),
+                         'timeOffset' => new _UserPreference('0000'),
                          'userid' => new _UserPreference(''));
 
 class UserPreferences {
@@ -63,7 +64,7 @@ class UserPreferences {
     function _getPref ($name) {
         global $UserPreferences;
         if (!isset($UserPreferences[$name])) {
-            trigger_error("$key: unknown preference", E_USER_NOTICE);
+            trigger_error("$name: unknown preference", E_USER_NOTICE);
             return false;
         }
         return $UserPreferences[$name];
