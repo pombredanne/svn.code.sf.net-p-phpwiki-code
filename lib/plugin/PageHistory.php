@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.13 2002-01-28 18:49:08 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.14 2002-01-28 18:51:52 carstenklapp Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -144,18 +144,6 @@ extends _RecentChanges_HtmlFormatter
                        fmt("Version %d", $rev->getVersion()));
     }
 
-    function format_revision ($rev) {
-        $class = 'rc-' . $this->importance($rev);
-
-        return HTML::li(array('class' => $class),
-                        $this->diffLink($rev), ' ',
-                        $this->pageLink($rev), ' ',
-                        $this->time($rev), ' ',
-                        ($this->importance($rev)=='minor') ? _("(minor edit)") ." " : '',
-                        $this->summaryAsHTML($rev),
-                        ' ... ',
-                        $this->authorLink($rev));
-    }
 }
 
 
