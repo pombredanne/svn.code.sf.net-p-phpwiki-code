@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.47 2004-07-03 16:51:05 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.48 2004-07-05 13:09:37 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -77,6 +77,7 @@ function IniConfig($file) {
          'EDITING_POLICY', 'THEME', 'CHARSET',
          'DEFAULT_LANGUAGE', 'WIKI_PGSRC', 'DEFAULT_WIKI_PGSRC',
          'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR',
+         'DATABASE_PREFIX', 'DATABASE_DSN', 'DATABASE_TYPE',
          'INTERWIKI_MAP_FILE', 'COPYRIGHTPAGE_TITLE', 'COPYRIGHTPAGE_URL',
          'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 'SERVER_NAME', 'SERVER_PORT',
          'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
@@ -104,7 +105,8 @@ function IniConfig($file) {
     $_IC_VALID_BOOL = array
         ('ENABLE_USER_NEW', 'ENABLE_PAGEPERM', 'ENABLE_EDIT_TOOLBAR', 'JS_SEARCHREPLACE',
          'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 
-         'ENABLE_RAW_HTML', 'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
+         'ENABLE_RAW_HTML', 'ENABLE_RAW_HTML_LOCKEDONLY', 'ENABLE_RAW_HTML_SAFE', 
+         'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
          'WIKIDB_NOCACHE_MARKUP', 'ALLOW_ANON_USER', 'ALLOW_ANON_EDIT',
          'ALLOW_BOGO_LOGIN', 'ALLOW_USER_PASSWORDS',
          'AUTH_USER_FILE_STORABLE', 'ALLOW_HTTP_AUTH_LOGIN',
@@ -196,9 +198,8 @@ function IniConfig($file) {
 
     // Database
     global $DBParams;
-    $DBParams['dbtype'] = @$rs['DATABASE_TYPE'];
-    if (isset($rs['DATABASE_DSN']))
-        $DBParams['dsn'] = $rs['DATABASE_DSN'];
+    $DBParams['dbtype'] = DATABASE_TYPE;
+    $DBParams['dsn'] = DATABASE_DSN;
     if (isset($rs['DATABASE_PREFIX']))
         $DBParams['prefix'] = $rs['DATABASE_PREFIX'];
     $DBParams['db_session_table'] = @$rs['DATABASE_SESSION_TABLE'];
@@ -612,6 +613,12 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2004/07/03 16:51:05  rurban
+// optional DBADMIN_USER:DBADMIN_PASSWD for action=upgrade (if no ALTER permission)
+// added atomic mysql REPLACE for PearDB as in ADODB
+// fixed _lock_tables typo links => link
+// fixes unserialize ADODB bug in line 180
+//
 // Revision 1.46  2004/07/02 09:55:58  rurban
 // more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
 //
