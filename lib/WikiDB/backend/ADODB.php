@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.40 2004-07-08 16:56:16 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.41 2004-07-08 21:32:35 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -533,10 +533,10 @@ extends WikiDB_backend
         extract($this->_table_names);
         //if ($limit)  $limit = "LIMIT $limit";
         //else         $limit = '';
-        if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
-        else         $orderby = '';
+        $orderby = PageList::sortby($sortby,'db');
+        if ($orderby) $orderby = 'ORDER BY ' . $orderby;
         $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
-        if (strstr($orderby,' mtime')) {
+        if (strstr($orderby, 'mtime')) { // was ' mtime'
             if ($include_deleted) {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
@@ -1143,6 +1143,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2004/07/08 16:56:16  rurban
+// use the backendType abstraction
+//
 // Revision 1.39  2004/07/05 13:56:22  rurban
 // sqlite autoincrement fix
 //
