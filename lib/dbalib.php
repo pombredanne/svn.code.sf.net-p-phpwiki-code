@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2.2.4 2001-11-07 20:30:47 dairiki Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2.2.5 2001-11-07 23:19:16 dairiki Exp $');
 
    /*
       Database functions:
@@ -202,7 +202,10 @@
 
    // setup for back-link search
    function InitBackLinkSearch($dbi, $pagename) {
-      return InitTitleSearch($dbi, MakeBackLinkSearchRegexp($pagename));
+      $pos['search'] = MakeBackLinkSearchRegexp($pagename);
+      $pos['key'] = dba_firstkey($dbi['wiki']);
+      
+      return $pos;
    }
 
    // iterating through back-links

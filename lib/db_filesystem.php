@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.6 2001-11-07 20:30:47 dairiki Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.7 2001-11-07 23:19:16 dairiki Exp $');
    /*
       Database functions:
 
@@ -210,7 +210,10 @@
 
    // setup for back-link search
    function InitBackLinkSearch($dbi, $pagename) {
-      return InitTitleSearch($dbi, MakeBackLinkSearchRegexp($pagename));
+      $pos['search'] = MakeBackLinkSearchRegexp($pagename);
+      $pos['data'] = GetAllWikiPageNames($dbi['wiki']);
+
+      return $pos;
    }
 
    // iterating through back-links
