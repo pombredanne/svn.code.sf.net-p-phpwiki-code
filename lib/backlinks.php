@@ -1,6 +1,6 @@
 <?php
    // Backlinks: returns pages which link to a given page.
-   rcs_id('$Id: backlinks.php,v 1.1.2.3 2005-01-07 14:02:27 rurban Exp $');
+   rcs_id('$Id: backlinks.php,v 1.1.2.4 2005-01-07 14:23:04 rurban Exp $');
 
 
    if(get_magic_quotes_gpc())
@@ -25,7 +25,7 @@
    $found = 0;
    while ($page = BackLinkSearchNextMatch($dbi, $query)) {
       $found++;
-      $html .= "<li>" . LinkExistingWikiWord($page) . "<br>\n";
+      $html .= "<li>" . LinkExistingWikiWord($page) . "<br />\n";
    }
 
    $html .= "</ul>\n<hr noshade>\n"

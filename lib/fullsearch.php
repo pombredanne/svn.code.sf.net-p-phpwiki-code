@@ -1,15 +1,15 @@
 <?php
    // Search the text of pages for a match.
-   rcs_id('$Id: fullsearch.php,v 1.4.2.4 2005-01-07 14:02:28 rurban Exp $');
+   rcs_id('$Id: fullsearch.php,v 1.4.2.5 2005-01-07 14:23:04 rurban Exp $');
 
    if(get_magic_quotes_gpc())
       $full = stripslashes($full);
    $full = trim($full);
       
-   $html = "<P><B>"
+   $html = "<p><b>"
 	   . sprintf(gettext ("Searching for \"%s\" ....."),
 		   htmlspecialchars($full))
-	   . "</B></P>\n<DL>\n";
+	   . "</b></p>\n<dl>\n";
    $found = 0;
    $count = 0;
 
@@ -21,7 +21,7 @@
      $full = preg_replace("/\s+/", "|", preg_quote($full));
 
      while ($pagehash = FullSearchNextMatch($dbi, $query)) {
-       $html .= "<DT><B>" . LinkExistingWikiWord($pagehash["pagename"]) . "</B>\n";
+       $html .= "<dt><b>" . LinkExistingWikiWord($pagehash["pagename"]) . "</b>\n";
        $count++;
 
        // print out all matching lines, highlighting the match

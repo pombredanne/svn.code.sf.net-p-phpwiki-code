@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.8.2.4 2005-01-07 14:02:28 rurban Exp $ -->
+<!-- $Id: editpage.php,v 1.8.2.5 2005-01-07 14:23:04 rurban Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -29,9 +29,9 @@
       if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !defined('WIKI_ADMIN')) {
 	 $html = "<p>";
 	 $html .= gettext ("This page has been locked by the administrator and cannot be edited.");
-	 $html .= "\n<p>";
+	 $html .= "</p>\n<p>";
 	 $html .= gettext ("Sorry for the inconvenience.");
-	 $html .= "\n";
+	 $html .= "</p>\n";
 	 GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
 	 ExitWiki ("");
       }

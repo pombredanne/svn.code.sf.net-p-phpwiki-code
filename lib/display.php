@@ -1,7 +1,7 @@
 <?php
    // display.php: fetch page or get default content
    // calls transform.php for actual transformation of wiki markup to HTML
-   rcs_id('$Id: display.php,v 1.5.2.4 2005-01-07 14:02:28 rurban Exp $');
+   rcs_id('$Id: display.php,v 1.5.2.5 2005-01-07 14:23:04 rurban Exp $');
  
    // if we got GET data, the first item is always a page name
    // if it wasn't this file would not have been included
@@ -11,7 +11,9 @@
   
    if (isset($QUERY_STRING) && preg_match('/^[-_.+%\w]+$/', $QUERY_STRING)) {
       $pagename = urldecode($QUERY_STRING);
-   } else { 
+   } elseif (isset($QUERY_STRING) && preg_match('/^([-_.+%\w]+)&.+$/', $QUERY_STRING, $m)) {
+      $pagename = urldecode($m[1]);
+   } else {
       $pagename = gettext("FrontPage");
 
       // if there is no FrontPage, create a basic set of Wiki pages
@@ -30,7 +32,7 @@
       include("lib/transform.php");
    } else {
       $html .= sprintf(gettext("Describe %s here."),
-		       "$pagename<a href='$ScriptUrl?edit=$enc_name'>?</a>");
+		       "$pagename<a href=\"$ScriptUrl?edit=$enc_name\">?</a>");
    }
 
    GeneratePage('BROWSE', $html, $pagename, $pagehash);

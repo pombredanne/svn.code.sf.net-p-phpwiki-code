@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mssql.php,v 1.1.2.7 2005-01-07 14:02:28 rurban Exp $');
+<?php rcs_id('$Id: mssql.php,v 1.1.2.8 2005-01-07 14:23:04 rurban Exp $');
 
    /* Microsoft SQL-Server library for PHPWiki
       Author: Andrew K. Pearson
@@ -155,7 +155,7 @@
 
       $retval = mssql_query($query);
       if ($retval == false) {
-	     printf(gettext ("Insert/Update failed: %s <br>\n"), mssql_get_last_message());
+	     printf(gettext ("Insert/Update failed: %s"), mssql_get_last_message() .  "<br>\n");
       }
    }
 

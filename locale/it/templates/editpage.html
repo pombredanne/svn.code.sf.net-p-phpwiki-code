@@ -1,46 +1,55 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="language" content="it" />
+<meta name="PHPWIKI_VERSION" content="###PHPWIKI_VERSION###" />
+<link rel="shortcut icon" href="###DATA_PATH###/images/favicon.ico" />
 <title>###PAGE###</title>
 </head>
 
 <body>
 
-<form method="POST" action="###SCRIPTURL###">
+<form method="post" action="###SCRIPTURL###">
 
-<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border="0" alt="[phpwiki]" width="50" height="50"></a>
 Modifica ###PAGE###
-<input type="submit" value=" Save "></h1>
+<input type="submit" value=" Registra "></h1>
 
-<textarea name="content" ROWS="22" COLS="80" wrap="virtual">###CONTENT###</textarea>
-<br>
-
+<textarea name="content" rows="22" cols="80" wrap="virtual">###CONTENT###</textarea>
+<br />
+<input type="checkbox" name="minor_edit" value="yes"
+###IF MINOR_EDIT### checked
+>
+Ciò è un cambiamento secondario, non archivia la vecchia versione.
+<br />
 <input type="checkbox" name="convert" value="tabs" >
 Non posso scrivere le tabulazioni.
 Per favore <a href="###SCRIPTURL###?ConvertiGliSpaziInTabs">ConvertiGliSpaziInTab</a>
 per me quando salvo.
-<p><a href="###SCRIPTURL###?BuonStile">BuonStile</a> consigli per le modifiche.
+<p /><a href="###SCRIPTURL###?BuonStile">BuonStile</a> consigli per le modifiche.
 
-<br>
+<br />
 <a href="###SCRIPTURL###?links=###PAGEURL###">ModificaCollegamenti</a>
 agli altri webservers.
 
-###IF COPY###<br><a href="###SCRIPTURL###?copy=###PAGEURL###">ModificaCopia</a> dell'autore precedente
+###IF COPY###<br /><a href="###SCRIPTURL###?copy=###PAGEURL###">ModificaCopia</a> dell'autore precedente
 
 <hr noshade>
 <small>
 <b>Enfasi:</b> '' per corsivo, ''' per grassetto, ''''' per entrambi
-<br><b>Liste:</b> tab-* per liste puntate, tab-# per liste numerate, tab-Term:-tab per liste di definizioni
-<br><b>Collegamenti:</b> UnisciParoleConInizialiInMaiuscolo o usa le parentesi quadre per un [collegamento ad una pagina] o un URL [http://cool.wiki.int/].
-<br><b>Collegamenti:</b> Usa [1],[2],[3],... e ModificaCollegamenti. Evita di collegare con "!": !NonCollegare, nomi di collegamenti come [text | URL]
-<br><b>Varie:</b>"!", "!!", "!!!" definisce le intestazioni,
+<br /><b>Liste:</b> tab-* per liste puntate, tab-# per liste numerate, tab-Term:-tab per liste di definizioni
+<br /><b>Collegamenti:</b> UnisciParoleConInizialiInMaiuscolo o usa le parentesi quadre per un [collegamento ad una pagina] o un URL [http://cool.wiki.int/].
+<br /><b>Collegamenti:</b> Usa [1],[2],[3],... e ModificaCollegamenti. Evita di collegare con "!": !NonCollegare, nomi di collegamenti come [text | URL]
+<br /><b>Varie:</b>"!", "!!", "!!!" definisce le intestazioni,
 "%%%" va a capo, "- - - -" crea una linea orizzontale, usa "[" con "[["
 per le sequenze di escape
-<br>altre informazioni su
+<br />altre informazioni su
 <a href="###SCRIPTURL###?RegoleDiFormattazioneDelTesto"><b>RegoleDiFormattazioneDelTestoTextFormattingRules</b></a>
 </small>
 
-<input type="hidden" name="post" value="###PAGEURL###">
+<input type="hidden" name="action" value="save">
+<input type="hidden" name="post" value="###PAGE###">
 <input type="hidden" name="editversion" value="###VERSION###">
 </form>
 </body>

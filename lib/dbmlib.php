@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.php,v 1.7.2.6 2005-01-07 14:02:28 rurban Exp $');
+   rcs_id('$Id: dbmlib.php,v 1.7.2.7 2005-01-07 14:23:04 rurban Exp $');
 
    /*
       Database functions:
