@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.83 2004-12-04 11:55:39 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.84 2004-12-04 12:58:26 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -430,7 +430,6 @@ function undo_save() {
         }
 
         if ($this->isSpam()) {
-            $this->tokens['PAGE_LOCKED_MESSAGE'] = $this->getSpamMessage();
             return false;
             /*
             // Save failed. No changes made.
@@ -528,7 +527,7 @@ function undo_save() {
      * Need to check dynamically some blacklist content (plugin WikiAccessRestrictions)
      * DONE: 
      *   More then 20 new external links
-     * TODO: 
+     * TODO:
      *   IP BlackList 
      *   domain blacklist
      *   url patterns
@@ -536,23 +535,47 @@ function undo_save() {
      */
     function isSpam () {
         $current = &$this->current;
+        $request = &$this->request;
         $oldtext = $current->getPackedContent();
         $newtext =& $this->_content;
-        if ($this->numLinks($newtext) - $this->numLinks($oldtext) >= 20)
+        // 1. Not more then 20 new external links
+        if ($this->numLinks($newtext) - $this->numLinks($oldtext) >= 20) {
+            $this->tokens['PAGE_LOCKED_MESSAGE'] = 
+                HTML($this->getSpamMessage(),
+                     HTML::p(HTML::em(_("Too many external links."))));
             return true;
+        }
+        // 2. external babycart (SpamAssassin) check
+        // This will probably prevent from discussing sex or viagra related topics. So beware.
+        if (ENABLE_SPAMASSASSIN) {
+            $user = $request->getUser();
+            include_once("lib/spam_babycart.php");
+            if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"), $user->getId())) {
+                if (is_array($babycart))
+                    $this->tokens['PAGE_LOCKED_MESSAGE'] = 
+                        HTML($this->getSpamMessage(),
+                             HTML::p(HTML::em(_("SpamAssassin reports: ", join("\n",$babycart)))));
+                return true;
+            }
+        }
         return false;
     }
 
+    /** Number of external links in the wikitext
+     */
     function numLinks(&$text) {
         return substr_count($text, "http://");
     }
 
+    /** Header of the Anti Spam message 
+     */
     function getSpamMessage () {
         return
             HTML(HTML::h2(_("Spam Prevention")),
-                 HTML::p(_("This page edit seems to contain spam and was therefore not saved.")),
-                 HTML::p(_("")),
-                 HTML::p(_("Sorry for the inconvenience.")));
+                 HTML::p(_("This page edit seems to contain spam and was therefore not saved."),
+                         HTML::br(),
+                         _("Sorry for the inconvenience.")),
+                 HTML::p(""));
     }
 
     function getPreview () {
@@ -856,6 +879,10 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.83  2004/12/04 11:55:39  rurban
+ First simple AntiSpam prevention:
+   No more than 20 new http:// links allowed
+
  Revision 1.82  2004/11/30 22:21:56  rurban
  changed gif to optimized (pngout) png
 
