@@ -1,4 +1,4 @@
-<?  rcs_id('$Id: wiki_dbmlib.php3,v 1.9 2000-07-16 05:50:58 wainstead Exp $');
+<?  rcs_id('$Id: wiki_dbmlib.php3,v 1.10 2000-07-16 06:44:46 wainstead Exp $');
    /*
       Database functions:
       OpenDataBase($dbname)
@@ -22,20 +22,31 @@
    // Suppress ugly error message with @.
 
    function OpenDataBase($dbname) {
-      while (($dbi = @dbmopen($dbname, "c")) < 1) {
+      global $WikiDB; // hash of all the DBM file names
+      reset($WikiDB);
+
+      while (($dbi[$dbname] = @dbmopen($WikiDB[$dbname], "c")) < 1) {
          if ($numattempts > MAX_DBM_ATTEMPTS) {
-            echo "Cannot open database, giving up.";
+            echo "Cannot open database $WikiDB[$dbmfile], giving up.";
             exit();
          }
          $numattempts++;
          sleep(1);
       }
+
+
+      // Keep track of the active DBM file, either 'wiki' or 'archive'
+      $dbi['active'] = $dbi[$dbname];
       return $dbi;
    }
 
 
    function CloseDataBase($dbi) {
-      return dbmclose($dbi);
+      reset($dbi);
+      while (list($dbmfile, $dbihandle) = each($dbi)) {
+         dbmclose($dbi[$dbihandle]);
+      }
+      return;
    }
 
 
@@ -61,7 +72,7 @@
 
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename) {
-      if ($data = dbmfetch($dbi, $pagename)) {
+      if ($data = dbmfetch($dbi['active'], $pagename)) {
          // unserialize $data into a hash
          $pagehash = unserialize(UnPadSerializedData($data));
          return $pagehash;
@@ -75,8 +86,8 @@
    function InsertPage($dbi, $pagename, $pagehash) {
       $pagedata = PadSerializedData(serialize($pagehash));
 
-      if (dbminsert($dbi, $pagename, $pagedata)) {
-         if (dbmreplace($dbi, $pagename, $pagedata)) {
+      if (dbminsert($dbi['active'], $pagename, $pagedata)) {
+         if (dbmreplace($dbi['active'], $pagename, $pagedata)) {
             echo "error writing value";
             exit();
          }
@@ -85,14 +96,14 @@
 
 
    function IsWikiPage($dbi, $pagename) {
-      return dbmexists($dbi, $pagename);
+      return dbmexists($dbi['active'], $pagename);
    }
 
 
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
       $pos['search'] = $search;
-      $pos['key'] = dbmfirstkey($dbi);
+      $pos['key'] = dbmfirstkey($dbi['active']);
 
       return $pos;
    }
@@ -101,7 +112,7 @@
    function TitleSearchNextMatch($dbi, &$pos) {
       while ($pos['key']) {
          $page = $pos['key'];
-         $pos['key'] = dbmnextkey($dbi, $pos['key']);
+         $pos['key'] = dbmnextkey($dbi['active'], $pos['key']);
 
          if (eregi($pos['search'], $page)) {
             return $page;
@@ -112,16 +123,16 @@
 
    // setup for full-text search
    function InitFullSearch($dbi, $search) {
-      return InitTitleSearch($dbi, $search);
+      return InitTitleSearch($dbi['active'], $search);
    }
 
    //iterating through database
    function FullSearchNextMatch($dbi, &$pos) {
       while ($pos['key']) {
          $key = $pos['key'];
-         $pos['key'] = dbmnextkey($dbi, $pos['key']);
+         $pos['key'] = dbmnextkey($dbi['active'], $pos['key']);
 
-         $pagedata = dbmfetch($dbi, $key);
+         $pagedata = dbmfetch($dbi['active'], $key);
          // test the serialized data
          if (eregi($pos['search'], $pagedata)) {
 	    $page['pagename'] = $key;
