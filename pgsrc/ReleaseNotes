@@ -1,3 +1,22 @@
+PhpWiki 1.2 is a huge advance over version 1.0:
+
+* Database support for MySQL, Postgresql, mSQL, flat file and the new dba_ library in PHP4 is included.
+* Internationalization: support for different languages, down to the source level, is included. German, Spanish, Swedish and Dutch are currently shipped with PhpWiki. An architecture is in place to easily add more languages.
+* New linking schemes using square brackets in addition to the old style !BumpyText.
+* Administration features include page locking, dumping the Wiki to a zip file, and deleting pages.
+* A MostPopular page showing the most frequently hit pages.
+* Full HTML compliance.
+* Links at the bottom of pages describing relationships like incoming links from other pages and their hits, outgoing and their hits, and the most popular nearby pages.
+* Color page diffs between the current and previous version.
+* An info page to view page metadata.
+* Far more customization capability for the admin.
+* A templating system to separate the page HTML from the PHP code.
+* New markup constructs for <B>, <I>, <DD>, <BR> and more.
+* Tabless markup to supercede the older markup (both still supported).
+
+
+----
+
 PhpWiki 1.1.9 includes Spanish language pages, a full implementation for
 Postgresql, numerous bug fixes and more. See the HISTORY file for more
 info: http://phpwiki.sourceforge.net/phpwiki/HISTORY
