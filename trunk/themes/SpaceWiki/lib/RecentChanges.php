@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RecentChanges.php,v 1.1 2002-02-22 23:46:56 carstenklapp Exp $');
+<?php rcs_id('$Id: RecentChanges.php,v 1.2 2002-03-03 03:54:56 carstenklapp Exp $');
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -13,6 +13,7 @@ function SpaceWiki_RC_revision_formatter (&$fmt, &$rev) {
     return HTML::li(array('class' => $class),
                     $fmt->diffLink($rev), ' ',
                     $fmt->pageLink($rev), ' ',
+                    ' . ',
                     $rev->get('is_minor_edit') ? $fmt->time($rev) : HTML::strong($fmt->time($rev)), ' ',
                     ' . . . ',
                     $fmt->summaryAsHTML($rev),
