@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.21 2004-12-14 21:35:15 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.22 2004-12-15 15:33:18 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -81,7 +81,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     // Arguments:
@@ -115,7 +115,7 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        // allow empty pagenames for ADMIN_USER style blogs: "Blogs/day"
+        // allow empty pagenames for ADMIN_USER style blogs: "Blog/day"
         //if (!$args['pagename'])
         //    return $this->error(_("No pagename specified"));
 
@@ -152,7 +152,7 @@ extends WikiPlugin
     function add (&$request, $blog, $type='wikiblog') {
         $parent = $blog['pagename'];
         if (empty($parent)) {
-            $prefix = "";   // allow empty parent for default "Blogs/day"
+            $prefix = "";   // allow empty parent for default "Blog/day"
             $parent = HOME_PAGE;
         } else {
             $prefix = $parent . SUBPAGE_SEPARATOR;
@@ -203,7 +203,7 @@ extends WikiPlugin
             // Generate the page name.  For now, we use the format:
             //   Rootname/Blog/2003-01-11/14:03:02+00:00
             // This gives us natural chronological order when sorted
-            // alphabetically.
+            // alphabetically. "Rootname/" is optional.
 
             $time = Iso8601DateTime();
             if ($type == 'wikiblog')
@@ -214,7 +214,7 @@ extends WikiPlugin
                 $pagename = substr($summary,0,12);
 
             // Check intermediate pages. If not existing they should RedirectTo the parent page.
-            // Maybe add the BlogArchives plugin instead for new interim subpage.
+            // Maybe add the BlogArchives plugin instead for the new interim subpage.
             $redirected = $prefix . $pagename;
             if (!$dbi->isWikiPage($redirected)) {
                 require_once('lib/loadsave.php');
@@ -310,11 +310,11 @@ extends WikiPlugin
     // all Blogs/Forum/Comment entries are subpages under this pagename, to find them faster.
     function _blogPrefix($type='wikiblog') {
         if ($type == 'wikiblog')
-            $name = _("Blogs");
+            $name = "Blog";
         elseif ($type == 'comment')
-            $name = _("Comments");
+            $name = "Comment";
         elseif ($type == 'wikiforum')
-            $name = _("Messages");
+            $name = "Message"; // FIXME: we use the first 12 chars of the summary
         return $name;
     }
 
@@ -359,6 +359,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/12/14 21:35:15  rurban
+// support new BLOG_EMPTY_DEFAULT_PREFIX
+//
 // Revision 1.20  2004/12/13 13:22:57  rurban
 // new BlogArchives plugin for the new blog theme. enable default box method
 // for all plugins. Minor search improvement.
