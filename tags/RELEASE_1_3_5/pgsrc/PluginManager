@@ -1,0 +1,14 @@
+Date: Wed, 1 Jan 2003 17:53:37 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.4)
+X-Rcs-Id: $Id: PluginManager,v 1.1 2003-01-04 02:39:16 carstenklapp Exp $
+Content-Type: application/x-phpwiki;
+  pagename=PluginManager;
+  pgsrc_version="2 $Revision: 1.1 $";
+  flags=PAGE_LOCKED;
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+<?plugin PluginManager?>
+----
+PhpWikiDocumentation WikiPlugin
