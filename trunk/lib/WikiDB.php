@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.46 2004-04-26 20:44:34 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.47 2004-04-29 19:39:44 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -215,7 +215,7 @@ class WikiDB {
         $current = $page->getCurrentRevision();
         $meta = $current->_data;
         $version = $current->getVersion();
-        $meta['summary'] = sprintf(_("renamed from %s"),$from);
+        $meta['summary'] = _("removed");
         $page->save($current->getPackedContent(), $version + 1, $meta);
         */
     }
@@ -353,33 +353,6 @@ class WikiDB {
         $result = $this->_backend->most_recent($params);
         return new WikiDB_PageRevisionIterator($this, $result);
     }
-
-   /**
-     * Blog search. (experimental)
-     *
-     * Search for blog entries related to a certain page.
-     *
-     * FIXME: with pagetype support and perhaps a RegexpSearchQuery
-     * we can make sure we are returning *ONLY* blog pages to the
-     * main routine.  Currently, we just use titleSearch which requires
-     * some further checking in lib/plugin/WikiBlog.php (BAD).
-     *
-     * @access public
-     *
-     * @param string $order  'normal' (chronological) or 'reverse'
-     * @param string $page   Find blog entries related to this page.
-     * @return WikiDB_PageIterator A WikiDB_PageIterator containing the relevant pages.
-     */
-    // Deleting until such time as this is properly implemented...
-    // (As long as it's just a title search, just use titleSearch.)
-    //function blogSearch($page, $order) {
-    //  //FIXME: implement ordering
-    //
-    //  require_once('lib/TextSearchQuery.php');
-    //  $query = new TextSearchQuery ($page . SUBPAGE_SEPARATOR);
-    //
-    //  return $this->titleSearch($query);
-    //}
 
     /**
      * Call the appropriate backend method.
@@ -1484,6 +1457,15 @@ class WikiDB_PageIterator
         $this->_pages->free();
     }
 
+    
+    function asArray() {
+    	$result = array();
+    	while ($page = $this->next())
+            $result[] = $page;
+        $this->free();
+        return $result;
+    }
+    
     // Not yet used and problematic. Order should be set in the query, not afterwards.
     // See PageList::sortby
     function setSortby ($arg = false) {
@@ -1715,6 +1697,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2004/04/26 20:44:34  rurban
+// locking table specific for better databases
+//
 // Revision 1.45  2004/04/20 00:06:03  rurban
 // themable paging support
 //
