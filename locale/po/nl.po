@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2002-01-10 16:25-0500\n"
+"POT-Creation-Date: 2002-01-10 19:33-0500\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -666,6 +666,11 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Describe %s here."
 msgstr "Beschrijf %s hier."
+
+#: ../lib/WikiDB.php:872
+#, c-format
+msgid "Acck! Revision %s of %s seems to have been deleted!"
+msgstr ""
 
 #: ../lib/WikiPlugin.php:64
 #, c-format
