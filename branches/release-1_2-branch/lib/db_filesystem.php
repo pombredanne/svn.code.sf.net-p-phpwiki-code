@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.4 2001-08-18 05:09:09 dairiki Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.5 2001-11-06 20:43:45 dairiki Exp $');
    /*
       Database functions:
 
@@ -46,11 +46,17 @@
    // of existing databases.  The encoded names can be decoded with
    // urldecode.
    function EncodePagename($pagename) {
-     $bad_chars = '%/\\:'; // '%' must be first!
+      if ($pagename == '.')
+        return '%2e';
+      else if ($pagename == '..')
+        return '%2e.';
+      
+      $bad_chars = '%/\\:'; // '%' must be first!
       for ($i = 0; $i < strlen($bad_chars); $i++) {
 	 $pagename = str_replace($bad_chars[$i],
 	                         rawurlencode($bad_chars[$i]), $pagename);
       }
+        
       return $pagename;
    }
 
@@ -65,6 +71,7 @@
          if ($data = fread($fd, filesize($filename))) {
             // unserialize $data into a hash
             $pagehash = unserialize($data);
+            $pagehash['pagename'] = $pagename;
 	    if (!is_array($pagehash))
 		ExitWiki(sprintf(gettext("'%s': corrupt file"),
 				 htmlspecialchars($filename)));
