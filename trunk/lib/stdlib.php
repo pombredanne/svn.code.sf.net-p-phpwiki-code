@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.81 2002-01-19 09:41:39 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.82 2002-01-19 19:29:49 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -10,7 +10,6 @@
     LinkURL($url, $linktext)
     LinkWikiWord($wikiword, $linktext)
     LinkExistingWikiWord($wikiword, $linktext)
-    LinkUnknownWikiWord($wikiword, $linktext)
     LinkImage($url, $alt)
     class Stack { push($item), pop(), cnt(), top() }
     CookSpaces($pagearray)
@@ -32,6 +31,8 @@
 
   function moved => LinkInterWikiLink($link, $linktext)
     (see /lib/interwiki.php)
+  function moved => LinkUnknownWikiWord($wikiword, $linktext)
+    (see /lib/Theme.php)
   function gone  => UpdateRecentChanges($dbi, $pagename, $isnewpage) 
     (see /lib/plugin/RecentChanges.php)
 
@@ -150,7 +151,8 @@ function LinkWikiWord($wikiword, $linktext = '', $version = false) {
     if ($dbi->isWikiPage($wikiword))
         return LinkExistingWikiWord($wikiword, $linktext);
     else
-        return LinkUnknownWikiWord($wikiword, $linktext);
+        global $Theme;
+        return $Theme->LinkUnknownWikiWord($wikiword, $linktext);
 }
 
 function LinkExistingWikiWord($wikiword, $linktext = '', $version = false) {
@@ -172,35 +174,6 @@ function LinkExistingWikiWord($wikiword, $linktext = '', $version = false) {
                     $linktext);
 }
 
-function LinkUnknownWikiWord($wikiword, $linktext = '', $version = false) {
-    if (empty($linktext)) {
-        $linktext = $wikiword;
-        if (defined("autosplit_wikiwords"))
-            $linktext=split_pagename($linktext);
-        $class = 'wikiunknown';
-    } else
-        $class = 'named-wikiunknown';
-    
-    $attr = array('action' => 'edit');
-    if ($version !== false)
-        $attr['version'] = $version;
-
-    //FIXME: do this without global
-    global $Theme;
-    // Note: $qmark uses Element instead of QElement to allow html in the WikiMark.
-    $qmark = Element('a', array('href' => WikiURL($wikiword, $attr)),
-                      $Theme->getWikiMark());
-
-    // FIXME: for some reason sprintf wants 4 arguments here!?
-    // lib/stdlib.php:196: Warning[2]: sprintf(): too few arguments
-    //$html = sprintf($qmark,$text,"","");
-
-    // FIXME: Sorry, this ugly hack is to prevent whole word from being inverted.
-    // For now this is necessary to use the new $Theme->setWikiMark("?%s")
-    $html = @ sprintf($qmark, "</span>".Element('u', $linktext)."<span>");
-
-    return Element('span', array('class' => $class), $html);
-}
 
 function LinkImage($url, $alt = '[External Image]') {
     // FIXME: Is this needed (or sufficient?)
@@ -418,7 +391,8 @@ function ParseAndLink($bracketlink) {
           $link['link'] = LinkInterWikiLink($URL, $linkname);
       } else {
           $link['type'] = "wiki-unknown-$linktype";
-          $link['link'] = LinkUnknownWikiWord($URL, $linkname);
+          global $Theme;
+          $link['link'] = $Theme->LinkUnknownWikiWord($URL, $linkname);
       }
     
     return $link;

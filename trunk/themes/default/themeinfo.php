@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.16 2002-01-19 03:23:44 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.17 2002-01-19 19:29:47 carstenklapp Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -39,9 +39,6 @@ $Theme->setLinkIcon('*', 'url');
 
 //$Theme->setButtonSeparator(' | ');
 
-// Controls whether the '?' appears before or after UnknownWikiWords.
-// The PhpWiki default is for the '?' to appear before.
-//$Theme->setWikiMark('?%s');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
