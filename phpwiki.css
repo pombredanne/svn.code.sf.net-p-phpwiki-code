@@ -225,28 +225,29 @@ div.transclusion {
   margin: 0.5ex 0px;
 }
 
-/* Diff output */
-.diff .block {
-  padding: 0.5ex 0.5em;
-  margin: 0.5ex 0;
-  border: 0.1px; /* hack for NS4 to get background color filled in whole div */
-} 
+/****************************************************************
+ **
+ ** Diff Output
+ **
+ *****************************************************************/
+.diff .block	{ padding: 0.5ex 0.5em; margin: 0.5ex 0; }
 .diff .block tt	{ font-weight: bold; }
 
-.diff .block div { position: relative; padding-left: 1.5em; }
+/* These screw up NS4 --- moved to phpwiki-heavy.css
+.diff .block div { position: relative; padding-left: 1.5em; } 
 .diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
+*/
 
 .diff .block	{ background: #ccc; }
-
 .diff .context	{ background: white; }
-.diff .deleted	{ background: #fee; }
-.diff .added	{ background: #efe; }
-.diff .changed	{ background: #ffb; }
+.diff .deleted	{ background: #fcc; }
+.diff .added	{ background: #cfc; }
+.diff .changed	{ background: #ff6; }
 
-.diff del	{ background: #fbb; font-weight: bold; text-decoration: none; }
-.diff ins	{ background: #bfb; font-weight: bold; text-decoration: none; }
+/* These don't work in NS4 -- it completely ignores <del> and <ins>. */
+.diff del	{ background: #f99; font-weight: bold; text-decoration: none; }
+.diff ins	{ background: #9f9; font-weight: bold; text-decoration: none; }
 
- 
 /* For emacs users
  *
  * Local Variables:

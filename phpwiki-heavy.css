@@ -30,3 +30,12 @@ A.wikiaction, A.wikiadmin, INPUT.button
  padding-right: 0.2em;
 }
 
+/****************************************************************
+ **
+ ** Diff Output
+ **
+ *****************************************************************/
+.diff .block div { position: relative; padding-left: 1.5em; } 
+.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
+
+
