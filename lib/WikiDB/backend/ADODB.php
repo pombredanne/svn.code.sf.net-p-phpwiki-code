@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.32 2004-06-25 14:15:08 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.33 2004-06-27 10:26:02 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -96,17 +96,19 @@ extends WikiDB_backend
                     'nonempty_tbl' => $prefix . 'nonempty');
         $page_tbl = $this->_table_names['page_tbl'];
         $version_tbl = $this->_table_names['version_tbl'];
-        $this->page_tbl_fields = "$page_tbl.id as id, $page_tbl.pagename as pagename, "
-            . "$page_tbl.hits as hits";
-        $this->version_tbl_fields = "$version_tbl.version as version, "
-            . "$version_tbl.mtime as mtime, "
-            . "$version_tbl.minor_edit as minor_edit, $version_tbl.content as content, "
-            . "$version_tbl.versiondata as versiondata";
+        $this->page_tbl_fields = "$page_tbl.id AS id, $page_tbl.pagename AS pagename, "
+            . "$page_tbl.hits hits";
+        $this->version_tbl_fields = "$version_tbl.version AS version, "
+            . "$version_tbl.mtime AS mtime, "
+            . "$version_tbl.minor_edit AS minor_edit, $version_tbl.content AS content, "
+            . "$version_tbl.versiondata AS versiondata";
 
         $this->_expressions
             = array('maxmajor'     => "MAX(CASE WHEN minor_edit=0 THEN version END)",
                     'maxminor'     => "MAX(CASE WHEN minor_edit<>0 THEN version END)",
-                    'maxversion'   => "MAX(version)");
+                    'maxversion'   => "MAX(version)",
+                    'notempty'     => "<>''",
+                    'iscontent'    => "content<>''");
         $this->_lock_count = 0;
     }
 
@@ -210,6 +212,7 @@ extends WikiDB_backend
             else
                 $data[$key] = $val;
         }
+        // FIXME: some DBMs dont support huge strings (pagedata), so we have to bind it.
         if ($dbh->Execute(sprintf("UPDATE $page_tbl"
                                   . " SET hits=%d, pagedata=%s"
                                   . " WHERE pagename=%s",
@@ -306,12 +309,12 @@ extends WikiDB_backend
         
         // FIXME: optimization: sometimes don't get page data?
         if ($want_content) {
-            $fields = $this->page_tbl_fields . ", $page_tbl.pagedata as pagedata"
+            $fields = $this->page_tbl_fields . ", $page_tbl.pagedata AS pagedata"
                 . ', ' . $this->version_tbl_fields;
         } else {
             $fields = $this->page_tbl_fields
-                . ", $version_tbl.version as version, $version_tbl.mtime as mtime, "
-                . "$version_tbl.minor_edit as minor_edit, $version_tbl.content<>'' as have_content, "
+                . ", $version_tbl.version AS version, $version_tbl.mtime AS mtime, "
+                . "$version_tbl.minor_edit AS minor_edit, $version_tbl.content<>'' as have_content, "
                 . "$version_tbl.versiondata as versiondata";
         }
         $row = $dbh->GetRow(sprintf("SELECT $fields"
@@ -506,9 +509,9 @@ extends WikiDB_backend
         $qpagename = $dbh->qstr($pagename);
         $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         // removed ref to FETCH_MODE in next line
-        $result = $dbh->Execute("SELECT $want.id as id, $want.pagename as pagename,"
-                                . " $want.hits as hits"
-                                . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
+        $result = $dbh->Execute("SELECT $want.id AS id, $want.pagename AS pagename,"
+                                . " $want.hits AS hits"
+                                . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee"
                                 . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                                 . " AND $have.pagename=$qpagename"
                                 //. " GROUP BY $want.id"
@@ -520,41 +523,49 @@ extends WikiDB_backend
     function get_all_pages($include_deleted=false,$sortby = false,$limit = false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        if ($limit)  $limit = "LIMIT $limit";
-        else         $limit = '';
+        //if ($limit)  $limit = "LIMIT $limit";
+        //else         $limit = '';
         if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
         else         $orderby = '';
         $dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         if (strstr($orderby,' mtime')) {
             if ($include_deleted) {
-                $result = $dbh->Execute("SELECT "
-                                        . $this->page_tbl_fields
-                                        ." FROM $page_tbl, $recent_tbl, $version_tbl"
-                                        . " WHERE $page_tbl.id=$recent_tbl.id"
-                                        . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-                                        . " $orderby $limit");
+                $sql = "SELECT "
+                    . $this->page_tbl_fields
+                    ." FROM $page_tbl, $recent_tbl, $version_tbl"
+                    . " WHERE $page_tbl.id=$recent_tbl.id"
+                    . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
+                    . " $orderby";
             }
             else {
-                $result = $dbh->Execute("SELECT "
-                                        . $this->page_tbl_fields
-                                        . " FROM $nonempty_tbl, $page_tbl, $recent_tbl, $version_tbl"
-                                        . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                                        . " AND $page_tbl.id=$recent_tbl.id"
-                                        . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
-                                        . " $orderby $limit");
+                $sql = "SELECT "
+                    . $this->page_tbl_fields
+                    . " FROM $nonempty_tbl, $page_tbl, $recent_tbl, $version_tbl"
+                    . " WHERE $nonempty_tbl.id=$page_tbl.id"
+                    . " AND $page_tbl.id=$recent_tbl.id"
+                    . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
+                    . " $orderby";
             }
         } else {
             if ($include_deleted) {
-                $result = $dbh->Execute("SELECT "
-                                        . $this->page_tbl_fields
-                                        . " FROM $page_tbl $orderby $limit");
+                $sql = "SELECT "
+                    . $this->page_tbl_fields
+                    . " FROM $page_tbl $orderby";
             } else {
-                $result = $dbh->Execute("SELECT "
-                                        . $this->page_tbl_fields
-                                        . " FROM $nonempty_tbl, $page_tbl"
-                                        . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                                        . " $orderby $limit");
+                $sql = "SELECT "
+                    . $this->page_tbl_fields
+                    . " FROM $nonempty_tbl, $page_tbl"
+                    . " WHERE $nonempty_tbl.id=$page_tbl.id"
+                    . " $orderby";
             }
+        }
+        if ($limit) {
+            // extract from,count from limit
+            require_once("lib/PageList.php");
+            list($offset,$count) = PageList::limit($limit);
+            $result = $dbh->SelectLimit($sql, $count, $offset);
+        } else {
+            $result = $dbh->Execute($sql);
         }
         $dbh->SetFetchMode(ADODB_FETCH_NUM);
         return new WikiDB_backend_ADODB_iter($this, $result);
@@ -618,7 +629,7 @@ extends WikiDB_backend
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular($limit=0,$sortby = '') {
+    function most_popular($limit=0, $sortby = '') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
@@ -639,8 +650,7 @@ extends WikiDB_backend
                                     . " FROM $nonempty_tbl, $page_tbl"
                                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                     . $where
-                                    . $orderby
-                                    , $limit);
+                                    . $orderby, $limit);
         $dbh->SetFetchMode(ADODB_FETCH_NUM);
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
@@ -1073,6 +1083,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2004/06/25 14:15:08  rurban
+// reduce memory footprint by caching only requested pagedate content (improving most page iterators)
+//
 // Revision 1.31  2004/06/16 10:38:59  rurban
 // Disallow refernces in calls if the declaration is a reference
 // ("allow_call_time_pass_reference clean").
