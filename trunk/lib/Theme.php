@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.94 2004-05-13 11:52:34 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.95 2004-05-13 12:10:50 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -129,7 +129,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         if ($exists)
             $link->pushContent($Theme->linkExistingWikiWord($wikipage, $sep . $last_part, $version));
         else
-            $link->pushContent($Theme->linkUnknownWikiWord($wikipage, $last_part));
+            $link->pushContent($Theme->linkUnknownWikiWord($wikipage, $sep . $last_part));
         return $link;
     }
 
@@ -1319,6 +1319,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.94  2004/05/13 11:52:34  rurban
+// search also default buttons
+//
 // Revision 1.93  2004/05/12 10:49:55  rurban
 // require_once fix for those libs which are loaded before FileFinder and
 //   its automatic include_path fix, and where require_once doesn't grok
