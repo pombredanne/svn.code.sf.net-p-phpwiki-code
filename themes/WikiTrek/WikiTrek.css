@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.25 2002-02-17 01:13:07 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.26 2002-02-18 21:48:09 carstenklapp Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -65,8 +65,8 @@ body {
   /* the background image url is relative to this file's directory */
   /*background-image:  url(images/starfield.png) repeat; */
   font-family: Helvetica, Arial, sans-serif;
-  color:             #fff;
-  background-color:  #000;
+  color:             white;
+  background-color:  black;
 }
 
 /* Main wiki text box */
@@ -111,13 +111,15 @@ form.wikiadmin div { background-color: black; }
 /* WikiWords */
 .wiki {
   text-decoration: none;
-  font-weight: bold;
 }
-div.wikitext a.wiki {
+.named-wiki {
+  text-decoration: underline;
+}
+div.wikitext a.wiki, div.wikitext a.named-wiki {
   color:           #fff313;
   font-weight:     bold;
-  text-decoration: none;
 }
+
 .wikitext a.wiki:hover, .wiki:hover {
   color: #44cff4;
 }
@@ -364,7 +366,7 @@ textarea.wikiedit {
  * Calendar plugin
  */
 table.cal {
-  border: 1px outset gray;
+  border: 1px solid #006;
   background: black;
   margin: 0.5ex 0.5em;
   padding: 1px;
@@ -374,7 +376,9 @@ table.cal {
 
 /* cells */
 table.cal td {
-  background: white;
+  border: 1px solid #006;
+  color: #fff313;
+  background: black;
   text-align: right;
 } 
 

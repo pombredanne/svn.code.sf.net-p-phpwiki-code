@@ -1,5 +1,5 @@
 /**
- * $Id: Hawaiian.css,v 1.22 2002-02-11 14:53:03 carstenklapp Exp $
+ * $Id: Hawaiian.css,v 1.23 2002-02-18 21:45:35 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -92,11 +92,12 @@ div.wikitext pre { font-family: monospace; }
 /**
  * Link styles
  */
-.wiki {
-  text-decoration: none;
+.wiki, .named-wiki {
   font-weight: bold;
   color: #87785c;
 }
+.wiki { text-decoration: none; }
+.named-wiki { text-decoration: underline; }
 
 /**
  * wikiaction, wikiadmin, wikiunsafe:
