@@ -1,5 +1,25 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageTrail.php,v 1.1 2002-09-27 13:27:17 rurban Exp $');
+rcs_id('$Id: PageTrail.php,v 1.2 2003-01-18 22:22:36 carstenklapp Exp $');
+/**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 /**
  * A simple PageTrail WikiPlugin.
  * Put this at the end of each page to store the trail.
@@ -7,12 +27,11 @@ rcs_id('$Id: PageTrail.php,v 1.1 2002-09-27 13:27:17 rurban Exp $');
  * Usage:
  * <?plugin PageTrail?>
  * <?plugin PageTrail numberlinks=5?>
- * <?plugin PageTrail invisible=1?>  
+ * <?plugin PageTrail invisible=1?>
  */
 
-// Constants are defined before the class.
-if (!defined('THE_END'))
-    define('THE_END', "!");
+if (!defined('PAGETRAIL_ARROW'))
+    define('PAGETRAIL_ARROW', " ==> ");
 
 class WikiPlugin_PageTrail
 extends WikiPlugin
@@ -28,9 +47,15 @@ extends WikiPlugin
         return _("PageTrail Plugin");
 
     }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.2 $");
+    }
+
     // default values
     function getDefaultArguments() {
-        return array('numberlinks' => $this->def_numberlinks, 
+        return array('numberlinks' => $this->def_numberlinks,
                      'invisible' => false,
                      );
     }
@@ -38,28 +63,32 @@ extends WikiPlugin
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
 
-        if ($numberlinks > 10 || $numberlinks < 0) { $numberlinks = $this->def_numberlinks; }
+        if ($numberlinks > 10 || $numberlinks < 0) {
+            $numberlinks = $this->def_numberlinks;
+        }
 
         // Get name of the current page we are on
         $thispage = $request->getArg('pagename');
         $thiscookie = $request->cookies->get("Wiki_PageTrail");
-        $Pages = explode(':',$thiscookie);
+        $Pages = explode(':', $thiscookie);
         array_unshift($Pages, $thispage);
-        $request->cookies->set("Wiki_PageTrail",implode(':',$Pages));
+        $request->cookies->set("Wiki_PageTrail", implode(':', $Pages));
 
         if (! $invisible) {
             $numberlinks = min(count($Pages)-1, $numberlinks);
-            $html = HTML::tt(fmt('%s', WikiLink($Pages[$numberlinks-1]), 'auto'));
-            for ($i = $numberlinks-2; $i >= 0; $i--) {
+            $html = HTML::tt(WikiLink($Pages[$numberlinks-1], 'auto'));
+            for ($i = $numberlinks - 2; $i >= 0; $i--) {
                 if (!empty($Pages[$i]))
-                    $html->pushContent(fmt(' ==> %s', WikiLink($Pages[$i], 'auto')));
+                    $html->pushContent(PAGETRAIL_ARROW, WikiLink($Pages[$i],
+                                                                 'auto'));
             }
-            $html->pushContent(THE_END);
             return $html;
-        } else 
+        } else
             return HTML();
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:
