@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.28 2004-05-05 13:38:09 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.29 2004-05-06 13:26:01 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.28 $");
+                            "\$Revision: 1.29 $");
     }
 
     function getDefaultArguments() {
@@ -95,8 +95,7 @@ extends WikiPlugin
                     $request->setArg("verify",false);
                     $request->setArg("delete",false);
                     $alert = new Alert(_("Message"),
-                                       _("Your UserPreferences have been successfully deleted."),
-                                       array(_("Okay") => $request->getURLtoSelf()));
+                                       _("Your UserPreferences have been successfully deleted."));
                     $alert->show();
                     return;
                 } elseif ($delete and !$request->getArg('verify')) {
@@ -164,6 +163,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/05/05 13:38:09  rurban
+// Support to remove all UserPreferences
+//
 // Revision 1.27  2004/05/03 13:16:47  rurban
 // fixed UserPreferences update, esp for boolean and int
 //
