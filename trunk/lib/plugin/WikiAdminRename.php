@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.12 2004-06-01 15:28:01 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.13 2004-06-03 12:59:41 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -196,7 +196,7 @@ extends WikiPlugin_WikiAdminSelect
         if (DEBUG) { // not yet tested
             $header->pushContent(HTML::br());
             $header->pushContent(_("Change pagename in all linked pages also?"));
-            $header->pushContent(HTML::em(_("Currently not working)")));
+            $header->pushContent(HTML::em(_("(Currently not working)")));
             $checkbox = HTML::input(array('type' => 'checkbox',
                                           'name' => 'admin_rename[updatelinks]',
                                           'value' => 1));
@@ -227,6 +227,11 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/06/01 15:28:01  rurban
+// AdminUser only ADMIN_USER not member of Administrators
+// some RateIt improvements by dfrankow
+// edit_toolbar buttons
+//
 // Revision 1.11  2004/05/24 17:34:53  rurban
 // use ACLs
 //
