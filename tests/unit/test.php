@@ -71,13 +71,13 @@ if (ENABLE_USER_NEW)
 else
     require_once($rootdir."lib/WikiUser.php"); 
 require_once($rootdir."lib/WikiGroup.php");
-require_once($rootdir."lib/PagePerm.php"); 
+require_once($rootdir."lib/PagePerm.php");
 
 class MockRequest extends Request {
     function MockRequest(&$dbparams) {
     	global $Theme, $request;
         $this->_dbi = WikiDB::open(&$dbparams);
-        $this->_args = array('pagename' => 'HomePage','action' => 'browse');
+        $this->_args = array('pagename' => 'HomePage', 'action' => 'browse');
         $this->Request();
     }
     function setArg($arg, $value) {
@@ -128,22 +128,30 @@ include_once("themes/" . THEME . "/themeinfo.php");
 ####################################################################
 
 # Test files
-require_once ('PHPUnit.php');
+require_once 'PHPUnit.php';
+# lib/config.php might do a cwd()
+require_once dirname(__FILE__).'/lib/InlineParserTest.php';
+require_once dirname(__FILE__).'/lib/PageListTest.php';
+require_once dirname(__FILE__).'/lib/plugin/ListPagesTest.php';
+require_once dirname(__FILE__).'/lib/plugin/AllPagesTest.php';
+require_once dirname(__FILE__).'/lib/plugin/AllUsersTest.php';
+require_once dirname(__FILE__).'/lib/plugin/OrphanedPagesTest.php'; 
+
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "<pre>\n";
-    
 print "Run tests ..\n";
 
-# lib/config.php might do a cwd()
-require_once (dirname(__FILE__).'/lib/InlineParserTest.php');
-$suite  = new PHPUnit_TestSuite("InlineParserTest");
-$result = PHPUnit::run($suite);
-echo $result -> toString();
+$suite  = new PHPUnit_TestSuite("phpwiki");
+$suite->addTest( new PHPUnit_TestSuite("InlineParserTest") );
+$suite->addTest( new PHPUnit_TestSuite("HtmlParserTest") );
+$suite->addTest( new PHPUnit_TestSuite("PageListTest") );
+$suite->addTest( new PHPUnit_TestSuite("ListPagesTest") );
+$suite->addTest( new PHPUnit_TestSuite("AllPagesTest") );
+$suite->addTest( new PHPUnit_TestSuite("AllUsersTest") );
+$suite->addTest( new PHPUnit_TestSuite("OrphanedPagesTest") );
+$result = PHPUnit::run($suite); 
 
-require_once (dirname(__FILE__).'/lib/HtmlParserTest.php');
-$suite  = new PHPUnit_TestSuite("HtmlParserTest");
-$result = PHPUnit::run($suite);
-echo $result -> toString();
+echo $result->toString();
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "</pre>\n";
