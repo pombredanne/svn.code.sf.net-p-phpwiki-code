@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.17 2004-10-21 21:00:59 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.18 2005-03-27 19:46:12 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -52,7 +52,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($userid) or $userid == $request->_user->UserName()) {
-            $user = & $request->_user;
+            $user =& $request->_user;
             $userid = $user->UserName();
         } else {
             $user = WikiUser($userid);
@@ -97,7 +97,7 @@ extends WikiPlugin
         unset($DBAuthParams['dummy']);
         $table->pushContent($this->_showhash("\$DBAuthParams[]", $DBAuthParams));
         $html->pushContent($table);
-        $html->pushContent(HTML(HTML::h3(fmt("Personal Auth Settings for '%s'",$userid))));
+        $html->pushContent(HTML(HTML::h3(fmt("Personal Auth Settings for '%s'", $userid))));
         if (!$user) {
             $html->pushContent(HTML::p(fmt("No userid")));
         } else {
@@ -106,8 +106,11 @@ extends WikiPlugin
                                        'cellspacing' => 0));
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $userdata = obj2hash($user);
+            // FIXME: only on sf.net/demo site
+            if (!empty($userdata['_dbi'])) unset($userdata['_dbi']);
+            if (!empty($userdata['_request'])) unset($userdata['_request']);
             $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
-            if (1 or ENABLE_USER_NEW) {
+            if (ENABLE_USER_NEW) {
               $group = &$request->getGroup();
               $groups = $group->getAllGroupsIn();
               $groupdata = obj2hash($group);
@@ -198,6 +201,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/10/21 21:00:59  rurban
+// fix recursion bug for old WikiUser:
+//   limit max recursion depth (4) and overall recursions (35).
+//
 // Revision 1.16  2004/06/25 14:29:22  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.
