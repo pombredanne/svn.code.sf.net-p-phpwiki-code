@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.64 2004-09-17 13:32:36 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.65 2004-09-17 14:13:49 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -327,21 +327,36 @@ class Request {
             if (!COMPRESS_OUTPUT)
                 $compress = false;
         }
-        elseif (!function_exists('version_compare')
-                || version_compare(phpversion(), '4.2.3', "<")) {
+        elseif (!check_php_version(4,2,3))
             $compress = false;
-        }
+        elseif (isCGI()) // necessary?
+            $compress = false;
 
         // Should we compress even when apache_note is not available?
         // sf.net bug #933183 and http://bugs.php.net/17557
-        if (!function_exists('ob_gzhandler') or !function_exists('apache_note'))
+        // This effectively eliminates CGI, but all other servers also. hmm.
+        if ($compress 
+            and (!function_exists('ob_gzhandler') 
+                 or !function_exists('apache_note'))) 
             $compress = false;
 
-        // Most RSS clients are not gzip compatible yet. wget is, Mozilla not.
-        // See http://phpwiki.sourceforge.net/phpwiki/KnownBugs
-        if ($this->getArg('format') and strstr('rss', $this->getArg('format')))
+        // New: we check for the client Accept-Encoding: "gzip" presence also
+        // This should eliminate a lot or reported problems.
+        if ($compress
+            and (!$this->get("HTTP_ACCEPT_ENCODING")
+                 or !strstr($this->get("HTTP_ACCEPT_ENCODING"), "gzip")))
             $compress = false;
-        
+
+        // Most RSS clients are NOT(!) application/xml gzip compatible yet. 
+        // Even if they are sending the accept-encoding gzip header!
+        // wget is, Mozilla, and MSIE no.
+        // Of the RSS readers only MagpieRSS 0.5.2 is. http://www.rssgov.com/rssparsers.html
+        // See also http://phpwiki.sourceforge.net/phpwiki/KnownBugs
+        if ($compress 
+            and $this->getArg('format') 
+            and strstr($this->getArg('format'), 'rss'))
+            $compress = false;
+
         if ($compress) {
             ob_start('ob_gzhandler');
             /*
@@ -999,6 +1014,10 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2004/09/17 13:32:36  rurban
+// Disable server-side gzip encoding for RSS (RDF encoding), even if the client says it
+// supports it. Mozilla has this error, wget works fine. IE not checked.
+//
 // Revision 1.63  2004/07/01 09:29:40  rurban
 // fixed another DbSession crash: wrong WikiGroup vars
 //
