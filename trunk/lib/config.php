@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.67 2002-09-27 13:40:34 rurban Exp $');
+rcs_id('$Id: config.php,v 1.68 2002-11-14 22:28:03 carstenklapp Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -195,7 +195,6 @@ function update_locale ($loc) {
 
 if (!defined('DEFAULT_LANGUAGE'))
      define('DEFAULT_LANGUAGE', 'en');
-update_locale(DEFAULT_LANGUAGE);
 
 
 /** string pcre_fix_posix_classes (string $regexp)
