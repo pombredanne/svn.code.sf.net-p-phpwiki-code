@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.53 2002-02-15 05:52:32 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.54 2002-02-16 01:12:51 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -312,6 +312,16 @@ table.cal td.cal-today a.cal-hide {  }
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
 .diff del { background: #f99; }
 .diff ins { background: #9f9; }
+
+
+/**
+ * PageHistory, Info
+ */
+td.pageinfo { font-weight: bold; }
+.pageinfo-minoredit, .pageinfo-authorid {
+  font-size: smaller;
+  font-style: oblique;
+}
 
 
 /**
