@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.16 2004-10-12 14:56:57 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.17 2004-10-12 15:06:02 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004 Reini Urban
@@ -145,6 +145,7 @@ class WikiPluginCached extends WikiPlugin
             ksort($sortedargs);
         $this->_args =& $sortedargs;
         $this->_type = $this->getPluginType();
+        $this->_static = false;
         if ($this->_type & PLUGIN_CACHED_STATIC 
             or $request->getArg('action') == 'pdf') // htmldoc doesn't grok subrequests
         {    
@@ -1089,6 +1090,9 @@ class WikiPluginCached extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/10/12 14:56:57  rurban
+// lib/WikiPluginCached.php:731: Notice[8]: Undefined property: _static
+//
 // Revision 1.15  2004/09/26 17:09:23  rurban
 // add SVG support for Ploticus (and hopefully all WikiPluginCached types)
 // SWF not yet.
