@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.81 2005-02-27 13:20:28 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.82 2005-02-28 20:14:19 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -378,6 +378,7 @@ function IniConfig($file) {
     unset($rskey); unset($apkey);
 
     // TODO: Currently unsupported on non-SQL
+    // CHECKME: PDO
     if (!empty($rs['ACCESS_LOG_SQL'])) {
         if (!in_array(DATABASE_TYPE, array('SQL','ADODB')))
             define('ACCESS_LOG_SQL', 0);
@@ -482,18 +483,18 @@ function IniConfig($file) {
     unset($rs); 
     unset($rsdef);
     
-    fixup_static_configs(); //[1ms]
+    fixup_static_configs($file); //[1ms]
     // Dump all globals and constants
     // The question is if reading this is faster then doing IniConfig() + fixup_static_configs()
     if (is_writable($dump)) {
         save_dump($dump);
     }
     // store locale[] in config.php? This is too problematic.
-    fixup_dynamic_configs(); // [100ms]
+    fixup_dynamic_configs($file); // [100ms]
 }
 
 // moved from lib/config.php [1ms]
-function fixup_static_configs() {
+function fixup_static_configs($file) {
     global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp, $AllActionPages;
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
 
@@ -565,26 +566,36 @@ function fixup_static_configs() {
         $error = sprintf("Encrypted passwords cannot be used: %s.",
                          "'function crypt()' not available in this version of php");
         trigger_error($error, E_USER_WARNING);
-        include_once(dirname(__FILE__)."/install.php");
-        run_install("_part1");
-        exit();
+        if (!preg_match("/config\-dist\.ini$/", $file)) { // protect against recursion
+            include_once(dirname(__FILE__)."/install.php");
+            run_install("_part1");
+            exit();
+        }
     }
 
     // Basic configurator validation
     if (!defined('ADMIN_USER') or ADMIN_USER == '') {
-        include_once(dirname(__FILE__)."/install.php");
-        run_install("_part1");
-        trigger_error(sprintf("%s may not be empty. Please update your configuration.", 
-        			          "ADMIN_USER"), 
-                      E_USER_ERROR);
-        exit();
+    	$error = sprintf("%s may not be empty. Please update your configuration.", 
+       			 "ADMIN_USER");
+        if (!preg_match("/config\-dist\.ini$/", $file)) { // protect against recursion
+            include_once(dirname(__FILE__)."/install.php");
+            run_install("_part1");
+            trigger_error($error, E_USER_ERROR);
+            exit();
+        } else {
+            trigger_error($error, E_USER_WARNING);
+        }
     }
     if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '') {
-        trigger_error("The ADMIN_USER password cannot be empty. Please update your configuration.",
-                      E_USER_WARNING);
-        include_once(dirname(__FILE__)."/install.php");
-        run_install("_part1");
-        exit();
+        $error = "The ADMIN_USER password cannot be empty. Please update your configuration.";
+        if (!preg_match("/config\-dist\.ini$/", $file)) { // protect against recursion
+            include_once(dirname(__FILE__)."/install.php");
+            run_install("_part1");
+            trigger_error($error, E_USER_ERROR);
+            exit();
+        } else {
+            trigger_error($error, E_USER_WARNING);
+        }
     }
 
     if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
@@ -623,7 +634,7 @@ function fixup_static_configs() {
  * Such as the language, and the virtual and server paths, which might be overridden 
  * by startup scripts for wiki farms.
  */
-function fixup_dynamic_configs() {
+function fixup_dynamic_configs($file) {
     global $WikiNameRegexp, $KeywordLinkRegexp;
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
 
@@ -819,6 +830,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.81  2005/02/27 13:20:28  rurban
+// remove clsclient (typo and still exp)
+//
 // Revision 1.80  2005/02/26 17:47:57  rurban
 // configurator: add (c), support show=_part1 initial expand, enable
 //   ENABLE_FILE_OUTPUT, use part.id not name
