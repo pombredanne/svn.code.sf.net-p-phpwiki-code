@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiCallback.php,v 1.1 2001-11-21 19:44:34 dairiki Exp $');
+rcs_id('$Id: WikiCallback.php,v 1.2 2001-11-21 20:01:52 dairiki Exp $');
 
 /**
  * A callback
@@ -154,6 +154,34 @@ class WikiMethodCb
 
     function toPearCb() {
         return array($this->object, $this->methodName);
+    }
+}
+
+/**
+ * Anonymous function callback.
+ */
+class WikiAnonymousCb
+    extends WikiCallback
+{
+    /**
+     * Constructor
+     *
+     * @param $args string Argument declarations
+     * @param $code string Function body
+     * @see create_function().
+     * @access public
+     */
+    function WikiAnonymousCb ($args, $code) {
+        $this->function = create_function($args, $code);
+    }
+
+    function call_array ($args) {
+        return call_user_func_array($this->function, $args);
+    }
+
+    function toPearCb() {
+        trigger_error("Can't convert WikiAnonymousCb to Pear callback",
+                      E_USER_ERROR);
     }
 }
 
