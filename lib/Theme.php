@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.58 2002-10-12 08:55:03 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.59 2003-01-04 22:30:16 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -324,11 +324,17 @@ class Theme {
     function getLastModifiedMessage ($revision, $show_version = 'auto') {
         global $request;
 
+        // dates >= this are considered invalid.
+        if (! defined('EPOCH'))
+            define('EPOCH', 0); // seconds since ~ January 1 1970
+
         $mtime = $revision->get('mtime');
-        
+        if ($mtime <= EPOCH)
+            return fmt("Never edited.");
+
         if ($show_version == 'auto')
             $show_version = !$revision->isCurrent();
-            
+
         if ($request->getPref('relativeDates') && ($date = $this->_relativeDay($mtime))) {
             if ($this->_showModTime)
                 $date =  sprintf(_("%s at %s"),
@@ -912,6 +918,7 @@ class SubmitImageButton extends SubmitButton {
 
 };
 
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:
