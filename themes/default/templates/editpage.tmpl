@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.51 2004-12-11 14:50:16 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.52 2004-12-19 18:28:22 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -8,7 +8,6 @@ $WidthI = HTML::input(array('type' => 'text',
                             'name' => 'pref[editWidth]',
                             'value' => $request->getPref('editWidth'),
                             'onchange' => 'this.form.submit();'));
-
 $HeightI = HTML::input(array('type' => 'text',
                              'size' => 3,
                              'maxlength' => 4,
@@ -16,10 +15,8 @@ $HeightI = HTML::input(array('type' => 'text',
                              'name' => 'pref[editHeight]',
                              'value' => $request->getPref('editHeight'),
                              'onchange' => 'this.form.submit();'));
-
 $s = $WikiTheme->getButtonSeparator();
 ?>
-
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong>
 <!-- FIXME: it would be nice to put a link to the #editarea anchor below,
@@ -81,7 +78,6 @@ $s = $WikiTheme->getButtonSeparator();
     <?= $user->isSignedIn()
         ? ''
         : fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
-    <?= Template('signin', array('FORMNAME' => 'editpage')) ?>
   </td>
 </tr>
 <?php if ($user->isadmin()) { ?>
