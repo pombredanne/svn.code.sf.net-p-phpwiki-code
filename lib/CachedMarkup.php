@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.26 2004-12-06 19:49:54 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.27 2004-12-17 16:12:09 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -245,6 +245,7 @@ class XmlRpc_LinkInfo {
 	$this->page = $page;
 	$this->type = $type;
 	$this->href = $href;
+	//$this->pageref = str_replace("/RPC2.php", "/index.php", $href);
     }
 }
 
@@ -301,7 +302,8 @@ class Cached_WikiLink extends Cached_Link {
     }
 
     function _getURL($basepage) {
-	return WikiURL($this->getPagename($basepage), false, 'abs_url');
+	return WikiURL($this->getPagename($basepage));
+	//return WikiURL($this->getPagename($basepage), false, 'abs_url');
     }
 
     function expand($basepage, &$markup) {
