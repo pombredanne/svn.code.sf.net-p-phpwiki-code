@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: difflib.php,v 1.8 2003-11-30 18:20:34 carstenklapp Exp $');
+rcs_id('$Id: difflib.php,v 1.9 2003-11-30 18:43:18 carstenklapp Exp $');
 
 // difflib.php
 //
@@ -666,7 +666,7 @@ extends Diff
         $xi = $yi = 0;
         // Optimizing loop invariants:
         // http://phplens.com/lens/php-book/optimizing-debugging-php.php
-        for ($i = 0; $max = $i < sizeof($this->edits); $i < $max; $i++) {
+        for ($i = 0, $max = sizeof($this->edits); $i < $max; $i++) {
             $orig = &$this->edits[$i]->orig;
             if (is_array($orig)) {
                 $orig = array_slice($from_lines, $xi, sizeof($orig));
@@ -910,6 +910,9 @@ class BlockDiffFormatter extends DiffFormatter
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.8  2003/11/30 18:20:34  carstenklapp
+ Minor code optimization: reduce invariant loops
+
  Revision 1.7  2003/01/03 22:27:17  carstenklapp
  Minor adjustments to diff block markers ("<<<<<<<"). Source reformatting.
 
