@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.2 2001-12-15 10:54:45 carstenklapp Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.3 2001-12-16 11:52:30 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -76,7 +76,7 @@ extends WikiPlugin
     function make_form($args) {
         // FIXME: need more thought about this whole interface.
         $args['search'] = '()';
-        return MakeWikiForm($GLOBALS['pagename'], $args, 'wikiaction','Full Text Search');
+        return MakeWikiForm(_($GLOBALS['pagename']), $args, 'wikiaction','Full Text Search');
     }
 };
         
