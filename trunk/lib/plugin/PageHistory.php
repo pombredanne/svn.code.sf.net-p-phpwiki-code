@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.1 2001-12-14 20:28:02 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.2 2001-12-15 02:36:56 dairiki Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -103,12 +103,17 @@ extends _RecentChanges_HtmlFormatter
         $html[] = Element('input', array('type' => 'hidden',
                                          'name' => 'action',
                                          'value' => 'diff'));
-        $html[] = Element('input', array('type' => 'hidden',
-                                         'name' => 'pagename',
-                                         'value' => $pagename));
+        if (USE_PATH_INFO) {
+            $action = WikiURL($pagename);
+        }
+        else {
+            $action = SCRIPT_NAME;
+            $html[] = Element('input', array('type' => 'hidden',
+                                             'name' => 'pagename',
+                                             'value' => $pagename));
+        }
 
-        $action = USE_PATH_INFO ? WikiURL($pagename) : SCRIPT_NAME;
-        return Element('form', array('method' => 'post',
+        return Element('form', array('method' => 'get',
                                      'action' => $action,
                                      'name' => 'diff-select'),
                        join("\n", $html))
