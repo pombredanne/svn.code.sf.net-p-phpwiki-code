@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.51 2004-11-27 14:39:04 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.52 2004-11-28 15:59:17 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -196,20 +196,23 @@ class WikiGroup{
             return $this->membership[$group];
         $user = (!empty($this->user)) ? $this->user : $request->getUser();
         switch ($group) {
-            case GROUP_EVERY: 		
+            case GROUP_EVERY:
                 return $this->membership[$group] = true;
-            case GROUP_ANONYMOUS: 	
+            case GROUP_ANONYMOUS:
                 return $this->membership[$group] = ! $user->isSignedIn();
-            case GROUP_BOGOUSER: 	
+            case GROUP_BOGOUSER:
                 return $this->membership[$group] = (isa($user,'_BogoUser') 
                                                     and $user->_level >= WIKIAUTH_BOGO);
-            case GROUP_SIGNED:    	
+            case GROUP_SIGNED:
                 return $this->membership[$group] = $user->isSignedIn();
-            case GROUP_AUTHENTICATED: 	
+            case GROUP_AUTHENTICATED:
                 return $this->membership[$group] = $user->isAuthenticated();
-            case GROUP_ADMIN:		
+            case GROUP_ADMIN:
                 return $this->membership[$group] = (isset($user->_level) 
                                                     and $user->_level == WIKIAUTH_ADMIN);
+            case GROUP_OWNER:
+            case GROUP_CREATOR:
+                return false;
             default:
                 trigger_error(__sprintf("Undefined method %s for special group %s",
                                         'isMember',$group),
@@ -347,6 +350,10 @@ class WikiGroup{
                     $users[] = $u;
             }
             return $users;
+        case GROUP_OWNER:
+        case GROUP_CREATOR:
+            // this could get complex so just return an empty array
+            return false;
         default:
             trigger_error(__sprintf("Unknown special group '%s'", $group),
                           E_USER_WARNING);
@@ -1093,6 +1100,18 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2004/11/27 14:39:04  rurban
+// simpified regex search architecture:
+//   no db specific node methods anymore,
+//   new sql() method for each node
+//   parallel to regexp() (which returns pcre)
+//   regex types bitmasked (op's not yet)
+// new regex=sql
+// clarified WikiDB::quote() backend methods:
+//   ->quote() adds surrounsing quotes
+//   ->qstr() (new method) assumes strings and adds no quotes! (in contrast to ADODB)
+//   pear and adodb have now unified quote methods for all generic queries.
+//
 // Revision 1.50  2004/11/24 18:58:41  rurban
 // bug #1063463
 //
