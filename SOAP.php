@@ -16,7 +16,7 @@
  */
 define ("WIKI_SOAP", "true");
 
-include_once("my-index.php");
+include_once("./index.php");
 include_once("lib/main.php");
 require_once('lib/nusoap/nusoap.php');
 
@@ -41,6 +41,8 @@ function checkCredentials(&$server, &$credentials, $access, $pagename) {
         $line = base64_decode(str_replace("Basic ","",trim($server->header['Authorization'])));
         list($credentials['username'],$credentials['password']) = explode(':',$line);
     } else {
+        if (!isset($_SERVER))
+            $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
         // TODO: where in the header is the client IP
         if (!isset($credentials['username'])) {
             if (isset($_SERVER['REMOTE_ADDR']))
