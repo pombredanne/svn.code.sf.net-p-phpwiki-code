@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.87 2002-01-23 05:10:22 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.88 2002-01-23 05:35:14 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -6,7 +6,6 @@
     IconForLink($protocol_or_url)
     LinkURL($url, $linktext)
     LinkWikiWord($wikiword, $linktext)
-    LinkExistingWikiWord($wikiword, $linktext)
     LinkImage($url, $alt)
 
     MakeWikiForm ($pagename, $args, $class, $button_text)
@@ -27,12 +26,14 @@
     __sprintf ($fmt)
     __vsprintf ($fmt, $args)
 
-  function moved => LinkInterWikiLink($link, $linktext)
-    (see /lib/interwiki.php)
-  function moved => LinkUnknownWikiWord($wikiword, $linktext)
-    (see /lib/Theme.php)
-  function gone  => UpdateRecentChanges($dbi, $pagename, $isnewpage) 
-    (see /lib/plugin/RecentChanges.php)
+  function: LinkInterWikiLink($link, $linktext)
+  moved to: lib/interwiki.php
+  function: linkExistingWikiWord($wikiword, $linktext, $version)
+  moved to: lib/Theme.php
+  function: LinkUnknownWikiWord($wikiword, $linktext)
+  moved to: lib/Theme.php
+  function: UpdateRecentChanges($dbi, $pagename, $isnewpage) 
+  gone see: lib/plugin/RecentChanges.php
 */
 
 
@@ -55,7 +56,7 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
         }
         $args = join('&', $enc_args);
     }
-    
+
     if (USE_PATH_INFO) {
         $url = $get_abs_url ? SERVER_URL . VIRTUAL_PATH . "/" : "";
         $url .= rawurlencode($pagename);
@@ -106,12 +107,6 @@ function LinkWikiWord($wikiword, $linktext = '', $version = false) {
         $link = $Theme->linkUnknownWikiWord($wikiword, $linktext);
     return $link;
 }
-
-function LinkExistingWikiWord($wikiword, $linktext = '', $version = false) {
-    global $Theme;
-    return $Theme->linkExistingWikiWord($wikiword, $linktext, $version);
-}
-
 
 function LinkImage($url, $alt = '[External Image]') {
     // FIXME: Is this needed (or sufficient?)
@@ -194,7 +189,7 @@ function MakeWikiForm ($pagename, $args, $class, $button_text = '') {
     $tr = HTML::tr($td);
     
     if (!empty($button_text))
-        $tr->pushContent(HTML::td(HTML::input(array('type'  => 'submit',
+        $tr->pushContent(HTML::td(HTML::input(array('type'   => 'submit',
                                                      'class' => 'button',
                                                      'value' => $button_text))));
     $form->pushContent(HTML::table(array('cellspacing' => 0,

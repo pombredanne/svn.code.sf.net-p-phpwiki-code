@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.28 2002-01-23 05:10:22 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.29 2002-01-23 05:32:08 carstenklapp Exp $');
 
 require_once('lib/transform.php');
 require_once('lib/Template.php');
@@ -21,8 +21,9 @@ function editPage(&$request, $do_preview = false) {
             NoSuchRevision($request, $page, $version); // noreturn
     }
 
+    global $Theme;
     $user = $request->getUser();
-    $pagelink = LinkExistingWikiWord($pagename, '', $version);
+    $pagelink = $Theme->LinkExistingWikiWord($pagename, '', $version);
 
     $wrapper = new WikiTemplate('top');
     $wrapper->setPageRevisionTokens($selected);
