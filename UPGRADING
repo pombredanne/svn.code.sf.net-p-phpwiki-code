@@ -35,6 +35,13 @@ through a URL like:
   http://path.to.your/wiki/admin.php?zip=all
 should get you a zip dump.)
 
+WARNING! WARNING! WARNING!  There is a bug in releases 1.2.0
+and 1.2.1 of PhpWiki which results in corrupt zip dumps if
+you are using the DBA, DBM or flat-file backends.  If you
+are using one of those backends you should make sure to
+fix that bug (see note below) before making the zip dump.
+
+
 3. Now upload your zip dump to your new 1.3 wiki.  (First you need to
 have set the admin user/passwd in the new index.php.)  You should
 be able to use the "Upload File" form on the PhpWikiAdministration
@@ -75,4 +82,35 @@ that's what you gotta do.
 An older note of mine on the same subject can be found at:
  http://sourceforge.net/forum/message.php?msg_id=107858
 
-$Id: UPGRADING,v 1.5 2001-11-09 20:36:45 dairiki Exp $
+
+==========
+
+On the zip-dump bug in 1.2.0 and 1.2.1.
+
+There is a bug which causes PhpWiki release 1.2.0 or 1.2.1 to produce
+corrupt zip dumps if you are using the DBA, DBM or flat-file backends.
+
+To fix the bug, either upgrade to release 1.2.2, or patch your PhpWiki
+source code as follows:
+
+To Manually Patch PhpWiki 1.2.0 or 1.2.1:
+
+ 1. Edit the appropriate backend driver:
+      Backend    Driver File
+      =======    ============
+      DBA        lib/dbalib.php
+      DBM        lib/dbmlib.php
+      flat file  lib/db_filesystem.php
+
+ 2. Find the function definition for RetrievePage().  (Look for a file
+    which begins "function RetrievePage"...)
+
+ 3. Within RetrievePage() look for the line which begins: 
+       $pagehash = unserialize(
+    (the exact arguments of unserialize depend on the backend.)
+
+ 4. Immediately after that line add a line which reads:
+       $pagehash['pagename'] = $pagename;
+
+
+$Id: UPGRADING,v 1.6 2001-11-14 17:15:42 dairiki Exp $
