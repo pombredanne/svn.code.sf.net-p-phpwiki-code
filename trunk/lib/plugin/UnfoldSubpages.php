@@ -1,5 +1,6 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.3 2003-01-04 22:46:07 carstenklapp Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.4 2003-01-05 02:37:30 carstenklapp Exp $');
+
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -20,14 +21,12 @@ rcs_id('$Id: UnfoldSubpages.php,v 1.3 2003-01-04 22:46:07 carstenklapp Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /**
  * UnfoldSubpages:  Lists the content of all SubPages of the current page.
  *   This is e.g. useful for the CalendarPlugin, to see all entries at once.
  * Usage:   <?plugin UnfoldSubpages words=50 ?>
  * Author:  Reini Urban <rurban@x-ray.at>
  */
-
 class WikiPlugin_UnfoldSubpages
 extends WikiPlugin
 {
@@ -35,23 +34,46 @@ extends WikiPlugin
         return _("UnfoldSubpages");
     }
 
+    function getDescription () {
+        return _("Includes the content of all SubPages of the current page.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.4 $");
+    }
+
     function getDefaultArguments() {
-        return array( //'header'  => '',  // expandable string
-                      'quiet'   => false, // no header
-                      'sort'    => 'asc',
-                      'sortby'  => 'pagename',
-                      'pages'   => '',      // maximum number of pages to include
-                      'sections' => false,  // maximum number of sections per page to include
-                      'words'   => false,   // maximum number of words per page to include
-                      'lines'   => false,   // maximum number of lines per page to include
-                      'bytes'   => false,   // maximum number of bytes per page to include
-                      'section' => false,   // named section per page only
-                      'sectionhead' => false // when including a named section show the heading
-                      );
+        return array(//'header'  => '',  // expandable string
+                     'quiet'   => false, // no header
+                     'sort'    => 'asc',
+                     'sortby'  => 'pagename',
+                     'pages'   => '',       // maximum number of pages
+                                            //  to include
+                     'sections' => false,   // maximum number of
+                                            //  sections per page to
+                                            //  include
+                     'smalltitle' => false, // if set, hide
+                                            //  transclusion-title,
+                                            //  just have a small link
+                                            //  at the start of the
+                                            //  page.
+                     'words'   => false,    // maximum number of words
+                                            //  per page to include
+                     'lines'   => false,    // maximum number of lines
+                                            //  per page to include
+                     'bytes'   => false,    // maximum number of bytes
+                                            //  per page to include
+                     'section' => false,    // named section per page
+                                            //  only
+                     'sectionhead' => false // when including a named
+                                            //  section show the
+                                            //  heading
+                     );
     }
 
     // from IncludePage
-    function firstNWordsOfContent( $n, $content ) {
+    function firstNWordsOfContent($n, $content) {
         $wordcount = 0;
         $new = array( );
         foreach ($content as $line) {
@@ -60,7 +82,8 @@ extends WikiPlugin
                 $new[] = implode(' ', array_slice($words, 0, $n - $wordcount))
                          . sprintf(_("... first %d words"), $n);
                 return $new;
-            } else {
+            }
+            else {
                 $wordcount += count($words);
                 $new[] = $line;
             }
@@ -74,7 +97,9 @@ extends WikiPlugin
         if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
                        . "  \\s*$\\n?"           // possible blank lines
                        . "  ( (?: ^.*\\n? )*? )" // some lines
-                       . "  (?= ^\\1 | \\Z)/xm", // sec header (same or higher level) (or EOF)
+                       . "  (?= ^\\1 | \\Z)/xm", // sec header (same
+                                                 //  or higher level)
+                                                 //  (or EOF)
                        implode("\n", $content),
                        $match)) {
             // Strip trailing blanks lines and ---- <hr>s
@@ -99,13 +124,12 @@ extends WikiPlugin
         include_once('lib/BlockParser.php');
         extract($this->getArgs($argstr, $request));
         $content = HTML();
-        //if ($sort == 'desc')
-        //    $subpages = array_reverse($subpages);
-        foreach ($subpages as $page) {
+        foreach (array_reverse($subpages) as $page) {
             // A page cannot include itself. Avoid doublettes.
             static $included_pages = array();
             if (in_array($page, $included_pages)) {
-                $content->pushContent(HTML::p(sprintf(_("recursive inclusion of page %s ignored"), $page)));
+                $content->pushContent(HTML::p(sprintf(_("recursive inclusion of page %s ignored"),
+                                                      $page)));
                 continue;
             }
             // trap any remaining nonexistant subpages
@@ -115,23 +139,40 @@ extends WikiPlugin
                 $c = $r->getContent();
 
                 if ($section)
-                    $c = $this->extractSection($section, $c, $page, $quiet, $sectionhead);
+                    $c = $this->extractSection($section, $c, $page, $quiet,
+                                               $sectionhead);
                 if ($lines)
-                    $c = array_slice($c, 0, $lines) . sprintf(_(" ... first %d lines"), $bytes);
+                    $c = array_slice($c, 0, $lines)
+                        . sprintf(_(" ... first %d lines"), $bytes);
                 if ($words)
                     $c = $this->firstNWordsOfContent($words, $c);
                 if ($bytes) {
                     if (strlen($c) > $bytes)
-                        $c = substr($c,0,$bytes) . sprintf(_(" ... first %d bytes"), $bytes);
+                        $c = substr($c, 0, $bytes)
+                            . sprintf(_(" ... first %d bytes"), $bytes);
                 }
 
                 array_push($included_pages, $page);
-                $ct = TransformText(implode("\n", $c), $r->get('markup'));
+                if ($smalltitle) {
+                    $pname = array_pop(explode("/", $page)); // get last subpage name
+                    // Use _("%s: %s") instead of .": ". for French punctuation
+                    $ct = TransformText(sprintf(_("%s: %s"), "[$pname|$page]",
+                                                implode("\n", $c)),
+                                        $r->get('markup'));
+                }
+                else {
+                    $ct = TransformText(implode("\n", $c), $r->get('markup'));
+                }
                 array_pop($included_pages);
-                $content->pushContent(HTML(HTML::p(array('class' => $quiet ? '' : 'transclusion-title'),
-                                                fmt("Included from %s:",WikiLink($page))),
-                                        HTML::div(array('class' => $quiet ? '' : 'transclusion'),
-                                                    false, $ct)));
+                if (! $smalltitle) {
+                    $content->pushContent(HTML::p(array('class' => $quiet ?
+                                                        '' : 'transclusion-title'),
+                                                  fmt("Included from %s:",
+                                                      WikiLink($page))));
+                }
+                $content->pushContent(HTML(HTML::div(array('class' => $quiet ?
+                                                           '' : 'transclusion'),
+                                                     false, $ct)));
             }
         }
         return $content;
@@ -139,6 +180,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2003/01/04 22:46:07  carstenklapp
+// Workaround: when page has no subpages avoid include of nonexistant pages.
+//
 
 // KNOWN ISSUES:
 // - line & word limit doesn't work if the included page itself
