@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.16 2004-07-01 06:31:23 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.17 2004-09-16 07:49:01 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -87,22 +87,29 @@ extends WikiPlugin
             $this->fixup_headers($mailified);
 
         if ($download) {
+            // TODO: we need a way to hook into the generated headers, to override 
+            // Content-Type, Set-Cookie, Cache-control, ...
             $request->discardOutput(); // Hijack the http request from PhpWiki.
             ob_end_clean(); // clean up after hijacking $request
             //ob_end_flush(); //debugging
             Header("Content-disposition: attachment; filename=\""
                    . FilenameForPage($page) . "\"");
-            // TODO: Read charset from generated page itself.
+            // Read charset from generated page itself.
             // Inconsequential at the moment, since loadsave.php
-            // presently always assumes CHARSET.
+            // always generates headers
+            $charset = $p->get('charset');
+            if (!$charset) $charset = $GLOBALS['charset'];
+            // We generate 3 Content-Type headers! first in loadsave,
+            // then here and the mimified string $mailified also has it!
             Header("Content-Type: text/plain; name=\""
-                   . FilenameForPage($page) . "\"; charset=\"" . $GLOBALS['charset']
+                   . FilenameForPage($page) . "\"; charset=\"" . $charset
                    . "\"");
             $request->checkValidators();
             // let $request provide last modifed & etag
             Header("Content-Id: <" . $this->MessageId . ">");
             // be nice to http keepalive~s
-            Header("Content-Length: " . strlen($mailified));
+            // FIXME: he length is wrong BTW. must strip the header.
+            Header("Content-Length: " . strlen($mailified)); 
 
             // Here comes our prepared mime file
             echo $mailified;
@@ -111,7 +118,7 @@ extends WikiPlugin
         }
         // We are displaing inline preview in a WikiPage, so wrap the
         // text if it is too long--unless quoted-printable (TODO).
-        $mailified = wordwrap($mailified, 70);
+        $mailified = safe_wordwrap($mailified, 70);
 
         $dlcvs = Button(array(//'page' => $page,
                               'action' => $this->getName(),
@@ -283,6 +290,9 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/07/01 06:31:23  rurban
+// doc upcase only
+//
 // Revision 1.15  2004/06/29 10:09:06  rurban
 // better desc
 //
