@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.20 2003-01-28 21:07:16 zorloc Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.21 2003-02-18 20:24:13 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -329,15 +329,46 @@ class Markup_old_emphasis  extends BalancedMarkup
 class Markup_nestled_emphasis extends BalancedMarkup
 {
     //var $_start_regexp = "(?<! [[:alnum:]] ) [*_=] (?=[[:alnum:]])";
-    var $_start_regexp = "(?<= \\s | ^ | [_=*(] )
-                          (?: (?<! _) _ (?! _)
-                            | (?<! \\*) \\* (?! \\*)
-                            | (?<! =) = (?! =) )
-                          (?= \S )";
+    var $_start_regexp = false;
+
+    function getStartRegexp() {
+	if (!$this->_start_regexp) {
+	    // The three possible delimiters
+            // (none of which can be followed by itself.)
+	    $i = "_ (?! _)";
+	    $b = "\\* (?! \\*)";
+	    $tt = "= (?! =)";
+
+	    $any = "(?: ${i}|${b}|${tt})"; // any of the three.
+
+	    // Any of [_*=] is okay if preceded by space or one of [-"'/:]
+	    $start[] = "(?<= \\s|^|[-\"'\\/:]) ${any}";
+
+	    // _ or * is okay after = as long as not immediately followed by =
+	    $start[] = "(?<= =) (?: ${i}|${b}) (?! =)";
+	    // etc...
+	    $start[] = "(?<= _) (?: ${b}|${tt}) (?! _)";
+	    $start[] = "(?<= \\*) (?: ${i}|${tt}) (?! \\*)";
+
+
+	    // any delimiter okay after an opening brace ( [{<(] )
+	    // as long as it's not immediately followed by the matching closing
+	    // brace.
+	    $start[] = "(?<= { ) ${any} (?! } )";
+	    $start[] = "(?<= < ) ${any} (?! > )";
+	    $start[] = "(?<= \\( ) ${any} (?! \\) )";
+	    
+	    $start = "(?:" . join('|', $start) . ")";
+	    
+	    // Any of the above must be immediately followed by non-whitespace.
+	    $this->_start_regexp = $start . "(?= \S)";
+	}
+	return $this->_start_regexp;
+    }
 
     function getEndRegexp ($match) {
         $chr = preg_quote($match);
-        return "(?<= \S | ^ ) (?<! $chr) $chr (?! $chr) (?= \s | [.,:;\"'?_*=)] | $)";
+        return "(?<= \S | ^ ) (?<! $chr) $chr (?! $chr) (?= \s | [-)}>\"'\\/:.,;!? _*=] | $)";
     }
     
     function markup ($match, $body) {
