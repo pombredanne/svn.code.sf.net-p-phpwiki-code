@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.34 2003-12-17 20:28:10 carstenklapp Exp $
+# $Id: Makefile,v 1.35 2004-02-16 00:19:40 rurban Exp $
 #
 # locale/Makefile
 #
@@ -58,6 +58,8 @@ po: po/nl.po
 mo: nl/LC_MESSAGES/phpwiki.mo nl/LC_MESSAGES/phpwiki.php
 po: po/sv.po
 mo: sv/LC_MESSAGES/phpwiki.mo sv/LC_MESSAGES/phpwiki.php
+po: po/ja.po
+mo: ja/LC_MESSAGES/phpwiki.mo ja/LC_MESSAGES/phpwiki.php
 #
 ${POT_FILE}: ../lib/ArchiveCleaner.php
 ${POT_FILE}: ../lib/BlockParser.php
