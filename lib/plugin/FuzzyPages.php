@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FuzzyPages.php,v 1.7 2002-03-02 05:47:27 carstenklapp Exp $');
+rcs_id('$Id: FuzzyPages.php,v 1.8 2002-08-20 18:26:12 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -49,8 +49,6 @@ extends WikiPlugin
         return array('s'     => false,
                      'debug' => false);
     }
-
-
 
     function spelling_similarity($subject) {
         $spelling_similarity_score = 0;
@@ -104,8 +102,8 @@ extends WikiPlugin
     }
 
     function addTableHead(&$table) {
-        $row = HTML::tr(HTML::td(_("Name")),
-                        HTML::td(array('align' => 'right'), _("Score")));
+        $row = HTML::tr(HTML::th(_("Name")),
+                        HTML::th(array('align' => 'right'), _("Score")));
         if ($this->debug)
             $this->_pushDebugHeadingTDinto($row);
 
@@ -120,7 +118,7 @@ extends WikiPlugin
         foreach ($list as $found_pagename => $score) {
             $row = HTML::tr(array('class' =>
                                   $score > HIGHLIGHT_ROWS_CUTOFF_SCORE
-                                  ? 'oddrow' : 'evenrow'),
+                                  ? 'evenrow' : 'oddrow'),
                             HTML::td(WikiLink($found_pagename)),
                             HTML::td(array('align' => 'right'),
                                      round($score)));
