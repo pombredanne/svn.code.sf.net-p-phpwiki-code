@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.12 2004-05-04 12:26:50 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.13 2004-05-04 14:24:07 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 
@@ -55,8 +55,11 @@ class DbaDatabase
             if ($watchdog <= 0)
                 break;
             flush();
+            // "c" failed, try "w" instead.
+            if (substr($mode,0,1) == "c" and file_exists($this->_file))
+                $mode = "w";
             // conflict: wait some random time to unlock (see ethernet)
-            $secs = 0.5 + ((double)rand(0,32768)/32768);
+            $secs = 0.5 + ((double)rand(1,32767)/32767);
             sleep($secs);
             $watchdog -= $secs;
             if (strlen($mode) == 2) $mode = substr($mode,0,-1);
