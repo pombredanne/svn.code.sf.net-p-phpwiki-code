@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.74 2004-11-07 16:02:51 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.75 2004-11-07 18:34:28 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -28,8 +28,6 @@ if (!function_exists('ob_clean')) {
     }
 }
 
-if (!defined('ACCESS_LOG_SQL')) define('ACCESS_LOG_SQL', false);
-        
 class Request {
         
     function Request() {
@@ -419,11 +417,8 @@ class Request {
             $this->_accesslog->setSize($this->_ob_get_length);
             global $RUNTIMER;
             if ($RUNTIMER) $this->_accesslog->setDuration($RUNTIMER->getTime());
-            // sql logging must be done before the db s closed.
-            if (isset($this->_accesslog->entries) and $this->_accesslog->_dbh)
-                foreach ($this->_accesslog->entries as $entry) {
-                    $entry->write_sql();
-                }
+            // sql logging must be done before the db is closed.
+            $this->_accesslog->write_sql();
         }
 
         if (!empty($this->_is_buffering_output)) {
@@ -775,7 +770,7 @@ class Request_AccessLog {
             global $DBParams;
             if (!in_array($DBParams['dbtype'], array('SQL','ADODB')))
                 trigger_error("Unsupported database backend for ACCESS_LOG_SQL.\nNeed DATABASE_TYPE=SQL or ADODB");
-            $this->_dbh =& $request->_dbi;
+            $this->_dbi =& $request->_dbi;
             $this->logtable = (!empty($DBParams['prefix']) ? $DBParams['prefix'] : '')."accesslog";
         }
         $this->entries = array();
@@ -791,6 +786,133 @@ class Request_AccessLog {
     function setSize($arg)     { $this->_do('setSize',$arg); }
     function setStatus($arg)   { $this->_do('setStatus',$arg); }
     function setDuration($arg) { $this->_do('setDuration',$arg); }
+
+    /**
+     * Read sequentially all previous entries from the beginning.
+     * while ($logentry = Request_AccessLogEntry::read()) ;
+     * For internal log analyzers: RecentReferrers, WikiAccessRestrictions
+     */
+    function read() {
+        return $this->_dbi ? $this->read_sql() : $this->read_file();
+    }
+
+    /**
+     * Return iterator of referer items reverse sorted (latest first).
+     */
+    function get_referer($limit=15, $external_only=false) {
+        if ($external_only) { // see stdlin.php:isExternalReferrer()
+            $base = SERVER_URL;
+            $blen = strlen($base);
+        }
+        if (!empty($this->_dbi)) {
+            // check same hosts in referer and request and remove them
+            $ext_where = " AND LEFT(referer,$blen) <> '$base'"
+                        ." AND LEFT(referer,$blen) <> LEFT(CONCAT('".SERVER_URL."',request_uri),$blen)";
+            return $this->_read_sql_query("(referer <>'' AND NOT(ISNULL(referer)))"
+                                          .($external_only ? $ext_where : '')
+                                          ." ORDER BY time_stamp DESC"
+                                          .($limit ? " LIMIT $limit" : ""));
+        } else {
+            $iter = new WikiDB_Array_generic_iter(0);
+            $logs =& $iter->_array;
+            while ($logentry = $this->read_file()) {
+                if (!empty($logentry->referer)
+                    and (!$external_only or (substr($logentry->referer,0,$blen) != $base)))
+                {
+                    $iter->_array[] = $logentry;
+                    if ($limit and count($logs) > $limit)
+                        array_shift($logs);
+                }
+            }
+            $logs = array_reverse($logs);
+            $logs = array_slice($logs,0,min($limit,count($logs)));
+            return $iter;
+        }
+    }
+
+    /**
+     * Return iterator of matching host items reverse sorted (latest first).
+     */
+    function get_host($host, $since_minutes=20) {
+        if ($this->_dbi) {
+            // mysql specific only:
+            return $this->read_sql("request_host='".$dbh->quote($host)."' AND time_stamp > ". (time()-$since_minutes*60) 
+                            ." ORDER BY time_stamp DESC");
+        } else {
+            $iter = new WikiDB_Array_generic_iter();
+            $logs =& $iter->_array;
+            $logentry = new Request_AccessLogEntry($this);
+            while ($logentry->read_file()) {
+                if (!empty($logentry->referer)) {
+                    $iter->_array[] = $logentry;
+                    if ($limit and count($logs) > $limit)
+                        array_shift($logs);
+                    $logentry = new Request_AccessLogEntry($this);
+                }
+            }
+            $logs = array_reverse($logs);
+            $logs = array_slice($logs,0,min($limit,count($logs)));
+            return $iter;
+        }
+    }
+
+    /**
+     * Read sequentially all previous entries from log file.
+     */
+    function read_file() {
+        global $request;
+        if ($this->logfile) $this->logfile = ACCESS_LOG; // support Request_AccessLog::read
+
+        if (empty($this->reader))       // start at the beginning
+            $this->reader = fopen($this->logfile, "r");
+        if ($s = fgets($this->reader)) {
+            $entry = new Request_AccessLogEntry($this);
+            if (preg_match('/^(\S+)\s(\S+)\s(\S+)\s\[(.+?)\] "([^"]+)" (\d+) (\d+) "([^"]*)" "([^"]*)"$/',$s,$m)) {
+            	list(,$entry->host, $entry->ident, $entry->user, $entry->time,
+                     $entry->request, $entry->status, $entry->size,
+                     $entry->referer, $entry->user_agent) = $m;
+            }
+            return $entry;
+        } else { // until the end
+            fclose($this->reader);
+            return false;
+        }
+    }
+    function _read_sql_query($where='') {
+        $dbh =& $this->_dbi;
+        $log_tbl =& $this->logtable;
+        return $dbh->genericSqlIter("SELECT *,request_uri as request,request_time as time,remote_user as user,"
+                                    ."remote_host as host,agent as user_agent"
+                                    ." FROM $log_tbl"
+                                    . ($where ? " WHERE $where" : ""));
+    }
+    function read_sql($where='') {
+        if (empty($this->sqliter))
+            $this->sqliter = $this->_read_sql_query($where);
+        return $this->sqliter->next();
+    }
+
+    /* done in request->finish() before the db is closed */
+    function write_sql() {
+        if (isset($this->entries) and $this->_dbi and $this->_dbi->isOpen())
+            foreach ($this->entries as $entry) {
+                $entry->write_sql();
+            }
+    }
+    /* done in the shutdown callback */
+    function write_file() {
+        if (isset($this->entries) and $this->logfile)
+            foreach ($this->entries as $entry) {
+                $entry->write_file();
+            }
+        unset($this->entries);
+    }
+    /* in an ideal world... */
+    function write() {
+        if ($this->logfile) $this->write_file();
+        if ($this->_dbi) $this->write_sql();
+        unset($this->entries);
+    }
 }
 
 class Request_AccessLogEntry
@@ -931,21 +1053,21 @@ class Request_AccessLogEntry
     /* This is better been done by apache mod_log_sql */
     /* If ACCESS_LOG_SQL & 2 we do write it by our own */
     function write_sql() {
-        $dbh =& $this->_accesslog->_dbh;
-        if ($dbh) {
-          $log_tbl =& $this->_accesslog->logtable;
-          if ($GLOBALS['request']->get('REQUEST_METHOD') == "POST") {
+        $dbh =& $this->_accesslog->_dbi;
+        if ($dbh and $dbh->isOpen()) {
+            $log_tbl =& $this->_accesslog->logtable;
+            if ($GLOBALS['request']->get('REQUEST_METHOD') == "POST") {
           	if (check_php_version(4,2))
           	  // strangely HTTP_POST_VARS doesn't contain all posted vars.
           	  $this->request_args = substr(serialize($_POST),0,254); // if VARCHAR(255) is used.
           	else
           	  $this->request_args = substr(serialize($GLOBALS['HTTP_POST_VARS']),0,254);
-          } else { 
+            } else { 
           	$this->request_args = $GLOBALS['request']->get('QUERY_STRING'); 
-          }
-          $dbh->genericSqlQuery
-            (
-             sprintf("INSERT DELAYED INTO $log_tbl"
+            }
+            $dbh->genericSqlQuery
+                (
+                 sprintf("INSERT DELAYED INTO $log_tbl"
                      . " (time_stamp,remote_host,remote_user,request_method,request_line,request_uri,"
                      .   "request_args,request_time,status,bytes_sent,referer,agent,request_duration)"
                      . " VALUES(%d,'%s','%s','%s','%s','%s','%s','%s','%d','%d',%s,'%s','%f')",
@@ -960,98 +1082,6 @@ class Request_AccessLogEntry
         }
     }
 
-    /**
-     * Read sequentially all previous entries from the beginning.
-     * while ($logentry = Request_AccessLogEntry::read()) ;
-     * For internal log analyzers: RecentReferrers, WikiAccessRestrictions
-     */
-    function read() {
-        return $this->accesslog->_dbh ? $this->read_sql() : $this->read_file();
-    }
-
-    /**
-     * Return iterator of referer items reverse sorted (latest first).
-     */
-    function get_referer($limit=15) {
-        if ($this->accesslog->_dbh) {
-            return read_sql("referer <>'' ORDER BY time_stamp DESC LIMIT $limit");
-        } else {
-            $iter = new WikiDB_Array_generic_iter();
-            $logs =& $iter->_array;
-            while ($logentry->read_file()) {
-                if (!empty($logentry->referer)) {
-                    $iter->_array[] = $logentry;
-                    if ($limit and count($logs) > $limit)
-                        array_shift($logs);
-                    $logentry = new Request_AccessLogEntry($this->_accesslog);
-                }
-            }
-            $logs = array_reverse($logs);
-            $logs = array_slice($logs,0,min($limit,count($logs)));
-            return $iter;
-        }
-    }
-    /**
-     * Return iterator of matching host items reverse sorted (latest first).
-     */
-    function get_host($host, $since_minutes=20) {
-        if ($this->accesslog->_dbh) {
-            // mysql specific only:
-            return read_sql("request_host='".$dbh->quote($host)."' AND time_stamp > ". (time()-$since_minutes*60) 
-                            ." ORDER BY time_stamp DESC");
-        } else {
-            $iter = new WikiDB_Array_generic_iter();
-            $logs =& $iter->_array;
-            while ($logentry->read_file()) {
-                if (!empty($logentry->referer)) {
-                    $iter->_array[] = $logentry;
-                    if ($limit and count($logs) > $limit)
-                        array_shift($logs);
-                    $logentry = new Request_AccessLogEntry($this->_accesslog);
-                }
-            }
-            $logs = array_reverse($logs);
-            $logs = array_slice($logs,0,min($limit,count($logs)));
-            return $iter;
-        }
-    }
-
-
-    /**
-     * Read sequentially all previous entries from log file.
-     */
-    function read_file() {
-        global $request;
-        if ($this->logfile) $this->logfile = ACCESS_LOG; // support Request_AccessLogEntry::read
-
-        if (empty($request->_accesslog->reader))       // start at the beginning
-            $request->_accesslog->reader = fopen($this->logfile, "r");
-        if ($s = fgets($request->_accesslog->reader)) {
-            if (preg_match('/^(\S+)\s(\S+)\s(\S+)\s\[(.+?)\] "([^"]+)" (\d+) (\d+) "([^"]*)" "([^"]*)"$/',$s,$m)) {
-            	list(,$this->host, $this->ident, $this->user, $this->time,
-                     $this->request, $this->status, $this->size,
-                     $this->referer, $this->user_agent) = $m;
-            }
-            return $this;
-        } else { // until the end
-            fclose($request->_accesslog->reader);
-            return false;
-        }
-    }
-
-    function _read_sql_query($where='') {
-        $dbh =& $this->_accesslog->_dbh;
-        $log_tbl =& $this->_accesslog->logtable;
-        if ($where)
-            return $dbh->genericSqlIter("SELECT * FROM $log_tbl WHERE $where");
-        else
-            return $dbh->genericSqlIter("SELECT * FROM $log_tbl");
-    }
-    function read_sql($where='') {
-        if (empty($this->_accesslog->sqliter))
-            $this->_accesslog->sqliter = $this->_read_sql_query($where);
-        return $this->_accesslog->sqliter->next();
-    }
 }
 
 /**
@@ -1251,6 +1281,11 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.74  2004/11/07 16:02:51  rurban
+// new sql access log (for spam prevention), and restructured access log class
+// dbh->quote (generic)
+// pear_db: mysql specific parts seperated (using replace)
+//
 // Revision 1.73  2004/11/06 04:51:25  rurban
 // readable ACCESS_LOG support: RecentReferrers, WikiAccessRestrictions
 //
