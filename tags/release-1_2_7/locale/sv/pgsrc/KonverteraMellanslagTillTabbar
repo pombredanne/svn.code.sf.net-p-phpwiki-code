@@ -1,0 +1,24 @@
+[VissaWebbläsare] har problem med tabbar som används i
+[Textformateringsregler]. Om du inte kan använda tabbar, eller om du
+fixar en sida som någon som inte kunde använda tabbar har skrivit, då
+ska du använda funktionen för att konvertera en längd med mellanslag
+till tabbar. Kryssa i kryssrutan som finns i slutet av RedigeraText
+och RedigeraKopia för att använda funktionen. Kryssrutan ser ut
+ungefär så här:
+
+ [[o] Jag kan inte använda tabbar. KonverteraMellanslagTillTabbar åt mig när jag sparar.
+
+En längd med mellanslag måste vara åtminstone __tre__ mellanslag lång
+för att konverteras till en tabb. Använd multiplar av __åtta__
+mellanslag för att skapa flera tabbar. Varje längd med åtta mellanslag
+konverteras till en tabb. Om den sista längden är lite kort så gör
+inte det något, bara den åtminstone är tre mellanslag lång.
+
+__Kolla dina ändringar.__ Sådana här ersättningsmetoder kan leda till
+oväntade resultat.
+-----
+[Underhållningsnotis: Den här sidan syns när användaren klickar på
+länken KonverteraMellanslagTillTabbar i något redigeringsfönster. Den
+beskriver vad som händer när du säger åt systemet att göra det här,
+varför du vill göra det här, och sätt att undvika
+mellanslag-istället-för-tabb-problemet.]

@@ -1,0 +1,15 @@
+Als Startpunkt zum Herumstöbern im Wiki eignen sich am besten die folgenden Seiten:
+
+	* WieManWikiBenutzt erklärt dir die Textformatierungen in einem Wiki.
+	* FrischeSeiten ist eine automatisch erstellte Liste neuer Seiten.
+	* WikiTechnik erkärt die Technik, mit der PhpWiki arbeitet.
+
+
+
+Hier ist eine Suche nach Seitentiteln. Suche zum Beispiel nach ''wiki'' oder ''sandwich''.
+
+%%Search%%
+
+Und hier ist eine Volltextsuche. Die Suche dauert ein paar Sekunden. Im Suchergebnis werden die Zeilen aus den gefundenen Seiten angezeigt, in denen ein Suchbegriff gefunden wurde.
+
+%%Fullsearch%%
