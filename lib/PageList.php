@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.16 2002-01-22 09:23:09 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.17 2002-01-22 15:36:42 dairiki Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -118,7 +118,7 @@ class PageList {
         $this->_columns = array(new _PageList_Column_pagename);
         $this->_pages = array();
         $this->_messageIfEmpty = _("<no matches>");
-        $this->_use_rowcolor = true;
+        $this->_group_rows = 3;
     }
 
     function setCaption ($caption_string) {
@@ -240,7 +240,8 @@ class PageList {
     function _generateTable($caption) {
         $table = HTML::table(array('cellpadding' => 0,
                                    'cellspacing' => 1,
-                                   'border'      => 0));
+                                   'border'      => 0,
+                                   'class'	 => 'pagelist'));
         $table->setAttr('summary', "FIXME: add brief summary and column names");
 
 
@@ -256,20 +257,13 @@ class PageList {
         $tbody = HTML::tbody();
         $n = 0;
         foreach ($this->_pages as $page_handle) {
-            $n++;
             $row = HTML::tr();
             $revision_handle = false;
             foreach ($this->_columns as $col) {
                 $row->pushContent($col->format($page_handle, $revision_handle));
             }
-            if ($this->_use_rowcolor == true) {
-                // alternate bgcolor for 3 rows every other 3 rows
-                if ((($n+2)/6 == round($n/6))||(($n+1)/6 == round($n/6))||(($n)/6 == round($n/6))) {
-                    $row->setAttr('class','pagelistcolor');
-                } else {
-                    $row->setAttr('bgcolor','pagelistnocolor');
-                }
-            }
+            $group = (int)($n++ / $this->_group_rows);
+            $row->setAttr('class', ($group % 2) ? 'oddrow' : 'evenrow');
             $tbody->pushContent($row);
         }
         $table->pushContent($tbody);
@@ -277,9 +271,14 @@ class PageList {
     }
 
     function _generateList($caption) {
-        $list = HTML::ul();
+        $list = HTML::ul(array('class' => 'pagelist'));
+        $n = 0;
         foreach ($this->_pages as $page_handle) {
-            $list->pushContent(HTML::li(LinkWikiWord($page_handle->getName())));
+            $group = (int)($n++ / $this->_group_rows);
+            $class = ($group % 2) ? 'oddrow' : 'evenrow';
+
+            $list->pushContent(HTML::li(array('class' => $class),
+                                        LinkWikiWord($page_handle->getName())));
         }
         if ($caption)
             $html[] = HTML::p($caption);
