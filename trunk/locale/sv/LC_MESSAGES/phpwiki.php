@@ -136,8 +136,6 @@ $locale["Search"] =
    "Sök";
 $locale["See %s tips for editing."] =
    "%s: Redigeringstips.";
-$locale["Show relative dates using 'Today' and 'Yesterday'."] =
-   "Andvänd relativt datum";
 $locale["Sign In"] =
    "Anslut";
 $locale["Sign Out"] =
