@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.5 2000-06-20 01:25:16 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.6 2000-06-20 04:50:57 wainstead Exp $ -->
 <?
 
    /*
@@ -30,7 +30,7 @@
 
       $dbi['dbc'] = $dbc;
       $dbi['table'] = $table;
-      echo "<p>dbi after open: '$dbi' '$dbi[table]' '$dbi[dbc]'<p>\n";
+//      echo "<p>dbi after open: '$dbi' '$dbi[table]' '$dbi[dbc]'<p>\n";
       return $dbi;
    }
 
@@ -58,10 +58,10 @@
                $pagehash[$key] = $val;
             }
 
-            // don't forget to unserialize the references
-            if ($pagehash['refs']) {
-               $pagehash['refs'] = unserialize($pagehash['refs']);
-            }
+            // unserialize/explode content
+            $pagehash['refs'] = unserialize($pagehash['refs']);
+            $pagehash['content'] = explode("\n", $pagehash['content']);
+
             return $pagehash;
          }
       }
@@ -74,40 +74,52 @@
    // Either insert or replace a key/value (a page)
    function InsertPage($dbi, $pagename, $pagehash) {
       $pagename = addslashes($pagename);
-      echo "<p>dbi in InsertPage: '$dbi' '$dbi[table]' '$dbi[dbc]'<p>";
-      reset($pagehash);
+//      echo "<p>dbi in InsertPage: '$dbi' '$dbi[table]' '$dbi[dbc]'<p>";
+
+      // prepare the content for storage
+      $pagehash["author"] = addslashes($pagehash["author"]);
+      $pagehash["content"] = implode("\n", $pagehash["content"]);
+      $pagehash["content"] = addslashes($pagehash["content"]);
+      $pagehash["pagename"] = addslashes($pagehash["pagename"]);
+      $pagehash["refs"] = serialize($pagehash["refs"]);
+
+      // temporary hack until the time stuff is brought up to date
+      $pagehash["created"] = time();
+      $pagehash["lastmodified"] = time();
 
       if (IsWikiPage($dbi, $pagename)) {
-         // do an update
-         list($key, $val) = each($pagehash);
-         $PAIRS = "$key='" . addslashes($val) . "'";
-         while (list($key, $val) = each($pagehash)) {
-            $PAIRS .= ",$key='" . addslashes($val) . "'";
-         }
+
+         $PAIRS = "author='$pagehash[author]'," .
+                  "content='$pagehash[content]'," .
+                  "created=$pagehash[created]," .
+                  "flags=$pagehash[flags]," .
+                  "lastmodified=$pagehash[lastmodified]," .
+                  "pagename='$pagehash[pagename]'," .
+                  "refs='$pagehash[refs]'," .
+                  "version=$pagehash[version]";
 
          $query = "UPDATE $dbi[table] SET $PAIRS WHERE pagename='$pagename'";
 
       } else {
          // do an insert
          // build up the column names and values for the query
-         list($key, $val) = each($pagehash);
-         $COLUMNS = "$key";
-         $VALUES  = "'" . addslashes($val) . "'";
 
-         while (list($key, $val) = each($pagehash)) {
-            $COLUMNS .= ",$key";
-            $VALUES  .= ",'" . addslashes($val) . "'";
-         }
+         $COLUMNS = "author, content, created, flags, " .
+                    "lastmodified, pagename, refs, version";
+
+         $VALUES =  "'$pagehash[author]', '$pagehash[content]', " .
+                    "$pagehash[created], $pagehash[flags], " .
+                    "$pagehash[lastmodified], '$pagehash[pagename]', " .
+                    "'$pagehash[refs]', $pagehash[version]";
+
 
          $query = "INSERT INTO $dbi[table] ($COLUMNS) VALUES($VALUES)";
       }
 
-      echo "<p>Query: $query<p>\n";
-
-//      if (!mysql_query("replace into $dbi[table] (page, hash) values ('$pagename', '$pagedata')", $dbi['dbc'])) {
-//            echo "error writing value";
-//            exit();
-//      }
+//      echo "<p>Query: $query<p>\n";
+      $retval = pg_exec($dbi['dbc'], $query);
+      if ($retval == false) 
+         echo "Insert/update failed: " . pg_errormessage($dbi['dbc']);
 
    }
 
@@ -116,9 +128,7 @@
    function IsWikiPage($dbi, $pagename) {
       $pagename = addslashes($pagename);
       $query = "select count(*) from $dbi[table] where pagename='$pagename'";
-      echo "<p>IsWikiPage query: $query<p>\n";
       $res = pg_exec($query);
-      //return(pg_numrows($res));
       $array = pg_fetch_array($res, 0);
       return $array[0];
    }
