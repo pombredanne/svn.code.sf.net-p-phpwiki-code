@@ -1,6 +1,6 @@
 Date: Sun, 27 Jan 2002 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: MagicPhpWikiURLs,v 1.9 2002-01-27 22:52:21 carstenklapp Exp $
+X-Rcs-Id: $Id: MagicPhpWikiURLs,v 1.10 2002-02-07 21:17:26 dairiki Exp $
 Content-Type: application/x-phpwiki;
   pagename=MagicPhpWikiURLs;
   flags=PAGE_LOCKED;
@@ -63,30 +63,8 @@ Other possibilites:
 
 !! Writing Magic Forms in Wiki Pages
 
-''__Note__: Magic forms are on their way out, I think.  They are being superceded by <''''?plugin-form>s.''
-
-If one of the ''query-args'' has a value like
-  ''arg''__=__''opt-width''__(__''opt-dflt-val''__)__
-the link will be rendered as a form, rather than as an anchor.
-
-''Opt-width'', if given specifies the size of the input area, while
-''opt-dflt-val'' specifies the default value for the input.
-If ''text'' is given in the link, then a submit-button with that
-label will be included in the form, otherwise the submit button
-will be omitted.
-
-Examples:
-
-  [[ Full Search | phpwiki:FullTextSearch?s=() ]
-gives
-[ Full Search | phpwiki:FullTextSearch?s=() ]
-
-While
-  [[ phpwiki:TitleSearch?s=12() ]
-yields
-[ phpwiki:TitleSearch?s=12() ]
-
-Other examples:
-[ Browse Page | phpwiki:?action=browse&pagename=() ]
+Magic forms are no longer supported.  They have been superceded
+by <''''?plugin-form?>s (for text searches) and by the WikiFormPlugin
+(for files uploads, etc.)
 ----
 PhpWikiDocumentation

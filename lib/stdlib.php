@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.99 2002-02-03 22:12:34 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.100 2002-02-07 21:17:26 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -148,46 +148,8 @@ class Stack {
 
 
 function MakeWikiForm ($pagename, $args, $class, $button_text = '') {
-    $form = HTML::form(array('action' => USE_PATH_INFO ? WikiURL($pagename) : SCRIPT_NAME,
-                             'method' => 'get',
-                             'class'  => $class,
-                             'accept-charset' => CHARSET));
-    $td = HTML::td();
-    
-    while (list($key, $val) = each($args)) {
-        $i = HTML::input(array('name' => $key, 'value' => $val, 'type' => 'hidden'));
-        
-        if (preg_match('/^ (\d*) \( (.*) \) ((upload)?) $/xi', $val, $m)) {
-            $i->setAttr('size', $m[1] ? $m[1] : 30);
-            $i->setAttr('value', $m[2]);
-            if (!$m[3]) {
-                $i->setAttr('type', 'text');
-            }
-            else {
-                $i->setAttr('type', 'file');
-                $form->setAttr('enctype', 'multipart/form-data');
-                $form->pushContent(HTML::input(array('name'  => 'MAX_FILE_SIZE',
-                                                     'value' =>  MAX_UPLOAD_SIZE,
-                                                     'type'  => 'hidden')));
-                $form->setAttr('method', 'post');
-            }
-            $td->pushContent($i);
-        }
-        else
-            $form->pushContent($i);
-    }
-    
-    $tr = HTML::tr($td);
-    
-    if (!empty($button_text))
-        $tr->pushContent(HTML::td(HTML::input(array('type'   => 'submit',
-                                                     'class' => 'button',
-                                                     'value' => $button_text))));
-    $form->pushContent(HTML::table(array('cellspacing' => 0,
-                                         'cellpadding' => 2,
-                                         'border'      => 0),
-                                   $tr));
-    return $form;
+    return HTML::p(HTML::em("MagicPhpWikiURL forms are no longer supported.  ",
+                            "Use the WikiFormPlugin instead."));
 }
 
 function SplitQueryArgs ($query_args = '') 
