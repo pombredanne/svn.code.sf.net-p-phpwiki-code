@@ -1,9 +1,8 @@
-<?php rcs_id('$Id: stdlib.php,v 1.33 2001-02-15 21:35:03 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.34 2001-02-16 04:43:08 dairiki Exp $');
 
 
    /*
       Standard functions for Wiki functionality
-         ExitWiki($errormsg)
          WikiURL($pagename, $args, $abs)
 	 
          LinkExistingWikiWord($wikiword, $linktext) 
@@ -28,19 +27,6 @@ function fix_magic_quotes_gpc (&$text)
    }
    return $text;
 }
-
-
-function get_remote_host () {
-   // Apache won't show REMOTE_HOST unless the admin configured it
-   // properly. We'll be nice and see if it's there.
-   if (getenv('REMOTE_HOST'))
-      return getenv('REMOTE_HOST');
-   $host = getenv('REMOTE_ADDR');
-   if (ENABLE_REVERSE_DNS)
-      return gethostbyaddr($host);
-   return $host;
-}
-
 
 function arrays_equal ($a, $b) 
 {
