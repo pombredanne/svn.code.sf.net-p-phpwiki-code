@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.21 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.22 2001-12-18 06:28:16 carstenklapp Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -259,13 +259,13 @@ function showDiff ($dbi, $request) {
         $args = array('action' => 'diff', 'previous' => $other);
         if ($version)
             $args['version'] = $version;
-        $otherdiffs .= ' ' . QElement('a', array('href' => WikiURL($pagename, $args),
+        $otherdiffs .= ', ' . QElement('a', array('href' => WikiURL($pagename, $args),
                                                  'class' => 'wikiaction'),
                                       $label[$other]);
     }
     $html .= Element('p',
                      htmlspecialchars(_("Other diffs:"))
-                     . $otherdiffs);
+                     . $otherdiffs . '.');
             
             
     if ($old and $old->getVersion() == 0)
