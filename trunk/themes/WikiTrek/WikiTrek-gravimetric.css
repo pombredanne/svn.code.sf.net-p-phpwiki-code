@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek-gravimetric.css,v 1.7 2002-02-16 23:39:10 carstenklapp Exp $
+ * $Id: WikiTrek-gravimetric.css,v 1.8 2002-02-17 01:13:07 carstenklapp Exp $
  *
  * WikiTrek-gravimetric.css
  *
@@ -25,10 +25,6 @@ input {
  */
 /* div.wikiaction, div.wikiadmin { */
 div.wikiaction, form.wikiadmin div {
-  border: 1px solid #006;
-  margin-top: 0.5ex;
-  margin-bottom: 0.5ex;
-  padding: 0.5ex 0.5em;
   /* Emulate the display behaviour of a table, to shrink it's width.
    * ie5.1Mac ignores this */
   position: relative;
@@ -67,20 +63,57 @@ a.wikiadmin:hover {
 
 /* QuestionMark */
 .wikiunknown a, .named-wikiunknown a {
+  border: 1px solid black;
   padding-left:  1px;
   padding-right: 1px;
   padding-top: 1px;
   margin-right: 1px;
+  font-size: smaller; /* too small in NS4 */
 }
+.wikiunknown a:hover, .named-wikiunknown a:hover {
+  border: 1px solid #403752;
+}
+
 
 /* Link icons */
 img.linkicon { vertical-align: middle; }
 
 
 /**
+ * Headings
+ */
+h1 {
+  padding-top:      0.25ex;
+  padding-left:     0.5em;
+  padding-right:    0.25em;
+  padding-bottom:   1px;
+}
+div.toolbar h1 a.wiki, h1 a.backlinks {
+  padding-top:      0.25ex;
+  padding-left:     0.25em;
+  padding-right:    0.25em;
+  padding-bottom:   1px;
+}
+h2 a.wiki {
+  padding-top:      0.25ex;
+  padding-left:     0.25em;
+  padding-right:    0.25em;
+  padding-bottom:   1px;
+}
+
+div.toolbar input {
+  border:  1px solid #0053db;
+  padding: 1px;
+  text-align:  left;
+}
+
+
+/**
  * Edit Page & View Source
  */
 /* color: inherit; and background: inherit; display as lime in NS4 */
+div.transclusion { font-size: smaller; } /* too small in NS4 */
+
 
 /**
  * Diff Output
@@ -116,6 +149,27 @@ div.toolbar .wiki:hover {
 }
 
 b.wikisummary {
-  padding:      2px;
-  margin:       1px;
+  padding: 2px;
+  margin: 1px;
 }
+
+/**
+ * Other
+ */
+/* PHP Warnings */
+div.errors {
+  font-size: smaller; /* too small in NS4 */
+  margin-top:    4ex;
+  margin-bottom: 2ex;
+  padding: 0.5ex 0.25em;
+}
+.errors h4 {
+  margin: 0;
+  padding: 0.5ex 0.25em;
+}
+
+.error {
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+}
+
