@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.13 2002-01-22 03:17:47 dairiki Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.14 2002-01-29 05:05:05 dairiki Exp $');
 
 function generate_interwikimap_and_regexp()
 {
@@ -15,7 +15,7 @@ function generate_interwikimap_and_regexp()
             $wikiname_regexp .= $wiki;
         }
 
-    $InterWikiLinkRegexp = "($wikiname_regexp)";
+    $InterWikiLinkRegexp = "(?:$wikiname_regexp)";
 }
 
 generate_interwikimap_and_regexp();
