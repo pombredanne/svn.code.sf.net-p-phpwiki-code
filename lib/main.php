@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.159 2004-06-06 16:58:51 rurban Exp $');
+rcs_id('$Id: main.php,v 1.160 2004-06-07 22:44:14 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -480,6 +480,8 @@ $this->version = phpwiki_version();
             case 'lock':
             case 'unlock':
             case 'upgrade':
+            case 'chown':
+            case 'setacl':
                 return WIKIAUTH_ADMIN;
 
             /* authcheck occurs only in the plugin.
@@ -758,6 +760,18 @@ $this->version = phpwiki_version();
         actionPage($this, $action);
     }
 
+    function action_chown () {
+        $this->setArg('s',$this->getArg('pagename'));
+        $this->setArg('verify',1);
+        $this->actionpage(_("PhpWikiAdministration/Chown"));
+    }
+
+    function action_setacl () {
+        $this->setArg('s',$this->getArg('pagename'));
+        $this->setArg('verify',1);
+        $this->actionpage(_("PhpWikiAdministration/SetAcl"));
+    }
+
     function action_diff () {
         $this->buffer_output();
         include_once "lib/diff.php";
@@ -992,6 +1006,12 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.159  2004/06/06 16:58:51  rurban
+// added more required ActionPages for foreign languages
+// install now english ActionPages if no localized are found. (again)
+// fixed default anon user level to be 0, instead of -1
+//   (wrong "required administrator to view this page"...)
+//
 // Revision 1.158  2004/06/04 20:32:53  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole

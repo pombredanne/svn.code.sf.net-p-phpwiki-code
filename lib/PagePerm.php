@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.21 2004-06-07 22:28:03 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.22 2004-06-07 22:44:14 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -199,6 +199,8 @@ function action2access ($action) {
     case 'lock':
     case 'unlock':
     case 'upgrade':
+    case 'chown':
+    case 'setacl':
             return 'change';
     default:
         //Todo: Plugins should be able to override its access type
@@ -689,6 +691,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/06/07 22:28:03  rurban
+// add acl field to mimified dump
+//
 // Revision 1.20  2004/06/07 18:39:03  rurban
 // support for SetAclSimple
 //

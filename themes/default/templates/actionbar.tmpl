@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.28 2004-05-12 10:49:56 rurban Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.29 2004-06-07 22:44:41 rurban Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -19,8 +19,13 @@
   <td>
   <div id="actionbuttons">
     <?= $EditB ?>
-    <?php if ($user->isAdmin()) { ?>
+    <?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>
       <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
+    <?php if (ENABLE_PAGEPERM) { ?>
+      <?=$Sep?><?= Button('chown') ?>
+      <?=$Sep?><?= Button('setacl') ?>
+    <?php }} ?>
+    <?php if ($user->isAdmin() or mayAccessPage('remove',$page->getName())) { ?>
       <?=$Sep?><?= Button('remove') ?>
     <?php } ?>
     <?=$Sep?><?= Button("PageHistory", _("PageHistory")) ?>

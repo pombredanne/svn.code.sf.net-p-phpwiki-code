@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: login.tmpl,v 1.32 2004-05-15 19:50:09 rurban Exp $ -->
+<!-- $Id: login.tmpl,v 1.33 2004-06-07 22:44:41 rurban Exp $ -->
 <!-- The login form -->
 <?php if ($fail_message) { ?>
   <p><strong><?=$fail_message?></strong></p>
@@ -10,14 +10,15 @@
 
 <?php 
 if (DEBUG) {
-  $t = sprintf("  DEBUG: ALLOW_ANON_EDIT = %s, ALLOW_BOGO_LOGIN = %s, ALLOW_USER_PASSWORDS = %s", 
+  $t = sprintf("  DEBUG: ALLOW_ANON_EDIT = %s, ALLOW_BOGO_LOGIN = %s, ALLOW_USER_PASSWORDS = %s, ENABLE_PAGEPERM = %s, ", 
 	       ALLOW_ANON_EDIT ? "true" : "false",
 	       ALLOW_BOGO_LOGIN ? "true" : "false",
-	       ALLOW_USER_PASSWORDS ? "true" : "false");
+	       ALLOW_USER_PASSWORDS ? "true" : "false",
+               ENABLE_PAGEPERM ? "true" : "false");
   if (ALLOW_USER_PASSWORDS) {
-    $t .= sprintf("  USER_AUTH_ORDER: %s",join(" => ",$GLOBALS['USER_AUTH_ORDER'])) .
-         sprintf(",  USER_AUTH_POLICY: %s",USER_AUTH_POLICY) .
-         sprintf(",  PASSWORD_LENGTH_MINIMUM: %s",PASSWORD_LENGTH_MINIMUM);
+    $t .= sprintf("  USER_AUTH_ORDER: %s", join(" => ", $GLOBALS['USER_AUTH_ORDER'])) 
+        . sprintf(",  USER_AUTH_POLICY: %s", USER_AUTH_POLICY)
+        . sprintf(",  PASSWORD_LENGTH_MINIMUM: %s", PASSWORD_LENGTH_MINIMUM);
   }
   echo asXML(HTML::div(array('class' => 'debug'),$t));
   echo "<br />\n";
