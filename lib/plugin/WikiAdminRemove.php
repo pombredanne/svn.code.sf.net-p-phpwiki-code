@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.9 2003-02-26 22:27:22 dairiki Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.10 2004-02-11 15:29:43 zorloc Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -112,7 +112,7 @@ extends WikiPlugin
         $dbi = $request->getDbh();
         foreach ($pages as $name) {
             $dbi->deletePage($name);
-            $ul->pushContent(HTML::li(fmt("Removed page '%s' succesfully.", $name)));
+            $ul->pushContent(HTML::li(fmt("Removed page '%s' successfully.", $name)));
         }
         $dbi->touch();
         return HTML($ul,
@@ -214,6 +214,18 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2003/02/26 22:27:22  dairiki
+// Fix and refactor FrameInclude plugin (more or less).
+//
+// (This should now generate valid HTML.  Woohoo!)
+//
+// The output when using the Sidebar theme is ugly enough that it should
+// be considered broken.  (But the Sidebar theme appears pretty broken in
+// general right now.)
+//
+// (Personal comment (not to be taken personally): I must say that I
+// remain unconvinced of the usefulness of this plugin.)
+//
 // Revision 1.8  2003/02/17 17:23:59  dairiki
 // Disable plugin unless action='browse'.
 //
