@@ -1,5 +1,5 @@
-<?php rcs_id('$Id: Theme.php,v 1.121 2005-01-20 10:14:37 rurban Exp $');
-/* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
+<?php rcs_id('$Id: Theme.php,v 1.122 2005-01-21 11:51:22 rurban Exp $');
+/* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -1398,6 +1398,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.121  2005/01/20 10:14:37  rurban
+// rel=nofollow on edit/create page links
+//
 // Revision 1.120  2004/12/20 13:20:23  rurban
 // fix problem described in patch #1088131. SidebarBox may be used before lib/WikiPlugin.php
 // is loaded.

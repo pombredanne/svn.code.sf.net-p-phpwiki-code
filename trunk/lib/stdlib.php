@@ -1,4 +1,23 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.228 2005-01-17 20:28:30 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.229 2005-01-21 11:51:22 rurban Exp $');
+/*
+ Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /*
   Standard functions for Wiki functionality
@@ -1756,8 +1775,8 @@ function firstNWordsOfContent( $n, $content ) {
     if ($content and $n > 0) {
     	if (is_array($content)) {
     	    // fixme: return a list of lines then?
-    	    $content = join("\n", $content);
-            $return_array = true;
+    	    //$content = join("\n", $content);
+            //$return_array = true;
             $wordcount = 0;
             foreach ($content as $line) {
                 $words = explode(' ', $line);
@@ -1863,6 +1882,10 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.228  2005/01/17 20:28:30  rurban
+// Allow more pagename chars: Limit only on certain backends.
+// Re-Allow : and ; and control chars on non-file backends.
+//
 // Revision 1.227  2005/01/14 18:32:08  uckelman
 // ConvertOldMarkup did not properly handle links containing pairs of pairs
 // of underscores. (E.g., [http://example.com/foo__bar__.html] would be
