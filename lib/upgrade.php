@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.14 2004-06-07 18:38:18 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.15 2004-06-07 19:50:40 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -285,7 +285,7 @@ CREATE TABLE $rating_tbl (
  */
 function CheckDatabaseUpdate($request) {
     global $DBParams, $DBAuthParams;
-    if (!in_array($DBParams['dbtype'],array('SQL','ADODB'))) return;
+    if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
     echo "<h3>",_("check for necessary database updates"),"</h3>\n";
     $dbh = &$request->_dbi;
     $tables = $dbh->_backend->listOfTables();
@@ -293,8 +293,8 @@ function CheckDatabaseUpdate($request) {
     $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
     extract($dbh->_backend->_table_names);
     foreach (explode(':','session:user:pref:member') as $table) {
-        echo sprintf(_("check for table %s"),$table)," ...";
-    	if (!in_array($prefix.$table,$tables)) {
+        echo sprintf(_("check for table %s"), $table)," ...";
+    	if (!in_array($prefix.$table, $tables)) {
             installTable(&$dbh, $table, $backend_type);
     	} else {
     	    echo _("OK")," <br />\n";
@@ -307,9 +307,8 @@ function CheckDatabaseUpdate($request) {
   	$database = $dbh->_backend->database();
   	assert(!empty($DBParams['db_session_table']));
         $session_tbl = $prefix . $DBParams['db_session_table'];
-        $sess_fields = $dbh->_backend->listOfFields($database,$session_tbl);
-        //FIXME: adodb seem to uppercase the fields
-        if (!strstr(strtolower(join(':',$sess_fields)),"sess_ip")) {
+        $sess_fields = $dbh->_backend->listOfFields($database, $session_tbl);
+        if (!strstr(strtolower(join(':', $sess_fields)),"sess_ip")) {
             echo "<b>",_("ADDING"),"</b>"," ... ";		
             $dbh->genericQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
         } else {
@@ -323,7 +322,7 @@ function CheckDatabaseUpdate($request) {
   	echo _("check for page.id auto_increment flag")," ...";
         assert(!empty($page_tbl));
   	$database = $dbh->_backend->database();
-  	$fields = mysql_list_fields($database,$page_tbl,$dbh->_backend->connection());
+  	$fields = mysql_list_fields($database, $page_tbl, $dbh->_backend->connection());
   	$columns = mysql_num_fields($fields); 
         for ($i = 0; $i < $columns; $i++) {
             if (mysql_field_name($fields, $i) == 'id') {
@@ -334,7 +333,7 @@ function CheckDatabaseUpdate($request) {
                     // MODIFY col_def valid since mysql 3.22.16,
                     // older mysql's need CHANGE old_col col_def
                     $dbh->genericQuery("ALTER TABLE $page_tbl CHANGE id id INT NOT NULL AUTO_INCREMENT");
-                    $fields = mysql_list_fields($database,$page_tbl);
+                    $fields = mysql_list_fields($database, $page_tbl);
                     if (!strstr(strtolower(mysql_field_flags($fields, $i)),"auto_increment"))
                         echo " <b><font color=\"red\">",_("FAILED"),"</font></b><br />\n";
                     else     
@@ -359,9 +358,9 @@ function CheckDatabaseUpdate($request) {
         $version = (string)(($arr[0] * 100) + $arr[1]) . "." . $arr[2];
         if ($version > 410.0 and $version < 420.0) {
             $dbh->genericQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL;");
-            echo sprintf(_("version <em>%s</em> <b>FIXED</b>"),$mysql_version),"<br />\n";	
+            echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";	
         } else {
-            echo sprintf(_("version <em>%s</em> not affected"),$mysql_version),"<br />\n";	
+            echo sprintf(_("version <em>%s</em> not affected"), $mysql_version),"<br />\n";	
         }
     }
     return;
@@ -406,6 +405,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.14  2004/06/07 18:38:18  rurban
+ added mysql 4.1.x search fix
+
  Revision 1.13  2004/06/04 20:32:53  rurban
  Several locale related improvements suggested by Pierrick Meignen
  LDAP fix by John Cole

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.35 2004-05-02 21:26:38 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.36 2004-06-07 19:50:40 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -564,6 +564,8 @@ function MimeifyPageRevision ($revision) {
         $params['summary'] = $revision->get('summary');
     if ($page->get('hits'))
         $params['hits'] = $page->get('hits');
+    if ($page->get('owner'))
+        $params['owner'] = $page->get('owner');
 
     $params['charset'] = $GLOBALS['charset'];
 
@@ -787,6 +789,14 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.35  2004/05/02 21:26:38  rurban
+// limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
+//   because they will not survive db sessions, if too large.
+// extended action=upgrade
+// some WikiTranslation button work
+// revert WIKIAUTH_UNOBTAINABLE (need it for main.php)
+// some temp. session debug statements
+//
 // Revision 1.34  2004/04/18 01:11:52  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.
