@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.95 2004-05-16 22:07:35 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.96 2004-05-18 16:23:40 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -606,7 +606,7 @@ extends _RecentChanges_Formatter
         $page = $rev->getPage();
         $pagename = $page->getName();
 
-        return array( 'title'           => split_pagename($pagename),
+        return array( 'title'           => SplitPagename($pagename),
                       'description'     => $this->summary($rev),
                       'link'            => $this->pageURL($rev),
                       'dc:date'         => $this->time($rev),
@@ -658,7 +658,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.95 $");
+                            "\$Revision: 1.96 $");
     }
 
     function managesValidators() {
@@ -786,7 +786,7 @@ extends WikiPlugin
         $args['show_deleted'] = false;
         $args['show_all'] = false;
         $args['days'] = 90;
-        return $this->makeBox(WikiLink($this->getName(),'',split_pagename($this->getName())),
+        return $this->makeBox(WikiLink($this->getName(),'',SplitPagename($this->getName())),
                               $this->format($this->getChanges($request->_dbi, $args), $args));
     }
 
@@ -841,6 +841,14 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.95  2004/05/16 22:07:35  rurban
+// check more config-default and predefined constants
+// various PagePerm fixes:
+//   fix default PagePerms, esp. edit and view for Bogo and Password users
+//   implemented Creator and Owner
+//   BOGOUSERS renamed to BOGOUSER
+// fixed syntax errors in signin.tmpl
+//
 // Revision 1.94  2004/05/14 20:55:03  rurban
 // simplified RecentComments
 //
