@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.35 2004-05-14 10:52:44 rurban Exp $
+ * $Id: phpwiki.css,v 1.36 2004-05-27 17:51:57 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -262,6 +262,8 @@ textarea.wikiedit {
   text-align: left;
   font-size: smaller;
 }
+#toolbar { padding:0px; }
+
 /**
  * Search Results
  */

@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.42 2004-05-18 14:47:21 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.43 2004-05-27 17:51:57 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -58,8 +58,9 @@ $s = $Theme->getButtonSeparator();
   <?php if (!empty($_GET['start_debug'])) echo '<input type="hidden" name="start_debug" value="1" >'; ?>
   <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
   <br clear="all" class="clear-floats" />
+  <?= $EDIT_TOOLBAR ?>
   <div id="editarea-size">
-  <?php if (isset($JS_SEARCHREPLACE)) { ?>
+  <?php if (0 and isset($JS_SEARCHREPLACE)) { ?>
   <span id="search-replace">
     <?php /*TODO: use image icons here instead of text */ ?>
     <?php /*TODO: replace this with Template('toolbar') */ ?>
