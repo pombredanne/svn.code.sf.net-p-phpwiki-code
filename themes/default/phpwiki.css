@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.9 2003-02-17 23:50:12 dairiki Exp $
+ * $Id: phpwiki.css,v 1.10 2003-02-18 02:49:20 dairiki Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -22,11 +22,13 @@
 img { border: 0; }
 
 form { margin: 0; }
+
 table {
   border-spacing: 1px;
   /* For Mozilla */
   empty-cells: show;
 }
+
 caption {
   caption-side: top;
   text-align: left;
@@ -556,7 +558,53 @@ li li.tight-bottom {
   margin-bottom: 0;
 }
 
+/*
+ * "DL tables"
+ */
+.wiki-dl-table {
+  border-collapse: collapse;
+  border: 2px #444 solid;
+}
+.wiki-dl-table tr {
+  border-top: 2px #444 solid;
+  border-bottom: 2px #444 solid;
+  border-left: none; 
+  border-right: none; 
+}
+.wiki-dl-table tr.tight-top {
+  border-top: 1px #444 solid;
+}
+.wiki-dl-table tr.tight-bottom {
+  border-bottom: 1px #444 solid;
+}
+.wiki-dl-table th, .wiki-dl-table td {
+  padding: 0.1ex 0.5em;
+}
+.wiki-dl-table th {
+  vertical-align: top;
+  text-align: right;
+  border-right: 1px #444 solid;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+}
+.wiki-dl-table td {
+  border: none;
+}
 
+/*
+ * "E-mail" style blockquote
+ */
+blockquote.mail-style-quote {
+  border-left: medium #284 solid;
+  padding-left: 1em;
+  margin-left: 0;
+  margin-right: 0;
+}
+.mail-style-quote blockquote.mail-style-quote {
+  margin-left: -0.6em;
+}
+  
 /* For emacs users
  *
  * Local Variables:
