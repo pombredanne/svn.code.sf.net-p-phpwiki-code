@@ -382,7 +382,7 @@ class Block_blockquote extends CompoundBlock
 class Block_list extends CompoundBlock
 {
     //var $_tag = 'ol' or 'ul';
-    var $_re = '\ {0,4}([-*o+#](?!-))\ *(?=\S)';
+    var $_re = '\ {0,4}([*+#]|-(?!-)|o(?=\ ))\ *(?=\S)';
 
     function _parse (&$input, $m) {
         // A list as the first content in a list is not allowed.
@@ -580,8 +580,8 @@ class Block_oldlists extends Block_list
 class Block_pre extends Block
 {
     var $_tag = 'pre';
-    var $_re = '<(pre|verbatim)>(.*?(?:\n^.*?)*?)(?<!~)<\/\1>\s*?\n';
-    //           1------------1 2---------------2
+    var $_re = '<(pre|verbatim)>(.*?(?:\s*\n^.*?)*?)(?<!~)<\/\1>\s*?\n';
+    //           1------------1 2------------------2
 
     function _parse (&$input, $m) {
         $input->accept($m);
