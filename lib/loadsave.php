@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.123 2004-09-25 16:26:54 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.124 2004-10-04 23:44:28 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -459,7 +459,7 @@ function DumpHtmlToDir (&$request)
             $prefix = '';
             if (isWindows()) {	
             	// drive where apache is installed
-                $prefix = '/' . substr($_SERVER["DOCUMENT_ROOT"],0,2);
+                $prefix = '/' . substr($request->get("DOCUMENT_ROOT"),0,2);
             }
             $link = LinkURL("file://".$prefix.$directory."/".$filename, 
                             $filename);
@@ -1199,6 +1199,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.123  2004/09/25 16:26:54  rurban
+ deferr notifies (to be improved)
+
  Revision 1.122  2004/09/17 14:25:45  rurban
  update comments
 
