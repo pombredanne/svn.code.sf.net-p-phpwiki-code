@@ -1,7 +1,7 @@
 <?php
    // display.php: fetch page or get default content
    // calls transform.php for actual transformation of wiki markup to HTML
-   rcs_id('$Id: display.php,v 1.5.2.1 2001-02-08 18:28:31 dairiki Exp $');
+   rcs_id('$Id: display.php,v 1.5.2.2 2001-11-06 20:41:56 dairiki Exp $');
  
    // if we got GET data, the first item is always a page name
    // if it wasn't this file would not have been included
@@ -9,7 +9,7 @@
    if (empty($QUERY_STRING) && isset($argv[0]))
       $QUERY_STRING = $argv[0];
   
-   if (isset($QUERY_STRING) && preg_match('/^[-+%\w]+$/', $QUERY_STRING)) {
+   if (isset($QUERY_STRING) && preg_match('/^[-_.+%\w]+$/', $QUERY_STRING)) {
       $pagename = urldecode($QUERY_STRING);
    } else { 
       $pagename = gettext("FrontPage");
