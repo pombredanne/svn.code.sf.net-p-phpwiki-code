@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.6 2004-02-24 15:20:07 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.7 2004-03-12 13:31:43 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -127,9 +127,15 @@ extends WikiPlugin_WikiAdminSelect
         $pages = array();
         if ($p && !$request->isPost())
             $pages = $p;
-        if ($p && $request->isPost() && $request->_user->isAdmin()
-            && empty($post_args['cancel'])) {
-            // FIXME: error message if not admin.
+        if ($p && $request->isPost() &&
+            empty($post_args['cancel'])) {
+
+            // FIXME: check individual PagePermissions
+            if (!$request->_user->isAdmin()) {
+                $request->_notAuthorized(WIKIAUTH_ADMIN);
+                $this->disabled("! user->isAdmin");
+            }
+
             if ($post_args['action'] == 'verify' and !empty($post_args['from'])) {
                 // Real action
                 return $this->searchReplacePages($dbi, $request, $p, $post_args['from'], $post_args['to']);
@@ -237,6 +243,9 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/02/24 15:20:07  rurban
+// fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
+//
 // Revision 1.5  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //

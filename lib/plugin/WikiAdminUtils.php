@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.5 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.6 2004-03-12 13:31:43 rurban Exp $');
 /**
  Copyright 2003 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -61,8 +61,10 @@ extends WikiPlugin
 
         if ($request->isPost()) {
             $user = $request->getUser();
-            if (!$user->isAdmin())
+            if (!$user->isAdmin()) {
+                $request->_notAuthorized(WIKIAUTH_ADMIN);
                 return $this->error(_("You must be an administrator to use this plugin."));
+            }
             return $this->do_action($request, $posted);
         }
 

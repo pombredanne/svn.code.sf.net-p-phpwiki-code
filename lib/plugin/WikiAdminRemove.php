@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.15 2004-03-01 13:48:46 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.16 2004-03-12 13:31:43 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -142,9 +142,14 @@ extends WikiPlugin
         $next_action = 'select';
         $pages = array();
         
-        if ($p && $request->isPost() && $request->_user->isAdmin()
-            && !empty($post_args['remove']) && empty($post_args['cancel'])) {
-            // FIXME: error message if not admin.
+        if ($p && $request->isPost() &&
+            !empty($post_args['remove']) && empty($post_args['cancel'])) {
+
+            // FIXME: check individual PagePermissions
+            if (!$request->_user->isAdmin()) {
+                $request->_notAuthorized(WIKIAUTH_ADMIN);
+                $this->disabled("! user->isAdmin");
+            }
             if ($post_args['action'] == 'verify') {
                 // Real delete.
                 return $this->removePages($request, $p);
@@ -213,6 +218,10 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/03/01 13:48:46  rurban
+// rename fix
+// p[] consistency fix
+//
 // Revision 1.14  2004/02/22 23:20:33  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.85 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.86 2004-03-12 13:31:43 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -307,11 +307,14 @@ extends _RecentChanges_Formatter
                 $last_date = $date;
 
             }
-            $lines->pushContent($this->format_revision($rev));
+            // enforce view permission
+            if (mayAccessPage('view',$rev->_pagename)) {
+                $lines->pushContent($this->format_revision($rev));
 
-            if ($first)
-                $this->setValidators($rev);
-            $first = false;
+                if ($first)
+                    $this->setValidators($rev);
+                $first = false;
+            }
         }
         if ($lines)
             $html->pushContent($lines);
@@ -480,11 +483,14 @@ extends _RecentChanges_Formatter
 
         $first = true;
         while ($rev = $changes->next()) {
-            $rss->addItem($this->item_properties($rev),
-                          $this->pageURI($rev));
-            if ($first)
-                $this->setValidators($rev);
-            $first = false;
+            // enforce view permission
+            if (mayAccessPage('view',$rev->_pagename)) {
+                $rss->addItem($this->item_properties($rev),
+                              $this->pageURI($rev));
+                if ($first)
+                    $this->setValidators($rev);
+                $first = false;
+            }
         }
 
         global $request;
@@ -607,7 +613,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.85 $");
+                            "\$Revision: 1.86 $");
     }
 
     function managesValidators() {
@@ -774,6 +780,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.85  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.84  2004/02/15 22:29:42  rurban
 // revert premature performance fix
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.4 2004-02-24 15:20:06 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.5 2004-03-12 13:31:43 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -113,9 +113,15 @@ extends WikiPlugin_WikiAdminSelect
         $pages = array();
         if ($p && !$request->isPost())
             $pages = $p;
-        if ($p && $request->isPost() && $request->_user->isAdmin()
-            && !empty($post_args['chmod']) && empty($post_args['cancel'])) {
-            // FIXME: error message if not admin.
+        if ($p && $request->isPost() &&
+            !empty($post_args['chmod']) && empty($post_args['cancel'])) {
+
+            // FIXME: check individual PagePermissions
+            if (!$request->_user->isAdmin()) {
+                $request->_notAuthorized(WIKIAUTH_ADMIN);
+                $this->disabled("! user->isAdmin");
+            }
+
             if ($post_args['action'] == 'verify') {
                 // Real action
                 return $this->chmodPages($dbi, $request, $p, 
@@ -192,6 +198,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/02/24 15:20:06  rurban
+// fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
+//
 // Revision 1.3  2004/02/24 04:02:06  rurban
 // Better warning messages
 //
