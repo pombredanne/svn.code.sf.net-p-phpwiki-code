@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.29 2002-01-23 05:10:22 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.30 2002-01-23 05:31:33 carstenklapp Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -305,10 +305,11 @@ function showDiff (&$request) {
         }
     }
 
+    global $Theme;
     $new_link = HTML::a(array('href' => WikiURL($new)), $new_version);
     $old_link = HTML::a(array('href' => WikiURL($old ? $old : $page)),
                         $old_version);
-    $page_link = LinkExistingWikiWord($page->getName());
+    $page_link = $Theme->LinkExistingWikiWord($page->getName());
     
     $html[] = HTML::p(fmt("Differences between %s and %s of %s.",
                           $new_link, $old_link, $page_link));

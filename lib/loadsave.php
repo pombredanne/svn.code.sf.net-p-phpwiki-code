@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.31 2002-01-23 05:10:22 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.32 2002-01-23 05:35:13 carstenklapp Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -13,7 +13,8 @@ function StartLoadDump($title, $html = '')
 function EndLoadDump(&$request)
 {
     // FIXME: This is a hack
-    $pagelink = LinkExistingWikiWord($request->getArg('pagename'));
+    global $Theme;
+    $pagelink = $Theme->LinkExistingWikiWord($request->getArg('pagename'));
     
     PrintXML(array(HTML::p(HTML::strong(_("Complete."))),
                    HTML::p(fmt("Return to %s", $pagelink))));
@@ -243,7 +244,8 @@ function SavePage (&$request, $pageinfo, $source, $filename)
                                     $new->getVersion()));
     }
 
-    $pagelink = LinkExistingWikiWord($pagename);
+    global $Theme;
+    $pagelink = $Theme->LinkExistingWikiWord($pagename);
     
     PrintXML(array(HTML::dt($pagelink), $mesg));
     flush();
@@ -355,12 +357,13 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
 
 function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
     $zip = new ZipReader($zipfile);
+    global $Theme;
     while (list ($fn, $data, $attrib) = $zip->readFile()) {
         // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
         $fn = basename("/dummy/" . $fn);
         if ( ($files && !in_array($fn, $files)) || ($exclude && in_array($fn, $exclude)) ) {
 
-            PrintXML(array(HTML::dt(LinkExistingWikiWord($fn)),
+            PrintXML(array(HTML::dt($Theme->LinkExistingWikiWord($fn)),
                            HTML::dd(_("Skipping"))));
            
             continue;
@@ -373,13 +376,14 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
 function LoadDir (&$request, $dirname, $files = false, $exclude = false)
 {
     $handle = opendir($dir = $dirname);
+    global $Theme;
     while ($fn = readdir($handle)) {
         if ($fn[0] == '.' || filetype("$dir/$fn") != 'file')
             continue;
             
         if ( ($files && !in_array($fn, $files)) || ($exclude && in_array($fn, $exclude)) ) {
 
-            PrintXML(array(HTML::dt(LinkExistingWikiWord($fn)),
+            PrintXML(array(HTML::dt($Theme->LinkExistingWikiWord($fn)),
                            HTML::dd(_("Skipping"))));
             continue;
         }
