@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.93 2004-02-26 03:22:05 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.94 2004-03-14 16:36:37 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -703,8 +703,10 @@ function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
         $files = array_diff($files, array(HOME_PAGE));
         $files[] = HOME_PAGE;
     }
-    foreach ($files as $file)
-        LoadFile($request, "$dirname/$file");
+    foreach ($files as $file) {
+        if (substr($file,-1,1) != '~') // refuse to load backup files
+            LoadFile($request, "$dirname/$file");
+    }
 }
 
 class LimitedFileSet extends FileSet {
@@ -877,6 +879,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.93  2004/02/26 03:22:05  rurban
+ also copy css and images with XHTML Dump
+
  Revision 1.92  2004/02/26 02:25:54  rurban
  fix empty and #-anchored links in XHTML Dumps
 
