@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.49 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: display.php,v 1.50 2004-05-04 22:34:25 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -127,7 +127,8 @@ function displayPage(&$request, $template=false) {
                                      '%mtime' => $revision->get('mtime')));
 
     // FIXME: should probably be in a template...
-    header("Content-Type: text/html; charset=" . $GLOBALS['charset']); // FIXME: this gets done twice?
+    if ($request->getArg('action') != 'pdf')
+        header("Content-Type: text/html; charset=" . $GLOBALS['charset']); // FIXME: this gets done twice?
 
     $page_content = $revision->getTransformedContent();
     
@@ -148,10 +149,16 @@ function displayPage(&$request, $template=false) {
     $template->printExpansion($toks);
     $page->increaseHitCount();
 
-    $request->checkValidators();
+    if ($request->getArg('action') != 'pdf')
+        $request->checkValidators();
     flush();
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 
 // For emacs users
 // Local Variables:

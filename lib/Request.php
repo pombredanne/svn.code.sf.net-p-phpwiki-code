@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.53 2004-05-03 21:57:47 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.54 2004-05-04 22:34:25 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -367,6 +367,7 @@ class Request {
     }
     
     function finish() {
+        session_write_close();
         if (!empty($this->_is_buffering_output)) {
             //header(sprintf("Content-Length: %d", ob_get_length()));
             ob_end_flush();
@@ -978,6 +979,12 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2004/05/03 21:57:47  rurban
+// locale updates: we previously lost some words because of wrong strings in
+//   PhotoAlbum, german rewording.
+// fixed $_SESSION registering (lost session vars, esp. prefs)
+// fixed ending slash in listAvailableLanguages/Themes
+//
 // Revision 1.52  2004/05/03 13:16:47  rurban
 // fixed UserPreferences update, esp for boolean and int
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.49 2004-05-03 11:16:40 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.50 2004-05-04 22:34:25 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -810,6 +810,7 @@ class WikiDB_Page
         $backend = &$this->_wikidb->_backend;
         $subject = _("Page change").' '.$this->_pagename;
         $previous = $backend->get_previous_version($this->_pagename, $version);
+        if (!isset($meta['mtime'])) $meta['mtime'] = time();
         if ($previous) {
             $difflink = WikiURL($this->_pagename,array('action'=>'diff'),true);
             $cache = &$this->_wikidb->_cache;
@@ -830,7 +831,6 @@ class WikiDB_Page
             
         } else {
             $difflink = WikiURL($this->_pagename,array(),true);
-            if (!isset($meta['mtime'])) $meta['mtime'] = time();
             $content = $this->_pagename . " " . $version . " " .  Iso8601DateTime($meta['mtime']) . "\n";
             $content .= _("New Page");
         }
@@ -1702,6 +1702,10 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/05/03 11:16:40  rurban
+// fixed sendPageChangeNotification
+// subject rewording
+//
 // Revision 1.48  2004/04/29 23:03:54  rurban
 // fixed sf.net bug #940996
 //

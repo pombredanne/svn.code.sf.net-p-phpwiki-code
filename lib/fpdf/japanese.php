@@ -1,12 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf_japanese.php,v 1.2 2004-03-26 03:14:35 rurban Exp $');
+rcs_id('$Id: japanese.php,v 1.1 2004-05-04 22:34:25 rurban Exp $');
 
 // PDF functions taken from FPDF http://www.fpdf.org
-// Edited for PHPWebthings by Don Sebà 
-// Feel free to edit, enhance the module, and please share it at http://www.phpdbform.com
-// Keep PHPWT COOL submit your modules/themes/mods, it will help to improve ! :)
 
-require_once('lib/fpdf.php');
 require_once('lib/pdf.php');
 
 class PDF_Japanese extends PDF {
