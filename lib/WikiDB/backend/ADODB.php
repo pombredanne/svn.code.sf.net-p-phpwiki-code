@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.64 2004-12-10 02:45:27 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.65 2004-12-10 22:15:00 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -213,7 +213,7 @@ extends WikiDB_backend
                                   $newdata['hits'], $dbh->qstr($pagename)));
             return;
         }
-        $where = sprintf("pagename=%s",$dbh->qstr($pagename));
+        $where = sprintf("pagename=%s", $dbh->qstr($pagename));
         $dbh->BeginTrans( );
         $dbh->RowLock($page_tbl,$where);
         
@@ -1385,6 +1385,12 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2004/12/10 02:45:27  rurban
+// SQL optimization:
+//   put _cached_html from pagedata into a new seperate blob, not huge serialized string.
+//   it is only rarelely needed: for current page only, if-not-modified
+//   but was extracted for every simple page iteration.
+//
 // Revision 1.63  2004/12/08 12:55:51  rurban
 // support new non-destructive delete_page via generic backend method
 //
