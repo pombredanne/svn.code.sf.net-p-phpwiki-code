@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ArchiveCleaner.php,v 1.2 2002-09-14 20:12:33 dairiki Exp $');
+<?php rcs_id('$Id: ArchiveCleaner.php,v 1.3 2004-04-29 20:41:03 rurban Exp $');
 
 class ArchiveCleaner
 {
@@ -70,8 +70,9 @@ class ArchiveCleaner
 class ArchiveCleaner_Counter
 {
     function ArchiveCleaner_Counter($params) {
-        
-        extract($params);
+
+        if (!empty($params))
+            extract($params);
         $INFINITY = 0x7fffffff;
 
         $this->max_keep = isset($max_keep) ? $max_keep : $INFINITY;
