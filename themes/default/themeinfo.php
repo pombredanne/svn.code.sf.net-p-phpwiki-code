@@ -17,7 +17,7 @@
 // Note that if you use the stock phpwiki style sheet, 'phpwiki.css',
 // you should make sure that it's companion 'phpwiki-heavy.css'
 // is installed in the same directory that the base style file is.
-define('CSS_URL', "themes/$theme/phpwiki.css");
+$CSS_URL = "themes/$theme/phpwiki.css";
 
 // logo image
 $logo = "themes/$theme/wikibase.png";
