@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.21 2002-01-18 01:25:03 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.22 2002-01-18 06:11:39 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -107,6 +107,8 @@ $Theme->setLinkIcon('ftp');
 $Theme->setLinkIcon('mailto');
 $Theme->setLinkIcon('interwiki');
 $Theme->setLinkIcon('*', 'url');
+
+$Theme->setButtonSep(' ');
 
 // Controls whether the '?' appears before or after UnknownWikiWords.
 // The PhpWiki default is for the '?' to appear before.

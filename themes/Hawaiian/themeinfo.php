@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.8 2002-01-17 20:34:02 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.9 2002-01-18 06:11:37 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -28,6 +28,8 @@ $Theme->addImageAlias('signature', 'WaterFall.jpg'); //for Steve
  */
 $Theme->setLinkIcon('interwiki');
 $Theme->setLinkIcon('*', 'flower.png');
+
+$Theme->setButtonSep(' | ');
 
 // FIXME: do we need this?
 // If you want to see more than just the waterfall let a random

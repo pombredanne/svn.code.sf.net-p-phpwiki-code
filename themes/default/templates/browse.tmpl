@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: browse.tmpl,v 1.1 2002-01-17 20:41:13 dairiki Exp $ -->
+<!-- $Id: browse.tmpl,v 1.2 2002-01-18 06:11:38 carstenklapp Exp $ -->
 <?php
   $BF = &$ButtonFactory;
 
@@ -49,6 +49,7 @@
      CSSs float:left; and float:right;.  However float:right; seems
      to cause MSIE4.01/NT to hang. 
      So, we use tables...  -->
+<? $s = $Theme->buttonSep ?>
 <table summary="Toolbar 1: Page actions and search for pages."
        class="toolbar" width="100%"
        cellpadding="0" cellspacing="0" border="0">
@@ -56,10 +57,10 @@
   <td>
     <?= $EditB ?> 
     <?php if ($user->is_admin()) { ?>
-      | <?= $LockPageB ?> | <?= $RemovePageB ?>
+     <?=$s?><?= $LockPageB ?><?=$s?><?= $RemovePageB ?>
     <?php } ?>
-    | <?= $PageHistoryB ?> | <?= $DiffB ?> 
-    | <?= $DebugInfoB ?> <!-- For debugging only, really -->
+   <?=$s?><?= $PageHistoryB ?><?=$s?><?= $DiffB ?> 
+   <?=$s?><?= $DebugInfoB ?> <!-- For debugging only, really -->
   </td>
   <td align="right">
     <?php if ($user->is_authenticated()) { ?>
