@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: random.php,v 1.2 2002-01-02 00:14:51 carstenklapp Exp $');
+rcs_id('$Id: random.php,v 1.3 2002-01-02 00:38:27 carstenklapp Exp $');
 
 // mt_srand ((double) microtime() * 1000000 / pi()); #not random enough
 // Hmm is this random enough?
@@ -17,10 +17,10 @@ $RandomPictures = array(
     "SubmersiblePiscesV.jpg",
     "SwimmingPoolWater.jpg",
     "Waterfall.jpg",
-    "WhaleRainbow.jpg",
+    "WhaleRainbow.jpg"
 );
 
-if isset($RandomPictures) {
+if (isset($RandomPictures)) {
     function my_srand($seed = '') {
         static $wascalled = FALSE;
             if (!$wascalled) {
@@ -31,7 +31,7 @@ if isset($RandomPictures) {
     }
 
     my_srand();
-    $SignatureImg = "themes/$theme/pictures/".$pictures[mt_rand(0,count($RandomPictures)-1)];
+    $SignatureImg = "themes/$theme/pictures/" . $RandomPictures[mt_rand(0,count($RandomPictures)-1)];
 }
 
 // (c-file-style: "gnu")
