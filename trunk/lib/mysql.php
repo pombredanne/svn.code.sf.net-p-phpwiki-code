@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.14 2001-07-15 15:47:59 wainstead Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.15 2001-07-18 01:06:29 uckelman Exp $');
 
    /*
       Database functions:
@@ -7,14 +7,14 @@
       MakeDBHash($pagename, $pagehash)
       MakePageHash($dbhash)
       RetrievePage($dbi, $pagename, $pagestore, $version)
-		RetrievePageVersions($dbi, $pagename, $curstore, $archstore)
-		GetMaxVersionNumber($dbi, $pagename, $pagestore)
+      RetrievePageVersions($dbi, $pagename, $curstore, $archstore)
+      GetMaxVersionNumber($dbi, $pagename, $pagestore)
       InsertPage($dbi, $pagename, $pagehash, $clobber)
-		ReplaceCurrentPage($pagename, $pagehash)
+      ReplaceCurrentPage($pagename, $pagehash)
       SavePageToArchive($pagename, $pagehash)
-		SelectStore($dbi, $pagename, $version, $curstore, $archstore)
-		IsVersionInWiki($dbi, $pagename, $version)
-		IsVersionInArchive($dbi, $pagename, $version)
+      SelectStore($dbi, $pagename, $version, $curstore, $archstore)
+      IsVersionInWiki($dbi, $pagename, $version)
+      IsVersionInArchive($dbi, $pagename, $version)
       IsWikiPage($dbi, $pagename)
       IsInArchive($dbi, $pagename)
       RemovePage($dbi, $pagename)
@@ -105,7 +105,7 @@ $HitCountStore = $DBParams['prefix']     . "hitcount";
    function RetrievePage($dbi, $pagename, $pagestore, $version) {
       $pagename = addslashes($pagename);
 
-		$version = $version ? " and version=$version" : '';
+      $version = $version ? " and version=$version" : '';
 
       if ($res = mysql_query("select * from $pagestore where pagename='$pagename'$version", $dbi['dbc'])) {
          if ($dbhash = mysql_fetch_array($res)) {
@@ -118,27 +118,27 @@ $HitCountStore = $DBParams['prefix']     . "hitcount";
 
 	// Return all versions of a page as an array of page hashes
 	function RetrievePageVersions($dbi, $pagename, $curstore, $archstore) {
-		$pagename = addslashes($pagename);
-		if (($page[0] = RetrievePage($dbi, $pagename, $curstore, 0)) != -1) {
-			if ($res = mysql_query("select * from $archstore where pagename='$pagename' order by version desc", $dbi['dbc'])) {
-				while ($dbhash = mysql_fetch_array($res)) {
-					array_push($page, MakePageHash($dbhash));
-				}
-				return $page;
-			}
-		}
-		return -1;
-	}
+        $pagename = addslashes($pagename);
+        if (($page[0] = RetrievePage($dbi, $pagename, $curstore, 0)) != -1) {
+            if ($res = mysql_query("select * from $archstore where pagename='$pagename' order by version desc", $dbi['dbc'])) {
+                while ($dbhash = mysql_fetch_array($res)) {
+                    array_push($page, MakePageHash($dbhash));
+                }
+                return $page;
+            }
+        }
+        return -1;
+    }
 
 
 	// Get maximum version number of a page in pagestore
-	function GetMaxVersionNumber($dbi, $pagename, $pagestore) {
-		$pagename = addslashes($pagename);
-		if ($res = mysql_query("select max(version) from $pagestore where pagename='$pagename'", $dbi['dbc'])) {
-			return mysql_result($res, 0);
-		}
-		return -1;
-	}
+    function GetMaxVersionNumber($dbi, $pagename, $pagestore) {
+        $pagename = addslashes($pagename);
+        if ($res = mysql_query("select max(version) from $pagestore where pagename='$pagename'", $dbi['dbc'])) {
+            return mysql_result($res, 0);
+        }
+        return -1;
+    }
 
 
    // Either insert or replace a key/value (a page)
@@ -167,37 +167,37 @@ $HitCountStore = $DBParams['prefix']     . "hitcount";
    }
 
 
-	// Adds to or replaces a page in the current pagestore
-	function ReplaceCurrentPage($pagename, $pagehash) {
-		global $WikiPageStore;
-		$dbi = OpenDataBase($WikiPageStore);
-		$linklist = ExtractWikiPageLinks($pagehash['content']);
-		SetWikiPageLinks($dbi, $pagename, $linklist);
-		InsertPage($dbi, $pagename, $pagehash, true);
+    // Adds to or replaces a page in the current pagestore
+    function ReplaceCurrentPage($pagename, $pagehash) {
+        global $WikiPageStore;
+        $dbi = OpenDataBase($WikiPageStore);
+        $linklist = ExtractWikiPageLinks($pagehash['content']);
+        SetWikiPageLinks($dbi, $pagename, $linklist);
+        InsertPage($dbi, $pagename, $pagehash, true);
 	}
 
 
-	// Adds a page to the archive pagestore
-	function SavePageToArchive($pagename, $pagehash) {
-		global $ArchivePageStore;
-		$dbi = OpenDataBase($ArchivePageStore);
-		InsertPage($dbi, $pagename, $pagehash, false);
-	}
+    // Adds a page to the archive pagestore
+    function SavePageToArchive($pagename, $pagehash) {
+        global $ArchivePageStore;
+        $dbi = OpenDataBase($ArchivePageStore);
+        InsertPage($dbi, $pagename, $pagehash, false);
+    }
 
 
 	// Returns store where version of page resides
 	function SelectStore($dbi, $pagename, $version, $curstore, $archstore) {
-		if ($version) {
-			if (IsVersionInWiki($dbi, $pagename, $version)) return $curstore;
-			elseif (IsVersionInArchive($dbi, $pagename, $version)) return $archstore;
-			else return -1; 
-		}
-		elseif (IsWikiPage($dbi, $pagename)) return $curstore;
-		else return -1;	
-	}
+    if ($version) {
+        if (IsVersionInWiki($dbi, $pagename, $version)) return $curstore;
+            elseif (IsVersionInArchive($dbi, $pagename, $version)) return $archstore;
+            else return -1; 
+        }
+        elseif (IsWikiPage($dbi, $pagename)) return $curstore;
+        else return -1;	
+    }
 
 
-	function IsVersionInWiki($dbi, $pagename, $version) {
+    function IsVersionInWiki($dbi, $pagename, $version) {
       $pagename = addslashes($pagename);
       if ($res = mysql_query("select count(*) from $dbi[table] where pagename='$pagename' and version='$version'", $dbi['dbc'])) {
          return mysql_result($res, 0);
@@ -206,7 +206,7 @@ $HitCountStore = $DBParams['prefix']     . "hitcount";
 	}
 
 	function IsVersionInArchive($dbi, $pagename, $version) {
-		global $ArchivePageStore;
+        global $ArchivePageStore;
 
       $pagename = addslashes($pagename);
       if ($res = mysql_query("select count(*) from $ArchivePageStore where pagename='$pagename' and version='$version'", $dbi['dbc'])) {
