@@ -1,6 +1,27 @@
 <?php
 
-rcs_id( '$Id: file.php,v 1.3 2003-01-04 03:29:02 wainstead Exp $' );
+rcs_id( '$Id: file.php,v 1.4 2003-01-04 03:41:46 wainstead Exp $' );
+
+/**
+ Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 
 require_once( 'lib/WikiDB.php' );
 require_once( 'lib/WikiDB/backend/file.php' );
@@ -25,6 +46,8 @@ class WikiDB_file extends WikiDB
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2003/01/04 03:29:02  wainstead
+// ok, this time log tag for sure.
 //
 // revision 1.2
 // Added credits, php emacs stuff, log tag for CVS.
