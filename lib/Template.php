@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.11 2002-01-03 19:12:38 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.12 2002-01-03 19:28:24 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -224,6 +224,8 @@ extends TemplateFile
         $this->qreplace('PAGEURL', rawurlencode($pagename));
         $this->qreplace('SPLIT_PAGE', split_pagename($pagename));
         $this->qreplace('BROWSE_PAGE', WikiURL($pagename));
+
+        $this->replace('EditTips', toolbar_Info_EditTips());
 
         // FIXME: this is a bit of dangerous hackage.
         $this->qreplace('ACTION', WikiURL($pagename, array('action' => '')));

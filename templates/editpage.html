@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.37 2002-01-03 19:12:41 carstenklapp Exp $
+$Id: editpage.html,v 1.38 2002-01-03 19:28:23 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -69,10 +69,7 @@ ${CSS}
     <?php } ?>
   </td>
 </tr></table>
-<p style="clear: both; padding: 2ex 0ex 0ex;">
-      <?php printf(_("You can change the size of the editing area in %s."), LinkExistingWikiWord(_("UserPreferences"))); ?>
-      <?php printf(_("See %s tips for editing."),LinkExistingWikiWord(_("GoodStyle"))); ?>
-</p>
+<p style="clear: both; padding: 2ex 0ex 0ex;">${EditTips}</p>
 <hr noshade="noshade" />
 <div class="wiki-edithelp">
 <?plugin IncludePage page=_("TextFormattingRules") section=_("Synopsis") quiet=1?>
