@@ -1,5 +1,5 @@
 <?php
-   rcs_id('$Id: stdlib.php,v 1.17 2000-12-30 21:48:15 ahollosi Exp $');
+   rcs_id('$Id: stdlib.php,v 1.18 2001-01-01 23:34:57 ahollosi Exp $');
    /*
       Standard functions for Wiki functionality
          LinkRelatedPages($dbi, $pagename)
@@ -156,8 +156,10 @@
 
       // valid only for EditLinks
       if ($template == 'EDITLINKS') {
-	 for ($i = 1; $i <= NUM_LINKS; $i++)
-	    _dotoken("R$i", $hash['refs'][$i], $page);
+	 for ($i = 1; $i <= NUM_LINKS; $i++) {
+            $ref = isset($hash['refs'][$i]) ? $hash['refs'][$i] : '';
+	    _dotoken("R$i", $ref, $page);
+         }
       }
 
       _dotoken('CONTENT', $content, $page);
