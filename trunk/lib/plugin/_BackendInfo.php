@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.6 2002-01-05 15:09:07 carstenklapp Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.7 2002-01-17 20:42:21 dairiki Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -16,12 +16,12 @@ extends WikiPlugin
     
     function WikiPlugin__BackendInfo() {
         $html = '<tr bgcolor="#ffcccc">'."\n";
-        $html .= '  <td colspan="2">${header}</td>'."\n";
+        $html .= '  <td colspan="2"><?=$header?></td>'."\n";
         $html .= '</tr>'."\n";
         $html .= '<?php foreach ($hash as $key => $val) { ?>'."\n";
         $html .= '  <tr>'."\n";
-        $html .= '    <td align="right" bgcolor="#cccccc">&nbsp;<?php echo $key;?>&nbsp;</td>'."\n";
-        $html .= '    <td><?php echo $val;?></td>'."\n";
+        $html .= '    <td align="right" bgcolor="#cccccc">&nbsp;<?=$key?>&nbsp;</td>'."\n";
+        $html .= '    <td><?=$val?></td>'."\n";
         $html .= '  </tr>'."\n";
         $html .= '<?php } ?>'."\n";
         $this->_hashtemplate = new Template($html);
