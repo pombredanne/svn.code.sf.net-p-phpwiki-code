@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.32 2003-02-18 02:49:20 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.33 2003-02-18 03:59:11 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -430,7 +430,9 @@ class TightSubBlock extends SubBlock {
 
 class BlockMarkup {
     var $_re;
-    
+    var $_tight_top = false;
+    var $_tight_bot = false;
+
     function _match (&$input, $match) {
         trigger_error('pure virtual', E_USER_ERROR);
     }
@@ -883,6 +885,10 @@ class Block_hr extends BlockMarkup
         $this->_element = new Block_HtmlElement('hr');
         return true;
     }
+
+    function _setTightness($top, $bot) {
+	// Don't tighten <hr/>s
+    }
 }
 
 class Block_heading extends BlockMarkup
@@ -897,6 +903,10 @@ class Block_heading extends BlockMarkup
         $this->_element = new Block_HtmlElement($tag, false, $text);
         
         return true;
+    }
+
+    function _setTightness($top, $bot) {
+	// Don't tighten headers.
     }
 }
 
