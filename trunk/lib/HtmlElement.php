@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.27 2002-10-31 03:28:30 carstenklapp Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.28 2003-01-04 02:32:30 carstenklapp Exp $');
 /*
  * Code for writing XML.
  */
@@ -125,7 +125,7 @@ class HTML extends HtmlElement {
     // echo "$d"
     // mkfuncs ul ol dl li dt dd
     // echo "$d"
-    // mkfuncs table caption thead tbody tfoot tr td th
+    // mkfuncs table caption thead tbody tfoot tr td th colgroup col
     // echo "$d"
     // mkfuncs form input option select textarea
     // echo "$d"
@@ -305,6 +305,14 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('th');
         return $el->_init2(func_get_args());
     }
+    function colgroup (/*...*/) {
+        $el = new HtmlElement('colgroup');
+        return $el->_init2(func_get_args());
+    }
+    function col (/*...*/) {
+        $el = new HtmlElement('col');
+        return $el->_init2(func_get_args());
+    }
 
     /****************************************/
     function form (/*...*/) {
@@ -378,7 +386,7 @@ HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
                       // other with inline content
                       . 'caption dt label legend '
                       // other with either inline or block
-                      . 'dd del ins li td th ');
+                      . 'dd del ins li td th colgroup ');
 
 HTML::_setTagProperty(HTMLTAG_INLINE,
                       // %inline elements:
@@ -437,6 +445,10 @@ function HiddenPosts ($exclude = array()) {
     global $HTTP_POST_VARS;
     HiddenInputs($HTTP_POST_VARS, false, $exclude);
 }
+
+/**
+ $Log: not supported by cvs2svn $
+ */
 
 // (c-file-style: "gnu")
 // Local Variables:
