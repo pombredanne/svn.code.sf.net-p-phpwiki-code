@@ -5,9 +5,20 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.20 2004-05-14 11:32:52 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.21 2004-06-19 11:48:05 rurban Exp $');
 
 define ('PHPWIKI_VERSION', '1.3.11pre');
+
+/** 
+ * Returns true if current php version is at mimimum a.b.c 
+ * Called: check_php_version(4,1)
+ */
+function check_php_version ($a = '0', $b = '0', $c = '0') {
+    static $PHP_VERSION;
+    if (!isset($PHP_VERSION))
+        $PHP_VERSION = substr( str_pad( preg_replace('/\D/','', PHP_VERSION), 3, '0'), 0, 3);
+    return ($PHP_VERSION >= ($a.$b.$c));
+}
 
 // If your php was compiled with --enable-trans-sid it tries to
 // add a PHPSESSID query argument to all URL strings when cookie

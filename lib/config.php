@@ -1,22 +1,11 @@
 <?php
-rcs_id('$Id: config.php,v 1.113 2004-06-03 12:59:41 rurban Exp $');
+rcs_id('$Id: config.php,v 1.114 2004-06-19 11:48:05 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
  * The run-time code has been moved to lib/IniConfig.php:fix_configs()
  */
  
-/** 
- * Returns true if current php version is at mimimum a.b.c 
- * Called: check_php_version(4,1)
- */
-function check_php_version ($a = '0', $b = '0', $c = '0') {
-    static $PHP_VERSION;
-    if (!isset($PHP_VERSION))
-        $PHP_VERSION = substr( str_pad( preg_replace('/\D/','', PHP_VERSION), 3, '0'), 0, 3);
-    return ($PHP_VERSION >= ($a.$b.$c));
-}
-
 if (!defined("LC_ALL")) {
     // Backward compatibility (for PHP < 4.0.5)
     if (!check_php_version(4,0,5)) {
@@ -329,6 +318,10 @@ if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.113  2004/06/03 12:59:41  rurban
+// simplify translation
+// NS4 wrap=virtual only
+//
 // Revision 1.112  2004/06/02 18:01:46  rurban
 // init global FileFinder to add proper include paths at startup
 //   adds PHPWIKI_DIR if started from another dir, lib/pear also
