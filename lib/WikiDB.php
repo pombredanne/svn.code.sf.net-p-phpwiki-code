@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.59 2004-05-27 17:49:05 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.60 2004-05-28 10:09:58 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -109,8 +109,10 @@ class WikiDB {
      */
     function WikiDB (&$backend, $dbparams) {
         $this->_backend = &$backend;
+        // don't do the following with the auth_dsn!
+        if (isset($dbparams['auth_dsn'])) return;
+        
         $this->_cache = new WikiDB_cache($backend);
-
         // If the database doesn't yet have a timestamp, initialize it now.
         if ($this->get('_timestamp') === false)
             $this->touch();
@@ -1174,15 +1176,16 @@ class WikiDB_Page
     // May be empty. Either the stored owner (/Chown), or the first authorized author
     function getOwner() {
         if ($owner = $this->get('owner'))
-            return $owner;
-        // check all revisions for the first author_id
+            return ($owner == "The PhpWiki programming team") ? ADMIN_USER : $owner;
+        // check all revisions forwards for the first author_id
         $backend = &$this->_wikidb->_backend;
         $pagename = &$this->_pagename;
         $latestversion = $backend->get_latest_version($pagename);
         for ($v=1; $v <= $latestversion; $v++) {
             $rev = $this->getRevision($v);
-            if ($rev and $owner = $rev->get('author_id'))
-                return $owner;
+            if ($rev and $owner = $rev->get('author_id')) {
+            	return ($owner == "The PhpWiki programming team") ? ADMIN_USER : $owner;
+            }
         }
         return '';
     }
@@ -1504,7 +1507,8 @@ class WikiDB_PageRevision
 
 
 /**
- * A class which represents a sequence of WikiDB_Pages.
+ * Class representing a sequence of WikiDB_Pages.
+ * TODO: Enhance to php5 iterators
  */
 class WikiDB_PageIterator
 {
@@ -1530,7 +1534,7 @@ class WikiDB_PageIterator
 
         $pagename = &$next['pagename'];
         if (!$pagename) {
-            trigger_error(__FILE__.':'.__LINE__.' empty pagename in WikiDB_PageIterator::next()',E_USER_WARNING);
+            trigger_error('empty pagename in WikiDB_PageIterator::next()', E_USER_WARNING);
             var_dump($next);
             return false;
         }
@@ -1555,7 +1559,6 @@ class WikiDB_PageIterator
     function free() {
         $this->_pages->free();
     }
-
     
     function asArray() {
     	$result = array();
@@ -1599,6 +1602,7 @@ class WikiDB_PageIterator
 
 /**
  * A class which represents a sequence of WikiDB_PageRevisions.
+ * TODO: Enhance to php5 iterators
  */
 class WikiDB_PageRevisionIterator
 {
@@ -1665,6 +1669,14 @@ class WikiDB_PageRevisionIterator
      */
     function free() { 
         $this->_revisions->free();
+    }
+
+    function asArray() {
+    	$result = array();
+    	while ($rev = $this->next())
+            $result[] = $rev;
+        $this->free();
+        return $result;
     }
 };
 
@@ -1811,6 +1823,15 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2004/05/27 17:49:05  rurban
+// renamed DB_Session to DbSession (in CVS also)
+// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+// remove leading slash in error message
+// added force_unlock parameter to File_Passwd (no return on stale locks)
+// fixed adodb session AffectedRows
+// added FileFinder helpers to unify local filenames and DATA_PATH names
+// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+//
 // Revision 1.58  2004/05/18 13:59:14  rurban
 // rename simpleQuery to genericQuery
 //
