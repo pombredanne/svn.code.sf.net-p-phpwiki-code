@@ -1,18 +1,22 @@
-<!-- $Id: wiki_pgsql.php3,v 1.13 2000-08-07 22:47:40 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.14 2000-08-10 04:49:59 wainstead Exp $ -->
 <?
 
    /*
       Database functions:
 
-      OpenDataBase($dbname)
+      OpenDataBase($table)
       CloseDataBase($dbi)
       RetrievePage($dbi, $pagename)
       InsertPage($dbi, $pagename, $pagehash)
       IsWikiPage($dbi, $pagename)
       InitTitleSearch($dbi, $search)
-      TitleSearchNextMatch($dbi, &$pos)
+      TitleSearchNextMatch($dbi, $res)
       InitFullSearch($dbi, $search)
-      FullSearchNextMatch($dbi, &$pos)
+      FullSearchNextMatch($dbi, $res)
+      IncreaseHitCount($dbi, $pagename)
+      GetHitCount($dbi, $pagename)
+      InitMostPopular($dbi, $limit)
+      MostPopularNextMatch($dbi, $res)
    */
 
 
@@ -200,25 +204,25 @@
 
 
    function IncreaseHitCount($dbi, $pagename) {
-      return;
-      $query = "update hitcount set hits=hits+1 where pagename='$pagename'";
-      $res = mysql_query($query, $dbi['dbc']);
 
-      if (!mysql_affected_rows($dbi['dbc'])) {
+      $query = "update hitcount set hits=hits+1 where pagename='$pagename'";
+      $res = pg_exec($dbi['dbc'], $query);
+
+      if (!pg_cmdtuples($res)) {
          $query = "insert into hitcount (pagename, hits) " .
                   "values ('$pagename', 1)";
-	 $res = mysql_query($query, $dbi['dbc']);
+	 $res = pg_exec($dbi['dbc'], $query);
       }
 
       return $res;
    }
 
    function GetHitCount($dbi, $pagename) {
-      return;
+
       $query = "select hits from hitcount where pagename='$pagename'";
-      $res = mysql_query($query, $dbi['dbc']);
-      if (mysql_num_rows($res)) {
-         $hits = mysql_result($res, 0);
+      $res = pg_exec($dbi['dbc'], $query);
+      if (pg_cmdtuples($res)) {
+         $hits = pg_result($res, 0, "hits");
       } else {
          $hits = "0";
       }
@@ -229,22 +233,35 @@
 
 
    function InitMostPopular($dbi, $limit) {
-      return;
+
+      global $pg_most_pop_ctr;
+      $pg_most_pop_ctr = 0;
+
       $query = "select * from hitcount " .
                "order by hits desc, pagename limit $limit";
-
-      $res = mysql_query($query);
-      
+      $res = pg_exec($dbi['dbc'], $query);
       return $res;
    }
 
    function MostPopularNextMatch($dbi, $res) {
-      return;
-      if ($hits = mysql_fetch_array($res)) {
+
+      global $pg_most_pop_ctr;
+      if ($hits = @pg_fetch_array($res, $pg_most_pop_ctr)) {
+         $pg_most_pop_ctr++;
 	 return $hits;
       } else {
          return 0;
       }
+   }
+
+   function GetAllWikiPageNames($dbi) {
+
+      $res = pg_exec("select pagename from wiki");
+      $rows = pg_numrows($res);
+      for ($i = 0; $i < $rows; $i++) {
+	 $pages[$i] = mysql_result($res, $i, "pagename");
+      }
+      return $pages;
    }
 
 
