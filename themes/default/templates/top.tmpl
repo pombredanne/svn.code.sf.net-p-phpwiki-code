@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: top.tmpl,v 1.7 2002-02-16 10:34:39 carstenklapp Exp $
+/* $Id: top.tmpl,v 1.8 2002-02-16 11:10:00 carstenklapp Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff and the and <head>.
  */
@@ -9,7 +9,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: top.tmpl,v 1.7 2002-02-16 10:34:39 carstenklapp Exp $ -->
+<!-- $Id: top.tmpl,v 1.8 2002-02-16 11:10:00 carstenklapp Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php
 if ($ROBOTS_META) {
@@ -69,6 +69,12 @@ if ($user->isadmin()) {
 if ($user->isSignedIn()) {
   $cal = $user->getId() . "'s"._("Calendar");
   ?><link rel="bookmark" title="<?= $cal ?>" href="<?=WikiURL($cal)?>" /><?php
+  /* add link to today's calendar page for the user if it exists */
+  $page_for_date = $cal .".". strftime("%Y-%m-%d", time()); //FIXME
+  $dbi = $request->getDbh();
+  if ($dbi->isWikiPage($page_for_date)) {
+    ?><link rel="bookmark" title="<?= $page_for_date ?>" href="<?=WikiURL($page_for_date)?>" /><?php
+  }
   ?><link rel="bookmark" title="<?=_("UserPreferences")?>" href="<?=WikiURL(_("UserPreferences"))?>" /><?php
 } else {
   ?><link rel="bookmark" title="<?=_("SandBox")?>" href="<?=WikiURL(_("SandBox"))?>" /><?php
