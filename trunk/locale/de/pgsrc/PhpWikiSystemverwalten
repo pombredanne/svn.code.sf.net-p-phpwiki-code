@@ -1,10 +1,10 @@
-Date: Tue, 17 Jun 2004 22:01:11 +0200
+Date: Thu, 17 Jun 2004 13:22:00 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: PhpWikiSystemverwalten,v 1.20 2004-06-17 10:36:14 rurban Exp $
+X-Rcs-Id: $Id: PhpWikiSystemverwalten,v 1.21 2004-06-19 12:14:33 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
   flags=PAGE_LOCKED;
-  pgsrc_version="2 $Revision: 1.20 $";
+  pgsrc_version="2 $Revision: 1.21 $";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -104,7 +104,7 @@ Hier kannst du ein ZIP Archiv hochladen, oder einzelne Dateien von deinem Comput
 
   <?plugin WikiForm action=upload?>
 
-! Dateien Laden
+! Datei Laden
 
 Hier kann man ZIP Archive, einzelne Dateien oder ganze Verzeichnisse
 ins Wiki laden. Die Dateien oder Verzeichnisse müssen lokal auf dem
@@ -118,7 +118,7 @@ oder einer ftp: URL von externen Quellen laden.
 !! Updaten
 
 Führe einige Systemchecks aus und bringe geänderte Seiten auf den letzten Stand,
-nachdem Sie die PhpWiki Version auf den letzuten Stand gebracht haben:
+nachdem Sie die PhpWiki Version auf den letzten Stand gebracht haben:
 * Upgrade neue oder geänderte Seiten von pgsrc,
 * Upgrade das Datenbank Schema (mysql _page.id auto_increment_, ADD _session.sess_ip_, ...),
 
