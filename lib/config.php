@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.62 2002-09-09 08:38:19 rurban Exp $');
+rcs_id('$Id: config.php,v 1.63 2002-09-09 13:30:41 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -12,6 +12,19 @@ if (!defined("LC_ALL")) {
     define("LC_ALL", "LC_ALL");
     define("LC_CTYPE", "LC_CTYPE");
 }
+
+function isCGI() {
+    return @preg_match('/CGI/',$GLOBALS['HTTP_ENV_VARS']['GATEWAY_INTERFACE']);
+}
+
+/*
+// copy some $_ENV vars to $_SERVER for CGI compatibility. php does it automatically since when?
+if (isCGI()) {
+    foreach (explode(':','SERVER_SOFTWARE:SERVER_NAME:GATEWAY_INTERFACE:SERVER_PROTOCOL:SERVER_PORT:REQUEST_METHOD:HTTP_ACCEPT:PATH_INFO:PATH_TRANSLATED:SCRIPT_NAME:QUERY_STRING:REMOTE_HOST:REMOTE_ADDR:REMOTE_USER:AUTH_TYPE:CONTENT_TYPE:CONTENT_LENGTH') as $key) {
+        $GLOBALS['HTTP_SERVER_VARS'][$key] = &$GLOBALS['HTTP_ENV_VARS'][$key];
+    }
+}
+*/
 
 // essential internal stuff
 set_magic_quotes_runtime(0);
@@ -82,7 +95,10 @@ if (!function_exists ('bindtextdomain')) {
 // on the language.
 function update_locale ($language) {
     global $locale, $LC_ALL, $language_locales;
-    
+    if (!$language and $GLOBALS['default_language']) {
+        return $GLOBALS['default_language'];
+    }
+
     // shortterm LANG fix. We really should define LC_ALL as "C" and LANG as "en"
     if ($language == 'C') {
         $language = 'en'; $LC_ALL = 'C';
@@ -108,9 +124,9 @@ function update_locale ($language) {
     if ($result) {
     	$LC_ALL = $result;
     	putenv("LC_ALL=$LC_ALL");
-    	putenv("LANG=$LC_ALL");
     }
-
+    putenv("LANG=$LC_ALL");
+            
     if (!function_exists ('bindtextdomain')) {
         if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) ) {
             include($lcfile);
@@ -127,8 +143,8 @@ function update_locale ($language) {
     }
     $GLOBALS['LANG'] = $language;
 }
-update_locale ($LANG);
 $default_language = $LANG;
+update_locale ($LANG);
 
 // To get the POSIX character classes in the PCRE's (e.g.
 // [[:upper:]]) to match extended characters (e.g. GrüßGott), we have
@@ -231,8 +247,7 @@ if (!defined('USE_PATH_INFO'))
 }
 
 
-function IsProbablyRedirectToIndex () 
-{
+function IsProbablyRedirectToIndex () {
     // This might be a redirect to the DirectoryIndex,
     // e.g. REQUEST_URI = /dir/  got redirected
     // to SCRIPT_NAME = /dir/index.php
@@ -241,16 +256,12 @@ function IsProbablyRedirectToIndex ()
     // $SCRIPT_NAME, since pages appear at
     // e.g. /dir/index.php/HomePage.
 
-//global $REQUEST_URI, $SCRIPT_NAME;
-    extract($GLOBALS['HTTP_SERVER_VARS']);
-
-    $requri = preg_quote($REQUEST_URI, '%');
-    return preg_match("%^${requri}[^/]*$%", $SCRIPT_NAME);
+    $requri = preg_quote($GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'], '%');
+    return preg_match("%^${requri}[^/]*$%", $GLOBALS['HTTP_SERVER_VARS']['SCRIPT_NAME']);
 }
 
 
-if (!defined('VIRTUAL_PATH'))
-{
+if (!defined('VIRTUAL_PATH')) {
     // We'd like to auto-detect when the cases where apaches
     // 'Action' directive (or similar means) is used to
     // redirect page requests to a cgi-handler.
@@ -273,14 +284,13 @@ if (!defined('VIRTUAL_PATH'))
 
     $REDIRECT_URL = &$HTTP_SERVER_VARS['REDIRECT_URL'];
     if (USE_PATH_INFO and isset($REDIRECT_URL)
-        and ! IsProbablyRedirectToIndex())
-        {
-            // FIXME: This is a hack, and won't work if the requested
-            // pagename has a slash in it.
-            define('VIRTUAL_PATH', dirname($REDIRECT_URL . 'x'));
-        }
-    else
+        and ! IsProbablyRedirectToIndex()) {
+        // FIXME: This is a hack, and won't work if the requested
+        // pagename has a slash in it.
+        define('VIRTUAL_PATH', dirname($REDIRECT_URL . 'x'));
+    } else {
         define('VIRTUAL_PATH', SCRIPT_NAME);
+    }
 }
 
 if (SERVER_PORT
@@ -293,13 +303,12 @@ else {
            SERVER_PROTOCOL . '://' . SERVER_NAME);
 }
 
-if (VIRTUAL_PATH != SCRIPT_NAME)
-{
+if (VIRTUAL_PATH != SCRIPT_NAME) {
     // Apache action handlers are used.
     define('PATH_INFO_PREFIX', VIRTUAL_PATH . '/');
 }
 else
-define('PATH_INFO_PREFIX', '/');
+    define('PATH_INFO_PREFIX', '/');
 
 
 define('BASE_URL',

@@ -80,7 +80,7 @@ if (!empty($include_path)) ini_set('include_path', $include_path);
 
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.93 2002-09-04 21:03:31 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.94 2002-09-09 13:30:41 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -661,7 +661,7 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 // This overcomes the index as config problem.
 ////////////////////////////////////////////////////////////////
 
-// This doesn't work with php as CGI yet!
+// Tested: Works with CGI also.
 if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
     if ($HTTP_SERVER_VARS['SCRIPT_NAME'] == VIRTUAL_PATH) {
         include "lib/main.php";
