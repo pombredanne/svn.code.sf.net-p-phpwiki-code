@@ -66,24 +66,18 @@ $locale["Error message: %s"] =
    "Fehlermeldung: %s";
 $locale["Cannot open database %s, giving up."] =
    "Kann Datenbank %s nicht öffnen - Abbruch.";
-$locale["Insert/update to table 'wiki' failed: %s"] =
+$locale["Insert/update failed: %s"] =
    "Einfügen/Verändern fehlgeschlagen: %s";
 $locale["Delete on %s failed: %s"] =
    "Löschen in %s fehlgeschlagen: %s";
 $locale["Insert into %s failed: %s"] =
    "Einfügen in %s fehlgeschlagen: %s";
-$locale["Insert/update into table 'archive' failed: %s"] =
-   "Einfügen/Verändern fehlgeschlagen: %s";
-$locale["MSSQL error: %s"] =
-   "MySQL Fehler: %s";
-$locale["Insert/Update failed: %s <br>\n"] =
-   "Einfügen/Verändern fehlgeschlagen: %s";
-$locale["Cannot delete '%s' from table '%s'"] =
-   "Kann nicht '%s' aus Tabelle '%s' löschen";
 $locale["MySQL error: %s"] =
    "MySQL Fehler: %s";
 $locale["Error writing page '%s'"] =
    "Fehler beim Schreiben der Seite '%s'";
+$locale["Cannot delete '%s' from table '%s'"] =
+   "Kann nicht '%s' aus Tabelle '%s' löschen";
 $locale["Enter a page name"] =
    "Seitenname eingeben";
 $locale["Go"] =
@@ -130,6 +124,8 @@ $locale["WikiFatalError"] =
    "FatalerWikiFehler";
 $locale["Search"] =
    "Suche";
+$locale["Nesting depth exceeded in SetHTMLOutputMode"] =
+   "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten.";
 $locale["%d best incoming links:"] =
    "Die %d besten hereinkommenden Links:";
 $locale["%d best outgoing links:"] =

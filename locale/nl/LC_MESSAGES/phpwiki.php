@@ -66,24 +66,18 @@ $locale["Error message: %s"] =
    "Foutboodschap: %s";
 $locale["Cannot open database %s, giving up."] =
    "Kan data base %s niet openen, geef op.";
-$locale["Insert/update to table 'wiki' failed: %s"] =
+$locale["Insert/update failed: %s"] =
    "Insert/update gefaald: %s";
 $locale["Delete on %s failed: %s"] =
    "Delete op %s gefaald: %s";
 $locale["Insert into %s failed: %s"] =
    "Insert in %s gefaald: %s";
-$locale["Insert/update into table 'archive' failed: %s"] =
-   "Insert/update gefaald: %s";
-$locale["MSSQL error: %s"] =
-   "MySQL fout: %s";
-$locale["Insert/Update failed: %s <br>\n"] =
-   "Insert/update gefaald: %s";
-$locale["Cannot delete '%s' from table '%s'"] =
-   "Kan '%s' niet verwijderen uit tabel '%s'";
 $locale["MySQL error: %s"] =
    "MySQL fout: %s";
 $locale["Error writing page '%s'"] =
    "Fout bij schrijven pagina `%s'";
+$locale["Cannot delete '%s' from table '%s'"] =
+   "Kan '%s' niet verwijderen uit tabel '%s'";
 $locale["Enter a page name"] =
    "Geef de naam van een pagina";
 $locale["Go"] =
@@ -128,6 +122,8 @@ $locale["WikiFatalError"] =
    "WikiFataleFout";
 $locale["Search"] =
    "Zoek";
+$locale["Nesting depth exceeded in SetHTMLOutputMode"] =
+   "Stack grenzen overschreden in SetHTMLOutputMode";
 $locale["%d best incoming links:"] =
    "%d beste inkomende koppelingen:";
 $locale["%d best outgoing links:"] =

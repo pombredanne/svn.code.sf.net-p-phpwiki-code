@@ -1,4 +1,4 @@
-<!-- $Id: lockpage.php,v 1.1.2.1 2005-01-05 04:24:49 rurban Exp $ -->
+<!-- $Id: lockpage.php,v 1.1.2.1.2.1 2005-01-07 13:48:42 rurban Exp $ -->
 <?php
    if(isset($lock)) $page = $lock;
    elseif(isset($unlock)) $page = $unlock;

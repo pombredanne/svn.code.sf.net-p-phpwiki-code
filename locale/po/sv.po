@@ -1,13 +1,13 @@
 # sv.po -- PhpWiki's Swedish language file
-# Copyright (C) 2001 Free Software Foundation, Inc.
+# Copyright (C) YEAR Free Software Foundation, Inc.
 # Jon Åslund <jooon@hem.passagen.se>, 2001.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: phpwiki 1.2.2\n"
-"POT-Creation-Date: 2001-11-28 10:50-0800\n"
-"PO-Revision-Date: 2001-11-26 01:58+0200\n"
+"Project-Id-Version: phpwiki 1.1.9\n"
+"POT-Creation-Date: 2001-05-21 08:27-0700\n"
+"PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: admin.php:26
 msgid "You entered an invalid login or password."
-msgstr "Du har angivit ett felaktigt användarnamn eller lösenord."
+msgstr "Du har angett ett otillåtet användarnamn eller lösenord."
 
 #: admin.php:47
 #, c-format
@@ -30,7 +30,7 @@ msgstr "Klicka %shär%s för att ta bort sidan nu."
 
 #: admin.php:53
 msgid "Otherwise press the \"Back\" button of your browser."
-msgstr "Klicka annars på backaknappen i din webbläsare."
+msgstr "Annars klicka på backaknappen i din webbläsare."
 
 #: admin.php:55
 msgid "Function not yet implemented."
@@ -45,50 +45,25 @@ msgstr "Ta bort sida"
 msgid "Removed page '%s' succesfully."
 msgstr "Tog bort sidan \"%s\"."
 
-#: lib/backlinks.php:11 lib/backlinks.php:19
-#, c-format
-msgid "Pages which link to %s"
-msgstr "Sidor som länkar till %s"
-
-#: lib/backlinks.php:32
-#, c-format
-msgid "%d pages link to %s."
-msgstr "%d sidor länkar till %s."
-
-#: lib/config.php:238
+#: lib/config.php:197
 msgid "templates/browse.html"
 msgstr "locale/sv/templates/browse.html"
 
-#: lib/config.php:239
+#: lib/config.php:198
 msgid "templates/editpage.html"
 msgstr "locale/sv/templates/editpage.html"
 
-#: lib/config.php:240
+#: lib/config.php:199
 msgid "templates/editlinks.html"
 msgstr "locale/sv/templates/editlinks.html"
 
-#: lib/config.php:241
+#: lib/config.php:200
 msgid "templates/message.html"
 msgstr "locale/sv/templates/message.html"
 
-#: lib/config.php:257
+#: lib/config.php:216
 msgid "./pgsrc"
 msgstr "locale/sv/pgsrc"
-
-#: lib/db_filesystem.php:76
-#, c-format
-msgid "'%s': corrupt file"
-msgstr "\"%s\": trasig fil"
-
-#: lib/db_filesystem.php:225
-#, c-format
-msgid "%s: bad data<br>\n"
-msgstr "%s: felaktig data<br>\n"
-
-#: lib/db_filesystem.php:317
-#, c-format
-msgid "%s: Bad filename in database<br>\n"
-msgstr "%s: felaktigt filnamn i databasen<br>\n"
 
 #: lib/diff.php:711
 #, c-format
@@ -101,7 +76,7 @@ msgstr "WikiDiff::_check: misslyckades"
 
 #: lib/diff.php:781
 msgid "WikiDiff::_check: edit sequence is non-optimal"
-msgstr "WikiDiff::_check: ändringssekvensen är ej optimal"
+msgstr "WikiDiff::_check: ändringssekvensen är icke optimal"
 
 #: lib/diff.php:785
 #, c-format
@@ -162,95 +137,76 @@ msgstr "Kopia av %s"
 msgid "No page name passed into editpage!"
 msgstr "Ingen sida är angiven!"
 
-#: lib/editpage.php:31 lib/savepage.php:135
+#: lib/editpage.php:31 lib/savepage.php:121
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr "Den här sidan är låst av administratören och kan ej redigeras."
 
-#: lib/editpage.php:33 lib/savepage.php:111 lib/savepage.php:136
+#: lib/editpage.php:33 lib/savepage.php:99 lib/savepage.php:122
 msgid "Sorry for the inconvenience."
 msgstr "Ledsen för allt besvär."
 
-#: lib/editpage.php:35 lib/savepage.php:137
+#: lib/editpage.php:35 lib/savepage.php:123
 #, c-format
 msgid "Problem while editing %s"
-msgstr "Kan ej redigera %s"
+msgstr "Har problem med att redigera %s"
 
-#: lib/fullsearch.php:10 lib/search.php:9
+#: lib/fullsearch.php:9 lib/search.php:9
 #, c-format
 msgid "Searching for \"%s\" ....."
 msgstr "Söker efter \"%s\" ....."
 
-#: lib/fullsearch.php:43 lib/search.php:26
-msgid "(You entered an empty search string)"
-msgstr "(Du har angivit en tom söksträng)"
-
-#: lib/fullsearch.php:47
+#: lib/fullsearch.php:41
 #, c-format
 msgid "%d matches found in %d pages."
 msgstr "%d träffar funna på %d sidor."
 
-#: lib/fullsearch.php:51
+#: lib/fullsearch.php:45
 msgid "Full Text Search Results"
 msgstr "Sökresultat för fulltextsökning"
 
-#: lib/msql.php:31 lib/mssql.php:41 lib/mysql.php:38
+#: lib/msql.php:29 lib/mysql.php:36
 msgid "Cannot establish connection to database, giving up."
 msgstr "Ger upp, kan ej skapa anslutning till databasen."
 
-#: lib/msql.php:33 lib/msql.php:39
+#: lib/msql.php:31 lib/msql.php:37
 #, c-format
 msgid "Error message: %s"
 msgstr "Felmeddelande: %s"
 
-#: lib/msql.php:37 lib/mssql.php:50 lib/mysql.php:44
+#: lib/msql.php:35 lib/mysql.php:42
 #, c-format
 msgid "Cannot open database %s, giving up."
 msgstr "Ger upp, kan ej öppna databasen %s."
 
-#: lib/msql.php:212
-#, fuzzy, c-format
-msgid "Insert/update to table 'wiki' failed: %s"
-msgstr "Insättning/uppdatering i wikitabellen misslyckades: %s"
+#: lib/msql.php:210 lib/msql.php:286
+#, c-format
+msgid "Insert/update failed: %s"
+msgstr "Insättning/uppdatering misslyckades: %s"
 
-#: lib/msql.php:223 lib/msql.php:300
+#: lib/msql.php:221 lib/msql.php:296
 #, c-format
 msgid "Delete on %s failed: %s"
 msgstr "Borttagning på %s misslyckades: %s"
 
-#: lib/msql.php:241 lib/msql.php:316
+#: lib/msql.php:237 lib/msql.php:312
 #, c-format
 msgid "Insert into %s failed: %s"
 msgstr "Insättning till %s misslyckades: %s"
 
-#: lib/msql.php:290
-#, fuzzy, c-format
-msgid "Insert/update into table 'archive' failed: %s"
-msgstr "Insättning/uppdatering misslyckades: %s"
-
-#: lib/mssql.php:43 lib/mssql.php:52 lib/mssql.php:197
-#, fuzzy, c-format
-msgid "MSSQL error: %s"
-msgstr "MSSQL-fel: %s"
-
-#: lib/mssql.php:158
-#, fuzzy, c-format
-msgid "Insert/Update failed: %s <br>\n"
-msgstr "Insättning/uppdatering misslyckades: %s <br>\n"
-
-#: lib/mssql.php:195 lib/mysql.php:163
-#, c-format
-msgid "Cannot delete '%s' from table '%s'"
-msgstr "Kan ej ta bort \"%s\" från tabellen \"%s\""
-
-#: lib/mysql.php:40 lib/mysql.php:46 lib/mysql.php:125 lib/mysql.php:165
+#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:123 lib/mysql.php:163
 #, c-format
 msgid "MySQL error: %s"
 msgstr "MySQL-fel: %s"
 
-#: lib/mysql.php:123
+#: lib/mysql.php:121
 #, c-format
 msgid "Error writing page '%s'"
 msgstr "Kunde inte spara sidan \"%s\""
+
+#: lib/mysql.php:161
+#, c-format
+msgid "Cannot delete '%s' from table '%s'"
+msgstr "Kan ej ta bort \"%s\" från tabellen \"%s\""
 
 #: lib/pageinfo.php:9
 msgid "Enter a page name"
@@ -271,7 +227,7 @@ msgstr "Sidinformation för"
 #: lib/pageinfo.php:36
 #, c-format
 msgid "Page name '%s' is not in the database"
-msgstr "Sidan \"%s\" finns inte i databasen"
+msgstr "Sidnamnet \"%s\" finns inte i databasen"
 
 #: lib/pageinfo.php:64
 msgid "Current version"
@@ -281,11 +237,11 @@ msgstr "Nuvarande version"
 msgid "Archived version"
 msgstr "Arkiverad version"
 
-#: lib/savepage.php:16 lib/savepage.php:86
+#: lib/savepage.php:16 lib/savepage.php:74
 msgid "RecentChanges"
 msgstr "SenasteÄndringar"
 
-#: lib/savepage.php:97
+#: lib/savepage.php:85
 msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
@@ -295,17 +251,17 @@ msgstr ""
 "och sparade sidan under tiden som du ändrade på sidan. Sparar du nu "
 "försvinner ändringarna gjorda av den förra användaren."
 
-#: lib/savepage.php:99
+#: lib/savepage.php:87
 msgid "In order to recover from this situation follow these steps:"
 msgstr "För att lösa situtationen, följ dessa steg:"
 
-#: lib/savepage.php:101
+#: lib/savepage.php:89
 msgid "Use your browser's <b>Back</b> button to go back to the edit page."
 msgstr ""
 "Använd webbläsarens <b>backaknapp</b> för att gå tillbaka till "
 "redigeringssidan."
 
-#: lib/savepage.php:103
+#: lib/savepage.php:91
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
@@ -313,7 +269,7 @@ msgstr ""
 "Kopiera dina ändringar till urklippet eller till ett annat temporärt ställe "
 "(t.ex. en texteditor)."
 
-#: lib/savepage.php:105
+#: lib/savepage.php:93
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
@@ -321,7 +277,7 @@ msgstr ""
 "<b>Ladda om</b> sidan. Du kommer nu se den senaste versionen av sidan. Dina "
 "ändringar är inte där."
 
-#: lib/savepage.php:107
+#: lib/savepage.php:95
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
@@ -329,30 +285,30 @@ msgstr ""
 "Ändra filen igen. Klistra in dina ändringar från urklippet (eller "
 "texteditorn)."
 
-#: lib/savepage.php:109
+#: lib/savepage.php:97
 msgid "Press <b>Save</b> again."
 msgstr "Klicka på <b>Spara</b> igen."
 
-#: lib/savepage.php:115
+#: lib/savepage.php:103
 #, c-format
 msgid "Problem while updating %s"
-msgstr "Kan ej uppdatera %s"
+msgstr "Har problem med att uppdatera %s"
 
-#: lib/savepage.php:160
+#: lib/savepage.php:146
 #, c-format
 msgid "Thank you for editing %s."
 msgstr "Tack för att du redigerade %s."
 
-#: lib/savepage.php:190
+#: lib/savepage.php:176
 msgid "Your careful attention to detail is much appreciated."
-msgstr "Din uppmärksamhet för detaljer är mycket uppskattad."
+msgstr "Din omstänksamhet för detaljer är mycket uppskattad."
 
-#: lib/search.php:30
+#: lib/search.php:25
 #, c-format
 msgid "%d pages match your query."
 msgstr "%d sidor matchar din fråga."
 
-#: lib/search.php:33
+#: lib/search.php:28
 #, fuzzy
 msgid "Title Search Results"
 msgstr "Sökresultat för fulltextsökning"
@@ -370,23 +326,22 @@ msgstr "WikiFatalError"
 msgid "Search"
 msgstr "Sök"
 
-#: lib/stdlib.php:388
+#: lib/stdlib.php:185
+#, fuzzy
+msgid "Nesting depth exceeded in SetHTMLOutputMode"
+msgstr "Stackgräns överskriden i SetHTMLOutputMode"
+
+#: lib/stdlib.php:381
 #, c-format
 msgid "%d best incoming links:"
 msgstr "De %d mest använda ingående länkarna:"
 
-#: lib/stdlib.php:401
+#: lib/stdlib.php:391
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "De %d mest använda utgående länkarna:"
 
-#: lib/stdlib.php:415
+#: lib/stdlib.php:402
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "De %d mest populära grannarna:"
-
-#~ msgid "Stack bounds exceeded in SetHTMLOutputMode"
-#~ msgstr "Stackgräns överskriden i SetHTMLOutputMode"
-
-#~ msgid "RelatedPages"
-#~ msgstr "RelateradeSidor"

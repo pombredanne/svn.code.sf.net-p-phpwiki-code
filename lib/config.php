@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.13 2002-02-08 15:46:30 dairiki Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.13.2.1 2005-01-07 13:48:42 rurban Exp $'); 
    // end essential internal stuff
 
 
@@ -174,10 +174,6 @@
    // If this is left blank (or unset), the signature will be omitted.
    $SignatureImg = "images/signature.png";
 
-   // this turns on url indicator icons, inserted before embedded links
-   //define("USE_LINK_ICONS", 1);
-   //define("DATA_PATH", "/wiki");
-
    // date & time formats used to display modification times, etc.
    // formats are given as format strings to PHP date() function
    $datetimeformat = "F j, Y";	// may contain time of day
@@ -195,20 +191,16 @@
 
    // allowed protocols for links - be careful not to allow "javascript:"
    // within a named link [name|uri] one more protocol is defined: phpwiki
-   $AllowedProtocols = "http|https|mailto|ftp|news|nntp|gopher";
+   $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
 
    // URLs ending with the following extension should be inlined as images
    $InlineImages = "png|jpg|gif";
 
-   // Uncomment this to automatically split WikiWords by inserting spaces.
-   // The default is to leave WordsSmashedTogetherLikeSo in the body text.
-   //define("autosplit_wikiwords", 1);
-
    // Perl regexp for WikiNames
    // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
-   //$WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
-   // This should work for all ISO-8859-1 languages:
-   $WikiNameRegexp = "(?<![A-Za-z0-9µÀ-ÖØ-öø-ÿ])([A-ZÀ-ÖØ-Þ][a-zµß-öø-ÿ]+){2,}(?![A-Za-z0-9µÀ-ÖØ-öø-ÿ])";
+   $WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
+
+
 
    /////////////////////////////////////////////////////////////////////
    // Part Four:
