@@ -1,0 +1,23 @@
+AllerleiBladeraars hebben moeite met het tab teken dat wordt gebruikt in de
+TekstFormatteringsRegels.  Als je geen tab kunt tiepen, of als je een
+pagina wilt repareren van iemand die geen tabs heeft getiept, dan moet je
+ons vragen groepen spaties door tabs te vervangen.  Je kunt spatien naar
+tab vertaling aanvragen met de knop onderaan de VeranderTekst en VeranderKopie
+pagina's.  Die ziet er ongeveer zo uit:
+
+ [[o] Ik kan geen tabs tiepen.  VertaalSpatiesNaarTabs voor mij als ik bewaar.
+
+Een groep spaties moet minstens '''drie''' spaties lang zijn om herkend
+te worden als tab.  Gebruik veelvouden van '''acht''' spaties om meerdere
+tabs te maken.  Elke groep van acht spaties wordt vertaald naar een tab.
+Het geeft niet als de laatste groep een beetje kort is, zolang er maar
+minstens drie spaties in de laatste (enige) groep staan.
+
+'''Controleer je werk.''' Deze methode kan leiden tot onverwachte resultaten.
+-----
+[Onderhoudsnotitie: Deze pagina wordt getoond waneer de gebruiker klikt
+op de "VertaalSpatiesNaarTabs" koppeling in een veranderschem.  Het
+beschrijft wat er gebeurt wanneer je het systeem vraagt dit te doen,
+waarom je het zou willen doen, en manieren om het 
+spaties-in-plaats-van-tabs probleem te omzeilen.]
+
