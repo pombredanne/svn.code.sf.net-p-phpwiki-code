@@ -1,5 +1,5 @@
-/* 
- * $Id: phpwiki-heavy.css,v 1.12 2002-02-10 11:05:40 carstenklapp Exp $
+/**
+ * $Id: phpwiki-heavy.css,v 1.13 2002-02-11 14:46:32 carstenklapp Exp $
  *
  * phpwiki-heavy.css
  *
@@ -16,30 +16,42 @@ div.br { display: none; }
 /* This break NS4, but is necessary for IE4. */
 div.wikitext { width: auto; }
 
+
+/**
+ * Links
+ */
+
 /* Make wikiaction links look like buttons */ 
 a.wikiaction, a.wikiadmin, input.button {
- border-style: outset;
- border-width: thin;
- color: #006;
- padding-top: 0ex;
- padding-bottom: 0ex;
- padding-left: .5em;
- padding-right: .5em;
+  border: 1px outset #006;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: .5em;
+  padding-right: .5em;
 }
-
+/* QuestionMark */
+.wikiunknown a, .named-wikiunknown {
+  font-size: smaller;
+  border: 1px outset black;
+  padding-left:  1px;
+  padding-right: 1px;
+  padding-top: 1px;
+  margin-right: 1px;
+}
 /* Link icons - This screws up NS4 */
-img.linkicon		{ vertical-align: middle; }
+img.linkicon { vertical-align: middle; }
+
 
 /**
  * Diff Output
  */
 .diff .block div {
- position: relative;
- padding-left: 1.5em;
+  position: relative;
+  padding-left: 1.5em;
 } 
 .diff .prefix {
- position: absolute;
- left: 0em;
- top: 0;
+  position: absolute;
+  left: 0;
+  top:  0;
 }
 
