@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.153 2003-11-30 18:43:18 carstenklapp Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.154 2004-01-25 03:49:03 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1328,9 +1328,27 @@ class Alert {
     }
 }
 
-                      
-        
+/** 
+ * returns true if current php version is at mimimum a.b.c 
+ * Called: check_php_version(4,1)
+ */
+function check_php_version ($a = '0', $b = '0', $c = '0') {
+    global $PHP_VERSION;
+    if(!isset($PHP_VERSION))
+        $PHP_VERSION = substr( str_pad( preg_replace('/\D/','', PHP_VERSION), 3, '0'), 0, 3);
+    return $PHP_VERSION >= ($a.$b.$c);
+}
+
+function isWikiWord($word) {
+    global $WikiNameRegexp;
+    //or preg_match('/\A' . $WikiNameRegexp . '\z/', $word) ??
+    return preg_match("/^$WikiNameRegexp\$/",$word);
+}
+
 // $Log: not supported by cvs2svn $
+// Revision 1.153  2003/11/30 18:43:18  carstenklapp
+// Fixed careless mistakes in my last optimization commit.
+//
 // Revision 1.152  2003/11/30 18:20:34  carstenklapp
 // Minor code optimization: reduce invariant loops
 //
