@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.87 2004-03-01 13:48:45 rurban Exp $');
+rcs_id('$Id: config.php,v 1.88 2004-03-14 13:17:51 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -52,18 +52,18 @@ function FindFile ($file, $missing_okay = false, $slashify = false)
 
 // Search PHP's include_path to find file or directory.
 // Searches for "locale/$LANG/$file", then for "$file".
-function FindLocalizedFile ($file, $missing_okay = false)
+function FindLocalizedFile ($file, $missing_okay = false, $re_init = false)
 {
     static $finder;
-    if (!isset($finder))
+    if ($re_init or !isset($finder))
         $finder = new LocalizedFileFinder;
     return $finder->findFile($file, $missing_okay);
 }
 
-function FindLocalizedButtonFile ($file, $missing_okay = false)
+function FindLocalizedButtonFile ($file, $missing_okay = false, $re_init = false)
 {
     static $buttonfinder;
-    if (!isset($buttonfinder))
+    if ($re_init or !isset($buttonfinder))
         $buttonfinder = new LocalizedButtonFinder;
     return $buttonfinder->findFile($file, $missing_okay);
 }
@@ -144,9 +144,11 @@ function update_locale ($loc) {
         // Reinitialize translation array.
         global $locale;
         $locale = array();
-        if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) ) {
+        // do reinit to purge PHP's static cache
+        if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok','reinit')) ) {
             include($lcfile);
         }
+        FindLocalizedButtonFile("",'missing_ok','reinit');
     }
 
     // To get the POSIX character classes in the PCRE's (e.g.
