@@ -1,0 +1,26 @@
+-- $Id: update.mysql.1.2.0-1.2.1,v 1.1.2.1 2001-08-18 03:57:27 dairiki Exp $
+--
+-- This MySQL script should be used to update an existing MySQL PhpWiki database
+-- from the schema used in PhpWiki 1.2.0 to the schema used by PhpWiki 1.2.1.
+--
+ALTER TABLE wiki
+	CHANGE COLUMN pagename pagename VARCHAR(100) BINARY NOT NULL;
+
+ALTER TABLE archive
+	CHANGE COLUMN pagename pagename VARCHAR(100) BINARY NOT NULL;
+
+ALTER TABLE wikilinks
+	CHANGE COLUMN frompage frompage VARCHAR(100) BINARY NOT NULL,
+	CHANGE COLUMN topage topage VARCHAR(100) BINARY NOT NULL;
+
+ALTER TABLE hitcount
+	CHANGE COLUMN pagename pagename VARCHAR(100) BINARY NOT NULL;
+
+ALTER TABLE wikiscore
+	CHANGE COLUMN pagename pagename VARCHAR(100) BINARY NOT NULL;
+
+ALTER TABLE hottopics
+	CHANGE COLUMN pagename pagename VARCHAR(100) BINARY NOT NULL;
+
+
+

@@ -5,9 +5,9 @@ PhpWiki consiste en mas o menos de una docena de ficheros mixtos PHP y HTML. Las
 Cada vez que el usuario haga click el el sitio web, la página solicitada es traida de la base de datos y renderizada al vuelo. El usuario solo solicita el fichero index.php, en donde se decide que otros fichero php se deben incluir.
 
 Los vínculos a páginas Wiki son automáticamente realizados, como: PhpWiki. Este puede ser el aspecto mas importante de un Wiki, la capacidad de añadir páginas que se autoenlazan. Otro aspecto interesante es como se enlanzan facilmente URL's:
-# http://www.wcsb.org/
-# ftp://ftp.redhat.com/
-# news://news.mozilla.org/
+	# http://www.wcsb.org/
+	# ftp://ftp.redhat.com/
+	# news://news.mozilla.org/
 
 Combinando un espacio de almacenamiento y un lenguaje de control sencillo, un Wiki expone muchas de las caracteristicas de WabiSabi.
 

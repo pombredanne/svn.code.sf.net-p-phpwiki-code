@@ -1,6 +1,7 @@
 0. INSTALLATION
 
-PhpWiki requires PHP version 4.0.? or greater.
+PhpWiki requires PHP version 3.0.9 or greater, since it uses the 
+preg_*() family of functions.
 
 Untar/gzip this file into the directory where you want it to live.
 That's it.
@@ -8,7 +9,20 @@ That's it.
 bash$ gzip -d phpwiki-X.XX.tar.gz
 bash$ tar -xvf phpwiki-X.XX.tar
 
-Look at index.php and edit the settings there to your liking.
+To improve efficiency, edit lib/config.php and set the $ServerAddress
+by hand; this will save a regexp call on every invocation.
+
+Example:
+Let's say you own the web server http://www.foo.com/. You untar in the
+server's root directory; then you should be able to just go to your new
+Wiki:
+
+http://www.foo.com/phpwiki/index.php
+
+If you configure your server to recognize index.php as the index of a
+directory, you can just do:
+
+http://www.foo.com/phpwiki/
 
 
 1. CONFIGURATION
@@ -21,11 +35,11 @@ live site, archived pages, and some additional information.
 
 If you don't want the DBM files to live in /tmp you must make sure the web
 server can read/write to your chosen location.  It's probably a bad idea
-to leave it in /tmp. (Again, edit index.php). 
+to leave it in /tmp. (Again, edit lib/config.php). 
 
 For example, you create a subdirectory called "pages" in the wiki
 directory made when you untarred PhpWiki. Move the DBM files there.
-(FIXME: this is incorrect:)The files are called: wikipagesdb, wikiarchivedb, wikilinksdb,
+The files are called: wikipagesdb, wikiarchivedb, wikilinksdb,
 wikihottopicsdb, and wikihitcountdb. The files should already have proper
 rights and owners, as they were created by the web server. Otherwise
 change them accordingly so your web server can read/write the DBM
@@ -65,31 +79,17 @@ You should visit http://www.php.net/ if you don't have PHP.
 Note that you should have the web server configured to allow index.php
 as the root document of a directory.
 
-FIXME: obsolete. (PHP 3 won't work)
 This web application was written under PHP version 3.0.12 and 
 the latest build of PHP4. It's tested under the following systems:
 
 MySQL + Debian
-mSQL + Red Hat 4.1  (FIXME: msql currently won't work)
-DBA or Postgresql on Red Hat 6.2
+mSQL + Red Hat 4.1
+DBM or Postgresql on Red Hat 6.2
 
 It reportedly works on Windows with Apache+PHP, which amazes me. 
 
-4. PATCHES
+That should be all. Send patches, bugs etc. to:
 
-Post patches to http://sourceforge.net/tracker/?func=add&group_id=6121&atid=306121
-
-5. BUGS
-
-Post bugs to http://sourceforge.net/tracker/?func=add&group_id=6121&atid=106121
-
-6. SUPPORT
-
-For support from the PhpWiki team and user community post to
 phpwiki-talk@lists.sourceforge.net
 
-You can join this list at http://lists.sourceforge.net/lists/listinfo/phpwiki-talk
-
 FIN
-
-$Id: INSTALL,v 1.11 2001-09-18 21:26:31 wainstead Exp $

@@ -1,62 +1,65 @@
+<!-- $Id: editpage.php,v 1.8.2.2 2001-02-27 23:16:12 dairiki Exp $ -->
 <?php
-rcs_id('$Id: editpage.php,v 1.17 2001-09-18 19:16:23 dairiki Exp $');
 
-require_once('lib/Template.php');
+   // editpage relies on $pagename and $ScriptUrl
 
-function editPage($dbi, $request) {
-    // editpage relies on $pagename, $version
-    $pagename = $request->getArg('pagename');
-    $version = $request->getArg('version');
-    
-    $page = $dbi->getPage($pagename);
-    $current = $page->getCurrentRevision();
+   if ($edit) {
+      $pagename = rawurldecode($edit);
+      if (get_magic_quotes_gpc()) {
+         $pagename = stripslashes($pagename);
+      }
+      $banner = htmlspecialchars($pagename);
+      $pagehash = RetrievePage($dbi, $pagename, $WikiPageStore);
 
-    if ($version === false) {
-        $selected = $current;
-    }
-    else {
-        $selected = $page->getRevision($version);
-        if (!$selected)
-            NoSuchRevision($page, $version); // noreturn
-    }
+   } elseif ($copy) {
+      $pagename = rawurldecode($copy);
+      if (get_magic_quotes_gpc()) {
+         $pagename = stripslashes($pagename);
+      }
+      $banner = htmlspecialchars (sprintf (gettext ("Copy of %s"), $pagename));
+      $pagehash = RetrievePage($dbi, $pagename, $ArchivePageStore);
 
-    global $user;               // FIXME: make this non-global.
-    if ($page->get('locked') && !$user->is_admin()) {
-        $html = "<p>";
-        $html .= gettext ("This page has been locked by the administrator and cannot be edited.");
-        $html .= "\n<p>";
-        $html .= gettext ("Sorry for the inconvenience.");
-        $html .= "\n";
-
-        echo GeneratePage('MESSAGE', $html,
-                          sprintf(gettext("Problem while editing %s"), $args->pagename),
-                          $selected);
-        ExitWiki ("");
-    }
+   } else {
+      ExitWiki(gettext ("No page name passed into editpage!"));
+   }
 
 
-    $age = time() - $current->get('mtime');
-    $minor_edit = ( $age < MINOR_EDIT_TIMEOUT && $current->get('author') == $user->id() );
+   if (is_array($pagehash)) {
 
-    $formvars = array('content' => htmlspecialchars($selected->getPackedContent()),
-                      'minor_edit' => $minor_edit ? 'checked' : '',
-                      'version' => $selected->getVersion(),
-                      'editversion' => $current->getVersion(),
-                      'summary' => '',
-                      'convert' => '',
-                      'pagename' => htmlspecialchars($pagename));
+      if (($pagehash['flags'] & FLAG_PAGE_LOCKED) && !defined('WIKI_ADMIN')) {
+	 $html = "<p>";
+	 $html .= gettext ("This page has been locked by the administrator and cannot be edited.");
+	 $html .= "\n<p>";
+	 $html .= gettext ("Sorry for the inconvenience.");
+	 $html .= "\n";
+	 GeneratePage('MESSAGE', $html, sprintf (gettext ("Problem while editing %s"), $pagename), 0);
+	 ExitWiki ("");
+      }
 
-    $template = new WikiTemplate('EDITPAGE');
-    $template->setPageRevisionTokens($selected);
-    $template->replace('FORMVARS', $formvars);
-    echo $template->getExpansion();
-}
+      $textarea = htmlspecialchars(implode("\n", $pagehash["content"]));
+      if (isset($copy)) {
+	 // $cdbi = OpenDataBase($WikiPageStore);
+	 $currentpage = RetrievePage($dbi, $pagename, $WikiPageStore);
+         $pagehash["version"] = $currentpage["version"];
+      }
+      elseif ($pagehash["version"] > 1) {
+	 if(IsInArchive($dbi, $pagename))
+           $pagehash["copy"] = 1;
+      }
+   } else {
+      if (preg_match("/^${WikiNameRegexp}\$/", $pagename))
+	 $newpage = $pagename;
+      else
+	 $newpage = "[$pagename]";
 
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:   
+      $textarea = htmlspecialchars(
+	 sprintf(gettext ("Describe %s here."), $newpage));
+
+      unset($pagehash);
+      $pagehash["version"] = 0;
+      $pagehash["lastmodified"] = time();
+      $pagehash["author"] = '';
+   }
+
+   GeneratePage('EDITPAGE', $textarea, $pagename, $pagehash);   
 ?>

@@ -1,272 +1,258 @@
 <?php
-rcs_id('$Id: config.php,v 1.43 2001-09-19 19:16:27 dairiki Exp $');
-/*
- * NOTE: the settings here should probably not need to be changed.
-*
-*
-* (The user-configurable settings have been moved to index.php.)
-*/
 
-if (!defined("LC_ALL")) {
-    // Backward compatibility (for PHP < 4.0.5)
-    define("LC_ALL", "LC_ALL");
-    define("LC_CTYPE", "LC_CTYPE");
-}
+   // essential internal stuff -- skip it. Go down to Part One. There
+   // are four parts to this file that interest you, all labeled Part
+   // One, Two, Three and Four.
 
-// essential internal stuff
-set_magic_quotes_runtime(0);
+   set_magic_quotes_runtime(0);
+   error_reporting(E_ALL ^ E_NOTICE);
 
-// Some constants.
-
-// "\x80"-"\x9f" (and "\x00" - "\x1f") are non-printing control
-// chars in iso-8859-*
-// $FieldSeparator = "\263"; //this is a superscript 3 in ISO-8859-1.
-$FieldSeparator = "\x81";
-
-require_once('lib/FileFinder.php');
-// Search PHP's include_path to find file or directory.
-function FindFile ($file, $missing_okay = false)
-{
-    static $finder;
-    if (!isset($finder))
-        $finder = new FileFinder;
-    return $finder->findFile($file, $missing_okay);
-}
-
-// Search PHP's include_path to find file or directory.
-// Searches for "locale/$LANG/$file", then for "$file".
-function FindLocalizedFile ($file, $missing_okay = false)
-{
-    static $finder;
-    if (!isset($finder))
-        $finder = new LocalizedFileFinder;
-    return $finder->findFile($file, $missing_okay);
-}
-
-// Setup localisation
-setlocale(LC_ALL, "$LANG");
-putenv("LC_ALL=$LANG");
-
-if (!function_exists ('gettext'))
-{
-    $locale = array();
-
-    function gettext ($text) { 
-        global $locale;
-        if (!empty ($locale[$text]))
-            return $locale[$text];
-        return $text;
-    }
-
-    if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) )
-        {
-            include($lcfile);
-        }
-}
-else
-{
-    // Setup localisation
-    bindtextdomain ("phpwiki", FindFile("locale"));
-    textdomain ("phpwiki");
-}
+   if (!function_exists('rcs_id')) {
+      function rcs_id($id) { echo "<!-- $id -->\n"; };
+   }
+   rcs_id('$Id: config.php,v 1.24.2.2 2001-05-21 16:06:50 dairiki Exp $'); 
+   // end essential internal stuff
 
 
-
-// To get the POSIX character classes in the PCRE's (e.g.
-// [[:upper:]]) to match extended characters (e.g. GrüßGott), we have
-// to set the locale, using setlocale().
-//
-// The problem is which locale to set?  We would like to recognize all
-// upper-case characters in the iso-8859-1 character set as upper-case
-// characters --- not just the ones which are in the current $LANG.
-//
-// As it turns out, at least on my system (Linux/glibc-2.2) as long as
-// you setlocale() to anything but "C" it works fine.  (I'm not sure
-// whether this is how it's supposed to be, or whether this is a bug
-// in the libc...)
-//
-// We don't currently use the locale setting for anything else, so for
-// now, just set the locale to US English.
-//
-// FIXME: Not all environments may support en_US?  We should probably
-// have a list of locales to try.
-if (setlocale(LC_CTYPE, 0) == 'C')
-     setlocale(LC_CTYPE, 'en_US.iso-8859-1');
-
-/** string pcre_fix_posix_classes (string $regexp)
-*
-* Older version (pre 3.x?) of the PCRE library do not support
-* POSIX named character classes (e.g. [[:alnum:]]).
-*
-* This is a helper function which can be used to convert a regexp
-* which contains POSIX named character classes to one that doesn't.
-*
-* All instances of strings like '[:<class>:]' are replaced by the equivalent
-* enumerated character class.
-*
-* Implementation Notes:
-*
-* Currently we use hard-coded values which are valid only for
-* ISO-8859-1.  Also, currently on the classes [:alpha:], [:alnum:],
-* [:upper:] and [:lower:] are implemented.  (The missing classes:
-* [:blank:], [:cntrl:], [:digit:], [:graph:], [:print:], [:punct:],
-* [:space:], and [:xdigit:] could easily be added if needed.)
-*
-* This is a hack.  I tried to generate these classes automatically
-* using ereg(), but discovered that in my PHP, at least, ereg() is
-* slightly broken w.r.t. POSIX character classes.  (It includes
-* "\xaa" and "\xba" in [:alpha:].)
-*
-* So for now, this will do.  --Jeff <dairiki@dairiki.org> 14 Mar, 2001
-*/
-function pcre_fix_posix_classes ($regexp) {
-    // First check to see if our PCRE lib supports POSIX character
-    // classes.  If it does, there's nothing to do.
-    if (preg_match('/[[:upper:]]/', 'A'))
-        return $regexp;
-
-    static $classes = array(
-                            'alnum' => "0-9A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
-                            'alpha' => "A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
-                            'upper' => "A-Z\xc0-\xd6\xd8-\xde",
-                            'lower' => "a-z\xdf-\xf6\xf8-\xff"
-                            );
-
-    $keys = join('|', array_keys($classes));
-
-    return preg_replace("/\[:($keys):]/e", '$classes["\1"]', $regexp);
-}
-
-$WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
-
-//////////////////////////////////////////////////////////////////
-// Autodetect URL settings:
-//
-if (!defined('SERVER_NAME')) define('SERVER_NAME', $HTTP_SERVER_VARS['SERVER_NAME']);
-if (!defined('SERVER_PORT')) define('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT']);
-if (!defined('SCRIPT_NAME')) define('SCRIPT_NAME', $HTTP_SERVER_VARS['SCRIPT_NAME']);
-if (!defined('DATA_PATH'))
-     define('DATA_PATH', dirname(SCRIPT_NAME));
-     if (!defined('USE_PATH_INFO'))
-{
-    /*
-     * If SCRIPT_NAME does not look like php source file,
-     * or user cgi we assume that php is getting run by an
-     * action handler in /cgi-bin.  In this case,
-     * I think there is no way to get Apache to pass
-     * useful PATH_INFO to the php script (PATH_INFO
-     * is used to the the php interpreter where the
-     * php script is...)
-     */
-    if (php_sapi_name() == 'apache')
-        define('USE_PATH_INFO', true);
-    else
-        define('USE_PATH_INFO', ereg('\.(php3?|cgi)$', $SCRIPT_NAME));
-}
+   /////////////////////////////////////////////////////////////////////
+   // Part One:
+   // Constants and settings. Edit the values below for your site.
+   /////////////////////////////////////////////////////////////////////
 
 
-function IsProbablyRedirectToIndex () 
-{
-    // This might be a redirect to the DirectoryIndex,
-    // e.g. REQUEST_URI = /dir/  got redirected
-    // to SCRIPT_NAME = /dir/index.php
+   // URL of index.php e.g. http://yoursite.com/phpwiki/index.php
+   // you can leave this empty - it will be calculated automatically
+   $ScriptUrl = "";
+   // URL of admin.php e.g. http://yoursite.com/phpwiki/admin.php
+   // you can leave this empty - it will be calculated automatically
+   // if you fill in $ScriptUrl you *MUST* fill in $AdminUrl as well!
+   $AdminUrl = "";
 
-    // In this case, the proper virtual path is still
-    // $SCRIPT_NAME, since pages appear at
-    // e.g. /dir/index.php/HomePage.
+   // Select your language - default language "C": English
+   // other languages available: Dutch "nl", Spanish "es", German "de",
+   // and Swedish "sv"
+   $LANG="C";
 
-//global $REQUEST_URI, $SCRIPT_NAME;
-    extract($GLOBALS['HTTP_SERVER_VARS']);
+   /////////////////////////////////////////////////////////////////////
+   // Part Two:
+   // Database section
+   // set your database here and edit the according section below.
+   // For PHP 4.0.4 and later you must use "dba" if you are using 
+   // DBM files for storage. "dbm" uses the older deprecated interface.
+   // The option 'default' will choose either dbm or dba, depending on
+   // the version of PHP you are running.
+   /////////////////////////////////////////////////////////////////////
 
-    $requri = preg_quote($REQUEST_URI, '%');
-    return preg_match("%^${requri}[^/]*$%", $SCRIPT_NAME);
-}
+   $WhichDatabase = 'default'; // use one of "dbm", "dba", "mysql",
+                           // "pgsql", "msql", or "file"
+
+   // DBM and DBA settings (default)
+   if ($WhichDatabase == 'dbm' or $WhichDatabase == 'dba' or
+       $WhichDatabase == 'default') {
+      $DBMdir = "/tmp";
+      $WikiPageStore = "wiki";
+      $ArchivePageStore = "archive";
+      $WikiDB['wiki']      = "$DBMdir/wikipagesdb";
+      $WikiDB['archive']   = "$DBMdir/wikiarchivedb";
+      $WikiDB['wikilinks'] = "$DBMdir/wikilinksdb";
+      $WikiDB['hottopics'] = "$DBMdir/wikihottopicsdb";
+      $WikiDB['hitcount']  = "$DBMdir/wikihitcountdb";
+      // try this many times if the dbm is unavailable
+      define("MAX_DBM_ATTEMPTS", 20);
+
+      // for PHP3 use dbmlib, else use dbalib for PHP4
+      if ($WhichDatabase == 'default') {
+         if ( floor(phpversion()) == 3) {
+            $WhichDatabase = 'dbm';
+         } else {
+            $WhichDatabase = 'dba';
+         }
+      }
+
+      if ($WhichDatabase == 'dbm') {
+          include "lib/dbmlib.php"; 
+      } else {
+          include "lib/dbalib.php";
+      }
+
+   // MySQL settings -- see INSTALL.mysql for details on using MySQL
+   } elseif ($WhichDatabase == 'mysql') {
+      $WikiPageStore = "wiki";
+      $ArchivePageStore = "archive";
+      $WikiLinksStore = "wikilinks";
+      $WikiScoreStore = "wikiscore";
+      $HitCountStore = "hitcount";
+      $mysql_server = 'localhost';
+      $mysql_user = 'root';
+      $mysql_pwd = '';
+      $mysql_db = 'wiki';
+      include "lib/mysql.php";
+
+   // PostgreSQL settings -- see INSTALL.pgsql for more details
+   } elseif ($WhichDatabase == 'pgsql') {
+      $pg_dbhost    = "localhost";
+      $pg_dbport    = "5432";
+      $WikiDataBase  = "wiki"; // name of the database in Postgresql
+      $WikiPageStore = "wiki";
+      $ArchivePageStore = "archive";
+      $WikiLinksPageStore = "wikilinks";
+      $HotTopicsPageStore = "hottopics";
+      $HitCountPageStore = "hitcount";
+      include "lib/pgsql.php";
+
+   // MiniSQL (mSQL) settings -- see INSTALL.msql for details on using mSQL
+   } elseif ($WhichDatabase == 'msql') {
+      $msql_db = "wiki";
+      $WikiPageStore = array();
+      $ArchivePageStore = array();
+      $WikiPageStore['table']         = "wiki";
+      $WikiPageStore['page_table']    = "wikipages";
+      $ArchivePageStore['table']      = "archive";
+      $ArchivePageStore['page_table'] = "archivepages";
+      // should be the same as wikipages.line
+      define("MSQL_MAX_LINE_LENGTH", 128);
+      include "lib/msql.php";
+
+   // Filesystem DB settings
+   } elseif ($WhichDatabase == 'file') {
+      $DBdir = "/tmp/wiki";
+      $WikiPageStore = "wiki";
+      $ArchivePageStore = "archive";
+      $WikiDB['wiki']      = "$DBdir/pages";
+      $WikiDB['archive']   = "$DBdir/archive";
+      $WikiDB['wikilinks'] = "$DBdir/links";
+      $WikiDB['hottopics'] = "$DBdir/hottopics";
+      $WikiDB['hitcount']  = "$DBdir/hitcount";
+      include "lib/db_filesystem.php";
+
+    } else die("Invalid '\$WhichDatabase' in lib/config.php"); 
 
 
-if (!defined('VIRTUAL_PATH'))
-{
-    // We'd like to auto-detect when the cases where apaches
-    // 'Action' directive (or similar means) is used to
-    // redirect page requests to a cgi-handler.
-    //
-    // In cases like this, requests for e.g. /wiki/HomePage
-    // get redirected to a cgi-script called, say,
-    // /path/to/wiki/index.php.  The script gets all
-    // of /wiki/HomePage as it's PATH_INFO.
-    //
-    // The problem is:
-    //   How to detect when this has happened reliably?
-    //   How to pick out the "virtual path" (in this case '/wiki')?
-    //
-    // (Another time an redirect might occur is to a DirectoryIndex
-    // -- the requested URI is '/wikidir/', the request gets
-    // passed to '/wikidir/index.php'.  In this case, the
-    // proper VIRTUAL_PATH is '/wikidir/index.php', since the
-    // pages will appear at e.g. '/wikidir/index.php/HomePage'.
-    //
+   /////////////////////////////////////////////////////////////////////
+   // Part Three:
+   // Miscellaneous
+   /////////////////////////////////////////////////////////////////////
 
-    $REDIRECT_URL = &$HTTP_SERVER_VARS['REDIRECT_URL'];
-    if (USE_PATH_INFO and isset($REDIRECT_URL)
-        and ! IsProbablyRedirectToIndex())
-        {
-            // FIXME: This is a hack, and won't work if the requested
-            // pagename has a slash in it.
-            define('VIRTUAL_PATH', dirname($REDIRECT_URL . 'x'));
-        }
-    else
-        define('VIRTUAL_PATH', SCRIPT_NAME);
-}
+   // logo image (path relative to index.php)
+   $logo = "images/wikibase.png";
 
-if (SERVER_PORT && SERVER_PORT != 80)
-     define('SERVER_URL',
-            "http://" . SERVER_NAME . ':' . SERVER_PORT);
-     else
-     define('SERVER_URL',
-            "http://" . SERVER_NAME);
+   // Signature image which is shown after saving an edited page
+   // If this is left blank (or unset), the signature will be omitted.
+   $SignatureImg = "images/signature.png";
 
-if (VIRTUAL_PATH != SCRIPT_NAME)
-{
-    // Apache action handlers are used.
-    define('PATH_INFO_PREFIX', VIRTUAL_PATH . "/");
-}
-else
-define("PATH_INFO_PREFIX", '/');
+   // date & time formats used to display modification times, etc.
+   // formats are given as format strings to PHP date() function
+   $datetimeformat = "F j, Y";	// may contain time of day
+   $dateformat = "F j, Y";	// must not contain time
+
+   // this defines how many page names to list when displaying
+   // the MostPopular pages; the default is to show the 20 most popular pages
+   define("MOST_POPULAR_LIST_LENGTH", 20);
+
+   // this defines how many page names to list when displaying related pages
+   define("NUM_RELATED_PAGES", 5);
+
+   // number of user-defined external references, i.e. "[1]"
+   define("NUM_LINKS", 12);
+
+   // allowed protocols for links - be careful not to allow "javascript:"
+   // within a named link [name|uri] one more protocol is defined: phpwiki
+   $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
+
+   // URLs ending with the following extension should be inlined as images
+   $InlineImages = "png|jpg|gif";
+
+   // Perl regexp for WikiNames
+   // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
+   $WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
 
 
-//////////////////////////////////////////////////////////////////
-// Select database
-//
-if (empty($DBParams['dbtype']))
-{
-    $DBParams['dbtype'] = 'dba';
-}
 
-// InterWiki linking -- wiki-style links to other wikis on the web
-//
-if (defined('INTERWIKI_MAP_FILE'))
-{
-    include ('lib/interwiki.php');
-}
+   /////////////////////////////////////////////////////////////////////
+   // Part Four:
+   // Original pages and layout
+   /////////////////////////////////////////////////////////////////////
 
-// FIXME: delete
-// Access log
-if (!defined('ACCESS_LOG'))
-     define('ACCESS_LOG', '');
+   // need to define localization function first -- skip this
+   if (!function_exists ('gettext')) {
+      $lcfile = "locale/$LANG/LC_MESSAGES/phpwiki.php";
+      if (file_exists($lcfile)) { include($lcfile); }
+      else { $locale = array(); }
 
-// FIXME: delete
-// Get remote host name, if apache hasn't done it for us
-if (empty($HTTP_SERVER_VARS['REMOTE_HOST']) && ENABLE_REVERSE_DNS)
-     $HTTP_SERVER_VARS['REMOTE_HOST'] = gethostbyaddr($HTTP_SERVER_VARS['REMOTE_ADDR']);
+      function gettext ($text) { 
+         global $locale;
+         if (!empty ($locale[$text]))
+           return $locale[$text];
+         return $text;
+      }
+   } else {
+      putenv ("LANG=$LANG");
+      bindtextdomain ("phpwiki", "./locale");
+      textdomain ("phpwiki");
+      setlocale("LC_ALL", "");
+   }
+   // end of localization function
+
+   // Template files (filenames are relative to script position)
+   $templates = array(
+   	"BROWSE" =>    gettext("templates/browse.html"),
+	"EDITPAGE" =>  gettext("templates/editpage.html"),
+	"EDITLINKS" => gettext("templates/editlinks.html"),
+	"MESSAGE" =>   gettext("templates/message.html")
+	);
+
+   /* WIKI_PGSRC -- specifies the source for the initial page contents
+    * of the Wiki.  The setting of WIKI_PGSRC only has effect when
+    * the wiki is accessed for the first time (or after clearing the
+    * database.) WIKI_PGSRC can either name a directory or a zip file.
+    * In either case WIKI_PGSRC is scanned for files --- one file per page.
+    *
+    * If the files appear to be MIME formatted messages, they are
+    * scanned for application/x-phpwiki content-types.  Any suitable
+    * content is added to the wiki.
+    * The files can also be plain text files, in which case the page name
+    * is taken from the file name.
+    */
+
+   define('WIKI_PGSRC', gettext("./pgsrc")); // Default (old) behavior.
+   //define('WIKI_PGSRC', './wiki.zip'); // New style.
+
+   // DEFAULT_WIKI_PGSRC is only used when the language is *not*
+   // the default (English) and when reading from a directory:
+   // in that case some English pages are inserted into the wiki as well
+   // DEFAULT_WIKI_PGSRC defines where the English pages reside 
+   define('DEFAULT_WIKI_PGSRC', "./pgsrc");
 
 
-// For emacs users
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:
 
+   //////////////////////////////////////////////////////////////////////
+   // you shouldn't have to edit anyting below this line
 
+   if (empty($ScriptUrl)) {
+      $port = ($SERVER_PORT == 80) ? '' : ":$SERVER_PORT";
+      $ScriptUrl = "http://$SERVER_NAME$port$SCRIPT_NAME";
+   }
+   if (defined('WIKI_ADMIN') && !empty($AdminUrl))
+      $ScriptUrl = $AdminUrl;
+
+   $FieldSeparator = "\263";
+
+   if (isset($PHP_AUTH_USER)) {
+        $remoteuser = $PHP_AUTH_USER;
+   } else {
+
+      // Apache won't show REMOTE_HOST unless the admin configured it
+      // properly. We'll be nice and see if it's there.
+
+      getenv('REMOTE_HOST') ? ($remoteuser = getenv('REMOTE_HOST'))
+                            : ($remoteuser = getenv('REMOTE_ADDR'));
+   }
+
+   // constants used for HTML output. HTML tags may allow nesting
+   // other tags always start at level 0
+   define("ZERO_LEVEL", 0);
+   define("NESTED_LEVEL", 1);
+
+   // constants for flags in $pagehash
+   define("FLAG_PAGE_LOCKED", 1);
 ?>

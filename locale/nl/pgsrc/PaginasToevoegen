@@ -1,6 +1,6 @@
 Voor het toevoegen van een nieuwe pagina aan Wiki, hoef je alleen maar een
 zinvolle titel de bedenken, de woorden met een hoofdletter te beginnen, en
-ZeAanElkaarTeSchrijvenZoalsDit.  Wiki herkent dit automagisch als een
+ZeAanElkaarTeSchrijvenZoalsDit.  Wiki herkent dit automagies als een
 koppeling.
 
 Daarna kun je verder gaan en HetVraagtekenAanKlikken vlak na je nieuwe
@@ -10,7 +10,7 @@ Als je documenten met een ingewikkelde opmaak aan de Wiki toe wilt voegen,
 kun je misschien beter een URL geven dan de tekst van het document hier 
 in proberen te tiepen, zoals:
 
- PhpWiki project pagina: http://phpwiki.sourceforge.net/
+ PhpWiki project pagina: http://wcsb.org/~swain/php/wiki/
 
 Wiki ondersteunt geen HTML tags (zie TekstFormmateringsRegels).  <tags>Die
 zien er gewoon uit als tekst.</tags>  De bedoeling van Wiki is zo eenvoudig 

@@ -1,170 +1,123 @@
-<?php rcs_id('$Id: stdlib.php,v 1.42 2001-09-18 19:16:23 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.5 2001-08-18 01:50:47 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
-         WikiURL($pagename, $args, $abs)
-         LinkWikiWord($wikiword, $linktext) 
+         ExitWiki($errormsg)
          LinkExistingWikiWord($wikiword, $linktext) 
          LinkUnknownWikiWord($wikiword, $linktext) 
          LinkURL($url, $linktext)
          LinkImage($url, $alt)
-         LinkInterWikiLink($link, $linktext)
+         RenderQuickSearch($value)
+         RenderFullSearch($value)
+         RenderMostPopular()
          CookSpaces($pagearray) 
          class Stack (push(), pop(), cnt(), top())
+         SetHTMLOutputMode($newmode, $depth)
          UpdateRecentChanges($dbi, $pagename, $isnewpage) 
          ParseAndLink($bracketlink)
          ExtractWikiPageLinks($content)
          LinkRelatedPages($dbi, $pagename)
+	 GeneratePage($template, $content, $name, $hash)
    */
 
 
-   function DataURL($url) {
-      if (preg_match('@^(\w+:|/)@', $url))
-	 return $url;
-      return SERVER_URL . DATA_PATH . "/$url";
-   }
-	  
-function WikiURL($pagename, $args = '', $get_abs_url = false) {
-    if (is_array($args)) {
-        $enc_args = array();
-        foreach  ($args as $key => $val) {
-            $enc_args[] = urlencode($key) . '=' . urlencode($val);
-        }
-        $args = join('&', $enc_args);
-    }
-
-    if (USE_PATH_INFO) {
-        $url = $get_abs_url ? SERVER_URL . VIRTUAL_PATH . "/" : '';
-        $url .= rawurlencode($pagename);
-        if ($args)
-            $url .= "?$args";
-    }
-    else {
-        $url = $get_abs_url ? SERVER_URL . SCRIPT_NAME : basename(SCRIPT_NAME);
-        $url .= "?pagename=" . rawurlencode($pagename);
-        if ($args)
-            $url .= "&$args";
-    }
-
-    return $url;
-}
-
-function StartTag($tag, $args = '')
-{
-   $s = "<$tag";
-   if (is_array($args))
+   function ExitWiki($errormsg)
    {
-      while (list($key, $val) = each($args))
-      {
-	 if (is_string($val) || is_numeric($val))
-	    $s .= sprintf(' %s="%s"', $key, htmlspecialchars($val));
-	 else if ($val)
-	    $s .= " $key";
-      }
-   }
-   return "$s>";
-}
+      static $exitwiki = 0;
+      global $dbi;
 
-   
-   define('NO_END_TAG_PAT',
-	  '/^' . join('|', array('area', 'base', 'basefont',
-				 'br', 'col', 'frame',
-				 'hr', 'image', 'input',
-				 'isindex', 'link', 'meta',
-				 'param')) . '$/i');
+      if($exitwiki)		// just in case CloseDataBase calls us
+         exit();
+      $exitwiki = 1;
 
-   function Element($tag, $args = '', $content = '')
-   {
-      $html = "<$tag";
-      if (!is_array($args))
-      {
-	 $content = $args;
-	 $args = false;
+      CloseDataBase($dbi);
+
+      if($errormsg <> '') {
+         print "<P><hr noshade><h2>" . gettext("WikiFatalError") . "</h2>\n";
+         print $errormsg;
+         print "\n</BODY></HTML>";
       }
-      $html = StartTag($tag, $args);
-      if (!preg_match(NO_END_TAG_PAT, $tag))
-      {
-	 $html .= $content;
-	 $html .= "</$tag>";//FIXME: newline might not always be desired.
-      }
-      return $html;
+      exit;
    }
 
-   function QElement($tag, $args = '', $content = '')
-   {
-      if (is_array($args))
-	 return Element($tag, $args, htmlspecialchars($content));
-      else
-      {
-	 $content = $args;
-	 return Element($tag, htmlspecialchars($content));
-      }
-   }
-   
-   function LinkURL($url, $linktext='') {
-      // FIXME: Is this needed (or sufficient?)
-      if(ereg("[<>\"]", $url)) {
-         return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
-      }
 
-      if (empty($linktext)) {
-          $linktext = $url;
-          $class = 'rawurl';
-      }
-      else {
-          $class = 'namedurl';
-      }
-
-      return QElement('a',
-                      array('href' => $url, 'class' => $class),
-                      $linktext);
-   }
-
-function LinkWikiWord($wikiword, $linktext='') {
-    global $dbi;
-    if ($dbi->isWikiPage($wikiword))
-        return LinkExistingWikiWord($wikiword, $linktext);
-    else
-        return LinkUnknownWikiWord($wikiword, $linktext);
-}
-
-    
    function LinkExistingWikiWord($wikiword, $linktext='') {
-      if (empty($linktext)) {
-          $linktext = $wikiword;
-          $class = 'wiki';
-      }
-      else
-          $class = 'named-wiki';
-      
-      return QElement('a', array('href' => WikiURL($wikiword),
-                                 'class' => $class),
-		     $linktext);
+      global $ScriptUrl;
+      $enc_word = rawurlencode($wikiword);
+      if(empty($linktext))
+         $linktext = htmlspecialchars($wikiword);
+      return "<a href=\"$ScriptUrl?$enc_word\">$linktext</a>";
    }
 
    function LinkUnknownWikiWord($wikiword, $linktext='') {
-      if (empty($linktext)) {
-          $linktext = $wikiword;
-          $class = 'wikiunknown';
-      }
-      else {
-          $class = 'named-wikiunknown';
-      }
+      global $ScriptUrl;
+      $enc_word = rawurlencode($wikiword);
+      if(empty($linktext))
+         $linktext = htmlspecialchars($wikiword);
+      return "<u>$linktext</u><a href=\"$ScriptUrl?edit=$enc_word\">?</a>";
+   }
 
-      return Element('span', array('class' => $class),
-		     QElement('a',
-                              array('href' => WikiURL($wikiword, array('action' => 'edit'))),
-                              '?')
-                     . Element('u', $linktext));
+   function LinkURL($url, $linktext='') {
+      global $ScriptUrl;
+      if(ereg("[<>\"]", $url)) {
+         return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
+      }
+      if(empty($linktext))
+         $linktext = htmlspecialchars($url);
+      return "<a href=\"$url\">$linktext</a>";
    }
 
    function LinkImage($url, $alt='[External Image]') {
-      // FIXME: Is this needed (or sufficient?)
-      //  As long as the src in htmlspecialchars()ed I think it's safe.
+      global $ScriptUrl;
       if(ereg('[<>"]', $url)) {
          return "<b><u>BAD URL -- remove all of &lt;, &gt;, &quot;</u></b>";
       }
-      return Element('img', array('src' => $url, 'alt' => $alt));
+      return "<img src=\"$url\" ALT=\"$alt\">";
+   }
+
+   
+   function RenderQuickSearch($value = '') {
+      global $ScriptUrl;
+      return "<form action=\"$ScriptUrl\">\n" .
+	     "<input type=text size=30 name=search value=\"$value\">\n" .
+	     "<input type=submit value=\"". gettext("Search") .
+	     "\"></form>\n";
+   }
+
+   function RenderFullSearch($value = '') {
+      global $ScriptUrl;
+      return "<form action=\"$ScriptUrl\">\n" .
+	     "<input type=text size=30 name=full value=\"$value\">\n" .
+	     "<input type=submit value=\"". gettext("Search") .
+	     "\"></form>\n";
+   }
+
+   function RenderMostPopular() {
+      global $ScriptUrl, $dbi;
+      
+      $query = InitMostPopular($dbi, MOST_POPULAR_LIST_LENGTH);
+      $result = "<DL>\n";
+      while ($qhash = MostPopularNextMatch($dbi, $query)) {
+	 $result .= "<DD>$qhash[hits] ... " . LinkExistingWikiWord($qhash['pagename']) . "\n";
+      }
+      $result .= "</DL>\n";
+      
+      return $result;
+   }
+
+
+   function ParseAdminTokens($line) {
+      global $ScriptUrl;
+      
+      while (preg_match("/%%ADMIN-INPUT-(.*?)-(\w+)%%/", $line, $matches)) {
+	 $head = str_replace('_', ' ', $matches[2]);
+         $form = "<FORM ACTION=\"$ScriptUrl\" METHOD=POST>"
+		."$head: <INPUT NAME=$matches[1] SIZE=20> "
+		."<INPUT TYPE=SUBMIT VALUE=\"" . gettext("Go") . "\">"
+		."</FORM>";
+	 $line = str_replace($matches[0], $form, $line);
+      }
+      return $line;
    }
 
    // converts spaces to tabs
@@ -206,123 +159,135 @@ function LinkWikiWord($wikiword, $linktext='') {
    // end class definition
 
 
-   function MakeWikiForm ($pagename, $args, $class, $button_text = '')
+   // I couldn't move this to lib/config.php because it wasn't declared yet.
+   $stack = new Stack;
+
+   /* 
+      Wiki HTML output can, at any given time, be in only one mode.
+      It will be something like Unordered List, Preformatted Text,
+      plain text etc. When we change modes we have to issue close tags
+      for one mode and start tags for another.
+
+      $tag ... HTML tag to insert
+      $tagtype ... ZERO_LEVEL - close all open tags before inserting $tag
+		   NESTED_LEVEL - close tags until depths match
+      $level ... nesting level (depth) of $tag
+		 nesting is arbitrary limited to 10 levels
+   */
+
+   function SetHTMLOutputMode($tag, $tagtype, $level)
    {
-      $formargs['action'] = USE_PATH_INFO ? WikiURL($pagename) : SCRIPT_NAME;
-      $formargs['method'] = 'get';
-      $formargs['class'] = $class;
-      
-      $contents = '';
-      $input_seen = 0;
-      
-      while (list($key, $val) = each($args))
-      {
-	 $a = array('name' => $key, 'value' => $val, 'type' => 'hidden');
-	 
-	 if (preg_match('/^ (\d*) \( (.*) \) ((upload)?) $/xi', $val, $m))
-	 {
-	    $input_seen++;
-	    $a['type'] = 'text';
-	    $a['size'] = $m[1] ? $m[1] : 30;
-	    $a['value'] = $m[2];
-	    if ($m[3])
-	    {
-	       $a['type'] = 'file';
-	       $formargs['enctype'] = 'multipart/form-data';
-	       $contents .= Element('input',
-				    array('name' => 'MAX_FILE_SIZE',
-					  'value' => MAX_UPLOAD_SIZE,
-					  'type' => 'hidden'));
-               $formargs['method'] = 'post';
-	    }
-	 }
+      global $stack;
+      $retvar = '';
 
-	 $contents .= Element('input', $a);
+      if ($level > 10) {
+	  // arbitrarily limit tag nesting
+	  //ExitWiki(gettext ("Nesting depth exceeded in SetHTMLOutputMode"));
+	  // Now, instead of crapping out when we encounter a deeply
+	  // nested list item, we just clamp the the maximum depth.
+	  $level = 10;
       }
-
-      $row = Element('td', $contents);
       
-      if (!empty($button_text)) {
-	 $row .= Element('td', Element('input', array('type' => 'submit',
-                                                      'class' => 'button',
-						      'value' => $button_text)));
-      }
-
-      return Element('form', $formargs,
-		     Element('table', array('cellspacing' => 0, 'cellpadding' => 2, 'border' => 0),
-			     Element('tr', $row)));
-   }
-
-   function SplitQueryArgs ($query_args = '') 
-   {
-      $split_args = split('&', $query_args);
-      $args = array();
-      while (list($key, $val) = each($split_args))
-	 if (preg_match('/^ ([^=]+) =? (.*) /x', $val, $m))
-	    $args[$m[1]] = $m[2];
-      return $args;
-   }
+      if ($tagtype == ZERO_LEVEL) {
+         // empty the stack until $level == 0;
+         if ($tag == $stack->top()) {
+            return; // same tag? -> nothing to do
+         }
+         while ($stack->cnt() > 0) {
+            $closetag = $stack->pop();
+            $retvar .= "</$closetag>\n";
+         }
    
-function LinkPhpwikiURL($url, $text = '') {
-	$args = array();
+         if ($tag) {
+            $retvar .= "<$tag>\n";
+            $stack->push($tag);
+         }
 
-	if (!preg_match('/^ phpwiki: ([^?]*) [?]? (.*) $/x', $url, $m))
-		return "<b><u>BAD phpwiki: URL</u></b>";
 
-	if ($m[1])
-		$pagename = urldecode($m[1]);
-	$qargs = $m[2];
-      
-	if (empty($pagename) && preg_match('/^(diff|edit|links|info)=([^&]+)$/', $qargs, $m)) {
-		// Convert old style links (to not break diff links in RecentChanges).
-		$pagename = urldecode($m[2]);
-		$args = array("action" => $m[1]);
-	}
-	else {
-		$args = SplitQueryArgs($qargs);
-	}
+      } elseif ($tagtype == NESTED_LEVEL) {
+         if ($level < $stack->cnt()) {
+            // $tag has fewer nestings (old: tabs) than stack,
+	    // reduce stack to that tab count
+            while ($stack->cnt() > $level) {
+               $closetag = $stack->pop();
+               if ($closetag == false) {
+                  //echo "bounds error in tag stack";
+                  break;
+               }
+               $retvar .= "</$closetag>\n";
+            }
 
-	if (empty($pagename))
-		$pagename = $GLOBALS['pagename'];
+	    // if list type isn't the same,
+	    // back up one more and push new tag
+	    if ($tag != $stack->top()) {
+	       $closetag = $stack->pop();
+	       $retvar .= "</$closetag><$tag>\n";
+	       $stack->push($tag);
+	    }
+   
+         } elseif ($level > $stack->cnt()) {
+	    // Test for and close top level elements which are not allowed to contain
+	    // other block-level elements.
+	    if ($stack->cnt() == 1 and
+	        preg_match('/^(p|pre|h\d)$/i', $stack->top()))
+	    {
+	       $closetag = $stack->pop();
+	       $retvar .= "</$closetag>";
+	    }
 
-	if (isset($args['action']) && $args['action'] == 'browse')
-		unset($args['action']);
-        /*FIXME:
-	if (empty($args['action']))
-		$class = 'wikilink';
-	else if (is_safe_action($args['action']))
-		$class = 'wikiaction';
-        */
-	if (empty($args['action']) || is_safe_action($args['action']))
-                $class = 'wikiaction';
-	else {
-		// Don't allow administrative links on unlocked pages.
-		// FIXME: Ugh: don't like this...
-		global $dbi;
-		$page = $dbi->getPage($GLOBALS['pagename']);
-		if (!$page->get('locked'))
-			return QElement('u', array('class' => 'wikiunsafe'),
-							gettext('Lock page to enable link'));
+	    // we add the diff to the stack
+	    // stack might be zero
+	    if ($stack->cnt() < $level) {
+	       while ($stack->cnt() < $level - 1) {
+		  // This is a bit of a hack:
+		  //
+		  // We're not nested deep enough, and have to make up
+		  // some kind of block element to nest within.
+		  //
+		  // Currently, this can only happen for nested list
+		  // element (either <ul> <ol> or <dl>).  What we used
+		  // to do here is to open extra lists of whatever
+		  // type was requested.  This would result in invalid
+		  // HTML, since and list is not allowed to contain
+		  // another list without first containing a list
+		  // item.  ("<ul><ul><li>Item</ul></ul>" is invalid.)
+		  //
+		  // So now, when we need extra list elements, we use
+		  // a <dl>, and open it with an empty <dd>.
 
-		$class = 'wikiadmin';
-	}
-      
-	// FIXME: ug, don't like this
-	if (preg_match('/=\d*\(/', $qargs))
-		return MakeWikiForm($pagename, $args, $class, $text);
-	if ($text)
-		$text = htmlspecialchars($text);
-	else
-		$text = QElement('span', array('class' => 'rawurl'), $url);
+		  $retvar .= "<dl><dd>";
+		  $stack->push('dl');
+	       }
 
-	return Element('a', array('href' => WikiURL($pagename, $args),
-							  'class' => $class),
-				   $text);
-}
+	       $retvar .= "<$tag>\n";
+	       $stack->push($tag);
+            }
+   
+         } else { // $level == $stack->cnt()
+            if ($tag == $stack->top()) {
+               return; // same tag? -> nothing to do
+            } else {
+	       // different tag - close old one, add new one
+               $closetag = $stack->pop();
+               $retvar .= "</$closetag>\n";
+               $retvar .= "<$tag>\n";
+               $stack->push($tag);
+            }
+         }
+
+   
+      } else { // unknown $tagtype
+         ExitWiki ("Passed bad tag type value in SetHTMLOutputMode");
+      }
+
+      return $retvar;
+   }
+   // end SetHTMLOutputMode
+
+
 
    function ParseAndLink($bracketlink) {
-      global $dbi, $AllowedProtocols, $InlineImages;
-      global $InterWikiLinkRegexp;
+      global $dbi, $ScriptUrl, $AllowedProtocols, $InlineImages;
 
       // $bracketlink will start and end with brackets; in between
       // will be either a page name, a URL or both separated by a pipe.
@@ -335,7 +300,7 @@ function LinkPhpwikiURL($url, $text = '') {
       if (isset($matches[3])) {
          // named link of the form  "[some link name | http://blippy.com/]"
          $URL = trim($matches[3]);
-         $linkname = trim($matches[1]);
+         $linkname = htmlspecialchars(trim($matches[1]));
 	 $linktype = 'named';
       } else {
          // unnamed link of the form "[http://blippy.com/] or [wiki page]"
@@ -344,7 +309,7 @@ function LinkPhpwikiURL($url, $text = '') {
 	 $linktype = 'simple';
       }
 
-      if ($dbi->isWikiPage($URL)) {
+      if (IsWikiPage($dbi, $URL)) {
          $link['type'] = "wiki-$linktype";
          $link['link'] = LinkExistingWikiWord($URL, $linkname);
       } elseif (preg_match("#^($AllowedProtocols):#", $URL)) {
@@ -358,14 +323,12 @@ function LinkPhpwikiURL($url, $text = '') {
 	 }
       } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
 	 $link['type'] = "url-wiki-$linktype";
-	 $link['link'] = LinkPhpwikiURL($URL, $linkname);
+	 if(empty($linkname))
+	    $linkname = htmlspecialchars($URL);
+	 $link['link'] = "<a href=\"$ScriptUrl$match[1]\">$linkname</a>";
       } elseif (preg_match("#^\d+$#", $URL)) {
-         $link['type'] = "footnote-$linktype";
+         $link['type'] = "reference-$linktype";
 	 $link['link'] = $URL;
-      } elseif (function_exists('LinkInterWikiLink') &&
-		preg_match("#^$InterWikiLinkRegexp:#", $URL)) {
-	 $link['type'] = "interwiki-$linktype";
-	 $link['link'] = LinkInterWikiLink($URL, $linkname);
       } else {
 	 $link['type'] = "wiki-unknown-$linktype";
          $link['link'] = LinkUnknownWikiWord($URL, $linkname);
@@ -375,41 +338,43 @@ function LinkPhpwikiURL($url, $text = '') {
    }
 
 
-function ExtractWikiPageLinks($content)
-{
-    global $WikiNameRegexp;
-    
-    if (is_string($content))
-        $content = explode("\n", $content);
+   function ExtractWikiPageLinks($content)
+   {
+      global $WikiNameRegexp, $AllowedProtocols;
 
-    $wikilinks = array();
-    foreach ($content as $line) {
-        // remove plugin code
-        $line = preg_replace('/<\?plugin\s+\w.*?\?>/', '', $line);
-        // remove escaped '['
-        $line = str_replace('[[', ' ', $line);
+      $wikilinks = array();
+      $numlines = count($content);
+      for($l = 0; $l < $numlines; $l++)
+      {
+	 // remove escaped '['
+         $line = str_replace('[[', ' ', $content[$l]);
 
-  // bracket links (only type wiki-* is of interest)
-  $numBracketLinks = preg_match_all("/\[\s*([^\]|]+\|)?\s*(.+?)\s*\]/", $line, $brktlinks);
-  for ($i = 0; $i < $numBracketLinks; $i++) {
-     $link = ParseAndLink($brktlinks[0][$i]);
-     if (preg_match("#^wiki#", $link['type']))
-        $wikilinks[$brktlinks[2][$i]] = 1;
+	 // bracket links (only type wiki-* is of interest)
+	 $numBracketLinks = preg_match_all("/\[\s*([^\]|]+\|)?\s*(.+?)\s*\]/", $line, $brktlinks);
+	 for ($i = 0; $i < $numBracketLinks; $i++) {
+	    $link = ParseAndLink($brktlinks[0][$i]);
+	    if (preg_match("#^wiki#", $link['type']))
+	       $wikilinks[$brktlinks[2][$i]] = 1;
 
-         $brktlink = preg_quote($brktlinks[0][$i]);
-         $line = preg_replace("|$brktlink|", '', $line);
-  }
+            $brktlink = preg_quote($brktlinks[0][$i]);
+            $line = preg_replace("|$brktlink|", '', $line);
+	 }
 
-      // BumpyText old-style wiki links
-      if (preg_match_all("/!?$WikiNameRegexp/", $line, $link)) {
-         for ($i = 0; isset($link[0][$i]); $i++) {
-            if($link[0][$i][0] <> '!')
-               $wikilinks[$link[0][$i]] = 1;
-     }
+	 // Remove URLs (think about "http:a.b.com/WikiWords").
+	 $line = preg_replace("/!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]/",
+			      ' ', $line);
+	 
+         // BumpyText old-style wiki links
+         if (preg_match_all("/!?$WikiNameRegexp/", $line, $link)) {
+            for ($i = 0; isset($link[0][$i]); $i++) {
+               if($link[0][$i][0] <> '!')
+                  $wikilinks[$link[0][$i]] = 1;
+	    }
+         }
       }
-   }
-   return array_keys($wikilinks);
-}      
+      return $wikilinks;
+   }      
+
 
    function LinkRelatedPages($dbi, $pagename)
    {
@@ -417,7 +382,6 @@ function ExtractWikiPageLinks($content)
       if(!function_exists('GetWikiPageLinks'))
          return '';
 
-      //FIXME: fix or toss?
       $links = GetWikiPageLinks($dbi, $pagename);
 
       $txt = "<b>";
@@ -436,7 +400,7 @@ function ExtractWikiPageLinks($content)
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['out'][$i])) {
             list($name, $score) = $links['out'][$i];
-	    if($dbi->isWikiPage($name))
+	    if(IsWikiPage($dbi, $name))
 	       $txt .= LinkExistingWikiWord($name) . " ($score), ";
          }
       }
@@ -454,60 +418,95 @@ function ExtractWikiPageLinks($content)
       return $txt;
    }
 
+   
+   # GeneratePage() -- takes $content and puts it in the template $template
+   # this function contains all the template logic
+   #
+   # $template ... name of the template (see config.php for list of names)
+   # $content ... html content to put into the page
+   # $name ... page title
+   # $hash ... if called while creating a wiki page, $hash points to
+   #           the $pagehash array of that wiki page.
 
-/**
- * Split WikiWords in page names.
- *
- * It has been deemed useful to split WikiWords (into "Wiki Words")
- * in places like page titles.  This is rumored to help search engines
- * quite a bit.
- *
- * @param $page string The page name.
- *
- * @return string The split name.
- */
-function split_pagename ($page) {
-    
-    if (preg_match("/\s/", $page))
-        return $page;           // Already split --- don't split any more.
+   function GeneratePage($template, $content, $name, $hash)
+   {
+      global $ScriptUrl, $AllowedProtocols, $templates;
+      global $datetimeformat, $dbi, $logo, $FieldSeparator;
 
-    // FIXME: this algorithm is Anglo-centric.
-    static $RE;
-    if (!isset($RE)) {
-        // This mess splits between a lower-case letter followed by either an upper-case
-	// or a numeral; except that it wont split the prefixes 'Mc', 'De', or 'Di' off
-        // of their tails.
-			$RE[] = '/([[:lower:]])((?<!Mc|De|Di)[[:upper:]]|\d)/';
-        // This the single-letter words 'I' and 'A' from any following capitalized words.
-        $RE[] = '/(?: |^)([AI])([[:upper:]])/';
-	// Split numerals from following letters.
-        $RE[] = '/(\d)([[:alpha:]])/';
+      if (!is_array($hash))
+         unset($hash);
 
-        foreach ($RE as $key => $val)
-            $RE[$key] = pcre_fix_posix_classes($val);
-    }
+      function _dotoken ($id, $val, &$page) {
+	 global $FieldSeparator;
+         $page = str_replace("$FieldSeparator#$id$FieldSeparator#",
+				$val, $page);
+      }
 
-    foreach ($RE as $regexp)
-        $page = preg_replace($regexp, '\\1 \\2', $page);
-    return $page;
-}
+      function _iftoken ($id, $condition, &$page) {
+         global $FieldSeparator;
 
-function NoSuchRevision ($page, $version) {
-    $html = "<p><b>" . gettext("Bad Version") . "</b>\n<p>";
-    $html .= sprintf(gettext("I'm sorry.  Version %d of %s is not in my database."),
-                     $version, htmlspecialchars($page->getName()));
-    $html .= "\n";
-    echo GeneratePage('MESSAGE', $html, gettext("Bad Version"));
-    ExitWiki ("");
-}
+	 // line based IF directive
+	 $lineyes = "$FieldSeparator#IF $id$FieldSeparator#";
+	 $lineno = "$FieldSeparator#IF !$id$FieldSeparator#";
+         // block based IF directive
+	 $blockyes = "$FieldSeparator#IF:$id$FieldSeparator#";
+	 $blockyesend = "$FieldSeparator#ENDIF:$id$FieldSeparator#";
+	 $blockno = "$FieldSeparator#IF:!$id$FieldSeparator#";
+	 $blocknoend = "$FieldSeparator#ENDIF:!$id$FieldSeparator#";
 
+	 if ($condition) {
+	    $page = str_replace($lineyes, '', $page);
+	    $page = str_replace($blockyes, '', $page);
+	    $page = str_replace($blockyesend, '', $page);
+	    $page = preg_replace("/$blockno(.*?)$blocknoend/s", '', $page);
+	    $page = ereg_replace("${lineno}[^\n]*\n", '', $page);
+         } else {
+	    $page = str_replace($lineno, '', $page);
+	    $page = str_replace($blockno, '', $page);
+	    $page = str_replace($blocknoend, '', $page);
+	    $page = preg_replace("/$blockyes(.*?)$blockyesend/s", '', $page);
+	    $page = ereg_replace("${lineyes}[^\n]*\n", '', $page);
+	 }
+      }
 
-// (c-file-style: "gnu")
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:   
+      $page = join('', file($templates[$template]));
+      $page = str_replace('###', "$FieldSeparator#", $page);
+
+      // valid for all pagetypes
+      _iftoken('COPY', isset($hash['copy']), $page);
+      _iftoken('LOCK',	(isset($hash['flags']) &&
+			($hash['flags'] & FLAG_PAGE_LOCKED)), $page);
+      _iftoken('ADMIN', defined('WIKI_ADMIN'), $page);
+
+      _dotoken('SCRIPTURL', $ScriptUrl, $page);
+      _dotoken('PAGE', htmlspecialchars($name), $page);
+      _dotoken('ALLOWEDPROTOCOLS', $AllowedProtocols, $page);
+      _dotoken('LOGO', $logo, $page);
+      
+      // invalid for messages (search results, error messages)
+      if ($template != 'MESSAGE') {
+         _dotoken('PAGEURL', rawurlencode($name), $page);
+         _dotoken('LASTMODIFIED',
+			date($datetimeformat, $hash['lastmodified']), $page);
+         _dotoken('LASTAUTHOR', $hash['author'], $page);
+         _dotoken('VERSION', $hash['version'], $page);
+	 if (strstr($page, "$FieldSeparator#HITS$FieldSeparator#")) {
+            _dotoken('HITS', GetHitCount($dbi, $name), $page);
+	 }
+	 if (strstr($page, "$FieldSeparator#RELATEDPAGES$FieldSeparator#")) {
+            _dotoken('RELATEDPAGES', LinkRelatedPages($dbi, $name), $page);
+	 }
+      }
+
+      // valid only for EditLinks
+      if ($template == 'EDITLINKS') {
+	 for ($i = 1; $i <= NUM_LINKS; $i++) {
+            $ref = isset($hash['refs'][$i]) ? $hash['refs'][$i] : '';
+	    _dotoken("R$i", $ref, $page);
+         }
+      }
+
+      _dotoken('CONTENT', $content, $page);
+      print $page;
+   }
 ?>

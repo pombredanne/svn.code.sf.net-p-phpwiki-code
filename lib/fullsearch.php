@@ -1,62 +1,46 @@
 <?php
-// Search the text of pages for a match.
-rcs_id('$Id: fullsearch.php,v 1.8 2001-09-19 03:24:36 wainstead Exp $');
-require_once('lib/Template.php');
-require_once('lib/TextSearchQuery.php');
+   // Search the text of pages for a match.
+   rcs_id('$Id: fullsearch.php,v 1.4 2000-12-30 21:09:13 ahollosi Exp $');
 
-$query = new TextSearchQuery($args->get('searchterm'));
+   if(get_magic_quotes_gpc())
+      $full = stripslashes($full);
 
-$html = ("<p><b>"
-         . sprintf(gettext ("Searching for \"%s\" ....."),
-                   htmlspecialchars($args->get('searchterm')))
-         . "</b></p>\n<dl>\n" );
+   $html = "<P><B>"
+	   . sprintf(gettext ("Searching for \"%s\" ....."),
+		   htmlspecialchars($full))
+	   . "</B></P>\n<DL>\n";
 
-// search matching pages
-$iter = $dbi->fullsearch($query);
+   // search matching pages
+   $query = InitFullSearch($dbi, $full);
 
-// quote regexp chars (space are treated as "or" operator)
-$hilight_re = $query->getHighlightRegexp();
+   // quote regexp chars (space are treated as "or" operator)
+   $full = preg_replace("/\s+/", "|", preg_quote($full));
 
-$found = 0;
-$count = 0;
-while ($page = $iter->next()) {
-    $html .= "<dt><b>" . LinkExistingWikiWord($page->getName()) . "</b>\n";
-    $count++;
-    if (empty($hilight_re))
-        continue;               // nothing to highlight
-    
-    // print out all matching lines, highlighting the match
-    $current = $page->getCurrentRevision();
-    $matches = preg_grep("/$hilight_re/i", $current->getContent());
-    foreach ($matches as $line) {
-        if ($hits = preg_match_all("/$hilight_re/i", $line, $dummy)) {
-            $line = preg_replace("/$hilight_re/i",
-                                 "${FieldSeparator}OT\\0${FieldSeparator}CT",
-                                 $line);
-            $line = htmlspecialchars($line);
-            $line = str_replace("${FieldSeparator}OT", '<b>', $line);
-            $line = str_replace("${FieldSeparator}CT", '</b>', $line);
-            $html .= "<dd><small>$line</small></dd>\n";
+   $found = 0;
+   $count = 0;
+   while ($pagehash = FullSearchNextMatch($dbi, $query)) {
+      $html .= "<DT><B>" . LinkExistingWikiWord($pagehash["pagename"]) . "</B>\n";
+      $count++;
+
+      // print out all matching lines, highlighting the match
+      for ($j = 0; $j < (count($pagehash["content"])); $j++) {
+         if ($hits = preg_match_all("/$full/i", $pagehash["content"][$j], $dummy)) {
+            $matched = preg_replace("/$full/i",
+				"${FieldSeparator}OT\\0${FieldSeparator}CT",
+                                $pagehash["content"][$j]);
+	    $matched = htmlspecialchars($matched);
+	    $matched = str_replace("${FieldSeparator}OT", '<b>', $matched);
+	    $matched = str_replace("${FieldSeparator}CT", '</b>', $matched);
+            $html .= "<dd><small>$matched</small></dd>\n";
             $found += $hits;
-        }
-    }
-}
+         }
+      }
+   }
 
-$html .= ( "</dl>\n<hr noshade>"
-           . sprintf (gettext ("%d matches found in %d pages."),
-                      $found, $count)
-           . "\n");
-           
-echo GeneratePage('MESSAGE', $html, sprintf(gettext("Full Text Search: %s"), $searchterm));
+   $html .= "</dl>\n<hr noshade>"
+	    . sprintf (gettext ("%d matches found in %d pages."),
+		       $found, $count)
+	    . "\n";
 
-
-// For emacs users
-// Local Variables:
-// mode: php
-// tab-width: 8
-// c-basic-offset: 4
-// c-hanging-comment-ender-p: nil
-// indent-tabs-mode: nil
-// End:
-
+   GeneratePage('MESSAGE', $html, gettext ("Full Text Search Results"), 0);
 ?>

@@ -4,9 +4,9 @@ Du aktivierst die Umwandlung, indem du das Kontrollfeld unten auf der Seite Edit
 
  [[o] Ich kann keine Tabulatoren verwenden. Bitte für mich, wenn ich speichere.
 
-Eine Folge von Leerzeichen muß mindestens __drei__ Leerzeichen lang sein, um als Tab erkannt zu werden. Verwende Vielfache von __acht__ Leerzeichen, um mehrere Tabs einzugeben. Jeweils acht Leerzeichen werden in einen Tab umgewandelt. Die letzte Folge darf auch etwas kürzer sein, so lange mindestens drei Leerzeichen in der letzten (oder einzigen) Folge sind.
+Eine Folge von Leerzeichen muß mindestens '''drei''' Leerzeichen lang sein, um als Tab erkannt zu werden. Verwende Vielfache von '''acht''' Leerzeichen, um mehrere Tabs einzugeben. Jeweils acht Leerzeichen werden in einen Tab umgewandelt. Die letzte Folge darf auch etwas kürzer sein, so lange mindestens drei Leerzeichen in der letzten (oder einzigen) Folge sind.
 
-__Bitte überprüfe die so erstellten Seiten!__ Diese Art der Tabulatorerkennung kann manchmal zu unerwarteten Ergebnissen führen.
+'''Bitte überprüfe die so erstellten Seiten!''' Diese Art der Tabulatorerkennung kann manchmal zu unerwarteten Ergebnissen führen.
  
 -----
 [Hinweis zu dieser Seite: diese Seite wird angezeigt, wenn der Benutzer den Link "Konvertiere LeerzeichenZuTabs" auf irgendeiner Bearbeiten-Seite anzeigt. Sie erklärt, was diese Funktion bewirkt, warum man sie verwendet, und Möglichkeiten zum Vermeiden des Problems der Leerzeichen statt Tabs.]

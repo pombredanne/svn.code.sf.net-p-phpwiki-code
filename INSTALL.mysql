@@ -1,4 +1,3 @@
-FIXME: these instructions are slightly broken.
 
 Installing phpwiki with mySQL 
 -----------------------------
@@ -31,7 +30,7 @@ For more information on mySQL go to http://www.mysql.org/
    error. In that case remove existing tables manually and delete
    the "drop tables" lines from schemas/schema.mysql - it should work now
 
-4. Edit index.php to reflect your settings.
+4. Edit lib/config.php to reflect your settings.
 
 	a) comment out the DBM settings
 	b) uncomment the mySQL settings
@@ -53,4 +52,4 @@ if (!extension_loaded("mysql"))  { dl("mysql.so"); }
 /Arno
 ahollosi@mail.com
 
-$Id: INSTALL.mysql,v 1.8 2001-09-18 19:16:23 dairiki Exp $
+$Id: INSTALL.mysql,v 1.6 2001-01-24 18:36:17 ahollosi Exp $

@@ -66,11 +66,11 @@ this is a plain paragraph again
 	# number
 ----
 __Link tests__
-# normal: HomePage
-# in brackets: [HomePage] -- named: [the front page|HomePage]
+# normal: FrontPage
+# in brackets: [FrontPage] -- named: [the front page|FrontPage]
 # Link in brackets: [http://phpwiki.sourceforge.net/]
 # Link outside brackets: http://phpwiki.sourceforge.net/
-# Link with Wiki word: http://phpwiki.sourceforge.net/phpwiki/index.php?HomePage
+# Link with Wiki word: http://phpwiki.sourceforge.net/phpwiki/index.php?FrontPage
 # Two consecutive links: http://phpwiki.sourceforge.net/ http://phpwiki.sourceforge.net/phpwiki/
 # [PhpWiki on Sourceforge | http://phpwiki.sourceforge.net/]
 # [URL with a WikiWord | http://phpwiki.sourceforge.net/phpwiki/index.php?RecentChanges]
