@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.10 2004-03-14 20:30:21 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.11 2004-03-15 09:52:59 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -188,18 +188,20 @@ extends WikiPlugin
         if ($jshide) {
             $list->setAttr('style','display:none;');
             $html->pushContent(Javascript("
-function toggletoc() {
+function toggletoc(a) {
   toc=document.getElementById('toclist');
   if (toc.style.display=='none') {
     toc.style.display='block';
+    a.title='"._("Click to hide the TOC")."';
   } else {
     toc.style.display='none';
+    a.title='"._("Click to display")."';
   }
 }"));
             $html->pushContent(HTML::h4(HTML::a(array('name'=>'TOC',
                                                       'class'=>'wikiaction',
                                                       'title'=>_("Click to display"),
-                                                      'onclick'=>"toggletoc()"),
+                                                      'onclick'=>"toggletoc(this)"),
                                                 _("Table Of Contents"))));
         } else {
             if (!$noheader)
@@ -213,6 +215,9 @@ function toggletoc() {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/03/14 20:30:21  rurban
+// jshide button
+//
 // Revision 1.9  2004/03/09 19:24:20  rurban
 // custom indentstr
 // h2 toc header

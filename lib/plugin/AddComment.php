@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AddComment.php,v 1.4 2004-03-14 20:30:21 rurban Exp $');
+rcs_id('$Id: AddComment.php,v 1.5 2004-03-15 09:52:59 rurban Exp $');
 /*
  Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     // Arguments:
@@ -91,18 +91,20 @@ extends WikiPlugin_WikiBlog
             $div = HTML::div(array('id'=>'comments','style'=>'display:none;'));
             //$list->setAttr('style','display:none;');
             $div->pushContent(Javascript("
-function togglecomments() {
+function togglecomments(a) {
   comments=document.getElementById('comments');
   if (comments.style.display=='none') {
     comments.style.display='block';
+    a.title='"._("Click to hide the comments")."';
   } else {
     comments.style.display='none';
+    a.title='"._("Click to display all comments")."';
   }
 }"));
             $html->pushContent(HTML::h4(HTML::a(array('name'=>'comment-header',
                                                       'class'=>'wikiaction',
                                                       'title'=>_("Click to display"),
-                                                      'onclick'=>"togglecomments()"),
+                                                      'onclick'=>"togglecomments(this)"),
                                                 _("Comments"))));
         } else {
             $div = HTML::div(array('id'=>'comments'));
@@ -133,6 +135,9 @@ function togglecomments() {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/03/14 20:30:21  rurban
+// jshide button
+//
 // Revision 1.3  2004/03/14 16:26:21  rurban
 // copyright line
 //
