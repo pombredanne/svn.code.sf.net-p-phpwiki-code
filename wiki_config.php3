@@ -1,4 +1,4 @@
-<!-- $Id: wiki_config.php3,v 1.6 2000-06-18 03:50:30 wainstead Exp $ -->
+<!-- $Id: wiki_config.php3,v 1.7 2000-06-18 03:51:55 wainstead Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for
@@ -22,17 +22,17 @@
    // if you are using MySQL instead of a DBM to store your
    // Wiki pages, use wiki_mysql.php3 instead of wiki_dbmlib.php3
    // See INSTALL.mysql for details on using MySQL
-/*
+
    // DBM settings (default)
    include "wiki_dbmlib.php3";
    $WikiDataBase = "/tmp/wikidb"; // must be server-writable!
    $ArchiveDataBase = "/tmp/wikiarchive"; // see above!
-*/
+
    // MySQL settings (thanks Arno Hollosi! <ahollosi@iname.com>)
    // Comment out the lines above (for the DBM) if you use these
 /*
    include "wiki_mysql.php3";
-   $WikiDataBase = "wiki"; 
+   $WikiDataBase = "wiki";
    $ArchiveDataBase = "archive";
    $mysql_server = 'localhost';
    $mysql_user = 'root';
@@ -40,13 +40,13 @@
    $mysql_db = 'wiki';
 */
 
-
+/*
    // PostgreSQL settings. 
    include "wiki_pgsql.php3";
    $WikiDataBase = "wiki";
    $pg_dbhost    = "localhost";
    $pg_dbport    = "5432";
-
+*/
 
    $ScriptName = "index.php3";
    $SignatureImg = "$ServerAddress/signature.png";
