@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.39 2004-03-14 16:40:45 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.40 2004-04-08 01:22:54 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -55,6 +55,7 @@ $s = $Theme->getButtonSeparator();
 <form method="post" id="editpage" name="editpage"
       action="<?= $request->getPostURL() ?>"
       accept-charset="<?=CHARSET?>">
+  <?php if (!empty($_GET['start_debug'])) echo '<input type="hidden" name="start_debug" value="1" >'; ?>
   <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
   <br clear="all" class="clear-floats" />
   <div id="editarea-size">

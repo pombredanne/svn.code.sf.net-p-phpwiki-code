@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.39 2004-03-30 02:14:03 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.40 2004-04-08 01:22:53 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -765,15 +765,15 @@ class WikiDB_Page
         /* Generate notification emails */
         if (isa($newrevision, 'wikidb_pagerevision')) {
             // Save didn't fail because of concurrent updates.
-            $notify = $this->get('notify');
+            $notify = $this->_wikidb->get('notify');
+            $emails = array();
             if (!empty($notify) and is_array($notify)) {
                 foreach ($notify as $page => $users) {
-                    if (ereg($page,$this->_pagename)) {
-                        $emails = array();
+                    if (glob_match($page,$this->_pagename)) {
                         foreach ($users as $userid => $user) {
                             if (!empty($user['verified']) and !empty($user['email']))
                                 $emails[] = $user['email'];
-                            elseif (DEBUG and !empty($user['email'])) {
+                            elseif (!empty($user['email'])) {
                                 global $request;
                                 //do a dynamic emailVerified check update
                                 $u = $request->getUser();
@@ -792,22 +792,53 @@ class WikiDB_Page
                                     }
                                 }
                                 // do no verification
-                                if (DEBUG and !in_array($user['email'],$emails))
-                                    $emails[] = $user['email'];
+                                if (DEBUG) {
+                                    if (!in_array($user['email'],$emails))
+                                        $emails[] = $user['email'];
+                                }
                             }
                         }
-                        if (!empty($emails)) {
-                            $subject = sprintf(_("PageChange Notification %s"),$page);
-                            $diff = WikiUrl($this->_pagename, array('action'=>'diff',true));
-                            $emails = join(',',$emails);
-                            if (mail($emails,"[".WIKI_NAME."] ".$subject,$subject."\n".$diff))
-                                trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
-                                                      $this->_pagename, $emails), E_USER_NOTICE);
-                            else
-                                trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
-                                                      $this->_pagename, $emails), E_USER_WARNING);
-                        }
                     }
+                }
+                if (!empty($emails)) {
+                    $emails = array_unique($emails);
+                    $subject = sprintf(_("PageChange Notification %s"),$this->_pagename);
+                    $previous = $backend->get_previous_version($this->_pagename, $version);
+                    if ($previous) {
+                        $difflink = WikiUrl($this->_pagename,array('action'=>'diff'),true);
+                        $cache = &$this->_wikidb->_cache;
+                        $this_content = explode("\n", $wikitext);
+                        $prevdata = $cache->get_versiondata($this->_pagename, $previous, true);
+                        if (empty($prevdata['%content']))
+                            $prevdata = $backend->get_versiondata($this->_pagename, $previous, true);
+                        $other_content = explode("\n", $prevdata['%content']);
+                        
+                        include_once("lib/diff.php");
+                        $diff2 = new Diff($other_content, $this_content);
+                        $context_lines = max(4, count($other_content) + 1,
+                                                count($this_content) + 1);
+                        $fmt = new UnifiedDiffFormatter($context_lines);
+                        $content  = $this->_pagename . " " . $previous . " " . Iso8601DateTime($prevdata['mtime']) . "\n";
+                        $content .= $this->_pagename . " " . $version . " " .  Iso8601DateTime($meta['mtime']) . "\n";
+                        $content .= $fmt->format($diff2);
+                        
+                    } else {
+                        $difflink = WikiUrl($this->_pagename,array(),true);
+                        $content = $this->_pagename . " " . $version . " " .  Iso8601DateTime($meta['mtime']) . "\n";
+                        $content .= _("New Page");
+                    }
+                    $editedby = sprintf(_("Edited by: %s"),$meta['author']);
+                    $emails = join(',',$emails);
+                    if (mail($emails,"[".WIKI_NAME."] ".$subject, 
+                             $subject."\n".
+                             $editedby."\n".
+                             $difflink."\n\n".
+                             $content))
+                        trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
+                                              $this->_pagename, $emails), E_USER_NOTICE);
+                    else
+                        trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
+                                              $this->_pagename, $emails), E_USER_WARNING);
                 }
             }
         }

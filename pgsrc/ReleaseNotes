@@ -1,36 +1,53 @@
 Date: Sun, 27 Jan 2002 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.17 2004-04-01 15:57:20 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.18 2004-04-08 01:22:54 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.17 $";
+  pgsrc_version="2 $Revision: 1.18 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-1.3.8 Jan-Mar 2004, Reini Urban:
+1.3.8 Jan-Apr 2004, Reini Urban:
+
+External pluggable authentification, DB prefs and sessions, 
+some more fixes, docs, themes and plugins.
 
 * new WikiUserNew class (after a kick in the ass by Carsten Klapp), 
-  (recursive) with new Preferences (finally from DB), and
-  improved DB_Session (+ ADODB support)
+* new Preferences (finally from DB, no cookies anymore)
+* improved DB_Session (with added ADODB + dba support)
 * enabled WikiGroup (Joby Walker and Reini Urban)
-* individual PagePermissions (enabled, but not yet enforced)
-* fixed WikiAdminSelect, WikiAdminRemove
+* new individual PagePermissions (enabled, but not yet enforced)
 * new WikiAdminRename, WikiAdminSearchReplace, WikiAdminSetAcl
-* several other new plugins: UpLoad, IncludeSiteMap, WikiPoll, WhoIsOnline, 
-  RichTable, CreateToc, AddComment, _WikiTranslation => TranslateText,
-  CreatePage, 
-* pear DB update
-* InterWiki image buttons
-* fixed XHTML dumps (css, images, unlinked pages, \r\r\n issue)
-* PageList: enhanced sortby + limit support, sortable gridbuttons enforced
-* preliminary SOAP support
-* minor theme/default overhaul and new theme/smaller
-* Japanese language support added by Tadashi Jokagi <webmaster@elf.no-ip.org>
-* fixed UnfoldSubpages sortby
+* several other new plugins: WikiPoll, WhoIsOnline, CreateToc, AddComment, 
+  _WikiTranslation => TranslateText, NoCache,
+  UpLoad (by NathanGass, qubit and Reini Urban), 
+  IncludeSiteMap (by cuthbertcat and Reini Urban),
+  RichTable (by Sameer D. Sahasrabuddhe), 
+  CreatePage and RateIt (by Dan Frankowski)
+* added InterWiki image button support
+* added Japanese language support (by Tadashi Jokagi)
+* added sqlite support (thanks to Matthew Palmer)
+* added theme and plugin-specific PageList column types and theme-specific UserPreferences
+* added EmailVerification and PageChangeNotification (experimental)
+* added new sess_ip column (DB_Session) for ip-based robot throttling
+
+* Pear DB update, minor performance improvement for PearDB
+* PageList: enhanced sortby + limit support, sortable gridbuttons enforced, cleanup.
+* minor theme/default overhaul, new theme/smaller, new experimental theme/wikilens
+* updated theme/Sidebar: box methods, fast jscalendar and easier to customize
 * more OldStyleTable arguments, PhotoAlbum local fs support
-* preliminary action=upgrade
+* preliminary action=upgrade (To import new pgsrc pages only yet. not for DB)
+* preliminary SOAP support
+* experimental javascript Search&Replace edit buttons.
+
+* fixed WikiAdminSelect, WikiAdminRemove
+* fixed and improved XHTML dumps (css, images, unlinked pages, \r\r\n issue)
+* fixed ADODB limit problem, fixed dba on Windows PHP 4.3.x
+* fixed BlockParser problem with "0" as text
+* fixed UnfoldSubpages sortby
+* fixes for PHP5 compatibility started
 
 1.3.4 until 1.3.7, 2002-2003 Jeff, Carsten and Steve Wainstead:
 
