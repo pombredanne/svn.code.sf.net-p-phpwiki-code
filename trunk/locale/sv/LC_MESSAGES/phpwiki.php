@@ -1,11 +1,27 @@
 <?php
 
+$locale["%s days"] =
+   "%s dar";
 $locale["%s of this page"] =
    "%s för den här sidan";
 $locale["%s: %s"] =
    "%s: %s";
+$locale["(diff)"] =
+   "(diff)";
 $locale["(last edited %s)"] =
    "(senast ändrad %s)";
+$locale["1 day"] =
+   "1 dag";
+$locale["Adjust"] =
+   "Justera";
+$locale["Calendar"] =
+   "Kalender";
+$locale["Cancel"] =
+   "Avbyrt";
+$locale["Complete."] =
+   "Komplett.";
+$locale["Contents"] =
+   "Innehåll";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
    "Kopiera dina ändringar till urklippet eller till ett annat temporärt ställe (t.ex. en texteditor).";
 $locale["Describe %s here."] =
@@ -34,18 +50,32 @@ $locale["FullTextSearch"] =
    "Fulltextsökning";
 $locale["GoodStyle"] =
    "BraStil";
+$locale["H"] =
+   "H";
+$locale["Height"] =
+   "Höjd";
 $locale["Hits"] =
    "Träffar";
 $locale["HomePage"] =
    "Framsida";
 $locale["I'm sorry.  Version %d of %s is not in my database."] =
    "Ledsen.  Version %d för %s finns inte i databasen";
+$locale["In order to recover from this situation, follow these steps:"] =
+   "För att lösa situtationen, följ dessa steg:";
 $locale["Include of '%s' failed"] =
    "Insättning för '%s' misslyckades";
 $locale["Included from %s"] =
    "Insättning från %s";
+$locale["InterWikiMap"] =
+   "InterWikiMap";
+$locale["Last"] =
+   "Senaste";
 $locale["Last Modified"] =
-   "Senast Ändrad";
+   "Ändringsdatum";
+$locale["Last Summary"] =
+   "Senaste Kommentar";
+$locale["Last edited %s."] =
+   "Senast ändrad %s.";
 $locale["Last edited on %s."] =
    "Senast ändrad %s.";
 $locale["Lists nested too deep in SetHTMLOutputMode"] =
@@ -56,24 +86,46 @@ $locale["Locked"] =
    "Låst";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
    "Ändra filen igen. Klistra in dina ändringar från urklippet (eller texteditorn).";
+$locale["Modern"] =
+   "Ny|modig";
 $locale["MostPopular"] =
    "MestPopulär";
+$locale["Next"] =
+   "Nästa";
+$locale["Next Month"] =
+   "Följande Månad";
 $locale["None"] =
-   "ingen";
+   "Ingen";
 $locale["Page Locked"] =
    "Sidan är Låst";
 $locale["Page Name"] =
    "Namn på Sidan";
+$locale["Password"] =
+   "Lösenord";
+$locale["Preview"] =
+   "Översikt";
+$locale["Previous"] =
+   "Föregående";
 $locale["Previous Author"] =
    "Göregående Författare";
+$locale["Previous Month"] =
+   "Föregående Månad";
+$locale["Printer"] =
+   "Skrivare";
 $locale["RecentChanges"] =
    "SenasteÄndringar";
 $locale["Remove Page"] =
    "Ta bort sida";
 $locale["Remove page"] =
    "Ta bort sida";
+$locale["Remove the page now"] =
+   "Ta bort sida nu";
 $locale["Removed page '%s' succesfully."] =
    "Tog bort sidan '%s'.";
+$locale["Return to %s"] =
+   "Tillbaka till %s";
+$locale["Return to %s."] =
+   "Tillbaka till %s.";
 $locale["Save"] =
    "Spara";
 $locale["Saved: %s"] =
@@ -82,8 +134,14 @@ $locale["Search"] =
    "Sök";
 $locale["See %s tips for editing."] =
    "%s: Redigeringstips.";
+$locale["Show relative dates using 'Today' and 'Yesterday'."] =
+   "Andvänd relativt datum";
 $locale["Sorry for the inconvenience."] =
    "Ledsen för allt besvär.";
+$locale["Summary:"] =
+   "Kommentar:";
+$locale["Synopsis"] =
+   "Översikt";
 $locale["TextFormattingRules"] =
    "Textformateringsregler";
 $locale["Thank you for editing %s."] =
@@ -100,12 +158,18 @@ $locale["Title search results for '%s'"] =
    "Sökresultat för titelsökningen för '%s'";
 $locale["TitleSearch"] =
    "Titelsökningen";
+$locale["Today"] =
+   "i dag";
+$locale["Today at %s"] =
+   "i dag i %s";
 $locale["Unlock Page"] =
    "Lås upp Sida";
 $locale["Version"] =
    "Version";
 $locale["Version %d"] =
    "Version %d";
+$locale["Version %s, saved %s."] =
+   "Version %s, sparade %s";
 $locale["Version %s, saved on %s."] =
    "Version %s, sparade %s";
 $locale["Versions are identical"] =
@@ -114,6 +178,16 @@ $locale["View Source"] =
    "Visa Källkoden";
 $locale["View Source: %s"] =
    "Visa Källkoden: %s";
+$locale["W"] =
+   "B";
+$locale["Warning!"] =
+   "Varning!";
+$locale["Width"] =
+   "Bredd";
+$locale["Yesterday"] =
+   "i går";
+$locale["Yesterday at %s"] =
+   "i går i %s";
 $locale["You are about to remove '%s' permanently!"] =
    "Du kommer att ta bort \"%s\" permanent!";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -126,6 +200,8 @@ $locale["diff"] =
    "diff";
 $locale["from %s"] =
    "från %s";
+$locale["last modified %s"] =
+   "senast ändrad %s";
 $locale["last modified on %s"] =
    "senast ändrad %s";
 $locale["locked"] =
@@ -136,5 +212,9 @@ $locale["version %d"] =
    "version %d";
 $locale["version %s"] =
    "version %s";
+$locale["version %s, saved %s."] =
+   "version %s, sparade %s.";
+$locale["version %s, saved on %s."] =
+   "version %s, sparade %s.";
 
 ?>
