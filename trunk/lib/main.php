@@ -1,8 +1,14 @@
 <?php
-rcs_id('$Id: main.php,v 1.3 2001-02-14 22:02:05 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.4 2001-02-15 19:32:34 dairiki Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
+
+if (USE_PATH_INFO && !isset($PATH_INFO))
+{
+   header("Location: " . SERVER_URL . $REQUEST_URI);
+   exit;
+}
 
 function DeducePagename () 
 {
@@ -11,9 +17,12 @@ function DeducePagename ()
    if (isset($pagename))
       return fix_magic_quotes_gpc($pagename);
 
-   if (USE_PATH_INFO)
+   if (USE_PATH_INFO && isset($PATH_INFO))
+   {
+      fix_magic_quotes_gpc($PATH_INFO);
       if (ereg('^' . PATH_INFO_PREFIX . '(..*)$', $PATH_INFO, $m))
 	 return $m[1];
+   }
 
    return gettext("FrontPage");
 }
