@@ -31,7 +31,7 @@ class SetupWiki extends PHPUnit_TestCase {
         purge_testbox();
         
         $dbi = $request->getDbh();
-        $dbi->deletePage('HomePage'); // possibly in cache
+        //$dbi->deletePage('HomePage'); // possibly in cache
         $this->assertFalse($dbi->isWikiPage('HomePage'));
 
         $request->setArg('source', FindFile('pgsrc'));

@@ -1,7 +1,7 @@
-#! /usr/local/bin/php -Cq
+#!/usr/local/bin/php -Cq
 <?php  
-/* Copyright (C) 2004, Dan Frankowski <dfrankow@cs.umn.edu>
- * Copyright (C) 2004, Reini Urban <rurban@x-ray.at>
+/* Copyright (C) 2004 Dan Frankowski <dfrankow@cs.umn.edu>
+ * Copyright (C) 2004 Reini Urban <rurban@x-ray.at>
  *
  * This file is part of PhpWiki.
  * 
@@ -26,6 +26,7 @@
  * You must have PEAR's PHPUnit package <http://pear.php.net/package/PHPUnit>. 
  * These tests are unrelated to test/maketest.pl, which do not use PHPUnit.
  * These tests run from the command-line as well as from the browser.
+ * Use the argv (from cli) or tests (from browser) params to run only certain tests.
  */
 
 ####################################################################
@@ -124,6 +125,7 @@ if (ENABLE_USER_NEW) {
     }
 }
 
+//FIXME: ignore cached requests (if-modified-since) from cli
 class MockRequest extends WikiRequest {
     function MockRequest(&$dbparams) {
         $this->_dbi = WikiDB::open($dbparams);
@@ -135,7 +137,7 @@ class MockRequest extends WikiRequest {
     function getGroup() {
     	if (is_object($this->_group))
             return $this->_group;
-        else     
+        else // FIXME: this is set to "/f:" somewhere.
             return WikiGroup::getGroup();
     }
 }
@@ -156,8 +158,13 @@ function purge_testbox() {
     global $db_params;	
     $dir = $db_params['directory'];
     assert($dir);
-    foreach (array('latest_ver','links','page_data', 'ver_data') as $d) {
+    foreach (array('latest_ver','links','page_data','ver_data') as $d) {
     	purge_dir("$dir/$d");
+    }
+    if (isset($GLOBALS['request'])) {
+        $dbi = $GLOBALS['request']->getDbh();
+        $dbi->_cache->close();
+        $dbi->_backend->_latest_versions = array();
     }
 }
 
@@ -198,12 +205,17 @@ $alltests = array('InlineParserTest','HtmlParserTest','PageListTest','ListPagesT
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']) and !empty($HTTP_GET_VARS['tests']))
     $argv = explode(',',$HTTP_GET_VARS['tests']);
 if (!empty($argv)) {
-	$runtests = array();
-	foreach ($argv as $test) {
-	    if (in_array($test,$alltests))
-            $runtests[] = $test;
-	}        
-	$alltests = $runtests;
+	if (count($argv) == 1 and preg_match("/test\.php$/", $argv[0]))
+	    ;
+	else {
+	    $runtests = array();
+	    print_r($argv);
+	    foreach ($argv as $test) {
+	        if (in_array($test,$alltests))
+                $runtests[] = $test;
+	    }
+	    $alltests = $runtests;
+	}
 }
 
 foreach ($alltests as $test) {
@@ -216,6 +228,7 @@ foreach ($alltests as $test) {
 $result = PHPUnit::run($suite); 
 
 echo "ran " . $result->runCount() . " tests, " . $result->failureCount() . " failures.\n";
+flush();
 
 if ($result->failureCount() > 0) {
     echo "More detail:\n";
