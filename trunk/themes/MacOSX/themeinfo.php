@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.15 2002-01-14 05:54:42 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.16 2002-01-15 23:23:21 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -84,6 +84,15 @@ $rssicon = "themes/$theme/RSS.png";
 // used. If it is not defined by index.php or in here then the "Thank
 // you for editing..." screen will be omitted.
 $SignatureImg = "themes/$theme/Signature.png"; // Papyrus 19pt
+
+// This defines separators used in RecentChanges and RecentEdits lists.
+// If undefined, defaults to '' (nothing) and '...' (three periods).
+define("RC_SEPARATOR_A", ' . . . ');
+define("RC_SEPARATOR_B", ' --');
+
+// Controls whether the '?' appears before or after UnknownWikiWords.
+// The PhpWiki default is for the '?' to appear before.
+define('WIKIMARK_AFTER', true);
 
 // If this theme defines any templates, they will completely override
 // whatever templates have been defined in index.php.
