@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.48 2004-11-19 19:22:03 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.49 2004-11-23 13:06:30 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -151,7 +151,9 @@ class WikiGroup{
                      GROUP_BOGOUSER,
                      GROUP_SIGNED,
                      GROUP_AUTHENTICATED,
-                     GROUP_ADMIN);
+                     GROUP_ADMIN,
+                     GROUP_OWNER,
+                     GROUP_CREATOR);
     }
     /** untranslated */
     function _specialGroups(){
@@ -161,7 +163,9 @@ class WikiGroup{
                      "_BOGOUSER",
                      "_SIGNED",
                      "_AUTHENTICATED",
-                     "_ADMIN");
+                     "_ADMIN",
+                     "_OWNER",
+                     "_CREATOR");
     }
 
     /**
@@ -321,7 +325,7 @@ class WikiGroup{
             return $users;
         case GROUP_BOGOUSER:
             foreach ($all as $u) {
-                if (isWikiWord($user)) $users[] = $u;
+                if (isWikiWord($u)) $users[] = $u;
             }
             return $users;
         case GROUP_SIGNED:    	
@@ -508,7 +512,7 @@ class GroupWikiPage extends WikiGroup{
             return false;
         }
         $contents = $group_revision->getContent();
-        $match = '/^\s*[\*\#]+\s*' . $this->username . '\s*$/';
+        $match = '/^\s*[\*\#]+\s*\[?' . $this->username . '\]?\s*$/';
         foreach ($contents as $line){
             if (preg_match($match, $line)) {
                 return true;
@@ -559,30 +563,22 @@ class GroupWikiPage extends WikiGroup{
     	if ($this->specialGroup($group))
             return $this->getSpecialMembersOf($group);
 
-        trigger_error("GroupWikiPage::getMembersOf is not yet implimented",
-                      E_USER_WARNING);
-        return array();
-        /*
-        * Waiting for a reliable way to check if a string is a username.
-        $request = $this->request;
-        $user = $this->user;
-        $group_page = $request->getPage($group);
+        $group_page = $GLOBALS['request']->getPage($group);
         $group_revision = $group_page->getCurrentRevision();
         if ($group_revision->hasDefaultContents()) {
-            trigger_error("Group $group does not exist", E_USER_WARNING);
-            return false;
+            trigger_error(sprintf(_("Group %s does not exist"),$group), E_USER_WARNING);
+            return array();
         }
         $contents = $group_revision->getContent();
-        $match = '/^(\s*[\*\#]+\s*)(\w+)(\s*)$/';
+        // This is not really a reliable way to check if a string is a username. But better than nothing.
+        $match = '/^(\s*[\*\#]+\s*\[?)(\w+)(\]?\s*)$/';
         $members = array();
-        foreach($contents as $line){
-            $matches = array();
-            if(preg_match($match, $line, $matches)){
+        foreach ($contents as $line){
+            if (preg_match($match, $line, $matches)){
                 $members[] = $matches[2];
             }
         }
         return $members;
-        */
     }
 }
 
@@ -1096,6 +1092,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2004/11/19 19:22:03  rurban
+// ModeratePage part1: change status
+//
 // Revision 1.47  2004/11/19 13:23:47  rurban
 //
 // Another catch by Charles Corrigan: check against the dbi backend, not the WikiDB class.

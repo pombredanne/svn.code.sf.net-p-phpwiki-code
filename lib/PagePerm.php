@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.36 2004-11-21 11:59:16 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.37 2004-11-23 13:06:30 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -396,14 +396,18 @@ class PagePermission {
         if ($group === ACL_AUTHENTICATED)
             return $user->isAuthenticated();
         if ($group === ACL_OWNER) {
+            if (!$user->isAuthenticated()) return false;
             $page = $request->getPage();
-            return ($user->isAuthenticated() and 
-                    $page->getOwner() === $user->UserName());
+            $owner = $page->getOwner();
+            return ($owner === $user->UserName() 
+                    or $member->isMember($owner));
         }
         if ($group === ACL_CREATOR) {
+            if (!$user->isAuthenticated()) return false;
             $page = $request->getPage();
-            return ($user->isAuthenticated() and 
-                    $page->getCreator() === $user->UserName());
+            $creator = $page->getCreator();
+            return ($creator === $user->UserName() 
+                    or $member->isMember($creator));
         }
         /* Or named groups or usernames.
            Note: We don't seperate groups and users here. 
@@ -718,6 +722,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2004/11/21 11:59:16  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.35  2004/11/15 15:56:40  rurban
 // don't load PagePerm on ENABLE_PAGEPERM = false to save memory. Move mayAccessPage() to main.php
 //
