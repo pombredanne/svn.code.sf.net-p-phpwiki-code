@@ -1,5 +1,5 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: RecentEdits,v 1.5 2002-01-09 05:50:18 carstenklapp Exp $
+X-RCS_ID: $Id: RecentEdits,v 1.6 2002-01-12 17:39:42 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=RecentEdits;
   flags=PAGE_LOCKED;
@@ -10,4 +10,4 @@ Here's a list of recently edited pages on this wiki. All minor changes are shown
 
 <?plugin Toolbar name=RecentEdits days=1,2,3,7,30,-1 sep=| ?>
 --------
-<?plugin RecentChanges days||=4 show_all=1 show_minor=1?>
+<?plugin RecentChanges days||=4 show_all||=1 show_minor||=1?>
