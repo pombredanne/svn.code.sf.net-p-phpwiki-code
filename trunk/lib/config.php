@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.82 2004-02-15 21:34:37 rurban Exp $');
+rcs_id('$Id: config.php,v 1.83 2004-02-16 00:20:30 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -112,7 +112,8 @@ function guessing_setlocale ($category, $locale) {
                  'nl' => array('nl_NL', 'dutch'),
                  'fr' => array('fr_FR', 'français', 'french'),
                  'it' => array('it_IT'),
-                 'sv' => array('sv_SE')
+                 'sv' => array('sv_SE'),
+                 'ja' => array('ja_JP','ja_JP.eucJP')
                  );
     
     list ($lang) = split('_', $locale);

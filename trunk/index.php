@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true);
 
 define ('PHPWIKI_VERSION', '1.3.8pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.123 2004-02-09 03:58:07 rurban Exp $');
+rcs_id('$Id: index.php,v 1.124 2004-02-16 00:20:30 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -321,7 +321,7 @@ $DBParams = array(
 //
 
 // USE_DB_SESSION fails with the current CVS code.
-define('USE_DB_SESSION',false);
+//define('USE_DB_SESSION',false);
 // Only for $DBParams['dbtype'] => 'SQL'. See schemas/mysql.sql or 
 // schemas/psql.sql. $DBParams['db_session_table'] must be defined.
 if (!defined('USE_DB_SESSION') and 
@@ -575,14 +575,13 @@ $DBAuthParams = array (
 
    // USERS <=> GROUPS
    //   DB methods for lib/WikiGroup.php, see also AUTH_GROUP_FILE above.
-   // you can define 1:n or n:m user<=>group relations, as you wish.
+   // You can define 1:n or n:m user<=>group relations, as you wish.
    // Sample configurations
-   //   only one group per user:
-   //'is_member' => 'SELECT 1 FROM user WHERE user=$userid"" AND group="$groupname"',
+   //   only one group per user (1:n):
+   //'is_member' => 'SELECT user FROM user WHERE user="$userid" AND group="$groupname"',
    //'group_members' => 'SELECT user FROM user WHERE group="$groupname"',
    //'user_groups' => 'SELECT group FROM user WHERE user="$userid"',
-   // or
-   //   multiple groups per user (n:m):
+   //   or multiple groups per user (n:m):
    'is_member' => 'SELECT userid FROM member WHERE userid="$userid" AND groupname="$groupname"',
    'group_members' => 'SELECT DISTINCT userid FROM member WHERE groupname="$groupname"',
    'user_groups' => 'SELECT groupname FROM member WHERE userid="$userid"',
@@ -660,6 +659,7 @@ if (!defined('CHARSET')) define("CHARSET", "iso-8859-1");
 // German  "de" (Deutsch    - StartSeite)
 // Swedish "sv" (Svenska    - Framsida)
 // Italian "it" (Italiano   - PaginaPrincipale)
+// Japanese "ja" (Japanese   - ホームページ)
 //
 // If you set DEFAULT_LANGUAGE to the empty string, your system's
 // default language (as determined by the applicable environment
@@ -910,6 +910,21 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.123  2004/02/09 03:58:07  rurban
+// for now default DB_SESSION to false
+// PagePerm:
+//   * not existing perms will now query the parent, and not
+//     return the default perm
+//   * added pagePermissions func which returns the object per page
+//   * added getAccessDescription
+// WikiUserNew:
+//   * added global ->prepare (not yet used) with smart user/pref/member table prefixing.
+//   * force init of authdbh in the 2 db classes
+// main:
+//   * fixed session handling (not triple auth request anymore)
+//   * don't store cookie prefs with sessions
+// stdlib: global obj2hash helper from _AuthInfo, also needed for PagePerm
+//
 // Revision 1.122  2004/02/07 14:20:18  rurban
 // consistent mysql schema with index.php (userid)
 //

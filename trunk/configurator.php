@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.19 2004-02-01 09:14:10 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.20 2004-02-16 00:20:30 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -245,7 +245,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.8pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.19 2004-02-01 09:14:10 rurban Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.20 2004-02-16 00:20:30 rurban Exp $');", "");
 
 $properties["Part One"] =
 new part('_partone', $SEPARATOR."\n", "
@@ -846,6 +846,7 @@ new _define_selection_optional('DEFAULT_LANGUAGE',
                     'de' => "Deutsch",
                     'sv' => "Svenska",
                     'it' => "Italiano",
+                    'ja' => "Japanese",
                     ''   => "none"), "
 Select your language/locale - default language is \"en\" for English.
 Other languages available:<pre>
@@ -856,6 +857,7 @@ French  \"fr\" (Français   - Accueil)
 German  \"de\" (Deutsch    - StartSeite)
 Swedish \"sv\" (Svenska    - Framsida)
 Italian \"it\" (Italiano   - PaginaPrincipale)
+Japanese \"ja\" (Japanese   - ¥Û¡¼¥à¥Ú¡¼¥¸)
 </pre>
 If you set DEFAULT_LANGUAGE to the empty string, your systems default language
 (as determined by the applicable environment variables) will be
