@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.95 2003-02-22 18:53:40 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.96 2003-02-26 02:55:53 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -743,6 +743,13 @@ if(defined('WIKI_XMLRPC')) return;
     $validators = array('wikiname' => WIKI_NAME,
                         'args'	=> hash($request->getArgs()),
                         'prefs'	=> hash($request->getPrefs()));
+    if (CACHE_CONTROL == 'STRICT') {
+        $dbi = $request->getDbh();
+        $timestamp = $dbi->getTimestamp();
+        $validators['mtime'] = $timestamp;
+        $validators['%mtime'] = (int)$timestamp;
+    }
+    
     $request->setValidators($validators);
    
     $request->handleAction();
