@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.1 2004-04-10 08:02:22 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.2 2004-06-03 12:30:38 rurban Exp $ -->
 <?php
 
 $WidthI = HTML::input(array('type' => 'text',
@@ -27,15 +27,11 @@ $s = $Theme->getButtonSeparator();
  * This is needed, otherwise the redirect to the real browser
  * page won't work with some browsers. (NS4 and Mozilla 0.97 won't accept
  * a redirect from a page to itself.)
- *
- * <textarea wrap="virtual"> is not valid xhtml but Netscape 4 requires it
- * to wrap long lines.
- *
  */ ?>
 
 <div class="wikitext" id="editform">
 <form method="post" name="editpage" id="editpage"
-      action="<?=WikiURL($page,array('action'=>'edit'))?>"
+      action="<?= $request->getPostURL() ?>"
       accept-charset="<?=CHARSET?>">
   <?php if (!empty($_GET['start_debug'])) echo '<input type="hidden" name="start_debug" value="1" >'; ?>
 <table summary="Toolbar: Save, Preview, and edit warnings." class="toolbar" width="100%"
@@ -57,20 +53,15 @@ $s = $Theme->getButtonSeparator();
   </td>
 </tr>
 </table>
-<p>
-  <?php if (isset($JS_SEARCHREPLACE)) { ?>
-  <span id="search-replace">
-    <?php /*TODO: use image icons here instead of text */ ?>
-    <input class="gridbutton" name="rck" type="button" value="(<?= _("Undo") ?>)" onfocus="if(this.blur && pretxt_anzahl==0) this.blur()" onclick="rueck()"><input class="gridbutton" type="button" value="<?= _("Redo") ?>" onclick="speich()">
-    <input type="button" class="gridbutton" value="<?=_("Search & Replace")?>" onclick="replace()">
-  </span>
-  <?php } ?>
-  <?=_("Edit Area Size")?>: <b><?=_("H")?></b>
-  <?=$HeightI?>
-  <b><?=_("W")?></b>
-  <?=$WidthI?>
-  <?=Button("submit:", _("Adjust"), 'wikiaction')?>
-  <br />
+<table width="100%">
+    <tr><td><?= $EDIT_TOOLBAR ?></td>
+        <td align="right"><div id="editarea-size">
+    <?=_("Size").':'?>
+    <b><?=_("H")?></b> <?=$HeightI?>
+    <b><?=_("W")?></b> <?=$WidthI?>
+    <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
+  </div></td></tr></table>
+<br />
   <?=$OLD_MARKUP_CB?>  <?=_("Use old markup")?>
 </p>
 <a name="editarea" id="editarea"><?=$EDIT_TEXTAREA?></a>

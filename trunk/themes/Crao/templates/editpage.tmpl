@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.2 2004-05-18 14:47:20 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.3 2004-06-03 12:30:38 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -44,22 +44,20 @@ $s = $Theme->getButtonSeparator();
  * This is needed, otherwise the redirect to the real browser
  * page won't work with some browsers. (NS4 and Mozilla 0.97 won't accept
  * a redirect from a page to itself.)
- *
- * <textarea wrap="virtual"> is not valid xhtml but Netscape 4 requires it
- * to wrap long lines.
- *
  */ ?>
 <form method="post" name="editpage"
       action="<?= $request->getPostURL() ?>"
       accept-charset="<?=CHARSET?>">
   <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
-  <br />
-  <fieldset id="editarea-size">
-    <label><?=_("Edit Area Size:")?>
-    <label><b><?=_("H")?></b> <?=$HeightI?></label>
-    <label><b><?=_("W")?></b> <?=$WidthI?></label></label>
+  <br clear="all" class="clear-floats" />
+  <table width="100%">
+    <tr><td><?= $EDIT_TOOLBAR ?></td>
+        <td align="right"><div id="editarea-size">
+    <?=_("Size").':'?>
+    <b><?=_("H")?></b> <?=$HeightI?>
+    <b><?=_("W")?></b> <?=$WidthI?>
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
-  </fieldset>
+  </div></td></tr></table>
   <fieldset class="editarea">
   <legend><?=_("Page Content: ")?></legend>
   <?=$EDIT_TEXTAREA?>
