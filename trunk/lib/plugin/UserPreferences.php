@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.31 2004-06-27 10:26:03 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.32 2004-06-28 12:51:41 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.31 $");
+                            "\$Revision: 1.32 $");
     }
 
     function getDefaultArguments() {
@@ -66,7 +66,11 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         $user =& $request->_user;
-        if (! $request->isActionPage($request->getArg('pagename'))) {
+        if ((!$request->isActionPage($request->getArg('pagename')) 
+             and (!isset($user->_prefs->_method) 
+                  or !in_array($user->_prefs->_method,array('ADODB','SQL'))))
+            or (in_array($request->getArg('action'),array('zip','ziphtml','dumphtml')))
+            or (isa($user,'_ForbiddenUser'))) {
             $no_args = $this->getDefaultArguments();
 // ?
 //            foreach ($no_args as $key => $value) {
@@ -153,10 +157,6 @@ extends WikiPlugin
             $args['available_languages'] = listAvailableLanguages();
 
             return Template('userprefs', $args);
-        }
-        elseif (in_array($request->getArg('action'),array('zip','ziphtml','dumphtml'))) {
-            // empty page
-            return;
         } else {
             // wrong or unauthenticated user
             return $request->_notAuthorized(WIKIAUTH_BOGO);
@@ -166,6 +166,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2004/06/27 10:26:03  rurban
+// oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
+//
 // Revision 1.30  2004/06/15 09:15:52  rurban
 // IMPORTANT: fixed passwd handling for passwords stored in prefs:
 //   fix encrypted usage, actually store and retrieve them from db

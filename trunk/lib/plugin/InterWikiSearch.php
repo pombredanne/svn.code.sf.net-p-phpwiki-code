@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: InterWikiSearch.php,v 1.7 2004-06-15 14:56:37 rurban Exp $');
+rcs_id('$Id: InterWikiSearch.php,v 1.8 2004-06-28 12:51:41 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -52,7 +52,7 @@ extends WikiPlugin
             return $this->disabled("Sorry, this plugin is currently out of order.");
 
         $page = $dbi->getPage($request->getArg('pagename'));
-        return new TransformedText($page,_('InterWikiMap'),array($markup => 2),
+        return new TransformedText($page,_('InterWikiMap'),array('markup' => 2),
                                    'searchableInterWikiMap');
         /*
         return new PageType($pagerevisionhandle,
@@ -121,6 +121,9 @@ extends PageType_interwikimap
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/06/15 14:56:37  rurban
+// more allow_call_time_pass_reference false fixes
+//
 // Revision 1.6  2004/04/19 23:13:03  zorloc
 // Connect the rest of PhpWiki to the IniConfig system.  Also the keyword regular expression is not a config setting
 //

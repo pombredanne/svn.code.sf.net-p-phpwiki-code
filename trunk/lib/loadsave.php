@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.113 2004-06-27 10:26:02 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.114 2004-06-28 12:51:41 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -78,7 +78,10 @@ function EndLoadDump(&$request)
     case 'ziphtml':    $label = _("Dump pages as XHTML"); break;
     }
     if ($label) $label = str_replace(" ","_",$label);
-    $pagelink = WikiLink(new WikiPageName(_("PhpWikiAdministration"),false,$label));
+    if ($action == 'browse') // loading virgin 
+        $pagelink = WikiLink(HOME_PAGE);
+    else
+        $pagelink = WikiLink(new WikiPageName(_("PhpWikiAdministration"),false,$label));
 
     PrintXML(HTML::p(HTML::strong(_("Complete."))),
              HTML::p(fmt("Return to %s", $pagelink)));
@@ -313,13 +316,15 @@ function DumpHtmlToDir (&$request)
     if (defined('HTML_DUMP_SUFFIX'))
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
     $WikiTheme->DUMP_MODE = 'HTML';
-
+    $request_args = $request->args;
+    
     while ($page = $pages->next()) {
-    	if (! $request->getArg('start_debug'))
+	$request->args = $request_args; // some plugins might change them (esp. on POST)
+    	if (!$request->getArg('start_debug'))
           @set_time_limit(30); // Reset watchdog.
-
+          
         $pagename = $page->getName();
-        $request->setArg('pagename',$pagename); // Template::_basepage fix
+        $request->setArg('pagename', $pagename); // Template::_basepage fix
         $filename = FilenameForPage($pagename) . $WikiTheme->HTML_DUMP_SUFFIX;
 
         $msg = HTML(HTML::br(), $pagename, ' ... ');
@@ -1041,6 +1046,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.113  2004/06/27 10:26:02  rurban
+ oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
+
  Revision 1.112  2004/06/25 14:29:20  rurban
  WikiGroup refactoring:
    global group attached to user, code for not_current user.
