@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.16 2002-01-23 17:24:02 carstenklapp Exp $
+# $Id: Makefile,v 1.17 2002-01-24 01:04:57 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -88,7 +88,7 @@ ${POT_FILE}: ../lib/plugin/PageHistory.php
 ${POT_FILE}: ../lib/plugin/RecentChanges.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
-${POT_FILE}: ../lib/plugin/UserPage.php
+${POT_FILE}: ../lib/plugin/UserPreferences.php
 ${POT_FILE}: ../lib/plugin/walkabout.php
 ${POT_FILE}: ../lib/prepend.php
 ${POT_FILE}: ../lib/removepage.php
@@ -132,6 +132,7 @@ ${POT_FILE}: ../themes/default/templates/nochanges.tmpl
 ${POT_FILE}: ../themes/default/templates/savepage.tmpl
 ${POT_FILE}: ../themes/default/templates/signin.tmpl
 ${POT_FILE}: ../themes/default/templates/top.tmpl
+${POT_FILE}: ../themes/default/templates/userprefs.tmpl
 ${POT_FILE}: ../themes/default/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/default/themeinfo.php
 ${POT_FILE}: ../themes/Hawaiian/lib/random.php
