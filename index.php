@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true);
 
 define ('PHPWIKI_VERSION', '1.3.8pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.122 2004-02-07 14:20:18 rurban Exp $');
+rcs_id('$Id: index.php,v 1.123 2004-02-09 03:58:07 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -319,9 +319,15 @@ $DBParams = array(
 /////////////////////////////////////////////////////////////////////
 // PHP Session settings:
 //
+
+// USE_DB_SESSION fails with the current CVS code.
+define('USE_DB_SESSION',false);
 // Only for $DBParams['dbtype'] => 'SQL'. See schemas/mysql.sql or 
 // schemas/psql.sql. $DBParams['db_session_table'] must be defined.
-if ($DBParams['dbtype'] == 'SQL' and $DBParams['db_session_table']) define('USE_DB_SESSION',true);
+if (!defined('USE_DB_SESSION') and 
+    $DBParams['dbtype'] == 'SQL' and 
+    $DBParams['db_session_table'])
+  define('USE_DB_SESSION',true);
 
 // If your php was compiled with --enable-trans-sid it tries to
 // add a PHPSESSID query argument to all URL strings when cookie
@@ -904,6 +910,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.122  2004/02/07 14:20:18  rurban
+// consistent mysql schema with index.php (userid)
+//
 // Revision 1.121  2004/02/07 10:41:25  rurban
 // fixed auth from session (still double code but works)
 // fixed GroupDB

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.111 2004-02-07 10:41:25 rurban Exp $');
+rcs_id('$Id: main.php,v 1.112 2004-02-09 03:58:12 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -12,6 +12,7 @@ if (ENABLE_USER_NEW)
 else
   require_once("lib/WikiUser.php");
 require_once("lib/WikiGroup.php");
+require_once("lib/PagePerm.php");
 
 class WikiRequest extends Request {
     // var $_dbi;
@@ -36,18 +37,34 @@ class WikiRequest extends Request {
         if (ENABLE_USER_NEW) {
             $userid = $this->_deduceUsername();	
             if (isset($this->_user) and $this->_user->_authhow == 'session') {
-            	$user = $this->_user;
+                // users might switch in a session between the two objects.
+                // restore old auth level here or in updateAuthAndPrefs?
+                $user = $this->getSessionVar('wiki_user');
+                if (isa($user,WikiUserClassname()) and !empty($user->_level)) {
+                    ;
+                    /* not needed:
+                    if (empty($this->_user)) {
+                        $c = get_class($user);
+                        $userid = $user->UserName();
+                        $this->_user = new $c($userid);
+                    }
+                    if ($user = UpgradeUser($this->_user,$user))
+                        $this->_user = $user;
+                    */
+                } else {
+                    $user = UpgradeUser($this->_user,$user);
+                }
             	$this->_prefs = $this->_user->_prefs;
             } else {
                 $user = WikiUser($userid);
-                // todo: upgrade later at updateAuthAndPrefs()
-                // fixme:  already done in _deduceUsername()
+                //Todo: upgrade later at updateAuthAndPrefs()
                 if (isset($this->_user)) 
                   $user = UpgradeUser($this->_user,$user);
                 $this->_user = $user;
                 $this->_prefs = $this->_user->_prefs;
             }
         } else {
+            // no upgrade from session
             $this->_user = new WikiUser($this, $this->_deduceUsername());
             $this->_prefs = $this->_user->getPreferences();
         }
@@ -119,11 +136,14 @@ class WikiRequest extends Request {
         }
 
         // Save preferences in session and cookie
-        // FIXME: hey! what about anonymous users?   Can't they have
-        // preferences too?
-
-        $id_only = true; 
-        $this->_user->setPreferences($this->_prefs, $id_only);
+        if (isset($this->_user) and 
+            (!isset($this->_user->_authhow) or $this->_user->_authhow != 'session')) {
+            $id_only = true; 
+            $this->_user->setPreferences($this->_prefs, $id_only);
+        } else {
+            $this->setSessionVar('wiki_user', $this->_user);
+            $this->setSessionVar('wiki_prefs', $this->_prefs);
+        }
 
         // Ensure user has permissions for action
         $require_level = $this->requiredAuthority($this->getArg('action'));
@@ -257,6 +277,8 @@ class WikiRequest extends Request {
                            $user->isSignedIn() ? $user->getId() : '');
     }
 
+    /* Permission system */
+
     function _notAuthorized ($require_level) {
         // Display the authority message in the Wiki's default
         // language, in case it is not english.
@@ -288,6 +310,8 @@ class WikiRequest extends Request {
         $this->finish();    // NORETURN
     }
 
+    // Fixme: for PagePermissions we'll need other strings, 
+    // relevant to the requested page, not just for the action on the whole wiki.
     function getActionDescription($action) {
         static $actionDescriptions;
         if (! $actionDescriptions) {
@@ -410,6 +434,7 @@ class WikiRequest extends Request {
                     return WIKIAUTH_ADMIN;
         }
     }
+    /* End of Permission system */
 
     function possiblyDeflowerVirginWiki () {
         if ($this->getArg('action') != 'browse')
@@ -541,23 +566,9 @@ class WikiRequest extends Request {
             return $this->args['auth']['userid'];
             
         if ($user = $this->getSessionVar('wiki_user')) {
-            // users might switch in a session between the two objects
-            // restore old auth level here or in updateAuthAndPrefs()?
-            if (isa($user,WikiUserClassname()) and !empty($user->_level)) {
-                if (empty($this->_user)) {
-                    $c = get_class($user);
-                    $userid = $user->UserName();
-                    if (ENABLE_USER_NEW)
-                        $this->_user = new $c($userid);
-                    else
-                        $this->_user = new $c($this,$userid,$user->_level);
-                }
-                if ($user = UpgradeUser($this->_user,$user))
-                    $this->_user = $user;
-                $this->_user->_authhow = 'session';
-            }
-            if (isa($user,WikiUserClassname()))
-                return $user->UserName();
+            $this->_user = $user;
+            $this->_user->_authhow = 'session';
+            return $user->UserName();
         }
         if ($userid = $this->getCookieVar('WIKI_ID')) {
             if (!empty($this->_user))
@@ -860,6 +871,12 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.111  2004/02/07 10:41:25  rurban
+// fixed auth from session (still double code but works)
+// fixed GroupDB
+// fixed DbPassUser upgrade and policy=old
+// added GroupLdap
+//
 // Revision 1.110  2004/02/03 09:45:39  rurban
 // LDAP cleanup, start of new Pref classes
 //

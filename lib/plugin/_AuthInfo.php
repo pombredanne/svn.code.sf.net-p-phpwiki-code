@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.4 2004-02-07 10:41:25 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.5 2004-02-09 03:58:20 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -22,8 +22,10 @@ rcs_id('$Id: _AuthInfo.php,v 1.4 2004-02-07 10:41:25 rurban Exp $');
 
 require_once('lib/Template.php');
 /**
- * This may display passwords in cleartext.
  * Used to debug auth problems and settings.
+ *
+ * Warning! This may display db and user passwords in cleartext.
+ * Fixme: How to avoid caching?
  */
 class WikiPlugin__AuthInfo
 extends WikiPlugin
@@ -38,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -67,7 +69,7 @@ extends WikiPlugin
                                           "PASSWORD_LENGTH_MINIMUM","USE_DB_SESSION"))));
         if ((defined('ALLOW_LDAP_LOGIN') && ALLOW_LDAP_LOGIN) or in_array("LDAP",$GLOBALS['USER_AUTH_ORDER']))
             $table->pushContent($this->_showhash("LDAP DEFINES", 
-                                                 $this->_buildConstHash(array("LDAP_AUTH_HOST","LDAP_AUTH_SEARCH"))));
+                                                 $this->_buildConstHash(array("LDAP_AUTH_HOST","LDAP_BASE_DN"))));
         if ((defined('ALLOW_IMAP_LOGIN') && ALLOW_IMAP_LOGIN) or in_array("IMAP",$GLOBALS['USER_AUTH_ORDER']))
             $table->pushContent($this->_showhash("IMAP DEFINES", array("IMAP_AUTH_HOST" => IMAP_AUTH_HOST)));
         if (defined('AUTH_USER_FILE') or in_array("File",$GLOBALS['USER_AUTH_ORDER']))
@@ -92,7 +94,7 @@ extends WikiPlugin
                                        'cellpadding' => 2,
                                        'cellspacing' => 0));
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
-            $userdata = $this->_obj2hash($user);
+            $userdata = obj2hash($user);
             $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
             $group = &WikiGroup::getGroup($request);
             $table->pushContent($this->_showhash("Group: Object of ".get_class($group), $group));
@@ -108,18 +110,6 @@ extends WikiPlugin
         return $html;
     }
 
-    function _obj2hash ($obj, $exclude = false, $fields = false) {
-        $a = array();
-        if (! $fields ) $fields = get_object_vars($obj);
-        foreach ($fields as $key => $val) {
-            if (is_array($exclude)) {
-                if (in_array($key,$exclude)) continue;
-            }
-            $a[$key] = $val;
-        }
-        return $a;
-    }
-
     function _showhash ($heading, $hash) {
     	static $seen = array();
         $rows = array();
@@ -129,6 +119,8 @@ extends WikiPlugin
                                HTML::td(array('colspan' => 2,
                                               'style' => 'color:#000000'),
                                         $heading));
+        if (is_object($hash))
+            $hash = obj2hash($hash);
         if (!empty($hash)) {
             ksort($hash);
             foreach ($hash as $key => $val) {
@@ -141,7 +133,7 @@ extends WikiPlugin
                         $val = HTML::table(array('border' => 1,
                                                  'cellpadding' => 2,
                                                  'cellspacing' => 0),
-                                           $this->_showhash($heading, $this->_obj2hash($val)));
+                                           $this->_showhash($heading, obj2hash($val)));
                     } else {
                         $val = $heading;
                     }
@@ -184,6 +176,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/02/07 10:41:25  rurban
+// fixed auth from session (still double code but works)
+// fixed GroupDB
+// fixed DbPassUser upgrade and policy=old
+// added GroupLdap
+//
 // Revision 1.3  2004/02/02 05:36:29  rurban
 // Simplification and more options, but no passwd or admin protection yet.
 //
