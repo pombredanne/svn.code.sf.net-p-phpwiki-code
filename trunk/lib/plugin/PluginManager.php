@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.8 2003-11-15 21:53:53 wainstead Exp $');
+rcs_id('$Id: PluginManager.php,v 1.9 2003-11-19 00:02:42 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -20,6 +20,10 @@ rcs_id('$Id: PluginManager.php,v 1.8 2003-11-15 21:53:53 wainstead Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+// TODO:
+// Some of this code can be simplified with the relatively new
+// WikiLink($p, 'auto') function.
+
 // Set this to true if you don't want regular users to view this page.
 // So far there are no known security issues.
 define('REQUIRE_ADMIN', false);
@@ -37,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -134,14 +138,26 @@ extends WikiPlugin
             // make a link if an actionpage exists
             $pnamelink = $pname;
             $plink = false;
+            // Also look for pages in the current locale
+            if (_($pname) != $pname) {
+                $l1 = _($pname);
+            } else
+                $l1 = '';
             if (preg_match("/^$WikiNameRegexp\$/", $pname)
-                && $dbi->isWikiPage($pname))
-                $pnamelink = WikiLink($pname);
+                && $dbi->isWikiPage($pname)) {
+                $pnamelink = HTML(WikiLink($pname));
+            }
             // make another link if an XxxYyyPlugin page exists
             $ppname = $pname . "Plugin";
+            // Also look for pages in the current locale
+            if (_($ppname) != $ppname) {
+                $l2 = _($ppname);
+            } else
+                $l2 = '';
             if (preg_match("/^$WikiNameRegexp\$/", $ppname)
-                && $dbi->isWikiPage($ppname))
-                $plink = WikiLink($ppname);
+                && $dbi->isWikiPage($ppname)) {
+                $plink = HTML(WikiLink($ppname));
+            }
             else {
                 // don't link to actionpages and plugins starting with
                 // an _ from page list
@@ -155,6 +171,37 @@ extends WikiPlugin
                         else
                             $plink = false;
             }
+            // insert any found locale-specific pages at the bottom of the td
+            if ($l1 || $l2) {
+                // really this should all just be put into a new <p>
+                $par = HTML::p();
+                //$plink->pushContent(HTML::br());
+                //$plink->pushContent(HTML::br());
+				if ($l1) {
+                    // Don't offer to create a link to a non-wikiword localized plugin page
+                    // but show those that already exist (Calendar, Comment, etc.)
+                    // (Non non-wikiword plugins are okay, they just can't become actionPages.)
+		            if (preg_match("/^$WikiNameRegexp\$/", $l1) || $dbi->isWikiPage($l1)) {
+						$par->pushContent(WikiLink($l1, 'auto'));
+                    } else {
+                        // probably incorrectly translated, so no page link
+						$par->pushContent($l1, ' ' . _("(Not a WikiWord)"));
+                    }
+                }
+                if ($l1 && $l2)
+                    $par->pushContent(HTML::br());
+				if ($l2) {
+		            if (preg_match("/^$WikiNameRegexp\$/", $l2) || $dbi->isWikiPage($l2)) {
+						$par->pushContent(WikiLink($l2, 'auto'));
+                    } else {
+                        // probably incorrectly translated, so no page link
+						$par->pushContent($l2, ' ' . _("(Not a WikiWord)"));
+                    }
+                }
+
+                $plink->pushContent($par);
+            }
+
             // highlight alternate rows
             $row_no++;
             $group = (int)($row_no / 1); //_group_rows
@@ -185,6 +232,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2003/11/15 21:53:53  wainstead
+// Minor change: list plugins in asciibetical order. It'd be better if
+// they were alphabetical.
+//
 // Revision 1.7  2003/02/24 01:36:25  dairiki
 // Don't use PHPWIKI_DIR unless it's defined.
 // (Also typo/bugfix in SystemInfo plugin.)
