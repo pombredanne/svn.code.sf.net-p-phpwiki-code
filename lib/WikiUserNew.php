@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.54 2004-04-18 00:24:45 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.55 2004-04-19 09:04:44 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -949,9 +949,11 @@ extends _AnonUser
         }
         // probably prefix table names if in same database
         if (!empty($DBParams['prefix']) and 
-            $this->_auth_dbi === $request->_dbi->_backend->_dbh) 
+            isset($this->_auth_dbi) and isset($request->_dbi->_backend->_dbh) and 
+            $DBParams['dsn'] == $GLOBALS['DBAuthParams']['auth_dsn'])
         {
-            if (!stristr($DBParams['prefix'], $stmt)) {
+            $prefix = $DBParams['prefix'];
+            if (!stristr($stmt, $prefix)) {
                 //Do it automatically for the lazy admin? Esp. on sf.net it's nice to have
                 trigger_error("TODO: Need to prefix the DBAuthParam tablename in index.php: $stmt",
                               E_USER_WARNING);
@@ -2486,23 +2488,24 @@ class UserPreferences
                     'userid'        => new _UserPreference(''),
                     'passwd'        => new _UserPreference(''),
                     'autologin'     => new _UserPreference_bool(),
-                    //'emailVerified' => new _UserPreference_emailVerified(),
-                    //fixed: store emailVerified as email parameter
+                    //'emailVerified' => new _UserPreference_emailVerified(), 
+                    //fixed: store emailVerified as email parameter, 1.3.8
                     'email'         => new _UserPreference_email(''),
-                    'notifyPages'   => new _UserPreference_notify(''),
+                    'notifyPages'   => new _UserPreference_notify(''), // 1.3.8
                     'theme'         => new _UserPreference_theme(THEME),
                     'lang'          => new _UserPreference_language(DEFAULT_LANGUAGE),
                     'editWidth'     => new _UserPreference_int(EDITWIDTH_DEFAULT_COLS,
                                                                EDITWIDTH_MIN_COLS,
                                                                EDITWIDTH_MAX_COLS),
-                    'noLinkIcons'   => new _UserPreference_bool(),
+                    'noLinkIcons'   => new _UserPreference_bool(),    // 1.3.8 
                     'editHeight'    => new _UserPreference_int(EDITHEIGHT_DEFAULT_ROWS,
                                                                EDITHEIGHT_MIN_ROWS,
                                                                EDITHEIGHT_DEFAULT_ROWS),
                     'timeOffset'    => new _UserPreference_numeric(TIMEOFFSET_DEFAULT_HOURS,
                                                                    TIMEOFFSET_MIN_HOURS,
                                                                    TIMEOFFSET_MAX_HOURS),
-                    'relativeDates' => new _UserPreference_bool()
+                    'relativeDates' => new _UserPreference_bool(),
+                    'googleLink'    => new _UserPreference_bool(), // 1.3.10
                     );
         // add custom theme-specific pref types:
         // FIXME: on theme changes the wiki_user session pref object will fail. 
@@ -2768,6 +2771,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2004/04/18 00:24:45  rurban
+// re-use our simple prepare: just for table prefix warnings
+//
 // Revision 1.53  2004/04/12 18:29:15  rurban
 // exp. Session auth for already authenticated users from another app
 //
