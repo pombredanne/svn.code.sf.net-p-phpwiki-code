@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SystemInfo.php,v 1.3 2002-09-18 18:34:13 dairiki Exp $');
+<?php rcs_id('$Id: SystemInfo.php,v 1.4 2002-12-14 23:20:10 carstenklapp Exp $');
 /**
  * Usage: <?plugin SystemInfo all ?>
  *        or <?plugin SystemInfo pagestats cachestats discspace hitstats ?> 
@@ -30,7 +30,7 @@ extends WikiPlugin
     }
 
     function getDescription() {
-        return _("Provide access to PhpWiki's lower level system information.");
+        return _("Provides access to PhpWiki's lower level system information.");
     }
     function getExpire($dbi, $argarray, $request) {
         return '+1800'; // 30 minutes
@@ -51,12 +51,12 @@ extends WikiPlugin
 
     function database() {
         global $DBParams, $request;
-        $s  = _("db type") . ": {$DBParams['dbtype']}, ";
+        $s  = _("db type:") . " {$DBParams['dbtype']}, ";
         switch ($DBParams['dbtype']) {
         case 'SQL':     // pear
         case 'ADODB':
             $dsn = $DBParams['dsn'];
-            $s .= _("db backend") . ": ";
+            $s .= _("db backend:") . " ";
             $s .= ($DBParams['dbtype'] == 'SQL') ? 'PearDB' : 'ADODB';
             if (preg_match('/^(\w+):/', $dsn, $m)) {
                 $backend = $m[1];
@@ -64,7 +64,7 @@ extends WikiPlugin
             }
             break;
         case 'dba':
-            $s .= _("dba handler") . ": {$DBParams['dba_handler']}, ";
+            $s .= _("dba handler:") . " {$DBParams['dba_handler']}, ";
             break;
         case 'cvs':
             // $s .= "cvs stuff: , ";
@@ -73,7 +73,8 @@ extends WikiPlugin
             // $s .= "flatfile stuff: , ";
             break;
         }
-        $s .= _("timeout") . ": {$DBParams['timeout']}";
+        // hack: suppress error when using sql, so no timeout
+        @$s .= _("timeout:") . " {$DBParams['timeout']}";
         return $s;
     }
     function cachestats() {
@@ -82,8 +83,8 @@ extends WikiPlugin
             return _("no cache used");
         $dbi = $request->getDbh();
         $cache = $dbi->_cache;
-        $s  = _("cached pagedata") . ": " . count($cache->_pagedata_cache);
-        $s .= ", " . _("cached versiondata") . ": " . count($cache->_versiondata_cache);
+        $s  = _("cached pagedata:") . " " . count($cache->_pagedata_cache);
+        $s .= ", " . _("cached versiondata:") . " " . count($cache->_versiondata_cache);
         //$s .= ", glv size: " . count($cache->_glv_cache);
         //$s .= ", cache hits: ?";
         //$s .= ", cache misses: ?";
@@ -274,11 +275,11 @@ extends WikiPlugin
         }
         natcasesort($available_languages);
 
-        return sprintf(_("Total %d languages: "),count($available_languages)) . 
+        return sprintf(_("Total of %d languages: "),count($available_languages)) . 
             implode(', ',$available_languages) . ". " .
             sprintf(_("Current language: '%s'"), $GLOBALS['LANG']) .
             ((DEFAULT_LANGUAGE != $GLOBALS['LANG']) 
-              ? ". " . sprintf(_("System default: '%s'"), DEFAULT_LANGUAGE)
+              ? ". " . sprintf(_("Default language: '%s'"), DEFAULT_LANGUAGE)
               : '');
     }
 
@@ -297,11 +298,11 @@ extends WikiPlugin
             $dir->close();
         }
         natcasesort($available_themes);
-        return sprintf(_("Total %d themes: "),count($available_themes)) . 
+        return sprintf(_("Total of %d themes: "),count($available_themes)) . 
             implode(', ',$available_themes) . ". " .
             sprintf(_("Current theme: '%s'"), $Theme->_name) . 
             ((THEME != $Theme->_name)
-              ? ". " . sprintf(_("System default: '%s'"), THEME)
+              ? ". " . sprintf(_("Default theme: '%s'"), THEME)
               : '');
     }
 
@@ -357,7 +358,7 @@ extends WikiPlugin
                              'supported_languages' => _("Supported languages"),
                              'supported_themes'    => _("Supported themes"),
 //                           '' => _(""),
-                             '' => _("")
+                             '' => ""
                              );
             $table = HTML::table(array('border' => 1,'cellspacing' => 3,'cellpadding' => 3));
             foreach ($allargs as $arg => $desc) {
