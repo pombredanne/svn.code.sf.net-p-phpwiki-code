@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.56 2004-06-03 12:36:03 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.57 2004-06-04 12:40:21 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -23,6 +23,9 @@ define('WIKIAUTH_USER', 2);     // real auth from a database/file/server.
 define('WIKIAUTH_ADMIN', 10);  // Wiki Admin
 define('WIKIAUTH_UNOBTAINABLE', 100);  // Permissions that no user can achieve
 
+if (!defined('COOKIE_EXPIRATION_DAYS')) define('COOKIE_EXPIRATION_DAYS', 365);
+if (!defined('COOKIE_DOMAIN'))          define('COOKIE_DOMAIN', '/');
+
 $UserPreferences = array(
                          'userid'        => new _UserPreference(''), // really store this also?
                          'passwd'        => new _UserPreference(''),
@@ -35,7 +38,8 @@ $UserPreferences = array(
                          'noLinkIcons'   => new _UserPreference_bool(),
                          'editHeight'    => new _UserPreference_int(22, 5, 80),
                          'timeOffset'    => new _UserPreference_numeric(0, -26, 26),
-                         'relativeDates' => new _UserPreference_bool()
+                         'relativeDates' => new _UserPreference_bool(),
+                         'googleLink'    => new _UserPreference_bool(), // 1.3.10
                          );
 
 function WikiUserClassname() {
@@ -157,6 +161,12 @@ class WikiUser {
         return $this->_level >= $require_level;
     }
 
+    function isValidName ($userid = false) {
+        if (!$userid)
+            $userid = $this->_userid;
+        return preg_match("/^[\w\.@\-]+$/",$userid) and strlen($userid) < 32;
+    }
+
     function AuthCheck ($postargs) {
         // Normalize args, and extract.
         $keys = array('userid', 'passwd', 'require_level', 'login', 'logout',
@@ -172,6 +182,9 @@ class WikiUser {
             return false;        // User hit cancel button.
         elseif (!$login && !$userid)
             return false;       // Nothing to do?
+
+        if (!$this->isValidName($userid))
+            return _("Invalid username.");
 
         $authlevel = $this->_pwcheck($userid, $passwd);
         if (!$authlevel)
@@ -249,6 +262,10 @@ class WikiUser {
         // WikiDB_User DB/File Authentication from $DBAuthParams
         // Check if we have the user. If not try other methods.
         if (ALLOW_USER_LOGIN) { // && !empty($passwd)) {
+            if (!$this->isValidName($userid)) {
+                trigger_error(_("Invalid username."), E_USER_WARNING);
+                return false;
+            }
             $request = $this->_request;
             // first check if the user is known
             if ($this->exists($userid)) {
@@ -256,7 +273,7 @@ class WikiUser {
                 return ($this->checkPassword($passwd)) ? WIKIAUTH_USER : false;
             } else {
                 // else try others such as LDAP authentication:
-                if (ALLOW_LDAP_LOGIN && !empty($passwd) && !strstr($userid,'*')) {
+                if (ALLOW_LDAP_LOGIN && defined(LDAP_AUTH_HOST) && !empty($passwd) && !strstr($userid,'*')) {
                     if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
                         $r = @ldap_bind($ldap); // this is an anonymous bind
                         $st_search = "uid=$userid";
@@ -722,6 +739,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2004/06/03 12:36:03  rurban
+// fix eval warning on signin
+//
 // Revision 1.55  2004/06/03 09:39:51  rurban
 // fix LDAP injection (wildcard in username) detected by Steve Christey, MITRE
 //

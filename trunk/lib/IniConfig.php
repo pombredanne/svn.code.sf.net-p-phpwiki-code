@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.29 2004-06-04 11:58:38 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.30 2004-06-04 12:40:21 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -107,9 +107,11 @@ function IniConfig($file) {
             define($item, $rs[$item]);
         //} elseif (array_key_exists($item, $rsdef)) {
         //    define($item, $rsdef[$item]);
-        // calculate them later:
+        // calculate them later or not at all:
         } elseif (in_array($item,array('DATABASE_PREFIX', 'SERVER_NAME', 'SERVER_PORT',
-         	'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH'))) {
+                                       'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
+                                       'LDAP_AUTH_HOST','IMAP_AUTH_HOST','POP3_AUTH_HOST'))) 
+        {
             ;
         } else {
             trigger_error(sprintf("missing config setting for %s",$item));
@@ -213,14 +215,16 @@ function IniConfig($file) {
 
     // LDAP bind options
     global $LDAP_SET_OPTION;
-    $optlist = preg_split('/\s*:\s*/', @$rs['LDAP_SET_OPTION']);
-    foreach ($optlist as $opt) {
-        $bits = preg_split('/\s*=\s*/', $opt, 2);
-        if (count($bits) == 2) {
-            $LDAP_SET_OPTION[$bits[0]] = $bits[1];
-        }
-        else {
-            // Possibly throw some sort of error?
+    if (isset($rs['LDAP_SET_OPTION'])) {
+        $optlist = preg_split('/\s*:\s*/', @$rs['LDAP_SET_OPTION']);
+        foreach ($optlist as $opt) {
+            $bits = preg_split('/\s*=\s*/', $opt, 2);
+            if (count($bits) == 2) {
+                $LDAP_SET_OPTION[$bits[0]] = $bits[1];
+            }
+            else {
+                // Possibly throw some sort of error?
+            }
         }
     }
 
@@ -537,6 +541,8 @@ function fix_configs() {
     if (!defined('ALLOW_ANON_EDIT')) define('ALLOW_ANON_EDIT', false); 
     if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', ! ALLOW_ANON_EDIT);
     if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
+    if (!defined('ALLOW_LDAP_LOGIN')) define('ALLOW_LDAP_LOGIN', defined('LDAP_AUTH_HOST'));
+    if (!defined('ALLOW_IMAP_LOGIN')) define('ALLOW_IMAP_LOGIN', defined('IMAP_AUTH_HOST'));
 
     if (ALLOW_USER_LOGIN and !empty($DBAuthParams) and empty($DBAuthParams['auth_dsn'])) {
         if (isset($DBParams['dsn']))
@@ -545,6 +551,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/06/04 11:58:38  rurban
+// added USE_TAGLINES
+//
 // Revision 1.28  2004/06/03 20:42:49  rurban
 // fixed bad warning #964850
 //
