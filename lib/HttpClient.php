@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HttpClient.php,v 1.4 2004-04-12 18:15:28 rurban Exp $');
+rcs_id('$Id: HttpClient.php,v 1.5 2004-04-29 19:34:24 rurban Exp $');
 
 /** 
    Version 0.9, 6th April 2003 - Simon Willison ( http://simon.incutio.com/ )
@@ -84,23 +84,24 @@ class HttpClient {
     }
     function doRequest() {
         // Performs the actual HTTP request, returning true or false depending on outcome
-		if (!$fp = @fsockopen($this->host, $this->port, $errno, $errstr, $this->timeout)) {
-		    // Set error message
+        if (!$fp = @fsockopen($this->host, $this->port, $errno, $errstr, $this->timeout)) {
+            // Set error message
             switch($errno) {
-				case -3:
-					$this->errormsg = 'Socket creation failed (-3)';
-				case -4:
-					$this->errormsg = 'DNS lookup failure (-4)';
-				case -5:
-					$this->errormsg = 'Connection refused or timed out (-5)';
-				default:
-					$this->errormsg = 'Connection failed ('.$errno.')';
-			    $this->errormsg .= ' '.$errstr;
-			    $this->debug($this->errormsg);
-			}
-			return false;
+            case -3:
+                $this->errormsg = 'Socket creation failed (-3)';
+            case -4:
+                $this->errormsg = 'DNS lookup failure (-4)';
+            case -5:
+                $this->errormsg = 'Connection refused or timed out (-5)';
+            default:
+                $this->errormsg = 'Connection failed ('.$errno.')';
+                $this->errormsg .= ' '.$errstr;
+                $this->debug($this->errormsg);
+            }
+            return false;
         }
-        socket_set_timeout($fp, $this->timeout);
+        if (check_php_version(4,3,0))
+            socket_set_timeout($fp, $this->timeout);
         $request = $this->buildRequest();
         $this->debug('Request', $request);
         fwrite($fp, $request);
@@ -343,6 +344,9 @@ class HttpClient {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/04/12 18:15:28  rurban
+// standard footer
+//
 
 // For emacs users
 // Local Variables:
