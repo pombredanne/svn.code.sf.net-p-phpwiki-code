@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.27 2004-12-18 17:03:19 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.28 2005-01-08 21:27:45 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / ....
@@ -584,6 +584,10 @@ extends DbSession
         $dbh = &$this->_connect();
         $time = time();
         $ip = $GLOBALS['request']->get('REMOTE_ADDR');
+        if (strlen($sess_data) > 4000) {
+            trigger_error("Overlarge session data!", E_USER_WARNING);
+            $sess_data = '';
+        }
         $dbh->set($id,$time.':'.$ip.':'.$sess_data);
         $this->_disconnect();
         return true;
