@@ -1,4 +1,4 @@
-<? rcs_id('$Id: wiki_stdlib.php3,v 1.23.2.3 2000-07-29 00:36:45 dairiki Exp $');
+<? rcs_id('$Id: wiki_stdlib.php3,v 1.23.2.4 2000-07-31 21:10:01 dairiki Exp $');
    /*
       Standard functions for Wiki functionality
          WikiURL ($pagename, $action)
@@ -94,7 +94,7 @@
       global $remoteuser; // this is set in the config
       global $dateformat;
 
-      $recentchanges = $dbi->retrievePage("RecentChanges");
+      $recentchanges = $dbi->getPage("RecentChanges");
       $lines = $recentchanges->content();
       $newpage = array();
 

@@ -1,4 +1,4 @@
-<? rcs_id('$Id: wiki_diff.php3,v 1.6.2.2 2000-07-29 00:36:45 dairiki Exp $');
+<? rcs_id('$Id: wiki_diff.php3,v 1.6.2.3 2000-07-31 21:10:00 dairiki Exp $');
 // wiki_diff.php3
 //
 // A PHP diff engine for phpwiki.
@@ -970,7 +970,7 @@ function wiki_diff ($pagename, $vers, $oldversion)
 {
   global $dbi;
 
-  if (!($page = $dbi->retrievePage($pagename, $vers)))
+  if (!($page = $dbi->getPage($pagename, $vers)))
       return wiki_message('ERROR', 'BadVersion');
   SetToken('Page', new PageTokens($page));
   

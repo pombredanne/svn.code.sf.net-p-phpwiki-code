@@ -1,4 +1,4 @@
-<? rcs_id('$Id: wiki_renderlib.php3,v 1.1.2.3 2000-07-29 00:36:45 dairiki Exp $');
+<? rcs_id('$Id: wiki_renderlib.php3,v 1.1.2.4 2000-07-31 21:10:01 dairiki Exp $');
 /*
  * Various magic characters used as temporary markers during rendering.
  *
@@ -41,7 +41,7 @@ class WikiRenderer
 {
   var $transforms = array();
   var $line = 0;
-  
+
   function registerTransform ($t, $extra_skip = 0) {
     if ($t->pre_transform)
       {
@@ -219,10 +219,10 @@ class WikiTransform
 class WikiLayout extends WikiTransform
 {
   var $final = true;
-  var $tokenize = false;
   
   function WikiLayout ($pat, $tag) {
-    $this->pat = $pat;
+    $this->WikiTransform($pat, '\\0', false);
+
     $this->_tag = $tag;
   }
   
@@ -239,11 +239,12 @@ class WikiLayout extends WikiTransform
  */
 class WikiReplacer extends WikiTransform
 {
-  var $pat = '/(?=a)(?!a)/x';	// default: never matches.
   var $table = array();
 
   function WikiReplacer ($tokenize = true, $reps = false) {
-    $this->tokenize = $tokenize;
+    // default pattern never matches:
+    $this->WikiTransform('/(?=a)(?!a)/x', '\\0', $tokenize);
+
     if ($reps)
       {
 	$this->table = $reps;
@@ -281,17 +282,18 @@ class WikiReplacer extends WikiTransform
  */
 class QuoteTransformer extends WikiTransform
 {
-  var $pat = '/(?=a)(?!a)/';	// default: never matches.
-  var $rep = '\\1\\2';
   var $repeat = true;
-
-  var $pre_transform = new WikiReplacer(false); /* no tokenize */
-  var $post_transform = new WikiReplacer;
 
   var $marker = "\x81";
   var $markers = "";
 
   function QuoteTransformer ($delims = false) {
+    // default pattern never matches:
+    $this->WikiTransform('/(?=a)(?!a)/', '\\1\\2');
+    
+    $this->pre_transform = new WikiReplacer(false); /* no tokenize */
+    $this->post_transform = new WikiReplacer;
+
     if ($delims)
       {
 	reset($delims);
@@ -334,7 +336,7 @@ class QuoteTransformer extends WikiTransform
 class HTMLFlushTransformer extends WikiLayout
 {
   function HTMLFlushTransformer($pat) {
-    $this->pat = $pat;
+    $this->WikiLayout($pat, '');
   }
   function transform ($match, &$r) {
     return $r->element->end();
@@ -345,28 +347,26 @@ class HTMLFlushTransformer extends WikiLayout
 // FIXME: combine with URLTransformer?
 class EmbeddedLinkTransformer extends WikiTransform
 {
-  var $pat = '/\[ \s* (\d+) \s* \]/x';
-  var $rep = '\\1';
-
+  function EmbeddedLinkTransformer () {
+    $this->WikiTransform('/\[ \s* (\d+) \s* \]/x', '\\1');
+  }
+  
   function transform ($match, &$r) {
-      $html = "[$match]";
-      if ( ($url = $r->refs[$match]) )
-	{
-	  $inline = preg_match("/\\.png$/i", $url);
-	  $html = LinkExternal($html, $url, $inline);
-	}
-      return $html;
+    $html = "[$match]";
+    if ( ($url = $r->refs[$match]) )
+      {
+	$inline = preg_match("/\\.png$/i", $url);
+	$html = LinkExternal($html, $url, $inline);
+      }
+    return $html;
   }
 }
 
 // Linkify URLS: ("http://foo.com/bar.html")
 class URLTransformer extends WikiTransform
 {
-  //var $pat = '/ \b' . SAFE_URL_REGEXP . '(?<=[^,.?:;]) /x';
-
   function URLTransformer($pat, $url = '\\0', $text = '') {
-    $this->pat = $pat;
-    $this->rep = $url . MATCHSEP_MARKER . $text;
+    $this->WikiTransform($pat, $url . MATCHSEP_MARKER . $text);
   }
   function transform ($match, &$r) {
     list ($url, $text)  = explode(MATCHSEP_MARKER, $match);
@@ -380,11 +380,8 @@ class URLTransformer extends WikiTransform
 // Linkify WikiWords
 class WikiLinkTransformer extends WikiTransform
 {
-  //var $pat = '/ \b (?:[A-Z][a-z]+){2,} \b /x';
-
   function WikiLinkTransformer ($pat, $link = '\\0') {
-    $this->pat = $pat;
-    $this->rep = $link;
+    $this->WikiTransform($pat, $link);
   }
   function transform ($match, &$r) {
     $r->wikilinks[$match] = $match;
@@ -395,9 +392,12 @@ class WikiLinkTransformer extends WikiTransform
 // Special placeholders:
 class PlaceholderTransformer extends WikiTransform
 {
-  var $pat = "/%%(Search|FullSearch|MostPopular|ZipSnapshot|ZipDump|AdminLogin)%%/";
-  var $rep = '\\1';
-
+  function PlaceholderTransformer () {
+    $this->WikiTransform("/%%(Search|FullSearch|MostPopular"
+			 . "|ZipSnapshot|ZipDump|AdminLogin)%%/",
+			 '\\1');
+  }
+    
   function transform ($what, &$r) {
     SafeSetToken('Render', $what);
     
@@ -413,12 +413,9 @@ class PlaceholderTransformer extends WikiTransform
 // Lists
 class ListTransformer extends WikiLayout
 {
-  //var $pat = '/^(\t+)(.*):\t/';
-  //var $rep = '\\1<dt>\\2</dt>';
-  //var $_tag = '<dl>';
-
   function ListTransformer ($pat, $tag, $level, $tail = '<li>') {
-    $this->pat = $pat;
+    $this->WikiLayout($pat,'');
+    // FIXME: hack
     $this->rep = $tag . MATCHSEP_MARKER . $level . MATCHSEP_MARKER . $tail;
   }
   function transform ($match, &$r) {
@@ -436,13 +433,15 @@ class ListTransformer extends WikiLayout
  */
 class WikiPageRenderer extends WikiRenderer
 {
-  var $element = new HTMLElementStack;
   var $wikilinks = array();
   var $refs;
 
   function WikiPageRenderer () {
     global $page_transform;
     ksort($page_transform);
+
+    $this->element = new HTMLElementStack;
+
     $this->registerTransforms($page_transform);
   }
   
@@ -553,21 +552,25 @@ $page_transform['^80Headings'] = new WikiLayout(
 // Tables:
 class TableTransformer extends WikiTransform
 {
-  var $pre_transform
-      = new WikiTransform('/^[|][|{}]*.*$/', "\n<tr>\\0</tr>", false);
-
-  var $post_transform = new WikiLayout('/^/',
-				       '<table cellspacing=1 cellpadding=2 border=3>');
-
-  var $pat = ": ([|][|{}]) \s* (.*?) \s* (?= [|][|{}] | </tr>$ ) :x";
-  var $rep = '\\1' . MATCHSEP_MARKER . '\\2';
-  var $tokenize = false;	// Could be either?
+  //var $tokenize = false;	// Could be either?
 
 
   var $table = array( '||' => 'center',
 		      '|}' => 'right',
 		      '|{' => 'left' );
 
+  function TableTransformer () {
+    $this->WikiTransform(':([|][|{}]) \s* (.*?) \s* (?= [|][|{}] | </tr>$ ):x',
+			 '\\1' . MATCHSEP_MARKER . '\\2');
+
+    $this->pre_transform
+	 = new WikiTransform('/^[|][|{}]*.*$/', "\n<tr>\\0</tr>", false);
+    
+    $this->post_transform
+	 = new WikiLayout('/^/',
+			  '<table cellspacing=1 cellpadding=2 border=3>');
+  }
+  
   function transform ($match, &$r) {
     list ($align, $text) = explode(MATCHSEP_MARKER, $match);
     return sprintf('<td align="%s">%s</td>', $this->table[$align], $text);
