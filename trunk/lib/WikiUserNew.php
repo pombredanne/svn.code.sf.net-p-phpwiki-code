@@ -1,10 +1,10 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.31 2004-03-12 23:20:58 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.32 2004-03-14 16:30:52 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
  * This is a complete OOP rewrite of the old WikiUser code with various
- * configurable external authentification methods.
+ * configurable external authentication methods.
  *
  * There's only one entry point, the function WikiUser which returns 
  * a WikiUser object, which contains the user's preferences.
@@ -240,6 +240,7 @@ function UpgradeUser ($olduser, $user) {
         foreach (get_object_vars($user) as $k => $v) {
             if (!empty($v)) $olduser->$k = $v;	
         }
+        $olduser->hasHomePage(); // revive db handle, because these don't survive sessions
         $GLOBALS['request']->_user = $olduser;
         return $olduser;
     } else {
@@ -328,7 +329,7 @@ class _WikiUser
     // returns page_handle to user's home page or false if none
     function hasHomePage() {
         if ($this->_userid) {
-            if ($this->_HomePagehandle) {
+            if (!empty($this->_HomePagehandle) and is_object($this->_HomePagehandle)) {
                 return $this->_HomePagehandle->exists();
             }
             else {
@@ -686,6 +687,7 @@ extends _AnonUser
                 $this->_HomePagehandle = $GLOBALS['request']->getPage($this->_userid);
         }
         $this->_authmethod = substr(get_class($this),1,-8);
+        if ($this->_authmethod == 'a') $this->_authmethod = 'admin';
         if (!$this->_prefs) {
             if ($prefs) $this->_prefs = $prefs;
             else $this->getPreferences();
@@ -772,17 +774,15 @@ extends _AnonUser
             unset($this->_auth_dbi);
 
         if (empty($this->_auth_dbi)) {
+            if ($DBParams['dbtype'] != 'SQL' and $DBParams['dbtype'] != 'ADODB')
+                return false;
             if (empty($DBAuthParams['auth_dsn'])) {
-                if ($DBParams['dbtype'] == 'SQL' or $DBParams['dbtype'] == 'ADODB')
-                    $dbh = $request->getDbh(); // use phpwiki database 
-                else 
-                    return false;
-            }
-            elseif ($DBAuthParams['auth_dsn'] == $DBParams['dsn'])
+                $dbh = $request->getDbh(); // use phpwiki database 
+            } elseif ($DBAuthParams['auth_dsn'] == $DBParams['dsn']) {
                 $dbh = $request->getDbh(); // same phpwiki database 
-            else // use another external database handle. needs PHP >= 4.1
+            } else { // use another external database handle. needs PHP >= 4.1
                 $dbh = WikiDB::open($DBAuthParams);
-                
+            }       
             $this->_auth_dbi =& $dbh->_backend->_dbh;    
         }
         return $this->_auth_dbi;
@@ -857,9 +857,12 @@ extends _AnonUser
         if (!is_object($prefs)) {
             $prefs = new UserPreferences($prefs);
         }
-        _AnonUser::setPreferences($prefs, $id_only);
-        // Encode only the _prefs array of the UserPreference object
-        if ($this->_prefs->isChanged($prefs)) {
+        if (_AnonUser::setPreferences($prefs, $id_only)) {
+            global $request;
+            $this->_prefs = $prefs;
+            $request->_prefs =& $this->_prefs; 
+            $request->_user->_prefs =& $this->_prefs;
+            // Encode only the _prefs array of the UserPreference object
             if ($this->_HomePagehandle and !$id_only)
                 $this->_HomePagehandle->set('pref', $prefs->store());
         }
@@ -1206,10 +1209,11 @@ extends _PassUser
             $this = new _AdoDbPassUser($UserName,$this->_prefs);
             return $this;
         }
-        else {
+        elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
             $this = new _PearDbPassUser($UserName,$this->_prefs);
             return $this;
         }
+        return false;
     }
 
     function mayChangePass() {
@@ -1310,6 +1314,9 @@ extends _DbPassUser
         global $DBAuthParams;
         $this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
+        if (!$dbh) { // needed?
+            return $this->_tryNextUser();
+        }
         // Prepare the configured auth statements
         if (!empty($DBAuthParams['auth_check']) and !$this->_authselect) {
             $this->_authselect = str_replace(array('"$userid"','"$password"'),
@@ -1350,6 +1357,9 @@ extends _DbPassUser
     function checkPass($submitted_password) {
         global $DBAuthParams;
         $this->getAuthDbh();
+        if (!$this->_auth_dbi) {  // needed?
+            return $this->_tryNextPass($submitted_password);
+        }
         if (!$this->_authselect)
             trigger_error("Either \$DBAuthParams['auth_check'] is missing or \$DBParams['dbtype'] != 'SQL'",
                           E_USER_WARNING);
@@ -2293,6 +2303,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2004/03/12 23:20:58  rurban
+// pref fixes (base64)
+//
 // Revision 1.30  2004/03/12 20:59:17  rurban
 // important cookie fix by Konstantin Zadorozhny
 // new editpage feature: JS_SEARCHREPLACE
