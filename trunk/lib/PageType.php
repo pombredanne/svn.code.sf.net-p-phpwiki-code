@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.41 2005-02-02 19:34:09 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.42 2005-02-02 19:36:56 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -209,7 +209,9 @@ class PageType_interwikimap extends PageType
         }
 
         // Add virtual monikers: Upload:, Talk:, User:
-        if (empty($map['Upload'])) 
+        // Upload: Should be expanded later to user-specific upload dirs. 
+        // In the Upload plugin, not here: Upload:ReiniUrban/uploaded-file.png
+        if (empty($map['Upload']))
             $map['Upload'] = getUploadDataPath();
         if (empty($map["Talk"])) {
             $pagename = $GLOBALS['request']->getArg('pagename');
@@ -472,6 +474,9 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2005/02/02 19:34:09  rurban
+// more maps: Talk, User
+//
 // Revision 1.40  2005/01/31 12:15:08  rurban
 // avoid some cornercase intermap warning. Thanks to Stefan <sonstiges@bayern-mail.de>
 //
