@@ -46,7 +46,7 @@ msgstr "SenasteÄndringar"
 
 #: ../templates/browse.html:57
 msgid "FindPage"
-msgstr ""
+msgstr "SökEfterSida"
 
 #: ../templates/browse.html:60
 #, fuzzy
@@ -59,7 +59,7 @@ msgstr "Sidan är låst"
 
 #: ../templates/browse.html:73
 msgid "Edit"
-msgstr ""
+msgstr "Redigera"
 
 #: ../templates/browse.html:76
 msgid "Edit old revision"
@@ -223,12 +223,12 @@ msgstr "Sökresultat för fulltextsökning"
 #: ../lib/plugin/FullTextSearch.php:16
 #, fuzzy
 msgid "Full Text Search"
-msgstr "Sökresultat för fulltextsökning"
+msgstr "Fulltextsökning"
 
 #: ../lib/plugin/FullTextSearch.php:52
-#, c-format
+#, fuzzy, c-format
 msgid "Full text search results for '%s'"
-msgstr ""
+msgstr "Sökresultat för fulltextsökning"
 
 #: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
 msgid "<no matches>"
@@ -338,9 +338,9 @@ msgid "Check any two boxes then %s."
 msgstr ""
 
 #: ../lib/plugin/PageHistory.php:144 ../lib/plugin/PageHistory.php:182
-#, fuzzy, c-format
+#, c-format
 msgid "Version %d"
-msgstr "version %s"
+msgstr "Version %d"
 
 #: ../lib/plugin/PageHistory.php:174
 msgid "History of changes."
@@ -418,20 +418,18 @@ msgid "Search"
 msgstr "Sök"
 
 #: ../lib/plugin/RecentChanges.php:253 ../lib/plugin/TitleSearch.php:16
-#, fuzzy
 msgid "Title Search"
-msgstr "Sökresultat för fulltextsökning"
+msgstr "Titelsökningen"
 
 #: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:255
 #: ../lib/plugin/TitleSearch.php:12
-#, fuzzy
 msgid "TitleSearch"
-msgstr "Sökresultat för fulltextsökning"
+msgstr "Titelsökningen"
 
 #: ../lib/plugin/TitleSearch.php:48
-#, c-format
+#, fuzzy, c-format
 msgid "Title search results for '%s'"
-msgstr ""
+msgstr "Sökresultat för titelsökningen"
 
 #: ../lib/plugin/UserPage.php:35
 #, c-format
@@ -618,7 +616,7 @@ msgstr "version %d"
 #: ../lib/diff.php:205
 #, fuzzy
 msgid "current version"
-msgstr "Arkiverad version"
+msgstr "nuvarande version"
 
 #: ../lib/diff.php:222
 msgid "previous major revision"
