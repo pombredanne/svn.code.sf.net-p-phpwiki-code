@@ -1,5 +1,5 @@
 /* 
- * $Id: Hawaiian-heavy.css,v 1.5 2002-01-16 20:04:04 carstenklapp Exp $
+ * $Id: Hawaiian-heavy.css,v 1.6 2002-02-08 07:24:23 carstenklapp Exp $
  *
  * Hawaiian-heavy.css
  *
@@ -15,12 +15,8 @@
 /* This break NS4, but is necessary for IE4. */
 div.wikitext { width: auto; }
 
-/* Make Wikilinks inside <B> tags larger. */
-b .wiki, strong .wiki,
-b .wikipage, strong .wikipage
-
 /* Link icons */
-img.linkicon        { vertical-align: middle; }
+img.linkicon { vertical-align: middle; }
 
 /****************************************************************
  **

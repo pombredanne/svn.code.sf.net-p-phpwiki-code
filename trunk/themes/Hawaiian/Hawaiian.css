@@ -1,5 +1,5 @@
 /*
-  $Id: Hawaiian.css,v 1.16 2002-02-03 21:32:06 carstenklapp Exp $
+  $Id: Hawaiian.css,v 1.17 2002-02-08 07:24:23 carstenklapp Exp $
 
   Classes:
 
@@ -25,6 +25,11 @@
 TODO: Get rid of tables in wikiaction forms.
 */
 
+/* NS4 doesn't grok @import.  This allows us to put things which
+ * break NS4 in another file. As of OmniWeb 4.1, OW now @imports :-(
+ */
+@import url(Hawaiian-heavy.css);
+
 body {
 /* the background image url is relative to this file's directory */
         color :             #000;
@@ -32,11 +37,6 @@ body {
         background-image :  url("images/uhhbackground.jpg");
         background-repeat : repeat;
 }
-
-/* NS4 doesn't grok @import.  This allows us to put things which
- * break NS4 in another file. As of OmniWeb 4.1, OW now @imports :-(
- */
-@import url(Hawaiian-heavy.css);
 
 body { font-family: arial, helvetica, sans-serif; }
 
@@ -52,9 +52,6 @@ input.button { font-family: arial, helvetica, sans-serif; }
 
 div.wikitext {
  background: url("images/tchecker-white.png");
- border: thin;
- border-color: none;
- border-style: solid;
  padding-left: 0.8em; 
  padding-right: 0.8em; 
  padding-top: 0px;
@@ -170,10 +167,6 @@ a.wikiadmin, .wikiadmin table   { color: #ff7e00; }
  */
 img.linkicon, img.rssicon	{ border: 0px; }
 img.rssicon		{ vertical-align: top; }
-/* This screws up NS4, moved to phpwiki-heavy.css 
-img.linkicon		{ vertical-align: middle; }
-*/
-
  
 /*
  * Put a border around wikiaction forms:
