@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.3 2003-01-04 03:41:51 wainstead Exp $');
+rcs_id('$Id: file.php,v 1.4 2003-02-24 01:53:28 dairiki Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -731,7 +731,7 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
         if ($e == false)
             return false;
 
-        $pn = urldecode($e[1]);
+        $pn = $e[1];
 
         $pagedata = $backend->get_pagedata($pn);
         $rec = array('pagename' => $pn,
@@ -748,6 +748,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2003/01/04 03:41:51  wainstead
+// Added copyleft flowerboxes
+//
 // Revision 1.2  2003/01/04 03:30:34  wainstead
 // added log tag, converted file to unix format
 //
