@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.64 2003-02-24 22:06:14 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.65 2003-02-24 22:41:57 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -881,7 +881,7 @@ class Theme {
         $css = array();
         $is_alt = false;
         foreach ($this->_css as $title => $css_files) {
-            aksort($css_files); // move $css_files[''] to front.
+            ksort($css_files); // move $css_files[''] to front.
             foreach ($css_files as $media => $css_file) {
                 $css[] = $this->_CSSlink($title, $css_file, $media, $is_alt);
                 if ($is_alt) break;
@@ -1000,6 +1000,11 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2003/02/24 22:06:14  dairiki
+// Attempts to fix auto-selection of printer CSS when printing.
+// See new comments lib/Theme.php for more details.
+// Also see SF patch #669563.
+//
 // Revision 1.63  2003/02/23 03:37:05  dairiki
 // Stupid typo/bug fix.
 //
