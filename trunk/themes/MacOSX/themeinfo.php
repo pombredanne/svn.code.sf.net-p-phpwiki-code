@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.16 2002-01-15 23:23:21 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.17 2002-01-17 06:32:04 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -106,13 +106,14 @@ $templates = array(
 // If this theme defines any custom link icons, they will completely
 // override any link icon settings defined in index.php.
 
+// Currently only the mailto icon is overridden from the default theme
 $URL_LINK_ICONS = array(
-                        'http'      => "images/http.png",
-                        'https'     => "images/https.png",
-                        'ftp'       => "images/ftp.png",
-                        'mailto'    => "themes/$theme/mailto.png",
-                        'interwiki' => "images/interwiki.png",
-                        '*'         => "images/url.png"
+                        'http'      => "themes/default/images/http.png",
+                        'https'     => "themes/default/images/https.png",
+                        'ftp'       => "themes/default/images/ftp.png",
+                        'mailto'    => "themes/MacOSX/mailto.png",
+                        'interwiki' => "themes/default/images/interwiki.png",
+                        '*'         => "themes/default/images/url.png"
                         );
 
 $ToolbarImages = array(
