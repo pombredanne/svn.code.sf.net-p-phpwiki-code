@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.34 2004-11-21 11:59:16 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.35 2004-11-28 19:57:56 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -119,17 +119,27 @@ class PageType_comment extends PageType {}
 class PageType_wikiforum extends PageType {}
 
 /* To prevent from PHP5 Fatal error: Using $this when not in object context */
-function getInterwikiMap () {
-    $map = new PageType_interwikimap();
+function getInterwikiMap ($pagetext = false) {
+    $map = new PageType_interwikimap($pagetext);
     return $map;
 }
 
 class PageType_interwikimap extends PageType
 {
-    function PageType_interwikimap() {
-        global $request;
-        $dbi = $request->getDbh();
-        $intermap = $this->_getMapFromWikiPage($dbi->getPage(_("InterWikiMap")));
+    function PageType_interwikimap($pagetext = false) {
+        $intermap = false;
+
+        if (!$pagetext) {
+            $dbi = $GLOBALS['request']->getDbh();
+            $page = $dbi->getPage(_("InterWikiMap"));
+            if ($page->get('locked')) {
+                $current = $page->getCurrentRevision();
+                $pagetext = $current->getPackedContent();
+                $intermap = $this->_getMapFromWikiText($pagetext);
+            } else {
+                trigger_error(_("WARNING: InterWikiMap page is unlocked, so not using those links."));
+            }
+        }
         if (!$intermap && defined('INTERWIKI_MAP_FILE'))
             $intermap = $this->_getMapFromFile(INTERWIKI_MAP_FILE);
 
@@ -137,10 +147,10 @@ class PageType_interwikimap extends PageType
         $this->_regexp = $this->_getRegexp();
     }
 
-    function GetMap ($request = false) {
+    function GetMap ($pagetext = false) {
     	/*PHP5 Fatal error: Using $this when not in object context */
         if (empty($this->_map)) {
-            $map = new PageType_interwikimap();
+            $map = new PageType_interwikimap($pagetext);
             return $map;
         } else {
             return $this;
@@ -152,7 +162,6 @@ class PageType_interwikimap extends PageType
     }
 
     function link ($link, $linktext = false) {
-
         list ($moniker, $page) = split (":", $link, 2);
         
         if (!isset($this->_map[$moniker])) {
@@ -204,14 +213,8 @@ class PageType_interwikimap extends PageType
         return $map;
     }
 
-    function _getMapFromWikiPage ($page) {
-        if (! $page->get('locked'))
-            return false;
-        
-        $current = $page->getCurrentRevision();
-        
-        if (preg_match('|^<verbatim>\n(.*)^</verbatim>|ms',
-                       $current->getPackedContent(), $m)) {
+    function _getMapFromWikiText ($pagetext) {
+        if (preg_match('|^<verbatim>\n(.*)^</verbatim>|ms', $pagetext, $m)) {
             return $m[1];
         }
         return false;
@@ -291,7 +294,7 @@ class PageFormatter_interwikimap extends PageFormatter
     function format($text) {
 	return HTML::div(array('class' => 'wikitext'),
 			 $this->_transform($this->_getHeader($text)),
-			 $this->_formatMap(),
+			 $this->_formatMap($text),
 			 $this->_transform($this->_getFooter($text)));
     }
 
@@ -303,18 +306,15 @@ class PageFormatter_interwikimap extends PageFormatter
 	return preg_replace('@.*?(</verbatim>|\Z)@s', '', $text, 1);
     }
     
-    function _getMap() {
-        $map = PageType_interwikimap::getMap();
+    function _getMap($pagetext) {
+        $map = getInterwikiMap($pagetext);
         return $map->_map;
     }
     
-    function _formatMap() {
-	$map = $this->_getMap();
+    function _formatMap($pagetext) {
+	$map = $this->_getMap($pagetext);
 	if (!$map)
-	    return HTML::p("<No map found>"); // Shouldn't happen.
-
-	global $request;
-        $dbi = $request->getDbh();
+	    return HTML::p("<No interwiki map found>"); // Shouldn't happen.
 
         $mon_attr = array('class' => 'interwiki-moniker');
         $url_attr = array('class' => 'interwiki-url');
