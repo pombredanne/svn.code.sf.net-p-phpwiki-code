@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.3 2003-02-22 00:26:14 dairiki Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.4 2003-02-26 00:25:28 dairiki Exp $');
 /**
  Copyright 2003 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -119,7 +119,8 @@ extends WikiPlugin
         $badpages = array();
         while (($page = $pages->next())) {
             $pagename = $page->getName();
-            if ($pagename[0] == SUBPAGE_SEPARATOR)
+            $wpn = new WikiPageName($pagename);
+            if (! $wpn->isValid())
                 $badpages[] = $pagename;
         }
 
