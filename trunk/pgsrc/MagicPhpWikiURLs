@@ -44,8 +44,7 @@ A magic link looks like:
 The "''text'' __|__" is optional but usually recommended. 
 If given it will provide the label for the link.
 
-The ''pagename'' part is optional, too.  If omitted, the link will
-refer to the current wiki-page.
+The ''phpwiki-url'' is a __phpwiki:__ URL as described above.
 
 !Some examples
 
