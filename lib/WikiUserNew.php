@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.49 2004-04-07 23:13:18 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.50 2004-04-10 05:34:35 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1891,7 +1891,7 @@ extends _PassUser
 {
     function checkPass($submitted_password) {
         $userid = $this->_userid;
-        $mbox = @imap_open( "{" . IMAP_AUTH_HOST . "}",
+        $mbox = @imap_open( "{" . IMAP_AUTH_HOST . "}INBOX",
                             $userid, $submitted_password, OP_HALFOPEN );
         if ($mbox) {
             imap_close($mbox);
@@ -2715,6 +2715,10 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2004/04/07 23:13:18  rurban
+// fixed pear/File_Passwd for Windows
+// fixed FilePassUser sessions (filehandle revive) and password update
+//
 // Revision 1.48  2004/04/06 20:00:10  rurban
 // Cleanup of special PageList column types
 // Added support of plugin and theme specific Pagelist Types

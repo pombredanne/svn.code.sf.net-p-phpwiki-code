@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.52 2004-04-10 02:55:48 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.53 2004-04-10 05:34:35 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -280,7 +280,7 @@ class WikiUser {
                 }
                 // imap authentication. added by limako
                 if (ALLOW_IMAP_LOGIN && !empty($passwd)) {
-                    $mbox = @imap_open( "{" . IMAP_AUTH_HOST . "}",
+                    $mbox = @imap_open( "{" . IMAP_AUTH_HOST . "}INBOX",
                                         $userid, $passwd, OP_HALFOPEN );
                     if($mbox) {
                         imap_close($mbox);
@@ -721,6 +721,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2004/04/10 02:55:48  rurban
+// fixed old WikiUser
+//
 // Revision 1.51  2004/04/06 20:00:10  rurban
 // Cleanup of special PageList column types
 // Added support of plugin and theme specific Pagelist Types
