@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.15 2002-02-03 09:10:06 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.16 2002-02-03 09:49:06 carstenklapp Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -14,6 +14,39 @@ if (!defined('SECONDS_PER_DAY'))
 // It would be nice to have some way to get from the individual date
 // pages back to the calendar page. (Subpage support might make this
 // easier.)
+
+/**
+ * A class representing a clickable day "button".
+ */
+class DayButton extends HtmlElement {
+    /** Constructor
+     *
+     */
+    function DayButton ($page_for_date, $mday, $isWikiPage, $istoday) {
+
+        $this->HtmlElement('td', array('align' => 'center'));
+
+        if ($isWikiPage) {
+            $class = 'cal-day';
+            $title = $page_for_date;
+            $mday = HTML::em($mday);
+        }
+        else {
+            $class = 'cal-hide';
+            $title = sprintf(_("Edit %s"), $page_for_date);
+            $url = WikiURL($page_for_date, array('action' => 'edit'));
+        }
+        if ($istoday) {
+            $mday = HTML::strong($mday);
+            $this->setAttr('class', 'cal-today');
+        }
+
+        $this->pushContent(HTML::a(array('href' => $url,
+                                      'class' => $class,
+                                      'title' => $title), $mday));
+    }
+
+};
 
 /**
  */
@@ -99,30 +132,12 @@ extends WikiPlugin
         $page_for_date = $args['prefix'] . strftime($args['date_format'],
                                                     $time);
         $t = localtime($time, 1);
-
-        $td = HTML::td(array('align' => 'center'));
-
         $mday = $t['tm_mday'];
-        if ($mday == $this->_today) {
-            $mday = HTML::strong($mday);
-            $td->setAttr('class', 'cal-today');
-        }
 
-        if ($dbi->isWikiPage($page_for_date)) {
-            $date = HTML::a(array('class' => 'cal-day',
-                                  'href'  => WikiURL($page_for_date),
-                                  'title' => $page_for_date),
-                            HTML::em($mday));
-        }
-        else {
-            $date = HTML::a(array('class' => 'cal-hide',
-                                  'href'  => WikiURL($page_for_date,
-                                                     array('action' => 'edit')),
-                                  'title' => sprintf(_("Edit %s"), $page_for_date)),
-                            $mday);
-        }
-        $td->pushContent(NBSP, $date, NBSP);
-        return $td;
+        $isWikiPage = $dbi->isWikiPage($page_for_date);
+        $istoday = $mday == $this->_today;
+
+        return new DayButton($page_for_date, $mday, $isWikiPage, $istoday);
     }
 
     function run($dbi, $argstr, $request) {
