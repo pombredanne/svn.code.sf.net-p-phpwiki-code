@@ -1,9 +1,9 @@
 Date: Fri, 19 Nov 2004 14:27:36 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.47 2004-11-19 13:34:51 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.48 2004-11-26 18:35:18 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.47 $";
+  pgsrc_version="2 $Revision: 1.48 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -114,7 +114,7 @@ changes:
   for proper importing (PCRE+memory related crashes on older php's)
 
 new:
-* new ENABLE_EDIT_TOOLBAR (from mediawiki), JS_SEARCHREPLACE, CategoryPulldown
+* new ENABLE_EDIT_TOOLBAR (from mediawiki), JS_SEARCHREPLACE, AddCategory button
 * new other config options: 
 ** ENABLE_PAGEPERM to turn off ACL (no owner at the statusline if off)
 ** FORTUNE_DIR to enable random quotes for new pages
@@ -143,6 +143,7 @@ new:
 * added template variable expansion support to the CreatePagePlugin
 * added paging support for simple one-column pagelists
 * added new PageList options: cols, azhead, comma, commasep, ordered
+  and enabled the new args on most plugins.
 * added experimental SearchHighlight feature (not for HTML yet)
 * added [OverWrite All] button to loadfile action on the first page.
 * performance: use cached static config/config.php, if it's writable by 
@@ -152,7 +153,9 @@ new:
 * added more PageChangeNotification on other actions: rename, remove.
   changed subject on create. Collapse mult. emails to one.
 * added WikiPluginCached support for image maps and svg
-
+* added case-sensitive and regex searching
+* added new PhpWiki:WikiFormRich plugin
+* added new AppendTextPlugin (by Pascal Giard)
 
 1.3.10 May, 13 2004, Reini Urban, Joby Walker:
 
