@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.18 2004-04-29 21:55:15 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.19 2004-05-08 16:59:27 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -70,9 +70,12 @@ extends WikiPlugin
     		case 2: $h = "h3"; break;
     		case 3: $h = "h2"; break;
     	}
-    	$theading = TransformInline($heading);
-    	$qheading = preg_quote($theading->asString());
-    	
+        if (defined('TOC_FULL_SYNTAX') and TOC_FULL_SYNTAX) {
+            $theading = TransformInline($heading);
+            $qheading = preg_quote($theading->asString());
+        } else {
+            $qheading = preg_quote($heading);
+        }
     	for ($j=$start_index; $j < count($content); $j++) {
             if (is_string($content[$j])) {
     		if (preg_match("/<$h>$qheading<\/$h>/",$content[$j])) {
@@ -207,7 +210,8 @@ extends WikiPlugin
                 $levels[] = $level;
             }
         }
-    	require_once("lib/InlineParser.php");
+        if (defined('TOC_FULL_SYNTAX') and TOC_FULL_SYNTAX)
+            require_once("lib/InlineParser.php");
         if ($headers = $this->extractHeaders(&$content, &$dbi->_markup, $with_toclink, $levels, $basepage)) {
             foreach ($headers as $h) {
                 // proper heading indent
@@ -251,6 +255,10 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/04/29 21:55:15  rurban
+// fixed TOC backlinks with USE_PATH_INFO false
+//   with_toclink=1, sf.net bug #940682
+//
 // Revision 1.17  2004/04/26 19:43:03  rurban
 // support most cases of header markup. fixed duplicate MangleXmlIdentifier name
 //
