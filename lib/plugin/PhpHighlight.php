@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhpHighlight.php,v 1.2 2002-11-04 17:42:19 carstenklapp Exp $');
+rcs_id('$Id: PhpHighlight.php,v 1.3 2002-11-04 19:29:40 carstenklapp Exp $');
 /**
  * A plugin that runs the highlight_string() function in PHP on it's
  * arguments to pretty-print PHP code.
@@ -60,7 +60,7 @@ extends WikiPlugin
 
         $this->sanify_colors($string, $comment, $keyword, $bg, $default, $html);
         $this->set_colors($string, $comment, $keyword, $bg, $default, $html);
-                
+
         if ($has_old_php) {
             ob_start();
             highlight_string("<?php\n" . $source . "\n?>");
@@ -87,7 +87,7 @@ extends WikiPlugin
            or maybe an html color name like "black" */
         // TODO
     }
-    
+
     function set_colors($string, $comment, $keyword, $bg, $default, $html) {
         // set highlight colors
         ini_set('highlight.string', $string);
@@ -97,7 +97,7 @@ extends WikiPlugin
         ini_set('highlight.default', $default);
         ini_set('highlight.html', $html);
     }
-    
+
 };
 
 // For emacs users
