@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.18 2004-11-01 10:43:57 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.19 2004-12-16 18:30:59 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004 Reini Urban
@@ -419,6 +419,7 @@ class WikiPluginCached extends WikiPlugin
         return HTML(HTML::map(array( 'name' => $key ), $map ),
                     HTML::img( array(
                    'src'    => $url, 
+                   'border' => 0,
                    //  'alt'    => htmlspecialchars($this->getAlt($dbi,$argarray,$request)) 
                    'usemap' => '#'.$key ))
                );
@@ -443,6 +444,7 @@ class WikiPluginCached extends WikiPlugin
     function embedImg($url, $dbi, $argarray, $request) {
         return HTML::img( array( 
             'src' => $url,
+            'border' => 0,
             'alt' => htmlspecialchars($this->getAlt($dbi, $argarray, $request)) ) );
     }
 
@@ -1094,6 +1096,12 @@ class WikiPluginCached extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/11/01 10:43:57  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.17  2004/10/12 15:06:02  rurban
 // fixes for older php, removed warnings
 //
