@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.203 2004-09-16 08:00:52 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.204 2004-09-17 13:19:15 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -405,7 +405,7 @@ function SplitQueryArgs ($query_args = '')
     return $args;
 }
 
-function LinkPhpwikiURL($url, $text = '', $basepage) {
+function LinkPhpwikiURL($url, $text = '', $basepage = false) {
     $args = array();
     
     if (!preg_match('/^ phpwiki: ([^?]*) [?]? (.*) $/x', $url, $m)) {
@@ -446,7 +446,7 @@ function LinkPhpwikiURL($url, $text = '', $basepage) {
     else {
         // Don't allow administrative links on unlocked pages.
         $dbi = $GLOBALS['request']->getDbh();
-        $page = $dbi->getPage($basepage);
+        $page = $dbi->getPage($basepage ? $basepage : $pagename);
         if (!$page->get('locked'))
             return HTML::span(array('class' => 'wikiunsafe'),
                               HTML::u(_("Lock page to enable link")));
@@ -1646,6 +1646,9 @@ function GenerateId($name) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.203  2004/09/16 08:00:52  rurban
+// just some comments
+//
 // Revision 1.202  2004/09/14 10:11:44  rurban
 // start 2nd Id with ...Plugin2
 //
