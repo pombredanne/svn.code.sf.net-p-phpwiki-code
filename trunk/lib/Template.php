@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.62 2004-06-28 15:39:27 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.63 2004-09-06 08:22:33 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -175,10 +175,12 @@ class Template
         }
         else
             $error->errfile .= " (In template '$this->_name')";
-        
-	$lines = explode("\n", $this->_tmpl);
-	if (isset($lines[$error->errline - 1]))
-	    $error->errstr .= ":\n\t" . $lines[$error->errline - 1];
+
+        if (!empty($this->_tmpl)) {
+            $lines = explode("\n", $this->_tmpl);
+            if (isset($lines[$error->errline - 1]))
+                $error->errstr .= ":\n\t" . $lines[$error->errline - 1];
+        }
 	return $error;
     }
 };
@@ -256,6 +258,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2004/06/28 15:39:27  rurban
+// fixed endless recursion in WikiGroup: isAdmin()
+//
 // Revision 1.61  2004/06/25 14:29:18  rurban
 // WikiGroup refactoring:
 //   global group attached to user, code for not_current user.
