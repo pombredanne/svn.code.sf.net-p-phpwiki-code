@@ -194,6 +194,26 @@ a.cal-hide, a.cal-arrow { text-decoration: none; }
 .cal-dayname { font-size: smaller; text-decoration: underline; }
 table.cal { border: thin solid black; } 
 
+
+/* IncludePage plugin */
+.transclusion-title {
+  font-style: oblique;
+  font-size: smaller; /* 0.75em; */
+  text-decoration: underline;
+  text-align: right;
+} 
+
+div.transclusion { 
+  background: lightgreen;
+  border: thin;
+  border-style: solid;
+  padding-left: 0.8em; 
+  padding-right: 0.8em; 
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin: 0.5ex 0px;
+}
+ 
 /* For emacs users
  *
  * Local Variables:
