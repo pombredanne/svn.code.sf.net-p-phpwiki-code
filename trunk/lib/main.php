@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.38 2002-01-28 01:01:26 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.39 2002-01-28 01:57:13 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -433,6 +433,7 @@ class WikiRequest extends Request {
         // FIXME: This check is redundant.
         //$user->requireAuth(WIKIAUTH_ADMIN);
         include('lib/removepage.php');
+        RemovePage($this);
     }
 
     
