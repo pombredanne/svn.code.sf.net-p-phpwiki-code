@@ -1,17 +1,17 @@
-<!-- $Id: wiki_fullsearch.php3,v 1.5 2000-06-14 03:33:43 wainstead Exp $ -->
+<!-- $Id: wiki_fullsearch.php3,v 1.6 2000-06-18 15:12:13 ahollosi Exp $ -->
 <?
    /*
       Search the text of pages for a match.
       A few too many regexps for my liking, but it works.
    */
 
-   echo WikiHeader("Search Results");
-   echo "<h1>$LogoImage Search Results</h1>\n";
-
    $found = $count = 0;
 
    if(get_magic_quotes_gpc())
       $full = stripslashes($full);
+
+   $result = "<P><B>Searching for \"" . htmlspecialchars($full) .
+		"\" ....</B></P>\n<DL>\n";
 
    // quote regexp chars
    $full = preg_quote($full);
@@ -22,7 +22,7 @@
       $pagename = $page['name'];
       $pagehash = $page['hash'];
 
-      echo "<h3>", LinkExistingWikiWord($pagename), "</h3>\n";
+      $result .= "<DT><B>" . LinkExistingWikiWord($pagename) . "</B>\n";
       $count++;
 
       // print out all matching lines, highlighting the match
@@ -30,13 +30,12 @@
          if (preg_match("/$full/i", $pagehash["content"][$j], $pmatches)) {
             $matched = preg_replace("/$full/i", "<b>\\0</b>",
                                     $pagehash["content"][$j]);
-            echo "<li>", $matched, "</li>\n";
+            $result .= "<dd><small>$matched</small></dd>\n";
             $found += count($pmatches);
          }
       }
-      echo "<hr>\n";
    }
 
-   echo "$found matches found in $count pages.\n";
-   echo WikiFooter();
+   $result .= "</dl>\n<hr noshade>$found matches found in $count pages.\n";
+   GeneratePage('MESSAGE', $result, "Full Text Search Results", 0);
 ?>

@@ -1,4 +1,4 @@
-<!-- $Id: wiki_savepage.php3,v 1.7 2000-06-14 03:41:09 wainstead Exp $ -->
+<!-- $Id: wiki_savepage.php3,v 1.8 2000-06-18 15:12:13 ahollosi Exp $ -->
 <?
 
 /*
@@ -10,10 +10,7 @@
 
    function ConcurrentUpdates($pagename)
    {
-      echo WikiHeader("Problem while updating $pagename");
-      $pagename = htmlspecialchars($pagename);
-      echo "<h1>Problem while updating $pagename</h1>\n" .
-	   "<P>PhpWiki is unable to save your changes, because\n" .
+      $html = "<P>PhpWiki is unable to save your changes, because\n" .
 	   "another user edited and saved the page while you\n" .
 	   "were editing the page too. If saving proceeded now\n" .
 	   "changes from the previous author would be lost.</P>\n" .
@@ -28,7 +25,8 @@
 	   "the clipboard (or text editor).\n" .
 	   "<LI>Press <B>Save</B> again.</OL>\n" .
 	   "<P>Sorry for the inconvinience.</P>";
-      echo WikiFooter();
+      GeneratePage('MESSAGE', $html, "Problem while updating " .
+		   htmlspecialchars($pagename), 0);
       exit;
    }
 
@@ -56,17 +54,15 @@
    $pagehash["author"] = $remoteuser;
 
    // create page header
-   echo WikiHeader("Thanks for $pagename Edits");
    $enc_url = rawurlencode($pagename);
    $enc_name = htmlspecialchars($pagename);
-   echo "Thank you for editing " .
+   $html = "Thank you for editing " .
 	"<a href=\"$ScriptUrl?$enc_url\">$enc_name</a><br>\n";
 
-
    if (! empty($content)) {
-      // patch from Grant Morgan <grant@ryuuguu.com> for
-      // magic_quotes_gpc
-      if(get_magic_quotes_gpc()) { $content = stripslashes($content); }
+      // patch from Grant Morgan <grant@ryuuguu.com> for magic_quotes_gpc
+      if (get_magic_quotes_gpc())
+         $content = stripslashes($content);
 
       $pagehash["content"] = explode("\n", $content);
 
@@ -81,24 +77,25 @@
 	   if (preg_match("#^($AllowedProtocols):#", ${'r'.$i}))
               $pagehash['r'.$i] = ${'r'.$i};
 	   else
-	      echo "<P>Link [$i]: <B>unknown protocol</B>" .
+	      $html .= "<P>Link [$i]: <B>unknown protocol</B>" .
 	           " - use one of $AllowedProtocols - link discarded.</P>\n";
 	}
    }
 
    InsertPage($dbi, $pagename, $pagehash);
    UpdateRecentChanges($dbi, $pagename, $newpage);
-?>
-Your careful attention to detail is much appreciated.<br>
-<img src="<? echo "$SignatureImg"; ?>"><br>
-p.s. Be sure to <em>Reload</em> your old pages.<br>
 
-<?
+   $html .= "Your careful attention to detail is much appreciated.\n";
+
    if ($WikiDataBase == "/tmp/wikidb") {
-      echo "<h2>Warning: the Wiki DBM file still lives in the ";
-      echo "/tmp directory. Please read the INSTALL file and move ";
-      echo "the DBM file to a permanent location or risk losing ";
-      echo "all the pages!</h2>\n";
+      $html .= "<P><B>Warning: the Wiki DBM file still lives in the " .
+		"/tmp directory. Please read the INSTALL file and move " .
+		"the DBM file to a permanent location or risk losing " .
+		"all the pages!</B>\n";
    }
-   echo WikiFooter();
+
+   $html .= "<P><img src=\"$SignatureImg\"></P><hr noshade><P>";
+   include("wiki_transform.php3");
+
+   GeneratePage('BROWSE', $html, $pagename, $pagehash);
 ?>
