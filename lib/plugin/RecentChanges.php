@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.58 2002-02-08 22:51:26 lakka Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.59 2002-02-09 21:35:42 carstenklapp Exp $');
 /**
  */
 
@@ -145,7 +145,7 @@ extends _RecentChanges_Formatter
         global $request, $Theme;
 
         $rss_url = $request->getURLtoSelf(array('format' => 'rss'));
-        return $Theme->makeButton("RSS", $rss_url, 'rssicion');
+        return $Theme->makeButton("RSS", $rss_url, 'rssicon');
     }
     
     function description () {
