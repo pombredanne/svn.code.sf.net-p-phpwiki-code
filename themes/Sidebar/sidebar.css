@@ -1,21 +1,21 @@
 /*
-  $Id: sidebar.css,v 1.1 2002-02-01 18:07:50 carstenklapp Exp $
+  $Id: sidebar.css,v 1.2 2002-02-01 18:21:30 carstenklapp Exp $
 */
 @import url("../../phpwiki.css");
 
 #navbar {
-        width: 4em;
+        width: 9em;
 position: absolute;
 left: 0.5em;
 line-height: 1.4;
          }
-body { margin-left: 10em;
+body { margin-left: 12em;
       }
 #actionbar {
-        width: 4em;
+        width: 9em;
 position: absolute;
 left: 1em;
-top: 9em;
+top: 10em;
 line-height: 1.4;
 
          }
