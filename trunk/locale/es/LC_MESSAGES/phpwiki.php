@@ -8,6 +8,8 @@ $locale["%s days"] =
    "%s dias";
 $locale["%s words"] =
    "%s dias";
+$locale["%s: %s"] =
+   "%s: %s";
 $locale["%s: file not found"] =
    "%s: fichero no encontrado";
 $locale["%s: not defined"] =
@@ -56,6 +58,8 @@ $locale["Full text search results for '%s'"] =
    "Resultados de la búsqueda en el texto completo para '%s'";
 $locale["FullTextSearch"] =
    "BúsquedaDelTexto";
+$locale["Go"] =
+   "Aceptar";
 $locale["GoodStyle"] =
    "BuenEstilo";
 $locale["H"] =
@@ -70,8 +74,6 @@ $locale["HomePage"] =
    "PáginaPrincipal";
 $locale["Include of '%s' failed"] =
    "Inserción de '%s' falló";
-$locale["Info"] =
-   "InformacionDeLaPagina";
 $locale["Last"] =
    "Final";
 $locale["Last edited %s."] =
@@ -106,8 +108,6 @@ $locale["Page Locked"] =
    "Página Bloqueada";
 $locale["Page Name"] =
    "Nombre de la Página";
-$locale["Page Version:"] =
-   "Versión:";
 $locale["Page now locked."] =
    "Página bloqueada.";
 $locale["Password"] =
@@ -142,8 +142,6 @@ $locale["Search"] =
    "Buscar";
 $locale["See %s tips for editing."] =
    "%s tips para editar.";
-$locale["Size:"] =
-   "Tamaño:";
 $locale["Someone has edited the page!"] =
    "¡Alguien ha modificado la página!";
 $locale["Sorry for the inconvenience."] =

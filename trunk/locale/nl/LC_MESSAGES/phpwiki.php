@@ -6,6 +6,8 @@ $locale["(diff)"] =
    "(diff)";
 $locale["- saved to database as version %d"] =
    "- bewaard in de data base als versie %d";
+$locale["BackLinks"] =
+   "TerugLinks";
 $locale["Cancel"] =
    "Annuleer";
 $locale["Complete."] =

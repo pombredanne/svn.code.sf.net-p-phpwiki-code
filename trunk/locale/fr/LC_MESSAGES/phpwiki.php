@@ -74,8 +74,6 @@ $locale["An unnamed PhpWiki"] =
    "Un PhpWiki sans titre";
 $locale["Author will be logged as %s."] =
    "L'auteur sera enregistré sous le nom %s.";
-$locale["Author:"] =
-   "Auteur :";
 $locale["BAD URL -- remove all of <, >, \""] =
    "MAUVAIS URL -- retirez tous les <, >, \"";
 $locale["BAD phpwiki: URL"] =
@@ -144,6 +142,8 @@ $locale["Edit %s"] =
    "Éditer %s";
 $locale["Edit Area Size"] =
    "Éditez la taille de la zone";
+$locale["Edit Area Size:"] =
+   "Taille de la zone d'édition :";
 $locale["Edit Old Revision"] =
    "Éditer la Version Archivée";
 $locale["Edit aborted."] =
@@ -174,6 +174,8 @@ $locale["Get BackLinks for %s"] =
    "Obtenir des RétroLiens pour %s";
 $locale["Get debugging information for %s."] =
    "Obtenir des infos de débogage pour %s.";
+$locale["Go"] =
+   "OK";
 $locale["GoodStyle"] =
    "StyleCorrect";
 $locale["H"] =
@@ -192,8 +194,6 @@ $locale["HomePage"] =
    "Accueil";
 $locale["I'm just doing minor edits. Please divert the usual logging to %s instead."] =
    "Je ne fais que des modifications mineures. Veuillez rediriger les logs habituels vers %s.";
-$locale["I'm sorry.  Version %d of %s is not in my database."] =
-   "Je suis désolé. La version %d de %s n'est pas dans la base de données.";
 $locale["Image loaded from cache file: %s"] =
    "Image chargée depuis le fichier cache : %s";
 $locale["Image saved to cache file: %s"] =
@@ -206,8 +206,6 @@ $locale["IncludePage"] =
    "InsérezLaPage";
 $locale["Included from %s"] =
    "Inséré de %s";
-$locale["Info"] =
-   "InfosDeLaPage";
 $locale["Insufficient permissions."] =
    "Permissions insuffisantes.";
 $locale["InterWiki Address"] =
@@ -228,6 +226,8 @@ $locale["Last Modified:"] =
    "Dernière Modification :";
 $locale["Last Summary"] =
    "Dernier Résumé";
+$locale["Last Summary:"] =
+   "Dernier Résumé :";
 $locale["Last edited %s."] =
    "Dernière modification %s.";
 $locale["Last edited on %s."] =
@@ -316,8 +316,6 @@ $locale["Page Locked"] =
    "Page Verrouillée";
 $locale["Page Name"] =
    "Nom de Page";
-$locale["Page Version:"] =
-   "Version de la Page :";
 $locale["Page names with prefix '%s'"] =
    "Noms de page ayant le préfixe ' %s '";
 $locale["Page names with suffix '%s'"] =
@@ -366,8 +364,6 @@ $locale["RandomPage"] =
    "PageAléatoire";
 $locale["Raw HTML is disabled in this wiki."] =
    "Le HTML est interdit sur ce wiki.";
-$locale["Raw HTML is only allowed in locked pages."] =
-   "Le HTML n'est autorisé que dans les pages verrouillées.";
 $locale["RecentChanges"] =
    "DernièresModifs";
 $locale["RecentEdits"] =
@@ -394,8 +390,6 @@ $locale["Revision Not Found"] =
    "Révision Non Trouvée";
 $locale["Save"] =
    "Enregistrer";
-$locale["Saved on:"] =
-   "Enregistrée le :";
 $locale["Saved: %s"] =
    "Enregistrée : %s";
 $locale["Saving this page will overwrite the current version."] =
@@ -426,8 +420,6 @@ $locale["Simple Sample Plugin"] =
    "Exemple Simple de Plugin";
 $locale["Since you started the deletion process, someone has saved a new version of %s.  Please check to make sure you still want to permanently remove the page from the database."] =
    "Depuis que vous avez entamé le processus d'effacement, quelqu'un a enregistré une nouvelle version de %s. Veuillez vérifier que vous désirez toujours retirer de façon permanente cette page de la base de données.";
-$locale["Size:"] =
-   "Taille :";
 $locale["Skipping"] =
    "Ignoré";
 $locale["Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save."] =
@@ -440,8 +432,6 @@ $locale["Sorry, this version of PHP cannot create PNG image files."] =
    "Désolé, cette version de PHP ne peut pas créer des fichiers d'image PNG.";
 $locale["Statistics about %s."] =
    "Statistiques sur %s.";
-$locale["Supplanted on:"] =
-   "Remplacée le :";
 $locale["Synopsis"] =
    "Vue d'ensemble";
 $locale["TextFormattingRules"] =
@@ -582,8 +572,6 @@ $locale["diff"] =
    "diff";
 $locale["edits"] =
    "modifications";
-$locale["elapsed time: %s s"] =
-   "temps écoulé : %s s";
 $locale["from %s"] =
    "de %s";
 $locale["is identical to current version %d - skipped"] =
