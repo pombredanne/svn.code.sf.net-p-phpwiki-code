@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.21 2003-11-25 21:14:12 carstenklapp Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.22 2003-11-30 19:33:53 carstenklapp Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -32,7 +32,12 @@
 <?php } ?>
   </div>
   </td>
-  <td align="right">
+<?php
+/* valign="top" is not ideal here but required to get reasonable alignment
+   with the other action buttons in some browsers, like OmniWeb and Safari
+   (therefore probably Konquorer too) */
+?>
+  <td align="right" valign="top">
     <div id="signin"><?= Template('signin') ?></div>
   </td>
 </tr>
