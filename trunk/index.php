@@ -69,7 +69,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.67 2002-01-19 08:20:19 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.68 2002-01-19 20:40:56 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -368,10 +368,6 @@ $AllowedProtocols = "http|https|mailto|ftp|news|nntp|ssh|gopher";
 
 // URLs ending with the following extension should be inlined as images
 $InlineImages = "png|jpg|gif|tiff|tif";
-
-// Uncomment this to automatically split WikiWords by inserting spaces.
-// The default is to leave WordsSmashedTogetherLikeSo in the body text.
-//define("autosplit_wikiwords", 1);
 
 // Perl regexp for WikiNames ("bumpy words")
 // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
