@@ -5,6 +5,7 @@ can be found at http://www.gnu.org/copyleft/gpl.txt.
 
 See INSTALL for installation notes.
 See INSTALL.mysql for using PhpWiki with MySQL.
+See INSTALL.pgsql for using PhpWiki with PostgreSQL
 
 The out-of-the-box version uses a dbm file in the /tmp directory; you may
 wish a more permanent place for yours, but make sure it's read/writable
@@ -12,11 +13,13 @@ by your web server!
 
 index.php3:            the "main page", really a set of branching instructions
 wiki_config.php3:      configuration options, constants, global variables
-wiki_dbmlib.php3:      database access functions
+wiki_dbmlib.php3:      database access functions for dbm files
 wiki_display.php3:     display a page (this calls "wiki_transform.php3")
 wiki_editlinks.php3:   edit the embedded links of a page
 wiki_editpage.php3:    edit a page
 wiki_fullsearch.php3:  full page text search
+wiki_mysql.php3:       database access functions for mySQL
+wiki_pgsql.php3:       database access functions for PostgreSQL
 wiki_savepage.php3:    save a page to db, thank user
 wiki_search.php3:      page title search
 wiki_setupwiki.php3:   load a set of pages from ./pgsrc/ directory
