@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.42 2002-09-02 09:34:05 rurban Exp $');
+<?php rcs_id('$Id: Template.php,v 1.43 2002-09-02 09:42:20 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -214,7 +214,8 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
         // head plugins must consist of a single line at the VERY FIRST LINE in the content.
         // This is a hack, but it works fast enough.
         $len = strlen('<?plugin-head');
-        if ($page_revision and 
+        if (($request->getArg('action') == 'browse') and
+            $page_revision and 
             ($text = &$page_revision->getPackedContent()) and 
             substr($text,0,$len) == '<?plugin-head')
         {
