@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-heavy.css,v 1.21 2002-02-17 01:27:34 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.22 2002-02-18 01:35:46 carstenklapp Exp $
  *
  * This is stuff which should be in phpwiki.css, but which breaks Netscape 4.
  *
@@ -104,5 +104,10 @@ img.linkicon { vertical-align: middle; }
   position: absolute;
   left: 0;
   top:  0;
+}
+/* deleted & added words */
+.diff del, .diff ins {
+  padding-left: 1px;
+  padding-right: 1px;
 }
 
