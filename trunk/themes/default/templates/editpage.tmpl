@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.9 2002-01-23 05:10:22 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.10 2002-01-23 16:31:02 carstenklapp Exp $ -->
 
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong></p>
@@ -80,20 +80,11 @@ $SaveB = HTML::input(array('type'  => 'submit',
   </td>
 </tr></table>
 
-<table summary="Toolbar: Edit tips." class="toolbar"
-       cellpadding="0" cellspacing="0" border="0"><tr valign="middle">
-  <?php /* FIXME: convert this to use the IncludePage plugin.
-         * A table is used for proper image to text alignment when
-         * a theme uses image buttons.
-         */ ?>
-<!-- FIXME:--> 
-  <td>
-    <?php printf(_("You can change the size of the editing area in %s."),
-                 "</td><td>&nbsp;".$UserPrefsB->asXML()."&nbsp;</td><td>"); ?>&nbsp;</td>
-  <td>
-    <?php printf(_("See %s tips for editing."),
-                 "</td><td>&nbsp;".$GoodStyleB->asXML()."&nbsp;</td><td>"); ?></td>
-</tr></table>
+  <?php /* FIXME: convert this to use the IncludePage plugin. */ ?>
+  <?php printf(_("You can change the size of the editing area in %s."),
+               $UserPrefsB->asXML()); ?>
+  <?php printf(_("See %s tips for editing."),
+               $GoodStyleB->asXML()); ?>
 
 <hr noshade="noshade" />
 
