@@ -657,6 +657,11 @@ msgstr "%s wird optimiert"
 msgid "Describe %s here."
 msgstr "Beschreibe %s hier."
 
+#: ../lib/WikiDB.php:872
+#, c-format
+msgid "Acck! Revision %s of %s seems to have been deleted!"
+msgstr ""
+
 #: ../lib/WikiPlugin.php:64
 #, c-format
 msgid "argument '%s' not declared by plugin"
@@ -1039,11 +1044,6 @@ msgid ""
 msgstr ""
 "Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine "
 "andere Seite zu editieren oder dein Text in einem Texteditor speichern."
-
-#: ../lib/savepage.php:62
-#, c-format
-msgid "Problem while editing %s"
-msgstr "Problem während dem Editieren von %s"
 
 #: ../lib/savepage.php:68
 #, c-format
