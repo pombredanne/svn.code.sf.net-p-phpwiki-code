@@ -1,17 +1,17 @@
 /*
-  $Id: phpwiki.css,v 1.20 2002-01-09 04:11:14 carstenklapp Exp $
+  $Id: phpwiki.css,v 1.21 2002-01-13 05:39:36 carstenklapp Exp $
 
   Classes:
 
   DIV.wikitext - the transformed wiki page text.
 
-  A.wiki           - link to page in wiki.
-  A.named-wiki    - a named link to page in wiki (from e.g. [name|WikiPage]).
-  A.interwiki     - link to page in another wiki
-    SPAN.wikipage    - page name within interwiki link.
-  A.named-interwiki  - link to page in another wiki
-  A.url           - link to external URL from wiki page.
-  A.named-url     - link to external URL from wiki page.
+  A.wiki            - link to page in wiki.
+  A.named-wiki      - a named link to page in wiki (from e.g. [name|WikiPage]).
+  A.interwiki       - link to page in another wiki
+    SPAN.wikipage   - page name within interwiki link.
+  A.named-interwiki - link to page in another wiki
+  A.url             - link to external URL from wiki page.
+  A.named-url       - link to external URL from wiki page.
 
   .wikiunknown A, .wikiunknown U
   .named-wikiunknown A, .named-wikiunknown U
@@ -45,15 +45,15 @@ INPUT.button { font-family: arial, helvetica, sans-serif; }
 .wikitext PRE { font-family: monospace; }
 
 DIV.wikitext {
- background: white;
- border: thin;
- border-color: black;
- border-style: solid;
- padding-left: 0.8em; 
+ background:    white;
+ border:         thin;
+ border-color:  black;
+ border-style:  solid;
+ padding-left:  0.8em; 
  padding-right: 0.8em; 
- padding-top: 0px;
- padding-bottom: 0px;
- margin: 0.5ex 0px;
+ padding-top:     0px;
+ padding-bottom:  0px;
+ margin:    0.5ex 0px;
  /* This breaks Netscape 4: (display does not go full width).
     width: auto;
  */
@@ -144,7 +144,7 @@ B .wiki, STRONG .wiki { font-size: larger; }
 { text-decoration: none; }
 
 .wikiunknown, .named-wikiunknown
-{color: #600; }
+{ color: #600; }
 
 /* Interwiki links */
 A.interwiki { text-decoration: none; }
@@ -161,21 +161,41 @@ I .interwiki, EM .interwiki
 /*
  * wikiaction, wikiadmin, wikiunsafe:
  */
-A.wikiaction, A.wikiadmin       { text-decoration: none; }
-A.wikiaction, .wikiaction TABLE, SPAN.wikiaction  { background-color: #ddd; }
-A.wikiadmin, .wikiadmin TABLE   { background-color: #fdd; }
+A.wikiaction, A.wikiadmin	{ text-decoration: none; }
+A.wikiaction, .wikiaction TABLE, SPAN.wikiaction { background-color: #ddd; }
+A.wikiadmin, .wikiadmin TABLE	{ background-color: #fdd; }
 .wikiunsafe                     { background-color: #ccc; }
+
+/* Adds a little more surface area to make actions a little more like
+   buttons. Apparently some versions of ie choke on percentages, so
+   these just are fixed dimensions and may need some tweaking, add or
+   subtract a pixel or so. */
+A.wikiaction, 
+A.wikiadmin     { padding-top:    0pt;
+                  padding-left:   6pt;
+                  padding-bottom: 1pt;
+                  padding-right:  6pt; }
+
+/* reduces the size of "(diff)" buttons in RecentChanges a bit so they
+   don't overlap as much (for mozilla) */
+DIV.wikitext 
+.wikiaction     { font-size:  smaller;
+                  padding-top:    0pt;
+                  padding-left:   2pt;
+                  padding-bottom: 0pt;
+                  padding-right:  2pt; }
 
 /*
  * No border on external link icons.
  */
-img.linkicon, img.rssicon	{ border: 0px; }
-img.rssicon		{ vertical-align: top; }
+img.linkicon,
+img.rssicon     { border: 0px; }
+img.rssicon	{ vertical-align: top; }
 /* This screws up NS4, moved to phpwiki-heavy.css 
-img.linkicon		{ vertical-align: middle; }
+img.linkicon    { vertical-align: middle; }
 */
 
- 
+
 /*
  * Put a border around wikiaction forms:
  * This doesn't work for NS4.
@@ -198,10 +218,10 @@ TEXTAREA.wikiedit { width: 100%; margin-top: 1ex; }
 /* Calendar plugin */
 
 a.cal-hide, a.cal-arrow { text-decoration: none; }
-.cal-arrow { font-weight: bold; }
-.cal-header { font-size: larger; }
-.cal-dayname { font-size: smaller; text-decoration: underline; }
-table.cal { border: thin solid black; } 
+.cal-arrow      { font-weight: bold; }
+.cal-header     { font-size: larger; }
+.cal-dayname    { font-size: smaller; text-decoration: underline; }
+table.cal       { border: thin solid black; } 
 
 
 /* IncludePage plugin */
@@ -213,29 +233,29 @@ table.cal { border: thin solid black; }
 } 
 
 div.transclusion { 
-  background: #cfc;
-  border: thin;
-  border-style: solid;
-  padding-left: 0.8em; 
+  background:     #cfc;
+  border:         thin;
+  border-style:  solid;
+  padding-left:  0.8em; 
   padding-right: 0.8em; 
-  padding-top: 0px;
-  padding-bottom: 0px;
-  margin: 0.5ex 0px;
+  padding-top:     0px;
+  padding-bottom:  0px;
+  margin:    0.5ex 0px;
 }
 
 /* The transclusion of the TextEditingRules Synopsis on templates/editpage.html */
 div.wiki-edithelp .transclusion {
-  font-size: smaller;
-  background: inherit;
+  font-size:   smaller;
+  background:  inherit;
   padding: 0.5ex 0.5em;
-  margin: 0.2ex 5%;
+  margin:     0.2ex 5%;
 }
 div.wiki-edithelp .transclusion p {
   margin: 0;
 }
 div.wiki-edithelp {
   background: #fff8dc; /* darker ivory */
-  font-size: smaller;
+  font-size:  smaller;
   padding: 0.05ex 2pt;
 }
   
