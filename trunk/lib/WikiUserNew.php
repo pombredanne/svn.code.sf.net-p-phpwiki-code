@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.2 2003-12-03 21:45:48 carstenklapp Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.3 2003-12-06 19:10:46 carstenklapp Exp $');
 
 // This is a complete rewrite of the old WikiUser code but it is not
 // implemented yet. Much of the existing UserPreferences class should
@@ -40,33 +40,116 @@ define('TIMEOFFSET_MIN_HOURS', -26);
 define('TIMEOFFSET_MAX_HOURS',  26);
 if (!defined('TIMEOFFSET_DEFAULT_HOURS')) define('TIMEOFFSET_DEFAULT_HOURS', 0);
 
+/**
+ * There are/will be four constants in index.php to establish login
+ * parameters:
+ *
+ * ALLOW_ANON_USER         default true
+ * ALLOW_BOGO_LOGIN        default true
+ * ALLOW_USER_PASSWORDS    default true
+ * PASSWORD_LENGTH_MINIMUM default 6?
+ *
+ *
+ * To require user passwords:
+ * ALLOW_BOGO_LOGIN = false,
+ * ALLOW_USER_PASSWORDS = true.
+ *
+ * To establish a COMPLETELY private wiki, such as an internal
+ * corporate one:
+ * ALLOW_ANON_USER = false,
+ * (and probably require user passwords as described above). In this
+ * case the user will be prompted to login immediately upon accessing
+ * any page.
+ *
+ * There are other possible combinations, but the typical wiki (such
+ * as PhpWiki.sf.net) would usually just leave all three enabled.
+ */
 
-function WikiUser ($UserName = '') {
-//TODO: check sessionvar for username & save username into sessionvar
-//TODO: how to implement PassUser?
-    switch ($UserName) {
-        case (ADMIN_USER):
-            return new _AdminUser($UserName);
-            break;
-        case (true):
-            return new _BogoUser($UserName);
-            break;
-        default:
-            // check for autologin pref in cookie and upgrade user object
-            $_AnonUser = new _AnonUser();
-            if ($UserName = $_AnonUser->UserName && $_AnonUser->_prefs->get('autologin')) {
-                if ($UserName == ADMIN_USER)
-                    return new _AdminUser($UserName);
-                else
-                    return new _BogoUser($UserName);
-            }
-            return $_AnonUser;
+// Local convenience functions.
+function _isAnonUserAllowed() {
+    return (defined('ALLOW_ANON_USER') && ALLOW_ANON_USER);
+}
+function _isBogoUserAllowed() {
+    return (defined('ALLOW_BOGO_LOGIN') && ALLOW_BOGO_LOGIN);
+}
+function _isUserPasswordsAllowed() {
+    return (defined('ALLOW_USER_PASSWORDS') && ALLOW_USER_PASSWORDS);
+}
+
+
+// Possibly upgrade userobject functions.
+function _determineAdminUserOrOtherUser($UserName) {
+    // Sanity check. User name is a condition of the definition of the
+    // _AdminUser, _BogoUser and _PassUser.
+    if (!$UserName)
+        return false;
+
+    if ($UserName == ADMIN_USER)
+        return new _AdminUser($UserName);
+    else
+        return _determineBogoUserOrPassUser($UserName);
+}
+
+function _determineBogoUserOrPassUser($UserName) {
+    // Sanity check. User name is a condition of the definition of
+    // _BogoUser and _PassUser.
+    if (!$UserName)
+        return false;
+
+    // Check for password and possibly upgrade user object.
+    $_BogoUser = new _BogoUser($UserName);
+    if (_isUserPasswordsAllowed()) {
+        if (/*$has_password =*/ $_BogoUser->_prefs->get('passwd'))
+            return new _PassUser($UserName);
     }
+    // User has no password.
+    if (_isBogoUserAllowed())
+        return $_BogoUser;
 
-    // For the future... think about...
-    // if (isa($user, '_AdminUser'))
-    // if (isa($user, '_DeactivatedUser'))
-    // etc.
+    // Passwords are not allowed, and Bogo is disallowed too. (Only
+    // the admin can sign in).
+    return false;
+}
+
+/**
+ * Primary WikiUser function, called by main.php.
+ * 
+ * This determines the user's type and returns an appropriate user
+ * object. main.php then querys the resultant object for password
+ * validity as necessary.
+ *
+ * If an _AnonUser object is returned, the user may only browse pages
+ * (and save prefs in a cookie).
+ *
+ * When this function returns false instead of any user object, the
+ * user has been denied access to the wiki (possibly even reading
+ * pages) and must therefore sign in to continue.
+ */
+function WikiUser ($UserName = '') {
+    //TODO: Check sessionvar for username & save username into
+    //sessionvar (may be more appropriate to do this in main.php).
+    if ($UserName) {
+        // Found a user name.
+        return _determineAdminUserOrOtherUser($UserName);
+    }
+    else {
+        // Check for autologin pref in cookie and possibly upgrade
+        // user object to another type.
+        $_AnonUser = new _AnonUser();
+        if ($UserName = $_AnonUser->UserName && $_AnonUser->_prefs->get('autologin')) {
+            // Found a user name.
+            return _determineAdminUserOrOtherUser($UserName);
+        }
+        else {
+            if (_isAnonUserAllowed())
+                return $_AnonUser;
+            return false; // User must sign in to browse pages.
+        }
+        return false; // User must sign in with a password.
+    }
+    trigger_error("DEBUG: Note: End of function reached in WikiUser." . " "
+                  . "Unexpectedly, an appropriate user class could not be determined.");
+    return false; // Failsafe.
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -88,6 +171,19 @@ class _WikiUser
         }
         $this->loadPreferences();
     }
+
+    function loadPreferences() {
+        trigger_error("DEBUG: Note: undefined _WikiUser class trying to load prefs." . " "
+                      . "New subclasses of _WikiUser must override this function.");
+        return false;
+    }
+
+    function savePreferences() {
+        trigger_error("DEBUG: Note: undefined _WikiUser class trying to save prefs." . " "
+                      . "New subclasses of _WikiUser must override this function.");
+        return false;
+    }
+
     // returns page_handle to user's home page or false if none
     function hasHomePage() {
         if ($this->UserName) {
@@ -108,6 +204,8 @@ class _WikiUser
 
     function checkPass($submitted_password) {
         // By definition, an undefined user class cannot sign in.
+        trigger_error("DEBUG: Warning: undefined _WikiUser class trying to sign in." . " "
+                      . "New subclasses of _WikiUser must override this function.");
         return false;
     }
 
@@ -157,21 +255,55 @@ extends _WikiUser
         setcookie(WIKI_NAME, $this->_prefs->pack($this->_prefs->getAll()),
                   COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
     }
+
+    function checkPass($submitted_password) {
+        // By definition, the _AnonUser does not HAVE a password
+        // (compared to _BogoUser, who has an EMPTY password).
+        trigger_error("DEBUG: Warning: _AnonUser unexpectedly asked to checkPass()." . " "
+                      . "Check isa($user, '_PassUser'), or: isa($user, '_AdminUser') etc. first." . " "
+                      . "New subclasses of _WikiUser must override this function.");
+        return false;
+    }
+
 }
 
+/**
+ * Do NOT extend _BogoUser to other classes, for checkPass()
+ * security. (In case of defects in code logic of the new class!)
+ */
 class _BogoUser
 extends _AnonUser
 {
     var $_level = WIKIAUTH_BOGO;
 
-    function _BogoUser($UserName) {
-        $this->_username = $UserName;
-        $this->_prefs = $this->loadPreferences();
+    function checkPass($submitted_password) {
+        // By definition, BogoUser has an empty password.
+        return true;
     }
+}
+
+class _PassUser
+extends _AnonUser
+/**
+ * New classes for externally authenticated users should extend from
+ * this class.
+ * 
+ * For now, the prefs $restored_from_page stuff is in here, but that
+ * will soon be moved into a new PersonalPage PassUser class or
+ * something, thus leaving this as a more generic passuser class from
+ * which other new authentication classes (and preference storage
+ * types) can extend.
+ */
+{
+    var $_level = WIKIAUTH_USER;
+
+    //TODO: password changing
+    //TODO: email verification
 
     function loadPreferences() {
-        // Read cookie first, Bogo's homepage prefs could have been
-        // altered.
+        // We don't necessarily have to read the cookie first. Since
+        // the user has a password, the prefs stored in the homepage
+        // cannot be arbitrarily altered by other Bogo users.
         _AnonUser::loadPreferences();
         // User may have deleted cookie, retrieve from his
         // NamesakePage if there is one.
@@ -186,29 +318,6 @@ extends _AnonUser
         // Encode only the _prefs array of the UserPreference object
         $serialized = $this->_prefs->pack($this->_prefs->getAll());
         $this->_HomePagehandle->set('_prefs', $serialized);
-    }
-
-    function checkPass($submitted_password) {
-        // By definition, BogoUser has an empty password.
-        return true;
-    }
-
-    function _checkPass($submitted_password, $stored_password) {
-}
-
-class _PassUser
-extends _BogoUser
-{
-    var $_level = WIKIAUTH_USER;
-
-    //TODO: if (ALLOW_USER_PASSWORDS)
-
-    function loadPreferences() {
-        //TODO:
-        //
-        // We don't necessarily have to read the cookie first. Since
-        // the user has a password, the prefs stored in the homepage
-        // cannot be arbitrarily altered by other Bogo users.
     }
 
     //TODO: alternatively obtain $stored_password from external auth
@@ -255,6 +364,10 @@ extends _BogoUser
     }
 }
 
+/**
+ * For security, this class should not be extended. Instead, extend
+ * from _PassUser (think of this as unix "root").
+ */
 class _AdminUser
 extends _PassUser
 {
@@ -486,6 +599,11 @@ class UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2003/12/03 21:45:48  carstenklapp
+// Added admin user, password user, and preference classes. Added
+// password checking functions for users and the admin. (Now the easy
+// parts are nearly done).
+//
 // Revision 1.1  2003/12/02 05:46:36  carstenklapp
 // Complete rewrite of WikiUser.php.
 //
