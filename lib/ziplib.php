@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.2.2.4 2001-12-12 05:12:06 carstenklapp Exp $');
+rcs_id('$Id: ziplib.php,v 1.2.2.5 2002-02-05 17:51:03 dairiki Exp $');
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -512,6 +512,15 @@ function MimeMultipart ($parts)
   
 function MimeifyPage ($pagehash) {
   extract($pagehash);
+
+  if (!isset($content))
+      $content = array();
+  elseif (!is_array($content)) {
+      // paranoia: should never happen, but we don't want
+      //     to lose page content, in case it does.
+      $content = array($content);
+  }
+
   // FIXME: add 'hits' to $params 
   $params = array('pagename' => rawurlencode($pagename),
 		  'author' => rawurlencode($author),
@@ -529,7 +538,7 @@ function MimeifyPage ($pagehash) {
   $out = MimeContentTypeHeader('application', 'x-phpwiki', $params);
   $out .= "Content-Transfer-Encoding: quoted-printable\r\n";
   $out .= "\r\n";
-  
+
   reset($content);
   while (list($junk, $line) = each($content))
       $out .= QuotedPrintableEncode(chop($line)) . "\r\n";
