@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: wiki_config.php3,v 1.22 2000-08-29 02:37:42 aredridel Exp $');
+   rcs_id('$Id: wiki_config.php3,v 1.23 2000-08-29 07:27:00 aredridel Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -89,6 +89,21 @@
    $ArchivePageStore['page_table'] = "archivepages";
    // end mSQL settings
 */
+
+/*
+   // Filesystem DB settings
+   include "wiki_db_filesystem.php3";
+   $DBdir = "/tmp/wiki";
+   $WikiPageStore = "wiki";
+   $ArchivePageStore = "archive";
+   $WikiDB['wiki']      = "$DBdir/pages";
+   $WikiDB['archive']   = "$DBdir/archive";
+   $WikiDB['wikilinks'] = "$DBdir/links";
+   $WikiDB['hottopics'] = "$DBdir/hottopics";
+   $WikiDB['hitcount']  = "$DBdir/hitcount";
+   // End Filsystem Settings
+*/
+
 
    /* WIKI_PGSRC
     *
