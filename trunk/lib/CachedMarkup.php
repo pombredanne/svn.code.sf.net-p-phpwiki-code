@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.7 2003-03-25 21:04:41 dairiki Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.8 2004-02-19 21:54:17 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -393,8 +393,8 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
     }
 
     function expand($basepage) {
-        include_once('lib/interwiki.php');
-	$intermap = InterWikiMap::GetMap($GLOBALS['request']);
+        //include_once('lib/interwiki.php');
+	$intermap = PageType_interwikimap::GetMap($GLOBALS['request']);
 	$label = isset($this->_label) ? $this->_label : false;
 	return $intermap->link($this->_link, $label);
     }
