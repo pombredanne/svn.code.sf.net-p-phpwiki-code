@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.16 2001-11-09 17:58:09 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.17 2001-11-14 15:29:50 dairiki Exp $');
 
 include "lib/config.php";
 include "lib/stdlib.php";
@@ -148,6 +148,7 @@ function main ($request) {
         echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$GLOBALS[RCS_IDS]\n";
         break;
 
+    /* Not yet implemented:    
     case 'xmldump':
         // FIXME:
         $limit = 1;
@@ -160,7 +161,8 @@ function main ($request) {
         $xmlwriter->writeDatabase($dbi, $limit);
         $xmlwriter->end();
         break;
-      
+    */
+        
     case 'upload':
         include_once("lib/loadsave.php");
         LoadPostFile($dbi, $request);
