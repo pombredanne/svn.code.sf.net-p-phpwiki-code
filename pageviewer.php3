@@ -1,4 +1,4 @@
-<!-- $Id: pageviewer.php3,v 1.5 2000-06-20 01:11:14 wainstead Exp $ -->
+<!-- $Id: pageviewer.php3,v 1.6 2000-06-20 03:16:37 wainstead Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <html>
 <head>
@@ -8,7 +8,20 @@
 <body bgcolor="navajowhite" text="navy">
 
 <form>
-<input type="text" name="pagename"> Enter a page name
+<input type="text" name="pagename" value="<?
+ echo $pagename 
+?>"> Enter a page name
+<input type="button" value="go" onClick="submit()"><br>
+
+<input type="checkbox" name="showpagesource" <? 
+
+      if ($showpagesource == "on") {
+         echo "checked";
+      } 
+
+?>
+> Show the page source and references
+
 </form>
 
 <?
@@ -20,7 +33,7 @@
 
    function ViewpageProps($name)
    {
-      global $dbi;
+      global $dbi, $showpagesource;
 
       $pagehash = RetrievePage($dbi, $name);
       if ($pagehash == -1) {
@@ -33,7 +46,7 @@
       echo "<table border=1 bgcolor=white>\n";
 
       while (list($key, $val) = each($pagehash)) {
-         if (gettype($val) == "array") {
+         if ((gettype($val) == "array") && ($showpagesource == "on")) {
             $val = implode($val, "<br>\n");
          }
          echo "<tr><td>$key</td><td>$val</td></tr>\n";
