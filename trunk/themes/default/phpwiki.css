@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.16 2004-02-26 01:34:35 rurban Exp $
+ * $Id: phpwiki.css,v 1.17 2004-02-26 21:09:46 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -110,7 +110,8 @@ form.wikiadmin div { background-color: #fee; }
  */
 .wiki, .named-wiki {
   text-decoration: none;
-  font-weight: bold;
+  font-weight: normal;
+  /* font-weight: bold; */
 }
 
 /* Action buttons */
@@ -151,7 +152,8 @@ a.wikiadmin, input.wikiadmin  { background-color: #fdd; }
 h1 .backlinks { text-decoration: underline; }
 
 /* Interwiki links */
-.wikipage  { font-weight: bold; }
+/* .wikipage  { font-weight: bold; } */
+.wikipage  { font-weight: normal; }
 .interwiki { text-decoration: none; }
 .interwiki, i.interwiki .wikipage, em .interwiki .wikipage { font-style: oblique; }
 .interwiki .wikipage, i .interwiki, em .interwiki { font-style: normal; }
@@ -162,7 +164,7 @@ h1 .backlinks { text-decoration: underline; }
  */
 h1, h2, h3, h4, h5, h6 { font-family: Arial, Helvetica, sans-serif; }
 
-h1 { margin: 0; }
+h1 { margin: 0; font-size: 140% }
 
 
 /**
