@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Toolbar.php,v 1.1 2002-01-07 04:35:31 carstenklapp Exp $');
+rcs_id('$Id: Toolbar.php,v 1.2 2002-01-07 08:07:44 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -10,6 +10,15 @@ rcs_id('$Id: Toolbar.php,v 1.1 2002-01-07 04:35:31 carstenklapp Exp $');
  * <?plugin Toolbar label="Try %s." sep=" or " go="this|SandBox,that|TestPage"?>
  *
  */
+
+
+
+
+// (This is all in a state of flux, so don't count on any of this being
+// the same tomorrow...)
+
+
+
 
 require_once('lib/transform.php');
 
@@ -25,13 +34,18 @@ extends WikiPlugin
     }
     
     function getDefaultArguments() {
-        return array('sep'		=> ',',
-                     'label'		=> false,
-                     'go'		=> false,
-                     'style'		=> 'text'
+        return array('sep'	=> ',',
+                     'label'	=> false,
+                     'go'	=> false,
+                     'style'	=> 'text',
+                     'name'	=> false
                      // TODO: new 'image' style for use with themes
                      // which have graphic buttons
                      );
+    }
+
+    function mkimg($key, $val, &$html, &$ToolbarURLs) {
+        $html .= "<td><a href=\"". $ToolbarURLs[$key]."\"><img alt=\"$key\" src=\"$val\" border=\"0\"></a></td>";
     }
 
     function run($dbi, $argstr, $request) {
@@ -52,6 +66,54 @@ extends WikiPlugin
                 $html = $error_text;
             }
             return $html;
+        }
+        //begin oops: this is isn't supposed to work, but it does!
+        if ($name = "RecentChanges") {
+        //end oops
+//            global $ToolbarImages, $theme;
+            global $theme;
+                $ToolbarImages = array(
+                'RecentChanges' => array(
+                '1 day'		=> "themes/$theme/locale/en/toolbars/RecentChanges/1day.png",
+                '3 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/3days.png",
+                '7 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/7days.png",
+                '30 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/30days.png",
+                '90 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/90days.png",
+                '...'		=> "themes/$theme/locale/en/toolbars/RecentChanges/alltime.png")
+                );
+                
+                $ToolbarURLs = array(
+                //'RecentChanges' => array(
+                '1 day'		=> "RecentChanges?days=1",
+                '3 days'	=> "RecentChanges?days=3",
+                '7 days'	=> "RecentChanges?days=7",
+                '30 days'	=> "RecentChanges?days=30",
+                '90 days'	=> "RecentChanges?days=90",
+                '...'		=> "RecentChanges?days=-1"
+                //)
+                );
+
+
+
+            //while(list($key, $val) = each($ToolbarImages)) {
+            //    echo "$key => $val<br>";
+            //}
+
+//            if (in_array ($name, $ToolbarImages)) {
+                $rcimages = $ToolbarImages[$name];
+                $html = "<table summary=\"RecentChanges\" border=0 cellspacing=0 cellpadding=0><tr valign=\"middle\"><td>Show changes for: ";
+                //array_walk($rcimages, 'makeimg'); //doesn't work???
+                while(list($key, $val) = each($rcimages)) {
+                    $this->mkimg($key, $val, $html, $ToolbarURLs);
+                }
+                return "</tr>".$html;
+                //reset($rcimages);
+//            }
+
+//            if (array_key_exists("first", $search_array)) {
+//                echo "The 'first' element is in the array";
+//            }
+
         }
 
         switch ($style) {
