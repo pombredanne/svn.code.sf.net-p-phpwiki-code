@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-rcs_id('$Id: body.tmpl,v 1.6 2004-06-14 11:26:51 rurban Exp $');
+rcs_id('$Id: body.tmpl,v 1.7 2004-12-10 03:05:57 rurban Exp $');
 ?>
 <body<?= $WikiTheme->getMoreAttr('body') ?>>
 <table class="sidebar" width="100%">
@@ -31,6 +31,7 @@ if (!$HIDE_TOOLBARS) {
 </div></div>
 <?php } else { ?>
 <div id="clock">
+<? include($WikiTheme->_findFile("hyperapplet.php")); ?>
 <? // include($WikiTheme->_findFile("clock.php")); ?>
 </div>
 <?php } ?>
