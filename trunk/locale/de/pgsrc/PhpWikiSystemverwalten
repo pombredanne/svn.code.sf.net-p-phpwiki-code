@@ -1,78 +1,79 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: PhpWikiSystemverwalten,v 1.8 2002-01-17 03:35:13 carstenklapp Exp $
+X-RCS_ID: $Id: PhpWikiSystemverwalten,v 1.9 2002-01-25 20:30:05 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
   flags=PAGE_LOCKED;
   lastmodified=1010734457;
 Content-Transfer-Encoding: binary
 
-__Beachtung__: Du mußt der Systemverwalter-Account mit Passwort zuerst schützen, sonnst werden ziemlich viel von diesen Administrationsbefehlen nicht funkionieren.
+__Beachte__: Du mußt den Systemverwalter-Zugang zuerst mit einem Passwort schützen, sonst werden die meisten Links auf dieser Seite nicht funktionieren.
 
 -----------
 ! Anmelden
 
-__[ Melde mich an | phpwiki:?action=login]__
+__[ Anmeldung | phpwiki:?action=login]__
 
-This allows you to login. While you are logged in you will be able to ''lock'', ''unlock'' and ''delete'' pages. You will also be able edit ''locked'' pages.
+Mit diesem Button mußt du dich als Administrator anmelden. Nur angemeldet kann man Seiten ''sperren'', ''entsperren'', ''löschen'' oder ''gesperrte'' Seiten editieren.
 
 ----------
 !! Aufräumen
 
-Eine Wiki SandKiste wird ganz einfach aufgeraümt. Hier kannst du es von locale/de/pgsrc erneut beladen wodurch es wieder unberührt gemacht würde: [ Putze die SandKiste aus | phpwiki:?action=loadfile&source=locale/de/pgsrc/SandKiste ].
+Räume die Wiki SandKiste auf. Hiermit kann man die Seite mit der Version von locale/de/pgsrc/SandKiste erneut initialisieren: [ Putze die SandKiste aus | phpwiki:?action=loadfile&source=locale/de/pgsrc/SandKiste ].
 
 ----------
-!! Speicherauszug und Archiv-Datenversicherung
+!! Speicherauszug und Archiv-Datensicherung
 
-! ZIP Dateien vom Datenbank
+! ZIP Dateien als Backup der PhpWiki Datenbank
 
-These links lead to zip files, generated on the fly, which contain all the pages in your Wiki. The zip file will be downloaded to your local computer.
+Diese Links erzeugen automatisch ZIP Archive, mit allen Seiten in deinem Wiki. Die ZIP Datei wird auf deinen lokalen Computer heruntergeladen, und muß dort gespeichert werden.
 
-Dieser __[ ZIP Speicherauszug | phpwiki:?action=zip]__ enthält nur die Aktuellste Versionen die Seiten, und dieser __[ ZIP Speicherauszug | phpwiki:?action=zip&include=all]__ enthält alle archivierte Versionen.
+Diese __[ kleine ZIP Datei | phpwiki:?action=zip]__ enthält nur die aktuellste Versionen aller Seiten, und diese __[ große ZIP Datei | phpwiki:?action=zip&include=all]__ enthält zusätzlich alle archivierten, vorigen Versionen.
 
-(If the PhpWiki is configured to allow it), anyone can download a zip file.
+(Wenn dein PhpWiki insoweit konfiguriert ist, darf jeder die ZIP Datei herunterladen.)
 
-If your php has ''zlib'' support, the files in the archive will be compressed, otherwise they will just be stored.
+Wenn in deinem PHP die ''zlib'' Bibliothek unterstützt, werden alle Seiten in dem Archiv komprimiert, ansosnten nur unkomprimiert gespeichert.
 
-! Seiten als Dateien im Verzeichnis Ablegen
+! Wiki Seiten als Dateien in lokales Verzeichnis speichern
 
-Here you can dump pages of your Wiki into a directory of your choice.
+Hier kannst du alle Seiten aus deinem Wiki in eine lokales Verzeichnis deiner Wahl herunterladen.
 
-[ Schreibe Seiten aus | phpwiki:?action=dumpserial&directory=(/tmp/wikidump) ]
+[ Schreibe Seiten | phpwiki:?action=dumpserial&directory=(/tmp/wikidump) ]
 
-The most recent version of each page will written out to the directory, one page per file. Your server must have write permissions to the directory!
+Nur die neuesten Versionen aller Seiten wird als Einzeldatei in dieses Verzeichnis geschrieben. Beachte, daß evtl. deine Benutzerrchte dazu ausreichen müssen.
 
 -----------
 
 !! Wiederherstellen
 
-If you have dumped a set of pages from PhpWiki, you can reload them here. Note that pages in your database will be overwritten; thus, if you dumped your StartSeite when you load it from this form it will overwrite the one in your database now. If you want to be selective just delete the pages from the directory (or zip file) which you don't want to load.
+Wenn du ein PhpWiki Backup besitzt, kannst du dieses hier wieder restaurieren. Beachte das alle Seiten in der Datenbank damit überschrieben werden! Das heißt, das Hochladen einer lokalen StartSeite überschreibt die aktuelle Seite in der Datenbank. Um nur einzelne Dateien zu restaurieren, musst dein Verzeichnis oder ZIP Archiv insosoweit anpassen.
 
 ! Datei Hochladen
 
-Here you can upload ZIP archives, or individual files from your (client) machine.
+Hier kannst Du ein ZIP Archiv hochladen, oder einzelne Dateien von deinem Computer (client).
 
-[ Hochlade | phpwiki:?action=upload&file=50()upload ]
+[ Hochladen | phpwiki:?action=upload&file=50()upload ]
 
-! Dateien Einladen
+! Dateien Laden
 
-Here you can load ZIP archives, individual files or entire directories. The file or directory must be local to the http server. You can also use this form to load from an http: or ftp: URL.
+Hier kann man ZIP Archive, einzelne Dateien oder ganze Verzeichnisse ins Wiki laden. Die Dateien oder Verzeichnisse müssen lokal auf dem HTTP Server bestehen. Du kannst den Pfad allerdings auch mit der http: oder einer ftp: URL von externen Quellen laden.
 
 [ Seiten Laden | phpwiki:?action=loadfile&source=50(/tmp/wikidump) ]
 
 -----------
 
-!! Datenform
+!! Daten-Format
 
-Currently the pages are stored, one per file, as MIME ([ RFC2045 | http://www.faqs.org/rfcs/rfc2045.html ]) e-mail ([ RFC822 | http://www.faqs.org/rfcs/rfc822.html ]) messages. The content-type ''application/x-phpwiki'' is used, and page meta-data is encoded in the content-type parameters. (If the file contains several versions of a page, it will have type ''multipart/mixed'', and contain several sub-parts, each with type ''application/x-phpwiki''). The message body contains the page text.
+Momentan werden alle Seiten dateiweise als MIME ([ RFC2045 | http://www.faqs.org/rfcs/rfc2045.html ]) E-Mail's ([ RFC822 | http://www.faqs.org/rfcs/rfc822.html ]) gespeichert. Der Content-type ''application/x-phpwiki'' wird benutzt, und die Seiten Meta Daten sind als Content-type Parameter codiert. (Wenn die Datei mehrere Versionen der Seite enthält, wird der MIME Typ ''multipart/mixed'' verwendet, und jede Version als Teil ''application/x-phpwiki'' codiert). Der Email Body enthält die aktuelle Version des Seiteninhaltes, der Kopf die anderen Daten aus der Datenbank. (Datum, Autor, ...)
 
-! Alten Datenformen
+! Alte Daten-Formate
 
 __Serialisierte Dateien__
 
-The dump to directory command used to dump the pages as php ''serialized()'' strings. For humans, this made the files very hard to read, and nearly impossible to edit.
+Der alte Dump-To-Directory Befehl schrieb alle Seiten als PHP ''serialized()'' Zeichenketten hinaus, die erstens unleserlich sind, und zweitens schwer bis gar nicht zu editieren sind.
 
 __Textdateien__
 
-Before that the page text was just dumped to a file--this means that all page meta-data was lost. Note that when loading ''Textdateien'', the page name is deduced from the file name.
+Davor wurde der Seiteninhalt als einfache Textdatei gespeichert, d.h alle zusätzlichen Daten (Meta-Daten) gingen verloren. (Datum, Autor, Version, ...). Der Seitenname entsprach dem Dateinamen.
 
-The upload and load functions will automatically recognize each of these three types of files, and handle them accordingly.
+Die Hochlade- und Lade-Funktionen erkennen jeden dieser drei Dateitypen automatisch. Es werden noch alle unterstützt.
+(ZIP, Verzeichnis oder Einzeldateien als MIME E-Mail, Serialisiert oder einfache Textdatei.)
