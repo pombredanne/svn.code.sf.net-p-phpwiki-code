@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.37 2002-02-10 11:05:40 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.38 2002-02-10 20:39:55 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up. It has not yet been tested against NS4.
@@ -24,7 +24,7 @@ img {
   vertical-align: baseline;
 }
 
-form { margin: 0; }
+form  { margin: 0; }
 input { margin: 0.1em; }
 input.numeric { text-align: right; }
 table {
@@ -51,17 +51,18 @@ body {
   /* ivory */
   background: #ffe;
   font-family: Arial, Helvetica, sans-serif;
+  margin: 1ex 1em;
 }
 
 div.wikitext {
+  margin-top:    0.5ex;
+  margin-bottom: 0.5ex;
   background: white;
   border: thin black solid;
   padding-left:  0.8em; 
   padding-right: 0.8em;
-  padding-top:     0px;
-  padding-bottom:  0px;
-  margin-left:  0.5em;
-  margin-right: 0.5em;
+  padding-top:    0.5ex;
+  padding-bottom: 0.5ex;
   /*This breaks Netscape 4: (display does not go full width).
    * width: auto;
    */
@@ -89,6 +90,7 @@ div.wikitext pre { font-family: monospace; }
   text-decoration: none;
 }
 .backlinks { color: #006; }
+h1 .backlinks { text-decoration: underline; }
 
 .wikiaction, .wikiaction table, span.wikiaction {
   border: 1px outset;
@@ -125,10 +127,7 @@ div.wikitext pre { font-family: monospace; }
  */
 h1, h2, h3, h4, h5, h6 { font-family: Arial, Helvetica, sans-serif; }
 
-h1 {
-  text-decoration: underline;
-}
-
+h1 { margin: 0; }
 
 /**
  * tables
@@ -145,38 +144,20 @@ caption { font-family: Arial, Helvetica, sans-serif; }
 /**
  * Toolbar
  */
-.toolbar, td, input.button { font-family: Arial, Helvetica, sans-serif;
-  margin-top:    0.1ex;
-  margin-bottom: 1ex;
-  margin-left:  1em;
-  margin-right: 1em;
-}
+.toolbar, input.button { font-family: Arial, Helvetica, sans-serif; }
 
-#actionbar table, #navbar {
-  border-top:    0.5pt solid black; /* medium gray */
-  border-bottom: 0.5pt solid black;
-  padding-top:    0.3ex;
-  padding-bottom: 0.4ex;
-  padding-left:  0.5em;
-  padding-right: 0.5em;
+.toolbar {
+  padding: 0;
+  margin:  0;
 }
+/* Prevent buttons from overlapping when wrapped */
+#navbar, #actionbar { line-height: 140%; }
 
 .editdate {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-  padding-top:    0.4ex;
-  padding-bottom: 0.3ex;
-  padding-left:  0.5em; 
-  padding-right: 0.5em; 
-  /* border-top: 0.5pt solid #666; * medium gray */
-}
-
-hr.ignore {
-  height: 0;
-  /* margin: -1ex; * Hack for Mozilla */
-  /* Hack for ie and OmniWeb to hide this element */
-  position: absolute;
-  top: -80px;
+  padding: 0;
+  padding-top:    0.25ex;
 }
 
 
@@ -187,10 +168,12 @@ hr.ignore {
 /* Make the textarea the full page width */
 textarea.wikiedit {
   width: 100%;
-/*  border: 1px inset #838383;*/
-  margin-top: 1ex;
+  margin-bottom: 0.5ex;
+  margin-top:    0.5ex;
   padding: 2px;
 }
+
+input.button { font-family: Arial, Helvetica, sans-serif; }
 
 #editarea-size {
   margin-top: 1ex;
@@ -228,9 +211,9 @@ textarea.wikiedit {
   padding-right: 0.5em;
   padding-top:    0.75ex;
   padding-bottom: 0.75ex;
-  margin-left:   0.25em;
-  margin-right:  0.25em;
-  margin-bottom: 1ex;
+  margin-left:  0;
+  margin-right: 0;
+  margin-top: 1ex;
   margin-bottom: 1ex;
 }
 .wiki-edithelp .wiki {
@@ -320,7 +303,7 @@ table.cal td.cal-today a.cal-hide {
 .diff .context { background: white; }
 
 /* + - line prefix */
-.diff .block tt	{
+.diff .block tt{
   font-weight: bold;
   font-family: monospace;
   margin-left: -.6em;
@@ -347,11 +330,12 @@ table.cal td.cal-today a.cal-hide {
 div.errors {
   color: black;
   background: #eee;
-  margin:  1em;
-  padding-left: 0.8em; 
+  margin-top:    1em;
+  margin-bottom: 1em;
+  padding-left:  0.8em; 
   padding-right: 0.8em; 
-  padding-top: 0.8ex;
-  padding-bottom: 0px;
+  padding-top:    0.8ex;
+  padding-bottom: 0;
   font-size: smaller;
   border: medium solid red;
   clear: both;
@@ -371,8 +355,9 @@ div.errors {
   color: black;
   background: white;
   font-family: monospace;
-  margin:  0.5em;
-  padding: 2px;
+  margin-top:    1em;
+  margin-bottom: 1em;
+  padding: 0.5ex 0.5em;
   border: medium solid #fff8dc; /* darker ivory */
 }
 
