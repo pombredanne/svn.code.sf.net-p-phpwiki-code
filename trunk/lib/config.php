@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.103 2004-04-30 00:04:14 rurban Exp $');
+rcs_id('$Id: config.php,v 1.104 2004-05-01 11:26:37 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -281,7 +281,18 @@ function IsProbablyRedirectToIndex () {
     return preg_match("%^${requri}[^/]*$%", $GLOBALS['HTTP_SERVER_VARS']['SCRIPT_NAME']);
 }
 
+// >= php-4.1.0
+if (!function_exists('array_key_exists')) { // lib/IniConfig.php, sqlite, adodb, ...
+    function array_key_exists($item, $array) {
+        return isset($array[$item]);
+    }
+}
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2004/04/30 00:04:14  rurban
+// zh (chinese language) support
+//
 // Revision 1.102  2004/04/29 23:25:12  rurban
 // re-ordered locale init (as in 1.3.9)
 // fixed loadfile with subpages, and merge/restore anyway
