@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.8 2002-01-29 08:16:26 rurban Exp $ -->
+<!-- $Id: login.tmpl,v 1.9 2002-01-29 18:29:09 carstenklapp Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -9,7 +9,7 @@
 
 <?php 
 if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
-  echo '<p>', _("You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."), '</p>';
+  echo '<p>', _("You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage. You do not need to enter a password."), '</p>';
 } 
 ?>
 
