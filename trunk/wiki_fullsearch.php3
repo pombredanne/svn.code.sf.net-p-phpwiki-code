@@ -1,11 +1,12 @@
-<!-- $Id: wiki_fullsearch.php3,v 1.6 2000-06-18 15:12:13 ahollosi Exp $ -->
+<!-- $Id: wiki_fullsearch.php3,v 1.7 2000-06-21 23:34:08 ahollosi Exp $ -->
 <?
    /*
       Search the text of pages for a match.
       A few too many regexps for my liking, but it works.
    */
 
-   $found = $count = 0;
+   $found = 0;
+   $count = 0;
 
    if(get_magic_quotes_gpc())
       $full = stripslashes($full);
@@ -18,20 +19,17 @@
 
    // search matching pages
    $query = InitFullSearch($dbi, $full);
-   while ($page = FullSearchNextMatch($dbi, $query)) {
-      $pagename = $page['name'];
-      $pagehash = $page['hash'];
-
-      $result .= "<DT><B>" . LinkExistingWikiWord($pagename) . "</B>\n";
+   while ($pagehash = FullSearchNextMatch($dbi, $query)) {
+      $result .= "<DT><B>" . LinkExistingWikiWord($pagehash["pagename"]) . "</B>\n";
       $count++;
 
       // print out all matching lines, highlighting the match
       for ($j = 0; $j < (count($pagehash["content"])); $j++) {
-         if (preg_match("/$full/i", $pagehash["content"][$j], $pmatches)) {
+         if ($hits = preg_match_all("/$full/i", $pagehash["content"][$j], $dummy)) {
             $matched = preg_replace("/$full/i", "<b>\\0</b>",
                                     $pagehash["content"][$j]);
             $result .= "<dd><small>$matched</small></dd>\n";
-            $found += count($pmatches);
+            $found += $hits;
          }
       }
    }
