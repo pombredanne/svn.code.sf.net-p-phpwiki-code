@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.5 2004-01-25 08:17:28 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.6 2004-03-01 13:48:45 rurban Exp $');
 
 /*
   Pagedata
@@ -323,7 +323,7 @@ class WikiDB_backend
      * @param $limit integer  No more than this many pages
      * @return object A WikiDB_backend_iterator.
      */
-    function most_popular($limit) {
+    function most_popular($limit,$sortby = '') {
         // This is method fetches all pages, then
         // sorts them by hit count.
         // (Not very efficient.)

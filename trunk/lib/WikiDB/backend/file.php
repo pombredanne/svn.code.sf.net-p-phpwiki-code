@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.7 2004-02-12 14:11:36 rurban Exp $');
+rcs_id('$Id: file.php,v 1.8 2004-03-01 13:48:45 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -597,7 +597,7 @@ extends WikiDB_backend
      * @param $limit integer  No more than this many pages
      * @return object A WikiDB_backend_iterator.
      */
-    function most_popular($limit) {
+    function most_popular($limit,$sortby = '') {
         // This is method fetches all pages, then
         // sorts them by hit count.
         // (Not very efficient.)
@@ -767,6 +767,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/02/12 14:11:36  rurban
+// more rename_page backend methods: only tested for PearDB! please help
+//
 // Revision 1.6  2004/01/26 09:17:51  rurban
 // * changed stored pref representation as before.
 //   the array of objects is 1) bigger and 2)

@@ -1,4 +1,4 @@
-<?
+<?php // -*- php -*-
 /**
  * Google API
  *
@@ -158,7 +158,7 @@ class Google {
                                  WikiLink("http://www.google.com/apis/")),
                              fmt("It's free however."));
         else
-          $this->license_key = GOOGLE_LICENSE_KEY;
+            $this->license_key = GOOGLE_LICENSE_KEY;
         require_once("lib/nusoap/nusoap.php");
 
         $this->soapclient = new soapclient(SERVER_URL . DATA_PATH."/"."GoogleSearch.wsdl", "wsdl");
@@ -166,6 +166,7 @@ class Google {
         if ($maxResults > 10) $maxResults = 10;
         if ($maxResults < 1) $maxResults = 1;
         $this->maxResults = $maxResults;
+        return $this;
     }
 
     /** 
@@ -244,7 +245,7 @@ class Google {
      *  @return string full text of the cached page
      */
     function doGetCachedPage($url) {
-        // This class gets created automatically!! (some eval'ed code from the soap request)
+        // This method gets created automatically!! (some eval'ed code from the soap request)
         $result = $this->proxy->doGetCachedPage(GOOGLE_LICENSE_KEY,
                                                 $url);
         if (!empty($result)) return base64_decode($result);
@@ -257,7 +258,7 @@ class Google {
      * @return string          text of any suggested replacement, or None
      */
     function doSpellingSuggestion($phrase) {
-        // This class gets created automatically!! (some eval'ed code from the soap request)
+        // This method gets created automatically!! (some eval'ed code from the soap request)
         return $this->proxy->doSpellingSuggestion(GOOGLE_LICENSE_KEY,
                                                   $phrase);
     }

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.36 2004-02-22 23:20:31 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.37 2004-03-01 13:48:45 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -305,8 +305,8 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching
      * pages.
      */
-    function mostPopular($limit = 20) {
-        $result = $this->_backend->most_popular($limit);
+    function mostPopular($limit = 20, $sortby = '') {
+        $result = $this->_backend->most_popular($limit, $sortby);
         return new WikiDB_PageIterator($this, $result);
     }
 
@@ -371,10 +371,7 @@ class WikiDB {
     //}
 
     /**
-     * Call the appropriate backend method
-     *
-     * A {@link WikiDB} consists of the (infinite) set of all possible pages,
-     * therefore this method never fails.
+     * Call the appropriate backend method.
      *
      * @access public
      * @param string $from Page to rename
@@ -388,13 +385,14 @@ class WikiDB {
         $result = false;
         if (method_exists($this->_backend,'rename_page')) {
             $oldpage = $this->getPage($from);
-            if ($oldpage->exists()) {
+            $newpage = $this->getPage($to);
+            if ($oldpage->exists() and ! $newpage->exists()) {
                 if ($result = $this->_backend->rename_page($from, $to)) {
                     //update all WikiLinks in existing pages
                     if ($updateWikiLinks) {
                         //trigger_error(_("WikiDB::renamePage(..,..,updateWikiLinks) not yet implemented"),E_USER_WARNING);
                         require_once('lib/plugin/WikiAdminSearchReplace.php');
-                        $links = $page->getLinks();
+                        $links = $oldpage->getLinks();
                         while ($linked_page = $links->next()) {
                             WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
                         }

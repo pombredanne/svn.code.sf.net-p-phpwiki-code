@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.14 2004-02-22 23:20:33 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.15 2004-03-01 13:48:46 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -79,7 +79,7 @@ extends WikiPlugin
                      );
     }
 
-    function collectPages(&$list, &$dbi, $sortby, $limit) {
+    function collectPages(&$list, &$dbi, $sortby, $limit=0) {
         extract($this->_args);
 
         $now = time();
@@ -159,7 +159,7 @@ extends WikiPlugin
         }
         if ($next_action == 'select') {
             // List all pages to select from.
-            $pages = $this->collectPages($pages, $dbi, $args['sortby']);
+            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit']);
         }
 
         $pagelist = new PageList_Selectable($args['info'], $exclude);
@@ -213,6 +213,13 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/02/22 23:20:33  rurban
+// fixed DumpHtmlToDir,
+// enhanced sortby handling in PageList
+//   new button_heading th style (enabled),
+// added sortby and limit support to the db backends and plugins
+//   for paging support (<<prev, next>> links on long lists)
+//
 // Revision 1.13  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //

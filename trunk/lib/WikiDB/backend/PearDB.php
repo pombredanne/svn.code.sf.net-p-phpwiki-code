@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.39 2004-03-01 11:43:34 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.40 2004-03-01 13:48:45 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -615,6 +615,13 @@ extends WikiDB_backend
         
         $this->lock();
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
+            if ($new = $this->_get_pageid($to, false)) {
+                //cludge alert!
+                //this page does not exist (already verified before), but exists in the page table.
+                //so we delete this page.
+                $dbh->query(sprintf("DELETE FROM $page_tbl WHERE id=$id",
+                                    $dbh->quoteString($to)));
+            }
             $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
                                 $dbh->quoteString($to)));
         }

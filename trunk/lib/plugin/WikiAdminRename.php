@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.7 2004-02-22 23:20:33 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.8 2004-03-01 13:48:46 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -57,6 +57,7 @@ extends WikiPlugin_WikiAdminSelect
                      /* How to sort */
                      'sortby'   => 'pagename',
                      'limit'    => 0,
+                     'updatelinks' => 0
                      );
     }
 
@@ -110,13 +111,13 @@ extends WikiPlugin_WikiAdminSelect
             // FIXME: error message if not admin.
             if ($post_args['action'] == 'verify') {
                 // Real action
-                return $this->renamePages($dbi, $request, $p, 
-                                          $post_args['from'], $post_args['to'], $post_args['updatelinks']);
+                return $this->renamePages($dbi, $request, array_keys($p), 
+                                          $post_args['from'], $post_args['to'], !empty($post_args['updatelinks']));
             }
             if ($post_args['action'] == 'select') {
                 if (!empty($post_args['from']))
                     $next_action = 'verify';
-                foreach ($p as $name) {
+                foreach ($p as $name => $c) {
                     $pages[$name] = 1;
                 }
             }
@@ -169,13 +170,13 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(HTML::input(array('name' => 'admin_rename[to]',
                                                'value' => $post_args['to'])));
         $header->pushContent(' '._("(no regex, case-sensitive)"));
-        if (0) { // not yet tested
+        if (1) { // not yet tested
             $header->pushContent(HTML::br());
             $header->pushContent(_("Change pagename in all linked pages also?"));
             $checkbox = HTML::input(array('type' => 'checkbox',
                                           'name' => 'admin_rename[updatelinks]',
                                           'value' => 1));
-            if ($post_args['updatelinks'])
+            if (!empty($post_args['updatelinks']))
                 $checkbox->setAttr('checked','checked');
             $header->pushContent($checkbox);
         }
@@ -186,6 +187,13 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/02/22 23:20:33  rurban
+// fixed DumpHtmlToDir,
+// enhanced sortby handling in PageList
+//   new button_heading th style (enabled),
+// added sortby and limit support to the db backends and plugins
+//   for paging support (<<prev, next>> links on long lists)
+//
 // Revision 1.6  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //

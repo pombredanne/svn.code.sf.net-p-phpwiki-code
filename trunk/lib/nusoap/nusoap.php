@@ -538,19 +538,19 @@ class soap_fault extends nusoap_base {
             $ns_string .= "\n  xmlns:$k=\"$v\"";
         }
         $return_msg =
-			'<?xml version="1.0"?'.">\n".
-			'<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"'.$ns_string.">\n".
-				'<SOAP-ENV:Body>'.
-				'<SOAP-ENV:Fault>'.
-					'<faultcode>'.$this->faultcode.'</faultcode>'.
-					'<faultactor>'.$this->faultactor.'</faultactor>'.
-					'<faultstring>'.$this->faultstring.'</faultstring>'.
-					'<detail>'.$this->serialize_val($this->faultdetail).'</detail>'.
-				'</SOAP-ENV:Fault>'.
-				'</SOAP-ENV:Body>'.
-			'</SOAP-ENV:Envelope>';
-		return $return_msg;
-	}
+            '<?xml version="1.0"?'.">\n".
+            '<SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"'.$ns_string.">\n".
+            '<SOAP-ENV:Body>'.
+            '<SOAP-ENV:Fault>'.
+		'<faultcode>'.$this->faultcode.'</faultcode>'.
+		'<faultactor>'.$this->faultactor.'</faultactor>'.
+		'<faultstring>'.$this->faultstring.'</faultstring>'.
+		'<detail>'.$this->serialize_val($this->faultdetail).'</detail>'.
+	    '</SOAP-ENV:Fault>'.
+            '</SOAP-ENV:Body>'.
+            '</SOAP-ENV:Envelope>';
+        return $return_msg;
+    }
 }
 
 ?><?php
@@ -2099,6 +2099,7 @@ class soap_server extends nusoap_base {
             $use = "encoded";
         }
 		
+        $this->operations[] = array($name => array());
         $this->operations[$name] = array(
                                          'name' => $name,
                                          'in' => $in,
