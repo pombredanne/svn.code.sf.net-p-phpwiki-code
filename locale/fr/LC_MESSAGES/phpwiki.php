@@ -498,8 +498,6 @@ $locale["Upload"] =
    "Télécharger";
 $locale["Uploading %s"] =
    "Téléchargement de %s";
-$locale["Use new markup"] =
-   "Utiliser le nouveau marquage";
 $locale["UserId"] =
    "IdentifiantUtilisateur";
 $locale["UserPreferences"] =

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
-"POT-Creation-Date: 2002-12-14 21:32-0500\n"
+"POT-Creation-Date: 2002-12-17 10:29-0800\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -158,21 +158,21 @@ msgstr "i går"
 msgid "Edit: %s"
 msgstr "Redigera: %s"
 
-#: ../lib/Theme.php:739 ../themes/default/templates/actionbar.tmpl:6
+#: ../lib/Theme.php:738 ../themes/default/templates/actionbar.tmpl:6
 msgid "Edit"
 msgstr "Redigera"
 
-#: ../lib/Theme.php:740
+#: ../lib/Theme.php:739
 msgid "Diff"
 msgstr "Diff"
 
-#: ../lib/Theme.php:741 ../themes/default/templates/signin.tmpl:6
+#: ../lib/Theme.php:740 ../themes/default/templates/signin.tmpl:6
 #: ../themes/default/templates/signin.tmpl:30
 #, fuzzy
 msgid "Sign Out"
 msgstr "Logga ut"
 
-#: ../lib/Theme.php:742 ../lib/WikiUser.php:163
+#: ../lib/Theme.php:741 ../lib/WikiUser.php:163
 #: ../themes/default/templates/login.tmpl:44
 #: ../themes/default/templates/signin.tmpl:52
 #: ../themes/default/templates/signin.tmpl:55
@@ -180,19 +180,19 @@ msgstr "Logga ut"
 msgid "Sign In"
 msgstr "Anslut"
 
-#: ../lib/Theme.php:743 ../themes/MacOSX/themeinfo.php:112
+#: ../lib/Theme.php:742 ../themes/MacOSX/themeinfo.php:111
 msgid "Lock Page"
 msgstr "Lås Sida"
 
-#: ../lib/Theme.php:744 ../themes/MacOSX/themeinfo.php:113
+#: ../lib/Theme.php:743 ../themes/MacOSX/themeinfo.php:112
 msgid "Unlock Page"
 msgstr "Lås upp Sida"
 
-#: ../lib/Theme.php:745
+#: ../lib/Theme.php:744
 msgid "Remove Page"
 msgstr "Ta bort sida"
 
-#: ../lib/Theme.php:788
+#: ../lib/Theme.php:787
 #, c-format
 msgid "Redefinition of %s: %s"
 msgstr ""
@@ -451,7 +451,7 @@ msgstr "Visa Källkoden: %s"
 msgid "Saved: %s"
 msgstr "Sparade: %s"
 
-#: ../lib/editpage.php:231 ../themes/MacOSX/themeinfo.php:114
+#: ../lib/editpage.php:231 ../themes/MacOSX/themeinfo.php:113
 msgid "Page Locked"
 msgstr "Sidan är Låst"
 
@@ -504,11 +504,11 @@ msgid ""
 "have been combined. The result is shown below."
 msgstr ""
 
-#: ../lib/editpage.php:321
+#: ../lib/editpage.php:323
 msgid "Preview"
 msgstr "Översikt"
 
-#: ../lib/editpage.php:324
+#: ../lib/editpage.php:326
 msgid "Save"
 msgstr "Spara"
 
@@ -1729,19 +1729,19 @@ msgstr "Insättning från %s"
 msgid "UserPreferences"
 msgstr "Inställningar"
 
-#: ../lib/plugin/UserPreferences.php:50
+#: ../lib/plugin/UserPreferences.php:48
 msgid ""
 "Error: The page with the UserPreferences plugin must be valid WikiWord or a "
 "Preferences subpage of the users HomePage. Sorry, UserPreferences cannot be "
 "saved."
 msgstr ""
 
-#: ../lib/plugin/UserPreferences.php:64
+#: ../lib/plugin/UserPreferences.php:62
 #, fuzzy
 msgid "No changes."
 msgstr "Visa källkoden och referenser för sidan"
 
-#: ../lib/plugin/UserPreferences.php:66
+#: ../lib/plugin/UserPreferences.php:64
 #, c-format
 msgid "%d UserPreferences fields successfully updated."
 msgstr ""
@@ -2156,7 +2156,7 @@ msgstr "Justera"
 
 #: ../themes/Portland/templates/editpage.tmpl:75
 #: ../themes/default/templates/editpage.tmpl:78
-msgid "Use new markup"
+msgid "Use old markup"
 msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:80
@@ -2164,26 +2164,38 @@ msgstr ""
 msgid "Preview only!  Changes not saved."
 msgstr ""
 
-#: ../themes/Portland/templates/editpage.tmpl:85
-#: ../themes/default/templates/editpage.tmpl:104
+#: ../themes/Portland/templates/editpage.tmpl:103
+#: ../themes/Portland/templates/editpage.tmpl:108
+#: ../themes/default/templates/editpage.tmpl:120
+#: ../themes/default/templates/editpage.tmpl:125
 #, c-format
 msgid "See %s tips for editing."
 msgstr "%s: Redigeringstips."
 
-#: ../themes/Portland/templates/editpage.tmpl:85
-#: ../themes/default/templates/editpage.tmpl:104
+#: ../themes/Portland/templates/editpage.tmpl:103
+#: ../themes/Portland/templates/editpage.tmpl:108
+#: ../themes/default/templates/editpage.tmpl:120
+#: ../themes/default/templates/editpage.tmpl:125
 msgid "GoodStyle"
 msgstr "BraStil"
 
-#: ../themes/Portland/templates/editpage.tmpl:87
-#: ../themes/default/templates/editpage.tmpl:105
-msgid "TextFormattingRules"
+#: ../themes/Portland/templates/editpage.tmpl:104
+#: ../themes/default/templates/editpage.tmpl:121
+#, fuzzy
+msgid "OldTextFormattingRules"
 msgstr "Textformateringsregler"
 
-#: ../themes/Portland/templates/editpage.tmpl:87
-#: ../themes/default/templates/editpage.tmpl:105
+#: ../themes/Portland/templates/editpage.tmpl:104
+#: ../themes/Portland/templates/editpage.tmpl:109
+#: ../themes/default/templates/editpage.tmpl:121
+#: ../themes/default/templates/editpage.tmpl:126
 msgid "Synopsis"
 msgstr "Översikt"
+
+#: ../themes/Portland/templates/editpage.tmpl:109
+#: ../themes/default/templates/editpage.tmpl:126
+msgid "TextFormattingRules"
+msgstr "Textformateringsregler"
 
 #: ../themes/Portland/templates/navbar.tmpl:8
 #: ../themes/default/templates/navbar.tmpl:13
