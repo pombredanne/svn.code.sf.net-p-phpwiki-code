@@ -49,7 +49,7 @@ lib/diff.php:          request colored diff's
 lib/diff3.php
 lib/difflib.php
 lib/display.php:       display a page (this calls "lib/transform.php")
-lib/editpage.php:      edit a page
+lib/editpage.php:      edit a page, save a page to db, thank user
 lib/ErrorManager.php
 lib/FileFinder.php
 *lib/fullsearch.php:   full page text search
@@ -65,7 +65,6 @@ lib/prepend.php:       things which must be done before all else
 lib/removepage.php
 lib/Request.php
 lib/RssWriter.php
-lib/savepage.php:      save a page to db, thank user
 *lib/search.php:       page title search
 lib/stdlib.php:        standard library of functions (non-db related)
 lib/Template.php
@@ -122,4 +121,4 @@ Steve Wainstead
 swain@panix.com
 http://wcsb.org/~swain/
 
-$Id: README,v 1.14 2002-01-31 23:11:32 carstenklapp Exp $
+$Id: README,v 1.15 2002-01-31 23:27:16 carstenklapp Exp $
