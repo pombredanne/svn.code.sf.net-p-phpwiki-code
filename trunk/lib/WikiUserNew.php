@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.20 2004-02-26 01:29:11 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.21 2004-02-26 20:43:49 rurban Exp $');
 
 // This is a complete OOP rewrite of the old WikiUser code with various
 // configurable external authentification methods.
@@ -631,7 +631,8 @@ extends _AnonUser
 
         if ($UserName) {
             $this->_userid = $UserName;
-            $this->_HomePagehandle = $this->hasHomePage();
+            if ($this->hasHomePage())
+                $this->_HomePagehandle = $GLOBALS['request']->getPage($this->_userid);
         }
         // Check the configured Prefs methods
         if (  !empty($DBAuthParams['pref_select']) ) {
@@ -819,7 +820,8 @@ extends _AnonUser
             //$request->setSessionVar('wiki_prefs', $this->_prefs);
             $request->setSessionVar('wiki_user', $request->_user);
         }
-        $this->_HomePagehandle->set('pref', $packed);
+        if ($this->_HomePagehandle)
+            $this->_HomePagehandle->set('pref', $packed);
         return count($unpacked);    
     }
 
@@ -832,8 +834,10 @@ extends _AnonUser
     function userExists() {
         //if ($this->_HomePagehandle) return true;
         while ($user = $this->nextClass()) {
-              if ($user->userExists())
+              if ($user->userExists()) {
+                  $this = $user;
                   return true;
+              }
               $this = $user; // prevent endless loop. does this work on all PHP's?
               // it just has to set the classname, what it correctly does.
         }
@@ -971,6 +975,43 @@ extends _PassUser
             return _PassUser::checkPass($submitted_password);
         }
         return WIKIAUTH_ANON;
+    }
+}
+
+class _HttpAuthPassUser
+extends _PassUser
+{
+
+    function _HttpAuthPassUser($UserName='') {
+        if (!$this->_prefs)
+            _PassUser::_PassUser($UserName);
+        $this->_authmethod = 'HttpAuth';
+        if ($this->userExists())
+            return $this;
+        else 
+            return $GLOBALS['ForbiddenUser'];
+    }
+
+    //force http auth authorization
+    function userExists() {
+        // todo: older php's
+        if (empty($_SERVER['PHP_AUTH_USER']) or 
+            $_SERVER['PHP_AUTH_USER'] != $this->_userid) {
+            header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
+            header('HTTP/1.0 401 Unauthorized'); 
+            exit;
+        }
+        $this->_userid = $_SERVER['PHP_AUTH_USER'];
+        $this->_level = WIKIAUTH_USER;
+        return $this;
+    }
+        
+    function checkPass($submitted_password) {
+        return $this->userExists() ? WIKIAUTH_USER : WIKIAUTH_ANON;
+    }
+
+    function mayChangePass() {
+        return false;
     }
 }
 
@@ -1958,6 +1999,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/02/26 01:29:11  rurban
+// important fixes: endless loops in certain cases. minor rewrite
+//
 // Revision 1.19  2004/02/25 17:15:17  rurban
 // improve stability
 //
