@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.66 2003-02-26 00:10:26 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.67 2003-02-26 03:40:22 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -474,10 +474,10 @@ class Theme {
             $default_text = $wikiword;
         }
         
-        $url = WikiURL($wikiword, array('action' => 'edit'));
+        $url = WikiURL($wikiword, array('action' => 'create'));
         //$link = HTML::span(HTML::a(array('href' => $url), '?'));
         $button = $this->makeButton('?', $url);
-        $button->addTooltip(sprintf(_("Edit: %s"), $wikiword));
+        $button->addTooltip(sprintf(_("Create: %s"), $wikiword));
         $link = HTML::span($button);
 
 
@@ -1024,6 +1024,9 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2003/02/26 00:10:26  dairiki
+// More/better/different checks for bad page names.
+//
 // Revision 1.65  2003/02/24 22:41:57  dairiki
 // Fix stupid typo.
 //

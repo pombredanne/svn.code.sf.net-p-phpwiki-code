@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.56 2003-02-21 18:07:14 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.57 2003-02-26 03:40:22 dairiki Exp $');
 
 require_once('lib/Template.php');
 
@@ -13,6 +13,13 @@ class PageEditor
 
         $this->current = $this->page->getCurrentRevision();
 
+        // HACKish short circuit to browse on action=create
+        if ($request->getArg('action') == 'create') {
+            if (! $this->current->hasDefaultContents()) 
+                $request->redirect(WikiURL($this->page->getName())); // noreturn
+        }
+        
+        
         $this->meta = array('author' => $this->user->getId(),
                             'author_id' => $this->user->getAuthenticatedId(),
                             'mtime' => time());
@@ -503,6 +510,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.56  2003/02/21 18:07:14  dairiki
+ Minor, nitpicky, currently inconsequential changes.
+
  Revision 1.55  2003/02/21 04:10:58  dairiki
  Fixes for new cached markup.
  Some minor code cleanups.
