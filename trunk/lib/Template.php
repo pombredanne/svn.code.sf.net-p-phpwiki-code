@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.7 2001-12-26 14:00:32 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.8 2001-12-30 06:10:45 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -215,6 +215,7 @@ extends TemplateFile
 	
         $pagename = $page->getName();
 	$this->replace('page', $page);
+        $this->qreplace('CHARSET', CHARSET);
         $this->qreplace('PAGE', $pagename);
         $this->qreplace('PAGEURL', rawurlencode($pagename));
         $this->qreplace('SPLIT_PAGE', split_pagename($pagename));

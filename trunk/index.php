@@ -39,7 +39,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.45 2001-12-29 18:22:26 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.46 2001-12-30 06:10:39 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -221,6 +221,19 @@ $ExpireParams['author'] = array('max_age'  => 365,
 // Page appearance and layout
 //
 /////////////////////////////////////////////////////////////////////
+
+// Select a valid charset name to be inserted into the xml/html pages.
+// For more info see: <http://www.iana.org/assignments/character-sets>.
+// Note that PhpWiki has been extensively tested only with the latin1
+// (iso-8859-1) character set.
+// If you change the default from iso-8859-1 PhpWiki may not work
+// properly and it will require code modifications. However, character
+// sets similar to iso-8859-1 may work with little or no modification
+// depending on your setup. The database must also support the same
+// charset, and of course the same is true for the web browser.
+// (Some work is in progress hopefully to allow more flexibility in
+// this area in the future).
+define("CHARSET", "iso-8859-1");
 
 // Select your language/locale - default language "C": English
 // other languages available: Dutch "nl", Spanish "es", German "de",
