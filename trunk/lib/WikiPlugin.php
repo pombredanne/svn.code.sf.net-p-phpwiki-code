@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.6 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.7 2002-01-07 01:12:34 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -258,6 +258,9 @@ class WikiPluginLoader {
             // If the plugin source has already been included, the include_once()
             // will fail, so we don't want to crap out just yet.
             $include_failed = true;
+        } else {
+            // this avoids: lib/WikiPlugin.php:265: Notice[8]: Undefined variable: include_failed
+            $include_failed = false;
         }
         
         $plugin_class = "WikiPlugin_$plugin_name";
