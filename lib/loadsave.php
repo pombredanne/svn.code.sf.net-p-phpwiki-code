@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.1 2001-02-12 01:43:10 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.2 2001-02-13 05:54:38 dairiki Exp $');
 
 require "lib/ziplib.php";
 
@@ -167,6 +167,8 @@ function SavePage ($dbi, $page, $defaults, $source, $filename)
    
    $mesg = array();
    $version = $page['version'];
+   $isnew = true;
+   
    if ($version)
       $mesg[] = sprintf(gettext("version %s"), $version);
    if ($source)
@@ -174,8 +176,11 @@ function SavePage ($dbi, $page, $defaults, $source, $filename)
   
    if (is_array($current = RetrievePage($dbi, $pagename, $WikiPageStore)))
    {
-      // FIXME: should compare author, flags ... as well!
-      if (arrays_equal($current['content'], $page['content']))
+      $isnew = false;
+      
+      if (arrays_equal($current['content'], $page['content'])
+	  && $current['author'] == $page['author']
+	  && $current['flags'] == $page['flags'])
       {
 	 $mesg[] = sprintf(gettext("is identical to current version %d"),
 			   $current['version']);
@@ -201,7 +206,8 @@ function SavePage ($dbi, $page, $defaults, $source, $filename)
    if ($page)
    {
       InsertPage($dbi, $pagename, $page);
-
+      UpdateRecentChanges($dbi, $pagename, $isnew);
+      
       $mesg[] = gettext("- saved");
       if ($version != $page['version'])
 	 $mesg[] = sprintf(gettext("as version %d"), $page['version']);
@@ -242,7 +248,7 @@ function LoadFile ($dbi, $filename, $text = false, $mtime = false)
    if (!$mtime)
       $mtime = time();	// Last resort.
 
-   $defaults = array('author' => 'The PhpWiki programming team',
+   $defaults = array('author' => $GLOBALS['user']->id(),
 		     'pagename' => rawurldecode($basename),
 		     'flags' => 0,
 		     'version' => 0,
@@ -267,27 +273,39 @@ function LoadFile ($dbi, $filename, $text = false, $mtime = false)
    }
 }
 
-function LoadZip ($dbi, $zipfile, $files = false)
+function LoadZip ($dbi, $zipfile, $files = false, $exclude = false)
 {
    $zip = new ZipReader($zipfile);
    while (list ($fn, $data, $attrib) = $zip->readFile())
    {
-      if ($files && !in_array(basename($fn), $files))
+      // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
+      $fn = basename("/dummy/" . $fn);
+      if ( ($files && !in_array($fn, $files))
+	   || ($exclude && in_array($fn, $exclude)) )
+      {
+	 print Element('dt', LinkExistingWikiWord($fn)) . QElement('dd', 'Skipping');
 	 continue;
+      }
 
       LoadFile($dbi, $fn, $data, $attrib['mtime']);
    }
 }
 
-function LoadDir ($dbi, $dirname, $files = false)
+function LoadDir ($dbi, $dirname, $files = false, $exclude = false)
 {
    $handle = opendir($dir = $dirname);
    while ($fn = readdir($handle))
    {
-      if ($files && !in_array($fn, $files))
-	 continue;
       if (filetype("$dir/$fn") != 'file')
 	 continue;
+
+      if ( ($files && !in_array($fn, $files))
+	   || ($exclude && in_array($fn, $exclude)) )
+      {
+	 print Element('dt', LinkExistingWikiWord($fn)) . QElement('dd', 'Skipping');
+	 continue;
+      }
+      
       LoadFile($dbi, "$dir/$fn");
    }
    closedir($handle);
@@ -313,23 +331,23 @@ function IsZipFile ($filename_or_fd)
 }
 
    
-function LoadAny ($dbi, $file_or_dir, $files = false)
+function LoadAny ($dbi, $file_or_dir, $files = false, $exclude = false)
 {
    $type = filetype($file_or_dir);
 
    if ($type == 'dir')
    {
-      LoadDir($dbi, $file_or_dir, $files);
+      LoadDir($dbi, $file_or_dir, $files, $exclude);
    }
    else if ($type != 'file' && !preg_match('/^(http|ftp):/', $file_or_dir))
    {
-      die("Bad file type: $type");
+      ExitWiki("Bad file type: $type");
    }
    else if (IsZipFile($file_or_dir))
    {
-      LoadZip($dbi, $file_or_dir, $files);
+      LoadZip($dbi, $file_or_dir, $files, $exclude);
    }
-   else if (!$files || in_array(basename($file_or_dir), $files))
+   else /* if (!$files || in_array(basename($file_or_dir), $files)) */
    {
       LoadFile($dbi, $file_or_dir);
    }
@@ -339,14 +357,17 @@ function LoadFileOrDir ($dbi, $source)
 {
    StartLoadDump("Loading '$source'");
    echo "<dl>\n";
-   LoadAny($dbi, $source);
+   LoadAny($dbi, $source, false, array(gettext('RecentChanges')));
    echo "</dl>\n";
    EndLoadDump();
 }
 
 function SetupWiki ($dbi)
 {
-   global $GenericPages, $LANG;
+   global $GenericPages, $LANG, $user;
+
+   //FIXME: This is a hack
+   $user->userid = 'The PhpWiki programming team';
    
    StartLoadDump('Loading up virgin wiki');
    echo "<dl>\n";
@@ -368,7 +389,7 @@ function LoadPostFile ($dbi, $postname)
    fix_magic_quotes_gpc($name);
 
    if (!is_uploaded_file($tmp_name))
-      die('Bad zipfile');	// Possible malicious attack.
+      ExitWiki('Bad file post');	// Possible malicious attack.
    
    // Dump http headers.
    $fd = fopen($tmp_name, "rb");
@@ -380,7 +401,7 @@ function LoadPostFile ($dbi, $postname)
    echo "<dl>\n";
    
    if (IsZipFile($fd))
-      LoadZip($dbi, $fd);
+      LoadZip($dbi, $fd, false, array(gettext('RecentChanges')));
    else
       Loadfile($dbi, $name, fread($fd, MAX_UPLOAD_SIZE));
 

@@ -1,9 +1,10 @@
 <?php
+/////////////////////////////////////////////////////////////////////
+// Part Zero: Don't touch this!
+/////////////////////////////////////////////////////////////////////
 define ('PHPWIKI_VERSION', '1.3.0pre');
-error_reporting(E_ALL /* ^ E_NOTICE */);
-
-$RCS_IDS = array("SCRIPT_NAME='$SCRIPT_NAME'",
-		 '$Id: index.php,v 1.7 2001-02-12 01:43:09 dairiki Exp $');
+require "lib/prepend.php";
+rcs_id('$Id: index.php,v 1.8 2001-02-13 05:54:38 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -40,22 +41,22 @@ define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 //
 /////////////////////////////////////////////////////////////////////
 
-// Pick one of 'dbm', 'dba', 'mysql', 'pgsql', 'msql', or 'file'.
-// (Or leaven DBTYPE undefined for default behavior (which is 'dba'
-// if supported, else 'dbm').
-
-//define("DBTYPE", 'mysql');
-
-// 'dbm' and 'dba create files named "$directory/${database}{$prefix}*".
-// 'file' creates files named "$directory/${database}/{$prefix}*/*".
-// The sql types use tables named "{$prefix}*"
-
 //
 // This array holds the parameters which select the database to use.
 //
 // Not all of these parameters are used by any particular DB backend.
 //
 $DBParams = array(
+   // Select the database type:
+   // Uncomment one of these, or leave all commented for the default
+   // data base type ('dba' if supported, else 'dbm'.)
+   //'dbtype' => 'dba',
+   //'dbtype' => 'dbm',
+   //'dbtype' => 'mysql',
+   //'dbtype' => 'pgsql',
+   //'dbtype' => 'msql',
+   //'dbtype' => 'file',
+   
    // Used by all DB types:
    'database' => 'wiki',
    'prefix' => '',	// prefix for filenames or table names
@@ -63,6 +64,10 @@ $DBParams = array(
    // Used by 'dbm', 'dba', 'file'
    'directory' => "/tmp",
 
+   // 'dbm' and 'dba create files named "$directory/${database}{$prefix}*".
+   // 'file' creates files named "$directory/${database}/{$prefix}*/*".
+   // The sql types use tables named "{$prefix}*"
+   
    // Used by 'dbm', 'dba'
    'timeout' => 20,
    
@@ -186,21 +191,21 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
  * Canonical name and httpd port of the server on which this
  * PhpWiki resides.
  */
-//define('PHPWIKI_SERVER_NAME', 'some.host.com');
-//define('PHPWIKI_SERVER_PORT', 80);
+//define('SERVER_NAME', 'some.host.com');
+//define('SERVER_PORT', 80);
 
 /*
  * Absolute URL (from the server root) of the PhpWiki
  * script.
  */
-//define('PHPWIKI_SCRIPT_NAME', '/some/where/index.php');
+//define('SCRIPT_NAME', '/some/where/index.php');
 
 /*
  * Absolute URL (from the server root) of the directory
  * in which relative URL's for images and other support files
  * are interpreted.
  */
-//define('PHPWIKI_DATA_PATH', '/some/where');
+//define('DATA_PATH', '/some/where');
 
 /*
  * Define to 'true' to use PATH_INFO to pass the pagename's.
@@ -211,10 +216,29 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 //define('USE_PATH_INFO', false);
 
 /*
- * FIXME: add docs
- * (Only used if USE_PATH_INFO is true.)
+ * VIRTUAL_PATH is the canonical URL path under which your
+ * your wiki appears.  Normally this is the same as
+ * dirname(SCRIPT_NAME), however using, e.g. apaches mod_actions
+ * (or mod_rewrite), you can make it something different.
+ *
+ * If you do this, you should set VIRTUAL_PATH here.
+ *
+ * E.g. your phpwiki might be installed at at /scripts/phpwiki/index.php,
+ * but  * you've made it accessible through eg. /wiki/FrontPage.
+ *
+ * One way to do this is to create a directory named 'wiki' in your
+ * server root.  The directory contains only one file: an .htaccess
+ * file which reads something like:
+ *
+ *    Action x-phpwiki-page /scripts/phpwiki/index.php
+ *    SetHandler x-phpwiki-page
+ *    DirectoryIndex /scripts/phpwiki/index.php
+ *
+ * In that case you should set VIRTUAL_PATH to '/wiki'.
+ *
+ * (VIRTUAL_PATH is only used if USE_PATH_INFO is true.)
  */
-//define('PHPWIKI_VIRTUAL_PATH', '/SomeWiki');
+//define('VIRTUAL_PATH', '/SomeWiki');
 
 
 ////////////////////////////////////////////////////////////////

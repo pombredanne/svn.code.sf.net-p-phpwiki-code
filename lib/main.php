@@ -1,5 +1,5 @@
-<?php $RCS_IDS[] = '$Id: main.php,v 1.1 2001-02-12 01:43:10 dairiki Exp $';
-function rcs_id($id) { $GLOBALS['RCS_IDS'][] = $id; }
+<?php
+rcs_id('$Id: main.php,v 1.2 2001-02-13 05:54:38 dairiki Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
@@ -46,7 +46,8 @@ function IsSafeAction ($action)
    return in_array ( $action, array('browse',
 				    'info', 'diff', 'search',
 				    'edit', 'save',
-				    'login', 'logout') );
+				    'login', 'logout',
+				    'setprefs') );
 }
 
 function get_auth_mode ($action) 
@@ -74,15 +75,18 @@ if ( ! IsWikiPage($dbi, gettext("FrontPage")) )
 {
    include_once("lib/loadsave.php");
    SetupWiki($dbi);
-   CloseDataBase($dbi);
-   exit;
+   ExitWiki();
 }
 
 // FIXME: I think this is redundant.
 if (!IsSafeAction($action))
    $user->must_be_admin($action);
 
-
+// Enable the output of most of the warning messages.
+// The warnings will screw up zip files and setpref though.
+if ($action != 'zip' && $action != 'setprefs')
+   PostponeErrorMessages(E_NOTICE);
+   
 switch ($action) {
    case 'edit':
       include "lib/editpage.php";
@@ -110,6 +114,9 @@ switch ($action) {
    case 'zip':
       include_once("lib/loadsave.php");
       MakeWikiZip($dbi, isset($include) && $include == 'all');
+      // I don't think it hurts to add cruft at the end of the zip file.
+      echo "\n========================================================\n";
+      echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$RCS_IDS\n";
       break;
 
    case 'upload':
@@ -143,10 +150,23 @@ switch ($action) {
       include "lib/display.php";
       break;
 
+   case 'setprefs':
+      $prefs = $user->getPreferences($GLOBALS);
+      if (!empty($edit_area_width))
+	 $prefs['edit_area.width'] = $edit_area_width;
+      if (!empty($edit_area_height))
+	 $prefs['edit_area.height'] = $edit_area_height;
+      $user->setPreferences($prefs);
+
+      PostponeErrorMessages(E_ALL & ~E_NOTICE);
+
+      include "lib/display.php";
+      break;
+   
    case 'browse':
    case 'login':
    case 'logout':
-      include "lib/display.php"; // defaults to FrontPage
+      include "lib/display.php";
       break;
 
    default:
@@ -154,7 +174,8 @@ switch ($action) {
       break;
 }
 
-CloseDataBase($dbi);
+ExitWiki();
+
 // For emacs users
 // Local Variables:
 // mode: php

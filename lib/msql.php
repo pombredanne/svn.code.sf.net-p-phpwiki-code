@@ -1,5 +1,5 @@
-<!-- $Id: msql.php,v 1.7 2001-02-12 01:43:10 dairiki Exp $ -->
 <?php
+rcs_id('$Id: msql.php,v 1.8 2001-02-13 05:54:38 dairiki Exp $');
 
    /*
       Database functions:

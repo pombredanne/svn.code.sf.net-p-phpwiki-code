@@ -1,5 +1,22 @@
 02/11/01 Jeff's hacks continue:
 
+* User preferences can be stored in a cookie.  Currently the only user preference
+  is the size of the textarea on the edit page.  See the UserPreferences wiki page.
+
+* When a zip/file is uploaded, set the author to the user who does the upload
+  (ie. the administrator).  Also enter the upload in RecentChanges.
+* Don't load RecentChanges from zip or dir.  Only from file.
+
+* Clean up error reporting.  Warning messages screw up header() and setcookie()
+  operations, and also corrupt the zip dumps.  New function
+  PostponeErrorMessages() allows one to postpone the reporting of selected warnings.
+
+* Beginnings of CSS support.  Still in the ugly stage.
+
+* More bug fixes.
+
+02/11/01 Jeff's hacks continue:
+
 * Moved user configuration stuff into index.php.  What was index.php is
   now in lib/main.php.
 
