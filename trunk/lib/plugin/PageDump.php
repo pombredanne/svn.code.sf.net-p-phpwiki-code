@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.11 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.12 2004-06-16 13:32:43 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -117,14 +117,12 @@ extends WikiPlugin
                               'format'=> 'forcvs',
                               'download'=> true),
                         _("Download for CVS"),
-                        WikiURL($page),
-                        'wikiadmin');
+                        $page);
         $dl = Button(array(//'page' => $page,
                            'action' => $this->getName(),
                            'download'=> true),
                      _("Download for backup"),
-                     WikiURL($page),
-                     'wikiadmin');
+                     $page);
 
         $h2 = HTML::h2(fmt("Preview: Page dump of %s",
                            WikiLink($page, 'auto')));
@@ -133,8 +131,7 @@ extends WikiPlugin
             $altpreviewbutton = Button(array(//'page' => $page, 
                                              'action' => $this->getName()),
                                        _("Preview as backup format"),
-                                       WikiURL($page),
-                                       'wikiadmin');
+                                       $page);
         }
         else {
             $desc = _("(formatted for backing up)");
@@ -142,8 +139,7 @@ extends WikiPlugin
                                              'action' => $this->getName(),
                                              'format'=> 'forcvs'),
                                        _("Preview as developer format"),
-                                       WikiURL($page),
-                                       'wikiadmin');
+                                       $page);
         }
         $warning = HTML(
 _("Please use one of the downloadable versions rather than copying and pasting from the above preview.")
@@ -255,6 +251,14 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.10  2004/06/07 22:28:05  rurban
 // add acl field to mimified dump
 //
