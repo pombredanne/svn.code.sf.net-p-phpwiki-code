@@ -1,6 +1,8 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.24 2004-08-05 17:33:51 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.25 2004-10-12 13:13:19 rurban Exp $');
 
+//echo " filefinder: ", error_reporting();
 require_once(dirname(__FILE__).'/stdlib.php');
+//echo " after loading stdlib: ", error_reporting();
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -15,7 +17,7 @@ require_once(dirname(__FILE__).'/stdlib.php');
  */
 class FileFinder
 {
-    var $_pathsep, $_path;
+    //var $_pathsep, $_path;
 
     /**
      * Constructor.
@@ -559,6 +561,9 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/08/05 17:33:51  rurban
+// strange problem with WikiTheme
+//
 // Revision 1.23  2004/06/19 12:33:25  rurban
 // prevent some warnings in corner cases
 //

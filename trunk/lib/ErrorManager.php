@@ -1,10 +1,18 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.34 2004-09-24 18:52:19 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.35 2004-10-12 13:13:19 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
-// TODO with php5: ignore E_STRICT (var warnings)
-define ('EM_FATAL_ERRORS',
-            E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
+// php5: ignore E_STRICT (var warnings)
+/*
+if (defined('E_STRICT') 
+    and (E_ALL & E_STRICT)
+    and (error_reporting() & E_STRICT)) {
+    echo " errormgr: error_reporting=", error_reporting();
+    echo "\nplease fix that in your php.ini!";
+    error_reporting(E_ALL & ~E_STRICT);
+}
+*/
+define ('EM_FATAL_ERRORS', E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR | ~2048);
 define ('EM_WARNING_ERRORS',
 	E_WARNING | E_CORE_WARNING | E_COMPILE_WARNING | E_USER_WARNING);
 define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
@@ -235,8 +243,11 @@ class ErrorManager
         // Error was either fatal, or was not handled by a handler.
         // Handle it ourself.
         if ($error->isFatal()) {
-            if (DEBUG & _DEBUG_TRACE)
+            echo "<html><body><div style=\"font-width:bold; color:red\">Fatal</div>\n";
+            if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
+                echo "error_reporting=",error_reporting(),"\n<br>";
                 $error->printSimpleTrace(debug_backtrace());
+            }
             $this->_die($error);
         }
         else if (($error->errno & error_reporting()) != 0) {
@@ -255,8 +266,11 @@ class ErrorManager
                 }
             }
             else {
-                if (DEBUG & _DEBUG_TRACE)
+                //echo "postponed errors: ";
+                if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
+                    echo "error_reporting=",error_reporting(),"\n";
                     $error->printSimpleTrace(debug_backtrace());
+                }
                 $error->printXML();
             }
         }
@@ -271,6 +285,7 @@ class ErrorManager
      * @access private
      */
     function _die($error) {
+        //echo "\n\n<html><body>";
         $error->printXML();
         PrintXML($this->_flush_errors());
         if ($this->_fatal_handler)
@@ -379,7 +394,7 @@ class PhpError {
      * @return boolean True if this is a fatal error.
      */
     function isFatal() {
-        return ($this->errno & (EM_WARNING_ERRORS|EM_NOTICE_ERRORS)) == 0;
+        return ($this->errno & (2048|EM_WARNING_ERRORS|EM_NOTICE_ERRORS)) == 0;
     }
 
     /**
@@ -473,8 +488,9 @@ class PhpError {
     }
 
     function printSimpleTrace($bt) {
+        global $HTTP_SERVER_VARS;
         $nl = isset($HTTP_SERVER_VARS['REQUEST_METHOD']) ? "<br />" : "\n";
-        echo "Traceback:".$nl;
+        echo $nl."Traceback:".$nl;
         foreach ($bt as $i => $elem) {
             if (!array_key_exists('file', $elem)) {
                 continue;
@@ -577,6 +593,10 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2004/09/24 18:52:19  rurban
+// in deferred html error messages use the worst header and class
+// (notice => warning => errors)
+//
 // Revision 1.33  2004/09/14 10:28:21  rurban
 // use assert, maybe we should only turn it off for releases
 //

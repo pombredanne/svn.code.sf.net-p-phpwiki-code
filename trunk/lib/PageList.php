@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.113 2004-10-05 17:00:03 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.114 2004-10-12 13:13:19 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -53,7 +53,7 @@
  *   ->supportedArgs() which arguments are supported, so that the plugin 
  *                     doesn't explictly need to declare it 
  *
- * TODO: 
+ * FIXED: 
  *   fix memory exhaustion on large pagelists with old --memory-limit php's only. 
  *   Status: improved 2004-06-25 16:19:36 rurban 
  *     but needs further testing.
@@ -601,10 +601,10 @@ class PageList {
                       * But limit and offset might help the query WikiDB::getAllPages()
                       */
                      'limit'    => 0,       // number of rows (pagesize)
-                     'paging'   => 'auto',  // 'auto'  normal paging mode
-                     //			    // 'smart' drop 'info' columns and enhance rows 
-                     //                     //         when the list becomes large
-                     //                     // 'none'  don't page at all 
+                     'paging'   => 'auto',  // 'auto'   top + bottom rows if applicable
+                     //			    // 'top'    top only if applicable
+                     //			    // 'bottom' bottom only if applicable
+                     //                     // 'none'   don't page at all 
                      // (TODO: what if $paging==false ?)
 
                      /* list-style options (with single pagename column only so far) */
@@ -1452,6 +1452,11 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.113  2004/10/05 17:00:03  rurban
+// support paging for simple lists
+// fix RatingDb sql backend.
+// remove pages from AllPages (this is ListPages then)
+//
 // Revision 1.112  2004/10/04 23:39:58  rurban
 // list of page objects
 //
