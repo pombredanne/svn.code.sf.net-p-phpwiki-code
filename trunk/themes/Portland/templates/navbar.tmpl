@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.7 2002-01-30 23:41:55 dairiki Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.8 2002-02-16 06:05:34 carstenklapp Exp $ -->
 <?php
   $Sep = $Theme->getButtonSeparator();
 ?>
@@ -13,8 +13,6 @@
      <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock')?>
      <?=$Sep?><?= Button('remove') ?>
     <?php } ?>
-    <!-- For debugging only, really -->
-    <?=$Sep?><?= Button(_("DebugInfo")) ?><br />
    <hr />
 <!-- I would like not to have to use these tables, and managed to
      get this stuff to work more or less correctly using
