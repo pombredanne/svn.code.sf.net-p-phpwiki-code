@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.10 2002-02-12 08:53:27 carstenklapp Exp $
+ * $Id: sidebar.css,v 1.11 2002-02-12 23:57:42 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -63,10 +63,12 @@ h1 a.backlinks { text-decoration: none; }
 
 /**
  * Common toolbar settings
+ * Note that div.toolbar is used for other toolbars besides
+ * #navbar and #actionbar, such as in editpage and removepage
  */
-hr.toolbar { display: none; }
+#navbuttons hr, #actionbuttons hr, #signin hr { display: none; }
 
-.toolbar { line-height: 2.4ex; }
+#navbuttons, #actionbuttons, #signin { line-height: 2.4ex; }
 
 /* Make the buttons as wide as the containing box */
 a.wikiaction, a.wikiadmin {
