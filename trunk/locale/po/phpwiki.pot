@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2002-01-10 19:33-0500\n"
+"POT-Creation-Date: 2002-01-11 00:45-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -270,7 +270,7 @@ msgid "History of changes."
 msgstr ""
 
 #: ../lib/Toolbar.php:168 ../lib/Toolbar.php:169
-#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:42
+#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:44
 msgid "PageHistory"
 msgstr ""
 
@@ -279,81 +279,81 @@ msgstr ""
 msgid "List PageHistory for %s"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:84
+#: ../lib/plugin/RecentChanges.php:86
 msgid "Deleted."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:86
+#: ../lib/plugin/RecentChanges.php:88
 msgid "New page."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:98
+#: ../lib/plugin/RecentChanges.php:100
 msgid "(diff)"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:124
+#: ../lib/plugin/RecentChanges.php:126
 msgid "RSS available"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:134
+#: ../lib/plugin/RecentChanges.php:136
 msgid "edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:136
+#: ../lib/plugin/RecentChanges.php:138
 msgid "major edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:138
+#: ../lib/plugin/RecentChanges.php:140
 msgid "minor edits"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:142
+#: ../lib/plugin/RecentChanges.php:144
 #, c-format
 msgid "The %d most recent %s during the past %.1f days are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:145
+#: ../lib/plugin/RecentChanges.php:147
 #, c-format
 msgid "The %d most recent %s are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:150
+#: ../lib/plugin/RecentChanges.php:152
 #, c-format
 msgid "The most recent %s during the past %.1f days are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:153
+#: ../lib/plugin/RecentChanges.php:155
 #, c-format
 msgid "All %s are listed below."
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:161 ../lib/plugin/Toolbar.php:87
+#: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/Toolbar.php:87
 #: ../lib/plugin/Toolbar.php:107 ../lib/plugin/Toolbar.php:112
 msgid "RecentEdits"
 msgstr ""
 
 #: ../lib/Toolbar.php:272 ../lib/loadsave.php:476
-#: ../lib/plugin/RecentChanges.php:161 ../lib/plugin/RecentChanges.php:270
-#: ../lib/plugin/RecentChanges.php:315 ../lib/plugin/Toolbar.php:87
+#: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/RecentChanges.php:272
+#: ../lib/plugin/RecentChanges.php:317 ../lib/plugin/Toolbar.php:87
 #: ../lib/plugin/Toolbar.php:105 ../lib/plugin/Toolbar.php:112
 msgid "RecentChanges"
 msgstr ""
 
 #: ../lib/Toolbar.php:69 ../lib/main.php:26 ../lib/main.php:85
-#: ../lib/main.php:87 ../lib/plugin/RecentChanges.php:253
+#: ../lib/main.php:87 ../lib/plugin/RecentChanges.php:255
 msgid "HomePage"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:258
+#: ../lib/plugin/RecentChanges.php:260
 msgid "Search"
 msgstr ""
 
-#: ../lib/plugin/RecentChanges.php:259 ../lib/plugin/TitleSearch.php:16
+#: ../lib/plugin/RecentChanges.php:261 ../lib/plugin/TitleSearch.php:16
 msgid "Title Search"
 msgstr ""
 
 #: ../lib/Toolbar.php:208 ../lib/main.php:123
-#: ../lib/plugin/RecentChanges.php:261 ../lib/plugin/TitleSearch.php:12
+#: ../lib/plugin/RecentChanges.php:263 ../lib/plugin/TitleSearch.php:12
 msgid "TitleSearch"
 msgstr ""
 
@@ -435,7 +435,7 @@ msgstr ""
 msgid "View WikiMarkup for page '%s'."
 msgstr ""
 
-#: ../lib/plugin/ViewMarkup.php:56 ../lib/stdlib.php:568
+#: ../lib/plugin/ViewMarkup.php:56 ../lib/stdlib.php:569
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr ""
@@ -1048,43 +1048,43 @@ msgstr ""
 msgid "Edit aborted: %s"
 msgstr ""
 
-#: ../lib/stdlib.php:83
+#: ../lib/stdlib.php:90
 msgid "Printer"
 msgstr ""
 
-#: ../lib/stdlib.php:172 ../lib/stdlib.php:231
+#: ../lib/stdlib.php:173 ../lib/stdlib.php:232
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:375
+#: ../lib/stdlib.php:376
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:494
+#: ../lib/stdlib.php:495
 #, c-format
 msgid "%d best incoming links:"
 msgstr ""
 
-#: ../lib/stdlib.php:504
+#: ../lib/stdlib.php:505
 #, c-format
 msgid "%d best outgoing links:"
 msgstr ""
 
-#: ../lib/stdlib.php:515
+#: ../lib/stdlib.php:516
 #, c-format
 msgid "%d most popular nearby:"
 msgstr ""
 
-#: ../lib/stdlib.php:566 ../lib/stdlib.php:572
+#: ../lib/stdlib.php:567 ../lib/stdlib.php:573
 msgid "Bad Version"
 msgstr ""
 
-#: ../lib/stdlib.php:725
+#: ../lib/stdlib.php:726
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:734
+#: ../lib/stdlib.php:735
 #, c-format
 msgid "%s: argument index out of range"
 msgstr ""
