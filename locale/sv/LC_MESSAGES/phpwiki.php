@@ -1,11 +1,5 @@
 <?php
 
-$locale["%d best incoming links:"] =
-   "De %d mest använda ingående länkarna:";
-$locale["%d best outgoing links:"] =
-   "De %d mest använda utgående länkarna:";
-$locale["%d most popular nearby:"] =
-   "De %d mest populära grannarna:";
 $locale["%s of this page"] =
    "%s för den här sidan";
 $locale["%s: %s"] =
@@ -16,8 +10,6 @@ $locale["(version %s, saved on %s)"] =
    "(version %s, sparade %s)";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Ladda om</b> sidan. Du kommer nu se den senaste versionen av sidan. Dina ändringar är inte där.";
-$locale["Click here to <a href=\"%s\">remove the page now</a>."] =
-   "Klicka shär för <a href=\"%s\">att ta bort sidan nu</a>.";
 $locale["Copied to [%s]"] =
    "Kopia är [%s]";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -108,8 +100,6 @@ $locale["Thank you for editing %s."] =
    "Tack för att du redigerade %s.";
 $locale["The %d most recent %s are listed below."] =
    "De %d senaste %s sidorna listas nedan.";
-$locale["The %s most popular pages of this wiki:"] =
-   "De %s mest populära sidorna för den här wikin:";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Den här sidan är låst av administratören och kan ej redigeras.";
 $locale["Title Search"] =
@@ -132,10 +122,6 @@ $locale["View Source"] =
    "Visa Källkoden";
 $locale["View Source: %s"] =
    "Visa Källkoden: %s";
-$locale["ViewSource"] =
-   "VisaKällkoden";
-$locale["WikiFatalError"] =
-   "WikiFatalError";
 $locale["You are about to remove '%s' permanently!"] =
    "Du kommer att ta bort \"%s\" permanent!";
 $locale["Your careful attention to detail is much appreciated."] =
@@ -152,8 +138,6 @@ $locale["revision by previous author"] =
    "version från föregående författare";
 $locale["version %d"] =
    "version %d";
-$locale["version %d of %s"] =
-   "version %s för %s";
 $locale["version %s"] =
    "version %s";
 
