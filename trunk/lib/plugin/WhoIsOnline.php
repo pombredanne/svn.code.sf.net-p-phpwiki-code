@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WhoIsOnline.php,v 1.10 2005-02-01 16:22:58 rurban Exp $');
+rcs_id('$Id: WhoIsOnline.php,v 1.11 2005-02-02 19:39:42 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -79,8 +79,10 @@ extends WikiPlugin
     function box($args=false, $request=false, $basepage=false) {
         if (!$request) $request =& $GLOBALS['request'];
         $stats = $this->getStats($request->_dbi,$request,'summary');
-        return $this->makeBox(WikiLink(_("WhoIsOnline"),'',_("Who is online")),
-                              fmt("%d online users",$stats['NUM_USERS']));
+        return $this->makeBox(_("Who is online"),
+                              HTML(HTML::Raw('&middot; '),
+                                   WikiLink(_("WhoIsOnline"),'auto',
+                                            fmt("%d online users", $stats['NUM_USERS']))));
     }
 
     function getSessions($dbi, &$request) {
@@ -197,6 +199,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2005/02/01 16:22:58  rurban
+// avoid __PHP_incomplete_Class notice
+//
 // Revision 1.9  2004/12/18 17:04:24  rurban
 // stabilize not to call UserName() of an incomplete (not loaded) object
 //
