@@ -1,17 +1,24 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.23 2002-08-23 18:29:34 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.24 2002-08-23 21:54:30 rurban Exp $ -->
 <?php
+foreach (explode(',',
+    'appearance,changePass,email,notifyPages,editAreaSize,timeOffset,relativeDates,errmsg,isForm') as $var) {
+    if (empty($$var)) $$var = false;
+}
 
 $time = time();
 $offset = $request->getPref('timeOffset') * 3600;
 $serverTime = $time - $offset;
-
-$timeOffsetInput = HTML::input(array('type' => "text",
+if ( $timeOffset )
+    $timeOffsetInput = HTML::input(array('type' => "text",
                                      'size' => 6,
                                      'maxlength' => 6,
                                      'name' => "pref[timeOffset]",
                                      'class' => "numeric",
                                      'value' => $request->getPref('timeOffset')));
+else
+    $timeOffsetInput = $request->getPref('timeOffset');
+
 
 $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
                                           'name' => 'pref[relativeDates][]',
@@ -20,43 +27,77 @@ $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
                                           'name' => 'pref[relativeDates][]',
                                           'value' => '1',
                                           'checked' => (bool) $request->getPref('relativeDates'))));
+
 $SelectThemes = ''; $SelectLanguages = '';
 $SelectThemesDesc = ''; $SelectLanguagesDesc = '';
-$SelectOptions = HTML(); 
-if (!empty($available_themes) and is_array($available_themes)) {
-  foreach ($available_themes as $theme) {
-    if ($theme == $request->getPref('theme'))
-	$SelectOptions->pushContent(HTML::option(array('value' => $theme,'selected'=>"selected"),$theme));
-    else
-	$SelectOptions->pushContent(HTML::option(array('value' => $theme),$theme));
-  }
-  $SelectThemes = HTML::select(array('name' => "pref[theme]",'id' => 'theme'),
-			       $SelectOptions);
-  $SelectThemesDesc = _("Select your theme");
-}
-
-$SelectOptions = HTML();
-if (!empty($available_languages) and is_array($available_languages)) {
-  foreach ($available_languages as $lang) {
-    if ($theme == $request->getPref('lang'))
-	$SelectOptions->pushContent(HTML::option(array('value' => $lang,'selected'=>"selected"),$lang));
-    else
-	$SelectOptions->pushContent(HTML::option(array('value' => $lang),$lang));
-  }
-  $SelectLanguages = HTML::select(array('name' => "pref[lang]",'id' => 'lang'),
-			       $SelectOptions);
-  $SelectLanguagesDesc = _("Select your language");
+if ($appearance) {
+    $SelectOptions = HTML(); 
+    if (!empty($available_themes) and is_array($available_themes)) {
+	foreach ($available_themes as $theme) {
+	    if ($theme == $request->getPref('theme'))
+		$SelectOptions->pushContent(HTML::option(array('value' => $theme,'selected'=>"selected"),$theme));
+	    else
+		$SelectOptions->pushContent(HTML::option(array('value' => $theme),$theme));
+	}
+	$SelectThemes = HTML::select(array('name' => "pref[theme]",'id' => 'theme'),
+				     $SelectOptions);
+	$SelectThemesDesc = _("Select your theme");
+    }
+    
+    $SelectOptions = HTML();
+    if (!empty($available_languages) and is_array($available_languages)) {
+	foreach ($available_languages as $lang) {
+	    if ($lang == $request->getPref('lang'))
+		$SelectOptions->pushContent(HTML::option(array('value' => $lang,'selected'=>"selected"),$lang));
+	    else
+		$SelectOptions->pushContent(HTML::option(array('value' => $lang),$lang));
+	}
+	$SelectLanguages = HTML::select(array('name' => "pref[lang]",'id' => 'lang'),
+					$SelectOptions);
+	$SelectLanguagesDesc = _("Select your language");
+    } else {
+	if ($SelectThemes == '') {
+	    $appearance = false;
+	    $SelectThemesDesc = '';
+	    $SelectLanguagesDesc = '';
+	}
+    }
 } else {
-  if ($SelectThemes == '')
-    $appearance = false;
+    $SelectThemesDesc = _("Current theme");
+    $SelectLanguagesDesc = _("Current language");
+    $SelectThemes = $request->getPref('theme');
+    $SelectLanguages = $request->getPref('lang');
 }
 
+$plugin = $request->getArg('pagename');
+if ($request->isActionPage($request->getArg('pagename')) and 
+    $plugin != _("PreferencesInfo")) 
+{
+    $isForm = true;
+}
 
-if (empty($errmsg)) $errmsg = false;
-else $errmsg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr());
+if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr());
 ?>
 <?= $errmsg ?>
+
+<?php if ($isForm) { ?>
 <form action="<?=$request->getURLtoSelf()?>" method="post">
+<?php } else { 
+  $user = $request->_user; 
+  $fill = "&nbsp;";
+?>
+<?= HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$request->getPref('userid'), " from " . $request->_user->auth_how()),
+	      sprintf("%12s: [% 10s]  %16s: [% 10s] | %8s: [%2s]\n","getId",$user->getId(),"getAuthenticatedId",$user->getAuthenticatedId(),"isSignedIn", $user->isSignedIn()),
+	      sprintf("%12s: [% 10s]\n",_("Password"),$request->getPref('passwd')),
+	      sprintf("%12s: [% 10s]  %16s: [% 8s]\n",
+		      _("Auth Level"),$user->_level,_("Auth Method"),$user->_authmethod),
+	      sprintf("%12s: [% 10s]\n",_("Homepage"),$user->_homepage),
+	      sprintf("%12s: [% 10s]\n",_("E-Mail"),$request->getPref('email')),
+	      sprintf("%12s: [% 10s]\n",_("Notify"),$request->getPref('notifyPages')),
+	      sprintf("%12s: [% 10s]\n",_("Theme"), $request->getPref('theme')),
+	      sprintf("%12s: [% 10s]\n",_("Language"),$request->getPref('lang'))
+	      ) ?>
+<?php } ?>
 
 <?php if ($changePass) { ?>
   <h2><?=_("Change Password")?></h2>
@@ -64,13 +105,14 @@ else $errmsg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr());
      <input type="password" name="pref[passwd2]" size="16" maxlength="16" class="text" value="" /> <?=_("Type it again")?>.
 <?php } ?>
 
-<?php if ($email or $notifyPages) { ?>
   <h2><?=_("Email Notification")?></h2>
   <p><?=_("Your E-Mail:")?>
   <?php if ($email) { ?>
      <input type="text" name="pref[email]" size="30" maxlength="60"
 	    value="<?=$request->getPref('email')?>" />
-  <?php } else { ?><?=$request->getPref('email')?><?php } ?>
+  <?php } else { ?>
+     '<?= $request->getPref('email') ?>'
+  <?php } ?>
   &nbsp;&nbsp;<?= _("Status") ?>:&nbsp;&nbsp;
   <?php if ($request->getPref('emailVerified')) { ?>
     <?= _("Email verified.") ?>
@@ -79,35 +121,39 @@ else $errmsg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr());
   <?php } ?>
   </p>
      <p class="hint">(<?=_("Note, that user accounts with bouncing emails will be disabled.")?>)</p>
-  <?php if ($notifyPages) { ?>
    <p><?=_("Get an email notification at changes of the following pages")?>:<br />
-   &nbsp;<textarea name="pref[notifyPages]" cols="50" rows="5"><?=$request->getPref('notifyPages')?></textarea>
+   <?php if ($notifyPages) { ?>
+     &nbsp;<textarea name="pref[notifyPages]" cols="50" rows="5"><?=$request->getPref('notifyPages')?></textarea>
      <p class="hint">(<?=_("Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed.")?>)</p>
    </p>
+  <?php } else { ?>
+    <?=$request->getPref('notifyPages')?>
   <?php } ?>
-<?php } ?>
 
-<?php if ($appearance) { ?>
   <h2><?=_("Appearance")?></h2>
    <table>
      <tr><td><?=$SelectThemesDesc?>:</td><td><?=$SelectLanguagesDesc?>:</td></tr>
      <tr><td><?= $SelectThemes ?></td><td><?= $SelectLanguages ?></td></tr>
    </table>
-<?php } ?>
 
-<?php if ($editAreaSize) { ?>
   <h2><?=_("Edit Area Size")?></h2>
   <p><?=_("Height")?>
+    <?php if ($editAreaSize) { ?>
      <input type="text" name="pref[editHeight]" size="4" maxlength="4" class="numeric"
             value="<?=$request->getPref('editHeight')?>" />
-     <?=_("Width")?>
+    <?php } else { ?>
+      <?=$request->getPref('editHeight')?>
+    <?php } ?>
+    <?=_("Width")?>
+    <?php if ($editAreaSize) { ?>
      <input type="text" name="pref[editWidth]" size="4" maxlength="4" class="numeric"
             value="<?=$request->getPref('editWidth')?>" />
+    <?php } else { ?>
+      <?=$request->getPref('editWidth')?>
+    <?php } ?>
   </p>
   <p class="hint"><?=_("Note that many browsers will automatically adjust the width of the editing area so that it fills the browser window.  In this case, the width preference will be ignored.")?></p>
-<?php } ?>
 
-<?php if ($timeOffset) { ?>
   <h2><?=_("Time Zone")?></h2>
   <p>
     <?=fmt("Add %s hours to the server's local time when reporting times.",
@@ -119,18 +165,16 @@ else $errmsg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr());
     <?=fmt("With the current offset, this would be reported as %s.",
            HTML::strong($Theme->formatDateTime($time)))?>
   </p>
-<?php } ?>
 
-<?php if ($relativeDates) { ?>
   <h2><?=_("Date Format")?></h2>
   <p><?=$RelativeDatesCB?>
      <?=_("Show relative dates using 'Today' and 'Yesterday'.")?>
   </p>
-<?php } ?>
-<?php if ($request->isActionPage($request->getArg('pagename'))) { ?>
+
+<?php if ($isForm) { ?>
   <hr />
   <p><?=Button("submit:", _("Update Preferences"), 'wikiadmin')?><?=Button("submit:cancel", _("Cancel"), 'button')?></p>
 <input type="hidden" name="action" value="<?=$request->getArg('pagename')?>">
 <?= HiddenGets(array('pref')) ?>
-<?php } ?>
 </form>
+<?php } ?>

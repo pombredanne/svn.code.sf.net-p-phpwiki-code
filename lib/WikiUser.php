@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.17 2002-08-23 18:29:29 rurban Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.18 2002-08-23 21:54:30 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -34,7 +34,7 @@ class WikiUser {
     var $_userid = false;
     var $_level  = false;
     var $_request, $_dbi, $_authdbi, $_homepage;
-    var $_authmethod = '';
+    var $_authmethod = '', $_authhow = '';
 
     /**
      * Constructor.
@@ -58,7 +58,12 @@ class WikiUser {
             $this->_userid = false;
             $this->_level = false;
             $this->_homepage = false;
+            $this->_authhow .= ' paranoia logout';
         }
+    }
+
+    function auth_how() {
+        return $this->_authhow;
     }
 
     /** Invariant
