@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.5 2001-12-06 20:44:13 dairiki Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.6 2001-12-11 18:42:12 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -200,15 +200,13 @@ class WikiUser
         ExitWiki();
     }
 
-    function _copy($object) {
-        if (!is_object($object))
-            return false;
-        if (strtolower(get_class($object)) != 'wikiuser')
+    function _copy($saved) {
+        if (!is_array($saved) || !isset($saved['state']) || !isset($saved['realm']))
             return false;
 
-        $this->userid = $object->userid;
-        $this->state = $object->state;
-        $this->realm = $object->realm;
+        $this->userid = $saved['userid'];
+        $this->state = $saved['state'];
+        $this->realm = $saved['realm'];
         return true;
     }
        
@@ -231,9 +229,13 @@ class WikiUser
     function _save() {
         $req = &$this->_request;
 
-        $req->setSessionVar('auth_state', $this);
+        $saved = array('userid' => $this->userid,
+                       'state' => $this->state,
+                       'realm' => $this->realm);
+        
+        $req->setSessionVar('auth_state', $saved);
         // FIXME: Disable restore from cookie (see note in WikiUser().)
-        //$req->setCookieVar('WIKI_AUTH', $this);
+        //$req->setCookieVar('WIKI_AUTH', $saved);
     }
 }
 
