@@ -29,6 +29,8 @@ $locale["GoodStyle"] =
    "GuterStil";
 $locale["tips for editing."] =
    "tips fürs Editieren.";
+$locale["TextFormattingRules"] =
+   "TextFormatierungsRegeln";
 
 $locale["Thank you for editing %s."] =
    "Danke für das Editieren von %s.";
