@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.194 2004-11-30 17:46:49 rurban Exp $');
+rcs_id('$Id: main.php,v 1.195 2004-12-09 22:24:44 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -31,8 +31,6 @@ class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->_dbi = WikiDB::open($GLOBALS['DBParams']); // first mysql request costs [958ms]! [670ms] is mysql_connect()
-        //if ((DEBUG & _DEBUG_TRACE) or (time() % 50 == 0))
-        //    $this->_dbi->_backend->optimize();
         if (in_array('File', $this->_dbi->getAuthParam('USER_AUTH_ORDER'))) {
             // force our local copy, until the pear version is fixed.
             include_once(dirname(__FILE__)."/pear/File_Passwd.php");
@@ -64,6 +62,11 @@ $this->version = phpwiki_version();
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
         $this->setArg('action', $this->_deduceAction());
+
+        if ((DEBUG & _DEBUG_SQL) or (time() % 50 == 0)) {
+            if ($this->_dbi->_backend->optimize())
+                trigger_error(_("Optimizing database"), E_USER_NOTICE);
+        }
         
         // Restore auth state. This doesn't check for proper authorization!
         if (ENABLE_USER_NEW) {
@@ -1177,6 +1180,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.194  2004/11/30 17:46:49  rurban
+// added ModeratedPage POST action hook (part 2/3)
+//
 // Revision 1.193  2004/11/30 07:51:08  rurban
 // fixed SESSION_SAVE_PATH warning msg
 //
