@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.74 2003-02-15 02:18:04 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.75 2003-02-15 03:04:30 dairiki Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -790,7 +790,7 @@ function SetupWiki (&$request)
     // This really needs to be cleaned up...
     // (I'm working on it.)
     $real_user = $request->_user;
-    $request->_user = new WikiUser(_("The PhpWiki programming team"),
+    $request->_user = new WikiUser($request, _("The PhpWiki programming team"),
                                    WIKIAUTH_BOGO);
 
     StartLoadDump($request, _("Loading up virgin wiki"));
@@ -832,6 +832,14 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.74  2003/02/15 02:18:04  dairiki
+ When default language was English (at least), pgsrc was being
+ loaded twice.
+
+ LimitedFileSet: Fix typo/bug. ($include was being ignored.)
+
+ SetupWiki(): Fix bugs in loading of $GenericPages.
+
  Revision 1.73  2003/01/28 21:09:17  zorloc
  The get_cfg_var() function should only be used when one is
  interested in the value from php.ini or similar. Use ini_get()
