@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.16 2004-09-25 16:37:18 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.17 2004-11-19 13:25:31 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -25,9 +25,10 @@ require_once('lib/PageList.php');
 /**
  * Based on AllPages and WikiGroup.
  *
- * We query homepage users (prefs stored in a page), 
- * users with db prefs and externally authenticated users with a db users table,
- * if auth_user_exists is defined.
+ * We list all users, 
+ * either homepage users (prefs stored in a page), 
+ * users with db prefs and 
+ * externally authenticated users with a db users table, if auth_user_exists is defined.
  */
 class WikiPlugin_AllUsers
 extends WikiPlugin
@@ -37,12 +38,12 @@ extends WikiPlugin
     }
 
     function getDescription() {
-        return _("With external authentication all users which stored their Preferences. Without external authentication all once signed-in users (from version 1.3.4 on).");
+        return _("List all once authenticated users.");
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -115,6 +116,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/09/25 16:37:18  rurban
+// add support for all PageList options
+//
 // Revision 1.15  2004/07/08 13:50:33  rurban
 // various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
 //
