@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.8 2001-11-14 18:48:47 dairiki Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.9 2001-12-06 18:36:51 dairiki Exp $');
 
 function generate_interwikimap_and_regexp()
 {
@@ -29,13 +29,13 @@ function LinkInterWikiLink($link, $linktext='')
     $url = $interwikimap[$wiki];
 
     // Urlencode page only if it's a query arg.
-    if (strstr($url, '?'))
-        $page = rawurlencode($page);
-
+    // FIXME: this is a somewhat broken heuristic.
+    $page_enc = strstr($url, '?') ? rawurlencode($page) : $page;
+    
     if (strstr($url, '%s'))
-        $url = sprintf($url, $page);
+        $url = sprintf($url, $page_enc);
     else
-        $url .= $page;
+        $url .= $page_enc;
 
     if ($linktext) {
         $linktext = htmlspecialchars($linktext);
