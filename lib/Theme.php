@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.88 2004-04-19 18:27:45 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.89 2004-04-29 21:25:45 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -808,10 +808,11 @@ class Theme {
      *
      * @return object A Button object.
      */
-    function makeLinkButton ($page_or_rev, $label = false) {
+    function makeLinkButton ($page_or_rev, $label = false, $action = false) {
         extract($this->_get_name_and_rev($page_or_rev));
 
         $args = $version ? array('version' => $version) : false;
+        if ($action) $args['action'] = $action;
 
         return $this->makeButton($label ? $label : $this->maybeSplitWikiWord($pagename), 
                                  WikiURL($pagename, $args), 'wiki');
@@ -829,7 +830,7 @@ class Theme {
             if (isa($page_or_rev, 'WikiDB_PageRevision')) {
                 $rev = $page_or_rev;
                 $page = $rev->getPage();
-                $version = $rev->getVersion();
+                if (!$rev->isCurrent()) $version = $rev->getVersion();
             }
             else {
                 $page = $page_or_rev;
@@ -1266,6 +1267,12 @@ class RelatedExternalLinksBox extends SidebarBox {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.88  2004/04/19 18:27:45  rurban
+// Prevent from some PHP5 warnings (ref args, no :: object init)
+//   php5 runs now through, just one wrong XmlElement object init missing
+// Removed unneccesary UpgradeUser lines
+// Changed WikiLink to omit version if current (RecentChanges)
+//
 // Revision 1.87  2004/04/19 09:13:23  rurban
 // new pref: googleLink
 //
