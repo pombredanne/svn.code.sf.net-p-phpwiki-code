@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.3 2001-11-08 11:01:16 riessen Exp $');
+rcs_id('$Id: cvs.php,v 1.4 2001-11-26 09:25:36 riessen Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -30,7 +30,11 @@ define( 'CMD_CONTENT',       '%content');
 define( 'CMD_CREATED',       'created');
 define( 'CMD_VERSION',       'version');
 define( 'CMD_AUTHOR',        'author');
+define( 'CMD_LINK_ATT',      '_links_' );
 
+// file names used to store specific information
+define( 'CVS_MP_FILE',              '.most_popular' );
+define( 'CVS_MR_FILE',              '.most_recent' );
 
 class WikiDB_backend_cvs
 extends WikiDB_backend
@@ -146,32 +150,26 @@ extends WikiDB_backend
         // CVS directory of the document root in serialized form. The
         // file always has the name, i.e. '_$pagename'.
         $metaFile = $this->_docDir . "/CVS/_" . $pagename;
-  
-        if ( $fd = @fopen( $metaFile, "r" ) )  {
 
-            $locked = flock( $fd, 1 ); // read lock
-            if ( !$locked ) {
-                fclose( $fd );
-                $this->_cvsError( "Unable to obtain read lock.",__LINE__);
+        if ( file_exists( $metaFile ) ) {
+            
+            $megaHash = 
+                 unserialize(join( '',$this->_readFileWithPath($metaFile)));
+
+            $filename = $this->_docDir . "/" . $pagename;
+            if ( file_exists( $filename ) ) {
+                $megaHash[CMD_CONTENT] = $this->_readFileWithPath( $filename );
+            } else {
+                $megaHash[CMD_CONTENT] = "";
             }
 
-            $pagehash = unserialize( join( '', file($metaFile) ));
-            // need to strip off the new lines at the end of each line
-            // hmmmm, content expects an array of lines where each line 
-            // has it's newline stripped off. Unfortunately because i don't
-            // want to store the files in serialize or wiki specific format,
-            // i need to add newlines when storing but need to strip them
-            // off again when i retrieve the file because file() doesn't remove
-            // newlines!
-//          $pagehash['content'] = file($filename);
-//          array_walk( $pagehash['content'], '_strip_newlines' );
-//          reset( $pagehash['content'] );
+            $this->_updateMostRecent( $pagename );
+            $this->_updateMostPopular( $pagename );
 
-            fclose( $fd );
-            return $pagehash;
+            return $megaHash;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
     /**
@@ -359,14 +357,22 @@ extends WikiDB_backend
 
     function set_links($pagename, $links) 
     {
-        // TODO: to be implemented
-        trigger_error("set_links: Not Implemented", E_USER_WARNING);
+        // TODO: needs to be tested ....
+        $megaHash = get_pagedata( $pagename );
+        $megaHash[CMD_LINK_ATT] = $links;
+        $this->_writeMetaInfo( $pagename, $megaHash );
     }
 
     function get_links($pagename, $reversed) 
     {
-        // TODO: to be implemented
-        trigger_error("get_links: Not Implemented", E_USER_WARNING);
+        // TODO: ignores the $reversed argument and returns
+        // TODO: the value of _links_ attribute of the meta information
+        // TODO: to implement a reversed version, i guess, we going to
+        // TODO: need to do a grep on all files for the pagename in 
+        // TODO: in question and return all those page names that contained
+        // TODO: the required pagename!
+        $megaHash = get_pagedata( $pagename );
+        return $megaHash[CMD_LINK_ATT];
     }
 
     function get_all_revisions($pagename) 
@@ -399,18 +405,57 @@ extends WikiDB_backend
 
     function most_popular($limit) 
     {
+        // TODO: needs to be tested ...
+        $mp = $this->_getMostPopular();
+        arsort( $mp, SORT_NUMERIC );
+        $returnVal = array();
+
+        while ( (list($key, $val) = each($a)) && $limit > 0 ) {
+            $returnVal[] = $key;
+            $limit--;
+        }
+        return $returnVal;
     }
 
+    /**
+     * This only accepts the 'since' and 'limit' attributes, everything
+     * else is ignored.
+     */
     function most_recent($params) 
     {
+        // TODO: needs to be tested ...
+        // most recent are those pages with the highest time value ...
+        $mr = $this->_getMostRecent();
+        arsort( $mp, SORT_NUMERIC );
+        $returnVal = array();
+
+        if ( isset( $params['limit'] ) ) {
+            $limit = $params['limit'];
+            while ( (list($key, $val) = each($a)) && $limit > 0 ) {
+                $returnVal[] = $key;
+                $limit--;
+            }
+        } else if ( isset( $params['since'] ) ) {
+            while ( (list($key, $val) = each($a)) ) {
+                if ( $val > $params['since'] ) {
+                    $returnVal[] = $key;
+                }
+            }
+        }
+
+        return new Cvs_Backend_Array_Iterator( $returnVal );
     }
 
     function lock($write_lock = true) 
     {
+        // TODO: to be implemented
+        trigger_error("lock: Not Implemented", E_USER_WARNING);
     }
 
     function unlock($force = false) 
     {
+        // TODO: to be implemented
+        trigger_error("unlock: Not Implemented", E_USER_WARNING);
     }
 
     function close () 
@@ -472,6 +517,8 @@ extends WikiDB_backend
     //
     function _create_meta_file( $page_name, $key, &$backend )
     {
+        // this is used as part of an array walk and therefore takes
+        // the backend argument
         $backend->_cvsDebug( "Creating meta file for [$page_name]" );
         $backend->update_pagedata( $page_name, array() );
     }
@@ -479,6 +526,54 @@ extends WikiDB_backend
     function _strip_leading_underscore( &$item ) 
     {
         $item = ereg_replace( "^_", "", $item );
+    }
+
+    /**
+     * update the most popular information by incrementing the count
+     * for the following page. If the page was not defined, it is entered
+     * with a value of 1.
+     */
+    function _updateMostPopular( $pagename )
+    {
+        $mp = $this->_getMostPopular();
+        if ( isset( $mp[$pagename] ) ) {
+            $mp[$pagename]++;
+        } else {
+            $mp[$pagename] = 1;
+        }
+        $this->_writeFileWithPath( $this->_docDir . "/CVS/" . CVS_MP_FILE, 
+                                   serialize( $mp ) );
+    }
+
+
+    /**
+     * Returns an array containing the most popular information. This
+     * creates the most popular file if it does not exist.
+     */
+    function _getMostPopular()
+    {
+        $mostPopular = $this->_docDir . "/CVS/" . CVS_MP_FILE;
+        if ( !file_exists( $mostPopular ) ) {
+            $this->_writeFileWithPath( $mostPopular, serialize( array() ) );
+        }
+        return unserialize(join( '',$this->_readFileWithPath($mostPopular)));
+    }
+
+    function _getMostRecent()
+    {
+        $mostRecent = $this->_docDir . "/CVS/" . CVS_MR_FILE;
+        if ( !file_exists( $mostRecent ) ) {
+            $this->_writeFileWithPath( $mostRecent, serialize( array() ) );
+        }
+        return unserialize(join( '',$this->_readFileWithPath($mostRecent)));
+    }
+
+    function _updateMostRecent( $pagename )
+    {
+        $mr = $this->_getMostRecent();
+        $mr[$pagename] = time();
+        $this->_writeFileWithPath( $this->_docDir . "/CVS/" . CVS_MR_FILE, 
+                                   serialize( $mr ) );
     }
 
     function _writeMetaInfo( $pagename, $hashInfo )
@@ -680,34 +775,51 @@ extends WikiDB_backend
     }
 
     /**
+     * Read locks a file, reads it, and returns it contents
+     */
+    function _readFileWithPath( $filename ) 
+    {
+        if ( $fd = @fopen( $filename, "r" ) )  {
+            $locked = flock( $fd, 1 ); // read lock
+            if ( !$locked ) {
+                fclose( $fd );
+                $this->_cvsError( "Unable to obtain read lock.",__LINE__);
+            }
+
+            $content = file( $filename );
+            fclose( $fd );
+            return $content;
+        } else {
+            $this->_cvsError( "Unable to open file '$filename' for reading",
+                              __LINE__ );
+            return false;
+        }
+    }
+
+    /**
      * Either replace the contents of an existing file or create a 
      * new file in the particular store using the page name as the
      * file name.
-     *
-     * Returns true if all went well, else false.
+     * 
+     * Nothing is returned, might be useful to return something ;-)
      */
-//      function _WriteFile( $pagename, $storename, $contents )
-//      {
-//          global $WikiDB;
-//          $filename = $WikiDB[$storename] . "/" . $pagename;
-//          _WriteFileWithPath( $filename, $contents );
-//      }
-
     function _writeFileWithPath( $filename, $contents )
     { 
+        // TODO: $contents should probably be a reference parameter ...
         if( $fd = fopen($filename, 'a') ) { 
             $locked = flock($fd,2);  // Exclusive blocking lock 
             if (!$locked) { 
                 $this->_cvsError("Timeout while obtaining lock.",__LINE__);
             } 
 
-            //Second (actually used) filehandle 
+            // Second filehandle -- we use this to write the contents
             $fdsafe = fopen($filename, 'w'); 
             fwrite($fdsafe, $contents); 
             fclose($fdsafe); 
             fclose($fd);
         } else {
-            $this->_cvsError( "Could not open file [$filename]", __LINE__ );
+            $this->_cvsError( "Could not open file '$filename' for writing", 
+                              __LINE__ );
         }
     }
 
