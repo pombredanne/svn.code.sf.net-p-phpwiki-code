@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.2 2001-10-01 21:55:54 riessen Exp $');
+rcs_id('$Id: cvs.php,v 1.3 2001-11-08 11:01:16 riessen Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -53,9 +53,9 @@ extends WikiDB_backend
      *                              applies to local directories, for pserver
      *                              set this to false and check out the 
      *                              document base beforehand
-     *   . debug_file ==> file name where debug information should be set.
+     *   . debug_file ==> file name where debug information should be sent.
      *                    If file doesn't exist then it's created, if this
-     *                    is empty, then no debugging is done.
+     *                    is empty, then debugging is turned off.
      *   . pgsrc ==> directory name where the default wiki pages are stored.
      *               This is only required if the backend is to create a
      *               new CVS repository.
@@ -144,7 +144,7 @@ extends WikiDB_backend
     {
         // the metadata information about a page is stored in the 
         // CVS directory of the document root in serialized form. The
-        // file always has the name _$pagename.
+        // file always has the name, i.e. '_$pagename'.
         $metaFile = $this->_docDir . "/CVS/_" . $pagename;
   
         if ( $fd = @fopen( $metaFile, "r" ) )  {
@@ -178,8 +178,14 @@ extends WikiDB_backend
      * This will create a new page if page being requested does not
      * exist.
      */
-    function update_pagedata($pagename, $newdata) 
+    function update_pagedata($pagename, $newdata = array() ) 
     {
+        // check argument
+        if ( ! is_array( $newdata ) ) {
+            trigger_error("update_pagedata: Argument 'newdata' was not array", 
+                          E_USER_WARNING);
+        }
+
         // retrieve the meta data
         $metaData = $this->get_pagedata( $pagename );
 
@@ -192,7 +198,7 @@ extends WikiDB_backend
             $metaData[CMD_CREATED] = time();
             $metaData[CMD_VERSION] = "1";
 
-            if ( ! isset($newdata[$CONTENT])) {
+            if ( ! isset($newdata[CMD_CONTENT])) {
                 $metaData[CMD_CONTENT] = "";
             } else {
                 $metaData[CMD_CONTENT] = $newdata[CMD_CONTENT];
@@ -216,24 +222,25 @@ extends WikiDB_backend
             }
         }
 
-        // update the page data, if required
-        if ( isset( $metaData[CMD_CONTENT] ) ) {
+        // update the page data, if required. Use newdata because it could
+        // be empty and thus unset($metaData[CMD_CONTENT]).
+        if ( isset( $newdata[CMD_CONTENT] ) ) {
             $this->_writePage( $pagename, $newdata[CMD_CONTENT] );
         }
 
         // remove any content from the meta data before storing it
         unset( $metaData[CMD_CONTENT] );
         $metaData[CMD_LAST_MODIFIED] = time();
-        $this->_writeMetaInfo( $pagename, $metaData );
 
-        $this->_commitPage( $pagename, serialize( $metaData ) );
+        $metaData[CMD_VERSION] = $this->_commitPage( $pagename, $metaData );
+        $this->_writeMetaInfo( $pagename, $metaData );
     }
 
     function get_latest_version($pagename) 
     {
         $metaData = $this->get_pagedata( $pagename );
         if ( $metaData ) {
-            // the version number is everything about the '1.'
+            // the version number is everything after the '1.'
             return $metaData[CMD_VERSION];
         } else {
             $this->_cvsDebug( "get_latest_versioned FAILED for [$pagename]" );
@@ -248,12 +255,13 @@ extends WikiDB_backend
     }
 
     /**
-     * the version parameter is assumed to be everything about the '1.'
+     * the version parameter is assumed to be everything after the '1.'
      * in the CVS versioning system.
      */
     function get_versiondata($pagename, $version, $want_content = false) 
     {
-        $this->_cvsDebug( "get_versiondata: [$pagename] [$version] [$want_content]" );
+        $this->_cvsDebug( "get_versiondata: [$pagename] "
+                          . "[$version] [$want_content]" );
       
         $filedata = "";
         if ( $want_content ) {
@@ -284,7 +292,7 @@ extends WikiDB_backend
 
         // shift log data until we get to the 'revision X.X' line
         // FIXME: ensure that we don't enter an endless loop here
-        while ( !ereg( "^revision ([^ ]+)$", $logdata[0], $revInfo ) ) {
+        while ( !ereg( "^revision 1.([0-9]+)$", $logdata[0], $revInfo ) ) {
             array_shift( $logdata );
         }
 
@@ -292,7 +300,7 @@ extends WikiDB_backend
         $rVal = unserialize( _unescape( $logdata[2] ) );
 
         // version information is incorrect
-        $rVal[CMD_VERSION] = ereg_replace( "^1[.]", "", $revInfo[1] );
+        $rVal[CMD_VERSION] = $revInfo[1];
         $rVal[CMD_CONTENT] = $filedata;
 
         foreach ( $rVal as $key => $value ) {
@@ -304,7 +312,7 @@ extends WikiDB_backend
 
     /**
      * This returns false if page was not deleted or could not be deleted
-     * else true is returned.
+     * else return true.
      */
     function delete_page($pagename) 
     {
@@ -320,8 +328,6 @@ extends WikiDB_backend
         $this->_deleteFile( $metaFile );
         
         $this->_removePage( $pagename );
-
-        $this->_cvsDebug( "CvsRemoveOutput [$cmdRemoveOutput]" );
 
         return true;
     }
@@ -374,20 +380,20 @@ extends WikiDB_backend
     {
         // FIXME: this ignores the include_defaulted parameter.
         return new Cvs_Backend_Array_Iterator( 
-                                    $this->_getAllFileNamesInDir( $this->_docDir ));
+                              $this->_getAllFileNamesInDir( $this->_docDir ));
     }
 
     function text_search($search = '', $fullsearch = false) 
     {
         if ( $fullsearch ) {
             return new Cvs_Backend_Full_Search_Iterator(
-                                    $this->_getAllFileNamesInDir( $this->_docDir ), 
-                                    $search, 
-                                    $this->_docDir );
+                               $this->_getAllFileNamesInDir( $this->_docDir ), 
+                               $search, 
+                               $this->_docDir );
         } else {
             return new Cvs_Backend_Title_Search_Iterator(
-                                    $this->_getAllFileNamesInDir( $this->_docDir ),
-                                    $search);
+                               $this->_getAllFileNamesInDir( $this->_docDir ),
+                               $search);
         }
     }
 
@@ -419,25 +425,66 @@ extends WikiDB_backend
     {
     }
 
+    /**
+     * What we do here is take a listing of the documents directory and
+     * check that each page has metadata file. If not, then a metadata
+     * file is created for the page.
+     *
+     * This can happen if rebuild() was called and someone has added
+     * files to the CVS repository not via PhpWiki. These files are 
+     * added to the document directory but without any metadata files.
+     */
     function check() 
     {
+        // TODO:
+        // TODO: test this .... i.e. add test to unit test file.
+        // TODO:
+        $page_names = $this->_getAllFileNamesInDir($this->_docDir);
+        $meta_names = $this->_getAllFileNamesInDir($this->_docDir . "/CVS");
+
+        array_walk( $meta_names, '_strip_leading_underscore' );
+        reset( $meta_names );
+        $no_meta_files = array_diff( $page_names, $meta_names );
+
+        array_walk( $no_meta_files, '_create_meta_file', $this );
+
+        return true;
     }
 
+    /**
+     * Do an update of the CVS repository 
+     */
     function rebuild() 
     {
+        // TODO:
+        // TODO: test this .... i.e. add test to unit test file.
+        // TODO:
+        $cmdLine = sprintf( "cd %s; cvs update -d 2>&1", $this->_docDir );
+        $this->_execCommand( $cmdLine, $cmdOutput, true );
+        return true;
     }
-
+    
     // 
     // ..-.-..-.-..-.-.. .--..-......-.--. --.-....----.....
     // The rest are all internal methods, not to be used 
     // directly.
     // ..-.-..-.-..-.-.. .--..-......-.--. --.-....----.....
     //
-   
+    function _create_meta_file( $page_name, $key, &$backend )
+    {
+        $backend->_cvsDebug( "Creating meta file for [$page_name]" );
+        $backend->update_pagedata( $page_name, array() );
+    }
+
+    function _strip_leading_underscore( &$item ) 
+    {
+        $item = ereg_replace( "^_", "", $item );
+    }
+
     function _writeMetaInfo( $pagename, $hashInfo )
     {
         $this->_writeFileWithPath( $this->_docDir . "/CVS/_" . $pagename, 
-                            serialize( $hashInfo ) );
+                                   serialize( $hashInfo ) );
     }
     function _writePage( $pagename, $content )
     {
@@ -451,12 +498,37 @@ extends WikiDB_backend
         
         $this->_execCommand( $cmdLine, $cmdRemoveOutput, true );
     }
-    function _commitPage( $pagename, $commitMsg = "no_message" )
+
+    /**
+     * this returns the new version number of the file.
+     */
+    function _commitPage( $pagename, &$meta_data )
     {
         $cmdLine = sprintf( "cd %s; cvs commit -m \"%s\" %s 2>&1", 
-                            $this->_docDir, escapeshellcmd( $commitMsg ), 
+                            $this->_docDir, 
+                            escapeshellcmd( serialize( $meta_data ) ),
                             $pagename );
         $this->_execCommand( $cmdLine, $cmdOutput, true );
+
+        $cmdOutput = implode( "\n", $cmdOutput );
+        $revInfo = array();
+        ereg( "\nnew revision: 1[.]([0-9]+); previous revision: ", $cmdOutput,
+              $revInfo );
+
+        $this->_cvsDebug( "CP: revInfo 0: $revInfo[0]" );
+        $this->_cvsDebug( "CP: $cmdOutput" );
+        if ( isset( $revInfo[1] ) ) {
+            $this->_cvsDebug( "CP: got revision information" );
+            return $revInfo[1];
+        } else {
+            ereg( "\ninitial revision: 1[.]([0-9]+)", $cmdOutput, $revInfo );
+            if ( isset( $revInfo[1] ) ) {
+                $this->_cvsDebug( "CP: is initial release" );
+                return 1;
+            }
+            $this->_cvsDebug( "CP: returning old version" );
+            return $meta_data[CMD_VERSION];
+        }
     }
     function _addPage( $pagename )
     {
@@ -510,6 +582,7 @@ extends WikiDB_backend
         touch( $path );
         chmod( $path, $mode );
     }
+
     /**
      * The lord giveth, and the lord taketh.
      */
@@ -520,13 +593,12 @@ extends WikiDB_backend
             $locked = flock($fd,2);  // Exclusive blocking lock 
 
             if (!$locked) { 
-                $this->_cvsError("Unable to delete file, lock was not obtained.",
-                          __LINE__, $filename, EM_NOTICE_ERRORS );
+                $this->_cvsError("Unable to delete file, "
+                                 . "lock was not obtained.",
+                                 __LINE__, $filename, EM_NOTICE_ERRORS );
             } 
 
-            if ( ($rVal = unlink( $filename )) == 0 ) {
-                /* if successful, then do nothing */
-            } else {
+            if ( ($rVal = unlink( $filename )) != 0 ) {
                 $this->_cvsDebug( "[$filename] --> Unlink returned [$rVal]" );
             }
 
@@ -596,10 +668,11 @@ extends WikiDB_backend
         $this->_cvsDebug( "Preparing to execute [$cmdLine]" );
         exec( $cmdLine, $cmdOutput, $cmdReturnVal );
         if ( $exitOnNonZero && ($cmdReturnVal != 0) ) {
-            $this->_cvsError("Command failed [$cmdLine], Return value: $cmdReturnVal",
-                      __LINE__ );
             $this->_cvsDebug( "Command failed [$cmdLine], Output: [" . 
-                       join("\n",$cmdOutput) . "]" );
+                              join("\n",$cmdOutput) . "]" );
+            $this->_cvsError("Command failed [$cmdLine], "
+                             . "Return value: $cmdReturnVal",
+                             __LINE__ );
         }
         $this->_cvsDebug( "Done execution [" . join("\n", $cmdOutput ) . "]" );
 
