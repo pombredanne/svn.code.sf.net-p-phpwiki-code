@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChown.php,v 1.3 2004-06-08 10:05:11 rurban Exp $');
+rcs_id('$Id: WikiAdminChown.php,v 1.4 2004-06-13 15:33:20 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,13 +43,17 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
         return array(
                      's' 	=> false,
                      'user' 	=> false,
+                     /* select pages by meta-data: */
+                     'author'   => false,
+                     'owner'    => false,
+                     'creator'  => false,
                      /* Pages to exclude in listing */
                      'exclude'  => '',
                      /* Columns to include in listing */
@@ -191,6 +195,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/06/08 10:05:11  rurban
+// simplified admin action shortcuts
+//
 // Revision 1.2  2004/06/07 18:59:42  rurban
 // added Chown link to Owner in statusbar
 //

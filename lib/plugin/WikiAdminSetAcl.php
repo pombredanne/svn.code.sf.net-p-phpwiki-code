@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.16 2004-06-08 13:50:43 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.17 2004-06-13 15:33:20 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -27,7 +27,6 @@ rcs_id('$Id: WikiAdminSetAcl.php,v 1.16 2004-06-08 13:50:43 rurban Exp $');
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:
- * Doesn't accept yet s=wildcard preselection
  * Requires PHP 4.2 so far.
  */
 require_once('lib/PageList.php');
@@ -46,13 +45,17 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
         return array(
-                     's' 	=> false,
-                     'p'        => "[]",
+                     'p'        => "[]",  // list of pages
+                     's' 	=> false, /* select by pagename */
+                     /* select pages by meta-data: */
+                     'author'   => false,
+                     'owner'    => false,
+                     'creator'  => false,
                      /* Pages to exclude in listing */
                      'exclude'  => '',
                      /* Columns to include in listing */
@@ -297,6 +300,9 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/06/08 13:50:43  rurban
+// show getfacl and acl line
+//
 // Revision 1.15  2004/06/08 10:05:12  rurban
 // simplified admin action shortcuts
 //

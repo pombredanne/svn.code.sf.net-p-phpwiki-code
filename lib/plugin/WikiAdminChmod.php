@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.8 2004-06-04 20:32:54 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.9 2004-06-13 15:33:20 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,12 +48,17 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
         return array(
                      's' 	=> false,
+                     'perm' 	=> false,
+                     /* select pages by meta-data: */
+                     'author'   => false,
+                     'owner'    => false,
+                     'creator'  => false,
                      /* Pages to exclude in listing */
                      'exclude'  => '',
                      /* Columns to include in listing */
@@ -202,6 +207,11 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/06/04 20:32:54  rurban
+// Several locale related improvements suggested by Pierrick Meignen
+// LDAP fix by John Cole
+// reanable admin check without ENABLE_PAGEPERM in the admin plugins
+//
 // Revision 1.7  2004/06/03 22:24:42  rurban
 // reenable admin check on !ENABLE_PAGEPERM, honor s=Wildcard arg, fix warning after Remove
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.84 2004-06-08 13:51:56 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.85 2004-06-13 15:33:19 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -654,6 +654,62 @@ class PageList {
         }
     }
 
+    function allPagesByAuthor($wildcard, $perm=false, $sortby=false, $limit=false) {
+        $dbi = $GLOBALS['request']->getDbh();
+        $allPagehandles = $dbi->getAllPages($perm, $sortby, $limit);
+        $allPages = array();
+        while ($pagehandle = $allPagehandles->next()) {
+            $name = $pagehandle->getName();
+            $author = $pagehandle->getAuthor();
+            if ($author) {
+                if (preg_match('/[\?\*]/', $wildcard)) {
+                    if (glob_match($wildcard, $author))
+                        $allPages[] = $name;
+                } elseif ($wildcard == $author) {
+                      $allPages[] = $name;
+                }
+            }
+        }
+        return $allPages;
+    }
+
+    function allPagesByOwner($wildcard, $perm=false, $sortby=false, $limit=false) {
+        $dbi = $GLOBALS['request']->getDbh();
+        $allPagehandles = $dbi->getAllPages($perm, $sortby, $limit);
+        $allPages = array();
+        while ($pagehandle = $allPagehandles->next()) {
+            $name = $pagehandle->getName();
+            $owner = $page->getOwner();
+            if ($owner) {
+                if (preg_match('/[\?\*]/', $wildcard)) {
+                    if (glob_match($wildcard, $owner))
+                        $allPages[] = $name;
+                } elseif ($wildcard == $owner) {
+                      $allPages[] = $name;
+                }
+            }
+        }
+        return $allPages;
+    }
+
+    function allPagesByCreator($wildcard, $perm=false, $sortby=false, $limit=false) {
+        $dbi = $GLOBALS['request']->getDbh();
+        $allPagehandles = $dbi->getAllPages($perm, $sortby, $limit);
+        $allPages = array();
+        while ($pagehandle = $allPagehandles->next()) {
+            $name = $pagehandle->getName();
+            $creator = $page->getCreator();
+            if ($creator) {
+                if (preg_match('/[\?\*]/', $wildcard)) {
+                    if (glob_match($wildcard, $creator))
+                        $allPages[] = $name;
+                } elseif ($wildcard == $creator) {
+                      $allPages[] = $name;
+                }
+            }
+        }
+        return $allPages;
+    }
 
     ////////////////////
     // private
@@ -942,6 +998,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.84  2004/06/08 13:51:56  rurban
+// some comments only
+//
 // Revision 1.83  2004/05/18 13:35:39  rurban
 //  improve Pagelist layout by equal pagename width for limited lists
 //

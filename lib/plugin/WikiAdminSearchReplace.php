@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.13 2004-06-13 14:30:26 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.14 2004-06-13 15:33:20 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -25,9 +25,7 @@ rcs_id('$Id: WikiAdminSearchReplace.php,v 1.13 2004-06-13 14:30:26 rurban Exp $'
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:
- * Currently we must be Admin.
- * Future versions will support PagePermissions.
- * requires PHP 4.2 so far.
+ *   Requires PHP 4.2 so far.
  */
 require_once('lib/PageList.php');
 require_once('lib/plugin/WikiAdminSelect.php');
@@ -45,12 +43,16 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
         return array(
                      's' 	=> false,
+                     /* select pages by meta-data: */
+                     'author'   => false,
+                     'owner'    => false,
+                     'creator'  => false,
                      /* Pages to exclude */
                      'exclude'  => '.',
                      /* Columns to include in listing */
@@ -250,6 +252,9 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/06/13 14:30:26  rurban
+// security fix: check permissions in SearchReplace
+//
 // Revision 1.12  2004/06/08 10:05:12  rurban
 // simplified admin action shortcuts
 //

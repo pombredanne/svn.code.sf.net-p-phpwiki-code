@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.15 2004-06-01 15:28:01 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.16 2004-06-13 15:33:20 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -27,9 +27,8 @@ rcs_id('$Id: WikiAdminSelect.php,v 1.15 2004-06-01 15:28:01 rurban Exp $');
  * Usage:   <?plugin WikiAdminSelect?>
  * Author:  Reini Urban <rurban@x-ray.at>
  *
- * KNOWN ISSUES:
+ * "list" PagePermissions supported implicitly by PageList.
  * Just a framework, nothing more.
- * Future versions will support PagePermissions.
  */
 // maybe display more attributes with this class...
 require_once('lib/PageList.php');
@@ -47,11 +46,16 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
         return array('s'       => '', // preselect pages
+                     /* select pages by meta-data: */
+                     'author'   => false,
+                     'owner'    => false,
+                     'creator'  => false,
+
                      'only'    => '',
                      'exclude' => '',
                      'info'    => 'most',
@@ -70,61 +74,52 @@ extends WikiPlugin
         return $list;
     }
 
+    /**
+     * Preselect a list of pagenames by:
+     * s: comma-seperated list of pagename wildcards
+     * author, owner, creator
+     */
     function preSelectS (&$args, &$request) {
+        // override plugin argument by GET: probably not needed if s||="" is used
+        // anyway, we force it for unique interface.
         if (!empty($request->getArg['s']))
             $args['s'] = $request->getArg['s'];
-        if ( !empty($args['s']) ) {
-            $s = $args['s'];
-            $sl = explodePageList($args['s']);
-            $this->_list = array();
-            if ($sl) {
-                $request->setArg('verify', 1);
-                foreach ($sl as $name) {
+        if ( !empty($args['owner']) )
+            $sl = PageList::allPagesByOwner($args['owner'],false,$args['sortby'],$args['limit']);
+        elseif ( !empty($args['author']) )
+            $sl = PageList::allPagesByAuthor($args['author'],false,$args['sortby'],$args['limit']);
+        elseif ( !empty($args['creator']) )
+            $sl = PageList::allPagesByCreator($args['creator'],false,$args['sortby'],$args['limit']);
+        elseif ( !empty($args['s']) or !empty($args['only']) ) {
+            // all pages by name
+            $sl = explodePageList(empty($args['only']) ? $args['s'] : $args['only']);
+        }
+        $this->_list = array();
+        if ($sl) {
+            $request->setArg('verify', 1);
+            if (!empty($args['exclude']))
+                $exclude = explodePageList($args['exclude']);
+            foreach ($sl as $name) {
+                if (!empty($args['exclude'])) {
+                    if (!in_array($name, $exclude))
+                        $this->_list[$name] = 1;
+                } else {
                     $this->_list[$name] = 1;
                 }
             }
-        } else {
-            $s = '*';
-            if (!empty($args['s']))
-                $s = $args['s'];
-            $this->_list = array();
         }
+        return $this->_list;
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
         //if ($request->getArg('action') != 'browse')
         //    return $this->disabled("(action != 'browse')");
         $args = $this->getArgs($argstr, $request);
-        if (!empty($args['only']))
-            $only = explodePageList($args['only']);
-        else
-            $only = false;
-        if (!empty($args['exclude']))
-            $exclude = explodePageList($args['exclude']);
-        else
-            $exclude = false;
+        $this->_args = $args;
+        $this->preSelectS(&$args, &$request);
+
         $info = $args['info'];
         $this->debug = $args['debug'];
-        //TODO: use the method preSelectS()
-        if (!empty($request->getArg['s']))
-            $args['s'] = $request->getArg['s'];
-        if (  //( $request->getArg('WikiAdminSelect') == _("Go")) and 
-              !empty($args['s'])) {
-            $s = $args['s'];
-            $sl = explodePageList($args['s']);
-            $this->_list = array();
-            if ($sl) {
-                $request->setArg('verify',1);
-                foreach ($sl as $name) {
-                    $this->_list[$name] = 1;
-                }
-            }
-        } else {
-            $s = '*';
-            if (!empty($args['s']))
-                $s = $args['s'];
-            $this->_list = array();
-        }
 
         // array_multisort($this->_list, SORT_NUMERIC, SORT_DESC);
         $pagename = $request->getArg('pagename');
@@ -247,6 +242,11 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/06/01 15:28:01  rurban
+// AdminUser only ADMIN_USER not member of Administrators
+// some RateIt improvements by dfrankow
+// edit_toolbar buttons
+//
 // Revision 1.14  2004/02/24 15:20:07  rurban
 // fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
 //
