@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageTrail.php,v 1.3 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: PageTrail.php,v 1.4 2004-02-27 02:49:40 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -22,7 +22,9 @@ rcs_id('$Id: PageTrail.php,v 1.3 2004-02-17 12:11:36 rurban Exp $');
 
 /**
  * A simple PageTrail WikiPlugin.
- * Put this at the end of each page to store the trail.
+ * Put this at the end of each page to store the trail,
+ * or better in a template (body or bottom) to support it for all pages.
+ * But Cache should be turned off then.
  *
  * Usage:
  * <?plugin PageTrail?>
@@ -50,13 +52,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     // default values
     function getDefaultArguments() {
         return array('numberlinks' => $this->def_numberlinks,
                      'invisible' => false,
+                     'duplicates' => false,
                      );
     }
 
@@ -71,8 +74,11 @@ extends WikiPlugin
         $thispage = $request->getArg('pagename');
         $thiscookie = $request->cookies->get("Wiki_PageTrail");
         $Pages = explode(':', $thiscookie);
-        array_unshift($Pages, $thispage);
-        $request->cookies->set("Wiki_PageTrail", implode(':', $Pages));
+
+        if ($duplicates || ($thispage != $Pages[0])) {
+            array_unshift($Pages, $thispage);
+            $request->cookies->set("Wiki_PageTrail",implode(':',$Pages));
+        }
 
         if (! $invisible) {
             $numberlinks = min(count($Pages)-1, $numberlinks);
@@ -89,6 +95,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.2  2003/01/18 22:22:36  carstenklapp
 // defined constant for arrow, eliminate use of fmt()
 //
