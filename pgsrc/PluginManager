@@ -1,9 +1,9 @@
 Date: Mon, 25 May 2004 20:05:50 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: PluginManager,v 1.5 2004-05-27 18:01:46 rurban Exp $
+X-Rcs-Id: $Id: PluginManager,v 1.6 2004-06-04 22:50:05 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=PluginManager;
-  pgsrc_version="2 $Revision: 1.5 $";
+  pgsrc_version="2 $Revision: 1.6 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -24,7 +24,8 @@ files for the plugins.
 Some plugins require external libraries not provided with PhpWiki or PHP, such as 
 * [PHP with GD support | php-function:ref.image] for the text2png plugin, 
 * [LaTeX2HTML | ftp://ftp.dante.de/tex-archive/support/latex2html ] for the TexToPngPlugin
-* [graphviz | http://graphviz.org/] for the VisualWikiPlugin, 
+* [graphviz | http://graphviz.org/] and a correctly configured lib/plugincache-config.php for the VisualWikiPlugin, 
+* [ploticus | http://ploticus.sourceforge.net/] for the PloticusPlugin, 
 * [phpweather | http://phpweather.sf.net] for the PhpWeatherPlugin,
 * [highlight | http://www.andre-simon.de/] for the SyntaxHighlighterPlugin,
 * a browser with [<iframe> support|http://www.cs.tut.fi/~jkorpela/html/iframe.html] for the TranscludePlugin,
