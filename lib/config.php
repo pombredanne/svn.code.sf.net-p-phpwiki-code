@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.131 2005-02-05 15:32:09 rurban Exp $');
+rcs_id('$Id: config.php,v 1.132 2005-02-07 15:39:02 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -219,7 +219,7 @@ function guessing_setlocale ($category, $locale) {
                  'ja.euc-jp' => array('ja_JP','ja_JP.eucJP','japanese.euc'),
                  'zh' => array('zh_TW', 'zh_CN'),
                  );
-    if (!$locale) { 
+    if (!$locale or $locale=='C') { 
         // do the reverse: return the detected locale collapsed to our LANG
         $locale = setlocale($category, '');
         if ($locale) {
@@ -271,8 +271,10 @@ function update_locale($loc) {
     if (!$newlocale) {
         $newlocale = FileFinder::_get_lang();
         list ($newlocale,) = split('_', $newlocale, 2);
+        $loc = guessing_setlocale(LC_ALL, $newlocale); // try again
+        if (!$loc) $loc = $newlocale;
     } else {
-        $loc = guessing_setlocale(LC_ALL, $newlocale);
+        $loc = $newlocale;
     }
     // Try to put new locale into environment (so any
     // programs we run will get the right locale.)
@@ -524,6 +526,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.131  2005/02/05 15:32:09  rurban
+// force guessing_setlocale (again)
+//
 // Revision 1.130  2005/01/29 20:36:44  rurban
 // very important php5 fix! clone objects
 //
