@@ -780,18 +780,19 @@ li#ca-watch { margin-left: 1.6em; }
 }
 /* hide from incapable browsers */
 head:first-child+body #footer li { white-space: nowrap; }
+
 #f-poweredbyico, #f-copyrightico {
     margin: 0 8px;
+    /*vertical-align: middle;*/
+    height: 31px;
     position: relative;
-    top: -2px; /* Bump it up just a tad */
+    top: -31px; /* Bump it up just a tad */
 }
 #f-poweredbyico {
     float: right;
-    height: 1%;
 }
 #f-copyrightico {
     float: left;
-    height: 1%;
 }
 
 /* js pref toc */

@@ -1,7 +1,7 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.2 2005-01-25 07:20:56 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.3 2005-02-11 14:50:06 rurban Exp $ -->
 <?php
-  if (!$page->get('locked') || $user->isAdmin() and $revision)
+if ((!$page->get('locked') || $user->isAdmin()) and isset($revision))
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
   else
@@ -12,8 +12,8 @@ $dbh = $request->getDbh();
 <div id="p-cactions" class="portlet">
     <h5>Views</h5>
     <ul>
+    <?= $EditB ?>
     <? if ( $user->isSignedIn() ) { ?>
-     <?= $EditB ?>
      <?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>
       <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
       <?php if (ENABLE_PAGEPERM) { ?>
