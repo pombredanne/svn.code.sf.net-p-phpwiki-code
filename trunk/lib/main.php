@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.170 2004-06-25 14:29:20 rurban Exp $');
+rcs_id('$Id: main.php,v 1.171 2004-06-29 09:30:42 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -333,13 +333,13 @@ $this->version = phpwiki_version();
     function getLevelDescription($level) {
     	static $levels = false;
     	if (!$levels) 
-    	    $levels = array('-1'  => _("FORBIDDEN"),
-                             '0'  => _("ANON"),
-                             '1'  => _("BOGO"),
-                             '2'  => _("USER"),
-                             '10' => _("ADMIN"),
-                             '100'=> _("UNOBTAINABLE"));
-    	return $levels[$level];
+    	    $levels = array('x-1' => _("FORBIDDEN"),
+                            'x0'  => _("ANON"),
+                            'x1'  => _("BOGO"),
+                            'x2'  => _("USER"),
+                            'x10' => _("ADMIN"),
+                            'x100'=> _("UNOBTAINABLE"));
+    	return $levels["x".$level];
     }
     
     function _notAuthorized ($require_level) {
@@ -1070,6 +1070,13 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.170  2004/06/25 14:29:20  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.169  2004/06/20 14:42:54  rurban
 // various php5 fixes (still broken at blockparser)
 //
