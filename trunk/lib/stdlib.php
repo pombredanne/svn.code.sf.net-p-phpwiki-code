@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.158 2004-02-19 21:54:17 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.159 2004-02-26 04:03:40 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1129,6 +1129,7 @@ function explodePageList($input, $perm = false, $orderby = 'pagename') {
     // expand wildcards from list of all pages
     if (preg_match('/[\?\*]/',$input)) {
         $dbi = $GLOBALS['request']->_dbi;
+        require_once("lib/PageList.php");
         $allPagehandles = $dbi->getAllPages($perm,$orderby);
         while ($pagehandle = $allPagehandles->next()) {
             $allPages[] = $pagehandle->getName();
@@ -1358,6 +1359,14 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.158  2004/02/19 21:54:17  rurban
+// moved initerwiki code to PageType.php
+// re-enabled and fixed InlineImages support, now also for InterWiki Urls
+//      * [File:my_image.gif] inlines the image,
+//      * File:my_image.gif shows a plain inter-wiki link,
+//      * [what a pic|File:my_image.gif] shows a named inter-wiki link to the gif
+//      * [File:my_image.gif|what a pic] shows a inlimed image linked to the page "what a pic"
+//
 // Revision 1.157  2004/02/09 03:58:12  rurban
 // for now default DB_SESSION to false
 // PagePerm:
