@@ -1,7 +1,8 @@
-1.3.11 June, 15? 2004, Reini Urban:
+1.3.11 June, 28? 2004, Reini Urban:
 
 Lots of bugfixes, a new EDIT_TOOLBAR from mediawiki, more page 
-permission enhancements and admin plugin overhaul.
+permission enhancements, reduce memory usage for pagelists which 
+need no page content, and admin plugin overhaul.
 
 fixes:
 * fixed Today link in all templates if USE_PATH_INFO = false
@@ -25,6 +26,7 @@ fixes:
 * fixed external DbPassUser login
 * fixed adodb action=upgrade
 * fixed FilePassUser locking problems
+* fixed a lot of LDAP auth and group issues
 * fixed LDAP options handling (by John Cole)
 * fixed possible security problems: allowing only posixly strict usernames, 
   and an actual LDAP Injection problem, detected by Steve Christey, MITRE.
@@ -39,9 +41,16 @@ fixes:
 * fixed PageChangeNotification for not-current users
 * fixed UpLoadPlugin for filenames with space (Bug #969532)
 * fixed label support for CreateTocPlugin (Bug #969495)
-* catch fatals during dumping (all four methods)
+* fixed Apache2 crashing with old markup and the CreateTocPlugin. 
+  Still cannot edit though.
+* catch fatals and request->args changes on dumping
+* fixed unneeded UserPreferences plugin login screen on dumphtml
 * catch SOAP fatal on GooglePlugin without GOOGLE_LICENSE_KEY
 * silently ignore jshide argument on MacIE for AddComment and CreateToc
+* PhpWiki is now allow_call_time_pass_reference = Off safe (php.ini)
+  Some external libraries are not (Pear_DB odbc, adodb oracle)
+* fixed sql statements for pagedata where it is not needed, fixing the 
+  typical PageList memory exhaustion on simple page lists.
 
 changes:
 * WikiAdminSetAcl functional
@@ -87,7 +96,8 @@ new:
 * new action=chown|setacl|rename|dump action shortcuts pointing to the plugin
 * new SyntaxHighlighter plugin (based on work by alecthomas),
   needs highlight from http://www.andre-simon.de/
-* new Ploticus plugin. full application/xhtml+xml support not yet
+* new Ploticus plugin. full application/xhtml+xml support not yet 
+  (javascript document.write() not supported with ENABLE_XHTML_XML)
 * new ListPages plugin (by Dan Frankowski)
 * new TeX2png plugin (by Pierrick Meignen)
 * added support for ?force_unlock=1 parameter for stale File_Passwd locks
@@ -96,6 +106,8 @@ new:
 * author, owner, creator support for WikiAdmin* and AllPages plugins:
 ** AllPagesCreatedByMe, AllPagesLastEditedByMe, AllPagesOwnedByMe
 * added action revert, with button from action=diff
+* added option regex to WikiAdminSearchReplace
+* added oracle PearDB backend (by Philippe Vanhaesendonck)
 
 
 1.3.10 May, 13 2004, Reini Urban, Joby Walker:
@@ -584,4 +596,4 @@ URL's.
 Prior to 0.02, there were no numbered releases, and in fact there
 was only one release, so I guess that would be 0.01 :-)
 
-$Id: HISTORY,v 1.11 2004-06-19 12:13:57 rurban Exp $
+$Id: HISTORY,v 1.12 2004-06-28 13:40:33 rurban Exp $
