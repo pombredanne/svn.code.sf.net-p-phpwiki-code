@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.14 2004-11-29 17:55:47 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.15 2004-11-30 09:49:23 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE or SQL matchers.
  *
@@ -323,35 +323,35 @@ extends TextSearchQuery_node
 class TextSearchQuery_node_starts_with
 extends TextSearchQuery_node_word {
     var $op = "STARTS_WITH";
-    function regexp() { return '(?=' . preg_quote($this->word, '/') . ')'; }
+    function regexp() { return '(?=\b' . preg_quote($this->word, '/') . ')'; }
     function sql()    { return $this->_sql_quote($this->word).'%'; }
 }
 
 class TextSearchQuery_node_ends_with
 extends TextSearchQuery_node_word {
     var $op = "ENDS_WITH";
-    function regexp() { return '(?=' . preg_quote($this->word, '/') . '.*)'; }
+    function regexp() { return '(?=' . preg_quote($this->word, '/') . '\b)'; }
     function sql()    { return '%'.$this->_sql_quote($this->word); }
 }
 
 class TextSearchQuery_node_exact
 extends TextSearchQuery_node_word {
     var $op = "EXACT";
-    function regexp() { return '(?=\B' . preg_quote($this->word, '/') . '\b)'; }
+    function regexp() { return '(?=\b' . preg_quote($this->word, '/') . '\b)'; }
     function sql()    { return $this->_sql_squote($this->word); }
 }
 
 class TextSearchQuery_node_regex // posix regex. FIXME!
 extends TextSearchQuery_node_word {
     var $op = "REGEX"; // using REGEXP or ~ extension
-    function regexp() { return '(?=\B' . $this->word . '\b)'; }
+    function regexp() { return '(?=\b' . $this->word . '\b)'; }
     function sql()    { return $this->_sql_quote($this->word); }
 }
 
 class TextSearchQuery_node_regex_glob
 extends TextSearchQuery_node_regex {
     var $op = "REGEX_GLOB";
-    function regexp() { return '(?=\B' . glob_to_pcre($this->word) . '\b)'; }
+    function regexp() { return '(?=\b' . glob_to_pcre($this->word) . '\b)'; }
 }
 
 class TextSearchQuery_node_regex_pcre // how to handle pcre modifiers? /i
