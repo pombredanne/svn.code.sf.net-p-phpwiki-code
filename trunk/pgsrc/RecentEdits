@@ -1,0 +1,13 @@
+From hostmaster@dairiki.org  Sat Feb 10 21:28:19 2001
+Subject: RecentEdits
+From: hostmaster@dairiki.org (PhpWiki)
+Date: Fri, 31 Aug 2001 22:07:14 -0700
+Mime-Version: 1.0
+Content-Type: application/x-phpwiki;
+  pagename=RecentEdits;
+  flags=PAGE_LOCKED
+Content-Transfer-Encoding: binary
+
+Here's a list of recently edited pages on this wiki.  All recent edits (not just the most recent) are listed here.  Minor changes are listed as well.  (For a list of just the most recent non-minor changes, see RecentChanges.)
+
+<?plugin RecentChanges  days=4 show_all=1 show_minor=1?>
