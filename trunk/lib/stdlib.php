@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.40 2001-06-26 18:08:32 uckelman Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.41 2001-08-12 23:57:37 wainstead Exp $');
 
 
    /*
@@ -157,11 +157,9 @@ function StartTag($tag, $args = '')
 	 $linktext = htmlspecialchars($linktext);
 
       return Element('span', array('class' => 'wikiunknown'),
-		     Element('u', $linktext) .
-		     QElement('a',
-			      array('href' => WikiURL($wikiword, array('action' => 'edit')),
-				    'class' => 'wikiunknown'),
-			      '?'));
+		     QElement('a', array('href' => WikiURL($wikiword, array('action' => 'edit')),'class' => 'wikiunknown'),'?')
+. 		     Element('u', $linktext)
+);
    }
 
 
