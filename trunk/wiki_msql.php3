@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.6 2000-06-28 02:08:50 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.7 2000-06-28 22:22:05 wainstead Exp $ -->
 <?
 
    /*
@@ -287,6 +287,7 @@
 
 
    function IncreaseHitCount($dbi, $pagename) {
+      return;
       $query = "update hitcount set hits=hits+1 where pagename='$pagename'";
       $res = mysql_query($query, $dbi['dbc']);
 
@@ -300,6 +301,7 @@
    }
 
    function GetHitCount($dbi, $pagename) {
+      return;
       $query = "select hits from hitcount where pagename='$pagename'";
       $res = mysql_query($query, $dbi['dbc']);
       if (mysql_num_rows($res)) {
@@ -314,6 +316,7 @@
 
 
    function InitMostPopular($dbi, $limit) {
+      return;
       $query = "select * from hitcount " .
                "order by hits desc, pagename limit $limit";
 
@@ -323,6 +326,7 @@
    }
 
    function MostPopularNextMatch($dbi, $res) {
+      return;
       if ($hits = mysql_fetch_array($res)) {
 	 return $hits;
       } else {

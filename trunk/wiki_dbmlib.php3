@@ -1,4 +1,4 @@
-<!-- $Id: wiki_dbmlib.php3,v 1.5 2000-06-28 02:13:22 wainstead Exp $ -->
+<!-- $Id: wiki_dbmlib.php3,v 1.6 2000-06-28 22:22:05 wainstead Exp $ -->
 <?
    /*
       Database functions:
@@ -111,25 +111,26 @@
       return 0;
    }
 
-
    ////////////////////////
    // new database features
 
 
    function IncreaseHitCount($dbi, $pagename) {
+      return;
       $query = "update hitcount set hits=hits+1 where pagename='$pagename'";
       $res = mysql_query($query, $dbi['dbc']);
 
       if (!mysql_affected_rows($dbi['dbc'])) {
          $query = "insert into hitcount (pagename, hits) " .
                   "values ('$pagename', 1)";
-	 $res = mysql_query($query, $dbi['dbc']);
+	      $res = mysql_query($query, $dbi['dbc']);
       }
 
       return $res;
    }
 
    function GetHitCount($dbi, $pagename) {
+      return;
       $query = "select hits from hitcount where pagename='$pagename'";
       $res = mysql_query($query, $dbi['dbc']);
       if (mysql_num_rows($res)) {
@@ -144,6 +145,7 @@
 
 
    function InitMostPopular($dbi, $limit) {
+      return;
       $query = "select * from hitcount " .
                "order by hits desc, pagename limit $limit";
 
@@ -153,6 +155,7 @@
    }
 
    function MostPopularNextMatch($dbi, $res) {
+      return;
       if ($hits = mysql_fetch_array($res)) {
 	 return $hits;
       } else {
