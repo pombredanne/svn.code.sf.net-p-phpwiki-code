@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.2 2003-01-17 21:11:31 zorloc Exp $')
+rcs_id('$Id: WikiGroup.php,v 1.3 2003-01-17 23:53:48 zorloc Exp $')
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -254,14 +254,15 @@ class GroupWikiPage extends WikiGroup{
     function isMember($group){
         $request = $this->request;
         $username = $this->_getUserName();
-        if ($this->membership[$group]) {
-            return true;
+        if (isset($this->membership[$group])) {
+            return $this->membership[$group];
         }
         $group_page = $request->getPage($group);
         if ($this->_inGroupPage($group_page)) {
             $this->membership[$group] = true;
             return true;
         }
+		$this->membership[$group] = false;
         return false;
     }
     
@@ -308,7 +309,9 @@ class GroupWikiPage extends WikiGroup{
             if ($this->_inGroupPage($group_page)) {
                 $group = $group_page->getName();
                 $membership[$group] = true;
-            }
+            } else {
+				$membership[$group] = false;
+			}
         }
         $this->membership = $membership;
         return $membership;
