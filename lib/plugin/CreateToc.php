@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.5 2004-03-09 08:57:10 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.6 2004-03-09 10:25:37 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,12 +40,12 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
         return array( 'pagename'  => '[pagename]', // not sure yet. TOC of another page here?
-                      // or headers=1,2,3 is also possible. (not yet)
+                      // or headers=1,2,3 is also possible.
                       'headers'   => "!!!,!!,!",   // "!!!" => h1, "!!" => h2, "!" => h3
                       'noheader'  => 0,            // omit <h1>Table of Contents</h1>
                       'align'     => 'left',
@@ -175,13 +175,13 @@ extends WikiPlugin
                 $level = $h['level'];
                 $indent = 3 - $level;
                 $link = new WikiPageName($pagename,$page,$h['anchor']);
-                $li = HTML::li(WikiLink($link,'known',$h['text']));
+                $li = WikiLink($link,'known',$h['text']);
                 if ($indent == 1)
-                  $list->pushContent(HTML::li(HTML::ul($li)));
+                    $list->pushContent(HTML::li(HTML::raw("-&nbsp;"),$li));
                 elseif ($indent == 2)
-                  $list->pushContent(HTML::li(HTML::ul(HTML::li(HTML::ul($li)))));
+                    $list->pushContent(HTML::li(HTML::raw("-&nbsp;-&nbsp;"),$li));
                 else
-                  $list->pushContent($li);
+                    $list->pushContent(HTML::li($li));
             }
         }
         $html->pushContent($list);
@@ -190,6 +190,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/03/09 08:57:10  rurban
+// convert space to "_" instead of "x20." in anchors
+// proper heading indent
+// handle duplicate headers
+// allow multiple headers like "!!!,!!" or "1,2"
+//
 // Revision 1.4  2004/03/02 18:21:29  rurban
 // typo: ref=>href
 //
