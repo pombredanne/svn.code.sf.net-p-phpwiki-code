@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.20 2002-01-31 08:51:58 carstenklapp Exp $');
+rcs_id('$Id: PearDB.php,v 1.21 2002-01-31 10:47:38 carstenklapp Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -717,7 +717,7 @@ extends WikiDB_backend
         /////////////////////////////////////////////////////////////
         // Quick and dirty hack to prevent mysql password
         // from being exposed during a Fatal PhpWiki database Error
-        return str_replace($DBParams['dsn'], '', $message);
+        global $DBParams; return str_replace($DBParams['dsn'], '', $message);
         /////////////////////////////////////////////////////////////
         return $message;
     }
