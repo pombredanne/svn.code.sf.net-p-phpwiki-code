@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.42 2002-01-28 20:02:14 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.43 2002-01-30 01:33:16 dairiki Exp $');
 
 
 include "lib/config.php";
@@ -240,6 +240,7 @@ class WikiRequest extends Request {
         // FIXME: clean up.
         switch ($action) {
         case 'browse':
+        case 'viewsource':
         case 'diff':
             return WIKIAUTH_ANON;
 
@@ -249,7 +250,6 @@ class WikiRequest extends Request {
             return WIKIAUTH_ANON;
             
         case 'edit':
-        case 'save':            // FIXME delete
             if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
                 return WIKIAUTH_BOGO;
             return WIKIAUTH_ANON;
@@ -416,14 +416,15 @@ class WikiRequest extends Request {
     function action_edit () {
         $this->compress_output();
         include "lib/editpage.php";
-        editPage($this);
+        $e = new PageEditor ($this);
+        $e->editPage();
     }
 
-    // FIXME: combine this with edit
-    function action_save () {
+    function action_viewsource () {
         $this->compress_output();
-        include "lib/savepage.php";
-        savePage($this);
+        include "lib/editpage.php";
+        $e = new PageEditor ($this);
+        $e->viewSource();
     }
 
     function action_lock () {

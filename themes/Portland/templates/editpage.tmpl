@@ -1,24 +1,6 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.11 2002-01-28 01:15:56 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.12 2002-01-30 01:33:20 dairiki Exp $ -->
 <?php
-$SummaryInput = HTML::input(array('type' => 'text',
-                                  'class' => 'wikitext',
-                                  'name' => 'summary',
-                                  'size' => 50,
-                                  'value' => $FORMVARS['summary']));
-
-$MinorEditCb = HTML::input(array('type' => 'checkbox',
-                                 'name' => 'minor_edit',
-                                 'checked' => (bool) $FORMVARS['minor_edit']));
-
-$PreviewB = HTML::input(array('type' => 'submit',
-                              'class' => 'button',
-                              'name' => 'preview',
-                              'value' => _("Preview")));
-$SaveB = HTML::input(array('type' => 'submit',
-                           'class' => 'button',
-                           'name' => 'save',
-                           'value' => _("Save")));
 
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -36,12 +18,6 @@ $AdjustB = $Theme->makeButton(_("Adjust"), "submit:");
 
 
 $GoodStyleB = $Theme->makeLinkButton(_("GoodStyle"));
-
-
-$NewMarkupCB = HTML::input(array('name' => 'markup',
-                                 'value' => 'new',
-                                 'type' => 'checkbox',
-                                 'checked' => $FORMVARS['markup'] == 'new'));
 
 $s = $Theme->getButtonSeparator();
 ?>
@@ -62,35 +38,31 @@ $s = $Theme->getButtonSeparator();
       action="<?=WikiURL($page,array('action'=>'edit'))?>"
       accept-charset="<?=CHARSET?>">
 <table summary="Toolbar: Save, Preview, and edit warnings." class="toolbar" width="100%"
-       cellpadding="0" cellspacing="0" border="0"><tr align="baseline">
+       cellpadding="0" cellspacing="0" border="0">
+<tr align="bottom">
   <td>
-    <?php if (!$revision->isCurrent()) { ?>
+    <?= $PAGE_LOCKED_MESSAGE ?>
+    <?= $CONCURRENT_UPDATE_MESSAGE ?>
+    <?php if (!$IS_CURRENT) { ?>
       <p><strong><?=_("Warning: You are editing an old revision.")?>
             <?=_("Saving this page will overwrite the current version.")?></strong></p>
     <?php } ?>
-    <?php if (isset($PREVIEW_CONTENT)) { ?>
-      <p><strong><?=_("Preview only!  Changes not saved.")?></strong></p>
+  </td>
+  <td align="right">
+    <?= $PREVIEW_B ?>
+    <?php if ($SAVE_B) { ?>
+      <?=$s?> <?= $SAVE_B ?>
     <?php } ?>
   </td>
-  <td align="right"><?= $PreviewB ?><?=$s?><?= $SaveB ?></td></tr>
-  <?php if (isset($PREVIEW_CONTENT)) { ?>
-    <tr><td colspan="2">
-      <hr />
-      <div class="wikitext"><?= $PREVIEW_CONTENT ?></div>
-    </td></tr>
-  <?php } ?>
+</tr>
 </table>
-<textarea class="wikiedit"
-          name="content"
-          rows="<?=$request->getPref('editHeight')?>"
-          cols="<?=$request->getPref('editWidth')?>"
-          wrap="virtual"><?=$FORMVARS['content']?></textarea>
+<?=$EDIT_TEXTAREA?>
 <br />
-<?=_("Summary:")?> <?= $SummaryInput ?>
+<?=_("Summary:")?> <?= $SUMMARY_INPUT ?>
 <br />
 <?= fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
 <br />
-<?= $MinorEditCb ?>
+<?= $MINOR_EDIT_CB ?>
 <?= fmt("I'm just doing minor edits. Please divert the usual logging to %s instead.",
         $Theme->linkExistingWikiWord(_("RecentEdits"))) ?>
 <br />
@@ -101,16 +73,20 @@ $s = $Theme->getButtonSeparator();
   <?=$WidthI?>
   <?=$AdjustB?>
   <br />
-  <?=$NewMarkupCB?>  <?=_("Use new markup")?>
+  <?=$NEW_MARKUP_CB?>  <?=_("Use new markup")?>
 </p>
+
+<?php if (isset($PREVIEW_CONTENT)) { ?>
+  <hr />
+  <p><strong><?=_("Preview only!  Changes not saved.")?></strong></p>
+  <div class="wikitext"><?= $PREVIEW_CONTENT ?></div>
+  <hr />
+<?php } ?>
 <!-- FIXME: do we need this at all?  If so, it could probably be moved to TextFormattingRules -->
 <p><?= fmt("See %s tips for editing.", $GoodStyleB) ?></p>
 <div class="wiki-edithelp">
 <?plugin IncludePage page=_("TextFormattingRules") section=_("Synopsis") quiet=1?>
 </div>
-<input type="hidden" name="action" value="save" />
-<input type="hidden" name="pagename" value="<?=$FORMVARS['pagename']?>" />
-<input type="hidden" name="editversion" value="<?=$FORMVARS['editversion']?>" />
-<input type="hidden" name="version" value="<?=$FORMVARS['version']?>" />
+<?=$HIDDEN_INPUTS?>
 </form>
 <hr />

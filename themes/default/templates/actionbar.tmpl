@@ -1,11 +1,11 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.7 2002-01-28 01:01:27 dairiki Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.8 2002-01-30 01:33:20 dairiki Exp $ -->
 <?php
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = $Theme->makeActionButton("edit",
                                      $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
   else
-      $EditB = $Theme->makeActionButton("edit", _("View Source"));
+      $EditB = $Theme->makeActionButton("viewsource", _("View Source"));
 
   $LockPageB = $Theme->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
   $RemovePageB = $Theme->makeActionButton('remove');

@@ -1,12 +1,16 @@
 <!-- -*-html-*- -->
-<!-- $Id: viewsource.tmpl,v 1.6 2002-01-28 01:01:27 dairiki Exp $ -->
-<p><strong><?=_("Note:")?></strong>
-<?=_("This page has been locked by the administrator and cannot be edited.")?>
-<?php if (! $revision->isCurrent()) { ?>
-  <br /><?=_("You are viewing an old revision of this page.")?>
-  <?= $Theme->makeActionButton('edit', _("View the current version"), $page->getName())?>.
+<!-- $Id: viewsource.tmpl,v 1.7 2002-01-30 01:33:20 dairiki Exp $ -->
+
+<?php if ($page->get('locked') && !$user->isAdmin()) { ?>
+  <p><strong><?=_("Note:")?></strong>
+  <?=_("This page has been locked by the administrator and cannot be edited.")?></p>
 <?php } ?>
-</p>
+
+<?php if (! $revision->isCurrent()) { ?>
+  <p><?=_("You are viewing an old revision of this page.")?>
+  <?= $Theme->makeActionButton('edit', _("View the current version"), $page->getName())?>.</p>
+<?php } ?>
+
 <!-- Dummy form else NS4 doesn't like the textarea -->
 <form method="post" action="<?=BASE_URL?>" accept-charset="<?=CHARSET?>">
 <!-- wrap=virtual is not HTML4, but without it NS4 doesn't wrap long lines -->
@@ -15,7 +19,7 @@
           rows="<?=$request->getPref('editHeight')?>"
           cols="<?=$request->getPref('editWidth')?>"
 	  readonly="readonly"
-          wrap="virtual"><?= $FORMVARS['content'] ?></textarea>
+          wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
 <?php
   $mtime = $Theme->formatDateTime($revision->get('mtime'));
   $PageHistoryB = $Theme->makeActionButton(_("PageHistory"), $mtime);
@@ -27,9 +31,7 @@
 			     $revision->getVersion(), $PageHistoryB);
 
 ?>
-<input type="hidden" name="action" value="browse" />
-<input type="hidden" name="pagename" value="<?=$FORMVARS['pagename']?>" />
-<input type="hidden" name="version" value="<?=$FORMVARS['version']?>" />
+<?= HiddenInputs($request->getArgs()) ?>
 </form>
 <hr />
 <?= $LastModifiedMsg ?><br />
