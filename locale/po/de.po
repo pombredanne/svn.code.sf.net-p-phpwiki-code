@@ -1382,9 +1382,8 @@ msgid "Display differences between revisions"
 msgstr "Zeilenweiser Vergleich der Versionen"
 
 #: ../lib/plugin/Diff.php:52
-#, fuzzy
 msgid "World"
-msgstr "HalloWelt"
+msgstr "Welt"
 
 #: ../lib/plugin/EditMetaData.php:45
 msgid "EditMetaData"
@@ -2577,9 +2576,8 @@ msgid "Error: The email address you specified is not valid."
 msgstr ""
 
 #: ../lib/plugin/UserRegistration.php:84
-#, fuzzy
 msgid "Error: You must specify a first name."
-msgstr "Sie müssen zum Sichern ein Verzeichnis angeben."
+msgstr ""
 
 #: ../lib/plugin/UserRegistration.php:87
 msgid "Error: You must specify a last name."
@@ -2604,9 +2602,8 @@ msgid "Your password is:  "
 msgstr ""
 
 #: ../lib/plugin/UserRegistration.php:116
-#, fuzzy
 msgid "Your home page is: "
-msgstr "%d Homepages"
+msgstr ""
 
 #: ../lib/plugin/UserRegistration.php:118
 msgid "Welcome to our Wiki."
@@ -3126,9 +3123,9 @@ msgid "Not enough questions answered!"
 msgstr "Nicht genügend Fragen beantwortet!"
 
 #: ../lib/plugin/WikiPoll.php:194 ../lib/plugin/WikiPoll.php:243
-#, fuzzy, c-format
+#, c-format
 msgid "Missing %s for %s"
-msgstr "ÄhnlicheSeitenListe wie %s"
+msgstr ""
 
 #: ../lib/plugin/WikiPoll.php:222
 msgid "Ok"
