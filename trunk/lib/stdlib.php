@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.103 2002-02-08 03:17:09 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.104 2002-02-08 05:03:10 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -458,18 +458,12 @@ function seconds2zoneOffset ($secs, $no_colon = false) {
 }
 
 /**
- * Returns the difference between the server's time zone and the
- * user's time zone in seconds.
+ * Returns the user's offset time in seconds.
  */
 function PrefTimezoneOffset () {
     global $request;
     $userOffset = $request->getPref('timeOffset');
-    $serverOffset = TimezoneOffset(false, true);
-
-    $server_secs = 60 * 60 * (floor($serverOffset/100) + substr($serverOffset,-2)/60);
-    $user_secs = 60 * (floor($userOffset/100)*60 + substr($userOffset,-2));
-    $offset_secs = $user_secs - $server_secs;
-
+    $offset_secs = 60 * (floor($userOffset/100)*60 + substr($userOffset,-2));
     return $offset_secs;
 }
 
