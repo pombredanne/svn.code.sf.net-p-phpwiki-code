@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.41 2002-02-14 03:39:15 carstenklapp Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.42 2002-02-18 16:59:49 lakka Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -172,7 +172,7 @@ class Theme {
     ////////////////////////////////////////////////////////////////
 
     var $_dateFormat = "%B %e, %Y";
-    var $_timeFormat = "%l:%M %p";
+    var $_timeFormat = "%I:%M %p";
     var $_showModTime = true;
 
     /**
