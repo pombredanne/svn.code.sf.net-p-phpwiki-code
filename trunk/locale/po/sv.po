@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.9\n"
-"POT-Creation-Date: 2001-12-27 00:19-0500\n"
+"POT-Creation-Date: 2001-12-28 06:12-0500\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -104,6 +104,11 @@ msgstr ""
 #: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:123
 #: ../templates/browse.html:124
 msgid "DebugInfo"
+msgstr ""
+
+#: ../lib/plugin/ViewMarkup.php:12 ../templates/browse.html:128
+#: ../templates/browse.html:129
+msgid "ViewMarkup"
 msgstr ""
 
 #: ../templates/editpage.html:16 ../templates/editpage.html:25
@@ -430,6 +435,51 @@ msgstr "Sökresultat för fulltextsökning"
 msgid "Title search results for '%s'"
 msgstr ""
 
+#: ../lib/plugin/UserPage.php:35
+#, c-format
+msgid "Your sysadmin has disallowed use of the %s plugin!"
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:41
+msgid "You should be logged in now."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:47
+#, c-format
+msgid "Before you can edit %s, you need to sign in."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:50
+msgid "The name you use to sign in must be in WikiWord format."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:55
+msgid "examples include: TomJefferson, AlexHamilton"
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:63
+msgid "Please re-enter your name in this form."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:71
+msgid ""
+"Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:73
+msgid "Sign in:"
+msgstr ""
+
+#: ../lib/plugin/ViewMarkup.php:16
+#, c-format
+msgid "View WikiMarkup for page '%s'."
+msgstr ""
+
+#: ../lib/plugin/ViewMarkup.php:42
+#, c-format
+msgid "Revealing WikiMarkup for page '%s':"
+msgstr ""
+
 #: ../lib/plugin/_BackendInfo.php:14
 #, c-format
 msgid "Get debugging information for %s."
@@ -466,9 +516,46 @@ msgstr ""
 msgid "couldn't open file '%s' for writing"
 msgstr ""
 
+#: ../lib/DbaDatabase.php:46 ../lib/ziplib.php:35 ../lib/ziplib.php:38
+#: ../lib/ziplib.php:43 ../lib/ziplib.php:45 ../lib/ziplib.php:47
+#: ../lib/ziplib.php:56 ../lib/ziplib.php:59 ../lib/ziplib.php:62
+#: ../lib/ziplib.php:67
+#, c-format
+msgid "%s failed"
+msgstr ""
+
+#: ../lib/ErrorManager.php:138
+msgid "error while handling error:"
+msgstr ""
+
+#: ../lib/FileFinder.php:82
+#, c-format
+msgid "%s: file not found"
+msgstr ""
+
+#: ../lib/WikiDB.php:353
+#, c-format
+msgid "Attempt to delete most recent revision of '%s'"
+msgstr ""
+
+#: ../lib/WikiDB.php:401
+#, c-format
+msgid "Attempt to merge most recent revision of '%s'"
+msgstr ""
+
+#: ../lib/WikiDB.php:488
+#, c-format
+msgid "%s: Date of new revision is %s"
+msgstr ""
+
+#: ../lib/WikiDB.php:513
+#, c-format
+msgid "Optimizing %s"
+msgstr ""
+
 #: ../lib/WikiDB.php:837
 #, fuzzy, c-format
-msgid "Describe [%s] here."
+msgid "Describe %s here."
 msgstr "Beskriv %s här."
 
 #: ../lib/WikiUser.php:97
@@ -481,7 +568,8 @@ msgid "to do that"
 msgstr ""
 
 #: ../lib/WikiUser.php:100
-msgid "You must be logged in as an administrator"
+#, c-format
+msgid "You must be logged in as an administrator %s"
 msgstr ""
 
 #: ../lib/WikiUser.php:180
@@ -499,6 +587,10 @@ msgstr ""
 
 #: ../lib/WikiUser.php:195
 msgid "(Any password will work, except, of course for the admin user.)"
+msgstr ""
+
+#: ../lib/config.php:271
+msgid "An unnamed PhpWiki"
 msgstr ""
 
 #: ../lib/diff.php:172
@@ -716,6 +808,16 @@ msgstr ""
 msgid "Action %s is disabled in this wiki."
 msgstr ""
 
+#: ../lib/main.php:185
+#, fuzzy
+msgid "lock or unlock pages"
+msgstr "Ta bort sida"
+
+#: ../lib/main.php:219
+#, c-format
+msgid "Bad action: '%s'"
+msgstr ""
+
 #: ../lib/prepend.php:31
 msgid "WikiFatalError"
 msgstr "WikiFatalError"
@@ -823,7 +925,11 @@ msgstr "Tack för att du redigerade %s."
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Din omstänksamhet för detaljer är mycket uppskattad."
 
-#: ../lib/stdlib.php:134
+#: ../lib/savepage.php:162
+msgid "Warning!"
+msgstr ""
+
+#: ../lib/stdlib.php:134 ../lib/stdlib.php:199
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
@@ -856,10 +962,61 @@ msgstr "version %s"
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr ""
 
+#: ../lib/stdlib.php:684
+#, c-format
+msgid "Can't mix '%s' with '%s' type format strings"
+msgstr ""
+
+#: ../lib/stdlib.php:692
+#, c-format
+msgid "%s: argument index out of range"
+msgstr ""
+
 #: ../lib/transform.php:108
 #, fuzzy
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Stackgräns överskriden i SetHTMLOutputMode"
+
+#: ../lib/ziplib.php:161 ../lib/ziplib.php:163 ../lib/ziplib.php:165
+#: ../lib/ziplib.php:563 ../lib/ziplib.php:659
+#, c-format
+msgid "Bad %s"
+msgstr ""
+
+#: ../lib/ziplib.php:183
+msgid "Can't inflate data: zlib support not enabled in this PHP"
+msgstr ""
+
+#: ../lib/ziplib.php:361
+#, c-format
+msgid "Can't open zip file '%s' for reading"
+msgstr ""
+
+#: ../lib/ziplib.php:367
+msgid "Unexpected EOF in zip file"
+msgstr ""
+
+#: ../lib/ziplib.php:391
+#, c-format
+msgid "Bad header type: %s"
+msgstr ""
+
+#: ../lib/ziplib.php:395
+msgid "Encryption and/or zip patches not supported."
+msgstr ""
+
+#: ../lib/ziplib.php:397
+msgid "Postponed CRC not yet supported."
+msgstr ""
+
+#: ../lib/ziplib.php:416
+#, c-format
+msgid "Compression method %s unsupported"
+msgstr ""
+
+#: ../lib/ziplib.php:419
+msgid "Uncompressed size mismatch"
+msgstr ""
 
 #: ../lib/ziplib.php:622
 #, c-format
@@ -867,17 +1024,12 @@ msgid "[%d] See [%s]"
 msgstr ""
 
 #: ../lib/ziplib.php:630
-msgid "!References"
+msgid "References"
 msgstr ""
 
 #: ../lib/ziplib.php:651
 #, c-format
 msgid "Can't parse %s"
-msgstr ""
-
-#: ../lib/ziplib.php:659
-#, c-format
-msgid "Bad %s"
 msgstr ""
 
 #: ../lib/ziplib.php:704
