@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.132 2004-12-08 01:18:33 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.133 2004-12-08 12:57:41 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
@@ -227,13 +227,11 @@ function MakeWikiZip (&$request)
         $pages = $dbi->getAllPages(false,false,false,$excludeList);
     }
     $request_args = $request->args;
+    $timeout = (! $request->getArg('start_debug')) ? 30 : 240;
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	if (! $request->getArg('start_debug'))
-            @set_time_limit(30); // Reset watchdog
-        else    
-            @set_time_limit(240);
+        longer_timeout($timeout); 	// Reset watchdog
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -304,13 +302,11 @@ function DumpToDir (&$request)
     }
 
     $request_args = $request->args;
+    $timeout = (! $request->getArg('start_debug')) ? 30 : 240;
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	if (! $request->getArg('start_debug'))
-            @set_time_limit(30); // Reset watchdog.
-        else    
-            @set_time_limit(240);
+        longer_timeout($timeout); 	// Reset watchdog
 
         $pagename = $page->getName();
         if (!isa($request,'MockRequest')) {
@@ -408,7 +404,6 @@ function DumpHtmlToDir (&$request)
     if (defined('HTML_DUMP_SUFFIX'))
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
     $WikiTheme->DUMP_MODE = 'HTML';
-    $request_args = $request->args;
 
     // check if the dumped file will be accessible from outside
     $doc_root = $request->get("DOCUMENT_ROOT");
@@ -425,13 +420,13 @@ function DumpHtmlToDir (&$request)
         }
         $link_prefix = "file://".$prefix.$directory."/";
     }
+
+    $request_args = $request->args;
+    $timeout = (! $request->getArg('start_debug')) ? 30 : 240;
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	if (! $request->getArg('start_debug'))
-            @set_time_limit(30); // Reset watchdog.
-        else    
-            @set_time_limit(240);
+        longer_timeout($timeout); 	// Reset watchdog
           
         $pagename = $page->getName();
         if (!isa($request,'MockRequest')) {
@@ -593,13 +588,11 @@ function MakeWikiZipHtml (&$request)
     }
 
     $request_args = $request->args;
+    $timeout = (! $request->getArg('start_debug')) ? 30 : 240;
     
     while ($page = $pages->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
-    	if (! $request->getArg('start_debug'))
-            @set_time_limit(30); // Reset watchdog.
-        else    
-            @set_time_limit(240);
+        longer_timeout($timeout); 	// Reset watchdog
 
         $current = $page->getCurrentRevision();
         if ($current->getVersion() == 0)
@@ -976,10 +969,8 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $text  = implode("", file($filename));
     }
 
-    if (! $request->getArg('start_debug'))
-        @set_time_limit(30); // Reset watchdog.
-    else    
-        @set_time_limit(240);
+    if (! $request->getArg('start_debug')) @set_time_limit(30); // Reset watchdog
+    else @set_time_limit(240);
 
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
     $basename = basename("/dummy/" . $filename);
@@ -1017,6 +1008,7 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
 
 function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
     $zip = new ZipReader($zipfile);
+    $timeout = (! $request->getArg('start_debug')) ? 20 : 120;
     while (list ($fn, $data, $attrib) = $zip->readFile()) {
         // FIXME: basename("filewithnoslashes") seems to return
         // garbage sometimes.
@@ -1028,7 +1020,7 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
             flush();
             continue;
         }
-
+        longer_timeout($timeout); 	// longer timeout per page
         LoadFile($request, $fn, $data, $attrib['mtime']);
     }
 }
@@ -1051,8 +1043,10 @@ function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
         $files = array_diff($files, array(HOME_PAGE));
         $files[] = HOME_PAGE;
     }
+    $timeout = (! $request->getArg('start_debug')) ? 20 : 120;
     foreach ($files as $file) {
-        if (substr($file,-1,1) != '~') // refuse to load backup files
+        longer_timeout($timeout); 	// longer timeout per page
+        if (substr($file,-1,1) != '~')  // refuse to load backup files
             LoadFile($request, "$dirname/$file");
     }
 }
@@ -1261,6 +1255,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.132  2004/12/08 01:18:33  rurban
+ Disallow loading config*.ini files. Detected by Santtu Jarvi.
+
  Revision 1.131  2004/11/30 17:48:38  rurban
  just comments
 
