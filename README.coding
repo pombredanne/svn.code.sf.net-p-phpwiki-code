@@ -18,3 +18,24 @@ literal, in double quotes (").
  BAD:   gettext("Hello $name");
  BAD:   define("MES", "howdy");  gettext(MES);
 
+For editing files in Emacs, set indent-tabs-mode to nil. Some people
+argue that it's better to use tabs and let people set their tab width,
+but I think we're better off using just spaces because aligned
+comments in the right region will not align correctly.
+
+Use php-mode as well. This is freely available on the net
+(http://sourceforge.net/projects/php-mode/). Put something like this
+in your .emacs file:
+
+(load "your-path-to-lisp-files/php-mode")
+(setq auto-mode-alist
+      (append '(
+                ("\\.php\\d?\\'" . php-mode)) auto-mode-alist))
+
+so when you open .php files in Emacs it will start PHP mode
+automatically.
+
+I'm sure Vim has a similar mode, if someone would let us know I'll add
+it to this README.
+
+Steve Wainstead
