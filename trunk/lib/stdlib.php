@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.159 2004-02-26 04:03:40 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.160 2004-02-28 21:14:08 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1129,7 +1129,6 @@ function explodePageList($input, $perm = false, $orderby = 'pagename') {
     // expand wildcards from list of all pages
     if (preg_match('/[\?\*]/',$input)) {
         $dbi = $GLOBALS['request']->_dbi;
-        require_once("lib/PageList.php");
         $allPagehandles = $dbi->getAllPages($perm,$orderby);
         while ($pagehandle = $allPagehandles->next()) {
             $allPages[] = $pagehandle->getName();

@@ -1,7 +1,29 @@
-<?php rcs_id('$Id: Theme.php,v 1.73 2004-02-26 03:22:05 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.74 2004-02-28 21:14:08 rurban Exp $');
+/* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
+ *
+ * This file is part of PhpWiki.
+ * 
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/**
+ * Customize output by themes: templates, css, special links functions, 
+ * and more formatting.
+ */
 
 require_once('lib/HtmlElement.php');
-
 
 /**
  * Make a link to a wiki page (in this wiki).
@@ -1092,6 +1114,9 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2004/02/26 03:22:05  rurban
+// also copy css and images with XHTML Dump
+//
 // Revision 1.72  2004/02/26 02:25:53  rurban
 // fix empty and #-anchored links in XHTML Dumps
 //

@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.20 2004-02-24 19:07:06 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.21 2004-02-28 21:14:08 rurban Exp $');
 /*
- Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -329,7 +329,7 @@ class FakePageRevision {
         
 class PageFormatter_wikiblog extends PageFormatter
 {
-    // Display contents:
+    // Display templated contents:
     function format($text) {
         include_once('lib/Template.php');
         global $request;
@@ -345,6 +345,27 @@ class PageFormatter_wikiblog extends PageFormatter
             $tokens["BLOG_" . strtoupper($key)] = $blog_meta[$key];
         
         return new Template('wikiblog', $request, $tokens);
+    }
+}
+
+class PageFormatter_wikiforum extends PageFormatter
+{
+    // Display templated contents:
+    function format($text) {
+        include_once('lib/Template.php');
+        global $request;
+        $tokens['CONTENT'] = $this->_transform($text);
+        $tokens['page'] = $this->_page;
+        $tokens['rev'] = new FakePageRevision($this->_meta);
+
+        $name = new WikiPageName($this->_page->getName());
+        $tokens['FORUM_PARENT'] = $name->getParent();
+
+        $topic_meta = $this->_meta['wikiforum'];
+        foreach(array('ctime', 'creator', 'creator_id') as $key)
+            $tokens["FORUM_" . strtoupper($key)] = $topic_meta[$key];
+
+        return new Template('wikiforum', $request, $tokens);
     }
 }
 

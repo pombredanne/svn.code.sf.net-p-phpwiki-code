@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.23 2003-04-01 17:20:16 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.24 2004-02-28 21:14:08 rurban Exp $');
 /*
  * Code for writing XML.
  */
@@ -91,7 +91,6 @@ class XmlContent
         }
     }
 
-
     function asXML () {
         $xml = '';
         foreach ($this->_content as $item) {
@@ -107,6 +106,23 @@ class XmlContent
                 $xml .= $this->_quote((string) $item);
         }
         return $xml;
+    }
+
+    function asPDF () {
+        $pdf = '';
+        foreach ($this->_content as $item) {
+            if (is_object($item)) {
+                if (method_exists($item, 'aspdf'))
+                    $pdf .= $item->asPDF();
+                elseif (method_exists($item, 'asstring'))
+                    $pdf .= $this->_quote($item->asString());
+                else
+                    $pdf .= sprintf("==Object(%s)==", get_class($item));
+            }
+            else
+                $pdf .= $this->_quote((string) $item);
+        }
+        return $pdf;
     }
 
     function asString () {

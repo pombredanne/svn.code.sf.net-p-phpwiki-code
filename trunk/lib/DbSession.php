@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.5 2004-02-26 19:15:23 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.6 2004-02-28 21:14:08 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB ....
@@ -237,7 +237,7 @@ extends DB_Session
         $sessions = array();
         $dbh = &$this->_connect();
         $table = $this->_table;
-        $res = $this->query("SELECT sess_data,sess_date FROM $table");
+        $res = $this->query("SELECT sess_data,sess_date FROM $table ORDER BY sess_date DESC");
         if (DB::isError($res) || empty($res))
             return $sessions;
         while ($row = $res->fetchRow()) {

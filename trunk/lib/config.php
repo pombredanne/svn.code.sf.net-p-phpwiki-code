@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.85 2004-02-27 02:37:16 rurban Exp $');
+rcs_id('$Id: config.php,v 1.86 2004-02-28 21:14:08 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -9,6 +9,7 @@ rcs_id('$Id: config.php,v 1.85 2004-02-27 02:37:16 rurban Exp $');
 
 if (!defined("LC_ALL")) {
     // Backward compatibility (for PHP < 4.0.5)
+    // huh? I have LC_ALL = 0. Does old PHP really have this odd definition?
     define("LC_ALL", "LC_ALL");
     define("LC_CTYPE", "LC_CTYPE");
 }
@@ -67,28 +68,6 @@ function FindLocalizedButtonFile ($file, $missing_okay = false)
     return $buttonfinder->findFile($file, $missing_okay);
 }
 
-//
-// Set up (possibly fake) gettext()
-//
-if (!function_exists ('bindtextdomain')) {
-    $locale = array();
-
-    function gettext ($text) { 
-        global $locale;
-        if (!empty ($locale[$text]))
-            return $locale[$text];
-        return $text;
-    }
-
-    function _ ($text) {
-        return gettext($text);
-    }
-}
-else {
-    bindtextdomain("phpwiki", FindFile("locale", false, true));
-    textdomain("phpwiki");
-}
-
 
 /**
  * Smart? setlocale().
@@ -105,9 +84,10 @@ else {
 function guessing_setlocale ($category, $locale) {
     if ($res = setlocale($category, $locale))
         return $res;
-
+// gettext problem on windows
     $alt = array('en' => array('C', 'en_US', 'en_GB', 'en_AU', 'en_CA', 'english'),
-                 'de' => array('de_DE', 'deutsch', 'german'),
+                 'de' => array('de_DE', 'German_Austria.1252', 'de_DE@euro', 'de_AT@euro', 'deutsch', 
+                               'german', 'German', 'de_AT', 'ge'),
                  'es' => array('es_ES', 'es_MX', 'es_AR', 'spanish'),
                  'nl' => array('nl_NL', 'dutch'),
                  'fr' => array('fr_FR', 'français', 'french'),
@@ -144,7 +124,8 @@ function update_locale ($loc) {
     $newlocale = guessing_setlocale(LC_ALL, $loc);
     if (!$newlocale) {
         trigger_error(sprintf(_("Can't set locale: '%s'"), $loc), E_USER_NOTICE);
-        $loc = setlocale(LC_ALL, '');  // pull locale from environment.
+        // => LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C;LC_NUMERIC=C;LC_TIME=C
+        $loc = setlocale(LC_CTYPE, '');  // pull locale from environment.
         list ($loc,) = split('_', $loc, 2);
         $GLOBALS['LANG'] = $loc;
         return false;
@@ -197,6 +178,28 @@ function update_locale ($loc) {
 if (!defined('DEFAULT_LANGUAGE'))
      define('DEFAULT_LANGUAGE', 'en');
 
+//
+// Set up (possibly fake) gettext()
+//
+if (!function_exists ('bindtextdomain')) {
+    $locale = array();
+
+    function gettext ($text) { 
+        global $locale;
+        if (!empty ($locale[$text]))
+            return $locale[$text];
+        return $text;
+    }
+
+    function _ ($text) {
+        return gettext($text);
+    }
+}
+else {
+    //update_locale (DEFAULT_LANGUAGE); // will fail with a failing gettext
+    bindtextdomain("phpwiki", FindFile("locale", false, true));
+    textdomain("phpwiki");
+}
 
 /** string pcre_fix_posix_classes (string $regexp)
 *
