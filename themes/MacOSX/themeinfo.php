@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.34 2002-01-22 05:15:47 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.35 2002-01-22 07:14:57 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -11,7 +11,22 @@ rcs_id('$Id: themeinfo.php,v 1.34 2002-01-22 05:15:47 dairiki Exp $');
  * rendered with a thick solid black border. When viewed with a modern
  * browser, the images will display with nice edges and blended
  * shadows.
- *
+ */
+
+// Button Localization:
+//
+// English "C"  English    - all present, only some with alpha shadows
+// Dutch   "nl" Nederlands - some
+// Spanish "es" Español    - some
+// French  "fr" Français   - none
+// German  "de" Deutsch    - most
+// Swedish "sv" Svenska    - none
+// Italian "it" Italiano   - none
+//
+// More translations are needed in po files before the localized
+// button images can be completed.
+
+/**
  * Known Problems:
  *
  * Most of the images you will see a white area around the outside.
@@ -20,9 +35,6 @@ rcs_id('$Id: themeinfo.php,v 1.34 2002-01-22 05:15:47 dairiki Exp $');
  *
  * The button toolbars use tables for positioning. Yuck. (It will do
  * for now).
- *
- * Only English and German buttons are available. Full localization is
- * coming.
  *
  * The CSS is still mostly the same as phpwiki.css. I'd like to change
  * it a bit but have no specific plans yet. Just a general feeling
