@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.3 2003-02-23 18:58:42 dairiki Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.4 2003-03-04 01:49:27 dairiki Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -78,6 +78,31 @@ extends WikiDB_backend_PearDB
         $word = $this->_dbh->quoteString($word);
         return "pagename ILIKE '%$word%' OR content ILIKE '%$word%'";
     }
+
+
+    /**
+     * Serialize data
+     */
+    function _serialize($data) {
+        if (empty($data))
+            return '';
+        assert(is_array($data));
+        return base64_encode(serialize($data));
+    }
+
+    /**
+     * Unserialize data
+     */
+    function _unserialize($data) {
+        if (empty($data))
+            return array();
+        // Base64 encoded data does not contain colons.
+        //  (only alphanumerics and '+' and '/'.)
+        if (substr($data,0,2) == 'a:')
+            return unserialize($data);
+        return unserialize(base64_decode($data));
+    }
+    
 };
 
 // (c-file-style: "gnu")
