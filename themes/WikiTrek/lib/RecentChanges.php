@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RecentChanges.php,v 1.3 2002-01-28 21:49:24 carstenklapp Exp $');
+<?php rcs_id('$Id: RecentChanges.php,v 1.4 2002-01-28 23:00:18 carstenklapp Exp $');
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */
@@ -31,7 +31,7 @@ function WikiTrek_PH_revision_formatter (&$fmt, &$rev) {
                     $fmt->summaryAsHTML($rev),
                     ' . . . ',
                     $fmt->authorLink($rev),
-                    ($fmt->importance($rev)=='minor') ? HTML::em(" (" . _("minor edit") . ")") : '');
+                    ($fmt->importance($rev)=='minor') ? HTML::small(" (" . _("minor edit") . ")") : '');
 }
 
 class _WikiTrek_RecentChanges_Formatter
