@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.38 2004-02-15 21:34:22 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.39 2004-02-27 02:22:21 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -362,7 +362,7 @@ class ParsedBlock extends Block_HtmlElement {
     function _getBlock (&$input) {
         $this->_atSpace = $input->skipSpace();
 
-        if (! ($line = $input->currentLine()) )
+        if (($line = $input->currentLine()) === '')
             return false;
 
         $tight_top = !$this->_atSpace;
@@ -379,6 +379,8 @@ class ParsedBlock extends Block_HtmlElement {
             }
             //$input->_debug('[', "_match failed");
         }
+        if (!$line)
+            return false;
 
         trigger_error("Couldn't match block: '$line'", E_USER_NOTICE);
         return false;
