@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.31 2004-06-14 11:26:52 rurban Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.32 2004-09-22 10:11:51 rurban Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -42,6 +42,9 @@
 ?>
       <?=$Sep?><?= $PurgeCache ?>
     <!-- End debugging buttons -->
+<?php } ?>
+<?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
+    <?=$Sep?><?= Button("pdf") ?>
 <?php } ?>
   </div>
   </td>
