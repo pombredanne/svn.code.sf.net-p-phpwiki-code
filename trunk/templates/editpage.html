@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.36 2002-01-03 00:09:18 carstenklapp Exp $
+$Id: editpage.html,v 1.37 2002-01-03 19:12:41 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -14,11 +14,7 @@ ${CSS}
 <title>${WIKI_NAME} - <?php printf(_("Edit: %s"),"${SPLIT_PAGE}"); ?></title>
 </head>
 <body>
-<div><a class="wikilink" 
-        href="${BROWSE}$_("HomePage")"
-        ><img src="${LOGO}"
-              border="0" alt="${WIKI_NAME}: $_("HomePage")" 
-              align="right" /></a></div>
+<div>${LOGO}</div>
 <!--This hack allows the h1 to be localised. FIXME: move out of html template into php-->
 <h1><?php printf(_("Edit: %s"),"<a class=\"backlinks\" href=\"${BROWSE}"._("BackLinks")."?page=${PAGE}\">${PAGE}</a>"); ?></h1>
 <!--=this line=<?php $bl='<plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?>';printf(_("Edit: %s"),"$bl"); ?>=doesn't work=-->

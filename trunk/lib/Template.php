@@ -1,7 +1,8 @@
-<?php rcs_id('$Id: Template.php,v 1.10 2002-01-03 00:32:33 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.11 2002-01-03 19:12:38 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
+require_once("lib/Toolbar.php");
 
 //FIXME: This is a mess and needs to be refactored.
 //  (In other words: this is all in a state of flux, so don't count on any
@@ -214,6 +215,9 @@ extends TemplateFile
 	*/
 	
         $pagename = $page->getName();
+        $this->replace('NAVIGATION', toolbar_action_Navigation($pagename));
+        $this->replace('SEARCH', toolbar_action_SearchActions($pagename,CHARSET));
+
 	$this->replace('page', $page);
         $this->qreplace('CHARSET', CHARSET);
         $this->qreplace('PAGE', $pagename);
@@ -236,6 +240,8 @@ extends TemplateFile
         $current = & $page->getCurrentRevision();
         $previous = & $page->getRevisionBefore($revision->getVersion());
 
+        $this->replace('NOT_VIEWING_CURRENT',
+                       toolbar_Warning_IsCurrent($current->getVersion() == $revision->getVersion(),$page->getName()));
         $this->replace('IS_CURRENT',
 		       $current->getVersion() == $revision->getVersion());
 
@@ -246,8 +252,14 @@ extends TemplateFile
 	
         global $datetimeformat;
         
-        $this->qreplace('LASTMODIFIED',
-                        strftime($datetimeformat, $revision->get('mtime')));
+        $this->replace('LASTMODIFIED',
+                         toolbar_Info_LastModified(
+                            ($current->getVersion() == $revision->getVersion()),
+                            strftime($datetimeformat, $revision->get('mtime')),
+                            $revision->getVersion() ));
+//        $this->qreplace('LASTMODIFIED',
+//                        strftime($datetimeformat, $revision->get('mtime')));
+
         $this->qreplace('LASTAUTHOR', $revision->get('author'));
         $this->qreplace('VERSION', $revision->getVersion());
         $this->qreplace('CURRENT_VERSION', $current->getVersion());
@@ -266,6 +278,11 @@ extends TemplateFile
 	*/
 	$this->replace('user', $user);
         $this->qreplace('USERID', $user->id());
+
+        //WARNING: hackage! $pagename is not available here
+        $pagename="";
+        $this->replace('SIGNIN', toolbar_User_UserSignInOut($user->is_authenticated(), $user->id(), $pagename));
+
         $prefs = $user->getPreferences();
         $this->qreplace('EDIT_AREA_WIDTH', $prefs['edit_area.width']);
         $this->qreplace('EDIT_AREA_HEIGHT', $prefs['edit_area.height']);
@@ -282,7 +299,8 @@ extends TemplateFile
         if (isset($user))
             $this->setWikiUserTokens($user);
         if (isset($logo))
-            $this->qreplace('LOGO', DataURL($logo));
+            $this->replace('LOGO', toolbar_action_Logo(WIKI_NAME, $logo));
+//            $this->qreplace('LOGO', DataURL($logo));
         if (isset($RCS_IDS))
             $this->qreplace('RCS_IDS', $RCS_IDS);
 
