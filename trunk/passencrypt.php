@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<!-- $Id: passencrypt.php,v 1.3 2002-09-08 18:34:35 rurban Exp $ -->
+<!-- $Id: passencrypt.php,v 1.4 2003-09-20 00:33:04 carstenklapp Exp $ -->
 <title>Password Encryption Tool</title>
 <!--
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -41,18 +41,18 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 function better_srand($seed = '') {
     static $wascalled = FALSE;
     if (!$wascalled) {
-	if ($seed === '') {
-	    list($usec,$sec)=explode(" ",microtime());
-	    if ($usec > 0.1) 
-		$seed = (double) $usec * $sec;
-	    else // once in a while use the combined LCG entropy
-		$seed = (double) 1000000 * substr(uniqid("",true),13);
-	}
-	if (function_exists('mt_srand')) {
-	    mt_srand($seed); // mersenne twister
-	} else {
-	    srand($seed);    
-	}
+        if ($seed === '') {
+            list($usec, $sec) = explode(" ", microtime());
+            if ($usec > 0.1) 
+                $seed = (double) $usec * $sec;
+            else // once in a while use the combined LCG entropy
+                $seed = (double) 1000000 * substr(uniqid("", true), 13);
+        }
+        if (function_exists('mt_srand')) {
+            mt_srand($seed); // mersenne twister
+        } else {
+            srand($seed);    
+        }
         $wascalled = TRUE;
     }
 }
@@ -61,12 +61,12 @@ function rand_ascii($length = 1) {
     better_srand();
     $s = "";
     for ($i = 1; $i <= $length; $i++) {
-	// return only typeable 7 bit ascii, avoid quotes
-	if (function_exists('mt_rand'))
-	    // the usually bad glibc srand()
-	    $s .= chr(mt_rand(40, 126)); 
-	else
-	    $s .= chr(rand(40, 126));
+        // return only typeable 7 bit ascii, avoid quotes
+        if (function_exists('mt_rand'))
+            // the usually bad glibc srand()
+            $s .= chr(mt_rand(40, 126)); 
+        else
+            $s .= chr(rand(40, 126));
     }
     return $s;
 }
@@ -77,36 +77,40 @@ function rand_ascii($length = 1) {
 // Sequence of random ASCII numbers, letters and some special chars.
 // Note: There exist other algorithms for easy-to-remember passwords.
 function random_good_password ($minlength = 5, $maxlength = 8) {
-  $newpass = '';
-  // assume ASCII ordering (not valid on EBCDIC systems!)
-  $valid_chars = "!#%&+-.0123456789=@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
-  $start = ord($valid_chars);
-  $end   = ord(substr($valid_chars,-1));
-  better_srand();
-  if (function_exists('mt_rand')) // mersenne twister
-      $length = mt_rand($minlength, $maxlength);
-  else	// the usually bad glibc rand()
-      $length = rand($minlength, $maxlength);
-  while ($length > 0) {
-      if (function_exists('mt_rand'))
-	  $newchar = mt_rand($start, $end);
-      else
-	  $newchar = rand($start, $end);
-      if (! strrpos($valid_chars,$newchar) ) continue; // skip holes
-      $newpass .= sprintf("%c",$newchar);
-      $length--;
-  }
-  return($newpass);
+    $newpass = '';
+    // assume ASCII ordering (not valid on EBCDIC systems!)
+    $valid_chars = "!#%&+-.0123456789=@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
+    $start = ord($valid_chars);
+    $end   = ord(substr($valid_chars, -1));
+    better_srand();
+    if (function_exists('mt_rand')) // mersenne twister
+        $length = mt_rand($minlength, $maxlength);
+    else        // the usually bad glibc rand()
+        $length = rand($minlength, $maxlength);
+    while ($length > 0) {
+        if (function_exists('mt_rand'))
+            $newchar = mt_rand($start, $end);
+        else
+            $newchar = rand($start, $end);
+        if (! strrpos($valid_chars, $newchar) )
+            continue; // skip holes
+        $newpass .= sprintf("%c", $newchar);
+        $length--;
+    }
+    return $newpass;
 }
 
 $posted = $GLOBALS['HTTP_POST_VARS'];
 if (!empty($posted['create'])) {
     $new_password = random_good_password();
-    echo "<p>The created new random password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<strong>",htmlentities($new_password),"</strong></p>\n";
+    echo "<p>The newly created random password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<strong>",
+         htmlentities($new_password),"</strong></p>\n";
     $posted['password'] = $new_password;
 }
 
-if ($password = $posted['password']) {
+if (($posted['password'] != "")
+    && ($posted['password'] == $posted['password2'])) {
+    $password = $posted['password'];
     /**
      * http://www.php.net/manual/en/function.crypt.php
      */
@@ -114,15 +118,19 @@ if ($password = $posted['password']) {
     $salt_length = max(CRYPT_SALT_LENGTH,
                         2 * CRYPT_STD_DES,
                         9 * CRYPT_EXT_DES,
-                    12 * CRYPT_MD5,
-                    16 * CRYPT_BLOWFISH);
+                       12 * CRYPT_MD5,
+                       16 * CRYPT_BLOWFISH);
     // Generate the encrypted password.
     $encrypted_password = crypt($password, rand_ascii($salt_length));
     $debug = $HTTP_GET_VARS['debug'];
     if ($debug)
         echo "The password was encrypted using a salt length of: $salt_length<br />\n";
-    echo "<p>The encrypted password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<strong>",htmlentities($encrypted_password),"</strong></p>\n";
+    echo "<p>The encrypted password is:<br />\n<br />&nbsp;&nbsp;&nbsp;\n<strong>",
+         htmlentities($encrypted_password),"</strong></p>\n";
     echo "<hr />\n";
+}
+else if ($posted['password'] != "") {
+    echo "The passwords did not match. Please try again.<br />\n";
 }
 if (empty($REQUEST_URI))
     $REQUEST_URI = $HTTP_ENV_VARS['REQUEST_URI'];
@@ -131,12 +139,16 @@ if (empty($REQUEST_URI))
 ?>
 
 <form action="<?php echo $REQUEST_URI ?>" method="post">
-<fieldset><legend accesskey="P">Password</legend>
-Enter a password to encrypt: <input type="password" name="password" value="" /> <input type="submit" value="Encrypt" />
+<fieldset><legend accesskey="P">Encrypt</legend>
+Enter a password twice to encrypt it:<br />
+<input type="password" name="password" value="" /><br />
+<input type="password" name="password2" value="" /> <input type="submit" value="Encrypt" />
 </fieldset>
-
-<fieldset><legend accesskey="C">Create</legend>
-Create new random password: <button name="create" value="1" />Create</button>
+<br />
+or:<br />
+<br />
+<fieldset><legend accesskey="C">Generate </legend>
+Create a new random password: <button name="create" value="1" />Create</button>
 </fieldset>
 </form>
 </body>
