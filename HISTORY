@@ -1,5 +1,5 @@
+Executing ssh-askpass to query the password...
 1.1.8 
-* All wiki_* files renamed to lib/*.php
 * MostPopular works for all implementations, except flat files
 * Flat file database support; it's not yet complete but the basic Wiki
   functionality is there, thanks to Ari
