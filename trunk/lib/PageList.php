@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.104 2004-08-18 11:01:55 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.105 2004-09-06 08:38:30 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -570,7 +570,7 @@ class PageList {
         }
         $this->_options['sortby'] = $this->sortby($this->_options['sortby'], 'init');
         if ($exclude) {
-            if (!is_array($exclude))
+            if (is_string($exclude) and !is_array($exclude))
                 $exclude = $this->explodePageList($exclude, false,
                                                   $this->_options['sortby'],
                                                   $this->_options['limit']);
@@ -1112,6 +1112,56 @@ class PageList {
         else
             return array(0, $limit);
     }
+
+    function PageingTokens($numrows = false, $ncolumns = false, $limit = false) {
+        if ($numrows === false)
+            $numrows = $this->getTotal();
+        if ($limit === false)
+            $limit = $this->_options['limit'];
+        if ($ncolumns === false)
+            $ncolumns = count($this->_columns);
+
+        list($offset,$pagesize) = $this->limit($limit);
+        if (!$pagesize or
+            (!$offset and $numrows <= $pagesize) or
+            ($offset + $pagesize < 0))
+            return false;
+
+        $request = &$GLOBALS['request'];
+        $pagename = $request->getArg('pagename');
+        $defargs = $request->args;
+        $prev = $defargs;
+
+        $tokens = array();
+        $tokens['PREV'] = false; $tokens['PREV_LINK'] = "";
+        $tokens['COLS'] = count($this->_columns);
+        $tokens['COUNT'] = $numrows; 
+        $tokens['OFFSET'] = $offset; 
+        $tokens['SIZE'] = $pagesize;
+        $tokens['NUMPAGES'] = (int)($numrows / $pagesize)+1;
+        $tokens['ACTPAGE'] = (int) (($offset+1) / $pagesize)+1;
+        if ($offset > 0) {
+            $prev['limit'] = min(0,$offset - $pagesize) . ",$pagesize";
+            $prev['count'] = $numrows;
+            $tokens['LIMIT'] = $prev['limit'];
+            $tokens['PREV'] = true;
+            $tokens['PREV_LINK'] = WikiURL($pagename, $prev);
+            $prev['limit'] = "0,$pagesize";
+            $tokens['FIRST_LINK'] = WikiURL($pagename, $prev);
+        }
+        $next = $defargs;
+        $tokens['NEXT'] = false; $tokens['NEXT_LINK'] = "";
+        if ($offset + $pagesize < $numrows) {
+            $next['limit'] = min($offset + $pagesize, $numrows - $pagesize) . ",$pagesize";
+            $next['count'] = $numrows;
+            $tokens['LIMIT'] = $next['limit'];
+            $tokens['NEXT'] = true;
+            $tokens['NEXT_LINK'] = WikiURL($pagename, $next);
+            $next['limit'] = $numrows - $pagesize . ",$pagesize";
+            $tokens['LAST_LINK'] = WikiURL($pagename, $next);
+        }
+        return $tokens;
+    }
     
     // make a table given the caption
     function _generateTable($caption) {
@@ -1156,8 +1206,9 @@ class PageList {
                                            implode(", ", $table_summary)));
 
         if ( $do_paging ) {
-            // if there are more pages than the limit, show a table-header, -footer
+            /*
             list($offset,$pagesize) = $this->limit($this->_options['limit']);
+            // if there are more pages than the limit, show a table-header, -footer
             $numrows = $this->getTotal();
             if (!$pagesize or
                 (!$offset and $numrows <= $pagesize) or
@@ -1167,10 +1218,19 @@ class PageList {
                                     HTML::tbody(false, $rows));
                 return $table;
             }
+            */
+            $tokens = $this->PageingTokens($this->getTotal(), 
+                                           count($this->_columns), 
+                                           $this->_options['limit']);
+            if ($tokens === false) {
+                $table->pushContent(HTML::thead($row),
+                                    HTML::tbody(false, $rows));
+                return $table;
+            }
+
+            /*
             global $request;
             include_once('lib/Template.php');
-
-            $tokens = array();
             $pagename = $request->getArg('pagename');
             $defargs = $request->args;
             unset($defargs['pagename']); unset($defargs['action']);
@@ -1195,7 +1255,7 @@ class PageList {
             $next = $defargs;
             $tokens['NEXT'] = false; $tokens['NEXT_LINK'] = "";
             if ($offset + $pagesize < $numrows) {
-                $next['limit'] = min($offset + $pagesize,$numrows - $pagesize) . ",$pagesize";
+                $next['limit'] = min($offset + $pagesize, $numrows - $pagesize) . ",$pagesize";
             	$next['count'] = $numrows;
             	$tokens['LIMIT'] = $next['limit'];
                 $tokens['NEXT'] = true;
@@ -1203,6 +1263,8 @@ class PageList {
                 $next['limit'] = $numrows - $pagesize . ",$pagesize";
                 $tokens['LAST_LINK'] = WikiURL($pagename,$next);
             }
+            */
+
             $paging = new Template("pagelink", $request, $tokens);
             $table->pushContent(HTML::thead($paging),
                                 HTML::tbody(false, HTML($row, $rows)),
@@ -1298,6 +1360,11 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2004/08/18 11:01:55  rurban
+// fixed checkbox list Select button:
+//   no GET request on click,
+//   only select the list checkbox entries, no other options.
+//
 // Revision 1.103  2004/07/09 10:06:49  rurban
 // Use backend specific sortby and sortable_columns method, to be able to
 // select between native (Db backend) and custom (PageList) sorting.
