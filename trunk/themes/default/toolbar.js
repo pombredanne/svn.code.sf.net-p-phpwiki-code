@@ -1,5 +1,5 @@
 // Toolbar JavaScript support functions from mediawiki 
-// $Id: toolbar.js,v 1.3 2004-06-01 15:23:10 rurban Exp $ 
+// $Id: toolbar.js,v 1.4 2004-06-02 20:46:41 rurban Exp $ 
 
 // Un-trap us from framesets
 if( window.top != window ) window.top.location = window.location;
@@ -15,7 +15,7 @@ function addButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
   document.write("<a href=\"javascript:insertTags");
   document.write("('"+tagOpen+"','"+tagClose+"','"+sampleText+"');\">");
   //width=\"23\" height=\"22\"
-  document.write("<img src=\""+imageFile+"\" width=\"18\" height=\"18\" border=\"0\" alt=\""+speedTip+"\" title=\""+speedTip+"\" style=\"border: 1px solid ButtonFace;\">");
+  document.write("<img src=\""+imageFile+"\" width=\"18\" height=\"18\" border=\"0\" alt=\""+speedTip+"\" title=\""+speedTip+"\">");
   document.write("</a>");
   return;
 }

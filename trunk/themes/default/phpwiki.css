@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.37 2004-06-01 15:23:10 rurban Exp $
+ * $Id: phpwiki.css,v 1.38 2004-06-02 20:46:41 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -223,6 +223,10 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   padding: 0;
   margin:  0;
 }
+.edit-toolbar img, .edit-toolbar input {
+  border: 1px solid ButtonFace;
+}
+
 #navbuttons {
   padding-right: 4em; /* wrap around logo */
   padding-bottom: 1ex; /* space for h1 */
