@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.31 2005-02-28 20:02:26 rurban Exp $
+<?php // $Id: configurator.php,v 1.32 2005-03-06 11:05:45 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -28,7 +28,7 @@
  *
  * DONE:
  * o Initial expand ?show=_part1 (the part id)
- * o read config-default.ini
+ * o read config-default.ini and use this as default_values
  * o commented / optional: non-default values should not be commented!
  *                         default values if optional can be omitted.
  * o validate input (fix javascript, add POST checks)
@@ -149,7 +149,7 @@ echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.31 2005-02-28 20:02:26 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.32 2005-03-06 11:05:45 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -159,6 +159,7 @@ body { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 80%; }
 pre { font-size: 120%; }
 td { border: thin solid black }
 tr { border: none }
+div.hint { border: thin solid red, background-color: #eeeeee; }
 tr.hidden { border: none; display: none; }
 td.part { background-color: #eeeeee; color: inherit; }
 td.instructions { background-color: #ffffee; width: <?php echo $tdwidth ?>px; color: inherit; }
@@ -250,6 +251,11 @@ function do_init() {
 <body onload="do_init();">
 
       <h1>Configuration for PhpWiki <?php echo $config_file ?></h1>
+
+<div class="hint">
+    Using this configurator.php is experimental!<br>
+    On any configuration problems, please edit the resulting config.ini manually.
+</div>
 
 <?php
 //define('DEBUG', 1);
@@ -1582,8 +1588,9 @@ directory where the top-level PhpWiki script (normally index.php)
 resides.");
 
 $properties["Use PATH_INFO"] =
-new boolean_define_commented_optional('USE_PATH_INFO', 
-                    array('true'  => 'use PATH_INFO',
+new _define_selection_optional_commented('USE_PATH_INFO', 
+		    array(''      => 'automatic',
+			  'true'  => 'use PATH_INFO',
 			  'false' => 'do not use PATH_INFO'), "
 PhpWiki will try to use short urls to pages, eg 
 http://www.example.com/index.php/HomePage
@@ -2081,6 +2088,20 @@ extends _define_selection { }
 
 class _variable_selection_optional
 extends _variable_selection { }
+
+class _define_selection_optional_commented
+extends _define_selection_optional { 
+    function _get_config_line($posted_value) {
+        if ($this->description)
+            $n = "\n";
+        if ($posted_value == $this->default_value)
+            return "${n};" . $this->_config_format($posted_value);
+        elseif ($posted_value == '')
+            return "${n};" . $this->_config_format("");
+        else
+            return "${n}" . $this->_config_format($posted_value);
+    }
+}
 
 class _define_password
 extends _define {
