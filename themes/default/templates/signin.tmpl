@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-rcs_id('$Id: signin.tmpl,v 1.27 2004-03-29 21:37:42 rurban Exp $');
+rcs_id('$Id: signin.tmpl,v 1.28 2004-05-01 11:59:05 rurban Exp $');
 
 if (empty($FORMNAME))
     $FORMNAME = 'signin';
@@ -48,7 +48,7 @@ if ($user->isAuthenticated()) {
 
   <script type="text/javascript"> <!--
      function SignIn(form,userid) {
-      <?php if (defined('EDITING_POLICY') and EDITING_POLICY) { ?>
+      <?php if (defined('EDITING_POLICY') and $request->_dbi->isWikiPage(EDITING_POLICY)) { ?>
       if (window.focus) {
         window.open('<?= WikiUrl(EDITING_POLICY) ?>',<!-- url -->
                     'PleaseReadThisFirst',<!-- window name -->
