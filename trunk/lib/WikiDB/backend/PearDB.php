@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.74 2004-11-27 14:39:05 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.75 2004-11-28 20:42:33 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -159,7 +159,11 @@ extends WikiDB_backend
     function  _extract_page_data($data) {
         if (empty($data)) return array();
         elseif (empty($data['pagedata'])) return $data;
-        else return array_merge($data, $this->_unserialize($data['pagedata']));
+        else {
+            $data = array_merge($data, $this->_unserialize($data['pagedata']));
+            unset($data['pagedata']);
+            return $data;
+        }
     }
 
     function update_pagedata($pagename, $newdata) {
@@ -315,23 +319,23 @@ extends WikiDB_backend
         if (!$query_result)
             return false;
 
-        extract($query_result);
-        $data = $this->_unserialize($versiondata);
+        $data = $this->_unserialize($query_result['versiondata']);
         
-        $data['mtime'] = $mtime;
-        $data['is_minor_edit'] = !empty($minor_edit);
+        $data['mtime'] = $query_result['mtime'];
+        $data['is_minor_edit'] = !empty($query_result['minor_edit']);
         
-        if (isset($content))
-            $data['%content'] = $content;
-        elseif ($have_content)
+        if (isset($query_result['content']))
+            $data['%content'] = $query_result['content'];
+        elseif ($query_result['have_content'])
             $data['%content'] = true;
         else
             $data['%content'] = '';
 
         // FIXME: this is ugly.
-        if (isset($pagename)) {
+        if (isset($query_result['pagename'])) {
             // Query also includes page data.
             // We might as well send that back too...
+            unset($query_result['versiondata']);
             $data['%pagedata'] = $this->_extract_page_data($query_result);
         }
 
@@ -1146,6 +1150,18 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.74  2004/11/27 14:39:05  rurban
+// simpified regex search architecture:
+//   no db specific node methods anymore,
+//   new sql() method for each node
+//   parallel to regexp() (which returns pcre)
+//   regex types bitmasked (op's not yet)
+// new regex=sql
+// clarified WikiDB::quote() backend methods:
+//   ->quote() adds surrounsing quotes
+//   ->qstr() (new method) assumes strings and adds no quotes! (in contrast to ADODB)
+//   pear and adodb have now unified quote methods for all generic queries.
+//
 // Revision 1.73  2004/11/26 18:39:02  rurban
 // new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
 //

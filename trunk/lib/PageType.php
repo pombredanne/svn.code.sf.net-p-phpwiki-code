@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.35 2004-11-28 19:57:56 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.36 2004-11-28 20:42:18 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -127,8 +127,6 @@ function getInterwikiMap ($pagetext = false) {
 class PageType_interwikimap extends PageType
 {
     function PageType_interwikimap($pagetext = false) {
-        $intermap = false;
-
         if (!$pagetext) {
             $dbi = $GLOBALS['request']->getDbh();
             $page = $dbi->getPage(_("InterWikiMap"));
@@ -138,7 +136,10 @@ class PageType_interwikimap extends PageType
                 $intermap = $this->_getMapFromWikiText($pagetext);
             } else {
                 trigger_error(_("WARNING: InterWikiMap page is unlocked, so not using those links."));
+                $intermap = false;
             }
+        } else {
+            $intermap = $this->_getMapFromWikiText($pagetext);
         }
         if (!$intermap && defined('INTERWIKI_MAP_FILE'))
             $intermap = $this->_getMapFromFile(INTERWIKI_MAP_FILE);
