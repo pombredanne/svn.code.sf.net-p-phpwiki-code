@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.11 2003-01-15 05:45:47 carstenklapp Exp $ -->
+<!-- $Id: configurator.php,v 1.12 2003-03-04 20:01:03 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -30,12 +30,11 @@ body { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 80%; }
 pre { font-size: 120%; }
 td { border: thin solid black }
 tr { border: none }
-td.part { background-color: #eeaaaa; }
-td.full_instructions { background-color: #eeeeee; }
-td.instructions { background-color: #ffffee; width: <?php echo $tdwidth ?>; }
-td.unchangeable_variable_top   { border-bottom: none; background-color: #eeeeee; }
-td.unchangeable_variable_left  { top-bottom: none; background-color: #eeeeee; }
-/* td.unchangeable_variable_right { top-bottom: none; background-color: #ffffff; } */
+tr.hidden { border: none; display: none; }
+td.part { background-color: #eeaaaa; color: inherit; }
+td.instructions { background-color: #ffffee; width: <?php echo $tdwidth ?>px; color: inherit; }
+td.unchangeable-variable-top   { border-bottom: none; background-color: #eeeeee; color:inherit; }
+td.unchangeable-variable-left  { border-top: none; background-color: #eeeeee; color:inherit; }
 -->
 </style>
 <script language="JavaScript" type="text/javascript">
@@ -67,23 +66,54 @@ function validate_range(error, low, high, empty_ok, output, field) {
 }
 
 function toggle_group(id) {
-  group = document.getElementById(id);
-  text = document.getElementById(id + "_text");
-  input = document.getElementById(id + "_input");
-  if (group.style.display == "none") {
-    text.innerHTML = "Hide options.";
-    group.style.display = "block";
-    input.value = 1;
-  } else {
+  var text = document.getElementById(id + "_text");
+  var do_hide = false;
+  if (text.innerHTML == "Hide options.") {
+    do_hide = true;
     text.innerHTML = "Show options.";
-    group.style.display = "none";
-    input.value = 0;
+  } else {
+    text.innerHTML = "Hide options.";
+  }
+
+  var rows = document.getElementsByTagName('tr');
+  var i = 0;
+  for (i = 0; i < rows.length; i++) {
+    var tr = rows[i];
+    if (tr.className == 'header' && tr.id == id) {
+      i++;
+      break;
+    }
+  }
+  for (; i < rows.length; i++) {
+    var tr = rows[i];
+    if (tr.className == 'header')
+      break;
+    tr.className = do_hide ? 'hidden': 'nonhidden';
   }
 }
+
+function do_init() {
+  // Hide all groups.  We do this via JavaScript to avoid
+  // hiding the groups if JavaScript is not supported...
+  var rows = document.getElementsByTagName('tr');
+  for (var i = 0; i < rows.length; i++) {
+    var tr = rows[i];
+    if (tr.className == 'header')
+      toggle_group(tr.id);
+  }
+
+  // Select text in textarea upon focus
+  var area = document.getElementById('config-output');
+  if (area) {
+    listener = { handleEvent: function (e) { area.select(); } };
+    area.addEventListener('focus', listener, false);
+  }
+}
+  
 -->
 </script>
 </head>
-<body>
+<body onload="do_init();">
 
 <h1>Configuration tool for PhpWiki 1.3.x</h1>
 
@@ -144,7 +174,7 @@ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam = array(
 "Antti Kaihola", "Jeremie Kass", "Carsten Klapp", "Marco Milanesi",
 "Grant Morgan", "Jan Nieuwenhuizen", "Aredridel Niothke", 
 "Pablo Roca Rozas", "Sandino Araico Sánchez", "Joel Uckelman", 
-"Reini Urban", "Tim Voght");
+"Reini Urban", "Tim Voght", "Jochen Kalmbach");
 
 This file is part of PhpWiki.
 
@@ -238,9 +268,9 @@ Part Null: Don't touch this!");
 
 $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
-define ('PHPWIKI_VERSION', '1.3.4pre');
+define ('PHPWIKI_VERSION', '1.3.5pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.11 2003-01-15 05:45:47 carstenklapp Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.12 2003-03-04 20:01:03 dairiki Exp $');", "");
 
 
 $properties["Part One"] =
@@ -297,7 +327,7 @@ $properties["Enable Plugin RawHtml"] =
 new boolean_define_optional('ENABLE_RAW_HTML', 
                     array('false' => "Disabled. Recommended on public sites.",
                           'true'  => "Enabled"), "
-Allow < ?plugin RawHtml ...>. Don't do this on a publicly accessable wiki for now.");
+Allow &lt; ?plugin RawHtml ...&gt;. Don't do this on a publicly accessable wiki for now.");
 
 $properties["Strict Mailable Pagedumps"] =
 new boolean_define('STRICT_MAILABLE_PAGEDUMPS', 
@@ -342,7 +372,7 @@ will be off.");
 $properties["Disabled Actions"] =
 new array_variable('DisabledActions', array(), "
 Actions listed in this array will not be allowed. Actions are:
-browse, diff, dumphtml, dumpserial, edit, loadfile, lock, remove, 
+browse, create, diff, dumphtml, dumpserial, edit, loadfile, lock, remove, 
 unlock, upload, viewsource, zip, ziphtml");
 
 $properties["Access Log"] =
@@ -350,6 +380,105 @@ new _define_commented('ACCESS_LOG', "/var/logs/wiki_access.log", "
 PhpWiki can generate an access_log (in \"NCSA combined log\" format)
 for you. If you want one, define this to the name of the log file,
 such as /tmp/wiki_access_log.");
+
+$properties["Compress Output"] =
+new boolean_define_commented_optional
+( 'COMPRESS_OUTPUT', 
+  array(''  => 'Compress when PhpWiki thinks approriate.',
+        'false' => 'Never compress output.',
+        'true' => 'Always try to compress output.'),
+  "
+By default PhpWiki will try to have PHP compress it's output
+before sending it to the browser (if you have a recent enough
+version of PHP and the browser supports it.
+
+Define COMPRESS_OUTPUT to false to prevent output compression.
+
+Define COMPRESS_OUTPUT to true to force output compression,
+even if we think your version of PHP does this in a buggy
+fashion.
+
+Leave it undefined to leave the choice up to PhpWiki.");
+
+$properties["HTTP Cache Control"] =
+new _define_selection_optional
+('CACHE_CONTROL',
+ array('LOOSE' => 'LOOSE',
+       'STRICT' => 'STRICT',
+       'NONE' => 'NONE',
+       'ALLOW_STALE' => 'ALLOW_STALE'),
+ "
+HTTP CACHE_CONTROL
+
+This controls how PhpWiki sets the HTTP cache control
+headers (Expires: and Cache-Control:) 
+
+Choose one of:
+
+<dl>
+<dt>NONE</dt>
+<dd>This is roughly the old (pre 1.3.4) behavior.  PhpWiki will
+    instruct proxies and browsers never to cache PhpWiki output.</dd>
+
+<dt>STRICT</dt>
+<dd>Cached pages will be invalidated whenever the database global
+    timestamp changes.  This should behave just like NONE (modulo
+    bugs in PhpWiki and your proxies and browsers), except that
+    things will be slightly more efficient.</dd>
+
+<dt>LOOSE</dt>
+<dd>Cached pages will be invalidated whenever they are edited,
+    or, if the pages include plugins, when the plugin output could
+    concievably have changed.
+
+    <p>Behavior should be much like STRICT, except that sometimes
+       wikilinks will show up as undefined (with the question mark)
+       when in fact they refer to (recently) created pages.
+       (Hitting your browsers reload or perhaps shift-reload button
+       should fix the problem.)</p></dd>
+
+<dt>ALLOW_STALE</dt>
+<dd>Proxies and browsers will be allowed to used stale pages.
+    (The timeout for stale pages is controlled by CACHE_CONTROL_MAX_AGE.)
+
+    <p>This setting will result in quirky behavior.  When you edit a
+       page your changes may not show up until you shift-reload the
+       page, etc...</p>
+
+    <p>This setting is generally not advisable, however it may be useful
+       in certain cases (e.g. if your wiki gets lots of page views,
+       and few edits by knowledgable people who won't freak over the quirks.)</p>
+</dd>
+
+The default is currently LOOSE.");
+
+$properties["HTTP Cache Control Max Age"] =
+new numeric_define('CACHE_CONTROL_MAX_AGE', 600,
+            "
+Maximum page staleness, in seconds.");
+
+$properties["Markup Caching"] =
+new boolean_define_commented_optional
+('WIKIDB_NOCACHE_MARKUP',
+ array('false' => 'Enable markup cache',
+       'true' => 'Disable markup cache'),
+ "
+MARKUP CACHING
+
+PhpWiki normally caches a preparsed version (i.e. mostly
+converted to HTML) of the most recent version of each page.
+(Parsing the wiki-markup takes a fair amount of CPU.)
+
+Define WIKIDB_NOCACHE_MARKUP to true to disable the
+caching of marked-up page content.
+
+Note that you can also disable markup caching on a per-page
+temporary basis by addinging a query arg of '?nocache=1'
+to the URL to the page.  (Use '?nocache=purge' to completely
+discard the cached version of the page.)
+
+You can also purge the cached markup globally by using the
+\"Purge Markup Cache\" button on the PhpWikiAdministration page.");
 
 
 $properties["Path for PHP Session Support"] =
@@ -424,8 +553,10 @@ For a MySQL database, the following should work:
 <pre>
    mysql://user:password@host/databasename
 </pre>
-<dl><dd>FIXME:</dd> <dt>My version Pear::DB seems to be broken enough that there
-        is no way to connect to a mysql server over a socket right now.</dt></dl>
+To connect over a unix socket, use something like
+<pre>
+   mysql://user:password@unix(/path/to/socket)/databasename
+</pre>
 <pre>'dsn' => 'mysql://guest@:/var/lib/mysql/mysql.sock/test',
 'dsn' => 'mysql://guest@localhost/test',
 'dsn' => 'pgsql://localhost/test',</pre>");
@@ -455,7 +586,13 @@ SQL Password:");
 
 $properties["SQL Database Host"] =
 new _variable('_dsn_sqlhostorsock', "localhost", "
-SQL Database Hostname:");
+SQL Database Hostname:
+
+To connect over a local named socket, use something like
+<pre>
+  unix(/var/lib/mysql/mysql.sock)
+</pre>
+here.");
 
 
 
@@ -592,7 +729,7 @@ User Authentication
 $properties["User Authentication"] =
 new boolean_define_optional('ALLOW_USER_LOGIN',
                     array('true'  => "true. Check any defined passwords. (Default)",
-                          'false' => "false. Don't check passwords. Legacy < 1.3.4"), "
+                          'false' => "false. Don't check passwords. Legacy &lt; 1.3.4"), "
 If ALLOW_USER_LOGIN is true, any defined internal and external
 authentication method is tried. 
 If not, we don't care about passwords, but check the next two constants.");
@@ -852,7 +989,7 @@ URLs ending with the following extension should be inlined as images");
 $properties["WikiName Regexp"] =
 new _variable('WikiNameRegexp', "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])", "
 Perl regexp for WikiNames (\"bumpy words\")
-(?&lt;!..) & (?!...) used instead of '\b' because \b matches '_' as well");
+(?&lt;!..) &amp; (?!...) used instead of '\b' because \b matches '_' as well");
 
 $properties["Subpage Separator"] =
 new _define_optional('SUBPAGE_SEPARATOR', '/', "
@@ -958,6 +1095,18 @@ In that case you should set VIRTUAL_PATH to '/wiki'.
 ");
 
 
+$properties["Part Seven"] =
+new part('_partseven', $SEPARATOR."\n", "
+
+Part Seven:
+
+Miscellaneous settings
+");
+
+$properties["Pagename of Recent Changes"] =
+new _define_optional('RECENT_CHANGES', 'RecentChanges', "
+Page name of RecentChanges page.  Used for RSS Auto-discovery.");
+
 
 $end = "
 
@@ -1052,6 +1201,10 @@ class _variable {
         return $this->config_item_name;
     }
 
+    function get_config_item_id() {
+        return str_replace('|', '-', $this->config_item_name);
+    }
+
     function get_config_item_header() {
        if (strchr($this->config_item_name,'|')) {
           list($var,$param) = explode('|',$this->config_item_name);
@@ -1079,14 +1232,14 @@ class _variable {
 
     function get_instructions($title) {
         global $tdwidth;
-        $i = "<p><b><h3>" . $title . "</h3></b></p>\n    " . nl2p($this->_get_description()) . "\n";
+        $i = "<h3>" . $title . "</h3>\n    " . nl2p($this->_get_description()) . "\n";
         return "<tr>\n<td width=\"$tdwidth\" class=\"instructions\">\n" . $i . "</td>\n";
     }
 
     function get_html() {
 	return $this->get_config_item_header() . 
-	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" " . 
-	    $this->jscheck . " />" . "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
+	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . htmlspecialchars($this->default_value) . "\" " . 
+	    $this->jscheck . " />" . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
     }
 }
 
@@ -1108,10 +1261,10 @@ extends _variable {
     }
     function get_instructions($title) {
 	global $tdwidth;
-        $i = "<p><b><h3>" . $title . "</h3></b></p>\n    " . nl2p($this->_get_description()) . "\n";
+        $i = "<h3>" . $title . "</h3>\n    " . nl2p($this->_get_description()) . "\n";
         // $i = $i ."<em>Not editable.</em><br />\n<pre>" . $this->default_value."</pre>";
-        return "<tr><td width=\"100%\" class=\"unchangeable_variable_top\" colspan=\"2\">\n".$i ."</td></tr>\n".
-	"<tr style=\"border-top: none\"><td class=\"unchangeable_variable_left\" width=\"$tdwidth\" bgcolor=\"#eeeeee\">&nbsp;</td>";
+        return "<tr><td width=\"100%\" class=\"unchangeable-variable-top\" colspan=\"2\">\n".$i ."</td></tr>\n".
+	"<tr style=\"border-top: none;\"><td class=\"unchangeable-variable-left\" width=\"$tdwidth\" bgcolor=\"#eeeeee\">&nbsp;</td>";
     }
 }
 
@@ -1147,7 +1300,7 @@ extends _variable {
         while(list($option, $label) = each($this->default_value)) {
             $output .= "  <option value=\"$option\">$label</option>\n";
         }
-        $output .= "</select>\n  </td>\n";
+        $output .= "</select>\n";
         return $output;
     }
 }
@@ -1169,7 +1322,7 @@ extends _variable {
     function get_html() {
 	return $this->get_config_item_header() . 
 	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />" .
-	    "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
+	    "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
     }
 }
 
@@ -1209,9 +1362,9 @@ extends _define_optional {
 	$s = $this->get_config_item_header() . 
 	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" {$this->jscheck} />";
         if (empty($this->default_value))
-	    return $s . "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: red\">Cannot be empty.</p>";
+	    return $s . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Cannot be empty.</p>";
 	else
-	    return $s . "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
+	    return $s . "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
     }
 }
 
@@ -1346,11 +1499,11 @@ extends _variable {
 	    $s .= "<br />&nbsp;<br />Created password: <strong>$new_password</strong>";
 	}
 	if (empty($this->default_value))
-	    $s .= "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: red\">Cannot be empty.</p>";
+	    $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Cannot be empty.</p>";
 	elseif (strlen($this->default_value) < 4)
-	    $s .= "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: red\">Must be longer than 4 chars.</p>";
+	    $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Must be longer than 4 chars.</p>";
 	else
-	    $s .= "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
+	    $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
 	return $s;
     }
 }
@@ -1388,7 +1541,7 @@ extends _variable {
         $ta = $this->get_config_item_header();
 	$ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\" {$this->jscheck}>";
         $ta .= $list_values . "</textarea>";
-	$ta .= "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
+	$ta .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
         return $ta;
     }
 }
@@ -1414,7 +1567,7 @@ extends _variable {
         $ta = $this->get_config_item_header();
         $ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\" {$this->jscheck}>";
         $ta .= $list_values . "</textarea>";
-	$ta .= "<p id=\"" . $this->get_config_item_name() . "\" style=\"color: green\">Input accepted.</p>";
+	$ta .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
         return $ta;
     }
 
@@ -1448,16 +1601,23 @@ extends _define {
             $n = "\n";
         return "${n}" . $this->_config_format($posted_value);
     }
+    function _config_format($value) {
+        if (strtolower(trim($value)) == 'false')
+            $value = false;
+        return sprintf("define('%s', %s);", $this->get_config_item_name(),
+                       (bool)$value ? 'true' : 'false');
+    }
     function get_html() {
         $output = $this->get_config_item_header();
         $output .= '<select name="' . $this->get_config_item_name() . "\" {$this->jscheck}>\n";
         /* The first option is the default */
         list($option, $label) = each($this->default_value);
-        $output .= "  <option value=\"$option\" selected>$label</option>\n";
-        /* There can only be two options */
-        list($option, $label) = each($this->default_value);
-        $output .= "  <option value=\"$option\">$label</option>\n";
-        $output .= "</select>\n  </td>\n";
+        $output .= "  <option value=\"$option\" selected='selected'>$label</option>\n";
+        /* There can usually, only be two options, there can be
+         * three options in the case of a boolean_define_commented_optional */
+        while (list($option, $label) = each($this->default_value)) 
+          $output .= "  <option value=\"$option\">$label</option>\n";
+        $output .= "</select>\n";
         return $output;
     }
 }
@@ -1466,7 +1626,7 @@ class boolean_define_optional
 extends boolean_define {
     function _config_format($value) {
 	$name = $this->get_config_item_name();
-        return sprintf("if (!defined('%s')) define('%s', '%s');", $name, $name, $value);
+        return "if (!defined('$name')) " . boolean_define::_config_format($value);
     }
 }
 
@@ -1489,7 +1649,7 @@ class boolean_define_commented_optional
 extends boolean_define_commented {
     function _config_format($value) {
 	$name = $this->get_config_item_name();
-        return sprintf("if (!defined('%s')) define('%s', '%s');", $name, $name, $value);
+        return "if (!defined('$name')) " . boolean_define_commented::_config_format($value);
     }
 }
 
@@ -1503,12 +1663,10 @@ extends _variable {
     }
     function get_instructions($title) {
 	$group_name = preg_replace("/\W/","",$title);
-	$i = "<tr>\n<td class=\"part\" width=\"100%\" colspan=\"2\" bgcolor=\"#eeaaaa\">\n";
-	if ($group_name == 'PartZero') $i = "</dl>" . $i;
-        $i .= "<p><b><h2>" . $title . "</h2></b></p>\n    " . nl2p($this->_get_description()) ."\n";
-	$i .= "<input id=\"{$group_name}_input\" type=\"hidden\" name=\"$group_name\" value=\"0\" />";
-	$i .= "<p><a href=\"javascript:toggle_group('$group_name')\" id=\"{$group_name}_text\">Show options.</a></p>";
-        return  $i ."</td></tr>\n" . "<dl id=\"$group_name\" style=\"display: none\">";
+	$i = "<tr class='header' id='$group_name'>\n<td class=\"part\" width=\"100%\" colspan=\"2\" bgcolor=\"#eeaaaa\">\n";
+        $i .= "<h2>" . $title . "</h2>\n    " . nl2p($this->_get_description()) ."\n";
+	$i .= "<p><a href=\"javascript:toggle_group('$group_name')\" id=\"{$group_name}_text\">Hide options.</a></p>";
+        return  $i ."</td>\n";
     }
     function get_html() {
         return "";
@@ -1517,7 +1675,18 @@ extends _variable {
 
 // html utility functions
 function nl2p($text) {
-    return "<p>" . str_replace("\n\n", "</p>\n<p>", $text) . "</p>";
+  preg_match_all("@\s*(<pre>.*?</pre>|<dl>.*?</dl>|.*?(?=\n\n|<pre>|<dl>|$))@s",
+                 $text, $m, PREG_PATTERN_ORDER);
+
+  $text = '';
+  foreach ($m[1] as $par) {
+    if (!($par = trim($par)))
+      continue;
+    if (!preg_match('/^<(pre|dl)>/', $par))
+      $par = "<p>$par</p>";
+    $text .= $par;
+  }
+  return $text;
 }
 
 function stripHtml($text) {
@@ -1529,6 +1698,8 @@ function stripHtml($text) {
         $d = str_replace("</dt>", "", $d);
         $d = str_replace("<dd>", "", $d);
         $d = str_replace("</dd>", "", $d);
+        $d = str_replace("<p>", "", $d);
+        $d = str_replace("</p>", "", $d);
         //restore html entities into characters
         // http://www.php.net/manual/en/function.htmlentities.php
         $trans = get_html_translation_table (HTML_ENTITIES);
@@ -1618,6 +1789,16 @@ function printArray($a) {
 /////////////////////////////
 // begin auto generation code
 
+if (!function_exists('is_a'))
+{
+  function is_a($object, $class)
+  {
+    $class = strtolower($class);
+    return (get_class($object) == $class) or is_subclass_of($object, $class);
+  }
+}
+
+
 if (@$HTTP_POST_VARS['action'] == 'make_config') {
 
     $timestamp = date ('dS of F, Y H:i:s');
@@ -1675,9 +1856,12 @@ You can't use this file with your PhpWiki server yet!!";
         echo "<p>A configuration file could <b>not</b> be written. You should copy the above configuration to a file, and manually save it as <code><b>index.php</b></code>.</p>\n";
     }
 
-    echo "<hr />\n<p>Here's the configuration file based on your answers:</p>\n<pre>\n";
+    echo "<hr />\n<p>Here's the configuration file based on your answers:</p>\n";
+    echo "<form method='get' action='$PHP_SELF'>\n";
+    echo "<textarea id='config-output' readonly='readonly' style='width:100%;' rows='30' cols='100'>\n";
     echo htmlentities($config);
-    echo "</pre>\n<hr />\n";
+    echo "</textarea></form>\n";
+    echo "<hr />\n";
 
     echo "<p>To make any corrections, <a href=\"configurator.php\">edit the settings again</a>.</p>\n";
 
@@ -1686,9 +1870,9 @@ You can't use this file with your PhpWiki server yet!!";
     /* No action has been specified - we make a form. */
 
     echo '
-<form action="configurator.php" method="POST">
+<form action="configurator.php" method="post">
+<input type="hidden" name="action" value="make_config" />
 <table cellpadding="4" cellspacing="0">
-  <input type="hidden" name="action" value="make_config">
 ';
 
     while(list($property, $obj) = each($properties)) {
@@ -1701,8 +1885,8 @@ You can't use this file with your PhpWiki server yet!!";
     }
 
     echo '
-</dl></table>
-<p><input type="submit" value="Save ',$config_file,'"> <input type="reset" value="Clear"></p>
+</table>
+<p><input type="submit" value="Save ',$config_file,'" /> <input type="reset" value="Clear" /></p>
 </form>
 ';
 }
