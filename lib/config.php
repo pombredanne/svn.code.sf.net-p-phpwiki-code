@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.3 2001-11-02 05:11:16 wainstead Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.4 2001-11-07 03:23:20 wainstead Exp $'); 
    // end essential internal stuff
 
 
@@ -57,6 +57,13 @@
       $WikiDB['wikilinks'] = "$DBMdir/wikilinksdb";
       $WikiDB['hottopics'] = "$DBMdir/wikihottopicsdb";
       $WikiDB['hitcount']  = "$DBMdir/wikihitcountdb";
+
+      // this is the type of DBM file on your system. For most Linuxen
+      // 'gdbm' is fine; 'db2' is another common type. 'ndbm' appears
+      // on Solaris but won't work because it won't store pages larger
+      // than 1000 bytes.
+      define("DBM_FILE_TYPE", 'gdbm');
+
       // try this many times if the dbm is unavailable
       define("MAX_DBM_ATTEMPTS", 20);
 
