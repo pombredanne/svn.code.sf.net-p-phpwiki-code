@@ -1,9 +1,9 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: PhpWikiSystemverwalten,v 1.9 2002-01-25 20:30:05 rurban Exp $
+X-RCS_ID: "$Id: PhpWikiSystemverwalten,v 1.10 2002-01-25 21:00:30 carstenklapp Exp $"
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiSystemverwalten;
   flags=PAGE_LOCKED;
-  lastmodified=1010734457;
+  charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 __Beachte__: Du mußt den Systemverwalter-Zugang zuerst mit einem Passwort schützen, sonst werden die meisten Links auf dieser Seite nicht funktionieren.
@@ -31,7 +31,7 @@ Diese __[ kleine ZIP Datei | phpwiki:?action=zip]__ enthält nur die aktuellste V
 
 (Wenn dein PhpWiki insoweit konfiguriert ist, darf jeder die ZIP Datei herunterladen.)
 
-Wenn in deinem PHP die ''zlib'' Bibliothek unterstützt, werden alle Seiten in dem Archiv komprimiert, ansosnten nur unkomprimiert gespeichert.
+Wenn in deinem PHP die ''zlib'' Bibliothek unterstützt, werden alle Seiten in dem Archiv komprimiert, ansonsten nur unkomprimiert gespeichert.
 
 ! Wiki Seiten als Dateien in lokales Verzeichnis speichern
 
@@ -39,7 +39,7 @@ Hier kannst du alle Seiten aus deinem Wiki in eine lokales Verzeichnis deiner Wa
 
 [ Schreibe Seiten | phpwiki:?action=dumpserial&directory=(/tmp/wikidump) ]
 
-Nur die neuesten Versionen aller Seiten wird als Einzeldatei in dieses Verzeichnis geschrieben. Beachte, daß evtl. deine Benutzerrchte dazu ausreichen müssen.
+Nur die neuesten Versionen aller Seiten wird als Einzeldatei in dieses Verzeichnis geschrieben. Beachte, daß evtl. deine Benutzerrechte dazu ausreichen müssen.
 
 -----------
 
@@ -49,7 +49,7 @@ Wenn du ein PhpWiki Backup besitzt, kannst du dieses hier wieder restaurieren. B
 
 ! Datei Hochladen
 
-Hier kannst Du ein ZIP Archiv hochladen, oder einzelne Dateien von deinem Computer (client).
+Hier kannst du ein ZIP Archiv hochladen, oder einzelne Dateien von deinem Computer (client).
 
 [ Hochladen | phpwiki:?action=upload&file=50()upload ]
 
@@ -73,7 +73,7 @@ Der alte Dump-To-Directory Befehl schrieb alle Seiten als PHP ''serialized()'' Z
 
 __Textdateien__
 
-Davor wurde der Seiteninhalt als einfache Textdatei gespeichert, d.h alle zusätzlichen Daten (Meta-Daten) gingen verloren. (Datum, Autor, Version, ...). Der Seitenname entsprach dem Dateinamen.
+Davor wurde der Seiteninhalt als einfache Textdatei gespeichert, d.h. alle zusätzlichen Daten (Meta-Daten) gingen verloren. (Datum, Autor, Version, ...). Der Seitenname entsprach dem Dateinamen.
 
 Die Hochlade- und Lade-Funktionen erkennen jeden dieser drei Dateitypen automatisch. Es werden noch alle unterstützt.
 (ZIP, Verzeichnis oder Einzeldateien als MIME E-Mail, Serialisiert oder einfache Textdatei.)
