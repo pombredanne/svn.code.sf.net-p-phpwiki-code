@@ -613,3 +613,9 @@ a img {
   margin-bottom: 60px;
 }
 /* End Various Tags & Classes*/
+
+#VisualWikiPlugin img {
+  width: 480px;
+  margin-left: 0;
+  padding: 0;
+}
