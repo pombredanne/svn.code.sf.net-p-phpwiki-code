@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.39 2002-01-05 09:22:25 carstenklapp Exp $
+$Id: editpage.html,v 1.40 2002-01-05 10:17:07 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -19,6 +19,9 @@ ${CSS}
 <h1><?php printf(_("Edit: %s"),"<a class=\"backlinks\" href=\"${BROWSE}"._("BackLinks")."?page=${PAGE}\">${PAGE}</a>"); ?></h1>
 <!--=this line=<?php $bl='<plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?>';printf(_("Edit: %s"),"$bl"); ?>=doesn't work=-->
 ${EDIT_WARNINGS}
+<?php if (!empty($PREVIEW_CONTENT)) { ?>
+  <div class="wikitext">${PREVIEW_CONTENT}</div>
+<?php } ?>
 <?php /*
  * FIXME: Hack! 
  * The URL used for the form action parameter is bogus.
