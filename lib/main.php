@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.69 2002-08-23 21:54:30 rurban Exp $');
+rcs_id('$Id: main.php,v 1.70 2002-08-24 13:18:56 rurban Exp $');
 
 define ('DEBUG', 1);
 define ('USE_PREFS_IN_PAGE', true);
@@ -229,6 +229,7 @@ class WikiRequest extends Request {
                     'remove'     => _("remove pages from this wiki"),
                     'unlock'     => _("unlock pages in this wiki"),
                     'upload'     => _("upload a zip dump to this wiki"),
+                    'verify'     => _("verify the current action"),
                     'viewsource' => _("view the source of pages in this wiki"),
                     'zip'        => _("download a zip dump from this wiki"),
                     'ziphtml'    => _("download an html zip dump from this wiki")
@@ -253,6 +254,7 @@ class WikiRequest extends Request {
                     'remove'     => _("Removing pages"),
                     'unlock'     => _("Unlocking pages"),
                     'upload'     => _("Uploading zip dumps"),
+                    'verify'     => _("Verify the current action"),
                     'viewsource' => _("Viewing the source of pages"),
                     'zip'        => _("Downloading zip dumps"),
                     'ziphtml'    => _("Downloading html zip dumps")
@@ -266,7 +268,7 @@ class WikiRequest extends Request {
 
     function requiredAuthority ($action) {
         // FIXME: clean up. 
-        // Todo: Check individual page permissions.
+        // Todo: Check individual page permissions instead.
         switch ($action) {
             case 'browse':
             case 'viewsource':

@@ -80,7 +80,7 @@ if (!empty($include_path)) ini_set('include_path', $include_path);
 
 define ('PHPWIKI_VERSION', '1.3.4');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.90 2002-08-23 18:29:29 rurban Exp $');
+rcs_id('$Id: index.php,v 1.91 2002-08-24 13:18:55 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -530,6 +530,10 @@ if (!defined('SUBPAGE_SEPARATOR')) define('SUBPAGE_SEPARATOR', '/');
 // data can not be found in it, then the file specified
 // by INTERWIKI_MAP_FILE (if any) will be used.
 define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
+
+// Display a warning if the internal lib/interwiki.map is used, and 
+// not the public InterWikiMap page. This map is not readable from outside.
+//define('WARN_NONPUBLIC_INTERWIKIMAP', false);
 
 /////////////////////////////////////////////////////////////////////
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.2 2002-08-22 23:32:33 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.3 2002-08-24 13:18:56 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -20,6 +20,16 @@ rcs_id('$Id: WikiAdminRemove.php,v 1.2 2002-08-22 23:32:33 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/**
+ * Displays a url in a seperate frame inside our body.
+ * Usage:   <?plugin WikiAdminRemove?>
+ * Author:  Reini Urban <rurban@x-ray.at>
+ *
+ * KNOWN ISSUES:
+ * Currently we must be Admin.
+ * Future versions will support PagePermissions.
+ * requires PHP 4.2 so far.
+ */ 
 // maybe display more attributes with this class...
 //require_once('lib/PageList.php'); 
 
@@ -98,16 +108,21 @@ extends WikiPlugin
         $this->_list = array();
         // array_multisort($this->_list, SORT_NUMERIC, SORT_DESC);
         $pagename = $request->getArg('pagename');
-        $form = HTML::form(array('action' => $_SERVER['REQUEST_URI'], 'method' => 'POST'));
-        if ($request->isPost() and $request->getArg('verify')) {
+        // GetUrlToSelf() with all given params
+        $uri = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'];
+        $form = HTML::form(array('action' => $uri, 'method' => 'POST'));
+	$p = $request->getArgs('p'); // $GLOBALS['HTTP_POST_VARS']['p']
+        if ($request->isPost() and $request->_user->isAdmin() and 
+            $request->getArg('verify')) {
             // List all to be deleted pages again.
-            foreach ($GLOBALS['HTTP_POST_VARS']['p'] as $page => $name) {
+            foreach ($p as $page => $name) {
                 $this->_list[$name] = 1;
             }
-        } elseif ($request->isPost() and $request->getArg('remove')) {
+        } elseif ($request->isPost() and $request->_user->isAdmin() and 
+        	  $request->getArg('remove')) {
             // Real delete.
             $ul = HTML::ul();
-            foreach ($GLOBALS['HTTP_POST_VARS']['p'] as $page => $name) {
+            foreach ($p as $page => $name) {
                 $dbi = $request->getDbh();
                 $dbi->deletePage($name);
                 $ul->pushContent(HTML::li(fmt("Removed page '%s' succesfully.", $name)));

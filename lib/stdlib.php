@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.114 2002-08-22 23:28:31 rurban Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.115 2002-08-24 13:18:56 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -53,7 +53,8 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     if (is_array($args)) {
         $enc_args = array();
         foreach  ($args as $key => $val) {
-            $enc_args[] = urlencode($key) . '=' . urlencode($val);
+            if (!is_array($val)) // ugly hack for getURLtoSelf() which also takes POST vars
+              $enc_args[] = urlencode($key) . '=' . urlencode($val);
         }
         $args = join('&', $enc_args);
     }

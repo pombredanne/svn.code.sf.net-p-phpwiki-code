@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.14 2002-08-22 23:28:31 rurban Exp $');
+<?php rcs_id('$Id: Request.php,v 1.15 2002-08-24 13:18:56 rurban Exp $');
 
 // FIXME: write log entry.
 
@@ -66,6 +66,7 @@ class Request {
             $this->args[$key] = $val;
     }
 
+    // Well oh well. Do we really want to pass POST params back as GET?
     function getURLtoSelf($args = false) {
         $get_args = $this->args;
         if ($args)
