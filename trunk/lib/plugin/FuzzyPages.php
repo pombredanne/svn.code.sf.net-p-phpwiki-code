@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FuzzyPages.php,v 1.6 2002-03-02 02:59:56 carstenklapp Exp $');
+rcs_id('$Id: FuzzyPages.php,v 1.7 2002-03-02 05:47:27 carstenklapp Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,8 +46,7 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('page'  => '[pagename]',
-                     's'     => false,
+        return array('s'     => false,
                      'debug' => false);
     }
 
@@ -62,8 +61,6 @@ extends WikiPlugin
 
     function sound_similarity($subject) {
         $sound_similarity_score = 0;
-        // similar_text() automatically calculates a percentage.
-        // http://www.php.net/manual/en/function.similar-text.php
         similar_text(metaphone($subject), $this->_searchterm_metaphone,
                      &$sound_similarity_score);
         return $sound_similarity_score;
@@ -149,15 +146,14 @@ extends WikiPlugin
     }
 
 
-
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        if (empty($page))
+        if (empty($s))
             return '';
         $this->debug = $debug;
 
-        $this->_searchterm = $s ? $s : $page;
+        $this->_searchterm = $s;
         $this->_list = array();
 
         $this->collectSimilarPages($this->_list, &$dbi);
@@ -170,14 +166,14 @@ extends WikiPlugin
 
 
     function _pushDebugHeadingTDinto(&$row) {
-            $row->pushContent(HTML::td(_("Spelling Score")),
-                              HTML::td(_("Sound Score")),
-                              HTML::td('Metaphones'));
+        $row->pushContent(HTML::td(_("Spelling Score")),
+                          HTML::td(_("Sound Score")),
+                          HTML::td('Metaphones'));
     }
 
     function _pushDebugTDinto(&$row, $pagename) {
-        // This actually calculates everything a second time for each page
-        // but the individual scores are retained separately.
+        // This actually calculates everything a second time for each pagename
+        // so the individual scores can be displayed separately for debugging.
         $debug_spelling = round($this->spelling_similarity($pagename), 1);
         $debug_sound = round($this->sound_similarity($pagename), 1);
         $debug_metaphone = sprintf("(%s, %s)", metaphone($pagename),
