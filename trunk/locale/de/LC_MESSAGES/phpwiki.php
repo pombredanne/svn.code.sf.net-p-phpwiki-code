@@ -200,8 +200,14 @@ $locale["ACCESS DENIED: You must log in to upload files."] =
    "DATEIZUGRIFF VERWEIGERT: Bitte melden Sie sich erst an um Dateien hochzuladen";
 $locale["ACL"] =
    "ACL";
+$locale["ACL: "] =
+   "ACL: ";
 $locale["ADDING"] =
    "HINZU";
+$locale["ADMIN"] =
+   "ADMIN";
+$locale["ANON"] =
+   "ANON";
 $locale["AUTH_GROUP_FILE not defined"] =
    "AUTH_GROUP_FILE nicht definiert";
 $locale["Access"] =
@@ -288,6 +294,8 @@ $locale["BAD URL -- remove all of <, >, \""] =
    "URL Formfehler - Entfernen Sie alle Zeichen mit <, >, \"";
 $locale["BAD phpwiki: URL"] =
    "phpwiki: URL Formfehler";
+$locale["BOGO"] =
+   "BOGO";
 $locale["Back Links"] =
    "Back Links";
 $locale["BackLinks"] =
@@ -358,6 +366,8 @@ $locale["Check to add this Acl"] =
    "Anklicken um diese ACL hinzuzufügen";
 $locale["Chmod"] =
    "Chmod";
+$locale["Chown"] =
+   "Chown";
 $locale["Click to authenticate as %s"] =
    "Hier klicken um sich anzumelden als %s";
 $locale["Click to de-/select all pages"] =
@@ -460,6 +470,8 @@ $locale["Describe %s here."] =
    "Beschreiben Sie %s hier.";
 $locale["Description"] =
    "Beschreibung";
+$locale["Description: "] =
+   "Beschreibung: ";
 $locale["Description: Provides a list of plugins on this wiki."] =
    "Beschreibung: Liste aller Zusatzprogramme in diesem Wiki.";
 $locale["Dialog"] =
@@ -592,6 +604,8 @@ $locale["ExternalSearchPlugin"] =
    "FremdSuchePlugin";
 $locale["FAILED"] =
    "FEHLER";
+$locale["FORBIDDEN"] =
+   "VERBOTEN";
 $locale["Fatal PhpWiki Error"] =
    "Fataler PhpWiki Fehler";
 $locale["File successfully uploaded."] =
@@ -819,7 +833,7 @@ $locale["Loading InterWikiMap from external file %s."] =
 $locale["Loading files"] =
    "Das Dateienladen in diesem Wiki";
 $locale["Loading up virgin wiki"] =
-   "Erstes Hochladen des noch gänzlich unberührten Wikis";
+   "Lade neue Seiten in das frische Wiki";
 $locale["Lock Page"] =
    "Seite Sperren";
 $locale["Lock page to enable link"] =
@@ -1072,6 +1086,8 @@ $locale["PhpWikiAdministration/Rename"] =
    "PhpWikiSystemverwalten/Umbenennen";
 $locale["PhpWikiAdministration/Replace"] =
    "PhpWikiSystemverwalten/Ersetzen";
+$locale["PhpWikiAdministration/SetAcl"] =
+   "PhpWikiSystemverwalten/AclSetzen";
 $locale["PhpWikiDocumentation"] =
    "PhpWikiDokumentation";
 $locale["PhpWikiPoll"] =
@@ -1224,6 +1240,8 @@ $locale["Renamed page '%s' to '%s'."] =
    "Seite '%s' auf '%s' umbenannt.";
 $locale["Replace with"] =
    "Ersetze mit";
+$locale["Replaced link in %s."] =
+   "Link in %s ersetzt.";
 $locale["Reply"] =
    "Antwort";
 $locale["Requires WikiAdmin privileges to edit."] =
@@ -1231,7 +1249,7 @@ $locale["Requires WikiAdmin privileges to edit."] =
 $locale["Reset"] =
    "Zurücksetzen";
 $locale["Restore Anyway"] =
-   "Ungeprüft hochladen";
+   "Ungeprüft überschreiben";
 $locale["Return to %s"] =
    "Zurück zu %s";
 $locale["Revision Not Found"] =
@@ -1282,6 +1300,8 @@ $locale["Select the pages to search:"] =
    "Seiten auswählen";
 $locale["Select: "] =
    "Auswahl: ";
+$locale["Selected Pages: "] =
+   "Ausgewählte Seiten: ";
 $locale["Selected page '%s' passed to '%s'."] =
    "Ausgewählte Seite »%s« an »%s« übergeben.";
 $locale["Serialized file %s"] =
@@ -1494,6 +1514,10 @@ $locale["Type it again"] =
    "Bitte hier wiederholen";
 $locale["Type: "] =
    "Typ:";
+$locale["UNOBTAINABLE"] =
+   "UNERREICHBAR";
+$locale["USER"] =
+   "BENUTZER";
 $locale["Unable to connect to IMAP server "] =
    "IMAP Server nicht gefunden ";
 $locale["Unable to connect to LDAP server "] =
