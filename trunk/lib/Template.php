@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.45 2002-09-02 14:36:58 rurban Exp $');
+<?php rcs_id('$Id: Template.php,v 1.46 2002-09-15 15:05:47 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -221,13 +221,7 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
             substr($text,0,$len) == '<?plugin-head')
         {
             $loader = new WikiPluginLoader();
-            // CheckMe!
-            return $loader->expandPI($text,$request);
-            /* // the return of FrameInclude:
-               $plugin = TransformText($page_revision);
-               $args['FRAMESET'] = $plugin->_content[0];
-               printXML(new Template('frameset', $request, $args));
-            */
+            return $loader->expandPI_head($text,$request);
         } else {
             printXML(new Template('html', $request, $args));
         }

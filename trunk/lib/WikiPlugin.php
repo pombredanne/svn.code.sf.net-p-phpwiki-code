@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.25 2002-09-02 14:36:58 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.26 2002-09-15 15:05:47 rurban Exp $');
 
 class WikiPlugin
 {
@@ -240,7 +240,7 @@ class WikiPluginLoader {
     var $_errors;
 
     function expandPI($pi, $request) {
-        if (!preg_match('/^\s*<\?(plugin(?:-form|-link|-head)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
+        if (!preg_match('/^\s*<\?(plugin(?:-form|-link)?)\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
             return $this->_error(sprintf("Bad %s", 'PI'));
 
         list(, $pi_name, $plugin_name, $plugin_args) = $m;
@@ -252,7 +252,6 @@ class WikiPluginLoader {
         }
         switch ($pi_name) {
             case 'plugin':
-            case 'plugin-head':
                 // FIXME: change API for run() (no $dbi needed).
                 $dbi = $request->getDbh();
                 return $plugin->run($dbi, $plugin_args, $request);
@@ -261,6 +260,21 @@ class WikiPluginLoader {
             case 'plugin-form':
                 return $plugin->makeForm($plugin_args, $request);
         }
+    }
+
+    // Special treatment. Only called by Template.php:GeneratePage
+    function expandPI_head($pi, $request) {
+        if (!preg_match('/^\s*<\?plugin-head\s+(\w+)\s*(.*?)\s*\?>\s*$/s', $pi, $m))
+            return $this->_error(sprintf("Bad %s", 'PI'));
+
+        list(, $plugin_name, $plugin_args) = $m;
+        $plugin = $this->getPlugin($plugin_name);
+        if (!is_object($plugin)) {
+            return new HtmlElement('p', array('class' => 'plugin-error'),
+                                   $this->getErrorDetail());
+        }
+        $dbi = $request->getDbh();
+        return $plugin->run($dbi, $plugin_args, $request);
     }
 
     function getPlugin($plugin_name) {
