@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.43 2004-07-10 08:50:24 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.44 2004-09-06 08:33:09 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -249,8 +249,8 @@ extends WikiDB_backend
             if (substr($dbh->databaseType,0,5) == 'mysql') {
                 // have auto-incrementing, atomic version
                 $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
-                                            . " (pagename,hits)"
-                                            . " VALUES(%s,0)",
+                                            . " (id,pagename)"
+                                            . " VALUES(NULL,%s)",
                                             $dbh->qstr($pagename)));
                 $id = $dbh->_insertid();
             } else {
@@ -946,7 +946,9 @@ extends WikiDB_backend_iterator
         if (!$this->_result) {
             return false;
         }
-        return $this->_result->numRows();
+        $count = $this->_result->numRows();
+        $this->_result->Close();
+        return $count;
     }
 
     function next() {
@@ -970,6 +972,7 @@ extends WikiDB_backend_iterator
 
     function free () {
         if ($this->_result) {
+            /* call mysql_free_result($this->_queryID) */
             $this->_result->Close();
             $this->_result = false;
         }
@@ -1167,6 +1170,12 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2004/07/10 08:50:24  rurban
+// applied patch by Philippe Vanhaesendonck:
+//   pass column list to iterators so we can FETCH_NUM in all cases.
+//   bind UPDATE pramas for huge pagedata.
+//   portable oracle backend
+//
 // Revision 1.42  2004/07/09 10:06:50  rurban
 // Use backend specific sortby and sortable_columns method, to be able to
 // select between native (Db backend) and custom (PageList) sorting.
