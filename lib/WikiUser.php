@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.40 2003-11-21 16:54:58 carstenklapp Exp $');
+rcs_id('$Id: WikiUser.php,v 1.41 2003-11-21 21:32:39 carstenklapp Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -563,8 +563,13 @@ extends _UserPreference
         $this->_UserPreference($default);
     }
 
+    // FIXME: check for valid locale
     function sanify ($value) {
-        // FIXME: check for valid locale
+        // Revert to DEFAULT_LANGUAGE if user does not specify
+        // language in UserPreferences or chooses <system language>.
+        if ($value == '' or empty($value))
+            $value = DEFAULT_LANGUAGE;
+
         return (string) $value;
     }
 }
@@ -651,6 +656,11 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2003/11/21 16:54:58  carstenklapp
+// Bugfix: login.tmpl was always displayed in English despite
+// DEFAULT_LANGUAGE set in index.php. (Added call to
+// update_locale(DEFAULT_LANGUAGE) before printing login form).
+//
 // Revision 1.39  2003/10/28 21:13:46  carstenklapp
 // Security bug fix for admin password, submitted by Julien Charbon.
 //
