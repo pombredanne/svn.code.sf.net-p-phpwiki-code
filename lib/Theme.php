@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.90 2004-05-02 19:12:14 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.91 2004-05-03 11:40:42 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1266,9 +1266,48 @@ class RelatedExternalLinksBox extends SidebarBox {
     }
 }
 
+function listAvailableThemes() {
+    $available_themes = array(); 
+    $dir_root = 'themes/';
+    if (defined('PHPWIKI_DIR'))
+        $dir_root = PHPWIKI_DIR . "/$dir_root";
+    $dir = dir($dir_root);
+    if ($dir) {
+        while($entry = $dir->read()) {
+            if (is_dir($dir_root.$entry)
+                && (substr($entry,0,1) != '.')
+                && $entry != 'CVS') {
+                array_push($available_themes, $entry);
+            }
+        }
+        $dir->close();
+    }
+    return $available_themes;
+}
 
+function listAvailableLanguages() {
+    $available_languages = array('en');
+    $dir_root = 'locale/';
+    if (defined('PHPWIKI_DIR'))
+        $dir_root = PHPWIKI_DIR . "/$dir_root";
+    if ($dir = dir($dir_root)) {
+        while($entry = $dir->read()) {
+            if (is_dir($dir_root.$entry)
+                && (substr($entry,0,1) != '.')
+                && $entry != 'po'
+                && $entry != 'CVS') {
+                array_push($available_languages, $entry);
+            }
+        }
+        $dir->close();
+    }
+    return $available_languages;
+}
 
 // $Log: not supported by cvs2svn $
+// Revision 1.90  2004/05/02 19:12:14  rurban
+// fix sf.net bug #945154 Konqueror alt css
+//
 // Revision 1.89  2004/04/29 21:25:45  rurban
 // default theme navbar consistency: linkButtons instead of action buttons
 //   3rd makeLinkButtin arg for action support

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.14 2004-04-19 23:13:04 zorloc Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.15 2004-05-03 11:40:42 rurban Exp $');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -309,22 +309,7 @@ extends WikiPlugin
                                       $list));
     }
     function supported_languages () {
-        $available_languages = array('en');
-        $dir_root = 'locale/';
-        if (defined('PHPWIKI_DIR'))
-            $dir_root = PHPWIKI_DIR . "/$dir_root";
-        $dir = @dir($dir_root);
-        if ($dir) {
-            while($entry = $dir->read()) {
-                if (is_dir($dir_root . $entry)
-                    && (substr($entry, 0, 1) != '.')
-                    && $entry != 'po'
-                    && $entry != 'CVS') {
-                    array_push($available_languages, $entry);
-                }
-            }
-            $dir->close();
-        }
+        $available_languages = listAvailableLanguages();
         natcasesort($available_languages);
 
         return sprintf(_("Total of %d languages: "),
@@ -338,21 +323,7 @@ extends WikiPlugin
 
     function supported_themes () {
         global $Theme;
-        $available_themes = array();
-        $dir_root = 'themes/';
-        if (defined('PHPWIKI_DIR'))
-            $dir_root = PHPWIKI_DIR . "/$dir_root";
-        $dir = @dir($dir_root);
-        if ($dir) {
-            while($entry = $dir->read()) {
-                if (is_dir($dir_root.$entry)
-                    && (substr($entry,0,1) != '.')
-                    && $entry!='CVS') {
-                    array_push($available_themes, $entry);
-                }
-            }
-            $dir->close();
-        }
+        $available_themes = listAvailableThemes();
         natcasesort($available_themes);
         return sprintf(_("Total of %d themes: "), count($available_themes))
             . implode(', ',$available_themes) . ". "
@@ -519,6 +490,9 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/04/19 23:13:04  zorloc
+// Connect the rest of PhpWiki to the IniConfig system.  Also the keyword regular expression is not a config setting
+//
 // Revision 1.13  2004/04/18 01:11:52  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.
