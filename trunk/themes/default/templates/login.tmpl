@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: login.tmpl,v 1.18 2002-09-16 21:51:18 dairiki Exp $ -->
+<!-- $Id: login.tmpl,v 1.19 2002-11-11 14:24:46 carstenklapp Exp $ -->
 <!-- The login form -->
 
 <?php if ($fail_message) { ?>
@@ -7,8 +7,15 @@
   <hr noshade="noshade" />
 <?php } ?>
 
-<?php if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) { ?>
-  <p><?= _("You may sign in using any WikiWord as a UserId. (ÀÖØöøÿßö etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage.") ?>
+<?php if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
+  // This iso-8859-1 sample covers French, Spanish, Italian, German, and probably others
+  $examplechars = htmlentities("ÀñíçéàÖãæôßøü", ENT_QUOTES, 'iso-8859-1');
+  // Japanese login doesn't work yet
+  /*if ((CHARSET == 'utf-8') && defined('ALLOW_NONWIKIWORD_LOGINS') && ALLOW_NONWIKIWORD_LOGINS) {
+    //sample Japanese loginname in unicode
+    $examplechars = $examplechars . "&#22825;&#36947;&#12354;&#12363;&#12397;";
+  }*/ ?>
+  <p><?= printf(_("You may sign in using any WikiWord as a UserId. (%s etc. may be used too). The UserId will be used as a link in RecentChanges to your UserId page, your HomePage."), $examplechars) ?>
   <?php if (empty($pass_required)) ?>
   <?= _("New users may use an empty password.") ?>
   </p>
