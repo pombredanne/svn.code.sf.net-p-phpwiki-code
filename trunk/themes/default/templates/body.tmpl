@@ -1,13 +1,13 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.12 2002-02-01 18:06:23 carstenklapp Exp $ -->
+<!-- $Id: body.tmpl,v 1.13 2002-02-01 19:47:23 carstenklapp Exp $ -->
 <body>
 
 <!-- The logo -->
-<div><a class="wikilink" 
-        href="<?=WikiURL(HomePage)?>"
-        ><img src="<?=$Theme->getImageURL('logo')?>"
-              border="0" alt="<?=WIKI_NAME?>: <?=HomePage?>" 
-              align="right" /></a></div>
+<div id="logo"><a class="wikilink" 
+                  href="<?=WikiURL(HomePage)?>"
+                  ><img src="<?=$Theme->getImageURL('logo')?>"
+                        border="0" alt="<?=WIKI_NAME?>: <?=HomePage?>" 
+                        align="right" /></a></div>
 <div id="navbar">
 <!-- The top navigation/search bar -->
 <?= Template('navbar') ?>
