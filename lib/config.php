@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.20 2001-01-19 22:20:30 wainstead Exp $');
+   rcs_id('$Id: config.php,v 1.21 2001-01-20 21:52:21 wainstead Exp $');
    // end essential internal stuff
 
 
@@ -38,12 +38,16 @@
    // set your database here and edit the according section below.
    // For PHP 4.0.4 and later you must use "dba" if you are using 
    // DBM files for storage. "dbm" uses the older deprecated interface.
+   // The option 'default' will choose either dbm or dba, depending on
+   // the version of PHP you are running.
+   /////////////////////////////////////////////////////////////////////
 
-   $WhichDatabase = 'dbm'; // use one of "dbm", "dba", "mysql",
-                           // "pgsql", "msql", or "file"
-   
-   // DBM (default) and DBA settings
-   if ($WhichDatabase == 'dbm' or 'dba') {
+   $WhichDatabase = 'default'; // use one of "dbm", "dba", "mysql",
+                               // "pgsql", "msql", or "file"
+
+
+   // DBM and DBA settings (default)
+   if ($WhichDatabase == 'dbm' or 'dba' or 'default') {
       $DBMdir = "/tmp";
       $WikiPageStore = "wiki";
       $ArchivePageStore = "archive";
@@ -54,6 +58,14 @@
       $WikiDB['hitcount']  = "$DBMdir/wikihitcountdb";
       // try this many times if the dbm is unavailable
       define("MAX_DBM_ATTEMPTS", 20);
+
+      // for PHP3 use dbmlib, else use dbalib for PHP4
+      if (($WhichDatabase == 'default') and (floor(phpversion())) == 3) {
+         $WhichDatabase = 'dbm';
+      } else {
+         $WhichDatabase = 'dba';
+      }
+
       if ($WhichDatabase == 'dbm') {
           include "lib/dbmlib.php";
       } else {
