@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.17 2001-11-14 21:05:38 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.18 2001-12-22 02:39:32 carstenklapp Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -142,11 +142,14 @@ function savePage ($dbi, $request) {
     $cleaner->cleanPageRevisions($page);
     
     $warnings = $dbi->GenericWarnings();
+    global $SignatureImg;
     if (empty($warnings)) {
-        // Do redirect to browse page.
-        // In this case, the user will most likely not see the rest of
-        // the HTML we generate (below).
-        $request->redirect(WikiURL($pagename, false, 'absolute_url'));
+        if (empty($SignatureImg)){
+            // Do redirect to browse page if no signature has been defined.
+            // In this case, the user will most likely not see the rest of
+            // the HTML we generate (below).
+            $request->redirect(WikiURL($pagename, false, 'absolute_url'));
+        }
     }
 
     $html = sprintf(gettext("Thank you for editing %s."),
@@ -161,7 +164,6 @@ function savePage ($dbi, $request) {
                          . "<br>\n");
     }
 
-    global $SignatureImg;
     if (!empty($SignatureImg))
         $html .= sprintf("<P><img src=\"%s\"></P>\n", DataURL($SignatureImg));
     
