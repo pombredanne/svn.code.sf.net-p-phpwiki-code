@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.14 2001-12-19 12:07:53 carstenklapp Exp $');
+rcs_id('$Id: PearDB.php,v 1.15 2001-12-19 13:04:06 carstenklapp Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -708,7 +708,7 @@ extends WikiDB_backend
 
     function _pear_error_message($error) {
         $class = get_class($this);
-        $message = $class ": " . _("fatal database error") ."\n"
+        $message = "$class: " . _("fatal database error") ."\n"
              . "\t" . $error->getMessage() . "\n"
              . "\t(" . $error->getDebugInfo() . ")\n";
 
