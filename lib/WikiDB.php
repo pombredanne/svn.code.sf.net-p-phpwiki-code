@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.85 2004-09-16 08:00:51 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.86 2004-09-23 18:52:06 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -413,7 +413,7 @@ class WikiDB {
                     $current = $page->getCurrentRevision();
                     $meta = $current->_data;
                     $version = $current->getVersion();
-                    $meta['summary'] = sprintf(_("renamed from %s"),$from);
+                    $meta['summary'] = sprintf(_("renamed from %s"), $from);
                     $page->save($current->getPackedContent(), $version + 1, $meta);
                 }
             } elseif (!$oldpage->getCurrentRevision(false) and !$newpage->exists()) {
@@ -904,7 +904,7 @@ class WikiDB_Page
         $previous = $backend->get_previous_version($this->_pagename, $version);
         if (!isset($meta['mtime'])) $meta['mtime'] = time();
         if ($previous) {
-            $difflink = WikiURL($this->_pagename,array('action'=>'diff'),true);
+            $difflink = WikiURL($this->_pagename, array('action'=>'diff'),true);
             $cache = &$this->_wikidb->_cache;
             $this_content = explode("\n", $wikitext);
             $prevdata = $cache->get_versiondata($this->_pagename, $previous, true);
@@ -1427,7 +1427,11 @@ class WikiDB_PageRevision
 
             // A feature similar to taglines at http://www.wlug.org.nz/
             // Lib from http://www.aasted.org/quote/
-            if (defined('FORTUNE_DIR') and is_dir(FORTUNE_DIR)) {
+            if (defined('FORTUNE_DIR') 
+                and is_dir(FORTUNE_DIR) 
+                and in_array($GLOBALS['request']->getArg('action'), 
+                             array('create','edit')))
+            {
                 include_once("lib/fortune.php");
                 $fortune = new Fortune();
                 $quote = str_replace("\n<br>","\n", $fortune->quoteFromDir(FORTUNE_DIR));
@@ -1918,6 +1922,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.85  2004/09/16 08:00:51  rurban
+// just some comments
+//
 // Revision 1.84  2004/09/14 10:34:30  rurban
 // fix TransformedText call to use refs
 //
