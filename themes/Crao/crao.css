@@ -164,6 +164,7 @@ p a.wiki-rc-action
 	width:auto;
 	background-color: transparent;
 	font: bolder 67px/50px  Verdana, Arial, Helvetica, sans-serif;
+        letter-spacing: -0.1em;
         font-variant: condensed;
 }
 #logo img {
@@ -607,8 +608,30 @@ caption {
 .pagelist tr.evenrow { background-color: white ;}
 .pagelist tr.oddrow  { background-color: white; }
 .pagelist td { padding:3px; }
-
-
+th.gridbutton {
+  background-color: threedlightshadow;
+  color: black;
+  font-weight: normal;
+  /*font-style: menu;*/
+  max-height: 18px;
+  height: 18px;
+  margin: 5px 0px;
+  float: none;
+  white-space: nowrap;
+  padding-top: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
+}
+input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
+  text-decoration: none;
+  font-size: small;
+  font-weight: normal;
+  /*font-style: menu;*/
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  background-color: threedlightshadow;
+  color: black;
+}
 
 .wikilink{
 	display:block;
