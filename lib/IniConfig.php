@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.61 2004-11-06 17:01:30 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.62 2004-11-07 16:02:51 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -246,20 +246,20 @@ function IniConfig($file) {
     		   'DATABASE_DBA_HANDLER'   => 'dba_handler',
     	           'DATABASE_DIRECTORY' => 'directory',
     	           'DATABASE_TIMEOUT'   => 'timeout',
-    	           'DATABASE_PREFIX'    => 'prefix') 
-             as $d => $k) 
+    	           'DATABASE_PREFIX'    => 'prefix')
+             as $item => $k)
     {
-        if (defined($d)) {
-            $DBParams[$k] = constant($d);
-            unset($rs[$d]);
-        } elseif (array_key_exists($d, $rs)) {
-            $DBParams[$k] = $rs[$d];
-            define($d, $rs[$d]);
-            unset($rs[$d]);
-        } elseif (array_key_exists($d, $rsdef)) {
-            $DBParams[$k] = $rsdef[$d];
-            define($d, $rsdef[$d]);
-            unset($rsdef[$d]);
+        if (defined($item)) {
+            $DBParams[$k] = constant($item);
+            unset($rs[$item]);
+        } elseif (array_key_exists($item, $rs)) {
+            $DBParams[$k] = $rs[$item];
+            define($item, $rs[$item]);
+            unset($rs[$item]);
+        } elseif (array_key_exists($item, $rsdef)) {
+            $DBParams[$k] = $rsdef[$item];
+            define($item, $rsdef[$item]);
+            unset($rsdef[$item]);
         }
     }
     // USE_DB_SESSION default logic:
@@ -721,6 +721,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2004/11/06 17:01:30  rurban
+// unify DATABASE constants init as with DBAUTH
+//
 // Revision 1.60  2004/11/06 03:06:58  rurban
 // make use of dumped static config state in config/config.php (if writable)
 //

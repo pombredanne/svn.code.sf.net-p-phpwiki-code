@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.7 2004-07-08 15:35:17 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.8 2004-11-07 16:02:52 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -34,11 +34,83 @@ extends WikiDB_backend_PearDB
 	    if ($row["db"] == $this->_dbh->dsn['database']
 	        and $row["User"] == $this->_dbh->dsn['username']
 	        and $row["Time"] > $this->_dbparams['timeout']
-	        and $row["Command"] == "Sleep") {
+	        and $row["Command"] == "Sleep") 
+            {
 	            $process_id = $row["Id"]; 
 	            mysql_query("KILL $process_id");
 	    }
 	}
+    }
+
+    /**
+     * Create a new revision of a page.
+     */
+    function set_versiondata($pagename, $version, $data) {
+        $dbh = &$this->_dbh;
+        $version_tbl = $this->_table_names['version_tbl'];
+        
+        $minor_edit = (int) !empty($data['is_minor_edit']);
+        unset($data['is_minor_edit']);
+        
+        $mtime = (int)$data['mtime'];
+        unset($data['mtime']);
+        assert(!empty($mtime));
+
+        @$content = (string) $data['%content'];
+        unset($data['%content']);
+        unset($data['%pagedata']);
+        
+        $this->lock();
+        $id = $this->_get_pageid($pagename, true);
+        // requires PRIMARY KEY (id,version)!
+        // VALUES supported since mysql-3.22.5
+        $dbh->query(sprintf("REPLACE INTO $version_tbl"
+                            . " (id,version,mtime,minor_edit,content,versiondata)"
+                            . " VALUES(%d,%d,%d,%d,'%s','%s')",
+                            $id, $version, $mtime, $minor_edit,
+                            $dbh->quoteString($content),
+                            $dbh->quoteString($this->_serialize($data))
+                            ));
+        // real binding (prepare,execute) only since mysqli + PHP5
+        $this->_update_recent_table($id);
+        $this->_update_nonempty_table($id);
+        $this->unlock();
+    }
+
+    function _update_recent_table($pageid = false) {
+        $dbh = &$this->_dbh;
+        extract($this->_table_names);
+        extract($this->_expressions);
+
+        $pageid = (int)$pageid;
+
+        // optimized: mysql can do this with one REPLACE INTO.
+        // supported in every (?) mysql version
+        // requires PRIMARY KEY (id)!
+        $dbh->query("REPLACE INTO $recent_tbl"
+                    . " (id, latestversion, latestmajor, latestminor)"
+                    . " SELECT id, $maxversion, $maxmajor, $maxminor"
+                    . " FROM $version_tbl"
+                    . ( $pageid ? " WHERE id=$pageid" : "")
+                    . " GROUP BY id" );
+    }
+
+    function _update_nonempty_table($pageid = false) {
+        $dbh = &$this->_dbh;
+        extract($this->_table_names);
+
+        $pageid = (int)$pageid;
+
+        // Optimized: mysql can do this with one REPLACE INTO.
+        // supported in every (?) mysql version
+        // requires PRIMARY KEY (id)
+        $dbh->query("REPLACE INTO $nonempty_tbl (id)"
+                    . " SELECT $recent_tbl.id"
+                    . " FROM $recent_tbl, $version_tbl"
+                    . " WHERE $recent_tbl.id=$version_tbl.id"
+                    . "       AND version=latestversion"
+                    . "  AND content<>''"
+                    . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
     }
    
     /**
