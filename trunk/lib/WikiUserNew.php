@@ -1,54 +1,50 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.21 2004-02-26 20:43:49 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.22 2004-02-27 05:15:40 rurban Exp $');
 
-// This is a complete OOP rewrite of the old WikiUser code with various
-// configurable external authentification methods.
-//
-// There's only one entry point, the function WikiUser which returns 
-// a WikiUser object, which contains the user's preferences.
-// This object might get upgraded during the login step and later also.
-// There exist three preferences storage methods: cookie, homepage and db,
-// and multiple password checking methods.
-// See index.php for $USER_AUTH_ORDER[] and USER_AUTH_POLICY if 
-// ALLOW_USER_PASSWORDS is defined.
-//
-// Each user object must define the two preferences methods 
-//  getPreferences(), setPreferences(), 
-// and the following 1-3 auth methods
-//  checkPass()  must be defined by all classes,
-//  userExists() only if USER_AUTH_POLICY'=='strict' 
-//  mayChangePass()  only if the password is storable.
-//  storePass()  only if the password is storable.
-//
-// WikiUser() given no name, returns an _AnonUser (anonymous user)
-// object, who may or may not have a cookie. 
-// However, if the there's a cookie with the userid or a session, 
-// the user is upgraded to the matching user object.
-// Given a user name, returns a _BogoUser object, who may or may not 
-// have a cookie and/or PersonalPage, a _PassUser object or an 
-// _AdminUser object.
-//
-// Takes care of passwords, all preference loading/storing in the
-// user's page and any cookies. lib/main.php will query the user object to
-// verify the password as appropriate.
-//
-// Notes by 2004-01-25 03:43:45 rurban
-// Currently this library doesn't look good enough with 
-// the current configuration options.
-// Test it by defining ENABLE_USER_NEW in index.php
-// The problem is that the previous code was written to do auth checks 
-// only on action != browse, and this code requires a good enough 
-// user object even for browse. I don't think that this is a good idea.
-// 1) Now a ForbiddenUser is returned instead of false.
-// 2) Previously ALLOW_ANON_USER = false meant that anon users cannot edit, 
-// but may browse. Now with ALLOW_ANON_USER = false he may not browse, 
-// which is needed to disable browse PagePermissions. Hmm...
-// I added now ALLOW_ANON_EDIT = true to makes things clear. 
-// (which replaces REQUIRE_SIGNIN_BEFORE_EDIT)
-/*
- * Fixme: 2004-02-06 15:42:24 rurban
- *   dbprefs edit with anonuser fails.
-*/
+/**
+ * This is a complete OOP rewrite of the old WikiUser code with various
+ * configurable external authentification methods.
+ *
+ * There's only one entry point, the function WikiUser which returns 
+ * a WikiUser object, which contains the user's preferences.
+ * This object might get upgraded during the login step and later also.
+ * There exist three preferences storage methods: cookie, homepage and db,
+ * and multiple password checking methods.
+ * See index.php for $USER_AUTH_ORDER[] and USER_AUTH_POLICY if 
+ * ALLOW_USER_PASSWORDS is defined.
+ *
+ * Each user object must define the two preferences methods 
+ *  getPreferences(), setPreferences(), 
+ * and the following 1-4 auth methods
+ *  checkPass()  must be defined by all classes,
+ *  userExists() only if USER_AUTH_POLICY'=='strict' 
+ *  mayChangePass()  only if the password is storable.
+ *  storePass()  only if the password is storable.
+ *
+ * WikiUser() given no name, returns an _AnonUser (anonymous user)
+ * object, who may or may not have a cookie. 
+ * However, if the there's a cookie with the userid or a session, 
+ * the user is upgraded to the matching user object.
+ * Given a user name, returns a _BogoUser object, who may or may not 
+ * have a cookie and/or PersonalPage, one of the various _PassUser objects 
+ * or an _AdminUser object.
+ *
+ * Takes care of passwords, all preference loading/storing in the
+ * user's page and any cookies. lib/main.php will query the user object to
+ * verify the password as appropriate.
+ *
+ * Notes by 2004-01-25 03:43:45 rurban
+ * Test it by defining ENABLE_USER_NEW in index.php
+ * 1) Now a ForbiddenUser is returned instead of false.
+ * 2) Previously ALLOW_ANON_USER = false meant that anon users cannot edit, 
+ * but may browse. Now with ALLOW_ANON_USER = false he may not browse, 
+ * which is needed to disable browse PagePermissions. Hmm...
+ * I added now ALLOW_ANON_EDIT = true to makes things clear. 
+ * (which replaces REQUIRE_SIGNIN_BEFORE_EDIT)
+ *
+ *  Authors: Reini Urban (the tricky parts), 
+ *           Carsten Klapp (started rolling the ball)
+ */
 
 define('WIKIAUTH_FORBIDDEN', -1); // Completely not allowed.
 define('WIKIAUTH_ANON', 0);       // Not signed in.
@@ -162,7 +158,7 @@ function _determineBogoUserOrPassUser($UserName) {
  * Primary WikiUser function, called by main.php.
  * 
  * This determines the user's type and returns an appropriate user
- * object. main.php then querys the resultant object for password
+ * object. lib/main.php then querys the resultant object for password
  * validity as necessary.
  *
  * If an _AnonUser object is returned, the user may only browse pages
@@ -175,8 +171,8 @@ function _determineBogoUserOrPassUser($UserName) {
 function WikiUser ($UserName = '') {
     global $ForbiddenUser;
 
-    //TODO: Check sessionvar for username & save username into
-    //sessionvar (may be more appropriate to do this in main.php).
+    //Maybe: Check sessionvar for username & save username into
+    //sessionvar (may be more appropriate to do this in lib/main.php).
     if ($UserName) {
         $ForbiddenUser = new _ForbiddenUser($UserName);
         // Found a user name.
@@ -248,28 +244,6 @@ function UserExists ($UserName) {
     return false;
 }
 
-/*
-function CheckPass ($UserName, $Password) {
-    global $request;
-    if (!($user = $request->getUser()))
-        $user = WikiUser($UserName);
-    if (!$user) 
-        return false;
-    if ($user->checkPass($Password)) {
-        $request->_user = $user;
-        return true;
-    }
-    if (isa($user,'_BogoUser'))
-      $user = new _PassUser($UserName);
-    while ($user = $user->nextClass()) {
-        return $user->checkPass($Password);
-        $this = $user;
-    }
-    $request->_user = $GLOBALS['ForbiddenUser'];
-    return false;
-}
-*/
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 // Base WikiUser class.
@@ -337,7 +311,7 @@ class _WikiUser
         return false;
     }
 
-    // case-insensitive position in _auth_methods
+    // innocent helper: case-insensitive position in _auth_methods
     function array_position ($string, $array) {
         $string = strtolower($string);
         for ($found = 0; $found < count($array); $found++) {
@@ -353,7 +327,8 @@ class _WikiUser
         if (empty($this->_current_index)) {
             if (get_class($this) != '_passuser') {
             	$this->_current_method = substr(get_class($this),1,-8);
-                $this->_current_index = $this->array_position($this->_current_method,$this->_auth_methods);
+                $this->_current_index = $this->array_position($this->_current_method,
+                                                              $this->_auth_methods);
             } else {
             	$this->_current_index = -1;
             }
@@ -384,6 +359,7 @@ class _WikiUser
         }
     }
 
+    //Fixme: for _HttpAuthPassUser
     function PrintLoginForm (&$request, $args, $fail_message = false,
                              $seperate_page = true) {
         include_once('lib/Template.php');
@@ -695,7 +671,8 @@ extends _AnonUser
                     // default: try to be smart
                     if (!empty($GLOBALS['PHP_AUTH_USER'])) {
                         return new _HttpAuthPassUser($UserName);
-                    } elseif (!empty($DBAuthParams['auth_check']) and ($DBAuthParams['auth_dsn'] or $GLOBALS ['DBParams']['dsn'])) {
+                    } elseif (!empty($DBAuthParams['auth_check']) and 
+                              (!empty($DBAuthParams['auth_dsn']) or !empty($GLOBALS ['DBParams']['dsn']))) {
                         return new _DbPassUser($UserName);
                     } elseif (defined('LDAP_AUTH_HOST') and defined('LDAP_BASE_DN') and function_exists('ldap_open')) {
                         return new _LDAPPassUser($UserName);
@@ -1013,6 +990,38 @@ extends _PassUser
     function mayChangePass() {
         return false;
     }
+
+    // hmm... either the server dialog or our own.
+    function PrintLoginForm (&$request, $args, $fail_message = false,
+                             $seperate_page = true) {
+        header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
+        header('HTTP/1.0 401 Unauthorized'); 
+        exit;
+
+        include_once('lib/Template.php');
+        // Call update_locale in case the system's default language is not 'en'.
+        // (We have no user pref for lang at this point yet, no one is logged in.)
+        update_locale(DEFAULT_LANGUAGE);
+        $userid = $this->_userid;
+        $require_level = 0;
+        extract($args); // fixme
+
+        $require_level = max(0, min(WIKIAUTH_ADMIN, (int)$require_level));
+
+        $pagename = $request->getArg('pagename');
+        $nocache = 1;
+        $login = new Template('login', $request,
+                              compact('pagename', 'userid', 'require_level',
+                                      'fail_message', 'pass_required', 'nocache'));
+        if ($seperate_page) {
+            $top = new Template('html', $request,
+                                array('TITLE' => _("Sign In")));
+            return $top->printExpansion($login);
+        } else {
+            return $login;
+        }
+    }
+
 }
 
 class _DbPassUser
@@ -1419,7 +1428,7 @@ extends _PassUser
             for ($i = 0; $i < $info["count"]; $i++) {
                 $dn = $info[$i]["dn"];
                 // The password is still plain text.
-                if ($r = @ldap_bind($ldap, $dn, $passwd)) {
+                if ($r = @ldap_bind($ldap, $dn, $submitted_password)) {
                     // ldap_bind will return TRUE if everything matches
                     ldap_close($ldap);
                     $this->_level = WIKIAUTH_USER;
@@ -1999,6 +2008,10 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/02/26 20:43:49  rurban
+// new HttpAuthPassUser class (forces http auth if in the auth loop)
+// fixed user upgrade: don't return _PassUser in the first hand.
+//
 // Revision 1.20  2004/02/26 01:29:11  rurban
 // important fixes: endless loops in certain cases. minor rewrite
 //
