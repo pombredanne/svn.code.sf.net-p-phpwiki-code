@@ -319,11 +319,11 @@ msgstr ""
 
 #: ../lib/plugin/MostPopular.php:27
 msgid "Hits"
-msgstr ""
+msgstr "Número de hits"
 
 #: ../lib/plugin/MostPopular.php:28
 msgid "Page Name"
-msgstr ""
+msgstr "Nombre de la página"
 
 #: ../lib/plugin/MostPopular.php:42
 #, c-format
