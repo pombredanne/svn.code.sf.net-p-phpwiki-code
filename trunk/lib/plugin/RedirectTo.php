@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.10 2003-02-24 00:40:09 carstenklapp Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.11 2003-11-22 17:54:50 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -78,7 +78,7 @@ extends WikiPlugin
             $url = preg_replace('/%\d\d/','',strip_tags($href));
             $thispage = $request->getPage();
             if (! $thispage->get('locked')) {
-                return $this->disabled(fmt(_("%s is only allowed in locked pages."),
+                return $this->disabled(fmt("%s is only allowed in locked pages.",
                                            _("Redirect to an external url")));
             }
         }
@@ -115,6 +115,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2003/02/24 00:40:09  carstenklapp
+// PHP's closing tag \?\> within // cvs log comments caused the trailing comments to display as literal text on the PluginManager page.
+//
 // Revision 1.9  2003/02/21 22:59:00  dairiki
 // Add new argument $basepage to WikiPlugin::run() and WikiPluginLoader::expandPI().
 // Plugins need to know what page they were invoked from so that they can handle
