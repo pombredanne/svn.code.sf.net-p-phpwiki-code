@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.33 2002-02-06 17:25:37 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.34 2002-02-06 19:53:15 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -109,10 +109,11 @@ class _PageList_Column_version extends _PageList_Column {
 
 class _PageList_Column_author extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
-        global $WikiNameRegexp;
+        global $WikiNameRegexp, $request;
+        $dbi = $request->getDbh();
 
         $author = _PageList_Column::_getValue($page_handle, $revision_handle);
-        if (preg_match("/^$WikiNameRegexp\$/", $author))
+        if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
             return WikiLink($author);
         else
             return $author;
