@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.6 2002-02-08 22:03:03 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.7 2002-03-08 20:31:13 carstenklapp Exp $');
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the Portland Pattern Repository.
@@ -25,14 +25,14 @@ class Theme_Portland extends Theme {
     }
     function getRecentChangesFormatter ($format) {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss/', $format))
+        if (preg_match('/^rss|^sidebar/', $format))
             return false;       // use default
         return '_Portland_RecentChanges_Formatter';
     }
 
     function getPageHistoryFormatter ($format) {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss/', $format))
+        if (preg_match('/^rss|^sidebar/', $format))
             return false;       // use default
         return '_Portland_PageHistory_Formatter';
     }

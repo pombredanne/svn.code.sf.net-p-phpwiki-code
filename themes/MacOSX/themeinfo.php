@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.45 2002-02-08 22:03:03 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.46 2002-03-08 20:31:14 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -42,14 +42,14 @@ class Theme_MacOSX extends Theme {
 
     function getRecentChangesFormatter ($format) {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss/', $format))
+        if (preg_match('/^rss|^sidebar/', $format))
             return false;       // use default
         return '_MacOSX_RecentChanges_Formatter';
     }
 
     function getPageHistoryFormatter ($format) {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss/', $format))
+        if (preg_match('/^rss|^sidebar/', $format))
             return false;       // use default
         return '_MacOSX_PageHistory_Formatter';
     }
