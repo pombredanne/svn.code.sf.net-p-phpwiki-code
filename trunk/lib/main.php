@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.9 2001-02-21 17:16:44 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.10 2001-02-28 20:54:18 dairiki Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
@@ -89,7 +89,7 @@ function get_auth_mode ($action)
    
 $user = new WikiUser(get_auth_mode($action));
 if ($user->is_authenticated())
-   $LogEntry->user = $user->id;
+   $LogEntry->user = $user->id();
 
 
 
