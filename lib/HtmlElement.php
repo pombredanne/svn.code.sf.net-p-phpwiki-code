@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.6 2002-01-22 03:17:47 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.7 2002-01-22 06:55:04 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -18,6 +18,22 @@ class HtmlElement extends XmlElement
             $this->_init(array_slice(func_get_args(), 1));
         else 
             $this->_attr = array();
+    }
+
+    /** Add a "tooltip" to an element.
+     *
+     * @param $tooltip_text string The tooltip text.
+     */
+    function addTooltip ($tooltip_text) {
+        $this->setAttr('title', $tooltip_text);
+
+        // FIXME: this should be initialized from title by an onLoad() function.
+        //        (though, that may not be possible.)
+        $qtooltip = str_replace("'", "\\'", $tooltip_text);
+        $this->setAttr('onmouseover',
+                       sprintf('window.status="%s"; return true;',
+                               addslashes($tooltip_text)));
+        $this->setAttr('onmouseout', "window.status='';return true;");
     }
 
     function _emptyTag () {
