@@ -1,4 +1,5 @@
-<?php rcs_id('$Id: Template.php,v 1.51 2003-12-20 23:54:15 carstenklapp Exp $');
+<?php //-*-php-*-
+rcs_id('$Id: Template.php,v 1.52 2003-12-20 23:59:19 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -242,6 +243,7 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
     return $html;
 }
 
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php
