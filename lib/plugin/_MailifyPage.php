@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _MailifyPage.php,v 1.2 2003-11-15 23:37:51 carstenklapp Exp $');
+rcs_id('$Id: _MailifyPage.php,v 1.3 2003-11-16 00:11:25 carstenklapp Exp $');
 /**
  * An experimental WikiPlugin for internal use only by PhpWiki
  * developers.
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -48,8 +48,14 @@ extends WikiPlugin
         // allow plugin-form
         if (!empty($s))
             $page = $s;
+        if (!$page)
+            return '';
+        if (! $dbi->isWikiPage($page))
+            return fmt("Page %s not found.",
+                       WikiLink($page, 'unknown'));
 
-        $mailified = MailifyPage($dbi->getPage($page));
+        $p = $dbi->getPage($page);
+        $mailified = MailifyPage($p);
 
         $this->fixup_headers($mailified);
 
@@ -107,6 +113,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2003/11/15 23:37:51  carstenklapp
+// Enhanced plugin to allow invocation with \<\?plugin-form _MailifyPage\?\>.
+//
 // Revision 1.1  2003/02/20 18:03:04  carstenklapp
 // New experimental WikiPlugin for internal use only by PhpWiki developers.
 //
