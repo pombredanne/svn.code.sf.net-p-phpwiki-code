@@ -1,4 +1,4 @@
-<!-- $Id: wiki_mysql.php3,v 1.7 2000-06-26 21:26:45 ahollosi Exp $ -->
+<!-- $Id: wiki_mysql.php3,v 1.8 2000-06-30 00:24:29 wainstead Exp $ -->
 <?
 
    /*
@@ -13,6 +13,11 @@
       TitleSearchNextMatch($dbi, &$pos)
       InitFullSearch($dbi, $search)
       FullSearchNextMatch($dbi, &$pos)
+      IncreaseHitCount($dbi, $pagename)  
+      GetHitCount($dbi, $pagename)   
+      InitMostPopular($dbi, $limit)   
+      MostPopularNextMatch($dbi, $res)
+
    */
 
 
