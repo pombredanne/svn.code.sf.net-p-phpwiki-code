@@ -1,42 +1,38 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.7 2002-01-15 23:22:26 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.8 2002-01-17 20:34:02 dairiki Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
  */
 
-// To activate this theme, specify this setting in index.php:
-//$theme=Hawaiian;
-// To deactivate themes, comment out all the $theme=lines in index.php.
+require_once('lib/Theme.php');
+
+$Theme = new Theme('Hawaiian');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
 
-$CSS_DEFAULT = "Hawaiian";
-
-$CSS_URLS = array_merge($CSS_URLS,
-                        array("$CSS_DEFAULT" => "themes/$theme/${CSS_DEFAULT}.css"));
+$Theme->setDefaultCSS('Hawaiian', 'Hawaiian.css');
+$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 
 
 // Logo image appears on every page and links to the HomePage.
-$logo = "themes/$theme/PalmBeach.jpg";
+$Theme->addImageAlias('logo', 'PalmBeach.jpg');
+//$Theme->addImageAlias('signature', 'SubmersiblePiscesV.jpg'); //for Steve
+$Theme->addImageAlias('signature', 'WaterFall.jpg'); //for Steve
 
-// RSS logo icon (path relative to index.php)
-// If this is left blank (or unset), the default "images/rss.png"
-// will be used.
-//$rssicon = "images/rss.png";
+/*
+ * Link Icons
+ */
+$Theme->setLinkIcon('interwiki');
+$Theme->setLinkIcon('*', 'flower.png');
 
-// Signature image which is shown after saving an edited page.  If
-// this is left blank, any signature defined in index.php will be
-// used. If it is not defined by index.php or in here then the "Thank
-// you for editing..." screen will be omitted.
-//$SignatureImg = "themes/$theme/pictures/SubmersiblePiscesV.jpg"; #for Steve
-$SignatureImg = "themes/$theme/WaterFall.jpg";
+// FIXME: do we need this?
 // If you want to see more than just the waterfall let a random
 // picture be chosen for the signature image:
-include("themes/$theme/pictures/random.php");
+//include("themes/$theme/pictures/random.php");
 
 // This defines separators used in RecentChanges and RecentEdits lists.
 // If undefined, defaults to '' (nothing) and '...' (three periods).
@@ -57,16 +53,6 @@ $templates = array(
                    );
 */
 
-// If this theme defines any custom link icons, they will completely
-// override any link icon settings defined in index.php.
-$URL_LINK_ICONS = array(
-                        /* 'http'   => "themes/$theme/http.png",   */
-                        /* 'https'  => "themes/$theme/https.png",  */
-                        /* 'ftp'    => "themes/$theme/ftp.png",    */
-                        /* 'mailto' => "themes/$theme/mailto.png", */
-                        'interwiki' => "themes/$theme/interwiki.png",
-                        '*'         => "themes/$theme/flower.png"
-                        );
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.17 2002-01-17 06:32:04 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.18 2002-01-17 20:34:02 dairiki Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -61,29 +61,36 @@ rcs_id('$Id: themeinfo.php,v 1.17 2002-01-17 06:32:04 carstenklapp Exp $');
 // To activate this theme, specify this setting in index.php:
 //$theme="MacOSX";
 // To deactivate themes, comment out all the $theme=lines in index.php.
+require_once('lib/Theme.php');
+
+class Theme_MacOSX extends Theme {
+    function getCSS() {
+        // FIXME: this is a hack which will not be needed once
+        //        we have dynamic CSS.
+        $css = Theme::getCSS();
+        $css .= Element('style', array('type' => 'text/css'),
+                        sprintf("<!--\nbody {background-image: url(%s);}\n-->\n",
+                                $this->getImageURL('bggranular')));
+        return $css;
+    }
+}
+
+$Theme = new Theme_MacOSX('MacOSX');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
-$CSS_DEFAULT = "MacOSX";
+$Theme->setDefaultCSS("MacOSX", "MacOSX.css");
 
-$CSS_URLS = array_merge($CSS_URLS,
-                        array("$CSS_DEFAULT" => "themes/$theme/${CSS_DEFAULT}.css"));
-
-// Logo image appears on every page and links to the HomePage.
-$logo = "themes/$theme/PhpWiki.png";
-
-// RSS logo icon (path relative to index.php)
-// If this is left blank (or unset), the default "images/rss.png"
-// will be used.
-//$rssicon = "images/rss.png";
-$rssicon = "themes/$theme/RSS.png";
-
-// Signature image which is shown after saving an edited page.  If
-// this is left blank, any signature defined in index.php will be
-// used. If it is not defined by index.php or in here then the "Thank
-// you for editing..." screen will be omitted.
-$SignatureImg = "themes/$theme/Signature.png"; // Papyrus 19pt
+/*
+ * Link icons.
+ */
+$Theme->setLinkIcon('http');
+$Theme->setLinkIcon('https');
+$Theme->setLinkIcon('ftp');
+$Theme->setLinkIcon('mailto');
+$Theme->setLinkIcon('interwiki');
+$Theme->setLinkIcon('*', 'url');
 
 // This defines separators used in RecentChanges and RecentEdits lists.
 // If undefined, defaults to '' (nothing) and '...' (three periods).
@@ -94,28 +101,7 @@ define("RC_SEPARATOR_B", ' --');
 // The PhpWiki default is for the '?' to appear before.
 define('WIKIMARK_AFTER', true);
 
-// If this theme defines any templates, they will completely override
-// whatever templates have been defined in index.php.
-
-$templates = array(
-                   'BROWSE'   => "themes/$theme/templates/browse.html",
-                   'EDITPAGE' => "themes/$theme/templates/editpage.html",
-                   'MESSAGE'  => "themes/$theme/templates/message.html"
-                   );
-
-// If this theme defines any custom link icons, they will completely
-// override any link icon settings defined in index.php.
-
-// Currently only the mailto icon is overridden from the default theme
-$URL_LINK_ICONS = array(
-                        'http'      => "themes/default/images/http.png",
-                        'https'     => "themes/default/images/https.png",
-                        'ftp'       => "themes/default/images/ftp.png",
-                        'mailto'    => "themes/MacOSX/mailto.png",
-                        'interwiki' => "themes/default/images/interwiki.png",
-                        '*'         => "themes/default/images/url.png"
-                        );
-
+/*
 $ToolbarImages = array(
 'RecentChanges' => array(
 '1 day'		=> "themes/$theme/locale/en/toolbars/RecentChanges/1day.png",
@@ -127,6 +113,7 @@ $ToolbarImages = array(
 '90 days'	=> "themes/$theme/locale/en/toolbars/RecentChanges/90days.png",
 '...'		=> "themes/$theme/locale/en/toolbars/RecentChanges/alltime.png")
 );
+*/
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
