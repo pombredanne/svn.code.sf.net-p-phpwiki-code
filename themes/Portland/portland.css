@@ -1,30 +1,19 @@
 /**
- * $Id: portland.css,v 1.6 2002-02-08 08:30:11 carstenklapp Exp $
+ * $Id: portland.css,v 1.7 2002-02-08 15:50:21 carstenklapp Exp $
  *
- * PhpWiki style sheet
- * Styles are kept to a minimum, so the printed page will otherwise
- * appear according to your browser's default font settings.
+ * PhpWiki's Portland style sheet based on the original Wiki
+ *
+ * Styles are kept to a minimum, so the page will mostly appear
+ * according to the browser's default font settings.
  */
 body {
   color : black;
   background : white;
 }
 
-a {
-  text-decoration : underline;
-}
-.rawurl {
-  text-decoration : underline;
-}
-
-.wiki {
-  text-decoration : underline;
-  font-weight : normal;
-}
-
 img {
   border : 0 none;
-}
+}y
 .linkicon {
   visibility : hidden;
   width :  0;
@@ -35,11 +24,3 @@ img {
   font-size : smaller;
 }
 
-.pagelist tr.evenrow {
-  color : black;
-  background : #eee;
-}
-.pagelist tr.oddrow {
-  color : black;
-  background : white;
-}
