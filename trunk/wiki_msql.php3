@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.12 2000-08-15 04:22:46 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.13 2000-08-16 03:30:58 wainstead Exp $ -->
 <?
 
    /*
@@ -243,7 +243,7 @@
                   "refs='$pagehash[refs]'," .
                   "version=$pagehash[version]";
 
-         $query  = "UPDATE $dbi[table] SET $PAIRS WHERE pagename='$pagename'";
+         $query  = "UPDATE $ArchivePageStore[table] SET $PAIRS WHERE pagename='$pagename'";
 
       } else {
          // do an insert
@@ -271,24 +271,24 @@
 
       // second, insert the page data
       // remove old data from page_table
-      $query = "delete from $dbi[page_table] where pagename='$pagename'";
+      $query = "delete from $ArchivePageStore[page_table] where pagename='$pagename'";
       // echo "Delete query: $query<br>\n";
       $retval = msql_query($query, $dbi['dbc']);
       if ($retval == false) 
-         echo "Delete on $dbi[page_table] failed: ", msql_error(), "<br>\n";
+         echo "Delete on $ArchivePageStore[page_table] failed: ", msql_error(), "<br>\n";
 
       // insert the new lines
       reset($pagehash["content"]);
 
       for ($x = 0; $x < count($pagehash["content"]); $x++) {
          $line = addslashes($pagehash["content"][$x]);
-         $query = "INSERT INTO $dbi[page_table] " .
+         $query = "INSERT INTO $ArchivePageStore[page_table] " .
                   "(pagename, lineno, line) " .
                   "VALUES('$pagename', $x, '$line')";
          // echo "Page line insert query: $query<br>\n";
          $retval = msql_query($query, $dbi['dbc']);
          if ($retval == false) 
-            echo "Insert into $dbi[page_table] failed: ", 
+            echo "Insert into $ArchivePageStore[page_table] failed: ", 
                   msql_error(), "<br>\n";
          
       }
