@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.16 2004-03-01 11:42:36 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.17 2004-03-01 13:48:45 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -77,8 +77,8 @@ extends WikiDB_backend
 */
         $parsed = parseDSN($dbparams['dsn']);
         $this->_dbh = &ADONewConnection($parsed['phptype']); // Probably only MySql works just now
-        $conn = $this->_dbh->PConnect($parsed['hostspec'],$parsed['username'], 
-                                      $parsed['password'], $parsed['database']);
+        $conn = $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
+                                     $parsed['password'], $parsed['database']);
 
 //  Error handling not needed here -all dealt with by adodb-errorhandler.inc.php		
 /*	if ($conn === false)  {
@@ -694,6 +694,13 @@ extends WikiDB_backend
         
         $this->lock();
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
+            if ($new = $this->_get_pageid($to, false)) {
+                //cludge alert!
+                //this page does not exist (already verified before), but exists in the page table.
+                //so we delete this page.
+                $dbh->query(sprintf("DELETE FROM $page_tbl WHERE id=$id",
+                                    $dbh->qstr($to)));
+            }
             $dbh->query(sprintf("UPDATE $page_tbl SET pagename=%s WHERE id=$id",
                                 $dbh->qstr($to)));
         }

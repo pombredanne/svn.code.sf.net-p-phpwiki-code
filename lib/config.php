@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.86 2004-02-28 21:14:08 rurban Exp $');
+rcs_id('$Id: config.php,v 1.87 2004-03-01 13:48:45 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -386,7 +386,6 @@ if (!defined('THEME'))
 
 if (!defined('HOME_PAGE'))
     define('HOME_PAGE', _("HomePage"));
-
 
 // FIXME: delete
 // Access log

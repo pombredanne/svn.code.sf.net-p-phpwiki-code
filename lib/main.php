@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.120 2004-03-01 10:22:41 rurban Exp $');
+rcs_id('$Id: main.php,v 1.121 2004-03-01 13:48:45 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -806,7 +806,6 @@ function main () {
 if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
 if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
 
-
     $validators = array('wikiname' => WIKI_NAME,
                         'args'     => hash($request->getArgs()),
                         'prefs'    => hash($request->getPrefs()));
@@ -839,6 +838,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.120  2004/03/01 10:22:41  rurban
+// initializeTheme optimize
+//
 // Revision 1.119  2004/02/26 20:45:06  rurban
 // check for ALLOW_ANON_USER = false
 //

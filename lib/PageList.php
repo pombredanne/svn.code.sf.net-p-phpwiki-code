@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.60 2004-03-01 09:36:02 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.61 2004-03-01 13:48:45 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -123,18 +123,16 @@ class _PageList_Column_base {
                                                             'nopurge' => '1')),
                                'class' => 'gridbutton', 
                                'title' => sprintf(_("Click to sort by %s"),$this->_field)),
-                         HTML::span(array('align'=>'left'), 
-                                    $this->_heading),
+                         $this->_heading,
                          HTML::raw('&nbsp;'),
-                         HTML::span(array('align'=>'right'), 
-                                    $src ? HTML::img(array('src' => $src, 
-                                                           'width' => '7', 
-                                                           'height' => '7', 
-                                                           'alt' => _("Click to reverse sort order")))
-                                         : HTML::img(array('src' => $Theme->getButtonURL('no_order'),
-                                                           'width' => '7', 
-                                                           'height' => '7', 
-                                                           'alt' => _("Click to sort")))));
+                         $src ? HTML::img(array('src' => $src, 
+                                                'width' => '7', 
+                                                'height' => '7', 
+                                                'alt' => _("Click to reverse sort order")))
+                         : HTML::img(array('src' => $Theme->getButtonURL('no_order'),
+                                           'width' => '7', 
+                                           'height' => '7', 
+                                           'alt' => _("Click to sort"))));
         } else {
             $s = $this->_heading;
         }
@@ -210,12 +208,12 @@ class _PageList_Column_checkbox extends _PageList_Column {
         if (!empty($pagelist->_selected[$pagename])) {
             return HTML::input(array('type' => 'checkbox',
                                      'name' => $this->_name . "[$pagename]",
-                                     'value' => $pagename,
+                                     'value' => 1,
                                      'checked' => 'CHECKED'));
         } else {
             return HTML::input(array('type' => 'checkbox',
                                      'name' => $this->_name . "[$pagename]",
-                                     'value' => $pagename));
+                                     'value' => 1));
         }
     }
     function format ($pagelist, $page_handle, &$revision_handle) {
@@ -262,9 +260,15 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
         $post_args = $GLOBALS['request']->getArg('admin_rename');
         $value = str_replace($post_args['from'], $post_args['to'],$page_handle->getName());
-        return HTML::div(" => ",HTML::input(array('type' => 'text',
+        $div = HTML::div(" => ",HTML::input(array('type' => 'text',
                                                   'name' => 'rename[]',
                                                   'value' => $value)));
+        $new_page = $GLOBALS['request']->getPage($value);
+        if ($new_page->exists()) {
+            $div->setAttr('class','error');
+            $div->setAttr('title',_("This page already exists"));
+        }
+        return $div;
     }
 };
 
