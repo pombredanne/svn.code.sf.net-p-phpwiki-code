@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.2.0\n"
-"POT-Creation-Date: 2001-05-21 09:36-0700\n"
+"POT-Creation-Date: 2001-05-31 09:42-0700\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -139,6 +139,10 @@ msgstr "Resultados de la búsqueda en el texto completo"
 msgid "Complete."
 msgstr ""
 
+#: ../lib/loadsave.php:16
+msgid "Return to "
+msgstr ""
+
 #: ../lib/loadsave.php:99 ../lib/main.php:158
 msgid "You must specify a directory to dump to"
 msgstr ""
@@ -166,6 +170,32 @@ msgstr ""
 #, fuzzy, c-format
 msgid "as version %d"
 msgstr "versi&oacute;n %s"
+
+#: ../lib/loadsave.php:263
+msgid "MIME file"
+msgstr ""
+
+#: ../lib/loadsave.php:268
+msgid "Serialized file"
+msgstr ""
+
+#: ../lib/loadsave.php:275
+msgid "plain file"
+msgstr ""
+
+# lib/stdlib.php:384 lib/stdlib.php:445
+#: ../lib/loadsave.php:363 ../lib/loadsave.php:378 ../lib/loadsave.php:409
+#: ../lib/stdlib.php:595 ../lib/stdlib.php:664
+msgid "RecentChanges"
+msgstr "CambiosRecientes"
+
+#: ../lib/loadsave.php:373
+msgid "The PhpWiki programming team"
+msgstr ""
+
+#: ../lib/loadsave.php:375
+msgid "Loading up virgin wiki"
+msgstr ""
 
 # lib/display.php:14
 #: ../lib/main.php:41 ../lib/main.php:99 ../lib/main.php:101
@@ -371,11 +401,6 @@ msgstr "%d mejores enlaces de salida:"
 msgid "%d most popular nearby:"
 msgstr "%d las m&aacute;s populares:"
 
-# lib/stdlib.php:384 lib/stdlib.php:445
-#: ../lib/stdlib.php:595 ../lib/stdlib.php:664
-msgid "RecentChanges"
-msgstr "CambiosRecientes"
-
 #: ../lib/stdlib.php:611
 msgid "The most recently changed pages are listed below."
 msgstr "Los cambios mas recientes son:"
@@ -388,6 +413,10 @@ msgstr "(primer dia de este Wiki)"
 msgid "Quick title search:"
 msgstr "Busqueda rápida de páginas:"
 
+#: ../lib/stdlib.php:645
+msgid "(new)"
+msgstr ""
+
 # lib/stdlib.php:330
 #: ../lib/transform.php:114
 #, fuzzy
@@ -399,8 +428,26 @@ msgstr "L&iacute;mites de la pila excedidos en SetHTMLOutputMode"
 msgid "Search"
 msgstr "Buscar"
 
+#: ../lib/userauth.php:83
+#, c-format
+msgid "to perform action '%s'"
+msgstr ""
+
+#: ../lib/userauth.php:85
+msgid "to do that"
+msgstr ""
+
+#: ../lib/userauth.php:86
+msgid "You must be logged in as an administrator"
+msgstr ""
+
+#: ../lib/userauth.php:154
+msgid ""
+"You must set the administrator account and password before you can log in."
+msgstr ""
+
 # admin.php:26
-#: ../lib/userauth.php:158
+#: ../lib/userauth.php:166
 msgid "You entered an invalid login or password."
 msgstr ""
 "Se h&aacute; introducido un nombre de usuario o palabra de paso invalido."

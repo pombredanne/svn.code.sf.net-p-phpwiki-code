@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.9\n"
-"POT-Creation-Date: 2001-05-21 09:36-0700\n"
+"POT-Creation-Date: 2001-05-31 09:42-0700\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -109,6 +109,10 @@ msgstr "Sökresultat för fulltextsökning"
 msgid "Complete."
 msgstr ""
 
+#: ../lib/loadsave.php:16
+msgid "Return to "
+msgstr ""
+
 #: ../lib/loadsave.php:99 ../lib/main.php:158
 msgid "You must specify a directory to dump to"
 msgstr ""
@@ -135,6 +139,31 @@ msgstr ""
 #, fuzzy, c-format
 msgid "as version %d"
 msgstr "version %s"
+
+#: ../lib/loadsave.php:263
+msgid "MIME file"
+msgstr ""
+
+#: ../lib/loadsave.php:268
+msgid "Serialized file"
+msgstr ""
+
+#: ../lib/loadsave.php:275
+msgid "plain file"
+msgstr ""
+
+#: ../lib/loadsave.php:363 ../lib/loadsave.php:378 ../lib/loadsave.php:409
+#: ../lib/stdlib.php:595 ../lib/stdlib.php:664
+msgid "RecentChanges"
+msgstr "SenasteÄndringar"
+
+#: ../lib/loadsave.php:373
+msgid "The PhpWiki programming team"
+msgstr ""
+
+#: ../lib/loadsave.php:375
+msgid "Loading up virgin wiki"
+msgstr ""
 
 #: ../lib/main.php:41 ../lib/main.php:99 ../lib/main.php:101
 msgid "HomePage"
@@ -306,10 +335,6 @@ msgstr "De %d mest använda utgående länkarna:"
 msgid "%d most popular nearby:"
 msgstr "De %d mest populära grannarna:"
 
-#: ../lib/stdlib.php:595 ../lib/stdlib.php:664
-msgid "RecentChanges"
-msgstr "SenasteÄndringar"
-
 #: ../lib/stdlib.php:611
 msgid "The most recently changed pages are listed below."
 msgstr "De senaste ändrade sidorna listas nedan."
@@ -322,6 +347,10 @@ msgstr "(första dagen för den här Wikin)"
 msgid "Quick title search:"
 msgstr "Snabb titelsökning:"
 
+#: ../lib/stdlib.php:645
+msgid "(new)"
+msgstr ""
+
 #: ../lib/transform.php:114
 #, fuzzy
 msgid "Lists nested too deep in SetHTMLOutputMode"
@@ -331,7 +360,25 @@ msgstr "Stackgräns överskriden i SetHTMLOutputMode"
 msgid "Search"
 msgstr "Sök"
 
-#: ../lib/userauth.php:158
+#: ../lib/userauth.php:83
+#, c-format
+msgid "to perform action '%s'"
+msgstr ""
+
+#: ../lib/userauth.php:85
+msgid "to do that"
+msgstr ""
+
+#: ../lib/userauth.php:86
+msgid "You must be logged in as an administrator"
+msgstr ""
+
+#: ../lib/userauth.php:154
+msgid ""
+"You must set the administrator account and password before you can log in."
+msgstr ""
+
+#: ../lib/userauth.php:166
 msgid "You entered an invalid login or password."
 msgstr "Du har angett ett otillåtet användarnamn eller lösenord."
 
