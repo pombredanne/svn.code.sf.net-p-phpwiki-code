@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.13 2004-04-01 15:57:20 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.14 2004-05-18 15:35:54 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -64,9 +64,9 @@ if ($dbi->isWikiPage($Theme->calendarBase())) {
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
 
-//$Theme->setDefaultCSS(_("Sidebar"), 'sidebar.css');
+$Theme->setDefaultCSS(_("Sidebar"), 'sidebar.css');
 //$Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
-$Theme->setDefaultCSS('PhpWiki', 'phpwiki.css');
+//$Theme->setDefaultCSS('PhpWiki', 'phpwiki.css');
 $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
