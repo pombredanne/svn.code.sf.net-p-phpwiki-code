@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.37 2002-02-08 22:02:59 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.38 2002-03-21 21:24:49 lakka Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -339,8 +339,8 @@ function showDiff (&$request) {
     if ($old and $old->getVersion() == 0)
         $old = false;
     
-    $html->pushContent(HTML::Table(PageInfoRow(_("Newer page:"), $new, &$request),
-                                   PageInfoRow(_("Older page:"), $old, &$request)));
+    $html->pushContent(HTML::Table(PageInfoRow(_("Newer page:"), $new, $request),
+                                   PageInfoRow(_("Older page:"), $old, $request)));
     
     if ($new && $old) {
         $diff = new Diff($old->getContent(), $new->getContent());
