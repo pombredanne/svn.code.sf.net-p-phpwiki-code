@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.8 2002-01-21 19:00:05 carstenklapp Exp $');
+rcs_id('$Id: BackLinks.php,v 1.9 2002-01-21 19:18:16 carstenklapp Exp $');
 /**
  */
 
@@ -40,7 +40,7 @@ extends WikiPlugin
     // anything else would be useful anyway).
 
         if ($info)
-            $pagelist->insertColumn(_(ucfirst($info)));
+            $pagelist->insertColumn(_($info));
 
         $n = false;
         while ($backlink = $backlinks->next()) {
