@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.2 2004-02-12 11:45:11 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.3 2004-02-12 13:05:50 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -67,25 +67,23 @@ extends WikiPlugin_WikiAdminSelect
         $ul = HTML::ul();
         $count = 0;
         foreach ($pages as $name) {
-            if (($newname = $this->renameHelper($name,$from,$to)) and $newname != $name) {
-                //Fixme!
-                break;
-                $dbi->renamePage($name,$newname); /* not yet implemented */
-                $ul->pushContent(HTML::li(fmt("Renamed page '%s' to '%s'.", $name, $newname)));
+            if ( ($newname = $this->renameHelper($name,$from,$to)) and 
+                  $newname != $name and
+                  $dbi->renamePage($name,$newname) ) {
+                /* not yet implemented for all backends */
+                $ul->pushContent(HTML::li(fmt("Renamed page '%s' to '%s'.",$name,WikiLink($newname))));
                 $count++;
-            } elseif (! $newname) {
+            } else {
                 $ul->pushContent(HTML::li(fmt("Couldn't rename page '%s' to '%s'.", $name, $newname)));
             }
         }
         if ($count) {
             $dbi->touch();
             return HTML($ul,
-                        HTML::p(fmt("%s pages have been permanently renamed.",$count)),
-                        HTML::p(HTML::em(fmt("WikiDB::renamePage(\"%s\",\"%s\") not yet implemented for this backend.",$name,$newname))));
+                        HTML::p(fmt("%s pages have been permanently renamed.",$count)));
         } else {
             return HTML($ul,
-                        HTML::p(fmt("No pages renamed.")),
-                        HTML::p(HTML::em(fmt("WikiDB::renamePage(\"%s\",\"%s\") not yet implemented for this backend.",$name,$newname))));
+                        HTML::p(fmt("No pages renamed.")));
         }
     }
     
@@ -182,6 +180,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/02/12 11:45:11  rurban
+// only WikiDB method missing
+//
 // Revision 1.1  2004/02/11 20:00:16  rurban
 // WikiAdmin... series overhaul. Rename misses the db backend methods yet. Chmod + Chwon still missing.
 //

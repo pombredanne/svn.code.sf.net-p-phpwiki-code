@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.8 2004-02-11 20:00:16 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.9 2004-02-12 13:05:50 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,11 +47,11 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
-        return array('s'   => '*',
+        return array('s'       => '', // preselect pages
                      'only'    => '',
                      'exclude' => '',
                      'info'    => 'most',
@@ -69,8 +69,8 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, $request) {
-        if ($request->getArg('action') != 'browse')
-            return $this->disabled("(action != 'browse')");
+        //if ($request->getArg('action') != 'browse')
+        //    return $this->disabled("(action != 'browse')");
         $args = $this->getArgs($argstr, $request);
         if (!empty($args['only']))
             $only = explodePageList($args['only']);
@@ -142,7 +142,7 @@ extends WikiPlugin
             }
         } elseif (empty($args['s'])) {
             // List all pages to select from.
-            $this->collectPages($this->_list, $dbi, $sortby);
+            $this->collectPages($this->_list, $dbi, $args['sortby']);
         }
         $pagelist = new PageList_Selectable($info
                                             ? 'checkbox,' . $info
@@ -195,6 +195,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/02/11 20:00:16  rurban
+// WikiAdmin... series overhaul. Rename misses the db backend methods yet. Chmod + Chwon still missing.
+//
 // Revision 1.7  2004/01/27 23:23:39  rurban
 // renamed ->Username => _userid for consistency
 // renamed mayCheckPassword => mayCheckPass

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.34 2004-01-26 09:17:48 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.35 2004-02-12 13:05:49 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,13 +87,13 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.34 $");
+        //                    "\$Revision: 1.35 $");
     }
 
     function getArgs($argstr, $request=false, $defaults = false) {
         if ($defaults === false)
             $defaults = $this->getDefaultArguments();
-
+        //Fixme: on POST argstr is empty
         list ($argstr_args, $argstr_defaults) = $this->parseArgStr($argstr);
         $args = array();
         if (!empty($defaults))
