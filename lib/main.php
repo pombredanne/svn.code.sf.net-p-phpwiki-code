@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.103 2003-12-02 00:10:00 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.104 2003-12-26 06:41:16 carstenklapp Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -719,8 +719,39 @@ function is_safe_action ($action) {
     return WikiRequest::requiredAuthorityForAction($action) < WIKIAUTH_ADMIN;
 }
 
+function validateSessionPath() {
+    // Try to defer any session.save_path PHP errors before any html
+    // is output, which causes some versions of IE to display a blank
+    // page (due to its strict mode while parsing a page?).
+    if (! is_writeable(ini_get('session.save_path'))) {
+        $tmpdir = '/tmp';
+        trigger_error
+            (sprintf(_("%s is not writable."),
+                     _("The session.save_path directory"))
+             . "\n"
+             . sprintf(_("Please ensure that %s is writable, or redefine %s in index.php."),
+                       sprintf(_("the directory '%s'"),
+                               ini_get('session.save_path')),
+                       'session.save_path')
+             . "\n"
+             . sprintf(_("Attempting to use the directory '%s' instead."),
+                       $tmpdir)
+             , E_USER_NOTICE);
+        if (! is_writeable($tmpdir)) {
+            trigger_error
+                (sprintf(_("%s is not writable."), $tmpdir)
+                 . "\n"
+                 . _("Users will not be able to sign in.")
+                 , E_USER_NOTICE);
+        }
+        else
+            ini_set('session.save_path', $tmpdir);
+    }
+}
 
 function main () {
+    validateSessionPath();
+
     global $request;
 
     $request = new WikiRequest();
@@ -790,6 +821,11 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2003/12/02 00:10:00  carstenklapp
+// Bugfix: Ongoing work to untangle UserPreferences/WikiUser/request code
+// mess: UserPreferences should take effect immediately now upon signing
+// in.
+//
 // Revision 1.102  2003/11/25 22:55:32  carstenklapp
 // Localization bugfix: For wikis where English is not the default system
 // language, make sure that the authority error message (i.e. "You must
