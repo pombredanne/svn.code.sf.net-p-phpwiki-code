@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.8 2001-11-09 15:36:03 dairiki Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.9 2001-12-02 07:39:03 carstenklapp Exp $'); 
    // end essential internal stuff
 
 
@@ -174,6 +174,9 @@
    // If this is left blank (or unset), the signature will be omitted.
    $SignatureImg = "images/signature.png";
 
+   // this turns on url indicator icons, inserted before embedded links
+   //define("USE_LINK_ICONS", 1);
+
    // date & time formats used to display modification times, etc.
    // formats are given as format strings to PHP date() function
    $datetimeformat = "F j, Y";	// may contain time of day
@@ -195,6 +198,10 @@
 
    // URLs ending with the following extension should be inlined as images
    $InlineImages = "png|jpg|gif";
+
+   // Uncomment this to automatically split WikiWords by inserting spaces.
+   // The default is to leave WordsSmashedTogetherLikeSo in the body text.
+   //define("autosplit_wikiwords", 1);
 
    // Perl regexp for WikiNames
    // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well

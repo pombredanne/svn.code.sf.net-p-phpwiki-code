@@ -1,8 +1,10 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21.2.6 2001-11-08 22:20:19 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.7 2001-12-02 07:39:15 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
          ExitWiki($errormsg)
+         pcre_fix_posix_classes($regexp)
+         split_pagename($page)
          LinkExistingWikiWord($wikiword, $linktext) 
          LinkUnknownWikiWord($wikiword, $linktext) 
          LinkURL($url, $linktext)
@@ -41,11 +43,75 @@
    }
 
 
+/**
+ * pcre_fix_posix_classes is required to autosplit_wikiwords.
+ * Called by the split_pagename function.
+ */
+function pcre_fix_posix_classes ($regexp) {
+    // First check to see if our PCRE lib supports POSIX character
+    // classes.  If it does, there's nothing to do.
+    if (preg_match('/[[:upper:]]/', 'A'))
+        return $regexp;
+
+    static $classes = array(
+                            'alnum' => "0-9A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
+                            'alpha' => "A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
+                            'upper' => "A-Z\xc0-\xd6\xd8-\xde",
+                            'lower' => "a-z\xdf-\xf6\xf8-\xff"
+                            );
+
+    $keys = join('|', array_keys($classes));
+
+    return preg_replace("/\[:($keys):]/e", '$classes["\1"]', $regexp);
+}
+
+
+/**
+ * Split WikiWords in page names.
+ *
+ * It has been deemed useful to split WikiWords (into "Wiki Words")
+ * in places like page titles.  This is rumored to help search engines
+ * quite a bit.
+ *
+ * @param $page string The page name.
+ *
+ * @return string The split name.
+ */
+function split_pagename ($page) {
+    
+    if (preg_match("/\s/", $page))
+        return $page;           // Already split --- don't split any more.
+
+    // FIXME: this algorithm is Anglo-centric.
+    static $RE;
+    if (!isset($RE)) {
+        // This mess splits between a lower-case letter followed by either an upper-case
+	// or a numeral; except that it wont split the prefixes 'Mc', 'De', or 'Di' off
+        // of their tails.
+			$RE[] = '/([[:lower:]])((?<!Mc|De|Di)[[:upper:]]|\d)/';
+        // This the single-letter words 'I' and 'A' from any following capitalized words.
+        $RE[] = '/(?: |^)([AI])([[:upper:]])/';
+	// Split numerals from following letters.
+        $RE[] = '/(\d)([[:alpha:]])/';
+
+        foreach ($RE as $key => $val)
+            $RE[$key] = pcre_fix_posix_classes($val);
+    }
+
+    foreach ($RE as $regexp)
+        $page = preg_replace($regexp, '\\1 \\2', $page);
+    return $page;
+}
+
+
    function LinkExistingWikiWord($wikiword, $linktext='') {
       global $ScriptUrl;
       $enc_word = rawurlencode($wikiword);
       if(empty($linktext))
          $linktext = htmlspecialchars($wikiword);
+      if (defined("autosplit_wikiwords"))
+         $linktext=split_pagename($linktext);
+
       return "<a href=\"$ScriptUrl?$enc_word\">$linktext</a>";
    }
 
@@ -54,6 +120,9 @@
       $enc_word = rawurlencode($wikiword);
       if(empty($linktext))
          $linktext = htmlspecialchars($wikiword);
+      if (defined("autosplit_wikiwords"))
+         $linktext=split_pagename($linktext);
+
       return "<u>$linktext</u><a href=\"$ScriptUrl?edit=$enc_word\">?</a>";
    }
 
@@ -319,7 +388,25 @@
             $link['link'] = LinkImage($URL, $linkname);
          } else {
 	    $link['type'] = "url-$linktype";
-            $link['link'] = LinkURL($URL, $linkname);
+        
+        if (!defined("USE_LINK_ICONS")) {
+           $link['link'] = LinkURL($URL, $linkname);
+        } else {
+           //preg_split((.*?):(.*)$, $URL, $matches);
+           //preg_split("[:]", $URL, $matches);
+           //$protoc = $matches[1]
+           $protoc = substr($URL, 0, strrpos($URL, ":"));
+           if ($protoc == "mailto") {
+               $link['link'] = "<img src=\"" . DATA_PATH . "/images/mailto.png\"> " . LinkURL($URL, $linkname);
+           } elseif ($protoc == "http") { 
+               $link['link'] = "<img src=\"" . DATA_PATH . "/images/http.png\"> " . LinkURL($URL, $linkname);
+           } elseif ($protoc == "https") { 
+               $link['link'] = "<img src=\"" . DATA_PATH . "/images/https.png\"> " . LinkURL($URL, $linkname);
+           } elseif ($protoc == "ftp") { 
+               $link['link'] = "<img src=\"" . DATA_PATH . "/images/ftp.png\"> " . LinkURL($URL, $linkname);
+            } else {
+               $link['link'] = LinkURL($URL, $linkname);
+           }
 	 }
       } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
 	 $link['type'] = "url-wiki-$linktype";
@@ -488,7 +575,7 @@
       _iftoken('ADMIN', defined('WIKI_ADMIN'), $page);
 
       _dotoken('SCRIPTURL', $ScriptUrl, $page);
-      _dotoken('PAGE', htmlspecialchars($name), $page);
+      _dotoken('PAGE', split_pagename(htmlspecialchars($name)), $page);
       _dotoken('ALLOWEDPROTOCOLS', $AllowedProtocols, $page);
       _dotoken('LOGO', $logo, $page);
       
