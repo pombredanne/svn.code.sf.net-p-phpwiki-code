@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.70 2005-01-18 20:55:43 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.71 2005-01-25 08:01:00 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -75,19 +75,22 @@ extends WikiDB_backend
     function WikiDB_backend_ADODB ($dbparams) {
         $parsed = parseDSN($dbparams['dsn']);
         $this->_dbparams = $dbparams;
+        $this->_parsedDSN =& $parsed;
         $this->_dbh = &ADONewConnection($parsed['phptype']);
         if (DEBUG & _DEBUG_SQL) {
             $this->_dbh->debug = true;
             $GLOBALS['ADODB_OUTP'] = '_sql_debuglog';
         }
         $this->_dsn = $parsed;
-        if (!empty($parsed['persistent']))
+        // persistent is defined as DSN option, or with a config value.
+        //   phptype://username:password@hostspec/database?persistent=false
+        if (!empty($parsed['persistent']) or DATABASE_PERSISTENT)
             $conn = $this->_dbh->PConnect($parsed['hostspec'],$parsed['username'], 
                                           $parsed['password'], $parsed['database']);
         else
             $conn = $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
                                          $parsed['password'], $parsed['database']);
-        
+
         // Since 1.3.10 we use the faster ADODB_FETCH_NUM,
         // with some ASSOC based recordsets.
         $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
@@ -1116,10 +1119,26 @@ extends WikiDB_backend
     function listOfTables() {
         return $this->_dbh->MetaTables();
     }
-    function listOfFields($database,$table) {
+    
+    // other database needs another connection and other privileges.
+    function listOfFields($database, $table) {
         $field_list = array();
-        foreach ($this->_dbh->MetaColumns($table,false) as $field) {
+        $old_db = $this->database();
+        if ($database != $old_db) {
+            $conn = $this->_dbh->Connect($this->_parsedDSN['hostspec'], 
+            				 DBADMIN_USER ? DBADMIN_USER : $this->_parsedDSN['username'], 
+                                         DBADMIN_PASSWD ? DBADMIN_PASSWD : $this->_parsedDSN['password'], 
+                                         $database);
+        }
+        foreach ($this->_dbh->MetaColumns($table, false) as $field) {
             $field_list[] = $field->name;
+        }
+        if ($database != $old_db) {
+            $this->_dbh->close();
+            $conn = $this->_dbh->Connect($this->_parsedDSN['hostspec'], 
+            				 $this->_parsedDSN['username'], 
+                                         $this->_parsedDSN['password'], 
+                                         $old_db);
         }
         return $field_list;
     }
@@ -1394,6 +1413,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2005/01/18 20:55:43  rurban
+// reformatting and two bug fixes: adding missing parens
+//
 // Revision 1.69  2004/12/26 17:14:03  rurban
 // fix ADODB MostPopular, avoid limit -1, pass hits on empty data
 //
