@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.18 2004-03-11 13:30:47 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.19 2004-03-11 16:27:30 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -731,9 +731,7 @@ class GroupFile extends WikiGroup {
      */ 
     function getMembersOf($group){
     	if ($this->specialGroup($group)) {
-            trigger_error(__sprintf("Undefined method %s for special group %s",
-                                    'getMembersOf',$group),
-                          E_USER_WARNING);
+            return WikiGroup::getMembersOf($group);
         } else {
             if (!empty($this->_file->users[$group])) {
                 return explode(' ',$this->_file->users[$group]);
@@ -818,8 +816,23 @@ class GroupLdap extends WikiGroup {
             }
         }
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
-            $r = @ldap_bind($ldap); 		    // this is an anonymous bind
-            $sr = ldap_search($ldap, "ou=Users,".$this->base_dn,"uid=$username");
+            if (defined('LDAP_AUTH_USER'))
+                if (defined('LDAP_AUTH_PASSWORD'))
+                    // Windows Active Directory Server is strict
+                    $r = @ldap_bind($ldap,LDAP_AUTH_USER,LDAP_AUTH_PASSWORD); 
+                else
+                    $r = @ldap_bind($ldap,LDAP_AUTH_USER); 
+            else
+                $r = @ldap_bind($ldap); // this is an anonymous bind
+            if (!empty($LDAP_SET_OPTION)) {
+                foreach ($LDAP_SET_OPTION as $key => $value) {
+                    ldap_set_option($ldap,$key,$value);
+                }
+            }
+            $st_search = defined('LDAP_SEARCH_FIELD') 
+                ? LDAP_SEARCH_FIELD."=$username"
+                : "uid=$username";
+            $sr = ldap_search($ldap, "ou=Users,".$this->base_dn,$st_search);
             $info = ldap_get_entries($ldap, $sr);
             for ($i = 0; $i < $info["count"]; $i++) {
             	if ($info[$i]["gidnumber"]["count"]) {
@@ -830,6 +843,9 @@ class GroupLdap extends WikiGroup {
                     $membership[] =  $info2[0]["cn"][0];
             	}
             }
+        } else {
+            trigger_error(fmt("Unable to connect to LDAP server %s", LDAP_AUTH_HOST), 
+                          E_USER_WARNING);
         }
         ldap_close($ldap);
         $this->membership = $membership;
@@ -844,6 +860,9 @@ class GroupLdap extends WikiGroup {
      * @return array Array of usernames that have joined the group.
      */ 
     function getMembersOf($group){
+    	if ($this->specialGroup($group))
+            return WikiGroup::getMembersOf($group);
+
         $members = array();
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
             $r = @ldap_bind($ldap); 		    // this is an anonymous bind
@@ -864,6 +883,10 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/03/11 13:30:47  rurban
+// fixed File Auth for user and group
+// missing only getMembersOf(Authenticated Users),getMembersOf(Every),getMembersOf(Signed Users)
+//
 // Revision 1.17  2004/03/10 15:38:48  rurban
 // store current user->page and ->action in session for WhoIsOnline
 // better WhoIsOnline icon
