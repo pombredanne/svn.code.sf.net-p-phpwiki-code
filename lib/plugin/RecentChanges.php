@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.66 2002-08-20 18:26:12 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.67 2002-10-12 09:47:05 carstenklapp Exp $');
 /**
  */
 
@@ -344,7 +344,7 @@ extends _RecentChanges_HtmlFormatter
                                'align' => 'right',
                                'width' => 32
                                ));
-        $linkurl = WikiLink(HomePage, false, $img);
+        $linkurl = WikiLink(HOME_PAGE, false, $img);
         $linkurl->setAttr('target', '_content');
         return $linkurl;
     }
@@ -373,6 +373,21 @@ extends _RecentChanges_HtmlFormatter
         $linkurl->setAttr('target', '_content');
         return $linkurl;
     }
+    // Overriding summaryAsHTML, because there is no way yet to
+    // return summary as transformed text with
+    // links setAttr('target', '_content') in Mozilla sidebar.
+    // So for now don't create clickable links inside summary
+    // in the sidebar, or else they target the sidebar and not the
+    // main content window.
+    function summaryAsHTML ($rev) {
+        if ( !($summary = $this->summary($rev)) )
+            return '';
+        return HTML::strong(array('class' => 'wiki-summary'),
+                                "[",
+                                /*TransformLinks(*/$summary,/* $rev->get('markup')),*/
+                                "]");
+    }
+
 
     function format ($changes) {
         $this->_args['daylist'] = false; //only 1 day for Mozilla sidebar
