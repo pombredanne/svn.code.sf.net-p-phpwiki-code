@@ -1,293 +1,37 @@
-/*
-  $Id: phpwiki.css,v 1.36 2002-02-10 05:22:12 carstenklapp Exp $
+/**
+ * $Id: phpwiki.css,v 1.37 2002-02-10 11:05:40 carstenklapp Exp $
+ *
+ * This incarnation of this stylesheet is a complete rewrite from the
+ * ground up. It has not yet been tested against NS4.
+ *
+ * Mozilla's "DOM Inspector" Sidebar was an invaluable troubleshooting
+ * tool for mapping the more complex CSS node selectors, such as those
+ * used to reference the various CalendarPlugin elements.
+ */
 
-  Classes:
-
-  div.wikitext - the transformed wiki page text.
-
-  a.wiki            - link to page in wiki.
-  a.named-wiki      - a named link to page in wiki (from e.g. [name|WikiPage]).
-  a.interwiki       - link to page in another wiki
-    span.wikipage   - page name within interwiki link.
-  a.named-interwiki - link to page in another wiki
-  a.url             - link to external URL from wiki page.
-  a.named-url       - link to external URL from wiki page.
-
-  .wikiunknown a, .wikiunknown u
-  .named-wikiunknown a, .named-wikiunknown u
-  
-  a.wikiaction
-  a.wikiadmin
-  .wikiunsafe
-
-  a.backlinks
-  
-TODO: Get rid of tables in wikiaction forms.
-*/
-
-/* NS4 doesn't grok @import.  This allows us to put things which
+/**
+ * NS4 doesn't grok @import.  This allows us to put things which
  * break NS4 in another file. As of OmniWeb 4.1, OW now @imports :-(
  */
 @import url(phpwiki-heavy.css);
 
-body { background: ivory; } /* #ffe */
 
-body { font-family: arial, helvetica, sans-serif; }
+/**
+ * General
+ */ 
+img {
+  border: 0;
+  vertical-align: baseline;
+}
 
-/*
- * NS4, defaults from BODY don't always propagate correctly.
- * So we need this:
- */
-.wikitext, .toolbar, p, td { font-family: arial, helvetica, sans-serif; }
-
-input.button { font-family: arial, helvetica, sans-serif; }
-
+form { margin: 0; }
+input { margin: 0.1em; }
 input.numeric { text-align: right; }
-
-.wikitext pre { font-family: monospace; }
-
-div.wikitext {
- background:    white;
- border:         thin;
- border-color:  black;
- border-style:  solid;
- padding-left:  0.8em; 
- padding-right: 0.8em; 
- padding-top:     0px;
- padding-bottom:  0px;
- margin-left:   0.5ex;
- margin-right:  0.5ex;
- /* This breaks Netscape 4: (display does not go full width).
-    width: auto;
- */
- clear: both;
+table {
+  border-spacing: 1px;
+  /* For Mozilla */
+  empty-cells: show;
 }
-
-p.editdate { margin-bottom: 0ex; }
-
-input.wikitext { margin:0px; }
-
-div.toolbar { margin: 1ex 0ex; }
-
-/*
- * FIXME: how much of this is needed anymore?
- *
- * This is a kluge for NS4 which doesn't honor the clear: settings on
- * .tool-left and .tool-right.
- *
- * Putting in explicit <br clear="all"> messes up the formatting in
- * other browsers.  Instead we'll put in a:
- *
- *  <div class="br"><br class="ignore" clear="all"></div>
- *
- * The clear:both on DIV.br seems to work.  And we'll disable the <br> altogether (in
- * CSS aware browsers) by setting display:none.
- *
- * Actually, I haven't yet found a browser which doesn't put a line break
- * between successive <div>'s.  This makes the <br class="ignore"> completely
- * unnecessary. 
- */
-div.br { clear:both; line-height: 0px; }
-.ignore { display: none; }
-
-/* FIXME: some problems in NS4 */
-div.errors {
- background: #eee;
- border: medium;
- border-color: red;
- border-style: solid;
- padding-left: 0.8em; 
- padding-right: 0.8em; 
- padding-top: 0px;
- padding-bottom: 0px;
- margin: 1em;
- /* This breaks Netscape 4: (display does not go full width).
-    width: auto;
- */
- clear: both;
-}
-
-/* FIXME: to be cleaned up/simplified */
-.errors h4 {
- color:red;
- text-decoration: underline;
- margin:0px;
-}
-
-p.error {
- font-size: smaller;
- font-family: monospace;
- margin:0px;
-}
-.error ul
-{
- font-size: smaller;
- font-family: monospace;
-}
-
-/*
- * Style for <hr>s in wiki markup.
- */
-.wikitext hr {
- background: #666;
- height: 1px;
- width: 90%;
- margin-left:auto;
- margin-right:auto;
-/* this is not valid css but NS4 needs it to center the 90% wide line */
- align: center;
-}
-
-
-/*
- * Link styles
- */
-/* Wiki Links */
-a.wiki { text-decoration: none; }
-.wiki  { font-weight: bold; }
-/* This is obscene in NS4
-b .wiki, strong .wiki { font-size: larger; }
-*/
-
-/* Unknown links */
-.wikiunknown a, .named-wikiunknown a, .wikiunknown u
-{ text-decoration: none; }
-
-.wikiunknown, .named-wikiunknown
-{ color: #600; }
-
-/* This renders the ? invisible in OW4.1 < sp29 */
-.wikiunknown A, .named-wikiunknown
-{ color: white; background-color: #600; }
-
-/* Interwiki links */
-a.interwiki { text-decoration: none; }
-.wikipage   { font-weight: bold; }
-
-.interwiki,
-i .interwiki .wikipage, em .interwiki .wikipage
-{ font-style: oblique; }
-
-.interwiki .wikipage,
-i .interwiki, em .interwiki  
-{ font-style: normal; }
-
-/*
- * wikiaction, wikiadmin, wikiunsafe:
- */
-a.wikiaction, a.wikiadmin	{ text-decoration: none; }
-a.wikiaction, .wikiaction table, span.wikiaction { background-color: #ddd; }
-a.wikiadmin, .wikiadmin table	{ background-color: #fdd; }
-.wikiunsafe                     { background-color: #ccc; }
-
-/*
- * No border on external link icons.
- */
-img.linkicon,
-img.rssicon     { border: 0px; }
-img.rssicon	{ vertical-align: top; }
-
-/*
- * Put a border around wikiaction forms:
- * This doesn't work for NS4.
- */
-.wikiaction table, .wikiadmin table
-{
-  border-style: ridge;
-  border-width: medium;
-}
-.wikiaction table { border-color: #9cf; }
-.wikiadmin table  { border-color: #f99; }
-
-/* Backlinks */
-a.backlinks { color: #006; }
-
-/* Make the textarea on the edit page full width */
-textarea.wikiedit { width: 100%; margin-top: 1ex; }
-
-#editarea-size {
-  margin-top: 1ex;
-  text-align: right;
-  font-size: smaller;
-}
-
-/* Calendar plugin */
-
-a.cal-hide, a.cal-arrow { text-decoration: none; }
-.cal-arrow       { font-weight: bold; }
-table.cal-header { font-size: larger; }
-.cal-dayname     { font-size: smaller; text-decoration: underline; }
-td.cal-today,
- table.cal       { border: thin solid black; } 
-
-/* IncludePage plugin */
-.transclusion-title {
-  font-style: oblique;
-  font-size: smaller; /* 0.75em; */
-  text-decoration: underline;
-  text-align: right;
-} 
-
-div.transclusion { 
-  background:     #cfc;
-  border:         thin;
-  border-style:  solid;
-  padding-left:  0.8em; 
-  padding-right: 0.8em; 
-  padding-top:     0px;
-  padding-bottom:  0px;
-  margin:    0.5ex 0px;
-}
-
-/* The transclusion of the TextEditingRules Synopsis on templates/editpage.html */
-div.wiki-edithelp .transclusion {
-  font-size:   smaller;
-  background:  inherit;
-  padding: 0.5ex 0.5em;
-  margin:     0.2ex 5%;
-}
-div.wiki-edithelp .transclusion p {
-  margin: 0;
-}
-div.wiki-edithelp {
-  background: #fff8dc; /* darker ivory */
-  font-size:  smaller;
-  padding: 0.05ex 2pt;
-}
-  
-/****************************************************************
- **
- ** Diff Output
- **
- *****************************************************************/
-.diff .block	{ padding: 0.5ex 0.5em; margin: 0.5ex 0; }
-.diff .block tt	{ font-weight: bold; }
-.diff del,
-.diff ins	{ font-weight: bold; text-decoration: none; }
-
-/* These screw up NS4 --- moved to phpwiki-heavy.css
-.diff .block div { position: relative; padding-left: 1.5em; } 
-.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
-*/
-
-.diff .block	{ background: #ccc; }
-.diff .context	{ background: #fff; }
-.diff .original,
-.diff .deleted	{ background: #fcc; }
-.diff .final,
-.diff .added	{ background: #cfc; }
-/*
-.diff .original	{ background: #feb; }
-.diff .final	{ background: #efb; }
-*/
-/* These don't work in NS4 -- it completely ignores <del> and <ins>. */
-.diff del	{ background: #f99; }
-.diff ins	{ background: #9f9; }
-
-/* PageList output */
-.pagelist tr.evenrow { background: #eeeeee; }
-.pagelist tr.oddrow  { background: white; }
-
 caption {
   caption-side: top;
   text-align: left;
@@ -296,6 +40,342 @@ caption {
      Mac ie5.1 ignores this*/
   width: 100%;
 }
+
+
+/**
+ * Wiki
+ */
+
+/* Main wiki text box */
+body {
+  /* ivory */
+  background: #ffe;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+div.wikitext {
+  background: white;
+  border: thin black solid;
+  padding-left:  0.8em; 
+  padding-right: 0.8em;
+  padding-top:     0px;
+  padding-bottom:  0px;
+  margin-left:  0.5em;
+  margin-right: 0.5em;
+  /*This breaks Netscape 4: (display does not go full width).
+   * width: auto;
+   */
+  clear: both;
+  /* user's browser settings *
+  font-family: none; */
+}
+div.wikitext hr { height: 1px; }
+
+div.wikitext pre { font-family: monospace; }
+
+
+/**
+ * Link styles
+ */
+.wiki {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/**
+ * wikiaction, wikiadmin, wikiunsafe:
+ */
+.wikiaction, .wikiadmin, .wiki-rc-action, .backlinks { 
+  text-decoration: none;
+}
+.backlinks { color: #006; }
+
+.wikiaction, .wikiaction table, span.wikiaction {
+  border: 1px outset;
+  background-color: #ddd;
+}
+.wikiadmin, .wikiadmin table {
+  border: 1px outset;
+  background-color: #fdd;
+}
+.wikiunsafe {
+  border: 1px outset;
+  background-color: #ccc;
+}
+
+
+/* Unknown links */
+.wikiunknown a, .named-wikiunknown a, .wikiunknown u {
+  text-decoration: none;
+}
+
+/* Interwiki links */
+.wikipage  { font-weight: bold; }
+.interwiki { text-decoration: none; }
+.interwiki, i.interwiki .wikipage, em .interwiki .wikipage {
+  font-style: oblique;
+}
+.interwiki .wikipage, i .interwiki, em .interwiki {
+  font-style: normal;
+}
+
+
+/**
+ * headings
+ */
+h1, h2, h3, h4, h5, h6 { font-family: Arial, Helvetica, sans-serif; }
+
+h1 {
+  text-decoration: underline;
+}
+
+
+/**
+ * tables
+ */
+caption { font-family: Arial, Helvetica, sans-serif; }
+.pagelist {
+}
+.pagelist thead, .pagelist thead u {
+}
+.pagelist tr.evenrow { background: #eee; }
+.pagelist tr.oddrow  { background: white; }
+
+
+/**
+ * Toolbar
+ */
+.toolbar, td, input.button { font-family: Arial, Helvetica, sans-serif;
+  margin-top:    0.1ex;
+  margin-bottom: 1ex;
+  margin-left:  1em;
+  margin-right: 1em;
+}
+
+#actionbar table, #navbar {
+  border-top:    0.5pt solid black; /* medium gray */
+  border-bottom: 0.5pt solid black;
+  padding-top:    0.3ex;
+  padding-bottom: 0.4ex;
+  padding-left:  0.5em;
+  padding-right: 0.5em;
+}
+
+.editdate {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding-top:    0.4ex;
+  padding-bottom: 0.3ex;
+  padding-left:  0.5em; 
+  padding-right: 0.5em; 
+  /* border-top: 0.5pt solid #666; * medium gray */
+}
+
+hr.ignore {
+  height: 0;
+  /* margin: -1ex; * Hack for Mozilla */
+  /* Hack for ie and OmniWeb to hide this element */
+  position: absolute;
+  top: -80px;
+}
+
+
+/**
+ * Edit Page & View Source
+ */
+
+/* Make the textarea the full page width */
+textarea.wikiedit {
+  width: 100%;
+/*  border: 1px inset #838383;*/
+  margin-top: 1ex;
+  padding: 2px;
+}
+
+#editarea-size {
+  margin-top: 1ex;
+  text-align: right;
+  font-size: smaller;
+}
+
+/* IncludePage plugin */
+.transclusion-title {
+  text-align: right;
+  font-style: oblique;
+  font-size:  smaller;
+  text-decoration: underline;
+  margin-bottom: 0.25ex;
+  margin-right:  0.25em;
+} 
+.transclusion, .wiki-edithelp {
+  font-size: smaller;
+}
+.transclusion {
+  background: inherit;
+  border: 1px solid gray;
+  padding-left:  0.8em; 
+  padding-right: 0.8em; 
+  padding-top:     0px;
+  padding-bottom:  0px;
+  margin-left:   0.25em;
+  margin-right:  0.25em;
+  margin-bottom: 0.1ex;
+}
+.wiki-edithelp {
+  background: white;
+  border: medium solid #fff8dc; /* darker ivory */
+  padding-left:  0.5em;
+  padding-right: 0.5em;
+  padding-top:    0.75ex;
+  padding-bottom: 0.75ex;
+  margin-left:   0.25em;
+  margin-right:  0.25em;
+  margin-bottom: 1ex;
+  margin-bottom: 1ex;
+}
+.wiki-edithelp .wiki {
+  /* color: #5454ff;*/
+}
+.wiki-edithelp p {
+  background: inherit;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left:  0.5em;
+  padding-right: 0.5em;
+  padding-top:    0.5ex;
+  padding-bottom: 0.5ex;
+  margin: 0;
+}
+
+
+/**
+ * Calendar plugin
+ */
+table.cal {
+  border: thin outset gray;
+  background: white;
+  margin: 0.5ex 0.5em;
+  padding: 1px;
+  /* For Mozilla */
+  empty-cells: hide;
+} 
+
+/* cells */
+table.cal td {
+  background: white;
+  text-align: right;
+} 
+
+/* Month-name header */
+table.cal-header { /* the html for this should really be in the thead */
+  font-size: larger;
+}
+table.cal-header tr, table.cal-header td {
+  text-align: center;
+  background: inherit;
+}
+.cal-arrow {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Day-names header */
+table.cal tbody tr .cal-dayname { /* the html for this should really be in the thead */
+  background: inherit;
+}
+.cal-dayname td {
+  text-align: center;
+  font-size: smaller;
+  text-decoration: underline;
+}
+
+/* Individual days */
+a.cal-hide { text-decoration: none; }
+
+/* Today */
+ /* cell */
+table.cal td.cal-today {
+  background: inherit;
+  margin: 1px;
+  border: 1px solid gray;
+}
+ /* text */
+table.cal td.cal-today a.cal-hide {
+  color: inherit;
+}
+
+
+/**
+ * Diff Output
+ */
+
+/* main box */
+.diff .block {
+  background: #ccc;
+  /*border: 1px solid black;*/
+  padding: 0.5ex 0.5em;
+  margin:  0.5ex 0;
+}
+
+/* individual lines */
+.diff .context { background: white; }
+
+/* + - line prefix */
+.diff .block tt	{
+  font-weight: bold;
+  font-family: monospace;
+  margin-left: -.6em;
+  color: black;
+}
+
+.diff del, .diff ins {
+  font-weight: bold;
+  text-decoration: none;
+}
+.diff .original, .diff .deleted { background: #fcc; }
+.diff .final, .diff .added { background: #cfc; }
+
+/* These don't work in NS4 -- it completely ignores <del> and <ins>. */
+.diff del { background: #f99; }
+.diff ins { background: #9f9; }
+
+
+/**
+ * Other
+ */
+
+/* PHP Warnings */
+div.errors {
+  color: black;
+  background: #eee;
+  margin:  1em;
+  padding-left: 0.8em; 
+  padding-right: 0.8em; 
+  padding-top: 0.8ex;
+  padding-bottom: 0px;
+  font-size: smaller;
+  border: medium solid red;
+  clear: both;
+}
+.errors h4 {
+  color: red;
+  background: inherit;
+  margin:  0;
+  padding: 0;
+  text-decoration: underline;
+}
+.error { font-family: monospace; }
+.error ul { font-family: monospace; }
+
+/* Debug */
+.debug {
+  color: black;
+  background: white;
+  font-family: monospace;
+  margin:  0.5em;
+  padding: 2px;
+  border: medium solid #fff8dc; /* darker ivory */
+}
+
 
 /* For emacs users
  *

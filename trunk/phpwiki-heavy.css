@@ -1,5 +1,5 @@
 /* 
- * $Id: phpwiki-heavy.css,v 1.11 2002-02-08 22:54:26 carstenklapp Exp $
+ * $Id: phpwiki-heavy.css,v 1.12 2002-02-10 11:05:40 carstenklapp Exp $
  *
  * phpwiki-heavy.css
  *
@@ -16,14 +16,8 @@ div.br { display: none; }
 /* This break NS4, but is necessary for IE4. */
 div.wikitext { width: auto; }
 
-/* Make Wikilinks inside <B> tags larger. */
-b .wiki, strong .wiki,
-b .wikipage, strong .wikipage
-{ font-size: larger; }
-
 /* Make wikiaction links look like buttons */ 
-a.wikiaction, a.wikiadmin, input.button
-{
+a.wikiaction, a.wikiadmin, input.button {
  border-style: outset;
  border-width: thin;
  color: #006;
@@ -36,12 +30,16 @@ a.wikiaction, a.wikiadmin, input.button
 /* Link icons - This screws up NS4 */
 img.linkicon		{ vertical-align: middle; }
 
-/****************************************************************
- **
- ** Diff Output
- **
- *****************************************************************/
-.diff .block div { position: relative; padding-left: 1.5em; } 
-.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
-
+/**
+ * Diff Output
+ */
+.diff .block div {
+ position: relative;
+ padding-left: 1.5em;
+} 
+.diff .prefix {
+ position: absolute;
+ left: 0em;
+ top: 0;
+}
 
