@@ -1,4 +1,5 @@
 !Synopsis
+RegoleDiFormattazioneDelTesto%%%
 __Enfasi:__ '____' per corsivo, __ per grassetto, '____'_''''_ per entrambi.%%%
 __Liste:__ * per liste puntate, # per liste numerate, ''; term : definition'' per liste di definizioni.
 %%%__Collegamenti:__ UnisciParoleConInizialiInMaiuscolo o usa le parentesi quadre per un [[collegamento ad una pagina] o un URL [[http://cool.wiki.int/].
