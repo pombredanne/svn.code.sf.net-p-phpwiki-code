@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.40 2002-01-05 10:17:07 carstenklapp Exp $
+$Id: editpage.html,v 1.41 2002-01-07 18:40:06 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -17,7 +17,7 @@ ${CSS}
 <div>${LOGO}</div>
 <!--This hack allows the h1 to be localised. FIXME: move out of html template into php-->
 <h1><?php printf(_("Edit: %s"),"<a class=\"backlinks\" href=\"${BROWSE}"._("BackLinks")."?page=${PAGE}\">${PAGE}</a>"); ?></h1>
-<!--=this line=<?php $bl='<plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?>';printf(_("Edit: %s"),"$bl"); ?>=doesn't work=-->
+<!--=this line=<?php $bl='<plugin-link BackLinks page="[pagename]" class="backlinks" linktext="${SPLIT_PAGE}" ?>';printf(_("Edit: %s"),"$bl"); ?>=does not work=-->
 ${EDIT_WARNINGS}
 <?php if (!empty($PREVIEW_CONTENT)) { ?>
   <div class="wikitext">${PREVIEW_CONTENT}</div>
