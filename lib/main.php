@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.102 2003-11-25 22:55:32 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.103 2003-12-02 00:10:00 carstenklapp Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -231,6 +231,7 @@ class WikiRequest extends Request {
             $user->_authhow = 'signin';
 
         // Save userid to prefs..
+        $this->_prefs = $this->_user->getPreferences();
         $this->_prefs->set('userid',
                            $user->isSignedIn() ? $user->getId() : '');
     }
@@ -789,6 +790,14 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2003/11/25 22:55:32  carstenklapp
+// Localization bugfix: For wikis where English is not the default system
+// language, make sure that the authority error message (i.e. "You must
+// sign in to edit pages in this wiki" etc.) is displayed in the wiki's
+// default language. Previously it would always display in English.
+// (Added call to update_locale() before displaying any messages prior to
+// the login prompt.)
+//
 // Revision 1.101  2003/11/25 21:49:44  carstenklapp
 // Bugfix: For a non-english wiki or when the user's preference is not
 // english, the wiki would always use the english ActionPage first if it
