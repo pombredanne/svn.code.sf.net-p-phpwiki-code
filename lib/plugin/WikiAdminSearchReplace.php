@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.7 2004-03-12 13:31:43 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.8 2004-03-17 20:23:44 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -138,17 +138,13 @@ extends WikiPlugin_WikiAdminSelect
 
             if ($post_args['action'] == 'verify' and !empty($post_args['from'])) {
                 // Real action
-                return $this->searchReplacePages($dbi, $request, $p, $post_args['from'], $post_args['to']);
+                return $this->searchReplacePages($dbi, $request, array_keys($p), $post_args['from'], $post_args['to']);
             }
             if ($post_args['action'] == 'select') {
                 if (!empty($post_args['from']))
                     $next_action = 'verify';
-                if (is_array($p) and isset($p[0])) {
-                  foreach ($p as $name) {
+                foreach ($p as $name => $c) {
                     $pages[$name] = 1;
-                  }
-                } else {
-                  $pages = $p;
                 }
             }
         }
@@ -243,6 +239,9 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/03/12 13:31:43  rurban
+// enforce PagePermissions, errormsg if not Admin
+//
 // Revision 1.6  2004/02/24 15:20:07  rurban
 // fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
 //

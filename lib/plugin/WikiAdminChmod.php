@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.5 2004-03-12 13:31:43 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.6 2004-03-17 20:23:44 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -124,13 +124,13 @@ extends WikiPlugin_WikiAdminSelect
 
             if ($post_args['action'] == 'verify') {
                 // Real action
-                return $this->chmodPages($dbi, $request, $p, 
+                return $this->chmodPages($dbi, $request, array_keys($p), 
                                           $post_args['perm']);
             }
             if ($post_args['action'] == 'select') {
                 if (!empty($post_args['perm']))
                     $next_action = 'verify';
-                foreach ($p as $name) {
+                foreach ($p as $name => $c) {
                     $pages[$name] = 1;
                 }
             }
@@ -198,6 +198,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/03/12 13:31:43  rurban
+// enforce PagePermissions, errormsg if not Admin
+//
 // Revision 1.4  2004/02/24 15:20:06  rurban
 // fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
 //

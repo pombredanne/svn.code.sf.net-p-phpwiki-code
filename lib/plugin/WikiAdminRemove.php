@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.16 2004-03-12 13:31:43 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.17 2004-03-17 20:23:44 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -113,6 +113,7 @@ extends WikiPlugin
         $ul = HTML::ul();
         $dbi = $request->getDbh();
         foreach ($pages as $name) {
+            $name = str_replace(array('%5B','%5D'),array('[',']'),$name);
             $dbi->deletePage($name);
             $ul->pushContent(HTML::li(fmt("Removed page '%s' successfully.", $name)));
         }
@@ -152,13 +153,14 @@ extends WikiPlugin
             }
             if ($post_args['action'] == 'verify') {
                 // Real delete.
-                return $this->removePages($request, $p);
+                return $this->removePages($request, array_keys($p));
             }
 
             if ($post_args['action'] == 'select') {
                 $next_action = 'verify';
-                foreach ($p as $name) {
-                    $pages[$name] = 1;
+                foreach ($p as $name => $c) {
+                    $name = str_replace(array('%5B','%5D'),array('[',']'),$name);
+                    $pages[$name] = $c;
                 }
             }
         }
@@ -218,6 +220,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/03/12 13:31:43  rurban
+// enforce PagePermissions, errormsg if not Admin
+//
 // Revision 1.15  2004/03/01 13:48:46  rurban
 // rename fix
 // p[] consistency fix
