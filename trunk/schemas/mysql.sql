@@ -1,8 +1,8 @@
--- $Id: mysql.sql,v 1.12 2004-04-12 10:07:45 rurban Exp $
+-- $Id: mysql.sql,v 1.13 2004-04-21 04:31:10 rurban Exp $
 
 drop table if exists page;
 CREATE TABLE page (
-	id              INT NOT NULL,
+	id              INT NOT NULL AUTO_INCREMENT,
         pagename        VARCHAR(100) BINARY NOT NULL,
 	hits            INT NOT NULL DEFAULT 0,
         pagedata        MEDIUMTEXT NOT NULL DEFAULT '',
