@@ -51,7 +51,7 @@ will not work''
 * You can suppress linking to old-style references by preceeding the word with a '!', e.g. !NotLinkedAsWikiName
 * [1], [2], [3], [4] refer to remote references. Click EditLinks on the edit form to enter URLs. These differ from the newer linking scheme; references are unique to a page.
 * Also, the old way of linking URL's is still supported: precede URLs with "http:", "ftp:" or "mailto:" to create links automatically as in: http://c2.com/
-* URLs ending with .png, or .jpg are inlined if in square brackets, by themselves: [http://phpwiki.sourceforge.net/phpwiki/png.png]
+* URLs ending with .png, or .jpg are inlined if in square brackets, by themselves: [http://phpwiki.sourceforge.net/phpwiki/images/png.png]
 
 
 '''HTML Mark-Up Language'''
