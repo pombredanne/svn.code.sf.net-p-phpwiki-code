@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.75 2004-09-16 08:00:52 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.76 2004-11-15 15:37:34 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -167,6 +167,7 @@ function replace() {
 ._("Close")
 ."\" onclick=\"self.close()\"></td></tr></table></center></form></body></html>');
    replacewin.window.document.close();
+   return false;
 }
 
 function do_replace() {
@@ -296,21 +297,41 @@ function speich() {
             $toolbar.="addButton('$image','$tip','$open','$close','$sample');\n";
         }
         $toolbar.="addInfobox('" . addslashes( _("Click a button to get an example text") ) . "');\n";
+
         if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
             $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.gif"); 
             //$redo_btn = $WikiTheme->getImageURL("ed_redo.gif");
             $sr_btn   = $WikiTheme->getImageURL("ed_replace.gif");
-            $sr_js = '<input type="image" class="toolbar" id="sr_undo" src="'.$undo_d_btn.'" title="'._("Undo Search & Replace").'" disabled="disabled" value="Undo" onfocus="if(this.blur && undo_buffer_index==0) this.blur()" onclick="do_undo()">'
+            $sr_html = HTML(HTML::input(array(
+                                              'type' =>"image",
+                                              'class'=>"toolbar",
+                                              'id'   =>"sr_undo",
+                                              'src'  =>$undo_d_btn,
+                                              'title'=>_("Undo Search & Replace"),
+                                              'disabled'=>"disabled", 
+                                              'value'   =>"Undo",
+                                              'onfocus' =>"if(this.blur && undo_buffer_index==0) this.blur()",
+                                              'onclick' =>"do_undo()")),
+                            HTML::input(array('type'=>"image",
+                                              'class'=>"toolbar",
+                                              'src'=>$sr_btn,
+                                              'title'=>_("Search & Replace"),
+                                              'onclick'=>"replace()")));
+            /*$sr_js = '<input type="image" class="toolbar" id="sr_undo" src="'.$undo_d_btn.'" title="'._("Undo Search & Replace").'" disabled="disabled" value="Undo" onfocus="if(this.blur && undo_buffer_index==0) this.blur()" onclick="do_undo()">'
                 // . '<input type="image" class="toolbar" src="'.$redo_btn.'" title="'._("Snap").'" onclick="speich()">'
                 . '<input type="image" class="toolbar" src="'.$sr_btn.'" title="'._("Search & Replace").'" onclick="replace()">';
-            $toolbar.='document.writeln("'.addslashes($sr_js).'");'."\n";
-        }
+              $toolbar.='document.writeln("'.addslashes($sr_js).'");'."\n";
+            */
+        } else $sr_html = '';
         // More:
         // Button to generate pagenames, display in extra window as pulldown and insert
         // Button to generate plugins, display in extra window as pulldown and insert
         // Button to generate categories, display in extra window as pulldown and insert
-        $toolbar.="document.writeln(\"</div>\");";
-        return Javascript($toolbar);
+        $toolbar_end = "document.writeln(\"</div>\");";
+        // don't use document.write for replace, otherwise self.opener is not defined.
+        return HTML(Javascript($toolbar),
+                    $sr_html,
+                    Javascript($toolbar_end));
     }
 
     function output ($template, $title_fs) {
@@ -762,6 +783,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.75  2004/09/16 08:00:52  rurban
+ just some comments
+
  Revision 1.74  2004/07/03 07:36:28  rurban
  do not get unneccessary content
 
