@@ -22,7 +22,7 @@ extends WikiPlugin
 		     'info'          => false
                      );
     }
-    // info arg now allows multiple columns info=mtime,hits,summary,author,locked,minor
+    // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
