@@ -1,8 +1,10 @@
-<?  rcs_id('$Id: wiki_dbmlib.php3,v 1.8 2000-07-07 19:53:50 dairiki Exp $');
+<?  rcs_id('$Id: wiki_dbmlib.php3,v 1.9 2000-07-16 05:50:58 wainstead Exp $');
    /*
       Database functions:
       OpenDataBase($dbname)
       CloseDataBase($dbi)
+      PadSerializedData($data)
+      UnPadSerializedData($data)
       RetrievePage($dbi, $pagename)
       InsertPage($dbi, $pagename, $pagehash)
       IsWikiPage($dbi, $pagename)
@@ -37,11 +39,31 @@
    }
 
 
+   // take a serialized hash, return same padded out to
+   // the next largest number bytes divisible by 500. This
+   // is to save disk space in the long run, since DBM files
+   // leak memory.
+   function PadSerializedData($data) {
+      // calculate the next largest number divisible by 500
+      $nextincr = 500 * ceil(strlen($data) / 500);
+      // pad with spaces
+      $data = sprintf("%-${nextincr}s", $data);
+      return $data;
+   }
+
+   // strip trailing whitespace from the serialized data 
+   // structure.
+   function UnPadSerializedData($data) {
+      return chop($data);
+   }
+
+
+
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename) {
       if ($data = dbmfetch($dbi, $pagename)) {
          // unserialize $data into a hash
-         $pagehash = unserialize($data);
+         $pagehash = unserialize(UnPadSerializedData($data));
          return $pagehash;
       } else {
          return -1;
@@ -51,7 +73,7 @@
 
    // Either insert or replace a key/value (a page)
    function InsertPage($dbi, $pagename, $pagehash) {
-      $pagedata = serialize($pagehash);
+      $pagedata = PadSerializedData(serialize($pagehash));
 
       if (dbminsert($dbi, $pagename, $pagedata)) {
          if (dbmreplace($dbi, $pagename, $pagedata)) {
