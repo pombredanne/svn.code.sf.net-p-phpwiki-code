@@ -97,9 +97,11 @@ key word such as a person's name needs to be added to the end of a
 sentence in english, there is no guarantee that the same word will
 appear at the end of a sentence once translated to another language.
 
-PhpWiki has been designed with this in mind. (Standard gettext
+PhpWiki has been designed with this in mind. (Standard printf
 notations like %s and %1$s, %2$s will work with PhpWiki, even though
 reordering of variable-substitutions is not actually part of PHP).
+(The printf(3) manual page on your system may be of some help.)
+
 
 Take the following English phrase as an example. This message would be
 displayed in the browser when someone wants to compare two revisions
@@ -122,28 +124,31 @@ dictates that the "page name" must come first, then followed by
 
 To summarize, when the word ordering must differ, insert "1$", "2$"
 etc. into the middle of '%s' and repeat for each instance of '%s' in
-the phrase.
+the phrase.  If you use this "$" notation, you must use it for each
+of the the format specifications within the string.
 
 Here are a couple more examples. They are fictional but they serve to
 illustrate how to handle special cases, should they arise:
 
 
 #msgid "Page version '%d' named '%s' is not available."
-#msgstr "Xyqlmn vvvm » %s « mnqee » %d « Gvbbbnbhkkk eeek."
+#msgstr "Xyqlmn vvvm » %2$s « mnqee » %1$d « Gvbbbnbhkkk eeek."
 
-Even though %s and %d are reversed, no '1$' and '2$ are needed because
-one is a text string and the other is a number. The punctuation marks
-for this language dictate extra spacing, so this has also been accounted
-for in the translation (i.e. the quote marks are only for emphasis, they
-are not considered part of the %s placeholder).
+The %s and %d are reversed, so '2$' and '1$' have been used to
+indicate the new ordering. The punctuation marks for this language
+dictate extra spacing, so this has also been accounted for in the
+translation (i.e. the quote marks are only for emphasis, they are not
+considered part of the %s placeholder).
 
 
 #msgid "Page named '%s' version '%d' written by author '%s' is not available."
-#msgstr "Qppn wwmoooppp '%2$s' vvvm '%1$s' mnqee '%d' Gvbbbnbhkkk eeek."
+#msgstr "Qppn wwmoooppp '%3$s' vvvm '%1$s' mnqee '%2$d' Gvbbbnbhkkk eeek."
 
-Name and author are reversed. No special treatment is needed for the
-number, because it is the only one present. The punctuation for this
-particular language is the same as english so it is unchanged.
+Name and author are reversed. Even though the position of the number
+('%d') isn't changed, still it must be changed to '%2$d' --- if you
+use a '$' on one of the format specifiers you must use it on all of
+them.  The punctuation for this particular language is the same as
+english so it is unchanged.
 
 
 While translating the text strings if you are uncertain about the
@@ -290,4 +295,4 @@ Jan Nieuwenhuizen <janneke@gnu.org>
 Arno Hollosi <ahollosi@mail.com>
 Carsten Klapp <carstenklapp@mac.com>
 
-$Id: README,v 1.4 2001-12-27 07:33:23 carstenklapp Exp $
+$Id: README,v 1.5 2002-01-12 17:30:54 dairiki Exp $
