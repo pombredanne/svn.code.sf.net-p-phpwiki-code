@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.17 2002-01-30 23:41:54 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.18 2002-02-14 21:42:24 carstenklapp Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -83,7 +83,8 @@ extends _RecentChanges_HtmlFormatter
     function description() {
         // Doesn't work (PHP bug?): $desc = parent::description() . "\n";
         $button = HTML::input(array('type'  => 'submit',
-                                    'value' => _("compare revisions")));
+                                    'value' => _("compare revisions"),
+                                    'class' => 'wikiaction'));
         return array(_RecentChanges_HtmlFormatter::description(), "\n",
                      $this->_javascript(sprintf('document.write("%s");',
                                                 _("Check any two boxes to compare revisions."))),
