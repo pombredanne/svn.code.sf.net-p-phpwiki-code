@@ -17,18 +17,13 @@ automatically, so that the sqlite binary is needed anymore.
 
 sqlite /tmp/phpwiki-sqlite.db < schemas/sqlite.sql
 
-Edit $DBParams in index.php to reflect your settings.
+Edit the DATABASE settings in config/config.ini to reflect your settings.
 
-  a) $DBParams['dbtype'] should be set to 'SQL'.
-      ADODB not yet supported. This is planned for the 1.4.0 release.
-  b) $DBParams['dsn'] should be set to something like
+  a) DATABASE_TYPE should be set to 'SQL'.
+     ADODB not yet tested. This is planned for the 1.4.0 release.
 
-	$DBParams['directory'] = "/tmp";
-	$DBParams['dsn'] = array (
-		  'phptype'   => "sqlite",
-		  'database'  => $DBParams['directory'] . "/phpwiki-sqlite.db",
-		  'mode'      => 0664
-		  );
+  b) DATABASE_DSN should be set to something like
+     DATABASE_DSN = "sqlite:///path/to/phpwiki-sqlite.db?mode=0664"
 
 That's it. PhpWiki should now work.
 
@@ -43,4 +38,4 @@ sqlite /tmp/phpwiki-sqlite.db < dump.sql
 Authors: 
 ReiniUrban (phpwiki developer) and Matthew Palmer (phpwiki debian maintainer)
 
-$Id: INSTALL.sqlite,v 1.2 2004-05-02 15:10:05 rurban Exp $
+$Id: INSTALL.sqlite,v 1.3 2004-06-28 13:54:56 rurban Exp $
