@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.2 2004-06-14 11:26:49 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.3 2004-06-16 14:31:26 rurban Exp $');
 /**
  * The new mediawiki (Wikipedia.org) default style.
  * Mediawiki 'monobook' style sheet for CSS2-capable browsers.
@@ -98,9 +98,9 @@ $WikiTheme->setLinkIcon('mailto');
 //$WikiTheme->setLinkIcon('interwiki');
 */
 $WikiTheme->setLinkIcon('wikiuser');
-$WikiTheme->setLinkIcon('*', 'url');
+//$WikiTheme->setLinkIcon('*', 'url');
 // front or after
-$WikiTheme->setLinkIconAttr('after');
+//$WikiTheme->setLinkIconAttr('after');
 
 //$WikiTheme->setButtonSeparator("\n | ");
 
