@@ -20,7 +20,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.16 2003-03-07 22:46:38 dairiki Exp $ -->
+<!-- $Id: configurator.php,v 1.17 2003-03-17 21:24:52 dairiki Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
 <style type="text/css" media="screen">
@@ -245,7 +245,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.16 2003-03-07 22:46:38 dairiki Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.17 2003-03-17 21:24:52 dairiki Exp $');", "");
 
 
 $properties["Part One"] =
@@ -296,10 +296,11 @@ If true, only the admin user can make zip dumps, else zip dumps
 require no authentication.");
 
 $properties["Enable Plugin RawHtml"] =
-new boolean_define_optional('ENABLE_RAW_HTML', 
-                    array('false' => "Disabled. Recommended on public sites.",
-                          'true'  => "Enabled"), "
-Allow &lt; ?plugin RawHtml ...&gt;. Don't do this on a publicly accessable wiki for now.");
+new boolean_define_commented_optional
+('ENABLE_RAW_HTML', 
+ array('true'  => "Enabled",
+       'false' => "Disabled."), "
+Allow &lt; ?plugin RawHtml ...&gt;. Define to false to disalbe the RawHtml plugin.");
 
 $properties["Strict Mailable Pagedumps"] =
 new boolean_define_optional

@@ -61,7 +61,7 @@ if (!defined('DEBUG')) define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.108 2003-03-07 22:47:01 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.109 2003-03-17 21:24:50 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -94,8 +94,8 @@ if (!defined('ADMIN_PASSWD')) define('ADMIN_PASSWD', "");
 // require no authentication.
 if (!defined('ZIPDUMP_AUTH')) define('ZIPDUMP_AUTH', false);
 
-// Don't do this on a publicly accessable wiki for now.
-if (!defined('ENABLE_RAW_HTML')) define('ENABLE_RAW_HTML', false);
+// Define to false to disable the RawHtml plugin.
+//if (!defined('ENABLE_RAW_HTML')) define('ENABLE_RAW_HTML', false);
 
 // If you define this to true, (MIME-type) page-dumps (either zip dumps,
 // or "dumps to directory" will be encoded using the quoted-printable
@@ -763,6 +763,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2003/03/07 22:47:01  dairiki
+// A few more if(!defined(...))'s
+//
 // Revision 1.107  2003/03/07 20:51:54  dairiki
 // New feature: Automatic extraction of keywords (for the meta keywords tag)
 // from Category* and Topic* links on each page.
