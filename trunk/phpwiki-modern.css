@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-modern.css,v 1.14 2002-02-10 22:13:05 carstenklapp Exp $
+ * $Id: phpwiki-modern.css,v 1.15 2002-02-16 02:58:17 carstenklapp Exp $
  *
  * Inspiration for this stylesheet:
  *
@@ -74,11 +74,11 @@ div.wikitext {
   font-family: none; */
 }
 
-#logo {
-  position: absolute;
-  right: 1.25em;
+#logo img {
+  position: relative;
+  right: 0.25em;
   /* This breaks when the navbar wraps to the second line. Ideas? */
-  top: 5.5ex;
+  top: 4.5ex;
 }
 
 /**
@@ -207,7 +207,7 @@ caption { font-family: Arial, Helvetica, sans-serif; }
  */
 .toolbar, td, input.button { font-family: Arial, Helvetica, sans-serif; }
 
-#navbar, #actionbar {
+#navbuttons, #actionbar {
   color:      black;
   background: #ddd; /* dark gray */
   margin-top:    0.1ex;
@@ -216,7 +216,7 @@ caption { font-family: Arial, Helvetica, sans-serif; }
   margin-right: 0em;
 }
 
-#actionbar table, #navbar {
+#actionbar table, #navbuttons {
   border-top:    0.5pt solid black; /* medium gray */
   border-bottom: 0.5pt solid black;
   padding-top:    0.3ex;
@@ -403,6 +403,16 @@ table.cal td.cal-today a.cal-hide {
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
 .diff del { background: #f99; }
 .diff ins { background: #9f9; }
+
+
+/**
+ * PageHistory, Info
+ */
+td.pageinfo { font-weight: bold; }
+.pageinfo-minoredit, .pageinfo-authorid {
+  font-size: smaller;
+  font-style: oblique;
+}
 
 
 /**
