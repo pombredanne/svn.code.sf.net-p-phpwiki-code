@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.9 2001-09-19 02:58:00 dairiki Exp $');
+rcs_id('$Id: ziplib.php,v 1.10 2001-12-11 18:21:38 dairiki Exp $');
 
 /**
  * GZIP stuff.
@@ -426,27 +426,7 @@ class ZipReader
 /**
  * Routines for Mime mailification of pages.
  */
-//FIXME: these should go elsewhere (stdlib.php).
-function ctime ($unix_time)
-{
-  return date("D M j H:i:s Y", $unix_time);
-}
-
-function rfc1123date ($unix_time)
-{
-  $zone = ' +';
-  
-  $zonesecs = date("Z", $unix_time);
-  if ($zonesecs < 0)
-      $zone = ' -';
-
-  $zonemins = (int)((abs($zonesecs) + 30) / 60);
-  $zonehrs = (int)(($zonemins + 30) / 60);
-  $zonemins -= $zonehrs * 60;
-  $zone .= sprintf("%02d%02d", $zonehrs, $zonemins);
-
-  return date("D, j M Y H:i:s", $unix_time) . $zone;
-}
+//FIXME: these should go elsewhere (libmime?).
 
 /**
  * Routines for quoted-printable en/decoding.

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.13 2001-11-26 22:00:26 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.14 2001-12-11 18:21:38 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -33,10 +33,10 @@ function MailifyPage ($page, $nversions = 1)
    $current = $page->getCurrentRevision();
    $from = isset($SERVER_ADMIN) ? $SERVER_ADMIN : 'foo@bar';
   
-   $head = "From $from  " . ctime(time()) . "\r\n";
+   $head = "From $from  " . CTime(time()) . "\r\n";
    $head .= "Subject: " . rawurlencode($page->getName()) . "\r\n";
    $head .= "From: $from (PhpWiki)\r\n";
-   $head .= "Date: " . rfc1123date($current->get('mtime')) . "\r\n";
+   $head .= "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
    $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n", PHPWIKI_VERSION);
 
    $iter = $page->getAllRevisions();
