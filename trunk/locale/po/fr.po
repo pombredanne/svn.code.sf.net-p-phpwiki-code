@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-08 23:20+0100\n"
+"POT-Creation-Date: 2004-06-09 13:38+0100\n"
 "PO-Revision-Date: 2004-06-05 11:33+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -21,11 +21,11 @@ msgstr ""
 #: ../lib/DbSession.php:47
 #, c-format
 msgid "Your WikiDB DB backend '%s' cannot be used for DbSession."
-msgstr ""
+msgstr "Votre choix '%s' de WikiDB DB ne peut pas être utilisé pour DbSession."
 
 #: ../lib/DbSession.php:48
 msgid "Set USE_DB_SESSION to false."
-msgstr ""
+msgstr "Mettre USE_DB_SESSION à false"
 
 #: ../lib/DbSession.php:528 ../lib/DbSession.php:530
 #: ../lib/WikiDB/backend/dba.php:23 ../lib/WikiDB/backend/dba.php:25
@@ -257,11 +257,11 @@ msgstr "Groupe/Utilisateur"
 
 #: ../lib/PagePerm.php:535
 msgid "Grant"
-msgstr ""
+msgstr "Accorder"
 
 #: ../lib/PagePerm.php:536
 msgid "Del/+"
-msgstr ""
+msgstr "Effacer/+"
 
 #: ../lib/PagePerm.php:537 ../lib/plugin/PluginManager.php:90
 msgid "Description"
@@ -269,23 +269,23 @@ msgstr "Description"
 
 #: ../lib/PagePerm.php:558
 msgid "Add this ACL"
-msgstr ""
+msgstr "Ajouer cette ACL"
 
 #: ../lib/PagePerm.php:582
 msgid "Allow / Deny"
-msgstr ""
+msgstr "Autoriser / Refuser"
 
 #: ../lib/PagePerm.php:594
 msgid "Delete this ACL"
-msgstr ""
+msgstr "Effacer cette ACL"
 
 #: ../lib/PagePerm.php:620
 msgid "add "
-msgstr ""
+msgstr "ajouter"
 
 #: ../lib/PagePerm.php:624
 msgid "Check to add this Acl"
-msgstr ""
+msgstr "Vérifier pour ajouter cette ACL"
 
 #: ../lib/PageType.php:132 ../lib/loadsave.php:409
 #: ../lib/plugin/WantedPages.php:80 ../themes/default/templates/info.tmpl:144
@@ -962,7 +962,7 @@ msgstr "L'autre version"
 
 #: ../lib/editpage.php:142
 msgid "Undo"
-msgstr ""
+msgstr "Annuler l'action"
 
 #: ../lib/editpage.php:148
 msgid "Undo disabled"
@@ -991,7 +991,7 @@ msgstr "OK"
 
 #: ../lib/editpage.php:166
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: ../lib/editpage.php:223
 #, c-format
@@ -1000,15 +1000,15 @@ msgstr "Éditer : %s"
 
 #: ../lib/editpage.php:233 ../lib/editpage.php:234
 msgid "Bold text"
-msgstr ""
+msgstr "Texte en gras"
 
 #: ../lib/editpage.php:238 ../lib/editpage.php:239
 msgid "Italic text"
-msgstr ""
+msgstr "Texte en italique"
 
 #: ../lib/editpage.php:243
 msgid "optional label | PageName"
-msgstr ""
+msgstr "en option | PageName"
 
 #: ../lib/editpage.php:244
 msgid "Link to page"
@@ -1016,35 +1016,35 @@ msgstr "Lien vers la page"
 
 #: ../lib/editpage.php:248
 msgid "optional label | http://www.example.com"
-msgstr ""
+msgstr "en option | http://www.example.com"
 
 #: ../lib/editpage.php:249
 msgid "External link (remember http:// prefix)"
-msgstr ""
+msgstr "Lien externe (http:// prefix)"
 
 #: ../lib/editpage.php:253
 msgid "Headline text"
-msgstr ""
+msgstr "Texte de début de ligne"
 
 #: ../lib/editpage.php:254
 msgid "Level 1 headline"
-msgstr ""
+msgstr "Texte de début de ligne de niveau 1"
 
 #: ../lib/editpage.php:258
 msgid "Example.jpg"
-msgstr ""
+msgstr "Example.jpg"
 
 #: ../lib/editpage.php:259
 msgid "Embedded image"
-msgstr ""
+msgstr "Image embarquée"
 
 #: ../lib/editpage.php:263
 msgid "Insert non-formatted text here"
-msgstr ""
+msgstr "Insérer du texte non-formaté ici"
 
 #: ../lib/editpage.php:264
 msgid "Ignore wiki formatting"
-msgstr ""
+msgstr "Ignorer le formatage wiki"
 
 # lib/pageinfo.php:64
 #: ../lib/editpage.php:269
@@ -1053,7 +1053,7 @@ msgstr "Votre signature"
 
 #: ../lib/editpage.php:274
 msgid "Horizontal line"
-msgstr ""
+msgstr "Ligne horizontale"
 
 #: ../lib/editpage.php:278 ../lib/editpage.php:279 ../lib/editpage.php:594
 msgid "Save"
@@ -1065,7 +1065,7 @@ msgstr "Prévisualiser"
 
 #: ../lib/editpage.php:297
 msgid "Click a button to get an example text"
-msgstr ""
+msgstr "Cliquer sur un bouton pour obtenir une exemple de texte"
 
 #: ../lib/editpage.php:303
 msgid "Undo Search & Replace"
@@ -1346,27 +1346,28 @@ msgstr "Dépôt de %s"
 
 #: ../lib/main.php:306
 msgid "FORBIDDEN"
-msgstr ""
+msgstr "INTERDIT"
 
 #: ../lib/main.php:307
 msgid "ANON"
-msgstr ""
+msgstr "ANONYME"
 
 #: ../lib/main.php:308
 msgid "BOGO"
-msgstr ""
+msgstr "BOGO"
 
 #: ../lib/main.php:309
 msgid "USER"
-msgstr ""
+msgstr "UTILISATEUR"
 
 #: ../lib/main.php:310
+#, fuzzy
 msgid "ADMIN"
 msgstr "AJOUT"
 
 #: ../lib/main.php:311
 msgid "UNOBTAINABLE"
-msgstr ""
+msgstr "INACCESSIBLE"
 
 #: ../lib/main.php:334
 msgid "authenticated"
@@ -1400,7 +1401,7 @@ msgstr "Vous devez vous connecter pour %s"
 #: ../lib/main.php:352
 #, c-format
 msgid "Access for you is forbidden to %s."
-msgstr ""
+msgstr "L'accès à %s vous est interdit"
 
 #: ../lib/main.php:354 ../lib/plugin/PluginManager.php:65
 #, c-format
@@ -2388,6 +2389,8 @@ msgstr "Le plugin de météo importée d'internet."
 #: ../lib/plugin/PhpWeather.php:88
 msgid "You have to define PHPWEATHER_BASE_DIR before use. (config/config.ini)"
 msgstr ""
+"Vous devez définir PHPWEATHER_BASE_DIR avant de l'utiliser (config/config."
+"ini)"
 
 #: ../lib/plugin/PhpWeather.php:104
 #, c-format
@@ -2808,7 +2811,7 @@ msgstr "Syntaxe du langage non spécifié"
 #: ../lib/plugin/SyntaxHighlighter.php:159
 #, c-format
 msgid "invalid %s ignored"
-msgstr ""
+msgstr "%s non valable ignoré"
 
 #: ../lib/plugin/SyntaxHighlighter.php:170
 #, c-format
@@ -3525,7 +3528,7 @@ msgstr "La page %s existe déjà. Ignoré."
 #: ../lib/plugin/WikiAdminRename.php:100 ../lib/plugin/WikiAdminSetAcl.php:103
 #, c-format
 msgid "Access denied to change page '%s'."
-msgstr ""
+msgstr "Accès refusé pour changer la page '%s'."
 
 #: ../lib/plugin/WikiAdminRename.php:104
 #, c-format
@@ -3708,6 +3711,8 @@ msgstr "ACL"
 msgid ""
 "Are you sure you want to permanently change access to the selected files?"
 msgstr ""
+"Ëtes-vous sûr de vouloir définitivement modifier l'accès aux fichiers "
+"sélectionnés ?"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:220
 msgid "Selected Pages: "
@@ -3732,7 +3737,7 @@ msgstr "Type : "
 
 #: ../lib/plugin/WikiAdminSetAcl.php:232
 msgid "getfacl: "
-msgstr ""
+msgstr "getfacl : "
 
 #: ../lib/plugin/WikiAdminSetAcl.php:233
 msgid "ACL: "
@@ -3745,15 +3750,15 @@ msgstr "Description: "
 #: ../lib/plugin/WikiAdminSetAcl.php:236
 msgid ""
 "Selected Grant checkboxes allow access, unselected checkboxes deny access."
-msgstr ""
+msgstr "Les cases sélectionnées autorisent l'accès, sinon elles l'interdisent."
 
 #: ../lib/plugin/WikiAdminSetAcl.php:237
 msgid "To ignore delete the line."
-msgstr ""
+msgstr "Pour ignorer effacez la ligne"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:238
 msgid "To add check 'Add' near the dropdown list."
-msgstr ""
+msgstr "Pour ajouter cocher 'Add' près de la liste déroulante"
 
 #: ../lib/plugin/WikiAdminSetAcl.php:261
 msgid "(Currently not working)"
@@ -4418,7 +4423,7 @@ msgstr "recherche les mises à jour nécessaire des pages sources"
 
 #: ../lib/upgrade.php:139
 msgid "always skip the HomePage."
-msgstr ""
+msgstr "toujours ignorer la page d'accueil"
 
 #: ../lib/upgrade.php:159
 msgid "MISSING"
@@ -4455,17 +4460,17 @@ msgstr "ÉCHOUÉ"
 
 #: ../lib/upgrade.php:353
 msgid "check for mysql 4.1.x binary search bug"
-msgstr ""
+msgstr "vérifier la recherche de bug pour mysql 4.1.x"
 
 #: ../lib/upgrade.php:361
 #, c-format
 msgid "version <em>%s</em> <b>FIXED</b>"
-msgstr ""
+msgstr "version <em>%s</em> <b>RÉSOLU</b>"
 
 #: ../lib/upgrade.php:363
 #, c-format
 msgid "version <em>%s</em> not affected"
-msgstr ""
+msgstr "version <em>%s</em> non affectée"
 
 #: ../lib/upgrade.php:393
 msgid "Upgrade disabled: user != isAdmin"
