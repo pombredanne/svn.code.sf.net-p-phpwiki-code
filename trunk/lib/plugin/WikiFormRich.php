@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.14 2004-11-25 17:20:52 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.15 2004-11-26 18:25:33 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -92,7 +92,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -184,6 +184,7 @@ extends WikiPlugin
               switch($inputtype) {
               case 'checkbox':
               case 'radio':
+                if (empty($input['value'])) $input['value'] = 1;
                 if (is_array($input['value'])) {
                     $div = HTML::div(array('class' => $class));
                     $values = $input['value'];
@@ -203,7 +204,6 @@ extends WikiPlugin
                     }
                     $form->pushContent($div);
                 } else {
-                    if (empty($input['value'])) $input['value'] = 1;
                     if (empty($input['checked'])) {
                         if ($request->getArg($input['name']))
                             $input['checked'] = 'checked';
@@ -217,54 +217,55 @@ extends WikiPlugin
                 }
                 break;
               case 'editbox':
-                $input['type'] = 'text';
-                if (empty($input['value']) and ($s = $request->getArg($input['name'])))
-                    $input['value'] = $s;
-                if ($nobr)
-                    $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
-                else
-                    $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
-                break;
+                  $input['type'] = 'text';
+                  if (empty($input['value']) and ($s = $request->getArg($input['name'])))
+                      $input['value'] = $s;
+                  if ($nobr)
+                      $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
+                  else
+                      $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
+                  break;
               case 'pulldown':
-                $values = $input['value'];
-                unset($input['value']);
-                unset($input['type']);
-                $select = HTML::select($input);
-                if (empty($values) and ($s = $request->getArg($input['name']))) {
-                    $select->pushContent(HTML::option(array('value'=> $s), $s));
-                } elseif (is_array($values)) {
-                    $name = $input['name'];
-                    unset($input['name']);
-                    foreach ($values as $val) {
-                        $input = array('value'=> $val);
-                        if ($request->getArg($name)) {
-                            if ($request->getArg($name) == $val)
-                                $input['selected'] = 'selected';
-                            else
-                                unset($input['selected']);
-                        }
-                        $select->pushContent(HTML::option($input, $val));
-                    }
-                }
-                $form->pushContent($text, $select);
-                break;
+                  $values = $input['value'];
+                  unset($input['value']);
+                  unset($input['type']);
+                  $select = HTML::select($input);
+                  if (is_string($values)) $values = explode(",", $values);
+                  if (empty($values) and ($s = $request->getArg($input['name']))) {
+                      $select->pushContent(HTML::option(array('value'=> $s), $s));
+                  } elseif (is_array($values)) {
+                      $name = $input['name'];
+                      unset($input['name']);
+                      foreach ($values as $val) {
+                          $input = array('value'=> $val);
+                          if ($request->getArg($name)) {
+                              if ($request->getArg($name) == $val)
+                                  $input['selected'] = 'selected';
+                              else
+                                  unset($input['selected']);
+                          }
+                          $select->pushContent(HTML::option($input, $val));
+                      }
+                  }
+                  $form->pushContent($text, $nbsp, $select);
+                  break;
               case 'reset':
               case 'hidden':
-                $form->pushContent(HTML::input($input));
-                break;
+                  $form->pushContent(HTML::input($input));
+                  break;
               // change the order of inputs, by explicitly placing a submit button here.
               case 'submit':
-                //$input['type'] = 'submit';
-                if (empty($input['value'])) $input['value'] = $buttontext ? $buttontext : $action;
-        	unset($input['text']);
-        	if (empty($input['class'])) $input['class'] = $class;
-                if ($nobr)
-                    $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
-                else
-                    $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
-        	// unset the default submit button
-        	$already_submit = 1;
-        	break;
+                  //$input['type'] = 'submit';
+                  if (empty($input['value'])) $input['value'] = $buttontext ? $buttontext : $action;
+                  unset($input['text']);
+                  if (empty($input['class'])) $input['class'] = $class;
+                  if ($nobr)
+                      $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
+                  else
+                      $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
+                  // unset the default submit button
+                  $already_submit = 1;
+                  break;
               }
             }
         }
@@ -293,6 +294,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/11/25 17:20:52  rurban
+// and again a couple of more native db args: backlinks
+//
 // Revision 1.13  2004/11/25 12:04:17  rurban
 // support extra submit[] and reste[] buttons to place it before. renamed radiobutton to radio
 //
