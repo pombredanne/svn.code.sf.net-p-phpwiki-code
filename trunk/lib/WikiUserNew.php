@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.34 2004-03-18 21:41:09 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.35 2004-03-18 22:18:31 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -255,7 +255,7 @@ function UpgradeUser ($olduser, $user) {
 }
 
 /**
- * Probably not needed, since we use the various user objects methos so far.
+ * Probably not needed, since we use the various user objects methods so far.
  * Anyway, here it is, looping through all available objects.
  */
 function UserExists ($UserName) {
@@ -270,12 +270,9 @@ function UserExists ($UserName) {
     }
     if (isa($user,'_BogoUser'))
         $user = new _PassUser($UserName,$user->_prefs);
-    while ($user = $user->nextClass()) {
+    $class = $user->nextClass();
+    if ($user = new $class($UserName,$user->_prefs)) {
         return $user->userExists($UserName);
-        // Does this work on all PHP version? In PHP5 not!
-        //FIXME: do UpgradeUser here for PHP5 compatibility
-        //if (!check_php_version(5))
-        //$this = $user;
     }
     $request->_user = $GLOBALS['ForbiddenUser'];
     return false;
@@ -390,7 +387,8 @@ class _WikiUser
     function nextClass() {
         if (($next = $this->nextAuthMethodIndex()) !== false) {
             $method = $this->AuthMethod($next);
-            $class = "_".$method."PassUser";
+            return "_".$method."PassUser";
+            /*          
             if ($user = new $class($this->_userid)) {
                 // prevent from endless recursion.
                 //$user->_current_method = $this->_current_method;
@@ -398,7 +396,9 @@ class _WikiUser
                 $user = UpgradeUser($user, $this);
             }
             return $user;
+            */
         }
+        return "_ForbiddenPassUser";
     }
 
     //Fixme: for _HttpAuthPassUser
@@ -735,10 +735,8 @@ extends _AnonUser
             if (defined('USER_AUTH_POLICY')) {
                 // policy 1: only pre-define one method for all users
                 if (USER_AUTH_POLICY === 'first-only') {
-                    if ($user = $this->nextClass())
-                        return $user;
-                    else 
-                        return $GLOBALS['ForbiddenUser'];
+                	$class = $user->nextClass();
+                    return new $class($UserName,$user->_prefs);
                 }
                 // use the default behaviour from the previous versions:
                 elseif (USER_AUTH_POLICY === 'old') {
@@ -910,7 +908,8 @@ extends _AnonUser
     // child methods obtain $stored_password from external auth.
     function userExists() {
         //if ($this->_HomePagehandle) return true;
-        while ($user = $this->nextClass()) {
+        $class = $this->nextClass();
+        while ($user = new $class($this->_userid,$this->_prefs)) {
               UpgradeUser($this,$user);
               if ($user->userExists()) {
                   return true;
@@ -918,6 +917,9 @@ extends _AnonUser
               // prevent endless loop. does this work on all PHP's?
               // it just has to set the classname, what it correctly does.
               // $this = $user;
+              $class = $user->nextClass();
+              if ($class == "_ForbiddenPassUser")
+                  return false;
         }
         return false;
     }
@@ -1012,14 +1014,16 @@ extends _AnonUser
 
     function _tryNextPass($submitted_password) {
         if (USER_AUTH_POLICY === 'strict') {
-            if ($user = $this->nextClass()) {
+        	$class = $this->nextClass();
+            if ($user = new $class($this->_userid,$this->_prefs)) {
                 if ($user->userExists()) {
                     return $user->checkPass($submitted_password);
                 }
             }
         }
         if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
-            if ($user = $this->nextClass())
+        	$class = $this->nextClass();
+            if ($user = new $class($this->_userid,$this->_prefs))
                 return $user->checkPass($submitted_password);
         }
         return $this->_level;
@@ -1027,11 +1031,13 @@ extends _AnonUser
 
     function _tryNextUser() {
         if (USER_AUTH_POLICY === 'strict') {
-            while ($user = $this->nextClass()) {
+        	$class = $this->nextClass();
+            while ($user = new $class($this->_userid,$this->_prefs)) {
                 $user = UpgradeUser($this, $user);
                 if ($user->userExists()) {
                     return true;
                 }
+        	    $class = $this->nextClass();
             }
         }
         return false;
@@ -2342,6 +2348,10 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2004/03/18 21:41:09  rurban
+// fixed sqlite support
+// WikiUserNew: PHP5 fixes: don't assign $this (untested)
+//
 // Revision 1.33  2004/03/16 15:42:04  rurban
 // more fixes for undefined property warnings
 //
