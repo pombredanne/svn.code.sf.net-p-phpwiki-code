@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.59 2004-04-26 12:35:21 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.60 2004-04-27 18:20:54 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2019,7 +2019,7 @@ extends _IMAPPassUser {
             $line = fgets($fp, 1024);
             if (! strncmp("+OK ", $line, 4)) {
                 // Send user name
-                fputs($fp, "user $user\n");
+                fputs($fp, "user $userid\n");
                 // Get response
                 $line = fgets($fp, 1024);
                 if (! strncmp("+OK ", $line, 4)) {
@@ -2802,6 +2802,10 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2004/04/26 12:35:21  rurban
+// POP3_AUTH_PORT deprecated, use "host:port" similar to IMAP
+// File_Passwd is already loaded
+//
 // Revision 1.58  2004/04/20 17:08:28  rurban
 // Some IniConfig fixes: prepend our private lib/pear dir
 //   switch from " to ' in the auth statements
