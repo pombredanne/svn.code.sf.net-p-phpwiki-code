@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.16 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.17 2001-12-19 09:55:30 carstenklapp Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -14,8 +14,8 @@ function EndLoadDump()
 {
    // FIXME: This is a hack
     
-   echo Element('p', QElement('b', gettext("Complete.")));
-   echo Element('p', "Return to " . LinkExistingWikiWord($GLOBALS['pagename']));
+   echo Element('p', QElement('b', _("Complete.")));
+   echo Element('p', sprintf( _("Return to %s"),LinkExistingWikiWord($GLOBALS['pagename']) ) );
    echo "</body></html>\n";
 }
 
@@ -122,19 +122,19 @@ function DumpToDir ($dbi, $request)
 {
     $directory = $request->getArg('directory');
     if (empty($directory))
-        ExitWiki(gettext("You must specify a directory to dump to"));
+        ExitWiki(_("You must specify a directory to dump to"));
    
     // see if we can access the directory the user wants us to use
     if (! file_exists($directory)) {
         if (! mkdir($directory, 0755))
-            ExitWiki("Cannot create directory '$directory'<br>\n");
+            ExitWiki( sprintf(_("Cannot create directory '%s'"),$directory) . "<br>\n");
         else
-            $html = "Created directory '$directory' for the page dump...<br>\n";
+            $html = sprintf(_("Created directory '%s' for the page dump..."),$directory) . "<br>\n";
     } else {
-        $html = "Using directory '$directory'<br>\n";
+        $html = sprintf(_("Using directory '%s'"),$directory) . "<br>\n";
     }
 
-    StartLoadDump("Dumping Pages", $html);
+    StartLoadDump( _("Dumping Pages"), $html);
    
     $pages = $dbi->getAllPages();
     
@@ -145,15 +145,15 @@ function DumpToDir ($dbi, $request)
 
         echo "<br>$enc_name ... ";
         if($page->getName() != $filename)
-            echo "<small>saved as $filename</small> ... ";
+            echo "<small>" . sprintf(_("saved as %s"),$filename) . "</small> ... ";
 
         $data = MailifyPage($page);
       
         if ( !($fd = fopen("$directory/$filename", "w")) )
-            ExitWiki("<b>couldn't open file '$directory/$filename' for writing</b>\n");
+            ExitWiki("<b>" . sprintf(_("couldn't open file '%s' for writing"),"$directory/$filename") . "</b>\n");
       
         $num = fwrite($fd, $data, strlen($data));
-        echo "<small>$num bytes written</small>\n";
+        echo "<small>" . sprintf(_("%s bytes written"),$num) . "</small>\n";
         flush();
       
         assert($num == strlen($data));
@@ -175,7 +175,7 @@ function SavePage ($dbi, $pageinfo, $source, $filename)
     $versiondata = $pageinfo['versiondata']; // Revision level meta-data.
 
     if (empty($pageinfo['pagename'])) {
-        echo Element('dd'). Element('dt', QElement('b', "Empty pagename!"));
+        echo Element('dd'). Element('dt', QElement('b', _("Empty pagename!") ));
         return;
     }
 
@@ -195,19 +195,19 @@ function SavePage ($dbi, $pageinfo, $source, $filename)
     $mesg = array();
     $skip = false;
     if ($source)
-        $mesg[] = sprintf(gettext("from %s"), $source);
+        $mesg[] = sprintf(_("from %s"), $source);
 
     $current = $page->getCurrentRevision();
     if ($current->getVersion() == 0) {
-        $mesg[] = gettext("new page");
+        $mesg[] = _("new page");
         $isnew = true;
     }
     else {
         if ($current->getPackedContent() == $content
             && $current->get('author') == $versiondata['author']) {
-            $mesg[] = sprintf(gettext("is identical to current version %d"),
+            $mesg[] = sprintf(_("is identical to current version %d"),
                               $current->getVersion());
-            $mesg[] = gettext("- skipped");
+            $mesg[] = _("- skipped");
             $skip = true;
         }
         $isnew = false;
@@ -218,7 +218,7 @@ function SavePage ($dbi, $pageinfo, $source, $filename)
                                      $versiondata,
                                      ExtractWikiPageLinks($content));
 
-        $mesg[] = sprintf(gettext("- saved as version %d"), $new->getVersion());
+        $mesg[] = sprintf(_("- saved to database as version %d"), $new->getVersion());
     }
    
     print( Element('dt', LinkExistingWikiWord($pagename))
@@ -310,10 +310,10 @@ function LoadFile ($dbi, $filename, $text = false, $mtime = false)
     if ( ($parts = ParseMimeifiedPages($text)) ) {
         usort($parts, 'SortByPageVersion');
         foreach ($parts as $pageinfo)
-            SavePage($dbi, $pageinfo, "MIME file $filename", $basename);
+            SavePage($dbi, $pageinfo, sprintf(_("MIME file %s"),$filename), $basename);
     }
     else if ( ($pageinfo = ParseSerializedPage($text, $default_pagename)) ) {
-        SavePage($dbi, $pageinfo, "Serialized file $filename", $basename);
+        SavePage($dbi, $pageinfo, sprintf(_("Serialized file %s"),$filename), $basename);
     }
     else {
         // Assume plain text file.
@@ -324,7 +324,7 @@ function LoadFile ($dbi, $filename, $text = false, $mtime = false)
                           'content'
                           => preg_replace('/[ \t\r]*\n/', "\n", chop($text))
                           );
-        SavePage($dbi, $pageinfo, "plain file $filename", $basename);
+        SavePage($dbi, $pageinfo, sprintf(_("plain file %s"),$filename), $basename);
     }
 }
 
@@ -338,7 +338,7 @@ function LoadZip ($dbi, $zipfile, $files = false, $exclude = false)
       if ( ($files && !in_array($fn, $files))
 	   || ($exclude && in_array($fn, $exclude)) )
       {
-         print Element('dt', LinkExistingWikiWord($fn)) . QElement('dd', 'Skipping');
+         print Element('dt', LinkExistingWikiWord($fn)) . QElement('dd', _("Skipping"));
          continue;
       }
 
@@ -357,7 +357,7 @@ function LoadDir ($dbi, $dirname, $files = false, $exclude = false)
       if ( ($files && !in_array($fn, $files))
 	   || ($exclude && in_array($fn, $exclude)) )
       {
-	 print Element('dt', LinkExistingWikiWord($fn)) . QElement('dd', 'Skipping');
+	 print Element('dt', LinkExistingWikiWord($fn)) . QElement('dd', _("Skipping"));
 	 continue;
       }
       
@@ -396,7 +396,7 @@ function LoadAny ($dbi, $file_or_dir, $files = false, $exclude = false)
    }
    else if ($type != 'file' && !preg_match('/^(http|ftp):/', $file_or_dir))
    {
-      ExitWiki("Bad file type: $type");
+      ExitWiki( sprintf(_("Bad file type: %s"),$type) );
    }
    else if (IsZipFile($file_or_dir))
    {
@@ -411,7 +411,7 @@ function LoadAny ($dbi, $file_or_dir, $files = false, $exclude = false)
 function LoadFileOrDir ($dbi, $request)
 {
    $source = $request->getArg('source');
-   StartLoadDump("Loading '$source'");
+   StartLoadDump( sprintf(_("Loading '%s'"),$source) );
    echo "<dl>\n";
    LoadAny($dbi, $source/*, false, array(gettext("RecentChanges"))*/);
    echo "</dl>\n";
@@ -423,9 +423,9 @@ function SetupWiki ($dbi)
     global $GenericPages, $LANG, $user;
 
     //FIXME: This is a hack
-    $user->userid = 'The PhpWiki programming team';
+    $user->userid = _("The PhpWiki programming team");
    
-    StartLoadDump('Loading up virgin wiki');
+    StartLoadDump(_("Loading up virgin wiki"));
     echo "<dl>\n";
 
     LoadAny($dbi, FindLocalizedFile(WIKI_PGSRC)/*, false, $ignore*/);
@@ -441,10 +441,10 @@ function LoadPostFile ($dbi, $request)
     $upload = $request->getUploadedFile('file');
 
     if (!$upload)
-        ExitWiki('No uploaded file to upload?');
+        ExitWiki(_("No uploaded file to upload?"));
 
     // Dump http headers.
-    StartLoadDump("Uploading " . $upload->getName());
+    StartLoadDump( sprintf(_("Uploading %s"),$upload->getName()) );
     echo "<dl>\n";
    
     $fd = $upload->open();
