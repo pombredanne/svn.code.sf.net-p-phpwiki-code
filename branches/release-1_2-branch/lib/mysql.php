@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.10.2.5 2005-01-07 13:59:58 rurban Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.10.2.6 2005-01-07 14:02:28 rurban Exp $');
 
    /*
       Database functions:

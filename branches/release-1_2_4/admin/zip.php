@@ -1,4 +1,4 @@
-<?php // $Id: zip.php,v 1.1.2.1.2.2 2005-01-07 13:59:57 rurban Exp $
+<?php // $Id: zip.php,v 1.1.2.1.2.3 2005-01-07 14:02:27 rurban Exp $
 
 function encode_pagename_for_wikizip ($pagename) {
   $enc = rawurlencode($pagename);
@@ -17,7 +17,7 @@ function MailifyPage ($pagehash, $oldpagehash = false)
   $head .= "Subject: " . encode_pagename_for_wikizip($pagehash['pagename']) . "\r\n";
   $head .= "From: $from (PhpWiki)\r\n";
   $head .= "Date: " . rfc1123date($pagehash['lastmodified']) . "\r\n";
-  $head .= "Mime-Version: 1.0 (Produced by PhpWiki 1.1.x)\r\n";
+  $head .= "Mime-Version: 1.0 (Produced by PhpWiki 1.2.6)\r\n";
 
   if (is_array($oldpagehash))
     {

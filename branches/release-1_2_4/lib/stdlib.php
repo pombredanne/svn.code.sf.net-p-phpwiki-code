@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21.2.12.2.2 2005-01-07 13:59:59 rurban Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.12.2.3 2005-01-07 14:02:28 rurban Exp $');
 
    /*
       Standard functions for Wiki functionality

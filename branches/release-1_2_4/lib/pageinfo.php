@@ -1,4 +1,4 @@
-<!-- $Id: pageinfo.php,v 1.5.4.2 2005-01-07 13:59:58 rurban Exp $ -->
+<!-- $Id: pageinfo.php,v 1.5.4.3 2005-01-07 14:02:28 rurban Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?php
    if (get_magic_quotes_gpc()) {

@@ -13,7 +13,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.13.2.2 2005-01-07 13:59:58 rurban Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.13.2.3 2005-01-07 14:02:28 rurban Exp $'); 
    // end essential internal stuff
 
 

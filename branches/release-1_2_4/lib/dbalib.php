@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2.2.5.2.2 2005-01-07 13:59:58 rurban Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2.2.5.2.3 2005-01-07 14:02:28 rurban Exp $');
 
    /*
       Database functions:

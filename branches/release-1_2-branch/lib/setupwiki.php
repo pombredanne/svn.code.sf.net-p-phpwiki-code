@@ -1,4 +1,4 @@
-<!-- $Id: setupwiki.php,v 1.3.2.2 2005-01-07 13:59:59 rurban Exp $ -->
+<!-- $Id: setupwiki.php,v 1.3.2.3 2005-01-07 14:02:28 rurban Exp $ -->
 <?php
 require "lib/ziplib.php";
 

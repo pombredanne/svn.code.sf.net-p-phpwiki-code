@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.7.2.3.2.2 2005-01-07 13:59:58 rurban Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.7.2.3.2.3 2005-01-07 14:02:28 rurban Exp $');
 
 /*
    All page saving events take place here.

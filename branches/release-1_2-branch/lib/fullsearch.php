@@ -1,6 +1,6 @@
 <?php
    // Search the text of pages for a match.
-   rcs_id('$Id: fullsearch.php,v 1.4.2.3 2005-01-07 13:59:58 rurban Exp $');
+   rcs_id('$Id: fullsearch.php,v 1.4.2.4 2005-01-07 14:02:28 rurban Exp $');
 
    if(get_magic_quotes_gpc())
       $full = stripslashes($full);

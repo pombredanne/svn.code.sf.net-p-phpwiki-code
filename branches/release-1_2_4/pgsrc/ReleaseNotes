@@ -1,3 +1,7 @@
+PhpWiki 1.2.6 flatfile fixes and enhancement:
+* fixed !TitleSearch and Backlinks for flatfile.
+* enable MostPopular (hitcount storage) for flatfile
+
 PhpWiki 1.2.5 supports now register_globals=off, 
 * adds user/password to pgsql, 
 * fix zip and dumpserial on dba, dbm, msql and file,
