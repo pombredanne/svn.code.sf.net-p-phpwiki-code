@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.31 2002-08-17 15:52:51 rurban Exp $');
+rcs_id('$Id: display.php,v 1.32 2002-08-17 17:03:05 rurban Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -54,6 +54,8 @@ function actionPage(&$request, $action) {
     $actionpage = $dbi->getPage($action);
     $actionrev = $actionpage->getCurrentRevision();
 
+    // $splitname = split_pagename($pagename);
+
     $pagetitle = HTML(fmt("%s: %s", $actionpage->getName(),
                           $Theme->linkExistingWikiWord($pagename, false, $version)));
 
@@ -62,8 +64,12 @@ function actionPage(&$request, $action) {
     $template = Template('browse', array('CONTENT' => $transformedContent));
 
     header("Content-Type: text/html; charset=" . CHARSET);
-    header("Last-Modified: ".Rfc2822DateTime($revision->get('mtime')));
+    if (!defined('DEBUG')) {
+        header("Last-Modified: ".Rfc2822DateTime($revision->get('mtime')));
+    }
 
+    // $template = Template('browse', array('CONTENT' => TransformText($actionrev)));
+    
     GeneratePage($template, $pagetitle, $revision);
     flush();
 }
@@ -119,7 +125,7 @@ function displayPage(&$request, $tmpl = 'browse') {
 
     header("Content-Type: text/html; charset=" . CHARSET);
     // don't clobber date header given by RC
-    if ( ! ($pagename == _("RecentChanges") || $pagename == _("RecentEdits")) )
+    if ( ! ($pagename == _("RecentChanges") || $pagename == _("RecentEdits") || defined('DEBUG')) )
         header("Last-Modified: ".Rfc2822DateTime($revision->get('mtime')));
 
     GeneratePage($template, $pagetitle, $revision,

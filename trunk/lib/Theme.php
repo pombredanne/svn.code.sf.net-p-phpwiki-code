@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.47 2002-08-17 15:52:51 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.48 2002-08-17 17:03:05 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -33,7 +33,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     global $Theme;
 
     if ($type == 'button') {
-        return $Theme->makeLinkButton($page_or_rev);
+        return $Theme->makeLinkButton($page_or_rev, $label);
     }
 
     $version = false;
@@ -84,8 +84,8 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     else {
         $exists = true;
     }
-    // Todo: fix ImageLinks images/next.gif semantics
-    //       support "/SubPage" relative link
+    // test external ImageLinks http://some/images/next.gif
+    // support "/SubPage" relative link
     if (is_string($page_or_rev) 
         and !$label 
         and strchr(substr($page_or_rev,1), '/')) {
@@ -669,12 +669,12 @@ class Theme {
      *
      * @return object A Button object.
      */
-    function makeLinkButton ($page_or_rev) {
+    function makeLinkButton ($page_or_rev, $label = false) {
         extract($this->_get_name_and_rev($page_or_rev));
 
         $args = $version ? array('version' => $version) : false;
 
-        return $this->makeButton($pagename, WikiURL($pagename, $args), 'wiki');
+        return $this->makeButton($label ? $label : $pagename, WikiURL($pagename, $args), 'wiki');
     }
 
     function _get_name_and_rev ($page_or_rev) {
