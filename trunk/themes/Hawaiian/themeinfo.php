@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.20 2002-02-03 21:28:30 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.21 2002-02-08 17:03:36 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -8,7 +8,18 @@ rcs_id('$Id: themeinfo.php,v 1.20 2002-02-03 21:28:30 carstenklapp Exp $');
 
 require_once('lib/Theme.php');
 
-$Theme = new Theme('Hawaiian');
+class Theme_Hawaiian extends Theme {
+    function getCSS() {
+        // FIXME: this is a hack which will not be needed once
+        //        we have dynamic CSS.
+        $css = Theme::getCSS();
+        $css->pushcontent(HTML::style(array('type' => 'text/css'),
+                             new RawXml(sprintf("<!--\nbody {background-image: url(%s);}\n-->",
+                                                $this->getImageURL('uhhbackground.jpg')))));
+        return $css;
+    }
+}
+$Theme = new Theme_Hawaiian('Hawaiian');
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
