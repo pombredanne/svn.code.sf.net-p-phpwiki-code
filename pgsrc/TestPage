@@ -66,21 +66,19 @@ this is a plain paragraph again
 	# number
 ----
 __Link tests__
-# FrontPage
-# [FrontPage]
+# normal: FrontPage
+# in brackets: [FrontPage] -- named: [the front page|FrontPage]
 # Link in brackets: [http://phpwiki.sourceforge.net/]
 # Link outside brackets: http://phpwiki.sourceforge.net/
 # Link with Wiki word: http://phpwiki.sourceforge.net/phpwiki/index.php?FrontPage
 # Two consecutive links: http://phpwiki.sourceforge.net/ http://phpwiki.sourceforge.net/phpwiki/
-# And what about a WikiLink and another WikiLinkWithSameStem on one line?
-# Other way around: WikiLinkWithSameStem plus WikiLink
 # [PhpWiki on Sourceforge | http://phpwiki.sourceforge.net/]
 # [URL with a WikiWord | http://phpwiki.sourceforge.net/phpwiki/index.php?RecentChanges]
-# Javascript: [boo! | javascript:alert('oops') ] 
+# Javascript: [boo! | javascript:alert('oops') ]  (is now: named internal link)
 # A [[Link] produces a [Link]
 # A [Link] looks like this: [[Link]
 # This is a [%%%] line break link
-# Also this page is [[not linked to], and this one is !NotLinkedTo.
+# Also this page is [[not linked to], and this one is !NotLinkedTo and this one neither !http://not.linked.to/.
 #* WikiName - WikiNameSameStem -- !!WikiName - !!WikiNameSameStem
 #* !!WikiName - !!WikiNameSameStem -- WikiName - WikiNameSameStem
 #* WikiNameSameStem - WikiName -- !!WikiNameSameStem - !!WikiName
