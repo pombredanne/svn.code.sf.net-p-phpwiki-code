@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.13 2004-04-20 23:24:49 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.14 2004-04-21 04:29:50 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -105,7 +105,7 @@ extends WikiPlugin
         for ($i=0; $i<count($content); $i++) {
             foreach ($levels as $level) {
                 if ($level < 1 or $level > 3) continue;
-                if (preg_match('/^\s*(!{'.$level.','.$level.'})([^!]+)$/',$content[$i],$match)) {
+                if (preg_match('/^\s*(!{'.$level.','.$level.'})([^!].*)$/',$content[$i],$match)) {
                     if (!strstr($content[$i],'#[')) {
                         $s = trim($match[2]);
                         $anchor = $this->_nextAnchor($s);
