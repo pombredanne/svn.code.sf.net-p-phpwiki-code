@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.5 2001-12-19 05:05:14 dairiki Exp $
+# $Id: Makefile,v 1.6 2001-12-21 07:43:08 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -38,3 +38,4 @@ po/%.po : po/phpwiki.pot
 %/LC_MESSAGES/phpwiki.php : %/LC_MESSAGES/phpwiki.mo
 	msgunfmt $< | awk -f make-php-trans.awk > $@
 
+clean : #Nothing to be done for 'clean'.
