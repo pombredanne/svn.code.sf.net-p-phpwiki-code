@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.31 2002-01-23 22:46:19 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.32 2002-01-25 08:36:09 carstenklapp Exp $');
 /**
  */
 
@@ -58,7 +58,7 @@ class _RecentChanges_Formatter
         global $WikiNameRegexp, $request;
         $dbi = $request->getDbh();
         if (preg_match("/^$WikiNameRegexp\$/", $author) && $dbi->isWikiPage($author))
-            return WikiURL($author);
+            return true;
         return false;
     }
 
@@ -108,9 +108,10 @@ extends _RecentChanges_Formatter
     
     function authorLink ($rev) {
         $author = $rev->get('author');
-        if ( ($url = $this->authorURL($author)) )
-            return HTML::a(array('href' => $url, 'class' => 'wiki'), $author);
-        else
+        if ( ($url = $this->authorURL($author)) ) {
+            global $Theme;
+            return $Theme->LinkExistingWikiWord($author);
+        } else
             return $author;
     }
 
