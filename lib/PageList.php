@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.77 2004-04-18 01:11:51 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.78 2004-04-20 00:06:03 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -409,23 +409,21 @@ class PageList {
         $this->_addColumn('pagename');
 
         $this->_options = $options;
-        if (!empty($options) and !empty($options['sortby'])) {
-            $sortby = $options['sortby'];
-        } else {
-            $sortby = $GLOBALS['request']->getArg('sortby');
+        foreach (array('sortby','limit','paging','count') as $key) {
+          if (!empty($options) and !empty($options[$key])) {
+            $this->_options[$key] = $options[$key];
+          } else {
+            $this->_options[$key] = $GLOBALS['request']->getArg($key);
+          }
         }
-        $this->sortby($sortby,'init');
-        if (!empty($options) and !empty($options['limit'])) {
-            $limit = $options['limit'];
-        } else {
-            $limit = $GLOBALS['request']->getArg('limit');
-        }
+        $this->_options['sortby'] = $this->sortby($this->_options['sortby'], 'init');
         if ($exclude) {
             if (!is_array($exclude))
-                $exclude = $this->explodePageList($exclude,false,$sortby,$limit);
+                $exclude = $this->explodePageList($exclude,false,
+                                                  $this->_options['sortby'],
+                                                  $this->_options['limit']);
             $this->_excluded_pages = $exclude;
         }
-            
         $this->_messageIfEmpty = _("<no matches>");
     }
 
@@ -444,14 +442,13 @@ class PageList {
                      //PageList pager options:
                      // These options may also be given to _generate(List|Table) later
                      // But limit and offset might help the query WikiDB::getAllPages()
-                     //cols    => 1,       // side-by-side display of list (1-3)
-                     //limit   => 50,      // number of rows
-                     //offset  => 0,       // needed internally for the pager
-                     //paging  => 'auto',  // 'auto'  normal paging mode
-                     //			   // 'smart' drop 'info' columns and enhance rows 
-                     //                    //         when the list becomes large
-                     //                    // 'none'  don't page at all
-                     //azhead  => 0        // provide shortcut links to pages starting with different letters
+                     'cols'     => 1,       // side-by-side display of list (1-3)
+                     'limit'    => 50,      // number of rows
+                     'paging'   => 'auto',  // 'auto'  normal paging mode
+                     //			    // 'smart' drop 'info' columns and enhance rows 
+                     //                     //         when the list becomes large
+                     //                     // 'none'  don't page at all
+                     //'azhead' => 0        // provide shortcut links to pages starting with different letters
                      );
     }
 
@@ -472,7 +469,8 @@ class PageList {
 
 
     function getTotal () {
-        return count($this->_rows);
+    	return !empty($this->_options['count'])
+    	       ? $this->_options['count'] : count($this->_rows);
     }
 
     function isEmpty () {
@@ -739,6 +737,63 @@ class PageList {
         $table->setAttr('summary', sprintf(_("Columns: %s."), 
                                            implode(", ", $table_summary)));
 
+        if ( isset($this->_options['paging']) and 
+             !empty($this->_options['limit']) and $this->getTotal() and
+             $this->_options['paging'] != 'none')
+        {
+            // if there are more pages than the limit, show a table-header, -footer
+            if (strstr($this->_options['limit'],','))
+                list($offset,$pagesize) = split(',',$this->_options['limit']);
+            else {    
+                $offset = 0; 
+                $pagesize = $this->_options['limit'];
+            }
+            $numrows = $this->getTotal();
+            if ($numrows <= $pagesize or ($offset + $pagesize < 0))
+                return $table;
+
+            global $request;
+            include_once('lib/Template.php');
+
+            $tokens = array();
+            $pagename = $request->getArg('pagename');
+            $defargs = $request->args;
+            unset($defargs['pagename']); unset($defargs['action']);
+            //$defargs['nocache'] = 1;
+            $prev = $defargs;
+            $tokens['PREV'] = false; $tokens['PREV_LINK'] = "";
+            $tokens['COLS'] = count($this->_columns);
+            $tokens['COUNT'] = $numrows; 
+            $tokens['OFFSET'] = $offset; 
+            $tokens['SIZE'] = $pagesize;
+            $tokens['NUMPAGES'] = (int)($numrows / $pagesize)+1;
+            $tokens['ACTPAGE'] = (int) (($offset+1) / $pagesize)+1;
+            if ($offset >= $pagesize) {
+            	$prev['limit'] = $offset - $pagesize . ',' . $pagesize;
+            	$prev['count'] = $numrows;
+            	$tokens['LIMIT'] = $prev['limit'];
+                $tokens['PREV'] = true;
+                $tokens['PREV_LINK'] = WikiURL($pagename,$prev);
+                $prev['limit'] = "0,$pagesize";
+                $tokens['FIRST_LINK'] = WikiURL($pagename,$prev);
+            }
+            $next = $defargs;
+            $tokens['NEXT'] = false; $tokens['NEXT_LINK'] = "";
+            if ($offset + $pagesize < $numrows) {
+                $next['limit'] = $offset + $pagesize . ',' . $pagesize;
+            	$next['count'] = $numrows;
+            	$tokens['LIMIT'] = $next['limit'];
+                $tokens['NEXT'] = true;
+                $tokens['NEXT_LINK'] = WikiURL($pagename,$next);
+                $next['limit'] = $numrows - $pagesize . ",$pagesize";
+                $tokens['LAST_LINK'] = WikiURL($pagename,$next);
+            }
+            $paging = new Template("pagelink", $request, $tokens);
+            $table->pushContent(HTML::thead($paging),
+                                HTML::tbody(false,HTML($row,$this->_rows)),
+                                HTML::tfoot($paging));
+            return $table;
+        }
         $table->pushContent(HTML::thead($row),
                             HTML::tbody(false, $this->_rows));
         return $table;
@@ -829,6 +884,11 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.77  2004/04/18 01:11:51  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

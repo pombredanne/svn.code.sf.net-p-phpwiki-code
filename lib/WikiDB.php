@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.44 2004-04-19 18:27:45 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.45 2004-04-20 00:06:03 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -249,6 +249,16 @@ class WikiDB {
         return new WikiDB_PageIterator($this, $result);
     }
 
+    function numPages($filter=false, $exclude='') {
+    	if (method_exists($this->_backend,'numPages'))
+            $count = $this->_backend->numPages($filter,$exclude);
+        else {
+            $iter = $this->getAllPages();
+            $count = $iter->count();
+        }
+        return (int)$count;
+    }
+    
     /**
      * Title search.
      *
@@ -1710,6 +1720,12 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2004/04/19 18:27:45  rurban
+// Prevent from some PHP5 warnings (ref args, no :: object init)
+//   php5 runs now through, just one wrong XmlElement object init missing
+// Removed unneccesary UpgradeUser lines
+// Changed WikiLink to omit version if current (RecentChanges)
+//
 // Revision 1.43  2004/04/18 01:34:20  rurban
 // protect most_popular from sortby=mtime
 //
