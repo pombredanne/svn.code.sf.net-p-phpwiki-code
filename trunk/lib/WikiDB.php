@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.123 2005-01-25 06:58:21 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.124 2005-01-29 20:43:32 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -116,7 +116,7 @@ class WikiDB {
         if (isset($dbparams['auth_dsn'])) return;
         
         $this->_cache = new WikiDB_cache($backend);
-        $GLOBALS['request']->_dbi = $this;
+        if (!empty($GLOBALS['request'])) $GLOBALS['request']->_dbi = $this;
 
         // If the database doesn't yet have a timestamp, initialize it now.
         if ($this->get('_timestamp') === false)
@@ -2139,6 +2139,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.123  2005/01/25 06:58:21  rurban
+// reformatting
+//
 // Revision 1.122  2005/01/20 10:18:17  rurban
 // reformatting
 //
