@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.7 2002-02-07 03:49:52 carstenklapp Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.8 2002-02-11 21:15:08 carstenklapp Exp $ -->
 <?php
 
 $s = $Theme->getButtonSeparator();
@@ -9,6 +9,7 @@ $s = $Theme->getButtonSeparator();
 <form action="<?= WikiURL(_("TitleSearch"))?>"
       method="get" accept-charset="<?=CHARSET?>">
   <div class="toolbar" id="navbar">
+  <div id="navbuttons">
    <?= WikiLink(_("RecentChanges"), "button") ?>
    <?=$s?><?= WikiLink(_("FindPage"), "button") ?>
    <?=$s?><input type="hidden" name="auto_redirect" value="1" />
@@ -23,5 +24,6 @@ $s = $Theme->getButtonSeparator();
     <?php if (!empty($user) && $user->isAdmin()) { ?>
      <?=$s?><?= WikiLink(_("PhpWikiAdministration"), "button") ?>
     <?php } ?>
+  </div>
   </div>
 </form>
