@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.1 2004-07-02 11:03:53 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.2 2004-07-09 10:25:52 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -78,10 +78,11 @@ extends WikiPlugin
         $arg = '';
     	for ($i = 0; $i < count($arg_array); $i++) {
     	    if (preg_match("/^\s*(".join("|",$allowed).")\[\]\s+(.+)\s*$/", $arg_array[$i], $m)) {
+    	    	$name = $m[1];
                 $this->inputbox[][$name] = array(); $i = count($this->inputbox) - 1;
-                foreach (preg_split("/[\s+]/", $m[2]) as $attr_pair) {
+                foreach (preg_split("/[\s]+/", $m[2]) as $attr_pair) {
                     list($attr,$value) = preg_split("/\s*=\s*/", $attr_pair);
-                    if (preg_match('/^".*"$/', $value, $m))
+                    if (preg_match('/^"(.*)"$/', $value, $m))
                         $value = $m[1];
                     elseif (defined($value))
                         $value = constant($value);
@@ -171,6 +172,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/07/02 11:03:53  rurban
+// renamed WikiFormMore to WikiFormRich: better syntax, no eval (safer)
+//
 // Revision 1.3  2004/07/01 13:59:25  rurban
 // enhanced to allow arbitrary order of args and stricter eval checking
 //
