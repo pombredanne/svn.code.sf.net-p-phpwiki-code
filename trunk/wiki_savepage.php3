@@ -1,4 +1,4 @@
-<!-- $Id: wiki_savepage.php3,v 1.6 2000-06-14 03:35:40 wainstead Exp $ -->
+<!-- $Id: wiki_savepage.php3,v 1.7 2000-06-14 03:41:09 wainstead Exp $ -->
 <?
 
 /*
@@ -63,12 +63,12 @@
 	"<a href=\"$ScriptUrl?$enc_url\">$enc_name</a><br>\n";
 
 
-   if (! empty($text)) {
+   if (! empty($content)) {
       // patch from Grant Morgan <grant@ryuuguu.com> for
       // magic_quotes_gpc
-      if(get_magic_quotes_gpc()) { $text = stripslashes($text); }
+      if(get_magic_quotes_gpc()) { $content = stripslashes($content); }
 
-      $pagehash["content"] = explode("\n", $text);
+      $pagehash["content"] = explode("\n", $content);
 
       // convert spaces to tabs at user request
       if ($convert) {
