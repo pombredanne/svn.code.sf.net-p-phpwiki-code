@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.17 2002-02-06 23:02:45 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.18 2002-02-09 20:00:26 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -222,6 +222,12 @@ class WikiPlugin
         //FIXME: can we do without this table?
         $form->pushContent(HTML::table(HTML::tr($contents)));
         return $form;
+    }
+
+    function error ($message) {
+        return HTML::div(array('class' => 'errors'),
+                         HTML::strong(fmt("Plugin %s failed.", $this->getName())), ' ',
+                         $message);
     }
 }
 
