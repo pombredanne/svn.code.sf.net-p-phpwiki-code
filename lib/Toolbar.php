@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.15 2002-01-11 22:51:34 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.16 2002-01-11 23:37:09 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -255,7 +255,7 @@ function toolbar_User_UserSignInOut($userauth, $userid, $pagename, $is_admin) {
             ._("SignIn") ."</a>";
     }
     if ($is_admin) {
-        $html .= separator() ."<a class=\"wikiaction\" href=\""
+        $html .= separator() ."<a class=\"wikiadmin\" href=\""
             . WikiURL(_("PhpWikiAdministration"), array('page' => $pagename)) ."\">"
             ._("PhpWikiAdministration") ."</a>";
      }
