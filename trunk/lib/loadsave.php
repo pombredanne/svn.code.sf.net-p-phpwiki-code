@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.91 2004-02-24 17:19:37 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.92 2004-02-26 02:25:54 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -253,6 +253,7 @@ function DumpHtmlToDir (&$request)
     global $HTML_DUMP_SUFFIX, $Theme;
     if ($HTML_DUMP_SUFFIX)
         $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
+    $Theme->DUMP_MODE = 'HTML';
 
     while ($page = $pages->next()) {
     	if (! $request->getArg('start_debug'))
@@ -294,6 +295,7 @@ function DumpHtmlToDir (&$request)
 
     //CopyImageFiles() will go here;
     $Theme->$HTML_DUMP_SUFFIX = '';
+    $Theme->DUMP_MODE = false;
 
     $request->setArg('pagename',$thispage); // Template::_basepage fix
     EndLoadDump($request);
@@ -847,6 +849,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.91  2004/02/24 17:19:37  rurban
+ debugging helpers only
+
  Revision 1.90  2004/02/24 17:09:24  rurban
  fixed \r\r\n with dumping on windows
 
