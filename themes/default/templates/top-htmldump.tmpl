@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: top-htmldump.tmpl,v 1.1 2002-02-21 21:09:50 carstenklapp Exp $
+/* $Id: top-htmldump.tmpl,v 1.2 2002-03-25 15:07:58 carstenklapp Exp $
  *
  * This template is used only for html file dumps, and is responsible mainly for the outer level <html> stuff and the and <head>.
  */
@@ -9,7 +9,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: top-htmldump.tmpl,v 1.1 2002-02-21 21:09:50 carstenklapp Exp $ -->
+<!-- $Id: top-htmldump.tmpl,v 1.2 2002-03-25 15:07:58 carstenklapp Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php /**
        * Additional navigation links are provided here in the html header for browsers
@@ -26,6 +26,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
       $wikiadminUrl = "http://phpwiki.sourceforge.net/phpwiki/ThePhpWikiProgrammingTeam";
       ?>
 <link rel="author" title="<?= $wikiadminName ?>" href="<?= $wikiadminUrl ?>" />
+<link rel="index" title="<?=_("AllPages")?>" href="<?=WikiURL(_("AllPages"))?>" />
 
 <?= $Theme->getCSS() ?>
 <title><?=WIKI_NAME?> - <?=AsString($TITLE)?></title>
