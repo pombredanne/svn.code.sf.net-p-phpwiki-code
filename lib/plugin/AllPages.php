@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.20 2004-02-22 23:20:33 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.21 2004-04-20 00:06:53 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -47,6 +47,7 @@ extends WikiPlugin
                      'info'          => '',
                      'sortby'        => 'pagename',   // +mtime,-pagename
                      'limit'         => 0,
+                     'paging'        => 'auto',
                      'debug'         => false
                      );
     }
@@ -56,14 +57,17 @@ extends WikiPlugin
     // sortby: [+|-] pagename|mtime|hits
 
     function run($dbi, $argstr, &$request, $basepage) {
-        extract($this->getArgs($argstr, $request));
+        $args = $this->getArgs($argstr, $request);
+        extract($args);
         // Todo: extend given _GET args
         if ($sorted = $request->getArg('sortby'))
             $sortby = $sorted;
         elseif ($sortby)
             $request->setArg('sortby',$sortby);
 
-        $pagelist = new PageList($info, $exclude, $this->getArgs($argstr, $request));
+        if (! $request->getArg('count'))  $args['count'] = $dbi->numPages(false,$exclude);
+        else $args['count'] = $request->getArg('count');
+        $pagelist = new PageList($info, $exclude, $args);
         //if (!$sortby) $sorted='pagename';
         if (!$noheader)
             $pagelist->setCaption(_("Pages in this wiki (%d total):"));
@@ -91,6 +95,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/02/22 23:20:33  rurban
+// fixed DumpHtmlToDir,
+// enhanced sortby handling in PageList
+//   new button_heading th style (enabled),
+// added sortby and limit support to the db backends and plugins
+//   for paging support (<<prev, next>> links on long lists)
+//
 // Revision 1.19  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.26 2004-04-18 01:34:21 rurban Exp $');
+rcs_id('$Id: MostPopular.php,v 1.27 2004-04-20 00:06:53 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.26 $");
+                            "\$Revision: 1.27 $");
     }
 
     function getDefaultArguments() {
@@ -47,7 +47,8 @@ extends WikiPlugin
                      'limit'    => 20, // limit <0 returns least popular pages
                      'noheader' => 0,
                      'sortby'   => 'hits',
-                     'info'     => false
+                     'info'     => false,
+                     'paging'   => 'auto'
                     );
     }
     
@@ -57,8 +58,8 @@ extends WikiPlugin
     // sortby: only pagename or hits. mtime not!
 
     function run($dbi, $argstr, &$request, $basepage) {
-    	//$request->setArg('nocache','1');
-        extract($this->getArgs($argstr, $request));
+    	$args = $this->getArgs($argstr, $request);
+        extract($args);
         if (strstr($sortby,'mtime')) {
             trigger_error(_("sortby=mtime not supported with MostPopular"),
                           E_USER_WARNING);
@@ -66,10 +67,17 @@ extends WikiPlugin
         }
         $columns = $info ? explode(",", $info) : array();
         array_unshift($columns, 'hits');
-
-        $pagelist = new PageList($columns, $exclude);
-
+        
+        if (! $request->getArg('count')) {
+            //$args['count'] = $dbi->numPages(false,$exclude);
+            $allpages = $dbi->mostPopular(0);
+            $args['count'] = $allpages->count();
+        } else {
+            $args['count'] = $request->getArg('count');
+        }
+        $dbi->touch();
         $pages = $dbi->mostPopular($limit,$sortby);
+        $pagelist = new PageList($columns, $exclude, $args);
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
             // don't show pages with no hits if most popular pages
@@ -96,6 +104,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/04/18 01:34:21  rurban
+// protect most_popular from sortby=mtime
+//
 // Revision 1.25  2004/03/30 02:38:06  rurban
 // RateIt support (currently no recommendation engine yet)
 //
