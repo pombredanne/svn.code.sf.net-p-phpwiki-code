@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.80 2004-04-20 00:56:00 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.81 2004-05-13 12:30:35 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -110,10 +110,14 @@ class _PageList_Column_base {
         if (in_array($this->_field,PageList::sortable_columns())) {
             // multiple comma-delimited sortby args: "+hits,+pagename"
             $src = false; 
-            $noimg = HTML::img(array('src' => $Theme->getButtonURL('no_order'),
-                                     'width' => '7', 
-                                     'height' => '7',
-                                     'alt'    => '.'));
+            $noimg_src = $Theme->getButtonURL('no_order');
+            if ($noimg_src)
+                $noimg = HTML::img(array('src' => $noimg_src,
+                                         'width' => '7', 
+                                         'height' => '7',
+                                         'border' => 0,
+                                         'alt'    => '.'));
+            else $noimg = HTML::raw('&nbsp;');
             if ($request->getArg('sortby')) {
                 if (PageList::sortby($this->_field,'check')) { // show icon?
                     $sortby = PageList::sortby($request->getArg('sortby'),'flip_order');
@@ -128,11 +132,12 @@ class _PageList_Column_base {
             }
             if (!$src) {
                 $img = $noimg;
-                $img->setAttr('alt', _("Click to sort"));
+                //$img->setAttr('alt', _("Click to sort"));
             } else {
                 $img = HTML::img(array('src' => $src, 
                                        'width' => '7', 
                                        'height' => '7', 
+                                       'border' => 0,
                                        'alt' => _("Click to reverse sort order")));
             }
             $s = HTML::a(array('href' => 
@@ -891,6 +896,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.80  2004/04/20 00:56:00  rurban
+// more paging support and paging fix for shorter lists
+//
 // Revision 1.79  2004/04/20 00:34:16  rurban
 // more paging support
 //
