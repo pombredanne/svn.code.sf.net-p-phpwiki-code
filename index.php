@@ -79,9 +79,9 @@ define ('DEBUG', 1);
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.4');
+define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.100 2003-01-04 03:36:58 wainstead Exp $');
+rcs_id('$Id: index.php,v 1.101 2003-02-21 19:29:30 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -679,5 +679,8 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2003/01/04 03:36:58  wainstead
+// Added 'file' as a database type alongside 'dbm'; added cvs log tag
+//
 
 ?>
