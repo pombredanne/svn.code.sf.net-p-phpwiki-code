@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.18 2004-12-06 19:50:05 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.19 2005-01-21 14:12:48 rurban Exp $');
 /*
- Copyright 2002, 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2002,2004,2005 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -99,10 +99,9 @@ extends WikiPlugin
             if ($dbi->isWikiPage($page)) {
                 $p = $dbi->getPage($page);
                 $r = $p->getCurrentRevision();
-                $c = $r->getContent();
-                $ct = implode("\n", $c);
+                $c = $r->getContent();   // array of lines
                 // trap recursive redirects
-                if (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\w+)\s+\?'.'>/',$ct,$m)) {
+                if (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\w+)\s+\?'.'>/', implode("\n", $c), $m)) {
                     if (in_array($m[1], $included_pages)) {
                         //$content->pushContent(HTML::p(sprintf(_("recursive inclusion of page %s ignored"),
                         //                              $page.' => '.$m[1])));
@@ -122,10 +121,11 @@ extends WikiPlugin
                         $c = substr($c, 0, $bytes)
                             . sprintf(_(" ... first %d bytes"), $bytes);
                 }
+                $ct = implode("\n", $c); // one string
 
                 array_push($included_pages, $page);
                 if ($smalltitle) {
-                    $pname = array_pop(explode("/", $page)); // get last subpage name
+                    $pname = array_pop(explode(SUBPAGE_SEPARATOR, $page)); // get last subpage name
                     // Use _("%s: %s") instead of .": ". for French punctuation
                     $ct = TransformText(sprintf(_("%s: %s"), "[$pname|$page]",
                                                 $ct),
@@ -151,6 +151,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/12/06 19:50:05  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.17  2004/11/23 15:17:19  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:
