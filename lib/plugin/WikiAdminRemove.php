@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.23 2004-06-03 22:24:48 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.24 2004-06-08 10:05:11 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function getDefaultArguments() {
@@ -131,7 +131,8 @@ extends WikiPlugin_WikiAdminSelect
     
     function run($dbi, $argstr, &$request, $basepage) {
         if ($request->getArg('action') != 'browse')
-            return $this->disabled("(action != 'browse')");
+            if ($request->getArg('action') != _("PhpWikiAdministration/Remove"))
+                return $this->disabled("(action != 'browse')");
         
         $args = $this->getArgs($argstr, $request);
         if (!is_numeric($args['min_age']))
@@ -244,6 +245,9 @@ class _PageList_Column_remove extends _PageList_Column {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/06/03 22:24:48  rurban
+// reenable admin check on !ENABLE_PAGEPERM, honor s=Wildcard arg, fix warning after Remove
+//
 // Revision 1.22  2004/05/16 22:07:35  rurban
 // check more config-default and predefined constants
 // various PagePerm fixes:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.16 2004-06-07 18:57:31 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.17 2004-06-08 10:05:12 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -124,7 +124,8 @@ extends WikiPlugin_WikiAdminSelect
     
     function run($dbi, $argstr, &$request, $basepage) {
         if ($request->getArg('action') != 'browse')
-            return $this->disabled("(action != 'browse')");
+            if ($request->getArg('action') != _("PhpWikiAdministration/Rename"))
+                return $this->disabled("(action != 'browse')");
         
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
@@ -252,6 +253,9 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/06/07 18:57:31  rurban
+// fix rename: Change pagename in all linked pages
+//
 // Revision 1.15  2004/06/04 20:32:54  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole

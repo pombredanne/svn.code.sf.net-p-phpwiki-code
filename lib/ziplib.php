@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.37 2004-06-07 22:28:04 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.38 2004-06-08 10:05:11 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -569,6 +569,7 @@ function MimeifyPageRevision ($revision) {
     if ($page->get('perm')) {
         $acl = getPagePermissions($page);
         $params['acl'] = $acl->asAclLines();
+        //TODO: convert to multiple lines? acl-view => groups,...; acl-edit => groups,... 
     }
 
     $params['charset'] = $GLOBALS['charset'];
@@ -577,6 +578,8 @@ function MimeifyPageRevision ($revision) {
     // special handling) --- so we urlencode all parameter values.
     foreach ($params as $key => $val)
         $params[$key] = rawurlencode($val);
+    if (isset($params['acl'])) 
+        $params['acl'] = str_replace(array("%3A","%2C%0A","%2C","%0A"),array(":","; ",",","; "),$params['acl']);
     
     $out = MimeContentTypeHeader('application', 'x-phpwiki', $params);
     $out .= sprintf("Content-Transfer-Encoding: %s\r\n",
@@ -738,7 +741,8 @@ function ParseMimeifiedPages ($data)
     $pagedata    = array();
     $versiondata = array();
     $pagedata['date'] = strtotime($headers['date']);
-    
+
+    //FIXME: support owner and acl
     foreach ($params as $key => $value) {
         if (empty($value))
             continue;
@@ -793,6 +797,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2004/06/07 22:28:04  rurban
+// add acl field to mimified dump
+//
 // Revision 1.36  2004/06/07 19:50:40  rurban
 // add owner field to mimified dump
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.161 2004-06-07 22:58:40 rurban Exp $');
+rcs_id('$Id: main.php,v 1.162 2004-06-08 10:05:11 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -482,6 +482,7 @@ $this->version = phpwiki_version();
             case 'upgrade':
             case 'chown':
             case 'setacl':
+            case 'rename':
                 return WIKIAUTH_ADMIN;
 
             /* authcheck occurs only in the plugin.
@@ -760,26 +761,29 @@ $this->version = phpwiki_version();
         actionPage($this, $action);
     }
 
-    function action_chown () {
-        $action = $this->findActionPage(_("PhpWikiAdministration/Chown"));
+    function adminActionSubpage ($subpage) {
+        $page = _("PhpWikiAdministration")."/".$subpage;
+        $action = $this->findActionPage($page);
         if ($action) {
             $this->setArg('s',$this->getArg('pagename'));
             $this->setArg('verify',1);
+            $this->setArg('action',$action);
             $this->actionpage($action);
         } else {
-            trigger_error(_("PhpWikiAdministration/Chown").": Cannot find action page", E_USER_WARNING);
+            trigger_error($page.": Cannot find action page", E_USER_WARNING);
         }
     }
 
+    function action_chown () {
+        $this->adminActionSubpage(_("Chown"));
+    }
+
     function action_setacl () {
-        $action = $this->findActionPage(_("PhpWikiAdministration/SetAcl"));
-        if ($action) {
-            $this->setArg('s',$this->getArg('pagename'));
-            $this->setArg('verify',1);
-            $this->actionpage($action);
-        } else {
-            trigger_error(_("PhpWikiAdministration/SetAcl").": Cannot find action page", E_USER_WARNING);
-        }
+        $this->adminActionSubpage(_("SetAcl"));
+    }
+
+    function action_rename () {
+        $this->adminActionSubpage(_("Rename"));
     }
 
     function action_dump () {
@@ -1026,6 +1030,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.161  2004/06/07 22:58:40  rurban
+// simplified chown, setacl, dump actions
+//
 // Revision 1.160  2004/06/07 22:44:14  rurban
 // added simplified chown, setacl actions
 //
