@@ -21,7 +21,7 @@ class AllPagesTest extends PHPUnit_TestCase {
         $basepage = "";
         $args = "";
         $result = $lp->run($request->getDbh(), $args, $request, $basepage);
-        $this->assertType('object',$result,'isa PageList');
+        $this->assertType('object', $result, 'isa PageList');
     }
 }
 

@@ -27,8 +27,11 @@ class SetupWiki extends PHPUnit_TestCase {
     function testSetupWiki() {
         global $request;
 
+	    print "Purge the testbox .. ";
+        purge_testbox();
+        
         $dbi = $request->getDbh();
-        $dbi->deletePage('HomePage');
+        $dbi->deletePage('HomePage'); // possibly in cache
         $this->assertFalse($dbi->isWikiPage('HomePage'));
 
         $request->setArg('source', FindFile('pgsrc'));
@@ -38,6 +41,5 @@ class SetupWiki extends PHPUnit_TestCase {
         $this->assertTrue($dbi->isWikiPage('HomePage'));
     }
 }
-
 
 ?>
