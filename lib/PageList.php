@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.129 2005-01-25 06:58:21 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.130 2005-01-28 12:07:36 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -826,7 +826,8 @@ class PageList {
         }
     }
 
-    function allPagesByAuthor($wildcard, $include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function allPagesByAuthor($wildcard, $include_empty=false, $sortby=false, 
+                              $limit=false, $exclude=false) {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
         $allPages = array();
@@ -851,7 +852,8 @@ class PageList {
         return $allPages;
     }
 
-    function allPagesByOwner($wildcard, $include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function allPagesByOwner($wildcard, $include_empty=false, $sortby=false, 
+                             $limit=false, $exclude=false) {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
         $allPages = array();
@@ -875,7 +877,8 @@ class PageList {
         return $allPages;
     }
 
-    function allPagesByCreator($wildcard, $include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function allPagesByCreator($wildcard, $include_empty=false, $sortby=false, 
+                               $limit=false, $exclude=false) {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
         $allPages = array();
@@ -1446,6 +1449,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.129  2005/01/25 06:58:21  rurban
+// reformatting
+//
 // Revision 1.128  2004/12/26 17:31:35  rurban
 // fixed prev link logic
 //
