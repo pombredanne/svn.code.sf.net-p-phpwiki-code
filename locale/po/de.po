@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2000-12-22 21:16+0100\n"
+"POT-Creation-Date: 2001-01-31 08:44+0100\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -45,23 +45,23 @@ msgstr "Seite löschen"
 msgid "Removed page '%s' succesfully."
 msgstr "Seite '%s' erfolgreich gelöscht."
 
-#: lib/config.php:162
+#: lib/config.php:195
 msgid "templates/browse.html"
 msgstr "locale/de/templates/browse.html"
 
-#: lib/config.php:163
+#: lib/config.php:196
 msgid "templates/editpage.html"
 msgstr "locale/de/templates/editpage.html"
 
-#: lib/config.php:164
+#: lib/config.php:197
 msgid "templates/editlinks.html"
 msgstr "locale/de/templates/editlinks.html"
 
-#: lib/config.php:165
+#: lib/config.php:198
 msgid "templates/message.html"
 msgstr "locale/de/templates/message.html"
 
-#: lib/config.php:181
+#: lib/config.php:214
 msgid "./pgsrc"
 msgstr "locale/de/pgsrc"
 
@@ -119,11 +119,11 @@ msgstr "Versionen sind identisch"
 msgid "Diff of %s."
 msgstr "Diff von %s."
 
-#: lib/display.php:14
+#: lib/display.php:12
 msgid "FrontPage"
 msgstr "StartSeite"
 
-#: lib/display.php:31 lib/editpage.php:50
+#: lib/display.php:29 lib/editpage.php:50
 #, c-format
 msgid "Describe %s here."
 msgstr "Beschreibe %s hier."
@@ -137,32 +137,32 @@ msgstr "Kopie von %s"
 msgid "No page name passed into editpage!"
 msgstr "Kein Seitenname an EditierSeite übergeben!"
 
-#: lib/editpage.php:31 lib/savepage.php:52
+#: lib/editpage.php:31 lib/savepage.php:121
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
 "Diese Seite wurde vom Administrator gesperrt und kann nicht editiert werden."
 
-#: lib/editpage.php:33 lib/savepage.php:32 lib/savepage.php:53
+#: lib/editpage.php:33 lib/savepage.php:99 lib/savepage.php:122
 #, fuzzy
 msgid "Sorry for the inconvenience."
 msgstr "Entschuldigung für die Unannehmlichkeiten."
 
-#: lib/editpage.php:35 lib/savepage.php:54
+#: lib/editpage.php:35 lib/savepage.php:123
 #, c-format
 msgid "Problem while editing %s"
 msgstr "Problem während dem Editieren von %s"
 
-#: lib/fullsearch.php:15
+#: lib/fullsearch.php:9 lib/search.php:9
 #, c-format
 msgid "Searching for \"%s\" ....."
 msgstr "Suche nach \"%s\" ....."
 
-#: lib/fullsearch.php:45
+#: lib/fullsearch.php:41
 #, c-format
 msgid "%d matches found in %d pages."
 msgstr "%d Treffer in %d Seiten."
 
-#: lib/fullsearch.php:48
+#: lib/fullsearch.php:45
 msgid "Full Text Search Results"
 msgstr "Volltext-Suchresultate"
 
@@ -195,17 +195,17 @@ msgstr "Löschen in %s fehlgeschlagen: %s"
 msgid "Insert into %s failed: %s"
 msgstr "Einfügen in %s fehlgeschlagen: %s"
 
-#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:118 lib/mysql.php:158
+#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:123 lib/mysql.php:163
 #, c-format
 msgid "MySQL error: %s"
 msgstr "MySQL Fehler: %s"
 
-#: lib/mysql.php:116
+#: lib/mysql.php:121
 #, c-format
 msgid "Error writing page '%s'"
 msgstr "Fehler beim Schreiben der Seite '%s'"
 
-#: lib/mysql.php:156
+#: lib/mysql.php:161
 #, c-format
 msgid "Cannot delete '%s' from table '%s'"
 msgstr "Kann nicht '%s' aus Tabelle '%s' löschen"
@@ -214,7 +214,7 @@ msgstr "Kann nicht '%s' aus Tabelle '%s' löschen"
 msgid "Enter a page name"
 msgstr "Seitenname eingeben"
 
-#: lib/pageinfo.php:10 lib/stdlib.php:239
+#: lib/pageinfo.php:10 lib/stdlib.php:116
 msgid "Go"
 msgstr "Los"
 
@@ -241,7 +241,11 @@ msgstr "Aktuelle Seite:"
 msgid "Archived version"
 msgstr "Archivierte Seite:"
 
-#: lib/savepage.php:18
+#: lib/savepage.php:16 lib/savepage.php:74
+msgid "RecentChanges"
+msgstr "FrischeSeiten"
+
+#: lib/savepage.php:85
 msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
@@ -252,17 +256,17 @@ msgstr ""
 "Wenn die Seite jetzt gespeichert werden würde, dann würdendie Veränderungen "
 "des anderen Benützers verloren gehen."
 
-#: lib/savepage.php:20
+#: lib/savepage.php:87
 msgid "In order to recover from this situation follow these steps:"
 msgstr "Um diese Situation zu korrigieren folge bitte den folgenden Schritten:"
 
-#: lib/savepage.php:22
+#: lib/savepage.php:89
 msgid "Use your browser's <b>Back</b> button to go back to the edit page."
 msgstr ""
 "Benütze die <b>Zurück</b> Funktion deines Browsers um zur Editierseitezu "
 "gelangen."
 
-#: lib/savepage.php:24
+#: lib/savepage.php:91
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
@@ -270,7 +274,7 @@ msgstr ""
 "Kopiere deine Veränderungen in die Zwischenablage oder an einen "
 "anderentemporären Platz (z.B. einen Texteditor)"
 
-#: lib/savepage.php:26
+#: lib/savepage.php:93
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
@@ -278,7 +282,7 @@ msgstr ""
 "<b>Aktualisiere</b> die Seite. Du solltest jetzt die neueste Versionder "
 "Seite sehen. Deine Veränderungen sind verschwunden."
 
-#: lib/savepage.php:28
+#: lib/savepage.php:95
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
@@ -286,23 +290,33 @@ msgstr ""
 "Editiere die Seite erneut. Kopiere deine Veränderungen aus derZwischenablage "
 "(oder aus dem Texteditor)"
 
-#: lib/savepage.php:30
+#: lib/savepage.php:97
 msgid "Press <b>Save</b> again."
 msgstr "Drücke nochmal <b>Speichern</b>"
 
-#: lib/savepage.php:36
+#: lib/savepage.php:103
 #, fuzzy, c-format
 msgid "Problem while updating %s"
 msgstr "Problem während dem Editieren von %s"
 
-#: lib/savepage.php:76
+#: lib/savepage.php:146
 #, c-format
 msgid "Thank you for editing %s."
 msgstr "Danke für das Editieren von %s."
 
-#: lib/savepage.php:106
+#: lib/savepage.php:176
 msgid "Your careful attention to detail is much appreciated."
 msgstr "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt."
+
+#: lib/search.php:25
+#, c-format
+msgid "%d pages match your query."
+msgstr "%d Seiten wurden gefunden."
+
+#: lib/search.php:28
+#, fuzzy
+msgid "Title Search Results"
+msgstr "Volltext-Suchresultate"
 
 #: lib/setupwiki.php:21
 #, c-format
@@ -313,29 +327,25 @@ msgstr "Füge Seite %s ein, Version %s vom %s"
 msgid "WikiFatalError"
 msgstr "FatalerWikiFehler"
 
-#: lib/stdlib.php:53
+#: lib/stdlib.php:83 lib/stdlib.php:91
+msgid "Search"
+msgstr "Suche"
+
+#: lib/stdlib.php:228
+msgid "Stack bounds exceeded in SetHTMLOutputMode"
+msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
+
+#: lib/stdlib.php:350
 #, c-format
 msgid "%d best incoming links:"
 msgstr "Die %d besten hereinkommenden Links:"
 
-#: lib/stdlib.php:63
+#: lib/stdlib.php:360
 #, c-format
 msgid "%d best outgoing links:"
 msgstr "Die %d besten hinausgehenden Links:"
 
-#: lib/stdlib.php:74
+#: lib/stdlib.php:371
 #, c-format
 msgid "%d most popular nearby:"
 msgstr "Die %d meistbesuchten Seiten in der Nähe:"
-
-#: lib/stdlib.php:207 lib/stdlib.php:215
-msgid "Search"
-msgstr "Suche"
-
-#: lib/stdlib.php:330
-msgid "Stack bounds exceeded in SetHTMLOutputMode"
-msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
-
-#: lib/stdlib.php:384 lib/stdlib.php:445
-msgid "RecentChanges"
-msgstr "FrischeSeiten"
