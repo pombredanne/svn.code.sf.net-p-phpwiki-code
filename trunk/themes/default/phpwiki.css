@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.11 2003-02-18 19:01:37 dairiki Exp $
+ * $Id: phpwiki.css,v 1.12 2003-02-21 04:21:31 dairiki Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -80,7 +80,6 @@ div.wikitext {
    */
   clear: both;
 }
-.interwiki-map thead td { text-decoration: underline; }
 
 /* Mozilla RecentChanges Sidebar */
 body.sidebar {
@@ -115,11 +114,12 @@ form.wikiadmin div { background-color: #fee; }
 
 /* Action buttons */
 a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe,
-input.wikiaction, input.button {
+input.wikiaction, input.button, input.wikiadmin {
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
   /* don't wrap text buttons */
   white-space: nowrap;
+  /*font-size: inherit; */
 }
 
 a.wikiaction, input.wikiaction, input.button { background-color: #ddd; }
@@ -445,7 +445,7 @@ td.pageinfo { font-weight: bold; }
 /**
  * Other
  */
-.printer { display: none; }
+.printer, .no-css { display: none; }
 
 /* PHP Warnings */
 div.errors {
@@ -606,6 +606,108 @@ blockquote.mail-style-quote {
 }
 .mail-style-quote blockquote.mail-style-quote {
   margin-left: -0.6em;
+}
+
+
+/*
+ * wikiblog
+ */
+.floatleft { float: left; }
+.floatright { float: right; }
+
+div.wikiblog {
+  border: thin black solid;
+  margin: 1ex 2em;
+  padding: 0 0;
+}
+div.wikiblog > div {
+  margin: 0 0;
+  padding: 0.5ex 0.5em;
+}
+div.wikiblog-header {
+  background-color: #ccf;
+}
+div.wikiblog > div.wikiblog-footer {
+  background-color: #eee;
+  padding: 0.2ex 0.5em;
+}
+h3.wikiblog-summary {
+  font-size: normal;
+  font-weight: bold;
+  margin: 0 0 1ex 0;
+}
+
+div.wikiblog.wikiblog-form {
+  background-color: #eee;
+}
+
+table.wikiblog-form {
+  width: auto;
+  border-collapse: collapse;
+  margin: 0.25em 0;
+}
+.wikiblog-form caption {
+  background-color: #ccf;
+  caption-side: top;
+  font-weight: bold;
+  text-align: left;
+  padding: 0.5ex 0.5em;
+}
+.wikiblog-form th {
+  vertical-align: top;
+  text-align: right;
+  padding: 0 0 0.3em 0.5em;
+}
+.wikiblog-form td {
+  padding: 0.25em 0.5em;
+}
+.wikiblog-form td.submit-button {
+  padding: 0;
+}
+.wikiblog-form input[type=text],
+.wikiblog-form textarea {
+  margin: 0 0;
+  width: 100%;
+}
+
+table.interwiki-map {
+  margin: 1em 2em;
+}
+.interwiki-map th {
+  text-decoration: underline;
+  text-align: left;
+  padding-left: 1em;
+}
+.interwiki-map td.interwiki-url {
+  padding-left: 2em;
+}
+.interwiki-map th.interwiki-url {
+  padding-left: 3em;
+}
+
+.dialog {
+  background-color: #cdf;
+  color: black;
+  margin: 2em auto 2em auto;
+  border: thin black solid;
+  width: 50%;
+}
+.dialog h1, .dialog p, .dialog div {
+  text-align: center;
+}
+.dialog h1 {
+  font-size: large;
+  margin: 0.5em 0 1em 0;
+}
+.dialog div.message {
+  background-color: white;
+  color: black;
+  color: black;
+  margin: 0 1em;
+  padding: 0.5em 0.5em;
+}
+.dialog p.buttons {
+  margin: 1em 0 0.5em 0;
 }
   
 /* For emacs users
