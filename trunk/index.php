@@ -9,7 +9,7 @@
 // index.php!
 
 /*
-Copyright 1999, 2000, 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam 
+Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam 
 = array(
 "Steve Wainstead", "Clifford A. Adams", "Lawrence Akka", 
 "Scott R. Anderson", "Jon Åslund", "Neil Brown", "Jeff Dairiki",
@@ -73,9 +73,9 @@ define('JS_SEARCHREPLACE',true);   // experimental edit feature
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.8');
+define ('PHPWIKI_VERSION', '1.3.9');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.137 2004-04-11 10:42:02 rurban Exp $');
+rcs_id('$Id: index.php,v 1.138 2004-04-12 12:27:07 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -291,6 +291,7 @@ $DBParams = array(
    //'dsn' => 'pgsql://localhost/test',
 
    // The common table prefix (see below) is added if defined
+   // Undefine this if you use dbtype = "cvs" or "file"
    'db_session_table'   => 'session',
    
    // Used by all DB types:
@@ -326,8 +327,7 @@ $DBParams = array(
 // Tested for dbtype: 'SQL', 'ADODB' and 'dba'. See schemas/mysql.sql, 
 // schemas/sqlite.sql or schemas/psql.sql. 
 // $DBParams['db_session_table'] must be defined.
-if (!defined('USE_DB_SESSION')   and 
-    $DBParams['dbtype'] == 'SQL' and 
+if (!defined('USE_DB_SESSION') and 
     !empty($DBParams['db_session_table']))
   define('USE_DB_SESSION',true);
 
@@ -583,6 +583,7 @@ $DBAuthParams = array (
    'auth_update'  => 'UPDATE user SET passwd=PASSWORD("$password") WHERE userid="$userid"',
 
    // Let a user create himself. Generally in external databases not wanted.
+   // Not yet tested!
    //'auth_create'  => 'INSERT INTO user SET passwd=PASSWORD("$password"),userid="$userid"',
 
    // USER => PREFERENCES
@@ -653,14 +654,14 @@ if (!defined('ALLOW_USER_LOGIN')) define('ALLOW_USER_LOGIN', false);
  */
 if (!defined('THEME')) {
 define('THEME', 'default');
-//define('THEME', 'smaller');
-//define('THEME', 'Hawaiian');
 //define('THEME', 'MacOSX');
+//define('THEME', 'smaller');
+//define('THEME', 'Wordpress');
 //define('THEME', 'Portland');
+//define('THEME', 'Hawaiian');
 //define('THEME', 'Sidebar');
 //define('THEME', 'SpaceWiki');
 //define('THEME', 'wikilens');
-//define('THEME', 'Wordpress');
 }
 
 // Select a valid charset name to be inserted into the xml/html pages,
@@ -679,7 +680,7 @@ define('THEME', 'default');
 // support the same charset, and of course the same is true for the
 // web browser. (Some work is in progress hopefully to allow more
 // flexibility in this area in the future).
-// Japanese must define "utf-8".
+// Note: For $GLOBALS['LANG']="ja" CHARSET "utf-8" must be defined.
 if (!defined('CHARSET')) define("CHARSET", "iso-8859-1");
 
 // Select your language/locale - default language is "en" for English.
@@ -699,6 +700,8 @@ if (!defined('CHARSET')) define("CHARSET", "iso-8859-1");
 // Note: The users language will be defined in $GLOBALS['LANG'], 
 // which overrides the DEFAULT_LANGUAGE. See wiki.
 //
+// Note: User-specified languages will set $GLOBALS['LANG'], this is just 
+// the system default.
 if (!defined('DEFAULT_LANGUAGE')) define('DEFAULT_LANGUAGE', 'en');
 
 /* WIKI_PGSRC -- specifies the source for the initial page contents of
@@ -950,6 +953,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.137  2004/04/11 10:42:02  rurban
+// pgsrc/CreatePagePlugin
+//
 // Revision 1.136  2004/04/10 04:14:13  rurban
 // sf.net 906436 Suggestion
 //
