@@ -28,14 +28,14 @@ For more information on mySQL go to http://www.mysql.org/
 
 3. Create tables inside your database (still using the root account).
 
-	mysql -uuser -ppassword phpwiki <schemas/schema.mysql
+	mysql -uuser -ppassword phpwiki <schemas/mysql.sql
 
    Note: the user specified in this command needs to have the rights
          to drop and create tables. Use the same user as in step 1.
 
    If you are using mySQL 3.21.x or earlier the script may issue an
    error. In that case remove existing tables manually and delete
-   the "drop tables" lines from schemas/schema.mysql - it should work now
+   the "drop tables" lines from schemas/mysql.sql - it should work now
 
 4. Edit $DBParams in index.php to reflect your settings.
 
@@ -45,7 +45,7 @@ For more information on mySQL go to http://www.mysql.org/
 	   (where 'phpwiki' is the mysql database name.)
         c) Note that if you set $DBParams['prefix'] to a 
            non-empty string, you will have to edit
-           schemas/schema.mysql before you perform step
+           schemas/mysql.sql before you perform step
            three (above).  (Sorry.)
 
 That's it. phpwiki should now work.
@@ -61,4 +61,4 @@ if (!extension_loaded("mysql"))  { dl("mysql.so"); }
 /Arno
 ahollosi@mail.com
 
-$Id: INSTALL.mysql,v 1.1 2001-12-01 22:01:48 wainstead Exp $
+$Id: INSTALL.mysql,v 1.2 2001-12-03 04:10:34 wainstead Exp $

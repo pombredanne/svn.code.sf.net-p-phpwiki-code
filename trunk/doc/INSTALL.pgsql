@@ -58,9 +58,9 @@ Next you need to create a database called "wiki".
 
 bash$ createdb wiki
 
-Now run the script schemas/schema.psql
+Now run the script schemas/psql.sql
 
-bash$ psql wiki -f schemas/schema.psql
+bash$ psql wiki -f schemas/psql.sql
 
 For some reason I had to stop/start the database so that these changes took 
 effect.. after that just open up the Wiki in your browser and you should
@@ -72,4 +72,4 @@ swain@panix.com
 
 Report bugs to phpwiki-talk@lists.sourceforge.net
 
-$Id: INSTALL.pgsql,v 1.1 2001-12-01 22:01:48 wainstead Exp $
+$Id: INSTALL.pgsql,v 1.2 2001-12-03 04:10:38 wainstead Exp $
