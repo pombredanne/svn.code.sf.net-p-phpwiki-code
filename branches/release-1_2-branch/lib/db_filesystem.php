@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4 2001-01-01 23:18:46 ahollosi Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.1 2001-08-18 00:35:10 dairiki Exp $');
    /*
       Database functions:
 
@@ -12,6 +12,9 @@
       TitleSearchNextMatch($dbi, $res)
       InitFullSearch($dbi, $search)
       FullSearchNextMatch($dbi, $res)
+      MakeBackLinkSearchRegexp($pagename)
+      InitBackLinkSearch($dbi, $pagename) 
+      BackLinkSearchNextMatch($dbi, &$pos) 
       IncreaseHitCount($dbi, $pagename)
       GetHitCount($dbi, $pagename)
       InitMostPopular($dbi, $limit)
@@ -151,6 +154,55 @@
    ////////////////////////
    // new database features
 
+   // Compute PCRE suitable for searching for links to the given page.
+   function MakeBackLinkSearchRegexp($pagename) {
+      global $WikiNameRegexp;
+
+      // Note that in (at least some) PHP 3.x's, preg_quote only takes
+      // (at most) one argument.  Also it doesn't quote '/'s.
+      // It does quote '='s, so we'll use that for the delimeter.
+      $quoted_pagename = preg_quote($pagename);
+      if (preg_match("/^$WikiNameRegexp\$/", $pagename)) {
+	 # FIXME: This may need modification for non-standard (non-english) $WikiNameRegexp.
+	 return "=(?<![A-Za-z0-9!])$quoted_pagename(?![A-Za-z0-9])=";
+      }
+      else {
+	 // Note from author: Sorry. :-/
+	 return ( '='
+		  . '(?<!\[)\[(?!\[)' // Single, isolated '['
+		  . '([^]|]*\|)?'     // Optional stuff followed by '|'
+	          . '\s*'             // Optional space
+		  . $quoted_pagename  // Pagename
+		  . '\s*\]=' );	      // Optional space, followed by ']'
+	 // FIXME: the above regexp is still not quite right.
+	 // Consider the text: " [ [ test page ]".  This is a link to a page
+	 // named '[ test page'.  The above regexp will recognize this
+	 // as a link either to '[ test page' (good) or to 'test page' (wrong).
+      } 
+   }
+
+   // setup for back-link search
+   function InitBackLinkSearch($dbi, $pagename) {
+      return InitTitleSearch($dbi, MakeBackLinkSearchRegexp($pagename));
+   }
+
+   // iterating through back-links
+   function BackLinkSearchNextMatch($dbi, &$pos) {
+      global $WikiPageStore;
+      while (list($key, $page) = each($pos['data'])) {
+         $pagedata = RetrievePage($dbi, $page, $WikiPageStore);
+	 printf("Page: '%s' => '%s'<br>\n",
+		htmlspecialchars($page),
+		htmlspecialchars($pagedata));
+	 
+	 while (list($i, $line) = each($pagedata['content'])) {
+	    if (preg_match($pos['search'], $line))
+	       return $page;
+	 }
+      }
+      return 0;
+   }
+
    function IncreaseHitCount($dbi, $pagename) {
       return;
 return;
@@ -225,11 +277,11 @@ return;
 
    function GetAllWikiPagenames($dbi) {
       $namelist = array();
-	  $d = opendir($dbi);
-	  $curr = 0;
-	  while($entry = readdir($d)) {
-         $namelist[$curr++] = $entry;
-	  }
+      $d = opendir($dbi);
+      while($entry = readdir($d)) {
+	 if ($entry != '.' && $entry != '..')
+	    $namelist[] = $entry;
+      }
 
       return $namelist;
    }

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: index.php,v 1.5 2000-11-08 15:34:06 ahollosi Exp $ -->
+<!-- $Id: index.php,v 1.5.2.1 2001-08-18 00:35:10 dairiki Exp $ -->
 <?php
    /*
       The main page, i.e. the main loop.
@@ -30,6 +30,14 @@
       include "lib/search.php";
    } elseif (isset($full)) {
       include "lib/fullsearch.php";
+   } elseif (isset($refs)) {
+      if (function_exists('InitBackLinkSearch')) {
+	 include "lib/backlinks.php";
+      }
+      else {
+	 $full = $refs;
+	 include "lib/fullsearch.php";
+      }
    } elseif (isset($post)) {
       include "lib/savepage.php";
    } elseif (isset($info)) {
