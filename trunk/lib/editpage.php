@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.39 2002-02-14 04:08:45 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.40 2002-02-14 23:15:54 lakka Exp $');
 
 require_once('lib/Template.php');
 
@@ -52,7 +52,18 @@ class PageEditor
         }
 
         if ($saveFailed || $this->isConcurrentUpdate())
-            $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage();
+            {
+                $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage();
+/*              $orig = $this->page->getRevision($this->_currentVersion);
+                $orig_content = $orig->getContent();
+                $this_content = explode("\n", $this->_content); 
+                $other_content = $this->current->getContent();             
+                include_once("lib/diff3.php");
+                $diff = new diff3($orig_content, $this_content, $other_content);
+                $output = $diff->merged_output("Your version", "Other version");
+                $this->_content = implode ("\n", $output);
+  */              
+            }
 
         if ($this->editaction == 'preview')
             $tokens['PREVIEW_CONTENT'] = $this->getPreview(); // FIXME: convert to _MESSAGE?
