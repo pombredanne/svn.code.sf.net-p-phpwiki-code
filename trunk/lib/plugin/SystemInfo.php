@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.11 2004-03-13 19:24:21 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.12 2004-03-14 16:26:21 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -519,6 +519,9 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/03/13 19:24:21  rurban
+// fixed supported_languages() and supported_themes()
+//
 // Revision 1.10  2004/03/08 18:17:10  rurban
 // added more WikiGroup::getMembersOf methods, esp. for special groups
 // fixed $LDAP_SET_OPTIONS

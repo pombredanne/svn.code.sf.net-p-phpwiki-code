@@ -1,6 +1,24 @@
-<?php //-*-php-*-
-rcs_id('$Id: Request.php,v 1.43 2004-03-12 20:59:17 rurban Exp $');
+<?php // -*-php-*-
+rcs_id('$Id: Request.php,v 1.44 2004-03-14 16:26:22 rurban Exp $');
+/*
+ Copyright (C) 2004 $ThePhpWikiProgrammingTeam
+ 
+ This file is part of PhpWiki.
 
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 // backward compatibility for PHP < 4.2.0
 if (!function_exists('ob_clean')) {
@@ -908,6 +926,10 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2004/03/12 20:59:17  rurban
+// important cookie fix by Konstantin Zadorozhny
+// new editpage feature: JS_SEARCHREPLACE
+//
 // Revision 1.42  2004/03/10 15:38:48  rurban
 // store current user->page and ->action in session for WhoIsOnline
 // better WhoIsOnline icon

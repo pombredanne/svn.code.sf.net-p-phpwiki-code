@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: AddComment.php,v 1.2 2004-03-12 20:59:18 rurban Exp $');
+rcs_id('$Id: AddComment.php,v 1.3 2004-03-14 16:26:21 rurban Exp $');
 /*
- Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  
  This file is part of PhpWiki.
 
@@ -45,7 +45,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     // Arguments:
@@ -108,6 +108,10 @@ extends WikiPlugin_WikiBlog
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/03/12 20:59:18  rurban
+// important cookie fix by Konstantin Zadorozhny
+// new editpage feature: JS_SEARCHREPLACE
+//
 // Revision 1.1  2004/03/12 17:32:41  rurban
 // new base class PageType_attach as base class for WikiBlog, Comment, and WikiForum.
 // new plugin AddComment, which is a WikiBlog with different pagetype and template,
