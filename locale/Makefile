@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.1 2001-04-07 17:07:17 dairiki Exp $
+# $Id: Makefile,v 1.2 2001-05-21 17:28:44 dairiki Exp $
 #
 # locale/Makefile
 #
@@ -6,7 +6,7 @@
 # don't need to be remade.
 #
 
-ALL_LINGUAS = nl es de sv
+ALL_LINGUAS = nl es de sv it
 
 PO_FILES = $(patsubst %, po/%.po, ${ALL_LINGUAS})
 MO_FILES = $(patsubst %, %/LC_MESSAGES/phpwiki.mo, ${ALL_LINGUAS})
