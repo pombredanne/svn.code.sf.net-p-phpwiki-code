@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.5 2001-12-19 14:37:52 carstenklapp Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -201,7 +201,7 @@ extends WikiPlugin_RecentChanges
     }
 
     function getDescription () {
-        return _("List PageHistory for [pagename]");
+        return sprintf(_("List PageHistory for %s"),'[pagename]');
     }
     
     function getDefaultArguments() {

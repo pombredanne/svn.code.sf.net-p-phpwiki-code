@@ -342,8 +342,8 @@ msgid "PageHistory"
 msgstr "SeiteProtokoll"
 
 #: ../lib/plugin/PageHistory.php:204
-msgid "List PageHistory for [pagename]"
-msgstr "Das Änderungsprotokoll für [pagename] auslisten"
+msgid "List PageHistory for %s"
+msgstr "Das Änderungsprotokoll für %s auslisten"
 
 #: ../lib/plugin/RecentChanges.php:84
 msgid "Deleted."
@@ -376,7 +376,7 @@ msgstr "geringe Änderungen"
 #: ../lib/plugin/RecentChanges.php:140
 #, c-format
 msgid "The %d most recent %s during the past %.1f days are listed below."
-msgstr "Die %d Jüngste %s innerhalb %,1f Tagen sind unten auflistet."
+msgstr "Die %d Jüngste %s innerhalb %.1f Tagen sind unten auflistet."
 
 #: ../lib/plugin/RecentChanges.php:143
 #, c-format
@@ -386,7 +386,7 @@ msgstr "Die %d Jüngste %s sind unten auflistet."
 #: ../lib/plugin/RecentChanges.php:148
 #, c-format
 msgid "The most recent %s during the past %.1f days are listed below."
-msgstr "Die Jüngste %s innerhalb %,1f Tagen sind unten auflistet."
+msgstr "Die Jüngste %s innerhalb %.1f Tagen sind unten auflistet."
 
 #: ../lib/plugin/RecentChanges.php:151
 #, c-format
