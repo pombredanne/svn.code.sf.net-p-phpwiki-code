@@ -262,8 +262,6 @@ $locale["PageHistory for %s"] =
    "%s のページ履歴";
 $locale["PageInfo"] =
    "ページ情報";
-$locale["Pagedata size: %d Kb"] =
-   "ページデーターサイズ: %s キロバイト";
 $locale["Password:"] =
    "パスワード:";
 $locale["Personal language:"] =
@@ -326,8 +324,6 @@ $locale["Revision Not Found"] =
    "リビジョンが見つかりません";
 $locale["Save"] =
    "保存する";
-$locale["Saved: %s"] =
-   "保存しました: 5s";
 $locale["Score"] =
    "スコア";
 $locale["Search"] =
@@ -468,8 +464,6 @@ $locale["locked"] =
    "ロックしました";
 $locale["max: %d"] =
    "最大: %d";
-$locale["new page"] =
-   "新規ページ";
 $locale["no cache used"] =
    "キャッシュを使いません";
 $locale["plain file %s"] =
@@ -484,8 +478,6 @@ $locale["today"] =
    "今日";
 $locale["too long"] =
    "長すぎます。";
-$locale["total hits: %d"] =
-   "総ヒット数: %s";
 $locale["use this plugin"] =
    "このプラグインを使う";
 $locale["version %d"] =

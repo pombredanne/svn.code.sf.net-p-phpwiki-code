@@ -34,8 +34,6 @@ $locale["Columns: %s."] =
    "Caratteri: %s.";
 $locale["Contents"] =
    "Indice";
-$locale["Deleted."] =
-   "Rimossa.";
 $locale["Describe %s here."] =
    "Descrivi %s qui.";
 $locale["Diff"] =
@@ -88,16 +86,12 @@ $locale["MostPopular"] =
    "PiùPopolari";
 $locale["Name"] =
    "Nome";
-$locale["New page."] =
-   "Nuova pagina.";
 $locale["Next"] =
    "Seguente";
 $locale["None"] =
    "Nessuno";
 $locale["Note:"] =
    "Nota:";
-$locale["Optimizing %s"] =
-   "Ottimizzando %s";
 $locale["Page Locked"] =
    "Pagina Bloccata";
 $locale["Page Name"] =
@@ -114,8 +108,6 @@ $locale["Remove"] =
    "Rimuovi";
 $locale["Remove Page"] =
    "Rimuovi la Pagina";
-$locale["Remove page"] =
-   "Rimuovi la pagina";
 $locale["Remove this page"] =
    "Rimuovi la pagina";
 $locale["Removed page '%s' successfully."] =
@@ -186,8 +178,6 @@ $locale["from %s"] =
    "dalla %s";
 $locale["locked"] =
    "bloccata";
-$locale["new page"] =
-   "nuova pagina";
 $locale["plain file %s"] =
    "archivio del testo %s";
 $locale["saved as %s"] =

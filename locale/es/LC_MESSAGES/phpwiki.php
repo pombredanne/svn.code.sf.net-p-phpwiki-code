@@ -88,8 +88,6 @@ $locale["CreateToc"] =
    "CreeToc";
 $locale["Created by CreatePage"] =
    "Cree par CreeLaPágina";
-$locale["Deleted."] =
-   "Borrada.";
 $locale["Describe %s here."] =
    "Describe %s aquí.";
 $locale["Diff"] =
@@ -194,10 +192,6 @@ $locale["MostPopular"] =
    "MasPopulares";
 $locale["Name"] =
    "Nombre de la Página";
-$locale["New Page"] =
-   "Página nueva";
-$locale["New page."] =
-   "Página nueva.";
 $locale["New password"] =
    "Nueva Contraseña";
 $locale["Newer page:"] =
@@ -270,8 +264,6 @@ $locale["Remove"] =
    "Quite";
 $locale["Remove Page"] =
    "Borrar Página";
-$locale["Remove page"] =
-   "Borrar página";
 $locale["Remove this page"] =
    "Quite esta página";
 $locale["Removed page '%s' successfully."] =
@@ -366,8 +358,6 @@ $locale["Width"] =
    "Anchura";
 $locale["Wiki Name"] =
    "Nombre de la Wiki";
-$locale["You are about to remove '%s' permanently!"] =
-   "¡Va a borrar '%s' permanentemente!";
 $locale["Your careful attention to detail is much appreciated."] =
    "Se agradece una cuidadosa atención a los detalles.";
 $locale["Your home page is locked so your preferences cannot not be saved."] =
@@ -386,8 +376,6 @@ $locale["days"] =
    "dias";
 $locale["locked"] =
    "bloqueada";
-$locale["new page"] =
-   "página nueva";
 $locale["previous revision"] =
    "versión archivada";
 $locale["the file '%s'"] =
