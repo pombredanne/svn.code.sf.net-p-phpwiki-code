@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21.2.2 2001-03-02 03:48:47 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.3 2001-03-02 21:26:03 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -180,6 +180,11 @@
       global $stack;
       $retvar = '';
 
+      if ($level > 10) {
+	  // arbitrarily limit tag nesting
+	  ExitWiki(gettext ("Nesting depth exceeded in SetHTMLOutputMode"));
+      }
+      
       if ($tagtype == ZERO_LEVEL) {
          // empty the stack until $level == 0;
          if ($tag == $stack->top()) {
@@ -229,13 +234,30 @@
 
 	    // we add the diff to the stack
 	    // stack might be zero
-	    while ($stack->cnt() < $level) {
-               $retvar .= "<$tag>\n";
-               $stack->push($tag);
-               if ($stack->cnt() > 10) {
-                  // arbitrarily limit tag nesting
-                  ExitWiki(gettext ("Stack bounds exceeded in SetHTMLOutputMode"));
-               }
+	    if ($stack->cnt() < $level) {
+	       while ($stack->cnt() < $level - 1) {
+		  // This is a bit of a hack:
+		  //
+		  // We're not nested deep enough, and have to make up
+		  // some kind of block element to nest within.
+		  //
+		  // Currently, this can only happen for nested list
+		  // element (either <ul> <ol> or <dl>).  What we used
+		  // to do here is to open extra lists of whatever
+		  // type was requested.  This would result in invalid
+		  // HTML, since and list is not allowed to contain
+		  // another list without first containing a list
+		  // item.  ("<ul><ul><li>Item</ul></ul>" is invalid.)
+		  //
+		  // So now, when we need extra list elements, we use
+		  // a <dl>, and open it with an empty <dd>.
+
+		  $retvar .= "<dl><dd>";
+		  $stack->push('dl');
+	       }
+
+	       $retvar .= "<$tag>\n";
+	       $stack->push($tag);
             }
    
          } else { // $level == $stack->cnt()
