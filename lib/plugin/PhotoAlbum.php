@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.9 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id: PhotoAlbum.php,v 1.10 2004-12-01 19:34:13 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
  
@@ -21,11 +21,10 @@ rcs_id('$Id: PhotoAlbum.php,v 1.9 2004-07-08 20:30:07 rurban Exp $');
  */
 
 /**
- * WikiPlugin which makes an 'album' of a set of photos with optional
- * descriptions.
+ * Display an album of a set of photos with optional descriptions.
  *
  * @author: Ted Vinke <teddy@jouwfeestje.com>
- *          local fs by Reini Urban
+ *          Reini Urban (local fs)
  *
  * Usage:
  * <?plugin PhotoAlbum
@@ -35,106 +34,30 @@ rcs_id('$Id: PhotoAlbum.php,v 1.9 2004-07-08 20:30:07 rurban Exp $');
  *          sort=false
  *          height=50%
  *          width=50%
- * ?>
-
- * (1) No src specified. Means [wikipagename].jpg from fixed albumlocation
- *     will be displayed e.g. "Sandbox.jpg".
  *
- *     You can set the following constants:
- */
-
-define('allow_album_location', true);
-define('album_location', 'http://kw.jouwfeestje.com/foto/redactie');
-define('album_default_extension', '.jpg');
-
-/**
- * (2) Textfile. Local or remote e.g. http://myserver/images/MyPhotos.txt
- *     E.g. possible content of a valid textfile:
- *
+ * "src": textfile of images or directory of images (local or remote)
+ *      Local or remote e.g. http://myserver/images/MyPhotos.txt or http://myserver/images/
+ *      Possible content of a valid textfile:
  * 	photo-01.jpg; Me and my girlfriend
  * 	photo-02.jpg
  * 	christmas.gif; Merry Christmas!
 
  *     Inside textfile, filenames and optional descriptions are seperated by
- *     constant 'desc_separator' (default is semi-colon) on each line. Listed
- *     files must be in same directory as textfile itself, so don't use
- *     relative paths inside textfile.
+ *     semi-colon on each line. Listed files must be in same directory as textfile 
+ *     itself, so don't use relative paths inside textfile.
+ *
+ * "url": defines the the webpath to the srcdir directory (formerly called weblocation)
  */
-
-define('desc_separator', ';');
-
-/**
- * (3) Directory. 
- *     Need weblocation="" the webpath to the srcdir
- *
- * Other parameters that need explaining:
- * "parameter"	"value"
- *
- * "mode"	"normal" - Normal table which shows photos full-size
- *		"thumbs" - WinXP thumbnail style
- *		"tiles"  - WinXP tiles style
- *		"list"	 - WinXP list style
- *		"slide"  - Not yet implemented
- *
- * "numcols"	Amount of columns per row in table
- *
- * "showdesc"	"none"   - No descriptions next to photos
- *		"name"   - Only filename shown
- *		"desc"   - Only description (from textfile) shown
- *		"both"	 - If no description found, then filename will be used
- *
- * "link"	If true, each image will be hyperlink to page where only that
- *		photo will be shown full-size. Only works when mode != 'normal'
- *
- * "attrib"	Array which can hold:
- *		"sort"   - sort shown photos alphabetically
- *		"nowrap" - descriptions won't be wrapped
- *		"alt"    - descs instead of filenames are used in image ALT-tags
- *
- * "bgcolor"
- * "hlcolor"	Cell background and highlight color
- *
- * "align"	Aligment of cell: "left", "center", "right"
- *
- * "height"
- * "width"	Size of shown photos. Either absolute value (e.g. "50") or
- *		HTML style percentage (e.g. "75%") or "auto" for no special
- *		action.
- *
- * "cellwidth"	Width of cells in table. Either absolute value in pixels, HTML
- *		style percentage, "auto" (no special action), "equal" (where
- *		all columns are equally sized) or "image" (take height and
- *		width of the photo in that cell).
- *
- * "tablewidth"	Guess what.
- */
-
-define('default_mode', 'normal'); 	// normal|thumbs|tiles|list
-define('default_numcols', 3);		// photos per row
-define('default_showdesc', 'both');	// none|name|desc|both
-define('default_link', true);		// show link to original sized photo
-define('default_attrib', '');		// 'sort, nowrap, alt'
-define('default_bgcolor', '#eae8e8');	// cell bgcolor (lightgrey)
-define('default_hlcolor', '#c0c0ff');	// highlight color (lightblue)
-define('default_align', 'center');	// alignment of all
-define('default_height', 'auto');	// image height (auto|75|100%)
-define('default_width', 'auto');	// image width (auto|75|100%)
-define('default_cellwidth', 'image');	// cell (auto|equal|image|75|100%)
-define('default_tablewidth', 1);	// table (75|100%)
 
 /**
  * TODO:
- *
- * - parse any local directory for pictures
- * - implement WinXP style 'slide' mode
+ * - implement WinXP style 'slide' mode, javascript tricks
  * - specify picture(s) as parameter(s)
  * - limit amount of pictures on one page
- * - use PHP to really resize or greyscale images (only where GD library
- *   supports it)
+ * - use PHP to really resize or greyscale images (only where GD library supports it)
  *
  * KNOWN ISSUES:
- *
- * - reading height and width, from images with spaces in their names, fails
+ * - reading height and width from images with spaces in their names fails.
  *
  * Fixed album location idea by Philip J. Hollenback. Thanks!
  */
@@ -152,49 +75,72 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
+// Avoid nameclash, so it's disabled. We allow any url.
+// define('allow_album_location', true);
+// define('album_location', 'http://kw.jouwfeestje.com/foto/redactie');
+// define('album_default_extension', '.jpg');
+// define('desc_separator', ';');
+
     function getDefaultArguments() {
-        return array('src'      => '',          // textfile
-                     'mode'	=> default_mode,
-                     'numcols'	=> default_numcols,
-                     'showdesc'	=> default_showdesc,
-                     'link'	=> default_link,
-                     'attrib'	=> default_attrib,
-                     'bgcolor'  => default_bgcolor,
-                     'hlcolor'	=> default_hlcolor,
-                     'align'	=> default_align,
-                     'height'   => default_height,
-                     'width'    => default_width,
-                     'cellwidth'=> default_cellwidth,
-                     'tablewidth'=> default_tablewidth,
-                     'p'	=> false, // "displaythissinglephoto.jpg"
-                     'h'	=> false, // "highlightcolorofthisphoto.jpg"
-                     'weblocation'  => false, // if src = localfs the web location
+        return array('src'      => '',          // textfile of image list, or local dir.
+                     'url'      => '',          // if src=localfs, url prefix (webroot for the links)
+                     'mode'	=> 'normal', 	// normal|thumbs|tiles|list
+                     	// "normal" - Normal table which shows photos full-size
+                     	// "thumbs" - WinXP thumbnail style
+                     	// "tiles"  - WinXP tiles style
+                     	// "list"   - WinXP list style
+                     	// "slide"  - Not yet implemented
+                     'numcols'	=> 3,		// photos per row, columns
+                     'showdesc'	=> 'both',	// none|name|desc|both
+                     	// "none"   - No descriptions next to photos
+                     	// "name"   - Only filename shown
+                     	// "desc"   - Only description (from textfile) shown
+                     	// "both"	 - If no description found, then filename will be used
+                     'link'	=> true, 	// show link to original sized photo
+                     	// If true, each image will be hyperlinked to a page where the single 
+                     	// photo will be shown full-size. Only works when mode != 'normal'
+                     'attrib'	=> '',		// 'sort, nowrap, alt'
+                     	// attrib arg allows multiple attributes: attrib=sort,nowrap,alt
+                     	// 'sort' sorts alphabetically, 'nowrap' for cells, 'alt' to use
+                        // descs instead of filenames in image ALT-tags
+                     'bgcolor'  => '#eae8e8',	// cell bgcolor (lightgrey)
+                     'hlcolor'	=> '#c0c0ff',	// highlight color (lightblue)
+                     'align'	=> 'center',	// alignment of table
+                     'height'   => 'auto',	// image height (auto|75|100%)
+                     'width'    => 'auto',	// image width (auto|75|100%)
+                     // Size of shown photos. Either absolute value (e.g. "50") or
+                     // HTML style percentage (e.g. "75%") or "auto" for no special
+                     // action.
+                     'cellwidth'=> 'image',	// cell (auto|equal|image|75|100%)
+                     // Width of cells in table. Either absolute value in pixels, HTML
+                     // style percentage, "auto" (no special action), "equal" (where
+                     // all columns are equally sized) or "image" (take height and
+                     // width of the photo in that cell).
+                     'tablewidth'=> false,	// table (75|100%)
+                     'p'	=> false, 	// "displaythissinglephoto.jpg"
+                     'h'	=> false, 	// "highlightcolorofthisphoto.jpg"
                      );
     }
-    // attrib arg allows multiple attributes attrib=sort,nowrap,alt
-    // 'sort' sorts alphabetically, 'nowrap' for cells, 'alt' to use
     // descriptions (instead of filenames) for image alt-tags
 
     function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
         $attributes = $attrib ? explode(",", $attrib) : array();
-
         $photos = array();
         $html = HTML();
 
         // check all parameters
-
         // what type do we have?
         if (!$src) {
             $showdesc  = 'none';
             $src   = $request->getArg('pagename');
             $error = $this->fromLocation($src, $photos);
         } else {
-            $error = $this->fromFile($src, $photos, $weblocation);
+            $error = $this->fromFile($src, $photos, $url);
         }
         if ($error) {
             return $this->error($error);
@@ -202,9 +148,8 @@ extends WikiPlugin
 
         if ($numcols < 1) $numcols = 1;
         if ($align != 'left' && $align != 'center' && $align != 'right') {
-            $align = default_align;
+            $align = 'center';
         }
-
 	if (count($photos) == 0) return;
 
 	if (in_array("sort", $attributes))
@@ -242,12 +187,9 @@ extends WikiPlugin
 	    // $params will be used for each <img > tag
             $params = array('src'    => $value["name"],
 	                    'border' => "0",
-	                    'alt'    => ($value["desc"] != "" &&
-	                                 in_array("alt", $attributes)) ?
-	                                 $value["desc"] :
-	                                 basename($value["name"])
-			    );
-
+	                    'alt'    => ($value["desc"] != "" and in_array("alt", $attributes))
+                            		? $value["desc"]
+                            		: basename($value["name"]));
 	    // check description
 	    switch ($showdesc) {
 	    	case 'none':
@@ -259,9 +201,7 @@ extends WikiPlugin
 	    	case 'desc':
 	    	    break;
 	    	default: // 'both'
-	    	    $value["desc"] = ($value["desc"] != "") ?
-	    	                      $value["desc"] :
-	    	                      basename($value["name"]);
+	    	    if (!$value["desc"]) $value["desc"] = basename($value["name"]);
 	    	    break;
 	    }
 
@@ -271,7 +211,8 @@ extends WikiPlugin
 	    if (!$size and !empty($value["src"])) {
 		$size = @getimagesize($value["src"]);
 		if (!$size) {
-	    	    trigger_error("Unable to getimagesize(".$value["name"].")",E_USER_NOTICE);
+	    	    trigger_error("Unable to getimagesize(".$value["name"].")", 
+                                  E_USER_NOTICE);
 		}
 	    }
 
@@ -288,8 +229,7 @@ extends WikiPlugin
 	    // cell operations
 	    $cell = array('align'   => "center",
                           'valign'  => "top",
-                          'bgcolor' => "$color",
-                          );
+                          'bgcolor' => "$color");
 	    if ($cellwidth != 'auto') {
 	    	if ($cellwidth == 'equal') {
 	            $newcellwidth = round(100/$numcols)."%";
@@ -301,7 +241,7 @@ extends WikiPlugin
                 $cell = array_merge($cell, array("width" => $newcellwidth));
 	    }
 	    if (in_array("nowrap", $attributes)) {
-	        $cell = array_merge($cell, array("nowrap" => ""));
+	        $cell = array_merge($cell, array("nowrap" => "nowrap"));
 	    }
 	    //create url to display single larger version of image on page
 	    $url 	= WikiURL($request->getPage(),
@@ -339,7 +279,7 @@ extends WikiPlugin
 	            	                              $size[1].
 	            	                              " pixels"))
 			      ))));
-            } else if ($mode == 'list') {
+            } elseif ($mode == 'list') {
             	$desc = ($showdesc != 'none') ? $value["desc"] : '';
 	        $row->pushContent(
 	            HTML::td(array("valign"  => "top",
@@ -361,7 +301,7 @@ extends WikiPlugin
 	                                             "bgcolor" => $color),
 	                                             HTML::small($desc)));
 	        }
-	    } else if ($mode == 'thumbs') {
+	    } elseif ($mode == 'thumbs') {
 	        $desc = ($showdesc != 'none') ?
 	                HTML::p(HTML::a(array("href" => "$url"),
 	                                $url_text)) :
@@ -374,7 +314,7 @@ extends WikiPlugin
                               //         but better use a css class
                               HTML::span(array('class'=>'gensmall'),$desc)
                               )));
-	    } else /* 'normal' mode */ {
+	    } elseif ($mode == 'normal') {
 	        $desc = ($showdesc != 'none') ? HTML::p($value["desc"]) : '';
                 $row->pushContent(
                     (HTML::td($cell,
@@ -382,6 +322,10 @@ extends WikiPlugin
                               // FIXME: no HtmlElement for fontsizes?
                               HTML::span(array('class'=>'gensmall'),$desc)
                               )));
+            //} elseif ($mode == 'slide') {
+            //}
+	    } else {
+                return $this->error(fmt("Invalid argument: %s=%s", 'mode', $mode));
             }
 
 	    // no more images in one row as defined by $numcols
@@ -400,8 +344,7 @@ extends WikiPlugin
 		                  "width"       => $tablewidth),
 		                  $html);
         // align all
-	$html = HTML::div(array("align" => $align), $html);
-        return $html;
+	return HTML::div(array("align" => $align), $html);
     }
 
     /**
@@ -413,10 +356,10 @@ extends WikiPlugin
      * @return integer New size in pixels
      */
     function newSize($oldSize, $value) {
-    	if (substr($value, strlen($value) - 1) != "%") {
+    	if (trim(substr($value,strlen($value)-1)) != "%") {
     	    return $value;
     	}
-    	substr_replace($value, "%", "");
+    	$value = str_replace("%", "", $value);
     	return round(($oldSize*$value)/100);
     }
 
@@ -429,79 +372,79 @@ extends WikiPlugin
     * @return string Error if fixed location is not allowed
     */
     function fromLocation($src, &$photos) {
-    	if (!allow_album_location) {
+    	/*if (!allow_album_location) {
     	    return $this->error(_("Fixed album location is not allowed. Please specify parameter src."));
-    	}
-    	$photos[count($photos)] =
-    	  array ("name" => album_location."/$src".album_default_extension,
-	    	 "desc" => ""
-	    	 );
-    }
-
-    /**
-     * fromFile - read pictures & descriptions (separated by desc_sep)
-     * from file $src and return it in array $photos
-     *
-     * @param string $src Full path and filename of textfile
-     * @param array $photos
-     * @return string Error when bad url or file couldn't be opened
-     */
-    function fromFile($src, &$photos, $webpath = false) {
+        }*/
+        //FIXME!
         if (! IsSafeURL($src)) {
             return $this->error(_("Bad url in src: remove all of <, >, \""));
         }
-        if (!preg_match('/^(http|ftp|https):\/\//i',$src)) {
-            // check if src is a directory
-            if (file_exists($src) and filetype($src) == 'dir') {
-            	//all images
-                $list = array();
-                foreach (array('jpeg','jpg','png','gif') as $ext) {
-                    $fileset = new fileSet($src, "*.$ext");
-                    $list = array_merge($list,$fileset->getFiles());
-                }
-                // convert dirname($src) (local fs path) to web path
-                natcasesort($list);
-                if (! $webpath ) {
-                    // assume relative src. default: "themes/Hawaiian/images/pictures"
-                    $webpath = DATA_PATH . '/' . $src;
-                }
-                foreach ($list as $file) {
-                    // convert local path to webpath
-                    $photos[] = array ("name" => $webpath . "/$file",
-                                       "src"  => $src . "/$file",
-                                       "desc" => "",
-                                       );
-                }
-                return;
-            }
-        } else {
-            // fixed: get current value, not stored value.
-            // todo: use lib/HttpClient.php (stdlib.php:url_get_contents())
-            if (! get_cfg_var('allow_url_fopen')) {
-                return $this->error(fmt("Wrong server setting: allow_url_fopen set to Off"));
-            }
+    	$photos[] = array ("name" => $src, //album_location."/$src".album_default_extension,
+                           "desc" => "");
+    }
+
+    /**
+     * fromFile - read pictures & descriptions (separated by ;)
+     *            from $src and return it in array $photos
+     *
+     * @param string $src path to dir or textfile (local or remote)
+     * @param array $photos
+     * @return string Error when bad url or file couldn't be opened
+     */
+    function fromFile($src, &$photos, $webpath='') {
+    	$src_bak = $src;
+        if (! IsSafeURL($src)) {
+            return $this->error(_("Bad url in src: remove all of <, >, \""));
         }
-    	@$fp = fopen ($src,"r");
+        if (preg_match('/^(http|ftp|https):\/\//i', $src)) {
+            $src = url_get_contents($src);
+        }
+        if (!file_exists($src) and file_exists(PHPWIKI_DIR . "/$src")) {
+            $src = PHPWIKI_DIR . "/$src";
+        }
+        // check if src is a directory
+        if (file_exists($src) and filetype($src) == 'dir') {
+            //all images
+            $list = array();
+            foreach (array('jpeg','jpg','png','gif') as $ext) {
+                $fileset = new fileSet($src, "*.$ext");
+                $list = array_merge($list, $fileset->getFiles());
+            }
+            // convert dirname($src) (local fs path) to web path
+            natcasesort($list);
+            if (! $webpath ) {
+                // assume relative src. default: "themes/Hawaiian/images/pictures"
+                $webpath = DATA_PATH . '/' . $src_bak;
+            }
+            foreach ($list as $file) {
+                // convert local path to webpath
+                $photos[] = array ("name" => $webpath . "/$file",
+                                   "src"  => $src . "/$file",
+                                   "desc" => "",
+                                   );
+            }
+            return;
+        }
+    	@$fp = fopen ($src, "r");
         if (!$fp) {
-            return $this->error(fmt("Unable to read %s ", $src));
+            return $this->error(fmt("Unable to read src='%s'", $src));
         }
-    	while ($data = fgetcsv ($fp, 1024, desc_separator)) {
+    	while ($data = fgetcsv ($fp, 1024, ';')) {
     	    if (count($data) == 0 || empty($data[0]))
     	        continue;
-	    // otherwise when empty 'undefined index 1' PHP warning appears
-    	    if (empty($data[1]))
-    	        $data[1] = '';
-	    $photos[count($photos)] = array ("name" => dirname($src).
-	                                               "/".
-	                                               trim("$data[0]"),
-	    				     "desc" => trim("$data[1]"),
-	    				     );
+    	    if (empty($data[1])) $data[1] = '';
+	    $photos[] = array ("name" => dirname($src)."/".trim($data[0]),
+                               "desc" => trim($data[1]));
         }
         fclose ($fp);
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/07/08 20:30:07  rurban
+// plugin->run consistency: request as reference, added basepage.
+// encountered strange bug in AllPages (and the test) which destroys ->_dbi
+//
 // Revision 1.8  2004/06/01 15:28:01  rurban
 // AdminUser only ADMIN_USER not member of Administrators
 // some RateIt improvements by dfrankow
