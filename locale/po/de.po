@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
-"POT-Creation-Date: 2003-11-09 16:44-0500\n"
+"POT-Creation-Date: 2003-11-14 21:38-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Helmer Pardun <pardunpress@t-online.de>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Reini Urban <rurban@x-ray.at>, Arno "
@@ -37,7 +37,7 @@ msgstr "Seitenname"
 
 #: ../lib/PageList.php:236 ../lib/plugin/FullTextSearch.php:75
 msgid "<no matches>"
-msgstr "<keine Treffer>"
+msgstr "<nichts gefunden>"
 
 #: ../lib/PageList.php:334
 msgid "Selected"
@@ -971,7 +971,7 @@ msgstr "Kommentar"
 
 #: ../lib/plugin/Comment.php:26
 msgid "Embed hidden comments in WikiPages."
-msgstr ""
+msgstr "Kommentar könnte in WikiQuellText versteckt worden."
 
 #: ../lib/plugin/EditMetaData.php:45
 msgid "EditMetaData"
@@ -985,7 +985,7 @@ msgstr "Meta-Daten für %s bearbeiten"
 #: ../lib/plugin/EditMetaData.php:113
 #, c-format
 msgid "Existing page-level metadata for %s:"
-msgstr ""
+msgstr "Zugewiesenen Seiten-nähe Meta-Daten für %s:"
 
 #: ../lib/plugin/EditMetaData.php:151
 msgid ""
@@ -1048,9 +1048,8 @@ msgid "See %s"
 msgstr "Siehe %s"
 
 #: ../lib/plugin/FullTextSearch.php:35
-#, fuzzy
 msgid "Search the content of all pages in this wiki."
-msgstr "um den Text aller Seiten dieses Wikis durchsuchen."
+msgstr "Den Text aller Seiten dieses Wikis durchsuchen."
 
 #: ../lib/plugin/FullTextSearch.php:80
 #, c-format
@@ -1077,23 +1076,23 @@ msgstr "Seitenname"
 
 #: ../lib/plugin/FuzzyPages.php:108
 msgid "Score"
-msgstr "Güte"
+msgstr "Bedeutung"
 
 #: ../lib/plugin/FuzzyPages.php:169
 msgid "Spelling Score"
-msgstr ""
+msgstr "Buchstabierende"
 
 #: ../lib/plugin/FuzzyPages.php:170
 msgid "Sound Score"
-msgstr ""
+msgstr "Aussprachliche"
 
 #: ../lib/plugin/HelloWorld.php:46
 msgid "HelloWorld"
-msgstr "HelloWorld"
+msgstr "GrüßGott"
 
 #: ../lib/plugin/HelloWorld.php:50
 msgid "Simple Sample Plugin"
-msgstr "Einfaches Zusatzprogramm Beispiel"
+msgstr "Zusatzprogramm Minimalbeispiel"
 
 #: ../lib/plugin/IncludePage.php:34
 msgid "IncludePage"
@@ -1101,7 +1100,7 @@ msgstr "SeiteEinfügen"
 
 #: ../lib/plugin/IncludePage.php:38
 msgid "Include text from another wiki page."
-msgstr ""
+msgstr "Text von einer andere Seite einfügen."
 
 #: ../lib/plugin/IncludePage.php:93 ../lib/plugin/PageGroup.php:80
 #: ../lib/plugin/UnfoldSubpages.php:114
@@ -1137,7 +1136,7 @@ msgstr "Name des Wikis"
 
 #: ../lib/plugin/InterWikiSearch.php:71 ../lib/plugin/RecentChanges.php:512
 msgid "Search"
-msgstr "Suche"
+msgstr "Suchen"
 
 # "ÄhnlicheSeiten" (LikePages sind keine SamePages; die korrekte
 # deutsche Übersetzung ist "ÄhnlicheSeiten" which would be the best.
@@ -1234,7 +1233,7 @@ msgstr "Inhalt"
 #: ../lib/plugin/PageGroup.php:93
 #, c-format
 msgid "A required argument '%s' is missing."
-msgstr "Erforderliches Argument »%s« fehlt."
+msgstr "Erforderliches Argument '%s' fehlt."
 
 #: ../lib/plugin/PageGroup.php:98 ../lib/plugin/PrevNext.php:66
 msgid "Next"
@@ -1329,7 +1328,7 @@ msgstr "%s ist leer."
 
 #: ../lib/plugin/PhotoAlbum.php:297
 msgid "PhotoAlbum"
-msgstr ""
+msgstr "PhotoAlbum"
 
 #: ../lib/plugin/PhotoAlbum.php:301
 msgid ""
@@ -1357,11 +1356,11 @@ msgstr ""
 #: ../lib/plugin/PhpHighlight.php:165
 #, c-format
 msgid "Invalid color: %s"
-msgstr ""
+msgstr "Ungültige Farbe: %s"
 
 #: ../lib/plugin/PhpWeather.php:59
 msgid "PhpWeather"
-msgstr ""
+msgstr "PhpWetter"
 
 #: ../lib/plugin/PhpWeather.php:63
 msgid "The PhpWeather plugin provides weather reports from the Internet."
@@ -1369,17 +1368,18 @@ msgstr ""
 
 #: ../lib/plugin/PhpWeather.php:84
 msgid "You have to configure it before use."
-msgstr ""
+msgstr "Vor Gebrauch muss es konfiguriert sein."
 
 #: ../lib/plugin/PhpWeather.php:100
 #, c-format
 msgid "The ICAO '%s' wasn't recognized."
-msgstr ""
+msgstr "Die angegebene ICAO '%s' war nicht bekannt."
 
 #: ../lib/plugin/PhpWeather.php:111
 #, c-format
 msgid "%s does not know about the language '%s', using 'en' instead."
 msgstr ""
+"%s weißt aber nichts von die Sprache '%s', stattdessen wird 'en' angewendet."
 
 #: ../lib/plugin/PhpWeather.php:166
 msgid "Submit country"
@@ -1398,29 +1398,28 @@ msgid "PluginManager"
 msgstr ""
 
 #: ../lib/plugin/PluginManager.php:35
-#, fuzzy
 msgid "Provides a list of plugins on this wiki."
-msgstr "Listet die Zusatzprogramme dieses Wikis aus."
+msgstr "Die Zusatzprogramme dieses Wikis auslisten."
 
 #: ../lib/plugin/PluginManager.php:54
 msgid "Plugins"
-msgstr ""
+msgstr "Zusatzprogramme"
 
 #: ../lib/plugin/PluginManager.php:66
 msgid "use this plugin"
-msgstr ""
+msgstr "um diese Zusatzprogramme zu verwenden"
 
 #: ../lib/plugin/PluginManager.php:90
 msgid "Plugin"
-msgstr ""
+msgstr "Zusatzprogramm"
 
 #: ../lib/plugin/PluginManager.php:90
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: ../lib/plugin/PluginManager.php:92
 msgid "Arguments"
-msgstr ""
+msgstr "Parameter"
 
 #: ../lib/plugin/PrevNext.php:32
 msgid "PrevNext"
@@ -1446,6 +1445,8 @@ msgstr "ZufallsSeite"
 #: ../lib/plugin/RandomPage.php:33
 msgid "Displays a list of randomly chosen pages or redirects to a random page."
 msgstr ""
+"Eine liste der zufälliger ausgewählter Seiten zeigen oder nach einer "
+"zufälliger ausgewählter Seite weiterleiten."
 
 #: ../lib/plugin/RawHtml.php:39
 msgid "A plugin to provide for raw HTML within wiki pages."
@@ -1458,7 +1459,7 @@ msgstr "HTML-Befehle sind in diesem Wiki ausser Kraft gesetzt."
 #: ../lib/plugin/RawHtml.php:65 ../lib/plugin/RedirectTo.php:81
 #, c-format
 msgid "%s is only allowed in locked pages."
-msgstr "%s werden nur in gesperrten Seiten erlaubt."
+msgstr "%s wird/werden nur in gesperrten Seiten erlaubt."
 
 #: ../lib/plugin/RawHtml.php:66
 msgid "Raw HTML"
@@ -1474,7 +1475,7 @@ msgstr "Neue Seite."
 
 #: ../lib/plugin/RecentChanges.php:128 ../themes/MacOSX/themeinfo.php:103
 msgid "(diff)"
-msgstr "(Diff)"
+msgstr ""
 
 #: ../lib/plugin/RecentChanges.php:133
 msgid "(hist)"
@@ -1696,7 +1697,7 @@ msgstr "noch nicht"
 #: ../lib/plugin/SystemInfo.php:181
 #, c-format
 msgid "%d homepages"
-msgstr ""
+msgstr "%d Homepages"
 
 #: ../lib/plugin/SystemInfo.php:226
 #, c-format
@@ -1706,7 +1707,7 @@ msgstr "Anzahl aller Seitenaufrufe %d"
 #: ../lib/plugin/SystemInfo.php:227
 #, c-format
 msgid "max: %d"
-msgstr ""
+msgstr "Max: %d"
 
 #: ../lib/plugin/SystemInfo.php:228
 #, c-format
@@ -1727,12 +1728,12 @@ msgstr "Standardabweichung: %2.3f"
 #: ../lib/plugin/SystemInfo.php:242
 #, c-format
 msgid "%d pages with less than %d hits (<%d%%)."
-msgstr "%d Seiten mit weniger als % Aufrufen."
+msgstr "%d Seiten die weniger als %d aufgerufen haben (<%d%%)."
 
 #: ../lib/plugin/SystemInfo.php:244
 #, c-format
 msgid "%d page(s) with more than %d hits (>%d%%)."
-msgstr "%d Seiten mit mehr als % Aufrufen (>%d%%)."
+msgstr "%d Seite(n) die mehr als %d aufgerufen haben (>%d%%)."
 
 #: ../lib/plugin/SystemInfo.php:286
 #, c-format
@@ -1767,12 +1768,12 @@ msgstr "Standardsprache für dieses Wiki: '%s'"
 #: ../lib/plugin/SystemInfo.php:357
 #, c-format
 msgid "Total of %d themes: "
-msgstr ""
+msgstr "%d Benutzeroberfläche gesamt: "
 
 #: ../lib/plugin/SystemInfo.php:359
 #, c-format
 msgid "Current theme: '%s'"
-msgstr ""
+msgstr "Ihre Benutzeroberfläche: '%s'"
 
 #: ../lib/plugin/SystemInfo.php:361
 #, c-format
@@ -1838,11 +1839,13 @@ msgstr "Untersützte Sprachen"
 
 #: ../lib/plugin/SystemInfo.php:413
 msgid "Supported themes"
-msgstr ""
+msgstr "Untersützte Benutzeroberfläche"
 
 #: ../lib/plugin/TexToPng.php:103
 msgid "Converts TeX to an image. May be used to embed formulas in PhpWiki."
 msgstr ""
+"(La)TeX-Dokument nach ein Bild erstellen. Dadurch konnte eine Formel in "
+"PhpWiki eingebettet worden."
 
 #: ../lib/plugin/TitleSearch.php:35
 msgid "Search the titles of all pages in this wiki."
@@ -1916,8 +1919,9 @@ msgid "Included from %s:"
 msgstr "Eingefügter Text von %s"
 
 #: ../lib/plugin/UpLoad.php:54
+#, fuzzy
 msgid "Simple Plugin to load files up to server"
-msgstr ""
+msgstr "Minimalbeispiel"
 
 #: ../lib/plugin/UpLoad.php:80 ../lib/plugin/WikiForm.php:100
 msgid "Upload"
@@ -1947,11 +1951,11 @@ msgstr ""
 
 #: ../lib/plugin/UpLoad.php:142
 msgid "Error: the upload log is not writable"
-msgstr ""
+msgstr "Fehler: upload Protokoll nicht schreibbar"
 
 #: ../lib/plugin/UpLoad.php:146
 msgid "Error: can't open the upload logfile"
-msgstr ""
+msgstr "Fehler: upload Protokoll Datei konnte nicht geöffnet worden"
 
 #: ../lib/plugin/UpLoad.php:165
 msgid "Uploading failed."
@@ -2023,7 +2027,7 @@ msgstr "WunschZettelSeiten in diesem Wiki (%d gesamt):"
 
 #: ../lib/plugin/WantedPages.php:121
 msgid "Count"
-msgstr "ZählerAnzahl"
+msgstr "Anzahl"
 
 #: ../lib/plugin/WikiAdminRemove.php:39
 msgid "WikiAdminRemove"
@@ -2045,10 +2049,11 @@ msgstr "Endgültige Löschung aller ausgewählten Seiten"
 #: ../lib/plugin/WikiAdminRemove.php:174
 msgid "Are you sure you want to permanently remove the selected files?"
 msgstr ""
+"Sind Sie sicher daß Sie die ausgewählen Seiten erfolgreich löschen wollen?"
 
 #: ../lib/plugin/WikiAdminRemove.php:177
 msgid "Remove selected pages"
-msgstr "Lösche die ausgewählten Seiten"
+msgstr "Ausgewählten Seiten Löschen"
 
 #: ../lib/plugin/WikiAdminRemove.php:180
 #, c-format
@@ -2074,7 +2079,7 @@ msgstr "Abbrechen"
 
 #: ../lib/plugin/WikiAdminSelect.php:41
 msgid "WikiAdminSelect"
-msgstr "WikiAdministratorAuswahl"
+msgstr "WikiAdminAuswahl"
 
 #: ../lib/plugin/WikiAdminSelect.php:45
 msgid ""
@@ -2084,28 +2089,28 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminSelect.php:108
 msgid "Select: "
-msgstr "Wähle: "
+msgstr "Auswählen: "
 
 #: ../lib/plugin/WikiAdminSelect.php:114
 msgid "Go"
 msgstr "Los"
 
 #: ../lib/plugin/WikiAdminSelect.php:134
-#, c-format
+#, fuzzy, c-format
 msgid "Selected page '%s' passed to '%s'."
-msgstr ""
+msgstr "Ausgewählte Seite "
 
 #: ../lib/plugin/WikiAdminSelect.php:152
 msgid "Select pages"
-msgstr "Wähle Seiten"
+msgstr "Seiten Auswählen"
 
 #: ../lib/plugin/WikiAdminUtils.php:29
 msgid "WikiAdminUtils"
-msgstr ""
+msgstr "WikiAdminUtils"
 
 #: ../lib/plugin/WikiAdminUtils.php:33
 msgid "Miscellaneous utility functions of use to the administrator."
-msgstr ""
+msgstr "Verschiedene Dienstfunktionen die für der Administrator nützlich sind."
 
 #: ../lib/plugin/WikiAdminUtils.php:65
 #, fuzzy
@@ -2118,7 +2123,7 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:95 ../lib/stdlib.php:1292
 msgid "Okay"
-msgstr ""
+msgstr "OK"
 
 #: ../lib/plugin/WikiAdminUtils.php:101
 msgid "Purge Markup Cache"
@@ -2134,12 +2139,12 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminUtils.php:128
 msgid "No pages with bad names were found."
-msgstr ""
+msgstr "Keine Seiten mit ungültiger Namen gefunden."
 
 #: ../lib/plugin/WikiAdminUtils.php:136
 #, c-format
 msgid "Deleted %s pages with invalid names:"
-msgstr ""
+msgstr "Die %d Seiten die mit ungültiger Namen gelöscht war:"
 
 #: ../lib/plugin/WikiBlog.php:74
 msgid "WikiBlog"
@@ -2154,10 +2159,10 @@ msgstr "Zeige und füge blogs hinzu für %s"
 msgid "New comment."
 msgstr ""
 
-#: ../lib/plugin/WikiBlog.php:256
+#: ../lib/plugin/WikiBlog.php:257
 #, c-format
 msgid "Comments on %s:"
-msgstr ""
+msgstr "Kommentar über %s:"
 
 #: ../lib/plugin/WikiForm.php:32
 msgid "WikiForm"
@@ -2173,11 +2178,11 @@ msgstr "Anmelden"
 
 #: ../lib/plugin/WikiForm.php:81
 msgid "Dump Pages"
-msgstr "Schreibe Seiten"
+msgstr "Seiten Schreiben"
 
 #: ../lib/plugin/WikiForm.php:89
 msgid "Dump Pages as XHTML"
-msgstr "Schreibe Seiten als XHTML"
+msgstr "Seiten als XHTML schreiben"
 
 #: ../lib/plugin/WikiForm.php:104
 #, c-format
@@ -2293,7 +2298,7 @@ msgstr "Seite sperren, um den Link zu aktivieren"
 #: ../lib/stdlib.php:453
 #, c-format
 msgid "'%s': Bad page name: %s"
-msgstr ""
+msgstr "'%s': Ungültiger Seitenname: %s"
 
 #: ../lib/stdlib.php:490
 msgid "White space converted to single space"
@@ -2314,11 +2319,11 @@ msgstr ""
 
 #: ../lib/stdlib.php:511
 msgid "too long"
-msgstr ""
+msgstr "zu lang"
 
 #: ../lib/stdlib.php:516
 msgid "illegal pagename"
-msgstr ""
+msgstr "ungültiger Seitenname"
 
 #: ../lib/stdlib.php:758
 msgid "Revision Not Found"
@@ -2434,7 +2439,7 @@ msgstr ""
 
 #: ../themes/Portland/templates/editpage.tmpl:60
 msgid "Summary"
-msgstr "Ihr Kommentar"
+msgstr "Zusammenfassung"
 
 #: ../themes/Portland/templates/editpage.tmpl:62
 #: ../themes/default/templates/editpage.tmpl:89
@@ -2531,13 +2536,13 @@ msgstr "Diff"
 
 #: ../themes/default/templates/blogform.tmpl:10
 msgid "Add a Comment"
-msgstr ""
+msgstr "Kommentar hinzufügen"
 
 #: ../themes/default/templates/blogform.tmpl:12
 #: ../themes/default/templates/editpage.tmpl:71
 #: ../themes/default/templates/info.tmpl:78
 msgid "Summary:"
-msgstr "Ihr Kommentar:"
+msgstr "Zusammenfassung:"
 
 #: ../themes/default/templates/blogform.tmpl:16
 msgid "Comment:"
@@ -2613,7 +2618,7 @@ msgstr "Letzter Autor:"
 
 #: ../themes/default/templates/info.tmpl:73
 msgid "Last Summary:"
-msgstr "Letzter Kommentar:"
+msgstr "Letzter Zusammenfassung:"
 
 #: ../themes/default/templates/info.tmpl:76
 msgid "Saved on:"
@@ -2879,7 +2884,7 @@ msgstr ""
 #: ../themes/default/templates/userprefs.tmpl:164
 #, c-format
 msgid "Hide %s."
-msgstr ""
+msgstr "%s verstecken."
 
 #: ../themes/default/templates/userprefs.tmpl:165
 msgid ""
@@ -2938,7 +2943,7 @@ msgstr "Datum mit relativen Bezeichnungen, wie »Heute« und »Gestern«."
 msgid "Update Preferences"
 msgstr "Speichere Einstellungen"
 
-#: ../themes/default/templates/wikiblog.tmpl:19
+#: ../themes/default/templates/wikiblog.tmpl:22
 #, c-format
 msgid "Comment modified on %s by %s"
 msgstr "Kommentar am %s geändert von %s"
