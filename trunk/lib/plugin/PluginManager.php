@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.16 2004-06-04 20:32:54 rurban Exp $');
+rcs_id('$Id: PluginManager.php,v 1.17 2005-01-25 06:58:22 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -110,7 +110,7 @@ extends WikiPlugin
         $row_no = 0;
 
         $w = new WikiPluginLoader;
-        foreach($plugins as $pluginName) {
+        foreach ($plugins as $pluginName) {
             // instantiate a plugin
             $pluginName = str_replace(".php", "", $pluginName);
             $temppluginclass = "<? plugin $pluginName ?>"; // hackish
@@ -203,6 +203,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/06/04 20:32:54  rurban
+// Several locale related improvements suggested by Pierrick Meignen
+// LDAP fix by John Cole
+// reanable admin check without ENABLE_PAGEPERM in the admin plugins
+//
 // Revision 1.15  2004/05/25 13:17:12  rurban
 // fixed Fatal error: Call to a member function on a non-object in PluginManager.php on line 222
 //
