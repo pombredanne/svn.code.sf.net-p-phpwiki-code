@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.160 2004-02-28 21:14:08 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.161 2004-03-12 15:48:07 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1125,18 +1125,9 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
 }
 
 // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
-function explodePageList($input, $perm = false, $orderby = 'pagename') {
-    // expand wildcards from list of all pages
-    if (preg_match('/[\?\*]/',$input)) {
-        $dbi = $GLOBALS['request']->_dbi;
-        $allPagehandles = $dbi->getAllPages($perm,$orderby);
-        while ($pagehandle = $allPagehandles->next()) {
-            $allPages[] = $pagehandle->getName();
-        }
-        return explodeList($input, $allPages);
-    } else {
-        return explode(',',$input);
-    }
+function explodePageList($input, $perm=false, $sortby='pagename', $limit=false) {
+    include_once("lib/PageList.php");
+    return PageList::explodePageList($input,$perm,$sortby,$limit);
 }
 
 // Class introspections
@@ -1358,6 +1349,15 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.160  2004/02/28 21:14:08  rurban
+// generally more PHPDOC docs
+//   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
+// fxied WikiUserNew pref handling: empty theme not stored, save only
+//   changed prefs, sql prefs improved, fixed password update,
+//   removed REPLACE sql (dangerous)
+// moved gettext init after the locale was guessed
+// + some minor changes
+//
 // Revision 1.158  2004/02/19 21:54:17  rurban
 // moved initerwiki code to PageType.php
 // re-enabled and fixed InlineImages support, now also for InterWiki Urls

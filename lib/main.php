@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.123 2004-03-10 15:41:27 rurban Exp $');
+rcs_id('$Id: main.php,v 1.124 2004-03-12 15:48:07 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -390,6 +390,7 @@ class WikiRequest extends Request {
             case 'remove':
             case 'lock':
             case 'unlock':
+            case 'upgrade':
                 return WIKIAUTH_ADMIN;
             default:
                 global $WikiNameRegexp;
@@ -725,6 +726,7 @@ class WikiRequest extends Request {
     }
 
     function action_upgrade () {
+        include_once("lib/loadsave.php");
         include_once("lib/upgrade.php");
         DoUpgrade($this);
     }
@@ -843,6 +845,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.123  2004/03/10 15:41:27  rurban
+// use default pref mysql table
+//
 // Revision 1.122  2004/03/08 18:17:09  rurban
 // added more WikiGroup::getMembersOf methods, esp. for special groups
 // fixed $LDAP_SET_OPTIONS

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.66 2004-03-12 13:31:42 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.67 2004-03-12 15:48:07 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -441,17 +441,22 @@ class PageList {
         }
         $this->_addColumn('pagename');
 
-        if ($exclude) {
-            if (!is_array($exclude))
-                $exclude = $this->explodePageList($exclude);
-            $this->_excluded_pages = $exclude;
-        }
-
         $this->_options = $options;
         if (!empty($options) and !empty($options['sortby'])) {
-            $this->sortby($options['sortby'],'init');
+            $sortby = $options['sortby'];
         } else {
-            $this->sortby($GLOBALS['request']->getArg('sortby'),'init');
+            $sortby = $GLOBALS['request']->getArg('sortby');
+        }
+        $this->sortby($sortby,'init');
+        if (!empty($options) and !empty($options['limit'])) {
+            $limit = $options['limit'];
+        } else {
+            $limit = $GLOBALS['request']->getArg('limit');
+        }
+        if ($exclude) {
+            if (!is_array($exclude))
+                $exclude = $this->explodePageList($exclude,false,$sortby,$limit);
+            $this->_excluded_pages = $exclude;
         }
             
         $this->_messageIfEmpty = _("<no matches>");
@@ -516,6 +521,11 @@ class PageList {
         } elseif (is_object($page_handle)) {
           if (in_array($page_handle->getName(), $this->_excluded_pages))
             return;             // exclude page.
+        }
+        //FIXME. only on sf.net
+        if (!is_object($page_handle)) {
+            trigger_error("PageList: Invalid page_handle $page_handle", E_USER_WARNING);
+            return;
         }
         // enforce view permission
         if (!mayAccessPage('view',$page_handle->getName()))

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.21 2004-03-12 11:18:24 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.22 2004-03-12 15:48:07 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -20,7 +20,7 @@ rcs_id('$Id: WikiGroup.php,v 1.21 2004-03-12 11:18:24 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// For now we provide no default memberhsip method. This might change.
+// For now we provide no default membership method. This might change.
 // (!defined('GROUP_METHOD')) define('GROUP_METHOD', "WIKIPAGE");
 
 if (!defined('GROUP_METHOD') or 
@@ -57,7 +57,7 @@ define('GROUP_CREATOR',	   	_("Creator"));
  */ 
 class WikiGroup{
     /** User name */
-    var $username;
+    var $username = '';
     /** The global WikiRequest object */
     var $request;
     /** Array of groups $username is confirmed to belong to */
@@ -69,7 +69,7 @@ class WikiGroup{
      * @param object $request The global WikiRequest object -- ignored.
      */ 
     function WikiGroup(&$request){    
-        return;
+        $this->request = $request;
     }
 
     /**
@@ -106,7 +106,7 @@ class WikiGroup{
                 if ($GLOBALS['DBParams']['dbtype'] == 'ADODB') {
                     return new GroupDB_ADODB($request);
                 } elseif ($GLOBALS['DBParams']['dbtype'] == 'SQL') {
-                    $group = new GroupDb_PearDB($request);
+                    return new GroupDb_PearDB($request);
                 } else {
                     trigger_error("GroupDb: unsupported dbtype " . $DBParams['dbtype'],
                                   E_USER_ERROR);
@@ -558,7 +558,7 @@ class GroupDb extends WikiGroup {
             empty($DBAuthParams['user_groups']) or
             empty($DBAuthParams['is_member'])) {
             trigger_error(_("No or not enough GROUP_DB SQL statements defined"), E_USER_WARNING);
-            return false;
+            return new GroupNone(&$request);
         }
         $this->_is_member = str_replace(array('"$userid"','"$groupname"'),
                                         array('%s','%s'),
@@ -998,6 +998,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/03/12 11:18:24  rurban
+// fixed ->membership chache
+//
 // Revision 1.20  2004/03/12 10:47:30  rurban
 // fixed GroupDB for ADODB
 //

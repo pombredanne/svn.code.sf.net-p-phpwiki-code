@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.1 2004-03-12 13:32:44 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.2 2004-03-12 15:48:07 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -25,7 +25,7 @@ rcs_id('$Id: upgrade.php,v 1.1 2004-03-12 13:32:44 rurban Exp $');
 /**
  * Upgrade the WikiDB and config settings after installing a new 
  * PhpWiki upgrade.
- * Status: experimental, no queries for verification yet, no db update
+ * Status: experimental, no queries for verification yet, no db update,
  *         no merge conflict
  * Installation on an existing PhpWiki database needs some 
  * additional worksteps. Each step will require multiple pages.
@@ -55,6 +55,7 @@ function CheckPgsrcUpdate(&$request) {
         $pagename = urldecode($pagename);
         if (substr($pagename,-1,1) == '~') continue;
         if ($dbh->isWikiPage($pagename)) {
+            // check mtime
             ; //echo "$pagename exists<br />\n";
         } else {
             echo "$pagename does not exist<br />\n";
@@ -102,6 +103,7 @@ function CheckDatabaseUpdate($request) {
     } elseif ($DBParam['dbtype'] == 'ADODB') {
         $tables = $backend->MetaTables();
     }
+    //...
     return;
 }
 
@@ -119,7 +121,7 @@ class Upgrade_CheckDatabaseUpdate extends Upgrade {
 }
 
 // TODO: At which step are we? 
-// Validate and do it again or go on with next step.
+// validate and do it again or go on with next step.
 
 /** entry function from lib/main.php
  */

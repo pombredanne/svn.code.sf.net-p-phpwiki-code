@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WhoIsOnline.php,v 1.2 2004-03-10 15:38:49 rurban Exp $');
+rcs_id('$Id: WhoIsOnline.php,v 1.3 2004-03-12 15:48:08 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -114,7 +114,7 @@ extends WikiPlugin
                         $page = $user->page;
                     if ($user->_level and $user->UserName()) { // registered or guest or what?
                         //Todo: expose REMOTE_ADDR?
-                        //Fixme: htmlentitities name may not be called here. but where then?
+                        //FIXME: htmlentitities name may not be called here. but where then?
                         $num_registered++;
                         $registered[] = array('name'  => $user->UserName(),
                                               'date'  => $date,
@@ -140,7 +140,7 @@ extends WikiPlugin
 
 	$sess_time = ini_get('session.gc_maxlifetime'); // in seconds
 
-        //todo: get and sets max stats
+        //TODO: get and sets max stats
         $page = $dbi->getPage($request->getArg('pagename'));
         $stats = array(); $stats['max_online_num'] = 0;
         if ($stats = $page->get('stats')) {
@@ -172,6 +172,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/03/10 15:38:49  rurban
+// store current user->page and ->action in session for WhoIsOnline
+// better WhoIsOnline icon
+// fixed WhoIsOnline warnings
+//
 // Revision 1.1  2004/02/26 19:15:37  rurban
 // new WhoIsOnline plugin: session explorer (postnuke style)
 //

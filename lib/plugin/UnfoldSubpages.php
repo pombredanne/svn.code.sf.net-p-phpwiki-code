@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.12 2004-02-22 23:20:33 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.13 2004-03-12 15:48:08 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -121,24 +121,12 @@ extends WikiPlugin
         include_once('lib/BlockParser.php');
 
         $args = $this->getArgs($argstr, $request);
-        if (empty($args['pagename']))
-            $pagename = $request->getArg('pagename');
-        $sortby = 'pagename';
-        if ($request->getArg('sortby'))
-            $sortby = $request->getArg('sortby');
         extract($args);
-        //TODO: explodePageList should be a PageList method.
-        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*',$sortby,$limit);
+        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*',false,$sortby,$limit);
         if (! $subpages ) {
             return $this->error(_("The current page has no subpages defined."));
         }           
-        extract($this->getArgs($argstr, $request));
         $content = HTML();
-        // ignore the sort argument, use sortby with the + or - prefix instead
-        // default: +
-        //if ($sort != 'asc') {
-        //    $subpages = array_reverse($subpages);
-        //}
         if ($maxpages) {
           $subpages = array_slice ($subpages, 0, $maxpages);
         }
@@ -198,6 +186,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/02/22 23:20:33  rurban
+// fixed DumpHtmlToDir,
+// enhanced sortby handling in PageList
+//   new button_heading th style (enabled),
+// added sortby and limit support to the db backends and plugins
+//   for paging support (<<prev, next>> links on long lists)
+//
 // Revision 1.11  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
