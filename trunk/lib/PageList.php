@@ -1,13 +1,12 @@
-<?php rcs_id('$Id: PageList.php,v 1.38 2002-02-24 17:59:40 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.39 2002-08-27 21:51:31 rurban Exp $');
 
 /**
  * This library relieves some work for these plugins:
  *
- * AllPages, BackLinks, LikePages, Mostpopular, TitleSearch
+ * AllPages, BackLinks, LikePages, Mostpopular, TitleSearch and more
  *
  * It also allows dynamic expansion of those plugins to include more
  * columns in their output.
- *
  *
  * Column 'info=' arguments:
  *
@@ -21,15 +20,23 @@
  * 'minor'    _("Minor Edit"), _("minor")
  * 'markup'   _("Markup")
  *
- * 'all'     All columns will be displayed. This argument must appear alone.
+ * 'all'       All columns will be displayed. This argument must appear alone.
+ * 'checkbox'  A selectable checkbox appears at the left.
  *
  * FIXME: In this refactoring I have un-implemented _ctime, _cauthor, and
  * number-of-revision.  Note the _ctime and _cauthor as they were implemented
  * were somewhat flawed: revision 1 of a page doesn't have to exist in the
  * database.  If lots of revisions have been made to a page, it's more than likely
  * that some older revisions (include revision 1) have been cleaned (deleted).
+ *
+ * FIXME:
+ * The 'sortby' option is handled here correctly, but at the backends at 
+ * the page iterator not yet.
+ *
+ * TODO: sortby, limit, offset, rows arguments for multiple pages/multiple rows.
  */
 class _PageList_Column_base {
+
     function _PageList_Column_base ($default_heading, $align = false) {
         $this->_heading = $default_heading;
 
@@ -38,7 +45,7 @@ class _PageList_Column_base {
             $this->_tdattr['align'] = $align;
     }
 
-    function format ($page_handle, &$revision_handle) {
+    function format ($pagelist, $page_handle, &$revision_handle) {
         return HTML::td($this->_tdattr,
                         NBSP,
                         $this->_getValue($page_handle, &$revision_handle),
@@ -50,8 +57,21 @@ class _PageList_Column_base {
     }
 
     function heading () {
-        return HTML::td(array('align' => 'center'),
-                        NBSP, HTML::u($this->_heading), NBSP);
+        if (in_array($this->_field,array('pagename','mtime','hits'))) {
+            // asc or desc: +pagename, -pagename
+            $sortby = '+' . $this->_field;
+            if ($sorted = $GLOBALS['request']->getArg('sortby')) {
+                // flip order
+                if ($sorted == '+' . $this->_field)
+                    $sortby = '-' . $this->_field;
+                elseif ($sorted == '-' . $this->_field)
+                    $sortby = '+' . $this->_field;
+            }
+            $s = HTML::a(array('href' => $GLOBALS['request']->GetURLtoSelf(array('sortby' => $sortby)),'class' => 'pagetitle', 'title' => sprintf(_("Sort by %s"),$this->_field)), NBSP, HTML::u($this->_heading), NBSP);
+        } else {
+            $s = HTML(NBSP, HTML::u($this->_heading), NBSP);
+        }
+        return HTML::td(array('align' => 'center'),$s);
     }
 };
 
@@ -88,6 +108,32 @@ class _PageList_Column_bool extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
         $val = _PageList_Column::_getValue($page_handle, $revision_handle);
         return $val ? $this->_textIfTrue : $this->_textIfFalse;
+    }
+};
+
+class _PageList_Column_checkbox extends _PageList_Column {
+    function _PageList_Column_checkbox ($field, $default_heading, $name='p') {
+        $this->_name = $name;
+        $this->_PageList_Column($field, $default_heading, 'center');
+    }
+    function _getValue ($pagelist, $page_handle, &$revision_handle) {
+        $pagename = $page_handle->getName();
+        if (!empty($pagelist->_selected[$pagename])) {
+            return HTML::input(array('type' => 'checkbox',
+                                     'name' => $this->_name . "[$pagename]",
+                                     'value' => $pagename,
+                                     'checked' => '1'));
+        } else {
+            return HTML::input(array('type' => 'checkbox',
+                                     'name' => $this->_name . "[$pagename]",
+                                     'value' => $pagename));
+        }
+    }
+    function format ($pagelist, $page_handle, &$revision_handle) {
+        return HTML::td($this->_tdattr,
+                        NBSP,
+                        $this->_getValue(&$pagelist, $page_handle, &$revision_handle),
+                        NBSP);
     }
 };
 
@@ -130,6 +176,8 @@ class _PageList_Column_author extends _PageList_Column {
 };
 
 class _PageList_Column_pagename extends _PageList_Column_base {
+    var $_field = 'pagename';
+
     function _PageList_Column_pagename () {
         $this->_PageList_Column_base(_("Page Name"));
         global $request;
@@ -154,8 +202,10 @@ class PageList {
     var $_caption = "";
     var $_pagename_seen = false;
     var $_types = array();
+    var $_options = array();
+    var $_selected = array();
 
-    function PageList ($columns = false, $exclude = false) {
+    function PageList ($columns = false, $exclude = false, $options = false) {
         if ($columns == 'all') {
             $this->_initAvailableColumns();
             $columns = array_keys($this->_types);
@@ -164,8 +214,14 @@ class PageList {
         if ($columns) {
             if (!is_array($columns))
                 $columns = explode(',', $columns);
-            foreach ($columns as $col)
+            if (in_array('all',$columns)) { // e.g. 'checkbox,all'
+                $this->_initAvailableColumns();
+                $columns = array_merge($columns,array_keys($this->_types));
+                $columns = array_diff($columns,array('all'));
+            }
+            foreach ($columns as $col) {
                 $this->_addColumn($col);
+            }
         }
         $this->_addColumn('pagename');
 
@@ -175,6 +231,7 @@ class PageList {
             $this->_excluded_pages = $exclude;
         }
 
+        $this->_options = $options;
         $this->_messageIfEmpty = _("<no matches>");
     }
 
@@ -203,8 +260,15 @@ class PageList {
     }
 
     function addPage ($page_handle) {
-        if (in_array($page_handle->getName(), $this->_excluded_pages))
+        if (is_string($page_handle)) {
+	    if (in_array($page_handle, $this->_excluded_pages))
+        	return;             // exclude page.
+            $dbi = $GLOBALS['request']->getDbh();
+            $page_handle = $dbi->getPage($page_handle);
+        } else {
+          if (in_array($page_handle->getName(), $this->_excluded_pages))
             return;             // exclude page.
+        }
 
         $group = (int)(count($this->_rows) / $this->_group_rows);
         $class = ($group % 2) ? 'oddrow' : 'evenrow';
@@ -213,7 +277,7 @@ class PageList {
         if (count($this->_columns) > 1) {
             $row = HTML::tr(array('class' => $class));
             foreach ($this->_columns as $col)
-                $row->pushContent($col->format($page_handle, $revision_handle));
+                $row->pushContent($col->format(&$this, $page_handle, $revision_handle));
         }
         else {
             $col = $this->_columns[0];
@@ -229,6 +293,11 @@ class PageList {
             $this->addPage($page);
     }
 
+    function addPageList (&$list) {
+        reset ($list);
+        while ($page = next($list))
+            $this->addPage($page);
+    }
 
     function getContent() {
         // Note that the <caption> element wants inline content.
@@ -259,7 +328,10 @@ class PageList {
             return;
 
         $this->_types =
-            array('pagename'
+            array(
+                  'checkbox'
+                  => new _PageList_Column_checkbox('p', _("Selected")),
+                  'pagename'
                   => new _PageList_Column_pagename,
 
                   'mtime'
@@ -296,11 +368,6 @@ class PageList {
             return false;       // Already have this one.
         $this->_columns_seen[$column] = true;
 
-
-
-
-
-
         if (strstr($column, ':'))
             list ($column, $heading) = explode(':', $column, 2);
 
@@ -329,6 +396,7 @@ class PageList {
 
         $row = HTML::tr();
         foreach ($this->_columns as $col) {
+            // Todo: add links to resort the table
             $row->pushContent($col->heading());
             $table_summary[] = $col->_heading;
         }
@@ -355,6 +423,28 @@ class PageList {
     }
 };
 
+/* List pages with checkboxes to select from.
+ * Todo: All, None jscript buttons.
+ */
+
+class PageList_Selectable
+extends PageList {
+
+    function PageList_Selectable ($columns=false, $exclude=false) {
+        PageList::PageList($columns,$exclude);
+    }
+
+    function addPageList ($array) {
+        while (list($pagename,$selected) = each($array)) {
+            if ($selected) $this->addPageSelected($pagename);
+            $this->addPage($pagename);
+        }
+    }
+
+    function addPageSelected ($pagename) {
+        $this->_selected[$pagename] = 1;
+    }
+}
 
 // (c-file-style: "gnu")
 // Local Variables:

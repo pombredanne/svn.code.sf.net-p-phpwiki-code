@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.13 2002-08-24 13:18:56 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.14 2002-08-27 21:51:31 rurban Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -720,6 +720,11 @@ class WikiDB_Page
                 return;         // values identical, skip update.
         }
 
+        // special handling of sensitive pref data or upgrades from older versions:
+        if ($key == 'pref') {
+            if (!empty($newval['userid'])) unset($newval['userid']);
+            //if ($GLOBALS['user']->isAdmin()) unset($newval['passwd']);
+        }
         $cache->update_pagedata($pagename, array($key => $newval));
     }
 
@@ -1060,6 +1065,36 @@ class WikiDB_PageIterator
     function free() {
         $this->_pages->free();
     }
+
+    // Not yet used.
+    function setSortby ($arg = false) {
+        if (!$arg) {
+            $arg = @$_GET['sortby'];
+            if ($arg) {
+                $sortby = substr($arg,1);
+                $order  = substr($arg,0,1)=='+' ? 'ASC' : 'DESC';
+            }
+        }
+        if (is_array($arg)) { // array('mtime' => 'desc')
+            $sortby = $arg[0];
+            $order = $arg[1];
+        } else {
+            $sortby = $arg;
+            $order  = 'ASC';
+        }
+        // available column types to sort by:
+        // todo: we must provide access methods for the generic dumb/iterator
+        $this->_types = explode(',','pagename,mtime,hits,version,author,locked,minor,markup');
+        if (in_array($sortby,$this->_types))
+            $this->_options['sortby'] = $sortby;
+        else
+            trigger_error(fmt("Argument %s '%s' ignored",'sortby',$sortby), E_USER_WARNING);
+        if (in_array(strtoupper($order),'ASC','DESC')) 
+            $this->_options['order'] = strtoupper($order);
+        else
+            trigger_error(fmt("Argument %s '%s' ignored",'order',$order), E_USER_WARNING);
+    }
+
 };
 
 /**
@@ -1239,27 +1274,27 @@ class WikiDB_cache
 
     function delete_versiondata($pagename, $version) {
         $new = $this->_backend->
-             delete_versiondata($pagename, $version);
-	 	unset ($this->_versiondata_cache[$pagename][$version]['1']);
-	 	unset ($this->_versiondata_cache[$pagename][$version]['0']);
-		unset ($this->_glv_cache[$pagename]);
+            delete_versiondata($pagename, $version);
+        unset ($this->_versiondata_cache[$pagename][$version]['1']);
+        unset ($this->_versiondata_cache[$pagename][$version]['0']);
+        unset ($this->_glv_cache[$pagename]);
     }
 	
-	function get_latest_version($pagename)  {
+    function get_latest_version($pagename)  {
 	if(defined('USECACHE')){
-		assert (is_string($pagename) && $pagename);
-        $cache = &$this->_glv_cache;	
-        if (!isset($cache[$pagename])) {
-            $cache[$pagename] = $this->_backend->get_latest_version($pagename);
-            if (empty($cache[$pagename]))
-                $cache[$pagename] = 0;
-        } 
-        return $cache[$pagename];}
+            assert (is_string($pagename) && $pagename);
+            $cache = &$this->_glv_cache;	
+            if (!isset($cache[$pagename])) {
+                $cache[$pagename] = $this->_backend->get_latest_version($pagename);
+                if (empty($cache[$pagename]))
+                    $cache[$pagename] = 0;
+            } 
+            return $cache[$pagename];}
 	else {
-		return $this->_backend->get_latest_version($pagename); 
-		}
-	}
-	
+            return $this->_backend->get_latest_version($pagename); 
+        }
+    }
+
 };
 
 /**
@@ -1267,9 +1302,6 @@ class WikiDB_cache
  *
  * We might have read-only access to the password and/or group membership,
  * or we might even be able to update the entries.
- *
- *   Group: list of userid's in a special WikiDB_Page
- *   WikiDB_Page:  owner.group permission_flag in page metadata
  *
  * FIXME: This was written before we stored prefs as %pagedata, so 
  */
@@ -1284,6 +1316,7 @@ extends WikiUser
         WikiUser::WikiUser($userid, $authlevel);
     }
 
+    /*
     function getPreferences() {
         // external prefs override internal ones?
         if (! $this->_authdb->getPrefs() )
@@ -1296,6 +1329,7 @@ extends WikiUser
         if (! $this->_authdb->setPrefs($prefs) )
             return WikiUser::setPreferences();
     }
+    */
 
     function exists() {
         return $this->_authdb->exists($this->_userid);
@@ -1312,7 +1346,7 @@ extends WikiUser
     }
 
     function checkPassword($passwd) {
-        return $this->_authdb->pwcheck($passwd);
+        return $this->_authdb->pwcheck($this->userid, $passwd);
     }
 
     function changePassword($passwd) {
@@ -1321,7 +1355,7 @@ extends WikiUser
                                   $this->_userid), E_USER_ERROR);
             return;
         }
-        return $this->_authdb->changePass($passwd);
+        return $this->_authdb->changePass($this->userid, $passwd);
     }
 
     function mayChangePassword() {
@@ -1336,47 +1370,82 @@ extends WikiDB
     var $auth_crypt_method = 'crypt', $auth_update = false;
     var $group_members = false, $user_groups = false;
     var $pref_update = false, $pref_select = false;
+    var $_dbh;
 
     function WikiAuthDB($DBAuthParams) {
         foreach ($DBAuthParams as $key => $value) {
             $this->$key = $value;
         }
+        if (!$this->auth_dsn) {
+            trigger_error(_("no \$DBAuthParams['dsn'] provided"), E_USER_ERROR);
+            return false;
+        }
+        // compare auth DB to the existing page DB. reuse if it's on the same database.
+        if (isa($this->_backend, 'WikiDB_backend_PearDB') and 
+            $this->_backend->_dsn == $this->auth_dsn) {
+            $this->_dbh = &$this->_backend->_dbh;
+            return $this->_backend;
+        }
+        include_once("lib/WikiDB/SQL.php");
+        return new WikiDB_SQL($DBAuthParams);
+    }
+
+    function param_missing ($param) {
+        trigger_error(sprintf(_("No \$DBAuthParams['%s'] provided."), $param), E_USER_ERROR);
+        return;
     }
 
     function getPrefs($prefs) {
         if ($this->pref_select) {
-            trigger_error(sprintf("WikiAuthDB->getPrefs() not yet written for '%s'",
-                                  $this->_userid), E_USER_WARNING);
+            $statement = $this->_backend->Prepare($this->pref_select);
+            return unserialize($this->_backend->Execute($statement, 
+                                                        $prefs->get('userid')));
         } else {
-            trigger_error(sprintf("WikiAuthDB->getPrefs() not defined for '%s'",
-                                  $this->_userid), E_USER_ERROR);
+            param_missing('pref_select');
+            return false;
         }
-        return false;
     }
+
     function setPrefs($prefs) {
         if ($this->pref_write) {
-            trigger_error(sprintf("WikiAuthDB->setPrefs() not allowed for '%s'",
-                                  $this->_userid), E_USER_ERROR);
+            $statement = $this->_backend->Prepare($this->pref_write);
+            return $this->_backend->Execute($statement, 
+                                            $prefs->get('userid'), serialize($prefs->_prefs));
         } else {
-            trigger_error(sprintf("WikiAuthDB->setPrefs() not yet written for '%s'",
-                                  $this->_userid), E_USER_WARNING);
+            param_missing('pref_write');
+            return false;
         }
-        return false;
     }
+
     function createUser ($pref) {
-        trigger_error(sprintf("WikiAuthDB->createUser() not yet written for '%s'",
-                              $this->_userid), E_USER_WARNING);
-        return false;
+        if ($this->user_create) {
+            $statement = $this->_backend->Prepare($this->user_create);
+            return $this->_backend->Execute($statement, 
+                                        $prefs->get('userid'), serialize($prefs->_prefs));
+        } else {
+            param_missing('user_create');
+            return false;
+        }
     }
-    function exists() {
-        trigger_error(sprintf("WikiAuthDB->exists() not yet written for '%s'",
-                              $this->_userid), E_USER_WARNING);
-        return false;
+
+    function exists($userid) {
+        if ($this->user_check) {
+            $statement = $this->_backend->Prepare($this->user_check);
+            return $this->_backend->Execute($statement, $prefs->get('userid'));
+        } else {
+            param_missing('user_check');
+            return false;
+        }
     }
-    function pwcheck($pass) {
-        trigger_error(sprintf("WikiAuthDB->pwcheck() not yet written for '%s'",
-                              $this->_userid), E_USER_WARNING);
-        return false;
+
+    function pwcheck($userid, $pass) {
+        if ($this->auth_check) {
+            $statement = $this->_backend->Prepare($this->auth_check);
+            return $this->_backend->Execute($statement, $userid, $pass);
+        } else {
+            param_missing('auth_check');
+            return false;
+        }
     }
 }
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.15 2002-08-24 13:18:56 rurban Exp $');
+<?php rcs_id('$Id: Request.php,v 1.16 2002-08-27 21:51:31 rurban Exp $');
 
 // FIXME: write log entry.
 
@@ -65,14 +65,28 @@ class Request {
         else
             $this->args[$key] = $val;
     }
+    
+    function debugVars() {
+        $array = array();
+        foreach (array('start_debug','debug_port','debug_no_cache') as $key) {
+            if (isset($GLOBALS['HTTP_GET_VARS'][$key]))
+                $array[$key] = $GLOBALS['HTTP_GET_VARS'][$key];
+        }
+        return $array;
+    }
+
 
     // Well oh well. Do we really want to pass POST params back as GET?
-    function getURLtoSelf($args = false) {
+    function getURLtoSelf($args = false, $exclude = array()) {
         $get_args = $this->args;
         if ($args)
             $get_args = array_merge($get_args, $args);
-        if (DEBUG)
-            $get_args = array_merge($get_args, $GLOBALS['HTTP_GET_VARS']);
+        if (DEBUG) 
+            $get_args = array_merge($get_args, $this->debugVars());
+
+        foreach ($exclude as $ex) {
+            if (!empty($get_args[$ex])) unset($get_args[$ex]);
+        }
 
         $pagename = $get_args['pagename'];
         unset ($get_args['pagename']);

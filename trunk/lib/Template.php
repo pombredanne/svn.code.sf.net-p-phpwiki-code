@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.40 2002-08-23 22:10:16 rurban Exp $');
+<?php rcs_id('$Id: Template.php,v 1.41 2002-08-27 21:51:31 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -210,14 +210,21 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
         printXML(new Template($frame, $request, $args));
         $request->setArg('framesrc',false);
     } else {
-        // This is a hack but, it works fast enough... so beware of spaces
-        // The other possibility would be to redirect to an action=FrameInclude
+        // Early plugin-head check:
+        // head plugins must consist of a single line at the VERY FIRST LINE in the content.
+        // This is a hack, but it works fast enough.
         if ($page_revision and 
             $text = &$page_revision->getPackedContent() and 
-            strstr($text, '<?plugin FrameInclude')) {
-            $plugin = TransformText($page_revision);
-            $args['FRAMESET'] = $plugin->_content[0];
-            printXML(new Template('frameset', $request, $args));
+            strstr($text, '<?plugin-head'))
+        {
+            $loader = new WikiPluginLoader();
+            // CheckMe!
+            return $loader->expandPI('<\?plugin-head\s+(?!\S)',$request);
+            /* // the return of FrameInclude:
+               $plugin = TransformText($page_revision);
+               $args['FRAMESET'] = $plugin->_content[0];
+               printXML(new Template('frameset', $request, $args));
+            */
         } else {
             printXML(new Template('html', $request, $args));
         }
@@ -245,7 +252,7 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
     $HIDE_TOOLBARS = true;
     $HTML_DUMP = true;
 
-    $html = asXML(new Template('top-htmldump', $request, $args));
+    $html = asXML(new Template('htmldump', $request, $args));
 
     $HIDE_TOOLBARS = false;
     $HTML_DUMP = false;

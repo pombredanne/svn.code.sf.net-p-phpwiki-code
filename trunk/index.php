@@ -78,14 +78,14 @@ if (!empty($include_path)) ini_set('include_path', $include_path);
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
-define ('PHPWIKI_VERSION', '1.3.4');
+define ('PHPWIKI_VERSION', '1.3.4pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.91 2002-08-24 13:18:55 rurban Exp $');
+rcs_id('$Id: index.php,v 1.92 2002-08-27 21:51:31 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
 // Part One:
-// Authentication and security settings:
+// Authentication and security settings. See Part Three for more.
 // 
 /////////////////////////////////////////////////////////////////////
 
@@ -198,7 +198,9 @@ $DBParams = array(
    'directory'     => "/tmp",
    //'dba_handler'   => 'gdbm',   // Either of 'gdbm' or 'db2' work great for me.
    //'dba_handler'   => 'db2',
-   'dba_handler'     => 'db3',    // Works fine on Windows, but not so on linux...
+   //'dba_handler'   => 'db3',    // Works fine on Windows, but not on every linux.
+   'dba_handler'     => 'dbm',    // On sf.net redhat there's dbm and gdbm
+
    'timeout'   => 20,
    //'timeout' => 5
 );
@@ -277,7 +279,7 @@ $ExpireParams['author'] = array('max_age'  => 365,
 //
 /////////////////////////////////////////////////////////////////////
 
-// The wiki is protected by HTTP Auth. Use the username and password 
+// The wiki can be protected by HTTP Auth. Use the username and password 
 // from there, but this is not sufficient. Try the other methods also.
 if (!defined('ALLOW_HTTP_AUTH_LOGIN')) define('ALLOW_HTTP_AUTH_LOGIN', false);
 
@@ -459,7 +461,7 @@ define("CHARSET", "iso-8859-1");
 // german pages. Somehow the system must recognize the locale as a
 // valid locale before gettext() will work, i.e., use 'de_DE',
 // 'nl_NL'.
-if (empty($LANG)) $LANG='C';
+if (empty($LANG)) $LANG='en';
 //$LANG='nl_NL';
 
 // Setting the LANG environment variable (accomplished above) may or
@@ -476,8 +478,26 @@ if (empty($LANG)) $LANG='C';
 //
 // You can tailor the locale used for time and date formatting by
 // setting the LC_TIME environment variable. You'll have to experiment
-// to find the correct setting:
-//putenv("LC_TIME=$LANG");
+// to find the correct setting.
+// gettext() fix: With setlocale() we must use the long form, 
+// like 'de_DE','nl_NL', 'es_MX', 'es_AR', 'fr_FR'. 
+// For Windows maybe even 'german'. You might fix this accordingly.
+$language_locales = array(
+                          'en' => 'C',
+                          'de' => 'de_DE',
+                          'es' => 'es_MX',
+                          'nl' => 'nl_NL',
+                          'fr' => 'fr_FR',
+                          'it' => 'it_IT',
+                          'sv' => 'sv_SV'
+                          );
+if (empty($LC_ALL)) {
+  if (empty($language_locales['LANG'])) 
+     $LC_ALL = $LANG;
+  else
+     $LC_ALL = $language_locales['LANG'];
+}
+putenv("LC_TIME=$LC_ALL");
 
 /* WIKI_PGSRC -- specifies the source for the initial page contents of
  * the Wiki. The setting of WIKI_PGSRC only has effect when the wiki is
@@ -633,11 +653,11 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 ////////////////////////////////////////////////////////////////
 // Check if we were included by some other wiki version (getimg, en, ...) 
 // or not. 
-// If we are original index.php fire up the code by loading lib/main.php.
+// If the server requested this index.php fire up the code by loading lib/main.php.
 // Parallel wiki scripts can now simply include /index.php for the 
 // main configuration, extend or redefine some settings and 
-// load lib/main.php by themselves. This overcomes the index as 
-// config problem.
+// load lib/main.php by themselves. 
+// This overcomes the index as config problem.
 ////////////////////////////////////////////////////////////////
 
 // This doesn't work with php as CGI yet!

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.3 2002-08-24 13:18:56 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.4 2002-08-27 21:51:31 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -31,7 +31,7 @@ rcs_id('$Id: WikiAdminRemove.php,v 1.3 2002-08-24 13:18:56 rurban Exp $');
  * requires PHP 4.2 so far.
  */ 
 // maybe display more attributes with this class...
-//require_once('lib/PageList.php'); 
+require_once('lib/PageList.php'); 
 
 class WikiPlugin_WikiAdminRemove
 extends WikiPlugin
@@ -45,9 +45,12 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('only'    => '',
-                     'exclude' => '',
-                     'debug' => false);
+        return array('only'     => '',
+                     'exclude'  => '',
+                     'run_page' => false, // why this? forgot it.
+                     'info'     => '',
+                     'sortby'   => '',
+                     'debug'    => false);
     }
 
     function collectPages(&$list, &$dbi) {
@@ -58,61 +61,33 @@ extends WikiPlugin
         }
     }
 
-    function addTableHead(&$table) {
-        $row = HTML::tr(HTML::th(_("Select")),
-                        HTML::th(_("Name")));
-        $table->pushContent(HTML::thead($row));
-    }
-
-    function addTableBody(&$list, &$table) {
-        $tbody = HTML::tbody();
-        foreach ($list as $pagename => $selected) {
-            if ($selected) {
-                $row = HTML::tr(array('class' => 'oddrow'),
-                                HTML::td(HTML::input(array('type' => 'checkbox',
-                                                           'name' => "p[$pagename]",
-                                                           'value' => $pagename,
-                                                           'checked' => '1'))),
-                                HTML::td(WikiLink($pagename)));
-            } else {
-                $row = HTML::tr(array('class' => 'evenrow'),
-                                HTML::td(HTML::input(array('type' => 'checkbox',
-                                                           'name' => "p[$pagename]",
-                                                           'value' => $pagename))),
-                                HTML::td(WikiLink($pagename)));
-            }
-            $tbody->pushContent($row);
-        }
-        $table->pushContent($tbody);
-    }
-
-    function formatTable(&$list, &$dbi) {
-        $table = HTML::table(array('cellpadding' => 2,
-                                   'cellspacing' => 1,
-                                   'border'      => 0,
-                                   'class' => 'pagelist'));
-        $table->pushContent(HTML::caption(array('align'=>'top'), 
-                                          _("Permanently remove all selected pages.")));
-        // $this->addTableHead($table);
-        $this->addTableBody($list, $table);
-        return $table;
-    }
-
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
         if (!empty($args['only']))
-            $this->only = explode(',',$args['only']);
+            $only = explodePageList($args['only']);
+        else $only = false;
         if (!empty($args['exclude']))
-            $this->only = explode(',',$args['exclude']);
+            $exclude = explodePageList($args['exclude']);
+        else $exclude = false;
+        $info = $args['info'];
         $this->debug = $args['debug'];
+
         $this->_list = array();
         // array_multisort($this->_list, SORT_NUMERIC, SORT_DESC);
         $pagename = $request->getArg('pagename');
         // GetUrlToSelf() with all given params
-        $uri = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'];
+        //$uri = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'];
+        $uri = $request->getURLtoSelf($request->debugVars(),array('verify'));
         $form = HTML::form(array('action' => $uri, 'method' => 'POST'));
-	$p = $request->getArgs('p'); // $GLOBALS['HTTP_POST_VARS']['p']
+	$p = $request->getArg('p');
+        // Handle WikiAdminSelect
         if ($request->isPost() and $request->_user->isAdmin() and 
+            $p and $request->getArg('action') == 'select') {
+            $request->setArg('verify',1);
+            foreach ($p as $page => $name) {
+                $this->_list[$name] = 1;
+            }
+        } elseif ($request->isPost() and $request->_user->isAdmin() and 
             $request->getArg('verify')) {
             // List all to be deleted pages again.
             foreach ($p as $page => $name) {
@@ -131,16 +106,17 @@ extends WikiPlugin
             // List all pages to select from.
             $this->collectPages($this->_list, &$dbi);
         }
-        $table = $this->formatTable($this->_list, &$dbi, &$request);
-        $form->pushContent($table);
-        $form->pushContent(HiddenInputs($GLOBALS['HTTP_GET_VARS'])); // debugging params, ...
+        $pagelist = new PageList_Selectable($info ? 'checkbox,'.$info : 'checkbox', $exclude); 
+        $pagelist->addPageList($this->_list);
+        $form->pushContent($pagelist->getContent());
+        $form->pushContent(HiddenGets(array('s','sortby','verify','WikiAdminRemove','remove'))); 
         // if (! USE_PATH_INFO ) $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'pagename', 'value' => $pagename)));
         if (! $request->getArg('verify')) {
             $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'verify')));
             $form->pushContent(Button('submit:verify', _("Remove selected pages"), 'wikiadmin'), 
                                Button('submit:cancel', _("Cancel"), 'button'));
         } else {
-            $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'remove')));
+            $form->pushContent(HTML::input(array('type' => 'hidden', 'name' => 'action', 'value' => 'WikiAdminRemove')));
             $form->pushContent(Button('submit:remove', _("Remove selected pages"), 'wikiadmin'),
                                Button('submit:cancel', _("Cancel"), 'button'));
         }

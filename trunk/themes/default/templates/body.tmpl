@@ -1,27 +1,7 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.28 2002-08-20 16:15:26 rurban Exp $ -->
+<!-- $Id: body.tmpl,v 1.29 2002-08-27 21:51:31 rurban Exp $ -->
 <body>
-<div id="navbar" class="toolbar">
-<?php
-global $HIDE_TOOLBARS;
-if (!$HIDE_TOOLBARS) {
-?>
-<!-- The top navigation/search bar -->
-<?= Template('navbar') ?>
-<?php } ?>
-<!-- The logo -->
-<div align="right" id="logo"><a class="wikilink" 
-                  href="<?=WikiURL(HOME_PAGE)?>"
-                  ><img src="<?=$Theme->getImageURL('logo')?>"
-                        border="0" alt="<?=WIKI_NAME?>: <?=HOME_PAGE?>" 
-                        align="right" /></a></div>
-
-<!-- Page title -->
-<h1><?= $HEADER ?></h1>
-</div>
+<?= Template('top') ?>
 <?= $CONTENT ?>
-
-<?= $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
-
-<?php if (defined('DEBUG')) { ?><?= Template('debug') ?><?php } ?>
+<?= Template('bottom') ?>
 </body>
