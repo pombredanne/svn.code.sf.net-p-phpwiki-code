@@ -1,12 +1,19 @@
-Date: Sat, 2 Feb 2002 00:01:32 -0500
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: FuzzyPages,v 1.1 2002-02-02 05:04:37 carstenklapp Exp $
+Date: Fri, 1 Mar 2002 23:29:46 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.3-jeffs-hacks)
+X-Rcs-Id: $Id: FuzzyPages,v 1.2 2002-03-02 05:58:06 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=FuzzyPages;
   flags=PAGE_LOCKED;
+  pgsrc_version="2 $Revision: 1.2 $";
+  markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The titles of all pages are searched to find those which are similarly spelled or similar sounding (english).
+<?plugin FuzzyPages ?>
 ----
-<?plugin FuzzyPages page='[pagename]'?>
+Additional Searches:
+<?plugin-form TitleSearch?>
+<?plugin-form FullTextSearch?>
+<?plugin-form FuzzyPages?>
+----
+<?plugin IncludePage page=FindPage quiet=1 section=Tips sectionhead=1 ?>
