@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.128 2005-01-04 20:22:46 rurban Exp $');
+rcs_id('$Id: config.php,v 1.129 2005-01-08 22:53:50 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -123,7 +123,10 @@ function isBrowserSafari($version = false) {
  */
 function guessing_lang ($languages=false) {
     if (!$languages) {
+    	// make this faster
+    	$languages = array("en","de","es","fr","it","ja","zh","nl","sv");
         // ignore possible "_territory" and codeset "ja.utf8"
+        /*
         require_once("lib/Theme.php");
         $languages = listAvailableLanguages();
         if (defined('DEFAULT_LANGUAGE') and in_array(DEFAULT_LANGUAGE, $languages))
@@ -133,12 +136,18 @@ function guessing_lang ($languages=false) {
                 array_splice($languages, $i, 1);
             }
             array_unshift($languages, DEFAULT_LANGUAGE);
-            $languages = locale_versions($languages);
+            foreach ($languages as $lang) {
+                $arr = FileFinder::locale_versions($lang);
+                $languages = array_merge($languages, $arr);
+            }
         }
+        */
     }
 
     if (isset($GLOBALS['request'])) // in fixup-dynamic-config there's no request yet
         $accept = $GLOBALS['request']->get('HTTP_ACCEPT_LANGUAGE');
+    elseif (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+        $accept = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 
     if ($accept) {
         $lang_list = array();
@@ -147,13 +156,13 @@ function guessing_lang ($languages=false) {
             $pos = strchr($list[$i], ";") ;
             if ($pos === false) {
                 // No Q it is only a locale...
-                $lang_list[] = array($list[$i] => 100);
+                $lang_list[$list[$i]] = 100;
             } else {
                 // Has a Q rating        
                 $q = explode(";",$list[$i]) ;
                 $loc = $q[0] ;
                 $q = explode("=",$q[1]) ;
-                $lang_list[] = array($loc => ($q[1]*100)) ;
+                $lang_list[$loc] = $q[1]*100 ;
             }
         }
 
@@ -216,6 +225,7 @@ function guessing_setlocale ($category, $locale) {
             if (strlen($lang) > 2) { 
                 foreach ($alt as $try => $locs) {
                     if (in_array($locale, $locs) or in_array($lang, $locs)) {
+                    	//if (empty($GLOBALS['LANG'])) $GLOBALS['LANG'] = $try;
                         return $try;
                     }
                 }
@@ -255,29 +265,19 @@ function update_locale($loc) {
     if (!$loc) {
         $newlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
         if (!$newlocale) {
-            //trigger_error(sprintf(_("Can't setlocale(LC_ALL,'%s')"), $loc), E_USER_NOTICE);
-            // => LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C;LC_NUMERIC=C;LC_TIME=C
-            //$loc = setlocale(LC_CTYPE, '');  // pull locale from environment.
-            //require_once(dirname(__FILE__)."/FileFinder.php");
             $newlocale = FileFinder::_get_lang();
             list ($newlocale,) = split('_', $newlocale, 2);
-            //$GLOBALS['LANG'] = $loc;
-            //$newlocale = $loc;
-            //return false;
+        } else {
+            $loc = guessing_setlocale(LC_ALL, $newlocale);
         }
-        $loc = $newlocale;
     }
-    //if (substr($newlocale,0,2) == $loc) // don't update with C or failing setlocale
-    //if (!isset($GLOBALS['LANG'])) $GLOBALS['LANG'] = $loc;
     // Try to put new locale into environment (so any
     // programs we run will get the right locale.)
-    //
     if (!function_exists ('bindtextdomain'))  {
         // Reinitialize translation array.
         global $locale;
         $locale = array();
-        // do reinit to purge PHP's static cache
-        // [43ms]
+        // do reinit to purge PHP's static cache [43ms]
         if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok', 'reinit')) ) {
             include($lcfile);
         }
@@ -506,6 +506,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.128  2005/01/04 20:22:46  rurban
+// guess $LANG based on client
+//
 // Revision 1.127  2004/12/26 17:15:32  rurban
 // new reverse locale detection on DEFAULT_LANGUAGE="", ja default euc-jp again
 //
