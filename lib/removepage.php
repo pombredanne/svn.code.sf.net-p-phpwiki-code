@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.15 2003-02-22 21:15:54 dairiki Exp $');
+rcs_id('$Id: removepage.php,v 1.16 2003-03-07 02:50:48 dairiki Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -9,10 +9,7 @@ function RemovePage (&$request) {
     $pagelink = WikiLink($page);
 
     if ($request->getArg('cancel')) {
-        $request->redirect(WikiURL($page), false);
-        // The user probably doesn't see the rest of this.
-        $html = HTML(HTML::h2(_("Request Cancelled!")),
-                     HTML::p(fmt("Return to %s.", $pagelink)));
+        $request->redirect(WikiURL($page)); // noreturn
     }
 
     $current = $page->getCurrentRevision();
