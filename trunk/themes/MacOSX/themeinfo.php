@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.50 2003-12-01 15:16:07 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.51 2003-12-01 18:47:24 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -93,7 +93,15 @@ $Theme = new Theme_MacOSX('MacOSX');
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
-$Theme->setDefaultCSS("MacOSX", "MacOSX.css");
+
+// This should result in phpwiki-printer.css being used when
+// printing or print-previewing with style "PhpWiki" or "MacOSX" selected.
+$Theme->setDefaultCSS('MacOSX',
+                       array(''      => 'MacOSX.css',
+                             'print' => 'phpwiki-printer.css'));
+
+// This allows one to manually select "Printer" style (when browsing page)
+// to see what the printer style looks like.
 $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 $Theme->addAlternateCSS(_("Top & bottom toolbars"), 'MacOSX-topbottombars.css');
 
