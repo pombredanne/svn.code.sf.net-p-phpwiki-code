@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: userauth.php,v 1.6 2001-05-31 17:43:05 dairiki Exp $');
+<?php rcs_id('$Id: userauth.php,v 1.7 2001-07-20 17:40:12 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -136,12 +136,21 @@ class WikiUser
 
    function _get_http_authenticated_userid () {
       global $PHP_AUTH_USER, $PHP_AUTH_PW;
-
-      if (empty($PHP_AUTH_USER) || empty($PHP_AUTH_PW))
+      global $WikiNameRegexp;
+      
+      if (empty($PHP_AUTH_USER))
 	 return false;
 
-      if (($PHP_AUTH_USER != ADMIN_USER) || ($PHP_AUTH_PW != ADMIN_PASSWD))
+      if ($PHP_AUTH_USER == ADMIN_USER) {
+	 if (empty($PHP_AUTH_PW) || $PHP_AUTH_PW != ADMIN_PASSWD)
+	    return false;
+      }
+      else if (! ALLOW_BOGO_LOGIN) {
 	 return false;
+      }
+      else if (! preg_match('/\A' . $WikiNameRegexp . '\z/', $PHP_AUTH_USER)) { 	
+	 return false;
+      }
 	 
       return $PHP_AUTH_USER;
    }
@@ -163,7 +172,13 @@ class WikiUser
       header("HTTP/1.0 401 Unauthorized");
       if (ACCESS_LOG)
 	 $LogEntry->status = 401;
-      echo gettext ("You entered an invalid login or password.");
+      echo "<p>" . gettext ("You entered an invalid login or password.") . "\n";
+      if (ALLOW_BOGO_LOGIN) {
+	 echo "<p>";
+	 echo gettext ("You can log in using any valid WikiWord as a user ID.") . "\n";
+	 echo gettext ("(Any password will work, except, of course for the admin user.)") . "\n";
+      }
+      
       ExitWiki();
    }
 }

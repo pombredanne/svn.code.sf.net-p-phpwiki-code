@@ -23,7 +23,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.19 2001-07-12 03:49:05 wainstead Exp $');
+rcs_id('$Id: index.php,v 1.20 2001-07-20 17:40:12 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -59,6 +59,12 @@ define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 // PhpWiki can generate an access_log (in "NCSA combined log" format)
 // for you.  If you want one, define this to the name of the log file.
 define('ACCESS_LOG', '/tmp/wiki_access_log');
+
+
+// If ALLOW_BOGO_LOGIN is true, users are allowed to login
+// (with any/no password) using any userid which: 1) is not
+// the ADMIN_USER, 2) is a valid WikiWord (matches $WikiNameRegexp.)
+define('ALLOW_BOGO_LOGIN', true);
 
 /////////////////////////////////////////////////////////////////////
 //
