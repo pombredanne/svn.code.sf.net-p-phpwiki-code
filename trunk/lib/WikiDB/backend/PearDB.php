@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.17 2002-01-24 06:53:36 carstenklapp Exp $');
+rcs_id('$Id: PearDB.php,v 1.18 2002-01-24 20:16:48 carstenklapp Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -687,9 +687,9 @@ extends WikiDB_backend
         if (! preg_match('/^\s*"?(INSERT|UPDATE|DELETE|REPLACE|CREATE'
                          . '|DROP|ALTER|GRANT|REVOKE|LOCK|UNLOCK)\s/', $query)) {
             // Last query was not of the sort which doesn't return any data.
+            //" <--kludge for brain-dead syntax coloring
             return false;
         }
-        //" <--(kludge for dumb syntax coloring)
         
         if (! in_array('ismanip', get_class_methods('DB'))) {
             // Pear shipped with PHP 4.0.4pl1 (and before, presumably)
