@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.1 2001-09-18 19:16:23 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.2 2001-09-19 02:58:24 dairiki Exp $');
 
 require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -17,7 +17,6 @@ extends WikiDB_backend
                           . $this->_pear_error_message($dbh),
                           E_USER_ERROR);
         }
-        $this->_dbh = $dbh;
         $dbh->setErrorHandling(PEAR_ERROR_CALLBACK,
                                array($this, '_pear_error_callback'));
         $dbh->setFetchMode(DB_FETCHMODE_ASSOC);
