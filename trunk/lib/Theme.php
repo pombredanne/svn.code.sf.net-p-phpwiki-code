@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.20 2002-01-23 16:09:40 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.21 2002-01-23 16:11:57 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 require_once('lib/ButtonFactory.php');
@@ -236,7 +236,7 @@ class Theme {
 
     function _getButtonPath () {
         $button_dir = $this->file("buttons");
-        if (!is_dir($button_dir))
+        if (!file_exists($button_dir) || !is_dir($button_dir))
             return array();
 
         $path = array('buttons');
