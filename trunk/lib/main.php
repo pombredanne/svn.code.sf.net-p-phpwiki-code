@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.88 2002-11-14 22:09:46 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.89 2002-11-14 22:54:01 carstenklapp Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -670,9 +670,9 @@ function main () {
     global $request;
 
     $request = new WikiRequest();
-    $request->initializeTheme();
     $request->updateAuthAndPrefs();
     $request->initializeLang();
+    $request->initializeTheme();
     
     /* FIXME: is this needed anymore?
         if (USE_PATH_INFO && ! $request->get('PATH_INFO')
