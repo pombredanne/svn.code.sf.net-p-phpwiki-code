@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.16 2005-01-18 20:55:48 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.17 2005-02-07 15:41:29 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -22,6 +22,13 @@ extends WikiDB_backend_PearDB
                 // Older MySQL's don't have CASE WHEN ... END
                 $this->_expressions['maxmajor'] = "MAX(IF(minor_edit=0,version,0))";
                 $this->_expressions['maxminor'] = "MAX(IF(minor_edit<>0,version,0))";
+            }
+            if ($this->_serverinfo['version'] > 401.0) {
+                global $charset;
+                //http://dev.mysql.com/doc/mysql/en/charset-connection.html
+                //SET NAMES 'latin1'
+                mysql_query("SET NAMES '$charset'");
+                //"SET CHARACTER SET latin1" for the default database.
             }
         }
     }
