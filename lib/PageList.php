@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.17 2002-01-22 15:36:42 dairiki Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.18 2002-01-23 05:18:10 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -107,7 +107,8 @@ class _PageList_Column_pagename extends _PageList_Column_base {
     }
     
     function _getValue ($page_handle, &$revision_handle) {
-        return LinkExistingWikiWord($page_handle->getName());
+        global $Theme;
+        return $Theme->LinkExistingWikiWord($page_handle->getName());
     }
 };
 
