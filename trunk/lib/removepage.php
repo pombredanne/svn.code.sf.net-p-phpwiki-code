@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.14 2003-02-21 04:16:51 dairiki Exp $');
+rcs_id('$Id: removepage.php,v 1.15 2003-02-22 21:15:54 dairiki Exp $');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {
@@ -26,13 +26,11 @@ function RemovePage (&$request) {
 
         $html = HTML(HTML::h2(fmt("You are about to remove '%s' permanently!", $pagelink)),
                      HTML::form(array('method' => 'post',
-                                      'action' => WikiURL($page)),
-                                HTML::input(array('type' => 'hidden',
-                                                  'name' => 'currentversion',
-                                                  'value' => $version)),
-                                HTML::input(array('type' => 'hidden',
-                                                  'name' => 'action',
-                                                  'value' => 'remove')),
+                                      'action' => $request->getPostURL()),
+                                HiddenInputs(array('currentversion' => $version,
+                                                   'pagename' => $page->getName(),
+                                                   'action' => 'remove')),
+                                
                                 HTML::div(array('class' => 'toolbar'),
                                           $removeB,
                                           $Theme->getButtonSeparator(),
