@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.100 2002-02-07 21:17:26 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.101 2002-02-07 23:23:26 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -12,7 +12,8 @@
     LinkPhpwikiURL($url, $text)
     LinkBracketLink($bracketlink)
     ExtractWikiPageLinks($content)
-
+    ConvertOldMarkup($content)
+    
     class Stack { push($item), pop(), cnt(), top() }
 
     split_pagename ($page)
@@ -304,6 +305,66 @@ function ExtractWikiPageLinks($content) {
 }      
 
 /**
+ * Convert old page markup to new-style markup.
+ *
+ * @param $text string Old-style wiki markup.
+ *
+ * @return string New-style wiki markup.
+ *
+ * @bugs FIXME: footnotes and old-style tables are known to be broken.
+ */
+function ConvertOldMarkup ($text) {
+    // PHPism: defining this function here, doesn't really make
+    // it function local, but it should.
+    function _ConvertOldListMarkup ($indent, $bullet) {
+        $indent = str_repeat('     ', strlen($indent));
+        if ($bullet[0] == ';') {
+            $term = ltrim(substr($bullet, 1));
+            return $indent . $term . "\n" . $indent . '     ';
+        }
+        else
+            return $indent . $bullet . ' ';
+    }
+    
+    /*****************************************************************
+     * Conversions for inline markup:
+     */
+
+    // escape tilde's
+    $orig[] = '/~/';
+    $repl[] = '~~';
+
+    // escape escaped brackets
+    $orig[] = '/\[\[/';
+    $repl[] = '~[';
+
+    // change ! escapes to ~'s.
+    global $AllowedProtocols, $WikiNameRegexp, $request;
+    include_once('lib/interwiki.php');
+    $map = InterWikiMap::GetMap($request);
+    $bang_esc[] = "(?:$AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
+    $bang_esc[] = $map->getRegexp() . ":[^\\s.,;?()]+"; // FIXME: is this really needed?
+    $bang_esc[] = $WikiNameRegexp;
+    $orig[] = '/!((?:' . join(')|(', $bang_esc) . '))/';
+    $repl[] = '~\\1';
+
+    
+    /*****************************************************************
+     * Conversions for block markup
+     */
+    // convert indented blocks to <pre></pre>.
+    $orig[] = '/^[ \t]+\S.*\n(?:(?:\s*\n)?^[ \t]+\S.*\n)*/m';
+    $repl[] = "<pre>\n\\0</pre>\n";
+
+    // convert lists
+    $orig[] = '/^([#*;]*)([*#]|;.*?:) */me';
+    $repl[] = "_ConvertOldListMarkup('\\1', '\\2')";
+    
+    return preg_replace($orig, $repl, $text);
+}
+
+
+/**
  * Split WikiWords in page names.
  *
  * It has been deemed useful to split WikiWords (into "Wiki Words") in
@@ -436,7 +497,7 @@ function Rfc2822DateTime ($time = false) {
  * Format time to standard 'ctime' format.
  *
  * @param $time time_t Time.  Default: now.
- * @return string Date and time in RFC-2822 format.
+ * @return string Date and time.
  */
 function CTime ($time = false)
 {
