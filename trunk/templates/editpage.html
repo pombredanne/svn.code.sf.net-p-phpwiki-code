@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.48 2002-01-12 06:00:56 carstenklapp Exp $
+$Id: editpage.html,v 1.49 2002-01-15 16:44:19 dairiki Exp $
 ${RCS_IDS}
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
@@ -72,5 +72,6 @@ ${EDIT_WARNINGS}
 <input type="hidden" name="editversion" value="$FORMVARS[editversion]" />
 <input type="hidden" name="version" value="$FORMVARS[version]" />
 </form>
+<?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML(); ?>
 </body>
 </html>

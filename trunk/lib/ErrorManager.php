@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.8 2002-01-13 18:43:19 dairiki Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.9 2002-01-15 16:44:19 dairiki Exp $');
 
 
 define ('EM_FATAL_ERRORS',
@@ -66,6 +66,27 @@ class ErrorManager
         $this->_flush_errors();
     }
 
+    /**
+     * Get postponed errors, formatted as HTML.
+     *
+     * This also flushes the postponed error queue.
+     *
+     * @return string HTML describing any queued errors. 
+     */
+    function getPostponedErrorsAsHTML() {
+        ob_start();
+        $this->flushPostponedErrors();
+        $html = ob_get_contents();
+        ob_end_clean();
+
+        if (!$html)
+            return false;
+        
+        return Element('div', array('class' => 'errors'),
+                       QElement('h4', _("PHP Warnings"))
+                       . $html);
+    }
+    
     /**
      * Push a custom error handler on the handler stack.
      *
