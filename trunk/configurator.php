@@ -1,5 +1,7 @@
 <?php 
 $tdwidth = 700;
+$config_file = 'index-user.php';
+$fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : "/") . $config_file;
 if ($HTTP_POST_VARS['create'])  header('Location: configurator.php?create=1#create');
 printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1'); 
 ?>
@@ -7,14 +9,16 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.6 2002-09-08 21:22:11 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.7 2002-09-15 16:17:37 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki 1.3.x</title>
-<STYLE TYPE="text/css" MEDIA="screen">
+<style type="text/css" media="screen">
 <!--
 /* TABLE { border: thin solid black } */
-TD { border: thin solid black }
-TR { border: none }
+body { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 80%; }
+pre { font-size: 120%; }
+td { border: thin solid black }
+tr { border: none }
 td.part { background-color: #eeaaaa; }
 td.full_instructions { background-color: #eeeeee; }
 td.instructions { background-color: #ffffee; width: <?php echo $tdwidth ?>; }
@@ -23,6 +27,50 @@ td.unchangeable_variable_left  { top-bottom: none; background-color: #eeeeee; }
 /* td.unchangeable_variable_right { top-bottom: none; background-color: #ffffff; } */
 -->
 </style>
+<script language="JavaScript" type="text/javascript">
+<!--
+function update(accepted, error, value, output) {
+  if (accepted) {
+    document.getElementById(output).innerHTML = "<font color=\"green\">Input accepted.</font>";
+  } else {
+    while ((index = error.indexOf("%s")) > -1) {
+      error = error.substring(0, index) + value + error.substring(index+2);
+    }
+    document.getElementById(output).innerHTML = "<font color=\"red\">" + error + "</font>";
+  }
+}
+
+function validate(error, value, output, field) {
+  update(field.value == value, error, field.value, output);
+}
+
+function validate_ereg(error, ereg, output, field) {
+  regex = new RegExp(ereg);
+  update(regex.test(field.value), error, field.value, output);
+}
+
+function validate_range(error, low, high, empty_ok, output, field) {
+  update((empty_ok == 1 && field.value == "") ||
+         (field.value >= low && field.value <= high),
+         error, field.value, output);
+}
+
+function toggle_group(id) {
+  group = document.getElementById(id);
+  text = document.getElementById(id + "_text");
+  input = document.getElementById(id + "_input");
+  if (group.style.display == "none") {
+    text.innerHTML = "Hide options.";
+    group.style.display = "block";
+    input.value = 1;
+  } else {
+    text.innerHTML = "Show options.";
+    group.style.display = "none";
+    input.value = 0;
+  }
+}
+-->
+</script>
 </head>
 <body>
 
@@ -181,7 +229,7 @@ $properties["Part Null Settings"] =
 new unchangeable_variable('_partnullsettings', "
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require \"lib/prepend.php\";
-rcs_id('\$Id: configurator.php,v 1.6 2002-09-08 21:22:11 rurban Exp $');", "");
+rcs_id('\$Id: configurator.php,v 1.7 2002-09-15 16:17:37 rurban Exp $');", "");
 
 
 $properties["Part One"] =
@@ -412,7 +460,7 @@ $dsn_sqldbname = $properties["SQL Database Name"]->value();
 
 $properties["SQL dsn"] =
 new unchangeable_variable("DBParams['dsn']", 
-  "\$DBParams['dsn'] = \"\$dsn_sqltype://$dsn_sqluser:$dsn_sqlpass@$dsn_sqlhostorsock/$dsn_sqldbname\";", "");
+  "\$DBParams['dsn'] = \"\$_dsn_sqltype://{$dsn_sqluser}:{$dsn_sqlpass}@{$dsn_sqlhostorsock}/{$dsn_sqldbname}\";", "");
 
 $properties["dba directory"] =
 new _variable("DBParams|directory", "/tmp", "
@@ -987,10 +1035,10 @@ class _variable {
     function get_config_item_header() {
        if (strchr($this->config_item_name,'|')) {
           list($var,$param) = explode('|',$this->config_item_name);
-	  return "<b>" . $this->prefix . $var . "['" . $param . "']</b><br/ >";
+	  return "<b>" . $this->prefix . $var . "['" . $param . "']</b><br />";
        }
        elseif ($this->config_item_name[0] != '_')
-	  return "<b>" . $this->prefix . $this->config_item_name . "</b><br/ >";
+	  return "<b>" . $this->prefix . $this->config_item_name . "</b><br />";
        else 
           return '';
     }
@@ -1010,13 +1058,14 @@ class _variable {
     }
 
     function get_instructions($title) {
+        global $tdwidth;
         $i = "<p><b><h3>" . $title . "</h3></b></p>\n    " . nl2p($this->_get_description()) . "\n";
         return "<tr>\n<td width=\"$tdwidth\" class=\"instructions\">\n" . $i . "</td>\n";
     }
 
     function get_html() {
 	return $this->get_config_item_header() . 
-	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">";
+	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" />";
     }
 }
 
@@ -1098,7 +1147,7 @@ extends _variable {
     }
     function get_html() {
 	return $this->get_config_item_header() . 
-	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">";
+	    "<input type=\"text\" size=\"50\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" />";
     }
 }
 
@@ -1148,8 +1197,8 @@ extends _variable {
 
 class numeric_define_commented
 extends _define {
-    function _config_format($value) {
-        return sprintf("define('%s', %s);", $this->get_config_item_name(), $value);
+    function get_html() {
+	return numeric_define::get_html();
     }
     function _get_config_line($posted_value) {
         if ($this->description)
@@ -1249,8 +1298,8 @@ extends _variable {
     function get_html() {
 	global $HTTP_POST_VARS, $HTTP_GET_VARS;
 	$s = $this->get_config_item_header();
-        $s .= "<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\">" . 
-"&nbsp;&nbsp;<input type=\"submit\" name=\"create\" value=\"Create Password\">";
+        $s .= "<input type=\"password\" name=\"" . $this->get_config_item_name() . "\" value=\"" . $this->default_value . "\" />" . 
+"&nbsp;&nbsp;<input type=\"submit\" name=\"create\" value=\"Create Password\" />";
         if ($HTTP_POST_VARS['create'] or $HTTP_GET_VARS['create']) {
 	    $new_password = random_good_password();
 	    $this->default_value = $new_password;
@@ -1264,6 +1313,10 @@ class numeric_define
 extends _define {
     function _config_format($value) {
         return sprintf("define('%s', %s);", $this->get_config_item_name(), $value);
+    }
+    function get_html() {
+	$ori = _define::get_html();
+	return substr($ori,0,-2) . " onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);" . '" />';
     }
     function _get_config_line($posted_value) {
         if ($this->description)
@@ -1403,8 +1456,13 @@ extends _variable {
         return "\n".$SEPARATOR . str_replace("\n", "\n// ", $d) ."\n$this->default_value";
     }
     function get_instructions($title) {
-        $i = "<p><b><h2>" . $title . "</h2></b></p>\n    " . nl2p($this->_get_description()) ."\n";
-        return "<tr>\n<td class=\"part\" width=\"100%\" colspan=\"2\" bgcolor=\"#eeaaaa\">\n" .$i ."</td></tr>\n";
+	$group_name = preg_replace("/\W/","",$title);
+	$i = "<tr>\n<td class=\"part\" width=\"100%\" colspan=\"2\" bgcolor=\"#eeaaaa\">\n";
+	if ($group_name == 'PartZero') $i = "</dl>" . $i;
+        $i .= "<p><b><h2>" . $title . "</h2></b></p>\n    " . nl2p($this->_get_description()) ."\n";
+	$i .= "<input id=\"{$group_name}_input\" type=\"hidden\" name=\"$group_name\" value=\"0\" />";
+	$i .= "<p><a href=\"javascript:toggle_group('$group_name')\" id=\"{$group_name}_text\">Show options.</a></p>";
+        return  $i ."</td></tr>\n" . "<dl id=\"$group_name\" style=\"display: none\">";
     }
     function get_html() {
         return "";
@@ -1514,7 +1572,7 @@ function printArray($a) {
 /////////////////////////////
 // begin auto generation code
 
-if ($action == 'make_config') {
+if ($HTTP_POST_VARS['action'] == 'make_config') {
 
     $timestamp = date ('dS of F, Y H:i:s');
 
@@ -1548,24 +1606,25 @@ You can't use this file with your PhpWiki server yet!!";
     $config .= $end;
 
     /* We first check if the config-file exists. */
-    if (file_exists('settings.php')) {
+    if (file_exists($fs_config_file)) {
         /* We make a backup copy of the file */
-        $new_filename = 'settings.' . time() . '.php';
-        if (@copy('settings.php', $new_filename)) {
-            $fp = @fopen('settings.php', 'w');
+	// $config_file = 'index-user.php';
+        $new_filename = preg_replace('/\.php$/', time() . '.php', $fs_config_file);
+        if (@copy($fs_config_file, $new_filename)) {
+            $fp = @fopen($fs_config_file, 'w');
         }
     } else {
-        $fp = @fopen('settings.php', 'w');
+        $fp = @fopen($fs_config_file, 'w');
     }
 
     if ($fp) {
         fputs($fp, $config);
         fclose($fp);
-        echo "<p>The configuration was written to <code><b>settings.php</b></code>.</p>\n";
+        echo "<p>The configuration was written to <code><b>$config_file</b></code>.</p>\n";
         if ($new_filename) {
             echo "<p>A backup was made to <code><b>$new_filename</b></code>.</p>\n";
         }
-        echo "<p><strong>You must rename or copy this</strong> <code><b>settings.php</b></code> <strong>file to</strong> <code><b>index.php</b></code>.</p>\n";
+        echo "<p><strong>You must rename or copy this</strong> <code><b>$config_file</b></code> <strong>file to</strong> <code><b>index.php</b></code>.</p>\n";
     } else {
         echo "<p>A configuration file could <b>not</b> be written. You should copy the above configuration to a file, and manually save it as <code><b>index.php</b></code>.</p>\n";
     }
@@ -1581,7 +1640,7 @@ You can't use this file with your PhpWiki server yet!!";
     /* No action has been specified - we make a form. */
 
     echo '
-<form action="configurator.php" method="post">
+<form action="configurator.php" method="POST">
 <table cellpadding="4" cellspacing="0">
   <input type="hidden" name="action" value="make_config">
 ';
@@ -1596,8 +1655,8 @@ You can't use this file with your PhpWiki server yet!!";
     }
 
     echo '
-</table>
-<p><input type="submit" value="Save settings.php"> <input type="reset" value="Clear"></p>
+</dl></table>
+<p><input type="submit" value="Save ',$config_file,'"> <input type="reset" value="Clear"></p>
 </form>
 ';
 }
