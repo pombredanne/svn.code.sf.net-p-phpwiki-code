@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.64 2005-02-28 17:35:44 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.65 2005-03-27 18:24:17 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -810,6 +810,8 @@ function TransformLinks($text, $markup = 2.0, $basepage = false) {
     }
     return $trfm->parse($text);
 }
+
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:
