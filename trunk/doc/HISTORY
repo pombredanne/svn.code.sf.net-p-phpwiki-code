@@ -1,4 +1,105 @@
-1.3.8 Jan-Mar 2004, Reini Urban:
+1.3.10 May, 13 2004, Reini Urban, Joby Walker:
+
+In short: paging support, adodb rewrite, permission problem fixed.
+
+fixes:
+* fixed severe permission problem:
+  Default permissions not honored. Everybody was able to edit.
+* set UserPreferences for bool and int fixed
+* POP3 auth
+* dba open problems improved, but not generally fixed
+* fixed dba session reading, but still broken
+* support wikiword links and image links in RichTable content,
+  backlinks still not working.
+* fixed navbar links in theme smaller, and made them default
+* fixed loading of localized pagenames on action=upgrade
+* fixed interwiki.map loading on certain PrettyWiki setups
+* re-enabled php-4.0.6 support (broken since 1.3.8: superglobals, array_key_exists),
+  4.0.4-pl1 and 4.0.5 do work, but not stable enough.
+* fix running phpwiki in "http://server/" (empty DATA_PATH)
+* fix PhpWiki:PrettyWiki detection: starter script includes index.php,
+  and include main.php by its own to override certain config values.
+* fix WikiAdminRemove arguments passed from WikiAdminSelect,
+  WikiAdminRemove deleted too many args if passed from WikiAdminSelect
+* session transportation improved, no db objects stored
+* PageGroup support for [links] and subpages
+* HttpClient fixes for older php's
+* RssFeed for allow_url_fopen=false, IMAGE support, empty ITEM list
+* Theme buttons are now also searched in the default theme
+* numerous other minor bugfixes.
+
+changes:
+* ADODB update from ancient mysql-only, to 4.21 with all supported databases.
+  transaction support, with mysql locking-workarounds
+* pear not in our include_path anymore: either use your pear or our pear, 
+  by adding it to your include_path or not. use now 1:1 copies of pear libs.
+* CreateToc parses now headers with links and formatting optionally, if 
+  TOC_FULL_SYNTAX is defined
+* PageChangeNotification: userids, not emails are printed
+* default theme navbar consistency: linkButtons instead of action buttons
+* _~WikiTranslation what=buttons, noT=1, nolinks=1
+* ~SetupWiki (virgin setup) also loads all mandatory pages now 
+  and overwrites ReleaseNotes
+* PageChangeNotification changed subject to "[WikiName] Page change %s",
+  update your filters accordingly
+* action=upgrade now linked in PhpWikiAdministration, 
+  db: fix page.id auto_increment and ADD session.sess_ip
+* some internal InlineParser optimization
+* DBAuthParam statement syntax change: variables now like '$userid'
+
+new:
+* new ini-style config instead of old index.php, by Joby Walker
+* paging support for pagelists longer than limit
+* PopularNearby plugin: same as the classic most popular footer
+* formatted single-line plugins supported
+* RelatedChanges plugin: only those which are links at the current page
+* new GoogleLink pref: add "[G]" lookup on unknown links
+* added chinese language support, by Yan-ren Tsai (druryl)
+* added missing MacOSX buttons, by Carsten Klapp.
+* new Crao theme from http://wiki.crao.net, by Arnaud Fontaine and Laurent Lunati
+
+1.3.9-p1 May,5 2004, Reini Urban:
+
+Bugfix patch for the following 1.3.9 problems:
+
+* Default permissions not honored. Everybody was able to edit.
+* set UserPreferences for bool and int fixed
+* dba open problems improved
+* session transportation improved, no db objects stored
+* php-4.0.6 support re-enabled (superglobals, array_key_exists)
+* WikiAdminRemove deleted too many if args passed from WikiAdminSelect
+* PageGroup support for [links] and subpages
+* disabled default dba sessions, broken!
+* HttpClient fixes for older php's
+* RssFeed for allow_url_fopen=false, IMAGE support, empty ITEM list
+
+1.2.4 (the old-stable version) May, 4 2004, Reini Urban:
+* improves possible deadlocks in DBA, 
+* fixes problems with DBA open failures.
+
+1.2.3 (the old-stable version) Apr, 29 2004, Reini Urban:
+* added the most popular footer for dba
+* added remove for dba
+* fixed a warning on info page
+
+1.3.9 Apr, 12 2004, Reini Urban:
+
+Bugfix release for the following 1.3.8 problems:
+
+* syntax errors in lib/plugin/UpLoad.php
+* syntax errors in lib/plugin/WikiAdminRemove.php
+* syntax error in schemas/mysql.sql
+* several path issues (cannot findfile...), which were caused 
+  by a chdir for bindtextdomain in lib/config.php.
+    Failed opening required 'lib/stdlib.php', 
+    templates/html.tmpl: not found, and more
+* added self-registration for DbPassUser
+* added GoTo plugin, RateIt action page
+
+1.3.8 Jan-Apr 2004, Reini Urban:
+
+External plugable authentification, DB prefs and sessions, 
+some more fixes, docs, themes and plugins.
 
 * new WikiUserNew class (after a kick in the ass by Carsten Klapp), 
   with new Preferences (finally from DB), and improved DB_Session (+ ADODB support)
@@ -382,4 +483,4 @@ URL's.
 Prior to 0.02, there were no numbered releases, and in fact there
 was only one release, so I guess that would be 0.01 :-)
 
-$Id: HISTORY,v 1.7 2004-03-20 17:02:19 rurban Exp $
+$Id: HISTORY,v 1.8 2004-05-13 13:48:34 rurban Exp $

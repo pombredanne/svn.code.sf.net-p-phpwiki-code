@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.95 2004-05-13 12:10:50 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.96 2004-05-13 13:48:34 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -990,7 +990,7 @@ class Theme {
     }
 
     /**
-        * @return string HTML for CSS.
+     * @return string HTML for CSS.
      */
     function getCSS () {
         $css = array();

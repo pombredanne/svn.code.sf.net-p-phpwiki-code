@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.17 2004-05-08 19:55:29 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.18 2004-05-13 13:48:34 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -308,7 +308,8 @@ class Cached_WikiLink extends Cached_Link {
 	$label = isset($this->_label) ? $this->_label : false;
 	$anchor = isset($this->_anchor) ? (string)$this->_anchor : '';
         $page = new WikiPageName($this->_page, $basepage, $anchor);
-	return WikiLink($page, 'auto', $label);
+        if ($page->isValid()) return WikiLink($page, 'auto', $label);
+	else return HTML($label);
     }
 
     function asXml() {
