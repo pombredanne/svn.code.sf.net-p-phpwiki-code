@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.25 2003-02-15 02:48:48 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.26 2003-02-24 22:06:18 dairiki Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -13,10 +13,18 @@ $Theme = new Theme('default');
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
 
-$Theme->setDefaultCSS('PhpWiki', 'phpwiki.css');
-$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print');
+// This should result in phpwiki-printer.css being used when
+// printing or print-previewing with style "PhpWiki" selected.
+$Theme->setDefaultCSS('PhpWiki',
+                      array(''		=> 'phpwiki.css',
+                            'print'	=> 'phpwiki-printer.css'));
+
+// This allows one to manually select "Printer" style (when browsing page)
+// to see what the printer style looks like.
+//$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css');
 $Theme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+
 
 /**
  * The logo image appears on every page and links to the HomePage.

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.63 2003-02-23 03:37:05 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.64 2003-02-24 22:06:14 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -168,6 +168,8 @@ class Theme {
 
         if ($theme_name != 'default')
             $this->_default_theme = new Theme;
+
+        $this->_css = array();
     }
 
     function file ($file) {
@@ -780,46 +782,116 @@ class Theme {
     //
     // CSS
     //
+    // Notes:
+    //
+    // Based on testing with Galeon 1.2.7 (Mozilla 1.2):
+    // Automatic media-based style selection (via <link> tags) only
+    // seems to work for the default style, not for alternate styles.
+    //
+    // Doing
+    //
+    //  <link rel="stylesheet" type="text/css" href="phpwiki.css" />
+    //  <link rel="stylesheet" type="text/css" href="phpwiki-printer.css" media="print" />
+    //
+    // works to make it so that the printer style sheet get used
+    // automatically when printing (or print-previewing) a page
+    // (but when only when the default style is selected.)
+    //
+    // Attempts like:
+    //
+    //  <link rel="alternate stylesheet" title="Modern"
+    //        type="text/css" href="phpwiki-modern.css" />
+    //  <link rel="alternate stylesheet" title="Modern"
+    //        type="text/css" href="phpwiki-printer.css" media="print" />
+    //
+    // Result in two "Modern" choices when trying to select alternate style.
+    // If one selects the first of those choices, one gets phpwiki-modern
+    // both when browsing and printing.  If one selects the second "Modern",
+    // one gets no CSS when browsing, and phpwiki-printer when printing.
+    //
+    // The Real Fix?
+    // =============
+    //
+    // We should probably move to doing the media based style
+    // switching in the CSS files themselves using, e.g.:
+    //
+    //  @import url(print.css) print;
+    //
     ////////////////////////////////////////////////////////////////
 
     function _CSSlink($title, $css_file, $media, $is_alt = false) {
+        // Don't set title on default style.  This makes it clear to
+        // the user which is the default (i.e. most supported) style.
         $link = HTML::link(array('rel'     => $is_alt ? 'alternate stylesheet' : 'stylesheet',
-                                 'title'   => $title,
                                  'type'    => 'text/css',
                                  'charset' => CHARSET,
                                  'href'    => $this->_findData($css_file)));
-        if ($media)
+        if ($is_alt)
+            $link->setAttr('title', $title);
+
+        if ($media) 
             $link->setAttr('media', $media);
+        
         return $link;
     }
 
-    function setDefaultCSS ($title, $css_file, $media = false) {
-        if (isset($this->_defaultCSS)) {
-            $oldtitle = $this->_defaultCSS->getAttr('title');
-            $error = sprintf("'%s' -> '%s'", $oldtitle, $title);
-            trigger_error(sprintf(_("Redefinition of %s: %s"), "'default CSS'", $error),
-                          E_USER_NOTICE);
-        }
-        if (isset($this->_alternateCSS))
-            unset($this->_alternateCSS[$title]);
-        $this->_defaultCSS = $this->_CSSlink($title, $css_file, $media);
+    /** Set default CSS source for this theme.
+     *
+     * To set styles to be used for different media, pass a
+     * hash for the second argument, e.g.
+     *
+     * $theme->setDefaultCSS('default', array('' => 'normal.css',
+     *                                        'print' => 'printer.css'));
+     *
+     * If you call this more than once, the last one called takes
+     * precedence as the default style.
+     *
+     * @param string $title Name of style (currently ignored, unless
+     * you call this more than once, in which case, some of the style
+     * will become alternate (rather than default) styles, and then their
+     * titles will be used.
+     *
+     * @param mixed $css_files Name of CSS file, or hash containing a mapping
+     * between media types and CSS file names.  Use a key of '' (the empty string)
+     * to set the default CSS for non-specified media.  (See above for an example.)
+     */
+    function setDefaultCSS ($title, $css_files) {
+        if (!is_array($css_files))
+            $css_files = array('' => $css_files);
+        // Add to the front of $this->_css
+        unset($this->_css[$title]);
+        $this->_css = array_merge(array($title => $css_files), $this->_css);
     }
 
-    function addAlternateCSS ($title, $css_file, $media = false) {
-        $this->_alternateCSS[$title] = $this->_CSSlink($title, $css_file, $media, true);
+    /** Set alternate CSS source for this theme.
+     *
+     * @param string $title Name of style.
+     * @param string $css_files Name of CSS file.
+     */
+    function addAlternateCSS ($title, $css_files) {
+        if (!is_array($css_files))
+            $css_files = array('' => $css_files);
+        $this->_css[$title] = $css_files;
     }
 
     /**
         * @return string HTML for CSS.
      */
     function getCSS () {
-        $meta = HTML::meta(array('http-equiv' => 'Default-Style',
-                                 'content' => $this->_defaultCSS->getAttr('title')));
-        $css = HTML($meta, $this->_defaultCSS);
-        if (!empty($this->_alternateCSS))
-            $css->pushContent($this->_alternateCSS);
-        return $css;
+        $css = array();
+        $is_alt = false;
+        foreach ($this->_css as $title => $css_files) {
+            aksort($css_files); // move $css_files[''] to front.
+            foreach ($css_files as $media => $css_file) {
+                $css[] = $this->_CSSlink($title, $css_file, $media, $is_alt);
+                if ($is_alt) break;
+                
+            }
+            $is_alt = true;
+        }
+        return HTML($css);
     }
+    
 
     function findTemplate ($name) {
         return $this->_path . $this->_findFile("templates/$name.tmpl");
@@ -928,6 +1000,9 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2003/02/23 03:37:05  dairiki
+// Stupid typo/bug fix.
+//
 // Revision 1.62  2003/02/21 04:14:52  dairiki
 // New WikiLink type 'if_known'.  This gives linkified name if page
 // exists, otherwise, just plain text.
