@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.45 2002-02-23 07:01:56 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.46 2002-02-26 21:58:49 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -34,6 +34,9 @@ class PageEditor
             $this->_initializeState();
             $this->_initialEdit = true;
         }
+
+        header("Content-Type: text/html; charset=" . CHARSET);
+        header("Last-Modified: ".Rfc2822DateTime($this->selected->get('mtime')));
     }
 
     function editPage () {
