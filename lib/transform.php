@@ -1,16 +1,34 @@
-<!-- $Id: transform.php,v 1.4 2000-10-24 10:32:37 ahollosi Exp $ -->
+<!-- $Id: transform.php,v 1.5 2000-10-25 14:45:53 ahollosi Exp $ -->
 <?php
    // expects $pagehash and $html to be set
 
-   // Set up inline links and images
+
+   function tokenize($str, $pattern, &$orig, &$ntokens) {
+      global $FieldSeparator;
+      // Find any strings in $str that match $pattern and
+      // store them in $tokens[], replacing them with a token
+      // replaced strings are stored in $orig
+      $new = "";      
+      while (preg_match("/^(.*?)($pattern)/", $str, $matches)) {
+         $linktoken = $FieldSeparator . $FieldSeparator . ($ntokens++) . $FieldSeparator;
+         $new .= $matches[1] . $linktoken;
+	 $orig[] = $matches[2];
+         $str = substr($str, strlen($matches[0]));
+      }
+      $new .= $str;
+      return $new;
+   }
+
+
+   // Prepare replacements for references [\d+]
    for ($i = 1; $i < (NUM_LINKS + 1); $i++) {
       if (! empty($pagehash['refs'][$i])) {
-         if (preg_match("/png$/i", $pagehash['refs'][$i])) {
-            // embed PNG images
-            $embedded[$i] = "<img src='" . $pagehash['refs'][$i] . "'>";
+         if (preg_match("/($InlineImages)$/i", $pagehash['refs'][$i])) {
+            // embed images
+            $embedded[$i] = LinkImage($pagehash['refs'][$i]);
          } else {
-            // ordinary embedded link
-            $embedded[$i] = "<a href='" . $pagehash['refs'][$i] . "'>[$i]</a>";
+            // ordinary link
+            $embedded[$i] = "<a href=\"" . $pagehash['refs'][$i] . "\">[$i]</a>";
          }
       }
    }
@@ -23,12 +41,12 @@
    $most_popular_list = RenderMostPopular();
 
 
-
    // Loop over all lines of the page and apply transformation rules
    for ($index = 0; $index < $numlines; $index++) {
       unset($tokens);
       unset($replacements);
       $ntokens = 0;
+      $replacements = array();
       
       $tmpline = $pagehash["content"][$index];
 
@@ -54,156 +72,87 @@ your web server it is highly advised that you do not allow this.
       //////////////////////////////////////////////////////////
       // New linking scheme: links are in brackets. This will
       // emulate typical HTML linking as well as Wiki linking.
+	
+      // First need to protect [[. 
+      $oldn = $ntokens;
+      $tmpline = tokenize($tmpline, "\[\[", $replacements, $ntokens);
+      while ($oldn < $ntokens)
+         $replacements[$oldn++] = "[";
 
-      // match anything between brackets except only numbers
-      // trying: 
-      $numBracketLinks = preg_match_all("/\[.+?\]/", $tmpline, $brktlinks);
-      /* On 12 Jul,2000 Jeff <dairiki@dairiki.org> adds:
-       *
-       * Simple sorting doesnt work, since (in ASCII) '[' comes between
-       * the upper- and lower-case characters.
-       *
-       * Using sort "[[Link] [Link]" will come out wrong, using
-       * rsort "[[link] [link]" will come out wrong.
-       * (An appropriate usort would work.)
-       *
-       * I've added a look-behind assertion to the preg_replace which,
-       * I think, fixes the problem.  I only hope that all PHP versions
-       * support look-behind assertions....
-      // sort instead of rsort or "[[link] [link]" will be rendered wrong.
-      sort($brktlinks[0]);
-      reset($brktlinks[0]);
-       */
+      // Now process the [\d+] links which are numeric references	
+      $oldn = $ntokens;
+      $tmpline = tokenize($tmpline, "\[\s*\d+\s*\]", $replacements ,$ntokens);
+      while ($oldn < $ntokens) {
+	 $num = (int)substr($replacements[$oldn], 1);
+         if (! empty($embedded[$num]))
+            $replacements[$oldn] = $embedded[$num];
+	 $oldn++;
+      }
 
-      for ($i = 0; $i < $numBracketLinks; $i++) {
-         $brktlink = preg_quote($brktlinks[0][$i]);
-         $linktoken = $FieldSeparator . $FieldSeparator . ++$ntokens . $FieldSeparator;
-	 /* PS:
-	  * If you're wondering about the double $FieldSeparator,
-	  * consider what happens to (the admittedly sick):
-	  *   "[Link1] [Link2]1[Link3]"
-	  *
-	  * Answer: without the double field separator, it gets
-	  *  tokenized to "%1% %2%1%3%" (using % to represent $FieldSeparator),
-	  *  which will get munged as soon as '%1%' is substituted with it's
-	  *  final value.
-	  */
-         $tmpline = preg_replace("|(?<!\[)$brktlink|",
-                                 $linktoken,
-                                 $tmpline);
-
-	 $tokens[] = $linktoken;
-	 $link = ParseAndLink($brktlinks[0][$i]);
-         $replacements[] = $link['link'];
+      // match anything else between brackets 
+      $oldn = $ntokens;
+      $tmpline = tokenize($tmpline, "\[.+?\]", $replacements, $ntokens);
+      while ($oldn < $ntokens) {
+	$link = ParseAndLink($replacements[$oldn]);	
+	$replacements[$oldn] = $link['link'];
+	$oldn++;
       }
 
       //////////////////////////////////////////////////////////
       // replace all URL's with tokens, so we don't confuse them
       // with Wiki words later. Wiki words in URL's break things.
 
-      $hasURLs = preg_match_all("/\b($AllowedProtocols):[^\s\<\>\[\]\"'\(\)]*[^\s\<\>\[\]\"'\(\)\,\.\?]/", $tmpline, $urls);
+      $tmpline = tokenize($tmpline, "\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]", $replacements, $ntokens);
+      while ($oldn < $ntokens) {
+	$replacements[$oldn] = LinkURL($replacements[$oldn]);
+        $oldn++;
+      }
 
-      // have to sort, otherwise errors creep in when the domain appears
-      // in two consecutive URL's on the same line, but the second is
-      // longer e.g. http://c2.com followed by http://c2.com/wiki 
-      rsort($urls[0]);
-      reset($urls[0]);
+      //////////////////////////////////////////////////////////
+      // Link Wiki words
+      // Wikiwords preceeded by a '!' are not linked
 
-      for ($i = 0; $i < $hasURLs; $i++) {
-         $inplaceURL = preg_quote($urls[0][$i]);
-         $URLtoken = $FieldSeparator . $FieldSeparator . ++$ntokens . $FieldSeparator;
-         $tmpline = preg_replace("|$inplaceURL|",
-                                 $URLtoken,
-                                 $tmpline);
-
-	 $tokens[] = $URLtoken;
-         $replacements[] = LinkURL($urls[0][$i]);
+      $oldn = $ntokens;
+      $tmpline = tokenize($tmpline, "!?$WikiNameRegexp", $replacements, $ntokens);
+      while ($oldn < $ntokens) {
+        $old = $replacements[$oldn];
+        if ($old[0] == '!') {
+	  $replacements[$oldn] = substr($old,1);
+	} elseif (IsWikiPage($dbi, $old)) {
+	  $replacements[$oldn] = LinkExistingWikiWord($old);
+	} else {
+	  $replacements[$oldn] = LinkUnknownWikiWord($old);
+	}
+	$oldn++;
       }
 
       // escape HTML metachars
-      $tmpline = ereg_replace("[&]", "&amp;", $tmpline);
-      $tmpline = ereg_replace("[>]", "&gt;", $tmpline);
-      $tmpline = ereg_replace("[<]", "&lt;", $tmpline);
+      $tmpline = str_replace("&", "&amp;", $tmpline);
+      $tmpline = str_replace(">", "&gt;", $tmpline);
+      $tmpline = str_replace("<", "&lt;", $tmpline);
 
       // four or more dashes to <hr>
       $tmpline = ereg_replace("^-{4,}", "<hr>", $tmpline);
-
 
       // %%% are linebreaks
       $tmpline = str_replace("%%%", "<br>", $tmpline);
 
       // bold italics
       $tmpline = preg_replace("|(''''')(.*?)(''''')|",
-                              "<strong><em>\\2</em></strong>",
-                              $tmpline);
+                              "<strong><em>\\2</em></strong>", $tmpline);
 
       // bold
       $tmpline = preg_replace("|(''')(.*?)(''')|",
-                              "<strong>\\2</strong>",
-                              $tmpline);
+                              "<strong>\\2</strong>", $tmpline);
 
       // bold
       $tmpline = preg_replace("|(__)(.*?)(__)|",
-                              "<strong>\\2</strong>",
-                              $tmpline);
+                              "<strong>\\2</strong>", $tmpline);
 
       // italics
       $tmpline = preg_replace("|('')(.*?)('')|",
-                              "<em>\\2</em>",
-                              $tmpline);
+                              "<em>\\2</em>", $tmpline);
 
-      // Link Wiki words
-      // Wikiwords preceeded by a '!' are not linked
-      if (preg_match_all("#!?\b(([A-Z][a-z]+){2,})\b#",
-                         $tmpline, $link)) {
-         // uniq the list of matches
-         unset($hash);
-         for ($i = 0; $link[0][$i]; $i++) {
-	    if(strstr($link[0][$i], '!'))	// hashval sports a value
-	       $hashval = "0000:".$link[0][$i];	// in front that guarantees
-	    else				// correct sorting
-	       $hashval = sprintf("%04d:%s", 9876-strlen($link[0][$i])
-					  , $link[0][$i]);
-            $hash[$hashval] = 1;
-         }
-
-	 // all '!WikiName' entries are sorted first
-         ksort($hash);
-         while (list($realfile, $val) = each($hash)) {
-	    $realfile = substr($realfile, 5);	// get rid of sort value
-	    $token = $FieldSeparator . $FieldSeparator . ++$ntokens . $FieldSeparator;
-	    $tmpline = str_replace($realfile, $token, $tmpline);
-
-	    $tokens[] = $token;
-	    if (strstr($realfile, '!')) {
-	       $replacements[] = substr($realfile, 1);
-	    }	       
-            elseif (IsWikiPage($dbi, $realfile)) {
-	       $replacements[] = LinkExistingWikiWord($realfile);
-            } else {
-	       $replacements[] = LinkUnknownWikiWord($realfile);
-            }
-         }
-      }
-
-      ///////////////////////////////////////////////////////
-      // Replace tokens
-      for ($i = 0; $i < $ntokens; $i++)
-	  $tmpline = str_replace($tokens[$i], $replacements[$i], $tmpline);
-      
-
-      // match and replace all user-defined links ([1], [2], [3]...)
-      preg_match_all("|\[(\d+)\]|", $tmpline, $match);
-      if (count($match[0])) {
-         for ($k = 0; $k < count($match[0]); $k++) {
-            if (! empty($embedded[$match[1][$k]])) {
-               $linkpattern = preg_quote($match[0][$k]);
-               $tmpline = preg_replace("|$linkpattern|",
-                                       $embedded[$match[1][$k]],
-                                       $tmpline);
-            }
-         }
-      }
 
       // HTML modes: pre, unordered/ordered lists, term/def  (using TAB)
       if (preg_match("/(^\t+)(.*?)(:\t)(.*$)/", $tmpline, $matches)) {
@@ -284,9 +233,15 @@ your web server it is highly advised that you do not allow this.
       $tmpline = str_replace("%%Fullsearch%%", $full_search_box, $tmpline);
       $tmpline = str_replace("%%Mostpopular%%", $most_popular_list, $tmpline);
 
+      ///////////////////////////////////////////////////////
+      // Replace tokens
+
+      for ($i = 0; $i < $ntokens; $i++)
+	  $tmpline = str_replace($FieldSeparator.$FieldSeparator.$i.$FieldSeparator, $replacements[$i], $tmpline);
+
+
       $html .= "$tmpline\n";
    }
-
 
    $html .= SetHTMLOutputMode("", ZERO_DEPTH, 0);
 ?>
