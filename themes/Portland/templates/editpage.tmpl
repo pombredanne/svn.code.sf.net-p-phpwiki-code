@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.8 2002-01-24 00:45:28 dairiki Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.9 2002-01-26 08:13:16 carstenklapp Exp $ -->
 <?php
 $SummaryInput = HTML::input(array('type' => 'text',
                                   'class' => 'wikitext',
@@ -20,7 +20,32 @@ $SaveB = HTML::input(array('type' => 'submit',
                            'name' => 'save',
                            'value' => _("Save")));
 
+$WidthI = HTML::input(array('type' => 'text',
+                            'size' => 3,
+                            'name' => 'pref[editWidth]',
+                            'value' => $request->getPref('editWidth'),
+                            'onchange' => 'this.form.submit();'));
 
+$HeightI = HTML::input(array('type' => 'text',
+                             'size' => 3,
+                             'name' => 'pref[editHeight]',
+                             'value' => $request->getPref('editHeight'),
+                             'onchange' => 'this.form.submit();'));
+
+$AdjustB = $Theme->makeButton(_("Adjust"), "submit:");
+
+
+$GoodStyleB = $ButtonFactory->makeLinkButton(_("GoodStyle"));
+
+
+$Markup['old'] = new HtmlElement('option', array('value' => 'old'),
+                                _("Old"));
+$Markup['new'] = new HtmlElement('option', array('value' => 'new'),
+                                 _("New"));
+$selected = $FORMVARS['markup'] == 'new' ? 'new' : 'old';
+$Markup[$selected]->setAttr('selected', true);
+$MarkupSelect = new HtmlElement('select', array('name' => 'markup'),
+                                $Markup);
 
   $s = $Theme->getButtonSeparator();
 ?>
@@ -64,24 +89,26 @@ $SaveB = HTML::input(array('type' => 'submit',
           rows="<?=$request->getPref('editHeight')?>"
           cols="<?=$request->getPref('editWidth')?>"
           wrap="virtual"><?=$FORMVARS['content']?></textarea>
-  <br />
-  <?=_("Summary:")?> <?= $SummaryInput ?>
-  <br />
-  <?= fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
-  <br />
-  <?= $MinorEditCb ?>
-  <?= fmt("I'm just doing minor edits. Please divert the usual logging to %s instead.",
-          $Theme->linkExistingWikiWord(_("RecentEdits"))) ?>
-  <br /><br />
-<div name="#edit-tips"><?php
-  // FIXME: convert this to use the IncludePage plugin. ?>
-<?= fmt("See %s tips for editing.",
-        $Theme->linkExistingWikiWord(_("GoodStyle"))) ?>
 <br />
-<?= fmt("You can change the size of the editing area in %s.",
-        $Theme->linkExistingWikiWord(_("UserPreferences"))) ?>
-</div>
-
+<?=_("Summary:")?> <?= $SummaryInput ?>
+<br />
+<?= fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
+<br />
+<?= $MinorEditCb ?>
+<?= fmt("I'm just doing minor edits. Please divert the usual logging to %s instead.",
+        $Theme->linkExistingWikiWord(_("RecentEdits"))) ?>
+<br />
+<p>
+  <?=_("Edit Area Size:")?> <b><?=_("H")?></b>
+  <?=$HeightI?>
+  <b><?=_("W")?></b>
+  <?=$WidthI?>
+  <?=$AdjustB?>
+  <br />
+  Markup Style: <?=$MarkupSelect?>
+</p>
+<!-- FIXME: do we need this at all?  If so, it could probably be moved to TextFormattingRules -->
+<p><?= fmt("See %s tips for editing.", $GoodStyleB) ?></p>
 <div class="wiki-edithelp">
 <?plugin IncludePage page=_("TextFormattingRules") section=_("Synopsis") quiet=1?>
 </div>
