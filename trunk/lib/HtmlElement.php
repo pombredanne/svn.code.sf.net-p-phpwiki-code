@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.15 2002-02-02 01:58:17 carstenklapp Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.16 2002-02-04 03:14:38 carstenklapp Exp $');
 /*
  * Code for writing XML.
  */
@@ -99,6 +99,7 @@ class HTML extends HtmlElement {
     //
     // Shell script to generate the following static methods:
     //
+    // #!/bin/sh
     // function mkfuncs () {
     //     for tag in "$@"
     //     do
@@ -108,15 +109,26 @@ class HTML extends HtmlElement {
     //         echo "    }"
     //     done
     // }
+    // d='
+    //     /****************************************/'
     // mkfuncs link style script noscript
+    // echo "$d"
     // mkfuncs a img br span
+    // echo "$d"
     // mkfuncs h1 h2 h3 h4 h5 h6
+    // echo "$d"
     // mkfuncs hr div p pre blockquote
+    // echo "$d"
     // mkfuncs em strong small
+    // echo "$d"
     // mkfuncs tt u sup sub
+    // echo "$d"
     // mkfuncs ul ol dl li dt dd
+    // echo "$d"
     // mkfuncs table caption thead tbody tfoot tr td th
-    // mkfuncs form input textarea
+    // echo "$d"
+    // mkfuncs form input option select textarea
+
     function link (/*...*/) {
         $el = new HtmlElement('link');
         return $el->_init2(func_get_args());
@@ -133,6 +145,8 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('noscript');
         return $el->_init2(func_get_args());
     }
+
+    /****************************************/
     function a (/*...*/) {
         $el = new HtmlElement('a');
         return $el->_init2(func_get_args());
@@ -149,6 +163,8 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('span');
         return $el->_init2(func_get_args());
     }
+
+    /****************************************/
     function h1 (/*...*/) {
         $el = new HtmlElement('h1');
         return $el->_init2(func_get_args());
@@ -173,6 +189,8 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('h6');
         return $el->_init2(func_get_args());
     }
+
+    /****************************************/
     function hr (/*...*/) {
         $el = new HtmlElement('hr');
         return $el->_init2(func_get_args());
@@ -193,6 +211,8 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('blockquote');
         return $el->_init2(func_get_args());
     }
+
+    /****************************************/
     function em (/*...*/) {
         $el = new HtmlElement('em');
         return $el->_init2(func_get_args());
@@ -205,6 +225,8 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('small');
         return $el->_init2(func_get_args());
     }
+
+    /****************************************/
     function tt (/*...*/) {
         $el = new HtmlElement('tt');
         return $el->_init2(func_get_args());
@@ -221,6 +243,8 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('sub');
         return $el->_init2(func_get_args());
     }
+
+    /****************************************/
     function ul (/*...*/) {
         $el = new HtmlElement('ul');
         return $el->_init2(func_get_args());
@@ -245,6 +269,8 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('dd');
         return $el->_init2(func_get_args());
     }
+
+    /****************************************/
     function table (/*...*/) {
         $el = new HtmlElement('table');
         return $el->_init2(func_get_args());
@@ -277,6 +303,8 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('th');
         return $el->_init2(func_get_args());
     }
+
+    /****************************************/
     function form (/*...*/) {
         $el = new HtmlElement('form');
         return $el->_init2(func_get_args());
@@ -285,16 +313,16 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('input');
         return $el->_init2(func_get_args());
     }
-    function textarea (/*...*/) {
-        $el = new HtmlElement('textarea');
+    function option (/*...*/) {
+        $el = new HtmlElement('option');
         return $el->_init2(func_get_args());
     }
     function select (/*...*/) {
         $el = new HtmlElement('select');
         return $el->_init2(func_get_args());
     }
-    function option (/*...*/) {
-        $el = new HtmlElement('option');
+    function textarea (/*...*/) {
+        $el = new HtmlElement('textarea');
         return $el->_init2(func_get_args());
     }
 }
@@ -312,7 +340,7 @@ HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
                       . 's strike u ' // (deprecated)
                       . 'abbr acronym cite code dfn em kbd samp strong var ' //%phrase
                       . 'a img object br script map q sub sup span bdo '//%special
-                      . 'button input label select textarea ' //%formctl
+                      . 'button input label option select textarea ' //%formctl
 
                       // %block elements which contain inline content
                       . 'address h1 h2 h3 h4 h5 h6 p pre '
@@ -330,7 +358,7 @@ HTML::_setTagProperty(HTMLTAG_INLINE,
                       . 's strike u ' // (deprecated)
                       . 'abbr acronym cite code dfn em kbd samp strong var ' //%phrase
                       . 'a img object br script map q sub sup span bdo '//%special
-                      . 'button input label select textarea ' //%formctl
+                      . 'button input label option select textarea ' //%formctl
                       );
 
 /**
