@@ -79,8 +79,7 @@ class WikiPlugin_TexToPng extends WikiPluginCached
     }
 
     function getDescription() {
-        return 'Converts TeX to an image. May be used to embed' 
-               . ' formulas in PhpWiki.';
+        return _("Converts TeX to an image. May be used to embed formulas in PhpWiki.");
     }
 
     function getDefaultArguments() {
@@ -245,7 +244,7 @@ class WikiPlugin_TexToPng extends WikiPluginCached
                             "$texbin ".$tempfiles.'.tex',true) &&                  
              $this->execute("$dvipsbin -o".$tempfiles.'.ps '.$tempfiles.'.dvi') &&  
              $this->execute("$pstoimgbin $options"
-                            ' -out '.$tempfiles.'.png '.
+                            .' -out '.$tempfiles.'.png '.
                             $tempfiles.'.ps'               ) &&
              file_exists( $tempfiles.'.png' );
 
