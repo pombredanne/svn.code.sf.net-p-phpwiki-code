@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.30 2004-06-07 19:31:31 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.31 2004-06-16 10:38:59 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -170,7 +170,7 @@ extends WikiDB_backend
         return $row ? $this->_extract_page_data($row[1],$row[0]) : false;
     }
 
-    function  _extract_page_data($data, $hits) {
+    function  _extract_page_data(&$data, $hits) {
         $pagedata = empty($data) ? array() : unserialize($data);
         $pagedata['hits'] = $hits;
         return $pagedata;
@@ -945,7 +945,7 @@ extends WikiDB_backend_ADODB_generic_iter
         }
         $result->MoveNext();
         
-        $pagedata = $backend->_extract_page_data(&$record['pagedata'], $record['hits']);
+        $pagedata = $backend->_extract_page_data($record['pagedata'], $record['hits']);
         $rec = array('pagename' => $record['pagename'],
                      'pagedata' => $pagedata);
         if (!empty($record['version'])) {
@@ -1071,6 +1071,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/06/07 19:31:31  rurban
+// fixed ADOOB upgrade: listOfFields()
+//
 // Revision 1.29  2004/05/12 10:49:55  rurban
 // require_once fix for those libs which are loaded before FileFinder and
 //   its automatic include_path fix, and where require_once doesn't grok

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.13 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.14 2004-06-16 10:38:59 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -166,7 +166,7 @@ ws[cfh]");
                 // the upload was a success and we need to mark this event in the "upload log"
                 if ($logfile) { 
                     $upload_log = $file_dir . basename($logfile);
-                    $this->log($userfile, $upload_log, &$message);
+                    $this->log($userfile, $upload_log, $message);
                 }
                 if ($autolink) {
                     require_once("lib/loadsave.php");
@@ -229,6 +229,14 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.12  2004/06/13 11:34:22  rurban
 // fixed bug #969532 (space in uploaded filenames)
 // improved upload error messages

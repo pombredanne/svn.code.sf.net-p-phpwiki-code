@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: FoafViewer.php,v 1.2 2004-06-13 13:54:25 rurban Exp $');
+rcs_id('$Id: FoafViewer.php,v 1.3 2004-06-16 10:38:59 rurban Exp $');
 
 //ini_set('include_path','.;C:/php/pear');
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -76,7 +76,8 @@ extends WikiPlugin
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this,'_error_handler'));
         */
         // Require the XML_FOAF_Parser class. This is a pear library not included with phpwiki.
-        //if (findFile('XML/FOAF/Parser.php','missing_ok'))
+        // see doc/README.foaf
+        if (findFile('XML/FOAF/Parser.php','missing_ok'))
             require_once 'XML/FOAF/Parser.php';
         //$ErrorManager->popErrorHandler();
         if (!class_exists('XML_FOAF_Parser'))
@@ -217,6 +218,13 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/06/13 13:54:25  rurban
+// Catch fatals on the four dump calls (as file and zip, as html and mimified)
+// FoafViewer: Check against external requirements, instead of fatal.
+// Change output for xhtmldumps: using file:// urls to the local fs.
+// Catch SOAP fatal by checking for GOOGLE_LICENSE_KEY
+// Import GOOGLE_LICENSE_KEY and FORTUNE_DIR from config.ini.
+//
 // Revision 1.1  2004/06/08 21:38:21  rurban
 // based on dans version 0.0.2 - simplified
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.14 2004-05-18 14:49:52 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.15 2004-06-16 10:38:59 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -107,7 +107,7 @@ extends WikiPlugin
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $userdata = obj2hash($user);
             $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
-            $group = &WikiGroup::getGroup($request);
+            $group = &WikiGroup::getGroup();
             $groups = $group->getAllGroupsIn();
             $groupdata = obj2hash($group);
             unset($groupdata['request']);
@@ -190,6 +190,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/05/18 14:49:52  rurban
+// Simplified strings for easier translation
+//
 // Revision 1.13  2004/04/02 15:06:56  rurban
 // fixed a nasty ADODB_mysql session update bug
 // improved UserPreferences layout (tabled hints)

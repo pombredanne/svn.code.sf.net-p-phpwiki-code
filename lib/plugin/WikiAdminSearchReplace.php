@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.15 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.16 2004-06-16 10:38:59 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -96,7 +96,7 @@ extends WikiPlugin_WikiAdminSelect
         foreach ($pages as $pagename) {
             if (!mayAccessPage('edit',$pagename)) {
 		$ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
-            } elseif (($result = $this->replaceHelper(&$dbi, $pagename, $from, $to, $caseexact, $regex))) {
+            } elseif (($result = $this->replaceHelper($dbi, $pagename, $from, $to, $caseexact, $regex))) {
                 $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", $from, $to, WikiLink($pagename))));
                 $count++;
             } else {
@@ -125,7 +125,7 @@ extends WikiPlugin_WikiAdminSelect
             $exclude = explodePageList($args['exclude']);
         else
             $exclude = false;
-        $this->preSelectS(&$args, &$request);
+        $this->preSelectS($args, $request);
 
         $p = $request->getArg('p');
         if (!$p) $p = $this->_list;
@@ -183,11 +183,11 @@ extends WikiPlugin_WikiAdminSelect
             $header->pushContent(
               HTML::p(HTML::strong(
                                    _("Are you sure you want to permanently search & replace text in the selected files?"))));
-            $this->replaceForm(&$header, $post_args);
+            $this->replaceForm($header, $post_args);
         }
         else {
             $button_label = _("Search & Replace");
-            $this->replaceForm(&$header, $post_args);
+            $this->replaceForm($header, $post_args);
             $header->pushContent(HTML::p(_("Select the pages to search:")));
         }
 
@@ -266,6 +266,14 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.14  2004/06/13 15:33:20  rurban
 // new support for arguments owner, author, creator in most relevant
 // PageList plugins. in WikiAdmin* via preSelectS()
