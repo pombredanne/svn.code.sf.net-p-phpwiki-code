@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.7 2004-11-10 15:29:21 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.8 2004-11-10 19:32:23 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -45,7 +45,7 @@ class WikiDB_ADODB extends WikiDB
     }
 
     // ADODB handles everything as string
-    function quote ($s) {
+    function quote ($in) {
         if (is_int($in) || is_double($in)) {
             return $in;
         } elseif (is_bool($in)) {
@@ -53,7 +53,7 @@ class WikiDB_ADODB extends WikiDB
         } elseif (is_null($in)) {
             return 'NULL';
         } else {
-            return $this->_backend->_dbh->qstr($s);
+            return $this->_backend->_dbh->qstr($in);
         }
     }
 

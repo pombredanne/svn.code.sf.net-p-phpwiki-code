@@ -1,10 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.66 2004-11-10 15:29:21 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.67 2004-11-10 19:32:24 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
-require_once('lib/ErrorManager.php');
-require_once('DB.php'); // Either our local pear copy or the systems
+//require_once('lib/ErrorManager.php');
 
 class WikiDB_backend_PearDB
 extends WikiDB_backend
@@ -13,11 +12,27 @@ extends WikiDB_backend
 
     function WikiDB_backend_PearDB ($dbparams) {
         // Find and include PEAR's DB.php.
-        //$pearFinder = new PearFileFinder;
-        //$pearFinder->includeOnce('DB.php');
+        // if DB would have exported its version number, it would be easier.
+        @require_once('DB/common.php'); // Either our local pear copy or the system one
+        // check the version!
+        $name = check_php_version(5) ? "escapeSimple" : strtolower("escapeSimple");
+        if (!in_array($name, get_class_methods("DB_common"))) {
+            $finder = new FileFinder;
+            $dir = dirname(__FILE__)."/../../pear";
+            $finder->_prepend_to_include_path($dir);
+            include_once("$dir/DB/common.php"); // use our version instead.
+            if (!in_array($name, get_class_methods("DB_common"))) {
+                $pearFinder = new PearFileFinder("lib/pear");
+                $pearFinder->includeOnce('DB.php');
+            } else {
+                include_once("$dir/DB.php");
+            }
+        } else {
+          include_once("DB.php");
+        }
 
         // Install filter to handle bogus error notices from buggy DB.php's.
-        //TODO: check the Pear_DB version
+        //TODO: check the Pear_DB version, but how?
         if (0) {
             global $ErrorManager;
             $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pear_notice_filter'));
@@ -115,34 +130,36 @@ extends WikiDB_backend
                             . " WHERE $nonempty_tbl.id=$page_tbl.id");
     }
     
+    function increaseHitCount($pagename) {
+        $dbh = &$this->_dbh;
+        // Hits is the only thing we can update in a fast manner.
+        // Note that this will fail silently if the page does not
+        // have a record in the page table.  Since it's just the
+        // hit count, who cares?
+        $dbh->query(sprintf("UPDATE %s SET hits=hits+1 WHERE pagename='%s'",
+                            $this->_table_names['page_tbl'],
+                            $dbh->escapeSimple($pagename)));
+        return;
+    }
+
     /**
      * Read page information from database.
      */
     function get_pagedata($pagename) {
         $dbh = &$this->_dbh;
-        $page_tbl = $this->_table_names['page_tbl'];
-
         //trigger_error("GET_PAGEDATA $pagename", E_USER_NOTICE);
-
-        $result = $dbh->getRow(sprintf("SELECT %s FROM $page_tbl WHERE pagename='%s'",
-                                       $this->page_tbl_fields.",pagedata",
+        $result = $dbh->getRow(sprintf("SELECT %s FROM %s WHERE pagename='%s'",
+                                       "hits,pagedata",
+                                       $this->_table_names['page_tbl'],
                                        $dbh->escapeSimple($pagename)),
                                DB_FETCHMODE_ASSOC);
-        if (!$result)
-            return false;
-        return $this->_extract_page_data($result);
+        return $result ? $this->_extract_page_data($result) : false;
     }
 
-    function  _extract_page_data($query_result) {
-        extract($query_result);
-        if (isset($query_result['pagedata'])) {
-            $data = $this->_unserialize($query_result['pagedata']);
-            // Memory optimization:
-            // Only store the cached_html for the current pagename
-            // Do it here or unset it in the Cache?
-        }
-        $data['hits'] = $query_result['hits'];
-        return $data;
+    function  _extract_page_data($data) {
+        if (empty($data)) return array();
+        elseif (empty($data['pagedata'])) return $data;
+        else return array_merge($data, $this->_unserialize($data['pagedata']));
     }
 
     function update_pagedata($pagename, $newdata) {
@@ -1025,6 +1042,13 @@ extends WikiDB_backend_PearDB_generic_iter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2004/11/10 15:29:21  rurban
+// * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
+// * ACCESS_LOG_SQL: fix cause request not yet initialized
+// * WikiDB: moved SQL specific methods upwards
+// * new Pear_DB quoting: same as ADODB and as newer Pear_DB.
+//   fixes all around: WikiGroup, WikiUserNew SQL methods, SQL logging
+//
 // Revision 1.65  2004/11/09 17:11:17  rurban
 // * revert to the wikidb ref passing. there's no memory abuse there.
 // * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively

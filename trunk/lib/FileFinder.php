@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.29 2004-11-09 17:11:03 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.30 2004-11-10 19:32:21 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -262,7 +262,6 @@ class FileFinder
         $dir = $this->slashifyPath($dir);
         if (!in_array($dir, $this->_path)) {
             $this->_path[] = $dir;
-            //ini_set('include_path', implode(':', $path));
         }
         /*
          * Some (buggy) PHP's (notable SourceForge's PHP 4.0.6)
@@ -276,6 +275,24 @@ class FileFinder
          * put it here, as it seems to work-around the bug.
          */
         ini_set('include_path', implode($this->_get_ini_separator(), $this->_path));
+    }
+
+    /**
+     * Add a directory to the front of PHP's include_path.
+     *
+     * The directory is prepended, and removed from the tail if already existing.
+     *
+     * @access private
+     * @param $dir string Directory to add.
+     */
+    function _prepend_to_include_path ($dir) {
+        $dir = $this->slashifyPath($dir);
+        // remove duplicates
+        if ($i = array_search($dir, $this->_path) !== false) {
+            array_splice($this->_path, $i, 1);
+        }
+        array_unshift($this->_path, $dir);
+        ini_set('include_path', implode($this->_path, $this->_get_ini_separator()));
     }
 
     // Return all the possible shortened locale specifiers for the given locale.
@@ -449,8 +466,9 @@ function FindFile ($file, $missing_okay = false, $slashify = false)
         $finder = new FileFinder;
     	// remove "/lib" from dirname(__FILE__)
     	$wikidir = preg_replace('/.lib$/','',dirname(__FILE__));
-    	$finder->_append_to_include_path($wikidir);
+        // let the system favor its local pear?
     	$finder->_append_to_include_path(dirname(__FILE__)."/pear");
+    	$finder->_prepend_to_include_path($wikidir);
         // Don't override existing INCLUDE_PATH config.
         if (!defined("INCLUDE_PATH"))
  	    define("INCLUDE_PATH", implode($finder->_get_ini_separator(), $finder->_path));
@@ -569,6 +587,17 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/11/09 17:11:03  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.28  2004/11/06 17:02:33  rurban
 // Workaround some php-win \\ duplication bug
 //
