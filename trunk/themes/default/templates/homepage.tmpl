@@ -1,13 +1,37 @@
-<?php // -*-html-*-  $Id: homepage.tmpl,v 1.1 2002-08-22 23:28:32 rurban Exp $ 
-$username = $user->getId());
+<?php // -*-php-*-
+rcs_id('$Id: homepage.tmpl,v 1.2 2003-12-11 20:37:13 carstenklapp Exp $');
+/**
+ * Note: Automatic homepage creation is not yet functional.
+ */
+$UserName = $user->getId();
+$DefaultMessage = sprintf(_("Describe %s here."), $UserName);
+
+$UserPreferencesMessage[0] =
+    sprintf(_("You can personalize various settings in %s."),
+            _("UserPreferences"));
+$UserPreferencesMessage[1] =
+    _("(Your preferences are stored as hidden data within this page).");
+
+$CalendarSubpage = sprintf('[%s]', SUBPAGE_SEPARATOR . _("Calendar"));
+$calendarMessage = sprintf(_("The %s subpage enables simple weblogging."),
+                           $CalendarSubpage);
+
+$BackLinks = sprintf('<'.'?plugin BackLinks ?'.'>');
+$FullTextSearch = sprintf('<'.'?plugin-form FullTextSearch s=%s ?'.'>',
+                          $UserName);
+/**
+ * WikiMarkup with embedded PHP follows:
+ */
 ?>
+<?=$DefaultMessage?>
 
-<?= sprintf(_('Automatically created homepage for %s. This page is needed to store the users preferences. The [/Calendar] subpage enables simple weblogging, at your [/Preferences] page you can customize various settings or change your password.'), $username) ?>
-
-* <?= '[ ' . SUBPAGE_SEPARATOR . _('Calendar') . ' ]' ?>
-* <?= '[ ' . SUBPAGE_SEPARATOR . _('Preferences') . ' ]' ?>
-
-<?= sprintf('<'.'?plugin BackLinks ?'.'>') ?>
-<?= sprintf('<'.'?plugin-form FullTextSearch s=%s ?'.'>', $username) ?>
 ----
-<?= _('CategoryHomepage') ?>
+<?=$UserPreferencesMessage[0]?>%%%
+_<?=$UserPreferencesMessage[1]?>_
+
+<?=$CalendarMessage?>
+----
+<?=$BackLinks?>
+<?=$FullTextSearch?>
+----
+<?=_("CategoryHomepage")?>
