@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.9 2002-01-21 01:50:33 dairiki Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.10 2002-01-22 06:55:39 dairiki Exp $');
 
 require_once("lib/HtmlElement.php");
 
@@ -22,21 +22,6 @@ class Button extends HtmlElement {
         $this->pushContent($text);
     }
 
-    /** Add a "tooltip" to a button.
-     *
-     * @param $tooltip_text string The tooltip text.
-     */
-    function addTooltip ($tooltip_text) {
-        $this->setAttr('title', $tooltip_text);
-
-        // FIXME: this should be initialized from title by an onLoad() function.
-        //        (though, that may not be possible.)
-        $qtooltip = str_replace("'", "\\'", $tooltip_text);
-        $this->setAttr('onmouseover',
-                       sprintf('window.status="%s"; return true;',
-                               addslashes($tooltip_text)));
-        $this->setAttr('onmouseout', "window.status='';return true;");
-    }
 };
 
 
