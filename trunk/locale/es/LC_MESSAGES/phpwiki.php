@@ -6,6 +6,8 @@ $locale["%d best outgoing links:"] =
    "%d mejores enlaces de salida:";
 $locale["%d most popular nearby:"] =
    "%d las más populares:";
+$locale["%s has been locked by the administrator and cannot be edited."] =
+   "%s ha sido bloqueada por el administrador y no puede ser editada.";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Vuelva a cargar</b> la página. Ahora podrá ver la versión mas actual de la página. Sus cambios no están ahí.";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -66,8 +68,6 @@ $locale["The %s most popular pages of this wiki:"] =
    "Las %s páginas más populares de este wiki:";
 $locale["This is a minor change."] =
    "Esto es un cambio pequeño.";
-$locale["This page has been locked by the administrator and cannot be edited."] =
-   "Esta página ha sido bloqueada por el administrador y no puede ser editada.";
 $locale["Unlock page"] =
    "Desbloquear página";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
@@ -93,4 +93,4 @@ $locale["version %d"] =
 $locale["version %s"] =
    "versión %s";
 
-;?>
+?>

@@ -6,6 +6,8 @@ $locale["%d best outgoing links:"] =
    "De %d mest använda utgående länkarna:";
 $locale["%d most popular nearby:"] =
    "De %d mest populära grannarna:";
+$locale["%s has been locked by the administrator and cannot be edited."] =
+   "%s sidan är låst av administratören och kan ej redigeras.";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Ladda om</b> sidan. Du kommer nu se den senaste versionen av sidan. Dina ändringar är inte där.";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -64,8 +66,6 @@ $locale["Thank you for editing %s."] =
    "Tack för att du redigerade %s.";
 $locale["The %s most popular pages of this wiki:"] =
    "De %s mest populära sidorna för den här wikin:";
-$locale["This page has been locked by the administrator and cannot be edited."] =
-   "Den här sidan är låst av administratören och kan ej redigeras.";
 $locale["Title Search"] =
    "Titelsökningen";
 $locale["TitleSearch"] =
@@ -93,4 +93,4 @@ $locale["last modified on %s"] =
 $locale["version %d"] =
    "version %d";
 
-;?>
+?>

@@ -6,6 +6,8 @@ $locale["%d best outgoing links:"] =
    "%d beste uitgaande koppelingen:";
 $locale["%d most popular nearby:"] =
    "%d meest gevraagde in de buurt:";
+$locale["%s has been locked by the administrator and cannot be edited."] =
+   "%s is afgesloten door de beheerder en kan niet veranderd worden.";
 $locale["- skipped"] =
    "- overgeslagen";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
@@ -84,8 +86,6 @@ $locale["The %s most popular pages of this wiki:"] =
    "De %s meestbezochte pagina's van deze Wiki:";
 $locale["The PhpWiki programming team"] =
    "Het PhpWiki programmeerteam";
-$locale["This page has been locked by the administrator and cannot be edited."] =
-   "Deze pagina is afgesloten door de beheerder en kan niet veranderd worden.";
 $locale["Title Search"] =
    "Titel zoek";
 $locale["TitleSearch"] =
@@ -125,4 +125,4 @@ $locale["last modified on %s"] =
 $locale["version %d"] =
    "versie %d";
 
-;?>
+?>

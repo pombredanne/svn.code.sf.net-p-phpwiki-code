@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2002-01-11 00:45-0500\n"
+"POT-Creation-Date: 2002-01-16 14:00-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,520 +14,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lib/Toolbar.php:139 ../templates/browse.html:41
-msgid "Page locked"
-msgstr ""
-
-#: ../lib/Toolbar.php:144 ../templates/browse.html:44
-msgid "Edit"
-msgstr ""
-
-#: ../lib/Toolbar.php:149 ../templates/browse.html:47
-msgid "Edit old revision"
-msgstr ""
-
-#: ../lib/Toolbar.php:156 ../templates/browse.html:52
-msgid "Unlock page"
-msgstr ""
-
-#: ../lib/Toolbar.php:160 ../templates/browse.html:54
-msgid "Lock page"
-msgstr ""
-
-#: ../lib/Toolbar.php:164 ../lib/removepage.php:20 ../templates/browse.html:56
-msgid "Remove page"
-msgstr ""
-
-#: ../lib/Toolbar.php:174 ../lib/Toolbar.php:180 ../templates/browse.html:60
-#: ../templates/browse.html:63
-msgid "Diff"
-msgstr ""
-
-#: ../templates/browse.html:86
-msgid "PHP Warnings"
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:92
-#: ../templates/browse.html:93
-msgid "DebugInfo"
-msgstr ""
-
-#: ../lib/plugin/ViewMarkup.php:21 ../templates/browse.html:97
-#: ../templates/browse.html:98
-msgid "ViewMarkup"
-msgstr ""
-
-#: ../templates/editpage.html:14 ../templates/editpage.html:19
-#: ../templates/editpage.html:20
-#, c-format
-msgid "Edit: %s"
-msgstr ""
-
-#: ../lib/Toolbar.php:187 ../lib/Toolbar.php:188 ../lib/Toolbar.php:225
-#: ../lib/Toolbar.php:226 ../lib/plugin/BackLinks.php:9
-#: ../templates/editpage.html:19
-msgid "BackLinks"
-msgstr ""
-
-#: ../templates/editpage.html:41
-msgid "Summary:"
-msgstr ""
-
-#: ../templates/editpage.html:48
-msgid "This is a minor change."
-msgstr ""
-
-#: ../templates/editpage.html:51
-msgid "Preview"
-msgstr ""
-
-#: ../templates/editpage.html:52
-msgid "Save"
-msgstr ""
-
-#: ../lib/Toolbar.php:333 ../templates/editpage.html:56
-#, c-format
-msgid "You are signed in as %s."
-msgstr ""
-
-#: ../lib/Toolbar.php:335 ../templates/editpage.html:58
-#, c-format
-msgid "Author will be logged as %s."
-msgstr ""
-
-#: ../lib/Toolbar.php:254 ../lib/Toolbar.php:339 ../templates/editpage.html:59
-msgid "SignIn"
-msgstr ""
-
-#: ../lib/Toolbar.php:376 ../templates/editpage.html:67
-msgid "TextFormattingRules"
-msgstr ""
-
-#: ../lib/Toolbar.php:377 ../templates/editpage.html:67
-msgid "Synopsis"
-msgstr ""
-
-#: ../lib/plugin/BackLinks.php:13
-#, c-format
-msgid "Get BackLinks for %s"
-msgstr ""
-
-#: ../lib/plugin/BackLinks.php:44
-#, c-format
-msgid "These pages link to %s:"
-msgstr ""
-
-#: ../lib/plugin/BackLinks.php:44
-#, c-format
-msgid "No pages link to %s."
-msgstr ""
-
-#: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
-msgid "Calendar"
-msgstr ""
-
-#: ../lib/plugin/Calendar.php:57
-msgid "Previous Month"
-msgstr ""
-
-#: ../lib/plugin/Calendar.php:61
-msgid "Next Month"
-msgstr ""
-
-#: ../lib/plugin/Calendar.php:116
-#, c-format
-msgid "Edit %s"
-msgstr ""
-
-#: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
-msgid "FullTextSearch"
-msgstr ""
-
-#: ../lib/plugin/FullTextSearch.php:16
-msgid "Full Text Search"
-msgstr ""
-
-#: ../lib/plugin/FullTextSearch.php:52
-#, c-format
-msgid "Full text search results for '%s'"
-msgstr ""
-
-#: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
-msgid "<no matches>"
-msgstr ""
-
-#: ../lib/plugin/HelloWorld.php:23
-msgid "HelloWorld"
-msgstr ""
-
-#: ../lib/plugin/HelloWorld.php:27
-msgid "Simple Sample Plugin"
-msgstr ""
-
-#: ../lib/plugin/IncludePage.php:15
-msgid "IncludePage"
-msgstr ""
-
-#: ../lib/plugin/IncludePage.php:58 ../lib/plugin/walkabout.php:69
-#, c-format
-msgid "<%s: no such section>"
-msgstr ""
-
-#: ../lib/plugin/IncludePage.php:71
-msgid "no page specified"
-msgstr ""
-
-#: ../lib/plugin/IncludePage.php:78
-#, c-format
-msgid "recursive inclusion of page %s"
-msgstr ""
-
-#: ../lib/plugin/IncludePage.php:87 ../lib/plugin/walkabout.php:120
-#, c-format
-msgid "%s(%d): no such revision"
-msgstr ""
-
-#: ../lib/plugin/IncludePage.php:111
-#, c-format
-msgid "Included from %s"
-msgstr ""
-
-#: ../lib/Toolbar.php:184 ../lib/Toolbar.php:185 ../lib/Toolbar.php:222
-#: ../lib/Toolbar.php:223 ../lib/plugin/LikePages.php:12
-msgid "LikePages"
-msgstr ""
-
-#: ../lib/plugin/LikePages.php:16
-#, c-format
-msgid "List LikePages for %s"
-msgstr ""
-
-#: ../lib/plugin/LikePages.php:40
-#, c-format
-msgid "Page names with prefix '%s'"
-msgstr ""
-
-#: ../lib/plugin/LikePages.php:46
-#, c-format
-msgid "Page names with suffix '%s'"
-msgstr ""
-
-#: ../lib/plugin/LikePages.php:59
-#, c-format
-msgid "These pages share an initial or final title word with '%s'"
-msgstr ""
-
-#: ../lib/plugin/LikePages.php:96
-msgid "<none>"
-msgstr ""
-
-#: ../lib/plugin/MostPopular.php:9
-msgid "MostPopular"
-msgstr ""
-
-#: ../lib/plugin/MostPopular.php:13
-msgid "List the most popular pages"
-msgstr ""
-
-#: ../lib/plugin/MostPopular.php:27
-msgid "Hits"
-msgstr ""
-
-#: ../lib/plugin/MostPopular.php:28
-msgid "Page Name"
-msgstr ""
-
-#: ../lib/plugin/MostPopular.php:42
-#, c-format
-msgid "The %s most popular pages of this wiki:"
-msgstr ""
-
-#: ../lib/plugin/PageHistory.php:71
-#, c-format
-msgid "PageHistory for %s"
-msgstr ""
-
-#: ../lib/plugin/PageHistory.php:86
-msgid "Check any two boxes to compare revisions."
-msgstr ""
-
-#: ../lib/plugin/PageHistory.php:88
-msgid "compare revisions"
-msgstr ""
-
-#: ../lib/plugin/PageHistory.php:90
-#, c-format
-msgid "Check any two boxes then %s."
-msgstr ""
-
-#: ../lib/plugin/PageHistory.php:144 ../lib/plugin/PageHistory.php:182
-#, c-format
-msgid "Version %d"
-msgstr ""
-
-#: ../lib/plugin/PageHistory.php:174
-msgid "History of changes."
-msgstr ""
-
-#: ../lib/Toolbar.php:168 ../lib/Toolbar.php:169
-#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:44
-msgid "PageHistory"
-msgstr ""
-
-#: ../lib/plugin/PageHistory.php:204
-#, c-format
-msgid "List PageHistory for %s"
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:86
-msgid "Deleted."
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:88
-msgid "New page."
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:100
-msgid "(diff)"
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:126
-msgid "RSS available"
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:136
-msgid "edits"
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:138
-msgid "major edits"
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:140
-msgid "minor edits"
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:144
-#, c-format
-msgid "The %d most recent %s during the past %.1f days are listed below."
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:147
-#, c-format
-msgid "The %d most recent %s are listed below."
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:152
-#, c-format
-msgid "The most recent %s during the past %.1f days are listed below."
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:155
-#, c-format
-msgid "All %s are listed below."
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/Toolbar.php:87
-#: ../lib/plugin/Toolbar.php:107 ../lib/plugin/Toolbar.php:112
-msgid "RecentEdits"
-msgstr ""
-
-#: ../lib/Toolbar.php:272 ../lib/loadsave.php:476
-#: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/RecentChanges.php:272
-#: ../lib/plugin/RecentChanges.php:317 ../lib/plugin/Toolbar.php:87
-#: ../lib/plugin/Toolbar.php:105 ../lib/plugin/Toolbar.php:112
-msgid "RecentChanges"
-msgstr ""
-
-#: ../lib/Toolbar.php:69 ../lib/main.php:26 ../lib/main.php:85
-#: ../lib/main.php:87 ../lib/plugin/RecentChanges.php:255
-msgid "HomePage"
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:260
-msgid "Search"
-msgstr ""
-
-#: ../lib/plugin/RecentChanges.php:261 ../lib/plugin/TitleSearch.php:16
-msgid "Title Search"
-msgstr ""
-
-#: ../lib/Toolbar.php:208 ../lib/main.php:123
-#: ../lib/plugin/RecentChanges.php:263 ../lib/plugin/TitleSearch.php:12
-msgid "TitleSearch"
-msgstr ""
-
-#: ../lib/plugin/TitleSearch.php:48
-#, c-format
-msgid "Title search results for '%s'"
-msgstr ""
-
-#: ../lib/plugin/Toolbar.php:31
-msgid "Toolbar"
-msgstr ""
-
-#: ../lib/plugin/Toolbar.php:35
-#, c-format
-msgid "Toolbar for %s"
-msgstr ""
-
-#: ../lib/plugin/Toolbar.php:76 ../lib/plugin/walkabout.php:81
-#, c-format
-msgid "A required argument '%s' is missing."
-msgstr ""
-
-#: ../lib/plugin/Toolbar.php:106
-#, c-format
-msgid "Show changes for: %s"
-msgstr ""
-
-#: ../lib/plugin/Toolbar.php:108
-#, c-format
-msgid "Show minor edits for: %s"
-msgstr ""
-
-#: ../lib/plugin/Toolbar.php:116
-msgid "1 day"
-msgstr ""
-
-#: ../lib/plugin/Toolbar.php:117
-#, c-format
-msgid "%s days"
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:35
-#, c-format
-msgid "Your sysadmin has disallowed use of the %s plugin!"
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:41
-msgid "You should be logged in now."
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:47
-#, c-format
-msgid "Before you can edit %s, you need to sign in."
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:50
-msgid "The name you use to sign in must be in WikiWord format."
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:55
-msgid "examples include: TomJefferson, AlexHamilton"
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:63
-msgid "Please re-enter your name in this form."
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:71
-msgid ""
-"Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."
-msgstr ""
-
-#: ../lib/plugin/UserPage.php:73
-msgid "Sign in:"
-msgstr ""
-
-#: ../lib/plugin/ViewMarkup.php:25
-#, c-format
-msgid "View WikiMarkup for page '%s'."
-msgstr ""
-
-#: ../lib/plugin/ViewMarkup.php:56 ../lib/stdlib.php:569
-#, c-format
-msgid "I'm sorry.  Version %d of %s is not in my database."
-msgstr ""
-
-#: ../lib/plugin/ViewMarkup.php:63
-#, c-format
-msgid "version %d of %s"
-msgstr ""
-
-#: ../lib/plugin/ViewMarkup.php:67
-#, c-format
-msgid "Page source for %s"
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:14
-#, c-format
-msgid "Get debugging information for %s."
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:45
-#, c-format
-msgid "Querying backend directly for '%s'"
-msgstr ""
-
-#: ../lib/plugin/_BackendInfo.php:51
-#, c-format
-msgid "No pagedata for %s"
-msgstr ""
-
-#: ../lib/plugin/text2png.php:37
-msgid "Sorry, this version of PHP cannot create PNG image files."
-msgstr ""
-
-#: ../lib/plugin/text2png.php:42
-#, c-format
-msgid "See %s"
-msgstr ""
-
-#: ../lib/plugin/text2png.php:89
-msgid ""
-"PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png."
-"php' for details."
-msgstr ""
-
-#: ../lib/plugin/text2png.php:141
-#, c-format
-msgid "Image saved to cache file: %s"
-msgstr ""
-
-#: ../lib/plugin/text2png.php:145
-#, c-format
-msgid "Image loaded from cache file: %s"
-msgstr ""
-
-#: ../lib/loadsave.php:164 ../lib/plugin/text2png.php:154
-#, c-format
-msgid "couldn't open file '%s' for writing"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:31
-msgid "walkabout"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:35
-#, c-format
-msgid "walkabout for %s"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:42 ../lib/plugin/walkabout.php:90
-msgid "Contents"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:88
-msgid "Next"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:89
-msgid "Previous"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:91
-msgid "First"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:92
-msgid "Last"
-msgstr ""
-
-#: ../lib/plugin/walkabout.php:110 ../lib/plugin/walkabout.php:151
-#: ../lib/plugin/walkabout.php:155
-#, c-format
-msgid "%s: %s"
+#: ../lib/config.php:271
+msgid "An unnamed PhpWiki"
 msgstr ""
 
 #: ../lib/DbaDatabase.php:46 ../lib/ziplib.php:36 ../lib/ziplib.php:39
@@ -536,193 +24,6 @@ msgstr ""
 #: ../lib/ziplib.php:68
 #, c-format
 msgid "%s failed"
-msgstr ""
-
-#: ../lib/ErrorManager.php:148
-msgid "error while handling error:"
-msgstr ""
-
-#: ../lib/FileFinder.php:82
-#, c-format
-msgid "%s: file not found"
-msgstr ""
-
-#: ../lib/Toolbar.php:91 ../lib/editpage.php:28
-msgid "Note:"
-msgstr ""
-
-#: ../lib/Toolbar.php:92
-msgid "You are viewing an old revision of this page."
-msgstr ""
-
-#: ../lib/Toolbar.php:96
-msgid "View the current version"
-msgstr ""
-
-#: ../lib/Toolbar.php:115
-#, c-format
-msgid "Last edited on %s."
-msgstr ""
-
-#: ../lib/Toolbar.php:118
-#, c-format
-msgid "Version %s, saved on %s."
-msgstr ""
-
-#: ../lib/Toolbar.php:211
-msgid "FindPage"
-msgstr ""
-
-#: ../lib/Toolbar.php:215 ../lib/Toolbar.php:216
-msgid "Quick Search"
-msgstr ""
-
-#: ../lib/Toolbar.php:247
-#, c-format
-msgid "You are signed in as %s"
-msgstr ""
-
-#: ../lib/Toolbar.php:250
-msgid "SignOut"
-msgstr ""
-
-#: ../lib/Toolbar.php:307
-msgid "Preview only!  Changes not saved."
-msgstr ""
-
-#: ../lib/Toolbar.php:312
-msgid "Warning: You are editing an old revision."
-msgstr ""
-
-#: ../lib/Toolbar.php:314
-msgid "Saving this page will overwrite the current version."
-msgstr ""
-
-#: ../lib/Toolbar.php:357
-#, c-format
-msgid "You can change the size of the editing area in %s."
-msgstr ""
-
-#: ../lib/Toolbar.php:358
-msgid "UserPreferences"
-msgstr ""
-
-#: ../lib/Toolbar.php:359
-#, c-format
-msgid "See %s tips for editing."
-msgstr ""
-
-#: ../lib/Toolbar.php:360
-msgid "GoodStyle"
-msgstr ""
-
-#: ../lib/Toolbar.php:392
-#, c-format
-msgid "Thank you for editing %s."
-msgstr ""
-
-#: ../lib/Toolbar.php:395
-msgid "Your careful attention to detail is much appreciated."
-msgstr ""
-
-#: ../lib/Toolbar.php:399
-msgid "Warning!"
-msgstr ""
-
-#: ../lib/WikiDB.php:353
-#, c-format
-msgid "Attempt to delete most recent revision of '%s'"
-msgstr ""
-
-#: ../lib/WikiDB.php:401
-#, c-format
-msgid "Attempt to merge most recent revision of '%s'"
-msgstr ""
-
-#: ../lib/WikiDB.php:488
-#, c-format
-msgid "%s: Date of new revision is %s"
-msgstr ""
-
-#: ../lib/WikiDB.php:513
-#, c-format
-msgid "Optimizing %s"
-msgstr ""
-
-#: ../lib/WikiDB.php:837
-#, c-format
-msgid "Describe %s here."
-msgstr ""
-
-#: ../lib/WikiDB.php:872
-#, c-format
-msgid "Acck! Revision %s of %s seems to have been deleted!"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:64
-#, c-format
-msgid "argument '%s' not declared by plugin"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:109
-#, c-format
-msgid "trailing cruft in plugin args: '%s'"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:233 ../lib/ziplib.php:162 ../lib/ziplib.php:164
-#: ../lib/ziplib.php:166 ../lib/ziplib.php:578 ../lib/ziplib.php:675
-#, c-format
-msgid "Bad %s"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:272
-#, c-format
-msgid "Include of '%s' failed"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:273
-#, c-format
-msgid "%s: no such class"
-msgstr ""
-
-#: ../lib/WikiPlugin.php:279
-#, c-format
-msgid "%s: not a subclass of WikiPlugin"
-msgstr ""
-
-#: ../lib/WikiUser.php:97
-#, c-format
-msgid "to perform action '%s'"
-msgstr ""
-
-#: ../lib/WikiUser.php:99
-msgid "to do that"
-msgstr ""
-
-#: ../lib/WikiUser.php:100
-#, c-format
-msgid "You must be logged in as an administrator %s"
-msgstr ""
-
-#: ../lib/WikiUser.php:180
-msgid ""
-"You must set the administrator account and password before you can log in."
-msgstr ""
-
-#: ../lib/WikiUser.php:191
-msgid "You entered an invalid login or password."
-msgstr ""
-
-#: ../lib/WikiUser.php:194
-msgid "You can log in using any valid WikiWord as a user ID."
-msgstr ""
-
-#: ../lib/WikiUser.php:195
-msgid "(Any password will work, except, of course for the admin user.)"
-msgstr ""
-
-#: ../lib/config.php:271
-msgid "An unnamed PhpWiki"
 msgstr ""
 
 #: ../lib/diff.php:172
@@ -803,8 +104,31 @@ msgstr ""
 msgid "Diff: %s"
 msgstr ""
 
-#: ../lib/editpage.php:29
-msgid "This page has been locked by the administrator and cannot be edited."
+#: ../lib/Toolbar.php:91 ../lib/editpage.php:40 ../templates/browse.html:70
+msgid "Note:"
+msgstr ""
+
+#: ../lib/editpage.php:41
+#, c-format
+msgid "%s has been locked by the administrator and cannot be edited."
+msgstr ""
+
+#: ../lib/editpage.php:45 ../lib/plugin/ViewSource.php:63
+#, c-format
+msgid "Page source for %s"
+msgstr ""
+
+#: ../lib/ErrorManager.php:86 ../themes/MacOSX/templates/browse.html:105
+msgid "PHP Warnings"
+msgstr ""
+
+#: ../lib/ErrorManager.php:169
+msgid "error while handling error:"
+msgstr ""
+
+#: ../lib/FileFinder.php:82
+#, c-format
+msgid "%s: file not found"
 msgstr ""
 
 #: ../lib/loadsave.php:17
@@ -842,6 +166,11 @@ msgstr ""
 #: ../lib/loadsave.php:158
 #, c-format
 msgid "saved as %s"
+msgstr ""
+
+#: ../lib/loadsave.php:164 ../lib/plugin/text2png.php:154
+#, c-format
+msgid "couldn't open file '%s' for writing"
 msgstr ""
 
 #: ../lib/loadsave.php:168
@@ -922,9 +251,31 @@ msgstr ""
 msgid "Uploading %s"
 msgstr ""
 
+#: ../lib/Toolbar.php:279 ../lib/loadsave.php:476
+#: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/RecentChanges.php:272
+#: ../lib/plugin/RecentChanges.php:317 ../lib/plugin/Toolbar.php:87
+#: ../lib/plugin/Toolbar.php:105 ../lib/plugin/Toolbar.php:112
+#: ../templates/browse.html:40
+msgid "RecentChanges"
+msgstr ""
+
+#: ../lib/Toolbar.php:69 ../lib/main.php:26 ../lib/main.php:85
+#: ../lib/main.php:87 ../lib/plugin/RecentChanges.php:255
+msgid "HomePage"
+msgstr ""
+
 #: ../lib/main.php:99
 #, c-format
 msgid "Action %s is disabled in this wiki."
+msgstr ""
+
+#: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
+msgid "FullTextSearch"
+msgstr ""
+
+#: ../lib/Toolbar.php:208 ../lib/main.php:123
+#: ../lib/plugin/RecentChanges.php:263 ../lib/plugin/TitleSearch.php:12
+msgid "TitleSearch"
 msgstr ""
 
 #: ../lib/main.php:186
@@ -934,6 +285,415 @@ msgstr ""
 #: ../lib/main.php:220
 #, c-format
 msgid "Bad action: '%s'"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:10 ../templates/browse.html:45
+msgid "DebugInfo"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:14
+#, c-format
+msgid "Get debugging information for %s."
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:45
+#, c-format
+msgid "Querying backend directly for '%s'"
+msgstr ""
+
+#: ../lib/plugin/_BackendInfo.php:51
+#, c-format
+msgid "No pagedata for %s"
+msgstr ""
+
+#: ../lib/Toolbar.php:187 ../lib/Toolbar.php:188 ../lib/Toolbar.php:225
+#: ../lib/Toolbar.php:226 ../lib/plugin/BackLinks.php:9
+#: ../templates/browse.html:44 ../themes/MacOSX/templates/editpage.html:19
+msgid "BackLinks"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:13
+#, c-format
+msgid "Get BackLinks for %s"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:39 ../lib/plugin/MostPopular.php:28
+msgid "Page Name"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:57
+#, c-format
+msgid "These pages link to %s:"
+msgstr ""
+
+#: ../lib/plugin/BackLinks.php:57
+#, c-format
+msgid "No pages link to %s."
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
+msgid "Calendar"
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:56
+msgid "Previous Month"
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:60
+msgid "Next Month"
+msgstr ""
+
+#: ../lib/plugin/Calendar.php:115
+#, c-format
+msgid "Edit %s"
+msgstr ""
+
+#: ../lib/plugin/FullTextSearch.php:16
+msgid "Full Text Search"
+msgstr ""
+
+#: ../lib/plugin/FullTextSearch.php:52
+#, c-format
+msgid "Full text search results for '%s'"
+msgstr ""
+
+#: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
+msgid "<no matches>"
+msgstr ""
+
+#: ../lib/plugin/HelloWorld.php:23
+msgid "HelloWorld"
+msgstr ""
+
+#: ../lib/plugin/HelloWorld.php:27
+msgid "Simple Sample Plugin"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:15
+msgid "IncludePage"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:58 ../lib/plugin/walkabout.php:71
+#, c-format
+msgid "<%s: no such section>"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:71
+msgid "no page specified"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:78
+#, c-format
+msgid "recursive inclusion of page %s"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:87 ../lib/plugin/walkabout.php:122
+#, c-format
+msgid "%s(%d): no such revision"
+msgstr ""
+
+#: ../lib/plugin/IncludePage.php:111
+#, c-format
+msgid "Included from %s"
+msgstr ""
+
+#: ../lib/Toolbar.php:184 ../lib/Toolbar.php:185 ../lib/Toolbar.php:222
+#: ../lib/Toolbar.php:223 ../lib/plugin/LikePages.php:12
+#: ../templates/browse.html:43
+msgid "LikePages"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:16
+#, c-format
+msgid "List LikePages for %s"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:40
+#, c-format
+msgid "Page names with prefix '%s'"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:46
+#, c-format
+msgid "Page names with suffix '%s'"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:59
+#, c-format
+msgid "These pages share an initial or final title word with '%s'"
+msgstr ""
+
+#: ../lib/plugin/LikePages.php:96
+msgid "<none>"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:9
+msgid "MostPopular"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:13
+msgid "List the most popular pages"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:27
+msgid "Hits"
+msgstr ""
+
+#: ../lib/plugin/MostPopular.php:42
+#, c-format
+msgid "The %s most popular pages of this wiki:"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:71
+#, c-format
+msgid "PageHistory for %s"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:86
+msgid "Check any two boxes to compare revisions."
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:88
+msgid "compare revisions"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:90
+#, c-format
+msgid "Check any two boxes then %s."
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:144 ../lib/plugin/PageHistory.php:182
+#, c-format
+msgid "Version %d"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:174
+msgid "History of changes."
+msgstr ""
+
+#: ../lib/Toolbar.php:168 ../lib/Toolbar.php:169
+#: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:44
+#: ../templates/browse.html:37
+msgid "PageHistory"
+msgstr ""
+
+#: ../lib/plugin/PageHistory.php:204
+#, c-format
+msgid "List PageHistory for %s"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:86
+msgid "Deleted."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:88
+msgid "New page."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:100
+msgid "(diff)"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:126
+msgid "RSS available"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:136
+msgid "edits"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:138
+msgid "major edits"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:140
+msgid "minor edits"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:144
+#, c-format
+msgid "The %d most recent %s during the past %.1f days are listed below."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:147
+#, c-format
+msgid "The %d most recent %s are listed below."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:152
+#, c-format
+msgid "The most recent %s during the past %.1f days are listed below."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:155
+#, c-format
+msgid "All %s are listed below."
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:163 ../lib/plugin/Toolbar.php:87
+#: ../lib/plugin/Toolbar.php:107 ../lib/plugin/Toolbar.php:112
+msgid "RecentEdits"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:260
+msgid "Search"
+msgstr ""
+
+#: ../lib/plugin/RecentChanges.php:261 ../lib/plugin/TitleSearch.php:16
+msgid "Title Search"
+msgstr ""
+
+#: ../lib/plugin/text2png.php:37
+msgid "Sorry, this version of PHP cannot create PNG image files."
+msgstr ""
+
+#: ../lib/plugin/text2png.php:42
+#, c-format
+msgid "See %s"
+msgstr ""
+
+#: ../lib/plugin/text2png.php:89
+msgid ""
+"PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png."
+"php' for details."
+msgstr ""
+
+#: ../lib/plugin/text2png.php:141
+#, c-format
+msgid "Image saved to cache file: %s"
+msgstr ""
+
+#: ../lib/plugin/text2png.php:145
+#, c-format
+msgid "Image loaded from cache file: %s"
+msgstr ""
+
+#: ../lib/plugin/TitleSearch.php:48
+#, c-format
+msgid "Title search results for '%s'"
+msgstr ""
+
+#: ../lib/plugin/Toolbar.php:31
+msgid "Toolbar"
+msgstr ""
+
+#: ../lib/plugin/Toolbar.php:35
+#, c-format
+msgid "Toolbar for %s"
+msgstr ""
+
+#: ../lib/plugin/Toolbar.php:76 ../lib/plugin/walkabout.php:83
+#, c-format
+msgid "A required argument '%s' is missing."
+msgstr ""
+
+#: ../lib/plugin/Toolbar.php:106
+#, c-format
+msgid "Show changes for: %s"
+msgstr ""
+
+#: ../lib/plugin/Toolbar.php:108
+#, c-format
+msgid "Show minor edits for: %s"
+msgstr ""
+
+#: ../lib/plugin/Toolbar.php:116
+msgid "1 day"
+msgstr ""
+
+#: ../lib/plugin/Toolbar.php:117
+#, c-format
+msgid "%s days"
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:35
+#, c-format
+msgid "Your sysadmin has disallowed use of the %s plugin!"
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:41
+msgid "You should be logged in now."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:47
+#, c-format
+msgid "Before you can edit %s, you need to sign in."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:50
+msgid "The name you use to sign in must be in WikiWord format."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:55
+msgid "examples include: TomJefferson, AlexHamilton"
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:63
+msgid "Please re-enter your name in this form."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:71
+msgid ""
+"Please enter your name as WordsStrungTogether (e.g. John Smith as JohnSmith)."
+msgstr ""
+
+#: ../lib/plugin/UserPage.php:73
+msgid "Sign in:"
+msgstr ""
+
+#: ../lib/plugin/ViewSource.php:20 ../templates/browse.html:31
+msgid "ViewSource"
+msgstr ""
+
+#: ../lib/plugin/ViewSource.php:24
+#, c-format
+msgid "View Wiki code for page '%s'."
+msgstr ""
+
+#: ../lib/plugin/ViewSource.php:52 ../lib/stdlib.php:556
+#, c-format
+msgid "I'm sorry.  Version %d of %s is not in my database."
+msgstr ""
+
+#: ../lib/plugin/ViewSource.php:59
+#, c-format
+msgid "version %d of %s"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:33
+msgid "walkabout"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:37
+#, c-format
+msgid "walkabout for %s"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:44 ../lib/plugin/walkabout.php:92
+msgid "Contents"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:90
+msgid "Next"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:91
+msgid "Previous"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:93
+msgid "First"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:94
+msgid "Last"
+msgstr ""
+
+#: ../lib/plugin/walkabout.php:112 ../lib/plugin/walkabout.php:159
+#: ../lib/plugin/walkabout.php:165 ../lib/plugin/walkabout.php:177
+#: ../lib/plugin/walkabout.php:183
+#, c-format
+msgid "%s: %s"
 msgstr ""
 
 #: ../lib/prepend.php:31
@@ -959,205 +719,278 @@ msgstr ""
 msgid "Removed page '%s' succesfully."
 msgstr ""
 
+#: ../lib/Toolbar.php:164 ../lib/removepage.php:20
+msgid "Remove page"
+msgstr ""
+
+#: ../lib/savepage.php:31 ../lib/savepage.php:60
+msgid "Use your browser's <b>Back</b> button to go back to the edit page."
+msgstr ""
+
 #: ../lib/savepage.php:32
-#, c-format
-msgid "Problem while updating %s"
+msgid ""
+"Copy your changes to the clipboard or to another temporary place (e.g. text "
+"editor)."
 msgstr ""
 
 #: ../lib/savepage.php:33
+msgid ""
+"<b>Reload</b> the page. You should now see the most current version of the "
+"page. Your changes are no longer there."
+msgstr ""
+
+#: ../lib/savepage.php:34
+msgid ""
+"Make changes to the file again. Paste your additions from the clipboard (or "
+"text editor)."
+msgstr ""
+
+#: ../lib/savepage.php:35
+msgid "Press <b>Save</b> again."
+msgstr ""
+
+#: ../lib/savepage.php:43
 msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
 "changes from the previous author would be lost."
 msgstr ""
 
-#: ../lib/savepage.php:35
+#: ../lib/savepage.php:46
 msgid "In order to recover from this situation follow these steps:"
 msgstr ""
 
-#: ../lib/savepage.php:37 ../lib/savepage.php:55
-msgid "Use your browser's <b>Back</b> button to go back to the edit page."
-msgstr ""
-
-#: ../lib/savepage.php:39
-msgid ""
-"Copy your changes to the clipboard or to another temporary place (e.g. text "
-"editor)."
-msgstr ""
-
-#: ../lib/savepage.php:41
-msgid ""
-"<b>Reload</b> the page. You should now see the most current version of the "
-"page. Your changes are no longer there."
-msgstr ""
-
-#: ../lib/savepage.php:43
-msgid ""
-"Make changes to the file again. Paste your additions from the clipboard (or "
-"text editor)."
-msgstr ""
-
-#: ../lib/savepage.php:45
-msgid "Press <b>Save</b> again."
-msgstr ""
-
-#: ../lib/savepage.php:47 ../lib/savepage.php:59
+#: ../lib/savepage.php:50 ../lib/savepage.php:64
 msgid "Sorry for the inconvenience."
 msgstr ""
 
-#: ../lib/savepage.php:54
+#: ../lib/savepage.php:53
+#, c-format
+msgid "Problem while updating %s"
+msgstr ""
+
+#: ../lib/savepage.php:59
 msgid ""
 "This page has been locked by the administrator so your changes could not be "
 "saved."
 msgstr ""
 
-#: ../lib/savepage.php:56
+#: ../lib/savepage.php:61
 msgid ""
 "Copy your changes to the clipboard. You can try editing a different page or "
 "save your text in a text editor."
 msgstr ""
 
-#: ../lib/savepage.php:62
+#: ../lib/savepage.php:67
 #, c-format
 msgid "Problem while editing %s"
 msgstr ""
 
-#: ../lib/savepage.php:68
+#: ../lib/savepage.php:73
 #, c-format
 msgid "Edit aborted: %s."
 msgstr ""
 
-#: ../lib/savepage.php:70
+#: ../lib/savepage.php:75
 msgid "You have not made any changes."
 msgstr ""
 
-#: ../lib/savepage.php:71
+#: ../lib/savepage.php:76
 msgid "New version not saved."
 msgstr ""
 
-#: ../lib/savepage.php:77
+#: ../lib/savepage.php:82
 msgid "Bad form submission"
 msgstr ""
 
-#: ../lib/savepage.php:78
+#: ../lib/savepage.php:83
 msgid "Required form variables are missing."
 msgstr ""
 
-#: ../lib/savepage.php:80
+#: ../lib/savepage.php:85
 #, c-format
 msgid "Edit aborted: %s"
 msgstr ""
 
-#: ../lib/stdlib.php:90
-msgid "Printer"
+#: ../lib/Toolbar.php:399 ../lib/savepage.php:194
+#, c-format
+msgid "Thank you for editing %s."
 msgstr ""
 
-#: ../lib/stdlib.php:173 ../lib/stdlib.php:232
+#: ../lib/Toolbar.php:402 ../lib/savepage.php:197
+msgid "Your careful attention to detail is much appreciated."
+msgstr ""
+
+#: ../lib/Toolbar.php:406 ../lib/savepage.php:202
+msgid "Warning!"
+msgstr ""
+
+#: ../lib/stdlib.php:153 ../lib/stdlib.php:219
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:376
+#: ../lib/stdlib.php:363
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:495
+#: ../lib/stdlib.php:482
 #, c-format
 msgid "%d best incoming links:"
 msgstr ""
 
-#: ../lib/stdlib.php:505
+#: ../lib/stdlib.php:492
 #, c-format
 msgid "%d best outgoing links:"
 msgstr ""
 
-#: ../lib/stdlib.php:516
+#: ../lib/stdlib.php:503
 #, c-format
 msgid "%d most popular nearby:"
 msgstr ""
 
-#: ../lib/stdlib.php:567 ../lib/stdlib.php:573
+#: ../lib/stdlib.php:554 ../lib/stdlib.php:560
 msgid "Bad Version"
 msgstr ""
 
-#: ../lib/stdlib.php:726
+#: ../lib/stdlib.php:713
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:735
+#: ../lib/stdlib.php:722
 #, c-format
 msgid "%s: argument index out of range"
 msgstr ""
 
+#: ../lib/Template.php:353
+msgid "Printer"
+msgstr ""
+
+#: ../lib/Toolbar.php:92 ../templates/browse.html:70
+msgid "You are viewing an old revision of this page."
+msgstr ""
+
+#: ../lib/Toolbar.php:96 ../templates/browse.html:71
+msgid "View the current version"
+msgstr ""
+
+#: ../lib/Toolbar.php:115 ../templates/browse.html:50
+#, c-format
+msgid "Last edited on %s."
+msgstr ""
+
+#: ../lib/Toolbar.php:118 ../templates/browse.html:52
+#, c-format
+msgid "Version %s, saved on %s."
+msgstr ""
+
+#: ../lib/Toolbar.php:139
+msgid "Page locked"
+msgstr ""
+
+#: ../lib/Toolbar.php:144 ../templates/browse.html:29
+#: ../templates/editpage.html:23
+msgid "Edit"
+msgstr ""
+
+#: ../lib/Toolbar.php:149 ../templates/browse.html:29
+msgid "Edit old revision"
+msgstr ""
+
+#: ../lib/Toolbar.php:156
+msgid "Unlock page"
+msgstr ""
+
+#: ../lib/Toolbar.php:160
+msgid "Lock page"
+msgstr ""
+
+#: ../lib/Toolbar.php:174 ../lib/Toolbar.php:180
+msgid "Diff"
+msgstr ""
+
+#: ../lib/Toolbar.php:211 ../templates/browse.html:41
+msgid "FindPage"
+msgstr ""
+
+#: ../lib/Toolbar.php:215 ../lib/Toolbar.php:216 ../templates/browse.html:104
+#: ../themes/MacOSX/templates/browse.html:71
+msgid "Quick Search"
+msgstr ""
+
+#: ../lib/Toolbar.php:248 ../templates/browse.html:113
+#: ../themes/MacOSX/templates/browse.html:79
+#, c-format
+msgid "You are signed in as %s"
+msgstr ""
+
+#: ../lib/Toolbar.php:251
+msgid "SignOut"
+msgstr ""
+
+#: ../lib/Toolbar.php:255 ../lib/Toolbar.php:346
+#: ../themes/MacOSX/templates/editpage.html:59
+msgid "SignIn"
+msgstr ""
+
+#: ../lib/Toolbar.php:259 ../lib/Toolbar.php:260
+msgid "PhpWikiAdministration"
+msgstr ""
+
+#: ../lib/Toolbar.php:314 ../templates/editpage.html:26
+msgid "Preview only!  Changes not saved."
+msgstr ""
+
+#: ../lib/Toolbar.php:319 ../templates/editpage.html:31
+msgid "Warning: You are editing an old revision."
+msgstr ""
+
+#: ../lib/Toolbar.php:321 ../templates/editpage.html:32
+msgid "Saving this page will overwrite the current version."
+msgstr ""
+
+#: ../lib/Toolbar.php:340 ../templates/editpage.html:78
+#: ../themes/MacOSX/templates/editpage.html:56
+#, c-format
+msgid "You are signed in as %s."
+msgstr ""
+
+#: ../lib/Toolbar.php:342 ../templates/editpage.html:81
+#: ../themes/MacOSX/templates/editpage.html:58
+#, c-format
+msgid "Author will be logged as %s."
+msgstr ""
+
+#: ../lib/Toolbar.php:364 ../templates/editpage.html:107
+#, c-format
+msgid "You can change the size of the editing area in %s."
+msgstr ""
+
+#: ../lib/Toolbar.php:365 ../templates/editpage.html:108
+msgid "UserPreferences"
+msgstr ""
+
+#: ../lib/Toolbar.php:366 ../templates/editpage.html:109
+#, c-format
+msgid "See %s tips for editing."
+msgstr ""
+
+#: ../lib/Toolbar.php:367 ../templates/editpage.html:110
+msgid "GoodStyle"
+msgstr ""
+
+#: ../lib/Toolbar.php:383 ../templates/editpage.html:117
+#: ../themes/MacOSX/templates/editpage.html:67
+msgid "TextFormattingRules"
+msgstr ""
+
+#: ../lib/Toolbar.php:384 ../templates/editpage.html:117
+#: ../themes/MacOSX/templates/editpage.html:67
+msgid "Synopsis"
+msgstr ""
+
 #: ../lib/transform.php:108
 msgid "Lists nested too deep in SetHTMLOutputMode"
-msgstr ""
-
-#: ../lib/ziplib.php:184
-msgid "Can't inflate data: zlib support not enabled in this PHP"
-msgstr ""
-
-#: ../lib/ziplib.php:366
-#, c-format
-msgid "Can't open zip file '%s' for reading"
-msgstr ""
-
-#: ../lib/ziplib.php:373
-msgid "Unexpected EOF in zip file"
-msgstr ""
-
-#: ../lib/ziplib.php:398
-#, c-format
-msgid "Bad header type: %s"
-msgstr ""
-
-#: ../lib/ziplib.php:403
-msgid "Encryption and/or zip patches not supported."
-msgstr ""
-
-#: ../lib/ziplib.php:406
-msgid "Postponed CRC not yet supported."
-msgstr ""
-
-#: ../lib/ziplib.php:425
-#, c-format
-msgid "Compression method %s unsupported"
-msgstr ""
-
-#: ../lib/ziplib.php:429
-msgid "Uncompressed size mismatch"
-msgstr ""
-
-#: ../lib/ziplib.php:636
-#, c-format
-msgid "[%d] See [%s]"
-msgstr ""
-
-#: ../lib/ziplib.php:644
-msgid "References"
-msgstr ""
-
-#: ../lib/ziplib.php:666
-#, c-format
-msgid "Can't parse %s"
-msgstr ""
-
-#: ../lib/ziplib.php:721
-#, c-format
-msgid "Unknown %s"
-msgstr ""
-
-#: ../lib/WikiDB/backend/PearDB.php:26
-#, c-format
-msgid "Can't connect to database: %s"
-msgstr ""
-
-#: ../lib/WikiDB/backend/PearDB.php:57
-msgid "WARNING: database still locked"
-msgstr ""
-
-#: ../lib/WikiDB/backend/PearDB.php:711
-msgid "fatal database error"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:93
@@ -1284,11 +1117,6 @@ msgstr ""
 msgid "Not copying"
 msgstr ""
 
-#: ../lib/WikiDB/backend/dba.php:23
-#, c-format
-msgid "%s: Can't open dba database"
-msgstr ""
-
 #: ../lib/WikiDB/backend/dbaBase.php:330
 #, c-format
 msgid "Bad key in linktable: %s"
@@ -1309,9 +1137,204 @@ msgstr ""
 msgid "link entry missing for backlink %s"
 msgstr ""
 
+#: ../lib/WikiDB/backend/dba.php:23
+#, c-format
+msgid "%s: Can't open dba database"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:26
+#, c-format
+msgid "Can't connect to database: %s"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:57
+msgid "WARNING: database still locked"
+msgstr ""
+
+#: ../lib/WikiDB/backend/PearDB.php:711
+msgid "fatal database error"
+msgstr ""
+
 #: ../lib/WikiDB/dba.php:17
 #, c-format
 msgid ""
 "DBA files are in the %s directory. Please read the INSTALL file and move the "
 "DB file to a permanent location or risk losing all the pages!"
+msgstr ""
+
+#: ../lib/WikiDB.php:353
+#, c-format
+msgid "Attempt to delete most recent revision of '%s'"
+msgstr ""
+
+#: ../lib/WikiDB.php:401
+#, c-format
+msgid "Attempt to merge most recent revision of '%s'"
+msgstr ""
+
+#: ../lib/WikiDB.php:488
+#, c-format
+msgid "%s: Date of new revision is %s"
+msgstr ""
+
+#: ../lib/WikiDB.php:513
+#, c-format
+msgid "Optimizing %s"
+msgstr ""
+
+#: ../lib/WikiDB.php:837
+#, c-format
+msgid "Describe %s here."
+msgstr ""
+
+#: ../lib/WikiDB.php:872
+#, c-format
+msgid "Acck! Revision %s of %s seems to have been deleted!"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:64
+#, c-format
+msgid "argument '%s' not declared by plugin"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:112
+#, c-format
+msgid "trailing cruft in plugin args: '%s'"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:236 ../lib/ziplib.php:162 ../lib/ziplib.php:164
+#: ../lib/ziplib.php:166 ../lib/ziplib.php:578 ../lib/ziplib.php:675
+#, c-format
+msgid "Bad %s"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:275
+#, c-format
+msgid "Include of '%s' failed"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:276
+#, c-format
+msgid "%s: no such class"
+msgstr ""
+
+#: ../lib/WikiPlugin.php:282
+#, c-format
+msgid "%s: not a subclass of WikiPlugin"
+msgstr ""
+
+#: ../lib/WikiUser.php:97
+#, c-format
+msgid "to perform action '%s'"
+msgstr ""
+
+#: ../lib/WikiUser.php:99
+msgid "to do that"
+msgstr ""
+
+#: ../lib/WikiUser.php:100
+#, c-format
+msgid "You must be logged in as an administrator %s"
+msgstr ""
+
+#: ../lib/WikiUser.php:180
+msgid ""
+"You must set the administrator account and password before you can log in."
+msgstr ""
+
+#: ../lib/WikiUser.php:191
+msgid "You entered an invalid login or password."
+msgstr ""
+
+#: ../lib/WikiUser.php:194
+msgid "You can log in using any valid WikiWord as a user ID."
+msgstr ""
+
+#: ../lib/WikiUser.php:195
+msgid "(Any password will work, except, of course for the admin user.)"
+msgstr ""
+
+#: ../lib/ziplib.php:184
+msgid "Can't inflate data: zlib support not enabled in this PHP"
+msgstr ""
+
+#: ../lib/ziplib.php:366
+#, c-format
+msgid "Can't open zip file '%s' for reading"
+msgstr ""
+
+#: ../lib/ziplib.php:373
+msgid "Unexpected EOF in zip file"
+msgstr ""
+
+#: ../lib/ziplib.php:398
+#, c-format
+msgid "Bad header type: %s"
+msgstr ""
+
+#: ../lib/ziplib.php:403
+msgid "Encryption and/or zip patches not supported."
+msgstr ""
+
+#: ../lib/ziplib.php:406
+msgid "Postponed CRC not yet supported."
+msgstr ""
+
+#: ../lib/ziplib.php:425
+#, c-format
+msgid "Compression method %s unsupported"
+msgstr ""
+
+#: ../lib/ziplib.php:429
+msgid "Uncompressed size mismatch"
+msgstr ""
+
+#: ../lib/ziplib.php:636
+#, c-format
+msgid "[%d] See [%s]"
+msgstr ""
+
+#: ../lib/ziplib.php:644
+msgid "References"
+msgstr ""
+
+#: ../lib/ziplib.php:666
+#, c-format
+msgid "Can't parse %s"
+msgstr ""
+
+#: ../lib/ziplib.php:721
+#, c-format
+msgid "Unknown %s"
+msgstr ""
+
+#: ../templates/editpage.html:15 ../themes/MacOSX/templates/editpage.html:15
+#: ../themes/MacOSX/templates/editpage.html:19
+#, c-format
+msgid "Edit: %s"
+msgstr ""
+
+#: ../templates/editpage.html:71 ../themes/MacOSX/templates/editpage.html:51
+msgid "Preview"
+msgstr ""
+
+#: ../templates/editpage.html:75 ../themes/MacOSX/templates/editpage.html:52
+msgid "Save"
+msgstr ""
+
+#: ../templates/editpage.html:85
+msgid "backup and reload after signing in"
+msgstr ""
+
+#: ../templates/editpage.html:90 ../themes/MacOSX/templates/editpage.html:41
+msgid "Summary:"
+msgstr ""
+
+#: ../templates/editpage.html:95 ../themes/MacOSX/templates/editpage.html:48
+msgid "This is a minor change."
+msgstr ""
+
+#: ../themes/MacOSX/templates/editpage.html:20
+#, c-format
+msgid "Return to %s."
 msgstr ""
