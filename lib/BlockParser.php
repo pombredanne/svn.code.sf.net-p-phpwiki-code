@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.9 2002-01-28 18:49:08 dairiki Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.10 2002-01-28 19:56:23 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -356,8 +356,8 @@ class Block_blockquote extends CompoundBlock
     function _parse (&$input, $m) {
         $indent = $m->getMatch();
         $this->_depth = strlen($indent);
-        $this->_content = BlockParser::parse($input->subBlock($indent),
-                                             BLOCK_NOTIGHTEN_EITHER);
+        $this->_content[] = BlockParser::parse($input->subBlock($indent),
+                                               BLOCK_NOTIGHTEN_EITHER);
         return true;
     }
 
@@ -672,8 +672,8 @@ class Block_email_blockquote extends CompoundBlock
     function _parse (&$input, $m) {
         $prefix = $m->getMatch();
         $indent = "(?:$prefix|>(?=\s*?\n))";
-        $this->_content = BlockParser::parse($input->subBlock($indent),
-                                             BLOCK_NOTIGHTEN_EITHER);
+        $this->_content[] = BlockParser::parse($input->subBlock($indent),
+                                               BLOCK_NOTIGHTEN_EITHER);
         return true;
     }
 }
