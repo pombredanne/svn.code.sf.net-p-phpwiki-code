@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.1 2004-05-12 19:42:16 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.2 2004-06-03 12:30:38 rurban Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -102,10 +102,14 @@ _("UserPreferences"))?>" />
       $pagetitle = " - ". AsString($TITLE);
 ?>
 <title><?=WIKI_NAME.$pagetitle?></title>
+<?= $Theme->getMoreHeaders() ?>
 </head>
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/05/12 19:42:16  rurban
+// new Crao theme by Arnaud Fontaine and Laurent Lunati
+//
 // Revision 1.13  2003/12/05 15:36:39  carstenklapp
 // Improvements: to make it easier to run multiple wikis off of one set
 // of code, urls for link rel author and copyright now defined in

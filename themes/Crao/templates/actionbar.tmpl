@@ -1,12 +1,12 @@
 <?php // -*-php-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.1 2004-05-12 19:42:16 rurban Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.2 2004-06-03 12:30:38 rurban Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
   else
       $EditB = Button("viewsource", _("View Source"));
-
   $Sep = $Theme->getButtonSeparator();
+//MSIE needs sticky.js
 ?>
 <div <?= isBrowserIE() ? "class=ie-actionbuttons" : "id=actionbuttons"?>>
     <?= $EditB ?>
@@ -17,7 +17,7 @@
 <?=$Sep?><?= Button("PageHistory", _("PageHistory")) ?>
 <?=$Sep?><?= Button("diff") ?> 
 <?=$Sep?><?= Button("PageInfo", _("PageInfo")) ?>
-<?php if ((defined('DEBUG') and DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?> 
+<?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?> 
     	<!-- Buttons really only for debugging -->
 <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?>
 <?php $purgeb = Button(array('nocache' => 'purge'),

@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.46 2004-06-03 11:34:20 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.47 2004-06-03 12:30:38 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -46,12 +46,7 @@ $s = $Theme->getButtonSeparator();
  * This is needed, otherwise the redirect to the real browser
  * page won't work with some browsers. (NS4 and Mozilla 0.97 won't accept
  * a redirect from a page to itself.)
- *
- * <textarea wrap="virtual"> is not valid xhtml but Netscape 4 requires it
- * to wrap long lines.
- *
  */ ?>
-
 <form method="post" id="editpage" name="editpage"
       action="<?= $request->getPostURL() ?>"
       accept-charset="<?=CHARSET?>">
