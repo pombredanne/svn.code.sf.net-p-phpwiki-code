@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.85 2004-12-06 19:49:56 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.86 2004-12-11 14:50:15 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -35,7 +35,7 @@ class PageEditor
         
         $this->tokens = array();
         
-        $version = $request->getArg('version');
+       $version = $request->getArg('version');
         if ($version !== false) {
             $this->selected = $this->page->getRevision($version);
             $this->version = $version;
@@ -119,6 +119,8 @@ class PageEditor
             	     HTML::p(HTML::em(_("&version=-1 might help."))));
         }
 
+        if ($this->editaction == 'edit_convert')
+            $tokens['PREVIEW_CONTENT'] = $this->getConvertedPreview();
         if ($this->editaction == 'preview')
             $tokens['PREVIEW_CONTENT'] = $this->getPreview(); // FIXME: convert to _MESSAGE?
 
@@ -595,11 +597,19 @@ function undo_save() {
 	return new TransformedText($this->page, $this->_content, $this->meta);
     }
 
+    function getConvertedPreview () {
+        include_once('lib/PageType.php');
+        $this->_content = $this->getContent();
+        $this->meta['markup'] = 2.0;
+        $this->_content = ConvertOldMarkup($this->_content);
+	return new TransformedText($this->page, $this->_content, $this->meta);
+    }
+
     // possibly convert HTMLAREA content back to Wiki markup
     function getContent () {
         if (USE_HTMLAREA) {
             $xml_output = Edit_HtmlArea_ConvertAfter($this->_content);
-            $this->_content = join("",$xml_output->_content);
+            $this->_content = join("", $xml_output->_content);
             return $this->_content;
         } else {
             return $this->_content;
@@ -709,7 +719,7 @@ function undo_save() {
                                 'checked' => $this->meta['markup'] < 2.0,
                                 'id' => 'useOldMarkup',
                                 'onclick' => 'showOldMarkupRules(this.checked)'));
-
+        $el['OLD_MARKUP_CONVERT'] = ($this->meta['markup'] < 2.0) ? Button('submit:edit[edit_convert]', _("Convert"), 'wikiaction') : '';
         $el['LOCKED_CB']
             = HTML::input(array('type' => 'checkbox',
                                 'name' => 'edit[locked]',
@@ -766,6 +776,8 @@ function undo_save() {
             $this->editaction = 'preview';
         elseif (!empty($posted['save']))
             $this->editaction = 'save';
+        elseif (!empty($posted['edit_convert']))
+            $this->editaction = 'edit_convert';
         else
             $this->editaction = 'edit';
 
@@ -848,6 +860,8 @@ extends PageEditor
             $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage();
         }
 
+        if ($this->editaction == 'edit_convert')
+            $tokens['PREVIEW_CONTENT'] = $this->getConvertedPreview();
         if ($this->editaction == 'preview')
             $tokens['PREVIEW_CONTENT'] = $this->getPreview(); // FIXME: convert to _MESSAGE?
 
@@ -890,6 +904,14 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.85  2004/12/06 19:49:56  rurban
+ enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+ renamed delete_page to purge_page.
+ enable action=edit&version=-1 to force creation of a new version.
+ added BABYCART_PATH config
+ fixed magiqc in adodb.inc.php
+ and some more docs
+
  Revision 1.84  2004/12/04 12:58:26  rurban
  enable babycart Blog::SpamAssassin module on ENABLE_SPAMASSASSIN=true
  (currently only for php >= 4.3.0)
