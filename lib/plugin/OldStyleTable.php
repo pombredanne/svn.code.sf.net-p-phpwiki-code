@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OldStyleTable.php,v 1.2 2002-09-17 19:19:53 dairiki Exp $');
+rcs_id('$Id: OldStyleTable.php,v 1.3 2002-10-29 01:12:24 carstenklapp Exp $');
 /**
  * OldStyleTable: Layout tables using the old table style.
  * 
@@ -61,7 +61,6 @@ extends WikiPlugin
         preg_match_all('/(\|+)(v*)([<>^]?)\s*(.*?)\s*(?=\||$)/',
                        $line, $matches, PREG_SET_ORDER);
 
-        $NBSP = new RawXml('&nbsp;');
         $row = HTML::tr();
         
         foreach ($matches as $m) {
@@ -83,7 +82,7 @@ extends WikiPlugin
             $content = TransformInline($m[4]);
             
             $row->pushContent(HTML::td($attr,
-                                       $NBSP, $content, $NBSP));
+                                       HTML::nbsp(), $content, HTML::nbsp()));
         }
         return $row;
     }

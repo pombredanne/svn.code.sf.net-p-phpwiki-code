@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.17 2002-09-09 08:38:19 rurban Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.18 2002-10-29 01:12:24 carstenklapp Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -71,17 +71,19 @@ extends WikiPlugin
             if (is_string($val) and (substr($val,0,2) == 'a:')) {
                 // how to indent this table?
                 $val = unserialize($val);
-                $rows[] = $this->_showhash (NBSP . NBSP . "get_pagedata('$pagename')['$key']" , $val);
+                $rows[] = HTML(HTML::nbsp(), HTML::nbsp(),
+                               $this->_showhash ("get_pagedata('$pagename')['$key']",
+                                                 $val));
             } else {
                 if ($key == 'passwd' and ! $request->_user->isAdmin())
                     $val = $val ? _("<not displayed>") : _("<empty>");
                 $rows[] = HTML::tr(HTML::td(array('align' => 'right',
                                                   'bgcolor' => '#cccccc',
                                                   'style' => 'color:#000000'),
-                                            NBSP . $key . NBSP),
+                                            HTML(HTML::nbsp(), $key, HTML::nbsp())),
                                HTML::td(array('bgcolor' => '#ffffff',
                                               'style' => 'color:#000000'),
-                                        $val ? $val : NBSP));
+                                        $val ? $val : HTML::nbsp()));
             }
         }
         return $rows;

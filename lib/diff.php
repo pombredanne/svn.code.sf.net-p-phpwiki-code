@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.38 2002-03-21 21:24:49 lakka Exp $');
+rcs_id('$Id: diff.php,v 1.39 2002-10-29 01:12:24 carstenklapp Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -47,7 +47,7 @@ class _HWLDF_WordAccumulator {
             if (!$word)
                 continue;
             if ($word[0] == "\n") {
-                $this->_group .= NBSP;
+                $this->_group .= "&nbsp;"; // FIXME to use HTML::nbsp()
                 $this->_flushLine($tag);
                 $word = substr($word, 1);
             }
@@ -143,7 +143,9 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
         unset($this->_block);
     }
 
-    function _lines($lines, $class, $prefix = NBSP, $elem = false) {
+    function _lines($lines, $class, $prefix = false, $elem = false) {
+        if (!$prefix)
+            $prefix = HTML::nbsp();
         foreach ($lines as $line) {
             if ($elem)
                 $line = new HtmlElement($elem, $line);
@@ -151,7 +153,7 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
             $this->_block->pushContent(HTML::div(array('class' => $class),
                                                  HTML::tt(array('class' => 'prefix'),
                                                           $prefix),
-                                                 $line, NBSP));
+                                                 $line, HTML::nbsp()));
         }
     }
 
@@ -212,11 +214,13 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
         unset($this->_block);
     }
 
-    function _lines($lines, $class, $prefix = NBSP, $elem = false) {
+    function _lines($lines, $class, $prefix = false, $elem = false) {
+        if (!$prefix)
+            $prefix = HTML::nbsp();
         $prefix = HTML::td(array('class' => 'prefix', 'width' => "1%"), $prefix);
         foreach ($lines as $line) {
             if (! trim($line))
-                $line = NBSP;
+                $line = HTML::nbsp();
             elseif ($elem)
                 $line = new HtmlElement($elem, $line);
 	    $this->_block->pushContent(HTML::tr(array('valign' => 'top'), 
