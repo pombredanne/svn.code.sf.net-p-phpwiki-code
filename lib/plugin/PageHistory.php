@@ -1,5 +1,26 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.22 2002-12-15 01:55:30 carstenklapp Exp $');
+rcs_id('$Id: PageHistory.php,v 1.23 2003-01-04 23:27:39 carstenklapp Exp $');
+
+/**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -205,14 +226,14 @@ extends _RecentChanges_RssFormatter
         if (!($title = $this->summary($rev)))
             $title = sprintf(_("Version %d"), $rev->getVersion());
 
-        return array( 'title'		=> $title,
-                      'link'		=> $this->pageURL($rev),
-                      'dc:date'		=> $this->time($rev),
-                      'dc:contributor'	=> $rev->get('author'),
-                      'wiki:version'	=> $rev->getVersion(),
+        return array( 'title'           => $title,
+                      'link'            => $this->pageURL($rev),
+                      'dc:date'         => $this->time($rev),
+                      'dc:contributor'  => $rev->get('author'),
+                      'wiki:version'    => $rev->getVersion(),
                       'wiki:importance' => $this->importance($rev),
-                      'wiki:status'	=> $this->status($rev),
-                      'wiki:diff'	=> $this->diffURL($rev),
+                      'wiki:status'     => $this->status($rev),
+                      'wiki:diff'       => $this->diffURL($rev),
                       );
     }
 }
@@ -228,13 +249,18 @@ extends WikiPlugin_RecentChanges
         return sprintf(_("List PageHistory for %s"),'[pagename]');
     }
 
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.23 $");
+    }
+
     function getDefaultArguments() {
-        return array('days'		=> false,
-                     'show_minor'	=> true,
-                     'show_major'	=> true,
-                     'limit'		=> false,
-                     'page'		=> '[pagename]',
-                     'format'		=> false);
+        return array('days'         => false,
+                     'show_minor'   => true,
+                     'show_major'   => true,
+                     'limit'        => false,
+                     'page'         => '[pagename]',
+                     'format'       => false);
     }
 
     function getDefaultFormArguments() {
@@ -274,13 +300,21 @@ extends WikiPlugin_RecentChanges
 
     function run ($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
-        if (empty($args['page']))
+        $pagename = $args['page'];
+        if (empty($pagename))
             return $this->makeForm("", $request);
+
+        if (! $dbi->isWikiPage($pagename))
+            return HTML(HTML::p(fmt("I'm sorry, there is no such page as %s.",
+                                    WikiLink($pagename, 'unknown'))),
+                        $this->makeForm("", $request));
         // Hack alert: format() is a NORETURN for rss formatters.
 
         return $this->format($this->getChanges($dbi, $args), $args);
     }
 };
+
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:
