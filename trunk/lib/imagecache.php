@@ -1,11 +1,23 @@
-<?php // -*-php-*-
-// +---------------------------------------------------------------------+
-// | imagecache.php                                                      |
-// +---------------------------------------------------------------------+
-// | Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)            |
-// | You may copy this code freely under the conditions of the GPL       |
-// +---------------------------------------------------------------------+
+<?php rcs_id('$Id: imagecache.php,v 1.2 2002-08-18 12:34:14 rurban Exp $');
+/*
+ Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
+ This file is (not yet) part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */ 
 /**
  * Gets an image from the cache and prints it to the browser.
  * This file belongs to WikiPluginCached.
@@ -48,7 +60,7 @@ function deduce_pagename ($request) {
  * produce an image. Furthermore, allow the usage of Apache's
  * ErrorDocument mechanism in order to make this file only called when 
  * image could not be found in the cache.
- * (see PHPWIKI-CACHE.README for further information).
+ * (see doc/README.phpwiki-cache for further information).
  */
 function mainImageCache() {
     $request = new Request;   

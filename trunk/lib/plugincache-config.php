@@ -1,16 +1,28 @@
-<?php // -*-php-*-
-// +---------------------------------------------------------------------+
-// | plugincache-config.php                                              |
-// +---------------------------------------------------------------------+
-// | Configuration file for the cache usage of WikiPluginCached          |
-// |                                                                     |
-// | Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)            |
-// | You may copy this code freely under the conditions of the GPL       |
-// +---------------------------------------------------------------------+
+<?php rcs_id('$Id: plugincache-config.php,v 1.2 2002-08-18 12:34:14 rurban Exp $');
+/*
+ Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
+ This file is (not yet) part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */ 
 /**
+ * Configuration file for the cache usage of WikiPluginCached
  * Parameters for the cache configuration of WikiPluginCached and
  * all plugins derived from this class.
+ * Esp. check $CacheParams['cache_dir'] and $CacheParams['cacheurl']
  *
  * @author  Johannes Große
  * @version 0.8
@@ -80,6 +92,7 @@ global $CacheParams;
 $CacheParams = array(
     // db settings (database='file' is the fastest)
         'database'        => 'file',
+    // the webserver muist have write access to this dir!
         'cache_dir'       => (substr(PHP_OS,0,3) == 'WIN') 
 	                       ? ($GLOBALS['HTTP_ENV_VARS']['TEMP'] . "\\cache\\")
 	                       : '/tmp/cache/',

@@ -1,13 +1,31 @@
-<?php // -*-php-*-
-// +---------------------------------------------------------------------+
-// | WikiPluginCached.php                                                |
-// +---------------------------------------------------------------------+
-// | Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)            |
-// | You may copy this code freely under the conditions of the GPL       |
-// +---------------------------------------------------------------------+
-// | You should set up the options in plugincache-config.php             |
-// | $ pear install http://pear.php.net/get/Cache                        |
-// +---------------------------------------------------------------------+
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.2 2002-08-18 12:34:14 rurban Exp $');
+/*
+ Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
+
+ This file is (not yet) part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */ 
+
+/**
+ * You should set up the options in plugincache-config.php
+ * $ pear install http://pear.php.net/get/Cache
+ * This file belongs to WikiPluginCached.
+ * @author  Johannes Große
+ * @version 0.8
+ */
 
 require_once "lib/WikiPlugin.php";
 require_once "lib/plugincache-config.php";
