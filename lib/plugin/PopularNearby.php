@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PopularNearby.php,v 1.2 2004-04-29 23:25:12 rurban Exp $');
+rcs_id('$Id: PopularNearby.php,v 1.3 2004-05-01 11:41:09 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -50,7 +50,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -83,9 +83,10 @@ extends WikiPlugin
                 $header = sprintf(_("%d most popular nearby: "),$limit); 
             $inlinks = $page->getLinks();
             $outlinks = $page->getLinks('reversed');
+            // array_merge doesn't sort out duplicate page objects here.
             $links = $this->sortedLinks(array_merge($inlinks->asArray(),
                                                     $outlinks->asArray()),
-                                        false,$limit);
+                                        false, $limit);
             break;
         }
         $html = HTML($header);
@@ -111,7 +112,10 @@ extends WikiPlugin
     function sortedLinks($pages, $direction=false, $limit=5) {
     	$links = array();
         if (is_array($pages)) {
+            $already = array(); // need special duplicate check
             foreach ($pages as $page) {
+                if (isset($already[$page->_pagename])) continue;
+                else $already[$page->_pagename] = 1;
                 // just the number of hits
                 $hits = $page->get('hits');
                 if (!$hits) continue;
@@ -140,19 +144,28 @@ extends WikiPlugin
 
     function sortByHits($links) {
         if (!$links) return array();
-        usort($links,array('WikiPlugin_PopularNearby','cmp_hits'));
+        if (check_php_version(4,1,0)) // new sort algorithm
+            usort($links,array('WikiPlugin_PopularNearby','cmp_hits'));
+        else    
+            uksort($links,'WikiPlugin_PopularNearby::cmp_hits');
         reset($links);
         return $links;
     }
 
     function cmp_hits($a, $b) {
-        return ($a['hits'] < $b['hits']) ? 1 : ($a['hits'] == $b['hits']) ? 0 : -1;
+    	if ($a['hits'] == $b['hits']) return 0;
+        return $a['hits'] < $b['hits'] ? 1 : -1;
     }
 
 
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/04/29 23:25:12  rurban
+// re-ordered locale init (as in 1.3.9)
+// fixed loadfile with subpages, and merge/restore anyway
+//   (sf.net bug #844188)
+//
 // Revision 1.1  2004/04/29 18:32:38  rurban
 // Re-implement the classic phpwiki-1.2 feature of the
 //  * 5 best incoming links: xx, xx, xx, ...
