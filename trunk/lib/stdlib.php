@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.152 2003-11-30 18:20:34 carstenklapp Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.153 2003-11-30 18:43:18 carstenklapp Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1112,7 +1112,7 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
     if (preg_match('/[\?\*]/',$input)) {
         // Optimizing loop invariants:
         // http://phplens.com/lens/php-book/optimizing-debugging-php.php
-        for ($i = 0; $max = $i < sizeof($list); $i < $max; $i++) {
+        for ($i = 0, $max = sizeof($list); $i < $max; $i++) {
             $f = $list[$i];
             if (preg_match('/[\?\*]/',$f)) {
             	reset($allnames);
@@ -1331,6 +1331,9 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.152  2003/11/30 18:20:34  carstenklapp
+// Minor code optimization: reduce invariant loops
+//
 // Revision 1.151  2003/11/29 19:30:01  carstenklapp
 // New function ByteFormatter.
 //
