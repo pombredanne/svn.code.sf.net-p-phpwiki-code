@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.10 2001-02-07 16:38:33 ahollosi Exp $');
+<?php rcs_id('$Id: transform.php,v 1.11 2001-02-07 17:21:33 ahollosi Exp $');
 
 define('WT_TOKENIZER', 1);
 define('WT_SIMPLE_MARKUP', 2);
@@ -265,6 +265,8 @@ of tokenized strings is done by do_transform().
    // emulate typical HTML linking as well as Wiki linking.
    function wtt_bracketlinks($line, &$trfrm)
    {
+      static $footnotes = array();
+
       // protecting [[
       $n = $ntok = $trfrm->tokencounter;
       $line = wt_tokenize($line, '\[\[', $trfrm->replacements, $ntok);
@@ -276,7 +278,18 @@ of tokenized strings is done by do_transform().
       $line = wt_tokenize($line, '\[.+?\]', $trfrm->replacements, $ntok);
       while ($n < $ntok) {
 	$link = ParseAndLink($trfrm->replacements[$n]);
-	$trfrm->replacements[$n++] = $link['link'];
+	if (strpos($link['type'], 'footnote') === false) {
+	   $trfrm->replacements[$n] = $link['link'];
+	} else {
+	   $ftnt = $link['link'];
+	   if (isset($footnotes[$ftnt])) {
+	      $trfrm->replacements[$n] = "<A NAME=\"footnote-$ftnt\"></A><A HREF=\"#footnote-rev-$ftnt\">[$ftnt]</A>";
+	   } else { // first encounter of [x]
+	      $trfrm->replacements[$n] = "<A NAME=\"footnote-rev-$ftnt\"></A><SUP><A HREF=\"#footnote-$ftnt\">[$ftnt]</A></SUP>";
+	      $footnotes[$ftnt] = 1;
+	   }
+	}
+	$n++;
       }
 
       $trfrm->tokencounter = $ntok;
