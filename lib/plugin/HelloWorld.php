@@ -1,21 +1,26 @@
 <?php // -*-php-*-
-rcs_id('$Id: HelloWorld.php,v 1.3 2001-12-15 10:54:49 carstenklapp Exp $');
+rcs_id('$Id: HelloWorld.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
 /**
  * A simple demonstration WikiPlugin.
  */
 class WikiPlugin_HelloWorld
 extends WikiPlugin
 {
-    var $name = "HelloWorld";
-    var $description = "PhpWiki";
-    
-    function getDefaultArguments() {
-        return array('salutation'	=> 'Hello,',
-                     'name'			=> 'World');
+    function getName () {
+        return _("HelloWorld");
     }
 
-    function run($argstr) {
-        extract($this->parseArgs($argstr));
+    function getDescription () {
+        return _("Simple Sample Plugin");
+    }
+    
+    function getDefaultArguments() {
+        return array('salutation'	=> "Hello,",
+                     'name'		=> "World");
+    }
+
+    function run($dbi, $argstr, $request) {
+        extract($this->getArgs($argstr, $request));
         
         return sprintf("<tt>%s %s</tt>", $salutation, $name);
     }

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.10 2001-12-15 17:03:45 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.11 2001-12-16 18:33:25 dairiki Exp $');
 /**
  */
 
@@ -303,9 +303,10 @@ extends _RecentChanges_Formatter
 class WikiPlugin_RecentChanges
 extends WikiPlugin
 {
-    var $name = 'RecentChanges';
-    var $description = 'RecentChanges';
-    
+    function getName () {
+        return _("RecentChanges");
+    }
+
     function getDefaultArguments() {
         return array('days'		=> 2,
                      'show_minor'	=> false,

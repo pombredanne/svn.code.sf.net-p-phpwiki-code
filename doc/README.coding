@@ -1,49 +1,68 @@
+$Id: README.coding,v 1.2 2001-12-16 18:33:25 dairiki Exp $
+
 Here are the coding guidelines for PhpWiki.
 
-! Follow the style of the PEAR Coding Standards: 
+!!! Code Indentation Style
+
+We follow, for the most part, the PEAR coding standards:
+
 * http://www.php.net/manual/en/pear.standards.php
+
 There's code snippets for configuring Emacs and Vim as well as several
-other text editors.
+other text editors at the above URL.
 
-! I18N: Using gettext()
-
-String literals which end up making it into the HTML output should be wrapped
-with a call to ''gettext()''.  This allows translations to be substituted when 
-PhpWiki is run in non-english environments.
-
-It is important that the argument of ''gettext()'' be a constant string
-literal, in double quotes (").
-
- OKAY:  gettext("This is a message.");
- OKAY:  gettext ("Fazool."); 
- OKAY:  sprintf(gettext("Hello %s"), $name);
-
- BAD:   gettext('This will be ignored by xgettext.');
- BAD:   gettext("Howdy" . ", wazoo");
- BAD:   gettext("Hello $name");
- BAD:   define("MES", "howdy");  gettext(MES);
+!! Emacs Users
 
 For editing files in Emacs, set indent-tabs-mode to nil. Some people
 argue that it's better to use tabs and let people set their tab width,
 but I think we're better off using just spaces because aligned
 comments in the right region will not align correctly. For a detailed
 argument see http://www.jwz.org/doc/tabs-vs-spaces.html.
+Also use a tab-width of eight, so that just in case tabs do creep
+into the source code, they have a standard width.
 
 Use php-mode as well. This is freely available on the net
-(http://www.ontosys.com/src/php-mode.el). Put something like this
+(http://sourceforge.net/projects/php-mode/). Put something like this
 in your .emacs file:
 
- (load "your-path-to-lisp-files/php-mode")
- (setq auto-mode-alist
-       (append '(
-                 ("\\.php\\d?\\'" . php-mode)) auto-mode-alist))
+ (autoload 'php-mode "php-mode" "PHP editing mode" t)
+ (add-to-list 'auto-mode-alist '("\\.php\\d?$" . php-mode))
+ (add-hook 'php-mode-hook
+	   (lambda ()
+	     (c-set-style "gnu")
+	     ;; This syntax table mod makes the second line in:
+	     ;; 
+	     ;;   function( $arg1,
+	     ;;             $arg2 );
+	     ;;
+	     ;; Line up correctly.
+	     ;;
+	     (modify-syntax-entry ?$ "'" php-mode-syntax-table)
+	     (set (make-local-variable 'tab-width) 8)
+	     (set (make-local-variable 'c-basic-offset) 4)
+	     (set (make-local-variable 'c-hanging-comment-ender-p) 'nil)
+	     (set (make-local-variable 'indent-tabs-mode) 'nil)))
 
-so when you open .php files in Emacs it will start PHP mode
-automatically.
 
-There is another php-mode.el I have not tried:
-http://sourceforge.net/projects/php-mode/
+!!! I18N: Using gettext()
 
-I'm sure Vim has a similar mode, if someone would let us know I'll add
-it to this README.
+String literals which end up making it into the HTML output should be wrapped
+with a call to ''gettext()''.  This allows translations to be substituted when 
+PhpWiki is run in non-english environments.
 
+Since xgettext (part of the "GNU gettext utilities") is used to find strings
+for translation, It is important that the argument of ''gettext()'' be a constant
+string literal, in double quotes (").
+
+(You can now use _("foo") as an alias for gettext("foo").)
+
+ OKAY:  gettext("This is a message.");
+ OKAY:  _("Fazool."); 
+ OKAY:  sprintf(gettext("Hello %s"), $name);
+ OKAY:  sprintf(_("Hello %s"), $name);
+
+ BAD:   gettext('This will be ignored by xgettext.');
+ BAD:   _("Howdy" . ", wazoo");
+ BAD:   gettext("Hello $name");
+ BAD:   define("MES", "howdy");  gettext(MES);
+ BAD:   gettext($string);

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.20 2001-12-15 02:40:42 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.21 2001-12-16 18:33:25 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -169,16 +169,15 @@ function PageInfoRow ($pagename, $label, $rev)
        $url = WikiURL($pagename, array('version' => $rev->getVersion()));
        $linked_version = QElement('a', array('href' => $url), $rev->getVersion());
        $cols .= Element('td',
-                        gettext("version") . " " . $linked_version);
+                        _("version") . " " . $linked_version);
 
        $cols .= QElement('td',
-                         sprintf(gettext ("last modified on %s"),
+                         sprintf(_("last modified on %s"),
                                  strftime($datetimeformat, $rev->get('mtime'))));
        $cols .= QElement('td',
-                         sprintf(gettext ("by %s"), $rev->get('author')));
+                         sprintf(_("by %s"), $rev->get('author')));
    } else {
-       $cols .= QElement('td', array('colspan' => '3'),
-                         gettext ("None"));
+       $cols .= QElement('td', array('colspan' => '3'), _("None"));
    }
    return Element('tr', $cols);
 }
@@ -199,17 +198,17 @@ function showDiff ($dbi, $request) {
     if ($version) {
         if (!($new = $page->getRevision($version)))
             NoSuchRevision($page, $version);
-        $new_version = sprintf(gettext("version %d"), $version);
+        $new_version = sprintf(_("version %d"), $version);
     }
     else {
         $new = $page->getCurrentRevision();
-        $new_version = gettext('current version');
+        $new_version = _("current version");
     }
 
     if (preg_match('/^\d+$/', $previous)) {
         if ( !($old = $page->getRevision($previous)) )
             NoSuchRevision($page, $previous);
-        $old_version = sprintf(gettext("version %d"), $previous);
+        $old_version = sprintf(_("version %d"), $previous);
         $others = array('major', 'minor', 'author');
     }
     else {
@@ -220,7 +219,7 @@ function showDiff ($dbi, $request) {
                 if (! $old->get('is_minor_edit'))
                     break;
             }
-            $old_version = gettext("previous major revision");
+            $old_version = _("previous major revision");
             $others = array('minor', 'author');
             break;
         case 'author':
@@ -229,14 +228,14 @@ function showDiff ($dbi, $request) {
                 if ($old->get('author') != $new->get('author'))
                     break;
             }
-            $old_version = gettext("revision by previous author");
+            $old_version = _("revision by previous author");
             $others = array('major', 'minor');
             break;
         case 'minor':
         default:
             $previous='minor';
             $old = $page->getRevisionBefore($new);
-            $old_version = gettext("previous revision");
+            $old_version = _("previous revision");
             $others = array('major', 'author');
             break;
         }
@@ -249,13 +248,13 @@ function showDiff ($dbi, $request) {
     $page_link = LinkExistingWikiWord($pagename);
     
     $html = Element('p',
-                    sprintf(htmlspecialchars(gettext("Differences between %s and %s of %s.")),
+                    sprintf(htmlspecialchars(_("Differences between %s and %s of %s.")),
                             $new_link, $old_link, $page_link));
 
     $otherdiffs='';
-    $label = array('major' => gettext("Previous Major Revision"),
-                   'minor' => gettext("Previous Revision"),
-                   'author'=> gettext("Previous Author"));
+    $label = array('major' => _("Previous Major Revision"),
+                   'minor' => _("Previous Revision"),
+                   'author'=> _("Previous Author"));
     foreach ($others as $other) {
         $args = array('action' => 'diff', 'previous' => $other);
         if ($version)
@@ -265,7 +264,7 @@ function showDiff ($dbi, $request) {
                                       $label[$other]);
     }
     $html .= Element('p',
-                     htmlspecialchars(gettext("Other diffs:"))
+                     htmlspecialchars(_("Other diffs:"))
                      . $otherdiffs);
             
             
@@ -273,8 +272,8 @@ function showDiff ($dbi, $request) {
         $old = false;
     
     $html .= Element('table',
-                    PageInfoRow($pagename, gettext ("Newer page:"), $new)
-                    . PageInfoRow($pagename, gettext ("Older page:"), $old));
+                    PageInfoRow($pagename, _("Newer page:"), $new)
+                    . PageInfoRow($pagename, _("Older page:"), $old));
 
 
     if ($new && $old) {
@@ -282,7 +281,7 @@ function showDiff ($dbi, $request) {
         
         if ($diff->isEmpty()) {
             $html .= Element('hr');
-            $html .= QElement('p', '[' . gettext ("Versions are identical") . ']');
+            $html .= QElement('p', '[' . _("Versions are identical") . ']');
         }
         else {
             // New CSS formatted unified diffs (ugly in NS4).
@@ -296,7 +295,7 @@ function showDiff ($dbi, $request) {
     
     include_once('lib/Template.php');
     echo GeneratePage('MESSAGE', $html,
-                      sprintf(gettext ("Diff: %s"), $pagename));
+                      sprintf(_("Diff: %s"), $pagename));
 }
   
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.5 2001-12-16 11:52:35 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.6 2001-12-16 18:33:25 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -14,12 +14,27 @@ class WikiPlugin
                       E_USER_ERROR);
     }
 
+    /**
+     * Get name of plugin.
+     *
+     * This is used (by default) by getDefaultLinkArguments and
+     * getDefaultFormArguments to compute the default link/form
+     * targets.
+     *
+     * If you want to gettextify the name (probably a good idea),
+     * override this method in your plugin class, like:
+     * <pre>
+     *   function getName() { return _("MyPlugin"); }
+     * </pre>
+     *
+     * @return string plugin name/target.
+     */
     function getName() {
-        return gettext($this->name);
+        return preg_replace('/^.*_/', '',  get_class($this));
     }
 
     function getDescription() {
-        return gettext($this->description);
+        return $this->getName();
     }
 
     

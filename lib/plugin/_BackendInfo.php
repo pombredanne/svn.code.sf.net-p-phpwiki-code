@@ -1,13 +1,18 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.2 2001-12-15 10:54:31 carstenklapp Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.3 2001-12-16 18:33:25 dairiki Exp $');
 require_once('lib/Template.php');
 /**
  */
 class WikiPlugin__BackendInfo
 extends WikiPlugin
 {
-    var $name = '_BackendInfo';
-    var $description = "Get debugging information for [pagename].";
+    function getName () {
+        return _("DebugInfo");
+    }
+
+    function getDescription () {
+        return _("Get debugging information for [pagename].");
+    }
     
     function WikiPlugin__BackendInfo() {
         $this->_hashtemplate = new Template('
@@ -37,13 +42,13 @@ extends WikiPlugin
         $backend = &$dbi->_backend;
 
         $html = QElement('h3',
-                         "Querying backend directly for '$page'");
+                         sprintf(_("Querying backend directly for '%s'"), $page));
 
         
         $rows = '';
         $pagedata = $backend->get_pagedata($page);
         if (!$pagedata)
-            $html .= QElement('p', "No pagedata for $page\n");
+            $html .= QElement('p', sprintf(_("No pagedata for %s\n"), $page));
         else {
             ksort($pagedata);
             $rows .= $this->_hashtemplate->

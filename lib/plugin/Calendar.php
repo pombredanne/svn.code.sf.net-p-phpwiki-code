@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.3 2001-12-15 10:54:40 carstenklapp Exp $');
+rcs_id('$Id: Calendar.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -20,9 +20,14 @@ if (!defined('SECONDS_PER_DAY'))
 class WikiPlugin_Calendar
 extends WikiPlugin
 {
-    var $name = 'Calendar';
-    var $description = 'Calendar';
-  
+    function getName () {
+        return _("Calendar");
+    }
+
+    function getDescription () {
+        return _("Calendar");
+    }
+    
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?
         return array('prefix'		=> '[pagename]:',
@@ -106,7 +111,7 @@ extends WikiPlugin
             $date = QElement('a', array('class' => 'cal-hide',
                                         'href'  => WikiURL($page_for_date,
                                                            array('action' => 'edit')),
-                                        'title' => "Edit $page_for_date"),
+                                        'title' => sprintf(_("Edit %s"), $page_for_date)),
                              $t['tm_mday']);
         }
 
