@@ -1,9 +1,9 @@
-Date: Mon, 17 Nov 2003 23:29:50 +0100
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.5pre)
-X-Rcs-Id: $Id: Neueste%C4nderungen,v 1.1 2003-11-17 23:16:17 carstenklapp Exp $
+Date: Mon, 19 Apr 2004 23:29:50 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.10pre)
+X-Rcs-Id: $Id: Neueste%C4nderungen,v 1.2 2004-04-19 20:45:25 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=Neueste%C4nderungen;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pgsrc_version="3 $Revision: 1.2 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -14,4 +14,4 @@ erzeugt. (GeringfügigeÄnderungen zeigt alle Geringfügige- und
 Hauptänderungen).
 
 --------
-<?plugin RecentChanges days||=7 daylist=1,3,7,30,90,0 ?>
+<?plugin RecentChanges show_minor||=1 days||=7 daylist=1,3,7,30,90,0 ?>
