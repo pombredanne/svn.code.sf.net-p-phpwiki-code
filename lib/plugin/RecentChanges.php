@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.103 2004-12-15 17:45:09 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.104 2005-01-24 23:15:16 uckelman Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -189,7 +189,7 @@ extends _RecentChanges_Formatter
                            $WikiTheme->makeButton("RSS2", $rss_url, 'rssicon'));
     }
 
-    function description () {
+    function pre_description () {
         extract($this->_args);
         // FIXME: say something about show_all.
         if ($show_major && $show_minor)
@@ -257,9 +257,11 @@ extends _RecentChanges_Formatter
             } else
                 $desc = fmt("All %s are listed below.", $edits);
         }
-        if (isset($this->_args['page'])) // RelatedChanges
-            return HTML::p(false, $desc, HTML::br(), fmt("(to pages linked from \"%s\")",$this->_args['page']));
-        return HTML::p(false, $desc);
+        return $desc;
+    }    
+
+    function description() {
+        return HTML::p(false, pre_description());
     }
 
 
@@ -733,7 +735,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.103 $");
+                            "\$Revision: 1.104 $");
     }
 
     function managesValidators() {
@@ -920,6 +922,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2004/12/15 17:45:09  rurban
+// fix box method
+//
 // Revision 1.102  2004/12/06 19:29:24  rurban
 // simplify RSS: add RSS2 link (rss tag only, new content-type)
 //

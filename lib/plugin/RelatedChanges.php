@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RelatedChanges.php,v 1.3 2004-06-03 18:58:27 rurban Exp $');
+rcs_id('$Id: RelatedChanges.php,v 1.4 2005-01-24 23:15:27 uckelman Exp $');
 
 /**
  * List of changes on all pages which are linked to from this page.
@@ -10,6 +10,16 @@ rcs_id('$Id: RelatedChanges.php,v 1.3 2004-06-03 18:58:27 rurban Exp $');
 
 require_once("lib/plugin/RecentChanges.php");
 
+class _RelatedChanges_HtmlFormatter
+extends _RecentChanges_HtmlFormatter
+{
+    function description() {
+        return HTML::p(false, pre_description(),
+         fmt(" (to pages linked from \"%s\")",$this->_args['page']));
+    }
+}
+
+
 class WikiPlugin_RelatedChanges
 extends WikiPlugin_RecentChanges
 {
@@ -19,7 +29,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -63,6 +73,32 @@ extends WikiPlugin_RecentChanges
         return $this->makeBox(WikiLink(_("RelatedChanges"),'',_("Related Changes")),
                               $this->format($this->getChanges($request->_dbi, $args), $args));
     }
+
+    function format ($changes, $args) {
+        global $WikiTheme;
+        $format = $args['format'];
+
+        $fmt_class = $WikiTheme->getFormatter('RelatedChanges', $format);
+        if (!$fmt_class) {
+            if ($format == 'rss')
+                $fmt_class = '_RecentChanges_RssFormatter';
+            elseif ($format == 'rss2')
+                $fmt_class = '_RecentChanges_Rss2Formatter';
+            elseif ($format == 'rss091') {
+                include_once "lib/RSSWriter091.php";
+                $fmt_class = '_RecentChanges_RssFormatter091';
+            }
+            elseif ($format == 'sidebar')
+                $fmt_class = '_RecentChanges_SideBarFormatter';
+            elseif ($format == 'box')
+                $fmt_class = '_RecentChanges_BoxFormatter';
+            else
+                $fmt_class = '_RelatedChanges_HtmlFormatter';
+        }
+  
+        $fmt = new $fmt_class($args);
+        return $fmt->format($changes);
+    }
 }
 
 /**
@@ -94,6 +130,9 @@ class RelatedChangesRevisionIterator extends WikiDB_PageRevisionIterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/06/03 18:58:27  rurban
+// days links requires action=RelatedChanges arg
+//
 // Revision 1.2  2004/05/08 14:06:13  rurban
 // new support for inlined image attributes: [image.jpg size=50x30 align=right]
 // minor stability and portability fixes
