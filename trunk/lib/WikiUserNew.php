@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.75 2004-05-16 22:07:35 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.76 2004-05-18 13:30:04 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1010,9 +1010,14 @@ extends _AnonUser
         // Simple sprintf-style.
         $new_stmt = str_replace($variables,$new,$stmt);
         if ($new_stmt == $stmt) {
-            trigger_error(sprintf("DbAuthParams: Old statement quoting style in %s",
+            if ($oldstyle) {
+                trigger_error(sprintf("DbAuthParams: Invalid statement in %s",
                                   $stmt), E_USER_WARNING);
-            $new_stmt = $this->prepare($stmt, $variables, 'oldstyle');
+            } else {
+                trigger_error(sprintf("DbAuthParams: Old statement quoting style in %s",
+                                  $stmt), E_USER_WARNING);
+                $new_stmt = $this->prepare($stmt, $variables, 'oldstyle');
+            }
         }
         return $new_stmt;
     }
@@ -2848,6 +2853,14 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.75  2004/05/16 22:07:35  rurban
+// check more config-default and predefined constants
+// various PagePerm fixes:
+//   fix default PagePerms, esp. edit and view for Bogo and Password users
+//   implemented Creator and Owner
+//   BOGOUSERS renamed to BOGOUSER
+// fixed syntax errors in signin.tmpl
+//
 // Revision 1.74  2004/05/15 19:48:33  rurban
 // fix some too loose PagePerms for signed, but not authenticated users
 //  (admin, owner, creator)
