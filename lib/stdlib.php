@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.19 2001-01-04 18:32:25 ahollosi Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.20 2001-01-09 18:22:49 ahollosi Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -378,6 +378,15 @@
    }
 
    
+   # GeneratePage() -- takes $content and puts it in the template $template
+   # this function contains all the template logic
+   #
+   # $template ... name of the template (see config.php for list of names)
+   # $content ... html content to put into the page
+   # $name ... page title
+   # $hash ... if called while creating a wiki page, $hash points to
+   #           the $pagehash array of that wiki page.
+
    function GeneratePage($template, $content, $name, $hash)
    {
       global $ScriptUrl, $AllowedProtocols, $templates;
