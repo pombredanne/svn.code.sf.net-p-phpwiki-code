@@ -73,10 +73,15 @@ $database_dsn = "mysql://wikiuser:@localhost/phpwiki_test";
 $cur_dir = getcwd();
 # Add root dir to the path
 if (substr(PHP_OS,0,3) == 'WIN')
-    $cur_dir = str_replace("\\","/",$cur_dir);
+    $cur_dir = str_replace("\\","/", $cur_dir);
 $rootdir = $cur_dir . '/../../';
 $ini_sep = substr(PHP_OS,0,3) == 'WIN' ? ';' : ':';
-ini_set('include_path', ini_get('include_path') . $ini_sep . $rootdir);
+ini_set('include_path', ini_get('include_path')
+        . $ini_sep . $rootdir 
+        . $ini_sep . $rootdir . "lib/pear");
+if ($HTTP_SERVER_VARS["SERVER_NAME"] == 'phpwiki.sourceforge.net') {
+    ini_set('include_path', ini_get('include_path') . ":/usr/share/pear");
+}
 
 # Quiet warnings in IniConfig.php
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
@@ -86,22 +91,25 @@ function printMemoryUsage($msg = '') {
     if ($msg) echo $msg,"\n";
     if ((defined('DEBUG') and (DEBUG & 8)) or !defined('DEBUG')) {
         echo "-- MEMORY USAGE: ";
-        if (function_exists('memory_get_usage')) {
+        if (function_exists('memory_get_usage') and memory_get_usage()) {
             echo memory_get_usage(),"\n";
+        /*
         } elseif (function_exists('getrusage')) {
             $u = getrusage();
             echo $u['ru_maxrss'],"\n";
+        */
         } elseif (substr(PHP_OS,0,3)=='WIN') { // requires a newer cygwin
             // what we want is the process memory only: apache or php
             $pid = getmypid();
             // this works only if it's a cygwin process (apache or php)
             //echo `cat /proc/$pid/statm |cut -f1`,"\n";
+
             // if it's native windows use something like this: 
             // (requires pslist from systinternals.com)
             echo `pslist $pid|grep -A1 Mem|perl -ane"print \$F[5]"`,"\n";
         } else {
             $pid = getmypid();
-            echo `ps -eo%mem,rss,pid | grep $pid`,"\n";
+            echo `ps -o%mem,vsz,rss,pid -p $pid|sed 1d`,"\n";
         }
         flush();
     }
@@ -209,6 +217,10 @@ function purge_testbox() {
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "<pre>\n";
+elseif (!empty($HTTP_SERVER_VARS['argv']))
+    $argv = $HTTP_SERVER_VARS['argv'];
+elseif (!ini_get("register_argc_argv"))
+    echo "Could not read cmd args (register_argc_argv=Off?)\n";
 // purge the testbox
     
 $debug_level = 9; //_DEBUG_VERBOSE | _DEBUG_TRACE
@@ -256,14 +268,15 @@ if (!empty($argv)) {
         echo "db=", join(",",$database_backends),"\n";
         echo "debug=", $debug_level,"\n";
         echo "level=", $user_level,"\n";
-        if ($debug_level & 8)
+        if ($debug_level & 8) {
             echo "pid=",getmypid(),"\n";
+            echo "USECACHE=",(defined('USECACHE') and USECACHE) ? "true" : "false","\n";
+        }
         echo "\n";
     }
     flush();
 }
 define('DEBUG', $debug_level); 
-
 
 if (DEBUG & 8)
     printMemoryUsage("before PEAR");

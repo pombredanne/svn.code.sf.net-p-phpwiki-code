@@ -1,2 +1,2 @@
 #!/bin/sh
-php -Cq test.php test=SetupWiki test=DumpHtml db=file db=dba level=10 debug=9
+php -Cq -d register_argc_argv=1 test.php test=SetupWiki test=DumpHtml db=file db=dba level=10 debug=9
