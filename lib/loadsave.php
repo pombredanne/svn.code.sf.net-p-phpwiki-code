@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.40 2002-01-25 07:33:59 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.41 2002-01-25 16:46:02 dairiki Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -33,41 +33,34 @@ function EndLoadDump(&$request)
  * http://www.nacs.uci.edu/indiv/ehood/MIME/2045/rfc2045.html
  * http://www.faqs.org/rfcs/rfc2045.html
  * (RFC 1521 has been superceeded by RFC 2045 & others).
+ *
+ * Also see http://www.faqs.org/rfcs/rfc2822.html
  */
 function MailifyPage ($page, $nversions = 1)
 {
-    global $SERVER_ADMIN, $pagedump_format;
-    
     $current = $page->getCurrentRevision();
-    $from = isset($SERVER_ADMIN) ? $SERVER_ADMIN : 'foo@bar';
-    $head = "";
-    /**
-     * "7bit" means short lines of US-ASCII.
-     * "8bit" means short lines of octets with the high-order bit set.
-     * "binary" means lines are not necessarily short enough for SMTP
-     * transport, and non-ASCII characters may be present.
-     */
-    if ($pagedump_format == 'quoted-printable') {
-        $head = "From $from  " . CTime(time()) . "\r\n";
+    $head = '';
+
+    if (STRICT_MAILABLE_PAGEDUMPS) {
+        $from = defined('SERVER_ADMIN') ? SERVER_ADMIN : 'foo@bar';
+        //This is for unix mailbox format: (not RFC (2)822)
+        // $head .= "From $from  " . CTime(time()) . "\r\n";
         $head .= "Subject: " . rawurlencode($page->getName()) . "\r\n";
         $head .= "From: $from (PhpWiki)\r\n";
-        $head .= "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
-        $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n",
-                         PHPWIKI_VERSION);
-        $head .= "Content-Transfer-Encoding: quoted-printable\r\n";
-    } else if ($pagedump_format == 'binary') {
-        $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n",
-                         PHPWIKI_VERSION."+carsten's-binary-hack");
-        $head .= "Content-Transfer-Encoding: binary\r\n";
-    } else {
-        $out .= "Content-Transfer-Encoding: " . $pagedump_format ."\r\n";
+        // RFC 2822 requires only a Date: and originator (From:)
+        // field, however the obsolete standard RFC 822 also
+        // requires a destination field.
+        $head .= "To: $from (PhpWiki)\r\n";
     }
+    $head .= "Date: " . Rfc2822DateTime($current->get('mtime')) . "\r\n";
+    $head .= sprintf("Mime-Version: 1.0 (Produced by PhpWiki %s)\r\n",
+                     PHPWIKI_VERSION);
 
-    // This might be better for actually emailing wiki pages--gateways
-    // are allowed to arbitrarily discard any X-* headers.
-    // The $Id\$ also contains : so the line must be quoted.
-    $head .= "Content-ID: \"rcs_id('$" ."Id" ."$" ."')\"\r\n";
-
+    // This should just be entered by hand (or by script?)
+    // in the actual pgsrc files, since only they should have
+    // RCS ids.
+    //$head .= "X-Rcs-Id: \$Id\$\r\n";
+    
     $iter = $page->getAllRevisions();
     $parts = array();
     while ($revision = $iter->next()) {
@@ -150,7 +143,6 @@ function MakeWikiZip (&$request)
 
 function DumpToDir (&$request) 
 {
-    global $pagedump_format;
     $directory = $request->getArg('directory');
     if (empty($directory))
         $request->finish(_("You must specify a directory to dump to"));
@@ -160,13 +152,12 @@ function DumpToDir (&$request)
         if (! mkdir($directory, 0755))
             $request->finish(fmt("Cannot create directory '%s'", $directory));
         else
-            $html = sprintf(_("Created directory '%s' for the page dump..."),
-                            $directory) . "<br />\n";
+            $html = HTML::p(fmt("Created directory '%s' for the page dump...",
+                                $directory));
     } else {
-        $html = sprintf(_("Using directory '%s'"),$directory) . "<br />\n";
+        $html = HTML::p(fmt("Using directory '%s'", $directory));
     }
 
-    $html .= "MIME " . $pagedump_format . "<br />\n";
     StartLoadDump($request, _("Dumping Pages"), $html);
 
     $dbi = $request->getDbh();

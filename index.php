@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.73 2002-01-25 06:03:52 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.74 2002-01-25 16:46:02 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -111,9 +111,19 @@ define('ADMIN_PASSWD', "");
 define('ZIPDUMP_AUTH', false);
 
 
-// This setting determines the type of page dumps. Must be one of
-// "quoted-printable" or "binary".
-$pagedump_format = "quoted-printable";
+// If you define this to true, (MIME-type) page-dumps (either zip dumps,
+// or "dumps to directory" will be encoded using the quoted-printable
+// encoding.  If you're actually thinking of mailing the raw page dumps,
+// then this might be useful, since (among other things,) it ensures
+// that all lines in the message body are under 80 characters in length.
+//
+// Also, setting this will cause a few additional mail headers
+// to be generated, so that the resulting dumps are valid
+// RFC 2822 e-mail messages.
+//
+// Probably, you can just leave this set to false, in which case you get
+// raw ('binary' content-encoding) page dumps.
+define('STRICT_MAILABLE_PAGEDUMPS', false);
 
 // The maximum file upload size.
 define('MAX_UPLOAD_SIZE', 16 * 1024 * 1024);
