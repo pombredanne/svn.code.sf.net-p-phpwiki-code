@@ -1,4 +1,4 @@
-<? rcs_id('$Id: wiki_setupwiki.php3,v 1.11.2.1 2000-07-29 00:36:45 dairiki Exp $');
+<? rcs_id('$Id: wiki_setupwiki.php3,v 1.11.2.2 2000-08-03 19:18:23 dairiki Exp $');
 require 'wiki_ziplib.php3';
 
 function SavePage ($dbi, $page, $source)
@@ -20,6 +20,8 @@ function LoadFile ($dbi, $filename, $text, $mtime)
   if (!($parts = ParseMimeifiedPages($text)))
     {
       // Can't parse MIME: assume plain text file.
+      if (!$mtime)
+	  $mtime = time();	// Last resort.
       $pagename = rawurldecode($filename);
       $page = new WikiPage($pagename, array('content' => $text,
 					    'version' => 1,
@@ -52,7 +54,7 @@ function LoadZipOrDir ($dbi, $zip_or_dir)
     {
       $zip = new ZipReader($zip_or_dir);
       while (list ($fn, $data, $attrib) = $zip->readFile())
-	  LoadFile($dbi, $fn, $data, time()); // FIXME:should really get mtime from zip
+	  LoadFile($dbi, $fn, $data, $attrib['mtime']);
     }
   else if ($type == 'dir')
     {
