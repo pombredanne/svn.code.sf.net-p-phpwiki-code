@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.19 2001-12-27 18:11:44 carstenklapp Exp $
+  $Id: phpwiki.css,v 1.20 2002-01-09 04:11:14 carstenklapp Exp $
 
   Classes:
 
@@ -236,7 +236,7 @@ div.wiki-edithelp .transclusion p {
 div.wiki-edithelp {
   background: #fff8dc; /* darker ivory */
   font-size: smaller;
-  padding: 0.05ex 1%;
+  padding: 0.05ex 2pt;
 }
   
 /****************************************************************

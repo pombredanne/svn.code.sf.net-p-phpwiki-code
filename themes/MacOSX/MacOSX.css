@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.5 2002-01-05 16:13:02 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.6 2002-01-09 04:11:13 carstenklapp Exp $
 
   Classes:
 
@@ -221,7 +221,7 @@ div.wiki-edithelp .transclusion p {
 div.wiki-edithelp {
   background: #fff8dc; /* darker ivory */
   font-size: smaller;
-  padding: 0.05ex 1%;
+  padding: 0.05ex 2pt;
 }
   
 /****************************************************************
