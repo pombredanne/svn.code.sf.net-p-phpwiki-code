@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.49 2002-02-01 19:17:21 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.50 2002-02-01 19:21:25 carstenklapp Exp $');
 /**
  */
 
@@ -468,19 +468,20 @@ extends WikiPlugin
             $url_show_all = "";
 
             // RecentEdits args
-            if (($show_minor == 1)||($show_minor == true))
+            if ($show_minor)
                 $url_show_minor = "&show_minor=1";
-            if (($show_all == 1)||($show_all == true))
+            if ($show_all)
                 $url_show_all = "&show_all=1";
             // Custom caption
             if (! $caption) {
                 if ($url_show_minor)
-                    $caption = _("Show changes for:");
+                    $caption = _("Show minor edits for:");
                 else {
                     if ($url_show_all)
                         $caption = _("Show all changes for:");
                     else
-                        $caption = _("Show minor edits for:");
+                        $caption = _("Show changes for:");
+                       
                 }
             }
 
