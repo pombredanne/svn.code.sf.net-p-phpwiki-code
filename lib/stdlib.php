@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.143 2003-02-26 00:10:26 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.144 2003-02-26 00:39:30 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -273,7 +273,7 @@ function SplitQueryArgs ($query_args = '')
     return $args;
 }
 
-function LinkPhpwikiURL($url, $text = '') {
+function LinkPhpwikiURL($url, $text = '', $basepage) {
     $args = array();
     
     if (!preg_match('/^ phpwiki: ([^?]*) [?]? (.*) $/x', $url, $m)) {
@@ -313,7 +313,8 @@ function LinkPhpwikiURL($url, $text = '') {
         $class = 'wikiaction';
     else {
         // Don't allow administrative links on unlocked pages.
-        $page = $GLOBALS['request']->getPage();
+        $dbi = $GLOBALS['request']->getDbh();
+        $page = $dbi->getPage($basepage);
         if (!$page->get('locked'))
             return HTML::span(array('class' => 'wikiunsafe'),
                               HTML::u(_("Lock page to enable link")));
@@ -1237,6 +1238,9 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.143  2003/02/26 00:10:26  dairiki
+// More/better/different checks for bad page names.
+//
 // Revision 1.142  2003/02/25 22:19:46  dairiki
 // Add some sanity checking for pagenames.
 //

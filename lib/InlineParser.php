@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.26 2003-02-23 22:43:35 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.27 2003-02-26 00:39:30 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -298,7 +298,7 @@ function LinkBracketLink($bracketlink) {
             return new Cached_ExternalLink($link, $label);
     }
     elseif (preg_match("/^phpwiki:/", $link))
-        return LinkPhpwikiURL($link, $label);
+        return new Cached_PhpwikiURL($link, $label);
     elseif (preg_match("/^" . $intermap->getRegexp() . ":/", $link))
         return new Cached_InterwikiLink($link, $label);
     else {
