@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.8 2004-01-27 23:23:39 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.9 2004-02-01 09:14:11 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -20,15 +20,9 @@ rcs_id('$Id: WikiGroup.php,v 1.8 2004-01-27 23:23:39 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-if (!defined('GROUP_NONE')) {
-    $group_method = 0; 
-    define('GROUP_NONE',	$group_method++);
-    define('GROUP_WIKIPAGE',	$group_method++); 
-    define('GROUP_DB',		$group_method++);
-    define('GROUP_FILE',	$group_method++);
-    define('GROUP_LDAP',	$group_method++);
-}
-if (!defined('GROUP_METHOD')) define('GROUP_METHOD', GROUP_WIKIPAGE);
+if (!defined('GROUP_METHOD') or !in_array(GROUP_METHOD,array('NONE','WIKIPAGE','DB','FILE','LDAP')))
+    trigger_error(_("No or unsupported GROUP_METHOD defined"), E_USER_WARNING);
+//define('GROUP_METHOD', "WIKIPAGE");
 
 /**
  * WikiGroup is an abstract class to provide the base functions for determining
@@ -85,21 +79,23 @@ class WikiGroup{
      */ 
     function getGroup($request){
         switch (GROUP_METHOD){
-            case GROUP_NONE: 
+            case "NONE": 
                 return new GroupNone($request);
                 break;
-            case GROUP_WIKIPAGE: 
+            case "WIKIPAGE":
                 return new GroupWikiPage($request);
                 break;
-            case GROUP_DB:
+            case "DB":
                 return new GroupDB($request);
                 break;
-            case GROUP_FILE: 
+            case "FILE": 
                 return new GroupFile($request);
                 break;
-#            case GROUP_LDAP: 
-#                return new GroupLDAP($request);
-#                break;
+            /*
+            case "LDAP": 
+                return new GroupLDAP($request);
+                break;
+            */
             default:
                 trigger_error(_("No GROUP_METHOD defined"), E_USER_WARNING);
                 return new WikiGroup($request);
@@ -388,9 +384,9 @@ class GroupDb extends WikiGroup {
             return false;
         }
         $dbh = _PassUser::getAuthDbh();
-        $this->_is_member = $dbh->_backend->prepare(preg_replace(array('"$userid"','"$groupname"'),array('?','?'),$DBAuthParams['is_member']));
-        $this->_group_members = $dbh->_backend->prepare(preg_replace('"$groupname"','?',$DBAuthParams['group_members']));
-        $this->_user_groups = $dbh->_backend->prepare(preg_replace('"$userid"','?',$DBAuthParams['user_groups']));
+        $this->_is_member = $dbh->prepare(preg_replace(array('"$userid"','"$groupname"'),array('?','?'),$DBAuthParams['is_member']));
+        $this->_group_members = $dbh->prepare(preg_replace('"$groupname"','?',$DBAuthParams['group_members']));
+        $this->_user_groups = $dbh->prepare(preg_replace('"$userid"','?',$DBAuthParams['user_groups']));
     }
 
     /**
@@ -410,7 +406,7 @@ class GroupDb extends WikiGroup {
             return $this->membership[$group];
         }
         $dbh = _PassUser::getAuthDbh();
-        $db_result = $dbh->_backend->execute($this->_is_member,$username,$group);
+        $db_result = $dbh->execute($this->_is_member,$username,$group);
         if ($db_result->numRows() > 0) {
             $this->membership[$group] = true;
             return true;
@@ -432,7 +428,7 @@ class GroupDb extends WikiGroup {
         $membership = array();
 
         $dbh = _PassUser::getAuthDbh();
-        $db_result = $dbh->_backend->execute($this->_user_groups,$username);
+        $db_result = $dbh->execute($this->_user_groups,$username);
         if ($db_result->numRows() > 0) {
             while (list($group) = $db_result->fetchRow()) {
                 $membership[] = $group;
@@ -456,7 +452,7 @@ class GroupDb extends WikiGroup {
         $members = array();
 
         $dbh = _PassUser::getAuthDbh();
-        $db_result = $dbh->_backend->execute($this->_group_members,$group);
+        $db_result = $dbh->execute($this->_group_members,$group);
         if ($db_result->numRows() > 0) {
             while (list($userid) = $db_result->fetchRow()) {
                 $members[] = $userid;
@@ -567,7 +563,127 @@ class GroupFile extends WikiGroup {
     }
 }
 
+/**
+ * Ldap is configured in index.php
+ * 
+ * @author ReiniUrban
+ */ 
+class GroupLdap extends WikiGroup {
+    
+    /**
+     * Constructor
+     * 
+     * @param object $request The global WikiRequest object.
+     */ 
+    function GroupLdap(&$request){
+        $this->request = &$request;
+        $this->username = null;
+        $this->membership = array();
+
+        if (!defined("LDAP_AUTH_HOST")) {
+            trigger_error(_("LDAP_AUTH_HOST not defined"), E_USER_WARNING);
+            return false;
+        }
+        if (! function_exists('ldap_open')) {
+            dl("ldap".DLL_EXT);
+            if (! function_exists('ldap_open')) {
+                trigger_error(_("No LDAP in this PHP version"), E_USER_WARNING);
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Determines if the current user is a member of a group.
+     * Not ready yet!
+     * 
+     * @param string $group Name of the group to check for membership.
+     * @return boolean True if user is a member, else false.
+     */ 
+    function isMember($group) {
+        if (isset($this->membership[$group])) {
+            return $this->membership[$group];
+        }
+        $request = $this->request;
+        $username = $this->_getUserName();
+        if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
+            $r = @ldap_bind($ldap); 		    // this is an anonymous bind
+            $st_search = "uid=$username member=$group";
+            $sr = ldap_search($ldap, LDAP_BASE_DN,
+                              "$st_search");
+            $info = ldap_get_entries($ldap, $sr);
+            if ($info["count"] > 0) {
+                ldap_close($ldap);
+                $this->membership[$group] = true;
+                return true;
+            }
+        }
+        $this->membership[$group] = false;
+        return false;
+    }
+    
+    /**
+     * Determines all of the groups of which the current user is a member.
+     * Not ready yet!
+     *
+     * @param string $group Name of the group to check for membership.
+     * @return array Array of groups to which the user belongs.
+     */ 
+    function getAllGroupsIn(){
+        $request = &$this->request;
+        $username = $this->_getUserName();
+        $membership = array();
+
+        if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
+            $r = @ldap_bind($ldap); 		    // this is an anonymous bind
+            $st_search = "uid=$username";
+            $sr = ldap_search($ldap, LDAP_BASE_DN,
+                              "$st_search");
+            $info = ldap_get_entries($ldap, $sr); // there may be more hits with this userid. try every
+            for ($i = 0; $i < $info["count"]; $i++) {
+                $dn = $info[$i]["member"];
+                if ($r = @ldap_bind($ldap, $dn, $group)) {
+                    $membership[] = $group;
+                }
+            }
+        }
+        ldap_close($ldap);
+        $this->membership = $membership;
+        return $membership;
+    }
+
+    /**
+     * Determines all of the members of a particular group.
+     * 
+     * Checks a group's page to return all the current members.  Currently this
+     * method is disabled and triggers an error and returns an empty array.
+     * @param string $group Name of the group to get the full membership list of.
+     * @return array Array of usernames that have joined the group.
+     */ 
+    function getMembersOf($group){
+        $request = &$this->request;
+        $username = $this->_getUserName();
+        $members = array();
+        /*
+        $dbh = _PassUser::getAuthDbh();
+        $db_result = $dbh->execute($this->_group_members,$group);
+        if ($db_result->numRows() > 0) {
+            while (list($userid) = $db_result->fetchRow()) {
+                $members[] = $userid;
+            }
+        }
+        */
+        return $members;
+    }
+}
+
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/01/27 23:23:39  rurban
+// renamed ->Username => _userid for consistency
+// renamed mayCheckPassword => mayCheckPass
+// fixed recursion problem in WikiUserNew
+// fixed bogo login (but not quite 100% ready yet, password storage)
+//
 // Revision 1.7  2004/01/26 16:52:40  rurban
 // added GroupDB and GroupFile classes
 //

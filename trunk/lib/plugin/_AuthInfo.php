@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.1 2004-02-01 01:04:34 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.2 2004-02-01 09:14:11 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -66,6 +66,18 @@ extends WikiPlugin
             $auth_defines[$constant] = constant($constant);
         }
         $table->pushContent($this->_showhash("AUTH DEFINES", $auth_defines));
+        if ((defined('ALLOW_LDAP_LOGIN') && ALLOW_LDAP_LOGIN) or in_array("LDAP",$GLOBALS['USER_AUTH_ORDER']))
+            $table->pushContent($this->_showhash("LDAP DEFINES", array("LDAP_AUTH_HOST" => LDAP_AUTH_HOST,
+                                                                       "LDAP_AUTH_SEARCH" => LDAP_AUTH_SEARCH)));
+        if ((defined('ALLOW_IMAP_LOGIN') && ALLOW_IMAP_LOGIN) or in_array("IMAP",$GLOBALS['USER_AUTH_ORDER']))
+            $table->pushContent($this->_showhash("IMAP DEFINES", array("IMAP_AUTH_HOST" => IMAP_AUTH_HOST)));
+        if (defined('AUTH_USER_FILE') or in_array("File",$GLOBALS['USER_AUTH_ORDER']))
+            $table->pushContent($this->_showhash("AUTH_USER_FILE", array("AUTH_USER_FILE" => AUTH_USER_FILE,
+                                                                         "AUTH_USER_FILE_STORABLE" => AUTH_USER_FILE_STORABLE,
+                                                                         "AUTH_GROUP_FILE" => AUTH_GROUP_FILE
+                                                                         )));
+        if (defined('GROUP_METHOD'))
+            $table->pushContent($this->_showhash("GROUP_METHOD", array("GROUP_METHOD" => GROUP_METHOD)));
         $table->pushContent($this->_showhash("\$USER_AUTH_ORDER[]", $GLOBALS['USER_AUTH_ORDER']));
         $table->pushContent($this->_showhash("USER_AUTH_POLICY", array("USER_AUTH_POLICY"=>USER_AUTH_POLICY)));
         $table->pushContent($this->_showhash("\$DBParams[]", $GLOBALS['DBParams']));
@@ -154,6 +166,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/02/01 01:04:34  rurban
+// Used to debug auth problems and settings.
+// This may display passwords in cleartext.
+// DB Objects are not displayed anymore.
+//
 // Revision 1.21  2003/02/21 04:22:28  dairiki
 // Make this work for array-valued data.  Make display of cached markup
 // readable.  Some code cleanups.  (This still needs more work.)

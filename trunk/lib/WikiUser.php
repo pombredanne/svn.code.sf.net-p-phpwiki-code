@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.47 2004-01-27 23:23:39 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.48 2004-02-01 09:14:11 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -262,7 +262,7 @@ class WikiUser {
                         $r = @ldap_bind($ldap); // this is an anonymous bind
                         $st_search = "uid=$userid";
                         // Need to set the right root search information. see ../index.php
-                        $sr = ldap_search($ldap, LDAP_AUTH_SEARCH,
+                        $sr = ldap_search($ldap, LDAP_BASE_DN,
                                           "$st_search");
                         $info = ldap_get_entries($ldap, $sr); // there may be more hits with this userid. try every
                         for ($i = 0; $i < $info["count"]; $i++) {
@@ -715,6 +715,12 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2004/01/27 23:23:39  rurban
+// renamed ->Username => _userid for consistency
+// renamed mayCheckPassword => mayCheckPass
+// fixed recursion problem in WikiUserNew
+// fixed bogo login (but not quite 100% ready yet, password storage)
+//
 // Revision 1.46  2004/01/26 09:17:48  rurban
 // * changed stored pref representation as before.
 //   the array of objects is 1) bigger and 2)
