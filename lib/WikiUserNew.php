@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.52 2004-04-12 13:04:50 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.53 2004-04-12 18:29:15 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1334,6 +1334,42 @@ extends _PassUser
 
 }
 
+/** 
+ * Support reuse of existing user session from another application.
+ * You have to define which session variable holds the userid, and 
+ * at what level is that user then. 1: BogoUser, 2: PassUser
+ *   define('AUTH_SESS_USER','userid');
+ *   define('AUTH_SESS_LEVEL',2);
+ */
+class _SessionPassUser
+extends _PassUser
+{
+    function _SessionPassUser($UserName='',$prefs=false) {
+        if ($prefs) $this->_prefs = $prefs;
+        if (!defined("AUTH_SESS_USER") or !defined("AUTH_SESS_LEVEL")) {
+            trigger_error(
+                "AUTH_SESS_USER or AUTH_SESS_LEVEL is not defined for the SessionPassUser method",
+                E_USER_ERROR);
+            exit;
+        }
+        $sess =& $GLOBALS['HTTP_SESSION_VARS'];
+        // FIXME: user hash: "[user][userid]" or object "user->id"
+        $this->_userid = $sess[AUTH_SESS_USER];
+        if (!isset($this->_prefs->_method))
+           _PassUser::_PassUser($this->_userid);
+        $this->_level = AUTH_SESS_LEVEL;
+        $this->_authmethod = 'Session';
+    }
+    function userExists() {
+        return !empty($this->_userid);
+    }
+    function checkPass($submitted_password) {
+        return $this->userExists() and $this->_level;
+    }
+    function mayChangePass() {
+        return false;
+    }
+}
 
 /**
  * Baseclass for PearDB and ADODB PassUser's
@@ -2731,6 +2767,12 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2004/04/12 13:04:50  rurban
+// added auth_create: self-registering Db users
+// fixed IMAP auth
+// removed rating recommendations
+// ziplib reformatting
+//
 // Revision 1.51  2004/04/11 10:42:02  rurban
 // pgsrc/CreatePagePlugin
 //

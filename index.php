@@ -74,7 +74,7 @@ define('ENABLE_USER_NEW',true);    // this will disappear with 1.4.0
 
 define ('PHPWIKI_VERSION', '1.3.10pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.139 2004-04-12 16:24:28 rurban Exp $');
+rcs_id('$Id: index.php,v 1.140 2004-04-12 18:29:12 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -474,6 +474,7 @@ if (!defined('ALLOW_USER_PASSWORDS')) define('ALLOW_USER_PASSWORDS', true);
 //                  Use Apache's htpasswd to manage this file.
 //   HttpAuth:      Use the protection by the webserver (.htaccess) or 
 //                  enforce it
+//   Session:       Re-use an existing user-session. AUTH_SESS_USER and AUTH_SESS_LEVEL 
 
 if (defined('ALLOW_USER_PASSWORDS')) {
 
@@ -489,6 +490,7 @@ if (defined('ALLOW_USER_PASSWORDS')) {
 //                "IMAP",    // define IMAP_AUTH_HOST
 //                "POP3",    // define POP3_AUTH_HOST
 //                "File",    // define AUTH_USER_FILE and opt. AUTH_USER_FILE_STORABLE
+//                "Session", // define AUTH_SESS_USER and AUTH_SESS_LEVEL
                   ) ;
 
     if (!defined('PASSWORD_LENGTH_MINIMUM')) define('PASSWORD_LENGTH_MINIMUM', 2);
@@ -541,6 +543,12 @@ if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost:143/imap/n
 //if (!defined('AUTH_USER_FILE')) define('AUTH_USER_FILE', '/etc/shadow'); // or '/etc/httpd/.htpasswd'
 // set this to true if the user may change his password into this file.
 //if (!defined('AUTH_USER_FILE_STORABLE')) define('AUTH_USER_FILE_STORABLE',false);
+
+// Session auth:
+// Name of the session variable, which holds the already authenticated username.
+//if (!defined('AUTH_SESS_USER')) define('AUTH_SESS_USER', 'userid');
+// Which level will be the user? 1=Bogo or 2=Pass
+//if (!defined('AUTH_SESS_LEVEL')) define('AUTH_SESS_LEVEL', 2);
 
 // Group membership:
 //if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "NONE");
@@ -952,6 +960,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.139  2004/04/12 16:24:28  rurban
+// 1.3.10pre, JS_SEARCHREPLACE => pref option
+//
 // Revision 1.138  2004/04/12 12:27:07  rurban
 // more notes and themes
 //
