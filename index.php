@@ -39,7 +39,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.43 2001-12-26 14:00:37 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.44 2001-12-27 01:34:38 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -359,10 +359,10 @@ $GenericPages = array("ReleaseNotes", "SteveWainstead", "TestPage");
 // allowed protocols for links - be careful not to allow "javascript:"
 // URL of these types will be automatically linked.
 // within a named link [name|uri] one more protocol is defined: phpwiki
-$AllowedProtocols = "http|https|mailto|ftp|news|gopher";
+$AllowedProtocols = "http|https|mailto|ftp|news|nntp|gopher";
 
 // URLs ending with the following extension should be inlined as images
-$InlineImages = "png|jpg|gif";
+$InlineImages = "png|jpg|gif|tiff|tif";
 
 // Uncomment this to automatically split WikiWords by inserting spaces.
 // The default is to leave WordsSmashedTogetherLikeSo in the body text.
