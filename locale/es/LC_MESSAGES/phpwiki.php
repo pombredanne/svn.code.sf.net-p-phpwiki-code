@@ -1,29 +1,5 @@
 <?php
 
-$locale["You entered an invalid login or password."] =
-   "Se h&aacute; introducido un nombre de usuario o palabra de paso invalido.";
-$locale["You are about to remove '%s' permanently!"] =
-   "¡Va a borrar '%s' permanentemente!";
-$locale["Click %shere%s to remove the page now."] =
-   "Haga Click %aqu&iacute;% para borrar la p&aacute;gina ahora";
-$locale["Otherwise press the \"Back\" button of your browser."] =
-   "En caso contrario pulse el bot&oacute; \"Atr&aacute;s\" en su navegador";
-$locale["Function not yet implemented."] =
-   "Funci&oacute;n todav&iacute; no implementada";
-$locale["Remove page"] =
-   "Borrar p&aacute;gina";
-$locale["Removed page '%s' succesfully."] =
-   "P&aacute;gina '%s' borrada satisfactoriamente.";
-$locale["templates/browse.html"] =
-   "locale/es/templates/browse.html";
-$locale["templates/editpage.html"] =
-   "locale/es/templates/editpage.html";
-$locale["templates/editlinks.html"] =
-   "locale/es/templates/editlinks.html";
-$locale["templates/message.html"] =
-   "locale/es/templates/message.html";
-$locale["./pgsrc"] =
-   "locale/es/pgsrc";
 $locale["WikiDiff::apply: line count mismatch: %s != %s"] =
    "WikiDiff::apply: conteo de l&iacute;neas difiere: %s != %s";
 $locale["WikiDiff::_check: failed"] =
@@ -32,8 +8,6 @@ $locale["WikiDiff::_check: edit sequence is non-optimal"] =
    "WikiDiff::_check: secuencia de edici&oacute;n no es &oacute;ptima";
 $locale["WikiDiff Okay: LCS = %s"] =
    "WikiDiff Ok: LCS = %s";
-$locale["Current page:"] =
-   "P&aacute;gina actual:";
 $locale["version %s"] =
    "versi&oacute;n %s";
 $locale["last modified on %s"] =
@@ -42,20 +16,18 @@ $locale["by %s"] =
    "por %s";
 $locale["None"] =
    "Ninguno";
+$locale["Current page:"] =
+   "P&aacute;gina actual:";
 $locale["Archived page:"] =
    "P&aacute;gina archivada:";
 $locale["Versions are identical"] =
    "Las versiones son id&eacute;nticas";
 $locale["Diff of %s."] =
    "Diferencia de %s.";
-$locale["HomePage"] =
-   "PaginaPrincipal";
 $locale["Describe %s here."] =
    "Describe %s aqu&iacute;.";
 $locale["Copy of %s"] =
    "Copia de %s";
-$locale["No page name passed into editpage!"] =
-   "No se h&aacute; pasado nombre de p&aacute;gina a editarpagina";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Esta p&aacute;gina ha sido bloqueada por el administrador y no puede ser editada.";
 $locale["Sorry for the inconvenience."] =
@@ -68,6 +40,10 @@ $locale["%d matches found in %d pages."] =
    "%d veces encontrado en %d p&aacute;ginas.";
 $locale["Full Text Search Results"] =
    "Resultados de la búsqueda en el texto completo";
+$locale["as version %d"] =
+   "versi&oacute;n %s";
+$locale["HomePage"] =
+   "PaginaPrincipal";
 $locale["Cannot establish connection to database, giving up."] =
    "No se puede establecer conexi&oacute;n con la base de datos, me doy por vencido.";
 $locale["Error message: %s"] =
@@ -86,22 +62,18 @@ $locale["Error writing page '%s'"] =
    "Error al escribir la p&aacute;gina `%s'";
 $locale["Cannot delete '%s' from table '%s'"] =
    "No se puede borrar '%s' de la tabla '%s'";
-$locale["Enter a page name"] =
-   "Escriba un nombre de p&aacute;gina";
-$locale["Go"] =
-   "Aceptar";
-$locale["Show the page source and references"] =
-   "Mostrar el c&oacute;digo fuente de la p&aacute;gina y referencias";
-$locale["PageInfo"] =
-   "InformacionDeLaPagina";
 $locale["Page name '%s' is not in the database"] =
    "El nombre de la p&aacute;gina `%s' no est&aacute; en la base de datos";
+$locale["Show the page source"] =
+   "Mostrar el c&oacute;digo fuente de la p&aacute;gina y referencias";
 $locale["Current version"] =
    "Versi&oacute;n actual:";
 $locale["Archived version"] =
    "Versi&oacute;n archivada:";
-$locale["RecentChanges"] =
-   "CambiosRecientes";
+$locale["PageInfo"] =
+   "InformacionDeLaPagina";
+$locale["WikiFatalError"] =
+   "ErrorFatalDeWiki";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki no es capaz de grabar sus cambios, debido a que otro usuarioh&aacute; editado y guardado la p&aacute;gina mientras usted estaba editando esta p&aacute;gina. Si se guarda ahora los cambios del autor anterior se podr&iacute;an perder.";
 $locale["In order to recover from this situation follow these steps:"] =
@@ -124,19 +96,31 @@ $locale["Your careful attention to detail is much appreciated."] =
    "Se agradece una cuidadosa atenci&oacute;n a los detalles.";
 $locale["Title Search Results"] =
    "Resultados de la búsqueda en el texto completo";
-$locale["Inserting page %s, version %s from %s"] =
-   "Insertando p&aacute;gina %s, versi&oacute;n %s de %s";
-$locale["WikiFatalError"] =
-   "ErrorFatalDeWiki";
-$locale["Search"] =
-   "Buscar";
-$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
-   "L&iacute;mites de la pila excedidos en SetHTMLOutputMode";
 $locale["%d best incoming links:"] =
    "%d mejores enlaces de entrada:";
 $locale["%d best outgoing links:"] =
    "%d mejores enlaces de salida:";
 $locale["%d most popular nearby:"] =
    "%d las m&aacute;s populares:";
+$locale["RecentChanges"] =
+   "CambiosRecientes";
+$locale["Lists nested too deep in SetHTMLOutputMode"] =
+   "L&iacute;mites de la pila excedidos en SetHTMLOutputMode";
+$locale["Search"] =
+   "Buscar";
+$locale["You entered an invalid login or password."] =
+   "Se h&aacute; introducido un nombre de usuario o palabra de paso invalido.";
+$locale["Function not yet implemented."] =
+   "Funci&oacute;n todav&iacute; no implementada";
+$locale["You are about to remove '%s' permanently!"] =
+   "¡Va a borrar '%s' permanentemente!";
+$locale["Click <a href=\"%s\">here</a> to remove the page now."] =
+   "Haga Click %aqu&iacute;% para borrar la p&aacute;gina ahora";
+$locale["Otherwise press the \"Back\" button of your browser."] =
+   "En caso contrario pulse el bot&oacute; \"Atr&aacute;s\" en su navegador";
+$locale["Removed page '%s' succesfully."] =
+   "P&aacute;gina '%s' borrada satisfactoriamente.";
+$locale["Remove page"] =
+   "Borrar p&aacute;gina";
 
 ;?>

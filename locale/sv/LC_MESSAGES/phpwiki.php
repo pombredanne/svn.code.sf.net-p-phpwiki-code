@@ -1,29 +1,5 @@
 <?php
 
-$locale["You entered an invalid login or password."] =
-   "Du har angett ett otillåtet användarnamn eller lösenord.";
-$locale["You are about to remove '%s' permanently!"] =
-   "Du kommer att ta bort \"%s\" permanent!";
-$locale["Click %shere%s to remove the page now."] =
-   "Klicka %shär%s för att ta bort sidan nu.";
-$locale["Otherwise press the \"Back\" button of your browser."] =
-   "Annars klicka på backaknappen i din webbläsare.";
-$locale["Function not yet implemented."] =
-   "Funktionen är ännu inte implementerad.";
-$locale["Remove page"] =
-   "Ta bort sida";
-$locale["Removed page %s succesfully."] =
-   "Tog bort sidan \"%s\".";
-$locale["templates/browse.html"] =
-   "locale/sv/templates/browse.html";
-$locale["templates/editpage.html"] =
-   "locale/sv/templates/editpage.html";
-$locale["templates/editlinks.html"] =
-   "locale/sv/templates/editlinks.html";
-$locale["templates/message.html"] =
-   "locale/sv/templates/message.html";
-$locale["./pgsrc"] =
-   "locale/sv/pgsrc";
 $locale["WikiDiff::apply: line count mismatch: %s != %s"] =
    "WikiDiff::apply: radantalet stämmer inte: %s != %s";
 $locale["WikiDiff::_check: failed"] =
@@ -32,8 +8,6 @@ $locale["WikiDiff::_check: edit sequence is non-optimal"] =
    "WikiDiff::_check: ändringssekvensen är icke optimal";
 $locale["WikiDiff Okay: LCS = %s"] =
    "WikiDiff Ok: LCS = %s";
-$locale["Current page:"] =
-   "Nuvarande sida:";
 $locale["version %s"] =
    "version %s";
 $locale["last modified on %s"] =
@@ -42,20 +16,18 @@ $locale["by %s"] =
    "av %s";
 $locale["None"] =
    "ingen";
+$locale["Current page:"] =
+   "Nuvarande sida:";
 $locale["Archived page:"] =
    "Arkiverad sida:";
 $locale["Versions are identical"] =
    "Versionerna är identiska";
 $locale["Diff of %s."] =
    "Diff av %s.";
-$locale["HomePage"] =
-   "Framsida";
 $locale["Describe %s here."] =
    "Beskriv %s här.";
 $locale["Copy of %s"] =
    "Kopia av %s";
-$locale["No page name passed into editpage!"] =
-   "Ingen sida är angiven!";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Den här sidan är låst av administratören och kan ej redigeras.";
 $locale["Sorry for the inconvenience."] =
@@ -68,6 +40,10 @@ $locale["%d matches found in %d pages."] =
    "%d träffar funna på %d sidor.";
 $locale["Full Text Search Results"] =
    "Sökresultat för fulltextsökning";
+$locale["as version %d"] =
+   "version %s";
+$locale["HomePage"] =
+   "Framsida";
 $locale["Cannot establish connection to database, giving up."] =
    "Ger upp, kan ej skapa anslutning till databasen.";
 $locale["Error message: %s"] =
@@ -86,22 +62,18 @@ $locale["Error writing page '%s'"] =
    "Kunde inte spara sidan \"%s\"";
 $locale["Cannot delete '%s' from table '%s'"] =
    "Kan ej ta bort \"%s\" från tabellen \"%s\"";
-$locale["Enter a page name"] =
-   "Ange ett sidnamn";
-$locale["Go"] =
-   "\"Gå till sidan\"";
-$locale["Show the page source and references"] =
-   "Visa källkoden och referenser för sidan";
-$locale["PageInfo"] =
-   "Sidinformation för";
 $locale["Page name '%s' is not in the database"] =
    "Sidnamnet \"%s\" finns inte i databasen";
+$locale["Show the page source"] =
+   "Visa källkoden och referenser för sidan";
 $locale["Current version"] =
    "Nuvarande version";
 $locale["Archived version"] =
    "Arkiverad version";
-$locale["RecentChanges"] =
-   "SenasteÄndringar";
+$locale["PageInfo"] =
+   "Sidinformation för";
+$locale["WikiFatalError"] =
+   "WikiFatalError";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kan inte spara dina ändringar eftersom en annan användare ändrade och sparade sidan under tiden som du ändrade på sidan. Sparar du nu försvinner ändringarna gjorda av den förra användaren.";
 $locale["In order to recover from this situation follow these steps:"] =
@@ -126,19 +98,31 @@ $locale["%d pages match your query."] =
    "%d sidor matchar din fråga.";
 $locale["Title Search Results"] =
    "Sökresultat för fulltextsökning";
-$locale["Inserting page %s, version %s from %s"] =
-   "Sätter in sidan %s, version %s från %s";
-$locale["WikiFatalError"] =
-   "WikiFatalError";
-$locale["Search"] =
-   "Sök";
-$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
-   "Stackgräns överskriden i SetHTMLOutputMode";
 $locale["%d best incoming links:"] =
    "De %d mest använda ingående länkarna:";
 $locale["%d best outgoing links:"] =
    "De %d mest använda utgående länkarna:";
 $locale["%d most popular nearby:"] =
    "De %d mest populära grannarna:";
+$locale["RecentChanges"] =
+   "SenasteÄndringar";
+$locale["Lists nested too deep in SetHTMLOutputMode"] =
+   "Stackgräns överskriden i SetHTMLOutputMode";
+$locale["Search"] =
+   "Sök";
+$locale["You entered an invalid login or password."] =
+   "Du har angett ett otillåtet användarnamn eller lösenord.";
+$locale["Function not yet implemented."] =
+   "Funktionen är ännu inte implementerad.";
+$locale["You are about to remove '%s' permanently!"] =
+   "Du kommer att ta bort \"%s\" permanent!";
+$locale["Click <a href=\"%s\">here</a> to remove the page now."] =
+   "Klicka %shär%s för att ta bort sidan nu.";
+$locale["Otherwise press the \"Back\" button of your browser."] =
+   "Annars klicka på backaknappen i din webbläsare.";
+$locale["Removed page '%s' succesfully."] =
+   "Tog bort sidan \"%s\".";
+$locale["Remove page"] =
+   "Ta bort sida";
 
 ;?>
