@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.46 2002-01-27 07:32:53 carstenklapp Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.47 2002-01-27 22:00:58 carstenklapp Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -402,9 +402,9 @@ function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
     // Defer HomePage loading until the end. If anything goes wrong
     // the pages can still be loaded again.
     $files = $fileset->getFiles();
-    if ($home = array_search(_("HomePage"), $files)) {
+    if ($home = array_search(HomePage, $files)) {
         $files[$home]='';
-        array_push($files, _("HomePage"));
+        array_push($files, HomePage);
     }
     foreach ($files as $file)
         LoadFile($request, "$dirname/$file");

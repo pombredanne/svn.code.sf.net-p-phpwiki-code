@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.36 2002-01-26 01:58:11 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.37 2002-01-27 22:00:58 carstenklapp Exp $');
 
 
 include "lib/config.php";
@@ -266,7 +266,7 @@ class WikiRequest extends Request {
     function deflowerDatabase () {
         if ($this->getArg('action') != 'browse')
             return;
-        if ($this->getArg('pagename') != _("HomePage"))
+        if ($this->getArg('pagename') != HomePage)
             return;
 
         $page = $this->getPage();
@@ -336,7 +336,7 @@ class WikiRequest extends Request {
         }
         
     
-        return _("HomePage");
+        return HomePage;
     }
 
     
