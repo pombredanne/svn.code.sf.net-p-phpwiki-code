@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.206 2005-02-04 11:30:10 rurban Exp $');
+rcs_id('$Id: main.php,v 1.207 2005-02-10 19:03:37 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -142,19 +142,14 @@ class WikiRequest extends Request {
     }
 
     function initializeLang () {
-        $user_lang = $this->getPref('lang');
+        // check non-default pref lang
         $_lang = @$this->_prefs->_prefs['lang'];
-        //check changed LANG and THEME inside a session. 
-        // (e.g. by using another baseurl)
-        if (isset($this->_user->_authhow) and 
-            $this->_user->_authhow == 'session' and 
-            !isset($_lang->lang) and 
-            $user_lang != $GLOBALS['LANG'])
-        {
-            $user_lang = $GLOBALS['LANG'];
-        }
-        if (isset($user_lang)) {
-            //trigger_error("DEBUG: initializeLang() ". $user_lang ." calling update_locale()...");
+        if (isset($_lang->lang) and $_lang->lang != $GLOBALS['LANG']) {
+            $user_lang = $_lang->lang;
+            //check changed LANG and THEME inside a session. 
+            // (e.g. by using another baseurl)
+            if (isset($this->_user->_authhow) and $this->_user->_authhow == 'session')
+                $user_lang = $GLOBALS['LANG'];
             update_locale($user_lang);
             FindLocalizedButtonFile(".",'missing_ok','reinit');
         }
@@ -163,16 +158,19 @@ class WikiRequest extends Request {
     function initializeTheme () {
         global $WikiTheme;
 
-        // Load theme
-        $user_theme = $this->getPref('theme');
+        // Load non-default theme
         $_theme = @$this->_prefs->_prefs['theme'];
+        if ($_theme and isset($_theme->theme))
+            $user_theme = $_theme->theme;
+        else 
+            $user_theme = $this->getPref('theme');
         //check changed LANG and THEME inside a session. 
         // (e.g. by using another baseurl)
-        if (isset($this->_user->_authhow) and 
-            $this->_user->_authhow == 'session' and 
-            !isset($_theme->theme) and
-            defined('THEME') and 
-            $user_theme != THEME)
+        if (isset($this->_user->_authhow) 
+            and $this->_user->_authhow == 'session' 
+            and !isset($_theme->theme) 
+            and defined('THEME') 
+            and $user_theme != THEME)
         {
             include_once("themes/" . THEME . "/themeinfo.php");
         }
@@ -397,7 +395,7 @@ class WikiRequest extends Request {
     /* Permission system */
     function getLevelDescription($level) {
     	static $levels = false;
-    	if (!$levels) 
+    	if (!$levels) // This looks like Visual Basic hack. For the very same reason.
     	    $levels = array('x-1' => _("FORBIDDEN"),
                             'x0'  => _("ANON"),
                             'x1'  => _("BOGO"),
@@ -1239,6 +1237,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.206  2005/02/04 11:30:10  rurban
+// remove old comments
+//
 // Revision 1.205  2005/01/29 20:41:47  rurban
 // some minor php5 strictness fixes
 //
