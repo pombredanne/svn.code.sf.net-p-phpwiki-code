@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.59 2004-06-13 11:34:22 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.60 2004-06-19 11:51:13 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -264,7 +264,7 @@ class Request {
         // Set cache control headers
         $this->cacheControl();
 
-        if (CACHE_CONTROL == 'NONE')
+        if (CACHE_CONTROL == 'NO_CACHE')
             return;             // don't check conditionals...
         
         // Check conditional headers in request
@@ -282,7 +282,7 @@ class Request {
     /** Set the cache control headers in the HTTP response.
      */
     function cacheControl($strategy=CACHE_CONTROL, $max_age=CACHE_CONTROL_MAX_AGE) {
-        if ($strategy == 'NONE') {
+        if ($strategy == 'NO_CACHE') {
             $cache_control = "no-cache";
             $max_age = -20;
         }
@@ -989,6 +989,10 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2004/06/13 11:34:22  rurban
+// fixed bug #969532 (space in uploaded filenames)
+// improved upload error messages
+//
 // Revision 1.58  2004/06/04 20:32:53  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole
