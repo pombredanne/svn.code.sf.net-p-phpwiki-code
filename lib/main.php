@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.151 2004-05-25 12:40:48 rurban Exp $');
+rcs_id('$Id: main.php,v 1.152 2004-05-27 17:49:06 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -19,14 +19,14 @@ class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->_dbi = WikiDB::open($GLOBALS['DBParams']);
+        if (in_array('File', $this->_dbi->getAuthParam('USER_AUTH_ORDER'))) {
+            // force our local copy, until the pear version is fixed.
+            include_once(dirname(__FILE__)."/pear/File_Passwd.php");
+        }
         if (USE_DB_SESSION) {
-            include_once('lib/DB_Session.php');
-            $prefix = isset($GLOBALS['DBParams']['prefix']) ? $GLOBALS['DBParams']['prefix'] : '';
-            if (in_array('File',$GLOBALS['USER_AUTH_ORDER'])) {
-                include_once(dirname(__FILE__)."/pear/File_Passwd.php");
-            }
-            $dbi = $this->getDbh();
-            $this->_dbsession = & new DB_Session($dbi,$prefix . $GLOBALS['DBParams']['db_session_table']);
+            include_once('lib/DbSession.php');
+            $dbi =& $this->_dbi;
+            $this->_dbsession = & new DbSession($dbi, $dbi->getParam('prefix') . $dbi->getParam('db_session_table'));
         }
 // Fixme: Does pear reset the error mask to 1? We have to find the culprit
 $x = error_reporting();
@@ -61,7 +61,7 @@ $this->version = phpwiki_version();
 	              $this->_user->_file->lockfile and 
 	              !$this->_user->_file->fplock  )
 	        {
-		    $this->_user = new _FilePassUser($userid,$this->_user->_prefs,$this->_user->_file->filename);
+		    $this->_user = new _FilePassUser($userid, $this->_user->_prefs, $this->_user->_file->filename);
 	        }
 	        /*
                 if (!isa($user,WikiUserClassname()) or empty($this->_user->_level)) {
@@ -190,10 +190,12 @@ $this->version = phpwiki_version();
      * request.)
      */
     function getPostURL ($pagename=false) {
+        global $HTTP_GET_VARS;
+
         if ($pagename === false)
             $pagename = $this->getArg('pagename');
         $action = $this->getArg('action');
-        if (!empty($_GET['start_debug'])) // zend ide support
+        if (!empty($HTTP_GET_VARS['start_debug'])) // zend ide support
             return WikiURL($pagename, array('action' => $action, 'start_debug' => 1));
         else
             return WikiURL($pagename, array('action' => $action));
@@ -943,6 +945,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.151  2004/05/25 12:40:48  rurban
+// trim the pagename
+//
 // Revision 1.150  2004/05/25 10:18:44  rurban
 // Check for UTF-8 URLs; Internet Explorer produces these if you
 // type non-ASCII chars in the URL bar or follow unescaped links.

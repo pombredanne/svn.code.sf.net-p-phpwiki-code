@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.58 2004-05-18 13:59:14 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.59 2004-05-27 17:49:05 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -525,6 +525,20 @@ class WikiDB {
         return false;
     }
 
+    function getParam($param) {
+        global $DBParams;
+        if (isset($DBParams[$param])) return $DBParams[$param];
+        elseif ($param == 'prefix') return '';
+        else return false;
+    }
+
+    function getAuthParam($param) {
+        global $DBAuthParams;
+        if (isset($DBAuthParams[$param])) return $DBAuthParams[$param];
+        elseif ($param == 'USER_AUTH_ORDER') return $GLOBALS['USER_AUTH_ORDER'];
+        elseif ($param == 'USER_AUTH_POLICY') return $GLOBALS['USER_AUTH_POLICY'];
+        else return false;
+    }
 };
 
 
@@ -1797,6 +1811,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2004/05/18 13:59:14  rurban
+// rename simpleQuery to genericQuery
+//
 // Revision 1.57  2004/05/16 22:07:35  rurban
 // check more config-default and predefined constants
 // various PagePerm fixes:

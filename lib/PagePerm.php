@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.17 2004-05-16 23:10:44 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.18 2004-05-27 17:49:05 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -213,22 +213,22 @@ function _requiredAuthorityForPagename($access, $pagename) {
     // Page not found; check against default permissions
     if (! $page->exists() ) {
         $perm = new PagePermission();
-        return ($perm->isAuthorized($access,$request->_user) === true);
+        return ($perm->isAuthorized($access, $request->_user) === true);
     }
     // no ACL defined; check for special dotfile or walk down
     if (! ($perm = getPagePermissions($page))) { 
         if ($pagename[0] == '.') {
             $perm = new PagePermission(PagePermission::dotPerms());
-            return ($perm->isAuthorized($access,$request->_user) === true);
+            return ($perm->isAuthorized($access, $request->_user) === true);
         }
-        return _requiredAuthorityForPagename($access,getParentPage($pagename));
+        return _requiredAuthorityForPagename($access, getParentPage($pagename));
     }
     // ACL defined; check if isAuthorized returns true or false or undecided
-    $authorized = $perm->isAuthorized($access,$request->_user);
+    $authorized = $perm->isAuthorized($access, $request->_user);
     if ($authorized != -1) // -1 for undecided
         return $authorized;
     else
-        return _requiredAuthorityForPagename($access,getParentPage($pagename));
+        return _requiredAuthorityForPagename($access, getParentPage($pagename));
 }
 
 /**
@@ -314,10 +314,10 @@ class PagePermission {
         if (is_array($hash) and !empty($hash)) {
             $accessTypes = $this->accessTypes();
             foreach ($hash as $access => $requires) {
-                if (in_array($access,$accessTypes))
+                if (in_array($access, $accessTypes))
                     $this->perm[$access] = $requires;
                 else
-                    trigger_error(sprintf(_("Unsupported ACL access type %s ignored."),$access),
+                    trigger_error(sprintf(_("Unsupported ACL access type %s ignored."), $access),
                                   E_USER_WARNING);
             }
         } else {
@@ -664,6 +664,11 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/05/16 23:10:44  rurban
+// update_locale wrongly resetted LANG, which broke japanese.
+// japanese now correctly uses EUC_JP, not utf-8.
+// more charset and lang headers to help the browser.
+//
 // Revision 1.16  2004/05/16 22:32:53  rurban
 // setacl icons
 //

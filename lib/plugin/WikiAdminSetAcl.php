@@ -1,9 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.9 2004-05-24 17:34:53 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.10 2004-05-27 17:49:06 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
- This file is not yet part of PhpWiki. It does not work yet.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -287,6 +287,9 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/05/24 17:34:53  rurban
+// use ACLs
+//
 // Revision 1.8  2004/05/16 22:32:54  rurban
 // setacl icons
 //

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.66 2004-04-29 23:25:12 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.67 2004-05-27 17:49:06 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -117,6 +117,7 @@ function define_f() {
    f=document.getElementById('editpage');
    f.editarea=document.getElementById('edit[content]');
    if(f.rck.style) f.rck.style.color='#ececec';
+   f.editarea.focus();
 }
 
 function replace() {
@@ -174,9 +175,85 @@ function speich() {
 }
 "));
             $GLOBALS['Theme']->addMoreAttr('body'," onload='define_f()'");
+        } else {
+            $GLOBALS['Theme']->addMoreAttr('body',"document.getElementById('edit[content]').editarea.focus()");
+        }
+        if (defined('ENABLE_EDIT_TOOLBAR') and ENABLE_EDIT_TOOLBAR) {
+            $GLOBALS['Theme']->addMoreHeaders(JavaScript('',array('src'=>$GLOBALS['Theme']->_findData("toolbar.js"))));
+            $tokens['EDIT_TOOLBAR'] = $this->toolbar();
+        } else {
+            $tokens['EDIT_TOOLBAR'] = '';
         }
 
         return $this->output('editpage', _("Edit: %s"));
+    }
+
+    function toolbar () {
+        global $Theme;
+        $toolarray = array(
+                           array(
+                                 "image"=>"button_bold.png",
+                                 "open"=>"*",
+                                 "close"=>"*",
+                                 "sample"=>_("bold_sample"),
+                                 "tip"=>_("bold_tip")),
+                           array("image"=>"button_italic.png",
+                                 "open"=>"_",
+                                 "close"=>"_",
+                                 "sample"=>_("italic_sample"),
+                                 "tip"=>_("italic_tip")),
+                           array("image"=>"button_link.png",
+                                 "open"=>"[",
+                                 "close"=>"]",
+                                 "sample"=>_("link_sample"),
+                                 "tip"=>_("link_tip")),
+                           array("image"=>"button_extlink.png",
+                                 "open"=>"[",
+                                 "close"=>"]",
+                                 "sample"=>_("extlink_sample"),
+                                 "tip"=>_("extlink_tip")),
+                           array("image"=>"button_headline.png",
+                                 "open"=>"\\n!!! ",
+                                 "close"=>"\\n",
+                                 "sample"=>_("headline_sample"),
+                                 "tip"=>_("headline_tip")),
+                           array("image"=>"button_image.png",
+                                 "open"=>"[ ",
+                                 "close"=>" ]",
+                                 "sample"=>_("image_sample"),
+                                 "tip"=>_("image_tip")),
+                           array("image"=>"button_nowiki.png",
+                                 "open"=>"\\n\\<verbatim\\>\\n",
+                                 "close"=>"\\n\\</verbatim\\>\\n",
+                                 "sample"=>_("nowiki_sample"),
+                                 "tip"=>_("nowiki_tip")),
+                           array("image"=>"button_sig.png",
+                                 "open" => "--" . $GLOBALS['request']->_user->UserName(),
+                                 "close" => "",
+                                 "sample"=>"",
+                                 "tip"=>_("sig_tip")),
+                           array("image"=>"button_hr.png",
+                                 "open"=>"\\n----\\n",
+                                 "close"=>"",
+                                 "sample"=>"",
+                                 "tip"=>_("hr_tip"))
+                           );
+        $toolbar = "document.writeln(\"<div id=\\\"toolbar\\\">\");\n";
+        foreach ($toolarray as $tool) {
+            $image = $Theme->getImageURL($tool["image"]);
+            $open  = $tool["open"];
+            $close = $tool["close"];
+            $sample = addslashes( $tool["sample"] );
+            // Note that we use the tip both for the ALT tag and the TITLE tag of the image.
+            // Older browsers show a "speedtip" type message only for ALT.
+            // Ideally these should be different, realistically they
+            // probably don't need to be.
+            $tip = addslashes( $tool["tip"] );
+            $toolbar.="addButton('$image','$tip','$open','$close','$sample');\n";
+        }
+        $toolbar.="addInfobox('" . addslashes( _( "infobox" ) ) . "');\n";
+        $toolbar.="document.writeln(\"</div>\");";
+        return Javascript($toolbar);
     }
 
     function output ($template, $title_fs) {
@@ -626,6 +703,11 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.66  2004/04/29 23:25:12  rurban
+ re-ordered locale init (as in 1.3.9)
+ fixed loadfile with subpages, and merge/restore anyway
+   (sf.net bug #844188)
+
  Revision 1.65  2004/04/18 01:11:52  rurban
  more numeric pagename fixes.
  fixed action=upload with merge conflict warnings.

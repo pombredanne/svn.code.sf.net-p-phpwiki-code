@@ -16,7 +16,7 @@
 // | Author: Rasmus Lerdorf <rasmus@php.net>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: File_Passwd.php,v 1.6 2004-04-26 20:44:36 rurban Exp $
+// $Id: File_Passwd.php,v 1.7 2004-05-27 17:49:06 rurban Exp $
 //
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 
@@ -88,14 +88,25 @@ class File_Passwd {
             $this->lockfile = $lockfile ;
         }
 
-        if($lock) {
+        if ($lock) {
+            //check if already locked, on some error or race condition or other user.
+            //FIXME: implement timeout as with dba
+            if (file_exists($this->lockfile)) {
+            	if (isset($GLOBALS['HTTP_GET_VARS']['force_unlock'])) {
+            	    $this->fplock = fopen($this->lockfile, 'w');
+            	    flock($this->fplock, LOCK_UN);
+            	    fclose($this->fplock);
+            	} else {
+                    trigger_error('File_Passwd lock conflict: Try &force_unlock=1',E_USER_NOTICE);
+            	}
+            }
             $this->fplock = fopen($this->lockfile, 'w');
             flock($this->fplock, LOCK_EX);
             $this->locked = true;
         }
     
         $fp = fopen($file,'r') ;
-        if( !$fp) {
+        if( !$fp ) {
             return new PEAR_Error( "Couldn't open '$file'!", 1, PEAR_ERROR_RETURN) ;
         }
         while(!feof($fp)) {
@@ -111,7 +122,7 @@ class File_Passwd {
             }
         }
         fclose($fp);
-    } // end func File_Passwd()
+    }
 
     /**
     * Adds a user
@@ -220,7 +231,7 @@ class File_Passwd {
     * @access public
     */
     function close() {
-        if($this->locked) {
+        if ($this->locked) {
             foreach($this->users as $user => $pass) {
                 if (isset($this->cvs[$user])) {
                     fputs($this->fplock, "$user:$pass:" . $this->cvs[$user] . "\n");

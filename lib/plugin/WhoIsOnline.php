@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WhoIsOnline.php,v 1.6 2004-05-02 15:10:08 rurban Exp $');
+rcs_id('$Id: WhoIsOnline.php,v 1.7 2004-05-27 17:49:06 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -26,7 +26,7 @@ rcs_id('$Id: WhoIsOnline.php,v 1.6 2004-05-02 15:10:08 rurban Exp $');
  * links to the page with the other mode.
  *
  * Formatting and idea borrowed from postnuke. Requires USE_DB_SESSION.
- * Works with PearDB, ADODB and dba DB_Sessions.
+ * Works with PearDB, ADODB and dba DbSessions.
  *
  * Author: Reini Urban
  */
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -194,6 +194,16 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/05/02 15:10:08  rurban
+// new finally reliable way to detect if /index.php is called directly
+//   and if to include lib/main.php
+// new global AllActionPages
+// SetupWiki now loads all mandatory pages: HOME_PAGE, action pages, and warns if not.
+// WikiTranslation what=buttons for Carsten to create the missing MacOSX buttons
+// PageGroupTestOne => subpages
+// renamed PhpWikiRss to PhpWikiRecentChanges
+// more docs, default configs, ...
+//
 // Revision 1.5  2004/04/06 20:27:05  rurban
 // fixed guests (no wiki_user session)
 // added ip (to help in ip-throttling)

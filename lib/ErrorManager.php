@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.23 2004-05-18 13:31:19 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.24 2004-05-27 17:49:05 rurban Exp $');
 
 require_once(dirname(__FILE__).'/HtmlElement.php');
 if (isset($GLOBALS['ErrorManager'])) return;
@@ -362,11 +362,13 @@ class PhpError {
         else
             $what = 'Fatal';
 
-	$dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : getcwd();
+	$dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__),0,-4);
         if (substr(PHP_OS,0,3) == 'WIN') {
            $dir = str_replace('/','\\',$dir);
            $this->errfile = str_replace('/','\\',$this->errfile);
-        }
+           $dir .= "\\";
+        } else 
+           $dir .= '/';
         $errfile = preg_replace('|^' . preg_quote($dir) . '|', '', $this->errfile);
         $lines = explode("\n", $this->errstr);
 
@@ -479,11 +481,13 @@ class PhpErrorOnce extends PhpError {
             $what = 'Warning';
         else
             $what = 'Fatal';
-	$dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : getcwd();
+	$dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__),0,-4);
         if (substr(PHP_OS,0,3) == 'WIN') {
            $dir = str_replace('/','\\',$dir);
            $this->errfile = str_replace('/','\\',$this->errfile);
-        }
+           $dir .= "\\";
+        } else 
+           $dir .= '/';
         $errfile = preg_replace('|^' . preg_quote($dir) . '|', '', $this->errfile);
         $lines = explode("\n", $this->errstr);
         $msg = sprintf("%s:%d: %s[%d]: %s %s",
@@ -509,6 +513,8 @@ if (!isset($GLOBALS['ErrorManager'])) {
     $GLOBALS['ErrorManager'] = new ErrorManager;
 }
 
+// $Log: not supported by cvs2svn $
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

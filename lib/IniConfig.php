@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.24 2004-05-18 13:33:13 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.25 2004-05-27 17:49:05 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -204,7 +204,11 @@ function IniConfig($file) {
                                     );
 
     // User authentication
-    $GLOBALS['USER_AUTH_ORDER'] = preg_split('/\s*:\s*/', $rs['USER_AUTH_ORDER']);
+    if (!isset($GLOBALS['USER_AUTH_ORDER']))
+        if (isset($rs['USER_AUTH_ORDER']))
+            $GLOBALS['USER_AUTH_ORDER'] = preg_split('/\s*:\s*/', $rs['USER_AUTH_ORDER']);
+        else 
+            $GLOBALS['USER_AUTH_ORDER'] = array("PersonalPage");
 
     // LDAP bind options
     global $LDAP_SET_OPTION;
@@ -536,6 +540,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/05/18 13:33:13  rurban
+// we already have a CGI function
+//
 // Revision 1.23  2004/05/17 17:43:29  rurban
 // CGI: no PATH_INFO fix
 //
