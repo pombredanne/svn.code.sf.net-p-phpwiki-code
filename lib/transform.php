@@ -1,4 +1,5 @@
-<?php rcs_id('$Id: transform.php,v 1.22 2001-04-09 19:28:52 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.23 2001-09-18 19:16:23 dairiki Exp $');
+require_once('lib/WikiPlugin.php');
 
 define('WT_SIMPLE_MARKUP', 0);
 define('WT_TOKENIZER', 1);
@@ -269,11 +270,21 @@ class WikiTransform
 
 //////////////////////////////////////////////////////////
 
+function do_transform ($lines) {
+   global $WikiNameRegexp, $AllowedProtocols, $InterWikiLinkRegexp;
+
+if (is_string($lines))
+    $lines = preg_split('/[ \t\r]*\n/', trim($lines));
+ 
+    
 $transform = new WikiTransform;
 
 // register functions
 // functions are applied in order of registering
 
+$transform->register(WT_SIMPLE_MARKUP, 'wtm_plugin_link');
+$transform->register(WT_MODE_MARKUP, 'wtm_plugin');
+ 
 $transform->register(WT_TOKENIZER, 'wtt_doublebrackets', '\[\[');
 $transform->register(WT_TOKENIZER, 'wtt_footnotes', '^\[\d+\]');
 $transform->register(WT_TOKENIZER, 'wtt_footnoterefs', '\[\d+\]');
@@ -294,9 +305,6 @@ if (function_exists('wtm_table')) {
    $transform->register(WT_SIMPLE_MARKUP, 'wtm_htmlchars');
    $transform->register(WT_SIMPLE_MARKUP, 'wtm_linebreak');
    $transform->register(WT_SIMPLE_MARKUP, 'wtm_bold_italics');
-   $transform->register(WT_SIMPLE_MARKUP, 'wtm_title_search');
-   $transform->register(WT_SIMPLE_MARKUP, 'wtm_fulltext_search');
-   $transform->register(WT_SIMPLE_MARKUP, 'wtm_mostpopular');
 
    $transform->register(WT_MODE_MARKUP, 'wtm_list_ul');
    $transform->register(WT_MODE_MARKUP, 'wtm_list_ol');
@@ -306,7 +314,9 @@ if (function_exists('wtm_table')) {
    $transform->register(WT_MODE_MARKUP, 'wtm_hr');
    $transform->register(WT_MODE_MARKUP, 'wtm_paragraph');
 
-   $html = $transform->do_transform($html, $pagehash['content']);
+//$html = $transform->do_transform($html, $pagehash['content']);
+   return $transform->do_transform('', $lines);
+}
 
 /*
 Requirements for functions registered to WikiTransform:
@@ -391,6 +401,10 @@ function wtt_footnoterefs($match, &$trfrm)
 function wtt_bracketlinks($match, &$trfrm)
 {
    $link = ParseAndLink($match);
+   if (strstr($link['link'], "</form>")) {
+       // FIXME: BIG HACK: see note in wtm_plugin.
+       return "</p>" . $link['link'] . "<p>";
+   }
    return $link["link"];
 }
 
@@ -413,10 +427,7 @@ function wtt_bumpylinks($match, &$trfrm)
    global $dbi;
    if ($match[0] == "!")
       return htmlspecialchars(substr($match,1));
-   // FIXME: make a LinkWikiWord() function?
-   if (IsWikiPage($dbi, $match))
-      return LinkExistingWikiWord($match);
-   return LinkUnknownWikiWord($match);
+   return LinkWikiWord($match);
 }
 
 // end of tokenizer functions
@@ -453,44 +464,34 @@ function wtt_bumpylinks($match, &$trfrm)
    //////////////////////////////////////////////////////////
    // some tokens to be replaced by (dynamic) content
 
-   // wiki token: title search dialog
-   function wtm_title_search($line, &$transformer) {
-      if (strpos($line, '%%Search%%') !== false) {
-	 $html = LinkPhpwikiURL(
-	    "phpwiki:?action=search&searchterm=()&searchtype=title",
-	    gettext("Search"));
+// FIXME: some plugins are in-line (maybe?) and some are block level.
+// Here we treat them all as inline, which will probably
+// generate some minorly invalid HTML in some cases.
+//
+function wtm_plugin_link($line, &$transformer) {
+    // FIXME: is this good syntax?
+    global $dbi, $request;      // FIXME: make these non-global?
+    
+    if (preg_match('/^(.*?)(<\?plugin-link\s+.*?\?>)(.*)$/', $line, $m)) {
+        list(, $prematch, $plugin_pi, $postmatch) = $m;
+        $loader = new WikiPluginLoader;
+        $html = $loader->expandPI($plugin_pi, $dbi, $request);
+        $line = $prematch . $transformer->token($html) . $postmatch;
+    }
+    return $line;
+}
 
-	 $line = str_replace('%%Search%%', $html, $line);
-      }
-      return $line;
-   }
-
-   // wiki token: fulltext search dialog
-   function wtm_fulltext_search($line, &$transformer) {
-      if (strpos($line, '%%Fullsearch%%') !== false) {
-	 $html = LinkPhpwikiURL(
-	    "phpwiki:?action=search&searchterm=()&searchtype=full",
-	    gettext("Search"));
-
-	 $line = str_replace('%%Fullsearch%%', $html, $line);
-      }
-      return $line;
-   }
-
-   // wiki token: mostpopular list
-   function wtm_mostpopular($line, &$transformer) {
-      global $ScriptUrl, $dbi;
-      if (strpos($line, '%%Mostpopular%%') !== false) {
-	 $query = InitMostPopular($dbi, MOST_POPULAR_LIST_LENGTH);
-	 $html = "<DL>\n";
-	 while ($qhash = MostPopularNextMatch($dbi, $query)) {
-	    $html .= "<DD>$qhash[hits] ... " . LinkExistingWikiWord($qhash['pagename']) . "\n";
-	 }
-	 $html .= "</DL>\n";
-	 $line = str_replace('%%Mostpopular%%', $html, $line);
-      }
-      return $line;
-   }
+function wtm_plugin($line, &$transformer) {
+    // FIXME: is this good syntax?
+    global $dbi, $request;      // FIXME: make these non-global?
+    
+    if (preg_match('/^<\?plugin(-form)?\s.*\?>\s*$/', $line)) {
+        $loader = new WikiPluginLoader;
+        $html = $loader->expandPI($line, $dbi, $request);
+        $line = $transformer->SetHTMLMode('', 0) . $transformer->token($html);
+    }
+    return $line;
+}
 
 
    //////////////////////////////////////////////////////////
@@ -613,9 +614,12 @@ function wtm_table($line, &$trfrm)
       return $line;
    }
 
-// For emacs users
+// (c-file-style: "gnu")
 // Local Variables:
 // mode: php
-// c-file-style: "ellemtel"
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
 // End:   
 ?>

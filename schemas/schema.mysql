@@ -1,60 +1,47 @@
--- $Id: schema.mysql,v 1.6 2001-07-17 15:58:28 dairiki Exp $
+-- $Id: schema.mysql,v 1.7 2001-09-18 19:16:23 dairiki Exp $
 
-drop table if exists phpwiki_pages;
-drop table if exists phpwiki_archive;
-drop table if exists phpwiki_links;
-drop table if exists phpwiki_hitcount;
-drop table if exists phpwiki_score;
-drop table if exists phpwiki_hottopics;
+drop table if exists page;
+CREATE TABLE page (
+	id		INT NOT NULL,
+        pagename	VARCHAR(100) BINARY NOT NULL,
+	hits		INT NOT NULL DEFAULT 0,
+        pagedata	MEDIUMTEXT NOT NULL DEFAULT '',
+        PRIMARY KEY (id),
+	UNIQUE KEY (pagename)
+);
 
+drop table if exists version;
+CREATE TABLE version (
+	id		INT NOT NULL,
+        version		INT NOT NULL,
+	mtime		INT NOT NULL,
+	minor_edit	TINYINT DEFAULT 0,
+        content		MEDIUMTEXT NOT NULL DEFAULT '',
+        versiondata	MEDIUMTEXT NOT NULL DEFAULT '',
+        PRIMARY KEY (id,version),
+	INDEX (mtime)
+);
 
-CREATE TABLE phpwiki_pages (
-        pagename VARCHAR(100) NOT NULL,
-        version INT NOT NULL DEFAULT 1,
-        flags INT NOT NULL DEFAULT 0,
-        author VARCHAR(100),
-        lastmodified INT NOT NULL,
-        created INT NOT NULL,
-        content MEDIUMTEXT NOT NULL,
-        refs TEXT,
-        PRIMARY KEY (pagename)
-        );
+drop table if exists recent;
+CREATE TABLE recent (
+	id		INT NOT NULL,
+	latestversion	INT,
+	latestmajor	INT,
+	latestminor	INT,
+        PRIMARY KEY (id)
+);
 
-CREATE TABLE phpwiki_archive (
-        pagename VARCHAR(100) NOT NULL,
-        version INT NOT NULL DEFAULT 1,
-        flags INT NOT NULL DEFAULT 0,
-        author VARCHAR(100),
-        lastmodified INT NOT NULL,
-        created INT NOT NULL,
-        content MEDIUMTEXT NOT NULL,
-        refs TEXT,
-        PRIMARY KEY (pagename, version)
-        );
+drop table if exists nonempty;
+CREATE TABLE nonempty (
+	id		INT NOT NULL,
+	PRIMARY KEY (id)
+);
 
-CREATE TABLE phpwiki_links (
-        frompage VARCHAR(100) NOT NULL,
-        topage VARCHAR(100) NOT NULL,
-        PRIMARY KEY (frompage, topage)
-        );
+drop table if exists link;
+CREATE TABLE link (
+        linkfrom	INT NOT NULL,
+        linkto		INT NOT NULL,
+	INDEX (linkfrom),
+        INDEX (linkto)
+);
 
-CREATE TABLE phpwiki_hitcount (
-        pagename VARCHAR(100) NOT NULL,
-        hits INT NOT NULL DEFAULT 0,
-        PRIMARY KEY (pagename)
-        );
-
-CREATE TABLE phpwiki_score (
-        pagename VARCHAR(100) NOT NULL,
-        score INT NOT NULL DEFAULT 0,
-        PRIMARY KEY (pagename)
-        );
-
-
--- tables below are not yet used
-
-CREATE TABLE phpwiki_hottopics (                
-        pagename VARCHAR(100) NOT NULL,
-        lastmodified INT NOT NULL,
-        PRIMARY KEY (pagename, lastmodified)
-        );

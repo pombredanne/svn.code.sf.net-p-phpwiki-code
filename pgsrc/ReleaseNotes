@@ -1,3 +1,13 @@
+Jeffs Hacks.
+
+* New database API.  See lib/WikiDB.php and lib/WikiDB/backend.php for the bulk of the documentation on this.  The new database can save multiple archived versions of each page.  A mechanism for purging archived revisions is now in place as well.  See the $!ExpireParams setting in index.php, and lib/!ArchiveCleaner.php for details.  At this point, the DBA, MySQL and Postgres backends are functional.  The DBA backend could use some performance optimization.  The whole API is still subject to some change as I figure out a clean way to provide for a variety of (not all forseen) methods of indexing and searching the wiki.
+* New WikiPlugin architecture.
+* New template engine.  This needs to be documented further, but, for now, see lib/Template.php.  On second thought, don't (lib/Template.php desperately needs refactoring, still.)  The basic advance is that PHP4's ob_*() functions can be used to capture output from eval()ed PHP code.  This allows the templates to be PHP code...
+* Edit preview button on the edit page.  Now you can see what your edits look like before committing them.
+* Reworked the style-sheets.  I still need to clean this up some more.  I would appreciate comments and bug reports on it.  So far I've only tested the new style sheets with Netscape 4.77 and Mozilla 0.9.3 (both running under Linux.)
+* Expanded syntax for text search, now searches like "wiki or web -page" (or "(wiki or web) and not page") will do more-or-less what they look like they'll do.
+* Security Issues: PhpWiki will now work with PHP's register_globals set to off.
+
 PhpWiki 1.3.x development branch.
 
 * Pagenames in PATH_INFO.

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.40 2001-05-31 17:39:02 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.41 2001-09-18 19:16:23 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -22,10 +22,6 @@ set_magic_quotes_runtime(0);
 // chars in iso-8859-*
 // $FieldSeparator = "\263"; //this is a superscript 3 in ISO-8859-1.
 $FieldSeparator = "\x81";
-
-
-// constants for flags in $pagehash
-define("FLAG_PAGE_LOCKED", 1);
 
 // Search PHP's include_path to find file or directory.
 function FindFile ($file, $missing_okay = false)
@@ -89,6 +85,10 @@ function FindLocalizedFile ($file, $missing_okay = false)
    return FindFile($file, $missing_okay);
 }
 
+// Setup localisation
+setlocale(LC_ALL, "$LANG");
+putenv("LC_ALL=$LANG");
+
 if (!function_exists ('gettext'))
 {
    $locale = array();
@@ -108,8 +108,6 @@ if (!function_exists ('gettext'))
 else
 {
    // Setup localisation
-   setlocale(LC_ALL, "$LANG");
-   putenv("LC_ALL=$LANG");
    bindtextdomain ("phpwiki", FindFile("locale"));
    textdomain ("phpwiki");
 }
@@ -186,9 +184,9 @@ $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
 //////////////////////////////////////////////////////////////////
 // Autodetect URL settings:
 //
-if (!defined('SERVER_NAME')) define('SERVER_NAME', $SERVER_NAME);
-if (!defined('SERVER_PORT')) define('SERVER_PORT', $SERVER_PORT);
-if (!defined('SCRIPT_NAME')) define('SCRIPT_NAME', $SCRIPT_NAME);
+if (!defined('SERVER_NAME')) define('SERVER_NAME', $HTTP_SERVER_VARS['SERVER_NAME']);
+if (!defined('SERVER_PORT')) define('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT']);
+if (!defined('SCRIPT_NAME')) define('SCRIPT_NAME', $HTTP_SERVER_VARS['SCRIPT_NAME']);
 if (!defined('DATA_PATH'))
    define('DATA_PATH', dirname(SCRIPT_NAME));
 if (!defined('USE_PATH_INFO'))
@@ -219,7 +217,8 @@ function IsProbablyRedirectToIndex ()
    // $SCRIPT_NAME, since pages appear at
    // e.g. /dir/index.php/HomePage.
    
-   global $REQUEST_URI, $SCRIPT_NAME;
+   //global $REQUEST_URI, $SCRIPT_NAME;
+   extract($GLOBALS['HTTP_SERVER_VARS']);
    
    $requri = preg_quote($REQUEST_URI, '%');
    return preg_match("%^${requri}[^/]*$%", $SCRIPT_NAME);
@@ -248,6 +247,7 @@ if (!defined('VIRTUAL_PATH'))
    // pages will appear at e.g. '/wikidir/index.php/HomePage'.
    //
 
+   $REDIRECT_URL = &$HTTP_SERVER_VARS['REDIRECT_URL'];
    if (USE_PATH_INFO and isset($REDIRECT_URL)
        and ! IsProbablyRedirectToIndex())
    {
@@ -280,35 +280,7 @@ else
 //
 if (empty($DBParams['dbtype']))
 {
-   if ( floor(phpversion()) == 3) {
-      $DBParams['dbtype'] = 'dbm';
-   } else {
-      $DBParams['dbtype'] = 'dba';
-   }
-}
-
-switch ($DBParams['dbtype']) 
-{
-   case 'dbm':
-      include 'lib/dbmlib.php';
-      break;
-   case 'dba':
-      include 'lib/dbalib.php';
-      break;
-   case 'mysql':
-      include 'lib/mysql.php';
-      break;
-   case 'pgsql':
-      include 'lib/pgsql.php';
-      break;
-   case 'msql':
-      include 'lib/msql.php';
-      break;
-   case 'file':
-      include "lib/db_filesystem.php";
-      break;
-   default:
-      ExitWiki($DBParams['dbtype'] . ": unknown DBTYPE");
+   $DBParams['dbtype'] = 'dba';
 }
 
 // InterWiki linking -- wiki-style links to other wikis on the web
@@ -318,13 +290,15 @@ if (defined('INTERWIKI_MAP_FILE'))
    include ('lib/interwiki.php');
 }
 
+// FIXME: delete
 // Access log
 if (!defined('ACCESS_LOG'))
    define('ACCESS_LOG', '');
-   
+
+// FIXME: delete
 // Get remote host name, if apache hasn't done it for us
-if (empty($REMOTE_HOST) && ENABLE_REVERSE_DNS)
-   $REMOTE_HOST = gethostbyaddr($REMOTE_ADDR);
+if (empty($HTTP_SERVER_VARS['REMOTE_HOST']) && ENABLE_REVERSE_DNS)
+   $HTTP_SERVER_VARS['REMOTE_HOST'] = gethostbyaddr($HTTP_SERVER_VARS['REMOTE_ADDR']);
 
    
 // For emacs users

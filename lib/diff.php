@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.12 2001-06-26 18:03:41 uckelman Exp $');
+rcs_id('$Id: diff.php,v 1.13 2001-09-18 19:16:23 dairiki Exp $');
 // diff.php
 //
 // A PHP diff engine for phpwiki.
@@ -1024,62 +1024,141 @@ class WikiUnifiedDiffFormatter extends WikiDiffFormatter
 
 /////////////////////////////////////////////////////////////////
 
-function PageInfoRow ($label, $hash)
+function PageInfoRow ($pagename, $label, $rev)
 {
    global $datetimeformat;
    
    $cols = QElement('td', array('align' => 'right'), $label);
    
+   if ($rev) {
+       $url = WikiURL($pagename, array('version' => $rev->getVersion()));
+       $linked_version = QElement('a', array('href' => $url), $rev->getVersion());
+       $cols .= Element('td',
+                        gettext("version") . " " . $linked_version);
 
-   if (is_array($hash)) {
-      extract($hash);
-      $cols .= QElement('td',
-			sprintf(gettext ("version %s"), $version));
-      $cols .= QElement('td',
-			sprintf(gettext ("last modified on %s"),
-				strftime($datetimeformat, $lastmodified)));
-      $cols .= QElement('td',
-			sprintf(gettext ("by %s"), $author));
+       $cols .= QElement('td',
+                         sprintf(gettext ("last modified on %s"),
+                                 strftime($datetimeformat, $rev->get('mtime'))));
+       $cols .= QElement('td',
+                         sprintf(gettext ("by %s"), $rev->get('author')));
    } else {
-      $cols .= QElement('td', array('colspan' => '3'),
-			gettext ("None"));
+       $cols .= QElement('td', array('colspan' => '3'),
+                         gettext ("None"));
    }
    return Element('tr', $cols);
 }
 
-if (isset($pagename))
-{
-	if (!isset($ver1)) {
-		if (isset($ver2)) $ver1 = $ver2 - 1;
-		else {
-			$ver1 = GetMaxVersionNumber($dbi, $pagename, $ArchivePageStore);
-			$ver2 = 0;
-		}
-	}
-	elseif (!isset($ver2)) $ver2 = 0;
+function showDiff ($dbi, $request) {
+    $pagename = $request->getArg('pagename');
+    $version = $request->getArg('version');
+    $previous = $request->getArg('previous');
+    
+    $page = $dbi->getPage($pagename);
 
-	$older = RetrievePage($dbi, $pagename, SelectStore($dbi, $pagename, $ver1, $WikiPageStore, $ArchivePageStore), $ver1);
-	$newer = RetrievePage($dbi, $pagename, SelectStore($dbi, $pagename, $ver2, $WikiPageStore, $ArchivePageStore), $ver2);
-
-  $html = Element('table',
-		  PageInfoRow(gettext ("Newer page:"), $newer)
-		  . PageInfoRow(gettext ("Older page:"), $older));
-		  
-  $html .= "<p>\n";
-  
-  if (is_array($newer) && is_array($older))
-    {
-      $diff = new WikiDiff($older['content'], $newer['content']);
-      if ($diff->isEmpty()) {
-	  $html .= '<hr>[' . gettext ("Versions are identical") . ']';
-      } else {
-	  //$fmt = new WikiDiffFormatter;
-	  $fmt = new WikiUnifiedDiffFormatter;
-	  $html .= $fmt->format($diff, $older['content']);
-      }
+    if ($version) {
+        if (!($new = $page->getRevision($version)))
+            NoSuchRevision($page, $version);
+        $new_version = sprintf(gettext("version %d"), $version);
+    }
+    else {
+        $new = $page->getCurrentRevision();
+        $new_version = gettext('current version');
     }
 
-  echo GeneratePage('MESSAGE', $html,
-		    sprintf(gettext ("Diff of %s."), $pagename), 0);
+    if (preg_match('/^\d+$/', $previous)) {
+        if ( !($old = $page->getRevision($previous)) )
+            NoSuchRevision($page, $previous);
+        $old_version = sprintf(gettext("version %d"), $previous);
+        $others = array('major', 'minor', 'author');
+    }
+    else {
+        switch ($previous) {
+        case 'major':
+            $old = $new;
+            while ($old = $page->getRevisionBefore($old)) {
+                if (! $old->get('is_minor_edit'))
+                    break;
+            }
+            $old_version = gettext("previous major revision");
+            $others = array('minor', 'author');
+            break;
+        case 'author':
+            $old = $new;
+            while ($old = $page->getRevisionBefore($old)) {
+                if ($old->get('author') != $new->get('author'))
+                    break;
+            }
+            $old_version = gettext("revision by previous author");
+            $others = array('major', 'minor');
+            break;
+        case 'minor':
+        default:
+            $previous='minor';
+            $old = $page->getRevisionBefore($new);
+            $old_version = gettext("previous revision");
+            $others = array('major', 'author');
+            break;
+        }
+    }
+
+    $new_url = WikiURL($pagename, array('version' => $new->getVersion()));
+    $new_link = QElement('a', array('href' => $new_url), $new_version);
+    $old_url = WikiURL($pagename, array('version' => $old ? $old->getVersion() : 0));
+    $old_link = QElement('a', array('href' => $old_url), $old_version);
+    $page_link = LinkExistingWikiWord($pagename);
+    
+    $html = Element('p',
+                    sprintf(htmlspecialchars(gettext("Differences between %s and %s of %s.")),
+                            $new_link, $old_link, $page_link));
+
+    $otherdiffs='';
+    $label = array('major' => gettext("Previous Major Revision"),
+                   'minor' => gettext("Previous Revision"),
+                   'author'=> gettext("Previous Author"));
+    foreach ($others as $other) {
+        $args = array('action' => 'diff', 'previous' => $other);
+        if ($version)
+            $args['version'] = $version;
+        $otherdiffs .= ' ' . QElement('a', array('href' => WikiURL($pagename, $args),
+                                                 'class' => 'wikiaction'),
+                                      $label[$other]);
+    }
+    $html .= Element('p',
+                     htmlspecialchars(gettext("Other diffs:"))
+                     . $otherdiffs);
+            
+            
+    if ($old and $old->getVersion() == 0)
+        $old = false;
+    
+    $html .= Element('table',
+                    PageInfoRow($pagename, gettext ("Newer page:"), $new)
+                    . PageInfoRow($pagename, gettext ("Older page:"), $old));
+
+    $html .= "<p>\n";
+
+    if ($new && $old) {
+        $diff = new WikiDiff($old->getContent(), $new->getContent());
+        if ($diff->isEmpty()) {
+            $html .= '<hr>[' . gettext ("Versions are identical") . ']';
+        }
+        else {
+            //$fmt = new WikiDiffFormatter;
+            $fmt = new WikiUnifiedDiffFormatter;
+            $html .= $fmt->format($diff, $old->getContent());
+        }
+    }
+    
+    include_once('lib/Template.php');
+    echo GeneratePage('MESSAGE', $html,
+                      sprintf(gettext ("Diff: %s"), $pagename));
 }
+  
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:   
 ?>

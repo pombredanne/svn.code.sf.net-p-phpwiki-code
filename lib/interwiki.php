@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: interwiki.php,v 1.5 2001-03-03 19:29:48 dairiki Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.6 2001-09-18 19:16:23 dairiki Exp $');
 
 function generate_interwikimap_and_regexp()
 {
@@ -34,15 +34,18 @@ function LinkInterWikiLink($link, $linktext='')
    else
       $url .= $page;
 
-   if ($linktext)
+   if ($linktext) {
       $linktext = htmlspecialchars($linktext);
-   else
-      $linktext = Element('span', array('class' => 'interwiki'),
-			  htmlspecialchars("$wiki:") .
-			  QElement('span', array('class' => 'wikiword'), $page));
+      $class = 'named-interwiki';
+   }
+   else {
+      $linktext = ( htmlspecialchars("$wiki:")
+                    . QElement('span', array('class' => 'wikipage'), $page) );
+      $class = 'interwiki';
+   }
    
    return Element('a', array('href' => $url,
-			     'class' => 'interwikilink'),
+			     'class' => $class),
 		  $linktext);
 }
 
