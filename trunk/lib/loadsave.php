@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.102 2004-06-06 16:58:51 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.103 2004-06-08 10:54:46 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -481,7 +481,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         else if ($current->getPackedContent() == $content
                  && $current->get('author') == $versiondata['author']) {
             $mesg->pushContent(' ',
-                               fmt("is identical to current version %d - skipped",
+                               fmt("content is identical to current version %d - no new revision created",
                                    $current->getVersion()));
             $skip = true;
         }
@@ -602,8 +602,13 @@ function ParseSerializedPage($text, $default_pagename, $user)
                 if (($value & FLAG_PAGE_LOCKED) != 0)
                     $pagedata['locked'] = 'yes';
                 break;
+            case 'owner':
             case 'created':
                 $pagedata[$key] = $value;
+                break;
+            case 'acl':
+            case 'perm':
+                $pagedata['perm'] = ParseMimeifiedPerm($value);
                 break;
             case 'lastmodified':
                 $versiondata['mtime'] = $value;
@@ -860,13 +865,11 @@ function SetupWiki (&$request)
     $finder = new FileFinder;
     foreach (array_merge(explode
                          (':',constant('HOME_PAGE')
-                          .':OldTextFormattingRules:TextFormattingRules'
-                          .':PhpWikiAdministration:PhpWikiAdministration%2FRemove'
-                          .':PhpWikiAdministration%2FRename:PhpWikiAdministration%2FReplace'
-                          .':PhpWikiAdministration%2FSetAcl:PhpWikiAdministration%2FChown'
-                          ),
+                          .':OldTextFormattingRules:TextFormattingRules:PhpWikiAdministration'),
                          $GLOBALS['AllActionPages']) as $f) {
         $page = gettext($f);
+        if (isSubPage($page))
+            $page = urlencode($page);
         if (! $request->_dbi->isWikiPage(urldecode($page)) ) {
             // translated version provided?
             if ($f = FindLocalizedFile($pgsrc . $finder->_pathsep . $page, 1))
@@ -910,6 +913,12 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.102  2004/06/06 16:58:51  rurban
+ added more required ActionPages for foreign languages
+ install now english ActionPages if no localized are found. (again)
+ fixed default anon user level to be 0, instead of -1
+   (wrong "required administrator to view this page"...)
+
  Revision 1.101  2004/06/04 20:32:53  rurban
  Several locale related improvements suggested by Pierrick Meignen
  LDAP fix by John Cole

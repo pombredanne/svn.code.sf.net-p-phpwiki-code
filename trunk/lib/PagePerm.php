@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.23 2004-06-08 10:05:11 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.24 2004-06-08 10:54:46 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -435,6 +435,9 @@ class PagePermission {
         return $perm;
     }
 
+    /**
+     * FIXME: check valid groups and access
+     */
     function sanify() {
         foreach ($this->perm as $access => $groups) {
             foreach ($groups as $group => $bool) {
@@ -634,20 +637,20 @@ class PagePermission {
     // See http://opag.ca/wiki/HelpOnAccessControlLists
     // As used by WikiAdminSetAclSimple
     function asAclLines() {
-        $s = '';
+        $s = ''; $line = '';
         $this->sanify();
         foreach ($this->perm as $access => $groups) {
             // unify groups for same access+bool
             //    view:CREATOR,-OWNER,
-            $s .= $access.':';
+            $line = $access.':';
             foreach ($groups as $group => $bool) {
-                $s .= ($bool?'':'-').$group.",";
+                $line .= ($bool?'':'-').$group.",";
             }
-            if (substr($s,-1,1) == ',')
-                $s = substr($s,-1)."; ";
-            else 
-                $s = '';
+            if (substr($line,-1) == ',')
+                $s .= substr($line,0,-1)."; ";
         }
+        if (substr($s,-2) == '; ')
+            $s = substr($s,0,-2);
         return $s;
     }
 
@@ -695,6 +698,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/06/08 10:05:11  rurban
+// simplified admin action shortcuts
+//
 // Revision 1.22  2004/06/07 22:44:14  rurban
 // added simplified chown, setacl actions
 //

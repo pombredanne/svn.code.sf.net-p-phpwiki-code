@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.31 2004-06-06 16:58:51 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.32 2004-06-08 10:54:46 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -352,7 +352,11 @@ function fix_configs() {
                               .'FullTextSearch:FuzzyPages:InterWikiSearch:LikePages:MostPopular:'
                               .'OrphanedPages:PageDump:PageHistory:PageInfo:RandomPage:RateIt:'
                               .'RecentChanges:RecentEdits:RelatedChanges:TitleSearch:TranslateText:'
-                              .'UpLoad:UserPreferences:WantedPages:WhoIsOnline');
+                              .'UpLoad:UserPreferences:WantedPages:WhoIsOnline:'
+                              .'PhpWikiAdministration/Remove'
+                              .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace'
+                              .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown'
+                              );
 
     //////////////////////////////////////////////////////////////////
     // Autodetect URL settings:
@@ -551,6 +555,12 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2004/06/06 16:58:51  rurban
+// added more required ActionPages for foreign languages
+// install now english ActionPages if no localized are found. (again)
+// fixed default anon user level to be 0, instead of -1
+//   (wrong "required administrator to view this page"...)
+//
 // Revision 1.30  2004/06/04 12:40:21  rurban
 // Restrict valid usernames to prevent from attacks against external auth or compromise
 // possible holes.
