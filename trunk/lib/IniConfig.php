@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.19 2004-05-08 19:55:29 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.20 2004-05-08 20:21:00 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -521,6 +521,12 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/05/08 19:55:29  rurban
+// support <span>inlined plugin-result</span>:
+//   if the plugin is parsed inside a line, use <span> instead of
+//   <div tightenable top bottom>
+//   e.g. for "This is the current Phpwiki <plugin SystemInfo version> version.
+//
 // Revision 1.18  2004/05/08 16:58:19  rurban
 // don't ignore some false config values (e.g. USE_PATH_INFO false was ignored)
 //
