@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //     lib/FileFinder.php:82: Fatal[256]: DB.php: file not found
 //
 // Define the include path for this wiki: pear plus the phpwiki path
-// $include_path = '.:/Apache/php/pear:/prog/php/phpwiki';
+// $include_path = '.:/usr/share/pear:/usr/local/httpd/phpwiki';
 //
 // // Windows needs ';' as path delimiter. cygwin, mac and unix ':'
 // if (substr(PHP_OS,0,3) == 'WIN') {
@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.3');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.86 2002-08-19 11:32:29 rurban Exp $');
+rcs_id('$Id: index.php,v 1.87 2002-08-20 08:56:58 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -93,7 +93,7 @@ rcs_id('$Id: index.php,v 1.86 2002-08-19 11:32:29 rurban Exp $');
 // This is used to generate a keywords meta tag in the HTML templates,
 // in bookmark titles for any bookmarks made to pages in your wiki,
 // and during RSS generation for the <title> of the RSS channel.
-//define('WIKI_NAME', 'PhpWiki');
+//if (!defined('WIKI_NAME')) define('WIKI_NAME', 'PhpWiki');
 
 // If set, we will perform reverse dns lookups to try to convert the
 // users IP number to a host name, even if the http server didn't do
@@ -103,15 +103,15 @@ define('ENABLE_REVERSE_DNS', true);
 // Username and password of administrator.
 // Set these to your preferences. For heaven's sake
 // pick a good password!
-define('ADMIN_USER', "");
-define('ADMIN_PASSWD', "");
+if (!defined('ADMIN_USER')) define('ADMIN_USER', "");
+if (!defined('ADMIN_PASSWD')) define('ADMIN_PASSWD', "");
 // If you used the passencrypt.php utility to encode the password
-// then uncomment this line:
-//define('ENCRYPTED_PASSWD', true);
+// then uncomment this line. Recommended!
+//if (!defined('ENCRYPTED_PASSWD')) define('ENCRYPTED_PASSWD', true);
 
 // If true, only the admin user can make zip dumps, else zip dumps
 // require no authentication.
-define('ZIPDUMP_AUTH', false);
+if (!defined('ZIPDUMP_AUTH')) define('ZIPDUMP_AUTH', false);
 
 
 // If you define this to true, (MIME-type) page-dumps (either zip dumps,
@@ -151,13 +151,13 @@ define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 // If ALLOW_BOGO_LOGIN is true, users are allowed to login (with
 // any/no password) using any userid which: 1) is not the ADMIN_USER,
 // 2) is a valid WikiWord (matches $WikiNameRegexp.)
-define('ALLOW_BOGO_LOGIN', true);
+if (!defined('ALLOW_BOGO_LOGIN')) define('ALLOW_BOGO_LOGIN', true);
 
 // If set, then if an anonymous user attempts to edit a page he will
 // be required to sign in.  (If ALLOW_BOGO_LOGIN is true, of course,
 // no password is required, but the user must still sign in under
 // some sort of BogoUserId.)
-define('REQUIRE_SIGNIN_BEFORE_EDIT', false);
+if (!defined('REQUIRE_SIGNIN_BEFORE_EDIT')) define('REQUIRE_SIGNIN_BEFORE_EDIT', false);
 
 // The login code now uses PHP's session support. Usually, the default
 // configuration of PHP is to store the session state information in
@@ -320,12 +320,14 @@ $ExpireParams['author'] = array('max_age'  => 365,
  *
  * Pick one.
  */
-//define('THEME', 'default');
+if (!defined('THEME')) {
+define('THEME', 'default');
 //define('THEME', 'Hawaiian');
 //define('THEME', 'MacOSX');
 //define('THEME', 'Portland');
 //define('THEME', 'Sidebar');
 //define('THEME', 'SpaceWiki');
+}
 
 // Select a valid charset name to be inserted into the xml/html pages,
 // and to reference links to the stylesheets (css). For more info see:
@@ -379,8 +381,7 @@ $LANG='C';
 // You can tailor the locale used for time and date formatting by
 // setting the LC_TIME environment variable. You'll have to experiment
 // to find the correct setting:
-//putenv('LC_TIME=de_DE');
-
+//putenv("LC_TIME=$LANG");
 
 /* WIKI_PGSRC -- specifies the source for the initial page contents of
  * the Wiki. The setting of WIKI_PGSRC only has effect when the wiki is
@@ -388,7 +389,7 @@ $LANG='C';
  * WIKI_PGSRC can either name a directory or a zip file. In either case
  * WIKI_PGSRC is scanned for files -- one file per page.
  */
-define('WIKI_PGSRC', "pgsrc"); // Default (old) behavior.
+if (!defined('WIKI_PGSRC')) define('WIKI_PGSRC', "pgsrc"); // Default (old) behavior.
 //define('WIKI_PGSRC', 'wiki.zip'); // New style.
 //define('WIKI_PGSRC', '../../../Logs/Hamwiki/hamwiki-20010830.zip'); // New style.
 
@@ -423,7 +424,8 @@ $InlineImages = "png|jpg|gif";
 // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
 $WikiNameRegexp = "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])";
 
-define('SUBPAGE_SEPARATOR','/');
+// Defaults to '/', but '.' was also used.
+if (!defined('SUBPAGE_SEPARATOR')) define('SUBPAGE_SEPARATOR','/');
 
 // InterWiki linking -- wiki-style links to other wikis on the web
 //
@@ -457,14 +459,14 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
  * Canonical name and httpd port of the server on which this PhpWiki
  * resides.
  */
-//define('SERVER_NAME', 'some.host.com');
+//if (!defined('SERVER_NAME')) define('SERVER_NAME', 'some.host.com');
 //define('SERVER_PORT', 80);
 
 /*
  * Relative URL (from the server root) of the PhpWiki
  * script.
  */
-//define('SCRIPT_NAME', '/some/where/index.php');
+//if (!defined('SCRIPT_NAME')) define('SCRIPT_NAME', '/some/where/index.php');
 
 /*
  * URL of the PhpWiki install directory.  (You only need to set this
@@ -486,12 +488,13 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 
 
 /*
- * Define to 'true' to use PATH_INFO to pass the pagename's.
- * e.g. http://www.some.where/index.php/HomePage instead
- * of http://www.some.where/index.php?pagename=HomePage
+ * Define to false not to use PATH_INFO to pass the pagename's.
+ * e.g. the old http://www.some.where/index.php?pagename=HomePage
+ * instead of http://www.some.where/index.php/HomePage
  * FIXME: more docs (maybe in README).
+ * Default: true
  */
-//define('USE_PATH_INFO', false);
+//if (!defined('USE_PATH_INFO')) define('USE_PATH_INFO', false);
 
 /*
  * VIRTUAL_PATH is the canonical URL path under which your your wiki
@@ -516,14 +519,31 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
  *
  * (VIRTUAL_PATH is only used if USE_PATH_INFO is true.)
  */
-//define('VIRTUAL_PATH', '/SomeWiki');
+//if (!defined('VIRTUAL_PATH')) define('VIRTUAL_PATH', '/SomeWiki');
 
 
 ////////////////////////////////////////////////////////////////
-// Okay... fire up the code:
+// Check if we were included by some other wiki version (getimg, en, ...) or not.
+// If we are the original index.php fire up the code by loading lib/main.php.
+// Parallel wiki scripts can now simply include /index.php for the 
+// main configuration, extend or redefine some settings and 
+// load lib/main.php by themselves. This overcomes the index as 
+// config problem.
 ////////////////////////////////////////////////////////////////
 
-include "lib/main.php";
+// This doesn't work with php as CGI yet!
+if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
+    if ($HTTP_SERVER_VARS['SCRIPT_NAME'] == VIRTUAL_PATH) {
+        include "lib/main.php";
+    }
+} else {
+    if (defined('SCRIPT_NAME') and 
+        ($HTTP_SERVER_VARS['SCRIPT_NAME'] == SCRIPT_NAME)) {
+        include "lib/main.php";
+    } elseif (strstr($HTTP_SERVER_VARS['PHP_SELF'],'index.php')) {
+        include "lib/main.php";
+    }
+}
 
 // (c-file-style: "gnu")
 // Local Variables:
