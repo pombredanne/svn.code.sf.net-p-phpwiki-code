@@ -364,6 +364,8 @@ $locale["Pages in this wiki (%d total):"] =
    "Seiten in diesem Wiki (%d gesamt):";
 $locale["Password"] =
    "Passwort";
+$locale["Permanently remove all selected pages."] =
+   "Lösche alle ausgewählten Seiten für immer.";
 $locale["PhpWikiAdministration"] =
    "PhpWikiSystemverwalten";
 $locale["Please check it through before saving."] =
@@ -408,6 +410,8 @@ $locale["Remove Page"] =
    "Seite Löschen";
 $locale["Remove page"] =
    "Seite löschen";
+$locale["Remove selected pages"] =
+   "Lösche die Seite jetzt";
 $locale["Remove the page now"] =
    "Lösche die Seite jetzt";
 $locale["Removed page '%s' succesfully."] =
@@ -438,6 +442,8 @@ $locale["See %s"] =
    "Siehe %s";
 $locale["See %s tips for editing."] =
    "Siehe %s Tips fürs Editieren.";
+$locale["Select"] =
+   "Löschen";
 $locale["Serialized file %s"] =
    "Serialisierte Datei %s";
 $locale["Show all changes for:"] =
