@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ViewMarkup.php,v 1.1 2001-12-28 03:42:31 carstenklapp Exp $');
+rcs_id('$Id: ViewMarkup.php,v 1.2 2001-12-28 09:55:12 carstenklapp Exp $');
 require_once('lib/Template.php');
 /**
  * A handy plugin for viewing the WikiMarkup of locked pages.
@@ -13,7 +13,7 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return sprintf(_("View WikiMarkup for '%s'."),'[pagename]');
+        return sprintf(_("View WikiMarkup for page '%s'."),'[pagename]');
     }
     
         function WikiPlugin_ViewMarkup() {
