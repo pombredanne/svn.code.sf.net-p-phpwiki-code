@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.5 2004-03-09 12:10:23 rurban Exp $');
+rcs_id('$Id: PhotoAlbum.php,v 1.6 2004-04-18 00:19:30 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
  
@@ -152,7 +152,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -462,6 +462,10 @@ extends WikiPlugin
                 }
                 // convert dirname($src) (local fs path) to web path
                 natcasesort($list);
+                if (! $webpath ) {
+                    // assume relative src. default: "themes/Hawaiian/images/pictures"
+                    $webpath = DATA_PATH . "/" . $src;
+                }
                 foreach ($list as $file) {
                     // convert local path to webpath
                     $photos[] = array ("name" => $webpath . "/$file",
@@ -472,8 +476,11 @@ extends WikiPlugin
                 return;
             }
         } else {
-            if (! ini_get('allow_url_fopen'))
+            // fixed: get current value, not stored value.
+            // todo: use lib/HttpClient.php
+            if (! get_cfg_var('allow_url_fopen')) {
                 return $this->error(fmt("Wrong server setting: allow_url_fopen set to Off"));
+            }
         }
     	@$fp = fopen ($src,"r");
         if (!$fp) {
@@ -496,6 +503,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/03/09 12:10:23  rurban
+// fixed getimagesize problem with local dir.
+//
 // Revision 1.4  2004/02/28 21:14:08  rurban
 // generally more PHPDOC docs
 //   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
