@@ -1301,11 +1301,11 @@ msgstr "Ihre Zeit:"
 
 #: ../themes/default/templates/userprefs.tmpl:78
 msgid "Date Format"
-msgstr ""
+msgstr "Datumformat"
 
 #: ../themes/default/templates/userprefs.tmpl:84
 msgid "Show relative dates using 'Today' and 'Yesterday'."
-msgstr ""
+msgstr "Daten mit relativen Bezeichnungen versehen wie »Heute« und »Gestern«."
 
 #: ../themes/default/templates/userprefs.tmpl:90
 msgid "Update Preferences"
