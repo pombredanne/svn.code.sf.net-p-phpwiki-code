@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.51 2002-02-01 19:32:43 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.52 2002-02-01 22:01:42 dairiki Exp $');
 /**
  */
 
@@ -155,19 +155,25 @@ extends _RecentChanges_Formatter
             $edits = _("major edits");
         else
             $edits = _("minor edits");
+
+        if ($days > 0) {
+            if (intval($days) != $days)
+                $days = sprintf("%.1f", $days);
+            $timespan = $days == 1 ? _("day") :  sprintf(_("%s days"), $days);
+        }
             
         if ($limit > 0) {
-            if ($days > 0)
-                $desc = fmt("The %d most recent %s during the past %.1f days are listed below.",
-                            $limit, $edits, $days);
+            if (!empty($timespan))
+                $desc = fmt("The %d most recent %s during the past %s are listed below.",
+                            $limit, $edits, $timespan);
             else
                 $desc = fmt("The %d most recent %s are listed below.",
                             $limit, $edits);
         }
         else {
-            if ($days > 0)
-                $desc = fmt("The most recent %s during the past %.1f days are listed below.",
-                            $edits, $days);
+            if (!empty($timespan))
+                $desc = fmt("The most recent %s during the past %s are listed below.",
+                            $edits, $timespan);
             else
                 $desc = fmt("All %s are listed below.", $edits);
         }
@@ -186,6 +192,9 @@ extends _RecentChanges_Formatter
         $html = HTML(HTML::h2(false, $this->title()));
         if (($desc = $this->description()))
             $html->pushContent(HTML::p(false, $desc));
+
+        if ($this->_args['daylist'])
+            $html->pushContent(new DayButtonBar($this->_args));
         
         $last_date = '';
         $lines = false;
@@ -206,23 +215,29 @@ extends _RecentChanges_Formatter
     }
 
     function format_revision ($rev) {
+        $args = &$this->_args;
+        
         $class = 'rc-' . $this->importance($rev);
 
-        $difflink = false;
-        $historylink = false;
-        if ($this->_show_difflinks)
-            $difflink = $this->diffLink($rev);
-        if ($this->_show_historylinks)
-            $historylink = $this->historyLink($rev);
+        $time = $this->time($rev);
+        if (! $rev->get('is_minor_edit'))
+            $time = HTML::strong($time);
 
-        return HTML::li(array('class' => $class),
-                        $difflink, ' ',
-                        $historylink, ' ',
-                        $this->pageLink($rev), ' ',
-                        $rev->get('is_minor_edit') ? $this->time($rev) : HTML::strong($this->time($rev)), ' ',
-                        $this->summaryAsHTML($rev),
-                        ' ... ',
-                        $this->authorLink($rev));
+        $line = HTML::li(array('class' => $class));
+
+
+        if ($args['difflinks'])
+            $line->pushContent($this->diffLink($rev), ' ');
+
+        if ($args['historylinks'])
+            $line->pushContent($this->historyLink($rev), ' ');
+
+        $line->pushContent($this->pageLink($rev), ' ',
+                           $time, ' ',
+                           $this->summaryAsHTML($rev),
+                           ' ... ',
+                           $this->authorLink($rev));
+        return $line;
     }
 }
 
@@ -443,105 +458,65 @@ extends WikiPlugin
         }
         
         $fmt = new $fmt_class($args);
-        $fmt->_show_difflinks = $args['difflinks'];
-        $fmt->_show_historylinks = $args['historylinks'];
-
         return $fmt->format($changes);
     }
 
     function run ($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
+
+        // Hack alert: format() is a NORETURN for rss formatters.
+        return $this->format($this->getChanges($dbi, $args), $args);
+    }
+};
+
+
+class DayButtonBar extends HtmlElement {
+
+    function DayButtonBar ($plugin_args) {
+        $this->HtmlElement('p', array('class' => 'wiki-rc-action'));
         
-        if (! $args['daylist']) {
-            // Display RecentChanges
-            //
-            // Hack alert: format() is a NORETURN for rss formatters.
-            return $this->format($this->getChanges($dbi, $args), $args);
-        } else {
-            // Display days selection buttons
-            extract($args);
-
-            $daysarray = explode(",", $daylist);
-
-            // Defaults
-            $url_show_minor = "";
-            $url_show_all = "";
-            $whichpage = _("RecentChanges");
-            
-            // RecentEdits args
-            if ($show_minor) {
-                $url_show_minor = "&show_minor=1";
-                $whichpage = _("RecentEdits");
-            }
-            if ($show_all)
-                $url_show_all = "&show_all=1";
-
-            // Custom caption
-            if (! $caption) {
-                if ($url_show_minor)
-                    $caption = _("Show minor edits for:");
-                else {
-                    if ($url_show_all)
-                        $caption = _("Show all changes for:");
-                    else
-                        $caption = _("Show changes for:");
-                }
-            }
-
-            $b = new buttonSet();
-            $b->caption = $caption;
-
-            foreach ($daysarray as $daynum) {
-
-                if ($daynum == 1)
-                    $label = _("1 day");
-                elseif ($daynum < 1)
-                    $label = "..."; //alldays
-                else
-                    $label = sprintf(_("%s days"), $daynum);
-
-                // Build the button's url
-                $b->addButton($label, "$whichpage?days=" .$daynum
-                                      .$url_show_minor .$url_show_all,
-                              'wiki-rc-action');
-            }
-            return HTML::div(array('class'=>'wiki-rc-action'), $b->getContent());
+        // Display days selection buttons
+        extract($plugin_args);
+        
+        // Custom caption
+        if (! $caption) {
+            if ($show_minor)
+                $caption = _("Show minor edits for:");
+            elseif ($show_all)
+                $caption = _("Show all changes for:");
+            else
+                $caption = _("Show changes for:");
         }
-    }
-};
 
-
-class buttonSet {
-    function buttonSet() {
-        $this->caption = "";
-        $this->content = "";
-        $this->_b = array();
-    }
-
-    function addButton($label, $url, $action) {
-        global $Theme;
-        $this->_b[] = $Theme->makeButton($label, $url, $action);
-    }
-
-    function getContent() {
-        if (empty($this->content))
-            $this->_generateContent();
-        return $this->content;
-    }
-
-    function _generateContent() {
-        $this->content = HTML::p($this->caption . " ");
-        // Avoid an extraneous ButtonSeparator
-        $this->content->pushContent(array_shift($this->_b));
+        $this->pushContent($caption, ' ');
 
         global $Theme;
-        foreach ($this->_b as $button) {
-            $this->content->pushContent($Theme->getButtonSeparator());
-            $this->content->pushContent($button);
+        $sep = $Theme->getButtonSeparator();
+        
+        $n = 0;
+        foreach (explode(",", $daylist) as $days) {
+            if ($n++)
+                $this->pushContent($sep);
+            $this->pushContent($this->_makeDayButton($days));
         }
     }
 
-};
+    function _makeDayButton ($days) {
+        global $Theme, $request;
+        
+        if ($days == 1)
+            $label = _("1 day");
+        elseif ($days < 1)
+            $label = "..."; //alldays
+        else
+            $label = sprintf(_("%s days"), $days);
+
+        $url = $request->getURLtoSelf(array('action' => 'browse', 'days' => $days));
+
+        return $Theme->makeButton($label, $url, 'wiki-rc-action');
+    }
+}
+
 
 
 // (c-file-style: "gnu")
