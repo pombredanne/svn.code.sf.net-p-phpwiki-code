@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.5 2004-04-26 20:44:35 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.6 2004-06-04 20:32:53 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -8,6 +8,9 @@ require_once('lib/WikiDB/backend/ADODB.php');
  * (tested with 4.0.18)
  * Whenever a table is write-locked, you cannot even write to other unrelated 
  * tables. So it seems that we have to lock all tables!
+ * As workaround we try it with application locks, uniquely named locks, 
+ * to prevent from concurrent writes of locks with the same name.
+ * The lock name is a strcat of the involved tables.
  */
 define('DO_APP_LOCK',true);
 define('DO_FULL_LOCK',false);

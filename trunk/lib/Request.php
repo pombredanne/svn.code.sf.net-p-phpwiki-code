@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.57 2004-06-03 18:54:25 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.58 2004-06-04 20:32:53 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -56,7 +56,7 @@ class Request {
                 trigger_error
                     (sprintf(_("%s is not writable."), _("The PhpWiki access log file"))
                     . "\n"
-                    . sprintf(_("Please ensure that %s is writable, or redefine %s in index.php."),
+                    . sprintf(_("Please ensure that %s is writable, or redefine %s in config/config.ini."),
                             sprintf(_("the file '%s'"), ACCESS_LOG),
                             'ACCESS_LOG')
                     , E_USER_NOTICE);
@@ -982,6 +982,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.57  2004/06/03 18:54:25  rurban
+// fixed "lost level in session" warning, now that signout sets level = 0 (before -1)
+//
 // Revision 1.56  2004/05/17 17:43:29  rurban
 // CGI: no PATH_INFO fix
 //

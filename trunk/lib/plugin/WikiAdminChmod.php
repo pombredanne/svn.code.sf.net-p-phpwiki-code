@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChmod.php,v 1.7 2004-06-03 22:24:42 rurban Exp $');
+rcs_id('$Id: WikiAdminChmod.php,v 1.8 2004-06-04 20:32:54 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -118,8 +118,7 @@ extends WikiPlugin_WikiAdminSelect
             $pages = $p;
         if ($p && $request->isPost() &&
             !empty($post_args['chmod']) && empty($post_args['cancel'])) {
-
-            // check individual PagePermissions
+            // without individual PagePermissions:
             if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
@@ -172,8 +171,10 @@ extends WikiPlugin_WikiAdminSelect
                           HiddenInputs($request->getArgs(),
                                         false,
                                         array('admin_chmod')),
-                          HiddenInputs(array('admin_chmod[action]' => $next_action,
-                                             'require_authority_for_post' => WIKIAUTH_ADMIN)),
+                          HiddenInputs(array('admin_chmod[action]' => $next_action)),
+                          ENABLE_PAGEPERM
+                          ? ''
+                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
                           $buttons);
     }
 
@@ -201,6 +202,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/06/03 22:24:42  rurban
+// reenable admin check on !ENABLE_PAGEPERM, honor s=Wildcard arg, fix warning after Remove
+//
 // Revision 1.6  2004/03/17 20:23:44  rurban
 // fixed p[] pagehash passing from WikiAdminSelect, fixed problem removing pages with [] in the pagename
 //

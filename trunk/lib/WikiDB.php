@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.64 2004-06-04 16:50:00 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.65 2004-06-04 20:32:53 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1025,9 +1025,15 @@ class WikiDB_Page
         return new WikiDB_PageIterator($this->_wikidb, $result);
     }
 
+    /**
+     * All Links from other pages to this page.
+     */
     function getBackLinks() {
         return $this->getLinks(true);
     }
+    /**
+     * Forward Links: All Links from this page to other pages.
+     */
     function getPageLinks() {
         return $this->getLinks(false);
     }
@@ -1832,6 +1838,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2004/06/04 16:50:00  rurban
+// add random quotes to empty pages
+//
 // Revision 1.63  2004/06/04 11:58:38  rurban
 // added USE_TAGLINES
 //
