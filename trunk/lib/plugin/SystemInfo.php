@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.19 2004-06-19 11:49:42 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.20 2004-11-20 11:28:49 rurban Exp $');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -415,24 +415,6 @@ extends WikiPlugin
     }
 }
 
-/* // autolisp stdlib
-;;; Median of the sorted list of numbers. 50% is above and 50% below
-;;; "center of a distribution"
-;;; Ex: (std-median (std-make-list 100 std-%random)) => 0.5 +- epsilon
-;;;     (std-median (std-make-list 100 (lambda () (std-random 10))))
-;;;       => 4.0-5.0 [0..9]
-;;;     (std-median (std-make-list 99  (lambda () (std-random 10))))
-;;;       => 4-5
-;;;     (std-median '(0 0 2 4 12))      => 2
-;;;     (std-median '(0 0 4 12))        => 2.0
-(defun STD-MEDIAN (numlst / l)
-  (setq numlst (std-sort numlst '<))            ; don't remove duplicates
-  (if (= 0 (rem (setq l (length numlst)) 2))    ; if even length
-    (* 0.5 (+ (nth (/ l 2) numlst)              ; force float!
-              (nth (1- (/ l 2)) numlst)))       ; fixed by Serge Pashkov
-    (nth (/ l 2) numlst)))
-
-*/
 function median($hits) {
     sort($hits);
     reset($hits);
@@ -461,13 +443,6 @@ function gensym($prefix = "_gensym") {
     return $prefix . $i;
 }
 
-/* // autolisp stdlib
-(defun STD-STANDARD-DEVIATION (numlst / n _dev_m r)
-  (setq n      (length numlst)
-        _dev_m (std-mean numlst)
-        r      (mapcar (function (lambda (x) (std-sqr (- x _dev_m)))) numlst))
-  (sqrt (* (std-mean r) (/ n (float (- n 1))))))
-*/
 function stddev(&$hits, $total = false) {
     $n = count($hits);
     if (!$total) $total = array_reduce($hits, 'rsum');
@@ -479,6 +454,9 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/06/19 11:49:42  rurban
+// dont print db passwords
+//
 // Revision 1.18  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
