@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.44 2002-02-26 11:08:41 lakka Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.45 2002-03-25 20:21:57 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -121,6 +121,7 @@ function Button ($action, $label = false, $page_or_rev = false) {
 
 
 class Theme {
+    var $HTML_DUMP_SUFFIX = '';
     function Theme ($theme_name = 'default') {
         $this->_name = $theme_name;
         $themes_dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/themes" : "themes";
@@ -382,6 +383,8 @@ class Theme {
         else
             $url = WikiURL($wikiword);
 
+        if ($this->HTML_DUMP_SUFFIX)
+            $url .= $this->HTML_DUMP_SUFFIX;
         $link = HTML::a(array('href' => $url));
 
         if (!empty($linktext)) {
