@@ -68,7 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.62 2002-01-15 22:20:53 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.63 2002-01-17 05:52:11 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -279,6 +279,7 @@ define("CHARSET", "iso-8859-1");
 // English "C"  (English    - HomePage)
 // Dutch   "nl" (Nederlands - ThuisPagina)
 // Spanish "es" (Español    - PáginaPrincipal)
+// French  "fr" (Français   - Accueil)
 // German  "de" (Deutsch    - StartSeite)
 // Swedish "sv" (Svenska    - Framsida)
 // Italian "it" (Italiano   - PaginaPrincipale)
@@ -331,16 +332,16 @@ $CSS_URLS = array('PhpWiki' => "phpwiki.css",
 $CSS_DEFAULT = "PhpWiki";
 
 // logo image (path relative to index.php)
-$logo = "images/wikibase.png";
+$logo = "themes/default/images/logo.png";
 
 // RSS logo icon (path relative to index.php)
 // If this is left blank (or unset), the default "images/rss.png"
 // will be used.
-//$rssicon = "images/rss.png";
+//$rssicon = "themes/default/images/RSS.png";
 
 // Signature image which is shown after saving an edited page
 // If this is left blank (or unset), the signature will be omitted.
-//$SignatureImg = "images/signature.png";
+//$SignatureImg = "themes/default/images/signature.png";
 
 // this turns on url indicator icons, inserted before embedded links
 // '*' icon is shown when the link type has no icon listed here, but
@@ -350,12 +351,12 @@ $logo = "images/wikibase.png";
 // turn on only 'interwiki' and '*', comment out the other four.
 /*
 $URL_LINK_ICONS = array(
-                        'http'	    => 'images/http.png',
-                        'https'     => 'images/https.png',
-                        'ftp'	    => 'images/ftp.png',
-                        'mailto'    => 'images/mailto.png',
-                        'interwiki' => 'images/interwiki.png',
-                        '*'         => 'images/url.png'
+                        'http'	    => 'themes/default/images/http.png',
+                        'https'     => 'themes/default/images/https.png',
+                        'ftp'	    => 'themes/default/images/ftp.png',
+                        'mailto'    => 'themes/default/images/mailto.png',
+                        'interwiki' => 'themes/default/images/interwiki.png',
+                        '*'         => 'themes/default/images/url.png'
                         );
 */                    
 
@@ -442,7 +443,7 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 // (i.e. templates, logo, signature etc.)
 // comment out the $theme= lines to revert to the standard interface
 // which defaults to /templates and /images
-//$theme="default";
+$theme="default";
 //$theme="Hawaiian";
 //$theme="MacOSX";
 //$theme="WikiTrek";
