@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.9 2004-11-24 13:55:42 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.10 2004-11-24 15:07:49 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -78,7 +78,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -100,10 +100,12 @@ extends WikiPlugin
     	    if (preg_match("/^\s*(".join("|",$allowed).")\[\]\s+(.+)\s*$/", $arg_array[$i], $m)) {
     	    	$name = $m[1]; // one of the allowed input types
                 $this->inputbox[][$name] = array(); $j = count($this->inputbox) - 1;
-                foreach (preg_split("/[\s]+/", $m[2]) as $attr_pair) {
-                    list($attr, $value) = preg_split("/\s*=\s*/", $attr_pair);
-                    if (preg_match('/^"(.*)"$/', $value, $m))
-                        $value = $m[1];
+                $curargs = $m[2];
+                // must match name=NAME and also value=<!plugin-list name !>
+                while (preg_match("/^(\w+)=(\"\"|\"?\w+\"?|\"?<!plugin-list.+!>\"?)\s*/", $curargs, $m)) {
+                    $attr = $m[1]; $value = $m[2];
+                    $curargs = substr($curargs, strlen($m[0]));
+                    if ($value == '""') $value='';
                     elseif (in_array($name, array("pulldown","checkbox","radiobutton"))
                             and preg_match('/^<!plugin-list.+!>$/', $value, $m))
             	    // like pulldown[] name=test value=<!plugin-list BackLinks page=HomePage!>
@@ -114,7 +116,8 @@ extends WikiPlugin
             		$plugin_str = preg_replace(array("/^<!/","/!>$/"),array("<?","?>"), $value);
             		// will return a pagelist object! pulldown,checkbox,radiobutton
             		$value = $loader->expandPI($plugin_str, $GLOBALS['request'], $markup, $basepage);
-            		if (isa($value, 'PageList')) $value = $value->_pages;
+            		if (isa($value, 'PageList')) 
+            		    $value = $value->_pages;
             		elseif (!is_array($value))
     	    		    trigger_error(sprintf("Invalid argument %s ignored", htmlentities($arg_array[$i])), 
     	    	                          E_USER_WARNING);
@@ -142,10 +145,7 @@ extends WikiPlugin
                                  'method' => $method,
                                  'class'  => 'wikiadmin',
                                  'accept-charset' => $GLOBALS['charset']),
-                           HiddenInputs(array_merge(
-                                                    array('action' => $action),
-                                                    USE_PATH_INFO ? array() 
-                                                    : array('pagename' => $basepage))));
+                           HiddenInputs(array('action' => $action)));
         if ($nobr) $nbsp = HTML::Raw('&nbsp;');
         foreach ($this->inputbox as $inputbox) {
             foreach ($inputbox as $inputtype => $input) {
@@ -159,21 +159,75 @@ extends WikiPlugin
                     $input['text'] = gettext($input['name']); //."=".$input['value'];
                 $text = $input['text'];
                 unset($input['text']);
-                if (empty($input['value'])) $input['value'] = 1;
-                elseif (is_array($input['value'])) {
-                    //TODO
-                    ;
-                }
                 if (empty($input['checked'])) {
                     if ($request->getArg($input['name']))
                         $input['checked'] = 'checked';
                 } else {
                     $input['checked'] = 'checked';
                 }
-                if ($nobr)
-                    $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
-                else
-                    $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
+                if (empty($input['value'])) $input['value'] = 1;
+                if (is_array($input['value'])) {
+                    $div = HTML::div(array('class' => $class));
+                    $values = $input['value'];
+                    $name = $input['name'];
+                    $input['name'] .= "[]";
+                    foreach ($values as $val) {
+                        // TODO: get checked status from a possible select column?
+                        $input['value'] = $val;
+                        if ($request->getArg($name)) {
+                            if ($request->getArg($name) == $val)
+                                $input['checked'] = 'checked';
+                            else 
+                                unset($input['checked']);
+                        }
+                        $text .= (" " . $val);
+                        $div->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
+                        if (!$nobr)
+                            $div->pushContent(HTML::br());
+                    }
+                    $form->pushContent($div);
+                } else {
+                    if ($nobr)
+                        $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
+                    else
+                        $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
+                }
+                break;
+              case 'radiobutton':
+                $input['type'] = 'radio';
+                if (empty($input['name']))
+                    return $this->error(fmt("A required argument '%s' is missing.",
+                                            "radiobutton[][name]"));
+                if (!isset($input['text'])) $input['text'] = gettext($input['name']);
+                $text = $input['text'];
+                unset($input['text']);
+                if ($input['checked']) $input['checked'] = 'checked';
+                if (is_array($input['value'])) {
+                    $div = HTML::div(array('class' => $class));
+                    $values = $input['value'];
+                    $name = $input['name'];
+                    $input['name'] .= "[]";
+                    foreach ($values as $val) {
+                        // TODO: get checked status from a possible select column?
+                        $input['value'] = $val;
+                        if ($request->getArg($name)) {
+                            if ($request->getArg($name) == $val)
+                                $input['checked'] = 'checked';
+                            else 
+                                unset($input['checked']);
+                        }
+                        $text .= (" " . $val);
+                        $div->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
+                        if (!$nobr)
+                            $div->pushContent(HTML::br());
+                    }
+                    $form->pushContent($div);
+                } else {
+                    if ($nobr)
+                        $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
+                    else
+                        $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
+                }
                 break;
               case 'editbox':
                 $input['type'] = 'text';
@@ -190,19 +244,33 @@ extends WikiPlugin
                 else
                     $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
                 break;
-              case 'radiobutton':
-                $input['type'] = 'radio';
+              case 'pulldown':
                 if (empty($input['name']))
                     return $this->error(fmt("A required argument '%s' is missing.",
-                                            "radiobutton[][name]"));
+                                            "pulldown[][name]"));
                 if (!isset($input['text'])) $input['text'] = gettext($input['name']);
                 $text = $input['text'];
                 unset($input['text']);
-                if ($input['checked']) $input['checked'] = 'checked';
-                if ($nobr)
-                    $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
-                else
-                    $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $text));
+                $values = $input['value'];
+                unset($input['value']);
+                $select = HTML::select($input);
+                if (empty($values) and ($s = $request->getArg($input['name']))) {
+                    $select->pushContent(HTML::option(array('value'=> $s), $s));
+                } elseif (is_array($values)) {
+                    $name = $input['name'];
+                    unset($input['name']);
+                    foreach ($values as $val) {
+                        $input = array('value'=> $val);
+                        if ($request->getArg($name)) {
+                            if ($request->getArg($name) == $val)
+                                $input['selected'] = 'selected';
+                            else
+                                unset($input['selected']);
+                        }
+                        $select->pushContent(HTML::option($input, $val));
+                    }
+                }
+                $form->pushContent($text, $select);
                 break;
               case 'hidden':
                 $input['type'] = 'hidden';
@@ -211,8 +279,6 @@ extends WikiPlugin
                     			    "hidden[][name]"));
                 unset($input['text']);
                 $form->pushContent(HTML::input($input));
-              case 'pulldown':
-                    return $this->error("Sorry, pulldown not yet supported");
               }
             }
         }
@@ -236,6 +302,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/11/24 13:55:42  rurban
+// omit unneccessary pagename arg
+//
 // Revision 1.8  2004/11/24 10:58:50  rurban
 // just docs
 //
