@@ -1,4 +1,4 @@
-<!-- $Id: index.php3,v 1.3 2000-06-05 21:46:50 wainstead Exp $ -->
+<!-- $Id: index.php3,v 1.4 2000-06-21 19:33:19 ahollosi Exp $ -->
 <?
    /*
       The main page, i.e. the main loop.
@@ -31,6 +31,8 @@
       include "wiki_fullsearch.php3";
    } elseif ($post) {
       include "wiki_savepage.php3";
+   } elseif ($info) {
+      include "wiki_pageinfo.php3";
    } else {
       include "wiki_display.php3"; // defaults to FrontPage
    }
