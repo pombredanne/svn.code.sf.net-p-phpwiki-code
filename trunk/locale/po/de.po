@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki 1.3.2-jeffs-hacks\n"
-"POT-Creation-Date: 2002-02-17 12:37-0500\n"
+"POT-Creation-Date: 2002-02-18 23:17-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@mac.com>, Arno Hollosi <ahollosi@mail.com>\n"
@@ -131,16 +131,16 @@ msgstr "Editiere: %s"
 msgid "View Source: %s"
 msgstr "Quell Text: %s"
 
-#: ../lib/editpage.php:188
+#: ../lib/editpage.php:193
 #, c-format
 msgid "Saved: %s"
 msgstr "Gespeichert: %s"
 
-#: ../lib/editpage.php:221 ../themes/MacOSX/themeinfo.php:114
+#: ../lib/editpage.php:229 ../themes/MacOSX/themeinfo.php:114
 msgid "Page Locked"
 msgstr "Seite Gesperrt"
 
-#: ../lib/editpage.php:222
+#: ../lib/editpage.php:230
 msgid ""
 "This page has been locked by the administrator so your changes can not be "
 "saved."
@@ -148,7 +148,7 @@ msgstr ""
 "Diese Seite wurde vom Systemverwalter gesperrt und deine Veränderungen "
 "können nicht gespeichert werden."
 
-#: ../lib/editpage.php:223
+#: ../lib/editpage.php:231
 msgid ""
 "(Copy your changes to the clipboard. You can try editing a different page or "
 "save your text in a text editor.)"
@@ -156,43 +156,50 @@ msgstr ""
 "(Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine "
 "andere Seite zu editieren oder dein Text in einem Texteditor speichern.)"
 
-#: ../lib/editpage.php:224
+#: ../lib/editpage.php:232
 msgid "Sorry for the inconvenience."
 msgstr "Entschuldigung für die Unannehmlichkeiten."
 
-#: ../lib/editpage.php:237
+#: ../lib/editpage.php:245
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
 "sections beginning with <<<<<<< Your version, and ending with >>>>>>> Other "
 "version.  You will need to edit those sections by hand, and the click Save"
 msgstr ""
 
-#: ../lib/editpage.php:239
+#: ../lib/editpage.php:247
 msgid "Please check it through and click Save to save it."
-msgstr "Bitte den Text nochmals durchsehen, dann klicke Speichern um ihn zu speichern."
+msgstr ""
+"Bitte den Text nochmals durchsehen, dann klicke Speichern um ihn zu "
+"speichern."
 
-#: ../lib/editpage.php:249
+#: ../lib/editpage.php:257
 msgid "Conflicting Edits!"
 msgstr "Widersprechende Änderungen!"
 
-#: ../lib/editpage.php:250
+#: ../lib/editpage.php:258
 msgid ""
 "In the time since you started editing this page, another user has saved a "
 "new version of it.  Your changes can not be saved as they are, since doing "
 "so would overwrite the other author's changes."
-msgstr "Seitdem du diese Seite zuerst editiert hast, hat ein anderer Benützer die Seite verändert und gespeichert. Deine Veränderungen kann nicht gespeichert werden, da würde die Veränderungen des anderen Autors überschreiben."
+msgstr ""
+"Seitdem du diese Seite zuerst editiert hast, hat ein anderer Benützer die "
+"Seite verändert und gespeichert. Deine Veränderungen kann nicht gespeichert "
+"werden, da würde die Veränderungen des anderen Autors überschreiben."
 
-#: ../lib/editpage.php:251
+#: ../lib/editpage.php:259
 msgid ""
 "So, your changes and those of the other author have been combined.  The "
 "result is shown below"
-msgstr "Somit sind Deine Änderungen und die des anderen Autors kombiniert worden. Das Resultat wird unten angezeigt."
+msgstr ""
+"Somit sind Deine Änderungen und die des anderen Autors kombiniert worden. "
+"Das Resultat wird unten angezeigt."
 
-#: ../lib/editpage.php:309
+#: ../lib/editpage.php:317
 msgid "Preview"
 msgstr "Vorschau"
 
-#: ../lib/editpage.php:312
+#: ../lib/editpage.php:320
 msgid "Save"
 msgstr "Speichern"
 
@@ -201,17 +208,16 @@ msgstr "Speichern"
 msgid "%s: error while handling error:"
 msgstr "%s: Fehler während der Fehlerbehandlung von:"
 
-#: ../lib/FileFinder.php:82
+#: ../lib/FileFinder.php:82 ../lib/loadsave.php:280
 #, c-format
 msgid "%s: file not found"
 msgstr "%s: Datei nicht gefunden"
 
-#: ../lib/interwiki.php:7
-#, fuzzy
+#: ../lib/interwiki.php:7 ../lib/loadsave.php:223
 msgid "InterWikiMap"
-msgstr "InterWikikarte"
+msgstr "InterWikiKarte"
 
-#: ../lib/interwiki.php:88
+#: ../lib/interwiki.php:88 ../lib/loadsave.php:292
 #, c-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr "Der InterWikikarte wird von der externen Datei %s geladen."
@@ -267,72 +273,81 @@ msgstr "%s Bytes geschrieben"
 msgid "Empty pagename!"
 msgstr "Leerer Seitenname!"
 
-#: ../lib/loadsave.php:234
+#: ../lib/loadsave.php:237
 #, c-format
 msgid "from %s"
 msgstr "von %s"
 
-#: ../lib/loadsave.php:239
+#: ../lib/loadsave.php:242
 msgid "new page"
 msgstr "neue Seite"
 
-#: ../lib/loadsave.php:246
+#: ../lib/loadsave.php:249
 #, c-format
 msgid "is identical to current version %d - skipped"
 msgstr "ist identisch mit der aktuellen Version %d - ausgelassen"
 
-#: ../lib/loadsave.php:258
+#: ../lib/loadsave.php:261
 #, c-format
 msgid "- saved to database as version %d"
 msgstr "- in der Datenbank gespeichert als Version %d."
 
-#: ../lib/loadsave.php:348
+#: ../lib/loadsave.php:276
+#, c-format
+msgid "%s: not defined"
+msgstr "%s: nicht definiert"
+
+#: ../lib/loadsave.php:285
+msgid "Default InterWiki map file not loaded."
+msgstr ""
+
+#: ../lib/loadsave.php:384
 #, c-format
 msgid "MIME file %s"
 msgstr "MIME-Datei %s"
 
-#: ../lib/loadsave.php:353
+#: ../lib/loadsave.php:389
 #, c-format
 msgid "Serialized file %s"
 msgstr "Serialisierte Datei %s"
 
-#: ../lib/loadsave.php:367
+#: ../lib/loadsave.php:403
 #, c-format
 msgid "plain file %s"
 msgstr "Textdatei %s"
 
-#: ../lib/loadsave.php:381 ../lib/loadsave.php:393
+#: ../lib/loadsave.php:417 ../lib/loadsave.php:429
 msgid "Skipping"
 msgstr "Wird ausgelassen"
 
-#: ../lib/loadsave.php:490
+#: ../lib/loadsave.php:526
 #, c-format
 msgid "Bad file type: %s"
 msgstr "Ungültiger Dateityp: %s"
 
-#: ../lib/loadsave.php:504
+#: ../lib/loadsave.php:540
 #, c-format
 msgid "Loading '%s'"
 msgstr "»%s« wird geladen"
 
-#: ../lib/loadsave.php:525
+#: ../lib/loadsave.php:561
 msgid "The PhpWiki programming team"
 msgstr "Das PhpWiki Programmierer-Team"
 
-#: ../lib/loadsave.php:528
+#: ../lib/loadsave.php:564
 msgid "Loading up virgin wiki"
 msgstr "Erstes Laden des noch leeren Wiki"
 
-#: ../lib/loadsave.php:545
+#: ../lib/loadsave.php:581
 msgid "No uploaded file to upload?"
 msgstr "Keine Datei zum Hochladen?"
 
-#: ../lib/loadsave.php:549
+#: ../lib/loadsave.php:585
 #, c-format
 msgid "Uploading %s"
 msgstr "%s wird hochgeladen"
 
-#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:554
+#: ../lib/RSSWriter091.php:115 ../lib/loadsave.php:590
 #: ../lib/plugin/RecentChanges.php:223 ../lib/plugin/RecentChanges.php:349
 #: ../lib/plugin/RecentChanges.php:426
 #: ../themes/Portland/templates/navbar.tmpl:28
@@ -627,12 +642,10 @@ msgid "Visited pages on this wiki, ordered by popularity:"
 msgstr "Die besuchten Seiten dieses Wikis, nach Popularität geordnet:"
 
 #: ../lib/plugin/OrphanedPages.php:36
-#, fuzzy
 msgid "OrphanedPages"
 msgstr ""
 
 #: ../lib/plugin/OrphanedPages.php:40
-#, fuzzy
 msgid "Orphaned Pages"
 msgstr ""
 
@@ -1109,9 +1122,9 @@ msgid "trailing cruft in plugin args: '%s'"
 msgstr "Unbekannte Zusatzprogramm Argumente: »%s«"
 
 #: ../lib/WikiPlugin.php:229
-#, fuzzy, c-format
+#, c-format
 msgid "Plugin %s failed."
-msgstr "Fehler bei %s"
+msgstr "Zusatzprogramm %s fehlgeschlagen."
 
 #: ../lib/WikiPlugin.php:274
 #, c-format
@@ -1285,7 +1298,7 @@ msgstr "Zuletzt Geändert:"
 
 #: ../themes/default/templates/info.tmpl:55
 msgid "Last Author:"
-msgstr "Letzter Autor"
+msgstr "Letzter Autor:"
 
 #: ../themes/default/templates/info.tmpl:56
 msgid "Last Summary:"
@@ -1310,7 +1323,7 @@ msgstr "Ersetzt am:"
 
 #: ../themes/default/templates/info.tmpl:86
 msgid "Page Version:"
-msgstr "Seiten Version"
+msgstr "Seiten Version:"
 
 #: ../themes/default/templates/info.tmpl:89
 msgid "Markup:"
@@ -1420,7 +1433,9 @@ msgstr "Zeitzone"
 #: ../themes/default/templates/userprefs.tmpl:38
 #, c-format
 msgid "Add %s hours to the server's local time when reporting times."
-msgstr "Zahle %s Stunden mit der lokalen Zeit des Servers zusammen, wenn Zeiten berichtet werden."
+msgstr ""
+"Zahle %s Stunden mit der lokalen Zeit des Servers zusammen, wenn Zeiten "
+"berichtet werden."
 
 #: ../themes/default/templates/userprefs.tmpl:42
 #, c-format

@@ -32,6 +32,8 @@ $locale["%s: error while handling error:"] =
    "%s: Fehler während der Fehlerbehandlung von:";
 $locale["%s: file not found"] =
    "%s: Datei nicht gefunden";
+$locale["%s: not defined"] =
+   "%s: nicht definiert";
 $locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
    "(Kopiere deine Veränderungen in die Zwischenablage. Du kannst versuchen eine andere Seite zu editieren oder dein Text in einem Texteditor speichern.)";
 $locale["(diff)"] =
@@ -200,6 +202,8 @@ $locale["Info"] =
    "Info";
 $locale["Insufficient permissions."] =
    "Erlaubnisse nicht ausreichend.";
+$locale["InterWikiMap"] =
+   "InterWikiKarte";
 $locale["Invalid password or userid."] =
    "Ungültiges Passwort oder Benutzername.";
 $locale["Last"] =
@@ -207,7 +211,7 @@ $locale["Last"] =
 $locale["Last Author"] =
    "Voriger Autor";
 $locale["Last Author:"] =
-   "Letzter Autor";
+   "Letzter Autor:";
 $locale["Last Modified"] =
    "Geändert";
 $locale["Last Modified:"] =
@@ -295,7 +299,7 @@ $locale["Page Locked"] =
 $locale["Page Name"] =
    "Seitenname";
 $locale["Page Version:"] =
-   "Seiten Version";
+   "Seiten Version:";
 $locale["Page names with prefix '%s'"] =
    "Seitenamen mit Prefix »%s«";
 $locale["Page names with suffix '%s'"] =
@@ -320,6 +324,8 @@ $locale["PhpWikiAdministration"] =
    "PhpWikiSystemverwalten";
 $locale["Please check it through and click Save to save it."] =
    "Bitte den Text nochmals durchsehen, dann klicke Speichern um ihn zu speichern.";
+$locale["Plugin %s failed."] =
+   "Zusatzprogramm %s fehlgeschlagen.";
 $locale["Preview"] =
    "Vorschau";
 $locale["Preview only!  Changes not saved."] =
