@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.116 2004-06-21 08:39:37 rurban Exp $');
+rcs_id('$Id: config.php,v 1.117 2004-06-21 17:29:17 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -326,7 +326,19 @@ if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
     }
 }
 
+// => php-4.2.0. pear wants to break old php's! DB uses it now.
+if (!function_exists('is_a')) {
+    function is_a($item,$class) {
+        return isa($item,$class); 
+    }
+}
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.116  2004/06/21 08:39:37  rurban
+// pear/Cache update from Cache-1.5.4 (added db and trifile container)
+// pear/DB update from DB-1.6.1 (mysql bugfixes, php5 compat, DB_PORTABILITY features)
+//
 // Revision 1.115  2004/06/20 14:42:54  rurban
 // various php5 fixes (still broken at blockparser)
 //
