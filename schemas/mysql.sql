@@ -1,4 +1,4 @@
--- $Id: schema.mysql,v 1.7 2001-09-18 19:16:23 dairiki Exp $
+-- $Id: mysql.sql,v 1.1 2001-12-03 04:05:38 wainstead Exp $
 
 drop table if exists page;
 CREATE TABLE page (

@@ -1,4 +1,4 @@
-# $Id: schema.minisql,v 1.6 2000-11-03 05:50:52 wainstead Exp $
+# $Id: minisql.sql,v 1.1 2001-12-03 04:05:38 wainstead Exp $
 
 drop table wiki\g
 drop table wikipages\g

@@ -1,4 +1,4 @@
--- $Id: schema.psql,v 1.9 2001-09-18 19:16:23 dairiki Exp $
+-- $Id: psql.sql,v 1.1 2001-12-03 04:05:38 wainstead Exp $
 
 \set QUIET
 
