@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.8 2002-01-05 15:24:18 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.9 2002-01-17 20:34:02 dairiki Exp $');
 
 /**
  * This PhpWiki theme is experimental and will likely not appear as
@@ -25,63 +25,36 @@ rcs_id('$Id: themeinfo.php,v 1.8 2002-01-05 15:24:18 carstenklapp Exp $');
  * probably choke on it too.
  * * * * * * * * * * * * */
 
-// To activate this theme, specify this setting in index.php:
-//$theme="WikiTrek";
-// To deactivate themes, comment out all the $theme=lines in 'index.php'.
+require_once('lib/Theme.php');
+
+$Theme = new Theme('WikiTrek');
 
 // CSS file defines fonts, colors and background images for this
-// style. The companion '*-heavy.css' file isn't defined, it's just
+// style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
-$CSS_DEFAULT = "WikiTrek";
 
-$CSS_URLS = array_merge($CSS_URLS,
-                        array("$CSS_DEFAULT" => "themes/$theme/${CSS_DEFAULT}.css"));
+$Theme->setDefaultCSS('WikiTrek', 'WikiTrek.css');
+$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 
-// Logo image appears on every page and links to the HomePage.
-$logo = "themes/$theme/Ufp-logo.jpg";
 
-// RSS logo icon (path relative to index.php)
-// If this is left blank (or unset), the default "images/rss.png"
-// will be used.
-//$rssicon = "images/rss.png";
+// The logo image
+$Theme->addImageAlias('logo', 'Ufp-logo.jpg');
+
 
 // Signature image which is shown after saving an edited page.  If
 // this is left blank, any signature defined in index.php will be
 // used. If it is not defined by index.php or in here then the "Thank
 // you for editing..." screen will be omitted.
-$SignatureImg = "themes/$theme/lights.gif";
+$Theme->addImageAlias('signature', 'lights.gif');
 
-// If this theme defines any templates, they will completely override
-// whatever templates have been defined in index.php.
-/*
-$templates = array(
-                   'BROWSE'   => "themes/$theme/templates/browse.html",
-                   'EDITPAGE' => "themes/$theme/templates/editpage.html",
-                   'MESSAGE'  => "themes/$theme/templates/message.html"
-                   );
-*/
-
-// If this theme defines any custom link icons, it will completely
-// override any link icon settings defined in index.php.
-/*
-$URL_LINK_ICONS = array(
-                        'http'      => "themes/$theme/http.png",
-                        'https'     => "themes/$theme/https.png",
-                        'ftp'       => "themes/$theme/ftp.png",
-                        'mailto'    => "themes/$theme/mailto.png",
-                        'interwiki' => "themes/$theme/interwiki.png",
-                        '*'         => "themes/$theme/zapg.png"
-                        );
-*/
 
 // The gettext() function does not work here because we are included
 // from 'index.php'. Normally themes shouldn't override date & time
 // settings because this will mess up any future user-specific
 // preferences for locale.
-$datetimeformat = sprintf(("Stardate %s"),'%B.%e.%Y'); // may contain
-                                                       // time of day
-$dateformat = sprintf(("Stardate %s"),'%B.%e.%Y'); // must not contain
-                                                   // time
+$Theme->setDateTimeFormat("Stardate %B.%e.%Y"); // may contain time of day
+$Theme->setDateFormat("Stardate %B.%e.%Y"); // must not contain time
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

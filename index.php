@@ -68,7 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.63 2002-01-17 05:52:11 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.64 2002-01-17 20:34:01 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -259,6 +259,22 @@ $ExpireParams['author'] = array('max_age'  => 365,
 //
 /////////////////////////////////////////////////////////////////////
 
+/* THEME
+ *
+ * Most of the page appearance is controlled by files in the theme
+ * subdirectory.
+ *
+ * There are a number of pre-defined themes shipped with PhpWiki.
+ * Or you may create your own (e.g. by copying and then modifying one of
+ * stock themes.)
+ *
+ * Pick one.
+ */
+//define('THEME', 'default');
+//define('THEME', 'Hawaiian');
+//define('THEME', 'MacOSX');
+//define('THEME', 'WikiTrek');
+
 // Select a valid charset name to be inserted into the xml/html pages,
 // and to reference links to the stylesheets (css). For more info see:
 // <http://www.iana.org/assignments/character-sets>. Note that PhpWiki
@@ -313,99 +329,25 @@ $LANG='C';
 // to find the correct setting:
 //putenv('LC_TIME=de_DE');
 
-// If you specify a relative URL for the CSS and images, the are
-// interpreted relative to DATA_PATH (see below). (The default value
-// of DATA_PATH is the directory in which index.php (this file)
-// resides.)
-
-// CSS location
-//
-// Note that if you use the stock phpwiki style sheet, 'phpwiki.css',
-// you should make sure that it's companion 'phpwiki-heavy.css' is
-// installed in the same directory that the base style file is.
-// FIXME: These default CSS key names could use localization, but
-// gettext() is not available at this point yet
-$CSS_URLS = array('PhpWiki' => "phpwiki.css",
-                  'Printer' => "phpwiki-printer.css",
-                  'Modern'  => "phpwiki-modern.css");
-
-$CSS_DEFAULT = "PhpWiki";
-
-// logo image (path relative to index.php)
-$logo = "themes/default/images/logo.png";
-
-// RSS logo icon (path relative to index.php)
-// If this is left blank (or unset), the default "images/rss.png"
-// will be used.
-//$rssicon = "themes/default/images/RSS.png";
-
-// Signature image which is shown after saving an edited page
-// If this is left blank (or unset), the signature will be omitted.
-//$SignatureImg = "themes/default/images/signature.png";
-
-// this turns on url indicator icons, inserted before embedded links
-// '*' icon is shown when the link type has no icon listed here, but
-// ONLY for the AllowedProtocols specified in in part four! The
-// 'interwiki' icon indicates a Wiki listed in lib/interwiki.map If
-// you want icons just to differentiate between urls and Wikis then
-// turn on only 'interwiki' and '*', comment out the other four.
-/*
-$URL_LINK_ICONS = array(
-                        'http'	    => 'themes/default/images/http.png',
-                        'https'     => 'themes/default/images/https.png',
-                        'ftp'	    => 'themes/default/images/ftp.png',
-                        'mailto'    => 'themes/default/images/mailto.png',
-                        'interwiki' => 'themes/default/images/interwiki.png',
-                        '*'         => 'themes/default/images/url.png'
-                        );
-*/                    
-
-// Date & time formats used to display modification times, etc.
-// Formats are given as format strings to PHP strftime() function See
-// http://www.php.net/manual/en/function.strftime.php for details.
-$datetimeformat = "%B %e, %Y";	// may contain time of day
-$dateformat = "%B %e, %Y";	// must not contain time
-
-// FIXME: delete
-// this defines how many page names to list when displaying
-// the MostPopular pages; the default is to show the 20 most popular pages
-define("MOST_POPULAR_LIST_LENGTH", 20);
-
-// this defines how many page names to list when displaying related pages
-define("NUM_RELATED_PAGES", 5);
-
-// This defines separators used in RecentChanges and RecentEdits lists.
-// If undefined, defaults to '' (nothing) and '...' (three periods).
-//define("RC_SEPARATOR_A", '. . . ');
-//define("RC_SEPARATOR_B", '. . . . . ');
-
-// Controls whether the '?' appears before or after UnknownWikiWords.
-// The PhpWiki default is for the '?' to appear before.
-//define('WIKIMARK_AFTER', true);
-
-// Template files (filenames are relative to script position)
-// However, if a LANG is set, they we be searched for in a locale
-// specific location first.
-$templates = array("BROWSE"   => "templates/browse.html",
-                   "EDITPAGE" => "templates/editpage.html",
-                   "MESSAGE"  => "templates/message.html");
 
 /* WIKI_PGSRC -- specifies the source for the initial page contents of
-* the Wiki. The setting of WIKI_PGSRC only has effect when the wiki is
-* accessed for the first time (or after clearing the database.)
-* WIKI_PGSRC can either name a directory or a zip file. In either case
-* WIKI_PGSRC is scanned for files -- one file per page.
+ * the Wiki. The setting of WIKI_PGSRC only has effect when the wiki is
+ * accessed for the first time (or after clearing the database.)
+ * WIKI_PGSRC can either name a directory or a zip file. In either case
+ * WIKI_PGSRC is scanned for files -- one file per page.
  */
 define('WIKI_PGSRC', "pgsrc"); // Default (old) behavior.
 //define('WIKI_PGSRC', 'wiki.zip'); // New style.
 //define('WIKI_PGSRC', '../../../Logs/Hamwiki/hamwiki-20010830.zip'); // New style.
 
-// DEFAULT_WIKI_PGSRC is only used when the language is *not* the
-// default (English) and when reading from a directory: in that case
-// some English pages are inserted into the wiki as well
-// DEFAULT_WIKI_PGSRC defines where the English pages reside FIXME: is
-// this really needed?  Can't we just copy these pages into the
-// localized pgsrc?
+/*
+ * DEFAULT_WIKI_PGSRC is only used when the language is *not* the
+ * default (English) and when reading from a directory: in that case
+ * some English pages are inserted into the wiki as well.
+ * DEFAULT_WIKI_PGSRC defines where the English pages reside.
+ */
+// FIXME: is this really needed?  Can't we just copy these pages into
+// the localized pgsrc?
 define('DEFAULT_WIKI_PGSRC', "pgsrc");
 // These are the pages which will get loaded from DEFAULT_WIKI_PGSRC.	
 $GenericPages = array("ReleaseNotes", "SteveWainstead", "TestPage");
@@ -439,21 +381,6 @@ $WikiNameRegexp = "(?<![[:alnum:]])([[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])"
 // Leave this undefined to disable InterWiki linking.
 define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 
-// The themeinfo file can be used to override default settings above this line
-// (i.e. templates, logo, signature etc.)
-// comment out the $theme= lines to revert to the standard interface
-// which defaults to /templates and /images
-$theme="default";
-//$theme="Hawaiian";
-//$theme="MacOSX";
-//$theme="WikiTrek";
-if (!empty($theme)) {
-    if (! @include("themes/$theme/themeinfo.php")) {
-        // FIXME: gettext doesn't work in index.php or themeinfo.php
-        trigger_error(sprintf(("Unable to open file '%s' for reading"),
-                              "themes/$theme/themeinfo.php"), E_USER_NOTICE);
-    }
-}
 
 /////////////////////////////////////////////////////////////////////
 //
