@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.204 2005-01-25 07:35:42 rurban Exp $');
+rcs_id('$Id: main.php,v 1.205 2005-01-29 20:41:47 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -251,8 +251,11 @@ class WikiRequest extends Request {
     function & getGroup () {
         if (isset($this->_user) and isset($this->_user->_group))
             return $this->_user->_group;
-        else
-            return WikiGroup::getGroup();
+        else {
+	    // Debug Strict: Only variable references should be returned by reference
+            $this->_user->_group = WikiGroup::getGroup();
+            return $this->_user->_group;
+        }
     }
 
     function & getPrefs () {
@@ -1108,8 +1111,16 @@ TODO: check against these cases:
 }
 
 //FIXME: deprecated
+/*
+Debug Strict: F:\prog\php\phpwiki-dev\phpwiki\lib\HtmlElement.php line 415 - Non-static method HTML::_setTagProperty() should not be called statically
+Debug Strict: F:\prog\php\phpwiki-dev\phpwiki\lib\HtmlElement.php line 432 - Non-static method HTML::_setTagProperty() should not be called statically
+Debug Strict: F:\prog\php\phpwiki-dev\phpwiki\lib\HtmlElement.php line 442 - Non-static method HTML::_setTagProperty() should not be called statically
+Debug Strict: F:\prog\php\phpwiki-dev\phpwiki\lib\WikiDB.php line 119 - Creating default object from empty value
+Debug Strict: F:\prog\php\phpwiki-dev\phpwiki\lib\main.php line 1112 - Non-static method WikiRequest::requiredAuthorityForAction() should not be called statically
+*/
 function is_safe_action ($action) {
-    return WikiRequest::requiredAuthorityForAction($action) < WIKIAUTH_ADMIN;
+    global $request;
+    return $request->requiredAuthorityForAction($action) < WIKIAUTH_ADMIN;
 }
 
 function validateSessionPath() {
@@ -1235,6 +1246,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.204  2005/01/25 07:35:42  rurban
+// add TODO comment
+//
 // Revision 1.203  2005/01/21 14:11:23  rurban
 // better moderation class tag
 //
