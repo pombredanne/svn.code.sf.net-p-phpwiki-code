@@ -12,7 +12,8 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The TranscludePlugin can be used to embed include whole (external) web pages within a wiki page.
+The TranscludePlugin can be used to embed include whole (external) web
+pages within a wiki page.
 
 ! Plugin Arguments
 
@@ -26,19 +27,19 @@ The TranscludePlugin can be used to embed include whole (external) web pages wit
 
 ! Bugs / Caveats
 
-o Pages are transcluded using =<iframe>= tags.  Older browsers do not support
-  ''iframe''s.  In that case the user will be presented with a link
-  to the trancluded material.
+o Pages are transcluded using =<iframe>= tags.  Older browsers do not
+  support ''iframe''s.  In that case the user will be presented with a
+  link to the trancluded material.
 
-o When possible, JavaScript code is used to adjust the height of the _iframe_
-  so that it fits the entire transcluded page.  Unfortunately, this seems
-  possible only when the transcluded page comes from the same server
-  as the wiki page.  (This restriction is due to security checks built
-  in to the JavaScript language.)
+o When possible, JavaScript code is used to adjust the height of the
+  _iframe_ so that it fits the entire transcluded page.
+  Unfortunately, this seems possible only when the transcluded page
+  comes from the same server as the wiki page.  (This restriction is
+  due to security checks built in to the JavaScript language.)
 
-o The recursion detection code does not currently work.
-  Be careful to avoid recursive transclusions, or you'll be sorry
-  (or at least amused.)
+o The recursion detection code does not currently work.  Be careful to
+  avoid recursive transclusions, or you'll be sorry (or at least
+  amused.)
 
 ! Example
 
