@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.19 2001-12-14 20:15:02 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.20 2001-12-15 02:40:42 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -43,14 +43,12 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
 
     function _lines($lines, $class, $prefix = '&nbsp;', $elem = false) {
         foreach ($lines as $line) {
-            if (!trim($line))
-                $line = '&nbsp;';
-            elseif ($elem)
+            if ($elem)
                 $line = QElement($elem, $line);
                     
             echo Element('div', array('class' => $class),
                          Element('tt', array('class' => 'prefix'), $prefix)
-                         . " $line") . "\n";
+                         . " $line&nbsp;") . "\n";
         }
     }
 
@@ -60,65 +58,50 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
     function _deleted($lines) {
         $this->_lines($lines, 'deleted', '-', 'del');
     }
+
     function _added($lines) {
         $this->_lines($lines, 'added', '+', 'ins');
     }
 
-    function _pack_in_span($chars, $elem) {
-        $end_span = "";
-        $packed = '';
-        foreach ($chars as $c) {
-            if ($c == "\n") {
-                $packed .= $end_span;
-                $end_span = "";
-            }
-            elseif (!$end_span) {
-                $packed .= "<$elem>";
-                $end_span = "</$elem>";
-            }
-            $packed .= htmlspecialchars($c);
-        }
-        return $packed . $end_span;
+    function _pack($bits, $tag) {
+        $packed = htmlspecialchars(implode("", $bits));
+        return "<$tag>"
+            . str_replace("\n", "<tt>&nbsp;</tt></$tag>\n<$tag>",
+                          $packed)
+            . "</$tag>";
     }
-        
-    function _split_to_chars($lines) {
-        // Split into characters --- there must be a better way ...
-        $joined = implode("\n", $lines);
-        $split = array();
-        for ($i = 0; $i < strlen($joined); $i++)
-            $split[$i] = $joined[$i];
-        return $split;
+
+    function _split($lines) {
+        preg_match_all('/ ( [^\S\n]+ | [[:alnum:]]+ | . ) (?: (?!< \n) [^\S\n])? /xs',
+                       implode("\n", $lines),
+                       $m);
+        return array($m[0], $m[1]);
     }
     
-            
     function _changed($orig, $final) {
-        // Compute character-wise diff in changed region.
-        $diff = new Diff($this->_split_to_chars($orig),
-                         $this->_split_to_chars($final));
+        list ($orig_words, $orig_stripped) = $this->_split($orig);
+        list ($final_words, $final_stripped) = $this->_split($final);
         
+        // Compute character-wise diff in changed region.
+        $diff = new MappedDiff($orig_words, $final_words,
+                               $orig_stripped, $final_stripped);
+
         $orig = $final = '';
         foreach ($diff->edits as $edit) {
-            switch ($edit->type) {
-            case 'copy':
-                $packed = implode('', $edit->orig);
-                $orig .= $packed;
-                $final .= $packed;
-                break;
-            case 'add':
-                $final .= $this->_pack_in_span($edit->final, 'ins');
-                break;
-            case 'delete':
-                $orig .= $this->_pack_in_span($edit->orig, 'del');
-                break;
-            case 'change':
-                $orig .= $this->_pack_in_span($edit->orig, 'del');
-                $final .= $this->_pack_in_span($edit->final, 'ins');
-                break;
+            if ($edit->type == 'copy') {
+                $orig .= implode('', $edit->orig);
+                $final .= implode('', $edit->final);
+            }
+            else {
+                if ($edit->orig)
+                    $orig .= $this->_pack($edit->orig, 'del');
+                if ($edit->final)
+                    $final .= $this->_pack($edit->final, 'ins');
             }
         }
 
-        $this->_lines(explode("\n", $orig),  'changed', '-');
-        $this->_lines(explode("\n", $final), 'changed', '+');
+        $this->_lines(explode("\n", $orig),  'original', '-');
+        $this->_lines(explode("\n", $final), 'final', '+');
     }
 }
 
