@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.20 2002-01-09 18:48:03 carstenklapp Exp $');
+rcs_id('$Id: editpage.php,v 1.21 2002-01-13 20:41:26 carstenklapp Exp $');
 
 require_once('lib/transform.php');
 require_once('lib/Template.php');
@@ -23,38 +23,45 @@ function editPage($dbi, $request) {
 
     global $user;               // FIXME: make this non-global.
     if ($page->get('locked') && !$user->is_admin()) {
-
+        // Perhaps this can be worked into display.php. It would be nice if:
+        // 'Note: You are viewing an old revision of this page. "View the current version".'
+        // would link to "View source of the current version".
+        // Also the <h1> is hard-coded in brwose.html / editpage.html
+        // so we can't get a nice title like "Page source for %s".
+        if ($version) {
+            $link = QElement('a',
+                             array('href' =>
+                                   WikiURL($pagename,
+                                           array('version' => $version))),$pagename);
+        } else {
+            $link = LinkExistingWikiWord($pagename);
+        }
         $html = QElement('p');
         $html .= QElement('strong', _("Note:")) . " ";
-        $html .= _("This page has been locked by the administrator and cannot be edited.");
+        $html .= sprintf(_("%s has been locked by the administrator and cannot be edited."), $link);
         $html .= "\n";
-        //$html .= QElement('p', _("Sorry for the inconvenience.")) . "\n";
-
-        //echo GeneratePage('MESSAGE', $html,
-        //                  sprintf(_("Problem while editing %s"),
-        //                          $request->getArg('pagename')),
-        //                  $selected);
-
-        //ExitWiki ("");
-
-        // Page locked.
-        // (This is a bit kludgy...)
-
-        // This renders the page but the title and the links at the
-        // bottom of the page don't draw:
-        //
-        // Fatal error: Call to a member function on a non-object
-        //
-        // FIXME: The ViewSource (ViewMarkup) plugin should be worked
-        //        into here somehow.
 
         $template = new WikiTemplate('BROWSE');
-        $template->replace('TITLE', $pagename);
+        $template->replace('TITLE', sprintf(_("Page source for %s"), $pagename));
         $template->replace('EDIT_FAIL_MESSAGES', $html
                            . QElement('hr', array('noshade' => 'noshade'))
                            . "\n");
-	$template->replace('CONTENT', do_transform($selected->getContent()));
+        $prefs = $user->getPreferences();
+        $template->replace('CONTENT', 
+                           Element('p',
+                                   QElement('textarea',
+                                            array('class'  => 'wikiedit',
+                                                  'rows'   => $prefs['edit_area.height'],
+                                                  'cols'   => $prefs['edit_area.width'],
+                                                  'wrap'   => 'virtual',
+                                                  'readonly' => true),
+                                            $selected->getPackedContent())));
+        $template->setPageRevisionTokens($selected);
+
+        require_once("lib/display.php");
+        $template->qreplace('PAGE_DESCRIPTION', GleanDescription($selected));
         echo $template->getExpansion();
+        flush();
         ExitWiki ("");
     }
 
