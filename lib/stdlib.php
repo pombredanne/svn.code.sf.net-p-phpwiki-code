@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.48 2001-12-02 02:52:37 joe_edelman Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.49 2001-12-02 03:33:50 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -365,6 +365,27 @@ function LinkPhpwikiURL($url, $text = '') {
          } else {
 	    $link['type'] = "url-$linktype";
             $link['link'] = LinkURL($URL, $linkname);
+            
+        if (!defined("USE_LINK_ICONS")) {
+           $link['link'] = LinkURL($URL, $linkname);
+        } else {
+           //preg_split((.*?):(.*)$, $URL, $matches);
+           //preg_split("[:]", $URL, $matches);
+           //$protoc = $matches[0] . "-" . $matches[1];
+           $protoc = substr($URL, 0, strrpos($URL, ":"));
+           if ($protoc == "mailto") {
+               $link['link'] = "<img src=\"" . DATA_PATH . "/images/mailto.png\"> " . LinkURL($URL, $linkname);
+           } elseif ($protoc == "http") { 
+               $link['link'] = "<img src=\"" . DATA_PATH . "/images/http.png\"> " . LinkURL($URL, $linkname);
+           } elseif ($protoc == "https") { 
+               $link['link'] = "<img src=\"" . DATA_PATH . "/images/https.png\"> " . LinkURL($URL, $linkname);
+           } elseif ($protoc == "ftp") { 
+               $link['link'] = "<img src=\"" . DATA_PATH . "/images/ftp.png\"> " . LinkURL($URL, $linkname);
+            } else {
+               $link['link'] = LinkURL($URL, $linkname);
+           }
+        }
+
 	 }
       } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
 	 $link['type'] = "url-wiki-$linktype";
