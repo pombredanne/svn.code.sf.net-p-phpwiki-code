@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.10 2004-06-03 22:08:17 rurban Exp $');
+rcs_id('$Id: file.php,v 1.11 2004-07-08 11:12:49 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -93,6 +93,8 @@ extends WikiDB_backend
 
     function _loadPage($type, $pagename, $version, $set_pagename = true) {
       $filename = $this->_pagename2filename($type, $pagename, $version);
+      if (!file_exists($filename)) return NULL;
+      if (!filesize($filename)) return array();
       if ($fd = @fopen($filename, "rb")) {
          $locked = flock($fd, 1); # Read lock
          if (!$locked) { 
@@ -774,6 +776,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/06/03 22:08:17  rurban
+// fix bug #963268 (check existing previous version)
+//
 // Revision 1.9  2004/04/27 16:03:05  rurban
 // missing pageiter::count methods
 //
