@@ -2,10 +2,11 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2002-02-07 17:30-0500\n"
+"POT-Creation-Date: 2002-02-07 19:52-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -823,6 +824,27 @@ msgstr ""
 msgid "UserPreferences"
 msgstr ""
 
+#: ../lib/plugin/WikiForm.php:12
+msgid "WikiForm"
+msgstr ""
+
+#: ../lib/plugin/WikiForm.php:43
+msgid "Load File"
+msgstr ""
+
+#: ../lib/plugin/WikiForm.php:50
+msgid "Dump Pages"
+msgstr ""
+
+#: ../lib/plugin/WikiForm.php:60
+msgid "Upload"
+msgstr ""
+
+#: ../lib/plugin/WikiForm.php:63
+#, c-format
+msgid "WikiForm: %s: unknown action"
+msgstr ""
+
 #: ../lib/removepage.php:16
 msgid "Request Cancelled!"
 msgstr ""
@@ -866,47 +888,47 @@ msgstr ""
 msgid "Remove page"
 msgstr ""
 
-#: ../lib/stdlib.php:90 ../lib/stdlib.php:106
+#: ../lib/stdlib.php:91 ../lib/stdlib.php:107
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:171
+#: ../lib/stdlib.php:172
 msgid "BAD phpwiki: URL"
 msgstr ""
 
-#: ../lib/stdlib.php:208
+#: ../lib/stdlib.php:209
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:345
+#: ../lib/stdlib.php:406
 msgid "Revision Not Found"
 msgstr ""
 
-#: ../lib/stdlib.php:346
+#: ../lib/stdlib.php:407
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr ""
 
-#: ../lib/stdlib.php:349
+#: ../lib/stdlib.php:410
 msgid "Bad Version"
 msgstr ""
 
-#: ../lib/XmlElement.php:333 ../lib/stdlib.php:532
+#: ../lib/XmlElement.php:333 ../lib/stdlib.php:593
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:541
+#: ../lib/stdlib.php:602
 #, c-format
 msgid "%s: argument index out of range"
 msgstr ""
 
-#: ../lib/stdlib.php:575 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:636 ../themes/Hawaiian/lib/random.php:20
 #, c-format
 msgid "%s is empty."
 msgstr ""
 
-#: ../lib/stdlib.php:582
+#: ../lib/stdlib.php:643
 #, c-format
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
@@ -970,22 +992,22 @@ msgstr ""
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr ""
 
-#: ../lib/WikiDB.php:505
+#: ../lib/WikiDB.php:506
 #, c-format
 msgid "%s: Date of new revision is %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:532
+#: ../lib/WikiDB.php:533
 #, c-format
 msgid "Optimizing %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:878
+#: ../lib/WikiDB.php:879
 #, c-format
 msgid "Describe %s here."
 msgstr ""
 
-#: ../lib/WikiDB.php:913
+#: ../lib/WikiDB.php:914
 #, c-format
 msgid "Acck! Revision %s of %s seems to have been deleted!"
 msgstr ""
