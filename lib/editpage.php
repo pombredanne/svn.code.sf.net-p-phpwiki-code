@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.38 2002-02-08 03:01:11 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.39 2002-02-14 04:08:45 carstenklapp Exp $');
 
 require_once('lib/Template.php');
 
@@ -283,10 +283,10 @@ class PageEditor
                                 'disabled' => (bool) !$this->user->isadmin(),
                                 'checked'  => (bool) $this->meta['locked']));
 
-        $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"));
+        $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"), 'wikiaction');
 
         if (!$this->isConcurrentUpdate() && !$this->canEdit())
-            $el['SAVE_B'] = Button('submit:edit[save]', _("Save"));
+            $el['SAVE_B'] = Button('submit:edit[save]', _("Save"), 'wikiaction');
 
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
 
