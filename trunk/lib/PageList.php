@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.85 2004-06-13 15:33:19 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.86 2004-06-13 15:51:37 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -658,6 +658,10 @@ class PageList {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($perm, $sortby, $limit);
         $allPages = array();
+        if ($wildcard === '[]') {
+            $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
+            if (!$wildcard) return $allPages;
+        }
         while ($pagehandle = $allPagehandles->next()) {
             $name = $pagehandle->getName();
             $author = $pagehandle->getAuthor();
@@ -677,9 +681,13 @@ class PageList {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($perm, $sortby, $limit);
         $allPages = array();
+        if ($wildcard === '[]') {
+            $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
+            if (!$wildcard) return $allPages;
+        }
         while ($pagehandle = $allPagehandles->next()) {
             $name = $pagehandle->getName();
-            $owner = $page->getOwner();
+            $owner = $pagehandle->getOwner();
             if ($owner) {
                 if (preg_match('/[\?\*]/', $wildcard)) {
                     if (glob_match($wildcard, $owner))
@@ -696,9 +704,13 @@ class PageList {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($perm, $sortby, $limit);
         $allPages = array();
+        if ($wildcard === '[]') {
+            $wildcard = $GLOBALS['request']->_user->getAuthenticatedId();
+            if (!$wildcard) return $allPages;
+        }
         while ($pagehandle = $allPagehandles->next()) {
             $name = $pagehandle->getName();
-            $creator = $page->getCreator();
+            $creator = $pagehandle->getCreator();
             if ($creator) {
                 if (preg_match('/[\?\*]/', $wildcard)) {
                     if (glob_match($wildcard, $creator))
@@ -998,6 +1010,10 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.85  2004/06/13 15:33:19  rurban
+// new support for arguments owner, author, creator in most relevant
+// PageList plugins. in WikiAdmin* via preSelectS()
+//
 // Revision 1.84  2004/06/08 13:51:56  rurban
 // some comments only
 //
