@@ -56,7 +56,7 @@ $schema[link] = array(
 
 $schema[session] = array( 
                 array("sess_id", FFDB_STRING, "key"), 
-                array("sess_data", FFDB_STRING)
+                array("sess_data", FFDB_STRING),
                 array("sess_date", FFDB_INT)
                 );
 
