@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.105 2004-11-20 09:16:27 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.106 2004-11-20 17:35:56 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -281,16 +281,19 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator which contains all pages
      *     in the WikiDB which have non-default contents.
      */
-    function getAllPages($include_empty=false, $sortby=false, $limit=false) {
+    function getAllPages($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
         // HACK: memory_limit=8M will fail on too large pagesets. old php on unix only!
-    	$mem = ini_get("memory_limit");
-    	if ($mem and !$limit and !isWindows() and !check_php_version(4,3)) {
-    	    $limit = 450;
-            $GLOBALS['request']->setArg('limit',$limit);
-            $GLOBALS['request']->setArg('paging','auto');
-    	}
-        $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit);
+        if (USECACHE) {
+            $mem = ini_get("memory_limit");
+            if ($mem and !$limit and !isWindows() and !check_php_version(4,3)) {
+                $limit = 450;
+                $GLOBALS['request']->setArg('limit',$limit);
+                $GLOBALS['request']->setArg('paging','auto');
+            }
+        }
+        $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit, $exclude);
         return new WikiDB_PageIterator($this, $result, array('include_empty' => $include_empty, 
+                                                             'exclude' => $exclude,
                                                              'limit' => $limit));
     }
 
@@ -304,7 +307,7 @@ class WikiDB {
             $count = $this->_backend->numPages($filter, $exclude);
         else {
             // FIXME: exclude ignored.
-            $iter = $this->getAllPages($filter);
+            $iter = $this->getAllPages($filter, false, false, $exclude);
             $count = $iter->count();
             $iter->free();
         }
@@ -404,6 +407,17 @@ class WikiDB {
         $result = $this->_backend->most_recent($params);
         return new WikiDB_PageRevisionIterator($this, $result);
     }
+
+    /**
+     * @access public
+     *
+     * @return Iterator A generic iterator containing rows of (duplicate) pagename, wantedfrom.
+     */
+    function wantedPages($exclude_from='', $exclude='', $sortby=false, $limit=false) {
+        return $this->_backend->wanted_pages($exclude_from, $exclude, $sortby, $limit);
+        //return new WikiDB_PageIterator($this, $result);
+    }
+
 
     /**
      * Call the appropriate backend method.
@@ -2076,6 +2090,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2004/11/20 09:16:27  rurban
+// Fix bad-style Cut&Paste programming errors, detected by Charles Corrigan.
+//
 // Revision 1.104  2004/11/19 19:22:03  rurban
 // ModeratePage part1: change status
 //

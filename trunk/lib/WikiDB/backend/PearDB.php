@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.67 2004-11-10 19:32:24 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.68 2004-11-20 17:35:58 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -702,14 +702,52 @@ extends WikiDB_backend
                . " FROM $table"
                . " WHERE $where_clause"
                . " ORDER BY mtime $order";
-
         if ($limit) {
-            $result = $dbh->limitQuery($sql, 0, $limit);
+             list($from, $count) = $this->limit($limit);
+             $result = $dbh->limitQuery($sql, $from, $count);
         } else {
             $result = $dbh->query($sql);
         }
-
         return new WikiDB_backend_PearDB_iter($this, $result);
+    }
+
+    /**
+     * Find referenced empty pages.
+     */
+    function wanted_pages($exclude_from='', $exclude='', $sortby=false, $limit=false) {
+        $dbh = &$this->_dbh;
+        extract($this->_table_names);
+        if ($orderby = $this->sortby($sortby, 'db', array('pagename','wantedfrom')))
+            $orderby = 'ORDER BY ' . $orderby;
+
+        if ($exclude_from) // array of pagenames
+            $exclude_from = " AND linked.pagename NOT IN ".$this->_sql_set($exclude_from);
+        if ($exclude) // array of pagenames
+            $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
+
+        $sql = "SELECT $page_tbl.pagename,linked.pagename as wantedfrom"
+            . " FROM $link_tbl,$page_tbl as linked "
+            . " LEFT JOIN $page_tbl ON($link_tbl.linkto=$page_tbl.id)"
+            . " LEFT JOIN $nonempty_tbl ON($link_tbl.linkto=$nonempty_tbl.id)" 
+            . " WHERE ISNULL($nonempty_tbl.id) AND linked.id=$link_tbl.linkfrom"
+            . $exclude_from
+            . $exclude
+            . $orderby;
+        if ($limit) {
+            list($from, $count) = $this->limit($limit);
+            $result = $dbh->limitQuery($sql, $from, $count * 3);
+        } else {
+            $result = $dbh->query($sql);
+        }
+        return new WikiDB_backend_PearDB_generic_iter($this, $result);
+    }
+
+    function _sql_set(&$pagenames) {
+        $s = '(';
+        foreach ($pagenames as $p) {
+            $s .= ("'".$this->_dbh->escapeSimple($p)."',");
+        }
+        return substr($s,0,-1).")";
     }
 
     /**
@@ -1042,6 +1080,13 @@ extends WikiDB_backend_PearDB_generic_iter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.67  2004/11/10 19:32:24  rurban
+// * optimize increaseHitCount, esp. for mysql.
+// * prepend dirs to the include_path (phpwiki_dir for faster searches)
+// * Pear_DB version logic (awful but needed)
+// * fix broken ADODB quote
+// * _extract_page_data simplification
+//
 // Revision 1.66  2004/11/10 15:29:21  rurban
 // * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
 // * ACCESS_LOG_SQL: fix cause request not yet initialized

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.11 2004-11-09 17:11:17 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.12 2004-11-20 17:35:58 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -212,8 +212,8 @@ extends WikiDB_backend
         $pagedb->set($pagename, (int)$latest . ':' . (int)$flags . ":$pagedata");
     }
 
-    //FIXME: support limit
-    function get_all_pages($include_empty = false, $sortby=false, $limit=false) {
+    //FIXME: support limit, exclude
+    function get_all_pages($include_empty = false, $sortby=false, $limit=false, $exclude=false) {
         $pagedb = &$this->_pagedb;
         $pages = array();
         for ($page = $pagedb->firstkey(); $page!== false; $page = $pagedb->nextkey()) {
@@ -221,7 +221,8 @@ extends WikiDB_backend
                 assert(!empty($page));
                 continue;
             }
-            
+            if ($exclude and in_array($page,$exclude)) continue; 
+            if ($limit and count($pages) > $limit) break;
             if (!$include_empty) {
             	if (!($data = $pagedb->get($page))) continue;
                 list($latestversion,$flags,) = explode(':', $data, 3);
@@ -231,7 +232,7 @@ extends WikiDB_backend
             }
             $pages[] = $page;
         }
-        $sortby = $this->sortby($sortby, 'db');
+        $sortby = $this->sortby($sortby, 'db', array('pagename','mtime'));
         if ($sortby and !strstr($sortby, "hits ")) { // check for which column to sortby
             usort($pages, 'WikiDB_backend_dbaBase_sortby_'.str_replace(' ','_',$sortby));
         }
@@ -309,7 +310,10 @@ extends WikiDB_backend_iterator
     function count() {
         return count($this->_pages);
     }
-
+    function asArray() {
+        reset($this->_pages);
+        return $this->_pages;
+    }
     function free() {
         $this->_pages = array();
     }

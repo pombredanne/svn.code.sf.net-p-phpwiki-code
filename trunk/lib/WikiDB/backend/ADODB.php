@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.52 2004-11-17 20:07:17 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.53 2004-11-20 17:35:58 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -548,11 +548,13 @@ extends WikiDB_backend
         return new WikiDB_backend_ADODB_iter($this, $result, $this->page_tbl_field_list);
     }
 
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false) {
+    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = 'ORDER BY ' . $orderby;
+        //TODO: convert comma-sep glob to sql-style: _sql_match_clause
+        if ($exclude) $exclude = "pagename not like ".$this->_dbh->qstr($exclude);
         //$dbh->SetFetchMode(ADODB_FETCH_ASSOC);
         if (strstr($orderby, 'mtime ')) { // was ' mtime'
             if ($include_empty) {
@@ -561,6 +563,7 @@ extends WikiDB_backend
                     ." FROM $page_tbl, $recent_tbl, $version_tbl"
                     . " WHERE $page_tbl.id=$recent_tbl.id"
                     . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
+                    . $exclude
                     . " $orderby";
             }
             else {
@@ -570,18 +573,22 @@ extends WikiDB_backend
                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
                     . " AND $page_tbl.id=$recent_tbl.id"
                     . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
+                    . $exclude
                     . " $orderby";
             }
         } else {
             if ($include_empty) {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
-                    . " FROM $page_tbl $orderby";
+                    . " FROM $page_tbl"
+                    . $exclude ? " WHERE $exclude" : ''
+                    . " $orderby";
             } else {
                 $sql = "SELECT "
                     . $this->page_tbl_fields
                     . " FROM $nonempty_tbl, $page_tbl"
                     . " WHERE $nonempty_tbl.id=$page_tbl.id"
+                    . $exclude
                     . " $orderby";
             }
         }
@@ -753,6 +760,49 @@ extends WikiDB_backend
         //$result->fields['version'] = $result->fields[6];
         return new WikiDB_backend_ADODB_iter($this, $result, 
             array_merge($this->page_tbl_field_list, $this->version_tbl_field_list));
+    }
+
+    /**
+     * Find referenced empty pages.
+     */
+    function wanted_pages($exclude_from='', $exclude='', $sortby=false, $limit=false) {
+        $dbh = &$this->_dbh;
+        extract($this->_table_names);
+        if ($orderby = $this->sortby($sortby, 'db', array('pagename','wantedfrom')))
+            $orderby = 'ORDER BY ' . $orderby;
+            
+        if ($exclude_from) // array of pagenames
+            $exclude_from = " AND linked.pagename NOT IN ".$this->_sql_set($exclude_from);
+        if ($exclude) // array of pagenames
+            $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
+
+        $limit = $limit ? $limit : -1;
+        /* 
+         all empty pages, independent of linkstatus:
+           select pagename as empty from page left join nonempty using(id) where isnull(nonempty.id);
+         only all empty pages, which have a linkto:
+           select page.pagename, linked.pagename as wantedfrom from link, page as linked 
+             left join page on(link.linkto=page.id) left join nonempty on(link.linkto=nonempty.id) 
+             where isnull(nonempty.id) and linked.id=link.linkfrom;  
+        */
+        $sql = "SELECT $page_tbl.pagename,linked.pagename as wantedfrom"
+            . " FROM $link_tbl,$page_tbl as linked "
+            . " LEFT JOIN $page_tbl ON($link_tbl.linkto=$page_tbl.id)"
+            . " LEFT JOIN $nonempty_tbl ON($link_tbl.linkto=$nonempty_tbl.id)" 
+            . " WHERE ISNULL($nonempty_tbl.id) AND linked.id=$link_tbl.linkfrom"
+            . $exclude_from
+            . $exclude
+            . $orderby;
+        $result = $dbh->SelectLimit($sql, $limit);
+        return new WikiDB_backend_ADODB_iter($this, $result, array('pagename','wantedfrom'));
+    }
+
+    function _sql_set(&$pagenames) {
+        $s = '(';
+        foreach ($pagenames as $p) {
+            $s .= ($this->_dbh->qstr($p).",");
+        }
+        return substr($s,0,-1).")";
     }
 
     /**
@@ -1190,6 +1240,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2004/11/17 20:07:17  rurban
+// just whitespace
+//
 // Revision 1.51  2004/11/15 15:57:37  rurban
 // silent cache warning
 //

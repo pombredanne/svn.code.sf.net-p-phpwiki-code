@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.13 2004-11-20 11:28:49 rurban Exp $');
+rcs_id('$Id: WantedPages.php,v 1.14 2004-11-20 17:35:58 rurban Exp $');
 /*
  Copyright (C) 2002, 2004 $ThePhpWikiProgrammingTeam
  
@@ -43,7 +43,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
     function getDefaultArguments() {
         return array_merge
@@ -51,7 +51,9 @@ extends WikiPlugin
              PageList::supportedArgs(),
              array('page'     => '[pagename]', // just for a single page.
                    'noheader' => false,
-                   'exclude_from'  => _("PgsrcTranslation").','._("InterWikiMap")));
+                   'exclude_from'  => _("PgsrcTranslation").','._("InterWikiMap"),
+                   'limit'    => '100',
+                   'paging'   => 'auto'));
     }
 
     // info arg allows multiple columns
@@ -76,19 +78,19 @@ extends WikiPlugin
         $pagelist->_wpagelist = array();
 
         if (!$page) {
-            $allpages_iter = $dbi->getAllPages(false, false);
-            while ($page_handle = $allpages_iter->next()) {
-                $name = $page_handle->getName();
-                if (in_array($name, $exclude_from)) continue;
-                $links = $page_handle->getPageLinks(true); // include_empty
-                while ($link_handle = $links->next()) {
-                    if (! $dbi->isWikiPage($linkname = $link_handle->getName())) {
-                        $pagelist->addPage($linkname);
-                        //if (!array_key_exists($linkname, $this->_wpagelist))
-                        $pagelist->_wpagelist[$linkname][] = $name;
-                    }
-                }
+            list($offset, $maxcount) = $pagelist->limit($limit);
+            $wanted_iter = $dbi->wantedPages($exclude_from, $exclude, $sortby, $limit);
+            while ($row = $wanted_iter->next()) {
+            	$wanted = $row['pagename'];
+            	$wantedfrom = $row['wantedfrom'];
+            	// ignore duplicates:
+            	if (empty($pagelist->_wpagelist[$wanted]))
+            	    $pagelist->addPage($wanted);
+            	$pagelist->_wpagelist[$wanted][] = $wantedfrom;
             }
+            $wanted_iter->free();
+            // update limit, but it's still a hack.
+            $pagelist->_options['limit'] = "$offset," . min($pagelist->getTotal(), $maxcount);
         } elseif ($dbi->isWikiPage($page)) {
             //only get WantedPages links for one page
             $page_handle = $dbi->getPage($page);
@@ -108,11 +110,9 @@ extends WikiPlugin
         }*/
         if (!$noheader) {
             if ($page)
-                $pagelist->setCaption(sprintf(_("Wanted Pages for %s (%d total):"),
-                                              $page, count($pagelist->_wpagelist)));
+                $pagelist->setCaption(sprintf(_("Wanted Pages for %s:"), $page));
             else
-                $pagelist->setCaption(sprintf(_("Wanted Pages in this wiki (%d total):"),
-                                            count($pagelist->_wpagelist)));
+                $pagelist->setCaption(sprintf(_("Wanted Pages in this wiki:")));
         }
         // reference obviously doesn't work, so force an update to add _wpagelist to parentobj
         if (isset($pagelist->_columns[1]) and $pagelist->_columns[1]->_field == 'wanted')
@@ -131,7 +131,7 @@ class _PageList_Column_WantedPages_wanted extends _PageList_Column {
     	$html = false;
         foreach($this->parentobj->_wpagelist[$page->getName()] as $page) {
             if ($html)
-                $html->pushContent(',', WikiLink($page));
+                $html->pushContent(', ', WikiLink($page));
             else 
                 $html = HTML(WikiLink($page));
         }
@@ -140,6 +140,14 @@ class _PageList_Column_WantedPages_wanted extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/11/20 11:28:49  rurban
+// fix a yet unused PageList customPageListColumns bug (merge class not decl to _types)
+// change WantedPages to use PageList
+// change WantedPages to print the list of referenced pages, not just the count.
+//   the old version was renamed to WantedPagesOld
+//   fix and add handling of most standard PageList arguments (limit, exclude, ...)
+// TODO: pagename sorting, dumb/WantedPagesIter and SQL optimization
+//
 // Revision 1.12  2004/10/04 23:39:34  rurban
 // just aesthetics
 //

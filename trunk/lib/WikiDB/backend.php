@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.10 2004-10-14 17:19:17 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.11 2004-11-20 17:35:57 rurban Exp $');
 
 /*
   Pagedata
@@ -280,7 +280,7 @@ class WikiDB_backend
      *
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_pages($include_defaulted, $orderby=false, $limit=false) {
+    function get_all_pages($include_defaulted, $orderby=false, $limit=false, $exclude=false) {
         trigger_error("virtual", E_USER_ERROR);
     }
         
@@ -354,6 +354,12 @@ class WikiDB_backend
         include_once('lib/WikiDB/backend/dumb/MostRecentIter.php');
         $pages = $this->get_all_pages(true,'mtime DESC');
         return new WikiDB_backend_dumb_MostRecentIter($this, $pages, $params);
+    }
+
+    function wanted_pages($exclude_from='', $exclude='', $sortby=false, $limit=false) {
+        include_once('lib/WikiDB/backend/dumb/WantedPagesIter.php');
+        $allpages = $this->get_all_pages(true,false,false,$exclude_from);
+        return new WikiDB_backend_dumb_WantedPagesIter($this, $allpages, $exclude, $sortby, $limit);
     }
 
     /**
