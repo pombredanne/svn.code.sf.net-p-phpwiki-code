@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.100 2003-11-18 16:54:18 carstenklapp Exp $');
+rcs_id('$Id: main.php,v 1.101 2003-11-25 21:49:44 carstenklapp Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -532,18 +532,21 @@ class WikiRequest extends Request {
     function findActionPage ($action) {
         static $cache;
 
-        if (isset($cache) and isset($cache[$action]))
-            return $cache[$action];
-        
+        // check for translated version, as per users preferred language
+        // (or system default in case it is not en)
+        $translation = gettext($action);
+
+        if (isset($cache) and isset($cache[$translation]))
+            return $cache[$translation];
+
+        // check for cached translated version
+        if ($this->_isActionPage($translation))
+            return $cache[$action] = $translation;
+
         // Allow for, e.g. action=LikePages
         global $WikiNameRegexp;
         if (!preg_match("/$WikiNameRegexp\\Z/A", $action))
             return $cache[$action] = false;
-
-        // check for translated version (users preferred language)
-        $translation = gettext($action);
-        if ($this->_isActionPage($translation))
-            return $cache[$action] = $translation;
 
         // check for translated version (default language)
         global $LANG;
@@ -775,6 +778,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2003/11/18 16:54:18  carstenklapp
+// Reformatting only: Tabs to spaces, added rcs log.
+//
 
 
 // Local Variables:
