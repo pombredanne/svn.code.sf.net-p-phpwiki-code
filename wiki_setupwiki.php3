@@ -1,65 +1,42 @@
-<!-- $Id: wiki_setupwiki.php3,v 1.11 2000-07-19 16:25:58 dairiki Exp $ -->
-<?
+<? rcs_id('$Id: wiki_setupwiki.php3,v 1.11.2.1 2000-07-29 00:36:45 dairiki Exp $');
 require 'wiki_ziplib.php3';
 
 function SavePage ($dbi, $page, $source)
 {
-  $pagename = $page['pagename'];
-  $version = $page['version'];
-  
-  if (is_array($current = RetrievePage($dbi, $pagename)))
-    {
-      if ($version <= $current['version'])
-	{
-	  $page['version'] = $current['version'] + 1;
-	  $version = $page['version'] . " [was $version]";
-	}
-      SaveCopyToArchive($pagename, $current);
-    }
+  $version = $dbi->insertPage($page);
 
-  printf("Inserting page <b>%s</b>, version %s from %s<br>\n",
-	 htmlspecialchars($pagename), $version, $source);
+  if ($version != $page->version())
+      $version .= "was " . $page->version();
+  // FIXME: templatize?
+  printf("Inserted page <b>%s</b>, version %s from %s<br>\n",
+	 htmlspecialchars($page->name()), $version, $source);
   flush();
-  InsertPage($dbi, $pagename, $page);
 }
       
-function LoadFile ($dbi, $filename, $text)
+function LoadFile ($dbi, $filename, $text, $mtime)
 {
   set_time_limit(30);	// Reset watchdog.
-  $now = time();
-  $defaults = array('author' => 'The PhpWiki programming team',
-		    'pagename' => rawurldecode($filename),
-		    'created' => $now,
-		    'flags' => 0,
-		    'lastmodified' => $now,
-		    'refs' => array(),
-		    'version' => 1);
   
   if (!($parts = ParseMimeifiedPages($text)))
     {
       // Can't parse MIME: assume plain text file.
-      $page = $defaults;
-      $page['pagename'] = rawurldecode($filename);
-      $page['content'] = preg_split('/\r?\n/',
-				    preg_replace('/\r?\n$/','',$text));
+      $pagename = rawurldecode($filename);
+      $page = new WikiPage($pagename, array('content' => $text,
+					    'version' => 1,
+					    'created' => $mtime,
+					    'lastmodified' => $mtime));
       SavePage($dbi, $page, "text file");
     }
   else
     {
       for (reset($parts); $page = current($parts); next($parts))
 	{
-	  // Fill in defaults for missing values?
-	  // Should we do more sanity checks here?
-	  reset($defaults);
-	  while (list($key, $val) = each($defaults))
-	      if (!isset($page[$key]))
-		  $page[$key] = $val;
-
-	  if ($page['pagename'] != rawurldecode($filename))
+	  // FIXME: templatize?
+	  if ($page->name() != rawurldecode($filename))
 	      printf("<b>Warning:</b> "
 		     . "pagename (%s) doesn't match filename (%s)"
 		     . " (using pagename)<br>\n",
-		     htmlspecialchars($page['pagename']),
+		     htmlspecialchars($page->name()),
 		     htmlspecialchars(rawurldecode($filename)));
 
 	  SavePage($dbi, $page, "MIME file");
@@ -75,7 +52,7 @@ function LoadZipOrDir ($dbi, $zip_or_dir)
     {
       $zip = new ZipReader($zip_or_dir);
       while (list ($fn, $data, $attrib) = $zip->readFile())
-	  LoadFile($dbi, $fn, $data);
+	  LoadFile($dbi, $fn, $data, time()); // FIXME:should really get mtime from zip
     }
   else if ($type == 'dir')
     {
@@ -86,7 +63,9 @@ function LoadZipOrDir ($dbi, $zip_or_dir)
 	{
 	  if (filetype("$dir/$fn") != 'file')
 	      continue;
-	  LoadFile($dbi, $fn, implode("", file("$dir/$fn")));
+	  $stat = stat("$dir/$fn");
+	  $mtime = $stat[9];
+	  LoadFile($dbi, $fn, implode("", file("$dir/$fn")), $mtime);
 	}
       closedir($handle); 
     }

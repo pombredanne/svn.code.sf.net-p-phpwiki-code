@@ -1,0 +1,27 @@
+<!-- DEFINE {Title} -->
+Problem While Editing <a href="{Page:Url}">{Page:Name}</a>
+<!-- END -->
+<!-- IF ({Message} == 'PageLocked') -->
+<p>This page has been locked by the administrator and cannot be edited.
+<p>Sorry for the inconvinience.
+<!-- END -->
+<!-- IF ({Message} == 'ConcurrentUpdates') -->
+<P>PhpWiki is unable to save your changes, because
+another user edited and saved the page while you
+were editing the page too.
+If saving proceeded now changes from the previous 
+author would be lost.</P>
+<P>In order to recover from this situation follow these steps:
+<OL>
+<LI>Use your browsers <B>Back</B> button to go back
+to the edit page.
+<LI>Copy your changes to the clipboard or to another temporary
+place (e.g. text editor).
+<LI><B>Reload</B> the page. You should now see the most current
+version of the page. Your changes are no longer there.
+<LI>Make changes to the file again. Paste your additions from
+the clipboard (or text editor).
+<LI>Press <B>Save</B> again.
+</OL>
+<P>Sorry for the inconvinience.</P>
+<!-- END -->

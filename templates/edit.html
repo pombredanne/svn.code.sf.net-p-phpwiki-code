@@ -1,0 +1,55 @@
+<!-- DEFINE {Title} -->
+Edit <a href="{Page:Url}">{Page:Name}</a>
+<!-- END -->
+<!-- IF ({Page:Version} != {Page:Latest:Version}) -->
+<p><b>Warning:</b> You are editing <em>version</em>
+{Page:Version} of this page;
+the most recent is version {Page:Latest:Version}.
+<br>If you save your edits,
+any changes made since version {Page:Version} will be lost.</p>
+<p>Perhaps you'd like to
+<a href="{Page:Latest:Url:Edit}">edit the current
+version of this page</a> instead?</p>
+<!-- END -->
+<form method="POST" action="{ScriptUrl}">
+<table cellspacing=0 cellpadding=0>
+<tr><td colspan=2><textarea name="content" ROWS="22" COLS="80"
+          wrap="virtual">{Page:Content}</textarea></td></tr>
+<tr>
+  <td><input type="submit" value=" Save Changes "></td>
+  <td>
+<!-- IF (!{ForceBackup}) -->
+    <input type="checkbox" 
+             name="noarchive" value="yes" {NoArchiveChecked}>
+       This is a minor change. Don't archive old version.<br>
+<!-- END -->
+    <input type="checkbox" name="convert" value="tabs" {NoTabsChecked}>
+        I can't type tabs.
+        Please <a href="{Browse:ConvertSpacesToTabs}">ConvertSpacesToTabs</a>
+        for me when I save.
+  </td>
+</tr></table>
+<br>
+<a href="{Browse:GoodStyle}">GoodStyle</a> tips for editing.
+<br>
+<a href="{Page:Url:Links}">EditLinks</a> to other web servers.
+<!-- IF ({Page:Previous:Version}) -->
+<br><a href="{Page:Previous:Url:Edit}">EditPreviousCopy</a>
+ from the archive.
+<!-- END -->
+<hr noshade>
+<small>
+<b>Emphasis:</b> '' for italics, ''' for bold, ''''' for both
+<br><b>Lists:</b> tab-* for bullet lists, tab-# for numbered lists, tab-Term:-tab for definition lists
+<br><b>References:</b> JoinCapitalizedWords or use square brackets for a [page link] or URL [http://cool.wiki.int/].
+<br><b>References:</b> Use [1],[2],[3],... and EditLinks. Avoid linking with "!": !DoNotHyperlink, name links like [text | URL]
+<br><b>Misc:</b>"!", "!!", "!!!" make headings,
+"%%%" makes a linebreak, "- - - -" makes a horizontal rule, 
+escape "[" with "[["
+<br>more on
+<a href="{Browse:TextFormattingRules}"><b>TextFormattingRules</b></a>
+</small>
+<input type="hidden" name="pagename" value="{Page:Name}">
+<input type="hidden" name="action" value="post">
+<input type="hidden" name="editversion" value="{Page:Latest:Version}">
+</form>

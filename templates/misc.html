@@ -1,0 +1,42 @@
+<!-- $Id: misc.html,v 1.1.2.1 2000-07-29 00:36:45 dairiki Exp $ -->
+<!-- IF ({Render} == 'Search') -->
+<form action="{ScriptUrl}">
+<input type="text" size=40 name="search" value="{content}">
+</form>
+<!-- END -->
+<!-- IF ({Render} == 'FullSearch') -->
+<form action="{ScriptUrl}">
+<input type="text" size=40 name="full" value="{content}">
+</form>
+<!-- END -->
+<!-- IF ({Render} == 'MostPopular') -->
+<dl>
+<dd><table cellspacing=1 cellpadding=1>
+  <tr><th>Hits</th><th align='left'>&nbsp;Page</th></tr>
+<!-- LOOP {MostPopular} -->
+  <tr><td align="center">{MostPopular:Page:Hits}</td>
+      <td><a href="{MostPopular:Page:Url}">{MostPopular:Page:Name}</a></td>
+  </tr>
+<!-- END -->
+</table></dd>
+</dl>
+<!-- END -->
+<!-- IF ({Render} == 'ZipSnapshot') -->
+<form action="{AdminUrl}" method="post">
+<input type="submit" value="Get Zip Snapshot">
+<input type="hidden" name="action" value="zip">
+</form>
+<!-- END -->
+<!-- IF ({Render} == 'ZipDump') -->
+<form action="{AdminUrl}" method="post">
+<input type="submit" value="Get Full Zip Dump">
+<input type="hidden" name="action" value="zip">
+<input type="hidden" name="all" value="yes">
+</form>
+<!-- END -->
+<!-- IF ({Render} == 'AdminLogin') -->
+<form action="{AdminUrl}" method="post">
+<input type="submit" value=" Login ">
+<input type="hidden" name="action" value="browse">
+</form>
+<!-- END -->

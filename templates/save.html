@@ -1,0 +1,30 @@
+<!-- DEFINE {Title} -->
+Saved <a href="{Page:Url:Backlinks}">{Page:Name}</a>
+<!-- END -->
+
+<!-- LOOP {BadRefs} -->
+<p>Link [{BadRefs:Num}]: {BadRefs:Url} : <b>unknown protocol</b>
+- use one of {AllowedProtocols} - link discarded.</p>
+<!-- END -->
+
+<!-- IF ({TempDatabaseWarning}) -->
+<P><B>Warning: the Wiki DBM file still lives in the /tmp directory.
+Please read the INSTALL file and move the DBM file to a permanent
+location or risk losing all the pages!</B>
+<!-- END -->
+
+<!-- IF ({PageUnchanged}) -->
+<p><b>Warning:</b> You've made no detectable changes.  Page not saved.
+<!-- ELSE -->
+Thank you for editing <a href="{Page:Url}">{Page:Name}</a><br>
+Your careful attention to detail is much appreciated.
+<P><img src="{SignatureImgUrl}"></P>
+<!-- END -->
+
+<hr noshade>
+{Page:ContentAsHtml}
+<hr noshade>
+[<a href="{Page:Url:Edit}">edit</a>]
+[<a href="{Page:Url:History}">hist</a>]
+[<a href="{Page:Url:Diff}">diff</a>]
+[<a href="{Page:Url:Info}">info</a>])

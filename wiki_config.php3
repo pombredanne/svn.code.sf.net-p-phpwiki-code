@@ -1,8 +1,10 @@
 <?
-   if (!function_exists('rcs_id')) {
-      function rcs_id($id) { echo "<!-- $id -->\n"; };
-   }
-   rcs_id('$Id: wiki_config.php3,v 1.19.2.1 2000-07-21 18:29:07 dairiki Exp $');
+function rcs_id($id) {
+  global $RcsIdentifiers;
+  $RcsIdentifiers .= "$id\n";
+};
+
+rcs_id('$Id: wiki_config.php3,v 1.19.2.2 2000-07-29 00:36:45 dairiki Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -35,29 +37,20 @@
    // Wiki pages, use wiki_msql.php3 instead of wiki_dbmlib.php3
    // See INSTALL.mysql for details on using mSQL
 
-
    // DBM settings (default)
-   include "wiki_dbmlib.php3";
-   $DBMdir = "/tmp";
-   $WikiDataBase = "wiki";
-   $ArchiveDataBase = "archive";
-   $WikiDB['wiki']      = "$DBMdir/wikipagesdb";
-   $WikiDB['archive']   = "$DBMdir/wikiarchivedb";
-   $WikiDB['wikilinks'] = "$DBMdir/wikilinksdb";
-   $WikiDB['hottopics'] = "$DBMdir/wikihottopicsdb";
-   $WikiDB['hitcount']  = "$DBMdir/wikihitcountdb";
+/**/
+   $dbparams =array('dbtype' => 'dbm',
+		    'dbfile' => '/tmp/phpwikidb');
+/**/		    
 
-/*
    // MySQL settings (thanks Arno Hollosi! <ahollosi@iname.com>)
    // Comment out the lines above (for the DBM) if you use these
-
-   include "wiki_mysql.php3";
-   $WikiDataBase = "wiki";
-   $ArchiveDataBase = "archive";
-   $mysql_server = 'localhost';
-   $mysql_user = 'root';
-   $mysql_pwd = '';
-   $mysql_db = 'wiki';
+/*
+   $dbparams = array('dbtype' => 'mysql',
+		     'server' => 'localhost',
+		     'user' => 'guest',
+		     'password' => '',
+		     'database' => 'test');
 */
 
 /*
@@ -124,40 +117,61 @@
    //define('WIKI_PGSRC', './wiki.zip'); // New style.
   
    $ScriptName = "index.php3";
+   $AdminName = "admin.php3";
 
 
-   // Template files (filenames are relative to script position)
-   $templates = array(
-   	"BROWSE" =>    "templates/browse.html",
-	"EDITPAGE" =>  "templates/editpage.html",
-	"EDITLINKS" => "templates/editlinks.html",
-	"MESSAGE" =>   "templates/message.html"
-	);
-
-   $SignatureImg = "$ServerAddress/signature.png";
-   $logo = "wikibase.png";
+//$SignatureImg = "$ServerAddress/signature.png";
+// $LogoURL = "$ServerAddress/wikibase.png";
 
    // date & time formats used to display modification times, etc.
    // formats are given as format strings to PHP date() function
-   $datetimeformat = "F j, Y";	// may contain time of day
+   //$datetimeformat = "F j, Y";	// may contain time of day
+   $datetimeformat = "D M d H:i T Y";	// may contain time of day
    $dateformat = "F j, Y";	// must not contain time
 
    // allowed protocols for links - be careful not to allow "javascript:"
    $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
    
-   // you shouldn't have to edit anyting below this line
+   // you shouldn't have to edit anything below this line
 
    $ScriptUrl = $ServerAddress . $ScriptName;
-   $LogoImage = "<img src='${ServerAddress}$logo' border='0'>";
-   $LogoImage = "<a href='$ScriptUrl'>$LogoImage</a>";
-
-
 
    // Apache won't show REMOTE_HOST unless the admin configured it
    // properly. We'll be nice and see if it's there.
-   empty($REMOTE_HOST) ?
-      ($remoteuser = $REMOTE_ADDR) : ($remoteuser = $REMOTE_HOST);
+   $remoteuser =  empty($REMOTE_HOST) ? $REMOTE_ADDR : $REMOTE_HOST;
 
+   // Template files (filenames are relative to script position)
+   define('WIKI_TEMPLATE_DIR', "templates");
+   $TemplateFiles = array(
+       "WRAPPER"   => "wrapper.html",
+       "BROWSE"    => "browse.html",
+       "BROWSEOLD" => "browseold.html",
+       "EDIT"      => "edit.html",
+       "LINKS"     => "links.html",
+       "SAVE"      => "save.html",
+       "SEARCH"    => "search.html",
+       "FULL"      => "fullsearch.html",
+       "BACKLINKS" => "backlinks.html",
+       "HISTORY"   => "history.html",
+       "DIFF"      => "diff.html",
+       "INFO"      => "info.html",
+       "ERROR"     => "error.html",
+       "EDITPROBLEM" => "editproblem.html",
+       "MISC"      => "misc.html"
+       );
+
+   $TemplateVars = array(
+       'RemoteUser'   => $remoteuser,
+       'AllowedProtocols' => $AllowedProtocols,
+       'BgColor'      => 'linen',
+       'SignatureImgUrl' => $ServerAddress . "signature.png",
+       'LogoImgUrl'   => $ServerAddress . "wikibase.png",
+       'FrontPageUrl' => $ServerAddress . "index.php3/FrontPage",
+       'AdminUrl'     => $ServerAddress . "admin.php3",
+       'ScriptName'   => $ScriptName,
+       'ScriptUrl'    => $ScriptUrl,
+       'Administrator' => ''
+    );
 
    // number of user-defined external links, i.e. "[1]"
    define("NUM_LINKS", 12);
@@ -175,7 +189,8 @@
     * but the pagename may not begin or end with a space.
     *
     * Some issues: tabs? multiple adjacent spaces? backslashses?
+    *              maximum length of a page name?
     */
-   define('PAGENAME_REGEXP', '(?!\s)[ !-Z^-{}~\xa1-\xff]+(?<!\s)');
+   define('PAGENAME_REGEXP', '(?!\s)[ !-Z^-{}~\xa1-\xff]{1,100}(?<!\s)');
    define('SAFE_URL_REGEXP', '(?:' . $AllowedProtocols . '):[^][\s<>"()]+');
 ?>

@@ -1,0 +1,9 @@
+!!! PhpWiki Administration
+
+All of the actions on this page require a valid administrator's username
+and password.
+
+
+|| %%AdminLogin%%  |{ Browse this wiki with administrative privileges.  (That means you'll be able to lock and unlock pages, as well as edit locked pages.)  To exit administrative mode, click on the logo at the top of the page.
+|| %%ZipSnapshot%% |{ Download a zip file containing the most recent versions of each page.
+|| %%ZipDump%%     |{ Download a zip file which contains all archived versions of each page.

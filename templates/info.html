@@ -1,0 +1,50 @@
+<!-- DEFINE {Title} -->
+PageInfo
+<!-- IF ({Page:Name}) -->
+for <a href="{Page:Url}">{Page:Name}</a>
+<!-- END -->
+<!-- END -->
+<form action="{ScriptUrl}" METHOD="POST">
+<input type="hidden" name="action" value="info">
+<!-- IF ({Page:Name}) -->
+<input name="pagename" value="{Page:Name}">
+<!-- END -->
+Enter a page name
+<input type="submit" value="Go"><br>
+<input type="checkbox" name="showpagesource" {ShowPageSourceChecked}>
+Show the page source and references
+</form>
+<!-- IF ({Page:Name}) -->
+<table border=2 bgcolor=white>
+<!-- LOOP {Hist} -->
+<!-- IF ({Hist:IsFirst}) -->
+<tr bgcolor="#ffcccc"><td align="right">Created</td><td>{Hist:Page:Created}</td></tr>
+<tr bgcolor="#ffcccc"><td align="right">Hits</td><td>{Hist:Page:Hits}</td></tr>
+<tr bgcolor="#ffcccc"><td align="right">Flags</td><td>{Hist:Page:Flags}</td></tr>
+<tr bgcolor="#ffcccc"><td align="right">Locked</td>
+  <td><!-- IF ({Hist:Page:Flags:Locked})-->Yes<!-- ELSE -->No<!-- END --></td></tr>
+<!-- END -->
+<tr><td colspan=2></td></tr>
+<tr><td colspan=2></td></tr>
+<tr><td align="right">Version</td><td>{Hist:Page:Version}</td></tr>
+<tr><td align="right">Author</td><td>{Hist:Page:Author}</td></tr>
+<tr><td align="right">Modifed</td><td>{Hist:Page:LastModified}</td></tr>
+<!-- IF ({ShowPageSourceChecked}) -->
+<tr><td align="right">Content</td>
+    <td><!-- IF ({Hist:Page:ContentPlain}) -->{Hist:Page:ContentPlain}
+        <!-- ELSE -->&nbsp;<!-- END --></td></tr>
+<tr>
+  <td>Refs</td>
+  <td><table cellspacing=1 cellpadding=1 border=0>
+<!-- LOOP {Hist:Page:Ref} -->
+    <tr><td>[{Hist:Page:Ref:Num}]</td><td>{Hist:Page:Ref:Url}</td></tr>
+<!-- END -->
+<!-- IF (! {Hist:Page:Ref:Count}) -->
+    <tr><td colspan=2>&nbsp;</td></tr>
+<!-- END -->
+  </table></td>
+<!-- END -->
+</tr>
+<!-- END -->
+</table>
+<!-- END -->

@@ -1,0 +1,26 @@
+<!-- DEFINE {Title} -->
+WikiDiff of <a href="{Page:Url}">{Page:Name}</a>
+<!-- END -->
+<table width="100%" bgcolor="black" cellspacing=2 cellpadding=2 border=0>
+<tr>
+  <td><table width="100%" bgcolor="white" cellspacing=0 cellpadding=2 border=0>
+    <tr bgcolor="#ccffcc">
+      <td><tt>---</tt></td>
+      <td><a href="{OrigPage:Url}"
+               >{OrigPage:Name} version {OrigPage:Version}</a></td>
+      <td align="right">{OrigPage:LastModified}</td>
+      <td>by {OrigPage:Author}</td>
+    </tr>
+    <tr bgcolor="#ffcccc">
+      <td><tt>+++</tt></td>
+      <td><a href="{Page:Url}"
+               >{Page:Name} version {Page:Version}</a></td>
+      <td align="right">{Page:LastModified}</td>
+      <td>by {Page:Author}</td>
+    </tr>
+  </table></td>
+</tr></table>
+{content}
+<hr noshade>
+[<a href="{Page:Url:History}">hist</a>]
+[<a href="{Page:Url:Info}">info</a>]

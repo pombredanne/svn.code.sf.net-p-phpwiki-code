@@ -1,0 +1,52 @@
+<!-- DEFINE {Title} -->
+Edit Links for <a href="{Page:Url}">{Page:Name}</a>
+<!-- END -->
+<!-- IF ({Page:Version} != {Page:Latest:Version}) -->
+<p><b>Warning:</b> You are editing the links for <em>version</em>
+{Page:Version} of this page;
+the most recent is version {Page:Latest:Version}.
+<br>If you save your edits,
+any changes made since version {Page:Version} will be lost.</p>
+<p>Perhaps you'd like to
+<a href="{Page:Latest:Url:Links}">edit the links for the 
+current version of this page</a>
+instead?</p>
+<hr>
+<!-- END -->
+<p>Type the full URL (http:// ...) for each reference cited in the text.
+<br>Protocols allowed are: {AllowedProtocols}
+<form method="POST" action="{ScriptUrl}">
+<table cellspacing=0 cellpadding=0>
+<tr><td colspan=2><table cellspacing=0 cellpadding=0>
+<!-- LOOP {Page:AllRefs} -->
+<tr>
+  <td align="center">[{Page:AllRefs:Num}]</td>
+  <td>&nbsp;
+     <input type="text" size="55" 
+            name="refs[{Page:AllRefs:Num}]" value="{Page:AllRefs:Url}"></td>
+</tr>
+<!-- END -->
+</table></td></tr>
+<tr>
+  <td><input type="submit" value=" Save Changes "></td>
+  <td>
+<!-- IF (! {ForceBackup}) -->
+    <input type="checkbox" 
+             name="noarchive" value="yes" {NoArchiveChecked}>
+       This is a minor change. Don't archive old version.<br>
+<!-- END -->
+    <input type="checkbox" name="convert" value="tabs" {NoTabsChecked}>
+        I can't type tabs.
+        Please <a href="{Browse:ConvertSpacesToTabs}">ConvertSpacesToTabs</a>
+        for me when I save.
+  </td>
+</tr>
+</table>
+<!-- IF ({Page:Previous:Version}) -->
+<br><a href="{Page:Previous:Url:Links}">EditPreviousCopy</a>
+ from the archive.
+<!-- END -->
+<input type="hidden" name="pagename" value="{Page:Name}">
+<input type="hidden" name="action" value="post">
+<input type="hidden" name="editversion" value="{Page:Latest:Version}">
+</form>

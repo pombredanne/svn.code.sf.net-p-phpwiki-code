@@ -1,55 +1,46 @@
-<!-- $Id: wiki_stdlib.php3,v 1.23.2.2 2000-07-22 22:25:29 dairiki Exp $ -->
-<?
+<? rcs_id('$Id: wiki_stdlib.php3,v 1.23.2.3 2000-07-29 00:36:45 dairiki Exp $');
    /*
       Standard functions for Wiki functionality
-	 GeneratePage($template, $content, $name, $hash)
          WikiURL ($pagename, $action)
          LinkExistingWikiWord($wikiword) 
          LinkUnknownWikiWord($wikiword) 
 	 LinkWikiWord($wikiword)
 	 LinkExternal($text [,$url [,$inline]])
-         RenderQuickSearch() 
-         RenderFullSearch() 
-         RenderMostPopular()
          CookSpaces($pagearray) 
          UpdateRecentChanges($dbi, $pagename, $isnewpage) 
-         SaveCopyToArchive($pagename, $pagehash)
-
 	 strip_magic_quotes_gpc($string)
+	 wiki_message($handle, $messageid)
    */
 
-   require('wiki_renderlib.php3');
+   require('wiki_template.php3');
 
-   function GeneratePage ($template, $content, $name, $hash)
-   {
-      $start = utime();
-      $gen = new WikiPageGenerator($name, $hash);
-      print $gen->generate($template, $content);
-      printf("<hr><b>Page generation took %f seconds</b>\n", utime() - $start);
-   }
-      
+   function WikiURL($pagename, $action = false, $extra = false) {
+      global $ScriptName;
 
-   function WikiURL ($pagename, $action = false) {
-      global $ScriptUrl;
+      $enc_name = rawurlencode($pagename);
+      $action = rawurlencode($action ? $action : 'browse');
 
-      $pagename = rawurlencode($pagename);
-      if ($action == 'browse')
-	  unset($action);
-      else
-	  $action = rawurlencode($action);
-      
+      if (!$extra || !preg_match('/edit|links|browse|diff/', $action))
+	  $extra = array();
+      if (!is_array($extra))
+	  $extra = array('version' => $extra);
+
       if (WIKI_PAGENAME_IN_PATHINFO) {
-	 $url = "$ScriptUrl/$pagename";
-	 if ($action)
-	     $url .= "?action=$action";
+	 $url = $enc_name;
+	 if ($action != 'browse')
+	     $args[] = "action=$action";
       }
       else {
-	 $url = "$ScriptUrl?";
-	 if ($action)
-	    $url .= "$action=";
-	 $url .= $pagename;
+	 $url = $ScriptName;
+	 $args[] = $action == 'browse' ? $enc_name : "$action=$enc_name";
       }
-      return $url;
+
+      while (list($key,$val) = each($extra))
+	  $args[] = rawurlencode($key) . '=' . rawurlencode($val);
+      
+      if ($args)
+	  $url .= '?' . implode('&', $args);
+      return "http:$url";
    }
 
    function LinkExistingWikiWord($wikiword) {
@@ -65,7 +56,7 @@
 
    function LinkWikiWord ($page) {
       global $dbi;
-      return ( IsWikiPage($dbi, $page)
+      return ( $dbi->isWikiPage($page)
 	       ? LinkExistingWikiWord($page)
 	       : LinkUnknownWikiWord($page) );
    }
@@ -89,31 +80,7 @@
 
      return sprintf($fmt, $url, htmlspecialchars($text));
    }
-   
-   function RenderQuickSearch() {
-      global $value, $ScriptUrl;
-      $formtext = "<form action='$ScriptUrl'>\n<input type='text' size='40' name='search' value='$value'>\n</form>\n";
-      return $formtext;
-   }
 
-   function RenderFullSearch() {
-      global $value, $ScriptUrl;
-      $formtext = "<form action='$ScriptUrl'>\n<input type='text' size='40' name='full' value='$value'>\n</form>\n";
-      return $formtext;
-   }
-
-   function RenderMostPopular() {
-      global $dbi;
-      
-      $query = InitMostPopular($dbi, 20);
-      $result = "<DL>\n";
-      while ($qhash = MostPopularNextMatch($dbi, $query)) {
-	 $result .= "<DD>$qhash[hits] ... " . LinkExistingWikiWord($qhash['pagename']) . "\n";
-      }
-      $result .= "</DL>\n";
-      
-      return $result;
-   }
 
    // converts spaces to tabs
    function CookSpaces($pagearray) {
@@ -122,87 +89,73 @@
 
 
    // The Recent Changes file is solely handled here
-   function UpdateRecentChanges($dbi, $pagename, $isnewpage) {
+   function UpdateRecentChanges($dbi, $pagename, $prev_version) {
 
       global $remoteuser; // this is set in the config
       global $dateformat;
 
-      $recentchanges = RetrievePage($dbi, "RecentChanges");
-
-      // this shouldn't be necessary, since PhpWiki loads 
-      // default pages if this is a new baby Wiki
-      if ($recentchanges == -1) {
-         $recentchanges = array(); 
-      }
-
-      $now = time();
-      $today = date($dateformat, $now);
-
-      if (date($dateformat, $recentchanges["lastmodified"]) != $today) {
-         $isNewDay = TRUE;
-         $recentchanges["lastmodified"] = $now;
-      } else {
-         $isNewDay = FALSE;
-      }
-
-      $numlines = sizeof($recentchanges["content"]);
+      $recentchanges = $dbi->retrievePage("RecentChanges");
+      $lines = $recentchanges->content();
       $newpage = array();
-      $k = 0;
 
       // scroll through the page to the first date and break
       // dates are marked with "____" at the beginning of the line
-      for ($i = 0; $i < ($numlines + 1); $i++) {
-         if (preg_match("/^____/",
-                        $recentchanges["content"][$i])) {
-            break;
-         } else {
-            $newpage[$k++] = $recentchanges["content"][$i];
-         }
-      }
+      reset($lines);
+      while (list($junk, $line) = each($lines)) 
+	{
+	  if (preg_match("/^____/", $line))
+	      break;
+	  $newpage[] = $line;
+	}
 
+      // FIXME: templatize
+      
       // if it's a new date, insert it, else add the updated page's
       // name to the array
+      $today = date($dateformat);
+      if ($prev_version)
+	  $difflink = '[diff|' . WikiURL($pagename, 'diff') . ']';
+      else
+	  $difflink = 'new';
+      $newpage[] = "____$today";
+      $newpage[] = "\t* [$pagename] ($difflink) ..... $remoteuser";
 
-      if ($isNewDay) {
-         $newpage[$k++] = "____$today\r";
-         $newpage[$k++] = "\r";
-      } else {
-         $newpage[$k++] = $recentchanges["content"][$i++];
-      }
-      if($isnewpage) {
-         $newpage[$k++] = "\t* [$pagename] (new) ..... $remoteuser\r";
-      } else {
-	 $diffurl = WikiURL($pagename, 'diff');
-         $newpage[$k++] = "\t* [$pagename] ([diff|$diffurl]) ..... $remoteuser\r";
-      }
+      if (! preg_match("/^____$today$/", $line))
+	  $newpage[] = $line;
 
       // copy the rest of the page into the new array
       $pagename = preg_quote($pagename);
-      for (; $i < ($numlines + 1); $i++) {
+      while (list($junk, $line) = each($lines)) 
+	{
          // skip previous entry for $pagename
-         if (preg_match("|\[$pagename\]|", $recentchanges["content"][$i])) {
-            continue;
-         } else {
-            $newpage[$k++] = $recentchanges["content"][$i];
-         }
-      }
+	  if (preg_match("|\[$pagename\]|", $line))
+	      continue;
+	  $newpage[] = $line;
+	}
 
-      $recentchanges["content"] = $newpage;
+      $newchanges = new WikiPage('RecentChanges',
+				 array('content' => $newpage,
+				       'author' => $recentchanges->author(),
+				       'refs' => $recentchanges->refs()));
 
-      InsertPage($dbi, "RecentChanges", $recentchanges);
-   }
-
-
-   // for archiving pages to a seperate dbm
-   function SaveCopyToArchive($pagename, $pagehash) {
-      global $ArchiveDataBase;
-
-      $adbi = OpenDataBase($ArchiveDataBase);
-      $newpagename = $pagename;
-      InsertPage($adbi, $newpagename, $pagehash);
+      $dbi->insertPage($newchanges, true);
    }
 
    function strip_magic_quotes_gpc ($string) {
       return get_magic_quotes_gpc() ? stripslashes($string) : $string;
+   }
+
+   function wiki_message ($handle, $error)
+   {
+     SafeSetToken('Message', $error);
+     SetToken('content', Template(strtoupper($handle)));
+     return false;
+   }
+
+   $DebugInfo = "";
+   function Debug($message)
+   {
+     global $DebugInfo;
+     $DebugInfo .= nl2br(htmlspecialchars(chop($message) . "\n"));
    }
 ?>

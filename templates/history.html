@@ -1,0 +1,36 @@
+<!-- DEFINE {Title} -->
+Archived Versions of <a href="{Page:Url}">{Page:Name}</a>
+<!-- END -->
+<table  bgcolor="black" cellspacing=2 cellpadding=2 border=0>
+<tr>
+  <td><table bgcolor="#cc9999" cellspacing=0 cellpadding=0 border=0>
+    <tr>
+      <td><table bgcolor="white" cellspacing=1 cellpadding=2 border=0>
+        <tr bgcolor="#cccccc">
+          <th>Date</th>
+          <th>Author</th>
+          <th colspan=2>Version</th>
+        </tr>
+<!-- LOOP {Hist} -->
+        <tr>
+          <td rowspan=2 align="right">&nbsp;{Hist:Page:LastModified}&nbsp;</td>
+          <td rowspan=2 align="center">&nbsp;{Hist:Page:Author}&nbsp;</td>
+          <td rowspan=2 align="center"><a href="{Hist:Page:Url}"
+                                        >&nbsp;{Hist:Page:Version}</a></td>
+<!-- IF ({Hist:IsFirst}) -->
+          <td></td>
+<!-- END -->
+        </tr>
+        <tr>
+<!-- IF ({Hist:IsLast}) -->
+          <td></td>
+<!-- ELSE -->
+          <td rowspan=2><tt>&gt;</tt><a href="{Hist:Page:Url:Diff}">diff</a></td>
+<!-- END -->
+        </tr>
+<!-- END -->
+      </table></td>
+    </tr>
+  </table></td>
+</tr>
+</table>
