@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.16 2002-11-20 15:22:54 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.17 2002-11-21 18:07:32 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -183,6 +183,19 @@ class SimpleMarkup
      * @return mixed The expansion of the matched text.
      */
     function markup ($match /*, $body */) {
+        // De-escape matched text.
+        $str = preg_replace('/' . ESCAPE_CHAR . '(.)/', '\1', $match);
+        return $this->_markup($str);
+    }
+
+    /** Markup matching text.
+     *
+     * @param string $match The text which matched the regexp
+     * with escaped charecters de-escaped.
+     *
+     * @return mixed The expansion of the matched text.
+     */
+    function _markup ($match) {
         trigger_error("pure virtual", E_USER_ERROR);
     }
 }
@@ -234,8 +247,8 @@ class Markup_escape  extends SimpleMarkup
         return ESCAPE_CHAR . ".";
     }
     
-    function markup ($match) {
-        return $match[1];
+    function _markup ($match) {
+        return $match;
     }
 }
 
@@ -243,7 +256,7 @@ class Markup_bracketlink  extends SimpleMarkup
 {
     var $_match_regexp = "\\#? \\[ .*?\S.*? \\]";
     
-    function markup ($match) {
+    function _markup ($match) {
         $link = LinkBracketLink($match);
         assert($link->isInlineElement());
         return $link;
@@ -257,7 +270,7 @@ class Markup_url extends SimpleMarkup
         return "(?<![[:alnum:]]) (?:$AllowedProtocols) : [^\s<>\"']+ (?<![ ,.?; \] \) ])";
     }
     
-    function markup ($match) {
+    function _markup ($match) {
         return LinkURL($match);
     }
 }
@@ -271,7 +284,7 @@ class Markup_interwiki extends SimpleMarkup
         return "(?<! [[:alnum:]])" . $map->getRegexp(). ": \S+ (?<![ ,.?; \] \) \" \' ])";
     }
 
-    function markup ($match) {
+    function _markup ($match) {
         global $request;
         $map = InterWikiMap::GetMap($request);
         return $map->link($match);
@@ -285,7 +298,7 @@ class Markup_wikiword extends SimpleMarkup
         return " $WikiNameRegexp";
     }
         
-    function markup ($match) {
+    function _markup ($match) {
         return WikiLink($match, 'auto');
     }
 }
@@ -294,7 +307,7 @@ class Markup_linebreak extends SimpleMarkup
 {
     var $_match_regexp = "(?: (?<! %) %%% (?! %) | <br> )";
 
-    function markup () {
+    function _markup () {
         return HTML::br();
     }
 }
