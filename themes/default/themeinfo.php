@@ -1,5 +1,30 @@
 <?php
 
+/**
+ * This PhpWiki theme is experimental and will likely not appear as 
+ * part of any release ("accessories not included"--download seperately.)
+ *
+ * The first experimental (and very alpha) theme pack is here, have some
+ * fun and play with it, fix it up if you like.
+ *
+ * This one is (by design) completely css-based so unfortunately it
+ * doesn't render properly or even the same across different browsers.
+ * A preview screen snapshot is also included for comparison testing.
+ *
+ * The reverse coloring of this theme was chosen to provide an
+ * extreme example of a heavily customized PhpWiki, through which
+ * any potential visual problems can be identified. The intention is
+ * to elimate as many non-html elements from the html templates as
+ * possible.
+ */
+
+//This theme does not render properly in all browsers. In particular,
+// OmniWeb renders some text as black-on-black. Netscape 4 will probably
+// choke on it too.
+
+//use this setting in index.php:
+//$theme="WikiTrek";
+
 // FIXME: these files are moved to a subfolder in /templates
 // e.g. /templates/vanilla so relative paths to index.php
 // should be irrelevant.
@@ -17,27 +42,22 @@
 // Note that if you use the stock phpwiki style sheet, 'phpwiki.css',
 // you should make sure that it's companion 'phpwiki-heavy.css'
 // is installed in the same directory that the base style file is.
-$CSS_URL = "themes/$theme/phpwiki.css";
+
+
+$CSS_URL = "themes/$theme/WikiTrek.css";
 
 // logo image
 $logo = "themes/$theme/wikibase.png";
 
 // Signature image which is shown after saving an edited page
 // If this is left blank (or unset), the signature will be omitted.
-$SignatureImg = "themes/$theme/signature.png";
+$SignatureImg = "themes/$theme/lights.gif";
 
-$templates = array('BROWSE' =>    "themes/$theme/templates/browse.html",
-		   'EDITPAGE' =>  "themes/$theme/templates/editpage.html",
-		   'MESSAGE' =>   "themes/$theme/templates/message.html");
-
-$URL_LINK_ICONS = array(
-                    'http'	=> "themes/$theme/icons/http.png",
-                    'https'	=> "themes/$theme/icons/https.png",
-                    'ftp'	=> "themes/$theme/icons/ftp.png",
-                    'mailto'	=> "themes/$theme/icons/mailto.png",
-                    'interwiki' => "themes/$theme/icons/interwiki.png",
-                    '*'		=> "themes/$theme/icons/zapg.png"
-                    );
+//gettext() does not work here yet
+//normally themes shouldn't override date & time settings because this will mess up
+//any future user-specific preferences for locale
+$datetimeformat = sprintf(("Stardate %s"),'%B %e, %Y');	// may contain time of day
+$dateformat = sprintf(("Stardate %s"),'%B %e, %Y');	// must not contain time
 
 // (c-file-style: "gnu")
 // Local Variables:
