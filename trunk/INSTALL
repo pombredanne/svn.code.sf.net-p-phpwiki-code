@@ -1,20 +1,18 @@
 0. INSTALLATION
 
-NOTE to users of PHP version 4.0.4 or later: PhpWiki will *not* work out
-of the box as advertized; you must edit lib/config.php and set the
-$WhichDatabase variable to "dba" since the DBM library interface has
-changed in PHP 4.0.4.
-
 PhpWiki requires PHP version 3.0.9 or greater, since it uses the 
 preg_*() family of functions.
 
 Untar/gzip this file into the directory where you want it to live.
-That's it. To improve efficiency, edit lib/config.php and set the
-$ServerAddress by hand; this will save a regexp call on every invocation.
+That's it.
 
 bash$ gzip -d phpwiki-X.XX.tar.gz
 bash$ tar -xvf phpwiki-X.XX.tar
 
+To improve efficiency, edit lib/config.php and set the $ServerAddress
+by hand; this will save a regexp call on every invocation.
+
+Example:
 Let's say you own the web server http://www.foo.com/. You untar in the
 server's root directory; then you should be able to just go to your new
 Wiki:
