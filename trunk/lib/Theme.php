@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.12 2002-01-21 06:55:47 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.13 2002-01-22 03:12:59 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -199,13 +199,24 @@ class Theme {
             $text = $aliases[$text];
         
         $qtext = urlencode($text);
-        // FIXME: search other languages too.
-        foreach (array("buttons/en/$qtext.png",
-                       "buttons/$qtext.png") as $file) {
-            $path = $this->_findData($file, 'missing okay');
+
+            // search no-label buttons in ./buttons
+            // FIXME: this probably needs the untranslated button label to work correctly 
+            $path = $this->_findData("buttons/$qtext.png", 'missing okay');
             if ($path)
                 return $path;
-        }
+
+            // search languages ./buttons/??
+            $path = FindLocalizedButtonFile("$qtext.png", 'missing okay');
+            if ($path)
+                return $path;
+
+            // search english ./buttons/en in case word is spelled the same
+            $path = $this->_findData("buttons/en/$qtext.png", 'missing okay');
+            if ($path)
+                return $path;
+
+
         return false;
     }
 
