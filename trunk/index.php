@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.76 2002-01-29 05:04:04 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.77 2002-01-31 05:10:28 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -414,10 +414,11 @@ $WikiNameRegexp = "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]]
 
 // InterWiki linking -- wiki-style links to other wikis on the web
 //
-// Intermap file for InterWikiLinks -- define other wikis there
-// Leave this undefined to disable InterWiki linking.
+// The map will be taken from a page name InterWikiMap.
+// If that page is not found (or is not locked), or map
+// data can not be found in it, then the file specified
+// by INTERWIKI_MAP_FILE (if any) will be used.
 define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
-
 
 /////////////////////////////////////////////////////////////////////
 //

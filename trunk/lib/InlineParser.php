@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.5 2002-01-31 02:01:59 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.6 2002-01-31 05:10:28 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -18,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 require_once('lib/HtmlElement.php');
+require_once('lib/interwiki.php');
 
 //FIXME: intubate ESCAPE_CHAR into BlockParser.php.
 define('ESCAPE_CHAR', '~');
@@ -254,12 +255,15 @@ class Markup_url extends SimpleMarkup
 class Markup_interwiki extends SimpleMarkup
 {
     function getMatchRegexp () {
-        global $InterWikiLinkRegexp;
-        return "(?<! [[:alnum:]]) $InterWikiLinkRegexp : \S+ (?<![ ,.?; \] \) \" \' ])";
+        global $request;
+        $map = InterWikiMap::GetMap($request);
+        return "(?<! [[:alnum:]])" . $map->getRegexp(). ": \S+ (?<![ ,.?; \] \) \" \' ])";
     }
 
     function markup ($match) {
-        return LinkInterWikiLink($match);
+        global $request;
+        $map = InterWikiMap::GetMap($request);
+        return $map->link($match);
     }
 }
 

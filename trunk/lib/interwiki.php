@@ -1,64 +1,107 @@
-<?php rcs_id('$Id: interwiki.php,v 1.14 2002-01-29 05:05:05 dairiki Exp $');
+<?php rcs_id('$Id: interwiki.php,v 1.15 2002-01-31 05:10:28 dairiki Exp $');
 
-function generate_interwikimap_and_regexp()
-{
-    global $interwikimap_file, $InterWikiLinkRegexp, $interwikimap;
+class InterWikiMap {
+    function InterWikiMap (&$request) {
+        $dbi = $request->getDbh();
 
-    $intermap_data = file(INTERWIKI_MAP_FILE, 1);
-    $wikiname_regexp = "";
-    for ($i=0; $i<count($intermap_data); $i++)
-        {
-            list( $wiki, $inter_url ) = split(' ', chop($intermap_data[$i]));
-            $interwikimap[$wiki] = $inter_url;
-            if ($wikiname_regexp)
-                $wikiname_regexp .= "|";
-            $wikiname_regexp .= $wiki;
+        $intermap = $this->_getMapFromWikiPage($dbi->getPage(_("InterWikiMap")));
+
+        if (!$intermap && defined('INTERWIKI_MAP_FILE'))
+            $intermap = $this->_getMapFromFile(INTERWIKI_MAP_FILE);
+
+        $this->_map = $this->_parseMap($intermap);
+        $this->_regexp = $this->_getRegexp();
+    }
+
+    function GetMap (&$request) {
+        static $map;
+        if (empty($map))
+            $map = new InterWikiMap($request);
+        return $map;
+    }
+    
+    function getRegexp() {
+        return $this->_regexp;
+    }
+
+    function link ($link, $linktext = false) {
+
+        list ($moniker, $page) = split (":", $link, 2);
+        
+        if (!isset($this->_map[$moniker])) {
+            return HTML::span(array('class' => 'bad-interwiki'),
+                              $linktext ? $linktext : $link);
         }
 
-    $InterWikiLinkRegexp = "(?:$wikiname_regexp)";
-}
+        $url = $this->_map[$moniker];
+        
+        // Urlencode page only if it's a query arg.
+        // FIXME: this is a somewhat broken heuristic.
+        $page_enc = strstr($url, '?') ? rawurlencode($page) : $page;
 
-generate_interwikimap_and_regexp();
+        if (strstr($url, '%s'))
+            $url = sprintf($url, $page_enc);
+        else
+            $url .= $page_enc;
+        
+        $link = HTML::a(array('href' => $url),
+                        IconForLink('interwiki'));
 
-function LinkInterWikiLink($link, $linktext='')
-{
-    global $interwikimap;
-
-    list( $wiki, $page ) = split( ":", $link, 2 );
-
-    $url = $interwikimap[$wiki];
-
-    // Urlencode page only if it's a query arg.
-    // FIXME: this is a somewhat broken heuristic.
-    $page_enc = strstr($url, '?') ? rawurlencode($page) : $page;
-
-    if (strstr($url, '%s'))
-        $url = sprintf($url, $page_enc);
-    else
-        $url .= $page_enc;
-
-    $link = HTML::a(array('href' => $url),
-                    IconForLink('interwiki'));
-    
-    if (!$linktext) {
-        $link->pushContent("$wiki:",
-                           HTML::span(array('class' => 'wikipage'), $page));
-        $link->setAttr('class', 'interwiki');
-    }
-    else {
-        $link->pushContent($linktext);
-        $link->setAttr('class', 'named-interwiki');
+        if (!$linktext) {
+            $link->pushContent("$moniker:",
+                               HTML::span(array('class' => 'wikipage'), $page));
+            $link->setAttr('class', 'interwiki');
+        }
+        else {
+            $link->pushContent($linktext);
+            $link->setAttr('class', 'named-interwiki');
+        }
+        
+        return $link;
     }
 
-    return $link;
-}
 
+    function _parseMap ($text) {
+        global $AllowedProtocols;
+        if (!preg_match_all("/^\s*(\S+)\s+((?:$AllowedProtocols):[^\s<>\"']+)/m",
+                            $text, $matches, PREG_SET_ORDER))
+            return false;
+        foreach ($matches as $m)
+            $map[$m[1]] = $m[2];
+        return $map;
+    }
+        
+    function _getMapFromWikiPage ($page) {
+        if (! $page->get('locked'))
+            return false;
+        
+        $current = $page->getCurrentRevision();
+        
+        if (preg_match('|^<verbatim>\n(.*)^</verbatim>|ms',
+                       $current->getPackedContent(), $m)) {
+            return $m[1];
+        }
+        return false;
+    }
 
-// Link InterWiki links
-// These can be protected by a '!' like Wiki words.
-function wtt_interwikilinks($match, &$trfrm) {
-    return $match[0] == "!" ? substr($match,1) : LinkInterWikiLink($match);
+    function _getMapFromFile ($filename) {
+        
+        @$fd = fopen ($filename, "rb");
+        @$data = fread ($fd, filesize($filename));
+        @fclose ($fd);
+        return $data;
+    }
+
+    function _getRegexp () {
+        if (!$this->_map)
+            return '(?:(?!a)a)'; //  Never matches.
+        
+        foreach (array_keys($this->_map) as $moniker)
+            $qkeys[] = preg_quote($moniker, '/');
+        return "(?:" . join("|", $qkeys) . ")";
+    }
 }
+            
 
 // For emacs users
 // Local Variables:
