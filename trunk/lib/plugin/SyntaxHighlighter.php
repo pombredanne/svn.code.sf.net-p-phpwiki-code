@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SyntaxHighlighter.php,v 1.1 2004-05-14 14:55:52 rurban Exp $');
+rcs_id('$Id: SyntaxHighlighter.php,v 1.2 2004-05-14 15:56:16 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -29,7 +29,7 @@ rcs_id('$Id: SyntaxHighlighter.php,v 1.1 2004-05-14 14:55:52 rurban Exp $');
  * syntax: See http://www.andre-simon.de/doku/highlight/highlight.html
  * style = ["ansi", "gnu", "kr", "java", "linux"]
  
-<?plugin SyntaxHighlighter syntax=c style=kr
+<?plugin SyntaxHighlighter syntax=c style=kr color=emacs
  #include <stdio.h>
  
  int main() {
@@ -51,6 +51,8 @@ define('HIGHLIGHT_EXE','highlight');
 //define('HIGHLIGHT_EXE','/usr/local/bin/highlight');
 
 // highlight requires two subdirs themes and langDefs somewhere.
+// Best by highlight.conf in $HOME, but the webserver user usually 
+// doesn't have a $HOME
 if (isWindows())
     define('HIGHLIGHT_DATA_DIR','f:\cygnus\usr\local\share\highlight');
 else  
@@ -70,13 +72,13 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getDefaultArguments() {
         return array(
-                     'syntax' => null,
-                     'style'  => null,
-                     'color'  => null,
+                     'syntax' => null, // required argument
+                     'style'  => null, // optional argument ["ansi", "gnu", "kr", "java", "linux"]
+                     'color'  => null, // optional, see highlight/themes
                      'number' => 0,
                      'wrap'   => 0,
                      );
@@ -152,7 +154,12 @@ extends WikiPlugin
                 $args .= " --data-dir " . HIGHLIGHT_DATA_DIR;
             if ($number != 0) $args .= " -l";
             if ($wrap != 0)   $args .= " -V";
-            if (!empty($color)) $args .= " --style $color -c ".FindFile("uploads")."/highlight.css";
+            $html = HTML();
+            if (!empty($color) and !preg_match('/^[\w-]+$/',$color)) {
+                $html->pushContent($this->error(fmt("invalid %s ignored",'color')));
+                $color = false;
+            }
+            if (!empty($color)) $args .= " --style $color -c ".FindFile("uploads")."/highlight-$color.css";
             if (!empty($style)) $args .= " -F $style";
             $commandLine = HIGHLIGHT_EXE . "$args -q -X -f -S $syntax";
             if (check_php_version(4,3,0))
@@ -161,19 +168,22 @@ extends WikiPlugin
                 $code = $this->oldFilterThroughCmd($source, $commandLine);
             if (empty($code))
                 return $this->error(fmt("Couldn't start commandline '%s'",$commandLine));
-            $html = HTML::pre(HTML::raw($code));
-
-            global $Theme;
-            $html->setAttr('class','tightenable top bottom');
-            $css = $Theme->_CSSlink('',empty($color) ? 'highlight.css' : 'uploads/highlight.css','');
+            $pre = HTML::pre(HTML::raw($code));
+            $pre->setAttr('class','tightenable top bottom');
+            $html->pushContent($pre);
+            $css = $GLOBALS['Theme']->_CSSlink('',empty($color) ? 'highlight.css' : "uploads/highlight-$color.css",'');
             return HTML($css,$html);
         } else {
-            return $this->error(_("empty source"));
+            return $this->error(fmt("empty source"));
         }
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/05/14 14:55:52  rurban
+// Alec Thomas original plugin, which comes with highlight http://www.andre-simon.de/,
+// plus some extensions by Reini Urban
+//
 //
 
 // For emacs users
