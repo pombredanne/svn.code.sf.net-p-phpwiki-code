@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.129 2004-04-07 23:13:19 rurban Exp $');
+rcs_id('$Id: main.php,v 1.130 2004-04-18 00:25:53 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -501,7 +501,7 @@ class WikiRequest extends Request {
             $pathinfo = $this->get('PATH_INFO');
             $tail = substr($pathinfo, strlen(PATH_INFO_PREFIX));
 
-            if ($tail && $pathinfo == PATH_INFO_PREFIX . $tail) {
+            if ($tail != '' and $pathinfo == PATH_INFO_PREFIX . $tail) {
                 return $tail;
             }
         }
@@ -880,6 +880,10 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.129  2004/04/07 23:13:19  rurban
+// fixed pear/File_Passwd for Windows
+// fixed FilePassUser sessions (filehandle revive) and password update
+//
 // Revision 1.128  2004/04/02 15:06:55  rurban
 // fixed a nasty ADODB_mysql session update bug
 // improved UserPreferences layout (tabled hints)
