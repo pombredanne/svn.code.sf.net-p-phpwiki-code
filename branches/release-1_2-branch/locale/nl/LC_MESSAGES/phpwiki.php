@@ -92,6 +92,8 @@ $locale["Current version"] =
    "Actuele versie:";
 $locale["Archived version"] =
    "Gearchiveerde versie:";
+$locale["RecentChanges"] =
+   "RecenteVeranderingen";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kan je veranderingen niet bewaren, want een andere gebruiker\nheeft de pagina veranderd terwijl jij de pagina ook aan het veranderen\nwas.  Als bewaren nu doorgang zou vinden, zouden de veranderingen van\nde vorige auteur verloren gaan.";
 $locale["In order to recover from this situation follow these steps:"] =
@@ -112,21 +114,21 @@ $locale["Thank you for editing %s."] =
    "Bedankt voor het veranderen van %s.";
 $locale["Your careful attention to detail is much appreciated."] =
    "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd.";
+$locale["Title Search Results"] =
+   "Volledige tekst zoek resultaten";
 $locale["Inserting page %s, version %s from %s"] =
    "Voeg pagina %s toe, versie %s van %s";
 $locale["WikiFatalError"] =
    "WikiFataleFout";
+$locale["Search"] =
+   "Zoek";
+$locale["Nesting depth exceeded in SetHTMLOutputMode"] =
+   "Stack grenzen overschreden in SetHTMLOutputMode";
 $locale["%d best incoming links:"] =
    "%d beste inkomende koppelingen:";
 $locale["%d best outgoing links:"] =
    "%d beste uitgaande koppelingen:";
 $locale["%d most popular nearby:"] =
    "%d meest gevraagde in de buurt:";
-$locale["Search"] =
-   "Zoek";
-$locale["Stack bounds exceeded in SetHTMLOutputMode"] =
-   "Stack grenzen overschreden in SetHTMLOutputMode";
-$locale["RecentChanges"] =
-   "RecenteVeranderingen";
 
 ;?>

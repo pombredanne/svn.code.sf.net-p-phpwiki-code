@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-12-22 21:16+0100\n"
+"POT-Creation-Date: 2001-05-21 08:27-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,85 +45,85 @@ msgstr ""
 msgid "Removed page '%s' succesfully."
 msgstr ""
 
-#: lib/config.php:162
+#: lib/config.php:197
 msgid "templates/browse.html"
 msgstr ""
 
-#: lib/config.php:163
+#: lib/config.php:198
 msgid "templates/editpage.html"
 msgstr ""
 
-#: lib/config.php:164
+#: lib/config.php:199
 msgid "templates/editlinks.html"
 msgstr ""
 
-#: lib/config.php:165
+#: lib/config.php:200
 msgid "templates/message.html"
 msgstr ""
 
-#: lib/config.php:181
+#: lib/config.php:216
 msgid "./pgsrc"
 msgstr ""
 
-#: lib/diff.php:682
+#: lib/diff.php:711
 #, c-format
 msgid "WikiDiff::apply: line count mismatch: %s != %s"
 msgstr ""
 
-#: lib/diff.php:742
+#: lib/diff.php:771
 msgid "WikiDiff::_check: failed"
 msgstr ""
 
-#: lib/diff.php:752
+#: lib/diff.php:781
 msgid "WikiDiff::_check: edit sequence is non-optimal"
 msgstr ""
 
-#: lib/diff.php:756
+#: lib/diff.php:785
 #, c-format
 msgid "WikiDiff Okay: LCS = %s"
 msgstr ""
 
-#: lib/diff.php:997
+#: lib/diff.php:1026
 msgid "Current page:"
 msgstr ""
 
-#: lib/diff.php:1001 lib/diff.php:1019
+#: lib/diff.php:1030 lib/diff.php:1048
 #, c-format
 msgid "version %s"
 msgstr ""
 
-#: lib/diff.php:1003 lib/diff.php:1021
+#: lib/diff.php:1032 lib/diff.php:1050
 #, c-format
 msgid "last modified on %s"
 msgstr ""
 
-#: lib/diff.php:1006 lib/diff.php:1024
+#: lib/diff.php:1035 lib/diff.php:1053
 #, c-format
 msgid "by %s"
 msgstr ""
 
-#: lib/diff.php:1010 lib/diff.php:1028
+#: lib/diff.php:1039 lib/diff.php:1057
 msgid "None"
 msgstr ""
 
-#: lib/diff.php:1015
+#: lib/diff.php:1044
 msgid "Archived page:"
 msgstr ""
 
-#: lib/diff.php:1037
+#: lib/diff.php:1066
 msgid "Versions are identical"
 msgstr ""
 
-#: lib/diff.php:1045
+#: lib/diff.php:1074
 #, c-format
 msgid "Diff of %s."
 msgstr ""
 
-#: lib/display.php:14
+#: lib/display.php:15
 msgid "FrontPage"
 msgstr ""
 
-#: lib/display.php:31 lib/editpage.php:50
+#: lib/display.php:32 lib/editpage.php:56
 #, c-format
 msgid "Describe %s here."
 msgstr ""
@@ -137,30 +137,30 @@ msgstr ""
 msgid "No page name passed into editpage!"
 msgstr ""
 
-#: lib/editpage.php:31 lib/savepage.php:52
+#: lib/editpage.php:31 lib/savepage.php:121
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
 
-#: lib/editpage.php:33 lib/savepage.php:32 lib/savepage.php:53
+#: lib/editpage.php:33 lib/savepage.php:99 lib/savepage.php:122
 msgid "Sorry for the inconvenience."
 msgstr ""
 
-#: lib/editpage.php:35 lib/savepage.php:54
+#: lib/editpage.php:35 lib/savepage.php:123
 #, c-format
 msgid "Problem while editing %s"
 msgstr ""
 
-#: lib/fullsearch.php:15
+#: lib/fullsearch.php:9 lib/search.php:9
 #, c-format
 msgid "Searching for \"%s\" ....."
 msgstr ""
 
-#: lib/fullsearch.php:45
+#: lib/fullsearch.php:41
 #, c-format
 msgid "%d matches found in %d pages."
 msgstr ""
 
-#: lib/fullsearch.php:48
+#: lib/fullsearch.php:45
 msgid "Full Text Search Results"
 msgstr ""
 
@@ -193,17 +193,17 @@ msgstr ""
 msgid "Insert into %s failed: %s"
 msgstr ""
 
-#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:118 lib/mysql.php:158
+#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:123 lib/mysql.php:163
 #, c-format
 msgid "MySQL error: %s"
 msgstr ""
 
-#: lib/mysql.php:116
+#: lib/mysql.php:121
 #, c-format
 msgid "Error writing page '%s'"
 msgstr ""
 
-#: lib/mysql.php:156
+#: lib/mysql.php:161
 #, c-format
 msgid "Cannot delete '%s' from table '%s'"
 msgstr ""
@@ -212,7 +212,7 @@ msgstr ""
 msgid "Enter a page name"
 msgstr ""
 
-#: lib/pageinfo.php:10 lib/stdlib.php:239
+#: lib/pageinfo.php:10 lib/stdlib.php:116
 msgid "Go"
 msgstr ""
 
@@ -237,55 +237,68 @@ msgstr ""
 msgid "Archived version"
 msgstr ""
 
-#: lib/savepage.php:18
+#: lib/savepage.php:16 lib/savepage.php:74
+msgid "RecentChanges"
+msgstr ""
+
+#: lib/savepage.php:85
 msgid ""
 "PhpWiki is unable to save your changes, because another user edited and "
 "saved the page while you were editing the page too. If saving proceeded now "
 "changes from the previous author would be lost."
 msgstr ""
 
-#: lib/savepage.php:20
+#: lib/savepage.php:87
 msgid "In order to recover from this situation follow these steps:"
 msgstr ""
 
-#: lib/savepage.php:22
+#: lib/savepage.php:89
 msgid "Use your browser's <b>Back</b> button to go back to the edit page."
 msgstr ""
 
-#: lib/savepage.php:24
+#: lib/savepage.php:91
 msgid ""
 "Copy your changes to the clipboard or to another temporary place (e.g. text "
 "editor)."
 msgstr ""
 
-#: lib/savepage.php:26
+#: lib/savepage.php:93
 msgid ""
 "<b>Reload</b> the page. You should now see the most current version of the "
 "page. Your changes are no longer there."
 msgstr ""
 
-#: lib/savepage.php:28
+#: lib/savepage.php:95
 msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
 msgstr ""
 
-#: lib/savepage.php:30
+#: lib/savepage.php:97
 msgid "Press <b>Save</b> again."
 msgstr ""
 
-#: lib/savepage.php:36
+#: lib/savepage.php:103
 #, c-format
 msgid "Problem while updating %s"
 msgstr ""
 
-#: lib/savepage.php:76
+#: lib/savepage.php:146
 #, c-format
 msgid "Thank you for editing %s."
 msgstr ""
 
-#: lib/savepage.php:106
+#: lib/savepage.php:176
 msgid "Your careful attention to detail is much appreciated."
+msgstr ""
+
+#: lib/search.php:25
+#, c-format
+msgid "%d pages match your query."
+msgstr ""
+
+#: lib/search.php:28
+msgid "Title Search Results"
 msgstr ""
 
 #: lib/setupwiki.php:21
@@ -297,29 +310,25 @@ msgstr ""
 msgid "WikiFatalError"
 msgstr ""
 
-#: lib/stdlib.php:53
+#: lib/stdlib.php:83 lib/stdlib.php:91
+msgid "Search"
+msgstr ""
+
+#: lib/stdlib.php:185
+msgid "Nesting depth exceeded in SetHTMLOutputMode"
+msgstr ""
+
+#: lib/stdlib.php:381
 #, c-format
 msgid "%d best incoming links:"
 msgstr ""
 
-#: lib/stdlib.php:63
+#: lib/stdlib.php:391
 #, c-format
 msgid "%d best outgoing links:"
 msgstr ""
 
-#: lib/stdlib.php:74
+#: lib/stdlib.php:402
 #, c-format
 msgid "%d most popular nearby:"
-msgstr ""
-
-#: lib/stdlib.php:207 lib/stdlib.php:215
-msgid "Search"
-msgstr ""
-
-#: lib/stdlib.php:330
-msgid "Stack bounds exceeded in SetHTMLOutputMode"
-msgstr ""
-
-#: lib/stdlib.php:384 lib/stdlib.php:445
-msgid "RecentChanges"
 msgstr ""
