@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.24 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.25 2003-02-15 02:48:48 dairiki Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -14,7 +14,7 @@ $Theme = new Theme('default');
 // expected to be in the same directory that the base style is in.
 
 $Theme->setDefaultCSS('PhpWiki', 'phpwiki.css');
-$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print');
 $Theme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
