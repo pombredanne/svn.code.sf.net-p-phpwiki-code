@@ -1,74 +1,37 @@
 From [no address given]  Tue Dec 18 02:37:26 2001
-
 Subject: SeiteFinden
-
 From: [no address given] (PhpWiki)
-
 Date: Sun, 16 Dec 2001 05:22:02 -0500
-
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.0-jeffs-hacks)
-
 Content-Type: application/x-phpwiki;
-
   pagename=SeiteFinden;
-
   flags=PAGE_LOCKED;
-
   lastmodified=1008498122;
-
 Content-Transfer-Encoding: quoted-printable
 
-
-
 Als Startpunkt zum Herumst=F6bern im Wiki eignen sich am besten die =
-
 folgenden Seiten:
 
-
-
 * WieManWikiBenutzt sagt wie die Sache hier in einem Wiki funzt.
-
 * FrischeSeiten ist eine automatisch erstellte Liste der ge=E4nderten =
-
 Seiten.
-
 * WikiTechnik erkl=E4rt die Technik, mit der PhpWiki arbeitet.
 
 
 
-
-
-
-
 Hier ist eine Suche nach Seitentiteln. Suche zum Beispiel nach ''wiki'' =
-
 oder ''sandwich''.
-
-
 
 <?plugin-form TitleSearch?>
 
-
-
 Und hier ist eine Volltextsuche. Die Suche dauert ein paar Sekunden. Im =
-
 Suchergebnis werden die Zeilen aus den gefundenen Seiten angezeigt, in =
-
 denen ein Suchbegriff gefunden wurde.
-
-
 
 <?plugin-form FullTextSearch?>
 
-
-
 ------
-
 Separate words with a space. All words have to match.
-
 %%%To exclude words prepend a '-'.
-
 %%%Example: 'wiki text -php' looks for all pages containing the words 'wiki'
-
 __and__ 'text', but __not__ containing the word 'php'.
-
