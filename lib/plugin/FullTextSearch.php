@@ -1,5 +1,24 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.13 2002-02-28 00:46:51 carstenklapp Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.14 2002-03-01 17:03:11 carstenklapp Exp $');
+/*
+Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+This file is part of PhpWiki.
+
+PhpWiki is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+PhpWiki is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with PhpWiki; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 
 require_once('lib/TextSearchQuery.php');
 
@@ -18,11 +37,11 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array('s'	=> false,
-                     'noheader' => false);
+                     'noheader'	=> false);
         // TODO: multiple page exclude
     }
 
-        
+
     function run($dbi, $argstr, $request) {
 
         $args = $this->getArgs($argstr, $request);
@@ -30,7 +49,7 @@ extends WikiPlugin
             return '';
 
         extract($args);
-        
+
         $query = new TextSearchQuery($s);
         $pages = $dbi->fullSearch($query);
         $lines = array();
@@ -52,7 +71,7 @@ extends WikiPlugin
 
         if ($noheader)
             return $list;
-        
+
         return HTML(HTML::p(fmt("Full text search results for '%s'", $s)),
                     $list);
     }
@@ -63,7 +82,7 @@ extends WikiPlugin
         $html = array();
         foreach ($matches as $line) {
             $line = $this->highlight_line($line, $hilight_re);
-            $html[] = HTML::dd(HTML::small(false, $line));
+            $html[] = HTML::dd(HTML::small(array('class' => 'search-context'), $line));
         }
         return $html;
     }
@@ -72,18 +91,18 @@ extends WikiPlugin
         while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {
             $line = substr($line, strlen($m[0]));
             $html[] = $m[1];    // prematch
-            $html[] = HTML::strong($m[2]); // match
+            $html[] = HTML::strong(array('class' => 'search-term'), $m[2]); // match
         }
         $html[] = $line;        // postmatch
         return $html;
     }
 };
-        
+
 // Local Variables:
 // mode: php
 // tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
