@@ -1,18 +1,18 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.61 2002-02-10 08:20:21 lakka Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.62 2002-02-16 02:31:49 carstenklapp Exp $');
 /**
  */
 
-        
+
 class _RecentChanges_Formatter
 {
     var $_absurls = false;
-    
+
     function _RecentChanges_Formatter ($rc_args) {
         $this->_args = $rc_args;
         $this->_diffargs = array('action' => 'diff');
 
-	if ($rc_args['show_minor'] || !$rc_args['show_major'])
+        if ($rc_args['show_minor'] || !$rc_args['show_major'])
             $this->_diffargs['previous'] = 'minor';
 
         // PageHistoryPlugin doesn't have a 'daylist' arg.
@@ -23,7 +23,7 @@ class _RecentChanges_Formatter
     function include_versions_in_URLs() {
         return (bool) $this->_args['show_all'];
     }
-    
+
     function date ($rev) {
         global $Theme;
         return $Theme->getDay($rev->get('mtime'));
@@ -52,7 +52,7 @@ class _RecentChanges_Formatter
         return WikiURL($this->include_versions_in_URLs() ? $rev : $rev->getPage(),
                        '', $this->_absurls);
     }
-    
+
     function authorHasPage ($author) {
         global $WikiNameRegexp, $request;
         $dbi = $request->getDbh();
@@ -77,18 +77,18 @@ class _RecentChanges_Formatter
     function importance ($rev) {
         return $rev->get('is_minor_edit') ? 'minor' : 'major';
     }
-    
+
     function summary($rev) {
         if ( ($summary = $rev->get('summary')) )
             return $summary;
 
         switch ($this->status($rev)) {
-        case 'deleted':
-            return _("Deleted.");
-        case 'new':
-            return _("New page.");
-        default:
-            return '';
+            case 'deleted':
+                return _("Deleted.");
+            case 'new':
+                return _("New page.");
+            default:
+                return '';
         }
     }
 }
@@ -123,7 +123,7 @@ extends _RecentChanges_Formatter
         else
             return $Theme->linkUnknownWikiWord($page->getName(), false, $version);
     }
-    
+
     function authorLink ($rev) {
         $author = $rev->get('author');
         if ( $this->authorHasPage($author) ) {
@@ -140,14 +140,14 @@ extends _RecentChanges_Formatter
                               TransformLinks($summary, $rev->get('markup')),
                               "]");
     }
-        
+
     function rss_icon () {
         global $request, $Theme;
 
         $rss_url = $request->getURLtoSelf(array('format' => 'rss'));
         return $Theme->makeButton("RSS", $rss_url, 'rssicon');
     }
-    
+
     function description () {
         extract($this->_args);
         // FIXME: say something about show_all.
@@ -162,7 +162,7 @@ extends _RecentChanges_Formatter
             if (intval($days) != $days)
                 $days = sprintf("%.1f", $days);
         }
-		$lmt = abs($limit);
+        $lmt = abs($limit);
         /**
          * Depending how this text is split up it can be tricky or
          * impossible to translate with good grammar. So the seperate
@@ -191,19 +191,19 @@ extends _RecentChanges_Formatter
                             $limit, $edits);
         }
         elseif ($limit < 0) {  //$limit < 0 means we want oldest pages
-    		if ($timespan) {
-                    if (intval($days) == 1)
-                        $desc = fmt("The %d oldest %s during the past day are listed below.",
-                                    $lmt, $edits);
-                    else
-                        $desc = fmt("The %d oldest %s during the past %s days are listed below.",
-                                    $lmt, $edits, $days);
-                } else
-                    $desc = fmt("The %d oldest %s are listed below.",
+            if ($timespan) {
+                if (intval($days) == 1)
+                    $desc = fmt("The %d oldest %s during the past day are listed below.",
                                 $lmt, $edits);
-		}
+                else
+                    $desc = fmt("The %d oldest %s during the past %s days are listed below.",
+                                $lmt, $edits, $days);
+            } else
+                $desc = fmt("The %d oldest %s are listed below.",
+                            $lmt, $edits);
+        }
 
-		else {
+        else {
             if ($timespan) {
                 if (intval($days) == 1)
                     $desc = fmt("The most recent %s during the past day are listed below.",
@@ -214,10 +214,10 @@ extends _RecentChanges_Formatter
             } else
                 $desc = fmt("All %s are listed below.", $edits);
         }
-		        return $desc;
+        return $desc;
     }
 
-        
+
     function title () {
         extract($this->_args);
         return array($show_minor ? _("RecentEdits") : _("RecentChanges"),
@@ -232,10 +232,10 @@ extends _RecentChanges_Formatter
 
         if ($this->_args['daylist'])
             $html->pushContent(new DayButtonBar($this->_args));
-        
+
         $last_date = '';
         $lines = false;
-        
+
         while ($rev = $changes->next()) {
             if (($date = $this->date($rev)) != $last_date) {
                 if ($lines)
@@ -253,12 +253,12 @@ extends _RecentChanges_Formatter
 
     function format_revision ($rev) {
         $args = &$this->_args;
-        
+
         $class = 'rc-' . $this->importance($rev);
 
         $time = $this->time($rev);
         if (! $rev->get('is_minor_edit'))
-            $time = HTML::strong($time);
+            $time = HTML::strong(array('class' => 'pageinfo-majoredit'), $time);
 
         $line = HTML::li(array('class' => $class));
 
@@ -291,12 +291,12 @@ extends _RecentChanges_Formatter
     function pageURI ($rev) {
         return WikiURL($rev, '', 'absurl');
     }
-    
+
     function format ($changes) {
         include_once('lib/RssWriter.php');
         $rss = new RssWriter;
 
-        
+
         $rss->channel($this->channel_properties());
 
         if (($props = $this->image_properties()))
@@ -316,18 +316,18 @@ extends _RecentChanges_Formatter
         global $ErrorManager;
         if (($errors = $ErrorManager->getPostponedErrorsAsHTML()))
             printf("\n<!-- PHP Warnings:\n%s-->\n", AsXML($errors));
-            
+
         global $request;        // FIXME
         $request->finish();     // NORETURN!!!!
     }
-    
+
     function image_properties () {
         global $Theme;
 
         $img_url = $Theme->getImageURL('logo');
         if (!$img_url)
             return false;
-        
+
         return array('title' => WIKI_NAME,
                      'link' => WikiURL(HomePage, false, 'absurl'),
                      'url' => $img_url);
@@ -339,7 +339,7 @@ extends _RecentChanges_Formatter
                      'name' => 's',
                      'link' => WikiURL(_("TitleSearch"), false, 'absurl'));
     }
-    
+
     function channel_properties () {
         global $request;
 
@@ -350,7 +350,7 @@ extends _RecentChanges_Formatter
                      'link' => $rc_url,
                      'dc:date' => Iso8601DateTime(time()));
 
-        /* FIXME: other things one might like in <channel>:                   
+        /* FIXME: other things one might like in <channel>:
          * sy:updateFrequency
          * sy:updatePeriod
          * sy:updateBase
@@ -365,14 +365,14 @@ extends _RecentChanges_Formatter
          * rss091:copyright
          */
     }
-    
 
-    
-        
+
+
+
     function item_properties ($rev) {
         $page = $rev->getPage();
         $pagename = $page->getName();
-        
+
         return array( 'title'		=> split_pagename($pagename),
                       'description'	=> $this->summary($rev),
                       'link'		=> $this->pageURL($rev),
@@ -447,13 +447,13 @@ extends WikiPlugin
         $action = $request->getArg('action');
         if ($action != 'browse' && ! $request->isActionPage($action))
             $args['format'] = false; // default -> HTML
-        
+
         if ($args['format'] == 'rss' && empty($args['limit']))
             $args['limit'] = 15; // Fix default value for RSS.
 
         return $args;
     }
-        
+
     function getMostRecentParams ($args) {
         extract($args);
 
@@ -468,11 +468,11 @@ extends WikiPlugin
             $params['since'] = time() - 24 * 3600 * $days;
         elseif ($days < 0.0)
             $params['since'] = 24 * 3600 * $days - time();
-				
+
 
         return $params;
     }
-    
+
     function getChanges ($dbi, $args) {
         $changes = $dbi->mostRecent($this->getMostRecentParams($args));
 
@@ -489,7 +489,7 @@ extends WikiPlugin
     function format ($changes, $args) {
         global $Theme;
         $format = $args['format'];
-        
+
         $fmt_class = $Theme->getFormatter('RecentChanges', $format);
         if (!$fmt_class) {
             if ($format == 'rss')
@@ -501,7 +501,7 @@ extends WikiPlugin
             else
                 $fmt_class = '_RecentChanges_HtmlFormatter';
         }
-        
+
         $fmt = new $fmt_class($args);
         return $fmt->format($changes);
     }
@@ -519,10 +519,10 @@ class DayButtonBar extends HtmlElement {
 
     function DayButtonBar ($plugin_args) {
         $this->HtmlElement('p', array('class' => 'wiki-rc-action'));
-        
+
         // Display days selection buttons
         extract($plugin_args);
-        
+
         // Custom caption
         if (! $caption) {
             if ($show_minor)
@@ -537,7 +537,7 @@ class DayButtonBar extends HtmlElement {
 
         global $Theme;
         $sep = $Theme->getButtonSeparator();
-        
+
         $n = 0;
         foreach (explode(",", $daylist) as $days) {
             if ($n++)
@@ -548,7 +548,7 @@ class DayButtonBar extends HtmlElement {
 
     function _makeDayButton ($days) {
         global $Theme, $request;
-        
+
         if ($days == 1)
             $label = _("1 day");
         elseif ($days < 1)
@@ -571,5 +571,5 @@ class DayButtonBar extends HtmlElement {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
