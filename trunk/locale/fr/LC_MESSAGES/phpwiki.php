@@ -144,8 +144,6 @@ $locale["Edit %s"] =
    "Éditer %s";
 $locale["Edit Area Size"] =
    "Éditez la taille de la zone";
-$locale["Edit Area Size:"] =
-   "Taille de la zone d'édition :";
 $locale["Edit Old Revision"] =
    "Éditer la Version Archivée";
 $locale["Edit aborted."] =
@@ -230,8 +228,6 @@ $locale["Last Modified:"] =
    "Dernière Modification :";
 $locale["Last Summary"] =
    "Dernier Résumé";
-$locale["Last Summary:"] =
-   "Dernier Résumé :";
 $locale["Last edited %s."] =
    "Dernière modification %s.";
 $locale["Last edited on %s."] =
@@ -444,8 +440,6 @@ $locale["Sorry, this version of PHP cannot create PNG image files."] =
    "Désolé, cette version de PHP ne peut pas créer des fichiers d'image PNG.";
 $locale["Statistics about %s."] =
    "Statistiques sur %s.";
-$locale["Summary:"] =
-   "Résumé :";
 $locale["Supplanted on:"] =
    "Remplacée le :";
 $locale["Synopsis"] =
@@ -498,6 +492,8 @@ $locale["Title search results for '%s'"] =
    "Résultat de recherche sur les titres de pages pour '%s'";
 $locale["TitleSearch"] =
    "RechercheParTitre";
+$locale["Today"] =
+   "Aujourd'hui";
 $locale["Top & bottom toolbars"] =
    "Barres d'outils en haut et en bas";
 $locale["Unable to open directory '%s' for reading"] =

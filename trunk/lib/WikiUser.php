@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.16 2002-08-22 23:42:51 rurban Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.17 2002-08-23 18:29:29 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -16,21 +16,25 @@ define('WIKIAUTH_USER', 2);     // real auth from a database/file/server.
 define('WIKIAUTH_ADMIN', 10);
 define('WIKIAUTH_FORBIDDEN', 11); // Completely not allowed.
 
-$UserPreferences = array('editWidth'     => new _UserPreference_int(80, 30, 150),
-                         'editHeight'    => new _UserPreference_int(22, 5, 80),
-                         'timeOffset'    => new _UserPreference_numeric(0, -26, 26),
-                         'relativeDates' => new _UserPreference_bool(),
+$UserPreferences = array(
                          'userid'        => new _UserPreference(''),
                          'passwd'        => new _UserPreference(''),
                          'email'         => new _UserPreference(''),
+                         'emailVerified' => new _UserPreference_bool(),
+                         'notifyPages'   => new _UserPreference(''),
                          'theme'         => new _UserPreference(THEME),
-                         'notifyPages'   => new _UserPreference(''));
+                         'lang'          => new _UserPreference($LANG),
+                         'editWidth'     => new _UserPreference_int(80, 30, 150),
+                         'editHeight'    => new _UserPreference_int(22, 5, 80),
+                         'timeOffset'    => new _UserPreference_numeric(0, -26, 26),
+                         'relativeDates' => new _UserPreference_bool()
+                         );
 
 class WikiUser {
     var $_userid = false;
     var $_level  = false;
     var $_request, $_dbi, $_authdbi, $_homepage;
-    var $_authmethod;
+    var $_authmethod = '';
 
     /**
      * Constructor.
@@ -42,8 +46,6 @@ class WikiUser {
         if (isa($userid, 'WikiUser')) {
             $this->_userid   = $userid->_userid;
             $this->_level    = $userid->_level;
-            if (isset($userid->_authmethod))
-                $this->_authmethod = $userid->_authmethod;
         }
         else {
             $this->_userid = $userid;
@@ -109,7 +111,7 @@ class WikiUser {
     
     function AuthCheck ($postargs) {
         // Normalize args, and extract.
-        $keys = array('userid', 'password', 'require_level', 'login', 'logout', 'cancel');
+        $keys = array('userid', 'passwd', 'require_level', 'login', 'logout', 'cancel');
         foreach ($keys as $key) 
             $args[$key] = isset($postargs[$key]) ? $postargs[$key] : false;
         extract($args);
@@ -122,7 +124,7 @@ class WikiUser {
         elseif (!$login && !$userid)
             return false;       // Nothing to do?
 
-        $authlevel = $this->_pwcheck($userid, $password);
+        $authlevel = $this->_pwcheck($userid, $passwd);
         if (!$authlevel)
             return _("Invalid password or userid.");
         elseif ($authlevel < $require_level)
@@ -148,7 +150,7 @@ class WikiUser {
 	$login = new Template('login', $request,
                               compact('pagename', 'userid', 'require_level', 'fail_message', 'pass_required'));
 	if ($seperate_page) {
-	    $top = new Template('top', $request, array('TITLE' =>  _("Sign In")));
+	    $top = new Template('html', $request, array('TITLE' =>  _("Sign In")));
 	    return $top->printExpansion($login);
 	} else {
 	    return $login;
@@ -162,11 +164,21 @@ class WikiUser {
         global $WikiNameRegexp;
         
 	if (!empty($userid) && $userid == ADMIN_USER) {
+            // $this->_authmethod = 'pagedata';
             if (defined('ENCRYPTED_PASSWD') && ENCRYPTED_PASSWD)
                 if (!empty($passwd) && crypt($passwd, ADMIN_PASSWD) == ADMIN_PASSWD)
                     return WIKIAUTH_ADMIN;
-            if (!empty($passwd) && $passwd == ADMIN_PASSWD)
-                return WIKIAUTH_ADMIN;
+            if (!empty($passwd)) {
+                if ($passwd == ADMIN_PASSWD)
+                  return WIKIAUTH_ADMIN;
+                else {
+                    // maybe we forgot to enable ENCRYPTED_PASSWD?
+                    if (function_exists('crypt') and crypt($passwd, ADMIN_PASSWD) == ADMIN_PASSWD) {
+                        trigger_error(_("You forgot to set ENCRYPTED_PASSWD to true. Please update your /index.php"), E_USER_WARNING);
+                        return WIKIAUTH_ADMIN;
+                    }
+                }
+            }
             return false;
         }
 	// HTTP Authentification
@@ -182,6 +194,7 @@ class WikiUser {
 	    $request = $this->_request;
 	    // first check if the user is known
 	    if ($this->exists($userid)) {
+                $this->_authmethod = 'pagedata';
 		return ($this->checkPassword($passwd)) ? WIKIAUTH_USER : false;
 	    } else {
 		// else try others such as LDAP authentication:
@@ -198,6 +211,7 @@ class WikiUser {
 			    if ($r = @ldap_bind($ldap, $dn, $passwd)) {
 				// ldap_bind will return TRUE if everything matches
 				ldap_close($ldap);
+                                $this->_authmethod = 'LDAP';
 				return WIKIAUTH_USER;
 			    }
 			}
@@ -210,6 +224,7 @@ class WikiUser {
 		    $mbox = @imap_open( "{" . IMAP_AUTH_HOST . ":143}", $userid, $passwd, OP_HALFOPEN );
 		    if( $mbox ) {
 			imap_close( $mbox );
+                        $this->_authmethod = 'IMAP';
 			return WIKIAUTH_USER;
 		    }
 		}
@@ -217,6 +232,7 @@ class WikiUser {
 	}
         if (ALLOW_BOGO_LOGIN
                 && preg_match('/\A' . $WikiNameRegexp . '\z/', $userid)) {
+            $this->_authmethod = 'BOGO';
             return WIKIAUTH_BOGO;
         }
         return false;
@@ -376,15 +392,24 @@ class WikiUser {
     }
 
     function mayChangePassword() {
-        // on external DBAuth or imap or LDAP not
+        // on external DBAuth maybe. on IMAP or LDAP not
         // on internal DBAuth yes
-        if (USE_PREFS_IN_PAGE) { // in page metadata
+        if (in_array($this->_authmethod, array('IMAP', 'LDAP'))) 
+            return false;
+        if ($this->isAdmin()) 
+            return false;
+        if ($this->_authmethod == 'pagedata')
             return true;
-        }
-        return $GLOBALS['DBAuthParams']['auth_pass_write'] or $GLOBALS['DBAuthParams']['auth_update'];
+        if ($this->_authmethod == 'authdb')
+            return true;
     }
 }
 
+// create user and default user homepage
+function createUser ($userid, $pref) {
+    $user = new WikiUser ($userid);
+    $user->createUser($pref);
+}
 
 class _UserPreference 
 {
@@ -487,12 +512,27 @@ class UserPreferences {
     function set ($name, $value) {
         if (!($pref = $this->_getPref($name)))
             return false;
-        $this->_prefs[$name] = $pref->sanify($value);
 	// don't set default values to safe space (in cookies, db and sesssion)
 	if ($value == $pref->default_value)
 	    unset($this->_prefs[$name]);
-	else 
-	    $this->_prefs[$name];
+	else {
+            // update on changes
+            $newvalue = $pref->sanify($value);
+            if (!empty($this->_prefs[$name]) and $this->_prefs[$name] != $newvalue) {
+                global $LANG;
+                // check updates (theme, lang, ...)
+                switch ($name) {
+                case 'theme': 
+                    include_once("themes/$value/themeinfo.php"); 
+                    break;
+                case 'lang':
+                    $LANG = ($value == 'en') ? 'C' : $value;
+                    update_locale ($LANG);
+                    break;
+                }
+            }
+            $this->_prefs[$name] = $pref->sanify($value);
+        }
     }
 }
 

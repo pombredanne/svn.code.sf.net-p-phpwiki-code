@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.59 2002-08-22 23:28:31 rurban Exp $');
+rcs_id('$Id: config.php,v 1.60 2002-08-23 18:29:29 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -51,16 +51,11 @@ function FindLocalizedButtonFile ($file, $missing_okay = false)
     return $buttonfinder->findFile($file, $missing_okay);
 }
 
-
-// Setup localisation
-setlocale(LC_ALL, "$LANG");
-
 // I think this putenv is unnecessary, and it causes trouble
 // if PHP's safe_mode is enabled:
 //putenv("LC_ALL=$LANG");
 
-if (!function_exists ('bindtextdomain'))
-{
+if (!function_exists ('bindtextdomain')) {
     $locale = array();
 
     function gettext ($text) { 
@@ -73,20 +68,26 @@ if (!function_exists ('bindtextdomain'))
     function _ ($text) {
         return gettext($text);
     }
+}
 
+// Setup localisation
+function update_locale ($LANG) {
+    if ($LANG == 'en')
+        $LANG = 'C';
+    setlocale(LC_ALL, "$LANG");
             
-    if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) )
-        {
+    if (!function_exists ('bindtextdomain')) {
+        if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) ) {
             include($lcfile);
         }
-}
-else
-{
-    // Setup localisation
-    bindtextdomain ("phpwiki", FindFile("locale"));
-    textdomain ("phpwiki");
+    } else {
+        // Setup localisation
+        bindtextdomain ("phpwiki", FindFile("locale"));
+        textdomain ("phpwiki");
+    }
 }
 
+update_locale ($LANG);
 
 
 // To get the POSIX character classes in the PCRE's (e.g.
@@ -297,6 +298,8 @@ if (defined('ENCRYPTED_PASSWD') && !function_exists('crypt')) {
     trigger_error($error);
 }
 
+if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '')
+    trigger_error(_("The admin password cannot be empty. Please update your /index.php"));
 
 // For emacs users
 // Local Variables:

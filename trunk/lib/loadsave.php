@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.68 2002-08-22 23:28:31 rurban Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.69 2002-08-23 18:29:30 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -26,7 +26,7 @@ require_once("lib/Template.php");
 function StartLoadDump(&$request, $title, $html = '')
 {
     // FIXME: This is a hack
-    $tmpl = Template('top', array('TITLE' => $title,
+    $tmpl = Template('html', array('TITLE' => $title,
                                   'HEADER' => $title,
                                   'CONTENT' => '%BODY%'));
     echo ereg_replace('%BODY%.*', '', $tmpl->getExpansion($html));
@@ -280,7 +280,7 @@ function DumpHtmlToDir (&$request)
         }
 
         $num = fwrite($fd, $data, strlen($data));
-        $msg->pushContent(HTML::small(fmt("%s bytes written\n", $num)));
+        $msg->pushContent(HTML::small(fmt("%s bytes written", $num) . "\n"));
         PrintXML($msg);
 
         flush();
@@ -655,6 +655,7 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
         // FIXME: windows uses \ and :
         if (is_integer(strpos($file_or_dir, "/"))) {
             $file_or_dir = FindFile($file_or_dir);
+            // Panic
             if (!file_exists($file_or_dir))
                 $file_or_dir = dirname($file_or_dir) ."/".urlencode(basename($file_or_dir));
         } else {

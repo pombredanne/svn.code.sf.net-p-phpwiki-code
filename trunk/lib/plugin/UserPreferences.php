@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.3 2002-08-22 23:32:33 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.4 2002-08-23 18:29:30 rurban Exp $');
 /**
  * Plugin to allow any user to adjust his own preferences.
  * This must be used in the page "UserPreferences" or in a subpage of a
@@ -28,7 +28,7 @@ extends WikiPlugin
         }
         return array('userid'		=> $userid, // current or the one from the SubPage
                      'changePass'       => $user->mayChangePassword(),
-                     'changeTheme'     	=> true,
+                     'appearance'     	=> true,
                      'email'       	=> true,
                      'notifyPages'     	=> true,
                      'editAreaSize'     => true,
@@ -45,7 +45,7 @@ extends WikiPlugin
             foreach ($no_args as $key => $value) {
                 $no_args[$value] = false;
             }
-            $no_args['errmsg'] = _('Error: The page with the UserPreferences plugin must be valid WikiWord or a Preferences subpage of the users HomePage. Sorry, UserPreferences cannot be saved.');
+            $no_args['errmsg'] = _("Error: The page with the UserPreferences plugin must be valid WikiWord or a Preferences subpage of the users HomePage. Sorry, UserPreferences cannot be saved.");
             return Template('userprefs', $no_args);
         }
         if ($user->isAuthenticated() and $args['userid'] == $user->_userid) {
@@ -56,20 +56,36 @@ extends WikiPlugin
             	  $pref = new UserPreferences($request->getArg('pref'));
             	// Fixme: How to update the Theme? Correct update?
             	$request->_user->SetPreferences($pref);
-            	$args['errmsg'] = _('Preferences successfully updated.');
+            	$args['errmsg'] = _("Preferences successfully updated.");
             } 
-            $available_themes = array();
+            $available_themes = array(); 
             $dir_root = PHPWIKI_DIR . '/themes/'; 
             $dir = dir($dir_root);
             if ($dir) {
-                    while($entry = $dir->read()) {
-                        if (is_dir($dir_root.$entry) and (substr($entry,0,1) != '.')) {
-                            array_push($available_themes,$entry);
-                        }
+                while($entry = $dir->read()) {
+                    if (is_dir($dir_root.$entry) and (substr($entry,0,1) != '.') and 
+                        $entry!='CVS') {
+                        array_push($available_themes,$entry);
                     }
-                    $dir->close();
+                }
+                $dir->close();
             }
             $args['available_themes'] = $available_themes;
+
+            $available_languages = array('en');
+            $dir_root = PHPWIKI_DIR . '/locale/'; 
+            $dir = dir($dir_root);
+            if ($dir) {
+                while($entry = $dir->read()) {
+                    if (is_dir($dir_root.$entry) and (substr($entry,0,1) != '.') and 
+                        $entry != 'po' and $entry != 'CVS') {
+                        array_push($available_languages,$entry);
+                    }
+                }
+                $dir->close();
+            }
+            $args['available_languages'] = $available_languages;
+
             return Template('userprefs', $args);
         } else {
             return $user->PrintLoginForm (&$request, $args, false, false);

@@ -80,7 +80,7 @@ if (!empty($include_path)) ini_set('include_path', $include_path);
 
 define ('PHPWIKI_VERSION', '1.3.4');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.89 2002-08-22 23:28:31 rurban Exp $');
+rcs_id('$Id: index.php,v 1.90 2002-08-23 18:29:29 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -334,15 +334,26 @@ if (!defined('LDAP_AUTH_SEARCH')) define('LDAP_AUTH_SEARCH', "ou=mycompany.com,o
 if (!defined('ALLOW_IMAP_LOGIN')) define('ALLOW_IMAP_LOGIN', true and function_exists('imap_open'));
 if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost');
 
-// Sample of external mysql tables to check against
+// Sample of external AuthDB mysql tables to check against
 /*
-// password only
- CREATE TABLE user (
+use phpwiki;
+CREATE TABLE pref (
+  userid char(48) binary NOT NULL UNIQUE,
+  preferences text NULL default '',
+  PRIMARY KEY (userid)
+) TYPE=MyISAM;
+INSERT INTO user VALUES ('ReiniUrban', 'a:1:{s:6:"passwd";s:13:"7cyrcMAh0grMI";}');
+
+// or password only
+CREATE TABLE user (
   userid char(48) binary NOT NULL UNIQUE,
   passwd char(48) binary default '*',
   PRIMARY KEY (userid)
- ) TYPE=MyISAM;
+) TYPE=MyISAM;
 
+*/
+// external mysql member table
+/*
  CREATE TABLE member (
    user  char(48) NOT NULL,
    group char(48) NOT NULL default 'users',
@@ -360,23 +371,31 @@ if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost');
 // We default to store them as metadata in WikiPages.
 // The most likely option is the same dsn as the wikipages.
 $DBAuthParams = array(
-   'auth_dsn'         => 'mysql://localhost/phpwiki',
-
-   'auth_check'  => 'SELECT passwd FROM user WHERE username="$userid"',
-   // all members of the group
-   'group_check' => 'SELECT username FROM grouptable WHERE groupname="$group"',
-   // all groups this user belongs to
-   'group_check' => 'SELECT groupname FROM grouptable WHERE username="$userid"',
-
+   //'auth_dsn'         => 'mysql://localhost/phpwiki',
    //'auth_user_file'  => '/etc/shadow', // '/etc/httpd/.htpasswd'
    //'auth_group_file' => '/etc/groups', // '/etc/httpd/.htgroup'
 
-   'auth_pass_crypt'  => 'crypt',     // 'crypt' (unix) or 'md5' (mysql) or just 'plain'
-   // 'auth_pass_crypt'  => 'md5',    // for 'mysql://localhost/mysql' users
-   // 'auth_pass_crypt'  => 'plain',
+   // USER => PASSWORD
+   'auth_check'  => 'SELECT passwd FROM user WHERE username="$userid"',
 
-   // 'auth_pass_write' = true,
-   'auth_update'  => 'UPDATE user SET passwd="$crypt_passwd" WHERE username="$userid"'
+   'auth_crypt_method'  => 'crypt',     // 'crypt' (unix) or 'md5' (mysql) or just 'plain'
+   // 'auth_crypt_method'  => 'md5',    // for 'mysql://localhost/mysql' users
+   // 'auth_crypt_method'  => 'plain',
+   'auth_update'  => 'UPDATE user SET passwd="$crypt_passwd" WHERE username="$userid"',
+   //'auth_update'  => 'UPDATE user SET passwd="$md5_passwd" WHERE username="$userid"',
+   //'auth_update'  => 'UPDATE user SET passwd="$plain_passwd" WHERE username="$userid"',
+
+   // USER => PREFERENCES
+   //'pref_select' => 'SELECT pref from user WHERE username="$userid"',
+   //'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE username="$userid"',
+
+   // USERS <=> GROUPS
+   // all members of the group
+   'group_members' => 'SELECT username FROM grouptable WHERE groupname="$group"',
+   // all groups this user belongs to
+   'user_groups' => 'SELECT groupname FROM grouptable WHERE username="$userid"',
+
+   'dummy' => false,
 );
 
 /////////////////////////////////////////////////////////////////////

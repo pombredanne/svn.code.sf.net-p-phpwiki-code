@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.27 2002-08-20 22:29:59 rurban Exp $
+# $Id: Makefile,v 1.28 2002-08-23 18:29:30 rurban Exp $
 #
 # locale/Makefile
 #
@@ -125,10 +125,12 @@ ${POT_FILE}: ../lib/pear/DB/mysql.php
 ${POT_FILE}: ../lib/pear/DB/pgsql.php
 ${POT_FILE}: ../lib/pear/PEAR.php
 ${POT_FILE}: ../lib/plugin/AllPages.php
+${POT_FILE}: ../lib/plugin/AllUsers.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
 ${POT_FILE}: ../lib/plugin/CacheTest.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
 ${POT_FILE}: ../lib/plugin/ExternalSearch.php
+${POT_FILE}: ../lib/plugin/FrameInclude.php
 ${POT_FILE}: ../lib/plugin/FullTextSearch.php
 ${POT_FILE}: ../lib/plugin/FuzzyPages.php
 ${POT_FILE}: ../lib/plugin/HelloWorld.php
@@ -175,9 +177,14 @@ ${POT_FILE}: ../themes/SpaceWiki/lib/RecentChanges.php
 ${POT_FILE}: ../themes/SpaceWiki/themeinfo.php
 ${POT_FILE}: ../themes/default/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/default/templates/body.tmpl
+${POT_FILE}: ../themes/default/templates/bottom.tmpl
 ${POT_FILE}: ../themes/default/templates/browse.tmpl
+${POT_FILE}: ../themes/default/templates/content.tmpl
 ${POT_FILE}: ../themes/default/templates/debug.tmpl
 ${POT_FILE}: ../themes/default/templates/editpage.tmpl
+${POT_FILE}: ../themes/default/templates/head.tmpl
+${POT_FILE}: ../themes/default/templates/homepage.tmpl
+${POT_FILE}: ../themes/default/templates/html.tmpl
 ${POT_FILE}: ../themes/default/templates/info.tmpl
 ${POT_FILE}: ../themes/default/templates/login.tmpl
 ${POT_FILE}: ../themes/default/templates/navbar.tmpl
@@ -185,7 +192,6 @@ ${POT_FILE}: ../themes/default/templates/nochanges.tmpl
 ${POT_FILE}: ../themes/default/templates/savepage.tmpl
 ${POT_FILE}: ../themes/default/templates/signin.tmpl
 ${POT_FILE}: ../themes/default/templates/top-htmldump.tmpl
-${POT_FILE}: ../themes/default/templates/top.tmpl
 ${POT_FILE}: ../themes/default/templates/userprefs.tmpl
 ${POT_FILE}: ../themes/default/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/default/themeinfo.php

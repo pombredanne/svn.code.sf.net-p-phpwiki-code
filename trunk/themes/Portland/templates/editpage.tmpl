@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.17 2002-02-19 01:32:38 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.18 2002-08-23 18:29:33 rurban Exp $ -->
 <?php
 
 $WidthI = HTML::input(array('type' => 'text',
@@ -57,7 +57,7 @@ $s = $Theme->getButtonSeparator();
 </table>
 <a name="editarea" id="editarea"><?=$EDIT_TEXTAREA?></a>
 <br />
-<?=_("Summary:")?> <?= $SUMMARY_INPUT ?>
+<?=_("Summary")?>: <?= $SUMMARY_INPUT ?>
 <br />
 <?= fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
 <br />
@@ -66,7 +66,7 @@ $s = $Theme->getButtonSeparator();
         WikiLink(_("RecentEdits"))) ?>
 <br />
 <p>
-  <?=_("Edit Area Size:")?> <b><?=_("H")?></b>
+  <?=_("Edit Area Size")?>: <b><?=_("H")?></b>
   <?=$HeightI?>
   <b><?=_("W")?></b>
   <?=$WidthI?>
