@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.180 2004-10-04 23:39:34 rurban Exp $');
+rcs_id('$Id: main.php,v 1.181 2004-10-07 16:08:58 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -51,23 +51,26 @@ $this->version = phpwiki_version();
                 //$user = $this->getSessionVar('wiki_user');
                 // revive db handle, because these don't survive sessions
                 if (isset($this->_user) and 
-                     ( ! isa($this->_user,WikiUserClassname())
+                     ( ! isa($this->_user, WikiUserClassname())
                        or (strtolower(get_class($this->_user)) == '_passuser')))
                 {
-                    $this->_user = WikiUser($userid,$this->_user->_prefs);
+                    $this->_user = WikiUser($userid, $this->_user->_prefs);
                 }
 	        // revive other db handle
 	        if (isset($this->_user->_prefs->_method) and 
 	                 ($this->_user->_prefs->_method == 'SQL' or 
 	                 $this->_user->_prefs->_method == 'ADODB'))
 	            $this->_user->_HomePagehandle = $this->getPage($userid);
-	        // update the lockfile filehandle
+	        // need to update the lockfile filehandle
 	        if (  isa($this->_user,'_FilePassUser') and 
 	              $this->_user->_file->lockfile and 
 	              !$this->_user->_file->fplock  )
 	        {
-		    $this->_user = new _FilePassUser($userid, $this->_user->_prefs, $this->_user->_file->filename);
-	        }
+	            //$level = $this->_user->_level;
+	            $this->_user = UpgradeUser($this->_user, 
+	                                       new _FilePassUser($userid, $this->_user->_prefs, $this->_user->_file->filename));
+                    //$this->_user->_level = $level;
+                }
             	$this->_prefs = & $this->_user->_prefs;
             } else {
                 $user = WikiUser($userid);
@@ -1109,6 +1112,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.180  2004/10/04 23:39:34  rurban
+// just aesthetics
+//
 // Revision 1.179  2004/09/25 18:57:42  rurban
 // better ACL error message: view not browse, change not setacl, ...
 //
