@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.37 2004-10-14 19:23:58 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.38 2004-10-19 17:34:55 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -248,7 +248,8 @@ class ErrorManager
             echo "<html><body><div style=\"font-weight:bold; color:red\">Fatal Error:</div>\n";
             if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
                 echo "error_reporting=",error_reporting(),"\n<br>";
-                $error->printSimpleTrace(debug_backtrace());
+                if (function_exists("debug_backtrace")) // >= 4.3.0
+                    $error->printSimpleTrace(debug_backtrace());
             }
             $this->_die($error);
         }
@@ -271,7 +272,8 @@ class ErrorManager
                 //echo "postponed errors: ";
                 if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
                     echo "error_reporting=",error_reporting(),"\n";
-                    $error->printSimpleTrace(debug_backtrace());
+                    if (function_exists("debug_backtrace")) // >= 4.3.0
+                        $error->printSimpleTrace(debug_backtrace());
                 }
                 $error->printXML();
             }
@@ -595,6 +597,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2004/10/14 19:23:58  rurban
+// remove debugging prints
+//
 // Revision 1.36  2004/10/12 15:35:43  rurban
 // avoid Php Notice header
 //
