@@ -1,3 +1,9 @@
+PhpWiki 1.1.9 includes Spanish language pages, a full implementation for
+Postgresql, numerous bug fixes and more. See the HISTORY file for more
+info: http://phpwiki.sourceforge.net/phpwiki/HISTORY
+
+----
+
 PhpWiki 1.1.6 is a major revision of PhpWiki. The ability to have themes (via an
 easy-to-edit template system) has been added; the schema for MySQL has been
 completely overhauled, breaking the page details into columns (for efficiency we
