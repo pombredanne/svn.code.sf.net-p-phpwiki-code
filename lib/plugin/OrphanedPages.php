@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OrphanedPages.php,v 1.2 2002-02-15 17:52:46 carstenklapp Exp $');
+rcs_id('$Id: OrphanedPages.php,v 1.3 2002-02-26 10:44:30 lakka Exp $');
 
 /*This file is part of PhpWiki.
 
@@ -69,12 +69,14 @@ extends WikiPlugin
 
         while ($page = $allpages_iter->next())
         {
-            $links_iter = $page->getLinks();
-            // test for absence of backlinks
-            if (!$links_iter->next())
-                $pagelist->addPage($page);
-        }
-
+		    $links_iter = $page->getLinks();
+			// test for absence of backlinks.  If a page is linked to only by itself, it is
+			// still an orphan
+			$parent = $links_iter->next();
+			if (!$parent ||   			  //page has no parents
+					(($parent->getName() == $page->getName()) && !$links_iter->next())) // page has itself only as a parent
+			    $pagelist->addPage($page);
+		}            
         return $pagelist;
         
     }
