@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.34 2003-03-07 02:41:44 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.35 2003-11-06 19:39:55 carstenklapp Exp $');
 // FIXME: write log entry.
 
 
@@ -490,6 +490,10 @@ class Request_UploadedFile {
 
     function getType() {
         return $this->_info['type'];
+    }
+
+    function getTmpName() {
+        return $this->_info['tmp_name'];
     }
 
     function open() {
