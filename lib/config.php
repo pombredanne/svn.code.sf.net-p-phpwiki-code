@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.50 2002-01-01 06:20:46 carstenklapp Exp $');
+rcs_id('$Id: config.php,v 1.51 2002-01-17 20:44:04 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -281,7 +281,7 @@ if (!defined('ACCESS_LOG'))
 if (empty($HTTP_SERVER_VARS['REMOTE_HOST']) && ENABLE_REVERSE_DNS)
      $HTTP_SERVER_VARS['REMOTE_HOST'] = gethostbyaddr($HTTP_SERVER_VARS['REMOTE_ADDR']);
 
-
+     
 // For emacs users
 // Local Variables:
 // mode: php
@@ -290,6 +290,4 @@ if (empty($HTTP_SERVER_VARS['REMOTE_HOST']) && ENABLE_REVERSE_DNS)
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
-
 ?>
