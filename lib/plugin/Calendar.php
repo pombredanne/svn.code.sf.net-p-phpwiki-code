@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.19 2002-02-08 22:38:21 dairiki Exp $');
+rcs_id('$Id: Calendar.php,v 1.20 2002-02-10 05:08:11 carstenklapp Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -84,6 +84,7 @@ extends WikiPlugin
 
         $fs = $this->args['wday_format'];
         $row = HTML::tr();
+        $row->setattr('class', 'cal-dayname');
         for ($i = 0; $i < 7; $i++) {
             $row->pushContent(HTML::td(array('class' => 'cal-dayname',
                                              'align' => 'center'),
