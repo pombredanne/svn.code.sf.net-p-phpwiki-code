@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.77 2004-11-15 15:52:35 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.78 2004-11-16 17:57:45 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -152,27 +152,25 @@ function undo_enable(bool) {
      if(sr_undo.blur) sr_undo.blur();
   }
 }
-
 function replace() {
    replacewin = window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,height=90,width=450');
    replacewin.window.document.write('<html><head><title>"
 ._("Search & Replace")
-."</title><style type=\"text/css\"><'+'!'+'-- body, input {font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:10pt;font-weight:bold;} td {font-size:9pt}  --'+'></style></head><body bgcolor=\"#dddddd\" onload=\"if(document.forms[0].ein.focus) document.forms[0].ein.focus()\"><form><center><table><tr><td align=\"right\">'+'"
+."</title><style type=\"text/css\"><'+'!'+'-- body, input {font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:10pt;font-weight:bold;} td {font-size:9pt}  --'+'></style></head><body bgcolor=\"#dddddd\" onload=\"if(document.forms[0].ein.focus) document.forms[0].ein.focus(); return false;\"><form><center><table><tr><td align=\"right\">'+'"
 ._("Search")
 .":</td><td align=\"left\"><input type=\"text\" name=\"ein\" size=\"45\" maxlength=\"500\"></td></tr><tr><td align=\"right\">'+' "
 ._("Replace with")
 .":</td><td align=\"left\"><input type=\"text\" name=\"aus\" size=\"45\" maxlength=\"500\"></td></tr><tr><td colspan=\"2\" align=\"center\"><input type=\"button\" value=\" "
 ._("OK")
-." \" onclick=\"if(self.opener)self.opener.do_replace()\">&nbsp;&nbsp;&nbsp;<input type=\"button\" value=\""
+." \" onclick=\"if(self.opener)self.opener.do_replace(); return false;\">&nbsp;&nbsp;&nbsp;<input type=\"button\" value=\""
 ._("Close")
-."\" onclick=\"self.close()\"></td></tr></table></center></form></body></html>');
+."\" onclick=\"self.close(); return false;\"></td></tr></table></center></form></body></html>');
    replacewin.window.document.close();
    return false;
 }
-
 function do_replace() {
    var txt=undo_buffer[undo_buffer_index]=f.editarea.value, ein=new RegExp(replacewin.document.forms[0].ein.value,'g'), aus=replacewin.document.forms[0].aus.value;
-   if(ein==''||ein==null) {
+   if (ein==''||ein==null) {
       if (replacewin) replacewin.window.document.forms[0].ein.focus();
       return;
    }
@@ -182,12 +180,13 @@ function do_replace() {
    result(z_repl, 'Substring \"'+ein+'\" found '+z_repl+' times. Replace with \"'+aus+'\"?', txt, 'String \"'+ein+'\" not found.');
    replacewin.window.focus();
    replacewin.window.document.forms[0].ein.focus();
+   return false;
 }
 function result(zahl,frage,txt,alert_txt) {
-   if(zahl>0) {
+   if (zahl>0) {
       if(window.confirm(frage)==true) {
          f.editarea.value=txt;
-         undo_buffer_index++;
+         undo_save();
          undo_enable(true);
       }
    } else alert(alert_txt);
@@ -199,13 +198,15 @@ function do_undo() {
       undo_buffer[undo_buffer_index]=null;
       undo_buffer_index--;
       if(undo_buffer_index==0) {
-         alert('Operation undone.');
+         alert('".
+_("Operation undone")
+."');
          undo_enable(false);
       }
    }
 }
 //save a snapshot in the undo buffer (unused)
-function speich() {
+function undo_save() {
    undo_buffer[undo_buffer_index]=f.editarea.value;
    undo_buffer_index++;
    undo_enable(true);
@@ -294,28 +295,28 @@ function speich() {
             // Ideally these should be different, realistically they
             // probably don't need to be.
             $tip = addslashes( $tool["tip"] );
-            $toolbar.="addButton('$image','$tip','$open','$close','$sample');\n";
+            $toolbar.="addTagButton('$image','$tip','$open','$close','$sample');\n";
         }
         $toolbar.="addInfobox('" . addslashes( _("Click a button to get an example text") ) . "');\n";
 
-        if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
+        if (JS_SEARCHREPLACE) {
             $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.gif"); 
             //$redo_btn = $WikiTheme->getImageURL("ed_redo.gif");
             $sr_btn   = $WikiTheme->getImageURL("ed_replace.gif");
-            $sr_html = HTML(HTML::input(array('type' =>"image",
-                                              'class'=>"toolbar",
-                                              'id'   =>"sr_undo",
-                                              'src'  =>$undo_d_btn,
-                                              'title'=>_("Undo Search & Replace"),
-                                              'disabled'=>"disabled", 
-                                              'value'   =>"Undo",
-                                              'onfocus' =>"if(this.blur && undo_buffer_index==0) this.blur()",
-                                              'onclick' =>"do_undo()")),
-                            HTML::input(array('type' =>"image",
-                                              'class'=>"toolbar",
-                                              'src'  => $sr_btn,
-                                              'title'=>_("Search & Replace"),
-                                              'onclick'=>"replace()")));
+            $sr_html = HTML(HTML::img(array('class'=>"toolbar",
+                                            'id'   =>"sr_undo",
+                                            'src'  =>$undo_d_btn,
+                                            'title'=>_("Undo Search & Replace"),
+                                            'alt'  =>_("Undo Search & Replace"),
+                                            'disabled'=>"disabled", 
+                                            'value'   =>"Undo",
+                                            'onfocus' =>"if(this.blur && undo_buffer_index==0) this.blur()",
+                                            'onclick' =>"do_undo()")),
+                            HTML::img(array('class'=>"toolbar",
+                                            'src'  => $sr_btn,
+                                            'alt'  =>_("Search & Replace"),
+                                            'title'=>_("Search & Replace"),
+                                            'onclick'=>"replace()")));
         } else {
             $sr_html = '';
         }
@@ -323,11 +324,31 @@ function speich() {
         // Button to generate pagenames, display in extra window as pulldown and insert
         // Button to generate plugins, display in extra window as pulldown and insert
         // Button to generate categories, display in extra window as pulldown and insert
+        if (DEBUG and JS_SEARCHREPLACE) {
+            //TODO: delegate this calculation to a seperate pulldown action request
+            require_once('lib/TextSearchQuery.php');
+            $dbi =& $GLOBALS['request']->_dbi;
+            $pages = $dbi->titleSearch(new TextSearchQuery(''._("Category").' OR '._("Topic").''));
+            if ($pages->count()) {
+                $categories = array();
+                while ($p = $pages->next()){
+                    $categories[] = $p->getName();
+                }
+                $more_buttons = HTML::img(array('class'=>"toolbar",
+                                                'src'  => $WikiTheme->getImageURL("ed_category.gif"),
+                                                'title'=>_("Categories"),
+                                                'onclick'=>"showPulldown('".
+                                                _("Categories")
+                                                ."',['".join("','",$categories)."'])"));
+                if ($sr_html) $sr_html = HTML($sr_html, $more_buttons);
+                else $sr_html = $more_buttons;
+            }
+        }
         $toolbar_end = "document.writeln(\"</div>\");";
         // don't use document.write for replace, otherwise self.opener is not defined.
         if ($sr_html)
             return HTML(Javascript($toolbar),
-                        $sr_html,
+                        "\n",$sr_html,
                         Javascript($toolbar_end));
         else
             return HTML(Javascript($toolbar . $toolbar_end));
@@ -782,6 +803,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.77  2004/11/15 15:52:35  rurban
+ improve js stability
+
  Revision 1.76  2004/11/15 15:37:34  rurban
  fix JS_SEARCHREPLACE
    don't use document.write for replace, otherwise self.opener is not defined.
