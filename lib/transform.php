@@ -1,4 +1,4 @@
-<!-- $Id: transform.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
+<!-- $Id: transform.php,v 1.2 2000-10-11 14:08:56 ahollosi Exp $ -->
 <?php
    // expects $pagehash and $html to be set
 
@@ -200,10 +200,14 @@ your web server it is highly advised that you do not allow this.
       }
 
       // HTML modes: pre, unordered/ordered lists, term/def
-      if (preg_match("/(^\t)(.*?)(:\t)(.*$)/", $tmpline, $matches)) {
+      if (preg_match("/(^\t+)(.*?)(:\t)(.*$)/", $tmpline, $matches)) {
          // this is a dictionary list item
-         $html .= SetHTMLOutputMode("dl", SINGLE_DEPTH, 1);
-         $tmpline = "<dt>" . $matches[2] . "<dd>" . $matches[4];
+         $numtabs = strlen($matches[1]);
+         $html .= SetHTMLOutputMode("dl", SINGLE_DEPTH, $numtabs);
+	 $tmpline = '';
+	 if(trim($matches[2]))
+            $tmpline = "<dt>" . $matches[2];
+	 $tmpline .= "<dd>" . $matches[4];
 
       // oops, the \d needed to be \d+, thanks alister@minotaur.nu
       } elseif (preg_match("/(^\t+)(\*|\d+|#)/", $tmpline, $matches)) {
