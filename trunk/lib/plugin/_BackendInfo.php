@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.4 2001-12-19 12:07:30 carstenklapp Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.5 2002-01-05 13:02:26 carstenklapp Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -15,17 +15,17 @@ extends WikiPlugin
     }
     
     function WikiPlugin__BackendInfo() {
-        $this->_hashtemplate = new Template('
-<tr bgcolor="#ffcccc">
-  <td colspan="2">${header}</td>
-</tr>
-<?php foreach ($hash as $key => $val) { ?>
-  <tr>
-    <td align="right" bgcolor="#cccccc">&nbsp;<?php echo $key;?>&nbsp;</td>
-    <td><?php echo $val;?></td>
-  </tr>
-<?php } ?>
-');
+        $html .= '<tr bgcolor="#ffcccc">'."\n";
+        $html .= '  <td colspan="2">${header}</td>'."\n";
+        $html .= '</tr>'."\n";
+        $html .= '<?php foreach ($hash as $key => $val) { ?>'."\n";
+        $html .= '  <tr>'."\n";
+        $html .= '    <td align="right" bgcolor="#cccccc">&nbsp;<?php echo $key;?>&nbsp;</td>'."\n";
+        $html .= '    <td><?php echo $val;?></td>'."\n";
+        $html .= '  </tr>'."\n";
+        $html .= '<?php } ?>'."\n";
+        $this->_hashtemplate = new Template($html);
+
     }
     
     function getDefaultArguments() {
