@@ -30,7 +30,7 @@
          $retval .= " (last edited " . $pagehash["date"] . ")\n";
       }
       $retval .= "<br>\n" .
-		 "<a href=\"$ScriptUrl?FindPage&value=$enc_name\">" .
+		 "<a href=\"$ScriptUrl?FindPage\">" .
 		 "FindPage</a> by browsing or searching\n";
       return $retval;
    }
@@ -329,7 +329,11 @@
             return LinkExistingWikiWord($linkname);
          } elseif (preg_match("#^($AllowedProtocols):#", $linkname)) {
             return LinkURL($linkname);
-         } else {
+         } elseif ($linkname == 'Search') {
+	    return RenderQuickSearch();
+	 } elseif ($linkname == 'Fullsearch') {
+	    return RenderFullSearch();
+	 } else {
             return LinkUnknownWikiWord($linkname);
          }
       }
