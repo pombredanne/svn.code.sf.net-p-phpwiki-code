@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.33 2004-04-12 13:04:50 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.34 2004-04-18 01:11:52 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -565,7 +565,7 @@ function MimeifyPageRevision ($revision) {
     if ($page->get('hits'))
         $params['hits'] = $page->get('hits');
 
-    $params['charset'] = CHARSET;
+    $params['charset'] = $GLOBALS['charset'];
 
     // Non-US-ASCII is not allowed in Mime headers (at least not without
     // special handling) --- so we urlencode all parameter values.
@@ -786,6 +786,12 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2004/04/12 13:04:50  rurban
+// added auth_create: self-registering Db users
+// fixed IMAP auth
+// removed rating recommendations
+// ziplib reformatting
+//
 
 // Local Variables:
 // mode: php

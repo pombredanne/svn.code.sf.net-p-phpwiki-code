@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.41 2004-04-15 21:39:46 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.42 2004-04-18 01:11:51 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -380,8 +380,8 @@ class WikiDB {
      * @return boolean     true or false
      */
     function renamePage($from, $to, $updateWikiLinks = false) {
-        assert(is_string($from) && $from);
-        assert(is_string($to) && $to);
+        assert(is_string($from) && $from != '');
+        assert(is_string($to) && $to != '');
         $result = false;
         if (method_exists($this->_backend,'rename_page')) {
             $oldpage = $this->getPage($from);
@@ -515,7 +515,7 @@ class WikiDB_Page
     function WikiDB_Page(&$wikidb, $pagename) {
         $this->_wikidb = &$wikidb;
         $this->_pagename = $pagename;
-        assert(is_string($this->_pagename) and $this->_pagename != '');
+        assert(is_string($pagename) and $pagename != '');
     }
 
     /**
@@ -1524,7 +1524,7 @@ class WikiDB_PageRevisionIterator
         $pagename = $next['pagename'];
         $version = $next['version'];
         $versiondata = $next['versiondata'];
-        assert(!empty($pagename));
+        assert(is_string($pagename) and $pagename != '');
         assert(is_array($versiondata));
         assert($version > 0);
 
@@ -1590,7 +1590,7 @@ class WikiDB_cache
     }
     
     function update_pagedata($pagename, $newdata) {
-        assert(is_string($pagename) && $pagename);
+        assert(is_string($pagename) && $pagename != '');
 
         $this->_backend->update_pagedata($pagename, $newdata);
 
@@ -1622,7 +1622,7 @@ class WikiDB_cache
     function get_versiondata($pagename, $version, $need_content = false) {
         //  FIXME: Seriously ugly hackage
 	if (defined ('USECACHE')){   //temporary - for debugging
-            assert(is_string($pagename) && $pagename);
+            assert(is_string($pagename) && $pagename != '');
             // there is a bug here somewhere which results in an assertion failure at line 105
             // of ArchiveCleaner.php  It goes away if we use the next line.
             $need_content = true;
@@ -1690,6 +1690,8 @@ class WikiDB_cache
     }
 
 };
+
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php

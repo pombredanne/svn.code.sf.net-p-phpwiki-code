@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.5 2002-11-19 19:08:14 dairiki Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.6 2004-04-18 01:11:51 rurban Exp $');
 /**
  * A text search query.
  *
@@ -32,6 +32,8 @@
  * quotes.  If you wan't to include the quote character within a quoted string,
  * double-up on the quote character: 'I''m hungry' is equivalent to
  * "I'm hungry".
+ *
+ * @author: Jeff Dairiki
  */
 class TextSearchQuery {
     /**
@@ -41,7 +43,7 @@ class TextSearchQuery {
      * Note that an empty $search_query will match anything.
      * @see TextSearchQuery
      */
-    function TextSearchQuery($search_query) {
+    function TextSearchQuery($search_query, $case_exact=false, $regex=false) {
         $parser = new TextSearchQuery_Parser;
         $this->_tree = $parser->parse($search_query);
         $this->_optimize();
@@ -102,6 +104,8 @@ class TextSearchQuery {
      * returns an SQL clause which will match exactly those records
      * containing the word.  The word passed to the callback will always
      * be in all lower case.
+     *
+     * TODO: support db-specific extensions, like MATCH or REGEX
      *
      * Example usage:
      * <pre>

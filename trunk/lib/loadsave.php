@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.94 2004-03-14 16:36:37 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.95 2004-04-18 01:11:52 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -501,7 +501,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $f = str_replace(sprintf(_("Serialized file %s"), ''), '', $f);
         $f = str_replace(sprintf(_("plain file %s"), ''), '', $f);
         //check if uploaded file? they pass just the content, but the file is gone
-        if (stat($f)) {
+        if (@stat($f)) {
             global $Theme;
             $meb = Button(array('action' => 'loadfile',
                                 'merge'=> true,
@@ -515,8 +515,10 @@ function SavePage (&$request, $pageinfo, $source, $filename)
                           _("Restore Anyway"),
                           _("PhpWikiAdministration"),
                           'wikiunsafe');
+            $mesg->pushContent(' ', $meb, " ", $owb);
+        } else {
+            $mesg->pushContent(HTML::em(_(" Sorry, cannot merge uploaded files.")));
         }
-        $mesg->pushContent(' ', $meb, " ", $owb);
     }
 
     if ($skip)
@@ -879,6 +881,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.94  2004/03/14 16:36:37  rurban
+ dont load backup files
+
  Revision 1.93  2004/02/26 03:22:05  rurban
  also copy css and images with XHTML Dump
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssParser.php,v 1.3 2004-04-12 17:32:19 rurban Exp $');
+rcs_id('$Id: RssParser.php,v 1.4 2004-04-18 01:11:51 rurban Exp $');
 /**
  * RSSParser Class, requires the expat extension
  * Based on Duncan Gough RSSParser class
@@ -26,6 +26,8 @@ rcs_id('$Id: RssParser.php,v 1.3 2004-04-12 17:32:19 rurban Exp $');
 /**
  * 2004-04-09 16:30:50 rurban: 
  *   added fsockopen allow_url_fopen = Off workaround
+ * 2004-04-12 20:04:12 rurban: 
+ *   fixes for IMAGE element (sf.net)
  */
 class RSSParser {
 
@@ -156,6 +158,8 @@ class RSSParser {
         xml_parser_free($xml_parser);
     }
 }
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.96 2004-04-12 10:08:34 rurban Exp $');
+rcs_id('$Id: config.php,v 1.97 2004-04-18 01:11:52 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -35,7 +35,11 @@ set_magic_quotes_runtime(0);
 // chars in iso-8859-*
 // $FieldSeparator = "\263"; //this is a superscript 3 in ISO-8859-1.
 // $FieldSeparator = "\xFF"; // this byte should never appear in utf-8
-if (strtolower(CHARSET) == 'utf-8')
+// FIXME: get rid of constant. pref is dynamic and language specific
+$charset = CHARSET;
+if (isset($GLOBALS['LANG']) and in_array($GLOBALS['LANG'],array('ja','zh')))
+    $charset = 'utf-8';
+if (strtolower($charset) == 'utf-8')
     $FieldSeparator = "\xFF";
 else
     $FieldSeparator = "\x81";
@@ -144,7 +148,8 @@ function guessing_setlocale ($category, $locale) {
                  'fr' => array('fr_FR', 'français', 'french'),
                  'it' => array('it_IT'),
                  'sv' => array('sv_SE'),
-                 'ja' => array('ja_JP','ja_JP.eucJP','japanese.euc')
+                 'ja' => array('ja_JP','ja_JP.eucJP','japanese.euc'),
+                 //'zh' => array('zh_TW', 'zh_CN')
                  );
     if (strlen($locale) == 2)
         $lang = $locale;
@@ -157,7 +162,7 @@ function guessing_setlocale ($category, $locale) {
         if ($res = setlocale($category, $try))
             return $res;
         // Try with charset appended...
-        $try = $try . '.' . CHARSET;
+        $try = $try . '.' . $GLOBALS['charset'];
         if ($res = setlocale($category, $try))
             return $res;
         foreach (array('@', ".", '_') as $sep) {
@@ -227,7 +232,7 @@ function update_locale($loc) {
     // FIXME: Not all environments may support en_US?  We should probably
     // have a list of locales to try.
     if (setlocale(LC_CTYPE, 0) == 'C') {
-        $x = setlocale(LC_CTYPE, 'en_US.' . CHARSET );
+        $x = setlocale(LC_CTYPE, 'en_US.' . $GLOBALS['charset']);
     } else {
         $x = setlocale(LC_CTYPE, $newlocale);
     }
@@ -303,6 +308,7 @@ else {
 * So for now, this will do.  --Jeff <dairiki@dairiki.org> 14 Mar, 2001
 */
 function pcre_fix_posix_classes ($regexp) {
+    global $charset;
     // First check to see if our PCRE lib supports POSIX character
     // classes.  If it does, there's nothing to do.
     if (preg_match('/[[:upper:]]/', 'Ä'))
@@ -314,7 +320,25 @@ function pcre_fix_posix_classes ($regexp) {
                             'upper' => "A-Z\xc0-\xd6\xd8-\xde",
                             'lower' => "a-z\xdf-\xf6\xf8-\xff"
                             );
-
+    if (!isset($charset))
+        $charset = CHARSET; // FIXME: get rid of constant. pref is dynamic and language specific
+    if (in_array($GLOBALS['LANG'],array('ja','zh')))
+        $charset = 'utf-8';
+    if (strtolower($charset) == 'utf-8') { // thanks to John McPherson
+        // until posix class names/pcre work with utf-8
+        // utf-8 non-ascii chars: most common (eg western) latin chars are 0xc380-0xc3bf
+        // we currently ignore other less common non-ascii characters
+        // (eg central/east european) latin chars are 0xc432-0xcdbf and 0xc580-0xc5be
+        // and indian/cyrillic/asian languages
+        
+        // this replaces [[:lower:]] with utf-8 match (Latin only)
+        $regexp = preg_replace('/\[\[\:lower\:\]\]/','(?:[a-z]|\xc3[\x9f-\xbf]|\xc4[\x81\x83\x85\x87])',
+                               $regexp);
+        // this replaces [[:upper:]] with utf-8 match (Latin only)
+        $regexp = preg_replace('/\[\[\:upper\:\]\]/','(?:[A-Z]|\xc3[\x80-\x9e]|\xc4[\x80\x82\x84\x86])',
+                               $regexp);
+    }
+   
     $keys = join('|', array_keys($classes));
 
     return preg_replace("/\[:($keys):]/e", '$classes["\1"]', $regexp);
@@ -509,6 +533,8 @@ if (ALLOW_USER_LOGIN and !empty($DBAuthParams) and empty($DBAuthParams['auth_dsn
     if (isset($DBParams['dsn']))
         $DBAuthParams['auth_dsn'] = $DBParams['dsn'];
 }
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.11 2004-02-24 15:20:07 rurban Exp $');
+rcs_id('$Id: WikiForm.php,v 1.12 2004-04-18 01:11:52 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -34,7 +34,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -51,7 +51,7 @@ extends WikiPlugin
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => 'post',
                                  'class'  => 'wikiadmin',
-                                 'accept-charset' => CHARSET),
+                                 'accept-charset' => $GLOBALS['charset']),
                            HiddenInputs(array('action' => $action,
                                               'pagename' => $basepage)));
         $input = array('type' => 'text',
@@ -120,6 +120,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/02/24 15:20:07  rurban
+// fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
+//
 // Revision 1.10  2004/02/22 23:20:33  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.85 2004-04-12 13:04:50 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.86 2004-04-18 01:11:51 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -910,7 +910,7 @@ class Theme {
         // the user which is the default (i.e. most supported) style.
         $link = HTML::link(array('rel'     => $is_alt ? 'alternate stylesheet' : 'stylesheet',
                                  'type'    => 'text/css',
-                                 'charset' => CHARSET,
+                                 'charset' => $GLOBALS['charset'],
                                  'href'    => $this->_findData($css_file)));
         if ($is_alt)
             $link->setAttr('title', $title);
@@ -1258,6 +1258,12 @@ class RelatedExternalLinksBox extends SidebarBox {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.85  2004/04/12 13:04:50  rurban
+// added auth_create: self-registering Db users
+// fixed IMAP auth
+// removed rating recommendations
+// ziplib reformatting
+//
 // Revision 1.84  2004/04/10 02:30:49  rurban
 // Fixed gettext problem with VIRTUAL_PATH scripts (Windows only probably)
 // Fixed "cannot setlocale..." (sf.net problem)

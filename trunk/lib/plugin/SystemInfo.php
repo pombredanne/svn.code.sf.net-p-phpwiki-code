@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.12 2004-03-14 16:26:21 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.13 2004-04-18 01:11:52 rurban Exp $');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -29,7 +29,7 @@ rcs_id('$Id: SystemInfo.php,v 1.12 2004-03-14 16:26:21 rurban Exp $');
  *
  * Provide access to phpwiki's lower level system information.
  *
- *   version, CHARSET, pagestats, SERVER_NAME, database, discspace,
+ *   version, charset, pagestats, SERVER_NAME, database, discspace,
  *   cachestats, userstats, linkstats, accessstats, hitstats,
  *   revisionstats, interwikilinks, imageextensions, wikiwordregexp,
  *   availableplugins, downloadurl, ...
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -519,6 +519,9 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/03/14 16:26:21  rurban
+// copyright line
+//
 // Revision 1.11  2004/03/13 19:24:21  rurban
 // fixed supported_languages() and supported_themes()
 //

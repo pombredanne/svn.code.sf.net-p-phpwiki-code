@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GoTo.php,v 1.2 2004-04-12 16:21:01 rurban Exp $');
+rcs_id('$Id: GoTo.php,v 1.3 2004-04-18 01:11:52 rurban Exp $');
 
 /**
  *  Display a form with text entry box and 'Go' button.
@@ -23,7 +23,7 @@ extends WikiPlugin
     }
     
     function getDefaultArguments() {
-        return array();
+        return array('size' => 32);
     }
 
     function run($dbi, $argstr, $request, $basepage) {
@@ -52,9 +52,9 @@ extends WikiPlugin
  
         $form->pushContent(HiddenInputs($request->getArgs()));
 
-        $textfield = HTML::input(array('type'=>'text',
-                                       'size'=>32,
-                                       'name'=>'goto[target]'));
+        $textfield = HTML::input(array('type' => 'text',
+                                       'size' => $size,
+                                       'name' => 'goto[target]'));
 
         $button = Button('submit:goto[go]', _("Go"), false);
 
@@ -66,6 +66,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/04/12 16:21:01  rurban
+// fix lib/plugin/RssFeed.php:81: Notice[8]: Undefined variable: th
+//
         
 // Local Variables:
 // mode: php
