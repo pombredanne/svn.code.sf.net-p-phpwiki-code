@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RawHtml.php,v 1.10 2004-07-05 13:09:37 rurban Exp $');
+rcs_id('$Id: RawHtml.php,v 1.11 2004-07-05 13:12:58 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -59,7 +59,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function managesValidators() {
@@ -183,7 +183,11 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
         // setup -- $allowedtags is an array of $tag=>$closeit pairs, where $tag is an HTML tag to allow and $closeit is 1 if the tag requires a matching, closing tag
         if ($allowedtags=="") {
-            $allowedtags= array ( "p"=>1, "br"=>0, "a"=>1, "img"=>0, "li"=>1, "ol"=>1, "ul"=>1, "b"=>1, "i"=>1, "em"=>1, "strong"=>1, "del"=>1, "ins"=>1, "u"=>1, "blockquote"=>1, "pre"=>1, "hr"=>0);
+            $allowedtags= array ( "p"=>1, "br"=>0, "a"=>1, "img"=>0, "li"=>1, 
+                "ol"=>1, "ul"=>1, "b"=>1, "i"=>1, "em"=>1, "strong"=>1, "del"=>1, "ins"=>1, 
+                "u"=>1, "blockquote"=>1, "pre"=>1, "hr"=>0,
+                "table"=>1, "tr"=>1, "td"=>1,
+                );
         }
         elseif (!is_array($allowedtags)) {
             $array= array( "$allowedtags" );
@@ -224,6 +228,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/07/05 13:09:37  rurban
+// ENABLE_RAW_HTML_LOCKEDONLY, ENABLE_RAW_HTML_SAFE
+//
 // Revision 1.9  2004/07/05 13:04:47  rurban
 // new RawHtml policies: ENABLE_RAW_HTML_LOCKEDONLY, ENABLE_RAW_HTML_SAFE
 //
