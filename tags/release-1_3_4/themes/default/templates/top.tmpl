@@ -1,0 +1,24 @@
+<?php // -*-html-*- ?>
+<!-- $Id: top.tmpl,v 1.20 2002-12-15 01:30:47 carstenklapp Exp $ -->
+<div id="navbar" class="toolbar">
+<?php
+global $HIDE_TOOLBARS;
+if (!$HIDE_TOOLBARS) {
+?>
+<!-- The top navigation/search bar -->
+<?= Template('navbar') ?>
+<?php } ?>
+<!-- The logo -->
+<div align="right" id="logo"><a class="wikilink" 
+                  href="<?=WikiURL(HOME_PAGE)?>" target="_top"
+                  ><img src="<?=$Theme->getImageURL('logo')?>"
+                        border="0" alt="<?=fmt(_("%s: %s"), WIKI_NAME, HOME_PAGE) ?>"
+                        align="right" /></a></div>
+
+<!-- Page title -->
+<h1><?= $HEADER ?></h1>
+</div>
+<?php if ($request->getArg('frame')) { ?>
+<!-- The included frame url for safety -->
+<p class="transclusion-title"><?fmt("Included frame from %s",$framesrc)?></p>
+<?php } ?>

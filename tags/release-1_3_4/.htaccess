@@ -1,0 +1,19 @@
+# $Id: .htaccess,v 1.4 2002-08-20 11:34:09 rurban Exp $
+
+<IfModule mod_php4.c>
+
+# For added security (and PhpWiki debugging purposes) you may want to 
+# uncomment the following lines.  (On the other hand, depending on
+# how your server and how it is configured, these lines might
+# cause "Internal Server Errors".)
+
+#  php_flag register_globals off
+#  php_flag track_vars on
+#  php_flag allow_url_fopen off
+
+</IfModule>
+
+# Try various wiki versions, like wiki, wikide, wikisidebar, ...
+# <FilesMatch "wiki*">
+#   SetHandler application/x-httpd-php
+# </FilesMatch>
