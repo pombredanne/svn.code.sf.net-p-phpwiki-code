@@ -1,3 +1,16 @@
+1.1.8 
+* MostPopular works for all implementations, except flat files
+* Flat file database support; it's not yet complete but the basic Wiki
+  functionality is there, thanks to Ari
+* New zip file format for page dumps follows standard email format
+* Removed tabs from all default pages
+* Added whitespace padding to pages after they are serialized and
+  written to the DBM file; this goes a long way towards fixing the
+  memory leak problems for DBM-based Wikis.
+* Numerous bug fixes, as always
+* Some refactoring of the database interface
+* 
+
 1.1.7 07/15/00: A lot was added since the 1.1.6b release. Diffs are
     the handiwork of Jeff Dairiki, though Arno wrote the second
     revision. Features and changes include:
