@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.73 2002-09-09 13:41:30 rurban Exp $');
+rcs_id('$Id: main.php,v 1.74 2002-09-09 15:26:12 rurban Exp $');
 
 define ('DEBUG', 1);
 define ('USE_PREFS_IN_PAGE', true);
@@ -10,10 +10,21 @@ require_once('lib/Request.php');
 require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
 
+if (defined('USE_DB_SESSION') and $DBParams['dbtype']=='SQL' and $DBParams['db_session_table']) {
+    require_once('lib/DB_Session.php');
+} else {
+    define('USE_DB_SESSION','false');
+}
+
 class WikiRequest extends Request {
 
     function WikiRequest () {
         $this->Request();
+        if (USE_DB_SESSION) {
+            $dbi = $this->getDbh();
+            new DB_Session($GLOBALS['DBParams']['db_session_table']);
+        }
+        $this->session = new Request_SessionVars;
 
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
