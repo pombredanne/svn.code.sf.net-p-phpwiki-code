@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.43 2005-02-04 11:44:07 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.44 2005-02-07 15:40:42 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -517,12 +517,13 @@ function CheckDatabaseUpdate(&$request) {
     // "select * from page where LOWER(pagename) like '%search%'" does not apply LOWER!
     // Confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a; not yet tested for 4.1.2alpha,
     // On windows only, though utf8 would be useful elsewhere also.
+    // Illegal mix of collations (latin1_bin,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '='])
     if (isWindows() and substr($backend_type,0,5) == 'mysql') {
   	echo _("check for mysql 4.1.x/5.0.0 binary search on windows problem")," ...";
         $mysql_version = $dbh->_backend->_serverinfo['version'];
         if ($mysql_version < 401.0) { 
             echo sprintf(_("version <em>%s</em> not affected"), $mysql_version),"<br />\n";
-        } elseif ($mysql_version >= 401.6)  {
+        } elseif ($mysql_version >= 401.6) { // FIXME: since which version?
             $row = $backend->getRow("SHOW CREATE TABLE $page_tbl");
             $result = join(" ", $row);
             if (strstr(strtolower($result), "character set") 
@@ -530,8 +531,11 @@ function CheckDatabaseUpdate(&$request) {
             {
                 echo _("OK"), "<br />\n";
             } else {
+                //SET CHARACTER SET latin1
+                //$dbh->genericSqlQuery("ALTER DATABASE ".$dbh->_backend->database()." DEFAULT CHARACTER SET ".CHARSET." COLLATE ".CHARSET."_bin");
                 $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename "
-                                     ."pagename VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL");
+                                      ."pagename VARCHAR(100) CHARACTER SET ".CHARSET." COLLATE ".CHARSET."_bin NOT NULL");
+                                      //."pagename VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL");
                 echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";
             }
         } else {
@@ -545,7 +549,7 @@ function CheckDatabaseUpdate(&$request) {
                 if (mysql_field_name($fields, $i) == 'pagename') {
             	    $flags = mysql_field_flags($fields, $i);
                     // I think it was fixed with 4.1.6, but I tested it only with 4.1.8
-                    if ($mysql_version > 401.0 and $mysql_version < 401.6) { 
+                    if ($mysql_version > 401.0 and $mysql_version < 401.6) {
                     	// remove the binary flag
             	        if (strstr(strtolower($flags), "binary")) {
             	            // FIXME: on duplicate pagenames this will fail!
@@ -847,6 +851,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.43  2005/02/04 11:44:07  rurban
+ check passwd in access_log
+
  Revision 1.42  2005/02/02 19:38:13  rurban
  prefer utf8 pagenames for collate issues
 
