@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.40 2004-03-25 22:54:31 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.41 2004-03-27 13:39:58 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -946,7 +946,7 @@ extends _AnonUser
         // PersonalPage if there is one.
         if ($this->_HomePagehandle) {
             if ($restored_from_page = $this->_prefs->retrieve($this->_HomePagehandle->get('pref'))) {
-                $updated = $this->_prefs->updatePrefs($restored_from_page);
+                $updated = $this->_prefs->updatePrefs($restored_from_page,'init');
                 //$this->_prefs = new UserPreferences($restored_from_page);
                 return $this->_prefs;
             }
@@ -2259,6 +2259,20 @@ extends _UserPreference
         }
     }
 
+    // stores the value as $this->$name, and not as $this->value (clever?)
+    function set ($name, $value) {
+    	$new = $this->get($name);
+	if ($new and $name = 'email' and $new != $value) {
+	    // don't update on init	
+	    $this->update($value);
+	}
+	if ($value != $this->default_value) {
+	    $this->{$name} = $value;
+        }
+        else 
+            unset($this->{$name});
+    }
+    
     /** Side-effect on email changes:
      * Send a verification mail or for now just a notification email.
      * For true verification (value = 2), we'd need a mailserver hook.
@@ -2429,19 +2443,31 @@ class UserPreferences
         return true;
     }
 
-    function updatePrefs($prefs) {
+    function updatePrefs($prefs, $init = false) {
         $count = 0;
+        if ($init) $this->_init = $init;
         if (is_object($prefs)) {
-            foreach ($this->_prefs as $type => $obj) {
-                if ($obj->get($type) !== $prefs->get($type)) {
+            $type = 'emailVerified'; $obj =& $this->_prefs['email'];
+            if ($obj->get($type) !== $prefs->get($type)) {
+                $obj->set($type,$prefs->get($type));
+                $count++;
+            }
+            foreach (array_keys($this->_prefs) as $type) {
+                if ($this->_prefs[$type]->get($type) !== $prefs->get($type)) {
                     $this->_prefs[$type]->set($type,$prefs->get($type));
                     $count++;
                 }
             }
         } elseif (is_array($prefs)) {
-            foreach ($this->_prefs as $type => $obj) {
+            $type = 'emailVerified'; $obj =& $this->_prefs['email'];
+            if (isset($prefs[$type]) and $obj->get($type) !== $prefs[$type]) {
+                $obj->set($type,$prefs[$type]);
+                $count++;
+            }
+            foreach (array_keys($this->_prefs) as $type) {
+            	$obj =& $this->_prefs[$type];
                 if (isset($prefs[$type]) and $obj->get($type) != $prefs[$type]) {
-                    $this->_prefs[$type]->set($type,$prefs[$type]);
+                    $obj->set($type,$prefs[$type]);
                     $count++;
                 }
             }
@@ -2605,6 +2631,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2004/03/25 22:54:31  rurban
+// fixed HttpAuth
+//
 // Revision 1.38  2004/03/25 17:37:36  rurban
 // helper to patch to and from php5 (workaround for stricter parser, no macros in php)
 //
