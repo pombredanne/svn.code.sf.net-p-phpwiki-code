@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.8 2002-01-07 04:19:05 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.9 2002-01-12 06:29:10 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -97,9 +97,12 @@ class WikiPlugin
                 $args[$arg] = $val;
             }
             else {
-                // FIXME: doesn't work for multiple args
+                // NOTE: This does work for multiple args. Use the
+                // separator character defined in your webserver
+                // configuration, usually & or &amp; (See
+                // http://www.htmlhelp.com/faq/cgifaq.4.html)
                 // e.g. <plugin RecentChanges days||=1 show_all||=0 show_minor||=0>
-                //      url: RecentChanges?days=1+show_all=1+show_minor=0
+                // url: RecentChanges?days=1&show_all=1&show_minor=0
                 assert($op == '||=');
                 $defaults[$arg] = $val;
             }
