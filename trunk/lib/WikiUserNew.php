@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.39 2004-03-25 22:33:38 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.40 2004-03-25 22:54:31 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1215,10 +1215,10 @@ class _HttpAuthPassUser
 extends _PassUser
 {
     function _HttpAuthPassUser($UserName='',$prefs=false) {
-        if (!$this->_prefs) {
-            if ($prefs) $this->_prefs = $prefs;
-            else _PassUser::_PassUser($UserName);
-        }
+        if ($prefs) $this->_prefs = $prefs;
+        if (!isset($this->_prefs->_method))
+           _PassUser::_PassUser($UserName);
+        if ($UserName) $this->_userid = $UserName;
         $this->_authmethod = 'HttpAuth';
         if ($this->userExists())
             return $this;
@@ -1226,16 +1226,28 @@ extends _PassUser
             return $GLOBALS['ForbiddenUser'];
     }
 
+    function _http_username() {
+	if (!empty($_SERVER['PHP_AUTH_USER']))
+	    return $_SERVER['PHP_AUTH_USER'];
+	if ($GLOBALS['HTTP_SERVER_VARS']['PHP_AUTH_USER'])
+	    return $GLOBALS['HTTP_SERVER_VARS']['PHP_AUTH_USER'];
+	if ($GLOBALS['REMOTE_USER'])
+	    return $GLOBALS['REMOTE_USER'];
+	if ($_ENV['REMOTE_USER'])
+	    return $_ENV['REMOTE_USER'];
+	return '';
+    }
+    
     //force http auth authorization
     function userExists() {
         // todo: older php's
-        if (empty($_SERVER['PHP_AUTH_USER']) or 
-            $_SERVER['PHP_AUTH_USER'] != $this->_userid) {
+        $username = $this->_http_username();
+        if (empty($username) or $username != $this->_userid) {
             header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
             header('HTTP/1.0 401 Unauthorized'); 
             exit;
         }
-        $this->_userid = $_SERVER['PHP_AUTH_USER'];
+        $this->_userid = $username;
         $this->_level = WIKIAUTH_USER;
         return $this;
     }
