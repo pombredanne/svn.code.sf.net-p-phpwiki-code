@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.3 2000-06-14 03:28:01 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.4 2000-06-18 03:59:20 wainstead Exp $ -->
 <?
 
    /*
@@ -15,23 +15,13 @@
       FullSearchNextMatch($dbi, &$pos)
    */
 
-/////////////////
-// remove after testing
-///////////////
-   $pg_database = "wiki";
-   $pg_dbhost   = "localhost";
-   $pg_dbport   = "5432";
-/////////////////
-// remove after testing
-///////////////
-
 
    // open a database and return a hash
 
    function OpenDataBase($table) {
-      global $pg_database, $pg_dbhost, $pg_dbport;
+      global $WikiDataBase, $pg_dbhost, $pg_dbport;
 
-      $connectstring = "host=$pg_dbhost port=$pg_dbport dbname=$pg_database";
+      $connectstring = "host=$pg_dbhost port=$pg_dbport dbname=$WikiDataBase";
 
       if (!($dbc = pg_pconnect($connectstring))) {
          echo "Cannot establish connection to database, giving up.";
