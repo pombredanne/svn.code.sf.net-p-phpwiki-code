@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: userauth.php,v 1.7 2001-07-20 17:40:12 dairiki Exp $');
+<?php rcs_id('$Id: userauth.php,v 1.8 2001-08-09 16:21:44 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -100,11 +100,13 @@ class WikiUser
       $prefs = array('edit_area.width' => 80,
 		     'edit_area.height' => 22);
 
-      $prefcookie = unserialize(fix_magic_quotes_gpc($GLOBALS['WIKI_PREFS']));
-
-      while (list($k, $v) = each($prefs))
-	 if (!empty($prefcookie[$k]))
-	    $prefs[$k] = $prefcookie[$k];
+      global $HTTP_COOKIE_VARS;
+      if (is_string($HTTP_COOKIE_VARS['WIKI_PREFS'])) {
+	 $prefcookie = unserialize(fix_magic_quotes_gpc($HTTP_COOKIE_VARS['WIKI_PREFS']));
+	 while (list($k, $v) = each($prefs))
+	    if (!empty($prefcookie[$k]))
+	       $prefs[$k] = $prefcookie[$k];
+      }
 
       // Some sanity checks. (FIXME: should move somewhere else)
       if (!($prefs['edit_area.width'] >= 30 && $prefs['edit_area.width'] <= 150))
