@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.2 2004-03-02 16:43:04 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.3 2004-03-02 18:11:37 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -49,21 +49,62 @@ extends WikiPlugin
                       'headers'   => "!!!,!!,!",   // "!!!" => h1, "!!" => h2, "!" => h3
                       'noheader'  => 0,            // omit <h1>Table of Contents</h1>
                       'align'     => 'left',
+                      'with_toclink' => 0,         // link back to TOC
                       // not yet
                       'jshide'    => 0,            // collapsed TOC as DHTML button 
                       );
     }
 
+    function preg_quote ($heading) {
+        return str_replace(array("/",".","?","*"),
+    		           array('\/','\.','\?','\*'), $heading);
+    }
+    
+    function searchHeader ($content, $start_index, $heading, $level) {
+    	$count = substr_count($level,'!');
+    	switch ($count) {
+    		case 1: $h = "h4"; break;
+    		case 2: $h = "h3"; break;
+    		case 3: $h = "h2"; break;
+    	}
+    	for ($j=$start_index; $j<count($content); $j++) {
+            if (is_string($content[$j])) {
+    		$heading = preg_quote($heading);
+    		if (preg_match("/<$h>$heading<\/$h>/",$content[$j]))
+    		    return $j;
+    	    }
+    	}
+    	trigger_error("Heading <$h> $heading </$h> not found\n", E_USER_NOTICE);
+    	return 0;
+    }
+    
     // Feature request: proper nesting
-    function extractHeaders (&$content, $level=2) {
+    function extractHeaders (&$content, &$markup, $backlink=0, $level=2) {
         $headers = array();
         if ($level < 1 or $level > 6) $level = 1;
+        $j = 0;
         for ($i=0; $i<count($content); $i++) {
             if (preg_match('/^\s*(!{'.$level.',3})([^!].+)$/',$content[$i],$match)) {
             	if (!strstr($content[$i],'#[')) {
             	    $s = trim($match[2]);
                     $headers[] = $s;
-                    $content[$i] = $match[1]." #[|$s][$s|#$s]";
+                    $anchor = MangleXmlIdentifier($s);
+                    // change original wikitext, but that is useless art...
+                    $content[$i] = $match[1]." #[|$anchor][$s|#TOC]";
+                    // and now change the to be printed markup (XmlTree):
+                    // search <hn>$s</hn> line in markup
+                    $j = $this->searchHeader($markup->_content, $j, $s, $match[1]);
+                    if (  $j and isset($markup->_content[$j]) and 
+                           is_string($markup->_content[$j])  ) {
+                        $x = $markup->_content[$j];
+	    		$heading = preg_quote($s);
+                    	if ($x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
+                    	                      "\$1<a name=\"$anchor\">\$2</a>\$3",$x)) {
+			    if ($backlink)
+			        $x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',"\$1<a ref=\"#TOC\" name=\"$anchor\">\$2</a>\$3",$markup->_content[$j]);
+                    	    $markup->_content[$j] = $x;
+                    	}
+                    }
             	}
             }
         }
@@ -85,11 +126,11 @@ extends WikiPlugin
         $content = $current->getContent();
         $html = HTML::div(array('class' => 'toc','align' => $align));
         if (!$noheader)
-            $html->pushContent(HTML::h1(_("Table Of Contents")));
+            $html->pushContent(HTML::h1(HTML::a(array('name'=>'TOC'),_("Table Of Contents"))));
         $list = HTML::ul(array('class' => 'toc'));
         //Todo: replace !!! with level 1, ...
         //Todo: proper indent of heading
-        if ($headers = $this->extractHeaders(&$content, 1)) {
+        if ($headers = $this->extractHeaders(&$content, &$dbi->_markup, $with_toclink, 1)) {
             foreach ($headers as $h) {
                 $link = new WikiPageName($pagename,$page,$h);
                 $list->pushContent(HTML::li(WikiLink($link,'known',$h)));

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.9 2004-02-27 02:22:21 rurban Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.10 2004-03-02 18:11:39 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -186,7 +186,7 @@ class CacheableMarkup extends XmlContent {
                 $xml .= $item;
             }
             elseif (is_subclass_of($item, 'cached_dynamiccontent')) {
-                $val = $item->expand($basepage);
+                $val = $item->expand($basepage, &$this);
                 $xml .= $val->asXML();
             }
             else {
@@ -198,13 +198,16 @@ class CacheableMarkup extends XmlContent {
 
     function printXML () {
         $basepage = $this->_basepage;
-
-	foreach ($this->_content as $item) {
+        // _content might be changed from a plugin (CreateToc)
+	for ($i=0; $i < count($this->_content); $i++) {
+	    $item = $this->_content[$i];
             if (is_string($item)) {
                 print $item;
             }
             elseif (is_subclass_of($item, 'cached_dynamiccontent')) {
-                $val = $item->expand($basepage);
+            	// give the content the chance to know about itself or even 
+            	// to change itself itself
+                $val = $item->expand($basepage, &$this);
                 $val->printXML();
             }
             else {
@@ -226,7 +229,7 @@ class Cached_DynamicContent {
 	$cache[] = $this;
     }
 
-    function expand($basepage) {
+    function expand($basepage, $obj) {
         trigger_error("Pure virtual", E_USER_ERROR);
     }
 
@@ -296,7 +299,7 @@ class Cached_WikiLink extends Cached_Link {
 	return WikiURL($this->getPagename($basepage), false, 'abs_url');
     }
 
-    function expand($basepage) {
+    function expand($basepage, &$markup) {
 	$label = isset($this->_label) ? $this->_label : false;
 	$anchor = isset($this->_anchor) ? (string)$this->_anchor : '';
         $page = new WikiPageName($this->_page, $basepage, $anchor);
@@ -316,7 +319,7 @@ class Cached_WikiLinkIfKnown extends Cached_WikiLink
 	$this->_page = $moniker;
     }
 
-    function expand($basepage) {
+    function expand($basepage, &$markup) {
         return WikiLink($this->_page, 'if_known');
     }
 }    
@@ -333,7 +336,7 @@ class Cached_PhpwikiURL extends Cached_DynamicContent
 	return true;
     }
 
-    function expand($basepage) {
+    function expand($basepage, &$markup) {
         $label = isset($this->_label) ? $this->_label : false;
         return LinkPhpwikiURL($this->_url, $label, $basepage);
     }
@@ -362,7 +365,7 @@ class Cached_ExternalLink extends Cached_Link {
 	return ($label and is_string($label)) ? $label : $this->_url;
     }
 
-    function expand($basepage) {
+    function expand($basepage, &$markup) {
 	$label = isset($this->_label) ? $this->_label : false;
 	return LinkURL($this->_url, $label);
     }
@@ -388,11 +391,11 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
     }
     
     function _getURL($basepage) {
-	$link = $this->expand($basepage);
+	$link = $this->expand($basepage, &$this);
 	return $link->getAttr('href');
     }
 
-    function expand($basepage) {
+    function expand($basepage, &$markup) {
         //include_once('lib/interwiki.php');
 	$intermap = PageType_interwikimap::GetMap($GLOBALS['request']);
 	$label = isset($this->_label) ? $this->_label : false;
@@ -423,11 +426,11 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 	return false;
     }
 
-    function expand($basepage) {
+    function expand($basepage, &$markup) {
         $loader = &$this->_getLoader();
 
         $xml = HTML::div(array('class' => 'plugin'),
-			 $loader->expandPI($this->_pi, $GLOBALS['request'], $basepage));
+			 $loader->expandPI($this->_pi, $GLOBALS['request'], &$markup, $basepage));
         
 	if (isset($this->_tightenable)) {
 	    $xml->setInClass('tightenable');
