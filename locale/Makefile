@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.4 2001-12-17 23:03:42 carstenklapp Exp $
+# $Id: Makefile,v 1.5 2001-12-19 05:05:14 dairiki Exp $
 #
 # locale/Makefile
 #
@@ -22,7 +22,7 @@ po 	: ${PO_FILES}
 mo	: ${MO_FILES} ${PHP_FILES}
 
 po/phpwiki.pot : ${PHP_SRC}
-	xgettext -L C++ -k_ -o $@ $^
+	xgettext -L C++ -k_ -k__printf -k__sprintf -k__vsprintf -o $@ $^
 
 po/%.po : po/phpwiki.pot
 	test -f $@ || touch $@

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.60 2001-12-16 18:33:25 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.61 2001-12-19 05:05:14 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -597,6 +597,105 @@ function CTime ($time = false)
         $time = time();
     return date("D M j H:i:s Y", $time);
 }
+
+
+
+/**
+ * Internationalized printf.
+ *
+ * This is essentially the same as PHP's built-in printf
+ * with the following exceptions:
+ * <ol>
+ * <li> It passes the format string through gettext().
+ * <li> It supports the argument reordering extensions.
+ * </ol>
+ *
+ * Example:
+ *
+ * In php code, use:
+ * <pre>
+ *    __printf("Differences between versions %s and %s of %s",
+ *             $new_link, $old_link, $page_link);
+ * </pre>
+ *
+ * Then in locale/po/de.po, one can reorder the printf arguments:
+ *
+ * <pre>
+ *    msgid "Differences between %s and %s of %s."
+ *    msgstr "Der Unterschiedsergebnis von %3$s, zwischen %1$s und %2$s."
+ * </pre>
+ *
+ * (Note that while PHP tries to expand $vars within double-quotes,
+ * the values in msgstr undergo no such expansion, so the '$'s okay...)
+ *
+ * One shouldn't use reordered arguments in the default format string.
+ * Backslashes in the default string would be necessary to escape the '$'s,
+ * and they'll cause all kinds of trouble....
+ */ 
+function __printf ($fmt) {
+    $args = func_get_args();
+    array_shift($args);
+    echo __vsprintf($fmt, $args);
+}
+
+/**
+ * Internationalized sprintf.
+ *
+ * This is essentially the same as PHP's built-in printf
+ * with the following exceptions:
+ * <ol>
+ * <li> It passes the format string through gettext().
+ * <li> It supports the argument reordering extensions.
+ * </ol>
+ *
+ * @see __printf
+ */ 
+function __sprintf ($fmt) {
+    $args = func_get_args();
+    array_shift($args);
+    return __vsprintf($fmt, $args);
+}
+  
+/**
+ * Internationalized vsprintf.
+ *
+ * This is essentially the same as PHP's built-in printf
+ * with the following exceptions:
+ * <ol>
+ * <li> It passes the format string through gettext().
+ * <li> It supports the argument reordering extensions.
+ * </ol>
+ *
+ * @see __printf
+ */ 
+function __vsprintf ($fmt, $args) {
+    $fmt = gettext($fmt);
+    // PHP's sprintf doesn't support variable with specifiers,
+    // like sprintf("%*s", 10, "x"); --- so we won't either.
+    
+    if (preg_match_all('/(?<!%)%(\d+)\$/x', $fmt, $m)) {
+        // Format string has '%2$s' style argument reordering.
+        // PHP doesn't support this.
+        if (preg_match('/(?<!%)%[- ]?\d*[^- \d$]/x', $fmt))
+            trigger_error("Can't mix '%1\$s' with '%s' type format strings", E_USER_WARNING);
+    
+        $fmt = preg_replace('/(?<!%)%\d+\$/x', '%', $fmt);
+        $newargs = array();
+    
+        // Reorder arguments appropriately.
+        foreach($m[1] as $argnum) {
+            if ($argnum < 1 || $argnum > count($args))
+                trigger_error("$argnum: argument index out of range", E_USER_WARNING);
+            $newargs[] = $args[$argnum - 1];
+        }
+        $args = $newargs;
+    }
+
+    // Not all PHP's have vsprintf, so...
+    array_unshift($args, $fmt);
+    return call_user_func_array('sprintf', $args);
+}
+
 
 // (c-file-style: "gnu")
 // Local Variables:
