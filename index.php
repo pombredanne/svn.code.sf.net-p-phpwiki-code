@@ -80,7 +80,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.78 2002-02-01 18:11:21 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.79 2002-02-08 15:12:08 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -407,7 +407,7 @@ $GenericPages = array("ReleaseNotes", "SteveWainstead", "TestPage");
 $AllowedProtocols = "http|https|mailto|ftp|news|nntp|ssh|gopher";
 
 // URLs ending with the following extension should be inlined as images
-$InlineImages = "png|jpg|gif|tiff|tif";
+$InlineImages = "png|jpg|gif";
 
 // Perl regexp for WikiNames ("bumpy words")
 // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
