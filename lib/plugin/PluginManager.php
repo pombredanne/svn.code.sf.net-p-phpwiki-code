@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.11 2003-12-10 01:01:24 carstenklapp Exp $');
+rcs_id('$Id: PluginManager.php,v 1.12 2004-01-04 18:14:49 wainstead Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -32,12 +32,12 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return _("Provides a list of plugins on this wiki.");
+        return _("Description: Provides a list of plugins on this wiki.");
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -257,6 +257,17 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2003/12/10 01:01:24  carstenklapp
+// New features: Also show plugin pages for localized variants.
+// Gracefully handle broken plugins in the plugins folder (such as other
+// lingering php files).
+//
+// Bugfix: Cleaned up Php warnings related to oddities of UserPreference
+// plugin (whose default value contains an array).
+//
+// Internal changes: Gave GoodVariableNames to the nightmarish
+// ones. Simplified some code with WikiLink 'if_known'.
+//
 // Revision 1.10  2003/11/30 18:23:48  carstenklapp
 // Code housekeeping: PEAR coding standards reformatting only.
 //
