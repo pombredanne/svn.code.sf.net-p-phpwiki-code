@@ -2,14 +2,14 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $');
+   rcs_id('$Id: config.php,v 1.2 2000-10-08 18:12:14 wainstead Exp $');
 
    /*
       Constants and settings. Edit the values below for
       your site. You need two image files, a banner and 
       a signature. The dbm file MUST be writable by the
       web server or this won't work. If you configure your
-      server to allow index.php3 as an index file, you 
+      server to allow index.php as an index file, you 
       can just give the URL without the script name.
    */
 
@@ -127,7 +127,7 @@
    define('WIKI_PGSRC', './pgsrc'); // Default (old) behavior.
    //define('WIKI_PGSRC', './wiki.zip'); // New style.
   
-   $ScriptName = "index.php3";
+   $ScriptName = "index.php";
 
 
    // Template files (filenames are relative to script position)

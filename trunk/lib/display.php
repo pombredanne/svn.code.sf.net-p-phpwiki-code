@@ -1,7 +1,7 @@
-<!-- $Id: display.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
+<!-- $Id: display.php,v 1.2 2000-10-08 18:12:14 wainstead Exp $ -->
 <?php
    /*
-      display.php3: render a page. This has all the display 
+      display.php: render a page. This has all the display 
       logic in it, except for the search boxes.
    */
  

@@ -30,7 +30,7 @@ For more information on mySQL go to http://www.mysql.org/
    error. In that case remove existing tables manually and delete
    the "drop tables" lines from schemas/schema.mysql - it should work now
 
-4. Edit wiki_config.php3 to reflect your settings.
+4. Edit lib/config.php to reflect your settings.
 
 	a) comment out the DBM settings
 	b) uncomment the mySQL settings
@@ -48,4 +48,4 @@ the necessary access rights for the phpwiki tables.
 /Arno
 ahollosi@iname.com
 
-$Id: INSTALL.mysql,v 1.4 2000-09-21 19:44:31 ahollosi Exp $
+$Id: INSTALL.mysql,v 1.5 2000-10-08 18:12:13 wainstead Exp $

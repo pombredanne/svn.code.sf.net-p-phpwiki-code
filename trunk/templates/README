@@ -1,4 +1,4 @@
-$Id: README,v 1.1 2000-06-18 16:05:34 ahollosi Exp $
+$Id: README,v 1.2 2000-10-08 18:12:14 wainstead Exp $
 
 PhpWiki distinguishes between four different templates:
 
@@ -18,8 +18,8 @@ PhpWiki distinguishes between four different templates:
   displaying error messages.
 
   
-The location of the template files is defined in wiki_config.php3
-The specification is relative to the index.php3 script.
+The location of the template files is defined in lib/config.php
+The specification is relative to the index.php script.
 
 Template files are regular HTML files, which contain special
 placeholders. Placeholders are surrounded by '###'.
@@ -72,7 +72,7 @@ The following placeholders are not available for the 'MESSAGE' template:
 Only for EditLinks:
 ###1###, ###2###, ....
 	Placeholder for references. Up to NUM_LINKS placeholders will be
-	substituted. NUM_LINKS is defined in wiki_config.php3
+	substituted. NUM_LINKS is defined in lib/config.php
 
 
 
