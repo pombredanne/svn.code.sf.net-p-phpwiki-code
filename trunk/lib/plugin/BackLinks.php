@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.23 2004-02-22 23:20:33 rurban Exp $');
+rcs_id('$Id: BackLinks.php,v 1.24 2004-04-18 05:42:17 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
     
     function getDefaultArguments() {
@@ -55,7 +55,7 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $this->_args = $this->getArgs($argstr, $request);
         extract($this->_args);
-        if (!$page)
+        if (empty($page) and $page != '0')
             return '';
         
         $exclude = $exclude ? explode(",", $exclude) : array();
@@ -131,6 +131,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/02/22 23:20:33  rurban
+// fixed DumpHtmlToDir,
+// enhanced sortby handling in PageList
+//   new button_heading th style (enabled),
+// added sortby and limit support to the db backends and plugins
+//   for paging support (<<prev, next>> links on long lists)
+//
 // Revision 1.22  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
