@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.5 2004-03-17 15:38:03 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.6 2004-04-21 04:29:50 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -119,7 +119,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -258,13 +258,13 @@ extends WikiPlugin
             	if (in_array($from_lang,array('en','fr'))) {
                     $url = "http://translate.google.com/translate";
                     $url .= "?langpair=" . urlencode($from_lang."|".$to_lang);
-                    $url .= "&u=" . urlencode(WikiUrl($pagename,false,true));
+                    $url .= "&u=" . urlencode(WikiURL($pagename,false,true));
             	}
             	// redirect or transclude?
 	        if ($url)
 	            return $request->redirect($url);
             	return HTML(fmt("TODO: Google can only translate from english and french. Find a translation service for %s to language %s",
-            	                WikiUrl($pagename,false,true),
+            	                WikiURL($pagename,false,true),
             	                $to_lang));
             } else
                 return $this->error(fmt("%s is empty",$pagename));
@@ -377,6 +377,9 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/03/17 15:38:03  rurban
+// more translations
+//
 // Revision 1.4  2004/03/17 13:20:31  rurban
 // Placeholder for all yet untranslated pgsrc pagenames. Add german translations of these.
 //

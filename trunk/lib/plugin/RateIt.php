@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.6 2004-04-12 14:07:12 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.7 2004-04-21 04:29:50 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -110,13 +110,13 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function RatingWidgetJavascript() {
         global $Theme;
         $img   = substr($Theme->_findData("images/RateItNk0.png"),0,-7);
-        $urlprefix = WikiUrl("",0,1);
+        $urlprefix = WikiURL("",0,1);
         $js = "
 function displayRating(imgPrefix, ratingvalue, pred) {
   var cancel = imgPrefix + 'Cancel';
@@ -579,7 +579,7 @@ function deleteRating(actionImg, page, dimension) {
         $dbi = &$this->_dbi->_backend;
         extract($dbi->_table_names);
 
-        $dbi->lock();
+        $dbi->lock(array('page','rating'));
         $raterid = $dbi->_get_pageid($rater, true);
         $rateeid = $dbi->_get_pageid($ratee, true);
         $where = "WHERE raterpage=$raterid and rateepage=$rateeid";
@@ -587,7 +587,7 @@ function deleteRating(actionImg, page, dimension) {
             $where .= " AND dimension=$dimension";
         }
         $dbi->_dbh->query("DELETE FROM $rating_tbl $where");
-        $dbi->unlock();
+        $dbi->unlock(array('page','rating'));
         return true;
     }
 
@@ -612,7 +612,7 @@ function deleteRating(actionImg, page, dimension) {
         if (empty($rating_tbl))
             $rating_tbl = (!empty($GLOBALS['DBParams']['prefix']) ? $GLOBALS['DBParams']['prefix'] : '') . 'rating';
 
-        $dbi->lock();
+        $dbi->lock(array('page','rating'));
         $raterid = $dbi->_get_pageid($rater, true);
         $rateeid = $dbi->_get_pageid($ratee, true);
         $where = "WHERE raterpage=$raterid AND rateepage=$rateeid";
@@ -620,7 +620,7 @@ function deleteRating(actionImg, page, dimension) {
         $dbi->_dbh->query("DELETE FROM $rating_tbl $where");
         // NOTE: Leave tstamp off the insert, and MySQL automatically updates it (only if MySQL is used)
         $dbi->_dbh->query("INSERT INTO $rating_tbl (dimension, raterpage, rateepage, ratingvalue, rateeversion) VALUES ('$dimension', $raterid, $rateeid, '$rating', '$rateeversion')");
-        $dbi->unlock();
+        $dbi->unlock(array('page','rating'));
         return true;
     }
 
@@ -747,6 +747,9 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/04/12 14:07:12  rurban
+// more docs
+//
 // Revision 1.5  2004/04/11 10:42:02  rurban
 // pgsrc/CreatePagePlugin
 //
