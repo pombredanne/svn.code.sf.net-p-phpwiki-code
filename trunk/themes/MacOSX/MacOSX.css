@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.20 2002-02-10 22:24:11 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.21 2002-02-16 16:02:56 carstenklapp Exp $
 
   Classes:
 
@@ -49,7 +49,7 @@ input.numeric {
 
 .wikitext pre { font-family: Monaco, monospace; }
 
-div.wikitext {
+div.wikitext, textarea.wikiedit, input.wikitext, textarea.summary {
   background: white;
   border-top:    solid 1px #7c7c7c;
   border-left:   solid 1px #c3c3c3;
