@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.2 2001-12-14 20:16:53 dairiki Exp $');
+<?php rcs_id('$Id: RssWriter.php,v 1.3 2002-01-01 06:14:40 carstenklapp Exp $');
 /*
  * Code for creating RSS 1.0.
  */
@@ -115,7 +115,7 @@ class XmlElement
 };
 
 // Encoding for RSS output.
-define('RSS_ENCODING', 'ISO-8859-1');
+define('RSS_ENCODING', CHARSET);
 
 /**
  * A class for writing RSS 1.0.
