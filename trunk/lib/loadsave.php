@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.41 2002-01-25 16:46:02 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.42 2002-01-26 01:35:28 dairiki Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -475,7 +475,7 @@ function LoadFileOrDir (&$request)
     $source = $request->getArg('source');
     StartLoadDump($request, sprintf(_("Loading '%s'"), $source));
     echo "<dl>\n";
-    LoadAny($request->getDbh(), $source/*, false, array(_("RecentChanges"))*/);
+    LoadAny($request, $source/*, false, array(_("RecentChanges"))*/);
     echo "</dl>\n";
     EndLoadDump($request);
 }
@@ -523,9 +523,9 @@ function LoadPostFile (&$request)
     
     $fd = $upload->open();
     if (IsZipFile($fd))
-        LoadZip($request->getDbh(), $fd, false, array(_("RecentChanges")));
+        LoadZip($request, $fd, false, array(_("RecentChanges")));
     else
-        Loadfile($request->getDbh(), $upload->getName(), $upload->getContents());
+        LoadFile($request, $upload->getName(), $upload->getContents());
     
     echo "</dl>\n";
     EndLoadDump($request);
