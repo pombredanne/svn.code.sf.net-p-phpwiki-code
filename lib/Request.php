@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.46 2004-03-30 02:14:03 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.47 2004-04-02 15:06:55 rurban Exp $');
 /*
  Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  
@@ -523,9 +523,14 @@ class Request_CookieVars {
     }
     
     function delete($key) {
+        static $deleted = array();
+        if (isset($deleted[$key])) return;
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
-        setcookie($key);
+        setcookie($key,'',0);
+        setcookie($key,'',0,defined('COOKIE_DOMAIN') ? COOKIE_DOMAIN : '/');
         unset($vars[$key]);
+        unset($_COOKIE[$key]);
+        $deleted[$key] = 1;
     }
 }
 
@@ -952,6 +957,13 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2004/03/30 02:14:03  rurban
+// fixed yet another Prefs bug
+// added generic PearDb_iter
+// $request->appendValidators no so strict as before
+// added some box plugin methods
+// PageList commalist for condensed output
+//
 // Revision 1.45  2004/03/24 19:39:02  rurban
 // php5 workaround code (plus some interim debugging code in XmlElement)
 //   php5 doesn't work yet with the current XmlElement class constructors,

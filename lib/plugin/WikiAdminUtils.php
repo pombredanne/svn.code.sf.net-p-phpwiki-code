@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.8 2004-04-01 15:57:11 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.9 2004-04-02 15:06:56 rurban Exp $');
 /**
  Copyright 2003 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -163,6 +163,8 @@ extends WikiPlugin
                 $user = new WikiUser(&$request,$username);
             $prefs = $user->getPreferences();
             if ($prefs->get('email')) {
+            	if (!$prefs->get('userid'))
+            	    $prefs->set('userid',$username);
                 $group = (int)(count($pagelist->_rows) / $pagelist->_group_rows);
                 $class = ($group % 2) ? 'oddrow' : 'evenrow';
                 $row = HTML::tr(array('class' => $class));
@@ -170,7 +172,7 @@ extends WikiPlugin
                 $row->pushContent($pagelist->_columns[0]->format($pagelist, $page_handle, $page_handle));
                 $row->pushContent($email->format($pagelist, &$prefs, $page_handle));
 		if (!empty($args['verified'])) {
-		    $prefs->set('emailVerified',empty($args['user'][$username]) ? 0 : 2);
+		    $prefs->_prefs['email']->set('emailVerified',empty($args['user'][$username]) ? 0 : 2);
 		}
                 $row->pushContent($emailVerified->format($pagelist, &$prefs, $args['verified']));
                 $pagelist->_rows[] = $row;

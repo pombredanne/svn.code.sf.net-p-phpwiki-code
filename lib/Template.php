@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.54 2004-03-02 18:11:39 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.55 2004-04-02 15:06:55 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -22,7 +22,7 @@ class Template
         $fp = fopen($file, "rb");
         $this->_tmpl = fread($fp, filesize($file));
         fclose($fp);
-
+$userid = $request->_user->_userid;
         if (is_array($args))
             $this->_locals = $args;
         elseif ($args)
@@ -245,6 +245,11 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2004/03/02 18:11:39  rurban
+// CreateToc support: Pass the preparsed markup to each plugin as $dbi->_markup
+// to be able to know about its context, and even let the plugin change it.
+// (see CreateToc)
+//
 // Revision 1.53  2004/02/22 23:20:31  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList

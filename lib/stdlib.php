@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.166 2004-04-01 15:57:10 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.167 2004-04-02 15:06:55 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -742,8 +742,8 @@ function split_pagename ($page) {
         $RE[] = "/(?<= |${sep}|^)([AI])([[:upper:]][[:lower:]])/";
         // Split numerals from following letters.
         $RE[] = '/(\d)([[:alpha:]])/';
-        // Split at subpage seperators
-        $RE[] = "/(${sep})([${sep}^]+)/";
+        //TODO: Split at subpage seperators
+        //$RE[] = "/(${sep})([^${sep}]+)/";
         
         foreach ($RE as $key)
             $RE[$key] = pcre_fix_posix_classes($key);
@@ -1377,6 +1377,11 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.166  2004/04/01 15:57:10  rurban
+// simplified Sidebar theme: table, not absolute css positioning
+// added the new box methods.
+// remaining problems: large left margin, how to override _autosplitWikiWords in Template only
+//
 // Revision 1.165  2004/03/24 19:39:03  rurban
 // php5 workaround code (plus some interim debugging code in XmlElement)
 //   php5 doesn't work yet with the current XmlElement class constructors,

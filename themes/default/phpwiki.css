@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.23 2004-04-01 15:57:20 rurban Exp $
+ * $Id: phpwiki.css,v 1.24 2004-04-02 15:06:56 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -493,10 +493,14 @@ div.errors {
 .hint {
   color: black;
   background: #eeeeee;
-  font-size: smaller;
-  margin-left: 5em;
+   /* font-size: smaller; */
+  font-style: italic; */ 
+  margin-left: 3em;
   padding: 0.5ex 0.5em;
   border: thin solid #aaaaaa;
+}
+span.hint {
+  padding: 0;
 }
 
 /* Disabled Plugins */

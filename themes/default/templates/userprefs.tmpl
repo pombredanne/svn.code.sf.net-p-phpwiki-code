@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.43 2004-03-24 19:40:35 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.44 2004-04-02 15:06:56 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -98,6 +98,8 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 ?>
 <?= $errmsg ?>
 
+<?= fmt("User preferences for user '%s':", $pref->get('userid')) ?>
+
 <?php if ($isForm) { ?>
 <form action="<?=$request->getPostURL()?>" method="post">
 <?php } else { 
@@ -118,18 +120,22 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 	      ) ?>
 <?php } ?>
 
+<table border="0">
 <?php if ($isForm and $user->mayChangePass()) { ?>
-  <h2><?=_("Change Password")?></h2>
-    <table border="0">
-      <tr><td align="right"><?=_("New password")?>:</td>
-          <td><input type="password" name="pref[passwd]" size="16" maxlength="16" class="text" value="" /></td></tr>
-      <tr><td align="right"><?=_("Type it again")?>:</td>
-          <td><input type="password" name="pref[passwd2]" size="16" maxlength="16" class="text" value="" /></td></tr>
-    </table>
+  <tr><td colspan="3"><h2><?=_("Change Password")?></h2></td></tr>
+
+    <tr><td align="right"><?=_("New password")?>:</td>
+        <td><input type="password" name="pref[passwd]" size="16" maxlength="16" class="text" value="" /></td>
+        <td></td></tr>
+    <tr><td align="right"><?=_("Type it again")?>:</td>
+        <td><input type="password" name="pref[passwd2]" size="16" maxlength="16" class="text" value="" /></td>
+        <td></td></tr>
 <?php } ?>
 
-  <h2><?=_("E-mail")?></h2>
-  <p><?=_("Your E-Mail:")?>
+  <tr><td colspan="3"><h2><?=_("E-mail")?></h2></td></tr>
+
+  <tr><td><?=_("Your E-Mail:")?></td>
+  <td>
   <?php if ($isForm) { ?>
      <input type="text" name="pref[email]" size="30" maxlength="60"
 	    value="<?=$pref->get('email')?>" />
@@ -142,26 +148,25 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   <?php } else { ?>
     <?= _("Email not yet verified.") ?>
   <?php } ?>
-  </p>
-     <p class="hint"><?=_("Note, that user accounts with bouncing emails will be disabled.")?></p>
-<?php 
-/*
-     Related code for this doesn't seem to function yet.
-     Commented out for now until it can be finished or removed. --CarstenKlapp
-*/ if (DEBUG) { ?>
-   <p><?=_("Get an email notification at changes of the following pages:")?><br />
+  </td><td>
+     <span class="hint"><?=_("Note, that user accounts with bouncing emails will be disabled.")?></span>
+   </td></tr>
+
+   <tr><td colspan="2">
+    <?=_("Get an email notification at changes of the following pages:")?><br />
     <?php if ($isForm) { ?>
-     <blockquote><textarea name="pref[notifyPages]" cols="50" rows="4"><?=$pref->get('notifyPages')?></textarea></blockquote>
-     <p class="hint"><?=_("Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed.")?></p>
-   </p>
+      <blockquote><textarea name="pref[notifyPages]" cols="50" rows="4"><?=$pref->get('notifyPages')?></textarea></blockquote></td>
+    <td><span class="hint"><?=_("Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed.")?></span></td>
     <?php } else { ?>
-     <?=$pref->get('notifyPages')?>
+     <td><?=$pref->get('notifyPages')?></td><td></td>
     <?php } ?>
-   <?php } ?>
-  <h2><?=_("Appearance")?></h2>
-  <p class="hint"><?=_("Here you can override site-specific default values. Currently not recommended!")?></p>
+   </tr>
+
+  <tr><td colspan="3"><h2><?=_("Appearance")?></h2></td></tr>
+
+  <tr><td colspan="2"><?=_("Here you can override site-specific default values.") ?></td>
+      <td><span class="hint"><?= _("Currently not recommended!") ?></span></td></tr>
   <?php /* Alternatively this could be done with <fieldset> and <legend>. */ ?>
-    <table border="0">
       <tr><td align="right"><?=$SelectThemesDesc?></td>
           <td><?= $SelectThemes ?></td>
           <td><span class="hint"><?=_("System default:")?> <?= THEME ?></span></td></tr>
@@ -170,11 +175,12 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 	  <td><span class="hint"><?=_("System default:")?> <?= DEFAULT_LANGUAGE ?></span></td></tr>
       <tr><td align="right"><?=fmt("Hide %s:", WikiLink("LinkIcons"))?></td>
           <td><?=$NoLinkIconsCB?></td>
-          <td><p class="hint"><?=_("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></tr>
-    </table>
+          <td><p class="hint"><?=_("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p></tr>
 
-  <h2><?=_("Edit Area Size")?></h2>
-  <p><?=_("Height")?>:&nbsp;
+  <tr><td colspan="3"><h2><?=_("Edit Area Size")?></h2></td></tr>
+
+  <tr><td colspan="2">
+    <?=_("Height")?>:&nbsp;
     <?php if ($isForm) { ?>
      <input type="text" name="pref[editHeight]" size="4" maxlength="4" class="numeric"
             value="<?=$pref->get('editHeight')?>" />
@@ -188,26 +194,32 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
     <?php } else { ?>
       <?=$pref->get('editWidth')?>
     <?php } ?>
-  </p>
-  <p class="hint"><?=_("Note that many browsers will automatically adjust the width of the editing area so that it fills the browser window.  In this case, the width preference will be ignored.")?></p>
+    </td>
+    <td><p class="hint">
+      <?=_("Note that many browsers will automatically adjust the width of the editing area so that it fills the browser window.  In this case, the width preference will be ignored.")?></p>
+    </td></tr>
 
-  <h2><?=_("Time Zone")?></h2>
-  <p>
+  <tr><td colspan="3"><h2><?=_("Time Zone")?></h2></td></tr>
+
+  <tr><td colspan="2"><p>
     <?=fmt("Add %s hours to the server's local time when reporting times.",
            $timeOffsetInput)?>
-  </p>
+  </p></td><td>
   <p class="hint">
     <?=fmt("The current time at the server is %s.",
             HTML::strong($Theme->formatDateTime($serverTime)))?>
     <?=fmt("With the current offset, this would be reported as %s.",
            HTML::strong($Theme->formatDateTime($time)))?>
   </p>
+  </td></tr>
 
-  <h2><?=_("Date Format")?></h2>
-  <p>
+  <tr><td colspan="3"><h2><?=_("Date Format")?></h2></td></tr>
+
+  <tr><td colspan="2"><p>
     <?=_("Show relative dates using 'Today' and 'Yesterday'")?>:
     <?= $RelativeDatesCB ?>
-  </p>
+  </p></td><td></td></tr>
+</table>
 
 <?php if ($isForm) { ?>
   <hr />
