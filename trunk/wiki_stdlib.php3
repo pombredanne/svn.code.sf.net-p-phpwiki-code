@@ -1,9 +1,8 @@
-<!-- $Id: wiki_stdlib.php3,v 1.14 2000-06-18 15:12:13 ahollosi Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.15 2000-06-21 22:57:17 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
 	 GeneratePage($template, $content, $name, $hash)
-         GetCurrentDate()
          LinkExistingWikiWord($wikiword) 
          LinkUnknownWikiWord($wikiword) 
          LinkURL($url)
@@ -21,6 +20,7 @@
    function GeneratePage($template, $content, $name, $hash)
    {
       global $ScriptUrl, $AllowedProtocols, $templates;
+      global $datetimeformat;
 
       if (!is_array($hash))
          unset($hash);
@@ -41,7 +41,7 @@
          $page = str_replace("#$FieldSeparator#PAGEURL#$FieldSeparator#",
 			rawurlencode($name), $page);
          $page = str_replace("#$FieldSeparator#LASTMODIFIED#$FieldSeparator#",
-			$hash['date'], $page);
+			date($datetimeformat, $hash['lastmodified']), $page);
          $page = str_replace("#$FieldSeparator#LASTAUTHOR#$FieldSeparator#",
 			$hash['author'], $page);
          $page = str_replace("#$FieldSeparator#VERSION#$FieldSeparator#",
@@ -52,7 +52,7 @@
       if ($template == 'EDITLINKS') {
 	 for ($i = 1; $i <= NUM_LINKS; $i++)
 	    $page = str_replace("#$FieldSeparator#R$i#$FieldSeparator#",
-			$hash["r$i"], $page);
+			$hash['refs'][$i], $page);
       }
 
       if ($hash['copy']) {
@@ -68,12 +68,6 @@
       print $page;
    }
 
-
-   function GetCurrentDate() {
-      // format is like December 13, 1999
-      return date("F j, Y");
-   }
-   
 
    function LinkExistingWikiWord($wikiword) {
       global $ScriptUrl;
@@ -245,6 +239,7 @@
    function UpdateRecentChanges($dbi, $pagename, $isnewpage) {
 
       global $remoteuser; // this is set in the config
+      global $dateformst;
 
       $recentchanges = RetrievePage($dbi, "RecentChanges");
 
@@ -254,11 +249,12 @@
          $recentchanges = array(); 
       }
 
-      $currentdate = GetCurrentDate();
+      $now = time();
+      $today = date($dateformat, $now);
 
-      if ($recentchanges["date"] != $currentdate) {
+      if (date($dateformat, $recentchanges["lastmodified"]) != $today) {
          $isNewDay = TRUE;
-         $recentchanges["date"] = $currentdate;
+         $recentchanges["lastmodified"] = $now;
       } else {
          $isNewDay = FALSE;
       }
@@ -281,7 +277,7 @@
       // name to the array
 
       if ($isNewDay) {
-         $newpage[$k++] = "$currentdate\r";
+         $newpage[$k++] = "$today\r";
       } else {
          $newpage[$k++] = $recentchanges["content"][$i++];
       }

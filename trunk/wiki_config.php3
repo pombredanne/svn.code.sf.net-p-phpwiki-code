@@ -1,4 +1,4 @@
-<!-- $Id: wiki_config.php3,v 1.9 2000-06-20 01:38:42 wainstead Exp $ -->
+<!-- $Id: wiki_config.php3,v 1.10 2000-06-21 22:57:17 ahollosi Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for
@@ -34,8 +34,8 @@
 
    // MySQL settings (thanks Arno Hollosi! <ahollosi@iname.com>)
    // Comment out the lines above (for the DBM) if you use these
-/*
-   include "wiki_mysql.php3";
+
+/*   include "wiki_mysql.php3";
    $WikiDataBase = "wiki";
    $ArchiveDataBase = "archive";
    $mysql_server = 'localhost';
@@ -67,7 +67,14 @@
    $SignatureImg = "$ServerAddress/signature.png";
    $logo = "wikibase.png";
 
+   // date & time formats used to display modification times, etc.
+   // formats are given as format strings to PHP date() function
+   $datetimeformat = "F j, Y";	// may contain time of day
+   $dateformat = "F j, Y";	// must not contain time
 
+   // allowed protocols for links - be careful not to allow "javscript:"
+   $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
+   
    // you shouldn't have to edit anyting below this line
 
    $ScriptUrl = $ServerAddress . $ScriptName;
@@ -76,9 +83,6 @@
 
    $FieldSeparator = "\263";
 
-   // allowed protocols for links - be careful not to allow "javscript:"
-   $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
-   
    // Apache won't show REMOTE_HOST unless the admin configured it
    // properly. We'll be nice and see if it's there.
    empty($REMOTE_HOST) ?

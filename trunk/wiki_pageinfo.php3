@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pageinfo.php3,v 1.1 2000-06-21 19:32:33 ahollosi Exp $ -->
+<!-- $Id: wiki_pageinfo.php3,v 1.2 2000-06-21 22:57:17 ahollosi Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?
    $encname = htmlspecialchars($info);
@@ -21,7 +21,7 @@
 
    function ViewpageProps($name)
    {
-      global $dbi, $showpagesource;
+      global $dbi, $showpagesource, $datetimeformat;
 
       $pagehash = RetrievePage($dbi, $name);
       if ($pagehash == -1) {
@@ -31,9 +31,13 @@
 	 $table = "<table border=1 bgcolor=white>\n";
 
 	 while (list($key, $val) = each($pagehash)) {
+	    if ($key > 0 || !$key) #key is an array index
+	       continue;
             if ((gettype($val) == "array") && ($showpagesource == "on")) {
                $val = implode($val, "<br>\n");
             }
+	    if (($key == 'lastmodified') || ($key == 'created'))
+	       $val = date($datetimeformat, $val);
             $table .= "<tr><td>$key</td><td>$val</td></tr>\n";
 	 }
 
