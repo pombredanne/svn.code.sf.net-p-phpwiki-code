@@ -1,5 +1,6 @@
 <?php // -*-php-*-
-rcs_id('$Id: HttpClient.php,v 1.1 2004-04-09 17:46:40 rurban Exp $');
+rcs_id('$Id: HttpClient.php,v 1.2 2004-04-10 02:30:49 rurban Exp $');
+
 /** 
    Version 0.9, 6th April 2003 - Simon Willison ( http://simon.incutio.com/ )
    Manual: http://scripts.incutio.com/httpclient/

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.83 2004-04-09 17:49:03 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.84 2004-04-10 02:30:49 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -116,9 +116,11 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         foreach ($parts as $part) {
             $path[] = $part;
             $parent = join(SUBPAGE_SEPARATOR, $path);
+            if ($Theme->_autosplitWikiWords)
+                $part = " " . $part;
             if ($part)
                 $link->pushContent($Theme->linkExistingWikiWord($parent, $sep . $part));
-            $sep = SUBPAGE_SEPARATOR;
+            $sep = $Theme->_autosplitWikiWords ? ' ' . SUBPAGE_SEPARATOR : SUBPAGE_SEPARATOR;
         }
         if ($exists)
             $link->pushContent($Theme->linkExistingWikiWord($wikipage, $sep . $last_part, $version));
@@ -1256,6 +1258,11 @@ class RelatedExternalLinksBox extends SidebarBox {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.83  2004/04/09 17:49:03  rurban
+// Added PhpWiki RssFeed to Sidebar
+// sidebar formatting
+// some browser dependant fixes (old-browser support)
+//
 // Revision 1.82  2004/04/06 20:00:10  rurban
 // Cleanup of special PageList column types
 // Added support of plugin and theme specific Pagelist Types
