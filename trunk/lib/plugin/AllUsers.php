@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.9 2004-02-22 23:20:33 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.10 2004-03-08 19:30:01 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -82,11 +82,17 @@ extends WikiPlugin
         if ($debug)
             $timer = new DebugTimer;
 
+        $group = WikiGroup::getGroup($request);
+        foreach ($group->_allUsers() as $user) {
+            $pagelist->addPage($user);
+        }
+        /*
         $page_iter = $dbi->getAllPages($include_empty, $sortby, $limit);
         while ($page = $page_iter->next()) {
             if ($page->isUserPage($include_empty))
                 $pagelist->addPage($page);
         }
+        */
 
         if ($debug) {
             return HTML($pagelist,
@@ -98,6 +104,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/02/22 23:20:33  rurban
+// fixed DumpHtmlToDir,
+// enhanced sortby handling in PageList
+//   new button_heading th style (enabled),
+// added sortby and limit support to the db backends and plugins
+//   for paging support (<<prev, next>> links on long lists)
+//
 // Revision 1.8  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //

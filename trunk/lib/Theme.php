@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.76 2004-03-08 18:17:09 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.77 2004-03-08 19:30:01 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -670,7 +670,7 @@ class Theme {
     }
 
     function _findButton ($button_file) {
-        if (!isset($this->_button_path))
+        if (empty($this->_button_path))
             $this->_button_path = $this->_getButtonPath();
 
         foreach ($this->_button_path as $dir) {
@@ -683,18 +683,17 @@ class Theme {
 
     function _getButtonPath () {
         $button_dir = $this->_findFile("buttons");
-        if (!file_exists($button_dir) || !is_dir($button_dir))
+        $path_dir = $this->_path . $button_dir;
+        if (!file_exists($path_dir) || !is_dir($path_dir))
             return array();
-
         $path = array($button_dir);
-
-        $dir = dir($button_dir);
+        $dir = dir($path_dir);
         while (($subdir = $dir->read()) !== false) {
             if ($subdir[0] == '.')
                 continue;
             if ($subdir == 'CVS')
                 continue;
-            if (is_dir("$button_dir/$subdir"))
+            if (is_dir("$path_dir/$subdir"))
                 $path[] = "$button_dir/$subdir";
         }
         $dir->close();
@@ -1128,6 +1127,11 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.76  2004/03/08 18:17:09  rurban
+// added more WikiGroup::getMembersOf methods, esp. for special groups
+// fixed $LDAP_SET_OPTIONS
+// fixed _AuthInfo group methods
+//
 // Revision 1.75  2004/03/01 09:34:37  rurban
 // fixed button path logic: now fallback to default also
 //
