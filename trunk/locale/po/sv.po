@@ -55,7 +55,7 @@ msgstr "Snabb titelsökning:"
 
 #: ../templates/browse.html:70
 msgid "Page locked"
-msgstr ""
+msgstr "Sidan är låst"
 
 #: ../templates/browse.html:73
 msgid "Edit"
@@ -66,14 +66,12 @@ msgid "Edit old revision"
 msgstr ""
 
 #: ../templates/browse.html:81
-#, fuzzy
 msgid "Unlock page"
-msgstr "Ta bort sida"
+msgstr "Lås upp sida"
 
 #: ../templates/browse.html:83
-#, fuzzy
 msgid "Lock page"
-msgstr "Ta bort sida"
+msgstr "Lås sida"
 
 #: ../lib/removepage.php:20 ../templates/browse.html:85
 msgid "Remove page"
@@ -113,9 +111,9 @@ msgstr ""
 
 #: ../templates/editpage.html:16 ../templates/editpage.html:25
 #: ../templates/editpage.html:26
-#, fuzzy, c-format
+#, c-format
 msgid "Edit: %s"
-msgstr "Diff av %s."
+msgstr "Redigera: %s."
 
 #: ../lib/plugin/BackLinks.php:9 ../templates/editpage.html:25
 msgid "BackLinks"
@@ -169,17 +167,17 @@ msgid "UserPreferences"
 msgstr ""
 
 #: ../templates/editpage.html:80
-#, fuzzy, c-format
+#, c-format
 msgid "See %s tips for editing."
-msgstr "Tack för att du redigerade %s."
+msgstr "%s: Redigeringstips."
 
 #: ../templates/editpage.html:80
 msgid "GoodStyle"
-msgstr ""
+msgstr "BraStil"
 
 #: ../templates/editpage.html:84
 msgid "TextFormattingRules"
-msgstr ""
+msgstr "Textformateringsregler"
 
 #: ../templates/editpage.html:84
 msgid "Synopsis"
@@ -613,9 +611,9 @@ msgid "None"
 msgstr "ingen"
 
 #: ../lib/diff.php:201 ../lib/diff.php:211
-#, fuzzy, c-format
+#, c-format
 msgid "version %d"
-msgstr "version %s"
+msgstr "version %d"
 
 #: ../lib/diff.php:205
 #, fuzzy
@@ -627,8 +625,9 @@ msgid "previous major revision"
 msgstr ""
 
 #: ../lib/diff.php:231
+#, fuzzy
 msgid "revision by previous author"
-msgstr ""
+msgstr "från föregående författare"
 
 #: ../lib/diff.php:238
 msgid "previous revision"
