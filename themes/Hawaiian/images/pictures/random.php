@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: random.php,v 1.1 2002-01-17 21:00:57 dairiki Exp $');
+rcs_id('$Id: random.php,v 1.2 2002-01-17 23:51:47 carstenklapp Exp $');
 
 // FIXME: This whole file could be refactored and turned in a
 //        RandomImage plugin.
@@ -67,7 +67,7 @@ function imagelist($dirname) {
 }
 
 // FIXME: Will this need to be changed to work on WindowsOS?
-$RandomPictures = imagelist( getcwd() ."/" ."themes/$theme/pictures/" );
+$RandomPictures = imagelist( getcwd() ."/" ."themes/$theme/images/pictures/" );
 
 if (!empty($RandomPictures)) {
 
@@ -90,8 +90,8 @@ if (!empty($RandomPictures)) {
     // For testing the randomization out, just use $logo instead of
     // #Signature
 
-    // $logo = "themes/$theme/pictures/"
-    $SignatureImg = "themes/$theme/pictures/"
+    // $logo = "themes/$theme/images/pictures/"
+    $SignatureImg = "themes/$theme/images/pictures/"
         .$RandomPictures[mt_rand(0,count($RandomPictures)-1)];
 }
 
