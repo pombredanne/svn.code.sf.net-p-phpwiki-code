@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.11 2004-05-02 21:26:38 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.12 2004-05-04 22:34:25 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -168,6 +168,7 @@ function action2access ($action) {
     case 'select':
     case 'xmlrpc':
     case 'search':
+    case 'pdf':
         return 'view';
     case 'zip':
     case 'ziphtml':
@@ -545,6 +546,14 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/05/02 21:26:38  rurban
+// limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
+//   because they will not survive db sessions, if too large.
+// extended action=upgrade
+// some WikiTranslation button work
+// revert WIKIAUTH_UNOBTAINABLE (need it for main.php)
+// some temp. session debug statements
+//
 // Revision 1.10  2004/04/29 22:32:56  zorloc
 // Slightly more elegant fix.  Instead of WIKIAUTH_FORBIDDEN, the current user's level + 1 is returned on a false.
 //

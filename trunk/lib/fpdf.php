@@ -754,7 +754,7 @@ class FPDF
     function Write($h,$txt,$link='') {
 	//Output text in flowing mode
 	$cw=&$this->CurrentFont['cw'];
-	$w=$this->w-$this->rMargin-$this->x;
+	$w=$this->w - $this->rMargin - $this->x;
 	$wmax=($w-2*$this->cMargin)*1000/$this->FontSize;
 	$s=str_replace("\r",'',$txt);
 	$nb=strlen($s);
@@ -981,9 +981,15 @@ class FPDF
      *                                                                              *
      *******************************************************************************/
     function _dochecks() {
-	//Check for locale-related bug
-	if (1.1==1)
-            $this->Error('Don\'t alter the locale before including class file');
+	//Check for locale-related bug. we must have "." as comma seperator
+	$attempts = array("C","en","en_us","English");
+	$i = 0;
+	while (1.1 == 1 and $i++ < count($attempts)) {
+            setlocale(LC_NUMERIC,$attempts[$i]);
+	}
+	if (1.1 == 1) {
+            $this->Error('1.1 == 1: Wrong locale with comma as dot. German? Don\'t alter the locale before including class file');
+	}
 	//Check for decimal separator
 	if (sprintf('%.1f',1.0)!='1.0')
             setlocale(LC_NUMERIC,'C');

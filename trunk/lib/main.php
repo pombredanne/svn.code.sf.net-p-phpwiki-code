@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.141 2004-05-03 13:16:47 rurban Exp $');
+rcs_id('$Id: main.php,v 1.142 2004-05-04 22:34:25 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -404,6 +404,7 @@ class WikiRequest extends Request {
             case 'select':
             case 'xmlrpc':
             case 'search':
+            case 'pdf':
                 return WIKIAUTH_ANON;
 
             case 'zip':
@@ -483,10 +484,6 @@ class WikiRequest extends Request {
             exit();        // just in case CloseDataBase calls us
         $in_exit = true;
 
-        if (!empty($this->_dbi) && !USE_DB_SESSION)
-            $this->_dbi->close();
-        unset($this->_dbi);
-
         global $ErrorManager;
         $ErrorManager->flushPostponedErrors();
 
@@ -504,11 +501,12 @@ class WikiRequest extends Request {
             unset($this->_user->_HomePagehandle);
             unset($this->_user->_auth_dbi);
 	}
-        Request::finish();
-        if (!empty($this->_dbi))
+        if (!empty($this->_dbi)) {
+            session_write_close();
             $this->_dbi->close();
-        unset($this->_dbi);
-        
+            unset($this->_dbi);
+        }
+        Request::finish();
         exit;
     }
 
@@ -790,6 +788,41 @@ class WikiRequest extends Request {
         include_once("lib/loadsave.php");
         LoadFileOrDir($this);
     }
+
+    function action_pdf () {
+        $this->buffer_output('nocompress');
+        if ($GLOBALS['LANG'] == 'ja') {
+            include_once("lib/fpdf/japanese.php");
+            $pdf = new PDF_Japanese;
+        } elseif ($GLOBALS['LANG'] == 'zh') {
+            include_once("lib/fpdf/chinese.php");
+            $pdf = new PDF_Chinese;
+        } else {
+            include_once("lib/pdf.php");
+            $pdf = new PDF;
+        }
+        include_once("lib/display.php");
+        displayPage($this);
+        $html = ob_get_contents();
+    	$pdf->Open();
+    	$pdf->AddPage();
+        $pdf->ConvertFromHTML($html);
+        $this->discardOutput();
+        
+        $this->buffer_output('nocompress');
+        $pdf->Output();
+        $GLOBALS['ErrorManager']->flushPostponedErrors();
+        if (!empty($errormsg)) {
+            $this->discardOutput();
+            PrintXML(HTML::br(),
+                     HTML::hr(),
+                     HTML::h2(_("Fatal PhpWiki Error")),
+                     $errormsg);
+            echo "\n</body></html>";
+        } else {
+            ob_end_flush();
+        }
+    }
 }
 
 //FIXME: deprecated
@@ -856,9 +889,12 @@ function main () {
     // Enable the output of most of the warning messages.
     // The warnings will screw up zip files though.
     global $ErrorManager;
-    if (substr($request->getArg('action'), 0, 3) != 'zip') {
-        $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
-        //$ErrorManager->setPostponedErrorMask(0);
+    $action = $request->getArg('action');
+    if (substr($action, 0, 3) != 'zip') {
+    	if ($action == 'pdf')
+    	    $ErrorManager->setPostponedErrorMask(0);
+    	else
+            $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE);
     }
 
     //FIXME:
@@ -887,7 +923,6 @@ if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
     // to go the paranoid route here pending further study and testing.)
     //
     $validators['%weak'] = true;
-    
     $request->setValidators($validators);
    
     $request->handleAction();
@@ -902,6 +937,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.141  2004/05/03 13:16:47  rurban
+// fixed UserPreferences update, esp for boolean and int
+//
 // Revision 1.140  2004/05/02 21:26:38  rurban
 // limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
 //   because they will not survive db sessions, if too large.
