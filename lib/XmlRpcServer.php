@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.2 2002-09-15 05:52:23 dairiki Exp $
+// $Id: XmlRpcServer.php,v 1.3 2002-09-15 06:14:32 dairiki Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -133,7 +133,7 @@ function _getPageRevision ($params)
  * @see urlencode
  */
 function UrlencodeControlCharacters($str) {
-    return preg_replace('/([\x00-\x20])/e', "urlencode('\\1')", $str);
+    return preg_replace('/([\x00-\x1F])/e', "urlencode('\\1')", $str);
 }
 
 /**
