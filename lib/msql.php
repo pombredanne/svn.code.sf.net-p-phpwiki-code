@@ -1,4 +1,4 @@
-<!-- $Id: msql.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
+<!-- $Id: msql.php,v 1.2 2000-10-19 22:25:45 ahollosi Exp $ -->
 <?php
 
    /*
@@ -26,14 +26,14 @@
       global $msql_db;
 
       if (! ($dbc = msql_connect())) {
-         echo "Cannot establish connection to database, giving up.";
-         echo "Error message: ", msql_error(), "<br>\n";
-         exit();
+         $msg =  "Cannot establish connection to database, giving up.";
+         $msg .= "<BR>Error message: " . msql_error();
+         ExitWiki($msg);
       }
       if (!msql_select_db($msql_db, $dbc)) {
-         echo "Cannot open database $msql_db, giving up.";
-         echo "Error message: ", msql_error(), "<br>\n";
-         exit();
+         $msg =  "Cannot open database $msql_db, giving up.";
+         $msg .= "<BR>Error message: " . msql_error();
+         ExitWiki($msg);
       }
 
       $dbi['dbc'] = $dbc;

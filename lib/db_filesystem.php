@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.2 2000-10-19 22:25:45 ahollosi Exp $');
    /*
       Database functions:
 
@@ -45,7 +45,7 @@
       if ($fd = @fopen($filename, "r")) {
          $locked = flock($fd, 1); # Read lock
          if (!$locked) { 
-            print "Error: timeout obtaining lock. Please try again"; exit; 
+            ExitWiki("Timeout while obtaining lock. Please try again"); 
          }
          if ($data = file($filename)) {
             // unserialize $data into a hash
@@ -79,7 +79,7 @@
       if($fd = fopen($filename, 'a')) { 
          $locked = flock($fd,2); #Exclusive blocking lock 
          if (!$locked) { 
-            print "Error: timeout obtaining lock. Please try again"; exit; 
+            ExitWiki("Timeout while obtaining lock. Please try again"); 
          } 
 
          #Second (actually used) filehandle 
@@ -88,9 +88,8 @@
          fclose($fdsafe); 
          fclose($fd);
       } else {
-         echo "error writing value";
-         exit();
-	  }
+         ExitWiki("Error while writing page '$pagename'");
+      }
    }
 
    function InsertPage($dbi, $pagename, $pagehash) {

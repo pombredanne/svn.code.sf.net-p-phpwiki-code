@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.2 2000-10-19 22:25:45 ahollosi Exp $');
 
    /*
       Database functions:
@@ -30,14 +30,14 @@
       global $mysql_server, $mysql_user, $mysql_pwd, $mysql_db;
 
       if (!($dbc = mysql_pconnect($mysql_server, $mysql_user, $mysql_pwd))) {
-         echo "Cannot establish connection to database, giving up.";
-	 echo "MySQL error: ", mysql_error(), "<br>\n";
-         exit();
+         $msg =  "Cannot establish connection to database, giving up.";
+	 $msg .= "<br>MySQL error: " . mysql_error();
+         ExitWiki($msg);
       }
       if (!mysql_select_db($mysql_db, $dbc)) {
-         echo "Cannot open database, giving up.";
-	 echo "MySQL error: ", mysql_error(), "<br>\n";
-         exit();
+         $msg =  "Cannot open database, giving up.";
+	 $msg .= "<br>MySQL error: " . mysql_error();
+         ExitWiki($msg);
       }
       $dbi['dbc'] = $dbc;
       $dbi['table'] = $dbname;
@@ -108,9 +108,8 @@
 
       if (!mysql_query("replace into $dbi[table] ($COLUMNS) values ($VALUES)",
       			$dbi['dbc'])) {
-            echo "error writing page '$pagename' ";
-	    echo mysql_error();
-            exit();
+	    $msg = "Error writing page '$pagename' " . mysql_error();
+            ExitWiki($msg);
       }
    }
 

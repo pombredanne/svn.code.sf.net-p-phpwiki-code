@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.2 2000-10-19 21:36:50 ahollosi Exp $ -->
+<!-- $Id: editpage.php,v 1.3 2000-10-19 22:25:45 ahollosi Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -19,10 +19,8 @@
       $banner = htmlspecialchars("Copy of $pagename");
       $pagehash = RetrievePage($dbi, $pagename, $ArchivePageStore);
 
-   } else {
-      echo "No page name passed into editpage!<br>\n";
-      exit();
-   }
+   } else
+      ExitWiki("No page name passed into editpage!");
 
 
    if (is_array($pagehash)) {
@@ -32,7 +30,7 @@
 		 "and cannot be edited.\n" .
 		 "<p>Sorry for the inconvinience.\n";
 	 GeneratePage('MESSAGE', $html, "Problem while editing $pagename", 0);
-	 exit;
+	 ExitWiki('');
       }
 
       $textarea = implode("\n", $pagehash["content"]);
