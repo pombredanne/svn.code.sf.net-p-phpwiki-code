@@ -1,5 +1,5 @@
 /**
- * $Id: WikiTrek.css,v 1.5 2002-01-05 06:17:01 carstenklapp Exp $
+ * $Id: WikiTrek.css,v 1.6 2002-01-11 05:34:10 carstenklapp Exp $
  *
  * This PhpWiki theme is experimental and will likely not appear as
  * part of any release. ("accessories not included"--download
@@ -10,8 +10,15 @@
         #fff; /white/
         #000; /black/
         #ffcf00; /yellow/
-        #0700ff; /blue/
+        #ddc300; /darker-yellow/
+        #0700ff; /bright-blue/
+        #0c10bc; /blue/
         #8452b5; /magenta/
+        #982505; /red/
+        #ef0032; /light-red/
+        #009000; /green/
+        #1bab11; /light-green/
+        #ff7e00; /orange/
 */
 
 /* NS4 doesn't grok @import.  This allows us to put things which
@@ -25,6 +32,7 @@ BODY {
         background-color :  #000;
         background-image :  url("starfield.png");
         background-repeat : repeat;
+        font-size :         larger;
 }
 
 BODY {
@@ -62,7 +70,7 @@ DIV.wikitext {
 
 h1 {
         color :            #000;
-        background-color : #0700ff;
+        background-color : #0c10bc;
         width :            100%;
         padding-top :      0.25em;
         padding-left :     0.5ex;
@@ -94,6 +102,9 @@ H2 , H3 , H4 {
         font-weight :     bold;
         text-decoration : none;
 }
+.wiki:hover {
+        background : #ddc300;
+}
 
 .rc-major {
         color :           #fff;
@@ -103,7 +114,7 @@ H2 , H3 , H4 {
 }
 
 .toolbar .wiki {
-        background :      #8452b5;
+        background :      #0c109c;
         text-decoration : none;
         font-weight :     bold;
         padding :         2px;
@@ -111,10 +122,14 @@ H2 , H3 , H4 {
         border :          1px none ;
         border-color :    #000;
         border-style :    solid;
+}
+.toolbar .wiki:hover {
+        background :   #0c10bc;
+        font-weight :  bold;
 }
 
 .wikiaction {
-        background :      #0b0;
+        background :      #009000;
         text-decoration : none;
         font-weight :     bold;
         padding :         2px;
@@ -123,7 +138,23 @@ H2 , H3 , H4 {
         border-color :    #000;
         border-style :    solid;
 }
+.wikiaction:hover {
+        background : #1bab11;
+}
 
+.wikiadmin {
+        background :      #982505;
+        text-decoration : none;
+        font-weight :     bold;
+        padding :         2px;
+        margin :          1px;
+        border :          1px none ;
+        border-color :    #000;
+        border-style :    solid;
+}
+.wikiadmin:hover {
+        background :      #ef0032;
+}
 
 b.wikisummary {
         color :           #ffcf00;
@@ -135,14 +166,6 @@ b.wikisummary {
         border :          1px none ;
         border-color :    #000;
         border-style :    solid;
-}
-
-.wiki:hover {
-        background : #6300ce;
-}
-
-.wikiaction:hover {
-        background : #ffcf00;
 }
 
 img.linkicon, img.rssicon {
@@ -158,3 +181,32 @@ img.rssicon {
         background-image :  url("themes/WikiTrek/lights5.gif");
 }
 /* this image also used for the thank-you signature */
+
+/****************************************************************
+ **
+ ** Diff Output
+ **
+ *****************************************************************/
+.diff .block	{ padding: 0.5ex 0.5em; margin: 0.5ex 0; }
+.diff .block tt	{ font-weight: bold; }
+.diff del,
+.diff ins	{ font-weight: normal; text-decoration: none; }
+
+/* These screw up NS4 --- moved to phpwiki-heavy.css
+.diff .block div { position: relative; padding-left: 1.5em; } 
+.diff .prefix	{ position: absolute; left: 0.5em; top: 0; }
+*/
+
+.diff .block	{ color: #000; background: #ffcf00; }
+.diff .context	{ color: #fff; background: #000; }
+.diff .original,
+.diff .deleted	{ background: #a40024; }
+.diff .final,
+.diff .added	{ background: #cfc; }
+/*
+.diff .original	{ background: #feb; }
+.diff .final	{ background: #efb; }
+*/
+/* These don't work in NS4 -- it completely ignores <del> and <ins>. */
+.diff del	{ background: #a40024; }
+.diff ins	{ background: #9f9; }
