@@ -1,8 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: HtmlParser.php,v 1.2 2004-10-19 13:23:06 rurban Exp $');
+rcs_id('$Id: HtmlParser.php,v 1.3 2004-12-26 17:10:44 rurban Exp $');
 /**
  * HtmlParser Class: Conversion HTML => wikimarkup
- * Requires XmlParser, XmlElement and the expat library
+ * Requires XmlParser, XmlElement and the expat (or now the libxml) library. This is all in core.
  */
 
 /*
@@ -32,7 +32,7 @@ rcs_id('$Id: HtmlParser.php,v 1.2 2004-10-19 13:23:06 rurban Exp $');
  * and to import HTML documents.
  *
  * See also php-html.sf.net for a php-only version, if 
- * you don't have the expat extension included.
+ * you don't have the expat/libxml extension included.
  * See also http://search.cpan.org/~diberri/HTML-WikiConverter/
  *
  */
@@ -410,6 +410,9 @@ extends HtmlParser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/10/19 13:23:06  rurban
+// fixed: Unknown modifier "g"
+//
 // Revision 1.1  2004/05/24 17:31:31  rurban
 // new XmlParser and HtmlParser, RssParser based on that.
 //
