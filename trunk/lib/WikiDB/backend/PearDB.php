@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.25 2002-02-09 23:07:01 lakka Exp $');
+rcs_id('$Id: PearDB.php,v 1.26 2002-02-20 17:40:32 dairiki Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -406,6 +406,7 @@ extends WikiDB_backend
         else
             list($have,$want) = array('linker', 'linkee');
 
+        
         $qpagename = $dbh->quoteString($pagename);
         
         $result = $dbh->query("SELECT $want.*"
@@ -413,8 +414,7 @@ extends WikiDB_backend
                               . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                               . "  AND $have.pagename='$qpagename'"
                               //. " GROUP BY $want.id"
-                              . " ORDER BY $want.pagename",
-                              DB_FETCHMODE_ASSOC);
+                              . " ORDER BY $want.pagename");
         
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
