@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.30 2002-11-14 21:56:53 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.31 2002-12-15 01:30:47 carstenklapp Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -59,7 +59,7 @@ if ( $isForm ) {
 	}
 	$SelectThemes = HTML::select(array('name' => "pref[theme]",'id' => 'theme'),
 				     $SelectOptions);
-	$SelectThemesDesc = _("Select your personal theme");
+	$SelectThemesDesc = _("Select your personal theme:");
     }
     
     $SelectOptions = HTML();
@@ -76,7 +76,7 @@ if ( $isForm ) {
 	}
 	$SelectLanguages = HTML::select(array('name' => "pref[lang]",'id' => 'lang'),
 					$SelectOptions);
-	$SelectLanguagesDesc = _("Select your personal language");
+	$SelectLanguagesDesc = _("Select your personal language:");
     } else {
 	if ($SelectThemes == '') {
 	    $appearance = false;
@@ -85,8 +85,8 @@ if ( $isForm ) {
 	}
     }
 } else {
-    $SelectThemesDesc = _("Personal theme");
-    $SelectLanguagesDesc = _("Personal language");
+    $SelectThemesDesc = _("Personal theme:");
+    $SelectLanguagesDesc = _("Personal language:");
     $SelectThemes = $request->getPref('theme');
     $SelectLanguages = $request->getPref('lang');
 }
@@ -128,7 +128,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   <?php } else { ?>
      '<?= $request->getPref('email') ?>'
   <?php } ?>
-  &nbsp;&nbsp;<?= _("Status") ?>:&nbsp;&nbsp;
+  &nbsp;&nbsp;<?= _("Status:") ?>&nbsp;&nbsp;
   <?php if ($request->getPref('emailVerified')) { ?>
     <?= _("Email verified.") ?>
   <?php } else { ?>
@@ -136,7 +136,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   <?php } ?>
   </p>
      <p class="hint">(<?=_("Note, that user accounts with bouncing emails will be disabled.")?>)</p>
-   <p><?=_("Get an email notification at changes of the following pages")?>:<br />
+   <p><?=_("Get an email notification at changes of the following pages:")?><br />
 
   <?php if ($isForm) { ?>
      &nbsp;<textarea name="pref[notifyPages]" cols="50" rows="5"><?=$request->getPref('notifyPages')?></textarea>
@@ -148,9 +148,9 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 
   <h2><?=_("Appearance")?></h2>
    <table cellspacing="5" border="1">
-     <tr class="hint"><td><?= _("Default system theme") ?>:</td><td><?=_("Default system language")?>:</td></tr>
+     <tr class="hint"><td><?= _("Default system theme:") ?></td><td><?=_("Default system language:")?></td></tr>
      <tr align="center"><td><?= THEME ?></td>    <td><?= DEFAULT_LANGUAGE ?></td></tr>
-     <tr class="hint"><td><?= $SelectThemesDesc?>:</td><td><?=$SelectLanguagesDesc?>:</td></tr>
+     <tr class="hint"><td><?= $SelectThemesDesc?></td><td><?=$SelectLanguagesDesc?></td></tr>
      <tr align="center"><td><?= $SelectThemes ?></td>    <td><?= $SelectLanguages ?></td></tr>
    </table>
      <p class="hint"><?=_("Here you can override site-specific default values. Currently not recommended!")?></p>
