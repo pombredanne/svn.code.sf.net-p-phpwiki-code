@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.4 2004-03-02 18:21:29 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.5 2004-03-09 08:57:10 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -21,9 +21,9 @@ rcs_id('$Id: CreateToc.php,v 1.4 2004-03-02 18:21:29 rurban Exp $');
  */
 
 /**
- * CreateToc:  Automatically link headers at the top
+ * CreateToc:  Automatically link to headers
  *
- * Usage:   <?plugin CreateToc headers=!!!,!! jshide||=1 align=left noheaders=0 ?>
+ * Usage:   <?plugin CreateToc headers=!!!,!! with_toclink||=1 jshide||=1 align=left noheaders=0 ?>
  * @author:  Reini Urban
  */
 
@@ -40,12 +40,12 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
         return array( 'pagename'  => '[pagename]', // not sure yet. TOC of another page here?
-                      // or headers=1,2,3 is also possible.
+                      // or headers=1,2,3 is also possible. (not yet)
                       'headers'   => "!!!,!!,!",   // "!!!" => h1, "!!" => h2, "!" => h3
                       'noheader'  => 0,            // omit <h1>Table of Contents</h1>
                       'align'     => 'left',
@@ -77,37 +77,58 @@ extends WikiPlugin
     	trigger_error("Heading <$h> $heading </$h> not found\n", E_USER_NOTICE);
     	return 0;
     }
+
+    /** prevent from duplicate anchors,
+     *  beautify spaces: " " => "_" and not "x20."
+     */
+    function _nextAnchor($s) {
+        static $anchors = array();
+
+        $s = str_replace(' ','_',$s);
+        $i = 1;
+        $anchor = MangleXmlIdentifier($s);
+        while (!empty($anchors[$anchor])) {
+            $anchor = MangleXmlIdentifier(sprintf("%s_%d",$s,$i++));
+        }
+        $anchors[$anchor] = $i;
+        return $anchor;
+    }
     
-    // Feature request: proper nesting
-    function extractHeaders (&$content, &$markup, $backlink=0, $level=2, $basepage='') {
+    // Feature request: proper nesting; multiple levels (e.g. 1,3)
+    function extractHeaders (&$content, &$markup, $backlink=0, $levels=false, $basepage='') {
+        if (!$levels) $levels = array(1,2);
+        reset($levels);
+        sort($levels);
         $headers = array();
-        if ($level < 1 or $level > 6) $level = 1;
         $j = 0;
         for ($i=0; $i<count($content); $i++) {
-            if (preg_match('/^\s*(!{'.$level.',3})([^!].+)$/',$content[$i],$match)) {
-            	if (!strstr($content[$i],'#[')) {
-            	    $s = trim($match[2]);
-                    $headers[] = $s;
-                    $anchor = MangleXmlIdentifier($s);
-                    // change original wikitext, but that is useless art...
-                    $content[$i] = $match[1]." #[|$anchor][$s|#TOC]";
-                    // and now change the to be printed markup (XmlTree):
-                    // search <hn>$s</hn> line in markup
-                    $j = $this->searchHeader($markup->_content, $j, $s, $match[1]);
-                    if (  $j and isset($markup->_content[$j]) and 
-                           is_string($markup->_content[$j])  ) {
-                        $x = $markup->_content[$j];
-	    		$heading = preg_quote($s);
-                    	if ($x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
-                    	                      "\$1<a name=\"$anchor\">\$2</a>\$3",$x)) {
-			    if ($backlink)
-			        $x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
-			                          "\$1<a href=\"$basepage#TOC\" name=\"$anchor\">\$2</a>\$3",
-			                          $markup->_content[$j]);
-                    	    $markup->_content[$j] = $x;
-                    	}
+            foreach ($levels as $level) {
+                if ($level < 1 or $level > 3) continue;
+                if (preg_match('/^\s*(!{'.$level.','.$level.'})([^!].+)$/',$content[$i],$match)) {
+                    if (!strstr($content[$i],'#[')) {
+                        $s = trim($match[2]);
+                        $anchor = $this->_nextAnchor($s);
+                        $headers[] = array('text' => $s, 'anchor' => $anchor, 'level' => $level);
+                        // change original wikitext, but that is useless art...
+                        $content[$i] = $match[1]." #[|$anchor][$s|#TOC]";
+                        // and now change the to be printed markup (XmlTree):
+                        // search <hn>$s</hn> line in markup
+                        $j = $this->searchHeader($markup->_content, $j, $s, $match[1]);
+                        if (  $j and isset($markup->_content[$j]) and 
+                              is_string($markup->_content[$j])  ) {
+                            $x = $markup->_content[$j];
+                            $heading = preg_quote($s);
+                            if ($x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
+                                                  "\$1<a name=\"$anchor\">\$2</a>\$3",$x)) {
+                                if ($backlink)
+                                    $x = preg_replace('/(<h\d>)('.$heading.')(<\/h\d>)/',
+                                                      "\$1<a href=\"$basepage#TOC\" name=\"$anchor\">\$2</a>\$3",
+                                                      $markup->_content[$j]);
+                                $markup->_content[$j] = $x;
+                            }
+                        }
                     }
-            	}
+                }
             }
         }
         return $headers;
@@ -130,22 +151,48 @@ extends WikiPlugin
         if (!$noheader)
             $html->pushContent(HTML::h1(HTML::a(array('name'=>'TOC'),_("Table Of Contents"))));
         $list = HTML::ul(array('class' => 'toc'));
-        //Todo: replace !!! with level 1, ...
-        //Todo: proper indent of heading
-        if ($headers = $this->extractHeaders(&$content, &$dbi->_markup, $with_toclink, 1, $basepage)) {
-            foreach ($headers as $h) {
-                $link = new WikiPageName($pagename,$page,$h);
-                $list->pushContent(HTML::li(WikiLink($link,'known',$h)));
+        if (!strstr($headers,",")) {
+            $headers = array($headers);	
+        } else {
+            $headers = explode(",",$headers);
+            //$headers = $levels[0];
+        }
+        $levels = array();
+        foreach ($headers as $h) {
+            //replace !!! with level 1, ...
+            if (strstr($h,"!")) {
+                $hcount = substr_count($h,'!');
+                $level = min(max(1, $hcount),3);
+                $levels[] = $level;
+            } else {
+                $level = min(max(1, (int) $h), 3);
+                $levels[] = $level;
             }
         }
-        //Fixme: Put new contents back to pagecache. 
-        // Will require yet another & arg to $plugin->run()
+        if ($headers = $this->extractHeaders(&$content, &$dbi->_markup, $with_toclink, $levels, $basepage)) {
+            foreach ($headers as $h) {
+                //proper heading indent
+                $level = $h['level'];
+                $indent = 3 - $level;
+                $link = new WikiPageName($pagename,$page,$h['anchor']);
+                $li = HTML::li(WikiLink($link,'known',$h['text']));
+                if ($indent == 1)
+                  $list->pushContent(HTML::li(HTML::ul($li)));
+                elseif ($indent == 2)
+                  $list->pushContent(HTML::li(HTML::ul(HTML::li(HTML::ul($li)))));
+                else
+                  $list->pushContent($li);
+            }
+        }
         $html->pushContent($list);
         return $html;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/03/02 18:21:29  rurban
+// typo: ref=>href
+//
 // Revision 1.1  2004/03/01 18:10:28  rurban
 // first version, without links, anchors and jscript folding
 //
