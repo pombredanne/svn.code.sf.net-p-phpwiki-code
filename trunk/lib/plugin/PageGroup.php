@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageGroup.php,v 1.1 2002-01-31 07:20:23 carstenklapp Exp $');
+<?php rcs_id('$Id: PageGroup.php,v 1.2 2002-01-31 08:27:33 carstenklapp Exp $');
 /**
  * Usage:
  *
@@ -81,7 +81,7 @@ extends WikiPlugin
 
         // default label
         if (!$label)
-            $label = $parent;
+            $label = $Theme->makeLinkButton($parent);
 
         // This is where the list extraction occurs from the named
         // $section on the $parent page.
