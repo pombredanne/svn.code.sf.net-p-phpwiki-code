@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.37 2002-09-02 09:34:05 rurban Exp $');
+rcs_id('$Id: display.php,v 1.38 2002-09-15 20:17:58 rurban Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -134,7 +134,8 @@ function displayPage(&$request, $tmpl = 'browse') {
 
     header("Content-Type: text/html; charset=" . CHARSET);
     // don't clobber date header given by RC
-    if ( ! ($pagename == _("RecentChanges") || $pagename == _("RecentEdits") || defined('DEBUG')) )
+    if ( ! ($pagename == _("RecentChanges") || $pagename == _("RecentEdits") || 
+            (defined('DEBUG') and DEBUG)) )
         header("Last-Modified: ".Rfc2822DateTime($revision->get('mtime')));
 
     GeneratePage($template, $pagetitle, $revision,

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.53 2002-09-02 14:36:58 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.54 2002-09-15 20:17:58 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -684,7 +684,8 @@ class Theme {
 
         $args = $version ? array('version' => $version) : false;
 
-        return $this->makeButton($label ? $label : $pagename, WikiURL($pagename, $args), 'wiki');
+        return $this->makeButton($label ? $label : $this->maybeSplitWikiWord($pagename), 
+                                 WikiURL($pagename, $args), 'wiki');
     }
 
     function _get_name_and_rev ($page_or_rev) {
@@ -811,7 +812,7 @@ class Button extends HtmlElement {
             $this->setAttr('class', $class);
         if ($request->getArg('frame'))
             $this->setAttr('target', '_top');
-        $this->pushContent($text);
+        $this->pushContent($GLOBALS['Theme']->maybeSplitWikiWord($text));
     }
 
 };
