@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.24 2002-12-14 16:21:46 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.25 2003-02-16 04:55:54 dairiki Exp $');
 
 // FIXME: write log entry.
 
@@ -108,6 +108,141 @@ class Request {
             $this->_log_entry->setStatus(302);
     }
 
+    /** Add a (key,val) pair to the ETag hash.
+     *
+     * Request with identical (key,val) sets have identical ETags.
+     *
+     * The idea is that things like plugins which can produce dynamic
+     * output should each add a value to the ETag (each using their own
+     * key...)  See the RecentChanges plugin for an example.
+     */
+    function addToETag($key, $val) {
+        $this->_etag[$key] = $val;
+    }
+
+    function hasETag() {
+        return !empty($this->_etag);
+    }
+    
+    /** Specify that the ETag for this response is a weak ETag.
+     */
+    function setETagIsWeak() {
+        $this->_etag_is_weak = true;
+    }
+
+    /** Set Last-Modified time for this request.
+     *
+     * If a more recent time has already been set, this has
+     * no effect.   (The most recent modification time takes
+     * precedence.)
+     */
+    function setModificationTime($mtime) {
+        if (!isset($this->_mtime))
+            $this->_mtime = $mtime;
+        else
+            $this->_mtime = max($this->_mtime, $mtime);
+    }
+    
+    /** Set (and check) validators for this response.
+     *
+     * This sets the appropriate "Last-Modified" and "ETag"
+     * headers in the HTTP response.
+     *
+     * Additionally, if the validators match any(all) conditional
+     * headers in the HTTP request, this method will not return, but
+     * instead will send "304 Not Modified" or "412 Precondition
+     * Failed" (as appropriate) back to the client.
+     */
+    function setValidators() {
+        $tag = $mtime = false;
+        
+        if (isset($this->_etag)) {
+            $tag = new HTTP_ETag($this->_etag, !empty($this->_etag_is_weak));
+            header("ETag: " . $tag->asString());
+        }
+        if (isset($this->_mtime)) {
+            $mtime = $this->_mtime;
+            header("Last-Modified: " . Rfc1123DateTime($mtime));
+        }
+        
+        if ($tag || $mtime) {
+            
+            // You can set CACHE_CONTROL_MAX_AGE (in index.php) if you want
+            // to allow browsers (and proxies) to be able to cache pages.
+            // (it should be set to the maximum allowed page staleness,
+            // in seconds.)
+            //
+            // Its probably not advisable to set CACHE_CONTROL_MAX_AGE to
+            // a non-zero value, as it most likely will result in stale
+            // pages after editing, and other insidious problems.
+            
+            $max_age = defined(CACHE_CONTROL_MAX_AGE) ? CACHE_CONTROL_MAX_AGE : 0;
+
+            if ($max_age > 0)
+                $cache_control = sprintf("max-age=%d", $max_age);
+            else {
+                $cache_control = "must-revalidate";
+                $max_age = -20;
+            }
+            header("Cache-Control: $cache_control");
+            header("Expires: " . Rfc1123DateTime(time() + $max_age));
+
+            $this->_checkValidators($mtime, $tag); // may not return (!)
+        }
+    }
+    
+    /** Check HTTP 1.1 (RFC 2616) validators for this response.
+     *
+     * If the validators match the "If-(Un)Modified-Since", and/or
+     * "If-(None-)Match" headers in the HTTP request, this function
+     * will not return, and will cause a "304 Not Modified"
+     * (or "412 Precondition Failed" as appropriate)
+     * response to be sent.
+     */
+    function _checkValidators($mtime=false, $tag=false) {
+        $request_method = $this->get('REQUEST_METHOD');
+        $is_get_or_head = ($request_method == "GET" or $request_method == "HEAD");
+        $conditional = false;
+        $test_failed = false;
+        
+        if ($mtime !== false) {
+            if (($since = $this->get("HTTP_IF_UNMODIFIED_SINCE")) !== false) {
+                if ($mtime > ParseRfc1123DateTime($since))
+                    $this->conditionFailed(412);
+            }
+            if ($is_get_or_head
+                and ($since = $this->get("HTTP_IF_MODIFIED_SINCE")) !== false) {
+                if ($mtime > ParseRfc1123DateTime($since))
+                    $test_failed = true;
+                $conditional = true;
+            }
+        }
+        if ($tag !== false) {
+            if (($taglist = $this->get("HTTP_IF_MATCH")) !== false) {
+                if (! $tag->matches($taglist, 'strong'))
+                    $this->conditionFailed(412);
+            }
+            if (($taglist = $this->get("HTTP_IF_NONE_MATCH")) !== false) {
+                $strong_compare = ! $is_get_or_head;
+                if (! $tag->matches($taglist, $strong_compare))
+                    $test_failed = true;
+                elseif (! $is_get_or_head)
+                    $this->conditionFailed(412);
+                $conditional = true;
+            }
+        }
+
+        if ($conditional && !$test_failed)
+            $this->conditionFailed(304);
+    }
+
+    function conditionFailed($status) {
+        $this->setStatus($status);
+        print "\n\n";
+        $this->finish();
+        exit();
+    }
+    
     function setStatus($status) {
         if (preg_match('|^HTTP/.*?\s(\d+)|i', $status, $m)) {
             header($status);
@@ -117,11 +252,13 @@ class Request {
             $status = (integer) $status;
             $reasons = array('200' => 'OK',
                              '302' => 'Found',
+                             '304' => 'Not Modified',
                              '400' => 'Bad Request',
                              '401' => 'Unauthorized',
                              '403' => 'Forbidden',
-                             '404' => 'Not Found');
-            header(sprintf("HTTP/1.0 %d %s", $status, $reason[$status]));
+                             '404' => 'Not Found',
+                             '412' => 'Precondition Failed');
+            header(sprintf("HTTP/1.1 %d %s", $status, $reason[$status]));
         }
 
         if (isset($this->_log_entry))
@@ -505,6 +642,74 @@ function Request_AccessLogEntry_shutdown_function ()
     }
     unset($Request_AccessLogEntry_entries);
 }
+
+
+class HTTP_ETag {
+    function HTTP_ETag($val, $is_weak=false) {
+
+        if (is_array($val)) {
+            // If val is a dict, hash it...
+            ksort($val);
+            $val = md5(serialize($val));
+        }
+
+        $this->_val = (string)$val;
+        $this->_weak = $is_weak;
+    }
+
+    /** Comparison
+     *
+     * Strong comparison: If either (or both) tag is weak, they
+     *  are not equal.
+     */
+    function equals($that, $strong_match=false) {
+        if ($this->_val != $that->_val)
+            return false;
+        if ($strong_match and ($this->_weak or $that->_weak))
+            return false;
+        return true;
+    }
+
+
+    function asString() {
+        $quoted = '"' . addslashes($this->_val) . '"';
+        return $this->_weak ? "W/$quoted" : $quoted;
+    }
+
+    /** Parse tag from header.
+     *
+     * This is a static member function.
+     */
+    function parse($strval) {
+        if (!preg_match(':^(W/)?"(.+)"$:i', trim($strval), $m))
+            return false;       // parse failed
+        list(,$weak,$str) = $m;
+        return new HTTP_ETag(stripslashes($str), $weak);
+    }
+
+    function matches($taglist, $strong_match=false) {
+        $taglist = trim($taglist);
+
+        if ($taglist == '*') {
+            if ($strong_match)
+                return ! $this->_weak;
+            else
+                return true;
+        }
+        
+        while (preg_match('@^(W/)?"((?:\\\\.|[^"])*)"\s*,?\s*@i',
+                          $taglist, $m)) {
+            list($match, $weak, $str) = $m;
+            $taglist = substr($taglist, strlen($match));
+            $tag = new HTTP_ETag(stripslashes($str), $weak);
+            if ($this->equals($tag, $strong_match)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 
 // Local Variables:
 // mode: php
