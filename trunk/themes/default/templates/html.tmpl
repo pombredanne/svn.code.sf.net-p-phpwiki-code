@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-rcs_id('$Id: html.tmpl,v 1.7 2004-06-25 14:29:22 rurban Exp $');
+rcs_id('$Id: html.tmpl,v 1.8 2004-12-13 09:13:33 rurban Exp $');
 /*
  * This template is responsible mainly for the outer level <html> stuff.
  *
@@ -15,7 +15,10 @@ if (browserVersion() >= 4.0)
 <?= Template('body') ?>
 <?php
 if (defined('DEBUG') and DEBUG) {
-    printf("<!-- phpwiki source: \n%s-->\n", $RCS_IDS);
+    echo "<!-- phpwiki source: \n";
+    echo $RCS_IDS;
+    echo "-->\n";
+    //printf("<!-- phpwiki source: \n%s-->\n", $RCS_IDS);
 }
 ?>
 </html>
