@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.5 2004-02-27 01:24:43 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.6 2004-02-27 01:36:51 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -119,27 +119,14 @@ extends WikiPlugin
             elseif ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
                 $message->pushContent(_("Sorry but this file is too big"),HTML::br(),HTML::br());
             }
-            elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name)) {
+            elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name) or
+                    (IsWindows() and rename($userfile_tmpname, $file_dir . $userfile_name))
+                    ) {
             	$interwiki = new PageType_interwikimap();
             	$link = $interwiki->link("Upload:$userfile_name");
-                $message->pushContent(_("File successfully uploaded to location: "),
-                                      HTML::br());
+                $message->pushContent(_("File successfully uploaded."));
+                $message->pushContent(HTML::ul(HTML::li($link)));
 
-                // the upload was a success and we need to mark this event in the "upload log"
-                $upload_log = $file_dir . basename($logfile);
-                if ($logfile) { 
-                    $this->log($userfile, $upload_log, &$message);
-                }
-                if ($autolink) {
-                    $pagehandle = $dbi->getPage($page);
-                }
-            }
-            elseif (IsWindows()) {
-            	rename($userfile_tmpname, $file_dir . $userfile_name);
-            	$interwiki = new PageType_interwikimap();
-            	$link = $interwiki->link("Upload:$userfile_name");
-                $message->pushContent(_("File quirkfully uploaded to location: "),
-                                      $link,HTML::br());
                 // the upload was a success and we need to mark this event in the "upload log"
                 $upload_log = $file_dir . basename($logfile);
                 if ($logfile) { 
@@ -148,7 +135,15 @@ extends WikiPlugin
                 if ($autolink) {
                     require_once("lib/loadsave.php");
                     $pagehandle = $dbi->getPage($page);
-                    //todo... append "\n* Upload:$userfile_name"
+                    if ($pagehandle->exists()) {// don't replace default contents
+                        $current = $pagehandle->getCurrentRevision();
+                        $version = $current->getVersion();
+                        $text = $current->getPackedContent();
+                        $newtext = $text . "\n* Upload:$userfile_name";
+                        $meta = $current->_data;
+                        $meta['summary'] = sprintf(_("uploaded %s"),$userfile_name);
+                        $pagehandle->save($newtext, $version + 1, $meta);
+                    }
                 }
             }
             else {
@@ -182,9 +177,10 @@ extends WikiPlugin
             if ($file_size <= 0) {
                 $file_size = "&lt; 0.1";
             }
+            $userfile_name = $userfile->getName();
             fwrite($log_handle,
                    "\n"
-                   . "<tr><td><a href=$userfile_name>$userfile_name</a></td>"
+                   . "<tr><td><a href=\"$userfile_name\">$userfile_name</a></td>"
                    . "<td align=\"right\">$file_size kB</td>"
                    . "<td>&nbsp;&nbsp;" . $Theme->formatDate(time()) . "</td>"
                    . "<td>&nbsp;&nbsp;<em>" . $user->getId() . "</em></td></tr>");
@@ -205,6 +201,10 @@ extends WikiPlugin
 // End:
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/02/27 01:24:43  rurban
+// use IntwerWiki links for uploaded file.
+// autolink to page prepared, but not yet ready
+//
 // Revision 1.4  2004/02/21 19:12:59  rurban
 // patch by Sascha Carlin
 //
