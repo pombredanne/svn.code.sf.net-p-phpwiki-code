@@ -1,7 +1,18 @@
-<?php rcs_id('$Id: Request.php,v 1.26 2003-02-16 05:10:00 dairiki Exp $');
-
+<?php rcs_id('$Id: Request.php,v 1.27 2003-02-16 20:04:46 dairiki Exp $');
 // FIXME: write log entry.
 
+/*
+ * You can set CACHE_CONTROL_MAX_AGE (in index.php) if you want to
+ * allow browsers (and proxies) to be able to cache pages.  (it should
+ * be set to the maximum allowed page staleness, in seconds.)
+ *
+ * Its probably not advisable to set CACHE_CONTROL_MAX_AGE to a
+ * non-zero value, as it most likely will result in stale pages after
+ * editing, and other insidious problems.
+ */
+if (!defined('CACHE_CONTROL_MAX_AGE'))
+     define('CACHE_CONTROL_MAX_AGE', 0);
+     
 class Request {
         
     function Request() {
@@ -101,6 +112,11 @@ class Request {
     function isPost () {
         return $this->get("REQUEST_METHOD") == "POST";
     }
+
+    function isGetOrHead () {
+        return in_array($this->get('REQUEST_METHOD'),
+                        array('GET', 'HEAD'));
+    }
     
     function redirect($url) {
         header("Location: $url");
@@ -108,42 +124,45 @@ class Request {
             $this->_log_entry->setStatus(302);
     }
 
-    /** Add a (key,val) pair to the ETag hash.
+    /** Set validators for this response.
      *
-     * Request with identical (key,val) sets have identical ETags.
+     * This sets a (possibly incomplete) set of validators
+     * for this response.
      *
-     * The idea is that things like plugins which can produce dynamic
-     * output should each add a value to the ETag (each using their own
-     * key...)  See the RecentChanges plugin for an example.
+     * The validator set can be extended using appendValidators().
+     *
+     * When you're all done setting and appending validators, you
+     * must call checkValidators() to check them and set the
+     * appropriate headers in the HTTP response.
+     *
+     * Example Usage:
+     *  ...
+     *  $request->setValidators(array('pagename' => $pagename,
+     *                                '%mtime' => $rev->get('mtime')));
+     *  ...
+     *  // Wups... response content depends on $otherpage, too...
+     *  $request->appendValidators(array('otherpage' => $otherpagerev->getPageName(),
+     *                                   '%mtime' => $otherpagerev->get('mtime')));
+     *  ...
+     *  // After all validators have been set:
+     *  $request->checkValidators();
      */
-    function addToETag($key, $val) {
-        $this->_etag[$key] = $val;
-    }
-
-    function hasETag() {
-        return !empty($this->_etag);
+    function setValidators($validator_set) {
+        if (is_array($validator_set))
+            $validator_set = new HTTP_ValidatorSet($validator_set);
+        $this->_validators = $validator_set;
     }
     
-    /** Specify that the ETag for this response is a weak ETag.
-     */
-    function setETagIsWeak() {
-        $this->_etag_is_weak = true;
-    }
-
-    /** Set Last-Modified time for this request.
+    /** Append validators for this response.
      *
-     * If a more recent time has already been set, this has
-     * no effect.   (The most recent modification time takes
-     * precedence.)
-     */
-    function setModificationTime($mtime) {
-        if (!isset($this->_mtime))
-            $this->_mtime = $mtime;
-        else
-            $this->_mtime = max($this->_mtime, $mtime);
+     * This appends additional validators to this response.
+     * You must call setValidators() before calling this method.
+     */ 
+    function appendValidators($validator_set) {
+        $this->_validators->append($validator_set);
     }
     
-    /** Set (and check) validators for this response.
+    /** Check validators and set headers in HTTP response
      *
      * This sets the appropriate "Last-Modified" and "ETag"
      * headers in the HTTP response.
@@ -153,95 +172,42 @@ class Request {
      * instead will send "304 Not Modified" or "412 Precondition
      * Failed" (as appropriate) back to the client.
      */
-    function setValidators() {
-        $tag = $mtime = false;
+    function checkValidators() {
+        $validators = &$this->_validators;
         
-        if (isset($this->_etag)) {
-            $tag = new HTTP_ETag($this->_etag, !empty($this->_etag_is_weak));
-            header("ETag: " . $tag->asString());
-        }
-        if (isset($this->_mtime)) {
-            $mtime = $this->_mtime;
+        // Set validator headers
+        if (($etag = $validators->getETag()) !== false)
+            header("ETag: " . $etag->asString());
+        if (($mtime = $validators->getModificationTime()) !== false)
             header("Last-Modified: " . Rfc1123DateTime($mtime));
-        }
+
+        // Set cache control headers
+        $this->cacheControl();
         
-        if ($tag || $mtime) {
-            
-            // You can set CACHE_CONTROL_MAX_AGE (in index.php) if you want
-            // to allow browsers (and proxies) to be able to cache pages.
-            // (it should be set to the maximum allowed page staleness,
-            // in seconds.)
-            //
-            // Its probably not advisable to set CACHE_CONTROL_MAX_AGE to
-            // a non-zero value, as it most likely will result in stale
-            // pages after editing, and other insidious problems.
-            
-            $max_age = defined('CACHE_CONTROL_MAX_AGE') ? CACHE_CONTROL_MAX_AGE : 0;
-
-            if ($max_age > 0)
-                $cache_control = sprintf("max-age=%d", $max_age);
-            else {
-                $cache_control = "must-revalidate";
-                $max_age = -20;
-            }
-            header("Cache-Control: $cache_control");
-            header("Expires: " . Rfc1123DateTime(time() + $max_age));
-
-            $this->_checkValidators($mtime, $tag); // may not return (!)
+        // Check conditional headers in request
+        $status = $validators->checkConditionalRequest($this);
+        if ($status) {
+            // Return short response due to failed conditionals
+            $this->setStatus($status);
+            print "\n\n";
+            $this->finish();
+            exit();
         }
+    }
+
+    /** Set the cache control headers in the HTTP response.
+     */
+    function cacheControl($max_age=CACHE_CONTROL_MAX_AGE) {
+        if ($max_age > 0)
+            $cache_control = sprintf("max-age=%d", $max_age);
+        else {
+            $cache_control = "must-revalidate";
+            $max_age = -20;
+        }
+        header("Cache-Control: $cache_control");
+        header("Expires: " . Rfc1123DateTime(time() + $max_age));
     }
     
-    /** Check HTTP 1.1 (RFC 2616) validators for this response.
-     *
-     * If the validators match the "If-(Un)Modified-Since", and/or
-     * "If-(None-)Match" headers in the HTTP request, this function
-     * will not return, and will cause a "304 Not Modified"
-     * (or "412 Precondition Failed" as appropriate)
-     * response to be sent.
-     */
-    function _checkValidators($mtime=false, $tag=false) {
-        $request_method = $this->get('REQUEST_METHOD');
-        $is_get_or_head = ($request_method == "GET" or $request_method == "HEAD");
-        $conditional = false;
-        $test_failed = false;
-        
-        if ($mtime !== false) {
-            if (($since = $this->get("HTTP_IF_UNMODIFIED_SINCE")) !== false) {
-                if ($mtime > ParseRfc1123DateTime($since))
-                    $this->conditionFailed(412);
-            }
-            if ($is_get_or_head
-                and ($since = $this->get("HTTP_IF_MODIFIED_SINCE")) !== false) {
-                if ($mtime > ParseRfc1123DateTime($since))
-                    $test_failed = true;
-                $conditional = true;
-            }
-        }
-        if ($tag !== false) {
-            if (($taglist = $this->get("HTTP_IF_MATCH")) !== false) {
-                if (! $tag->matches($taglist, 'strong'))
-                    $this->conditionFailed(412);
-            }
-            if (($taglist = $this->get("HTTP_IF_NONE_MATCH")) !== false) {
-                $strong_compare = ! $is_get_or_head;
-                if (! $tag->matches($taglist, $strong_compare))
-                    $test_failed = true;
-                elseif (! $is_get_or_head)
-                    $this->conditionFailed(412);
-                $conditional = true;
-            }
-        }
-
-        if ($conditional && !$test_failed)
-            $this->conditionFailed(304);
-    }
-
-    function conditionFailed($status) {
-        $this->setStatus($status);
-        print "\n\n";
-        $this->finish();
-        exit();
-    }
     
     function setStatus($status) {
         if (preg_match('|^HTTP/.*?\s(\d+)|i', $status, $m)) {
@@ -646,14 +612,7 @@ function Request_AccessLogEntry_shutdown_function ()
 
 class HTTP_ETag {
     function HTTP_ETag($val, $is_weak=false) {
-
-        if (is_array($val)) {
-            // If val is a dict, hash it...
-            ksort($val);
-            $val = md5(serialize($val));
-        }
-
-        $this->_val = (string)$val;
+        $this->_val = hash($val);
         $this->_weak = $is_weak;
     }
 
@@ -696,7 +655,7 @@ class HTTP_ETag {
             else
                 return true;
         }
-        
+
         while (preg_match('@^(W/)?"((?:\\\\.|[^"])*)"\s*,?\s*@i',
                           $taglist, $m)) {
             list($match, $weak, $str) = $m;
@@ -710,6 +669,124 @@ class HTTP_ETag {
     }
 }
 
+// Possible results from the HTTP_ValidatorSet::_check*() methods.
+// (Higher numerical values take precedence.)
+define ('_HTTP_VAL_PASS', 0);   // Test is irrelevant
+define ('_HTTP_VAL_NOT_MODIFIED', 1); // Test passed, content not changed
+define ('_HTTP_VAL_MODIFIED', 2); // Test failed, content changed
+define ('_HTTP_VAL_FAILED', 3); // Precondition failed.
+
+class HTTP_ValidatorSet {
+    function HTTP_ValidatorSet($validators) {
+        $this->_mtime = $this->_weak = false;
+        $this->_tag = array();
+        
+        foreach ($validators as $key => $val) {
+            if ($key == '%mtime') {
+                $this->_mtime = $val;
+            }
+            elseif ($key == '%weak') {
+                if ($val)
+                    $this->_weak = true;
+            }
+            else {
+                $this->_tag[$key] = $val;
+            }
+        }
+    }
+
+    function append($that) {
+        if (is_array($that))
+            $that = new HTTP_ValidatorSet($that);
+
+        // Pick the most recent mtime
+        if (isset($that->_mtime))
+            if (!isset($this->_mtime) || $that->_mtime > $this->_mtime)
+                $this->_mtime = $that->_mtime;
+
+        // If either is weak, we're weak
+        if (!empty($that->_weak))
+            $this->_weak = true;
+
+        $this->_tag = array_merge($this->_tag, $that->_tag);
+    }
+
+    function getETag() {
+        if (! $this->_tag)
+            return false;
+        return new HTTP_ETag($this->_tag, $this->_weak);
+    }
+
+    function getModificationTime() {
+        return $this->_mtime;
+    }
+    
+    function checkConditionalRequest (&$request) {
+        $result = max($this->_checkIfUnmodifiedSince($request),
+                      $this->_checkIfModifiedSince($request),
+                      $this->_checkIfMatch($request),
+                      $this->_checkIfNoneMatch($request));
+
+        if ($result == _HTTP_VAL_PASS || $result == _HTTP_VAL_MODIFIED)
+            return false;       // "please proceed with normal processing"
+        elseif ($result == _HTTP_VAL_FAILED)
+            return 412;         // "412 Precondition Failed"
+        elseif ($result == _HTTP_VAL_NOT_MODIFIED)
+            return 304;         // "304 Not Modified"
+
+        trigger_error("Ack, shouldn't get here", E_USER_ERROR);
+        return false;
+    }
+
+    function _checkIfUnmodifiedSince(&$request) {
+        if ($this->_mtime !== false) {
+            $since = ParseRfc1123DateTime($request->get("HTTP_IF_UNMODIFIED_SINCE"));
+            if ($since !== false && $this->_mtime > $since)
+                return _HTTP_VAL_FAILED;
+        }
+        return _HTTP_VAL_PASS;
+    }
+
+    function _checkIfModifiedSince(&$request) {
+        if ($this->_mtime !== false and $request->isGetOrHead()) {
+            $since = ParseRfc1123DateTime($request->get("HTTP_IF_MODIFIED_SINCE"));
+            if ($since !== false) {
+                if ($this->_mtime <= $since)
+                    return _HTTP_VAL_NOT_MODIFIED;
+                return _HTTP_VAL_MODIFIED;
+            }
+        }
+        return _HTTP_VAL_PASS;
+    }
+
+    function _checkIfMatch(&$request) {
+        if ($this->_tag && ($taglist = $request->get("HTTP_IF_MATCH"))) {
+            $tag = $this->getETag();
+            if (!$tag->matches($taglist, 'strong'))
+                return _HTTP_VAL_FAILED;
+        }
+        return _HTTP_VAL_PASS;
+    }
+
+    function _checkIfNoneMatch(&$request) {
+        if ($this->_tag && ($taglist = $request->get("HTTP_IF_NONE_MATCH"))) {
+            $tag = $this->getETag();
+            $strong_compare = ! $request->isGetOrHead();
+            if ($taglist) {
+                if ($tag->matches($taglist, $strong_compare)) {
+                    if ($request->isGetOrHead())
+                        return _HTTP_VAL_NOT_MODIFIED;
+                    else
+                        return _HTTP_VAL_FAILED;
+                }
+                return _HTTP_VAL_MODIFIED;
+            }
+        }
+        return _HTTP_VAL_PASS;
+    }
+}
+
+    
 
 // Local Variables:
 // mode: php

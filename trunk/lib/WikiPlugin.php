@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.29 2003-02-16 05:09:43 dairiki Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.30 2003-02-16 20:04:46 dairiki Exp $');
 
 class WikiPlugin
 {
@@ -7,20 +7,28 @@ class WikiPlugin
         return array('description' => $this->getDescription());
     }
 
-    /** Does plugin have static output?
+    /** Does the plugin manage its own HTTP validators?
      *
-     * Should return true iff the output of the plugin only depends
-     * on its arguments and/or the contents of the current page.
+     * This should be overwritten by (some) individual plugins.
      *
-     * The safe answer is false, but that will probably make the page
-     * output uncacheable.  Plugins should override this method to return
-     * true if possible.
+     * If the output of the plugin is static, depending only
+     * on the plugin arguments, query arguments and contents
+     * of the current page, this can (and should) return true.
+     *
+     * If the plugin can deduce a modification time, or equivalent
+     * sort of tag for it's content, then the plugin should
+     * call $request->appendValidators() with appropriate arguments,
+     * and should override this method to return true.
+     *
+     * When in doubt, the safe answer here is false.
+     * Unfortunately, returning false here will most likely make
+     * any page which invokes the plugin uncacheable (by HTTP proxies
+     * or browsers).
      */
-    function hasStaticOutput() {
+    function managesValidators() {
         return false;
     }
     
-
     // FIXME: args?
     function run ($dbi, $argstr, &$request) {
         trigger_error("WikiPlugin::run: pure virtual function",
@@ -280,15 +288,24 @@ class WikiPluginLoader {
                 // FIXME: change API for run() (no $dbi needed).
                 $dbi = $request->getDbh();
                 // FIXME: could do better here...
-                if (! $plugin->hasStaticOutput()) {
+                if (! $plugin->managesValidators()) {
                     // Output of plugin (potentially) depends on
                     // the state of the WikiDB (other than the current
-                    // page.)  Individual plugins should try to add
-                    // there own bits to ETag --- but for now, we'll
-                    // at least mark ETag as a weak validator.
-                    $request->setETagIsWeak();
+                    // page.)
+                    
+                    // Lacking other information, we'll assume things
+                    // changed last time the wikidb was touched.
+                    
+                    // As an additional hack, mark the ETag weak, since,
+                    // for all we know, the page might depend
+                    // on things other than the WikiDB (e.g. PhpWeather,
+                    // Calendar...)
+                    
+                    $timestamp = $dbi->getTimestamp();
+                    $request->appendValidators(array('dbi_timestamp' => $timestamp,
+                                                     '%mtime' => (int)$timestamp,
+                                                     '%weak' => true));
                 }
-                
                 return $plugin->run($dbi, $plugin_args, $request);
             case 'plugin-link':
                 return $plugin->makeLink($plugin_args, $request);
@@ -354,8 +371,6 @@ class WikiPluginLoader {
         $this->_errors = $message;
         return false;
     }
-
-
 };
 
 // (c-file-style: "gnu")

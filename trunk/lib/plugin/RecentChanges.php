@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.70 2003-02-16 05:09:43 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.71 2003-02-16 20:04:48 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -110,13 +110,13 @@ class _RecentChanges_Formatter
         }
     }
 
-    function setValidators($rev) {
+    function setValidators($most_recent_rev) {
+        $rev = $most_recent_rev;
+        $validators = array('RecentChanges-top' =>
+                            array($rev->getPageName(), $rev->getVersion()),
+                            '%mtime' => $rev->get('mtime'));
         global $request;
-        if ($request->hasETag()) {
-            $request->addToETag('RecentChanges-top',
-                                array($rev->getPageName(), $rev->getVersion()));
-            $request->setModificationTime($rev->get('mtime'));
-        }
+        $request->appendValidators($validators);
     }
 }
 
@@ -597,9 +597,27 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.70 $");
+                            "\$Revision: 1.71 $");
     }
 
+    function managesValidators() {
+        // Note that this is a bit of a fig.
+        // We set validators based on the most recently changed page,
+        // but this fails when the most-recent page is deleted.
+        // (Consider that the Last-Modified time will decrease
+        // when this happens.)
+
+        // We might be better off, leaving this as false (and junking
+        // the validator logic above) and just falling back to the
+        // default behavior (handled by WikiPlugin) of just using
+        // the WikiDB global timestamp as the mtime.
+
+        // Nevertheless, for now, I leave this here, mostly as an
+        // example for how to use appendValidators() and managesValidators().
+        
+        return true;
+    }
+            
     function getDefaultArguments() {
         return array('days'         => 2,
                      'show_minor'   => false,
@@ -742,6 +760,37 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2003/02/16 05:09:43  dairiki
+// Starting to fix handling of the HTTP validator headers, Last-Modified,
+// and ETag.
+//
+// Last-Modified was being set incorrectly (but only when DEBUG was not
+// defined!)  Setting a Last-Modified without setting an appropriate
+// Expires: and/or Cache-Control: header results in browsers caching
+// the page unconditionally (for a certain period of time).
+// This is generally bad, since it means people don't see updated
+// page contents right away --- this is particularly confusing to
+// the people who are editing pages since their edits don't show up
+// next time they browse the page.
+//
+// Now, we don't allow caching of pages without revalidation
+// (via the If-Modified-Since and/or If-None-Match request headers.)
+// (You can allow caching by defining CACHE_CONTROL_MAX_AGE to an
+// appropriate value in index.php, but I advise against it.)
+//
+// Problems:
+//
+//   o Even when request is aborted due to the content not being
+//     modified, we currently still do almost all the work involved
+//     in producing the page.  So the only real savings from all
+//     this logic is in network bandwidth.
+//
+//   o Plugins which produce "dynamic" output need to be inspected
+//     and made to call $request->addToETag() and
+//     $request->setModificationTime() appropriately, otherwise the
+//     page can change without the change being detected.
+//     This leads to stale pages in cache again...
+//
 // Revision 1.69  2003/01/18 22:01:43  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;

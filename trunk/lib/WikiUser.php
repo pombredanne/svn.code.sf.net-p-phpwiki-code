@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.34 2003-02-15 02:21:54 dairiki Exp $');
+rcs_id('$Id: WikiUser.php,v 1.35 2003-02-16 20:04:47 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -639,9 +639,20 @@ class UserPreferences {
         else
             $this->_prefs[$name] = $newvalue;
     }
+
+    function hash () {
+        return hash($this->_prefs);
+    }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2003/02/15 02:21:54  dairiki
+// API Change!  Explicit $request argument added to contructor for WikiUser.
+//
+// This seemed the best way to fix a problem whereby the WikiDB
+// was being opened twice.  (Which while being merely inefficient
+// when using an SQL backend causes hangage when using a dba backend.)
+//
 // Revision 1.33  2003/01/22 03:21:40  zorloc
 // Modified WikiUser constructor to move the DB request for the homepage to
 // the end of the logic to prevent it from being requested and then dropped.
