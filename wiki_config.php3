@@ -1,4 +1,4 @@
-<!-- $Id: wiki_config.php3,v 1.10 2000-06-21 22:57:17 ahollosi Exp $ -->
+<!-- $Id: wiki_config.php3,v 1.11 2000-06-25 03:46:18 wainstead Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for
@@ -11,14 +11,15 @@
 
    // You should set the $ServerAddress as below, and comment out
    // the if/else below.
-   //$ServerAddress = "http://phpwiki.sourceforge.net/wiki/";
+   $ServerAddress = "http://127.0.0.1:8080/phpwiki/";
 
+/*
    if (preg_match("#(.*?)([^/]*$)#", $REQUEST_URI, $matches)) {
       $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT" . $matches[1];
    } else {
       $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT$REQUEST_URI";
    }
-
+*/
    // if you are using MySQL instead of a DBM to store your
    // Wiki pages, use wiki_mysql.php3 instead of wiki_dbmlib.php3
    // See INSTALL.mysql for details on using MySQL
@@ -52,6 +53,15 @@
    $pg_dbhost    = "localhost";
    $pg_dbport    = "5432";
 */
+
+/*
+   // MiniSQL (mSQL) settings.
+   include "wiki_msql.php3";
+   $msql_db = "wiki";
+   $WikiDataBase = "wiki";
+   $ArchiveDataBase = "archive";
+*/
+
 
    $ScriptName = "index.php3";
 
