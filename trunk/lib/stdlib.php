@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.182 2004-05-25 12:40:48 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.183 2004-06-01 10:22:56 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1490,8 +1490,38 @@ function stripForSearch( $string ) {
 }
 */
 
+/** 
+ * Workaround for allow_url_fopen, to get the content of an external URI.
+ * It returns the contents in one slurp. Parsers might want to check for allow_url_fopen
+ * and use fopen, fread chunkwise. (see lib/XmlParser.php)
+ */
+function url_get_contents( $uri ) {
+    if (get_cfg_var('allow_url_fopen')) { // was ini_get('allow_url_fopen'))
+        return @file_get_contents($uri);
+    } else {
+        require_once("lib/HttpClient.php");
+        $bits = parse_url($uri);
+        $host = $bits['host'];
+        $port = isset($bits['port']) ? $bits['port'] : 80;
+        $path = isset($bits['path']) ? $bits['path'] : '/';
+        if (isset($bits['query'])) {
+            $path .= '?'.$bits['query'];
+        }
+        $client = new HttpClient($host, $port);
+        $client->use_gzip = false;
+        if (!$client->get($path)) {
+            return false;
+        } else {
+            return $client->getContent();
+        }
+    }
+}
+
 
 // $Log: not supported by cvs2svn $
+// Revision 1.182  2004/05/25 12:40:48  rurban
+// trim the pagename
+//
 // Revision 1.181  2004/05/25 10:18:44  rurban
 // Check for UTF-8 URLs; Internet Explorer produces these if you
 // type non-ASCII chars in the URL bar or follow unescaped links.
