@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.82 2005-01-18 08:55:51 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.83 2005-01-18 10:11:29 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -578,7 +578,7 @@ extends WikiDB_backend
                                 . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                                 . " AND $have.pagename='$qpagename'"
                                 . " AND $want.pagename='$qlink'"
-                                . "LIMIT 1");
+                                . " LIMIT 1");
         return $row['result'];
     }
 
@@ -1218,6 +1218,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.82  2005/01/18 08:55:51  rurban
+// fix quoting
+//
 // Revision 1.81  2005/01/17 08:53:09  rurban
 // pagedata fix by Charles Corrigan
 //
