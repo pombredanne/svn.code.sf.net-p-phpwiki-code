@@ -1,7 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.5 2002-01-21 06:55:47 dairiki Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.6 2002-01-21 19:14:30 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
+require_once('lib/PageList.php');
 
 /**
  */
@@ -33,23 +34,25 @@ extends WikiPlugin
         
         $query = new TextSearchQuery($s);
         $pages = $dbi->titleSearch($query);
-        $list = HTML::ul();
+
+        $pagelist = new PageList();
+//        $pagelist->insertColumn(_("Hits"));
+//        $pagelist->addColumn(_("Last Modified"));
+
         while ($page = $pages->next()) {
-            $name = $page->getName();
-            $list->pushContent(HTML::li($Theme->linkExistingWikiWord($name)));
-            $last_name = $name;
+            $pagelist->addPage($page);
+            $last_name = $page->getName();
         }
 
-        if ($auto_redirect && count($list->getContent()) == 1)
+        if ($auto_redirect && ($pagelist->getTotal() == 1))
             $request->redirect(WikiURL($last_name));
-        if (!$list->getContent())
+        if ($pagelist->getTotal() == 0)
             $list = HTML::blockquote(_("<no matches>"));
         if ($noheader)
-            return $list;
+            return $pagelist->getContent();
         
-
         return array(HTML::p(fmt("Title search results for '%s'", $s)),
-                     $list);
+                     $pagelist->getContent());
     }
 };
         
