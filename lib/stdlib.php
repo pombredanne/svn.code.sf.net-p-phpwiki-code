@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.201 2004-09-14 10:06:42 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.202 2004-09-14 10:11:44 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1633,7 +1633,7 @@ function url_get_contents( $uri ) {
 function GenerateId($name) {
     static $ids = array();
     if (empty($ids[$name])) {
-        $ids[$name] = 0;
+        $ids[$name] = 1;
         return $name;
     } else {
         $ids[$name]++;
@@ -1644,6 +1644,9 @@ function GenerateId($name) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.201  2004/09/14 10:06:42  rurban
+// generate iterated plugin ids, set plugin span id also
+//
 // Revision 1.200  2004/08/05 17:34:26  rurban
 // move require to sortby branch
 //
