@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.53 2001-12-06 06:24:44 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.54 2001-12-06 18:29:15 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -122,25 +122,32 @@ function QElement($tag, $args = '', $content = '')
                      array('href' => $url, 'class' => $class),
                      $linktext);
       } else {
-            //ideally the link image would be specified by a map file
-            //similar to the interwiki.map
-            $linkproto = substr($url, 0, strrpos($url, ":"));
-			switch($linkproto) {
-            case "mailto":
-                $linkimg = "/images/mailto.png";
-            case "http":
-                $linkimg = "/images/http.png";
-            case "https":
-                $linkimg = "/images/https.png";
-            case "ftp":
-                $linkimg = "/images/ftp.png";
-            else
-                $linkimg = "/images/http.png";
-            }
+          //ideally the link image would be specified by a map file
+          //similar to the interwiki.map
+          $linkproto = substr($url, 0, strrpos($url, ":"));
+          switch($linkproto) {
+          case "mailto":
+              $linkimg = "/images/mailto.png";
+              break;
+          case "http":
+              $linkimg = "/images/http.png";
+              break;
+          case "https":
+              $linkimg = "/images/https.png";
+              break;
+          case "ftp":
+              $linkimg = "/images/ftp.png";
+              break;
+          default:
+              $linkimg = "/images/http.png";
+              break;
+          }
       return Element('a',
-                 array('href' => $url, 'class' => $class),
-                 Element('img', array('src' => DATA_PATH . $linkimg, 'alt' => $linkproto)) . $linktext);
-    }
+                     array('href' => $url, 'class' => $class),
+                     Element('img', array('src' => DATA_PATH . $linkimg,
+                                          'alt' => $linkproto))
+                     . $linktext);
+      }
    }
 
 function LinkWikiWord($wikiword, $linktext='') {
@@ -385,11 +392,6 @@ function LinkPhpwikiURL($url, $text = '') {
          } else {
 	    $link['type'] = "url-$linktype";
             $link['link'] = LinkURL($URL, $linkname);
-            
-        
-           $link['link'] = LinkURL($URL, $linkname);
-        
-
 	 }
       } elseif (preg_match("#^phpwiki:(.*)#", $URL, $match)) {
 	 $link['type'] = "url-wiki-$linktype";
