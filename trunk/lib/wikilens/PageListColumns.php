@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageListColumns.php,v 1.3 2004-06-21 17:01:41 rurban Exp $');
+rcs_id('$Id: PageListColumns.php,v 1.4 2004-06-30 20:12:09 dfrankow Exp $');
 
 /*
  Copyright 2004 Mike Cassano
@@ -33,6 +33,7 @@ rcs_id('$Id: PageListColumns.php,v 1.3 2004-06-21 17:01:41 rurban Exp $');
 
 require_once('lib/PageList.php');
 require_once("lib/wikilens/RatingsUser.php");
+require_once('lib/plugin/RateIt.php');
 
 /**
  * Column representing the number of backlinks to the page.
@@ -43,7 +44,13 @@ class _PageList_Column_numbacklinks extends _PageList_Column_custom
 {
     function _getValue ($page_handle, &$revision_handle) 
     {
-        return $page_handle->getNumLinks();
+        //return $page_handle->getNumLinks();
+        $theIter = $page_handle->getBackLinks();
+        $total = 0;
+        while($curr = $theIter->next()){
+            $total++;
+        }
+        return $total;
     }
 };
 
@@ -141,10 +148,10 @@ class _PageList_Column_ratingvalue extends _PageList_Column {
 
     function _PageList_Column_ratingvalue ($params) {
     	$this->_pagelist =& $params[3];
-        $this->_user = $this->_pagelist->getOption('user');
+        $this->_user =& $params[4];//$this->_pagelist->getOption('user');
         assert(!empty($this->_user));
         $this->_PageList_Column($params[0], $params[1], $params[2]);
-        $this->_dimension   = $this->_pagelist->getOption('dimension');;
+        $this->_dimension   = $this->_pagelist->getOption('dimension');
     }
 
     function format ($pagelist, $page_handle, &$revision_handle) 
@@ -203,7 +210,7 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
     }
 
     function format ($pagelist, $page_handle, &$revision_handle) {
-        $widget = RatingWidgetHtml($page_handle->getName(), "", "pagerat", $this->_dimension, "small");
+        $widget = WikiPlugin_RateIt::RatingWidgetHtml($page_handle->getName(), "", "pagerat", $this->_dimension, "small");
         $td = HTML::td($widget);
         $td->setAttr('nowrap', 'nowrap');
         return $td;
@@ -233,7 +240,8 @@ class _PageList_Column_prediction extends _PageList_Column
         $active_user = $request->getUser();
         // This needs to be a reference so things aren't recomputed for this user
         $this->_active_ratings_user =& RatingsUserFactory::getUser($active_user->getId());
-    	$this->_pagelist =& $params[3];
+    	
+        $this->_pagelist =& $params[3];
         $this->_PageList_Column($params[0], $params[1], $params[2]);
         $this->_dimension = $this->_pagelist->getOption('dimension');;
         $this->_users = $this->_pagelist->getOption('users');
@@ -277,9 +285,10 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
         // the memoization in pearson_similarity and mean_rating to work
         $this->_active_ratings_user =& new RatingsUser($active_user->getId());
         $this->_PageList_Column($params[0], $params[1], $params[2]);
+        
         if (!empty($params[3])) {
-    	    $this->_pagelist =& $params[3];
-            $this->_dimension = $this->_pagelist->getOption('dimension');;
+            $this->_pagelist =& $params[3];
+            $this->_dimension = $this->_pagelist->getOption('dimension');
             $this->_users = $this->_pagelist->getOption('users');
         }
     }
@@ -287,7 +296,6 @@ class _PageList_Column_top3recs extends _PageList_Column_custom
     function _getValue ($page_handle, &$revision_handle) 
     {
         $ratings = $this->_active_ratings_user->get_ratings();
-        
         $iter = $page_handle->getLinks();
         $recs = array();
         while($current = $iter->next()) {
@@ -348,6 +356,9 @@ $WikiTheme->addPageListColumn
     ));
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/06/21 17:01:41  rurban
+// fix typo and rating method call
+//
 // Revision 1.2  2004/06/21 16:22:32  rurban
 // add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
 // fixed dumping buttons locally (images/buttons/),
