@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.9 2004-05-03 20:44:58 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.10 2004-05-03 21:57:47 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -22,7 +22,7 @@ rcs_id('$Id: _WikiTranslation.php,v 1.9 2004-05-03 20:44:58 rurban Exp $');
 
 /**
  * _WikiTranslation:  Display pagenames and other strings in various languages.
- * Can be used to let a favorite translation service translate a whole page. 
+ * Can also be used to let a favorite translation service translate a whole page. 
  * Current favorite: translate.google.com if from_lang = en or fr
  *
  * Examples:
@@ -70,12 +70,12 @@ $pgsrc_container =
     _("NewMarkupTestPage") .','.
     _("OldMarkupTestPage") .','.
     _("OldStyleTablePlugin") .','.
-    _("PageDump") .','.
+//  _("PageDump") .','.
     _("PageGroupTest") .','.
-    _("PageGroupTestFour") .','.
-    _("PageGroupTestOne") .','.
-    _("PageGroupTestThree") .','.
-    _("PageGroupTestTwo") .','.
+    _("PageGroupTest/Four") .','.
+    _("PageGroupTest/One") .','.
+    _("PageGroupTest/Three") .','.
+    _("PageGroupTest/Two") .','.
     _("PgsrcTranslation") .','.
     _("PhotoAlbumPlugin") .','.
     _("PhpHighlightPlugin") .','.
@@ -119,7 +119,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -395,6 +395,11 @@ class _PageList_Column_custom extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/05/03 20:44:58  rurban
+// fixed gettext strings
+// new SqlResult plugin
+// _WikiTranslation: fixed init_locale
+//
 // Revision 1.8  2004/05/02 21:26:38  rurban
 // limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
 //   because they will not survive db sessions, if too large.

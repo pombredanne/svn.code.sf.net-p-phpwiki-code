@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.91 2004-05-03 11:40:42 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.92 2004-05-03 21:57:47 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1268,13 +1268,13 @@ class RelatedExternalLinksBox extends SidebarBox {
 
 function listAvailableThemes() {
     $available_themes = array(); 
-    $dir_root = 'themes/';
+    $dir_root = 'themes';
     if (defined('PHPWIKI_DIR'))
         $dir_root = PHPWIKI_DIR . "/$dir_root";
     $dir = dir($dir_root);
     if ($dir) {
         while($entry = $dir->read()) {
-            if (is_dir($dir_root.$entry)
+            if (is_dir($dir_root.'/'.$entry)
                 && (substr($entry,0,1) != '.')
                 && $entry != 'CVS') {
                 array_push($available_themes, $entry);
@@ -1287,15 +1287,16 @@ function listAvailableThemes() {
 
 function listAvailableLanguages() {
     $available_languages = array('en');
-    $dir_root = 'locale/';
+    $dir_root = 'locale';
     if (defined('PHPWIKI_DIR'))
         $dir_root = PHPWIKI_DIR . "/$dir_root";
     if ($dir = dir($dir_root)) {
         while($entry = $dir->read()) {
-            if (is_dir($dir_root.$entry)
+            if (is_dir($dir_root."/".$entry)
                 && (substr($entry,0,1) != '.')
                 && $entry != 'po'
-                && $entry != 'CVS') {
+                && $entry != 'CVS') 
+            {
                 array_push($available_languages, $entry);
             }
         }
@@ -1305,6 +1306,10 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.91  2004/05/03 11:40:42  rurban
+// put listAvailableLanguages() and listAvailableThemes() from SystemInfo and
+// UserPreferences into Themes.php
+//
 // Revision 1.90  2004/05/02 19:12:14  rurban
 // fix sf.net bug #945154 Konqueror alt css
 //

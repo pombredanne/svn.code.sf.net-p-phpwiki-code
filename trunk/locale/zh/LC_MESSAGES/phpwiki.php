@@ -152,8 +152,6 @@ $locale["(no regex, case-sensitive)"] =
    "(no regex, 不分大小寫)";
 $locale["(ugo : rwx)"] =
    "(ugo : rwx)";
-$locale["));"] =
-   "));";
 $locale["- saved to database as version %d"] =
    "- 已經以版本 %d 存入資料庫中";
 $locale["-???"] =
@@ -604,8 +602,6 @@ $locale["FindPage"] =
    "FindPage";
 $locale["First"] =
    "開頭";
-$locale["Fixed album location is not allowed."] =
-   "固定的相簿位置是不被允許的";
 $locale["FrameInclude"] =
    "FrameInclude";
 $locale["FrameIncludePlugin"] =
@@ -1006,8 +1002,6 @@ $locale["Page now unlocked."] =
    "頁面已被解鎖定.";
 $locale["Page statistics"] =
    "頁面統計";
-$locale["PageChange Notification %s"] =
-   "PageChange 通知 %s";
 $locale["PageChange Notification Error: Couldn't send %s to %s"] =
    "PageChange 通知錯誤: 無法送 %s 給 %s";
 $locale["PageChange Notification of %s sent to %s"] =

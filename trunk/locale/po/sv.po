@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-30 00:51+0100\n"
+"POT-Creation-Date: 2004-05-03 21:16+0100\n"
 "PO-Revision-Date: 2001-01-27 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgid ""
 "USE_DB_SESSION to false."
 msgstr ""
 
-#: ../lib/DB_Session.php:513 ../lib/DB_Session.php:515
+#: ../lib/DB_Session.php:519 ../lib/DB_Session.php:521
 #: ../lib/WikiDB/backend/dba.php:23 ../lib/WikiDB/backend/dba.php:25
 #, c-format
 msgid "%s: Can't open dba database"
@@ -58,26 +58,25 @@ msgstr ""
 msgid "It's free however."
 msgstr ""
 
-#: ../lib/IniConfig.php:440
+#: ../lib/IniConfig.php:467
 msgid "An unnamed PhpWiki"
 msgstr ""
 
-#: ../lib/IniConfig.php:443 ../lib/imagecache.php:57
-#: ../themes/Wordpress/templates/actionbar.tmpl:21
+#: ../lib/IniConfig.php:470 ../themes/Wordpress/templates/actionbar.tmpl:21
 #: ../themes/default/templates/userprefs.tmpl:119
 msgid "HomePage"
 msgstr "Framsida"
 
-#: ../lib/IniConfig.php:457
+#: ../lib/IniConfig.php:484
 #, c-format
 msgid "Encrypted passwords cannot be used: %s."
 msgstr ""
 
-#: ../lib/IniConfig.php:463
+#: ../lib/IniConfig.php:490
 msgid "The admin password cannot be empty. Please update your /index.php"
 msgstr ""
 
-#: ../lib/IniConfig.php:467
+#: ../lib/IniConfig.php:494
 msgid ""
 "Empty db_session_table. Turn USE_DB_SESSION off or define the table name."
 msgstr ""
@@ -199,38 +198,38 @@ msgstr ""
 msgid "Columns: %s."
 msgstr ""
 
-#: ../lib/PagePerm.php:260
+#: ../lib/PagePerm.php:261
 #, fuzzy
 msgid "List this page and all subpages"
 msgstr "Kunde inte spara sidan \"%s\""
 
-#: ../lib/PagePerm.php:261
+#: ../lib/PagePerm.php:262
 msgid "View this page and all subpages"
 msgstr ""
 
-#: ../lib/PagePerm.php:262
+#: ../lib/PagePerm.php:263
 msgid "Edit this page and all subpages"
 msgstr ""
 
-#: ../lib/PagePerm.php:263
+#: ../lib/PagePerm.php:264
 #, fuzzy
 msgid "Create a new (sub)page"
 msgstr "Kunde inte spara sidan \"%s\""
 
-#: ../lib/PagePerm.php:264
+#: ../lib/PagePerm.php:265
 msgid "Download the page contents"
 msgstr ""
 
-#: ../lib/PagePerm.php:265
+#: ../lib/PagePerm.php:266
 msgid "Change page attributes"
 msgstr ""
 
-#: ../lib/PagePerm.php:266
+#: ../lib/PagePerm.php:267
 #, fuzzy
 msgid "Remove this page"
 msgstr "Ta bort sida"
 
-#: ../lib/PagePerm.php:295
+#: ../lib/PagePerm.php:296
 #, c-format
 msgid "Unsupported ACL access type %s ignored."
 msgstr ""
@@ -257,7 +256,7 @@ msgstr "Ny|modig"
 msgid "InterWiki Address"
 msgstr ""
 
-#: ../lib/RSSWriter091.php:116 ../lib/loadsave.php:875
+#: ../lib/RSSWriter091.php:116 ../lib/loadsave.php:899
 #: ../lib/plugin/RecentChanges.php:258 ../lib/plugin/RecentChanges.php:270
 #: ../lib/plugin/RecentChanges.php:372 ../lib/plugin/RecentChanges.php:448
 #: ../lib/plugin/RecentChanges.php:581 ../lib/plugin/RecentChanges.php:654
@@ -271,7 +270,7 @@ msgstr ""
 msgid "RecentChanges"
 msgstr "SenasteÄndringar"
 
-#: ../lib/Request.php:57 ../lib/main.php:790 ../lib/main.php:803
+#: ../lib/Request.php:57 ../lib/main.php:807 ../lib/main.php:820
 #, c-format
 msgid "%s is not writable."
 msgstr ""
@@ -280,7 +279,7 @@ msgstr ""
 msgid "The PhpWiki access log file"
 msgstr ""
 
-#: ../lib/Request.php:59 ../lib/main.php:793
+#: ../lib/Request.php:59 ../lib/main.php:810
 #, c-format
 msgid "Please ensure that %s is writable, or redefine %s in index.php."
 msgstr ""
@@ -290,7 +289,7 @@ msgstr ""
 msgid "the file '%s'"
 msgstr "senast ändrad %s"
 
-#: ../lib/Template.php:161
+#: ../lib/Template.php:159
 #, c-format
 msgid "%4d  %s\n"
 msgstr "%4d  %s\n"
@@ -371,8 +370,8 @@ msgid "Sign Out"
 msgstr "Logga ut"
 
 #: ../lib/Theme.php:851 ../lib/WikiUser.php:205 ../lib/WikiUserNew.php:468
-#: ../lib/WikiUserNew.php:1347 ../themes/Wordpress/templates/signin.tmpl:69
-#: ../themes/default/templates/login.tmpl:71
+#: ../lib/WikiUserNew.php:1342 ../themes/Wordpress/templates/signin.tmpl:69
+#: ../themes/default/templates/login.tmpl:70
 msgid "Sign In"
 msgstr "Anslut"
 
@@ -388,16 +387,16 @@ msgstr "Lås upp Sida"
 msgid "Remove Page"
 msgstr "Ta bort sida"
 
-#: ../lib/Theme.php:1212
+#: ../lib/Theme.php:1214
 #, c-format
 msgid "%s: has no box method"
 msgstr ""
 
-#: ../lib/Theme.php:1231
+#: ../lib/Theme.php:1233
 msgid "Related Links"
 msgstr ""
 
-#: ../lib/Theme.php:1251
+#: ../lib/Theme.php:1253
 msgid "External Links"
 msgstr ""
 
@@ -420,37 +419,37 @@ msgstr ""
 msgid "Optimizing %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:810
-#, c-format
-msgid "PageChange Notification %s"
-msgstr ""
+#: ../lib/WikiDB.php:811
+#, fuzzy
+msgid "Page change"
+msgstr "Visa källkoden och referenser för sidan"
 
-#: ../lib/WikiDB.php:834
+#: ../lib/WikiDB.php:835
 #, fuzzy
 msgid "New Page"
 msgstr "Ta bort sida"
 
-#: ../lib/WikiDB.php:836
+#: ../lib/WikiDB.php:837
 #, fuzzy, c-format
 msgid "Edited by: %s"
 msgstr "Redigera: %s"
 
-#: ../lib/WikiDB.php:843
+#: ../lib/WikiDB.php:844
 #, c-format
 msgid "PageChange Notification of %s sent to %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:846
+#: ../lib/WikiDB.php:847
 #, c-format
 msgid "PageChange Notification Error: Couldn't send %s to %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:1291 ../themes/default/templates/homepage.tmpl:7
+#: ../lib/WikiDB.php:1292 ../themes/default/templates/homepage.tmpl:7
 #, c-format
 msgid "Describe %s here."
 msgstr "Beskriv %s här."
 
-#: ../lib/WikiDB.php:1326
+#: ../lib/WikiDB.php:1327
 #, c-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr ""
@@ -546,7 +545,7 @@ msgstr ""
 msgid "No LDAP in this PHP version"
 msgstr ""
 
-#: ../lib/WikiGroup.php:964 ../lib/WikiUserNew.php:1910
+#: ../lib/WikiGroup.php:964 ../lib/WikiUserNew.php:1905
 #, c-format
 msgid "Unable to connect to LDAP server %s"
 msgstr ""
@@ -641,60 +640,60 @@ msgstr ""
 msgid "Default preferences will be used."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1090
+#: ../lib/WikiUserNew.php:1085
 msgid ""
 "The length of the stored password is shorter than the system policy allows. "
 "Sorry, you cannot login.\n"
 " You have to ask the System Administrator to reset your password."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1104 ../lib/pear/File_Passwd.php:198
+#: ../lib/WikiUserNew.php:1099 ../lib/pear/File_Passwd.php:198
 msgid "The crypt function is not available in this version of PHP."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1105
+#: ../lib/WikiUserNew.php:1100
 msgid ""
 "Please set ENCRYPTED_PASSWD to false in index.php and probably change "
 "ADMIN_PASSWD."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1118
+#: ../lib/WikiUserNew.php:1113
 msgid "Please set ENCRYPTED_PASSWD to true in index.php."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1245
+#: ../lib/WikiUserNew.php:1240
 #, c-format
 msgid ""
 "\n"
 "You stored an empty password in your '%s' page.\n"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1246
+#: ../lib/WikiUserNew.php:1241
 msgid "Your access permissions are only for a BogoUser.\n"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1247
+#: ../lib/WikiUserNew.php:1242
 msgid "Please set your password in UserPreferences."
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1948
+#: ../lib/WikiUserNew.php:1943
 msgid "Unable to connect to LDAP server "
 msgstr ""
 
-#: ../lib/WikiUserNew.php:1978
+#: ../lib/WikiUserNew.php:1973
 msgid "Unable to connect to IMAP server "
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2042
+#: ../lib/WikiUserNew.php:2037
 #, fuzzy, c-format
 msgid "Couldn't connect to %s"
 msgstr "Ger upp, kan ej skapa anslutning till databasen: %s"
 
-#: ../lib/WikiUserNew.php:2430
+#: ../lib/WikiUserNew.php:2429
 msgid "Email Verification"
 msgstr ""
 
-#: ../lib/WikiUserNew.php:2431
+#: ../lib/WikiUserNew.php:2430
 #, c-format
 msgid ""
 "Welcome to %s!\n"
@@ -793,9 +792,9 @@ msgstr "Kunde inte spara sidan \"%s\""
 msgid "Versions are identical"
 msgstr "Versionerna är identiska"
 
-#: ../lib/display.php:54 ../lib/plugin/PageGroup.php:91
-#: ../lib/plugin/PageGroup.php:156 ../lib/plugin/PageGroup.php:167
-#: ../lib/plugin/PageGroup.php:183 ../lib/plugin/PageGroup.php:190
+#: ../lib/display.php:54 ../lib/plugin/PageGroup.php:102
+#: ../lib/plugin/PageGroup.php:166 ../lib/plugin/PageGroup.php:177
+#: ../lib/plugin/PageGroup.php:193 ../lib/plugin/PageGroup.php:200
 #: ../lib/plugin/PageHistory.php:216 ../lib/plugin/UnfoldSubpages.php:165
 #: ../themes/default/templates/head.tmpl:45
 #: ../themes/wikilens/templates/head.tmpl:45
@@ -1008,7 +1007,7 @@ msgstr "Ta bort sida"
 msgid "has edit conflicts - overwriting anyway"
 msgstr ""
 
-#: ../lib/loadsave.php:471 ../lib/loadsave.php:840 ../lib/loadsave.php:843
+#: ../lib/loadsave.php:471 ../lib/loadsave.php:841 ../lib/loadsave.php:844
 msgid "The PhpWiki programming team"
 msgstr ""
 
@@ -1026,17 +1025,17 @@ msgstr ""
 msgid "- saved to database as version %d"
 msgstr "version %d"
 
-#: ../lib/loadsave.php:500 ../lib/loadsave.php:649
+#: ../lib/loadsave.php:500 ../lib/loadsave.php:648
 #, c-format
 msgid "MIME file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:501 ../lib/loadsave.php:654
+#: ../lib/loadsave.php:501 ../lib/loadsave.php:653
 #, c-format
 msgid "Serialized file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:502 ../lib/loadsave.php:668
+#: ../lib/loadsave.php:502 ../lib/loadsave.php:667
 #, fuzzy, c-format
 msgid "plain file %s"
 msgstr "senast ändrad %s"
@@ -1076,245 +1075,258 @@ msgstr "%s: fila ingen funna"
 msgid "Default InterWiki map file not loaded."
 msgstr ""
 
-#: ../lib/loadsave.php:682 ../lib/loadsave.php:694
+#: ../lib/loadsave.php:681 ../lib/loadsave.php:693
 msgid "Skipping"
 msgstr ""
 
-#: ../lib/loadsave.php:793
+#: ../lib/loadsave.php:792
 #, c-format
 msgid "Unable to load: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:800
+#: ../lib/loadsave.php:799
 #, c-format
 msgid "Bad file type: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:815
+#: ../lib/loadsave.php:816
 #, c-format
 msgid "Loading '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:846
+#: ../lib/loadsave.php:847
 msgid "Loading up virgin wiki"
 msgstr ""
 
-#: ../lib/loadsave.php:866
+#: ../lib/loadsave.php:890
 msgid "No uploaded file to upload?"
 msgstr ""
 
-#: ../lib/loadsave.php:870
+#: ../lib/loadsave.php:894
 #, c-format
 msgid "Uploading %s"
 msgstr ""
 
-#: ../lib/main.php:292
+#: ../lib/main.php:296
+#, fuzzy, c-format
+msgid "%s is disallowed on this wiki for user %s (level: %d)."
+msgstr "De %d mest populära sidorna för den här wikin:"
+
+#: ../lib/main.php:300
 #, fuzzy, c-format
 msgid "%s is disallowed on this wiki."
 msgstr "De %d mest populära sidorna för den här wikin:"
 
-#: ../lib/main.php:296
+#: ../lib/main.php:304
 #, c-format
 msgid "You must sign in to %s."
 msgstr ""
 
-#: ../lib/main.php:298
+#: ../lib/main.php:306
 #, c-format
 msgid "You must log in to %s."
 msgstr ""
 
-#: ../lib/main.php:300 ../lib/plugin/PluginManager.php:65
+#: ../lib/main.php:308 ../lib/plugin/PluginManager.php:65
 #, c-format
 msgid "You must be an administrator to %s."
 msgstr ""
 
-#: ../lib/main.php:313
+#: ../lib/main.php:321
 #, fuzzy
 msgid "view this page"
 msgstr "%s för den här sidan"
 
-#: ../lib/main.php:314
+#: ../lib/main.php:322
 #, fuzzy
 msgid "diff this page"
 msgstr "%s för den här sidan"
 
-#: ../lib/main.php:315
+#: ../lib/main.php:323
 #, fuzzy
 msgid "dump html pages"
 msgstr "Ta bort sida"
 
-#: ../lib/main.php:316
+#: ../lib/main.php:324
 #, fuzzy
 msgid "dump serial pages"
 msgstr "De %d mest populära sidorna för den här wikin:"
 
-#: ../lib/main.php:317
+#: ../lib/main.php:325
 #, fuzzy
 msgid "edit this page"
 msgstr "%s för den här sidan"
 
-#: ../lib/main.php:318
+#: ../lib/main.php:326
 #, fuzzy
 msgid "create this page"
 msgstr "Kunde inte spara sidan \"%s\""
 
-#: ../lib/main.php:319
+#: ../lib/main.php:327
 #, fuzzy
 msgid "load files into this wiki"
 msgstr "De %d mest populära sidorna för den här wikin:"
 
-#: ../lib/main.php:320
+#: ../lib/main.php:328
 #, fuzzy
 msgid "lock this page"
 msgstr "%s för den här sidan"
 
-#: ../lib/main.php:321
+#: ../lib/main.php:329
 #, fuzzy
 msgid "remove this page"
 msgstr "Ta bort sida nu"
 
-#: ../lib/main.php:322
+#: ../lib/main.php:330
 #, fuzzy
 msgid "unlock this page"
 msgstr "Lås upp Sida"
 
-#: ../lib/main.php:323
+#: ../lib/main.php:331
 #, fuzzy
 msgid "upload a zip dump"
 msgstr "De %d mest populära sidorna för den här wikin:"
 
-#: ../lib/main.php:324
+#: ../lib/main.php:332
 msgid "verify the current action"
 msgstr ""
 
-#: ../lib/main.php:325
+#: ../lib/main.php:333
 #, fuzzy
 msgid "view the source of this page"
 msgstr "De %d mest populära sidorna för den här wikin:"
 
-#: ../lib/main.php:326
+#: ../lib/main.php:334
 msgid "access this wiki via XML-RPC"
 msgstr ""
 
-#: ../lib/main.php:327
+#: ../lib/main.php:335
+msgid "access this wiki via SOAP"
+msgstr ""
+
+#: ../lib/main.php:336
 #, fuzzy
 msgid "download a zip dump from this wiki"
 msgstr "De %d mest populära sidorna för den här wikin:"
 
-#: ../lib/main.php:328
+#: ../lib/main.php:337
 #, fuzzy
 msgid "download an html zip dump from this wiki"
 msgstr "De %d mest populära sidorna för den här wikin:"
 
-#: ../lib/main.php:340
+#: ../lib/main.php:349
 #, fuzzy
 msgid "Browsing pages"
 msgstr "Kunde inte spara sidan \"%s\""
 
-#: ../lib/main.php:341
+#: ../lib/main.php:350
 #, fuzzy
 msgid "Diffing pages"
 msgstr "Kunde inte spara sidan \"%s\""
 
-#: ../lib/main.php:342
+#: ../lib/main.php:351
 #, fuzzy
 msgid "Dumping html pages"
 msgstr "Ta bort sida"
 
-#: ../lib/main.php:343
+#: ../lib/main.php:352
 #, fuzzy
 msgid "Dumping serial pages"
 msgstr "De %d mest populära sidorna för den här wikin:"
 
-#: ../lib/main.php:344
+#: ../lib/main.php:353
 #, fuzzy
 msgid "Editing pages"
 msgstr "Kunde inte spara sidan \"%s\""
 
-#: ../lib/main.php:345
+#: ../lib/main.php:354
 #, fuzzy
 msgid "Creating pages"
 msgstr "Kunde inte spara sidan \"%s\""
 
-#: ../lib/main.php:346
+#: ../lib/main.php:355
 #, fuzzy
 msgid "Loading files"
 msgstr "Lås Sida"
 
-#: ../lib/main.php:347
+#: ../lib/main.php:356
 #, fuzzy
 msgid "Locking pages"
 msgstr "Lås Sida"
 
-#: ../lib/main.php:348
+#: ../lib/main.php:357
 #, fuzzy
 msgid "Removing pages"
 msgstr "Ta bort sida"
 
-#: ../lib/main.php:349
+#: ../lib/main.php:358
 #, fuzzy
 msgid "Unlocking pages"
 msgstr "Lås upp Sida"
 
-#: ../lib/main.php:350
+#: ../lib/main.php:359
 msgid "Uploading zip dumps"
 msgstr ""
 
-#: ../lib/main.php:351
+#: ../lib/main.php:360
 msgid "Verify the current action"
 msgstr ""
 
-#: ../lib/main.php:352
+#: ../lib/main.php:361
 #, fuzzy
 msgid "Viewing the source of pages"
 msgstr "De %d mest populära sidorna för den här wikin:"
 
-#: ../lib/main.php:353
+#: ../lib/main.php:362
 msgid "XML-RPC access"
 msgstr ""
 
-#: ../lib/main.php:354
+#: ../lib/main.php:363
+msgid "SOAP access"
+msgstr ""
+
+#: ../lib/main.php:364
 msgid "Downloading zip dumps"
 msgstr ""
 
-#: ../lib/main.php:355
+#: ../lib/main.php:365
 msgid "Downloading html zip dumps"
 msgstr ""
 
-#: ../lib/main.php:464
+#: ../lib/main.php:475
 #, c-format
 msgid "%s: Bad action"
 msgstr ""
 
-#: ../lib/main.php:485
+#: ../lib/main.php:496
 msgid "Fatal PhpWiki Error"
 msgstr "PhpWiki Fatal Error"
 
-#: ../lib/main.php:675 ../lib/plugin/FullTextSearch.php:39
+#: ../lib/main.php:692 ../lib/plugin/FullTextSearch.php:39
 #: ../lib/plugin/WantedPages.php:133
 msgid "FullTextSearch"
 msgstr "Fulltextsökning"
 
-#: ../lib/main.php:678 ../lib/plugin/RecentChanges.php:571
+#: ../lib/main.php:695 ../lib/plugin/RecentChanges.php:571
 #: ../lib/plugin/TitleSearch.php:31 ../themes/Sidebar/templates/navbar.tmpl:23
 msgid "TitleSearch"
 msgstr "Titelsökningen"
 
-#: ../lib/main.php:791
+#: ../lib/main.php:808
 msgid "The session.save_path directory"
 msgstr ""
 
-#: ../lib/main.php:794
+#: ../lib/main.php:811
 #, c-format
 msgid "the directory '%s'"
 msgstr ""
 
-#: ../lib/main.php:798
+#: ../lib/main.php:815
 #, c-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr ""
 
-#: ../lib/main.php:805
+#: ../lib/main.php:822
 msgid "Users will not be able to sign in."
 msgstr ""
 
@@ -1717,13 +1729,13 @@ msgstr "Insättning"
 msgid "Include text from another wiki page."
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:93 ../lib/plugin/PageGroup.php:80
+#: ../lib/plugin/IncludePage.php:93 ../lib/plugin/PageGroup.php:91
 #: ../lib/plugin/UnfoldSubpages.php:117
 #, c-format
 msgid "<%s: no such section>"
 msgstr ""
 
-#: ../lib/plugin/IncludePage.php:132 ../lib/plugin/PageGroup.php:121
+#: ../lib/plugin/IncludePage.php:132 ../lib/plugin/PageGroup.php:131
 #, c-format
 msgid "%s(%d): no such revision"
 msgstr ""
@@ -1884,6 +1896,16 @@ msgstr ""
 msgid "Orphaned Pages in this wiki (%d total):"
 msgstr "De %d mest populära sidorna för den här wikin:"
 
+#: ../lib/plugin/PageDump.php:34 ../lib/plugin/_WikiTranslation.php:73
+#: ../themes/default/templates/actionbar.tmpl:33
+#, fuzzy
+msgid "PageDump"
+msgstr "Visa källkoden för %s"
+
+#: ../lib/plugin/PageDump.php:37
+msgid "View a single page dump online."
+msgstr ""
+
 #: ../lib/plugin/PageDump.php:63
 #, fuzzy, c-format
 msgid "Page %s not found."
@@ -1951,29 +1973,29 @@ msgstr "Visa källkoden för %s"
 msgid "PageGroup for %s"
 msgstr "Visa källkoden för %s"
 
-#: ../lib/plugin/PageGroup.php:60 ../lib/plugin/PageGroup.php:100
+#: ../lib/plugin/PageGroup.php:60 ../lib/plugin/PageGroup.php:110
 #: ../lib/plugin/PrevNext.php:69
 msgid "Contents"
 msgstr "Innehåll"
 
-#: ../lib/plugin/PageGroup.php:93
+#: ../lib/plugin/PageGroup.php:104
 #, c-format
 msgid "A required argument '%s' is missing."
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:98 ../lib/plugin/PrevNext.php:66
+#: ../lib/plugin/PageGroup.php:108 ../lib/plugin/PrevNext.php:66
 msgid "Next"
 msgstr "Nästa"
 
-#: ../lib/plugin/PageGroup.php:99 ../lib/plugin/PrevNext.php:65
+#: ../lib/plugin/PageGroup.php:109 ../lib/plugin/PrevNext.php:65
 msgid "Previous"
 msgstr "Föregående"
 
-#: ../lib/plugin/PageGroup.php:101 ../lib/plugin/PrevNext.php:64
+#: ../lib/plugin/PageGroup.php:111 ../lib/plugin/PrevNext.php:64
 msgid "First"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:102 ../lib/plugin/PrevNext.php:67
+#: ../lib/plugin/PageGroup.php:112 ../lib/plugin/PrevNext.php:67
 msgid "Last"
 msgstr "Senaste"
 
@@ -2064,26 +2086,18 @@ msgid ""
 msgstr ""
 
 #: ../lib/plugin/PhotoAlbum.php:433
-msgid "Fixed album location is not allowed."
+msgid "Fixed album location is not allowed. Please specify parameter src."
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:434
-msgid "));"
-msgstr ""
-
-#: ../lib/plugin/PhotoAlbum.php:452 ../lib/plugin/Transclude.php:85
+#: ../lib/plugin/PhotoAlbum.php:451 ../lib/plugin/Transclude.php:85
 msgid "Bad url in src: remove all of <, >, \""
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:467
-msgid "/"
-msgstr ""
-
-#: ../lib/plugin/PhotoAlbum.php:482
+#: ../lib/plugin/PhotoAlbum.php:481
 msgid "Wrong server setting: allow_url_fopen set to Off"
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:487
+#: ../lib/plugin/PhotoAlbum.php:486
 #, c-format
 msgid "Unable to read %s "
 msgstr ""
@@ -2101,38 +2115,38 @@ msgstr ""
 msgid "Invalid color: %s"
 msgstr ""
 
-#: ../lib/plugin/PhpWeather.php:59
+#: ../lib/plugin/PhpWeather.php:61
 msgid "PhpWeather"
 msgstr ""
 
-#: ../lib/plugin/PhpWeather.php:63
+#: ../lib/plugin/PhpWeather.php:65
 msgid "The PhpWeather plugin provides weather reports from the Internet."
 msgstr ""
 
-#: ../lib/plugin/PhpWeather.php:84
+#: ../lib/plugin/PhpWeather.php:86
 msgid "You have to configure it before use."
 msgstr ""
 
-#: ../lib/plugin/PhpWeather.php:100
+#: ../lib/plugin/PhpWeather.php:102
 #, c-format
 msgid "The ICAO '%s' wasn't recognized."
 msgstr ""
 
-#: ../lib/plugin/PhpWeather.php:111
+#: ../lib/plugin/PhpWeather.php:113
 #, c-format
 msgid "%s does not know about the language '%s', using 'en' instead."
 msgstr ""
 
-#: ../lib/plugin/PhpWeather.php:166
+#: ../lib/plugin/PhpWeather.php:168
 msgid "Submit country"
 msgstr ""
 
-#: ../lib/plugin/PhpWeather.php:166
+#: ../lib/plugin/PhpWeather.php:168
 #, fuzzy
 msgid "Change country"
 msgstr "Lösenord"
 
-#: ../lib/plugin/PhpWeather.php:185
+#: ../lib/plugin/PhpWeather.php:187
 msgid "Submit location"
 msgstr ""
 
@@ -2637,95 +2651,95 @@ msgstr ""
 msgid "Total %d plugins: "
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:330
+#: ../lib/plugin/SystemInfo.php:315
 #, c-format
 msgid "Total of %d languages: "
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:333
+#: ../lib/plugin/SystemInfo.php:318
 #, c-format
 msgid "Current language: '%s'"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:335
+#: ../lib/plugin/SystemInfo.php:320
 #, c-format
 msgid "Default language: '%s'"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:357
+#: ../lib/plugin/SystemInfo.php:328
 #, c-format
 msgid "Total of %d themes: "
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:359
+#: ../lib/plugin/SystemInfo.php:330
 #, c-format
 msgid "Current theme: '%s'"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:361
+#: ../lib/plugin/SystemInfo.php:332
 #, c-format
 msgid "Default theme: '%s'"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:373
+#: ../lib/plugin/SystemInfo.php:344
 #, c-format
 msgid "unknown argument '%s' to SystemInfo"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:396
+#: ../lib/plugin/SystemInfo.php:367
 msgid "Application name"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:397
+#: ../lib/plugin/SystemInfo.php:368
 msgid "PhpWiki engine version"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:398
+#: ../lib/plugin/SystemInfo.php:369
 msgid "Database"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:399
+#: ../lib/plugin/SystemInfo.php:370
 msgid "Cache statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:400
+#: ../lib/plugin/SystemInfo.php:371
 msgid "Page statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:403
+#: ../lib/plugin/SystemInfo.php:374
 msgid "User statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:405
+#: ../lib/plugin/SystemInfo.php:376
 msgid "Hit statistics"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:407
+#: ../lib/plugin/SystemInfo.php:378
 msgid "Expiry parameters"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:408
+#: ../lib/plugin/SystemInfo.php:379
 msgid "Wikiname regexp"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:409
+#: ../lib/plugin/SystemInfo.php:380
 msgid "Allowed protocols"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:410
+#: ../lib/plugin/SystemInfo.php:381
 #, fuzzy
 msgid "Inline images"
 msgstr "Lås upp Sida"
 
-#: ../lib/plugin/SystemInfo.php:411
+#: ../lib/plugin/SystemInfo.php:382
 msgid "Available plugins"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:412
+#: ../lib/plugin/SystemInfo.php:383
 msgid "Supported languages"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:413
+#: ../lib/plugin/SystemInfo.php:384
 msgid "Supported themes"
 msgstr ""
 
@@ -2841,11 +2855,11 @@ msgid "Translate"
 msgstr "Insättning"
 
 #: ../lib/plugin/TranslateText.php:118 ../lib/plugin/WikiAdminChmod.php:163
-#: ../lib/plugin/WikiAdminRemove.php:205 ../lib/plugin/WikiAdminRename.php:164
+#: ../lib/plugin/WikiAdminRemove.php:211 ../lib/plugin/WikiAdminRename.php:164
 #: ../lib/plugin/WikiAdminSearchReplace.php:185
 #: ../lib/plugin/WikiAdminSelect.php:196 ../lib/plugin/WikiAdminSelect.php:217
 #: ../lib/plugin/WikiAdminSetAcl.php:164 ../lib/plugin/WikiAdminUtils.php:203
-#: ../lib/removepage.php:22 ../themes/default/templates/login.tmpl:73
+#: ../lib/removepage.php:22 ../themes/default/templates/login.tmpl:72
 #: ../themes/default/templates/userprefs.tmpl:237
 msgid "Cancel"
 msgstr "Avbyrt"
@@ -2988,7 +3002,7 @@ msgstr ""
 msgid "PgsrcTranslation"
 msgstr ""
 
-#: ../lib/plugin/WantedPages.php:99
+#: ../lib/plugin/WantedPages.php:99 ../themes/default/templates/online.tmpl:38
 #, fuzzy
 msgid "<none>"
 msgstr "Ingen"
@@ -3073,7 +3087,7 @@ msgstr ""
 msgid "No pages changed."
 msgstr "Visa källkoden och referenser för sidan"
 
-#: ../lib/plugin/WikiAdminChmod.php:150 ../lib/plugin/WikiAdminRemove.php:179
+#: ../lib/plugin/WikiAdminChmod.php:150 ../lib/plugin/WikiAdminRemove.php:185
 #: ../lib/plugin/WikiAdminRename.php:150
 #: ../lib/plugin/WikiAdminSearchReplace.php:171
 #: ../lib/plugin/WikiAdminSetAcl.php:151
@@ -3128,36 +3142,36 @@ msgstr "Ta bort sida nu"
 msgid "Removed page '%s' successfully."
 msgstr "Tog bort sidan '%s'."
 
-#: ../lib/plugin/WikiAdminRemove.php:174 ../lib/plugin/WikiAdminRemove.php:226
+#: ../lib/plugin/WikiAdminRemove.php:180 ../lib/plugin/WikiAdminRemove.php:232
 #, fuzzy
 msgid "Remove"
 msgstr "Ta bort sida"
 
-#: ../lib/plugin/WikiAdminRemove.php:181
+#: ../lib/plugin/WikiAdminRemove.php:187
 msgid "Are you sure you want to permanently remove the selected files?"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:184
+#: ../lib/plugin/WikiAdminRemove.php:190
 #, fuzzy
 msgid "Remove selected pages"
 msgstr "Ta bort sida nu"
 
-#: ../lib/plugin/WikiAdminRemove.php:185
+#: ../lib/plugin/WikiAdminRemove.php:191
 #, fuzzy
 msgid "Permanently remove the selected files:"
 msgstr "Ta bort sida nu"
 
-#: ../lib/plugin/WikiAdminRemove.php:188
+#: ../lib/plugin/WikiAdminRemove.php:194
 #, c-format
 msgid "Also pages which have been deleted at least %s days."
 msgstr ""
 
-#: ../lib/plugin/WikiAdminRemove.php:192
+#: ../lib/plugin/WikiAdminRemove.php:198
 #, fuzzy
 msgid "List all pages."
 msgstr "Kunde inte spara sidan \"%s\""
 
-#: ../lib/plugin/WikiAdminRemove.php:198
+#: ../lib/plugin/WikiAdminRemove.php:204
 #, c-format
 msgid "(Pages which have been deleted at least %s days are already checked.)"
 msgstr ""
@@ -3510,38 +3524,38 @@ msgstr ""
 msgid "Enable configurable polls"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:159 ../lib/plugin/WikiPoll.php:228
+#: ../lib/plugin/WikiPoll.php:161 ../lib/plugin/WikiPoll.php:230
 msgid "Sorry! You must wait at least 20 minutes until you can vote again!"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:185
+#: ../lib/plugin/WikiPoll.php:187
 msgid "Not enough questions answered!"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:194 ../lib/plugin/WikiPoll.php:255
+#: ../lib/plugin/WikiPoll.php:196 ../lib/plugin/WikiPoll.php:257
 #, fuzzy, c-format
 msgid "Missing %s for %s"
 msgstr "version %s för %s"
 
-#: ../lib/plugin/WikiPoll.php:222
+#: ../lib/plugin/WikiPoll.php:224
 msgid "Ok"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:225
+#: ../lib/plugin/WikiPoll.php:227
 #, fuzzy
 msgid "Reset"
 msgstr "Insättning från %s"
 
-#: ../lib/plugin/WikiPoll.php:271 ../lib/plugin/WikiPoll.php:285
+#: ../lib/plugin/WikiPoll.php:273 ../lib/plugin/WikiPoll.php:287
 #, c-format
 msgid "  %d%% (%d/%d)"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:301 ../lib/plugin/WikiPoll.php:303
+#: ../lib/plugin/WikiPoll.php:303 ../lib/plugin/WikiPoll.php:305
 msgid "The result of this poll so far:"
 msgstr ""
 
-#: ../lib/plugin/WikiPoll.php:301
+#: ../lib/plugin/WikiPoll.php:303
 #, fuzzy
 msgid "Thanks for participating!"
 msgstr "Tack för att du redigerade %s."
@@ -3727,11 +3741,6 @@ msgstr ""
 msgid "OldStyleTablePlugin"
 msgstr ""
 
-#: ../lib/plugin/_WikiTranslation.php:73
-#, fuzzy
-msgid "PageDump"
-msgstr "Visa källkoden för %s"
-
 #: ../lib/plugin/_WikiTranslation.php:74
 #, fuzzy
 msgid "PageGroupTest"
@@ -3865,19 +3874,19 @@ msgstr ""
 msgid "Show translations of various words or pages"
 msgstr ""
 
-#: ../lib/plugin/_WikiTranslation.php:266
+#: ../lib/plugin/_WikiTranslation.php:261
 #, c-format
 msgid ""
 "TODO: Google can only translate from english and french. Find a translation "
 "service for %s to language %s"
 msgstr ""
 
-#: ../lib/plugin/_WikiTranslation.php:270
+#: ../lib/plugin/_WikiTranslation.php:265
 #, c-format
 msgid "%s is empty"
 msgstr ""
 
-#: ../lib/plugin/_WikiTranslation.php:360
+#: ../lib/plugin/_WikiTranslation.php:375
 #, c-format
 msgid "Define the translation for %s in %s"
 msgstr ""
@@ -4027,11 +4036,57 @@ msgstr ""
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
 
-#: ../lib/upgrade.php:134
+#: ../lib/upgrade.php:50
+msgid "check for necessary pgsrc updates"
+msgstr ""
+
+#: ../lib/upgrade.php:103
+msgid "MISSING"
+msgstr ""
+
+#: ../lib/upgrade.php:107 ../lib/upgrade.php:120 ../lib/upgrade.php:192
+msgid "FAILED"
+msgstr ""
+
+#: ../lib/upgrade.php:107
+#, fuzzy, c-format
+msgid "no schema %s found"
+msgstr "Visa källkoden och referenser för sidan"
+
+#: ../lib/upgrade.php:120
+#, fuzzy
+msgid "not yet implemented"
+msgstr "Funktionen är ännu inte implementerad."
+
+#: ../lib/upgrade.php:131
+msgid "check for necessary database updates"
+msgstr ""
+
+#: ../lib/upgrade.php:144
+msgid "check for table $table"
+msgstr ""
+
+#: ../lib/upgrade.php:156
+msgid "check for new session.sess_ip column"
+msgstr ""
+
+#: ../lib/upgrade.php:166 ../lib/upgrade.php:185
+msgid "ADDING"
+msgstr ""
+
+#: ../lib/upgrade.php:170 ../lib/upgrade.php:194 ../lib/upgrade.php:196
+msgid "OK"
+msgstr ""
+
+#: ../lib/upgrade.php:177
+msgid "check for page.id auto_increment flag"
+msgstr ""
+
+#: ../lib/upgrade.php:230
 msgid "Upgrade disabled: user != isAdmin"
 msgstr ""
 
-#: ../lib/upgrade.php:138
+#: ../lib/upgrade.php:234
 msgid "Upgrading this PhpWiki"
 msgstr ""
 
@@ -4341,13 +4396,13 @@ msgstr ""
 msgid "Sign in as:"
 msgstr "Anslut"
 
-#: ../themes/default/templates/actionbar.tmpl:35
+#: ../themes/default/templates/actionbar.tmpl:36
 #: ../themes/smaller/templates/actionbar.tmpl:38
 #: ../themes/smaller/templates/info.tmpl:178
 msgid "PurgeHtmlCache"
 msgstr ""
 
-#: ../themes/default/templates/actionbar.tmpl:36
+#: ../themes/default/templates/actionbar.tmpl:37
 #: ../themes/smaller/templates/actionbar.tmpl:39
 #: ../themes/smaller/templates/info.tmpl:179
 msgid ""
@@ -4577,19 +4632,30 @@ msgid ""
 "in RecentChanges to your home page."
 msgstr ""
 
-#: ../themes/default/templates/login.tmpl:56
+#: ../themes/default/templates/login.tmpl:52
+msgid ""
+"Note: Only if you create your personal HomePage with same the pagename as "
+"your user id, you will be able to store your UserPreferences. Otherwise not."
+msgstr ""
+
+#: ../themes/default/templates/login.tmpl:55
 msgid "New users may use an empty password."
 msgstr ""
 
-#: ../themes/default/templates/login.tmpl:63
+#: ../themes/default/templates/login.tmpl:62
 #, fuzzy
 msgid "UserId:"
 msgstr "Namn"
 
-#: ../themes/default/templates/login.tmpl:67
+#: ../themes/default/templates/login.tmpl:66
 #, fuzzy
 msgid "Password:"
 msgstr "Lösenord"
+
+#: ../themes/default/templates/navbar.tmpl:27
+#, fuzzy
+msgid "Preferences"
+msgstr "Inställningar"
 
 #: ../themes/default/templates/nochanges.tmpl:3
 #, fuzzy
@@ -4602,7 +4668,7 @@ msgstr ""
 
 #: ../themes/default/templates/online.tmpl:8
 #: ../themes/default/templates/online.tmpl:16
-#: ../themes/default/templates/online.tmpl:58
+#: ../themes/default/templates/online.tmpl:59
 msgid "Who Is Online"
 msgstr ""
 
@@ -4641,28 +4707,28 @@ msgstr ""
 msgid "Registered Users Online: "
 msgstr ""
 
-#: ../themes/default/templates/online.tmpl:42
+#: ../themes/default/templates/online.tmpl:43
 msgid "Admin is also online."
 msgstr ""
 
-#: ../themes/default/templates/online.tmpl:46
+#: ../themes/default/templates/online.tmpl:47
 #, c-format
 msgid "This data is based on users active over the past %s"
 msgstr ""
 
-#: ../themes/default/templates/online.tmpl:50
+#: ../themes/default/templates/online.tmpl:51
 msgid "Sorry, no dynamic DB Session support."
 msgstr ""
 
-#: ../themes/default/templates/online.tmpl:58
+#: ../themes/default/templates/online.tmpl:59
 msgid "Switch to summary"
 msgstr ""
 
-#: ../themes/default/templates/online.tmpl:62
+#: ../themes/default/templates/online.tmpl:63
 msgid "Registered Users"
 msgstr ""
 
-#: ../themes/default/templates/online.tmpl:77
+#: ../themes/default/templates/online.tmpl:78
 msgid "Guests"
 msgstr ""
 
@@ -4850,9 +4916,10 @@ msgid "Add %s:"
 msgstr "Träffar:"
 
 #: ../themes/default/templates/userprefs.tmpl:187
+#, c-format
 msgid ""
 "Add Google links to unknown pages behind the '?', and the create action "
-"behind the pagename instead. See MeatBall:GooglePrompt."
+"behind the pagename instead. See %s."
 msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:193
@@ -5100,9 +5167,6 @@ msgstr "Ta bort sida"
 
 #~ msgid "Problem while editing %s"
 #~ msgstr "Har problem med att redigera %s"
-
-#~ msgid "Not Implemented"
-#~ msgstr "Funktionen är ännu inte implementerad."
 
 #, fuzzy
 #~ msgid "returning old version"
