@@ -1,25 +1,50 @@
-// Toolbar JavaScript support functions from mediawiki 
-// $Id: toolbar.js,v 1.4 2004-06-02 20:46:41 rurban Exp $ 
+// Toolbar JavaScript support functions. Taken from mediawiki 
+// $Id: toolbar.js,v 1.5 2004-11-16 17:57:44 rurban Exp $ 
 
 // Un-trap us from framesets
 if( window.top != window ) window.top.location = window.location;
+var pullwin;
 
 // This function generates the actual toolbar buttons with localized text
 // We use it to avoid creating the toolbar where javascript is not enabled
 // Not all buttons use this helper, some need special javascript treatment.
-function addButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
+function addButton(imageFile, speedTip, func, args) {
+  var i;
   speedTip=escapeQuotes(speedTip);
-  tagOpen=escapeQuotes(tagOpen);
-  tagClose=escapeQuotes(tagClose);
-  sampleText=escapeQuotes(sampleText);
-  document.write("<a href=\"javascript:insertTags");
-  document.write("('"+tagOpen+"','"+tagClose+"','"+sampleText+"');\">");
+  document.write("<a href=\"javascript:"+func+"(");
+  for (i=0; i<args.length; i++){
+    if (i>0) document.write(",");
+    document.write("'"+escapeQuotes(args[i])+"'");
+  }
   //width=\"23\" height=\"22\"
-  document.write("<img src=\""+imageFile+"\" width=\"18\" height=\"18\" border=\"0\" alt=\""+speedTip+"\" title=\""+speedTip+"\">");
+  document.write(");\"><img src=\""+imageFile+"\" width=\"18\" height=\"18\" border=\"0\" alt=\""+speedTip+"\" title=\""+speedTip+"\">");
   document.write("</a>");
   return;
 }
-
+function addTagButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
+  addButton(imageFile, speedTip, "insertTags", [tagOpen, tagClose, sampleText]);
+  return;
+}
+// This function generates a pulldown list to select from.
+// plugins, pagenames, categories. not with document.write because we cannot use self.opener then.
+//function addPulldown(imageFile, speedTip, pages) {
+//  addButton(imageFile, speedTip, "showPulldown", pages);
+//  return;
+//}
+function showPulldown(title, pages) {
+   pullwin = window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,height=350,width=250');
+   pullwin.window.document.write('<html><head><title>'+escapeQuotes(title)+'</title><style type=\"text/css\"><'+'!'+'-- body, input {font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:10pt;font-weight:bold;} option {font-size:9pt}  --'+'></style></head><body bgcolor=\"#dddddd\"><form><select name=\"select\" size=\"'+((pages.length>20)?'20':new String(pages.length))+'\" ondblclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value); return false;\">');
+   for (i=0; i<pages.length; i++){
+     pullwin.window.document.write('<option value="'+pages[i]+'">'+escapeQuotes(pages[i])+'<option>\n');
+   }
+   pullwin.window.document.write('</select><br /><input type=\"button\" value=\"Ok\" onclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value); return false;\"><input type=\"button\" value=\"Close\" onclick=\"self.close(); return false;\"></form></body></html>');
+   pullwin.window.document.close();
+   return false;
+}
+function do_pulldown(value) {
+  insertTags(value, '', '\n');
+  return;
+}
 function addInfobox(infoText) {
   // if no support for changing selection, add a small copy & paste field
   var clientPC = navigator.userAgent.toLowerCase(); // Get client info
@@ -32,7 +57,6 @@ function addInfobox(infoText) {
 		   infoText+"\" readonly=\"readonly\"></form>");
   }
 }
-
 function escapeQuotes(text) {
   var re=new RegExp("'","g");
   text=text.replace(re,"\\'");
@@ -42,13 +66,11 @@ function escapeQuotes(text) {
   text=text.replace(re,"\\n");
   return text;
 }
-
 function escapeQuotesHTML(text) {
   var re=new RegExp('"',"g");
   text=text.replace(re,"&quot;");
   return text;
 }
-
 // apply tagOpen/tagClose to selection in textarea,
 // use sampleText instead of selection if there is none
 // copied and adapted from phpBB
@@ -89,12 +111,12 @@ function insertTags(tagOpen, tagClose, sampleText) {
     // All others
   } else {
     // Append at the end: Some people find that annoying
-    //txtarea.value += tagOpen + sampleText + tagClose;
+    txtarea.value += tagOpen + sampleText + tagClose;
     //txtarea.focus();
-    var re=new RegExp("\\n","g");
-    tagOpen=tagOpen.replace(re,"");
-    tagClose=tagClose.replace(re,"");
-    document.infoform.infobox.value=tagOpen+sampleText+tagClose;
+    //var re=new RegExp("\\n","g");
+    //tagOpen=tagOpen.replace(re,"");
+    //tagClose=tagClose.replace(re,"");
+    //document.infoform.infobox.value=tagOpen+sampleText+tagClose;
     txtarea.focus();
   }
   // reposition cursor if possible
