@@ -8,10 +8,16 @@
 
    if ($edit) {
       $pagename = rawurldecode($edit);
-      $banner = "$pagename";
+      if (get_magic_quotes_gpc()) {
+         $pagename = stripslashes($pagename);
+      }
+      $banner = htmlspecialchars($pagename);
    } elseif ($copy) {
       $pagename = rawurldecode($copy);
-      $banner = "Copy of $pagename";
+      if (get_magic_quotes_gpc()) {
+         $pagename = stripslashes($pagename);
+      }
+      $banner = htmlspecialchars("Copy of $pagename");
    } else {
       echo "No page name passed into editpage!<br>\n";
       exit();
@@ -36,7 +42,7 @@
          $lastcopy = false;
       }
    } else {
-      echo "Describe $pagename here.";
+      echo "Describe " . htmlspecialchars($pagename) . " here.";
       $lastcopy = false;
    }
 ?></textarea>

@@ -3,6 +3,9 @@
    // This allows an arbitrary number of reference links.
 
    $pagename = rawurldecode($links);
+   if (get_magic_quotes_gpc()) {
+      $pagename = stripslashes($pagename);
+   }
    $pagehash = array();
    $pagehash = RetrievePage($dbi, $pagename);
    settype ($pagehash, 'array');
@@ -13,13 +16,13 @@
 ?>
 <html>
 <head>
-<title><? echo $pagename; ?>Links</title>
+<title><? echo htmlspecialchars($pagename); ?>Links</title>
 </head>
 
 <body>
 
 <form method="POST" action="<? echo $ScriptUrl; ?>">
-<h1><? echo $pagename; ?> Links
+<h1><? echo htmlspecialchars($pagename); ?> Links
 <input type="submit" value=" Save ">
 <input type="reset" value=" Reset "></h1>
 
@@ -31,8 +34,8 @@
 
 ?>
 <p>
-Type the full URL (http:// ...) for each reference cited in the
-text.<p>
+Type the full URL (http:// ...) for each reference cited in the text.
+<BR>Protocols allowed are: <? echo $AllowedProtocols ?><p>
 <input type="hidden" size=1 name="post"
 value="<? echo rawurlencode($pagename); ?>">
 
