@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.50 2002-08-22 23:28:31 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.51 2002-08-24 13:18:56 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -528,6 +528,12 @@ class Theme {
         $url = $this->_findButton("$qtext.png");
         if ($url && strstr($url, '%')) {
             $url = preg_replace('|([^/]+)$|e', 'urlencode("\\1")', $url);
+        }
+        if (!$url) {// Jeff complained about png not supported everywhere. This is not PC
+            $url = $this->_findButton("$qtext.gif");
+            if ($url && strstr($url, '%')) {
+                $url = preg_replace('|([^/]+)$|e', 'urlencode("\\1")', $url);
+            }
         }
         return $url;
     }

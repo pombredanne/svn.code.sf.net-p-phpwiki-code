@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.12 2002-08-23 18:29:29 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.13 2002-08-24 13:18:56 rurban Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -659,8 +659,11 @@ class WikiDB_Page
      * <dl>
      * <dt>'locked'<dd> Is page locked?
      * <dt>'hits'  <dd> Page hit counter.
-     * <dt>'user'  <dd> User Homepage
-     * <dt>'group' <dd> Group list
+     * <dt>'pref'  <dd> Users preferences, stored in homepages.
+     * <dt>'owner' <dd> Default: first author_id. We might add a group with a dot here:
+     *                  E.g. "owner.users"
+     * <dt>'perm'  <dd> Permission flag to authorize read/write/execution of 
+     *                  page-headers and content.
      * <dt>'score' <dd> Page score (not yet implement, do we need?)
      * </dl>
      *

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FrameInclude.php,v 1.1 2002-08-23 18:32:12 rurban Exp $');
+rcs_id('$Id: FrameInclude.php,v 1.2 2002-08-24 13:18:56 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -21,9 +21,27 @@ rcs_id('$Id: FrameInclude.php,v 1.1 2002-08-23 18:32:12 rurban Exp $');
  */
 
 /**
- * FrameInclude:  include text from another wiki page in this one
- * usage:   <?plugin FrameInclude src=http://www.internet-technology.de/fourwins_de.htm ?>
- * author:  Reini Urban <rurban@x-ray.at>
+ * FrameInclude:  Displays a url in a seperate frame inside our body.
+ * Usage:   <?plugin FrameInclude src=http://www.internet-technology.de/fourwins_de.htm ?>
+ * Author:  Reini Urban <rurban@x-ray.at>
+ *
+ * KNOWN ISSUES:
+ *  This is a dirty hack into the whole system. To display the page as frameset
+ *  we must know in advance about the plugin existence.
+ *  1. We can buffer the output stream (which in certain cases is not doable).
+ *  2. Check the page content for the start string '<?plugin FrameInclude'
+ *     which we currently do.
+ *  3. Redirect to a new page with the frameset only. ?frameset=pagename
+ *      $request->setArg('framesrc', $src);
+ *      $request->redirect('frameset', $request->getName());
+ *  In any cases we can now serve only specific templates with the new frame 
+ *  argument. The whole page is now ?frame=html (before it was named "top")
+ *  For the Sidebar theme we provide a left frame also, otherwise 
+ *  only top, content and bottom.
+ *
+ *  This plugin doesn't return a typical html stream inside a <body>, only a 
+ *  <frameset> which has to go before <body>, right after <head>.
+ *
  */
 
 class WikiPlugin_FrameInclude
@@ -38,10 +56,12 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array( 'src'         => false, // the src url to include
-                      'name'        => '',
-                      'rows'        => '10%,*,10%',
-                      'cols'        => '10%,*',  // only used on Theme "Sidebar"
+        return array( 'src'         => false,       // the src url to include
+                      'name'        => 'content',   // name of our frame
+                      'title'       => false,
+                      'rows'        => '10%,*,10%', // names: top, $name, bottom
+                      'cols'        => '10%,*',     // names: left, $name
+                                                    // only useful on Theme "Sidebar"
                       'frameborder' => 0,
                       'marginwidth'  => false,
                       'marginheight' => false,
@@ -57,10 +77,9 @@ extends WikiPlugin
 
         if (!$src)
             return $this->error(sprintf(_("%s parameter missing"), 'src'));
-        // FIXME: unmunged url
+        // FIXME: unmunged url hack
         $src = preg_replace('/src=(.*)\Z/','$1',$argstr);
-
-        // how to normalize url's?
+        // How to normalize url's to compare against recursion?
         if ($src == $request->getURLtoSelf() ) {
             return $this->error(sprintf(_("recursive inclusion of url %s"), $src));
         }
@@ -100,16 +119,17 @@ extends WikiPlugin
                         "  $content\n".
                         "</FRAMESET>\n";
         }
+        // Other options:
         // 1) either change the whole output stream to 
-        //    head, $frameset, <nobody>body</nobody>
-        // 2) or redirect to ?frameset=pagename
+        //    head, $frameset, <nobody>body</nobody> (buffered)
+        // 2) redirect to ?frameset=pagename
         //    $request->setArg('framesrc', $src);
         //    $request->redirect('frameset', $request->getName());
         return $frameset; 
     }
 };
 
-// This is an excerpt from the css file I use:
+// This is an excerpt from the CSS file. (from IncludePage)
 //
 // .transclusion-title {
 //   font-style: oblique;
@@ -128,8 +148,6 @@ extends WikiPlugin
 //   padding-bottom: 0px;
 //   margin: 0.5ex 0px;
 // }
-
-// KNOWN ISSUES:
 
 // For emacs users
 // Local Variables:

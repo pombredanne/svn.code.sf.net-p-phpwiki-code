@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.15 2002-08-23 18:29:30 rurban Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.16 2002-08-24 13:18:56 rurban Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -37,7 +37,7 @@ extends WikiPlugin
             $html->pushContent(HTML::p(fmt("No pagedata for %s", $page)));
         else {
             $table->pushContent($this->_showhash("get_pagedata('$page')",
-                                                 $pagedata));
+                                                 $pagedata,$page));
         }
 
         for ($version = $backend->get_latest_version($page);
@@ -61,7 +61,7 @@ extends WikiPlugin
         return $html;
     }
 
-    function _showhash ($heading, $hash) {
+    function _showhash ($heading, $hash, $pagename='') {
         $rows[] = HTML::tr(array('bgcolor' => '#ffcccc',
                                  'style' => 'color:#000000'),
                            HTML::td(array('colspan' => 2,
@@ -69,14 +69,15 @@ extends WikiPlugin
         ksort($hash);
         foreach ($hash as $key => $val) {
             if (is_string($val) and (substr($val,0,2) == 'a:')) {
+                // how to indent this table?
                 $val = unserialize($val);
-                $rows[] = $this->_showhash (NBSP . NBSP . "%pagedata '$key' array" , $val);
+                $rows[] = $this->_showhash (NBSP . NBSP . "get_pagedata('$pagename')['$key']" , $val);
             } else {
                 if ($key == 'passwd') $val = $val ? _("<not displayed>") : _("<empty>");
                 $rows[] = HTML::tr(HTML::td(array('align' => 'right',
-                                              'bgcolor' => '#cccccc',
-                                              'style' => 'color:#000000'),
-                                        NBSP . $key . NBSP),
+                                                  'bgcolor' => '#cccccc',
+                                                  'style' => 'color:#000000'),
+                                            NBSP . $key . NBSP),
                                HTML::td(array('bgcolor' => '#ffffff',
                                               'style' => 'color:#000000'),
                                         $val ? $val : NBSP));
