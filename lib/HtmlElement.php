@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.45 2005-01-10 18:05:56 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.46 2005-01-25 06:50:33 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -366,6 +366,10 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('textarea');
         return $el->_init2(func_get_args());
     }
+    function label (/*...*/) {
+        $el = new HtmlElement('label');
+        return $el->_init2(func_get_args());
+    }
 
     /****************************************/
     function area (/*...*/) {
@@ -415,7 +419,7 @@ HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
                       . 's strike u ' // (deprecated)
                       . 'abbr acronym cite code dfn em kbd samp strong var ' //%phrase
                       . 'a img object embed br script map q sub sup span bdo '//%special
-                      . 'button input label option select textarea ' //%formctl
+                      . 'button input label option select textarea label ' //%formctl
 
                       // %block elements which contain inline content
                       . 'address h1 h2 h3 h4 h5 h6 p pre '
@@ -463,7 +467,7 @@ function HiddenInputs ($query_args, $pfx = false, $exclude = array()) {
     $inputs = HTML();
 
     foreach ($query_args as $key => $val) {
-        if (in_array($key,$exclude)) continue;
+        if (in_array($key, $exclude)) continue;
         $name = $pfx ? $pfx . "[$key]" : $key;
         if (is_array($val))
             $inputs->pushContent(HiddenInputs($val, $name));
@@ -486,7 +490,7 @@ function HiddenInputs ($query_args, $pfx = false, $exclude = array()) {
 function JavaScript ($js, $script_args = false) {
     $default_script_args = array(//'version' => 'JavaScript', // not xhtml conformant
                                  'type' => 'text/javascript');
-    $script_args = $script_args ? array_merge($default_script_args,$script_args)
+    $script_args = $script_args ? array_merge($default_script_args, $script_args)
                                 : $default_script_args;
     if (empty($js))
         return HTML::script($script_args);
@@ -531,6 +535,9 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.45  2005/01/10 18:05:56  rurban
+ php5 case-sensitivity
+
  Revision 1.44  2005/01/08 20:58:19  rurban
  ending space after colgroup breaks _setTagProperty
 
