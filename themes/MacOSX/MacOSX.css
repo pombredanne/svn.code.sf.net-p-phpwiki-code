@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.3 2002-01-05 11:44:21 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.4 2002-01-05 16:12:19 carstenklapp Exp $
 
   Classes:
 
@@ -28,7 +28,7 @@ TODO: Get rid of tables in wikiaction forms.
 /* NS4 doesn't grok @import.  This allows us to put things which
  * break NS4 in another file. As of OmniWeb 4.1, OW now @imports :-(
  */
-@import url(MacOSX-heavy.css);
+@import url(phpwiki-heavy.css);
 
 BODY { background: #fafafa url("bgpaper8.png"); }
 
@@ -162,9 +162,6 @@ I .interwiki, EM .interwiki
  * wikiaction, wikiadmin, wikiunsafe:
  */
 A.wikiaction, A.wikiadmin       { text-decoration: none; }
-A.wikiaction, .wikiaction TABLE, SPAN.wikiaction  { background-color: #ddd; }
-A.wikiadmin, .wikiadmin TABLE   { background-color: #fdd; }
-.wikiunsafe                     { background-color: #ccc; }
 
 /*
  * No border on external link icons.
@@ -176,18 +173,6 @@ img.linkicon		{ vertical-align: middle; }
 */
 .wikiaction { border: 0; }
  
-/*
- * Put a border around wikiaction forms:
- * This doesn't work for NS4.
- */
-.wikiaction TABLE, .wikiadmin TABLE
-{
-  border-style: ridge;
-  border-width: medium;
-}
-.wikiaction TABLE { border-color: #9cf; }
-.wikiadmin TABLE  { border-color: #f99; }
-
 /* Backlinks */
 A.backlinks { color: #006; }
 
