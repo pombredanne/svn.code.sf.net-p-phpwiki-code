@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.3 2004-06-03 09:40:57 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.4 2004-06-19 10:06:38 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -80,7 +80,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
     function getDefaultArguments() {
         return array(
@@ -135,11 +135,11 @@ extends WikiPluginCached
      */
     function helpImage() {
         $def = $this->defaultArguments();
-        $other_imgtypes = $GLOBALS['CacheParams']['imgtypes'];
-        unset ($other_imgtypes[$def['imgtype']]);
+        //$other_imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
+        //unset ($other_imgtypes[$def['imgtype']]);
         $helparr = array(
             '<?plugin Ploticus ' .
-            'device'           => ' = "' . $def['device'] . "(default)|" . join('|',$GLOBALS['CacheParams']['imgtypes']).'"',
+            'device'           => ' = "' . $def['device'] . "(default)|" . join('|',$GLOBALS['PLUGIN_CACHED_IMGTYPES']).'"',
             'alt'              => ' = "alternate text"',
             '-csmap'           => ' bool: clickable map?',
             'help'             => ' bool: displays this screen',
@@ -223,8 +223,8 @@ extends WikiPluginCached
         $source =& $this->source;
         if (!empty($source)) {
             $html = HTML();
-            $cacheparams = $GLOBALS['CacheParams'];
-            $tempfiles = tempnam($cacheparams['cache_dir'], 'Ploticus');
+            //$cacheparams = $GLOBALS['CacheParams'];
+            $tempfiles = $this->tempnam('Ploticus');
             $gif = $argarray['device'];
             $args = " -stdin -$gif -o $tempfiles.$gif";
             if (!empty($argarray['-csmap'])) {
@@ -255,6 +255,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/06/03 09:40:57  rurban
+// WikiPluginCache improvements
+//
 // Revision 1.2  2004/06/02 19:37:07  rurban
 // extended description
 //

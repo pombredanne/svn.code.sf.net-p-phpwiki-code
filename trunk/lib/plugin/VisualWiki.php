@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.9 2004-06-03 09:40:57 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.10 2004-06-19 10:06:38 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -84,7 +84,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     /**
@@ -178,7 +178,7 @@ extends WikiPluginCached
             $arg['backlink_nb'] = $def['backlink_nb'];
 
         // ToDo: check if "ImageCreateFrom$imgtype"() exists.
-        if (!in_array($imgtype, $GLOBALS['CacheParams']['imgtypes']))
+        if (!in_array($imgtype, $GLOBALS['PLUGIN_CACHED_IMGTYPES']))
             $arg['imgtype'] = $def['imgtype'];
         if (empty($fontname))
             $arg['fontname'] = VISUALWIKIFONT;
@@ -248,11 +248,11 @@ extends WikiPluginCached
      */
     function helpImage() {
         $def = $this->defaultarguments();
-        $other_imgtypes = $GLOBALS['CacheParams']['imgtypes'];
+        $other_imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
         unset ($other_imgtypes[$def['imgtype']]);
         $helparr = array(
             '<?plugin '.$this->getName() .
-            ' img'             => ' = "' . $def['imgtype'] . "(default)|" . join('|',$GLOBALS['CacheParams']['imgtypes']).'"',
+            ' img'             => ' = "' . $def['imgtype'] . "(default)|" . join('|',$GLOBALS['PLUGIN_CACHED_IMGTYPES']).'"',
             'width'            => ' = "width in inches"',
             'height'           => ' = "height in inches"',
             'fontname'         => ' = "font family"',
@@ -609,8 +609,8 @@ extends WikiPluginCached
      */
     function invokeDot($argarray) {
         global $dotbin;
-        $cacheparams = $GLOBALS['CacheParams'];
-        $tempfiles = tempnam($cacheparams['cache_dir'], 'VisualWiki');
+        //$cacheparams = $GLOBALS['CacheParams'];
+        $tempfiles = $this->tempnam('VisualWiki');
         $gif = $argarray['imgtype'];
         $ImageCreateFromFunc = "ImageCreateFrom$gif";
         $ok =  $tempfiles
@@ -732,6 +732,9 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/06/03 09:40:57  rurban
+// WikiPluginCache improvements
+//
 // Revision 1.8  2004/01/26 09:18:00  rurban
 // * changed stored pref representation as before.
 //   the array of objects is 1) bigger and 2)

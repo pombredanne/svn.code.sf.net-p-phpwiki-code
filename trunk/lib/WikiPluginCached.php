@@ -1,8 +1,8 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.9 2004-06-02 19:12:43 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.10 2004-06-19 10:06:37 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
- This file is (not yet) part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
  */ 
 
 /**
- * You should set up the options in plugincache-config.php
+ * You should set up the options in config/config.ini at Part seven:
  * $ pear install http://pear.php.net/get/Cache
  * This file belongs to WikiPluginCached.
  * @author  Johannes Große
@@ -28,11 +28,12 @@
  */
 
 require_once "lib/WikiPlugin.php";
-require_once "lib/plugincache-config.php";
+// require_once "lib/plugincache-config.php";
+
 // Try the installed pear class first. It might be newer. Not yet.
 // @require_once('Cache.php');
 // if (!class_exists('Cache'))
-require_once('Cache.php'); // We have to create your own copy here.
+require_once('Cache.php');
 
 define('PLUGIN_CACHED_HTML',0);
 define('PLUGIN_CACHED_IMG_INLINE',1);
@@ -50,7 +51,7 @@ define('PLUGIN_CACHED_MAP',3);
  *     <li>plugin/VisualWiki.php</li></ul>
  *
  * @author  Johannes Große
- * @version 0.8
+ * @version 1.0
  */                                                                
 class WikiPluginCached extends WikiPlugin
 {   
@@ -68,36 +69,36 @@ class WikiPluginCached extends WikiPlugin
      */
     function genUrl($cache,$argarray) {
     	global $request;
-        $cacheparams = $GLOBALS['CacheParams'];
+        //$cacheparams = $GLOBALS['CacheParams'];
 
         $plugincall = serialize( array( 
             'pluginname' => $this->getName(),
             'arguments'  => $argarray ) ); 
         $id = $cache->generateId( $plugincall );
 
-        $url = $cacheparams['cacheurl']; // FIXME: SERVER_URL ?
+        $url = DATA_PATH . '/getimg.php?';
         if (($lastchar = substr($url,-1)) == '/') {
             $url = substr($url, 0, -1);
         }
-        if (strlen($plugincall)>$cacheparams['maxarglen']) {
+        if (strlen($plugincall) > PLUGIN_CACHED_MAXARGLEN) {
             // we can't send the data as URL so we just send the id  
-
             if (!$request->getSessionVar('imagecache'.$id)) {
                 $request->setSessionVar('imagecache'.$id, $plugincall);
             } 
             $plugincall = false; // not needed anymore
         }
 
-        if ($lastchar=='?') {
+        if ($lastchar == '?') {
             // this indicates that a direct call of the image creation
             // script is wished ($url is assumed to link to the script)
             $url .= "id=$id" . ($plugincall ? '&args='.rawurlencode($plugincall) : '');
         } else {
-            // we are supposed to use the indirect 404 ErrorDocument method
+            // Not yet supported.
+            // We are supposed to use the indirect 404 ErrorDocument method
             // ($url is assumed to be the url of the image in 
             //  cache_dir and the image creation script is referred to in the 
             //  ErrorDocument 404 directive.)
-            $url .= '/' . $cacheparams['filename_prefix'] . $id . '.img' 
+            $url .= '/' . PLUGIN_CACHED_FILENAME_PREFIX . $id . '.img' 
                     . ($plugincall ? '?args='.rawurlencode($plugincall) : '');
         }
         if ($request->getArg("start_debug"))
@@ -126,7 +127,7 @@ class WikiPluginCached extends WikiPlugin
      */
     function run($dbi, $argstr, &$request, $basepage) {
         $cache = WikiPluginCached::newCache();
-        $cacheparams = $GLOBALS['CacheParams'];
+        //$cacheparams = $GLOBALS['CacheParams'];
 
         $sortedargs = $this->getArgs($argstr, $request);
         if (is_array($sortedargs) )
@@ -154,7 +155,7 @@ class WikiPluginCached extends WikiPlugin
                 } 
                 break;
             case PLUGIN_CACHED_IMG_INLINE:
-                if ($cacheparams['usecache']&&(!$content || !$content['image'])) {
+                if (PLUGIN_CACHED_USECACHE && (!$content || !$content['image'])) {
                     $do_save = WikiPluginCached::produceImage($content, $this, $dbi, $sortedargs, $request, 'html');
                     $content['html'] = $do_save?$this->embedImg($url, $dbi, $sortedargs, $request) : false;
                 }
@@ -252,8 +253,8 @@ class WikiPluginCached extends WikiPlugin
      * @param  request   Request      ??? 
      * @return           string       'png', 'jpeg' or 'gif'
      */    
-    function getImageType($dbi,$argarray,$request) {
-        if (in_array($argarray['imgtype'], $GLOBAL['CacheParams']['imgtypes']))
+    function getImageType(&$dbi, $argarray, &$request) {
+        if (in_array($argarray['imgtype'], preg_split('/\s*:\s*/', PLUGIN_CACHED_IMGTYPES)))
             return $argarray['imgtype'];
         else
             return 'png';
@@ -383,16 +384,21 @@ class WikiPluginCached extends WikiPlugin
     function newCache() {
         static $staticcache;
   
-        $cacheparams = $GLOBALS['CacheParams'];
-
         if (!is_object($staticcache)) {
-         /*  $pearFinder = new PearFileFinder;
-            $pearFinder->includeOnce('Cache.php');*/
-
-            $staticcache = new Cache($cacheparams['database'],$cacheparams); 
-            $staticcache->gc_maxlifetime = $cacheparams['maxlifetime'];
+            if (!class_exists('Cache')) {
+                $pearFinder = new PearFileFinder;
+                $pearFinder->includeOnce('Cache.php');
+            }
+            $cacheparams = array();
+            foreach (explode(':','database:cache_dir:filename_prefix:highwater:lowwater'
+                             .':maxlifetime:maxarglen:usecache:force_syncmap') as $key) {
+                $cacheparams[$key] = constant('PLUGIN_CACHED_'.strtoupper($key));
+            }
+            $cacheparams['imgtypes'] = preg_split('/\s*:\s*/', PLUGIN_CACHED_IMGTYPES);
+            $staticcache = new Cache(PLUGIN_CACHED_DATABASE, $cacheparams);
+            $staticcache->gc_maxlifetime = PLUGIN_CACHED_MAXLIFETIME;
  
-            if (!$cacheparams['usecache']) {
+            if (! PLUGIN_CACHED_USECACHE ) {
                 $staticcache->setCaching(false);
             }
         }
@@ -476,7 +482,7 @@ class WikiPluginCached extends WikiPlugin
      * @return  void 
      */
     function writeHeader($doctype) {
-        $IMAGEHEADER = array( 
+        static $IMAGEHEADER = array( 
             'gif'  => 'Content-type: image/gif',
             'png'  => 'Content-type: image/png',
             'jpeg' => 'Content-type: image/jpeg',
@@ -486,9 +492,9 @@ class WikiPluginCached extends WikiPlugin
             'gd2'  => 'Content-type: image/gd2',
             'wbmp' => 'Content-type: image/vnd.wap.wbmp', // wireless bitmaps for PDA's and such.
             'html' => 'Content-type: text/html' );
-        // Todo: swf
+       // Todo: swf, pdf
        Header($IMAGEHEADER[$doctype]);
-    } // writeHeader
+    }
 
 
     /** 
@@ -615,8 +621,8 @@ class WikiPluginCached extends WikiPlugin
         }
 
         // image handle -> image data        
-        $cacheparams = $GLOBALS['CacheParams'];
-        $tmpfile = tempnam($cacheparams['cache_dir'],$cacheparams['filename_prefix']);
+        //$cacheparams = $GLOBALS['CacheParams'];
+        $tmpfile = $this->tempnam();
         WikiPluginCached::writeImage($content['imagetype'], $imagehandle, $tmpfile);             
         ImageDestroy($imagehandle);
         if (file_exists($tmpfile)) {
@@ -630,6 +636,10 @@ class WikiPluginCached extends WikiPlugin
         return false;
     } // produceImage
 
+    function tempnam($prefix = false) {
+        return tempnam(isWindows() ? str_replace('/', "\\", PLUGIN_CACHED_CACHE_DIR) : PLUGIN_CACHED_CACHE_DIR,
+                       $prefix ? $prefix : PLUGIN_CACHED_FILENAME_PREFIX);
+    }
 
     /** 
      * Main function for obtaining images from cache or generating on-the-fly
@@ -666,14 +676,15 @@ class WikiPluginCached extends WikiPlugin
 
         // cache empty, but image maps have to be created _inline_
         // so ask user to reload wiki page instead
-        $cacheparams = $GLOBALS['CacheParams'];
-        if (($plugin->getPluginType() == PLUGIN_CACHED_MAP) && $cacheparams['force_syncmap']) {
-            $errortext = gettext('Image map expired. Reload wiki page to recreate its html part.');
+        //$cacheparams = $GLOBALS['CacheParams'];
+        if (($plugin->getPluginType() == PLUGIN_CACHED_MAP) && PLUGIN_CACHED_FORCE_SYNCMAP) {
+            $errortext = _("Image map expired. Reload wiki page to recreate its html part.");
             WikiPluginCached::printError($errorformat, $errortext);
         }
 
         
-        if (!WikiPluginCached::produceImage($content, $plugin, $dbi, $argarray, $request, $errorformat) ) return false;
+        if (!WikiPluginCached::produceImage($content, $plugin, $dbi, $argarray, 
+                                            $request, $errorformat) ) return false;
 
         $expire = $plugin->getExpire($dbi,$argarray,$request);
 
