@@ -1,16 +1,16 @@
-$Id: README,v 1.3 2002-02-01 06:47:15 wainstead Exp $
+$Id: README,v 1.4 2004-06-19 12:13:57 rurban Exp $
 
-todo: certain blocks are repeated over and over. For example, editing
+TODO: certain blocks are repeated over and over. For example, editing
 a page is always the same set of links to follow, but this info is
 duplicated across all test scripts. There should be a way of
 abstracting this info. Macros perhaps.
 
-System requirements for the test suite for PhpWik:
+System requirements for the test suite for PhpWiki:
 
-Sun's Java SDK, http://java.sun.com/j2se/
-httpunit,       http://httpunit.sf.net
-Ant,            http://jakarta.apache.org/builds/jakarta-ant/release/
-jtidy,          http://sourceforge.net/project/showfiles.php?group_id=13153
+Sun's Java SDK  http://java.sun.com/j2se/
+httpunit        http://httpunit.sf.net
+Ant             http://jakarta.apache.org/builds/jakarta-ant/release/
+jtidy           http://sourceforge.net/project/showfiles.php?group_id=13153
 
 (actually httpunit needs jtidy, not this test system per se)
 This was tested against Ant version 1.4.1 and httpunit 1.3.

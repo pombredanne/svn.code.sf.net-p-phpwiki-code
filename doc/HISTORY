@@ -39,7 +39,7 @@ fixes:
 * fixed PageChangeNotification for not-current users
 * fixed UpLoadPlugin for filenames with space (Bug #969532)
 * fixed label support for CreateTocPlugin (Bug #969495)
-* catch fatals on dumping
+* catch fatals during dumping (all four methods)
 * catch SOAP fatal on GooglePlugin without GOOGLE_LICENSE_KEY
 * silently ignore jshide argument on MacIE for AddComment and CreateToc
 
@@ -584,4 +584,4 @@ URL's.
 Prior to 0.02, there were no numbered releases, and in fact there
 was only one release, so I guess that would be 0.01 :-)
 
-$Id: HISTORY,v 1.10 2004-06-14 11:25:06 rurban Exp $
+$Id: HISTORY,v 1.11 2004-06-19 12:13:57 rurban Exp $
