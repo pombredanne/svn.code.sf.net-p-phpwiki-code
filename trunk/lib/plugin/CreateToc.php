@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.15 2004-04-26 14:09:05 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.16 2004-04-26 14:46:14 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -74,11 +74,16 @@ extends WikiPlugin
     		if (preg_match("/<$h>$heading<\/$h>/",$content[$j])) {
     		    return $j;
     		}
-    	    } elseif (isa($content[$j],'cached_wikilink')) {
+    	    } elseif (isa($content[$j],'cached_wikilink')) { 
+                // support single wikiword headers also
     	    	$content[$j] = $content[$j]->asString();
+    	    	//TODO: To allow "!! WikiWord link"
+    	    	// Split heading into WikiWords and check against 
+    	    	// joined content (after cached_plugininvocation).
+    	    	// The first wikilink is the anchor then.
     	    	if ($content[$j] == $heading and 
-    	    	   substr($content[$j-1],-4,4) == "<$h>" and 
-    	    	   substr($content[$j+1],0,5) == "</$h>")
+    	    	   substr($content[$j-1],-4,4) == "<$h>" and
+    	    	   substr($content[$j+1],0,5) == "</$h>") 
     	    	{
     		    return $j;
     		}
@@ -123,7 +128,7 @@ extends WikiPlugin
                         $content[$i] = $match[1]." #[|$anchor][$s|#TOC]";
                         // And now change the to be printed markup (XmlTree):
                         // Search <hn>$s</hn> line in markup
-                        //Fixme: Find wikilink'ed headers also.
+                        //Fixme: Find non-singleworded wikilink'ed headers also.
                         $j = $this->searchHeader($markup->_content, $j, $s, $match[1]);
                         if (  $j and isset($markup->_content[$j]) and 
                               is_string($markup->_content[$j])  ) 
