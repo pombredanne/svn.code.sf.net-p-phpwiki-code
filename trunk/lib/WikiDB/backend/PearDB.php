@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.10 2001-11-21 19:49:21 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.11 2001-12-03 03:18:34 joe_edelman Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -426,7 +426,7 @@ extends WikiDB_backend
         }
         else {
             $result = $dbh->query("SELECT $page_tbl.*"
-                                  . " FROM $nonempty_tbl $page_tbl"
+                                  . " FROM $nonempty_tbl, $page_tbl"
                                   . " WHERE $nonempty_tbl.id=$page_tbl.id"
                                   . " ORDER BY pagename");
         }
