@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TranslateText.php,v 1.1 2004-03-17 11:42:37 rurban Exp $');
+rcs_id('$Id: TranslateText.php,v 1.2 2004-03-17 12:04:36 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -22,9 +22,12 @@ rcs_id('$Id: TranslateText.php,v 1.1 2004-03-17 11:42:37 rurban Exp $');
 
 /**
  * TranslateText:  Translation helper
- * The pagename is the text to be translated.
+ * The (bogus) pagename is the text to be translated.
  * One required argument: lang
+ * Requires that an action page with the <?plugin TranslateText ?> line exists.
+ *
  * Usually called from <?plugin _WikiTranslation ?>
+ * Contributed translation are stored in UsersPage/ContributedTranslations
  *
  * Examples:
  *    pagename="Some text in english" action=TranslateText lang=es
@@ -47,7 +50,7 @@ extends WikiPlugin__WikiTranslation
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -65,11 +68,11 @@ extends WikiPlugin__WikiTranslation
             
         $this->lang = $lang;
         //action=save
-        if (isset($translate['submit']) and $request->isPost()) {
+        if (!empty($translate) and isset($translate['submit']) and $request->isPost()) {
             $trans = $translate["content"];
             if (empty($trans) or $trans == $pagename) {
-                $header = HTML(HTML::h2("Translation Error!"),
-                               HTML::p("Your translated text is either empty or equal to the untranslated text. Please try again."));
+                $header = HTML(HTML::h2(_("Translation Error!")),
+                               HTML::p(_("Your translated text is either empty or equal to the untranslated text. Please try again.")));
             } else {
                 //save translation in a users subpage
                 $user = $request->getUser();
@@ -95,8 +98,9 @@ extends WikiPlugin__WikiTranslation
                                            substr($trans,0,15),$lang);
                 $page->save($text, $version + 1, $meta);
                 // TODO: admin notification
-                return HTML(HTML::h2("Thanks for adding this translation!"),
-                            HTML::p("Your translated text doesn't yet appear in this PhpWiki, but the Administrator will pick it up and add to the installation."),
+                return HTML(HTML::h2(_("Thanks for adding this translation!")),
+                            HTML::p(fmt("Your translated text doesn't yet appear in this %s, but the Administrator will pick it up and add to the installation.", 
+                                       WIKI_NAME)),
                             fmt("Your translation is stored in %s",WikiLink($transpagename)));
             }
         }
@@ -106,7 +110,6 @@ extends WikiPlugin__WikiTranslation
             $header = HTML($header,fmt("From english to %s: ", HTML::strong($lang)));
         else
             $header = fmt("From english to %s: ", HTML::strong($lang));
-        $next_action = 'save';
         $button_label = _("Translate");
 
         $buttons = HTML::p(Button('submit:translate[submit]', $button_label, 'wikiadmin'),
