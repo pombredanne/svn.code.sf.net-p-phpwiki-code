@@ -96,7 +96,7 @@ A good place to find other distributions of mySQL or PostgreSQL which
 can be used with Mac OS X are listed at:
 
     <http://versiontracker.com/macosx/>
-
+    <http://fink.sourceforge.net/>
 
 PHP 4.1 and Mac OS X
 --------------------
@@ -212,27 +212,31 @@ as the httpd logs--it will be up to you to Trash it once in a while or
 write your own /etc/daily.local file to include it as part of a server
 log rotation.
 
+The web server must have write access to the log file:
+
+    sudo chown www /private/var/log/httpd/wiki_access.log
+
 
 Using Apple's Project Builder with PhpWiki
 ------------------------------------------
 
 A PB project file is available on the SourceForge CVS server to allow
 you to easily edit PhpWiki's source code using Apple's Project
-Builder. If you have not yet updated to PB 1.1.1 (Dec 2001 DevTools)
-it is highly recommended you do so because the PhpWiki source are
-written in ISO-8859-1, and some of the bug fixes are pertinent to file
-encoding.
+Builder. PB 2.1 (Dec 2002 DevTools) is recommended. If you have not
+yet updated to at least PB 1.1.1 (Dec 2001 DevTools) it is highly
+recommended you do so because the PhpWiki source are written in
+ISO-8859-1, and some of the bug fixes are pertinent to file encoding.
 
-PB 1.1 has some bugs which makes it impossible to select the correct
-character encoding in the GUI for any pre-existing source code
+The older PB 1.1 has some bugs which makes it impossible to select the
+correct character encoding in the GUI for any pre-existing source code
 files. By using this project file you will find the PhpWiki source
 files are already preset to use the correct ISO-8859-1 (Western
 Latin-1) encoding.
 
-Also by using this file, if you are updating or adding a tranlastion
-to the './phpwiki/locale/po/' files, you do not have to run 'make'
-from the terminal window. The Build Target settings have been
-preconfigured to automatically build the project with a "legacy
+Also by using the project file, if you are updating or adding a
+tranlastion to the './phpwiki/locale/po/' files, you do not have to
+run 'make' from the terminal window. The Build Target settings have
+been preconfigured to automatically build the project with a "legacy
 Makefile", by invoking '/usr/bin/gnumake' in the folder
 './phpwiki/locale'. Just click the build button in the toolbar.
 
@@ -243,6 +247,10 @@ contains your "phpwiki" folder.
 
 How to use SSH with Project Builder
 -----------------------------------
+
+To use the CVS functions in PB, the phpwiki folder itself must have
+been checked out with CVS (i.e. the 'CVS' folders within each
+subdirectory of the phpwiki source are required by PB).
 
 Project Builder 1.1.1 (December 2001 Dev Tools) can be used with
 SourceForge's CVS but a little work is needed to get it set up the
@@ -261,6 +269,8 @@ Instructions
 1.  Download and install "keychain" from:
 
     <http://www.gentoo.org/projects/keychain.html>
+
+Keychain is also available via the Fink package manager.
 
 The Keychain script acts as a front-end to ssh-agent, allowing you to
 easily have one long-running ssh-agent process per system, rather than
@@ -283,8 +293,9 @@ alias sshsf 'ssh mysfuserid@phpwiki.sourceforge.net'
 
 # Keychain is an OpenSSH key manager
 # This will add my SSH1 and SSH2 key
+# Use '/sw/bin/keychain' for a fink-installed keychain
 /usr/bin/keychain ~/.ssh/id_rsa ~/.ssh/id_dsa
-source ~/.ssh-agent-csh-${HOST}
+source ~/.keychain/${HOST}-csh
 
 
     If you use bash instead, add following lines to the ~/.bashrc file:
@@ -299,7 +310,7 @@ alias sshsf='ssh mysfuserid@phpwiki.sourceforge.net'
 # Keychain is an OpenSSH key manager
 # This will add my SSH1 and SSH2 key
 /usr/bin/keychain ~/.ssh/id_rsa ~/.ssh/id_dsa
-source ~/.ssh-agent-${HOSTNAME}
+source ~/.keychain/${HOSTNAME}-sh
 
 
 3.  Close the terminal window then open a new one. Keychain will
@@ -349,7 +360,6 @@ ProgrammingTopics/TextDisplay/Tasks/TextDefaultsAndBindings.html>
 If you have problems after all of this, try contacting the
 phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
 
-Carsten Klapp
-carstenklapp@mac.com
+Carsten Klapp <carstenklapp@yahoo.ca>
 
-$Id: INSTALL.MacOSX,v 1.14 2002-03-06 02:21:16 carstenklapp Exp $
+$Id: INSTALL.MacOSX,v 1.15 2003-01-29 21:43:17 carstenklapp Exp $
