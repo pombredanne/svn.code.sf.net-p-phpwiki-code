@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.101 2004-04-26 13:22:32 rurban Exp $');
+rcs_id('$Id: config.php,v 1.102 2004-04-29 23:25:12 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -222,23 +222,14 @@ function update_locale($loc) {
 */
 function pcre_fix_posix_classes ($regexp) {
     global $charset;
-    // First check to see if our PCRE lib supports POSIX character
-    // classes.  If it does, there's nothing to do.
-    if (preg_match('/[[:upper:]]/', 'Ä'))
-        return $regexp;
-
-    static $classes = array(
-                            'alnum' => "0-9A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
-                            'alpha' => "A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
-                            'upper' => "A-Z\xc0-\xd6\xd8-\xde",
-                            'lower' => "a-z\xdf-\xf6\xf8-\xff"
-                            );
     if (!isset($charset))
-        $charset = CHARSET; // FIXME: get rid of constant. pref is dynamic and language specific
+        $charset = CHARSET; // get rid of constant. pref is dynamic and language specific
     if (in_array($GLOBALS['LANG'],array('ja','zh')))
         $charset = 'utf-8';
     if (strtolower($charset) == 'utf-8') { // thanks to John McPherson
         // until posix class names/pcre work with utf-8
+	if (preg_match('/[[:upper:]]/', '\xc4\x80'))
+            return $regexp;    
         // utf-8 non-ascii chars: most common (eg western) latin chars are 0xc380-0xc3bf
         // we currently ignore other less common non-ascii characters
         // (eg central/east european) latin chars are 0xc432-0xcdbf and 0xc580-0xc5be
@@ -250,10 +241,18 @@ function pcre_fix_posix_classes ($regexp) {
         // this replaces [[:upper:]] with utf-8 match (Latin only)
         $regexp = preg_replace('/\[\[\:upper\:\]\]/','(?:[A-Z]|\xc3[\x80-\x9e]|\xc4[\x80\x82\x84\x86])',
                                $regexp);
+    } elseif (preg_match('/[[:upper:]]/', 'Ä')) {
+        // First check to see if our PCRE lib supports POSIX character
+        // classes.  If it does, there's nothing to do.
+        return $regexp;
     }
-   
+    static $classes = array(
+                            'alnum' => "0-9A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
+                            'alpha' => "A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
+                            'upper' => "A-Z\xc0-\xd6\xd8-\xde",
+                            'lower' => "a-z\xdf-\xf6\xf8-\xff"
+                            );
     $keys = join('|', array_keys($classes));
-
     return preg_replace("/\[:($keys):]/e", '$classes["\1"]', $regexp);
 }
 
@@ -283,6 +282,9 @@ function IsProbablyRedirectToIndex () {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2004/04/26 13:22:32  rurban
+// calculate bool old or dynamic constants later
+//
 // Revision 1.100  2004/04/26 12:15:01  rurban
 // check default config values
 //

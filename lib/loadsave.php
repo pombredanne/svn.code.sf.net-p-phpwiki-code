@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.97 2004-04-29 22:39:50 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.98 2004-04-29 23:25:12 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -811,10 +811,11 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
 function LoadFileOrDir (&$request)
 {
     $source = $request->getArg('source');
-    StartLoadDump($request, fmt("Loading '%s'", HTML(dirname($source),
-                                                     "/",
-                                                     WikiLink(basename($source),
-                                                              'auto'))));
+    $page = rawurldecode(basename($source));
+    StartLoadDump($request, fmt("Loading '%s'", 
+    	HTML(dirname($source),
+             dirname($source) ? "/" : "",
+             WikiLink($page,'auto'))));
     echo "<dl>\n";
     LoadAny($request, $source);
     echo "</dl>\n";

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PopularNearby.php,v 1.1 2004-04-29 18:32:38 rurban Exp $');
+rcs_id('$Id: PopularNearby.php,v 1.2 2004-04-29 23:25:12 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -28,9 +28,9 @@ rcs_id('$Id: PopularNearby.php,v 1.1 2004-04-29 18:32:38 rurban Exp $');
  */
 /* Usage:
 
-* <?plugin PopularNearby mode=incoming ?>
-* <?plugin PopularNearby mode=outgoing ?>
-* <?plugin PopularNearby mode=nearby ?>
+* <small><?plugin PopularNearby mode=incoming ?></small>
+* <small><?plugin PopularNearby mode=outgoing ?></small>
+* <small><?plugin PopularNearby mode=nearby ?></small>
 
 */
  
@@ -50,14 +50,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
         return array('pagename' => '[pagename]',
                      'mode'     => 'nearby', // or 'incoming' or 'outgoing'
                      'exclude'  => '',
-                     'limit'    => 5, // limit <0 returns least popular pages
+                     'limit'    => 5,
                      'noheader' => 0,
                     );
     }
@@ -88,7 +88,6 @@ extends WikiPlugin
                                         false,$limit);
             break;
         }
-        // if (count($links) > $limit) array_splice($links, $limit);
         $html = HTML($header);
         for ($i=0; $i<count($links); $i++) {
             $html->pushContent($links[$i]['format'],$i<count($links)-1?', ':'');
@@ -154,6 +153,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/04/29 18:32:38  rurban
+// Re-implement the classic phpwiki-1.2 feature of the
+//  * 5 best incoming links: xx, xx, xx, ...
+//  * 5 best outgoing links: xx, xx, xx, ...
+//  * 5 most popular nearby: xx, xx, xx, ...
+//
 
 // Local Variables:
 // mode: php

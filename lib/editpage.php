@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.65 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.66 2004-04-29 23:25:12 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -59,7 +59,8 @@ class PageEditor
                 $this->_content = $initial_content;
             }
         }
-        header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
+        if (!headers_sent())
+            header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
     }
 
     function editPage () {
@@ -625,6 +626,11 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.65  2004/04/18 01:11:52  rurban
+ more numeric pagename fixes.
+ fixed action=upload with merge conflict warnings.
+ charset changed from constant to global (dynamic utf-8 switching)
+
  Revision 1.64  2004/04/06 19:48:56  rurban
  temp workaround for action=edit AddComment form
 
