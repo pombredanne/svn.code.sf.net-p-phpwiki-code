@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.24 2002-02-10 20:32:24 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.25 2002-02-10 21:42:23 carstenklapp Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -28,7 +28,9 @@ $s = $Theme->getButtonSeparator();
      I think we need to do away with using <base> altogether... -->
      Please continue editing.  (You'll find your <!--a href="#editarea"-->edit area<!--/a--> at the bottom of the page.)
   </p>
+  <hr class="printer" noshade="noshade" />
   <div class="wikitext"><?= $PREVIEW_CONTENT ?></div>
+  <hr class="printer" noshade="noshade" />
 <?php } ?>
 
 <?= $PAGE_LOCKED_MESSAGE ?>
@@ -38,7 +40,6 @@ $s = $Theme->getButtonSeparator();
   <p><strong><?=_("Warning: You are editing an old revision.")?>
         <?=_("Saving this page will overwrite the current version.")?></strong></p>
 <?php } ?>
-
 <?php /*
  * FIXME: Hack! 
  * The funky URL used for the form action parameter is bogus.

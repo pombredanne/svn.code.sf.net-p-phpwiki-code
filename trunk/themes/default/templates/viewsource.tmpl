@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: viewsource.tmpl,v 1.16 2002-02-10 20:32:24 carstenklapp Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.17 2002-02-10 21:42:23 carstenklapp Exp $ -->
 
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -22,6 +22,7 @@ readonly="readonly"
 wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
 
 <div id="actionbar">
+<hr class="printer" noshade="noshade" />
 <p class="editdate"><?= $Theme->getLastModifiedMessage($revision) ?></p>
 <hr class="toolbar" noshade="noshade" />
 <?= Template('actionbar') ?>
