@@ -1,4 +1,4 @@
-<!-- $Id: wiki_savepage.php3,v 1.9 2000-06-21 22:57:17 ahollosi Exp $ -->
+<!-- $Id: wiki_savepage.php3,v 1.10 2000-06-27 19:41:23 ahollosi Exp $ -->
 <?
 
 /*
@@ -37,6 +37,8 @@
    if (! is_array($pagehash)) {
       $pagehash = array();
       $pagehash["version"] = 0;
+      $pagehash["created"] = time();
+      $pagehash["flags"] = 0;
       $newpage = 1;
    } else {
       if(isset($editversion) && ($editversion != $pagehash["version"])) {
