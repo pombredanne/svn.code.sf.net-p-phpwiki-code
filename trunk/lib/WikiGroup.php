@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.26 2004-04-07 23:13:18 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.27 2004-05-06 13:56:40 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -424,9 +424,6 @@ class GroupWikiPage extends WikiGroup{
      * @return boolean True if user is a member, else false.
      */ 
     function isMember($group){
-    	if ($this->specialGroup($group))
-            return WikiGroup::isMember($group);
-
         $request = $this->request;
         //$username = $this->_getUserName();
         if (isset($this->membership[$group])) {
@@ -438,6 +435,9 @@ class GroupWikiPage extends WikiGroup{
             return true;
         }
         $this->membership[$group] = false;
+        // Let grouppages override certain defaults, such as members of admin
+    	if ($this->specialGroup($group))
+            return WikiGroup::isMember($group);
         return false;
     }
     
@@ -448,11 +448,11 @@ class GroupWikiPage extends WikiGroup{
     * @return boolean True if user is a member, else false.
     * @access private
     */
-    function _inGroupPage($group_page){
+    function _inGroupPage($group_page,$strict=false){
         $group_revision = $group_page->getCurrentRevision();
         if ($group_revision->hasDefaultContents()) {
             $group = $group_page->getName();
-            trigger_error(sprintf(_("Group %s does not exist"),$group), E_USER_WARNING);
+            if ($strict) trigger_error(sprintf(_("Group page '%s' does not exist"),$group), E_USER_WARNING);
             return false;
         }
         $contents = $group_revision->getContent();
@@ -589,9 +589,6 @@ class GroupDb_PearDB extends GroupDb {
      * @return boolean True if user is a member, else false.
      */ 
     function isMember($group) {
-    	if ($this->specialGroup($group))
-            return WikiGroup::isMember($group);
-
         if (isset($this->membership[$group])) {
             return $this->membership[$group];
         }
@@ -602,6 +599,9 @@ class GroupDb_PearDB extends GroupDb {
             return true;
         }
         $this->membership[$group] = false;
+        // Let override certain defaults, such as members of admin
+    	if ($this->specialGroup($group))
+            return WikiGroup::isMember($group);
         return false;
     }
     
@@ -641,8 +641,6 @@ class GroupDb_PearDB extends GroupDb {
      * @return array Array of usernames that have joined the group.
      */ 
     function getMembersOf($group){
-    	if ($this->specialGroup($group))
-            return WikiGroup::getMembersOf($group);
 
         $members = array();
         $dbh = & $this->dbh;
@@ -652,6 +650,9 @@ class GroupDb_PearDB extends GroupDb {
                 $members[] = $userid;
             }
         }
+        // add certain defaults, such as members of admin
+    	if ($this->specialGroup($group))
+            $members = array_merge($memebrs,WikiGroup::getMembersOf($group));
         return $members;
     }
 }
@@ -670,9 +671,6 @@ class GroupDb_ADODB extends GroupDb {
      * @return boolean True if user is a member, else false.
      */ 
     function isMember($group) {
-    	if ($this->specialGroup($group))
-            return WikiGroup::isMember($group);
-
         if (isset($this->membership[$group])) {
             return $this->membership[$group];
         }
@@ -688,6 +686,9 @@ class GroupDb_ADODB extends GroupDb {
             }
         }
         $this->membership[$group] = false;
+    	if ($this->specialGroup($group))
+            return WikiGroup::isMember($group);
+
         return false;
     }
     
@@ -728,9 +729,6 @@ class GroupDb_ADODB extends GroupDb {
      * @return array Array of usernames that have joined the group.
      */ 
     function getMembersOf($group){
-    	if ($this->specialGroup($group))
-    	    return WikiGroup::getMembersOf($group);
-            
         $members = array();
         $dbh = & $this->dbh;
         $rs = $dbh->Execute(sprintf($this->_group_members,$dbh->qstr($group)));
@@ -741,6 +739,9 @@ class GroupDb_ADODB extends GroupDb {
             }
         }
         $rs->Close();
+        // add certain defaults, such as members of admin
+    	if ($this->specialGroup($group))
+            $members = array_merge($members,WikiGroup::getMembersOf($group));
         return $members;
     }
 }
@@ -787,9 +788,6 @@ class GroupFile extends WikiGroup {
      * @return boolean True if user is a member, else false.
      */ 
     function isMember($group) {
-    	if ($this->specialGroup($group))
-            return WikiGroup::isMember($group);
-
         //$request = $this->request;
         //$username = $this->username;
         if (isset($this->membership[$group])) {
@@ -806,6 +804,8 @@ class GroupFile extends WikiGroup {
           }
         }
         $this->membership[$group] = false;
+    	if ($this->specialGroup($group))
+            return WikiGroup::isMember($group);
         return false;
     }
     
@@ -847,14 +847,14 @@ class GroupFile extends WikiGroup {
      * @return array Array of usernames that have joined the group.
      */ 
     function getMembersOf($group){
-    	if ($this->specialGroup($group)) {
-            return WikiGroup::getMembersOf($group);
-        } else {
-            if (!empty($this->_file->users[$group])) {
-                return explode(' ',$this->_file->users[$group]);
-            }
-            return array();
+        $members = array();
+        if (!empty($this->_file->users[$group])) {
+            $members = explode(' ',$this->_file->users[$group]);
         }
+    	if ($this->specialGroup($group)) {
+            $members = array_merge($members,WikiGroup::getMembersOf($group));
+        }
+        return $members;
     }
 }
 
@@ -1000,6 +1000,10 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/04/07 23:13:18  rurban
+// fixed pear/File_Passwd for Windows
+// fixed FilePassUser sessions (filehandle revive) and password update
+//
 // Revision 1.25  2004/03/29 10:40:36  rurban
 // GroupDb_PearDB fetchmode fix
 //
