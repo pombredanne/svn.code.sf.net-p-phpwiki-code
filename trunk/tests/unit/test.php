@@ -129,6 +129,7 @@ function printMemoryUsage($msg = '') {
         flush();
     }
 }
+/* // now in stdlib.php
 function printSimpleTrace($bt) {
     //print_r($bt);
     echo "Traceback:\n";
@@ -139,6 +140,7 @@ function printSimpleTrace($bt) {
         print "  " . $elem['file'] . ':' . $elem['line'] . "\n";
     }
 }
+*/
 # Show lots of detail when an assert() in the code fails
 function assert_callback( $script, $line, $message ) {
    echo "assert failed: script ", $script," line ", $line," :";
@@ -232,7 +234,9 @@ function printConstant($v) {
     } else echo "undefined";
     echo "\n";
 }
-
+/**
+ * via the HTML sapi interface print a form to easily change the current cmdline settings.
+ */
 function html_option_form() {
     global $debug_level,$user_level,$start_debug;
 
@@ -265,9 +269,9 @@ function html_option_form() {
             $option->pushContent(HTML::input($input), $s, HTML::br());
         }
     }
-    if ($input)
+    if (!empty($input))
         $form->pushContent(HTML::td($option));
-    $table = HTML::form(array('action' => $GLOBALS['PHP_SELF'],
+    $table = HTML::form(array('action' => $_SERVER['PHP_SELF'],
                                           'method' => 'GET',
                               'accept-charset' => $GLOBALS['charset']),
                         HiddenInputs(array('start_debug' => $start_debug)),
@@ -302,10 +306,12 @@ $alltests = array('InlineParserTest','HtmlParserTest',
                   'SetupWiki',
                   'AllPagesTest','AllUsersTest','OrphanedPagesTest',
                   'DumpHtml');
+// support db=file db=dba test=SetupWiki test=DumpHtml debug=num -dconstant=value
+// or  db=file,dba test=SetupWiki,DumpHtml debug=num -dconstant=value
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
     $argv = array();
     foreach ($HTTP_GET_VARS as $key => $val) {
-    	if (is_array($val)) 
+    	if (is_array($val))
     	    foreach ($val as $k => $v) $argv[] = $key."=".$k;
     	elseif (strstr($val,",") and in_array($key,array("test","db")))
     	    foreach (explode(",",$val) as $v) $argv[] = $key."=".$v;
@@ -315,7 +321,6 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
 } elseif (!empty($argv) and preg_match("/test\.php$/", $argv[0]))
     array_shift($argv);
 if (!empty($argv)) {
-    //support db=file db=dba test=SetupWiki test=DumpHtml debug=num -dconstant=value
     $runtests = array();
     $define = array();
     $run_database_backends = array();
@@ -343,7 +348,7 @@ if (!empty($argv)) {
     if (empty($runtests))
         $runtests = $alltests;
     if ($debug_level & 1) {
-        echo "\n";
+        //echo "\n";
         echo "PHP_SAPI=",php_sapi_name(), "\n";
         echo "PHP_OS=",PHP_OS, "\n";
         echo "PHP_VERSION=",PHP_VERSION, "\n";
@@ -388,7 +393,7 @@ require_once 'PHPUnit.php';
 ob_end_flush();
 
 if ($debug_level & 1) {
-    echo "\n";
+    //echo "\n";
     echo "PHPWIKI_VERSION=",PHPWIKI_VERSION, strstr(PHPWIKI_VERSION,"pre") ? strftime("-%Y%m%d") : "","\n";
     if ($debug_level & 9) {
         // which constants affect memory?

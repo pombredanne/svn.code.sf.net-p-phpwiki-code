@@ -1,5 +1,21 @@
--- $Id: mysql-test-initialize.sql,v 1.1 2004-11-03 16:55:03 rurban Exp $
+-- $Id: mysql-test-initialize.sql,v 1.2 2004-11-15 16:53:01 rurban Exp $
 -- for the regression suite
+
+drop table if exists test_page;
+drop table if exists test_version;
+drop table if exists test_recent;
+drop table if exists test_nonempty;
+drop table if exists test_link;
+drop table if exists test_session;
+
+-- since 1.3.7:
+
+drop table if exists test_pref;
+drop table if exists test_user;
+drop table if exists test_member;
+
+drop table if exists test_rating;
+drop table if exists test_accesslog;
 
 CREATE TABLE test_page (
 	id              INT NOT NULL AUTO_INCREMENT,
@@ -86,3 +102,24 @@ CREATE TABLE test_rating (
         tstamp TIMESTAMP(14) NOT NULL,
         PRIMARY KEY (dimension, raterpage, rateepage)
 );
+
+-- only if you need fast log-analysis (spam prevention, recent referrers)
+-- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
+CREATE TABLE test_accesslog (
+        time_stamp    int unsigned,
+	remote_host   varchar(50),
+	remote_user   varchar(50),
+        request_method varchar(10),
+	request_line  varchar(255),
+	request_args  varchar(255),
+	request_file  varchar(255),
+	request_uri   varchar(255),
+	request_time  char(28),
+	status 	      smallint unsigned,
+	bytes_sent    smallint unsigned,
+        referer       varchar(255), 
+	agent         varchar(255),
+	request_duration float
+);
+CREATE INDEX log_time ON test_accesslog (time_stamp);
+CREATE INDEX log_host ON test_accesslog (remote_host);
