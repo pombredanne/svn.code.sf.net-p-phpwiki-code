@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.7 2003-02-15 23:32:57 dairiki Exp $
+ * $Id: phpwiki.css,v 1.8 2003-02-17 05:53:35 dairiki Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -112,7 +112,8 @@ form.wikiadmin div { background-color: #fee; }
 }
 
 /* Action buttons */
-a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe {
+a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe,
+input.wikiaction, input.button {
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
   /* don't wrap text buttons */
