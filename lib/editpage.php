@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.76 2004-11-15 15:37:34 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.77 2004-11-15 15:52:35 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -154,7 +154,7 @@ function undo_enable(bool) {
 }
 
 function replace() {
-   replacewin=window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,height=90,width=450');
+   replacewin = window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,height=90,width=450');
    replacewin.window.document.write('<html><head><title>"
 ._("Search & Replace")
 ."</title><style type=\"text/css\"><'+'!'+'-- body, input {font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:10pt;font-weight:bold;} td {font-size:9pt}  --'+'></style></head><body bgcolor=\"#dddddd\" onload=\"if(document.forms[0].ein.focus) document.forms[0].ein.focus()\"><form><center><table><tr><td align=\"right\">'+'"
@@ -163,7 +163,7 @@ function replace() {
 ._("Replace with")
 .":</td><td align=\"left\"><input type=\"text\" name=\"aus\" size=\"45\" maxlength=\"500\"></td></tr><tr><td colspan=\"2\" align=\"center\"><input type=\"button\" value=\" "
 ._("OK")
-." \" onclick=\"self.opener.do_replace()\">&nbsp;&nbsp;&nbsp;<input type=\"button\" value=\""
+." \" onclick=\"if(self.opener)self.opener.do_replace()\">&nbsp;&nbsp;&nbsp;<input type=\"button\" value=\""
 ._("Close")
 ."\" onclick=\"self.close()\"></td></tr></table></center></form></body></html>');
    replacewin.window.document.close();
@@ -173,7 +173,7 @@ function replace() {
 function do_replace() {
    var txt=undo_buffer[undo_buffer_index]=f.editarea.value, ein=new RegExp(replacewin.document.forms[0].ein.value,'g'), aus=replacewin.document.forms[0].aus.value;
    if(ein==''||ein==null) {
-      replacewin.window.document.forms[0].ein.focus();
+      if (replacewin) replacewin.window.document.forms[0].ein.focus();
       return;
    }
    var z_repl=txt.match(ein)? txt.match(ein).length : 0;
@@ -302,8 +302,7 @@ function speich() {
             $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.gif"); 
             //$redo_btn = $WikiTheme->getImageURL("ed_redo.gif");
             $sr_btn   = $WikiTheme->getImageURL("ed_replace.gif");
-            $sr_html = HTML(HTML::input(array(
-                                              'type' =>"image",
+            $sr_html = HTML(HTML::input(array('type' =>"image",
                                               'class'=>"toolbar",
                                               'id'   =>"sr_undo",
                                               'src'  =>$undo_d_btn,
@@ -312,26 +311,26 @@ function speich() {
                                               'value'   =>"Undo",
                                               'onfocus' =>"if(this.blur && undo_buffer_index==0) this.blur()",
                                               'onclick' =>"do_undo()")),
-                            HTML::input(array('type'=>"image",
+                            HTML::input(array('type' =>"image",
                                               'class'=>"toolbar",
-                                              'src'=>$sr_btn,
+                                              'src'  => $sr_btn,
                                               'title'=>_("Search & Replace"),
                                               'onclick'=>"replace()")));
-            /*$sr_js = '<input type="image" class="toolbar" id="sr_undo" src="'.$undo_d_btn.'" title="'._("Undo Search & Replace").'" disabled="disabled" value="Undo" onfocus="if(this.blur && undo_buffer_index==0) this.blur()" onclick="do_undo()">'
-                // . '<input type="image" class="toolbar" src="'.$redo_btn.'" title="'._("Snap").'" onclick="speich()">'
-                . '<input type="image" class="toolbar" src="'.$sr_btn.'" title="'._("Search & Replace").'" onclick="replace()">';
-              $toolbar.='document.writeln("'.addslashes($sr_js).'");'."\n";
-            */
-        } else $sr_html = '';
+        } else {
+            $sr_html = '';
+        }
         // More:
         // Button to generate pagenames, display in extra window as pulldown and insert
         // Button to generate plugins, display in extra window as pulldown and insert
         // Button to generate categories, display in extra window as pulldown and insert
         $toolbar_end = "document.writeln(\"</div>\");";
         // don't use document.write for replace, otherwise self.opener is not defined.
-        return HTML(Javascript($toolbar),
-                    $sr_html,
-                    Javascript($toolbar_end));
+        if ($sr_html)
+            return HTML(Javascript($toolbar),
+                        $sr_html,
+                        Javascript($toolbar_end));
+        else
+            return HTML(Javascript($toolbar . $toolbar_end));
     }
 
     function output ($template, $title_fs) {
@@ -350,7 +349,7 @@ function speich() {
 
 
         $title = new FormattedText ($title_fs, $pagelink);
-        if ($template == 'editpage' and USE_HTMLAREA) {
+        if (USE_HTMLAREA and $template == 'editpage') {
             $WikiTheme->addMoreHeaders(Edit_HtmlArea_Head());
             //$tokens['PAGE_SOURCE'] = Edit_HtmlArea_ConvertBefore($this->_content);
         }
@@ -783,6 +782,10 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.76  2004/11/15 15:37:34  rurban
+ fix JS_SEARCHREPLACE
+   don't use document.write for replace, otherwise self.opener is not defined.
+
  Revision 1.75  2004/09/16 08:00:52  rurban
  just some comments
 
