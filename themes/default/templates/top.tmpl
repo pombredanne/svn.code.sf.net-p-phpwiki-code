@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: top.tmpl,v 1.5 2002-01-24 00:45:28 dairiki Exp $
+/* $Id: top.tmpl,v 1.6 2002-02-04 02:19:36 carstenklapp Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff and the and <head>.
  */
@@ -9,10 +9,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- phpwiki source:
-$Id: top.tmpl,v 1.5 2002-01-24 00:45:28 dairiki Exp $
-<?=$RCS_IDS?>
--->
+<!-- $Id: top.tmpl,v 1.6 2002-02-04 02:19:36 carstenklapp Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
 <?php if ($ROBOTS_META) { ?>
   <meta name="robots" content="<?= $ROBOTS_META ?>" />
@@ -23,10 +20,14 @@ $Id: top.tmpl,v 1.5 2002-01-24 00:45:28 dairiki Exp $
 <?php if (!empty($PAGE_DESCRIPTION)) { ?>
   <meta name="description" content="<?=$PAGE_DESCRIPTION?>" />
 <?php } ?>
+<meta name="PHPWIKI_VERSION" content="<?=PHPWIKI_VERSION?>" />
 <base href="<?=BASE_URL?>" />
 <link rel="shortcut icon" href="<?=$Theme->getImageURL('favicon.ico')?>" />
 <?= $Theme->getCSS() ?>
 <title><?=WIKI_NAME?> - <?=AsString($TITLE)?></title>
 </head>
 <?= Template('body') ?>
+<!-- phpwiki source:
+<?=$RCS_IDS?>
+-->
 </html>
