@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.15 2002-11-12 22:42:10 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.16 2002-11-20 15:22:54 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -321,7 +321,7 @@ class Markup_nestled_emphasis extends BalancedMarkup
     function getEndRegexp ($match) {
         //return "(?<= [[:alnum:]]) \\$match (?![[:alnum:]])";
         $rev = preg_quote(strrev($match));
-        return "(?<= \S) $rev (?= \s | [.,:;\"'] | $)";
+        return "(?<= \S) $rev (?= \s | [.,:;\"'?] | $)";
     }
     
     function markup ($match, $body) {
