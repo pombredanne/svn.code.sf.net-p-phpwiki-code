@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RawHtml.php,v 1.6 2003-03-17 21:24:53 dairiki Exp $');
+rcs_id('$Id: RawHtml.php,v 1.7 2003-03-17 22:32:26 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -41,9 +41,16 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
+    function managesValidators() {
+        // The plugin output will only change if the plugin
+        // invocation (page text) changes --- so the necessary
+        // validators have already been handled by displayPage.
+        return true;
+    }
+    
     function run($dbi, $argstr, &$request, $basepage) {
         if (!defined('ENABLE_RAW_HTML') || ! ENABLE_RAW_HTML) {
             return $this->disabled(_("Raw HTML is disabled in this wiki."));
@@ -64,6 +71,13 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2003/03/17 21:24:53  dairiki
+// Fix security bugs in the RawHtml plugin.
+//
+// Change the default configuration to allow use of plugin, since
+// I believe the plugin is now safe for general use. (Raw HTML will only
+// work on locked pages.)
+//
 // Revision 1.5  2003/01/18 22:01:43  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
