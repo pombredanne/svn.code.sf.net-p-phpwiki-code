@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.107 2005-02-04 13:45:28 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.108 2005-04-01 16:09:35 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -736,7 +736,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.107 $");
+                            "\$Revision: 1.108 $");
     }
 
     function managesValidators() {
@@ -773,7 +773,8 @@ extends WikiPlugin
     }
 
     function getArgs ($argstr, $request, $defaults = false) {
-        $args = WikiPlugin::getArgs($argstr, $request, $this->getDefaultArguments());
+    	if (!$defaults) $defaults = $this->getDefaultArguments();
+        $args = WikiPlugin::getArgs($argstr, $request, $defaults);
 
         $action = $request->getArg('action');
         if ($action != 'browse' && ! $request->isActionPage($action))
@@ -923,6 +924,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.107  2005/02/04 13:45:28  rurban
+// improve box layout a bit
+//
 // Revision 1.106  2005/02/02 19:39:10  rurban
 // honor show_all=false
 //
