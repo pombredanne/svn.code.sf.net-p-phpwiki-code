@@ -6,8 +6,6 @@ $locale["%d best outgoing links:"] =
    "%d beste uitgaande koppelingen:";
 $locale["%d most popular nearby:"] =
    "%d meest gevraagde in de buurt:";
-$locale["%s has been locked by the administrator and cannot be edited."] =
-   "%s is afgesloten door de beheerder en kan niet veranderd worden.";
 $locale["- skipped"] =
    "- overgeslagen";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
@@ -50,8 +48,6 @@ $locale["None"] =
    "Geen";
 $locale["Page Name"] =
    "Pagina";
-$locale["Page locked"] =
-   "Sidan är låst";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki kan je veranderingen niet bewaren, want een andere gebruiker\nheeft de pagina veranderd terwijl jij de pagina ook aan het veranderen\nwas.  Als bewaren nu doorgang zou vinden, zouden de veranderingen van\nde vorige auteur verloren gaan.";
 $locale["Press <b>Save</b> again."] =

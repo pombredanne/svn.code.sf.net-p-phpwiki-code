@@ -6,8 +6,6 @@ $locale["%d best outgoing links:"] =
    "%d mejores enlaces de salida:";
 $locale["%d most popular nearby:"] =
    "%d las más populares:";
-$locale["%s has been locked by the administrator and cannot be edited."] =
-   "%s ha sido bloqueada por el administrador y no puede ser editada.";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Vuelva a cargar</b> la página. Ahora podrá ver la versión mas actual de la página. Sus cambios no están ahí.";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
@@ -30,16 +28,12 @@ $locale["HomePage"] =
    "PáginaPrincipal";
 $locale["In order to recover from this situation follow these steps:"] =
    "Para restaurar esta situación siga los siguientes pasos:";
-$locale["Lock page"] =
-   "Bloquear página";
 $locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
    "Haga cambios a la página otra vez. Pegue sus modificaciones del portapapeles (o del editor de textos).";
 $locale["None"] =
    "Ninguno";
 $locale["Page Name"] =
    "Nombre de la página";
-$locale["Page locked"] =
-   "Página bloqueada";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
    "PhpWiki no es capaz de grabar sus cambios, debido a que otro usuariohá editado y guardado la página mientras usted estaba editando esta página. Si se guarda ahora los cambios del autor anterior se podrían perder.";
 $locale["Press <b>Save</b> again."] =
@@ -68,8 +62,6 @@ $locale["The %s most popular pages of this wiki:"] =
    "Las %s páginas más populares de este wiki:";
 $locale["This is a minor change."] =
    "Esto es un cambio pequeño.";
-$locale["Unlock page"] =
-   "Desbloquear página";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
    "Use el botón <b>Atrás<b> para retornar a la página editada";
 $locale["Version %d"] =
