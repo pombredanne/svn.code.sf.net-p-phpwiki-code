@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.21 2002-09-12 20:56:29 rurban Exp $');
+<?php rcs_id('$Id: Request.php,v 1.22 2002-09-18 22:11:21 dairiki Exp $');
 
 // FIXME: write log entry.
 
@@ -23,10 +23,7 @@ class Request {
             break;
         }
         
-        // Defer session_start until we decided to load DB_Session (or not).
-        if (! USE_DB_SESSION) {
-            $this->session = new Request_SessionVars; 
-        }
+        $this->session = new Request_SessionVars; 
         $this->cookies = new Request_CookieVars;
         
         if (ACCESS_LOG)

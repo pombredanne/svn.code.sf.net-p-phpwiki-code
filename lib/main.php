@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.84 2002-09-18 19:29:43 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.85 2002-09-18 22:11:21 dairiki Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -10,19 +10,20 @@ require_once("lib/WikiUser.php");
 require_once('lib/WikiDB.php');
 
 if (USE_DB_SESSION) {
-    require_once('lib/DB_Session.php');
+    include_once('lib/DB_Session.php');
 }
 
 class WikiRequest extends Request {
     // var $_dbi;
 
     function WikiRequest () {
-        $this->Request();
         if (USE_DB_SESSION) {
             $this->_dbi = $this->getDbh();
-            new DB_Session($this->_dbi->_backend->_dbh, $GLOBALS['DBParams']['db_session_table']);
-            $this->session = new Request_SessionVars;
+            new DB_Session($this->_dbi->_backend->_dbh,
+                           $GLOBALS['DBParams']['db_session_table']);
         }
+        
+        $this->Request();
 
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
@@ -34,62 +35,66 @@ class WikiRequest extends Request {
         $this->_prefs = $this->_user->getPreferences();
     }
 
+    function initializeTheme () {
+    	global $Theme;
+
+        // Load theme
+        if ($user_theme = $this->getPref('theme'))
+            include_once("themes/$user_theme/themeinfo.php");
+        if (empty($Theme) and defined ('THEME'))
+            include_once("themes/" . THEME . "/themeinfo.php");
+        if (empty($Theme))
+            include_once("themes/default/themeinfo.php");
+        assert(!empty($Theme));
+    }
+
+
     // This really maybe should be part of the constructor, but since it
     // may involve HTML/template output, the global $request really needs
     // to be initialized before we do this stuff.
     function updateAuthAndPrefs () {
-    	global $Theme;
+        
         // Handle preference updates, an authentication requests, if any.
         if ($new_prefs = $this->getArg('pref')) {
             $this->setArg('pref', false);
             if ($this->isPost() and !empty($new_prefs['passwd']) and 
                 ($new_prefs['passwd2'] != $new_prefs['passwd'])) {
+                // FIXME: enh?
                 $this->_prefs->set('passwd','');
                 // $this->_prefs->set('passwd2',''); // This is not stored anyway
-                include_once("themes/" . THEME . "/themeinfo.php");
                 return false;
             }
             foreach ($new_prefs as $key => $val) {
             	if ($key == 'passwd') {
-            	  $val = crypt('passwd');
+                    // FIXME: enh?
+                    $val = crypt('passwd');
             	}
                 $this->_prefs->set($key, $val);
             }
         }
 
+        // FIXME: need to move authentication request processing
+        // up to be before pref request processing, I think,
+        // since logging in may change which preferences
+        // we're talking about...
+
         // Handle authentication request, if any.
         if ($auth_args = $this->getArg('auth')) {
             $this->setArg('auth', false);
-            include_once("themes/" . THEME . "/themeinfo.php");
             $this->_handleAuthRequest($auth_args); // possible NORETURN
         }
         elseif ( ! $this->_user->isSignedIn() ) {
             // If not auth request, try to sign in as saved user.
             if (($saved_user = $this->getPref('userid')) != false) {
-            	include_once("themes/" . THEME . "/themeinfo.php");
                 $this->_signIn($saved_user);
             }
         }
 
         // Save preferences in session and cookie
-        $id_only = true;
+        // FIXME: hey! what about anonymous users?   Can't they have
+        // preferences too?
+        $id_only = true; 
         $this->_user->setPreferences($this->_prefs, $id_only);
-        /*
-        if ($theme = $this->getPref('theme') ) {
-            // Load user-defined theme
-            include_once("themes/$theme/themeinfo.php");
-        } else {
-            // site theme
-            include_once("themes/" . THEME . "/themeinfo.php");
-        }
-        */
-        if (empty($Theme)) {
-            include_once("themes/" . THEME . "/themeinfo.php");
-        }
-        if (empty($Theme)) {
-            include_once("themes/default/themeinfo.php");
-        }
-        assert(!empty($Theme));
 
         // Ensure user has permissions for action
         $require_level = $this->requiredAuthority($this->getArg('action'));
@@ -629,8 +634,9 @@ function main () {
     global $request;
 
     $request = new WikiRequest();
+    $request->initializeTheme();
     $request->updateAuthAndPrefs();
-
+    
     /* FIXME: is this needed anymore?
         if (USE_PATH_INFO && ! $request->get('PATH_INFO')
             && ! preg_match(',/$,', $request->get('REDIRECT_URL'))) {
