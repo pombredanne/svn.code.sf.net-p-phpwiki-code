@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.2 2002-03-08 20:31:13 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.3 2003-12-05 01:31:51 carstenklapp Exp $');
 
 /**
  * This theme is by design completely css-based so unfortunately it
@@ -49,14 +49,17 @@ $Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
  */
 //$Theme->addImageAlias('logo', 'logo.png');
 $Theme->addImageAlias('logo', 'Ufp-logo.jpg');
+$Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
- * is not set, any signature defined in index.php will be used. If it
- * is not defined by index.php or in here then the "Thank you for
- * editing..." screen will be omitted.
+ * is set to false then the "Thank you for editing..." screen will
+ * be omitted.
  */
 $Theme->addImageAlias('signature', 'lights.gif');
+$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
+// Uncomment this next line to disable the signature.
+//$Theme->addImageAlias('signature', false);
 
 $Theme->addImageAlias('hr', 'hr.png');
 

@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.23 2003-03-24 22:57:20 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.24 2003-12-05 01:31:50 carstenklapp Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -34,15 +34,18 @@ $Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
  * The logo image appears on every page and links to the HomePage.
  */
 $Theme->addImageAlias('logo', 'PalmBeach.jpg');
+$Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
- * is not set, any signature defined in index.php will be used. If it
- * is not defined by index.php or in here then the "Thank you for
- * editing..." screen will be omitted.
+ * is set to false then the "Thank you for editing..." screen will
+ * be omitted.
  */
 //$Theme->addImageAlias('signature', 'SubmersiblePiscesV.jpg');
 $Theme->addImageAlias('signature', 'WaterFall.jpg');
+$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
+// Uncomment this next line to disable the signature.
+//$Theme->addImageAlias('signature', false);
 
 // If you want to see more than just the waterfall let a random
 // picture be chosen for the signature image:
@@ -60,7 +63,7 @@ $Theme->addImageAlias('signature', $imgFile);
 $Theme->setLinkIcon('interwiki');
 $Theme->setLinkIcon('*', 'flower.png');
 
-//$Theme->setButtonSeparator(' | ');
+$Theme->setButtonSeparator(' ');
 
 /**
  * WikiWords can automatically be split by inserting spaces between

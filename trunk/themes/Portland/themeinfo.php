@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.9 2003-03-24 22:57:23 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.10 2003-12-05 01:31:50 carstenklapp Exp $');
 
 /*
  * This file defines an appearance ("theme") of PhpWiki similar to the Portland Pattern Repository.
@@ -63,15 +63,16 @@ $Theme->addAlternateCSS('PhpWiki', 'phpwiki.css');
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-//$Theme->addImageAlias('logo', 'logo.png');
+$Theme->addImageAlias('logo', WIKI_NAME . 'logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
- * is not set, any signature defined in index.php will be used. If it
- * is not defined by index.php or in here then the "Thank you for
- * editing..." screen will be omitted.
+ * is set to false then the "Thank you for editing..." screen will
+ * be omitted.
  */
-$Theme->addImageAlias('signature', 'signature.png');
+$Theme->addImageAlias('signature', WIKI_NAME . "Signature.png");
+// Uncomment this next line to disable the signature.
+//$Theme->addImageAlias('signature', false);
 
 /*
  * Link icons.

@@ -1,6 +1,5 @@
-<?php
-
-rcs_id('$Id: themeinfo.php,v 1.51 2003-12-01 18:47:24 carstenklapp Exp $');
+<?php //-*-php-*-
+rcs_id('$Id: themeinfo.php,v 1.52 2003-12-05 01:31:50 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -86,6 +85,25 @@ class Theme_MacOSX extends Theme {
 
         return $link;
     }
+    //*********************
+
+
+    function ImageButton ($text, $url, $class, $img_url, $img_attr = false) {
+        $this->HtmlElement('a', array('href' => $url));
+        if ($class)
+            $this->setAttr('class', $class);
+
+        if (!is_array($img_attr))
+            $img_attr = array();
+        $img_attr['src'] = $img_url;
+        $img_attr['alt'] = $text;
+        $img_attr['class'] = 'wiki-button';
+        $img_attr['border'] = 0;
+        $this->pushContent(HTML::img($img_attr), $text==_("(diff)") ? HTML::small($text) : "");
+    }
+    //*********************
+
+
 }
 
 $Theme = new Theme_MacOSX('MacOSX');
@@ -108,15 +126,16 @@ $Theme->addAlternateCSS(_("Top & bottom toolbars"), 'MacOSX-topbottombars.css');
 /**
  * The logo image appears on every page and links to the HomePage.
  */
-//$Theme->addImageAlias('logo', 'logo.png');
+$Theme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
- * is not set, any signature defined in index.php will be used. If it
- * is not defined by index.php or in here then the "Thank you for
- * editing..." screen will be omitted.
+ * is set to false then the "Thank you for editing..." screen will
+ * be omitted.
  */
-$Theme->addImageAlias('signature', 'signature.png');
+$Theme->addImageAlias('signature', PHPWIKI_NAME . "Signature.png");
+// Uncomment this next line to disable the signature.
+//$Theme->addImageAlias('signature', false);
 
 /*
  * Link icons.
