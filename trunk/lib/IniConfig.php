@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.85 2005-03-27 20:36:16 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.86 2005-04-06 06:41:05 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -180,7 +180,8 @@ function IniConfig($file) {
          'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
          'DISABLE_HTTP_REDIRECT',
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
-         'BLOG_EMPTY_DEFAULT_PREFIX', 'DATABASE_PERSISTENT'
+         'BLOG_EMPTY_DEFAULT_PREFIX', 'DATABASE_PERSISTENT',
+         'ENABLE_DISCUSSION_LINK'
          );
 
     $rs = @parse_ini_file($file);
@@ -830,6 +831,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.85  2005/03/27 20:36:16  rurban
+// configurator recursion fixes, dont print temp _dsn vars
+//
 // Revision 1.84  2005/03/27 18:23:40  rurban
 // compute locale only for setlocale and LC_ALL
 //

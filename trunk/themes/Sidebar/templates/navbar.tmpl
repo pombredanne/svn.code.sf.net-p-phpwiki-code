@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-    rcs_id('$Id: navbar.tmpl,v 1.9 2005-02-04 13:25:07 rurban Exp $');
+    rcs_id('$Id: navbar.tmpl,v 1.10 2005-04-06 06:41:05 rurban Exp $');
     $split = $WikiTheme->_autosplitWikiWords;
     $WikiTheme->setAutosplitWikiWords(true);
 ?>
@@ -22,10 +22,15 @@ $button->setAttr('class', false);
 if (isset($button->_content[0])) $button->_content[0]->setAttr('class', false);
 echo $button->asXml();
 ?><?=$SEP?><?= WikiLink(_("FindPage"), "button",_("Full Search")) ?>
-<?php // this requires the Talk: map to end in "/Discussion"
-if (!string_ends_with($page->getName(), _("Discussion"))) { ?>
-  <?=$SEP?><?= WikiLink(new WikiPagename('Talk:'.$page->getName(), $page->getName()), 
-               'button', _("Discussion")) ?><?php } ?>
+<?php 
+if (ENABLE_DISCUSSION_LINK) { // This requires Talk: map to end in "/Discussion"
+  if (!string_ends_with($page->getName(), _("Discussion"))) { ?>
+    <?=$SEP?><?= WikiLink(new WikiPagename('Talk:'.$page->getName(), $page->getName()), 
+               'button', _("Discussion")) ?>
+  <?php } else { ?>
+    <?=$SEP?><?= Button(array(),_("Article"),$page->getName()) ?>
+  <?php } ?>
+<?php } ?>
 <?php if (!empty($revision)) { ?>
 <?=$SEP?><?=Button(_("BackLinks")) ?>
 <?php } ?>
