@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.2 2002-02-02 22:50:24 lakka Exp $');
+rcs_id('$Id: ADODB.php,v 1.3 2002-02-03 01:59:54 dairiki Exp $');
 
 /*This file is part of PhpWiki.
 
@@ -547,14 +547,19 @@ extends WikiDB_backend
 
     function _sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);  //not sure if we need this.  ADODB may do it for us
-        $word = $this->_dbh->qstr($word, get_magic_quotes_runtime());
-        return "LOWER(pagename) LIKE %$word%";
+        // (we need it for at least % and _ --- they're the wildcard characters
+        //  for the LIKE operator, and we need to quote them if we're searching
+        //  for literal '%'s or '_'s.  --- I'm not sure about \, but it seems to
+        //  work as is.
+        $word = $this->_dbh->qstr("%$word%");
+        return "LOWER(pagename) LIKE $word";
     }
 
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);  //not sure if we need this
-        $word = $this->_dbh->qstr($word, get_magic_quotes_runtime());
-        return "LOWER(pagename) LIKE %$word% OR content LIKE %$word%";
+        // (see above)
+        $word = $this->_dbh->qstr("%$word%");
+        return "LOWER(pagename) LIKE $word OR content LIKE $word";
     }
 
     /**
@@ -832,18 +837,18 @@ extends WikiDB_backend_iterator
     }
     
     function next() {
-        $backend = &$this->_backend;
-        if (!$this->_result)
-            return false;
-
-//      $record = $this->_result->fetchRow(DB_FETCHMODE_ASSOC);
-		$record = $this->_result->fields;
-        $this->_result->MoveNext();
-		if ($this->_result->EOF) {
+        $result = &$this->_result;
+        if (!$result || $result->EOF) {
             $this->free();
             return false;
         }
+
+//      $record = $this->_result->fetchRow(DB_FETCHMODE_ASSOC);
+        $record = $result->fields;
+        $result->MoveNext();
         
+        $backend = &$this->_backend;
+
         $pagedata = $backend->_extract_page_data($record);
         $rec = array('pagename' => $record['pagename'],
                      'pagedata' => $pagedata);
@@ -859,7 +864,7 @@ extends WikiDB_backend_iterator
     function free () {
         if ($this->_result) {
 //          $this->_result->free();
-			$this->_result->Close();
+            $this->_result->Close();
             $this->_result = false;
         }
     }
