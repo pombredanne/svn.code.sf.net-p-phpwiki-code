@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.184 2004-06-04 20:32:53 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.185 2004-06-11 09:07:30 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -192,7 +192,12 @@ function IconForLink($protocol_or_url) {
 }
 
 /**
- * Glue icon in front of text.
+ * Glue icon in front of or after text.
+ * Pref: 'noLinkIcons'  - ignore icon if set
+ * Theme: 'LinkIcons'   - 'yes'   at front
+ *                      - 'no'    display no icon
+ *                      - 'front' display at left
+ *                      - 'after' display at right
  *
  * @param string $protocol_or_url Protocol or URL.  Used to determine the
  * proper icon.
@@ -200,25 +205,49 @@ function IconForLink($protocol_or_url) {
  * @return XmlContent.
  */
 function PossiblyGlueIconToText($proto_or_url, $text) {
-    global $request;
-    if (! $request->getPref('noLinkIcons')) {
-        $icon = IconForLink($proto_or_url);
-        if ($icon) {
-            if (!is_object($text)) {
-                preg_match('/^\s*(\S*)(.*?)\s*$/', $text, $m);
-                list (, $first_word, $tail) = $m;
-            }
-            else {
-                $first_word = $text;
-                $tail = false;
-            }
-            
-            $text = HTML::span(array('style' => 'white-space: nowrap'),
-                               $icon, $first_word);
-            if ($tail)
-                $text = HTML($text, $tail);
-        }
+    global $request, $Theme;
+    if ($request->getPref('noLinkIcons'))
+        return $text;
+    $icon = IconForLink($proto_or_url);
+    if (!$icon)
+        return $text;
+    if ($where = $Theme->getLinkIconAttr()) {
+        if ($where == 'no') return $text;
+        if ($where != 'after') $where = 'front';
+    } else {
+        $where = 'front';
     }
+    if ($where == 'after') {
+        // span the icon only to the last word (tie them together), 
+        // to let the previous words wrap on line breaks.
+        if (!is_object($text)) {
+            preg_match('/^(\s*\S*)(\s*)$/', $text, $m);
+            list (, $prefix, $last_word) = $m;
+        }
+        else {
+            $last_word = $text;
+            $prefix = false;
+        }
+        $text = HTML::span(array('style' => 'white-space: nowrap'),
+                           $last_word, HTML::Raw('&nbsp;'), $icon);
+        if ($prefix)
+            $text = HTML($prefix, $text);
+        return $text;
+    }
+    // span the icon only to the first word (tie them together), 
+    // to let the next words wrap on line breaks
+    if (!is_object($text)) {
+        preg_match('/^\s*(\S*)(.*?)\s*$/', $text, $m);
+        list (, $first_word, $tail) = $m;
+    }
+    else {
+        $first_word = $text;
+        $tail = false;
+    }
+    $text = HTML::span(array('style' => 'white-space: nowrap'),
+                       $icon, $first_word);
+    if ($tail)
+        $text = HTML($text, $tail);
     return $text;
 }
 
@@ -258,7 +287,10 @@ function LinkURL($url, $linktext = '') {
     return $link;
 }
 
-
+/**
+ * FIXME: disallow sizes which are too small. 
+ * Spammers may use such (typically invisible) image attributes to higher their GoogleRank.
+ */
 function LinkImage($url, $alt = false) {
     // FIXME: Is this needed (or sufficient?)
     if(! IsSafeURL($url)) {
@@ -291,6 +323,28 @@ function LinkImage($url, $alt = false) {
                     $link->setAttr('hspace',$m[1]);
                 if (preg_match('/^vspace=(\d+)$/',$attr,$m))
                     $link->setAttr('vspace',$m[1]);
+            }
+        }
+        // check width and height as spam countermeasure
+        if (($width = $link->getAttr('width')) and ($height = $link->getAttr('height'))) {
+            $width  = (integer) $width; // px or % or other suffix
+            $height = (integer) $height;
+            if (($width < 3 and $height < 10) or 
+                ($height < 3 and $width < 20) or 
+                ($height < 7 and $width < 7))
+            {
+                trigger_error(_("Invalid image size"), E_USER_NOTICE);
+                return '';
+            }
+        } elseif ($size = @getimagesize($url)) {
+            $width = $size[0];
+            $height = $size[1];
+            if (($width < 3 and $height < 10) or 
+                ($height < 3 and $width < 20) or 
+                ($height < 7 and $width < 7))
+            {
+                trigger_error(_("Invalid image size"), E_USER_NOTICE);
+                return '';
             }
         }
     }
@@ -1538,6 +1592,11 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.184  2004/06/04 20:32:53  rurban
+// Several locale related improvements suggested by Pierrick Meignen
+// LDAP fix by John Cole
+// reanable admin check without ENABLE_PAGEPERM in the admin plugins
+//
 // Revision 1.183  2004/06/01 10:22:56  rurban
 // added url_get_contents() used in XmlParser and elsewhere
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.103 2004-06-07 22:44:14 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.104 2004-06-11 09:07:30 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -682,6 +682,17 @@ class Theme {
         return false;
     }
 
+    var $_linkIcon = 'front'; // or 'after' or 'no'. 
+    // maybe also 'spanall': there is a scheme currently in effect with front, which 
+    // spans the icon only to the first, to let the next words wrap on line breaks
+    // see stdlib.php:PossiblyGlueIconToText()
+    function getLinkIconAttr () {
+        return $this->_linkIcon;
+    }
+    function setLinkIconAttr ($where) {
+        $this->_linkIcon = $where;
+    }
+
     function addButtonAlias ($text, $alias = false) {
         $aliases = &$this->_buttonAliases;
 
@@ -1352,6 +1363,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2004/06/07 22:44:14  rurban
+// added simplified chown, setacl actions
+//
 // Revision 1.102  2004/06/07 18:59:28  rurban
 // added Chown link to Owner in statusbar
 //
