@@ -1,4 +1,4 @@
-<!-- $Id: wiki_transform.php3,v 1.6 2000-06-09 10:25:12 ahollosi Exp $ -->
+<!-- $Id: wiki_transform.php3,v 1.7 2000-06-14 03:23:44 wainstead Exp $ -->
 <?
    // expects $pagename, $pagehash, and $html (optional) to be set
 
@@ -16,11 +16,11 @@
       }
    }
 
-   $numlines = count($pagehash["text"]);
+   $numlines = count($pagehash["content"]);
 
    // Loop over all lines of the page and apply transformation rules
    for ($index = 0; $index < $numlines; $index++) {
-      $tmpline = $pagehash["text"][$index];
+      $tmpline = $pagehash["content"][$index];
 
       if (!strlen($tmpline) || $tmpline == "\r") {
          // this is a blank line, send <p>
