@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.54 2004-10-14 17:13:01 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.55 2004-10-14 19:23:58 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -61,7 +61,6 @@ rcs_id('$Id: IniConfig.php,v 1.54 2004-10-14 17:13:01 rurban Exp $');
  */
 
 include_once (dirname(__FILE__)."/config.php");
-//echo " load filefinder: ", error_reporting();
 include_once (dirname(__FILE__)."/FileFinder.php");
 
 function IniConfig($file) {
@@ -652,6 +651,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2004/10/14 17:13:01  rurban
+// use DATABASE_PREFIX
+//
 // Revision 1.53  2004/10/12 13:13:19  rurban
 // php5 compatibility (5.0.1 ok)
 //

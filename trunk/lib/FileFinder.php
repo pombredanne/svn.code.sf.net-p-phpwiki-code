@@ -1,10 +1,6 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.26 2004-10-14 19:19:33 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.27 2004-10-14 19:23:58 rurban Exp $');
 
-//echo " filefinder: ", error_reporting();
 require_once(dirname(__FILE__).'/stdlib.php');
-//echo " after loading stdlib: ", error_reporting();
-
-// FIXME: make this work with non-unix (e.g. DOS) filenames.
 
 /**
  * A class for finding files.
@@ -565,6 +561,10 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/10/14 19:19:33  rurban
+// loadsave: check if the dumped file will be accessible from outside.
+// and some other minor fixes. (cvsclient native not yet ready)
+//
 // Revision 1.25  2004/10/12 13:13:19  rurban
 // php5 compatibility (5.0.1 ok)
 //
