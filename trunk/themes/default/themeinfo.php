@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.31 2004-04-06 20:00:11 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.32 2004-06-13 09:40:08 rurban Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -75,6 +75,13 @@ $Theme->setButtonSeparator("\n | ");
  * http://www.php.net/manual/en/function.strftime.php for details.
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
+ *
+ * Suggestion for french: 
+ *   $Theme->setDateFormat("%A %e %B %Y");
+ *   $Theme->setTimeFormat("%H:%M:%S");
+ * Suggestion for capable php versions, using the server locale:
+ *   $Theme->setDateFormat("%x");
+ *   $Theme->setTimeFormat("%X");
  */
 //$Theme->setDateFormat("%B %d, %Y");
 //$Theme->setTimeFormat("%I:%M %p");
