@@ -1,9 +1,9 @@
 Date: Thu, 7 Oct 2004 18:13:41 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.45 2004-10-07 16:19:40 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.46 2004-11-03 16:46:16 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.45 $";
+  pgsrc_version="2 $Revision: 1.46 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -80,7 +80,7 @@ changes:
 * check more config-default and predefined constants 
 * ~AutoSplit pagenames at subpage seperators, esp for Sidebar theme
 * improve Pagelist layout by equal pagename width for limited lists 
-* added CPAN to interwiki.map
+* added CPAN, OsFaq2, WikiLens to interwiki.map
 * ExternalSearchPlugin useimage arg (RFE #952323)
 * Simplified some strings for easier translation 
 * added hash and object support for ~SessionPassUser userid session variable
@@ -136,6 +136,8 @@ new:
 * added template variable expansion support to the CreatePagePlugin
 * added paging support for simple one-column pagelists
 * added new PageList options: cols, azhead, comma, commasep, ordered
+* added experimental SearchHighlight feature (not for HTML yet)
+* added [OverWrite All] button to loadfile action on the first page.
 
 1.3.10 May, 13 2004, Reini Urban, Joby Walker:
 
