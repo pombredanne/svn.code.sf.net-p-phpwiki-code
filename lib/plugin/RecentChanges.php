@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.64 2002-02-26 20:52:12 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.65 2002-03-08 03:29:51 carstenklapp Exp $');
 /**
  */
 
@@ -231,7 +231,38 @@ extends _RecentChanges_Formatter
         extract($this->_args);
         return array($show_minor ? _("RecentEdits") : _("RecentChanges"),
                      ' ',
-                     $this->rss_icon());
+                     $this->rss_icon(),
+                     $this->sidebar_link());
+    }
+
+    function sidebar_link() {
+        extract($this->_args);
+        $pagetitle = $show_minor ? _("RecentEdits") : _("RecentChanges");
+
+        global $request;
+        $sidebarurl = WikiURL($pagetitle, false, 'absurl') . "?format=sidebar";
+
+        $addsidebarjsfunc =
+            "function addPanel() {\n"
+            ."    window.sidebar.addPanel (\"" . sprintf("%s - %s", WIKI_NAME, $pagetitle) . "\",\n"
+            ."       \"$sidebarurl\",\"\");\n"
+            ."}\n";
+        $jsf = $this->_javascript($addsidebarjsfunc);
+    
+        $addsidebarjsclick = " " . "<small style=\"font-weight:normal;\"><a href=\"javascript:addPanel();\">sidebar</a></small>";
+        $jsc = $this->_javascript("if ((typeof window.sidebar == 'object') &&\n"
+                                ."    (typeof window.sidebar.addPanel == 'function'))\n"
+                                ."   {\n"
+                                ."       document.write('$addsidebarjsclick');\n"
+                                ."   }\n"
+                                );
+        return HTML(new RawXML("\n"), $jsf, new RawXML("\n"), $jsc);
+    }
+
+    function _javascript($script) {
+        return HTML::script(array('language' => 'JavaScript',
+                                  'type'     => 'text/javascript'),
+                            new RawXml("<!-- //\n$script\n// -->"));
     }
 
     function format ($changes) {
@@ -285,6 +316,92 @@ extends _RecentChanges_Formatter
                            ' ... ',
                            $this->authorLink($rev));
         return $line;
+    }
+}
+
+
+class _RecentChanges_SideBarFormatter
+extends _RecentChanges_HtmlFormatter
+{
+    function description () {
+        //omit description
+    }
+    function rss_icon () {
+        //omit rssicon
+    }
+    function title () {
+        //title click opens the normal RC or RE page in the main browser frame
+        extract($this->_args);
+        $titlelink = WikiLink($show_minor ? _("RecentEdits") : _("RecentChanges"));
+        $titlelink->setAttr('target', '_content');
+        return HTML($this->logo(), $titlelink);
+    }
+    function logo () {
+        //logo click opens the HomePage in the main browser frame
+        global $Theme;
+        $img = HTML::img(array('src' => $Theme->getImageURL('logo'),
+                               'border' => 0,
+                               'align' => 'right',
+                               'width' => 32
+                               ));
+        $linkurl = WikiLink(HomePage, false, $img);
+        $linkurl->setAttr('target', '_content');
+        return $linkurl;
+    }
+
+    function authorLink ($rev) {
+        $author = $rev->get('author');
+        if ( $this->authorHasPage($author) ) {
+            $linkurl = WikiLink($author);
+            $linkurl->setAttr('target', '_content'); // way to do this using parent::authorLink ??
+            return $linkurl;
+        } else
+            return $author;
+    }
+    function diffLink ($rev) {
+        $linkurl = parent::diffLink($rev);
+        $linkurl->setAttr('target', '_content');
+        return $linkurl;
+    }
+    function historyLink ($rev) {
+        $linkurl = parent::historyLink($rev);
+        $linkurl->setAttr('target', '_content');
+        return $linkurl;
+    }
+    function pageLink ($rev) {
+        $linkurl = parent::pageLink($rev);
+        $linkurl->setAttr('target', '_content');
+        return $linkurl;
+    }
+
+    function format ($changes) {
+        $this->_args['daylist'] = false; //only 1 day for Mozilla sidebar
+        $html = _RecentChanges_HtmlFormatter::format ($changes);
+        $html = HTML::div(array('class' => 'wikitext'), $html);
+
+        printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
+        printf('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"');
+        printf('  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">');
+        printf('<html xmlns="http://www.w3.org/1999/xhtml">');
+        
+        printf("<head>\n");
+        extract($this->_args);
+        $title = WIKI_NAME . $show_minor ? _("RecentEdits") : _("RecentChanges");
+        printf("<title>" . $title . "</title>\n");
+        global $Theme;
+        $css = $Theme->getCSS();
+        $css->PrintXML();
+        printf("</head>\n");
+        
+        printf("<body class=\"sidebar\">\n");
+        $html->PrintXML();
+        printf("\n</body>\n");
+        printf("</html>\n");
+
+        flush();
+
+        global $request;
+        $request->finish(); // cut rest of page processing short
     }
 }
 
@@ -462,6 +579,9 @@ extends WikiPlugin
         if ($args['format'] == 'rss' && empty($args['limit']))
             $args['limit'] = 15; // Fix default value for RSS.
 
+        if ($args['format'] == 'sidebar' && empty($args['limit']))
+            $args['limit'] = 1; // Fix default value for sidebar.
+
         return $args;
     }
 
@@ -509,6 +629,8 @@ extends WikiPlugin
                 include_once "lib/RSSWriter091.php";
                 $fmt_class = '_RecentChanges_RssFormatter091';
             }
+            elseif ($format == 'sidebar')
+                $fmt_class = '_RecentChanges_SideBarFormatter';
             else
                 $fmt_class = '_RecentChanges_HtmlFormatter';
         }
