@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.4 2002-01-21 16:52:59 carstenklapp Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.5 2002-01-21 16:59:01 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -9,15 +9,27 @@ require_once("lib/XmlElement.php");
 
 class HtmlElement extends XmlElement
 {
-    function printXML () {
-        if (!$this->_content) {
-            if (HTML::isEmptyTag($this->getTag())) {
-                echo "<" . $this->_startTag() . " />";
-                return;
-            }
-            $this->pushContent('');
-        }
-        XmlElement::printXML();
+    function HtmlElement ($tagname /* , $attr_or_content , ...*/) {
+	$this->_tag = $tagname;
+        $this->_content = array();
+        $this->_properties = HTML::getTagProperties($tagname);
+        
+        if (func_num_args() > 1)
+            $this->_init(array_slice(func_get_args(), 1));
+        else 
+            $this->_attr = array();
+    }
+
+    function _emptyTag () {
+        return substr($this->_startTag(), 0, -1) . " />";
+    }
+
+    function isEmpty () {
+        return ($this->_properties & HTMLTAG_EMPTY) != 0;
+    }
+
+    function hasInlineContent () {
+        return ($this->_properties & HTMLTAG_INLINE) != 0;
     }
 };
 
@@ -257,31 +269,56 @@ class HTML {
     }
 
     function isEmptyTag($tag) {
-        global $HTML_TagProperties;
-        if (!isset($HTML_TagProperties[$tag]))
-            return false;
-        $props = $HTML_TagProperties[$tag];
-        return ($props & HTMLTAG_EMPTY) != 0;
+        return (HTML::getTagProperties($tag) & HTMLTAG_EMPTY) != 0;
+    }
+
+    function canHaveInlineContent($tag) {
+        return (HTML::getTagProperties($tag) & HTMLTAG_INLINE) != 0;
+    }
+
+    function getTagProperties($tag) {
+        $props = &$GLOBALS['HTML_TagProperties'];
+        return isset($props[$tag]) ? $props[$tag] : 0;
+    }
+    
+        
+    function _setTagProperty($prop_flag, $tags) {
+        $props = &$GLOBALS['HTML_TagProperties'];
+        if (is_string($tags))
+            $tags = preg_split('/\s+/', $tags);
+        foreach ($tags as $tag) {
+            if (isset($props[$tag]))
+                $props[$tag] |= $prop_flag;
+            else
+                $props[$tag] = $prop_flag;
+        }
     }
 }
 
 define('HTMLTAG_EMPTY', 1);
+define('HTMLTAG_INLINE', 2);
 
-$GLOBALS['HTML_TagProperties']
-= array('area' => HTMLTAG_EMPTY,
-        'base' => HTMLTAG_EMPTY,
-        'basefont' => HTMLTAG_EMPTY,
-        'br' => HTMLTAG_EMPTY,
-        'col' => HTMLTAG_EMPTY,
-        'frame' => HTMLTAG_EMPTY,
-        'hr' => HTMLTAG_EMPTY,
-        'img' => HTMLTAG_EMPTY,
-        'input' => HTMLTAG_EMPTY,
-        'isindex' => HTMLTAG_EMPTY,
-        'link' => HTMLTAG_EMPTY,
-        'meta' => HTMLTAG_EMPTY,
-        'param' => HTMLTAG_EMPTY);
-        
+
+HTML::_setTagProperty(HTMLTAG_EMPTY,
+                      'area base basefont br col frame hr img input isindex link meta param');
+HTML::_setTagProperty(HTMLTAG_INLINE,
+                      // %inline elements:
+                      'b big i small tt ' // %fontstyle
+                      . 'abbr acronym cite code dfn em kbd samp strong var ' //%phrase
+                      . 'a img object br script map q sub sup span bdo '//%special
+                      . 'button input label select textarea ' //%formctl
+
+                      // %block elements which contain inline content
+                      . 'address h1 h2 h3 h4 h5 h6 p pre '
+                      // %block elements which contain either block or inline content
+                      . 'div fieldset '
+
+                      // other with inline content
+                      . 'caption dt label legend '
+                      // other with either inline or block
+                      . 'dd del ins li td th ');
+
+      
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

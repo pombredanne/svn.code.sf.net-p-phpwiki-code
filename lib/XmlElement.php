@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.2 2002-01-21 06:55:47 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.3 2002-01-21 16:59:01 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -83,35 +83,44 @@ class XmlElement
         return $this->_content;
     }
 
-    function _startTag () {
-        $tag = $this->_tag;
+    function _startTag() {
+        $start = "<" . $this->_tag;
         foreach ($this->_attr as $attr => $val)
-            $tag .= " $attr=\"" . $this->_quoteAttr($val) . '"';
-        return $tag;
+            $start .= " $attr=\"" . $this->_quoteAttr($val) . '"';
+        $start .= ">";
+        return $start;
     }
 
+    function _emptyTag() {
+        return substr($this->_startTag(), 0, -1) . "/>";
+    }
+    
+        
     function printXML () {
-        if (!$this->_content) {
-            echo "<" . $this->_startTag() . "/>";
+        
+        if ($this->isEmpty()) {
+            echo $this->_emptyTag();
         }
         else {
-            echo "<" . $this->_startTag() . ">";
-            foreach ($this->_content as $c)
+            $sep = $this->hasInlineContent() ? "" : "\n";
+            echo $this->_startTag() . $sep;
+            foreach ($this->_content as $c) {
                 PrintXML($c);
+                echo $sep;
+            }
             echo "</$this->_tag>";
         }
     }
 
     function asXML () {
-        if (!$this->_content) {
-            return "<" . $this->_startTag() . "/>";
-        }
+        if ($this->isEmpty())
+            return $this->_emptyTag();
 
-        $xml =  "<" . $this->_startTag() . ">";
+        $sep = $this->hasInlineContent() ? "" : "\n";
+        $xml =  $this->_startTag() . $sep;
         foreach ($this->_content as $c)
-            $xml .= AsXML($c);
-        $xml .= "</$this->_tag>";
-        return $xml;
+            $xml .= AsXML($c) . $sep;
+        return $xml . "</$this->_tag>";
     }
 
     function asString () {
@@ -119,6 +128,19 @@ class XmlElement
         foreach ($this->_content as $c)
             $val .= AsString($c);
         return trim($str);
+    }
+
+    function isEmpty () {
+        return empty($this->_content);
+    }
+
+    function hasInlineContent () {
+        // FIXME: This is a hack.
+        if (empty($this->_content))
+            return false;
+        if (is_object($this->_content[0]))
+            return false;
+        return true;
     }
     
     function _quote ($string) {
