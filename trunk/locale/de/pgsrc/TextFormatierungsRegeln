@@ -1,6 +1,6 @@
-Date: Sun, 27 Jan 2002 17:28:55 -0500
+Date: Thu, 28 Mar 2002 14:57:00 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: TextFormatierungsRegeln,v 1.16 2002-01-27 23:13:04 carstenklapp Exp $
+X-Rcs-Id: $Id: TextFormatierungsRegeln,v 1.17 2002-03-28 20:32:23 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=TextFormatierungsRegeln;
   flags=PAGE_LOCKED;
@@ -10,10 +10,10 @@ Content-Transfer-Encoding: binary
 ! Übersicht
 TextFormatierungsRegeln%%%
 __Hervorhebung:__ '____' für ''kursiv'', _''''_ für __starke Betonung__, '____'_''''_ für ''__fett u. kursiv__''.%%%
-__Listen:__* für Rasterpunkte u. Ebenen, # für numerierte Listen, »; Das Wort : Die Wortbestimmung« für glossarähnliche Listen.%%%
-__Querverweise:__ in !GroßbuchstabenZusammenstoßen oder in einschließende einklammern [[ein Link] oder URL [[!http://cool.wiki.int/].%%%
+__Listen:__* für Rasterpunkte u. Ebenen, # für numerierte Listen, ''__;__ Das Wort __:__ Die Wortbestimmung'' für glossarähnliche Listen.%%%
+__Querverweise:__ in !GroßbuchstabenZusammenstoßen oder in einschließende klammern setzen [[ein Link] oder URL [[!http://cool.wiki.int/].%%%
 __Fußnoten:__ Benutze [[1],[[2],[[3],...%%%
-__Das Erstellen eines Links verhindern:__ das Wort mit ein »!« beginnen: !!NichtLinken, Links so angeben: [[Text | URL] (zweimal »[«).%%%
+__Links verhindern:__ das Wort mit ein »!« beginnen: !!NichtLinken, Links so angeben: [[[[Text | URL] (zweimal »[«).%%%
 __Verschiedenes:__ »!«, »!!«, »!!!« für überschriften, »%%''''%« für Zeilenvorschubzeichen, u. »---''''-« zeichnet eine Linie.
 
 ----
@@ -74,7 +74,7 @@ funktioniert nicht''
 * Du kannst das Erstellen eines Links verhindern, indem du vor das Wort ein Ausrufungszeichen setzt, zum Beispiel !DasIstKeinLink.
 * You can create footnotes by using [[1], [[2], [[3], ... like this here [1]. See footnote for counterpart.  (If the [[ is in the first column, it is a footnote ''definition'' rather than a footnote ''reference'' [1].)
 * Wenn du im Text Adressen eingibst, die mit __http:__, __ftp:__ oder __mailto:__ beginnen, werden diese auch automatisch in Links umgewandelt, zum Beispiel http://c2.com/
-* Adressen, die mit __.png__ oder __.jpg__ enden (d.h. Bilder) werden in die Seite eingefügt, wenn sie in eckige Klammern gesetzt werden, z. B.: [http://phpwiki.sourceforge.net/alpha/themes/default/images/png.png]
+* Adressen, die mit __.png__ oder __.jpg__ enden (d.h. Bilder) werden in die Seite eingefügt, wenn sie in eckige Klammern gesetzt werden, z. B.: [http://phpwiki.sourceforge.net/demo/themes/default/images/png.png]
 ! Tables
 
 * Simple tables are available.  A table row is introduced by a __|__ in the first column.  It is best described by example:

@@ -1,6 +1,6 @@
-Date: Sun, 27 Jan 2002 17:28:55 -0500
+Date: Thu, 28 Mar 2002 14:57:00 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: TextFormattingRules,v 1.27 2002-01-27 22:52:21 carstenklapp Exp $
+X-Rcs-Id: $Id: TextFormattingRules,v 1.28 2002-03-28 20:32:23 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=TextFormattingRules;
   flags=PAGE_LOCKED;
@@ -9,12 +9,12 @@ Content-Transfer-Encoding: binary
 
 ! Synopsis
 TextFormattingRules%%%
-__Emphasis:__ '____' for ''italics'', _''''_ for __bold__, '____'_''''_ for ''__both__''%%%
-__Lists:__ * for bullet lists, # for numbered lists, "; term : definition" for definition lists%%%
+__Emphasis:__ '____' for ''italics'', _''''_ for __bold__, '____'_''''_ for ''__both__''.%%%
+__Lists:__ * for bullet lists, # for numbered lists, ''__;__ term __:__ definition'' for definition lists.%%%
 __References:__ !JoinCapitalizedWords or use square brackets for a [[page link] or URL [[!http://cool.wiki.int/].%%%
 __Footnotes:__ Use [[1],[[2],[[3],...%%%
-__Preventing linking__ Prefix with "!": !!DoNotHyperlink, name links like [[text | URL] (double up on the "[")%%%
-__Misc__ "!", "!!", "!!!" make headings, "%%''''%" makes a linebreak, "-''''-''''-''''-" makes a horizontal rule
+__Preventing linking:__ Prefix with "!": !!DoNotHyperlink, name links like [[[[text | URL] (double up on the "[").%%%
+__Misc:__ "!", "!!", "!!!" make headings, "%%''''%" makes a linebreak, "-''''-''''-''''-" makes a horizontal rule.
 
 ----
 ! Paragraphs
@@ -72,7 +72,7 @@ will not work''
 * You can suppress linking to old-style references and URIs by preceding the word with a '!', e.g. !NotLinkedAsWikiName, !http://not.linked.to/
 * You can create footnotes by using [[1], [[2], [[3], ... like this here [1]. See footnote for counterpart.  (If the [[ is in the first column, it is a footnote ''definition'' rather than a footnote ''reference'' [1].)
 * Also, the old way of linking URL's is still supported: precede URLs with "http:", "ftp:" or "mailto:" to create links automatically as in: http://c2.com/
-* URLs ending with .png, .gif, or .jpg are inlined if in square brackets, by themselves: [http://phpwiki.sourceforge.net/alpha/themes/default/images/png.png]
+* URLs ending with .png, .gif, or .jpg are inlined if in square brackets, by themselves: [http://phpwiki.sourceforge.net/demo/themes/default/images/png.png]
 
 ! Tables
 
