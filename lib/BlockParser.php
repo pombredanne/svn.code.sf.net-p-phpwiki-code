@@ -4,6 +4,16 @@ require_once('lib/HtmlElement.php');
 //FIXME:
 require_once('lib/transform.php');
 
+function d ($x) 
+{
+    echo nl2br(htmlspecialchars("$x\n"));
+    flush();
+}
+
+
+    
+     
+     
 class InlineTransform
 extends WikiTransform {
     function InlineTransform() {
@@ -37,21 +47,42 @@ extends WikiTransform {
 };
 
 function TransformInline ($text) {
-    $lines = preg_split('/[ \t\r]*\n/', trim($text));
+    // the old transform code does funny things with leading and trailing
+    // white space.
+    // All this is to ensure leading and trailing whitespace does not
+    // get altered...
+    $lines = explode("\n", $text);
+    $out = '';
+    while ($lines && !preg_match('/\S/', $lines[0]))
+        $out .= array_shift($lines) . "\n";
+    $tail = '';
+    while ($lines && !preg_match('/\S/', $lines[count($lines)-1]))
+        $tail = array_pop($lines) . "\n$tail";
 
     $trfm = new InlineTransform;
-    return new RawXml(rtrim(AsXML($trfm->do_transform('', $lines))));
+    $out .= preg_replace('/\n $/', '', AsXML($trfm->do_transform('', $lines)));
+    $out .= $tail;
+    
+    //if ($out != $text) {
+    //    echo(" IN <pre>'" . htmlspecialchars($text) . "'</pre><br>\n");
+    //    echo("OUT <pre>'" . htmlspecialchars($out) . "'</pre><br>\n");
+    //}
+    return new RawXml($out);
 }
 
+define("BLOCK_NEVER_TIGHTEN", 0);
+define("BLOCK_NOTIGHTEN_AFTER", 1);
+define("BLOCK_NOTIGHTEN_BEFORE", 2);
+define("BLOCK_NOTIGHTEN_EITHER", 3);
 /**
  * FIXME:
  *  Still to do:
- *    headings,
- *    hr
- *    tables
- *    simple li's (vs compound li's) & (dd's).
+ *    (old-style) tables
+ *    <dl> style tables
+ *    old-style lists.
  */
 class BlockParser {
+
     function BlockParser ($block_types) {
         $this->_blockTypes = array();
         foreach ($block_types as $type)
@@ -65,160 +96,164 @@ class BlockParser {
         $prototype = new $class (false);
         $this->_blockTypes[] = $prototype;
     }
-
     
-    function parse ($text) {
+    function parse ($text, $tighten = BLOCK_NEVER_TIGHTEN) {
         $content = array();
 
-        // strip leading blank lines
-        //$text = preg_replace("/\s*\n/A", "", $text);
-
         $block = $this->_nextBlock($text);
-        while ($block) {
-            while ($nextBlock = $this->_nextBlock($text)) {
-                if (!isa($block, "Block_blockquote"))
-                    break;
-                if (!isa($nextBlock, "Block_blockquote"))
-                    break;
-                if ($nextBlock->getDepth() >= $block->getDepth())
-                    break;
+        $tight = $tighten != BLOCK_NEVER_TIGHTEN;
 
-                // We have a deeper block quote immediated preceding
-                // a shallower block-quote.  Merge the two...
-                $nextBlock->unshiftContent($block);
+        while ($block !== false) {
+            if (!$block) {
+                if (($tighten & BLOCK_NOTIGHTEN_AFTER) != 0)
+                    $tight = false;
+                $block = $this->_nextBlock($text);
+                continue;
+            }
+                
+            while ($nextBlock = $this->_nextBlock($text)) {
+                // Attempt to merge current with following block.
+                if (! $nextBlock->mergeWithPrecedingBlock($block))
+                    break;      // can't merge
                 $block = $nextBlock;
             }
 
-            $content[] = $block;
+            if ($nextBlock === '' && ($tighten & BLOCK_NOTIGHTEN_BEFORE) != 0)
+                $tight = false;
+            
+            $out = $block->finish($tight);
+            if (is_array($out))
+                array_splice($content, count($content), 0, $out);
+            else
+                $content[] = $out;
+
             $block = $nextBlock;
+            $tight = $tighten != BLOCK_NEVER_TIGHTEN;
         }
         return $content;
     }
-    
+
     function _nextBlock (&$text) {
-        if (preg_match('/\s*\n/A', $text, $m))
+        if (!$text)
+            return false;
+
+        if (preg_match('/\s*\n/A', $text, $m)) {
+            // A paragraph break: one or more blank lines.
             $text = substr($text, strlen($m[0]));
+            return '';          // (empty but !== false).
+        }
         
         foreach ($this->_blockTypes as $type) {
-            if (($block = $type->Match($text)))
+            if (($block = $type->Match($text))) {
                 return $block;
+            }
         }
 
-        return false;
+        // We should never get here.
+        list ($line1, $line2) = explode("\n", $text);
+        trigger_error("Couldn't match block:\n    $line1\n    $line2",
+                      E_USER_ERROR);
     }
-
 }
 
-        
-class Block {
+class Block extends HtmlElement {
     /**
      * (This should be a static member function...)
      */
     function Match (&$text) {
-        return $this->_match($text);
+        if (!preg_match($this->_re, $text, $m))
+            return false;
+        
+        $block = $this;
+        $block->_parse($m, $text);
+        return $block;
+    }
+
+    function _parse ($m, &$text) {
+        $this->_init_from_match($m);
+        $text = substr($text, strlen($m[0]));
+    }
+    
+    function mergeWithPrecedingBlock ($precedingBlock) {
+        return false;
+    }
+
+    function finish ($tighten) {
+        return $this;
     }
 }
-
-
-
-class TightListItem extends HtmlElement
-{
-    function TightListItem ($tag, $content) {
-        $this->HtmlElement($tag);
-        $this->pushTightContent($content);
-    }
-        
-    function pushTightContent ($content) {
-        if (!is_array($content))
-            $content = array($content);
-        foreach ($content as $c) {
-            if (isa($c, "HtmlElement") && $c->getTag() == 'p')
-                $c = $c->getContent();
-            $this->pushContent($c);
-        }
-    }
-}
-
-        
-                
             
 class Block_list extends Block
 {
-    var $_match_re = "/([*#])\s*(?=\S)/A";
+    var $_re = '/\ {0,4}([*#])\ *(?=\S)/A';
 
-    function _match (&$text) {
+    function _parse ($m, &$text) {
         global $BlockParser;
         
-        if (!(preg_match($this->_match_re, $text, $m)))
-            return false;
         $li_pfx = preg_quote($m[0], '/');
         $c_pfx = sprintf("\\ {%d}", strlen($m[0]));
-        $li_re = "/${li_pfx}\S.*(?:\s*\n${c_pfx}.*)*(?:\s*\n)?/A";
+        $li_re = "/${li_pfx}\S.*(?:\s*\n${c_pfx}.*\S.*)*\n?/A";
         $strip_re = "/^(?:${li_pfx}|${c_pfx})/m";
 
-        $list = new HtmlElement($m[1] == '*' ? 'ul' : 'ol');
+        $this->_init($m[1] == '*' ? 'ul' : 'ol');
 
-        $was_loose = false;
-        $have_item = preg_match($li_re, $text, $m);
-        assert($have_item);
-        while ($have_item) {
+        $tight = BLOCK_NOTIGHTEN_AFTER;
+        $length = 0;
+        while (preg_match($li_re, $text, $m)) {
             $text = substr($text, strlen($m[0]));
             $body = preg_replace($strip_re, '', $m[0]);
             
-            $have_item = preg_match($li_re, $text, $m);
-            $is_loose = preg_match($have_item
-                                   ? "/\n\s*\n/"
-                                   : "/\n\s*\n(?!\s*\$)/",
-                                   $body);
-            $tight = !($is_loose ||$was_loose);
-            $was_loose = $is_loose;
-            
-            $li_content = $BlockParser->parse(rtrim($body));
-            if ($tight)
-                $list->pushContent(new TightListItem('li', $li_content));
+            $this->pushContent(HTML::li(false,
+                                        $BlockParser->parse(rtrim($body), $tight)));
+            if ($pbreak = preg_match("/\s*\n/A", $text, $m2)) {
+                $text = substr($text, strlen($m2[0]));
+                $tight = BLOCK_NEVER_TIGHTEN;
+            }
             else
-                $list->pushContent(new HtmlElement('li', false, $li_content));
+                $tight = BLOCK_NOTIGHTEN_AFTER;
         }
-        assert($list->getContent());
-
-        return $list;
+        assert(!$this->isEmpty());
     }
 }
 
 class Block_dl extends Block
 {
-    var $_re = "/([^\s!].*):\s*\n((?:\ +\S.*(?:\s*\n)?)+)/A";
+    var $_re = '/ [^\s!].*:	# term (<dt>)
+                  \s*\n		# zero of more blank lines
+                  \ +\S		# indented non-blank line
+                /Ax';
 
-    function _match (&$text) {
-        
-        $have_item = preg_match($this->_re, $text, $m);
-        if (!$have_item)
-            return false;
+    var $_dtdd_re = '/ ([^\s!].*):	# term (<dt>)
+                       [^\S\n]*\n	# rest of first line.
+                       ((?:
+                          (?:\s*\n)?	# zero of more blank lines
+                          \ +\S.*	# indented non-blank line
+                       )+)\n?
+                     /Ax';
 
+    function Block_dl () {
+        $this->_init('dl');
+    }
+    
+    function _parse ($m, &$text) {
         global $BlockParser;
-        $was_loose = false;
-        $list = HTML::dl();
-
-        while ($have_item) {
+        
+        while(preg_match($this->_dtdd_re, $text, $m)) {
             $text = substr($text, strlen($m[0]));
-            $list->pushContent(HTML::dt(rtrim($m[1])));
+            $dt = HTML::dt(rtrim($m[1]));
             $body = $this->_unindent($m[2]);
+            
+            $dd = HTML::dd(false, $BlockParser->parse($body, BLOCK_NOTIGHTEN_AFTER));
 
-            $have_item = preg_match($this->_re, $text, $m);
-            $is_loose = preg_match($have_item
-                                   ? "/\n\s*\n/"
-                                   : "/\n\s*\n(?!\s*\$)/",
-                                   $body);
-            $tight = !($is_loose ||$was_loose);
-            $was_loose = $is_loose;
+            if (preg_match("/\s*\n/A", $text, $m2)) {
+                $text = substr($text, strlen($m2[0]));
+                // FIXME: use something else for space here?
+                $dd->pushContent(HTML::p(array('class' => 'empty')));
+            }
 
-            $dd_content = $BlockParser->parse(rtrim($body));
-            if ($tight)
-                $list->pushContent(new TightListItem('dd', $dd_content));
-            else
-                $list->pushContent(new HtmlElement('dd', false, $dd_content));
+            $this->pushContent($dt, $dd);
         }
-        return $list->getContent() ? $list : false;
+        assert(!$this->isEmpty());
     }
 
     function _unindent ($body) {
@@ -235,84 +270,88 @@ class Block_dl extends Block
 
 class Block_blockquote extends Block
 {
-    var $_depth;
+    //var $_depth;
     
-    var $_re = "/(\ +(?=\S)).*(?:\s*\n\\1.*)*\n?/A";
+    var $_re = '/ (\ +(?=\S)).*	# indented non-blank line
+                  (?:
+                     \s*\n	# zero or more blank lines
+                     \1.*	# lines with same or greater indent
+                  )*\n?
+                /Ax';
 
-    function _match (&$text) {
-        if (! preg_match($this->_re, $text, $m))
-            return false;
-        $text = substr($text, strlen($m[0]));
-
+    function Block_blockquote () {
+        $this->_init('blockquote');
+    }
+    
+    function _init_from_match ($m) {
         $this->_depth = strlen($m[1]);
         $pfx = preg_quote($m[1], '/');
         $body = preg_replace("/^$pfx/m", "", $m[0]);
         global $BlockParser;
-        return HTML::blockquote(false, $BlockParser->parse($body));
+        $this->pushContent($BlockParser->parse($body, BLOCK_NOTIGHTEN_EITHER));
     }
 
-    function getDepth () {
-        return $this->_depth;
+    function mergeWithPrecedingBlock ($precedingBlock) {
+        if (!isa($precedingBlock, "Block_blockquote"))
+            return false;       // can only merge with another blockquote.
+        if ($precedingBlock->_depth <= $this->_depth)
+            return false;       // can only merge with deeper block
+
+        $this->unshiftContent($precedingBlock);
+        return true;
     }
 }
 
 class BlockBlock extends Block
 {
     function BlockBlock ($begin_re, $end_re) {
-        $this->_re = ( "/"
-                       . "($begin_re"
-                       . "((?:.|\n)*?)"
-                       . "$end_re)"
-                       . "\s*?\n?"
-                       . "/Ai" );
+        $this->_re = "/ (
+                          $begin_re
+                          ( (?:.|\\n)*? )
+                          $end_re
+                        )
+                        [^\\S\\n]*\\n?
+                      /Aix";
     }
 }
         
 class Block_pre extends BlockBlock
 {
     function Block_pre () {
+        $this->_init('pre');
         $this->BlockBlock("<pre>", "(?<!~)<\/pre>");
     }
 
-    function _match (&$text) {
-        if (!preg_match($this->_re, $text, $m))
-            return false;
-        $text = substr($text, strlen($m[0]));
-
-        return HTML::pre(false, TransformInline($m[2]));
+    function _init_from_match ($m) {
+        $this->pushContent(TransformInline($m[2]));
     }
-
 }
 
 class Block_plugin extends BlockBlock
 {
     function Block_plugin () {
+        $this->_init('div', array('class' => 'plugin'));
         $this->BlockBlock("<\?plugin(?:-form)?\s", "\?>");
     }
 
 
-    function _match (&$text) {
-        if (!preg_match($this->_re, $text, $m))
-            return false;
-        $text = substr($text, strlen($m[0]));
-
+    function _init_from_match ($m) {
         global $request;
         $loader = new WikiPluginLoader;
-
-        return HTML::div(array('class' => 'plugin'),
-                         $loader->expandPI($m[1], $request));
+        $this->pushContent($loader->expandPI($m[1], $request));
     }
 }
 
 class Block_hr extends Block
 {
-    var $_re = "/-{4,}\s*?\n?/A";
-    
-    function _match (&$text) {
-        if (!preg_match($this->_re, $text, $m))
-            return false;
-        $text = substr($text, strlen($m[0]));
-        return HTML::hr();
+    var $_re = "/-{4,}[^\S\n]*\n?/A";
+
+    function Block_hr () {
+        $this->_init('hr');
+    }
+        
+    function _init_from_match ($m) {
+        //return true;
     }
 }
 
@@ -320,27 +359,41 @@ class Block_heading extends Block
 {
     var $_re = "/(!{1,3}).*?(\S.*)\n?/A";
     
-    function _match (&$text) {
-        if (!preg_match($this->_re, $text, $m))
-            return false;
-        $text = substr($text, strlen($m[0]));
-
+    function _init_from_match ($m) {
         $tag = "h" . (5 - strlen($m[1]));
-        return new HtmlElement($tag, false, rtrim($m[2]));
+        $this->_init($tag);
+        $this->pushContent(TransformInline(rtrim($m[2])));
     }
 }
 
-    
 class Block_p extends Block
 {
-    var $_re = "/(\S.*(?:\n(?!\s|[*#!]|\<\?|----|<pre>).+)*)\n?/A";
-        
-    function _match (&$text) {
-        if (!preg_match($this->_re, $text, $m))
+    var $_re = "/\S.*\n?/A";
+    //var $_text = '';
+
+    function Block_p () {
+        $this->_init('p');
+    }
+    
+    function _init_from_match ($m) {
+        $this->_text = $m[0];
+    }
+
+    function mergeWithPrecedingBlock ($precedingBlock) {
+        if (!isa($precedingBlock, 'Block_p'))
             return false;
-        $text = substr($text, strlen($m[0]));
-        
-        return HTML::p(false, TransformInline($m[1]));
+        $this->_text = $precedingBlock->_text . $this->_text;
+        return true;
+    }
+            
+    function finish ($tighten) {
+        $content = TransformInline(trim($this->_text));
+        if ($tighten)
+            return $content;
+        else {
+            $this->pushContent($content);
+            return $this;
+        }
     }
 }
 
@@ -354,15 +407,29 @@ $GLOBALS['BlockParser'] = new BlockParser(array('Block_dl',
                                                 'Block_p'));
 
 
+// FIXME: This is temporary, too...
 function NewTransform ($text) {
     global $BlockParser;
 
+    //set_time_limit(2);
+    
     // Expand leading tabs.
     // FIXME: do this better.
     $text = preg_replace('/^\ *[^\ \S\n][^\S\n]*/me', "str_repeat(' ', strlen('\\0'))", $text);
     assert(!preg_match('/^\ *\t/', $text));
 
     return $BlockParser->parse($text);
+}
+
+
+// FIXME: bad name
+function TransformRevision ($revision) {
+    if ($revision->get('markup') == 'new') {
+        return NewTransform($revision->getPackedContent());
+    }
+    else {
+        return do_transform($revision->getContent());
+    }
 }
 
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.35 2002-01-23 05:15:09 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.36 2002-01-26 01:51:13 dairiki Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 
@@ -120,7 +120,7 @@ class WikiTransform
 	 // back up one more and push new tag
 	 if ($tag && $tag != $this->stack->top()) {
 	    $closetag = $this->stack->pop();
-	    $retvar .= "</$closetag>" . $el->_startTag() . "\n";
+	    $retvar .= "</$closetag>" . $el->startTag() . "\n";
 	    $this->stack->push($tag);
 	 }
    
@@ -158,7 +158,7 @@ class WikiTransform
                $this->stack->push($stuff);
 	    }
 
-	    $retvar .= $el->_startTag() . "\n";
+	    $retvar .= $el->startTag() . "\n";
 	    $this->stack->push($tag);
          }
       }
@@ -650,9 +650,9 @@ function wtm_table($line, &$trfrm)
 
       // FIXME: this is a hack: can't tokenize whole <td></td> since we
       // haven't marked up italics, etc... yet
-      $row .= $trfrm->rawtoken($td->_startTag() . "&nbsp;");
+      $row .= $trfrm->rawtoken($td->startTag() . "&nbsp;");
       $row .= trim($m[4]);
-      $row .= $trfrm->rawtoken("&nbsp;" . $td->_endTag());
+      $row .= $trfrm->rawtoken("&nbsp;" . $td->endTag());
    }
    assert(empty($line));
    $row = $trfrm->rawtoken("<tr>") . $row . $trfrm->rawtoken("</tr>");

@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.19 2002-01-25 06:54:20 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.20 2002-01-26 01:51:13 dairiki Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/transform.php');
@@ -64,16 +64,8 @@ function displayPage(&$request, $tmpl = 'browse') {
                          $splitname);
     $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
 
-
-    if (0) {
-        include_once('lib/BlockParser.php');
-        $content = NewTransform($revision->getPackedContent());
-        //print_r($content);
-        $template = Template($tmpl, array('CONTENT' => $content));
-    }
-    else
-        $template = Template($tmpl, do_transform($revision->getContent()));
-    
+    include_once('lib/BlockParser.php');
+    $template = Template($tmpl, array('CONTENT' => TransformRevision($revision)));
 
     GeneratePage($template, $pagetitle, $revision,
                  array('ROBOTS_META'	=> 'index,follow',

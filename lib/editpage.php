@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.30 2002-01-24 00:45:28 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.31 2002-01-26 01:51:13 dairiki Exp $');
 
 require_once('lib/transform.php');
 require_once('lib/Template.php');
@@ -39,11 +39,17 @@ function editPage(&$request, $do_preview = false) {
         foreach (array('minor_edit', 'convert') as $key)
             $formvars[$key] = (bool) $request->getArg($key);
         foreach (array('content', 'editversion', 'summary', 'pagename',
-                       'version') as $key)
+                       'version', 'markup') as $key)
             $formvars[$key] = (string) $request->getArg($key);
 
-        $template->replace('PREVIEW_CONTENT',
-                           do_transform($request->getArg('content')));
+        if ($formvars['markup'] == 'new') {
+            include_once('lib/BlockParser.php');
+            $trfm = 'NewTransform';
+        }
+        else {
+            $trfm = 'do_transform';
+        }
+        $template->replace('PREVIEW_CONTENT', $trfm($request->getArg('content')));
     }
     else {
         $age = time() - $current->get('mtime');
@@ -53,6 +59,7 @@ function editPage(&$request, $do_preview = false) {
                           'minor_edit'  => $minor_edit,
                           'version'     => $selected->getVersion(),
                           'editversion' => $current->getVersion(),
+                          'markup'	=> $current->get('markup'),
                           'summary'     => '',
                           'convert'     => '',
                           'pagename'    => $pagename);
