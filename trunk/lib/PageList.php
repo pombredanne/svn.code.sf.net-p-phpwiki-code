@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.83 2004-05-18 13:35:39 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.84 2004-06-08 13:51:56 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -493,7 +493,7 @@ class PageList {
 
     function getTotal () {
     	return !empty($this->_options['count'])
-    	       ? $this->_options['count'] : count($this->_rows);
+    	       ? (integer) $this->_options['count'] : count($this->_rows);
     }
 
     function isEmpty () {
@@ -942,6 +942,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.83  2004/05/18 13:35:39  rurban
+//  improve Pagelist layout by equal pagename width for limited lists
+//
 // Revision 1.82  2004/05/16 22:07:35  rurban
 // check more config-default and predefined constants
 // various PagePerm fixes:

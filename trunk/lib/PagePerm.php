@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.24 2004-06-08 10:54:46 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.25 2004-06-08 13:51:57 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -93,7 +93,7 @@ function pagePermissions($pagename) {
     }
 }
 
-function pagePermissionsSimpleFormat($perm_tree,$owner,$group=false) {
+function pagePermissionsSimpleFormat($perm_tree, $owner, $group=false) {
     list($type,$perm) = pagePermissionsAcl($perm_tree[0], $perm_tree);
     /*
     $type = $perm_tree[0];
@@ -109,12 +109,12 @@ function pagePermissionsSimpleFormat($perm_tree,$owner,$group=false) {
     }
     */
     if ($type == 'page')
-        return HTML::tt(HTML::bold($perm->asRwxString($owner,$group).'+'));
+        return HTML::tt(HTML::strong($perm->asRwxString($owner, $group)));
     elseif ($type == 'default')
-        return HTML::tt($perm->asRwxString($owner,$group));
+        return HTML::tt($perm->asRwxString($owner, $group));
     elseif ($type == 'inherited') {
-        return HTML::tt(array('class'=>'inherited','style'=>'color:#aaa;'),
-                        $perm->asRwxString($owner,$group));
+        return HTML::tt(array('class'=>'inherited', 'style'=>'color:#aaa;'),
+                        $perm->asRwxString($owner, $group));
     }
 }
 
@@ -698,6 +698,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/06/08 10:54:46  rurban
+// better acl dump representation, read back acl and owner
+//
 // Revision 1.23  2004/06/08 10:05:11  rurban
 // simplified admin action shortcuts
 //

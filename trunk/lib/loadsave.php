@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.103 2004-06-08 10:54:46 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.104 2004-06-08 13:51:57 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -480,6 +480,9 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         }
         else if ($current->getPackedContent() == $content
                  && $current->get('author') == $versiondata['author']) {
+            // The page metadata is already changed, we don't need a new revision.
+            // This was called previously "is identical to current version %d - skipped"
+            // which is wrong, since the pagedata was stored, not skipped.
             $mesg->pushContent(' ',
                                fmt("content is identical to current version %d - no new revision created",
                                    $current->getVersion()));
@@ -913,6 +916,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.103  2004/06/08 10:54:46  rurban
+ better acl dump representation, read back acl and owner
+
  Revision 1.102  2004/06/06 16:58:51  rurban
  added more required ActionPages for foreign languages
  install now english ActionPages if no localized are found. (again)
