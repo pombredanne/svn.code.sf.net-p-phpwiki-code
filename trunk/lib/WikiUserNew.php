@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.81 2004-06-02 18:01:45 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.82 2004-06-03 09:39:51 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1941,6 +1941,11 @@ extends _PassUser
 
         $this->_authmethod = 'LDAP';
         $userid = $this->_userid;
+        if (strstr($userid,'*')) {
+            trigger_error(fmt("Invalid username '%s' for LDAP Auth",$userid),E_USER_WARNING);
+            return WIKIAUTH_FORBIDDEN;
+        }
+
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
             if (defined('LDAP_AUTH_USER'))
                 if (defined('LDAP_AUTH_PASSWORD'))
@@ -1988,6 +1993,10 @@ extends _PassUser
         global $LDAP_SET_OPTION;
 
         $userid = $this->_userid;
+        if (strstr($userid,'*')) {
+            trigger_error(fmt("Invalid username '%s' for LDAP Auth",$userid),E_USER_WARNING);
+            return WIKIAUTH_FORBIDDEN;
+        }
         if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
             if (defined('LDAP_AUTH_USER'))
                 if (defined('LDAP_AUTH_PASSWORD'))
@@ -2917,6 +2926,12 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.81  2004/06/02 18:01:45  rurban
+// init global FileFinder to add proper include paths at startup
+//   adds PHPWIKI_DIR if started from another dir, lib/pear also
+// fix slashify for Windows
+// fix USER_AUTH_POLICY=old, use only USER_AUTH_ORDER methods (besides HttpAuth)
+//
 // Revision 1.80  2004/06/02 14:20:27  rurban
 // fix adodb DbPassUser login
 //
