@@ -1,4 +1,4 @@
- # $Id: Makefile,v 1.37 2004-02-26 21:22:36 rurban Exp $
+ # $Id: Makefile,v 1.38 2004-02-26 21:23:27 rurban Exp $
 #
 # locale/Makefile
 #
@@ -242,19 +242,6 @@ ${POT_FILE}: ../themes/Portland/templates/editpage.tmpl
 ${POT_FILE}: ../themes/Portland/templates/navbar.tmpl
 ${POT_FILE}: ../themes/Portland/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/Portland/themeinfo.php
-${POT_FILE}: ../themes/Reini/templates/actionbar.tmpl
-${POT_FILE}: ../themes/Reini/templates/body.tmpl
-${POT_FILE}: ../themes/Reini/templates/browse.tmpl
-${POT_FILE}: ../themes/Reini/templates/editpage.tmpl
-${POT_FILE}: ../themes/Reini/templates/login.tmpl
-${POT_FILE}: ../themes/Reini/templates/navbar.tmpl
-${POT_FILE}: ../themes/Reini/templates/nochanges.tmpl
-${POT_FILE}: ../themes/Reini/templates/savepage.tmpl
-${POT_FILE}: ../themes/Reini/templates/signin.tmpl
-${POT_FILE}: ../themes/Reini/templates/top.tmpl
-${POT_FILE}: ../themes/Reini/templates/userprefs.tmpl
-${POT_FILE}: ../themes/Reini/templates/viewsource.tmpl
-${POT_FILE}: ../themes/Reini/themeinfo.php
 ${POT_FILE}: ../themes/Sidebar/templates/frame-footer.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/frame-header.tmpl
 ${POT_FILE}: ../themes/Sidebar/templates/frame-left.tmpl
