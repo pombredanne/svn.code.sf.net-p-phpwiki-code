@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: difflib.php,v 1.9 2003-11-30 18:43:18 carstenklapp Exp $');
+rcs_id('$Id: difflib.php,v 1.10 2004-04-08 01:22:53 rurban Exp $');
 
 // difflib.php
 //
@@ -853,7 +853,7 @@ class UnifiedDiffFormatter extends DiffFormatter
             $xbeg .= "," . $xlen;
         if ($ylen != 1)
             $ybeg .= "," . $ylen;
-        return "@@ -$xbeg +$ybeg @@";
+        return "@@ -$xbeg +$ybeg @@\n";
     }
 
     function _added($lines) {
@@ -910,6 +910,9 @@ class BlockDiffFormatter extends DiffFormatter
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.9  2003/11/30 18:43:18  carstenklapp
+ Fixed careless mistakes in my last optimization commit.
+
  Revision 1.8  2003/11/30 18:20:34  carstenklapp
  Minor code optimization: reduce invariant loops
 

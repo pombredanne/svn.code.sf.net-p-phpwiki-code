@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.3 2004-04-06 20:00:11 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.4 2004-04-08 01:22:54 rurban Exp $');
 /**
  */
 require_once('lib/Theme.php');
@@ -124,11 +124,13 @@ class _UserPreference_recnnbr // recommendation engine key clustering, neighborh
 extends _UserPreference_numeric{}
 
 $Theme->customUserPreferences(array(
-                                   'recengine' => new _UserPreference_recengine(),
-                                   'recalgo'   => new _UserPreference_recalgo(),
+                                   'recengine' => new _UserPreference_recengine('php'),
+                                   'recalgo'   => new _UserPreference_recalgo('itemProb'),
                                    //recnnbr: typically 15-30 for item-based, 40-80 for user-based algos
                                    'recnnbr'   => new _UserPreference_recnnbr(10,14,80),
                                    ));
+
+require_once('lib/PageList.php');
 
 /**
  *  Custom PageList classes
@@ -145,12 +147,14 @@ class _PageList_Column_rating extends _PageList_Column {
         $args = "pagename=".$page_handle->_pagename;
         $args .= " small=1";
         $args .= " imgPrefix=".$prefix++;
-        return $loader->expandPi('<'."?plugin RateIt $args ?".'>',$GLOBALS['request'],$page_handle);
+        return $loader->expandPi('<'."?plugin RateIt $args ?".'>',
+                                 $GLOBALS['request'], $page_handle);
     }
 };
 
 // register custom PageList type
-$Theme->addPageListColumn(array('rating' => new _PageList_Column_rating('rating', _("Rate")))); 
+$Theme->addPageListColumn(array('rating' => 
+                                new _PageList_Column_rating('rating', _("Rate"))));
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

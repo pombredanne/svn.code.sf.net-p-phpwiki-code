@@ -66,14 +66,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // processing timer, and possibly other debugging messages at the
 // bottom of each page.
 if (!defined('DEBUG')) define ('DEBUG', 0);
-define('ENABLE_USER_NEW',true); // this will disappear with 1.4.0
+define('ENABLE_USER_NEW',true);    // this will disappear with 1.4.0
+//define('JS_SEARCHREPLACE',true); // experimental
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.132 2004-04-01 15:57:10 rurban Exp $');
+rcs_id('$Id: index.php,v 1.133 2004-04-08 01:22:53 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -321,8 +322,8 @@ $DBParams = array(
 // PHP Session settings:
 //
 
-// Only for $DBParams['dbtype'] => 'SQL'. See schemas/mysql.sql or 
-// schemas/psql.sql. 
+// Tested for dbtype: 'SQL', 'ADODB' and 'dba'. See schemas/mysql.sql, 
+// schemas/sqlite.sql or schemas/psql.sql. 
 // $DBParams['db_session_table'] must be defined.
 if (!defined('USE_DB_SESSION')   and 
     $DBParams['dbtype'] == 'SQL' and 
@@ -942,6 +943,11 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.132  2004/04/01 15:57:10  rurban
+// simplified Sidebar theme: table, not absolute css positioning
+// added the new box methods.
+// remaining problems: large left margin, how to override _autosplitWikiWords in Template only
+//
 // Revision 1.131  2004/03/14 16:24:35  rurban
 // authenti(fi)cation spelling
 //

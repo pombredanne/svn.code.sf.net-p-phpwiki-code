@@ -16,7 +16,7 @@
 // | Author: Rasmus Lerdorf <rasmus@php.net>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: File_Passwd.php,v 1.4 2004-04-07 23:13:19 rurban Exp $
+// $Id: File_Passwd.php,v 1.5 2004-04-08 01:22:53 rurban Exp $
 //
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 
@@ -222,7 +222,7 @@ class File_Passwd {
     function close() {
         if($this->locked) {
             foreach($this->users as $user => $pass) {
-                if($this->cvs[$user]) {
+                if (isset($this->cvs[$user])) {
                     fputs($this->fplock, "$user:$pass:" . $this->cvs[$user] . "\n");
                 } else {
                     fputs($this->fplock, "$user:$pass\n");
