@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24 2001-01-31 07:38:10 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.24.2.1 2001-02-08 18:28:31 dairiki Exp $');
    // end essential internal stuff
 
 
@@ -135,7 +135,9 @@
 
    // logo image (path relative to index.php)
    $logo = "images/wikibase.png";
-   // signature image which is shown after saving an edited page
+
+   // Signature image which is shown after saving an edited page
+   // If this is left blank (or unset), the signature will be omitted.
    $SignatureImg = "images/signature.png";
 
    // date & time formats used to display modification times, etc.
@@ -231,9 +233,6 @@
    }
    if (defined('WIKI_ADMIN') && !empty($AdminUrl))
       $ScriptUrl = $AdminUrl;
-
-   $LogoImage = "<img src=\"$logo\" border=0 ALT=\"[PhpWiki!]\">";
-   $LogoImage = "<a href=\"$ScriptUrl\">$LogoImage</a>";
 
    $FieldSeparator = "\263";
 

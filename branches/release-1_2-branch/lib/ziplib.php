@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ziplib.php,v 1.2 2001-01-01 23:13:32 ahollosi Exp $');
+rcs_id('$Id: ziplib.php,v 1.2.2.1 2001-02-08 18:28:31 dairiki Exp $');
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -671,7 +671,7 @@ function ParseMimeifiedPages ($data)
   $encoding = strtolower($headers['content-transfer-encoding']);
   if ($encoding == 'quoted-printable')
       $data = QuotedPrintableDecode($data);
-  else if ($encoding && $encoding == 'binary')
+  else if ($encoding && $encoding != 'binary')
       die("Unknown encoding type: $encoding");
   
   $pagehash['content'] = preg_split('/[ \t\r]*\n/', chop($data));
