@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.22 2003-11-30 19:33:53 carstenklapp Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.23 2003-12-03 02:09:26 carstenklapp Exp $');
   if (!$page->get('locked') || $user->isAdmin())
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -28,7 +28,16 @@
     <?=$Sep?><?= Button("diff") ?> 
     <?=$Sep?><?= Button("PageInfo", _("PageInfo")) ?>
 <?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?> 
-    <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?> <!-- For debugging only, really -->
+    <!-- Buttons really only for debugging -->
+    <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?>
+<?php
+     $purgeb = Button(array('nocache' => 'purge'),
+                     _("PurgeHtmlCache"), $page->getName());
+     $purgeb->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
+?>
+    <?=$Sep?><?= $purgeb ?>
+
+    <!-- End debugging buttons -->
 <?php } ?>
   </div>
   </td>
