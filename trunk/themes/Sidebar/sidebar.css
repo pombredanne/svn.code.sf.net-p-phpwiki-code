@@ -1,5 +1,5 @@
 /*
-  $Id: sidebar.css,v 1.7 2002-02-09 03:49:38 carstenklapp Exp $
+  $Id: sidebar.css,v 1.8 2002-02-11 21:06:30 carstenklapp Exp $
 */
 @import url("../../phpwiki.css");
 
@@ -12,6 +12,7 @@
 }
 
 body {
+    margin-top: 1.5ex;
     margin-left: 13em;
 }
 
@@ -23,13 +24,10 @@ body {
     left:   1em;
 }
 
-/* ie5 mac allows html img align to override this.
- * This confuses OmniWeb too.
- */
-#logo {
+div#logo img {
     position: fixed;
     left: 1em;
-    top:  1ex;
+    top:  1.5ex;
 }
 
 /* ie5 mac sometimes ignores the bottom position of classes so id is used instead. */
