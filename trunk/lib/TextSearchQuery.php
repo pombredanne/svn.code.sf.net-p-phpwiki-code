@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.4 2002-01-28 03:59:30 dairiki Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.5 2002-11-19 19:08:14 dairiki Exp $');
 /**
  * A text search query.
  *
@@ -553,11 +553,11 @@ class TextSearchQuery_Lexer {
         $tokens = array();
         $buf = strtolower(ltrim($string));
         while (!empty($buf)) {
-            if (preg_match('/^(and|or)\s*/', $buf, $m)) {
+            if (preg_match('/^(and|or)\b\s*/', $buf, $m)) {
                 $val = $m[1];
                 $type = TSQ_TOK_BINOP;
             }
-            elseif (preg_match('/^(-|not)\s*/', $buf, $m)) {
+            elseif (preg_match('/^(-|not\b)\s*/', $buf, $m)) {
                 $val = $m[1];
                 $type = TSQ_TOK_NOT;
             }
