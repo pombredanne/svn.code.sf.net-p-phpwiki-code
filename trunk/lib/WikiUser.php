@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.3 2001-11-29 18:03:59 dairiki Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.4 2001-12-02 02:34:48 joe_edelman Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -20,7 +20,13 @@ class WikiUser
         $this->_request = &$request;
         // Restore from cookie.
         $this->_restore();
-        
+
+        // don't check for HTTP auth if there's nothing to worry about
+        if (  $this->state == 'authorized' 
+              && $auth_mode != 'LOGIN' 
+              && $auth_mode != 'LOGOUT'  )
+            return;   
+
         if ($this->state == 'authorized' && $auth_mode == 'LOGIN') {
             // ...logout
             $this->realm++;
