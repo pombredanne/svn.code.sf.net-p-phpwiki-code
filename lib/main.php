@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.160 2004-06-07 22:44:14 rurban Exp $');
+rcs_id('$Id: main.php,v 1.161 2004-06-07 22:58:40 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -761,15 +761,35 @@ $this->version = phpwiki_version();
     }
 
     function action_chown () {
-        $this->setArg('s',$this->getArg('pagename'));
-        $this->setArg('verify',1);
-        $this->actionpage(_("PhpWikiAdministration/Chown"));
+        $action = $this->findActionPage(_("PhpWikiAdministration/Chown"));
+        if ($action) {
+            $this->setArg('s',$this->getArg('pagename'));
+            $this->setArg('verify',1);
+            $this->actionpage($action);
+        } else {
+            trigger_error(_("PhpWikiAdministration/Chown").": Cannot find action page", E_USER_WARNING);
+        }
     }
 
     function action_setacl () {
-        $this->setArg('s',$this->getArg('pagename'));
-        $this->setArg('verify',1);
-        $this->actionpage(_("PhpWikiAdministration/SetAcl"));
+        $action = $this->findActionPage(_("PhpWikiAdministration/SetAcl"));
+        if ($action) {
+            $this->setArg('s',$this->getArg('pagename'));
+            $this->setArg('verify',1);
+            $this->actionpage($action);
+        } else {
+            trigger_error(_("PhpWikiAdministration/SetAcl").": Cannot find action page", E_USER_WARNING);
+        }
+    }
+
+    function action_dump () {
+        $action = $this->findActionPage(_("PageDump"));
+        if ($action) {
+            $this->actionpage($action);
+        } else {
+            // redirect to action=upgrade if admin?
+            trigger_error(_("PageDump").": Cannot find action page", E_USER_WARNING);
+        }
     }
 
     function action_diff () {
@@ -1006,6 +1026,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.160  2004/06/07 22:44:14  rurban
+// added simplified chown, setacl actions
+//
 // Revision 1.159  2004/06/06 16:58:51  rurban
 // added more required ActionPages for foreign languages
 // install now english ActionPages if no localized are found. (again)
