@@ -1,15 +1,15 @@
 <?php // -*-php-*-
-rcs_id('$Id: Info.php,v 1.5 2002-02-25 03:33:10 carstenklapp Exp $');
+rcs_id('$Id: PageInfo.php,v 1.1 2002-10-14 14:43:22 carstenklapp Exp $');
 /**
  * ActionPage plugin returns extra information about a page.
  * The plugin just passes a page revision handle to the Template
  * info.tmpl, which does all the real work.
  */
-class WikiPlugin_Info
+class WikiPlugin_PageInfo
 extends WikiPlugin
 {
     function getName () {
-        return _("Info");
+        return _("PageInfo");
     }
 
     function getDescription () {
