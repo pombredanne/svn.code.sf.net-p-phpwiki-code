@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.25 2002-09-18 18:35:24 dairiki Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.26 2002-09-18 22:11:21 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -533,7 +533,10 @@ class _UserPreference_theme extends _UserPreference
     }
 
     function update ($newvalue) {
+        global $Theme;
         include($this->_themefile($value));
+        if (empty($Theme))
+            include($this->_themefile('default'));
     }
 
     function _themefile ($theme) {
