@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.4 2004-04-26 20:44:34 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.5 2004-10-14 19:19:34 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -18,8 +18,8 @@ class WikiDB_ADODB extends WikiDB
             $backend = $dbparams['dsn']['phptype'];
         elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
             $backend = $m[1];
-        // do we have a override? (currently only mysql)
-        // todo: don't use this if the used mysql database can do transactions
+        // Do we have a override? (currently: mysql, sqlite, oracle, mssql)
+        // TODO: pgsql, mysqlt (innodb or bdb)
         if (FindFile("lib/WikiDB/backend/ADODB_$backend.php",true)) {
             $backend = 'ADODB_' . $backend;
         } else {

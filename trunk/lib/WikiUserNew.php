@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.109 2004-10-07 16:08:58 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.110 2004-10-14 19:19:33 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1064,7 +1064,7 @@ extends _AnonUser
         }
         // Preparate the SELECT statement, for ADODB and PearDB (MDB not).
         // Simple sprintf-style.
-        $new_stmt = str_replace($variables,$new,$stmt);
+        $new_stmt = str_replace($variables, $new, $stmt);
         if ($new_stmt == $stmt) {
             if ($oldstyle) {
                 trigger_error(sprintf("DbAuthParams: Invalid statement in %s",
@@ -3059,6 +3059,11 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.109  2004/10/07 16:08:58  rurban
+// fixed broken FileUser session handling.
+//   thanks to Arnaud Fontaine for detecting this.
+// enable file user Administrator membership.
+//
 // Revision 1.108  2004/10/05 17:00:04  rurban
 // support paging for simple lists
 // fix RatingDb sql backend.

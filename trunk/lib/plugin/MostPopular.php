@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.29 2004-09-25 16:33:52 rurban Exp $');
+rcs_id('$Id: MostPopular.php,v 1.30 2004-10-14 19:19:34 rurban Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
 
     function getDefaultArguments() {
@@ -79,7 +79,7 @@ extends WikiPlugin
             $args['count'] = $request->getArg('count');
         }
         $dbi->touch();
-        $pages = $dbi->mostPopular($limit,$sortby);
+        $pages = $dbi->mostPopular($limit, $sortby);
         $pagelist = new PageList($columns, $exclude, $args);
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
@@ -107,6 +107,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2004/09/25 16:33:52  rurban
+// add support for all PageList options
+//
 // Revision 1.28  2004/04/20 18:10:55  rurban
 // config refactoring:
 //   FileFinder is needed for WikiFarm scripts calling index.php

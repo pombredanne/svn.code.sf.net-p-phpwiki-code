@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.17 2004-09-16 07:49:01 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.18 2004-10-14 19:19:34 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -281,7 +281,7 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
         for ($i = 0; $i < count($array); $i++ ) {
             if(trim($array[$i]) != "zzzjunk") { //nasty, fixme
             //trigger_error("'$array[$i]'");//debugging
-                $return[] =$array[$i];
+                $return[] = $array[$i];
             }
         }
 
@@ -290,6 +290,11 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/09/16 07:49:01  rurban
+// use the page charset instead if the global one on download
+//   (need to clarify header order, since we print the same header type 3 times!)
+// wordwrap workaround (security concern)
+//
 // Revision 1.16  2004/07/01 06:31:23  rurban
 // doc upcase only
 //

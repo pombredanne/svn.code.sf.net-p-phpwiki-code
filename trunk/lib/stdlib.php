@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.208 2004-10-12 13:13:20 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.209 2004-10-14 19:19:34 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1760,7 +1760,24 @@ function isExternalReferrer(&$request) {
     return false;
 }
 
+function loadPhpExtension($extension) {
+    if (!extension_loaded($extension)) {
+        $soname = (isWindows() ? 'php_' : '') . $extension . (isWindows() ? '.dll' : '.so');
+        if (!@dl($soname))
+            return false;
+    }
+    return extension_loaded('cvsclient');
+}
+
+function string_starts_with($string, $prefix) {
+    return (substr($string, 0, strlen($prefix)) == $prefix);
+}
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.208  2004/10/12 13:13:20  rurban
+// php5 compatibility (5.0.1 ok)
+//
 // Revision 1.207  2004/09/26 12:21:40  rurban
 // removed old log entries.
 // added persistent start_debug on internal links and DEBUG
