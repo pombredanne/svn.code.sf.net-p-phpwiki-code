@@ -1,15 +1,17 @@
 Date: Sun, 24 Feb 2002 00:14:20 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: PgsrcTranslation,v 1.10 2002-02-24 05:20:15 carstenklapp Exp $
+X-Rcs-Id: $Id: PgsrcTranslation,v 1.11 2002-11-25 19:44:02 dairiki Exp $
 Content-Type: application/x-phpwiki;
   pagename=PgsrcTranslation;
   flags="";
-  pgsrc_version="2 $Revision: 1.10 $";
+  pgsrc_version="2 $Revision: 1.11 $";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-__Note:__ This page is much more impressive on the [demo server|PhpWikiDemo:en/PgsrcTranslation] where the page names actually link.
+__Note:__ This page is much more impressive on the
+[demo server|PhpWikiDemo:en/PgsrcTranslation] where the page names
+actually link.
 
 !! Translated Page Name Matrix
 ''Action Pages'' |
@@ -403,7 +405,9 @@ it:
 nl:
     [ToverPhpWikiURLs]
 
-! These pages have single word titles so ~[square brackets] are required to link:
+! These pages have single word titles so ~[square brackets] are
+required to link:
+
 fr:
     [Accueil]
 de:
@@ -422,4 +426,6 @@ fr:
     [Info]
 
 ----
-See also: PhpWiki:MultiLingualWiki, PhpWiki:LanguageSelection, PhpWikiDocumentation.
+
+See also: PhpWiki:MultiLingualWiki, PhpWiki:LanguageSelection,
+PhpWikiDocumentation.
