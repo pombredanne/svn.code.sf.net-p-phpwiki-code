@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.45 2004-11-17 20:06:30 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.46 2004-11-18 09:52:23 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -626,11 +626,13 @@ class GroupDb extends WikiGroup {
         } else {
             $user =& $this->user;
         }
-        $this->_is_member = $user->prepare($DBAuthParams['is_member'],
+        if (isa($this->user, '_PassUser')) { // TODO: safety by Charles Corrigan
+            $this->_is_member = $user->prepare($DBAuthParams['is_member'],
                                            array('userid','groupname'));
-        $this->_group_members = $user->prepare($DBAuthParams['group_members'],'groupname');
-        $this->_user_groups = $user->prepare($DBAuthParams['user_groups'],'userid');
-        $this->dbh = $user->_auth_dbi;
+            $this->_group_members = $user->prepare($DBAuthParams['group_members'],'groupname');
+            $this->_user_groups = $user->prepare($DBAuthParams['user_groups'],'userid');
+            $this->dbh = $user->_auth_dbi;
+        }
     }
 }
 
@@ -1094,6 +1096,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2004/11/17 20:06:30  rurban
+// possible group fix
+//
 // Revision 1.44  2004/11/11 10:31:26  rurban
 // Disable default options in config-dist.ini
 // Add new CATEGORY_GROUP_PAGE root page: Default: Translation of "CategoryGroup"
