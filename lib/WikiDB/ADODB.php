@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.3 2004-04-16 14:11:54 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.4 2004-04-26 20:44:34 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -9,18 +9,27 @@ require_once('lib/WikiDB.php');
  * Support for a newer adodb library, the adodb extension library 
  * and more databases will come with PhpWiki v1.3.10
  *
- * @author: Lawrence Akka
+ * @author: Lawrence Akka, Reini Urban
  */
 class WikiDB_ADODB extends WikiDB
 {
     function WikiDB_ADODB ($dbparams) {
-        $backend_type = 'ADODB';
-        include_once("lib/WikiDB/backend/ADODB.php");
-        $backend_class = "WikiDB_backend_ADODB";
+        if (is_array($dbparams['dsn']))
+            $backend = $dbparams['dsn']['phptype'];
+        elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
+            $backend = $m[1];
+        // do we have a override? (currently only mysql)
+        // todo: don't use this if the used mysql database can do transactions
+        if (FindFile("lib/WikiDB/backend/ADODB_$backend.php",true)) {
+            $backend = 'ADODB_' . $backend;
+        } else {
+            $backend = 'ADODB';
+        }
+        include_once("lib/WikiDB/backend/$backend.php");
+        $backend_class = "WikiDB_backend_$backend";
         $backend = new $backend_class($dbparams);
         $this->WikiDB($backend, $dbparams);
     }
-   
     
     /**
      * Determine whether page exists (in non-default form).

@@ -1,10 +1,10 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.47 2004-04-20 00:06:04 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.48 2004-04-26 20:44:35 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
 require_once('lib/ErrorManager.php');
-require_once('lib/pear/DB.php'); // Always favor use our local pear copy
+require_once('DB.php'); // Always favor use our local pear copy
 
 class WikiDB_backend_PearDB
 extends WikiDB_backend
@@ -705,7 +705,7 @@ extends WikiDB_backend
      *
      * @access protected
      */
-    function lock($write_lock = true) {
+    function lock($tables = false, $write_lock = true) {
         if ($this->_lock_count++ == 0)
             $this->_lock_tables($write_lock);
     }
@@ -727,7 +727,7 @@ extends WikiDB_backend
      *
      * @see _lock_database
      */
-    function unlock($force = false) {
+    function unlock($tables = false, $force = false) {
         if ($this->_lock_count == 0)
             return;
         if (--$this->_lock_count <= 0 || $force) {
@@ -926,6 +926,9 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2004/04/20 00:06:04  rurban
+// themable paging support
+//
 // Revision 1.46  2004/04/19 21:51:41  rurban
 // php5 compatibility: it works!
 //

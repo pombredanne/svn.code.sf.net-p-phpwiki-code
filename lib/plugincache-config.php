@@ -1,8 +1,8 @@
-<?php rcs_id('$Id: plugincache-config.php,v 1.4 2004-04-26 13:43:03 rurban Exp $');
+<?php rcs_id('$Id: plugincache-config.php,v 1.5 2004-04-26 20:44:34 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
- This file is (not yet) part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by

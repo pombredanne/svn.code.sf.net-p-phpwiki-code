@@ -160,7 +160,7 @@ class ADODB_mysql extends ADOConnection {
 	
 	function _affectedrows()
 	{
-			return mysql_affected_rows($this->_connectionID);
+            return mysql_affected_rows($this->_connectionID);
 	}
   
  	// See http://www.mysql.com/doc/M/i/Miscellaneous_functions.html
@@ -668,4 +668,13 @@ class ADORecordSet_mysql extends ADORecordSet{
 
 }
 }
+
+// (c-file-style: "gnu")
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:   
 ?>

@@ -16,10 +16,10 @@
 // |          Sebastian Bergmann <sb@sebastian-bergmann.de>               |
 // +----------------------------------------------------------------------+
 //
-// $Id: Cache.php,v 1.1 2002-08-19 06:41:28 rurban Exp $
+// $Id: Cache.php,v 1.2 2004-04-26 20:44:36 rurban Exp $
 
-require_once('lib/pear/PEAR.php');
-require_once('lib/pear/Cache/Error.php');
+require_once('PEAR.php');
+require_once('Cache/Error.php');
 
 /**
 * Cache is a base class for cache implementations.
@@ -59,7 +59,7 @@ require_once('lib/pear/Cache/Error.php');
 *          bad circumstances  (especially with the file container)
 *
 * @author   Ulf Wendel <ulf.wendel@phpdoc.de>
-* @version  $Id: Cache.php,v 1.1 2002-08-19 06:41:28 rurban Exp $
+* @version  $Id: Cache.php,v 1.2 2004-04-26 20:44:36 rurban Exp $
 * @package  Cache
 * @access   public
 */
@@ -130,7 +130,7 @@ class Cache extends PEAR {
         $this->PEAR();
         $container = strtolower($container);
         $container_class = 'Cache_Container_' . $container;
-        $container_classfile = 'lib/pear/Cache/Container/' . $container . '.php';
+        $container_classfile = 'Cache/Container/' . $container . '.php';
 
         include_once $container_classfile;
         $this->container = new $container_class($container_options);

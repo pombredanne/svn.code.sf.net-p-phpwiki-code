@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssParser.php,v 1.4 2004-04-18 01:11:51 rurban Exp $');
+rcs_id('$Id: RssParser.php,v 1.5 2004-04-26 20:44:34 rurban Exp $');
 /**
  * RSSParser Class, requires the expat extension
  * Based on Duncan Gough RSSParser class
@@ -127,9 +127,10 @@ class RSSParser {
             $fp = fopen("$file","r") or die("Error reading XML file, $file");
             while ($data = fread($fp, 4096))  {
                 xml_parse($xml_parser, $data, feof($fp)) or 
-                    die(sprintf("XML error: %s at line %d", 
-                                xml_error_string(xml_get_error_code($xml_parser)), 
-                                xml_get_current_line_number($xml_parser)));
+                    trigger_error(sprintf("XML error: %s at line %d", 
+                                          xml_error_string(xml_get_error_code($xml_parser)), 
+                                          xml_get_current_line_number($xml_parser)),
+                                  E_USER_WARNING);
             }
             fclose($fp);
         } else {
@@ -151,15 +152,21 @@ class RSSParser {
                 $data = $client->getContent();
             }
             xml_parse($xml_parser, $data, true) or 
-                die(sprintf("XML error: %s at line %d", 
-                            xml_error_string(xml_get_error_code($xml_parser)), 
-                            xml_get_current_line_number($xml_parser)));
+                trigger_error(sprintf("XML error: %s at line %d", 
+                                      xml_error_string(xml_get_error_code($xml_parser)), 
+                                      xml_get_current_line_number($xml_parser)),
+                              E_USER_WARNING);
         }
         xml_parser_free($xml_parser);
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/04/18 01:11:51  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 
 // For emacs users
 // Local Variables:

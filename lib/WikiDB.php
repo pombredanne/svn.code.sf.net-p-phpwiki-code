@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.45 2004-04-20 00:06:03 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.46 2004-04-26 20:44:34 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -168,12 +168,6 @@ class WikiDB {
         return new WikiDB_Page($this, $pagename);
     }
 
-        
-    // Do we need this?
-    //function nPages() { 
-    //}
-
-
     /**
      * Determine whether page exists (in non-default form).
      *
@@ -249,6 +243,10 @@ class WikiDB {
         return new WikiDB_PageIterator($this, $result);
     }
 
+    // Do we need this?
+    //function nPages() { 
+    //}
+    // Yes, for paging. Renamed.
     function numPages($filter=false, $exclude='') {
     	if (method_exists($this->_backend,'numPages'))
             $count = $this->_backend->numPages($filter,$exclude);
@@ -567,18 +565,17 @@ class WikiDB_Page
         if ($version == 0)
             return;
 
-        $backend->lock();
+        $backend->lock(array('page','version'));
         $latestversion = $cache->get_latest_version($pagename);
         if ($latestversion && $version == $latestversion) {
-            $backend->unlock();
+            $backend->unlock(array('page','version'));
             trigger_error(sprintf("Attempt to delete most recent revision of '%s'",
                                   $pagename), E_USER_ERROR);
             return;
         }
 
         $cache->delete_versiondata($pagename, $version);
-		
-        $backend->unlock();
+        $backend->unlock(array('page','version'));
     }
 
     /*
@@ -617,10 +614,10 @@ class WikiDB_Page
         if ($version == 0)
             return;
 
-        $backend->lock();
+        $backend->lock(array('version'));
         $latestversion = $backend->get_latest_version($pagename);
         if ($latestversion && $version == $latestversion) {
-            $backend->unlock();
+            $backend->unlock(array('version'));
             trigger_error(sprintf("Attempt to merge most recent revision of '%s'",
                                   $pagename), E_USER_ERROR);
             return;
@@ -629,7 +626,7 @@ class WikiDB_Page
         $versiondata = $cache->get_versiondata($pagename, $version, true);
         if (!$versiondata) {
             // Not there? ... we're done!
-            $backend->unlock();
+            $backend->unlock(array('version'));
             return;
         }
 
@@ -649,7 +646,7 @@ class WikiDB_Page
         }
 
         $cache->delete_versiondata($pagename, $version);
-        $backend->unlock();
+        $backend->unlock(array('version'));
     }
 
     
@@ -679,14 +676,14 @@ class WikiDB_Page
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
                 
-        $backend->lock();
+        $backend->lock(array('version','page','recent','links','nonempty'));
 
         $latestversion = $backend->get_latest_version($pagename);
         $newversion = $latestversion + 1;
         assert($newversion >= 1);
 
         if ($version != WIKIDB_FORCE_CREATE && $version != $newversion) {
-            $backend->unlock();
+            $backend->unlock(array('version','page','recent','links'));
             return false;
         }
 
@@ -730,7 +727,7 @@ class WikiDB_Page
         
         $backend->set_links($pagename, $links);
 
-        $backend->unlock();
+        $backend->unlock(array('version','page','recent','links','nonempty'));
 
         return new WikiDB_PageRevision($this->_wikidb, $pagename, $newversion,
                                        $data);
@@ -758,12 +755,10 @@ class WikiDB_Page
 	$links = $formatted->getWikiPageLinks();
 
 	$backend = &$this->_wikidb->_backend;
-	$backend->lock();
 	$newrevision = $this->createRevision($version, $wikitext, $meta, $links);
 	if ($newrevision)
             if (!defined('WIKIDB_NOCACHE_MARKUP') or !WIKIDB_NOCACHE_MARKUP)
                 $this->set('_cached_html', $formatted->pack());
-	$backend->unlock();
 
 	// FIXME: probably should have some global state information
 	// in the backend to control when to optimize.
@@ -838,7 +833,7 @@ class WikiDB_Page
         $subject = sprintf(_("PageChange Notification %s"),$this->_pagename);
         $previous = $backend->get_previous_version($this->_pagename, $version);
         if ($previous) {
-            $difflink = WikiUrl($this->_pagename,array('action'=>'diff'),true);
+            $difflink = WikiURL($this->_pagename,array('action'=>'diff'),true);
             $cache = &$this->_wikidb->_cache;
             $this_content = explode("\n", $wikitext);
             $prevdata = $cache->get_versiondata($this->_pagename, $previous, true);
@@ -856,7 +851,7 @@ class WikiDB_Page
             $content .= $fmt->format($diff2);
             
         } else {
-            $difflink = WikiUrl($this->_pagename,array(),true);
+            $difflink = WikiURL($this->_pagename,array(),true);
             if (!isset($meta['mtime'])) $meta['mtime'] = time();
             $content = $this->_pagename . " " . $version . " " .  Iso8601DateTime($meta['mtime']) . "\n";
             $content .= _("New Page");
@@ -1720,6 +1715,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2004/04/20 00:06:03  rurban
+// themable paging support
+//
 // Revision 1.44  2004/04/19 18:27:45  rurban
 // Prevent from some PHP5 warnings (ref args, no :: object init)
 //   php5 runs now through, just one wrong XmlElement object init missing

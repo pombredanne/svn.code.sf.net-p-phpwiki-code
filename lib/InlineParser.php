@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.37 2004-04-19 23:13:03 zorloc Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.38 2004-04-26 20:44:34 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.

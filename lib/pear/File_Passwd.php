@@ -16,11 +16,11 @@
 // | Author: Rasmus Lerdorf <rasmus@php.net>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: File_Passwd.php,v 1.5 2004-04-08 01:22:53 rurban Exp $
+// $Id: File_Passwd.php,v 1.6 2004-04-26 20:44:36 rurban Exp $
 //
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 
-require_once 'lib/pear/PEAR.php' ;
+require_once 'PEAR.php' ;
 
 /**
 * Class to manage passwd-style files

@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.48 2004-04-13 09:13:50 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.49 2004-04-26 20:44:34 rurban Exp $');
 /*
- Copyright (C) 2004 $ThePhpWikiProgrammingTeam
+ Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
  This file is part of PhpWiki.
 
@@ -458,7 +458,7 @@ class Request_SessionVars {
             $val->page   = $GLOBALS['request']->getArg('pagename');
             $val->action = $GLOBALS['request']->getArg('action');
         }
-        if (!function_usable('ini_get') or ini_get('register_globals')) {
+        if (!function_usable('get_cfg_var') or get_cfg_var('register_globals')) {
             // This is funky but necessary, at least in some PHP's
             $GLOBALS[$key] = $val;
         }
@@ -540,7 +540,7 @@ class Request_CookieVars {
 /* Win32 Note:
    [\winnt\php.ini]
    You must set "upload_tmp_dir" = "/tmp/" or "C:/tmp/"
-   Best on the same drive as apache, with foreard slashes 
+   Best on the same drive as apache, with forward slashes 
    and with ending slash!
    Otherwise "\\" => "" and the uploaded file will not be found.
 */
@@ -960,6 +960,11 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2004/04/13 09:13:50  rurban
+// sf.net bug #933183 and http://bugs.php.net/17557
+// disable ob_gzhandler if apache_note cannot be used.
+//   (conservative until we find why)
+//
 // Revision 1.47  2004/04/02 15:06:55  rurban
 // fixed a nasty ADODB_mysql session update bug
 // improved UserPreferences layout (tabled hints)

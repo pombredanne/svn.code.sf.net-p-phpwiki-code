@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.10 2004-04-26 13:22:32 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.11 2004-04-26 20:44:34 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -123,11 +123,11 @@ function IniConfig($file) {
         }
         
         // calculate them later: old or dynamic constants
-        if (in_array($item,array('USE_PATH_INFO','USE_DB_SESSION',
-                                 'ALLOW_HTTP_AUTH_LOGIN','ALLOW_LDAP_LOGIN',
-                                 'ALLOW_IMAP_LOGIN','ALLOW_USER_LOGIN',
-                                 'REQUIRE_SIGNIN_BEFORE_EDIT',
-                                 'WIKIDB_NOCACHE_MARKUP')))
+        if (!$val and in_array($item,array('USE_PATH_INFO','USE_DB_SESSION',
+                                           'ALLOW_HTTP_AUTH_LOGIN','ALLOW_LDAP_LOGIN',
+                                           'ALLOW_IMAP_LOGIN','ALLOW_USER_LOGIN',
+                                           'REQUIRE_SIGNIN_BEFORE_EDIT',
+                                           'WIKIDB_NOCACHE_MARKUP')))
         {
             ;
         }
@@ -162,7 +162,8 @@ function IniConfig($file) {
     $DBParams['dba_handler'] = @$rs['DATABASE_DBA_HANDLER'];
     $DBParams['directory'] = @$rs['DATABASE_DIRECTORY'];
     $DBParams['timeout'] = @$rs['DATABASE_TIMEOUT'];
-    if (!defined('USE_DB_SESSION') and $DBParams['db_session_table']) {
+    if (!defined('USE_DB_SESSION') and $DBParams['db_session_table'] and 
+        in_array($DBParams['dbtype'],array('SQL','ADODB','dba'))) {
         define('USE_DB_SESSION', true);
     }
 
@@ -491,6 +492,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/04/26 13:22:32  rurban
+// calculate bool old or dynamic constants later
+//
 // Revision 1.9  2004/04/26 12:15:01  rurban
 // check default config values
 //

@@ -16,7 +16,7 @@
 // | Author: Stig Bakken <stig@php.net>                                   |
 // +----------------------------------------------------------------------+
 //
-// $Id: storage.php,v 1.1 2002-09-12 11:47:07 rurban Exp $
+// $Id: storage.php,v 1.2 2004-04-26 20:44:37 rurban Exp $
 //
 // DB_storage: a class that lets you return SQL data as objects that
 // can be manipulated and that updates the database accordingly.
@@ -24,11 +24,11 @@
 // Based on DB 1.3 from the pear.php.net repository. 
 // The only modifications made have been modification of the include paths. 
 //
-rcs_id('$Id: storage.php,v 1.1 2002-09-12 11:47:07 rurban Exp $');
+rcs_id('$Id: storage.php,v 1.2 2004-04-26 20:44:37 rurban Exp $');
 rcs_id('From Pear CVS: Id: ldap.php,v 1.9 2002/02/11 12:59:37 mj Exp');
 
-require_once "lib/pear/PEAR.php";
-require_once "lib/pear/DB.php";
+require_once "PEAR.php";
+require_once "DB.php";
 
 /**
  * DB_storage provides an object interface to a table row.  It lets

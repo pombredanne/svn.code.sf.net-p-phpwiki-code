@@ -20,16 +20,16 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 //
 //
-// $Id: Pager.php,v 1.1 2002-09-12 11:47:07 rurban Exp $
+// $Id: Pager.php,v 1.2 2004-04-26 20:44:37 rurban Exp $
 ///
 // Based on DB_Pager 0.7 from the pear.php.net repository. 
 // The only modifications made have been modification of the include paths.
 //
-rcs_id('$Id: Pager.php,v 1.1 2002-09-12 11:47:07 rurban Exp $');
+rcs_id('$Id: Pager.php,v 1.2 2004-04-26 20:44:37 rurban Exp $');
 rcs_id('From Pear CVS: Id: Pager.php,v 1.3 2002/05/12 13:59:40 cox Exp');
 
-require_once 'lib/pear/PEAR.php';
-require_once 'lib/pear/DB.php';
+require_once 'PEAR.php';
+require_once 'DB.php';
 
 /**
 * This class handles all the stuff needed for displaying paginated results

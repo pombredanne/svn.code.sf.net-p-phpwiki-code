@@ -16,7 +16,7 @@
 // | Author: Sterling Hughes <sterling@php.net>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: ibase.php,v 1.1 2002-09-12 11:47:07 rurban Exp $
+// $Id: ibase.php,v 1.2 2004-04-26 20:44:37 rurban Exp $
 //
 // Database independent query interface definition for PHP's Interbase
 // extension.
@@ -24,10 +24,10 @@
 // Based on DB 1.3 from the pear.php.net repository. 
 // The only modifications made have been modification of the include paths. 
 //
-rcs_id('$Id: ibase.php,v 1.1 2002-09-12 11:47:07 rurban Exp $');
+rcs_id('$Id: ibase.php,v 1.2 2004-04-26 20:44:37 rurban Exp $');
 rcs_id('From Pear CVS: Id: ibase.php,v 1.3 2002/05/09 12:29:53 ssb Exp');
 
-require_once 'lib/pear/DB/common.php';
+require_once 'DB/common.php';
 
 class DB_ibase extends DB_common
 {

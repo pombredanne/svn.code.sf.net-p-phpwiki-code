@@ -1,11 +1,11 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.36 2004-04-19 21:51:41 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.37 2004-04-26 20:44:34 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
  *
  * This code is now php5 compatible. --2004-04-19 23:51:43 rurban
  */
-require_once("lib/XmlElement.php");
+require_once(dirname(__FILE__)."/XmlElement.php");
 
 /**
  * An XML element.
@@ -511,6 +511,9 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.36  2004/04/19 21:51:41  rurban
+ php5 compatibility: it works!
+
  Revision 1.35  2004/04/19 18:27:45  rurban
  Prevent from some PHP5 warnings (ref args, no :: object init)
    php5 runs now through, just one wrong XmlElement object init missing
