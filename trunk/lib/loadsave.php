@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.72 2003-01-03 22:25:53 carstenklapp Exp $');
+rcs_id('$Id: loadsave.php,v 1.73 2003-01-28 21:09:17 zorloc Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -141,7 +141,7 @@ function MakeWikiZip (&$request)
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
     while ($page = $pages->next()) {
-        if (! get_cfg_var('safe_mode'))
+        if (! ini_get('safe_mode'))
             set_time_limit(30); // Reset watchdog.
 
         $current = $page->getCurrentRevision();
@@ -188,7 +188,7 @@ function DumpToDir (&$request)
     $pages = $dbi->getAllPages();
 
     while ($page = $pages->next()) {
-        if (! get_cfg_var('safe_mode'))
+        if (! ini_get('safe_mode'))
             set_time_limit(30); // Reset watchdog.
 
         $filename = FilenameForPage($page->getName());
@@ -251,7 +251,7 @@ function DumpHtmlToDir (&$request)
         $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
 
     while ($page = $pages->next()) {
-        if (! get_cfg_var('safe_mode'))
+        if (! ini_get('safe_mode'))
             set_time_limit(30); // Reset watchdog.
 
         $pagename = $page->getName();
@@ -318,7 +318,7 @@ function MakeWikiZipHtml (&$request)
         $Theme->HTML_DUMP_SUFFIX = $HTML_DUMP_SUFFIX;
 
     while ($page = $pages->next()) {
-        if (! get_cfg_var('safe_mode'))
+        if (! ini_get('safe_mode'))
             set_time_limit(30); // Reset watchdog.
 
         $current = $page->getCurrentRevision();
@@ -592,7 +592,7 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $text  = implode("", file($filename));
     }
 
-    if (! get_cfg_var('safe_mode'))
+    if (! ini_get('safe_mode'))
         set_time_limit(30); // Reset watchdog.
 
     // FIXME: basename("filewithnoslashes") seems to return garbage sometimes.
@@ -829,6 +829,11 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.72  2003/01/03 22:25:53  carstenklapp
+ Cosmetic fix to "Merge Edit" & "Overwrite" buttons. Added "The PhpWiki
+ programming team" as author when loading from pgsrc. Source
+ reformatting.
+
  Revision 1.71  2003/01/03 02:48:05  carstenklapp
  function SavePage: Added loadfile options for overwriting or merge &
  compare a loaded pgsrc file with an existing page.
