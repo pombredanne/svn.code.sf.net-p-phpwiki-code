@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PearDb.php,v 1.6 2005-01-06 15:44:22 rurban Exp $');
+rcs_id('$Id: PearDb.php,v 1.7 2005-02-14 12:28:27 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -179,6 +179,9 @@ extends _DbPassUser
         if ($result) {
             $this->_level = WIKIAUTH_USER;
             return $this->_level;
+        } elseif (USER_AUTH_POLICY === 'strict') {
+            $this->_level = WIKIAUTH_FORBIDDEN;
+            return $this->_level;
         } else {
             return $this->_tryNextPass($submitted_password);
         }
@@ -219,6 +222,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2005/01/06 15:44:22  rurban
+// move password length checker to correct method. thanks to Charles Corrigan
+//
 // Revision 1.5  2004/12/26 17:11:17  rurban
 // just copyright
 //

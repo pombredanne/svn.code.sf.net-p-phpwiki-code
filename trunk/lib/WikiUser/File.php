@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: File.php,v 1.4 2004-12-26 17:11:16 rurban Exp $');
+rcs_id('$Id: File.php,v 1.5 2005-02-14 12:28:27 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -80,7 +80,7 @@ extends _PassUser
         if ($this->_may_change) {
             $this->_file = new File_Passwd($this->_file->_filename, true, 
                                            $this->_file->_filename.'.lock');
-            $result = $this->_file->modUser($this->_userid,$submitted_password);
+            $result = $this->_file->modUser($this->_userid, $submitted_password);
             $this->_file->close();
             $this->_file = new File_Passwd($this->_file->_filename, false);
             return $result;
@@ -91,6 +91,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/12/26 17:11:16  rurban
+// just copyright
+//
 // Revision 1.3  2004/12/20 16:05:01  rurban
 // gettext msg unification
 //

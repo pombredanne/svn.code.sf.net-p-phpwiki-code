@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PersonalPage.php,v 1.4 2004-12-26 17:11:17 rurban Exp $');
+rcs_id('$Id: PersonalPage.php,v 1.5 2005-02-14 12:28:27 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -27,18 +27,18 @@ extends _PassUser
             if (empty($stored_password)) {
             	if (PASSWORD_LENGTH_MINIMUM > 0) {
                   trigger_error(sprintf(
-                    _("PersonalPage login method:\n").
-                    _("You stored an empty password in your '%s' page.\n").
-                    _("Your access permissions are only for a BogoUser.\n").
+                    _("PersonalPage login method:")."\n".
+                    _("You stored an empty password in your '%s' page.")."\n".
+                    _("Your access permissions are only for a BogoUser.")."\n".
                     _("Please set a password in UserPreferences."),
                                         $this->_userid), E_USER_WARNING);
                   $this->_level = WIKIAUTH_BOGO;
             	} else {
             	  if (!empty($submitted_password))
                     trigger_error(sprintf(
-                      _("PersonalPage login method:\n").
-                      _("You stored an empty password in your '%s' page.\n").
-                      _("Given password ignored.\n").
+                      _("PersonalPage login method:")."\n".
+                      _("You stored an empty password in your '%s' page.")."\n".
+                      _("Given password ignored.")."\n".
                       _("Please set a password in UserPreferences."),
                                         $this->_userid), E_USER_WARNING);
                   $this->_level = WIKIAUTH_USER;
@@ -48,12 +48,16 @@ extends _PassUser
             if ($this->_checkPass($submitted_password, $stored_password))
                 return ($this->_level = WIKIAUTH_USER);
             return _PassUser::checkPass($submitted_password);
+        } else {
+            return WIKIAUTH_ANON;
         }
-        return WIKIAUTH_ANON;
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/12/26 17:11:17  rurban
+// just copyright
+//
 // Revision 1.3  2004/11/05 22:09:39  rurban
 // empty passwd PersonalPage case
 //

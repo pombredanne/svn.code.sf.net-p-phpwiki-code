@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: BogoLogin.php,v 1.4 2004-12-26 17:11:15 rurban Exp $');
+rcs_id('$Id: BogoLogin.php,v 1.5 2005-02-14 12:28:27 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -44,6 +44,9 @@ extends _PassUser
                 if ($this->_checkPass($submitted_password, $stored_password)) {
                     $this->_level = WIKIAUTH_USER;
                     return $this->_level;
+                } elseif (USER_AUTH_POLICY === 'strict') {
+                    $this->_level = WIKIAUTH_FORBIDDEN;
+                    return $this->_level;
                 } else {
                     return $this->_tryNextPass($submitted_password);
                 }
@@ -59,6 +62,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/12/26 17:11:15  rurban
+// just copyright
+//
 // Revision 1.3  2004/11/06 03:07:03  rurban
 // make use of dumped static config state in config/config.php (if writable)
 //

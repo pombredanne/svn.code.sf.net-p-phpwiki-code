@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: AdoDb.php,v 1.4 2004-12-26 17:11:15 rurban Exp $');
+rcs_id('$Id: AdoDb.php,v 1.5 2005-02-14 12:28:26 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -209,6 +209,9 @@ extends _DbPassUser
         if ($result) { 
             $this->_level = WIKIAUTH_USER;
             return $this->_level;
+        } elseif (USER_AUTH_POLICY === 'strict') {
+            $this->_level = WIKIAUTH_FORBIDDEN;
+            return $this->_level;
         } else {
             return $this->_tryNextPass($submitted_password);
         }
@@ -247,6 +250,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/12/26 17:11:15  rurban
+// just copyright
+//
 // Revision 1.3  2004/12/20 16:05:01  rurban
 // gettext msg unification
 //
