@@ -1,4 +1,3 @@
 Las 20 páginas más populares de este wiki:
-(número de hits, nombre de la página)
 
-%%Mostpopular%%
+<?plugin MostPopular limit=20 ?>
