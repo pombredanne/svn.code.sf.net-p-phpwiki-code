@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-printer.css,v 1.9 2002-02-07 19:49:42 carstenklapp Exp $
+ * $Id: phpwiki-printer.css,v 1.10 2002-02-08 07:52:23 carstenklapp Exp $
  *
  * PhpWiki style sheet for the printed page:
  * Black on white only, with no toolbar commands and no link icons.
@@ -39,7 +39,7 @@ a {
 
 p.editdate {
   font-size: smaller;
-  margin-top: -1ex;
+  margin-top: 0ex;
 }
 
 .rawurl {
