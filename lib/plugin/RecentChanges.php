@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.52 2002-02-01 22:01:42 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.53 2002-02-03 01:57:47 dairiki Exp $');
 /**
  */
 
@@ -14,6 +14,10 @@ class _RecentChanges_Formatter
 
 	if ($rc_args['show_minor'] || !$rc_args['show_major'])
             $this->_diffargs['previous'] = 'minor';
+
+        // PageHistoryPlugin doesn't have a 'daylist' arg.
+        if (!isset($this->_args['daylist']))
+            $this->_args['daylist'] = false;
     }
 
     function include_versions_in_URLs() {
