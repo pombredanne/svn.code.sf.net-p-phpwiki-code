@@ -725,7 +725,7 @@ msgstr "Historique des changements."
 #: ../lib/plugin/PageHistory.php:221 ../lib/plugin/RecentChanges.php:47
 #: ../themes/default/templates/actionbar.tmpl:29
 msgid "PageHistory"
-msgstr "PageHistory"
+msgstr "Historique"
 
 #: ../lib/plugin/PageHistory.php:225
 #, c-format
