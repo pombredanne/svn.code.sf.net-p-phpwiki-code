@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.23 2004-06-19 12:33:25 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.24 2004-08-05 17:33:51 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -421,12 +421,13 @@ extends FileFinder
         assert(!empty($lang));
         assert(!empty($WikiTheme));
 
-        $langs = $this->locale_versions($lang);
-
-        foreach ($langs as $lang) {
-            if ($lang == 'C') $lang = 'en';
-            foreach ($include_path as $dir) {
-                $path[] = $this->slashifyPath($WikiTheme->file("buttons/$lang"));
+        if (is_object($WikiTheme)) {
+            $langs = $this->locale_versions($lang);
+            foreach ($langs as $lang) {
+                if ($lang == 'C') $lang = 'en';
+                foreach ($include_path as $dir) {
+                    $path[] = $this->slashifyPath($WikiTheme->file("buttons/$lang"));
+                }
             }
         }
 
@@ -558,6 +559,9 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/06/19 12:33:25  rurban
+// prevent some warnings in corner cases
+//
 // Revision 1.22  2004/06/14 11:31:20  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
