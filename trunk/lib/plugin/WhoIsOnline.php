@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WhoIsOnline.php,v 1.4 2004-03-30 02:14:04 rurban Exp $');
+rcs_id('$Id: WhoIsOnline.php,v 1.5 2004-04-06 20:27:05 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -26,7 +26,7 @@ rcs_id('$Id: WhoIsOnline.php,v 1.4 2004-03-30 02:14:04 rurban Exp $');
  * links to the page with the other mode.
  *
  * Formatting and idea borrowed from postnuke. Requires USE_DB_SESSION.
- * Currently only PearDB, adodb in the works.
+ * Works with PearDB, ADODB and dba DB_Sessions.
  *
  * Author: Reini Urban
  */
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -108,7 +108,10 @@ extends WikiPlugin
             foreach ($sessions as $row) {
                 $data = $row['wiki_user'];
                 $date = $row['date'];
-                if (empty($data)) continue;
+                //Todo: Security issue: Expose REMOTE_ADDR?
+                //      Probably only to WikiAdmin
+                $ip   = $row['ip'];  
+                if (empty($date)) continue;
                 $num_online++;
                 $user = @unserialize($data);
                 if (!empty($user)) {
@@ -122,7 +125,6 @@ extends WikiPlugin
                     if (in_array('page',$objvars))
                         $page = $user->page;
                     if ($user->_level and $user->UserName()) { // registered or guest or what?
-                        //Todo: expose REMOTE_ADDR?
                         //FIXME: htmlentitities name may not be called here. but where then?
                         $num_registered++;
                         $registered[] = array('name'  => $user->UserName(),
@@ -130,6 +132,7 @@ extends WikiPlugin
                                               'action'=> $action,
                                               'page'  => $page,
                                               'level' => $user->_level,
+                                              'ip'    => $ip,
                                               'x'     => 'x');
                         if ($user->_level == WIKIAUTH_ADMIN)
                            $admins[] = $registered[count($registered)-1];
@@ -140,8 +143,18 @@ extends WikiPlugin
                                           'action'=> $action,
                                           'page'  => $page,
                                           'level' => $user->_level,
+                                          'ip'    => $ip,
                                           'x'     => 'x');
                     }
+                } else {
+                    $num_guests++;
+                    $guests[] = array('name'  => $guestname,
+                                      'date'  => $date,
+                                      'action'=> '',
+                                      'page'  => '',
+                                      'level' => 0,
+                                      'ip'    => $ip,
+                                      'x'     => 'x');
                 }
             }
         }
@@ -181,6 +194,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/03/30 02:14:04  rurban
+// fixed yet another Prefs bug
+// added generic PearDb_iter
+// $request->appendValidators no so strict as before
+// added some box plugin methods
+// PageList commalist for condensed output
+//
 // Revision 1.3  2004/03/12 15:48:08  rurban
 // fixed explodePageList: wrong sortby argument order in UnfoldSubpages
 // simplified lib/stdlib.php:explodePageList
