@@ -13,6 +13,7 @@ level="level=2"
 tests="test=SetupWiki test=AllPagesTest test=DumpHtml"
 prefix=$1
 if [ -z $prefix ]; then prefix="439dba"; fi
+chmod -R a+rw .testbox .dumphtml
 
 today=`date`
 for define in USECACHE ENABLE_USER_NEW; do
