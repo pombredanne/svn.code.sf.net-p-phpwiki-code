@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.65 2003-02-24 22:41:57 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.66 2003-02-26 00:10:26 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -61,7 +61,9 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         $pagename = $wikipage->name;
     }
     
-
+    if (!is_string($wikipage) and !$wikipage->isValid('strict'))
+        return $Theme->linkBadWikiWord($wikipage, $label);
+    
     if ($type == 'auto' or $type == 'if_known') {
         if (isset($page)) {
             $current = $page->getCurrentRevision();
@@ -493,6 +495,28 @@ class Theme {
         return $link;
     }
 
+    function linkBadWikiWord($wikiword, $linktext = '') {
+        global $ErrorManager;
+        
+        if ($linktext) {
+            $text = $linktext;
+        }
+        elseif (isa($wikiword, 'WikiPageName')) {
+            $text = $wikiword->shortName;
+        }
+        else {
+            $text = $wikiword;
+        }
+
+        if (isa($wikiword, 'WikiPageName'))
+            $message = $wikiword->getWarnings();
+        else
+            $message = sprintf(_("'%s': Bad page name"), $wikiword);
+        $ErrorManager->warning($message);
+        
+        return HTML::span(array('class' => 'badwikiword'), $text);
+    }
+    
     ////////////////////////////////////////////////////////////////
     //
     // Images and Icons
@@ -1000,6 +1024,9 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2003/02/24 22:41:57  dairiki
+// Fix stupid typo.
+//
 // Revision 1.64  2003/02/24 22:06:14  dairiki
 // Attempts to fix auto-selection of printer CSS when printing.
 // See new comments lib/Theme.php for more details.

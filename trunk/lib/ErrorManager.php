@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.16 2002-09-14 22:23:36 dairiki Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.17 2003-02-26 00:10:26 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -216,6 +216,10 @@ class ErrorManager
         $in_handler = false;
     }
 
+    function warning($msg, $errno=E_USER_NOTICE) {
+        $this->handleError(new PhpWikiError($errno, $msg));
+    }
+    
     /**
      * @access private
      */
@@ -381,6 +385,35 @@ class PhpError {
         return AsString($this->_getDetail());
     }
 }
+
+/**
+ * A class representing a PhpWiki warning.
+ *
+ * This is essentially the same as a PhpError, except that the
+ * error message is quieter: no source line, etc...
+ */
+class PhpWikiError extends PhpError {
+    /**
+     * Construct a new PhpError.
+     * @param $errno   int
+     * @param $errstr  string
+     */
+    function PhpWikiError($errno, $errstr) {
+        $this->PhpError($errno, $errstr, '?', '?');
+    }
+
+    function _getDetail() {
+        if ($this->isNotice())
+            $what = 'Notice';
+        else if ($this->isWarning())
+            $what = 'Warning';
+        else
+            $what = 'Fatal';
+
+        return HTML::div(array('class' => 'error'), HTML::p("$what: $this->errstr"));
+    }
+}
+
 
 if (!isset($GLOBALS['ErrorManager'])) {
     $GLOBALS['ErrorManager'] = new ErrorManager;

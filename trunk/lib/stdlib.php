@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.142 2003-02-25 22:19:46 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.143 2003-02-26 00:10:26 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -323,7 +323,13 @@ function LinkPhpwikiURL($url, $text = '') {
     if (!$text)
         $text = HTML::span(array('class' => 'rawurl'), $url);
 
-    return HTML::a(array('href'  => WikiURL(CanonizePagename($pagename), $args),
+    $wikipage = new WikiPageName($pagename);
+    if (!$wikipage->isValid()) {
+        global $Theme;
+        return $Theme->linkBadWikiWord($wikipage, $url);
+    }
+    
+    return HTML::a(array('href'  => WikiURL($pagename, $args),
                          'class' => $class),
                    $text);
 }
@@ -386,7 +392,7 @@ class WikiPagename
             $this->shortName = $name;
         }
 
-        $this->name = $this->CanonizePagename($name);
+        $this->name = $this->_check($name);
         $this->anchor = (string)$anchor;
     }
 
@@ -395,6 +401,25 @@ class WikiPagename
         if (!($tail = strrchr($name, SUBPAGE_SEPARATOR)))
             return false;
         return substr($name, 0, -strlen($tail));
+    }
+
+    function isValid($strict = false) {
+        if ($strict)
+            return !isset($this->_errors);
+        return !empty($this->name);
+    }
+
+    function getWarnings() {
+        $warnings = array();
+        if (isset($this->_warnings))
+            $warnings = array_merge($warnings, $this->_warnings);
+        if (isset($this->_errors))
+            $warnings = array_merge($warnings, $this->_errors);
+        if (!$warnings)
+            return false;
+        
+        return sprintf(_("'%s': Bad page name: %s"),
+                       $this->shortName, join(', ', $warnings));
     }
     
     function _pagename($page) {
@@ -423,68 +448,41 @@ class WikiPagename
         return substr($name, 1);
     }
 
-    /** Sanify pagename.
-     *
-     * There are certain restrictions on valid page names.  This
-     * function converts a page name to an allowable form.  The caller
-     * should ensure that the return value is not the empty string.
-     *
-     * @param string $pagename   Input pagename.
-     *
-     * @param bool $fail_on_error If true, this function will return
-     * false if the page name is not already in canonical form.  (The
-     * default is false, in which case the "fixed" pagename will be
-     * returned.)
-     *
-     * @return string Sanified or canonical page name.  Returns the
-     * empty string if there is no canonical version of the page name
-     * (in which case the page name should be considered completely
-     * illegal, and should not be treated as a page name at all.)
-     */
-    function CanonizePagename ($pagename, $fail_on_error=false) {
+
+    function _check($pagename) {
         // Compress internal white-space to single space character.
         $pagename = preg_replace('/[\s\xa0]+/', ' ', $orig = $pagename);
-        if ($pagename != $orig) {
-            trigger_error(sprintf(_("White space converted to single space in pagename '%s'"),
-                                  $pagename), E_USER_NOTICE);
-            if ($fail_on_error)
-                return false;
-        }
+        if ($pagename != $orig)
+            $this->_warnings[] = _("White space converted to single space");
     
         // Delete any control characters.
         $pagename = preg_replace('/[\x00-\x1f\x7f\x80-\x9f]/', '', $orig = $pagename);
-        if ($pagename != $orig) {
-            trigger_error(sprintf(_("Pagename '%s': Control characters not allowed"),
-                                  $pagename), E_USER_NOTICE);
-            if ($fail_on_error)
-                return false;
-        }
+        if ($pagename != $orig)
+            $this->_errors[] = _("Control characters not allowed");
 
         // Strip leading and trailing white-space.
         $pagename = trim($pagename);
+
         $orig = $pagename;
         while ($pagename and $pagename[0] == SUBPAGE_SEPARATOR)
             $pagename = substr($pagename, 1);
-        if ($pagename != $orig) {
-            trigger_error(sprintf(_("Leading %s not allowed in pagename '%s'"),
-                                  SUBPAGE_SEPARATOR, $orig), E_USER_NOTICE);
-            if ($fail_on_error)
-                return false;
-        }
+        if ($pagename != $orig)
+            $this->_errors[] = sprintf(_("Leading %s not allowed"), SUBPAGE_SEPARATOR);
 
-        if (preg_match('/[:;]/', $pagename)) {
-            trigger_error(_("Semicolons and colons are deprecated within pagenames."),
-                          E_USER_NOTICE);
-        }
-    
+        if (preg_match('/[:;]/', $pagename))
+            $this->_warnings[] = _("';' and ':' in pagenames are deprecated");
+        
         if (strlen($pagename) > MAX_PAGENAME_LENGTH) {
-            $pagename = substr($orig = $pagename, 0, MAX_PAGENAME_LENGTH);
-            trigger_error(sprintf(_("Pagename '%s' is too long."), $orig),
-                          E_USER_NOTICE);
-            if ($fail_on_error)
-                return false;
+            $pagename = substr($pagename, 0, MAX_PAGENAME_LENGTH);
+            $this->_errors[] = _("too long");
         }
-    
+        
+
+        if ($pagename == '.' or $pagename == '..') {
+            $this->_errors[] = sprintf(_("illegal pagename"), $pagename);
+            $pagename = '';
+        }
+        
         return $pagename;
     }
 }
@@ -1239,6 +1237,9 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.142  2003/02/25 22:19:46  dairiki
+// Add some sanity checking for pagenames.
+//
 // Revision 1.141  2003/02/22 20:49:55  dairiki
 // Fixes for "Call-time pass by reference has been deprecated" errors.
 //
