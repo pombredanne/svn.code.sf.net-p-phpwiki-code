@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.73 2004-05-15 18:31:01 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.74 2004-05-15 19:48:33 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -448,11 +448,12 @@ class _WikiUser
 
     //Fixme: for _HttpAuthPassUser
     function PrintLoginForm (&$request, $args, $fail_message = false,
-                             $seperate_page = true) {
+                             $seperate_page = false) {
         include_once('lib/Template.php');
         // Call update_locale in case the system's default language is not 'en'.
         // (We have no user pref for lang at this point yet, no one is logged in.)
-        update_locale(DEFAULT_LANGUAGE);
+        if ($GLOBALS['LANG'] != DEFAULT_LANGUAGE)
+            update_locale(DEFAULT_LANGUAGE);
         $userid = $this->_userid;
         $require_level = 0;
         extract($args); // fixme
@@ -461,15 +462,16 @@ class _WikiUser
 
         $pagename = $request->getArg('pagename');
         $nocache = 1;
-        $login = new Template('login', $request,
-                              compact('pagename', 'userid', 'require_level',
-                                      'fail_message', 'pass_required', 'nocache'));
+        $login = Template('login',
+                          compact('pagename', 'userid', 'require_level',
+                                  'fail_message', 'pass_required', 'nocache'));
+        // check if the html template was already processed
+        $seperate_page = $seperate_page ? true : !alreadyTemplateProcessed('html');
         if ($seperate_page) {
-            $top = new Template('html', $request,
-                                array('TITLE' => _("Sign In")));
+            $top = Template('html', array('TITLE' => _("Sign In")));
             return $top->printExpansion($login);
         } else {
-            return $login;
+            return $login->printExpansion();
         }
     }
 
@@ -1357,29 +1359,6 @@ extends _PassUser
         header('WWW-Authenticate: Basic realm="'.WIKI_NAME.'"');
         header('HTTP/1.0 401 Unauthorized'); 
         exit;
-
-        include_once('lib/Template.php');
-        // Call update_locale in case the system's default language is not 'en'.
-        // (We have no user pref for lang at this point yet, no one is logged in.)
-        update_locale(DEFAULT_LANGUAGE);
-        $userid = $this->_userid;
-        $require_level = 0;
-        extract($args); // fixme
-
-        $require_level = max(0, min(WIKIAUTH_ADMIN, (int)$require_level));
-
-        $pagename = $request->getArg('pagename');
-        $nocache = 1;
-        $login = new Template('login', $request,
-                              compact('pagename', 'userid', 'require_level',
-                                      'fail_message', 'pass_required', 'nocache'));
-        if ($seperate_page) {
-            $top = new Template('html', $request,
-                                array('TITLE' => _("Sign In")));
-            return $top->printExpansion($login);
-        } else {
-            return $login;
-        }
     }
 
 }
@@ -2869,6 +2848,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2004/05/15 18:31:01  rurban
+// some action=pdf Request fixes: With MSIE it works now. Now the work with the page formatting begins.
+//
 // Revision 1.72  2004/05/12 10:49:55  rurban
 // require_once fix for those libs which are loaded before FileFinder and
 //   its automatic include_path fix, and where require_once doesn't grok
