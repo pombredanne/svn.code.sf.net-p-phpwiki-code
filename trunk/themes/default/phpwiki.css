@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.36 2004-05-27 17:51:57 rurban Exp $
+ * $Id: phpwiki.css,v 1.37 2004-06-01 15:23:10 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -215,6 +215,11 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 .toolbar, input.button, #signin { font-family: Arial, Helvetica, sans-serif; }
 
 .toolbar {
+  padding: 0;
+  margin:  0;
+}
+.edit-toolbar {
+  background-color: #fff;
   padding: 0;
   margin:  0;
 }

@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.50 2004-05-07 10:26:14 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.51 2004-06-01 15:23:10 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -153,15 +153,13 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   <?php } else { ?>
     <?= _("Email not yet verified.") ?>
   <?php } ?>
-  </td><td>
-     <span class="hint"><?=_("Note, that user accounts with bouncing emails will be disabled.")?></span>
-   </td></tr>
+  </td><td><p class="hint"><?=_("Note, that user accounts with bouncing emails will be disabled.")?></p></td></tr>
 
    <tr><td colspan="2">
     <?=_("Get an email notification at changes of the following pages:")?><br />
     <?php if ($isForm) { ?>
       <blockquote><textarea name="pref[notifyPages]" cols="50" rows="4"><?=$pref->get('notifyPages')?></textarea></blockquote></td>
-    <td><span class="hint"><?=_("Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed.")?></span></td>
+    <td><p class="hint"><?=_("Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed.")?></p></td>
     <?php } else { ?>
      <td><?=$pref->get('notifyPages')?></td><td></td>
     <?php } ?>
