@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.88 2004-02-22 23:20:31 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.89 2004-02-24 15:14:57 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -467,21 +467,22 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $f = str_replace(sprintf(_("MIME file %s"), ''), '', $f);
         $f = str_replace(sprintf(_("Serialized file %s"), ''), '', $f);
         $f = str_replace(sprintf(_("plain file %s"), ''), '', $f);
-        global $Theme;
-        $meb = Button(array('action' => 'loadfile',
-                            'merge'=> true,
-                            'source'=> dirname($f) . "/"
-                                       . basename($f)),
-                      _("Merge Edit"),
-                      _("PhpWikiAdministration"),
-                      'wikiadmin');
-        $owb = Button(array('action' => 'loadfile',
-                            'overwrite'=> true,
-                            'source'=> dirname($f) . "/"
-                                       . basename($f)),
-                      _("Restore Anyway"),
-                      _("PhpWikiAdministration"),
-                      'wikiunsafe');
+        //check if uploaded file? they pass just the content, but the file is gone
+        if (stat($f)) {
+            global $Theme;
+            $meb = Button(array('action' => 'loadfile',
+                                'merge'=> true,
+                                'source'=> $f),
+                          _("Merge Edit"),
+                          _("PhpWikiAdministration"),
+                          'wikiadmin');
+            $owb = Button(array('action' => 'loadfile',
+                                'overwrite'=> true,
+                                'source'=> $f),
+                          _("Restore Anyway"),
+                          _("PhpWikiAdministration"),
+                          'wikiunsafe');
+        }
         $mesg->pushContent(' ', $meb, " ", $owb);
     }
 
@@ -842,6 +843,13 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.88  2004/02/22 23:20:31  rurban
+ fixed DumpHtmlToDir,
+ enhanced sortby handling in PageList
+   new button_heading th style (enabled),
+ added sortby and limit support to the db backends and plugins
+   for paging support (<<prev, next>> links on long lists)
+
  Revision 1.87  2004/01/26 09:17:49  rurban
  * changed stored pref representation as before.
    the array of objects is 1) bigger and 2)
