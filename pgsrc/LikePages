@@ -1,6 +1,13 @@
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
+X-RCS_ID: $Id: LikePages,v 1.3 2002-01-09 06:25:54 carstenklapp Exp $
+Content-Type: application/x-phpwiki;
+  pagename=LikePages;
+  flags=PAGE_LOCKED;
+  lastmodified=1009096690;
+Content-Transfer-Encoding: binary
+
 LikePages are pages which share an initial or final word with that page.
 
 See also Wiki:LikePages and MeatBall:LikePages.
 ----
 <?plugin LikePages?>
-
