@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.35 2003-02-16 20:04:47 dairiki Exp $');
+rcs_id('$Id: WikiUser.php,v 1.36 2003-02-21 22:50:51 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -560,7 +560,7 @@ extends _UserPreference
 
     function sanify ($value) {
         // FIXME: check for valid locale
-        return $value;
+        return (string) $value;
     }
 }
 
@@ -646,6 +646,11 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.35  2003/02/16 20:04:47  dairiki
+// Refactor the HTTP validator generation/checking code.
+//
+// This also fixes a number of bugs with yesterdays validator mods.
+//
 // Revision 1.34  2003/02/15 02:21:54  dairiki
 // API Change!  Explicit $request argument added to contructor for WikiUser.
 //
