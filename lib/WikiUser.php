@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.23 2002-09-12 17:05:27 rurban Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.24 2002-09-12 20:56:29 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -257,9 +257,9 @@ class WikiUser {
         if (!($prefs = $this->_request->getCookieVar('WIKI_PREFS2')))
             $prefs = $this->_request->getSessionVar('wiki_prefs');
 
-        if (!$this->_userid and !empty($GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'])) {
-            $this->_userid = $GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'];
-        }
+        //if (!$this->_userid and !empty($GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'])) {
+        //    $this->_userid = $GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'];
+        //}
 
         // before we get his prefs we should check if he is signed in
         if (!$prefs->_prefs and USE_PREFS_IN_PAGE and $this->homePage()) { // in page metadata
@@ -507,7 +507,7 @@ class UserPreferences {
     function UserPreferences ($saved_prefs = false) {
         $this->_prefs = array();
 
-        if (isa($saved_prefs, 'UserPreferences')) {
+        if (isa($saved_prefs, 'UserPreferences') and $saved_prefs->_prefs) {
             foreach ($saved_prefs->_prefs as $name => $value)
                 $this->set($name, $value);
         } elseif (is_array($saved_prefs)) {
