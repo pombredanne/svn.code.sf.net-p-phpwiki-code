@@ -1,9 +1,10 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.21 2002-02-07 03:47:27 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.22 2002-02-08 23:04:13 carstenklapp Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
                             'maxlength' => 4,
+                            'class' => "numeric",
                             'name' => 'pref[editWidth]',
                             'value' => $request->getPref('editWidth'),
                             'onchange' => 'this.form.submit();'));
@@ -11,6 +12,7 @@ $WidthI = HTML::input(array('type' => 'text',
 $HeightI = HTML::input(array('type' => 'text',
                              'size' => 3,
                              'maxlength' => 4,
+                             'class' => "numeric",
                              'name' => 'pref[editHeight]',
                              'value' => $request->getPref('editHeight'),
                              'onchange' => 'this.form.submit();'));
