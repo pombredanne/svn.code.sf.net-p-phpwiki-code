@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.61 2002-02-19 07:01:35 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.62 2002-02-19 22:17:40 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -292,24 +292,36 @@ table.cal td.cal-today {
  /* text */
 table.cal td.cal-today a.cal-hide {  }
 
-
 /**
  * Diff Output
  */
 /* main box */
+.diff {
+  background: white;
+  /* for NS4 */
+  border: 1px solid black;
+}
 .diff .block {
   background: #ccc;
-  padding: 0.5ex 0.5em;
-  margin:  0.5ex 0;
+  padding-left: 1em;
+  /* for NS4 */
+  /*border: none;*/
 }
+
 /* individual blocks */
-.diff .context { background: white; }
+.diff .context {
+  background: white;
+  /* for NS4 */
+  border: none;
+}
 /* + - line prefix */
 .diff .block tt {
-  font-weight: bold;
+  font-weight: normal;
   font-family: monospace;
-  margin-left: -.6em;
   color: black;
+  /* for NS4 */
+  margin-left: 0;
+  border: none;
 }
 /* changed words */
 .diff del, .diff ins {
@@ -317,10 +329,23 @@ table.cal td.cal-today a.cal-hide {  }
   text-decoration: none;
 }
 
+/* blocks containing deleted or added words */
+.diff .original, .diff .deleted,
+.diff .final, .diff .added {
+  background: white;
+}
 /* blocks containing deleted words */
-.diff .original, .diff .deleted { background: #fcc; }
+.diff .original, .diff .deleted {
+  background: #fcc;
+  /* for NS4 */
+  border: none;
+}
 /* blocks containing added words */
-.diff .final, .diff .added { background: #cfc; }
+.diff .final, .diff .added {
+  background: #cfc;
+  /* for NS4 */
+  border: none;
+}
 
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
 /* deleted words */
@@ -354,7 +379,6 @@ div.errors {
   padding-right: 0.8em; 
   padding-top:    0.8ex;
   padding-bottom: 0;
-  font-size: smaller;
   border: medium solid red;
   clear: both;
 }
