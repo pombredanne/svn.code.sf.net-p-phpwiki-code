@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.206 2004-09-25 16:28:36 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.207 2004-09-26 12:21:40 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -60,6 +60,7 @@
     GenerateId ($name)
     firstNWordsOfContent ($n, $content)
     extractSection ($section, $content, $page, $quiet = false, $sectionhead = false)
+    isExternalReferrer()
 
   function: LinkInterWikiLink($link, $linktext)
   moved to: lib/interwiki.php
@@ -145,10 +146,17 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
             $pagename = $pagename->name;
         }
     }
-    
+    if (!$get_abs_url and DEBUG and $GLOBALS['request']->getArg('start_debug')) {
+    	if (!$args)
+    	    $args = 'start_debug=' . $GLOBALS['request']->getArg('start_debug');
+    	elseif (is_array($args))
+    	    $args['start_debug'] = $GLOBALS['request']->getArg('start_debug');
+    	else 
+    	    $args .= '&start_debug=' . $GLOBALS['request']->getArg('start_debug');
+    }
     if (is_array($args)) {
         $enc_args = array();
-        foreach  ($args as $key => $val) {
+        foreach ($args as $key => $val) {
             if (!is_array($val)) // ugly hack for getURLtoSelf() which also takes POST vars
               $enc_args[] = urlencode($key) . '=' . urlencode($val);
         }
@@ -1739,8 +1747,21 @@ function extractSection ($section, $content, $page, $quiet = false, $sectionhead
     return array(sprintf(_("<%s: no such section>"), $mesg));
 }
 
+function isExternalReferrer(&$request) {
+    if ($referrer = $request->get('HTTP_REFERER')) {
+    	$home = SCRIPT_NAME; // was SERVER_URL, but we want to check sister wiki's also
+    	if (substr(strtolower($referrer),0,strlen($home)) == strtolower($home)) return false;
+        require_once("lib/ExternalReferrer.php");
+        $se = new SearchEngines();
+        return $se->parseSearchQuery($referrer);
+    }
+    return false;
+}
 
 // $Log: not supported by cvs2svn $
+// Revision 1.206  2004/09/25 16:28:36  rurban
+// added to TOC, firstNWordsOfContent is now plugin compatible, added extractSection
+//
 // Revision 1.205  2004/09/23 13:59:35  rurban
 // Before removing a page display a sample of 100 words.
 //
@@ -1958,147 +1979,6 @@ function extractSection ($section, $content, $page, $quiet = false, $sectionhead
 //   removed REPLACE sql (dangerous)
 // moved gettext init after the locale was guessed
 // + some minor changes
-//
-// Revision 1.158  2004/02/19 21:54:17  rurban
-// moved initerwiki code to PageType.php
-// re-enabled and fixed InlineImages support, now also for InterWiki Urls
-//      * [File:my_image.gif] inlines the image,
-//      * File:my_image.gif shows a plain inter-wiki link,
-//      * [what a pic|File:my_image.gif] shows a named inter-wiki link to the gif
-//      * [File:my_image.gif|what a pic] shows a inlimed image linked to the page "what a pic"
-//
-// Revision 1.157  2004/02/09 03:58:12  rurban
-// for now default DB_SESSION to false
-// PagePerm:
-//   * not existing perms will now query the parent, and not
-//     return the default perm
-//   * added pagePermissions func which returns the object per page
-//   * added getAccessDescription
-// WikiUserNew:
-//   * added global ->prepare (not yet used) with smart user/pref/member table prefixing.
-//   * force init of authdbh in the 2 db classes
-// main:
-//   * fixed session handling (not triple auth request anymore)
-//   * don't store cookie prefs with sessions
-// stdlib: global obj2hash helper from _AuthInfo, also needed for PagePerm
-//
-// Revision 1.156  2004/01/26 09:17:49  rurban
-// * changed stored pref representation as before.
-//   the array of objects is 1) bigger and 2)
-//   less portable. If we would import packed pref
-//   objects and the object definition was changed, PHP would fail.
-//   This doesn't happen with an simple array of non-default values.
-// * use $prefs->retrieve and $prefs->store methods, where retrieve
-//   understands the interim format of array of objects also.
-// * simplified $prefs->get() and fixed $prefs->set()
-// * added $user->_userid and class '_WikiUser' portability functions
-// * fixed $user object ->_level upgrading, mostly using sessions.
-//   this fixes yesterdays problems with loosing authorization level.
-// * fixed WikiUserNew::checkPass to return the _level
-// * fixed WikiUserNew::isSignedIn
-// * added explodePageList to class PageList, support sortby arg
-// * fixed UserPreferences for WikiUserNew
-// * fixed WikiPlugin for empty defaults array
-// * UnfoldSubpages: added pagename arg, renamed pages arg,
-//   removed sort arg, support sortby arg
-//
-// Revision 1.155  2004/01/25 10:52:22  rurban
-// added sortby support to explodePageList() and UnfoldSubpages
-// fixes [ 758044 ] Plugin UnfoldSubpages does not sort (includes fix)
-//
-// Revision 1.154  2004/01/25 03:49:03  rurban
-// added isWikiWord() to avoid redundancy
-// added check_php_version() to check for older php versions.
-//   e.g. object::method calls, ...
-//
-// Revision 1.153  2003/11/30 18:43:18  carstenklapp
-// Fixed careless mistakes in my last optimization commit.
-//
-// Revision 1.152  2003/11/30 18:20:34  carstenklapp
-// Minor code optimization: reduce invariant loops
-//
-// Revision 1.151  2003/11/29 19:30:01  carstenklapp
-// New function ByteFormatter.
-//
-// Revision 1.150  2003/09/13 22:43:00  carstenklapp
-// New preference to hide LinkIcons.
-//
-// Revision 1.149  2003/03/26 19:37:08  dairiki
-// Fix "object to string conversion" bug with external image links.
-//
-// Revision 1.148  2003/03/25 21:03:02  dairiki
-// Cleanup debugging output.
-//
-// Revision 1.147  2003/03/13 20:17:05  dairiki
-// Bug fix: Fix linking of pages whose names contain a hash ('#').
-//
-// Revision 1.146  2003/03/07 02:46:24  dairiki
-// function_usable(): New function.
-//
-// Revision 1.145  2003/03/04 01:55:05  dairiki
-// Fix to ensure absolute URL for logo in RSS recent changes.
-//
-// Revision 1.144  2003/02/26 00:39:30  dairiki
-// Bug fix: for magic PhpWiki URLs, "lock page to enable link" message was
-// being displayed at incorrect times.
-//
-// Revision 1.143  2003/02/26 00:10:26  dairiki
-// More/better/different checks for bad page names.
-//
-// Revision 1.142  2003/02/25 22:19:46  dairiki
-// Add some sanity checking for pagenames.
-//
-// Revision 1.141  2003/02/22 20:49:55  dairiki
-// Fixes for "Call-time pass by reference has been deprecated" errors.
-//
-// Revision 1.140  2003/02/21 23:33:29  dairiki
-// Set alt="" on the link icon image tags.
-// (See SF bug #675141.)
-//
-// Revision 1.139  2003/02/21 22:16:27  dairiki
-// Get rid of MakeWikiForm, and form-style MagicPhpWikiURLs.
-// These have been obsolete for quite awhile (I hope).
-//
-// Revision 1.138  2003/02/21 04:12:36  dairiki
-// WikiPageName: fixes for new cached links.
-//
-// Alert: new class for displaying alerts.
-//
-// ExtractWikiPageLinks and friends are now gone.
-//
-// LinkBracketLink moved to InlineParser.php
-//
-// Revision 1.137  2003/02/18 23:13:40  dairiki
-// Wups again.  Typo fix.
-//
-// Revision 1.136  2003/02/18 21:52:07  dairiki
-// Fix so that one can still link to wiki pages with # in their names.
-// (This was made difficult by the introduction of named tags, since
-// '[Page #1]' is now a link to anchor '1' in page 'Page'.
-//
-// Now the ~ escape for page names should work: [Page ~#1].
-//
-// Revision 1.135  2003/02/18 19:17:04  dairiki
-// SplitPagename():
-//     Bug fix. 'ThisIsABug' was being split to 'This IsA Bug'.
-//     Cleanup up subpage splitting code.
-//
-// Revision 1.134  2003/02/16 19:44:20  dairiki
-// New function hash().  This is a helper, primarily for generating
-// HTTP ETags.
-//
-// Revision 1.133  2003/02/16 04:50:09  dairiki
-// New functions:
-// Rfc1123DateTime(), ParseRfc1123DateTime()
-// for converting unix timestamps to and from strings.
-//
-// These functions produce and grok the time strings
-// in the format specified by RFC 2616 for use in HTTP headers
-// (like Last-Modified).
-//
-// Revision 1.132  2003/01/04 22:19:43  carstenklapp
-// Bugfix UnfoldSubpages: "Undefined offset: 1" error when plugin invoked
-// on a page with no subpages (explodeList(): array 0-based, sizeof 1-based).
 //
 
 // (c-file-style: "gnu")
