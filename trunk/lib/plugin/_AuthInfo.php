@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.18 2005-03-27 19:46:12 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.19 2005-04-01 14:04:31 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -57,7 +57,7 @@ extends WikiPlugin
         } else {
             $user = WikiUser($userid);
         }
-        if (!$user->isAdmin() and !DEBUG) {
+        if (!$user->isAdmin() and ! (DEBUG && _DEBUG_LOGIN)) {
             $request->_notAuthorized(WIKIAUTH_ADMIN);
             $this->disabled("! user->isAdmin");
         }
@@ -105,15 +105,12 @@ extends WikiPlugin
                                        'cellpadding' => 2,
                                        'cellspacing' => 0));
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
-            $userdata = obj2hash($user);
-            // FIXME: only on sf.net/demo site
-            if (!empty($userdata['_dbi'])) unset($userdata['_dbi']);
-            if (!empty($userdata['_request'])) unset($userdata['_request']);
+            $userdata = obj2hash($user, array('_dbi','_request', 'password', 'passwd'));
             $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
             if (ENABLE_USER_NEW) {
               $group = &$request->getGroup();
               $groups = $group->getAllGroupsIn();
-              $groupdata = obj2hash($group);
+              $groupdata = obj2hash($group, array('_dbi','_request', 'password', 'passwd'));
               unset($groupdata['request']);
               $table->pushContent($this->_showhash("Group: Object of ".get_class($group), $groupdata));
               $groups = $group->getAllGroupsIn();
@@ -201,6 +198,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2005/03/27 19:46:12  rurban
+// security fixes (unknown why and where these get defined)
+//
 // Revision 1.17  2004/10/21 21:00:59  rurban
 // fix recursion bug for old WikiUser:
 //   limit max recursion depth (4) and overall recursions (35).
