@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.49 2003-09-13 22:47:04 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.50 2003-12-01 15:16:07 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -95,7 +95,7 @@ $Theme = new Theme_MacOSX('MacOSX');
 // expected to be in the same directory that the base style is in.
 $Theme->setDefaultCSS("MacOSX", "MacOSX.css");
 $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
-$Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+$Theme->addAlternateCSS(_("Top & bottom toolbars"), 'MacOSX-topbottombars.css');
 
 /**
  * The logo image appears on every page and links to the HomePage.
