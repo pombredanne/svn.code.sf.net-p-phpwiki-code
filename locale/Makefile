@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.23 2002-02-19 04:24:54 carstenklapp Exp $
+# $Id: Makefile,v 1.24 2002-02-22 21:48:26 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -85,6 +85,7 @@ ${POT_FILE}: ../lib/plugin/FullTextSearch.php
 ${POT_FILE}: ../lib/plugin/FuzzyPages.php
 ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
+${POT_FILE}: ../lib/plugin/Info.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
 ${POT_FILE}: ../lib/plugin/MostPopular.php
 ${POT_FILE}: ../lib/plugin/OrphanedPages.php
@@ -149,6 +150,7 @@ ${POT_FILE}: ../themes/default/templates/nochanges.tmpl
 ${POT_FILE}: ../themes/default/templates/savepage.tmpl
 ${POT_FILE}: ../themes/default/templates/signin.tmpl
 ${POT_FILE}: ../themes/default/templates/top.tmpl
+${POT_FILE}: ../themes/default/templates/top-htmldump.tmpl
 ${POT_FILE}: ../themes/default/templates/userprefs.tmpl
 ${POT_FILE}: ../themes/default/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/default/themeinfo.php
