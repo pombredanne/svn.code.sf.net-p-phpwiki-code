@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PearDb.php,v 1.2 2004-11-10 15:29:21 rurban Exp $');
+rcs_id('$Id: PearDb.php,v 1.3 2004-12-19 00:58:02 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -97,7 +97,11 @@ extends _DbPassUser
             return $this->_tryNextUser();
         }
         if (!$this->isValidName()) {
+            trigger_error(_("Invalid username"),E_USER_WARNING);
             return $this->_tryNextUser();
+        }
+        if (!$this->_checkPassLength($submitted_password)) {
+            return WIKIAUTH_FORBIDDEN;
         }
         $dbi =& $GLOBALS['request']->_dbi;
         // Prepare the configured auth statements
@@ -214,6 +218,13 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/11/10 15:29:21  rurban
+// * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
+// * ACCESS_LOG_SQL: fix cause request not yet initialized
+// * WikiDB: moved SQL specific methods upwards
+// * new Pear_DB quoting: same as ADODB and as newer Pear_DB.
+//   fixes all around: WikiGroup, WikiUserNew SQL methods, SQL logging
+//
 // Revision 1.1  2004/11/01 10:43:58  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: LDAP.php,v 1.1 2004-11-01 10:43:58 rurban Exp $');
+rcs_id('$Id: LDAP.php,v 1.2 2004-12-19 00:58:02 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -11,7 +11,6 @@ extends _PassUser
  * Preferences are handled in _PassUser
  */
 {
-	
     function _init() {
         if ($this->_ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
             global $LDAP_SET_OPTION;
@@ -54,7 +53,11 @@ extends _PassUser
         $this->_authmethod = 'LDAP';
         $userid = $this->_userid;
         if (!$this->isValidName()) {
+            trigger_error(_("Invalid username"),E_USER_WARNING);
             return $this->_tryNextPass($submitted_password);
+        }
+        if (!$this->_checkPassLength($submitted_password)) {
+            return WIKIAUTH_FORBIDDEN;
         }
         if (strstr($userid,'*')) {
             trigger_error(fmt("Invalid username '%s' for LDAP Auth",$userid), 
@@ -99,7 +102,7 @@ extends _PassUser
 
     function userExists() {
         $userid = $this->_userid;
-        if (strstr($userid,'*')) {
+        if (strstr($userid, '*')) {
             trigger_error(fmt("Invalid username '%s' for LDAP Auth", $userid),
                           E_USER_WARNING);
             return false;
@@ -131,6 +134,12 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/11/01 10:43:58  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 
 // Local Variables:
 // mode: php

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Session.php,v 1.1 2004-11-01 10:43:58 rurban Exp $');
+rcs_id('$Id: Session.php,v 1.2 2004-12-19 00:58:02 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 
@@ -47,7 +47,7 @@ extends _PassUser
         return !empty($this->_userid);
     }
     function checkPass($submitted_password) {
-        return $this->userExists() and $this->_level;
+        return $this->userExists() and $this->_level > -1;
     }
     function mayChangePass() {
         return false;
@@ -55,6 +55,12 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/11/01 10:43:58  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 
 // Local Variables:
 // mode: php

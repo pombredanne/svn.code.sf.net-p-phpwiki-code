@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.198 2004-12-17 16:49:51 rurban Exp $');
+rcs_id('$Id: main.php,v 1.199 2004-12-19 00:58:01 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -48,6 +48,7 @@ class WikiRequest extends Request {
             	    	case 'SQL' : include_once("lib/WikiUser/PearDb.php"); break;
             	    	case 'ADODB': include_once("lib/WikiUser/AdoDb.php"); break;
             	    }
+            	unset($method);
             }
         }
         if (USE_DB_SESSION) {
@@ -187,16 +188,12 @@ $this->version = phpwiki_version();
 
         // Save preferences in session and cookie
         if (!defined('WIKI_XMLRPC') or !WIKI_XMLRPC) {
-            if (isset($this->_user) and 
-                (!isset($this->_user->_authhow) or $this->_user->_authhow != 'session')) {
-                $id_only = true; 
-                $this->_user->setPreferences($this->_prefs, $id_only);
-                if (isa($this->_user, "_HttpAuthPassUser"))
-                    $this->setSessionVar('wiki_user', $this->_user);
-            } else {
-                $this->setSessionVar('wiki_user', $this->_user);
-                //$this->setSessionVar('wiki_prefs', $this->_prefs);
+            if (isset($this->_user)) {
+            	if (!isset($this->_user->_authhow) or $this->_user->_authhow != 'session') {
+                    $this->_user->setPreferences($this->_prefs, true);
+            	}
             }
+            $this->setSessionVar('wiki_user', $this->_user);
         }
 
         // Ensure user has permissions for action
@@ -344,8 +341,8 @@ $this->version = phpwiki_version();
     }
 
     // login or logout or restore state
-    function _setUser ($user) {
-        $this->_user = $user;
+    function _setUser (&$user) {
+        $this->_user =& $user;
         if (defined('MAIN_setUser')) return;
         define('MAIN_setUser',true);
         $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(),
@@ -375,7 +372,12 @@ $this->version = phpwiki_version();
                             'x2'  => _("USER"),
                             'x10' => _("ADMIN"),
                             'x100'=> _("UNOBTAINABLE"));
-    	return $levels["x".$level];
+        if (!empty($level))
+            $level = '0';
+        if (!empty($levels["x".$level]))
+            return $levels["x".$level];
+        else
+            return _("ANON");
     }
     
     function _notAuthorized ($require_level) {
@@ -1188,6 +1190,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.198  2004/12/17 16:49:51  rurban
+// avoid Invalid username message on Sign In button click
+//
 // Revision 1.197  2004/12/17 16:39:55  rurban
 // enable sessions for HttpAuth
 //
