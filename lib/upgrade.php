@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.18 2004-06-19 11:47:17 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.19 2004-06-19 12:19:09 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -27,6 +27,7 @@ rcs_id('$Id: upgrade.php,v 1.18 2004-06-19 11:47:17 rurban Exp $');
  * PhpWiki upgrade.
  * Status: experimental, no queries for verification yet, no db update,
  *         no merge conflict
+ *
  * Installation on an existing PhpWiki database needs some 
  * additional worksteps. Each step will require multiple pages.
  *
@@ -36,10 +37,13 @@ rcs_id('$Id: upgrade.php,v 1.18 2004-06-19 11:47:17 rurban Exp $');
  *  2. Check for new or changed (localized) pgsrc/ pages and ask 
  *     for upgrading these. Check timestamps, upgrade silently or 
  *     show diffs if existing. Overwrite or merge (easy)
- *  3. Check for new or changed or deprecated index.php settings
+ *  3. Check for new or changed or deprecated index.php/config.ini settings
  *     and help in upgrading these. (hard)
+ *  3a Convert old-style index.php into config/config.ini. (easy)
  *  4. Check for changed plugin invocation arguments. (hard)
  *  5. Check for changed theme variables. (hard)
+ *  6. Convert the automatic update to a class-based multi-page 
+ *     version. (hard)
  *
  * @author: Reini Urban
  */
@@ -427,6 +431,8 @@ function CheckConfigUpdate(&$request) {
 }
 
 /**
+ * TODO:
+ *
  * Upgrade: Base class for multipage worksteps
  * identify, validate, display options, next step
  */
@@ -466,6 +472,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.18  2004/06/19 11:47:17  rurban
+ added CheckConfigUpdate: CACHE_CONTROL = NONE => NO_CACHE
+
  Revision 1.17  2004/06/17 11:31:50  rurban
  check necessary localized actionpages
 
