@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.11 2004-12-17 16:12:08 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.12 2004-12-18 16:49:29 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -419,53 +419,57 @@ function listLinks($params)
         return NoSuchPage($pagename);
 
     $page = $dbh->getPage($pagename);
-    /*
-    $linkiterator = $page->getLinks(false);
+    
+    // The fast WikiDB method. below is the slow method which goes through the formatter
+    // NB no clean way to extract a list of external links yet, so
+    // only internal links returned.  i.e. all type 'local'.
+    $linkiterator = $page->getPageLinks();
     $linkstruct = array();
     while ($currentpage = $linkiterator->next()) {
         $currentname = $currentpage->getName();
-        $name = short_string($currentname);
-        // NB no clean way to extract a list of external links yet, so
-        // only internal links returned.  ie all type 'local'.
-        $type = new xmlrpcval('local');
-
         // Compute URL to page
         $args = array();
-        $currentrev = $currentpage->getCurrentRevision();
-        if ($currentrev->hasDefaultContents())
-            $args['action'] = 'edit';
+        // How to check external links?
+        if (!$currentpage->exists()) $args['action'] = 'edit';
 
         // FIXME: Autodetected value of VIRTUAL_PATH wrong,
-        // this make absolute URLs contstructed by WikiURL wrong.
+        // this make absolute URLs constructed by WikiURL wrong.
         // Also, if USE_PATH_INFO is false, WikiURL is wrong
         // due to its use of SCRIPT_NAME.
-        $use_abspath = USE_PATH_INFO && ! preg_match('/RPC2.php$/', VIRTUAL_PATH);
-        $href = new xmlrpcval(WikiURL($currentname, $args, $use_abspath));
-            
-        $linkstruct[] = new xmlrpcval(array('page'=> $name,
-                                            'type'=> $type,
-                                            'href' => $href),
+        //$use_abspath = USE_PATH_INFO && ! preg_match('/RPC2.php$/', VIRTUAL_PATH);
+        
+        // USE_PATH_INFO must be defined in index.php or config.ini but not before, 
+        // otherwise it is ignored and xmlrpc urls are wrong.
+        // SCRIPT_NAME here is always .../RPC2.php
+        if (USE_PATH_INFO and !$args) {
+            $url = preg_replace('/%2f/i', '/', rawurlencode($currentname));
+        } elseif (!USE_PATH_INFO) {
+            $url = str_replace("/RPC2.php","/index.php", WikiURL($currentname, $args, true));
+        } else {
+            $url = WikiURL($currentname, $args);
+        }
+        $linkstruct[] = new xmlrpcval(array('page'=> short_string($currentname),
+                                            'type'=> new xmlrpcval('local', 'string'),
+                                            'href' => short_string($url)),
                                       "struct");
     }
-    */
-    
+   
+    /*
     $current = $page->getCurrentRevision();
     $content = $current->getTransformedContent();
     $links = $content->getLinkInfo();
-
     foreach ($links as $link) {
         // We used to give an href for unknown pages that
         // included action=edit.  I think that's probably the
         // wrong thing to do.
-        $linkstruct[] = new xmlrpcval(array(/*'name'=> short_string($link->page),*/ // wrong!
-                                            'page'=> short_string($link->page),
+        $linkstruct[] = new xmlrpcval(array('page'=> short_string($link->page),
                                             'type'=> new xmlrpcval($link->type, 'string'),
                                             'href' => short_string($link->href),
                                             //'pageref' => short_string($link->pageref),
                                             ),
                                       "struct");
     }
-        
+    */
     return new xmlrpcresp(new xmlrpcval ($linkstruct, "array"));
 } 
 
