@@ -1,16 +1,16 @@
 Date: Wed, 2 Jun 2004 21:09:39 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: PloticusPlugin,v 1.2 2004-06-02 19:37:07 rurban Exp $
+X-Rcs-Id: $Id: PloticusPlugin,v 1.3 2004-06-03 22:27:09 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=PloticusPlugin;
-  pgsrc_version="2 $Revision: 1.2 $";
+  pgsrc_version="2 $Revision: 1.3 $";
   flags="";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 The Ploticus WikiPlugin passes all its arguments to the ploticus
-binary and displays the result as PNG, GIF, EPS or SVG.
+binary and displays the result as PNG, GIF, EPS, SVG or SWF.
 Ploticus is a free, GPL, non-interactive software package
 for producing plots, charts, and graphics from data.
 See http://ploticus.sourceforge.net/doc/welcome.html
@@ -38,8 +38,8 @@ __help__:  |
   a ploticus with PNG support. This comes only with the cygwin 
   built pl221win32cygmax.zip.
 # We support only images supported by GD so far (PNG most likely).
-  No EPS, PS, SVG or SVGZ support due to limitations in
-  ~WikiPluginCached.
+  No EPS, PS, SVG, SVGZ or SWG support yet due to API limitations in
+  ~WikiPluginCached. No technical problems, so you can expect it soon.
 
 !! Examples
 
