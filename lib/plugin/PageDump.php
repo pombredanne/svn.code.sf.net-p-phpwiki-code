@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.15 2004-06-29 10:09:06 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.16 2004-07-01 06:31:23 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -10,7 +10,7 @@ rcs_id('$Id: PageDump.php,v 1.15 2004-06-29 10:09:06 rurban Exp $');
  * PhpWikiAdministration needs to be updated to handle URLs again, and
  * add loading capability from InterWiki addresses.
 
- * multiple revisions in one file handled by format=backup
+ * Multiple revisions in one file handled by format=backup
  *
  * TODO: What about comments/summary field? quoted-printable?
  *
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -283,6 +283,9 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/06/29 10:09:06  rurban
+// better desc
+//
 // Revision 1.14  2004/06/29 10:07:40  rurban
 // added dump of all revisions by format=backup (screen and download)
 //
