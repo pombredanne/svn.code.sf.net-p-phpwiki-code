@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.9 2004-05-14 11:33:03 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.10 2004-05-15 01:19:41 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -238,7 +238,7 @@ function CheckDatabaseUpdate($request) {
     extract($dbh->_backend->_table_names);
     foreach (explode(':','session:user:pref:member') as $table) {
         echo _("check for table $table")," ...";    	
-    	if (!in_array($table,$tables)) {
+    	if (!in_array($prefix.$table,$tables)) {
             installTable(&$dbh, $table, $backend_type);
     	} else {
     	    echo "OK <br />\n";
@@ -332,6 +332,10 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.9  2004/05/14 11:33:03  rurban
+ version updated to 1.3.11pre
+ upgrade stability fix
+
  Revision 1.8  2004/05/12 10:49:55  rurban
  require_once fix for those libs which are loaded before FileFinder and
    its automatic include_path fix, and where require_once doesn't grok
