@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.2 2001-08-18 02:05:28 dairiki Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.3 2001-08-18 02:38:34 dairiki Exp $');
    /*
       Database functions:
 
@@ -45,19 +45,22 @@
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename, $pagestore) {
       $filename = $dbi[$pagestore] . "/" . $pagename;
-      if ($fd = @fopen($filename, "r")) {
+      if ($fd = @fopen($filename, "rb")) {
          $locked = flock($fd, 1); # Read lock
          if (!$locked) { 
             ExitWiki("Timeout while obtaining lock. Please try again"); 
          }
-         if ($data = file($filename)) {
+         if ($data = fread($fd, filesize($filename))) {
             // unserialize $data into a hash
-            $pagehash = unserialize(join("\n", $data));
-		 }	
-		 fclose($fd);
-		 if($data) {
-		    return $pagehash;
-		 }
+            $pagehash = unserialize($data);
+	    if (!is_array($pagehash))
+		ExitWiki(sprintf("'%s': corrupt file",
+				 htmlspecialchars($filename)));
+	 }	
+	 fclose($fd);
+	 if ($data) {
+	    return $pagehash;
+	 }
       } else {
          return -1;
       }
@@ -79,16 +82,21 @@
 	  }
 
       $filename = $dbi . "/" . $pagename;
-      if($fd = fopen($filename, 'a')) { 
+      if($fd = fopen($filename, 'a+b')) { 
          $locked = flock($fd,2); #Exclusive blocking lock 
          if (!$locked) { 
             ExitWiki("Timeout while obtaining lock. Please try again"); 
-         } 
+         }
+	 
 
          #Second (actually used) filehandle 
-         $fdsafe = fopen($filename, 'w'); 
-         fwrite($fdsafe, $pagedata); 
-         fclose($fdsafe); 
+         #$fdsafe = fopen($filename, 'wb'); 
+         #fwrite($fdsafe, $pagedata); 
+         #fclose($fdsafe);
+
+	 rewind($fd);
+	 ftruncate($fd, 0);
+         fwrite($fd, $pagedata); 
          fclose($fd);
       } else {
          ExitWiki("Error while writing page '$pagename'");
