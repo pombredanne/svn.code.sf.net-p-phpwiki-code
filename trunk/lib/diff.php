@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.44 2003-02-17 02:17:31 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.45 2004-01-25 03:57:15 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -246,8 +246,7 @@ function PageInfoRow ($label, $rev, &$request)
         $author = $rev->get('author');
         $dbi = $request->getDbh();
 
-        $iswikipage = (preg_match("/^$WikiNameRegexp\$/", $author)
-                       && $dbi->isWikiPage($author));
+        $iswikipage = (isWikiWord($author) && $dbi->isWikiPage($author));
         $authorlink = $iswikipage ? WikiLink($author) : $author;
 
         $linked_version = WikiLink($rev, 'existing', $rev->getVersion());
@@ -386,6 +385,10 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2003/02/17 02:17:31  dairiki
+// Fix so that action=diff will work when the most recent version
+// of a page has been "deleted".
+//
 // Revision 1.43  2003/01/29 19:17:37  carstenklapp
 // Bugfix for &nbsp showing on diff page.
 //
