@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.26 2004-06-21 16:22:32 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.27 2004-07-08 17:31:43 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -23,7 +23,7 @@ rcs_id('$Id: AllPages.php,v 1.26 2004-06-21 16:22:32 rurban Exp $');
 require_once('lib/PageList.php');
 
 /**
- * TODO: support author=[] (current user) and owner, creator
+ * DONE: support author=[] (current user) and owner, creator
  * to be able to have pages: 
  * AllPagesCreatedByMe, AllPagesOwnedByMe, AllPagesLastAuthoredByMe
  */
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.26 $");
+                            "\$Revision: 1.27 $");
     }
 
     function getDefaultArguments() {
@@ -115,6 +115,16 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2004/06/21 16:22:32  rurban
+// add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
+// fixed dumping buttons locally (images/buttons/),
+// support pages arg for dumphtml,
+// optional directory arg for dumpserial + dumphtml,
+// fix a AllPages warning,
+// show dump warnings/errors on DEBUG,
+// don't warn just ignore on wikilens pagelist columns, if not loaded.
+// RateIt pagelist column is called "rating", not "ratingwidget" (Dan?)
+//
 // Revision 1.25  2004/06/14 11:31:38  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList

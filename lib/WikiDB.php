@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.75 2004-07-05 13:56:22 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.76 2004-07-08 17:31:43 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -262,11 +262,12 @@ class WikiDB {
     //}
     // Yes, for paging. Renamed.
     function numPages($filter=false, $exclude='') {
-    	if (method_exists($this->_backend,'numPages'))
-            $count = $this->_backend->numPages($filter,$exclude);
+    	if (method_exists($this->_backend, 'numPages'))
+            $count = $this->_backend->numPages($filter, $exclude);
         else {
             $iter = $this->getAllPages();
             $count = $iter->count();
+            $iter->free();
         }
         return (int)$count;
     }
@@ -1891,6 +1892,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.75  2004/07/05 13:56:22  rurban
+// sqlite autoincrement fix
+//
 // Revision 1.74  2004/07/03 16:51:05  rurban
 // optional DBADMIN_USER:DBADMIN_PASSWD for action=upgrade (if no ALTER permission)
 // added atomic mysql REPLACE for PearDB as in ADODB

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.13 2004-07-08 15:23:59 rurban Exp $');
+rcs_id('$Id: file.php,v 1.14 2004-07-08 17:31:43 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -567,6 +567,11 @@ extends WikiDB_backend
 
         return new WikiDB_backend_file_iter($this, $a);
     }
+
+    function numPages($filter=false, $exclude='') {
+        $this->_loadLatestVersions();
+        return count($this->_latest_versions);
+    }
         
     /**
      * Title or full text search.
@@ -781,6 +786,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/07/08 15:23:59  rurban
+// less verbose for tests
+//
 // Revision 1.12  2004/07/08 13:50:32  rurban
 // various unit test fixes: print error backtrace on _DEBUG_TRACE; allusers fix; new PHPWIKI_NOMAIN constant for omitting the mainloop
 //
