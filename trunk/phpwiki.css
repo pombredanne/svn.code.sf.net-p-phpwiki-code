@@ -23,8 +23,8 @@
 TODO: Get rid of tables in wikiaction forms.
 */
 
-/* NS4 & OmniWeb 4 don't grok @import.  This allows us to put things which
- * break NS4 and OW4 in another file.
+/* NS4 doesn't grok @import.  This allows us to put things which
+ * break NS4 in another file. As of OmniWeb 4.1, OW now @imports :-(
  */
 @import url(phpwiki-heavy.css);
 
