@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.20 2004-06-07 18:39:03 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.21 2004-06-07 22:28:03 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -630,8 +630,9 @@ class PagePermission {
     // Seperate acl's by whitespace (here "\n", but " " is also acceptable on reading)
     // See http://opag.ca/wiki/HelpOnAccessControlLists
     // As used by WikiAdminSetAclSimple
-    function asAclLines($owner,$group=false) {
+    function asAclLines($group=false) {
         $s = '';
+        $this->sanify();
         foreach ($this->perm as $access => $groups) {
             // TODO: unify groups for same access+bool
             //    +CREATOR,OWNER:view
@@ -688,6 +689,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2004/06/07 18:39:03  rurban
+// support for SetAclSimple
+//
 // Revision 1.19  2004/06/06 17:12:28  rurban
 // fixed PagePerm non-object problem (mayAccessPage), also bug #967150
 //
