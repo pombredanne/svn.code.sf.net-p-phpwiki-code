@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.13 2004-06-03 12:59:41 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.14 2004-06-03 22:24:48 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -47,11 +47,12 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
         return array(
+                     's' 	=> false,
                      /* Pages to exclude in listing */
                      'exclude'  => '',
                      /* Columns to include in listing */
@@ -107,8 +108,10 @@ extends WikiPlugin_WikiAdminSelect
             $exclude = explodePageList($args['exclude']);
         else
             $exclude = false;
+        $this->preSelectS(&$args, &$request);
 
         $p = $request->getArg('p');
+        if (!$p) $p = $this->_list;
         $post_args = $request->getArg('admin_rename');
         $next_action = 'select';
         $pages = array();
@@ -116,15 +119,11 @@ extends WikiPlugin_WikiAdminSelect
             $pages = $p;
         if ($p && $request->isPost() &&
             !empty($post_args['rename']) && empty($post_args['cancel'])) {
-
             // DONE: check individual PagePermissions
-            /*
-            if (!$request->_user->isAdmin()) {
+            if (!ENABLE_PAGEPERM and !$request->_user->isAdmin()) {
                 $request->_notAuthorized(WIKIAUTH_ADMIN);
                 $this->disabled("! user->isAdmin");
             }
-            */
-
             // DONE: error message if not allowed.
             if ($post_args['action'] == 'verify') {
                 // Real action
@@ -227,6 +226,10 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/06/03 12:59:41  rurban
+// simplify translation
+// NS4 wrap=virtual only
+//
 // Revision 1.12  2004/06/01 15:28:01  rurban
 // AdminUser only ADMIN_USER not member of Administrators
 // some RateIt improvements by dfrankow

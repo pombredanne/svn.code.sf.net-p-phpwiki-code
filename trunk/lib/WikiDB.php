@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.61 2004-06-02 17:13:48 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.62 2004-06-03 22:24:41 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -722,7 +722,7 @@ class WikiDB_Page
         assert($newversion >= 1);
 
         if ($version != WIKIDB_FORCE_CREATE && $version != $newversion) {
-            $backend->unlock(array('version','page','recent','links'));
+            $backend->unlock(array('version','page','recent','links','nonempty'));
             return false;
         }
 
@@ -1823,6 +1823,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2004/06/02 17:13:48  rurban
+// fix getRevisionBefore assertion
+//
 // Revision 1.60  2004/05/28 10:09:58  rurban
 // fix bug #962117, incorrect init of auth_dsn
 //
