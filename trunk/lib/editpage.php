@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.68 2004-06-01 15:28:00 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.69 2004-06-02 10:17:56 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -219,12 +219,12 @@ function speich() {
                            array("image"=>"ed_pagelink.gif",
                                  "open"=>"[",
                                  "close"=>"]",
-                                 "sample"=>_("[ Label | PageName]"),
+                                 "sample"=>_("optional label | PageName"),
                                  "tip"=>_("Link to page")),
                            array("image"=>"ed_link.gif",
                                  "open"=>"[",
                                  "close"=>"]",
-                                 "sample"=>_("[label | http://www.example.com]"),
+                                 "sample"=>_("optional label | http://www.example.com"),
                                  "tip"=>_("External link (remember http:// prefix)")),
                            array("image"=>"ed_headline.gif",
                                  "open"=>"\\n!!! ",
@@ -242,7 +242,7 @@ function speich() {
                                  "sample"=>_("Insert non-formatted text here"),
                                  "tip"=>_("Ignore wiki formatting")),
                            array("image"=>"ed_sig.gif",
-                                 "open" => "--" . $GLOBALS['request']->_user->UserName(),
+                                 "open" => " --" . $GLOBALS['request']->_user->UserName(),
                                  "close" => "",
                                  "sample"=>"",
                                  "tip"=>_("Your signature")),
@@ -253,6 +253,14 @@ function speich() {
                                  "tip"=>_("Horizontal line"))
                            );
         $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
+
+        $btn = new SubmitImageButton(_("Save"), "edit[save]", 'wikiaction', $Theme->getImageURL("ed_save.gif"));
+        $btn->addTooltip(_("Save"));
+        $toolbar.='document.writeln("'.addslashes($btn->asXml()).'");'."\n";
+        $btn = new SubmitImageButton(_("Preview"), "edit[preview]", 'wikiaction', $Theme->getImageURL("ed_preview.gif"));
+        $btn->addTooltip(_("Preview"));
+        $toolbar.='document.writeln("'.addslashes($btn->asXml()).'");'."\n";
+
         foreach ($toolarray as $tool) {
             $image = $Theme->getImageURL($tool["image"]);
             $open  = $tool["open"];
@@ -265,7 +273,16 @@ function speich() {
             $tip = addslashes( $tool["tip"] );
             $toolbar.="addButton('$image','$tip','$open','$close','$sample');\n";
         }
-        $toolbar.="addInfobox('" . addslashes( _( "infobox" ) ) . "');\n";
+        $toolbar.="addInfobox('" . addslashes( _("Click a button to get an example text") ) . "');\n";
+        if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
+            $undo_btn = $Theme->getImageURL("ed_undo.gif"); 
+            $redo_btn = $Theme->getImageURL("ed_redo.gif");
+            $sr_btn   = $Theme->getImageURL("ed_replace.gif");
+            $sr_js = '<input name="rck" type="image" src="'.$undo_btn.'" title="'._("Undo Search & Replace").'" onfocus="if(this.blur && pretxt_anzahl==0) this.blur()" onclick="rueck()">'
+                . '<input type="image" src="'.$redo_btn.'" title="'._("Redo").'" onclick="speich()">'
+                . '<input type="image" src="'.$sr_btn.'" title="'._("Search & Replace").'" onclick="replace()">';
+            $toolbar.='document.writeln("'.addslashes($sr_js).'");'."\n";
+        }
         $toolbar.="document.writeln(\"</div>\");";
         return Javascript($toolbar);
     }
@@ -717,6 +734,11 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.68  2004/06/01 15:28:00  rurban
+ AdminUser only ADMIN_USER not member of Administrators
+ some RateIt improvements by dfrankow
+ edit_toolbar buttons
+
  Revision _1.6  2004/05/26 15:48:00  syilek
  fixed problem with creating page with slashes from one true page
 
