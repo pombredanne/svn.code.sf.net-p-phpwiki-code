@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RedirectTo.php,v 1.4 2002-09-27 10:55:45 rurban Exp $');
+rcs_id('$Id: RedirectTo.php,v 1.5 2002-10-14 16:28:13 carstenklapp Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -60,8 +60,6 @@ extends WikiPlugin
         $args = ($this->getArgs($argstr, $request));
         $href = $args['href'];
         $page = $args['page'];
-        if (!$href and !$page)
-            return $this->error(sprintf(_("%s or %s parameter missing"), 'href', 'page'));
         if ($href) {
             /*
              * Use quotes on the href argument value, like:
@@ -71,12 +69,22 @@ extends WikiPlugin
              * uses of the plugin? Like stripping tags or hexcode.
              */
             $url = preg_replace('/%\d\d/','',strip_tags($href));
+            $thispage = $request->getPage();
+            if (! $thispage->get('locked')) {
+                return $this->error(HTML(fmt(_("%s is only allowed in locked pages."),
+                                             _("Redirect to an external url")),
+                                         HTML::br(),
+                                         fmt("url=\"%s\"", $url)));
+            }
         }
-        else {
+        else if ($page) {
             $url = $request->getURLtoSelf(array_merge(array('pagename' => $page,
                                                             'redirectfrom' => $request->getArg('pagename')),
                                                       SplitQueryArgs($args['args'])));
         }
+        else
+            return $this->error(sprintf(_("%s or %s parameter missing"), "'href'", "'page'"));
+
         if ($page == $request->getArg('pagename')) {
             return $this->error(sprintf(_("Recursive redirect to self: '%s'"), $url));
         }
