@@ -1,9 +1,9 @@
 Date: Thu, 9 Oct 2003 01:46:11 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.5pre)
-X-Rcs-Id: $Id: G%E4steBuch,v 1.7 2003-11-17 22:52:31 carstenklapp Exp $
+X-Rcs-Id: $Id: G%E4steBuch,v 1.8 2004-06-16 12:48:56 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=G%E4steBuch;
-  pgsrc_version="2 $Revision: 1.7 $";
+  pgsrc_version="2 $Revision: 1.8 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -11,5 +11,6 @@ Content-Transfer-Encoding: binary
 
 Tragen Sie sich einfach mit Namen und Datum auf dieser Seite ein!
 
-Jeff Dairiki, Arno Hollosi, SteveWainstead, PhpWiki Autoren.
+Jeff Dairiki, Arno Hollosi, SteveWainstead, Reini Urban, und alle weiteren  
+[PhpWiki Autoren|PhpWiki:ThePhpWikiProgrammingTeam].
 ----
