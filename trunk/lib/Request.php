@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.63 2004-07-01 09:29:40 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.64 2004-09-17 13:32:36 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -335,6 +335,11 @@ class Request {
         // Should we compress even when apache_note is not available?
         // sf.net bug #933183 and http://bugs.php.net/17557
         if (!function_exists('ob_gzhandler') or !function_exists('apache_note'))
+            $compress = false;
+
+        // Most RSS clients are not gzip compatible yet. wget is, Mozilla not.
+        // See http://phpwiki.sourceforge.net/phpwiki/KnownBugs
+        if ($this->getArg('format') and strstr('rss', $this->getArg('format')))
             $compress = false;
         
         if ($compress) {
@@ -994,6 +999,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2004/07/01 09:29:40  rurban
+// fixed another DbSession crash: wrong WikiGroup vars
+//
 // Revision 1.62  2004/06/27 10:26:02  rurban
 // oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
 //
