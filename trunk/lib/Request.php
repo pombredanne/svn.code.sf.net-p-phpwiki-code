@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.29 2003-02-22 18:53:39 dairiki Exp $');
+<?php rcs_id('$Id: Request.php,v 1.30 2003-02-22 20:25:44 dairiki Exp $');
 // FIXME: write log entry.
 
 /*
@@ -31,11 +31,9 @@ class Request {
         switch($this->get('REQUEST_METHOD')) {
         case 'GET':
         case 'HEAD':
-            // $this->sanify_input_array(&$GLOBALS['HTTP_GET_VARS']);
             $this->args = &$GLOBALS['HTTP_GET_VARS'];
             break;
         case 'POST':
-            // $this->sanify_input_array(&$GLOBALS['HTTP_POST_VARS']);
             $this->args = &$GLOBALS['HTTP_POST_VARS'];
             break;
         default:
@@ -390,32 +388,6 @@ class Request {
         }
         elseif (is_string($var))
             $var = preg_replace('|^\r?\n?|', '', $var);
-    }
-
-    // Fixme: Seperate into fields of type: displayed, db, internal, password, ...
-    // and define for each type the allowed characters.
-    function sanify_input_array (&$arr) {
-        if (!empty($arr)) {
-            foreach (array_keys($arr) as $key) {
-                if (!in_array($key,array('edit','password')))
-                    $arr[$key] = $this->sanify_userinput($arr[$key]);
-            }
-        }
-    }
-
-    function sanify_userinput ($var) {
-        // Prevent possible XSS attacks (cross site scripting attacks)
-        // See http://www.cert.org/advisories/CA-2000-02.html, http://www.perl.com/pub/a/2002/02/20/css.html
-        // <script> tags, ...
-        // /wiki/?pagename=<script>alert(document.cookie)</script>
-        if (is_string($var)) {
-            return strip_tags($var);
-        } elseif (is_array($var)) {
-            $this->sanify_input_array($var);
-            return $var;
-        } else {
-            return $var;
-        }
     }
 }
 
