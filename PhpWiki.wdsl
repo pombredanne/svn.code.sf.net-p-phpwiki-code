@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<definitions  name="Wiki" 
+		 targetNamespace="http://phpwiki.sourceforge.net/phpwiki/PhpWiki.wsdl"
+		 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+		 xmlns:tns="http://phpwiki.sourceforge.net/phpwiki/PhpWiki.wsdl" 
+		 xmlns:xsd="http://www.w3.org/1999/XMLSchema"
+		 xmlns="http://schemas.xmlsoap.org/wsdl/" 
+		 >
+
+	<message name="getPageRequest">
+		<part name="page" type="xsd:string"/>
+	</message>
+
+	<message name="getPageResponse">
+		<part name="pageData" type="xsd:string"/>
+	</message>
+
+	<portType name="wikiPortType">
+		<operation name="getPage">
+			<input message="tns:getPageRequest"/>
+			<output message="tns:getPageResponse"/>
+		</operation>
+	</portType>
+
+	<binding name="wikiBinding" type="tns:wikiPortType">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="getPage">
+		  <soap:operation soapAction="http://phpwiki.sourceforge.net/phpwiki/SOAP.php"/>
+			<input>
+				<soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+	</binding>
+
+	<service name="wikiService">
+		<port name="wikiPortType" binding="tns:wikiBinding">
+			<soap:address location="http://phpwiki.sourceforge.net/phpwiki/SOAP.php" /> 
+		</port>
+	</service>
+</definitions>
