@@ -1,13 +1,15 @@
 Date: Thu, 28 Mar 2002 14:57:00 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: OldTextFormattingRules,v 1.3 2004-02-15 18:10:27 rurban Exp $
+X-Rcs-Id: $Id: OldTextFormattingRules,v 1.4 2004-03-14 16:34:22 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=OldTextFormattingRules;
-  pgsrc_version="2 $Revision: 1.3 $";
+  pgsrc_version="2 $Revision: 1.4 $";
   flags=PAGE_LOCKED;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
+<?plugin CreateToc jshide||=1 with_toclink||=1 ?>
+----
 ! Synopsis
 OldTextFormattingRules%%%
 __Emphasis:__ '____' for ''italics'', _''''_ for __bold__, '____'_''''_ for ''__both__''.%%%
@@ -106,7 +108,7 @@ See [MagicPhpWikiURLs] for gory details on how to write various kind of wiki mai
 
 -----
 
-Footnotes:
+! Footnotes:
 
 [1] By using [[1] a second time (in the first column) the footnote itself is ''defined''.  You may refer to a footnote as many times as you want, but you may only define it once on the page.  Note the the [[1] in the footnote links back to the first reference, if there are multiple references there will be +'s after the [[1] which will link to the other references.  (References which come ''after'' the footnote ''definition'' will not be linked to.)
 ----
