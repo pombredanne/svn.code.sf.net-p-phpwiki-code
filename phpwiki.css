@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.30 2002-02-03 21:32:10 carstenklapp Exp $
+  $Id: phpwiki.css,v 1.31 2002-02-06 20:14:00 carstenklapp Exp $
 
   Classes:
 
@@ -60,7 +60,7 @@ div.wikitext {
  clear: both;
 }
 
-p.editdate { margin-bottom: -1ex; }
+p.editdate { margin-bottom: 0ex; }
 
 input.wikitext { margin:0px; }
 
