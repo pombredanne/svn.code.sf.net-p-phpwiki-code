@@ -1,5 +1,24 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.201 2005-01-20 10:18:17 rurban Exp $');
+rcs_id('$Id: main.php,v 1.202 2005-01-21 12:02:32 rurban Exp $');
+/*
+ Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -38,8 +57,9 @@ class WikiRequest extends Request {
             include_once(dirname(__FILE__)."/pear/File_Passwd.php");
         }
         if (ENABLE_USER_NEW) {
-            // load all necessary userclasses (otherwise session => __PHP_Incomplete_Class_Name)
-            // There's no way to demandload it later. (This way it's much slower but needs less memory than loading all)
+            // Preload all necessary userclasses. Otherwise session => __PHP_Incomplete_Class_Name
+            // There's no way to demandload it later. This way it's much slower but needs 
+            // less memory than loading all
             if (ALLOW_BOGO_LOGIN)
                 include_once("lib/WikiUser/BogoLogin.php");
             foreach ($GLOBALS['USER_AUTH_ORDER'] as $method) {
@@ -57,9 +77,11 @@ class WikiRequest extends Request {
             $dbi =& $this->_dbi;
             $this->_dbsession = new DbSession($dbi, $dbi->getParam('prefix') . $dbi->getParam('db_session_table'));
         }
+
 // Fixme: Does pear reset the error mask to 1? We have to find the culprit
 //$x = error_reporting();
-$this->version = phpwiki_version();
+
+        $this->version = phpwiki_version();
         $this->Request(); // [90ms]
 
         // Normalize args...
@@ -70,10 +92,10 @@ $this->version = phpwiki_version();
             if ($this->_dbi->_backend->optimize())
                 trigger_error(_("Optimizing database"), E_USER_NOTICE);
         }
-        
+
         // Restore auth state. This doesn't check for proper authorization!
+        $userid = $this->_deduceUsername();	
         if (ENABLE_USER_NEW) {
-            $userid = $this->_deduceUsername();	
             if (isset($this->_user) and 
                 !empty($this->_user->_authhow) and 
                 $this->_user->_authhow == 'session')
@@ -102,7 +124,9 @@ $this->version = phpwiki_version();
 	        {
 	            //$level = $this->_user->_level;
 	            $this->_user = UpgradeUser($this->_user, 
-	                                       new _FilePassUser($userid, $this->_user->_prefs, $this->_user->_file->filename));
+	                                       new _FilePassUser($userid, 
+                                                                 $this->_user->_prefs, 
+                                                                 $this->_user->_file->filename));
                     //$this->_user->_level = $level;
                 }
             	$this->_prefs = & $this->_user->_prefs;
@@ -112,7 +136,7 @@ $this->version = phpwiki_version();
                 $this->_prefs = & $this->_user->_prefs;
             }
         } else {
-            $this->_user = new WikiUser($this, $this->_deduceUsername());
+            $this->_user = new WikiUser($this, $userid);
             $this->_prefs = $this->_user->getPreferences();
         }
     }
@@ -173,7 +197,7 @@ $this->version = phpwiki_version();
     // [50ms]: 36ms is wikidb_page::exists
     function updateAuthAndPrefs () {
 
-        if (isset($this->_user) and (!isa($this->_user,WikiUserClassname()))) {
+        if (isset($this->_user) and (!isa($this->_user, WikiUserClassname()))) {
             $this->_user = false;	
         }
         // Handle authentication request, if any.
@@ -189,9 +213,11 @@ $this->version = phpwiki_version();
                 $this->_signIn($saved_user);
             }
         }
+        
+        $action = $this->getArg('action');
 
         // Save preferences in session and cookie
-        if (!defined('WIKI_XMLRPC') or !WIKI_XMLRPC) {
+        if ((defined('WIKI_XMLRPC') and !WIKI_XMLRPC) or $action != 'xmlrpc') {
             if (isset($this->_user)) {
             	if (!isset($this->_user->_authhow) or $this->_user->_authhow != 'session') {
                     $this->_user->setPreferences($this->_prefs, true);
@@ -203,7 +229,6 @@ $this->version = phpwiki_version();
         // Ensure user has permissions for action
         // HACK ALERT: We may not set the request arg to create, 
         // since the pageeditor has an ugly logic for action == create.
-        $action = $this->getArg('action');
   	if ($action == 'edit' or $action == 'create') {
             $page = $this->getPage();
             if (! $page->exists() )
@@ -339,7 +364,7 @@ $this->version = phpwiki_version();
                 $this->_user = new _PassUser($userid);
         }
         $user = $this->_user->AuthCheck(array('userid' => $userid));
-        if (isa($user,WikiUserClassname())) {
+        if (isa($user, WikiUserClassname())) {
             $this->_setUser($user); // success!
         }
     }
@@ -629,9 +654,9 @@ TODO: check against these cases:
     // [574ms] mainly template:printexpansion: 393ms and template::expandsubtemplate [100+70+60ms]
     function handleAction () {
         $action = $this->getArg('action');
-        if ($this->isPost()) {
+        if ($this->isPost() and !$this->_user->isAdmin() and $action != 'browse') {
             $page = $this->getPage();
-            if (!$this->_user->isAdmin() and $action != 'browse' and $page->get('moderation')) {
+            if ( $page->get('moderation') ) {
                 require_once("lib/WikiPlugin.php");
                 $loader = new WikiPluginLoader();
                 $plugin = $loader->getPlugin("ModeratedPage");
@@ -757,13 +782,13 @@ TODO: check against these cases:
 
     function _deduceAction () {
         if (!($action = $this->getArg('action'))) {
-            // Detect XML-RPC requests
+            // Detect XML-RPC requests. TODO: SOAP?
             if ($this->isPost()
-                && $this->get('CONTENT_TYPE') == 'text/xml') {
-                global $HTTP_RAW_POST_DATA;
-                if (strstr($HTTP_RAW_POST_DATA, '<methodCall>')) {
-                    return 'xmlrpc';
-                }
+                && $this->get('CONTENT_TYPE') == 'text/xml'
+                && strstr($GLOBALS['HTTP_RAW_POST_DATA'], '<methodCall>')
+               )
+            {
+                return 'xmlrpc';
             }
             return 'browse';    // Default if no action specified.
         }
@@ -815,6 +840,21 @@ TODO: check against these cases:
                 return $userid;
             }
         }
+
+        if ($this->getArg('action') == 'xmlrpc') { // how about SOAP?
+            // wiki.putPage has special otional userid/passwd arguments. check that later.
+            $userid = '';
+            if (isset($HTTP_SERVER_VARS['REMOTE_USER']))
+                $userid = $HTTP_SERVER_VARS['REMOTE_USER'];
+            elseif (isset($HTTP_SERVER_VARS['REMOTE_ADDR']))
+                $userid = $HTTP_SERVER_VARS['REMOTE_ADDR'];
+            elseif (isset($HTTP_ENV_VARS['REMOTE_ADDR']))
+                $userid = $HTTP_ENV_VARS['REMOTE_ADDR'];
+            elseif (isset($GLOBALS['REMOTE_ADDR']))
+                $userid = $GLOBALS['REMOTE_ADDR'];
+            return $userid;
+        }
+
         return false;
     }
     
@@ -1194,6 +1234,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.201  2005/01/20 10:18:17  rurban
+// reformatting
+//
 // Revision 1.200  2004/12/26 17:08:36  rurban
 // php5 fixes: case-sensitivity, no & new
 //
