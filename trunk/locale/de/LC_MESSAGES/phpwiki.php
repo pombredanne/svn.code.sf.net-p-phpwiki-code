@@ -215,7 +215,7 @@ $locale["List LikePages for %s"] =
 $locale["List PageHistory for %s"] =
    "Das Änderungsprotokoll für %s auflisten";
 $locale["List the most popular pages"] =
-   "Die MeistBesuchten Seiten auflisten";
+   "Die meistbesucht Seiten auflisten";
 $locale["Lists nested too deep in SetHTMLOutputMode"] =
    "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten.";
 $locale["Loading '%s'"] =
@@ -274,6 +274,10 @@ $locale["Page names with prefix '%s'"] =
    "Seitenamen mit Prefix »%s«";
 $locale["Page names with suffix '%s'"] =
    "Seitennamen mit Suffix »%s«";
+$locale["Page now locked."] =
+   "Seite jetzt gesperrt.";
+$locale["Page now unlocked."] =
+   "Seite jetzt freigegeben.";
 $locale["PageGroup"] =
    "SeitenGruppe";
 $locale["PageGroup for %s"] =
@@ -384,12 +388,16 @@ $locale["The %d most popular pages of this wiki:"] =
    "Die %d meistbesuchten Seiten dieses Wikis:";
 $locale["The %d most recent %s are listed below."] =
    "Die %d jüngste %s sind unten aufgelistet.";
-$locale["The %d most recent %s during the past %s are listed below."] =
-   "Die %d jüngste %s innerhalb von %s sind unten aufgelistet.";
+$locale["The %d most recent %s during the past %s days are listed below."] =
+   "Die %d jüngste %s innerhalb der letzten %s Tage sind unten aufgelistet.";
+$locale["The %d most recent %s during the past day are listed below."] =
+   "Die %d jüngste %s innerhalb des letzten Tages sind unten aufgelistet.";
 $locale["The PhpWiki programming team"] =
    "Das PhpWiki Programmierer-Team";
-$locale["The most recent %s during the past %s are listed below."] =
-   "Die jüngste %s innerhalb von %s sind unten aufgelistet.";
+$locale["The most recent %s during the past %s days are listed below."] =
+   "Die jüngste %s innerhalb der letzten %s Tage sind unten aufgelistet.";
+$locale["The most recent %s during the past day are listed below."] =
+   "Die jüngste %s innerhalb des letzten Tages sind unten aufgelistet.";
 $locale["These page titles match fuzzy with '%s'"] =
    "Diese Seite Namen sehen sich ungefähr ähnlich aus wie »%s«.";
 $locale["These pages share an initial or final title word with '%s'"] =
@@ -494,8 +502,6 @@ $locale["couldn't open file '%s' for writing"] =
    "Datei »%s« konnte nicht zum Schreiben geöffnet werden";
 $locale["current version"] =
    "aktuelle Version";
-$locale["day"] =
-   "einem Tag";
 $locale["diff"] =
    "Diff";
 $locale["edits"] =
