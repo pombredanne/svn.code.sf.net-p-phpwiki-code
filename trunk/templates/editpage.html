@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.29 2001-12-18 09:17:38 carstenklapp Exp $
+$Id: editpage.html,v 1.30 2001-12-19 03:46:32 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -83,7 +83,7 @@ $_("Edit") <a href="${BROWSE}${PAGEURL}"
 </p>
 <hr noshade="noshade" />
 <div class="wiki-edithelp">
-<?plugin IncludePage page=_("TextFormattingRules") section=_("Synopsis") ?>
+<?plugin IncludePage page=_("TextFormattingRules") section=_("Synopsis") quiet=1?>
 </div>
 
 <input type="hidden" name="action" value="save" />
