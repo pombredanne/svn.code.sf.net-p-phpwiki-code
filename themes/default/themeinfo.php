@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.21 2002-02-08 22:03:03 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.22 2002-02-09 05:59:19 carstenklapp Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -15,6 +15,7 @@ $Theme = new Theme('default');
 
 $Theme->setDefaultCSS('PhpWiki', 'phpwiki.css');
 $Theme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+$Theme->addAlternateCSS(_("Top & bottom toolbars"), 'topbar.css');
 $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
 /**
