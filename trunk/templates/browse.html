@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: browse.html,v 1.51 2002-01-15 23:40:25 dairiki Exp $
+$Id: browse.html,v 1.52 2002-01-16 20:22:44 carstenklapp Exp $
 ${RCS_IDS}
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=${CHARSET}" />
@@ -28,7 +28,7 @@ ${CSS}
       $EditB = $BF->makeActionButton("edit",
                                      $IS_CURRENT ? _("Edit") : _("Edit old revision"));
   else
-      $EditB = $BF->makeActionPageButton(_("ViewSource"));
+      $EditB = $BF->makeActionButton(array('action' => 'edit'), _("ViewSource"));
 
   $LockPageB = $BF->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
   $RemovePageB = $BF->makeActionButton('remove');
