@@ -1,4 +1,4 @@
-# $Id: schema.minisql,v 1.1 2000-06-24 06:41:33 wainstead Exp $
+# $Id: schema.minisql,v 1.2 2000-06-25 07:34:36 wainstead Exp $
 
 drop table wiki\g
 drop table archive\g
@@ -15,7 +15,7 @@ CREATE TABLE wiki (
         created INT NOT NULL,
         content TEXT(1024),
         refs TEXT(100),
-        searchterms char(500)
+        searchterms char(2048)
         )
 \g
 
@@ -31,7 +31,7 @@ CREATE TABLE archive (
         created INT NOT NULL,
         content TEXT(1024),
         refs TEXT(100),
-        searchterms char(500)
+        searchterms char(2048)
         )
 \g
 
