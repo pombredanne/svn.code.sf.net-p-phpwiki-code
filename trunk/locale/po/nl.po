@@ -1,0 +1,76 @@
+# nl.po -- PhpWiki's dutch language file
+# Copyright (C) 2000 Jan Nieuwenhuizen <janneke@gnu.org>.
+# Jan Nieuwenhuizen <janneke@gnu.org>, 2000.
+#
+#
+# Don't change the format of the first three lines,
+# the TP robot wants them like this (I hope).
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: phpwiki 1.1.7\n"
+"POT-Creation-Date: 2000-10-19 23:29+0200\n"
+"PO-Revision-Date: 2000-09-30 02:23+0200\n"
+"Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
+"Language-Team: Dutch <nl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Date: 1998-05-26 11:26:28+0200\n"
+"From:  <janneke@gnu.org>\n"
+
+#: ../lib/config.php:158
+msgid "./pgsrc"
+msgstr "./locale/nl/pgsrc"
+
+#: ../lib/config.php:168
+msgid "templates/browse.html"
+msgstr "./locale/nl/templates/browse.html"
+
+#: ../lib/config.php:169
+msgid "templates/editpage.html"
+msgstr "./locale/nl/templates/editpage.html"
+
+#: ../lib/config.php:170
+msgid "templates/editlinks.html"
+msgstr "./locale/nl/templates/editlinks.html"
+
+#: ../lib/config.php:171
+msgid "templates/message.html"
+msgstr "./locale/nl/templates/message.html"
+
+#: ../lib/diff.php:1017
+#, c-format
+msgid "Diff of %s."
+msgstr "Diff van %s."
+
+#: ../lib/display.php:14
+msgid "FrontPage"
+msgstr "VoorPagina"
+
+#: ../lib/display.php:31 ../lib/editpage.php:49
+#, c-format
+msgid "Describe %s here."
+msgstr "Beschrijf %s hier."
+
+#: ../lib/pageinfo.php:22 ../lib/pageinfo.php:66
+msgid "PageInfo"
+msgstr "PaginaInfo"
+
+#: ../lib/savepage.php:60
+#, c-format
+msgid "Thank you for editing %s."
+msgstr "Bedankt voor het veranderen van %s."
+
+#: ../lib/savepage.php:90
+msgid "Your careful attention to detail is much appreciated."
+msgstr "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd."
+
+#: ../lib/stdlib.php:318 ../lib/stdlib.php:380
+msgid "RecentChanges"
+msgstr "RecenteVeranderingen"
+
+# #: test_dbmlib.php3:41 test_dbmlib.php3:75 wiki_linguas.php3:21
+#~ msgid "TestPage"
+#~ msgstr "TestPagina"

@@ -1,4 +1,4 @@
-<!-- $Id: stdlib.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
+<!-- $Id: stdlib.php,v 1.2 2000-10-19 21:36:50 ahollosi Exp $ -->
 <?php
    /*
       Standard functions for Wiki functionality
@@ -315,7 +315,7 @@
       global $ScriptUrl;
       global $WikiPageStore;
 
-      $recentchanges = RetrievePage($dbi, "RecentChanges", $WikiPageStore);
+      $recentchanges = RetrievePage($dbi, gettext("RecentChanges"), $WikiPageStore);
 
       // this shouldn't be necessary, since PhpWiki loads 
       // default pages if this is a new baby Wiki
@@ -377,7 +377,7 @@
 
       $recentchanges["content"] = $newpage;
 
-      InsertPage($dbi, "RecentChanges", $recentchanges);
+      InsertPage($dbi, gettext("RecentChanges"), $recentchanges);
    }
 
 

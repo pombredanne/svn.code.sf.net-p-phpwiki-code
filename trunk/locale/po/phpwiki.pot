@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2000-10-19 23:29+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: ../lib/config.php:158
+msgid "./pgsrc"
+msgstr ""
+
+#: ../lib/config.php:168
+msgid "templates/browse.html"
+msgstr ""
+
+#: ../lib/config.php:169
+msgid "templates/editpage.html"
+msgstr ""
+
+#: ../lib/config.php:170
+msgid "templates/editlinks.html"
+msgstr ""
+
+#: ../lib/config.php:171
+msgid "templates/message.html"
+msgstr ""
+
+#: ../lib/diff.php:1017
+#, c-format
+msgid "Diff of %s."
+msgstr ""
+
+#: ../lib/display.php:14
+msgid "FrontPage"
+msgstr ""
+
+#: ../lib/display.php:31 ../lib/editpage.php:49
+#, c-format
+msgid "Describe %s here."
+msgstr ""
+
+#: ../lib/pageinfo.php:22 ../lib/pageinfo.php:66
+msgid "PageInfo"
+msgstr ""
+
+#: ../lib/savepage.php:60
+#, c-format
+msgid "Thank you for editing %s."
+msgstr ""
+
+#: ../lib/savepage.php:90
+msgid "Your careful attention to detail is much appreciated."
+msgstr ""
+
+#: ../lib/stdlib.php:318 ../lib/stdlib.php:380
+msgid "RecentChanges"
+msgstr ""

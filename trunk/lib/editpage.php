@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
+<!-- $Id: editpage.php,v 1.2 2000-10-19 21:36:50 ahollosi Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -46,7 +46,8 @@
            $pagehash["copy"] = 1;
       }
    } else {
-      $textarea = "Describe " . htmlspecialchars($pagename) . " here.";
+      $textarea = sprintf(gettext("Describe %s here."),
+			  htmlspecialchars($pagename));
       unset($pagehash);
       $pagehash["version"] = 0;
    }

@@ -2,7 +2,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.5 2000-10-10 02:59:08 wainstead Exp $');
+   rcs_id('$Id: config.php,v 1.6 2000-10-19 21:36:50 ahollosi Exp $');
 
    /*
       Constants and settings. Edit the values below for
@@ -33,7 +33,30 @@
       $ServerAddress = "http://$SERVER_NAME:$SERVER_PORT$REQUEST_URI";
    }
 
+   //  Select your language here
+ 
+   $LANG="C"; // (What should be the) Default: English
+   // $LANG="nl";  // We all speak dutch, no?
 
+   if (!function_exists ('gettext')) {
+      $lcfile = "locale/$LANG/LC_MESSAGES/phpwiki.php";
+      if(file_exists($lcfile)) {
+         include($lcfile);
+      } else {
+         $locale = array();
+      }
+
+      function gettext ($text) { 
+         global $locale;
+         if (!empty ($locale[$text]))
+           return $locale[$text];
+         return $text;
+      }
+   } else {
+      putenv ("LANG=$LANG");
+      bindtextdomain ("phpwiki", "./locale");
+      textdomain ("phpwiki");
+   }
 
    // if you are using MySQL instead of a DBM to store your
    // Wiki pages, use mysql.php instead of dbmlib.php
@@ -62,7 +85,6 @@
 /*
    // MySQL settings (thanks Arno Hollosi! <ahollosi@iname.com>)
    // Comment out the lines above (for the DBM) if you use these
-
    include "lib/mysql.php";
    $WikiPageStore = "wiki";
    $ArchivePageStore = "archive";
@@ -133,22 +155,21 @@
     * The files can also be plain text files, in which case the page name
     * is taken from the file name.
     */
-   define('WIKI_PGSRC', './pgsrc'); // Default (old) behavior.
+   define('WIKI_PGSRC', gettext("./pgsrc")); // Default (old) behavior.
    //define('WIKI_PGSRC', './wiki.zip'); // New style.
   
    $ScriptName = "index.php";
 
+   $SignatureImg = "images/signature.png";
+   $logo = "images/wikibase.png";
 
    // Template files (filenames are relative to script position)
    $templates = array(
-   	"BROWSE" =>    "templates/browse.html",
-	"EDITPAGE" =>  "templates/editpage.html",
-	"EDITLINKS" => "templates/editlinks.html",
-	"MESSAGE" =>   "templates/message.html"
+   	"BROWSE" =>    gettext("templates/browse.html"),
+	"EDITPAGE" =>  gettext("templates/editpage.html"),
+	"EDITLINKS" => gettext("templates/editlinks.html"),
+	"MESSAGE" =>   gettext("templates/message.html")
 	);
-
-   $SignatureImg = "images/signature.png";
-   $logo = "images/wikibase.png";
 
    // date & time formats used to display modification times, etc.
    // formats are given as format strings to PHP date() function
@@ -157,7 +178,25 @@
 
    // allowed protocols for links - be careful not to allow "javascript:"
    $AllowedProtocols = "http|https|mailto|ftp|news|gopher";
-   
+
+   // this defines how many page names to list when displaying
+   // the MostPopular pages; i.e. setting this to 20 will show
+   // the 20 most popular pages
+   define("MOST_POPULAR_LIST_LENGTH", 20);
+
+   // this defines how many page names to list when displaying
+   // scored related pages
+   define("NUM_RELATED_PAGES", 5);
+
+   // number of user-defined external links, i.e. "[1]"
+   define("NUM_LINKS", 12);
+
+   // try this many times if the dbm is unavailable
+   define("MAX_DBM_ATTEMPTS", 20);
+
+
+   //////////////////////////////////////////////////////////////////////
+
    // you shouldn't have to edit anyting below this line
 
    $ScriptUrl = $ServerAddress . $ScriptName;
@@ -171,13 +210,6 @@
    empty($REMOTE_HOST) ?
       ($remoteuser = $REMOTE_ADDR) : ($remoteuser = $REMOTE_HOST);
 
-
-   // number of user-defined external links, i.e. "[1]"
-   define("NUM_LINKS", 12);
-
-   // try this many times if the dbm is unavailable
-   define("MAX_DBM_ATTEMPTS", 20);
-
    // constants used for HTML output. List tags like UL and 
    // OL have a depth of one, PRE has a depth of 0.
    define("ZERO_DEPTH", 0);
@@ -185,14 +217,4 @@
 
    // constants for flags in $pagehash
    define("FLAG_PAGE_LOCKED", 1);
-
-   // this defines how many page names to list when displaying
-   // the MostPopular pages; i.e. setting this to 20 will show
-   // the 20 most popular pages
-   define("MOST_POPULAR_LIST_LENGTH", 20);
-
-   // this defines how many page names to list when displaying
-   // scored related pages
-   define("NUM_RELATED_PAGES", 5);
-
 ?>
