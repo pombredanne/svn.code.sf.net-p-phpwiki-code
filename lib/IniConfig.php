@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.73 2005-01-25 06:51:37 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.74 2005-01-29 20:35:52 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -652,6 +652,8 @@ function fixup_dynamic_configs() {
         if (!defined($var) and !empty($HTTP_SERVER_VARS[$var]))
             define($var, $HTTP_SERVER_VARS[$var]);
     }
+    if (!defined('SERVER_NAME')) define('SERVER_NAME', '127.0.0.1');
+    if (!defined('SERVER_PORT')) define('SERVER_PORT', 80);
     if (!defined('SERVER_PROTOCOL')) {
         if (empty($HTTP_SERVER_VARS['HTTPS']) || $HTTP_SERVER_VARS['HTTPS'] == 'off')
             define('SERVER_PROTOCOL', 'http');
@@ -767,6 +769,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2005/01/25 06:51:37  rurban
+// new options: TOOLBAR_PAGELINK_PULLDOWN, DATABASE_PERSISTENT
+//
 // Revision 1.72  2005/01/13 07:29:27  rurban
 // Default ACCESS_LOG_SQL = 2 on SQL/ADODB
 //
