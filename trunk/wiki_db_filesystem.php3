@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: wiki_db_filesystem.php3,v 1.2 2000-08-29 07:55:35 aredridel Exp $');
+<?php  rcs_id('$Id: wiki_db_filesystem.php3,v 1.3 2000-08-29 08:02:41 aredridel Exp $');
    /*
       Database functions:
 
@@ -115,21 +115,16 @@
 
 
    // setup for title-search
-   function InitTitleSearch($dbi, $search) { // not implemented yet
-      return;
+   function InitTitleSearch($dbi, $search) { 
       $pos['search'] = $search;
-      $pos['key'] = dbmfirstkey($dbi['wiki']);
+      $pos['data'] = GetAllWikiPageNames($dbi['wiki']);
 
       return $pos;
    }
 
    // iterating through database
-   function TitleSearchNextMatch($dbi, &$pos) { // not implemented yet
-      return;
-      while ($pos['key']) {
-         $page = $pos['key'];
-         $pos['key'] = dbmnextkey($dbi['wiki'], $pos['key']);
-
+   function TitleSearchNextMatch($dbi, &$pos) { 
+      while (list($key, $page) = each($pos['data'])) {
          if (eregi($pos['search'], $page)) {
             return $page;
          }
@@ -138,27 +133,19 @@
    }
 
    // setup for full-text search
-   function InitFullSearch($dbi, $search) { // Not implemented yet
-      return;
+   function InitFullSearch($dbi, $search) { 
       return InitTitleSearch($dbi, $search);
    }
 
    //iterating through database
-   function FullSearchNextMatch($dbi, &$pos) { // Not implemented yet.
-      return;
-      while ($pos['key']) {
-         $key = $pos['key'];
-         $pos['key'] = dbmnextkey($dbi['wiki'], $pos['key']);
-
-         $pagedata = dbmfetch($dbi['wiki'], $key);
-         // test the serialized data
-         if (eregi($pos['search'], $pagedata)) {
-	    $page['pagename'] = $key;
-            $pagedata = unserialize(UnPadSerializedData($pagedata));
-	    $page['content'] = $pagedata['content'];
-	    return $page;
-	 }
-      }
+   function FullSearchNextMatch($dbi, &$pos) { 
+      global $WikiPageStore;
+      while (list($key, $page) = each($pos['data'])) {
+         $pagedata = RetrievePage($dbi, $page, $WikiPageStore);
+         if (eregi($pos['search'], serialize($pagedata))) {
+	        return $pagedata;
+		 }
+	  }
       return 0;
    }
 
