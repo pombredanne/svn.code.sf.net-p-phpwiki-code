@@ -1,0 +1,86 @@
+$Id: README,v 1.1 2000-06-18 16:05:34 ahollosi Exp $
+
+PhpWiki distinguishes between four different templates:
+
+- template for browsing pages (default: browse.html)
+  This template is used when viewing Wiki pages.
+  
+- template for editing pages (default: editpage.html)
+  This template is used when users edit a page by clicking on
+  the EditText link.
+
+- template for editing references (default: editlinks.html)
+  This template is used when users edit references of a page
+  by clicking on the EditLinks link on the EditText page.
+
+- template for plain messages from PhpWiki (default: message.html)
+  This template is used when displaying search results, or when
+  displaying error messages.
+
+  
+The location of the template files is defined in wiki_config.php3
+The specification is relative to the index.php3 script.
+
+Template files are regular HTML files, which contain special
+placeholders. Placeholders are surrounded by '###'.
+You must not use '###' for other purposes.
+
+
+Following placeholders are provided by PhpWiki:
+
+###SCRIPTURL###
+	This is the URL of the main PhpWiki script.
+	All URL's referring to the Wiki itself should use this placeholder.
+
+###PAGE###
+	The page title. Any special HTML characters are replaced by their
+	entities. Do not use this placeholder in links. Use ###PAGEURL###
+	instead.
+
+###CONTENT###
+	The actual page content. This is either the Wikipage itself,
+	the search result, or a message text.
+
+###ALLOWEDPROTOCOLS###
+	Protocols allowed for external links and references.
+	Default: http|https|mailto|ftp|news|gopher
+
+
+The following placeholders are not available for the 'MESSAGE' template:
+
+###PAGEURL###
+	Page title encoded for use in URLs.
+
+###LASTMODIFIED###
+	Date when the page was last modified.
+
+###LASTAUTHOR###
+	Author of latest modification. Usually this is the hostname or
+	the IP address.
+
+###VERSION###
+	Revision number of the page.
+	Note: this is also used for detecting concurrent updates to a page.
+	See hidden input field in EDITPAGE template for how to use it.
+
+###IFCOPY###
+	Special placeholder. Should only be used in EDITPAGE template.
+	If EditCopy link should be shown, then ###IFCOPY### is ignored.
+	If EditCopy should not be shown, the rest of the line is deleted.
+
+
+Only for EditLinks:
+###1###, ###2###, ....
+	Placeholder for references. Up to NUM_LINKS placeholders will be
+	substituted. NUM_LINKS is defined in wiki_config.php3
+
+
+
+Examples:
+
+<A HREF="###SCRIPTURL###">the entry (default) page</A>
+<A HREF="###SCRIPTURL###?###PAGEURL###">the current page</A>
+<A HREF="###SCRIPTURL###?FindPage">the FindPage page</A>
+<head><title>PhpWiki Page: ###PAGE###</title></head>
+
+see default templates for more examples.
