@@ -1,4 +1,1 @@
-Le 20 pagine piu` popolari di questo wiki sono:
-(hitcount, pagename)
-
 <?plugin MostPopular limit=20 ?>
