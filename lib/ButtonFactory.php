@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.7 2002-01-19 22:32:01 dairiki Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.8 2002-01-19 22:49:25 carstenklapp Exp $');
 
 /**
  * A class representing a clickable "button".
@@ -168,6 +168,15 @@ class ButtonFactory {
             $attr['rev'] = $version;
         
         return $this->makeButton($action_page, WikiURL($action_page, $attr), 'wikiaction');
+    }
+    // This allows a custom label for makeActionPageButton.
+    function makeLabelActionPageButton ($label, $action_page, $page_or_rev = false) {
+        extract($this->_get_name_and_rev($page_or_rev));
+        $attr['page'] = $pagename;
+        if ($version)
+            $attr['rev'] = $version;
+        
+        return $this->makeButton($label, WikiURL($action_page, $attr), 'wikiaction');
     }
 
     /**
