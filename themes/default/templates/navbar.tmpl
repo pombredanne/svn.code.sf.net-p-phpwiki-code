@@ -1,0 +1,28 @@
+<?php // -*-html-*- ?>
+<!-- $Id: navbar.tmpl,v 1.1 2002-01-18 19:23:11 dairiki Exp $ -->
+<?php
+
+$BF = &$ButtonFactory;
+$s = $Theme->buttonSep;
+
+?>
+<!-- The top navigation/search bar -->
+<form action="<?= WikiURL(_("TitleSearch"))?>"
+      method="get" accept-charset="<?=CHARSET?>">
+  <div class="toolbar" id="navbar">
+   <?= $BF->makeLinkButton(_("RecentChanges")) ?>
+   <?=$s?><?= $BF->makeLinkButton(_("FindPage")) ?>
+   <?=$s?><input type="hidden" name="auto_redirect" value="1" />
+      <input type="text"  name="s" size="12"
+             title='<?=_("Quick Search")?>'
+             onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
+             onmouseout="window.status=''; return true;" />
+    <?php if (!empty($PAGE)) { ?>
+     <?=$s?><?= $ButtonFactory->makeActionPageButton(_("LikePages")) ?>
+     <?=$s?><?= $ButtonFactory->makeActionPageButton(_("BackLinks")) ?>
+    <?php } ?>
+    <?php if ($user->is_admin()) { ?>
+     <?=$s?><?= $ButtonFactory->makeLinkButton(_("PhpWikiAdministration")) ?>
+    <?php } ?>
+  </div>
+</form>
