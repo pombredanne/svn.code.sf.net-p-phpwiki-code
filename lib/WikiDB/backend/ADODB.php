@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.5 2002-02-08 20:30:48 lakka Exp $');
+rcs_id('$Id: ADODB.php,v 1.6 2002-02-08 22:51:26 lakka Exp $');
 
 /*This file is part of PhpWiki.
 
@@ -592,14 +592,21 @@ extends WikiDB_backend
         $include_minor_revisions = false;
         $exclude_major_revisions = false;
         $include_all_revisions = false;
-        extract($params);
+		extract($params);
 
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
         $pick = array();
-        if ($since)
-            $pick[] = "mtime >= $since";
+        $order = "DESC";
+		if ($since < 0){
+		    $order = "ASC";
+			$since = -$since;
+			$pick[] = "mtime <= $since";
+			}
+		elseif ($since > 0){
+		    $pick[] = "mtime >= $since";
+		}
         
         if ($include_all_revisions) {
             // Include all revisions of each page.
@@ -634,7 +641,6 @@ extends WikiDB_backend
                 $pick[] ='version=latestversion';
             }
         }
-
         $limit = $limit ? $limit : -1;
         $where_clause = $join_clause;
         if ($pick)
@@ -645,7 +651,7 @@ extends WikiDB_backend
         $result = $dbh->SelectLimit("SELECT $page_tbl.*,$version_tbl.*"
                               . " FROM $table"
                               . " WHERE $where_clause"
-                              . " ORDER BY mtime DESC",
+                              . " ORDER BY mtime $order",
                               $limit);
 
         return new WikiDB_backend_ADODB_iter($this, $result);

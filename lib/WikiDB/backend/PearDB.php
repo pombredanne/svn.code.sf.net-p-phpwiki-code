@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.23 2002-02-08 20:30:48 lakka Exp $');
+rcs_id('$Id: PearDB.php,v 1.24 2002-02-08 22:51:26 lakka Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -517,8 +517,15 @@ extends WikiDB_backend
         extract($this->_table_names);
 
         $pick = array();
-        if ($since)
-            $pick[] = "mtime >= $since";
+        $order = "DESC";
+		if ($since < 0){
+		    $order = "ASC";
+			$since = -$since;
+			$pick[] = "mtime <= $since";
+			}
+		elseif ($since > 0){
+		    $pick[] = "mtime >= $since";
+		}
         
         if ($include_all_revisions) {
             // Include all revisions of each page.
@@ -563,7 +570,7 @@ extends WikiDB_backend
         $result = $dbh->query("SELECT $page_tbl.*,$version_tbl.*"
                               . " FROM $table"
                               . " WHERE $where_clause"
-                              . " ORDER BY mtime DESC"
+                              . " ORDER BY mtime $order"
                               . $limitclause);
 
         return new WikiDB_backend_PearDB_iter($this, $result);
