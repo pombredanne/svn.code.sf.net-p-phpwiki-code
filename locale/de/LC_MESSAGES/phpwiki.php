@@ -69,11 +69,11 @@ $locale["Edit:"] =
 $locale["FindPage"] =
    "SeiteFinden";
 $locale["Full Text Search"] =
-   "Volltextsuch";
+   "Volltextsuche";
 $locale["Full text search results for '%s'"] =
    "Volltext-Suchresultate nach »%s«";
 $locale["FullTextSearch"] =
-   "Volltextsuch";
+   "Volltextsuche";
 $locale["Get BackLinks for [pagename]"] =
    "Hole BackLinks für [pagename]";
 $locale["Get debugging information for [pagename]."] =
@@ -225,11 +225,11 @@ $locale["This is a minor change."] =
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert werden.";
 $locale["Title Search"] =
-   "Titelsuch";
+   "Titelsuche";
 $locale["Title search results for '%s'"] =
    "Titel-Suchresultate nach »%s«";
 $locale["TitleSearch"] =
-   "Titelsuch";
+   "Titelsuche";
 $locale["To cancel press the \"Back\" button of your browser."] =
    "Anderenfalls benütze die »Zurück« Funktion deines Browsers.";
 $locale["Unlock page"] =
