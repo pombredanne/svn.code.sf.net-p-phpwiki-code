@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.1 2001-12-07 22:15:43 dairiki Exp $');
+<?php rcs_id('$Id: RssWriter.php,v 1.2 2001-12-14 20:16:53 dairiki Exp $');
 /*
  * Code for creating RSS 1.0.
  */
@@ -114,6 +114,8 @@ class XmlElement
     
 };
 
+// Encoding for RSS output.
+define('RSS_ENCODING', 'ISO-8859-1');
 
 /**
  * A class for writing RSS 1.0.
@@ -167,7 +169,7 @@ class RssWriter extends XmlElement
     // and can include:
     //  'description', 'URI'
     function addItem($properties, $uri = false) {
-	$this->_items[] = $this->__node('item', $properties, $uri);
+        $this->_items[] = $this->__node('item', $properties, $uri);
     }
 
     // Args should include:
@@ -176,7 +178,6 @@ class RssWriter extends XmlElement
     //  'URI'
     function image($properties, $uri = false) {
         $this->_image = $this->__node('image', $properties, $uri);
-
     }
 
     // Args should include:
@@ -217,17 +218,21 @@ class RssWriter extends XmlElement
 	if ($items)
 	    $this->add($items);
 
+        $this->__spew();
         $this->_finished = true;
     }
             
-    /**
-     * Get XML representation of RSS.
-     */
-    function asXML () {
-        $this->finish();
-	return $this->asString();
-    }
 
+    /**
+     * Write output to HTTP client.
+     */
+    function __spew() {
+        header("Content-Type: application/xml; charset=" . RSS_ENCODING);
+        printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", RSS_ENCODING);
+        echo $this->asString();
+    }
+        
+    
     /**
      * Create a new RDF <i>typedNode</i>.
      */
