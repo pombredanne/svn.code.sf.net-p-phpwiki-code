@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.10 2004-05-15 01:19:41 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.11 2004-05-15 13:06:17 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -45,6 +45,79 @@ rcs_id('$Id: upgrade.php,v 1.10 2004-05-15 01:19:41 rurban Exp $');
  */
 require_once("lib/loadsave.php");
 
+/**
+ * TODO: check for the pgsrc_version number, not the revision
+ */
+function doPgsrcUpdate(&$request,$pagename,$path,$filename) {
+    $dbi = $request->getDbh(); 
+    $page = $dbi->getPage($pagename);
+    if ($page->exists()) {
+        // check mtime: update automatically if pgsrc is newer
+        $rev = $page->getCurrentRevision();
+        $page_mtime = $rev->get('mtime');
+        $data  = implode("", file($path."/".$filename));
+        if (($parts = ParseMimeifiedPages($data))) {
+            usort($parts, 'SortByPageVersion');
+            reset($parts);
+            $pageinfo = $parts[0];
+            $stat  = stat($path."/".$filename);
+            $new_mtime = @$pageinfo['versiondata']['mtime'];
+            if (!$new_mtime)
+                $new_mtime = @$pageinfo['versiondata']['lastmodified'];
+            if (!$new_mtime)
+                $new_mtime = @$pageinfo['pagedata']['date'];
+            if (!$new_mtime)
+                $new_mtime = $stat[9];
+            if ($new_mtime > $page_mtime) {
+                echo "$path/$pagename: newer than the existing page.",
+                    " replace ($new_mtime &gt; $page_mtime)<br />\n";
+                LoadAny($request,$path."/".$filename);
+                echo "<br />\n";
+            } else {
+                echo "$path/$pagename: older than the existing page.",
+                    " skipped.<br />\n";
+            }
+        } else {
+            echo "$path/$pagename: unknown format.",
+                " skipped.<br />\n";
+        }
+    } else {
+        echo "$pagename does not exist<br />\n";
+        LoadAny($request,$path."/".$filename);
+        echo "<br />\n";
+    }
+}
+
+/** need the english filename (required precondition: urlencode == urldecode)
+ *  returns the plugin name.
+ */ 
+function isActionPage($filename) {
+    static $special = array("DebugInfo" 	=> "_BackendInfo",
+                            "PhpWikiRecentChanges" => "RssFeed",
+                            "ProjectSummary"  	=> "RssFeed",
+                            "RecentReleases"  	=> "RssFeed",
+                            );
+    $base = preg_replace("/\..{1,4}$/","",basename($filename));
+    if (isset($special[$base])) return $special[$base];
+    if (FindFile("lib/plugin/".$base.".php",true)) return $base;
+    else return false;
+}
+
+function CheckActionPageUpdate(&$request) {
+    echo "<h3>",_("check for necessary ActionPage updates"),"</h3>\n";
+    $dbi = $request->getDbh(); 
+    $path = FindFile('pgsrc');
+    $pgsrc = new fileSet($path);
+    // most actionpages have the same name as the plugin
+    foreach ($pgsrc->getFiles() as $filename) {
+        if (substr($filename,-1,1) == '~') continue;
+        $pagename = urldecode($filename);
+        if (isActionPage($filename)) {
+            doPgsrcUpdate($request, $pagename, $path, $filename);
+        }
+    }
+}
+
 // see loadsave.php for saving new pages.
 function CheckPgsrcUpdate(&$request) {
     echo "<h3>",_("check for necessary pgsrc updates"),"</h3>\n";
@@ -52,41 +125,24 @@ function CheckPgsrcUpdate(&$request) {
     $path = FindLocalizedFile(WIKI_PGSRC);
     $pgsrc = new fileSet($path);
     // fixme: verification, ...
+    $isHomePage = false;
     foreach ($pgsrc->getFiles() as $filename) {
         if (substr($filename,-1,1) == '~') continue;
         $pagename = urldecode($filename);
-        $page = $dbi->getPage($pagename);
-        if ($page->exists()) {
-            // check mtime: update automatically if pgsrc is newer
-            $rev = $page->getCurrentRevision();
-            $page_mtime = $rev->get('mtime');
-            $data  = implode("", file($path."/".$filename));
-            if (($parts = ParseMimeifiedPages($data))) {
-                usort($parts, 'SortByPageVersion');
-                reset($parts);
-                $pageinfo = $parts[0];
-                $stat  = stat($path."/".$filename);
-                $new_mtime = @$pageinfo['versiondata']['mtime'];
-                if (!$new_mtime)
-                    $new_mtime = @$pageinfo['versiondata']['lastmodified'];
-                if (!$new_mtime)
-                    $new_mtime = @$pageinfo['pagedata']['date'];
-                if (!$new_mtime)
-                    $new_mtime = $stat[9];
-                if ($new_mtime > $page_mtime) {
-                    echo "$path/$pagename: newer than the existing page. replace ($new_mtime &gt; $page_mtime)<br />\n";
-                    LoadAny($request,$path."/".$filename);
-                    echo "<br />\n";
-                } else {
-                    echo "$path/$pagename: older than the existing page. skipped.<br />\n";
-                }
-            } else {
-                echo "$path/$pagename: unknown format, skipped.<br />\n";
-            }
-        } else {
-            echo "$pagename does not exist<br />\n";
-            LoadAny($request,$path."/".$filename);
-            echo "<br />\n";
+        // don't ever update the HomePage
+        if (defined(HOME_PAGE))
+            if ($pagename == HOME_PAGE) $isHomePage = true;
+        else
+            if ($pagename == _("HomePage")) $isHomePage = true;
+        if ($pagename == "HomePage") $isHomePage = true;
+        if ($isHomePage) {
+            echo "$path/$pagename: always skip the HomePage.",
+                " skipped<br />\n";
+            $isHomePage = false;
+            continue;
+        }
+        if (!isActionPage($filename)) {
+            doPgsrcUpdate($request,$pagename,$path,$filename);
         }
     }
     return;
@@ -323,6 +379,7 @@ function DoUpgrade($request) {
     }
 
     StartLoadDump($request, _("Upgrading this PhpWiki"));
+    CheckActionPageUpdate($request);
     CheckDatabaseUpdate($request);
     CheckPgsrcUpdate($request);
     //CheckThemeUpdate($request);
@@ -332,6 +389,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.10  2004/05/15 01:19:41  rurban
+ upgrade prefix fix by Kai Krakow
+
  Revision 1.9  2004/05/14 11:33:03  rurban
  version updated to 1.3.11pre
  upgrade stability fix
