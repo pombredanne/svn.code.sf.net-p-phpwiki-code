@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.4 2002-01-22 03:17:47 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.5 2002-01-24 00:27:55 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -126,7 +126,7 @@ class XmlElement
     function asString () {
         $str = '';
         foreach ($this->_content as $c)
-            $val .= AsString($c);
+            $str .= AsString($c);
         return trim($str);
     }
 
@@ -274,8 +274,10 @@ function AsString ($val) {
             $str .= AsString($x);
         return $str;
     }
+    
     return (string) $val;
 }
+
 
     
 function fmt ($fs /* , ... */) {
