@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-topbottombars.css,v 1.5 2002-02-12 23:55:09 carstenklapp Exp $
+ * $Id: phpwiki-topbottombars.css,v 1.6 2002-02-13 01:22:27 carstenklapp Exp $
  *
  */
 @import url("phpwiki.css");
@@ -8,11 +8,10 @@
 /**
  * General settings
  */
-body{
-  padding-top: 2.5em;
+body {
+  padding-top: 9ex;
   padding-bottom: 9ex;
 }
-div.wikitext { margin-top: 6ex; }
 
 
 /**
