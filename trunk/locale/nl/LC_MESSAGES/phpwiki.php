@@ -156,8 +156,6 @@ $locale["Width"] =
    "Breedte";
 $locale["You are about to remove '%s' permanently!"] =
    "Je staat op het punt '%s' voorgoed te verwijderen!";
-$locale["You are signed in as %s"] =
-   "Je bent ingelogd als %s";
 $locale["You must specify a directory to dump to"] =
    "Je moet een directory specificeren om in te storten";
 $locale["Your careful attention to detail is much appreciated."] =

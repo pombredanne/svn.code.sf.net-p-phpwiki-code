@@ -90,6 +90,8 @@ $locale["%s: error while handling error:"] =
    "%s: Fehler während der Fehlerbehandlung von:";
 $locale["%s: file not found"] =
    "»%s«: Datei nicht gefunden";
+$locale["%s: no such class"] =
+   "Unbekannte Klasse: »%s«";
 $locale["%s: not defined"] =
    "%s: nicht definiert";
 $locale["'%s': Bad page name"] =
@@ -158,8 +160,6 @@ $locale["ACL"] =
    "ACL";
 $locale["AUTH_GROUP_FILE not defined"] =
    "AUTH_GROUP_FILE nicht definiert";
-$locale["Acck! Revision %s of %s seems to have been deleted!"] =
-   "Hoppla! Es scheint, die Version %s von %s wurde gelöscht!";
 $locale["Action page"] =
    "Aktion Seite";
 $locale["Add %s hours to the server's local time when reporting times."] =
@@ -168,6 +168,8 @@ $locale["Add a Comment"] =
    "Kommentar hinzufügen";
 $locale["AddComment"] =
    "NeuerKommentar";
+$locale["AddCommentPlugin"] =
+   "NeuerKommentarPlugin";
 $locale["AddingPages"] =
    "SeitenErzeugen";
 $locale["Adjust"] =
@@ -260,8 +262,6 @@ $locale["Can't mix '%s' with '%s' type format strings"] =
    "Kann »%s« Typ-Formatzeichenketten nicht mit »%s« vermischen.";
 $locale["Can't open zip file '%s' for reading"] =
    "Konnte zip Datei »%s« nich öffnen zum lesen";
-$locale["Can't set locale: '%s'"] =
-   "Kann Locale »%s« nicht setzen";
 $locale["Cancel"] =
    "Abbrechen";
 $locale["Cannot create directory '%s'"] =
@@ -310,8 +310,6 @@ $locale["CommentPlugin"] =
    "KommentarPlugin";
 $locale["Comments"] =
    "Kommentare";
-$locale["Comments on %s:"] =
-   "Kommentar zu %s:";
 $locale["Complete."] =
    "Fertig.";
 $locale["Conflicting Edits!"] =
@@ -342,6 +340,8 @@ $locale["CreatePage"] =
    "NeueSeite";
 $locale["CreateToc"] =
    "InhaltsVerzeichnis";
+$locale["CreateTocPlugin"] =
+   "InhaltsVerzeichnisPlugin";
 $locale["Created directory '%s' for the page dump..."] =
    "Ein Verzeichnis »%s« wurde erzeugt, um die Dateien abzulegen...";
 $locale["Creating pages"] =
@@ -350,8 +350,6 @@ $locale["Current Language"] =
    "Ausgewählte Sprache";
 $locale["Current Theme"] =
    "Ausgewählte Darstellung";
-$locale["Current directory: "] =
-   "Aktuelles Verzeichnis: ";
 $locale["Current language: '%s'"] =
    "Ihre Sprache: »%s«";
 $locale["Current theme: '%s'"] =
@@ -548,8 +546,6 @@ $locale["HelloWorld"] =
    "HalloWelt";
 $locale["HelloWorldPlugin"] =
    "HalloWeltPlugin";
-$locale["Here you can override site-specific default values. Currently not recommended!"] =
-   "Hier können Sie einige Benutzerfestwerte überwinden. Wird noch nicht empholen dass diese geändert würden!";
 $locale["Hide %s:"] =
    "%s verstecken.";
 $locale["Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections."] =
@@ -646,8 +642,6 @@ $locale["Last Modified"] =
    "Zuletzt geändert";
 $locale["Last Modified:"] =
    "Zuletzt Geändert:";
-$locale["Last Post"] =
-   "Letzte Nachricht";
 $locale["Last Summary"] =
    "Letzte Zusammenfassung";
 $locale["Last Summary:"] =
@@ -778,8 +772,6 @@ $locale["No other page links to %s yet."] =
    "Noch keine Seiten sind mit %s verlinkt.";
 $locale["No page links to %s."] =
    "Keine Seiten sind mit %s verlinkt.";
-$locale["No page specified for %s"] =
-   "Keine Seite angegeben für %s";
 $locale["No pagedata for %s"] =
    "Keine Daten für Seite %s";
 $locale["No pages changed."] =
@@ -1006,8 +998,6 @@ $locale["RecentEdits"] =
    "GeringfügigeÄnderungen";
 $locale["Recursive redirect to self: '%s'"] =
    "Eigenbezogene Selbstrückleitung: »%s«";
-$locale["Recursively get BackLinks or links for %s"] =
-   "Alle BackLinks für %s (rekursiv)";
 $locale["Redirect"] =
    "Weiterleiten";
 $locale["Redirect to an external url"] =
@@ -1126,8 +1116,6 @@ $locale["Show summary information of the current user sessions."] =
    "Zeige Überblick über alle aktuellen Benutzersessions";
 $locale["Show translations of various words or pages"] =
    "Zeige Übersetzungen für verschiedene Wörter oder Seiten";
-$locale["Sidebar"] =
-   "Sidebar";
 $locale["Sign In"] =
    "Anmelden";
 $locale["Sign Out"] =
@@ -1446,8 +1434,6 @@ $locale["Yes"] =
    "Ja";
 $locale["You are about to remove '%s' permanently!"] =
    "Sie sind im Begriff »%s« permanent zu löschen!";
-$locale["You are signed in as %s"] =
-   "Sie sind angemeldet als %s";
 $locale["You are viewing an old revision of this page."] =
    "Sie sehen eine alte Version dieser Seite.";
 $locale["You can personalize various settings in %s."] =
