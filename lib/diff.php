@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: diff.php,v 1.18 2001-12-13 18:29:24 dairiki Exp $');
+rcs_id('$Id: diff.php,v 1.19 2001-12-14 20:15:02 dairiki Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -10,6 +10,15 @@ rcs_id('$Id: diff.php,v 1.18 2001-12-13 18:29:24 dairiki Exp $');
 
 require_once('lib/difflib.php');
 
+/**
+ * HTML unified diff formatter.
+ *
+ * This class formats a diff into a CSS-based
+ * unified diff format.
+ *
+ * Within groups of changed lines, diffs are highlit
+ * at the character-diff level.
+ */
 class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
 {
     function HtmlUnifiedDiffFormatter($context_lines = 4) {
@@ -113,6 +122,16 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
     }
 }
 
+/**
+ * HTML table-based unified diff formatter.
+ *
+ * This class formats a diff into a table-based
+ * unified diff format.  (Similar to what was produced
+ * by previous versions of PhpWiki.)
+ *
+ * Within groups of changed lines, diffs are highlit
+ * at the character-diff level.
+ */
 class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
 {
     function TableUnifiedDiffFormatter($context_lines = 4) {

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: difflib.php,v 1.1 2001-12-13 05:10:04 dairiki Exp $');
+rcs_id('$Id: difflib.php,v 1.2 2001-12-14 20:15:02 dairiki Exp $');
 // difflib.php
 //
 // A PHP diff engine for phpwiki.
@@ -18,10 +18,6 @@ class _DiffOp {
     var $orig;
     var $final;
     
-    function _DiffOp () {
-        trigger_error("pure virtual", E_USER_ERROR);
-    }
-
     function reverse() {
         trigger_error("pure virtual", E_USER_ERROR);
     }
@@ -96,6 +92,9 @@ class _DiffOp_Change extends _DiffOp {
  *
  * Finally, some ideas (subdivision by NCHUNKS > 2, and some optimizations)
  * are my own.
+ *
+ * @author Geoffrey T. Dairiki
+ * @access private
  */
 class _DiffEngine
 {
@@ -475,14 +474,19 @@ class _DiffEngine
 }
 
 /**
- * Class representing a diff between two files.
+ * Class representing a 'diff' between two sequences of strings.
  */
 class Diff 
 {
     var $edits;
 
     /**
-     * Compute diff between lists of strings.
+     * Constructor.
+     * Computes diff between sequences of strings.
+     *
+     * @param $from_lines array An array of strings.
+     *        (Typically these are lines from a file.)
+     * @param $to_lines array An array of strings.
      */
     function Diff($from_lines, $to_lines) {
         $eng = new _DiffEngine;
@@ -497,9 +501,8 @@ class Diff
      *
      *  $diff = new Diff($lines1, $lines2);
      *  $rev = $diff->reverse();
-     *
-     *  // reconstruct $lines1 from $lines2:
-     *  $out = $rev->apply($lines2);
+     * @return object A Diff object representing the inverse of the
+     *                original diff.
      */
     function reverse () {
 	$rev = $this;
@@ -511,7 +514,9 @@ class Diff
     }
 
     /**
-     * Return true if two files were equal.
+     * Check for empty diff.
+     *
+     * @return bool True iff two sequences were identical.
      */
     function isEmpty () {
         foreach ($this->edits as $edit) {
@@ -525,6 +530,8 @@ class Diff
      * Compute the length of the Longest Common Subsequence (LCS).
      *
      * This is mostly for diagnostic purposed.
+     *
+     * @return int The length of the LCS.
      */
     function lcs () {
 	$lcs = 0;
@@ -537,6 +544,11 @@ class Diff
 
     /**
      * Get the original set of lines.
+     *
+     * This reconstructs the $from_lines parameter passed to the
+     * constructor.
+     *
+     * @return array The original sequence of strings.
      */
     function orig() {
         $lines = array();
@@ -550,6 +562,11 @@ class Diff
 
     /**
      * Get the final set of lines.
+     *
+     * This reconstructs the $to_lines parameter passed to the
+     * constructor.
+     *
+     * @return array The sequence of strings.
      */
     function final() {
         $lines = array();
@@ -591,11 +608,37 @@ class Diff
     }
 }
 
+/**
+ * A class to format Diffs
+ *
+ * This class formats the diff in classic diff format.
+ * It is intended that this class be customized via inheritance,
+ * to obtain fancier outputs.
+ */
 class DiffFormatter
 {
+    /**
+     * Number of leading context "lines" to preserve.
+     *
+     * This should be left at zero for this class, but subclasses
+     * may want to set this to other values.
+     */
     var $leading_context_lines = 0;
+
+    /**
+     * Number of trailing context "lines" to preserve.
+     *
+     * This should be left at zero for this class, but subclasses
+     * may want to set this to other values.
+     */
     var $trailing_context_lines = 0;
-    
+
+    /**
+     * Format a diff.
+     *
+     * @param $diff object A Diff object.
+     * @return string The formatted output.
+     */
     function format($diff) {
 
         $xi = $yi = 1;
@@ -673,7 +716,7 @@ class DiffFormatter
         }
         $this->_end_block();
     }
-        
+
     function _start_diff() {
     }
 
@@ -719,6 +762,11 @@ class DiffFormatter
     }
 }
 
+/**
+ * "Unified" diff formatter.
+ *
+ * This class formats the diff in classic "unified diff" format.
+ */
 class UnifiedDiffFormatter extends DiffFormatter
 {
     function UnifiedDiffFormatter($context_lines = 4) {
