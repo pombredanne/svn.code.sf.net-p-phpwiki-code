@@ -1,0 +1,325 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2000-12-22 21:16+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: admin.php:26
+msgid "You entered an invalid login or password."
+msgstr ""
+
+#: admin.php:47
+#, c-format
+msgid "You are about to remove '%s' permanently!"
+msgstr ""
+
+#: admin.php:50
+#, c-format
+msgid "Click %shere%s to remove the page now."
+msgstr ""
+
+#: admin.php:53
+msgid "Otherwise press the \"Back\" button of your browser."
+msgstr ""
+
+#: admin.php:55
+msgid "Function not yet implemented."
+msgstr ""
+
+#: admin.php:57 admin.php:65
+msgid "Remove page"
+msgstr ""
+
+#: admin.php:63
+#, c-format
+msgid "Removed page '%s' succesfully."
+msgstr ""
+
+#: lib/config.php:162
+msgid "templates/browse.html"
+msgstr ""
+
+#: lib/config.php:163
+msgid "templates/editpage.html"
+msgstr ""
+
+#: lib/config.php:164
+msgid "templates/editlinks.html"
+msgstr ""
+
+#: lib/config.php:165
+msgid "templates/message.html"
+msgstr ""
+
+#: lib/config.php:181
+msgid "./pgsrc"
+msgstr ""
+
+#: lib/diff.php:682
+#, c-format
+msgid "WikiDiff::apply: line count mismatch: %s != %s"
+msgstr ""
+
+#: lib/diff.php:742
+msgid "WikiDiff::_check: failed"
+msgstr ""
+
+#: lib/diff.php:752
+msgid "WikiDiff::_check: edit sequence is non-optimal"
+msgstr ""
+
+#: lib/diff.php:756
+#, c-format
+msgid "WikiDiff Okay: LCS = %s"
+msgstr ""
+
+#: lib/diff.php:997
+msgid "Current page:"
+msgstr ""
+
+#: lib/diff.php:1001 lib/diff.php:1019
+#, c-format
+msgid "version %s"
+msgstr ""
+
+#: lib/diff.php:1003 lib/diff.php:1021
+#, c-format
+msgid "last modified on %s"
+msgstr ""
+
+#: lib/diff.php:1006 lib/diff.php:1024
+#, c-format
+msgid "by %s"
+msgstr ""
+
+#: lib/diff.php:1010 lib/diff.php:1028
+msgid "None"
+msgstr ""
+
+#: lib/diff.php:1015
+msgid "Archived page:"
+msgstr ""
+
+#: lib/diff.php:1037
+msgid "Versions are identical"
+msgstr ""
+
+#: lib/diff.php:1045
+#, c-format
+msgid "Diff of %s."
+msgstr ""
+
+#: lib/display.php:14
+msgid "FrontPage"
+msgstr ""
+
+#: lib/display.php:31 lib/editpage.php:50
+#, c-format
+msgid "Describe %s here."
+msgstr ""
+
+#: lib/editpage.php:19
+#, c-format
+msgid "Copy of %s"
+msgstr ""
+
+#: lib/editpage.php:23
+msgid "No page name passed into editpage!"
+msgstr ""
+
+#: lib/editpage.php:31 lib/savepage.php:52
+msgid "This page has been locked by the administrator and cannot be edited."
+msgstr ""
+
+#: lib/editpage.php:33 lib/savepage.php:32 lib/savepage.php:53
+msgid "Sorry for the inconvenience."
+msgstr ""
+
+#: lib/editpage.php:35 lib/savepage.php:54
+#, c-format
+msgid "Problem while editing %s"
+msgstr ""
+
+#: lib/fullsearch.php:15
+#, c-format
+msgid "Searching for \"%s\" ....."
+msgstr ""
+
+#: lib/fullsearch.php:45
+#, c-format
+msgid "%d matches found in %d pages."
+msgstr ""
+
+#: lib/fullsearch.php:48
+msgid "Full Text Search Results"
+msgstr ""
+
+#: lib/msql.php:29 lib/mysql.php:36
+msgid "Cannot establish connection to database, giving up."
+msgstr ""
+
+#: lib/msql.php:31 lib/msql.php:37
+#, c-format
+msgid "Error message: %s"
+msgstr ""
+
+#: lib/msql.php:35 lib/mysql.php:42
+#, c-format
+msgid "Cannot open database %s, giving up."
+msgstr ""
+
+#: lib/msql.php:210 lib/msql.php:286
+#, c-format
+msgid "Insert/update failed: %s"
+msgstr ""
+
+#: lib/msql.php:221 lib/msql.php:296
+#, c-format
+msgid "Delete on %s failed: %s"
+msgstr ""
+
+#: lib/msql.php:237 lib/msql.php:312
+#, c-format
+msgid "Insert into %s failed: %s"
+msgstr ""
+
+#: lib/mysql.php:38 lib/mysql.php:44 lib/mysql.php:118 lib/mysql.php:158
+#, c-format
+msgid "MySQL error: %s"
+msgstr ""
+
+#: lib/mysql.php:116
+#, c-format
+msgid "Error writing page '%s'"
+msgstr ""
+
+#: lib/mysql.php:156
+#, c-format
+msgid "Cannot delete '%s' from table '%s'"
+msgstr ""
+
+#: lib/pageinfo.php:9
+msgid "Enter a page name"
+msgstr ""
+
+#: lib/pageinfo.php:10 lib/stdlib.php:239
+msgid "Go"
+msgstr ""
+
+#: lib/pageinfo.php:21
+msgid "Show the page source and references"
+msgstr ""
+
+#: lib/pageinfo.php:26 lib/pageinfo.php:75
+msgid "PageInfo"
+msgstr ""
+
+#: lib/pageinfo.php:36
+#, c-format
+msgid "Page name '%s' is not in the database"
+msgstr ""
+
+#: lib/pageinfo.php:64
+msgid "Current version"
+msgstr ""
+
+#: lib/pageinfo.php:70
+msgid "Archived version"
+msgstr ""
+
+#: lib/savepage.php:18
+msgid ""
+"PhpWiki is unable to save your changes, because another user edited and "
+"saved the page while you were editing the page too. If saving proceeded now "
+"changes from the previous author would be lost."
+msgstr ""
+
+#: lib/savepage.php:20
+msgid "In order to recover from this situation follow these steps:"
+msgstr ""
+
+#: lib/savepage.php:22
+msgid "Use your browser's <b>Back</b> button to go back to the edit page."
+msgstr ""
+
+#: lib/savepage.php:24
+msgid ""
+"Copy your changes to the clipboard or to another temporary place (e.g. text "
+"editor)."
+msgstr ""
+
+#: lib/savepage.php:26
+msgid ""
+"<b>Reload</b> the page. You should now see the most current version of the "
+"page. Your changes are no longer there."
+msgstr ""
+
+#: lib/savepage.php:28
+msgid ""
+"Make changes to the file again. Paste your additions from the clipboard (or "
+"text editor)."
+msgstr ""
+
+#: lib/savepage.php:30
+msgid "Press <b>Save</b> again."
+msgstr ""
+
+#: lib/savepage.php:36
+#, c-format
+msgid "Problem while updating %s"
+msgstr ""
+
+#: lib/savepage.php:76
+#, c-format
+msgid "Thank you for editing %s."
+msgstr ""
+
+#: lib/savepage.php:106
+msgid "Your careful attention to detail is much appreciated."
+msgstr ""
+
+#: lib/setupwiki.php:21
+#, c-format
+msgid "Inserting page %s, version %s from %s"
+msgstr ""
+
+#: lib/stdlib.php:36
+msgid "WikiFatalError"
+msgstr ""
+
+#: lib/stdlib.php:53
+#, c-format
+msgid "%d best incoming links:"
+msgstr ""
+
+#: lib/stdlib.php:63
+#, c-format
+msgid "%d best outgoing links:"
+msgstr ""
+
+#: lib/stdlib.php:74
+#, c-format
+msgid "%d most popular nearby:"
+msgstr ""
+
+#: lib/stdlib.php:207 lib/stdlib.php:215
+msgid "Search"
+msgstr ""
+
+#: lib/stdlib.php:330
+msgid "Stack bounds exceeded in SetHTMLOutputMode"
+msgstr ""
+
+#: lib/stdlib.php:384 lib/stdlib.php:445
+msgid "RecentChanges"
+msgstr ""

@@ -1,0 +1,115 @@
+'''Alinea's'''
+
+	* Spring alinea's niet in (zoals engelstaligen dat doen).
+
+	* Begin een nieuwe regel en vul uit waar nodig.
+
+	* Gebruik lege regels als scheiding.
+
+	* Vier of meer mintekens maken een horizontale lijn.
+
+	* %%''''% maakt een regelbreuk (ook in koppen en lijsten).
+
+
+'''Lijsten'''
+
+	* tab-* voor niveau een.
+
+		* tab-tab-* voor niveau twee, enz.
+
+	* Gebuik * voor gepunteerde lijsten, 1. genummerde lijsten (meng
+maar wat raak).
+
+	* tab-Term:-tab Term voor definitie lijsten.
+
+	* Een regel voor elk punt.
+
+	* Other leading whitespace signals preformatted text, changes font.
+
+	* Andere witruimte aan het begin betekent geformatteerde tekst en
+verandert het font.
+
+
+'''Koppen'''
+
+	* '!' aan het begin van een regel maakt een kleine kop.
+
+	* '!!' aan het begin van een regel maakt een middelgrote kop.
+
+	* '!!!' aan het begin van een regel maakt een grote kop.
+
+
+'''Lettertypen'''
+
+	* Spring in met een of meer spaties voor een niet proportioneel font:
+
+ Dit is niet proportioneel
+En dit lekker wel.
+
+
+'''Ingesprongen Alinea's'''
+''(Citaten)''
+
+	* tab-space-:-tab -- veel gebruikt (met nadruk) voor citaten.  (Zie
+BlokCitatenNadoen)
+
+
+'''Nadruk'''
+
+	* Gebruik twee paar enkele aanhalingtekens ('') voor nadruk (meestal
+cursief).
+
+	* Gebuik drie paar enkele aanhalingtekens (''') voor sterke nadruk
+(meestal vet).
+
+	* Gebruik vijf paar enkele aanhalingstekens ('''''), of drie binnen
+dubbele, voor een ander soort van nadruk (VetCursiefInWiki), maar wees
+op je hoede voor luizen in de Wiki nadruk logica...
+
+	* Nadruk kan meerdere malen in een regel worden gebruikt, maar kan
+regelbreuken niet oversteken.
+
+
+'''Verwijzingen'''
+
+	* Koppelingen naar andere pagina's binnen de Wiki worden gemaakt door
+de naam van de pagina in vierkante haken te zetten:
+[dit is een paginakoppeling].
+
+	* Koppelingen naar externe pagina's gaan zo: [http://www.lilypond.org].
+
+	* Je kunt de koppelingen naar externe pagina's een naam geven, door
+het tiepen van naam, een staaf (|) en dan de koppeling: [Jan's thuispagina |
+http://www.xs4all.nl/~jantien].
+
+	* Oude Wiki koppeling wordt nog steeds ondersteund:
+KapitaliseerEnSchrijfAanElkaar voor het maken van lokale verwijzingen.
+
+	* Je kunt koppelen naar oude stijl verwijzingen onderdrukken door
+een '!' voor de woorden te tiepen: !NietGekoppeldAlsWikiNaam.
+
+	* [1], [2], [3], [4] verwijzen naar externe verwijzingen.  Klik
+VeranderKoppelingen op het veranderformulier voor het intiepen van de URLs.
+Deze zijn anders dan de nieuwere manier van koppelen; verwijzingen zijn
+per pagina uniek.
+
+	* De oude manier van URL koppeling wordt nog steeds ondersteund:
+tiep voor de URLs "http:", "ftp:' of "mailto:" ome een automatiese koppeling
+te maken, als in: http://c2.com/.
+
+	* URLs die eindigen op .png worden ingebed ''wanneer ingevoerd als
+een externe verwijzing''.
+
+
+'''Opmaak Taal'''
+
+	* Doe geen moeite.
+
+	* < en > zijn zichzelf.
+
+	* De & tekens werken toch niet.
+
+	* Als je nou echt zo nodig HTML moet gebruiken, begin elke regel met
+een staaf (|).  Merk op dat dit kunstje mogelijk gemaakt moet worden door
+de systeembeheerder.
+
