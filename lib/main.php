@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.87 2002-10-19 16:40:29 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.88 2002-11-14 22:09:46 carstenklapp Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -33,6 +33,13 @@ class WikiRequest extends Request {
         $this->_user = new WikiUser($this->_deduceUsername());
         // $this->_user = new WikiDB_User($this->_user->getId(), $this->getAuthDbh());
         $this->_prefs = $this->_user->getPreferences();
+    }
+
+    function initializeLang () {
+        if ($user_lang = $this->getPref('lang')) {
+            //trigger_error("DEBUG: initializeLang() ". $user_lang ." calling update_locale()...");
+            update_locale($user_lang);
+        }
     }
 
     function initializeTheme () {
@@ -507,8 +514,10 @@ class WikiRequest extends Request {
         global $LANG;
         if ($LANG != DEFAULT_LANGUAGE and $LANG != "en") {
             $save_lang = $LANG;
+            //trigger_error("DEBUG: findActionPage() ". DEFAULT_LANGUAGE." calling update_locale()...");
             update_locale(DEFAULT_LANGUAGE);
             $default = gettext($action);
+            //trigger_error("DEBUG: findActionPage() ". $save_lang." restoring save_lang, calling update_locale()...");
             update_locale($save_lang);
             if ($this->_isActionPage($default))
                 return $cache[$action] = $default;
@@ -663,6 +672,7 @@ function main () {
     $request = new WikiRequest();
     $request->initializeTheme();
     $request->updateAuthAndPrefs();
+    $request->initializeLang();
     
     /* FIXME: is this needed anymore?
         if (USE_PATH_INFO && ! $request->get('PATH_INFO')
