@@ -4,7 +4,7 @@
 <html>
 <head>
 <!-- phpwiki source:
-$Id: editpage.html,v 1.27 2001-12-16 16:52:58 carstenklapp Exp $
+$Id: editpage.html,v 1.28 2001-12-17 16:41:25 dairiki Exp $
 ${RCS_IDS}
 -->
 <base href="${BASE_URL}" />
@@ -80,10 +80,9 @@ $_("Edit") <a href="${BROWSE}${PAGEURL}"
   $_("See") <?php echo LinkExistingWikiWord(_("GoodStyle")) ?> $_("tips for editing.")
 </p>
 <hr noshade="noshade" />
-<small>
-<?php echo LinkExistingWikiWord(_("TextFormattingRules")) ?>
-<?plugin IncludePage page=_("TextFormattingRules") lines=6 quiet=true ?>
-</small>
+<div class="wiki-edithelp">
+<?plugin IncludePage page=_("TextFormattingRules") section=_("Synopsis") ?>
+</div>
 
 <input type="hidden" name="action" value="save" />
 <input type="hidden" name="pagename" value="$FORMVARS[pagename]" />
