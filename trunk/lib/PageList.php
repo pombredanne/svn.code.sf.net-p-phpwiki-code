@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.23 2002-01-26 22:28:21 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.24 2002-01-27 02:57:42 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -175,7 +175,7 @@ class PageList {
      * column, concatenate the desired adding to $column, after adding
      * a colon.  E.g. 'hits:Page Views'.
      */ 
-    function addColumn ($column) {
+    function addColumn ($new_columnname) {
         if (($col = $this->_getColumn($new_columnname))) {
            if(! $this->column_exists($col->_heading)) {
                 array_push($this->_columns, $col);
