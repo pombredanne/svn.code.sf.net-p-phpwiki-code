@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.35 2004-10-12 13:13:19 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.36 2004-10-12 15:35:43 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -118,6 +118,8 @@ class ErrorManager
                 $cur_err = $err;
             }
         }
+        if ($cur_err->isNotice())
+            return $flushed;
         $class = $cur_err->getHtmlClass(); 
         $html = HTML::div(array('class' => $class),
                           HTML::h4(array('class' => 'errors'), 
@@ -593,6 +595,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.35  2004/10/12 13:13:19  rurban
+// php5 compatibility (5.0.1 ok)
+//
 // Revision 1.34  2004/09/24 18:52:19  rurban
 // in deferred html error messages use the worst header and class
 // (notice => warning => errors)
