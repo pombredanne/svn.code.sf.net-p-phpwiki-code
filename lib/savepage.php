@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.16 2001-09-18 19:16:23 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.17 2001-11-14 21:05:38 dairiki Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -18,23 +18,22 @@ function ConcurrentUpdates($pagename) {
      is does not know about php's dot operator.
      We want to translate this entire paragraph as one string, of course.
    */
-    $html = "<P>";
+    $html = "<p>";
     $html .= gettext ("PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost.");
-    $html .= "</P>\n<P>";
+    $html .= "</p>\n<p>";
     $html .= gettext ("In order to recover from this situation follow these steps:");
-    $html .= "\n<OL><LI>";
+    $html .= "\n<ol><li>";
     $html .= gettext ("Use your browser's <b>Back</b> button to go back to the edit page.");
-    $html .= "\n<LI>";
+    $html .= "</li>\n<li>";
     $html .= gettext ("Copy your changes to the clipboard or to another temporary place (e.g. text editor).");
-    $html .= "\n<LI>";
+    $html .= "</li>\n<li>";
     $html .= gettext ("<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there.");
-    $html .= "\n<LI>";
+    $html .= "</li>\n<li>";
     $html .= gettext ("Make changes to the file again. Paste your additions from the clipboard (or text editor).");
-    $html .= "\n<LI>";
+    $html .= "</li>\n<li>";
     $html .= gettext ("Press <b>Save</b> again.");
-    $html .= "</OL>\n<P>";
-    $html .= gettext ("Sorry for the inconvenience.");
-    $html .= "</P>";
+    $html .= "</li></ol></p>\n";
+    $html .= QElement('p', gettext ("Sorry for the inconvenience."));
 
     echo GeneratePage('MESSAGE', $html,
                       sprintf (gettext ("Problem while updating %s"), $pagename));
