@@ -1,17 +1,29 @@
 <?php
+
+/*
+  This is the starting file for PhpWiki. All this file does
+   is set configuration options, and at the end of the file 
+   it includes() the file lib/main.php, where the real action begins.
+
+   This file is divided into six parts: Parts Zero, One, Two, Three,
+   Four and Five. Each one has different configuration settings you 
+   can change; in all cases the default should work on your system, 
+   however, we recommend you tailor things to your particular setting.
+*/
+
 /////////////////////////////////////////////////////////////////////
 // Part Zero: If PHP needs help in finding where you installed the
 //   rest of the PhpWiki code, you can set the include_path here.
-/////////////////////////////////////////////////////////////////////
+
 
 //ini_set('include_path', '.:/where/you/installed/phpwiki');
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
-/////////////////////////////////////////////////////////////////////
+
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.13 2001-03-07 16:45:19 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.14 2001-03-11 17:51:54 wainstead Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
