@@ -12,8 +12,8 @@ $locale["- skipped"] =
    "- overgeslagen";
 $locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
    "<b>Reload</b> de pagina.  Je zou nu de meest recente versie van de pagina moeten zien.  Jouw veranderingen staan er nu niet meer.";
-$locale["Click <a href=\"%s\">here</a> to remove the page now."] =
-   "Klik <a href=\"%s\">hier</a> om de pagina nu te verwijderen.";
+$locale["Click here to <a href=\"%s\">remove the page now</a>."] =
+   "Klik hier om <a href=\"%s\">de pagina nu te verwijderen</a>.";
 $locale["Complete."] =
    "Klaar.";
 $locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
