@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.33 2003-11-18 19:30:29 carstenklapp Exp $
+# $Id: Makefile,v 1.34 2003-12-17 20:28:10 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -145,6 +145,7 @@ ${POT_FILE}: ../lib/pear/DB/sybase.php
 ${POT_FILE}: ../lib/pear/PEAR.php
 ${POT_FILE}: ../lib/plugin/AllPages.php
 ${POT_FILE}: ../lib/plugin/AllUsers.php
+${POT_FILE}: ../lib/plugin/AuthorHistory.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
 ${POT_FILE}: ../lib/plugin/CacheTest.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
@@ -159,9 +160,11 @@ ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/InterWikiSearch.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
+${POT_FILE}: ../lib/plugin/ListSubpages.php
 ${POT_FILE}: ../lib/plugin/MostPopular.php
 ${POT_FILE}: ../lib/plugin/OldStyleTable.php
 ${POT_FILE}: ../lib/plugin/OrphanedPages.php
+${POT_FILE}: ../lib/plugin/PageDump.php
 ${POT_FILE}: ../lib/plugin/PageGroup.php
 ${POT_FILE}: ../lib/plugin/PageHistory.php
 ${POT_FILE}: ../lib/plugin/PageInfo.php
@@ -192,7 +195,6 @@ ${POT_FILE}: ../lib/plugin/WikiAdminUtils.php
 ${POT_FILE}: ../lib/plugin/WikiBlog.php
 ${POT_FILE}: ../lib/plugin/WikiForm.php
 ${POT_FILE}: ../lib/plugin/_BackendInfo.php
-${POT_FILE}: ../lib/plugin/_MailifyPage.php
 ${POT_FILE}: ../lib/plugin/_PreferencesInfo.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/plugincache-config.php
@@ -212,6 +214,7 @@ ${POT_FILE}: ../themes/Portland/lib/RecentChanges.php
 ${POT_FILE}: ../themes/Portland/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/Portland/templates/body.tmpl
 ${POT_FILE}: ../themes/Portland/templates/browse.tmpl
+${POT_FILE}: ../themes/Portland/templates/debug.tmpl
 ${POT_FILE}: ../themes/Portland/templates/editpage.tmpl
 ${POT_FILE}: ../themes/Portland/templates/navbar.tmpl
 ${POT_FILE}: ../themes/Portland/templates/viewsource.tmpl
