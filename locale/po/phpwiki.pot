@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2001-12-21 02:13-0500\n"
+"POT-Creation-Date: 2001-12-21 03:31-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -469,8 +469,9 @@ msgstr ""
 msgid "(Any password will work, except, of course for the admin user.)"
 msgstr ""
 
-#: ../lib/diff.php:172
-msgid "version"
+#: ../lib/diff.php:172 ../lib/diff.php:201 ../lib/diff.php:211
+#, c-format
+msgid "version %d"
 msgstr ""
 
 #: ../lib/diff.php:175
@@ -485,11 +486,6 @@ msgstr ""
 
 #: ../lib/diff.php:180
 msgid "None"
-msgstr ""
-
-#: ../lib/diff.php:201 ../lib/diff.php:211
-#, c-format
-msgid "version %d"
 msgstr ""
 
 #: ../lib/diff.php:205
