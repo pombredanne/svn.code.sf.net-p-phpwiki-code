@@ -21,10 +21,11 @@ this document.
 In any case you may find Project Builder to be an attractive
 alternative to TextEdit, especially if you are intent on heavily
 customizing PhpWiki, working with PHP or doing any other code
-development. Among other niceties it provides line numbering and
-syntax coloring, but don't rely on PB's text colors too much, it
-doesn't yet properly deal with escaped (\") quotes which are
-frequently called for in PHP when generating HTML code.
+development. Among other niceties it provides multiple undos (even
+beyond the last file save), line numbering and syntax coloring; but
+don't rely on PB's text colors too much, it doesn't always properly
+handle coloring for \"escaped quotes\" which are frequently called for
+in PHP when generating HTML code.
 
 
 Database
@@ -41,7 +42,7 @@ and PhpWiki. After you install and test mySQL follow the instructions
 given in INSTALL.mysql to prepare a new database for use with PhpWiki.
 
 
-Apache PHP Module
+Apache PHP Modulex
 -----------------
 The default PHP module for Apache as supplied by Apple does work with
 PhpWiki but is missing support for the zlib and GD libraries. Wiki
@@ -55,6 +56,19 @@ Apple-supplied Apache installation).
 
 PHP with GD library support is required to use "text2png", an
 experimental plugin for Wiki 1.3.
+
+PhpWiki 1.3 already knows where to find the required PEAR.php on Mac
+OS X systems. However if you need to use PEAR with other PHP
+applications, edit or create the file /usr/local/lib/php.ini then add
+the following line:
+
+include_path = ".:/System/Library/PHP";
+
+If you compiled a version of PHP yourself (perhaps newer than the
+4.0.6 version included by Apple) the path will already be included in
+the php.ini file. In that case you shouldn't have to change the path,
+unless you installed PHP into a location other than the default
+/usr/local/ prefix.
 
 
 Obtaining and Installing mySQL and libphp4.so
@@ -72,8 +86,9 @@ PHP. Take a look at Mark's PHP installation instructions or read the
 Apache documentation for more information.
 
 A good place to find other distributions of mySQL or PostgreSQL which
-can be used with Mac OS X are listed at
-<http://versiontracker.com/macosx/>.
+can be used with Mac OS X are listed at:
+
+    <http://versiontracker.com/macosx/>
 
 
 PhpWiki Configuration Notes
@@ -86,16 +101,6 @@ configuration file "/private/etc/httpd/httpd.conf").
 Follow the generalized installation instructions described in INSTALL
 but with the changes below.
 
-0. PhpWiki 1.3 needs to know where to find PEAR.php. Edit line 31 of
-   index.php to match the following:
-
-ini_set('include_path', '.: /System/Library/PHP');
-
-If you compiled a version of PHP yourself (perhaps newer than the
-4.0.6 version included by Apple) this step may be omitted--unless you
-changed the default PHP installation directories from /usr/local/. In
-that case you will have to substitute the appropriate location of
-PEAR.php according to your PHP installation.
 
 1. The Mac OS X Apache web server runs as user "www" and this works
    fine with PhpWiki so long as "Everyone" has at least read-only
@@ -138,7 +143,7 @@ into the mod_alias section as shown below.
 #PhpWiki 1.3 aliases
     Alias /wiki/images/ "/Library/WebServer/Documents/phpwiki/images/"
     Alias /wiki/images "/Library/WebServer/Documents/phpwiki/images"
-    Alias /wiki/ "/Library/WebServer/Documents/phpwiki/index.php?"
+    Alias /wiki/ "/Library/WebServer/Documents/phpwiki/index.php/"
     Alias /wiki "/Library/WebServer/Documents/phpwiki/index.php"
 
 
