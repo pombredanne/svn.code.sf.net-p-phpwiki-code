@@ -1,10 +1,12 @@
--- $Id: mssql-initialize.sql,v 1.1 2004-10-12 17:31:34 rurban Exp $
+-- $Id: mssql-initialize.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
+-- UNTESTED!
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
         pagename        VARCHAR(100) NOT NULL,
 	hits            INT NOT NULL DEFAULT 0,
         pagedata        TEXT NOT NULL DEFAULT '',
+	cached_html 	TEXT NOT NULL DEFAULT '',   -- added with 1.3.11
         PRIMARY KEY (id),
 	UNIQUE (pagename)
 );
@@ -47,7 +49,8 @@ CREATE TABLE session (
     	sess_ip 	CHAR(15) NOT NULL,
     	PRIMARY KEY (sess_id)
 );
-CREATE INDEX sess_date ON session (sess_date);
+CREATE INDEX sessdate_index ON session (sess_date);
+CREATE INDEX sessip_index ON session (sess_ip);
 
 -- Optional DB Auth and Prefs
 -- For these tables below the default table prefix must be used 
@@ -88,3 +91,29 @@ CREATE TABLE rating (
         tstamp TIMESTAMP(14) NOT NULL,
         PRIMARY KEY (dimension, raterpage, rateepage)
 );
+CREATE INDEX rating_dimension ON rating (dimension);
+CREATE INDEX rating_raterpage ON rating (raterpage);
+CREATE INDEX rating_rateepage ON rating (rateepage);
+
+-- if ACCESS_LOG_SQL > 0
+-- only if you need fast log-analysis (spam prevention, recent referrers)
+-- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
+CREATE TABLE accesslog (
+        time_stamp    INT UNSIGNED,
+	remote_host   VARCHAR(50),
+	remote_user   VARCHAR(50),
+        request_method VARCHAR(10),
+	request_line  VARCHAR(255),
+	request_args  VARCHAR(255),
+	request_file  VARCHAR(255),
+	request_uri   VARCHAR(255),
+	request_time  CHAR(28),
+	status 	      SMALLINT UNSIGNED,
+	bytes_sent    SMALLINT UNSIGNED,
+        referer       VARCHAR(255), 
+	agent         VARCHAR(255),
+	request_duration FLOAT
+);
+CREATE INDEX log_time ON accesslog (time_stamp);
+CREATE INDEX log_host ON accesslog (remote_host);
+-- create extra indices on demand (usually referer. see plugin/AccessLogSql)

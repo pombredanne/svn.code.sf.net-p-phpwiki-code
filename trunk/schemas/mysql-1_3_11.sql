@@ -1,6 +1,7 @@
--- $Id: mysql-1_3_11.sql,v 1.3 2005-02-07 15:18:52 rurban Exp $
+-- $Id: mysql-1_3_11.sql,v 1.4 2005-02-27 09:33:05 rurban Exp $
 -- phpwiki 1.3.11 upgrade from 1.3.10
 
+-- if ACCESS_LOG_SQL > 0
 -- only if you need fast log-analysis (spam prevention, recent referrers)
 -- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
 CREATE TABLE accesslog (

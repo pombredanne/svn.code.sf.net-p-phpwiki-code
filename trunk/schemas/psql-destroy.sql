@@ -1,4 +1,4 @@
--- $Id: psql-destroy.sql,v 1.1 2004-07-22 16:49:20 dfrankow Exp $
+-- $Id: psql-destroy.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
 
 \set QUIET
 
@@ -20,7 +20,7 @@
 -- Commonly, connections from php are made under
 -- the user name of 'nobody', 'apache' or 'www'.
 
-\set httpd_user	'rurban'
+\set httpd_user	'www'
 
 --================================================================
 --
@@ -38,30 +38,16 @@
 \echo 'overwriting existing tables.'
 
 \set page_tbl		:prefix 'page'
-\set page_id		:prefix 'page_id'
-\set page_nm		:prefix 'page_nm'
-
 \set version_tbl	:prefix 'version'
-\set vers_id		:prefix 'vers_id'
-\set vers_mtime		:prefix 'vers_mtime'
-
 \set recent_tbl		:prefix 'recent'
-\set recent_id		:prefix 'recent_id'
-
 \set nonempty_tbl	:prefix 'nonempty'
-\set nonmt_id		:prefix 'nonmt_id'
-
 \set link_tbl		:prefix 'link'
-\set link_from		:prefix 'link_from'
-\set link_to		:prefix 'link_to'
-
 \set session_tbl	:prefix 'session'
-\set sess_id		:prefix 'sess_id'
-\set sess_date		:prefix 'sess_date'
-\set sess_ip		:prefix 'sess_ip'
-
 \set pref_tbl		:prefix 'pref'
-\set pref_id		:prefix 'pref_id'
+-- \set user_tbl	:prefix 'user'
+-- \set member_tbl	:prefix 'member'
+\set rating_tbl		:prefix 'rating'
+\set accesslog_tbl	:prefix 'accesslog'
 
 \echo Dropping :page_tbl
 DROP TABLE :page_tbl;
@@ -81,9 +67,15 @@ DROP TABLE :link_tbl;
 \echo Dropping :session_tbl
 DROP TABLE :session_tbl;
 
--- Optional DB Auth and Prefs
--- For these tables below the default table prefix must be used 
--- in the DBAuthParam SQL statements also.
-
 \echo Dropping :pref_tbl
 DROP TABLE :pref_tbl;
+
+-- DROP TABLE :user_tbl;
+-- DROP TABLE :member_tbl;
+
+\echo Dropping :rating_tbl
+DROP TABLE :rating_tbl;
+
+\echo Dropping :accesslog_tbl
+DROP TABLE :accesslog_tbl;
+
