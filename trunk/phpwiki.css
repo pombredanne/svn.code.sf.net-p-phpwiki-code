@@ -28,7 +28,7 @@ TODO: Get rid of tables in wikiaction forms.
  */
 @import url(phpwiki-heavy.css);
 
-BODY { background: ivory; }
+BODY { background: ivory; } //#ffe
 
 BODY { font-family: arial, helvetica, sans-serif; }
 
@@ -231,7 +231,11 @@ div.wiki-edithelp .transclusion {
 div.wiki-edithelp .transclusion p {
   margin: 0;
 }
-
+div.wiki-edithelp {
+  background: #fff8dc; /* darker ivory */
+  font-size: smaller;
+  padding: 0.05ex 1%;
+}
   
 /****************************************************************
  **
