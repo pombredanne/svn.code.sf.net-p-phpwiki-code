@@ -1,4 +1,4 @@
-<!-- $Id: msql.inc,v 1.1 2000-09-18 04:36:04 wainstead Exp $ -->
+<!-- $Id: msql.inc,v 1.2 2000-10-07 17:47:19 wainstead Exp $ -->
 <?php
 
    /*
@@ -8,7 +8,7 @@
       OpenDataBase($dbname)
       CloseDataBase($dbi)
       RetrievePage($dbi, $pagename, $pagestore)
-      InsertPage($dbi, $pagename, $pagehash)xc
+      InsertPage($dbi, $pagename, $pagehash)
       SaveCopyToArchive($dbi, $pagename, $pagehash) 
       IsWikiPage($dbi, $pagename)
       InitTitleSearch($dbi, $search)

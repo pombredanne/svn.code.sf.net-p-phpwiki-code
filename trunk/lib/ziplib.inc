@@ -1,4 +1,4 @@
-<?php rcs_id("$Id: ziplib.inc,v 1.1 2000-09-18 04:36:04 wainstead Exp $");
+<?php rcs_id("$Id: ziplib.inc,v 1.2 2000-10-07 17:47:20 wainstead Exp $");
 
 //FIXME: get rid of this.
 function warn ($msg)
@@ -420,7 +420,7 @@ class ZipReader
 /**
  * Routines for Mime mailification of pages.
  */
-//FIXME: these should go elsewhere (wiki_stdlib).
+//FIXME: these should go elsewhere (stdlib.inc).
 function ctime ($unix_time)
 {
   return date("D M j H:i:s Y", $unix_time);

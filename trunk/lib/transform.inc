@@ -1,4 +1,4 @@
-<!-- $Id: transform.inc,v 1.1 2000-09-18 04:36:04 wainstead Exp $ -->
+<!-- $Id: transform.inc,v 1.2 2000-10-07 17:47:20 wainstead Exp $ -->
 <?php
    // expects $pagehash and $html to be set
 
@@ -93,7 +93,8 @@ your web server it is highly advised that you do not allow this.
                                  $tmpline);
 
 	 $tokens[] = $linktoken;
-         $replacements[] = ParseAndLink($brktlinks[0][$i]);
+	 $link = ParseAndLink($brktlinks[0][$i]);
+         $replacements[] = $link['link'];
       }
 
       //////////////////////////////////////////////////////////
@@ -263,7 +264,7 @@ your web server it is highly advised that you do not allow this.
       $tmpline = str_replace("%%Fullsearch%%", $full_search_box, $tmpline);
       $tmpline = str_replace("%%Mostpopular%%", $most_popular_list, $tmpline);
 
-      $html .= "$tmpline";
+      $html .= "$tmpline\n";
    }
 
 
