@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<!-- phpwiki source:
+###RCS_IDS###
+-->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+###ROBOTS_META###
+<base href="###BASE_URL###">
+<title>Edit: ###SPLIT_PAGE###</title>
+<link rel="stylesheet" title="phpwiki" href="###CSS_URL###" type="text/css">
+</head>
+
+<body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
+<form class="wikiaction" method="POST" action="###BROWSE_PAGE###">
+<h1><a class="wikilink" href="###BROWSE###StartSeite"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+<span="wikiword">###PAGE###</span> editieren
+<input type="submit" value=" Speichern "></h1>
+
+<textarea name="content"
+          rows="###EDIT_AREA_HEIGHT###"
+          cols="###EDIT_AREA_WIDTH###"
+          wrap="virtual">###CONTENT###</textarea>
+<br>
+###IF:MINOR_EDIT_CHECKBOX###
+  ###MINOR_EDIT_CHECKBOX### Geringf&uuml;gige &Auml;nderung, alte Version nicht archivieren. 
+  <br>
+###ENDIF:MINOR_EDIT_CHECKBOX###
+<input type="checkbox" name="convert" value="tabs" >
+Ich kann keine Tabulatoren verwenden.
+Bitte <a class="wikilink" href="###BROWSE###KonvertiereLeerzeichenZuTabs"><span class="wikiword">KonvertiereLeerzeichenZuTabs</span></a>
+für mich, wenn ich speichere.
+<p>You can change the size of the editing area.
+See <a class="wikilink" href="###BROWSE###UserPreferences"><span class="wikiword">UserPreferences</span></a>.</p>
+<p><a class="wikilink" href="###BROWSE###GuterStil"><span class="wikiword">GuterStil</span></a>: Tips fürs Editieren.</p>
+
+###IF COPY###<br><a class="wikiaction" href="###ACTION###edit&amp;version=archive">EditiereArchivSeite</a> vom vorhergenden Autor.
+
+<hr noshade>
+<small>
+<b>Emphasis:</b> '' for italics, __ for bold, ''__ for both
+<br><b>Lists:</b> * for bullet lists, # for numbered lists, ''; term : definition'' for definition lists
+<br><b>References:</b> JoinCapitalizedWords or use square brackets for a [page link] or URL [http://cool.wiki.int/].
+<br><b>Footnotes:</b> Use [1],[2],[3],... 
+<br><b>Preventing linking:</b> Avoid linking with "!":
+!DoNotHyperlink, name links like [[text | URL] (double up on the "[")
+<br><b>Misc:</b>"!", "!!", "!!!" make headings,
+"%%%" makes a linebreak, "- - - -" makes a horizontal rule
+<br>more on
+<a class="wikilink" href="###BROWSE###TextFormattingRules"><b><span class="wikiword">TextFormattingRules</span></b></a>
+</small>
+
+<input type="hidden" name="action" value="save">
+<input type="hidden" name="pagename" value="###PAGE###">
+<input type="hidden" name="editversion" value="###VERSION###">
+</form>
+</body>
+</html>

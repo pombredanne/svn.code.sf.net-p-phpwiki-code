@@ -1,0 +1,141 @@
+/*
+  Classes:
+
+  wikitext 
+  
+  wikiword   - A wiki page name
+  rawurl     - A raw url (like http://some.where.com/howdy.jpg)
+  interwiki  - An interwiki name
+  
+  linkurl    - A link to an external URL
+  interwikilink - A link to an external wiki
+  wikilink   = A link to an existing page 
+  wikiunknown = A link to a non-existing page
+  wikiaction  - A link which to an action  (edit, diff, info...)
+  wikiadmin   - A link to an admin action  (lock, remove ...)
+  wikiunsafe  - A link to an admin action which is located on an unlocked page.
+*/
+
+TABLE.outer { background-color: black; }
+TABLE.inner { background-color: white; }
+
+/*
+ * WikiWords in sans-serif
+ */
+.wikiword
+{
+    font-family: avantgarde, helvetica, sans-serif;
+} 
+PRE .wikiword, 
+TT .wikiword
+{
+    font-family: monospace;
+}
+H1 .wikiword
+{
+    font-size: large;
+}
+SMALL .wikiword
+{
+    font-size: small;
+}
+
+.interwiki
+{
+    font-family: zapf chancery, cursive;
+}
+
+
+
+/*
+ * Raw URLS in smaller font
+ */
+.rawurl
+{
+    font-family: serif;
+    font-size: smaller;
+}
+
+
+/*
+ * No underline for wikilinks.
+ */
+.wikilink,
+.wikiunknown,
+.wikiunknown U,
+.wikiaction,
+.wikiadmin,
+.interwikilink,
+.footnote A,    
+.footnote-rev    
+{
+  text-decoration: none;
+  /* color: #600; */
+}
+.wikiunknown,
+.wikiunknown U
+{
+   color: #600;
+}
+
+
+/*
+ * Different backgrounds depening on link type.
+ */
+/*
+.wikilink
+{
+    background-color: #ddc;
+}
+*/
+.wikiaction,
+.wikiaction INPUT,
+.wikiaction TABLE
+{
+    background-color: #ddf;
+}
+.wikiadmin,
+.wikiadmin INPUT,
+.wikiadmin TABLE
+{
+    background-color: #fdd;
+}
+.wikiunsafe
+{
+    background-color: #eee;
+}
+
+.wikilink:link
+{
+  /* color: #c00; */
+}
+.wikilink:visited,
+{
+  /* color: #600; */
+}
+
+
+/*
+ * Special colors for the '?' after unknown wikiwords.
+ */
+A.wikiunknown
+{
+    color: #fffff0;
+    background-color: #663333;
+    font-family: avantgarde, helvetica, sans-serif;
+    text-decoration: none;
+}
+PRE A.wikiunknown,
+TT A.wikiunknown
+{
+    font-family: monospace;
+}
+
+
+/* For emacs users
+ *
+ * Local Variables:
+ * mode: c
+ * c-file-style: cc-mode
+ * End:
+ */

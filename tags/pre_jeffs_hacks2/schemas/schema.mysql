@@ -1,0 +1,60 @@
+-- $Id: schema.mysql,v 1.6 2001-07-17 15:58:28 dairiki Exp $
+
+drop table if exists phpwiki_pages;
+drop table if exists phpwiki_archive;
+drop table if exists phpwiki_links;
+drop table if exists phpwiki_hitcount;
+drop table if exists phpwiki_score;
+drop table if exists phpwiki_hottopics;
+
+
+CREATE TABLE phpwiki_pages (
+        pagename VARCHAR(100) NOT NULL,
+        version INT NOT NULL DEFAULT 1,
+        flags INT NOT NULL DEFAULT 0,
+        author VARCHAR(100),
+        lastmodified INT NOT NULL,
+        created INT NOT NULL,
+        content MEDIUMTEXT NOT NULL,
+        refs TEXT,
+        PRIMARY KEY (pagename)
+        );
+
+CREATE TABLE phpwiki_archive (
+        pagename VARCHAR(100) NOT NULL,
+        version INT NOT NULL DEFAULT 1,
+        flags INT NOT NULL DEFAULT 0,
+        author VARCHAR(100),
+        lastmodified INT NOT NULL,
+        created INT NOT NULL,
+        content MEDIUMTEXT NOT NULL,
+        refs TEXT,
+        PRIMARY KEY (pagename, version)
+        );
+
+CREATE TABLE phpwiki_links (
+        frompage VARCHAR(100) NOT NULL,
+        topage VARCHAR(100) NOT NULL,
+        PRIMARY KEY (frompage, topage)
+        );
+
+CREATE TABLE phpwiki_hitcount (
+        pagename VARCHAR(100) NOT NULL,
+        hits INT NOT NULL DEFAULT 0,
+        PRIMARY KEY (pagename)
+        );
+
+CREATE TABLE phpwiki_score (
+        pagename VARCHAR(100) NOT NULL,
+        score INT NOT NULL DEFAULT 0,
+        PRIMARY KEY (pagename)
+        );
+
+
+-- tables below are not yet used
+
+CREATE TABLE phpwiki_hottopics (                
+        pagename VARCHAR(100) NOT NULL,
+        lastmodified INT NOT NULL,
+        PRIMARY KEY (pagename, lastmodified)
+        );
