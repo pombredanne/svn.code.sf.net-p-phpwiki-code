@@ -1,4 +1,4 @@
-<!-- $Id: wiki_config.php3,v 1.7 2000-06-18 03:51:55 wainstead Exp $ -->
+<!-- $Id: wiki_config.php3,v 1.8 2000-06-18 15:12:13 ahollosi Exp $ -->
 <?
    /*
       Constants and settings. Edit the values below for
@@ -49,6 +49,16 @@
 */
 
    $ScriptName = "index.php3";
+
+
+   // Template files (filenames are relative to script position)
+   $templates = array(
+   	"BROWSE" => "templates/browse.html",
+	"EDITPAGE" => "templates/editpage.html",
+	"EDITLINKS" => "templates/editlinks.html",
+	"MESSAGE" => "templates/message.html"
+	);
+
    $SignatureImg = "$ServerAddress/signature.png";
    $logo = "wikibase.png";
 

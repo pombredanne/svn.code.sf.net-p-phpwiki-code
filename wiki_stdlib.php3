@@ -1,10 +1,8 @@
-<!-- $Id: wiki_stdlib.php3,v 1.13 2000-06-14 03:38:06 wainstead Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.14 2000-06-18 15:12:13 ahollosi Exp $ -->
 <?
    /*
       Standard functions for Wiki functionality
-         WikiToolBar() 
-         WikiHeader($pagename) 
-         WikiFooter() 
+	 GeneratePage($template, $content, $name, $hash)
          GetCurrentDate()
          LinkExistingWikiWord($wikiword) 
          LinkUnknownWikiWord($wikiword) 
@@ -19,33 +17,57 @@
          ParseAndLink($bracketlink)
    */
 
-   // render the Wiki toolbar at bottom of page
-   function WikiToolBar() {
-      global $ScriptUrl, $pagename, $pagehash;
-      $enc_name = rawurlencode($pagename);
 
-      $retval  = "<hr>\n" .
-		 "<a href=\"$ScriptUrl?edit=$enc_name\">EditText</a>\n" .
-		 " of this page\n";
-      if (is_array($pagehash)) {
-         $retval .= " (last edited " . $pagehash["date"] . ")\n";
+   function GeneratePage($template, $content, $name, $hash)
+   {
+      global $ScriptUrl, $AllowedProtocols, $templates;
+
+      if (!is_array($hash))
+         unset($hash);
+
+      $page = join('', file($templates[$template]));
+      $page = str_replace('###', "#$FieldSeparator#", $page);
+
+      // valid for all pagetypes
+      $page = str_replace("#$FieldSeparator#SCRIPTURL#$FieldSeparator#",
+			$ScriptUrl, $page);
+      $page = str_replace("#$FieldSeparator#PAGE#$FieldSeparator#",
+			htmlspecialchars($name), $page);
+      $page = str_replace("#$FieldSeparator#ALLOWEDPROTOCOLS#$FieldSeparator#",
+			$AllowedProtocols, $page);
+
+      // invalid for messages (search results, error messages)
+      if ($template != 'MESSAGE') {
+         $page = str_replace("#$FieldSeparator#PAGEURL#$FieldSeparator#",
+			rawurlencode($name), $page);
+         $page = str_replace("#$FieldSeparator#LASTMODIFIED#$FieldSeparator#",
+			$hash['date'], $page);
+         $page = str_replace("#$FieldSeparator#LASTAUTHOR#$FieldSeparator#",
+			$hash['author'], $page);
+         $page = str_replace("#$FieldSeparator#VERSION#$FieldSeparator#",
+			$hash['version'], $page);
       }
-      $retval .= "<br>\n" .
-		 "<a href=\"$ScriptUrl?FindPage\">" .
-		 "FindPage</a> by browsing or searching\n";
-      return $retval;
+
+      // valid only for EditLinks
+      if ($template == 'EDITLINKS') {
+	 for ($i = 1; $i <= NUM_LINKS; $i++)
+	    $page = str_replace("#$FieldSeparator#R$i#$FieldSeparator#",
+			$hash["r$i"], $page);
+      }
+
+      if ($hash['copy']) {
+	 $page = str_replace("#$FieldSeparator#IFCOPY#$FieldSeparator#",
+			'', $page);
+      } else {
+	 $page = ereg_replace("#$FieldSeparator#IFCOPY#$FieldSeparator#[^\n]*",
+			'', $page);
+      }
+
+      $page = str_replace("#$FieldSeparator#CONTENT#$FieldSeparator#",
+			$content, $page);
+      print $page;
    }
 
-   // top of page
-   function WikiHeader($pagename) {
-      global $LogoImage, $ScriptUrl;
-      return "<html>\n<head>\n<title>" . htmlspecialchars($pagename) .
-	     "</title>\n</head>\n<body>\n";
-   }
-
-   function WikiFooter() {
-      return "</body>\n</html>\n";
-   }
 
    function GetCurrentDate() {
       // format is like December 13, 1999

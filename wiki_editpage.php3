@@ -1,11 +1,7 @@
-<!-- $Id: wiki_editpage.php3,v 1.7 2000-06-14 03:31:50 wainstead Exp $ -->
+<!-- $Id: wiki_editpage.php3,v 1.8 2000-06-18 15:12:13 ahollosi Exp $ -->
 <?
 
-/*
-   This page is for editing a Wiki page.
-   It relies on $pagename and $ScriptUrl;
-   it will set $pagehash["content"]. 
-*/
+   // editpage relies on $pagename and $ScriptUrl
 
    if ($edit) {
       $pagename = rawurldecode($edit);
@@ -28,69 +24,18 @@
 
    if (is_array($pagehash)) {
       $textarea = implode($pagehash["content"], "\n");
-      $version = $copy ? $pagehash["version"]+1 : $pagehash["version"];
       if (($pagehash["version"] > 1) &&
-          ($pagehash["author"] != $remoteuser)) {
-         $lastcopy = $pagename;
-      } else {
-         $lastcopy = false;
+          ($pagehash["author"] != $remoteuser)) {  ### FIXME - should compare with author of archived version
+         $pagehash["copy"] = 1;
+      }
+      if($copy) {		### FIXME - version++ is wrong
+         $pagehash["version"]++;
       }
    } else {
       $textarea = "Describe " . htmlspecialchars($pagename) . " here.";
-      $lastcopy = false;
-      $version = 0;
-   }
-   
-   echo WikiHeader($pagename); 
-?>
-
-<form method="POST" action="<? echo "$ScriptUrl"; ?>">
-<h1><? echo $banner, " "; ?>
-<input type="submit" value=" Save ">
-</h1>
-
-<textarea name="content" ROWS="22" COLS="80" wrap="virtual"><?
-echo $textarea ?></textarea>
-<br>
-
-<input type="checkbox" name="convert" value="tabs" >
-I can't type tabs.   Please
-<a href="<? echo "$ScriptUrl"; ?>?ConvertSpacesToTabs">ConvertSpacesToTabs</a>
-for me when I save.
-
-<p>
-
-<a href="<? echo "$ScriptUrl"; ?>?GoodStyle">GoodStyle</a>
-tips for editing.
-
-<br>
-
-<a href="<? echo "$ScriptUrl"; ?>?links=<? echo rawurlencode($pagename); ?>">EditLinks</a>
-to other web servers.
-
-<br>
-
-<?
-   if ($lastcopy) {
-      $enc_name = rawurlencode($lastcopy);
-      echo "<a href='$ScriptUrl?copy=$enc_copy'>EditCopy</a>";
-      echo " from previous author";
+      unset($pagehash);
+      $pagehash["version"] = 0;
    }
 
+   GeneratePage('EDITPAGE', $textarea, $pagename, $pagehash);   
 ?>
-<hr>
-<small>
-<b>Emphasis:</b> '' for italics, ''' for bold, ''''' for both
-<br><b>Lists:</b> tab-* for bullet lists, tab-# for numbered lists, tab-Term:-tab for definition lists
-<br><b>References:</b> JoinCapitalizedWords or use square brackets for a [page link] or URL [http://cool.wiki.int/].
-<br><b>References:</b> Use [1],[2],[3],... and EditLinks. Avoid linking with "!": !DoNotHyperlink, name links like [text | URL]
-<br><b>Misc:</b>"!", "!!", "!!!" make headings,
-"%%%" makes a linebreak, "- - - -" makes a horizontal rule, escape "[" with "[["
-<br>more on <a href="<? echo $ScriptUrl ?>?TextFormattingRules"><b>TextFormattingRules</b></a>
-</small>
-
-<input type="hidden" name="post" value="<? echo rawurlencode($pagename); ?>">
-<input type="hidden" name="editversion" value="<? echo $version+0 ?>">
-</form>
-
-<? echo WikiFooter(); ?>
