@@ -227,6 +227,11 @@ Builder's CVS facilities in Anonymous mode with the SourceForge CVS
 server. (Technical explanation: PB tries to use rsh instead of ssh as
 is required for SourceForge).
 
+Emacs Users: You can add custom Alt-key bindings to Project Builder
+for some common Emacs stuff:  *Note the wrapped url!
+http://developer.apple.com/techpubs/macosx/Cocoa/TasksAndConcepts/
+ProgrammingTopics/TextDisplay/Tasks/TextDefaultsAndBindings.html
+
 
 If you have problems after all of this, try contacting the
 phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
@@ -234,4 +239,4 @@ phpwiki-talk list at phpwiki-talk@lists.sourceforge.net.
 Carsten Klapp
 carstenklapp@mac.com
 
-$Id: INSTALL.MacOSX,v 1.8 2001-12-27 18:11:24 carstenklapp Exp $
+$Id: INSTALL.MacOSX,v 1.9 2001-12-30 23:38:34 carstenklapp Exp $
