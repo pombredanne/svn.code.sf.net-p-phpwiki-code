@@ -1,7 +1,6 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.9 2004-04-07 23:13:18 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.10 2004-04-27 16:08:44 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
-// FIXME: autodetect supported handlers.
 
 define('DBA_DATABASE_DEFAULT_TIMEOUT', 20);
 
@@ -12,6 +11,14 @@ class DbaDatabase
         $this->_handler = $handler;
         $this->_timeout = DBA_DATABASE_DEFAULT_TIMEOUT;
         $this->_dbh = false;
+        if (function_exists("dba_handlers")) { // since 4.3.0
+            if (!in_array($handler,dba_handlers()))
+                $this->_error(
+                    sprintf(
+                	    _("The DBA handler %s is unsupported!")."\n".
+                    	    _("Supported handlers are: %s"), 
+                    	    $handler, join(",",dba_handlers())));
+        }
         if ($mode)
             $this->open($mode);
     }
@@ -30,26 +37,38 @@ class DbaDatabase
         $this->_dba_open_error = false;
         $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_dba_open_error_handler'));
 
-        // oops, you don't have DBM support.
+        // oops, you don't have DBA support.
         if (!function_exists("dba_open")) {
-            echo "You don't seem to have DBM file support compiled into PHP.";
+            echo "You don't seem to have DBA support compiled into PHP.";
         }
-
-        // PHP 4.3.x Windows lock bug workaround: http://bugs.php.net/bug.php?id=23975
-        if (isWindows() and (strlen($mode) == 1)) {
-            $mode .= "-"; // suppress locking
+	
+        // lock supported since 4.3.0:
+        if (check_php_version(4,3,0) and (strlen($mode) == 1)) {
+            // PHP 4.3.x Windows lock bug workaround: http://bugs.php.net/bug.php?id=23975
+            if (isWindows()) {
+                $mode .= "-"; 			// suppress locking, or
+            } elseif ($handler != 'gdbm') { 	// gdbm does it internally
+            	$mode .= "d"; 			// else use internal locking
+            }
         }
         while (($dbh = dba_open($this->_file, $mode, $this->_handler)) < 1) {
-            if (--$watchdog <= 0)
+            if ($watchdog <= 0)
                 break;
             flush();
-            sleep(1);
+            // conflict: wait some randon time to unlock (see ethernet)
+            $secs = 0.5+rand(1.0);
+            sleep($secs);
+            $watchdog -= $secs;
+            if (strlen($mode) == 2) $mode = substr($mode,0,-1);
         }
         $ErrorManager->popErrorHandler();
 
         if (!$dbh) {
             if ( ($error = $this->_dba_open_error) ) {
                 $error->errno = E_USER_ERROR;
+                $error->errstr .= "\nfile: " . $this->_file
+                               .  "\nmode: " . $mode
+                               .  "\nhandler: " . $this->_handler;
                 $ErrorManager->handleError($error);
             }
             else {
