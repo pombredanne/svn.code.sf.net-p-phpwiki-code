@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.13 2002-01-22 03:17:47 dairiki Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.14 2002-01-22 05:06:50 dairiki Exp $');
 
 // This relieves some work for these plugins:
 //
@@ -6,6 +6,7 @@
 //
 // It also allows dynamic expansion of those plugins to include more
 // columns in their output.
+//
 //
 // There are still a few rough edges.
 //
@@ -15,11 +16,102 @@
 //        typo, the wiki craps out, you will not even be able to edit the
 //        page again to fix the typo in the column name!
 
+
+// FIXME: In this refactoring I have un-implemented _ctime, _cauthor, and
+// number-of-revision.  Note the _ctime and _cauthor as they were implemented
+// were somewhat flawed: revision 1 of a page doesn't have to exist in the
+// database.  If lots of revisions have been made to a page, it's more than likely
+// that some older revisions (include revision 1) have been cleaned (deleted).
+
+class _PageList_Column_base {
+    function _PageList_Column_base ($default_heading, $align = false) {
+        $this->_heading = $default_heading;
+
+        $this->_tdattr = array();
+        if ($align)
+            $this->_tdattr['align'] = $align;
+    }
+    
+    function format ($page_handle, &$revision_handle) {
+        return HTML::td($this->_tdattr,
+                        NBSP,
+                        $this->_getValue($page_handle, &$revision_handle),
+                        NBSP);
+    }
+
+    function setHeading ($heading) {
+        $this->_heading = $heading;
+    }
+    
+    function heading () {
+        return HTML::td(array('align' => 'center'),
+                        NBSP, HTML::u($this->_heading), NBSP);
+    }
+};
+
+class _PageList_Column extends _PageList_Column_base {
+    function _PageList_Column ($field, $default_heading, $align = false) {
+        $this->_PageList_Column_base($default_heading, $align);
+        
+        $this->_need_rev = substr($field, 0, 4) == 'rev:';
+        if ($this->_need_rev)
+            $this->_field = substr($field, 4);
+        else
+            $this->_field = $field;
+    }
+    
+    function _getValue ($page_handle, &$revision_handle) {
+        if ($this->_need_rev) {
+            if (!$revision_handle)
+                $revision_handle = $page_handle->getCurrentRevision();
+            return $revision_handle->get($this->_field);
+        }
+        else {
+            return $page_handle->get($this->_field);
+        }
+    }
+};
+
+class _PageList_Column_bool extends _PageList_Column {
+    function _PageList_Column_bool ($field, $default_heading, $text = 'yes') {
+        $this->_PageList_Column($field, $default_heading, 'center');
+        $this->_textIfTrue = $text;
+        $this->_textIfFalse = new RawXml('&#8212;');
+    }
+    
+    function _getValue ($page_handle, &$revision_handle) {
+        $val = _PageList_Column::_getValue($page_handle, $revision_handle);
+        return $val ? $this->_textIfTrue : $this->_textIfFalse;
+    }
+};
+
+class _PageList_Column_time extends _PageList_Column {
+    function _PageList_Column_time ($field, $default_heading) {
+        $this->_PageList_Column($field, $default_heading, 'right');
+    }
+    
+    function _getValue ($page_handle, &$revision_handle) {
+        global $Theme;
+        $time = _PageList_Column::_getValue($page_handle, $revision_handle);
+        return $Theme->formatDateTime($time);
+    }
+};
+
+class _PageList_Column_pagename extends _PageList_Column_base {
+    function _PageList_Column_pagename () {
+        $this->_PageList_Column_base(_("Page Name"));
+    }
+    
+    function _getValue ($page_handle, &$revision_handle) {
+        return LinkExistingWikiWord($page_handle->getName());
+    }
+};
+
+        
 class PageList {
-    function PageList ($pagelist_name = '') {
-        $this->name = $pagelist_name;
+    function PageList () {
         $this->_caption = "";
-        $this->_columns = array(_("Page Name"));
+        $this->_columns = array(new _PageList_Column_pagename);
         $this->_pages = array();
         $this->_messageIfEmpty = _("<no matches>");
     }
@@ -38,15 +130,35 @@ class PageList {
     function setMessageIfEmpty ($msg) {
         $this->_messageIfEmpty = $msg;
     }
-    
-    //FIXME: yuck, get rid of ucfirst
-    function addColumn ($new_columnname) {
-        array_push($this->_columns, ucfirst($new_columnname));
+
+    /**
+     * Add a column to the listing.
+     *
+     * @input $column string Which column to add.
+     * $Column can be one of <ul>
+     * <li>mtime
+     * <li>hits
+     * <li>summary
+     * <li>author
+     * <li>locked
+     * <li>minor
+     * </ul>
+     *
+     * If you would like to specify an alternate heading for the
+     * column, concatenate the desired adding to $column, after adding
+     * a colon.  E.g. 'hits:Page Views'.
+     */ 
+    function addColumn ($column) {
+        if (($col = $this->_getColumn($new_columnname)))
+            array_push($this->_columns, $col);
     }
 
     function insertColumn ($new_columnname) {
-        array_unshift($this->_columns, ucfirst($new_columnname));
+        if (($col = $this->_getColumn($new_columnname)))
+            array_unshift($this->_columns, $col);
     }
+
+
 
     function addPage ($page_handle) {
         array_push($this->_pages, &$page_handle);
@@ -85,192 +197,65 @@ class PageList {
     ////////////////////
     // private
     ////////////////////
-
-    // Some of these column_name aliases could probably be eliminated
-    // once standard titles have been agreed upon
-
-    // lookup alignment from column name
-    function _column_align($column_name) {
-        $map = array(
-                     _("Page Name")       => 'left',
-                     _("Page")            => 'left',
-                     _("Name")            => 'left',
-                     _("Last Modified")   => 'left',
-                     _("Hits")            => 'right',
-                     _("Visitors")        => 'right',
-                     _("Date Created")    => 'left',
-                     _("Creation Date")   => 'left',
-                     _("# Of Revisions")  => 'right',        //FIXME: count revisions in db
-                     _("First Summary")   => 'left',
-                     _("Last Summary")    => 'left',
-                     _("Summary")         => 'left',
-                     _("Last Author")     => 'left',
-                     _("Last Edited By")  => 'left',
-                     _("Author")          => 'left',
-                     _("Original Author") => 'left',
-                     _("Created By")      => 'left',
-                     _("Locked")          => 'left',
-                     _("Minor Edit")      => 'left',
-                     _("Minor")           => 'left',
-                     );
-
-        $key = $map[$column_name];
-
-        if (! $key) {
-            //FIXME: localise after wording has been finalized.
-            trigger_error("_column_align: key for '$column_name' not found",
-                          E_USER_ERROR);
+    function _getColumn ($column) {
+        static $types;
+        if (empty($types)) {
+            $types = array( 'mtime'
+                            => new _PageList_Column_time('rev:mtime', _("Last Modified")),
+                            'hits'
+                            => new _PageList_Column('hits',  _("Hits"), 'right'),
+                            'summary'
+                            => new _PageList_Column('rev:summary',  _("Last Summary")),
+                            'author'
+                            => new _PageList_Column('rev:author',  _("Last Author")),
+                            'locked'
+                            => new _PageList_Column_bool('locked',  _("Locked"), _("locked")),
+                            'minor'
+                            => new _PageList_Column_bool('rev:is_minor_edit',
+                                                         _("Minor Edit"), _("minor"))
+                            );
         }
-        return $key;
-    }
 
+        if (strstr($column, ':'))
+            list ($column, $heading) = explode(':', $column, 2);
 
-    // lookup database field from column name
-    function _colname_to_dbfield($column_name) {
-        $map = array(
-                     _("Page Name")       => 'pagename',
-                     _("Page")            => 'pagename',
-                     _("Name")            => 'pagename',
-                     _("Last Modified")   => 'mtime',
-                     _("Hits")            => 'hits',
-                     _("Visitors")        => 'hits',
-                     _("Date Created")    => '_ctime',
-                     _("Creation Date")   => '_ctime',
-                     _("# Of Revisions")  => '',        //FIXME: count revisions in db
-                     _("First Summary")   => '_csummary',
-                     _("Last Summary")    => 'summary',
-                     _("Summary")         => 'summary',
-                     _("Last Author")     => 'author',
-                     _("Last Edited By")  => 'author',
-                     _("Author")          => '_cauthor',
-                     _("Original Author") => '_cauthor',
-                     _("Created By")      => '_cauthor',
-                     _("Locked")          => 'locked',
-                     _("Minor Edit")      => 'is_minor_edit',
-                     _("Minor")           => 'is_minor_edit',
-                    );
-        $key = $map[$column_name];
-        if (! $key) {
-            //FIXME: localise after wording has been finalized.
-            trigger_error("_colname_to_dbfield: key for '$column_name' not found",
-                          E_USER_ERROR);
+        if (!isset($types[$column])) {
+            trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
+            return false;
         }
-        return $key;
+
+        $col = $types[$column];
+        if (!empty($heading))
+            $col->setHeading($heading);
+        return $col;
     }
-
-
-    // lookup whether fieldname requires page revision
-    function _does_require_rev($column_name) {
-        $map = array(
-                     _("Page Name")       => false,
-                     _("Page")            => false,
-                     _("Name")            => false,
-                     _("Last Modified")   => true,
-                     _("Hits")            => false,
-                     _("Visitors")        => false,
-                     _("Date Created")    => false,
-                     _("Creation Date")   => false,
-                     _("# Of Revisions")  => '',        //FIXME: count revisions in db
-                     _("First Summary")   => false,
-                     _("Last Summary")    => true,
-                     _("Summary")         => true,
-                     _("Last Author")     => true,
-                     _("Last Edited By")  => true,
-                     _("Author")          => true,
-                     _("Original Author") => false,
-                     _("Created By")      => false,
-                     _("Locked")          => false,
-                     _("Minor Edit")      => true,
-                     _("Minor")           => true,
-                     );
-        $key = $map[$column_name];
-        return $key;
-    }
-
+        
+    
     // make a table given the caption
     function _generateTable($caption) {
-        $pad = NBSP. NBSP;
-        $emdash = new RawXml('&#8212;');
-
         $table = HTML::table(array('cellpadding' => 0,
                                    'cellspacing' => 1,
-                                   'border'      => 0,
-                                   'width'       => '100%'));
+                                   'border'      => 0));
         $table->setAttr('summary', "FIXME: add brief summary and column names");
 
 
-        $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
+        if ($caption)
+            $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
 
         $row = HTML::tr();
-        foreach ($this->_columns as $column_name) {
-            $row->pushContent(HTML::td(array('align'
-                                             => $this->_column_align($column_name)),
-                                       $pad, HTML::u($column_name)));
-        }
+        foreach ($this->_columns as $col)
+            $row->pushContent($col->heading());
         $table->pushContent(HTML::thead($row));
         
 
         $tbody = HTML::tbody();
         foreach ($this->_pages as $page_handle) {
             $row = HTML::tr();
-            global $Theme;
-
-            foreach ($this->_columns as $column_name) {
-                $field = $this->_colname_to_dbfield($column_name);
-
-                if ($this->_does_require_rev($column_name)) {
-                    $current = $page_handle->getCurrentRevision();
-                    $value = $current->get($field);
-                }
-                else
-                    $value = $page_handle->get($field);
-
-                //TODO: make method to determine formatting
-                switch ($field) {
-                    // needs current rev
-                case 'mtime' :
-                    $value = $Theme->formatDateTime($value);
-                    break;
-                case 'is_minor_edit' :
-                    $value = $value ? _("minor") : $emdash;
-                    break;
-
-                    // does not need current rev
-                case 'pagename' :
-                    $value = LinkExistingWikiWord($page_handle->getName());
-                    break;
-                case 'locked' :
-                    $value = $value ? _("locked") : $emdash;
-                    break;
-                case '_ctime' :
-                    // FIXME: There might not be revision 1 (it may have been cleaned
-                    // out long ago).
-                    $revision = $page_handle->getRevision(1);
-                    $value = $Theme->formatDateTime($revision->get('mtime'));
-                    break;
-                case '_cauthor' :
-                    // FIXME: as above
-                    $revision = $page_handle->getRevision(1);
-                    $value = LinkExistingWikiWord($revision->get('author'));
-                    break;
-                case '_csummary' :
-                    // FIXME: as above
-                    $revision = $page_handle->getRevision(1);
-                    //TODO: link WikiWords
-                    //$td = new RawXml (LinkExistingWikiWord($revision->get('summary')));
-                    $value = $revision->get('summary');
-                    break;
-
-                default :
-                    break;
-                }
-
-                $row->pushContent(HTML::td(array('align' => $this->_column_align($column_name)),
-                                           $pad, $value));
-            }
+            $revision_handle = false;
+            foreach ($this->_columns as $col)
+                $row->pushContent($col->format($page_handle, $revision_handle));
             $tbody->pushContent($row);
         }
-
         $table->pushContent($tbody);
         return $table;
     }
@@ -294,7 +279,6 @@ class PageList {
             $html[] = HTML::blockquote(HTML::p($this->_messageIfEmpty));
         return $html;
     }
-
 };
 
 

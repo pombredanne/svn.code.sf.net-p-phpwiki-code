@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.13 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: MostPopular.php,v 1.14 2002-01-22 05:06:50 dairiki Exp $');
 /**
  */
 
@@ -27,8 +27,8 @@ extends WikiPlugin
         $pages = $dbi->mostPopular($limit);
 
         $pagelist = new PageList();
-        $pagelist->insertColumn(_("Hits"));
-        //$pagelist->addcolumn(_("Last Modified"));
+        $pagelist->insertColumn('hits');
+        //$pagelist->addcolumn('mtime');
 
         while ($page = $pages->next()) {
             $hits = $page->get('hits');

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.10 2002-01-22 03:17:47 dairiki Exp $');
+rcs_id('$Id: BackLinks.php,v 1.11 2002-01-22 05:06:50 dairiki Exp $');
 /**
  */
 
@@ -34,7 +34,7 @@ extends WikiPlugin
         $p = $dbi->getPage($page);
         $backlinks = $p->getLinks();
 
-        $pagelist = new PageList();
+        $pagelist = new PageList;
 
 
         // Currently only info="Last Modified" or info=hits works (I
