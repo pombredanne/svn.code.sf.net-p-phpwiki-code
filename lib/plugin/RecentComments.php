@@ -1,8 +1,10 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentComments.php,v 1.2 2004-05-14 17:40:56 rurban Exp $');
+rcs_id('$Id: RecentComments.php,v 1.3 2004-05-14 20:55:03 rurban Exp $');
 
 /**
- * List of basepages with recently added comments
+ * List of basepages with recently added comments.
+ * Idea from http://www.wakkawiki.com/RecentlyCommented
+ * @author: Reini Urban
  */
 
 require_once("lib/plugin/RecentChanges.php");
@@ -16,7 +18,7 @@ extends WikiPlugin_RecentChanges
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
     function getDefaultArguments() {
     	//php-4.0.4pl1 breaks at the parent:: line even if the 
@@ -30,33 +32,65 @@ extends WikiPlugin_RecentChanges
         return $args;
     }
 
+    function format ($changes, $args) {
+        $fmt = new _RecentChanges_CommentFormatter($args);
+        return $fmt->format($changes);
+    }
+
+    function run($dbi, $argstr, &$request, $basepage) {
+        $args = $this->getArgs($argstr, $request);
+        // HACKish: fix for SF bug #622784  (1000 years of RecentChanges ought
+        // to be enough for anyone.)
+        $args['days'] = min($args['days'], 365000);
+        return $this->format($this->getChanges($request->_dbi, $args), $args);
+    }
+
     function getChanges ($dbi, $args) {
         $changes = $dbi->mostRecent($this->getMostRecentParams($args));
-
         $show_deleted = $args['show_deleted'];
         if ($show_deleted == 'sometimes')
             $show_deleted = $args['show_minor'];
         if (!$show_deleted)
             $changes = new NonDeletedRevisionIterator($changes, !$args['show_all']);
-
         // sort out pages with no comments
         $changes = new RecentCommentsRevisionIterator($changes, $dbi);
         return $changes;
     }
+}
 
-    // box is used to display a fixed-width, narrow version with common header.
-    // just a numbered list of limit pagenames, without date.
-    function box($args = false, $request = false, $basepage = false) {
-        if (!$request) $request =& $GLOBALS['request'];
-        if (!isset($args['limit'])) $args['limit'] = 15;
-        $args['format'] = 'box';
-        $args['show_minor'] = false;
-        $args['show_major'] = true;
-        $args['show_deleted'] = false;
-        $args['show_all'] = false;
-        $args['days'] = 90;
-        return $this->makeBox(WikiLink(_("RecentComments"),'',_("Recent Comments")),
-                              $this->format($this->getChanges($request->_dbi, $args), $args));
+class _RecentChanges_CommentFormatter
+extends _RecentChanges_HtmlFormatter {
+
+    function empty_message () {
+        return _("No comments found");
+    }
+
+    function title() {
+        return;
+    }
+
+    function format_revision ($rev) {
+    	static $doublettes = array();
+    	if (isset($doublettes[$rev->getPageName()])) return;
+    	$doublettes[$rev->getPageName()] = 1;
+        $args = &$this->_args;
+        $class = 'rc-' . $this->importance($rev);
+        $time = $this->time($rev);
+        if (! $rev->get('is_minor_edit'))
+            $time = HTML::strong(array('class' => 'pageinfo-majoredit'), $time);
+        $line = HTML::li(array('class' => $class));
+        if ($args['difflinks'])
+            $line->pushContent($this->diffLink($rev), ' ');
+
+        if ($args['historylinks'])
+            $line->pushContent($this->historyLink($rev), ' ');
+
+        $line->pushContent($this->pageLink($rev), ' ',
+                           $time, ' ',
+                           ' . . . . ',
+                           _("latest comment by "),
+                           $this->authorLink($rev));
+        return $line;
     }
 }
 
@@ -88,8 +122,8 @@ class RecentCommentsRevisionIterator extends WikiDB_PageRevisionIterator
                     usort($this->comments, array("WikiPlugin_WikiBlog",
                                                  "cmp"));
                 if (isset($this->comments[$this->_current])) {
-                    $this->_current++;
-                    return $rev;
+                    //$this->_current++;
+                    return $this->comments[$this->_current++];
                 }
             } else {
 		$this->_current = 0;

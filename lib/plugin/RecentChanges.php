@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.93 2004-05-14 17:33:07 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.94 2004-05-14 20:55:03 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -257,9 +257,6 @@ extends _RecentChanges_Formatter
 
     function title () {
         extract($this->_args);
-        if (isset($caption) and $caption == _("Recent Comments"))
-            return array(_("RecentComments"),' ',$this->rss_icon(),
-                         $this->sidebar_link());
         return array($show_minor ? _("RecentEdits") : _("RecentChanges"),
                      ' ',
                      $this->rss_icon(),
@@ -605,9 +602,6 @@ extends _RecentChanges_Formatter
          */
     }
 
-
-
-
     function item_properties ($rev) {
         $page = $rev->getPage();
         $pagename = $page->getName();
@@ -664,7 +658,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.93 $");
+                            "\$Revision: 1.94 $");
     }
 
     function managesValidators() {
@@ -792,7 +786,7 @@ extends WikiPlugin
         $args['show_deleted'] = false;
         $args['show_all'] = false;
         $args['days'] = 90;
-        return $this->makeBox(WikiLink(_("RecentChanges"),'',_("Recent Changes")),
+        return $this->makeBox(WikiLink($this->getName(),'',split_pagename($this->getName())),
                               $this->format($this->getChanges($request->_dbi, $args), $args));
     }
 
@@ -847,6 +841,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.93  2004/05/14 17:33:07  rurban
+// new plugin RecentChanges
+//
 // Revision 1.92  2004/04/21 04:29:10  rurban
 // Two convenient RecentChanges extensions
 //   RelatedChanges (only links from current page)
