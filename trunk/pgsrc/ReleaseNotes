@@ -1,13 +1,55 @@
 Date: Fri, 29 Apr 2004 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.30 2004-05-14 11:33:03 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.31 2004-05-25 20:05:50 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.30 $";
+  pgsrc_version="2 $Revision: 1.31 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
+
+1.3.11 May, ?? 2004, Reini Urban:
+
+fixes:
+* fixed Today link in all templates if USE_PATH_INFO = false
+* fixed PluginManager fatal error line 222
+* utf-8 pagenames fixed (typed foreign names from IE) Bug #
+* CGI: no PATH_INFO fix 
+* fix some too loose PagePerms for signed, but not authenticated users
+  (admin, owner, creator), and edit and view for Bogo and Password users 
+* fixed syntax errors in signin.tmpl 
+* fixed important WikiDB bug with DEBUG > 0: wrong assertion 
+  around line 172 (#954648)
+* RssFeed stability fix for empty feeds or broken connections 
+* fixed Sidebar theme CSS
+* fixed ImageLinks, broken since 1.3.10 (#956068)
+* fixed lib/pear/File_Passwd loading
+
+changes:
+* show RelatedChanges only if minimum two links on the current page.
+* enabled PagePerm for admin plugins: Remove, Rename, SetAcl (no admin required)
+* PageDump: ViewSource link, better actionpage usage, MessageID TZ
+* new Error-style with collapsed output of repeated messages 
+* trim pagenames to avoid abuse
+* no double login page header, better login msg. 
+* check more config-default and predefined constants 
+* AutoSplit pagenames at subpage seperators, esp for Sidebar theme
+* improve Pagelist layout by equal pagename width for limited lists 
+* added CPAN to interwiki.map
+* RFE #952323 ExternalSearchPlugin useimage arg
+* TranslateText: verbatim needed a pagebreak
+* Simplified some strings for easier translation 
+
+new:
+* WikiAdminSetAcl functional
+* implemented WikiDB creator and ownership
+* added action=pdf: only page formatter missing
+* new XmlParser, HtmlParser: new libs for HTML->wiki import and htmlarea3 support
+* USE_EDIT_TOOLBAR enabled (from mediawiki)
+* utf8 detection logic
+* new SyntaxHighlighter plugin (based on work of alecthomas)
+  Needs highlight from http://www.andre-simon.de/
 
 1.3.10 May, 13 2004, Reini Urban, Joby Walker:
 
