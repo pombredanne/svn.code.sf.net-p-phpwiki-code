@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.108 2004-09-26 12:24:02 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.109 2004-10-14 21:06:02 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -499,32 +499,17 @@ class Theme {
     function linkExistingWikiWord($wikiword, $linktext = '', $version = false) {
         global $request;
 
-        if ($version !== false)
+        if ($version !== false and !$this->HTML_DUMP_SUFFIX)
             $url = WikiURL($wikiword, array('version' => $version));
         else
             $url = WikiURL($wikiword);
 
         // Extra steps for dumping page to an html file.
-        // FIXME: shouldn't this be in WikiURL?
         if ($this->HTML_DUMP_SUFFIX) {
-            // no action or sortby links
-            $url = preg_replace("/\?.*$/","",$url);
-            // urlencode for pagenames with accented letters
-            $url = rawurlencode($url);
-            $url = preg_replace('/^\./', '%2e', $url);
-            // fix url#anchor links (looks awful)
-            if (strstr($url,'%23'))
-                $url = preg_replace("/%23/",$this->HTML_DUMP_SUFFIX."#",$url);
-            else
-                $url .= $this->HTML_DUMP_SUFFIX;
+            $url = preg_replace('/^\./', '%2e', $url); // dot pages
         }
 
         $link = HTML::a(array('href' => $url));
-
-        if (isa($wikiword, 'WikiPageName'))
-            $default_text = $wikiword->shortName;
-        else
-            $default_text = $wikiword;
         
         if (!empty($linktext)) {
             $link->pushContent($linktext);
@@ -1372,6 +1357,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2004/09/26 12:24:02  rurban
+// no anchor (PCRE memory), explicit ^ instead
+//
 // Revision 1.107  2004/06/21 16:22:29  rurban
 // add DEFAULT_DUMP_DIR and HTML_DUMP_DIR constants, for easier cmdline dumps,
 // fixed dumping buttons locally (images/buttons/),
