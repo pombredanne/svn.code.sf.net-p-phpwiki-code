@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.24 2004-04-18 05:42:17 rurban Exp $');
+rcs_id('$Id: BackLinks.php,v 1.25 2004-09-13 15:00:50 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
     
     function getDefaultArguments() {
@@ -48,10 +48,11 @@ extends WikiPlugin
                      'info'         => false
                      );
     }
+
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
-    
+    // NEW: info=count : number of links
     function run($dbi, $argstr, &$request, $basepage) {
         $this->_args = $this->getArgs($argstr, $request);
         extract($this->_args);
@@ -61,9 +62,12 @@ extends WikiPlugin
         $exclude = $exclude ? explode(",", $exclude) : array();
         if (!$include_self)
             $exclude[] = $page;
-        
+        if ($info) {
+            $info = explode(",", $info);
+            if (in_array('count',$info))
+                $this->_args['types']['count'] = new _PageList_Column_BackLinks_count('count', _("#"), 'center');
+        }
         $pagelist = new PageList($info, $exclude, $this->_args);
-        
         $p = $dbi->getPage($page);
         $pagelist->addPages($p->getLinks());
         
@@ -75,8 +79,7 @@ extends WikiPlugin
         // distinction as it does with English in this case. :)
         if (!$noheader) {
             if ($page == $request->getArg('pagename')
-                && !$dbi->isWikiPage($page))
-                {
+                && !$dbi->isWikiPage($page)) {
                     // BackLinks plugin is more than likely being called
                     // upon for an empty page on said page, while either
                     // 'browse'ing, 'create'ing or 'edit'ing.
@@ -101,7 +104,7 @@ extends WikiPlugin
                     else
                         $pagelist->setCaption(fmt("%s pages would link to %s:",
                                                   $pagelist->getTotal(), $pagelink));
-                }
+            }
             else {
                 // BackLinks plugin is being displayed on a normal page.
                 $pagelink = WikiLink($page, 'auto');
@@ -130,7 +133,21 @@ extends WikiPlugin
     
 };
 
+// how many links from this backLink to other pages
+class _PageList_Column_BackLinks_count extends _PageList_Column {
+    function _getValue($page, &$revision_handle) {
+        $iter = $page->getPageLinks();
+        $count = $iter->count();
+        return $count;
+    }
+}
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/04/18 05:42:17  rurban
+// more fixes for page="0"
+// better WikiForum support
+//
 // Revision 1.23  2004/02/22 23:20:33  rurban
 // fixed DumpHtmlToDir,
 // enhanced sortby handling in PageList
