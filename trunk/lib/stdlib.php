@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.45 2001-11-26 06:23:42 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.46 2001-11-28 20:12:48 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -19,10 +19,14 @@
 
 
    function DataURL($url) {
-      global $theme;
       if (preg_match('@^(\w+:|/)@', $url))
 	 return $url;
+      return SERVER_URL . DATA_PATH . "/$url";
+      // Beginnings of theme support by Carsten Klapp:
+      /*
+      global $theme;
       return SERVER_URL . DATA_PATH . "/templates/$theme/$url";
+      */
    }
 	  
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
