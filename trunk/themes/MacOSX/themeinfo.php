@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.23 2002-01-19 00:04:49 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.24 2002-01-19 01:03:50 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -21,16 +21,7 @@ rcs_id('$Id: themeinfo.php,v 1.23 2002-01-19 00:04:49 carstenklapp Exp $');
  * The button toolbars use tables for positioning. Yuck. (It will do
  * for now).
  *
- * Only English buttons are available. Full localization is still a
- * ways off. Work is in progress to modularize & tokenize the normal
- * templates and (somehow) some cool toolbar functions are going to
- * result from it.  This should make editing the MacOSX theme template
- * files much easier as well as providing a generic localization
- * method for any other toolbars (whether image or text).
- *
- * There is an image for a BackLinks button but it's not used yet
- * either.  For now BackLinks are still accessed by clicking in the
- * title.
+ * Only English buttons are available. Full localization is coming.
  *
  * The CSS is still mostly the same as phpwiki.css. I'd like to change
  * it a bit but have no specific plans yet. Just a general feeling
@@ -40,21 +31,18 @@ rcs_id('$Id: themeinfo.php,v 1.23 2002-01-19 00:04:49 carstenklapp Exp $');
  * brushed paper (or stucco?) texture effect very close to white. If
  * your monitor isn't calibrated well you might not even see it.
  *
- * I probably won't be submitting anything else for this theme for a
- * bit.  Not until the default toolbar stuff and templates are further
- * along anyway.
- * 
  * Send me some feedback, do you like the icons used in the buttons?
- * Got any ideas for code to pick out the localized buttons from the
- * right directory? Automatic button generation for localized buttons
+ *
+ * Automatic button generation for localized buttons
  * isn't going to happen for this theme--there is a gradient across
  * the glass surface of the button that only Mac OS X Aqua can
  * generate. Chopping a button up and stamping it with localized words
  * means a lot of tweaking to the blank button pieces to get the seams
- * invisible. So it will be a nicer effect to produce them by hand.
+ * invisible, so a more authentic Mac OS X user experience is achived by
+ * producing the buttons by hand.
  *
- * The current link icons I want to move into this theme, and come up
- * with some new linkicons for the default look. (Comments, feedback?)
+ * The defaut link icons I want to move into this theme, and come up
+ * with some new linkicons for the default look. (Any ideas, feedback?)
  *
  * */
 
@@ -71,7 +59,9 @@ class Theme_MacOSX extends Theme {
         $css = Theme::getCSS();
         $css .= Element('style', array('type' => 'text/css'),
                         sprintf("<!--\nbody {background-image: url(%s);}\n-->\n",
-                                $this->getImageURL('bggranular')));
+                                $this->getImageURL('bgpaper8')));
+                                //for non-browse pages, like former editpage, message etc.
+                                //$this->getImageURL('bggranular')));
         return $css;
     }
 
@@ -109,6 +99,9 @@ $Theme->setLinkIcon('interwiki');
 $Theme->setLinkIcon('*', 'url');
 
 $Theme->setButtonSeparator(' ');
+
+$Theme->setDateTimeFormat("%A, %B %e, %Y. %l:%M:%S %p %Z"); // may contain time of day
+$Theme->setDateFormat("%A, %B %e, %Y"); // must not contain time
 
 // Controls whether the '?' appears before or after UnknownWikiWords.
 // The PhpWiki default is for the '?' to appear before.
