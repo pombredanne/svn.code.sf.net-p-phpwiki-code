@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.192 2004-06-28 12:47:43 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.193 2004-06-28 13:27:03 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -639,10 +639,15 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
     // AnciennesR%E8glesDeFormatage crashes. 
     // It only crashes with CreateToc
     $debug_skip = false;
-    if (preg_match("/plugin CreateToc/",$text)) {
-    	trigger_error("The CreateTocPlugin is not yet old markup compatible! Skipped.", E_USER_WARNING);
+    // I suspect this only to crash with Apache2 (IIS not tested)
+    if (in_array(php_sapi_name(),array('apache2handler','apache2filter')) 
+        and preg_match("/plugin CreateToc/",$text)) {
+    	trigger_error(_("The CreateTocPlugin is not yet old markup compatible! ")
+    	             ._("Please remove the CreateToc line to be able to reformat this page to old markup. ")
+    	             ._("Skipped."), E_USER_WARNING);
         $debug_skip = true;
-        if (!DEBUG) return $text;
+        //if (!DEBUG) return $text;
+        return $text;
     }
 
     if (empty($subs)) {
@@ -1610,6 +1615,9 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.192  2004/06/28 12:47:43  rurban
+// skip if non-DEBUG and old markup with CreateToc
+//
 // Revision 1.191  2004/06/25 14:31:56  rurban
 // avoid debug_skip warning
 //

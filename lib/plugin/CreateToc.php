@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.23 2004-06-28 13:13:58 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.24 2004-06-28 13:27:03 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -51,7 +51,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function getDefaultArguments() {
@@ -197,9 +197,12 @@ extends WikiPlugin
         }
         $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
+        //FIXME: I suspect this only to crash with Apache2
         if (!$current->get('markup') or $current->get('markup') < 2) {
-            trigger_error(_("CreateToc disabled for old markup"), E_USER_WARNING);
-            return '';
+	    if (in_array(php_sapi_name(),array('apache2handler','apache2filter'))) {
+                trigger_error(_("CreateToc disabled for old markup"), E_USER_WARNING);
+                return '';
+	    }
         }
         $content = $current->getContent();
         $html = HTML::div(array('class' => 'toc','align' => $align));
@@ -273,6 +276,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/06/28 13:13:58  rurban
+// CreateToc disabled for old markup
+//
 // Revision 1.22  2004/06/15 14:56:37  rurban
 // more allow_call_time_pass_reference false fixes
 //
