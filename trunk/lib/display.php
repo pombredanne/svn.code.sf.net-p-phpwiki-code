@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.18 2002-01-25 01:04:13 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.19 2002-01-25 06:54:20 dairiki Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/transform.php');
@@ -67,8 +67,7 @@ function displayPage(&$request, $tmpl = 'browse') {
 
     if (0) {
         include_once('lib/BlockParser.php');
-        global $BlockParser;
-        $content = $BlockParser->parse($revision->getPackedContent());
+        $content = NewTransform($revision->getPackedContent());
         //print_r($content);
         $template = Template($tmpl, array('CONTENT' => $content));
     }

@@ -40,7 +40,7 @@ function TransformInline ($text) {
     $lines = preg_split('/[ \t\r]*\n/', trim($text));
 
     $trfm = new InlineTransform;
-    return $trfm->do_transform('', $lines);
+    return new RawXml(rtrim(AsXML($trfm->do_transform('', $lines))));
 }
 
 /**
@@ -65,65 +65,45 @@ class BlockParser {
         $prototype = new $class (false);
         $this->_blockTypes[] = $prototype;
     }
+
     
     function parse ($text) {
         $content = array();
 
         // strip leading blank lines
-        $text = preg_replace("/\s*\n/A", "", $text);
+        //$text = preg_replace("/\s*\n/A", "", $text);
 
-        while ($text) {
-            $parsed = $this->_parseOne($text);
-            assert (!is_array($parsed));
-            $content[] = $parsed;
+        $block = $this->_nextBlock($text);
+        while ($block) {
+            while ($nextBlock = $this->_nextBlock($text)) {
+                if (!isa($block, "Block_blockquote"))
+                    break;
+                if (!isa($nextBlock, "Block_blockquote"))
+                    break;
+                if ($nextBlock->getDepth() >= $block->getDepth())
+                    break;
 
-            // strip blank lines
-            $text = preg_replace("/\s*\n/A", "", $text);
+                // We have a deeper block quote immediated preceding
+                // a shallower block-quote.  Merge the two...
+                $nextBlock->unshiftContent($block);
+                $block = $nextBlock;
+            }
+
+            $content[] = $block;
+            $block = $nextBlock;
         }
         return $content;
     }
-
-    function _parseOne (&$text) {
-        $block = $this->_grokBlockType($text); // determine block type from first line of text
-        assert($block);
-        $btext = $block->extractBlock($text);
-
-        while ($nextBlock = $this->_grokBlockType($text)) {
-            $next_text = $nextBlock->extractBlock($text);
-            
-            if (! $nextBlock->matches($btext . $next_text)) {
-                // Can't combine blocks.
-                $text = $next_text . $text;
-                if ($nextBlock->getDepth() < $block->getDepth()) {
-                    //if (!isa($block, "Block_blockquote")) {
-                    if ($block->_tag != 'blockquote') {
-                        // FIXME: move this.
-                        $block = new Block_blockquote;
-                        assert(preg_match('/(?:\s*\n)?( *)(?=\S)/', $btext, $m));
-                        $block->_init($m);
-                    }
-                }
-                break;
-            }
-            assert ($nextBlock->getDepth() <= $block->getDepth());
-            $block = $nextBlock;
-            $btext .= $next_text;
-        }
-
-        if (0) {
-            echo "BLOCK $block->_tag:<pre>\n";
-            echo htmlspecialchars($btext);
-            echo "\n</pre><br />\n";
-        }
+    
+    function _nextBlock (&$text) {
+        if (preg_match('/\s*\n/A', $text, $m))
+            $text = substr($text, strlen($m[0]));
         
-        return $block->parse($btext);
-    }
-
-    function _grokBlockType ($text) {
         foreach ($this->_blockTypes as $type) {
             if (($block = $type->Match($text)))
                 return $block;
         }
+
         return false;
     }
 
@@ -131,303 +111,259 @@ class BlockParser {
 
         
 class Block {
-    var $_match_re;
-    var $_prefix_re;
-    var $_block_re;
-    var $_depth = 0;
-    var $_tag;
-    var $_attr = false;
-
-    /*
-    function Block ($match = false) {
-        if ($match)
-            $this->_init($match);
-    }
-    */
-
-    function _init ($match) {
-        $qprefix = preg_quote($match[1], '/');
-        $this->_prefix_re = $qprefix;
-        $this->_block_re = "(?:(?:\s*\n)?${qprefix}.*\n?)+";
-        $this->_depth = strlen($match[1]);
-    }
-
     /**
      * (This should be a static member function...)
      */
-    function Match ($text) {
-        if (! preg_match($this->_match_re, $text, $match))
-            return false;
+    function Match (&$text) {
+        return $this->_match($text);
+    }
+}
 
-        $block = $this;        // Copy self.
-        $block->_init($match);
-        return $block;
+
+
+class TightListItem extends HtmlElement
+{
+    function TightListItem ($tag, $content) {
+        $this->HtmlElement($tag);
+        $this->pushTightContent($content);
     }
         
-    function extractBlock (&$text) {
-        $block_re = &$this->_block_re;
-        assert(preg_match("/$block_re/Ami", $text, $m));
-        $text = substr($text, strlen($m[0]));
-        return $m[0];
+    function pushTightContent ($content) {
+        if (!is_array($content))
+            $content = array($content);
+        foreach ($content as $c) {
+            if (isa($c, "HtmlElement") && $c->getTag() == 'p')
+                $c = $c->getContent();
+            $this->pushContent($c);
+        }
     }
+}
 
-    function getDepth () {
-        return $this->_depth;
-    }
-
-    function matches ($text) {
-        $block_re = &$this->_block_re;
-        return preg_match("/$block_re\$/Ai", $text);
-    }
-    
-    function parse ($text) {
-        assert ($this->matches($text));
-
-        // Strip block prefix from $text.
-        $prefix = &$this->_prefix_re;
-        $text = preg_replace("/^$prefix/m", "", $text);
         
+                
+            
+class Block_list extends Block
+{
+    var $_match_re = "/([*#])\s*(?=\S)/A";
 
+    function _match (&$text) {
         global $BlockParser;
-        return $this->wrap($BlockParser->parse($text));
-    }
-
-    // FIXME: rename
-    function wrap($content) {
-        // DEBUGGING:
-        //if (is_array($content)) $content = join('', $content);
-        //$content = preg_replace("/(?<!\n)$/", "\n", $content);
-        //return "$this->_tag:\n" . preg_replace("/^(?!\$)/m", "  ", $content);
         
-        return new HtmlElement($this->_tag, $this->_attr, $content);
-    }
-    
-}
+        if (!(preg_match($this->_match_re, $text, $m)))
+            return false;
+        $li_pfx = preg_quote($m[0], '/');
+        $c_pfx = sprintf("\\ {%d}", strlen($m[0]));
+        $li_re = "/${li_pfx}\S.*(?:\s*\n${c_pfx}.*)*(?:\s*\n)?/A";
+        $strip_re = "/^(?:${li_pfx}|${c_pfx})/m";
 
-class ListBlock extends Block
-{
-    var $_match_re = "/(?:\s*\n)?( *[*#] *(?=\S))/A";
-    
-    /**
-     * Get a regexp which matches the line prefix for
-     * any <li> of the same type (ul/ol) and depth.
-     */
-    function makeLiPrefixRegexp ($match) {
-        return preg_quote($match[1], '/');
-    }
-    
-    /**
-     * Get a regexp which matches the line prefix for
-     * any <li> continuation lines.
-     */
-    function makeContPrefixRegexp ($match) {
-        return sprintf(" {%d}", strlen($match[1]));
-    }
-}
+        $list = new HtmlElement($m[1] == '*' ? 'ul' : 'ol');
 
-class Block_list extends ListBlock
-{
-    function _init ($match) {
-        $this->_tag = $this->grokListType($match);
-        
-        $liprefix = $this->makeLiPrefixRegexp($match);
-        $cprefix = $this->makeContPrefixRegexp($match);
+        $was_loose = false;
+        $have_item = preg_match($li_re, $text, $m);
+        assert($have_item);
+        while ($have_item) {
+            $text = substr($text, strlen($m[0]));
+            $body = preg_replace($strip_re, '', $m[0]);
+            
+            $have_item = preg_match($li_re, $text, $m);
+            $is_loose = preg_match($have_item
+                                   ? "/\n\s*\n/"
+                                   : "/\n\s*\n(?!\s*\$)/",
+                                   $body);
+            $tight = !($is_loose ||$was_loose);
+            $was_loose = $is_loose;
+            
+            $li_content = $BlockParser->parse(rtrim($body));
+            if ($tight)
+                $list->pushContent(new TightListItem('li', $li_content));
+            else
+                $list->pushContent(new HtmlElement('li', false, $li_content));
+        }
+        assert($list->getContent());
 
-        preg_match('/^ */', $match[1], $m);
-        $this->_depth = strlen($m[0]);
-        
-        $this->_prefix_re = false; // don't strip any prefix
-        $this->_block_re = ( "(?:\s*\n)?"          // leading blank lines.
-                             . "(?:"
-                             . "${liprefix}.*\n?" // first line
-                             . "(?:(?:\s*\n)?${cprefix}.*\n?)*" // continuation lines
-                             . ")+" );
-        
-    }
-
-    function grokListType ($match) {
-        return preg_match("/#\s*\$/", $match[0]) ? 'ol' : 'ul';
-    }
-
-    function parse ($text) {
-        global $ListParser;
-        return $this->wrap($ListParser->parse($text));
-    }
-}
-
-
-class Block_li extends ListBlock
-{
-    var $_tag = 'li';
-
-    function _init ($match) {
-        $liprefix = $this->makeLiPrefixRegexp($match);
-        $cprefix = $this->makeContPrefixRegexp($match);
-
-        $this->_prefix_re = "(?:${cprefix}|${liprefix})";
-        $this->_block_re = ( "${liprefix}.*\n?" // first line
-                             . "(?:(?:\s*\n)?${cprefix}.*\n?)*" ); // continuation lines
+        return $list;
     }
 }
 
 class Block_dl extends Block
 {
-    var $_tag = 'dl';
-    var $_match_re = "/(?:\s*\n)?[^\s*#].*:\s*\n +\S/A";
-    var $_prefix_re = false;    // no prefix to strip
-    var $_block_re = "(?:(?:\s*\n)?[^\s*#].*:(?:\s*\n +\S.*)+\n?)+";
+    var $_re = "/([^\s!].*):\s*\n((?:\ +\S.*(?:\s*\n)?)+)/A";
 
-    function _init () {
-    }
-
-    function parse ($text) {
-        $dt = new Block_dt;
-        $dd = new Block_dd;
+    function _match (&$text) {
         
-        $content = array();
-        while ($block = $dt->Match($text)) {
-            $btext = $block->extractBlock($text);
-            $content[] = $block->parse($btext);
-            
-            $block = $dd->Match($text);
-            assert($block);
-            $btext = $block->extractBlock($text);
-            $content[] = $block->parse($btext);
+        $have_item = preg_match($this->_re, $text, $m);
+        if (!$have_item)
+            return false;
+
+        global $BlockParser;
+        $was_loose = false;
+        $list = HTML::dl();
+
+        while ($have_item) {
+            $text = substr($text, strlen($m[0]));
+            $list->pushContent(HTML::dt(rtrim($m[1])));
+            $body = $this->_unindent($m[2]);
+
+            $have_item = preg_match($this->_re, $text, $m);
+            $is_loose = preg_match($have_item
+                                   ? "/\n\s*\n/"
+                                   : "/\n\s*\n(?!\s*\$)/",
+                                   $body);
+            $tight = !($is_loose ||$was_loose);
+            $was_loose = $is_loose;
+
+            $dd_content = $BlockParser->parse(rtrim($body));
+            if ($tight)
+                $list->pushContent(new TightListItem('dd', $dd_content));
+            else
+                $list->pushContent(new HtmlElement('dd', false, $dd_content));
         }
-        assert(preg_match("/\s*\$/A", $text));
-        return $this->wrap($content);
-    }
-}
-
-class Block_dt extends Block
-{
-    var $_tag = 'dt';
-    var $_match_re = "/(?:\s*\n)?[^\s*#].*:\s*?\n/A";
-    var $_block_re = "(?:\s*\n)?[^\s*#].*:\s*\n";
-
-    function _init () {
-    }
-    
-    function parse ($text) {
-        
-        assert(preg_match("/(\S.*?)\s*:/A", $text, $m));
-        return $this->wrap($m[1]);
-    }
-}
-
-
-class Block_dd extends Block
-{
-    var $_tag = 'dd';
-    var $_match_re = "/(?:(?:\s*\n)? +\S.*\n?)+/A";
-    var $_block_re = "(?:(?:\s*\n)? +\S.*\n?)+";
-
-    function _init ($match) {
-        $indent = $this->_getIndent($match[0]);
-        $this->_prefix_re =  sprintf(" {%d}", $indent);
+        return $list->getContent() ? $list : false;
     }
 
-    function _getIndent ($body) {
+    function _unindent ($body) {
         assert(preg_match_all("/^ +(?=\S)/m", $body, $m));
         $indent = strlen($m[0][0]);
         foreach ($m[0] as $pfx)
             $indent = min($indent, strlen($pfx));
-        return $indent;
+
+        $ind_re = sprintf("\\ {%d}", $indent);
+        return preg_replace("/^{$ind_re}/m", "", $body);
     }
 }
 
 
 class Block_blockquote extends Block
 {
-    var $_tag = 'blockquote';
-    var $_match_re = "/(?:\s*\n)?( +(?=\S))/A";
+    var $_depth;
+    
+    var $_re = "/(\ +(?=\S)).*(?:\s*\n\\1.*)*\n?/A";
+
+    function _match (&$text) {
+        if (! preg_match($this->_re, $text, $m))
+            return false;
+        $text = substr($text, strlen($m[0]));
+
+        $this->_depth = strlen($m[1]);
+        $pfx = preg_quote($m[1], '/');
+        $body = preg_replace("/^$pfx/m", "", $m[0]);
+        global $BlockParser;
+        return HTML::blockquote(false, $BlockParser->parse($body));
+    }
+
+    function getDepth () {
+        return $this->_depth;
+    }
 }
 
 class BlockBlock extends Block
 {
-    var $_prefix_re = false;    // no prefix to strip
-
     function BlockBlock ($begin_re, $end_re) {
-        $this->_begin_re = $begin_re;
-        $this->_end_re = $end_re;
-        
-        $this->_block_re = ( "(?:\s*\n)?"
-                             . $begin_re
-                             . "(?:.|\n)*?"
-                             . $end_re
-                             . "\s*?(?=\n|\S|$)" );
-        $this->_match_re = "/" . $this->_block_re . "/Ai";
-    }
-
-    function _init () {
-    }
-
-    function _strip ($text) {
-        $beg = $this->_begin_re;
-        $end = $this->_end_re;
-        
-        $text = preg_replace("/.*?${beg}/Asi", "", $text);
-        $text = preg_replace("/${end}.*?$/si", "", $text);
-        return $text;
-    }
-
-    function parse ($text) {
-        // FIXME: parse inline markup.
-        return $this->wrap(TransformInline($this->_strip($text)));
+        $this->_re = ( "/"
+                       . "($begin_re"
+                       . "((?:.|\n)*?)"
+                       . "$end_re)"
+                       . "\s*?\n?"
+                       . "/Ai" );
     }
 }
         
-    
-    
 class Block_pre extends BlockBlock
 {
-    var $_tag = 'pre';
-
     function Block_pre () {
         $this->BlockBlock("<pre>", "(?<!~)<\/pre>");
     }
+
+    function _match (&$text) {
+        if (!preg_match($this->_re, $text, $m))
+            return false;
+        $text = substr($text, strlen($m[0]));
+
+        return HTML::pre(false, TransformInline($m[2]));
+    }
+
 }
 
 class Block_plugin extends BlockBlock
 {
-    var $_tag = 'div';
-    
     function Block_plugin () {
         $this->BlockBlock("<\?plugin(?:-form)?\s", "\?>");
-        $this->_attr = array('class' => 'plugin');
     }
 
-    function parse ($text) {
+
+    function _match (&$text) {
+        if (!preg_match($this->_re, $text, $m))
+            return false;
+        $text = substr($text, strlen($m[0]));
+
         global $request;
         $loader = new WikiPluginLoader;
-        return $this->wrap($loader->expandPI($text, $request));
+
+        return HTML::div(array('class' => 'plugin'),
+                         $loader->expandPI($m[1], $request));
     }
 }
 
+class Block_hr extends Block
+{
+    var $_re = "/-{4,}\s*?\n?/A";
+    
+    function _match (&$text) {
+        if (!preg_match($this->_re, $text, $m))
+            return false;
+        $text = substr($text, strlen($m[0]));
+        return HTML::hr();
+    }
+}
+
+class Block_heading extends Block
+{
+    var $_re = "/(!{1,3}).*?(\S.*)\n?/A";
+    
+    function _match (&$text) {
+        if (!preg_match($this->_re, $text, $m))
+            return false;
+        $text = substr($text, strlen($m[0]));
+
+        $tag = "h" . (5 - strlen($m[1]));
+        return new HtmlElement($tag, false, rtrim($m[2]));
+    }
+}
+
+    
 class Block_p extends Block
 {
-    var $_tag = 'p';
-    var $_match_re = "/(?=\S)/A";
-    var $_prefix_re = false;    // no prefix to strip
-    var $_block_re = "\S.*\n?(?:^(?!\<\?)[^\s*#].*\n?)*";
+    var $_re = "/(\S.*(?:\n(?!\s|[*#!]|\<\?|----|<pre>).+)*)\n?/A";
         
-    function _init ($match) {
-    }
-
-    function parse ($text) {
-        // FIXME: parse inline markup.
-        return $this->wrap(TransformInline($text));
+    function _match (&$text) {
+        if (!preg_match($this->_re, $text, $m))
+            return false;
+        $text = substr($text, strlen($m[0]));
+        
+        return HTML::p(false, TransformInline($m[1]));
     }
 }
 
 $GLOBALS['BlockParser'] = new BlockParser(array('Block_dl',
                                                 'Block_list',
                                                 'Block_blockquote',
+                                                'Block_heading',
+                                                'Block_hr',
                                                 'Block_pre',
                                                 'Block_plugin',
                                                 'Block_p'));
 
-$GLOBALS['ListParser'] = new BlockParser(array('Block_li'));
+
+function NewTransform ($text) {
+    global $BlockParser;
+
+    // Expand leading tabs.
+    // FIXME: do this better.
+    $text = preg_replace('/^\ *[^\ \S\n][^\S\n]*/me', "str_repeat(' ', strlen('\\0'))", $text);
+    assert(!preg_match('/^\ *\t/', $text));
+
+    return $BlockParser->parse($text);
+}
 
 
 // (c-file-style: "gnu")
