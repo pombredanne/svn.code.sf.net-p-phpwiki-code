@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.71 2005-01-10 18:06:40 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.72 2005-01-13 07:29:27 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -350,14 +350,16 @@ function IniConfig($file) {
         unset($rs[$rskey]);
     }
     unset($rskey); unset($apkey);
-    
-    // currently unsupported on non-SQL 
+
+    // TODO: Currently unsupported on non-SQL
     if (!empty($rs['ACCESS_LOG_SQL'])) {
-        if (!in_array($DBParams['dbtype'], array('SQL','ADODB')))
+        if (!in_array(DATABASE_TYPE, array('SQL','ADODB')))
             define('ACCESS_LOG_SQL', 0);
     }
-    else
-        define('ACCESS_LOG_SQL', 0);
+    // SQL defaults to ACCESS_LOG_SQL = 2
+    else {
+        define('ACCESS_LOG_SQL', in_array(DATABASE_TYPE, array('SQL','ADODB')) ? 2 : 0);
+    }
 
     // optional values will be set to '' to simplify the logic.
     foreach ($_IC_OPTIONAL_VALUE as $item) {
@@ -765,6 +767,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2005/01/10 18:06:40  rurban
+// $LANG from DEFAULT_LANGUAGE
+//
 // Revision 1.70  2005/01/04 20:22:44  rurban
 // guess $LANG based on client
 //
