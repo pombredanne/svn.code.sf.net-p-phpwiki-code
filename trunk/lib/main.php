@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.177 2004-09-14 10:31:09 rurban Exp $');
+rcs_id('$Id: main.php,v 1.178 2004-09-25 16:27:36 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -362,19 +362,30 @@ $this->version = phpwiki_version();
         $what = $this->getActionDescription($this->getArg('action'));
         $pass_required = ($require_level >= WIKIAUTH_USER);
         if ($require_level == WIKIAUTH_UNOBTAINABLE) {
+            global $DisabledActions;
+	    if ($DisabledActions and in_array($action, $DisabledActions)) {
+            	$msg = fmt("%s is disallowed on this wiki.",
+                           $this->getDisallowedActionDescription($this->getArg('action')));
+		$this->finish();
+		return;
+	    }
             if (class_exists('PagePermission')) {
                 $user =& $this->_user;
             	$status = $user->isAuthenticated() ? _("authenticated") : _("not authenticated");
-            	$msg = fmt("%s is disallowed on this wiki for %s user '%s' (level: %s).",
-                           $this->getDisallowedActionDescription($this->getArg('action')),
-                           $status, $user->getId(),$this->getLevelDescription($user->_level));
+            	$msg = fmt("%s %s %s is disallowed on this wiki for %s user '%s' (level: %s).",
+                           _("Missing PagePermission:"),
+                           $this->getArg('action'),
+                           $this->getArg('pagename'),
+                           $status, $user->getId(), $this->getLevelDescription($user->_level));
                 $user->PrintLoginForm($this, compact('pass_required'), $msg);
                 $this->finish();
+		return;
             } else {
             	$msg = fmt("%s is disallowed on this wiki.",
                            $this->getDisallowedActionDescription($this->getArg('action')));
                 $this->_user->PrintLoginForm($this, compact('require_level','pass_required'), $msg);
 		$this->finish();
+		return;
             }
         }
         elseif ($require_level == WIKIAUTH_BOGO)
@@ -421,8 +432,20 @@ $this->version = phpwiki_version();
         else
             return $action;
     }
+    
+    /**
+TODO: check against these cases:
+        if ($DisabledActions and in_array($action, $DisabledActions))
+            return WIKIAUTH_UNOBTAINABLE;
+
+    	if (ENABLE_PAGEPERM and class_exists("PagePermission")) {
+    	   return requiredAuthorityForPage($action);
+    	   
+=> Browsing pages is disallowed on this wiki for authenticated user 'rurban' (level: BOGO).
+    */
     function getDisallowedActionDescription($action) {
         static $disallowedActionDescriptions;
+        
         if (! $disallowedActionDescriptions) {
             $disallowedActionDescriptions
             = array('browse'     => _("Browsing pages"),
@@ -474,7 +497,8 @@ $this->version = phpwiki_version();
         
     function requiredAuthorityForAction ($action) {
         global $DisabledActions;
-        if ($DisabledActions and in_array($action,$DisabledActions))
+        
+        if ($DisabledActions and in_array($action, $DisabledActions))
             return WIKIAUTH_UNOBTAINABLE;
             
     	if (ENABLE_PAGEPERM and class_exists("PagePermission")) {
@@ -1083,6 +1107,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.177  2004/09/14 10:31:09  rurban
+// exclude E_STRICT for php5: untested. I believe this must be set earlier because the parsing step is already strict, and this is called at run-time
+//
 // Revision 1.176  2004/08/05 17:33:22  rurban
 // aesthetic typo
 //
