@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.54 2002-09-15 20:17:58 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.55 2002-09-16 18:49:51 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -8,14 +8,14 @@ require_once('lib/HtmlElement.php');
  *
  * This is a convenience function.
  *
- * @param $page_or_rev mixed
+ * @param mixed $page_or_rev
  * Can be:<dl>
  * <dt>A string</dt><dd>The page to link to.</dd>
  * <dt>A WikiDB_Page object</dt><dd>The page to link to.</dd>
  * <dt>A WikiDB_PageRevision object</dt><dd>A specific version of the page to link to.</dd>
  * </dl>
  *
- * @param $type string
+ * @param string $type
  * One of:<dl>
  * <dt>'unknown'</dt><dd>Make link appropriate for a non-existant page.</dd>
  * <dt>'known'</dt><dd>Make link appropriate for an existing page.</dd>
@@ -25,12 +25,13 @@ require_once('lib/HtmlElement.php');
  * Unless $type of of the latter form, the link will be of class 'wiki', 'wikiunknown',
  * 'named-wiki', or 'named-wikiunknown', as appropriate.
  *
- * @param $label mixed (string or XmlContent object)
+ * @param mixed $label (string or XmlContent object)
  * Label for the link.  If not given, defaults to the page name.
- * (Label is ignored for $type == 'button'.)
+ *
+ * @return XmlContent The link
  */
 function WikiLink ($page_or_rev, $type = 'known', $label = false) {
-    global $Theme;
+    global $Theme, $request;
 
     if ($type == 'button') {
         return $Theme->makeLinkButton($page_or_rev, $label);
@@ -49,13 +50,12 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         $pagename = $page->getName();
     }
     else {
-        $pagename = $page_or_rev;
-        // "/SubPage" relative link
-        if (substr($pagename,0,1) == SUBPAGE_SEPARATOR) { // relative link to page below
-            global $request;
-            $page = $request->getArg('pagename');
-            $label = substr($page_or_rev,1);
-            $pagename = $page . $pagename;
+        // Convert "/SubPage"  to "FullPath/ThroughParentsTo/SubPage"
+        $pagename = $request->fullPagename($page_or_rev);
+        if ($pagename != $page_or_rev and !$label) {
+            // strip leading / from subpage link
+            // FIXME: is this really a good idea?
+            $label = substr($pagename, 1);
         }
     }
 
@@ -76,6 +76,8 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     else {
         $exists = true;
     }
+    // FIXME: this should be somewhere else, if really needed.
+    // WikiLink makes A link, not a string of fancy ones.
     // Todo: test external ImageLinks http://some/images/next.gif
     if (is_string($page_or_rev) 
         and !$label 
