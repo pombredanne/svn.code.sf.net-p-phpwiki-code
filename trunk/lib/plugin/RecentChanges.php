@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.83 2004-02-15 21:34:37 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.84 2004-02-15 22:29:42 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -607,7 +607,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.83 $");
+                            "\$Revision: 1.84 $");
     }
 
     function managesValidators() {
@@ -679,14 +679,14 @@ extends WikiPlugin
     }
 
     function getChanges ($dbi, $args) {
+        $changes = $dbi->mostRecent($this->getMostRecentParams($args));
+
         $show_deleted = $args['show_deleted'];
         if ($show_deleted == 'sometimes')
             $show_deleted = $args['show_minor'];
 
         if (!$show_deleted)
             $changes = new NonDeletedRevisionIterator($changes, !$args['show_all']);
-        else    
-            $changes = $dbi->mostRecent($this->getMostRecentParams($args));
 
         return $changes;
     }
@@ -774,6 +774,15 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.83  2004/02/15 21:34:37  rurban
+// PageList enhanced and improved.
+// fixed new WikiAdmin... plugins
+// editpage, Theme with exp. htmlarea framework
+//   (htmlarea yet committed, this is really questionable)
+// WikiUser... code with better session handling for prefs
+// enhanced UserPreferences (again)
+// RecentChanges for show_deleted: how should pages be deleted then?
+//
 // Revision 1.82  2004/01/25 03:58:43  rurban
 // use stdlib:isWikiWord()
 //
