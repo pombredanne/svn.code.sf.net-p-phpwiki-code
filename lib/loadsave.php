@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: loadsave.php,v 1.52 2002-01-30 23:41:54 dairiki Exp $');
+<?php rcs_id('$Id: loadsave.php,v 1.53 2002-02-09 04:01:52 dairiki Exp $');
 
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
@@ -290,7 +290,7 @@ function ParseSerializedPage($text, $default_pagename, $user)
     if (empty($pagehash['author'])) {
         $pagehash['author'] = $user->getId();
     }
-    
+
     foreach ($pagehash as $key => $value) {
         switch($key) {
         case 'pagename':
@@ -299,6 +299,7 @@ function ParseSerializedPage($text, $default_pagename, $user)
             break;
         case 'content':
             $pageinfo[$key] = join("\n", $value);
+            break;
         case 'flags':
             if (($value & FLAG_PAGE_LOCKED) != 0)
                 $pagedata['locked'] = 'yes';
