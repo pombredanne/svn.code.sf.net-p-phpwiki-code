@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Values.php,v 1.2 2003-01-28 18:55:25 zorloc Exp $')
+rcs_id('$Id: Values.php,v 1.3 2003-12-07 19:23:48 carstenklapp Exp $')
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -266,6 +266,9 @@ $values[] = array(
 
 
 //$Log: not supported by cvs2svn $
+//Revision 1.2  2003/01/28 18:55:25  zorloc
+//I have added all of the values for Part One of our configuration values.
+//
 //Revision 1.1  2003/01/28 07:32:24  zorloc
 //This file holds all of the config settings for the constants, variables,
 //and arrays that can be customized/defined.
