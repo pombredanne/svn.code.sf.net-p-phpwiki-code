@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.29 2003-02-15 01:54:19 dairiki Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.30 2003-02-17 06:02:25 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -440,18 +440,11 @@ function HiddenInputs ($query_args, $pfx = false, $exclude = array()) {
     return $inputs;
 }
 
-function HiddenGets ($exclude = array()) {
-    global $HTTP_GET_VARS;
-    HiddenInputs($HTTP_GET_VARS, false, $exclude);
-}
-
-function HiddenPosts ($exclude = array()) {
-    global $HTTP_POST_VARS;
-    HiddenInputs($HTTP_POST_VARS, false, $exclude);
-}
-
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.29  2003/02/15 01:54:19  dairiki
+ Added HTML::meta() for <meta> tag.
+
  Revision 1.28  2003/01/04 02:32:30  carstenklapp
  Added 'col' and 'colgroup' table elements used by PluginManager.
 
