@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.31 2004-05-03 20:46:51 rurban Exp $
+ * $Id: phpwiki.css,v 1.32 2004-05-08 14:06:13 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -161,7 +161,7 @@ h1 .backlinks { text-decoration: underline; }
 
 
 /**
- * headings
+ * headings: Georgia
  */
 h1, h2, h3, h4, h5, h6 { font-family: Arial, Helvetica, sans-serif; }
 

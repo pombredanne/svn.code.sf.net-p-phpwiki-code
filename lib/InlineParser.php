@@ -1,4 +1,5 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.43 2004-05-06 20:30:46 rurban Exp $');
+<?php 
+rcs_id('$Id: InlineParser.php,v 1.44 2004-05-08 14:06:12 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -255,10 +256,20 @@ class Markup_escape  extends SimpleMarkup
     }
 }
 
+/**
+ * [image.jpg size=50% border=5], [image.jpg size=50x30]
+ * Support for the following attributes: see stdlib.php:LinkImage()
+ *   size=<precent>%, size=<width>x<height>
+ *   border=n, align=\w+, hspace=n, vspace=n
+ */
+function isImageLink($link) {
+    if (!$link) return false;
+    return preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $link)
+        or preg_match("/\\.(" . INLINE_IMAGES . ")\s+(size|border|align|hspace|vspace)=/i", $link);
+}
+
 function LinkBracketLink($bracketlink) {
-    //include_once("lib/interwiki.php");
-    $intermap = getInterwikiMap();
-    
+
     // $bracketlink will start and end with brackets; in between will
     // be either a page name, a URL or both separated by a pipe.
     
@@ -281,7 +292,7 @@ function LinkBracketLink($bracketlink) {
 
     // [label|link]
     // if label looks like a url to an image, we want an image link.
-    if (preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $label)) {
+    if (isImageLink($label)) {
         $imgurl = $label;
         if (preg_match("/^" . $intermap->getRegexp() . ":/", $label)) {
             $imgurl = $intermap->link($label);
@@ -303,7 +314,7 @@ function LinkBracketLink($bracketlink) {
 
     if (preg_match("#^(" . ALLOWED_PROTOCOLS . "):#", $link)) {
         // if it's an image, embed it; otherwise, it's a regular link
-        if (preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $link))
+        if (isImageLink($link))
             return LinkImage($link, $label);
         else
             return new Cached_ExternalLink($link, $label);
@@ -317,8 +328,10 @@ function LinkBracketLink($bracketlink) {
      * [what a pic|File:my_image.gif] shows a named inter-wiki link to the gif
      * [File:my_image.gif|what a pic] shows a inlimed image linked to the page "what a pic"
      */
-    elseif (preg_match("/^" . $intermap->getRegexp() . ":/", $link)) {
-        if (empty($label) && preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $link)) {
+    elseif (strstr($link,':') and 
+            ($intermap = getInterwikiMap()) and 
+            preg_match("/^" . $intermap->getRegexp() . ":/", $link)) {
+        if (empty($label) && isImageLink($link)) {
             // if without label => inlined image [File:xx.gif]
             $imgurl = $intermap->link($link);
             return LinkImage($imgurl->getAttr('href'), $label);
@@ -485,7 +498,7 @@ class Markup_nestled_emphasis extends BalancedMarkup
         switch ($match) {
         case '*': return new HtmlElement('b', $body);
         case '=': return new HtmlElement('tt', $body);
-        case '_':  return new HtmlElement('i', $body);
+        case '_': return new HtmlElement('i', $body);
         }
     }
 }

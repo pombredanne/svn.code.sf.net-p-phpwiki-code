@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.52 2004-05-06 19:26:16 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.53 2004-05-08 14:06:12 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -169,6 +169,8 @@ class WikiDB {
             if (!(is_string($pagename) and $pagename != '')) {
                 if ($error_displayed) return false;
                 $error_displayed = true;
+                if (function_exists("xdebug_get_function_stack"))
+                    var_dump(xdebug_get_function_stack());
                 trigger_error("empty pagename",E_USER_WARNING);
                 return false;
             }
@@ -537,6 +539,10 @@ class WikiDB_Page
         $this->_pagename = $pagename;
         if (DEBUG) {
             if (!(is_string($pagename) and $pagename != '')) {
+                if (function_exists("xdebug_get_function_stack")) {
+                    echo "xdebug_get_function_stack(): "; var_dump(xdebug_get_function_stack());
+
+                }
                 trigger_error("empty pagename",E_USER_WARNING);
                 return false;
             }
@@ -1477,6 +1483,11 @@ class WikiDB_PageIterator
             return false;
 
         $pagename = &$next['pagename'];
+        if (!$pagename) {
+            trigger_error(__FILE__.':'.__LINE__.' empty pagename in WikiDB_PageIterator::next()',E_USER_WARNING);
+            var_dump($next);
+            return false;
+        }
         if (isset($next['pagedata']))
             $this->_wikidb->_cache->cache_data($next);
 
@@ -1754,6 +1765,11 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2004/05/06 19:26:16  rurban
+// improve stability, trying to find the InlineParser endless loop on sf.net
+//
+// remove end-of-zip comments to fix sf.net bug #777278 and probably #859628
+//
 // Revision 1.51  2004/05/06 17:30:37  rurban
 // CategoryGroup: oops, dos2unix eol
 // improved phpwiki_version:

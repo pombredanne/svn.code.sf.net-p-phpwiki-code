@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.108 2004-05-08 11:25:16 rurban Exp $');
+rcs_id('$Id: config.php,v 1.109 2004-05-08 14:06:12 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -11,10 +11,10 @@ rcs_id('$Id: config.php,v 1.108 2004-05-08 11:25:16 rurban Exp $');
  * Called: check_php_version(4,1)
  */
 function check_php_version ($a = '0', $b = '0', $c = '0') {
-    global $PHP_VERSION;
-    if(!isset($PHP_VERSION))
+    static $PHP_VERSION;
+    if (!isset($PHP_VERSION))
         $PHP_VERSION = substr( str_pad( preg_replace('/\D/','', PHP_VERSION), 3, '0'), 0, 3);
-    return $PHP_VERSION >= ($a.$b.$c);
+    return ($PHP_VERSION >= ($a.$b.$c));
 }
 
 if (!defined("LC_ALL")) {
@@ -321,6 +321,9 @@ if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2004/05/08 11:25:16  rurban
+// php-4.0.4 fixes
+//
 // Revision 1.107  2004/05/06 17:30:38  rurban
 // CategoryGroup: oops, dos2unix eol
 // improved phpwiki_version:
