@@ -1,5 +1,5 @@
 /*
-  $Id: Hawaiian.css,v 1.8 2002-01-17 20:34:52 dairiki Exp $
+  $Id: Hawaiian.css,v 1.9 2002-01-18 20:46:12 carstenklapp Exp $
 
   Classes:
 
@@ -53,7 +53,7 @@ input.button { font-family: arial, helvetica, sans-serif; }
 div.wikitext {
  background: transparent;
  border: thin;
- border-color: black;
+ border-color: none;
  border-style: solid;
  padding-left: 0.8em; 
  padding-right: 0.8em; 
@@ -90,9 +90,9 @@ div.br { clear:both; line-height: 0px; }
 .ignore { display: none; }
  
 div.errors {
- background: #eee;
- border: medium;
- border-color: red;
+ background: #d6c8a8;
+ border: thin;
+ border-color: #a6977a;
  border-style: solid;
  padding-left: 0.8em; 
  padding-right: 0.8em; 
@@ -106,7 +106,7 @@ div.errors {
 }
 
 .errors h4 {
- color:red;
+ color: white;
  text-decoration: underline;
  margin:0px;
 }
@@ -125,21 +125,14 @@ p.error {
 /*
  * Style for <hr>s in wiki markup.
  */
-.wikitext hr {
- background: #666;
- height: 1px;
- width: 90%;
- margin-left:auto;
- margin-right:auto;
- align:center; /* for NS4 */
-}
+.wikitext hr {}
 
 
 /*
  * Link styles
  */
 /* Wiki Links */
-a.wiki { text-decoration: none; }
+a.wiki { text-decoration: none; color: #506cd0;}
 .wiki  { font-weight: bold; }
 
 /* Unknown links */
@@ -165,7 +158,7 @@ i .interwiki, em .interwiki
  * wikiaction, wikiadmin, wikiunsafe:
  */
 a.wikiaction, a.wikiadmin       { text-decoration: none; }
-a.wikiaction, .wikiaction table, span.wikiaction  { font-weight: normal; color: #ff7e00; }
+a.wikiaction, .wikiaction table, span.wikiaction  { font-weight: normal; color: #a6977a; }
 a.wikiadmin, .wikiadmin table   { color: #444; }
 .wikiunsafe                     { color: #ccc; }
 
@@ -192,7 +185,7 @@ img.linkicon		{ vertical-align: middle; }
 .wikiadmin table  { border-color: #f99; }
 
 /* Backlinks */
-a.backlinks { color: #006; }
+a.backlinks { color: #96876a; }
 
 /* Make the textarea on the edit page full width */
 textarea.wikiedit { width: 100%; margin-top: 1ex; }
