@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.58 2004-11-09 17:11:16 rurban Exp $');
+rcs_id('$Id: display.php,v 1.59 2004-11-17 20:03:58 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -149,12 +149,12 @@ function displayPage(&$request, $template=false) {
     // OR: add the searchhightplugin line to the content?
     if ($result = isExternalReferrer($request)) {
     	if (DEBUG and !empty($result['query'])) {
-            //$GLOBALS['SearchHighLightQuery'] = $result['query'];
-            /* simply add the SearchHighLight plugin to the top of the page. 
+            //$GLOBALS['SearchHighlightQuery'] = $result['query'];
+            /* simply add the SearchHighlight plugin to the top of the page. 
                This just parses the wikitext, and doesn't highlight the markup */
             include_once('lib/WikiPlugin.php');
 	    $loader = new WikiPluginLoader;
-            $xml = $loader->expandPI('<'.'?plugin SearchHighLight s="'.$result['query'].'"?'.'>', $request, $markup);
+            $xml = $loader->expandPI('<'.'?plugin SearchHighlight s="'.$result['query'].'"?'.'>', $request, $markup);
             if ($xml and is_array($xml)) {
               foreach (array_reverse($xml) as $line) {
                 array_unshift($page_content->_content, $line);
@@ -215,6 +215,17 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2004/11/09 17:11:16  rurban
+// * revert to the wikidb ref passing. there's no memory abuse there.
+// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
+//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
+//   are also needed at the rendering for linkExistingWikiWord().
+//   pass options to pageiterator.
+//   use this cache also for _get_pageid()
+//   This saves about 8 SELECT count per page (num all pagelinks).
+// * fix passing of all page fields to the pageiterator.
+// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
+//
 // Revision 1.57  2004/11/01 10:43:57  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
