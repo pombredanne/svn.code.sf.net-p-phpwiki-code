@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.php,v 1.7.2.2 2001-11-06 20:43:11 dairiki Exp $');
+   rcs_id('$Id: dbmlib.php,v 1.7.2.3 2001-11-07 20:30:47 dairiki Exp $');
 
    /*
       Database functions:
@@ -165,7 +165,7 @@
 
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
-      $pos['search'] = $search;
+      $pos['search'] = '=' . preg_quote($search) . '=i';
       $pos['key'] = dbmfirstkey($dbi['wiki']);
 
       return $pos;
@@ -178,7 +178,7 @@
          $page = $pos['key'];
          $pos['key'] = dbmnextkey($dbi['wiki'], $pos['key']);
 
-         if (eregi($pos['search'], $page)) {
+         if (preg_match($pos['search'], $page)) {
             return $page;
          }
       }
@@ -200,7 +200,7 @@
 
          $pagedata = dbmfetch($dbi['wiki'], $key);
          // test the serialized data
-         if (eregi($pos['search'], $pagedata)) {
+         if (preg_match($pos['search'], $pagedata)) {
 	    $page['pagename'] = $key;
             $pagedata = unserialize(UnPadSerializedData($pagedata));
 	    $page['content'] = $pagedata['content'];

@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2.2.3 2001-11-07 03:23:24 wainstead Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2.2.4 2001-11-07 20:30:47 dairiki Exp $');
 
    /*
       Database functions:
@@ -131,7 +131,7 @@
 
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
-      $pos['search'] = $search;
+      $pos['search'] = '=' . preg_quote($search) . '=i';
       $pos['key'] = dba_firstkey($dbi['wiki']);
 
       return $pos;
@@ -143,7 +143,7 @@
          $page = $pos['key'];
          $pos['key'] = dba_nextkey($dbi['wiki']);
 
-         if (eregi($pos['search'], $page)) {
+         if (preg_match($pos['search'], $page)) {
             return $page;
          }
       }
@@ -163,7 +163,7 @@
 
          $pagedata = dba_fetch($key, $dbi['wiki']);
          // test the serialized data
-         if (eregi($pos['search'], $pagedata)) {
+         if (preg_match($pos['search'], $pagedata)) {
 	    $page['pagename'] = $key;
             $pagedata = unserialize(UnPadSerializedData($pagedata));
 	    $page['content'] = $pagedata['content'];

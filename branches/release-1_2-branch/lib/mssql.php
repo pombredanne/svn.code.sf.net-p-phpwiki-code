@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mssql.php,v 1.1.2.4 2001-11-07 18:58:14 dairiki Exp $');
+<?php rcs_id('$Id: mssql.php,v 1.1.2.5 2001-11-07 20:30:47 dairiki Exp $');
 
    /* Microsoft SQL-Server library for PHPWiki
       Author: Andrew K. Pearson
@@ -247,7 +247,10 @@
 
    function MakeSQLSearchClause($search, $column)
    {
-      $search = addslashes(preg_replace("/\s+/", " ", $search));
+      $search = preg_replace("/\s+/", " ", trim($search));
+      $search = preg_replace('/(?=[%_\\\\])/', "\\", $search);
+      $search = addslashes($search);
+
       $term = strtok($search, ' ');
       $clause = '';
       while($term) {
