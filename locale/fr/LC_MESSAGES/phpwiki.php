@@ -60,8 +60,6 @@ $locale["<none>"] =
    "< acune >";
 $locale["A required argument '%s' is missing."] =
    "Un argument requis '%s' est manquant.";
-$locale["Acck! Revision %s of %s seems to have been deleted!"] =
-   "Ouille ! La révision %s de %s semble avoir été effacée !";
 $locale["Add %s hours to the server's local time when reporting times."] =
    "Ajouter %s heures à l'heure locale du serveur pour afficher les horodatages.";
 $locale["Adjust"] =
@@ -188,6 +186,8 @@ $locale["Hits:"] =
    "Visites :";
 $locale["HomePage"] =
    "Accueil";
+$locale["HowToUseWiki"] =
+   "CommentUtiliserWiki";
 $locale["I'm just doing minor edits. Please divert the usual logging to %s instead."] =
    "Je ne fais que des modifications mineures. Veuillez rediriger les logs habituels vers %s.";
 $locale["Image loaded from cache file: %s"] =
@@ -384,8 +384,6 @@ $locale["Show changes for:"] =
    "Indiquer les modifications depuis ";
 $locale["Show minor edits for:"] =
    "Indiquer les modifications mineures depuis ";
-$locale["Sidebar"] =
-   "Sidebar";
 $locale["Sign In"] =
    "Connexion";
 $locale["Sign Out"] =
@@ -512,8 +510,6 @@ $locale["With the current offset, this would be reported as %s."] =
    "Avec l'offset actuel, ceci serait affiché comme %s.";
 $locale["You are about to remove '%s' permanently!"] =
    "Vous êtes sur le point de supprimer ' %s ' de façon permanente !";
-$locale["You are signed in as %s"] =
-   "Vous êtes connecté en tant que %s";
 $locale["You are viewing an old revision of this page."] =
    "Vous lisez une ancienne version de cette page.";
 $locale["You have not made any changes so no new version has been saved."] =

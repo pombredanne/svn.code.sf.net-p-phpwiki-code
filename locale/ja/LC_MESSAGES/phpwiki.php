@@ -364,8 +364,6 @@ $locale["Select: "] =
    "選択:";
 $locale["Serialized file %s"] =
    "シリアライズファイル %s";
-$locale["Sidebar"] =
-   "スライドバー";
 $locale["Sign In"] =
    "サインイン";
 $locale["Sign Out"] =
@@ -466,8 +464,6 @@ $locale["Wiki Name"] =
    "Wiki名";
 $locale["WikiForm: %s: unknown action"] =
    "WikiForm: '%s' は未知の操作です。";
-$locale["You are signed in as %s"] =
-   "%s としてサインインしました";
 $locale["Your E-Mail:"] =
    "あなたのメールアドレス:";
 $locale["cached pagedata:"] =
