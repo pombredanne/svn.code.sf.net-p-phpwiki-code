@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.62 2004-03-08 19:30:01 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.63 2004-03-09 08:29:56 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -104,6 +104,10 @@ class _PageList_Column_base {
         if (in_array($this->_field,PageList::sortable_columns())) {
             // multiple comma-delimited sortby args: "+hits,+pagename"
             $src = false; 
+            $noimg = HTML::img(array('src' => $Theme->getButtonURL('no_order'),
+                                     'width' => '7', 
+                                     'height' => '7',
+                                     'alt'    => '.'));
             if ($request->getArg('sortby')) {
                 if (PageList::sortby($this->_field,'check')) { // show icon?
                     $sortby = PageList::sortby($request->getArg('sortby'),'flip_order');
@@ -116,6 +120,15 @@ class _PageList_Column_base {
             } else {
                 $sortby = PageList::sortby($this->_field,'init');
             }
+            if (!$src) {
+                $img = $noimg;
+                $img->setAttr('alt', _("Click to sort"));
+            } else {
+                $img = HTML::img(array('src' => $src, 
+                                       'width' => '7', 
+                                       'height' => '7', 
+                                       'alt' => _("Click to reverse sort order")));
+            }
             $s = HTML::a(array('href' => 
                                //Fixme: pass all also other GET args along. (limit, p[])
                                //Fixme: convert to POST submit[sortby]
@@ -123,21 +136,15 @@ class _PageList_Column_base {
                                                             'nopurge' => '1')),
                                'class' => 'gridbutton', 
                                'title' => sprintf(_("Click to sort by %s"),$this->_field)),
+                         $noimg,
+                         HTML::raw('&nbsp;'),
                          $this->_heading,
                          HTML::raw('&nbsp;'),
-                         $src ? HTML::img(array('src' => $src, 
-                                                'width' => '7', 
-                                                'height' => '7', 
-                                                'alt' => _("Click to reverse sort order")))
-                         : HTML::img(array('src' => $Theme->getButtonURL('no_order'),
-                                           'width' => '7', 
-                                           'height' => '7', 
-                                           'alt' => _("Click to sort"))));
+                         $img);
         } else {
-            $s = $this->_heading;
+            $s = HTML(HTML::raw('&nbsp;'), $this->_heading, HTML::raw('&nbsp;'));
         }
-        return HTML::th(array('align' => 'center', 'class' => 'gridbutton'), 
-                        HTML::raw('&nbsp;'), $s, HTML::raw('&nbsp;'));
+        return HTML::th(array('align' => 'center', 'class' => 'gridbutton'), $s);
     }
 };
 
