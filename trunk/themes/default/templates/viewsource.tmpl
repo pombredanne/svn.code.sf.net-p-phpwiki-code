@@ -1,23 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: viewsource.tmpl,v 1.13 2002-02-04 21:31:52 carstenklapp Exp $ -->
-<?php
-$mtime = $revision->get('mtime');
-$fmtime = $Theme->formatDateTime($mtime);
-
-if ($revision->isCurrent()) {
-  if (istoday($mtime) || isyesterday($mtime))
-    $LastModifiedMsg = fmt("Last edited %s.", $fmtime);
-  else
-    $LastModifiedMsg = fmt("Last edited on %s.", $fmtime);
-} else {
-  if (istoday($mtime) || isyesterday($mtime))
-    $LastModifiedMsg = fmt("Version %s, saved %s.",
-                           $revision->getVersion(), $fmtime);
-  else
-    $LastModifiedMsg = fmt("Version %s, saved on %s.",
-                           $revision->getVersion(), $fmtime);
-}
-?>
+<!-- $Id: viewsource.tmpl,v 1.14 2002-02-08 22:03:04 dairiki Exp $ -->
 
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -40,7 +22,7 @@ cols="<?=$request->getPref('editWidth')?>"
 readonly="readonly"
 wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
 
-<p class="editdate"><?= $LastModifiedMsg ?></p>
+<p class="editdate"><?= $Theme->getLastModifiedMessage($revision) ?></p>
 <div id="actionbar">
 <hr class="toolbar" noshade="noshade" />
 <?= Template('actionbar') ?>

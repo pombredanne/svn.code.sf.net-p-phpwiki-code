@@ -1,27 +1,15 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.18 2002-02-08 15:37:03 carstenklapp Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.19 2002-02-08 22:03:04 dairiki Exp $ -->
 <?php
 
-if (!$defaultOffset = $request->getPref('timeOffset'))
-    $defaultOffset = '+0000'; // Default to 0 time offset.
-$yourTime = $Theme->formatDateTime(time(), true);
+$time = time();
+$offset = $request->getPref('timeOffset') * 3600;
+$serverTime = $time - $offset;
 
-/**
- * Generate the popup menu.
- */
-$select = HTML();
-for ($z = -14; $z < 12; $z++) {
-    $tz_val = seconds2zoneOffset($z*60*60, true);
-    $tz_string = seconds2zoneOffset($z*60*60);
-
-    $selected = $defaultOffset == $tz_val ? array('selected' => 'selected') : array();
-    $select->pushContent(HTML::option(array_merge(array('value' => $tz_val),
-                                                  $selected),
-                                      $tz_string));
-    $z = $z-0.5;
-}
-
-$offsetTimePopup = HTML::select(array('name' => "pref[timeOffset]"), $select);
+$timeOffsetInput = HTML::input(array('type' => "text",
+                                     'size' => 6,
+                                     'name' => "pref[timeOffset]",
+                                     'value' => $request->getPref('timeOffset')));
 
 $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
                                           'name' => 'pref[relativeDates][]',
@@ -33,53 +21,31 @@ $RelativeDatesCB = HTML(HTML::input(array('type' => 'hidden',
 ?>
 <form action="<?=WikiURL($page)?>" method="post">
   <input type="hidden" name="pagename" value="<?=$request->getArg('pagename')?>" />
-  <blockquote>
-  <table>
-    <tr>
-      <td colspan="2"><h2><?=_("Edit Area Size")?></h2></td>
-    </tr><tr>
-      <td align="right"><?=_("Height")?></td>
-      <td>
-        <input type="text" name="pref[editHeight]" size="4" maxlength="4"
-               value="<?=$request->getPref('editHeight')?>" />
-      </td>
-    </tr>
-    <tr>
-      <td align="right"><?=_("Width")?></td>
-      <td>
-        <input type="text" name="pref[editWidth]" size="4" maxlength="4"
-               value="<?=$request->getPref('editWidth')?>" />
-      </td>
-    </tr>
+  <h2><?=_("Edit Area Size")?></h2>
+  <p><?=_("Height")?>
+     <input type="text" name="pref[editHeight]" size="4" maxlength="4"
+            value="<?=$request->getPref('editHeight')?>" />
+     <?=_("Width")?>
+     <input type="text" name="pref[editWidth]" size="4" maxlength="4"
+            value="<?=$request->getPref('editWidth')?>" />
+  </p>
+  <p><?=_("Note that many browsers will automatically adjust the width of the editing area so that it fills the browser window.  In this case, the width preference will be ignored.")?></p>
 
-    <tr>
-      <td colspan="2"><h2><?=_("Time Zone")?></h2></td>
-    </tr><tr>
-      <td align="right"><?=_("Server time:")?></td>
-      <td><?= Rfc2822DateTime() ?></td>
-    </tr><tr>
-      <td align="right"><?=_("Your time:")?></td>
-      <td><?= $yourTime ?></td>
-    </tr><tr>
-      <td align="right"><?=_("Offset time:")?></td>
-      <td>
-        <?= $offsetTimePopup ?>
-      </td>
-    </tr>
-      <!--until timezone functions have been fully debugged-->
-      <tr><td></td><td><small>Times converted to your zone will be marked with an asterisk&nbsp;(*) for debugging.</small></td></tr>
-    <tr>
-      <td colspan="2"><h2><?=_("Date Format")?></h2></td>
-    </tr><tr>
-      <td align="right">
-        <?=$RelativeDatesCB?>
-      </td>
-      <td>
-        <?=_("Show relative dates using 'Today' and 'Yesterday'.")?>
-      </td>
-    </tr>
-  </table>
-  </blockquote>
+  <h2><?=_("Time Zone")?></h2>
+  <p>
+    <?=fmt("Add %s hours to the servers local time, when reporting times.",
+           $timeOffsetInput)?>
+    (<?=fmt("The current time at server is %s.",
+            HTML::strong($Theme->formatDateTime($serverTime)))?>
+    <?=fmt("With the current offset, that would be reported as %s.",
+           HTML::strong($Theme->formatDateTime($time)))?>)
+  </p> 
+
+  <h2><?=_("Date Format")?></h2>
+  <p><?=$RelativeDatesCB?>
+     <?=_("Show relative dates using 'Today' and 'Yesterday'.")?>
+  </p>
+
   <hr />
-  <?=Button("submit:", _("Update Preferences"))?>
+  <p><?=Button("submit:", _("Update Preferences"))?></p>
 </form>

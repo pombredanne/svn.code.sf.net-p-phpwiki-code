@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.20 2002-02-03 19:06:05 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.21 2002-02-08 22:03:03 dairiki Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -58,8 +58,14 @@ $Theme->setLinkIcon('*', 'url');
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-//$Theme->setDateTimeFormat("%B %e, %Y");   // may contain time of day
-//$Theme->setDateFormat("%B %e, %Y");	    // must not contain time
+//$Theme->setDateFormat("%B %e, %Y");
+//$Theme->setTimeFormat("%l:%M %p");
+
+/*
+ * To suppress times in the "Last edited on" messages, give a
+ * give a second argument of false:
+ */
+//$Theme->setDateFormat("%B %e, %Y", false); 
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

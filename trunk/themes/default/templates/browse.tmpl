@@ -1,24 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.15 2002-02-03 22:12:33 carstenklapp Exp $ -->
-<?php 
-  $mtime = $revision->get('mtime');
-  $fmtime = $Theme->formatDateTime($mtime);
-
-  if ($revision->isCurrent()) {
-    if (istoday($mtime) || isyesterday($mtime))
-      $LastModifiedMsg = fmt("Last edited %s.", $fmtime);
-    else
-      $LastModifiedMsg = fmt("Last edited on %s.", $fmtime);
-  } else {
-    if (istoday($mtime) || isyesterday($mtime))
-      $LastModifiedMsg = fmt("Version %s, saved %s.",
-                             $revision->getVersion(), $fmtime);
-    else
-      $LastModifiedMsg = fmt("Version %s, saved on %s.",
-                             $revision->getVersion(), $fmtime);
-  }
-?>
-
+<!-- $Id: browse.tmpl,v 1.16 2002-02-08 22:03:04 dairiki Exp $ -->
 <div class="br"><br clear="all" class="ignore" /></div>
 
 <?php if (! $revision->isCurrent()) { ?>
@@ -32,7 +13,7 @@
 <div class="wikitext"><?=$CONTENT?></div>
 <hr class="ignore" noshade="noshade" />
 
-<p class="editdate"><?= $LastModifiedMsg ?></p>
+<p class="editdate"><?= $Theme->getLastModifiedMessage($revision) ?></p>
 <div id="actionbar">
 <hr class="toolbar" noshade="noshade" />
 <?= Template('actionbar') ?>
