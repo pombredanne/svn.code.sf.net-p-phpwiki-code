@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-19 04:50-0500\n"
+"POT-Creation-Date: 2001-12-19 07:00-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -177,8 +177,9 @@ msgid "BackLinks"
 msgstr ""
 
 #: ../lib/plugin/BackLinks.php:13
-msgid "Get BackLinks for [pagename]"
-msgstr "Hole BackLinks für [pagename]"
+#, c-format
+msgid "Get BackLinks for %s"
+msgstr "Hole BackLinks für %s"
 
 #: ../lib/plugin/BackLinks.php:44
 #, c-format
@@ -248,7 +249,7 @@ msgstr "keine Seite angegeben"
 #: ../lib/plugin/IncludePage.php:79
 #, c-format
 msgid "recursive inclusion of page %s"
-msgstr "Fehler beim einfügen der Sektion %s: sich selbst aufrufende"
+msgstr "Fehler beim einfügen der Seite %s: sich selbst aufrufende"
 
 #: ../lib/plugin/IncludePage.php:88
 #, c-format
@@ -265,8 +266,9 @@ msgid "LikePages"
 msgstr "GleicheSeiten"
 
 #: ../lib/plugin/LikePages.php:16
-msgid "List LikePages for [pagename]"
-msgstr "GleicheSeite wie [pagename] auflisten"
+#, c-format
+msgid "List LikePages for %s"
+msgstr "GleicheSeite wie %s auflisten"
 
 #: ../lib/plugin/LikePages.php:39
 #, c-format
@@ -374,7 +376,7 @@ msgstr "geringe Änderungen"
 #: ../lib/plugin/RecentChanges.php:140
 #, c-format
 msgid "The %d most recent %s during the past %.1f days are listed below."
-msgstr "Die %d Jüngste %s innerhalb %.1f Tagen sind unten auflistet."
+msgstr "Die %d Jüngste %s innerhalb %,1f Tagen sind unten auflistet."
 
 #: ../lib/plugin/RecentChanges.php:143
 #, c-format
@@ -384,7 +386,7 @@ msgstr "Die %d Jüngste %s sind unten auflistet."
 #: ../lib/plugin/RecentChanges.php:148
 #, c-format
 msgid "The most recent %s during the past %.1f days are listed below."
-msgstr "Die Jüngste %s innerhalb %.1f Tagen sind unten auflistet."
+msgstr "Die Jüngste %s innerhalb %,1f Tagen sind unten auflistet."
 
 #: ../lib/plugin/RecentChanges.php:151
 #, c-format
@@ -419,8 +421,9 @@ msgid "Title search results for '%s'"
 msgstr "Titel-Suchresultate nach »%s«"
 
 #: ../lib/plugin/_BackendInfo.php:14
-msgid "Get debugging information for [pagename]."
-msgstr "Hol' mir die Debug-Informationen von [pagename]."
+#, c-format
+msgid "Get debugging information for %s."
+msgstr "Hol' mir die Debug-Informationen von %s."
 
 #: ../lib/plugin/_BackendInfo.php:45
 #, c-format
@@ -429,8 +432,8 @@ msgstr "Die Datenbank wird direckt nach »%s« abgefragt"
 
 #: ../lib/plugin/_BackendInfo.php:51
 #, c-format
-msgid "No pagedata for %s\n"
-msgstr "Keine Seitendatei für %s\n"
+msgid "No pagedata for %s"
+msgstr "Keine Seitendatei für %s"
 
 #: ../lib/WikiDB.php:837
 #, c-format
@@ -469,7 +472,7 @@ msgstr "Du kannst mit jedes gultiges WikiWort als Benutzername anmelden."
 msgid "(Any password will work, except, of course for the admin user.)"
 msgstr ""
 "(Irgende Wörter können als Passwort angenommen werden sowieso, aber "
-"natürlich nicht für der Systemverwalter.)"
+"natürlich nicht für den Systemverwalter.)"
 
 #: ../lib/diff.php:172
 msgid "version"
@@ -570,7 +573,7 @@ msgstr "Fertig."
 #: ../lib/loadsave.php:18
 #, c-format
 msgid "Return to %s"
-msgstr ""
+msgstr "Zurück zur %s"
 
 #: ../lib/loadsave.php:125
 msgid "You must specify a directory to dump to"
@@ -589,16 +592,16 @@ msgstr ""
 #: ../lib/loadsave.php:134
 #, fuzzy, c-format
 msgid "Using directory '%s'"
-msgstr "Die Datenbank wird direckt nach »%s« abgefragt"
+msgstr "»%s« wird abgefragt"
 
 #: ../lib/loadsave.php:137
 msgid "Dumping Pages"
 msgstr ""
 
 #: ../lib/loadsave.php:148
-#, fuzzy, c-format
+#, c-format
 msgid "saved as %s"
-msgstr "- als Version %d. gespeichert"
+msgstr "als %s gespeichert"
 
 #: ../lib/loadsave.php:153
 #, c-format
@@ -611,9 +614,8 @@ msgid "%s bytes written"
 msgstr ""
 
 #: ../lib/loadsave.php:178
-#, fuzzy
 msgid "Empty pagename!"
-msgstr "Seitenname eingeben"
+msgstr "Seitenname ist leer!"
 
 #: ../lib/loadsave.php:198
 #, c-format
@@ -634,28 +636,28 @@ msgid "- skipped"
 msgstr "- ausgelassen"
 
 #: ../lib/loadsave.php:221
-#, fuzzy, c-format
+#, c-format
 msgid "- saved to database as version %d"
-msgstr "- als Version %d. gespeichert"
+msgstr "- gespeichert zur Datenbank als Verson %d."
 
 #: ../lib/loadsave.php:313
 #, c-format
 msgid "MIME file %s"
-msgstr ""
+msgstr "MIME Datei %s"
 
 #: ../lib/loadsave.php:316
 #, c-format
 msgid "Serialized file %s"
-msgstr ""
+msgstr "Serialized Datei %s"
 
 #: ../lib/loadsave.php:327
 #, c-format
 msgid "plain file %s"
-msgstr ""
+msgstr "plain Datei %s"
 
 #: ../lib/loadsave.php:341 ../lib/loadsave.php:360
 msgid "Skipping"
-msgstr ""
+msgstr "Wird ausgelassen"
 
 #: ../lib/loadsave.php:399
 #, c-format
@@ -718,10 +720,10 @@ msgid ""
 "saved the page while you were editing the page too. If saving proceeded now "
 "changes from the previous author would be lost."
 msgstr ""
-"PhpWiki kann deine Veränderungen nicht speichern, da ein andererBenützer die "
-"Seite verändert und gespeichert hat, während du diese Seiteeditiert hast. "
-"Wenn die Seite jetzt gespeichert werden würde, dann würdendie Veränderungen "
-"des anderen Benützers verloren gehen."
+"PhpWiki kann deine Veränderungen nicht speichern, da ein anderer Benützer "
+"die Seite verändert und gespeichert hat, während du diese Seite editiert "
+"hast. Wenn die Seite jetzt gespeichert werden würde, dann würden die "
+"Veränderungen des anderen Benützers verlorengehen."
 
 #: ../lib/savepage.php:24
 msgid "In order to recover from this situation follow these steps:"
@@ -754,8 +756,8 @@ msgid ""
 "Make changes to the file again. Paste your additions from the clipboard (or "
 "text editor)."
 msgstr ""
-"Editiere die Seite erneut. Kopiere deine Veränderungen aus derZwischenablage "
-"(oder aus dem Texteditor)"
+"Editiere die Seite erneut. Kopiere deine Veränderungen aus der "
+"Zwischenablage (oder aus dem Texteditor)"
 
 #: ../lib/savepage.php:34
 msgid "Press <b>Save</b> again."
@@ -832,29 +834,42 @@ msgstr "Es tut mir leid.  Version %d. von %s war nicht in meine Datenbank."
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 
-#: ../lib/ziplib.php:621
+#: ../lib/ziplib.php:622
 #, c-format
 msgid "[%d] See [%s]"
 msgstr "[%d] Sehe [%s]"
 
-#: ../lib/ziplib.php:629
+#: ../lib/ziplib.php:630
 msgid "!References"
 msgstr "!Fußnoten"
 
-#: ../lib/WikiDB/backend/PearDB.php:26
+#: ../lib/ziplib.php:651
+#, c-format
+msgid "Can't parse %s"
+msgstr ""
+
+#: ../lib/ziplib.php:659
 #, fuzzy, c-format
+msgid "Bad %s"
+msgstr "Fehler beim %s"
+
+#: ../lib/ziplib.php:704
+#, c-format
+msgid "Unknown %s"
+msgstr "Unbekannte %s"
+
+#: ../lib/WikiDB/backend/PearDB.php:26
+#, c-format
 msgid "Can't connect to database: %s"
-msgstr "Kann Verbindung zu Datenbank nicht aufbauen - Abbruch."
+msgstr "Kann Verbindung zu Datenbank nicht aufbauen: %s"
 
 #: ../lib/WikiDB/backend/PearDB.php:57
-#, c-format
-msgid "WARNING: database still locked (lock_count = %s)"
-msgstr ""
+msgid "WARNING: database still locked"
+msgstr "WARNUNG: Datenbank ist gesperrt"
 
-#: ../lib/WikiDB/backend/PearDB.php:710
-#, c-format
-msgid "%s: fatal database error"
-msgstr ""
+#: ../lib/WikiDB/backend/PearDB.php:711
+msgid "fatal database error"
+msgstr "fataler Datenbank Fehler"
 
 #: ../lib/WikiDB/backend/cvs.php:93
 #, c-format
@@ -867,44 +882,24 @@ msgid "Found [%s] in [%s]"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:182
-msgid "update_pagedata: Argument 'newdata' was not array"
-msgstr ""
+#, c-format
+msgid "Argument %s was not array"
+msgstr "Argument %s war nicht array"
 
 #: ../lib/WikiDB/backend/cvs.php:190
-msgid "update_pagedata: no meta data found"
-msgstr ""
+msgid "no meta data found"
+msgstr "keine meta data gefunden"
 
 #: ../lib/WikiDB/backend/cvs.php:243
 #, c-format
-msgid "get_latest_versioned FAILED for [%s]"
+msgid "FAILED for [%s]"
 msgstr ""
 
-#: ../lib/WikiDB/backend/cvs.php:260
-#, c-format
-msgid "get_versiondata: [%s] [%s] [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:315
-#, c-format
-msgid "delete_page [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:337
-msgid "delete_versiondata: Not Implemented"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:347
-msgid "set_versiondata: Not Implemented"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:450
-msgid "lock: Not Implemented"
-msgstr ""
-
+#: ../lib/WikiDB/backend/cvs.php:337 ../lib/WikiDB/backend/cvs.php:347
+#: ../lib/WikiDB/backend/cvs.php:353 ../lib/WikiDB/backend/cvs.php:450
 #: ../lib/WikiDB/backend/cvs.php:456
-#, fuzzy
-msgid "unlock: Not Implemented"
-msgstr "Funktion noch nicht implementiert."
+msgid "Not Implemented"
+msgstr "Nicht implementiert."
 
 #: ../lib/WikiDB/backend/cvs.php:520
 #, c-format
@@ -912,29 +907,28 @@ msgid "Creating meta file for [%s]"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:614
-msgid "CP: got revision information"
+msgid "got revision information"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:619
-msgid "CP: is initial release"
+msgid "is initial release"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:622
-msgid "CP: returning old version"
-msgstr ""
+msgid "returning old version"
+msgstr "alte Version wird ergeben"
 
 #: ../lib/WikiDB/backend/cvs.php:689
 msgid "Unable to delete file, lock was not obtained."
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:699
-msgid "deleteFile: Unable to open file"
+msgid "Unable to open file"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:709
-#, fuzzy
 msgid "no message"
-msgstr "StartSeite"
+msgstr "keine Meldung"
 
 #: ../lib/WikiDB/backend/cvs.php:749
 #, c-format
@@ -948,7 +942,7 @@ msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:763
 #, c-format
-msgid "Command failed [%s], Output: ["
+msgid "Command failed [%s], Output:"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:765
@@ -973,6 +967,11 @@ msgstr ""
 msgid "Timeout while obtaining lock."
 msgstr ""
 
+#: ../lib/WikiDB/backend/cvs.php:817
+#, c-format
+msgid "Could not open file '%s' for writing"
+msgstr ""
+
 #: ../lib/WikiDB/backend/cvs.php:827
 #, c-format
 msgid "Copying from [%s] to [%s]"
@@ -984,12 +983,12 @@ msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:835
 #, c-format
-msgid "Copied to [%s/%s]"
-msgstr ""
+msgid "Copied to [%s]"
+msgstr "Kopiert an %s"
 
 #: ../lib/WikiDB/backend/cvs.php:837
 #, c-format
-msgid "Failed to copy [%s/%s]"
+msgid "Failed to copy [%s]"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:843
@@ -1003,28 +1002,29 @@ msgstr ""
 
 #: ../lib/WikiDB/backend/dbaBase.php:330
 #, c-format
-msgid "Bad key in linktable: '%s'"
+msgid "Bad key in linktable: %s"
 msgstr ""
 
 #: ../lib/WikiDB/backend/dbaBase.php:352
 #, c-format
-msgid "Bad key '%s' in table"
+msgid "Bad key %s in table"
 msgstr ""
 
 #: ../lib/WikiDB/backend/dbaBase.php:360
 #, c-format
-msgid "backlink entry missing for link '%s'->'%s'"
+msgid "backlink entry missing for link %s"
 msgstr ""
 
 #: ../lib/WikiDB/backend/dbaBase.php:368
 #, c-format
-msgid "link entry missing for backlink '%s'<-'%s'"
+msgid "link entry missing for backlink %s"
 msgstr ""
 
 #: ../lib/WikiDB/dba.php:17
+#, c-format
 msgid ""
-"DBA files are in the /tmp directory. Please read the INSTALL file and move "
-"the DB file to a permanent location or risk losing all the pages!"
+"DBA files are in the %s directory. Please read the INSTALL file and move the "
+"DB file to a permanent location or risk losing all the pages!"
 msgstr ""
 
 #~ msgid "Current page:"
@@ -1032,9 +1032,6 @@ msgstr ""
 
 #~ msgid "Archived page:"
 #~ msgstr "Archivierte Seite:"
-
-#~ msgid "Copy of %s"
-#~ msgstr "Kopie von %s"
 
 #~ msgid "Searching for \"%s\" ....."
 #~ msgstr "Suche nach \"%s\" ....."

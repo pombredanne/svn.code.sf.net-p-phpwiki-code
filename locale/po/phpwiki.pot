@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2001-12-19 04:50-0500\n"
+"POT-Creation-Date: 2001-12-19 07:00-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -178,7 +178,8 @@ msgid "BackLinks"
 msgstr ""
 
 #: ../lib/plugin/BackLinks.php:13
-msgid "Get BackLinks for [pagename]"
+#, c-format
+msgid "Get BackLinks for %s"
 msgstr ""
 
 #: ../lib/plugin/BackLinks.php:44
@@ -266,7 +267,8 @@ msgid "LikePages"
 msgstr ""
 
 #: ../lib/plugin/LikePages.php:16
-msgid "List LikePages for [pagename]"
+#, c-format
+msgid "List LikePages for %s"
 msgstr ""
 
 #: ../lib/plugin/LikePages.php:39
@@ -420,7 +422,8 @@ msgid "Title search results for '%s'"
 msgstr ""
 
 #: ../lib/plugin/_BackendInfo.php:14
-msgid "Get debugging information for [pagename]."
+#, c-format
+msgid "Get debugging information for %s."
 msgstr ""
 
 #: ../lib/plugin/_BackendInfo.php:45
@@ -430,7 +433,7 @@ msgstr ""
 
 #: ../lib/plugin/_BackendInfo.php:51
 #, c-format
-msgid "No pagedata for %s\n"
+msgid "No pagedata for %s"
 msgstr ""
 
 #: ../lib/WikiDB.php:837
@@ -814,13 +817,28 @@ msgstr ""
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr ""
 
-#: ../lib/ziplib.php:621
+#: ../lib/ziplib.php:622
 #, c-format
 msgid "[%d] See [%s]"
 msgstr ""
 
-#: ../lib/ziplib.php:629
+#: ../lib/ziplib.php:630
 msgid "!References"
+msgstr ""
+
+#: ../lib/ziplib.php:651
+#, c-format
+msgid "Can't parse %s"
+msgstr ""
+
+#: ../lib/ziplib.php:659
+#, c-format
+msgid "Bad %s"
+msgstr ""
+
+#: ../lib/ziplib.php:704
+#, c-format
+msgid "Unknown %s"
 msgstr ""
 
 #: ../lib/WikiDB/backend/PearDB.php:26
@@ -829,13 +847,11 @@ msgid "Can't connect to database: %s"
 msgstr ""
 
 #: ../lib/WikiDB/backend/PearDB.php:57
-#, c-format
-msgid "WARNING: database still locked (lock_count = %s)"
+msgid "WARNING: database still locked"
 msgstr ""
 
-#: ../lib/WikiDB/backend/PearDB.php:710
-#, c-format
-msgid "%s: fatal database error"
+#: ../lib/WikiDB/backend/PearDB.php:711
+msgid "fatal database error"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:93
@@ -849,42 +865,23 @@ msgid "Found [%s] in [%s]"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:182
-msgid "update_pagedata: Argument 'newdata' was not array"
+#, c-format
+msgid "Argument %s was not array"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:190
-msgid "update_pagedata: no meta data found"
+msgid "no meta data found"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:243
 #, c-format
-msgid "get_latest_versioned FAILED for [%s]"
+msgid "FAILED for [%s]"
 msgstr ""
 
-#: ../lib/WikiDB/backend/cvs.php:260
-#, c-format
-msgid "get_versiondata: [%s] [%s] [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:315
-#, c-format
-msgid "delete_page [%s]"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:337
-msgid "delete_versiondata: Not Implemented"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:347
-msgid "set_versiondata: Not Implemented"
-msgstr ""
-
-#: ../lib/WikiDB/backend/cvs.php:450
-msgid "lock: Not Implemented"
-msgstr ""
-
+#: ../lib/WikiDB/backend/cvs.php:337 ../lib/WikiDB/backend/cvs.php:347
+#: ../lib/WikiDB/backend/cvs.php:353 ../lib/WikiDB/backend/cvs.php:450
 #: ../lib/WikiDB/backend/cvs.php:456
-msgid "unlock: Not Implemented"
+msgid "Not Implemented"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:520
@@ -893,15 +890,15 @@ msgid "Creating meta file for [%s]"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:614
-msgid "CP: got revision information"
+msgid "got revision information"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:619
-msgid "CP: is initial release"
+msgid "is initial release"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:622
-msgid "CP: returning old version"
+msgid "returning old version"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:689
@@ -909,7 +906,7 @@ msgid "Unable to delete file, lock was not obtained."
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:699
-msgid "deleteFile: Unable to open file"
+msgid "Unable to open file"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:709
@@ -928,7 +925,7 @@ msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:763
 #, c-format
-msgid "Command failed [%s], Output: ["
+msgid "Command failed [%s], Output:"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:765
@@ -953,6 +950,11 @@ msgstr ""
 msgid "Timeout while obtaining lock."
 msgstr ""
 
+#: ../lib/WikiDB/backend/cvs.php:817
+#, c-format
+msgid "Could not open file '%s' for writing"
+msgstr ""
+
 #: ../lib/WikiDB/backend/cvs.php:827
 #, c-format
 msgid "Copying from [%s] to [%s]"
@@ -964,12 +966,12 @@ msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:835
 #, c-format
-msgid "Copied to [%s/%s]"
+msgid "Copied to [%s]"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:837
 #, c-format
-msgid "Failed to copy [%s/%s]"
+msgid "Failed to copy [%s]"
 msgstr ""
 
 #: ../lib/WikiDB/backend/cvs.php:843
@@ -983,26 +985,27 @@ msgstr ""
 
 #: ../lib/WikiDB/backend/dbaBase.php:330
 #, c-format
-msgid "Bad key in linktable: '%s'"
+msgid "Bad key in linktable: %s"
 msgstr ""
 
 #: ../lib/WikiDB/backend/dbaBase.php:352
 #, c-format
-msgid "Bad key '%s' in table"
+msgid "Bad key %s in table"
 msgstr ""
 
 #: ../lib/WikiDB/backend/dbaBase.php:360
 #, c-format
-msgid "backlink entry missing for link '%s'->'%s'"
+msgid "backlink entry missing for link %s"
 msgstr ""
 
 #: ../lib/WikiDB/backend/dbaBase.php:368
 #, c-format
-msgid "link entry missing for backlink '%s'<-'%s'"
+msgid "link entry missing for backlink %s"
 msgstr ""
 
 #: ../lib/WikiDB/dba.php:17
+#, c-format
 msgid ""
-"DBA files are in the /tmp directory. Please read the INSTALL file and move "
-"the DB file to a permanent location or risk losing all the pages!"
+"DBA files are in the %s directory. Please read the INSTALL file and move the "
+"DB file to a permanent location or risk losing all the pages!"
 msgstr ""
