@@ -1,0 +1,55 @@
+/**
+ * $Id: portland.css,v 1.1 2002-01-19 22:48:42 carstenklapp Exp $
+ *
+ * PhpWiki style sheet for the printed page:
+ * Black on white only, with no toolbar commands and no link icons.
+ * Styles are kept to a minimum, so the printed page will otherwise
+ * appear according to your browser's default font settings.
+ */
+body {
+        color :      black;
+        background : white; 
+}
+
+/**
+ * Render links with black text and no underlines for readability on b&w
+ * printers which try to render colors as greys. (Greyscale text is often
+ * difficult to read on older 300dpi lasers.)
+ */
+a {
+        text-decoration : underline;
+}
+
+/**
+ * Override the above to keep underlines for WikiLinks and generic urls,
+ * they are useful indicators on the printed page.
+ * (most browsers underline links by default anyway but this overrides
+ * any user-defined default style sheets.)
+ */
+.wiki {
+        text-decoration : underline;
+        font-weight :     normal;
+}
+
+.rawurl {
+        text-decoration : underline;
+}
+
+/**
+ * Hide image borders for older browsers--newer broswers default to a zero
+ * border around images anyway.
+ */
+img {
+        border : none;
+}
+
+/* Hide other non-essential page elements from the printer. */
+.linkicon {
+        /**
+         * Some browsers ignore this completely: OmniWeb 4.1
+         * also shrink down the image to nothing so the text flows around it.
+         */
+        visibility : hidden;
+        width :  0;
+        height : 0;
+}

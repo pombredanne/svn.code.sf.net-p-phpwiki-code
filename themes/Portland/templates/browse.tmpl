@@ -1,0 +1,16 @@
+<?php // -*-html-*- ?>
+<!-- $Id: browse.tmpl,v 1.1 2002-01-19 22:48:42 carstenklapp Exp $ -->
+<?php
+?>
+
+<div class="br"><br clear="all" class="ignore" /></div>
+
+<?php if (! $IS_CURRENT) { ?>
+  <p><strong><?=_("Note:")?></strong>
+     <?=_("You are viewing an old revision of this page.")?>
+     <a href="<?= WikiURL($page->getName()) ?>"
+        ><?=_("View the current version")?></a>.</p>
+  <hr class="ignore" />
+<?php } ?>
+
+<div class="wikitext"><?=$CONTENT?></div>

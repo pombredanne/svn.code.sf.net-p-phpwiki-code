@@ -1,0 +1,40 @@
+<?php // -*-html-*- ?>
+<!-- $Id: actionbar.tmpl,v 1.1 2002-01-19 22:48:42 carstenklapp Exp $ -->
+<?php
+  $BF = &$ButtonFactory;
+
+  /* TODO: Cleanup for localization. */
+
+  if (!$page->get('locked') || $user->isAdmin())
+      $EditB = $BF->makeActionButton("edit",
+                                     $IS_CURRENT ? _("EditText") : _("Edit Old Revision"));
+  else
+      $EditB = $BF->makeActionButton("edit", _("View Source"));
+
+  $mtime = $Theme->formatDateTime($revision->get('mtime'));
+  //<?plugin-link PageHistory page="[pagename]" ?>
+  $PageHistoryB = $BF->makeLabelActionPageButton($mtime, _("PageHistory"));
+
+  /* FIXME: This doesn't work yet. */
+  if ($IS_CURRENT)
+      $LastModifiedMsg = sprintf(_("(last edited %s)"), $PageHistoryB);
+  else
+      $LastModifiedMsg = __sprintf(_("(version %s, saved on %s)"),
+                                   $VERSION, $PageHistoryB);
+
+  $LockPageB = $BF->makeActionButton($page->get('locked') ? 'unlock' : 'lock');
+  $RemovePageB = $BF->makeActionButton('remove');
+
+  $DiffB = $BF->makeActionButton(array('action' => 'diff', 'previous' => 'major'));
+
+  $DebugInfoB = $BF->makeActionPageButton(_("DebugInfo"));
+
+  $Sep = $Theme->getButtonSeparator();
+?>
+
+    <?= $EditB ?> of this page <?= $LastModifiedMsg ?>
+    <?php if ($user->isAdmin()) { ?>
+     <?=$Sep?><?= $LockPageB ?><?=$Sep?><?= $RemovePageB ?>
+    <?php } ?>
+    <!-- For debugging only, really -->
+    <?=$Sep?><?= $DebugInfoB ?><br />
