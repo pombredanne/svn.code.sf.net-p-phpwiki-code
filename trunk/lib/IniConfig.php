@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.79 2005-02-11 14:45:44 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.80 2005-02-26 17:47:57 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -14,7 +14,7 @@ rcs_id('$Id: IniConfig.php,v 1.79 2005-02-11 14:45:44 rurban Exp $');
  * @author: Joby Walker, Reini Urban, Matthew Palmer
  */
 /*
- * Copyright 2004 $ThePhpWikiProgrammingTeam
+ * Copyright 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  *
@@ -86,12 +86,15 @@ function save_dump($file) {
     //TODO: optimize this by removing ignore, big serialized array and merge into existing GLOBALS
     foreach ($vars as $var => $val) {
     	if (!$ignore[$var])
-            fwrite($fp, "\$GLOBALS['".$var."']=unserialize(\"".addslashes(serialize($val))."\");\n");
+            fwrite($fp, "\$GLOBALS['".$var."']=unserialize(\""
+            		    .addslashes(serialize($val))."\");\n");
     }
     // cannot be optimized, maybe leave away predefined consts somehow
     foreach (get_defined_constants() as $var => $val) {
-    	if (substr($var,0,4) != "PHP_" and substr($var,0,2) != "E_" and substr($var,0,2) != "T_"  and substr($var,0,2) != "M_")
-            fwrite($fp, "if(!defined('".$var."')) define('".$var."',unserialize(\"".addslashes(serialize($val))."\"));\n");
+    	if (substr($var,0,4) != "PHP_" and substr($var,0,2) != "E_" 
+    	    and substr($var,0,2) != "T_"  and substr($var,0,2) != "M_")
+            fwrite($fp, "if(!defined('".$var."')) define('".$var."',unserialize(\""
+            	        .addslashes(serialize($val))."\"));\n");
     }
     fwrite($fp, "return 'noerr';}");
     fwrite($fp,"?>");
@@ -111,10 +114,13 @@ function IniConfig($file) {
         }
     }
 
+    // First-time installer detection here...
+    // Similar to SetupWiki()
     if (!file_exists($file)) {
-        // first-time installer detection here...
-        // similar to SetupWiki()
-        include(dirname(__FILE__)."/install.php");
+        // We need to DATA_PATH for configurator, or pass the posted values 
+        // somewhow to the script
+        include_once(dirname(__FILE__)."/install.php");
+        run_install("_part1");
         trigger_error("Datasource file '$file' does not exist", E_USER_ERROR);
         exit();
     }
@@ -211,7 +217,7 @@ function IniConfig($file) {
         }
     }
     unset($item);
-    
+
     // Boolean options are slightly special - if they're set to any of
     // '', 'false', '0', or 'no' (all case-insensitive) then the value will
     // be a boolean false, otherwise if there is anything set it'll
@@ -226,7 +232,8 @@ function IniConfig($file) {
         //} elseif (array_key_exists($item, $rsdef)) {
         //    $val = $rsdef[$item];
         } else {
-            $val = false; //trigger_error(sprintf("missing boolean config setting for %s",$item));
+            $val = false; 
+            //trigger_error(sprintf("missing boolean config setting for %s",$item));
         }
         
         // calculate them later: old or dynamic constants
@@ -291,7 +298,8 @@ function IniConfig($file) {
         // try to load it dynamically (unix only)
         if (!loadPhpExtension("pdo")) {
             echo $GLOBALS['php_errormsg'], "<br>\n";
-            trigger_error(sprintf("dl() problem: Required extension '%s' could not be loaded!", "pdo"),
+            trigger_error(sprintf("dl() problem: Required extension '%s' could not be loaded!",
+                                  "pdo"),
                           E_USER_ERROR);
         }
     }
@@ -302,7 +310,9 @@ function IniConfig($file) {
             and in_array($DBParams['dbtype'], array('SQL','ADODB','PDO'))) {
             define('USE_DB_SESSION', true);
         } elseif ($DBParams['dbtype'] == 'dba' and check_php_version(4,1,2)) {
-            define('USE_DB_SESSION', true); // Depends on db handler as well. berkeley has problems.
+            define('USE_DB_SESSION', true); // Depends on db handler as well. 
+            				    // BerkeleyDB on older php has problems 
+            				    // with multiple db handles.
         } else {
             define('USE_DB_SESSION', false);
         }
@@ -420,7 +430,8 @@ function IniConfig($file) {
     if (!trim($WikiNameRegexp))
        $WikiNameRegexp = '(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])';
 
-    // got rid of global $KeywordLinkRegexp by using a TextSearchQuery instead of "Category:Topic"
+    // Got rid of global $KeywordLinkRegexp by using a TextSearchQuery instead 
+    // of "Category:Topic"
     if (!isset($rs['KEYWORDS'])) $rs['KEYWORDS'] = @$rsdef['KEYWORDS'];
     if (!isset($rs['KEYWORDS'])) $rs['KEYWORDS'] = "Category* OR Topic*";
     if ($rs['KEYWORDS'] == 'Category:Topic') $rs['KEYWORDS'] = "Category* OR Topic*";
@@ -430,7 +441,8 @@ function IniConfig($file) {
 
     // TODO: can this be a constant?
     global $DisabledActions;
-    if (!array_key_exists('DISABLED_ACTIONS', $rs) and array_key_exists('DISABLED_ACTIONS', $rsdef))
+    if (!array_key_exists('DISABLED_ACTIONS', $rs) 
+        and array_key_exists('DISABLED_ACTIONS', $rsdef))
         $rs['DISABLED_ACTIONS'] = @$rsdef['DISABLED_ACTIONS'];
     if (array_key_exists('DISABLED_ACTIONS', $rs))
         $DisabledActions = preg_split('/\s*:\s*/', $rs['DISABLED_ACTIONS']);
@@ -544,16 +556,36 @@ function fixup_static_configs() {
 
     if (!defined('THEME'))
         define('THEME', 'default');
-
+        
+    /*$configurator_link = HTML(HTML::br(), "=>", 
+                              HTML::a(array('href'=>DATA_PATH."/configurator.php"),
+    								  _("Configurator")));*/
     // check whether the crypt() function is needed and present
     if (defined('ENCRYPTED_PASSWD') && !function_exists('crypt')) {
         $error = sprintf("Encrypted passwords cannot be used: %s.",
                          "'function crypt()' not available in this version of php");
-        trigger_error($error);
+        trigger_error($error, E_USER_WARNING);
+        include_once(dirname(__FILE__)."/install.php");
+        run_install("_part1");
+        exit();
     }
 
-    if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '')
-        trigger_error("The admin password cannot be empty. Please update your config/config.ini");
+    // Basic configurator validation
+    if (!defined('ADMIN_USER') or ADMIN_USER == '') {
+        include_once(dirname(__FILE__)."/install.php");
+        run_install("_part1");
+        trigger_error(sprintf("%s may not be empty. Please update your configuration.", 
+        			          "ADMIN_USER"), 
+                      E_USER_ERROR);
+        exit();
+    }
+    if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '') {
+        trigger_error("The ADMIN_USER password cannot be empty. Please update your configuration.",
+                      E_USER_WARNING);
+        include_once(dirname(__FILE__)."/install.php");
+        run_install("_part1");
+        exit();
+    }
 
     if (defined('USE_DB_SESSION') and USE_DB_SESSION) {
         if (! $DBParams['db_session_table'] ) {
@@ -787,6 +819,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.79  2005/02/11 14:45:44  rurban
+// support ENABLE_LIVESEARCH, enable PDO sessions
+//
 // Revision 1.78  2005/02/10 19:01:19  rurban
 // add PDO support
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: install.php,v 1.1 2004-12-06 19:49:58 rurban Exp $');
+rcs_id('$Id: install.php,v 1.2 2005-02-26 17:47:57 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -27,23 +27,40 @@ rcs_id('$Id: install.php,v 1.1 2004-12-06 19:49:58 rurban Exp $');
  */
 
 function init_install() {
+    // prevent from recursion
+    static $already = 0;
     // setup default settings
-    IniConfig(dirname(__FILE__)."/../config/config-dist.ini");
+    if (!$already)
+        IniConfig(dirname(__FILE__)."/../config/config-dist.ini");
+    $already = 1;
 }
 
-function run_install() {
-    // display a screen of various settings:
-    // 1. convert from older index.php configuration
-    // 2. database and admin_user setup based on configurator.php
+/** 
+ * Display a screen of various settings:
+ * 1. convert from older index.php configuration [TODO]
+ * 2. database and admin_user setup based on configurator.php
+ * 3. dump the current settings to config/config.ini. 
+ */
+function run_install($part = '') {
+    if ($part) {
+        global $HTTP_GET_VARS;
+        $HTTP_GET_VARS['show'] = $part;
+    }
     include(dirname(__FILE__)."/../configurator.php");
-    // dump the current settings to config/config.ini.
 }
 
 init_install();
-run_install();
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.1  2004/12/06 19:49:58  rurban
+ enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+ renamed delete_page to purge_page.
+ enable action=edit&version=-1 to force creation of a new version.
+ added BABYCART_PATH config
+ fixed magiqc in adodb.inc.php
+ and some more docs
+
 
  */
 
