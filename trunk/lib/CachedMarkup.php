@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.33 2005-01-30 19:47:19 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.34 2005-01-30 21:51:04 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -506,7 +506,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 	    $div->setInClass('top', ($this->_tightenable & 1) != 0);
 	    $div->setInClass('bottom', ($this->_tightenable & 2) != 0);
 	}
-        if ($id)
+        if (!empty($id))
             $div->setAttr('id', $id);
 	$div->pushContent($xml);
 	return $div;
