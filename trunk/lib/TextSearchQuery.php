@@ -1,4 +1,4 @@
-<?php
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.4 2002-01-28 03:59:30 dairiki Exp $');
 /**
  * A text search query.
  *

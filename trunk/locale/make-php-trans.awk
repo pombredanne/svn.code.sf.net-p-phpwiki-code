@@ -1,3 +1,5 @@
+# $Id: make-php-trans.awk,v 1.4 2002-01-28 03:59:30 dairiki Exp $
+
 BEGIN {
   msgid=""; msgstr="";
   print ("<?php\n");
