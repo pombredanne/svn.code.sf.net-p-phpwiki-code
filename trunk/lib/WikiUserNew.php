@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.89 2004-06-06 16:58:51 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.90 2004-06-08 09:31:15 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1660,7 +1660,7 @@ extends _DbPassUser
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
         if (empty($this->_authcreate) and $dbi->getAuthParam('auth_create')) {
-            $this->_authcreate = $this->prepare($dbh->getAuthParam('auth_create'),
+            $this->_authcreate = $this->prepare($dbi->getAuthParam('auth_create'),
                                                 array("userid", "password"));
         }
         if (!empty($this->_authcreate)) {
@@ -2989,6 +2989,12 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.89  2004/06/06 16:58:51  rurban
+// added more required ActionPages for foreign languages
+// install now english ActionPages if no localized are found. (again)
+// fixed default anon user level to be 0, instead of -1
+//   (wrong "required administrator to view this page"...)
+//
 // Revision 1.88  2004/06/04 20:32:53  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole
