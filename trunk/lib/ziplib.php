@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.28 2003-02-15 23:21:16 dairiki Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.29 2003-02-21 04:17:46 dairiki Exp $');
 
 /**
  * GZIP stuff.
@@ -749,6 +749,7 @@ function ParseMimeifiedPages ($data)
         case 'author_id':
         case 'summary':
         case 'markup':
+        case 'pagetype':
             $versiondata[$key] = $value;
             break;
         }
