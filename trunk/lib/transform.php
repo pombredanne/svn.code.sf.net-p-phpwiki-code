@@ -1,14 +1,12 @@
-<!-- $Id: transform.php,v 1.7 2000-11-08 15:40:00 ahollosi Exp $ -->
-<?php
+<?php rcs_id('$Id: transform.php,v 1.8 2001-01-04 18:34:15 ahollosi Exp $');
    // expects $pagehash and $html to be set
-
 
    function tokenize($str, $pattern, &$orig, &$ntokens) {
       global $FieldSeparator;
       // Find any strings in $str that match $pattern and
-      // store them in $tokens[], replacing them with a token
-      // replaced strings are stored in $orig
-      $new = "";      
+      // store them in $orig, replacing them with tokens
+      // starting at number $ntokens - returns tokenized string
+      $new = '';      
       while (preg_match("/^(.*?)($pattern)/", $str, $matches)) {
          $linktoken = $FieldSeparator . $FieldSeparator . ($ntokens++) . $FieldSeparator;
          $new .= $matches[1] . $linktoken;
@@ -28,12 +26,11 @@
             $embedded[$i] = LinkImage($pagehash['refs'][$i]);
          } else {
             // ordinary link
-            $embedded[$i] = "<a href=\"" . $pagehash['refs'][$i] . "\">[$i]</a>";
+            $embedded[$i] = LinkURL($pagehash['refs'][$i], "[$i]");
          }
       }
    }
 
-   $numlines = count($pagehash["content"]);
 
    // only call these once, for efficiency
    $quick_search_box  = RenderQuickSearch();
@@ -42,17 +39,19 @@
 
 
    // Loop over all lines of the page and apply transformation rules
+   $numlines = count($pagehash["content"]);
+
    for ($index = 0; $index < $numlines; $index++) {
       unset($tokens);
       unset($replacements);
       $ntokens = 0;
       $replacements = array();
       
-      $tmpline = $pagehash["content"][$index];
+      $tmpline = $pagehash['content'][$index];
 
       if (!strlen($tmpline) || $tmpline == "\r") {
          // this is a blank line, send <p>
-         $html .= SetHTMLOutputMode("p", ZERO_DEPTH, 0);
+         $html .= SetHTMLOutputMode('', ZERO_LEVEL, 0);
          continue;
       }
 
@@ -62,7 +61,7 @@ your web server it is highly advised that you do not allow this.
 
       elseif (preg_match("/(^\|)(.*)/", $tmpline, $matches)) {
          // HTML mode
-         $html .= SetHTMLOutputMode("", ZERO_DEPTH, 0);
+         $html .= SetHTMLOutputMode("", ZERO_LEVEL, 0);
          $html .= $matches[2];
          continue;
       }
@@ -75,15 +74,15 @@ your web server it is highly advised that you do not allow this.
 	
       // First need to protect [[. 
       $oldn = $ntokens;
-      $tmpline = tokenize($tmpline, "\[\[", $replacements, $ntokens);
+      $tmpline = tokenize($tmpline, '\[\[', $replacements, $ntokens);
       while ($oldn < $ntokens)
-         $replacements[$oldn++] = "[";
+         $replacements[$oldn++] = '[';
 
       // Now process the [\d+] links which are numeric references	
       $oldn = $ntokens;
-      $tmpline = tokenize($tmpline, "\[\s*\d+\s*\]", $replacements ,$ntokens);
+      $tmpline = tokenize($tmpline, '\[\s*\d+\s*\]', $replacements, $ntokens);
       while ($oldn < $ntokens) {
-	 $num = (int)substr($replacements[$oldn], 1);
+	 $num = (int) substr($replacements[$oldn], 1);
          if (! empty($embedded[$num]))
             $replacements[$oldn] = $embedded[$num];
 	 $oldn++;
@@ -91,7 +90,7 @@ your web server it is highly advised that you do not allow this.
 
       // match anything else between brackets 
       $oldn = $ntokens;
-      $tmpline = tokenize($tmpline, "\[.+?\]", $replacements, $ntokens);
+      $tmpline = tokenize($tmpline, '\[.+?\]', $replacements, $ntokens);
       while ($oldn < $ntokens) {
 	$link = ParseAndLink($replacements[$oldn]);	
 	$replacements[$oldn] = $link['link'];
@@ -101,6 +100,7 @@ your web server it is highly advised that you do not allow this.
       //////////////////////////////////////////////////////////
       // replace all URL's with tokens, so we don't confuse them
       // with Wiki words later. Wiki words in URL's break things.
+      // URLs preceeded by a '!' are not linked
 
       $tmpline = tokenize($tmpline, "!?\b($AllowedProtocols):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]", $replacements, $ntokens);
       while ($oldn < $ntokens) {
@@ -129,22 +129,24 @@ your web server it is highly advised that you do not allow this.
 	$oldn++;
       }
 
+
+      //////////////////////////////////////////////////////////
       // escape HTML metachars
-      $tmpline = str_replace("&", "&amp;", $tmpline);
-      $tmpline = str_replace(">", "&gt;", $tmpline);
-      $tmpline = str_replace("<", "&lt;", $tmpline);
+      $tmpline = str_replace('&', '&amp;', $tmpline);
+      $tmpline = str_replace('>', '&gt;', $tmpline);
+      $tmpline = str_replace('<', '&lt;', $tmpline);
 
       // four or more dashes to <hr>
-      $tmpline = ereg_replace("^-{4,}", "<hr>", $tmpline);
+      $tmpline = ereg_replace("^-{4,}", '<hr>', $tmpline);
 
       // %%% are linebreaks
-      $tmpline = str_replace("%%%", "<br>", $tmpline);
+      $tmpline = str_replace('%%%', '<br>', $tmpline);
 
-      // bold italics
+      // bold italics (old way)
       $tmpline = preg_replace("|(''''')(.*?)(''''')|",
                               "<strong><em>\\2</em></strong>", $tmpline);
 
-      // bold
+      // bold (old way)
       $tmpline = preg_replace("|(''')(.*?)(''')|",
                               "<strong>\\2</strong>", $tmpline);
 
@@ -157,30 +159,34 @@ your web server it is highly advised that you do not allow this.
                               "<em>\\2</em>", $tmpline);
 
 
-      // HTML modes: pre, unordered/ordered lists, term/def  (using TAB)
+      //////////////////////////////////////////////////////////
+      // unordered, ordered, and dictionary list  (using TAB)
+
       if (preg_match("/(^\t+)(.*?)(:\t)(.*$)/", $tmpline, $matches)) {
-         // this is a dictionary list item
+         // this is a dictionary list (<dl>) item
          $numtabs = strlen($matches[1]);
-         $html .= SetHTMLOutputMode("dl", SINGLE_DEPTH, $numtabs);
+         $html .= SetHTMLOutputMode('dl', NESTED_LEVEL, $numtabs);
 	 $tmpline = '';
 	 if(trim($matches[2]))
-            $tmpline = "<dt>" . $matches[2];
-	 $tmpline .= "<dd>" . $matches[4];
+            $tmpline = '<dt>' . $matches[2];
+	 $tmpline .= '<dd>' . $matches[4];
 
       } elseif (preg_match("/(^\t+)(\*|\d+|#)/", $tmpline, $matches)) {
-         // this is part of a list
+         // this is part of a list (<ul>, <ol>)
          $numtabs = strlen($matches[1]);
-         if ($matches[2] == "*") {
-            $listtag = "ul";
+         if ($matches[2] == '*') {
+            $listtag = 'ul';
          } else {
-            $listtag = "ol"; // a rather tacit assumption. oh well.
+            $listtag = 'ol'; // a rather tacit assumption. oh well.
          }
          $tmpline = preg_replace("/^(\t+)(\*|\d+|#)/", "", $tmpline);
-         $html .= SetHTMLOutputMode($listtag, SINGLE_DEPTH, $numtabs);
-         $html .= "<li>";
+         $html .= SetHTMLOutputMode($listtag, NESTED_LEVEL, $numtabs);
+         $html .= '<li>';
 
-      // tabless markup for unordered and ordered lists
-      // list types can be mixed, so we only look at the last
+
+      //////////////////////////////////////////////////////////
+      // tabless markup for unordered, ordered, and dictionary lists
+      // ul/ol list types can be mixed, so we only look at the last
       // character. Changes e.g. from "**#*" to "###*" go unnoticed.
       // and wouldn't make a difference to the HTML layout anyway.
 
@@ -188,55 +194,55 @@ your web server it is highly advised that you do not allow this.
       } elseif (preg_match("/^([#*]*\*)[^#]/", $tmpline, $matches)) {
          // this is part of an unordered list
          $numtabs = strlen($matches[1]);
-         $listtag = "ul";
-
-         $tmpline = preg_replace("/^([#*]*\*)/", "", $tmpline);
-         $html .= SetHTMLOutputMode($listtag, SINGLE_DEPTH, $numtabs);
-         $html .= "<li>";
+         $tmpline = preg_replace("/^([#*]*\*)/", '', $tmpline);
+         $html .= SetHTMLOutputMode('ul', NESTED_LEVEL, $numtabs);
+         $html .= '<li>';
 
       // ordered lists <OL>: "#"
       } elseif (preg_match("/^([#*]*\#)/", $tmpline, $matches)) {
          // this is part of an ordered list
          $numtabs = strlen($matches[1]);
-         $listtag = "ol";
-
          $tmpline = preg_replace("/^([#*]*\#)/", "", $tmpline);
-         $html .= SetHTMLOutputMode($listtag, SINGLE_DEPTH, $numtabs);
-         $html .= "<li>";
+         $html .= SetHTMLOutputMode('ol', NESTED_LEVEL, $numtabs);
+         $html .= '<li>';
 
       // definition lists <DL>: ";text:text"
       } elseif (preg_match("/(^;+)(.*?):(.*$)/", $tmpline, $matches)) {
          // this is a dictionary list item
          $numtabs = strlen($matches[1]);
-         $html .= SetHTMLOutputMode("dl", SINGLE_DEPTH, $numtabs);
+         $html .= SetHTMLOutputMode('dl', NESTED_LEVEL, $numtabs);
 	 $tmpline = '';
 	 if(trim($matches[2]))
-            $tmpline = "<dt>" . $matches[2];
-	 $tmpline .= "<dd>" . $matches[3];
+            $tmpline = '<dt>' . $matches[2];
+	 $tmpline .= '<dd>' . $matches[3];
 
+
+      //////////////////////////////////////////////////////////
+      // remaining modes: preformatted text, headings, normal text	
 
       } elseif (preg_match("/^\s+/", $tmpline)) {
          // this is preformatted text, i.e. <pre>
-         $html .= SetHTMLOutputMode("pre", ZERO_DEPTH, 0);
+         $html .= SetHTMLOutputMode('pre', ZERO_LEVEL, 0);
 
       } elseif (preg_match("/^(!{1,3})[^!]/", $tmpline, $whichheading)) {
 	 // lines starting with !,!!,!!! are headings
-	 if($whichheading[1] == '!') $heading = "h3";
-	 elseif($whichheading[1] == '!!') $heading = "h2";
-	 elseif($whichheading[1] == '!!!') $heading = "h1";
-	 $tmpline = preg_replace("/^!+/", "", $tmpline);
-	 $html .= SetHTMLOutputMode($heading, ZERO_DEPTH, 0);
+	 if($whichheading[1] == '!') $heading = 'h3';
+	 elseif($whichheading[1] == '!!') $heading = 'h2';
+	 elseif($whichheading[1] == '!!!') $heading = 'h1';
+	 $tmpline = preg_replace("/^!+/", '', $tmpline);
+	 $html .= SetHTMLOutputMode($heading, ZERO_LEVEL, 0);
 
       } else {
          // it's ordinary output if nothing else
-         $html .= SetHTMLOutputMode("", ZERO_DEPTH, 0);
+         $html .= SetHTMLOutputMode('p', ZERO_LEVEL, 0);
       }
 
-      $tmpline = str_replace("%%Search%%", $quick_search_box, $tmpline);
-      $tmpline = str_replace("%%Fullsearch%%", $full_search_box, $tmpline);
-      $tmpline = str_replace("%%Mostpopular%%", $most_popular_list, $tmpline);
-      if(defined('WIKI_ADMIN') && strstr($tmpline, "%%ADMIN-"))
+      $tmpline = str_replace('%%Search%%', $quick_search_box, $tmpline);
+      $tmpline = str_replace('%%Fullsearch%%', $full_search_box, $tmpline);
+      $tmpline = str_replace('%%Mostpopular%%', $most_popular_list, $tmpline);
+      if(defined('WIKI_ADMIN') && strstr($tmpline, '%%ADMIN-'))
          $tmpline = ParseAdminTokens($tmpline);
+
 
       ///////////////////////////////////////////////////////
       // Replace tokens
@@ -245,8 +251,8 @@ your web server it is highly advised that you do not allow this.
 	  $tmpline = str_replace($FieldSeparator.$FieldSeparator.$i.$FieldSeparator, $replacements[$i], $tmpline);
 
 
-      $html .= "$tmpline\n";
+      $html .= $tmpline . "\n";
    }
 
-   $html .= SetHTMLOutputMode("", ZERO_DEPTH, 0);
+   $html .= SetHTMLOutputMode('', ZERO_LEVEL, 0);
 ?>
