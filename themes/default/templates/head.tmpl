@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.12 2003-11-22 17:58:43 carstenklapp Exp $');
+  rcs_id('$Id: head.tmpl,v 1.13 2003-12-05 15:36:39 carstenklapp Exp $');
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -11,10 +11,10 @@
 <?php if (!empty($PAGE_KEYWORDS)) { ?>
 <meta name="keywords" content="<?=$PAGE_KEYWORDS?>" />
 <?php } ?>
-<meta name="language" content="<?=$LANG?>" />
+<meta name="language" content="<?=DEFAULT_LANGUAGE?>" />
 <meta name="document-type" content="Public" />
 <meta name="document-rating" content="General" />
-<meta name="generator" content="phpWiki" />
+<meta name="generator" content="PhpWiki" />
 <meta name="PHPWIKI_VERSION" content="<?=PHPWIKI_VERSION?>" />
 <base href="<?=PHPWIKI_BASE_URL?>" />
 <link rel="shortcut icon" href="<?=$Theme->getImageURL('favicon.ico')?>" />
@@ -29,12 +29,8 @@
 <link rel="home" title="<?=HOME_PAGE?>" href="<?=WikiURL(HOME_PAGE)?>" />
 <link rel="help" title="<?=_("HowToUseWiki")?>" href="<?=WikiURL(
 _("HowToUseWiki"))?>" />
-<link rel="copyright" title="GNU General Public License" href="http://www.gnu.org/copyleft/gpl.html#SEC1" />
-<?php
-      $wikiadminName = _("The PhpWiki Programming Team");
-      $wikiadminUrl = "http://phpwiki.sourceforge.net/phpwiki/ThePhpWikiProgrammingTeam";
-      ?>
-<link rel="author" title="<?= $wikiadminName ?>" href="<?= $wikiadminUrl ?>" />
+<link rel="copyright" title="<?=COPYRIGHTPAGE_TITLE?>" href="<?=COPYRIGHTPAGE_URL?>" />
+<link rel="author" title="<?=AUTHORPAGE_TITLE?>" href="<?=AUTHORPAGE_URL?>" />
 <link rel="search" title="<?=_("FindPage")?>" href="<?=WikiURL(
 _("FindPage"))?>" />
 <?php /**
@@ -61,7 +57,7 @@ _("FindPage"))?>" />
        * http://www.oreillynet.com/cs/weblog/view/wlg/1475
        */
 ?>
-<link rel="alternate" type="application/rss+xml" title="RSS" href="<?=WikiURL(RECENT_CHANGES, array('format' => 'rss'))?>" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="<?=WikiURL(_("RecentChanges"), array('format' => 'rss'))?>" />
 
 <?php /**
        * Add some user-specific links.
@@ -115,6 +111,11 @@ _("UserPreferences"))?>" />
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2003/11/22 17:58:43  carstenklapp
+// Minor internal change: Removed redundant call to gettext within
+// fmt(). (locale make: head.tmpl:49: warning: keyword nested in keyword
+// arg)
+//
 // Revision 1.11  2003/11/21 23:06:12  carstenklapp
 // Bugfix: Some <link rel=...> links in Mozilla/iCab were always linking
 // to the english pages even when DEFAULT_LANGUAGE != 'en'. (Rewrapped
