@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.56 2004-04-12 13:04:50 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.57 2004-05-01 18:20:05 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -121,9 +121,7 @@ class Template
         if (!isset($page))
             $page = &$request->getPage();
         
-        global $Theme, $RCS_IDS;
-
-        
+        global $Theme, $RCS_IDS, $charset;
         
         //$this->_dump_template();
 
@@ -253,6 +251,12 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2004/04/12 13:04:50  rurban
+// added auth_create: self-registering Db users
+// fixed IMAP auth
+// removed rating recommendations
+// ziplib reformatting
+//
 // Revision 1.55  2004/04/02 15:06:55  rurban
 // fixed a nasty ADODB_mysql session update bug
 // improved UserPreferences layout (tabled hints)
