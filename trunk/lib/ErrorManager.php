@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.5 2001-12-28 09:53:06 carstenklapp Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.6 2002-01-09 17:28:26 carstenklapp Exp $');
 
 
 define ('EM_FATAL_ERRORS',
@@ -11,7 +11,7 @@ define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
 /**
  * A class which allows custom handling of PHP errors.
  *
- * This is a singleton class.  There should only be one instance
+ * This is a singleton class. There should only be one instance
  * of it --- you can access the one instance via $GLOBALS['ErrorManager'].
  *
  * FIXME: more docs.
@@ -29,7 +29,7 @@ class ErrorManager
         $this->_fatal_handler = false;
         $this->_postpone_mask = 0;
         $this->_postponed_errors = array();
-        
+
         set_error_handler('ErrorManager_errorHandler');
     }
 
@@ -69,31 +69,40 @@ class ErrorManager
     /**
      * Push a custom error handler on the handler stack.
      *
-     * Sometimes one is performing an operation where one expects certain errors
-     * or warnings.  In this case, one might not want these errors reported
-     * in the normal manner.  Installing a custom error handler via this method
-     * allows one to intercept such errors.
+     * Sometimes one is performing an operation where one expects
+     * certain errors or warnings. In this case, one might not want
+     * these errors reported in the normal manner. Installing a custom
+     * error handler via this method allows one to intercept such
+     * errors.
      *
      * An error handler installed via this method should be either a
-     * function or an object method taking one argument: a PhpError object.
+     * function or an object method taking one argument: a PhpError
+     * object.
      *
      * The error handler should return either:
      * <dl>
-     * <dt> False <dd> If it has not handled the error.  In this case, error
-     *       processing will proceed as if the handler had never been called:
-     *       the error will be passed to the next handler in the stack,
-     *       or the default handler, if there are no more handlers in the stack.
-     * <dt> True  <dd> If the handler has handled the error.  If the error was
-     *        a non-fatal one, no further processing will be done.
-     *        If it was a fatal error, the ErrorManager will still
-     *        terminate the PHP process (see setFatalHandler.)
-     * <dt> A PhpError object
-     *   <dd> The error is not considered
-     *        handled, and will be passed on to the next handler(s) in the stack
-     *        (or the default handler).
-     *        The returned PhpError need not be the same as the one passed to the
-     *        handler.  This allows the handler to "adjust" the error message.
+     * <dt> False <dd> If it has not handled the error. In this case,
+     *                 error processing will proceed as if the handler
+     *                 had never been called: the error will be passed
+     *                 to the next handler in the stack, or the
+     *                 default handler, if there are no more handlers
+     *                 in the stack.
      *
+     * <dt> True <dd> If the handler has handled the error. If the
+     *                error was a non-fatal one, no further processing
+     *                will be done. If it was a fatal error, the
+     *                ErrorManager will still terminate the PHP
+     *                process (see setFatalHandler.)
+     *
+     * <dt> A PhpError object <dd> The error is not considered
+     *                             handled, and will be passed on to
+     *                             the next handler(s) in the stack
+     *                             (or the default handler). The
+     *                             returned PhpError need not be the
+     *                             same as the one passed to the
+     *                             handler. This allows the handler to
+     *                             "adjust" the error message.
+     * </dl>
      * @access public
      * @param $handler WikiCallback  Handler to call.
      */
@@ -112,8 +121,9 @@ class ErrorManager
     /**
      * Set a termination handler.
      *
-     * This handler will be called upon fatal errors.  The handler gets passed
-     * one argument: a PhpError object describing the fatal error.
+     * This handler will be called upon fatal errors. The handler
+     * gets passed one argument: a PhpError object describing the
+     * fatal error.
      *
      * @access public
      * @param $handler WikiCallback  Callback to call on fatal errors.
@@ -125,30 +135,30 @@ class ErrorManager
     /**
      * Handle an error.
      *
-     * The error is passed through any registered error handlers,
-     * and then either reported or postponed.
+     * The error is passed through any registered error handlers, and
+     * then either reported or postponed.
      *
      * @access public
      * @param $error object A PhpError object.
      */
     function handleError($error) {
         static $in_handler;
-        
+
         if (!empty($in_handler)) {
             echo "<p>ErrorManager: "._("error while handling error:")."</p>\n";
             echo $error->printError();
             return;
         }
         $in_handler = true;
-        
+
         foreach ($this->_handlers as $handler) {
             $result = $handler->call($error);
             if (!$result) {
                 continue;       // Handler did not handle error.
             }
             elseif (is_object($result)) {
-                // handler filtered the result.  Still should pass to the
-                // rest of the chain.
+                // handler filtered the result. Still should pass to
+                // the rest of the chain.
                 if ($error->isFatal()) {
                     // Don't let handlers make fatal errors non-fatal.
                     $result->errno = $error->errno;
@@ -171,7 +181,7 @@ class ErrorManager
             $this->_die($error);
         }
         else if (($error->errno & error_reporting()) != 0) {
-            if (($error->errno & $this->_postpone_mask) != 0) {
+            if  (($error->errno & $this->_postpone_mask) != 0) {
                 $this->_postponed_errors[] = $error;
             }
             else {
@@ -191,7 +201,7 @@ class ErrorManager
             $this->_fatal_handler->call($error);
         exit -1;
     }
-        
+
     /**
      * @access private
      */
@@ -209,8 +219,8 @@ class ErrorManager
 /**
  * Global error handler for class ErrorManager.
  *
- * This is necessary since PHP's set_error_handler() does not allow one to
- * set an object method as a handler.
+ * This is necessary since PHP's set_error_handler() does not allow
+ * one to set an object method as a handler.
  * 
  * @access private
  */
@@ -251,14 +261,14 @@ class PhpError {
 
     /**
      * Construct a new PhpError.
-     * @param $errno int
-     * @param $errstr string
+     * @param $errno   int
+     * @param $errstr  string
      * @param $errfile string
      * @param $errline int
      */
     function PhpError($errno, $errstr, $errfile, $errline) {
-        $this->errno = $errno;
-        $this->errstr = $errstr;
+        $this->errno   = $errno;
+        $this->errstr  = $errstr;
         $this->errfile = $errfile;
         $this->errline = $errline;
     }
@@ -334,5 +344,5 @@ if (!isset($GLOBALS['ErrorManager'])) {
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
