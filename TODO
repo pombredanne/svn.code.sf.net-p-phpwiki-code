@@ -21,3 +21,14 @@ Add lastmodified and created features to DBM version
 
 In wiki_msql.php3, when strings are decomposed, a single word longer than
 MSQL_MAX_LINE_LENGTH will have unknown consequences.
+
+Changes to the default pages (like the change in how Search and
+FullSearch are identified, and the right code swapped in) do not
+propagate when one updates from CVS since they are in the database
+already. This is a "gotcha" and perhaps the only solution is to mention
+it in the FAQ and the README.
+
+Also, it might be time to start a FAQ.
+
+Search tells you how many matches it found in how many pages, but it
+doesn't say how many pages it searched anymore.
