@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.6 2004-01-26 09:17:51 rurban Exp $');
+rcs_id('$Id: file.php,v 1.7 2004-02-12 14:11:36 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -141,8 +141,9 @@ extends WikiDB_backend
         $f = @unlink($filename);
         if ($f == false)
 	          trigger_error("delete file failed: ".$filename." ver: ".$version, E_USER_WARNING);
-        
     }
+
+
     // *********************************************************************
 
 
@@ -376,6 +377,24 @@ extends WikiDB_backend
     }
 
     /**
+     * Rename all files for this page
+     *
+     * @access protected   Via WikiDB
+     */
+    function rename_page($pagename, $to) {
+        $version = _getLatestVersion($pagename);
+        foreach ($this->_dir_names as $type => $path) {
+            if (is_dir($path)) {
+                $filename = $this->_pagename2filename($type, $pagename, $version);
+                $new = $this->_pagename2filename($type, $to, $version);
+                @rename($filename,$new);
+            }
+        }
+        $this->update_pagedata($pagename, array('pagename' => $to)); 
+        return true;
+    }
+
+    /**
      * Delete page from the database.
      *
      * Delete page (and all it's revisions) from the database.
@@ -388,10 +407,10 @@ extends WikiDB_backend
             $this->_removePage('ver_data', $pagename, $ver);
             $ver = $this->get_previous_version($pagename, $ver);
         }
-		$this->_removePage('page_data', $pagename, 0);
-		$this->_removePage('links', $pagename, 0);
-		// remove page from latest_version...
-		$this->_setLatestVersion($pagename, 0);
+        $this->_removePage('page_data', $pagename, 0);
+        $this->_removePage('links', $pagename, 0);
+        // remove page from latest_version...
+        $this->_setLatestVersion($pagename, 0);
     }
             
     /**
@@ -748,6 +767,26 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/01/26 09:17:51  rurban
+// * changed stored pref representation as before.
+//   the array of objects is 1) bigger and 2)
+//   less portable. If we would import packed pref
+//   objects and the object definition was changed, PHP would fail.
+//   This doesn't happen with an simple array of non-default values.
+// * use $prefs->retrieve and $prefs->store methods, where retrieve
+//   understands the interim format of array of objects also.
+// * simplified $prefs->get() and fixed $prefs->set()
+// * added $user->_userid and class '_WikiUser' portability functions
+// * fixed $user object ->_level upgrading, mostly using sessions.
+//   this fixes yesterdays problems with loosing authorization level.
+// * fixed WikiUserNew::checkPass to return the _level
+// * fixed WikiUserNew::isSignedIn
+// * added explodePageList to class PageList, support sortby arg
+// * fixed UserPreferences for WikiUserNew
+// * fixed WikiPlugin for empty defaults array
+// * UnfoldSubpages: added pagename arg, renamed pages arg,
+//   removed sort arg, support sortby arg
+//
 // Revision 1.5  2004/01/25 08:17:29  rurban
 // ORDER BY support for all other backends,
 // all non-SQL simply ignoring it, using plain old dumb_iter instead

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.12 2004-01-25 08:17:29 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.13 2004-02-12 14:11:35 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -678,6 +678,22 @@ extends WikiDB_backend
                                     $limit);
 
         return new WikiDB_backend_ADODB_iter($this, $result);
+    }
+
+    /**
+     * Rename page in the database.
+     */
+    function rename_page($pagename, $to) {
+        $dbh = &$this->_dbh;
+        extract($this->_table_names);
+        
+        $this->lock();
+        if ( ($id = $this->_get_pageid($pagename, false)) ) {
+            $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
+                                $dbh->qstr($to)));
+        }
+        $this->unlock();
+        return $id;
     }
 
     function _update_recent_table($pageid = false) {

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.6 2004-01-25 08:17:29 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.7 2004-02-12 14:11:36 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -142,6 +142,16 @@ extends WikiDB_backend
         $pagedb->set($pagename, false);
 
         $this->set_links($pagename, false);
+    }
+
+    function rename_page($pagename, $to) {
+	$data = get_pagedata($pagename);
+	if (isset($data['pagename']))
+	  $data['pagename'] = $to;
+        //$vdata = get_versiondata($pagename, $version, 1);
+	//$this->delete_page($pagename);
+	$this->update_pagedata($to, $data);
+	return true;
     }
             
     /**
