@@ -1,8 +1,8 @@
-<?
+<?php
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: wiki_config.php3,v 1.21 2000-08-15 02:44:16 wainstead Exp $');
+   rcs_id('$Id: wiki_config.php3,v 1.22 2000-08-29 02:37:42 aredridel Exp $');
 
    /*
       Constants and settings. Edit the values below for

@@ -1,5 +1,5 @@
-<!-- $Id: wiki_search.php3,v 1.5 2000-06-18 15:12:13 ahollosi Exp $ -->
-<?
+<!-- $Id: wiki_search.php3,v 1.6 2000-08-29 02:37:42 aredridel Exp $ -->
+<?php
    // Title search: returns pages having a name matching the search term
 
    $found = 0;

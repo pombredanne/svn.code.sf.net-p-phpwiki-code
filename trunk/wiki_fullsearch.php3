@@ -1,5 +1,5 @@
-<!-- $Id: wiki_fullsearch.php3,v 1.8 2000-07-04 21:26:43 ahollosi Exp $ -->
-<?
+<!-- $Id: wiki_fullsearch.php3,v 1.9 2000-08-29 02:37:42 aredridel Exp $ -->
+<?php
    /*
       Search the text of pages for a match.
       A few too many regexps for my liking, but it works.

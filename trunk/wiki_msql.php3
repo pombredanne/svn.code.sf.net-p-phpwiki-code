@@ -1,5 +1,5 @@
-<!-- $Id: wiki_msql.php3,v 1.14 2000-08-16 03:55:31 wainstead Exp $ -->
-<?
+<!-- $Id: wiki_msql.php3,v 1.15 2000-08-29 02:37:42 aredridel Exp $ -->
+<?php
 
    /*
       Database functions:

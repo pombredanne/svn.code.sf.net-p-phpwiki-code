@@ -1,4 +1,4 @@
-<?  rcs_id('$Id: wiki_dbmlib.php3,v 1.11 2000-08-15 02:54:04 wainstead Exp $');
+<?php  rcs_id('$Id: wiki_dbmlib.php3,v 1.12 2000-08-29 02:37:42 aredridel Exp $');
    /*
       Database functions:
 

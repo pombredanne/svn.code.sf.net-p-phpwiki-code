@@ -1,4 +1,4 @@
-<? rcs_id("$Id: wiki_ziplib.php3,v 1.6 2000-08-03 19:40:19 dairiki Exp $");
+<?php rcs_id("$Id: wiki_ziplib.php3,v 1.7 2000-08-29 02:37:42 aredridel Exp $");
 
 //FIXME: get rid of this.
 function warn ($msg)
