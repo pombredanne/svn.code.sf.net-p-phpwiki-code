@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: navbar.tmpl,v 1.1 2004-03-01 09:38:01 rurban Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.2 2004-04-21 04:21:32 rurban Exp $ -->
 <?php
 $s = $Theme->getButtonSeparator();
 ?>
@@ -15,8 +15,9 @@ $s = $Theme->getButtonSeparator();
              onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
              onmouseout="window.status=''; return true;" />
     <?php if (!empty($revision)) { ?>
-     <?=$s?><?= WikiLink(_("LikePages")) ?>
-     <?=$s?><?= WikiLink(_("BackLinks")) ?>
+     <?=$s?><?= Button(array('action'=>'LikePages'),_("LikePages"),$page->getName()) ?>
+     <?=$s?><?= Button(array('action'=>'BackLinks'), _("BackLinks"),$page->getName()) ?>
+     <?=$s?><?= Button(array('action'=>'RelatedChanges'), _("RelatedChanges"),$page->getName()) ?>
     <?php } ?>
     <?php if (!empty($user) && $user->isAdmin()) { ?>
      <?=$s?><?= WikiLink(_("PhpWikiAdministration"), "","Admin") ?>
