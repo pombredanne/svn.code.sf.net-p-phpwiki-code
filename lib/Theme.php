@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.10 2002-01-19 22:32:01 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.11 2002-01-20 03:36:17 carstenklapp Exp $');
 
 class Theme {
     function Theme ($theme_name) {
@@ -78,10 +78,14 @@ class Theme {
     //
     ////////////////////////////////////////////////////////////////
 
+    //FIXME: PHP 4.1 Warnings
+    //lib/Theme.php:84: Notice[8]: The call_user_method() function is deprecated,
+    //use the call_user_func variety with the array(&$obj, "method") syntax instead
+
     function getFormatter ($type, $format) {
         $method = strtolower("get${type}Formatter");
         if (method_exists($this, $method))
-            return call_user_method($method, $this, $format);
+            return @call_user_method($method, $this, $format);
         return false;
     }
 
