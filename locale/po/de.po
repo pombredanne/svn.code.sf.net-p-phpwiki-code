@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-17 22:06-0500\n"
+"POT-Creation-Date: 2001-12-18 01:18-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
@@ -19,6 +19,7 @@ msgid "Note:"
 msgstr "Hinweis:"
 
 #: ../templates/browse.html:34
+#, fuzzy
 msgid "You are viewing an old revision of this page."
 msgstr ""
 
@@ -32,9 +33,10 @@ msgstr "hier"
 
 #: ../templates/browse.html:35
 msgid "to view the current version."
-msgstr "um die aktuellste version zu zeigen."
+msgstr "um die aktuellste Version zu schauen."
 
 #: ../templates/browse.html:50
+#, fuzzy
 msgid "Last edited on"
 msgstr "Zuletzt verändert am"
 
@@ -43,6 +45,7 @@ msgid "Version"
 msgstr "Version"
 
 #: ../templates/browse.html:52
+#, fuzzy
 msgid ", saved on"
 msgstr ", seite zuletzt verändert am"
 
@@ -90,6 +93,7 @@ msgid "Diff"
 msgstr "Vergleichen"
 
 #: ../templates/browse.html:97 ../templates/editpage.html:71
+#, fuzzy
 msgid "You are signed in as"
 msgstr "Du bist eingemeldet als"
 
@@ -111,6 +115,7 @@ msgid "DebugInfo"
 msgstr "DebugInfo"
 
 #: ../templates/editpage.html:15
+#, fuzzy
 msgid "Edit:"
 msgstr "Editieren:"
 
@@ -119,8 +124,9 @@ msgid "Preview only!  Changes not saved."
 msgstr "Nur die Vorschau!  Änderungen nicht gespeichert."
 
 #: ../templates/editpage.html:35
+#, fuzzy
 msgid "Warning: You are editing an old revision."
-msgstr "Warnung: "
+msgstr "Warnung: alte Seite"
 
 #: ../templates/editpage.html:36
 msgid "Saving this page will overwrite the current version."
@@ -163,6 +169,7 @@ msgid "GoodStyle"
 msgstr "GuterStil"
 
 #: ../templates/editpage.html:80
+#, fuzzy
 msgid "tips for editing."
 msgstr "tips fürs Editieren."
 
@@ -179,18 +186,19 @@ msgid "BackLinks"
 msgstr ""
 
 #: ../lib/plugin/BackLinks.php:13
+#, fuzzy
 msgid "Get BackLinks for [pagename]"
-msgstr ""
+msgstr "Hole BackLinks für [pagename]"
 
 #: ../lib/plugin/BackLinks.php:44
 #, c-format
 msgid "These pages link to %s:"
-msgstr ""
+msgstr "Diese Seiten sind in Verbindung mit %s:"
 
 #: ../lib/plugin/BackLinks.php:44
 #, c-format
 msgid "No pages link to %s."
-msgstr ""
+msgstr "Keine Seiten in Verbindung mit %s."
 
 #: ../lib/plugin/Calendar.php:24 ../lib/plugin/Calendar.php:28
 msgid "Calendar"
@@ -205,24 +213,22 @@ msgid "Next Month"
 msgstr "Nächste Monat"
 
 #: ../lib/plugin/Calendar.php:114
-#, fuzzy, c-format
+#, c-format
 msgid "Edit %s"
-msgstr "TextEditieren"
+msgstr "%s Editieren"
 
 #: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
-#, fuzzy
 msgid "FullTextSearch"
-msgstr "Volltext-Suchresultate"
+msgstr "Volltextsuch"
 
 #: ../lib/plugin/FullTextSearch.php:16
-#, fuzzy
 msgid "Full Text Search"
-msgstr "Volltext-Suchresultate"
+msgstr "Volltextsuch"
 
 #: ../lib/plugin/FullTextSearch.php:52
 #, c-format
 msgid "Full text search results for '%s'"
-msgstr "«%s»"
+msgstr "Volltext-Suchresultate nach «%s»"
 
 #: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
 msgid "<no matches>"
@@ -237,9 +243,8 @@ msgid "Simple Sample Plugin"
 msgstr "Einfaches Zusatzprogramm Beispiel"
 
 #: ../lib/plugin/IncludePage.php:15
-#, fuzzy
 msgid "IncludePage"
-msgstr "SeiteFinden"
+msgstr "SeiteEinfügen"
 
 #: ../lib/plugin/IncludePage.php:58
 #, c-format
@@ -263,7 +268,7 @@ msgstr ""
 #: ../lib/plugin/IncludePage.php:111
 #, c-format
 msgid "Included from %s"
-msgstr "eingefügter Text von %s"
+msgstr "Eingefügter Text von %s"
 
 #: ../lib/plugin/LikePages.php:12
 msgid "LikePages"
@@ -276,17 +281,17 @@ msgstr "GleicheSeite wie [pagename] auflisten"
 #: ../lib/plugin/LikePages.php:39
 #, c-format
 msgid "Page names with prefix '%s'"
-msgstr "«%s»"
+msgstr "Seitenamen mit Vorsatzwort «%s»"
 
 #: ../lib/plugin/LikePages.php:44
 #, c-format
 msgid "Page names with suffix '%s'"
-msgstr "«%s»"
+msgstr "Seitenamen mit Vorsatzwort «%s»"
 
 #: ../lib/plugin/LikePages.php:57
-#, c-format
+#, fuzzy, c-format
 msgid "These pages share an initial or final title word with '%s'"
-msgstr "«%s»"
+msgstr "Diese Seiten share an initial or final title word with «%s»"
 
 #: ../lib/plugin/LikePages.php:93
 msgid "<none>"
@@ -316,7 +321,7 @@ msgstr "Die %s meistbesuchten Seiten dieses Wikis:"
 #: ../lib/plugin/PageHistory.php:71
 #, c-format
 msgid "PageHistory for %s"
-msgstr "Änderungsprotokoll für %s"
+msgstr "Änderungsprotokoll für die Seite %s"
 
 #: ../lib/plugin/PageHistory.php:86
 msgid "Check any two boxes to compare revisions."
@@ -324,7 +329,7 @@ msgstr ""
 
 #: ../lib/plugin/PageHistory.php:88
 msgid "compare revisions"
-msgstr "revisionen vergleicheren"
+msgstr "Revisionen vergleicheren"
 
 #: ../lib/plugin/PageHistory.php:90
 #, c-format
@@ -342,15 +347,15 @@ msgstr "Das Änderungsprotokoll."
 
 #: ../lib/plugin/PageHistory.php:200 ../lib/plugin/RecentChanges.php:42
 msgid "PageHistory"
-msgstr "Protokoll"
+msgstr "SeiteProtokoll"
 
 #: ../lib/plugin/PageHistory.php:204
 msgid "List PageHistory for [pagename]"
-msgstr "Zeige das Änderungsprotokoll für [pagename]"
+msgstr "Das Änderungsprotokoll für [pagename] auslisten"
 
 #: ../lib/plugin/RecentChanges.php:84
 msgid "Deleted."
-msgstr "Geloescht."
+msgstr "Gelöscht."
 
 #: ../lib/plugin/RecentChanges.php:86
 msgid "New page."
@@ -378,17 +383,17 @@ msgid "minor edits"
 msgstr "geringe Änderungen"
 
 #: ../lib/plugin/RecentChanges.php:140
-#, fuzzy, c-format
+#, c-format
 msgid "The %d most recent %s during the past %.1f days are listed below."
-msgstr "Hier findest du eine Liste kürzlich veränderter oder neuer Seiten."
+msgstr "Die %d Jüngste %s innerhalb %.1f Tagen sind unten auflistet."
 
 #: ../lib/plugin/RecentChanges.php:143
-#, fuzzy, c-format
+#, c-format
 msgid "The %d most recent %s are listed below."
 msgstr "Die %d Jüngste %s sind unten auflistet."
 
 #: ../lib/plugin/RecentChanges.php:148
-#, fuzzy, c-format
+#, c-format
 msgid "The most recent %s during the past %.1f days are listed below."
 msgstr "Die Jüngste %s innerhalb %.1f Tagen sind unten auflistet."
 
@@ -411,24 +416,22 @@ msgid "Search"
 msgstr "Suche"
 
 #: ../lib/plugin/RecentChanges.php:251 ../lib/plugin/TitleSearch.php:16
-#, fuzzy
 msgid "Title Search"
-msgstr "Volltext-Suchresultate"
+msgstr "Volltextsuch"
 
 #: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:253
 #: ../lib/plugin/TitleSearch.php:12
-#, fuzzy
 msgid "TitleSearch"
-msgstr "Volltext-Suchresultate"
+msgstr "Volltextsuch"
 
 #: ../lib/plugin/TitleSearch.php:48
 #, c-format
 msgid "Title search results for '%s'"
-msgstr "«%s»"
+msgstr "Titel-Suchresultate nach «%s»"
 
 #: ../lib/plugin/_BackendInfo.php:14
 msgid "Get debugging information for [pagename]."
-msgstr ""
+msgstr "Hol' mir die Debug-Informationen von [pagename]."
 
 #: ../lib/plugin/_BackendInfo.php:45
 #, c-format
@@ -438,7 +441,7 @@ msgstr "Die Datenbank wird direckt nach «%s» abgefragt"
 #: ../lib/plugin/_BackendInfo.php:51
 #, c-format
 msgid "No pagedata for %s\n"
-msgstr "Keine Seitendatei fuer %s\n"
+msgstr "Keine Seitendatei für %s\n"
 
 #: ../lib/WikiDB.php:837
 #, c-format
@@ -448,7 +451,7 @@ msgstr "Beschreibe [%s] hier."
 #: ../lib/WikiUser.php:97
 #, c-format
 msgid "to perform action '%s'"
-msgstr "um die Tatigkeit «%s» zu "
+msgstr "um die Tatigkeit «%s» zu tun"
 
 #: ../lib/WikiUser.php:99
 msgid "to do that"
@@ -456,24 +459,25 @@ msgstr "um daß zu tun"
 
 #: ../lib/WikiUser.php:100
 msgid "You must be logged in as an administrator"
-msgstr ""
+msgstr "Du mußt dich als eine Administrator anmelden"
 
 #: ../lib/WikiUser.php:181
 msgid ""
 "You must set the administrator account and password before you can log in."
-msgstr ""
+msgstr "Du mußt der Administrator-Account mit Passwort zuerst schützen bevor du dich anmelden kannst."
 
 #: ../lib/WikiUser.php:193
 msgid "You entered an invalid login or password."
 msgstr "Du hast ein ungültiges Login oder Passwort eingegeben."
 
 #: ../lib/WikiUser.php:196
+#, fuzzy
 msgid "You can log in using any valid WikiWord as a user ID."
-msgstr ""
+msgstr "Du kannst mit jedes gultiges WikiWort als Benutzername anmelden."
 
 #: ../lib/WikiUser.php:197
 msgid "(Any password will work, except, of course for the admin user.)"
-msgstr ""
+msgstr "(Irgende Wšrter kšnnen als Passwort angenommen werden sowieso, aber natŸrlich nicht fur die Admin-Benuzer.)"
 
 #: ../lib/diff.php:172
 msgid "version"
@@ -482,7 +486,7 @@ msgstr "Version"
 #: ../lib/diff.php:175
 #, c-format
 msgid "last modified on %s"
-msgstr "zuletzt am % verändert"
+msgstr "zuletzt am %s verändert"
 
 #: ../lib/diff.php:178
 #, c-format
@@ -499,7 +503,6 @@ msgid "version %d"
 msgstr "Version %d"
 
 #: ../lib/diff.php:205
-#, fuzzy
 msgid "current version"
 msgstr "aktuellste Version"
 
@@ -518,7 +521,7 @@ msgstr "vorige Revision"
 #: ../lib/diff.php:251
 #, c-format
 msgid "Differences between %s and %s of %s."
-msgstr "Der Unterschied zwischen %s und %s von %s."
+msgstr "Der Unterschiedsergebnis von %3$s, zwischen %1$s und %2$s."
 
 #: ../lib/diff.php:255
 msgid "Previous Major Revision"
@@ -534,7 +537,7 @@ msgstr "Vorherige Author"
 
 #: ../lib/diff.php:267
 msgid "Other diffs:"
-msgstr "Andere vergleichungen:"
+msgstr "NachtrŠgliche vergleichen:"
 
 #: ../lib/diff.php:275
 msgid "Newer page:"
@@ -551,7 +554,7 @@ msgstr "Versionen sind identisch"
 #: ../lib/diff.php:298
 #, c-format
 msgid "Diff: %s"
-msgstr "Unterschiedsergebnis:"
+msgstr "Vergleich: %s"
 
 #: ../lib/editpage.php:26 ../lib/savepage.php:45
 msgid "This page has been locked by the administrator and cannot be edited."
@@ -614,7 +617,7 @@ msgid "You are about to remove '%s' permanently!"
 msgstr "Du bist im Begriff «%s» permanent zu löschen!"
 
 #: ../lib/removepage.php:8
-#, fuzzy, c-format
+#, c-format
 msgid "Click here to <a href=\"%s\">remove the page now</a>."
 msgstr "Klicke hier um <a href=\"%s\">die Seite jetzt zu löschen</a>."
 
@@ -666,7 +669,7 @@ msgid "Press <b>Save</b> again."
 msgstr "Drücke nochmal <b>Speichern</b>"
 
 #: ../lib/savepage.php:39
-#, fuzzy, c-format
+#, c-format
 msgid "Problem while updating %s"
 msgstr "Problem während dem Editieren von %s"
 
@@ -705,8 +708,9 @@ msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler -- aller Zeichen <, >, \" wegnehmen"
 
 #: ../lib/stdlib.php:336
+#, fuzzy
 msgid "Lock page to enable link"
-msgstr "Seite sperren um "
+msgstr "Seite sperren um das Link zu verbinden"
 
 #: ../lib/stdlib.php:455
 #, c-format
