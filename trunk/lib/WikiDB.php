@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.67 2004-06-07 19:12:49 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.68 2004-06-08 21:03:20 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -817,7 +817,7 @@ class WikiDB_Page
             // Save didn't fail because of concurrent updates.
             $notify = $this->_wikidb->get('notify');
             if (!empty($notify) and is_array($notify)) {
-                list($emails,$userids) = $this->getPageChangeEmails($notify);
+                list($emails, $userids) = $this->getPageChangeEmails($notify);
                 if (!empty($emails))
                     $this->sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids);
             }
@@ -830,7 +830,7 @@ class WikiDB_Page
     function getPageChangeEmails($notify) {
         $emails = array(); $userids = array();
         foreach ($notify as $page => $users) {
-            if (glob_match($page,$this->_pagename)) {
+            if (glob_match($page, $this->_pagename)) {
                 foreach ($users as $userid => $user) {
                     if (!empty($user['verified']) and !empty($user['email'])) {
                         $emails[]  = $user['email'];
@@ -844,15 +844,16 @@ class WikiDB_Page
                                 $emails[] = $user['email'];
                                 $userids[] = $userid;
                                 $notify[$page][$userid]['verified'] = 1;
-                                $request->_dbi->set('notify',$notify);
+                                $request->_dbi->set('notify', $notify);
                             }
                         } else {
                             $u = WikiUser($userid);
+                            $u->getPreferences();
                             if ($u->_prefs->get('emailVerified')) {
                                 $emails[] = $user['email'];
                                 $userids[] = $userid;
                                 $notify[$page][$userid]['verified'] = 1;
-                                $request->_dbi->set('notify',$notify);
+                                $request->_dbi->set('notify', $notify);
                             }
                         }
                         // ignore verification
@@ -1841,6 +1842,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.67  2004/06/07 19:12:49  rurban
+// fixed rename version=0, bug #966284
+//
 // Revision 1.66  2004/06/07 18:57:27  rurban
 // fix rename: Change pagename in all linked pages
 //
