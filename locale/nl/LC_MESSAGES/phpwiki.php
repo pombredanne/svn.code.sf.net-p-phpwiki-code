@@ -40,7 +40,7 @@ $locale["Versions are identical"] =
    "Versies zijn identiek";
 $locale["Diff of %s."] =
    "Diff van %s.";
-$locale["FrontPage"] =
+$locale["HomePage"] =
    "VoorPagina";
 $locale["Describe %s here."] =
    "Beschrijf %s hier.";

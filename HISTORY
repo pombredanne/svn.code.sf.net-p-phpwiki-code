@@ -96,7 +96,7 @@ Bug fixes:
 * Spanish version updated
 * More robust support for flat file based Wiki (INSTALL.flatfile
   included)
-* "named internal links," i.e. [wow | FrontPage]
+* "named internal links," i.e. [wow | HomePage]
 * New IF syntax added to templates
 * New PhpWikiAdministration page added
 * New term/defintion syntax (for <DT><DD> tags)
@@ -300,7 +300,7 @@ reverse linking of page titles
 
 0.05: 12/14/99: Added title searches, RecentChanges, fixed numerous bugs like
 only trying to render valid page names, the last-edited-date, removed
-the navigation toolbars, linked the new logo to FrontPage, and a half
+the navigation toolbars, linked the new logo to HomePage, and a half
 dozen other odd things. It's almost ready.
 
 0.04: 12/12/99: Several additions to markup:

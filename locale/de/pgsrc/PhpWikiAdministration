@@ -40,7 +40,7 @@ __Load__
 
 If you have dumped a set of pages from PhpWiki, you can reload them here.
 Note that pages in your database will be overwritten; thus, if you dumped
-your FrontPage when you load it from this form it will overwrite the one
+your HomePage when you load it from this form it will overwrite the one
 in your database now. If you want to be selective just delete
 the pages from the directory you don't want to load.
 

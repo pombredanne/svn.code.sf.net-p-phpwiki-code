@@ -24,7 +24,7 @@ files.  Do the following:
 
 Note: it is more important to translate the templates than to translate
 the pgsrc/ files. For the pgsrc/ files it is sufficient to change their
-names to Islandic and maybe translate the FrontPage (or how it is
+names to Islandic and maybe translate the HomePage (or how it is
 called in Islandic). Again, for anything you don't know, look at the
 `nl' or `de' versions.
 

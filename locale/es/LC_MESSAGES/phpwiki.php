@@ -48,7 +48,7 @@ $locale["Versions are identical"] =
    "Las versiones son id&eacute;nticas";
 $locale["Diff of %s."] =
    "Diferencia de %s.";
-$locale["FrontPage"] =
+$locale["HomePage"] =
    "PaginaPrincipal";
 $locale["Describe %s here."] =
    "Describe %s aqu&iacute;.";

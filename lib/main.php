@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.10 2001-02-28 20:54:18 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.11 2001-04-06 18:21:37 wainstead Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
@@ -38,7 +38,7 @@ function DeducePagename ()
    if (isset($QUERY_STRING) && preg_match('/^[^&=]+$/', $QUERY_STRING))
       return urldecode(fix_magic_quotes_gpc($QUERY_STRING));
    
-   return gettext("FrontPage");
+   return gettext("HomePage");
 }
 
 $pagename = DeducePagename();
@@ -96,8 +96,8 @@ if ($user->is_authenticated())
 // All requests require the database
 $dbi = OpenDataBase($WikiPageStore);
 
-// if there is no FrontPage, create a basic set of Wiki pages
-if ( ! IsWikiPage($dbi, gettext("FrontPage")) )
+// if there is no HomePage, create a basic set of Wiki pages
+if ( ! IsWikiPage($dbi, gettext("HomePage")) )
 {
    include_once("lib/loadsave.php");
    SetupWiki($dbi);

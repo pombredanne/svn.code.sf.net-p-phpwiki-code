@@ -155,7 +155,7 @@ msgstr "Diferencia de %s."
 
 # lib/display.php:14
 #: lib/display.php:12
-msgid "FrontPage"
+msgid "HomePage"
 msgstr "PaginaPrincipal"
 
 # lib/display.php:31 lib/editpage.php:50

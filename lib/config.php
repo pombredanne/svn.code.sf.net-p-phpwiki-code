@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.37 2001-03-14 19:48:29 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.38 2001-04-06 18:21:37 wainstead Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -197,7 +197,7 @@ function IsProbablyRedirectToIndex ()
    
    // In this case, the proper virtual path is still
    // $SCRIPT_NAME, since pages appear at
-   // e.g. /dir/index.php/FrontPage.
+   // e.g. /dir/index.php/HomePage.
    
    global $REQUEST_URI, $SCRIPT_NAME;
    
@@ -212,10 +212,10 @@ if (!defined('VIRTUAL_PATH'))
    // 'Action' directive (or similar means) is used to
    // redirect page requests to a cgi-handler.
    //
-   // In cases like this, requests for e.g. /wiki/FrontPage
+   // In cases like this, requests for e.g. /wiki/HomePage
    // get redirected to a cgi-script called, say,
    // /path/to/wiki/index.php.  The script gets all
-   // of /wiki/FrontPage as it's PATH_INFO.
+   // of /wiki/HomePage as it's PATH_INFO.
    //
    // The problem is:
    //   How to detect when this has happened reliably?
@@ -225,7 +225,7 @@ if (!defined('VIRTUAL_PATH'))
    // -- the requested URI is '/wikidir/', the request gets
    // passed to '/wikidir/index.php'.  In this case, the
    // proper VIRTUAL_PATH is '/wikidir/index.php', since the
-   // pages will appear at e.g. '/wikidir/index.php/FrontPage'.
+   // pages will appear at e.g. '/wikidir/index.php/HomePage'.
    //
 
    if (USE_PATH_INFO and isset($REDIRECT_URL)

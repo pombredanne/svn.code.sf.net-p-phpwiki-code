@@ -37,7 +37,7 @@ or do something like:
 to blow away a mysql based wiki.
 
 Now with your web browser, go browse to
-the FrontPage of your new wiki.  It will detect
+the HomePage of your new wiki.  It will detect
 that it's working with a virgin database and
 will pull in the pages from the source
 specified in WIKI_PGSRC.
@@ -45,4 +45,4 @@ specified in WIKI_PGSRC.
 Jeff
 
 
-$Id: UPGRADING,v 1.1 2001-02-11 20:18:58 wainstead Exp $
+$Id: UPGRADING,v 1.2 2001-04-06 18:21:36 wainstead Exp $

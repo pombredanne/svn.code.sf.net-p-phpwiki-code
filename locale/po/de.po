@@ -120,7 +120,7 @@ msgid "Diff of %s."
 msgstr "Diff von %s."
 
 #: lib/display.php:12
-msgid "FrontPage"
+msgid "HomePage"
 msgstr "StartSeite"
 
 #: lib/display.php:29 lib/editpage.php:50
