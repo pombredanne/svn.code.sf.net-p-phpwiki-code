@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.63 2001-12-28 09:53:24 carstenklapp Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.64 2002-01-03 00:09:18 carstenklapp Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -51,6 +51,18 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     }
 
     return $url;
+}
+
+function CSS_URL($CSS_URLS, $CSS_DEFAULT) {
+    $html = "";
+    foreach  ($CSS_URLS as $key => $val) {
+        if ($CSS_DEFAULT == $key) {
+            $html .= "<link rel=\"stylesheet\" title=\"".htmlspecialchars($key)."\" href=\"". DataURL(htmlspecialchars($val))."\" type=\"text/css\" />\n";
+        } else {
+            $html .= "<link rel=\"alternate stylesheet\" title=\"".htmlspecialchars($key)."\" href=\"". DataURL(htmlspecialchars($val))."\" type=\"text/css\" />\n";
+        }
+    }
+    return $html;
 }
 
 define('NO_END_TAG_PAT',

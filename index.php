@@ -39,7 +39,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.2-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.47 2002-01-02 01:28:16 carstenklapp Exp $');
+rcs_id('$Id: index.php,v 1.48 2002-01-03 00:09:15 carstenklapp Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -278,7 +278,13 @@ $LANG='C';
 // Note that if you use the stock phpwiki style sheet, 'phpwiki.css',
 // you should make sure that it's companion 'phpwiki-heavy.css'
 // is installed in the same directory that the base style file is.
-$CSS_URL = "phpwiki.css";
+$CSS_URLS = array(
+    'PhpWiki' => "phpwiki.css",
+    'Printer' => "phpwiki-printer.css",
+    'Modern'  => "phpwiki-modern.css"
+);
+
+$CSS_DEFAULT = "PhpWiki";
 
 // logo image (path relative to index.php)
 $logo = "images/wikibase.png";
