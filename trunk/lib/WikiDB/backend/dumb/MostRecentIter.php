@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostRecentIter.php,v 1.2 2002-02-08 22:51:26 lakka Exp $');
+rcs_id('$Id: MostRecentIter.php,v 1.3 2002-02-09 23:07:01 lakka Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -17,8 +17,8 @@ extends WikiDB_backend_iterator
         if ($exclude_major_revisions)
             $include_minor_revisions = true;
 
-		$reverse = $since < 0;
-		if($reverse){$since = -$since;}
+		$reverse = $limit < 0;
+		if($reverse){$limit = -$limit;}
         $this->_revisions = array();
         while ($page = $pages->next()) {
             $revs = $backend->get_all_revisions($page['pagename']);
@@ -33,12 +33,7 @@ extends WikiDB_backend_iterator
                     if ($exclude_major_revisions)
                         continue;
                 }
-				if ($reverse){
-				    if ($vdata['mtime'] > $since) {
-					    break;
-					}
-				}
-                elseif (!empty($since) && $vdata['mtime'] < $since)
+				if (!empty($since) && $vdata['mtime'] < $since)
                     break;
 
                 $this->_revisions[] = $revision;

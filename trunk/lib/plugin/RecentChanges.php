@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.59 2002-02-09 21:35:42 carstenklapp Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.60 2002-02-09 23:07:01 lakka Exp $');
 /**
  */
 
@@ -150,9 +150,7 @@ extends _RecentChanges_Formatter
     
     function description () {
         extract($this->_args);
-
         // FIXME: say something about show_all.
-
         if ($show_major && $show_minor)
             $edits = _("edits");
         elseif ($show_major)
@@ -164,7 +162,7 @@ extends _RecentChanges_Formatter
             if (intval($days) != $days)
                 $days = sprintf("%.1f", $days);
         }
-
+		$lmt = abs($limit);
         /**
          * Depending how this text is split up it can be tricky or
          * impossible to translate with good grammar. So the seperate
@@ -199,7 +197,20 @@ extends _RecentChanges_Formatter
                 $desc = fmt("The %d most recent %s are listed below.",
                             $limit, $edits);
         }
-        else {
+        elseif ($limit < 0) {  //$limit < 0 means we want oldest pages
+    		if ($timespan) {
+                    if (intval($days) == 1)
+                        $desc = fmt("The %d oldest %s during the past day are listed below.",
+                                    $lmt, $edits);
+                    else
+                        $desc = fmt("The %d oldest %s during the past %s days are listed below.",
+                                    $lmt, $edits, $days);
+                } else
+                    $desc = fmt("The %d oldest %s are listed below.",
+                                $lmt, $edits);
+		}
+
+		else {
             if ($timespan) {
                 if (intval($days) == 1)
                     $desc = fmt("The most recent %s during the past day are listed below.",
@@ -216,7 +227,7 @@ extends _RecentChanges_Formatter
             } else
                 $desc = fmt("All %s are listed below.", $edits);
         }
-        return $desc;
+		        return $desc;
     }
 
         
@@ -553,7 +564,7 @@ class DayButtonBar extends HtmlElement {
         
         if (abs($days) == 1)
             $label = _("1 day");
-        elseif ($days == 0)
+        elseif ($days <= 0)
             $label = "..."; //alldays
         else
             $label = sprintf(_("%s days"), abs($days));

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopularIter.php,v 1.5 2002-02-08 22:51:26 lakka Exp $');
+rcs_id('$Id: MostPopularIter.php,v 1.6 2002-02-09 23:07:01 lakka Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -26,7 +26,7 @@ extends WikiDB_backend_iterator
 
 		if($limit < 0){  //sort pages in reverse order - ie least popular first.
 	        usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf_rev');
-			$limit = -$limit
+			$limit = -$limit;
 			}
 		else usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf');
 
