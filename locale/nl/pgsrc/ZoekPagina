@@ -1,18 +1,17 @@
-Hier zijn een paar goede plaatsen om te beginnen met  bladeren.
+Hier zijn een paar goede plaatsen om te beginnen met bladeren.
 
 * HoeWikiTeGebruiken maakt snel wegwijs in Wiki.
 * RecenteVeranderingen worden automatisch bijgehouden.
 * MeerOverTechnieken van het bladeren en veranderen van deze server.
 
 
-Hier is een titel zoeker.  Probeer iets als ''wiki'' 
-of ''broodje''.
+Hier is een titel zoeker.  Probeer iets als ''wiki'' of ''broodje''.
 
-%%Search%%
+<?plugin-form TitleSearch?>
 
 Gebruik deze voor het doorzoeken van alle tekst.  Dit kan een paar seconden duren.  De resultaten tonen alle regels op een pagina die een oplossing bevatten.
 
-%%Fullsearch%%
+<?plugin-form FullTextSearch?>
 ------
 Scheid woorden met een spatie.  Alle woorden moeten gevonden worden.
 %%%Om woorden uit te zonderen, plak er een '-' voor.
