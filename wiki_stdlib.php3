@@ -1,7 +1,8 @@
-<!-- $Id: wiki_stdlib.php3,v 1.28 2000-09-04 05:54:15 wainstead Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.29 2000-09-23 14:31:06 ahollosi Exp $ -->
 <?php
    /*
       Standard functions for Wiki functionality
+         LinkRelatedPages($dbi, $pagename)
 	 GeneratePage($template, $content, $name, $hash)
          LinkExistingWikiWord($wikiword) 
          LinkUnknownWikiWord($wikiword) 
@@ -15,9 +16,47 @@
          SetHTMLOutputMode($newmode, $depth)
          UpdateRecentChanges($dbi, $pagename, $isnewpage) 
          ParseAndLink($bracketlink)
+         ExtractWikiPageLinks($content)
    */
 
 
+   function LinkRelatedPages($dbi, $pagename)
+   {
+      // currently not supported everywhere
+      if(!function_exists('GetWikiPageLinks'))
+         return '';
+
+      $links = GetWikiPageLinks($dbi, $pagename);
+
+      $txt = "<b>" . NUM_RELATED_PAGES . " best incoming links:</b>\n";
+      for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
+         if(isset($links['in'][$i])) {
+            list($name, $score) = $links['in'][$i];
+	    $txt .= LinkExistingWikiWord($name) . " ($score), ";
+         }
+      }
+
+      $txt .= "\n<br><b>" . NUM_RELATED_PAGES . " best outgoing links:</b>\n";
+      for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
+         if(isset($links['out'][$i])) {
+            list($name, $score) = $links['out'][$i];
+	    if(IsWikiPage($dbi, $name))
+	       $txt .= LinkExistingWikiWord($name) . " ($score), ";
+         }
+      }
+
+      $txt .= "\n<br><b>" . NUM_RELATED_PAGES . " most popular nearby:</b>\n";
+      for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
+         if(isset($links['popular'][$i])) {
+            list($name, $score) = $links['popular'][$i];
+	    $txt .= LinkExistingWikiWord($name) . " ($score), ";
+         }
+      }
+      
+      return $txt;
+   }
+
+   
    function GeneratePage($template, $content, $name, $hash)
    {
       global $ScriptUrl, $AllowedProtocols, $templates;
@@ -52,6 +91,10 @@
 	 if (strstr($page, "#$FieldSeparator#HITS#$FieldSeparator#")) {
             $page = str_replace("#$FieldSeparator#HITS#$FieldSeparator#",
 			GetHitCount($dbi, $name), $page);
+	 }
+	 if (strstr($page, "#$FieldSeparator#RELATEDPAGES#$FieldSeparator#")) {
+            $page = str_replace("#$FieldSeparator#RELATEDPAGES#$FieldSeparator#",
+			LinkRelatedPages($dbi, $name), $page);
 	 }
       }
 
@@ -351,12 +394,16 @@
 
       // send back links that are only numbers (they are references)
       if (preg_match("/^\d+$/", $linkdata)) {
-         return $bracketlink;
+         $link['type'] = 'ref';
+	 $link['link'] = $bracketlink;
+         return $link;
       }
 
       // send back escaped ([[) bracket sets
       if (preg_match("/^\[/", $linkdata)) {
-         return htmlspecialchars(substr($bracketlink, 1));
+         $link['type'] = 'none';
+	 $link['link'] = htmlspecialchars(substr($bracketlink, 1));
+         return $link;
       }
 
       // match the contents 
@@ -371,11 +418,14 @@
          $linkname = htmlspecialchars(trim($matches[1]));
          // assert proper URL's
          if (preg_match("#^($AllowedProtocols):#", $URL)) {
-            return "<a href=\"$URL\">$linkname</a>";
+            $link['type'] = 'url-named';
+	    $link['link'] = "<a href=\"$URL\">$linkname</a>";
          } else {
-            return "<b><u>BAD URL -- links have to start with one of " . 
-                   "$AllowedProtocols followed by ':'</u></b>";
+            $link['type'] = 'url-bad';
+            $link['link'] = "<b><u>BAD URL -- links have to start with one" . 
+                   "of $AllowedProtocols followed by ':'</u></b>";
          }
+	 return $link;
       }
 
 
@@ -385,21 +435,58 @@
       if (isset($matches[1])) {
          $linkname = trim($matches[1]);
          if (IsWikiPage($dbi, $linkname)) {
-            return LinkExistingWikiWord($linkname);
+            $link['type'] = 'wiki';
+            $link['link'] = LinkExistingWikiWord($linkname);
          } elseif (preg_match("#^($AllowedProtocols):#", $linkname)) {
             // if it's an image, embed it; otherwise, it's a regular link
             if (preg_match("/jpg$|png$|gif$/i", $linkname)) {
-               return LinkImage($linkname);
+	       $link['type'] = 'url-image';
+               $link['link'] = LinkImage($linkname);
             } else {
-               return LinkURL($linkname);
+	       $link['type'] = 'url-simple';
+               $link['link'] = LinkURL($linkname);
             }
 	 } else {
-            return LinkUnknownWikiWord($linkname);
+	    $link['type'] = 'wiki-unknown';
+            $link['link'] = LinkUnknownWikiWord($linkname);
+         }
+
+	 return $link;
+      }
+
+
+      $link['type'] = 'unknown';
+      $link['link'] = $bracketlink;
+      return $link;
+   }
+
+
+   function ExtractWikiPageLinks($content)
+   {
+      $wikilinks = array();
+
+      $numlines = count($content);
+      for($l = 0; $l < $numlines; $l++)
+      {
+         $line = $content[$l];
+	 $numBracketLinks = preg_match_all("/\[\s*(.+?)\s*\]/", $line, $brktlinks);
+	 for ($i = 0; $i < $numBracketLinks; $i++) {
+	    $link = ParseAndLink($brktlinks[0][$i]);
+	    if($link['type'] == 'wiki' || $link['type'] == 'wiki-unknown')
+	       $wikilinks[$brktlinks[1][$i]]++;
+
+            $brktlink = preg_quote($brktlinks[0][$i]);
+            $line = preg_replace("|$brktlink|", '', $line);
+	 }
+
+         if (preg_match_all("#!?\b(([A-Z][a-z]+){2,})\b#", $line, $link)) {
+            for ($i = 0; $link[0][$i]; $i++) {
+               if(!strstr($link[0][$i], '!'))
+                  $wikilinks[$link[0][$i]]++;
+	    }
          }
       }
 
-      return $bracketlink;
-
-   }
-
+      return $wikilinks;
+   }      
 ?>
