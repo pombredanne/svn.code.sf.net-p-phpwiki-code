@@ -1,6 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.29 2004-11-29 16:08:31 rurban Exp $');
-
+rcs_id('$Id: upgrade.php,v 1.30 2004-11-29 17:58:57 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -21,28 +20,27 @@ rcs_id('$Id: upgrade.php,v 1.29 2004-11-29 16:08:31 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /**
  * Upgrade the WikiDB and config settings after installing a new 
  * PhpWiki upgrade.
- * Status: experimental, no queries for verification yet, no db update,
- *         no merge conflict
+ * Status: experimental, no queries for verification yet, 
+ *         no merge conflict resolution (patch?), just overwrite.
  *
  * Installation on an existing PhpWiki database needs some 
  * additional worksteps. Each step will require multiple pages.
  *
  * This is the plan:
  *  1. Check for new or changed database schema and update it 
- *     according to some predefined upgrade tables. (medium)
+ *     according to some predefined upgrade tables. (medium, complete)
  *  2. Check for new or changed (localized) pgsrc/ pages and ask 
  *     for upgrading these. Check timestamps, upgrade silently or 
- *     show diffs if existing. Overwrite or merge (easy)
+ *     show diffs if existing. Overwrite or merge (easy, complete)
  *  3. Check for new or changed or deprecated index.php/config.ini settings
  *     and help in upgrading these. (hard)
  *  3a Convert old-style index.php into config/config.ini. (easy)
  *  4. Check for changed plugin invocation arguments. (hard)
  *  5. Check for changed theme variables. (hard)
- *  6. Convert the automatic update to a class-based multi-page 
+ *  6. Convert the single-request upgrade to a class-based multi-page 
  *     version. (hard)
 
  * Done: overwrite=1 link on edit conflicts at first occurence "Overwrite all".
@@ -50,8 +48,6 @@ rcs_id('$Id: upgrade.php,v 1.29 2004-11-29 16:08:31 rurban Exp $');
  * @author: Reini Urban
  */
 require_once("lib/loadsave.php");
-//define('DBADMIN_USER','rurban');
-//define('DBADMIN_PASSWD','');
 
 /**
  * TODO: check for the pgsrc_version number, not the revision mtime only
@@ -444,13 +440,13 @@ function CheckDatabaseUpdate(&$request) {
     //   http://bugs.mysql.com/bug.php?id=4398
     // "select * from page where LOWER(pagename) like '%search%'" does not apply LOWER!
     // confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a; not yet tested for 4.1.2alpha,
-    // TODO: there's another known workaround, not yet applied. on windows only.
+    // TODO: there's another known workaround, not yet applied. On windows only.
     if (isWindows() and substr($backend_type,0,5) == 'mysql') {
   	echo _("check for mysql 4.1.x/5.0.0 binary search on windows problem")," ...";
-  	$result = mysql_query("SELECT VERSION()",$dbh->_backend->connection());
+  	$result = mysql_query("SELECT VERSION()", $dbh->_backend->connection());
         $row = mysql_fetch_row($result);
         $mysql_version = $row[0];
-        $arr = explode('.',$mysql_version);
+        $arr = explode('.', $mysql_version);
         $version = (string)(($arr[0] * 100) + $arr[1]) . "." . (integer)$arr[2];
         if ($version >= 401.0) {
             $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL;");
@@ -553,6 +549,7 @@ function DoUpgrade($request) {
     }
 
     StartLoadDump($request, _("Upgrading this PhpWiki"));
+    //CheckOldIndexUpdate($request); // to upgrade from < 1.3.10
     CheckActionPageUpdate($request);
     CheckDatabaseUpdate($request);
     CheckPgsrcUpdate($request);
@@ -564,6 +561,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.29  2004/11/29 16:08:31  rurban
+ added missing nl
+
  Revision 1.28  2004/11/16 16:25:14  rurban
  fix accesslog tablename, print CREATED only if really done
 
