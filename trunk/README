@@ -38,7 +38,6 @@ index.php:             just the user-defined configs, calls lib/main.php
 
 lib/:
 lib/ArchiveCleaner.php
-lib/ButtonFactory.php
 lib/config.php:        not user-definable config functions.
 lib/DbaDatabase.php
 *lib/dbalib.php:       database access functions for the dba interface
@@ -123,4 +122,4 @@ Steve Wainstead
 swain@panix.com
 http://wcsb.org/~swain/
 
-$Id: README,v 1.13 2002-01-17 04:35:06 carstenklapp Exp $
+$Id: README,v 1.14 2002-01-31 23:11:32 carstenklapp Exp $
