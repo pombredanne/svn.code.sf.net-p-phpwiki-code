@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.50 2004-04-10 05:34:35 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.51 2004-04-11 10:42:02 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -1268,12 +1268,14 @@ extends _PassUser
     function _http_username() {
 	if (!empty($_SERVER['PHP_AUTH_USER']))
 	    return $_SERVER['PHP_AUTH_USER'];
-	if ($GLOBALS['HTTP_SERVER_VARS']['PHP_AUTH_USER'])
+	if (!empty($GLOBALS['HTTP_SERVER_VARS']['PHP_AUTH_USER']))
 	    return $GLOBALS['HTTP_SERVER_VARS']['PHP_AUTH_USER'];
-	if ($GLOBALS['REMOTE_USER'])
+	if (!empty($GLOBALS['REMOTE_USER']))
 	    return $GLOBALS['REMOTE_USER'];
-	if ($_ENV['REMOTE_USER'])
-	    return $_ENV['REMOTE_USER'];
+	if (!empty($GLOBALS['HTTP_SERVER_VARS']['REMOTE_USER']))
+	    return $GLOBALS['HTTP_SERVER_VARS']['REMOTE_USER'];
+        if (!empty($GLOBALS['HTTP_ENV_VARS']['REMOTE_USER']))
+	    return $GLOBALS['HTTP_ENV_VARS']['REMOTE_USER'];
 	return '';
     }
     
@@ -2715,6 +2717,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2004/04/10 05:34:35  rurban
+// sf bug#830912
+//
 // Revision 1.49  2004/04/07 23:13:18  rurban
 // fixed pear/File_Passwd for Windows
 // fixed FilePassUser sessions (filehandle revive) and password update

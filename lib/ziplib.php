@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.31 2003-11-09 01:24:13 carstenklapp Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.32 2004-04-11 10:42:02 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -561,7 +561,6 @@ function MimeifyPageRevision ($revision) {
                     'author'       => $revision->get('author'),
                     'version'      => $revision->getVersion(),
                     'lastmodified' => $revision->get('mtime'));
-
     
     if ($page->get('mtime'))
         $params['created'] = $page->get('mtime');

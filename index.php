@@ -9,7 +9,8 @@
 // index.php!
 
 /*
-Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam = array(
+Copyright 1999, 2000, 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam 
+= array(
 "Steve Wainstead", "Clifford A. Adams", "Lawrence Akka", 
 "Scott R. Anderson", "Jon Åslund", "Neil Brown", "Jeff Dairiki",
 "Stéphane Gourichon", "Jan Hidders", "Arno Hollosi", "John Jorgensen",
@@ -74,7 +75,7 @@ define('JS_SEARCHREPLACE',true);   // experimental edit feature
 
 define ('PHPWIKI_VERSION', '1.3.8');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.136 2004-04-10 04:14:13 rurban Exp $');
+rcs_id('$Id: index.php,v 1.137 2004-04-11 10:42:02 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -652,11 +653,14 @@ if (!defined('ALLOW_USER_LOGIN')) define('ALLOW_USER_LOGIN', false);
  */
 if (!defined('THEME')) {
 define('THEME', 'default');
+//define('THEME', 'smaller');
 //define('THEME', 'Hawaiian');
 //define('THEME', 'MacOSX');
 //define('THEME', 'Portland');
 //define('THEME', 'Sidebar');
 //define('THEME', 'SpaceWiki');
+//define('THEME', 'wikilens');
+//define('THEME', 'Wordpress');
 }
 
 // Select a valid charset name to be inserted into the xml/html pages,
@@ -675,6 +679,7 @@ define('THEME', 'default');
 // support the same charset, and of course the same is true for the
 // web browser. (Some work is in progress hopefully to allow more
 // flexibility in this area in the future).
+// Japanese must define "utf-8".
 if (!defined('CHARSET')) define("CHARSET", "iso-8859-1");
 
 // Select your language/locale - default language is "en" for English.
@@ -691,6 +696,8 @@ if (!defined('CHARSET')) define("CHARSET", "iso-8859-1");
 // If you set DEFAULT_LANGUAGE to the empty string, your system's
 // default language (as determined by the applicable environment
 // variables) will be used.
+// Note: The users language will be defined in $GLOBALS['LANG'], 
+// which overrides the DEFAULT_LANGUAGE. See wiki.
 //
 if (!defined('DEFAULT_LANGUAGE')) define('DEFAULT_LANGUAGE', 'en');
 
@@ -943,6 +950,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 //include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.136  2004/04/10 04:14:13  rurban
+// sf.net 906436 Suggestion
+//
 // Revision 1.135  2004/04/10 03:33:03  rurban
 // Oops revert
 //
