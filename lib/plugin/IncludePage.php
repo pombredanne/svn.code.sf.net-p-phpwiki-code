@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.4 2001-12-16 18:33:25 dairiki Exp $');
+rcs_id('$Id: IncludePage.php,v 1.5 2001-12-17 16:40:43 dairiki Exp $');
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
@@ -20,7 +20,8 @@ extends WikiPlugin
                       'rev'   => false,    // the revision (defaults to most recent)
                       'quiet' => false,    // if set, inclusion appears as normal content
                       'words' => false,    // maximum number of words to include
-                      'lines' => false     // maximum number of lines to include
+                      'lines' => false,    // maximum number of lines to include
+                      'section'=> false    // include a named section
                                         );
     }
 
@@ -41,6 +42,23 @@ extends WikiPlugin
         return $new;
     }
 
+    function extractSection ($section, $content) {
+        $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
+
+        if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
+                       . "  \\s*$\\n?"           // possible blank lines
+                       . "  ( (?: ^.*\\n? )*? )" // some lines
+                       . "  (?= ^\\1 | \\Z)/xm", // sec header (same or higher level) (or EOF)
+                       implode("\n", $content),
+                       $match)) {
+            // Strip trailing blanks lines and ---- <hr>s
+            $text = preg_replace("/\\s*^-{4,}\\s*$/m", "", $match[2]);
+            return explode("\n", $text);
+        }
+        return array(sprintf(_("<%s: no such section>"), $section));
+    }
+    
+                
     function error($msg) {
         // FIXME: better error reporting?
         trigger_error($msg, E_USER_NOTICE);
@@ -75,7 +93,9 @@ extends WikiPlugin
         }
 
         $c = $r->getContent();
-        
+
+        if ($section)
+            $c = $this->extractSection($section, $c);
         if ($lines)
             $c = array_slice($c, 0, $lines);
         if ($words) 
