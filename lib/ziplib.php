@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.43 2005-01-25 08:00:09 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.44 2005-01-31 00:28:48 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -623,13 +623,14 @@ function ParseRFC822Headers (&$string)
     
     if (empty($headers))
         return false;
-    
-    if (! preg_match("/^\r?\n/", $string, $match))  {
-        // No blank line after headers.
-        return false;
+
+    if (strlen($string) > 0) {
+        if (! preg_match("/^\r?\n/", $string, $match))  {
+            // No blank line after headers.
+            return false;
+        }
+        $string = substr($string, strlen($match[0]));
     }
-    
-    $string = substr($string, strlen($match[0]));
     
     return $headers;
 }
@@ -833,6 +834,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2005/01/25 08:00:09  rurban
+// use unix type to support subdirs with forward slash and long filenames
+//
 // Revision 1.42  2004/11/16 16:17:51  rurban
 // support ENABLE_PAGEPERM=false mime load/save
 //
