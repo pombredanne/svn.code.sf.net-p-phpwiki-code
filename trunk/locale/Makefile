@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.24 2002-02-22 21:48:26 carstenklapp Exp $
+# $Id: Makefile,v 1.25 2002-02-23 05:53:54 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -167,5 +167,5 @@ ${POT_FILE}: ../themes/Portland/templates/navbar.tmpl
 ${POT_FILE}: ../themes/Portland/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/Portland/themeinfo.php
 ${POT_FILE}: ../themes/Sidebar/themeinfo.php
-${POT_FILE}: ../themes/WikiTrek/lib/RecentChanges.php
-${POT_FILE}: ../themes/WikiTrek/themeinfo.php
+${POT_FILE}: ../themes/SpaceWiki/lib/RecentChanges.php
+${POT_FILE}: ../themes/SpaceWiki/themeinfo.php
