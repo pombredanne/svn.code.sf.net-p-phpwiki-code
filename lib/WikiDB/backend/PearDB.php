@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.45 2004-04-16 14:19:39 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.46 2004-04-19 21:51:41 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -583,7 +583,7 @@ extends WikiDB_backend
             $join_clause = "$page_tbl.id=$recent_tbl.id";
             $table .= ", $version_tbl";
             $join_clause .= " AND $version_tbl.id=$page_tbl.id";
-                
+            
             if ($exclude_major_revisions) {
                 // Include only most recent minor revision
                 $pick[] = 'version=latestminor';
@@ -914,6 +914,9 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2004/04/16 14:19:39  rurban
+// updated ADODB notes
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

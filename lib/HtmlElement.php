@@ -1,9 +1,9 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.35 2004-04-19 18:27:45 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.36 2004-04-19 21:51:41 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
  *
- * FIXME: This code is not (yet) php5 compatible.
+ * This code is now php5 compatible. --2004-04-19 23:51:43 rurban
  */
 require_once("lib/XmlElement.php");
 
@@ -16,7 +16,7 @@ class HtmlElement extends XmlElement
 {
     function __construct ($tagname /* , $attr_or_content , ...*/) {
         $this->_init(func_get_args());
-        //$this->_properties = HTML::getTagProperties($tagname);
+        $this->_properties = HTML::getTagProperties($tagname);
     }
 
     function _init ($args) {
@@ -511,6 +511,12 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.35  2004/04/19 18:27:45  rurban
+ Prevent from some PHP5 warnings (ref args, no :: object init)
+   php5 runs now through, just one wrong XmlElement object init missing
+ Removed unneccesary UpgradeUser lines
+ Changed WikiLink to omit version if current (RecentChanges)
+
  Revision 1.34  2004/03/24 19:39:02  rurban
  php5 workaround code (plus some interim debugging code in XmlElement)
    php5 doesn't work yet with the current XmlElement class constructors,
