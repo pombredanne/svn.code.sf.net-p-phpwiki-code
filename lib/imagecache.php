@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: imagecache.php,v 1.10 2004-09-22 13:46:26 rurban Exp $');
+<?php rcs_id('$Id: imagecache.php,v 1.11 2004-10-12 15:06:01 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -115,6 +115,7 @@ function mainImageCache() {
     $id = $request->getArg('id');
     $args = $request->getArg('args');
     $request->setArg('action', 'imagecache');
+    $cache = new WikiPluginCached;
 
     if ($id) {
         // this indicates a direct call (script wasn't called as
@@ -131,7 +132,7 @@ function mainImageCache() {
             $uri = $request->get('REQUEST_URI');
         }
         if (!$uri) {
-            WikiPluginCached::printError( 'png', 
+            $cache->printError( 'png', 
                 'Could not deduce image identifier or creation'
                 . ' parameters. (Neither REQUEST nor REDIRECT'
                 . ' obtained.)' ); 
@@ -139,7 +140,7 @@ function mainImageCache() {
         }    
         //$cacheparams = $GLOBALS['CacheParams'];
         if (!preg_match(':^(.*/)?'.PLUGIN_CACHED_FILENAME_PREFIX.'([^\?/]+)\.img(\?args=([^\?&]*))?$:', $uri, $matches)) {
-            WikiPluginCached::printError('png', "I do not understand this URL: $uri");
+            $cache->printError('png', "I do not understand this URL: $uri");
             return;
         }        
         
@@ -151,7 +152,7 @@ function mainImageCache() {
         $request->setStatus(200); // No, we do _not_ have an Error 404 :->
     }
 
-    WikiPluginCached::fetchImageFromCache($request->_dbi, $request, 'png');
+    $cache->fetchImageFromCache($request->_dbi, $request, 'png');
 }
 
 
