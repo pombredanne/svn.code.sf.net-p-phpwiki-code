@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.79 2003-04-29 14:34:20 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.80 2003-11-27 15:17:01 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -172,7 +172,7 @@ extends _RecentChanges_Formatter
         global $request, $Theme;
 
         $rss_url = $request->getURLtoSelf(array('format' => 'rss'));
-        return $Theme->makeButton("RSS", $rss_url, 'rssicon');
+        return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), $Theme->makeButton("RSS", $rss_url, 'rssicon'));
     }
 
     function description () {
@@ -272,7 +272,9 @@ extends _RecentChanges_Formatter
             ."}\n";
         $jsf = JavaScript($addsidebarjsfunc);
 
-        $addsidebarjsclick = " " . "<small style=\"font-weight:normal;\"><a href=\"javascript:addPanel();\">sidebar</a></small>";
+        global $Theme;
+        $sidebar_button = $Theme->makeButton("sidebar", 'javascript:addPanel();', 'sidebaricon');
+        $addsidebarjsclick = asXML(HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), $sidebar_button));
         $jsc = JavaScript("if ((typeof window.sidebar == 'object') &&\n"
                                 ."    (typeof window.sidebar.addPanel == 'function'))\n"
                                 ."   {\n"
@@ -603,7 +605,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.79 $");
+                            "\$Revision: 1.80 $");
     }
 
     function managesValidators() {
@@ -770,6 +772,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.79  2003/04/29 14:34:20  dairiki
+// Bug fix: "add sidebar" link didn't work when USE_PATH_INFO was false.
+//
 // Revision 1.78  2003/03/04 01:55:05  dairiki
 // Fix to ensure absolute URL for logo in RSS recent changes.
 //
