@@ -1,40 +1,33 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.1 2002-02-22 23:46:56 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.2 2002-03-08 20:31:13 carstenklapp Exp $');
 
 /**
- * This PhpWiki theme is experimental and will likely not appear as
- * part of any release ("accessories not included"--download
- * seperately.)
- *
  * This theme is by design completely css-based so unfortunately it
  * doesn't render properly or even the same across different browsers.
- * A preview screen snapshot is also included for comparison testing.
+ * Mozilla 0.98 was used for testing, it is the only Mac browser so
+ * far which correctly renders most of the css used here.
+ * A preview screen snapshot is included for comparison testing.
  *
  * The reverse coloring of this theme was chosen to provide an extreme
  * example of a heavily customized PhpWiki, through which any
- * potential visual problems can be identified. The intention is to
- * elimate as many non-html elements from the html templates as
- * possible.
- *
- * This theme does not render properly in all browsers. In particular,
- * OmniWeb renders some text as black-on-black. Netscape 4 will
- * probably choke on it too.
- * * * * * * * * * * * * */
+ * potential visual problems can be identified and to eliminate any
+ * remaining non-structural html elements from the html templates.
+ */
 
 require_once('lib/Theme.php');
 
 class Theme_SpaceWiki extends Theme {
     function getRecentChangesFormatter ($format) {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss/', $format))
+        if (preg_match('/^rss|^sidebar/', $format))
             return false;       // use default
         return '_SpaceWiki_RecentChanges_Formatter';
     }
 
     function getPageHistoryFormatter ($format) {
         include_once($this->file('lib/RecentChanges.php'));
-        if (preg_match('/^rss/', $format))
+        if (preg_match('/^rss|^sidebar/', $format))
             return false;       // use default
         return '_SpaceWiki_PageHistory_Formatter';
     }
