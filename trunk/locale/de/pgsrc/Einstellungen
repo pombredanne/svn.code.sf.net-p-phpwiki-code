@@ -1,6 +1,6 @@
-Date: Sun, 27 Jan 2002 17:28:55 -0500
+Date: Sat, 2 Feb 2002 18:34:29 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: Einstellungen,v 1.6 2002-01-27 23:08:57 carstenklapp Exp $
+X-Rcs-Id: $Id: Einstellungen,v 1.7 2002-02-02 23:37:12 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=Einstellungen;
   flags=PAGE_LOCKED;
@@ -9,7 +9,4 @@ Content-Transfer-Encoding: binary
 
 Du kannst einige Einstellungen jetzt bestimmen. Die Werte werden in einer __Cookie__ deines Browsers gespeichert, daher müssen Cookies in deinem Browser aktiviert sein.
 
-! Größe des Texteingabefensters
-
-[Anzahl Spalten | phpwiki:?action=setprefs&edit_area_width=3()]
-[Anzahl Zeilen | phpwiki:?action=setprefs&edit_area_height=3()]
+<?plugin UserPreferences?>
