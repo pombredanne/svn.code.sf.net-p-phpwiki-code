@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.19 2002-02-08 22:56:37 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.20 2002-02-10 22:24:11 carstenklapp Exp $
 
   Classes:
 
@@ -263,6 +263,7 @@ div.wiki-message {
   border: solid 1px #d8d8d8;
   padding: 6pt;
 }
+.printer { display: none; }
 
 /****************************************************************
  **
