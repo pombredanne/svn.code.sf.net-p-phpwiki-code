@@ -17,7 +17,7 @@ Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 "Antti Kaihola", "Jeremie Kass", "Carsten Klapp", "Marco Milanesi",
 "Grant Morgan", "Jan Nieuwenhuizen", "Aredridel Niothke", 
 "Pablo Roca Rozas", "Sandino Araico Sánchez", "Joel Uckelman", 
-"Reini Urban", "Tim Voght", "Jochen Kalmbach");
+"Reini Urban", "Joby Walker", "Tim Voght", "Jochen Kalmbach");
 
 This file is part of PhpWiki.
 
@@ -36,11 +36,11 @@ along with PhpWiki; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-require_once "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.141 2004-04-19 23:13:02 zorloc Exp $');
+require_once (dirname(__FILE__).'/lib/prepend.php');
+rcs_id('$Id: index.php,v 1.142 2004-04-26 12:16:40 rurban Exp $');
 
-require_once "lib/IniConfig.php";
-IniConfig("config/config.ini");
+require_once(dirname(__FILE__).'/lib/IniConfig.php');
+IniConfig(dirname(__FILE__)."/config/config.ini");
 
 //if (defined('WIKI_SOAP') and WIKI_SOAP) return;
 
@@ -62,23 +62,26 @@ IniConfig("config/config.ini");
 // uncomment the include "lib/main.php" line below.
 if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
     if ($HTTP_SERVER_VARS['SCRIPT_NAME'] != VIRTUAL_PATH) {
-        include "lib/main.php";
+        include(dirname(__FILE__)."/lib/main.php");
     }
     elseif (defined('SCRIPT_NAME') and 
             ($HTTP_SERVER_VARS['SCRIPT_NAME'] != SCRIPT_NAME)) {
-        include "lib/main.php";
+        include(dirname(__FILE__)."/lib/main.php");
     }
 } else {
     if (defined('SCRIPT_NAME') and 
         ($HTTP_SERVER_VARS['SCRIPT_NAME'] == SCRIPT_NAME)) {
-        include "lib/main.php";
+        include(dirname(__FILE__)."/lib/main.php");
     } elseif (strstr($HTTP_SERVER_VARS['PHP_SELF'],'index.php')) {
-        include "lib/main.php";
+        include(dirname(__FILE__)."/lib/main.php");
     }
 }
-//include "lib/main.php";
+//include(dirname(__FILE__)."/lib/main.php");
 
 // $Log: not supported by cvs2svn $
+// Revision 1.141  2004/04/19 23:13:02  zorloc
+// Connect the rest of PhpWiki to the IniConfig system.  Also the keyword regular expression is not a config setting
+//
 // Revision 1.140  2004/04/12 18:29:12  rurban
 // exp. Session auth for already authenticated users from another app
 //
