@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.33 2002-02-19 22:59:37 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.34 2002-02-20 00:11:37 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -219,11 +219,11 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
         $args = array();
 
     $args['CONTENT'] = $content;
-    $args['TITLE'] = $title;
+    $args['TITLE'] = split_pagename($title);
     $args['revision'] = $page_revision;
     
     if (!isset($args['HEADER']))
-        $args['HEADER'] = $title;
+        $args['HEADER'] = split_pagename($title);
     
     global $HIDE_TOOLBARS;
     $HIDE_TOOLBARS = true;
