@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.22 2002-02-08 22:03:01 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.23 2003-03-24 22:57:20 dairiki Exp $');
 
 /**
  * WikiWiki Hawaiian theme for PhpWiki.
@@ -76,7 +76,7 @@ $Theme->setAutosplitWikiWords(true);
  * Do not include the server's zone (%Z), times are converted to the
  * user's time zone.
  */
-//$Theme->setDateFormat("%B %e, %Y");	    // must not contain time
+//$Theme->setDateFormat("%B %d, %Y");	    // must not contain time
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
