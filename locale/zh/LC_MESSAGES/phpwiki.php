@@ -1624,8 +1624,6 @@ $locale["You must specify a directory to dump to"] =
    "你必須指定目錄以進行傾印";
 $locale["Your E-Mail:"] =
    "你的 E-Mail:";
-$locale["Your access permissions are only for a BogoUser.\n"] =
-   "你的存取權限只能給 BogoUser. \n";
 $locale["Your browser should have redirected you to %s."] =
    "你的瀏覽器應該會重導向到 %s.";
 $locale["Your careful attention to detail is much appreciated."] =
