@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.8.2.1 2001-02-15 21:25:02 dairiki Exp $ -->
+<!-- $Id: editpage.php,v 1.8.2.2 2001-02-27 23:16:12 dairiki Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -36,7 +36,7 @@
 	 ExitWiki ("");
       }
 
-      $textarea = implode("\n", $pagehash["content"]);
+      $textarea = htmlspecialchars(implode("\n", $pagehash["content"]));
       if (isset($copy)) {
 	 // $cdbi = OpenDataBase($WikiPageStore);
 	 $currentpage = RetrievePage($dbi, $pagename, $WikiPageStore);
