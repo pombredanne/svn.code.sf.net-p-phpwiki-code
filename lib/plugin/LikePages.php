@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LikePages.php,v 1.13 2002-01-28 01:01:27 dairiki Exp $');
+rcs_id('$Id: LikePages.php,v 1.14 2002-01-30 18:28:37 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -18,21 +18,21 @@ extends WikiPlugin
     }
     
     function getDefaultArguments() {
-        // FIXME: how to exclude multiple pages?
-        return array('page'	=> '[pagename]',
+        return array('pagename'	=> '[pagename]',
                      'prefix'	=> false,
                      'suffix'	=> false,
-                     'exclude'	=> false,
+                     'exclude'	=> '',
                      'noheader'	=> false,
-                     'info'     => false
+                     'info'     => ''
                      );
     }
     // info arg allows multiple columns info=mtime,hits,summary,version,author,locked,minor
+    // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        if (empty($page) && empty($prefix) && empty($suffix))
+        if (empty($pagename) && empty($prefix) && empty($suffix))
             return '';
 
         
@@ -43,17 +43,16 @@ extends WikiPlugin
         elseif ($suffix) {
             $descrip = fmt("Page names with suffix '%s'", $suffix);
         }
-        elseif ($page) {
+        elseif ($pagename) {
             $words = preg_split('/[\s:-;.,]+/',
-                                split_pagename($page));
+                                split_pagename($pagename));
             $words = preg_grep('/\S/', $words);
             
             $prefix = reset($words);
             $suffix = end($words);
-            $exclude = $page;
-            
+
             $descrip = fmt("These pages share an initial or final title word with '%s'",
-                           LinkWikiWord($page));
+                           LinkWikiWord($pagename));
         }
 
         // Search for pages containing either the suffix or the prefix.
@@ -74,18 +73,22 @@ extends WikiPlugin
         
         $match_re = '/' . join('|', $match) . '/';
 
-        $pages = $dbi->titleSearch($query);
         $pagelist = new PageList;
 
         if ($info)
             foreach (explode(",", $info) as $col)
                 $pagelist->insertColumn($col);
 
+        $pagelist->excludePageName($pagename);
+        if ($exclude)
+            foreach (explode(",", $exclude) as $excludepage)
+                $pagelist->excludePageName($excludepage);
+
+        $pages = $dbi->titleSearch($query);
+
         while ($page = $pages->next()) {
             $name = $page->getName();
             if (!preg_match($match_re, $name))
-                continue;
-            if (!empty($exclude) && $name == $exclude)
                 continue;
 
             $pagelist->addPage($page);
