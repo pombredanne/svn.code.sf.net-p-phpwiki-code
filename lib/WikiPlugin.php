@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.3 2001-12-15 10:55:20 carstenklapp Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.4 2001-12-15 11:28:15 carstenklapp Exp $');
 
 class WikiPlugin
 {
@@ -19,7 +19,7 @@ class WikiPlugin
     }
 
     function getDescription() {
-        return $this->description;
+        return _($this->description);
     }
 
     
@@ -127,7 +127,7 @@ class WikiPlugin
                                            str_replace("'", "\\'", $args['description']));
             $attr['onmouseout'] = "window.status='';return true;";
         }
-        return QElement('a', $attr, $args['linktext']);
+        return QElement('a', $attr, _($args['linktext']));
     }
 
     function getDefaultFormArguments() {
