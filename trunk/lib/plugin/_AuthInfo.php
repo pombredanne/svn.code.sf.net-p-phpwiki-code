@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.11 2004-03-12 11:18:25 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.12 2004-03-12 15:48:08 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -23,6 +23,8 @@ rcs_id('$Id: _AuthInfo.php,v 1.11 2004-03-12 11:18:25 rurban Exp $');
 require_once('lib/Template.php');
 /**
  * Used to debug auth problems and settings.
+ * This plugin is only testing purposes. 
+ * if DEBUG is false, only admin can call it, which is of no real use.
  *
  * Warning! This may display db and user passwords in cleartext.
  */
@@ -39,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -54,6 +56,10 @@ extends WikiPlugin
             $userid = $user->UserName();
         } else {
             $user = WikiUser($userid);
+        }
+        if (!$user->isAdmin() and !DEBUG) {
+            $request->_notAuthorized(WIKIAUTH_ADMIN);
+            $this->disabled("! user->isAdmin");
         }
 
         $html = HTML(HTML::h3(fmt("General Auth Settings")));
@@ -184,6 +190,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/03/12 11:18:25  rurban
+// fixed ->membership chache
+//
 // Revision 1.10  2004/03/10 13:54:53  rurban
 // adodb WikiGroup fix
 //
