@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.6 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.7 2003-02-22 20:49:56 dairiki Exp $');
 /**
  * Plugin to allow any user to adjust his own preferences.
  * This must be used in the page "UserPreferences" or in a subpage of a
@@ -95,7 +95,7 @@ extends WikiPlugin
 
             return Template('userprefs', $args);
         } else {
-            return $user->PrintLoginForm (&$request, $args, false, false);
+            return $user->PrintLoginForm ($request, $args, false, false);
         }
     }
 };

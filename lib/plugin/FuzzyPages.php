@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FuzzyPages.php,v 1.9 2003-01-18 21:41:02 carstenklapp Exp $');
+rcs_id('$Id: FuzzyPages.php,v 1.10 2003-02-22 20:49:55 dairiki Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -58,14 +58,14 @@ extends WikiPlugin
     function spelling_similarity($subject) {
         $spelling_similarity_score = 0;
         similar_text($subject, $this->_searchterm,
-                     &$spelling_similarity_score);
+                     $spelling_similarity_score);
         return $spelling_similarity_score;
     }
 
     function sound_similarity($subject) {
         $sound_similarity_score = 0;
         similar_text(metaphone($subject), $this->_searchterm_metaphone,
-                     &$sound_similarity_score);
+                     $sound_similarity_score);
         return $sound_similarity_score;
     }
 
@@ -86,13 +86,12 @@ extends WikiPlugin
             $pagename = $pagehandle->getName();
             $similarity_score = $this->averageSimilarities($pagename);
             if ($similarity_score > MIN_SCORE_CUTOFF)
-                $list = array_merge($list,
-                                    array($pagename => $similarity_score));
+                $list[$pagename] = $similarity_score;
         }
     }
 
     function sortCollectedPages(&$list) {
-        array_multisort(&$list, SORT_NUMERIC, SORT_DESC);
+        arsort($list, SORT_NUMERIC);
     }
 
     function addTableCaption(&$table, &$dbi) {
@@ -140,7 +139,7 @@ extends WikiPlugin
                                    'cellspacing' => 1,
                                    'border'      => 0,
                                    'class' => 'pagelist'));
-        $this->addTableCaption($table, &$dbi);
+        $this->addTableCaption($table, $dbi);
         $this->addTableHead($table);
         $this->addTableBody($list, $table);
         return $table;
@@ -157,11 +156,11 @@ extends WikiPlugin
         $this->_searchterm = $s;
         $this->_list = array();
 
-        $this->collectSimilarPages($this->_list, &$dbi);
+        $this->collectSimilarPages($this->_list, $dbi);
 
         $this->sortCollectedPages($this->_list);
 
-        return $this->formatTable($this->_list, &$dbi);
+        return $this->formatTable($this->_list, $dbi);
     }
 
 
@@ -187,6 +186,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2003/01/18 21:41:02  carstenklapp
+// Code cleanup:
+// Reformatting & tabs to spaces;
+// Added copyleft, getVersion, getDescription, rcs_id.
+//
 
 // Local Variables:
 // mode: php

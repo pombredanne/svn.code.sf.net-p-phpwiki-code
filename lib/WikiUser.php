@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.36 2003-02-21 22:50:51 dairiki Exp $');
+rcs_id('$Id: WikiUser.php,v 1.37 2003-02-22 20:49:55 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -366,7 +366,7 @@ class WikiUser {
                               'versiondata' => array('author' => $this->_userid),
                               'pagename' => $this->_userid,
                               'content' => _('CategoryHomepage'));
-            SavePage (&$this->_request, $pageinfo, false, false);
+            SavePage ($this->_request, $pageinfo, false, false);
         }
         $this->setPreferences($pref);
     }
@@ -384,7 +384,7 @@ class WikiUser {
                           'versiondata' => array('author' => $this->_userid),
                           'pagename' => $pagename,
                           'content' => $text);
-        SavePage (&$this->_request, $pageinfo, false, false);
+        SavePage ($this->_request, $pageinfo, false, false);
 
         // create Calender
         $pagename = $this->_userid . SUBPAGE_SEPARATOR . _('Preferences');
@@ -393,7 +393,7 @@ class WikiUser {
                               'versiondata' => array('author' => $this->_userid),
                               'pagename' => $pagename,
                               'content' => "<?plugin Calender ?>\n");
-            SavePage (&$this->_request, $pageinfo, false, false);
+            SavePage ($this->_request, $pageinfo, false, false);
         }
 
         // create Preferences
@@ -403,7 +403,7 @@ class WikiUser {
                               'versiondata' => array('author' => $this->_userid),
                               'pagename' => $pagename,
                               'content' => "<?plugin UserPreferences ?>\n");
-            SavePage (&$this->_request, $pageinfo, false, false);
+            SavePage ($this->_request, $pageinfo, false, false);
         }
     }
 
@@ -646,6 +646,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2003/02/21 22:50:51  dairiki
+// Ensure that language preference is a string.
+//
 // Revision 1.35  2003/02/16 20:04:47  dairiki
 // Refactor the HTTP validator generation/checking code.
 //

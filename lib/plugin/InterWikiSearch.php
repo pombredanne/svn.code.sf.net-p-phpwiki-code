@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: InterWikiSearch.php,v 1.1 2003-01-31 22:56:21 carstenklapp Exp $');
+rcs_id('$Id: InterWikiSearch.php,v 1.2 2003-02-22 20:49:56 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -80,8 +80,8 @@ extends interWikiMapPageType
 
                 $w = new WikiPluginLoader;
                 $p = $w->getPlugin('ExternalSearch');
-                $argstr = "url=" . $moniker; // is this the right way to pass args to a plugin?
-                $searchtd = HTML::td($p->run(&$dbi, &$argstr, &$request));
+                $argstr = sprintf('url="%s"', addslashes($moniker));
+                $searchtd = HTML::td($p->run($dbi, $argstr, $request));
 
                 $tbody->pushContent(HTML::tr($monikertd, $searchtd));
             }
@@ -96,6 +96,9 @@ extends interWikiMapPageType
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2003/01/31 22:56:21  carstenklapp
+// New plugin which provides entry forms to search any site listed in the InterWikiMap.
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

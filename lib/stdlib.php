@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.140 2003-02-21 23:33:29 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.141 2003-02-22 20:49:55 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -988,8 +988,8 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
             $f = $list[$i];
             if (preg_match('/[\?\*]/',$f)) {
             	reset($allnames);
-            	$expand = new ListRegexExpand(&$list, $glob_style ? glob_to_pcre($f) : $f, $case_sensitive);
-            	$expand->expandRegex($i, &$allnames);
+            	$expand = new ListRegexExpand($list, $glob_style ? glob_to_pcre($f) : $f, $case_sensitive);
+            	$expand->expandRegex($i, $allnames);
             }
         }
     }
@@ -1006,7 +1006,7 @@ function explodePageList($input, $perm = false) {
         while ($pagehandle = $allPagehandles->next()) {
             $allPages[] = $pagehandle->getName();
         }
-        return explodeList($input, &$allPages);
+        return explodeList($input, $allPages);
     } else {
         return explode(',',$input);
     }
@@ -1172,6 +1172,10 @@ class Alert {
                       
         
 // $Log: not supported by cvs2svn $
+// Revision 1.140  2003/02/21 23:33:29  dairiki
+// Set alt="" on the link icon image tags.
+// (See SF bug #675141.)
+//
 // Revision 1.139  2003/02/21 22:16:27  dairiki
 // Get rid of MakeWikiForm, and form-style MagicPhpWikiURLs.
 // These have been obsolete for quite awhile (I hope).

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.4 2003-02-21 23:01:09 dairiki Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.5 2003-02-22 20:49:55 dairiki Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -674,7 +674,7 @@ class WikiPluginCached extends WikiPlugin
         }
 
         
-        if (!WikiPluginCached::produceImage(&$content, $plugin, $dbi, $argarray, $request, $errorformat) ) return false;
+        if (!WikiPluginCached::produceImage($content, $plugin, $dbi, $argarray, $request, $errorformat) ) return false;
 
         $expire = $plugin->getExpire($dbi,$argarray,$request);
 
