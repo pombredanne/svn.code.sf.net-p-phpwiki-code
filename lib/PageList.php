@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.126 2004-12-16 18:26:57 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.127 2004-12-26 17:19:28 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -129,7 +129,7 @@ class _PageList_Column_base {
             if ($request->getArg('sortby')) {
                 if ($pagelist->sortby($colNum, 'check')) { // show icon?
                     $sortby = $pagelist->sortby($request->getArg('sortby'), 'flip_order');
-                    $request->setArg('sortby', $sortby);
+                    //$request->setArg('sortby', $sortby);
                     $desc = (substr($sortby,0,1) == '-'); // asc or desc? (+pagename, -pagename)
                     $src = $WikiTheme->getButtonURL($desc ? 'asc_order' : 'desc_order');
                 } else {
@@ -1135,6 +1135,8 @@ class PageList {
         $request = &$GLOBALS['request'];
         $pagename = $request->getArg('pagename');
         $defargs = $request->args;
+        if (USE_PATH_INFO) unset($defargs['pagename']);
+        if ($defargs['action'] == 'browse') unset($defargs['action']);
         $prev = $defargs;
 
         $tokens = array();
@@ -1146,7 +1148,7 @@ class PageList {
         $tokens['NUMPAGES'] = (int)($numrows / $pagesize)+1;
         $tokens['ACTPAGE'] = (int) (($offset+1) / $pagesize)+1;
         if ($offset > 0) {
-            $prev['limit'] = min(0,$offset - $pagesize) . ",$pagesize";
+            $prev['limit'] = min(0, $offset - $pagesize) . ",$pagesize";
             $prev['count'] = $numrows;
             $tokens['LIMIT'] = $prev['limit'];
             $tokens['PREV'] = true;
@@ -1440,6 +1442,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.126  2004/12/16 18:26:57  rurban
+// Avoid double calculation
+//
 // Revision 1.125  2004/11/25 17:20:49  rurban
 // and again a couple of more native db args: backlinks
 //
