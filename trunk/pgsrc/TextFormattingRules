@@ -1,9 +1,9 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: TextFormattingRules,v 1.23 2002-01-09 05:50:18 carstenklapp Exp $
+X-RCS_ID: $Id: TextFormattingRules,v 1.24 2002-01-12 17:46:02 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=TextFormattingRules;
   flags=PAGE_LOCKED;
-  lastmodified=1008721970;
+  lastmodified=1010855917;
 Content-Transfer-Encoding: binary
 
 ! Synopsis
@@ -106,3 +106,5 @@ various kind of wiki maintainance links.
 Footnotes:
 
 [1] By using [[1] a second time (in the first column) the footnote itself is ''defined''.  You may refer to a footnote as many times as you want, but you may only define it once on the page.  Note the the [[1] in the footnote links back to the first reference, if there are multiple references there will be +'s after the [[1] which will link to the other references.  (References which come ''after'' the footnote ''definition'' will not be linked to.)
+----
+PhpWikiDocumentation
