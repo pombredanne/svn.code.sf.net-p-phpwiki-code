@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.46 2003-12-11 00:57:29 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.47 2004-01-25 07:58:29 rurban Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -321,6 +321,26 @@ class PageList {
 
     function isEmpty () {
         return empty($this->_rows);
+    }
+
+    // $action = flip_order, db
+    function sortby ($string, $action) {
+        $order = '+';
+        if (substr($string,0,1) == '+') {
+            $order = '+'; $string = substr($string,1);
+        } elseif (substr($string,0,1) == '-') {
+            $order = '-'; $string = substr($string,1);
+        }
+        if (in_array($string,array('pagename','mtime','hits'))) {
+            // Todo: multiple comma-delimited sortby args: "+hits,+pagename"
+            // asc or desc: +pagename, -pagename
+            if ($action == 'flip_order') {
+                return ($order == '+' ? '-' : '+') . $string;
+            } elseif ($action == 'db') {
+                return $string . ($order == '+' ? ' ASC' : ' DESC');
+            }
+        }
+        return '';
     }
 
     function addPage ($page_handle) {

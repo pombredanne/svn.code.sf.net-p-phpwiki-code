@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.17 2003-02-27 20:10:30 dairiki Exp $');
+rcs_id('$Id: AllPages.php,v 1.18 2004-01-25 07:58:30 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -57,10 +57,14 @@ extends WikiPlugin
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
         // Todo: extend given _GET args
-        if ($sortby)
+        if ($sorted = $request->getArg('sortby'))
+            $sortby = $sorted;
+        elseif ($sortby)
             $request->setArg('sortby',$sortby);
 
-        $pagelist = new PageList($info, $exclude);
+        $pagelist = new PageList($info, $exclude, $this->getArgs($argstr, $request));
+        if ($sortby) $sorted = $pagelist->sortby($sortby,'db');
+        else $sorted='pagename';
         if (!$noheader)
             $pagelist->setCaption(_("Pages in this wiki (%d total):"));
 
@@ -68,9 +72,10 @@ extends WikiPlugin
         if ($include_empty)
             $pagelist->_addColumn('version');
 
-        $timer = new DebugTimer;
-
-        $pagelist->addPages( $dbi->getAllPages($include_empty) );
+        if (defined('DEBUG') and DEBUG)
+            $timer = new DebugTimer;
+        //handle $sortby
+        $pagelist->addPages( $dbi->getAllPages($include_empty, $sorted) );
 
         if (defined('DEBUG') and DEBUG) {
             return HTML($pagelist,
@@ -87,6 +92,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2003/02/27 20:10:30  dairiki
+// Disable profiling output when DEBUG is defined but false.
+//
 // Revision 1.16  2003/02/21 04:08:26  dairiki
 // New class DebugTimer in prepend.php to help report timing.
 //
