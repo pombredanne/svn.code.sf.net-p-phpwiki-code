@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.2.4\n"
-"POT-Creation-Date: 2002-02-07 17:30-0500\n"
+"POT-Creation-Date: 2002-02-07 19:52-0500\n"
 "PO-Revision-Date: 2001-09-24 00:00+0000\n"
 "Last-Translator: Stéphane Gourichon <stephane.gourichon@lip6.fr>, Pascal "
 "<pascal@phpfrance.com>\n"
@@ -878,6 +878,29 @@ msgstr "Résultat de recherche sur les titres de pages pour ' %s '"
 msgid "UserPreferences"
 msgstr "PréférencesUtilisateurs"
 
+#: ../lib/plugin/WikiForm.php:12
+msgid "WikiForm"
+msgstr ""
+
+#: ../lib/plugin/WikiForm.php:43
+msgid "Load File"
+msgstr ""
+
+#: ../lib/plugin/WikiForm.php:50
+#, fuzzy
+msgid "Dump Pages"
+msgstr "Toutes les Pages"
+
+#: ../lib/plugin/WikiForm.php:60
+#, fuzzy
+msgid "Upload"
+msgstr "Télécharger %s"
+
+#: ../lib/plugin/WikiForm.php:63
+#, c-format
+msgid "WikiForm: %s: unknown action"
+msgstr ""
+
 #: ../lib/removepage.php:16
 msgid "Request Cancelled!"
 msgstr ""
@@ -926,47 +949,47 @@ msgstr "Page ' %s ' supprimée avec succès."
 msgid "Remove page"
 msgstr "Supprimer la page"
 
-#: ../lib/stdlib.php:90 ../lib/stdlib.php:106
+#: ../lib/stdlib.php:91 ../lib/stdlib.php:107
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:171
+#: ../lib/stdlib.php:172
 msgid "BAD phpwiki: URL"
 msgstr ""
 
-#: ../lib/stdlib.php:208
+#: ../lib/stdlib.php:209
 msgid "Lock page to enable link"
 msgstr "Verrouillez la page pour permettre le lien"
 
-#: ../lib/stdlib.php:345
+#: ../lib/stdlib.php:406
 msgid "Revision Not Found"
 msgstr ""
 
-#: ../lib/stdlib.php:346
+#: ../lib/stdlib.php:407
 #, c-format
 msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr "I'm sorry.  Version %d of %s n'est pas dans la base de données."
 
-#: ../lib/stdlib.php:349
+#: ../lib/stdlib.php:410
 msgid "Bad Version"
 msgstr ""
 
-#: ../lib/XmlElement.php:333 ../lib/stdlib.php:532
+#: ../lib/XmlElement.php:333 ../lib/stdlib.php:593
 #, c-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
 
-#: ../lib/stdlib.php:541
+#: ../lib/stdlib.php:602
 #, c-format
 msgid "%s: argument index out of range"
 msgstr ""
 
-#: ../lib/stdlib.php:575 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:636 ../themes/Hawaiian/lib/random.php:20
 #, c-format
 msgid "%s is empty."
 msgstr ""
 
-#: ../lib/stdlib.php:582
+#: ../lib/stdlib.php:643
 #, c-format
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
@@ -1032,23 +1055,23 @@ msgstr "Supprimer la Page"
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Limites de la piles ont été dépassées dans SetHTMLOutputMode"
 
-#: ../lib/WikiDB.php:505
+#: ../lib/WikiDB.php:506
 #, c-format
 msgid "%s: Date of new revision is %s"
 msgstr ""
 
-#: ../lib/WikiDB.php:532
+#: ../lib/WikiDB.php:533
 #, c-format
 msgid "Optimizing %s"
 msgstr "Optimalisant %s"
 
 # lib/display.php:31 lib/editpage.php:50
-#: ../lib/WikiDB.php:878
+#: ../lib/WikiDB.php:879
 #, c-format
 msgid "Describe %s here."
 msgstr "Décrivez %s ici."
 
-#: ../lib/WikiDB.php:913
+#: ../lib/WikiDB.php:914
 #, c-format
 msgid "Acck! Revision %s of %s seems to have been deleted!"
 msgstr ""

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.20 2002-02-03 22:25:37 carstenklapp Exp $
+# $Id: Makefile,v 1.21 2002-02-08 00:55:14 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -76,11 +76,6 @@ ${POT_FILE}: ../lib/interwiki.php
 ${POT_FILE}: ../lib/loadsave.php
 ${POT_FILE}: ../lib/main.php
 ${POT_FILE}: ../lib/PageList.php
-${POT_FILE}: ../lib/pear/DB.php
-${POT_FILE}: ../lib/pear/DB/common.php
-${POT_FILE}: ../lib/pear/DB/mysql.php
-${POT_FILE}: ../lib/pear/DB/pgsql.php
-${POT_FILE}: ../lib/pear/PEAR.php
 ${POT_FILE}: ../lib/plugin/AllPages.php
 ${POT_FILE}: ../lib/plugin/_BackendInfo.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
@@ -98,6 +93,7 @@ ${POT_FILE}: ../lib/plugin/RecentChanges.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
 ${POT_FILE}: ../lib/plugin/UserPreferences.php
+${POT_FILE}: ../lib/plugin/WikiForm.php
 ${POT_FILE}: ../lib/prepend.php
 ${POT_FILE}: ../lib/removepage.php
 ${POT_FILE}: ../lib/Request.php
