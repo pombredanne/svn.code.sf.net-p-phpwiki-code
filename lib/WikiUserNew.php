@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.60 2004-04-27 18:20:54 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.61 2004-04-29 17:18:19 zorloc Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -96,6 +96,7 @@ define('WIKIAUTH_ANON', 0);       // Not signed in.
 define('WIKIAUTH_BOGO', 1);       // Any valid WikiWord is enough.
 define('WIKIAUTH_USER', 2);       // Bogo user with a password.
 define('WIKIAUTH_ADMIN', 10);     // UserName == ADMIN_USER.
+define('WIKIAUTH_UNOBTAINABLE', 100);  // Permissions that no user can achieve
 
 if (!defined('COOKIE_EXPIRATION_DAYS')) define('COOKIE_EXPIRATION_DAYS', 365);
 if (!defined('COOKIE_DOMAIN'))          define('COOKIE_DOMAIN', '/');
@@ -2802,6 +2803,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2004/04/27 18:20:54  rurban
+// sf.net patch #940359 by rassie
+//
 // Revision 1.59  2004/04/26 12:35:21  rurban
 // POP3_AUTH_PORT deprecated, use "host:port" similar to IMAP
 // File_Passwd is already loaded

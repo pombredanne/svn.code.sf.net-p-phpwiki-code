@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.135 2004-04-26 12:15:01 rurban Exp $');
+rcs_id('$Id: main.php,v 1.136 2004-04-29 17:18:19 zorloc Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -288,7 +288,7 @@ class WikiRequest extends Request {
         // User does not have required authority.  Prompt for login.
         $what = $this->getActionDescription($this->getArg('action'));
 
-        if ($require_level == WIKIAUTH_FORBIDDEN) {
+        if ($require_level == WIKIAUTH_UNOBTAINABLE) {
             $this->finish(fmt("%s is disallowed on this wiki.",
                               $this->getDisallowedActionDescription($this->getArg('action'))));
         }
@@ -885,6 +885,9 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.135  2004/04/26 12:15:01  rurban
+// check default config values
+//
 // Revision 1.134  2004/04/23 06:46:37  zorloc
 // Leave DB connection open when USE_DB_SESSION is true so that session info can be written to the DB.
 //

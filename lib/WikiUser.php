@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.53 2004-04-10 05:34:35 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.54 2004-04-29 17:18:19 zorloc Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -15,12 +15,13 @@ rcs_id('$Id: WikiUser.php,v 1.53 2004-04-10 05:34:35 rurban Exp $');
 //       serialized string.
 //       If no homepage, fallback to prefs in cookie as in 1.3.3.
 
+define('WIKIAUTH_FORBIDDEN', -1); // Completely not allowed.
 define('WIKIAUTH_ANON', 0);
 define('WIKIAUTH_BOGO', 1);     // any valid WikiWord is enough
 define('WIKIAUTH_USER', 2);     // real auth from a database/file/server.
 
-define('WIKIAUTH_ADMIN', 10);
-define('WIKIAUTH_FORBIDDEN', 11); // Completely not allowed.
+define('WIKIAUTH_ADMIN', 10);  // Wiki Admin
+define('WIKIAUTH_UNOBTAINABLE', 100);  // Permissions that no user can achieve
 
 $UserPreferences = array(
                          'userid'        => new _UserPreference(''), // really store this also?
@@ -721,6 +722,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2004/04/10 05:34:35  rurban
+// sf bug#830912
+//
 // Revision 1.52  2004/04/10 02:55:48  rurban
 // fixed old WikiUser
 //
