@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.18 2002-01-19 20:38:09 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.19 2002-01-24 01:01:58 dairiki Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -28,7 +28,9 @@ $Theme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
  * is not defined by index.php or in here then the "Thank you for
  * editing..." screen will be omitted.
  */
-//$Theme->addImageAlias('signature', 'signature.png');
+
+// Comment this next line out to enable signature.
+$Theme->addImageAlias('signature', false);
 
 /*
  * Link icons.
