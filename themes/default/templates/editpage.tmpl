@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.40 2004-04-08 01:22:54 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.41 2004-04-13 08:29:08 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -62,6 +62,7 @@ $s = $Theme->getButtonSeparator();
   <?php if (isset($JS_SEARCHREPLACE)) { ?>
   <span id="search-replace">
     <?php /*TODO: use image icons here instead of text */ ?>
+    <?php /*TODO: replace this with Template('toolbar') */ ?>
     <input class="gridbutton" name="rck" type="button" value="(<?= _("Undo") ?>)" onfocus="if(this.blur && pretxt_anzahl==0) this.blur()" onclick="rueck()"><input class="gridbutton" type="button" value="<?= _("Redo") ?>" onclick="speich()">
     <input type="button" class="gridbutton" value="<?=_("Search & Replace")?>" onclick="replace()">
   </span>
@@ -71,7 +72,7 @@ $s = $Theme->getButtonSeparator();
     <b><?=_("W")?></b> <?=$WidthI?>
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
   </div>
-  <a name="editarea" id="editarea"><?=$EDIT_TEXTAREA?></a>
+  <a name="editarea"></a><?=$EDIT_TEXTAREA?>
 
 <!-- FIXME: fix layout, move CSS to CSS -->
 <div class="toolbar" style="text-align: center;">
