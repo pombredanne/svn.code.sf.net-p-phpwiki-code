@@ -43,6 +43,7 @@ ini_set('include_path', ini_get('include_path') . $ini_sep . $rootdir);
 
 # This quiets a warning in config.php
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
+$HTTP_SERVER_VARS['HTTP_USER_AGENT'] = "PHPUnit";
 define('GROUP_METHOD', 'NONE');
 
 # Other needed files
