@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: wiki_mysql.php3,v 1.14 2000-08-29 02:37:42 aredridel Exp $');
+<?php rcs_id('$Id: wiki_mysql.php3,v 1.15 2000-09-20 19:26:36 ahollosi Exp $');
 
    /*
       Database functions:
@@ -9,6 +9,7 @@
       InsertPage($dbi, $pagename, $pagehash)
       SaveCopyToArchive($dbi, $pagename, $pagehash) 
       IsWikiPage($dbi, $pagename)
+      IsInArchive($dbi, $pagename)
       InitTitleSearch($dbi, $search)
       TitleSearchNextMatch($dbi, &$pos)
       InitFullSearch($dbi, $search)
@@ -20,7 +21,6 @@
       GetAllWikiPageNames($dbi)
 
    */
-
 
    // open a database and return the handle
    // ignores MAX_DBM_ATTEMPTS
@@ -38,7 +38,6 @@
 	 echo "MySQL error: ", mysql_error(), "<br>\n";
          exit();
       }
-
       $dbi['dbc'] = $dbc;
       $dbi['table'] = $dbname;
       return $dbi;
@@ -77,7 +76,7 @@
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename, $pagestore) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select * from $dbi[$pagestore] where pagename='$pagename'", $dbi['dbc'])) {
+      if ($res = mysql_query("select * from $pagestore where pagename='$pagename'", $dbi['dbc'])) {
          if ($dbhash = mysql_fetch_array($res)) {
             return MakePageHash($dbhash);
          }
@@ -99,7 +98,6 @@
                  "$pagehash[lastmodified], '$pagehash[pagename]', " .
                  "'$pagehash[refs]', $pagehash[version]";
 
-
       if (!mysql_query("replace into $dbi[table] ($COLUMNS) values ($VALUES)",
       			$dbi['dbc'])) {
             echo "error writing page '$pagename' ";
@@ -114,8 +112,7 @@
       global $ArchivePageStore;
 
       $adbi = OpenDataBase($ArchivePageStore);
-      $newpagename = $pagename; // what the hell does this do?
-      InsertPage($adbi, $newpagename, $pagehash);
+      InsertPage($adbi, $pagename, $pagehash);
    }
 
 
@@ -124,6 +121,17 @@
       if ($res = mysql_query("select count(*) from $dbi[table] where pagename='$pagename'", $dbi['dbc'])) {
          return(mysql_result($res, 0));
       }
+      return 0;
+   }
+
+   function IsInArchive($dbi, $pagename) {
+      global $ArchivePageStore;
+
+      $pagename = addslashes($pagename);
+      if ($res = mysql_query("select count(*) from $ArchivePageStore where pagename='$pagename'", $dbi['dbc'])) {
+         return(mysql_result($res, 0));
+      }
+      return 0;
    }
 
 
