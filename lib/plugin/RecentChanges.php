@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.91 2004-04-19 18:27:46 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.92 2004-04-21 04:29:10 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -247,6 +247,8 @@ extends _RecentChanges_Formatter
             } else
                 $desc = fmt("All %s are listed below.", $edits);
         }
+        if (isset($this->_args['page'])) // RelatedChanges
+            return HTML::p(false, $desc, HTML::br(), fmt("(to pages linked from \"%s\")",$this->_args['page']));
         return HTML::p(false, $desc);
     }
 
@@ -643,9 +645,6 @@ class NonDeletedRevisionIterator extends WikiDB_PageRevisionIterator
         return false;
     }
 
-    function free () {
-        $this->_revisions->free();
-    }
 }
 
 class WikiPlugin_RecentChanges
@@ -657,7 +656,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.91 $");
+                            "\$Revision: 1.92 $");
     }
 
     function managesValidators() {
@@ -715,7 +714,6 @@ extends WikiPlugin
         $params = array('include_minor_revisions' => $show_minor,
                         'exclude_major_revisions' => !$show_major,
                         'include_all_revisions' => !empty($show_all));
-
         if ($limit != 0)
             $params['limit'] = $limit;
 
@@ -723,7 +721,6 @@ extends WikiPlugin
             $params['since'] = time() - 24 * 3600 * $days;
         elseif ($days < 0.0)
             $params['since'] = 24 * 3600 * $days - time();
-
 
         return $params;
     }
@@ -842,6 +839,12 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.91  2004/04/19 18:27:46  rurban
+// Prevent from some PHP5 warnings (ref args, no :: object init)
+//   php5 runs now through, just one wrong XmlElement object init missing
+// Removed unneccesary UpgradeUser lines
+// Changed WikiLink to omit version if current (RecentChanges)
+//
 // Revision 1.90  2004/04/18 01:11:52  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.
