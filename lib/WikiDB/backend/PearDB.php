@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.28 2002-09-12 11:45:33 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.29 2003-02-22 00:28:34 dairiki Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -343,7 +343,7 @@ extends WikiDB_backend
         extract($this->_table_names);
         
         $this->lock();
-        if ( ($id = $this->_get_pageid($pagename, 'id')) ) {
+        if ( ($id = $this->_get_pageid($pagename, false)) ) {
             $dbh->query("DELETE FROM $version_tbl  WHERE id=$id");
             $dbh->query("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id");

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.21 2003-02-21 04:26:55 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.22 2003-02-22 00:28:32 dairiki Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -214,7 +214,6 @@ class WikiDB {
      */
     function deletePage($pagename) {
         $this->_cache->delete_page($pagename);
-        $this->_backend->set_links($pagename, false);
     }
 
     /**

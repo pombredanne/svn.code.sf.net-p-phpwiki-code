@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.8 2002-09-12 11:45:33 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.9 2003-02-22 00:28:34 dairiki Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -423,7 +423,7 @@ extends WikiDB_backend
         extract($this->_table_names);
         
         $this->lock();
-        if ( ($id = $this->_get_pageid($pagename, 'id')) ) {
+        if ( ($id = $this->_get_pageid($pagename, false)) ) {
             $dbh->Execute("DELETE FROM $version_tbl  WHERE id=$id");
             $dbh->Execute("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id");
