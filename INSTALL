@@ -32,7 +32,8 @@ or .htaccess
 
 QUICK START INSTRUCTIONS
 
-Look at 'index.php' and edit the settings there to your liking.
+Copy 'config/config-dist.ini' to 'config/config.ini' and edit the 
+settings in 'config/config.ini' to your liking.
 
 By default PhpWiki is configured to use a flatfile database. If there
 is no dbm on your system, you will see an error like this the first
@@ -43,7 +44,7 @@ time you try to use PhpWiki:
 
 To correct this you will have to install a dbm package or preferably
 an sql-compatible database such as MySQL or PostgreSQL and make the
-necessary configuration changes to index.php.
+necessary configuration changes to 'config/config.ini'.
 
 
 
@@ -63,7 +64,8 @@ live. That's it.
 bash$ gzip -d phpwiki-X.XX.tar.gz
 bash$ tar -xvf phpwiki-X.XX.tar
 
-Look at 'index.php' and edit the settings there to your liking.
+In the config subdirectory copy 'config-dist.ini' to 'config.ini' and 
+edit the settings in 'config.ini' to your liking.
 
 
 1. CONFIGURATION
@@ -77,7 +79,7 @@ of the live site, archived pages, and some additional information.
 
 If you don't want the DBM files to live in '/tmp' you must make sure
 the web server can read/write to your chosen location.  It's probably
-a bad idea to leave it in '/tmp', so change it in 'index.php'.
+a bad idea to leave it in '/tmp', so change it in 'config/config.ini'.
 
 WARNING: on many systems, files in '/tmp' are subject to periodic
          removal. We very strongly advise you to move the files to
@@ -151,4 +153,4 @@ You can join this list at:
 
 FIN
 
-$Id: INSTALL,v 1.19 2004-04-10 04:03:57 rurban Exp $
+$Id: INSTALL,v 1.20 2004-04-20 22:45:39 zorloc Exp $
