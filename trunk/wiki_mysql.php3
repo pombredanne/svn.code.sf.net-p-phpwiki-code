@@ -1,4 +1,4 @@
-<!-- $Id: wiki_mysql.php3,v 1.10 2000-07-04 21:18:09 ahollosi Exp $ -->
+<!-- $Id: wiki_mysql.php3,v 1.11 2000-07-07 02:44:59 wainstead Exp $ -->
 <?
 
    /*
@@ -102,7 +102,8 @@
 
       if (!mysql_query("replace into $dbi[table] ($COLUMNS) values ($VALUES)",
       			$dbi['dbc'])) {
-            echo "error writing page '$pagename'";
+            echo "error writing page '$pagename' ";
+	    echo mysql_error();
             exit();
       }
    }
