@@ -1,5 +1,26 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.18 2002-02-09 20:20:38 dairiki Exp $');
+rcs_id('$Id: IncludePage.php,v 1.19 2002-03-02 05:40:33 carstenklapp Exp $');
+/*
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+
 /**
  * IncludePage:  include text from another wiki page in this one
  * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
@@ -19,7 +40,8 @@ extends WikiPlugin
                       'quiet'   => false, // if set, inclusion appears as normal content
                       'words'   => false, // maximum number of words to include
                       'lines'   => false, // maximum number of lines to include
-                      'section' => false  // include a named section
+                      'section' => false, // include a named section
+                      'sectionhead' => false // when including a named section show the heading
                       );
     }
 
@@ -30,7 +52,7 @@ extends WikiPlugin
             $words = explode(' ', $line);
             if ($wordcount + count($words) > $n) {
                 $new[] = implode(' ', array_slice($words, 0, $n - $wordcount))
-                    . "... (first $n words)";
+                         . "... (first $n words)";
                 return $new;
             } else {
                 $wordcount += count($words);
@@ -40,7 +62,7 @@ extends WikiPlugin
         return $new;
     }
 
-    function extractSection ($section, $content, $page, $quiet) {
+    function extractSection ($section, $content, $page, $quiet, $sectionhead) {
         $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
 
         if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
@@ -51,6 +73,8 @@ extends WikiPlugin
                        $match)) {
             // Strip trailing blanks lines and ---- <hr>s
             $text = preg_replace("/\\s*^-{4,}\\s*$/m", "", $match[2]);
+            if ($sectionhead)
+                $text = $match[1] . $section ."\n". $text;
             return explode("\n", $text);
         }
         if ($quiet)
@@ -90,18 +114,18 @@ extends WikiPlugin
         $c = $r->getContent();
 
         if ($section)
-            $c = $this->extractSection($section, $c, $page, $quiet);
+            $c = $this->extractSection($section, $c, $page, $quiet, $sectionhead);
         if ($lines)
             $c = array_slice($c, 0, $lines);
         if ($words)
             $c = $this->firstNWordsOfContent($words, $c);
 
-        
+
         array_push($included_pages, $page);
 
         include_once('lib/BlockParser.php');
         $content = TransformText(implode("\n", $c), $r->get('markup'));
-        
+
         array_pop($included_pages);
 
         if ($quiet) return $content;
@@ -109,7 +133,7 @@ extends WikiPlugin
         return HTML(HTML::p(array('class' => 'transclusion-title'),
                             fmt("Included from %s",
                                 WikiLink($page))),
-                    
+
                     HTML::div(array('class' => 'transclusion'),
                               false, $content));
     }
