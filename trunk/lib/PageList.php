@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.127 2004-12-26 17:19:28 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.128 2004-12-26 17:31:35 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1148,7 +1148,7 @@ class PageList {
         $tokens['NUMPAGES'] = (int)($numrows / $pagesize)+1;
         $tokens['ACTPAGE'] = (int) (($offset+1) / $pagesize)+1;
         if ($offset > 0) {
-            $prev['limit'] = min(0, $offset - $pagesize) . ",$pagesize";
+            $prev['limit'] = max(0, $offset - $pagesize) . ",$pagesize";
             $prev['count'] = $numrows;
             $tokens['LIMIT'] = $prev['limit'];
             $tokens['PREV'] = true;
@@ -1442,6 +1442,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.127  2004/12/26 17:19:28  rurban
+// dont break sideeffecting sortby flips on paging urls (MostPopular)
+//
 // Revision 1.126  2004/12/16 18:26:57  rurban
 // Avoid double calculation
 //
