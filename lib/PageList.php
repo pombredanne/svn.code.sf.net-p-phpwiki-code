@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.11 2002-01-21 21:06:13 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.12 2002-01-21 22:15:32 carstenklapp Exp $');
 
 // This relieves some work for these plugins:
 //
@@ -88,7 +88,9 @@ class PageList {
                      _("Date Created")    => 'left',
                      _("Creation Date")   => 'left',
                      _("# Of Revisions")  => 'right',        //FIXME: count revisions in db
+                     _("First Summary")   => 'left',
                      _("Last Summary")    => 'left',
+                     _("Summary")         => 'left',
                      _("Last Author")     => 'left',
                      _("Last Edited By")  => 'left',
                      _("Author")          => 'left',
@@ -122,7 +124,9 @@ class PageList {
                      _("Date Created")    => '_ctime',
                      _("Creation Date")   => '_ctime',
                      _("# Of Revisions")  => '',        //FIXME: count revisions in db
+                     _("First Summary")   => '_csummary',
                      _("Last Summary")    => 'summary',
+                     _("Summary")         => 'summary',
                      _("Last Author")     => 'author',
                      _("Last Edited By")  => 'author',
                      _("Author")          => '_cauthor',
@@ -154,7 +158,9 @@ class PageList {
                      _("Date Created")    => false,
                      _("Creation Date")   => false,
                      _("# Of Revisions")  => '',        //FIXME: count revisions in db
+                     _("First Summary")   => false,
                      _("Last Summary")    => true,
+                     _("Summary")         => true,
                      _("Last Author")     => true,
                      _("Last Edited By")  => true,
                      _("Author")          => true,
@@ -219,6 +225,12 @@ class PageList {
                 case '_cauthor' :
                     $revision = $page_handle->getRevision(1);
                     $td = new RawXml (LinkExistingWikiWord($revision->get('author')));
+                    break;
+                case '_csummary' :
+                    $revision = $page_handle->getRevision(1);
+                    //TODO: link WikiWords
+                    //$td = new RawXml (LinkExistingWikiWord($revision->get('summary')));
+                    $td = new RawXml ($revision->get('summary'));
                     break;
 
                 default :
