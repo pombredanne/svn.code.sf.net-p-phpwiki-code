@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.27 2003-09-13 22:43:00 carstenklapp Exp $');
+rcs_id('$Id: WikiDB.php,v 1.28 2004-01-25 07:58:30 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -234,8 +234,8 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator which contains all pages
      *     in the WikiDB which have non-default contents.
      */
-    function getAllPages($include_defaulted = false) {
-        $result = $this->_backend->get_all_pages($include_defaulted);
+    function getAllPages($include_defaulted = false, $orderby = 'pagename') {
+        $result = $this->_backend->get_all_pages($include_defaulted,$orderby);
         return new WikiDB_PageIterator($this, $result);
     }
 

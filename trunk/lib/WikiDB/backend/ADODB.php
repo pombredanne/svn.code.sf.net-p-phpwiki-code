@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.10 2004-01-25 04:00:16 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.11 2004-01-25 08:00:45 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -493,24 +493,42 @@ extends WikiDB_backend
         $result = $dbh->Execute("SELECT $want.*"
                               . " FROM $link_tbl, $page_tbl AS linker, $page_tbl AS linkee"
                               . " WHERE linkfrom=linker.id AND linkto=linkee.id"
-                              . "  AND $have.pagename=$qpagename"
+                              . " AND $have.pagename=$qpagename"
                               //. " GROUP BY $want.id"
                               . " ORDER BY $want.pagename");
         
         return new WikiDB_backend_ADODB_iter($this, $result);
     }
 
-    function get_all_pages($include_deleted) {
+    function get_all_pages($include_deleted,$orderby) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
-        if ($include_deleted) {
-            $result = $dbh->Execute("SELECT * FROM $page_tbl ORDER BY pagename");
+        if (substr($orderby,0,5) == 'mtime') {
+            //$orderby = $version_tbl . '.' . $orderby;
+            if ($include_deleted) {
+                $result = $dbh->Execute("SELECT * FROM $page_tbl, $recent_tbl, $version_tbl"
+                                        . " WHERE $page_tbl.id=$recent_tbl.id"
+                                        . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
+                                        . " ORDER BY $orderby");
+            }
+            else {
+                $result = $dbh->Execute("SELECT $page_tbl.*"
+                                        . " FROM $nonempty_tbl, $page_tbl, $recent_tbl, $version_tbl"
+                                        . " WHERE $nonempty_tbl.id=$page_tbl.id"
+                                        . " AND $page_tbl.id=$recent_tbl.id"
+                                        . " AND $page_tbl.id=$version_tbl.id AND latestversion=version"
+                                        . " ORDER BY $orderby");
+            }
         } else {
-            $result = $dbh->Execute("SELECT $page_tbl.*"
-                                  . " FROM $nonempty_tbl, $page_tbl"
-                                  . " WHERE $nonempty_tbl.id=$page_tbl.id"
-                                  . " ORDER BY pagename");
+            if ($include_deleted) {
+                $result = $dbh->Execute("SELECT * FROM $page_tbl ORDER BY $orderby");
+            } else {
+                $result = $dbh->Execute("SELECT $page_tbl.*"
+                                        . " FROM $nonempty_tbl, $page_tbl"
+                                        . " WHERE $nonempty_tbl.id=$page_tbl.id"
+                                        . " ORDER BY $orderby");
+            }
         }
 
         return new WikiDB_backend_ADODB_iter($this, $result);
