@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.195 2004-06-29 08:52:22 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.196 2004-07-01 08:51:22 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -628,6 +628,10 @@ class WikiPageName
  * @bugs Footnotes don't work quite as before (esp if there are
  *   multiple references to the same footnote.  But close enough,
  *   probably for now....
+ * @bugs  Apache2 and IIS crash with OldTextFormattingRules or
+ *   AnciennesR%E8glesDeFormatage. ( at the 2nd attempt to do the anchored block regex )
+ *   It only crashes with CreateToc so far, but other pages (not in pgsrc) are 
+ *   also known to crash, even with Apache1.
  */
 function ConvertOldMarkup ($text, $markup_type = "block") {
 
@@ -637,11 +641,13 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
     // FIXME:
     // Trying to detect why the 2nd paragraph of OldTextFormattingRules or
     // AnciennesR%E8glesDeFormatage crashes. 
-    // It only crashes with CreateToc
+    // It only crashes with CreateToc so far, but other pages (not in pgsrc) are 
+    // also known to crash, even with Apache1.
     $debug_skip = false;
-    // I suspect this only to crash with Apache2 (IIS not tested)
-    if (in_array(php_sapi_name(),array('apache2handler','apache2filter')) 
-        and preg_match("/plugin CreateToc/",$text)) {
+    // I suspect this only to crash with Apache2 and IIS.
+    if (in_array(php_sapi_name(),array('apache2handler','apache2filter','isapi'))
+        and preg_match("/plugin CreateToc/", $text)) 
+    {
     	trigger_error(_("The CreateTocPlugin is not yet old markup compatible! ")
     	             ._("Please remove the CreateToc line to be able to reformat this page to old markup. ")
     	             ._("Skipped."), E_USER_WARNING);
@@ -1616,6 +1622,16 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.195  2004/06/29 08:52:22  rurban
+// Use ...version() $need_content argument in WikiDB also:
+// To reduce the memory footprint for larger sets of pagelists,
+// we don't cache the content (only true or false) and
+// we purge the pagedata (_cached_html) also.
+// _cached_html is only cached for the current pagename.
+// => Vastly improved page existance check, ACL check, ...
+//
+// Now only PagedList info=content or size needs the whole content, esp. if sortable.
+//
 // Revision 1.194  2004/06/29 06:48:04  rurban
 // Improve LDAP auth and GROUP_LDAP membership:
 //   no error message on false password,

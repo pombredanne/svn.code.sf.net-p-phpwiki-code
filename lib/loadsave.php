@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.114 2004-06-28 12:51:41 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.115 2004-07-01 08:51:22 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -280,7 +280,18 @@ function DumpToDir (&$request)
     EndLoadDump($request);
 }
 
-
+/**
+ * Dump all pages as XHTML to a directory, as pagename.html.
+ * Copies all used css files to the directory, all used images to a 
+ * "images" subdirectory, and all used buttons to a "images/buttons" subdirectory.
+ * The webserver must have write permissions to these directories. 
+ *   chown httpd HTML_DUMP_DIR; chmod u+rwx HTML_DUMP_DIR 
+ * should be enough.
+ *
+ * @param string directory (optional) path to dump to. Default: HTML_DUMP_DIR
+ * @param string pages     (optional) Comma-seperated of glob-style pagenames to dump
+ * @param string exclude   (optional) Comma-seperated of glob-style pagenames to exclude
+ */
 function DumpHtmlToDir (&$request)
 {
     $directory = $request->getArg('directory');
@@ -304,6 +315,9 @@ function DumpHtmlToDir (&$request)
     $thispage = $request->getArg('pagename'); // for "Return to ..."
 
     $dbi = $request->getDbh();
+    if ($exclude = $request->getArg('exclude')) {   // exclude which pagenames
+        $excludeList = explodePageList($exclude); 
+    }
     if ($whichpages = $request->getArg('pages')) {  // which pagenames
         if ($whichpages == '[]') // current page
             $whichpages = $thispage;
@@ -324,10 +338,19 @@ function DumpHtmlToDir (&$request)
           @set_time_limit(30); // Reset watchdog.
           
         $pagename = $page->getName();
+        PrintXML(HTML::br(), $pagename, ' ... ');
+        flush();
+
+        if (in_array($pagename, $excludeList)) {
+            PrintXML(_("Skipped."));
+            flush();
+            continue;
+        }
+
         $request->setArg('pagename', $pagename); // Template::_basepage fix
         $filename = FilenameForPage($pagename) . $WikiTheme->HTML_DUMP_SUFFIX;
 
-        $msg = HTML(HTML::br(), $pagename, ' ... ');
+        $msg = HTML();
 
         $revision = $page->getCurrentRevision();
         $transformedContent = $revision->getTransformedContent();
@@ -355,8 +378,8 @@ function DumpHtmlToDir (&$request)
         }
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num), "\n"));
         PrintXML($msg);
-
         flush();
+
         assert($num == strlen($data));
         fclose($fd);
     }
@@ -1046,6 +1069,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.114  2004/06/28 12:51:41  rurban
+ improved dumphtml and virgin setup
+
  Revision 1.113  2004/06/27 10:26:02  rurban
  oci8 patch by Philippe Vanhaesendonck + some ADODB notes+fixes
 

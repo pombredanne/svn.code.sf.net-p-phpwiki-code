@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.44 2004-06-29 08:52:22 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.45 2004-07-01 08:51:21 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -358,7 +358,7 @@ function fix_configs() {
     else
         $FieldSeparator = "\x81";
 
-    if (!defined('DEFAULT_LANGUAGE'))
+    if (!defined('DEFAULT_LANGUAGE')) // not needed anymore
         define('DEFAULT_LANGUAGE', 'en');
     update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
 
@@ -611,6 +611,16 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2004/06/29 08:52:22  rurban
+// Use ...version() $need_content argument in WikiDB also:
+// To reduce the memory footprint for larger sets of pagelists,
+// we don't cache the content (only true or false) and
+// we purge the pagedata (_cached_html) also.
+// _cached_html is only cached for the current pagename.
+// => Vastly improved page existance check, ACL check, ...
+//
+// Now only PagedList info=content or size needs the whole content, esp. if sortable.
+//
 // Revision 1.43  2004/06/29 06:48:02  rurban
 // Improve LDAP auth and GROUP_LDAP membership:
 //   no error message on false password,
