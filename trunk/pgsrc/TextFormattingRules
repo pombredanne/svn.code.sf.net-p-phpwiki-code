@@ -8,6 +8,8 @@ Content-Type: application/x-phpwiki;
   flags=PAGE_LOCKED;
 Content-Transfer-Encoding: quoted-printable
 
+! Synopsis
+
 __Emphasis:__ '____' for ''italics'', _''''_ for __bold__, '____'_''''_ =
 for ''__both__''%%%
 __Lists:__ * for bullet lists, # for numbered lists, "; term : definition" =
@@ -20,8 +22,6 @@ __Preventing linking__ Prefix with "!": !!DoNotHyperlink, name links like =
 __Misc__ "!", "!!", "!!!" make headings, "%%''''%" makes a linebreak, =
 "-''''-''''-''''-" makes a horizontal rule
 
-''[[__Note:__ the first six lines of this page will appear on the Edit =
-page.]''
 ----
 ! Paragraphs
 
