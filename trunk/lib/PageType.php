@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.21 2004-02-28 21:14:08 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.22 2004-03-12 17:32:43 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 
@@ -111,7 +111,12 @@ class PageType {
 }
 
 class PageType_wikitext extends PageType {}
+class PageType_html extends PageType {}
+
 class PageType_wikiblog extends PageType {}
+class PageType_comment extends PageType {}
+class PageType_wikiforum extends PageType {}
+
 class PageType_interwikimap extends PageType
 {
     function PageType_interwikimap() {
@@ -325,12 +330,15 @@ class FakePageRevision {
         return $this->_meta[$key];
     }
 }
-
         
-class PageFormatter_wikiblog extends PageFormatter
+class PageFormatter_attach extends PageFormatter
 {
-    // Display templated contents:
+    var $type, $prefix;
+    
+    // Display templated contents for wikiblog, comment and wikiforum
     function format($text) {
+    	if (empty($this->type))
+    	    trigger_error('PageFormatter_attach->format: $type missing');
         include_once('lib/Template.php');
         global $request;
         $tokens['CONTENT'] = $this->_transform($text);
@@ -338,37 +346,41 @@ class PageFormatter_wikiblog extends PageFormatter
         $tokens['rev'] = new FakePageRevision($this->_meta);
 
         $name = new WikiPageName($this->_page->getName());
-        $tokens['BLOG_PARENT'] = $name->getParent();
+        $tokens[$this->prefix."_PARENT"] = $name->getParent();
 
-        $blog_meta = $this->_meta['wikiblog'];
+        $meta = $this->_meta[$this->type];
         foreach(array('ctime', 'creator', 'creator_id') as $key)
-            $tokens["BLOG_" . strtoupper($key)] = $blog_meta[$key];
+            $tokens[$this->prefix . "_" . strtoupper($key)] = $meta[$key];
         
-        return new Template('wikiblog', $request, $tokens);
+        return new Template($this->type, $request, $tokens);
     }
 }
 
-class PageFormatter_wikiforum extends PageFormatter
+class PageFormatter_wikiblog extends PageFormatter_attach {
+    var $type = 'wikiblog', $prefix = "BLOG";
+}
+class PageFormatter_comment extends PageFormatter_attach {
+    var $type = 'comment', $prefix = "COMMENT";
+}
+class PageFormatter_wikiforum extends PageFormatter_attach {
+    var $type = 'wikiforum', $prefix = "FORUM";
+}
+
+/**
+ * wikiabuse for htmlarea editing. not yet used.
+ */
+class PageFormatter_html extends PageFormatter
 {
-    // Display templated contents:
+    function _transform($text) {
+	return $text;
+    }
     function format($text) {
-        include_once('lib/Template.php');
-        global $request;
-        $tokens['CONTENT'] = $this->_transform($text);
-        $tokens['page'] = $this->_page;
-        $tokens['rev'] = new FakePageRevision($this->_meta);
-
-        $name = new WikiPageName($this->_page->getName());
-        $tokens['FORUM_PARENT'] = $name->getParent();
-
-        $topic_meta = $this->_meta['wikiforum'];
-        foreach(array('ctime', 'creator', 'creator_id') as $key)
-            $tokens["FORUM_" . strtoupper($key)] = $topic_meta[$key];
-
-        return new Template('wikiforum', $request, $tokens);
+    	return $text;
     }
 }
-
+/**
+ *  FIXME. not yet used
+ */
 class PageFormatter_pdf extends PageFormatter
 {
 
@@ -394,7 +406,6 @@ class PageFormatter_pdf extends PageFormatter
         //$pdf->Output();
         //$tokens['rev'] = new FakePageRevision($this->_meta);
         //$name = new WikiPageName($this->_page->getName());
-        //$tokens['PARENT'] = $name->getParent();
 
         //TODO: define fonts, pagelayout
         $template = new Template('pdf', $request, $tokens);
