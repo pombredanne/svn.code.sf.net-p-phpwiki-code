@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.35 2001-03-07 16:45:20 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.36 2001-03-11 17:56:36 wainstead Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -101,7 +101,7 @@ else
 //
 // The problem is which locale to set?  We would like to recognize all
 // upper-case characters in the iso-8859-1 character set as upper-case
-// characters --- not just the one's which are in the current $LANG.
+// characters --- not just the ones which are in the current $LANG.
 //
 // As it turns out, at least on my system (Linux/glibc-2.2) as long as
 // you setlocale() to anything but "C" it works fine.  (I'm not sure
