@@ -1,5 +1,5 @@
 /**
- * $Id: sidebar.css,v 1.9 2002-02-12 07:18:12 carstenklapp Exp $
+ * $Id: sidebar.css,v 1.10 2002-02-12 08:53:27 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -29,8 +29,8 @@ div.wikitext {
   /* "paper" borders */
   border-top:  1px solid #e8e6df;
   border-left: 1px solid #e8e6df;
-  border-bottom: 1px inset #6d6a5c;
-  border-right:  1px inset #b3ae97;
+  border-bottom: 1px solid #b2b2b2;
+  border-right:  1px solid #b2b2b2;
 }
 
 /** some border colors
@@ -161,7 +161,12 @@ div#actionbar {
   width: 100%;
 }
 
-
+.debug {
+  position: fixed;
+  left: 1em;
+  top: 34ex;
+  width: 14.5em;
+}
 
 /*
 */
