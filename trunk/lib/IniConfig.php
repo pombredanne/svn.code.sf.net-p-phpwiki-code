@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.28 2004-06-03 20:42:49 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.29 2004-06-04 11:58:38 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -77,6 +77,7 @@ function IniConfig($file) {
     // List of all valid config options to be define()d which take booleans.
     $_IC_VALID_BOOL = array
         ('ENABLE_USER_NEW', 'ENABLE_PAGEPERM', 'ENABLE_EDIT_TOOLBAR', 'JS_SEARCHREPLACE',
+         'USE_TAGLINES',
          'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 
          'ENABLE_RAW_HTML', 'STRICT_MAILABLE_PAGEDUMPS', 'COMPRESS_OUTPUT',
          'WIKIDB_NOCACHE_MARKUP', 'ALLOW_ANON_USER', 'ALLOW_ANON_EDIT',
@@ -544,6 +545,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2004/06/03 20:42:49  rurban
+// fixed bad warning #964850
+//
 // Revision 1.27  2004/06/03 10:18:19  rurban
 // fix FileUser locking issues, new config ENABLE_PAGEPERM
 //
