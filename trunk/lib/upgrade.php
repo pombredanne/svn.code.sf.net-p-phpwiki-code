@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.35 2004-12-13 14:35:41 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.36 2004-12-20 12:56:11 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -635,8 +635,8 @@ function DoUpgrade($request) {
 
     StartLoadDump($request, _("Upgrading this PhpWiki"));
     //CheckOldIndexUpdate($request); // to upgrade from < 1.3.10
+    CheckDatabaseUpdate($request);   // first check cached_html and friends
     CheckActionPageUpdate($request);
-    CheckDatabaseUpdate($request);
     CheckPgsrcUpdate($request);
     //CheckThemeUpdate($request);
     CheckConfigUpdate($request);
@@ -646,6 +646,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.35  2004/12/13 14:35:41  rurban
+ verbose arg
+
  Revision 1.34  2004/12/11 09:39:28  rurban
  needed init for ref
 
