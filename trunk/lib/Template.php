@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.13 2002-01-05 09:25:37 carstenklapp Exp $');
+<?php rcs_id('$Id: Template.php,v 1.14 2002-01-05 10:17:07 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -246,9 +246,9 @@ extends TemplateFile
                        toolbar_Warnings_View($current->getVersion() == $revision->getVersion(),$page->getName()));
         $this->replace('IS_CURRENT',
 		       $current->getVersion() == $revision->getVersion());
-        $this->replace('EDIT_WARNINGS',
-                       toolbar_Warnings_Edit(!empty($PREVIEW_CONTENT),
-                                             $current->getVersion() == $revision->getVersion()));
+//        $this->replace('EDIT_WARNINGS',
+//                       toolbar_Warnings_Edit(!empty($PREVIEW_CONTENT),
+//                                             $current->getVersion() == $revision->getVersion()));
 	/*
         if ($previous && $previous->getVersion() != 0)
             $this->setConditional('COPY'); // FIXME: should rename HAVE_COPY?

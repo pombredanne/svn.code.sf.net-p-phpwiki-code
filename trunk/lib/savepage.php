@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.19 2001-12-28 09:53:19 carstenklapp Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.20 2002-01-05 10:17:07 carstenklapp Exp $');
 require_once('lib/Template.php');
 require_once('lib/transform.php');
 require_once('lib/ArchiveCleaner.php');
@@ -84,7 +84,13 @@ function savePreview($dbi, $request) {
     $template = new WikiTemplate('EDITPAGE');
     $template->setPageRevisionTokens($selected);
     $template->replace('FORMVARS', $formvars);
-    $template->replace('PREVIEW_CONTENT', do_transform($request->getArg('content')));
+
+    $PREVIEW_CONTENT= do_transform($request->getArg('content'));
+    $template->replace('PREVIEW_CONTENT',$PREVIEW_CONTENT);
+    $template->replace('EDIT_WARNINGS',
+                       toolbar_Warnings_Edit(!empty($PREVIEW_CONTENT),
+                                             $version == $request->getArg('editversion')));
+
     echo $template->getExpansion();
 }
 
