@@ -1,4 +1,4 @@
-<!-- $Id: wiki_diff.php3,v 1.5 2000-07-03 23:55:22 dairiki Exp $ -->
+<!-- $Id: wiki_diff.php3,v 1.6 2000-07-15 21:00:38 ahollosi Exp $ -->
 <?
 // wiki_diff.php3
 //
@@ -962,6 +962,10 @@ class WikiUnifiedDiffFormatter extends WikiDiffFormatter
 
 if ($diff)
 {
+  if (get_magic_quotes_gpc()) {
+     $diff = stripslashes($diff);
+  }
+
   $pagename = $diff;
 
   $wiki = RetrievePage($dbi, $pagename);
