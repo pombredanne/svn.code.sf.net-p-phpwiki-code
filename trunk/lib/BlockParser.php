@@ -134,8 +134,8 @@ class BlockParser {
     }
 
     function _nextBlock (&$text) {
-        if (!$text)
-            return false;
+	if (preg_match('/[^\S\n]*$/A', $text))
+	           return false;
 
         if (preg_match('/\s*\n/A', $text, $m)) {
             // A paragraph break: one or more blank lines.
@@ -151,6 +151,9 @@ class BlockParser {
 
         // We should never get here.
         list ($line1, $line2) = explode("\n", $text);
+        echo ( "Looking at:<pre>\n"
+               . htmlspecialchars("$line1\n$line2\n")
+               . "</pre><br>\n" );
         trigger_error("Couldn't match block:\n    $line1\n    $line2",
                       E_USER_ERROR);
     }
