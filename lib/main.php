@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.12 2001-04-07 00:34:30 dairiki Exp $');
+rcs_id('$Id: main.php,v 1.13 2001-04-09 19:31:49 dairiki Exp $');
 include "lib/config.php";
 include "lib/stdlib.php";
 include "lib/userauth.php";
@@ -96,12 +96,13 @@ if ($user->is_authenticated())
 // All requests require the database
 $dbi = OpenDataBase($WikiPageStore);
 
-// if there is no HomePage, create a basic set of Wiki pages
-if ( ! IsWikiPage($dbi, gettext("HomePage")) )
-{
-   include_once("lib/loadsave.php");
-   SetupWiki($dbi);
-   ExitWiki();
+if ( $action == 'browse' && $pagename == gettext("HomePage") ) {
+   // if there is no HomePage, create a basic set of Wiki pages
+   if ( ! IsWikiPage($dbi, gettext("HomePage")) ) {
+      include_once("lib/loadsave.php");
+      SetupWiki($dbi);
+      ExitWiki();
+   }
 }
 
 // FIXME: I think this is redundant.
