@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: CachedMarkup.php,v 1.3 2003-02-26 00:10:25 dairiki Exp $');
+<?php rcs_id('$Id: CachedMarkup.php,v 1.4 2003-02-26 00:39:30 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -263,6 +263,24 @@ class Cached_WikiLinkIfKnown extends Cached_WikiLink
 
     function expand($basepage) {
         return WikiLink($this->_page, 'if_known');
+    }
+}    
+    
+class Cached_PhpwikiURL extends Cached_DynamicContent
+{
+    function Cached_PhpwikiURL ($url, $label) {
+	$this->_url = $url;
+        if ($label)
+            $this->_label = $label;
+    }
+
+    function isInlineElement() {
+	return true;
+    }
+
+    function expand($basepage) {
+        $label = isset($this->_label) ? $this->_label : false;
+        return LinkPhpwikiURL($this->_url, $label, $basepage);
     }
 }    
     
