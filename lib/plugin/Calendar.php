@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.1 2001-11-10 04:56:18 dairiki Exp $');
+rcs_id('$Id: Calendar.php,v 1.2 2001-12-04 05:59:45 carstenklapp Exp $');
 
 if (!defined('SECONDS_PER_DAY'))
     define('SECONDS_PER_DAY', 24 * 3600);
@@ -20,7 +20,7 @@ if (!defined('SECONDS_PER_DAY'))
 class WikiPlugin_Calendar
 extends WikiPlugin
 {
-    var $name = 'BackLinks';
+    var $name = 'Calendar';
   
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?
