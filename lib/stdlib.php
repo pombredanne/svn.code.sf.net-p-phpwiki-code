@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.210 2004-10-14 21:06:02 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.211 2004-10-22 09:05:11 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -163,10 +163,10 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
         $args = join('&', $enc_args);
     }
 
-    if (USE_PATH_INFO or $GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX) {
+    if (USE_PATH_INFO or !empty($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX)) {
         $url = $get_abs_url ? SERVER_URL . VIRTUAL_PATH . "/" : "";
         $url .= preg_replace('/%2f/i', '/', rawurlencode($pagename));
-        if ($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX)
+        if (!empty($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX))
             $url .= $GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX;
         if ($args)
             $url .= "?$args";
@@ -1775,8 +1775,23 @@ function string_starts_with($string, $prefix) {
     return (substr($string, 0, strlen($prefix)) == $prefix);
 }
 
+/** 
+ * Ensure that the script will have another $secs time left. 
+ * Works only if safe_mode is off.
+ * For example not to timeout on waiting socket connections.
+ *   Use the socket timeout as arg.
+ */
+function longer_timeout($secs = 30) {
+    $timeout = @ini_get("max_execution_time") ? ini_get("max_execution_time") : 30;
+    $timeleft = $timeout - $GLOBALS['RUNTIMER']->getTime();
+    if ($timeleft < $secs)
+        @set_time_limit(max($timeout,(integer)($secs + $timeleft)));
+}
 
 // $Log: not supported by cvs2svn $
+// Revision 1.210  2004/10/14 21:06:02  rurban
+// fix dumphtml with USE_PATH_INFO (again). fix some PageList refs
+//
 // Revision 1.209  2004/10/14 19:19:34  rurban
 // loadsave: check if the dumped file will be accessible from outside.
 // and some other minor fixes. (cvsclient native not yet ready)
