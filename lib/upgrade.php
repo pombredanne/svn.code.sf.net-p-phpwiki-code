@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.20 2004-07-03 14:48:18 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.21 2004-07-03 16:51:05 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -48,6 +48,8 @@ rcs_id('$Id: upgrade.php,v 1.20 2004-07-03 14:48:18 rurban Exp $');
  * @author: Reini Urban
  */
 require_once("lib/loadsave.php");
+//define('DBADMIN_USER','rurban');
+//define('DBADMIN_PASSWD','');
 
 /**
  * TODO: check for the pgsrc_version number, not the revision
@@ -299,7 +301,23 @@ function CheckDatabaseUpdate(&$request) {
     global $DBParams, $DBAuthParams;
     if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
     echo "<h3>",_("check for necessary database updates"),"</h3>\n";
-    $dbh = &$request->_dbi;
+    if (defined('DBADMIN_USER')) {
+        // if need to connect as the root user, for alter permissions
+        $AdminParams = $DBParams;
+        if ($DBParams['dbtype'] == 'SQL')
+            $dsn = DB::parseDSN($AdminParams['dsn']);
+        else
+            $dsn = parseDSN($AdminParams['dsn']);
+        $AdminParams['dsn'] = sprintf("%s://%s:%s@%s/%s",
+                                      $dsn['phptype'],
+                                      DBADMIN_USER,
+                                      DBADMIN_PASSWD,
+                                      $dsn['hostspec'],
+                                      $dsn['database']);
+        $dbh = WikiDB::open($AdminParams);
+    } else {
+        $dbh = &$request->_dbi;
+    }
     $tables = $dbh->_backend->listOfTables();
     $backend_type = $dbh->_backend->backendType();
     $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
@@ -358,17 +376,18 @@ function CheckDatabaseUpdate(&$request) {
         }
         mysql_free_result($fields);
     }
-    // check for mysql 4.1.x binary search bug, fixed since 4.1.3.
-    // http://bugs.mysql.com/bug.php?id=1491
-    // not yet tested for 4.1.2alpha, but confirmed for 4.1.0alpha
+    // check for mysql 4.1.x/5.0.0a binary search bug.
+    //   related to http://bugs.mysql.com/bug.php?id=1491, but not exactly.
+    // "select * from page where LOWER(pagename) like 'search'" does not apply LOWER!
+    // confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a, not yet tested for 4.1.2alpha,
     if (substr($backend_type,0,5) == 'mysql') {
-  	echo _("check for mysql 4.1.0-2 binary search bug")," ...";
+  	echo _("check for mysql 4.1.x/5.0.0 binary search problem")," ...";
   	$result = mysql_query("SELECT VERSION()",$dbh->_backend->connection());
         $row = mysql_fetch_row($result);
         $mysql_version = $row[0];
         $arr = explode('.',$mysql_version);
         $version = (string)(($arr[0] * 100) + $arr[1]) . "." . (integer)$arr[2];
-        if ($version >= 401.0 and $version < 401.3) {
+        if ($version >= 401.0) {
             $dbh->genericQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL;");
             echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";	
         } else {
@@ -472,6 +491,11 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.20  2004/07/03 14:48:18  rurban
+ Tested new mysql 4.1.3-beta: binary search bug as fixed.
+ => fixed action=upgrade,
+ => version check in PearDB also (as in ADODB)
+
  Revision 1.19  2004/06/19 12:19:09  rurban
  slightly improved docs
 
