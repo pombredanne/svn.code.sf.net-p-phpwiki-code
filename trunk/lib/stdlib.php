@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.128 2002-10-06 16:45:10 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.129 2002-10-19 20:56:19 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -593,6 +593,7 @@ function ExtractLinks($content) {
 function ConvertOldMarkup ($text, $markup_type = "block") {
 
     static $subs;
+    static $block_re;
     
     if (empty($subs)) {
         /*****************************************************************
@@ -633,47 +634,115 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
         $orig[] = "/''(.*?)''/";
         $repl[] = '<em>\\1</em>';
 
+        // Escape nestled markup.
+        $orig[] = '/^(?<=^|\s)[=_](?=\S)|(?<=\S)[=_*](?=\s|$)/m';
+        $repl[] = '~\\0';
+        
+        // in old markup headings only allowed at beginning of line
+        $orig[] = '/!/';
+        $repl[] = '~!';
 
         $subs["inline"] = array($orig, $repl);
 
-        // Escape nestled markup. (two versions: inline & block)
-        $subs["inline"][0][] = '/^(?<=^|\s)[=_*](?=\S)|(?<=\S)[=_*](?=\s|$)/m';
-        $subs["inline"][1][] = '/~\\0/';
-        $orig[] = '/^.*?(?:(?<=^|\s)[=_*](?=\S)|(?<=\S)[=_*](?=\s|$)).*$/me';
-        $repl[] = "_EscapeNestledMarkup('\\0')";
-            
         /*****************************************************************
-         * Conversions for block markup
+         * Patterns which match block markup constructs which take
+         * special handling...
          */
-        // convert indented blocks to <pre></pre>.
-        $orig[] = '/^[ \t]+\S.*\n(?:(?:\s*\n)?^[ \t]+\S.*\n)*/m';
-        $repl[] = "<pre>\n\\0</pre>\n";
 
-        // convert tables
-        $orig[] = '/(?:^\|.*\n)+/m';
-        $repl[] = "<?plugin OldStyleTable\n\\0?>\n";
+        // Indented blocks
+        $blockpats[] = '[ \t]+\S(?:.*\s*\n[ \t]+\S)*';
 
-        // convert lists
-        $orig[] = '/^([#*;]*)([*#]|;.*?:) */me';
-        $repl[] = "_ConvertOldListMarkup('\\1', '\\2')";
+        // Tables
+        $blockpats[] = '\|(?:.*\n\|)*';
 
-        // convert footnote definitions
-        $orig[] = '/^\[\s*(\d+)\s*\]/m';
-        $repl[] = '#[|ftnt_\\1]~[[\\1|#ftnt_ref_\\1]~]';
+        // List items
+        $blockpats[] = '[#*;]*(?:[*#]|;.*?:)';
 
-        // in old markup headings only allowed at beginning of line
-        //$orig[] = '/(?<=[^!])!/';
-        $orig[] = '/([^\n!])!/';
-        $repl[] = '\\1~!';
+        // Footnote definitions
+        $blockpats[] = '\[\s*(\d+)\s*\]';
 
-        $subs["block"] = array($orig, $repl);
+        // Plugins
+        $blockpats[] = '<\?plugin(?:-form)?\b.*\?>\s*$';
+
+        // Section Title
+        $blockpats[] = '!{1,3}[^!]';
+
+        $block_re = ( '/\A((?:.|\n)*?)(^(?:'
+                      . join("|", $blockpats)
+                      . ').*$)\n?/m' );
+        
     }
     
-    list ($orig, $repl) = $subs[$markup_type];
-    if ($markup_type == "block" and substr($text,-1) != "\n")
-        $text .= "\n";
-    return preg_replace($orig, $repl, $text);
+    if ($markup_type != "block") {
+        list ($orig, $repl) = $subs[$markup_type];
+        return preg_replace($orig, $repl, $text);
+    }
+    else {
+        list ($orig, $repl) = $subs['inline'];
+        $out = '';
+        while (preg_match($block_re, $text, $m)) {
+            $text = substr($text, strlen($m[0]));
+            list (,$leading_text, $block) = $m;
+            $suffix = "\n";
+            
+            if (strchr(" \t", $block[0])) {
+                // Indented block
+                $prefix = "<pre>\n";
+                $suffix = "\n</pre>\n";
+            }
+            elseif ($block[0] == '|') {
+                // Old-style table
+                $prefix = "<?plugin OldStyleTable\n";
+                $suffix = "\n?>\n";
+            }
+            elseif (strchr("#*;", $block[0])) {
+                // Old-style list item
+                preg_match('/^([#*;]*)([*#]|;.*?:) */', $block, $m);
+                list (,$ind,$bullet) = $m;
+                $block = substr($block, strlen($m[0]));
+                
+                $indent = str_repeat('     ', strlen($ind));
+                if ($bullet[0] == ';') {
+                    //$term = ltrim(substr($bullet, 1));
+                    //return $indent . $term . "\n" . $indent . '     ';
+                    $prefix = $ind . $bullet;
+                }
+                else
+                    $prefix = $indent . $bullet . ' ';
+            }
+            elseif ($block[0] == '[') {
+                // Footnote definition
+                preg_match('/^\[\s*(\d+)/', $block, $m);
+                $footnum = $m[1];
+                $block = substr($block, strlen($m[0]));
+                $prefix = "#[|ftnt_$footnum]~[[\\1|#ftnt_ref_$footnum]~] ";
+            }
+            elseif ($block[0] == '<') {
+                // Plugin.
+                // HACK: no inline markup...
+                $prefix = $block;
+                $block = '';
+            }
+            elseif ($block[0] == '!') {
+                // Section heading
+                preg_match('/^!{1,3}/', $block, $m);
+                $prefix = $m[0];
+                $block = substr($block, strlen($m[0]));
+            }
+            else {
+                // AAck!
+                assert(0);
+            }
+
+            $out .= ( preg_replace($orig, $repl, $leading_text)
+                      . $prefix
+                      . preg_replace($orig, $repl, $block)
+                      . $suffix );
+        }
+        return $out . preg_replace($orig, $repl, $text);
+    }
 }
+
 
 function _ConvertOldListMarkup ($ind, $bullet) {
     $indent = str_repeat('     ', strlen($ind));
