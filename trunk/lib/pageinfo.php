@@ -1,4 +1,4 @@
-<!-- $Id: pageinfo.php,v 1.3 2000-10-19 21:36:50 ahollosi Exp $ -->
+<!-- $Id: pageinfo.php,v 1.4 2000-10-24 09:55:18 ahollosi Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?php
    if (get_magic_quotes_gpc()) {
@@ -6,16 +6,20 @@
    }
 
    $encname = htmlspecialchars($info);
+   $enter .= gettext ("Enter a page name");
+   $go = gettext ("Go");
    $html = "<form action=\"$ScriptUrl\" METHOD=GET>\n" .
 	   "<input name=\"info\" value=\"$encname\">" .
-	   " Enter a page name\n" .
-	   "<input type=submit value=Go><br>\n" .
+	   " $enter\n" .
+	   "<input type=submit value=$go><br>\n" .
 	   "<input type=checkbox name=showpagesource";
 
    if ($showpagesource == "on") {
       $html .= " checked";
    }
-   $html .= "> Show the page source and references\n</form>\n";
+   $html .= "> ";
+   $html .= gettext ("Show the page source and references");
+   $html .= "\n</form>\n";
 
    // don't bother unless we were asked
    if (! $info) {
@@ -29,7 +33,8 @@
 
       $pagehash = RetrievePage($dbi, $name, $pagestore);
       if ($pagehash == -1) {
-         $table = "Page name '$name' is not in the database<br>\n";
+         $table = sprintf (gettext ("Page name '%s' is not in the database"),
+		$name) . "\n";
       }
       else {
 	 $table = "<table border=1 bgcolor=white>\n";
@@ -55,11 +60,15 @@
       return $table;
    }
 
-   $html .= "<P><B>Current version</B></p>";
+   $html .= "<P><B>";
+   $html .= gettext ("Current version");
+   $html .= "</B></p>";
    // $dbi = OpenDataBase($WikiPageStore);   --- done by index.php
    $html .= ViewPageProps($info, $WikiPageStore);
 
-   $html .= "<P><B>Archived version</B></p>";
+   $html .= "<P><B>";
+   $html .= gettext ("Archived version");
+   $html .= "</B></p>";
    // $dbi = OpenDataBase($ArchivePageStore);
    $html .= ViewPageProps($info, $ArchivePageStore);
 

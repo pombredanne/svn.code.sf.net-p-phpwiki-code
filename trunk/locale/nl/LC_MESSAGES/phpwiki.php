@@ -69,8 +69,20 @@ $locale["MySQL error: %s"] =
    "MySQL fout: %s";
 $locale["Error writing page '%s'"] =
    "Fout bij schrijven pagina `%s'";
+$locale["Enter a page name"] =
+   "Geef de naam van een pagina";
+$locale["Go"] =
+   "Ga";
+$locale["Show the page source and references"] =
+   "Toon de bron tekst en de koppelingen van de pagina";
 $locale["PageInfo"] =
    "PaginaInfo";
+$locale["Page name '%s' is not in the database"] =
+   "Pagina naam `%s' staat niet in de data base";
+$locale["Current version"] =
+   "Actuele versie:";
+$locale["Archived version"] =
+   "Gearchiveerde versie:";
 $locale["Thank you for editing %s."] =
    "Bedankt voor het veranderen van %s.";
 $locale["Your careful attention to detail is much appreciated."] =
