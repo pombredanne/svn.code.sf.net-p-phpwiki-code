@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.44 2003-11-29 20:06:43 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.45 2003-11-30 18:18:13 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -209,7 +209,7 @@ class _PageList_Column_content extends _PageList_Column {
         if (($len = strlen($c)) > $this->bytes) {
             $c = substr($c, 0, $this->bytes);
         }
-        require_once('lib/BlockParser.php');
+        include_once('lib/BlockParser.php');
         // false --> don't bother processing hrefs for embedded WikiLinks
         $ct = TransformText($c, $revision_handle->get('markup'), false);
         return HTML::div(array('style' => 'font-size:xx-small'),
