@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForm.php,v 1.6 2002-08-19 11:32:30 rurban Exp $');
+rcs_id('$Id: WikiForm.php,v 1.7 2002-08-20 08:37:42 rurban Exp $');
 /**
  * This is a replacement for MagicPhpWikiURL forms.
  *
