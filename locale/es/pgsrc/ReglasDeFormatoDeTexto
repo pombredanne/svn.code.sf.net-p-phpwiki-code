@@ -1,4 +1,5 @@
 !Synopsis
+ReglasDeFormatoDeTexto%%%
 __Énfasis:__ '____' para itálicas, _''''_ para bold, '____'_''''_ para ambos.%%%
 __Listas:__ * para listas de balazos, # para listas numeradas, ''; term : definición'' para listas de definiciones.%%%
 __Referencias:__ UnirPalabrasEnMayúsculas o usar corchetes para una [[enlace hacia una página] o URL [[http://cool.wiki.int/].%%%
