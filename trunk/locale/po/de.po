@@ -211,11 +211,11 @@ msgstr "%s Editieren"
 
 #: ../lib/main.php:120 ../lib/plugin/FullTextSearch.php:12
 msgid "FullTextSearch"
-msgstr "Volltextsuch"
+msgstr "Volltextsuche"
 
 #: ../lib/plugin/FullTextSearch.php:16
 msgid "Full Text Search"
-msgstr "Volltextsuch"
+msgstr "Volltextsuche"
 
 #: ../lib/plugin/FullTextSearch.php:52
 #, c-format
@@ -408,12 +408,12 @@ msgstr "Suche"
 
 #: ../lib/plugin/RecentChanges.php:251 ../lib/plugin/TitleSearch.php:16
 msgid "Title Search"
-msgstr "Titelsuch"
+msgstr "Titelsuche"
 
 #: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:253
 #: ../lib/plugin/TitleSearch.php:12
 msgid "TitleSearch"
-msgstr "Titelsuch"
+msgstr "Titelsuche"
 
 #: ../lib/plugin/TitleSearch.php:48
 #, c-format
