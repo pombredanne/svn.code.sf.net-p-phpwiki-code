@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.6 2001-09-21 14:41:33 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.7 2001-10-29 17:57:24 dairiki Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -371,14 +371,16 @@ extends WikiDB_backend
 
         $dbh->query("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
 
-        foreach($links as $link) {
-            if (isset($linkseen[$link]))
-                continue;
-            $linkseen[$link] = true;
-            $linkid = $this->_get_pageid($link, true);
-            $dbh->query("INSERT INTO $link_tbl (linkfrom, linkto)"
-                        . " VALUES ($pageid, $linkid)");
-        }
+	if ($links) {
+            foreach($links as $link) {
+                if (isset($linkseen[$link]))
+                    continue;
+                $linkseen[$link] = true;
+                $linkid = $this->_get_pageid($link, true);
+                $dbh->query("INSERT INTO $link_tbl (linkfrom, linkto)"
+                            . " VALUES ($pageid, $linkid)");
+            }
+	}
         $this->unlock();
     }
     
