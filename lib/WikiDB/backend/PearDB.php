@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.78 2004-12-08 12:55:51 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.79 2004-12-10 02:45:27 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -213,6 +213,22 @@ extends WikiDB_backend
                            . " WHERE pagename=?",
                            array($hits, $this->_serialize($data), $pagename));
         $this->unlock(array($page_tbl));
+    }
+
+    function get_cached_html($pagename) {
+        $dbh = &$this->_dbh;
+        $page_tbl = $this->_table_names['page_tbl'];
+        return $dbh->GetOne(sprintf("SELECT cached_html FROM $page_tbl WHERE pagename='%s'",
+                                    $dbh->escapeSimple($pagename)));
+    }
+
+    function set_cached_html($pagename, $data) {
+        $dbh = &$this->_dbh;
+        $page_tbl = $this->_table_names['page_tbl'];
+        $sth = $dbh->query("UPDATE $page_tbl"
+                           . " SET cached_html=?"
+                           . " WHERE pagename=?",
+                           array($data, $pagename));
     }
 
     function _get_pageid($pagename, $create_if_missing = false) {
@@ -1198,6 +1214,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2004/12/08 12:55:51  rurban
+// support new non-destructive delete_page via generic backend method
+//
 // Revision 1.77  2004/12/06 19:50:04  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.

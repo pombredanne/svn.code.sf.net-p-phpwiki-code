@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.114 2004-12-09 22:24:44 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.115 2004-12-10 02:45:27 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1250,8 +1250,13 @@ class WikiDB_Page
      */
     function get($key) {
         $cache = &$this->_wikidb->_cache;
+        $backend = &$this->_wikidb->_backend;
         if (!$key || $key[0] == '%')
             return false;
+        // several new SQL backends optimize this.
+        if ($key == '_cached_html' and method_exists($backend, 'get_cached_html')) {
+            return $backend->get_cached_html($pagename);
+        }
         $data = $cache->get_pagedata($this->_pagename);
         return isset($data[$key]) ? $data[$key] : false;
     }
@@ -1283,9 +1288,15 @@ class WikiDB_Page
      */
     function set($key, $newval) {
         $cache = &$this->_wikidb->_cache;
+        $backend = &$this->_wikidb->_backend;
         $pagename = &$this->_pagename;
         
         assert($key && $key[0] != '%');
+
+        // several new SQL backends optimize this.
+        if ($key == '_cached_html' and method_exists($backend, 'set_cached_html')) {
+            return $backend->set_cached_html($pagename, $newval);
+        }
 
         $data = $cache->get_pagedata($pagename);
 
@@ -1964,10 +1975,12 @@ class WikiDB_cache
             if (!isset($cache[$pagename]) || !is_array($cache[$pagename])) {
                 $cache[$pagename] = $this->_backend->get_pagedata($pagename);
                 // Never keep a ['%pagedata']['_cached_html'] in cache, other than the current page.
+                /*
                 if (isset($cache[$pagename]['_cached_html'])
                     and $pagename != $GLOBALS['request']->getArg('pagename')) {
                     unset($cache[$pagename]['_cached_html']);
                 }
+                */
                 if (empty($cache[$pagename]))
                     $cache[$pagename] = array();
             }
@@ -2047,7 +2060,7 @@ class WikiDB_cache
         if ($vdata && !empty($vdata['%pagedata'])) {
             $this->_pagedata_cache[$pagename] =& $vdata['%pagedata'];
             // only store _cached_html for the requested page
-            if (USECACHE 
+            if (0 and USECACHE 
                 and isset($vdata['%pagedata']['_cached_html'])
                 and $pagename != $GLOBALS['request']->getArg('pagename')) 
             {
@@ -2128,6 +2141,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.114  2004/12/09 22:24:44  rurban
+// optimize on _DEBUG_SQL only. but now again on every 50th request, not just save.
+//
 // Revision 1.113  2004/12/06 19:49:55  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.
