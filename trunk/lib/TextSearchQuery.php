@@ -1,18 +1,18 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.17 2005-02-14 12:16:09 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.18 2005-02-26 18:30:40 rurban Exp $');
 /**
- * A text search query, converting queries to PCRE or SQL matchers.
+ * A text search query, converting queries to PCRE and SQL matchers.
  *
  * This represents an enhanced "Google-like" text search query:
  * <dl>
  * <dt> default: case-insensitive glob-style search with special operators OR AND NOT -
  * <dt> wiki -test
- *   <dd> Match strings containing the substring 'wiki',  and not containing the
+ *   <dd> Match strings containing the substring 'wiki', and NOT containing the
  *        substring 'test'.
  * <dt> wiki word or page
- *   <dd> Match strings containing the substring 'wiki' and either the substring
- *        'word' or the substring 'page'.
+ *   <dd> Match strings containing the substring 'wiki' AND either the substring
+ *        'word' OR the substring 'page'.
  * <dt> auto-detect regex hints, glob-style or regex-style, and converts them 
- *      to PCRE or SQL matchers
+ *      to PCRE and SQL matchers:
  *   <dd> "^word$" => EXACT(word)
  *   <dd> "^word"  => STARTS_WITH(word)
  *   <dd> "word*"  => STARTS_WITH(word)
@@ -27,7 +27,7 @@
  * following search clause.
  *
  * Search clauses may be joined with the (left-associative) binary operators
- * 'AND' and 'OR'.
+ * 'AND' and 'OR'. (case-insensitive)
  *
  * Two adjoining search clauses are joined with an implicit 'AND'.  This has
  * lower precedence than either an explicit 'AND' or 'OR', so "a b OR c"
@@ -45,8 +45,8 @@
  * Force regex on "re:word" => posix-style, "/word/" => pcre-style 
  * or use regex='glob' to use file wildcard-like matching. (not yet)
  *
- * The parsed tree is then converted to the needed PCRE (highlight, simple backends) 
- * or SQL functions. 
+ * The parsed tree is then converted to the needed PCRE (highlight, 
+ * simple backends) or SQL functions. 
  *
  * @author: Jeff Dairiki
  * @author: Reini Urban (case and regex detection, enhanced sql callbacks)
