@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.18 2003-02-15 02:24:23 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.19 2003-02-16 19:43:10 dairiki Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -108,6 +108,10 @@ class WikiDB {
         $this->_backend = &$backend;
         $this->_cache = new WikiDB_cache($backend);
 
+        // If the database doesn't yet have a timestamp, initialize it now.
+        if ($this->get('_timestamp') === false)
+            $this->touch();
+        
         //FIXME: devel checking.
         //$this->_backend->check();
     }
@@ -352,6 +356,94 @@ class WikiDB {
       return $this->titleSearch($query);
     }
 
+    /** Get timestamp when database was last modified.
+     *
+     * @return string A string consisting of two integers,
+     * separated by a space.  The first is the time in
+     * unix timestamp format, the second is a modification
+     * count for the database.
+     *
+     * The idea is that you can cast the return value to an
+     * int to get a timestamp, or you can use the string value
+     * as a good hash for the entire database.
+     */
+    function getTimestamp() {
+        $ts = $this->get('_timestamp');
+        return sprintf("%d %d", $ts[0], $ts[1]);
+    }
+    
+    /**
+     * Update the database timestamp.
+     *
+     */
+    function touch() {
+        $ts = $this->get('_timestamp');
+        $this->set('_timestamp', array(time(), $ts[1] + 1));
+    }
+
+        
+    /**
+     * Access WikiDB global meta-data.
+     *
+     * NOTE: this is currently implemented in a hackish and
+     * not very efficient manner.
+     *
+     * @access public
+     *
+     * @param string $key Which meta data to get.
+     * Some reserved meta-data keys are:
+     * <dl>
+     * <dt>'_timestamp' <dd> Data used by getTimestamp().
+     * </dl>
+     *
+     * @return scalar The requested value, or false if the requested data
+     * is not set.
+     */
+    function get($key) {
+        if (!$key || $key[0] == '%')
+            return false;
+        /*
+         * Hack Alert: We can use any page (existing or not) to store
+         * this data (as long as we always use the same one.)
+         */
+        $gd = $this->getPage('global_data');
+        $data = $gd->get('__global');
+
+        if ($data && isset($data[$key]))
+            return $data[$key];
+        else
+            return false;
+    }
+
+    /**
+     * Set global meta-data.
+     *
+     * NOTE: this is currently implemented in a hackish and
+     * not very efficient manner.
+     *
+     * @see get
+     * @access public
+     *
+     * @param string $key  Meta-data key to set.
+     * @param string $newval  New value.
+     */
+    function set($key, $newval) {
+        if (!$key || $key[0] == '%')
+            return;
+        
+        $gd = $this->getPage('global_data');
+        
+        $data = $gd->get('__global');
+        if ($data === false)
+            $data = array();
+
+        if (empty($newval))
+            unset($data[$key]);
+        else
+            $data[$key] = $newval;
+
+        $gd->set('__global', $data);
+    }
 };
 
 
@@ -759,11 +851,6 @@ class WikiDB_Page
                 return;         // values identical, skip update.
         }
 
-        // special handling of sensitive pref data or upgrades from older versions:
-        if ($key == 'pref') {
-            if (!empty($newval['userid'])) unset($newval['userid']);
-            //if ($GLOBALS['user']->isAdmin()) unset($newval['passwd']);
-        }
         $cache->update_pagedata($pagename, array($key => $newval));
     }
 
