@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.1 2001-09-18 19:19:05 dairiki Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.2 2001-12-15 10:54:45 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 
@@ -9,6 +9,7 @@ class WikiPlugin_FullTextSearch
 extends WikiPlugin
 {
     var $name = 'FullTextSearch';
+    var $description = 'FullTextSearch';
 
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?

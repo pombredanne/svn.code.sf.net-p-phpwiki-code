@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.1 2001-09-18 19:19:05 dairiki Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.2 2001-12-15 10:54:31 carstenklapp Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -7,6 +7,7 @@ class WikiPlugin__BackendInfo
 extends WikiPlugin
 {
     var $name = '_BackendInfo';
+    var $description = "Get debugging information for [pagename].";
     
     function WikiPlugin__BackendInfo() {
         $this->_hashtemplate = new Template('

@@ -7,6 +7,7 @@ class WikiPlugin_text2png
 extends WikiPlugin
 {
 	var $name = 'text2png';
+	var $description = 'text2png';
 	
 	function getDefaultArguments() {
     global $LANG;

@@ -1,11 +1,12 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.2 2001-09-19 03:24:36 wainstead Exp $');
+rcs_id('$Id: BackLinks.php,v 1.3 2001-12-15 10:54:36 carstenklapp Exp $');
 /**
  */
 class WikiPlugin_BackLinks
 extends WikiPlugin
 {
     var $name = 'BackLinks';
+    var $description = "Get BackLinks for [pagename]";
   
     function getDefaultArguments() {
         // FIXME: how to exclude multiple pages?

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.2 2001-12-15 02:36:56 dairiki Exp $');
+rcs_id('$Id: PageHistory.php,v 1.3 2001-12-15 10:55:02 carstenklapp Exp $');
 /**
  */
 require_once('lib/plugin/RecentChanges.php');
@@ -197,6 +197,7 @@ class WikiPlugin_PageHistory
 extends WikiPlugin_RecentChanges
 {
     var $name = 'PageHistory';
+    var $description = "List PageHistory for [pagename]";
     
     function getDefaultArguments() {
         return array('days'		=> false,
