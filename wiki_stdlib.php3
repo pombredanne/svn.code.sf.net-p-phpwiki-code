@@ -1,4 +1,4 @@
-<!-- $Id: wiki_stdlib.php3,v 1.27 2000-08-29 02:37:42 aredridel Exp $ -->
+<!-- $Id: wiki_stdlib.php3,v 1.28 2000-09-04 05:54:15 wainstead Exp $ -->
 <?php
    /*
       Standard functions for Wiki functionality
@@ -124,7 +124,7 @@
    function RenderMostPopular() {
       global $ScriptUrl, $dbi;
       
-      $query = InitMostPopular($dbi, 20);
+      $query = InitMostPopular($dbi, MOST_POPULAR_LIST_LENGTH);
       $result = "<DL>\n";
       while ($qhash = MostPopularNextMatch($dbi, $query)) {
 	 $result .= "<DD>$qhash[hits] ... " . LinkExistingWikiWord($qhash['pagename']) . "\n";
