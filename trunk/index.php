@@ -61,7 +61,7 @@ if (!defined('DEBUG')) define ('DEBUG', 1);
 
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.110 2003-03-18 20:51:10 lakka Exp $');
+rcs_id('$Id: index.php,v 1.111 2003-03-18 21:40:04 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -677,7 +677,9 @@ $KeywordLinkRegexp = '(?<=^Category|^Topic)[[:upper:]].*$';
  * See also http://phpwiki.sourceforge.net/phpwiki/PrettyWiki for more ideas
  * on prettifying your urls.
  *
- * Default: true
+ * Default: PhpWiki will try to divine whether use of PATH_INFO
+ * is supported in by your webserver/PHP configuration, and will
+ * use PATH_INFO if it thinks that is possible.
  */
 //if (!defined('USE_PATH_INFO')) define('USE_PATH_INFO', false);
 
@@ -770,6 +772,9 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.110  2003/03/18 20:51:10  lakka
+// Revised comments on use of USE_PATH_INFO with Apache 2
+//
 // Revision 1.109  2003/03/17 21:24:50  dairiki
 // Fix security bugs in the RawHtml plugin.
 //
