@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.126 2004-12-20 16:05:00 rurban Exp $');
+rcs_id('$Id: config.php,v 1.127 2004-12-26 17:15:32 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -106,9 +106,14 @@ function isBrowserKonqueror($version = false) {
     if ($version) return browserDetect('Konqueror/') and browserVersion() >= $version; 
     return browserDetect('Konqueror/');
 }
+// FIXME: MacOSX Safarai has certain limitations. Need detection and patches.
+function isBrowserSafari($version = false) {
+    if ($version) return browserDetect('Safari/') and browserVersion() >= $version; 
+    return browserDetect('Safari/');
+}
 
 /**
- * Smart? setlocale().
+ * Smart setlocale().
  *
  * This is a version of the builtin setlocale() which is
  * smart enough to try some alternatives...
@@ -121,8 +126,6 @@ function isBrowserKonqueror($version = false) {
  * [56ms]
  */
 function guessing_setlocale ($category, $locale) {
-    if ($res = setlocale($category, $locale))
-        return $res;
     $alt = array('en' => array('C', 'en_US', 'en_GB', 'en_AU', 'en_CA', 'english'),
                  'de' => array('de_DE', 'de_DE', 'de_DE@euro', 
                                'de_AT@euro', 'de_AT', 'German_Austria.1252', 'deutsch', 
@@ -132,9 +135,25 @@ function guessing_setlocale ($category, $locale) {
                  'fr' => array('fr_FR', 'français', 'french'),
                  'it' => array('it_IT'),
                  'sv' => array('sv_SE'),
-                 'ja' => array('ja_JP','ja_JP.eucJP','japanese.euc'),
+                 'ja.utf-8'  => array('ja_JP','ja_JP.utf-8','japanese'),
+                 'ja.euc-jp' => array('ja_JP','ja_JP.eucJP','japanese.euc'),
                  'zh' => array('zh_TW', 'zh_CN'),
                  );
+    if (!$locale) { 
+        // do the reverse: return the detected locale collapsed to our LANG
+        $locale = setlocale($category,'');
+        if ($locale) {
+            if (strstr($locale, '_')) list ($lang) = split('_', $locale);
+            else $lang = $locale;
+            if (strlen($lang) > 2) { 
+                foreach ($alt as $try => $locs) {
+                    if (in_array($locale, $locs) or in_array($lang, $locs)) {
+                        return $try;
+                    }
+                }
+            }
+        }
+    }
     if (strlen($locale) == 2)
         $lang = $locale;
     else 
@@ -165,29 +184,26 @@ function guessing_setlocale ($category, $locale) {
 }
 // [99ms]
 function update_locale($loc) {
-    //require_once(dirname(__FILE__)."/FileFinder.php");
-    $newlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
-    if (!$newlocale) {
-        //trigger_error(sprintf(_("Can't setlocale(LC_ALL,'%s')"), $loc), E_USER_NOTICE);
-        // => LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C;LC_NUMERIC=C;LC_TIME=C
-        //$loc = setlocale(LC_CTYPE, '');  // pull locale from environment.
-        $newlocale = FileFinder::_get_lang();
-        list ($newlocale,) = split('_', $newlocale, 2);
-        //$GLOBALS['LANG'] = $loc;
-        //$newlocale = $loc;
-        //return false;
+    if (!$loc) {
+        $newlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
+        if (!$newlocale) {
+            //trigger_error(sprintf(_("Can't setlocale(LC_ALL,'%s')"), $loc), E_USER_NOTICE);
+            // => LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C;LC_NUMERIC=C;LC_TIME=C
+            //$loc = setlocale(LC_CTYPE, '');  // pull locale from environment.
+            //require_once(dirname(__FILE__)."/FileFinder.php");
+            $newlocale = FileFinder::_get_lang();
+            list ($newlocale,) = split('_', $newlocale, 2);
+            //$GLOBALS['LANG'] = $loc;
+            //$newlocale = $loc;
+            //return false;
+        }
+        $loc = $newlocale;
     }
     //if (substr($newlocale,0,2) == $loc) // don't update with C or failing setlocale
     if (!isset($GLOBALS['LANG'])) $GLOBALS['LANG'] = $loc;
     // Try to put new locale into environment (so any
     // programs we run will get the right locale.)
     //
-    // If PHP is in safe mode, this is not allowed,
-    // so hide errors...
-    @putenv("LC_ALL=$newlocale");
-    @putenv("LANG=$newlocale");
-    @putenv("LANGUAGE=$newlocale");
-    
     if (!function_exists ('bindtextdomain'))  {
         // Reinitialize translation array.
         global $locale;
@@ -197,6 +213,12 @@ function update_locale($loc) {
         if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok', 'reinit')) ) {
             include($lcfile);
         }
+    } else {
+        // If PHP is in safe mode, this is not allowed,
+        // so hide errors...
+        @putenv("LC_ALL=$loc");
+        @putenv("LANG=$loc");
+        @putenv("LANGUAGE=$loc");
     }
 
     // To get the POSIX character classes in the PCRE's (e.g.
@@ -220,10 +242,10 @@ function update_locale($loc) {
     if (setlocale(LC_CTYPE, 0) == 'C') {
         $x = setlocale(LC_CTYPE, 'en_US.' . $GLOBALS['charset']);
     } else {
-        $x = setlocale(LC_CTYPE, $newlocale);
+        $x = setlocale(LC_CTYPE, $loc);
     }
 
-    return $newlocale;
+    return $loc;
 }
 
 /** string pcre_fix_posix_classes (string $regexp)
@@ -256,11 +278,16 @@ function pcre_fix_posix_classes ($regexp) {
     global $charset;
     if (!isset($charset))
         $charset = CHARSET; // get rid of constant. pref is dynamic and language specific
-    if (in_array($GLOBALS['LANG'],array('zh')))
+    if (in_array($GLOBALS['LANG'], array('zh')))
         $charset = 'utf-8';
-    if (in_array($GLOBALS['LANG'],array('ja')))
+    if (strstr($GLOBALS['LANG'],'.utf-8'))
         $charset = 'utf-8';
-        //$charset = 'euc-jp';
+    elseif (strstr($GLOBALS['LANG'],'.euc-jp'))
+        $charset = 'euc-jp';
+    elseif (in_array($GLOBALS['LANG'], array('ja')))
+        //$charset = 'utf-8';
+        $charset = 'euc-jp';
+
     if (strtolower($charset) == 'utf-8') { // thanks to John McPherson
         // until posix class names/pcre work with utf-8
 	if (preg_match('/[[:upper:]]/', '\xc4\x80'))
@@ -411,6 +438,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.126  2004/12/20 16:05:00  rurban
+// gettext msg unification
+//
 // Revision 1.125  2004/11/21 11:59:18  rurban
 // remove final \n to be ob_cache independent
 //
