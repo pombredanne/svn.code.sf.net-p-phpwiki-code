@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.17 2002-09-15 03:56:22 dairiki Exp $');
+rcs_id('$Id: WikiDB.php,v 1.18 2003-02-15 02:24:23 dairiki Exp $');
 
 //FIXME: arg on get*Revision to hint that content is wanted.
 
@@ -1354,151 +1354,157 @@ class WikiDB_cache
  * We might have read-only access to the password and/or group membership,
  * or we might even be able to update the entries.
  *
- * FIXME: This was written before we stored prefs as %pagedata, so 
+ * FIXME: This was written before we stored prefs as %pagedata, so
+ *
+ * FIXME: I believe this is not currently used.
  */
-class WikiDB_User
-extends WikiUser
-{
-    var $_authdb;
+//  class WikiDB_User
+//  extends WikiUser
+//  {
+//      var $_authdb;
 
-    function WikiDB_User($userid, $authlevel = false) {
-        $this->_authdb = new WikiAuthDB($GLOBALS['DBAuthParams']);
-        $this->_authmethod = 'AuthDB';
-        WikiUser::WikiUser($userid, $authlevel);
-    }
+//      function WikiDB_User($userid, $authlevel = false) {
+//          global $request;
+//          $this->_authdb = new WikiAuthDB($GLOBALS['DBAuthParams']);
+//          $this->_authmethod = 'AuthDB';
+//          WikiUser::WikiUser($request, $userid, $authlevel);
+//      }
 
-    /*
-    function getPreferences() {
-        // external prefs override internal ones?
-        if (! $this->_authdb->getPrefs() )
-            if ($pref = WikiUser::getPreferences())
-                return $prefs;
-        return false;
-    }
+//      /*
+//      function getPreferences() {
+//          // external prefs override internal ones?
+//          if (! $this->_authdb->getPrefs() )
+//              if ($pref = WikiUser::getPreferences())
+//                  return $prefs;
+//          return false;
+//      }
 
-    function setPreferences($prefs) {
-        if (! $this->_authdb->setPrefs($prefs) )
-            return WikiUser::setPreferences();
-    }
-    */
+//      function setPreferences($prefs) {
+//          if (! $this->_authdb->setPrefs($prefs) )
+//              return WikiUser::setPreferences();
+//      }
+//      */
 
-    function exists() {
-        return $this->_authdb->exists($this->_userid);
-    }
+//      function exists() {
+//          return $this->_authdb->exists($this->_userid);
+//      }
 
-    // create user and default user homepage
-    function createUser ($pref) {
-        if ($this->exists()) return;
-        if (! $this->_authdb->createUser($pref)) {
-            // external auth doesn't allow this.
-            // do our policies allow local users instead?
-            return WikiUser::createUser($pref);
-        }
-    }
+//      // create user and default user homepage
+//      function createUser ($pref) {
+//          if ($this->exists()) return;
+//          if (! $this->_authdb->createUser($pref)) {
+//              // external auth doesn't allow this.
+//              // do our policies allow local users instead?
+//              return WikiUser::createUser($pref);
+//          }
+//      }
 
-    function checkPassword($passwd) {
-        return $this->_authdb->pwcheck($this->userid, $passwd);
-    }
+//      function checkPassword($passwd) {
+//          return $this->_authdb->pwcheck($this->userid, $passwd);
+//      }
 
-    function changePassword($passwd) {
-        if (! $this->mayChangePassword() ) {
-            trigger_error(sprintf("Attempt to change an external password for '%s'",
-                                  $this->_userid), E_USER_ERROR);
-            return;
-        }
-        return $this->_authdb->changePass($this->userid, $passwd);
-    }
+//      function changePassword($passwd) {
+//          if (! $this->mayChangePassword() ) {
+//              trigger_error(sprintf("Attempt to change an external password for '%s'",
+//                                    $this->_userid), E_USER_ERROR);
+//              return;
+//          }
+//          return $this->_authdb->changePass($this->userid, $passwd);
+//      }
 
-    function mayChangePassword() {
-        return $this->_authdb->auth_update;
-    }
-}
+//      function mayChangePassword() {
+//          return $this->_authdb->auth_update;
+//      }
+//  }
 
-class WikiAuthDB
-extends WikiDB
-{
-    var $auth_dsn = false, $auth_check = false;
-    var $auth_crypt_method = 'crypt', $auth_update = false;
-    var $group_members = false, $user_groups = false;
-    var $pref_update = false, $pref_select = false;
-    var $_dbh;
+/*
+ * FIXME: I believe this is not currently used.
+ */
+//  class WikiAuthDB
+//  extends WikiDB
+//  {
+//      var $auth_dsn = false, $auth_check = false;
+//      var $auth_crypt_method = 'crypt', $auth_update = false;
+//      var $group_members = false, $user_groups = false;
+//      var $pref_update = false, $pref_select = false;
+//      var $_dbh;
 
-    function WikiAuthDB($DBAuthParams) {
-        foreach ($DBAuthParams as $key => $value) {
-            $this->$key = $value;
-        }
-        if (!$this->auth_dsn) {
-            trigger_error(_("no \$DBAuthParams['dsn'] provided"), E_USER_ERROR);
-            return false;
-        }
-        // compare auth DB to the existing page DB. reuse if it's on the same database.
-        if (isa($this->_backend, 'WikiDB_backend_PearDB') and 
-            $this->_backend->_dsn == $this->auth_dsn) {
-            $this->_dbh = &$this->_backend->_dbh;
-            return $this->_backend;
-        }
-        include_once("lib/WikiDB/SQL.php");
-        return new WikiDB_SQL($DBAuthParams);
-    }
+//      function WikiAuthDB($DBAuthParams) {
+//          foreach ($DBAuthParams as $key => $value) {
+//              $this->$key = $value;
+//          }
+//          if (!$this->auth_dsn) {
+//              trigger_error(_("no \$DBAuthParams['dsn'] provided"), E_USER_ERROR);
+//              return false;
+//          }
+//          // compare auth DB to the existing page DB. reuse if it's on the same database.
+//          if (isa($this->_backend, 'WikiDB_backend_PearDB') and 
+//              $this->_backend->_dsn == $this->auth_dsn) {
+//              $this->_dbh = &$this->_backend->_dbh;
+//              return $this->_backend;
+//          }
+//          include_once("lib/WikiDB/SQL.php");
+//          return new WikiDB_SQL($DBAuthParams);
+//      }
 
-    function param_missing ($param) {
-        trigger_error(sprintf(_("No \$DBAuthParams['%s'] provided."), $param), E_USER_ERROR);
-        return;
-    }
+//      function param_missing ($param) {
+//          trigger_error(sprintf(_("No \$DBAuthParams['%s'] provided."), $param), E_USER_ERROR);
+//          return;
+//      }
 
-    function getPrefs($prefs) {
-        if ($this->pref_select) {
-            $statement = $this->_backend->Prepare($this->pref_select);
-            return unserialize($this->_backend->Execute($statement, 
-                                                        $prefs->get('userid')));
-        } else {
-            param_missing('pref_select');
-            return false;
-        }
-    }
+//      function getPrefs($prefs) {
+//          if ($this->pref_select) {
+//              $statement = $this->_backend->Prepare($this->pref_select);
+//              return unserialize($this->_backend->Execute($statement, 
+//                                                          $prefs->get('userid')));
+//          } else {
+//              param_missing('pref_select');
+//              return false;
+//          }
+//      }
 
-    function setPrefs($prefs) {
-        if ($this->pref_write) {
-            $statement = $this->_backend->Prepare($this->pref_write);
-            return $this->_backend->Execute($statement, 
-                                            $prefs->get('userid'), serialize($prefs->_prefs));
-        } else {
-            param_missing('pref_write');
-            return false;
-        }
-    }
+//      function setPrefs($prefs) {
+//          if ($this->pref_write) {
+//              $statement = $this->_backend->Prepare($this->pref_write);
+//              return $this->_backend->Execute($statement, 
+//                                              $prefs->get('userid'), serialize($prefs->_prefs));
+//          } else {
+//              param_missing('pref_write');
+//              return false;
+//          }
+//      }
 
-    function createUser ($pref) {
-        if ($this->user_create) {
-            $statement = $this->_backend->Prepare($this->user_create);
-            return $this->_backend->Execute($statement, 
-                                        $prefs->get('userid'), serialize($prefs->_prefs));
-        } else {
-            param_missing('user_create');
-            return false;
-        }
-    }
+//      function createUser ($pref) {
+//          if ($this->user_create) {
+//              $statement = $this->_backend->Prepare($this->user_create);
+//              return $this->_backend->Execute($statement, 
+//                                          $prefs->get('userid'), serialize($prefs->_prefs));
+//          } else {
+//              param_missing('user_create');
+//              return false;
+//          }
+//      }
 
-    function exists($userid) {
-        if ($this->user_check) {
-            $statement = $this->_backend->Prepare($this->user_check);
-            return $this->_backend->Execute($statement, $prefs->get('userid'));
-        } else {
-            param_missing('user_check');
-            return false;
-        }
-    }
+//      function exists($userid) {
+//          if ($this->user_check) {
+//              $statement = $this->_backend->Prepare($this->user_check);
+//              return $this->_backend->Execute($statement, $prefs->get('userid'));
+//          } else {
+//              param_missing('user_check');
+//              return false;
+//          }
+//      }
 
-    function pwcheck($userid, $pass) {
-        if ($this->auth_check) {
-            $statement = $this->_backend->Prepare($this->auth_check);
-            return $this->_backend->Execute($statement, $userid, $pass);
-        } else {
-            param_missing('auth_check');
-            return false;
-        }
-    }
-}
+//      function pwcheck($userid, $pass) {
+//          if ($this->auth_check) {
+//              $statement = $this->_backend->Prepare($this->auth_check);
+//              return $this->_backend->Execute($statement, $userid, $pass);
+//          } else {
+//              param_missing('auth_check');
+//              return false;
+//          }
+//      }
+//  }
 
 // Local Variables:
 // mode: php
