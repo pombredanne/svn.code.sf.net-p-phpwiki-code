@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.1 2004-06-18 14:42:17 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.2 2004-06-19 10:22:41 rurban Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
@@ -49,6 +49,63 @@ class RatingsDb extends WikiDB {
         }
     }
 
+/// *************************************************************************************
+// FIXME    
+// from Reini Urban's RateIt plugin
+
+    function addRating($rating, $userid, $pagename, $dimension) {
+        if (RATING_STORAGE == 'SQL') {
+            $page = $this->_dbi->getPage($pagename);
+            $current = $page->getCurrentRevision();
+            $rateeversion = $current->getVersion();
+            $this->sql_rate($userid, $pagename, $rateeversion, $dimension, $rating);
+        } else {
+            $this->metadata_set_rating($userid, $pagename, $dimension, $rating);
+        }
+    }
+
+    function deleteRating($userid=null, $pagename=null, $dimension=null) {
+        if (is_null($dimension)) $dimension = $this->dimension;
+        if (is_null($userid))    $userid = $this->userid; 
+        if (is_null($pagename))  $pagename = $this->pagename;
+        if (RATING_STORAGE == 'SQL') {
+            $this->sql_delete_rating($userid, $pagename, $dimension);
+        } else {
+            $this->metadata_set_rating($userid, $pagename, $dimension, -1);
+        }
+    }
+
+    function getRating($userid=null, $pagename=null, $dimension=null) {
+        if (is_null($dimension)) $dimension = $this->dimension;
+        if (is_null($userid))    $userid = $this->userid; 
+        if (is_null($pagename))  $pagename = $this->pagename;
+        if (RATING_STORAGE == 'SQL') {
+            $ratings_iter = $this->sql_get_rating($dimension, $userid, $pagename);
+            if ($rating = $ratings_iter->next()) {
+                return $rating['ratingvalue'];
+            } else 
+                return false;
+        } else {
+            return $this->metadata_get_rating($userid, $pagename, $dimension);
+        }
+    }
+
+    function getUsersRated($dimension=null, $orderby = null) {
+        if (is_null($dimension)) $dimension = $this->dimension;
+        if (is_null($userid))    $userid = $this->userid; 
+        if (is_null($pagename))  $pagename = $this->pagename;
+        if (RATING_STORAGE == 'SQL') {
+            $ratings_iter = $this->sql_get_users_rated($dimension, $orderby);
+            if ($rating = $ratings_iter->next()) {
+                return $rating['ratingvalue'];
+            } else 
+                return false;
+        } else {
+            return $this->metadata_get_users_rated($dimension, $orderby);
+        }
+    }
+   
+    
     /**
      * Get ratings.
      *
@@ -184,63 +241,11 @@ class RatingsDb extends WikiDB {
     
     //function getUsersRated(){}
     
-/// *************************************************************************************
-// FIXME    
-// from Reini Urban's RateIt plugin
-
-    function addRating($rating, $userid, $pagename, $dimension) {
-        if (RATING_STORAGE == 'SQL') {
-            $page = $this->_dbi->getPage($pagename);
-            $current = $page->getCurrentRevision();
-            $rateeversion = $current->getVersion();
-            $this->sql_rate($userid, $pagename, $rateeversion, $dimension, $rating);
-        } else {
-            $this->metadata_set_rating($userid, $pagename, $dimension, $rating);
-        }
-    }
-
-    function deleteRating($userid=null, $pagename=null, $dimension=null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
-        if (RATING_STORAGE == 'SQL') {
-            $this->sql_delete_rating($userid, $pagename, $dimension);
-        } else {
-            $this->metadata_set_rating($userid, $pagename, $dimension, -1);
-        }
-    }
-
-    function getRating($userid=null, $pagename=null, $dimension=null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
-        if (RATING_STORAGE == 'SQL') {
-            $ratings_iter = $this->sql_get_rating($dimension, $userid, $pagename);
-            if ($rating = $ratings_iter->next()) {
-                return $rating['ratingvalue'];
-            } else 
-                return false;
-        } else {
-            return $this->metadata_get_rating($userid, $pagename, $dimension);
-        }
-    }
-
-    function getUsersRated($dimension=null, $orderby = null) {
-        if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
-        if (RATING_STORAGE == 'SQL') {
-            $ratings_iter = $this->sql_get_users_rated($dimension, $orderby);
-            if ($rating = $ratings_iter->next()) {
-                return $rating['ratingvalue'];
-            } else 
-                return false;
-        } else {
-            return $this->metadata_get_users_rated($dimension, $orderby);
-        }
-    }
-
-    // TODO
+//*******************************************************************************
+    // TODO:
+    // Use wikilens/RatingsUser.php for the php methods.
+    //
+    // Old:
     // Currently we have to call the "suggest" CGI
     //   http://www-users.cs.umn.edu/~karypis/suggest/
     // until we implement a simple recommendation engine.
@@ -261,7 +266,7 @@ class RatingsDb extends WikiDB {
         
         return 0;
         
-        if (defined('RATING_EXTERNAL')) {
+        if (defined('RATING_EXTERNAL') and RATING_EXTERNAL) {
             // how call suggest.exe? as CGI or natively
             //$rating = HTML::Raw("<!--#include virtual=".RATING_ENGINE." -->");
             $args = "-u$user -p$page -malpha"; // --top 10
@@ -276,7 +281,8 @@ class RatingsDb extends WikiDB {
 
     /**
      * TODO: slow item-based recommendation engine, similar to suggest RType=2.
-     * Only the SUGGEST_EstimateAlpha part
+     *       Only the SUGGEST_EstimateAlpha part
+     * Take wikilens/RatingsUser.php for the php methods.
      */
     function php_prediction($userid=null, $pagename=null, $dimension=null) {
         if (is_null($dimension)) $dimension = $this->dimension;
@@ -333,6 +339,7 @@ class RatingsDb extends WikiDB {
             return 2.5;
         }
     }
+//*******************************************************************************
 
     /**
      * Get ratings.
@@ -523,49 +530,9 @@ class RatingsDb extends WikiDB {
    
 }
 
+/*
 class RatingsDB_backend_PearDB 
 extends WikiDB_backend_PearDB {
-
-    /**
-     * Get ratings.
-     *
-     * @param dimension  The rating dimension id.
-     *                   Example: 0
-     *                   [optional]
-     *                   If this is null (or left off), the search for ratings
-     *                   is not restricted by dimension.
-     *
-     * @param rater  The page id of the rater, i.e. page doing the rating.
-     *               This is a Wiki page id, often of a user page.
-     *               Example: "DanFr"
-     *               [optional]
-     *               If this is null (or left off), the search for ratings
-     *               is not restricted by rater.
-     *               TODO: Support an array
-     *
-     * @param ratee  The page id of the ratee, i.e. page being rated.
-     *               Example: "DudeWheresMyCar"
-     *               [optional]
-     *               If this is null (or left off), the search for ratings
-     *               is not restricted by ratee.
-     *               TODO: Support an array
-     *
-     * @param orderby An order-by clause with fields and (optionally) ASC
-     *                or DESC.
-     *               Example: "ratingvalue DESC"
-     *               [optional]
-     *               If this is null (or left off), the search for ratings
-     *               has no guaranteed order
-     *
-     * @param pageinfo The type of page that has its info returned (i.e.,
-     *               'pagename', 'hits', and 'pagedata') in the rows.
-     *               Example: "rater"
-     *               [optional]
-     *               If this is null (or left off), the info returned
-     *               is for the 'ratee' page (i.e., thing being rated).
-     *
-     * @return DB iterator with results 
-     */
     function get_rating($dimension=null, $rater=null, $ratee=null,
                         $orderby=null, $pageinfo = "ratee") {
         $result = $this->_get_rating_result(
@@ -579,9 +546,6 @@ extends WikiDB_backend_PearDB {
         return new WikiDB_backend_PearDB_generic_iter($this, $result);
     }
 
-    /**
-     * Like get_rating(), but return a result suitable for WikiDB_PageIterator
-     */
     function get_rating_page($dimension=null, $rater=null, $ratee=null,
                              $orderby=null, $pageinfo = "ratee") {
         $result = $this->_get_rating_result(
@@ -589,48 +553,6 @@ extends WikiDB_backend_PearDB {
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
 
-    /**
-     * Get ratings.
-     *
-     * @param dimension  The rating dimension id.
-     *                   Example: 0
-     *                   [optional]
-     *                   If this is null (or left off), the search for ratings
-     *                   is not restricted by dimension.
-     *
-     * @param rater  The page id of the rater, i.e. page doing the rating.
-     *               This is a Wiki page id, often of a user page.
-     *               Example: "DanFr"
-     *               [optional]
-     *               If this is null (or left off), the search for ratings
-     *               is not restricted by rater.
-     *               TODO: Support an array
-     *
-     * @param ratee  The page id of the ratee, i.e. page being rated.
-     *               Example: "DudeWheresMyCar"
-     *               [optional]
-     *               If this is null (or left off), the search for ratings
-     *               is not restricted by ratee.
-     *               TODO: Support an array
-     *
-     * @param orderby An order-by clause with fields and (optionally) ASC
-     *                or DESC.
-     *               Example: "ratingvalue DESC"
-     *               [optional]
-     *               If this is null (or left off), the search for ratings
-     *               has no guaranteed order
-     *
-     * @param pageinfo The type of page that has its info returned (i.e.,
-     *               'pagename', 'hits', and 'pagedata') in the rows.
-     *               Example: "rater"
-     *               [optional]
-     *               If this is null (or left off), the info returned
-     *               is for the 'ratee' page (i.e., thing being rated).
-     *
-     * @access private
-     *
-     * @return DB iterator with results
-     */
     function _get_rating_result($dimension=null, $rater=null, $ratee=null,
                                 $orderby=null, $pageinfo = "ratee") {
         // pageinfo must be 'rater' or 'ratee'
@@ -702,18 +624,6 @@ extends WikiDB_backend_PearDB {
 
         return $result;
     }
-    /**
-     * Delete a rating.
-     *
-     * @param rater  The page id of the rater, i.e. page doing the rating.
-     *               This is a Wiki page id, often of a user page.
-     * @param ratee  The page id of the ratee, i.e. page being rated.
-     * @param dimension  The rating dimension id.
-     *
-     * @access public
-     *
-     * @return true upon success
-     */
     function delete_rating($rater, $ratee, $dimension) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -727,20 +637,6 @@ extends WikiDB_backend_PearDB {
         return true;
     }
 
-    /**
-     * Rate a page.
-     *
-     * @param rater  The page id of the rater, i.e. page doing the rating.
-     *               This is a Wiki page id, often of a user page.
-     * @param ratee  The page id of the ratee, i.e. page being rated.
-     * @param rateeversion  The version of the ratee page.
-     * @param dimension  The rating dimension id.
-     * @param rating The rating value (a float).
-     *
-     * @access public
-     *
-     * @return true upon success
-     */
     function rate($rater, $ratee, $rateeversion, $dimension, $rating, $isPrivate = 'no') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -756,8 +652,12 @@ extends WikiDB_backend_PearDB {
         return true;
     }
 } 
+*/
 
-// $Log: not supported by cvs2svn $ 
+// $Log: not supported by cvs2svn $
+// Revision 1.1  2004/06/18 14:42:17  rurban
+// added wikilens libs (not yet merged good enough, some work for DanFr)
+// 
 
 // Local Variables:
 // mode: php
