@@ -80,7 +80,7 @@ if (!empty($include_path)) ini_set('include_path', $include_path);
 
 define ('PHPWIKI_VERSION', '1.3.4pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.92 2002-08-27 21:51:31 rurban Exp $');
+rcs_id('$Id: index.php,v 1.93 2002-09-04 21:03:31 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -114,7 +114,7 @@ if (!defined('ADMIN_PASSWD')) define('ADMIN_PASSWD', "");
 if (!defined('ZIPDUMP_AUTH')) define('ZIPDUMP_AUTH', false);
 
 // Don't do this on a publicly accessable wiki for now.
-if (!defined('ENABLE_RAW_HTML')) define('ENABLE_RAW_HTML', true);
+if (!defined('ENABLE_RAW_HTML')) define('ENABLE_RAW_HTML', false);
 
 // If you define this to true, (MIME-type) page-dumps (either zip dumps,
 // or "dumps to directory" will be encoded using the quoted-printable
@@ -196,10 +196,11 @@ $DBParams = array(
    
    // Used only by 'dba'
    'directory'     => "/tmp",
-   //'dba_handler'   => 'gdbm',   // Either of 'gdbm' or 'db2' work great for me.
+   'dba_handler'   => 'gdbm',   // Either of 'gdbm' or 'db2' work great for me.
    //'dba_handler'   => 'db2',
    //'dba_handler'   => 'db3',    // Works fine on Windows, but not on every linux.
-   'dba_handler'     => 'dbm',    // On sf.net redhat there's dbm and gdbm
+   //'dba_handler'     => 'dbm',    // dbm suffers from limits on size of data items?
+   // On sf.net redhat there's dbm and gdbm
 
    'timeout'   => 20,
    //'timeout' => 5
@@ -614,7 +615,7 @@ define('INTERWIKI_MAP_FILE', "lib/interwiki.map");
 //if (!defined('PHPWIKI_DIR')) define('PHPWIKI_DIR', '/home/user/public_html/phpwiki');
 
 /*
- * Define to false not to use PATH_INFO to pass the pagename's.
+ * Define to false to NOT use PATH_INFO to pass the pagename's.
  * e.g. the old http://www.some.where/index.php?pagename=HomePage
  * instead of http://www.some.where/index.php/HomePage
  * or even better http://www.some.where/wiki/HomePage
