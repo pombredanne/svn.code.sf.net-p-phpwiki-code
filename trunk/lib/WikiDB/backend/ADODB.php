@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.13 2004-02-12 14:11:35 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.14 2004-02-17 12:17:34 rurban Exp $');
 
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
@@ -576,14 +576,16 @@ extends WikiDB_backend
         //  for literal '%'s or '_'s.  --- I'm not sure about \, but it seems to
         //  work as is.
         $word = $this->_dbh->qstr("%$word%");
-        return "LOWER(pagename) LIKE $word";
+        $page_tbl = $this->_table_names['page_tbl'];
+        return "LOWER($page_tbl.pagename) LIKE $word";
     }
 
     function _fullsearch_sql_match_clause($word) {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);  //not sure if we need this
         // (see above)
         $word = $this->_dbh->qstr("%$word%");
-        return "LOWER(pagename) LIKE $word OR content LIKE $word";
+        $page_tbl = $this->_table_names['page_tbl'];
+        return "LOWER($page_tbl.pagename) LIKE $word OR content LIKE $word";
     }
 
     /**
