@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.68 2002-11-14 22:28:03 carstenklapp Exp $');
+rcs_id('$Id: config.php,v 1.69 2003-02-21 19:44:54 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -257,7 +257,11 @@ if (!defined('SERVER_PROTOCOL')) {
 
 if (!defined('SCRIPT_NAME')) define('SCRIPT_NAME', $HTTP_SERVER_VARS['SCRIPT_NAME']);
 
-if (!defined('DATA_PATH'))   define('DATA_PATH', dirname(SCRIPT_NAME));
+if (!defined('DATA_PATH')) {
+    // Hack so that if phpwiki in in the htdoc root,
+    // DATA_PATH == '' rather than '/'.
+    define('DATA_PATH', substr(dirname('x' . SCRIPT_NAME), 1));
+}
 
 if (!defined('USE_PATH_INFO'))
 {
