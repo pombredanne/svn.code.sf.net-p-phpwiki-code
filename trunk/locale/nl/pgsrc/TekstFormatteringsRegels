@@ -1,3 +1,12 @@
+Date: Sun, 27 Jan 2002 17:28:55 -0500
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
+X-Rcs-Id: $Id: TekstFormatteringsRegels,v 1.9 2002-01-27 23:31:35 carstenklapp Exp $
+Content-Type: application/x-phpwiki;
+  pagename=TekstFormatteringsRegels;
+  flags=PAGE_LOCKED;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
 ! Synopsis
 TekstFormatteringsRegels%%%
 __Nadruk:__ '__' voor schuin, _''_ voor vet, '__'_''_ voor beide.%%%
