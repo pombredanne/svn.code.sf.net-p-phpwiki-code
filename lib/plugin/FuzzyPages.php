@@ -1,12 +1,12 @@
 <?php // -*-php-*-
-rcs_id('$Id: FuzzyPages.php,v 1.3 2002-02-02 06:13:08 carstenklapp Exp $');
+rcs_id('$Id: FuzzyPages.php,v 1.4 2002-02-27 19:04:30 carstenklapp Exp $');
 
 //require_once('lib/TextSearchQuery.php');
 //require_once('lib/PageList.php');
 
 /**
  * FuzzyChanges is an experimental plugin which looks for similar page titles.
- * 
+ *
  * Pages are considered similar if they sound similar - metaphone() (english only)
  * or if the name is written similar - levenshtein()
  *
@@ -23,8 +23,9 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('page'	=> '[pagename]',
-                     's'	=> false);
+        return array('page'     => '[pagename]',
+                     's'        => false,
+                     'size'     => false); //default in WikiPlugin function makeForm
     }
 
     function run($dbi, $argstr, $request) {
@@ -34,7 +35,7 @@ extends WikiPlugin
             return '';
 
         $thispage = $page;
-if ($s) $thispage = $s;
+        if ($s) $thispage = $s;
         $list = array();
         $pages = $dbi->getAllPages();
 
@@ -69,9 +70,9 @@ if ($s) $thispage = $s;
         $table = HTML::table(array('cellpadding' => 2,
                                    'cellspacing' => 1,
                                    'border'      => 0,
-                                   'class'	 => 'pagelist'));
+                                   'class'       => 'pagelist'));
         $descrip = fmt("These page titles match fuzzy with '%s'",
-                        WikiLink($thispage, 'auto'));
+                       WikiLink($thispage, 'auto'));
         $table->pushContent(HTML::caption(array('align'=>'top'), $descrip));
         foreach ($list as $key => $val) {
             $row = HTML::tr(HTML::td(WikiLink($key)),
@@ -88,5 +89,5 @@ if ($s) $thispage = $s;
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>
