@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.5 2002-01-21 16:28:28 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.6 2002-01-21 16:53:35 carstenklapp Exp $');
 
 // This will relieve some of the work of plugins like LikePages,
 // MostPopular and allows dynamic expansion of those plugins do
@@ -58,21 +58,24 @@ class PageList {
         $table = HTML::table(array('cellpadding' => 0,
                                    'cellspacing' => 1,
                                    'border' => 0,
-                                   'summary' => $summary)
+                                   'summary' => $summary,
+                                   'width' => '100%')
                             );
 
         $pad = new RawXml('&nbsp;&nbsp;');
 
-        $head = HTML::tr();
+        $caption = HTML::div(array('align' => 'left'), $this->getCaption());
+
+        $thead = HTML::thead();
         foreach ($this->_columns as $column_name) {
             if ($this->_column_align($column_name) == 'right') {
-                $head->pushContent(HTML::td(array('align' => 'right'), $pad, HTML::u($column_name)));
+                $thead->pushContent(HTML::td(array('align' => 'right'), $pad, HTML::u($column_name)));
             } else {
-                $head->pushContent(HTML::td($pad, HTML::u($column_name)));
+                $thead->pushContent(HTML::td($pad, HTML::u($column_name)));
             }
         }
-        $table->pushContent($head);
 
+        $tbody = HTML::tbody();
         foreach ($this->_pages as $page_handle) {
             $row = HTML::tr();
             foreach ($this->_columns as $column_name) {
@@ -102,9 +105,14 @@ class PageList {
                     $row->pushContent (HTML::td($pad, $td));
                 }
             }
-            $table->pushContent(HTML::tr($row));
+            $tbody->pushContent($row);
         }
-        return array(HTML::p($this->getCaption()), $table);
+
+        // Final table assembly
+        $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
+        $table->pushContent($thead);
+        $table->pushContent($tbody);
+        return $table;
     }
     
     ////////////////////
