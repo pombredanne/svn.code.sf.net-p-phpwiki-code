@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.199 2004-08-05 10:38:15 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.200 2004-08-05 17:34:26 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1183,12 +1183,12 @@ class fileSet {
      * (This was a function LoadDir in lib/loadsave.php)
      * See also http://www.php.net/manual/en/function.readdir.php
      */
-    function getFiles($exclude=false,$sortby=false,$limit=false) {
-        require_once('lib/PageList.php');
-
+    function getFiles($exclude=false, $sortby=false, $limit=false) {
         $list = $this->_fileList;
+
         if ($sortby) {
-            switch (Pagelist::sortby($sortby,'db')) {
+            require_once('lib/PageList.php');
+            switch (Pagelist::sortby($sortby, 'db')) {
             case 'pagename ASC': break;
             case 'pagename DESC': 
                 $list = array_reverse($list); 
@@ -1203,7 +1203,7 @@ class fileSet {
             }
         }
         if ($limit)
-            return array_splice($list,0,$limit);
+            return array_splice($list, 0, $limit);
         return $list;
     }
 
@@ -1632,6 +1632,10 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.199  2004/08/05 10:38:15  rurban
+// fix Bug #993692:  Making Snapshots or Backups doesn't work anymore
+// in CVS version.
+//
 // Revision 1.198  2004/07/02 10:30:36  rurban
 // always disable getimagesize for < php-4.3 with external png's
 //
