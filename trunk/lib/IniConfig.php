@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.70 2005-01-04 20:22:44 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.71 2005-01-10 18:06:40 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -585,7 +585,12 @@ function fixup_dynamic_configs() {
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
     update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
-    if (empty($LANG)) $LANG = guessing_lang();
+    if (empty($LANG))
+        if (!defined("DEFAULT_LANGUAGE") or !DEFAULT_LANGUAGE)
+            // TODO: defer this to WikiRequest::initializeLang()
+            $LANG = guessing_lang(); 
+        else    
+            $LANG = DEFAULT_LANGUAGE;
  
     // Set up (possibly fake) gettext()
     // Todo: this could be moved to fixup_static_configs()
@@ -760,6 +765,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2005/01/04 20:22:44  rurban
+// guess $LANG based on client
+//
 // Revision 1.69  2004/12/23 14:07:34  rurban
 // fix default language detection if DEFAULT_LANGUAGE=, collapse to 2char lang code, fix typo in @bindtextdomain
 //
