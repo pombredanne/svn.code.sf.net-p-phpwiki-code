@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.7 2004-04-20 22:26:27 zorloc Exp $');
+rcs_id('$Id: IniConfig.php,v 1.8 2004-04-23 16:55:59 zorloc Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -186,6 +186,10 @@ function IniConfig($file)
     }
 
     // Now it's the external DB authentication stuff's turn
+    if (in_array('Db', $USER_AUTH_ORDER) && empty($rs['DBAUTH_AUTH_DSN'])) {
+        $rs['DBAUTH_AUTH_DSN'] = $DBParams['dsn'];
+    }
+    
     global $DBAuthParams;
     $DBAP_MAP = array('DBAUTH_AUTH_DSN' => 'auth_dsn',
                       'DBAUTH_AUTH_CHECK' => 'auth_check',
@@ -460,6 +464,9 @@ function fix_configs() {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/04/20 22:26:27  zorloc
+// Removed Pear_Config for parse_ini_file().
+//
 // Revision 1.6  2004/04/20 18:10:27  rurban
 // config refactoring:
 //   FileFinder is needed for WikiFarm scripts calling index.php
