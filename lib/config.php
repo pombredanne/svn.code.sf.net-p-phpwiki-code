@@ -10,7 +10,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.10 2001-12-02 21:36:43 carstenklapp Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.11 2001-12-11 15:47:02 dairiki Exp $'); 
    // end essential internal stuff
 
 
@@ -206,9 +206,9 @@
 
    // Perl regexp for WikiNames
    // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
-   $WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
-
-
+   //$WikiNameRegexp = "(?<![A-Za-z0-9])([A-Z][a-z]+){2,}(?![A-Za-z0-9])";
+   // This should work for all ISO-8859-1 languages:
+   $WikiNameRegexp = "(?<![A-Za-z0-9µÀ-ÖØ-öø-ÿ])([A-ZÀ-ÖØ-Þ][a-zµß-öø-ÿ]+){2,}(?![A-Za-z0-9µÀ-ÖØ-öø-ÿ])";
 
    /////////////////////////////////////////////////////////////////////
    // Part Four:
