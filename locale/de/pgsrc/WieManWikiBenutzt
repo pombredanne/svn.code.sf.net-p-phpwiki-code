@@ -1,9 +1,9 @@
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks+carsten's-binary-hack)
-X-RCS_ID: $Id: WieManWikiBenutzt,v 1.7 2002-01-09 05:21:48 carstenklapp Exp $
+X-RCS_ID: "$Id: WieManWikiBenutzt,v 1.8 2002-01-25 22:54:28 carstenklapp Exp $"
 Content-Type: application/x-phpwiki;
   pagename=WieManWikiBenutzt;
   flags="";
-  lastmodified=1008922802;
+  charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 ''»Wiki wiki«'' heißt »schnell« auf Hawai'anisch.
@@ -38,3 +38,5 @@ Ich bin auch ein Absatz. Wir sind halt sehr kleine Absätze.
 ----
 WikiWikiWeb soll schnell und einfach zu editieren sein. Es hat eine sehr
 einfache Syntax, über die du in TextFormatierungsRegeln mehr erfahren kannst.
+----
+PhpWikiDokumentation
