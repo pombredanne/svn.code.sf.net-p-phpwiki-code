@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.8 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.9 2004-02-27 02:10:50 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -80,7 +80,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     // Arguments:
@@ -247,11 +247,13 @@ extends WikiPlugin
         $parent = $args['page'];
         $blogs = $this->findBlogs($dbi, $parent);
         $html = HTML();
-
         if ($blogs) {
+            // First reorder
+            usort($blogs, array("WikiPlugin_WikiBlog",
+                                "cmp"));
             if ($args['order'] == 'reverse')
                 $blogs = array_reverse($blogs);
-            
+           
             if (!$args['noheader'])
                 $html->pushContent(HTML::h2(array('class' => 'wikiblog-heading'),
                                             fmt("Comments on %s:", WikiLink($parent))));
@@ -304,6 +306,11 @@ extends WikiPlugin
         }
         return $blogs;
     }
+
+    function cmp($a, $b) {
+        return(strcmp($a->get('mtime'),
+                      $b->get('mtime')));
+    }
     
     function showBlogForm (&$request, $args) {
         // Show blog-entry form.
@@ -313,6 +320,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.7  2003/11/17 16:23:55  carstenklapp
 // Switched to Iso8601DateTime and more use of SUBPAGE_SEPARATOR. This
 // allows plugin UnfoldSubpages (for example) to be added to page
