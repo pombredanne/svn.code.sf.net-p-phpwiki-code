@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssFeed.php,v 1.5 2004-05-18 16:18:37 rurban Exp $');
+rcs_id('$Id: RssFeed.php,v 1.6 2004-05-24 17:36:06 rurban Exp $');
 /*
  Copyright 2003 Arnaud Fontaine
 
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -55,10 +55,9 @@ extends WikiPlugin
     function run($dbi, $argstr, $request, $basepage) {
         extract($this->getArgs($argstr, $request));
 
-        $xml_parser = xml_parser_create();
         $rss_parser = new RSSParser();
         if (!empty($url))
-            $rss_parser->parse_results( $xml_parser, &$rss_parser, $url, $debug);
+            $rss_parser->parse_url( $url, $debug);
 
         if (!empty($rss_parser->channel['title'])) $feed = $rss_parser->channel['title'];
         if (!empty($rss_parser->channel['link']))  $url  = $rss_parser->channel['link'];
@@ -98,6 +97,8 @@ extends WikiPlugin
             $cell->pushContent($cell_content);
             $html->pushContent($cell);
         }
+        if (!check_php_version(5))
+            $rss_parser->__destruct();
         return $html;
     }
 
@@ -115,6 +116,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/05/18 16:18:37  rurban
+// AutoSplit at subpage seperators
+// RssFeed stability fix for empty feeds or broken connections
+//
 // Revision 1.4  2004/04/18 01:11:52  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.
