@@ -1,9 +1,9 @@
 Date: Sat, 13 Mar 2004 11:26:41 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.8)
-X-Rcs-Id: $Id: CreateTocPlugin,v 1.1 2004-03-14 16:27:26 rurban Exp $
+X-Rcs-Id: $Id: CreateTocPlugin,v 1.2 2004-03-17 18:33:31 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=CreateTocPlugin;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -13,13 +13,13 @@ Content-Transfer-Encoding: binary
 
 WikiPlugin to create a dynamical *Table Of Contents* of all headers. Since v1.3.8
 
-!! Usage:
+!! Usage
 <verbatim>
      <?plugin CreateToc ?>
      <?plugin CreateToc jshide||=1 with_toclink||=1 ?>
 </verbatim>
 
-!! Plugin Arguments:
+!! Plugin Arguments
 __jshide__: |
   Boolean if the TOC should be initially hidden and on click expanded. Default: 0
 __with_toclink__:  |
@@ -37,7 +37,7 @@ __pagename__:  |
 
 !! Known Problems
 
-If the header contains a link or a WikiWord, ~CreateToc will break.
+If any header contains a link or a ~WikiWord or non-word characters, ~CreateToc will print a warning and refuse to link this header.
 
 !! Examples
 
