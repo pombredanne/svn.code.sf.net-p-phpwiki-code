@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.9 2002-09-09 08:38:18 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.10 2002-09-12 11:45:33 rurban Exp $');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -317,6 +317,7 @@ class LocalizedFileFinder
      * Constructor.
      */
     function LocalizedFileFinder () {
+        $this->_pathsep = $this->_get_syspath_separator();
         $include_path = $this->_get_include_path();
         $path = array();
 
@@ -353,6 +354,7 @@ class LocalizedButtonFinder
      */
     function LocalizedButtonFinder () {
         global $Theme;
+        $this->_pathsep = $this->_get_syspath_separator();
         $include_path = $this->_get_include_path();
         $path = array();
 

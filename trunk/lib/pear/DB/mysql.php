@@ -13,15 +13,14 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Authors: Stig Bakken <ssb@fast.no>                                   |
-// |                                                                      |
+// | Author: Stig Bakken <ssb@fast.no>                                    |
 // +----------------------------------------------------------------------+
 //
-// Based on code from the PHP CVS repository.  The only modifications made
-// have been modification of the include paths.
+// Based on DB 1.3 from the pear.php.net repository. 
+// The only modifications made have been modification of the include paths. 
 //
-rcs_id('$Id: mysql.php,v 1.1 2002-01-28 04:01:57 dairiki Exp $');
-rcs_id('From Pear CVS: Id: mysql.php,v 1.84 2002/01/13 18:47:17 cox Exp');
+rcs_id('$Id: mysql.php,v 1.2 2002-09-12 11:45:33 rurban Exp $');
+rcs_id('From Pear CVS: Id: mysql.php,v 1.5 2002/06/19 00:41:06 cox Exp');
 //
 // Database independent query interface definition for PHP's MySQL
 // extension.
@@ -85,6 +84,7 @@ class DB_mysql extends DB_common
             1100 => DB_ERROR_NOT_LOCKED,
             1136 => DB_ERROR_VALUE_COUNT_ON_ROW,
             1146 => DB_ERROR_NOSUCHTABLE,
+            1048 => DB_ERROR_CONSTRAINT,
         );
     }
 
@@ -108,11 +108,11 @@ class DB_mysql extends DB_common
             return $this->raiseError(DB_ERROR_EXTENSION_NOT_FOUND);
 
         $this->dsn = $dsninfo;
-        if ($dsninfo['protocol'] == 'unix') {
+        if (isset($dsninfo['protocol']) && $dsninfo['protocol'] == 'unix') {
             $dbhost = ':' . $dsninfo['socket'];
         } else {
             $dbhost = $dsninfo['hostspec'] ? $dsninfo['hostspec'] : 'localhost';
-            if ($dsninfo['port']) {
+            if (!empty($dsninfo['port'])) {
                 $dbhost .= ':' . $dsninfo['port'];
             }
         }
@@ -146,8 +146,21 @@ class DB_mysql extends DB_common
 
         if ($dsninfo['database']) {
             if (!@mysql_select_db($dsninfo['database'], $conn)) {
-                return $this->raiseError(DB_ERROR_NODBSELECTED, null, null,
-                                         null, mysql_error($conn));
+               switch(mysql_errno($conn)) {
+                        case 1049:
+                            return $this->raiseError(DB_ERROR_NOSUCHDB, null, null,
+                                                     null, mysql_error($conn));
+                            break;
+                        case 1044:
+                             return $this->raiseError(DB_ERROR_ACCESS_VIOLATION, null, null,
+                                                      null, mysql_error($conn));
+                            break;
+                        default:
+                            return $this->raiseError(DB_ERROR, null, null,
+                                                     null, mysql_error($conn));
+                            break;
+
+                    }
             }
             // fix to allow calls to different databases in the same script
             $this->_db = $dsninfo['database'];
@@ -194,8 +207,10 @@ class DB_mysql extends DB_common
         $ismanip = DB::isManip($query);
         $this->last_query = $query;
         $query = $this->modifyQuery($query);
-        if (!@mysql_select_db($this->_db, $this->connection)) {
-            return $this->mysqlRaiseError(DB_ERROR_NODBSELECTED);
+        if ($this->_db) {
+            if (!@mysql_select_db($this->_db, $this->connection)) {
+                return $this->mysqlRaiseError(DB_ERROR_NODBSELECTED);
+            }
         }
         if (!$this->autocommit && $ismanip) {
             if ($this->transaction_opcount == 0) {
@@ -316,12 +331,23 @@ class DB_mysql extends DB_common
             return mysql_free_result($result);
         }
 
-        if (!isset($this->prepare_tokens[(int)$result])) {
+        $result = (int)$result; // $result is a prepared query handle
+        if (!isset($this->prepare_tokens[$result])) {
             return false;
         }
 
-        unset($this->prepare_tokens[(int)$result]);
-        unset($this->prepare_types[(int)$result]);
+        // [ssb]: WTF? unset($this->prepare_types[$result]) makes PHP
+        // crash on my laptop (4.1.2 as well as 4.3.0-dev)
+
+        $copy = $this->prepare_types;
+        unset($copy[$result]);
+        $this->prepare_types = $copy;
+//        unset($this->prepare_types[$result]);
+
+        $copy = $this->prepare_tokens;
+        unset($copy[$result]);
+        $this->prepare_tokens = $copy;
+//        unset($this->prepare_tokens[$result]);
 
         return true;
     }
@@ -393,8 +419,10 @@ class DB_mysql extends DB_common
     function commit()
     {
         if ($this->transaction_opcount > 0) {
-            if (!@mysql_select_db($this->_db, $this->connection)) {
-                return $this->mysqlRaiseError(DB_ERROR_NODBSELECTED);
+            if ($this->_db) {
+                if (!@mysql_select_db($this->_db, $this->connection)) {
+                    return $this->mysqlRaiseError(DB_ERROR_NODBSELECTED);
+                }
             }
             $result = @mysql_query('COMMIT', $this->connection);
             $result = @mysql_query('SET AUTOCOMMIT=1', $this->connection);
@@ -415,8 +443,10 @@ class DB_mysql extends DB_common
     function rollback()
     {
         if ($this->transaction_opcount > 0) {
-            if (!@mysql_select_db($this->_db, $this->connection)) {
-                return $this->mysqlRaiseError(DB_ERROR_NODBSELECTED);
+            if ($this->_db) {
+                if (!@mysql_select_db($this->_db, $this->connection)) {
+                    return $this->mysqlRaiseError(DB_ERROR_NODBSELECTED);
+                }
             }
             $result = @mysql_query('ROLLBACK', $this->connection);
             $result = @mysql_query('SET AUTOCOMMIT=1', $this->connection);
@@ -474,85 +504,82 @@ class DB_mysql extends DB_common
      *
      * @access public
      *
-     * @param $seq_name the name of the sequence
+     * @param string $seq_name the name of the sequence
      *
-     * @param $ondemand whether to create the sequence table on demand
+     * @param bool $ondemand whether to create the sequence table on demand
      * (default is true)
      *
-     * @return a sequence integer, or a DB error
+     * @return mixed a sequence integer, or a DB error
      */
     function nextId($seq_name, $ondemand = true)
     {
-        $sqn = preg_replace('/[^a-z0-9_]/i', '_', $seq_name);
-        $repeat = 0;
+        $seqname = $this->getSequenceName($seq_name);
         do {
-            // XXX HACK: temporarily force error mode to "return"
-            $tmp = $this->_default_error_mode;
-            $this->_default_error_mode = PEAR_ERROR_RETURN;
-            $result = $this->query("UPDATE ${sqn}_seq ".
+            $repeat = 0;
+            $this->pushErrorHandling(PEAR_ERROR_RETURN);
+            $result = $this->query("UPDATE ${seqname} ".
                                    'SET id=LAST_INSERT_ID(id+1)');
-            $this->_default_error_mode = $tmp;
-            if ($ondemand && DB::isError($result) &&
-                $result->getCode() == DB_ERROR_NOSUCHTABLE) {
-                $repeat = 1;
+            $this->popErrorHandling();
+            if ($result == DB_OK) {
+                /** COMMON CASE **/
+                $id = mysql_insert_id($this->connection);
+                if ($id != 0) {
+                    return $id;
+                }
+                /** EMPTY SEQ TABLE **/
+                // Sequence table must be empty for some reason, so fill it and return 1
+                // Obtain a user-level lock
+                $result = $this->getOne("SELECT GET_LOCK('${seqname}_lock',10)");
+                if (DB::isError($result)) {
+                    return $this->raiseError($result);
+                }
+                if ($result == 0) {
+                    // Failed to get the lock, bail with a DB_ERROR_NOT_LOCKED error
+                    return $this->mysqlRaiseError(DB_ERROR_NOT_LOCKED);
+                }
+
+                // add the default value
+                $result = $this->query("REPLACE INTO ${seqname} VALUES (0)");
+                if (DB::isError($result)) {
+                    return $this->raiseError($result);
+                }
+
+                // Release the lock
+                $result = $this->getOne("SELECT RELEASE_LOCK('${seqname}_lock')");
+                if (DB::isError($result)) {
+                    return $this->raiseError($result);
+                }
+                // We know what the result will be, so no need to try again
+                return 1;
+
+            /** ONDEMAND TABLE CREATION **/
+            } elseif ($ondemand && DB::isError($result) &&
+                $result->getCode() == DB_ERROR_NOSUCHTABLE)
+            {
                 $result = $this->createSequence($seq_name);
                 // Since createSequence initializes the ID to be 1,
                 // we do not need to retrieve the ID again (or we will get 2)
                 if (DB::isError($result)) {
-                    return $result;
+                    return $this->raiseError($result);
                 } else {
                     // First ID of a newly created sequence is 1
                     return 1;
                 }
+
+            /** BACKWARDS COMPAT **/
             } elseif (DB::isError($result) &&
-                $result->getCode() == DB_ERROR_ALREADY_EXISTS) {
-                // Must be using old sequence emulation implementation,
-                // we need to clean up the dupes.
-
-                // Obtain a user-level lock... this will release any previous
-                // application locks, but unlike LOCK TABLES, it does not abort
-                // the current transaction and is much less frequently used.
-                $result = $this->getOne("SELECT GET_LOCK('${sqn}_seq_lock',10)");
+                      $result->getCode() == DB_ERROR_ALREADY_EXISTS)
+            {
+                // see _BCsequence() comment
+                $result = $this->_BCsequence($seqname);
                 if (DB::isError($result)) {
-                    return $result;
+                    return $this->raiseError($result);
                 }
-                if ($result == 0) {
-                    // Failed to get the lock, can't do the conversion, bail
-                    // with a DB_ERROR_NOT_LOCKED error
-                    return $this->mysqlRaiseError(1100);
-                }
-
-                $highest_id = $this->getOne("SELECT MAX(id) FROM ${sqn}_seq");
-                if (DB::isError($highest_id)) {
-                    return $highest_id;
-                }
-                // We should probably do something if $highest_id isn't
-                // numeric, but I'm at a loss as how to handle that...
-                $result = $this->query("DELETE FROM ${sqn}_seq ".
-                                       "WHERE id <> $highest_id");
-                if (DB::isError($result)) {
-                    return $result;
-                }
-
-                // If another thread has been waiting for this lock,
-                // it will go thru the above procedure, but will have no
-                // real effect
-                $result = $this->getOne("SELECT RELEASE_LOCK('${sqn}_seq_lock')");
-                if (DB::isError($result)) {
-                    return $result;
-                }
-
-                // This should kill all rows except the highest, now we
-                // can try again
                 $repeat = 1;
-            } else {
-                $repeat = 0;
             }
         } while ($repeat);
-        if (DB::isError($result)) {
-            return $result;
-        }
-        return mysql_insert_id($this->connection);
+
+        return $this->raiseError($result);
     }
 
     // }}}
@@ -560,15 +587,15 @@ class DB_mysql extends DB_common
 
     function createSequence($seq_name)
     {
-        $sqn = preg_replace('/[^a-z0-9_]/i', '_', $seq_name);
-        $res = $this->query("CREATE TABLE ${sqn}_seq ".
+        $seqname = $this->getSequenceName($seq_name);
+        $res = $this->query("CREATE TABLE ${seqname} ".
                             '(id INTEGER UNSIGNED AUTO_INCREMENT NOT NULL,'.
                             ' PRIMARY KEY(id))');
         if (DB::isError($res)) {
             return $res;
         }
         // insert yields value 1, nextId call will generate ID 2
-        return $this->query("INSERT INTO ${sqn}_seq VALUES(0)");
+        return $this->query("INSERT INTO ${seqname} VALUES(0)");
     }
 
     // }}}
@@ -576,11 +603,55 @@ class DB_mysql extends DB_common
 
     function dropSequence($seq_name)
     {
-        $sqn = preg_replace('/[^a-z0-9_]/i', '_', $seq_name);
-        return $this->query("DROP TABLE ${sqn}_seq");
+        $seqname = $this->getSequenceName($seq_name);
+        return $this->query("DROP TABLE ${seqname}");
     }
 
     // }}}
+
+    /**
+    * Bacwards Compatibility with old sequence emulation implementation
+    * (clean up the dupes)
+    * @param string $seqname The sequence name to clean up
+    * @return mixed DB_Error or true
+    */
+    function _BCsequence($seqname)
+    {
+        // Obtain a user-level lock... this will release any previous
+        // application locks, but unlike LOCK TABLES, it does not abort
+        // the current transaction and is much less frequently used.
+        $result = $this->getOne("SELECT GET_LOCK('${seqname}_lock',10)");
+        if (DB::isError($result)) {
+            return $result;
+        }
+        if ($result == 0) {
+            // Failed to get the lock, can't do the conversion, bail
+            // with a DB_ERROR_NOT_LOCKED error
+            return $this->mysqlRaiseError(DB_ERROR_NOT_LOCKED);
+        }
+
+        $highest_id = $this->getOne("SELECT MAX(id) FROM ${seqname}");
+        if (DB::isError($highest_id)) {
+            return $highest_id;
+        }
+        // This should kill all rows except the highest
+        // We should probably do something if $highest_id isn't
+        // numeric, but I'm at a loss as how to handle that...
+        $result = $this->query("DELETE FROM ${seqname} WHERE id <> $highest_id");
+        if (DB::isError($result)) {
+            return $result;
+        }
+
+        // If another thread has been waiting for this lock,
+        // it will go thru the above procedure, but will have no
+        // real effect
+        $result = $this->getOne("SELECT RELEASE_LOCK('${seqname}_lock')");
+        if (DB::isError($result)) {
+            return $result;
+        }
+        return true;
+    }
+
     // {{{ quote()
     /**
     * Quote the given string so it can be safely used within string delimiters
@@ -621,8 +692,7 @@ class DB_mysql extends DB_common
 
     function modifyLimitQuery($query, $from, $count)
     {
-        $query = $query . " LIMIT $from, $count";
-        return $query;
+        return $query . " LIMIT $from, $count";
     }
 
     // }}}
@@ -634,7 +704,8 @@ class DB_mysql extends DB_common
             $errno = $this->errorCode(mysql_errno($this->connection));
         }
         return $this->raiseError($errno, null, null, null,
-                        @mysql_error($this->connection));
+                                 @mysql_errno($this->connection) . " ** " .
+                                 @mysql_error($this->connection));
     }
 
     // }}}

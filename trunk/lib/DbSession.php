@@ -7,8 +7,7 @@ ini_set('session.save_handler','user');
 
 // {{{ includes
 
-//include 'DB.php';
-include_once 'pear/DB.php';
+include_once 'lib/pear/DB.php';
 require_once('lib/WikiDB/backend/PearDB.php');
 
 // }}} includes
@@ -23,12 +22,13 @@ require_once('lib/WikiDB/backend/PearDB.php');
  * @class   DB_Session
  * @author  Stanislav Shramko <stanis@movingmail.com>
  * @access  public
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  */
 
 class DB_Session 
 extends WikiDB_backend_PearDB
+// extends DB
 {
 
     /**
@@ -37,28 +37,38 @@ extends WikiDB_backend_PearDB
      * @param  string $table a name of the table
      * @access public
      */
-    function DB_Session($table = 'session_table') {
+    function DB_Session(& $dbh, $table = 'session_table') {
 	global $db_session_dbh, $db_session_dsn, $db_session_persistent, $session_table;
-	// $this->PEAR();
 	$session_table = $table;
-	if (!$this->_dbh) { // Fixme. This should not happen.
-	    $db_session_dbh = DB::connect($GLOBALS['DBParams']['dsn'], 
-					  array('persistent' => true, 'debug' => 2));
+	// We always use persistent connections for now. See PearDB.
+	
+	if (!$dbh) { // Fixme. This should not happen.
+	    trigger_error(_("No DB_Session handler."), E_USER_WARNING);
+	    $db = new WikiDB_backend_PearDB ($GLOBALS['DBParams']);
+	    $db_session_dsn = $db->_dsn;
+	    $db_session_dbh = $db->_dbh;
+	    $db_session_persistent = $dbh->getOption('persistent');
+	    /*
+	    PEAR::PEAR();
+	    $db_session_dsn = $GLOBALS['DBParams']['dsn'];
+	    $db_session_dbh = DB::connect($db_session_dsn, 
+					  array('persistent' => $db_session_persistent, 
+					        'debug' => 2));
+	    */
 	    if (DB::isError($db_session_dbh)) {
 		die("DB_Session allocated the following problem: " . 
 		    $db_session_dbh->getMessage());
 	    }
 	}
 	else {
-	    $db_session_dbh =& $this->_dbh;
+	    $db_session_persistent = $dbh->getOption('persistent');
+	    $db_session_dbh = $dbh;
+	    $db_session_dsn = $GLOBALS['DBParams']['dsn'];
 	}
-	// We always use persistent connections for now.
-	$db_session_persistent = true; //$dbh->get('persistent');
 	session_set_save_handler ("_db_session_open", 
 				  "_db_session_close", "_db_session_read", 
 				  "_db_session_write", "_db_session_destroy", 
 				  "_db_session_gc");
-	session_start();
     }
 
     /**

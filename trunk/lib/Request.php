@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.19 2002-09-09 15:26:12 rurban Exp $');
+<?php rcs_id('$Id: Request.php,v 1.20 2002-09-12 11:45:33 rurban Exp $');
 
 // FIXME: write log entry.
 
@@ -11,11 +11,11 @@ class Request {
         switch($this->get('REQUEST_METHOD')) {
         case 'GET':
         case 'HEAD':
-            $this->sanify_input_array(&$GLOBALS['HTTP_GET_VARS']);
+            // $this->sanify_input_array(&$GLOBALS['HTTP_GET_VARS']);
             $this->args = &$GLOBALS['HTTP_GET_VARS'];
             break;
         case 'POST':
-            $this->sanify_input_array(&$GLOBALS['HTTP_POST_VARS']);
+            // $this->sanify_input_array(&$GLOBALS['HTTP_POST_VARS']);
             $this->args = &$GLOBALS['HTTP_POST_VARS'];
             break;
         default:
@@ -203,21 +203,24 @@ class Request {
             $var = preg_replace('|^\r?\n?|', '', $var);
     }
 
+    // Fixme: Seperate into fields of type: displayed, db, internal, password, ...
+    // and define for each type the allowed characters.
     function sanify_input_array (&$arr) {
         if (!empty($arr)) {
             foreach (array_keys($arr) as $key) {
-                $arr[$key] = $this->sanify_userinput($arr[$key]);
+                if (!in_array($key,array('edit','password')))
+                    $arr[$key] = $this->sanify_userinput($arr[$key]);
             }
         }
     }
 
     function sanify_userinput ($var) {
         // Prevent possible XSS attacks (cross site scripting attacks)
-        // see http://www.cert.org/advisories/CA-2000-02.html, http://www.perl.com/pub/a/2002/02/20/css.html
+        // See http://www.cert.org/advisories/CA-2000-02.html, http://www.perl.com/pub/a/2002/02/20/css.html
         // <script> tags, ...
         // /wiki/?pagename=<script>alert(document.cookie)</script>
         if (is_string($var)) {
-            return htmlentities(strip_tags($var));
+            return strip_tags($var);
         } elseif (is_array($var)) {
             $this->sanify_input_array($var);
             return $var;
