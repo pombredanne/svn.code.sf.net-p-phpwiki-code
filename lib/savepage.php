@@ -1,4 +1,4 @@
-<!-- $Id: savepage.php,v 1.1 2000-10-08 17:33:26 wainstead Exp $ -->
+<!-- $Id: savepage.php,v 1.2 2000-10-19 21:36:50 ahollosi Exp $ -->
 <?php
 
 /*
@@ -57,8 +57,9 @@
    // create page header
    $enc_url = rawurlencode($pagename);
    $enc_name = htmlspecialchars($pagename);
-   $html = "Thank you for editing " .
-	"<a href=\"$ScriptUrl?$enc_url\">$enc_name</a><br>\n";
+   $html = sprintf(gettext("Thank you for editing %s."),
+		   "<a href=\"$ScriptUrl?$enc_url\">$enc_name</a>");
+   $html .= "<br>\n";
 
    if (! empty($content)) {
       // patch from Grant Morgan <grant@ryuuguu.com> for magic_quotes_gpc
@@ -86,7 +87,8 @@
    InsertPage($dbi, $pagename, $pagehash);
    UpdateRecentChanges($dbi, $pagename, $newpage);
 
-   $html .= "Your careful attention to detail is much appreciated.\n";
+   $html .= gettext ("Your careful attention to detail is much appreciated.");
+   $html .= "\n";
 
    if ($WikiPageStore == "/tmp/wikidb") {
       $html .= "<P><B>Warning: the Wiki DBM file still lives in the " .

@@ -1,4 +1,4 @@
-<!-- $Id: pageinfo.php,v 1.2 2000-10-08 18:12:14 wainstead Exp $ -->
+<!-- $Id: pageinfo.php,v 1.3 2000-10-19 21:36:50 ahollosi Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
 <?php
    if (get_magic_quotes_gpc()) {
@@ -19,7 +19,7 @@
 
    // don't bother unless we were asked
    if (! $info) {
-      GeneratePage('MESSAGE', $html, "PageInfo", 0);
+      GeneratePage('MESSAGE', $html, gettext("PageInfo"), 0);
       exit;
    }
 
@@ -63,5 +63,5 @@
    // $dbi = OpenDataBase($ArchivePageStore);
    $html .= ViewPageProps($info, $ArchivePageStore);
 
-   GeneratePage('MESSAGE', $html, "PageInfo: '$info'", 0);
+   GeneratePage('MESSAGE', $html, gettext("PageInfo").": '$info'", 0);
 ?>
