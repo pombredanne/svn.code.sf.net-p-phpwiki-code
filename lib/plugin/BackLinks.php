@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.5 2001-12-19 12:07:34 carstenklapp Exp $');
+rcs_id('$Id: BackLinks.php,v 1.6 2002-01-15 02:42:32 carstenklapp Exp $');
 /**
  */
 class WikiPlugin_BackLinks
@@ -18,8 +18,12 @@ extends WikiPlugin
         return array('exclude'		=> '',
                      'include_self'	=> 0,
                      'noheader'		=> 0,
-                     'page'		=> false);
+                     'page'		=> false,
+                     'info'		=> false);
     }
+
+    // Currently only info=false or info=hits works (I don't think
+    // anything else would be useful anyway).
 
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
@@ -30,13 +34,22 @@ extends WikiPlugin
         $p = $dbi->getPage($page);
         $backlinks = $p->getLinks();
         $lines = array();
+        if ($info) {
+            $lines[] = $this->_tr(QElement('u', _(ucfirst($info))),
+                                  QElement('u', _("Page Name")));
+        }
         while ($backlink = $backlinks->next()) {
             $name = $backlink->getName();
             if ($exclude && $name == $exclude)
                 continue;
             if (!$include_self && $name == $page)
                 continue;
-            $lines[] = Element('li', LinkWikiWord($name));
+            if ($info) {
+                $lines[] = $this->_tr($backlink->get($info),
+                                      LinkWikiWord($name));
+            } else {
+                $lines[] = Element('li', LinkWikiWord($name));
+            }
         }
 
         $html = '';
@@ -47,8 +60,23 @@ extends WikiPlugin
             $html = Element('p', $header) . "\n";
         }
         
-        return $html . Element('ul', join("\n", $lines));
+        if ($info) {
+            $html .= Element('blockquote',
+                             Element('table', array('cellpadding' => 0,
+                                                    'cellspacing' => 1,
+                                                    'border' => 0),
+                                     join("\n", $lines)));
+            return $html;
+        } else {
+            return $html . Element('ul', join("\n", $lines));
+        }
     }
+
+    function _tr ($col1, $col2) {
+        return "<tr><td align='right'>$col1&nbsp;&nbsp;</td>"
+            . "<td>&nbsp;&nbsp;$col2</td></tr>\n";
+    }
+
 };
 
 // For emacs users
