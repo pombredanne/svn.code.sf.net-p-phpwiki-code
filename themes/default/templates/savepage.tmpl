@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: savepage.tmpl,v 1.6 2002-02-04 20:38:01 carstenklapp Exp $ -->
+<!-- $Id: savepage.tmpl,v 1.7 2002-02-11 00:37:55 carstenklapp Exp $ -->
 <?php
     $signatureURL = $Theme->getImageURL('signature');
     if ($request->getArg('lockchanged'))
@@ -17,7 +17,7 @@
 <?php } ?>
 
 <?php if ($signatureURL) { ?>
-  <p><img src="<?=$signatureURL?>" /></p>
+  <p><img src="<?=$signatureURL?>" id="signature" /></p>
 <?php } ?>
 
 <?=$LockChangedMsg?>
