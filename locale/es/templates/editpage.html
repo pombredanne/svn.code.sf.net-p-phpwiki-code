@@ -13,7 +13,7 @@
 
 <body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
 <form class="wikiaction" method="POST" action="###BROWSE_PAGE###">
-<h1><a class="wikilink" href="###BROWSE###HomePage"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+<h1><a class="wikilink" href="###BROWSE###PáginaPrincipal"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
 Editar <span="wikiword">###PAGE###</span>
 <input type="submit" value=" Save "></h1>
 
@@ -37,17 +37,18 @@ See <a class="wikilink" href="###BROWSE###UserPreferences"><span class="wikiword
 ###IF COPY###<br><a class="wikiaction" href="###ACTION###edit&amp;version=archive">EditarCopia</a> De un autor previo
 
   <hr noshade>
-  <small> <b>&Eacute;nfasis:</b> '' para it&aacute;licas, ''' para bold, ''''' 
+  <small> <b>&Eacute;nfasis:</b> '' para it&aacute;licas, __ para bold, ''__ 
   para ambos <br>
-  <b>Listas:</b> tab-* para listas de balazos, tab-# para listas numeradas, tab-Term:-tab 
+  <b>Listas:</b> * para listas de balazos, # para listas numeradas, ''; term : definición'' 
   para listas de definiciones <br>
   <b>Referencias:</b> UnirPalabrasEnMay&uacute;sculas o usar corchetes para una 
   [enlace hacia una p&aacute;gina] o URL [http://cool.wiki.int/]. <br>
-  <b>Referencias:</b> Use [1],[2],[3],... y EditarEnlacess. Evite hacer enlaces 
-  con "!": !NoHiperEnlaces. Enlaces con nombres como [text | URL] <br>
-  <b>Varios:</b>"!", "!!", "!!!" para hacer t&iacute;tulos, "%%%" hace un salto 
-  de l&iacute;nea, "- - - -" Hace una linea horizontal, escapar "[" con "[[" <br>
-  M&aacute;s en <a href="###SCRIPTURL###?ReglasDeFormatoDeTexto"><b>ReglasDeFormatoDeTexto</b></a> 
+  <b>Anotaciones:</b> Use [1],[2],[3],...<br>
+  <b>Preveción enlazar:</b> Evite hacer enlaces 
+  con "!": !NoHiperEnlaces. Enlaces con nombres como [[text | URL] (doble "[")<br>
+  <b>Varios:</b>"!", "!!", "!!!" para hacer t&iacute;tulos,
+  "%%%" hace un salto de l&iacute;nea, "- - - -" Hace una linea horizontal<br>
+  M&aacute;s en <a href="###BROWSE###ReglasDeFormatoDeTexto"><b>ReglasDeFormatoDeTexto</b></a> 
   </small> 
 
 <input type="hidden" name="action" value="save">

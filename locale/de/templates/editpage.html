@@ -13,7 +13,7 @@
 
 <body bgcolor=ivory text=black alink=red link=darkblue vlink=darkmagenta>
 <form class="wikiaction" method="POST" action="###BROWSE_PAGE###">
-<h1><a class="wikilink" href="###BROWSE###HomePage"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
+<h1><a class="wikilink" href="###BROWSE###StartSeite"><img src="###LOGO###" border=0 alt="[phpwiki]" width=50 height=50></a>
 <span="wikiword">###PAGE###</span> editieren
 <input type="submit" value=" Speichern "></h1>
 
@@ -38,12 +38,14 @@ See <a class="wikilink" href="###BROWSE###UserPreferences"><span class="wikiword
 
 <hr noshade>
 <small>
-<b>Emphasis:</b> '' for italics, ''' for bold, ''''' for both
-<br><b>Lists:</b> tab-* for bullet lists, tab-# for numbered lists, tab-Term:-tab for definition lists
+<b>Emphasis:</b> '' for italics, __ for bold, ''__ for both
+<br><b>Lists:</b> * for bullet lists, # for numbered lists, ''; term : definition'' for definition lists
 <br><b>References:</b> JoinCapitalizedWords or use square brackets for a [page link] or URL [http://cool.wiki.int/].
-<br><b>References:</b> Use [1],[2],[3],... and EditLinks. Avoid linking with "!": !DoNotHyperlink, name links like [text | URL]
+<br><b>Footnotes:</b> Use [1],[2],[3],... 
+<br><b>Preventing linking:</b> Avoid linking with "!":
+!DoNotHyperlink, name links like [[text | URL] (double up on the "[")
 <br><b>Misc:</b>"!", "!!", "!!!" make headings,
-"%%%" makes a linebreak, "- - - -" makes a horizontal rule, escape "[" with "[["
+"%%%" makes a linebreak, "- - - -" makes a horizontal rule
 <br>more on
 <a class="wikilink" href="###BROWSE###TextFormattingRules"><b><span class="wikiword">TextFormattingRules</span></b></a>
 </small>
