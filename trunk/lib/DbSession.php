@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.16 2004-05-07 15:11:28 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.17 2004-05-27 17:49:05 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB ....
@@ -8,8 +8,9 @@
  * Originally by Stanislav Shramko <stanis@movingmail.com>
  * Minor rewrite by Reini Urban <rurban@x-ray.at> for Phpwiki.
  * Quasi-major rewrite/decruft/fix by Jeff Dairiki <dairiki@dairiki.org>.
+ * ADODB and dba classes by Reini Urban.
  */
-class DB_Session
+class DbSession
 {
     var $_backend;
     /**
@@ -22,19 +23,19 @@ class DB_Session
      * @param string $table
      * Name of SQL table containing session data.
      */
-    function DB_Session(&$dbh, $table = 'session') {
+    function DbSession(&$dbh, $table = 'session') {
         // Coerce WikiDB to PearDB or ADODB.
         // Todo: adodb/dba handlers
-        $db_type = $GLOBALS['DBParams']['dbtype'];
+        $db_type = $dbh->getParam('dbtype');
         if (isa($dbh, 'WikiDB')) {
             $backend = &$dbh->_backend;
             $db_type = substr(get_class($dbh),7);
-            $class = "DB_Session_".$db_type;
+            $class = "DbSession_".$db_type;
             
             // < 4.1.2 crash on dba sessions at session_write_close(). 
             // (Tested with 4.1.1 and 4.1.2)
             // Didn't try postgres sessions.
-            if (!check_php_version(4,1,2) and $db_type=='dba')
+            if (!check_php_version(4,1,2) and $db_type == 'dba')
                 return false;
                 
             if (class_exists($class)) {
@@ -43,8 +44,8 @@ class DB_Session
             }
         }
         //Fixme: E_USER_WARNING ignored!
-        trigger_error(sprintf(
-_("Your WikiDB DB backend '%s' cannot be used for DB_Session. Set USE_DB_SESSION to false."),
+        trigger_error(sprintf(_("Your WikiDB DB backend '%s' cannot be used for DbSession.")." ".
+                              _("Set USE_DB_SESSION to false."),
                              $db_type), E_USER_WARNING);
         return false;
     }
@@ -61,12 +62,12 @@ _("Your WikiDB DB backend '%s' cannot be used for DB_Session. Set USE_DB_SESSION
 
 }
 
-class DB_Session_SQL
-extends DB_Session
+class DbSession_SQL
+extends DbSession
 {
     var $_backend_type = "SQL";
 
-    function DB_Session_SQL (&$dbh, $table) {
+    function DbSession_SQL (&$dbh, $table) {
 
         $this->_dbh = $dbh;
         $this->_table = $table;
@@ -88,7 +89,7 @@ extends DB_Session
         if (!$this->_connected) {
             $res = $dbh->connect($dbh->dsn);
             if (DB::isError($res)) {
-                error_log("PhpWiki::DB_Session::_connect: " . $res->getMessage());
+                error_log("PhpWiki::DbSession::_connect: " . $res->getMessage());
             }
         }
         return $dbh;
@@ -182,7 +183,7 @@ extends DB_Session
         //$dbh->unlock(false,1);
         $table = $this->_table;
         $qid = $dbh->quote($id);
-        $qip = $dbh->quote($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
+        $qip = $dbh->quote($GLOBALS['request']->get('REMOTE_ADDR'));
         $time = time();
 	if (DEBUG and $sess_data == 'wiki_user|N;') {
 	    trigger_error("delete session $qid",E_USER_WARNING);
@@ -199,11 +200,11 @@ extends DB_Session
         $res = $dbh->query("UPDATE $table"
                            . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
                            . " WHERE sess_id=$qid");
-        if ( $dbh->affectedRows() < 1 ) // 0 (none) or -1 (failure) on mysql
+        if ( $dbh->affectedRows() < 1 ) { // 0 (none) or -1 (failure) on mysql
             $res = $dbh->query("INSERT INTO $table"
                                . " (sess_id, sess_data, sess_date, sess_ip)"
                                . " VALUES ($qid, $qdata, $time, $qip)");
-
+        }
         $this->_disconnect();
         return ! DB::isError($res);
     }
@@ -274,12 +275,12 @@ extends DB_Session
 }
 
 // self-written adodb-sessions
-class DB_Session_ADODB
-extends DB_Session
+class DbSession_ADODB
+extends DbSession
 {
     var $_backend_type = "ADODB";
 
-    function DB_Session_ADODB ($dbh, $table) {
+    function DbSession_ADODB ($dbh, $table) {
 
         $this->_dbh = $dbh;
         $this->_table = $table;
@@ -296,11 +297,11 @@ extends DB_Session
     }
 
     function _connect() {
-        global $DBParams;
+        global $request;
         static $parsed = false;
         $dbh = &$this->_dbh;
         if (!$dbh or !is_resource($dbh->_connectionID)) {
-            if (!$parsed) $parsed = parseDSN($DBParams['dsn']);
+            if (!$parsed) $parsed = parseDSN($request->_dbi->getParam('dsn'));
             $this->_dbh = &ADONewConnection($parsed['phptype']); // Probably only MySql works just now
             $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
                                  $parsed['password'], $parsed['database']);
@@ -394,7 +395,7 @@ extends DB_Session
         $dbh = &$this->_connect();
         $table = $this->_table;
         $qid = $dbh->qstr($id);
-        $qip = $dbh->qstr($GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR']);
+        $qip = $dbh->qstr($GLOBALS['request']->get('REMOTE_ADDR'));
         $time = time();
 
         // postgres can't handle binary data in a TEXT field.
@@ -404,10 +405,11 @@ extends DB_Session
         $rs = $dbh->Execute("UPDATE $table"
                            . " SET sess_data=$qdata, sess_date=$time, sess_ip=$qip"
                            . " WHERE sess_id=$qid");
-        if ( $dbh->Affected_Rows() < 1 ) // 0 (none) or -1 (failure) on mysql
+        if ( ! $dbh->Affected_Rows() ) { // false or int
             $rs = $dbh->Execute("INSERT INTO $table"
                                . " (sess_id, sess_data, sess_date, sess_ip)"
                                . " VALUES ($qid, $qdata, $time, $qip)");
+        }
         $result = ! $rs->EOF;
         if ($result) $rs->free();                        
         $this->_disconnect();
@@ -489,12 +491,12 @@ extends DB_Session
  *    Index: session_id
  *   Values: date : IP : data
  */
-class DB_Session_dba
-extends DB_Session
+class DbSession_dba
+extends DbSession
 {
     var $_backend_type = "dba";
 
-    function DB_Session_dba (&$dbh, $table) {
+    function DbSession_dba (&$dbh, $table) {
         $this->_dbh = $dbh;
         ini_set('session.save_handler','user');
         session_module_name('user'); // new style
@@ -561,7 +563,7 @@ extends DB_Session
     function write ($id, $sess_data) {
         $dbh = &$this->_connect();
         $time = time();
-        $ip = $GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'];
+        $ip = $GLOBALS['request']->get('REMOTE_ADDR');
         $dbh->set($id,$time.':'.$ip.':'.$sess_data);
         $this->_disconnect();
         return true;

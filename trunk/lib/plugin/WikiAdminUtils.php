@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.10 2004-04-07 23:13:19 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.11 2004-05-27 17:49:06 rurban Exp $');
 /**
  Copyright 2003 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -140,7 +140,8 @@ extends WikiPlugin
                     $list);
     }
 
-    //TODO
+    //TODO: We need a seperate plugin for this.
+    //      Too many options.
     function _do_access_restrictions(&$request, &$args) {
     	return _("Sorry. Access Restrictions not yet implemented");
     }

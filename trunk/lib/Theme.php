@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.97 2004-05-18 16:23:39 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.98 2004-05-27 17:49:05 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -193,9 +193,8 @@ class Theme {
 
     function Theme ($theme_name = 'default') {
         $this->_name = $theme_name;
-        $themes_dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/themes" : "themes";
-
-        $this->_path  = defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/" : "";
+        $this->_themes_dir = NormalizeLocalFileName("themes");
+        $this->_path  = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
         $this->_theme = "themes/$theme_name";
 
         if ($theme_name != 'default')
@@ -209,14 +208,13 @@ class Theme {
    } 
 
     function _findFile ($file, $missing_okay = false) {
-        if (file_exists($this->_path . "$this->_theme/$file"))
+        if (file_exists($this->file($file)))
             return "$this->_theme/$file";
 
         // FIXME: this is a short-term hack.  Delete this after all files
         // get moved into themes/...
         if (file_exists($this->_path . $file))
             return $file;
-
 
         if (isset($this->_default_theme)) {
             return $this->_default_theme->_findFile($file, $missing_okay);
@@ -371,7 +369,7 @@ class Theme {
 
         $mtime = $revision->get('mtime');
         if ($mtime <= EPOCH)
-            return fmt("Never edited.");
+            return fmt("Never edited");
 
         if ($show_version == 'auto')
             $show_version = !$revision->isCurrent();
@@ -382,9 +380,9 @@ class Theme {
                                  $date, $this->formatTime($mtime));
             
             if ($show_version)
-                return fmt("Version %s, saved %s.", $revision->getVersion(), $date);
+                return fmt("Version %s, saved %s", $revision->getVersion(), $date);
             else
-                return fmt("Last edited %s.", $date);
+                return fmt("Last edited %s", $date);
         }
 
         if ($this->_showModTime)
@@ -393,9 +391,9 @@ class Theme {
             $date = $this->formatDate($mtime);
         
         if ($show_version)
-            return fmt("Version %s, saved on %s.", $revision->getVersion(), $date);
+            return fmt("Version %s, saved on %s", $revision->getVersion(), $date);
         else
-            return fmt("Last edited on %s.", $date);
+            return fmt("Last edited on %s", $date);
     }
     
     function _relativeDay ($time_t) {
@@ -420,6 +418,32 @@ class Theme {
             return _("yesterday");
 
         return false;
+    }
+
+    /**
+     * Format the "Author" and "Owner" messages for a page revision.
+     */
+    function getOwnerMessage ($page) {
+        $dbi =& $GLOBALS['request']->_dbi;
+        $owner = $page->getOwner();
+        if ($owner) {
+            if ( $dbi->isWikiPage($owner) )
+                return fmt("Owner: %s", WikiLink($owner));
+            else
+                return fmt("Owner: \"%s\"", $owner);
+        }
+    }
+    function getAuthorMessage ($revision, $only_authenticated = true) {
+        $dbi =& $GLOBALS['request']->_dbi;
+        $author = $revision->get('author_id');
+        if ( $author or $only_authenticated ) {
+            if (!$author) $author = $revision->get('author');
+            if (!$author) return '';
+            if ( $dbi->isWikiPage($author) )
+                return fmt("by %s", WikiLink($author));
+            else
+                return fmt("by \"%s\"", $author);
+        }
     }
 
     ////////////////////////////////////////////////////////////////
@@ -1319,6 +1343,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.97  2004/05/18 16:23:39  rurban
+// rename split_pagename to SplitPagename
+//
 // Revision 1.96  2004/05/13 13:48:34  rurban
 // doc update for the new 1.3.10 release
 //
