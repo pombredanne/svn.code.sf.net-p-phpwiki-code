@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.18 2001-03-02 00:24:17 dairiki Exp $');
+<?php rcs_id('$Id: transform.php,v 1.19 2001-03-02 21:16:05 dairiki Exp $');
 
 define('WT_SIMPLE_MARKUP', 0);
 define('WT_TOKENIZER', 1);
@@ -109,6 +109,11 @@ class WikiTransform
 				// to be executed
       $retvar = '';
 	 
+      if ($level > 10) {
+	 // arbitrarily limit tag nesting
+	 ExitWiki(gettext ("Lists nested too deep in SetHTMLOutputMode"));
+      }
+      
       if ($level <= $this->stack->cnt()) {
 	 // $tag has fewer nestings (old: tabs) than stack,
 	 // reduce stack to that tab count
@@ -138,13 +143,28 @@ class WikiTransform
 	       
 	 // we add the diff to the stack
 	 // stack might be zero
-	 while ($this->stack->cnt() < $level) {
+	 if ($this->stack->cnt() < $level) {
+	    while ($this->stack->cnt() < $level - 1) {
+	       // This is a bit of a hack:
+	       //
+	       // We're not nested deep enough, and have to make up some kind of block
+	       // element to nest within.
+	       //
+	       // Currently, this can only happen for nested list element
+	       // (either <ul> <ol> or <dl>).  What we used to do here is
+	       // to open extra lists of whatever type was requested.
+	       // This would result in invalid HTML, since and list is
+	       // not allowed to contain another list without first containing
+	       // a list item.  ("<ul><ul><li>Item</ul></ul>" is invalid.)
+	       //
+	       // So now, when we need extra list elements, we use a <dl>, and
+	       // open it with an empty <dd>.
+	       $retvar .= "<dl><dd>";
+	       $this->stack->push('dl');
+	    }
+
 	    $retvar .= StartTag($tag, $args) . "\n";
 	    $this->stack->push($tag);
-	    if ($this->stack->cnt() > 10) {
-	       // arbitrarily limit tag nesting
-	       ExitWiki(gettext ("Stack bounds exceeded in SetHTMLOutputMode"));
-	    }
          }
       }
       
