@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-  rcs_id('$Id: navbar.tmpl,v 1.38 2005-02-04 13:25:08 rurban Exp $');
+  rcs_id('$Id: navbar.tmpl,v 1.39 2005-04-02 00:26:48 uckelman Exp $');
 ?>
 <!-- The top navigation/search bar -->
 <form action="<?= WikiURL(
@@ -52,8 +52,9 @@ _("Quick Search")?>'; return true;"
 </form>
 <?php if (DEBUG & 2) {
         if (isset($links)) {
-            $s = '';
-            while ($p = $links->next()) { $s .= $p->_pagename.', '; }
+            $p = $links->next();
+            $s = $p->_pagename;
+            while ($p = $links->next()) { $s .= ', ' . $p->_pagename; }
             echo asXML(HTML::strong("PageLinks: "),$s ? HTML::em($s) : HTML::em('<none>'));
         }
 } ?>
