@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.92 2004-02-26 02:25:54 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.93 2004-02-26 03:22:05 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -293,8 +293,36 @@ function DumpHtmlToDir (&$request)
         fclose($fd);
     }
 
-    //CopyImageFiles() will go here;
-    $Theme->$HTML_DUMP_SUFFIX = '';
+    if (is_array($Theme->dumped_images)) {
+        @mkdir("$directory/images");
+        foreach ($Theme->dumped_images as $img_file) {
+            if (($from = $Theme->_findFile($img_file)) and basename($from)) {
+                $target = "$directory/images/".basename($img_file);
+                if (copy($Theme->_path . $from, $target)) {
+                    $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
+                    PrintXML($msg);
+                }
+            } else {
+                $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... not found", $target)));
+                PrintXML($msg);
+            }
+        }
+    }
+    if (is_array($Theme->dumped_css)) {
+      foreach ($Theme->dumped_css as $css_file) {
+          if (($from = $Theme->_findFile(basename($css_file))) and basename($from)) {
+              $target = "$directory/" . basename($css_file);
+              if (copy($Theme->_path . $from, $target)) {
+                  $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
+                  PrintXML($msg);
+              }
+          } else {
+              $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... not found", $target)));
+              PrintXML($msg);
+          }
+      }
+    }
+    $Theme->HTML_DUMP_SUFFIX = '';
     $Theme->DUMP_MODE = false;
 
     $request->setArg('pagename',$thispage); // Template::_basepage fix
@@ -849,6 +877,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.92  2004/02/26 02:25:54  rurban
+ fix empty and #-anchored links in XHTML Dumps
+
  Revision 1.91  2004/02/24 17:19:37  rurban
  debugging helpers only
 

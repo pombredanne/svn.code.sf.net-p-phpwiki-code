@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.72 2004-02-26 02:25:53 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.73 2004-02-26 03:22:05 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -161,7 +161,7 @@ function Button ($action, $label = false, $page_or_rev = false) {
 
 class Theme {
     var $HTML_DUMP_SUFFIX = '';
-    var $DUMP_MODE;
+    var $DUMP_MODE, $dumped_images, $dumped_css; 
 
     function Theme ($theme_name = 'default') {
         $this->_name = $theme_name;
@@ -486,7 +486,7 @@ class Theme {
             $default_text = $wikiword;
         }
         
-        if ($this->DUMP_MODE) {
+        if ($this->DUMP_MODE) { // HTML, PDF or XML
             $link = HTML::u( empty($linktext) ? $wikiword : $linktext);
             $link->addTooltip(sprintf(_("Empty link to: %s"), $wikiword));
             $link->setAttr('class', empty($linktext) ? 'wikiunknown' : 'named-wikiunknown');
@@ -579,9 +579,14 @@ class Theme {
 
         $path = $this->_findData("images/$image", 'missing okay');
         if (!$path) // search explicit images/ or button/ links also
-            return $this->_findData("$image", 'missing okay');
-       	else 
-            return $path;	
+            $path = $this->_findData("$image", 'missing okay');
+
+        if ($this->DUMP_MODE) {
+            if (empty($this->dumped_images)) $this->dumped_images = array();
+            $path = "images/". basename($path);
+            if (!in_array($path,$this->dumped_images)) $this->dumped_images[] = $path;
+        }
+        return $path;	
     }
 
     function setLinkIcon($proto, $image = false) {
@@ -875,6 +880,11 @@ class Theme {
 
         if ($media) 
             $link->setAttr('media', $media);
+        if ($this->DUMP_MODE) {
+            if (empty($this->dumped_css)) $this->dumped_css = array();
+            if (!in_array($css_file,$this->dumped_css)) $this->dumped_css[] = $css_file;
+            $link->setAttr('href', basename($link->getAttr('href')));
+        }
         
         return $link;
     }
@@ -1082,6 +1092,9 @@ class SubmitImageButton extends SubmitButton {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.72  2004/02/26 02:25:53  rurban
+// fix empty and #-anchored links in XHTML Dumps
+//
 // Revision 1.71  2004/02/15 21:34:37  rurban
 // PageList enhanced and improved.
 // fixed new WikiAdmin... plugins
