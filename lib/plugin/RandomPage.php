@@ -1,5 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: RandomPage.php,v 1.1 2002-01-28 15:54:49 carstenklapp Exp $');
+rcs_id('$Id: RandomPage.php,v 1.2 2002-01-28 16:43:15 carstenklapp Exp $');
+
+require_once('lib/PageList.php');
 
 /**
  */
@@ -15,25 +17,40 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array('showname' => false);
+        return array('pages'    => 1,
+                     'showname' => false,
+                     'info'     => '');
     }
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
 
-        $pages = $dbi->getAllPages();
+        $allpages = $dbi->getAllPages();
 
-        while ($page = $pages->next())
-            $pagearray[] = $page->getname();
+        while ($page = $allpages->next())
+            $pagearray[] = $page;
 
         better_srand(); // Start with a good seed.
-        $pagename = $pagearray[array_rand($pagearray)];
 
         global $Theme;
-        if ($showname)
-            return $Theme->linkExistingWikiWord($pagename);
-        else
-            return $Theme->linkExistingWikiWord($pagename,_("RandomPage"));
+        if ($pages < 2) {
+            $page = $pagearray[array_rand($pagearray)];
+            if (($showname == 'true') || ($showname == 1))
+                return $Theme->linkExistingWikiWord($page->getName());
+            else
+                return $Theme->linkExistingWikiWord($page->getName(), _("RandomPage"));
+        } else {
+            if ($pages > 20)
+                $pages = 20;
+            $PageList = new PageList();
+            if ($info)
+                foreach (explode(",", $info) as $col)
+                    $PageList->insertColumn($col);
+            for ($n=1;$n<=$pages;$n++) {
+                $PageList->addPage($pagearray[array_rand($pagearray)]);
+            }
+        }
+        return $PageList->getContent();
     }
 };
 
