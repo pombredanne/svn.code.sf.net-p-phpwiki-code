@@ -1,11 +1,11 @@
 <?php // -*-html-*- ?>
-<!-- $Id: body.tmpl,v 1.13 2002-08-23 18:29:33 rurban Exp $ -->
+<!-- $Id: body.tmpl,v 1.14 2002-12-15 01:39:15 carstenklapp Exp $ -->
 <body>
 <!-- Page title and logo -->
 <h1><a class="wikilink" 
        href="<?=WikiURL(HOME_PAGE)?>"
        ><img src="<?=$Theme->getImageURL('logo')?>"
-             border="0" alt="<?=WIKI_NAME?>: <?=HOME_PAGE?>" 
+             border="0" alt="<?=fmt(_("%s: %s"), WIKI_NAME, HOME_PAGE) ?>" 
              align="bottom" /></a> <?=$HEADER?></h1>
 <?= $CONTENT ?>
 <?= Template('navbar') ?>
