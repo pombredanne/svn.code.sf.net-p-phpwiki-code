@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.4 2001-12-02 02:34:48 joe_edelman Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.5 2001-12-06 20:44:13 dairiki Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -22,6 +22,17 @@ class WikiUser
         $this->_restore();
 
         // don't check for HTTP auth if there's nothing to worry about
+        //
+        // FIXME: the addition of this short-cut introduced a security hole.
+        //        Since $this->_restore can potentially restore $this from a
+        //        user provided cookie, a carefully constructed cookie can
+        //        be used to effectively log in (even as admin) without
+        //        a password.
+        //
+        //        For now, I'm disabling the code which saves/restores $this
+        //        in a cookie.  (Login state is still preserved in session vars.)
+        //        I'll work on a longer term solution.
+        
         if (  $this->state == 'authorized' 
               && $auth_mode != 'LOGIN' 
               && $auth_mode != 'LOGOUT'  )
@@ -206,8 +217,9 @@ class WikiUser
         
         if ( $this->_copy($req->getSessionVar('auth_state')) )
             return;
-        elseif ( $this->_copy($req->getCookieVar('WIKI_AUTH')) )
-            return;
+        // FIXME: Disable restore from cookie (see note in WikiUser().)
+        //elseif ( $this->_copy($req->getCookieVar('WIKI_AUTH')) )
+        //    return;
         else {
             // Default state.
             $this->userid = '';
@@ -220,7 +232,8 @@ class WikiUser
         $req = &$this->_request;
 
         $req->setSessionVar('auth_state', $this);
-        $req->setCookieVar('WIKI_AUTH', $this);
+        // FIXME: Disable restore from cookie (see note in WikiUser().)
+        //$req->setCookieVar('WIKI_AUTH', $this);
     }
 }
 
