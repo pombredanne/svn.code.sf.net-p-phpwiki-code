@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.7 2004-04-09 17:49:03 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.8 2004-04-12 09:12:22 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,29 @@ extends WikiPlugin
     //var $url_prefix = DATA_PATH . "/img/";
     //what if the above are not set in index.php? seems to fail...
 
-    var $disallowed_extensions = explode("\n",
+    var $disallowed_extensions;
+    // todo: use PagePerms instead
+    var $only_authenticated = true; // allow only authenticated users upload.
+
+    function getName () {
+        return "UpLoad";
+    }
+
+    function getDescription () {
+        return _("Upload files to the local InterWiki Upload:<filename>");
+    }
+
+    function getDefaultArguments() {
+        return array('logfile'  => 'file_list.txt',
+        	     // add a link of the fresh file automatically to the 
+        	     // end of the page (or current page)
+        	     'autolink' => true, 
+        	     'page'     => '[pagename]',
+        	     );
+    }
+
+    function run($dbi, $argstr, &$request, $basepage) {
+        $this->disallowed_extensions = explode("\n",
 "ad[ep]
 asd
 ba[st]
@@ -80,27 +102,6 @@ vxd
 ws[cfh]
 \{[[:xdigit:]]{8}(?:-[[:xdigit:]]{4}){3}-[[:xdigit:]]{12}\}");
 
-    // todo: use PagePerms instead
-    var $only_authenticated = true; // allow only authenticated users upload.
-
-    function getName () {
-        return "UpLoad";
-    }
-
-    function getDescription () {
-        return _("Upload files to the local InterWiki Upload:<filename>");
-    }
-
-    function getDefaultArguments() {
-        return array('logfile'  => 'file_list.txt',
-        	     // add a link of the fresh file automatically to the 
-        	     // end of the page (or current page)
-        	     'autolink' => true, 
-        	     'page'     => '[pagename]',
-        	     );
-    }
-
-    function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
@@ -240,6 +241,11 @@ ws[cfh]
 // End:
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/04/09 17:49:03  rurban
+// Added PhpWiki RssFeed to Sidebar
+// sidebar formatting
+// some browser dependant fixes (old-browser support)
+//
 // Revision 1.6  2004/02/27 01:36:51  rurban
 // autolink enabled
 //

@@ -1,4 +1,4 @@
--- $Id: mysql.sql,v 1.10 2004-04-09 17:49:03 rurban Exp $
+-- $Id: mysql.sql,v 1.11 2004-04-12 09:12:23 rurban Exp $
 
 drop table if exists page;
 CREATE TABLE page (
@@ -51,7 +51,7 @@ CREATE TABLE session (
     	sess_data 	BLOB NOT NULL,
     	sess_date 	INT UNSIGNED NOT NULL,
     	sess_ip 	CHAR(15) NOT NULL,
-    	PRIMARY KEY (sess_id)
+    	PRIMARY KEY (sess_id),
 	INDEX (sess_date)
 ); -- TYPE=heap; -- if your Mysql supports it and you have enough RAM
 
