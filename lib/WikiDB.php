@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.89 2004-09-26 10:54:42 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.90 2004-09-28 12:50:22 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -1967,9 +1967,9 @@ class WikiDB_cache
 
     function delete_versiondata($pagename, $version) {
         $new = $this->_backend->delete_versiondata($pagename, $version);
-        unset ($this->_versiondata_cache[$pagename][$version]['1']);
-        unset ($this->_versiondata_cache[$pagename][$version]['0']);
-        unset ($this->_glv_cache[$pagename]);
+        @unset ($this->_versiondata_cache[$pagename][$version]['1']);
+        @unset ($this->_versiondata_cache[$pagename][$version]['0']);
+        @unset ($this->_glv_cache[$pagename]);
     }
 	
     function get_latest_version($pagename)  {
@@ -1990,6 +1990,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.89  2004/09/26 10:54:42  rurban
+// silence deferred check
+//
 // Revision 1.88  2004/09/25 18:16:40  rurban
 // unset more unneeded _cached_html. (Guess this should fix sf.net now)
 //
