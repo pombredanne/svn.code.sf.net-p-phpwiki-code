@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.53 2004-06-25 14:29:20 rurban Exp $');
+rcs_id('$Id: display.php,v 1.54 2004-09-17 14:19:41 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -51,7 +51,8 @@ function actionPage(&$request, $action) {
 
     // $splitname = SplitPagename($pagename);
 
-    $pagetitle = HTML(fmt("%s: %s", $actionpage->getName(),
+    $pagetitle = HTML(fmt("%s: %s", 
+                          $actionpage->getName(),
                           $WikiTheme->linkExistingWikiWord($pagename, false, $version)));
 
     $validators = new HTTP_ValidatorSet(array('pageversion' => $revision->getVersion(),
@@ -64,7 +65,7 @@ function actionPage(&$request, $action) {
 
     $transformedContent = $actionrev->getTransformedContent();
     $template = Template('browse', array('CONTENT' => $transformedContent));
-
+/*
     if (!headers_sent()) {
         //FIXME: does not work yet. document.write not supported (signout button)
         // http://www.w3.org/People/mimasa/test/xhtml/media-types/results
@@ -75,6 +76,7 @@ function actionPage(&$request, $action) {
         else
             header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
     }
+*/    
     GeneratePage($template, $pagetitle, $revision);
     $request->checkValidators();
     flush();
@@ -134,7 +136,7 @@ function displayPage(&$request, $template=false) {
 
     $request->appendValidators(array('pagerev' => $revision->getVersion(),
                                      '%mtime' => $revision->get('mtime')));
-
+/*
     // FIXME: This is also in the template...
     if ($request->getArg('action') != 'pdf' and !headers_sent()) {
       // FIXME: enable MathML/SVG/... support
@@ -145,7 +147,7 @@ function displayPage(&$request, $template=false) {
         else
             header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
     }
-
+*/
     $page_content = $revision->getTransformedContent();
     
     $toks['CONTENT'] = new Template('browse', $request, $page_content);
@@ -169,7 +171,15 @@ function displayPage(&$request, $template=false) {
         $request->checkValidators();
     flush();
 }
+
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2004/06/25 14:29:20  rurban
+// WikiGroup refactoring:
+//   global group attached to user, code for not_current user.
+//   improved helpers for special groups (avoid double invocations)
+// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
+// fixed a XHTML validation error on userprefs.tmpl
+//
 // Revision 1.52  2004/06/14 11:31:37  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
