@@ -1,9 +1,9 @@
-Date: Thu, 7 Oct 2004 18:13:41 +0200
+Date: Fri, 19 Nov 2004 14:27:36 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.46 2004-11-03 16:46:16 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.47 2004-11-19 13:34:51 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.46 $";
+  pgsrc_version="2 $Revision: 1.47 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -65,17 +65,19 @@ fixes:
   typical PageList memory exhaustion on simple page lists.
 * fixed crash after login, by eliminating endless recursion in 
   group isAdmin() checks
+* fixed and improve WikiDB pageid caching.
+* fixed some WikiGroup errors for WIKIPAGE and DB
 
 changes:
 * ~WikiAdminSetAcl functional
 * enabled PhpWiki:PagePermissions for all admin plugins (no admin required): 
   Remove, Rename, Replace, ~SetAcl, Chown
 * new Error-style with collapsed output of repeated messages 
-* trim pagenames to avoid abuse
+* whitespace trim pagenames to avoid abuse
 * no double login page header, better login msg. 
 * improved ~FileFinder include_path logic (~NormalizeLocalFileName, ...)
 ** init global FileFinder to add proper include paths at startup
-   adds PHPWIKI_DIR if started from another dir, lib/pear also
+   adds PHPWIKI_DIR to the front if started from another dir, lib/pear to the end.
 ** fix slashify for Windows
 * check more config-default and predefined constants 
 * ~AutoSplit pagenames at subpage seperators, esp for Sidebar theme
@@ -99,16 +101,21 @@ changes:
 * aggressive WikiDB and cache memory optimization: don't cache %content 
   and _cached_html if not needed.
 * PageDump added format=backup: dump all revisions.
-* force mysql to use auto_increment page.id for performbce reasons. 
+* force mysql to use auto_increment page.id for performance reasons.
   call ?action=upgrade
 * extended all plugins which take pages and exclude params to accept 
   <!plugin-list !> pagelists
 * improved SqlResult: templates and variable expansion.
   automatic paging not yet.
+* use latest Pear DB features, which will break on older PearDB libs. 
+  (escapeSimple). Use INCLUDE_PATH to override.
+* INCLUDE_PATH is now prepended, not appended. PHPWIKI_DIR is forced to be first.
+* rewrote OldTextFormattingRules, AnciennesR%E8glesDeFormatage
+  for proper importing (PCRE+memory related crashes on older php's)
 
 new:
-* new ENABLE_EDIT_TOOLBAR (from mediawiki), JS_SEARCHREPLACE currently broken.
-* new config options: 
+* new ENABLE_EDIT_TOOLBAR (from mediawiki), JS_SEARCHREPLACE, CategoryPulldown
+* new other config options: 
 ** ENABLE_PAGEPERM to turn off ACL (no owner at the statusline if off)
 ** FORTUNE_DIR to enable random quotes for new pages
 * implemented WikiDB page creator and ownership
@@ -138,6 +145,14 @@ new:
 * added new PageList options: cols, azhead, comma, commasep, ordered
 * added experimental SearchHighlight feature (not for HTML yet)
 * added [OverWrite All] button to loadfile action on the first page.
+* performance: use cached static config/config.php, if it's writable by 
+  the webserver.
+* added ACCESS_LOG_SQL &1: read, &2 write. new accesslog sql table. 
+  for various log analysis: abuse prevention, recent referrers.
+* added more PageChangeNotification on other actions: rename, remove.
+  changed subject on create. Collapse mult. emails to one.
+* added WikiPluginCached support for image maps and svg
+
 
 1.3.10 May, 13 2004, Reini Urban, Joby Walker:
 
