@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.11 2001-12-03 03:18:34 joe_edelman Exp $');
+rcs_id('$Id: PearDB.php,v 1.12 2001-12-14 22:20:44 dairiki Exp $');
 
 //require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
@@ -681,11 +681,30 @@ extends WikiDB_backend
      * @return bool True iff error is not really an error.
      */
     function _is_false_error($error) {
-        $code = $error->getCode();
+        if ($error->getCode() != DB_ERROR)
+            return false;
+
         $query = $this->_dbh->last_query;
-        return ($code == DB_ERROR
-                && ! DB::isManip($query)
-                && preg_match('/^\s*"?(LOCK|UNLOCK)\s/', $query));
+
+        if (! preg_match('/^\s*"?(INSERT|UPDATE|DELETE|REPLACE|CREATE'
+                         . '|DROP|ALTER|GRANT|REVOKE|LOCK|UNLOCK)\s/', $query)) {
+            // Last query was not of the sort which doesn't return any data.
+            return false;
+        }
+        
+        if (! in_array('ismanip', get_class_methods('DB'))) {
+            // Pear shipped with PHP 4.0.4pl1 (and before, presumably)
+            // does not have the DB::isManip method.
+            return true;
+        }
+        
+        if (DB::isManip($query)) {
+            // If Pear thinks it's an isManip then it wouldn't have thrown
+            // the error we're testing for....
+            return false;
+        }
+
+        return true;
     }
 
     function _pear_error_message($error) {
