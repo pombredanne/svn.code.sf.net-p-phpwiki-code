@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Toolbar.php,v 1.12 2002-01-09 18:58:10 carstenklapp Exp $');
+<?php rcs_id('$Id: Toolbar.php,v 1.13 2002-01-10 22:33:46 carstenklapp Exp $');
 
 //require_once("lib/ErrorManager.php");
 //require_once("lib/WikiPlugin.php");
@@ -212,9 +212,9 @@ function toolbar_action_SearchActions($pagename, $charset) {
     $html .= separator()
         ."<span><input type=\"hidden\" name=\"auto_redirect\" value=\"1\" />";
     $html .= "<input type=\"text\"  name=\"s\" size=\"12\"";
-    $html .= " title=" ._("Quick Search");
+    $html .= " title=\"" ._("Quick Search") ."\"";
     $html .= " onmouseover=\"window.status='" ._("Quick Search")
-        ."'; return true;";
+        ."'; return true;\"";
     $html .= " onmouseout=\"window.status=''; return true;\" /></span>";
 
     //$html .= separator() ."<plugin-link LikePages page=\"" .$pagename ."\" >";
