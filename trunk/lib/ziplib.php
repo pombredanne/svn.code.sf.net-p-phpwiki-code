@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.24 2002-01-26 01:51:13 dairiki Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.25 2002-01-26 07:33:45 carstenklapp Exp $');
 
 /**
  * GZIP stuff.
@@ -526,11 +526,10 @@ function MimeifyPageRevision ($revision) {
     $page = $revision->getPage();
     // FIXME: add 'hits' to $params 
     $params = array('pagename'     => $page->getName(),
+                    'flags'        => "",
                     'author'       => $revision->get('author'),
                     'version'      => $revision->getVersion(),
-                    'flags'        => "",
-                    'lastmodified' => $revision->get('mtime'),
-                    'charset'	   => CHARSET);
+                    'lastmodified' => $revision->get('mtime'));
 
     
     if ($page->get('mtime'))
@@ -541,7 +540,8 @@ function MimeifyPageRevision ($revision) {
         $params['author_id'] = $revision->get('author_id');
     if ($revision->get('markup'))
         $params['markup'] = $revision->get('markup');
-    
+
+    $params['charset'] = CHARSET;
 
     // Non-US-ASCII is not allowed in Mime headers (at least not without
     // special handling) --- so we urlencode all parameter values.
