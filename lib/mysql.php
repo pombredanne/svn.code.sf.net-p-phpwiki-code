@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.9 2001-01-01 23:34:57 ahollosi Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.10 2001-01-04 18:37:56 ahollosi Exp $');
 
    /*
       Database functions:
@@ -57,6 +57,7 @@
    }
 
 
+   // prepare $pagehash for storing in mysql
    function MakeDBHash($pagename, $pagehash)
    {
       $pagehash["pagename"] = addslashes($pagename);
@@ -72,6 +73,8 @@
       return $pagehash;
    }
 
+
+   // convert mysql result $dbhash to $pagehash
    function MakePageHash($dbhash)
    {
       // unserialize/explode content
@@ -206,6 +209,7 @@
    {
       $search = addslashes(preg_replace("/\s+/", " ", $search));
       $term = strtok($search, ' ');
+      $clause = '';
       while($term) {
          $word = "$term";
 	 if ($word[0] == '-') {
