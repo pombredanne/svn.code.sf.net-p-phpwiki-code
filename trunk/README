@@ -2,8 +2,8 @@ PhpWiki is a web application licensed under the GNU Public License, which
 should be included in the same directory as this README. A copy
 can be found at http://www.gnu.org/copyleft/gpl.txt.
 
-See ../INSTALL for installation notes.
-Read ../UPGRADING before upgrading from a previous version of PhpWiki.
+See ./INSTALL for installation notes.
+Read ./UPGRADING before upgrading from a previous version of PhpWiki.
 
 Additional docs:
 
