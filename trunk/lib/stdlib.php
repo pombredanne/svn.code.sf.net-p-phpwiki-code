@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.31 2001-02-14 22:02:05 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.32 2001-02-15 19:32:55 dairiki Exp $');
 
 
    /*
@@ -307,7 +307,7 @@ function StartTag($tag, $args = '')
 	 $args = SplitQueryArgs($qargs);
       }
 
-      if ($args['action'] == 'browse')
+      if (isset($args['action']) && $args['action'] == 'browse')
 	 unset($args['action']);
 
       if (empty($args['action']))
