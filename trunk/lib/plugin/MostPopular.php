@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.14 2002-01-22 05:06:50 dairiki Exp $');
+rcs_id('$Id: MostPopular.php,v 1.15 2002-01-22 06:15:52 carstenklapp Exp $');
 /**
  */
 
@@ -18,8 +18,11 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array('limit'	=> 20,
-                     'noheader'	=> 0);
+                     'noheader'	=> 0,
+                     'info'     => false
+                    );
     }
+    // info arg now allows multiple columns info=mtime,hits,summary,author,locked,minor
 
     function run($dbi, $argstr, $request) {
         extract($this->getArgs($argstr, $request));
@@ -28,7 +31,10 @@ extends WikiPlugin
 
         $pagelist = new PageList();
         $pagelist->insertColumn('hits');
-        //$pagelist->addcolumn('mtime');
+
+        if ($info)
+            foreach (explode(",", $info) as $col)
+                $pagelist->insertColumn($col);
 
         while ($page = $pages->next()) {
             $hits = $page->get('hits');

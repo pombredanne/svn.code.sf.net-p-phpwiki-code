@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.8 2002-01-22 05:06:50 dairiki Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.9 2002-01-22 06:15:52 carstenklapp Exp $');
 
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
@@ -20,8 +20,11 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('s'		=> false,
                      'auto_redirect'	=> false,
-                     'noheader'		=> false);
+                     'noheader'		=> false,
+                     'info'             => false
+                     );
     }
+    // info arg now allows multiple columns info=mtime,hits,summary,author,locked,minor
 
     function run($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
@@ -34,8 +37,10 @@ extends WikiPlugin
         $pages = $dbi->titleSearch($query);
 
         $pagelist = new PageList();
-//        $pagelist->insertColumn('hits');
-//        $pagelist->addColumn('mtime');
+
+        if ($info)
+            foreach (explode(",", $info) as $col)
+                $pagelist->insertColumn($col);
 
         while ($page = $pages->next()) {
             $pagelist->addPage($page);
