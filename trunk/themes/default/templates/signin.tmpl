@@ -1,8 +1,5 @@
 <?php // -*-html-*-
-     rcs_id('$Id: signin.tmpl,v 1.22 2003-11-09 20:58:15 carstenklapp Exp $');
-
-     $Sep = $Theme->getButtonSeparator();
-     $SignOutB = $Theme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
+     rcs_id('$Id: signin.tmpl,v 1.23 2003-11-30 19:52:03 carstenklapp Exp $');
 
      if (empty($FORMNAME))
          $FORMNAME = 'signin';
@@ -13,8 +10,10 @@
   <form method="post" action="<?= $request->getPostURL() ?>" accept-charset="<?=CHARSET?>" name="<?=$FORMNAME?>">
   <?= HiddenInputs($request->getArgs(), false, array('auth')) ?>
 <?php } ?>
-<?php if ($user->isSignedIn()) {  ?>
-
+<?php if ($user->isSignedIn()) {
+  $Sep = $Theme->getButtonSeparator();
+  $SignOutB = $Theme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
+?>
 <span>
   <?= fmt("You are signed in as %s", WikiLink($user->getId(), 'auto')) ?>
   <?=$Sep?>
