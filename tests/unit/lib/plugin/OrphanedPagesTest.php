@@ -18,7 +18,9 @@ class OrphanedPagesTest extends PHPUnit_TestCase {
 
         $lp = new WikiPlugin_OrphanedPages();
         $this->assertEquals("OrphanedPages", $lp->getName());
-        $result = $lp->run($request->getDbh(), "pages=foo", $request);
+        $basepage = "";
+        $args = "";
+        $result = $lp->run($request->getDbh(), $args, $request, $basepage);
         $this->assertType('object',$result,'isa PageList');
     }
 }

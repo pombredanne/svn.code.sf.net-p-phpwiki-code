@@ -11,6 +11,9 @@ class PageListTest extends PHPUnit_TestCase {
 
     function testPageList() {
         // Completely empty PageList
+        $columns = "";
+        $exclude = "";
+        $options = "";
         $pl = new PageList($columns, $exclude, $options);
         $this->assertTrue($pl->isEmpty(), "empty");
         $this->assertEquals(0, $pl->getTotal(), "count 0");
