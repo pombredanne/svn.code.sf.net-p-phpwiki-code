@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.49 2004-06-14 11:26:52 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.50 2004-12-04 11:14:18 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -87,6 +87,15 @@ $s = $WikiTheme->getButtonSeparator();
 <?php if ($user->isadmin()) { ?>
   <tr>
     <td><?= $LOCKED_CB ?> <?=_("Locked")?></td>
+  </tr>
+<?php } ?>
+<?php if (0) {
+// Not yet supported within the same request. 
+// Better use a button to the external UpLoad page. 
+// Or fix action=edit to handle the uploaded filename within the same request.
+?>
+  <tr>
+    <td><?plugin UpLoad ?></td>
   </tr>
 <?php } ?>
 </table>
