@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.20 2003-12-14 05:36:31 carstenklapp Exp $');
+rcs_id('$Id: BackLinks.php,v 1.21 2003-12-22 07:31:57 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
     
     function getDefaultArguments() {
@@ -109,7 +109,7 @@ extends WikiPlugin
                 if ($pagelist->isEmpty())
                     return HTML::p(fmt("No page links to %s.", $pagelink));
                 
-                trigger_error($pagelist->getTotal());
+                //trigger_error("DEBUG: " . $pagelist->getTotal());
                 
                 if ($pagelist->getTotal() == 1)
                     $pagelist->setCaption(fmt("One page links to %s:",
@@ -131,6 +131,13 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2003/12/14 05:36:31  carstenklapp
+// Internal changes to prepare for an upcoming feature: Added some
+// conditions and alternate phrases (alternate wording of text srings
+// when referring to a non-existant page (i.e. WikiLink 'unknown')) when
+// calling the BackLinks plugin *within* a non-existant page, such as
+// from within an editpage or browse template while editing a new page.
+//
 // Revision 1.19  2003/01/18 21:19:25  carstenklapp
 // Code cleanup:
 // Reformatting; added copyleft, getVersion, getDescription
