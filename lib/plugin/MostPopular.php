@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.17 2002-01-30 18:29:10 carstenklapp Exp $');
+rcs_id('$Id: MostPopular.php,v 1.18 2002-01-30 22:47:30 carstenklapp Exp $');
 /**
  */
 
@@ -32,17 +32,7 @@ extends WikiPlugin
         extract($this->getArgs($argstr, $request));
 
         $pagelist = new PageList();
-
-        if ($info)
-            foreach (explode(",", $info) as $col)
-                $pagelist->insertColumn($col);
-
-        if (!$include_self)
-                $pagelist->excludePageName($pagename); // hackish
-        if ($exclude)
-            foreach (explode(",", $exclude) as $excludepage)
-                $pagelist->excludePageName($excludepage);
-
+        $this->_init($pagename, &$pagelist, $info, $exclude, $include_self);
         $pagelist->insertColumn('hits');
 
         $pages = $dbi->mostPopular($limit);
@@ -65,6 +55,19 @@ extends WikiPlugin
 
         return $pagelist;
     }
+
+    function _init(&$page, &$pagelist, $info = '', $exclude = '', $include_self = '') {
+	if ($info)
+            foreach (explode(",", $info) as $col)
+                $pagelist->insertColumn($col);
+
+	if ($exclude)
+            foreach (explode(",", $exclude) as $excludepage)
+                $pagelist->excludePageName($excludepage);
+	if (!$include_self)
+            $pagelist->excludePageName($page);
+   }
+
 };
 
 // Local Variables:

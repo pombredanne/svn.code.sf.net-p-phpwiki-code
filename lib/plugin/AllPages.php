@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.6 2002-01-30 18:26:04 carstenklapp Exp $');
+rcs_id('$Id: AllPages.php,v 1.7 2002-01-30 22:47:30 carstenklapp Exp $');
 
 require_once('lib/PageList.php');
 
@@ -32,16 +32,7 @@ extends WikiPlugin
         extract($this->getArgs($argstr, $request));
 
         $pagelist = new PageList();
-
-        if ($info)
-            foreach (explode(",", $info) as $col)
-                $pagelist->insertColumn($col);
-
-        if ($include_self==false || $include_self==0 )
-                $pagelist->excludePageName($pagename); // hackish
-        if ($exclude)
-            foreach (explode(",", $exclude) as $excludepage)
-                $pagelist->excludePageName($excludepage);
+        $this->_init($pagename, &$pagelist, $info, $exclude, $include_self);
 
         if (!$noheader)
             $pagelist->setCaption(_("Pages in this wiki (%d total):"));
@@ -53,6 +44,19 @@ extends WikiPlugin
 
         return $pagelist;
     }
+
+    function _init($page, &$pagelist, $info = '', $exclude = '', $include_self = '') {
+	if ($info)
+            foreach (explode(",", $info) as $col)
+                $pagelist->insertColumn($col);
+
+	if ($exclude)
+            foreach (explode(",", $exclude) as $excludepage)
+                $pagelist->excludePageName($excludepage);
+	if (!$include_self)
+            $pagelist->excludePageName($page);
+   }
+
 };
         
 // Local Variables:
