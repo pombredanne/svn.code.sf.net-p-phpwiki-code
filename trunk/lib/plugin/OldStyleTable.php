@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OldStyleTable.php,v 1.3 2002-10-29 01:12:24 carstenklapp Exp $');
+rcs_id('$Id: OldStyleTable.php,v 1.4 2002-10-31 03:28:31 carstenklapp Exp $');
 /**
  * OldStyleTable: Layout tables using the old table style.
  * 
@@ -82,7 +82,7 @@ extends WikiPlugin
             $content = TransformInline($m[4]);
             
             $row->pushContent(HTML::td($attr,
-                                       HTML::nbsp(), $content, HTML::nbsp()));
+                                       HTML::raw('&nbsp;'), $content, HTML::raw('&nbsp;')));
         }
         return $row;
     }

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.41 2002-10-29 01:12:24 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.42 2002-10-31 03:28:30 carstenklapp Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -47,9 +47,9 @@ class _PageList_Column_base {
 
     function format ($pagelist, $page_handle, &$revision_handle) {
         return HTML::td($this->_tdattr,
-                        HTML::nbsp(),
+                        HTML::raw('&nbsp;'),
                         $this->_getValue($page_handle, &$revision_handle),
-                        HTML::nbsp());
+                        HTML::raw('&nbsp;'));
     }
 
     function setHeading ($heading) {
@@ -68,9 +68,9 @@ class _PageList_Column_base {
                 elseif ($sorted == '-' . $this->_field)
                     $sortby = '+' . $this->_field;
             }
-            $s = HTML::a(array('href' => $GLOBALS['request']->GetURLtoSelf(array('sortby' => $sortby)),'class' => 'pagetitle', 'title' => sprintf(_("Sort by %s"),$this->_field)), HTML::nbsp(), HTML::u($this->_heading), HTML::nbsp());
+            $s = HTML::a(array('href' => $GLOBALS['request']->GetURLtoSelf(array('sortby' => $sortby)),'class' => 'pagetitle', 'title' => sprintf(_("Sort by %s"),$this->_field)), HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
         } else {
-            $s = HTML(HTML::nbsp(), HTML::u($this->_heading), HTML::nbsp());
+            $s = HTML(HTML::raw('&nbsp;'), HTML::u($this->_heading), HTML::raw('&nbsp;'));
         }
         return HTML::td(array('align' => 'center'),$s);
     }
@@ -132,9 +132,9 @@ class _PageList_Column_checkbox extends _PageList_Column {
     }
     function format ($pagelist, $page_handle, &$revision_handle) {
         return HTML::td($this->_tdattr,
-                        HTML::nbsp(),
+                        HTML::raw('&nbsp;'),
                         $this->_getValue(&$pagelist, $page_handle, &$revision_handle),
-                        HTML::nbsp());
+                        HTML::raw('&nbsp;'));
     }
 };
 

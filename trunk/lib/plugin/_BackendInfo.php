@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.18 2002-10-29 01:12:24 carstenklapp Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.19 2002-10-31 03:28:31 carstenklapp Exp $');
 require_once('lib/Template.php');
 /**
  */
@@ -71,7 +71,7 @@ extends WikiPlugin
             if (is_string($val) and (substr($val,0,2) == 'a:')) {
                 // how to indent this table?
                 $val = unserialize($val);
-                $rows[] = HTML(HTML::nbsp(), HTML::nbsp(),
+                $rows[] = HTML(HTML::raw('&nbsp;'), HTML::raw('&nbsp;'),
                                $this->_showhash ("get_pagedata('$pagename')['$key']",
                                                  $val));
             } else {
@@ -80,10 +80,10 @@ extends WikiPlugin
                 $rows[] = HTML::tr(HTML::td(array('align' => 'right',
                                                   'bgcolor' => '#cccccc',
                                                   'style' => 'color:#000000'),
-                                            HTML(HTML::nbsp(), $key, HTML::nbsp())),
+                                            HTML(HTML::raw('&nbsp;'), $key, HTML::raw('&nbsp;'))),
                                HTML::td(array('bgcolor' => '#ffffff',
                                               'style' => 'color:#000000'),
-                                        $val ? $val : HTML::nbsp()));
+                                        $val ? $val : HTML::raw('&nbsp;')));
             }
         }
         return $rows;
