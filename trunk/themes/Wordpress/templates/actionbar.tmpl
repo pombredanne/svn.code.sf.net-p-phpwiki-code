@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.3 2004-06-14 11:26:51 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.4 2004-06-28 16:10:28 rurban Exp $ -->
 <div id="actionbar">
 
 <?php
@@ -9,7 +9,7 @@
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit this page") : _("Edit old revision"));
   else
-      $EditB = Button("viewsource", _("View source"));
+      $EditB = Button("viewsource", _("View Source"));
   // $EditB = fmt("%s of this page", $EditB);
 
 ?>

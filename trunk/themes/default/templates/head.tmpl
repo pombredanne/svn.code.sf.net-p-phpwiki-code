@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.20 2004-06-25 14:29:22 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.21 2004-06-28 16:10:28 rurban Exp $');
 ?>
 <head>
 <?php if (ENABLE_XHTML_XML and strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml')) { ?>
@@ -65,7 +65,8 @@ _("FindPage"))?>" />
 <link rel="alternate" type="application/rss+xml" title="RSS" href="<?=WikiURL(
 _("RecentChanges"), array('format' => 'rss'))?>" />
 
-<?php /**
+<?php 
+      /**
        * Add some user-specific links.
        */ ?>
 <?php if (!$user->isSignedIn()) {

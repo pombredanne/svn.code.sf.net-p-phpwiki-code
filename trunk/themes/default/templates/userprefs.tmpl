@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: userprefs.tmpl,v 1.55 2004-06-25 14:29:22 rurban Exp $ -->
+<!-- $Id: userprefs.tmpl,v 1.56 2004-06-28 16:10:28 rurban Exp $ -->
 <?php
 // Todo: Move the logic and code to the plugin
 // This is very experimental and the read-only part an ugly hack so far.
@@ -8,11 +8,10 @@ foreach (explode(',','errmsg,isForm') as $var) {
 }
 
 $plugin = $request->getArg('pagename');
-if ($request->isActionPage($request->getArg('pagename')) and 
-    $plugin != _("PreferencesInfo") and $plugin != _("_PreferencesInfo")) {
-    $isForm = true;
+if ($request->isActionPage($request->getArg('pagename')) 
+    and $isForm and $plugin == _("PreferencesInfo")) {
+    $isForm = false;
 }
-
 $time = time();
 $user = &$request->getUser();
 $pref = &$request->_prefs;
@@ -108,15 +107,15 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 <?php if ($isForm) { ?>
 <form action="<?=$request->getPostURL()?>" method="post">
 <?php } else { 
-  $user = $request->_user; 
   $fill = "&nbsp;";
   // See also plugin _AuthInfo
+  $authmethod = ENABLE_USER_NEW ? @$user->_authmethod : @$user->auth_how;
 ?>
-<?= HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$pref->get('userid'), " from " . (ENABLE_USER_NEW ? $request->_user->_authmethod : $request->_user->auth_how)),
+<?= HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$pref->get('userid'), " from " . $authmethod),
 	      sprintf("%12s: [% 10s]  %16s: [% 10s] | %8s: [%2s]\n","getId",$user->getId(),"getAuthenticatedId",$user->getAuthenticatedId(),"isSignedIn", $user->isSignedIn()),
 	      //sprintf("%12s: [% 10s]\n",_("Password"),empty($pref->get('passwd')) ? _("<empty>") : _("<not empty>")),
 	      sprintf("%12s: [% 10s]  %15s: [% 8s]\n",
-		      _("Auth Level"),$user->_level,_("Auth Method"),$user->_authmethod),
+		      _("Auth Level"),$user->_level,_("Auth Method"),$authmethod),
 	      sprintf("%12s: [% 10s]\n",_("HomePage"),$user->hasHomePage() ? (ENABLE_USER_NEW ? $user->_HomePagehandle->_pagename : $user->_homepage->_pagename ) : ''),
 	      sprintf("%12s: [% 10s]\n",_("E-Mail"),$pref->get('email')),
 	      //sprintf("%12s: [% 10s]\n",_("Notify"),$pref->get('notifyPages')),
