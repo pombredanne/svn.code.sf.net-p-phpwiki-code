@@ -1,31 +1,31 @@
 /*
-  $Id: Hawaiian.css,v 1.6 2002-01-12 07:20:14 carstenklapp Exp $
+  $Id: Hawaiian.css,v 1.7 2002-01-16 20:04:04 carstenklapp Exp $
 
   Classes:
 
-  DIV.wikitext - the transformed wiki page text.
+  div.wikitext - the transformed wiki page text.
 
-  A.wiki           - link to page in wiki.
-  A.named-wiki    - a named link to page in wiki (from e.g. [name|WikiPage]).
-  A.interwiki     - link to page in another wiki
+  a.wiki             - link to page in wiki.
+  a.named-wiki       - a named link to page in wiki (from e.g. [name|WikiPage]).
+  a.interwiki        - link to page in another wiki
     SPAN.wikipage    - page name within interwiki link.
-  A.named-interwiki  - link to page in another wiki
-  A.url           - link to external URL from wiki page.
-  A.named-url     - link to external URL from wiki page.
+  a.named-interwiki  - link to page in another wiki
+  a.url              - link to external URL from wiki page.
+  a.named-url        - link to external URL from wiki page.
 
-  .wikiunknown A, .wikiunknown U
-  .named-wikiunknown A, .named-wikiunknown U
+  .wikiunknown a, .wikiunknown u
+  .named-wikiunknown a, .named-wikiunknown u
   
-  A.wikiaction
-  A.wikiadmin
+  a.wikiaction
+  a.wikiadmin
   .wikiunsafe
 
-  A.backlinks
+  a.backlinks
   
 TODO: Get rid of tables in wikiaction forms.
 */
 
-BODY {
+body {
 /* the background image url is relative to this file's directory */
         color :             #000;
         background-color :  #fff;
@@ -38,19 +38,19 @@ BODY {
  */
 @import url(Hawaiian-heavy.css);
 
-BODY { font-family: arial, helvetica, sans-serif; }
+body { font-family: arial, helvetica, sans-serif; }
 
 /*
  * NS4, defaults from BODY don't always propagate correctly.
  * So we need this:
  */ 
-.wikitext, .toolbar, P, TD { font-family: arial, helvetica, sans-serif; }
+.wikitext, .toolbar, p, td { font-family: arial, helvetica, sans-serif; }
 
-INPUT.button { font-family: arial, helvetica, sans-serif; }
+input.button { font-family: arial, helvetica, sans-serif; }
 
 .wikitext PRE { font-family: monospace; }
 
-DIV.wikitext {
+div.wikitext {
  background: transparent;
  border: thin;
  border-color: black;
@@ -66,9 +66,9 @@ DIV.wikitext {
  clear: both;
 }
 
-INPUT.wikitext { margin:0px; }
+input.wikitext { margin:0px; }
 
-DIV.toolbar { margin: 1ex 0ex; }
+div.toolbar { margin: 1ex 0ex; }
 
 /*
  * This is a kluge for NS4 which doesn't honor the clear: settings on
@@ -86,10 +86,10 @@ DIV.toolbar { margin: 1ex 0ex; }
  * between successive <div>'s.  This makes the <br class="ignore"> completely
  * unnecessary. 
  */
-DIV.br { clear:both; line-height: 0px; }
+div.br { clear:both; line-height: 0px; }
 .ignore { display: none; }
  
-DIV.errors {
+div.errors {
  background: #eee;
  border: medium;
  border-color: red;
@@ -105,18 +105,18 @@ DIV.errors {
  clear: both;
 }
 
-.errors H4 {
+.errors h4 {
  color:red;
  text-decoration: underline;
  margin:0px;
 }
 
-P.error {
+p.error {
  font-size: smaller;
  font-family: monospace;
  margin:0px;
 }
-.error UL
+.error ul
 {
  font-size: smaller;
  font-family: monospace;
@@ -125,7 +125,7 @@ P.error {
 /*
  * Style for <hr>s in wiki markup.
  */
-.wikitext HR {
+.wikitext hr {
  background: #666;
  height: 1px;
  width: 90%;
@@ -139,34 +139,34 @@ P.error {
  * Link styles
  */
 /* Wiki Links */
-A.wiki { text-decoration: none; }
+a.wiki { text-decoration: none; }
 .wiki  { font-weight: bold; }
 
 /* Unknown links */
-.wikiunknown A, .named-wikiunknown A, .wikiunknown U
+.wikiunknown a, .named-wikiunknown a, .wikiunknown u
 { text-decoration: none; }
 
 .wikiunknown, .named-wikiunknown
 {color: #600; }
 
 /* Interwiki links */
-A.interwiki { text-decoration: none; }
+a.interwiki { text-decoration: none; }
 .wikipage   { font-weight: bold; }
 
 .interwiki,
-I .interwiki .wikipage, EM .interwiki .wikipage
+i .interwiki .wikipage, em .interwiki .wikipage
 { font-style: oblique; }
 
 .interwiki .wikipage,
-I .interwiki, EM .interwiki  
+i .interwiki, em .interwiki  
 { font-style: normal; }
 
 /*
  * wikiaction, wikiadmin, wikiunsafe:
  */
-A.wikiaction, A.wikiadmin       { text-decoration: none; }
-A.wikiaction, .wikiaction TABLE, SPAN.wikiaction  { font-weight: normal; color: #ff7e00; }
-A.wikiadmin, .wikiadmin TABLE   { color: #444; }
+a.wikiaction, a.wikiadmin       { text-decoration: none; }
+a.wikiaction, .wikiaction table, span.wikiaction  { font-weight: normal; color: #ff7e00; }
+a.wikiadmin, .wikiadmin table   { color: #444; }
 .wikiunsafe                     { color: #ccc; }
 
 /*
@@ -183,19 +183,19 @@ img.linkicon		{ vertical-align: middle; }
  * Put a border around wikiaction forms:
  * This doesn't work for NS4.
  */
-.wikiaction TABLE, .wikiadmin TABLE
+.wikiaction table, .wikiadmin table
 {
   border-style: ridge;
   border-width: medium;
 }
-.wikiaction TABLE { border-color: #9cf; }
-.wikiadmin TABLE  { border-color: #f99; }
+.wikiaction table { border-color: #9cf; }
+.wikiadmin table  { border-color: #f99; }
 
 /* Backlinks */
-A.backlinks { color: #006; }
+a.backlinks { color: #006; }
 
 /* Make the textarea on the edit page full width */
-TEXTAREA.wikiedit { width: 100%; margin-top: 1ex; }
+textarea.wikiedit { width: 100%; margin-top: 1ex; }
 
 
 /* Calendar plugin */
