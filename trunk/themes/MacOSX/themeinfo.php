@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.38 2002-01-23 06:39:50 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.39 2002-01-23 08:11:42 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -141,7 +141,7 @@ $Theme->setLinkIcon('mailto');
 $Theme->setLinkIcon('interwiki');
 $Theme->setLinkIcon('*', 'url');
 
-$Theme->setButtonSeparator(' ');
+$Theme->setButtonSeparator(""); //use no separator instead of default
 
 $Theme->addButtonAlias('?', 'uww');
 $Theme->addButtonAlias(_("Lock Page"), "Lock Page");
