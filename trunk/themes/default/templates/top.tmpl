@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-/* $Id: top.tmpl,v 1.2 2002-01-17 22:52:04 dairiki Exp $
+/* $Id: top.tmpl,v 1.3 2002-01-17 23:14:22 dairiki Exp $
  *
  * This template is responsible mainly for the outer level <html> stuff and the and <head>.
  */
@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- phpwiki source:
-$Id: top.tmpl,v 1.2 2002-01-17 22:52:04 dairiki Exp $
+$Id: top.tmpl,v 1.3 2002-01-17 23:14:22 dairiki Exp $
 <?=$RCS_IDS?>
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
@@ -23,7 +23,7 @@ $Id: top.tmpl,v 1.2 2002-01-17 22:52:04 dairiki Exp $
 <?php if (!empty($PAGE_DESCRIPTION)) { ?>
   <meta name="description" content="<?=$PAGE_DESCRIPTION?>" />
 <?php } ?>
-<base href="<?=$BASE_URL?>" />
+<base href="<?=BASE_URL?>" />
 <link rel="shortcut icon" href="<?=$Theme->getImageURL('favicon.ico')?>" />
 <?= $Theme->getCSS() ?>
 <title><?=$WIKI_NAME?> - <?=$TITLE?></title>

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.51 2002-01-17 20:44:04 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.52 2002-01-17 23:14:21 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -251,6 +251,9 @@ if (VIRTUAL_PATH != SCRIPT_NAME)
 else
 define('PATH_INFO_PREFIX', '/');
 
+
+define('BASE_URL',
+       SERVER_URL . (USE_PATH_INFO ? VIRTUAL_PATH . '/' : SCRIPT_NAME));
 
 //////////////////////////////////////////////////////////////////
 // Select database

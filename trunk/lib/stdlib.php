@@ -1,8 +1,7 @@
-<?php rcs_id('$Id: stdlib.php,v 1.78 2002-01-17 22:52:03 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.79 2002-01-17 23:14:22 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
-    BaseURL()
     WikiURL($pagename, $args, $get_abs_url)
     StartTag($tag, $args)
     Element($tag, $args, $content)
@@ -39,10 +38,6 @@
 */
 
 
-function BaseURL() {
-    return SERVER_URL . DATA_PATH . "/";
-}
-
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
     if (is_array($args)) {
         $enc_args = array();
@@ -53,8 +48,7 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     }
     
     if (USE_PATH_INFO) {
-        $url = $get_abs_url ?
-            SERVER_URL . VIRTUAL_PATH . "/" : VIRTUAL_PATH . "/";
+        $url = $get_abs_url ? SERVER_URL . VIRTUAL_PATH . "/" : "";
         $url .= rawurlencode($pagename);
         if ($args)
             $url .= "?$args";
