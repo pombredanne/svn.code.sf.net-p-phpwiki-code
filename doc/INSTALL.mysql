@@ -1,7 +1,8 @@
-FIXME: these instructions are slightly broken.
-
 Installing phpwiki with MySQL 
 -----------------------------
+
+A MySQL configuration is relatively hard to setup and slow, compared 
+to dba or better SQL databases.
 
 This assumes that you have a working MySQL server and client setup.
 Installing MySQL is beyond the scope of this document.
@@ -50,8 +51,8 @@ For more information on MySQL go to http://www.mysql.org/
            schemas/mysql-destroy.sql at the same time, so you
            don't forget.)
 
-That's it. phpwiki should now work. DATABASE_DIRECTORY,
-DATABASE_DBA_HANDLER and DATABASE_TIMEOUT are ignore for mysql.
+That's it. Phpwiki should now work. 
+DATABASE_DIRECTORY and DATABASE_DBA_HANDLER are ignored for mysql.
 
 If you run into problems then check that your MySQL-user has
 the necessary access rights for the phpwiki tables.
@@ -68,12 +69,13 @@ Upgrading a MySQL phpwiki
 If schemas/mysql-initialize.sql has changed for your old phpwiki
 installation (or changed when compared to the old "mysql.sql" file),
 you can either create missing tables manually and ALTER the changed
-tables manually.  Or you can run ?action=upgrade (also from "Upgrade"
+tables manually.  
+Or you can run ?action=upgrade (also from "Upgrade"
 at PhpWikiAdministration), but then your database user needs the
-necessary ALTER and CREATE permissions. You might change these
-temporarily in your config.ini.  action=upgrade also brings all
-changed pgsrc files up-to-date.
+necessary ALTER and CREATE permissions. 
+You might want to set DBADMIN_USER temporarly in your config.ini.
+?action=upgrade also brings all changed pgsrc files up-to-date.
 
-/Reini and Arno ahollosi@mail.com
+/Reini Urban and Arno ahollosi@mail.com
 
-$Id: INSTALL.mysql,v 1.6 2004-07-25 17:46:44 dfrankow Exp $
+$Id: INSTALL.mysql,v 1.7 2004-12-17 09:28:40 rurban Exp $
