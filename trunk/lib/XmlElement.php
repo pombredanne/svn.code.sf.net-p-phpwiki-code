@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.20 2003-02-18 19:00:47 dairiki Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.21 2003-02-21 04:23:19 dairiki Exp $');
 /*
  * Code for writing XML.
  */
@@ -284,7 +284,7 @@ class XmlElement extends XmlContent
                     continue;
                 $val = $attr;
             }
-            $qval = str_replace("\"", '&quot;', $this->_quote($val));
+            $qval = str_replace("\"", '&quot;', $this->_quote((string)$val));
             $start .= " $attr=\"$qval\"";
         }
         $start .= ">";
@@ -417,7 +417,7 @@ class FormattedText {
 
     function asXML () {
         // Not all PHP's have vsprintf, so...
-        $args[] = XmlElement::_quote($this->_fs);
+        $args[] = XmlElement::_quote((string)$this->_fs);
         foreach ($this->_args as $arg)
             $args[] = AsXML($arg);
         return call_user_func_array('sprintf', $args);
@@ -425,7 +425,7 @@ class FormattedText {
 
     function printXML () {
         // Not all PHP's have vsprintf, so...
-        $args[] = XmlElement::_quote($this->_fs);
+        $args[] = XmlElement::_quote((string)$this->_fs);
         foreach ($this->_args as $arg)
             $args[] = AsXML($arg);
         call_user_func_array('printf', $args);
@@ -464,7 +464,7 @@ function PrintXML ($val /* , ... */ ) {
             PrintXML($x);
     }
     else
-        echo (string)XmlContent::_quote($val);
+        echo (string)XmlContent::_quote((string)$val);
 }
 
 function AsXML ($val /* , ... */) {
