@@ -1,10 +1,34 @@
-<?php rcs_id('$Id: PageGroup.php,v 1.4 2002-02-16 02:08:26 carstenklapp Exp $');
+<?php // -*-php-*-
+rcs_id('$Id: PageGroup.php,v 1.5 2003-01-18 21:49:00 carstenklapp Exp $');
+/**
+ Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+
+ This file is part of PhpWiki.
+
+ PhpWiki is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ PhpWiki is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with PhpWiki; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 /**
  * Usage:
  *
  * <?plugin PageGroup parent=MyTableOfContents ?>
  *
- * <?plugin PageGroup parent=MyTableOfContents label="Visit more pages in MyTableOfContents" ?>
+ * <?plugin PageGroup
+ *          parent=MyTableOfContents
+ *          label="Visit more pages in MyTableOfContents"
+ * ?>
  *
  * <?plugin PageGroup parent=MyTableOfContents section=PartTwo loop=true ?>
  *
@@ -22,6 +46,11 @@ extends WikiPlugin
 
     function getDescription() {
         return sprintf(_("PageGroup for %s"),'[pagename]');
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -61,8 +90,7 @@ extends WikiPlugin
             // required args are missing?
             $error_text = fmt("%s: %s", "WikiPlugin_" .$this->getName(),
                               $error_text);
-            $error_text .= " " . sprintf(_("A required argument '%s' is missing."),
-                                         'parent');
+            $error_text .= " " . sprintf(_("A required argument '%s' is missing."), 'parent');
             $html = $error_text;
             return $html;
         }
@@ -125,17 +153,24 @@ extends WikiPlugin
                         $linkpage  = $c[$thispage - 1];
                     }
                     // mind the French : punctuation
-                    $text = fmt("%s: %s", $directions[$go_item], $Theme->makeLinkButton($linkpage));
+                    $text = fmt("%s: %s", $directions[$go_item],
+                                $Theme->makeLinkButton($linkpage));
                     $links->pushcontent($text);
-                    $links->pushcontent($sep); //this works because there are only 2 go items, previous,next
+                    $links->pushcontent($sep); // this works because
+                                               // there are only 2 go
+                                               // items, previous,next
                 } else {
                     if ($thispage == 0) {
                         // skip it
                     } else {
                         $linkpage  = $c[$thispage - 1];
-                        $text = fmt("%s: %s", $directions[$go_item], $Theme->makeLinkButton($linkpage));
+                        $text = fmt("%s: %s", $directions[$go_item],
+                                    $Theme->makeLinkButton($linkpage));
                         $links->pushcontent($text);
-                        $links->pushcontent($sep); //this works because there are only 2 go items, previous,next
+                        $links->pushcontent($sep); //this works
+                                                   //because there are
+                                                   //only 2 go items,
+                                                   //previous,next
                     }
                 }
             } else if ($go_item == 'next') {
@@ -145,13 +180,15 @@ extends WikiPlugin
                     } else {
                         $linkpage  = $c[$thispage + 1];
                     }
-                    $text = fmt("%s: %s", $directions[$go_item], $Theme->makeLinkButton($linkpage));
+                    $text = fmt("%s: %s", $directions[$go_item],
+                                $Theme->makeLinkButton($linkpage));
                 } else {
                     if ($thispage == $lastindex) {
                         // skip it
                     } else {
                         $linkpage = $c[$thispage + 1];
-                        $text = fmt("%s: %s", $directions[$go_item], $Theme->makeLinkButton($linkpage));
+                        $text = fmt("%s: %s", $directions[$go_item],
+                                    $Theme->makeLinkButton($linkpage));
                     }
                 }
                 $links->pushcontent($text);
@@ -159,10 +196,10 @@ extends WikiPlugin
         }
         $links->pushcontent(" ] "); // an experiment
         return $links;
-
     }
-
 };
+
+// $Log: not supported by cvs2svn $
 
 // Local Variables:
 // mode: php

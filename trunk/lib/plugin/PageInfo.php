@@ -1,6 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageInfo.php,v 1.2 2003-01-04 23:27:39 carstenklapp Exp $');
-
+rcs_id('$Id: PageInfo.php,v 1.3 2003-01-18 21:49:01 carstenklapp Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -34,13 +33,13 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return sprintf(_("Show extra page Info and statistics for %s"),
+        return sprintf(_("Show extra page Info and statistics for %s."),
                        '[pagename]');
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -73,6 +72,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2003/01/04 23:27:39  carstenklapp
+// New: Gracefully handle non-existant pages. Added copyleft;
+// getVersion() for PluginManager.
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
