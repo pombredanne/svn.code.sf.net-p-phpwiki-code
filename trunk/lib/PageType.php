@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.16 2003-01-31 22:53:39 carstenklapp Exp $');
+rcs_id('$Id: PageType.php,v 1.17 2003-02-01 03:12:51 carstenklapp Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -66,7 +66,7 @@ function PageType(&$rev, $pagename = false, $markup = false, $overridePageType =
     if ($overridePageType) {
         $ContentTemplateName = '$overridePageType';
         $content_template = new $overridePageType($text, $markup);
-        trigger_error(sprintf("DEBUG: PageType overriden as %s", $overridePageType));
+        //trigger_error(sprintf("DEBUG: PageType overridden as %s", $overridePageType));
     }
     else {
        /**
@@ -285,6 +285,9 @@ extends PageType
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2003/01/31 22:53:39  carstenklapp
+// Added hook/hack to allow plugins to provide their own or override a PageType.
+//
 // Revision 1.15  2003/01/06 01:46:31  carstenklapp
 // Bugfix: Also identify any WikiBlogs which are subpages of subpages.
 //
