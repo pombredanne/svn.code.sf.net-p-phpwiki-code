@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.3 2003-01-17 23:53:48 zorloc Exp $')
+rcs_id('$Id: WikiGroup.php,v 1.4 2003-01-21 04:02:39 zorloc Exp $')
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -262,7 +262,7 @@ class GroupWikiPage extends WikiGroup{
             $this->membership[$group] = true;
             return true;
         }
-		$this->membership[$group] = false;
+        $this->membership[$group] = false;
         return false;
     }
     
@@ -310,8 +310,8 @@ class GroupWikiPage extends WikiGroup{
                 $group = $group_page->getName();
                 $membership[$group] = true;
             } else {
-				$membership[$group] = false;
-			}
+                $membership[$group] = false;
+            }
         }
         $this->membership = $membership;
         return $membership;
@@ -353,4 +353,13 @@ class GroupWikiPage extends WikiGroup{
     }
 }
 
+// $Log: not supported by cvs2svn $
+
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 ?>
