@@ -1,0 +1,15 @@
+Date: Sat, 15 Nov 2003 04:26:12 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.5pre)
+X-Rcs-Id: $Id: _MailifyPage,v 1.1 2003-11-15 03:32:09 carstenklapp Exp $
+Content-Type: application/x-phpwiki;
+  pagename=_MailifyPage;
+  pgsrc_version="2 $Revision: 1.1 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+This page is simply an aid to the PhpWiki programmers for producing
+page dumps of a single page.
+----
+<?plugin _MailifyPage?>
