@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreatePage.php,v 1.3 2004-03-24 19:41:04 rurban Exp $');
+rcs_id('$Id: CreatePage.php,v 1.4 2004-04-21 16:14:50 zorloc Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -59,6 +59,9 @@ extends WikiPlugin
         extract($this->getArgs($argstr, $request));
         if (!$s)
             return '';
+            
+        // Prevent spaces at the start and end of a page name
+        $s = trim($s);
 
         $param = array('action' => 'edit');
         if ($template and $dbi->isWikiPage($template)) {
@@ -98,6 +101,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/03/24 19:41:04  rurban
+// fixed the name
+//
 // Revision 1.2  2004/03/17 15:37:41  rurban
 // properly support initial_content and template with URI length overflow workaround
 //
