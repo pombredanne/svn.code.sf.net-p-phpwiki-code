@@ -18,8 +18,6 @@ $locale["(Copy your changes to the clipboard. You can try editing a different pa
    "Copie sus cambios al portapapeles o a otro sitio temporal (p.ej. editor de textos).";
 $locale["1 day"] =
    "1 día";
-$locale["All Pages"] =
-   "Todas las Páginas";
 $locale["AllPages"] =
    "TodasLasPáginas";
 $locale["An unnamed PhpWiki"] =
@@ -52,8 +50,6 @@ $locale["FindPage"] =
    "BuscarPágina";
 $locale["First"] =
    "Primera";
-$locale["Full Text Search"] =
-   "Una búsqueda completa de texto";
 $locale["Full text search results for '%s'"] =
    "Resultados de la búsqueda en el texto completo para '%s'";
 $locale["FullTextSearch"] =
@@ -80,8 +76,6 @@ $locale["Last edited %s."] =
    "Editada por última vez %s.";
 $locale["Last edited on %s."] =
    "Editada por última vez %s.";
-$locale["Lists nested too deep in SetHTMLOutputMode"] =
-   "Límites de la pila excedidos en SetHTMLOutputMode";
 $locale["Lock Page"] =
    "Bloquear Página";
 $locale["Locked"] =
@@ -100,8 +94,6 @@ $locale["Next"] =
    "Siguiente";
 $locale["None"] =
    "Ninguna";
-$locale["Orphaned Pages"] =
-   "Buscar Páginas";
 $locale["OrphanedPages"] =
    "BuscarPágina";
 $locale["Page Locked"] =

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.30 2002-12-17 18:33:24 dairiki Exp $
+# $Id: Makefile,v 1.31 2003-03-12 09:31:13 carstenklapp Exp $
 #
 # locale/Makefile
 #
@@ -61,6 +61,7 @@ mo: sv/LC_MESSAGES/phpwiki.mo sv/LC_MESSAGES/phpwiki.php
 #
 ${POT_FILE}: ../lib/ArchiveCleaner.php
 ${POT_FILE}: ../lib/BlockParser.php
+${POT_FILE}: ../lib/CachedMarkup.php
 ${POT_FILE}: ../lib/DB_Session.php
 ${POT_FILE}: ../lib/DbaDatabase.php
 ${POT_FILE}: ../lib/DbaListSet.php
@@ -99,10 +100,13 @@ ${POT_FILE}: ../lib/WikiDB/backend/dumb/BackLinkIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/MostPopularIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/MostRecentIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/TextSearchIter.php
+${POT_FILE}: ../lib/WikiDB/backend/file.php
 ${POT_FILE}: ../lib/WikiDB/backend/mysql.php
 ${POT_FILE}: ../lib/WikiDB/backend/pgsql.php
 ${POT_FILE}: ../lib/WikiDB/cvs.php
 ${POT_FILE}: ../lib/WikiDB/dba.php
+${POT_FILE}: ../lib/WikiDB/file.php
+${POT_FILE}: ../lib/WikiGroup.php
 ${POT_FILE}: ../lib/WikiPlugin.php
 ${POT_FILE}: ../lib/WikiPluginCached.php
 ${POT_FILE}: ../lib/WikiUser.php
@@ -144,6 +148,7 @@ ${POT_FILE}: ../lib/plugin/AllUsers.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
 ${POT_FILE}: ../lib/plugin/CacheTest.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
+${POT_FILE}: ../lib/plugin/Comment.php
 ${POT_FILE}: ../lib/plugin/EditMetaData.php
 ${POT_FILE}: ../lib/plugin/ExternalSearch.php
 ${POT_FILE}: ../lib/plugin/FrameInclude.php
@@ -151,6 +156,7 @@ ${POT_FILE}: ../lib/plugin/FullTextSearch.php
 ${POT_FILE}: ../lib/plugin/FuzzyPages.php
 ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
+${POT_FILE}: ../lib/plugin/InterWikiSearch.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
 ${POT_FILE}: ../lib/plugin/MostPopular.php
 ${POT_FILE}: ../lib/plugin/OldStyleTable.php
@@ -159,8 +165,10 @@ ${POT_FILE}: ../lib/plugin/PageGroup.php
 ${POT_FILE}: ../lib/plugin/PageHistory.php
 ${POT_FILE}: ../lib/plugin/PageInfo.php
 ${POT_FILE}: ../lib/plugin/PageTrail.php
+${POT_FILE}: ../lib/plugin/PhotoAlbum.php
 ${POT_FILE}: ../lib/plugin/PhpHighlight.php
 ${POT_FILE}: ../lib/plugin/PhpWeather.php
+${POT_FILE}: ../lib/plugin/PluginManager.php
 ${POT_FILE}: ../lib/plugin/PrevNext.php
 ${POT_FILE}: ../lib/plugin/RandomPage.php
 ${POT_FILE}: ../lib/plugin/RawHtml.php
@@ -178,16 +186,17 @@ ${POT_FILE}: ../lib/plugin/VisualWiki.php
 ${POT_FILE}: ../lib/plugin/WantedPages.php
 ${POT_FILE}: ../lib/plugin/WikiAdminRemove.php
 ${POT_FILE}: ../lib/plugin/WikiAdminSelect.php
+${POT_FILE}: ../lib/plugin/WikiAdminUtils.php
 ${POT_FILE}: ../lib/plugin/WikiBlog.php
 ${POT_FILE}: ../lib/plugin/WikiForm.php
 ${POT_FILE}: ../lib/plugin/_BackendInfo.php
+${POT_FILE}: ../lib/plugin/_MailifyPage.php
 ${POT_FILE}: ../lib/plugin/_PreferencesInfo.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/plugincache-config.php
 ${POT_FILE}: ../lib/prepend.php
 ${POT_FILE}: ../lib/removepage.php
 ${POT_FILE}: ../lib/stdlib.php
-${POT_FILE}: ../lib/transform.php
 ${POT_FILE}: ../lib/ziplib.php
 ${POT_FILE}: ../themes/Hawaiian/lib/random.php
 ${POT_FILE}: ../themes/Hawaiian/themeinfo.php
@@ -201,16 +210,25 @@ ${POT_FILE}: ../themes/Portland/templates/editpage.tmpl
 ${POT_FILE}: ../themes/Portland/templates/navbar.tmpl
 ${POT_FILE}: ../themes/Portland/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/Portland/themeinfo.php
+${POT_FILE}: ../themes/Sidebar/templates/frame-footer.tmpl
+${POT_FILE}: ../themes/Sidebar/templates/frame-header.tmpl
+${POT_FILE}: ../themes/Sidebar/templates/frame-left.tmpl
+${POT_FILE}: ../themes/Sidebar/templates/frameset.tmpl
 ${POT_FILE}: ../themes/Sidebar/themeinfo.php
 ${POT_FILE}: ../themes/SpaceWiki/lib/RecentChanges.php
 ${POT_FILE}: ../themes/SpaceWiki/themeinfo.php
 ${POT_FILE}: ../themes/default/templates/actionbar.tmpl
+${POT_FILE}: ../themes/default/templates/blogform.tmpl
 ${POT_FILE}: ../themes/default/templates/body.tmpl
 ${POT_FILE}: ../themes/default/templates/bottom.tmpl
+${POT_FILE}: ../themes/default/templates/browse-footer.tmpl
 ${POT_FILE}: ../themes/default/templates/browse.tmpl
 ${POT_FILE}: ../themes/default/templates/content.tmpl
 ${POT_FILE}: ../themes/default/templates/debug.tmpl
+${POT_FILE}: ../themes/default/templates/dialog.tmpl
 ${POT_FILE}: ../themes/default/templates/editpage.tmpl
+${POT_FILE}: ../themes/default/templates/frame-footer.tmpl
+${POT_FILE}: ../themes/default/templates/frame-header.tmpl
 ${POT_FILE}: ../themes/default/templates/frameset.tmpl
 ${POT_FILE}: ../themes/default/templates/head.tmpl
 ${POT_FILE}: ../themes/default/templates/homepage.tmpl
@@ -220,9 +238,11 @@ ${POT_FILE}: ../themes/default/templates/info.tmpl
 ${POT_FILE}: ../themes/default/templates/login.tmpl
 ${POT_FILE}: ../themes/default/templates/navbar.tmpl
 ${POT_FILE}: ../themes/default/templates/nochanges.tmpl
+${POT_FILE}: ../themes/default/templates/redirect.tmpl
 ${POT_FILE}: ../themes/default/templates/savepage.tmpl
 ${POT_FILE}: ../themes/default/templates/signin.tmpl
 ${POT_FILE}: ../themes/default/templates/top.tmpl
 ${POT_FILE}: ../themes/default/templates/userprefs.tmpl
 ${POT_FILE}: ../themes/default/templates/viewsource.tmpl
+${POT_FILE}: ../themes/default/templates/wikiblog.tmpl
 ${POT_FILE}: ../themes/default/themeinfo.php

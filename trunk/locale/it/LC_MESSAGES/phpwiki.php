@@ -52,8 +52,6 @@ $locale["FindPage"] =
    "TrovaPagina";
 $locale["First"] =
    "Prima";
-$locale["Full Text Search"] =
-   "Una ricerca completa del testo";
 $locale["Full text search results for '%s'"] =
    "Risultati della ricerca su tutto il testo per '%s'";
 $locale["FullTextSearch"] =

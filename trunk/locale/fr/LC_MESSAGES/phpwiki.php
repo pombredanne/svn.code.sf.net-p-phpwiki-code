@@ -38,6 +38,8 @@ $locale["%s: file not found"] =
    "%s : fichier non trouvé";
 $locale["%s: not defined"] =
    "%s : non défini";
+$locale["'%s': corrupt file"] =
+   "'%s' : ce fichier est abîmé.";
 $locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
    "(Copiez vos modifications dans le presse-papier. Vous pouvez essayer d'éditer une page différente ou sauver votre texte dans un éditeur).";
 $locale["(diff)"] =
@@ -66,8 +68,6 @@ $locale["Adjust"] =
    "Ajuster";
 $locale["All %s are listed below."] =
    "Toutes les %s sont énumérées ci-dessous.";
-$locale["All Pages"] =
-   "Toutes les Pages";
 $locale["AllPages"] =
    "ToutesLesPages";
 $locale["An unnamed PhpWiki"] =
@@ -162,16 +162,12 @@ $locale["FindPage"] =
    "ChercherUnePage";
 $locale["First"] =
    "Première";
-$locale["Full Text Search"] =
-   "Recherche en Texte Intégral";
 $locale["Full text search results for '%s'"] =
    "Résultats de la recherche en texte intégral de ' %s '";
 $locale["FullTextSearch"] =
    "RechercheEnTexteIntégral";
 $locale["FuzzyPages"] =
    "PagesFloues";
-$locale["Get BackLinks for %s"] =
-   "Obtenir des RétroLiens pour %s";
 $locale["Get debugging information for %s."] =
    "Obtenir des infos de débogage pour %s.";
 $locale["Go"] =
@@ -234,16 +230,8 @@ $locale["Last edited on %s."] =
    "Dernière modification le %s.";
 $locale["LikePages"] =
    "PagesSemblables";
-$locale["List FuzzyPages for %s"] =
-   "Liste des PagesFloues pour %s";
-$locale["List LikePages for %s"] =
-   "Listes des PagesSemblables à %s";
 $locale["List PageHistory for %s"] =
    "Listage de l'Historique de %s";
-$locale["List the most popular pages"] =
-   "Énumérez le plus populaire des pages";
-$locale["Lists nested too deep in SetHTMLOutputMode"] =
-   "Profondeur d'imbrication des listes trop grande dans SetHTMLOutputMode";
 $locale["Load File"] =
    "Charger le fichier";
 $locale["Loading '%s'"] =
@@ -300,8 +288,6 @@ $locale["Optimizing %s"] =
    "Optimisation de %s";
 $locale["Original (1.2 or 1.0)"] =
    "Original (1.2 ou 1.0)";
-$locale["Orphaned Pages"] =
-   "Pages Orphelines";
 $locale["Orphaned Pages in this wiki (%d total):"] =
    "Pages Orphelines dans ce wiki (%d au total) :";
 $locale["OrphanedPages"] =
@@ -368,8 +354,6 @@ $locale["RecentChanges"] =
    "DernièresModifs";
 $locale["RecentEdits"] =
    "ÉditionsRécentes";
-$locale["Redefinition of %s: %s"] =
-   "Redéfinition du %s : %s";
 $locale["References"] =
    "Références";
 $locale["Remove Page"] =
@@ -380,12 +364,8 @@ $locale["Remove the page now"] =
    "Supprimer la page maintenant";
 $locale["Removed page '%s' succesfully."] =
    "Page ' %s ' supprimée avec succès.";
-$locale["Request Cancelled!"] =
-   "Demande Annulée !";
 $locale["Return to %s"] =
    "Retour à l'%s";
-$locale["Return to %s."] =
-   "Retour à la %s.";
 $locale["Revision Not Found"] =
    "Révision Non Trouvée";
 $locale["Save"] =
