@@ -1,7 +1,7 @@
 <?php
 // display.php: fetch page or get default content
 // calls transform.php for actual transformation of wiki markup to HTML
-rcs_id('$Id: display.php,v 1.23 2002-01-28 20:02:14 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.24 2002-01-30 00:36:19 dairiki Exp $');
 
 require_once('lib/Template.php');
 //require_once('lib/transform.php');
@@ -81,8 +81,8 @@ function displayPage(&$request, $tmpl = 'browse') {
     }
 
     $splitname = split_pagename($pagename);
-    $pagetitle = HTML::a(array('href' => WikiURL(_("BackLinks"),
-                                                 array('page' => $pagename)),
+    $pagetitle = HTML::a(array('href' => WikiURL($pagename,
+                                                 array('action' => _("BackLinks"))),
                                'class' => 'backlinks'),
                          $splitname);
     $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
