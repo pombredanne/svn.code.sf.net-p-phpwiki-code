@@ -1,10 +1,10 @@
 Date: Tue, 20 Aug 2002 11:04:00 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.3)
-X-Rcs-Id: $Id: PhpWikiAdministration,v 1.20 2002-11-25 19:44:02 dairiki Exp $
+X-Rcs-Id: $Id: PhpWikiAdministration,v 1.21 2003-02-21 04:14:15 dairiki Exp $
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
   flags=PAGE_LOCKED;
-  pgsrc_version="3 $Revision: 1.20 $";
+  pgsrc_version="4 $Revision: 1.21 $";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -120,6 +120,33 @@ pages.
 
 The XHTML file collection can also be downloaded as an
 __[XHTML ZIP Snapshot | phpwiki:?action=ziphtml]__.
+
+----
+
+!! PhpWiki Internals
+
+These are here mostly for debugging purposes (at least, that's the hope.)
+
+In normal use, you shouldn't need to use these, though, then again,
+they shouldn't really do any harm.
+
+Purge Markup Cache |
+  (If your wiki is so configured,) the transformed (almost-HTML) content
+  of the most recent version of each page is cached.  This speeds up page
+  rendering since parsing of the wiki-text takes a fair amount of juice.
+
+  Hitting this button will delete all cached transformed content.
+  (Each pages content will be transformed and re-cached next time someone
+  views it.)
+
+  <?plugin WikiAdminUtils action=purge-cache label="Purge Cache" ?>
+
+Clean WikiDB of Illegal Filenames |
+  Page names beginning with the subpage-separator --- usually a slash (=/=) ---
+  are not allowed.  Sometimes though an errant plugin or something might
+  create one...  This button will delete any pages with illegal page names.
+
+  <?plugin WikiAdminUtils action=purge-bad-pagenames label="Exorcise WikiDB" ?>
 
 ----
 
