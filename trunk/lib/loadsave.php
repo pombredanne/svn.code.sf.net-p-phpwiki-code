@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.106 2004-06-13 13:54:25 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.107 2004-06-14 11:31:37 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -275,10 +275,10 @@ function DumpHtmlToDir (&$request)
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
 
-    global $Theme;
+    global $WikiTheme;
     if (defined('HTML_DUMP_SUFFIX'))
-        $Theme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
-    $Theme->DUMP_MODE = 'HTML';
+        $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
+    $WikiTheme->DUMP_MODE = 'HTML';
 
     while ($page = $pages->next()) {
     	if (! $request->getArg('start_debug'))
@@ -286,7 +286,7 @@ function DumpHtmlToDir (&$request)
 
         $pagename = $page->getName();
         $request->setArg('pagename',$pagename); // Template::_basepage fix
-        $filename = FilenameForPage($pagename) . $Theme->HTML_DUMP_SUFFIX;
+        $filename = FilenameForPage($pagename) . $WikiTheme->HTML_DUMP_SUFFIX;
 
         $msg = HTML(HTML::br(), $pagename, ' ... ');
 
@@ -322,12 +322,12 @@ function DumpHtmlToDir (&$request)
         fclose($fd);
     }
 
-    if (is_array($Theme->dumped_images)) {
+    if (is_array($WikiTheme->dumped_images)) {
         @mkdir("$directory/images");
-        foreach ($Theme->dumped_images as $img_file) {
-            if (($from = $Theme->_findFile($img_file)) and basename($from)) {
+        foreach ($WikiTheme->dumped_images as $img_file) {
+            if (($from = $WikiTheme->_findFile($img_file)) and basename($from)) {
                 $target = "$directory/images/".basename($img_file);
-                if (copy($Theme->_path . $from, $target)) {
+                if (copy($WikiTheme->_path . $from, $target)) {
                     $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
                     PrintXML($msg);
                 }
@@ -337,11 +337,11 @@ function DumpHtmlToDir (&$request)
             }
         }
     }
-    if (is_array($Theme->dumped_css)) {
-      foreach ($Theme->dumped_css as $css_file) {
-          if (($from = $Theme->_findFile(basename($css_file))) and basename($from)) {
+    if (is_array($WikiTheme->dumped_css)) {
+      foreach ($WikiTheme->dumped_css as $css_file) {
+          if (($from = $WikiTheme->_findFile(basename($css_file))) and basename($from)) {
               $target = "$directory/" . basename($css_file);
-              if (copy($Theme->_path . $from, $target)) {
+              if (copy($WikiTheme->_path . $from, $target)) {
                   $msg = HTML(HTML::br(), HTML($from), HTML::small(fmt("... copied to %s", $target)));
                   PrintXML($msg);
               }
@@ -351,8 +351,8 @@ function DumpHtmlToDir (&$request)
           }
       }
     }
-    $Theme->HTML_DUMP_SUFFIX = '';
-    $Theme->DUMP_MODE = false;
+    $WikiTheme->HTML_DUMP_SUFFIX = '';
+    $WikiTheme->DUMP_MODE = false;
 
     $request->setArg('pagename',$thispage); // Template::_basepage fix
     EndLoadDump($request);
@@ -375,9 +375,9 @@ function MakeWikiZipHtml (&$request)
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
 
-    global $Theme;
+    global $WikiTheme;
     if (defined('HTML_DUMP_SUFFIX'))
-        $Theme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
+        $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
 
     /* ignore fatals in plugins */
     global $ErrorManager;
@@ -398,7 +398,7 @@ function MakeWikiZipHtml (&$request)
 
         $pagename = $page->getName();
         $request->setArg('pagename',$pagename); // Template::_basepage fix
-        $filename = FilenameForPage($pagename) . $Theme->HTML_DUMP_SUFFIX;
+        $filename = FilenameForPage($pagename) . $WikiTheme->HTML_DUMP_SUFFIX;
         $revision = $page->getCurrentRevision();
 
         $transformedContent = $revision->getTransformedContent();
@@ -414,7 +414,7 @@ function MakeWikiZipHtml (&$request)
     // FIXME: Deal with images here.
     $zip->finish();
     $ErrorManager->popErrorHandler();
-    $Theme->$HTML_DUMP_SUFFIX = '';
+    $WikiTheme->$HTML_DUMP_SUFFIX = '';
 }
 
 
@@ -539,7 +539,7 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         $f = str_replace(sprintf(_("plain file %s"), ''), '', $f);
         //check if uploaded file? they pass just the content, but the file is gone
         if (@stat($f)) {
-            global $Theme;
+            global $WikiTheme;
             $meb = Button(array('action' => 'loadfile',
                                 'merge'=> true,
                                 'source'=> $f),
@@ -562,6 +562,43 @@ function SavePage (&$request, $pageinfo, $source, $filename)
         PrintXML(HTML::dt(HTML::em(WikiLink($pagename))), $mesg);
     else
         PrintXML(HTML::dt(WikiLink($pagename)), $mesg);
+    flush();
+}
+
+// action=revert (by diff)
+function RevertPage (&$request)
+{
+    $mesg = HTML::dd();
+    $pagename = $request->getArg('pagename');
+    $version = $request->getArg('version');
+    if (!$version) {
+        PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
+                 HTML::dd(_("missing required version argument")));
+        return;
+    }
+    $dbi = $request->getDbh();
+    $page = $dbi->getPage($pagename);
+    $current = $page->getCurrentRevision();
+    if ($current->getVersion() == 0) {
+        $mesg->pushContent(' ', _("no page content"));
+        PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
+                 $mesg);
+        return;
+    }
+    if ($current->getVersion() == $version) {
+        $mesg->pushContent(' ', _("same version page"));
+        return;
+    }
+    $rev = $page->getRevision($version);
+    $content = $rev->getPackedContent();
+    $versiondata = $rev->_data;
+    $versiondata['summary'] = sprintf(_("revert to version %d"), $version);
+    $new = $page->save($content, $current->getVersion() + 1, $versiondata);
+    $dbi->touch();
+    $mesg->pushContent(' ', fmt("- version %d saved to database as version %d",
+                                $version, $new->getVersion()));
+    PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
+             $mesg);
     flush();
 }
 
@@ -950,6 +987,13 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.106  2004/06/13 13:54:25  rurban
+ Catch fatals on the four dump calls (as file and zip, as html and mimified)
+ FoafViewer: Check against external requirements, instead of fatal.
+ Change output for xhtmldumps: using file:// urls to the local fs.
+ Catch SOAP fatal by checking for GOOGLE_LICENSE_KEY
+ Import GOOGLE_LICENSE_KEY and FORTUNE_DIR from config.ini.
+
  Revision 1.105  2004/06/08 19:48:16  rurban
  fixed foreign setup: no ugly skipped msg for the GenericPages, load english actionpages if translated not found
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.104 2004-06-11 09:07:30 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.105 2004-06-14 11:31:36 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -54,10 +54,10 @@ require_once(dirname(__FILE__).'/HtmlElement.php');
  * @return XmlContent The link
  */
 function WikiLink ($page_or_rev, $type = 'known', $label = false) {
-    global $Theme, $request;
+    global $WikiTheme, $request;
 
     if ($type == 'button') {
-        return $Theme->makeLinkButton($page_or_rev, $label);
+        return $WikiTheme->makeLinkButton($page_or_rev, $label);
     }
 
     $version = false;
@@ -86,7 +86,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
     }
     
     if (!is_string($wikipage) and !$wikipage->isValid('strict'))
-        return $Theme->linkBadWikiWord($wikipage, $label);
+        return $WikiTheme->linkBadWikiWord($wikipage, $label);
     
     if ($type == 'auto' or $type == 'if_known') {
         if (isset($page)) {
@@ -120,21 +120,21 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         foreach ($parts as $part) {
             $path[] = $part;
             $parent = join(SUBPAGE_SEPARATOR, $path);
-            if ($Theme->_autosplitWikiWords)
+            if ($WikiTheme->_autosplitWikiWords)
                 $part = " " . $part;
             if ($part)
-                $link->pushContent($Theme->linkExistingWikiWord($parent, $sep . $part));
-            $sep = $Theme->_autosplitWikiWords ? ' ' . SUBPAGE_SEPARATOR : SUBPAGE_SEPARATOR;
+                $link->pushContent($WikiTheme->linkExistingWikiWord($parent, $sep . $part));
+            $sep = $WikiTheme->_autosplitWikiWords ? ' ' . SUBPAGE_SEPARATOR : SUBPAGE_SEPARATOR;
         }
         if ($exists)
-            $link->pushContent($Theme->linkExistingWikiWord($wikipage, $sep . $last_part, $version));
+            $link->pushContent($WikiTheme->linkExistingWikiWord($wikipage, $sep . $last_part, $version));
         else
-            $link->pushContent($Theme->linkUnknownWikiWord($wikipage, $sep . $last_part));
+            $link->pushContent($WikiTheme->linkUnknownWikiWord($wikipage, $sep . $last_part));
         return $link;
     }
 
     if ($exists) {
-        return $Theme->linkExistingWikiWord($wikipage, $label, $version);
+        return $WikiTheme->linkExistingWikiWord($wikipage, $label, $version);
     }
     elseif ($type == 'if_known') {
         if (!$label && isa($wikipage, 'WikiPageName'))
@@ -142,7 +142,7 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
         return HTML($label ? $label : $pagename);
     }
     else {
-        return $Theme->linkUnknownWikiWord($wikipage, $label);
+        return $WikiTheme->linkUnknownWikiWord($wikipage, $label);
     }
 }
 
@@ -178,12 +178,12 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
  * ($Page_or_rev is ignored for submit buttons.)
  */
 function Button ($action, $label = false, $page_or_rev = false) {
-    global $Theme;
+    global $WikiTheme;
 
     if (!is_array($action) && preg_match('/submit:(.*)/A', $action, $m))
-        return $Theme->makeSubmitButton($label, $m[1], $class = $page_or_rev);
+        return $WikiTheme->makeSubmitButton($label, $m[1], $class = $page_or_rev);
     else
-        return $Theme->makeActionButton($action, $label, $page_or_rev);
+        return $WikiTheme->makeActionButton($action, $label, $page_or_rev);
 }
 
 
@@ -1151,7 +1151,7 @@ class Button extends HtmlElement {
             $this->setAttr('class', $class);
         if ($request->getArg('frame'))
             $this->setAttr('target', '_top');
-        $this->pushContent($GLOBALS['Theme']->maybeSplitWikiWord($text));
+        $this->pushContent($GLOBALS['WikiTheme']->maybeSplitWikiWord($text));
     }
 
 };
@@ -1363,6 +1363,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2004/06/11 09:07:30  rurban
+// support theme-specific LinkIconAttr: front or after or none
+//
 // Revision 1.103  2004/06/07 22:44:14  rurban
 // added simplified chown, setacl actions
 //

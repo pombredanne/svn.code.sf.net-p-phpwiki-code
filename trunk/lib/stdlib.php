@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.186 2004-06-13 13:54:25 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.187 2004-06-14 11:31:37 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -173,7 +173,7 @@ function AbsoluteURL ($url) {
  * displayed.
  */
 function IconForLink($protocol_or_url) {
-    global $Theme;
+    global $WikiTheme;
     if (0 and $filename_suffix == false) {
         // display apache style icon for file type instead of protocol icon
         // - archive: unix:gz,bz2,tgz,tar,z; mac:dmg,dmgz,bin,img,cpt,sit; pc:zip;
@@ -183,7 +183,7 @@ function IconForLink($protocol_or_url) {
         // - multimedia: mpeg,mpg,mov,qt
     } else {
         list ($proto) = explode(':', $protocol_or_url, 2);
-        $src = $Theme->getLinkIconURL($proto);
+        $src = $WikiTheme->getLinkIconURL($proto);
         if ($src)
             return HTML::img(array('src' => $src, 'alt' => "", 'class' => 'linkicon', 'border' => 0));
         else
@@ -205,13 +205,13 @@ function IconForLink($protocol_or_url) {
  * @return XmlContent.
  */
 function PossiblyGlueIconToText($proto_or_url, $text) {
-    global $request, $Theme;
+    global $request, $WikiTheme;
     if ($request->getPref('noLinkIcons'))
         return $text;
     $icon = IconForLink($proto_or_url);
     if (!$icon)
         return $text;
-    if ($where = $Theme->getLinkIconAttr()) {
+    if ($where = $WikiTheme->getLinkIconAttr()) {
         if ($where == 'no') return $text;
         if ($where != 'after') $where = 'front';
     } else {
@@ -450,8 +450,8 @@ function LinkPhpwikiURL($url, $text = '', $basepage) {
 
     $wikipage = new WikiPageName($pagename);
     if (!$wikipage->isValid()) {
-        global $Theme;
-        return $Theme->linkBadWikiWord($wikipage, $url);
+        global $WikiTheme;
+        return $WikiTheme->linkBadWikiWord($wikipage, $url);
     }
     
     return HTML::a(array('href'  => WikiURL($pagename, $args),
@@ -1452,10 +1452,10 @@ class Alert {
         if (!$buttons)
             $buttons = array(_("Okay") => $request->getURLtoSelf());
         
-        global $Theme;
+        global $WikiTheme;
         foreach ($buttons as $label => $url)
             print "$label $url\n";
-            $out[] = $Theme->makeButton($label, $url, 'wikiaction');
+            $out[] = $WikiTheme->makeButton($label, $url, 'wikiaction');
         return new XmlContent($out);
     }
 }
@@ -1594,6 +1594,13 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.186  2004/06/13 13:54:25  rurban
+// Catch fatals on the four dump calls (as file and zip, as html and mimified)
+// FoafViewer: Check against external requirements, instead of fatal.
+// Change output for xhtmldumps: using file:// urls to the local fs.
+// Catch SOAP fatal by checking for GOOGLE_LICENSE_KEY
+// Import GOOGLE_LICENSE_KEY and FORTUNE_DIR from config.ini.
+//
 // Revision 1.185  2004/06/11 09:07:30  rurban
 // support theme-specific LinkIconAttr: front or after or none
 //

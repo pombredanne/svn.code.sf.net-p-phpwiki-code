@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.58 2004-06-04 20:32:53 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.59 2004-06-14 11:31:36 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -656,9 +656,9 @@ extends _UserPreference
     }
 
     function update ($newvalue) {
-        global $Theme;
+        global $WikiTheme;
         include_once($this->_themefile($newvalue));
-        if (empty($Theme))
+        if (empty($WikiTheme))
             include_once($this->_themefile(THEME));
     }
 
@@ -739,6 +739,11 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2004/06/04 20:32:53  rurban
+// Several locale related improvements suggested by Pierrick Meignen
+// LDAP fix by John Cole
+// reanable admin check without ENABLE_PAGEPERM in the admin plugins
+//
 // Revision 1.57  2004/06/04 12:40:21  rurban
 // Restrict valid usernames to prevent from attacks against external auth or compromise
 // possible holes.

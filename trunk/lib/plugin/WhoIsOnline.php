@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WhoIsOnline.php,v 1.7 2004-05-27 17:49:06 rurban Exp $');
+rcs_id('$Id: WhoIsOnline.php,v 1.8 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -58,13 +58,13 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-        global $Theme;
+        global $WikiTheme;
         $request->setArg('nocache',1);
         $args = $this->getArgs($argstr, $request);
         // use the "online.tmpl" template
         // todo: check which arguments are really needed in the template.
         $stats = $this->getStats($dbi,$request,$args['mode']);
-        if ($src = $Theme->getImageURL("whosonline"))
+        if ($src = $WikiTheme->getImageURL("whosonline"))
             $img = HTML::img(array('src' => $src,
                                    'alt' => $this->getName(),
                                    'border' => 0));
@@ -194,6 +194,15 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/05/27 17:49:06  rurban
+// renamed DB_Session to DbSession (in CVS also)
+// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
+// remove leading slash in error message
+// added force_unlock parameter to File_Passwd (no return on stale locks)
+// fixed adodb session AffectedRows
+// added FileFinder helpers to unify local filenames and DATA_PATH names
+// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
+//
 // Revision 1.6  2004/05/02 15:10:08  rurban
 // new finally reliable way to detect if /index.php is called directly
 //   and if to include lib/main.php

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.21 2004-06-02 18:01:45 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.22 2004-06-14 11:31:20 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -409,21 +409,21 @@ extends FileFinder
      * Constructor.
      */
     function LocalizedButtonFinder () {
-        global $Theme;
+        global $WikiTheme;
         $this->_pathsep = $this->_get_syspath_separator();
         $include_path = $this->_get_include_path();
         $path = array();
 
         $lang = $this->_get_lang();
         assert(!empty($lang));
-        assert(!empty($Theme));
+        assert(!empty($WikiTheme));
 
         $langs = $this->locale_versions($lang);
 
         foreach ($langs as $lang) {
             if ($lang == 'C') $lang = 'en';
             foreach ($include_path as $dir) {
-                $path[] = $this->slashifyPath($Theme->file("buttons/$lang"));
+                $path[] = $this->slashifyPath($WikiTheme->file("buttons/$lang"));
             }
         }
 
@@ -555,6 +555,12 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/06/02 18:01:45  rurban
+// init global FileFinder to add proper include paths at startup
+//   adds PHPWIKI_DIR if started from another dir, lib/pear also
+// fix slashify for Windows
+// fix USER_AUTH_POLICY=old, use only USER_AUTH_ORDER methods (besides HttpAuth)
+//
 // Revision 1.20  2004/05/27 17:49:05  rurban
 // renamed DB_Session to DbSession (in CVS also)
 // added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals

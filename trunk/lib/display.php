@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.51 2004-05-18 16:23:39 rurban Exp $');
+rcs_id('$Id: display.php,v 1.52 2004-06-14 11:31:37 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -37,7 +37,7 @@ function RedirectorLink($pagename) {
 
     
 function actionPage(&$request, $action) {
-    global $Theme;
+    global $WikiTheme;
 
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
@@ -52,7 +52,7 @@ function actionPage(&$request, $action) {
     // $splitname = SplitPagename($pagename);
 
     $pagetitle = HTML(fmt("%s: %s", $actionpage->getName(),
-                          $Theme->linkExistingWikiWord($pagename, false, $version)));
+                          $WikiTheme->linkExistingWikiWord($pagename, false, $version)));
 
     $validators = new HTTP_ValidatorSet(array('pageversion' => $revision->getVersion(),
                                               '%mtime' => $revision->get('mtime')));
@@ -154,6 +154,9 @@ function displayPage(&$request, $template=false) {
     flush();
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2004/05/18 16:23:39  rurban
+// rename split_pagename to SplitPagename
+//
 // Revision 1.50  2004/05/04 22:34:25  rurban
 // more pdf support
 //

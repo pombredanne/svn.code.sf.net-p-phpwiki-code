@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.53 2004-05-24 17:36:32 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.54 2004-06-14 11:31:21 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004 Reini Urban
  *
@@ -346,8 +346,8 @@ function LinkBracketLink($bracketlink) {
             $imgurl = $imgurl->getAttr('href');
         } elseif (! preg_match("#^(" . ALLOWED_PROTOCOLS . "):#", $imgurl)) {
             // local theme linkname like 'images/next.gif'.
-            global $Theme;
-            $imgurl = $Theme->getImageURL($imgurl);
+            global $WikiTheme;
+            $imgurl = $WikiTheme->getImageURL($imgurl);
         }
         $label = LinkImage($imgurl, $link);
     }

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.164 2004-06-13 13:54:25 rurban Exp $');
+rcs_id('$Id: main.php,v 1.165 2004-06-14 11:31:37 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -100,7 +100,7 @@ $this->version = phpwiki_version();
     }
 
     function initializeTheme () {
-        global $Theme;
+        global $WikiTheme;
 
         // Load theme
         $user_theme = $this->getPref('theme');
@@ -115,13 +115,13 @@ $this->version = phpwiki_version();
         {
             include_once("themes/" . THEME . "/themeinfo.php");
         }
-        if (empty($Theme) and isset($user_theme))
+        if (empty($WikiTheme) and isset($user_theme))
             include_once("themes/$user_theme/themeinfo.php");
-        if (empty($Theme) and defined('THEME'))
+        if (empty($WikiTheme) and defined('THEME'))
             include_once("themes/" . THEME . "/themeinfo.php");
-        if (empty($Theme))
+        if (empty($WikiTheme))
             include_once("themes/default/themeinfo.php");
-        assert(!empty($Theme));
+        assert(!empty($WikiTheme));
     }
 
     // This really maybe should be part of the constructor, but since it
@@ -378,6 +378,7 @@ $this->version = phpwiki_version();
                     'dumphtml'   => _("dump html pages"),
                     'dumpserial' => _("dump serial pages"),
                     'edit'       => _("edit this page"),
+                    'revert'     => _("revert to a previous version of this page"),
                     'create'     => _("create this page"),
                     'loadfile'   => _("load files into this wiki"),
                     'lock'       => _("lock this page"),
@@ -406,6 +407,7 @@ $this->version = phpwiki_version();
                     'dumphtml'   => _("Dumping html pages"),
                     'dumpserial' => _("Dumping serial pages"),
                     'edit'       => _("Editing pages"),
+                    'revert'     => _("Reverting to a previous version of pages"),
                     'create'     => _("Creating pages"),
                     'loadfile'   => _("Loading files"),
                     'lock'       => _("Locking pages"),
@@ -469,6 +471,7 @@ $this->version = phpwiki_version();
                 return WIKIAUTH_ANON;
 
             case 'edit':
+            case 'revert':
             case 'soap':
                 if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
                     return WIKIAUTH_BOGO;
@@ -879,6 +882,11 @@ $this->version = phpwiki_version();
         $xmlrpc->service();
     }
     
+    function action_revert () {
+        include_once "lib/loadsave.php";
+        RevertPage($this);
+    }
+
     function action_zip () {
         include_once("lib/loadsave.php");
         MakeWikiZip($this);
@@ -1041,6 +1049,13 @@ main();
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.164  2004/06/13 13:54:25  rurban
+// Catch fatals on the four dump calls (as file and zip, as html and mimified)
+// FoafViewer: Check against external requirements, instead of fatal.
+// Change output for xhtmldumps: using file:// urls to the local fs.
+// Catch SOAP fatal by checking for GOOGLE_LICENSE_KEY
+// Import GOOGLE_LICENSE_KEY and FORTUNE_DIR from config.ini.
+//
 // Revision 1.163  2004/06/13 11:35:32  rurban
 // check for create action on action=edit not to fool PagePerm checks
 //

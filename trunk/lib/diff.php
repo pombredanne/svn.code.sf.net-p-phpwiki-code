@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.47 2004-06-08 13:51:57 rurban Exp $');
+rcs_id('$Id: diff.php,v 1.48 2004-06-14 11:31:36 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -237,9 +237,9 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
 
 /////////////////////////////////////////////////////////////////
 
-function PageInfoRow ($label, $rev, &$request)
+function PageInfoRow ($label, $rev, &$request, $is_current = false)
 {
-    global $Theme, $WikiNameRegexp;
+    global $WikiTheme;
 
     $row = HTML::tr(HTML::td(array('align' => 'right'), $label));
     if ($rev) {
@@ -248,14 +248,22 @@ function PageInfoRow ($label, $rev, &$request)
 
         $iswikipage = (isWikiWord($author) && $dbi->isWikiPage($author));
         $authorlink = $iswikipage ? WikiLink($author) : $author;
-
-        $linked_version = WikiLink($rev, 'existing', $rev->getVersion());
+        $version = $rev->getVersion();
+        $linked_version = WikiLink($rev, 'existing', $version);
+        if ($is_current)
+            $revertbutton = HTML();
+        else
+            $revertbutton = $WikiTheme->makeActionButton(array('action' => 'revert',
+                                                               'version' => $version),
+                                                         false, $rev);
         $row->pushContent(HTML::td(fmt("version %s", $linked_version)),
-                          HTML::td($Theme->getLastModifiedMessage($rev,
-                                                                  false)),
-                          HTML::td(fmt("by %s", $authorlink)));
+                          HTML::td($WikiTheme->getLastModifiedMessage($rev,
+                                                                      false)),
+                          HTML::td(fmt("by %s", $authorlink)),
+                          HTML::td($revertbutton)
+                          );
     } else {
-        $row->pushContent(HTML::td(array('colspan' => '3'), _("None")));
+        $row->pushContent(HTML::td(array('colspan' => '4'), _("None")));
     }
     return $row;
 }
@@ -358,9 +366,9 @@ function showDiff (&$request) {
         $old = false;
 
     $html->pushContent(HTML::Table(PageInfoRow(_("Newer page:"), $new,
-                                               $request),
+                                               $request, empty($version)),
                                    PageInfoRow(_("Older page:"), $old,
-                                               $request)));
+                                               $request, false)));
 
     if ($new && $old) {
         $diff = new Diff($old->getContent(), $new->getContent());
@@ -385,6 +393,9 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2004/06/08 13:51:57  rurban
+// some comments only
+//
 // Revision 1.46  2004/05/01 15:59:29  rurban
 // nothing changed
 //

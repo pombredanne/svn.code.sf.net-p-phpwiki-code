@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.71 2004-06-03 18:06:29 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.72 2004-06-14 11:31:37 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -121,11 +121,12 @@ class PageEditor
 
         //FIXME: enable Undo button for all other buttons also, not only the search/replace button
         if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
+            global $WikiTheme;
             $tokens['JS_SEARCHREPLACE'] = 1;
-            $undo_btn = $GLOBALS['Theme']->getImageURL("ed_undo.gif"); 
-            $undo_d_btn = $GLOBALS['Theme']->getImageURL("ed_undo_d.gif"); 
+            $undo_btn = $WikiTheme->getImageURL("ed_undo.gif"); 
+            $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.gif"); 
             // JS_SEARCHREPLACE from walterzorn.de
-            $GLOBALS['Theme']->addMoreHeaders(Javascript("
+            $WikiTheme->addMoreHeaders(Javascript("
 var f, sr_undo, replacewin, undo_buffer=new Array(), undo_buffer_index=0;
 
 function define_f() {
@@ -209,12 +210,12 @@ function speich() {
    undo_enable(true);
 }
 "));
-            $GLOBALS['Theme']->addMoreAttr('body'," onload='define_f()'");
+            $WikiTheme->addMoreAttr('body'," onload='define_f()'");
         } else {
-            $GLOBALS['Theme']->addMoreAttr('body',"document.getElementById('edit[content]').editarea.focus()");
+            $WikiTheme->addMoreAttr('body',"document.getElementById('edit[content]').editarea.focus()");
         }
         if (defined('ENABLE_EDIT_TOOLBAR') and ENABLE_EDIT_TOOLBAR) {
-            $GLOBALS['Theme']->addMoreHeaders(JavaScript('',array('src'=>$GLOBALS['Theme']->_findData("toolbar.js"))));
+            $WikiTheme->addMoreHeaders(JavaScript('',array('src' => $WikiTheme->_findData("toolbar.js"))));
             $tokens['EDIT_TOOLBAR'] = $this->toolbar();
         } else {
             $tokens['EDIT_TOOLBAR'] = '';
@@ -224,7 +225,7 @@ function speich() {
     }
 
     function toolbar () {
-        global $Theme;
+        global $WikiTheme;
         $toolarray = array(
                            array(
                                  "image"=>"ed_format_bold.gif",
@@ -275,15 +276,15 @@ function speich() {
                            );
         $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
 
-        $btn = new SubmitImageButton(_("Save"), "edit[save]", 'toolbar', $Theme->getImageURL("ed_save.gif"));
+        $btn = new SubmitImageButton(_("Save"), "edit[save]", 'toolbar', $WikiTheme->getImageURL("ed_save.gif"));
         $btn->addTooltip(_("Save"));
         $toolbar.='document.writeln("'.addslashes($btn->asXml()).'");'."\n";
-        $btn = new SubmitImageButton(_("Preview"), "edit[preview]", 'toolbar', $Theme->getImageURL("ed_preview.gif"));
+        $btn = new SubmitImageButton(_("Preview"), "edit[preview]", 'toolbar', $WikiTheme->getImageURL("ed_preview.gif"));
         $btn->addTooltip(_("Preview"));
         $toolbar.='document.writeln("'.addslashes($btn->asXml()).'");'."\n";
 
         foreach ($toolarray as $tool) {
-            $image = $Theme->getImageURL($tool["image"]);
+            $image = $WikiTheme->getImageURL($tool["image"]);
             $open  = $tool["open"];
             $close = $tool["close"];
             $sample = addslashes( $tool["sample"] );
@@ -296,10 +297,9 @@ function speich() {
         }
         $toolbar.="addInfobox('" . addslashes( _("Click a button to get an example text") ) . "');\n";
         if (defined('JS_SEARCHREPLACE') and JS_SEARCHREPLACE) {
-            //$undo_btn = $GLOBALS['Theme']->getImageURL("ed_undo.gif"); 
-            $undo_d_btn = $GLOBALS['Theme']->getImageURL("ed_undo_d.gif"); 
-            //$redo_btn = $Theme->getImageURL("ed_redo.gif");
-            $sr_btn   = $Theme->getImageURL("ed_replace.gif");
+            $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.gif"); 
+            //$redo_btn = $WikiTheme->getImageURL("ed_redo.gif");
+            $sr_btn   = $WikiTheme->getImageURL("ed_replace.gif");
             $sr_js = '<input type="image" class="toolbar" id="sr_undo" src="'.$undo_d_btn.'" title="'._("Undo Search & Replace").'" disabled="disabled" value="Undo" onfocus="if(this.blur && undo_buffer_index==0) this.blur()" onclick="do_undo()">'
                 // . '<input type="image" class="toolbar" src="'.$redo_btn.'" title="'._("Snap").'" onclick="speich()">'
                 . '<input type="image" class="toolbar" src="'.$sr_btn.'" title="'._("Search & Replace").'" onclick="replace()">';
@@ -314,7 +314,7 @@ function speich() {
     }
 
     function output ($template, $title_fs) {
-        global $Theme;
+        global $WikiTheme;
         $selected = &$this->selected;
         $current = &$this->current;
 
@@ -330,7 +330,7 @@ function speich() {
 
         $title = new FormattedText ($title_fs, $pagelink);
         if ($template == 'editpage' and USE_HTMLAREA) {
-            $Theme->addMoreHeaders(Edit_HtmlArea_Head());
+            $WikiTheme->addMoreHeaders(Edit_HtmlArea_Head());
             //$tokens['PAGE_SOURCE'] = Edit_HtmlArea_ConvertBefore($this->_content);
         }
         $template = Template($template, $this->tokens);
@@ -416,8 +416,8 @@ function speich() {
         $warnings = $dbi->GenericWarnings();
         $dbi->touch();
         
-        global $Theme;
-        if (empty($warnings) && ! $Theme->getImageURL('signature')) {
+        global $WikiTheme;
+        if (empty($warnings) && ! $WikiTheme->getImageURL('signature')) {
             // Do redirect to browse page if no signature has
             // been defined.  In this case, the user will most
             // likely not see the rest of the HTML we generate
@@ -762,6 +762,11 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.71  2004/06/03 18:06:29  rurban
+ fix file locking issues (only needed on write)
+ fixed immediate LANG and THEME in-session updates if not stored in prefs
+ advanced editpage toolbars (search & replace broken)
+
  Revision 1.70  2004/06/02 20:47:47  rurban
  dont use the wikiaction class
 

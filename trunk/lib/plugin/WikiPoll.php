@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiPoll.php,v 1.7 2004-05-01 15:59:29 rurban Exp $');
+rcs_id('$Id: WikiPoll.php,v 1.8 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -65,7 +65,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -232,14 +232,14 @@ extends WikiPlugin
     }
 
     function bar($percent) {
-        global $Theme;
-        return HTML(HTML::img(array('src' => $Theme->getImageUrl('leftbar'),
+        global $WikiTheme;
+        return HTML(HTML::img(array('src' => $WikiTheme->getImageUrl('leftbar'),
                                     'alt' => '<')),
-                    HTML::img(array('src' => $Theme->getImageUrl('mainbar'),
+                    HTML::img(array('src' => $WikiTheme->getImageUrl('mainbar'),
                                     'alt' => '-',
                                     'width' => sprintf("%02d",$percent),
                                     'height' => 14)),
-                    HTML::img(array('src' => $Theme->getImageUrl('rightbar'),
+                    HTML::img(array('src' => $WikiTheme->getImageUrl('rightbar'),
                                     'alt' => '>')));
     }
 
@@ -330,6 +330,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/05/01 15:59:29  rurban
+// more php-4.0.6 compatibility: superglobals
+//
 // Revision 1.6  2004/03/01 18:08:53  rurban
 // oops, checked in the debug version. revert to IP check on
 //

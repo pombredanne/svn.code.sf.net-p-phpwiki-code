@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.10 2004-06-07 22:28:05 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.11 2004-06-14 11:31:39 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -39,7 +39,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -155,8 +155,8 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
          )
                         );
 
-        global $Theme;
-        if (!$Sep = $Theme->getButtonSeparator())
+        global $WikiTheme;
+        if (!$Sep = $WikiTheme->getButtonSeparator())
             $Sep = " ";
 
         return HTML($h2, HTML::em($desc),
@@ -255,6 +255,9 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/06/07 22:28:05  rurban
+// add acl field to mimified dump
+//
 // Revision 1.9  2004/06/07 19:50:41  rurban
 // add owner field to mimified dump
 //

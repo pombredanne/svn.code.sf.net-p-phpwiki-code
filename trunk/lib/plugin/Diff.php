@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Diff.php,v 1.1 2004-02-26 23:02:17 rurban Exp $');
+rcs_id('$Id: Diff.php,v 1.2 2004-06-14 11:31:39 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin {
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -58,7 +58,7 @@ extends WikiPlugin {
 
     function PageInfoRow ($label, $rev, &$request) {
 
-        global $Theme, $WikiNameRegexp;
+        global $WikiTheme, $WikiNameRegexp;
 
         $row = HTML::tr(HTML::td(array('align' => 'right'), $label));
         if ($rev) {
@@ -70,7 +70,7 @@ extends WikiPlugin {
             
             $linked_version = WikiLink($rev, 'existing', $rev->getVersion());
             $row->pushContent(HTML::td(fmt("version %s", $linked_version)),
-                              HTML::td($Theme->getLastModifiedMessage($rev,
+                              HTML::td($WikiTheme->getLastModifiedMessage($rev,
                                                                       false)),
                               HTML::td(fmt("by %s", $authorlink)));
         } else {
@@ -422,6 +422,13 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/02/26 23:02:17  rurban
+// lib/diff.php converted to a plugin by electrawn,
+// plugin cleaned up by rurban,
+// code by dairiki
+//
+// Would make sense to see arbitrary diff's between any files or revisions.
+//
 //
 
 // For emacs users

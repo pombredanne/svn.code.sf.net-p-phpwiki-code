@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageGroup.php,v 1.7 2004-05-03 15:53:20 rurban Exp $');
+rcs_id('$Id: PageGroup.php,v 1.8 2004-06-14 11:31:39 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -50,7 +50,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -112,14 +112,14 @@ extends WikiPlugin
                              'last'     => _("Last")
                              );
 
-        global $Theme;
-        $sep = $Theme->getButtonSeparator();
+        global $WikiTheme;
+        $sep = $WikiTheme->getButtonSeparator();
         if (!$sep)
             $sep = " | "; // force some kind of separator
 
         // default label
         if (!$label)
-            $label = $Theme->makeLinkButton($parent);
+            $label = $WikiTheme->makeLinkButton($parent);
 
         // This is where the list extraction occurs from the named
         // $section on the $parent page.
@@ -164,7 +164,7 @@ extends WikiPlugin
                     }
                     // mind the French : punctuation
                     $text = fmt("%s: %s", $directions[$go_item],
-                                $Theme->makeLinkButton($linkpage));
+                                $WikiTheme->makeLinkButton($linkpage));
                     $links->pushcontent($text);
                     $links->pushcontent($sep); // this works because
                                                // there are only 2 go
@@ -175,7 +175,7 @@ extends WikiPlugin
                     } else {
                         $linkpage  = $c[$thispage - 1];
                         $text = fmt("%s: %s", $directions[$go_item],
-                                    $Theme->makeLinkButton($linkpage));
+                                    $WikiTheme->makeLinkButton($linkpage));
                         $links->pushcontent($text);
                         $links->pushcontent($sep); //this works
                                                    //because there are
@@ -191,14 +191,14 @@ extends WikiPlugin
                         $linkpage  = $c[$thispage + 1];
                     }
                     $text = fmt("%s: %s", $directions[$go_item],
-                                $Theme->makeLinkButton($linkpage));
+                                $WikiTheme->makeLinkButton($linkpage));
                 } else {
                     if ($thispage == $lastindex) {
                         // skip it
                     } else {
                         $linkpage = $c[$thispage + 1];
                         $text = fmt("%s: %s", $directions[$go_item],
-                                    $Theme->makeLinkButton($linkpage));
+                                    $WikiTheme->makeLinkButton($linkpage));
                     }
                 }
                 $links->pushcontent($text);
@@ -210,6 +210,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/05/03 15:53:20  rurban
+// Support [] links, but no [name|page] links yet
+// Support subpages
+//
 // Revision 1.6  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SystemInfo.php,v 1.17 2004-05-08 14:06:13 rurban Exp $');
+rcs_id('$Id: SystemInfo.php,v 1.18 2004-06-14 11:31:39 rurban Exp $');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getExpire($dbi, $argarray, $request) {
@@ -323,13 +323,13 @@ extends WikiPlugin
     }
 
     function supported_themes () {
-        global $Theme;
+        global $WikiTheme;
         $available_themes = listAvailableThemes();
         natcasesort($available_themes);
         return sprintf(_("Total of %d themes: "), count($available_themes))
             . implode(', ',$available_themes) . ". "
-            . sprintf(_("Current theme: '%s'"), $Theme->_name)
-            . ((THEME != $Theme->_name)
+            . sprintf(_("Current theme: '%s'"), $WikiTheme->_name)
+            . ((THEME != $WikiTheme->_name)
                ? ". " . sprintf(_("Default theme: '%s'"), THEME)
                : '');
     }
@@ -478,6 +478,10 @@ function stddev(&$hits, $total = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/05/08 14:06:13  rurban
+// new support for inlined image attributes: [image.jpg size=50x30 align=right]
+// minor stability and portability fixes
+//
 // Revision 1.16  2004/05/06 20:30:47  rurban
 // revert and removed some comments
 //

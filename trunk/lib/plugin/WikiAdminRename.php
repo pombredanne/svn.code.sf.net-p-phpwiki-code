@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.18 2004-06-13 15:33:20 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.19 2004-06-14 11:31:39 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,25 +48,19 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
-        return array(
+        return array_merge
+            (
+             PageList::supportedArgs(),
+             array(
                      's' 	=> false,
-                     /* select pages by meta-data: */
-                     'author'   => false,
-                     'owner'    => false,
-                     'creator'  => false,
-                     /* Pages to exclude in listing */
-                     'exclude'  => '',
                      /* Columns to include in listing */
                      'info'     => 'pagename,mtime',
-                     /* How to sort */
-                     'sortby'   => 'pagename',
-                     'limit'    => 0,
-                     'updatelinks' => 0 // not yet working
-                     );
+                     'updatelinks' => 0
+                     ));
     }
 
     //TODO: regex and case-inexact option
@@ -257,6 +251,10 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/06/13 15:33:20  rurban
+// new support for arguments owner, author, creator in most relevant
+// PageList plugins. in WikiAdmin* via preSelectS()
+//
 // Revision 1.17  2004/06/08 10:05:12  rurban
 // simplified admin action shortcuts
 //

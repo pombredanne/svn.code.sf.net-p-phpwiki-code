@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SyntaxHighlighter.php,v 1.4 2004-05-18 14:49:52 rurban Exp $');
+rcs_id('$Id: SyntaxHighlighter.php,v 1.5 2004-06-14 11:31:39 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -72,7 +72,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
     function getDefaultArguments() {
         return array(
@@ -171,7 +171,7 @@ extends WikiPlugin
             $pre = HTML::pre(HTML::raw($code));
             $pre->setAttr('class','tightenable top bottom');
             $html->pushContent($pre);
-            $css = $GLOBALS['Theme']->_CSSlink('',empty($color) ? 'highlight.css' : "uploads/highlight-$color.css",'');
+            $css = $GLOBALS['WikiTheme']->_CSSlink('',empty($color) ? 'highlight.css' : "uploads/highlight-$color.css",'');
             return HTML($css,$html);
         } else {
             return $this->error(fmt("empty source"));
@@ -180,6 +180,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/05/18 14:49:52  rurban
+// Simplified strings for easier translation
+//
 // Revision 1.3  2004/05/14 17:33:12  rurban
 // new plugin RecentChanges
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.97 2004-06-03 18:58:27 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.98 2004-06-14 11:31:39 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -43,13 +43,13 @@ class _RecentChanges_Formatter
     }
 
     function date ($rev) {
-        global $Theme;
-        return $Theme->getDay($rev->get('mtime'));
+        global $WikiTheme;
+        return $WikiTheme->getDay($rev->get('mtime'));
     }
 
     function time ($rev) {
-        global $Theme;
-        return $Theme->formatTime($rev->get('mtime'));
+        global $WikiTheme;
+        return $WikiTheme->formatTime($rev->get('mtime'));
     }
 
     function diffURL ($rev) {
@@ -124,13 +124,13 @@ class _RecentChanges_HtmlFormatter
 extends _RecentChanges_Formatter
 {
     function diffLink ($rev) {
-        global $Theme;
-        return $Theme->makeButton(_("(diff)"), $this->diffURL($rev), 'wiki-rc-action');
+        global $WikiTheme;
+        return $WikiTheme->makeButton(_("(diff)"), $this->diffURL($rev), 'wiki-rc-action');
     }
 
     function historyLink ($rev) {
-        global $Theme;
-        return $Theme->makeButton(_("(hist)"), $this->historyURL($rev), 'wiki-rc-action');
+        global $WikiTheme;
+        return $WikiTheme->makeButton(_("(hist)"), $this->historyURL($rev), 'wiki-rc-action');
     }
 
     function pageLink ($rev, $link_text=false) {
@@ -138,7 +138,7 @@ extends _RecentChanges_Formatter
         return WikiLink($rev,'auto',$link_text);
         /*
         $page = $rev->getPage();
-        global $Theme;
+        global $WikiTheme;
         if ($this->include_versions_in_URLs()) {
             $version = $rev->getVersion();
             if ($rev->isCurrent())
@@ -151,9 +151,9 @@ extends _RecentChanges_Formatter
             $exists = !$cur->hasDefaultContents();
         }
         if ($exists)
-            return $Theme->linkExistingWikiWord($page->getName(), $link_text, $version);
+            return $WikiTheme->linkExistingWikiWord($page->getName(), $link_text, $version);
         else
-            return $Theme->linkUnknownWikiWord($page->getName(), $link_text);
+            return $WikiTheme->linkUnknownWikiWord($page->getName(), $link_text);
         */
     }
 
@@ -175,10 +175,10 @@ extends _RecentChanges_Formatter
     }
 
     function rss_icon () {
-        global $request, $Theme;
+        global $request, $WikiTheme;
 
         $rss_url = $request->getURLtoSelf(array('format' => 'rss'));
-        return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), $Theme->makeButton("RSS", $rss_url, 'rssicon'));
+        return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), $WikiTheme->makeButton("RSS", $rss_url, 'rssicon'));
     }
 
     function description () {
@@ -284,8 +284,8 @@ extends _RecentChanges_Formatter
             ."}\n";
         $jsf = JavaScript($addsidebarjsfunc);
 
-        global $Theme;
-        $sidebar_button = $Theme->makeButton("sidebar", 'javascript:addPanel();', 'sidebaricon');
+        global $WikiTheme;
+        $sidebar_button = $WikiTheme->makeButton("sidebar", 'javascript:addPanel();', 'sidebaricon');
         $addsidebarjsclick = asXML(HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), $sidebar_button));
         $jsc = JavaScript("if ((typeof window.sidebar == 'object') &&\n"
                                 ."    (typeof window.sidebar.addPanel == 'function'))\n"
@@ -380,8 +380,8 @@ extends _RecentChanges_HtmlFormatter
     }
     function logo () {
         //logo click opens the HomePage in the main browser frame
-        global $Theme;
-        $img = HTML::img(array('src' => $Theme->getImageURL('logo'),
+        global $WikiTheme;
+        $img = HTML::img(array('src' => $WikiTheme->getImageURL('logo'),
                                'border' => 0,
                                'align' => 'right',
                                'style' => 'height:2.5ex'
@@ -452,8 +452,8 @@ extends _RecentChanges_HtmlFormatter
         extract($this->_args);
         $title = WIKI_NAME . $show_minor ? _("RecentEdits") : _("RecentChanges");
         printf("<title>" . $title . "</title>\n");
-        global $Theme;
-        $css = $Theme->getCSS();
+        global $WikiTheme;
+        $css = $WikiTheme->getCSS();
         $css->PrintXML();
         printf("</head>\n");
 
@@ -558,9 +558,9 @@ extends _RecentChanges_Formatter
     }
 
     function image_properties () {
-        global $Theme;
+        global $WikiTheme;
 
-        $img_url = AbsoluteURL($Theme->getImageURL('logo'));
+        $img_url = AbsoluteURL($WikiTheme->getImageURL('logo'));
         if (!$img_url)
             return false;
 
@@ -658,7 +658,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.97 $");
+                            "\$Revision: 1.98 $");
     }
 
     function managesValidators() {
@@ -741,10 +741,10 @@ extends WikiPlugin
     }
 
     function format ($changes, $args) {
-        global $Theme;
+        global $WikiTheme;
         $format = $args['format'];
 
-        $fmt_class = $Theme->getFormatter('RecentChanges', $format);
+        $fmt_class = $WikiTheme->getFormatter('RecentChanges', $format);
         if (!$fmt_class) {
             if ($format == 'rss')
                 $fmt_class = '_RecentChanges_RssFormatter';
@@ -813,8 +813,8 @@ class DayButtonBar extends HtmlElement {
 
         $this->pushContent($caption, ' ');
 
-        global $Theme;
-        $sep = $Theme->getButtonSeparator();
+        global $WikiTheme;
+        $sep = $WikiTheme->getButtonSeparator();
 
         $n = 0;
         foreach (explode(",", $daylist) as $days) {
@@ -825,7 +825,7 @@ class DayButtonBar extends HtmlElement {
     }
 
     function _makeDayButton ($days) {
-        global $Theme, $request;
+        global $WikiTheme, $request;
 
         if ($days == 1)
             $label = _("1 day");
@@ -836,11 +836,14 @@ class DayButtonBar extends HtmlElement {
 
         $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'days' => $days));
 
-        return $Theme->makeButton($label, $url, 'wiki-rc-action');
+        return $WikiTheme->makeButton($label, $url, 'wiki-rc-action');
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.97  2004/06/03 18:58:27  rurban
+// days links requires action=RelatedChanges arg
+//
 // Revision 1.96  2004/05/18 16:23:40  rurban
 // rename split_pagename to SplitPagename
 //
