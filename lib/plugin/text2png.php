@@ -24,11 +24,23 @@ extends WikiPlugin
         //basic image creation and caching
 		//you MUST delete the image cache yourself if you change the drawing routines!
 		
-        //to show debug string, whether image was saved or loaded from cache
-		//and what the path is
-        
+        //uncomment debug string above to see whether image was saved to or loaded from cache
+		//and what the path is.
+		
+        //locale test
+		//http://download.php.net/manual/en/function.dcgettext.php
+		//dcgettext and dgettext aren't available functions on my system.?? -carsten
+		//this doesn't seem to work anyway, always get english. ??
+        //$oldlang=$LANG;
+		//putenv("LANG=$l");
+        //$LANG=$l;
+        //if (!$l == "C") {include("locale/$l/LC_MESSAGES/phpwiki.php");}
+		//$text = gettext($text);
+        //putenv("LANG=$oldlang");
+		
 		$filename = $text . ".png";
-        if ($l == "C") { $l = "en"; } //FIXME: hack for english, C=en
+		
+        if ($l == "C") { $l = "en"; } //FIXME: hack for english, C=en ??
 		$filepath = getcwd() . "/images/$l";
  
         if (!file_exists($filepath ."/". $filename)) {
@@ -59,6 +71,8 @@ extends WikiPlugin
             //draw text
 		    $text_color = ImageColorAllocate($im, 0, 0, 0);
 		    ImageTTFText($im, 10, 0, 10, 30, $text_color, $ttfont, $text);
+
+            //maybe an alternate text drawing method in case ImageTTFText doesn't work
 		    //ImageString($im, 2, 10, 40, $text, $text_color);
 
 		    // to dump directly to browser:
