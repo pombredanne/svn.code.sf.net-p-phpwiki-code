@@ -1,4 +1,6 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.8 2002-01-19 22:49:25 carstenklapp Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.9 2002-01-21 01:50:33 dairiki Exp $');
+
+require_once("lib/HtmlElement.php");
 
 /**
  * A class representing a clickable "button".
@@ -6,7 +8,7 @@
  * In it's simplest (default) form, a "button" is just a link associated
  * with some sort of wiki-action.
  */
-class Button {
+class Button extends HtmlElement {
     /** Constructor
      *
      * @param $text string The text for the button.
@@ -14,10 +16,10 @@ class Button {
      * @param $class string The CSS class for the button.
      */
     function Button ($text, $url, $class = false) {
-        $this->_attr = array('href' => $url);
+        $this->HtmlElement('a', array('href' => $url));
         if ($class)
-            $this->_attr['class'] = $class;
-        $this->_text = $text;
+            $this->setAttr('class', $class);
+        $this->pushContent($text);
     }
 
     /** Add a "tooltip" to a button.
@@ -25,36 +27,18 @@ class Button {
      * @param $tooltip_text string The tooltip text.
      */
     function addTooltip ($tooltip_text) {
-        $attr = &$this->_attr;
-        $attr['title'] = $tooltip_text;
+        $this->setAttr('title', $tooltip_text);
 
         // FIXME: this should be initialized from title by an onLoad() function.
         //        (though, that may not be possible.)
         $qtooltip = str_replace("'", "\\'", $tooltip_text);
-        $attr['onmouseover'] = "window.status='$qtooltip';return true;";
-        $attr['onmouseout']  = "window.status='';return true;";
-    }
-    
-    /** Get HTML for the button.
-     *
-     * @return string HTML markup.
-     */
-    function asHTML () {
-        return Element('a', $this->_attr,
-                       $this->linkContents());
-    }
-
-    /** Get the HTML text of the button.
-     *
-     * (Subclasses implementing image buttons will probably want
-     * to override this method so that it returns an <img> tag.)
-     *
-     * @return string HTML markup.
-     */
-    function linkContents () {
-        return htmlspecialchars($this->_text);
+        $this->setAttr('onmouseover',
+                       sprintf('window.status="%s"; return true;',
+                               addslashes($tooltip_text)));
+        $this->setAttr('onmouseout', "window.status='';return true;");
     }
 };
+
 
 /**
  * A clickable image button.
@@ -69,22 +53,17 @@ class ImageButton extends Button {
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
     function ImageButton ($text, $url, $class, $img_url, $img_attr = false) {
-        $this->Button($text, $url, $class);
-        
-        if (is_array($img_attr))
-            $this->_img_attr = $img_attr;
-        $this->_img_attr['src'] = $img_url;
-        $this->_img_attr['alt'] = $text;
-        $this->_img_attr['class'] = 'wiki-button';
-        $this->_img_attr['border'] = 0;
-    }
-
-    /** Get img tag.
-     *
-     * @return string The image tag for this button.
-     */
-    function linkContents() {
-        return Element('img', $this->_img_attr);
+        $this->HtmlElement('a', array('href' => $url));
+        if ($class)
+            $this->setAttr('class', $class);
+ 
+        if (!is_array($img_attr))
+            $img_attr = array();
+        $img_attr['src'] = $img_url;
+        $img_attr['alt'] = $text;
+        $img_attr['class'] = 'wiki-button';
+        $img_attr['border'] = 0;
+        $this->pushContent(HTML::img($img_attr));
     }
 };
 
