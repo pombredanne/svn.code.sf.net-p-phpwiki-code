@@ -1,6 +1,6 @@
 <?php
 /**
- * Check if all pgsrc files import without failure
+ * 1st important test: Check if all pgsrc files import without failure
  */
 
 require_once 'lib/loadsave.php';
@@ -8,11 +8,10 @@ require_once 'PHPUnit.php';
 
 class SetupWiki extends phpwiki_TestCase {
 
-    function testImportOldMarkup() {
+    function _loadPage($pagename) {
         global $request;
         $dbi = $request->getDbh();
-        $pagename = 'OldMarkupTestPage';
-        $dbi->deletePage($pagename);
+        $dbi->purgePage($pagename);
         $this->assertFalse($dbi->isWikiPage($pagename));
 
         $request->setArg('source', FindFile('pgsrc/'.$pagename));
@@ -21,16 +20,24 @@ class SetupWiki extends phpwiki_TestCase {
         $request->setArg('source', false);
         $this->assertTrue($dbi->isWikiPage($pagename));
     }
-
+    
+    /* PCRE memory problem (crash) with such big pages and anchored blocks */
+    function testOldMarkupTestPage() {
+    	$this->_loadPage('OldMarkupTestPage');
+    }
+    
+    /* ADODB set_links _id_cache error: IncludePagePlugin => HomePage */
+    function testIncludePagePlugin() {
+    	$this->_loadPage('IncludePagePlugin');
+    }
+    
     function testSetupWiki() {
         global $request;
 
-        //print "Purge the testbox ... ";
         purge_testbox();
-        //print "\n";
         
         $dbi = $request->getDbh();
-        $dbi->deletePage('HomePage'); // possibly in cache
+        $dbi->purgePage('HomePage'); // possibly in cache
         $this->assertFalse($dbi->isWikiPage('HomePage'));
 
         $request->setArg('source', FindFile('pgsrc'));

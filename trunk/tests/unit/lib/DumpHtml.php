@@ -1,6 +1,7 @@
 <?php
 /**
- * Check if all pages can be rendered (dumped)
+ * 2nd important test:
+ *   Check if all standard pages can be rendered (dumped)
  */
 
 require_once 'lib/loadsave.php';
@@ -38,11 +39,11 @@ class DumpHtml extends phpwiki_TestCase {
         purge_dir($cur_dir."/.dumphtml");
         purge_dir($cur_dir."/.dumphtml/images");
         $request->setArg('pages','');
+        //$request->setArg('exclude','LinkDatabase');  // this does not work with format=text => exit
         DumpHtmlToDir($request);
         $this->assertTrue(file_exists($cur_dir."/.dumphtml/HomePage.html")); 
     }
 
 }
-
 
 ?>

@@ -332,7 +332,7 @@ function updateLevelEdit(formObj) {
         $option->pushContent(HTML::input($input), "WIKIAUTH_".$s, HTML::br());
     }
     $form->pushContent(HTML::td($option));
-                                
+
     unset($input);
     $option = HTML::div(array('class' => 'option'), 'defines: ', HTML::br());
     if (!empty($GLOBALS['define']))
@@ -347,11 +347,12 @@ function updateLevelEdit(formObj) {
     $table = HTML::form(array('action' => $_SERVER['PHP_SELF'],
                                           'method' => 'GET',
                               'accept-charset' => $GLOBALS['charset']),
-                        HiddenInputs(array('start_debug' => $start_debug)),
                         $js,
                         HTML::table(HTML::tr(array('valign'=>'top'), $form)),
                         HTML::input(array('type' => 'submit')),
                         HTML::input(array('type' => 'reset')));
+    if ($start_debug)
+        $table->pushContent(HiddenInputs(array('start_debug' => $start_debug)));
     return $table->printXml();
 }
 
