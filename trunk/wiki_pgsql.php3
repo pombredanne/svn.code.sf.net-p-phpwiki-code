@@ -1,4 +1,4 @@
-<!-- $Id: wiki_pgsql.php3,v 1.1 2000-06-12 04:13:57 wainstead Exp $ -->
+<!-- $Id: wiki_pgsql.php3,v 1.2 2000-06-14 01:04:56 wainstead Exp $ -->
 <?
 
    /*
@@ -79,9 +79,14 @@
 
    function IsWikiPage($dbi, $pagename) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select count(*) from $dbi[table] where page='$pagename'", $dbi['dbc'])) {
-         return(mysql_result($res, 0));
-      }
+      echo "<P>Trying $pagename</P>\n";
+      $query = "select count(*) from " . $dbi['table'] . " where pagename='$pagename'";
+      echo "<P>query: '$query'</p>\n";
+      $res = pg_exec($query);
+      echo "<P>Result: '$res'</P>\n";
+      //return(pg_numrows($res));
+      $array = pg_fetch_array($res, 0);
+      return $array[0];
    }
 
 
