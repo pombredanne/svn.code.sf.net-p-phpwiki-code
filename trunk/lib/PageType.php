@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.15 2003-01-06 01:46:31 carstenklapp Exp $');
+rcs_id('$Id: PageType.php,v 1.16 2003-01-31 22:53:39 carstenklapp Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ include_once('lib/BlockParser.php');
  *
  * See http://phpwiki.sourceforge.net/phpwiki/PageType
  */
-function PageType(&$rev, $pagename = false, $markup = false) {
+function PageType(&$rev, $pagename = false, $markup = false, $overridePageType = false) {
 
     if (isa($rev, 'WikiDB_PageRevision')) {
         $text = $rev->getPackedContent();
@@ -60,45 +60,55 @@ function PageType(&$rev, $pagename = false, $markup = false) {
     // then that can be used instead of this pagename check.
 
     /**
-     * Check whether pagename is InterWikiMap.
+     * Hook to allow plugins to provide their own or override a PageType.
+     * See InterWikiSearch plugin.
      */
-    $isInterWikiMap = _("InterWikiMap");
-
-    /**
-     * Check whether pagename indicates a blog. Adapted from the
-     * WikiBlog plugin.
-     */
-    // get subpage basename, don't forget subpages of subpages
-    $basename = explode(SUBPAGE_SEPARATOR, $pagename);
-    array_pop($basename);
-    $escpage = implode(SUBPAGE_SEPARATOR, $basename);
-    // from WikiBlog plugin:
-    // If page contains '/', we must escape them
-    // FIXME: only works for '/' SUBPAGE_SEPARATOR
-    $escpage = preg_replace ("/\//", '\/', $escpage);
-    if (preg_match("/^$escpage\/Blog-([[:digit:]]{14})$/", $pagename, $matches))
-        $isWikiBlog = $pagename;
-    else
-        $isWikiBlog = "";
-
-    switch($pagename) {
-        case $isInterWikiMap:
-            $ContentTemplateName = 'interwikimap';
-            $content_template = new interWikiMapPageType($text, $markup);
-            //trigger_error("DEBUG: PageType is an InterWikiMap");
-            break;
-        case $isWikiBlog:
-            $ContentTemplateName = 'wikiblog';
-            $content_template = new wikiBlogPageType($text, $markup);
-            $content_template->_summary = $rev->get('summary');
-            //trigger_error("DEBUG: PageType is a WikiBlog");
-            break;
-        default:
-            $ContentTemplateName = 'wikitext';
-            $content_template = new PageType($text, $markup);
-            //trigger_error("DEBUG: PageType is default");
+    if ($overridePageType) {
+        $ContentTemplateName = '$overridePageType';
+        $content_template = new $overridePageType($text, $markup);
+        trigger_error(sprintf("DEBUG: PageType overriden as %s", $overridePageType));
     }
+    else {
+       /**
+        * Check whether pagename is InterWikiMap.
+        */
+        $isInterWikiMap = _("InterWikiMap");
 
+        /**
+         * Check whether pagename indicates a blog. Adapted from the
+         * WikiBlog plugin.
+         */
+        // get subpage basename, don't forget subpages of subpages
+        $basename = explode(SUBPAGE_SEPARATOR, $pagename);
+        array_pop($basename);
+        $escpage = implode(SUBPAGE_SEPARATOR, $basename);
+        // from WikiBlog plugin:
+        // If page contains '/', we must escape them
+        // FIXME: only works for '/' SUBPAGE_SEPARATOR
+        $escpage = preg_replace ("/\//", '\/', $escpage);
+        if (preg_match("/^$escpage\/Blog-([[:digit:]]{14})$/", $pagename, $matches))
+            $isWikiBlog = $pagename;
+        else
+            $isWikiBlog = "";
+    
+        switch($pagename) {
+            case $isInterWikiMap:
+                $ContentTemplateName = 'interwikimap';
+                $content_template = new interWikiMapPageType($text, $markup);
+                //trigger_error("DEBUG: PageType is an InterWikiMap");
+                break;
+            case $isWikiBlog:
+                $ContentTemplateName = 'wikiblog';
+                $content_template = new wikiBlogPageType($text, $markup);
+                $content_template->_summary = $rev->get('summary');
+                //trigger_error("DEBUG: PageType is a WikiBlog");
+                break;
+            default:
+                $ContentTemplateName = 'wikitext';
+                $content_template = new PageType($text, $markup);
+                //trigger_error("DEBUG: PageType is default");
+        }
+    }
     return $content_template->getContent();
 }
 
@@ -275,6 +285,9 @@ extends PageType
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2003/01/06 01:46:31  carstenklapp
+// Bugfix: Also identify any WikiBlogs which are subpages of subpages.
+//
 // Revision 1.14  2003/01/06 00:08:08  carstenklapp
 // Added a basic WikiBlog page type, takes advantage of editpage summary field.
 //
