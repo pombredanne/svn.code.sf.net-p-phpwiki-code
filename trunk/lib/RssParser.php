@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssParser.php,v 1.2 2004-04-12 17:13:43 rurban Exp $');
+rcs_id('$Id: RssParser.php,v 1.3 2004-04-12 17:32:19 rurban Exp $');
 /**
  * RSSParser Class, requires the expat extension
  * Based on Duncan Gough RSSParser class
@@ -61,6 +61,9 @@ class RSSParser {
             $this->item['LINK']        = "";
             $this->inside_item = false;
         } elseif ($tagName == "IMAGE") {
+            $this->item['TITLE']       = "";
+            $this->item['DESCRIPTION'] = "";
+            $this->item['LINK']        = "";
             $this->inside_item = false;
         } elseif ($tagName == "CHANNEL") {
             $this->channel = array("title" => $this->title,
@@ -82,7 +85,12 @@ class RSSParser {
         if ($this->inside_item) {
             if (empty($this->item[$current_tag]))
                 $this->item[$current_tag] = '';
-            $this->item[$current_tag] .= trim($data);
+            if ($current_tag == 'LINK') {
+            	if (trim($data))
+            	    $this->item[$current_tag] = trim($data);
+            } else {
+                $this->item[$current_tag] .= trim($data);
+            }
         } else {
             switch ($current_tag) {
             case "TITLE":
@@ -91,11 +99,11 @@ class RSSParser {
                 break;
             case "DESCRIPTION":
                 if (trim($data))
-                    $this->description .= "<br />\n" . trim($data);
+                    $this->description .= trim($data);
                 break;
             case "LINK":
                 if (trim($data))
-                    $this->link .= " " . trim($data);
+                    $this->link = trim($data);
                 break;
             case "DC:DATE":
                 if (trim($data))
