@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiUser.php,v 1.14 2002-02-24 20:36:23 carstenklapp Exp $');
+<?php rcs_id('$Id: WikiUser.php,v 1.15 2002-08-22 23:28:31 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail, home(wiki)page,
@@ -10,33 +10,51 @@
 // in username and other state information in a cookie.
 
 define('WIKIAUTH_ANON', 0);
-define('WIKIAUTH_BOGO', 1);
-define('WIKIAUTH_USER', 2);     // currently unused.
+define('WIKIAUTH_BOGO', 1);     // any valid WikiWord is enough
+define('WIKIAUTH_USER', 2);     // real auth from a database/file/server.
+
 define('WIKIAUTH_ADMIN', 10);
 define('WIKIAUTH_FORBIDDEN', 11); // Completely not allowed.
 
-class WikiUser 
-{
+$UserPreferences = array('editWidth'     => new _UserPreference_int(80, 30, 150),
+                         'editHeight'    => new _UserPreference_int(22, 5, 80),
+                         'timeOffset'    => new _UserPreference_numeric(0, -26, 26),
+                         'relativeDates' => new _UserPreference_bool(),
+                         'userid'        => new _UserPreference(''),
+                         'passwd'        => new _UserPreference(''),
+                         'email'         => new _UserPreference(''),
+                         'theme'         => new _UserPreference(THEME),
+                         'notifyPages'   => new _UserPreference(''));
+
+class WikiUser {
     var $_userid = false;
     var $_level  = false;
+    var $_request, $_dbi, $_authdbi, $_homepage;
+    var $_authmethod;
 
     /**
      * Constructor.
      */
     function WikiUser ($userid = false, $authlevel = false) {
+        $this->_request = &$GLOBALS['request'];
+        $this->_dbi = &$this->_request->getDbh();
+
         if (isa($userid, 'WikiUser')) {
-            $this->_userid = $userid->_userid;
-            $this->_level = $userid->_level;
+            $this->_userid   = $userid->_userid;
+            $this->_level    = $userid->_level;
+            $this->_authmethod = $userid->_authmethod;
         }
         else {
             $this->_userid = $userid;
             $this->_level = $authlevel;
         }
-
+	if ($this->_userid)
+    	    $this->_homepage = $this->_dbi->getPage($this->_userid);
         if (!$this->_ok()) {
             // Paranoia: if state is at all inconsistent, log out...
             $this->_userid = false;
             $this->_level = false;
+            $this->_homepage = false;
         }
     }
 
@@ -60,16 +78,15 @@ class WikiUser
     }
 
     function getId () {
-        
         return ( $this->isSignedIn()
                  ? $this->_userid
-                 : $GLOBALS['request']->get('REMOTE_ADDR') ); // FIXME: globals
+                 : $this->_request->get('REMOTE_ADDR') ); // FIXME: globals
     }
 
     function getAuthenticatedId() {
         return ( $this->isAuthenticated()
                  ? $this->_userid
-                 : $GLOBALS['request']->get('REMOTE_ADDR') ); // FIXME: globals
+                 : $this->_request->get('REMOTE_ADDR') ); // FIXME: globals
     }
 
     function isSignedIn () {
@@ -104,7 +121,7 @@ class WikiUser
         elseif (!$login && !$userid)
             return false;       // Nothing to do?
 
-        $authlevel = WikiUser::_pwcheck($userid, $password);
+        $authlevel = $this->_pwcheck($userid, $password);
         if (!$authlevel)
             return _("Invalid password or userid.");
         elseif ($authlevel < $require_level)
@@ -117,20 +134,24 @@ class WikiUser
         return $user;
     }
     
-    function PrintLoginForm (&$request, $args, $fail_message = false) {
+    function PrintLoginForm (&$request, $args, $fail_message = false, $seperate_page = true) {
         include_once('lib/Template.php');
         
         $userid = '';
         $require_level = 0;
-        extract($args);
+        extract($args); // fixme
         
         $require_level = max(0, min(WIKIAUTH_ADMIN, (int) $require_level));
         
-        $login = new Template('login', $request,
-                              compact('userid', 'require_level', 'fail_message'));
-
-        $top = new Template('top', $request, array('TITLE' =>  _("Sign In")));
-        $top->printExpansion($login);
+	$pagename = $request->getArg('pagename');
+	$login = new Template('login', $request,
+                              compact('pagename', 'userid', 'require_level', 'fail_message', 'pass_required'));
+	if ($seperate_page) {
+	    $top = new Template('top', $request, array('TITLE' =>  _("Sign In")));
+	    return $top->printExpansion($login);
+	} else {
+	    return $login;
+	}
     }
         
     /**
@@ -139,7 +160,7 @@ class WikiUser
     function _pwcheck ($userid, $passwd) {
         global $WikiNameRegexp;
         
-        if (!empty($userid) && $userid == ADMIN_USER) {
+	if (!empty($userid) && $userid == ADMIN_USER) {
             if (defined('ENCRYPTED_PASSWD') && ENCRYPTED_PASSWD)
                 if (!empty($passwd) && crypt($passwd, ADMIN_PASSWD) == ADMIN_PASSWD)
                     return WIKIAUTH_ADMIN;
@@ -147,15 +168,336 @@ class WikiUser
                 return WIKIAUTH_ADMIN;
             return false;
         }
-        elseif (ALLOW_BOGO_LOGIN
+	// HTTP Authentification
+        elseif (ALLOW_HTTP_AUTH_LOGIN and !empty($PHP_AUTH_USER)) {
+	    // if he ignored the password field, because he is already authentificated
+	    // try the previously given password.
+	    if (empty($passwd)) $passwd = $PHP_AUTH_PW;
+	}
+
+	// WikiDB_User DB/File Authentification from $DBAuthParams 
+        // Check if we have the user. If not try other methods.
+        if (ALLOW_USER_LOGIN and !empty($passwd)) {
+	    $request = $this->_request;
+	    // first check if the user is known
+	    if ($this->exists($userid)) {
+		return ($this->checkPassword($passwd)) ? WIKIAUTH_USER : false;
+	    } else {
+		// else try others such as LDAP authentication:
+		if (ALLOW_LDAP_LOGIN and !empty($passwd)) {
+		    if ($ldap = ldap_connect(LDAP_AUTH_HOST)) { // must be a valid LDAP server!
+			$r = @ldap_bind($ldap); // this is an anonymous bind
+			$st_search = "uid=$userid";
+			// Need to set the right root search information. see ../index.php
+			$sr = ldap_search($ldap, LDAP_AUTH_SEARCH, "$st_search");  
+			$info = ldap_get_entries($ldap, $sr); // there may be more hits with this userid. try every
+			for ($i=0; $i<$info["count"]; $i++) {
+			    $dn = $info[$i]["dn"];
+			    // The password is still plain text.
+			    if ($r = @ldap_bind($ldap, $dn, $passwd)) {
+				// ldap_bind will return TRUE if everything matches
+				ldap_close($ldap);
+				return WIKIAUTH_USER;
+			    }
+			}
+		    } else {
+			trigger_error("Unable to connect to LDAP server " . LDAP_AUTH_HOST, E_USER_WARNING);
+		    }
+		}
+		// imap authentication. added by limako
+		if (ALLOW_IMAP_LOGIN and !empty($passwd)) {
+		    $mbox = @imap_open( "{" . IMAP_AUTH_HOST . ":143}", $userid, $passwd, OP_HALFOPEN );
+		    if( $mbox ) {
+			imap_close( $mbox );
+			return WIKIAUTH_USER;
+		    }
+		}
+	    }
+	}
+        if (ALLOW_BOGO_LOGIN
                 && preg_match('/\A' . $WikiNameRegexp . '\z/', $userid)) {
             return WIKIAUTH_BOGO;
         }
         return false;
     }
-}
-    
 
+    // Todo: try our WikiDB backends.
+    function getPreferences() {
+        // Restore saved preferences.
+        // I'd rather prefer only to store the UserId in the cookie or session,
+        // and get the preferences from the db or page.
+        if (!($prefs = $this->_request->getCookieVar('WIKI_PREFS2')))
+            $prefs = $this->request->getSessionVar('wiki_prefs');
+
+        if (!$this->_userid and !empty($GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'])) {
+            $this->_userid = $GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'];
+        }
+
+        // before we get his prefs we should check if he is signed in
+        if (!$prefs->_prefs and USE_PREFS_IN_PAGE and $this->homePage()) { // in page metadata
+            if ($pref = $this->_homepage->get('pref'))
+                $prefs = unserialize($pref);
+        }
+        return new UserPreferences($prefs);
+    }
+
+    // No cookies anymore for all prefs, only the userid.
+    // PHP creates a session cookie in memory, which is much more efficient.
+    function setPreferences($prefs, $id_only = false) {
+        // update the id
+        $this->_request->setSessionVar('wiki_prefs', $prefs);
+        // $this->_request->setCookieVar('WIKI_PREFS2', $this->_prefs, 365);
+        // simple unpacked cookie
+        if ($this->_userid) setcookie('WIKI_ID', $this->_userid, 365, '/');
+
+        // We must ensure that any password is encrypted. 
+        // We don't need any plaintext password.
+        if (! $id_only and $this->isSignedIn() and ($homepage = $this->homePage())) {
+            if ($this->isAdmin()) 
+                $prefs->set('passwd',''); // this is already stored in index.php, 
+                                          // and it might be plaintext! well oh well
+            $homepage->set('pref',serialize($prefs->_prefs));
+        }
+    }
+
+    // check for homepage with user flag.
+    // can be overriden from the auth backends
+    function exists() {
+        $homepage = $this->homePage();
+        return ($this->_userid and $homepage and $homepage->get('pref'));
+    }
+
+    // doesn't check for existance!!! hmm. 
+    // how to store metadata in not existing pages? how about versions?
+    function homePage() {
+        if (!$this->_userid) return false;
+        if ($this->_homepage) 
+            return $this->_homepage;
+        else {
+            $this->_homepage = $this->_dbi->getPage($this->_userid);
+            return $this->_homepage;
+        }
+    }
+
+    // create user by checking his homepage
+    function createUser ($pref, $createDefaultHomepage = true) {
+        if ($this->exists()) return;
+        if ($createDefaultHomepage) {
+            $this->createHomepage ($pref);
+        } else {
+            // empty page
+            include "lib/loadsave.php";
+            $pageinfo = array('pagedata' => array('pref' => serialize($pref->_pref)),
+                              'versiondata' => array('author' => $this->_userid),
+                              'pagename' => $this->_userid,
+                              'content' => _('CategoryHomepage'));
+            SavePage (&$this->_request, $pageinfo, false, false);
+        }
+        $this->setPreferences($pref);
+    }
+
+    // create user and default user homepage
+    function createHomepage ($pref) {
+        $pagename = $this->_userid;
+        include "lib/loadsave.php";
+
+        // create default homepage:
+        //  properly expanded template and the pref metadata
+        $template = Template('homepage.tmpl',$this->_request);
+        $text  = $template->getExpansion();
+        $pageinfo = array('pagedata' => array('pref' => serialize($pref->_pref)),
+                          'versiondata' => array('author' => $this->_userid),
+                          'pagename' => $pagename,
+                          'content' => $text);
+        SavePage (&$this->_request, $pageinfo, false, false);
+            
+        // create Calender
+        $pagename = $this->_userid . SUBPAGE_SEPARATOR . _('Preferences');
+        if (! isWikiPage($pagename)) {
+            $pageinfo = array('pagedata' => array(),
+                              'versiondata' => array('author' => $this->_userid),
+                              'pagename' => $pagename,
+                              'content' => "<?plugin Calender ?>\n");
+            SavePage (&$this->_request, $pageinfo, false, false);
+        }
+
+        // create Preferences
+        $pagename = $this->_userid . SUBPAGE_SEPARATOR . _('Preferences');
+        if (! isWikiPage($pagename)) {
+            $pageinfo = array('pagedata' => array(),
+                              'versiondata' => array('author' => $this->_userid),
+                              'pagename' => $pagename,
+                              'content' => "<?plugin UserPreferences ?>\n");
+            SavePage (&$this->_request, $pageinfo, false, false);
+        }
+    }
+
+    function tryAuthBackends() {
+        return ''; // crypt('') will never be ''
+    }
+
+    // Auth backends must store the crypted password where?
+    // Not in the preferences.
+    function checkPassword($passwd) {
+        $prefs = $this->getPreferences();
+        $stored_passwd = $prefs->get('passwd'); // crypted
+        if (empty($prefs->_prefs['passwd']))    // not stored in the page
+            // allow empty passwords? At least store a '*' then.
+            // try other backend
+            $stored_passwd = $this->tryAuthBackends($this->_userid);
+        if (empty($stored_passwd)) {
+            trigger_error(sprintf(_("WikiUser backend problem: Old UserPage %s. No password to check against! Update your UserPreferences."), $this->_userid), E_USER_NOTICE);
+            return true;
+            //return false;
+        }
+        if ($stored_passwd == '*')
+            return true;
+        if (!empty($passwd) && crypt($passwd, $stored_passwd) == $stored_passwd)
+            return true;
+        else         
+            return false;
+    }
+
+    function changePassword($newpasswd, $passwd2 = false) {
+        if (! $this->mayChangePassword() ) {
+            trigger_error(sprintf("Attempt to change an external password for '%s'. Not allowed!",
+                                  $this->_userid), E_USER_ERROR);
+            return;
+        }
+        if ($passwd2 and $passwd2 != $newpasswd) {
+            trigger_error("The second passwort must be the same as the first to change it", E_USER_ERROR);
+            return;
+        }
+        $prefs = $this->getPreferences();
+        //$oldpasswd = $prefs->get('passwd');
+        $prefs->set('passwd', crypt($newpasswd));
+        $this->setPreferences($prefs);
+    }
+
+    function mayChangePassword() {
+        // on external DBAuth or imap or LDAP not
+        // on internal DBAuth yes
+        if (USE_PREFS_IN_PAGE) { // in page metadata
+            return true;
+        }
+        return $GLOBALS['DBAuthParams']['auth_pass_write'] or $GLOBALS['DBAuthParams']['auth_update'];
+    }
+}
+
+
+class _UserPreference 
+{
+    function _UserPreference ($default_value) {
+        $this->default_value = $default_value;
+    }
+
+    function sanify ($value) {
+        return (string) $value;
+    }
+}
+
+class _UserPreference_numeric extends _UserPreference
+{
+    function _UserPreference_numeric ($default, $minval = false, $maxval = false) {
+        $this->_UserPreference((double) $default);
+        $this->_minval = (double) $minval;
+        $this->_maxval = (double) $maxval;
+    }
+
+    function sanify ($value) {
+        $value = (double) $value;
+        if ($this->_minval !== false && $value < $this->_minval)
+            $value = $this->_minval;
+        if ($this->_maxval !== false && $value > $this->_maxval)
+            $value = $this->_maxval;
+        return $value;
+    }
+}
+
+class _UserPreference_int extends _UserPreference_numeric
+{
+    function _UserPreference_int ($default, $minval = false, $maxval = false) {
+        $this->_UserPreference_numeric((int) $default, (int)$minval, (int)$maxval);
+    }
+
+    function sanify ($value) {
+        return (int) parent::sanify((int)$value);
+    }
+}
+
+class _UserPreference_bool extends _UserPreference
+{
+    function _UserPreference_bool ($default = false) {
+        $this->_UserPreference((bool) $default);
+    }
+
+    function sanify ($value) {
+        if (is_array($value)) {
+            /* This allows for constructs like:
+             *
+             *   <input type="hidden" name="pref[boolPref][]" value="0" />
+             *   <input type="checkbox" name="pref[boolPref][]" value="1" />
+             *
+             * (If the checkbox is not checked, only the hidden input gets sent.
+             * If the checkbox is sent, both inputs get sent.)
+             */
+            foreach ($value as $val) {
+                if ($val)
+                    return true;
+            }
+            return false;
+        }
+        return (bool) $value;
+    }
+}
+
+// don't save default preferences for efficiency.
+class UserPreferences {
+    function UserPreferences ($saved_prefs = false) {
+        $this->_prefs = array();
+
+        if (isa($saved_prefs, 'UserPreferences')) {
+            foreach ($saved_prefs->_prefs as $name => $value)
+                $this->set($name, $value);
+        } elseif (is_array($saved_prefs)) {
+            foreach ($saved_prefs as $name => $value)
+                $this->set($name, $value);
+        }
+    }
+
+    function _getPref ($name) {
+        global $UserPreferences;
+        if (!isset($UserPreferences[$name])) {
+            if ($name == 'passwd2') return false;
+            trigger_error("$name: unknown preference", E_USER_NOTICE);
+            return false;
+        }
+        return $UserPreferences[$name];
+    }
+
+    function get ($name) {
+        if (isset($this->_prefs[$name]))
+            return $this->_prefs[$name];
+        if (!($pref = $this->_getPref($name)))
+            return false;
+        return $pref->default_value;
+    }
+
+    function set ($name, $value) {
+        if (!($pref = $this->_getPref($name)))
+            return false;
+        $this->_prefs[$name] = $pref->sanify($value);
+	// don't set default values to safe space (in cookies, db and sesssion)
+	if ($value == $pref->default_value)
+	    unset($this->_prefs[$name]);
+	else 
+	    $this->_prefs[$name];
+    }
+}
+
+// Local Variables:
+// mode: php
+// tab-width: 8
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil

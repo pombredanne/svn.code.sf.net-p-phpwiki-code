@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.58 2002-08-19 11:32:29 rurban Exp $');
+rcs_id('$Id: config.php,v 1.59 2002-08-22 23:28:31 rurban Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
 *
@@ -268,16 +268,17 @@ define('BASE_URL',
 // Select database
 //
 if (empty($DBParams['dbtype']))
-{
     $DBParams['dbtype'] = 'dba';
-}
 
-if (!defined('WIKI_NAME')) {
+if (!defined('WIKI_NAME'))
     define('WIKI_NAME', _("An unnamed PhpWiki"));
-}
-if (!defined('HOME_PAGE')) {
+
+if (!defined('THEME'))
+    define('THEME', 'default');
+
+if (!defined('HOME_PAGE'))
     define('HOME_PAGE', _("HomePage"));
-}
+
 
 // FIXME: delete
 // Access log

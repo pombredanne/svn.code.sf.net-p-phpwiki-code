@@ -1,25 +1,32 @@
 <?php // -*-php-*-
-// Sample to override the default wiki (theme, language, db, ...)
+// Sample to override the default wiki (Theme, Language, DB, ...)
+//
 // Also simplifies USE_PATH_INFO paths:
 //  "/<my>/wiki/HomePage" instead of "/<mywiki>/index.php/HomePage"
 // The simpliest version is 
-//   include "index.php"; include "lib/main.php";
+//   <?php include "index.php"; include "lib/main.php"; ?>
+//
+// Note: This needs a webserver handler to PHP like this on Apache:
+// <Files "wiki">
+//  SetHandler application/x-httpd-php
+// </Files> 
 
 $LANG='de_DE';
 define('THEME', 'Portland');
 
 // CONSTANTS as default wiki overrides before index.php
-//define('WIKI_NAME', "WikiDemo:$LANG:" . THEME);
+define('WIKI_NAME', "WikiDemo:$LANG:" . THEME);
 
 // Load the default configuration.
 include "index.php";
 
 // VARIABLES as default wiki overrides after index.php:
 putenv("LC_TIME=$LANG");
-// Try another DB
-$DBParams['dbtype'] = 'SQL';
-$DBParams['dsn'] = 'mysql://<user>:<pass>@localhost/<username>_wiki';
 
-// Start the wiki.
+// Try another DB than the version in index.php like this:
+//$DBParams['dbtype'] = 'SQL';
+//$DBParams['dsn'] = 'mysql://<user>:<pass>@localhost/<username>_wiki';
+
+// Start the wiki:
 include "lib/main.php";
 ?>

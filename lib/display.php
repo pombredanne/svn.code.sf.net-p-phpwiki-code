@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.33 2002-08-19 06:31:17 rurban Exp $');
+rcs_id('$Id: display.php,v 1.34 2002-08-22 23:28:31 rurban Exp $');
 
 require_once('lib/Template.php');
 require_once('lib/BlockParser.php');
@@ -23,8 +23,8 @@ function GleanDescription ($rev) {
         = pcre_fix_posix_classes("/[.?!]\s+[[:upper:])]"
                                  . ".*"
                                  . "[.?!]\s*([[:upper:])]|$)/sx");
-
-    $content = $rev->getPackedContent();
+    // Escape strings
+    $content = preg_replace("/(['\"])/", "\$1", $rev->getPackedContent());
 
     // Iterate through paragraphs.
     while (preg_match('/(?: ^ \w .* $ \n? )+/mx', $content, $m)) {
@@ -88,7 +88,7 @@ function displayPage(&$request, $tmpl = 'browse') {
     }
 
     $splitname = split_pagename($pagename);
-    if (strchr($pagename, SUBPAGE_SEPARATOR)) {
+    if (isSubPage($pagename)) {
         $pages = explode(SUBPAGE_SEPARATOR,$pagename);
         $last_page = array_pop($pages); // deletes last element from array as side-effect
         $pagetitle = HTML::span(HTML::a(array('href' => WikiURL($pages[0]),
@@ -99,7 +99,7 @@ function displayPage(&$request, $tmpl = 'browse') {
         array_shift($pages);
         foreach ($pages as $p)  {
             $pagetitle->pushContent(HTML::a(array('href' => WikiURL($first_pages . $p),
-                                             'class' => 'backlinks'),
+                                                  'class' => 'backlinks'),
                                        split_pagename($p . SUBPAGE_SEPARATOR)));
             $first_pages .= $p . SUBPAGE_SEPARATOR;
         }

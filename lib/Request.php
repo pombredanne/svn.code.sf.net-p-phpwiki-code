@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Request.php,v 1.13 2002-02-08 08:01:32 lakka Exp $');
+<?php rcs_id('$Id: Request.php,v 1.14 2002-08-22 23:28:31 rurban Exp $');
 
 // FIXME: write log entry.
 
@@ -28,7 +28,7 @@ class Request {
             $this->_log_entry = & new Request_AccessLogEntry($this,
                                                              ACCESS_LOG);
         
-        $TheRequest = $this;
+        $GLOBALS['request'] = $this;
     }
 
     function get($key) {
@@ -65,12 +65,13 @@ class Request {
         else
             $this->args[$key] = $val;
     }
-    
 
     function getURLtoSelf($args = false) {
         $get_args = $this->args;
         if ($args)
             $get_args = array_merge($get_args, $args);
+        if (DEBUG)
+            $get_args = array_merge($get_args, $GLOBALS['HTTP_GET_VARS']);
 
         $pagename = $get_args['pagename'];
         unset ($get_args['pagename']);
@@ -79,7 +80,6 @@ class Request {
 
         return WikiURL($pagename, $get_args);
     }
-    
 
     function isPost () {
         return $this->get("REQUEST_METHOD") == "POST";
@@ -122,7 +122,6 @@ class Request {
         if (!empty($this->_is_compressing_output))
             ob_end_flush();
     }
-    
 
     function getSessionVar($key) {
         return $this->session->get($key);
@@ -162,7 +161,6 @@ class Request {
                 $this->_stripslashes($GLOBALS[$vars]);
         }
     }
-
 
     function _stripslashes(&$var) {
         if (is_array($var)) {

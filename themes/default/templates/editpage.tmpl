@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.30 2002-02-18 23:16:29 carstenklapp Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.31 2002-08-22 23:28:32 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -58,7 +58,7 @@ $s = $Theme->getButtonSeparator();
   <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
   <br clear="both" />
   <div id="editarea-size">
-    <?=_("Edit Area Size:")?>
+    <?=_("Edit Area Size")?>:
     <b><?=_("H")?></b> <?=$HeightI?>
     <b><?=_("W")?></b> <?=$WidthI?>
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
@@ -67,7 +67,7 @@ $s = $Theme->getButtonSeparator();
 
 <!-- FIXME: fix layout, move CSS to CSS -->
 <div class="toolbar" style="text-align: center;">
-  <?=_("Summary:")?> <?=$SUMMARY_INPUT?>
+  <?=_("Summary")?>: <?=$SUMMARY_INPUT?>
 </div>
 <table summary="Toolbar: Page editing options." class="toolbar" width="100%"
        cellpadding="0" cellspacing="0" border="0">

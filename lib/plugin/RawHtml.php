@@ -9,7 +9,7 @@ rcs_id('$Id:');
 //
 // ENABLE AT YOUR OWN RISK!!!
 //
-define('ENABLE_RAW_HTML', false);
+if (!defined('ENABLE_RAW_HTML')) define('ENABLE_RAW_HTML', false);
 
 /**
  * A plugin to provide for raw HTML within wiki pages.

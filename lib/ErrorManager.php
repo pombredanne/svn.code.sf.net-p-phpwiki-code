@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.13 2002-01-28 18:49:08 dairiki Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.14 2002-08-22 23:28:31 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -8,6 +8,11 @@ define ('EM_WARNING_ERRORS',
 	E_WARNING | E_CORE_WARNING | E_COMPILE_WARNING | E_USER_WARNING);
 define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
 
+assert_options (ASSERT_CALLBACK, 'wiki_assert_handler');
+
+function wiki_assert_handler ($file, $line, $code) {
+	ErrorManager_errorHandler( $code, sprintf("<br />%s:$line: $code: Assertion failed <br />", $file, $line, $code), $file, $line);
+}
 
 /**
  * A class which allows custom handling of PHP errors.

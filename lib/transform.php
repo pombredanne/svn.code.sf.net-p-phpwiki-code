@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: transform.php,v 1.44 2002-08-19 11:32:30 rurban Exp $');
+<?php rcs_id('$Id: transform.php,v 1.45 2002-08-22 23:28:31 rurban Exp $');
 require_once('lib/WikiPlugin.php');
 require_once('lib/HtmlElement.php');
 require_once('lib/interwiki.php');
@@ -421,6 +421,7 @@ function  wtt_doublebrackets($match, &$trfrm) {
     return '[';
 }
 
+// ^[d] definition
 function wtt_footnotes($match, &$trfrm) {
     global $request;
     $page = rawurlencode($request->getArg('pagename'));
@@ -440,17 +441,18 @@ function wtt_footnotes($match, &$trfrm) {
                                              "href" => "$page#$anchor",
                                              "class" => "footnote-rev"),
                                        $fntext));
-            $fntext = '+';
+            $fntext = ''; //$fntext = '+';
         }
     }
     return $html;
 }
 
+// [d] link to footnote
 function wtt_footnoterefs($match, &$trfrm) {
     global $request;
     $ftnt = trim(substr($match,1,-1)) + 0;
 
-   $footnote_definition_seen = false;
+    $footnote_definition_seen = false;
 
     if (empty($trfrm->user_data['footnotes']))
         $trfrm->user_data['footnotes'] = array();

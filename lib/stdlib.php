@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.113 2002-08-19 06:31:17 rurban Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.114 2002-08-22 23:28:31 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -747,8 +747,7 @@ function better_srand($seed = '') {
  * array('1' => 2, '2' => array('1' => 3, '2' => 4))
  * See http://www.php.net/manual/en/function.count.php
  */
-function count_all($arg)
-{
+function count_all($arg) {
     // skip if argument is empty
     if ($arg) {
         //print_r($arg); //debugging
@@ -761,6 +760,16 @@ function count_all($arg)
             $count += count_all($val);
         return $count;
     }
+}
+
+function isSubPage($pagename) {
+    return (strstr($pagename, SUBPAGE_SEPARATOR));
+}
+
+function subPageSlice($pagename, $pos) {
+    $pages = explode(SUBPAGE_SEPARATOR,$pagename);
+    $pages = array_slice($pages,$pos,1);
+    return $pages[0];
 }
 
 

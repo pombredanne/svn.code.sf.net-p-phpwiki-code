@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.21 2002-08-19 11:32:29 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.22 2002-08-22 23:28:31 rurban Exp $');
 /*
  * Code for writing XML.
  */
@@ -407,6 +407,11 @@ function HiddenInputs ($query_args, $pfx = false, $exclude = array()) {
                                                    'value' => $val)));
     }
     return $inputs;
+}
+
+function HiddenGets ($exclude = array()) {
+    global $request;
+    HiddenInputs($request->getArgs(), false, $exclude);
 }
 
 // (c-file-style: "gnu")

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.49 2002-08-19 06:31:17 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.50 2002-08-22 23:28:31 rurban Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -712,7 +712,7 @@ class Theme {
     }
 
     //----------------------------------------------------------------
-    var $_buttonSeparator = ' | ';
+    var $_buttonSeparator = "\n | ";
 
     function setButtonSeparator($separator) {
         $this->_buttonSeparator = $separator;
