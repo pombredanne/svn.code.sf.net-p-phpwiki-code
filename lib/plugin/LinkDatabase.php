@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LinkDatabase.php,v 1.6 2004-12-22 18:48:10 rurban Exp $');
+rcs_id('$Id: LinkDatabase.php,v 1.7 2004-12-26 17:17:25 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
     function getExpire($dbi, $argarray, $request) {
         return '+900'; // 15 minutes
@@ -126,8 +126,9 @@ extends WikiPluginCached
                 echo "\n";
             }
             flush();
-            if (empty($WikiTheme->DUMP_MODE) or $WikiTheme->DUMP_MODE != 'HTML')
+            if (empty($WikiTheme->DUMP_MODE))
                 $request->finish();
+
         } elseif ($args['format'] == 'xml') {
             // For hypergraph.jar. Best dump it to a local sitemap.xml periodically
             global $WikiTheme, $charset;
@@ -160,7 +161,7 @@ extends WikiPluginCached
             }
 	    echo "</graph>\n";
 	    echo "</GraphXML>\n";
-            if (empty($WikiTheme->DUMP_MODE) or $WikiTheme->DUMP_MODE != 'HTML') {
+            if (empty($WikiTheme->DUMP_MODE)) {
                 unset($GLOBALS['ErrorManager']->_postponed_errors);
                 $request->finish();
             }
@@ -182,6 +183,9 @@ class _PageList_Column_LinkDatabase_links extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/12/22 18:48:10  rurban
+// default format=html for unit-tests and DumpHtml/Zip breakage
+//
 // Revision 1.5  2004/12/17 16:39:03  rurban
 // minor reformatting
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.134 2004-12-20 16:05:01 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.135 2004-12-26 17:17:25 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
@@ -580,6 +580,7 @@ function MakeWikiZipHtml (&$request)
     global $WikiTheme;
     if (defined('HTML_DUMP_SUFFIX'))
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
+    $WikiTheme->DUMP_MODE = 'ZIPHTML';
 
     /* ignore fatals in plugins */
     if (check_php_version(4,1)) {
@@ -635,6 +636,8 @@ function MakeWikiZipHtml (&$request)
         unset($template);
         unset($data);
     }
+    $pages->free();
+    
     // FIXME: Deal with css and images here.
     $zip->finish();
     if (check_php_version(4,1)) {
@@ -642,6 +645,7 @@ function MakeWikiZipHtml (&$request)
         $ErrorManager->popErrorHandler();
     }
     $WikiTheme->$HTML_DUMP_SUFFIX = '';
+    $WikiTheme->DUMP_MODE = false;
 }
 
 
@@ -1255,6 +1259,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.134  2004/12/20 16:05:01  rurban
+ gettext msg unification
+
  Revision 1.133  2004/12/08 12:57:41  rurban
  page-specific timeouts for long multi-page requests
 
