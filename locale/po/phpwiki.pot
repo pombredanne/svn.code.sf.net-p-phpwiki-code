@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.7pre\n"
-"POT-Creation-Date: 2003-11-18 14:26-0500\n"
+"POT-Creation-Date: 2003-11-22 12:59-0500\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "%s: error while handling error:"
 msgstr ""
 
-#: ../lib/FileFinder.php:143 ../lib/loadsave.php:501
+#: ../lib/FileFinder.php:143 ../lib/loadsave.php:504
 #, c-format
 msgid "%s: file not found"
 msgstr ""
@@ -28,7 +28,7 @@ msgstr ""
 msgid "Sort by %s"
 msgstr ""
 
-#: ../lib/PageList.php:183 ../lib/plugin/WantedPages.php:121
+#: ../lib/PageList.php:183 ../lib/plugin/WantedPages.php:128
 msgid "Page Name"
 msgstr ""
 
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Last Summary"
 msgstr ""
 
-#: ../lib/PageList.php:348 ../lib/plugin/PluginManager.php:90
+#: ../lib/PageList.php:348 ../lib/plugin/PluginManager.php:94
 msgid "Version"
 msgstr ""
 
@@ -81,7 +81,7 @@ msgstr ""
 msgid "Markup"
 msgstr ""
 
-#: ../lib/PageList.php:405 ../lib/plugin/WantedPages.php:148
+#: ../lib/PageList.php:405 ../lib/plugin/WantedPages.php:155
 #, c-format
 msgid "Columns: %s."
 msgstr ""
@@ -94,7 +94,7 @@ msgstr ""
 msgid "InterWiki Address"
 msgstr ""
 
-#: ../lib/RSSWriter091.php:116 ../lib/loadsave.php:823
+#: ../lib/RSSWriter091.php:116 ../lib/loadsave.php:829
 #: ../lib/plugin/RecentChanges.php:250 ../lib/plugin/RecentChanges.php:263
 #: ../lib/plugin/RecentChanges.php:363 ../lib/plugin/RecentChanges.php:434
 #: ../lib/plugin/RecentChanges.php:525 ../lib/plugin/RecentChanges.php:601
@@ -168,7 +168,7 @@ msgstr ""
 msgid "Sign Out"
 msgstr ""
 
-#: ../lib/Theme.php:780 ../lib/WikiUser.php:183
+#: ../lib/Theme.php:780 ../lib/WikiUser.php:185
 #: ../themes/default/templates/login.tmpl:49
 #: ../themes/default/templates/signin.tmpl:60
 msgid "Sign In"
@@ -267,12 +267,12 @@ msgstr ""
 msgid "Insufficient permissions."
 msgstr ""
 
-#: ../lib/WikiUser.php:211
+#: ../lib/WikiUser.php:213
 msgid ""
 "You forgot to set ENCRYPTED_PASSWD to true. Please update your /index.php"
 msgstr ""
 
-#: ../lib/WikiUser.php:427
+#: ../lib/WikiUser.php:429
 #, c-format
 msgid ""
 "Old UserPage %s without stored password updated with empty password. Set a "
@@ -402,7 +402,7 @@ msgstr ""
 #: ../lib/plugin/PageGroup.php:156 ../lib/plugin/PageGroup.php:167
 #: ../lib/plugin/PageGroup.php:183 ../lib/plugin/PageGroup.php:190
 #: ../lib/plugin/PageHistory.php:216 ../lib/plugin/UnfoldSubpages.php:164
-#: ../themes/default/templates/head.tmpl:46
+#: ../themes/default/templates/head.tmpl:49
 #, c-format
 msgid "%s: %s"
 msgstr ""
@@ -521,7 +521,7 @@ msgstr ""
 msgid "InterWikiMap"
 msgstr ""
 
-#: ../lib/interwiki.php:90 ../lib/loadsave.php:513
+#: ../lib/interwiki.php:90 ../lib/loadsave.php:516
 #, c-format
 msgid "Loading InterWikiMap from external file %s."
 msgstr ""
@@ -591,7 +591,7 @@ msgstr ""
 msgid "has edit conflicts - overwriting anyway"
 msgstr ""
 
-#: ../lib/loadsave.php:435 ../lib/loadsave.php:791
+#: ../lib/loadsave.php:435 ../lib/loadsave.php:797
 msgid "The PhpWiki programming team"
 msgstr ""
 
@@ -609,68 +609,73 @@ msgstr ""
 msgid "- saved to database as version %d"
 msgstr ""
 
-#: ../lib/loadsave.php:464 ../lib/loadsave.php:607
+#: ../lib/loadsave.php:464 ../lib/loadsave.php:610
 #, c-format
 msgid "MIME file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:465 ../lib/loadsave.php:612
+#: ../lib/loadsave.php:465 ../lib/loadsave.php:615
 #, c-format
 msgid "Serialized file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:466 ../lib/loadsave.php:626
+#: ../lib/loadsave.php:466 ../lib/loadsave.php:629
 #, c-format
 msgid "plain file %s"
 msgstr ""
 
-#: ../lib/loadsave.php:469 ../lib/loadsave.php:475
+#: ../lib/loadsave.php:472
+msgid "Merge Edit"
+msgstr ""
+
+#: ../lib/loadsave.php:473 ../lib/loadsave.php:481
 #: ../themes/Portland/templates/navbar.tmpl:30
+#: ../themes/default/templates/head.tmpl:80
 #: ../themes/default/templates/navbar.tmpl:36
 msgid "PhpWikiAdministration"
 msgstr ""
 
-#: ../lib/loadsave.php:474
+#: ../lib/loadsave.php:480
 msgid "Restore Anyway"
 msgstr ""
 
-#: ../lib/loadsave.php:497
+#: ../lib/loadsave.php:500
 #, c-format
 msgid "%s: not defined"
 msgstr ""
 
-#: ../lib/loadsave.php:506
+#: ../lib/loadsave.php:509
 msgid "Default InterWiki map file not loaded."
 msgstr ""
 
-#: ../lib/loadsave.php:640 ../lib/loadsave.php:652
+#: ../lib/loadsave.php:643 ../lib/loadsave.php:655
 msgid "Skipping"
 msgstr ""
 
-#: ../lib/loadsave.php:749
+#: ../lib/loadsave.php:752
 #, c-format
 msgid "Unable to load: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:756
+#: ../lib/loadsave.php:759
 #, c-format
 msgid "Bad file type: %s"
 msgstr ""
 
-#: ../lib/loadsave.php:770
+#: ../lib/loadsave.php:773
 #, c-format
 msgid "Loading '%s'"
 msgstr ""
 
-#: ../lib/loadsave.php:794
+#: ../lib/loadsave.php:800
 msgid "Loading up virgin wiki"
 msgstr ""
 
-#: ../lib/loadsave.php:814
+#: ../lib/loadsave.php:820
 msgid "No uploaded file to upload?"
 msgstr ""
 
-#: ../lib/loadsave.php:818
+#: ../lib/loadsave.php:824
 #, c-format
 msgid "Uploading %s"
 msgstr ""
@@ -690,7 +695,7 @@ msgstr ""
 msgid "You must log in to %s."
 msgstr ""
 
-#: ../lib/main.php:251 ../lib/plugin/PluginManager.php:65
+#: ../lib/main.php:251 ../lib/plugin/PluginManager.php:69
 #, c-format
 msgid "You must be an administrator to %s."
 msgstr ""
@@ -833,6 +838,7 @@ msgid "Fatal PhpWiki Error"
 msgstr ""
 
 #: ../lib/main.php:604 ../lib/plugin/FullTextSearch.php:31
+#: ../lib/plugin/WantedPages.php:116
 msgid "FullTextSearch"
 msgstr ""
 
@@ -896,7 +902,7 @@ msgid "%s pages link to %s:"
 msgstr ""
 
 #: ../lib/plugin/Calendar.php:41 ../lib/plugin/Calendar.php:45
-#: ../themes/default/templates/head.tmpl:82
+#: ../themes/default/templates/head.tmpl:89
 #: ../themes/default/templates/navbar.tmpl:27
 msgid "Calendar"
 msgstr ""
@@ -1329,32 +1335,36 @@ msgstr ""
 msgid "Submit location"
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:31
+#: ../lib/plugin/PluginManager.php:35
 msgid "PluginManager"
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:35
+#: ../lib/plugin/PluginManager.php:39
 msgid "Provides a list of plugins on this wiki."
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:54
+#: ../lib/plugin/PluginManager.php:58
 msgid "Plugins"
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:66
+#: ../lib/plugin/PluginManager.php:70
 msgid "use this plugin"
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:90
+#: ../lib/plugin/PluginManager.php:94
 msgid "Plugin"
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:90
+#: ../lib/plugin/PluginManager.php:94
 msgid "Description"
 msgstr ""
 
-#: ../lib/plugin/PluginManager.php:92
+#: ../lib/plugin/PluginManager.php:96
 msgid "Arguments"
+msgstr ""
+
+#: ../lib/plugin/PluginManager.php:188 ../lib/plugin/PluginManager.php:198
+msgid "(Not a WikiWord)"
 msgstr ""
 
 #: ../lib/plugin/PrevNext.php:32
@@ -1880,6 +1890,7 @@ msgid "Uploading failed."
 msgstr ""
 
 #: ../lib/plugin/UserPreferences.php:34
+#: ../themes/default/templates/head.tmpl:86
 msgid "UserPreferences"
 msgstr ""
 
@@ -1934,12 +1945,12 @@ msgstr ""
 msgid "Wanted Pages for %s (%d total):"
 msgstr ""
 
-#: ../lib/plugin/WantedPages.php:119
+#: ../lib/plugin/WantedPages.php:126
 #, c-format
 msgid "Wanted Pages in this wiki (%d total):"
 msgstr ""
 
-#: ../lib/plugin/WantedPages.php:121
+#: ../lib/plugin/WantedPages.php:128
 msgid "Count"
 msgstr ""
 
@@ -2309,7 +2320,7 @@ msgstr ""
 
 #: ../themes/Portland/templates/actionbar.tmpl:10
 #: ../themes/default/templates/actionbar.tmpl:7
-#: ../themes/default/templates/head.tmpl:46
+#: ../themes/default/templates/head.tmpl:49
 msgid "View Source"
 msgstr ""
 
@@ -2428,6 +2439,7 @@ msgid "TextFormattingRules"
 msgstr ""
 
 #: ../themes/Portland/templates/navbar.tmpl:8
+#: ../themes/default/templates/head.tmpl:39
 #: ../themes/default/templates/navbar.tmpl:11
 msgid "FindPage"
 msgstr ""
@@ -2459,7 +2471,7 @@ msgstr ""
 msgid "Comment:"
 msgstr ""
 
-#: ../themes/default/templates/debug.tmpl:23
+#: ../themes/default/templates/debug.tmpl:18
 #, c-format
 msgid "Page Execution took %s seconds"
 msgstr ""
@@ -2486,9 +2498,21 @@ msgstr ""
 msgid "This is a minor change."
 msgstr ""
 
-#: ../themes/default/templates/head.tmpl:32
+#: ../themes/default/templates/head.tmpl:31
+msgid "HowToUseWiki"
+msgstr ""
+
+#: ../themes/default/templates/head.tmpl:34
 #: ../themes/default/templates/htmldump.tmpl:25
 msgid "The PhpWiki Programming Team"
+msgstr ""
+
+#: ../themes/default/templates/head.tmpl:72
+msgid "SandBox"
+msgstr ""
+
+#: ../themes/default/templates/head.tmpl:74
+msgid "WikiWikiWeb"
 msgstr ""
 
 #: ../themes/default/templates/info.tmpl:29
