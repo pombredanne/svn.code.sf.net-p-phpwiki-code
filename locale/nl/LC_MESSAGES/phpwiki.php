@@ -164,8 +164,6 @@ $locale["diff"] =
    "diff";
 $locale["from %s"] =
    "van %s";
-$locale["is identical to current version %d - skipped"] =
-   "is gelijk aaan huidige versie %d - overgeslagen";
 $locale["locked"] =
    "låst";
 $locale["new page"] =
