@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.15 2004-07-03 14:48:18 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.16 2004-09-25 16:35:09 rurban Exp $');
 /*
  Copyright 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision: 1.16 $");
     }
 
     function getDefaultArguments() {
@@ -70,50 +70,6 @@ extends WikiPlugin
             'sectionhead' => false // when including a named
                                 //  section show the heading
             );
-    }
-
-    // from IncludePage
-    function firstNWordsOfContent($n, $content) {
-        $wordcount = 0;
-        $new = array( );
-        foreach ($content as $line) {
-            $words = explode(' ', $line);
-            if ($wordcount + count($words) > $n) {
-                $new[] = implode(' ', array_slice($words, 0, $n - $wordcount))
-                         . sprintf(_("... first %d words"), $n);
-                return $new;
-            }
-            else {
-                $wordcount += count($words);
-                $new[] = $line;
-            }
-        }
-        return $new;
-    }
-
-    //TODO: move this to stdlib.php
-    function extractSection ($section, $content, $page, $quiet, $sectionhead) {
-        $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
-
-        if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
-                       . "  \\s*$\\n?"           // possible blank lines
-                       . "  ( (?: ^.*\\n? )*? )" // some lines
-                       . "  (?= ^\\1 | \\Z)/xm", // sec header (same
-                                                 //  or higher level)
-                                                 //  (or EOF)
-                       implode("\n", $content),
-                       $match)) {
-            // Strip trailing blanks lines and ---- <hr>s
-            $text = preg_replace("/\\s*^-{4,}\\s*$/m", "", $match[2]);
-            if ($sectionhead)
-                $text = $match[1] . $section ."\n". $text;
-            return explode("\n", $text);
-        }
-        if ($quiet)
-            $mesg = $page ." ". $section;
-        else
-            $mesg = $section;
-        return array(sprintf(_("<%s: no such section>"), $mesg));
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -155,13 +111,13 @@ extends WikiPlugin
                     }
                 }
                 if ($section)
-                    $c = $this->extractSection($section, $c, $page, $quiet,
-                                               $sectionhead);
+                    $c = extractSection($section, $c, $page, $quiet,
+                                        $sectionhead);
                 if ($lines)
                     $c = array_slice($c, 0, $lines)
                         . sprintf(_(" ... first %d lines"), $bytes);
                 if ($words)
-                    $c = $this->firstNWordsOfContent($words, $c);
+                    $c = firstNWordsOfContent($words, $c);
                 if ($bytes) {
                     if (strlen($c) > $bytes)
                         $c = substr($c, 0, $bytes)
@@ -196,6 +152,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2004/07/03 14:48:18  rurban
+// Tested new mysql 4.1.3-beta: binary search bug as fixed.
+// => fixed action=upgrade,
+// => version check in PearDB also (as in ADODB)
+//
 // Revision 1.14  2004/07/03 08:19:40  rurban
 // trap recursive redirects
 //

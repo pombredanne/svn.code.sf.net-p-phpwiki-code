@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageGroup.php,v 1.8 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: PageGroup.php,v 1.9 2004-09-25 16:35:09 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -50,7 +50,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -64,7 +64,7 @@ extends WikiPlugin
     }
 
     // Stolen from IncludePage.php
-    function extractSection ($section, $content, $page) {
+    function extractGroupSection ($section, $content, $page) {
         $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
         if (preg_match("/ ^(!{1,})\\s*$qsection" // section header
                        . "  \\s*$\\n?"           // possible blank lines
@@ -137,7 +137,7 @@ extends WikiPlugin
         }
 
         $c = $r->getContent();
-        $c = $this->extractSection($section, $c, $parent);
+        $c = $this->extractGroupSection($section, $c, $parent);
 
         $pagename = $request->getArg('pagename');
 
@@ -210,6 +210,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.7  2004/05/03 15:53:20  rurban
 // Support [] links, but no [name|page] links yet
 // Support subpages
