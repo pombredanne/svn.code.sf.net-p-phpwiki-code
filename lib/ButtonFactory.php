@@ -1,12 +1,28 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.1 2002-01-15 23:40:25 dairiki Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.2 2002-01-15 23:56:44 dairiki Exp $');
 
+/**
+ * A class representing a clickable "button".
+ *
+ * In it's simplest (default) form, a "button" is just a link associated
+ * with some sort of wiki-action.
+ */
 class Button {
+    /** Constructor
+     *
+     * @param $text string The text for the button.
+     * @param $url string The url (href) for the button.
+     * @param $class string The CSS class for the button.
+     */
     function Button ($text, $url, $class) {
         $this->_attr = array('href' => $url,
                              'class' => $class);
         $this->_text = $text;
     }
 
+    /** Add a "tooltip" to a button.
+     *
+     * @param $tooltip_text string The tooltip text.
+     */
     function addTooltip ($tooltip_text) {
         $attr = &$this->_attr;
         $attr['title'] = $tooltip_text;
@@ -18,17 +34,39 @@ class Button {
         $attr['onmouseout']  = "window.status='';return true;";
     }
     
+    /** Get HTML for the button.
+     *
+     * @return string HTML markup.
+     */
     function asHTML () {
         return Element('a', $this->_attr,
                        $this->linkContents());
     }
 
+    /** Get the HTML text of the button.
+     *
+     * (Subclasses implementing image buttons will probably want
+     * to override this method so that it returns an <img> tag.)
+     *
+     * @return string HTML markup.
+     */
     function linkContents () {
         return htmlspecialchars($this->_text);
     }
 };
 
+/**
+ * A clickable image button.
+ */
 class ImageButton {
+    /** Constructor
+     *
+     * @param $text string The text for the button.
+     * @param $url string The url (href) for the button.
+     * @param $class string The CSS class for the button.
+     * @param $img_url string URL for button's image.
+     * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
+     */
     function ImageButton ($text, $url, $class, $img_url, $img_attr = false) {
         $this->Button($text, $url, $class);
         
@@ -38,13 +76,31 @@ class ImageButton {
         $this->_img_attr['alt'] = $text;
     }
 
+    /** Get img tag.
+     *
+     * @return string The image tag for this button.
+     */
     function linkContents() {
         return Element('img', $this->_img_attr);
     }
 };
 
+/**
+ * A factory class used to aid in the construction of <code>Button</code>s.
+ */
 class ButtonFactory {
-    
+
+    /**
+     * Action on current page.
+     *
+     * This constructs a button which performs an action on the
+     * currently selected version of the current page.
+     *
+     * @param $action string The action to perform (e.g. 'edit', 'lock').
+     * @param $label string Textual label for the button.
+     * @param $page_or_rev mixed FIXME: need doc.
+     * @return object A Button object.
+     */
     function makeActionButton ($action, $label = false, $page_or_rev = false) {
         extract($this->_get_name_and_rev($page_or_rev));
 
@@ -68,6 +124,21 @@ class ButtonFactory {
         return $this->makeButton($label, WikiURL($pagename, $attr), $class);
     }
 
+    /**
+     * Link to wiki page.
+     *
+     * This constructs a button which simple links to
+     * another page within the wiki.
+     *
+     * @param $page_or_rev mixed The page to link to.  This can be
+     * given as a string (the page name), a WikiDB_Page object, or as
+     * WikiDB_PageRevision object.  If given as a WikiDB_PageRevision
+     * object, the button will link to a specific version of the
+     * designated page, otherwise the button links to the most recent
+     * version of the page.
+     *
+     * @return object A Button object.
+     */
     function makeLinkButton ($page_or_rev) {
         extract($this->_get_name_and_rev($page_or_rev));
 
@@ -76,6 +147,17 @@ class ButtonFactory {
         return $this->makeButton($pagename, WikiURL($pagename, $attr), 'wiki');
     }
 
+    /**
+     * Throw page at an "action page"
+     *
+     * This constructs a button which "throws" the current page
+     * at another "action page" or "magic page".
+     *
+     * @param $action_page string Name of the action page to apply to this page.
+     * @param $page_or_rev mixed FIXME: need docs.
+     *
+     * @return object A Button object.
+     */
     function makeActionPageButton ($action_page, $page_or_rev = false) {
         extract($this->_get_name_and_rev($page_or_rev));
         $attr['page'] = $pagename;
@@ -85,6 +167,17 @@ class ButtonFactory {
         return $this->makeButton($action_page, WikiURL($action_page, $attr), 'wikiaction');
     }
 
+    /**
+     * Construct a button
+     *
+     * This constructs a button of a type specified by the selected theme.
+     *
+     * @param $text string The text for the button.
+     * @param $url string The url (href) for the button.
+     * @param $class string The CSS class for the button.
+     *
+     * @return object A Button object.
+     */
     function makeButton($text, $url, $class) {
         global $THEME;
 
