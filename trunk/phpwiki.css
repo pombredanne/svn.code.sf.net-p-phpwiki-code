@@ -1,5 +1,5 @@
 /*
-  $Id: phpwiki.css,v 1.31 2002-02-06 20:14:00 carstenklapp Exp $
+  $Id: phpwiki.css,v 1.32 2002-02-08 08:19:10 carstenklapp Exp $
 
   Classes:
 
@@ -131,7 +131,8 @@ p.error {
  width: 90%;
  margin-left:auto;
  margin-right:auto;
- align:center; /* for NS4 */
+/* this is not valid css but NS4 needs it to center the 90% wide line */
+ align: center;
 }
 
 
