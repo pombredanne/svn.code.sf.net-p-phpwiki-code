@@ -110,6 +110,13 @@
    // Either insert or replace a key/value (a page)
    function InsertPage($dbi, $pagename, $pagehash) {
 
+      global $WikiPageStore; // ugly hack
+      if ($dbi['table'] == $WikiPageStore) 
+      { // HACK
+         $linklist = ExtractWikiPageLinks($pagehash['content']);
+	 	 SetWikiPageLinks($dbi, $pagename, $linklist);
+      }
+
       $pagehash = MakeDBHash($pagename, $pagehash);
 
       // record the time of modification
