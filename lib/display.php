@@ -1,43 +1,8 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.46 2003-03-07 21:46:55 dairiki Exp $');
+rcs_id('$Id: display.php,v 1.47 2003-03-07 21:52:34 dairiki Exp $');
 
 require_once('lib/Template.php');
-
-/**
- * Guess a short description of the page.
- *
- * Algorithm:
- *
- * This algorithm was suggested on MeatballWiki by
- * Alex Schroeder <kensanata@yahoo.com>.
- *
- * Use the first paragraph in the page which contains at least two
- * sentences.
- *
- * @see http://www.usemod.com/cgi-bin/mb.pl?MeatballWikiSuggestions
- */
-function GleanDescription ($rev) {
-    $two_sentences
-        = pcre_fix_posix_classes("/[.?!]\s+[[:upper:])]"
-                                 . ".*"
-                                 . "[.?!]\s*([[:upper:])]|$)/sx");
-    // Escape strings
-    $content = preg_replace("/(['\"])/", "\$1", $rev->getPackedContent());
-
-    // Iterate through paragraphs.
-    while (preg_match('/(?: ^ \w .* $ \n? )+/mx', $content, $m)) {
-        $paragraph = $m[0];
-
-        // Return paragraph if it contains at least two sentences.
-        if (preg_match($two_sentences, $paragraph)) {
-            return preg_replace("/\s*\n\s*/", " ", trim($paragraph));
-        }
-
-        $content = substr(strstr($content, $paragraph), strlen($paragraph));
-    }
-    return '';
-}
 
 /**
  * Extract keywords from Category* links on page. 
