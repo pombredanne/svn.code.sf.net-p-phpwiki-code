@@ -18,8 +18,6 @@ $locale["%s: Bad action"] =
    "%s: Ungültige Aktion";
 $locale["%s: Can't open dba database"] =
    "%s: Konnte DBA Datenbank nicht öffnen.";
-$locale["%s: Date of new revision is %s"] =
-   "%s: Datum der letzten Änderung %s";
 $locale["%s: argument index out of range"] =
    "%s: Ungültiger Index in Array";
 $locale["%s: error while handling error:"] =
@@ -281,11 +279,11 @@ $locale["Previous"] =
 $locale["Previous Author"] =
    "Voriger Autor";
 $locale["Previous Major Revision"] =
-   "Vorige Hauptversion";
+   "Vorige Hauptrevision";
 $locale["Previous Month"] =
    "Voriger Monat";
 $locale["Previous Revision"] =
-   "Vorige Version";
+   "Vorige Revision";
 $locale["Printer"] =
    "Drucker";
 $locale["Problem while editing %s"] =
@@ -312,6 +310,10 @@ $locale["Required form variables are missing."] =
    "Benötigen Form-Variablen sind Fehlend.";
 $locale["Return to %s"] =
    "Zurück zu %s";
+$locale["Return to %s."] =
+   "Zurück zu %s";
+$locale["Revision Not Found"] =
+   "Version Nicht Gefunden";
 $locale["Save"] =
    "Speichern";
 $locale["Saved: %s"] =
@@ -340,6 +342,8 @@ $locale["Simple Sample Plugin"] =
    "Einfaches Zusatzprogramm Beispiel";
 $locale["Skipping"] =
    "Wird ausgelassen";
+$locale["Someone has edited the page!"] =
+   "Jemand hat die Seite verändert!";
 $locale["Sorry for the inconvenience."] =
    "Entschuldigung für die Unannehmlichkeiten.";
 $locale["Sorry, this version of PHP cannot create PNG image files."] =
@@ -392,6 +396,8 @@ $locale["UserPreferences"] =
    "Einstellungen";
 $locale["Using directory '%s'"] =
    "Verwende Verzeichnis »%s«";
+$locale["Version"] =
+   "Version";
 $locale["Version %d"] =
    "Version %d.";
 $locale["Version %s, saved on %s."] =
@@ -420,8 +426,6 @@ $locale["You are signed in as %s"] =
    "Angemeldet als %s";
 $locale["You are viewing an old revision of this page."] =
    "Du siehst eine alte Version dieser Seite.";
-$locale["You can change the size of the editing area in %s."] =
-   "Du kannst die Größe des Texteingabefensters in %s ändern.";
 $locale["You have not made any changes so no new version has been saved."] =
    "Du hast keine Änderungen gemacht also ist keine neue Version gespeichert worden.";
 $locale["You must be an administrator to %s this wiki"] =
@@ -445,7 +449,9 @@ $locale["compare revisions"] =
 $locale["couldn't open file '%s' for writing"] =
    "Datei »%s« konnte nicht zum Schreiben geöffnet werden";
 $locale["current version"] =
-   "aktuellste Version";
+   "aktuelle Version";
+$locale["diff"] =
+   "Diff";
 $locale["edits"] =
    "Änderungen";
 $locale["from %s"] =
@@ -460,6 +466,8 @@ $locale["major edits"] =
    "Hauptänderungen";
 $locale["minor"] =
    "gerigne";
+$locale["minor edit"] =
+   "gerinfügige";
 $locale["minor edits"] =
    "Geringfügige Änderungen";
 $locale["new page"] =
@@ -471,7 +479,7 @@ $locale["plain file %s"] =
 $locale["previous major revision"] =
    "Vorige Hauptrevision";
 $locale["previous revision"] =
-   "vorige Revision";
+   "vorige Version";
 $locale["recursive inclusion of page %s"] =
    "Fehler beim Einfügen der Seite %s: Rekursion (sich selbst aufrufend)";
 $locale["revision by previous author"] =
