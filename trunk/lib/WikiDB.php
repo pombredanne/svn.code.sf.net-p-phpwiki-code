@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.92 2004-10-05 17:00:04 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.93 2004-10-14 17:17:57 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -123,6 +123,7 @@ class WikiDB {
         
         $this->_cache = new WikiDB_cache($backend);
         // If the database doesn't yet have a timestamp, initialize it now.
+        $GLOBALS['request']->_dbi = $this;
         if ($this->get('_timestamp') === false)
             $this->touch();
         
@@ -189,7 +190,7 @@ class WikiDB {
         } else {
             assert($pagename != '');
         }
-        return new WikiDB_Page($this, $pagename);
+        return new WikiDB_Page(/*$this,*/ $pagename);
     }
 
     /**
@@ -374,8 +375,8 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching
      * pages.
      */
-    function mostPopular($limit = 20) {
-        $result = $this->_backend->most_popular($limit);
+    function mostPopular($limit = 20, $sortby = '-hits') {
+        $result = $this->_backend->most_popular($limit, $sortby);
         return new WikiDB_PageIterator($this, $result);
     }
 
@@ -461,7 +462,7 @@ class WikiDB {
         }
         /* Generate notification emails? */
         if ($result) {
-            $notify = $this->_wikidb->get('notify');
+            $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 list($emails, $userids) = WikiDB_Page::getPageChangeEmails($notify);
                 if (!empty($emails)) {
@@ -635,8 +636,8 @@ class WikiDB {
  */
 class WikiDB_Page 
 {
-    function WikiDB_Page(&$wikidb, $pagename) {
-        $this->_wikidb = &$wikidb;
+    function WikiDB_Page(/*&$wikidb,*/ $pagename) {
+        //$this->_wikidb = &$wikidb;
         $this->_pagename = $pagename;
         if (DEBUG) {
             if (!(is_string($pagename) and $pagename != '')) {
@@ -644,10 +645,11 @@ class WikiDB_Page
                     echo "xdebug_get_function_stack(): "; var_dump(xdebug_get_function_stack());
 
                 }
-                trigger_error("empty pagename",E_USER_WARNING);
+                trigger_error("empty pagename", E_USER_WARNING);
                 return false;
             }
-        } else assert(is_string($pagename) and $pagename != '');
+        } else 
+            assert(is_string($pagename) and $pagename != '');
     }
 
     /**
@@ -666,7 +668,7 @@ class WikiDB_Page
     // we purge the pagedata (_cached_html) also
     function exists() {
         $current = $this->getCurrentRevision(false);
-        unset($current->_wikidb->_cache->_pagedata_cache[$this->_pagename]);
+        unset($GLOBALS['request']->_dbi->_cache->_pagedata_cache[$this->_pagename]);
         $exists = ! $current->hasDefaultContents();
         unset($current->_data->{'%pagedata'});
         return $exists;
@@ -684,8 +686,8 @@ class WikiDB_Page
      *  use a WikiDB_PageRevision object here.)
      */
     function deleteRevision($version) {
-        $backend = &$this->_wikidb->_backend;
-        $cache = &$this->_wikidb->_cache;
+        $backend = &$GLOBALS['request']->_dbi->_backend;
+        $cache = &$GLOBALS['request']->_dbi->_cache;
         $pagename = &$this->_pagename;
 
         $version = $this->_coerce_to_version($version);
@@ -733,8 +735,8 @@ class WikiDB_Page
      * </ul>
      */
     function mergeRevision($version) {
-        $backend = &$this->_wikidb->_backend;
-        $cache = &$this->_wikidb->_cache;
+        $backend = &$GLOBALS['request']->_dbi->_backend;
+        $cache = &$GLOBALS['request']->_dbi->_cache;
         $pagename = &$this->_pagename;
 
         $version = $this->_coerce_to_version($version);
@@ -799,8 +801,8 @@ class WikiDB_Page
      * $version was incorrect, returns false
      */
     function createRevision($version, &$content, $metadata, $links) {
-        $backend = &$this->_wikidb->_backend;
-        $cache = &$this->_wikidb->_cache;
+        $backend = &$GLOBALS['request']->_dbi->_backend;
+        $cache = &$GLOBALS['request']->_dbi->_cache;
         $pagename = &$this->_pagename;
                 
         $backend->lock(array('version','page','recent','link','nonempty'));
@@ -856,7 +858,7 @@ class WikiDB_Page
 
         $backend->unlock(array('version','page','recent','link','nonempty'));
 
-        return new WikiDB_PageRevision($this->_wikidb, $pagename, $newversion,
+        return new WikiDB_PageRevision($GLOBALS['request']->_dbi, $pagename, $newversion,
                                        $data);
     }
 
@@ -881,7 +883,7 @@ class WikiDB_Page
 	$meta['pagetype'] = $type->getName();
 	$links = $formatted->getWikiPageLinks();
 
-	$backend = &$this->_wikidb->_backend;
+	$backend = &$GLOBALS['request']->_dbi->_backend;
 	$newrevision = $this->createRevision($version, $wikitext, $meta, $links);
 	if ($newrevision)
             if (!defined('WIKIDB_NOCACHE_MARKUP') or !WIKIDB_NOCACHE_MARKUP)
@@ -900,7 +902,7 @@ class WikiDB_Page
         /* Generate notification emails? */
         if (isa($newrevision, 'wikidb_pagerevision')) {
             // Save didn't fail because of concurrent updates.
-            $notify = $this->_wikidb->get('notify');
+            $notify = $GLOBALS['request']->_dbi->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 list($emails, $userids) = $this->getPageChangeEmails($notify);
                 if (!empty($emails)) {
@@ -963,13 +965,13 @@ class WikiDB_Page
     }
 
     function sendPageChangeNotification(&$wikitext, $version, $meta, $emails, $userids) {
-        $backend = &$this->_wikidb->_backend;
+        $backend = &$GLOBALS['request']->_dbi->_backend;
         $subject = _("Page change").' '.$this->_pagename;
         $previous = $backend->get_previous_version($this->_pagename, $version);
         if (!isset($meta['mtime'])) $meta['mtime'] = time();
         if ($previous) {
             $difflink = WikiURL($this->_pagename, array('action'=>'diff'),true);
-            $cache = &$this->_wikidb->_cache;
+            $cache = &$GLOBALS['request']->_dbi->_cache;
             $this_content = explode("\n", $wikitext);
             $prevdata = $cache->get_versiondata($this->_pagename, $previous, true);
             if (empty($prevdata['%content']))
@@ -1012,8 +1014,8 @@ class WikiDB_Page
      * @return WikiDB_PageRevision The current WikiDB_PageRevision object. 
      */
     function getCurrentRevision($need_content = true) {
-        $backend = &$this->_wikidb->_backend;
-        $cache = &$this->_wikidb->_cache;
+        $backend = &$GLOBALS['request']->_dbi->_backend;
+        $cache = &$GLOBALS['request']->_dbi->_cache;
         $pagename = &$this->_pagename;
         
         // Prevent deadlock in case of memory exhausted errors
@@ -1042,17 +1044,17 @@ class WikiDB_Page
      * Note that version zero of any page always exists.
      */
     function getRevision($version, $need_content=true) {
-        $cache = &$this->_wikidb->_cache;
+        $cache = &$GLOBALS['request']->_dbi->_cache;
         $pagename = &$this->_pagename;
         
         if (! $version ) // 0 or false
-            return new WikiDB_PageRevision($this->_wikidb, $pagename, 0);
+            return new WikiDB_PageRevision($GLOBALS['request']->_dbi, $pagename, 0);
 
         assert($version > 0);
         $vdata = $cache->get_versiondata($pagename, $version, $need_content);
         if (!$vdata)
             return false;
-        return new WikiDB_PageRevision($this->_wikidb, $pagename, $version,
+        return new WikiDB_PageRevision($GLOBALS['request']->_dbi, $pagename, $version,
                                        $vdata);
     }
 
@@ -1073,7 +1075,7 @@ class WikiDB_Page
      * the default revision) will always be found.
      */
     function getRevisionBefore($version, $need_content=true) {
-        $backend = &$this->_wikidb->_backend;
+        $backend = &$GLOBALS['request']->_dbi->_backend;
         $pagename = &$this->_pagename;
 
         $version = $this->_coerce_to_version($version);
@@ -1099,9 +1101,9 @@ class WikiDB_Page
      * WikiDB_Page in reverse order by version number.
      */
     function getAllRevisions() {
-        $backend = &$this->_wikidb->_backend;
+        $backend = &$GLOBALS['request']->_dbi->_backend;
         $revs = $backend->get_all_revisions($this->_pagename);
-        return new WikiDB_PageRevisionIterator($this->_wikidb, $revs);
+        return new WikiDB_PageRevisionIterator($GLOBALS['request']->_dbi, $revs);
     }
     
     /**
@@ -1115,9 +1117,9 @@ class WikiDB_Page
      * all matching pages.
      */
     function getLinks($reversed = true) {
-        $backend = &$this->_wikidb->_backend;
+        $backend = &$GLOBALS['request']->_dbi->_backend;
         $result =  $backend->get_links($this->_pagename, $reversed);
-        return new WikiDB_PageIterator($this->_wikidb, $result);
+        return new WikiDB_PageIterator($GLOBALS['request']->_dbi, $result);
     }
 
     /**
@@ -1155,7 +1157,7 @@ class WikiDB_Page
      * is not set.
      */
     function get($key) {
-        $cache = &$this->_wikidb->_cache;
+        $cache = &$GLOBALS['request']->_dbi->_cache;
         if (!$key || $key[0] == '%')
             return false;
         $data = $cache->get_pagedata($this->_pagename);
@@ -1168,7 +1170,7 @@ class WikiDB_Page
      * @return hash The page meta-data.
      */
     function getMetaData() {
-        $cache = &$this->_wikidb->_cache;
+        $cache = &$GLOBALS['request']->_dbi->_cache;
         $data = $cache->get_pagedata($this->_pagename);
         $meta = array();
         foreach ($data as $key => $val) {
@@ -1188,7 +1190,7 @@ class WikiDB_Page
      * @param string $newval  New value.
      */
     function set($key, $newval) {
-        $cache = &$this->_wikidb->_cache;
+        $cache = &$GLOBALS['request']->_dbi->_cache;
         $pagename = &$this->_pagename;
         
         assert($key && $key[0] != '%');
@@ -1279,7 +1281,7 @@ class WikiDB_Page
         if ($owner = $this->get('owner'))
             return ($owner == "The PhpWiki programming team") ? ADMIN_USER : $owner;
         // check all revisions forwards for the first author_id
-        $backend = &$this->_wikidb->_backend;
+        $backend = &$GLOBALS['request']->_dbi->_backend;
         $pagename = &$this->_pagename;
         $latestversion = $backend->get_latest_version($pagename);
         for ($v=1; $v <= $latestversion; $v++) {
@@ -1320,7 +1322,7 @@ class WikiDB_PageRevision
     function WikiDB_PageRevision(&$wikidb, $pagename, $version,
                                  $versiondata = false)
         {
-            $this->_wikidb = &$wikidb;
+            $GLOBALS['request']->_dbi = &$wikidb;
             $this->_pagename = $pagename;
             $this->_version = $version;
             $this->_data = $versiondata ? $versiondata : array();
@@ -1334,7 +1336,7 @@ class WikiDB_PageRevision
      * @return WikiDB_Page The WikiDB_Page which this revision belongs to.
      */
     function getPage() {
-        return new WikiDB_Page($this->_wikidb, $this->_pagename);
+        return new WikiDB_Page(/*$GLOBALS['request']->_dbi, */$this->_pagename);
     }
 
     /**
@@ -1415,7 +1417,7 @@ class WikiDB_PageRevision
      * contents.
      */
     function getTransformedContent($pagetype_override=false) {
-	$backend = &$this->_wikidb->_backend;
+	$backend = &$GLOBALS['request']->_dbi->_backend;
         
 	if ($pagetype_override) {
 	    // Figure out the normal page-type for this page.
@@ -1525,7 +1527,7 @@ class WikiDB_PageRevision
     }
 
     function _get_content() {
-        $cache = &$this->_wikidb->_cache;
+        $cache = &$GLOBALS['request']->_dbi->_cache;
         $pagename = $this->_pagename;
         $version = $this->_version;
 
@@ -1636,7 +1638,7 @@ class WikiDB_PageIterator
 {
     function WikiDB_PageIterator(&$wikidb, &$pages) {
         $this->_pages = $pages;
-        $this->_wikidb = &$wikidb;
+        $GLOBALS['request']->_dbi = &$wikidb;
     }
     
     function count () {
@@ -1663,10 +1665,10 @@ class WikiDB_PageIterator
         // there's always hits, but we cache only if more 
         // (well not with file, cvs and dba)
         if (isset($next['pagedata']) and count($next['pagedata']) > 1) {
-            $this->_wikidb->_cache->cache_data($next);
+            $GLOBALS['request']->_dbi->_cache->cache_data($next);
         }
 
-        return new WikiDB_Page($this->_wikidb, $pagename);
+        return new WikiDB_Page(/*$GLOBALS['request']->_dbi,*/ $pagename);
     }
 
     /**
@@ -1704,7 +1706,7 @@ class WikiDB_PageRevisionIterator
 {
     function WikiDB_PageRevisionIterator(&$wikidb, &$revisions) {
         $this->_revisions = $revisions;
-        $this->_wikidb = &$wikidb;
+        $GLOBALS['request']->_dbi = &$wikidb;
     }
     
     function count () {
@@ -1723,7 +1725,7 @@ class WikiDB_PageRevisionIterator
         if ( ! ($next = $this->_revisions->next()) )
             return false;
 
-        $this->_wikidb->_cache->cache_data($next);
+        $GLOBALS['request']->_dbi->_cache->cache_data($next);
 
         $pagename = $next['pagename'];
         $version = $next['version'];
@@ -1747,7 +1749,7 @@ class WikiDB_PageRevisionIterator
             }
         } else assert($version > 0);
 
-        return new WikiDB_PageRevision($this->_wikidb, $pagename, $version,
+        return new WikiDB_PageRevision($GLOBALS['request']->_dbi, $pagename, $version,
                                        $versiondata);
     }
 
@@ -1999,6 +2001,11 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.92  2004/10/05 17:00:04  rurban
+// support paging for simple lists
+// fix RatingDb sql backend.
+// remove pages from AllPages (this is ListPages then)
+//
 // Revision 1.91  2004/10/04 23:41:19  rurban
 // delete notify: fix, @unset syntax error
 //
