@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ButtonFactory.php,v 1.2 2002-01-15 23:56:44 dairiki Exp $');
+<?php rcs_id('$Id: ButtonFactory.php,v 1.3 2002-01-16 15:23:24 dairiki Exp $');
 
 /**
  * A class representing a clickable "button".
@@ -213,6 +213,10 @@ class ButtonFactory {
     
     function _labelForAction ($action) {
         switch ($action) {
+        case 'edit':
+            return _("Edit");
+        case 'diff':
+            return _("Diff");
             
         case 'logout':
             return _("SignOut");
@@ -228,9 +232,10 @@ class ButtonFactory {
             return _("Remove Page");
 
         default:
+            // I don't think the rest of these actually get used.
             // 'setprefs'
             // 'upload' 'dumpserial' 'loadfile' 'zip'
-            // 'edit' 'save' 'diff' 'browse'
+            // 'save' 'browse'
             return ucfirst($action);
         }
     }
