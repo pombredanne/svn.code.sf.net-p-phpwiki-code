@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.74 2003-02-21 22:52:21 dairiki Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.75 2003-02-22 21:39:05 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -608,7 +608,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.74 $");
+                            "\$Revision: 1.75 $");
     }
 
     function managesValidators() {
@@ -717,6 +717,10 @@ extends WikiPlugin
     function run ($dbi, $argstr, $request) {
         $args = $this->getArgs($argstr, $request);
 
+        // HACKish: fix for SF bug #622784  (1000 years of RecentChanges ought
+        // to be enough for anyone.)
+        $args['days'] = min($args['days'], 365000);
+        
         // Hack alert: format() is a NORETURN for rss formatters.
         return $this->format($this->getChanges($dbi, $args), $args);
     }
@@ -771,6 +775,10 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.74  2003/02/21 22:52:21  dairiki
+// Make sure to interpret relative links (like [/Subpage]) in summary
+// relative to correct basepage.
+//
 // Revision 1.73  2003/02/21 04:12:06  dairiki
 // Minor fixes for new cached markup.
 //
