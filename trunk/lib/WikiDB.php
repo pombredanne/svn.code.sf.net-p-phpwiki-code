@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.84 2004-09-14 10:34:30 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.85 2004-09-16 08:00:51 rurban Exp $');
 
 //require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -21,7 +21,9 @@ require_once('lib/PageType.php');
 define('WIKIDB_FORCE_CREATE', -1);
 
 // FIXME:  used for debugging only.  Comment out if cache does not work
-define('USECACHE', 1);
+// or RAM is too low.
+if (!defined('USECACHE'))
+    define('USECACHE', 1);
 
 /** 
  * Abstract base class for the database used by PhpWiki.
@@ -1916,6 +1918,9 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.84  2004/09/14 10:34:30  rurban
+// fix TransformedText call to use refs
+//
 // Revision 1.83  2004/09/08 13:38:00  rurban
 // improve loadfile stability by using markup=2 as default for undefined markup-style.
 // use more refs for huge objects.
