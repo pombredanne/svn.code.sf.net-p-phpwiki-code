@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.5 2002-01-21 01:48:50 dairiki Exp $');
+<?php rcs_id('$Id: RssWriter.php,v 1.6 2004-04-13 14:54:04 rurban Exp $');
 /*
  * Code for creating RSS 1.0.
  */
@@ -88,8 +88,8 @@ class RssWriter extends XmlElement
         $channel = &$this->_channel;
         $items = &$this->_items;
 
+        $seq = new XmlElement('rdf:Seq');
         if ($items) {
-            $seq = new XmlElement('rdf:Seq');
             foreach ($items as $item)
                 $seq->pushContent($this->__ref('rdf:li', $item));
             $channel->pushContent(new XmlElement('items', false, $seq));
