@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-     rcs_id('$Id: signin.tmpl,v 1.24 2004-01-25 04:02:26 rurban Exp $');
+     rcs_id('$Id: signin.tmpl,v 1.25 2004-02-19 22:15:43 rurban Exp $');
 
      if (empty($FORMNAME))
          $FORMNAME = 'signin';
@@ -10,7 +10,8 @@
   <form method="post" action="<?= $request->getPostURL() ?>" accept-charset="<?=CHARSET?>" name="<?=$FORMNAME?>">
   <?= HiddenInputs($request->getArgs(), false, array('auth')) ?>
 <?php } ?>
-<?php if ($user->isSignedIn()) {
+<?php // Check for status SignedIn but not Authenticated ?>
+<?php if ($user->isAuthenticated()) {
   $Sep = $Theme->getButtonSeparator();
   $SignOutB = $Theme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
 ?>
@@ -40,13 +41,13 @@
 ?>
   <script type="text/javascript"> <!--
     function SignIn(form) {
-      <?php /* (comment out:)
+      <?php if (defined('EDITING_POLICY') and EDITING_POLICY) { ?>
       if (window.focus) {
-        window.open('/EditingPolicy.html',<!-- url -->
+        window.open('<?= WikiUrl(EDITING_POLICY) ?>',<!-- url -->
                     'PleaseReadThisFirst',<!-- window name -->
                     'width=600,height=430,scrollbars=yes,resizable=yes,toolbar=yes');
       }
-      */ ?>
+      <?php } ?>
       form.submit();
     }
     //-->
