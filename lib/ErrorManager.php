@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.7 2002-01-10 04:03:12 carstenklapp Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.8 2002-01-13 18:43:19 dairiki Exp $');
 
 
 define ('EM_FATAL_ERRORS',
@@ -312,11 +312,7 @@ class PhpError {
         $errfile = ereg_replace('^' . getcwd() . '/', '', $this->errfile);
 
         $lines = explode("\n", $this->errstr);
-        //$errstr = htmlspecialchars(array_shift($lines));
-        // Quick hack: by removing htmlspecialchars urls can be used
-        // in error messages. How will this affect other error
-        // messages?
-        $errstr = array_shift($lines);
+        $errstr = htmlspecialchars(array_shift($lines));
         foreach ($lines as $key => $line)
             $lines[$key] = "<li>" . htmlspecialchars($line) . "</li>";
         if ($lines)
