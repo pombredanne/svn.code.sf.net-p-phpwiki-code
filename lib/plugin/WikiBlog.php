@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.16 2004-04-19 18:27:46 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.17 2004-05-14 17:33:12 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -83,7 +83,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     // Arguments:
@@ -322,7 +322,7 @@ extends WikiPlugin
         $prefix = $parent . SUBPAGE_SEPARATOR;
         $pfxlen = strlen($prefix);
             require_once('lib/TextSearchQuery.php');
-        $pages = $dbi->titleSearch(new TextSearchQuery ($prefix));
+        $pages = $dbi->titleSearch(new TextSearchQuery($prefix));
 
         $blogs = array();
         while ($page = $pages->next()) {
@@ -350,6 +350,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2004/04/19 18:27:46  rurban
+// Prevent from some PHP5 warnings (ref args, no :: object init)
+//   php5 runs now through, just one wrong XmlElement object init missing
+// Removed unneccesary UpgradeUser lines
+// Changed WikiLink to omit version if current (RecentChanges)
+//
 // Revision 1.15  2004/04/18 05:42:17  rurban
 // more fixes for page="0"
 // better WikiForum support
