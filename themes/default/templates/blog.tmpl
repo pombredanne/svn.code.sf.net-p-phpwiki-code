@@ -1,0 +1,40 @@
+<?php // -*-html-*- ?>
+<!-- $Id: blog.tmpl,v 1.1 2003-01-06 02:17:08 carstenklapp Exp $ -->
+<?php
+if (empty($noheader))
+    $noheader = false;
+$tableSummary = sprintf(_("Comments on %s by %s."), $pagename, $author);
+?>
+
+<?php if (!$noheader) { ?>
+  <h4><?=fmt("Comments on %s:", $pagelink)?></h4>
+<?php } ?>
+
+<div class="wikiblog" margin-bottom="330px" margin-left="1.0em" margin-right="1.0em">
+<!-- FIXME: move table formatting to css -->
+<table summary="<?= $tableSummary ?>" class="wikiblog" border="0" align="center" width="96%">
+  <tr bgcolor="#ccccff">
+    <td align="left"><strong><?=$date?></strong></td>
+    <td align="right"><strong><?=$authorlink?></strong></td>
+  </tr>
+  <tr bgcolor="#EEEEEE">
+    <td colspan="2"><strong><?=$summary?></strong><br /><?=$comment?></td>
+  </tr>
+
+<?php if ($datemodified) { ?>
+  <tr bgcolor="#eeeeff">
+    <td align="right" colspan="2">
+      <small><?= fmt("Comment modified on %s by %s", $datemodified, $authormodified) ?></small>
+    </td>
+  </tr>
+<?php } ?>
+
+  <tr>
+    <td colspan="2"><?=$browselink?> <?= $user->_userid==$author ? $editlink : "" ?> <?= $user->isadmin() ? $removelink : "" ?></td>
+  </tr>
+</table>
+</div>
+
+<?php
+// $Log: not supported by cvs2svn $
+?>
