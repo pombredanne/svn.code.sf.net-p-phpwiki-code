@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.6 2002-01-20 08:38:06 carstenklapp Exp $');
+rcs_id('$Id: MostPopular.php,v 1.7 2002-01-20 16:54:06 dairiki Exp $');
 /**
  */
 class WikiPlugin_MostPopular
@@ -14,7 +14,6 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        // FIXME: how to exclude multiple pages?
         return array('limit'	=> 20,
                      'noheader'	=> 0);
     }
@@ -23,12 +22,13 @@ extends WikiPlugin
         extract($this->getArgs($argstr, $request));
 
         $pages = $dbi->mostPopular($limit);
-
+        
         $lines[] = $this->_tr(QElement('u', _("Hits")),
                               QElement('u', _("Page Name")));
 
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
+            echo "HITS: $hits<br>\n";
             if ($hits == 0)
                 break;
             $lines[] = $this->_tr($hits,
@@ -38,9 +38,12 @@ extends WikiPlugin
 
         $html = '';
         if (!$noheader) {
-            $html .= QElement('p',
-                             sprintf(_("The %s most popular pages of this wiki:"),
-                                     $limit > 0 ? $limit : ''));
+            if ($limit > 0)
+                $msg = sprintf(_("The %s most popular pages of this wiki:"), $limit);
+            else
+                $msg = _("Visited pages on this wiki, ordered by popularity:");
+                
+            $html .= QElement('p', $msg);
         }
 
 
