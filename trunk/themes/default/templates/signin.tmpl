@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: signin.tmpl,v 1.31 2004-06-14 11:26:53 rurban Exp $');
+rcs_id('$Id: signin.tmpl,v 1.32 2004-06-15 09:34:38 rurban Exp $');
 
 if (empty($FORMNAME))
     $FORMNAME = 'signin';
@@ -37,13 +37,14 @@ if ($user->isAuthenticated()) {
 				     'onchange' => "SignIn(this.form,false);"));
     $SignInInput->addTooltip(_("Enter your UserId to sign in"));
     $userid = $user->getId();
-    if ($user->isSignedIn()) 
-      echo sprintf(_("You are signed but not authenticated as %s. "), 
+    if ($user->isSignedIn()) {
+        echo sprintf(_("You are signed but not authenticated as %s. "), 
 		   asXml(HTML::a(array(
 				       'href'=>'#',
 				       'title' => sprintf(_("Click to authenticate as %s"),$userid),
 				       'onclick'=>'SignIn(document.forms["'.$FORMNAME.'"],"'.$userid.'");'),
 				 $userid)));
+    }
 ?>
   <script type="text/javascript"> <!--
      function SignIn(form,userid) {
