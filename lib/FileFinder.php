@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.1 2001-09-19 19:16:27 dairiki Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.2 2001-09-20 18:26:14 dairiki Exp $');
 
 // FIXME: make this work with non-unix (e.g. DOS) filenames.
 
@@ -125,8 +125,20 @@ class FileFinder
         $path = $this->_get_include_path();
         if (!in_array($dir, $path)) {
             $path[] = $dir;
-            ini_set('include_path', implode(':', $path));
+            //ini_set('include_path', implode(':', $path));
         }
+        /*
+         * Some (buggy) PHP's (notable SourceForge's PHP 4.0.6)
+         * sometimes don't seem to heed their include_path.
+	 * I.e. sometimes a file is not found even though it seems
+         * to be in the current include_path.
+         * A simple ini_set('include_path', ini_get('include_path'))
+         * seems to be enough to fix the problem
+         *
+         * This following line should be in the above if-block,
+         * but we put it here, as it seems to work-around the bug. 
+         */
+        ini_set('include_path', implode(':', $path));
     }
 }
 
