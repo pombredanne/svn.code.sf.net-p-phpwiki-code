@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.12 2004-04-26 20:44:34 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.13 2004-04-29 22:29:03 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB ....
@@ -541,9 +541,8 @@ extends DB_Session
             return false;
         }
         list(,,$packed) = explode(':', $result, 3);
-        $data = unserialize($packed);
         $this->_disconnect();
-        return $data;
+        return $packed;
     }
   
     function write ($id, $sess_data) {
