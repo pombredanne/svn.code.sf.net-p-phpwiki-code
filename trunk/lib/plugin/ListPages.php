@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListPages.php,v 1.4 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id: ListPages.php,v 1.5 2004-09-06 08:37:31 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,11 +43,12 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
-        return array('pages'    => '',
+        return array('pages'    => false,
+                     'exclude'  => false,
                      'info'     => 'pagename,top3recs',
                      'dimension' => 0,
                      );
@@ -113,9 +114,17 @@ extends WikiPlugin
                                                                      'left', $pagelist));
         }
         */
-        foreach (explode(',', $pages) as $key => $pagename) {
-            $page = $pages = $dbi->getPage($pagename); 
-            $pagelist->addPage($page);
+        if (is_string($exclude) and !empty($exclude)) {
+            $exclude = explodePageList($exclude);
+            // $argstr = preg_replace("/exclude=\S*\s/", "", $argstr);
+        }
+
+        $pages_array = is_string($pages) ? explodePageList($pages) : (is_array($pages) ? $pages : array());
+        foreach ($pages_array as $pagename) {
+            if (empty($exclude) or !in_array($pagename, $exclude)) {
+                $page = $dbi->getPage($pagename); 
+                $pagelist->addPage($page);
+            }
         }
 
         return $pagelist;
@@ -123,6 +132,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/07/08 20:30:07  rurban
+// plugin->run consistency: request as reference, added basepage.
+// encountered strange bug in AllPages (and the test) which destroys ->_dbi
+//
 // Revision 1.3  2004/06/28 18:58:18  rurban
 // fixed another pass-by-reference
 //
