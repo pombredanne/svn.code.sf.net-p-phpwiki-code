@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.16 2003-02-21 04:08:26 dairiki Exp $');
+rcs_id('$Id: AllPages.php,v 1.17 2003-02-27 20:10:30 dairiki Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -68,14 +68,11 @@ extends WikiPlugin
         if ($include_empty)
             $pagelist->_addColumn('version');
 
-        if (defined('DEBUG'))
-            $debug = true;
-
         $timer = new DebugTimer;
 
         $pagelist->addPages( $dbi->getAllPages($include_empty) );
 
-        if ($debug) {
+        if (defined('DEBUG') and DEBUG) {
             return HTML($pagelist,
                         HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
         } else {
@@ -90,6 +87,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2003/02/21 04:08:26  dairiki
+// New class DebugTimer in prepend.php to help report timing.
+//
 // Revision 1.15  2003/01/18 21:19:25  carstenklapp
 // Code cleanup:
 // Reformatting; added copyleft, getVersion, getDescription
