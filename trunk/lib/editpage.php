@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.69 2004-06-02 10:17:56 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.70 2004-06-02 20:47:47 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -254,10 +254,10 @@ function speich() {
                            );
         $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
 
-        $btn = new SubmitImageButton(_("Save"), "edit[save]", 'wikiaction', $Theme->getImageURL("ed_save.gif"));
+        $btn = new SubmitImageButton(_("Save"), "edit[save]", '', $Theme->getImageURL("ed_save.gif"));
         $btn->addTooltip(_("Save"));
         $toolbar.='document.writeln("'.addslashes($btn->asXml()).'");'."\n";
-        $btn = new SubmitImageButton(_("Preview"), "edit[preview]", 'wikiaction', $Theme->getImageURL("ed_preview.gif"));
+        $btn = new SubmitImageButton(_("Preview"), "edit[preview]", '', $Theme->getImageURL("ed_preview.gif"));
         $btn->addTooltip(_("Preview"));
         $toolbar.='document.writeln("'.addslashes($btn->asXml()).'");'."\n";
 
@@ -734,6 +734,10 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.69  2004/06/02 10:17:56  rurban
+ integrated search/replace into toolbar
+ added save+preview buttons
+
  Revision 1.68  2004/06/01 15:28:00  rurban
  AdminUser only ADMIN_USER not member of Administrators
  some RateIt improvements by dfrankow
