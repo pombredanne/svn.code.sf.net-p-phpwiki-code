@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.78 2003-02-24 02:05:43 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.79 2003-02-26 01:56:05 dairiki Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -148,6 +148,9 @@ function MakeWikiZip (&$request)
         if ($current->getVersion() == 0)
             continue;
 
+        $wpn = new WikiPageName($page->getName());
+        if (!$wpn->isValid())
+            continue;
 
         $attrib = array('mtime'    => $current->get('mtime'),
                         'is_ascii' => 1);
@@ -828,6 +831,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.78  2003/02/24 02:05:43  dairiki
+ Fix "n bytes written" message when dumping HTML.
+
  Revision 1.77  2003/02/21 04:12:05  dairiki
  Minor fixes for new cached markup.
 
