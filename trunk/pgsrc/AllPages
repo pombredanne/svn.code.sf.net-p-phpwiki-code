@@ -1,10 +1,10 @@
-Date: Sun, 27 Jan 2002 17:28:55 -0500
+Date: Fri, 1 Feb 2002 21:55:05 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: AllPages,v 1.3 2002-01-27 22:52:21 carstenklapp Exp $
+X-Rcs-Id: $Id: AllPages,v 1.4 2002-02-02 02:59:40 carstenklapp Exp $
 Content-Type: application/x-phpwiki;
   pagename=AllPages;
   flags=PAGE_LOCKED;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-<?plugin AllPages noheader||=0 include_empty||=0 info||='' ?>
+<?plugin AllPages debug=1 info= hits,pagename,mtime,author,summary,version,minor,locked ?>
