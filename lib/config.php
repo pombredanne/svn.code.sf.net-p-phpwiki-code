@@ -6,7 +6,7 @@
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.15 2000-11-08 15:40:00 ahollosi Exp $');
+   rcs_id('$Id: config.php,v 1.16 2000-11-13 14:54:08 ahollosi Exp $');
    // end essential internal stuff
 
 
@@ -50,6 +50,9 @@
    } elseif ($WhichDatabase == 'mysql') {
       $WikiPageStore = "wiki";
       $ArchivePageStore = "archive";
+      $WikiLinksStore = "wikilinks";
+      $WikiScoreStore = "wikiscore";
+      $HitCountStore = "hitcount";
       $mysql_server = 'localhost';
       $mysql_user = 'root';
       $mysql_pwd = '';
