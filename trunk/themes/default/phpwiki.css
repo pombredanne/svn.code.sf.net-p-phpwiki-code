@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.29 2004-04-14 10:51:02 rurban Exp $
+ * $Id: phpwiki.css,v 1.30 2004-04-18 03:36:01 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -125,11 +125,11 @@ input.wikiaction, input.button, input.wikiadmin {
   /*font-size: inherit; */
 }
 
-a.wikiaction, input.wikiaction, input.button { background-color: #ddd; }
+a.wikiaction, a.wikiaction:visited, input.wikiaction, input.button { background-color: #ddd; }
 
 .wikiunsafe { background-color: #fcc; }
 
-a.wikiadmin, input.wikiadmin  { background-color: #fdd; }
+a.wikiadmin, a.wikiadmin:visited, input.wikiadmin  { background-color: #fdd; }
 
 /* Unknown links */
 .wikiunknown, .named-wikiunknown {
