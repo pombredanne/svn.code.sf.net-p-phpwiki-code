@@ -64,8 +64,8 @@ have a brand-new PhpWiki running!
 
 If you find something I missed, please let me know.
 Steve Wainstead
-swain@wcsb.org
+swain@panix.com
 
 Report bugs to phpwiki-talk@lists.sourceforge.net
 
-$Id: INSTALL.pgsql,v 1.7 2001-02-02 02:55:31 wainstead Exp $
+$Id: INSTALL.pgsql,v 1.8 2001-03-03 19:43:14 wainstead Exp $

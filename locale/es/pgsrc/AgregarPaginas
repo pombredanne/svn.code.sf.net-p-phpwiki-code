@@ -4,7 +4,7 @@ Entonces se debe pulsar el ? al final de su hipervínculo, y el Wiki le dará una 
 
 Si desea añadir al Wiki, documentos con formato muy complejo, es mejor que ponga una URL hacia el documento antes que añadir aqui el texto del documento, como:
 
- Página web del proyecto PhpWiki: http://wcsb.org/~swain/php/wiki/
+ Página web del proyecto PhpWiki: http://phpwiki.sourceforge.net/
 
 El Wiki no soporta HTML tags (ver ReglasDeFormatoDeTexto).  <tags>son renderizados solo como texto.</tags> el Wiki está hecho para ser lo mas simple posible y así promover su uso.
 
