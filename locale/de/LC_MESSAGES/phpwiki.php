@@ -17,7 +17,7 @@ $locale["%s: Can't open dba database"] =
 $locale["(Any password will work, except, of course for the admin user.)"] =
    "(Irgende Wörter können als Passwort angenommen werden sowieso, aber natürlich nicht für den Systemverwalter.)";
 $locale["(diff)"] =
-   "(vgl.)";
+   "(Diff)";
 $locale["- saved to database as version %d"] =
    "- gespeichert zur Datenbank als Verson %d.";
 $locale["- skipped"] =
@@ -41,7 +41,7 @@ $locale["Author will be logged as %s."] =
 $locale["BAD URL -- remove all of <, >, \""] =
    "URL Formfehler -- aller Zeichen <, >, \" wegnehmen";
 $locale["BackLinks"] =
-   "Querverbindungen";
+   "BackLinks";
 $locale["Bad %s"] =
    "Ungültige %s";
 $locale["Bad Version"] =
@@ -93,11 +93,11 @@ $locale["Deleted."] =
 $locale["Describe [%s] here."] =
    "Beschreibe [%s] hier.";
 $locale["Diff"] =
-   "Vergleichen";
+   "Diff";
 $locale["Diff: %s"] =
-   "Vergleich: %s";
+   "Diff: %s";
 $locale["Differences between %s and %s of %s."] =
-   "Der Unterschiedsergebnis von %3\$s, zwischen %1\$s und %2\$s.";
+   "Der Unterschiedsergebnis von %3\$s, zwischen %1\$s und %2\$s";
 $locale["Done execution"] =
    "Ausgeführt.";
 $locale["Dumping Pages"] =
@@ -129,7 +129,7 @@ $locale["Full text search results for '%s'"] =
 $locale["FullTextSearch"] =
    "Volltextsuche";
 $locale["Get BackLinks for %s"] =
-   "Hole Querverbindungen für %s";
+   "Hole BackLinks für %s";
 $locale["Get debugging information for %s."] =
    "Hol' mir die Debug-Informationen von %s.";
 $locale["GoodStyle"] =
@@ -201,7 +201,7 @@ $locale["Note:"] =
 $locale["Older page:"] =
    "Altere Seite:";
 $locale["Other diffs:"] =
-   "Nachträgliche vergleichen:";
+   "Andere Differenzen:";
 $locale["PHP Warnings"] =
    "PHP Warnungen";
 $locale["Page Name"] =
@@ -367,7 +367,7 @@ $locale["Your careful attention to detail is much appreciated."] =
 $locale["[%d] See [%s]"] =
    "[%d] Sehe [%s]";
 $locale["backlink entry missing for link %s"] =
-   "Es fehlt einer Querverbindung Datensatz für Link %s";
+   "Es fehlt ein BackLink Datensatz für Link %s";
 $locale["by %s"] =
    "von %s";
 $locale["compare revisions"] =
@@ -391,7 +391,7 @@ $locale["is initial release"] =
 $locale["last modified on %s"] =
    "zuletzt am %s verändert";
 $locale["link entry missing for backlink %s"] =
-   "Es fehlt einer Link Datensatz für die Querverbindung %s";
+   "Es fehlt einer Link Datensatz für das BackLink %s";
 $locale["major edits"] =
    "Hauptänderungen";
 $locale["minor edits"] =
