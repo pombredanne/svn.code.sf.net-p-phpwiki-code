@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Template.php,v 1.17 2002-01-11 19:43:15 dairiki Exp $');
+<?php rcs_id('$Id: Template.php,v 1.18 2002-01-11 22:51:33 carstenklapp Exp $');
 
 require_once("lib/ErrorManager.php");
 require_once("lib/WikiPlugin.php");
@@ -285,7 +285,7 @@ extends TemplateFile
 
         //WARNING: hackage! $pagename is not available here
         $pagename="";
-        $this->replace('SIGNIN', toolbar_User_UserSignInOut($user->is_authenticated(), $user->id(), $pagename));
+        $this->replace('SIGNIN', toolbar_User_UserSignInOut($user->is_authenticated(), $user->id(), $pagename, $user->is_admin()));
 
         $prefs = $user->getPreferences();
         $this->qreplace('EDIT_AREA_WIDTH', $prefs['edit_area.width']);
