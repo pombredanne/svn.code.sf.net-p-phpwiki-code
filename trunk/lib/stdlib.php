@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.217 2004-11-16 17:31:03 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.218 2004-11-25 08:28:48 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1359,9 +1359,9 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
 }
 
 // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
-function explodePageList($input, $perm=false, $sortby='pagename', $limit=false) {
+function explodePageList($input, $include_empty=false, $sortby='pagename', $limit=false, $exclude=false) {
     include_once("lib/PageList.php");
-    return PageList::explodePageList($input,$perm,$sortby,$limit);
+    return PageList::explodePageList($input, $include_empty, $sortby, $limit, $exclude);
 }
 
 // Class introspections
@@ -1811,6 +1811,9 @@ function printSimpleTrace($bt) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.217  2004/11/16 17:31:03  rurban
+// re-enable old block markup conversion
+//
 // Revision 1.216  2004/11/11 18:31:26  rurban
 // add simple backtrace on such general failures to get at least an idea where
 //
