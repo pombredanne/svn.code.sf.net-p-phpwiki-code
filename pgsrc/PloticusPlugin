@@ -1,16 +1,16 @@
-Date: Wed, 2 Jun 2004 21:09:39 +0200
+Date: Fri, 24 Sep 2004 21:30:51 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: PloticusPlugin,v 1.3 2004-06-03 22:27:09 rurban Exp $
+X-Rcs-Id: $Id: PloticusPlugin,v 1.4 2004-09-26 18:10:40 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=PloticusPlugin;
-  pgsrc_version="2 $Revision: 1.3 $";
+  pgsrc_version="2 $Revision: 1.4 $";
   flags="";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 The Ploticus WikiPlugin passes all its arguments to the ploticus
-binary and displays the result as PNG, GIF, EPS, SVG or SWF.
+binary and displays the result as PNG, GIF, EPS, SVG, SVGZ or SWF.
 Ploticus is a free, GPL, non-interactive software package
 for producing plots, charts, and graphics from data.
 See http://ploticus.sourceforge.net/doc/welcome.html
@@ -24,9 +24,13 @@ See http://ploticus.sourceforge.net/doc/welcome.html
 
 !! Plugin Arguments
 __device__: |
-  Default: png
+  gif, png, jpeg or svg. Soon also PS or SWG. Default: png
+__data__:  |
+  optionally add data by <!plugin-list !> pagelist plugins.
 __alt__:  |
   alt text for the image
+__-prefab__:  |
+  use the given prefab script (may need $_ENV~['PLOTICUS_PREFABS'~])
 __-csmap__:  |
   If a clickable map should be produced (not yet tested)
 __help__:  |
@@ -36,10 +40,9 @@ __help__:  |
 
 # For windows you need either a gd library with GIF support or
   a ploticus with PNG support. This comes only with the cygwin 
-  built pl221win32cygmax.zip.
-# We support only images supported by GD so far (PNG most likely).
-  No EPS, PS, SVG, SVGZ or SWG support yet due to API limitations in
-  ~WikiPluginCached. No technical problems, so you can expect it soon.
+  build so far.
+# We support only images supported by GD (PNG most likely) and now 
+  also SVG. MAP support not yet tested. No EPS, PS or SWG support yet.
 
 !! Examples
 
