@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.58 2002-02-18 21:38:40 carstenklapp Exp $
+ * $Id: phpwiki.css,v 1.59 2002-02-19 03:40:10 carstenklapp Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -47,6 +47,14 @@ body {
   margin: 1.5ex 1em;
 }
 
+div.wikitext hr { height: 1px; }
+
+div.wikitext pre { font-family: monospace; }
+
+
+/**
+ * PageTypes
+ */
 /* Main wiki text box */
 div.wikitext {
   margin-top:    1ex;
@@ -61,12 +69,8 @@ div.wikitext {
    * width: auto;
    */
   clear: both;
-  /* user's browser settings *
-  font-family: none; */
 }
-div.wikitext hr { height: 1px; }
-
-div.wikitext pre { font-family: monospace; }
+.interwiki-map thead td { text-decoration: underline; }
 
 
 /**

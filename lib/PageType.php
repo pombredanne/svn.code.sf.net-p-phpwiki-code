@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageType.php,v 1.7 2002-02-19 00:08:24 carstenklapp Exp $');
+<?php rcs_id('$Id: PageType.php,v 1.8 2002-02-19 03:42:36 carstenklapp Exp $');
 /*
 Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -147,14 +147,28 @@ class interWikiMapPageType extends PageType {
     }
 
     function _arrayToTable ($array, &$request) {
+        $thead = HTML::thead();
+        $label[0] = _("Name");
+        $label[1] = _("InterWiki Address");
+        $thead->pushContent(HTML::tr(HTML::td($label[0]),
+                                     HTML::td($label[1])));
+
+        $tbody = HTML::tbody();
         $dbi = $request->getDbh();
-        $table = HTML::table();
-        foreach ($array as $moniker => $url) {
+        foreach ($array as $moniker => $interurl) {
             if ($dbi->isWikiPage($moniker)) {
                 $moniker = WikiLink($moniker);
             }
-            $table->pushContent(HTML::tr(HTML::td($moniker), HTML::td(HTML::tt($url))));
+            $moniker = HTML::td(array('class' => 'interwiki-moniker'), $moniker);
+            $interurl = HTML::td(array('class' =>'interwiki-url'), HTML::tt($interurl));
+    
+            $tbody->pushContent(HTML::tr($moniker, $interurl));
         }
+        $table = HTML::table();
+        $table->setAttr('class', 'interwiki-map');
+        $table->pushContent($thead);
+        $table->pushContent($tbody);
+
         return $table;
     }
 

@@ -1,5 +1,5 @@
 /*
-  $Id: MacOSX.css,v 1.23 2002-02-18 21:46:19 carstenklapp Exp $
+  $Id: MacOSX.css,v 1.24 2002-02-19 03:40:10 carstenklapp Exp $
 
   Classes:
 
@@ -49,6 +49,10 @@ input.numeric {
 
 .wikitext pre { font-family: Monaco, monospace; }
 
+
+/**
+ * Wiki
+ */
 div.wikitext, textarea.wikiedit, input.wikitext, textarea.summary {
   background: white;
   border-top:    solid 1px #7c7c7c;
@@ -70,24 +74,19 @@ input.wikitext { margin:0px; }
 
 div.toolbar { margin: 1ex 0ex; }
 
-/*
- * This is a kluge for NS4 which doesn't honor the clear: settings on
- * .tool-left and .tool-right.
- *
- * Putting in explicit <br clear="all"> messes up the formatting in
- * other browsers.  Instead we'll put in a:
- *
- *  <div class="br"><br class="ignore" clear="all"></div>
- *
- * The clear:both on div.br seems to work.  And we'll disable the <br> altogether (in
- * CSS aware browsers) by setting display:none.
- *
- * Actually, I haven't yet found a browser which doesn't put a line break
- * between successive <div>'s.  This makes the <br class="ignore"> completely
- * unnecessary. 
+
+/**
+ * PageTypes
  */
-div.br { clear:both; line-height: 0px; }
-.ignore { display: none; }
+.interwiki-map thead td {
+  background: #e8e8e8;
+  font-weight: bold;
+  font-size: smaller;
+}
+.interwiki-map thead td:first-child { text-decoration: underline; }
+.interwiki-moniker { background: #eee; }
+.interwiki-url { background: #f8f8f8; }
+
  
 div.errors {
  background: #eee;
