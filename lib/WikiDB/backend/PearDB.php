@@ -1,13 +1,23 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.2 2001-09-19 02:58:24 dairiki Exp $');
+rcs_id('$Id: PearDB.php,v 1.3 2001-09-19 19:20:30 dairiki Exp $');
 
-require_once('DB.php');
+//require_once('DB.php');
 require_once('lib/WikiDB/backend.php');
+require_once('lib/FileFinder.php');
+require_once('lib/ErrorManager.php');
 
 class WikiDB_backend_PearDB
 extends WikiDB_backend
 {
     function WikiDB_backend_PearDB ($dbparams) {
+        // Find and include PEAR's DB.php.
+        $pearFinder = new PearFileFinder;
+        $pearFinder->includeOnce('DB.php');
+
+        // Install filter to handle bogus error notices from buggy DB.php's.
+        global $ErrorManager;
+        $ErrorManager->pushErrorHandler(array($this, '_pear_notice_filter'));
+        
         // Open connection to database
         $dsn = $dbparams['dsn'];
         $this->_dbh = DB::connect($dsn, true); //FIXME: true -> persistent connection
@@ -633,10 +643,31 @@ extends WikiDB_backend
      * @param A PEAR_error object.
      */
     function _pear_error_callback($error) {
+        if ($this->_is_false_error($error))
+            return;
+        
         $this->_dbh->setErrorHandling(PEAR_ERROR_PRINT);	// prevent recursive loops.
         $this->close();
-        //trigger_error($this->_pear_error_message($error), E_USER_WARNING);
-        ExitWiki($this->_pear_error_message($error));
+        trigger_error($this->_pear_error_message($error), E_USER_ERROR);
+    }
+
+    /**
+     * Detect false errors messages from PEAR DB.
+     *
+     * The version of PEAR DB which ships with PHP 4.0.6 has a bug in that
+     * it doesn't recognize "LOCK" and "UNLOCK" as SQL commands which don't
+     * return any data.  (So when a "LOCK" command doesn't return any data,
+     * DB reports it as an error, when in fact, it's not.)
+     *
+     * @access private
+     * @return bool True iff error is not really an error.
+     */
+    function _is_false_error($error) {
+        $code = $error->getCode();
+        $query = $this->_dbh->last_query;
+        return ($code == DB_ERROR
+                && ! DB::isManip($query)
+                && preg_match('/^\s*"?(LOCK|UNLOCK)\s/', $query));
     }
 
     function _pear_error_message($error) {
@@ -646,6 +677,22 @@ extends WikiDB_backend
              . "\t(" . $error->getDebugInfo() . ")\n";
 
         return $message;
+    }
+
+    /**
+     * Filter PHP errors notices from PEAR DB code.
+     *
+     * The PEAR DB code which ships with PHP 4.0.6 produces spurious
+     * errors and notices.  This is an error callback (for use with
+     * ErrorManager which will filter out those spurious messages.)
+     * @see _is_false_error, ErrorManager
+     * @access private
+     */
+    function _pear_notice_filter($err) {
+        return ( $err->isNotice()
+                 && $err->errfile == 'DB/common.php' 
+                 && $err->errline == 126
+                 && preg_match('/Undefined offset: +0\b/', $err->errstr) );
     }
 };
 
