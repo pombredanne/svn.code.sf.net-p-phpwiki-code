@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.2 2002-01-17 22:52:03 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.3 2002-01-18 00:28:43 dairiki Exp $');
 
 class Theme {
     function Theme ($theme_name) {
@@ -33,6 +33,13 @@ class Theme {
             return DATA_PATH . "/$path";
         return $path;
     }
+
+    function requireFile ($file) {
+        $path = $this->_findFile($file);
+        if (!$path)
+            return false;
+        return require_once($path);
+    }
     
     ////////////////////////////////////////////////////////////////
     //
@@ -41,7 +48,7 @@ class Theme {
     ////////////////////////////////////////////////////////////////
     
     var $_dateTimeFormat = "%B %e, %Y";
-    var $_dateFormat = "%B, %Y";
+    var $_dateFormat = "%B %e, %Y";
 
     function setDateFormat ($fs) {
         $this->_dateFormat = $fs;
@@ -67,6 +74,19 @@ class Theme {
     }
 
 
+    ////////////////////////////////////////////////////////////////
+    //
+    // Hooks for other formatting
+    //
+    ////////////////////////////////////////////////////////////////
+
+    function getFormatter ($type, $format) {
+        $method = strtolower("get${type}Formatter");
+        if (method_exists($this, $method))
+            return call_user_method($method, $this, $format);
+        return false;
+    }
+    
     ////////////////////////////////////////////////////////////////
     //
     // Images and Icons
