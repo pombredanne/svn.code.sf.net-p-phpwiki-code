@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.13 2001-02-14 05:22:49 dairiki Exp $');
+rcs_id('$Id: editpage.php,v 1.14 2001-02-15 21:33:40 dairiki Exp $');
 
    // editpage relies on $pagename, $version
 
@@ -37,8 +37,14 @@ rcs_id('$Id: editpage.php,v 1.13 2001-02-14 05:22:49 dairiki Exp $');
 	 }
       }
    } else {
-      $textarea = sprintf(gettext ("Describe %s here."),
-				htmlspecialchars($pagename));
+      if (preg_match("/^${WikiNameRegexp}\$/", $pagename))
+	 $newpage = $pagename;
+      else
+	 $newpage = "[$pagename]";
+
+      $textarea = htmlspecialchars(
+	 sprintf(gettext ("Describe %s here."), $newpage));
+
       unset($pagehash);
       $pagehash["version"] = 0;
       $pagehash["lastmodified"] = time();
