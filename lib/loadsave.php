@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.127 2004-11-01 10:43:57 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.128 2004-11-16 16:16:44 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
@@ -796,14 +796,14 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
                           'wikiunsafe');
             $mesg->pushContent(' ', $meb, " ", $owb);
             if (!$overwite_all) {
-              $owb = Button(array('action' => 'loadfile',
-                                'overwrite'=> true,
-                                'source'=> $request->getArg('source')),
-                          _("Overwrite All"),
-                          _("PhpWikiAdministration"),
-                          'wikiunsafe');
-              $mesg->pushContent(HTML::div(array('class' => 'hint'), $owb));
-              $overwite_all = true;
+                $args = $request->getArgs();
+                $args['overwrite'] = 1;
+                $owb = Button($args,
+                              _("Overwrite All"),
+                              _("PhpWikiAdministration"),
+                              'wikiunsafe');
+                $mesg->pushContent(HTML::div(array('class' => 'hint'), $owb));
+                $overwite_all = true;
             }
         } else {
             $mesg->pushContent(HTML::em(_(" Sorry, cannot merge.")));
@@ -1245,6 +1245,12 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.127  2004/11/01 10:43:57  rurban
+ seperate PassUser methods into seperate dir (memory usage)
+ fix WikiUser (old) overlarge data session
+ remove wikidb arg from various page class methods, use global ->_dbi instead
+ ...
+
  Revision 1.126  2004/10/16 15:13:39  rurban
  new [Overwrite All] button
 
