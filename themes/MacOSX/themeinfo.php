@@ -1,6 +1,6 @@
 <?php
 
-rcs_id('$Id: themeinfo.php,v 1.11 2002-01-08 22:54:29 carstenklapp Exp $');
+rcs_id('$Id: themeinfo.php,v 1.12 2002-01-10 06:40:31 carstenklapp Exp $');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.
@@ -96,16 +96,15 @@ $templates = array(
 
 // If this theme defines any custom link icons, they will completely
 // override any link icon settings defined in index.php.
-/*
+
 $URL_LINK_ICONS = array(
-                        'http'      => "themes/$theme/icons/http.png",
-                        'https'     => "themes/$theme/icons/https.png",
-                        'ftp'       => "themes/$theme/icons/ftp.png",
-                        'mailto'    => "themes/$theme/icons/mailto.png",
-                        'interwiki' => "themes/$theme/icons/interwiki.png",
-                        '*'         => "themes/$theme/icons/zapg.png"
+                        'http'      => "images/http.png",
+                        'https'     => "images/https.png",
+                        'ftp'       => "images/ftp.png",
+                        'mailto'    => "images/mailto.png",
+                        'interwiki' => "images/interwiki.png",
+                        '*'         => "images/zapg.png"
                         );
-*/
 
 $ToolbarImages = array(
 'RecentChanges' => array(
