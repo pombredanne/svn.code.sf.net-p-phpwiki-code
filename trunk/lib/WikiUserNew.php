@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.62 2004-04-29 18:31:24 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.63 2004-05-01 15:59:29 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1285,16 +1285,16 @@ extends _PassUser
     }
 
     function _http_username() {
+        if (!isset($_SERVER))
+            $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
 	if (!empty($_SERVER['PHP_AUTH_USER']))
 	    return $_SERVER['PHP_AUTH_USER'];
-	if (!empty($GLOBALS['HTTP_SERVER_VARS']['PHP_AUTH_USER']))
-	    return $GLOBALS['HTTP_SERVER_VARS']['PHP_AUTH_USER'];
-	if (!empty($GLOBALS['REMOTE_USER']))
-	    return $GLOBALS['REMOTE_USER'];
-	if (!empty($GLOBALS['HTTP_SERVER_VARS']['REMOTE_USER']))
-	    return $GLOBALS['HTTP_SERVER_VARS']['REMOTE_USER'];
+	if (!empty($_SERVER['REMOTE_USER']))
+	    return $_SERVER['REMOTE_USER'];
         if (!empty($GLOBALS['HTTP_ENV_VARS']['REMOTE_USER']))
 	    return $GLOBALS['HTTP_ENV_VARS']['REMOTE_USER'];
+	if (!empty($GLOBALS['REMOTE_USER']))
+	    return $GLOBALS['REMOTE_USER'];
 	return '';
     }
     
@@ -2439,6 +2439,8 @@ extends _UserPreference
     fixed version from http://www.zend.com/zend/spotlight/ev12apr.php
  */
 function ValidateMail($email, $noconnect=false) {
+    if (!isset($_SERVER))
+        $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
     $HTTP_HOST = $_SERVER['HTTP_HOST'];
     $result = array();
     // well, technically ".a.a.@host.com" is also valid
@@ -2803,6 +2805,9 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2004/04/29 18:31:24  rurban
+// Prevent from warning where no db pref was previously stored.
+//
 // Revision 1.61  2004/04/29 17:18:19  zorloc
 // Fixes permission failure issues.  With PagePermissions and Disabled Actions when user did not have permission WIKIAUTH_FORBIDDEN was returned.  In WikiUser this was ok because WIKIAUTH_FORBIDDEN had a value of 11 -- thus no user could perform that action.  But WikiUserNew has a WIKIAUTH_FORBIDDEN value of -1 -- thus a user without sufficent permission to do anything.  The solution is a new high value permission level (WIKIAUTH_UNOBTAINABLE) to be the default level for access failure.
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.45 2004-01-25 03:57:15 rurban Exp $');
+rcs_id('$Id: diff.php,v 1.46 2004-05-01 15:59:29 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -271,7 +271,7 @@ function showDiff (&$request) {
         $version = $request->getArg('version');
         $previous = $request->getArg('previous');
     }
-
+ 
     // abort if page doesn't exist
     $dbi = $request->getDbh();
     $page = $request->getPage();
@@ -385,6 +385,9 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2004/01/25 03:57:15  rurban
+// WikiUserNew support (temp. ENABLE_USER_NEW constant)
+//
 // Revision 1.44  2003/02/17 02:17:31  dairiki
 // Fix so that action=diff will work when the most recent version
 // of a page has been "deleted".

@@ -49,6 +49,8 @@ if (!defined('PHPWEATHER_BASE_DIR')) {
     /* PhpWeather has not been loaded before. We include the base
      * class from PhpWeather, adjust this to match the location of
      * PhpWeather on your server: */
+    if (!isset($_SERVER))
+        $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
     @include_once($_SERVER['DOCUMENT_ROOT'] . '/phpweather-2.1.0/phpweather.php');
 }
 
@@ -65,7 +67,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -195,6 +197,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.9  2003/01/28 21:10:38  zorloc
 // Better error messages from PhpWeather Plugin -- Martin Geisler
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiPoll.php,v 1.6 2004-03-01 18:08:53 rurban Exp $');
+rcs_id('$Id: WikiPoll.php,v 1.7 2004-05-01 15:59:29 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -65,7 +65,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
@@ -139,6 +139,8 @@ extends WikiPlugin
     }
     
     function run($dbi, $argstr, &$request, $basepage) {
+        if (!isset($_SERVER))
+            $_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
     	$request->setArg('nocache','purge');
         $args = $this->getArgs($argstr, $request);
         if (!$args['page'])
@@ -328,6 +330,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/03/01 18:08:53  rurban
+// oops, checked in the debug version. revert to IP check on
+//
 // Revision 1.5  2004/03/01 16:11:13  rurban
 // graphical enhancement
 //

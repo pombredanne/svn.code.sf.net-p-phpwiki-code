@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.14 2004-04-29 23:25:12 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.15 2004-05-01 15:59:29 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -268,7 +268,7 @@ function fix_configs() {
 
     // "\x80"-"\x9f" (and "\x00" - "\x1f") are non-printing control
     // chars in iso-8859-*
-    // $FieldSeparator = "\263"; //this is a superscript 3 in ISO-8859-1.
+    // $FieldSeparator = "\263"; // this is a superscript 3 in ISO-8859-1.
     // $FieldSeparator = "\xFF"; // this byte should never appear in utf-8
     // FIXME: get rid of constant. pref is dynamic and language specific
     $charset = CHARSET;
@@ -281,7 +281,6 @@ function fix_configs() {
 
     if (!defined('DEFAULT_LANGUAGE'))
         define('DEFAULT_LANGUAGE', 'en');
-
     update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
 
     // Set up (possibly fake) gettext()
@@ -491,6 +490,11 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2004/04/29 23:25:12  rurban
+// re-ordered locale init (as in 1.3.9)
+// fixed loadfile with subpages, and merge/restore anyway
+//   (sf.net bug #844188)
+//
 // Revision 1.13  2004/04/29 21:54:05  rurban
 // typo
 //
