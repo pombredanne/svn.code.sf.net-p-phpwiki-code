@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRemove.php,v 1.17 2004-03-17 20:23:44 rurban Exp $');
+rcs_id('$Id: WikiAdminRemove.php,v 1.18 2004-04-07 23:13:19 rurban Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -168,8 +168,10 @@ extends WikiPlugin
             // List all pages to select from.
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit']);
         }
-
-        $pagelist = new PageList_Selectable($args['info'], $exclude);
+        $pagelist = new PageList_Selectable($args['info'], $exclude, 
+                                            array('types' => 
+                                                  array('remove'
+                                                        => new _PageList_Column_remove('remove', _("Remove"))));
         $pagelist->addPageList($pages);
 
         $header = HTML::p();
@@ -219,7 +221,18 @@ extends WikiPlugin
     }
 }
 
+class _PageList_Column_remove extends _PageList_Column {
+    function _getValue ($page_handle, &$revision_handle) {
+        return Button(array('action' => 'remove'), _("Remove"),
+                      $page_handle->getName());
+    }
+};
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2004/03/17 20:23:44  rurban
+// fixed p[] pagehash passing from WikiAdminSelect, fixed problem removing pages with [] in the pagename
+//
 // Revision 1.16  2004/03/12 13:31:43  rurban
 // enforce PagePermissions, errormsg if not Admin
 //

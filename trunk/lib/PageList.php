@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.73 2004-04-06 20:00:10 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.74 2004-04-07 23:13:18 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -268,20 +268,10 @@ class _PageList_Column_version extends _PageList_Column {
     }
 };
 
-// If needed this could eventually become a subclass
-// of a new _PageList_Column_action class for other actions.
-// only for WikiAdminRemove or WikiAdminSelect
-class _PageList_Column_remove extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
-        return Button(array('action' => 'remove'), _("Remove"),
-                      $page_handle->getName());
-    }
-};
-
-
 // Output is hardcoded to limit of first 50 bytes. Otherwise
 // on very large Wikis this will fail if used with AllPages
 // (PHP memory limit exceeded)
+// FIXME: old PHP without superglobals
 class _PageList_Column_content extends _PageList_Column {
     function _PageList_Column_content ($field, $default_heading, $align = false) {
         _PageList_Column::_PageList_Column($field, $default_heading, $align);
@@ -291,9 +281,9 @@ class _PageList_Column_content extends _PageList_Column {
                                        $this->bytes);
         } elseif ($field == 'hi_content') {
             if (!empty($_POST['admin_replace'])) {
-              $search = $_POST['admin_replace']['from'];
-              $this->_heading .= sprintf(_(" ... around %s"),
-                                       '»'.$search.'«');
+                $search = $_POST['admin_replace']['from'];
+                $this->_heading .= sprintf(_(" ... around %s"),
+                                           '»'.$search.'«');
             }
         }
     }
@@ -351,35 +341,6 @@ class _PageList_Column_author extends _PageList_Column {
     }
 };
 
-class _PageList_Column_perm extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
-        $perm_array = pagePermissions($page_handle->_pagename);
-        return pagePermissionsSimpleFormat($perm_array,
-                                           $page_handle->get('author'),$page_handle->get('group'));
-        if (0) {
-            ob_start();
-            var_dump($perm_array);
-            $xml = ob_get_contents();
-            ob_end_clean();
-            return $xml;
-        }
-    }
-};
-
-class _PageList_Column_acl extends _PageList_Column {
-    function _getValue ($page_handle, &$revision_handle) {
-        $perm_tree = pagePermissions($page_handle->_pagename);
-        return pagePermissionsAclFormat($perm_tree);
-        if (0) {
-            ob_start();
-            var_dump($perm_array);
-            $xml = ob_get_contents();
-            ob_end_clean();
-            return $xml;
-        }
-    }
-};
-
 // DONE: only if RateIt is used
 // class _PageList_Column_rating extends _PageList_Column
 // moved to theme/wikilens/themeinfo.php
@@ -417,7 +378,7 @@ class PageList {
 
     function PageList ($columns = false, $exclude = false, $options = false) {
         // let plugins predefine only certain objects, such its own custom pagelist columns
-        if (!empty($options) and !empty($options['types'])) {
+        if (!empty($options['types'])) {
             $this->_types = $options['types'];
             unset($options['types']);
         }
@@ -484,12 +445,13 @@ class PageList {
                      // These options may also be given to _generate(List|Table) later
                      // But limit and offset might help the query WikiDB::getAllPages()
                      //cols    => 1,       // side-by-side display of list (1-3)
-                     //limit   => 50,      // length of one column
+                     //limit   => 50,      // number of rows
                      //offset  => 0,       // needed internally for the pager
-                     //paging  => 'auto',  // '':     normal paging mode
-                     //			   // 'auto': drop 'info' columns and enhance rows 
+                     //paging  => 'auto',  // 'auto'  normal paging mode
+                     //			   // 'smart' drop 'info' columns and enhance rows 
                      //                    //         when the list becomes large
-                     //                    // 'none': don't page at all
+                     //                    // 'none'  don't page at all
+                     //azhead  => 0        // provide shortcut links to pages starting with different letters
                      );
     }
 

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.48 2004-04-06 20:00:10 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.49 2004-04-07 23:13:18 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  */
 /**
@@ -274,7 +274,7 @@ function UpgradeUser ($olduser, $user) {
         }
         */
         $olduser->hasHomePage(); // revive db handle, because these don't survive sessions
-        $GLOBALS['request']->_user = $olduser;
+        //$GLOBALS['request']->_user = $olduser;
         return $olduser;
     } else {
         return false;
@@ -521,10 +521,20 @@ class _WikiUser
             return _("Insufficient permissions.");
 
         // Successful login.
-        $user = $GLOBALS['request']->_user;
-        $user->_userid = $userid;
-        $user->_level = $authlevel;
-        return $user;
+        //$user = $GLOBALS['request']->_user;
+        if (!empty($this->_current_method) and 
+            strtolower(get_class($this)) == '_passuser') 
+        {
+            // upgrade class
+            $class = "_" . $this->_current_method . "PassUser";
+            $user = new $class($userid,$this->_prefs);
+            /*PHP5 patch*/$this = $user;
+            $this->_level = $authlevel;
+            return UpgradeUser($user,$this);
+        }
+        $this->_userid = $userid;
+        $this->_level = $authlevel;
+        return $this;
     }
 
 }
@@ -1970,18 +1980,30 @@ extends _PassUser
 
     // This can only be called from _PassUser, because the parent class 
     // sets the pref methods, before this class is initialized.
-    function _FilePassUser($UserName='',$file='') {
-        if (!$this->_prefs)
-            _PassUser::_PassUser($UserName);
+    function _FilePassUser($UserName='',$prefs=false,$file='') {
+        if (!$this->_prefs and isa($this,"_FilePassUser")) {
+            if ($prefs) $this->_prefs = $prefs;
+            if (!isset($this->_prefs->_method))
+              _PassUser::_PassUser($UserName);
+        }
 
+        $this->_userid = $UserName;
         // read the .htaccess style file. We use our own copy of the standard pear class.
         include_once 'lib/pear/File_Passwd.php';
-        // if passwords may be changed we have to lock them:
         $this->_may_change = defined('AUTH_USER_FILE_STORABLE') && AUTH_USER_FILE_STORABLE;
         if (empty($file) and defined('AUTH_USER_FILE'))
-            $this->_file = new File_Passwd(AUTH_USER_FILE, !empty($this->_may_change));
-        elseif (!empty($file))
-            $this->_file = new File_Passwd($file, !empty($this->_may_change));
+            $file = AUTH_USER_FILE;
+        // if passwords may be changed we have to lock them:
+        if ($this->_may_change) {
+            $lock = true;
+            $lockfile = $file . ".lock";
+        } else {
+            $lock = false;
+            $lockfile = false;
+        }
+        // "__PHP_Incomplete_Class"
+        if (!empty($file) or empty($this->_file) or !isa($this->_file,"File_Passwd"))
+            $this->_file = new File_Passwd($file, $lock, $lockfile);
         else
             return false;
         return $this;
@@ -2000,6 +2022,7 @@ extends _PassUser
     }
 
     function checkPass($submitted_password) {
+        include_once 'lib/pear/File_Passwd.php';
         if ($this->_file->verifyPassword($this->_userid,$submitted_password)) {
             $this->_authmethod = 'File';
             $this->_level = WIKIAUTH_USER;
@@ -2010,10 +2033,14 @@ extends _PassUser
     }
 
     function storePass($submitted_password) {
-        if ($this->_may_change)
-            return $this->_file->modUser($this->_userid,$submitted_password);
-        else 
-            return false;
+        if ($this->_may_change) {
+            if ($this->_file->modUser($this->_userid,$submitted_password)) {
+                $this->_file->close();
+                $this->_file = new File_Passwd($this->_file->_filename, true, $this->_file->lockfile);
+                return true;
+            }
+        }
+        return false;
     }
 
 }
@@ -2244,6 +2271,7 @@ extends _UserPreference
         // expand to existing pages only or store matches?
         // for now we store (glob-style) matches which is easier for the user
         $pages = $this->_page_split($value);
+        // Limitation: only current user.
         $user = $GLOBALS['request']->getUser();
         $userid = $user->UserName();
         $email  = $user->_prefs->get('email');
@@ -2687,6 +2715,15 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2004/04/06 20:00:10  rurban
+// Cleanup of special PageList column types
+// Added support of plugin and theme specific Pagelist Types
+// Added support for theme specific UserPreferences
+// Added session support for ip-based throttling
+//   sql table schema change: ALTER TABLE session ADD sess_ip CHAR(15);
+// Enhanced postgres schema
+// Added DB_Session_dba support
+//
 // Revision 1.47  2004/04/02 15:06:55  rurban
 // fixed a nasty ADODB_mysql session update bug
 // improved UserPreferences layout (tabled hints)

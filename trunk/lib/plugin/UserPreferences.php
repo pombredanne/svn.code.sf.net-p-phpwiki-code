@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.24 2004-04-06 20:00:11 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.25 2004-04-07 23:13:19 rurban Exp $');
 /**
  Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -23,10 +23,12 @@ rcs_id('$Id: UserPreferences.php,v 1.24 2004-04-06 20:00:11 rurban Exp $');
 /**
  * Plugin to allow any user to adjust his own preferences.
  * This must be used in the page "UserPreferences".
- * Prefs are stored in metadata within the user's home page or in a cookie.
+ * Prefs are stored in metadata in the current session, 
+ *  within the user's home page or in a database.
  *
  * TODO:
- * Certain themes should be able to extend the predefined list of preferences.
+ * Certain themes should be able to extend the predefined list 
+ * of preferences.
  */
 class WikiPlugin_UserPreferences
 extends WikiPlugin
@@ -39,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
@@ -101,7 +103,7 @@ extends WikiPlugin
                                 if (method_exists($user, 'storePass')) {
                                     $passchanged = $user->storePass($rp['passwd']);
                                 }
-                                if (method_exists($user, 'changePass')) {
+                                if (!$passchanged and method_exists($user, 'changePass')) {
                                     $passchanged = $user->changePass($rp['passwd']);
                                 }
                                 if ($passchanged) {
@@ -170,6 +172,15 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/04/06 20:00:11  rurban
+// Cleanup of special PageList column types
+// Added support of plugin and theme specific Pagelist Types
+// Added support for theme specific UserPreferences
+// Added session support for ip-based throttling
+//   sql table schema change: ALTER TABLE session ADD sess_ip CHAR(15);
+// Enhanced postgres schema
+// Added DB_Session_dba support
+//
 // Revision 1.23  2004/04/02 15:06:56  rurban
 // fixed a nasty ADODB_mysql session update bug
 // improved UserPreferences layout (tabled hints)

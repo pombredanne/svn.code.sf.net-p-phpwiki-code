@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.25 2004-03-29 10:40:36 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.26 2004-04-07 23:13:18 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,8 @@ define('GROUP_CREATOR',	   	_("Creator"));
 
 /**
  * WikiGroup is an abstract class to provide the base functions for determining
- * group membership.
+ * group membership. 
+ * Limitation: For the current user only.
  * 
  * WikiGroup is an abstract class with three functions:
  * <ol><li />Provide the static method getGroup with will return the proper
@@ -999,6 +1000,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/03/29 10:40:36  rurban
+// GroupDb_PearDB fetchmode fix
+//
 // Revision 1.24  2004/03/14 16:26:22  rurban
 // copyright line
 //
