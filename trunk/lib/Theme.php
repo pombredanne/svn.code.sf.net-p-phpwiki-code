@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.28 2002-02-01 05:58:45 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.29 2002-02-03 01:33:02 carstenklapp Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -194,8 +194,12 @@ class Theme {
     
     function formatTime ($time_t) {
         //FIXME: make 24-hour mode configurable?
+        $offset_time = $time_t + PrefTimezoneOffset();
         return preg_replace('/^0/', ' ',
-                            strtolower(strftime("%I:%M %p", $time_t)));
+                            strtolower(strftime("%I:%M %p", $offset_time)))
+            . "*";
+        // The asterisk is temporary, for debugging it indicates a
+        // time has been converted to the user's local time.
     }
 
 
