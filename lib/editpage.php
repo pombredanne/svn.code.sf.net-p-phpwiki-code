@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.8 2001-01-01 23:13:32 ahollosi Exp $ -->
+<!-- $Id: editpage.php,v 1.9 2001-02-07 22:14:35 dairiki Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -42,9 +42,11 @@
 	 $currentpage = RetrievePage($dbi, $pagename, $WikiPageStore);
          $pagehash["version"] = $currentpage["version"];
       }
-      elseif ($pagehash["version"] > 1) {
-	 if(IsInArchive($dbi, $pagename))
-           $pagehash["copy"] = 1;
+      else {
+	 if ($pagehash["version"] > 1 && IsInArchive($dbi, $pagename)) {
+	    $pagehash["copy"] = 1;
+	 }
+	 $currentpage = $pagehash;
       }
    } else {
       $textarea = sprintf(gettext ("Describe %s here."),
@@ -53,6 +55,14 @@
       $pagehash["version"] = 0;
       $pagehash["lastmodified"] = time();
       $pagehash["author"] = '';
+      $currentpage = $pagehash;
+   }
+
+   if ($currentpage['author'] == $remoteuser) {
+      $page_age = time() - $currentpage['lastmodified'];
+      if ($page_age < MINOR_EDIT_TIMEOUT) {
+	 $pagehash['minor_edit'] = 1;
+      }
    }
 
    GeneratePage('EDITPAGE', $textarea, $pagename, $pagehash);   
