@@ -1,7 +1,11 @@
 REQUIREMENTS
 
-PhpWiki requires a web server with PHP version 4.0.? or greater and a
+PhpWiki requires a web server with PHP version 4.0.5? or greater and a
 database application.
+
+(PhpWiki uses the array_search() function which is present only in PHP
+version 4.0.5 or greater.)
+
 
 QUICK START INSTRUCTIONS
 
@@ -101,17 +105,17 @@ Note: This is insecure. The proper way is to let the directory be
 
 2. ALLOWING EMBEDDED HTML
 
-(This is not working in the 1.3 branch as of this writing.)
-
 PhpWiki ships with this feature disabled by default. According to
 CERT, malicious users can embed HTML in your pages that allow pure
 evil to happen:
 
     <http://www.cert.org/advisories/CA-2000-02.html>
 
-You can uncomment the "elseif" in 'lib/transform.php' to allow
-embedded HTML; but you should NEVER do this if your Wiki is publically
-accessible.
+Set the ENABLE_RAW_HTML to true in 'lib/plugin/RawHtml.php' to allow
+embedded HTML, but you should NEVER do this if your Wiki is publicly
+accessible!
+
+define('ENABLE_RAW_HTML', true);
 
 
 3. ETC
@@ -141,4 +145,4 @@ You can join this list at:
 
 FIN
 
-$Id: INSTALL,v 1.15 2002-01-17 08:10:45 carstenklapp Exp $
+$Id: INSTALL,v 1.16 2002-02-23 23:31:19 carstenklapp Exp $
