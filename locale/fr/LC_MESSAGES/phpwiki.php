@@ -384,8 +384,6 @@ $locale["Show changes for:"] =
    "Indiquer les modifications depuis ";
 $locale["Show minor edits for:"] =
    "Indiquer les modifications mineures depuis ";
-$locale["Show relative dates using 'Today' and 'Yesterday'."] =
-   "Montre les dates relatives en utilisant 'Aujourd'hui' et 'Hier'.";
 $locale["Sidebar"] =
    "Sidebar";
 $locale["Sign In"] =
