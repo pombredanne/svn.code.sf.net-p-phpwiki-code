@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.100 2004-04-26 12:15:01 rurban Exp $');
+rcs_id('$Id: config.php,v 1.101 2004-04-26 13:22:32 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -66,6 +66,7 @@ function isBrowserIE55() {
     return (isBrowserIE() and 
             browserVersion() > 5.1 and browserVersion() < 6.0);
 }
+// old Netscape prior to Mozilla
 function isBrowserNetscape() {
     return (browserDetect('Mozilla/') and 
             ! browserDetect('Gecko/') and
@@ -282,6 +283,9 @@ function IsProbablyRedirectToIndex () {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2004/04/26 12:15:01  rurban
+// check default config values
+//
 // Revision 1.99  2004/04/21 14:04:24  zorloc
 // 'Require lib/FileFinder.php' necessary to allow for call to FindLocalizedFile().
 //
