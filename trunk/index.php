@@ -23,7 +23,7 @@
 
 define ('PHPWIKI_VERSION', '1.3.0-jeffs-hacks');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.23 2001-09-19 03:44:53 wainstead Exp $');
+rcs_id('$Id: index.php,v 1.24 2001-09-19 19:12:16 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -65,6 +65,18 @@ define('ACCESS_LOG', '/tmp/wiki_access_log');
 // (with any/no password) using any userid which: 1) is not
 // the ADMIN_USER, 2) is a valid WikiWord (matches $WikiNameRegexp.)
 define('ALLOW_BOGO_LOGIN', true);
+
+// The login code now uses PHP's session support.  Usually, the default
+// configuration of PHP is to store the session state information in
+// /tmp.  That probably will work fine, but fails e.g. on clustered
+// servers where each server has their own distinct /tmp (this
+// is the case on SourceForge's project web server.)  You can specify
+// an alternate directory in which to store state information like so
+// (whatever user your httpd runs as must have read/write permission
+// in this directory):
+
+// ini_set('session.save_path', 'some_other_directory');
+
 
 /////////////////////////////////////////////////////////////////////
 //
