@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.178 2004-09-25 16:27:36 rurban Exp $');
+rcs_id('$Id: main.php,v 1.179 2004-09-25 18:57:42 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -374,9 +374,10 @@ $this->version = phpwiki_version();
             	$status = $user->isAuthenticated() ? _("authenticated") : _("not authenticated");
             	$msg = fmt("%s %s %s is disallowed on this wiki for %s user '%s' (level: %s).",
                            _("Missing PagePermission:"),
-                           $this->getArg('action'),
+                           action2access($this->getArg('action')),
                            $this->getArg('pagename'),
                            $status, $user->getId(), $this->getLevelDescription($user->_level));
+                // TODO: add link to action=setacl
                 $user->PrintLoginForm($this, compact('pass_required'), $msg);
                 $this->finish();
 		return;
@@ -1107,6 +1108,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.178  2004/09/25 16:27:36  rurban
+// better not allowed description: on global disallowed, and on missing pageperms
+//
 // Revision 1.177  2004/09/14 10:31:09  rurban
 // exclude E_STRICT for php5: untested. I believe this must be set earlier because the parsing step is already strict, and this is called at run-time
 //
