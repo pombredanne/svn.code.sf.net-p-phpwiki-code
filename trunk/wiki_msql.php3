@@ -1,4 +1,4 @@
-<!-- $Id: wiki_msql.php3,v 1.10 2000-08-11 18:45:23 wainstead Exp $ -->
+<!-- $Id: wiki_msql.php3,v 1.11 2000-08-15 02:54:04 wainstead Exp $ -->
 <?
 
    /*
@@ -7,8 +7,9 @@
       MakeDBHash($pagename, $pagehash)
       OpenDataBase($dbname)
       CloseDataBase($dbi)
-      RetrievePage($dbi, $pagename)
+      RetrievePage($dbi, $pagename, $pagestore)
       InsertPage($dbi, $pagename, $pagehash)
+      SaveCopyToArchive($dbi, $pagename, $pagehash) 
       IsWikiPage($dbi, $pagename)
       InitTitleSearch($dbi, $search)
       TitleSearchNextMatch($dbi, &$pos)
@@ -121,10 +122,10 @@
 
 
    // Return hash of page + attributes or default
-   function RetrievePage($dbi, $pagename) {
+   function RetrievePage($dbi, $pagename, $pagestore) {
       $pagename = addslashes($pagename);
 
-      $query = "select * from $dbi[table] where pagename='$pagename'";
+      $query = "select * from $dbi[$pagestore] where pagename='$pagename'";
 
       if ($res = msql_query($query, $dbi['dbc'])) {
          $dbhash = msql_fetch_array($res);
@@ -220,6 +221,17 @@
    }
 
 
+
+   // for archiving pages to a seperate dbm
+   function SaveCopyToArchive($dbi, $pagename, $pagehash) {
+      global $ArchivePageStore;
+
+      $adbi = OpenDataBase($ArchivePageStore);
+      $newpagename = $pagename; // what the hell does this do?
+      InsertPage($adbi, $newpagename, $pagehash);
+   }
+
+
    function IsWikiPage($dbi, $pagename) {
       $pagename = addslashes($pagename);
       $query = "select pagename from $dbi[table] where pagename='$pagename'";
@@ -267,8 +279,9 @@
 
    // iterating through database
    function FullSearchNextMatch($dbi, $res) {
+      global $WikiPageStore;
       if ($row = msql_fetch_row($res)) {
-	return RetrievePage($dbi, $row[0]);
+	return RetrievePage($dbi, $row[0], $WikiPageStore);
       } else {
 	return 0;
       }

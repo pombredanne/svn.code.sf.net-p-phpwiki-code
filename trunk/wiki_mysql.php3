@@ -1,12 +1,13 @@
-<? rcs_id('$Id: wiki_mysql.php3,v 1.12 2000-07-07 19:53:50 dairiki Exp $');
+<? rcs_id('$Id: wiki_mysql.php3,v 1.13 2000-08-15 02:54:04 wainstead Exp $');
 
    /*
       Database functions:
 
       OpenDataBase($dbname)
       CloseDataBase($dbi)
-      RetrievePage($dbi, $pagename)
+      RetrievePage($dbi, $pagename, $pagestore)
       InsertPage($dbi, $pagename, $pagehash)
+      SaveCopyToArchive($dbi, $pagename, $pagehash) 
       IsWikiPage($dbi, $pagename)
       InitTitleSearch($dbi, $search)
       TitleSearchNextMatch($dbi, &$pos)
@@ -74,9 +75,9 @@
 
 
    // Return hash of page + attributes or default
-   function RetrievePage($dbi, $pagename) {
+   function RetrievePage($dbi, $pagename, $pagestore) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select * from $dbi[table] where pagename='$pagename'", $dbi['dbc'])) {
+      if ($res = mysql_query("select * from $dbi[$pagestore] where pagename='$pagename'", $dbi['dbc'])) {
          if ($dbhash = mysql_fetch_array($res)) {
             return MakePageHash($dbhash);
          }
@@ -105,6 +106,16 @@
 	    echo mysql_error();
             exit();
       }
+   }
+
+
+   // for archiving pages to a seperate dbm
+   function SaveCopyToArchive($dbi, $pagename, $pagehash) {
+      global $ArchivePageStore;
+
+      $adbi = OpenDataBase($ArchivePageStore);
+      $newpagename = $pagename; // what the hell does this do?
+      InsertPage($adbi, $newpagename, $pagehash);
    }
 
 
