@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.125 2002-09-17 19:23:32 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.126 2002-09-18 15:17:12 dairiki Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -41,6 +41,39 @@
   gone see: lib/plugin/RecentChanges.php
 */
 
+/**
+ * Convert string to a valid XML identifier.
+ *
+ * XML 1.0 identifiers are of the form: [A-Za-z][A-Za-z0-9:_.-]*
+ *
+ * We would like to have, e.g. named anchors within wiki pages
+ * names like "Table of Contents" --- clearly not a valid XML
+ * fragment identifier.
+ *
+ * This function implements a one-to-one map from {any string}
+ * to {valid XML identifiers}.
+ *
+ * It does this by
+ * converting all bytes not in [A-Za-z0-9:_-],
+ * and any leading byte not in [A-Za-z] to 'xbb.',
+ * where 'bb' is the hexadecimal representation of the
+ * character.
+ *
+ * As a special case, the empty string is converted to 'empty.'
+ *
+ * @param string $str
+ * @return string
+ */
+function MangleXmlIdentifier($str) 
+{
+    if (!$str)
+        return 'empty.';
+    
+    return preg_replace('/[^-_:A-Za-z0-9]|(?<=^)[^A-Za-z]/e',
+                        "'x' . sprintf('%02x', ord('\\0')) . '.'",
+                        $str);
+}
+    
 
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
     $anchor = false;
@@ -82,7 +115,7 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
             $url .= "&$args";
     }
     if ($anchor)
-        $url .= "#$anchor";
+        $url .= "#" . MangleXmlIdentifier($anchor);
     return $url;
 }
 
@@ -345,7 +378,8 @@ function LinkBracketLink($bracketlink) {
 
     if ($hash) {
         // It's an anchor, not a link...
-        return HTML::a(array('name' => $link, 'id' => $link),
+        $id = MangleXmlIdentifier($link);
+        return HTML::a(array('name' => $id, 'id' => $id),
                        $bar ? $label : $link);
     }
 
