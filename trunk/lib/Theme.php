@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.105 2004-06-14 11:31:36 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.106 2004-06-20 14:42:54 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1145,7 +1145,7 @@ class Button extends HtmlElement {
         if (check_php_version(5)) {
             $this->_init('a', array('href' => $url));
         } else {
-            $this->HtmlElement('a', array('href' => $url));
+            $this->__construct('a', array('href' => $url));
         }
         if ($class)
             $this->setAttr('class', $class);
@@ -1170,7 +1170,7 @@ class ImageButton extends Button {
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
     function ImageButton ($text, $url, $class, $img_url, $img_attr = false) {
-        $this->HtmlElement('a', array('href' => $url));
+        $this->__construct('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
 
@@ -1195,7 +1195,7 @@ class SubmitButton extends HtmlElement {
      * @param $class string The CSS class for the button.
      */
     function SubmitButton ($text, $name = false, $class = false) {
-        $this->HtmlElement('input', array('type' => 'submit',
+        $this->__construct('input', array('type' => 'submit',
                                           'value' => $text));
         if ($name)
             $this->setAttr('name', $name);
@@ -1219,7 +1219,7 @@ class SubmitImageButton extends SubmitButton {
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
     function SubmitImageButton ($text, $name = false, $class = false, $img_url) {
-        $this->HtmlElement('input', array('type'  => 'image',
+        $this->__construct('input', array('type'  => 'image',
                                           'src'   => $img_url,
                                           'value' => $text,
                                           'alt'   => $text));
@@ -1363,6 +1363,14 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2004/06/14 11:31:36  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.104  2004/06/11 09:07:30  rurban
 // support theme-specific LinkIconAttr: front or after or none
 //

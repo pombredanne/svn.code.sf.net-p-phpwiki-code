@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.45 2004-04-29 19:39:44 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.46 2004-06-20 14:42:53 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -37,6 +37,10 @@ require_once('lib/InlineParser.php');
  *  Still to do:
  *    (old-style) tables
  * FIXME: unify this with the RegexpSet in InlineParser.
+ *
+ * FIXME: This is very php5 sensitive: It was fixed for 1.3.9, 
+ *        but is again broken with the 1.3.11 
+ *        allow_call_time_pass_reference clean fixes
  *
  * @package Markup
  * @author: Geoffrey T. Dairiki 
@@ -235,7 +239,7 @@ class BlockParser_Input {
 class BlockParser_InputSubBlock extends BlockParser_Input
 {
     function BlockParser_InputSubBlock (&$input, $prefix_re, $initial_prefix = false) {
-        $this->_input = &$input;
+        $this->_input = $input;
         $this->_prefix_pat = "/$prefix_re|\\s*\$/Ax";
         $this->_atSpace = false;
 
@@ -377,15 +381,18 @@ class ParsedBlock extends Block_HtmlElement {
         $re_set = &$this->_regexpset;
         for ($m = $re_set->match($line); $m; $m = $re_set->nextMatch($line, $m)) {
             $block = $this->_block_types[$m->regexp_ind];
-            //$input->_debug('>', get_class($block));
+            if (DEBUG & _DEBUG_PARSER)
+                $input->_debug('>', get_class($block));
             
             if ($block->_match($input, $m)) {
-                //$input->_debug('<', get_class($block));
+                if (DEBUG & _DEBUG_PARSER)
+                    $input->_debug('<', get_class($block));
                 $tight_bottom = ! $input->skipSpace();
                 $block->_setTightness($tight_top, $tight_bottom);
                 return $block;
             }
-            //$input->_debug('[', "_match failed");
+            if (DEBUG & _DEBUG_PARSER)
+                $input->_debug('[', "_match failed");
         }
         if (!$line)
             return false;
@@ -520,7 +527,7 @@ class Block_list extends BlockMarkup
     }
     
     function merge ($nextBlock) {
-        if (isa($nextBlock, 'Block_list') && $this->_tag == $nextBlock->_tag) {
+        if (isa($nextBlock, 'Block_list') and $this->_tag == $nextBlock->_tag) {
             array_splice($this->_content, count($this->_content), 0,
                          $nextBlock->_content);
             return $this;
@@ -615,8 +622,8 @@ class Block_table_dl_defn extends XmlContent
     function setTightness($tight_top, $tight_bot) {
         $this->_tight_top = $tight_top;
 	$this->_tight_bot = $tight_bot;
-	$first = &$this->firstTR();
-	$last = &$this->lastTR();
+	$first = $this->firstTR();
+	$last  = $this->lastTR();
 	$first->setInClass('top', $tight_top);
         if (!empty($last)) {
             $last->setInClass('bottom', $tight_bot);
@@ -820,8 +827,9 @@ class Block_oldlists extends Block_list
             $li->setTightness($top, $bot);
         }
         else {
-            // This is where php5 broke
-            if (DEBUG and check_php_version(5)) {
+            // This is where php5 usually brakes.
+            // wrong duplicated <li> contents
+            if (DEBUG and DEBUG & _DEBUG_PARSER and check_php_version(5)) {
                 if (count($this->_content) != 2) {
                     echo "<pre>";
                     /*
@@ -849,7 +857,10 @@ class Block_oldlists extends Block_list
                     */
                     echo 'count($this->_content): ', count($this->_content),"\n";
                     echo "\$this->_content[0]: "; var_dump ($this->_content[0]);
-                    foreach ($this->_content as $c) {
+                    
+                    for ($i=1; $i < min(5, count($this->_content)); $i++) {
+                        $c =& $this->_content[$i];
+                        echo '$this->_content[',$i,"]: \n";
                         echo "_tag: "; var_dump ($c->_tag);
                         echo "_content: "; var_dump ($c->_content);
                         echo "_properties: "; var_dump ($c->_properties);
@@ -995,7 +1006,7 @@ class Block_p extends BlockMarkup
 
     function merge ($nextBlock) {
         $class = get_class($nextBlock);
-        if ($class == 'block_p' && $this->_tight_bot) {
+        if (strtolower($class) == 'block_p' && $this->_tight_bot) {
             $this->_text .= "\n" . $nextBlock->_text;
             $this->_tight_bot = $nextBlock->_tight_bot;
             return $this;
@@ -1033,7 +1044,7 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
     //set_time_limit(3);
 
     $output = new WikiText($text);
-    if (0 && DEBUG && check_php_version(5)) {
+    if (0 and DEBUG and DEBUG & _DEBUG_VERBOSE and check_php_version(5)) {
         echo "<pre>"; var_dump($output); echo "</pre>"; 
     }
 
@@ -1046,6 +1057,8 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
     
     return new XmlContent($output->getContent());
 }
+
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.114 2004-06-19 11:48:05 rurban Exp $');
+rcs_id('$Id: config.php,v 1.115 2004-06-20 14:42:54 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -16,7 +16,15 @@ if (!defined("LC_ALL")) {
         define("LC_CTYPE", 2);
     }
 }
+// debug flags: 
+define ('_DEBUG_VERBOSE',   1);
+define ('_DEBUG_PAGELINKS', 2);
+define ('_DEBUG_PARSER',    4);
+define ('_DEBUG_TRACE',     8);
+define ('_DEBUG_INFO',     16);
+define ('_DEBUG_APD',      32);
 
+//hmm, this is not true for apache2/php5! There CGI/1.1 is defined even with the php sapi module.
 function isCGI() {
     return @preg_match('/CGI/',$GLOBALS['HTTP_ENV_VARS']['GATEWAY_INTERFACE']);
 }
@@ -318,6 +326,9 @@ if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.114  2004/06/19 11:48:05  rurban
+// moved version check forwards: already needed in XmlElement::_quote
+//
 // Revision 1.113  2004/06/03 12:59:41  rurban
 // simplify translation
 // NS4 wrap=virtual only

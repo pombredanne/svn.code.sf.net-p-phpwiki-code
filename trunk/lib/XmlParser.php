@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: XmlParser.php,v 1.4 2004-06-08 21:03:20 rurban Exp $');
+rcs_id('$Id: XmlParser.php,v 1.5 2004-06-20 14:42:54 rurban Exp $');
 /**
  * Base XmlParser Class.
  * Requires the expat.so/.dll, usually enabled by default.
@@ -77,7 +77,7 @@ class XmlParser {
         unset($this->_parser);
         
         if (isset($xml_parser_root)) {
-            $xml_parser_root->__destruct();
+            $xml_parser_root->_destruct();
             unset($xml_parser_root); // nested parsing forbidden!
         }
         unset($xml_parser_current);
@@ -159,6 +159,9 @@ class XmlParser {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/06/08 21:03:20  rurban
+// updated RssParser for XmlParser quirks (store parser object params in globals)
+//
 // Revision 1.3  2004/06/03 18:06:29  rurban
 // fix file locking issues (only needed on write)
 // fixed immediate LANG and THEME in-session updates if not stored in prefs
