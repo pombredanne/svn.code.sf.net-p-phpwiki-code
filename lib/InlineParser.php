@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: InlineParser.php,v 1.7 2002-02-01 05:59:26 dairiki Exp $');
+<?php rcs_id('$Id: InlineParser.php,v 1.8 2002-02-07 19:27:41 dairiki Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.
@@ -420,6 +420,13 @@ class InlineTransformer
             return true;        // Done. SimpleMarkup is simple.
 
         $end_regexp = $markup->getEndRegexp($match);
+        // Optimization: if no end pattern in text, we know the
+        // parse will fail.  This is an important optimization,
+        // e.g. when text is "*lots *of *start *delims *with
+        // *no *matching *end *delims".
+        // 
+        if (!preg_match("/$end_regexp/xs", $text))
+            return false;
         return $this->parse($text, $end_regexp);
     }
 }
