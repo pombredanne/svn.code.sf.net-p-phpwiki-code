@@ -1,4 +1,4 @@
--- $Id: mysql.sql,v 1.6 2004-01-28 16:49:01 rurban Exp $
+-- $Id: mysql.sql,v 1.7 2004-02-07 14:20:18 rurban Exp $
 
 drop table if exists page;
 CREATE TABLE page (
@@ -59,17 +59,18 @@ CREATE TABLE session (
 
 -- Don't know if you should auth against pref table also. 
 -- the password is stored there also.
-drop table if exists pref;
-CREATE TABLE pref (
-  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
-  	prefs  	TEXT NULL DEFAULT '',
-  	PRIMARY KEY (userid)
-) TYPE=MyISAM;
+--drop table if exists pref;
+--CREATE TABLE pref (
+--  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
+--  	prefs  	TEXT NULL DEFAULT '',
+--  	PRIMARY KEY (userid)
+--) TYPE=MyISAM;
 
 drop table if exists user;
 CREATE TABLE user (
   	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
   	passwd 	CHAR(48) BINARY DEFAULT '',
+	prefs  	TEXT NULL DEFAULT '',
 --	groupname CHAR(48) BINARY DEFAULT 'users',
   	PRIMARY KEY (userid)
 ) TYPE=MyISAM;

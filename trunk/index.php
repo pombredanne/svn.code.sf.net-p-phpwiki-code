@@ -73,7 +73,7 @@ define('ENABLE_USER_NEW',true);
 
 define ('PHPWIKI_VERSION', '1.3.8pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.121 2004-02-07 10:41:25 rurban Exp $');
+rcs_id('$Id: index.php,v 1.122 2004-02-07 14:20:18 rurban Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -518,15 +518,13 @@ if (!defined('IMAP_AUTH_HOST'))   define('IMAP_AUTH_HOST', 'localhost:143/imap/n
 // set this to true if the user may change his password into this file.
 //if (!defined('AUTH_USER_FILE_STORABLE')) define('AUTH_USER_FILE_STORABLE',false);
 
-
-// Where to read/store group membership:
+// Group membership:
 //if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "NONE");
 if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "WIKIPAGE");
 //if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "DB");
 //if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "FILE");
 //if (!defined('GROUP_METHOD')) define('GROUP_METHOD', "LDAP");
 //if (!defined('AUTH_GROUP_FILE')) define('AUTH_GROUP_FILE', '/etc/groups'); // or '/etc/httpd/.htgroup'
-// not yet!
 
 // Seperate DB User Authentication.
 //   Can be external, like radius, phpnuke, courier authmysql,
@@ -539,11 +537,11 @@ $DBAuthParams = array (
 
    // USER => PASSWORD
    // plaintext passwords:
-   //  'auth_check'  => 'SELECT IF(passwd="$password",1,0) as ok FROM user WHERE username="$userid"',
+   //  'auth_check'  => 'SELECT IF(passwd="$password",1,0) as ok FROM user WHERE userid="$userid"',
    // database (md5) passwords (more secure):
    'auth_check'  => 'SELECT IF(passwd=PASSWORD("$password"),1,0) as ok FROM user WHERE userid="$userid"',
    // crypt passwords:
-   //'auth_check'  => 'SELECT password as password FROM user WHERE username="$userid"',
+   //'auth_check'  => 'SELECT password as password FROM user WHERE userid="$userid"',
    // this is only needed with auth_crypt_method plain:
    'auth_user_exists'  => 'SELECT userid FROM user WHERE userid="$userid"',
 
@@ -567,7 +565,7 @@ $DBAuthParams = array (
    //users must be predefined:
    //'pref_update' => 'UPDATE user SET prefs="$pref_blob" WHERE userid="$userid"',
    //or users can create themselves:
-   'pref_update' => 'REPLACE INTO user SET prefs="$pref_blob", username="$userid"',
+   'pref_update' => 'REPLACE INTO user SET prefs="$pref_blob", userid="$userid"',
 
    // USERS <=> GROUPS
    //   DB methods for lib/WikiGroup.php, see also AUTH_GROUP_FILE above.
@@ -906,6 +904,12 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 include "lib/main.php";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.121  2004/02/07 10:41:25  rurban
+// fixed auth from session (still double code but works)
+// fixed GroupDB
+// fixed DbPassUser upgrade and policy=old
+// added GroupLdap
+//
 // Revision 1.120  2004/02/03 09:45:39  rurban
 // LDAP cleanup, start of new Pref classes
 //
