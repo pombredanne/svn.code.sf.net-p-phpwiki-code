@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: main.php,v 1.78 2002-09-12 17:35:39 rurban Exp $');
+rcs_id('$Id: main.php,v 1.79 2002-09-12 20:56:29 rurban Exp $');
 
 define ('USE_PREFS_IN_PAGE', true);
 
@@ -21,9 +21,8 @@ class WikiRequest extends Request {
         if (USE_DB_SESSION) {
             $this->_dbi = $this->getDbh();
             new DB_Session($this->_dbi->_backend->_dbh, $GLOBALS['DBParams']['db_session_table']);
-	    session_start();
+            $this->session = new Request_SessionVars;
         }
-        $this->session = new Request_SessionVars;
 
         // Normalize args...
         $this->setArg('pagename', $this->_deducePagename());
@@ -31,9 +30,9 @@ class WikiRequest extends Request {
 
         // Restore auth state
         $this->_user = new WikiUser($this->_deduceUsername());
-        $this->_deduceUsername();
-        // WikiDB Auth later
-        // $this->_user = new WikiDB_User($this->getSessionVar('wiki_user'), $this->getAuthDbh());
+        if (ALLOW_USER_LOGIN) {
+          $this->_user = new WikiDB_User($this->_user->getId(), $this->getAuthDbh());
+        }
         $this->_prefs = $this->_user->getPreferences();
     }
 
