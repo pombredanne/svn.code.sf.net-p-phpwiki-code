@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.9 2002-02-08 20:30:48 lakka Exp $');
+rcs_id('$Id: cvs.php,v 1.10 2002-02-08 22:51:26 lakka Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -429,7 +429,12 @@ extends WikiDB_backend
         // TODO: needs to be tested ...
         // most recent are those pages with the highest time value ...
         $mr = $this->_getMostRecent();
-        arsort( $mp, SORT_NUMERIC );
+        $reverse = ($params['since'] < 0 );
+		if ($reverse) {
+		    $params['since'] = -$params['since'];
+			asort ($mp, SORT_NUMERIC );
+		}
+	    else arsort( $mp, SORT_NUMERIC );
         $returnVal = array();
 
         if ( isset( $params['limit'] ) ) {
@@ -440,9 +445,16 @@ extends WikiDB_backend
             }
         } else if ( isset( $params['since'] ) ) {
             while ( (list($key, $val) = each($a)) ) {
-                if ( $val > $params['since'] ) {
-                    $returnVal[] = $key;
-                }
+                if($reverse){
+    				if ( $val < $params['since'] ) {
+                        $returnVal[] = $key;
+                    }
+				}
+				else {
+					if ( $val > $params['since'] ) {
+                    	$returnVal[] = $key;
+                    }
+				}
             }
         }
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopularIter.php,v 1.4 2002-02-08 22:20:36 dairiki Exp $');
+rcs_id('$Id: MostPopularIter.php,v 1.5 2002-02-08 22:51:26 lakka Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -24,7 +24,11 @@ extends WikiDB_backend_iterator
             $pages[] = $page;
         }
 
-        usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf');
+		if($limit < 0){  //sort pages in reverse order - ie least popular first.
+	        usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf_rev');
+			$limit = -$limit
+			}
+		else usort($pages, 'WikiDB_backend_dumb_MostPopularIter_sortf');
 
         if ($limit < 0) {
             $pages = array_reverse($pages);
@@ -51,6 +55,15 @@ function WikiDB_backend_dumb_MostPopularIter_sortf($a,$b) {
     if (isset($b['pagedata']['hits']))
         $bhits = (int)$b['pagedata']['hits'];
     return $bhits - $ahits;
+}
+
+function WikiDB_backend_dumb_MostPopularIter_sortf_rev($a,$b) {
+    $ahits = $bhits = 0; 
+    if (isset($a['pagedata']['hits']))
+        $ahits = (int)$a['pagedata']['hits'];
+    if (isset($b['pagedata']['hits']))
+        $bhits = (int)$b['pagedata']['hits'];
+    return $ahits - $bhits;
 }
 
 // For emacs users
