@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.117 2004-12-13 08:15:09 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.118 2004-12-13 13:22:57 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1483,7 +1483,7 @@ class WikiDB_PageRevision
         return explode("\n", $this->getPackedContent());
     }
 	
-	/**
+   /**
      * Get the pagename of the revision.
      *
      * @access public
@@ -1491,6 +1491,9 @@ class WikiDB_PageRevision
      * @return string pagename.
      */
     function getPageName() {
+        return $this->_pagename;
+    }
+    function getName() {
         return $this->_pagename;
     }
 
@@ -2141,6 +2144,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.117  2004/12/13 08:15:09  rurban
+// false is wrong. null might be better but lets play safe.
+//
 // Revision 1.116  2004/12/10 22:15:00  rurban
 // fix $page->get('_cached_html)
 // refactor upgrade db helper _convert_cached_html() to be able to call them from WikiAdminUtils also.

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.56 2004-11-29 17:56:51 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.57 2004-12-13 13:22:58 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.56 $");
+        //                    "\$Revision: 1.57 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -359,11 +359,18 @@ class WikiPlugin
         return $form;
     }
 
-    function makeBox($title,$body) {
-        if (!$title) $title = $this->_getName();
+    // box is used to display a fixed-width, narrow version with common header
+    function box($args=false, $request=false, $basepage=false) {
+        if (!$request) $request =& $GLOBALS['request'];
+        $dbi = $request->getDbh();
+        return $this->makeBox('', $this->run($dbi, $args, $request, $basepage));
+    }
+
+    function makeBox($title, $body) {
+        if (!$title) $title = $this->getName();
         return HTML::div(array('class'=>'box'),
-                         HTML::div(array('class'=>'box-title'),$title),
-                         HTML::div(array('class'=>'box-data'),$body));
+                         HTML::div(array('class'=>'box-title'), $title),
+                         HTML::div(array('class'=>'box-data'), $body));
     }
     
     function error ($message) {
