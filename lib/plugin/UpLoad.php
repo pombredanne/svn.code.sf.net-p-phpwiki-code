@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.3 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.4 2004-02-21 19:12:59 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
         $file_dir = defined('PHPWIKI_DIR') ? 
-            PHPWIKI_DIR . "/uploads" : "uploads";
+            PHPWIKI_DIR . "/uploads/" : "uploads/";
         $url_prefix = SERVER_NAME.DATA_PATH; 
 
         $action = $request->getURLtoSelf();
@@ -188,6 +188,9 @@ extends WikiPlugin
 // End:
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.2  2004/01/26 09:18:00  rurban
 // * changed stored pref representation as before.
 //   the array of objects is 1) bigger and 2)
