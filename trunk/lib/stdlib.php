@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.30 2001-02-14 05:22:49 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.31 2001-02-14 22:02:05 dairiki Exp $');
 
 
    /*
@@ -524,7 +524,7 @@ function StartTag($tag, $args = '')
 	 }
       }
 
-      $page = join('', file(SearchPath($templates[$template])));
+      $page = join('', file(FindLocalizedFile($templates[$template])));
       $page = str_replace('###', "$FieldSeparator#", $page);
 
       // valid for all pagetypes

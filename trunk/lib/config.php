@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.31 2001-02-13 05:54:38 dairiki Exp $');
+rcs_id('$Id: config.php,v 1.32 2001-02-14 22:02:05 dairiki Exp $');
 /*
  * NOTE: the settings here should probably not need to be changed.
  *
@@ -26,6 +26,53 @@ define("FLAG_PAGE_LOCKED", 1);
 //
 // Set up localization
 //
+
+if (empty($LANG))
+   $LANG = "C";
+
+   
+// Search PHP's include_path to find file or directory.
+function FindFile ($file, $missing_okay = false)
+{
+   // FIXME: This wont work for DOS filenames.
+   if (ereg('^/', $file))
+   {
+      // absolute path.
+      if (file_exists($file))
+	 return $file;
+   }
+   else
+   {
+      $include_path = ini_get('include_path');
+      if (empty($include_path))
+	 $include_path = '.';
+      // FIXME: This wont work for DOS filenames.
+      $path = explode(':', $include_path);
+      while (list($i, $dir) = each ($path))
+	 if (file_exists("$dir/$file"))
+	    return "$dir/$file";
+   }
+   
+   if (!$missing_okay)
+      ExitWiki("$file: file not found");
+   return false;
+}
+
+// Search PHP's include_path to find file or directory.
+// Searches for "locale/$LANG/$file", then for "$file".
+function FindLocalizedFile ($file, $missing_okay = false)
+{
+   global $LANG;
+   
+   // FIXME: This wont work for DOS filenames.
+   if (!ereg('^/', $file))
+   {
+      if ( ($path = FindFile("locale/$LANG/$file", 'missing_is_okay')) )
+	 return $path;
+   }
+   return FindFile($file, $missing_okay);
+}
+
 if (!function_exists ('gettext'))
 {
    $locale = array();
@@ -37,7 +84,7 @@ if (!function_exists ('gettext'))
       return $text;
    }
 
-   if ( ($lcfile = SearchPath("LC_MESSAGES/phpwiki.php", 'missing_ok')) )
+   if ( ($lcfile = FindLocalizedFile("LC_MESSAGES/phpwiki.php", 'missing_ok')) )
    {
       include($lcfile);
    }
@@ -68,7 +115,10 @@ if (!defined('USE_PATH_INFO'))
     * is used to the the php interpreter where the
     * php script is...)
     */
-   define('USE_PATH_INFO', ereg('\.(php3?|cgi)$', $SCRIPT_NAME));
+   if (php_sapi_name() == 'apache')
+      define('USE_PATH_INFO', true);
+   else
+      define('USE_PATH_INFO', ereg('\.(php3?|cgi)$', $SCRIPT_NAME));
 }
 if (!defined('VIRTUAL_PATH'))
 {

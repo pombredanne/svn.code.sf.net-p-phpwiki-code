@@ -1,10 +1,17 @@
 <?php
 /////////////////////////////////////////////////////////////////////
-// Part Zero: Don't touch this!
+// Part Zero: If PHP needs help in finding where you installed the
+//   rest of the PhpWiki code, you can set the include_path here.
+/////////////////////////////////////////////////////////////////////
+
+//ini_set('include_path', '.:/where/you/installed/phpwiki');
+
+/////////////////////////////////////////////////////////////////////
+// Part Null: Don't touch this!
 /////////////////////////////////////////////////////////////////////
 define ('PHPWIKI_VERSION', '1.3.0pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.9 2001-02-14 05:22:49 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.10 2001-02-14 22:02:05 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -33,6 +40,9 @@ define('MAX_UPLOAD_SIZE', 16 * 1024 * 1024);
 // If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the default
 // state for the "minor edit" checkbox on the edit page form will be off.
 define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
+
+// Actions listed in this array will not be allowed.
+//$DisabledActions = array('dumpserial', 'loadfile');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -120,16 +130,11 @@ define("MOST_POPULAR_LIST_LENGTH", 20);
 // this defines how many page names to list when displaying related pages
 define("NUM_RELATED_PAGES", 5);
 
-// This path is searched when trying to read WIKI_PGSRC
-// or template files.
-$DataPath = array(".", "locale/$LANG");
-
 // Template files (filenames are relative to script position)
 // (These filenames will be passed through gettext() before use.)
 $templates = array("BROWSE" =>    "templates/browse.html",
 		   "EDITPAGE" =>  "templates/editpage.html",
 		   "MESSAGE" =>   "templates/message.html");
-
 
 /* WIKI_PGSRC -- specifies the source for the initial page contents
  * of the Wiki.  The setting of WIKI_PGSRC only has effect when

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.3 2001-02-14 05:22:49 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.4 2001-02-14 22:02:05 dairiki Exp $');
 
 require "lib/ziplib.php";
 
@@ -374,9 +374,9 @@ function SetupWiki ($dbi)
 
    $ignore = array(gettext('RecentChanges'));
 
-   LoadAny($dbi, SearchPath(WIKI_PGSRC), false, $ignore);
+   LoadAny($dbi, FindLocalizedFile(WIKI_PGSRC), false, $ignore);
    if ($LANG != "C")
-      LoadAny($dbi, SearchPath(DEFAULT_WIKI_PGSRC), $GenericPages, $ignore);
+      LoadAny($dbi, FindLocalizedFile(DEFAULT_WIKI_PGSRC), $GenericPages, $ignore);
 
    echo "</dl>\n";
    EndLoadDump();
