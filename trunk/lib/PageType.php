@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.17 2003-02-01 03:12:51 carstenklapp Exp $');
+rcs_id('$Id: PageType.php,v 1.18 2003-02-21 04:18:06 dairiki Exp $');
 /*
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -20,204 +20,156 @@ rcs_id('$Id: PageType.php,v 1.17 2003-02-01 03:12:51 carstenklapp Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-include_once('lib/BlockParser.php');
+require_once('lib/CachedMarkup.php');
 
-/**
- * Get a PageType
- *
- * usage:
- *
- * require_once('lib/PageType.php');
- * $transformedContent = PageType($pagerevisionhandle, $pagename, $markup);
- *
- * The pagename and markup args are only required when displaying the
- * content for an edit preview, otherwise they will be extracted from
- * the page $revision instance.
- *
- * See http://phpwiki.sourceforge.net/phpwiki/PageType
+/** A cacheable formatted wiki page.
  */
-function PageType(&$rev, $pagename = false, $markup = false, $overridePageType = false) {
-
-    if (isa($rev, 'WikiDB_PageRevision')) {
-        $text = $rev->getPackedContent();
-        $pagename = $rev->getPageName();
-        $markup = $rev->get('markup');
-
-    }
-    else {
-        // Hopefully only an edit preview gets us here, else we might
-        // be screwed.
-        if ($pagename == false) {
-            //debugging message only
-            $error_text = "DEBUG: \$rev was not a 'WikiDB_PageRevision'. (Are you not previewing a page edit?)";
-            trigger_error($error_text, E_USER_NOTICE);
-        }
-        $text = $rev;
-    }
-
-    // PageType currently only works with InterWikiMap and WikiBlog.
-    // Once a contentType field has been implemented in the database
-    // then that can be used instead of this pagename check.
-
-    /**
-     * Hook to allow plugins to provide their own or override a PageType.
-     * See InterWikiSearch plugin.
+class TransformedText extends CacheableMarkup {
+    /** Constructor.
+     *
+     * @param WikiDB_Page $page
+     * @param string $text  The packed page revision content.
+     * @param hash $meta    The version meta-data.
+     * @param string $type_override  For markup of page using a different
+     *        pagetype than that specified in its version meta-data.
      */
-    if ($overridePageType) {
-        $ContentTemplateName = '$overridePageType';
-        $content_template = new $overridePageType($text, $markup);
-        //trigger_error(sprintf("DEBUG: PageType overridden as %s", $overridePageType));
+    function TransformedText($page, $text, $meta, $type_override=false) {
+        @$pagetype = $meta['pagetype'];
+        if ($type_override)
+            $pagetype = $type_override;
+	$this->_type = PageType::GetPageType($pagetype);
+	$this->CacheableMarkup($this->_type->transform($page, $text, $meta),
+                               $page->getName());
     }
-    else {
-       /**
-        * Check whether pagename is InterWikiMap.
-        */
-        $isInterWikiMap = _("InterWikiMap");
 
-        /**
-         * Check whether pagename indicates a blog. Adapted from the
-         * WikiBlog plugin.
-         */
-        // get subpage basename, don't forget subpages of subpages
-        $basename = explode(SUBPAGE_SEPARATOR, $pagename);
-        array_pop($basename);
-        $escpage = implode(SUBPAGE_SEPARATOR, $basename);
-        // from WikiBlog plugin:
-        // If page contains '/', we must escape them
-        // FIXME: only works for '/' SUBPAGE_SEPARATOR
-        $escpage = preg_replace ("/\//", '\/', $escpage);
-        if (preg_match("/^$escpage\/Blog-([[:digit:]]{14})$/", $pagename, $matches))
-            $isWikiBlog = $pagename;
-        else
-            $isWikiBlog = "";
-    
-        switch($pagename) {
-            case $isInterWikiMap:
-                $ContentTemplateName = 'interwikimap';
-                $content_template = new interWikiMapPageType($text, $markup);
-                //trigger_error("DEBUG: PageType is an InterWikiMap");
-                break;
-            case $isWikiBlog:
-                $ContentTemplateName = 'wikiblog';
-                $content_template = new wikiBlogPageType($text, $markup);
-                $content_template->_summary = $rev->get('summary');
-                //trigger_error("DEBUG: PageType is a WikiBlog");
-                break;
-            default:
-                $ContentTemplateName = 'wikitext';
-                $content_template = new PageType($text, $markup);
-                //trigger_error("DEBUG: PageType is default");
-        }
+    function getType() {
+	return $this->_type;
     }
-    return $content_template->getContent();
 }
 
 /**
- * The basic PageType formats a standard WikiPage with one section:
+ * A page type descriptor.
  *
- * - wikitext
+ * Encapsulate information about page types.
+ *
+ * Currently the only information encapsulated is how to format
+ * the specific page type.  In the future or capabilities may be
+ * added, e.g. the abilities to edit different page types (differently.)
+ *
+ * IMPORTANT NOTE: Since the whole PageType class gets stored (serialized)
+ * as of the cached marked-up page, it is important that the PageType classes
+ * not have large amounts of class data.  (No class data is even better.)
  */
-class PageType
-{
+class PageType {
     /**
-     * This is a simple WikiPage
+     * Get a page type descriptor.
+     *
+     * This is a static member function.
+     *
+     * @param string $pagetype  Name of the page type.
+     * @return PageType  An object which is a subclass of PageType.
      */
-    var $_content = "";
-    var $_markup = false;
-    var $_divs = array();
-
-    function PageType (&$content, $markup) {
-        $this->_content = $content;
-        $this->_markup = $markup;
-        $this->_html = HTML();
-
-    }
-
-    function _defineSections() {
-        /**
-         * ... section_id => ('css_class', $this->_section_function)
-         */
-        $this->_divs = array('wikitext' => array('wikitext',
-                                                 $this->_extractText()));
-    }
-
-    function _populateSections() {
-        foreach ($this->_divs as $section => $data) {
-            list($class, $function) = $data;
-            if (!empty($function))
-                $this->_html->pushContent(HTML::div(array('class' => $class),
-                                                    $function));
+    function GetPageType ($name=false) {
+        if (!$name)
+            $name = 'wikitext';
+        if ($name) {
+            $class = "PageType_" . (string)$name;
+            if (class_exists($class))
+                return new $class;
+            trigger_error(sprintf("PageType '%s' unknown", (string)$name),
+                          E_USER_WARNING);
         }
+        return new PageType_wikitext;
     }
 
-    function _extractText() {
-        /**
-         * Custom text extractions might want to check if the section
-         * contains any text using trim() before returning any
-         * transformed text, to avoid displaying blank boxes.
-         *
-         * See interWikiMapPageType->_extractStartText()
-         * and interWikiMapPageType->_extractEndText() for examples.
-         */
-        return TransformText($this->_content, $this->_markup);
+    /**
+     * Get the name of this page type.
+     *
+     * @return string  Page type name.
+     */
+    function getName() {
+	if (!preg_match('/^PageType_(.+)$/i', get_class($this), $m))
+	    trigger_error("Bad class name for formatter(?)", E_USER_ERROR);
+	return $m[1];
     }
 
-    function getContent() {
-        // _defineSections & _populateSections execution moved to here
-        // from constructor, to allow custom vars (used for WikiBlog
-        // page summary field)
-        $this->_defineSections();
-        $this->_populateSections();
-        return $this->_html;
+    /**
+     * Transform page text.
+     *
+     * @param WikiDB_Page $page
+     * @param string $text
+     * @param hash $meta Version meta-data
+     * @return XmlContent The transformed page text.
+     */
+    function transform($page, $text, $meta) {
+        $fmt_class = 'PageFormatter_' . $this->getName();
+        $formatter = new $fmt_class($page, $meta);
+        return $formatter->format($text);
     }
-};
+}
 
-/**
- * wikiBlogPageType formats a Wiki page as a blog, with two sections:
- *
- * - wikiblog-summary
- * - wikitext
- */
-class wikiBlogPageType
-extends PageType
+class PageType_wikitext extends PageType {}
+class PageType_wikiblog extends PageType {}
+class PageType_interwikimap extends PageType
 {
-    var $_summary = "";
+    // FIXME: move code from interwikimap into here.(?)
+}
 
-    function _defineSections() {
-        /**
-         * section_id => ('css_class', $this->_section_function)
-         */
-        // FIXME: Create new css styles
-        $this->_divs = array('wikiblog-summary' => array('wikitext', $this->_extractSummary()),
-                             'wikitext' => array('wikitext', $this->_extractText())
-                             );
-    }
 
-    function _extractSummary() {
-        return HTML(HTML::strong(array('class' => 'wikiblog-label'),
-                                 _("Summary:")),
-                    " ", $this->_summary);
-    }
-};
-
-/**
- * interWikiMapPageType formats a Wiki page as an InterWikiMap, with
- * up to three sections:
- *
- * - interwikimap-header
- * - interwikimap
- * - interwikimap-footer
+/** How to transform text.
  */
-class interWikiMapPageType
-extends PageType
+class PageFormatter {
+    /** Constructor.
+     *
+     * @param WikiDB_Page $page
+     * @param hash $meta Version meta-data.
+     */
+    function PageFormatter($page, $meta) {
+        $this->_page = $page;
+	$this->_meta = $meta;
+	if (!empty($meta['markup']))
+	    $this->_markup = $meta['markup'];
+	else
+	    $this->_markup = 1;
+    }
+
+    function _transform($text) {
+	include_once('lib/BlockParser.php');
+	return TransformText($text, $this->_markup);
+    }
+
+    /** Transform the page text.
+     *
+     * @param string $text  The raw page content (e.g. wiki-text).
+     * @return XmlContent   Transformed content.
+     */
+    function format($text) {
+        trigger_error("pure virtual", E_USER_ERROR);
+    }
+}
+
+class PageFormatter_wikitext extends PageFormatter 
 {
-    function _defineSections() {
-        /**
-         * section_id => ('css_class', $this->_section_function)
-         */
-        $this->_divs = array('interwikimap-header' => array('wikitext', $this->_extractStartText()),
-                             'interwikimap'        => array('wikitext', $this->_getMap()),
-                             'interwikimap-footer' => array('wikitext', $this->_extractEndText()));
+    function format($text) {
+	return HTML::div(array('class' => 'wikitext'),
+			 $this->_transform($text));
+    }
+}
+
+class PageFormatter_interwikimap extends PageFormatter
+{
+    function format($text) {
+	return HTML::div(array('class' => 'wikitext'),
+			 $this->_transform($this->_getHeader($text)),
+			 $this->_formatMap(),
+			 $this->_transform($this->_getFooter($text)));
+    }
+
+    function _getHeader($text) {
+	return preg_replace('/<verbatim>.*/s', '', $text);
+    }
+    function _getFooter($text) {
+	return preg_replace('@.*?(</verbatim>|\Z)@s', '', $text, 1);
     }
 
     function _getMap() {
@@ -225,75 +177,66 @@ extends PageType
         // let interwiki.php get the map
         include_once("lib/interwiki.php");
         $map = InterWikiMap::GetMap($request);
-        return $this->_arrayToTable($map->_map, $request);
+        return $map->_map;
     }
 
-    function _arrayToTable ($array, &$request) {
-        $thead = HTML::thead();
-        $label[0] = _("Name");
-        $label[1] = _("InterWiki Address");
-        $thead->pushContent(HTML::tr(HTML::td($label[0]),
-                                     HTML::td($label[1])));
+    function _formatMap() {
+	$map = $this->_getMap();
+	if (!$map)
+	    return HTML::p("<No map found>"); // Shouldn't happen.
 
-        $tbody = HTML::tbody();
+	global $request;
         $dbi = $request->getDbh();
-        if ($array) {
-            foreach ($array as $moniker => $interurl) {
-                if ($dbi->isWikiPage($moniker)) {
-                    $moniker = WikiLink($moniker);
-                }
-                $moniker = HTML::td(array('class' => 'interwiki-moniker'),
-                                    $moniker);
-                $interurl = HTML::td(array('class' =>'interwiki-url'),
-                                     HTML::tt($interurl));
 
-                $tbody->pushContent(HTML::tr($moniker, $interurl));
-            }
+        $mon_attr = array('class' => 'interwiki-moniker');
+        $url_attr = array('class' => 'interwiki-url');
+        
+        $thead = HTML::thead(HTML::tr(HTML::th($mon_attr, _("Moniker")),
+				      HTML::th($url_attr, _("InterWiki Address"))));
+	foreach ($map as $moniker => $interurl) {
+	    $rows[] = HTML::tr(HTML::td($mon_attr, new Cached_WikiLinkIfKnown($moniker)),
+			       HTML::td($url_attr, HTML::tt($interurl)));
         }
-        $table = HTML::table();
-        $table->setAttr('class', 'interwiki-map');
-        $table->pushContent($thead);
-        $table->pushContent($tbody);
+	
+	return HTML::table(array('class' => 'interwiki-map'),
+			   $thead,
+			   HTML::tbody(false, $rows));
+    }
+}
 
-        return $table;
+class FakePageRevision {
+    function FakePageRevision($meta) {
+        $this->_meta = $meta;
     }
 
-    function _extractStartText() {
-        // get the start block of text
-        $v = strpos($this->_content, "<verbatim>");
-        if ($v)
-            list($wikitext, $cruft) = explode("<verbatim>", $this->_content);
-        else
-            $wikitext = $this->_content;
-
-        if (trim($wikitext))
-            return TransformText($wikitext, $this->_markup);
-
-        return "";
+    function get($key) {
+        if (empty($this->_meta[$key]))
+            return false;
+        return $this->_meta[$key];
     }
+}
 
-    function _extractEndText() {
-        // get the ending block of text
-        $v = strpos($this->_content, "</verbatim>");
-        if ($v) {
-            list($cruft, $endtext) = explode("</verbatim>", $this->_content);
-            if (trim($endtext))
-                return TransformText($endtext, $this->_markup);
-        }
-        return "";
+        
+class PageFormatter_wikiblog extends PageFormatter
+{
+    // Display contents:
+    function format($text) {
+        include_once('lib/Template.php');
+        global $request;
+        $tokens['CONTENT'] = $this->_transform($text);
+        $tokens['page'] = $this->_page;
+        $tokens['rev'] = new FakePageRevision($this->_meta);
+
+        $name = new WikiPageName($this->_page->getName());
+        $tokens['BLOG_PARENT'] = $name->getParent();
+
+        $blog_meta = $this->_meta['wikiblog'];
+        foreach(array('ctime', 'creator', 'creator_id') as $key)
+            $tokens["BLOG_" . strtoupper($key)] = $blog_meta[$key];
+        
+        return new Template('wikiblog', $request, $tokens);
     }
-};
-
-// $Log: not supported by cvs2svn $
-// Revision 1.16  2003/01/31 22:53:39  carstenklapp
-// Added hook/hack to allow plugins to provide their own or override a PageType.
-//
-// Revision 1.15  2003/01/06 01:46:31  carstenklapp
-// Bugfix: Also identify any WikiBlogs which are subpages of subpages.
-//
-// Revision 1.14  2003/01/06 00:08:08  carstenklapp
-// Added a basic WikiBlog page type, takes advantage of editpage summary field.
-//
+}
 
 // Local Variables:
 // mode: php
