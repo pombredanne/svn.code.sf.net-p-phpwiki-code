@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.126 2002-09-18 15:17:12 dairiki Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.127 2002-09-24 01:12:28 zorloc Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -75,6 +75,15 @@ function MangleXmlIdentifier($str)
 }
     
 
+/**
+* Generates a valid URL for a given Wiki pagename.
+* @param mixed $pagename If a string this will be the name of the Wiki page to link to.
+* 			 If a WikiDB_Page object function will extract the name to link to.
+* 			 If a WikiDB_PageRevision object function will extract the name to link to.
+* @param array $args 
+* @param boolean $get_abs_url Default value is false.
+* @return string The absolute URL to the page passed as $pagename.
+*/
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
     $anchor = false;
     
@@ -119,6 +128,13 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     return $url;
 }
 
+/**
+* Generates icon in front of links.
+* @param string $protocol_or_url URL or protocol to determine which icon to use.
+* @return HtmlElement HtmlElement object that contains data to create img link to
+* icon for use with url or protocol passed to the function. False if no img to be
+* displayed
+*/
 function IconForLink($protocol_or_url) {
     global $Theme;
     if ($filename_suffix = false) {
@@ -138,10 +154,22 @@ function IconForLink($protocol_or_url) {
     }
 }
 
+/**
+* Determines if the url passed to function is safe, by detecting if the characters
+* '<', '>', or '"' are present.
+* @param string $url URL to check for unsafe characters.
+* @return boolean True if same, false else.
+*/
 function IsSafeURL($url) {
     return !ereg('[<>"]', $url);
 }
 
+/**
+* Generates an HtmlElement object to store data for a link.
+* @param string $url URL that the link will point to.
+* @param string $linktext Text to be displayed as link.
+* @return HtmlElement HtmlElement object that contains data to construct an html link.
+*/
 function LinkURL($url, $linktext = '') {
     // FIXME: Is this needed (or sufficient?)
     if(! IsSafeURL($url)) {
