@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: JabberPresence.php,v 1.1 2004-11-20 17:37:23 rurban Exp $');
+rcs_id('$Id: JabberPresence.php,v 1.2 2004-11-20 17:42:57 rurban Exp $');
 /**
  * A simple Jabber presence WikiPlugin.
  * http://wiki.crao.net/index.php/JabberPr%E9sence/Source
@@ -11,6 +11,9 @@ rcs_id('$Id: JabberPresence.php,v 1.1 2004-11-20 17:37:23 rurban Exp $');
  *
  * @author: Arnaud Fontaine
  */
+
+if (!defined('MY_JABBER_ID'))
+    define('MY_JABBER_ID', $request->UserName()."@jabber.com");
 
 class WikiPlugin_JabberPresence
 extends WikiPlugin
@@ -27,13 +30,13 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     // Establish default values for each of this plugin's arguments.
     function getDefaultArguments() {
-        return array('scripturl' => "<mettez l'url de votre bot ici>",
-                     'jid'       => "",
+        return array('scripturl' => "http://edgar.netflint.net/status.php",
+                     'jid'       => MY_JABBER_ID,
 		     'type'      => 'image',
                      'iconset'   => "gabber");
     }
