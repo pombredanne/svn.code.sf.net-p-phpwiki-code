@@ -28,8 +28,7 @@ A few notes:
      flags        => integer,
      lastmodified => integer (also Unix time),
      pagename     => string,
-     version      => integer,
-     refs         => array (where each element is a reference)
+     version      => integer
   };
 
 The functions are:
@@ -156,5 +155,5 @@ The functions are:
       This deletes the existing list of linking pages and inserts all
       the page names in $linklist.
 
-$Id: DBLIB.txt,v 1.8 2000-12-12 21:53:20 wainstead Exp $
+$Id: DBLIB.txt,v 1.9 2001-02-17 05:35:56 dairiki Exp $
 
