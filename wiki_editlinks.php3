@@ -1,3 +1,4 @@
+<!-- $Id: wiki_editlinks.php3,v 1.4 2000-06-05 21:46:50 wainstead Exp $ -->
 <?
    // Thanks to Alister <alister@minotaur.nu> for this code.
    // This allows an arbitrary number of reference links.

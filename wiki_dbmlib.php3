@@ -1,3 +1,4 @@
+<!-- $Id: wiki_dbmlib.php3,v 1.3 2000-06-05 21:46:50 wainstead Exp $ -->
 <?
    /*
       Database functions:
