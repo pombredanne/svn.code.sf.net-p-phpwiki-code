@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: savepage.php,v 1.7.2.1 2001-02-08 18:28:31 dairiki Exp $');
+<?php rcs_id('$Id: savepage.php,v 1.7.2.2 2001-09-21 19:59:13 dairiki Exp $');
 
 /*
    All page saving events take place here.
@@ -69,7 +69,19 @@
          }
       }
 
-      $recentchanges['content'] = $newpage;
+      // copy the new page back into recentchanges, skipping empty days
+      $numlines = sizeof($newpage);
+      $recentchanges['content'] = array();
+      $k = 0;
+      for ($i = 0; $i < $numlines; $i++) {
+         if ($i != $numlines-1 &&
+             preg_match("/^____/", $newpage[$i]) &&
+             preg_match("/^[\r\n]*$/", $newpage[$i+1])) {
+            $i++;
+         } else {
+            $recentchanges['content'][$k++] = $newpage[$i];
+         }
+      }
 
       InsertPage($dbi, gettext ("RecentChanges"), $recentchanges);
    }
