@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.103 2004-07-09 10:06:49 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.104 2004-08-18 11:01:55 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -324,6 +324,12 @@ class _PageList_Column_checkbox extends _PageList_Column {
                         HTML::raw('&nbsp;'),
                         $this->_getValue($pagelist, $page_handle, $revision_handle),
                         HTML::raw('&nbsp;'));
+    }
+    // don't sort this javascript button
+    function button_heading ($pagelist, $colNum) {
+        $s = HTML(HTML::raw('&nbsp;'), $this->_heading, HTML::raw('&nbsp;'));
+        return HTML::th(array('align' => 'center', 'valign' => 'middle', 
+                              'class' => 'gridbutton'), $s);
     }
 };
 
@@ -1139,7 +1145,7 @@ class PageList {
             if ($do_paging and 
                 isset($col->_field) and $col->_field == 'pagename' and 
                 ($maxlen = $this->maxLen()))
-                $heading->setAttr('width',$maxlen * 7);
+                $heading->setAttr('width', $maxlen * 7);
             $row->pushContent($heading);
             if (is_string($col->getHeading()))
                 $table_summary[] = $col->getHeading();
@@ -1212,9 +1218,9 @@ class PageList {
       return JavaScript("
 function flipAll(formObj) {
   var isFirstSet = -1;
-  for (var i=0;i < formObj.length;i++) {
+  for (var i=0; i < formObj.length; i++) {
       fldObj = formObj.elements[i];
-      if (fldObj.type == 'checkbox') { 
+      if ((fldObj.type == 'checkbox') && (fldObj.name.substring(0,2) == 'p[')) { 
          if (isFirstSet == -1)
            isFirstSet = (fldObj.checked) ? true : false;
          fldObj.checked = (isFirstSet) ? false : true;
@@ -1292,6 +1298,15 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2004/07/09 10:06:49  rurban
+// Use backend specific sortby and sortable_columns method, to be able to
+// select between native (Db backend) and custom (PageList) sorting.
+// Fixed PageList::AddPageList (missed the first)
+// Added the author/creator.. name to AllPagesBy...
+//   display no pages if none matched.
+// Improved dba and file sortby().
+// Use &$request reference
+//
 // Revision 1.102  2004/07/08 21:32:35  rurban
 // Prevent from more warnings, minor db and sort optimizations
 //
