@@ -1,13 +1,10 @@
 /* 
- * $Id: phpwiki-modern-heavy.css,v 1.4 2002-01-16 20:04:04 carstenklapp Exp $
+ * $Id: phpwiki-modern-heavy.css,v 1.5 2002-02-08 08:36:11 carstenklapp Exp $
  *
  * phpwiki-modern-heavy.css
  *
  * This is stuff which should be in phpwiki-modern.css, but which breaks NS4.
  */
-
-/* Hide the elements we put in just to get around NS4 bugs. */
-.ns4bug, div.br { display: none; }
 
 /* This break NS4, but is necessary for IE4. */
 div.wikitext { width: auto; }

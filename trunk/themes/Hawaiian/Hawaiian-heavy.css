@@ -1,13 +1,10 @@
 /* 
- * $Id: Hawaiian-heavy.css,v 1.6 2002-02-08 07:24:23 carstenklapp Exp $
+ * $Id: Hawaiian-heavy.css,v 1.7 2002-02-08 08:36:10 carstenklapp Exp $
  *
  * Hawaiian-heavy.css
  *
  * This is stuff which should be in Hawaiian.css, but which breaks NS4.
  */
-
-/* Hide the elements we put in just to get around NS4 bugs. */
-.ns4bug, div.br { display: none; }
 
 /* This makes spacings in NS4 too big. */
 .toolbar, div.toolbar { margin: 0.5ex 0ex; }
