@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.116 2004-11-21 11:59:16 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.117 2004-11-30 17:44:54 rurban Exp $');
 /* Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -367,11 +367,12 @@ class Theme {
      */
     function getLastModifiedMessage ($revision, $show_version = 'auto') {
         global $request;
-
+        if (!$revision) return '';
+        
         // dates >= this are considered invalid.
         if (! defined('EPOCH'))
             define('EPOCH', 0); // seconds since ~ January 1 1970
-
+        
         $mtime = $revision->get('mtime');
         if ($mtime <= EPOCH)
             return fmt("Never edited");
@@ -448,6 +449,7 @@ class Theme {
     }
 
     function getAuthorMessage ($revision, $only_authenticated = true) {
+        if (!$revision) return '';
         $dbi =& $GLOBALS['request']->_dbi;
         $author = $revision->get('author_id');
         if ( $author or $only_authenticated ) {
@@ -1389,6 +1391,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.116  2004/11/21 11:59:16  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.115  2004/11/17 17:24:02  rurban
 // more verbose on fatal template not found
 //
