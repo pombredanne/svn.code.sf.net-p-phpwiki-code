@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.105 2004-05-02 15:10:06 rurban Exp $');
+rcs_id('$Id: config.php,v 1.106 2004-05-02 19:12:14 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -52,8 +52,10 @@ function browserDetect($match) {
 }
 // returns a similar number for Netscape/Mozilla (gecko=5.0)/IE/Opera features.
 function browserVersion() {
-    if (strstr(browserAgent(),"Mozilla/4.0 (compatible; MSIE"))
+    if (strstr(browserAgent(),    "Mozilla/4.0 (compatible; MSIE"))
         return (float) substr(browserAgent(),30);
+    elseif (strstr(browserAgent(),"Mozilla/5.0 (compatible; Konqueror/"))
+        return (float) substr(browserAgent(),36);
     else
         return (float) substr(browserAgent(),8);
 }
@@ -75,6 +77,12 @@ function isBrowserNetscape() {
 // NS3 or less
 function isBrowserNS3() {
     return (isBrowserNetscape() and browserVersion() < 4.0);
+}
+// must omit display alternate stylesheets: konqueror 3.1.4
+// http://sourceforge.net/tracker/index.php?func=detail&aid=945154&group_id=6121&atid=106121
+function isBrowserKonqueror($version = false) {
+    if ($version) return browserDetect('Konqueror/') and browserVersion() >= $version; 
+    return browserDetect('Konqueror/');
 }
 
 /**
@@ -291,6 +299,16 @@ if (!function_exists('array_key_exists')) { // lib/IniConfig.php, sqlite, adodb,
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2004/05/02 15:10:06  rurban
+// new finally reliable way to detect if /index.php is called directly
+//   and if to include lib/main.php
+// new global AllActionPages
+// SetupWiki now loads all mandatory pages: HOME_PAGE, action pages, and warns if not.
+// WikiTranslation what=buttons for Carsten to create the missing MacOSX buttons
+// PageGroupTestOne => subpages
+// renamed PhpWikiRss to PhpWikiRecentChanges
+// more docs, default configs, ...
+//
 // Revision 1.104  2004/05/01 11:26:37  rurban
 // php-4.0.x support: array_key_exists (PHP 4 >= 4.1.0)
 //
