@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.24 2004-07-05 13:56:22 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.25 2004-09-06 08:28:00 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -187,7 +187,7 @@ function installTable(&$dbh, $table, $backend_type) {
     case 'session':
         assert($session_tbl);
         if ($backend_type == 'mysql') {
-            $dbh->genericQuery("
+            $dbh->genericSqlQuery("
 CREATE TABLE $session_tbl (
     	sess_id 	CHAR(32) NOT NULL DEFAULT '',
     	sess_data 	BLOB NOT NULL,
@@ -197,57 +197,57 @@ CREATE TABLE $session_tbl (
 	INDEX (sess_date)
 )");
         } else {
-            $dbh->genericQuery("
+            $dbh->genericSqlQuery("
 CREATE TABLE $session_tbl (
 	sess_id 	CHAR(32) NOT NULL DEFAULT '',
     	sess_data 	".($backend_type == 'pgsql'?'TEXT':'BLOB')." NOT NULL,
     	sess_date 	INT,
     	sess_ip 	CHAR(15) NOT NULL
 )");
-            $dbh->genericQuery("CREATE UNIQUE INDEX sess_id ON $session_tbl (sess_id)");
+            $dbh->genericSqlQuery("CREATE UNIQUE INDEX sess_id ON $session_tbl (sess_id)");
         }
-        $dbh->genericQuery("CREATE INDEX sess_date on session (sess_date)");
+        $dbh->genericSqlQuery("CREATE INDEX sess_date on session (sess_date)");
         break;
     case 'user':
         $user_tbl = $prefix.'user';
         if ($backend_type == 'mysql') {
-            $dbh->genericQuery("
+            $dbh->genericSqlQuery("
 CREATE TABLE $user_tbl (
   	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
   	passwd 	CHAR(48) BINARY DEFAULT '',
   	PRIMARY KEY (userid)
 )");
         } else {
-            $dbh->genericQuery("
+            $dbh->genericSqlQuery("
 CREATE TABLE $user_tbl (
   	userid 	CHAR(48) NOT NULL,
   	passwd 	CHAR(48) DEFAULT ''
 )");
-            $dbh->genericQuery("CREATE UNIQUE INDEX userid ON $user_tbl (userid)");
+            $dbh->genericSqlQuery("CREATE UNIQUE INDEX userid ON $user_tbl (userid)");
         }
         break;
     case 'pref':
         $pref_tbl = $prefix.'pref';
         if ($backend_type == 'mysql') {
-            $dbh->genericQuery("
+            $dbh->genericSqlQuery("
 CREATE TABLE $pref_tbl (
   	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
   	prefs  	TEXT NULL DEFAULT '',
   	PRIMARY KEY (userid)
 )");
         } else {
-            $dbh->genericQuery("
+            $dbh->genericSqlQuery("
 CREATE TABLE $pref_tbl (
   	userid 	CHAR(48) NOT NULL,
   	prefs  	TEXT NULL DEFAULT '',
 )");
-            $dbh->genericQuery("CREATE UNIQUE INDEX userid ON $pref_tbl (userid)");
+            $dbh->genericSqlQuery("CREATE UNIQUE INDEX userid ON $pref_tbl (userid)");
         }
         break;
     case 'member':
         $member_tbl = $prefix.'member';
         if ($backend_type == 'mysql') {
-            $dbh->genericQuery("
+            $dbh->genericSqlQuery("
 CREATE TABLE $member_tbl (
 	userid    CHAR(48) BINARY NOT NULL,
    	groupname CHAR(48) BINARY NOT NULL DEFAULT 'users',
@@ -255,19 +255,19 @@ CREATE TABLE $member_tbl (
    	INDEX (groupname)
 )");
         } else {
-            $dbh->genericQuery("
+            $dbh->genericSqlQuery("
 CREATE TABLE $member_tbl (
 	userid    CHAR(48) NOT NULL,
    	groupname CHAR(48) NOT NULL DEFAULT 'users',
 )");
-            $dbh->genericQuery("CREATE INDEX userid ON $member_tbl (userid)");
-            $dbh->genericQuery("CREATE INDEX groupname ON $member_tbl (groupname)");
+            $dbh->genericSqlQuery("CREATE INDEX userid ON $member_tbl (userid)");
+            $dbh->genericSqlQuery("CREATE INDEX groupname ON $member_tbl (groupname)");
         }
         break;
     case 'rating':
         $rating_tbl = $prefix.'rating';
         if ($backend_type == 'mysql') {
-            $dbh->genericQuery("
+            $dbh->genericSqlQuery("
 CREATE TABLE $rating_tbl (
         dimension INT(4) NOT NULL,
         raterpage INT(11) NOT NULL,
@@ -278,7 +278,7 @@ CREATE TABLE $rating_tbl (
         PRIMARY KEY (dimension, raterpage, rateepage)
 )");
         } else {
-            $dbh->genericQuery("
+            $dbh->genericSqlQuery("
 CREATE TABLE $rating_tbl (
         dimension INT(4) NOT NULL,
         raterpage INT(11) NOT NULL,
@@ -287,7 +287,7 @@ CREATE TABLE $rating_tbl (
         rateeversion INT(11) NOT NULL,
         tstamp TIMESTAMP(14) NOT NULL,
 )");
-            $dbh->genericQuery("CREATE UNIQUE INDEX rating ON $rating_tbl (dimension, raterpage, rateepage)");
+            $dbh->genericSqlQuery("CREATE UNIQUE INDEX rating ON $rating_tbl (dimension, raterpage, rateepage)");
         }
         break;
     }
@@ -341,8 +341,10 @@ function CheckDatabaseUpdate(&$request) {
         $session_tbl = $prefix . $DBParams['db_session_table'];
         $sess_fields = $dbh->_backend->listOfFields($database, $session_tbl);
         if (!strstr(strtolower(join(':', $sess_fields)),"sess_ip")) {
+            // TODO: postgres test (should be able to add columns at the end, but not in between)
             echo "<b>",_("ADDING"),"</b>"," ... ";		
-            $dbh->genericQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
+            $dbh->genericSqlQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
+            $dbh->genericSqlQuery("CREATE INDEX sess_date ON $session_tbl (sess_date)");
         } else {
             echo _("OK");
         }
@@ -359,29 +361,30 @@ function CheckDatabaseUpdate(&$request) {
         for ($i = 0; $i < $columns; $i++) {
             if (mysql_field_name($fields, $i) == 'id') {
             	$flags = mysql_field_flags($fields, $i);
-                //FIXME: something wrong with ADODB here!
-            	if (!strstr(strtolower($flags),"auto_increment")) {
-                    echo "<b>",_("ADDING"),"</b>"," ... ";		
+                //DONE: something was wrong with ADODB here.
+            	if (!strstr(strtolower($flags), "auto_increment")) {
+                    echo "<b>",_("ADDING"),"</b>"," ... ";
                     // MODIFY col_def valid since mysql 3.22.16,
                     // older mysql's need CHANGE old_col col_def
-                    $dbh->genericQuery("ALTER TABLE $page_tbl CHANGE id id INT NOT NULL AUTO_INCREMENT");
+                    $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE id id INT NOT NULL AUTO_INCREMENT");
                     $fields = mysql_list_fields($database, $page_tbl);
-                    if (!strstr(strtolower(mysql_field_flags($fields, $i)),"auto_increment"))
-                        echo " <b><font color=\"red\">",_("FAILED"),"</font></b><br />\n";
+                    if (!strstr(strtolower(mysql_field_flags($fields, $i)), "auto_increment"))
+                        echo " <b><font color=\"red\">", _("FAILED"), "</font></b><br />\n";
                     else     
-                        echo _("OK"),"<br />\n";
+                        echo _("OK"), "<br />\n";
             	} else {
-                    echo _("OK"),"<br />\n";            		
+                    echo _("OK"), "<br />\n";            		
             	}
             	break;
             }
         }
         mysql_free_result($fields);
     }
-    // check for mysql 4.1.x/5.0.0a binary search bug.
+    // check for mysql 4.1.x/5.0.0a binary search problem.
     //   http://bugs.mysql.com/bug.php?id=4398
     // "select * from page where LOWER(pagename) like '%search%'" does not apply LOWER!
     // confirmed for 4.1.0alpha,4.1.3-beta,5.0.0a; not yet tested for 4.1.2alpha,
+    // TODO: there's a known workaround, not yet applied. on windows only.
     if (substr($backend_type,0,5) == 'mysql') {
   	echo _("check for mysql 4.1.x/5.0.0 binary search problem")," ...";
   	$result = mysql_query("SELECT VERSION()",$dbh->_backend->connection());
@@ -390,7 +393,7 @@ function CheckDatabaseUpdate(&$request) {
         $arr = explode('.',$mysql_version);
         $version = (string)(($arr[0] * 100) + $arr[1]) . "." . (integer)$arr[2];
         if ($version >= 401.0) {
-            $dbh->genericQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL;");
+            $dbh->genericSqlQuery("ALTER TABLE $page_tbl CHANGE pagename pagename VARCHAR(100) NOT NULL;");
             echo sprintf(_("version <em>%s</em> <b>FIXED</b>"), $mysql_version),"<br />\n";	
         } else {
             echo sprintf(_("version <em>%s</em> not affected"), $mysql_version),"<br />\n";
@@ -493,6 +496,9 @@ function DoUpgrade($request) {
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.24  2004/07/05 13:56:22  rurban
+ sqlite autoincrement fix
+
  Revision 1.23  2004/07/04 10:28:06  rurban
  DBADMIN_USER fix
 
@@ -540,7 +546,7 @@ function DoUpgrade($request) {
  reanable admin check without ENABLE_PAGEPERM in the admin plugins
 
  Revision 1.12  2004/05/18 13:59:15  rurban
- rename simpleQuery to genericQuery
+ rename simpleQuery to genericSqlQuery
 
  Revision 1.11  2004/05/15 13:06:17  rurban
  skip the HomePage, at first upgrade the ActionPages, then the database, then the rest
