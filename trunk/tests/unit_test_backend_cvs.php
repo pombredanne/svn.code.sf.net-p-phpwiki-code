@@ -10,9 +10,7 @@
 // assume that the we've cd'ed to the tests directory
 ini_set('include_path', '..' );
 
-function rcs_id()
-{
-}
+function rcs_id() {}
 
 if ( $USER == "root" ) {
   // root user can't check in to a CVS repository
