@@ -9,13 +9,13 @@ $locale["%d best outgoing links:"] =
 $locale["%d most popular nearby:"] =
    "Die %d meistbesuchten Seiten in der Nähe:";
 $locale["(Any password will work, except, of course for the admin user.)"] =
-   "(Irgende Wörter können als Passwort angenommen werden sowieso, aber natürlich nicht fur die Admin-Benuzer.)";
+   "(Irgende Wörter können als Passwort angenommen werden sowieso, aber natürlich nicht für der Systemverwalter.)";
 $locale["(diff)"] =
    "(vgl.)";
 $locale[", saved on"] =
    ", seite zuletzt verändert am";
 $locale["- saved as version %d"] =
-   "- als Version %d gespeichert";
+   "- als Version %d. gespeichert";
 $locale["- skipped"] =
    "- ausgelassen";
 $locale["<%s: no such section>"] =
@@ -27,7 +27,7 @@ $locale["<no matches>"] =
 $locale["<none>"] =
    "<keine>";
 $locale["Action %s is disabled in this wiki."] =
-   "In dieses Wikis ist die Tatigkeit »%s« nicht erlauben.";
+   "In dieses Wikis wurde die Tatigkeit »%s« nicht erlauben.";
 $locale["All %s are listed below."] =
    "Alle %s sind unten auflistet.";
 $locale["BAD URL -- remove all of <, >, \""] =
@@ -89,7 +89,7 @@ $locale["Hits"] =
 $locale["HomePage"] =
    "StartSeite";
 $locale["I'm sorry.  Version %d of %s is not in my database."] =
-   "Es tut mir leid.  Version %d von %s war nicht in meine Datenbank.";
+   "Es tut mir leid.  Version %d. von %s war nicht in meine Datenbank.";
 $locale["In order to recover from this situation follow these steps:"] =
    "Um diese Situation zu korrigieren folge bitte den folgenden Schritten:";
 $locale["IncludePage"] =
@@ -184,6 +184,8 @@ $locale["Remove page"] =
    "Seite löschen";
 $locale["Removed page '%s' succesfully."] =
    "Seite »%s« erfolgreich gelöscht.";
+$locale["Required form variables are missing."] =
+   "Benötigen Form-Variablen sind Fehlend.";
 $locale["Save"] =
    "Speichern";
 $locale["Search"] =
@@ -221,7 +223,7 @@ $locale["These pages share an initial or final title word with '%s'"] =
 $locale["This is a minor change."] =
    "Geringfügige Änderung";
 $locale["This page has been locked by the administrator and cannot be edited."] =
-   "Diese Seite wurde vom Administrator gesperrt und kann nicht editiert werden.";
+   "Diese Seite wurde vom Systemverwalter gesperrt und kann nicht editiert werden.";
 $locale["Title Search"] =
    "Volltextsuch";
 $locale["Title search results for '%s'"] =
@@ -229,7 +231,7 @@ $locale["Title search results for '%s'"] =
 $locale["TitleSearch"] =
    "Volltextsuch";
 $locale["To cancel press the \"Back\" button of your browser."] =
-   "Anderenfalls benütze die \"Zurück\" Funktion deines Browsers.";
+   "Anderenfalls benütze die »Zurück« Funktion deines Browsers.";
 $locale["Unlock page"] =
    "Seite freigeben";
 $locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
@@ -239,7 +241,7 @@ $locale["UserPreferences"] =
 $locale["Version"] =
    "Version";
 $locale["Version %d"] =
-   "Version %d";
+   "Version %d.";
 $locale["Versions are identical"] =
    "Versionen sind identisch";
 $locale["Warning: You are editing an old revision."] =
@@ -257,9 +259,9 @@ $locale["You entered an invalid login or password."] =
 $locale["You have not made any changes."] =
    "Du hast keine Änderungen gemacht.";
 $locale["You must be logged in as an administrator"] =
-   "Du mußt dich als eine Administrator anmelden";
+   "Du mußt dich als eine Systemverwalter anmelden";
 $locale["You must set the administrator account and password before you can log in."] =
-   "Du mußt der Administrator-Account mit Passwort zuerst schützen bevor du dich anmelden kannst.";
+   "Du mußt der Systemverwalter-Account mit Passwort zuerst schützen bevor du dich anmelden kannst.";
 $locale["Your careful attention to detail is much appreciated."] =
    "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt.";
 $locale["[%d] See [%s]"] =
@@ -305,6 +307,6 @@ $locale["to view the current version."] =
 $locale["version"] =
    "Version";
 $locale["version %d"] =
-   "Version %d";
+   "Version %d.";
 
 ;?>
