@@ -1,5 +1,5 @@
-<!-- $Id: wiki_editpage.php3,v 1.12 2000-08-15 02:59:20 wainstead Exp $ -->
-<?
+<!-- $Id: wiki_editpage.php3,v 1.13 2000-08-29 02:37:42 aredridel Exp $ -->
+<?php
 
    // editpage relies on $pagename and $ScriptUrl
 

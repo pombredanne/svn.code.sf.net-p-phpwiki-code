@@ -1,6 +1,6 @@
-<!-- $Id: wiki_pageinfo.php3,v 1.6 2000-08-15 02:59:20 wainstead Exp $ -->
+<!-- $Id: wiki_pageinfo.php3,v 1.7 2000-08-29 02:37:42 aredridel Exp $ -->
 <!-- Display the internal structure of a page. Steve Wainstead, June 2000 -->
-<?
+<?php
    if (get_magic_quotes_gpc()) {
       $info = stripslashes($info);
    }

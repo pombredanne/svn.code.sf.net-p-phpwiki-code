@@ -1,5 +1,5 @@
-<!-- $Id: wiki_display.php3,v 1.7 2000-08-15 02:59:20 wainstead Exp $ -->
-<?
+<!-- $Id: wiki_display.php3,v 1.8 2000-08-29 02:37:42 aredridel Exp $ -->
+<?php
    /*
       display.php3: render a page. This has all the display 
       logic in it, except for the search boxes.

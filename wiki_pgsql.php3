@@ -1,5 +1,5 @@
-<!-- $Id: wiki_pgsql.php3,v 1.15 2000-08-15 02:54:04 wainstead Exp $ -->
-<?
+<!-- $Id: wiki_pgsql.php3,v 1.16 2000-08-29 02:37:42 aredridel Exp $ -->
+<?php
 
    /*
       Database functions:

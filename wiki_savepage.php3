@@ -1,5 +1,5 @@
-<!-- $Id: wiki_savepage.php3,v 1.15 2000-08-15 02:59:20 wainstead Exp $ -->
-<?
+<!-- $Id: wiki_savepage.php3,v 1.16 2000-08-29 02:37:42 aredridel Exp $ -->
+<?php
 
 /*
    All page saving events take place here.

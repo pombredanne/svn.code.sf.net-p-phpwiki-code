@@ -1,5 +1,5 @@
-<!-- $Id: wiki_stdlib.php3,v 1.26 2000-08-15 02:49:06 wainstead Exp $ -->
-<?
+<!-- $Id: wiki_stdlib.php3,v 1.27 2000-08-29 02:37:42 aredridel Exp $ -->
+<?php
    /*
       Standard functions for Wiki functionality
 	 GeneratePage($template, $content, $name, $hash)

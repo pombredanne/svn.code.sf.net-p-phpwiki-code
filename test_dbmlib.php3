@@ -1,4 +1,4 @@
-<!-- $Id: test_dbmlib.php3,v 1.6 2000-08-15 02:59:20 wainstead Exp $ -->
+<!-- $Id: test_dbmlib.php3,v 1.7 2000-08-29 02:37:42 aredridel Exp $ -->
 <html>
 <head>
 <title>Test bed for database library</title>
@@ -6,7 +6,7 @@
 
 <body>
 
-<?
+<?php
    include "wiki_config.php3";
    
    // OpenDataBase()
@@ -33,7 +33,7 @@
 
 <hr>
 
-<?
+<?php
 
    // IsWikPage()
    // Test for pages to see if they are there
@@ -65,7 +65,7 @@
 
 <hr>
 
-<?
+<?php
 
    // RetrievePage()
    // Retrieve a page; should handle successful 
@@ -101,7 +101,7 @@
 
 <hr>
 
-<?
+<?php
 
    // CloseDataBase()
    // try to close the database

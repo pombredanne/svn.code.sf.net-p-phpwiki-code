@@ -1,5 +1,5 @@
-<!-- $Id: wiki_transform.php3,v 1.13 2000-07-12 18:47:53 dairiki Exp $ -->
-<?
+<!-- $Id: wiki_transform.php3,v 1.14 2000-08-29 02:37:42 aredridel Exp $ -->
+<?php
    // expects $pagehash and $html to be set
 
    // Set up inline links and images
