@@ -8,7 +8,7 @@ For more information on mySQL go to http://www.mysql.org/
 
 1. If you do not have a suitable database already, create one.
 
-	mysqladmin -uuser -ppaswword create phpwiki
+	mysqladmin -uuser -ppassword create phpwiki
 
 2. If necessary create a user for that database which has the rights to
    select, insert, update, delete. A mySQL grant statment for this user
@@ -21,13 +21,14 @@ For more information on mySQL go to http://www.mysql.org/
 
 3. Create tables inside your database.
 
-	CREATE table wiki (
-		page varchar(100) primary key,
-		hash mediumtext);
+	mysql -uuser -ppassword phpwiki <schemas/schema.mysql
 
-	CREATE table archive (
-		page varchar(100) primary key,
-		hash mediumtext);
+   Note: the user specified in this command needs to have the rights
+         to drop and create tables. Use the same user as in step 1.
+
+   If you are using mySQL 3.21.x or earlier the script may issue an
+   error. In that case remove existing tables manually and delete
+   the "drop tables" lines from schemas/schema.mysql - it should work now
 
 4. Edit wiki_config.php3 to reflect your settings.
 
@@ -50,4 +51,4 @@ the necessary access rights for the phpwiki tables.
 /Arno
 ahollosi@iname.com
 
-$Id: INSTALL.mysql,v 1.2 2000-06-08 22:11:05 ahollosi Exp $
+$Id: INSTALL.mysql,v 1.3 2000-06-21 22:59:18 ahollosi Exp $
