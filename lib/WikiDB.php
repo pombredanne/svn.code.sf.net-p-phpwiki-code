@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.42 2004-04-18 01:11:51 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.43 2004-04-18 01:34:20 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -306,6 +306,9 @@ class WikiDB {
      * pages.
      */
     function mostPopular($limit = 20, $sortby = '') {
+        // we don't support sortby=mtime here
+        if (strstr($sortby,'mtime'))
+            $sortby = '';
         $result = $this->_backend->most_popular($limit, $sortby);
         return new WikiDB_PageIterator($this, $result);
     }
@@ -824,6 +827,7 @@ class WikiDB_Page
                         
                     } else {
                         $difflink = WikiUrl($this->_pagename,array(),true);
+                        if (!isset($meta['mtime'])) $meta['mtime'] = time();
                         $content = $this->_pagename . " " . $version . " " .  Iso8601DateTime($meta['mtime']) . "\n";
                         $content .= _("New Page");
                     }
@@ -1692,6 +1696,11 @@ class WikiDB_cache
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2004/04/18 01:11:51  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 
 // Local Variables:
 // mode: php

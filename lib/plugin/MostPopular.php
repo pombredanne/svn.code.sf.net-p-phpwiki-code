@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopular.php,v 1.25 2004-03-30 02:38:06 rurban Exp $');
+rcs_id('$Id: MostPopular.php,v 1.26 2004-04-18 01:34:21 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -38,7 +38,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
@@ -54,11 +54,16 @@ extends WikiPlugin
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
+    // sortby: only pagename or hits. mtime not!
 
     function run($dbi, $argstr, &$request, $basepage) {
     	//$request->setArg('nocache','1');
         extract($this->getArgs($argstr, $request));
-
+        if (strstr($sortby,'mtime')) {
+            trigger_error(_("sortby=mtime not supported with MostPopular"),
+                          E_USER_WARNING);
+            $sortby = '';
+        }
         $columns = $info ? explode(",", $info) : array();
         array_unshift($columns, 'hits');
 
@@ -91,6 +96,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2004/03/30 02:38:06  rurban
+// RateIt support (currently no recommendation engine yet)
+//
 // Revision 1.24  2004/03/01 13:48:46  rurban
 // rename fix
 // p[] consistency fix

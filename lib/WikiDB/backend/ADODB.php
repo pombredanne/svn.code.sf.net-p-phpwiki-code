@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.23 2004-04-16 14:19:39 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.24 2004-04-18 01:34:20 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -621,7 +621,7 @@ extends WikiDB_backend
             $order = "ASC"; 
             $limit = -$limit;
         }
-        if ($sortby) $orderby = 'ORDER BY ' . PageList::sortby($sortby,'db');
+        if ($sortby) $orderby = "ORDER BY " . PageList::sortby($sortby,'db');
         else         $orderby = "ORDER BY hits $order";
         $limit = $limit ? $limit : -1;
 
@@ -1039,6 +1039,9 @@ extends WikiDB_backend_ADODB_generic_iter
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/04/16 14:19:39  rurban
+// updated ADODB notes
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
