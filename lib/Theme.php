@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.27 2002-01-31 03:18:42 dairiki Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.28 2002-02-01 05:58:45 dairiki Exp $');
 
 require_once('lib/HtmlElement.php');
 
@@ -112,7 +112,7 @@ function WikiLink ($page_or_rev, $type = false, $label = false) {
 function Button ($action, $label = false, $page_or_rev = false) {
     global $Theme;
 
-    if (preg_match('/submit:(.*)/A', $action, $m))
+    if (!is_array($action) && preg_match('/submit:(.*)/A', $action, $m))
         return $Theme->makeSubmitButton($label, $m[1]);
     else
         return $Theme->makeActionButton($action, $label, $page_or_rev);
