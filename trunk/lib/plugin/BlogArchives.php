@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BlogArchives.php,v 1.1 2004-12-13 13:22:57 rurban Exp $');
+rcs_id('$Id: BlogArchives.php,v 1.2 2004-12-14 21:35:15 rurban Exp $');
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
  */
@@ -14,6 +14,7 @@ require_once('lib/plugin/WikiBlog.php');
  *
  * TODO: year=
  *       support PageList (paging, limit, info filters: title, num, month, year, ...)
+ *       leave off time subpage? Blogs just per day with one summary title only?
  * @author: Reini Urban
  */
 class WikiPlugin_BlogArchives
@@ -29,19 +30,19 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
-        return array_merge
-            (
-             //PageList::supportedArgs(), 
-             array('user'     => false,
+        return //array_merge
+               //(
+               //PageList::supportedArgs(), 
+             array('user'     => '',
                    'order'    => 'reverse',        // latest first
                    'info'     => 'month,numpages', // ignored
                    'month'    => false,
                    'noheader' => 0
-                   ));
+                   );
     }
 
     // "2004-12" => "December 2004"
@@ -70,23 +71,33 @@ extends WikiPlugin_WikiBlog
     }
     
     function run($dbi, $argstr, &$request, $basepage) {
-        if (is_array($argstr))
+        if (is_array($argstr)) // can do with array also.
             $args =& $argstr;
         else
             $args = $this->getArgs($argstr, $request);
-        $user = $request->getUser();
-        if ($user->isAuthenticated())
-            $args['user'] = $user->UserName();
-        else
-            $args['user'] = ADMIN_USER;
-        $info = explode(',', $args['info']);
+        if (empty($args['user'])) {
+            $user = $request->getUser();
+            if ($user->isAuthenticated()) {
+                $args['user'] = $user->UserName();
+            } else {
+                $args['user'] = '';
+            }
+        }
+        if (!$args['user'] or $args['user'] == ADMIN_USER) {
+            if (BLOG_EMPTY_DEFAULT_PREFIX)
+                $args['user'] = ''; 	    // "Blogs/day" pages 
+            else
+                $args['user'] = ADMIN_USER; // "Admin/Blogs/day" pages 
+        }
+        $parent = (empty($args['user']) ? '' : $args['user'] . SUBPAGE_SEPARATOR);
+
+        //$info = explode(',', $args['info']);
         //$pagelist = new PageList($args['info'], $args['exclude'], $args);
         //if (!is_array('pagename'), explode(',', $info))
         //    unset($pagelist->_columns['pagename']);
         
-        //$prefix = $args['user'].SUBPAGE_SEPARATOR."Blog";
-        if ($args['month']) {
-            $prefix = $args['user'].SUBPAGE_SEPARATOR."Blog".SUBPAGE_SEPARATOR.$args['month'].'-';
+        if (!empty($args['month'])) {
+            $prefix = $parent . $this->_blogPrefix('wikiblog') . SUBPAGE_SEPARATOR . $args['month'];
             $pages = $dbi->titleSearch(new TextSearchQuery("^".$prefix, true, 'posix'));
             $html = HTML::ul();
             while ($page = $pages->next()) {
@@ -109,7 +120,7 @@ extends WikiPlugin_WikiBlog
             usort($blogs, array("WikiPlugin_WikiBlog", "cmp"));
             if ($args['order'] == 'reverse')
                 $blogs = array_reverse($blogs);
-            // collapse pagenames by month    
+            // collapse pagenames by month
             $months = array();
             foreach ($blogs as $rev) {
                 $blog = $this->_blog($rev);
@@ -121,7 +132,6 @@ extends WikiPlugin_WikiBlog
                               'month' => $mon,
                               'link'  => WikiURL($basepage, 
                                          $this->_nonDefaultArgs(array('month' => $mon))));
-                                          
                 else
                     $months[$mon]['num']++;
             }
@@ -142,12 +152,16 @@ extends WikiPlugin_WikiBlog
     function box($args=false, $request=false, $basepage=false) {
         if (!$request) $request =& $GLOBALS['request'];
         if (!$args or empty($args['limit'])) $args['limit'] = 10;
-        if (!$args or empty($args['noheader'])) $args['noheader'] = 1;
-        return $this->makeBox('', $this->run($request->_dbi, $args, $request, $basepage));
+        $args['noheader'] = 1;
+        return $this->makeBox(_("Archives"), $this->run($request->_dbi, $args, $request, $basepage));
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/12/13 13:22:57  rurban
+// new BlogArchives plugin for the new blog theme. enable default box method
+// for all plugins. Minor search improvement.
+//
 
 // Local Variables:
 // mode: php

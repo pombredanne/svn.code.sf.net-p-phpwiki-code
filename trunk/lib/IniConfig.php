@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.67 2004-11-30 09:51:35 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.68 2004-12-14 21:35:15 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -174,6 +174,7 @@ function IniConfig($file) {
          'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
          'DISABLE_HTTP_REDIRECT',
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
+         'BLOG_EMPTY_DEFAULT_PREFIX',
          );
 
     $rs = @parse_ini_file($file);
@@ -761,6 +762,9 @@ function fixup_dynamic_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.67  2004/11/30 09:51:35  rurban
+// changed KEYWORDS from pageprefix to search term. added installer detection.
+//
 // Revision 1.66  2004/11/17 17:23:12  rurban
 // fixed chdir back from locale
 //
