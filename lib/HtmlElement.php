@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.17 2002-02-06 18:45:55 carstenklapp Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.18 2002-02-06 19:56:24 carstenklapp Exp $');
 /*
  * Code for writing XML.
  */
@@ -192,10 +192,6 @@ class HTML extends HtmlElement {
 
     /****************************************/
     function hr (/*...*/) {
-        // better way to do this?
-        global $Theme;
-        if ($hr = $Theme->hr())
-            return $hr;
         $el = new HtmlElement('hr');
         return $el->_init2(func_get_args());
     }
