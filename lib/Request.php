@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.84 2004-12-17 16:37:30 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.85 2004-12-26 17:08:36 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -51,7 +51,7 @@ class Request {
         $this->cookies = new Request_CookieVars;
         
         if (ACCESS_LOG or ACCESS_LOG_SQL) {
-            $this->_accesslog =& new Request_AccessLog(ACCESS_LOG, ACCESS_LOG_SQL);
+            $this->_accesslog = new Request_AccessLog(ACCESS_LOG, ACCESS_LOG_SQL);
         }
         
         $GLOBALS['request'] = $this;
@@ -175,12 +175,15 @@ class Request {
             $this->finish();
         }
         else if ($bogus) {
+            // Safari needs window.location.href = targeturl
             return JavaScript("
               function redirect(url) {
                 if (typeof location.replace == 'function')
                   location.replace(url);
                 else if (typeof location.assign == 'function')
                   location.assign(url);
+                else if (self.location.href)
+                  self.location.href = url;
                 else
                   window.location = url;
               }
@@ -801,7 +804,7 @@ class Request_AccessLog {
             }
         }
         $this->entries = array();
-        $this->entries[] = & new Request_AccessLogEntry($this);
+        $this->entries[] = new Request_AccessLogEntry($this);
     }
 
     function _do($cmd, &$arg) {
@@ -1093,12 +1096,13 @@ class Request_AccessLogEntry
             } else { 
           	$this->request_args = $GLOBALS['request']->get('QUERY_STRING'); 
             }
+            // duration problem: sprintf "%f" might use comma e.g. "100,201" in european locales
             $dbh->genericSqlQuery
                 (
                  sprintf("INSERT DELAYED INTO $log_tbl"
                          . " (time_stamp,remote_host,remote_user,request_method,request_line,request_uri,"
                          .   "request_args,request_time,status,bytes_sent,referer,agent,request_duration)"
-                         . " VALUES(%d,%s,%s,%s,%s,%s,%s,%s,%d,%d,%s,%s,%f)",
+                         . " VALUES(%d,%s,%s,%s,%s,%s,%s,%s,%d,%d,%s,%s,'%s')",
                      $this->time,
                      $dbh->quote($this->host), $dbh->quote($this->user),
                      $dbh->quote($GLOBALS['request']->get('REQUEST_METHOD')), $dbh->quote($this->request), 
@@ -1309,6 +1313,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.84  2004/12/17 16:37:30  rurban
+// avoid warning
+//
 // Revision 1.83  2004/12/10 02:36:43  rurban
 // More help with the new native xmlrpc lib. no warnings, no user cookie on xmlrpc.
 //

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.40 2004-12-13 14:39:46 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.41 2004-12-26 17:08:36 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -306,6 +306,9 @@ class ErrorManager
         $flushed = HTML();
         for ($i=0; $i<count($errors); $i++) {
             $error =& $errors[$i];
+            if (!is_object($error)) {
+                continue;
+            }
             if (($error->errno & $keep_mask) != 0)
                 continue;
             unset($errors[$i]);
@@ -362,22 +365,22 @@ class PhpError {
     /**
      * The PHP errno
      */
-    var $errno;
+    //var $errno;
 
     /**
      * The PHP error message.
      */
-    var $errstr;
+    //var $errstr;
 
     /**
      * The source file where the error occurred.
      */
-    var $errfile;
+    //var $errfile;
 
     /**
      * The line number (in $this->errfile) where the error occured.
      */
-    var $errline;
+    //var $errline;
 
     /**
      * Construct a new PhpError.
@@ -605,6 +608,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2004/12/13 14:39:46  rurban
+// aesthetics
+//
 // Revision 1.39  2004/11/05 18:04:20  rurban
 // print errno only if _DEBUG_VERBOSE
 //
