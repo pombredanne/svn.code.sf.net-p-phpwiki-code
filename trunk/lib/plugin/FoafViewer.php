@@ -1,10 +1,7 @@
 <?php
-rcs_id('$Id: FoafViewer.php,v 1.1 2004-06-08 21:38:21 rurban Exp $');
+rcs_id('$Id: FoafViewer.php,v 1.2 2004-06-13 13:54:25 rurban Exp $');
 
 //ini_set('include_path','.;C:/php/pear');
-
-// Require the XML_FOAF_Parser class. This is a pear library not included with phpwiki.
-require_once 'XML/FOAF/Parser.php';
 
 /**
 * Basic FoafViewPlugin for PHPWiki.
@@ -41,6 +38,16 @@ require_once 'XML/FOAF/Parser.php';
 class WikiPlugin_FoafViewer
 extends WikiPlugin
 {
+    // The handler is handled okay. The only problem is that it still 
+    // throws a fatal.
+    function _error_handler($error) {
+        if (strstr($error->errstr,"Failed opening required 'XML/FOAF/Parser.php'"))
+            return true;
+        elseif (strstr($error->errstr,'No such file or directory'))
+            return true;
+        return false;
+    }
+
     function getName() {
         return _("FoafViewer");
     }
@@ -51,7 +58,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -62,6 +69,19 @@ extends WikiPlugin
     }
                 
     function run($dbi, $argstr, $request, $basepage) {
+
+        /* ignore fatal on loading */
+        /*
+        global $ErrorManager;
+        $ErrorManager->pushErrorHandler(new WikiMethodCb($this,'_error_handler'));
+        */
+        // Require the XML_FOAF_Parser class. This is a pear library not included with phpwiki.
+        //if (findFile('XML/FOAF/Parser.php','missing_ok'))
+            require_once 'XML/FOAF/Parser.php';
+        //$ErrorManager->popErrorHandler();
+        if (!class_exists('XML_FOAF_Parser'))
+            return $this->error(_("required pear library XML/FOAF/Parser.php not found in include_path"));
+
         extract($this->getArgs($argstr, $request));
         // Get our FOAF File from the foaf plugin argument or $_GET['foaf']
         if (empty($foaf)) $foaf = $request->getArg('foaf');
@@ -197,6 +217,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/06/08 21:38:21  rurban
+// based on dans version 0.0.2 - simplified
+//
 
 // For emacs users
 // Local Variables:

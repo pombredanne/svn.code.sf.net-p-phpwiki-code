@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.105 2004-06-08 19:48:16 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.106 2004-06-13 13:54:25 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -25,6 +25,21 @@ rcs_id('$Id: loadsave.php,v 1.105 2004-06-08 19:48:16 rurban Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
+/**
+ * ignore fatal errors during dump
+ */
+function _ignore_fatal_plugin_error_handler(&$error) {
+    if ($error->isFatal()) {
+        $error->errno = E_USER_WARNING;
+        return true;
+    }
+    return false; // let the message come through: call the remaining handlers:
+    /*
+    if (preg_match('/Plugin/',$error->errstr))
+        return true;        // Ignore error
+    */
+}
+
 function StartLoadDump(&$request, $title, $html = '')
 {
     // FIXME: This is a hack
@@ -32,10 +47,16 @@ function StartLoadDump(&$request, $title, $html = '')
                                   'HEADER' => $title,
                                   'CONTENT' => '%BODY%'));
     echo ereg_replace('%BODY%.*', '', $tmpl->getExpansion($html));
+
+    /* ignore fatals in plugins */
+    global $ErrorManager;
+    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin_error_handler'));
 }
 
 function EndLoadDump(&$request)
 {
+    global $ErrorManager;
+    $ErrorManager->popErrorHandler();
     // FIXME: This is a hack
     $pagelink = WikiLink($request->getPage());
 
@@ -135,8 +156,11 @@ function MakeWikiZip (&$request)
     }
 
 
-
     $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
+
+    /* ignore fatals in plugins */
+    global $ErrorManager;
+    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin_error_handler'));
 
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
@@ -166,6 +190,7 @@ function MakeWikiZip (&$request)
                               $content, $attrib);
     }
     $zip->finish();
+    $ErrorManager->popErrorHandler();
 }
 
 function DumpToDir (&$request)
@@ -265,11 +290,6 @@ function DumpHtmlToDir (&$request)
 
         $msg = HTML(HTML::br(), $pagename, ' ... ');
 
-        if($page->getName() != $filename) {
-            $msg->pushContent(HTML::small(fmt("saved as %s", $filename)),
-                              " ... ");
-        }
-
         $revision = $page->getCurrentRevision();
         $transformedContent = $revision->getTransformedContent();
         $template = new Template('browse', $request,
@@ -283,8 +303,17 @@ function DumpHtmlToDir (&$request)
                                                "$directory/$filename")));
             $request->finish($msg);
         }
-
         $num = fwrite($fd, $data, strlen($data));
+        if($page->getName() != $filename) {
+            $prefix = '';
+            if (isWindows()) {	
+            	// drive where apache is installed
+                $prefix = '/' . substr($_SERVER["DOCUMENT_ROOT"],0,2);
+            }
+            $link = LinkURL("file://".$prefix.$directory."/".$filename, 
+                            $filename);
+            $msg->pushContent(HTML::small(_("saved as "), $link, " ... "));
+        }
         $msg->pushContent(HTML::small(fmt("%s bytes written", $num), "\n"));
         PrintXML($msg);
 
@@ -350,6 +379,10 @@ function MakeWikiZipHtml (&$request)
     if (defined('HTML_DUMP_SUFFIX'))
         $Theme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
 
+    /* ignore fatals in plugins */
+    global $ErrorManager;
+    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin_error_handler'));
+
     while ($page = $pages->next()) {
     	if (! $request->getArg('start_debug'))
             @set_time_limit(30); // Reset watchdog.
@@ -380,6 +413,7 @@ function MakeWikiZipHtml (&$request)
     }
     // FIXME: Deal with images here.
     $zip->finish();
+    $ErrorManager->popErrorHandler();
     $Theme->$HTML_DUMP_SUFFIX = '';
 }
 
@@ -916,6 +950,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.105  2004/06/08 19:48:16  rurban
+ fixed foreign setup: no ugly skipped msg for the GenericPages, load english actionpages if translated not found
+
  Revision 1.104  2004/06/08 13:51:57  rurban
  some comments only
 

@@ -156,11 +156,12 @@ class Google {
     function Google($maxResults=10,$license_key=false,$proxy=false) {
         if ($license_key)
             $this->license_key = $license_key;
-        elseif (!defined('GOOGLE_LICENSE_KEY'))
-            return HTML::div(array('class' => 'errors'),
-                             fmt("You must first obtain a license key at %s to be able to use the Google API.",
-                                 WikiLink("http://www.google.com/apis/")),
-                             fmt("It's free however."));
+        elseif (!defined('GOOGLE_LICENSE_KEY')) {
+            trigger_error("\nYou must first obtain a license key at http://www.google.com/apis/"
+                         ."\nto be able to use the Google API.".
+                          "\nIt's free however.", E_USER_WARNING);
+            return false;
+        }
         else
             $this->license_key = GOOGLE_LICENSE_KEY;
         require_once("lib/nusoap/nusoap.php");
@@ -219,6 +220,8 @@ class Google {
     function doGoogleSearch($query, $startIndex=1, $maxResults=10, $filter = "false",
                             $restrict='', $safeSearch='false', $lr='',
                             $inputencoding='UTF-8', $outputencoding='UTF-8') {
+        if (!defined("GOOGLE_LICENSE_KEY"))
+            return false;
         // doGoogleSearch() gets created automatically!! (some eval'ed code from the soap request)
         $result = $this->doGoogleSearch(GOOGLE_LICENSE_KEY, // "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                                         $query,

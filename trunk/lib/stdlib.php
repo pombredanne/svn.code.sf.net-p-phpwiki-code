@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.185 2004-06-11 09:07:30 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.186 2004-06-13 13:54:25 rurban Exp $');
 
 /*
   Standard functions for Wiki functionality
@@ -1275,7 +1275,9 @@ function explodePageList($input, $perm=false, $sortby='pagename', $limit=false) 
 
 // Class introspections
 
-/** Determine whether object is of a specified type.
+/** 
+ * Determine whether object is of a specified type.
+ * In PHP builtin since 4.2.0 as is_a()
  *
  * @param $object object An object.
  * @param $class string Class name.
@@ -1592,6 +1594,9 @@ function url_get_contents( $uri ) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.185  2004/06/11 09:07:30  rurban
+// support theme-specific LinkIconAttr: front or after or none
+//
 // Revision 1.184  2004/06/04 20:32:53  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole

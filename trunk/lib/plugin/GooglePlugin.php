@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GooglePlugin.php,v 1.2 2004-04-18 01:11:52 rurban Exp $');
+rcs_id('$Id: GooglePlugin.php,v 1.3 2004-06-13 13:54:25 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -49,7 +49,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -69,9 +69,11 @@ extends WikiPlugin
         //    return '';
         $html = HTML();
         extract($args);
-        if ($request->isPost()) {
+        // prevent from dump
+        if ($q and $request->isPost()) {
             require_once("lib/Google.php");
             $google = new Google();
+            if (!$google) return '';
             switch ($mode) {
                 case 'search': $result = $google->doGoogleSearch($q); break;
                 case 'cache':  $result = $google->doGetCachedPage($q); break;
@@ -107,13 +109,18 @@ extends WikiPlugin
                                              'size'  => $formsize)));
         $form->pushContent(HTML::input(array('type' => 'submit',
                                              'class' => 'button',
-                                             'value' => $mode
+                                             'value' => gettext($mode)
                                              )));
         return HTML($html,$form);
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/04/18 01:11:52  rurban
+// more numeric pagename fixes.
+// fixed action=upload with merge conflict warnings.
+// charset changed from constant to global (dynamic utf-8 switching)
+//
 // Revision 1.1  2004/02/29 01:37:59  rurban
 // New experimental feature: use the Google API directly
 // Needs a free license key and the soap library nosoap,

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.33 2004-06-08 19:48:16 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.34 2004-06-13 13:54:25 rurban Exp $');
 
 /**
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -72,7 +72,9 @@ function IniConfig($file) {
          'INTERWIKI_MAP_FILE', 'COPYRIGHTPAGE_TITLE', 'COPYRIGHTPAGE_URL',
          'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 'SERVER_NAME', 'SERVER_PORT',
          'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
-         'WIKI_NAME_REGEXP');
+         'WIKI_NAME_REGEXP',
+         'GOOGLE_LICENSE_KEY','FORTUNE_DIR'
+         );
 
     // List of all valid config options to be define()d which take booleans.
     $_IC_VALID_BOOL = array
@@ -158,12 +160,11 @@ function IniConfig($file) {
     }
 
     // Special handling for some config options
-    if ($val = @$rs['INCLUDE_PATH']) {
-        ini_set('include_path', $val);
+    if (!empty($rs['INCLUDE_PATH'])) {
+        ini_set('include_path', $rs['INCLUDE_PATH']);
     }
-
-    if ($val = @$rs['SESSION_SAVE_PATH']) {
-        ini_set('session.save_path', $val);
+    if (!empty($rs['SESSION_SAVE_PATH'])) {
+        ini_set('session.save_path', $rs['SESSION_SAVE_PATH']);
     }
 
     // Database
@@ -555,6 +556,9 @@ function fix_configs() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2004/06/08 19:48:16  rurban
+// fixed foreign setup: no ugly skipped msg for the GenericPages, load english actionpages if translated not found
+//
 // Revision 1.32  2004/06/08 10:54:46  rurban
 // better acl dump representation, read back acl and owner
 //
