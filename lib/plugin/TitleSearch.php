@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.23 2004-11-23 15:17:19 rurban Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.24 2004-11-25 08:30:58 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function getDefaultArguments() {
@@ -60,24 +60,24 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s']))
             return '';
-        extract($args);
+        //extract($args);
 
-        $query = new TextSearchQuery($s, $case_exact);
-        $pages = $dbi->titleSearch($query, $case_exact);
+        $query = new TextSearchQuery($args['s'], $args['case_exact']);
+        $pages = $dbi->titleSearch($query, $args['case_exact']);
 
-        $pagelist = new PageList($info, $exclude, $args);
+        $pagelist = new PageList($args['info'], $args['exclude'], $args);
         while ($page = $pages->next()) {
             $pagelist->addPage($page);
             $last_name = $page->getName();
         }
         // Provide an unknown WikiWord link to allow for page creation
         // when a search returns no results
-        if (!$noheader)
+        if (!$args['noheader'])
             $pagelist->setCaption(fmt("Title search results for '%s'",
                                       $pagelist->getTotal() == 0
-                                      ? WikiLink($s, 'auto') : $s));
+                                      ? WikiLink($args['s'], 'auto') : $args['s']));
 
-        if ($auto_redirect && ($pagelist->getTotal() == 1)) {
+        if ($args['auto_redirect'] && ($pagelist->getTotal() == 1)) {
             return HTML($request->redirect(WikiURL($last_name, false, 'absurl'), false),
                         $pagelist);
         }
@@ -87,6 +87,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2004/11/23 15:17:19  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.22  2004/11/23 13:35:49  rurban
 // add case_exact search
 //
