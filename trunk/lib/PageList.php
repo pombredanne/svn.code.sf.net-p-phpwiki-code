@@ -1,7 +1,10 @@
-<?php rcs_id('$Id: PageList.php,v 1.8 2002-01-21 17:59:42 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.9 2002-01-21 19:18:16 carstenklapp Exp $');
 
-// This will relieve some of the work of plugins like LikePages,
-// MostPopular and allows dynamic expansion of those plugins do
+// This relieves some work for these plugins:
+//
+// BackLinks, LikePages, Mostpopular, TitleSearch
+//
+// It also allows dynamic expansion of those plugins to
 // include more columns in their output.
 //
 // There are still a few rough edges.
@@ -28,12 +31,13 @@ class PageList {
         return $this->_caption;
     }
 
+    //FIXME: yuck, get rid of ucfirst
     function addColumn ($new_columnname) {
-        array_push($this->_columns, $new_columnname);
+        array_push($this->_columns, ucfirst($new_columnname));
     }
 
     function insertColumn ($new_columnname) {
-        array_unshift($this->_columns, $new_columnname);
+        array_unshift($this->_columns, ucfirst($new_columnname));
     }
 
     function addPage ($page_handle) {
@@ -70,7 +74,7 @@ class PageList {
                      _("Last Modified")  => 'left',
                      _("Hits")           => 'right',
                      _("Date Created")   => 'left',
-                     _("# of revisions") => 'right',
+                     _("# Of Revisions") => 'right',
                      _("Last Summary")   => 'left',
                      _("Last Edited By") => 'left'
                      );
@@ -114,7 +118,7 @@ class PageList {
                      _("Last Modified")  => true,
                      _("Hits")           => false,
                      _("Date Created")   => '',
-                     _("# of revisions") => '',
+                     _("# Of Revisions") => '',
                      _("Last Summary")   => true,
                      _("Last Edited By") => true
                      );
