@@ -1,4 +1,4 @@
-<!-- $Id: editpage.php,v 1.8 2001-01-01 23:13:32 ahollosi Exp $ -->
+<!-- $Id: editpage.php,v 1.8.2.1 2001-02-15 21:25:02 dairiki Exp $ -->
 <?php
 
    // editpage relies on $pagename and $ScriptUrl
@@ -47,8 +47,14 @@
            $pagehash["copy"] = 1;
       }
    } else {
-      $textarea = sprintf(gettext ("Describe %s here."),
-				htmlspecialchars($pagename));
+      if (preg_match("/^${WikiNameRegexp}\$/", $pagename))
+	 $newpage = $pagename;
+      else
+	 $newpage = "[$pagename]";
+
+      $textarea = htmlspecialchars(
+	 sprintf(gettext ("Describe %s here."), $newpage));
+
       unset($pagehash);
       $pagehash["version"] = 0;
       $pagehash["lastmodified"] = time();
