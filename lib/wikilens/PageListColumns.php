@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageListColumns.php,v 1.7 2004-11-01 10:43:59 rurban Exp $');
+rcs_id('$Id: PageListColumns.php,v 1.8 2004-11-06 17:13:17 rurban Exp $');
 
 /*
  Copyright 2004 Mike Cassano
@@ -112,10 +112,11 @@ class _PageList_Column_minmisery extends _PageList_Column_custom
 
 class _PageList_Column_averagerating extends _PageList_Column_custom
 {
-    function init ($field, $default_heading, $align, &$pagelist) 
+    function _PageList_Column_averagerating ($params) 
     {
-        $this->_PageList_Column($field, $default_heading, $align);
-        $this->_selectedBuddies = $pagelist->getOption('selectedBuddies');
+    	$this->_pagelist =& $params[3];
+        $this->_PageList_Column($params[0], $params[1], $params[2]);
+        $this->_selectedBuddies = $this->_pagelist->getOption('selectedBuddies');
     }
 
     function _getValue ($page_handle, &$revision_handle) 
@@ -375,6 +376,12 @@ $WikiTheme->addPageListColumn
     ));
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/11/01 10:43:59  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.6  2004/07/08 20:30:07  rurban
 // plugin->run consistency: request as reference, added basepage.
 // encountered strange bug in AllPages (and the test) which destroys ->_dbi
