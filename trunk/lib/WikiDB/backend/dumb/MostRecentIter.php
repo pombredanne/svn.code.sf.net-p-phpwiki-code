@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostRecentIter.php,v 1.3 2002-02-09 23:07:01 lakka Exp $');
+rcs_id('$Id: MostRecentIter.php,v 1.4 2003-02-23 19:55:21 dairiki Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -13,6 +13,7 @@ class WikiDB_backend_dumb_MostRecentIter
 extends WikiDB_backend_iterator
 {
     function WikiDB_backend_dumb_MostRecentIter(&$backend, &$pages, $params) {
+        $limit = false;
         extract($params);
         if ($exclude_major_revisions)
             $include_minor_revisions = true;
