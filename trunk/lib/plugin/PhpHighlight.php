@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhpHighlight.php,v 1.8 2004-02-17 12:11:36 rurban Exp $');
+rcs_id('$Id: PhpHighlight.php,v 1.9 2004-04-10 07:25:24 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -43,6 +43,13 @@ rcs_id('$Id: PhpHighlight.php,v 1.8 2004-02-17 12:11:36 rurban Exp $');
  * Added compatibility for PHP < 4.2.0, where the highlight_string()
  * function has no second argument.
  * Added ability to override colors defined in php.ini --Carsten Klapp
+ *
+ * Known Problems:
+ *   <?plugin PhpHighlight
+ *   testing[somearray];
+ *   testing~[badworkaround~];
+ *   ?>
+ * will swallow "[somearray]"
  */
 
 class WikiPlugin_PhpHighlight
@@ -61,15 +68,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     // Establish default values for each of this plugin's arguments.
     function getDefaultArguments() {
         // TODO: results of ini_get() should be static for multiple
         // invocations of plugin on one WikiPage
-        return array('source'  => false,
-                     'wrap'    => true,
+        return array('wrap'    => true,
                      'string'  => ini_get("highlight.string"),  //'#00CC00',
                      'comment' => ini_get("highlight.comment"), //'#FF9900',
                      'keyword' => ini_get("highlight.keyword"), //'#006600',
@@ -82,15 +88,7 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
 
         extract($this->getArgs($argstr, $request));
-
-        if (!function_exists('version_compare')
-            || version_compare(phpversion(), '4.2.0', 'lt')) {
-            // trigger_error(sprintf(_("%s requires PHP version %s or newer."),
-            //                      $this->getName(), "4.2.0"), E_USER_NOTICE);
-            /* return unhighlighted text as if <verbatim> were used */
-            // return HTML::pre($argstr); // early return
-            $has_old_php = true;
-        }
+        $source =& $this->source;
 
         $this->sanify_colors($string, $comment, $keyword, $bg, $default, $html);
         $this->set_colors($string, $comment, $keyword, $bg, $default, $html);
@@ -104,7 +102,7 @@ extends WikiPlugin
                                   array('<?php', '?>'), $source);
         }
 
-        if (!empty($has_old_php)) {
+        if (!check_php_version(4,2,0)) {
             ob_start();
             highlight_string($source);
             $str = ob_get_contents();
@@ -134,7 +132,7 @@ extends WikiPlugin
     }
 
     function handle_plugin_args_cruft(&$argstr, &$args) {
-        $args['source'] = $argstr;
+        $this->source = $argstr;
     }
 
     /**
@@ -190,6 +188,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/02/17 12:11:36  rurban
+// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
+//
 // Revision 1.7  2003/01/18 22:01:43  carstenklapp
 // Code cleanup:
 // Reformatting & tabs to spaces;
