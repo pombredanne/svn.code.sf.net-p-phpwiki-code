@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.34 2004-02-12 17:05:38 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.35 2004-02-15 15:27:52 rurban Exp $');
 
 require_once('lib/stdlib.php');
 require_once('lib/PageType.php');
@@ -214,6 +214,16 @@ class WikiDB {
      */
     function deletePage($pagename) {
         $this->_cache->delete_page($pagename);
+
+        //How to create a RecentChanges entry with explaining summary?
+        /*
+        $page = $this->getPage($pagename);
+        $current = $page->getCurrentRevision();
+        $meta = $current->_data;
+        $version = $current->getVersion();
+        $meta['summary'] = sprintf(_("renamed from %s"),$from);
+        $page->save($current->getPackedContent(), $version + 1, $meta);
+        */
     }
 
     /**
@@ -389,12 +399,12 @@ class WikiDB {
                             WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,$linked_page->getName(),$from,$to);
                         }
                     }
-                    //create a RecentChanges entry with explaining summary (Fixme: fails)
+                    //create a RecentChanges entry with explaining summary
                     $page = $this->getPage($to);
                     $current = $page->getCurrentRevision();
                     $meta = $current->_data;
                     $version = $current->getVersion();
-                    $meta['summary'] = sprintf(_("WikiAdminRename'd from %s"),$from);
+                    $meta['summary'] = sprintf(_("renamed from %s"),$from);
                     $page->save($current->getPackedContent(), $version + 1, $meta);
                 }
             }
