@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.1 2004-04-16 23:30:41 zorloc Exp $');
+rcs_id('$Id: IniConfig.php,v 1.2 2004-04-19 18:33:13 zorloc Exp $');
 
 /**************************************************************************
  * A configurator intended to read it's config from a PHP-style INI file,
@@ -226,5 +226,8 @@ function IniConfig($file)
         // Another "too-tricky" redefine
         global $KeywordLinkRegexp;
         $KeywordLinkRegexp = @$rs['KEYWORD_LINK_REGEXP'];
+        
+        global $DisabledActions;
+        $DisabledActions = preg_split('/\s*:\s*/', @$rs['DisabledActions']);
 
 }
