@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.11 2003-03-24 22:57:24 dairiki Exp $');
+rcs_id('$Id: themeinfo.php,v 1.12 2004-03-26 03:13:23 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki.
@@ -14,14 +14,37 @@ class Theme_Sidebar extends Theme {
         if ($name == "navbar" || $name == "actionbar" || $name == "signin") {
             //$old = $Theme->getButtonSeparator();
             //$this->setButtonSeparator(HTML::br());
-            $this->setButtonSeparator(' ');
+            $this->setButtonSeparator("\n");
             //$Theme->setButtonSeparator($old);
         }
-
         return $this->_path . $this->_findFile("templates/$name.tmpl");
+    }
+    function calendarLink($date = false) {
+        return $this->calendarBase() . SUBPAGE_SEPARATOR . strftime("%Y-%m-%d", $date ? $date : time());
+    }
+    function calendarBase() {
+        static $UserCalPageTitle = false;
+        if (!$UserCalPageTitle) $UserCalPageTitle = $GLOBALS['request']->_user->getId() . SUBPAGE_SEPARATOR . _("Calendar");
+        return $UserCalPageTitle;
     }
 }
 $Theme = new Theme_Sidebar('Sidebar');
+
+$dbi = $GLOBALS['request']->getDbh();
+// display flat calender dhtml under the clock
+if ($dbi->isWikiPage($Theme->calendarBase())) {
+    $jslang = @$GLOBALS['LANG'];
+    $Theme->addMoreHeaders($Theme->_CSSlink(0,$Theme->_findFile('jscalendar/calendar-phpwiki.css'),'all'));
+    $Theme->addMoreHeaders("\n");
+    $Theme->addMoreHeaders(JavaScript('',array('src' => $Theme->_findData('jscalendar/calendar_stripped.js'))));
+    $Theme->addMoreHeaders("\n");
+    if (!($langfile = $Theme->_findData("jscalendar/lang/calendar-$jslang.js")))
+        $langfile = $Theme->_findData("jscalendar/lang/calendar-en.js");
+    $Theme->addMoreHeaders(JavaScript('',array('src' => $langfile)));
+    $Theme->addMoreHeaders("\n");
+    $Theme->addMoreHeaders(JavaScript('',array('src' => $Theme->_findData('jscalendar/calendar-setup_stripped.js'))));
+    $Theme->addMoreHeaders("\n");
+}
 
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
