@@ -44,44 +44,24 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // Part Zero: If PHP needs help in finding where you installed the
 //   rest of the PhpWiki code, you can set the include_path here.
 
-// NOTE: phpwiki uses the PEAR library of php code for SQL database
-// access. Your PHP is probably already configured to set
-// include_path so that PHP can find the pear code. If not (or if you
-// change include_path here) make sure you include the path to the
-// PEAR code in include_path. (To find the PEAR code on your system,
-// search for a file named 'PEAR.php'. Some common locations are:
+// Define PHP's include path so that it can find the PHP source code
+// for this PhpWiki.
+// 
+// You shouldn't need to do this unless you've moved index.php out
+// of the PhpWiki install directory.
 //
-//   Unixish systems:
-//     /usr/share/php
-//     /usr/local/share/php
-//   Mac OS X:
-//     /System/Library/PHP
-//
-// The above examples are already included by PhpWiki. You shouldn't
-// have to change this unless you see a WikiFatalError:
-//
-//     lib/FileFinder.php:82: Fatal[256]: DB.php: file not found
-//
-// Define the include path for this wiki: pear plus the phpwiki path
-// $include_path = '.:/usr/share/pear:/usr/local/httpd/phpwiki';
-//
-// // Windows needs ';' as path delimiter. cygwin, mac and unix ':'
-// if (substr(PHP_OS,0,3) == 'WIN') {
-//     $include_path = implode(';',explode(':',$include_path));
-// } elseif (substr(PHP_OS,0,6) == 'CYGWIN') {
-//     $include_path = '.:/usr/local/lib/php/pear:/usr/src/php/phpwiki';
-// } else {
-//     ;
-// }
-if (!empty($include_path)) ini_set('include_path', $include_path);
-define ('DEBUG', 1);
+// Note that on Windows-based servers, you should use ; rather than :
+// as the path separator.
+//ini_set('include_path', '.:/usr/local/httpd/phpwiki');
+
+if (!defined('DEBUG')) define ('DEBUG', 1);
 
 /////////////////////////////////////////////////////////////////////
 // Part Null: Don't touch this!
 
 define ('PHPWIKI_VERSION', '1.3.5pre');
 require "lib/prepend.php";
-rcs_id('$Id: index.php,v 1.107 2003-03-07 20:51:54 dairiki Exp $');
+rcs_id('$Id: index.php,v 1.108 2003-03-07 22:47:01 dairiki Exp $');
 
 /////////////////////////////////////////////////////////////////////
 //
@@ -99,7 +79,7 @@ if (!defined('WIKI_NAME')) define('WIKI_NAME', 'PhpWiki');
 // If set, we will perform reverse dns lookups to try to convert the
 // users IP number to a host name, even if the http server didn't do
 // it for us.
-define('ENABLE_REVERSE_DNS', true);
+if (!defined('ENABLE_REVERSE_DNS')) define('ENABLE_REVERSE_DNS', true);
 
 // Username and password of administrator.
 // Set these to your preferences. For heaven's sake
@@ -129,19 +109,19 @@ if (!defined('ENABLE_RAW_HTML')) define('ENABLE_RAW_HTML', false);
 //
 // Probably, you can just leave this set to false, in which case you get
 // raw ('binary' content-encoding) page dumps.
-define('STRICT_MAILABLE_PAGEDUMPS', false);
+if (!defined('STRICT_MAILABLE_PAGEDUMPS')) define('STRICT_MAILABLE_PAGEDUMPS', false);
 
 // Here you can change the filename suffix used for XHTML page dumps.
 // If you don't want any suffix just comment this out.
 $HTML_DUMP_SUFFIX = '.html';
 
 // The maximum file upload size.
-define('MAX_UPLOAD_SIZE', 16 * 1024 * 1024);
+if (!defined('MAX_UPLOAD_SIZE')) define('MAX_UPLOAD_SIZE', 16 * 1024 * 1024);
 
 // If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the
 // default state for the "minor edit" checkbox on the edit page form
 // will be off.
-define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
+if (!defined('MINOR_EDIT_TIMEOUT')) define("MINOR_EDIT_TIMEOUT", 7 * 24 * 3600);
 
 // Actions listed in this array will not be allowed.
 //$DisabledActions = array('dumpserial', 'loadfile');
@@ -541,7 +521,7 @@ define('THEME', 'default');
 // charset, and of course the same is true for the web browser. (Some
 // work is in progress hopefully to allow more flexibility in this
 // area in the future).
-define("CHARSET", "iso-8859-1");
+if (!defined('CHARSET')) define("CHARSET", "iso-8859-1");
 
 // Select your language/locale - default language is "en" for English.
 // Other languages available:
@@ -553,11 +533,11 @@ define("CHARSET", "iso-8859-1");
 // Swedish "sv" (Svenska    - Framsida)
 // Italian "it" (Italiano   - PaginaPrincipale)
 //
-// If you set $LANG to the empty string, your systems default language
-// (as determined by the applicable environment variables) will be
-// used.
+// If you set DEFAULT_LANGUAGE to the empty string, your systems
+// default language (as determined by the applicable environment
+// variables) will be used.
 //
-define('DEFAULT_LANGUAGE', 'en');
+if (!defined('DEFAULT_LANGUAGE')) define('DEFAULT_LANGUAGE', 'en');
 
 /* WIKI_PGSRC -- specifies the source for the initial page contents of
  * the Wiki. The setting of WIKI_PGSRC only has effect when the wiki is
@@ -783,6 +763,10 @@ if (defined('VIRTUAL_PATH') and defined('USE_PATH_INFO')) {
 // End:   
 
 // $Log: not supported by cvs2svn $
+// Revision 1.107  2003/03/07 20:51:54  dairiki
+// New feature: Automatic extraction of keywords (for the meta keywords tag)
+// from Category* and Topic* links on each page.
+//
 // Revision 1.106  2003/03/07 02:48:23  dairiki
 // Add option to prevent HTTP redirect.
 //
