@@ -1,7 +1,8 @@
 <?php 
-// $Id: configurator.php,v 1.25 2005-02-15 17:54:37 rurban Exp $
+// $Id: configurator.php,v 1.26 2005-02-16 15:11:00 rurban Exp $
 /**
- * Started automatically the first time by IniConfig("config/config.ini") if it doesn't exist
+ * Starts automatically the first time by IniConfig("config/config.ini") 
+ * if it doesn't exist.
  *
  * 1.3.11 TODO:
  * fix SQL quotes, AUTH_ORDER quotes and file forward slashes
@@ -16,7 +17,14 @@
  * ask to store it in index.php or index-user.php
  * 
  * A file config/config.ini will be generated.
+ *
+ * NOTE: If you have a starterscript outside PHOWIKI_DIR but no 
+ * config/config.ini yet (very unlikely!), you must define DATA_PATH in the 
+ * starterscript, otherwise the webpath to configurator is unknown, and 
+ * subsequent requests will fail. (Save INI)
  */
+
+if (!defined('ENABLE_FILE_OUTPUT')) define('ENABLE_FILE_OUTPUT', true);
 
 global $HTTP_SERVER_VARS;
 if (empty($configurator))
@@ -35,7 +43,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", 'iso-8859-1');
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.25 2005-02-15 17:54:37 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.26 2005-02-16 15:11:00 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -136,17 +144,15 @@ function do_init() {
 //define('DEBUG', 1);
 /**
  * The Configurator is a php script to aid in the configuration of PhpWiki.
- * Parts of this file are based on PHPWeather's configurator.php file.
- * http://sourceforge.net/projects/phpweather/
+ * Parts of this file were based on PHPWeather's configurator.php file.
+ *   http://sourceforge.net/projects/phpweather/
  *
  * TO CHANGE THE CONFIGURATION OF YOUR PHPWIKI, DO *NOT* MODIFY THIS FILE!
  * more instructions go here
  *
  * Todo: 
- *   * start this automatically the first time
  *   * fix include_path
- *   * eval index.php to get the actual settings.
- *   * ask to store it in index.php or settings.php
+ *   * eval config.ini to get the actual settings.
  */
 
 //////////////////////////////
@@ -155,8 +161,8 @@ function do_init() {
 /**
  * Notes for the description parameter of $property:
  *
- * - Descriptive text will be changed into comments (preceeded by //)
- *   for the final output to index.php.
+ * - Descriptive text will be changed into comments (preceeded by ; )
+ *   for the final output to config.ini.
  *
  * - Only a limited set of html is allowed: pre, dl dt dd; it will be
  *   stripped from the final output.
@@ -177,13 +183,13 @@ function do_init() {
 $SEPARATOR = ";=========================================================================";
 
 $preamble = "
-; This is the main configuration file for PhpWiki.
+; This is the main configuration file for PhpWiki in INI-style format.
 ; Note that certain characters are used as comment char and therefore 
 ; these entries must be in double-quotes. Such as \":\", \";\", \",\" and \"|\"
+; Take special care for DBAUTH_ sql statements. (Part 3a)
 ;
-; This file is divided into eight parts: Parts Zero, One, Two, Three,
-; Four, Five, Six and Seven. Each one has different configuration settings you can
-; change; in all cases the default should work on your system,
+; This file is divided into several parts: Each one has different configuration 
+; settings you can change; in all cases the default should work on your system,
 ; however, we recommend you tailor things to your particular setting.
 ";
 
@@ -201,7 +207,7 @@ if (substr(PHP_OS,0,3) == 'WIN') {
 }
 
 $properties["PHP include_path"] =
-    new _define_optional('INCLUDE_PATH', ini_get('include_path'), "
+    new _define('INCLUDE_PATH', ini_get('include_path'), "
 If PHP needs help in finding where you installed the rest of the PhpWiki
 code, you can set the include_path here.
 
@@ -214,11 +220,12 @@ the phpwiki/lib/pear path to override your Pear_DB.
 Note that on Windows-based servers, you should use ; rather than :
 as the path separator.");
 
+// TODO: convert this a checkbox row as in tests/unit/test.pgp
 $properties["DEBUG"] =
 new _define_optional('DEBUG', '0', "
 Set DEBUG to 1 to view the XHTML and CSS validator icons, page
 processing timer, and possibly other debugging messages at the
-bottom of each page. 65 for a more verbose level. 
+bottom of each page. 65 for a more verbose level with AUTH hints. 
 See lib/config.php for all supported values.");
 
 $properties["ENABLE_USER_NEW"] =
@@ -236,21 +243,26 @@ new boolean_define_commented_optional
 ('ENABLE_PAGEPERM', 
  array('true'  => "Enabled",
        'false' => "Disabled."), "
-I suspect ACL page permissions to degrade speed by 10%. Default: true");
+Use access control lists (as in Solaris and Windows NTFS) per page and group, 
+not per user for the whole wiki.
+
+I suspect ACL page permissions to degrade speed by 10%. 
+GROUP_METHOD=WIKIPAGE is slowest. (See Part 3a)
+Default: true");
 
 $properties["ENABLE_EDIT_TOOLBAR"] =
 new boolean_define_commented_optional
 ('ENABLE_EDIT_TOOLBAR', 
  array('true'  => "Enabled",
        'false' => "Disabled."), "
-Graphical buttons on edit. Default: true
+Graphical buttons on edit. Default: true.
 Reportedly broken on MacOSX Safari");
 
 $properties["JS_SEARCHREPLACE"] =
 new boolean_define_commented_optional
 ('JS_SEARCHREPLACE', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
+       'false' => "Disabled"), "
 Adds two additional buttons in EDIT_TOOLBAR, Search&Replace and Undo. 
 Undo is experimental.");
 
@@ -258,22 +270,22 @@ $properties["ENABLE_DOUBLECLICKEDIT"] =
 new boolean_define_commented_optional
 ('ENABLE_DOUBLECLICKEDIT', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
+       'false' => "Disabled"), "
 Default: true");
 
 $properties["ENABLE_XHTML_XML"] =
 new boolean_define_commented_optional
 ('ENABLE_XHTML_XML', 
- array('true'  => "Enabled",
-       'false' => "Disabled."), "
-Needed for inlined SVG and MathM, but may conflict with document.write(). 
+ array('false' => "Disabled",
+       'true'  => "Enabled"), "
+Needed for inlined SVG and MathM, but may conflict with javascript:document.write(). 
 Experimental. Default: false");
 
 $properties["USECACHE"] =
 new boolean_define_commented_optional
 ('USECACHE', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
+       'false' => "Disabled"), "
 Store DB query results in memory to avoid duplicate queries.
 Disable only for old php's with low memory or memory_limit=8MB.
 Default: true");
@@ -282,7 +294,7 @@ $properties["ENABLE_SPAMASSASSIN"] =
 new boolean_define_commented_optional
 ('ENABLE_SPAMASSASSIN', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
+       'false' => "Disabled"), "
 Needs babycart installed. See http://phpwiki.org/SpamAssassinIntegration
 Optionally define BABYCART_PATH. Default: /usr/local/bin/babycart");
 
@@ -290,7 +302,7 @@ $properties["GOOGLE_LINKS_NOFOLLOW"] =
 new boolean_define_commented_optional
 ('GOOGLE_LINKS_NOFOLLOW', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
+       'false' => "Disabled"), "
 If enabled ref=nofollow is added to all external links to discourage spam. 
 You might want to turn it off, if you want to improve pageranks on external links.");
 
@@ -298,7 +310,7 @@ $properties["ENABLE_LIVESEARCH"] =
 new boolean_define_commented_optional
 ('ENABLE_LIVESEARCH', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
+       'false' => "Disabled"), "
 LiveSearch enables immediate title search results via XMLHttpRequest.
 Displays the results in a dropdown under the titlesearch inputbox
 while typing. (experimental, only with certain themes)
@@ -308,8 +320,17 @@ See themes/blog/themeinfo.php.
 Currently we use the bitflux.ch library, but we will change to 
 the russian acdropdown soon. http://momche.net/publish/article.php?page=acdropdown");
 
+$properties["USE_SAFE_DBSESSION"] =
+new boolean_define_commented_optional
+('USE_SAFE_DBSESSION', 
+ array('false' => "Disabled",
+       'true'  => "Enabled"), "
+USE_SAFE_DBSESSION should be enabled, if you encounter session problems, with duplicate INSERT 
+sess_id warnings at the bottom of the page. Reason is a unreliable affected_rows implementation() 
+in the sql backend. Default is Disabled, using the fastest DbSession UPDATE method.");
+
 $properties["Part One"] =
-new part('_partone', $SEPARATOR."\n", "
+new part('_part1', $SEPARATOR."\n", "
 Part One: Authentication and security settings. See Part Three for more.");
 
 $properties["Admin Username"] =
@@ -322,9 +343,26 @@ new _define_password_optional('ADMIN_PASSWD', "", "
 For heaven's sake pick a good password.
 If your version of PHP supports encrypted passwords, your password will be
 automatically encrypted within the generated config file. 
-Use the \"Create Random Password\" button to create a good (random) password.",
+Use the \"Create Random Password\" button to create a good (random) password.
+
+ADMIN_PASSWD is ignored on HttpAuth",
 "onchange=\"validate_ereg('Sorry, ADMIN_PASSWD must be at least 4 chars long.', '^....+$', 'ADMIN_PASSWD', this);\"");
 
+$properties["Encrypted Passwords"] =
+new boolean_define
+('ENCRYPTED_PASSWD',
+ array('true'  => "true.  use crypt for all passwords",
+       'false' => "false. use plaintest passwords (not recommended)"), "
+It is recommended that you use encrypted passwords to be stored in the 
+config.ini and the users homepages metadata.
+You might want to use the passencrypt.php utility to encode the
+admin password, in the event that someone gains ftp or ssh access to the
+server and directory containing phpwiki. 
+<i>SQL access passwords cannot be encrypted, besides using external DATABASE_DSN aliases within PDO.</i>
+
+If true, all user passwords will be stored encrypted.
+You might have to set it to false, if your PHP doesn't support crypt().
+");
 
 $properties["Wiki Name"] =
 new _define_optional('WIKI_NAME', 'PhpWiki', "
@@ -359,7 +397,7 @@ $properties["Enable RawHtml Plugin"] =
 new boolean_define_commented_optional
 ('ENABLE_RAW_HTML', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
+       'false' => "Disabled"), "
 The RawHtml plugin allows page authors to embed real, raw HTML into Wiki
 pages.  This is a possible security threat, as much HTML (or, rather,
 JavaScript) can be very risky.  If you are in a controlled environment,
@@ -369,78 +407,71 @@ $properties["Allow RawHtml Plugin only on locked pages"] =
 new boolean_define_commented_optional
 ('ENABLE_RAW_HTML_LOCKEDONLY', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
+       'false' => "Disabled"), "
 If this is set, only pages locked by the Administrator may contain the RawHtml plugin.");
 
 $properties["Allow RawHtml Plugin if safe HTML code"] =
 new boolean_define_commented_optional
 ('ENABLE_RAW_HTML_SAFE', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
+       'false' => "Disabled"), "
 If this is set, all unsafe html code is stripped automatically (experimental!)
 See <a href=\"http://chxo.com/scripts/safe_html-test.php\" target=\"_new\">chxo.com/scripts/safe_html-test.php</a>
 ");
 
-$properties["Strict Mailable Pagedumps"] =
-new boolean_define_optional
-('STRICT_MAILABLE_PAGEDUMPS', 
- array('false' => "binary",
-       'true'  => "quoted-printable"),
-"
-If you define this to true, (MIME-type) page-dumps (either zip dumps,
-or \"dumps to directory\" will be encoded using the quoted-printable
-encoding.  If you're actually thinking of mailing the raw page dumps,
-then this might be useful, since (among other things,) it ensures
-that all lines in the message body are under 80 characters in length.
-
-Also, setting this will cause a few additional mail headers
-to be generated, so that the resulting dumps are valid
-RFC 2822 e-mail messages.
-
-Probably, you can just leave this set to false, in which case you get
-raw ('binary' content-encoding) page dumps.");
-
-$properties["HTML Dump Filename Suffix"] =
-new _variable('HTML_DUMP_SUFFIX', ".html", "
-Here you can change the filename suffix used for XHTML page dumps.
-If you don't want any suffix just comment this out.");
-
 //FIXME: should be numeric_define_optional
 $properties["Maximum Upload Size"] =
-new numeric_define('MAX_UPLOAD_SIZE', "16 * 1024 * 1024", "
+new numeric_define_optional('MAX_UPLOAD_SIZE', "16 * 1024 * 1024", "
 The maximum file upload size.");
 
 //FIXME: should be numeric_define_optional
 $properties["Minor Edit Timeout"] =
-new numeric_define('MINOR_EDIT_TIMEOUT', "7 * 24 * 3600", "
+new numeric_define_optional('MINOR_EDIT_TIMEOUT', "7 * 24 * 3600", "
 If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the
 default state for the \"minor edit\" checkbox on the edit page form
 will be off.");
 
 $properties["Disabled Actions"] =
-new array_variable('DisabledActions', array(), "
+new array_define('DisabledActions', array(), "
 Actions listed in this array will not be allowed. Actions are:
 browse, create, diff, dumphtml, dumpserial, edit, loadfile, lock, remove, 
 unlock, upload, viewsource, zip, ziphtml");
 
-$properties["Access Log"] =
-new _define_commented('ACCESS_LOG', "/var/logs/wiki_access.log", "
+$properties["Access Log File"] =
+new _define_commented_optional('ACCESS_LOG', "/var/logs/wiki_access.log", "
 PhpWiki can generate an access_log (in \"NCSA combined log\" format)
 for you. If you want one, define this to the name of the log file,
-such as /tmp/wiki_access_log.");
+such as /tmp/wiki_access_log. Preferred is to use SQL access logging as below.
+
+Default: empty - no access log file will be generated.");
+
+$properties["Access Log SQL"] =
+new _define_selection(
+'ACCESS_LOG_SQL', 
+array('0' => 'disable',
+      '1' => 'read only',
+      '2' => 'read + write'), "
+PhpWiki can read and/or write apache-style mod_log_sql accesslog tables for faster
+abuse detection and referer lists. 
+See http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
+
+If defined (e.g. 1) only read-access is done via SQL. 
+If flag 2 is set, phpwiki also writes. (Default on SQL or ADODB)
+This must use DATABASE_TYPE = SQL or ADODB.
+");
 
 $properties["Compress Output"] =
 new boolean_define_commented_optional
 ( 'COMPRESS_OUTPUT', 
-  array(''  => 'Compress when PhpWiki thinks appropriate.',
+  array(''      => 'GZIP compress when PhpWiki thinks appropriate.',
         'false' => 'Never compress output.',
-        'true' => 'Always try to compress output.'),
-  "
+        'true'  => 'Always try to compress output.'),
+"
 By default PhpWiki will try to have PHP compress it's output
 before sending it to the browser (if you have a recent enough
-version of PHP and the browser supports it.)
+version of PHP and the action and the browser supports it.)
 
-Define COMPRESS_OUTPUT to false to prevent output compression.
+Define COMPRESS_OUTPUT to false to prevent output compression at all.
 
 Define COMPRESS_OUTPUT to true to force output compression,
 even if we think your version of PHP does this in a buggy
@@ -502,7 +533,7 @@ The default is currently LOOSE.");
 
 // FIXME: should be numeric_define_optional
 $properties["HTTP Cache Control Max Age"] =
-new numeric_define('CACHE_CONTROL_MAX_AGE', 600,
+new numeric_define_optional('CACHE_CONTROL_MAX_AGE', 600,
             "
 Maximum page staleness, in seconds.");
 
@@ -510,7 +541,7 @@ $properties["Markup Caching"] =
 new boolean_define_commented_optional
 ('WIKIDB_NOCACHE_MARKUP',
  array('false' => 'Enable markup cache',
-       'true' => 'Disable markup cache'),
+       'true'  => 'Disable markup cache'),
 "
 MARKUP CACHING
 
@@ -539,13 +570,14 @@ case on SourceForge's project web server.) You can specify an
 alternate directory in which to store state information like so
 (whatever user your httpd runs as must have read/write permission
 in this directory).
-on USE_DB_SESSION = true you can ignore this.
+
+On USE_DB_SESSION = true you can ignore this.
 ");
 
 ///////// database selection
 
 $properties["Part Two"] =
-new part('_parttwo', $SEPARATOR."\n", "
+new part('_part2', $SEPARATOR."\n", "
 
 Part Two:
 Database Configuration
@@ -676,7 +708,16 @@ Use 'gdbm', 'dbm', 'db2', 'db3' or 'db4' depending on your DBA handler methods s
 
 $properties["dba timeout"] =
 new numeric_define("DATABASE_TIMEOUT", "12", "
-Recommended values are 10-20.");
+Recommended values are 10-20 seconds. The more load the server has, the higher the timeout.");
+
+$properties["DATABASE_PERSISTENT"] =
+new boolean_define_commented_optional
+('DATABASE_PERSISTENT', 
+ array('false' => "Disabled",
+       'true'  => "Enabled"), "
+Use persistent database connections for SQL databases, if the database backend supports it.
+Not recommended for heavily loaded servers.
+Default: false");
 
 ///////////////////
 
@@ -777,7 +818,7 @@ but in no case keep more than twenty unique author revisions.");
 /////////////////////////////////////////////////////////////////////
 
 $properties["Part Three"] =
-new part('_partthree', $SEPARATOR."\n", "
+new part('_part3', $SEPARATOR."\n", "
 
 Part Three: (optional)
 Basic User Authentication Setup
@@ -875,7 +916,7 @@ The following policies are available for user authentication:
 ///////////////////
 
 $properties["Part Three A"] =
-new part('_partthree_a', $SEPARATOR."\n", "
+new part('_part3a', $SEPARATOR."\n", "
 
 Part Three A: (optional)
 Group Membership");
@@ -916,7 +957,7 @@ group membership information.  It should be in the same format as the
 standard unix /etc/groups(5) file.");
 
 $properties["Part Three B"] =
-new part('_partthree_b', $SEPARATOR."\n", "
+new part('_part3b', $SEPARATOR."\n", "
 
 Part Three B: (optional)
 External database authentication and authorization.
@@ -1173,7 +1214,7 @@ Which level will the user be? 1 = Bogo or 2 = Pass");
 /////////////////////////////////////////////////////////////////////
 
 $properties["Part Four"] =
-new part('_partfour', $SEPARATOR."\n", "
+new part('_part4', $SEPARATOR."\n", "
 
 Part Four:
 Page appearance and layout");
@@ -1292,7 +1333,7 @@ the localized pgsrc?
 ///////////////////
 
 $properties["Part Five"] =
-new part('_partfive', $SEPARATOR."\n", "
+new part('_part5', $SEPARATOR."\n", "
 
 Part Five:
 Mark-up options");
@@ -1305,7 +1346,8 @@ within a named link [name|uri] one more protocol is defined: phpwiki");
 
 $properties["Inline Images"] =
 new list_define('INLINE_IMAGES', 'png|jpg|gif', "
-URLs ending with the following extension should be inlined as images");
+URLs ending with the following extension should be inlined as images. 
+Scripts shoud not be allowed!");
 
 $properties["WikiName Regexp"] =
 new _define('WIKI_NAME_REGEXP', "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])", "
@@ -1313,7 +1355,7 @@ Perl regexp for WikiNames (\"bumpy words\")
 (?&lt;!..) &amp; (?!...) used instead of '\b' because \b matches '_' as well");
 
 $properties["Subpage Separator"] =
-new _define_optional('SUBPAGE_SEPARATOR', '/', "
+new _define_optional('SUBPAGE_SEPARATOR', '"/"', "
 One character which seperates pages from subpages. Defaults to '/', but '.' or ':' were also used.",
 "onchange=\"validate_ereg('Sorry, \'%s\' must be a single character. Currently only :, / or .', '^[/:.]$', 'SUBPAGE_SEPARATOR', this);\""
 );
@@ -1330,7 +1372,7 @@ by INTERWIKI_MAP_FILE (if any) will be used.");
 $properties["WARN_NONPUBLIC_INTERWIKIMAP"] =
 new boolean_define('WARN_NONPUBLIC_INTERWIKIMAP',   
 	array('true'  => "true",
-                          'false' => "false"), "
+              'false' => "false"), "
 Display a warning if the internal lib/interwiki.map is used, and 
 not the public InterWikiMap page. This map is not readable from outside.");
 
@@ -1377,7 +1419,7 @@ Default Author URL");
 new boolean_define_optional
 ('TOC_FULL_SYNTAX', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
+       'false' => "Disabled"), "
 Allow full markup in headers to be parsed by the CreateToc plugin.
 
 If false you may not use WikiWords or [] links or any other markup in 
@@ -1387,7 +1429,7 @@ faster and more stable.");
 ///////////////////
 
 $properties["Part Six"] =
-new part('_partsix', $SEPARATOR."\n", "
+new part('_part6', $SEPARATOR."\n", "
 
 Part Six (optional):
 URL options -- you can probably skip this section.
@@ -1397,12 +1439,11 @@ For a pretty wiki (no index.php in the url) set a seperate DATA_PATH.");
 global $HTTP_SERVER_VARS;
 $properties["Server Name"] =
 new _define_commented_optional('SERVER_NAME', $HTTP_SERVER_VARS['SERVER_NAME'], "
-Canonical name and httpd port of the server on which this PhpWiki
-resides.");
-
+Canonical name of the server on which this PhpWiki resides.");
 
 $properties["Server Port"] =
-new numeric_define_commented('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT'], "",
+new numeric_define_commented('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT'], "
+Canonical httpd port of the server on which this PhpWiki resides.",
 "onchange=\"validate_ereg('Sorry, \'%s\' is no valid port number.', '^[0-9]+$', 'SERVER_PORT', this);\"");
 
 $properties["Script Name"] =
@@ -1447,13 +1488,12 @@ Default: PhpWiki will try to divine whether use of PATH_INFO
 is supported in by your webserver/PHP configuration, and will
 use PATH_INFO if it thinks that is possible.");
 
-
 $properties["Virtual Path"] =
 new _define_commented_optional('VIRTUAL_PATH', '/SomeWiki', "
 VIRTUAL_PATH is the canonical URL path under which your your wiki
 appears. Normally this is the same as dirname(SCRIPT_NAME), however
-using, e.g. seperate starter scripts, apaches mod_actions (or mod_rewrite), you can make it
-something different.
+using e.g. seperate starter scripts, apaches mod_actions (or mod_rewrite), 
+you can make it something different.
 
 If you do this, you should set VIRTUAL_PATH here or in the starter scripts.
 
@@ -1476,12 +1516,44 @@ In that case you should set VIRTUAL_PATH to '/wiki'.
 ///////////////////
 
 $properties["Part Seven"] =
-new part('_partseven', $SEPARATOR."\n", "
+new part('_part7', $SEPARATOR."\n", "
 
 Part Seven:
 
 Miscellaneous settings
 ");
+
+$properties["Strict Mailable Pagedumps"] =
+new boolean_define_optional
+('STRICT_MAILABLE_PAGEDUMPS', 
+ array('false' => "binary",
+       'true'  => "quoted-printable"),
+"
+If you define this to true, (MIME-type) page-dumps (either zip dumps,
+or \"dumps to directory\" will be encoded using the quoted-printable
+encoding.  If you're actually thinking of mailing the raw page dumps,
+then this might be useful, since (among other things,) it ensures
+that all lines in the message body are under 80 characters in length.
+
+Also, setting this will cause a few additional mail headers
+to be generated, so that the resulting dumps are valid
+RFC 2822 e-mail messages.
+
+Probably, you can just leave this set to false, in which case you get
+raw ('binary' content-encoding) page dumps.");
+
+$properties["HTML Dump Filename Suffix"] =
+new _define_optional('HTML_DUMP_SUFFIX', ".html", "
+Here you can change the filename suffix used for XHTML page dumps.
+If you don't want any suffix just comment this out.");
+
+$properties["Default local Dump Directory"] =
+new _define_optional('DEFAULT_DUMP_DIR', "/tmp/wikidump", "
+Specify the default directory for local backups.");
+
+$properties["Default local HTML Dump Directory"] =
+new _define_optional('HTML_DUMP_DIR', "/tmp/wikidumphtml", "
+Specify the default directory for local XHTML dumps.");
 
 $properties["Pagename of Recent Changes"] =
 new _define_optional('RECENT_CHANGES', 'RecentChanges', "
@@ -1505,10 +1577,64 @@ report.)  In that case you can set DISABLE_HTTP_REDIRECT to true.
 (In which case, PhpWiki will revert to sneakier tricks to try to
 redirect the browser...)");
 
+$properties["Disable GETIMAGESIZE"] =
+new boolean_define_commented_optional
+('DISABLE_GETIMAGESIZE',
+ array('false' => 'Enable',
+       'true'  => 'Disable'), "
+Set GETIMAGESIZE to disabled, if your php fails to calculate the size on 
+inlined images, or you don't want to disable too small images to be inlined.
+
+Per default too small ploaded or external images are not displayed, 
+to prevent from external 1 pixel spam.");
+
 $properties["EDITING_POLICY"] =
   new _define_optional('EDITING_POLICY', "EditingPolicy", "
 An interim page which gets displayed on every edit attempt, if it exists.");
 
+$properties["ENABLE_MODERATEDPAGE_ALL"] =
+new boolean_define_commented_optional
+('ENABLE_MODERATEDPAGE_ALL',
+ array('false' => 'Disable',
+       'true'  => 'Enable'), "
+");
+
+$properties["FORTUNE_DIR"] =
+  new _define_commented_optional('FORTUNE_DIR', "/usr/share/fortune", "
+");
+$properties["DBADMIN_USER"] =
+  new _define_commented_optional('DBADMIN_USER', "", "
+");
+$properties["DBADMIN_PASSWD"] =
+  new _define_commented_optional('DBADMIN_PASSWD', "", "
+");
+$properties["USE_EXTERNAL_HTML2PDF"] =
+  new _define_commented_optional('USE_EXTERNAL_HTML2PDF', "htmldoc --quiet --format pdf14 --no-toc --no-title %s", "
+");
+$properties["BABYCART_PATH"] =
+  new _define_commented_optional('BABYCART_PATH', "/usr/local/bin/babycart", "
+");
+
+$properties["Part Seven A"] =
+new part('_part7a', $SEPARATOR."\n", "
+
+Part Seven A:
+
+Cached Plugin Settings. (pear Cache)
+");
+
+/*
+PLUGIN_CACHED_DATABASE = file
+; PLUGIN_CACHED_CACHE_DIR = /tmp/cache
+PLUGIN_CACHED_FILENAME_PREFIX = phpwiki
+PLUGIN_CACHED_HIGHWATER = 4194304
+PLUGIN_CACHED_LOWWATER  = 3145728
+PLUGIN_CACHED_MAXLIFETIME = 2592000
+PLUGIN_CACHED_MAXARGLEN = 1000
+PLUGIN_CACHED_USECACHE = true
+PLUGIN_CACHED_FORCE_SYNCMAP = true
+PLUGIN_CACHED_IMGTYPES = "png|gif|gd|gd2|jpeg|wbmp|xbm|xpm"
+*/
 
 $end = "\n".$SEPARATOR."\n";
 
@@ -1517,7 +1643,8 @@ $end = "\n".$SEPARATOR."\n";
 // begin class definitions
 
 /**
- * A basic index.php configuration line in the form of a variable.
+ * A basic config-dist.ini configuration line in the form of a variable. 
+ * (not needed anymore, we have only defines)
  *
  * Produces a string in the form "$name = value;"
  * e.g.:
@@ -1709,21 +1836,16 @@ extends _define {
     }
 }
 
+/** 
+ * We don't use _optional anymore, because INI-style config's don't need that. 
+ * IniConfig.php does the optional logic now.
+ * But we use _optional for config-default.ini options
+ */
 class _define_commented_optional
-extends _define_commented {
-    /*function _config_format($value) {
-	$name = $this->get_config_item_name();
-        return sprintf("if (!defined('%s')) define('%s', '%s');", $name, $name, $value);
-    }*/
-}
+extends _define_commented { }
 
 class _define_optional
-extends _define {
-    /*function _config_format($value) {
-	$name = $this->get_config_item_name();
-        return sprintf("if (!defined('%s')) define('%s', '%s');", $name, $name, $value);
-    }*/
-}
+extends _define { }
 
 class _define_optional_notempty
 extends _define_optional {
@@ -1752,16 +1874,33 @@ extends _variable {
     }
 }
 
-class numeric_define_commented
+class numeric_define
 extends _define {
-    function numeric_define_commented($config_item_name, $default_value, $description, $jscheck = '') {
+
+    function numeric_define($config_item_name, $default_value, $description, $jscheck = '') {
         $this->_define($config_item_name, $default_value, $description, $jscheck);
-        if (!$jscheck) 
+        if (!$jscheck)
             $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);\"";
     }
-    function get_html() {
-	return numeric_define::get_html();
+    function _config_format($value) {
+        //return sprintf("define('%s', %s);", $this->get_config_item_name(), $value);
+        return sprintf("%s = %s", $this->get_config_item_name(), $value);
     }
+    function _get_config_line($posted_value) {
+        if ($this->description)
+            $n = "\n";
+        if ($posted_value == '')
+            return "${n};" . $this->_config_format('0');
+        else
+            return "${n}" . $this->_config_format($posted_value);
+    }
+}
+
+class numeric_define_optional
+extends numeric_define {}
+
+class numeric_define_commented
+extends numeric_define {
     function _get_config_line($posted_value) {
         if ($this->description)
             $n = "\n";
@@ -1788,26 +1927,10 @@ extends _variable_selection {
 }
 
 class _define_selection_optional
-extends _define_selection {
-    /*    function _config_format($value) {
-	$name = $this->get_config_item_name();
-        return sprintf("if (!defined('%s')) define('%s', '%s');", $name, $name, $value);
-    }*/
-}
+extends _define_selection { }
 
 class _variable_selection_optional
-extends _variable_selection {
-    /*
-    function _config_format($value) {
-        $v = $this->get_config_item_name();
-        // handle arrays: a|b --> a['b']
-        if (strpos($v, '|')) {
-            list($a, $b) = explode('|', $v);
-            $v = sprintf("%s['%s']", $a, $b);
-        }
-        return sprintf("if (!isset(\$%s)) { \$%s = \"%s\"; }", $v, $v, $value);
-    }*/
-}
+extends _variable_selection { }
 
 class _define_password
 extends _define {
@@ -1852,8 +1975,7 @@ extends _define {
 }
 
 class _define_password_optional
-extends _define_password {
-}
+extends _define_password { }
 
 class _variable_password
 extends _variable {
@@ -1881,28 +2003,6 @@ extends _variable {
 	else
 	    $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: green\">Input accepted.</p>";
 	return $s;
-    }
-}
-
-class numeric_define
-extends _define {
-
-    function numeric_define($config_item_name, $default_value, $description, $jscheck = '') {
-        $this->_define($config_item_name, $default_value, $description, $jscheck);
-        if (!$jscheck)
-            $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);\"";
-    }
-    function _config_format($value) {
-        //return sprintf("define('%s', %s);", $this->get_config_item_name(), $value);
-        return sprintf("%s = %s", $this->get_config_item_name(), $value);
-    }
-    function _get_config_line($posted_value) {
-        if ($this->description)
-            $n = "\n";
-        if ($posted_value == '')
-            return "${n};" . $this->_config_format('0');
-        else
-            return "${n}" . $this->_config_format($posted_value);
     }
 }
 
