@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.34 2002-02-06 19:53:15 carstenklapp Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.35 2002-02-08 02:32:49 dairiki Exp $');
 
 /**
  * This library relieves some work for these plugins:
@@ -18,6 +18,7 @@
  * 'author'  _("Last Author")),
  * 'locked'  _("Locked"), _("locked")
  * 'minor'   _("Minor Edit"), _("minor")
+ * 'markup'  _("Markup")
  *
  * FIXME: In this refactoring I have un-implemented _ctime, _cauthor, and
  * number-of-revision.  Note the _ctime and _cauthor as they were implemented
@@ -253,13 +254,20 @@ class PageList {
                             => new _PageList_Column_bool('locked', _("Locked"), _("locked")),
                             'minor'
                             => new _PageList_Column_bool('rev:is_minor_edit',
-                                                         _("Minor Edit"), _("minor"))
+                                                         _("Minor Edit"), _("minor")),
+                            'markup'
+                            => new _PageList_Column('rev:markup', _("Markup"))
                             );
         }
 
         if (isset($this->_columns_seen[$column]))
             return false;       // Already have this one.
         $this->_columns_seen[$column] = true;
+
+
+
+
+
 
         if (strstr($column, ':'))
             list ($column, $heading) = explode(':', $column, 2);
