@@ -2,16 +2,15 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-12-18 02:25-0500\n"
+"POT-Creation-Date: 2001-12-18 16:46-0500\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8859-1\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../templates/browse.html:34
@@ -19,7 +18,6 @@ msgid "Note:"
 msgstr "Hinweis:"
 
 #: ../templates/browse.html:34
-#, fuzzy
 msgid "You are viewing an old revision of this page."
 msgstr ""
 
@@ -36,7 +34,6 @@ msgid "to view the current version."
 msgstr "um die aktuellste Version zu schauen."
 
 #: ../templates/browse.html:50
-#, fuzzy
 msgid "Last edited on"
 msgstr "Zuletzt verändert am"
 
@@ -45,12 +42,11 @@ msgid "Version"
 msgstr "Version"
 
 #: ../templates/browse.html:52
-#, fuzzy
 msgid ", saved on"
 msgstr ", seite zuletzt verändert am"
 
 #: ../lib/loadsave.php:452 ../lib/plugin/RecentChanges.php:159
-#: ../lib/plugin/RecentChanges.php:262 ../lib/plugin/RecentChanges.php:307
+#: ../lib/plugin/RecentChanges.php:264 ../lib/plugin/RecentChanges.php:309
 #: ../templates/browse.html:56
 msgid "RecentChanges"
 msgstr "FrischeSeiten"
@@ -60,7 +56,6 @@ msgid "FindPage"
 msgstr "SeiteFinden"
 
 #: ../templates/browse.html:60
-#, fuzzy
 msgid "Quick Search"
 msgstr "Schnelle Suche"
 
@@ -93,7 +88,6 @@ msgid "Diff"
 msgstr "Vergleichen"
 
 #: ../templates/browse.html:97 ../templates/editpage.html:71
-#, fuzzy
 msgid "You are signed in as"
 msgstr "Du bist eingemeldet als"
 
@@ -101,7 +95,7 @@ msgstr "Du bist eingemeldet als"
 msgid "SignOut"
 msgstr "Ausmelden"
 
-#: ../templates/browse.html:100
+#: ../templates/browse.html:100 ../templates/editpage.html:74
 msgid "SignIn"
 msgstr "Anmelden"
 
@@ -115,7 +109,6 @@ msgid "DebugInfo"
 msgstr "DebugInfo"
 
 #: ../templates/editpage.html:15
-#, fuzzy
 msgid "Edit:"
 msgstr "Editieren:"
 
@@ -124,7 +117,6 @@ msgid "Preview only!  Changes not saved."
 msgstr "Nur die Vorschau!  Änderungen nicht gespeichert."
 
 #: ../templates/editpage.html:35
-#, fuzzy
 msgid "Warning: You are editing an old revision."
 msgstr "Warnung: alte Seite"
 
@@ -152,32 +144,31 @@ msgstr "Speichern"
 msgid "Author will be logged as"
 msgstr ""
 
-#: ../templates/editpage.html:78
+#: ../templates/editpage.html:80
 msgid "You can change the size of the editing area in"
 msgstr ""
 
-#: ../templates/editpage.html:79
+#: ../templates/editpage.html:81
 msgid "UserPreferences"
 msgstr "BenutzerEinstellungen"
 
-#: ../templates/editpage.html:80
+#: ../templates/editpage.html:82
 msgid "See"
 msgstr "Sehe"
 
-#: ../templates/editpage.html:80
+#: ../templates/editpage.html:82
 msgid "GoodStyle"
 msgstr "GuterStil"
 
-#: ../templates/editpage.html:80
-#, fuzzy
+#: ../templates/editpage.html:82
 msgid "tips for editing."
 msgstr "tips fürs Editieren."
 
-#: ../templates/editpage.html:84
+#: ../templates/editpage.html:86
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
-#: ../templates/editpage.html:84
+#: ../templates/editpage.html:86
 msgid "Synopsis"
 msgstr "Übersicht"
 
@@ -186,7 +177,6 @@ msgid "BackLinks"
 msgstr ""
 
 #: ../lib/plugin/BackLinks.php:13
-#, fuzzy
 msgid "Get BackLinks for [pagename]"
 msgstr "Hole BackLinks für [pagename]"
 
@@ -228,7 +218,7 @@ msgstr "Volltextsuch"
 #: ../lib/plugin/FullTextSearch.php:52
 #, c-format
 msgid "Full text search results for '%s'"
-msgstr "Volltext-Suchresultate nach «%s»"
+msgstr "Volltext-Suchresultate nach »%s«"
 
 #: ../lib/plugin/FullTextSearch.php:54 ../lib/plugin/TitleSearch.php:52
 msgid "<no matches>"
@@ -281,17 +271,17 @@ msgstr "GleicheSeite wie [pagename] auflisten"
 #: ../lib/plugin/LikePages.php:39
 #, c-format
 msgid "Page names with prefix '%s'"
-msgstr "Seitenamen mit Vorsatzwort «%s»"
+msgstr "Seitenamen mit Vorsatzwort »%s«"
 
 #: ../lib/plugin/LikePages.php:44
 #, c-format
 msgid "Page names with suffix '%s'"
-msgstr "Seitenamen mit Vorsatzwort «%s»"
+msgstr "Seitenamen mit Nachsatzwort »%s«"
 
 #: ../lib/plugin/LikePages.php:57
-#, fuzzy, c-format
+#, c-format
 msgid "These pages share an initial or final title word with '%s'"
-msgstr "Diese Seiten share an initial or final title word with «%s»"
+msgstr "Diese Seiten share an initial or final title word with »%s«"
 
 #: ../lib/plugin/LikePages.php:93
 msgid "<none>"
@@ -370,7 +360,6 @@ msgid "RSS available"
 msgstr "RSS verfügbar"
 
 #: ../lib/plugin/RecentChanges.php:132
-#, fuzzy
 msgid "edits"
 msgstr "Änderungen"
 
@@ -407,19 +396,19 @@ msgid "RecentEdits"
 msgstr "GeringeÄnderungen"
 
 #: ../lib/main.php:26 ../lib/main.php:85 ../lib/main.php:87
-#: ../lib/plugin/RecentChanges.php:245
+#: ../lib/plugin/RecentChanges.php:247
 msgid "HomePage"
 msgstr "StartSeite"
 
-#: ../lib/plugin/RecentChanges.php:250
+#: ../lib/plugin/RecentChanges.php:252
 msgid "Search"
 msgstr "Suche"
 
-#: ../lib/plugin/RecentChanges.php:251 ../lib/plugin/TitleSearch.php:16
+#: ../lib/plugin/RecentChanges.php:253 ../lib/plugin/TitleSearch.php:16
 msgid "Title Search"
 msgstr "Volltextsuch"
 
-#: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:253
+#: ../lib/main.php:123 ../lib/plugin/RecentChanges.php:255
 #: ../lib/plugin/TitleSearch.php:12
 msgid "TitleSearch"
 msgstr "Volltextsuch"
@@ -427,7 +416,7 @@ msgstr "Volltextsuch"
 #: ../lib/plugin/TitleSearch.php:48
 #, c-format
 msgid "Title search results for '%s'"
-msgstr "Titel-Suchresultate nach «%s»"
+msgstr "Titel-Suchresultate nach »%s«"
 
 #: ../lib/plugin/_BackendInfo.php:14
 msgid "Get debugging information for [pagename]."
@@ -436,7 +425,7 @@ msgstr "Hol' mir die Debug-Informationen von [pagename]."
 #: ../lib/plugin/_BackendInfo.php:45
 #, c-format
 msgid "Querying backend directly for '%s'"
-msgstr "Die Datenbank wird direckt nach «%s» abgefragt"
+msgstr "Die Datenbank wird direckt nach »%s« abgefragt"
 
 #: ../lib/plugin/_BackendInfo.php:51
 #, c-format
@@ -451,7 +440,7 @@ msgstr "Beschreibe [%s] hier."
 #: ../lib/WikiUser.php:97
 #, c-format
 msgid "to perform action '%s'"
-msgstr "um die Tatigkeit «%s» zu tun"
+msgstr "um die Tatigkeit »%s« zu tun"
 
 #: ../lib/WikiUser.php:99
 msgid "to do that"
@@ -471,13 +460,12 @@ msgid "You entered an invalid login or password."
 msgstr "Du hast ein ungültiges Login oder Passwort eingegeben."
 
 #: ../lib/WikiUser.php:196
-#, fuzzy
 msgid "You can log in using any valid WikiWord as a user ID."
 msgstr "Du kannst mit jedes gultiges WikiWort als Benutzername anmelden."
 
 #: ../lib/WikiUser.php:197
 msgid "(Any password will work, except, of course for the admin user.)"
-msgstr "(Irgende Wšrter kšnnen als Passwort angenommen werden sowieso, aber natŸrlich nicht fur die Admin-Benuzer.)"
+msgstr "(Irgende Wörter können als Passwort angenommen werden sowieso, aber natürlich nicht fur die Admin-Benuzer.)"
 
 #: ../lib/diff.php:172
 msgid "version"
@@ -521,7 +509,7 @@ msgstr "vorige Revision"
 #: ../lib/diff.php:251
 #, c-format
 msgid "Differences between %s and %s of %s."
-msgstr "Der Unterschiedsergebnis von %3$s, zwischen %1$s und %2$s."
+msgstr "Der Unterschiedsergebnis zwischen %s und %s von %s."
 
 #: ../lib/diff.php:255
 msgid "Previous Major Revision"
@@ -537,7 +525,7 @@ msgstr "Vorherige Author"
 
 #: ../lib/diff.php:267
 msgid "Other diffs:"
-msgstr "NachtrŠgliche vergleichen:"
+msgstr "Nachträgliche vergleichen:"
 
 #: ../lib/diff.php:275
 msgid "Newer page:"
@@ -562,7 +550,6 @@ msgstr ""
 "Diese Seite wurde vom Administrator gesperrt und kann nicht editiert werden."
 
 #: ../lib/editpage.php:28 ../lib/savepage.php:36 ../lib/savepage.php:47
-#, fuzzy
 msgid "Sorry for the inconvenience."
 msgstr "Entschuldigung für die Unannehmlichkeiten."
 
@@ -605,7 +592,7 @@ msgstr "- als Version %d gespeichert"
 #: ../lib/main.php:99
 #, c-format
 msgid "Action %s is disabled in this wiki."
-msgstr "In dieses Wikis ist die Tatigkeit «%s» nicht erlauben."
+msgstr "In dieses Wikis ist die Tatigkeit »%s« nicht erlauben."
 
 #: ../lib/prepend.php:31
 msgid "WikiFatalError"
@@ -614,7 +601,7 @@ msgstr "FatalerWikiFehler"
 #: ../lib/removepage.php:5
 #, c-format
 msgid "You are about to remove '%s' permanently!"
-msgstr "Du bist im Begriff «%s» permanent zu löschen!"
+msgstr "Du bist im Begriff »%s« permanent zu löschen!"
 
 #: ../lib/removepage.php:8
 #, c-format
@@ -622,14 +609,13 @@ msgid "Click here to <a href=\"%s\">remove the page now</a>."
 msgstr "Klicke hier um <a href=\"%s\">die Seite jetzt zu löschen</a>."
 
 #: ../lib/removepage.php:12
-#, fuzzy
 msgid "To cancel press the \"Back\" button of your browser."
 msgstr "Anderenfalls benütze die \"Zurück\" Funktion deines Browsers."
 
 #: ../lib/removepage.php:16
 #, c-format
 msgid "Removed page '%s' succesfully."
-msgstr "Seite «%s» erfolgreich gelöscht."
+msgstr "Seite »%s« erfolgreich gelöscht."
 
 #: ../lib/savepage.php:22
 msgid ""
@@ -708,7 +694,6 @@ msgid "BAD URL -- remove all of <, >, \""
 msgstr "URL Formfehler -- aller Zeichen <, >, \" wegnehmen"
 
 #: ../lib/stdlib.php:336
-#, fuzzy
 msgid "Lock page to enable link"
 msgstr "Seite sperren um das Link zu verbinden"
 
@@ -737,7 +722,6 @@ msgid "I'm sorry.  Version %d of %s is not in my database."
 msgstr "Es tut mir leid.  Version %d von %s war nicht in meine Datenbank."
 
 #: ../lib/transform.php:108
-#, fuzzy
 msgid "Lists nested too deep in SetHTMLOutputMode"
 msgstr "Interner Fehler: Stackgrenze in SetHTMLOutputMode überschritten."
 
@@ -747,7 +731,6 @@ msgid "[%d] See [%s]"
 msgstr "[%d] Sehe [%s]"
 
 #: ../lib/ziplib.php:629
-#, fuzzy
 msgid "!References"
 msgstr "!Fußnoten"
 
@@ -788,17 +771,13 @@ msgstr "!Fußnoten"
 #~ msgstr "MySQL Fehler: %s"
 
 #~ msgid "Error writing page '%s'"
-#~ msgstr "Fehler beim Schreiben der Seite «%s»"
+#~ msgstr "Fehler beim Schreiben der Seite »%s«"
 
 #~ msgid "Cannot delete '%s' from table '%s'"
-#~ msgstr "Kann nicht «%s» aus Tabelle «%s» löschen"
+#~ msgstr "Kann nicht »%s« aus Tabelle »%s« löschen"
 
-#~ msgid "Page name «%s' is not in the database"
-#~ msgstr "Seite «%s» ist nicht in der Datenbank"
-
-#, fuzzy
-#~ msgid "Show the page source"
-#~ msgstr "Zeige den Seitenquelltext und die Verweise"
+#~ msgid "Page name '%s' is not in the database"
+#~ msgstr "Seite »%s« ist nicht in der Datenbank"
 
 #~ msgid "PageInfo"
 #~ msgstr "SeitenInfo"
