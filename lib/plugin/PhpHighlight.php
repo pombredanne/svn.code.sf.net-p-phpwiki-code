@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhpHighlight.php,v 1.5 2002-11-08 18:33:12 carstenklapp Exp $');
+rcs_id('$Id: PhpHighlight.php,v 1.6 2002-11-25 19:53:23 dairiki Exp $');
 /**
  * A plugin that runs the highlight_string() function in PHP on it's
  * arguments to pretty-print PHP code.
@@ -9,8 +9,14 @@ rcs_id('$Id: PhpHighlight.php,v 1.5 2002-11-08 18:33:12 carstenklapp Exp $');
  * code that should be highlighted
  * ?>
  *
- * You should not add '<?php' and '?>' to the code - the plugin does
- * this automatically.
+ * You do not have to add '<?php' and '?>' to the code - the plugin
+ * does this automatically if you do not set wrap to 0.
+ *
+ * If you do set wrap to 0, then you'll have to start and stop PHP
+ * mode in the source yourself, or you wont see any highlighting. But
+ * you cannot use '<?php' and '?>' in the source, because this
+ * interferes with PhpWiki, you'll have use '< ?php' and '? >'
+ * instead.
  *
  * Author: Martin Geisler <gimpster@gimpster.com>.
  *
@@ -37,6 +43,7 @@ extends WikiPlugin
         // TODO: results of ini_get() should be static for multiple
         // invocations of plugin on one WikiPage
         return array('source'  => false,
+                     'wrap'    => true,
                      'string'  => ini_get("highlight.string"),  //'#00CC00',
                      'comment' => ini_get("highlight.comment"), //'#FF9900',
                      'keyword' => ini_get("highlight.keyword"), //'#006600',
@@ -62,9 +69,14 @@ extends WikiPlugin
         $this->sanify_colors($string, $comment, $keyword, $bg, $default, $html);
         $this->set_colors($string, $comment, $keyword, $bg, $default, $html);
 
-        /* Automatically wrap with "<?php\n" and "\n?>" required by
-           highlight_string(): */
-        $source = "<?php\n" . $source . "\n?>";
+        if ($wrap) {
+            /* Wrap with "<?php\n" and "\n?>" required by
+             * highlight_string(): */
+            $source = "<?php\n" . $source . "\n?>";
+        } else {
+            $source = str_replace(array('< ?php', '? >'),
+                                  array('<?php', '?>'), $source);
+        }
 
         if (!empty($has_old_php)) {
             ob_start();
@@ -74,8 +86,10 @@ extends WikiPlugin
         } else {
             $str = highlight_string($source, true);
         }
-        /* Remove "<?php\n" and "\n?>": */
-        $str = str_replace(array('&lt;?php<br />', '?&gt;'), '', $str);
+
+        if ($wrap)
+            /* Remove "<?php\n" and "\n?>" again: */
+            $str = str_replace(array('&lt;?php<br />', '?&gt;'), '', $str);
 
         /**
          * We might have made some empty font tags. (The following
@@ -102,10 +116,12 @@ extends WikiPlugin
      * See http://www.w3.org/TR/REC-html40/types.html#h-6.5
      */
     function sanify_colors($string, $comment, $keyword, $bg, $default, $html) {
-        static $html4colors = array("black", "silver", "gray", "white", "maroon", "red",
-                                    "purple", "fuchsia", "green", "lime", "olive", "yellow",
+        static $html4colors = array("black", "silver", "gray", "white",
+                                    "maroon", "red", "purple", "fuchsia",
+                                    "green", "lime", "olive", "yellow",
                                     "navy", "blue", "teal", "aqua");
-        static $MAXLEN = 7; /* strlen("fuchsia"), strlen("#00FF00"), strlen("#fff") */
+        /* max(strlen("fuchsia"), strlen("#00FF00"), ... ) = 7 */
+        static $MAXLEN = 7;
         foreach (array($string, $comment, $keyword, $bg, $default, $html) as $color) {
             $length = strlen($color);
             //trigger_error(sprintf(_("DEBUG: color '%s' is length %d."), $color, $length), E_USER_NOTICE);
