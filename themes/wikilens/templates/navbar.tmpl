@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-    rcs_id('$Id: navbar.tmpl,v 1.2 2004-05-27 17:55:39 rurban Exp $');
+    rcs_id('$Id: navbar.tmpl,v 1.3 2004-06-04 20:34:11 rurban Exp $');
 
     $s = $Theme->getButtonSeparator();
 ?>
@@ -11,12 +11,14 @@
    <?=$s?><?= WikiLink(_("FindPage"), "button") ?>
    <?=$s?><input type="hidden" name="auto_redirect" value="1" />
       <?php if (! USE_PATH_INFO) { ?>
-      <input type="hidden" name="pagename" value="<?=_("TitleSearch")?>" />
+      <input type="hidden" name="pagename" value="<?=
+_("TitleSearch")?>" />
       <?php } ?>
       <input type="hidden" name="nocache" value="purge" />
       <input type="text"  name="s" size="12" maxlength="256"
              title='<?=_("Quick Search")?>'
-             onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
+             onmouseover="window.status='<?=
+_("Quick Search")?>'; return true;"
              onmouseout="window.status=''; return true;" />
     <?php if (!empty($revision)) { ?>
      <?=$s?><?= Button("LikePages", _("LikePages")) ?>

@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.47 2004-06-03 12:30:38 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.48 2004-06-04 20:34:11 rurban Exp $ -->
 <?php
 $WidthI = HTML::input(array('type' => 'text',
                             'size' => 3,
@@ -56,9 +56,7 @@ $s = $Theme->getButtonSeparator();
   <table width="100%">
     <tr><td><?= $EDIT_TOOLBAR ?></td>
         <td align="right"><div id="editarea-size">
-    <?=_("Size").':'?>
-    <b><?=_("H")?></b> <?=$HeightI?>
-    <b><?=_("W")?></b> <?=$WidthI?>
+        <?=_("Size").':'?><b><?=_("H")?></b> <?=$HeightI?><b><?=_("W")?></b> <?=$WidthI?>
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
   </div></td></tr></table>
   <a name="editarea"></a><?=$EDIT_TEXTAREA?>
