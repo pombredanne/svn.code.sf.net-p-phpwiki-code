@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: loadsave.php,v 1.27 2002-01-19 07:21:58 dairiki Exp $');
+rcs_id('$Id: loadsave.php,v 1.28 2002-01-19 21:58:38 dairiki Exp $');
 require_once("lib/ziplib.php");
 require_once("lib/Template.php");
 
@@ -268,7 +268,7 @@ function ParseSerializedPage($text, $default_pagename)
     if (empty($pagehash['pagename']))
         $pagehash['pagename'] = $default_pagename;
     if (empty($pagehash['author']))
-        $pagehash['author'] = $GLOBALS['user']->id();
+        $pagehash['author'] = $GLOBALS['user']->getId(); // FIXME:?
     
     
     foreach ($pagehash as $key => $value) {
@@ -318,9 +318,6 @@ function LoadFile ($dbi, $filename, $text = false, $mtime = false)
     if (!$mtime)
         $mtime = time();	// Last resort.
     
-    $defaults = array('author'   => $GLOBALS['user']->id(),
-                      'pagename' => rawurldecode($basename));
-    
     $default_pagename = rawurldecode($basename);
     
     if ( ($parts = ParseMimeifiedPages($text)) ) {
@@ -338,7 +335,7 @@ function LoadFile ($dbi, $filename, $text = false, $mtime = false)
         $pageinfo = array('pagename' => $default_pagename,
                           'pagedata' => array(),
                           'versiondata'
-                          => array('author' => $GLOBALS['user']->id()),
+                          => array('author' => $GLOBALS['user']->getId()), //FIXME:?
                           'content'  => preg_replace('/[ \t\r]*\n/', "\n",
                                                      chop($text))
                           );
@@ -410,6 +407,7 @@ function IsZipFile ($filename_or_fd)
 function LoadAny ($dbi, $file_or_dir, $files = false, $exclude = false)
 {
     // FIXME: This is a partial workaround for sf bug #501145
+
     if (substr_count($file_or_dir,"/") < 1) {
         $type = filetype(rawurlencode($file_or_dir));
     } else {
@@ -446,8 +444,16 @@ function SetupWiki ($dbi)
 {
     global $GenericPages, $LANG, $user;
     
-    //FIXME: This is a hack (and now broken)
-    //$user->userid = _("The PhpWiki programming team");a
+    //FIXME: This is a hack (err, "interim solution")
+    // This is a bogo-bogo-login:  Login without
+    // saving login information in session state.
+    // This avoids logging in the unsuspecting
+    // visitor as "The PhpWiki programming team".
+    //
+    // This really needs to be cleaned up...
+    // (I'm working on it.)
+    $user->_userid = _("The PhpWiki programming team");
+    $user->_level = WIKIAUTH_BOGO;
     
     StartLoadDump(_("Loading up virgin wiki"));
     echo "<dl>\n";
