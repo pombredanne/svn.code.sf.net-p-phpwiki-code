@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.31 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: BackLinks.php,v 1.32 2004-12-06 19:50:05 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.31 $");
+                            "\$Revision: 1.32 $");
     }
     
     function getDefaultArguments() {
@@ -145,8 +145,10 @@ class _PageList_Column_BackLinks_count extends _PageList_Column {
     }
 }
 
-
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2004/11/26 18:39:02  rurban
+// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
+//
 // Revision 1.30  2004/11/25 17:20:52  rurban
 // and again a couple of more native db args: backlinks
 //

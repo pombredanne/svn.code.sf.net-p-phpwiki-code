@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.81 2004-11-27 14:39:04 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.82 2004-12-06 19:49:55 rurban Exp $');
 /*
  Copyright (C) 2002,2004 $ThePhpWikiProgrammingTeam
  
@@ -312,7 +312,6 @@ class Request {
     }
 
     function buffer_output($compress = true) {
-        // USECACHE = false turns off ob buffering also for now. (sf.net)
         // FIXME: disables sessions (some byte before all headers_sent())
         /*if (defined('USECACHE') and !USECACHE) {
             $this->_is_buffering_output = false;
@@ -1305,6 +1304,18 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.81  2004/11/27 14:39:04  rurban
+// simpified regex search architecture:
+//   no db specific node methods anymore,
+//   new sql() method for each node
+//   parallel to regexp() (which returns pcre)
+//   regex types bitmasked (op's not yet)
+// new regex=sql
+// clarified WikiDB::quote() backend methods:
+//   ->quote() adds surrounsing quotes
+//   ->qstr() (new method) assumes strings and adds no quotes! (in contrast to ADODB)
+//   pear and adodb have now unified quote methods for all generic queries.
+//
 // Revision 1.80  2004/11/21 11:59:16  rurban
 // remove final \n to be ob_cache independent
 //

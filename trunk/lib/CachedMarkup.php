@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.25 2004-11-28 19:57:47 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.26 2004-12-06 19:49:54 rurban Exp $');
 /* Copyright (C) 2002, Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.

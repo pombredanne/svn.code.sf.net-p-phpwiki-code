@@ -1,8 +1,9 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.35 2004-11-21 11:59:18 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.36 2004-12-06 19:49:56 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
- * @author: Jeff Dairiki
+ * @author: Jeff Dairiki,
+ *          Reini Urban (php5 tricks)
  *
  * FIXME: This module is very php5 sensitive: It was fixed for 1.3.9, 
  *        but is again broken with the 1.3.11 
@@ -603,6 +604,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.35  2004/11/21 11:59:18  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.34  2004/10/12 13:13:19  rurban
 // php5 compatibility (5.0.1 ok)
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.34 2004-11-23 15:17:19 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.35 2004-12-06 19:50:04 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.34 $");
+                            "\$Revision: 1.35 $");
     }
 
     function getDefaultArguments() {
@@ -64,6 +64,7 @@ extends WikiPlugin
     // 2004-07-08 22:05:35 rurban: turned off &$request to prevent from strange bug below
     function run($dbi, $argstr, $request, $basepage) {
         $args = $this->getArgs($argstr, $request);
+        $pages = false;
         // Todo: extend given _GET args
         if ($args['debug'])
             $timer = new DebugTimer;
@@ -92,10 +93,9 @@ extends WikiPlugin
         } else {
             if (! $request->getArg('count'))  $args['count'] = $dbi->numPages($args['include_empty'],$args['exclude']);
             else $args['count'] = $request->getArg('count');
-            //$pages = false; // ??
         }
-        //if (empty($args['count']) and !empty($pages))
-        //    $args['count'] = count($pages);
+        if (empty($args['count']) and !empty($pages))
+            $args['count'] = count($pages);
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         if (!$args['noheader']) $pagelist->setCaption($caption);
 
@@ -103,10 +103,10 @@ extends WikiPlugin
         if ($args['include_empty'])
             $pagelist->_addColumn('version');
 
-        /*if ($pages !== false)
+        if ($pages !== false)
             $pagelist->addPageList($pages);
-        else */
-        $pagelist->addPages( $dbi->getAllPages($args['include_empty'], $args['sortby'], $args['limit']) );
+        else
+            $pagelist->addPages( $dbi->getAllPages($args['include_empty'], $args['sortby'], $args['limit']) );
         if ($args['debug']) {
             return HTML($pagelist,
                         HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
@@ -122,6 +122,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2004/11/23 15:17:19  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.33  2004/11/01 10:43:59  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session

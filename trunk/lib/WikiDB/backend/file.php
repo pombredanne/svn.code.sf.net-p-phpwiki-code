@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.21 2004-11-25 17:20:52 rurban Exp $');
+rcs_id('$Id: file.php,v 1.22 2004-12-06 19:50:04 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -20,8 +20,6 @@ rcs_id('$Id: file.php,v 1.21 2004-11-25 17:20:52 rurban Exp $');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-
 
 /**
  * Backend for handling file storage. 
@@ -402,15 +400,22 @@ extends WikiDB_backend
     }
 
     /**
+     * See ADODB for a better delete_page(), which can be undone and is seen in RecentChanges.
+     */
+    function delete_page($pagename) {
+        $this->purge_page($pagename);
+    }
+
+    /**
      * Delete page from the database.
      *
      * Delete page (and all it's revisions) from the database.
      *
      * @param $pagename string Page name.
      */
-    function delete_page($pagename) {
+    function purge_page($pagename) {
         $ver = $this->get_latest_version($pagename);
-        while($ver > 0) {
+        while ($ver > 0) {
             $this->_removePage('ver_data', $pagename, $ver);
             $ver = $this->get_previous_version($pagename, $ver);
         }
@@ -730,6 +735,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2004/11/25 17:20:52  rurban
+// and again a couple of more native db args: backlinks
+//
 // Revision 1.20  2004/11/23 13:35:49  rurban
 // add case_exact search
 //

@@ -1,7 +1,7 @@
 <?php
-rcs_id('$Id: spam_babycart.php,v 1.1 2004-12-04 12:58:26 rurban Exp $');
+rcs_id('$Id: spam_babycart.php,v 1.2 2004-12-06 19:49:58 rurban Exp $');
 /*
-* $Id: spam_babycart.php,v 1.1 2004-12-04 12:58:26 rurban Exp $
+* $Id: spam_babycart.php,v 1.2 2004-12-06 19:49:58 rurban Exp $
 * Author: Bob Apthorpe <apthorpe+babycart@cynistar.net>
 * Proof-of-concept PHP fragment to flag blog/wiki spam
 *
@@ -14,8 +14,10 @@ rcs_id('$Id: spam_babycart.php,v 1.1 2004-12-04 12:58:26 rurban Exp $');
 function check_babycart(&$text, $ip, $user_id='') {
     // $X_babycart = '/usr/bin/perl /home/apthorpe/pjx/babycart/babycart';
     // cygwin:
-    // $X_babycart = 'n:/bin/perl /usr/local/bin/babycart';
-    $X_babycart = '/usr/local/bin/babycart';
+    if (!defined('BABYCART_PATH'))
+        define('BABYCART_PATH', '/usr/local/bin/babycart');
+    // cygwin:
+    //$X_babycart = 'n:/bin/perl /usr/local/bin/babycart';
 
     $comment = "IP: $ip\n";
     $subject = $GLOBALS['request']->getArg('pagename');
@@ -24,7 +26,7 @@ function check_babycart(&$text, $ip, $user_id='') {
     $comment .= $text;
 
     $descriptorspec = array(0 => array("pipe", "r"), 1 => array("pipe", "w"), 2 => array("pipe", "w"));
-    $process = proc_open($X_babycart, $descriptorspec, $pipes);
+    $process = proc_open(BABYCART_PATH, $descriptorspec, $pipes);
     if (is_resource($process)) {
 	// $pipes now looks like this:
 	// 0 => writeable handle connected to child stdin
@@ -70,7 +72,7 @@ function check_babycart(&$text, $ip, $user_id='') {
             return explode(',', $response, 4);
         }
     }
-    trigger_error("Couldn't process $X_babycart.\n".$error, E_USER_WARNING);
+    trigger_error("Couldn't process ".BABYCART_PATH.".\n".$error, E_USER_WARNING);
     return -1; // process error
 }
 ?>

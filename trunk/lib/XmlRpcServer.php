@@ -1,5 +1,5 @@
 <?php 
-// $Id: XmlRpcServer.php,v 1.7 2004-11-21 11:59:18 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.8 2004-12-06 19:49:56 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  *
  * LICENCE
@@ -28,8 +28,8 @@
  * for details.
  *
  * PHP >= 4.1.0 includes experimental support for the xmlrpc-epi c library 
- * written by Dan Libby (see http://uk2.php.net/manual/en/ref.xmlrpc.php).  This
- * is not compiled into PHP by default.  If it *is* compiled into your installation
+ * written by Dan Libby (see http://uk2.php.net/manual/en/ref.xmlrpc.php).  
+ * This is not compiled into PHP by default.  If it *is* compiled into your installation
  * (ie you have --with-xmlrpc) there may well be namespace conflicts with the xml-rpc
  * library used by this code, and you will get errors.
  * 
@@ -50,7 +50,7 @@
 //        Make use of the xmlrpc extension if found. Resolve namespace conflicts
 //        Remove all warnings from xmlrpc.inc 
 //        Return list of external links in listLinks
- 
+//        RSS2 cloud subscription
 
 // Intercept GET requests from confused users.  Only POST is allowed here!
 // There is some indication that $HTTP_SERVER_VARS is deprecated in php > 4.1.0
@@ -84,7 +84,7 @@ global $_xmlrpcs_debug;
 include_once("lib/XMLRPC/xmlrpcs.inc");
 
 //  API version
-define ("WIKI_XMLRPC_VERSION", 1);
+define ("WIKI_XMLRPC_VERSION", "1.1");
 
 /**
  * Helper function:  Looks up a page revision (most recent by default) in the wiki database
@@ -185,7 +185,7 @@ $wiki_dmap['getRPCVersionSupported']
 // method.
 function getRPCVersionSupported($params)
 {
-    return new xmlrpcresp(new xmlrpcval(WIKI_XMLRPC_VERSION, "int"));
+    return new xmlrpcresp(new xmlrpcval(WIKI_XMLRPC_VERSION, "string"));
 }
 
 /**
@@ -443,9 +443,51 @@ function listLinks($params)
         
     return new xmlrpcresp(new xmlrpcval ($linkstruct, "array"));
 } 
+
+/**
+ * Publish-Subscribe
+ * Client subscribes to a RecentChanges-like channel, getting a short 
+ * callback notification on every change. Like PageChangeNotification, just shorter 
+ * and more complicated
+ * RSS2 support (not yet), since radio userland's rss-0.92. now called RSS2.
+ * BTW: Radio Userland deprecated this interface.
+ *
+ * boolean wiki.rssPleaseNotify ( notifyProcedure, port, path, protocol, urlList )
+ *   returns: true or false 
+ *
+ * Check of the channel behind the rssurl has a cloud element, 
+ * if the client has a direct IP connection (no NAT),
+ * register the client on the WikiDB notification handler
+ *
+ * http://backend.userland.com/publishSubscribeWalkthrough
+ * http://www.soapware.org/xmlStorageSystem#rssPleaseNotify
+ * http://www.thetwowayweb.com/soapmeetsrss#rsscloudInterface
+ */
+$wiki_dmap['rssPleaseNotify']
+= array('signature'	=> array(array($xmlrpcStruct, $xmlrpcBoolean)),
+        'documentation' => 'RSS2 change notification subscriber channel',
+        'function'	=> 'rssPleaseNotify');
+
+function rssPleaseNotify($params)
+{
+    // register the clients IP
+    return new xmlrpcresp(new xmlrpcval (false, "boolean"));
+}
+
+$wiki_dmap['mailPasswordToUser']
+= array('signature'	=> array(array($xmlrpcStruct, $xmlrpcString)),
+        'documentation' => 'RSS2 change notification subscriber channel',
+        'function'	=> 'mailPasswordToUser');
+
+function mailPasswordToUser($params)
+{
+    return new xmlrpcresp(new xmlrpcval (false, "boolean"));
+}
  
-// Construct the server instance, and set up the despatch map, which maps
-// the XML-RPC methods onto the wiki functions
+/** 
+ * Construct the server instance, and set up the dispatch map, which maps
+ * the XML-RPC methods on to the wiki functions.
+ */
 class XmlRpcServer extends xmlrpc_server
 {
     function XmlRpcServer ($request = false) {

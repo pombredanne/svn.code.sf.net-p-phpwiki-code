@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ModeratedPage.php,v 1.2 2004-11-30 17:46:49 rurban Exp $');
+rcs_id('$Id: ModeratedPage.php,v 1.3 2004-12-06 19:50:05 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -19,12 +19,14 @@ rcs_id('$Id: ModeratedPage.php,v 1.2 2004-11-30 17:46:49 rurban Exp $');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
 /**
- * This plugin requires an action page (Default: ModeratedPage)
- * and provides delayed execution of restricted actions, after
- * a special moderators request:
+ * This plugin requires an action page (default: ModeratedPage)
+ * and provides delayed execution of restricted actions, 
+ * after a special moderators request. Usually by email.
  *   http://mywiki/SomeModeratedPage?action=ModeratedPage&id=kdclcr78431zr43uhrn&pass=approve
  *
+ * See http://phpwiki.org/PageModeration
  * Author: ReiniUrban
  */
 
@@ -41,7 +43,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
     function getDefaultArguments() {
         return array('page'          => '[pagename]',
@@ -63,18 +65,18 @@ extends WikiPlugin
 	    $page = $dbi->getPage($args['page']);
             $moderation = $page->get("moderation");
             if ($moderation) {
-              if (isset($moderation['id']) and $moderation['id'] == $args['id']) {
-            	// handle defaults:
-                //   approve or reject
-                if ($args['pass'] == 'approve')
-                    return $this->approve($args, $moderation);
-                elseif ($args['pass'] == 'reject')
-                    return $this->reject($args, $moderation);
-                else
-                    return $this->error("Wrong pass ".$args['pass']);
-              } else {
-                return $this->error("Wrong id");
-              }
+                if (isset($moderation['id']) and $moderation['id'] == $args['id']) {
+                    // handle defaults:
+                    //   approve or reject
+                    if ($args['pass'] == 'approve')
+                        return $this->approve($args, $moderation);
+                    elseif ($args['pass'] == 'reject')
+                        return $this->reject($args, $moderation);
+                    else
+                        return $this->error("Wrong pass ".$args['pass']);
+                } else {
+                    return $this->error("Wrong id");
+                }
             }
         }
         return '';
@@ -109,6 +111,15 @@ extends WikiPlugin
             $users[$userid] = 0;
         }
         list($args['emails'], $args['moderators']) = $page->getPageChangeEmails(array($page->getName() => $users));
+
+        if (!empty($args['require_access'])) {
+            $args['require_access'] = preg_split("/\s*,\s*/", $args['require_access']);
+            if (empty($args['require_access']))
+                unset($args['require_access']);
+        }
+        if ($args['require_level'] !== false) {
+            $args['require_level'] = (integer) $args['require_level'];
+        }
         unset($args['id']);
         unset($args['page']);
         unset($args['pass']);
@@ -175,7 +186,7 @@ extends WikiPlugin
     }
 
     /** 
-     * Handle client-side moderation request on any moderated page.
+     * Handle client-side POST moderation request on any moderated page.
      *   if ($page->get('moderation')) WikiPlugin_ModeratedPage::handler(...);
      * return false if not handled (pass through), true if handled and displayed.
      */
@@ -195,14 +206,22 @@ extends WikiPlugin
             return true;
         }
         // which action?
-    	if ($action == 'edit') {
+        if (!empty($status['require_access']) and !in_array(action2access($action), $status['require_access']))
+            return false; // allow and fall through, not moderated
+        if (!empty($status['require_level']) and $request->_user->_level >= $status['require_level'])
+            return false; // allow and fall through, not moderated
+        // else all post actions are moderated by default
+    	if (1) /* or in_array($action, array('edit','remove','rename')*/ {
     	    //$moderated = $page->get('moderated');
     	    $id = $this->generateId();
     	    while (!empty($moderated[$id])) $id = $this->generateId(); // avoid duplicates
-    	    $moderated['id'] = $id;
-    	    $moderated['data'][$id] = array('args' => $request->getArgs(),
+    	    $moderated['id'] = $id; 		// overwrite current id
+    	    $moderated['data'][$id] = array( 	// add current request
     	                                    'timestamp' => time(),
-    	    	          		    'userid' => $request->_user->getId());
+    	    	          		    'userid' => $request->_user->getId(),
+                                            'args' => $request->getArgs(),
+                                            'user'   => serialize($request->_user),
+                                            );
             $this->_tokens['CONTENT'] = HTML::div(array('class' => 'wikitext'),
             					  fmt("%s: action forwarded to moderator %s", 
                                                       $action, 
@@ -215,8 +234,10 @@ extends WikiPlugin
                      $subject, 
                      $action.': '._("ModeratedPage").' '.$pagename."\n"
                      . serialize($moderated['data'][$id])
-                     ."\n<".WikiURL($pagename, array('id' => $id,'pass' => 'approve'),1).">"
-                     ."\n<".WikiURL($pagename, array('id' => $id,'pass' => 'reject'),1).">\n"
+                     ."\n<".WikiURL($pagename, array('action' => _("ModeratedPage"), 
+                                                     'id' => $id, 'pass' => 'approve'), 1).">"
+                     ."\n<".WikiURL($pagename, array('action' => _("ModeratedPage"), 
+                                                     'id' => $id, 'pass' => 'reject'), 1).">\n"
                      )) {
                 $page->set('moderated', $moderated);
                 return false; // pass thru
@@ -231,14 +252,17 @@ extends WikiPlugin
 
     /** 
      * Handle admin-side moderation resolve.
+     * We might have to convert the GET to a POST request to continue with the left-over stored request.
      */
     function approve($args, $moderation) {
+        // check id, convert to POST, continue
         ;
     }
     /** 
      * Handle admin-side moderation resolve.
      */
     function reject($args, $moderation) {
+        // check id, delete action
         ;
     }
     
@@ -269,6 +293,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/11/30 17:46:49  rurban
+// added ModeratedPage POST action hook (part 2/3)
+//
 // Revision 1.1  2004/11/19 19:22:35  rurban
 // ModeratePage part1: change status
 //
