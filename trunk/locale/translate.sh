@@ -61,7 +61,7 @@ BEGIN {
   next;
 }
 END {
-  if (mgsid && str)
+  if (msgid && str)
     print ("$locale[\"" msgid "\"] =\n   \"" str "\";");
   print ("\n;?>");
 }
