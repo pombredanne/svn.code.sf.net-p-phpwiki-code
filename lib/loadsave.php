@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.107 2004-06-14 11:31:37 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.108 2004-06-16 12:43:01 rurban Exp $');
 
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
@@ -28,7 +28,7 @@ require_once("lib/Template.php");
 /**
  * ignore fatal errors during dump
  */
-function _ignore_fatal_plugin_error_handler(&$error) {
+function _ignore_fatal_plugin(&$error) {
     if ($error->isFatal()) {
         $error->errno = E_USER_WARNING;
         return true;
@@ -44,19 +44,22 @@ function StartLoadDump(&$request, $title, $html = '')
 {
     // FIXME: This is a hack
     $tmpl = Template('html', array('TITLE' => $title,
-                                  'HEADER' => $title,
-                                  'CONTENT' => '%BODY%'));
+                                   'HEADER' => $title,
+                                   'CONTENT' => '%BODY%'));
     echo ereg_replace('%BODY%.*', '', $tmpl->getExpansion($html));
 
-    /* ignore fatals in plugins */
+    /* ignore fatals in plugins. Fails with 4.0.6, works ok with 4.1.1 */
+    if (!check_php_version(4,1)) return;
     global $ErrorManager;
-    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin_error_handler'));
+    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin'));
 }
 
 function EndLoadDump(&$request)
 {
-    global $ErrorManager;
-    $ErrorManager->popErrorHandler();
+    if (check_php_version(4,1)) {
+        global $ErrorManager;
+        $ErrorManager->popErrorHandler();
+    }
     // FIXME: This is a hack
     $pagelink = WikiLink($request->getPage());
 
@@ -159,8 +162,10 @@ function MakeWikiZip (&$request)
     $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
 
     /* ignore fatals in plugins */
-    global $ErrorManager;
-    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin_error_handler'));
+    if (check_php_version(4,1)) {
+        global $ErrorManager;
+        $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin'));
+    }
 
     $dbi = $request->getDbh();
     $pages = $dbi->getAllPages();
@@ -190,7 +195,9 @@ function MakeWikiZip (&$request)
                               $content, $attrib);
     }
     $zip->finish();
-    $ErrorManager->popErrorHandler();
+    if (check_php_version(4,1)) {
+        $ErrorManager->popErrorHandler();
+    }
 }
 
 function DumpToDir (&$request)
@@ -380,8 +387,10 @@ function MakeWikiZipHtml (&$request)
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
 
     /* ignore fatals in plugins */
-    global $ErrorManager;
-    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin_error_handler'));
+    if (check_php_version(4,1)) {
+        global $ErrorManager;
+        $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_fatal_plugin'));
+    }
 
     while ($page = $pages->next()) {
     	if (! $request->getArg('start_debug'))
@@ -413,7 +422,9 @@ function MakeWikiZipHtml (&$request)
     }
     // FIXME: Deal with images here.
     $zip->finish();
-    $ErrorManager->popErrorHandler();
+    if (check_php_version(4,1)) {
+        $ErrorManager->popErrorHandler();
+    }
     $WikiTheme->$HTML_DUMP_SUFFIX = '';
 }
 
@@ -987,6 +998,14 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.107  2004/06/14 11:31:37  rurban
+ renamed global $Theme to $WikiTheme (gforge nameclash)
+ inherit PageList default options from PageList
+   default sortby=pagename
+ use options in PageList_Selectable (limit, sortby, ...)
+ added action revert, with button at action=diff
+ added option regex to WikiAdminSearchReplace
+
  Revision 1.106  2004/06/13 13:54:25  rurban
  Catch fatals on the four dump calls (as file and zip, as html and mimified)
  FoafViewer: Check against external requirements, instead of fatal.
