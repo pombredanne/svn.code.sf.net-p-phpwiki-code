@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.105 2004-06-29 06:48:03 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.106 2004-07-01 08:49:38 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -566,7 +566,9 @@ class _WikiUser
                 // upgrade class
                 $class = "_" . $this->_current_method . "PassUser";
                 $user = new $class($userid,$this->_prefs);
-                /*PHP5 patch*/$this = $user;
+                if (!check_php_version(5))
+                    eval("\$this = \$user;");
+                // /*PHP5 patch*/$this = $user;
                 $this->_level = $authlevel;
                 return $user;
             }
@@ -583,7 +585,9 @@ class _WikiUser
             // upgrade class
             $class = "_" . $this->_current_method . "PassUser";
             $user = new $class($userid,$this->_prefs);
-            /*PHP5 patch*/$this = $user;
+            if (!check_php_version(5))
+                eval("\$this = \$user;");
+            // /*PHP5 patch*/$this = $user;
             $user->_level = $authlevel;
             return $user;
         }
@@ -907,8 +911,8 @@ extends _AnonUser
                             return new _HttpAuthPassUser($UserName,$this->_prefs);
                         else {
                             $user = new _HttpAuthPassUser($UserName,$this->_prefs);
-                            //todo: with php5 comment the following line.
-                            /*PHP5 patch*/$this = $user;
+                            eval("\$this = \$user;");
+                            // /*PHP5 patch*/$this = $user;
                             return $user;
                         }
                     } elseif (in_array('Db', $dbh->getAuthParam('USER_AUTH_ORDER')) and
@@ -918,8 +922,8 @@ extends _AnonUser
                             return new _DbPassUser($UserName,$this->_prefs);
                         else {
                             $user = new _DbPassUser($UserName,$this->_prefs);
-                            //todo: with php5 comment the following line.
-                            /*PHP5 patch*/$this = $user;
+                            eval("\$this = \$user;");
+                            // /*PHP5 patch*/$this = $user;
                             return $user;
                         }
                     } elseif (in_array('LDAP', $dbh->getAuthParam('USER_AUTH_ORDER')) and
@@ -929,8 +933,8 @@ extends _AnonUser
                             return new _LDAPPassUser($UserName,$this->_prefs);
                         else {
                             $user = new _LDAPPassUser($UserName,$this->_prefs);
-                            //todo: with php5 comment the following line.
-                            /*PHP5 patch*/$this = $user;
+                            eval("\$this = \$user;");
+                            // /*PHP5 patch*/$this = $user;
                             return $user;
                         }
                     } elseif (in_array('IMAP', $dbh->getAuthParam('USER_AUTH_ORDER')) and
@@ -939,8 +943,8 @@ extends _AnonUser
                             return new _IMAPPassUser($UserName,$this->_prefs);
                         else {
                             $user = new _IMAPPassUser($UserName,$this->_prefs);
-                            //todo: with php5 comment the following line.
-                            /*PHP5 patch*/$this = $user;
+                            eval("\$this = \$user;");
+                            // /*PHP5 patch*/$this = $user;
                             return $user;
                         }
                     } elseif (in_array('File', $dbh->getAuthParam('USER_AUTH_ORDER')) and
@@ -949,8 +953,8 @@ extends _AnonUser
                             return new _FilePassUser($UserName, $this->_prefs);
                         else {
                             $user = new _FilePassUser($UserName, $this->_prefs);
-                            //todo: with php5 comment the following line.
-                            /*PHP5 patch*/$this = $user;
+                            eval("\$this = \$user;");
+                            // /*PHP5 patch*/$this = $user;
                             return $user;
                         }
                     } else {
@@ -958,8 +962,8 @@ extends _AnonUser
                             return new _PersonalPagePassUser($UserName,$this->_prefs);
                         else {
                             $user = new _PersonalPagePassUser($UserName,$this->_prefs);
-                            //todo: with php5 comment the following line.
-                            /*PHP5 patch*/$this = $user;
+                            eval("\$this = \$user;");
+                            // /*PHP5 patch*/$this = $user;
                             return $user;
                         }
                     }
@@ -1131,8 +1135,9 @@ extends _AnonUser
         //if ($this->_HomePagehandle) return true;
         $class = $this->nextClass();
         while ($user = new $class($this->_userid, $this->_prefs)) {
-            //todo: with php5 comment the following line:
-            /*PHP5 patch*/$this = $user;
+            if (!check_php_version(5))
+                eval("\$this = \$user;");
+            // /*PHP5 patch*/$this = $user;
             UpgradeUser($this,$user);
             if ($user->userExists()) {
                 return true;
@@ -1256,8 +1261,9 @@ extends _AnonUser
         if (USER_AUTH_POLICY === 'strict') {
         	$class = $this->nextClass();
             while ($user = new $class($this->_userid,$this->_prefs)) {
-                //todo: with php5 comment the following line:
-                /*PHP5 patch*/$this = $user;
+                if (!check_php_version(5))
+                    eval("\$this = \$user;");
+                // /*PHP5 patch*/$this = $user;
                 //$user = UpgradeUser($this, $user);
                 if ($user->userExists()) {
                     return true;
@@ -1295,8 +1301,9 @@ extends _PassUser
             if (isset($this->_prefs->_method) and $this->_prefs->_method == 'HomePage') {
                 $user = new _PersonalPagePassUser($this->_userid, $this->_prefs);
                 if ($user->checkPass($submitted_password)) {
-                    //todo: with php5 comment the following line:
-                    /*PHP5 patch*/$this = $user;
+                    if (!check_php_version(5))
+                        eval("\$this = \$user;");
+                    // /*PHP5 patch*/$this = $user;
                     $user = UpgradeUser($this, $user);
                     $this->_level = WIKIAUTH_USER;
                     return $this->_level;
@@ -1535,8 +1542,7 @@ extends _PassUser
                 return new _AdoDbPassUser($UserName,$this->_prefs);
             else {
                 $user = new _AdoDbPassUser($UserName,$this->_prefs);
-                //todo: with php5 comment the following line:
-                /*PHP5 patch*/$this = $user;
+                eval("\$this = \$user;");
                 return $user;
             }
         }
@@ -1545,8 +1551,7 @@ extends _PassUser
                 return new _PearDbPassUser($UserName,$this->_prefs);
             else {
                 $user = new _PearDbPassUser($UserName,$this->_prefs);
-                //todo: with php5 comment the following line:
-                /*PHP5 patch*/$this = $user;
+                eval("\$this = \$user;");
                 return $user;
             }
         }
@@ -3043,6 +3048,13 @@ extends UserPreferences
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2004/06/29 06:48:03  rurban
+// Improve LDAP auth and GROUP_LDAP membership:
+//   no error message on false password,
+//   added two new config vars: LDAP_OU_USERS and LDAP_OU_GROUP with GROUP_METHOD=LDAP
+//   fixed two group queries (this -> user)
+// stdlib: ConvertOldMarkup still flawed
+//
 // Revision 1.104  2004/06/28 15:39:37  rurban
 // fixed endless recursion in WikiGroup: isAdmin()
 //
