@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: stdlib.php,v 1.21.2.5 2001-08-18 01:50:47 dairiki Exp $');
+<?php rcs_id('$Id: stdlib.php,v 1.21.2.6 2001-11-08 22:20:19 dairiki Exp $');
 
    /*
       Standard functions for Wiki functionality
@@ -390,7 +390,10 @@
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['in'][$i])) {
             list($name, $score) = $links['in'][$i];
-	    $txt .= LinkExistingWikiWord($name) . " ($score), ";
+            if($i>0) {
+               $txt .= ", ";
+            }
+	    $txt .= LinkExistingWikiWord($name) . " ($score)";
          }
       }
 
@@ -401,7 +404,10 @@
          if(isset($links['out'][$i])) {
             list($name, $score) = $links['out'][$i];
 	    if(IsWikiPage($dbi, $name))
-	       $txt .= LinkExistingWikiWord($name) . " ($score), ";
+               if($i>0) {
+                  $txt .= ", ";
+               }
+	       $txt .= LinkExistingWikiWord($name) . " ($score)";
          }
       }
 
@@ -411,7 +417,10 @@
       for($i = 0; $i < NUM_RELATED_PAGES; $i++) {
          if(isset($links['popular'][$i])) {
             list($name, $score) = $links['popular'][$i];
-	    $txt .= LinkExistingWikiWord($name) . " ($score), ";
+            if($i>0) {
+               $txt .= ", ";
+            }
+	    $txt .= LinkExistingWikiWord($name) . " ($score)";
          }
       }
       
