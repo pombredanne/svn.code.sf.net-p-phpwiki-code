@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.23 2002-08-24 13:18:56 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.24 2002-09-02 12:39:02 rurban Exp $');
 /*
  * Code for writing XML.
  */
@@ -129,7 +129,9 @@ class HTML extends HtmlElement {
     // echo "$d"
     // mkfuncs table caption thead tbody tfoot tr td th
     // echo "$d"
-    // mkfuncs form input option select textarea area map
+    // mkfuncs form input option select textarea
+    // echo "$d"
+    // mkfuncs area map frame frameset nobody
 
     function link (/*...*/) {
         $el = new HtmlElement('link');
@@ -327,12 +329,26 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('textarea');
         return $el->_init2(func_get_args());
     }
+
+    /****************************************/
     function area (/*...*/) {
         $el = new HtmlElement('area');
         return $el->_init2(func_get_args());
     }
     function map (/*...*/) {
         $el = new HtmlElement('map');
+        return $el->_init2(func_get_args());
+    }
+    function frame (/*...*/) {
+        $el = new HtmlElement('frame');
+        return $el->_init2(func_get_args());
+    }
+    function frameset (/*...*/) {
+        $el = new HtmlElement('frameset');
+        return $el->_init2(func_get_args());
+    }
+    function nobody (/*...*/) {
+        $el = new HtmlElement('nobody');
         return $el->_init2(func_get_args());
     }
 }
@@ -355,7 +371,7 @@ HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
                       // %block elements which contain inline content
                       . 'address h1 h2 h3 h4 h5 h6 p pre '
                       // %block elements which contain either block or inline content
-                      . 'div fieldset '
+                      . 'div fieldset frameset'
 
                       // other with inline content
                       . 'caption dt label legend '
@@ -369,6 +385,7 @@ HTML::_setTagProperty(HTMLTAG_INLINE,
                       . 'abbr acronym cite code dfn em kbd samp strong var ' //%phrase
                       . 'a img object br script map q sub sup span bdo '//%special
                       . 'button input label option select textarea ' //%formctl
+                      . 'nobody'
                       );
 
 /**
