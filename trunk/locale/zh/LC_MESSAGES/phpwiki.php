@@ -124,8 +124,6 @@ $locale["';' and ':' in pagenames are deprecated"] =
    "頁面名稱中的';' 和 ':' 是不被允許的";
 $locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
    "(複製你的更動到剪貼簿中. 你可以試著編輯另一個不同的頁面或存到文字編輯器中.)";
-$locale["(Not a WikiWord)"] =
-   "(不是一個 WikiWord)";
 $locale["(Pages which have been deleted at least %s days are already checked.)"] =
    "(列出過去 %s 天內已被刪除且檢查過的頁面.)";
 $locale["(Redirected from %s)"] =
@@ -182,8 +180,6 @@ $locale["<system theme>"] =
    "<系統佈景主題>";
 $locale["<unknown>"] =
    "<未知的>";
-$locale["?"] =
-   "?";
 $locale["A plugin to provide for raw HTML within wiki pages."] =
    "用來在 wiki 頁面提供 raw HTML的 plugin.";
 $locale["A required argument '%s' is missing."] =
@@ -200,8 +196,6 @@ $locale["Add %s hours to the server's local time when reporting times."] =
    "當回報時間時,在伺服器的本地時間加上 %s 個小時.";
 $locale["Add a Comment"] =
    "加入意見";
-$locale["Add or change a page-level metadata 'key=>value' pair. Note that you can remove a key by leaving value-box empty."] =
-   "加入或變更頁面層級的中繼資料 'key=>value'. 注意,移除時直接將 value 設為空白即可.";
 $locale["AddComment"] =
    "AddComment";
 $locale["AddCommentPlugin"] =
@@ -264,8 +258,6 @@ $locale["Author"] =
    "作者";
 $locale["Author will be logged as %s."] =
    "作者將登入為 %s.";
-$locale["Author:"] =
-   "作者:";
 $locale["AuthorHistory"] =
    "作者歷程";
 $locale["AuthorHistoryPlugin"] =
@@ -326,8 +318,6 @@ $locale["CategoryHomePages"] =
    "CategoryHomePages";
 $locale["CategoryHomepage"] =
    "分類首頁";
-$locale["CategoryPage"] =
-   "CategoryPage";
 $locale["Change Password"] =
    "改變密碼";
 $locale["Change Verification Status"] =
@@ -354,8 +344,6 @@ $locale["Click to display"] =
    "點擊以顯示";
 $locale["Click to reverse sort order"] =
    "點擊以反轉排列順序";
-$locale["Click to sort"] =
-   "點擊進行排序";
 $locale["Click to sort by %s"] =
    "點擊以 %s 排序";
 $locale["Columns: %s."] =
@@ -364,8 +352,6 @@ $locale["Comment"] =
    "意見";
 $locale["Comment modified on %s by %s"] =
    "意見在 %s 被 %s 變更";
-$locale["Comment:"] =
-   "意見:";
 $locale["CommentPlugin"] =
    "CommentPlugin";
 $locale["Comments"] =
@@ -390,14 +376,10 @@ $locale["Couldn't chmod page '%s' to '%s'."] =
    "無法為頁面 '%s' 變更權限為 '%s'.";
 $locale["Couldn't rename page '%s' to '%s'."] =
    "無法更名頁面 '%s' 為 '%s'.";
-$locale["Couldn't setacl page '%s'."] =
-   "無法設定頁面 '%s' 的 acl.";
 $locale["Count"] =
    "計數";
 $locale["Create a Wiki page by the provided name."] =
    "以提供的名稱建立 Wiki 頁面.";
-$locale["Create a Wiki page."] =
-   "建立 Wiki 頁面";
 $locale["Create a new (sub)page"] =
    "建立新(子)頁面";
 $locale["Create: %s"] =
@@ -520,8 +502,6 @@ $locale["Edit %s"] =
    "編輯 %s";
 $locale["Edit Area Size"] =
    "編輯區域大小";
-$locale["Edit Area Size:"] =
-   "編輯區域大小:";
 $locale["Edit Old Revision"] =
    "編輯舊的修訂";
 $locale["Edit aborted."] =
@@ -638,10 +618,6 @@ $locale["GoodStyle"] =
    "GoodStyle";
 $locale["GooglePlugin"] =
    "GooglePlugin";
-$locale["Group"] =
-   "群組";
-$locale["Group %s does not exist"] =
-   "群組 %s 不存在";
 $locale["Guest"] =
    "訪客";
 $locale["Guests"] =
@@ -734,8 +710,6 @@ $locale["InterWikiMap"] =
    "InterWikiMap";
 $locale["InterWikiSearch"] =
    "InterWikiSearch";
-$locale["Invalid acl"] =
-   "錯誤的 acl";
 $locale["Invalid chmod string"] =
    "錯誤的 chmod 字串";
 $locale["Invalid color: %s"] =
@@ -744,8 +718,6 @@ $locale["Invalid password or userid."] =
    "錯誤的密碼或使用者帳號.";
 $locale["It's free however."] =
    "然而它是自由的.";
-$locale["JabberPresence"] =
-   "JabberPresence";
 $locale["Keep up to %d major edits, but keep them no longer than %d days."] =
    "保持 %d 份主要編輯,但不超過 %d 天.";
 $locale["LDAP_AUTH_HOST not defined"] =
@@ -756,20 +728,10 @@ $locale["Last"] =
    "最後";
 $locale["Last Author"] =
    "最後一位修改的作者";
-$locale["Last Author:"] =
-   "最後一位更動者:";
 $locale["Last Modified"] =
    "最後修改";
-$locale["Last Modified:"] =
-   "最後更動:";
 $locale["Last Summary"] =
    "最後摘要";
-$locale["Last Summary:"] =
-   "最後摘要:";
-$locale["Last edited %s."] =
-   "最後編輯 %s.";
-$locale["Last edited on %s."] =
-   "最後編輯的時間在 %s.";
 $locale["LatestSnapshot"] =
    "最新快照";
 $locale["Layout tables using a very rich markup style."] =
@@ -870,8 +832,6 @@ $locale["MostPopular"] =
    "MostPopular";
 $locale["Name"] =
    "名稱";
-$locale["Never edited."] =
-   "未曾編輯過";
 $locale["New Page"] =
    "新頁面";
 $locale["New comment."] =
@@ -896,8 +856,6 @@ $locale["No changes found"] =
    "沒發現任何變更";
 $locale["No changes."] =
    "沒有變更.";
-$locale["No dsn specified"] =
-   "沒有指定 dsn";
 $locale["No opinion"] =
    "沒意見";
 $locale["No or not enough GROUP_DB SQL statements defined"] =
@@ -1014,14 +972,6 @@ $locale["PageGroup for %s"] =
    "頁面群組 - %s";
 $locale["PageGroupTest"] =
    "PageGroupTest";
-$locale["PageGroupTestFour"] =
-   "PageGroupTestFour";
-$locale["PageGroupTestOne"] =
-   "PageGroupTestOne";
-$locale["PageGroupTestThree"] =
-   "PageGroupTestThree";
-$locale["PageGroupTestTwo"] =
-   "PageGroupTestTwo";
 $locale["PageHistory"] =
    "PageHistory";
 $locale["PageHistory for %s"] =
@@ -1036,8 +986,6 @@ $locale["Pagedata size: %d Kb"] =
    "頁面資料大小: %d Kb";
 $locale["Pages in this wiki (%d total):"] =
    "在此 wiki 中的頁面 (共 %d):";
-$locale["Pages: %s"] =
-   "頁面: %s";
 $locale["Password cannot be changed."] =
    "無法變更密碼.";
 $locale["Password updated."] =
@@ -1074,8 +1022,6 @@ $locale["PhpWeatherPlugin"] =
    "PhpWeatherPlugin";
 $locale["PhpWiki"] =
    "PhpWiki";
-$locale["PhpWiki News"] =
-   "Wiki 新聞";
 $locale["PhpWiki developers should manually inspect the downloaded file for nested markup before rewrapping with emacs and checking into CVS."] =
    "在以 emacs 重包裝與簽入之前,PhpWiki 開發者應會因為巢狀標記而手動審閱已下載的檔案.";
 $locale["PhpWiki engine version"] =
@@ -1100,12 +1046,6 @@ $locale["Please contact your PhpWiki administrator for assistance."] =
    "請向你的 PhpWiki 管理者尋求協助.";
 $locale["Please continue editing.  (You'll find your %s at the bottom of the page.)"] =
    "請繼續編輯. (你將在頁面的底部找到你的 %s.)";
-$locale["Please ensure that %s is writable, or redefine %s in index.php."] =
-   "請確定 %s 可以寫入,或重新定義 index.php 裡的 %s.";
-$locale["Please set ENCRYPTED_PASSWD to false in index.php and probably change ADMIN_PASSWD."] =
-   "請在 index.php 中設定 ENCRYPTED_PASSWD 為 false 或許也要變更 ADMIN_PASSWD.";
-$locale["Please set ENCRYPTED_PASSWD to true in index.php."] =
-   "請在 index.php 中設定 ENCRYPTED_PASSWD 為 true.";
 $locale["Please set your password in UserPreferences."] =
    "請在 UserPreferences 中設定你的密碼.";
 $locale["Please use one of the downloadable versions rather than copying and pasting from the above preview."] =
@@ -1178,8 +1118,6 @@ $locale["Raw HTML is disabled in this wiki."] =
    "Raw HTML 已經被關閉.";
 $locale["RawHtmlPlugin"] =
    "RawHtmlPlugin";
-$locale["Recent Changes"] =
-   "最近變更";
 $locale["RecentChanges"] =
    "RecentChanges";
 $locale["RecentEdits"] =
@@ -1220,8 +1158,6 @@ $locale["Remove page"] =
    "移除頁面";
 $locale["Remove selected pages"] =
    "移除選定頁面";
-$locale["Remove the page now"] =
-   "現在移除頁面";
 $locale["Remove this page"] =
    "移除此頁面";
 $locale["Removed page '%s' successfully."] =
@@ -1330,8 +1266,6 @@ $locale["Show translations of various words or pages"] =
    "顯示多個字或頁面的轉換";
 $locale["Sign In"] =
    "簽入";
-$locale["Sign In:"] =
-   "簽入:";
 $locale["Sign Out"] =
    "簽出";
 $locale["Sign in as:"] =
@@ -1342,8 +1276,6 @@ $locale["Simple RSS Feed aggregator Plugin"] =
    "簡單的 RSS Feed aggregator Plugin";
 $locale["Simple Sample Plugin"] =
    "簡單的範例 Plugin";
-$locale["Simple jabber presence plugin"] =
-   "簡單的 jabber presence plugin";
 $locale["Since you started the deletion process, someone has saved a new version of %s.  Please check to make sure you still want to permanently remove the page from the database."] =
    "從你開始刪除到現在,有人已經儲存了一份 %s 的較新版本. 請檢查以確定你仍想要從資料庫中永久刪除此頁面.";
 $locale["SiteMap"] =
@@ -1396,8 +1328,6 @@ $locale["Subpage"] =
    "子頁面";
 $locale["Summary"] =
    "摘要";
-$locale["Summary:"] =
-   "摘要:";
 $locale["Supplanted on:"] =
    "代替為";
 $locale["Supported languages"] =
@@ -1454,8 +1384,6 @@ $locale["The PhpWiki access log file"] =
    "PhpWiki 存取日誌檔案";
 $locale["The PhpWiki programming team"] =
    "PhpWiki 開發團隊";
-$locale["The admin password cannot be empty. Please update your /index.php"] =
-   "管理者密碼不能是空白. 請更新你的 /index.php";
 $locale["The crypt function is not available in this version of PHP."] =
    "此版本的 PHP 沒有 crypt 函數.";
 $locale["The current page has no subpages defined."] =
@@ -1616,10 +1544,6 @@ $locale["Version %d"] =
    "版本 %d";
 $locale["Version %s"] =
    "版本 %s";
-$locale["Version %s, saved %s."] =
-   "版本 %s, 存於 %s.";
-$locale["Version %s, saved on %s."] =
-   "版本 %s, 存於 %s.";
 $locale["Versions are identical"] =
    "版本相同";
 $locale["View Source"] =
@@ -1660,8 +1584,6 @@ $locale["Warning: You are editing an old revision."] =
    "警告: 你正在編輯較舊的修訂.";
 $locale["We have a total of %d registered users."] =
    "共有 %d 位已註冊的使用者.";
-$locale["Welcome to %s!\nYou email account is verified and\nwill be used to send pagechange notifications.\nSee %s"] =
-   "歡迎 %s! \n 你的 email 帳號已經確認並且將會被用來寄送頁面變更通知. \n 參閱 %s";
 $locale["White space converted to single space"] =
    "空白空格轉換為單一空格";
 $locale["Who Is Online"] =
@@ -1734,12 +1656,8 @@ $locale["You can only use it via the _WikiTranslation plugin."] =
    "你只能透過 _WikiTranslation plugin 使用.";
 $locale["You can personalize various settings in %s."] =
    "你可以在 %s 自訂多種個人化設定.";
-$locale["You forgot to set ENCRYPTED_PASSWD to true. Please update your /index.php"] =
-   "你忘了設定 ENCRYPTED_PASSWD 為 true. 請更新你的 /index.php";
 $locale["You have not made any changes so no new version has been saved."] =
    "你沒有做任何更動,所以沒有存入任何新版本.";
-$locale["You have to configure it before use."] =
-   "你必須在使用前先設定.";
 $locale["You may sign in using any [WikiWord|AddingPages] as a user id. (Any characters in %s etc. may be used too). The user id will be used as a link in RecentChanges to your home page."] =
    "在使用任何 [WikiWord|AddingPages] 前必須先以你的帳號簽入. (%s 等.  或許也已經被其他人使用了). 帳號將會在近期更動中被用來作為連到你首頁的連結.";
 $locale["You must be an administrator to %s."] =
@@ -1758,8 +1676,6 @@ $locale["You must specify a directory to dump to"] =
    "你必須指定目錄以進行傾印";
 $locale["Your E-Mail:"] =
    "你的 E-Mail:";
-$locale["Your WikiDB DB backend '%s' cannot be used for DB_Session. Set USE_DB_SESSION to false."] =
-   "你的 WikiDB DB 後台 '%s' 無法給 DB_Session 使用. 請設定 USE_DB_SESSION 為 false.";
 $locale["Your access permissions are only for a BogoUser.\n"] =
    "你的存取權限只能給 BogoUser. \n";
 $locale["Your browser should have redirected you to %s."] =
@@ -1784,8 +1700,6 @@ $locale["Your version"] =
    "你的版本";
 $locale["[%d] See [%s]"] =
    "[%d] 參閱 [%s]";
-$locale["_AuthInfo"] =
-   "_AuthInfo";
 $locale["_PreferencesInfo"] =
    "_PreferencesInfo";
 $locale["_WikiTranslation"] =
@@ -1910,8 +1824,6 @@ $locale["revision by previous author"] =
    "上位作者的修訂";
 $locale["saved as %s"] =
    "存為 %s";
-$locale["set acl for page '%s'."] =
-   "為 page '%s' 設定 acl.";
 $locale["stddev: %2.3f"] =
    "stddev: %2.3f";
 $locale["the directory '%s'"] =

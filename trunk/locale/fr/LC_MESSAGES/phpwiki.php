@@ -140,8 +140,6 @@ $locale["Edit %s"] =
    "Éditer %s";
 $locale["Edit Area Size"] =
    "Éditez la taille de la zone";
-$locale["Edit Area Size:"] =
-   "Taille de la zone d'édition :";
 $locale["Edit Old Revision"] =
    "Éditer la Version Archivée";
 $locale["Edit aborted."] =
@@ -185,7 +183,9 @@ $locale["Hits"] =
 $locale["Hits:"] =
    "Visites :";
 $locale["HomePage"] =
-   "Accueil";
+   "PageAccueil";
+$locale["HomePageAlias"] =
+   "PageAccueilAlias";
 $locale["HowToUseWiki"] =
    "CommentUtiliserWiki";
 $locale["I'm just doing minor edits. Please divert the usual logging to %s instead."] =
@@ -214,20 +214,10 @@ $locale["Last"] =
    "Finale";
 $locale["Last Author"] =
    "Auteur Précédent";
-$locale["Last Author:"] =
-   "Auteur Précédent :";
 $locale["Last Modified"] =
    "Dernière Modification";
-$locale["Last Modified:"] =
-   "Dernière Modification :";
 $locale["Last Summary"] =
    "Dernier Résumé";
-$locale["Last Summary:"] =
-   "Dernier Résumé :";
-$locale["Last edited %s."] =
-   "Dernière modification %s.";
-$locale["Last edited on %s."] =
-   "Dernière modification le %s.";
 $locale["LikePages"] =
    "PagesSemblables";
 $locale["List PageHistory for %s"] =
@@ -324,6 +314,8 @@ $locale["Please check it through before saving."] =
    "Veuillez la vérifier avant la sauver.";
 $locale["Plugin %s failed."] =
    "Plugin %s a échoué.";
+$locale["Preferences"] =
+   "Préférences";
 $locale["Preview"] =
    "Prévisualiser";
 $locale["Preview only!  Changes not saved."] =
@@ -356,14 +348,14 @@ $locale["Remove Page"] =
    "Supprimer la Page";
 $locale["Remove page"] =
    "Supprimer la page";
-$locale["Remove the page now"] =
-   "Supprimer la page maintenant";
 $locale["Removed page '%s' successfully."] =
    "Page ' %s ' supprimée avec succès.";
 $locale["Return to %s"] =
    "Retour à l'%s";
 $locale["Revision Not Found"] =
    "Révision Non Trouvée";
+$locale["SandBox"] =
+   "BacÀSable";
 $locale["Save"] =
    "Enregistrer";
 $locale["Saved: %s"] =
@@ -384,6 +376,8 @@ $locale["Show changes for:"] =
    "Indiquer les modifications depuis ";
 $locale["Show minor edits for:"] =
    "Indiquer les modifications mineures depuis ";
+$locale["Sidebar"] =
+   "Sidebar";
 $locale["Sign In"] =
    "Connexion";
 $locale["Sign Out"] =
@@ -480,10 +474,6 @@ $locale["Version %d"] =
    "Version %d";
 $locale["Version %s"] =
    "Version %s";
-$locale["Version %s, saved %s."] =
-   "Version %s, enregistrée %s.";
-$locale["Version %s, saved on %s."] =
-   "Version %s, enregistrée sur %s.";
 $locale["Versions are identical"] =
    "Les versions sont identiques";
 $locale["View Source"] =

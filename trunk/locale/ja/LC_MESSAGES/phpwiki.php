@@ -56,8 +56,6 @@ $locale["Auth Level"] =
    "認証レベル";
 $locale["Auth Method"] =
    "認証方法";
-$locale["Author:"] =
-   "編集者:";
 $locale["Available plugins"] =
    "有効なプラグイン一覧";
 $locale["Bad Version"] =
@@ -77,8 +75,6 @@ $locale["Change Password"] =
 $locale["Change country"] =
    "国名変更";
 $locale["Comment"] =
-   "コメント";
-$locale["Comment:"] =
    "コメント";
 $locale["Complete."] =
    "完了しました。";
@@ -130,8 +126,6 @@ $locale["Edit %s"] =
    "%s を編集";
 $locale["Edit Area Size"] =
    "編集エリアのサイズ";
-$locale["Edit Area Size:"] =
-   "編集エリアサイズ";
 $locale["Edit Old Revision"] =
    "古いリビジョンを編集する";
 $locale["Edit aborted."] =
@@ -194,20 +188,10 @@ $locale["Last"] =
    "最後へ";
 $locale["Last Author"] =
    "最終編集者";
-$locale["Last Author:"] =
-   "最終編集者";
 $locale["Last Modified"] =
-   "最終更新日時";
-$locale["Last Modified:"] =
    "最終更新日時";
 $locale["Last Summary"] =
    "最終要約";
-$locale["Last Summary:"] =
-   "最終概要";
-$locale["Last edited %s."] =
-   "最終編集日時";
-$locale["Last edited on %s."] =
-   "最終編集日時: %s";
 $locale["List PageHistory for %s"] =
    "%s のページ履歴一覧";
 $locale["Load File"] =
@@ -364,6 +348,8 @@ $locale["Select: "] =
    "選択:";
 $locale["Serialized file %s"] =
    "シリアライズファイル %s";
+$locale["Sidebar"] =
+   "スライドバー";
 $locale["Sign In"] =
    "サインイン";
 $locale["Sign Out"] =
@@ -387,8 +373,6 @@ $locale["Submit location"] =
 $locale["Subpage"] =
    "サブページ";
 $locale["Summary"] =
-   "要約";
-$locale["Summary:"] =
    "要約";
 $locale["Supported languages"] =
    "サポート言語一覧";

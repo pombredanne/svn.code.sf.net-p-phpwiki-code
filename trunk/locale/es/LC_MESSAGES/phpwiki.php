@@ -74,10 +74,6 @@ $locale["Include of '%s' failed"] =
    "Inserción de '%s' falló";
 $locale["Last"] =
    "Final";
-$locale["Last edited %s."] =
-   "Editada por última vez %s.";
-$locale["Last edited on %s."] =
-   "Editada por última vez %s.";
 $locale["Lock Page"] =
    "Bloquear Página";
 $locale["Locked"] =
@@ -122,8 +118,6 @@ $locale["Remove Page"] =
    "Borrar Página";
 $locale["Remove page"] =
    "Borrar página";
-$locale["Remove the page now"] =
-   "Borrar la página ahora";
 $locale["Removed page '%s' successfully."] =
    "Página '%s' borrada satisfactoriamente.";
 $locale["Removing pages"] =
