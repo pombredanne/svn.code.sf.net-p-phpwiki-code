@@ -1,7 +1,6 @@
--- $Id: psql-destroy.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
+-- $Id: psql-destroy.sql,v 1.3 2005-04-07 06:13:57 rurban Exp $
 
 \set QUIET
-
 
 --================================================================
 -- Prefix for table names.
@@ -12,30 +11,15 @@
 \set prefix 	''
 
 --================================================================
--- Which postgres user gets access to the tables?
---
--- You should set this to the name of the postgres
--- user who will be accessing the tables.
---
--- Commonly, connections from php are made under
--- the user name of 'nobody', 'apache' or 'www'.
-
-\set httpd_user	'www'
-
---================================================================
 --
 -- Don't modify below this point unless you know what you are doing.
 --
 --================================================================
 
 \set qprefix '\'' :prefix '\''
-\set qhttp_user '\'' :httpd_user '\''
-\echo Initializing PhpWiki tables with:
+\echo Dropping all PhpWiki tables with:
 \echo '       prefix = ' :qprefix
-\echo '   httpd_user = ' :qhttp_user
 \echo
-\echo 'Expect some \'Relation \'*\' does not exists\' errors unless you are'
-\echo 'overwriting existing tables.'
 
 \set page_tbl		:prefix 'page'
 \set version_tbl	:prefix 'version'

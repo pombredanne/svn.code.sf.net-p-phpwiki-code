@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.3 2005-04-07 06:13:57 rurban Exp $
 
 \set QUIET
 
@@ -64,6 +64,7 @@
 \set pref_id		:prefix 'pref_id'
 
 \set rating_tbl		:prefix 'rating'
+\set rating_id		:prefix 'rating_id'
 
 \set accesslog_tbl	:prefix 'accesslog'
 \set accesslog_time	:prefix 'log_time'
@@ -146,11 +147,11 @@ CREATE UNIQUE INDEX :pref_id ON :pref_tbl (userid);
 -- if you plan to use the wikilens theme
 \echo Creating :rating_tbl
 CREATE TABLE :rating_tbl (
-        dimension NUMBER(4) NOT NULL,
-        raterpage NUMBER(11) NOT NULL,
-        rateepage NUMBER(11) NOT NULL,
+        dimension INTEGER NOT NULL,
+        raterpage BIGINT NOT NULL,
+        rateepage BIGINT NOT NULL,
         ratingvalue FLOAT NOT NULL,
-        rateeversion NUMBER(11) NOT NULL,
+        rateeversion BIGINT NOT NULL,
         tstamp TIMESTAMP NOT NULL
 );
 CREATE UNIQUE INDEX :rating_id ON :rating_tbl (dimension, raterpage, rateepage);
@@ -160,7 +161,7 @@ CREATE UNIQUE INDEX :rating_id ON :rating_tbl (dimension, raterpage, rateepage);
 -- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
 \echo Creating :accesslog_tbl
 CREATE TABLE :accesslog_tbl (
-        time_stamp    INT UNSIGNED,
+        time_stamp    INT,
 	remote_host   VARCHAR(50),
 	remote_user   VARCHAR(50),
         request_method VARCHAR(10),
@@ -169,8 +170,8 @@ CREATE TABLE :accesslog_tbl (
 	request_file  VARCHAR(255),
 	request_uri   VARCHAR(255),
 	request_time  CHAR(28),
-	status 	      SMALLINT UNSIGNED,
-	bytes_sent    SMALLINT UNSIGNED,
+	status 	      SMALLINT,
+	bytes_sent    SMALLINT,
         referer       VARCHAR(255), 
 	agent         VARCHAR(255),
 	request_duration FLOAT
