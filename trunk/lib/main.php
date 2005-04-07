@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.209 2005-04-06 06:19:30 rurban Exp $');
+rcs_id('$Id: main.php,v 1.210 2005-04-07 06:06:34 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -824,12 +824,16 @@ TODO: check against these cases:
 
         if (!empty($HTTP_SERVER_VARS['PHP_AUTH_USER']))
             return $HTTP_SERVER_VARS['PHP_AUTH_USER'];
+        // pubcookie et al
+        if (!empty($HTTP_SERVER_VARS['REMOTE_USER']))
+            return $HTTP_SERVER_VARS['REMOTE_USER'];
         if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
             return $HTTP_ENV_VARS['REMOTE_USER'];
             
         if ($user = $this->getSessionVar('wiki_user')) {
             // switched auth between sessions. 
-            // Note: There's no way to demandload a missing class-definition afterwards! (Stupid php)
+            // Note: There's no way to demandload a missing class-definition 
+            // afterwards! (Stupid php)
             if (isa($user, WikiUserClassname())) {
                 $this->_user = $user;
                 $this->_user->_authhow = 'session';
@@ -1241,6 +1245,10 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.209  2005/04/06 06:19:30  rurban
+// Revert the previous wrong bugfix #1175761: USECACHE was mixed with WIKIDB_NOCACHE_MARKUP.
+// Fix WIKIDB_NOCACHE_MARKUP in main (always set it) and clarify it in WikiDB
+//
 // Revision 1.208  2005/02/28 21:24:32  rurban
 // ignore forbidden ini_set warnings. Bug #1117254 by Xavier Roche
 //
