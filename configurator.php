@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.33 2005-03-27 20:36:16 rurban Exp $
+<?php // $Id: configurator.php,v 1.34 2005-04-08 05:05:16 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -152,7 +152,7 @@ echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.33 2005-03-27 20:36:16 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.34 2005-04-08 05:05:16 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -1349,12 +1349,12 @@ new _define_selection_optional('THEME',
                     'smaller'  => 'smaller',
                     'Wordpress'=> 'Wordpress',
                     'Portland' => "Portland",
-                    'Hawaiian' => "Hawaiian",
                     'Sidebar'  => "Sidebar",
                     'Crao'     => 'Crao',
                     'wikilens' => 'wikilens (Ratings)',
-                    'SpaceWiki' => "SpaceWiki",
                     'shamino_com' => 'shamino_com',
+                    'SpaceWiki' => "SpaceWiki",
+                    'Hawaiian' => "Hawaiian",
                     'MonoBook'  => 'MonoBook [experimental]',
                     'blog' 	=> 'blog [experimental]',
                     ), "
@@ -1366,7 +1366,20 @@ subdirectory.
 There are a number of pre-defined themes shipped with PhpWiki.
 Or you may create your own (e.g. by copying and then modifying one of
 stock themes.)
-
+<pre>
+  THEME = default
+  THEME = MacOSX
+  THEME = smaller
+  THEME = Wordpress
+  THEME = Portland
+  THEME = Sidebar
+  THEME = Crao
+  THEME = wikilens (Ratings)
+  THEME = Hawaiian
+  THEME = SpaceWiki
+  THEME = Hawaiian
+</pre>
+  
 Problems:
 <pre>
   THEME = MonoBook (WikiPedia) [experimental. MSIE problems]
