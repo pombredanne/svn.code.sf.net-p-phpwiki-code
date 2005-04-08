@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.72 2005-02-02 20:35:41 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.73 2005-04-08 05:41:00 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -18,8 +18,10 @@ class Template
         $this->_basepage = $request->getArg('pagename');
 
         if (strstr($name, "/")) {
-            $oldtheme = $WikiTheme->_name;
-            list($WikiTheme->_name, $name) = explode("/", $name);
+            $oldname = $WikiTheme->_name;
+            $oldtheme = $WikiTheme->_theme;
+            list($themename, $name) = explode("/", $name);
+            $WikiTheme->_theme = "themes/$themename";
         }
         $this->_name = $name;
         $file = $WikiTheme->findTemplate($name);
@@ -27,7 +29,10 @@ class Template
             trigger_error("no template for $name found.", E_USER_WARNING);
             return;
         }
-        if (isset($oldtheme)) $WikiTheme->_name = $oldtheme;
+        if (isset($oldname)) { 
+            $WikiTheme->_name = $oldname; 
+            $WikiTheme->_theme = $oldtheme; 
+        }
         $fp = fopen($file, "rb");
         if (!$fp) {
             trigger_error("$file not found", E_USER_WARNING);
@@ -277,6 +282,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.72  2005/02/02 20:35:41  rurban
+// add $SEP
+//
 // Revision 1.71  2005/02/02 19:29:30  rurban
 // support theme overrides
 //
