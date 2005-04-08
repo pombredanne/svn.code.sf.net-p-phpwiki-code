@@ -1,19 +1,16 @@
-<?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.4 2004-06-14 11:26:53 rurban Exp $ -->
-<?php
-  if (!$page->get('locked') || $user->isAdmin())
-      $EditB = Button("edit",
-                      $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
-  else
-      $EditB = Button("viewsource", _("View Source"));
-
-  $Sep = $WikiTheme->getButtonSeparator();
+<?php // -*-php-*-
+rcs_id('$Id: actionbar.tmpl,v 1.5 2005-04-08 05:28:54 rurban Exp $');
+if (!$page->get('locked') || $user->isAdmin())
+    $EditB = Button("edit",
+                    $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
+else
+    $EditB = Button("viewsource", _("View Source"));
 ?>
-<!-- I would like not to have to use these tables, and managed to
-     get this stuff to work more or less correctly using
-     CSSs float:left; and float:right;.  However float:right; seems
-     to cause MSIE4.01/NT to hang.
-     So, we use tables...  -->
+<?php /* I would like not to have to use these tables, and managed to
+       * get this stuff to work more or less correctly using
+       * CSSs float:left; and float:right;.  However float:right; seems
+       * to cause MSIE4.01/NT to hang. 
+       * So, we use tables...  */ ?>
 <table summary="Toolbar 1: Page actions and user login."
        width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr valign="baseline">
@@ -21,30 +18,34 @@
   <div id="actionbuttons">
     <? if ( $user->isSignedIn()) { ?>
      <?= $EditB ?>
-     <?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>
-      <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
-      <?php if (ENABLE_PAGEPERM) { ?>
-        <?=$Sep?><?= Button('chown') ?>
-        <?=$Sep?><?= Button('setacl') ?>
+     <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
+      <?=$SEP?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
+      <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $page->getName())) { ?>
+        <?=$SEP?><?= Button('chown') ?>
+        <?=$SEP?><?= Button('setacl') ?>
      <?php }} ?>
-     <?php if ($user->isAdmin() or mayAccessPage('remove',$page->getName())) { ?>
-      <?=$Sep?><?= Button('remove') ?>
+     <?php if ($user->isAdmin() or mayAccessPage('remove', $page->getName())) { ?>
+      <?=$SEP?><?= Button('remove') ?>
      <?php } ?>
+     <?=$SEP?>
     <?php } ?>
-    <?=$Sep?><?= Button(array('action'=>'PageInfo'),_("Info"),$page->getName()) ?>
+   <?= Button(array('action'=>'PageInfo'),_("Info"), $page->getName()) ?>
 <?php if (((defined('DEBUG') and DEBUG and $request->getArg('action') == 'browse')) || $user->isAdmin()) { ?>
       <!-- Buttons really only for debugging -->
-      <?=$Sep?><?= Button(_("PageHistory")) ?>
-      <?=$Sep?><?= Button("diff") ?>
-      <?=$Sep?><?= Button(_("PageDump")) ?>
+      <?=$SEP?><?= Button(_("PageHistory")) ?>
+      <?=$SEP?><?= Button("diff") ?>
+      <?=$SEP?><?= Button(_("PageDump")) ?>
 <?php
      $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $page->getName());
      $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
 ?>
-    <?=$Sep?><?= $PurgeCache ?>
+    <?=$SEP?><?= $PurgeCache ?>
     <!-- End debugging buttons -->
     <?php } ?>
+<?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
+    <?=$SEP?><?= Button("pdf") ?>
+<?php } ?>
   </div>
   </td>
 <?php if (empty($NOSIGNIN)) { ?>
