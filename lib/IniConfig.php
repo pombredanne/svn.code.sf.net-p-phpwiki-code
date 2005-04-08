@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.86 2005-04-06 06:41:05 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.87 2005-04-08 18:11:50 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -639,9 +639,9 @@ function fixup_dynamic_configs($file) {
     global $WikiNameRegexp, $KeywordLinkRegexp;
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
 
-    if (defined('INCLUDE_PATH'))
+    if (defined('INCLUDE_PATH') and INCLUDE_PATH)
         @ini_set('include_path', INCLUDE_PATH);
-    if (defined('SESSION_SAVE_PATH'))
+    if (defined('SESSION_SAVE_PATH') and SESSION_SAVE_PATH)
         @ini_set('session.save_path', SESSION_SAVE_PATH);
     if (!defined('DEFAULT_LANGUAGE'))   // not needed anymore
         define('DEFAULT_LANGUAGE', ''); // detect from client
@@ -831,6 +831,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.86  2005/04/06 06:41:05  rurban
+// add ENABLE_DISCUSSION_LINK dependency (to turn it off for 1.3.11)
+//
 // Revision 1.85  2005/03/27 20:36:16  rurban
 // configurator recursion fixes, dont print temp _dsn vars
 //
