@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.131 2005-02-04 10:48:06 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.132 2005-04-09 09:16:15 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1260,6 +1260,27 @@ function flipAll(formObj) {
    }
 }");
     }
+
+    /* recursive stack for private sublist options (azhead, cols) */
+    function _saveOptions($opts) {
+        $stack = array('pages' => $this->_pages);
+        foreach ($opts as $k => $v) {
+            $stack[$k] = $this->_options[$k];
+            $this->_options[$k] = $v;
+        }
+        if (empty($this->_stack))
+            $this->_stack = new Stack();
+        $this->_stack->push($stack);
+    }
+    function _restoreOptions() {
+    	assert($this->_stack);
+    	$stack = $this->_stack->pop();
+        $this->_pages = $stack['pages'];
+        unset($stack['pages']);
+        foreach ($stack as $k => $v) {
+            $this->_options[$k] = $v;
+        }
+    }
     
     // 'cols'   - split into several columns
     // 'azhead' - support <h3> grouping into initials
@@ -1278,14 +1299,11 @@ function flipAll(formObj) {
             $width = sprintf("%d", 100 / $this->_options['cols']).'%';
             $cols = HTML::tr(array('valign' => 'top'));
             for ($i=0; $i < $count; $i += $length) {
-                $save_pages = $this->_pages;
-                $save_cols = $this->_options['cols'];
-                $this->_options['cols'] = 0; // avoid endless recursion!
+                $this->_saveOptions(array('cols' => 0));
                 $this->_pages = array_slice($this->_pages, $i, $length);
                 $cols->pushContent(HTML::td(/*array('width' => $width),*/ 
                                             $this->_generateList()));
-                $this->_pages = $save_pages;
-                $this->_options['cols'] = $save_cols;
+                $this->_restoreOptions();
             }
             // speed up table rendering by defining colgroups
             $out->pushContent(HTML::table(HTML::colgroup(array('span' => $this->_options['cols'],
@@ -1307,20 +1325,20 @@ function flipAll(formObj) {
                 $page =& $this->_pages[$i];
                 $h = substr($page->getName(), 0, 1);
                 if ($h != $cur_h and $i > $j) {
-                    $save_pages = $this->_pages;
-                    $save_cols = $this->_options['cols'];
-                    $save_azhead = $this->_options['azhead'];
-                    $this->_options['cols'] = 0;  // avoid endless recursion!
-                    $this->_options['azhead'] = 0;
+                    $this->_saveOptions(array('cols' => 0, 'azhead' => 0));
                     $this->_pages = array_slice($this->_pages, $j, $i - $j);
                     $out->pushContent($this->_generateList());
-                    $this->_pages = $save_pages;
-                    $this->_options['cols'] = $save_cols;
-                    $this->_options['azhead'] = $save_azhead;
+                    $this->_restoreOptions();
                     $j = $i;
                     $out->pushContent(HTML::h3($h));
                     $cur_h = $h;
                 }
+            }
+            if ($i > $j) { // flush the rest
+                $this->_saveOptions(array('cols' => 0, 'azhead' => 0));
+                $this->_pages = array_slice($this->_pages, $j, $i - $j);
+                $out->pushContent($this->_generateList());
+                $this->_restoreOptions();
             }
             return $out;
         }
@@ -1449,6 +1467,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.131  2005/02/04 10:48:06  rurban
+// fix usort ref warning. Thanks to Charles Corrigan
+//
 // Revision 1.130  2005/01/28 12:07:36  rurban
 // reformatting
 //
