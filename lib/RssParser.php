@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssParser.php,v 1.10 2005-01-22 11:45:09 rurban Exp $');
+rcs_id('$Id: RssParser.php,v 1.11 2005-04-10 10:24:58 rurban Exp $');
 /**
  * Simple RSSParser Class
  * Based on Duncan Gough RSSParser class
@@ -34,6 +34,9 @@ rcs_id('$Id: RssParser.php,v 1.10 2005-01-22 11:45:09 rurban Exp $');
  *   added fsockopen allow_url_fopen = Off workaround
  * 2004-04-12 20:04:12 rurban: 
  *   fixes for IMAGE element (sf.net)
+ * 2005-04-10 11:17:35 rurban
+ *   certain RSS dont contain <item> tags to describe the list of <items>
+ *     http://ws.audioscrobbler.com/rdf/ for example
  */
 
 require_once('lib/XmlParser.php');
@@ -45,6 +48,7 @@ extends XmlParser {
     var $link  = "";
     var $description = "";
     var $inside_item = false;
+    var $list_items = false;
     var $item  = array();
     var $items;
     var $channel;
@@ -52,11 +56,14 @@ extends XmlParser {
     var $date = "";
 
     function tag_open($parser, $name, $attrs=''){
-        global $current_tag;
+        global $current_tag, $current_attrs;
 
         $current_tag = $name;
+        $current_attrs = $attrs;
         if ($name == "ITEM")
             $this->inside_item = true;
+        elseif ($name == "ITEMS")
+            $this->list_items = true;
         elseif ($name == "IMAGE")
             $this->inside_item = true;
     }
@@ -68,18 +75,22 @@ extends XmlParser {
             if (empty($this->items)) {
                 $this->items = array();	
                 $GLOBALS['rss_parser_items'] =& $this->items;
+            } elseif (!empty($this->items[0]['link']) and $this->items[0]['title'] == '') {
+            	// override the initial <items> list with detailed <item>'s
+                $this->items = array();
+                $GLOBALS['rss_parser_items'] =& $this->items;
             }
             $this->items[] = array("title"       => $this->item['TITLE'],
-                                   "description" => $this->item['DESCRIPTION'],
+                                   "description" => @$this->item['DESCRIPTION'],
                                    "link"        => $this->item['LINK']);
-            $this->item['TITLE']       = "";
-            $this->item['DESCRIPTION'] = "";
-            $this->item['LINK']        = "";
+            $this->item = array("TITLE"       => "",
+                                "DESCRIPTION" => "",
+                                "LINK"        => "");
             $this->inside_item = false;
         } elseif ($tagName == "IMAGE") {
-            $this->item['TITLE']       = "";
-            $this->item['DESCRIPTION'] = "";
-            $this->item['LINK']        = "";
+            $this->item = array("TITLE"       => "",
+                                "DESCRIPTION" => "",
+                                "LINK"        => "");
             $this->inside_item = false;
         } elseif ($tagName == "CHANNEL") {
             $this->channel = array("title" => $this->title,
@@ -93,11 +104,17 @@ extends XmlParser {
             $this->link        = "";
             $this->divers      = "";
             $this->date        = "";
+        } elseif ($tagName == "ITEMS") {
+            $GLOBALS['rss_parser_items'] =& $this->items;
+            $this->item = array("TITLE"       => "",
+                                "DESCRIPTION" => "",
+                                "LINK"        => "");
+            $this->list_items = false;
         }
     }
 
     function cdata($parser, $data){
-        global $current_tag;
+        global $current_tag, $current_attrs;
 
         if ($this->inside_item) {
             if (empty($this->item[$current_tag]))
@@ -107,6 +124,13 @@ extends XmlParser {
             	    $this->item[$current_tag] = trim($data);
             } else {
                 $this->item[$current_tag] .= trim($data);
+            }
+        } elseif ($this->list_items) {
+            if ($current_tag == 'RDF:LI') {
+            	// FIXME: avoid duplicates. cdata called back 4x per RDF:LI
+            	if ($this->items[count($this->items)-1]['link'] != @$current_attrs['RDF:RESOURCE'])
+                    $this->items[] = array('link' => @$current_attrs['RDF:RESOURCE'],
+                                           'title' => '');
             }
         } else {
             switch ($current_tag) {
@@ -142,8 +166,8 @@ extends XmlParser {
         //OO workaround: parser object looses its params. we have to store them in globals
         if ($is_final) {
     	    if (empty($this->items)) {
-                $this->items = $GLOBALS['rss_parser_items'];
-                $this->channel = $GLOBALS['rss_parser_channel'];
+                $this->items   = @$GLOBALS['rss_parser_items'];
+                $this->channel = @$GLOBALS['rss_parser_channel'];
     	    }
     	    unset($GLOBALS['rss_parser_items']);
     	    unset($GLOBALS['rss_parser_channel']);
@@ -152,6 +176,9 @@ extends XmlParser {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2005/01/22 11:45:09  rurban
+// docs
+//
 // Revision 1.9  2004/06/08 21:12:02  rurban
 // is_final fix for incremental parsing
 //
