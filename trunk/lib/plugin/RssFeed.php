@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RssFeed.php,v 1.9 2004-11-03 16:34:10 rurban Exp $');
+rcs_id('$Id: RssFeed.php,v 1.10 2005-04-10 10:24:58 rurban Exp $');
 /*
  Copyright 2003 Arnaud Fontaine
 
@@ -39,14 +39,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     // Establish default values for each of this plugin's arguments.
     function getDefaultArguments() {
         return array('feed' 		=> "",
                      'description' 	=> "",
-                     'url' 		=> "", //"http://phpwiki.sourceforge.net/phpwiki/RecentChanges?format=rss",
+                     'url' 		=> "", //"http://phpwiki.org/RecentChanges?format=rss",
                      'maxitem' 		=> 0,
                      'debug' 		=> false,
                      );
@@ -84,17 +84,19 @@ extends WikiPlugin
         $html = HTML::div(array('class'=> 'rss'), $th);
         if ($rss_parser->items) { 
             // only maxitem's
-            if ( $maxitem > 0) 
+            if ( $maxitem > 0 )
                 $rss_parser->items = array_slice($rss_parser->items, 0, $maxitem);
             foreach ($rss_parser->items as $item) {
+                $cell = HTML::div(array('class'=> 'rssitem'));
+                if ($item['link'] and empty($item['title']))
+                    $item['title'] = $item['link'];
                 $cell_title = HTML::div(array('class'=> 'itemname'),
                                         HTML::a(array('href'=>$item['link']),
                                                 HTML::raw($item['title'])));
-                $cell_content = HTML::div(array('class'=> 'itemdesc'),
-                                          HTML::raw($item['description']));
-                $cell = HTML::div(array('class'=> 'rssitem'));
                 $cell->pushContent($cell_title);
-                $cell->pushContent($cell_content);
+                if (!empty($item['description']))
+                    $cell->pushContent(HTML::div(array('class'=> 'itemdesc'),
+                                                 HTML::raw($item['description'])));
                 $html->pushContent($cell);
             }
         } else {
@@ -119,6 +121,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/11/03 16:34:10  rurban
+// proper msg if rss connection is broken or no items found
+//
 // Revision 1.8  2004/07/08 20:30:07  rurban
 // plugin->run consistency: request as reference, added basepage.
 // encountered strange bug in AllPages (and the test) which destroys ->_dbi
