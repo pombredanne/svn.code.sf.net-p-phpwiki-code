@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO_mysql.php,v 1.1 2005-02-10 19:01:24 rurban Exp $');
+rcs_id('$Id: PDO_mysql.php,v 1.2 2005-04-10 10:43:25 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -45,10 +45,15 @@ extends WikiDB_backend_PDO
 
         if ($this->_serverinfo['version'] > 401.0) {
             global $charset;
+            $aliases = array('iso-8859-1' => 'latin1',
+                             'utf-8'      => 'utf8');
             //http://dev.mysql.com/doc/mysql/en/charset-connection.html
-            //SET NAMES 'latin1' or 'utf8'
-            $this->query("SET NAMES '$charset'");
-            //SET CHARACTER SET latin1 for the default database.
+            if (isset($aliases[strtolower($charset)])) {
+                // mysql needs special unusual names and doesn't resolve aliases
+                mysql_query("SET NAMES '". $aliases[$charset] . "'");
+            } else {
+                mysql_query("SET NAMES '$charset'");
+            }
         }
     }
 
@@ -129,6 +134,9 @@ extends WikiDB_backend_PDO
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/02/10 19:01:24  rurban
+// add PDO support
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

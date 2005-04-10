@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.18 2005-04-01 14:32:44 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.19 2005-04-10 10:43:25 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -26,11 +26,12 @@ extends WikiDB_backend_PearDB
             // esp. needed for utf databases
             if ($this->_serverinfo['version'] > 401.0) {
                 global $charset;
+                $aliases = array('iso-8859-1' => 'latin1',
+                                 'utf-8'      => 'utf8');
                 //http://dev.mysql.com/doc/mysql/en/charset-connection.html
-                if (strtolower($charset) == 'iso-8859-1') {
-                    // mysql needs different names and doesn't resolve aliases
-                    mysql_query("SET NAMES 'latin1'");
-                    //mysql_query("SET CHARACTER SET latin1");
+                if (isset($aliases[strtolower($charset)])) {
+                    // mysql needs special unusual names and doesn't resolve aliases
+                    mysql_query("SET NAMES '". $aliases[$charset] . "'");
                 } else {
                     mysql_query("SET NAMES '$charset'");
                 }
