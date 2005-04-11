@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.90 2005-02-26 18:30:01 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.91 2005-04-11 19:40:14 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -661,29 +661,33 @@ class Request_CookieVars {
 class Request_UploadedFile {
     function getUploadedFile($postname) {
         global $HTTP_POST_FILES;
-        
+
+        // Against php5 with !ini_get('register-long-arrays'). See Bug #1180115
+        if (empty($HTTP_POST_FILES) and !empty($_FILES))
+            $HTTP_POST_FILES =& $_FILES;
         if (!isset($HTTP_POST_FILES[$postname]))
             return false;
         
-        $fileinfo = &$HTTP_POST_FILES[$postname];
+        $fileinfo =& $HTTP_POST_FILES[$postname];
         if ($fileinfo['error']) {
+            // See https://sourceforge.net/forum/message.php?msg_id=3093651
+            $err = (int) $fileinfo['error'];
             // errmsgs by Shilad Sen
-            switch ($HTTP_POST_FILES['userfile']['error']) {
+            switch ($err) {
             case 1:
-                trigger_error(_("Upload error: file too big"), E_USER_ERROR);
+                trigger_error(_("Upload error: file too big"), E_USER_WARNING);
                 break;
             case 2:
-                trigger_error(_("Upload error: file too big"), E_USER_ERROR);
+                trigger_error(_("Upload error: file too big"), E_USER_WARNING);
                 break;
             case 3:
-                trigger_error(_("Upload error: file only partially recieved"), E_USER_ERROR);
+                trigger_error(_("Upload error: file only partially recieved"), E_USER_WARNING);
                 break;
             case 4:
-                trigger_error(_("Upload error: no file selected"), E_USER_ERROR);
+                trigger_error(_("Upload error: no file selected"), E_USER_WARNING);
                 break;
             default:
-                trigger_error(_("Upload error: unknown error #") . $fileinfo['error'], E_USER_ERROR);
-                break;
+                trigger_error(_("Upload error: unknown error #") . $err, E_USER_WARNING);
             }
             return false;
         }
@@ -713,7 +717,7 @@ class Request_UploadedFile {
             	    ;
                 }
             } else {
-              trigger_error(sprintf("Uploaded tmpfile %s not found.",$fileinfo['tmp_name'])."\n".
+              trigger_error(sprintf("Uploaded tmpfile %s not found.", $fileinfo['tmp_name'])."\n".
                            " Probably illegal TEMP environment or upload_tmp_dir setting.",
                           E_USER_WARNING);
             }
@@ -1328,6 +1332,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.90  2005/02/26 18:30:01  rurban
+// update (C)
+//
 // Revision 1.89  2005/02/04 10:38:36  rurban
 // do not log passwords! Thanks to Charles Corrigan
 //

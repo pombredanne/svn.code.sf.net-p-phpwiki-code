@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.18 2005-02-12 17:24:24 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.19 2005-04-11 19:40:15 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -117,46 +117,45 @@ ws[cfh]");
         $form->pushContent($contents);
 
         $message = HTML();
+        if ($request->isPost() and $this->only_authenticated) {
+            // Make sure that the user is logged in.
+            $user = $request->getUser();
+            if (!$user->isAuthenticated()) {
+                $message->pushContent(HTML::h2(_("ACCESS DENIED: You must log in to upload files.")),
+                                          HTML::br(),HTML::br());
+                $result = HTML();
+                $result->pushContent($form);
+                $result->pushContent($message);
+                return $result;
+            }
+        }
+        
         $userfile = $request->getUploadedFile('userfile');
         if ($userfile) {
             $userfile_name = $userfile->getName();
             $userfile_name = trim(basename($userfile_name));
             $userfile_tmpname = $userfile->getTmpName();
-
-            if ($this->only_authenticated) {
-                // Make sure that the user is logged in.
-                //
-                $user = $request->getUser();
-                if (!$user->isAuthenticated()) {
-                    $message->pushContent(_("ACCESS DENIED: You must log in to upload files."),
-                                          HTML::br(),HTML::br());
-                    $result = HTML();
-                    $result->pushContent($form);
-                    $result->pushContent($message);
-                    return $result;
-                }
-            }
-
+	    $err_header = HTML::h2(fmt("ERROR uploading '%s': ", $userfile_name));
             if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")\$/",
                            $userfile_name))
             {
-            	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
+            	$message->pushContent($err_header);
                 $message->pushContent(fmt("Files with extension %s are not allowed.",
                                           join(", ", $this->disallowed_extensions)),HTML::br(),HTML::br());
             } 
             elseif (preg_match("/[^._a-zA-Z0-9-]/", $userfile_name))
             {
-            	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
+            	$message->pushContent($err_header);
                 $message->pushContent(_("File names may only contain alphanumeric characters and dot, underscore or dash."),
                                       HTML::br(),HTML::br());
             }
             elseif (file_exists($file_dir . $userfile_name)) {
-            	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
+            	$message->pushContent($err_header);
                 $message->pushContent(fmt("There is already a file with name %s uploaded.",
                                           $userfile_name),HTML::br(),HTML::br());
             }
             elseif ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
-            	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
+            	$message->pushContent($err_header);
                 $message->pushContent(_("Sorry but this file is too big."),HTML::br(),HTML::br());
             }
             elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name) or
@@ -165,7 +164,7 @@ ws[cfh]");
             {
             	$interwiki = new PageType_interwikimap();
             	$link = $interwiki->link("Upload:$userfile_name");
-                $message->pushContent(_("File successfully uploaded."));
+                $message->pushContent(HTML::h2(_("File successfully uploaded.")));
                 $message->pushContent(HTML::ul(HTML::li($link)));
 
                 // the upload was a success and we need to mark this event in the "upload log"
@@ -188,7 +187,7 @@ ws[cfh]");
                 }
             }
             else {
-            	$message->pushContent(fmt("ERROR uploading '%s': ",$userfile_name));
+            	$message->pushContent($err_header);
                 $message->pushContent(HTML::br(),_("Uploading failed."),HTML::br());
             }
         }
@@ -207,12 +206,10 @@ ws[cfh]");
     	global $WikiTheme;
     	$user = $GLOBALS['request']->_user;
         if (!is_writable($upload_log)) {
-            $message->pushContent(_("Error: the upload log is not writable."));
-            $message->pushContent(HTML::br());
+            trigger_error(_("The upload logfile is not writable."), E_USER_WARNING);
         }
         elseif (!$log_handle = fopen ($upload_log, "a")) {
-            $message->pushContent(_("Error: can't open the upload logfile."));
-            $message->pushContent(HTML::br());
+            trigger_error(_("Can't open the upload logfile."), E_USER_WARNING);
         }
         else {        // file size in KB; precision of 0.1
             $file_size = round(($userfile->getSize())/1024, 1);
@@ -234,6 +231,10 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2005/02/12 17:24:24  rurban
+// locale update: missing . : fixed. unified strings
+// proper linebreaks
+//
 // Revision 1.17  2004/11/09 08:15:50  rurban
 // trim filename
 //
