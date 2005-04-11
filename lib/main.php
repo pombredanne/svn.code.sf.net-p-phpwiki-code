@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.210 2005-04-07 06:06:34 rurban Exp $');
+rcs_id('$Id: main.php,v 1.211 2005-04-11 19:42:54 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -66,8 +66,9 @@ class WikiRequest extends Request {
                 include_once("lib/WikiUser/$method.php");
             	if ($method == 'Db')
             	    switch($GLOBALS['DBParams']['dbtype']) {
-            	    	case 'SQL' : include_once("lib/WikiUser/PearDb.php"); break;
+            	    	case 'SQL'  : include_once("lib/WikiUser/PearDb.php"); break;
             	    	case 'ADODB': include_once("lib/WikiUser/AdoDb.php"); break;
+                        //case 'PDO'  : include_once("lib/WikiUser/PdoDb.php"); break;
             	    }
             }
             unset($method);
@@ -75,7 +76,8 @@ class WikiRequest extends Request {
         if (USE_DB_SESSION) {
             include_once('lib/DbSession.php');
             $dbi =& $this->_dbi;
-            $this->_dbsession = new DbSession($dbi, $dbi->getParam('prefix') . $dbi->getParam('db_session_table'));
+            $this->_dbsession = new DbSession($dbi, $dbi->getParam('prefix') 
+                                              . $dbi->getParam('db_session_table'));
         }
 
 // Fixme: Does pear reset the error mask to 1? We have to find the culprit
@@ -114,6 +116,7 @@ class WikiRequest extends Request {
 	        if (isset($this->_user->_prefs->_method)
                     and ($this->_user->_prefs->_method == 'SQL' 
                          or $this->_user->_prefs->_method == 'ADODB' 
+                         //or $this->_user->_prefs->_method == 'PDO' 
                          or $this->_user->_prefs->_method == 'HomePage')) {
 	            $this->_user->_HomePagehandle = $this->getPage($userid);
 	        }
@@ -395,7 +398,7 @@ class WikiRequest extends Request {
     /* Permission system */
     function getLevelDescription($level) {
     	static $levels = false;
-    	if (!$levels) // This looks like Visual Basic hack. For the very same reason.
+    	if (!$levels) // This looks like a Visual Basic hack. For the very same reason. "0"
     	    $levels = array('x-1' => _("FORBIDDEN"),
                             'x0'  => _("ANON"),
                             'x1'  => _("BOGO"),
@@ -501,7 +504,7 @@ class WikiRequest extends Request {
     }
     
     /**
-TODO: check against these cases:
+     TODO: check against these cases:
         if ($DisabledActions and in_array($action, $DisabledActions))
             return WIKIAUTH_UNOBTAINABLE;
 
@@ -549,7 +552,7 @@ TODO: check against these cases:
          * This is a hook for plugins to require authority
          * for posting to them.
          *
-         * IMPORTANT: this is not a secure check, so the plugin
+         * IMPORTANT: This is not a secure check, so the plugin
          * may not assume that any POSTs to it are authorized.
          * All this does is cause PhpWiki to prompt for login
          * if the user doesn't have the required authority.
@@ -662,12 +665,13 @@ TODO: check against these cases:
                 $loader = new WikiPluginLoader();
                 $plugin = $loader->getPlugin("ModeratedPage");
             	if ($plugin->handler($this, $page)) {
-            	    $CONTENT = HTML::div(array('class' => 'wiki-edithelp'),
-            	                                 fmt("%s: action forwarded to a moderator.", 
-            	    				     $action), 
-                                         HTML::br(),
-                                         // better msg: "This action requires moderator approval. Please be patient."
-                                         _("You must wait for moderator approval."));
+            	    $CONTENT = HTML::div
+                        (
+                         array('class' => 'wiki-edithelp'),
+                         fmt("%s: action forwarded to a moderator.", 
+                             $action), 
+                         HTML::br(),
+                         _("This action requires moderator approval. Please be patient."));
                     if (!empty($plugin->_tokens['CONTENT']))
                         $plugin->_tokens['CONTENT']->pushContent
                             (
@@ -1041,10 +1045,10 @@ TODO: check against these cases:
     }
 
     function action_remove () {
-        // FIXME: This check is redundant.
+        // This check is now redundant.
         //$user->requireAuth(WIKIAUTH_ADMIN);
         $pagename = $this->getArg('pagename');
-        if (strstr($pagename,_('PhpWikiAdministration'))) {
+        if (strstr($pagename, _("PhpWikiAdministration"))) {
             $this->action_browse();
         } else {
             include('lib/removepage.php');
@@ -1112,7 +1116,7 @@ TODO: check against these cases:
     
 }
 
-//FIXME: deprecated
+//FIXME: deprecated with ENABLE_PAGEPERM (?)
 function is_safe_action ($action) {
     global $request;
     return $request->requiredAuthorityForAction($action) < WIKIAUTH_ADMIN;
@@ -1123,7 +1127,7 @@ function validateSessionPath() {
     // is output, which causes some versions of IE to display a blank
     // page (due to its strict mode while parsing a page?).
     if (! is_writeable(ini_get('session.save_path'))) {
-        $tmpdir = defined('SESSION_SAVE_PATH') ? SESSION_SAVE_PATH : '/tmp';
+        $tmpdir = (defined('SESSION_SAVE_PATH') and SESSION_SAVE_PATH) ? SESSION_SAVE_PATH : '/tmp';
         if (!is_writeable($tmpdir))
             $tmpdir = '/tmp';
         trigger_error
@@ -1151,7 +1155,7 @@ function validateSessionPath() {
 }
 
 function main () {
-    if (!USE_DB_SESSION)
+    if ( !USE_DB_SESSION )
         validateSessionPath();
 
     global $request;
@@ -1184,7 +1188,7 @@ function main () {
         if ($request->getArg('nocache')) // 1 or purge
             define('WIKIDB_NOCACHE_MARKUP', $request->getArg('nocache'));
         else
-            define('WIKIDB_NOCACHE_MARKUP', false);
+            define('WIKIDB_NOCACHE_MARKUP', false); // redundant, but explicit
     }
     
     // Initialize with system defaults in case user not logged in.
@@ -1245,6 +1249,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.210  2005/04/07 06:06:34  rurban
+// add _SERVER[REMOTE_USER] check for pubcookie et al, Bug #1177259 (iamjpr)
+//
 // Revision 1.209  2005/04/06 06:19:30  rurban
 // Revert the previous wrong bugfix #1175761: USECACHE was mixed with WIKIDB_NOCACHE_MARKUP.
 // Fix WIKIDB_NOCACHE_MARKUP in main (always set it) and clarify it in WikiDB
@@ -1560,7 +1567,14 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 // db_session for older php's (no &func() allowed)
 //
 // Revision 1.136  2004/04/29 17:18:19  zorloc
-// Fixes permission failure issues.  With PagePermissions and Disabled Actions when user did not have permission WIKIAUTH_FORBIDDEN was returned.  In WikiUser this was ok because WIKIAUTH_FORBIDDEN had a value of 11 -- thus no user could perform that action.  But WikiUserNew has a WIKIAUTH_FORBIDDEN value of -1 -- thus a user without sufficent permission to do anything.  The solution is a new high value permission level (WIKIAUTH_UNOBTAINABLE) to be the default level for access failure.
+// Fixes permission failure issues.  With PagePermissions and Disabled
+// Actions when user did not have permission WIKIAUTH_FORBIDDEN was
+// returned.  In WikiUser this was ok because WIKIAUTH_FORBIDDEN had a
+// value of 11 -- thus no user could perform that action.  But
+// WikiUserNew has a WIKIAUTH_FORBIDDEN value of -1 -- thus a user
+// without sufficent permission to do anything.  The solution is a new
+// high value permission level (WIKIAUTH_UNOBTAINABLE) to be the
+// default level for access failure.
 //
 // Revision 1.135  2004/04/26 12:15:01  rurban
 // check default config values
@@ -1642,13 +1656,16 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 // check for ALLOW_ANON_USER = false
 //
 // Revision 1.118  2004/02/26 01:32:03  rurban
-// fixed session login with old WikiUser object. strangely, the errormask gets corruoted to 1, Pear???
+// fixed session login with old WikiUser object. 
+// strangely, the errormask gets corrupted to 1, Pear???
 //
 // Revision 1.117  2004/02/24 17:19:37  rurban
 // debugging helpers only
 //
 // Revision 1.116  2004/02/24 15:17:14  rurban
-// improved auth errors with individual pages. the fact that you may not browse a certain admin page does not conclude that you may not browse the whole wiki. renamed browse => view
+// improved auth errors with individual pages. the fact that you may
+// not browse a certain admin page does not conclude that you may not
+// browse the whole wiki. renamed browse => view
 //
 // Revision 1.115  2004/02/15 21:34:37  rurban
 // PageList enhanced and improved.
