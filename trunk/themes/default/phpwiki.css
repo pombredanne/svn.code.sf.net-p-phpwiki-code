@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.48 2005-02-27 18:19:20 rurban Exp $
+ * $Id: phpwiki.css,v 1.49 2005-04-11 19:41:23 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -558,11 +558,23 @@ div.errors {
   border: medium solid red;
   clear: both;
 }
-.errors h4 {
+h4.errors {
   color: red;
   margin:  0;
   padding: 0;
   text-decoration: underline;
+}
+div.warning {
+  color: black;
+  background: #eee;
+  margin-top:    1em;
+  margin-bottom: 1em;
+  padding-left:  0.8em; 
+  padding-right: 0.8em; 
+  padding-top:    0.8ex;
+  padding-bottom: 0;
+  border: thin solid blue;
+  clear: both;
 }
 .error { font-family: monospace; font-size: 120%; }
 .error ul { font-family: monospace; }

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.42 2005-02-26 18:29:07 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.43 2005-04-11 19:41:23 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -111,19 +111,18 @@ class ErrorManager
         if ($flushed->isEmpty())
             return false;
         // format it with the worst class (error, warning, notice)
-        //$class = 'notice';
-        $cur_err = new PhpError(0,"","","");
+        $worst_err = $flushed->_content[0];
         foreach ($flushed->_content as $err) {
-            if ($err and isa($err, 'PhpError') and $err->errno > $cur_err->errno) {
-                $cur_err = $err;
+            if ($err and isa($err, 'PhpError') and $err->errno > $worst_err->errno) {
+                $worst_err = $err;
             }
         }
-        if ($cur_err->isNotice())
+        if ($worst_err->isNotice())
             return $flushed;
-        $class = $cur_err->getHtmlClass(); 
-        $html = HTML::div(array('class' => $class),
+        $class = $worst_err->getHtmlClass(); 
+        $html = HTML::div(array('style' => 'border: none', 'class' => $class),
                           HTML::h4(array('class' => 'errors'), 
-                                   "PHP " . $cur_err->getDescription()));
+                                   "PHP " . $worst_err->getDescription()));
         $html->pushContent($flushed);
         return $html;
     }
@@ -423,7 +422,7 @@ class PhpError {
         if ($this->isNotice()) {
             return 'hint';
         } elseif ($this->isWarning()) {
-            return 'errors';
+            return 'warning';
         } else {
             return 'errors';
         }
@@ -465,9 +464,9 @@ class PhpError {
                          array_shift($lines));
         }
         
-        //$html = HTML::div(array('class' => $this->getHtmlClass()), HTML::p($msg));
+        $html = HTML::div(array('class' => $this->getHtmlClass()), HTML::p($msg));
         // The class is now used for the div container.
-        $html = HTML::div(HTML::p($msg));
+        // $html = HTML::div(HTML::p($msg));
         if ($lines) {
             $list = HTML::ul();
             foreach ($lines as $line)
@@ -611,6 +610,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2005/02/26 18:29:07  rurban
+// re-enable colored boxed errors
+//
 // Revision 1.41  2004/12/26 17:08:36  rurban
 // php5 fixes: case-sensitivity, no & new
 //
