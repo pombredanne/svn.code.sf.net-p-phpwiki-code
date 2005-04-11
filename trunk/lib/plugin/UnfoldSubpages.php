@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.19 2005-01-21 14:12:48 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.20 2005-04-11 19:45:17 rurban Exp $');
 /*
  Copyright 2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -77,13 +77,14 @@ extends WikiPlugin
         
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*', false, $sortby, $limit, $exclude);
+        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*', false, 
+                                    $sortby, $limit, $exclude);
         if (! $subpages ) {
             return $this->error(_("The current page has no subpages defined."));
         }           
         $content = HTML();
         if ($maxpages) {
-          $subpages = array_slice ($subpages, 0, $maxpages);
+            $subpages = array_slice ($subpages, 0, $maxpages);
         }
 
         include_once('lib/BlockParser.php');
@@ -101,10 +102,14 @@ extends WikiPlugin
                 $r = $p->getCurrentRevision();
                 $c = $r->getContent();   // array of lines
                 // trap recursive redirects
-                if (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\w+)\s+\?'.'>/', implode("\n", $c), $m)) {
+                if (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\w+)\s+\?'.'>/', 
+                               implode("\n", $c), $m)) 
+                {
                     if (in_array($m[1], $included_pages)) {
-                        //$content->pushContent(HTML::p(sprintf(_("recursive inclusion of page %s ignored"),
-                        //                              $page.' => '.$m[1])));
+                    	if (!$quiet)
+                            $content->pushContent(
+                                HTML::p(sprintf(_("recursive inclusion of page %s ignored"),
+                                                $page.' => '.$m[1])));
                         continue;
                     }
                 }
@@ -151,6 +156,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2005/01/21 14:12:48  rurban
+// clarify $ct
+//
 // Revision 1.18  2004/12/06 19:50:05  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.
