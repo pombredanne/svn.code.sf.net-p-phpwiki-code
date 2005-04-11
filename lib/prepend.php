@@ -5,7 +5,7 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.34 2005-02-27 13:18:47 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.35 2005-04-11 19:44:22 rurban Exp $');
 
 define('PHPWIKI_VERSION', '1.3.11'); // 20050226
 
@@ -19,6 +19,17 @@ function check_php_version ($a = '0', $b = '0', $c = '0') {
         $PHP_VERSION = substr( str_pad( preg_replace('/\D/','', PHP_VERSION), 3, '0'), 0, 3);
     return ($PHP_VERSION >= ($a.$b.$c));
 }
+
+/** PHP5 deprecated old-style globals if !ini_get('register-long-arrays'). 
+  *  See Bug #1180115
+  * We want to work with those old ones instead of the new superglobals, 
+  * for easier coding.
+  */
+foreach (array('SERVER','REQUEST','GET','POST','SESSION','ENV','COOKIE') as $k) {
+    if (!isset($GLOBALS['HTTP_'.$k.'_VARS']) and isset($GLOBALS['_'.$k]))
+        $GLOBALS['HTTP_'.$k.'_VARS'] =& $GLOBALS['_'.$k];
+}
+unset($k);
 
 // If your php was compiled with --enable-trans-sid it tries to
 // add a PHPSESSID query argument to all URL strings when cookie
