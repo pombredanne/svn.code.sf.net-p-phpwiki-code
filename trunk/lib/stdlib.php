@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.239 2005-04-01 16:11:42 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.240 2005-04-23 11:15:49 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -329,12 +329,13 @@ function PossiblyGlueIconToText($proto_or_url, $text) {
 /**
  * Determines if the url passed to function is safe, by detecting if the characters
  * '<', '>', or '"' are present.
+ * Check against their urlencoded values also.
  *
  * @param string $url URL to check for unsafe characters.
  * @return boolean True if same, false else.
  */
 function IsSafeURL($url) {
-    return !preg_match('/[<>"]/', $url);
+    return !preg_match('/([<>"])|(%3C)|(%3E)|(%22)/', $url);
 }
 
 /**
@@ -363,22 +364,31 @@ function LinkURL($url, $linktext = '') {
 }
 
 /**
- * FIXME: disallow sizes which are too small. 
+ * Inline Images
+ *
+ * Syntax: [image.png size=50% border=n align= hspace= vspace= width= height=]
+ * Disallows sizes which are too small. 
  * Spammers may use such (typically invisible) image attributes to higher their GoogleRank.
+ *
+ * Handle embeddable objects, like svg, class, vrml, swf, svgz, pdf especially.
  */
 function LinkImage($url, $alt = false) {
+    $force_img = "png|jpg|gif|jpeg|bmp|pl|cgi";
+    // Disallow tags in img src urls. Typical CSS attacks.
     // FIXME: Is this needed (or sufficient?)
     if(! IsSafeURL($url)) {
         $link = HTML::strong(HTML::u(array('class' => 'baduri'),
                                      _("BAD URL -- remove all of <, >, \"")));
     } else {
         // support new syntax: [image.jpg size=50% border=n]
+        if (!preg_match("/\.(".$force_img.")/i", $url))
+            $ori_url = $url;
         $arr = split(' ',$url);
         if (count($arr) > 1) {
             $url = $arr[0];
         }
         if (empty($alt)) $alt = basename($url);
-        $link = HTML::img(array('src' => $url, 'alt' => $alt));
+        $link = HTML::img(array('src' => $url, 'alt' => $alt, 'title' => $alt));
         if (count($arr) > 1) {
             array_shift($arr);
             foreach ($arr as $attr) {
@@ -400,7 +410,7 @@ function LinkImage($url, $alt = false) {
                     $link->setAttr('vspace',$m[1]);
             }
         }
-        // check width and height as spam countermeasure
+        // Check width and height as spam countermeasure
         if (($width  = $link->getAttr('width')) and ($height = $link->getAttr('height'))) {
             //$width  = (int) $width; // px or % or other suffix
             //$height = (int) $height;
@@ -408,7 +418,7 @@ function LinkImage($url, $alt = false) {
                 ($height < 3 and $width < 20) or 
                 ($height < 7 and $width < 7))
             {
-                trigger_error(_("Invalid image size"), E_USER_NOTICE);
+                trigger_error(_("Invalid image size"), E_USER_WARNING);
                 return '';
             }
         } else {
@@ -425,16 +435,62 @@ function LinkImage($url, $alt = false) {
                     or ($height < 3 and $width < 20)
                     or ($height < 7 and $width < 7))
                 {
-                    trigger_error(_("Invalid image size"), E_USER_NOTICE);
+                    trigger_error(_("Invalid image size"), E_USER_WARNING);
                     return '';
                 }
             }
         }
     }
     $link->setAttr('class', 'inlineimage');
+
+    /* Check for inlined objects. Everything allowed in INLINE_IMAGES besides
+     * png|jpg|gif|jpeg|bmp|pl|cgi
+     * Note: Allow cgi's (pl,cgi) returning images.
+     */
+    if (!preg_match("/\.(".$force_img.")/i", $url)) {
+        //HTML::img(array('src' => $url, 'alt' => $alt, 'title' => $alt));
+        // => HTML::object(array('src' => $url)) ...;
+        return ImgObject($link, $ori_url);
+    }
     return $link;
 }
 
+/**
+ * <object> / <embed> tags instead of <img> for all non-image extensions allowed via INLINE_IMAGES
+ * Called by LinkImage(), not directly.
+ * Syntax: [image.svg size=50% border=n align= hspace= vspace= width= height=]
+ * $alt may be an alternate img
+ * TODO: Need to unify with WikiPluginCached::embedObject()
+ *
+ * Note that Safari 1.0 will crash with <object>, use only <embed>
+ *   http://www.alleged.org.uk/pdc/2002/svg-object.html
+ */
+function ImgObject($img, $url) {
+    // get the url args: data="sample.svgz" type="image/svg+xml" width="400" height="300"
+    $args = split(' ', $url);
+    if (count($args) >= 1) {
+        $url = array_shift($args);
+        foreach ($args as $attr) {
+            if (preg_match('/^type=(\S+)$/',$attr,$m))
+                $img->setAttr('type', $m[1]);
+            if (preg_match('/^data=(\S+)$/',$attr,$m))
+                $img->setAttr('data', $m[1]);
+        }
+    }
+    $type = $img->getAttr('type');
+    if (!$type) {
+        // TODO: map extension to mime-types if type is not given and php < 4.3
+        if (function_exists('mime_content_type'))
+            $type = mime_content_type($url);
+    }
+    $link = HTML::object(array_merge($img->_attr, array('src' => $url, 'type' => $type)));
+    $link->setAttr('class', 'inlineobject');
+    if (isBrowserSafari()) {
+        return HTML::embed($link->_attr);
+    }
+    $link->pushContent(HTML::embed($link->_attr));
+    return $link;
+}
 
 
 class Stack {
@@ -1969,6 +2025,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.239  2005/04/01 16:11:42  rurban
+// just whitespace
+//
 // Revision 1.238  2005/03/04 16:29:14  rurban
 // Fixed bug #994994 (escape / in glob)
 // Optimized glob_to_pcre within fileSet() matching.
