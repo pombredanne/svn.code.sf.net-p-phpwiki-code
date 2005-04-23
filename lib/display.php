@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.63 2004-11-30 17:48:38 rurban Exp $');
+rcs_id('$Id: display.php,v 1.64 2005-04-23 11:21:55 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -100,19 +100,19 @@ function displayPage(&$request, $template=false) {
         $pagetitle = HTML::span(HTML::a(array('href' => WikiURL($pages[0]),
                                               'class' => 'pagetitle'
                                               ),
-                                        SplitPagename($pages[0] . SUBPAGE_SEPARATOR)));
+                                        $GLOBALS['WikiTheme']->maybeSplitWikiWord($pages[0] . SUBPAGE_SEPARATOR)));
         $first_pages = $pages[0] . SUBPAGE_SEPARATOR;
         array_shift($pages);
         foreach ($pages as $p)  {
             $pagetitle->pushContent(HTML::a(array('href' => WikiURL($first_pages . $p),
                                                   'class' => 'backlinks'),
-                                       SplitPagename($p . SUBPAGE_SEPARATOR)));
+                                            $GLOBALS['WikiTheme']->maybeSplitWikiWord($p . SUBPAGE_SEPARATOR)));
             $first_pages .= $p . SUBPAGE_SEPARATOR;
         }
         $backlink = HTML::a(array('href' => WikiURL($pagename,
                                                     array('action' => _("BackLinks"))),
                                   'class' => 'backlinks'),
-                            SplitPagename($last_page));
+                            $GLOBALS['WikiTheme']->maybeSplitWikiWord($last_page));
         $backlink->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
         $pagetitle->pushContent($backlink);
     } else {
@@ -223,6 +223,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2004/11/30 17:48:38  rurban
+// just comments
+//
 // Revision 1.62  2004/11/30 09:51:35  rurban
 // changed KEYWORDS from pageprefix to search term. added installer detection.
 //
