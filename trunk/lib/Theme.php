@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.127 2005-02-11 14:45:44 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.128 2005-04-23 11:23:49 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -490,7 +490,7 @@ class Theme {
     ////////////////////////////////////////////////////////////////
 
     var $_autosplitWikiWords = false;
-    function setAutosplitWikiWords($autosplit=false) {
+    function setAutosplitWikiWords($autosplit=true) {
         $this->_autosplitWikiWords = $autosplit ? true : false;
     }
 
@@ -559,7 +559,10 @@ class Theme {
             return $link;
         } else {
             // if AnonEditUnknownLinks show "?" only users which are allowed to edit this page
-            if (! $this->_anonEditUnknownLinks and ! mayAccessPage('edit', $request->getArg('pagename'))) {
+            if (! $this->_anonEditUnknownLinks and 
+                ( ! $request->_user->isSignedIn() 
+                  or ! mayAccessPage('edit', $request->getArg('pagename')))) 
+            {
                 $text = HTML::span( empty($linktext) ? $wikiword : $linktext);
                 $text->setAttr('class', empty($linktext) ? 'wikiunknown' : 'named-wikiunknown');
                 return $text;
@@ -1424,6 +1427,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.127  2005/02/11 14:45:44  rurban
+// support ENABLE_LIVESEARCH, enable PDO sessions
+//
 // Revision 1.126  2005/02/04 11:43:18  rurban
 // update comments
 //
