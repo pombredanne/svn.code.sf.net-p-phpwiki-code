@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.43 2005-02-02 20:40:12 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.44 2005-04-23 11:07:34 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -120,6 +120,8 @@ class PageType_wikiforum extends PageType {}
 
 /* To prevent from PHP5 Fatal error: Using $this when not in object context */
 function getInterwikiMap ($pagetext = false) {
+    static $map;
+    if (empty($map))
     $map = new PageType_interwikimap($pagetext);
     return $map;
 }
@@ -474,6 +476,9 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2005/02/02 20:40:12  rurban
+// fix Talk: and User: names and links
+//
 // Revision 1.42  2005/02/02 19:36:56  rurban
 // more plans
 //
