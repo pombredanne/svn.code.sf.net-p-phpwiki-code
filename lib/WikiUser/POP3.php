@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: POP3.php,v 1.5 2005-03-19 07:30:52 rurban Exp $');
+rcs_id('$Id: POP3.php,v 1.6 2005-04-23 11:17:41 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -35,17 +35,17 @@ extends _IMAPPassUser {
         if ($fp) {
             // Get welcome string
             $line = fgets($fp, 1024);
-            if (! strncmp("+OK ", $line, 4)) {
+            if (! strncmp("+OK", $line, 3)) {
                 // Send user name
                 fputs($fp, "user $userid\n");
                 // Get response
                 $line = fgets($fp, 1024);
-                if (! strncmp("+OK ", $line, 4)) {
+                if (! strncmp("+OK", $line, 3)) {
                     // Send password
                     fputs($fp, "pass $pass\n");
                     // Get response
                     $line = fgets($fp, 1024);
-                    if (! strncmp("+OK ", $line, 4)) {
+                    if (! strncmp("+OK", $line, 3)) {
                         $retval = true;
                     }
                 }
@@ -70,6 +70,9 @@ extends _IMAPPassUser {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2005/03/19 07:30:52  rurban
+// fixed missing IMAP dependency. Thanks to sun-man
+//
 // Revision 1.4  2004/12/26 17:11:17  rurban
 // just copyright
 //
