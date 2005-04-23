@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.33 2004-06-14 11:26:51 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.34 2005-04-23 11:44:54 rurban Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -57,7 +57,7 @@ $WikiTheme->setButtonSeparator("\n | ");
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-//$WikiTheme->setAutosplitWikiWords(false);
+$WikiTheme->setAutosplitWikiWords(false);
 
 /**
  * Layout improvement with dangling links for mostly closed wiki's:

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.3 2004-06-14 11:26:53 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.4 2005-04-23 11:44:54 rurban Exp $');
 /**
  * tiny actionbar, only Edit (if signed in) and Info => PageInfo,
  *   all other Actionbars buttons in info.tmpl
@@ -85,7 +85,7 @@ $WikiTheme->setLinkIcon('mailto');
  * WikiWords can automatically be split by inserting spaces between
  * the words. The default is to leave WordsSmashedTogetherLikeSo.
  */
-//$WikiTheme->setAutosplitWikiWords(false);
+$WikiTheme->setAutosplitWikiWords(false);
 
 /**
  * Layout improvement with dangling links for mostly closed wiki's:
