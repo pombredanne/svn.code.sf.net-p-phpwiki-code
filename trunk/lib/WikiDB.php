@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.130 2005-04-06 06:19:30 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.131 2005-04-23 11:30:12 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1138,11 +1138,13 @@ class WikiDB_Page
      * unless $version is greater than zero, a revision (perhaps version zero,
      * the default revision) will always be found.
      */
-    function getRevisionBefore($version, $need_content=true) {
+    function getRevisionBefore($version=false, $need_content=true) {
         $backend = &$this->_wikidb->_backend;
         $pagename = &$this->_pagename;
-
-        $version = $this->_coerce_to_version($version);
+        if ($version === false)
+            $version = $this->_wikidb->_cache->get_latest_version($pagename);
+        else
+            $version = $this->_coerce_to_version($version);
 
         if ($version == 0)
             return false;
@@ -2135,6 +2137,10 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.130  2005/04/06 06:19:30  rurban
+// Revert the previous wrong bugfix #1175761: USECACHE was mixed with WIKIDB_NOCACHE_MARKUP.
+// Fix WIKIDB_NOCACHE_MARKUP in main (always set it) and clarify it in WikiDB
+//
 // Revision 1.129  2005/04/06 05:50:29  rurban
 // honor !USECACHE for _cached_html, fixes #1175761
 //
