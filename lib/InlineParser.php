@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.65 2005-03-27 18:24:17 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.66 2005-04-23 11:15:49 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -394,11 +394,16 @@ function LinkBracketLink($bracketlink) {
      * File:my_image.gif shows a plain inter-wiki link,
      * [what a pic|File:my_image.gif] shows a named inter-wiki link to the gif
      * [File:my_image.gif|what a pic] shows a inlimed image linked to the page "what a pic"
+     *
+     * Note that for simplicity we will accept embedded object tags (non-images) 
+     * here also, and seperate them later in LinkImage()
      */
-    elseif (strstr($link,':') and 
-            ($intermap = getInterwikiMap()) and 
-            preg_match("/^" . $intermap->getRegexp() . ":/", $link)) {
-        if (empty($label) && isImageLink($link)) {
+    elseif (strstr($link,':')
+            and ($intermap = getInterwikiMap()) 
+            and preg_match("/^" . $intermap->getRegexp() . ":/", $link)) 
+    {
+        // trigger_error("label: $label link: $link", E_USER_WARNING);
+        if (empty($label) and isImageLink($link)) {
             // if without label => inlined image [File:xx.gif]
             $imgurl = $intermap->link($link);
             return LinkImage($imgurl->getAttr('href'), $label);
@@ -812,6 +817,9 @@ function TransformLinks($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2005/03/27 18:24:17  rurban
+// add Log
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
