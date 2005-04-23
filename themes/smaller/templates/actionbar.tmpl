@@ -1,10 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: actionbar.tmpl,v 1.5 2005-04-08 05:28:54 rurban Exp $');
-if (!$page->get('locked') || $user->isAdmin())
-    $EditB = Button("edit",
-                    $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
-else
-    $EditB = Button("viewsource", _("View Source"));
+rcs_id('$Id: actionbar.tmpl,v 1.6 2005-04-23 11:43:44 rurban Exp $');
+// Only [Info] button when not signed in.
+// The rest behind Info
 ?>
 <?php /* I would like not to have to use these tables, and managed to
        * get this stuff to work more or less correctly using
@@ -16,8 +13,12 @@ else
 <tr valign="baseline">
   <td>
   <div id="actionbuttons">
-    <? if ( $user->isSignedIn()) { ?>
-     <?= $EditB ?>
+    <?php if ( $user->isSignedIn()) { ?>
+      <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
+        <?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
+      <?php } else { ?>
+        <?= Button("viewsource", _("View Source")) ?>
+     <?php } ?>
      <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
       <?=$SEP?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
       <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $page->getName())) { ?>
@@ -25,6 +26,7 @@ else
         <?=$SEP?><?= Button('setacl') ?>
      <?php }} ?>
      <?php if ($user->isAdmin() or mayAccessPage('remove', $page->getName())) { ?>
+      <?=$SEP?><?= Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
       <?=$SEP?><?= Button('remove') ?>
      <?php } ?>
      <?=$SEP?>
@@ -35,12 +37,6 @@ else
       <?=$SEP?><?= Button(_("PageHistory")) ?>
       <?=$SEP?><?= Button("diff") ?>
       <?=$SEP?><?= Button(_("PageDump")) ?>
-<?php
-     $PurgeCache = Button(array('nocache' => 'purge'),
-                     _("PurgeHtmlCache"), $page->getName());
-     $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
-?>
-    <?=$SEP?><?= $PurgeCache ?>
     <!-- End debugging buttons -->
     <?php } ?>
 <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
