@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: IMAP.php,v 1.4 2004-12-26 17:11:17 rurban Exp $');
+rcs_id('$Id: IMAP.php,v 1.5 2005-04-25 19:46:08 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -29,8 +29,10 @@ extends _PassUser
             $this->_level = WIKIAUTH_USER;
             return $this->_level;
         } else {
-            trigger_error(_("Unable to connect to IMAP server "). IMAP_AUTH_HOST, 
-                          E_USER_WARNING);
+            if ($submitted_password != "") { // if LENGTH 0 is allowed
+                trigger_error(_("Unable to connect to IMAP server "). IMAP_AUTH_HOST, 
+                              E_USER_WARNING);
+            }
         }
 
         return $this->_tryNextPass($submitted_password);
@@ -51,6 +53,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/12/26 17:11:17  rurban
+// just copyright
+//
 // Revision 1.3  2004/12/20 16:05:01  rurban
 // gettext msg unification
 //
