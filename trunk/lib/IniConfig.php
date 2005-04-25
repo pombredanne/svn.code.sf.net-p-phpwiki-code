@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.87 2005-04-08 18:11:50 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.88 2005-04-25 20:17:13 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -181,7 +181,7 @@ function IniConfig($file) {
          'DISABLE_HTTP_REDIRECT',
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
          'BLOG_EMPTY_DEFAULT_PREFIX', 'DATABASE_PERSISTENT',
-         'ENABLE_DISCUSSION_LINK'
+         'ENABLE_DISCUSSION_LINK', 'ENABLE_CAPTCHA'
          );
 
     $rs = @parse_ini_file($file);
@@ -831,6 +831,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.87  2005/04/08 18:11:50  rurban
+// guard against empty default INI values
+//
 // Revision 1.86  2005/04/06 06:41:05  rurban
 // add ENABLE_DISCUSSION_LINK dependency (to turn it off for 1.3.11)
 //
