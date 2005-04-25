@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.94 2005-02-28 20:23:31 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.95 2005-04-25 20:17:14 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -11,6 +11,7 @@ require_once('lib/Template.php');
 //       when HtmlParser is finished.
 if (!defined('USE_HTMLAREA')) define('USE_HTMLAREA', false);
 if (USE_HTMLAREA) require_once('lib/htmlarea.php');
+if (ENABLE_CAPTCHA)  require_once('lib/Captcha.php'); 
 
 class PageEditor
 {
@@ -86,7 +87,11 @@ class PageEditor
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
         }
         elseif ($this->request->getArg('save_and_redirect_to') != "") {
-            if ($this->savePage()) {
+            if (ENABLE_CAPTCHA && $this->captchaFailed()) {
+		$this->tokens['PAGE_LOCKED_MESSAGE'] = 
+                    HTML::p(HTML::h1(_("Typed in verification word mismatch ... are you a bot?")));
+	    }
+            elseif ( $this->savePage()) {
                 // noreturn
                 $this->request->redirect(WikiURL($this->request->getArg('save_and_redirect_to')));
                 return true;    // Page saved.
@@ -94,10 +99,15 @@ class PageEditor
             $saveFailed = true;
         }
         elseif ($this->editaction == 'save') {
-            if ($this->savePage()) {
+            if (ENABLE_CAPTCHA && $this->captchaFailed()) {
+		$this->tokens['PAGE_LOCKED_MESSAGE'] = 
+                    HTML::p(HTML::h1(_("Typed in verification word mismatch ... are you a bot?")));
+	    }
+            elseif ($this->savePage()) {
                 return true;    // Page saved.
             }
-            $saveFailed = true;
+            else
+                $saveFailed = true;
         }
 
         if ($saveFailed and $this->isConcurrentUpdate())
@@ -294,6 +304,19 @@ class PageEditor
         return true;
     }
 
+    function captchaFailed () {
+	if ($this->request->getSessionVar('captcha_ok') == true)
+	    return false;
+	
+	if ( ! array_key_exists ( 'captcha_input', $this->meta )
+             or ($this->request->getSessionVar('captchaword')
+                 and ($this->request->getSessionVar('captchaword') != $this->meta['captcha_input'])))
+	    return true;
+	
+	$this->request->setSessionVar('captcha_ok', true);
+	return false;
+    }
+
     function isConcurrentUpdate () {
         assert($this->current->getVersion() >= $this->_currentVersion);
         return $this->current->getVersion() != $this->_currentVersion;
@@ -486,6 +509,20 @@ class PageEditor
 
         $el['HIDDEN_INPUTS'] = HiddenInputs($h);
         $el['EDIT_TEXTAREA'] = $this->getTextArea();
+        if ( ENABLE_CAPTCHA && ! $request->getSessionVar('captchaword')) {
+	    $request->setSessionVar('captchaword', get_captcha_word());
+	}
+	if ( ENABLE_CAPTCHA && ! $request->getSessionVar('captcha_ok')) {
+	    $el['CAPTCHA_INPUT']
+		= HTML::input(array('type'  => 'text',
+				    'class' => 'wikitext',
+				    'id'    => 'edit[captcha_input]',
+				    'name'  => 'edit[captcha_input]',
+				    'size'  => 20,
+				    'maxlength' => 256));
+	    $el['CAPTCHA_IMAGE'] = '<img src="?action=captcha" alt="captcha" />';
+	    $el['CAPTCHA_LABEL'] = '<label for="edit[captcha_input]">'._("Type word above:").' </label>';
+	}
         $el['SUMMARY_INPUT']
             = HTML::input(array('type'  => 'text',
                                 'class' => 'wikitext',
@@ -577,6 +614,10 @@ class PageEditor
         $meta['summary'] = trim(substr($posted['summary'], 0, 256));
         $meta['is_minor_edit'] = !empty($posted['minor_edit']);
         $meta['pagetype'] = !empty($posted['pagetype']) ? $posted['pagetype'] : false;
+        if ( ENABLE_CAPTCHA )
+	    $meta['captcha_input'] = !empty($posted['captcha_input']) ?
+		$posted['captcha_input'] : '';
+
         $this->meta = array_merge($this->meta, $meta);
         $this->locked = !empty($posted['locked']);
 
@@ -714,6 +755,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.94  2005/02/28 20:23:31  rurban
+ fix error_stack
+
  Revision 1.93  2005/02/27 19:31:52  rurban
  hack: display errorstack without sideeffects (save and restore)
 

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.211 2005-04-11 19:42:54 rurban Exp $');
+rcs_id('$Id: main.php,v 1.212 2005-04-25 20:17:14 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -583,6 +583,7 @@ class WikiRequest extends Request {
             case 'xmlrpc':
             case 'search':
             case 'pdf':
+            case 'captcha':
                 return WIKIAUTH_ANON;
 
             case 'zip':
@@ -1113,6 +1114,11 @@ class WikiRequest extends Request {
     	include_once("lib/pdf.php");
     	ConvertAndDisplayPdf($this);
     }
+
+    function action_captcha () {
+        include_once "lib/Captcha.php";
+        captcha_image ( $this->getSessionVar('captchaword')); 
+    }
     
 }
 
@@ -1249,6 +1255,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.211  2005/04/11 19:42:54  rurban
+// reformatting, SESSION_SAVE_PATH check
+//
 // Revision 1.210  2005/04/07 06:06:34  rurban
 // add _SERVER[REMOTE_USER] check for pubcookie et al, Bug #1177259 (iamjpr)
 //
