@@ -1,4 +1,4 @@
--- $Id: oci8-initialize.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
+-- $Id: oci8-initialize.sql,v 1.3 2005-05-04 05:08:13 rurban Exp $
 
 set verify off
 set feedback off
@@ -187,17 +187,18 @@ CREATE INDEX &rating_rateepage ON &rating_tbl (rateepage);
 -- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
 prompt Creating &accesslog_tbl
 CREATE TABLE &accesslog_tbl (
-        time_stamp    INT UNSIGNED,
-	remote_host   VARCHAR(50),
-	remote_user   VARCHAR(50),
-        request_method VARCHAR(10),
-	request_line  VARCHAR(255),
-	request_args  VARCHAR(255),
-	request_file  VARCHAR(255),
-	request_uri   VARCHAR(255),
-	request_time  CHAR(28),
-	status 	      SMALLINT UNSIGNED,
-	bytes_sent    SMALLINT UNSIGNED,
+-- for OCI 9i+ use:   time_stamp TIMESTAMP,
+        time_stamp    DATE,
+	remote_host   VARCHAR2(50),
+	remote_user   VARCHAR2(50),
+        request_method VARCHAR2(10),
+	request_line  VARCHAR2(255),
+	request_args  VARCHAR2(255),
+	request_file  VARCHAR2(255),
+	request_uri   VARCHAR2(255),
+	request_time  DATE,
+	status 	      NUMBER(4),
+	bytes_sent    NUMBER(4),
         referer       VARCHAR(255), 
 	agent         VARCHAR(255),
 	request_duration FLOAT
