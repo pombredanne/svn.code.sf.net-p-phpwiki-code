@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.128 2005-04-23 11:23:49 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.129 2005-05-05 08:57:26 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -909,6 +909,9 @@ class Theme {
             }
             $pagename = $page->getName();
         }
+        elseif (is_numeric($page_or_rev)) {
+            $version = $page_or_rev;
+        }
         else {
             $pagename = (string) $page_or_rev;
         }
@@ -1427,6 +1430,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.128  2005/04/23 11:23:49  rurban
+// improve semantics in the setAutosplitWikiWords method: switch to true if no args
+//
 // Revision 1.127  2005/02/11 14:45:44  rurban
 // support ENABLE_LIVESEARCH, enable PDO sessions
 //
