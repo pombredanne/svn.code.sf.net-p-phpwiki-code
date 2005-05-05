@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.64 2005-04-23 11:21:55 rurban Exp $');
+rcs_id('$Id: display.php,v 1.65 2005-05-05 08:54:40 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -82,6 +82,7 @@ function actionPage(&$request, $action) {
 }
 
 function displayPage(&$request, $template=false) {
+    global $WikiTheme;
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
     $page = $request->getPage();
@@ -97,35 +98,35 @@ function displayPage(&$request, $template=false) {
     if (isSubPage($pagename)) {
         $pages = explode(SUBPAGE_SEPARATOR, $pagename);
         $last_page = array_pop($pages); // deletes last element from array as side-effect
-        $pagetitle = HTML::span(HTML::a(array('href' => WikiURL($pages[0]),
+        $pageheader = HTML::span(HTML::a(array('href' => WikiURL($pages[0]),
                                               'class' => 'pagetitle'
                                               ),
-                                        $GLOBALS['WikiTheme']->maybeSplitWikiWord($pages[0] . SUBPAGE_SEPARATOR)));
+                                        $WikiTheme->maybeSplitWikiWord($pages[0] . SUBPAGE_SEPARATOR)));
         $first_pages = $pages[0] . SUBPAGE_SEPARATOR;
         array_shift($pages);
         foreach ($pages as $p)  {
-            $pagetitle->pushContent(HTML::a(array('href' => WikiURL($first_pages . $p),
+            $pageheader->pushContent(HTML::a(array('href' => WikiURL($first_pages . $p),
                                                   'class' => 'backlinks'),
-                                            $GLOBALS['WikiTheme']->maybeSplitWikiWord($p . SUBPAGE_SEPARATOR)));
+                                            $WikiTheme->maybeSplitWikiWord($p . SUBPAGE_SEPARATOR)));
             $first_pages .= $p . SUBPAGE_SEPARATOR;
         }
         $backlink = HTML::a(array('href' => WikiURL($pagename,
                                                     array('action' => _("BackLinks"))),
                                   'class' => 'backlinks'),
-                            $GLOBALS['WikiTheme']->maybeSplitWikiWord($last_page));
+                            $WikiTheme->maybeSplitWikiWord($last_page));
         $backlink->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
-        $pagetitle->pushContent($backlink);
+        $pageheader->pushContent($backlink);
     } else {
-        $pagetitle = HTML::a(array('href' => WikiURL($pagename,
+        $pageheader = HTML::a(array('href' => WikiURL($pagename,
                                                      array('action' => _("BackLinks"))),
                                    'class' => 'backlinks'),
-                             SplitPagename($pagename));
-        $pagetitle->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
+                             $WikiTheme->maybeSplitWikiWord($pagename));
+        $pageheader->addTooltip(sprintf(_("BackLinks for %s"), $pagename));
         if ($request->getArg('frame'))
-            $pagetitle->setAttr('target', '_top');
+            $pageheader->setAttr('target', '_top');
     }
 
-    $pageheader = $pagetitle;
+    $pagetitle = SplitPagename($pagename);
     if (($redirect_from = $request->getArg('redirectfrom'))) {
         $redirect_message = HTML::span(array('class' => 'redirectfrom'),
                                        fmt("(Redirected from %s)",
@@ -203,8 +204,8 @@ function displayPage(&$request, $template=false) {
    
     $toks['CONTENT'] = new Template('browse', $request, $page_content);
     
-    $toks['TITLE'] = $pagetitle;
-    $toks['HEADER'] = $pageheader;
+    $toks['TITLE'] = $pagetitle;   // <title> tag
+    $toks['HEADER'] = $pageheader; // h1 with backlink
     $toks['revision'] = $revision;
     if (!empty($redirect_message))
         $toks['redirected'] = $redirect_message;
@@ -223,6 +224,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2005/04/23 11:21:55  rurban
+// honor theme-specific SplitWikiWord in the HEADER
+//
 // Revision 1.63  2004/11/30 17:48:38  rurban
 // just comments
 //
