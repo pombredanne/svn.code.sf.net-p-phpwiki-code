@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.129 2005-05-05 08:57:26 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.130 2005-05-06 16:43:35 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -124,10 +124,12 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
                 $part = " " . $part;
             if ($part)
                 $link->pushContent($WikiTheme->linkExistingWikiWord($parent, $sep . $part));
-            $sep = $WikiTheme->_autosplitWikiWords ? ' ' . SUBPAGE_SEPARATOR : SUBPAGE_SEPARATOR;
+            $sep = $WikiTheme->_autosplitWikiWords 
+                   ? ' ' . SUBPAGE_SEPARATOR : SUBPAGE_SEPARATOR;
         }
         if ($exists)
-            $link->pushContent($WikiTheme->linkExistingWikiWord($wikipage, $sep . $last_part, $version));
+            $link->pushContent($WikiTheme->linkExistingWikiWord($wikipage, $sep . $last_part, 
+                                                                $version));
         else
             $link->pushContent($WikiTheme->linkUnknownWikiWord($wikipage, $sep . $last_part));
         return $link;
@@ -181,7 +183,7 @@ function Button ($action, $label = false, $page_or_rev = false) {
     global $WikiTheme;
 
     if (!is_array($action) && preg_match('/^submit:(.*)/', $action, $m))
-        return $WikiTheme->makeSubmitButton($label, $m[1], $class = $page_or_rev);
+        return $WikiTheme->makeSubmitButton($label, $m[1], $page_or_rev);
     else
         return $WikiTheme->makeActionButton($action, $label, $page_or_rev);
 }
@@ -424,7 +426,8 @@ class Theme {
         // Note that due to daylight savings chages (and leap seconds), $now minus
         // 24 hours is not guaranteed to be yesterday.
         $yesterday = localtime($now - (12 + $today['tm_hour']) * 3600, true);
-        if ($time['tm_yday'] == $yesterday['tm_yday'] && $time['tm_year'] == $yesterday['tm_year'])
+        if ($time['tm_yday'] == $yesterday['tm_yday'] 
+            and $time['tm_year'] == $yesterday['tm_year'])
             return _("yesterday");
 
         return false;
@@ -586,7 +589,8 @@ class Theme {
             $button->setAttr('rel', 'nofollow');
         $link->pushContent($button);
         if ($request->getPref('googleLink')) {
-            $gbutton = $this->makeButton('G', "http://www.google.com/search?q=".urlencode($wikiword));
+            $gbutton = $this->makeButton('G', "http://www.google.com/search?q="
+                                         . urlencode($wikiword));
             $gbutton->addTooltip(sprintf(_("Google:%s"), $wikiword));
             $link->pushContent($gbutton);
         }
@@ -667,7 +671,8 @@ class Theme {
         if ($this->DUMP_MODE) {
             if (empty($this->dumped_images)) $this->dumped_images = array();
             $path = "images/". basename($path);
-            if (!in_array($path,$this->dumped_images)) $this->dumped_images[] = $path;
+            if (!in_array($path,$this->dumped_images)) 
+                $this->dumped_images[] = $path;
         }
         return $path;	
     }
@@ -720,7 +725,8 @@ class Theme {
         if ($url && strstr($url, '%')) {
             $url = preg_replace('|([^/]+)$|e', 'urlencode("\\1")', $url);
         }
-        if (!$url) {// Jeff complained about png not supported everywhere. This is not PC
+        if (!$url) {// Jeff complained about png not supported everywhere. 
+                    // This was not PC until 2005.
             $url = $this->_findButton("$qtext.gif");
             if ($url && strstr($url, '%')) {
                 $url = preg_replace('|([^/]+)$|e', 'urlencode("\\1")', $url);
@@ -1172,9 +1178,12 @@ class Theme {
     // Google's or acdropdown is better.
     function initLiveSearch() {
         if (!$this->HTML_DUMP_SUFFIX) {
-            $this->addMoreAttr('body', 'LiveSearch', HTML::Raw(" onload=\"liveSearchInit()"));
-            $this->addMoreHeaders(JavaScript('var liveSearchURI="'.WikiURL(_("TitleSearch"),false,true).'";'));
-            $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData('livesearch.js'))));
+            $this->addMoreAttr('body', 'LiveSearch', 
+                               HTML::Raw(" onload=\"liveSearchInit()"));
+            $this->addMoreHeaders(JavaScript('var liveSearchURI="'
+                                             .WikiURL(_("TitleSearch"),false,true).'";'));
+            $this->addMoreHeaders(JavaScript('', array
+                                             ('src' => $this->_findData('livesearch.js'))));
         }
     }
 };
@@ -1430,6 +1439,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.129  2005/05/05 08:57:26  rurban
+// support action=revert
+//
 // Revision 1.128  2005/04/23 11:23:49  rurban
 // improve semantics in the setAutosplitWikiWords method: switch to true if no args
 //
