@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.1 2005-01-25 15:19:09 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.2 2005-05-06 18:43:41 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -8,7 +8,7 @@ rcs_id('$Id: EditToolbar.php,v 1.1 2005-01-25 15:19:09 rurban Exp $');
  * Features: 
  * - save-preview and formatting buttons from mediawiki
  * - Search&Replace from walterzorn.de
- * - pageinsert pulldown by Reini Urban
+ * - pageinsert popup by Reini Urban (TODO: should be a pulldown, use acdropdown))
  *
  */
 
@@ -232,17 +232,20 @@ function undo_save() {
             $sr_html = '';
         }
 
-        //TODO: delegate these calculations to a seperate pulldown action request
+        //TODO: delegate these calculations to a seperate popup action request
         //   action=pulldown or xmlrpc/soap (see google: WebServiceProxyFactory.createProxyAsync)
 
-        // Button to generate categories, display in extra window as pulldown and insert
+        // Button to generate categories, display in extra window as popup and insert
         $sr_html = HTML($sr_html, $this->categoriesPulldown());
-        // Button to generate plugins, display in extra window as pulldown and insert
+        // Button to generate plugins, display in extra window as popup and insert
         $sr_html = HTML($sr_html, $this->pluginPulldown());
 
-        // Button to generate pagenames, display in extra window as pulldown and insert
+        // Button to generate pagenames, display in extra window as popup and insert
         if (TOOLBAR_PAGELINK_PULLDOWN)
             $sr_html = HTML($sr_html, $this->pagesPulldown(TOOLBAR_PAGELINK_PULLDOWN));
+        // Button to insert from an template, display pagename in extra window as popup and insert
+        if (TOOLBAR_TEMPLATE_PULLDOWN)
+            $sr_html = HTML($sr_html, $this->templatePulldown(TOOLBAR_TEMPLATE_PULLDOWN));
 
 
         // don't use document.write for replace, otherwise self.opener is not defined.
@@ -316,7 +319,6 @@ function undo_save() {
     }
 
     function pagesPulldown($query, $case_exact=false, $regex='auto') {
-
         require_once('lib/TextSearchQuery.php');
         $dbi =& $GLOBALS['request']->_dbi;
         $page_iter = $dbi->titleSearch(new TextSearchQuery($query, $case_exact, $regex));
@@ -327,7 +329,7 @@ function undo_save() {
                 $pages[] = $p->getName();
             }
             return HTML("\n", HTML::img(array('class'=>"toolbar",
-                                              'src'  => $WikiTheme->getImageURL("ed_pagelink.png"),
+                                              'src'  => $WikiTheme->getImageURL("ed_pages.png"),
                                               'title'=>_("AddPageLink"),
                                               'onclick'=>"showPulldown('".
                                               _("Insert PageLink (double-click)")
@@ -339,10 +341,41 @@ function undo_save() {
         return '';
     }
 
+    function templatePulldown($query, $case_exact=false, $regex='auto') {
+        require_once('lib/TextSearchQuery.php');
+        $dbi =& $GLOBALS['request']->_dbi;
+        $page_iter = $dbi->titleSearch(new TextSearchQuery($query, $case_exact, $regex));
+        if ($page_iter->count()) {
+            global $WikiTheme;
+            $pages_js = '';
+            while ($p = $page_iter->next()) {
+                $rev = $p->getCurrentRevision();
+                $toinsert = str_replace("\n",'\n',addslashes($rev->_get_content()));
+                $pages_js .= ",['".$p->getName()."','$toinsert']";
+            }
+            $pages_js = substr($pages_js, 1);
+            if (!empty($pages_js))
+                return HTML("\n", HTML::img
+                            (array('class'=>"toolbar",
+                                   'src'  => $WikiTheme->getImageURL("ed_template.png"),
+                                   'title'=>_("AddTemplate"),
+                                   'onclick'=>"showPulldown('".
+                                   _("Insert Template (double-click)")
+                                   ."',[".$pages_js."],'"
+                                   ._("Insert")."','"
+                                   ._("Close")
+                                   ."')")));
+        }
+        return '';
+    }
+
 }
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.1  2005/01/25 15:19:09  rurban
+ extract Toolbar code from editpage.php
+
 
 */
 
