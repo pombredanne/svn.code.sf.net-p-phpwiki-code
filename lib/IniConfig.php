@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.89 2005-05-06 16:54:18 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.90 2005-05-06 18:45:59 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -162,7 +162,7 @@ function IniConfig($file) {
          'AUTH_USER_FILE', 'AUTH_GROUP_FILE', 'AUTH_SESS_USER', 'AUTH_SESS_LEVEL',
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
          'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD',
-         'SESSION_SAVE_PATH', 'TOOLBAR_PAGELINK_PULLDOWN',
+         'SESSION_SAVE_PATH', 'TOOLBAR_PAGELINK_PULLDOWN', 'TOOLBAR_TEMPLATE_PULLDOWN',
          'EXTERNAL_LINK_TARGET'
          );
 
@@ -832,6 +832,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.89  2005/05/06 16:54:18  rurban
+// support optional EXTERNAL_LINK_TARGET, default: _blank
+//
 // Revision 1.88  2005/04/25 20:17:13  rurban
 // captcha feature by Benjamin Drieu. Patch #1110699
 //
