@@ -79,7 +79,7 @@ function captcha_image ( $word ) {
 	$y = rand(25, 50);
     $x = rand(10, $width-100);
 
-    imagettftext($jpg, $size, $angle, $x, $y, $tx, FindFile("lib/captcha/Vera.ttf"), $word);
+    imagettftext($jpg, $size, $angle, $x, $y, $tx, realpath(FindFile("lib/captcha/Vera.ttf")), $word);
 
     $x = rand(0, 280);
     $y = rand(0, 115);
