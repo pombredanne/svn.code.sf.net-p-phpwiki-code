@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GraphViz.php,v 1.3 2004-12-17 16:49:52 rurban Exp $');
+rcs_id('$Id: GraphViz.php,v 1.4 2005-05-06 16:54:59 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -122,7 +122,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
     function getDefaultArguments() {
         return array(
@@ -371,6 +371,7 @@ extends WikiPluginCached
                 ("$outfile: ".(file_exists($outfile) ? filesize($outfile):'missing')."\n".
                  "$tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'missing'));
             $this->_errortext .= ("\ncmd-line: $dotbin -T$gif $tempfiles.dot -o $outfile");
+            $this->_errortext .= ("\ncmd-line: $dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map");
             trigger_error($this->_errortext, E_USER_WARNING);
             return array(false, false);
         }
@@ -422,6 +423,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/12/17 16:49:52  rurban
+// avoid Invalid username message on Sign In button click
+//
 // Revision 1.2  2004/12/14 21:34:22  rurban
 // fix syntax error
 //
