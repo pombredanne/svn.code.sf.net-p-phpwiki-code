@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.44 2005-04-23 11:07:34 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.45 2005-05-06 16:48:41 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -122,7 +122,7 @@ class PageType_wikiforum extends PageType {}
 function getInterwikiMap ($pagetext = false) {
     static $map;
     if (empty($map))
-    $map = new PageType_interwikimap($pagetext);
+        $map = new PageType_interwikimap($pagetext);
     return $map;
 }
 
@@ -213,8 +213,15 @@ class PageType_interwikimap extends PageType
         // Add virtual monikers: Upload:, Talk:, User:
         // Upload: Should be expanded later to user-specific upload dirs. 
         // In the Upload plugin, not here: Upload:ReiniUrban/uploaded-file.png
-        if (empty($map['Upload']))
+        if (empty($map['Upload'])) {
             $map['Upload'] = getUploadDataPath();
+        }
+        // User:ReiniUrban => ReiniUrban or Users/ReiniUrban
+        // Can be easily overriden by a customized InterWikiMap: 
+        //   User Users/%s
+        if (empty($map["User"])) {
+            $map["User"] = "%s";
+        }
         if (empty($map["Talk"])) {
             $pagename = $GLOBALS['request']->getArg('pagename');
             if (string_ends_with($pagename, SUBPAGE_SEPARATOR._("Discussion")))
@@ -222,11 +229,26 @@ class PageType_interwikimap extends PageType
             else
                 $map["Talk"] = "%s".SUBPAGE_SEPARATOR._("Discussion");
         }
-        // User:ReiniUrban => ReiniUrban or Users/ReiniUrban
-        // Can be easily overriden by a customized InterWikiMap: 
-        //   User Users/%s
-        if (empty($map["User"])) {
-            $map["User"] = "%s";
+
+        foreach (array('Upload','User','Talk') as $special) {
+            // Expand special variables:
+            //   %u => username
+            //   %b => wikibaseurl
+            //   %d => iso8601 DateTime
+            // %s is expanded later to the pagename
+            if (strstr($map[$special], '%u'))
+                $map[$special] = str_replace($map[$special],
+                                             '%u', 
+                                             $GLOBALS['request']->_user->_userid);
+            if (strstr($map[$special], '%b'))
+                $map[$special] = str_replace($map[$special],
+                                             '%b', 
+                                             PHPWIKI_BASE_URL);
+            if (strstr($map[$special], '%d'))
+                $map[$special] = str_replace($map[$special],
+                                             '%d', 
+                                             // such as 2003-01-11T14:03:02+00:00
+                                             Iso8601DateTime());
         }
 
         // Maybe add other monikers also (SemanticWeb link predicates?)
@@ -245,7 +267,8 @@ class PageType_interwikimap extends PageType
 
     function _getMapFromFile ($filename) {
         if (defined('WARN_NONPUBLIC_INTERWIKIMAP') and WARN_NONPUBLIC_INTERWIKIMAP) {
-            $error_html = sprintf(_("Loading InterWikiMap from external file %s."), $filename);
+            $error_html = sprintf(_("Loading InterWikiMap from external file %s."), 
+                                  $filename);
             trigger_error( $error_html, E_USER_NOTICE );
         }
         if (!file_exists($filename)) {
@@ -284,9 +307,9 @@ class PageFormatter {
 	if (!empty($meta['markup']))
 	    $this->_markup = $meta['markup'];
 	else
-	    $this->_markup = 1; // dump used old-markup as empty. 
-        // to be able to restore it we must keep markup 1 as default.
-        // new policy: default = new markup (old crashes quite often)
+	    $this->_markup = 2; // dump used old-markup as empty. 
+        // FIXME: To be able to restore old plain-backups we should keep markup 1 as default.
+        // New policy: default = new markup (old crashes quite often)
     }
 
     function _transform(&$text) {
@@ -476,6 +499,9 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2005/04/23 11:07:34  rurban
+// cache map
+//
 // Revision 1.43  2005/02/02 20:40:12  rurban
 // fix Talk: and User: names and links
 //
