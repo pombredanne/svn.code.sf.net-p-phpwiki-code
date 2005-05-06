@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.135 2005-04-01 15:22:20 rurban Exp $');
+rcs_id('$Id: config.php,v 1.136 2005-05-06 16:49:24 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -109,7 +109,8 @@ function isBrowserKonqueror($version = false) {
     if ($version) return browserDetect('Konqueror/') and browserVersion() >= $version; 
     return browserDetect('Konqueror/');
 }
-// FIXME: MacOSX Safarai has certain limitations. Need detection and patches.
+// MacOSX Safari has certain limitations. Need detection and patches.
+// * no <object>, only <embed>
 function isBrowserSafari($version = false) {
     if ($version) return browserDetect('Safari/') and browserVersion() >= $version; 
     return browserDetect('Safari/');
@@ -557,6 +558,10 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.135  2005/04/01 15:22:20  rurban
+// Implement icase and regex options.
+// Change checkbox case message from "Case-Sensitive" to "Case-Insensitive"
+//
 // Revision 1.134  2005/03/27 18:23:39  rurban
 // compute locale only for setlocale and LC_ALL
 //
