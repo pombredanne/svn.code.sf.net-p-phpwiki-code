@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.240 2005-04-23 11:15:49 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.241 2005-05-06 16:54:19 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -354,10 +354,10 @@ function LinkURL($url, $linktext = '') {
     else {
         if (!$linktext)
             $linktext = preg_replace("/mailto:/A", "", $url);
-        
-        $link = HTML::a(array('href' => $url),
-                        PossiblyGlueIconToText($url, $linktext));
-        
+        $args = array('href' => $url);
+        if ( defined('EXTERNAL_LINK_TARGET') ) // can also be set in the css
+            $args['target'] = is_string(EXTERNAL_LINK_TARGET) ? EXTERNAL_LINK_TARGET : "_blank";
+        $link = HTML::a($args, PossiblyGlueIconToText($url, $linktext));
     }
     $link->setAttr('class', $linktext ? 'namedurl' : 'rawurl');
     return $link;
@@ -2025,6 +2025,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.240  2005/04/23 11:15:49  rurban
+// handle allowed inlined objects within INLINE_IMAGES
+//
 // Revision 1.239  2005/04/01 16:11:42  rurban
 // just whitespace
 //
