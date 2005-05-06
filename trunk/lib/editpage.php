@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.95 2005-04-25 20:17:14 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.96 2005-05-06 17:54:22 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -72,6 +72,9 @@ class PageEditor
         global $WikiTheme;
         $saveFailed = false;
         $tokens = &$this->tokens;
+        $tokens['PAGE_LOCKED_MESSAGE'] = '';
+        $tokens['CONCURRENT_UPDATE_MESSAGE'] = '';
+
         if (isset($this->request->args['pref']['editWidth'])
             and ($this->request->getPref('editWidth') != $this->request->args['pref']['editWidth'])) {
             $this->request->_prefs->set('editWidth', $this->request->args['pref']['editWidth']);
@@ -755,6 +758,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.95  2005/04/25 20:17:14  rurban
+ captcha feature by Benjamin Drieu. Patch #1110699
+
  Revision 1.94  2005/02/28 20:23:31  rurban
  fix error_stack
 
