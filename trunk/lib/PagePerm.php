@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.38 2004-11-30 17:48:38 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.39 2005-05-06 16:57:54 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -169,6 +169,7 @@ function action2access ($action) {
     case 'xmlrpc':
     case 'search':
     case 'pdf':
+    case 'captcha':
         return 'view';
     case 'zip':
     case 'ziphtml':
@@ -723,6 +724,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.38  2004/11/30 17:48:38  rurban
+// just comments
+//
 // Revision 1.37  2004/11/23 13:06:30  rurban
 // several fixes and suggestions by Charles Corrigan:
 // * fix GROUP_BOGO_USER check
