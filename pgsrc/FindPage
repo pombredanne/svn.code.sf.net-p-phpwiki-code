@@ -1,9 +1,9 @@
-Date: Wed, 26 Nov 2004 10:56:40 +0100
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
-X-Rcs-Id: $Id: FindPage,v 1.17 2004-12-05 11:15:41 rurban Exp $
+Date: Thu, 21 Apr 2005 18:56:40 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
+X-Rcs-Id: $Id: FindPage,v 1.18 2005-05-06 17:33:55 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
-  pgsrc_version="2 $Revision: 1.17 $";
+  pgsrc_version="2 $Revision: 1.18 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -40,7 +40,7 @@ those which are similarly spelled or similar sounding (english).
 
 ------
 
-! Search Tips
+! Tips
 Separate words with a space. All words have to match as substrings. %%%
 'OR', grouping with parenthesis, string-quoting and some glob-style wildcard 
 characters are also supported. %%%
