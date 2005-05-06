@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RichTable.php,v 1.6 2005-04-09 08:16:00 rurban Exp $');
+rcs_id('$Id: RichTable.php,v 1.7 2005-05-06 17:44:24 rurban Exp $');
 /**
   RichTablePlugin
   A PhpWiki plugin that allows insertion of tables using a richer syntax.
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -140,13 +140,17 @@ extends WikiPlugin
         foreach ($attr_chunks as $attr_pair) {
             if (empty($attr_pair)) continue;
             $key_val = preg_split("/\s*=\s*/", $attr_pair);
-            $options[trim($key_val[0])] = trim($key_val[1]);
+            if (!empty($key_val[1]))
+                $options[trim($key_val[0])] = trim($key_val[1]);
         }
         return $options;
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2005/04/09 08:16:00  rurban
+// fix RichTablePlugin embedded plugin invocation. Bug #1044245
+//
 // Revision 1.5  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
