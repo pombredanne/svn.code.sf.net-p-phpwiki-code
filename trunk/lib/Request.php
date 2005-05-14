@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.91 2005-04-11 19:40:14 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.92 2005-05-14 07:22:47 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -1118,7 +1118,7 @@ class Request_AccessLogEntry
             // duration problem: sprintf "%f" might use comma e.g. "100,201" in european locales
             $dbh->genericSqlQuery
                 (
-                 sprintf("INSERT DELAYED INTO $log_tbl"
+                 sprintf("INSERT INTO $log_tbl"
                          . " (time_stamp,remote_host,remote_user,request_method,request_line,request_uri,"
                          .   "request_args,request_time,status,bytes_sent,referer,agent,request_duration)"
                          . " VALUES(%d,%s,%s,%s,%s,%s,%s,%s,%d,%d,%s,%s,'%s')",
@@ -1332,6 +1332,11 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.91  2005/04/11 19:40:14  rurban
+// Simplify upload. See https://sourceforge.net/forum/message.php?msg_id=3093651
+// Improve UpLoad warnings.
+// Move auth check before upload.
+//
 // Revision 1.90  2005/02/26 18:30:01  rurban
 // update (C)
 //
