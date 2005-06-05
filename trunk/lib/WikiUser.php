@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.64 2005-02-08 13:25:50 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.65 2005-06-05 05:38:02 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -40,6 +40,7 @@ $UserPreferences = array(
                          'timeOffset'    => new _UserPreference_numeric(0, -26, 26),
                          'relativeDates' => new _UserPreference_bool(),
                          'googleLink'    => new _UserPreference_bool(), // 1.3.10
+                         'doubleClickEdit' => new _UserPreference_bool(), // 1.3.11
                          );
 
 function WikiUserClassname() {
@@ -745,6 +746,10 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2005/02/08 13:25:50  rurban
+// encrypt password. fix strict logic.
+// both bugs reported by Mikhail Vladimirov
+//
 // Revision 1.63  2005/01/21 14:07:50  rurban
 // reformatting
 //

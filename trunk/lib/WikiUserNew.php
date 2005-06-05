@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.127 2005-04-02 18:01:41 uckelman Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.128 2005-06-05 05:38:02 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -520,9 +520,12 @@ class _WikiUser
         return $this->_level >= $require_level;
     }
 
+    /* This is quite restrictive and not according the login description online. 
+       Any word char (A-Za-z0-9_), ".", "@" and "-"
+       The backends may loosen this.
+    */
     function isValidName ($userid = false) {
-        if (!$userid)
-            $userid = $this->_userid;
+        if (!$userid) $userid = $this->_userid;
         return preg_match("/^[\w\.@\-]+$/",$userid) and strlen($userid) < 32;
     }
 
@@ -587,7 +590,7 @@ class _WikiUser
             // upgrade class
             $class = "_" . $this->_current_method . "PassUser";
             include_once("lib/WikiUser/".$this->_current_method.".php");
-            $user = new $class($userid,$this->_prefs);
+            $user = new $class($userid, $this->_prefs);
             if (!check_php_version(5))
                 eval("\$this = \$user;");
             // /*PHP5 patch*/$this = $user;
@@ -1771,6 +1774,7 @@ class UserPreferences
                                                                    TIMEOFFSET_MAX_HOURS),
                     'relativeDates' => new _UserPreference_bool(),
                     'googleLink'    => new _UserPreference_bool(), // 1.3.10
+                    'doubleClickEdit' => new _UserPreference_bool(), // 1.3.11
                     );
         // add custom theme-specific pref types:
         // FIXME: on theme changes the wiki_user session pref object will fail. 
@@ -2068,6 +2072,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.127  2005/04/02 18:01:41  uckelman
+// Fixed regex for RFC822 addresses.
+//
 // Revision 1.126  2005/02/28 20:30:46  rurban
 // some stupid code for _AdminUser (probably not needed)
 //
