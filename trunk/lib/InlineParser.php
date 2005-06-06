@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.66 2005-04-23 11:15:49 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.67 2005-06-06 17:41:20 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -333,7 +333,7 @@ function LinkBracketLink($bracketlink) {
     preg_match('/(\#?) \[\s* (?: (.*?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
 	       $bracketlink, $matches);
     if (count($matches) < 4) {
-    	trigger_error(_("Invalid [] syntax ignored").": ".$bracketlink, E_USER_NOTICE);
+    	trigger_error(_("Invalid [] syntax ignored").": ".$bracketlink, E_USER_WARNING);
     	return new Cached_Link;
     }
     list (, $hash, $label, $bar, $rawlink) = $matches;
@@ -619,6 +619,29 @@ class Markup_html_abbr extends BalancedMarkup
     }
 }
 
+// See http://www.pmwiki.org/wiki/PmWiki/WikiStyles and
+//     http://www.flexwiki.com/default.aspx/FlexWiki/FormattingRules.html
+class Markup_color extends BalancedMarkup {
+    // %color=blue% blue text %% and back to normal
+    var $_start_regexp = "%color=(?: [^%]*)%";
+    var $_end_regexp = "%%";
+    
+    function markup ($match, $body) {
+    	$color = substr($match, 7, -1);
+        if (strlen($color) != 7 
+            and in_array($color, array('red', 'blue', 'grey', 'black'))) {
+            // must be a name
+            return new HtmlElement('font', array('color' => $color), $body);
+        } elseif ((substr($color,0,1) == '#') 
+                  and (strspn(substr($color,1),'0123456789ABCDEFabcdef') == strlen($color)-1)) {
+            return new HtmlElement('font', array('color' => $color), $body);
+        } else {
+            trigger_error(sprintf(_("unknown color %s ignored"), $color), E_USER_WARNING);
+        }
+        	
+    }
+}
+
 // Special version for single-line plugins formatting, 
 //  like: '<small>< ?plugin PopularNearby ? ></small>'
 class Markup_plugin extends SimpleMarkup
@@ -688,6 +711,8 @@ class InlineTransformer
             $class = "Markup_$mtype";
             $this->_addMarkup(new $class);
         }
+        if (ENABLE_MARKUP_COLOR)
+            $this->_addMarkup(new Markup_color);
     }
 
     function _addMarkup ($markup) {
@@ -817,6 +842,9 @@ function TransformLinks($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2005/04/23 11:15:49  rurban
+// handle allowed inlined objects within INLINE_IMAGES
+//
 // Revision 1.65  2005/03/27 18:24:17  rurban
 // add Log
 //
