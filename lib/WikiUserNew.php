@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.128 2005-06-05 05:38:02 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.129 2005-06-10 06:10:35 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1065,6 +1065,7 @@ extends _AnonUser
     function getPreferences() {
         if (!empty($this->_prefs->_method)) {
             if ($this->_prefs->_method == 'ADODB') {
+            	// FIXME: strange why this should be needed...
             	include_once("lib/WikiUser/Db.php");
             	include_once("lib/WikiUser/AdoDb.php");
                 _AdoDbPassUser::_AdoDbPassUser($this->_userid,$this->_prefs);
@@ -1097,10 +1098,15 @@ extends _AnonUser
     function setPreferences($prefs, $id_only=false) {
         if (!empty($this->_prefs->_method)) {
             if ($this->_prefs->_method == 'ADODB') {
+            	// FIXME: strange why this should be needed...
+            	include_once("lib/WikiUser/Db.php");
+            	include_once("lib/WikiUser/AdoDb.php");
                 _AdoDbPassUser::_AdoDbPassUser($this->_userid,$prefs);
                 return _AdoDbPassUser::setPreferences($prefs, $id_only);
             }
             elseif ($this->_prefs->_method == 'SQL') {
+            	include_once("lib/WikiUser/Db.php");
+            	include_once("lib/WikiUser/PearDb.php");
                 _PearDbPassUser::_PearDbPassUser($this->_userid, $prefs);
                 return _PearDbPassUser::setPreferences($prefs, $id_only);
             }
@@ -2072,6 +2078,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.128  2005/06/05 05:38:02  rurban
+// Default ENABLE_DOUBLECLICKEDIT = false. Moved to UserPreferences
+//
 // Revision 1.127  2005/04/02 18:01:41  uckelman
 // Fixed regex for RFC822 addresses.
 //
