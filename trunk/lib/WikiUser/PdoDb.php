@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PdoDb.php,v 1.1 2005-05-06 16:56:48 rurban Exp $');
+rcs_id('$Id: PdoDb.php,v 1.2 2005-06-10 06:12:36 rurban Exp $');
 /* Copyright (C) 2004, 2005 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -16,6 +16,7 @@ extends _DbPassUser
  */
 {
     var $_authmethod = 'PDODb';
+
     function _PdoDbPassUser($UserName='', $prefs=false) {
 
         if (!$this->_prefs and isa($this,"_PdoDbPassUser")) {
@@ -65,11 +66,6 @@ extends _DbPassUser
     function setPreferences($prefs, $id_only=false) {
         // if the prefs are changed
         if ($count = _AnonUser::setPreferences($prefs, 1)) {
-            //global $request;
-            //$user = $request->_user;
-            //unset($user->_auth_dbi);
-            // this must be done in $request->_setUser, not here!
-            //$request->setSessionVar('wiki_user', $user);
             $this->getAuthDbh();
             $packed = $this->_prefs->store();
             if (!$id_only and isset($this->_prefs->_update)) {
@@ -92,13 +88,12 @@ extends _DbPassUser
                 if ($this->_HomePagehandle and !$id_only)
                     $this->_HomePagehandle->set('pref', $packed);
             }
-            return $count; //count($this->_prefs->unpack($packed));
+            return $count;
         }
         return 0;
     }
 
     function userExists() {
-        //global $DBAuthParams;
         $this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
         if (!$dbh) { // needed?
@@ -109,44 +104,70 @@ extends _DbPassUser
             return $this->_tryNextUser();
         }
         $dbi =& $GLOBALS['request']->_dbi;
-        // Prepare the configured auth statements
         if ($dbi->getAuthParam('auth_check') and empty($this->_authselect)) {
-            $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'), 
-                                                array("userid", "password"));
+            try {
+                $this->_authselect = $dbh->prepare($dbi->getAuthParam('auth_check'));
+            }
+            catch (PDOException $e) {
+                trigger_error("SQL Error: ".$e->getMessage(), E_USER_WARNING);
+                return false;
+            }
         }
-        if (empty($this->_authselect))
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
-                              'DBAUTH_AUTH_CHECK', 'SQL'),
-                          E_USER_WARNING);
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
-        if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->query(sprintf($this->_authselect, $dbh->quote($this->_userid)));
-            if ($rs->numRows())
+        if ( !$dbi->getAuthParam('auth_user_exists') 
+             and $this->_auth_crypt_method == 'crypt'
+             and $this->_authselect)
+        {
+            try {
+                $this->_authselect->bindParam("userid",  $this->_userid, PDO_PARAM_STR, 48);
+                $this->_authselect->execute();
+            }
+            catch (PDOException $e) {
+                trigger_error("SQL Error: ".$e->getMessage(), E_USER_WARNING);
+                return false;
+            }
+            if ($this->_authselect->fetchSingle())
                 return true;
         }
         else {
             if (! $dbi->getAuthParam('auth_user_exists'))
-                trigger_error(fmt("%s is missing",'DBAUTH_AUTH_USER_EXISTS'),
+                trigger_error(fmt("%s is missing", 'DBAUTH_AUTH_USER_EXISTS'),
                               E_USER_WARNING);
-            $this->_authcheck = $this->prepare($dbi->getAuthParam('auth_user_exists'),"userid");
-            $rs = $dbh->query(sprintf($this->_authcheck, $dbh->quote($this->_userid)));
-            if ($rs->numRows())
+            $this->_authcheck = $dbh->prepare($dbi->getAuthParam('auth_check'));
+            $this->_authcheck->bindParam("userid", $this->_userid, PDO_PARAM_STR, 48);
+            $this->_authcheck->execute();
+            if ($this->_authcheck->fetchSingle())
                 return true;
         }
-        // maybe the user is allowed to create himself. Generally not wanted in 
+        // User does not exist yet.
+        // Maybe the user is allowed to create himself. Generally not wanted in 
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
         if (empty($this->_authcreate) and $dbi->getAuthParam('auth_create')) {
-            $this->_authcreate = $this->prepare($dbi->getAuthParam('auth_create'),
-                                                array("userid", "password"));
+            try {
+                $this->_authcreate = $dbh->prepare($dbi->getAuthParam('auth_create'));
+            }
+            catch (PDOException $e) {
+                trigger_error("SQL Error: ".$e->getMessage(), E_USER_WARNING);
+                return false;
+            }
         }
-        if (!empty($this->_authcreate) and isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) {
+        if (!empty($this->_authcreate) and 
+            isset($GLOBALS['HTTP_POST_VARS']['auth']) and
+            isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) 
+        {
             $passwd = $GLOBALS['HTTP_POST_VARS']['auth']['passwd'];
-            $dbh->simpleQuery(sprintf($this->_authcreate,
-                                      $dbh->quote($passwd),
-                                      $dbh->quote($this->_userid)
-                                      ));
-            return true;
+            try {
+                $this->_authcreate->bindParam("userid", $this->_userid, PDO_PARAM_STR, 48);
+                $this->_authcreate->bindParam("password", $passwd, PDO_PARAM_STR, 48);
+                $rs = $this->_authselect->execute();
+            }
+            catch (PDOException $e) {
+                trigger_error("SQL Error: ".$e->getMessage(), E_USER_WARNING);
+                return false;
+            }
+            if ($rs)
+                return true;
         }
         return $this->_tryNextUser();
     }
@@ -173,13 +194,29 @@ extends _DbPassUser
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         $dbh = &$this->_auth_dbi;
         if ($this->_auth_crypt_method == 'crypt') {
-            $stored_password = $dbh->getOne(sprintf($this->_authselect, 
-                                                    $dbh->quote($this->_userid)));
+            try {
+                $this->_authselect->bindParam("userid", $this->_userid, PDO_PARAM_STR, 48);
+                $this->_authselect->execute();
+                $rs = $this->_authselect->fetch(PDO_FETCH_BOTH);
+            }
+            catch (PDOException $e) {
+                trigger_error("SQL Error: ".$e->getMessage(), E_USER_WARNING);
+                return false;
+            }
+            $stored_password = @$rs[0];
             $result = $this->_checkPass($submitted_password, $stored_password);
         } else {
-            $okay = $dbh->getOne(sprintf($this->_authselect,
-                                         $dbh->quote($submitted_password),
-                                         $dbh->quote($this->_userid)));
+            try {
+                $this->_authselect->bindParam("password", $submitted_password, PDO_PARAM_STR, 48);
+                $this->_authselect->bindParam("userid", $this->_userid, PDO_PARAM_STR, 48);
+                $this->_authselect->execute();
+                $rs = $this->_authselect->fetch(PDO_FETCH_BOTH);
+            }
+            catch (PDOException $e) {
+                trigger_error("SQL Error: ".$e->getMessage(), E_USER_WARNING);
+                return false;
+            }
+            $okay = @$rs[0];
             $result = !empty($okay);
         }
 
@@ -206,8 +243,13 @@ extends _DbPassUser
         $dbh = &$this->_auth_dbi;
         $dbi =& $GLOBALS['request']->_dbi;
         if ($dbi->getAuthParam('auth_update') and empty($this->_authupdate)) {
-            $this->_authupdate = $this->prepare($dbi->getAuthParam('auth_update'),
-                                                array("userid", "password"));
+            try {
+                $this->_authupdate = $dbh->prepare($dbi->getAuthParam('auth_update'));
+            }
+            catch (PDOException $e) {
+                trigger_error("SQL Error: ".$e->getMessage(), E_USER_WARNING);
+                return false;
+            }
         }
         if (empty($this->_authupdate)) {
             trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
@@ -220,15 +262,23 @@ extends _DbPassUser
             if (function_exists('crypt'))
                 $submitted_password = crypt($submitted_password);
         }
-        $dbh->simpleQuery(sprintf($this->_authupdate,
-                                  $dbh->quote($submitted_password),
-        			  $dbh->quote($this->_userid)
-                                  ));
+        try {
+            $this->_authupdate->bindParam("password", $submitted_password, PDO_PARAM_STR, 48);
+            $this->_authupdate->bindParam("userid", $this->_userid, PDO_PARAM_STR, 48);
+            $this->_authupdate->execute();
+        }
+        catch (PDOException $e) {
+            trigger_error("SQL Error: ".$e->getMessage(), E_USER_WARNING);
+            return false;
+        }
         return true;
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/05/06 16:56:48  rurban
+// add PdoDbPassUser
+//
 
 // Local Variables:
 // mode: php
