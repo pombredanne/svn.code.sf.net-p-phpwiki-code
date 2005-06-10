@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Db.php,v 1.2 2004-12-26 17:11:15 rurban Exp $');
+rcs_id('$Id: Db.php,v 1.3 2005-06-10 06:11:56 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -71,6 +71,16 @@ extends _PassUser
         return false;
     }
 
+    /* Since we properly quote the username, we allow most chars here. 
+       Just " ; and ' is forbidden, max length: 48 as defined in the schema.
+    */
+    function isValidName ($userid = false) {
+        if (!$userid) $userid = $this->_userid;
+        if (strcspn($userid, ";'\"") != strlen($userid)) return false;
+        if (strlen($userid) > 48) return false;
+        return true;
+    }
+
     function mayChangePass() {
         return !isset($this->_authupdate);
     }
@@ -78,6 +88,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/12/26 17:11:15  rurban
+// just copyright
+//
 // Revision 1.1  2004/11/01 10:43:58  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
