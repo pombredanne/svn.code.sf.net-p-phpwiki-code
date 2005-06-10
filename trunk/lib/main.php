@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.212 2005-04-25 20:17:14 rurban Exp $');
+rcs_id('$Id: main.php,v 1.213 2005-06-10 06:10:35 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -58,17 +58,18 @@ class WikiRequest extends Request {
         }
         if (ENABLE_USER_NEW) {
             // Preload all necessary userclasses. Otherwise session => __PHP_Incomplete_Class_Name
-            // There's no way to demandload it later. This way it's much slower but needs 
-            // less memory than loading all
+            // There's no way to demand-load it later. This way it's much slower, but needs slightly
+            // less memory than loading all.
             if (ALLOW_BOGO_LOGIN)
                 include_once("lib/WikiUser/BogoLogin.php");
+            // UserPreferences POST Update doesn't reach this.
             foreach ($GLOBALS['USER_AUTH_ORDER'] as $method) {
                 include_once("lib/WikiUser/$method.php");
             	if ($method == 'Db')
-            	    switch($GLOBALS['DBParams']['dbtype']) {
+            	    switch( DATABASE_TYPE ) {
             	    	case 'SQL'  : include_once("lib/WikiUser/PearDb.php"); break;
             	    	case 'ADODB': include_once("lib/WikiUser/AdoDb.php"); break;
-                        //case 'PDO'  : include_once("lib/WikiUser/PdoDb.php"); break;
+                        case 'PDO'  : include_once("lib/WikiUser/PdoDb.php"); break;
             	    }
             }
             unset($method);
@@ -116,12 +117,12 @@ class WikiRequest extends Request {
 	        if (isset($this->_user->_prefs->_method)
                     and ($this->_user->_prefs->_method == 'SQL' 
                          or $this->_user->_prefs->_method == 'ADODB' 
-                         //or $this->_user->_prefs->_method == 'PDO' 
+                         or $this->_user->_prefs->_method == 'PDO' 
                          or $this->_user->_prefs->_method == 'HomePage')) {
 	            $this->_user->_HomePagehandle = $this->getPage($userid);
 	        }
 	        // need to update the lockfile filehandle
-	        if ( isa($this->_user,'_FilePassUser') 
+	        if ( isa($this->_user, '_FilePassUser') 
                      and $this->_user->_file->lockfile 
                      and !$this->_user->_file->fplock )
 	        {
@@ -1255,6 +1256,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.212  2005/04/25 20:17:14  rurban
+// captcha feature by Benjamin Drieu. Patch #1110699
+//
 // Revision 1.211  2005/04/11 19:42:54  rurban
 // reformatting, SESSION_SAVE_PATH check
 //
