@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.130 2005-05-06 16:43:35 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.131 2005-06-10 06:09:06 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -199,12 +199,15 @@ class Theme {
         $this->_path  = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
         $this->_theme = "themes/$theme_name";
 
-        if (ENABLE_DOUBLECLICKEDIT) // by pixels
+        // by pixels
+        if ($GLOBALS['request']->getPref('doubleClickEdit')
+            or ENABLE_DOUBLECLICKEDIT)
             $this->initDoubleClickEdit();
 
         if ($theme_name != 'default')
             $this->_default_theme = new Theme;
 
+        // will be replaced by acDropDown
         if (ENABLE_LIVESEARCH) { // by bitflux.ch
             $this->initLiveSearch();
         }
@@ -1439,6 +1442,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.130  2005/05/06 16:43:35  rurban
+// split long lines
+//
 // Revision 1.129  2005/05/05 08:57:26  rurban
 // support action=revert
 //
