@@ -1,4 +1,4 @@
--- $Id: mysql-1_3_11.sql,v 1.4 2005-02-27 09:33:05 rurban Exp $
+-- $Id: mysql-1_3_11.sql,v 1.5 2005-06-21 05:59:18 rurban Exp $
 -- phpwiki 1.3.11 upgrade from 1.3.10
 
 -- if ACCESS_LOG_SQL > 0
@@ -23,3 +23,8 @@ CREATE TABLE accesslog (
 CREATE INDEX log_time ON accesslog (time_stamp);
 CREATE INDEX log_host ON accesslog (remote_host);
 
+-- and use ?action=upgrade as WIKI_ADMIN then
+ALTER TABLE page ADD cached_html MEDIUMBLOB;
+
+-- support ipv6
+ALTER TABLE session CHANGE sess_ip sess_ip CHAR(40) NOT NULL;

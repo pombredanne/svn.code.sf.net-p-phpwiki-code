@@ -1,4 +1,4 @@
--- $Id: mssql-initialize.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
+-- $Id: mssql-initialize.sql,v 1.3 2005-06-21 05:59:18 rurban Exp $
 -- UNTESTED!
 
 CREATE TABLE page (
@@ -46,7 +46,7 @@ CREATE TABLE session (
     	sess_id 	CHAR(32) NOT NULL DEFAULT '',
     	sess_data 	BLOB NOT NULL,
     	sess_date 	INT UNSIGNED NOT NULL,
-    	sess_ip 	CHAR(15) NOT NULL,
+    	sess_ip 	CHAR(40) NOT NULL,
     	PRIMARY KEY (sess_id)
 );
 CREATE INDEX sessdate_index ON session (sess_date);
