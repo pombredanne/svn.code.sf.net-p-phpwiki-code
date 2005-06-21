@@ -1,4 +1,4 @@
--- $Id: oci8-initialize.sql,v 1.3 2005-05-04 05:08:13 rurban Exp $
+-- $Id: oci8-initialize.sql,v 1.4 2005-06-21 05:59:18 rurban Exp $
 
 set verify off
 set feedback off
@@ -130,7 +130,7 @@ CREATE TABLE &session_tbl (
 	sess_id 	CHAR(32) DEFAULT '',
     	sess_data 	CLOB,
     	sess_date 	INT,
-    	sess_ip 	CHAR(15) NOT NULL,
+    	sess_ip 	CHAR(40) NOT NULL,
 	CONSTRAINT &sess_id PRIMARY KEY (sess_id)
 );
 CREATE INDEX &sess_date ON &session_tbl (sess_date);

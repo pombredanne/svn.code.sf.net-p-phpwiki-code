@@ -1,6 +1,6 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id: sqlite-initialize.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
+-- $Id: sqlite-initialize.sql,v 1.3 2005-06-21 05:59:18 rurban Exp $
 
 CREATE TABLE page (
 	id              INTEGER PRIMARY KEY,
@@ -45,7 +45,7 @@ CREATE TABLE session (
 	sess_id   CHAR(32) NOT NULL DEFAULT '' PRIMARY KEY,
 	sess_data MEDIUMTEXT NOT NULL,
 	sess_date INTEGER UNSIGNED NOT NULL,
-	sess_ip   CHAR(15) NOT NULL
+	sess_ip   CHAR(40) NOT NULL
 );
 CREATE INDEX sessdate_index ON session (sess_date);
 CREATE INDEX sessip_index ON session (sess_ip);

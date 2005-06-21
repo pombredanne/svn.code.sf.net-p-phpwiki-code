@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.3 2005-04-07 06:13:57 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.4 2005-06-21 05:59:18 rurban Exp $
 
 \set QUIET
 
@@ -124,7 +124,7 @@ CREATE TABLE :session_tbl (
 	sess_id 	CHAR(32) NOT NULL DEFAULT '',
     	sess_data 	TEXT NOT NULL,
     	sess_date 	INT,
-    	sess_ip 	CHAR(15) NOT NULL
+    	sess_ip 	CHAR(40) NOT NULL
 );
 CREATE UNIQUE INDEX :sess_id ON :session_tbl (sess_id);
 CREATE INDEX :sess_date ON :session_tbl (sess_date);

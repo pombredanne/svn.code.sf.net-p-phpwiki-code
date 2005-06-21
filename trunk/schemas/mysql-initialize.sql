@@ -1,4 +1,4 @@
--- $Id: mysql-initialize.sql,v 1.7 2005-02-27 09:33:05 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.8 2005-06-21 05:59:18 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
@@ -51,7 +51,7 @@ CREATE TABLE session (
     	sess_id 	CHAR(32) NOT NULL DEFAULT '',
     	sess_data 	BLOB NOT NULL,
     	sess_date 	INT UNSIGNED NOT NULL,
-    	sess_ip 	CHAR(15) NOT NULL,
+    	sess_ip 	CHAR(40) NOT NULL,
     	PRIMARY KEY (sess_id),
 	INDEX (sess_date)
 );
@@ -63,6 +63,7 @@ CREATE TABLE session (
 -- ALTER TABLE page CHANGE id id INT NOT NULL AUTO_INCREMENT;
 -- update to 1.3.11: (see lib/upgrade.php)
 -- ALTER TABLE page ADD cached_html MEDIUMBLOB;
+-- ALTER TABLE session CHANGE sess_ip sess_ip CHAR(40) NOT NULL;
 
 -- Optional DB Auth and Prefs
 -- For these tables below the default table prefix must be used 
