@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PersonalPage.php,v 1.5 2005-02-14 12:28:27 rurban Exp $');
+rcs_id('$Id: PersonalPage.php,v 1.6 2005-06-22 05:36:52 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -12,6 +12,15 @@ class _PersonalPagePassUser
 extends _PassUser
 {
     var $_authmethod = 'PersonalPage';
+
+    /* Very loose checking, since we properly quote the PageName. 
+       Just trim spaces, ... See lib/stdlib.php
+    */
+    function isValidName ($userid = false) {
+        if (!$userid) $userid = $this->_userid;
+        $WikiPageName = new WikiPageName($userid);
+        return $WikiPageName->isValid() and ($userid === $$WikiPageName->name);
+    }
 
     function userExists() {
         return $this->_HomePagehandle and $this->_HomePagehandle->exists();
@@ -55,6 +64,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2005/02/14 12:28:27  rurban
+// fix policy strict. Thanks to Mikhail Vladimirov
+//
 // Revision 1.4  2004/12/26 17:11:17  rurban
 // just copyright
 //
