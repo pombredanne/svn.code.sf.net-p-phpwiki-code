@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.35 2004-10-13 14:13:55 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.36 2005-06-30 05:17:14 rurban Exp $');
 /**
- Copyright (C) 2001, 2002, 2003, 2004 $ThePhpWikiProgrammingTeam
+ Copyright (C) 2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -26,8 +26,7 @@ rcs_id('$Id: UserPreferences.php,v 1.35 2004-10-13 14:13:55 rurban Exp $');
  * Prefs are stored in metadata in the current session, 
  *  within the user's home page or in a database.
  *
- * TODO:
- * Certain themes should be able to extend the predefined list 
+ * Theme extension: Themes are able to extend the predefined list 
  * of preferences.
  */
 class WikiPlugin_UserPreferences
@@ -41,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.35 $");
+                            "\$Revision: 1.36 $");
     }
 
     function getDefaultArguments() {
@@ -170,6 +169,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.35  2004/10/13 14:13:55  rurban
+// fix cannot edit prefs
+//
 // Revision 1.34  2004/10/05 00:10:49  rurban
 // adjust for unittests. They finally pass all tests
 //
