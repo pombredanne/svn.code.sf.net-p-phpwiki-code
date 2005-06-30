@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.90 2005-05-06 18:45:59 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.91 2005-06-30 04:53:46 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -452,20 +452,25 @@ function IniConfig($file) {
 
     global $PLUGIN_CACHED_IMGTYPES;
     $PLUGIN_CACHED_IMGTYPES = preg_split('/\s*[|:]\s*/', PLUGIN_CACHED_IMGTYPES);
+
     if (empty($rs['PLUGIN_CACHED_CACHE_DIR']) and !empty($rsdef['PLUGIN_CACHED_CACHE_DIR']))
         $rs['PLUGIN_CACHED_CACHE_DIR'] = $rsdef['PLUGIN_CACHED_CACHE_DIR'];
     if (empty($rs['PLUGIN_CACHED_CACHE_DIR'])) {
         if (!empty($rs['INCLUDE_PATH'])) {
             @ini_set('include_path', $rs['INCLUDE_PATH']);
         }
-        if (!FindFile('/tmp/cache', 1)) { // [29ms]
-            if (!FindFile('/tmp', 1)) {
-                mkdir('/tmp', 777);
-            }
-            mkdir('/tmp/cache', 777);
+        if (empty($rs['TEMP_DIR'])) {
+            $rs['TEMP_DIR'] = "/tmp";
+            if (getenv("TEMP"))
+                $rs['TEMP_DIR'] = getenv("TEMP");
+        }
+        $rs['PLUGIN_CACHED_CACHE_DIR'] = $rs['TEMP_DIR'] . '/cache';
+        if (!FindFile($rs['PLUGIN_CACHED_CACHE_DIR'], 1)) { // [29ms]
+            FindFile($rs['TEMP_DIR'], false, 1);            // TEMP must exist!
+            mkdir($rs['PLUGIN_CACHED_CACHE_DIR'], 777);
         }
         // will throw an error if not exists.
-        define('PLUGIN_CACHED_CACHE_DIR', FindFile('/tmp/cache',false,1)); 
+        define('PLUGIN_CACHED_CACHE_DIR', FindFile($rs['PLUGIN_CACHED_CACHE_DIR'],false,1)); 
     } else {
         define('PLUGIN_CACHED_CACHE_DIR', $rs['PLUGIN_CACHED_CACHE_DIR']);
         // will throw an error if not exists.
@@ -832,6 +837,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.90  2005/05/06 18:45:59  rurban
+// add TOOLBAR_TEMPLATE_PULLDOWN (AddTemplate icon)
+//
 // Revision 1.89  2005/05/06 16:54:18  rurban
 // support optional EXTERNAL_LINK_TARGET, default: _blank
 //
