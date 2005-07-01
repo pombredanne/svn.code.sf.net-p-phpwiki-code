@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.15 2005-01-18 20:55:48 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.16 2005-07-01 05:19:26 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -40,6 +40,26 @@ extends WikiDB_backend_PearDB
             $this->_dbh->query("VACUUM ANALYZE $table");
         }
         return 1;
+    }
+
+    // Until the binary escape problems on pear pgsql are solved */
+    function get_cached_html($pagename) {
+        $dbh = &$this->_dbh;
+        $page_tbl = $this->_table_names['page_tbl'];
+        $data = $dbh->GetOne(sprintf("SELECT cached_html FROM $page_tbl WHERE pagename='%s'",
+                                     $dbh->escapeSimple($pagename)));
+        if ($data) return base64_decode($data);
+        else return '';
+    }
+
+    function set_cached_html($pagename, $data) {
+        $dbh = &$this->_dbh;
+        $page_tbl = $this->_table_names['page_tbl'];
+        $sth = $dbh->query("UPDATE $page_tbl"
+                           . " SET cached_html=?"
+                           . " WHERE pagename=?",
+                           // pear does NOT use pg_escape_string()! Oh dear.
+                           array(base64_encode($data), $pagename));
     }
 
     /**
