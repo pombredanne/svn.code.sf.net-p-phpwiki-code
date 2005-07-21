@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PersonalPage.php,v 1.6 2005-06-22 05:36:52 rurban Exp $');
+rcs_id('$Id: PersonalPage.php,v 1.7 2005-07-21 19:02:16 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -19,7 +19,7 @@ extends _PassUser
     function isValidName ($userid = false) {
         if (!$userid) $userid = $this->_userid;
         $WikiPageName = new WikiPageName($userid);
-        return $WikiPageName->isValid() and ($userid === $$WikiPageName->name);
+        return $WikiPageName->isValid() and ($userid === $WikiPageName->name);
     }
 
     function userExists() {
@@ -64,6 +64,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2005/06/22 05:36:52  rurban
+// looser isValidName method
+//
 // Revision 1.5  2005/02/14 12:28:27  rurban
 // fix policy strict. Thanks to Mikhail Vladimirov
 //
