@@ -1,7 +1,7 @@
 <?php
 // by Edd Dumbill (C) 1999-2002
 // <edd@usefulinc.com>
-// $Id: xmlrpcs.inc,v 1.3 2005-07-08 05:36:12 rurban Exp $
+// $Id: xmlrpcs.inc,v 1.4 2005-07-21 19:25:13 rurban Exp $
 
 // Copyright (c) 1999,2000,2002 Edd Dumbill.
 // All rights reserved.
@@ -372,13 +372,15 @@ class xmlrpc_server
 	// so we do not try to convert them into xml character entities
 	//$data = xmlrpc_html_entity_xlate($data);
 	$parser = xml_parser_create($xmlrpc_defencoding);
+	// Error: Resource ID#46 used as offset, casting to integer
+	$parser_idx = (int)$parser;
 
-	$_xh[$parser]=array();
-	$_xh[$parser]['st']='';
-	$_xh[$parser]['cm']=0;
-	$_xh[$parser]['isf']=0;
-	$_xh[$parser]['params']=array();
-	$_xh[$parser]['method']='';
+	$_xh[$parser_idx]=array();
+	$_xh[$parser_idx]['st']='';
+	$_xh[$parser_idx]['cm']=0;
+	$_xh[$parser_idx]['isf']=0;
+	$_xh[$parser_idx]['params']=array();
+	$_xh[$parser_idx]['method']='';
 
 	// decompose incoming XML into request structure
 
@@ -403,16 +405,16 @@ class xmlrpc_server
 	else
 	    {
 		xml_parser_free($parser);
-		$m=new xmlrpcmsg($_xh[$parser]['method']);
+		$m=new xmlrpcmsg($_xh[$parser_idx]['method']);
 		// now add parameters in
 		$plist='';
 		$allOK = 1;
-		for($i=0; $i<sizeof($_xh[$parser]['params']); $i++)
+		for($i=0; $i<sizeof($_xh[$parser_idx]['params']); $i++)
 		    {
-			//print "<!-- " . $_xh[$parser]['params'][$i]. "-->\n";
-			$plist.="$i - " .  $_xh[$parser]['params'][$i]. ";\n";
+			//print "<!-- " . $_xh[$parser_idx]['params'][$i]. "-->\n";
+			$plist.="$i - " .  $_xh[$parser_idx]['params'][$i]. ";\n";
 			$allOK = 0;
-			@eval('$m->addParam(' . $_xh[$parser]['params'][$i]. '); $allOK=1;');
+			@eval('$m->addParam(' . $_xh[$parser_idx]['params'][$i]. '); $allOK=1;');
 			if (!$allOK)
 			    {
 				break;
