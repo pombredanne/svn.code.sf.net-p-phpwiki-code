@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.13 2005-01-21 14:10:36 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.14 2005-07-21 19:27:04 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -531,7 +531,7 @@ function putPage($params) {
     }
     $request->_user = _getUser($userid);
     $request->_user->_group = $request->getGroup();
-    $$user = $request->_user->AuthCheck($userid, $passwd);
+    $request->_user->AuthCheck($userid, $passwd);
                                          
     if (! mayAccessPage ('edit', $pagename)) {
         return new xmlrpcresp(
@@ -636,6 +636,59 @@ function mailPasswordToUser($params)
     }
     return new xmlrpcresp(new xmlrpcval ($success, "boolean"));
 }
+
+/** 
+ * struct titleSearch(String substring [, Integer option = 0])
+ * returns an array of matching pagenames.
+ * TODO: standardize options
+ *
+ * @author: Reini Urban
+ */
+$wiki_dmap['titleSearch']
+= array('signature'     => array(array($xmlrpcArray, $xmlrpcString, $xmlrpcInt)),
+        'documentation' => "Return matching pagenames. 
+Option 1: caseexact, 2: regex, 4: starts_with, 8: exact",
+        'function'      => 'titleSearch');
+
+function titleSearch($params)
+{
+    global $request;
+    $ParamPageName = $params->getParam(0);
+    $searchstring = short_string_decode($ParamPageName->scalarval());
+    if (count($params->params) > 1) {
+        $ParamOption = $params->getParam(1);
+        $option = $ParamOption->scalarval();
+    } else $option = 0;
+    // default option: substring, case-inexact
+
+    $case_exact = $option & 1;
+    $regex      = $option & 2;
+    if (!$regex) {
+        if ($option & 4) { // STARTS_WITH
+            $regex = true;
+            $searchstring = "^".$searchstring;
+        }
+        if ($option & 8) { // EXACT
+            $regex = true;
+            $searchstring = "^".$searchstring."$";
+        }
+    } else {
+    	if ($option & 4 or $option & 8) { 
+		    global $xmlrpcerruser;
+    		return new xmlrpcresp(0, $xmlrpcerruser + 1, "Invalid option");
+    	}
+    }
+    include_once("lib/TextSearchQuery.php");
+    $query = new TextSearchQuery($searchstring, $case_exact, $regex ? 'auto' : 'none');
+    $dbh = $request->getDbh();
+    $iterator = $dbh->titleSearch($query);
+    $pages = array();
+    while ($page = $iterator->next()) {
+        $pages[] = short_string($page->getName());
+    } 
+    return new xmlrpcresp(new xmlrpcval($pages, "array"));
+}
+
  
 /** 
  * Construct the server instance, and set up the dispatch map, 
