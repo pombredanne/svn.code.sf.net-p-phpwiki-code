@@ -1,110 +1,120 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# de.po -- PhpWiki's 1.2.x german language file
+# Copyright (C) 1998,2000,2001,2005 $ThePhpWikiProgrammingTeam 
+# Arno Hollosi <ahollosi@mail.com>, 1998,2000
+# Reini Urban <rurban@x-ray.at>, 2001,2005
 #
+# Don't change the format of the first three lines,
+# the TP robot wants them like this (I hope).
+# 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: phpwiki 1.1.8\n"
-"POT-Creation-Date: 2001-11-28 10:50-0800\n"
-"PO-Revision-Date: 2000-10-31 02:23+0200\n"
-"Last-Translator: Arno Hollosi <ahollosi@mail.com>\n"
-"Language-Team: German <de@li.org>\n"
+"Project-Id-Version: phpwiki 1.2.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-30 22:23+0100\n"
+"PO-Revision-Date: 2005-01-30 22:06+0100\n"
+"Last-Translator: Reini Urban <rurban@x-ray.at>, Arno Hollosi <ahollosi@mail."
+"com>\n"
+"Language-Team: phpwiki-talk@lists.sf.net\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8859-1\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: admin.php:17
+msgid "Set the administrator account and password first.\n"
+msgstr "Setze zuerst den Administrator Loginname und Passwort.\n"
 
 #: admin.php:26
 msgid "You entered an invalid login or password."
 msgstr "Du hast ein ungültiges Login oder Passwort eingegeben."
 
-#: admin.php:47
-#, c-format
+#: admin.php:48
+#, php-format
 msgid "You are about to remove '%s' permanently!"
 msgstr "Du bist im Begriff '%s' permanent zu löschen!"
 
-#: admin.php:50
-#, c-format
+#: admin.php:51
+#, php-format
 msgid "Click %shere%s to remove the page now."
 msgstr "Klicke %shier%s um die Seite jetzt zu löschen."
 
-#: admin.php:53
+#: admin.php:54
 msgid "Otherwise press the \"Back\" button of your browser."
 msgstr "Anderenfalls benütze die \"Zurück\" Funktion deines Browsers."
 
-#: admin.php:55
+#: admin.php:56
 msgid "Function not yet implemented."
 msgstr "Funktion noch nicht implementiert."
 
-#: admin.php:57 admin.php:65
+#: admin.php:58 admin.php:66
 msgid "Remove page"
 msgstr "Seite löschen"
 
-#: admin.php:63
-#, c-format
+#: admin.php:64
+#, php-format
 msgid "Removed page '%s' succesfully."
 msgstr "Seite '%s' erfolgreich gelöscht."
 
 #: lib/backlinks.php:11 lib/backlinks.php:19
-#, c-format
+#, php-format
 msgid "Pages which link to %s"
 msgstr ""
 
 #: lib/backlinks.php:32
-#, c-format
+#, php-format
 msgid "%d pages link to %s."
 msgstr ""
 
-#: lib/config.php:238
+#: lib/config.php:274
 msgid "templates/browse.html"
 msgstr "locale/de/templates/browse.html"
 
-#: lib/config.php:239
+#: lib/config.php:275
 msgid "templates/editpage.html"
 msgstr "locale/de/templates/editpage.html"
 
-#: lib/config.php:240
+#: lib/config.php:276
 msgid "templates/editlinks.html"
 msgstr "locale/de/templates/editlinks.html"
 
-#: lib/config.php:241
+#: lib/config.php:277
 msgid "templates/message.html"
 msgstr "locale/de/templates/message.html"
 
-#: lib/config.php:257
+#: lib/config.php:293
 msgid "./pgsrc"
 msgstr "locale/de/pgsrc"
 
 #: lib/db_filesystem.php:76
-#, c-format
+#, php-format
 msgid "'%s': corrupt file"
-msgstr ""
+msgstr "'%s': korrupte Datei"
 
-#: lib/db_filesystem.php:225
-#, c-format
+#: lib/db_filesystem.php:221 lib/db_filesystem.php:251
+#, php-format
 msgid "%s: bad data<br>\n"
-msgstr ""
+msgstr "%s: falsche Daten<br>\n"
 
-#: lib/db_filesystem.php:317
-#, c-format
+#: lib/db_filesystem.php:301
+#, php-format
 msgid "%s: Bad filename in database<br>\n"
-msgstr ""
+msgstr "%s: Ungültiger Dateiname in Datenbank<br>\n"
 
 #: lib/diff.php:711
-#, c-format
+#, php-format
 msgid "WikiDiff::apply: line count mismatch: %s != %s"
 msgstr ""
 
 #: lib/diff.php:771
 msgid "WikiDiff::_check: failed"
-msgstr ""
+msgstr "WikiDiff::_check: Fehler"
 
 #: lib/diff.php:781
 msgid "WikiDiff::_check: edit sequence is non-optimal"
 msgstr ""
 
 #: lib/diff.php:785
-#, c-format
+#, php-format
 msgid "WikiDiff Okay: LCS = %s"
 msgstr ""
 
@@ -113,17 +123,17 @@ msgid "Current page:"
 msgstr "Aktuelle Seite:"
 
 #: lib/diff.php:1030 lib/diff.php:1048
-#, c-format
+#, php-format
 msgid "version %s"
 msgstr "Version %s"
 
 #: lib/diff.php:1032 lib/diff.php:1050
-#, c-format
+#, php-format
 msgid "last modified on %s"
 msgstr "zuletzt verändert am %s"
 
 #: lib/diff.php:1035 lib/diff.php:1053
-#, c-format
+#, php-format
 msgid "by %s"
 msgstr "von %s"
 
@@ -140,21 +150,21 @@ msgid "Versions are identical"
 msgstr "Versionen sind identisch"
 
 #: lib/diff.php:1074
-#, c-format
+#, php-format
 msgid "Diff of %s."
 msgstr "Diff von %s."
 
-#: lib/display.php:15
+#: lib/display.php:17
 msgid "FrontPage"
 msgstr "StartSeite"
 
-#: lib/display.php:32 lib/editpage.php:56
-#, c-format
+#: lib/display.php:34 lib/editpage.php:56
+#, php-format
 msgid "Describe %s here."
 msgstr "Beschreibe %s hier."
 
 #: lib/editpage.php:19
-#, c-format
+#, php-format
 msgid "Copy of %s"
 msgstr "Kopie von %s"
 
@@ -168,26 +178,25 @@ msgstr ""
 "Diese Seite wurde vom Administrator gesperrt und kann nicht editiert werden."
 
 #: lib/editpage.php:33 lib/savepage.php:111 lib/savepage.php:136
-#, fuzzy
 msgid "Sorry for the inconvenience."
 msgstr "Entschuldigung für die Unannehmlichkeiten."
 
 #: lib/editpage.php:35 lib/savepage.php:137
-#, c-format
+#, php-format
 msgid "Problem while editing %s"
 msgstr "Problem während dem Editieren von %s"
 
 #: lib/fullsearch.php:10 lib/search.php:9
-#, c-format
+#, php-format
 msgid "Searching for \"%s\" ....."
 msgstr "Suche nach \"%s\" ....."
 
 #: lib/fullsearch.php:43 lib/search.php:26
 msgid "(You entered an empty search string)"
-msgstr ""
+msgstr "(Sie haben einen leeren Suchtext eingegeben)"
 
 #: lib/fullsearch.php:47
-#, c-format
+#, php-format
 msgid "%d matches found in %d pages."
 msgstr "%d Treffer in %d Seiten."
 
@@ -195,62 +204,62 @@ msgstr "%d Treffer in %d Seiten."
 msgid "Full Text Search Results"
 msgstr "Volltext-Suchresultate"
 
-#: lib/msql.php:31 lib/mssql.php:41 lib/mysql.php:38
+#: lib/msql.php:31 lib/mssql.php:41 lib/mysql.php:40
 msgid "Cannot establish connection to database, giving up."
 msgstr "Kann Verbindung zu Datenbank nicht aufbauen - Abbruch."
 
 #: lib/msql.php:33 lib/msql.php:39
-#, c-format
+#, php-format
 msgid "Error message: %s"
 msgstr "Fehlermeldung: %s"
 
-#: lib/msql.php:37 lib/mssql.php:50 lib/mysql.php:44
-#, c-format
+#: lib/msql.php:37 lib/mssql.php:50 lib/mysql.php:46
+#, php-format
 msgid "Cannot open database %s, giving up."
 msgstr "Kann Datenbank %s nicht öffnen - Abbruch."
 
 #: lib/msql.php:212
-#, fuzzy, c-format
+#, php-format
 msgid "Insert/update to table 'wiki' failed: %s"
-msgstr "Einfügen/Verändern fehlgeschlagen: %s"
+msgstr "Einfügen/Verändern in Tabelle 'wiki' fehlgeschlagen: %s"
 
 #: lib/msql.php:223 lib/msql.php:300
-#, c-format
+#, php-format
 msgid "Delete on %s failed: %s"
 msgstr "Löschen in %s fehlgeschlagen: %s"
 
 #: lib/msql.php:241 lib/msql.php:316
-#, c-format
+#, php-format
 msgid "Insert into %s failed: %s"
 msgstr "Einfügen in %s fehlgeschlagen: %s"
 
 #: lib/msql.php:290
-#, fuzzy, c-format
+#, php-format
 msgid "Insert/update into table 'archive' failed: %s"
-msgstr "Einfügen/Verändern fehlgeschlagen: %s"
+msgstr "Einfügen/Verändern in Tabelle 'archive' fehlgeschlagen: %s"
 
 #: lib/mssql.php:43 lib/mssql.php:52 lib/mssql.php:197
-#, fuzzy, c-format
+#, php-format
 msgid "MSSQL error: %s"
-msgstr "MySQL Fehler: %s"
+msgstr "MSSQL Fehler: %s"
 
 #: lib/mssql.php:158
-#, fuzzy, c-format
-msgid "Insert/Update failed: %s <br>\n"
+#, php-format
+msgid "Insert/Update failed: %s"
 msgstr "Einfügen/Verändern fehlgeschlagen: %s"
 
-#: lib/mssql.php:195 lib/mysql.php:163
-#, c-format
+#: lib/mssql.php:195 lib/mysql.php:167
+#, php-format
 msgid "Cannot delete '%s' from table '%s'"
 msgstr "Kann nicht '%s' aus Tabelle '%s' löschen"
 
-#: lib/mysql.php:40 lib/mysql.php:46 lib/mysql.php:125 lib/mysql.php:165
-#, c-format
+#: lib/mysql.php:42 lib/mysql.php:48 lib/mysql.php:127 lib/mysql.php:169
+#, php-format
 msgid "MySQL error: %s"
 msgstr "MySQL Fehler: %s"
 
-#: lib/mysql.php:123
-#, c-format
+#: lib/mysql.php:125
+#, php-format
 msgid "Error writing page '%s'"
 msgstr "Fehler beim Schreiben der Seite '%s'"
 
@@ -258,7 +267,7 @@ msgstr "Fehler beim Schreiben der Seite '%s'"
 msgid "Enter a page name"
 msgstr "Seitenname eingeben"
 
-#: lib/pageinfo.php:10 lib/stdlib.php:116
+#: lib/pageinfo.php:10 lib/stdlib.php:197
 msgid "Go"
 msgstr "Los"
 
@@ -271,19 +280,17 @@ msgid "PageInfo"
 msgstr "SeitenInfo"
 
 #: lib/pageinfo.php:36
-#, c-format
+#, php-format
 msgid "Page name '%s' is not in the database"
 msgstr "Seite '%s' ist nicht in der Datenbank"
 
 #: lib/pageinfo.php:64
-#, fuzzy
 msgid "Current version"
-msgstr "Aktuelle Seite:"
+msgstr "Aktuelle Version"
 
 #: lib/pageinfo.php:70
-#, fuzzy
 msgid "Archived version"
-msgstr "Archivierte Seite:"
+msgstr "Archivierte Version"
 
 #: lib/savepage.php:16 lib/savepage.php:86
 msgid "RecentChanges"
@@ -339,12 +346,12 @@ msgid "Press <b>Save</b> again."
 msgstr "Drücke nochmal <b>Speichern</b>"
 
 #: lib/savepage.php:115
-#, fuzzy, c-format
+#, php-format
 msgid "Problem while updating %s"
-msgstr "Problem während dem Editieren von %s"
+msgstr "Problem während dem Speichern von %s"
 
 #: lib/savepage.php:160
-#, c-format
+#, php-format
 msgid "Thank you for editing %s."
 msgstr "Danke für das Editieren von %s."
 
@@ -353,40 +360,39 @@ msgid "Your careful attention to detail is much appreciated."
 msgstr "Deine besondere Aufmerksamkeit für Details wird sehr geschätzt."
 
 #: lib/search.php:30
-#, c-format
+#, php-format
 msgid "%d pages match your query."
 msgstr "%d Seiten wurden gefunden."
 
 #: lib/search.php:33
-#, fuzzy
 msgid "Title Search Results"
 msgstr "Volltext-Suchresultate"
 
 #: lib/setupwiki.php:21
-#, c-format
+#, php-format
 msgid "Inserting page %s, version %s from %s"
 msgstr "Füge Seite %s ein, Version %s vom %s"
 
-#: lib/stdlib.php:36
+#: lib/stdlib.php:38
 msgid "WikiFatalError"
 msgstr "FatalerWikiFehler"
 
-#: lib/stdlib.php:83 lib/stdlib.php:91
+#: lib/stdlib.php:164 lib/stdlib.php:172
 msgid "Search"
 msgstr "Suche"
 
-#: lib/stdlib.php:388
-#, c-format
+#: lib/stdlib.php:469
+#, php-format
 msgid "%d best incoming links:"
 msgstr "Die %d besten hereinkommenden Links:"
 
-#: lib/stdlib.php:401
-#, c-format
+#: lib/stdlib.php:482
+#, php-format
 msgid "%d best outgoing links:"
 msgstr "Die %d besten hinausgehenden Links:"
 
-#: lib/stdlib.php:415
-#, c-format
+#: lib/stdlib.php:496
+#, php-format
 msgid "%d most popular nearby:"
 msgstr "Die %d meistbesuchten Seiten in der Nähe:"
 

@@ -9,95 +9,100 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: phpwiki 1.1.7\n"
-"POT-Creation-Date: 2001-11-28 10:50-0800\n"
+"Project-Id-Version: phpwiki 1.2.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-30 22:23+0100\n"
 "PO-Revision-Date: 2000-09-30 02:23+0200\n"
 "Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
-"Language-Team: Dutch <nl@li.org>\n"
+"Language-Team: phpwiki-talk@lists.sf.net\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=8859-1\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Date: 1998-05-26 11:26:28+0200\n"
 "From:  <janneke@gnu.org>\n"
+
+#: admin.php:17
+msgid "Set the administrator account and password first.\n"
+msgstr ""
 
 #: admin.php:26
 msgid "You entered an invalid login or password."
 msgstr "Je hebt een ongeldige gebruikersnaam of wachtwoord ingevoerd."
 
-#: admin.php:47
-#, c-format
+#: admin.php:48
+#, php-format
 msgid "You are about to remove '%s' permanently!"
 msgstr "Je staat op het punt '%s' voorgoed te verwijderen!"
 
-#: admin.php:50
-#, c-format
+#: admin.php:51
+#, php-format
 msgid "Click %shere%s to remove the page now."
 msgstr "Klik %shier%s om de pagina nu te verwijderen."
 
-#: admin.php:53
+#: admin.php:54
 msgid "Otherwise press the \"Back\" button of your browser."
 msgstr "Druk anders op de \"Terug\" knop van je bladeraar."
 
-#: admin.php:55
+#: admin.php:56
 msgid "Function not yet implemented."
 msgstr "Functie nog niet geïmplementeerd."
 
-#: admin.php:57 admin.php:65
+#: admin.php:58 admin.php:66
 msgid "Remove page"
 msgstr "Verwijder pagina"
 
-#: admin.php:63
-#, c-format
+#: admin.php:64
+#, php-format
 msgid "Removed page '%s' succesfully."
 msgstr "Pagina '%s' verwijderd."
 
 #: lib/backlinks.php:11 lib/backlinks.php:19
-#, c-format
+#, php-format
 msgid "Pages which link to %s"
 msgstr ""
 
 #: lib/backlinks.php:32
-#, c-format
+#, php-format
 msgid "%d pages link to %s."
 msgstr ""
 
-#: lib/config.php:238
+#: lib/config.php:274
 msgid "templates/browse.html"
 msgstr "locale/nl/templates/browse.html"
 
-#: lib/config.php:239
+#: lib/config.php:275
 msgid "templates/editpage.html"
 msgstr "locale/nl/templates/editpage.html"
 
-#: lib/config.php:240
+#: lib/config.php:276
 msgid "templates/editlinks.html"
 msgstr "locale/nl/templates/editlinks.html"
 
-#: lib/config.php:241
+#: lib/config.php:277
 msgid "templates/message.html"
 msgstr "locale/nl/templates/message.html"
 
-#: lib/config.php:257
+#: lib/config.php:293
 msgid "./pgsrc"
 msgstr "locale/nl/pgsrc"
 
 #: lib/db_filesystem.php:76
-#, c-format
+#, php-format
 msgid "'%s': corrupt file"
 msgstr ""
 
-#: lib/db_filesystem.php:225
-#, c-format
+#: lib/db_filesystem.php:221 lib/db_filesystem.php:251
+#, php-format
 msgid "%s: bad data<br>\n"
 msgstr ""
 
-#: lib/db_filesystem.php:317
-#, c-format
+#: lib/db_filesystem.php:301
+#, php-format
 msgid "%s: Bad filename in database<br>\n"
 msgstr ""
 
 #: lib/diff.php:711
-#, c-format
+#, php-format
 msgid "WikiDiff::apply: line count mismatch: %s != %s"
 msgstr ""
 
@@ -110,7 +115,7 @@ msgid "WikiDiff::_check: edit sequence is non-optimal"
 msgstr ""
 
 #: lib/diff.php:785
-#, c-format
+#, php-format
 msgid "WikiDiff Okay: LCS = %s"
 msgstr ""
 
@@ -119,17 +124,17 @@ msgid "Current page:"
 msgstr "Huidige pagina:"
 
 #: lib/diff.php:1030 lib/diff.php:1048
-#, c-format
+#, php-format
 msgid "version %s"
 msgstr "versie %s"
 
 #: lib/diff.php:1032 lib/diff.php:1050
-#, c-format
+#, php-format
 msgid "last modified on %s"
 msgstr "laatste verandering op %s"
 
 #: lib/diff.php:1035 lib/diff.php:1053
-#, c-format
+#, php-format
 msgid "by %s"
 msgstr "door %s"
 
@@ -146,21 +151,21 @@ msgid "Versions are identical"
 msgstr "Versies zijn identiek"
 
 #: lib/diff.php:1074
-#, c-format
+#, php-format
 msgid "Diff of %s."
 msgstr "Diff van %s."
 
-#: lib/display.php:15
+#: lib/display.php:17
 msgid "FrontPage"
 msgstr "VoorPagina"
 
-#: lib/display.php:32 lib/editpage.php:56
-#, c-format
+#: lib/display.php:34 lib/editpage.php:56
+#, php-format
 msgid "Describe %s here."
 msgstr "Beschrijf %s hier."
 
 #: lib/editpage.php:19
-#, c-format
+#, php-format
 msgid "Copy of %s"
 msgstr "Kopie van %s"
 
@@ -178,12 +183,12 @@ msgid "Sorry for the inconvenience."
 msgstr "Excuses voor het ongemak."
 
 #: lib/editpage.php:35 lib/savepage.php:137
-#, c-format
+#, php-format
 msgid "Problem while editing %s"
 msgstr "Probleem tijdens veranderen %s"
 
 #: lib/fullsearch.php:10 lib/search.php:9
-#, c-format
+#, php-format
 msgid "Searching for \"%s\" ....."
 msgstr "Zoeken naar \"%s\" ..."
 
@@ -192,7 +197,7 @@ msgid "(You entered an empty search string)"
 msgstr ""
 
 #: lib/fullsearch.php:47
-#, c-format
+#, php-format
 msgid "%d matches found in %d pages."
 msgstr "%d keer gevonden in %d pagina's."
 
@@ -200,62 +205,62 @@ msgstr "%d keer gevonden in %d pagina's."
 msgid "Full Text Search Results"
 msgstr "Volledige tekst zoek resultaten"
 
-#: lib/msql.php:31 lib/mssql.php:41 lib/mysql.php:38
+#: lib/msql.php:31 lib/mssql.php:41 lib/mysql.php:40
 msgid "Cannot establish connection to database, giving up."
 msgstr "Kan verbinding naar data base niet tot stand brengen, geef op."
 
 #: lib/msql.php:33 lib/msql.php:39
-#, c-format
+#, php-format
 msgid "Error message: %s"
 msgstr "Foutboodschap: %s"
 
-#: lib/msql.php:37 lib/mssql.php:50 lib/mysql.php:44
-#, c-format
+#: lib/msql.php:37 lib/mssql.php:50 lib/mysql.php:46
+#, php-format
 msgid "Cannot open database %s, giving up."
 msgstr "Kan data base %s niet openen, geef op."
 
 #: lib/msql.php:212
-#, fuzzy, c-format
+#, php-format
 msgid "Insert/update to table 'wiki' failed: %s"
-msgstr "Insert/update gefaald: %s"
+msgstr "Insert/update 'wiki' gefaald: %s"
 
 #: lib/msql.php:223 lib/msql.php:300
-#, c-format
+#, php-format
 msgid "Delete on %s failed: %s"
 msgstr "Delete op %s gefaald: %s"
 
 #: lib/msql.php:241 lib/msql.php:316
-#, c-format
+#, php-format
 msgid "Insert into %s failed: %s"
 msgstr "Insert in %s gefaald: %s"
 
 #: lib/msql.php:290
-#, fuzzy, c-format
+#, php-format
 msgid "Insert/update into table 'archive' failed: %s"
-msgstr "Insert/update gefaald: %s"
+msgstr "Insert/update 'archive' gefaald: %s"
 
 #: lib/mssql.php:43 lib/mssql.php:52 lib/mssql.php:197
-#, fuzzy, c-format
+#, php-format
 msgid "MSSQL error: %s"
-msgstr "MySQL fout: %s"
+msgstr "MSSQL fout: %s"
 
 #: lib/mssql.php:158
-#, fuzzy, c-format
-msgid "Insert/Update failed: %s <br>\n"
+#, php-format
+msgid "Insert/Update failed: %s"
 msgstr "Insert/update gefaald: %s"
 
-#: lib/mssql.php:195 lib/mysql.php:163
-#, c-format
+#: lib/mssql.php:195 lib/mysql.php:167
+#, php-format
 msgid "Cannot delete '%s' from table '%s'"
 msgstr "Kan '%s' niet verwijderen uit tabel '%s'"
 
-#: lib/mysql.php:40 lib/mysql.php:46 lib/mysql.php:125 lib/mysql.php:165
-#, c-format
+#: lib/mysql.php:42 lib/mysql.php:48 lib/mysql.php:127 lib/mysql.php:169
+#, php-format
 msgid "MySQL error: %s"
 msgstr "MySQL fout: %s"
 
-#: lib/mysql.php:123
-#, c-format
+#: lib/mysql.php:125
+#, php-format
 msgid "Error writing page '%s'"
 msgstr "Fout bij schrijven pagina `%s'"
 
@@ -263,7 +268,7 @@ msgstr "Fout bij schrijven pagina `%s'"
 msgid "Enter a page name"
 msgstr "Geef de naam van een pagina"
 
-#: lib/pageinfo.php:10 lib/stdlib.php:116
+#: lib/pageinfo.php:10 lib/stdlib.php:197
 msgid "Go"
 msgstr "Ga"
 
@@ -276,7 +281,7 @@ msgid "PageInfo"
 msgstr "PaginaInfo"
 
 #: lib/pageinfo.php:36
-#, c-format
+#, php-format
 msgid "Page name '%s' is not in the database"
 msgstr "Pagina naam `%s' staat niet in de data base"
 
@@ -342,12 +347,12 @@ msgid "Press <b>Save</b> again."
 msgstr "Druk opnieuw op <b>Bewaar</b>."
 
 #: lib/savepage.php:115
-#, c-format
+#, php-format
 msgid "Problem while updating %s"
 msgstr "Probleem tijdens veranderen van %s"
 
 #: lib/savepage.php:160
-#, c-format
+#, php-format
 msgid "Thank you for editing %s."
 msgstr "Bedankt voor het veranderen van %s."
 
@@ -356,40 +361,39 @@ msgid "Your careful attention to detail is much appreciated."
 msgstr "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd."
 
 #: lib/search.php:30
-#, c-format
+#, php-format
 msgid "%d pages match your query."
 msgstr ""
 
 #: lib/search.php:33
-#, fuzzy
 msgid "Title Search Results"
-msgstr "Volledige tekst zoek resultaten"
+msgstr "Zoek resultaten"
 
 #: lib/setupwiki.php:21
-#, c-format
+#, php-format
 msgid "Inserting page %s, version %s from %s"
 msgstr "Voeg pagina %s toe, versie %s van %s"
 
-#: lib/stdlib.php:36
+#: lib/stdlib.php:38
 msgid "WikiFatalError"
 msgstr "WikiFataleFout"
 
-#: lib/stdlib.php:83 lib/stdlib.php:91
+#: lib/stdlib.php:164 lib/stdlib.php:172
 msgid "Search"
 msgstr "Zoek"
 
-#: lib/stdlib.php:388
-#, c-format
+#: lib/stdlib.php:469
+#, php-format
 msgid "%d best incoming links:"
 msgstr "%d beste inkomende koppelingen:"
 
-#: lib/stdlib.php:401
-#, c-format
+#: lib/stdlib.php:482
+#, php-format
 msgid "%d best outgoing links:"
 msgstr "%d beste uitgaande koppelingen:"
 
-#: lib/stdlib.php:415
-#, c-format
+#: lib/stdlib.php:496
+#, php-format
 msgid "%d most popular nearby:"
 msgstr "%d meest gevraagde in de buurt:"
 

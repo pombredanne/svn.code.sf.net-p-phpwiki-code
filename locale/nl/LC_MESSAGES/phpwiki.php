@@ -67,16 +67,16 @@ $locale["Error message: %s"] =
 $locale["Cannot open database %s, giving up."] =
    "Kan data base %s niet openen, geef op.";
 $locale["Insert/update to table 'wiki' failed: %s"] =
-   "Insert/update gefaald: %s";
+   "Insert/update 'wiki' gefaald: %s";
 $locale["Delete on %s failed: %s"] =
    "Delete op %s gefaald: %s";
 $locale["Insert into %s failed: %s"] =
    "Insert in %s gefaald: %s";
 $locale["Insert/update into table 'archive' failed: %s"] =
-   "Insert/update gefaald: %s";
+   "Insert/update 'archive' gefaald: %s";
 $locale["MSSQL error: %s"] =
-   "MySQL fout: %s";
-$locale["Insert/Update failed: %s <br>\n"] =
+   "MSSQL fout: %s";
+$locale["Insert/Update failed: %s"] =
    "Insert/update gefaald: %s";
 $locale["Cannot delete '%s' from table '%s'"] =
    "Kan '%s' niet verwijderen uit tabel '%s'";
@@ -121,7 +121,7 @@ $locale["Thank you for editing %s."] =
 $locale["Your careful attention to detail is much appreciated."] =
    "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd.";
 $locale["Title Search Results"] =
-   "Volledige tekst zoek resultaten";
+   "Zoek resultaten";
 $locale["Inserting page %s, version %s from %s"] =
    "Voeg pagina %s toe, versie %s van %s";
 $locale["WikiFatalError"] =

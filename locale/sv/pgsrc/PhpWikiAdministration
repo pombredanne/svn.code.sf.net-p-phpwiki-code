@@ -4,7 +4,7 @@
 
 ! ZIP-filer av databasen
 
- __[ZIP Snapshot | phpwiki:?zip=snapshot]__ : innehåller endast den senaste versionen
+ __[ZIP Snapshot | phpwiki:zip=snapshot]__ : innehåller endast den senaste versionen
 
  __[ZIP Dump | phpwiki:?zip=all]__ : innehåller alla arkiverade versioner
 
@@ -22,7 +22,7 @@ metadata finns som parametrar till Content-Type i brevhuvudet.
 
 ! Ladda / Dumpa serialiserade sidor
 
-Här kan du ladda eller dumpa sidor av din wiki i valfri katalog.
+Här kan du ladda eller dumpa sidor av din Wiki i valfri katalog.
 
 __Dump__
 
