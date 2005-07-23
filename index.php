@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: index.php,v 1.5.2.5 2005-07-23 11:13:03 rurban Exp $ -->
+<!-- $Id: index.php,v 1.5.2.6 2005-07-23 11:59:18 rurban Exp $ -->
 <?php
    /*
       The main page, i.e. the main loop.
