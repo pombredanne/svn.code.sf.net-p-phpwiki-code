@@ -1,3 +1,39 @@
+PhpWiki 1.2.8 register_globals=off fix:
+* fix and centralize broken register_globals=off logic.
+* update message catalog
+* replace mysql_pconnect by mysql_connect
+
+PhpWiki 1.2.7 backport cvs release-1_2-branch enhancements never 
+released with 1.2.4-1.2.6:
+* full xhtml conformity
+* split_pagename in title and header to help google
+* "INSTALL.Mac OS X" added from cvs
+* lib/zipfile.php: Content-Disposition: attachment
+* lib/config.php, lib/stdlib.php: support new USE_LINK_ICONS and AUTOSPLIT_WIKIWORDS, better i18n $!WikiNameRegexp
+* re-added images/* LINK_ICONS, pre-calculate DATA_PATH
+* locale/*: fix and update strings and templates esp. for german, 
+* index.php: urlparser extended to omit &start_debug=1 and other args
+* added minor_edit checkbox
+* print more meta tags: robots, favicon, language and PHPWIKI_VERSION
+
+PhpWiki 1.2.6 flatfile fixes and enhancement:
+* fixed !TitleSearch and Backlinks for flatfile.
+* enable MostPopular (hitcount storage) for flatfile
+
+PhpWiki 1.2.5 supports now register_globals=off, 
+* adds user/password to pgsql, 
+* fix zip and dumpserial on dba, dbm, msql and file,
+* and fixes a minor (un)lock issue, displaying the (un)locked page afterwards and not the FrontPage.
+
+PhpWiki 1.2.4 improves possible deadlocks in DBA, 
+* and fixes problems with DBA open failures.
+
+PhpWiki 1.2.3 just adds the RELATEDPAGES footer support to dba, 
+* adds remove to dba,
+* and fixes one minor aesthetic error on info w/o "Show the page source" 
+
+--[ReiniUrban|http://phpwiki.org/ReiniUrban]
+
 PhpWiki 1.2 is a huge advance over version 1.0:
 
 * Database support for MySQL, Postgresql, mSQL, flat file and the new dba_ library in PHP4 is included.
