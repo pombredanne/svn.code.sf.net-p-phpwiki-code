@@ -1,4 +1,4 @@
-<?php // $Id: admin.php,v 1.5.2.4 2005-07-23 11:13:03 rurban Exp $
+<?php // $Id: admin.php,v 1.5.2.5 2005-07-23 11:59:18 rurban Exp $
 
    function rcs_id($id) {}   // otherwise this gets in the way
 
