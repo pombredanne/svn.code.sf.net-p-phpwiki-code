@@ -6,11 +6,16 @@
 
    set_magic_quotes_runtime(0);
    error_reporting(E_ALL ^ E_NOTICE);
+   if (!ini_get('register_globals') or (ini_get('register_globals') == 'off')) {
+       import_request_variables('gps');
+       extract($HTTP_SERVER_VARS);
+   }
 
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.13 2002-02-08 15:46:30 dairiki Exp $'); 
+   rcs_id('$Id: config.php,v 1.24.2.14 2005-07-23 11:13:02 rurban Exp $'); 
+   define('PHPWIKI_VERSION', '1.2.8');
    // end essential internal stuff
 
 
@@ -44,8 +49,14 @@
    /////////////////////////////////////////////////////////////////////
 
    $WhichDatabase = 'default'; // use one of "dbm", "dba", "mysql",
-                           // "pgsql", "msql", "mssql", or "file"
+                               // "pgsql", "msql", "mssql", or "file"
 
+   if ($WhichDatabase == 'default' and function_exists("dba_open"))
+       $WhichDatabase = 'dba';
+   if ($WhichDatabase == 'default' and function_exists("dbmopen") 
+       and floor(phpversion()) == 3)
+       $WhichDatabase = 'dbm';
+       
    // DBM and DBA settings (default)
    if ($WhichDatabase == 'dbm' or $WhichDatabase == 'dba' or
        $WhichDatabase == 'default') {
@@ -58,13 +69,26 @@
       $WikiDB['hottopics'] = "$DBMdir/wikihottopicsdb";
       $WikiDB['hitcount']  = "$DBMdir/wikihitcountdb";
 
-      // this is the type of DBM file on your system. For most Linuxen
-      // 'gdbm' is fine; 'db2' is another common type. 'ndbm' appears
-      // on Solaris but won't work because it won't store pages larger
+      // This is the type of DBA handler for your system. For most Linuxen
+      // 'gdbm' is best; 'db2', 'db3' or 'db4' (BerkeleyDB) are another common types. 
+      // 'ndbm' appears on Solaris but won't work because it won't store pages larger
       // than 1000 bytes.
-      define("DBM_FILE_TYPE", 'gdbm');
+      // We do now some smart auto-detection, which will be the best.
+      // You can override it by defining DBM_FILE_TYPE earlier.
+      if (!defined("DBM_FILE_TYPE")) {
+          if (function_exists("dba_handlers")) { // since 4.3.0
+              foreach (array('gdbm','db4','db3','db2','sdbm','ndbm') as $handler) {
+                  if (in_array($handler, dba_handlers())) {
+                      define("DBM_FILE_TYPE", $handler);
+                      break;
+                  }
+              }
+          }
+      }
+      if (!defined("DBM_FILE_TYPE"))
+          define("DBM_FILE_TYPE", (substr(PHP_OS,0,3) == 'WIN') ? 'db3' : 'gdbm');
 
-      // try this many times if the dbm is unavailable
+      // time in seconds to try if the dbm is unavailable
       define("MAX_DBM_ATTEMPTS", 20);
 
       // for PHP3 use dbmlib, else use dbalib for PHP4
@@ -113,6 +137,8 @@
    } elseif ($WhichDatabase == 'pgsql') {
       $pg_dbhost    = "localhost";
       $pg_dbport    = "5432";
+      $pg_dbuser    = "";      // username as used in step 2 of INSTALL.mysql
+      $pg_dbpass    = "";      // password of above user (or leave blank if none)	
       $WikiDataBase  = "wiki"; // name of the database in Postgresql
       $WikiPageStore = "wiki";
       $ArchivePageStore = "archive";
@@ -139,11 +165,11 @@
       $DBdir = "/tmp/wiki";
       $WikiPageStore = "wiki";
       $ArchivePageStore = "archive";
-      $WikiDB['wiki']      = "$DBdir/pages";
-      $WikiDB['archive']   = "$DBdir/archive";
-      $WikiDB['wikilinks'] = "$DBdir/links";
-      $WikiDB['hottopics'] = "$DBdir/hottopics";
-      $WikiDB['hitcount']  = "$DBdir/hitcount";
+      $WikiDB[$WikiPageStore]      = "$DBdir/pages";
+      $WikiDB[$ArchivePageStore]   = "$DBdir/archive";
+      //$WikiDB['wikilinks'] = "$DBdir/links";
+      //$WikiDB['hottopics'] = "$DBdir/hottopics";
+      $WikiDB['hitcount']    = "$DBdir/hitcount";
       include "lib/db_filesystem.php";
 
    // MS SQLServer settings
@@ -176,7 +202,8 @@
 
    // this turns on url indicator icons, inserted before embedded links
    //define("USE_LINK_ICONS", 1);
-   //define("DATA_PATH", "/wiki");
+   if (defined('USE_LINK_ICONS') and !defined('DATA_PATH'))
+       define("DATA_PATH", dirname($SCRIPT_NAME));
 
    // date & time formats used to display modification times, etc.
    // formats are given as format strings to PHP date() function
@@ -202,7 +229,7 @@
 
    // Uncomment this to automatically split WikiWords by inserting spaces.
    // The default is to leave WordsSmashedTogetherLikeSo in the body text.
-   //define("autosplit_wikiwords", 1);
+   //define("AUTOSPLIT_WIKIWORDS", 1);
 
    // Perl regexp for WikiNames
    // (?<!..) & (?!...) used instead of '\b' because \b matches '_' as well
@@ -229,15 +256,16 @@
       }
    } else {
       // This putenv() fails when safe_mode is on.
-      // I think it is unnecessary. 
-      //putenv ("LANG=$LANG");
-      bindtextdomain ("phpwiki", "./locale");
-      textdomain ("phpwiki");
+      @putenv("LC_ALL=$LANG");
+      @putenv("LANG=$LANG");
+      @putenv("LANGUAGE=$LANG");
       if (!defined("LC_ALL")) {
          // Backwards compatibility (for PHP < 4.0.5)
          define("LC_ALL", "LC_ALL");
-      }   
+      }
       setlocale(LC_ALL, "$LANG");
+      bindtextdomain ("phpwiki", "./locale");
+      textdomain ("phpwiki");
    }
    // end of localization function
 
@@ -274,9 +302,13 @@
 
 
    //////////////////////////////////////////////////////////////////////
-   // you shouldn't have to edit anyting below this line
+   // you shouldn't have to edit anything below this line
    function compute_default_scripturl() {
-      global $SERVER_PORT, $SERVER_NAME, $SCRIPT_NAME, $HTTPS;
+      global $HTTP_SERVER_VARS, $SERVER_PORT, $SERVER_NAME, $SCRIPT_NAME, $HTTPS;
+      if (!ini_get('register_globals') or (ini_get('register_globals') == 'off')) {
+          extract($HTTP_SERVER_VARS);
+      }
+      
       if (!empty($HTTPS) && $HTTPS != 'off') {
          $proto = 'https';
          $dflt_port = 443;
