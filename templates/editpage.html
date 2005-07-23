@@ -1,0 +1,54 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="language" content="en" />
+<meta name="PHPWIKI_VERSION" content="###PHPWIKI_VERSION###" />
+<link rel="shortcut icon" href="###DATA_PATH###/images/favicon.ico" />
+<title>###PAGE###</title>
+</head>
+
+<body>
+
+<form method="post" action="###SCRIPTURL###">
+
+<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border="0" alt="[phpwiki]" width="50" height="50"></a>
+Edit ###PAGE###
+<input type="submit" value=" Save "></h1>
+
+<textarea name="content" rows="22" cols="80" wrap="virtual">###CONTENT###</textarea>
+<br />
+<input type="checkbox" name="minor_edit" value="yes"
+###IF MINOR_EDIT### checked
+>
+This is a minor change, don't archive old version.
+<br />
+<input type="checkbox" name="convert" value="tabs" >
+I can't type tabs.
+Please <a href="###SCRIPTURL###?ConvertSpacesToTabs">ConvertSpacesToTabs</a>
+for me when I save.
+<p /><a href="###SCRIPTURL###?GoodStyle">GoodStyle</a> tips for editing.
+
+<br />
+<a href="###SCRIPTURL###?links=###PAGEURL###">EditLinks</a> to other web servers.
+
+###IF COPY###<br /><a href="###SCRIPTURL###?copy=###PAGEURL###">EditCopy</a> from previous author
+
+<hr noshade>
+<small>
+<b>Emphasis:</b> '' for italics, ''' for bold, ''''' for both
+<br /><b>Lists:</b> tab-* for bullet lists, tab-# for numbered lists, tab-Term:-tab for definition lists
+<br /><b>References:</b> JoinCapitalizedWords or use square brackets for a [page link] or URL [http://cool.wiki.int/].
+<br /><b>References:</b> Use [1],[2],[3],... and EditLinks. Avoid linking with "!": !DoNotHyperlink, name links like [text | URL]
+<br /><b>Misc:</b>"!", "!!", "!!!" make headings,
+"%%%" makes a linebreak, "- - - -" makes a horizontal rule, escape "[" with "[["
+<br />more on
+<a href="###SCRIPTURL###?TextFormattingRules"><b>TextFormattingRules</b></a>
+</small>
+
+<input type="hidden" name="action" value="save" />
+<input type="hidden" name="post" value="###PAGE###" />
+<input type="hidden" name="editversion" value="###VERSION###" />
+</form>
+</body>
+</html>

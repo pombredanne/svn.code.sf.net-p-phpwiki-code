@@ -1,0 +1,54 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="language" content="de" />
+<meta name="PHPWIKI_VERSION" content="###PHPWIKI_VERSION###" />
+<link rel="shortcut icon" href="###DATA_PATH###/images/favicon.ico" />
+<title>###PAGE###</title>
+</head>
+
+<body>
+
+<form method="POST" action="###SCRIPTURL###">
+
+<h1><a href="###SCRIPTURL###"><img src="###LOGO###" border="0" alt="[phpwiki]" width="50" height="50"></a>
+###PAGE### editieren
+<input type="submit" value=" Speichern "></h1>
+
+<textarea name="content" rows="22" cols="80" wrap="virtual">###CONTENT###</textarea>
+<br />
+<input type="checkbox" name="minor_edit" value="yes"
+###IF MINOR_EDIT### checked
+>
+Das ist eine geringfügige Änderung, archiviere die alte Version nicht.
+<br />
+<input type="checkbox" name="convert" value="tabs" >
+Ich kann keine Tabulatoren verwenden.
+Bitte <a href="###SCRIPTURL###?KonvertiereLeerzeichenZuTabs">KonvertiereLeerzeichenZuTabs</a>
+für mich, wenn ich speichere.
+<p /><a href="###SCRIPTURL###?GuterStil">GuterStil</a>: Tips fürs Editieren.
+
+<br />
+<a href="###SCRIPTURL###?links=###PAGEURL###">EditiereVerweise</a> zu anderen Webseiten.
+
+###IF COPY###<br /><a href="###SCRIPTURL###?copy=###PAGEURL###">EditiereArchivSeite</a> vom vorhergenden Autor.
+
+<hr noshade>
+<small>
+<b>Hervorhebung:</b> '' für Kursiv, ''' für Fett, ''''' für Fett+Kursiv.
+<br /><b>Listen:</b> tab-* für normale Listen, tab-# für numerierte Listen, tab-Term:-tab für Definitionslisten.
+<br /><b>Verweise:</b> GroßbuchstabenZusammenschreiben oder in eckigen Klammern für eine [Seiten Link] oder URL [http://cool.wiki.int/].
+<br /><b>Verweise:</b> Verwende [1],[2],[3],... und EditLinks. Vermeide Links mit "!": !NichtVerlinken, Benenne Links so [text | URL]
+<br /><b>Misc:</b>"!", "!!", "!!!" für Überschriften,
+"%%%" für Zeilenvorschubzeichen, "- - - -" für eine Linie, das einfache "[" Zeichen als "[["
+<br />Weiters siehe
+<a href="###SCRIPTURL###?TextFormatierungsRegeln"><b>TextFormatierungsRegeln</b></a>
+</small>
+
+<input type="hidden" name="action" value="save">
+<input type="hidden" name="post" value="###PAGE###">
+<input type="hidden" name="editversion" value="###VERSION###">
+</form>
+</body>
+</html>
