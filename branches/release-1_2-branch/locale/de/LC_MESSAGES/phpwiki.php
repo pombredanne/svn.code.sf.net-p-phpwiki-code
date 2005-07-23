@@ -1,5 +1,7 @@
 <?php
 
+$locale["Set the administrator account and password first.\n"] =
+   "Setze zuerst den Administrator Loginname und Passwort.\n";
 $locale["You entered an invalid login or password."] =
    "Du hast ein ungültiges Login oder Passwort eingegeben.";
 $locale["You are about to remove '%s' permanently!"] =
@@ -24,6 +26,14 @@ $locale["templates/message.html"] =
    "locale/de/templates/message.html";
 $locale["./pgsrc"] =
    "locale/de/pgsrc";
+$locale["'%s': corrupt file"] =
+   "'%s': korrupte Datei";
+$locale["%s: bad data<br>\n"] =
+   "%s: falsche Daten<br>\n";
+$locale["%s: Bad filename in database<br>\n"] =
+   "%s: Ungültiger Dateiname in Datenbank<br>\n";
+$locale["WikiDiff::_check: failed"] =
+   "WikiDiff::_check: Fehler";
 $locale["Current page:"] =
    "Aktuelle Seite:";
 $locale["version %s"] =
@@ -56,6 +66,8 @@ $locale["Problem while editing %s"] =
    "Problem während dem Editieren von %s";
 $locale["Searching for \"%s\" ....."] =
    "Suche nach \"%s\" .....";
+$locale["(You entered an empty search string)"] =
+   "(Sie haben einen leeren Suchtext eingegeben)";
 $locale["%d matches found in %d pages."] =
    "%d Treffer in %d Seiten.";
 $locale["Full Text Search Results"] =
@@ -67,16 +79,16 @@ $locale["Error message: %s"] =
 $locale["Cannot open database %s, giving up."] =
    "Kann Datenbank %s nicht öffnen - Abbruch.";
 $locale["Insert/update to table 'wiki' failed: %s"] =
-   "Einfügen/Verändern fehlgeschlagen: %s";
+   "Einfügen/Verändern in Tabelle 'wiki' fehlgeschlagen: %s";
 $locale["Delete on %s failed: %s"] =
    "Löschen in %s fehlgeschlagen: %s";
 $locale["Insert into %s failed: %s"] =
    "Einfügen in %s fehlgeschlagen: %s";
 $locale["Insert/update into table 'archive' failed: %s"] =
-   "Einfügen/Verändern fehlgeschlagen: %s";
+   "Einfügen/Verändern in Tabelle 'archive' fehlgeschlagen: %s";
 $locale["MSSQL error: %s"] =
-   "MySQL Fehler: %s";
-$locale["Insert/Update failed: %s <br>\n"] =
+   "MSSQL Fehler: %s";
+$locale["Insert/Update failed: %s"] =
    "Einfügen/Verändern fehlgeschlagen: %s";
 $locale["Cannot delete '%s' from table '%s'"] =
    "Kann nicht '%s' aus Tabelle '%s' löschen";
@@ -95,9 +107,9 @@ $locale["PageInfo"] =
 $locale["Page name '%s' is not in the database"] =
    "Seite '%s' ist nicht in der Datenbank";
 $locale["Current version"] =
-   "Aktuelle Seite:";
+   "Aktuelle Version";
 $locale["Archived version"] =
-   "Archivierte Seite:";
+   "Archivierte Version";
 $locale["RecentChanges"] =
    "FrischeSeiten";
 $locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
@@ -115,7 +127,7 @@ $locale["Make changes to the file again. Paste your additions from the clipboard
 $locale["Press <b>Save</b> again."] =
    "Drücke nochmal <b>Speichern</b>";
 $locale["Problem while updating %s"] =
-   "Problem während dem Editieren von %s";
+   "Problem während dem Speichern von %s";
 $locale["Thank you for editing %s."] =
    "Danke für das Editieren von %s.";
 $locale["Your careful attention to detail is much appreciated."] =

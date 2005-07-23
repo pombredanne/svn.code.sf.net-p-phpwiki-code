@@ -2,96 +2,104 @@
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Jon Åslund <jooon@hem.passagen.se>, 2001.
 #
+# Don't change the format of the first three lines,
+# the TP robot wants them like this (I hope).
+# 
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: phpwiki 1.2.2\n"
-"POT-Creation-Date: 2001-11-28 10:50-0800\n"
+"Project-Id-Version: phpwiki 1.2.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-30 22:23+0100\n"
 "PO-Revision-Date: 2001-11-26 01:58+0200\n"
 "Last-Translator: Jon Åslund <jooon@hem.passagen.se>\n"
-"Language-Team: \n"
+"Language-Team: phpwiki-talk@lists.sf.net\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: admin.php:17
+msgid "Set the administrator account and password first.\n"
+msgstr ""
 
 #: admin.php:26
 msgid "You entered an invalid login or password."
 msgstr "Du har angivit ett felaktigt användarnamn eller lösenord."
 
-#: admin.php:47
-#, c-format
+#: admin.php:48
+#, php-format
 msgid "You are about to remove '%s' permanently!"
 msgstr "Du kommer att ta bort \"%s\" permanent!"
 
-#: admin.php:50
-#, c-format
+#: admin.php:51
+#, php-format
 msgid "Click %shere%s to remove the page now."
 msgstr "Klicka %shär%s för att ta bort sidan nu."
 
-#: admin.php:53
+#: admin.php:54
 msgid "Otherwise press the \"Back\" button of your browser."
 msgstr "Klicka annars på backaknappen i din webbläsare."
 
-#: admin.php:55
+#: admin.php:56
 msgid "Function not yet implemented."
 msgstr "Funktionen är ännu inte implementerad."
 
-#: admin.php:57 admin.php:65
+#: admin.php:58 admin.php:66
 msgid "Remove page"
 msgstr "Ta bort sida"
 
-#: admin.php:63
-#, fuzzy, c-format
+#: admin.php:64
+#, php-format
 msgid "Removed page '%s' succesfully."
-msgstr "Tog bort sidan \"%s\"."
+msgstr "Tog bort sidan '%s'."
 
 #: lib/backlinks.php:11 lib/backlinks.php:19
-#, c-format
+#, php-format
 msgid "Pages which link to %s"
 msgstr "Sidor som länkar till %s"
 
 #: lib/backlinks.php:32
-#, c-format
+#, php-format
 msgid "%d pages link to %s."
 msgstr "%d sidor länkar till %s."
 
-#: lib/config.php:238
+#: lib/config.php:274
 msgid "templates/browse.html"
 msgstr "locale/sv/templates/browse.html"
 
-#: lib/config.php:239
+#: lib/config.php:275
 msgid "templates/editpage.html"
 msgstr "locale/sv/templates/editpage.html"
 
-#: lib/config.php:240
+#: lib/config.php:276
 msgid "templates/editlinks.html"
 msgstr "locale/sv/templates/editlinks.html"
 
-#: lib/config.php:241
+#: lib/config.php:277
 msgid "templates/message.html"
 msgstr "locale/sv/templates/message.html"
 
-#: lib/config.php:257
+#: lib/config.php:293
 msgid "./pgsrc"
 msgstr "locale/sv/pgsrc"
 
 #: lib/db_filesystem.php:76
-#, c-format
+#, php-format
 msgid "'%s': corrupt file"
 msgstr "\"%s\": trasig fil"
 
-#: lib/db_filesystem.php:225
-#, c-format
+#: lib/db_filesystem.php:221 lib/db_filesystem.php:251
+#, php-format
 msgid "%s: bad data<br>\n"
 msgstr "%s: felaktig data<br>\n"
 
-#: lib/db_filesystem.php:317
-#, c-format
+#: lib/db_filesystem.php:301
+#, php-format
 msgid "%s: Bad filename in database<br>\n"
 msgstr "%s: felaktigt filnamn i databasen<br>\n"
 
 #: lib/diff.php:711
-#, c-format
+#, php-format
 msgid "WikiDiff::apply: line count mismatch: %s != %s"
 msgstr "WikiDiff::apply: radantalet stämmer inte: %s != %s"
 
@@ -104,7 +112,7 @@ msgid "WikiDiff::_check: edit sequence is non-optimal"
 msgstr "WikiDiff::_check: ändringssekvensen är ej optimal"
 
 #: lib/diff.php:785
-#, c-format
+#, php-format
 msgid "WikiDiff Okay: LCS = %s"
 msgstr "WikiDiff Ok: LCS = %s"
 
@@ -113,17 +121,17 @@ msgid "Current page:"
 msgstr "Nuvarande sida:"
 
 #: lib/diff.php:1030 lib/diff.php:1048
-#, c-format
+#, php-format
 msgid "version %s"
 msgstr "version %s"
 
 #: lib/diff.php:1032 lib/diff.php:1050
-#, c-format
+#, php-format
 msgid "last modified on %s"
 msgstr "senast ändrad %s"
 
 #: lib/diff.php:1035 lib/diff.php:1053
-#, c-format
+#, php-format
 msgid "by %s"
 msgstr "av %s"
 
@@ -140,21 +148,21 @@ msgid "Versions are identical"
 msgstr "Versionerna är identiska"
 
 #: lib/diff.php:1074
-#, c-format
+#, php-format
 msgid "Diff of %s."
 msgstr "Diff av %s."
 
-#: lib/display.php:15
+#: lib/display.php:17
 msgid "FrontPage"
 msgstr "Framsida"
 
-#: lib/display.php:32 lib/editpage.php:56
-#, c-format
+#: lib/display.php:34 lib/editpage.php:56
+#, php-format
 msgid "Describe %s here."
 msgstr "Beskriv %s här."
 
 #: lib/editpage.php:19
-#, c-format
+#, php-format
 msgid "Copy of %s"
 msgstr "Kopia av %s"
 
@@ -171,12 +179,12 @@ msgid "Sorry for the inconvenience."
 msgstr "Ledsen för allt besvär."
 
 #: lib/editpage.php:35 lib/savepage.php:137
-#, c-format
+#, php-format
 msgid "Problem while editing %s"
 msgstr "Kan ej redigera %s"
 
 #: lib/fullsearch.php:10 lib/search.php:9
-#, c-format
+#, php-format
 msgid "Searching for \"%s\" ....."
 msgstr "Söker efter \"%s\" ....."
 
@@ -185,7 +193,7 @@ msgid "(You entered an empty search string)"
 msgstr "(Du har angivit en tom söksträng)"
 
 #: lib/fullsearch.php:47
-#, c-format
+#, php-format
 msgid "%d matches found in %d pages."
 msgstr "%d träffar funna på %d sidor."
 
@@ -193,62 +201,62 @@ msgstr "%d träffar funna på %d sidor."
 msgid "Full Text Search Results"
 msgstr "Sökresultat för fulltextsökning"
 
-#: lib/msql.php:31 lib/mssql.php:41 lib/mysql.php:38
+#: lib/msql.php:31 lib/mssql.php:41 lib/mysql.php:40
 msgid "Cannot establish connection to database, giving up."
 msgstr "Ger upp, kan ej skapa anslutning till databasen."
 
 #: lib/msql.php:33 lib/msql.php:39
-#, c-format
+#, php-format
 msgid "Error message: %s"
 msgstr "Felmeddelande: %s"
 
-#: lib/msql.php:37 lib/mssql.php:50 lib/mysql.php:44
-#, c-format
+#: lib/msql.php:37 lib/mssql.php:50 lib/mysql.php:46
+#, php-format
 msgid "Cannot open database %s, giving up."
 msgstr "Ger upp, kan ej öppna databasen %s."
 
 #: lib/msql.php:212
-#, fuzzy, c-format
+#, php-format
 msgid "Insert/update to table 'wiki' failed: %s"
-msgstr "Insättning/uppdatering i wikitabellen misslyckades: %s"
+msgstr "Insättning/uppdatering i wikitabellen 'wiki' misslyckades: %s"
 
 #: lib/msql.php:223 lib/msql.php:300
-#, c-format
+#, php-format
 msgid "Delete on %s failed: %s"
 msgstr "Borttagning på %s misslyckades: %s"
 
 #: lib/msql.php:241 lib/msql.php:316
-#, c-format
+#, php-format
 msgid "Insert into %s failed: %s"
 msgstr "Insättning till %s misslyckades: %s"
 
 #: lib/msql.php:290
-#, fuzzy, c-format
+#, php-format
 msgid "Insert/update into table 'archive' failed: %s"
-msgstr "Insättning/uppdatering misslyckades: %s"
+msgstr "Insättning/uppdatering  i wikitabellen 'archive' misslyckades: %s"
 
 #: lib/mssql.php:43 lib/mssql.php:52 lib/mssql.php:197
-#, fuzzy, c-format
+#, php-format
 msgid "MSSQL error: %s"
 msgstr "MSSQL-fel: %s"
 
 #: lib/mssql.php:158
-#, fuzzy, c-format
-msgid "Insert/Update failed: %s <br>\n"
-msgstr "Insättning/uppdatering misslyckades: %s <br>\n"
+#, php-format
+msgid "Insert/Update failed: %s"
+msgstr "Insättning/uppdatering misslyckades: %s"
 
-#: lib/mssql.php:195 lib/mysql.php:163
-#, c-format
+#: lib/mssql.php:195 lib/mysql.php:167
+#, php-format
 msgid "Cannot delete '%s' from table '%s'"
 msgstr "Kan ej ta bort \"%s\" från tabellen \"%s\""
 
-#: lib/mysql.php:40 lib/mysql.php:46 lib/mysql.php:125 lib/mysql.php:165
-#, c-format
+#: lib/mysql.php:42 lib/mysql.php:48 lib/mysql.php:127 lib/mysql.php:169
+#, php-format
 msgid "MySQL error: %s"
 msgstr "MySQL-fel: %s"
 
-#: lib/mysql.php:123
-#, c-format
+#: lib/mysql.php:125
+#, php-format
 msgid "Error writing page '%s'"
 msgstr "Kunde inte spara sidan \"%s\""
 
@@ -256,7 +264,7 @@ msgstr "Kunde inte spara sidan \"%s\""
 msgid "Enter a page name"
 msgstr "Ange ett sidnamn"
 
-#: lib/pageinfo.php:10 lib/stdlib.php:116
+#: lib/pageinfo.php:10 lib/stdlib.php:197
 msgid "Go"
 msgstr "\"Gå till sidan\""
 
@@ -269,7 +277,7 @@ msgid "PageInfo"
 msgstr "Sidinformation för"
 
 #: lib/pageinfo.php:36
-#, c-format
+#, php-format
 msgid "Page name '%s' is not in the database"
 msgstr "Sidan \"%s\" finns inte i databasen"
 
@@ -334,12 +342,12 @@ msgid "Press <b>Save</b> again."
 msgstr "Klicka på <b>Spara</b> igen."
 
 #: lib/savepage.php:115
-#, c-format
+#, php-format
 msgid "Problem while updating %s"
 msgstr "Kan ej uppdatera %s"
 
 #: lib/savepage.php:160
-#, c-format
+#, php-format
 msgid "Thank you for editing %s."
 msgstr "Tack för att du redigerade %s."
 
@@ -348,40 +356,39 @@ msgid "Your careful attention to detail is much appreciated."
 msgstr "Din uppmärksamhet för detaljer är mycket uppskattad."
 
 #: lib/search.php:30
-#, c-format
+#, php-format
 msgid "%d pages match your query."
 msgstr "%d sidor matchar din fråga."
 
 #: lib/search.php:33
-#, fuzzy
 msgid "Title Search Results"
-msgstr "Sökresultat för fulltextsökning"
+msgstr "Sökresultat"
 
 #: lib/setupwiki.php:21
-#, c-format
+#, php-format
 msgid "Inserting page %s, version %s from %s"
 msgstr "Sätter in sidan %s, version %s från %s"
 
-#: lib/stdlib.php:36
+#: lib/stdlib.php:38
 msgid "WikiFatalError"
 msgstr "WikiFatalError"
 
-#: lib/stdlib.php:83 lib/stdlib.php:91
+#: lib/stdlib.php:164 lib/stdlib.php:172
 msgid "Search"
 msgstr "Sök"
 
-#: lib/stdlib.php:388
-#, c-format
+#: lib/stdlib.php:469
+#, php-format
 msgid "%d best incoming links:"
 msgstr "De %d mest använda ingående länkarna:"
 
-#: lib/stdlib.php:401
-#, c-format
+#: lib/stdlib.php:482
+#, php-format
 msgid "%d best outgoing links:"
 msgstr "De %d mest använda utgående länkarna:"
 
-#: lib/stdlib.php:415
-#, c-format
+#: lib/stdlib.php:496
+#, php-format
 msgid "%d most popular nearby:"
 msgstr "De %d mest populära grannarna:"
 

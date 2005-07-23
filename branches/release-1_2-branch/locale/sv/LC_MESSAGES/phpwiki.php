@@ -13,7 +13,7 @@ $locale["Function not yet implemented."] =
 $locale["Remove page"] =
    "Ta bort sida";
 $locale["Removed page '%s' succesfully."] =
-   "Tog bort sidan \"%s\".";
+   "Tog bort sidan '%s'.";
 $locale["Pages which link to %s"] =
    "Sidor som länkar till %s";
 $locale["%d pages link to %s."] =
@@ -87,17 +87,17 @@ $locale["Error message: %s"] =
 $locale["Cannot open database %s, giving up."] =
    "Ger upp, kan ej öppna databasen %s.";
 $locale["Insert/update to table 'wiki' failed: %s"] =
-   "Insättning/uppdatering i wikitabellen misslyckades: %s";
+   "Insättning/uppdatering i wikitabellen 'wiki' misslyckades: %s";
 $locale["Delete on %s failed: %s"] =
    "Borttagning på %s misslyckades: %s";
 $locale["Insert into %s failed: %s"] =
    "Insättning till %s misslyckades: %s";
 $locale["Insert/update into table 'archive' failed: %s"] =
-   "Insättning/uppdatering misslyckades: %s";
+   "Insättning/uppdatering  i wikitabellen 'archive' misslyckades: %s";
 $locale["MSSQL error: %s"] =
    "MSSQL-fel: %s";
-$locale["Insert/Update failed: %s <br>\n"] =
-   "Insättning/uppdatering misslyckades: %s <br>\n";
+$locale["Insert/Update failed: %s"] =
+   "Insättning/uppdatering misslyckades: %s";
 $locale["Cannot delete '%s' from table '%s'"] =
    "Kan ej ta bort \"%s\" från tabellen \"%s\"";
 $locale["MySQL error: %s"] =
@@ -143,7 +143,7 @@ $locale["Your careful attention to detail is much appreciated."] =
 $locale["%d pages match your query."] =
    "%d sidor matchar din fråga.";
 $locale["Title Search Results"] =
-   "Sökresultat för fulltextsökning";
+   "Sökresultat";
 $locale["Inserting page %s, version %s from %s"] =
    "Sätter in sidan %s, version %s från %s";
 $locale["WikiFatalError"] =

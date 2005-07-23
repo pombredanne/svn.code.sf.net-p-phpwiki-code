@@ -39,8 +39,8 @@ Detta är inte det
 
 ! Markering
 
-* Använd dubbla apostrofer ('____') för vanlig betoning (vanligtvis ''lutande stil'')
-* Använd dubbla understreck (_''''_) för stark betoning (vanligtvis __fet stil__)
+* Använd dubbla apostrofer ('') för vanlig betoning (vanligtvis ''lutande stil'')
+* Använd dubbla understreck (__) för stark betoning (vanligtvis __fet stil__)
 * Blanda dem om du vill: __''fet lutande stil''__
 * ''Markering'' kan användas ''flera'' gånger på en rad, men ''kan inte'' användas över radgränser:
 
@@ -49,7 +49,7 @@ kommer inte att fungera''
 
 ! Referenser
 
-* Hyperlänkar till andra sidor inom wikin görs genom att sätta sidnamnet innanför hakparenteser: [detta är en länk] eller genom att [AnvändaWikiOrd] (föredras)
+* Hyperlänkar till andra sidor inom Wikin görs genom att sätta sidnamnet innanför hakparenteser: [detta är en länk] eller genom att [AnvändaWikiOrd] (föredras)
 * Hyperlänkar till externa sidor görs så här: [http://www.wcsb.org/]
 * Du kan namnge länkarna genom att skriva ett namn, ett lodrätt streck och sedan hyperlänken eller sidnamnet: [PhpWiki-hemsidan | http://phpwiki.sourceforge.net/] - [framsidan | Framsida]
 * Du kan undvika att länkar skapas genom att sätta "!" framför ordet som du inte vill vara en länk, t.ex. !InteEnWikilänk, !http://inte.heller.en.länk/
