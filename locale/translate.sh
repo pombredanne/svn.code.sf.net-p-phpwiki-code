@@ -18,7 +18,7 @@ fi
 
 ALL_LINGUAS="nl es de sv it"
 
-xgettext -L C++ -o locale/po/phpwiki.pot admin.php lib/*php
+xgettext -L PHP --from-code=iso-8859-1 -o locale/po/phpwiki.pot admin.php lib/*php
 podir=locale/po
 for i in $ALL_LINGUAS; do
 	po=$podir/$i.po
