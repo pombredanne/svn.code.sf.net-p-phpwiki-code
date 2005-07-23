@@ -19,6 +19,8 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ;[ Aredridel Niothke | mailto:aredridel@nbtsc.org ] :
 ;: has started a flat file database for Phpwiki.
 
+;[ Reini Urban | http://phpwiki.sf.net/phpwiki/ReiniUrban ] :
+;: dba work since 1.2.2. Releases since 1.2.3
 
 ! Localization
 
@@ -61,7 +63,8 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ;[Jeremie Kass | mailto:jeremie@umich.edu ] :
 ;: contributed a patch so the logo is decided in the templates instead of being hardcoded.
 
-
+;[Jose Vina | mailto:jose@svi.nl ] :
+;: fixed MostPopular sorting for dba and dbm
 
 ------------
 

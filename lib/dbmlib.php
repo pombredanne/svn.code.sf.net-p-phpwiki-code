@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbmlib.php,v 1.7.2.7 2005-01-07 14:23:04 rurban Exp $');
+   rcs_id('$Id: dbmlib.php,v 1.7.2.8 2005-07-23 11:56:36 rurban Exp $');
 
    /*
       Database functions:
@@ -325,7 +325,7 @@
 	    $res[$pagename] = (int) $score;	// add page to $res	    
 	    reset($oldres);
 	    while(list($pname, $pscore) = each($oldres)) {
-	       if (!$removed and ($pscore = $lowest))
+	       if (!$removed and ($pscore == $lowest))
 	          $removed = 1;		// don't copy this entry
 	       else {
 	          $res[$pname] = (int) $pscore;
