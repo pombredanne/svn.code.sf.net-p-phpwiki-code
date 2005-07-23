@@ -1,0 +1,398 @@
+# nl.po -- PhpWiki's dutch language file
+# Copyright (C) 2000 Jan Nieuwenhuizen <janneke@gnu.org>.
+# Jan Nieuwenhuizen <janneke@gnu.org>, 2000.
+#
+#
+# Don't change the format of the first three lines,
+# the TP robot wants them like this (I hope).
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: phpwiki 1.2.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-07 15:09+0100\n"
+"PO-Revision-Date: 2000-09-30 02:23+0200\n"
+"Last-Translator: Jan Nieuwenhuizen <janneke@gnu.org>\n"
+"Language-Team: Dutch <nl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Date: 1998-05-26 11:26:28+0200\n"
+"From:  <janneke@gnu.org>\n"
+
+#: admin.php:32
+msgid "You entered an invalid login or password."
+msgstr "Je hebt een ongeldige gebruikersnaam of wachtwoord ingevoerd."
+
+#: admin.php:54
+#, c-format
+msgid "You are about to remove '%s' permanently!"
+msgstr "Je staat op het punt '%s' voorgoed te verwijderen!"
+
+#: admin.php:57
+#, c-format
+msgid "Click %shere%s to remove the page now."
+msgstr "Klik %shier%s om de pagina nu te verwijderen."
+
+#: admin.php:60
+msgid "Otherwise press the \"Back\" button of your browser."
+msgstr "Druk anders op de \"Terug\" knop van je bladeraar."
+
+#: admin.php:62
+msgid "Function not yet implemented."
+msgstr "Functie nog niet geïmplementeerd."
+
+#: admin.php:64 admin.php:72
+msgid "Remove page"
+msgstr "Verwijder pagina"
+
+#: admin.php:70
+#, c-format
+msgid "Removed page '%s' succesfully."
+msgstr "Pagina '%s' verwijderd."
+
+#: lib/backlinks.php:11 lib/backlinks.php:19
+#, c-format
+msgid "Pages which link to %s"
+msgstr ""
+
+#: lib/backlinks.php:32
+#, c-format
+msgid "%d pages link to %s."
+msgstr ""
+
+#: lib/config.php:273
+msgid "templates/browse.html"
+msgstr "locale/nl/templates/browse.html"
+
+#: lib/config.php:274
+msgid "templates/editpage.html"
+msgstr "locale/nl/templates/editpage.html"
+
+#: lib/config.php:275
+msgid "templates/editlinks.html"
+msgstr "locale/nl/templates/editlinks.html"
+
+#: lib/config.php:276
+msgid "templates/message.html"
+msgstr "locale/nl/templates/message.html"
+
+#: lib/config.php:292
+msgid "./pgsrc"
+msgstr "locale/nl/pgsrc"
+
+#: lib/db_filesystem.php:76
+#, c-format
+msgid "'%s': corrupt file"
+msgstr ""
+
+#: lib/db_filesystem.php:221 lib/db_filesystem.php:251
+#, c-format
+msgid "%s: bad data<br>\n"
+msgstr ""
+
+#: lib/db_filesystem.php:301
+#, c-format
+msgid "%s: Bad filename in database<br>\n"
+msgstr ""
+
+#: lib/diff.php:711
+#, c-format
+msgid "WikiDiff::apply: line count mismatch: %s != %s"
+msgstr ""
+
+#: lib/diff.php:771
+msgid "WikiDiff::_check: failed"
+msgstr ""
+
+#: lib/diff.php:781
+msgid "WikiDiff::_check: edit sequence is non-optimal"
+msgstr ""
+
+#: lib/diff.php:785
+#, c-format
+msgid "WikiDiff Okay: LCS = %s"
+msgstr ""
+
+#: lib/diff.php:1026
+msgid "Current page:"
+msgstr "Huidige pagina:"
+
+#: lib/diff.php:1030 lib/diff.php:1048
+#, c-format
+msgid "version %s"
+msgstr "versie %s"
+
+#: lib/diff.php:1032 lib/diff.php:1050
+#, c-format
+msgid "last modified on %s"
+msgstr "laatste verandering op %s"
+
+#: lib/diff.php:1035 lib/diff.php:1053
+#, c-format
+msgid "by %s"
+msgstr "door %s"
+
+#: lib/diff.php:1039 lib/diff.php:1057
+msgid "None"
+msgstr "Geen"
+
+#: lib/diff.php:1044
+msgid "Archived page:"
+msgstr "Gearchiveerde pagina:"
+
+#: lib/diff.php:1066
+msgid "Versions are identical"
+msgstr "Versies zijn identiek"
+
+#: lib/diff.php:1074
+#, c-format
+msgid "Diff of %s."
+msgstr "Diff van %s."
+
+#: lib/display.php:17
+msgid "FrontPage"
+msgstr "VoorPagina"
+
+#: lib/display.php:34 lib/editpage.php:56
+#, c-format
+msgid "Describe %s here."
+msgstr "Beschrijf %s hier."
+
+#: lib/editpage.php:19
+#, c-format
+msgid "Copy of %s"
+msgstr "Kopie van %s"
+
+#: lib/editpage.php:23
+msgid "No page name passed into editpage!"
+msgstr "Geen paginanaam doorgegeven aan veranderpagina"
+
+#: lib/editpage.php:31 lib/savepage.php:135
+msgid "This page has been locked by the administrator and cannot be edited."
+msgstr ""
+"Deze pagina is afgesloten door de beheerder en kan niet veranderd worden."
+
+#: lib/editpage.php:33 lib/savepage.php:111 lib/savepage.php:136
+msgid "Sorry for the inconvenience."
+msgstr "Excuses voor het ongemak."
+
+#: lib/editpage.php:35 lib/savepage.php:137
+#, c-format
+msgid "Problem while editing %s"
+msgstr "Probleem tijdens veranderen %s"
+
+#: lib/fullsearch.php:10 lib/search.php:9
+#, c-format
+msgid "Searching for \"%s\" ....."
+msgstr "Zoeken naar \"%s\" ..."
+
+#: lib/fullsearch.php:43 lib/search.php:26
+msgid "(You entered an empty search string)"
+msgstr ""
+
+#: lib/fullsearch.php:47
+#, c-format
+msgid "%d matches found in %d pages."
+msgstr "%d keer gevonden in %d pagina's."
+
+#: lib/fullsearch.php:51
+msgid "Full Text Search Results"
+msgstr "Volledige tekst zoek resultaten"
+
+#: lib/msql.php:31 lib/mssql.php:41 lib/mysql.php:38
+msgid "Cannot establish connection to database, giving up."
+msgstr "Kan verbinding naar data base niet tot stand brengen, geef op."
+
+#: lib/msql.php:33 lib/msql.php:39
+#, c-format
+msgid "Error message: %s"
+msgstr "Foutboodschap: %s"
+
+#: lib/msql.php:37 lib/mssql.php:50 lib/mysql.php:44
+#, c-format
+msgid "Cannot open database %s, giving up."
+msgstr "Kan data base %s niet openen, geef op."
+
+#: lib/msql.php:212
+#, c-format
+msgid "Insert/update to table 'wiki' failed: %s"
+msgstr "Insert/update 'wiki' gefaald: %s"
+
+#: lib/msql.php:223 lib/msql.php:300
+#, c-format
+msgid "Delete on %s failed: %s"
+msgstr "Delete op %s gefaald: %s"
+
+#: lib/msql.php:241 lib/msql.php:316
+#, c-format
+msgid "Insert into %s failed: %s"
+msgstr "Insert in %s gefaald: %s"
+
+#: lib/msql.php:290
+#, c-format
+msgid "Insert/update into table 'archive' failed: %s"
+msgstr "Insert/update 'archive' gefaald: %s"
+
+#: lib/mssql.php:43 lib/mssql.php:52 lib/mssql.php:197
+#, c-format
+msgid "MSSQL error: %s"
+msgstr "MSSQL fout: %s"
+
+#: lib/mssql.php:158
+#, c-format
+msgid "Insert/Update failed: %s"
+msgstr "Insert/update gefaald: %s"
+
+#: lib/mssql.php:195 lib/mysql.php:163
+#, c-format
+msgid "Cannot delete '%s' from table '%s'"
+msgstr "Kan '%s' niet verwijderen uit tabel '%s'"
+
+#: lib/mysql.php:40 lib/mysql.php:46 lib/mysql.php:125 lib/mysql.php:165
+#, c-format
+msgid "MySQL error: %s"
+msgstr "MySQL fout: %s"
+
+#: lib/mysql.php:123
+#, c-format
+msgid "Error writing page '%s'"
+msgstr "Fout bij schrijven pagina `%s'"
+
+#: lib/pageinfo.php:9
+msgid "Enter a page name"
+msgstr "Geef de naam van een pagina"
+
+#: lib/pageinfo.php:10 lib/stdlib.php:197
+msgid "Go"
+msgstr "Ga"
+
+#: lib/pageinfo.php:21
+msgid "Show the page source and references"
+msgstr "Toon de bron tekst en de koppelingen van de pagina"
+
+#: lib/pageinfo.php:26 lib/pageinfo.php:75
+msgid "PageInfo"
+msgstr "PaginaInfo"
+
+#: lib/pageinfo.php:36
+#, c-format
+msgid "Page name '%s' is not in the database"
+msgstr "Pagina naam `%s' staat niet in de data base"
+
+#: lib/pageinfo.php:64
+msgid "Current version"
+msgstr "Actuele versie:"
+
+#: lib/pageinfo.php:70
+msgid "Archived version"
+msgstr "Gearchiveerde versie:"
+
+#: lib/savepage.php:16 lib/savepage.php:86
+msgid "RecentChanges"
+msgstr "RecenteVeranderingen"
+
+#: lib/savepage.php:97
+msgid ""
+"PhpWiki is unable to save your changes, because another user edited and "
+"saved the page while you were editing the page too. If saving proceeded now "
+"changes from the previous author would be lost."
+msgstr ""
+"PhpWiki kan je veranderingen niet bewaren, want een andere gebruiker\n"
+"heeft de pagina veranderd terwijl jij de pagina ook aan het veranderen\n"
+"was.  Als bewaren nu doorgang zou vinden, zouden de veranderingen van\n"
+"de vorige auteur verloren gaan."
+
+#: lib/savepage.php:99
+msgid "In order to recover from this situation follow these steps:"
+msgstr "Om uit deze benarde situatie te geraken, volg je deze stappen:"
+
+#: lib/savepage.php:101
+msgid "Use your browser's <b>Back</b> button to go back to the edit page."
+msgstr ""
+"Gebruik de <b>Terug</b> knop van je bladeraar om terug te gaan naar de "
+"verander tekst pagina."
+
+#: lib/savepage.php:103
+msgid ""
+"Copy your changes to the clipboard or to another temporary place (e.g. text "
+"editor)."
+msgstr ""
+"Kopiëer je veranderingen naar het klipbord of een andere tijdelijke plaats "
+"(bijv. een tekst editor)."
+
+#: lib/savepage.php:105
+msgid ""
+"<b>Reload</b> the page. You should now see the most current version of the "
+"page. Your changes are no longer there."
+msgstr ""
+"<b>Reload</b> de pagina.  Je zou nu de meest recente versie van de pagina "
+"moeten zien.  Jouw veranderingen staan er nu niet meer."
+
+#: lib/savepage.php:107
+msgid ""
+"Make changes to the file again. Paste your additions from the clipboard (or "
+"text editor)."
+msgstr ""
+"Breng je veranderingen aan de pagina opnieuw aan.  Plak je toevoeginen van "
+"het klipbord (of tekst editor)."
+
+#: lib/savepage.php:109
+msgid "Press <b>Save</b> again."
+msgstr "Druk opnieuw op <b>Bewaar</b>."
+
+#: lib/savepage.php:115
+#, c-format
+msgid "Problem while updating %s"
+msgstr "Probleem tijdens veranderen van %s"
+
+#: lib/savepage.php:160
+#, c-format
+msgid "Thank you for editing %s."
+msgstr "Bedankt voor het veranderen van %s."
+
+#: lib/savepage.php:190
+msgid "Your careful attention to detail is much appreciated."
+msgstr "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd."
+
+#: lib/search.php:30
+#, c-format
+msgid "%d pages match your query."
+msgstr ""
+
+#: lib/search.php:33
+msgid "Title Search Results"
+msgstr "Zoek resultaten"
+
+#: lib/setupwiki.php:21
+#, c-format
+msgid "Inserting page %s, version %s from %s"
+msgstr "Voeg pagina %s toe, versie %s van %s"
+
+#: lib/stdlib.php:38
+msgid "WikiFatalError"
+msgstr "WikiFataleFout"
+
+#: lib/stdlib.php:164 lib/stdlib.php:172
+msgid "Search"
+msgstr "Zoek"
+
+#: lib/stdlib.php:469
+#, c-format
+msgid "%d best incoming links:"
+msgstr "%d beste inkomende koppelingen:"
+
+#: lib/stdlib.php:482
+#, c-format
+msgid "%d best outgoing links:"
+msgstr "%d beste uitgaande koppelingen:"
+
+#: lib/stdlib.php:496
+#, c-format
+msgid "%d most popular nearby:"
+msgstr "%d meest gevraagde in de buurt:"
+
+#, fuzzy
+#~ msgid "Nesting depth exceeded in SetHTMLOutputMode"
+#~ msgstr "Stack grenzen overschreden in SetHTMLOutputMode"

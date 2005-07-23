@@ -1,0 +1,67 @@
+! Tip
+
+Schau dir am besten auch den "Quelltext" dieser Seite an, indem du unten auf den Link zum Editieren klickst. Dann verstehst du die Beispiele besser.
+
+! Absätze
+
+* Rücke Absätze nicht ein
+* Zeilenumbrüche werden automatisch erstellt
+* Absätze werden durch Leerzeilen getrennt
+* Vier oder mehr Minuszeichen am Zeilenanfang erzeugen eine horizontale Linie
+* %%''''% erstellt einen Zeilenumbruch (auch in Überschriften und Listen)
+
+
+! Listen
+
+* Ein Sternchen für die erste Ebene
+** Sternchen-Sternchen für die zweite Ebene, usw.
+* Verwende * für Aufzählungslisten, # für numerierte Listen (auch durcheinander)
+* Eine Zeile für jeden Listenpunkt
+* Tab-Begriff:-Tab erstellt eine Definition für glossarähnliche Listen
+* Andere Leerzeichen als Tab am Zeilenanfang erstellen vorformatierten Text mit einer anderen Schriftart
+
+! Überschriften
+
+* '!' am Zeilenanfang erstellt eine kleine Überschrift
+* '!!' eine mittlere
+* '!!!' eine große
+
+! Schriftart
+* Um eine Schriftart mit gleichen Zeichenabständen (schreibmaschinenähnlich, zum Beispiel für Quelltexte) zu erhalten, füge am Anfang der Zeile ein oder mehr Leerzeichen ein.
+
+ Hier haben alle Zeichen den gleichen Abstand
+Und hier nicht.
+
+! Eingerückte Absätze
+
+* Mit einem Semikolon und einem Doppelpunkt (;:) am Zeilenanfang erstellst du einen eingerückten Absatz.
+
+;: Dieser Absatz ist eingerückt. Verwende diese Funktion zum Beispiel (zusammen mit ''Betonung'' zum zitieren von Texten).
+
+
+! Hervorhebung
+
+* Verwende zwei einfache Anführungszeichen für ''Betonung'' (wird normalerweise kursiv dargestellt)
+* Verwende doppelte Unterstriche für __starke Betonung__ (wird normalerweise fett dargestellt)
+* Du kannst sie auch zusammen verwenden: ''__fett & kursiv__''
+* ''Betonungen'' können ''mehrfach'' in einer Zeile verwendet werden, aber sie können ''nicht'' über das Zeilenende hinausgehen:
+
+''So etwas
+funktioniert nicht''
+
+! Querverweise
+* Hyperlinks zu anderen Seiten im Wiki werden erstellt, indem man den Namen in eckige Klammern einschließt [das ist ein Link] oder besser WikiWörterVerwendet.
+* Hyperlinks zu externen Seiten werden so erstellt: [http://www.wcsb.org/]
+* Du kannst Links zu externen Seiten einen Namen geben, indem du in der eckigen Klammer erst den Namen und dann, getrennt durch einen senkrechten Strich (|), die Adresse angibst: [Steve's Homepage | http://wcsb.org/~swain/]
+* Du kannst das Erstellen eines Links verhindern, indem du vor das Wort ein Ausrufungszeichen setzt, zum Beispiel !DasIstKeinLink.
+* [1], [2], [3], [4] beziehen sich auf externe Verweise. Klicke auf !EditiereVerweise auf der Bearebiten-Seite, um die Adressen einzugeben.
+* Wenn du im Text Adressen eingibst, die mit "http:", "ftp:" oder "mailto:" beginnen, werden diese auch automatisch in Links umgewandelt, zum Beispiel http://c2.com/
+* Adressen, die mit .png oder .jpg enden (d.h. Bilder) werden in die Seite eingefügt, wenn sie in eckige Klammern gesetzt werden. HIER EIN BEISPIEL EINFÜGEN!!!
+
+
+! HTML-Formatierungen
+
+* Du benötigst keine HTML-Formatierungen
+* < und > erscheinen einfach so im Text
+* Sonderzeichen mit & funktionieren nicht
+* Wenn du wirklich HTML verwenden ''mußt'', kann dein Systemverwalter diese Funktion aktivieren. Du mußt dann jede Zeile mit einem senkrechten Strich (|) beginnen. Normalerweise ist diese Funktion aber deaktiviert.
