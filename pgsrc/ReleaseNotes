@@ -1,3 +1,7 @@
+PhpWiki 1.2.9 bugfix:
+* Jose Vina fixed MostPopular sorting for dba and dbm, 
+  which was broken since 1.2.3
+
 PhpWiki 1.2.8 register_globals=off fix:
 * fix and centralize broken register_globals=off logic.
 * update message catalog
