@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: index.php,v 1.5.2.4 2005-01-07 14:23:04 rurban Exp $ -->
+<!-- $Id: index.php,v 1.5.2.5 2005-07-23 11:13:03 rurban Exp $ -->
 <?php
    /*
       The main page, i.e. the main loop.
@@ -12,9 +12,6 @@
 
       // All requests require the database
       $dbi = OpenDataBase($WikiPageStore);
-   }
-   if (!ini_get('register_globals')) {
-       import_request_variables('gps');
    }
 
    // Allow choice of submit buttons to determine type of search:

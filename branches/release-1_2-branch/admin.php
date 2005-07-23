@@ -1,35 +1,29 @@
-<?php // $Id: admin.php,v 1.5.2.3 2005-01-07 14:23:04 rurban Exp $
+<?php // $Id: admin.php,v 1.5.2.4 2005-07-23 11:13:03 rurban Exp $
 
    function rcs_id($id) {}   // otherwise this gets in the way
 
    define('WIKI_ADMIN', true);	// has to be before includes
-   if (!ini_get('register_globals')) {
-       extract($HTTP_SERVER_VARS);
-   }
 
    include("lib/config.php");
    include("lib/stdlib.php");
-   if (!ini_get('register_globals')) {
-       import_request_variables('gps');
-   }
 
-   // set these to your preferences. For heaven's sake
-   // pick a good password!
+   // Set these to your preferences. 
+   // For heaven's sake pick a good password!
    $wikiadmin   = "";
    $adminpasswd = "";
 
    // Do not tolerate sloppy systems administration
    if (empty($wikiadmin) || empty($adminpasswd)) {
-      echo "Set the administrator account and password first.\n";
+       echo gettext("Set the administrator account and password first.\n");
       exit;
    }
 
-   // from the manual, Chapter 16
+   // From the manual, Chapter 16
    if (($PHP_AUTH_USER != $wikiadmin  )  ||
        ($PHP_AUTH_PW   != $adminpasswd)) {
       Header("WWW-Authenticate: Basic realm=\"PhpWiki\"");
       Header("HTTP/1.0 401 Unauthorized");
-      echo gettext ("You entered an invalid login or password.");
+      echo gettext("You entered an invalid login or password.");
       exit;
    }
 
