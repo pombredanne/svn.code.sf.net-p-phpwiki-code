@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: mysql.php,v 1.10.2.7 2005-01-07 14:23:05 rurban Exp $');
+<?php rcs_id('$Id: mysql.php,v 1.10.2.8 2005-07-23 11:15:48 rurban Exp $');
 
    /*
       Database functions:
@@ -34,15 +34,17 @@
    function OpenDataBase($dbname) {
       global $mysql_server, $mysql_user, $mysql_pwd, $mysql_db;
 
-      if (!($dbc = mysql_pconnect($mysql_server, $mysql_user, $mysql_pwd))) {
+      // smaller servers might benefit from mysql_pconnect, but larger ones 
+      // may run out of connections
+      if (!($dbc = mysql_connect($mysql_server, $mysql_user, $mysql_pwd))) {
          $msg = gettext ("Cannot establish connection to database, giving up.");
-	 $msg .= "<BR>";
+	 $msg .= "<br />";
 	 $msg .= sprintf(gettext ("MySQL error: %s"), mysql_error());
 	 ExitWiki($msg);
       }
       if (!mysql_select_db($mysql_db, $dbc)) {
          $msg =  sprintf(gettext ("Cannot open database %s, giving up."), $mysql_db);
-	 $msg .= "<BR>";
+	 $msg .= "<br />";
 	 $msg .= sprintf(gettext ("MySQL error: %s"), mysql_error());
 	 ExitWiki($msg);
       }
@@ -89,7 +91,7 @@
    // Return hash of page + attributes or default
    function RetrievePage($dbi, $pagename, $pagestore) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select * from $pagestore where pagename='$pagename'", $dbi['dbc'])) {
+      if ($res = mysql_query("SELECT * FROM $pagestore WHERE pagename='$pagename'", $dbi['dbc'])) {
          if ($dbhash = mysql_fetch_array($res)) {
             return MakePageHash($dbhash);
          }
@@ -118,10 +120,10 @@
                  "$pagehash[lastmodified], '$pagehash[pagename]', " .
                  "'$pagehash[refs]', $pagehash[version]";
 
-      if (!mysql_query("replace into $dbi[table] ($COLUMNS) values ($VALUES)",
+      if (!mysql_query("REPLACE INTO ".$dbi['table']." ($COLUMNS) VALUES ($VALUES)",
       			$dbi['dbc'])) {
             $msg = sprintf(gettext ("Error writing page '%s'"), $pagename);
-	    $msg .= "<BR>";
+	    $msg .= "<br />";
 	    $msg .= sprintf(gettext ("MySQL error: %s"), mysql_error());
             ExitWiki($msg);
       }
@@ -138,7 +140,8 @@
 
    function IsWikiPage($dbi, $pagename) {
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select count(*) from $dbi[table] where pagename='$pagename'", $dbi['dbc'])) {
+      if ($res = mysql_query("SELECT COUNT(*) FROM ".$dbi['table']." WHERE pagename='$pagename'", 
+                             $dbi['dbc'])) {
          return(mysql_result($res, 0));
       }
       return 0;
@@ -148,7 +151,8 @@
       global $ArchivePageStore;
 
       $pagename = addslashes($pagename);
-      if ($res = mysql_query("select count(*) from $ArchivePageStore where pagename='$pagename'", $dbi['dbc'])) {
+      if ($res = mysql_query("SELECT COUNT(*) FROM $ArchivePageStore WHERE pagename='$pagename'", 
+                             $dbi['dbc'])) {
          return(mysql_result($res, 0));
       }
       return 0;
@@ -164,19 +168,19 @@
       $msg .= "<br>\n";
       $msg .= gettext ("MySQL error: %s");
 
-      if (!mysql_query("delete from $WikiPageStore where pagename='$pagename'", $dbi['dbc']))
+      if (!mysql_query("DELETE FROM $WikiPageStore WHERE pagename='$pagename'", $dbi['dbc']))
          ExitWiki(sprintf($msg, $pagename, $WikiPageStore, mysql_error()));
 
-      if (!mysql_query("delete from $ArchivePageStore where pagename='$pagename'", $dbi['dbc']))
+      if (!mysql_query("DELETE FROM $ArchivePageStore WHERE pagename='$pagename'", $dbi['dbc']))
          ExitWiki(sprintf($msg, $pagename, $ArchivePageStore, mysql_error()));
 
-      if (!mysql_query("delete from $WikiLinksStore where frompage='$pagename'", $dbi['dbc']))
+      if (!mysql_query("DELETE FROM $WikiLinksStore WHERE frompage='$pagename'", $dbi['dbc']))
          ExitWiki(sprintf($msg, $pagename, $WikiLinksStore, mysql_error()));
 
-      if (!mysql_query("delete from $HitCountStore where pagename='$pagename'", $dbi['dbc']))
+      if (!mysql_query("DELETE FROM $HitCountStore WHERE pagename='$pagename'", $dbi['dbc']))
          ExitWiki(sprintf($msg, $pagename, $HitCountStore, mysql_error()));
 
-      if (!mysql_query("delete from $WikiScoreStore where pagename='$pagename'", $dbi['dbc']))
+      if (!mysql_query("DELETE FROM $WikiScoreStore WHERE pagename='$pagename'", $dbi['dbc']))
          ExitWiki(sprintf($msg, $pagename, $WikiScoreStore, mysql_error()));
    }
 
@@ -186,13 +190,13 @@
       global $HitCountStore;
 
       $qpagename = addslashes($pagename);
-      $res = mysql_query("update $HitCountStore set hits=hits+1"
-                         . " where pagename='$qpagename'",
+      $res = mysql_query("UPDATE $HitCountStore SET hits=hits+1"
+                         . " WHERE pagename='$qpagename'",
                          $dbi['dbc']);
 
       if (!mysql_affected_rows($dbi['dbc'])) {
-	 $res = mysql_query("insert into $HitCountStore (pagename, hits)"
-                            . " values ('$qpagename', 1)",
+	 $res = mysql_query("INSERT INTO $HitCountStore (pagename, hits)"
+                            . " VALUES ('$qpagename', 1)",
                             $dbi['dbc']);
       }
 
@@ -204,8 +208,8 @@
       global $HitCountStore;
 
       $qpagename = addslashes($pagename);
-      $res = mysql_query("select hits from $HitCountStore"
-                         . " where pagename='$qpagename'",
+      $res = mysql_query("SELECT hits FROM $HitCountStore"
+                         . " WHERE pagename='$qpagename'",
                          $dbi['dbc']);
       if (mysql_num_rows($res))
          $hits = mysql_result($res, 0);
@@ -227,9 +231,9 @@
          $word = strtolower("$term");
 	 if ($word[0] == '-') {
 	    $word = substr($word, 1);
-	    $clause .= "not (LCASE($column) like '%$word%') ";
+	    $clause .= "NOT (LCASE($column) LIKE '%$word%') ";
 	 } else {
-	    $clause .= "(LCASE($column) like '%$word%') ";
+	    $clause .= "(LCASE($column) LIKE '%$word%') ";
 	 }
 	 if ($term = strtok(' '))
 	    $clause .= 'AND ';
@@ -241,8 +245,8 @@
    // setup for title-search
    function InitTitleSearch($dbi, $search) {
       $clause = MakeSQLSearchClause($search, 'pagename');
-      $res = mysql_query("select pagename from $dbi[table] where $clause order by pagename", $dbi["dbc"]);
-
+      $res = mysql_query("SELECT pagename FROM ".$dbi['table']." WHERE $clause ORDER BY pagename", 
+                         $dbi["dbc"]);
       return $res;
    }
 
@@ -261,7 +265,7 @@
    // setup for full-text search
    function InitFullSearch($dbi, $search) {
       $clause = MakeSQLSearchClause($search, 'content');
-      $res = mysql_query("select * from $dbi[table] where $clause", $dbi["dbc"]);
+      $res = mysql_query("SELECT * FROM ".$dbi['table']." WHERE $clause", $dbi["dbc"]);
 
       return $res;
    }
@@ -302,7 +306,8 @@
 
    function InitMostPopular($dbi, $limit) {
       global $HitCountStore;
-      $res = mysql_query("select * from $HitCountStore order by hits desc, pagename limit $limit", $dbi["dbc"]);
+      $res = mysql_query("SELECT * FROM $HitCountStore ORDER BY hits desc, pagename LIMIT $limit", 
+                         $dbi["dbc"]);
       
       return $res;
    }
@@ -316,7 +321,7 @@
 
    function GetAllWikiPageNames($dbi) {
       global $WikiPageStore;
-      $res = mysql_query("select pagename from $WikiPageStore", $dbi["dbc"]);
+      $res = mysql_query("SELECT pagename FROM $WikiPageStore", $dbi["dbc"]);
       $rows = mysql_num_rows($res);
       for ($i = 0; $i < $rows; $i++) {
 	 $pages[$i] = mysql_result($res, $i);
@@ -333,21 +338,28 @@
       global $WikiLinksStore, $WikiScoreStore, $HitCountStore;
 
       $pagename = addslashes($pagename);
-      $res = mysql_query("select topage, score from $WikiLinksStore, $WikiScoreStore where topage=pagename and frompage='$pagename' order by score desc, topage");
+      $res = mysql_query("SELECT topage, score FROM $WikiLinksStore, $WikiScoreStore"
+                         ." WHERE topage=pagename AND frompage='$pagename'"
+                         ." ORDER BY score DESC, topage");
       $rows = mysql_num_rows($res);
       for ($i = 0; $i < $rows; $i++) {
 	 $out = mysql_fetch_array($res);
 	 $links['out'][] = array($out['topage'], $out['score']);
       }
 
-      $res = mysql_query("select frompage, score from $WikiLinksStore, $WikiScoreStore where frompage=pagename and topage='$pagename' order by score desc, frompage");
+      $res = mysql_query("SELECT frompage, score FROM $WikiLinksStore, $WikiScoreStore"
+                         ." WHERE frompage=pagename AND topage='$pagename'"
+                         ." ORDER BY score DESC, frompage");
       $rows = mysql_num_rows($res);
       for ($i = 0; $i < $rows; $i++) {
 	 $out = mysql_fetch_array($res);
 	 $links['in'][] = array($out['frompage'], $out['score']);
       }
 
-      $res = mysql_query("select distinct pagename, hits from $WikiLinksStore, $HitCountStore where (frompage=pagename and topage='$pagename') or (topage=pagename and frompage='$pagename') order by hits desc, pagename");
+      $res = mysql_query("SELECT DISTINCT pagename, hits FROM $WikiLinksStore, $HitCountStore"
+                         ." WHERE (frompage=pagename AND topage='$pagename')"
+                         ." OR (topage=pagename and frompage='$pagename')"
+                         ." ORDER BY hits DESC, pagename");
       $rows = mysql_num_rows($res);
       for ($i = 0; $i < $rows; $i++) {
 	 $out = mysql_fetch_array($res);
@@ -366,7 +378,7 @@
       $frompage = addslashes($pagename);
 
       // first delete the old list of links
-      mysql_query("delete from $WikiLinksStore where frompage='$frompage'",
+      mysql_query("DELETE FROM $WikiLinksStore WHERE frompage='$frompage'",
 		$dbi["dbc"]);
 
       // the page may not have links, return if not
@@ -376,14 +388,16 @@
       while (list($topage, $count) = each($linklist)) {
          $topage = addslashes($topage);
 	 if($topage != $frompage) {
-            mysql_query("insert into $WikiLinksStore (frompage, topage) " .
-                     "values ('$frompage', '$topage')", $dbi["dbc"]);
+            mysql_query("INSERT INTO $WikiLinksStore (frompage, topage)"
+                        ." VALUES ('$frompage', '$topage')", $dbi["dbc"]);
 	 }
       }
 
       // update pagescore
-      mysql_query("delete from $WikiScoreStore", $dbi["dbc"]);
-      mysql_query("insert into $WikiScoreStore select w1.topage, count(*) from $WikiLinksStore as w1, $WikiLinksStore as w2 where w2.topage=w1.frompage group by w1.topage", $dbi["dbc"]);
+      mysql_query("DELETE FROM $WikiScoreStore", $dbi["dbc"]);
+      mysql_query("INSERT INTO $WikiScoreStore"
+                  ." SELECT w1.topage, COUNT(*) FROM $WikiLinksStore AS w1, $WikiLinksStore AS w2"
+                  ." WHERE w2.topage=w1.frompage GROUP BY w1.topage", $dbi["dbc"]);
    }
 
 /* more mysql queries:
