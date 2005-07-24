@@ -1,194 +1,146 @@
 <?php
 
-$locale["%4d  %s\n"] =
-   "%4d  %s\n";
-$locale["%s Kb (%s bytes)"] =
-   "%s Kb (%s byte)";
-$locale["%s at %s"] =
-   "%s a %s";
-$locale["%s bytes"] =
-   "%s byte";
-$locale["%s days"] =
-   "%s giorni";
-$locale["%s of this page"] =
-   "%s di questa pagina";
-$locale["%s: %s"] =
-   "%s: %s";
-$locale["%s: file not found"] =
-   "%s: archivio non trovato";
-$locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
-   "(Copia le tue modifiche nella clipboard. Potete provare a modificare un'altra pagina o registra il vostro testo in un editor di testo.)";
-$locale["(diff)"] =
-   "(diff)";
-$locale["- saved to database as version %d"] =
-   "- salvata a base di dati a versione %d";
-$locale["1 day"] =
-   "1 giorno";
-$locale["<no matches>"] =
-   "<nessun risultati>";
-$locale["Calendar"] =
-   "Calendario";
-$locale["Cancel"] =
-   "Annulla";
-$locale["Columns: %s."] =
-   "Caratteri: %s.";
-$locale["Contents"] =
-   "Indice";
-$locale["Describe %s here."] =
-   "Descrivi %s qui.";
-$locale["Diff"] =
-   "Diff";
-$locale["Edit"] =
-   "Modifica";
-$locale["Edit %s"] =
-   "Modifica %s";
-$locale["Edit: %s"] =
-   "Modifica: %s";
-$locale["EditText"] =
-   "ModificaIlTesto";
-$locale["Fatal PhpWiki Error"] =
-   "Errore Fatale Di PhpWiki";
-$locale["FindPage"] =
-   "TrovaPagina";
-$locale["First"] =
-   "Prima";
-$locale["Full text search results for '%s'"] =
-   "Risultati della ricerca su tutto il testo per '%s'";
-$locale["FullTextSearch"] =
-   "RicercaDelTesto";
-$locale["Go"] =
-   "Vai";
-$locale["GoodStyle"] =
-   "BuonStile";
-$locale["H"] =
-   "A";
-$locale["Height"] =
-   "Altezza";
-$locale["HomePage"] =
-   "PaginaPrincipale";
-$locale["HomePageAlias"] =
-   "PaginaPrincipaleAlias";
-$locale["Include of '%s' failed"] =
-   "Inserimento di '%s' fallito";
-$locale["IncludePagePlugin"] =
-   "InserireLaPaginaPlugin";
-$locale["Last"] =
-   "Ultima";
-$locale["Last Modified"] =
-   "Ultima Modifica";
-$locale["Lock Page"] =
-   "Blocca la Pagina";
-$locale["Locked"] =
-   "Bloccata";
-$locale["Modern"] =
-   "Moderno";
-$locale["MostPopular"] =
-   "PiùPopolari";
-$locale["Name"] =
-   "Nome";
-$locale["Next"] =
-   "Seguente";
-$locale["None"] =
-   "Nessuno";
-$locale["Note:"] =
-   "Nota:";
-$locale["Page Locked"] =
-   "Pagina Bloccata";
-$locale["Page Name"] =
-   "Nome Della Pagina";
-$locale["Page now unlocked."] =
-   "Pagina sbloccata.";
-$locale["PhpWikiAdministration/Remove"] =
-   "AmministrazioneDiPhpWiki/Rimuovi";
-$locale["Previous"] =
-   "Precedente";
-$locale["Printer"] =
-   "Stampante";
-$locale["Remove"] =
-   "Rimuovi";
-$locale["Remove Page"] =
-   "Rimuovi la Pagina";
-$locale["Remove this page"] =
+$locale["You entered an invalid login or password."] =
+   "Nome utente o password errata.";
+$locale["You are about to remove '%s' permanently!"] =
+   "Stai per rimuovere %s";
+$locale["Click %shere%s to remove the page now."] =
+   "Per rimuovere la pagina clicca %squa%s";
+$locale["Otherwise press the \"Back\" button of your browser."] =
+   "Altrimenti premi il bottone \"Precedente\" sul tuo browser";
+$locale["Function not yet implemented."] =
+   "Funzione non implementata.";
+$locale["Remove page"] =
    "Rimuovi la pagina";
-$locale["Removed page '%s' successfully."] =
-   "La pagina '%s' è stata rimossa correttamente.";
-$locale["Save"] =
-   "Registra";
-$locale["Saved: %s"] =
-   "Salvata: %s";
-$locale["Search"] =
-   "Ricerca";
-$locale["See %s tips for editing."] =
-   "Vedere %s consigli per le modifiche.";
-$locale["Show minor edits for:"] =
-   "Mostrare le modifiche secondarie per:";
-$locale["Someone has edited the page!"] =
-   "Qualcuno ha modificato la pagina!";
-$locale["Sorry for the inconvenience."] =
-   "Scusa per l'inconveniente.";
-$locale["Synopsis"] =
-   "Sinossi";
-$locale["TextFormattingRules"] =
-   "RegoleDiFormattazioneDelTesto";
-$locale["Thank you for editing %s."] =
-   "Grazie per le modifiche! %s.";
-$locale["The %d most popular pages of this wiki:"] =
-   "Le %d pagine più popolari di questo wiki sono:";
-$locale["This page has been locked by the administrator and cannot be edited."] =
-   "Questa pagina è stata bloccata dall'amministratore e non può essere modificata.";
-$locale["This page has been locked by the administrator so your changes can not be saved."] =
-   "Questa pagina è stata bloccata dall'amministratore in modo da i vostri cambiamenti non possono essere salvati.";
-$locale["Time Zone"] =
-   "Fuso Orario";
-$locale["Title Search"] =
-   "La ricerca su tutto il testo";
-$locale["Title search results for '%s'"] =
-   "Risultati della ricerca su tutto il testo per '%s'";
-$locale["TitleSearch"] =
-   "RicercaSuTutto";
-$locale["Today"] =
-   "Oggi";
-$locale["Unlock Page"] =
-   "Sblocca la Pagina";
-$locale["Version"] =
-   "Versione";
-$locale["Version %d"] =
-   "Versione %d";
-$locale["Version %s"] =
-   "Versione %s";
-$locale["Versions are identical"] =
-   "Le versioni sono identiche";
-$locale["View the current version"] =
-   "Mostra il versione corrente";
-$locale["W"] =
-   "L";
-$locale["Warning!"] =
-   "Avvertimento!";
-$locale["Width"] =
-   "Larghezza";
-$locale["Your careful attention to detail is much appreciated."] =
-   "La tua cura verso il dettaglio è molto apprezzata.";
-$locale["by %s"] =
-   "di %s";
-$locale["current version"] =
-   "versione corrente";
-$locale["diff"] =
-   "diff";
-$locale["from %s"] =
-   "dalla %s";
-$locale["locked"] =
-   "bloccata";
-$locale["plain file %s"] =
-   "archivio del testo %s";
-$locale["saved as %s"] =
-   "salvata a %s";
-$locale["today"] =
-   "oggi";
-$locale["version %d"] =
-   "versione %d";
+$locale["Removed page '%s' succesfully."] =
+   "La pagina '%s' &egrave; stata rimossa correttamente.";
+$locale["templates/browse.html"] =
+   "locale/it/templates/browse.html";
+$locale["templates/editpage.html"] =
+   "locale/it/templates/editpage.html";
+$locale["templates/editlinks.html"] =
+   "locale/it/templates/editlinks.html";
+$locale["templates/message.html"] =
+   "locale/it/templates/message.html";
+$locale["./pgsrc"] =
+   "locale/it/pgsrc";
+$locale["WikiDiff::apply: line count mismatch: %s != %s"] =
+   "WikiDiff::applu: il numero delle linee &egrave; differente: %s != %s";
+$locale["WikiDiff::_check: failed"] =
+   "WikiDiff::_check: fallito";
+$locale["WikiDiff::_check: edit sequence is non-optimal"] =
+   "WikiDiff::_check: la sequenza di editazione non e` ottimale";
+$locale["WikiDiff Okay: LCS = %s"] =
+   "WikiDiff Ok: LCS = %s";
+$locale["Current page:"] =
+   "Pagina corrente:";
 $locale["version %s"] =
    "versione %s";
-$locale["yesterday"] =
-   "ieri";
+$locale["last modified on %s"] =
+   "Ultima modifica: %s";
+$locale["by %s"] =
+   "di %s";
+$locale["None"] =
+   "Nessuno";
+$locale["Archived page:"] =
+   "Pagina archiviata:";
+$locale["Versions are identical"] =
+   "Le versioni sono identiche";
+$locale["Diff of %s."] =
+   "Differenza di %s";
+$locale["FrontPage"] =
+   "PaginaPrincipale";
+$locale["Describe %s here."] =
+   "Descrivi %s qui";
+$locale["Copy of %s"] =
+   "Copia di %s";
+$locale["No page name passed into editpage!"] =
+   "Nessuna pagina &grave; passata a modificapagina";
+$locale["This page has been locked by the administrator and cannot be edited."] =
+   "Questa pagina &grave; stata bloccata dall'amministratore e non pu&ograve; essere modificata";
+$locale["Sorry for the inconvenience."] =
+   "Scusa per l'inconveniente.";
+$locale["Problem while editing %s"] =
+   "Si sono verificati problemi durante la modifica %s";
+$locale["Searching for \"%s\" ....."] =
+   "Sto cercando \"%s\" .....";
+$locale["%d matches found in %d pages."] =
+   "Ho trovato %d occorrente in %d pagine.";
+$locale["Full Text Search Results"] =
+   "Risultati della ricerca su tutto il testo";
+$locale["Cannot establish connection to database, giving up."] =
+   "Non riesco a stabilire una connessione col database, abbandono.";
+$locale["Error message: %s"] =
+   "Messaggio d'errore: %s";
+$locale["Cannot open database %s, giving up."] =
+   "Non riesco ad aprire il database %s, abbandono.";
+$locale["Insert/update to table 'wiki' failed: %s"] =
+   "Inserimento/aggiornamento su 'wiki' fallito: %s";
+$locale["Delete on %s failed: %s"] =
+   "Cancellazione su %s fallita: %s";
+$locale["Insert into %s failed: %s"] =
+   "Inserimento in %s fallito: %s";
+$locale["Insert/update into table 'archive' failed: %s"] =
+   "Inserimento/aggiornamento su 'archive' fallito: %s";
+$locale["MSSQL error: %s"] =
+   "Errore di MSSQL: %s";
+$locale["Insert/Update failed: %s"] =
+   "Inserimento/aggiornamento fallito: %s";
+$locale["Cannot delete '%s' from table '%s'"] =
+   "Non posso cancellare '%s' dalla tabella '%s'";
+$locale["MySQL error: %s"] =
+   "Errore di MySQL: %s";
+$locale["Error writing page '%s'"] =
+   "Errore durante il salvataggio della pagina '%s'";
+$locale["Enter a page name"] =
+   "Scrivi un nome di una pagina";
+$locale["Go"] =
+   "Vai";
+$locale["Show the page source and references"] =
+   "Mostra il sorgente della pagina e le sue referenze";
+$locale["PageInfo"] =
+   "InformazioniDellaPagina";
+$locale["Page name '%s' is not in the database"] =
+   "La pagina '%s' non e` presente nel database";
+$locale["Current version"] =
+   "Versione corrente";
+$locale["Archived version"] =
+   "Versione archiviata";
+$locale["RecentChanges"] =
+   "ModificheRecenti";
+$locale["PhpWiki is unable to save your changes, because another user edited and saved the page while you were editing the page too. If saving proceeded now changes from the previous author would be lost."] =
+   "PhpWiki non &egrave; riuscito a salvare i tuoi cambiamenti perch&egrave; un altro utente ha cambiato la pagina mentre la stavi modificando. Se il salvataggio viene comunque fatto, i cambiamenti dell'altro utente verranno persi.";
+$locale["In order to recover from this situation follow these steps:"] =
+   "Per risolvere questa situazione segui questi passi:";
+$locale["Use your browser's <b>Back</b> button to go back to the edit page."] =
+   "Usa il pulsante <b>Precedente</b> del tuo browser per tornarealla pagina di modifica";
+$locale["Copy your changes to the clipboard or to another temporary place (e.g. text editor)."] =
+   "Copia le tue modifiche nella clipboard o temporaneamente in unaltro posto (es: un editor di testo)";
+$locale["<b>Reload</b> the page. You should now see the most current version of the page. Your changes are no longer there."] =
+   "<b>Aggiorna</b> la pagina. Dovresti vedere l'ultima versione senzamodifiche";
+$locale["Make changes to the file again. Paste your additions from the clipboard (or text editor)."] =
+   "Cambia ancora il file ed installa le tue modifiche dalla clipboard (o dall'editor di testo)";
+$locale["Press <b>Save</b> again."] =
+   "Premi ancora <b>Salva</b>";
+$locale["Problem while updating %s"] =
+   "Problemi durante l'aggiornamento %s";
+$locale["Thank you for editing %s."] =
+   "Grazie per le modifiche! %s.";
+$locale["Your careful attention to detail is much appreciated."] =
+   "La tua cura verso il dettaglio &egrave; molto apprezzata.";
+$locale["Title Search Results"] =
+   "Risultati della ricerca su tutto il testo";
+$locale["Inserting page %s, version %s from %s"] =
+   "Sto inserendo la pagina %s, versione %s da %s";
+$locale["WikiFatalError"] =
+   "ErroreFataleDiWiki";
+$locale["Search"] =
+   "Ricerca";
+$locale["%d best incoming links:"] =
+   "%d migliori link in entrata:";
+$locale["%d best outgoing links:"] =
+   "%s migliori link in uscita:";
+$locale["%d most popular nearby:"] =
+   "%d pi&ugrave; popolari:";
 
-?>
+;?>
