@@ -6,16 +6,19 @@
 
    set_magic_quotes_runtime(0);
    error_reporting(E_ALL ^ E_NOTICE);
-   if (!ini_get('register_globals') or (ini_get('register_globals') == 'off')) {
+   if (! (bool)ini_get('register_globals')) {
        import_request_variables('gps');
+       if (! (bool)ini_get('register_long_arrays')) {
+	   $HTTP_SERVER_VARS =& $_SERVER;
+       }
        extract($HTTP_SERVER_VARS);
    }
 
    if (!function_exists('rcs_id')) {
       function rcs_id($id) { echo "<!-- $id -->\n"; };
    }
-   rcs_id('$Id: config.php,v 1.24.2.14 2005-07-23 11:13:02 rurban Exp $'); 
-   define('PHPWIKI_VERSION', '1.2.8');
+   rcs_id('$Id: config.php,v 1.24.2.15 2005-07-24 07:35:40 rurban Exp $'); 
+   define('PHPWIKI_VERSION', '1.2.10');
    // end essential internal stuff
 
 
@@ -305,8 +308,13 @@
    // you shouldn't have to edit anything below this line
    function compute_default_scripturl() {
       global $HTTP_SERVER_VARS, $SERVER_PORT, $SERVER_NAME, $SCRIPT_NAME, $HTTPS;
-      if (!ini_get('register_globals') or (ini_get('register_globals') == 'off')) {
-          extract($HTTP_SERVER_VARS);
+
+      if (! (bool)ini_get('register_globals')) {
+	  import_request_variables('gps');
+	  if (! (bool)ini_get('register_long_arrays')) {
+	      $HTTP_SERVER_VARS =& $_SERVER;
+	  }
+	  extract($HTTP_SERVER_VARS);
       }
       
       if (!empty($HTTPS) && $HTTPS != 'off') {
@@ -330,7 +338,7 @@
    $FieldSeparator = "\263";
 
    if (isset($PHP_AUTH_USER)) {
-        $remoteuser = $PHP_AUTH_USER;
+      $remoteuser = $PHP_AUTH_USER;
    } else {
 
       // Apache won't show REMOTE_HOST unless the admin configured it
