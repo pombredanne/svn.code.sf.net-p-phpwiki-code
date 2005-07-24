@@ -1,10 +1,11 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.11 2004-12-06 19:29:23 rurban Exp $');
+<?php rcs_id('$Id: RssWriter.php,v 1.12 2005-07-24 09:52:59 rurban Exp $');
 /*
  * Code for creating RSS 1.0.
  */
 
 // Encoding for RSS output.
-define('RSS_ENCODING', $GLOBALS['charset']);
+if (!defined('RSS_ENCODING'))
+  define('RSS_ENCODING', $GLOBALS['charset']);
 
 /**
  * A class for writing RSS 1.0.
