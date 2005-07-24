@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.34 2005-04-08 05:05:16 rurban Exp $
+<?php // $Id: configurator.php,v 1.35 2005-07-24 08:50:18 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -45,7 +45,7 @@
  *
  * A file config/config.ini will be automatically generated, if writable.
  *
- * NOTE: If you have a starterscript outside PHOWIKI_DIR but no 
+ * NOTE: If you have a starterscript outside PHPWIKI_DIR but no 
  * config/config.ini yet (very unlikely!), you must define DATA_PATH in the 
  * starterscript, otherwise the webpath to configurator is unknown, and 
  * subsequent requests will fail. (POST to save the INI)
@@ -67,6 +67,7 @@ $fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : '/')
 if (isset($HTTP_POST_VARS['create']))  header('Location: '.$configurator.'?show=_part1&create=1#create');
 
 // helpers from lib/WikiUser/HttpAuth.php
+if (!function_exists('_http_user')) {
     function _http_user() {
         if (!isset($_SERVER))
             $_SERVER = $GLOBALS['HTTP_SERVER_VARS'];
@@ -104,7 +105,7 @@ if (isset($HTTP_POST_VARS['create']))  header('Location: '.$configurator.'?show=
 	trigger_error("Permission denied. Require ADMIN_USER.", E_USER_ERROR);
 	exit();
     }
-
+}
 
 // If config.ini exists, we require ADMIN_USER access by faking HttpAuth. 
 // So nobody can see or reset the password(s).
@@ -152,7 +153,7 @@ echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.34 2005-04-08 05:05:16 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.35 2005-07-24 08:50:18 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -986,7 +987,7 @@ Try any of these in the given order:
 <dt>Db</dt>
 	<dd>Use DBAUTH_AUTH_* (see below) with PearDB or ADODB only.</dd>
 <dt>LDAP</dt>
-	<dd>Authenticate against LDAP_AUTH_HOST with LDAP_BASE_DN</dd>
+	<dd>Authenticate against LDAP_AUTH_HOST with LDAP_BASE_DN.</dd>
 <dt>IMAP</dt>
 	<dd>Authenticate against IMAP_AUTH_HOST (email account)</dd>
 <dt>POP3</dt>
@@ -1007,7 +1008,8 @@ USER_AUTH_POLICY, below.  To specify multiple authentication methods,
 separate the name of each one with colons.
 <pre>
   USER_AUTH_ORDER = 'PersonalPage : Db'
-  USER_AUTH_ORDER = 'BogoLogin : PersonalPage'</pre>");
+  USER_AUTH_ORDER = 'BogoLogin : PersonalPage'
+</pre>");
 
 $properties["PASSWORD_LENGTH_MINIMUM"] =
     new numeric_define("PASSWORD_LENGTH_MINIMUM", "6", "
@@ -1232,13 +1234,13 @@ Default: ou=Groups");
 
 $properties["LDAP Authentication"] =
 new unchangeable_define('LDAP Authentication', "
-If USER_AUTH_ORDER contains Ldap:
-
-The LDAP server to connect to.  Can either be a hostname, or a complete
-URL to the server (useful if you want to use ldaps or specify a different
-port number).
+; If USER_AUTH_ORDER contains Ldap:
+; 
+; The LDAP server to connect to.  Can either be a hostname, or a complete
+; URL to the server (useful if you want to use ldaps or specify a different
+; port number).
 ;LDAP_AUTH_HOST = \"ldap://localhost:389\"
-
+; 
 ; The organizational or domain BASE DN: e.g. \"dc=mydomain,dc=com\".
 ;
 ; Note: ou=Users and ou=Groups are used for GroupLdap Membership
@@ -1406,10 +1408,10 @@ $properties["Language"] =
 new _define_selection_optional('DEFAULT_LANGUAGE',
                array('en' => "English",
                      ''   => "<empty> (user-specific)",
-                     'fr' => "Français",
+                     'fr' => "Fran~is",
                      'de' => "Deutsch",
                      'nl' => "Nederlands",
-                     'es' => "Español",
+                     'es' => "Espa~l",
                      'sv' => "Svenska",
                      'it' => "Italiano",
                      'ja' => "Japanese",
@@ -1418,12 +1420,12 @@ Select your language/locale - default language is \"en\" for English.
 Other languages available:<pre>
 English \"en\"  (English    - HomePage)
 German  \"de\" (Deutsch    - StartSeite)
-French  \"fr\" (Français   - Accueil)
+French  \"fr\" (Fran~is   - Accueil)
 Dutch   \"nl\" (Nederlands - ThuisPagina)
-Spanish \"es\" (Español    - PáginaPrincipal)
+Spanish \"es\" (Espa~l    - P~inaPrincipal)
 Swedish \"sv\" (Svenska    - Framsida)
 Italian \"it\" (Italiano   - PaginaPrincipale)
-Japanese \"ja\" (Japanese   - ¥Û¡¼¥à¥Ú¡¼¥¸)
+Japanese \"ja\" (Japanese   - ~~~~~~)
 Chinese  \"zh\" (Chinese)
 </pre>
 If you set DEFAULT_LANGUAGE to the empty string, your systems default language
@@ -1825,6 +1827,8 @@ class _variable {
 	    and !preg_match("/(selection|boolean)/", get_class($this))
 	    and !preg_match("/(SCRIPT_NAME|VIRTUAL_PATH)/", $config_item_name))
 	    $this->default_value = constant($config_item_name); // ignore given default value
+	elseif ($config_item_name == $default_value)
+	    $this->default_value = '';
 	else
 	    $this->default_value = $default_value;
 	$this->jscheck = $jscheck;
@@ -2124,6 +2128,7 @@ class _define_password
 extends _define {
 
     function _define_password($config_item_name, $default_value, $description, $jscheck = '') {
+    	if ($config_item_name == $default_value) $default_value = '';
         $this->_define($config_item_name, $default_value, $description, $jscheck);
         if (!$jscheck)
             $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' cannot be empty.', '^.+$', '" 
@@ -2169,6 +2174,7 @@ extends _define_password { }
 class _variable_password
 extends _variable {
     function _variable_password($config_item_name, $default_value, $description, $jscheck = '') {
+    	if ($config_item_name == $default_value) $default_value = '';
         $this->_define($config_item_name, $default_value, $description, $jscheck);
         if (!$jscheck)
             $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' cannot be empty.', '^.+$', '" . $this->get_config_item_name() . "', this);\"";
@@ -2181,11 +2187,16 @@ extends _variable {
 	    $this->default_value = $new_password;
 	    $s .= "Created password: <strong>$new_password</strong><br />&nbsp;<br />";
 	}
-        $s .= "<input type=\"password\" name=\"" . $this->get_config_item_name()
-           . "\" value=\"" . $this->default_value 
-           . "\" {$this->jscheck} />" 
+	// dont re-encrypt already encrypted passwords
+	$value = $this->value();
+	$encrypted = !empty($GLOBALS['properties']["Encrypted Passwords"]) and 
+	             $GLOBALS['properties']["Encrypted Passwords"]->value();
+	if (empty($value))
+	    $encrypted = false;
+        $s .= "<input type=\"". ($encrypted ? "text" : "password") . "\" name=\"" . $this->get_config_item_name()
+           . "\" value=\"" . $value . "\" {$this->jscheck} />" 
            . "&nbsp;&nbsp;<input type=\"submit\" name=\"create\" value=\"Create Random Password\" />";
-	if (empty($this->default_value))
+	if (empty($value))
 	    $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Cannot be empty.</p>";
 	elseif (strlen($this->default_value) < 4)
 	    $s .= "<p id=\"" . $this->get_config_item_id() . "\" style=\"color: red\">Must be longer than 4 chars.</p>";
