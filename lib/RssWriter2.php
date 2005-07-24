@@ -1,11 +1,10 @@
-<?php rcs_id('$Id: RssWriter2.php,v 1.1 2004-12-06 19:29:23 rurban Exp $');
+<?php rcs_id('$Id: RssWriter2.php,v 1.2 2005-07-24 09:52:59 rurban Exp $');
 /*
  * Code for creating RSS 2.0
  * Author: Reini Urban for PhpWiki
  */
 
 // Encoding for RSS output.
-define('RSS_ENCODING', $GLOBALS['charset']);
 include_once("lib/RssWriter.php");
 
 /**
