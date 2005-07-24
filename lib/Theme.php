@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.131 2005-06-10 06:09:06 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.132 2005-07-24 09:51:22 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -199,17 +199,22 @@ class Theme {
         $this->_path  = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
         $this->_theme = "themes/$theme_name";
 
-        // by pixels
-        if ($GLOBALS['request']->getPref('doubleClickEdit')
-            or ENABLE_DOUBLECLICKEDIT)
-            $this->initDoubleClickEdit();
-
         if ($theme_name != 'default')
             $this->_default_theme = new Theme;
+
+        // by pixels
+        if ((is_object($GLOBALS['request']) // guard against unittests
+             and $GLOBALS['request']->getPref('doubleClickEdit'))
+            or ENABLE_DOUBLECLICKEDIT)
+            $this->initDoubleClickEdit();
 
         // will be replaced by acDropDown
         if (ENABLE_LIVESEARCH) { // by bitflux.ch
             $this->initLiveSearch();
+        }
+        // replaces external LiveSearch
+        if (defined("ENABLE_ACDROPDOWN") and ENABLE_ACDROPDOWN) { 
+            $this->initMoAcDropDown();
         }
         $this->_css = array();
     }
@@ -1095,7 +1100,7 @@ class Theme {
 
     var $_MoreHeaders = array();
     function addMoreHeaders ($element) {
-        array_push($this->_MoreHeaders,$element);
+        array_push($this->_MoreHeaders, $element);
     }
     function getMoreHeaders () {
         if (empty($this->_MoreHeaders))
@@ -1176,8 +1181,8 @@ class Theme {
             $this->addMoreAttr('body', 'DoubleClickEdit', HTML::Raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
     }
 
-    // Immediate title search results via XMLHttpRequest
-    // by Bitflux GmbH, bitflux.ch. You need to install the livesearch.js seperately
+    // Immediate title search results via XMLHTML(HttpRequest
+    // by Bitflux GmbH, bitflux.ch. You need to install the livesearch.js seperately.
     // Google's or acdropdown is better.
     function initLiveSearch() {
         if (!$this->HTML_DUMP_SUFFIX) {
@@ -1187,6 +1192,24 @@ class Theme {
                                              .WikiURL(_("TitleSearch"),false,true).'";'));
             $this->addMoreHeaders(JavaScript('', array
                                              ('src' => $this->_findData('livesearch.js'))));
+        }
+    }
+
+    // Immediate title search results via XMLHttpRequest
+    // using the shipped moacdropdown js-lib
+    function initMoAcDropDown() {
+        if (!$this->HTML_DUMP_SUFFIX) {
+            $dir = $this->_findData('moacdropdown');
+            // if autocomplete_remote is used:
+            foreach (array("mobrowser.js","modomevent.js","modomt.js",
+                           "modomext.js","xmlextras.js") as $js) 
+            {
+                $this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/$js")));
+            }
+            $this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/acdropdown.js")));
+            //$this->addMoreHeaders($this->_CSSlink(0, 
+            //                      $this->_findFile('moacdropdown/css/dropdown.css'), 'all'));
+            $this->addMoreHeaders(HTML::style("  @import url( $dir/css/dropdown.css );\n"));
         }
     }
 };
@@ -1442,6 +1465,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.131  2005/06/10 06:09:06  rurban
+// enable getPref('doubleClickEdit')
+//
 // Revision 1.130  2005/05/06 16:43:35  rurban
 // split long lines
 //
