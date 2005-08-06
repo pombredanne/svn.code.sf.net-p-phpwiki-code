@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.136 2005-05-06 16:49:24 rurban Exp $');
+rcs_id('$Id: config.php,v 1.137 2005-08-06 14:31:10 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -551,13 +551,18 @@ function safe_wordwrap($str, $width=80, $break="\n", $cut=false) {
 }
 
 function getUploadFilePath() {
-    return defined('PHPWIKI_DIR') ? PHPWIKI_DIR . "/uploads/" : "uploads/";
+    return defined('PHPWIKI_DIR') 
+        ? PHPWIKI_DIR . "/uploads/" 
+        : realpath(dirname(__FILE__) . "/../uploads/");
 }
 function getUploadDataPath() {
   return SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/uploads/';
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.136  2005/05/06 16:49:24  rurban
+// Safari comment
+//
 // Revision 1.135  2005/04/01 15:22:20  rurban
 // Implement icase and regex options.
 // Change checkbox case message from "Case-Sensitive" to "Case-Insensitive"
