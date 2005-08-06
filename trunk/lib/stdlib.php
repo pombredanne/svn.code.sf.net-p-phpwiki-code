@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.242 2005-08-06 13:07:04 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.243 2005-08-06 15:01:38 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -719,7 +719,8 @@ class WikiPageName
 	    return $page->getPageName();
         elseif (isa($page, 'WikiPageName'))
 	    return $page->name;
-        if (!is_string($page)) {
+        // '0' or e.g. '1984' should be allowed though
+        if (!is_string($page) and !is_integer($page)) {
             trigger_error(sprintf("Non-string pagename '%s' (%s)(%s)",
                                   $page, gettype($page), get_class($page)),
                           E_USER_NOTICE);
@@ -2027,6 +2028,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.242  2005/08/06 13:07:04  rurban
+// quote paths correctly (not the best method though)
+//
 // Revision 1.241  2005/05/06 16:54:19  rurban
 // support optional EXTERNAL_LINK_TARGET, default: _blank
 //
