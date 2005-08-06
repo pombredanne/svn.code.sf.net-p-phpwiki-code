@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageTrail.php,v 1.7 2005-02-28 21:24:34 rurban Exp $');
+rcs_id('$Id: PageTrail.php,v 1.8 2005-08-06 13:23:14 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     // default values
@@ -80,13 +80,13 @@ extends WikiPlugin
             $request->session->set("PageTrail", $Pages);
         }
 
-        if (! $invisible) {
-            $numberlinks = min(count($Pages)-1, $numberlinks);
+        $numberlinks = min(count($Pages), $numberlinks);
+        if (! $invisible and $numberlinks) {
             $html = HTML::tt(WikiLink($Pages[$numberlinks-1], 'auto'));
             for ($i = $numberlinks - 2; $i >= 0; $i--) {
                 if (!empty($Pages[$i]))
                     $html->pushContent(PAGETRAIL_ARROW, 
-                                       WikiLink($Pages[$i],'auto'));
+                                       WikiLink($Pages[$i], 'auto'));
             }
             return $html;
         } else
@@ -95,6 +95,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2005/02/28 21:24:34  rurban
+// ignore forbidden ini_set warnings. Bug #1117254 by Xavier Roche
+//
 // Revision 1.6  2005/02/27 21:34:10  rurban
 // Fix error with : in pagenames. Thanks to Dan Frankowski. bug #1115479
 //
