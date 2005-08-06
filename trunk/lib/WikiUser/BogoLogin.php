@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: BogoLogin.php,v 1.5 2005-02-14 12:28:27 rurban Exp $');
+rcs_id('$Id: BogoLogin.php,v 1.6 2005-08-06 13:21:37 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -7,10 +7,10 @@ rcs_id('$Id: BogoLogin.php,v 1.5 2005-02-14 12:28:27 rurban Exp $');
 /** Without stored password. A _BogoLoginPassUser with password 
  *  is automatically upgraded to a PersonalPagePassUser.
  */
-class _BogoLoginPassUser
-extends _PassUser
-{
+class _BogoLoginPassUser extends _PassUser {
+
     var $_authmethod = 'BogoLogin';
+    
     function userExists() {
         if (isWikiWord($this->_userid)) {
             $this->_level = WIKIAUTH_BOGO;
@@ -62,6 +62,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2005/02/14 12:28:27  rurban
+// fix policy strict. Thanks to Mikhail Vladimirov
+//
 // Revision 1.4  2004/12/26 17:11:15  rurban
 // just copyright
 //
