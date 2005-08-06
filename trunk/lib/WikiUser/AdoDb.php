@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: AdoDb.php,v 1.5 2005-02-14 12:28:26 rurban Exp $');
+rcs_id('$Id: AdoDb.php,v 1.6 2005-08-06 13:21:09 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -103,16 +103,16 @@ extends _DbPassUser
             return $this->_tryNextUser();
         }
         $dbi =& $GLOBALS['request']->_dbi;
-        if (empty($this->_authselect) and $dbi->getAuthParam('auth_check')) {
-            $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'),
-                                                array("userid","password"));
+        // Prepare the configured auth statements
+        if ($dbi->getAuthParam('auth_check') and empty($this->_authselect)) {
+            $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'), 
+                                                array("userid", "password"));
         }
-        if (empty($this->_authselect))
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
-                              'DBAUTH_AUTH_CHECK', 'ADODB'),
-                          E_USER_WARNING);
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
-        if ($this->_auth_crypt_method == 'crypt') {
+        if ( !$dbi->getAuthParam('auth_user_exists') 
+             and $this->_auth_crypt_method == 'crypt'
+             and $this->_authselect)
+        {
             $rs = $dbh->Execute(sprintf($this->_authselect, $dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
                 $rs->Close();
@@ -135,7 +135,8 @@ extends _DbPassUser
                 $rs->Close();
             }
         }
-        // maybe the user is allowed to create himself. Generally not wanted in 
+        // User does not exist yet.
+        // Maybe the user is allowed to create himself. Generally not wanted in 
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
         if (empty($this->_authcreate) and $dbi->getAuthParam('auth_create')) {
@@ -146,8 +147,9 @@ extends _DbPassUser
             isset($GLOBALS['HTTP_POST_VARS']['auth']) and
             isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) 
         {
+            $passwd = $GLOBALS['HTTP_POST_VARS']['auth']['passwd'];
             $dbh->Execute(sprintf($this->_authcreate,
-                                  $dbh->qstr($GLOBALS['HTTP_POST_VARS']['auth']['passwd']),
+                                  $dbh->qstr($passwd),
                                   $dbh->qstr($this->_userid)));
             return true;
         }
@@ -172,7 +174,7 @@ extends _DbPassUser
         $dbi =& $GLOBALS['request']->_dbi;
         if (empty($this->_authselect) and $dbi->getAuthParam('auth_check')) {
             $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'),
-                                                array("userid", "password"));
+                                                array("password", "userid"));
         }
         if (!isset($this->_authselect))
             $this->userExists();
@@ -182,7 +184,8 @@ extends _DbPassUser
                           E_USER_WARNING);
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->Execute(sprintf($this->_authselect, $dbh->qstr($this->_userid)));
+            $rs = $dbh->Execute(sprintf($this->_authselect, 
+            				$dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
                 $stored_password = $rs->fields['password'];
                 $rs->Close();
@@ -197,8 +200,8 @@ extends _DbPassUser
                                         $dbh->qstr($this->_userid)));
             if (isset($rs->fields['ok']))
                 $okay = $rs->fields['ok'];
-            elseif (isset($rs->fields[1]))
-                $okay = $rs->fields[1];
+            elseif (isset($rs->fields[0]))
+                $okay = $rs->fields[0];
             else {
                 $okay = reset($rs->fields);
             }
@@ -250,6 +253,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2005/02/14 12:28:26  rurban
+// fix policy strict. Thanks to Mikhail Vladimirov
+//
 // Revision 1.4  2004/12/26 17:11:15  rurban
 // just copyright
 //
