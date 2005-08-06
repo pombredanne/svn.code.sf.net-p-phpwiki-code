@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.45 2005-05-06 16:48:41 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.46 2005-08-06 13:09:33 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -202,7 +202,7 @@ class PageType_interwikimap extends PageType
 
 
     function _parseMap ($text) {
-        if (!preg_match_all("/^\s*(\S+)\s+(\S+)/m",
+        if (!preg_match_all("/^\s*(\S+)\s+(.+)$/m",
                             $text, $matches, PREG_SET_ORDER))
             return false;
 
@@ -499,6 +499,9 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2005/05/06 16:48:41  rurban
+// support %u, %b, %d expansion for Upload: User: and Talk: interwiki monikers
+//
 // Revision 1.44  2005/04/23 11:07:34  rurban
 // cache map
 //
