@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.23 2005-02-04 13:25:07 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.24 2005-08-06 13:26:25 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki,
@@ -14,22 +14,9 @@ require_once('lib/WikiPlugin.php');
 class Theme_Sidebar extends Theme {
 
     function Theme_Sidebar ($theme_name='Sidebar') {
-        $this->_name = $theme_name;
-        $this->_themes_dir = NormalizeLocalFileName("themes");
-        $this->_path  = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
-        $this->_theme = "themes/$theme_name";
-        if (ENABLE_DOUBLECLICKEDIT) // by pixels
-            $this->initDoubleClickEdit();
+        parent::Theme($theme_name);
 
-        if ($theme_name != 'default')
-            $this->_default_theme = new Theme;
-        $this->_css = array();
-
-        $this->calendarInit();
-
-        if (defined("ENABLE_LIVESEARCH") and ENABLE_LIVESEARCH) { // by bitflux.ch
-            $this->initLiveSearch();
-        }
+        $this->calendarInit(true);
     }
 
     function findTemplate ($name) {
@@ -61,44 +48,42 @@ class Theme_Sidebar extends Theme {
         return $UserCalPageTitle;
     }
 
-    function calendarInit() {
+    function calendarInit($force = false) {
         $dbi = $GLOBALS['request']->getDbh();
-        // display flat calender dhtml under the clock
-        if ($dbi->isWikiPage($this->calendarBase())) {
+        // display flat calender dhtml in the sidebar
+        if ($force or $dbi->isWikiPage($this->calendarBase())) {
             $jslang = @$GLOBALS['LANG'];
             $this->addMoreHeaders
                 (
                  $this->_CSSlink(0, 
                                  $this->_findFile('jscalendar/calendar-phpwiki.css'), 'all'));
-            $this->addMoreHeaders("\n");
             $this->addMoreHeaders
                 (JavaScript('',
-                            array('src' => $this->_findData('jscalendar/calendar_stripped.js'))));
-            $this->addMoreHeaders("\n");
+                            array('src' => $this->_findData('jscalendar/calendar'.(DEBUG?'':'_stripped').'.js'))));
             if (!($langfile = $this->_findData("jscalendar/lang/calendar-$jslang.js")))
                 $langfile = $this->_findData("jscalendar/lang/calendar-en.js");
             $this->addMoreHeaders(JavaScript('',array('src' => $langfile)));
-            $this->addMoreHeaders("\n");
             $this->addMoreHeaders
                 (JavaScript('',
                             array('src' => 
-                                  $this->_findData('jscalendar/calendar-setup_stripped.js'))));
-            $this->addMoreHeaders("\n");
+                                  $this->_findData('jscalendar/calendar-setup'.(DEBUG?'':'_stripped').'.js'))));
+
+            // Get existing date entries for the current user
             require_once("lib/TextSearchQuery.php");
-            // get existing date entries for the current user:
-            $iter = $dbi->titleSearch(new TextSearchQuery("^".$this->calendarBase().SUBPAGE_SEPARATOR, true));
+            $iter = $dbi->titleSearch(new TextSearchQuery("^".$this->calendarBase().SUBPAGE_SEPARATOR, true, "auto"));
             $existing = array();
             while ($page = $iter->next()) {
                 if ($page->exists())
                     $existing[] = basename($page->_pagename);
             }
-            $js_exist = '{"'.join('":1,"',$existing).'":1}';
-            //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
-            $this->addMoreHeaders(JavaScript('
-// this table holds the existing calender entries for the current user
+            if (!empty($existing)) {
+                $js_exist = '{"'.join('":1,"',$existing).'":1}';
+                //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
+                $this->addMoreHeaders(JavaScript('
+// This table holds the existing calender entries for the current user
 // calculated from the database
 var SPECIAL_DAYS = '.$js_exist.';
-// this function returns true if the date exists
+// This function returns true if the date exists in SPECIAL_DAYS
 function dateExists(date, y, m, d) {
     var year = date.getFullYear();
     m = m + 1;
@@ -109,13 +94,18 @@ function dateExists(date, y, m, d) {
     if (!exists) return false;
     else return true;
 }
-// this is the actual date status handler.  Note that it receives the
-// date object as well as separate values of year, month and date, for
-// your confort.
-function dateStatusHandler(date, y, m, d) {
+// This is the actual date status handler. 
+// Note that it receives the date object as well as separate 
+// values of year, month and date.
+function dateStatusFunc(date, y, m, d) {
     if (dateExists(date, y, m, d)) return "existing";
     else return false;
 }'));
+            }
+            else {
+                $this->addMoreHeaders(JavaScript('
+function dateStatusFunc(date, y, m, d) { return false;}'));
+            }
         }
     }
 }
