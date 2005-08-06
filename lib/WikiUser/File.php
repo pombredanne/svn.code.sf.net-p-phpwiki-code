@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: File.php,v 1.6 2005-05-04 05:37:34 rurban Exp $');
+rcs_id('$Id: File.php,v 1.7 2005-08-06 13:21:37 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -25,14 +25,13 @@ extends _PassUser
         }
         $this->_userid = $UserName;
         // read the .htaccess style file. We use our own copy of the standard pear class.
-        //include_once 'lib/pear/File_Passwd.php';
         $this->_may_change = defined('AUTH_USER_FILE_STORABLE') && AUTH_USER_FILE_STORABLE;
         if (empty($file) and defined('AUTH_USER_FILE'))
             $file = AUTH_USER_FILE;
         // same style as in main.php
         include_once(dirname(__FILE__)."/../pear/File_Passwd.php"); 
         // "__PHP_Incomplete_Class"
-        if (!empty($file) or empty($this->_file) or !isa($this->_file,"File_Passwd"))
+        if (!empty($file) or empty($this->_file) or !isa($this->_file, "File_Passwd"))
             $this->_file = new File_Passwd($file, false, $file.'.lock');
         else
             return false;
@@ -92,6 +91,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2005/05/04 05:37:34  rurban
+// fix #1191096 by Karel
+//
 // Revision 1.5  2005/02/14 12:28:27  rurban
 // fix policy strict. Thanks to Mikhail Vladimirov
 //
