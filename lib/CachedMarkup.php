@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.35 2005-04-23 11:18:58 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.36 2005-08-06 13:06:22 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -480,6 +480,7 @@ class Cached_UserLink extends Cached_WikiLink {
 }
 
 class Cached_PluginInvocation extends Cached_DynamicContent {
+
     function Cached_PluginInvocation ($pi) {
 	$this->_pi = $pi;
     }

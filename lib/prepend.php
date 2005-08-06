@@ -5,9 +5,9 @@
  */
 $RCS_IDS = '';
 function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.37 2005-06-22 05:49:00 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.38 2005-08-06 13:06:22 rurban Exp $');
 
-define('PHPWIKI_VERSION', '1.3.11_20050610');
+define('PHPWIKI_VERSION', '1.3.11_20050806');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
@@ -20,7 +20,7 @@ function check_php_version ($a = '0', $b = '0', $c = '0') {
     return ($PHP_VERSION >= ($a.$b.$c));
 }
 
-/** PHP5 deprecated old-style globals if !ini_get('register-long-arrays'). 
+/** PHP5 deprecated old-style globals if !ini_get('register_long_arrays'). 
   *  See Bug #1180115
   * We want to work with those old ones instead of the new superglobals, 
   * for easier coding.
