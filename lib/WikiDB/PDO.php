@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.1 2005-02-10 19:01:21 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.2 2005-08-06 13:20:05 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -49,8 +49,9 @@ class WikiDB_PDO extends WikiDB
         return $this->_cache->_id_cache[$pagename];
     }
 
-    // with PDO we should really use native quoting using prepared statements with ?
-    // add surrounding quotes '' if string
+    // With PDO we should really use native quoting using prepared statements with ?
+    // Supported since PDO-0.3 (?)
+    // Add surrounding quotes '' if string
     function quote ($in) {
         if (is_int($in) || is_double($in)) {
             return $in;
