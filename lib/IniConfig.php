@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.91 2005-06-30 04:53:46 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.92 2005-08-06 13:00:21 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -163,7 +163,7 @@ function IniConfig($file) {
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
          'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD',
          'SESSION_SAVE_PATH', 'TOOLBAR_PAGELINK_PULLDOWN', 'TOOLBAR_TEMPLATE_PULLDOWN',
-         'EXTERNAL_LINK_TARGET'
+         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL'
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -381,13 +381,16 @@ function IniConfig($file) {
 
     // TODO: Currently unsupported on non-SQL
     // CHECKME: PDO
-    if (!empty($rs['ACCESS_LOG_SQL'])) {
-        if (!in_array(DATABASE_TYPE, array('SQL','ADODB')))
+    if (array_key_exists('ACCESS_LOG_SQL', $rs)) {
+    	// WikiDB_backend::isSql() not yet loaded
+        if (!in_array(DATABASE_TYPE, array('SQL','ADODB','PDO')))
+            // override false config setting on no SQL WikiDB database.
             define('ACCESS_LOG_SQL', 0);
     }
     // SQL defaults to ACCESS_LOG_SQL = 2
     else {
-        define('ACCESS_LOG_SQL', in_array(DATABASE_TYPE, array('SQL','ADODB')) ? 2 : 0);
+        define('ACCESS_LOG_SQL', 
+               in_array(DATABASE_TYPE, array('SQL','ADODB','PDO')) ? 2 : 0);
     }
 
     // optional values will be set to '' to simplify the logic.
@@ -837,6 +840,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.91  2005/06/30 04:53:46  rurban
+// use better /tmp/cache, dependent on TEMP_DIR and getenv("TEMP")
+//
 // Revision 1.90  2005/05/06 18:45:59  rurban
 // add TOOLBAR_TEMPLATE_PULLDOWN (AddTemplate icon)
 //
