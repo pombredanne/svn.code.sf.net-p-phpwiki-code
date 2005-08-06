@@ -1,5 +1,5 @@
 // Toolbar JavaScript support functions. Taken from mediawiki 
-// $Id: toolbar.js,v 1.9 2005-01-25 07:17:32 rurban Exp $ 
+// $Id: toolbar.js,v 1.10 2005-08-06 13:33:05 rurban Exp $ 
 
 // Un-trap us from framesets
 if( window.top != window ) window.top.location = window.location;
@@ -25,8 +25,10 @@ function addTagButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
   addButton(imageFile, speedTip, "insertTags", [tagOpen, tagClose, sampleText]);
   return;
 }
-// This function generates a pulldown list to select from.
-// plugins, pagenames, categories. 
+
+// This function generates a popup list to select from. 
+// In an external window so far, but we really want that as acdropdown pulldown, hence the name.
+// plugins, pagenames, categories, templates. 
 // not with document.write because we cannot use self.opener then.
 //function addPulldown(imageFile, speedTip, pages) {
 //  addButton(imageFile, speedTip, "showPulldown", pages);
