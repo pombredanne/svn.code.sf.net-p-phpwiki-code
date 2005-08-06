@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.241 2005-05-06 16:54:19 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.242 2005-08-06 13:07:04 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -370,7 +370,7 @@ function LinkURL($url, $linktext = '') {
  * Disallows sizes which are too small. 
  * Spammers may use such (typically invisible) image attributes to higher their GoogleRank.
  *
- * Handle embeddable objects, like svg, class, vrml, swf, svgz, pdf especially.
+ * Handle embeddable objects, like svg, class, vrml, swf, svgz, pdf, avi, wmv especially.
  */
 function LinkImage($url, $alt = false) {
     $force_img = "png|jpg|gif|jpeg|bmp|pl|cgi";
@@ -530,6 +530,7 @@ class Stack {
 
 function SplitQueryArgs ($query_args = '') 
 {
+    // FIXME: use the arg-seperator which might not be &
     $split_args = split('&', $query_args);
     $args = array();
     while (list($key, $val) = each($split_args))
@@ -1448,8 +1449,9 @@ class ListRegexExpand {
         //$this->index = false;
     }
     function listMatchCallback ($item, $key) {
+        $quoted = str_replace('/','\/',$item);
     	if (preg_match('/' . $this->match . ($this->case_sensitive ? '/' : '/i'), 
-                       $item)) {
+                       $quoted)) {
 	    unset($this->list[$this->index]);
             $this->list[] = $item;
         }
@@ -2025,6 +2027,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.241  2005/05/06 16:54:19  rurban
+// support optional EXTERNAL_LINK_TARGET, default: _blank
+//
 // Revision 1.240  2005/04/23 11:15:49  rurban
 // handle allowed inlined objects within INLINE_IMAGES
 //
