@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PearDb.php,v 1.7 2005-02-14 12:28:27 rurban Exp $');
+rcs_id('$Id: PearDb.php,v 1.8 2005-08-06 13:21:09 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -107,38 +107,40 @@ extends _DbPassUser
             $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'), 
                                                 array("userid", "password"));
         }
-        if (empty($this->_authselect))
-            trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
-                              'DBAUTH_AUTH_CHECK', 'SQL'),
-                          E_USER_WARNING);
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
-        if ($this->_auth_crypt_method == 'crypt') {
+        if (!$dbi->getAuthParam('auth_user_exists') 
+            and $this->_auth_crypt_method == 'crypt' 
+            and $this->_authselect) 
+        {
             $rs = $dbh->query(sprintf($this->_authselect, $dbh->quote($this->_userid)));
             if ($rs->numRows())
                 return true;
         }
         else {
             if (! $dbi->getAuthParam('auth_user_exists'))
-                trigger_error(fmt("%s is missing",'DBAUTH_AUTH_USER_EXISTS'),
+                trigger_error(fmt("%s is missing", 'DBAUTH_AUTH_USER_EXISTS'),
                               E_USER_WARNING);
-            $this->_authcheck = $this->prepare($dbi->getAuthParam('auth_user_exists'),"userid");
+            $this->_authcheck = $this->prepare($dbi->getAuthParam('auth_user_exists'), "userid");
             $rs = $dbh->query(sprintf($this->_authcheck, $dbh->quote($this->_userid)));
             if ($rs->numRows())
                 return true;
         }
-        // maybe the user is allowed to create himself. Generally not wanted in 
+        // User does not exist yet.
+        // Maybe the user is allowed to create himself. Generally not wanted in 
         // external databases, but maybe wanted for the wiki database, for performance 
         // reasons
         if (empty($this->_authcreate) and $dbi->getAuthParam('auth_create')) {
             $this->_authcreate = $this->prepare($dbi->getAuthParam('auth_create'),
                                                 array("userid", "password"));
         }
-        if (!empty($this->_authcreate) and isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) {
+        if (!empty($this->_authcreate) and 
+            isset($GLOBALS['HTTP_POST_VARS']['auth']) and
+            isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) 
+        {
             $passwd = $GLOBALS['HTTP_POST_VARS']['auth']['passwd'];
             $dbh->simpleQuery(sprintf($this->_authcreate,
                                       $dbh->quote($passwd),
-                                      $dbh->quote($this->_userid)
-                                      ));
+                                      $dbh->quote($this->_userid)));
             return true;
         }
         return $this->_tryNextUser();
@@ -222,6 +224,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2005/02/14 12:28:27  rurban
+// fix policy strict. Thanks to Mikhail Vladimirov
+//
 // Revision 1.6  2005/01/06 15:44:22  rurban
 // move password length checker to correct method. thanks to Charles Corrigan
 //
