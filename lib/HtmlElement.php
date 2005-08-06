@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.46 2005-01-25 06:50:33 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.47 2005-08-06 12:53:36 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -493,13 +493,13 @@ function JavaScript ($js, $script_args = false) {
     $script_args = $script_args ? array_merge($default_script_args, $script_args)
                                 : $default_script_args;
     if (empty($js))
-        return HTML::script($script_args);
+        return HTML(HTML::script($script_args),"\n");
     else
         // see http://devedge.netscape.com/viewsource/2003/xhtml-style-script/
-        return HTML::script($script_args,
+        return HTML(HTML::script($script_args,
                             new RawXml((ENABLE_XHTML_XML ? "\n//<![CDATA[" : "\n<!--//")
-                                       . "\n".rtrim($js)."\n"
-                                       . (ENABLE_XHTML_XML ? "//]]>\n" : "// -->")));
+                                       . "\n".trim($js)."\n"
+                                       . (ENABLE_XHTML_XML ? "//]]>\n" : "// -->"))),"\n");
 }
 
 /** Conditionally display content based of whether javascript is supported.
@@ -535,6 +535,9 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.46  2005/01/25 06:50:33  rurban
+ added label
+
  Revision 1.45  2005/01/10 18:05:56  rurban
  php5 case-sensitivity
 
