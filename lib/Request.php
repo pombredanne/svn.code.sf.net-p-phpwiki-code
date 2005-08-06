@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.92 2005-05-14 07:22:47 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.93 2005-08-06 14:31:10 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -701,7 +701,7 @@ class Request_UploadedFile {
                 }
                 $tmp_file .= '/' . basename($fileinfo['tmp_name']);
                 /* but ending slash in php.ini upload_tmp_dir is required. */
-                if (ereg_replace('/+', '/', $tmp_file) != $fileinfo['tmp_name']) {
+                if (realpath(ereg_replace('/+', '/', $tmp_file)) != realpath($fileinfo['tmp_name'])) {
                     trigger_error(sprintf("Uploaded tmpfile illegal: %s != %s.",$tmp_file, $fileinfo['tmp_name']).
                     	          "\n".
                     	          "Probably illegal TEMP environment or upload_tmp_dir setting.",
@@ -1332,6 +1332,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.92  2005/05/14 07:22:47  rurban
+// remove mysql specific INSERT DELAYED
+//
 // Revision 1.91  2005/04/11 19:40:14  rurban
 // Simplify upload. See https://sourceforge.net/forum/message.php?msg_id=3093651
 // Improve UpLoad warnings.
