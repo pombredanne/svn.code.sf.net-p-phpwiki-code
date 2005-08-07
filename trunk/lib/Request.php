@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.94 2005-08-07 09:14:39 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.95 2005-08-07 10:09:33 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -617,7 +617,7 @@ class Request_CookieVars {
     	// if already defined, ignore
     	if (defined('MAIN_setUser') and $key = 'WIKI_ID') return;
         if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
-    	
+
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (is_numeric($persist_days)) {
             $expires = time() + (24 * 3600) * $persist_days;
@@ -630,6 +630,7 @@ class Request_CookieVars {
         else
             $packedval = urlencode($val);
         $vars[$key] = $packedval;
+        @$_COOKIE[$key] = $packedval;
         if ($path)
             @setcookie($key, $packedval, $expires, $path);
         else
@@ -643,10 +644,11 @@ class Request_CookieVars {
         
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (!defined('COOKIE_DOMAIN'))
-            @setcookie($key,'',0);
-        @setcookie($key,'',0,defined('COOKIE_DOMAIN') ? COOKIE_DOMAIN : '/');
-        unset($vars[$key]);
+            @setcookie($key, '', 0);
+        else    
+            @setcookie($key, '', 0, COOKIE_DOMAIN);
         unset($GLOBALS['HTTP_COOKIE_VARS'][$key]);
+        unset($_COOKIE[$key]);
         $deleted[$key] = 1;
     }
 }
@@ -1332,6 +1334,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.94  2005/08/07 09:14:39  rurban
+// fix comments
+//
 // Revision 1.93  2005/08/06 14:31:10  rurban
 // ensure absolute uploads path
 //
