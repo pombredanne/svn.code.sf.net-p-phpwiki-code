@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.34 2005-08-07 10:08:33 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.35 2005-08-07 10:51:11 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / PDO, ....
@@ -28,7 +28,8 @@ class DbSession
         // Check for existing DbSession handler
         $db_type = $dbh->getParam('dbtype');
         if (isa($dbh, 'WikiDB')) {
-            //$db_type = substr(get_class($dbh),7); // will fail with php4 and case-sensitive filesystem
+            // will fail with php4 and case-sensitive filesystem
+            //$db_type = substr(get_class($dbh),7); 
             
             // < 4.1.2 crash on dba sessions at session_write_close(). 
             // (Tested with 4.1.1 and 4.1.2)
@@ -62,6 +63,9 @@ class DbSession
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2005/08/07 10:08:33  rurban
+// dba simplification: no _backend in the subclass
+//
 // Revision 1.33  2005/02/27 19:40:36  rurban
 // fix for php4 and case-sensitive filesystems
 //
