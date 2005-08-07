@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.33 2005-02-27 19:40:36 rurban Exp $');
+<?php rcs_id('$Id: DbSession.php,v 1.34 2005-08-07 10:08:33 rurban Exp $');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / PDO, ....
@@ -14,7 +14,6 @@
  */
 class DbSession
 {
-    var $_backend;
     /**
      * Constructor
      *
@@ -41,9 +40,9 @@ class DbSession
             
             $class = "DbSession_".$db_type;
             if (class_exists($class)) {
-                $backend = &$dbh->_backend;
-                $this->_backend = new $class($backend->_dbh, $table);
-                return $this->_backend;
+                // dba has no ->_dbh, so this is used for the session link
+                $this->_backend = new $class($dbh->_backend->_dbh, $table);
+                return $this;
             }
         }
         //Fixme: E_USER_WARNING ignored!
@@ -63,6 +62,9 @@ class DbSession
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2005/02/27 19:40:36  rurban
+// fix for php4 and case-sensitive filesystems
+//
 // Revision 1.32  2005/02/11 14:41:57  rurban
 // seperate DbSession classes: less memory, a bit slower
 //
