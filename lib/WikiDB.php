@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.131 2005-04-23 11:30:12 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.132 2005-08-07 10:10:07 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -694,7 +694,7 @@ class WikiDB_Page
 
         $backend->lock(array('page','version'));
         $latestversion = $cache->get_latest_version($pagename);
-        if ($latestversion && $version == $latestversion) {
+        if ($latestversion && ($version == $latestversion)) {
             $backend->unlock(array('page','version'));
             trigger_error(sprintf("Attempt to delete most recent revision of '%s'",
                                   $pagename), E_USER_ERROR);
@@ -2093,11 +2093,10 @@ class WikiDB_cache
 
     function delete_versiondata($pagename, $version) {
         $new = $this->_backend->delete_versiondata($pagename, $version);
-        if (isset($this->_versiondata_cache[$pagename][$version]['1']))
-            unset ($this->_versiondata_cache[$pagename][$version]['1']);
-        if (isset($this->_versiondata_cache[$pagename][$version]['0']))
-            unset ($this->_versiondata_cache[$pagename][$version]['0']);
-        if (isset($this->_glv_cache[$pagename]))
+        if (isset($this->_versiondata_cache[$pagename][$version]))
+            unset ($this->_versiondata_cache[$pagename][$version]);
+        // dirty latest version cache only if latest version gets deleted
+        if (isset($this->_glv_cache[$pagename]) and $this->_glv_cache[$pagename] == $version)
             unset ($this->_glv_cache[$pagename]);
     }
 	
@@ -2137,6 +2136,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.131  2005/04/23 11:30:12  rurban
+// allow emtpy WikiDB::getRevisionBefore(), for simplier templates (revert)
+//
 // Revision 1.130  2005/04/06 06:19:30  rurban
 // Revert the previous wrong bugfix #1175761: USECACHE was mixed with WIKIDB_NOCACHE_MARKUP.
 // Fix WIKIDB_NOCACHE_MARKUP in main (always set it) and clarify it in WikiDB
