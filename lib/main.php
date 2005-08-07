@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.213 2005-06-10 06:10:35 rurban Exp $');
+rcs_id('$Id: main.php,v 1.214 2005-08-07 09:14:03 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -378,9 +378,9 @@ class WikiRequest extends Request {
     function _setUser (&$user) {
         $this->_user =& $user;
         if (defined('MAIN_setUser')) return;
-        define('MAIN_setUser',true);
         $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(),
                             COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
+        define('MAIN_setUser',true);
         if ($user->isSignedIn())
             $user->_authhow = 'signin';
 
@@ -1256,6 +1256,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.213  2005/06/10 06:10:35  rurban
+// ensure Update Preferences gets through
+//
 // Revision 1.212  2005/04/25 20:17:14  rurban
 // captcha feature by Benjamin Drieu. Patch #1110699
 //
