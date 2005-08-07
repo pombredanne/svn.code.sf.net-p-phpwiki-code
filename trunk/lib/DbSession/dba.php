@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dba.php,v 1.2 2005-08-07 10:07:55 rurban Exp $');
+<?php rcs_id('$Id: dba.php,v 1.3 2005-08-07 10:49:57 rurban Exp $');
 
 /** DBA Sessions
  *  session:
@@ -50,7 +50,7 @@ extends DbSession
     }
 
     function open ($save_path, $session_name) {
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $dbh->open();
     }
 
@@ -60,13 +60,13 @@ extends DbSession
     }
 
     function read ($id) {
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $result = $dbh->get($id);
         if (!$result) {
             return false;
         }
         list(,,$packed) = explode(':', $result, 3);
-        $this->_disconnect();
+        // $this->_disconnect();
         if (strlen($packed) > 4000) {
             trigger_error("Overlarge session data!", E_USER_WARNING);
             $packed = '';
@@ -76,27 +76,27 @@ extends DbSession
     }
   
     function write ($id, $sess_data) {
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $time = time();
         $ip = $GLOBALS['request']->get('REMOTE_ADDR');
         if (strlen($sess_data) > 4000) {
             trigger_error("Overlarge session data!", E_USER_WARNING);
             $sess_data = '';
         }
-        $dbh->set($id,$time.':'.$ip.':'.$sess_data);
-        $this->_disconnect();
+        $dbh->set($id, $time.':'.$ip.':'.$sess_data);
+        //$this->_disconnect();
         return true;
     }
 
     function destroy ($id) {
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $dbh->delete($id);
-        $this->_disconnect();
+        //$this->_disconnect();
         return true;
     }
 
     function gc ($maxlifetime) {
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $threshold = time() - $maxlifetime;
         for ($id = $dbh->firstkey(); $id !== false; $id = $dbh->nextkey()) {
             $result = $dbh->get($id);
@@ -104,7 +104,7 @@ extends DbSession
             if ($date < $threshold)
                 $dbh->delete($id);
         }
-        $this->_disconnect();
+        //$this->_disconnect();
         return true;
     }
 
@@ -132,6 +132,9 @@ extends DbSession
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2005/08/07 10:07:55  rurban
+// dba simplification: use default timeout
+//
 // Revision 1.1  2005/02/11 14:41:40  rurban
 // seperate DbSession classes: less memory, a bit slower
 //
