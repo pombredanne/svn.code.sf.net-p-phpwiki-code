@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.46 2005-08-06 13:09:33 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.47 2005-08-07 09:14:38 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -210,7 +210,9 @@ class PageType_interwikimap extends PageType
             $map[$m[1]] = $m[2];
         }
 
-        // Add virtual monikers: Upload:, Talk:, User:
+        // Add virtual monikers Upload: Talk: User:
+        // and expand special variables %u, %b, %d
+
         // Upload: Should be expanded later to user-specific upload dirs. 
         // In the Upload plugin, not here: Upload:ReiniUrban/uploaded-file.png
         if (empty($map['Upload'])) {
@@ -222,8 +224,10 @@ class PageType_interwikimap extends PageType
         if (empty($map["User"])) {
             $map["User"] = "%s";
         }
+        // Talk:PageName => PageName/Discussion as default, which might be overridden
         if (empty($map["Talk"])) {
             $pagename = $GLOBALS['request']->getArg('pagename');
+            // against PageName/Discussion/Discussion
             if (string_ends_with($pagename, SUBPAGE_SEPARATOR._("Discussion")))
                 $map["Talk"] = "%s";
             else
@@ -251,7 +255,7 @@ class PageType_interwikimap extends PageType
                                              Iso8601DateTime());
         }
 
-        // Maybe add other monikers also (SemanticWeb link predicates?)
+        // Maybe add other monikers also - SemanticWeb link predicates
         // Should they be defined in a RDF? (strict mode)
         // Or should the SemanticWeb lib add it by itself? 
         // (adding only a subset dependent on the context = model)
@@ -499,6 +503,9 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2005/08/06 13:09:33  rurban
+// allow spaces in interwiki paths, even implicitly. fixes bug #1218733
+//
 // Revision 1.45  2005/05/06 16:48:41  rurban
 // support %u, %b, %d expansion for Upload: User: and Talk: interwiki monikers
 //

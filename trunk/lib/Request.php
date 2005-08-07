@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.93 2005-08-06 14:31:10 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.94 2005-08-07 09:14:39 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -576,7 +576,7 @@ class Request_SessionVars {
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
         if (!function_usable('ini_get') or ini_get('register_globals'))
             unset($GLOBALS[$key]);
-        if (DEBUG) trigger_error("delete session $key",E_USER_WARNING);
+        if (DEBUG) trigger_error("delete session $key", E_USER_WARNING);
         unset($vars[$key]);
         session_unregister($key);
     }
@@ -1332,6 +1332,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.93  2005/08/06 14:31:10  rurban
+// ensure absolute uploads path
+//
 // Revision 1.92  2005/05/14 07:22:47  rurban
 // remove mysql specific INSERT DELAYED
 //
