@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dba.php,v 1.1 2005-02-11 14:41:40 rurban Exp $');
+<?php rcs_id('$Id: dba.php,v 1.2 2005-08-07 10:07:55 rurban Exp $');
 
 /** DBA Sessions
  *  session:
@@ -36,21 +36,16 @@ extends DbSession
             $dba_handler = 'gdbm';
             $timeout = 20;
             extract($DBParams);
+
             $dbfile = "$directory/$prefix" . 'session' . '.' . $dba_handler;
-            $dbh = new DbaDatabase($dbfile, false, $dba_handler);
-            $dbh->set_timeout($timeout);
-            if (!$dbh->open('c')) {
-                trigger_error(sprintf(_("%s: Can't open dba database"), $dbfile), E_USER_ERROR);
-                global $request;
-                $request->finish(fmt("%s: Can't open dba database", $dbfile));
-            }
+            $dbh = new DbaDatabase($dbfile, 'c', $dba_handler);
             $this->_dbh = &$dbh;
         }
         return $dbh;
     }
 
     function _disconnect() {
-        if (0 and isset($this->_dbh))
+        if (isset($this->_dbh))
             $this->_dbh->close();
     }
 
@@ -137,6 +132,9 @@ extends DbSession
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/02/11 14:41:40  rurban
+// seperate DbSession classes: less memory, a bit slower
+//
 
 // Local Variables:
 // mode: php
