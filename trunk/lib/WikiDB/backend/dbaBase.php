@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.21 2005-04-01 16:05:48 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.22 2005-08-07 10:11:24 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -196,7 +196,7 @@ extends WikiDB_backend
 
         if ($version == $latest) {
             $previous = $this->get_previous_version($version);
-            if ($previous> 0) {
+            if ($previous > 0) {
                 $pvdata = $this->get_versiondata($pagename, $previous);
                 $is_empty = empty($pvdata['%content']);
             }
