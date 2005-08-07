@@ -1,8 +1,13 @@
-# $Id: Makefile,v 1.7 2004-11-03 16:47:53 rurban Exp $
+# $Id: Makefile,v 1.8 2005-08-07 08:54:33 rurban Exp $
 # user-definable settings:
 # for mysqladmin
 DBADMIN_USER=root
 DBADMIN_PASS=secret
+
+# etags (GNU Emacs 21.5.x)
+#ETAGS_STDIN = /usr/bin/etags -L -
+# etags (GNU Emacs 21.4.15)
+ETAGS_STDIN = /usr/bin/etags -
 
 DB_SQLITE_DBFILE = /tmp/phpwiki-sqlite.db
 
@@ -45,15 +50,15 @@ PHP_SRC := $(wildcard *.php ./lib/*.php ./lib/WikiDB/*.php ./lib/plugin/*.php)
 all:  TAGS
 
 TAGS:  $(PHP_SRC)
-#	etags $(PHP_SRC)
 	if [ -f $@ ]; then /usr/bin/mv -f $@ $@~; fi
-	/usr/bin/find . \( -type d -regex '\(^\./lib/pear\)\|\(^\./lib/WikiDB/adodb\)\|\(^\./lib/nusoap\)\|\(^\./lib/fpdf\)\|\(^\./locale/.*/LC_MESSAGES\)' \) -prune -o -type f -name \*.php | etags -
+#	etags $(PHP_SRC)
+	/usr/bin/find . \( -type d -regex '\(^\./lib/pear\)\|\(^\./lib/WikiDB/adodb\)\|\(^\./lib/nusoap\)\|\(^\./lib/fpdf\)\|\(^\./locale/.*/LC_MESSAGES\)' \) -prune -o -type f -name \*.php | grep \*.php | $(ETAGS_STDIN)
 
 TAGS.full:  $(PHP_SRC)
 	if [ -f $@ ]; then /usr/bin/mv -f $@ $@~; fi
-# 	better etags
-#	/usr/bin/find . -name \*.php -o -name \*.tmpl | etags -L - --langmap="HTML:.tmpl" -f $@
-	/usr/bin/find . -type f -name \*.php -o -name \*.tmpl | etags - -o $@
+	/usr/bin/find . -name \*.php -o -name \*.tmpl | $(ETAGS_STDIN) --langmap="HTML:.tmpl" -f $@
+# older etags needed this:
+#	/usr/bin/find . -type f -name \*.php -o -name \*.tmpl | etags - -o $@
 
 locale: 
 	cd locale
