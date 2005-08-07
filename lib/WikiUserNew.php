@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.129 2005-06-10 06:10:35 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.130 2005-08-07 09:14:39 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2078,6 +2078,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.129  2005/06/10 06:10:35  rurban
+// ensure Update Preferences gets through
+//
 // Revision 1.128  2005/06/05 05:38:02  rurban
 // Default ENABLE_DOUBLECLICKEDIT = false. Moved to UserPreferences
 //
