@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.43 2005-04-11 19:41:23 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.44 2005-08-07 10:52:43 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -212,6 +212,13 @@ class ErrorManager
             $msg->printXML();
             return;
         }
+
+        // template which flushed the pending errors already handled,
+        // so display now all errors directly.
+        if (!empty($GLOBALS['request']->_finishing)) {
+            $this->_postpone_mask = 0;
+	}
+        
         $in_handler = true;
 
         foreach ($this->_handlers as $handler) {
@@ -254,7 +261,7 @@ class ErrorManager
         }
         else if (($error->errno & error_reporting()) != 0) {
             if  (($error->errno & $this->_postpone_mask) != 0) {
-                if ((function_exists('is_a') and is_a($error,'PhpErrorOnce'))
+                if ((function_exists('is_a') and is_a($error, 'PhpErrorOnce'))
                     or (!function_exists('is_a') and 
                     (
                      // stdlib independent isa()
@@ -610,6 +617,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2005/04/11 19:41:23  rurban
+// Improve postponed errors+warnins list layout.
+//
 // Revision 1.42  2005/02/26 18:29:07  rurban
 // re-enable colored boxed errors
 //

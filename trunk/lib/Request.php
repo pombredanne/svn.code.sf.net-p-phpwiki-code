@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.95 2005-08-07 10:09:33 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.96 2005-08-07 10:52:43 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -416,6 +416,7 @@ class Request {
     }
 
     function finish() {
+    	$this->_finishing = true;
         if (!empty($this->_accesslog)) {
             $this->_accesslog->push($this);
             if (empty($this->_do_chunked_output))
@@ -1334,6 +1335,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.95  2005/08/07 10:09:33  rurban
+// set _COOKIE also
+//
 // Revision 1.94  2005/08/07 09:14:39  rurban
 // fix comments
 //

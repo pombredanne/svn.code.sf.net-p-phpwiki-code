@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.16 2004-11-21 11:59:14 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.17 2005-08-07 10:52:43 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 
@@ -157,9 +157,8 @@ class DbaDatabase
     }
     
     function _error($mes) {
-        trigger_error("DbaDatabase: $mes", E_USER_WARNING);
-        return false;
-        
+        //trigger_error("DbaDatabase: $mes", E_USER_WARNING);
+        //return false;
         trigger_error("$this->_file: dba error: $mes", E_USER_ERROR);
     }
 
