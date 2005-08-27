@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.215 2005-08-07 10:50:27 rurban Exp $');
+rcs_id('$Id: main.php,v 1.216 2005-08-27 09:40:46 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -828,14 +828,6 @@ class WikiRequest extends Request {
         if (!empty($this->args['auth']) and !empty($this->args['auth']['userid']))
             return $this->args['auth']['userid'];
 
-        if (!empty($HTTP_SERVER_VARS['PHP_AUTH_USER']))
-            return $HTTP_SERVER_VARS['PHP_AUTH_USER'];
-        // pubcookie et al
-        if (!empty($HTTP_SERVER_VARS['REMOTE_USER']))
-            return $HTTP_SERVER_VARS['REMOTE_USER'];
-        if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
-            return $HTTP_ENV_VARS['REMOTE_USER'];
-            
         if ($user = $this->getSessionVar('wiki_user')) {
             // switched auth between sessions. 
             // Note: There's no way to demandload a missing class-definition 
@@ -846,6 +838,16 @@ class WikiRequest extends Request {
                 return ENABLE_USER_NEW ? $user->UserName() : $this->_user;
             }
         }
+
+	// Sessions override http auth
+        if (!empty($HTTP_SERVER_VARS['PHP_AUTH_USER']))
+            return $HTTP_SERVER_VARS['PHP_AUTH_USER'];
+        // pubcookie et al
+        if (!empty($HTTP_SERVER_VARS['REMOTE_USER']))
+            return $HTTP_SERVER_VARS['REMOTE_USER'];
+        if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
+            return $HTTP_ENV_VARS['REMOTE_USER'];
+
         if ($userid = $this->getCookieVar('WIKI_ID')) {
             if (!empty($userid) and substr($userid,0,2) != 's:') {
                 $this->_user->authhow = 'cookie';
@@ -1256,6 +1258,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.215  2005/08/07 10:50:27  rurban
+// postpone guard
+//
 // Revision 1.214  2005/08/07 09:14:03  rurban
 // fix cookie logout; let the WIKI_ID cookie get deleted
 //
