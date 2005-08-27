@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.132 2005-08-07 10:10:07 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.133 2005-08-27 09:39:10 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1898,7 +1898,7 @@ class WikiDB_PageRevisionIterator
  */
 class WikiDB_Array_PageIterator
 {
-    function WikiDB_Array_PageIterator(&$pagenames) {
+    function WikiDB_Array_PageIterator($pagenames) {
         global $request;
         $this->_dbi = $request->getDbh();
         $this->_pages = $pagenames;
@@ -2136,6 +2136,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.132  2005/08/07 10:10:07  rurban
+// clean whole version cache
+//
 // Revision 1.131  2005/04/23 11:30:12  rurban
 // allow emtpy WikiDB::getRevisionBefore(), for simplier templates (revert)
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.137 2005-01-30 23:14:38 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.138 2005-08-27 09:39:10 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -403,7 +403,10 @@ function DumpHtmlToDir (&$request)
     if ($whichpages = $request->getArg('pages')) {  // which pagenames
         if ($whichpages == '[]') // current page
             $whichpages = $thispage;
-        $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
+        $pages = new WikiDB_Array_PageIterator(array($thispage));
+    // not at admin page: dump only the current page
+    } elseif ($thispage != _("PhpWikiAdministration")) { 
+        $pages = new WikiDB_Array_PageIterator($whichpages ? $whichpages : array($thispage));
     } else {
         $pages = $dbi->getAllPages(false,false,false,$excludeList);
     }
@@ -502,7 +505,10 @@ function DumpHtmlToDir (&$request)
     if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
         @mkdir("$directory/images");
         foreach ($WikiTheme->dumped_images as $img_file) {
-            if ($img_file and ($from = $WikiTheme->_findFile($img_file, true)) and basename($from)) {
+            if ($img_file 
+                and ($from = $WikiTheme->_findFile($img_file, true)) 
+                and basename($from)) 
+            {
                 $target = "$directory/images/".basename($img_file);
                 if (copy($WikiTheme->_path . $from, $target)) {
                     _copyMsg($from, fmt("... copied to %s", $target));
@@ -518,7 +524,10 @@ function DumpHtmlToDir (&$request)
     	// Buttons also
         @mkdir("$directory/images/buttons");
         foreach ($WikiTheme->dumped_buttons as $text => $img_file) {
-            if ($img_file and ($from = $WikiTheme->_findFile($img_file, true)) and basename($from)) {
+            if ($img_file 
+                and ($from = $WikiTheme->_findFile($img_file, true)) 
+                and basename($from)) 
+            {
                 $target = "$directory/images/buttons/".basename($img_file);
                 if (copy($WikiTheme->_path . $from, $target)) {
                     _copyMsg($from, fmt("... copied to %s", $target));
@@ -532,7 +541,10 @@ function DumpHtmlToDir (&$request)
     }
     if (!empty($WikiTheme->dumped_css) and is_array($WikiTheme->dumped_css)) {
         foreach ($WikiTheme->dumped_css as $css_file) {
-            if ($css_file and ($from = $WikiTheme->_findFile(basename($css_file), true)) and basename($from)) {
+            if ($css_file 
+                and ($from = $WikiTheme->_findFile(basename($css_file), true)) 
+                and basename($from)) 
+            {
                 $target = "$directory/" . basename($css_file);
                 if (copy($WikiTheme->_path . $from, $target)) {
                     _copyMsg($from, fmt("... copied to %s", $target));
@@ -1307,6 +1319,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.137  2005/01/30 23:14:38  rurban
+ simplify page names
+
  Revision 1.136  2005/01/25 07:07:24  rurban
  remove body tags in html dumps, add css and images to zipdumps, simplify printing
 
