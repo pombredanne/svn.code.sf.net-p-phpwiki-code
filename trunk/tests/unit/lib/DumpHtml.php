@@ -38,14 +38,15 @@ class DumpHtml extends phpwiki_TestCase {
     function test99DumpHtml() {
         global $request, $cur_dir;
 
-        $request->setArg('directory',$cur_dir.'/.dumphtml');
+        $request->setArg('directory', $cur_dir.'/.dumphtml');
         purge_dir($cur_dir."/.dumphtml");
         purge_dir($cur_dir."/.dumphtml/images");
-        $request->setArg('pages','');
+        $request->setArg('pagename', _("PhpWikiAdministration"));
+        $request->setArg('pages', '');
         //FIXME: LinkDatabase doesn't work for DumpHtmlToDir
         //$request->setArg('exclude','LinkDatabase');  // this does not work with format=text => exit
         DumpHtmlToDir($request);
-        $this->assertTrue(file_exists($cur_dir."/.dumphtml/HomePage.html")); 
+        $this->assertTrue(file_exists($cur_dir."/.dumphtml/".HOME_PAGE.".html")); 
     }
 
 }
