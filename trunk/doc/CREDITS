@@ -53,7 +53,7 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ;: configuration libs and tools, WikiGroup architecture
 
 ; Johannes Groﬂe :
-;: WikiPluginCached
+;: WikiPluginCached plugins and architecture
 
 ! Localization
 
@@ -119,7 +119,7 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ; Manuel Samper <manuel@samper.dyndns.org>
 ;: improved the WikiLink regexp splitter
 
-! Contributor since 1.3.x:
+! Contributors since 1.3.x:
 
 ; Philippe Vanhaesendonck (oracle backend, several patches)
 ; Matt Palmer (debian package maintainer, sqlite, IniConfig)
@@ -216,4 +216,4 @@ Sara von Mosch (Word to wiki converter)
 * Grant Morgan http://c2.com/cgi-bin/wiki?GrantMorgan,
 * and especially Clifford A. Adams: http://c2.com/cgi-bin/wiki?CliffordAdams
 
- $Id: CREDITS,v 1.5 2005-02-27 12:17:59 rurban Exp $
+ $Id: CREDITS,v 1.6 2005-08-27 10:01:26 rurban Exp $
