@@ -355,7 +355,7 @@ elseif (!ini_get("register_argc_argv"))
 // purge the testbox
     
 $debug_level = 1; //was 9, _DEBUG_VERBOSE | _DEBUG_TRACE
-if (defined('E_STRICT')) $debug_level = 5; // add PARSER flag on php5
+//if (defined('E_STRICT')) $debug_level = 5; // add PARSER flag on php5
 $user_level  = 1; // BOGO (conflicts with RateIt)
 // use argv (from cli) or tests (from browser) params to run only certain tests
 // avoid pear: Console::Getopt
