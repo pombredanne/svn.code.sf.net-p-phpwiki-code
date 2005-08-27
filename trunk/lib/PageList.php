@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.132 2005-04-09 09:16:15 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.133 2005-08-27 09:41:37 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -629,6 +629,14 @@ class PageList {
         } else {
             $this->_pages[] = $page_handle;
         }
+    }
+
+    function pageNames() {
+        $pages = array();
+        foreach ($this->_pages as $page_handle) {
+            $pages[] = $page_handle->getName();
+        }
+        return $pages;
     }
 
     function _getPageFromHandle($page_handle) {
@@ -1467,6 +1475,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.132  2005/04/09 09:16:15  rurban
+// fix recursive PageList azhead+cols listing
+//
 // Revision 1.131  2005/02/04 10:48:06  rurban
 // fix usort ref warning. Thanks to Charles Corrigan
 //
