@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.138 2005-08-27 09:39:10 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.139 2005-08-27 18:02:43 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -218,17 +218,17 @@ function MakeWikiZip (&$request)
     } else {
         $excludeList = array();
     }
-    if ($whichpages = $request->getArg('pages')) {  // which pagenames
-        if ($whichpages == '[]') // current page
-            $whichpages = $thispage;
-        $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
+    if ($pages = $request->getArg('pages')) {  // which pagenames
+        if ($pages == '[]') // current page
+            $pages = $thispage;
+        $page_iter = new WikiDB_Array_PageIterator(explodePageList($pages));
     } else {
-        $pages = $dbi->getAllPages(false,false,false,$excludeList);
+        $page_iter = $dbi->getAllPages(false,false,false,$excludeList);
     }
     $request_args = $request->args;
     $timeout = (! $request->getArg('start_debug')) ? 30 : 240;
     
-    while ($page = $pages->next()) {
+    while ($page = $page_iter->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
         longer_timeout($timeout); 	// Reset watchdog
 
@@ -292,18 +292,18 @@ function DumpToDir (&$request)
     } else {
         $excludeList = array();
     }
-    if ($whichpages = $request->getArg('pages')) {  // which pagenames
-        if ($whichpages == '[]') // current page
-            $whichpages = $thispage;
-        $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
+    if ($pages = $request->getArg('pages')) {  // which pagenames
+        if ($pages == '[]') // current page
+            $pages = $thispage;
+        $page_iter = new WikiDB_Array_PageIterator(explodePageList($pages));
     } else {
-        $pages = $dbi->getAllPages(false,false,false,$excludeList);
+        $page_iter = $dbi->getAllPages(false,false,false,$excludeList);
     }
 
     $request_args = $request->args;
     $timeout = (! $request->getArg('start_debug')) ? 30 : 240;
 
-    while ($page = $pages->next()) {
+    while ($page = $page_iter->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
         longer_timeout($timeout); 	// Reset watchdog
 
@@ -400,22 +400,22 @@ function DumpHtmlToDir (&$request)
     } else {
         $excludeList = array();
     }
-    if ($whichpages = $request->getArg('pages')) {  // which pagenames
-        if ($whichpages == '[]') // current page
-            $whichpages = $thispage;
-        $pages = new WikiDB_Array_PageIterator(array($thispage));
+    if ($pages = $request->getArg('pages')) {  // which pagenames
+        if ($pages == '[]') // current page
+            $pages = $thispage;
+        $page_iter = new WikiDB_Array_PageIterator(explodePageList($pages));
     // not at admin page: dump only the current page
     } elseif ($thispage != _("PhpWikiAdministration")) { 
-        $pages = new WikiDB_Array_PageIterator($whichpages ? $whichpages : array($thispage));
+        $page_iter = new WikiDB_Array_PageIterator(array($thispage));
     } else {
-        $pages = $dbi->getAllPages(false,false,false,$excludeList);
+        $page_iter = $dbi->getAllPages(false,false,false,$excludeList);
     }
 
     global $WikiTheme;
     if (defined('HTML_DUMP_SUFFIX'))
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
     $WikiTheme->DUMP_MODE = 'HTML';
-    $_bodyAttr = $WikiTheme->_MoreAttr['body'];
+    $_bodyAttr = @$WikiTheme->_MoreAttr['body'];
     unset($WikiTheme->_MoreAttr['body']);
 
     // check if the dumped file will be accessible from outside
@@ -437,7 +437,7 @@ function DumpHtmlToDir (&$request)
     $request_args = $request->args;
     $timeout = (! $request->getArg('start_debug')) ? 20 : 240;
     
-    while ($page = $pages->next()) {
+    while ($page = $page_iter->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
         longer_timeout($timeout); 	// Reset watchdog
           
@@ -500,7 +500,7 @@ function DumpHtmlToDir (&$request)
         unset($template);
         unset($data);
     }
-    $pages->free();
+    $page_iter->free();
 
     if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
         @mkdir("$directory/images");
@@ -586,19 +586,19 @@ function MakeWikiZipHtml (&$request)
     } else {
         $excludeList = array();
     }
-    if ($whichpages = $request->getArg('pages')) {  // which pagenames
-        if ($whichpages == '[]') // current page
-            $whichpages = $thispage;
-        $pages = new WikiDB_Array_PageIterator(explodePageList($whichpages));
+    if ($pages = $request->getArg('pages')) {  // which pagenames
+        if ($pages == '[]') // current page
+            $pages = $thispage;
+        $page_iter = new WikiDB_Array_PageIterator(explodePageList($pages));
     } else {
-        $pages = $dbi->getAllPages(false,false,false,$excludeList);
+        $page_iter = $dbi->getAllPages(false,false,false,$excludeList);
     }
 
     global $WikiTheme;
     if (defined('HTML_DUMP_SUFFIX'))
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
     $WikiTheme->DUMP_MODE = 'ZIPHTML';
-    $_bodyAttr = $WikiTheme->_MoreAttr['body'];
+    $_bodyAttr = @$WikiTheme->_MoreAttr['body'];
     unset($WikiTheme->_MoreAttr['body']);
 
     /* ignore fatals in plugins */
@@ -610,7 +610,7 @@ function MakeWikiZipHtml (&$request)
     $request_args = $request->args;
     $timeout = (! $request->getArg('start_debug')) ? 20 : 240;
     
-    while ($page = $pages->next()) {
+    while ($page = $page_iter->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
         longer_timeout($timeout); 	// Reset watchdog
 
@@ -655,7 +655,7 @@ function MakeWikiZipHtml (&$request)
         unset($template);
         unset($data);
     }
-    $pages->free();
+    $page_iter->free();
 
     $attrib = false;
     // Deal with css and images here.
@@ -1319,6 +1319,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.138  2005/08/27 09:39:10  rurban
+ dumphtml when not at admin page: dump the current or given page
+
  Revision 1.137  2005/01/30 23:14:38  rurban
  simplify page names
 
