@@ -1,3 +1,9 @@
+PhpWiki 1.2.11:
+* support remove for $WhichDatabase = file
+
+PhpWiki 1.2.10:
+* support php5 with register_long_arrays = off 
+
 PhpWiki 1.2.9 bugfix:
 * Jose Vina fixed MostPopular sorting for dba and dbm, 
   which was broken since 1.2.3
