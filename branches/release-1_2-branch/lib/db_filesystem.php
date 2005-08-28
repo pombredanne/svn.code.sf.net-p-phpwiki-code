@@ -1,4 +1,4 @@
-<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.10 2005-01-07 14:23:04 rurban Exp $');
+<?php  rcs_id('$Id: db_filesystem.php,v 1.4.2.11 2005-08-28 14:03:17 rurban Exp $');
    /*
       Database functions:
 
@@ -8,6 +8,7 @@
       InsertPage($dbi, $pagename, $pagehash)
       SaveCopyToArchive($dbi, $pagename, $pagehash) 
       IsWikiPage($dbi, $pagename)
+      IsInArchive($dbi, $pagename)
       InitTitleSearch($dbi, $search)
       TitleSearchNextMatch($dbi, $res)
       InitFullSearch($dbi, $search)
@@ -15,10 +16,12 @@
       MakeBackLinkSearchRegexp($pagename)
       InitBackLinkSearch($dbi, $pagename) 
       BackLinkSearchNextMatch($dbi, &$pos) 
+      RemovePage($dbi, $pagename)
       IncreaseHitCount($dbi, $pagename)
       GetHitCount($dbi, $pagename)
       InitMostPopular($dbi, $limit)
       MostPopularNextMatch($dbi, $res)
+      GetAllWikiPagenames($dbi)
    */
 
 
@@ -91,26 +94,26 @@
       $pagedata = serialize($pagehash);
 
       if (!file_exists($dbi)) {
-	     $d = split("/", $dbi);
-		 $dt = "";
-		 while(list($key, $val) = each($d)) {
-			$dt = $dt.$val."/";
-		    @mkdir($dt, 0755);
-		 }
+	  $d = split("/", $dbi);
+	  $dt = "";
+	  while(list($key, $val) = each($d)) {
+	      $dt = $dt.$val."/";
+	      @mkdir($dt, 0755);
 	  }
+      }
 
       $filename = $dbi . "/" . EncodePagename($pagename);
       if($fd = fopen($filename, 'a+b')) { 
-         $locked = flock($fd,2); #Exclusive blocking lock 
+	  $locked = flock($fd,2); // Exclusive blocking lock 
          if (!$locked) { 
             ExitWiki("Timeout while obtaining lock. Please try again"); 
          }
 	 
 
-         #Second (actually used) filehandle 
-         #$fdsafe = fopen($filename, 'wb'); 
-         #fwrite($fdsafe, $pagedata); 
-         #fclose($fdsafe);
+         // Second (actually used) filehandle 
+         //$fdsafe = fopen($filename, 'wb'); 
+         //fwrite($fdsafe, $pagedata); 
+         //fclose($fdsafe);
 
 	 rewind($fd);
 	 ftruncate($fd, 0);
@@ -228,6 +231,12 @@
 	 }
       }
       return 0;
+   }
+
+   function RemovePage($dbi, $pagename) {
+       $filename = $dbi . "/" . EncodePagename($pagename);
+      if (Filesystem_WritePage($dbi['wiki'], $pagename, false))
+	  unlink($filename);
    }
 
    function IncreaseHitCount($dbi, $pagename) {
