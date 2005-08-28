@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: info.tmpl,v 1.2 2004-06-14 11:26:49 rurban Exp $ -->
+<!-- $Id: info.tmpl,v 1.3 2005-08-28 11:04:08 rurban Exp $ -->
 <?php
 
 $modifed = $WikiTheme->formatDateTime($revision->get('mtime'));
@@ -79,7 +79,6 @@ if ($is_current = $revision->isCurrent()) {
 }
 
 $tableSummary = fmt("Statistics about %s.", $page->getName());
-$Sep = $WikiTheme->getButtonSeparator();
 
 ?>
 
@@ -165,20 +164,20 @@ if (0 and isSubPage($page->getName())) {
 
 <div id="actionbuttons">
     <?= Button("viewsource", _("View Source")) ?>
-    <?=$Sep?><?= Button("PageHistory", _("PageHistory")) ?>
-    <?=$Sep?><?= Button("AuthorHistory", _("AuthorHistory")) ?>
-    <?=$Sep?><?= Button("Diff") ?> 
-    <?=$Sep?><?= Button(array('action'=>'diff','previous' => 'minor'),_("Diff previous Revision"),$page->getName()) ?> 
-    <?=$Sep?><?= Button(array('action'=>'diff','previous' => 'author'),_("Diff previous Author"),$page->getName()) ?> 
+    <?=$SEP?><?= Button("PageHistory", _("PageHistory")) ?>
+    <?=$SEP?><?= Button("AuthorHistory", _("AuthorHistory")) ?>
+    <?=$SEP?><?= Button("Diff") ?> 
+    <?=$SEP?><?= Button(array('action'=>'diff','previous' => 'minor'),_("Diff previous Revision"),$page->getName()) ?> 
+    <?=$SEP?><?= Button(array('action'=>'diff','previous' => 'author'),_("Diff previous Author"),$page->getName()) ?> 
 <?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?> 
     <!-- Buttons really only for debugging -->
-    <?=$Sep?><?= Button("DebugInfo", _("DebugInfo")) ?>
+    <?=$SEP?><?= Button("DebugInfo", _("DebugInfo")) ?>
 <?php
      $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $page->getName());
      $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
 ?>
-    <?=$Sep?><?= $PurgeCache ?>
+    <?=$SEP?><?= $PurgeCache ?>
 
     <!-- End debugging buttons -->
 <?php } ?>
@@ -187,6 +186,9 @@ if (0 and isSubPage($page->getName())) {
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/06/14 11:26:49  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+//
 // Revision 1.1  2004/06/11 09:01:51  rurban
 // new MonoBook theme (copied from mediawiki)
 //
