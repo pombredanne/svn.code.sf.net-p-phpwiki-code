@@ -1,0 +1,421 @@
+# ru.po -- PhpWiki's russian language file
+# Copyright (C) 2005 Pavel Zaichenko <zpf@mail.ru>.
+#
+# Don't change the format of the first three lines,
+# the TP robot wants them like this (I hope).
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: phpwiki 1.2.10\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-08-28 15:37+0000\n"
+"PO-Revision-Date: 2005-08-19 03:19+0200\n"
+"Last-Translator: Pavel Zaichenko <zaichep@mail.ru>\n"
+"Language-Team: phpwiki-talk@lists.sf.net <zaichep@mail.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.php:17
+msgid "Set the administrator account and password first.\n"
+msgstr "Сначала установите учетную запись и пароль администратора.\n"
+
+#: admin.php:26
+msgid "You entered an invalid login or password."
+msgstr "Вы указали неверное имя или пароль."
+
+#: admin.php:49
+#, php-format
+msgid "You are about to remove '%s' permanently!"
+msgstr "Вы собираетесь безвозвратно удалить '%s'!"
+
+#: admin.php:52
+#, php-format
+msgid "Click %shere%s to remove the page now."
+msgstr "Щелкните %sздесь%s для удаления страницы."
+
+#: admin.php:55
+msgid "Otherwise press the \"Back\" button of your browser."
+msgstr "Иначе нажмите кнопку Вашего браузера \"Назад\"."
+
+#: admin.php:57
+msgid "Function not yet implemented."
+msgstr "Функция еще не реализована."
+
+#: admin.php:59 admin.php:67
+msgid "Remove page"
+msgstr "Удалить страницу"
+
+#: admin.php:65
+#, php-format
+msgid "Removed page '%s' succesfully."
+msgstr "Страница '%s' успешно удалена."
+
+#: lib/backlinks.php:11 lib/backlinks.php:19
+#, php-format
+msgid "Pages which link to %s"
+msgstr "Страницы, которые ссылаются на %s"
+
+#: lib/backlinks.php:32
+#, php-format
+msgid "%d pages link to %s."
+msgstr "%d страниц ссылаются на %s."
+
+#: lib/config.php:276 lib/ru-config.php:276 lib/zh-config.php:276
+msgid "_wiki_name_regexp_"
+msgstr ""
+"(?<![[:alnum:]])([[:upper:]][[:lower:]]+)+[[:upper:]]?([[:upper:]][[:lower:]]"
+"+)+(?![[:alnum:]])"
+
+#: lib/config.php:284 lib/ru-config.php:284 lib/zh-config.php:284
+msgid "templates/browse.html"
+msgstr "locale/ru/templates/browse.html"
+
+#: lib/config.php:285 lib/ru-config.php:285 lib/zh-config.php:285
+msgid "templates/editpage.html"
+msgstr "locale/ru/templates/editpage.html"
+
+#: lib/config.php:286 lib/ru-config.php:286 lib/zh-config.php:286
+msgid "templates/editlinks.html"
+msgstr "locale/ru/templates/editlinks.html"
+
+#: lib/config.php:287 lib/ru-config.php:287 lib/zh-config.php:287
+msgid "templates/message.html"
+msgstr "locale/ru/templates/message.html"
+
+#: lib/config.php:303 lib/ru-config.php:303 lib/zh-config.php:303
+msgid "./pgsrc"
+msgstr "locale/ru/pgsrc"
+
+#: lib/db_filesystem.php:79
+#, php-format
+msgid "'%s': corrupt file"
+msgstr "'%s': файл испорчен"
+
+#: lib/db_filesystem.php:224 lib/db_filesystem.php:260
+#, php-format
+msgid "%s: bad data<br>\n"
+msgstr "%s: неверные данные<br>\n"
+
+#: lib/db_filesystem.php:310
+#, php-format
+msgid "%s: Bad filename in database<br>\n"
+msgstr "%s: Неверное имя файла в базе данных<br>\n"
+
+#: lib/diff.php:711
+#, php-format
+msgid "WikiDiff::apply: line count mismatch: %s != %s"
+msgstr "WikiDiff::apply: количество строк не совпадает: %s != %s"
+
+#: lib/diff.php:771
+msgid "WikiDiff::_check: failed"
+msgstr "WikiDiff::_check: сбой"
+
+#: lib/diff.php:781
+msgid "WikiDiff::_check: edit sequence is non-optimal"
+msgstr "WikiDiff::_check: последовательность изменений не оптимальна"
+
+#: lib/diff.php:785
+#, php-format
+msgid "WikiDiff Okay: LCS = %s"
+msgstr "WikiDiff Okay: LCS = %s"
+
+#: lib/diff.php:1026
+msgid "Current page:"
+msgstr "Текущая страница:"
+
+#: lib/diff.php:1030 lib/diff.php:1048
+#, php-format
+msgid "version %s"
+msgstr "версия %s"
+
+#: lib/diff.php:1032 lib/diff.php:1050
+#, php-format
+msgid "last modified on %s"
+msgstr "изменена %s"
+
+#: lib/diff.php:1035 lib/diff.php:1053
+#, php-format
+msgid "by %s"
+msgstr "%s"
+
+#: lib/diff.php:1039 lib/diff.php:1057
+msgid "None"
+msgstr "None"
+
+#: lib/diff.php:1044
+msgid "Archived page:"
+msgstr "Архивная страница:"
+
+#: lib/diff.php:1066
+msgid "Versions are identical"
+msgstr "Версии идентичны"
+
+#: lib/diff.php:1074
+#, php-format
+msgid "Diff of %s."
+msgstr "Изменения %s."
+
+#: lib/display.php:17
+msgid "FrontPage"
+msgstr "ТитульнаяСтраница"
+
+#: lib/display.php:34 lib/editpage.php:56
+#, php-format
+msgid "Describe %s here."
+msgstr "Опишите здесь %s."
+
+#: lib/editpage.php:19
+#, php-format
+msgid "Copy of %s"
+msgstr "Копия %s"
+
+#: lib/editpage.php:23
+msgid "No page name passed into editpage!"
+msgstr "Не указано имя страницы для редактирования!"
+
+#: lib/editpage.php:31 lib/savepage.php:135
+msgid "This page has been locked by the administrator and cannot be edited."
+msgstr ""
+"Эта страница была заблокирована администратором и не может быть изменена."
+
+#: lib/editpage.php:33 lib/savepage.php:111 lib/savepage.php:136
+msgid "Sorry for the inconvenience."
+msgstr "Извините за неудобство."
+
+#: lib/editpage.php:35 lib/savepage.php:137
+#, php-format
+msgid "Problem while editing %s"
+msgstr "Проблема при редактировании %s"
+
+#: lib/fullsearch.php:10 lib/search.php:9
+#, php-format
+msgid "Searching for \"%s\" ....."
+msgstr "Поиск \"%s\" ....."
+
+#: lib/fullsearch.php:43 lib/search.php:26
+msgid "(You entered an empty search string)"
+msgstr "(Вы указали пустую строку для поиска)"
+
+#: lib/fullsearch.php:47
+#, php-format
+msgid "%d matches found in %d pages."
+msgstr "Найдено %d совпадений в %d страницах."
+
+#: lib/fullsearch.php:51
+msgid "Full Text Search Results"
+msgstr "Результаты полнотекстового поиска"
+
+#: lib/msql.php:31 lib/mssql.php:41 lib/mysql.php:40
+msgid "Cannot establish connection to database, giving up."
+msgstr "Не могу установить соединение с базой данных, отказ."
+
+#: lib/msql.php:33 lib/msql.php:39
+#, php-format
+msgid "Error message: %s"
+msgstr "Сообщение об ошибке: %s"
+
+#: lib/msql.php:37 lib/mssql.php:50 lib/mysql.php:46
+#, php-format
+msgid "Cannot open database %s, giving up."
+msgstr "Не могу открыть базу данных %s, отказ."
+
+#: lib/msql.php:212
+#, php-format
+msgid "Insert/update to table 'wiki' failed: %s"
+msgstr "Сбой при выполнении вставки/обновления таблицы 'wiki': %s"
+
+#: lib/msql.php:223 lib/msql.php:300
+#, php-format
+msgid "Delete on %s failed: %s"
+msgstr "Сбой при удалении из %s: %s"
+
+#: lib/msql.php:241 lib/msql.php:316
+#, php-format
+msgid "Insert into %s failed: %s"
+msgstr "Сбой при вставке в %s: %s"
+
+#: lib/msql.php:290
+#, php-format
+msgid "Insert/update into table 'archive' failed: %s"
+msgstr "Сбой при выполнении вставки/обновления таблицы 'archive': %s"
+
+#: lib/mssql.php:43 lib/mssql.php:52 lib/mssql.php:197
+#, php-format
+msgid "MSSQL error: %s"
+msgstr "Ошибка MSSQL: %s"
+
+#: lib/mssql.php:158
+#, php-format
+msgid "Insert/Update failed: %s"
+msgstr "Сбой при выполнении вставки/обновления: %s"
+
+#: lib/mssql.php:195 lib/mysql.php:167
+#, php-format
+msgid "Cannot delete '%s' from table '%s'"
+msgstr "Не могу удалить '%s' из таблицы '%s'"
+
+#: lib/mysql.php:42 lib/mysql.php:48 lib/mysql.php:127 lib/mysql.php:169
+#, php-format
+msgid "MySQL error: %s"
+msgstr "Ошибка MySQL: %s"
+
+#: lib/mysql.php:125
+#, php-format
+msgid "Error writing page '%s'"
+msgstr "Ошибка при записи страницы '%s'"
+
+#: lib/pageinfo.php:9
+msgid "Enter a page name"
+msgstr "Введите имя страницы"
+
+#: lib/pageinfo.php:10 lib/stdlib.php:230
+msgid "Go"
+msgstr "Выполнить"
+
+#: lib/pageinfo.php:21
+msgid "Show the page source and references"
+msgstr "Показать текст страницы и ссылки"
+
+#: lib/pageinfo.php:26 lib/pageinfo.php:75
+msgid "PageInfo"
+msgstr "Инфо"
+
+#: lib/pageinfo.php:36
+#, php-format
+msgid "Page name '%s' is not in the database"
+msgstr "В базе данных нет страницы с именем '%s'"
+
+#: lib/pageinfo.php:64
+msgid "Current version"
+msgstr "Текущая версия"
+
+#: lib/pageinfo.php:70
+msgid "Archived version"
+msgstr "Архивная версия"
+
+#: lib/savepage.php:16 lib/savepage.php:86
+msgid "RecentChanges"
+msgstr "НедавниеИзменения"
+
+#: lib/savepage.php:97
+msgid ""
+"PhpWiki is unable to save your changes, because another user edited and "
+"saved the page while you were editing the page too. If saving proceeded now "
+"changes from the previous author would be lost."
+msgstr ""
+"PhpWiki не может сохранить сделанные Вами изменения, так как за время "
+"редактирования страницы она была изменена и сохранена другим пользователем. "
+"Если продолжить сохранение, то изменения, сделанные другим пользователем, "
+"будут утеряны."
+
+#: lib/savepage.php:99
+msgid "In order to recover from this situation follow these steps:"
+msgstr "Для выхода из создавшейся ситуации выполните следующие действия:"
+
+#: lib/savepage.php:101
+msgid "Use your browser's <b>Back</b> button to go back to the edit page."
+msgstr ""
+"Используйте кнопку Вашего браузера <b>Назад</b> для возврата к экрану "
+"редактирования страницы."
+
+#: lib/savepage.php:103
+msgid ""
+"Copy your changes to the clipboard or to another temporary place (e.g. text "
+"editor)."
+msgstr ""
+"Скопируйте Ваши изменения в буфер обмена или другое временное место "
+"(например, текстовый редактор)."
+
+#: lib/savepage.php:105
+msgid ""
+"<b>Reload</b> the page. You should now see the most current version of the "
+"page. Your changes are no longer there."
+msgstr ""
+"<b>Обновите</b> страницу. Вы должны теперь видеть самую последнюю версию "
+"страницы. Эта версия страницы не содержит изменений, сделанных Вами."
+
+#: lib/savepage.php:107
+msgid ""
+"Make changes to the file again. Paste your additions from the clipboard (or "
+"text editor)."
+msgstr ""
+"Повторно внесите Ваши изменения в файл. Вставьте Ваши дополнения и буфера "
+"обмена (или текстового редактора)."
+
+#: lib/savepage.php:109
+msgid "Press <b>Save</b> again."
+msgstr "Снова нажмите <b>Сохранить</b>."
+
+#: lib/savepage.php:115
+#, php-format
+msgid "Problem while updating %s"
+msgstr "Проблема при обновлении %s"
+
+#: lib/savepage.php:160
+#, php-format
+msgid "Thank you for editing %s."
+msgstr "Благодарим за редактирование страницы %s."
+
+#: lib/savepage.php:190
+msgid "Your careful attention to detail is much appreciated."
+msgstr "Мы высоко ценим Ваше тщательное внимание к деталям."
+
+#: lib/search.php:30
+#, php-format
+msgid "%d pages match your query."
+msgstr "%d страниц соответствую Вашему запросу."
+
+#: lib/search.php:33
+msgid "Title Search Results"
+msgstr "Результаты поиска по заголовкам"
+
+#: lib/setupwiki.php:21
+#, php-format
+msgid "Inserting page %s, version %s from %s"
+msgstr "Добавление станицы %s, версия %s из %s"
+
+#: lib/stdlib.php:39
+msgid "WikiFatalError"
+msgstr "WikiFatalError"
+
+#: lib/stdlib.php:60
+msgid "_alnum_regexp_class_"
+msgstr ""
+"[0-9A-Za-z]|А|Б|В|Г|Д|Е|Ё|Ж|З|И|Й|К|Л|М|Н|О|П|Р|С|Т|У|Ф|Х|Ц|Ч|Ш|Щ|Ь|Ы|Ъ|Э|Ю|"
+"Я|а|б|в|г|д|е|ё|ж|з|и|й|к|л|м|н|о|п|р|с|т|у|ф|х|ц|ч|ш|щ|ь|ы|ъ|э|ю|я"
+
+#: lib/stdlib.php:66
+msgid "_alpha_regexp_class_"
+msgstr ""
+"[A-Za-z]|А|Б|В|Г|Д|Е|Ё|Ж|З|И|Й|К|Л|М|Н|О|П|Р|С|Т|У|Ф|Х|Ц|Ч|Ш|Щ|Ь|Ы|Ъ|Э|Ю|Я|а|"
+"б|в|г|д|е|ё|ж|з|и|й|к|л|м|н|о|п|р|с|т|у|ф|х|ц|ч|ш|щ|ь|ы|ъ|э|ю|я"
+
+#: lib/stdlib.php:72
+msgid "_upper_regexp_class_"
+msgstr ""
+"[A-Z]|А|Б|В|Г|Д|Е|Ё|Ж|З|И|Й|К|Л|М|Н|О|П|Р|С|Т|У|Ф|Х|Ц|Ч|Ш|Щ|Ь|Ы|Ъ|Э|Ю|Я"
+
+#: lib/stdlib.php:78
+msgid "_lower_regexp_class_"
+msgstr ""
+"[a-z]|а|б|в|г|д|е|ё|ж|з|и|й|к|л|м|н|о|п|р|с|т|у|ф|х|ц|ч|ш|щ|ь|ы|ъ|э|ю|я"
+
+#: lib/stdlib.php:197 lib/stdlib.php:205
+msgid "Search"
+msgstr "Поиск"
+
+#: lib/stdlib.php:502
+#, php-format
+msgid "%d best incoming links:"
+msgstr "%d лучших входящих ссылок:"
+
+#: lib/stdlib.php:515
+#, php-format
+msgid "%d best outgoing links:"
+msgstr "%d лучших исходящих ссылок:"
+
+#: lib/stdlib.php:529
+#, php-format
+msgid "%d most popular nearby:"
+msgstr "%d наиболее популярных соседних:"
