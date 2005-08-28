@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.5 2005-08-28 11:04:08 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.6 2005-08-28 11:10:15 rurban Exp $ -->
 <?php
 $dbh = $request->getDbh();
 $Sep = HTML::raw("<li>");
@@ -13,10 +13,15 @@ $Sep = HTML::raw("<li>");
       <?= Button("viewsource", _("View Source")) ?>
     <?php } ?>
     <?php if (!string_ends_with($page->getName(), _("Discussion"))) { ?>
-    <?php $talk = new WikiPageName('Talk:'.$page->getName()); ?>
-      <?=$Sep?><?= Button(array('action'=>$dbh->isWikiPage($talk->getName()) ? 'browse' : 'create', 
+    <?php 
+	$talk = new WikiPageName('Talk:'.$page->getName());
+        if ($dbh->isWikiPage($talk->getName())) { ?>
+	  <?=$Sep?><?= Button(array('action'=>'browse'), _("Discussion"), $talk->getName()) ?>
+        <?php } else { ?>
+	  <?=$Sep?><?= Button(array('action'=>'create',
                               'template'=>'TemplateTalk'),
 			  _("Discussion"), $talk->getName()) ?>
+        <?php } ?>
     <?php } else { ?>
       <?php $talk = new WikiPageName($page->getName()); ?>
       <?=$Sep?><?= Button(array(),_("Article"), $talk->getParent()) ?>
