@@ -1,31 +1,32 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2.2.6 2005-07-23 11:56:36 rurban Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2.2.7 2005-08-28 14:03:37 rurban Exp $');
 
    /*
       Database functions:
 
       OpenDataBase($dbname) 
       CloseDataBase($dbi) 
-      PadSerializedData($data) 
-      UnPadSerializedData($data) 
       RetrievePage($dbi, $pagename, $pagestore) 
       InsertPage($dbi, $pagename, $pagehash) 
       SaveCopyToArchive($dbi, $pagename, $pagehash) 
       IsWikiPage($dbi, $pagename) 
       IsInArchive($dbi, $pagename) 
-      InitTitleSearch($dbi, $search) 
-      TitleSearchNextMatch($dbi, &$pos) 
+      RemovePage($dbi, $pagename)
+      InitTitleSearch($dbi, $search)
+      TitleSearchNextMatch($dbi, &$pos)
       InitFullSearch($dbi, $search) 
       FullSearchNextMatch($dbi, &$pos) 
-      MakeBackLinkSearchRegexp($pagename)
+      MakeBackLinkSearchRegexp($pagename) 
       InitBackLinkSearch($dbi, $pagename) 
       BackLinkSearchNextMatch($dbi, &$pos) 
       IncreaseHitCount($dbi, $pagename) 
       GetHitCount($dbi, $pagename) 
-      InitMostPopular($dbi, $limit) 
-      MostPopularNextMatch($dbi, &$res) 
-      GetAllWikiPagenames($dbi) 
+      InitMostPopular($dbi, $limit)
+      MostPopularNextMatch($dbi, &$res)
+      GetAllWikiPagenames($dbi)
+      GetWikiPageLinks($dbi, $pagename)
+      SetWikiPageLinks($dbi, $pagename, $linklist)
    */
 
 
