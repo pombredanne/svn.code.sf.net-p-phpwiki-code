@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.2 2005-09-10 20:07:16 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.3 2005-09-10 20:43:19 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -31,22 +31,26 @@ rcs_id('$Id: Template.php,v 1.2 2005-09-10 20:07:16 rurban Exp $');
  * See also: http://meta.wikimedia.org/wiki/Help:Template
  * Parameter expansion:
  *   vars="var1=value1&var2=value2"
+ * We only support named parameters, not numbered ones as in mediawiki, and 
+ * the placeholder is %%var%% and not {{{var}}} as in mediawiki.
  *
- * Predefined variables automatically expanded if existing:
+ * The following predefined variables are automatically expanded if existing:
  *   pagename
  *   mtime     - last modified date + time
  *   ctime     - creation date + time
  *   author    - last author
  *   owner     
  *   creator   - first author
- *   SERVER_URL, DATA_PATH, SCRIPT_NAME, BASE_URL
+ *   SERVER_URL, DATA_PATH, SCRIPT_NAME, PHPWIKI_BASE_URL and BASE_URL
  *
- * Future:
- * - Maybe support a mediawiki-style syntax extension which maps 
-       {{TemplateFilm|title=rurban|year=1999}}
-     to 
-       <?plugin Template page=TemplateFilm vars="title=rurban&year=1999" ?>
-   - <noinclude> .. </noinclude>
+ * <noinclude> .. </noinclude> is stripped
+ *
+ * In work:
+ * - ENABLE_MARKUP_TEMPLATE = true: (lib/InlineParser.php)
+ *   Support a mediawiki-style syntax extension which maps 
+ *     {{TemplateFilm|title=rurban|year=1999}}
+ *   to 
+ *     <?plugin Template page=TemplateFilm vars="title=rurban&year=1999" ?>
  */
 
 class WikiPlugin_Template
@@ -62,7 +66,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -122,6 +126,10 @@ extends WikiPlugin
             $initial_content = implode("\n", $c);
         }
 
+        if (preg_match('/<noinclude>.+<\/noinclude>/s', $initial_content)) {
+            $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "", 
+                                            $initial_content);
+        }
         if (preg_match('/%%\w+%%/', $initial_content)) // need variable expansion
         {
             $var = array();
@@ -175,6 +183,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2005/09/10 20:07:16  rurban
+// fix BASE_URL
+//
 // Revision 1.1  2005/09/10 19:59:38  rurban
 // Parametrized page inclusion ala mediawiki
 //
