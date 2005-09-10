@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.27 2005-02-03 05:09:57 rurban Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.28 2005-09-10 21:33:08 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -49,7 +49,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     function getDefaultArguments() {
@@ -76,7 +76,7 @@ extends WikiPlugin
             return '';
 
         $query = new TextSearchQuery($args['s'], $args['case_exact'], $args['regex']);
-        $pages = $dbi->titleSearch($query);
+        $pages = $dbi->titleSearch($query,$args['sortby'],$args['limit'],$args['exclude']);
 
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         while ($page = $pages->next()) {
@@ -113,6 +113,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2005/02/03 05:09:57  rurban
+// livesearch.js support
+//
 // Revision 1.26  2004/11/27 14:39:05  rurban
 // simpified regex search architecture:
 //   no db specific node methods anymore,
