@@ -4,10 +4,14 @@
  * Things which must be done and defined before anything else.
  */
 $RCS_IDS = '';
-function rcs_id ($id) { $GLOBALS['RCS_IDS'] .= "$id\n"; }
-rcs_id('$Id: prepend.php,v 1.40 2005-08-27 09:41:57 rurban Exp $');
+function rcs_id ($id) { 
+    // Save memory
+    if (defined('DEBUG') and DEBUG)
+        $GLOBALS['RCS_IDS'] .= "$id\n"; 
+}
+rcs_id('$Id: prepend.php,v 1.41 2005-09-10 21:23:54 rurban Exp $');
 
-define('PHPWIKI_VERSION', '1.3.11_20050827');
+define('PHPWIKI_VERSION', '1.3.11_20050910');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
