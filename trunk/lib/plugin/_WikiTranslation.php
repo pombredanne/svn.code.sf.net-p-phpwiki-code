@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.16 2005-02-12 17:24:24 rurban Exp $');
+rcs_id('$Id: _WikiTranslation.php,v 1.17 2005-09-10 11:31:16 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -138,7 +138,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
 
     function getDefaultArguments() {
@@ -288,7 +288,7 @@ extends WikiPlugin
             // But here we cannot change the header anymore. So we can decide to ignore them, 
             // or display them with all the errors.
             //FIXME: do iconv the ob
-            if ($GLOBALS['charset'] != 'utf-8') {
+            if ($GLOBALS['charset'] != 'utf-8' and !defined('NEED_ICONV_TO')) {
             	define('NEED_ICONV_TO', 'utf-8');
             	//either the extension or external 
                 //$GLOBALS['charset'] = 'utf-8';
@@ -459,6 +459,10 @@ class _PageList_Column_customlang extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2005/02/12 17:24:24  rurban
+// locale update: missing . : fixed. unified strings
+// proper linebreaks
+//
 // Revision 1.15  2005/01/25 08:06:47  rurban
 // add fast_translate: setlocale() switching with the gettext extension is by far too slow; add default pagelist args
 //
