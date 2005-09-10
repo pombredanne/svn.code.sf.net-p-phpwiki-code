@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.1 2005-09-10 19:59:38 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.2 2005-09-10 20:07:16 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -62,7 +62,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -150,11 +150,13 @@ extends WikiPlugin
                 $var['owner'] = $thispage->getOwner();
             if (empty($var['creator']) and preg_match('/%%creator%%/', $initial_content))
                 $var['creator'] = $thispage->getCreator();
-            foreach (array("SERVER_URL", "DATA_PATH", "SCRIPT_NAME", "BASE_URL") as $c) {
+            foreach (array("SERVER_URL", "DATA_PATH", "SCRIPT_NAME", "PHPWIKI_BASE_URL") as $c) {
                 // constants are not overridable
                 if (preg_match('/%%'.$c.'%%/', $initial_content))
                     $var[$c] = constant($c);
             }
+            if (preg_match('/%%BASE_URL%%/', $initial_content))
+                $var['BASE_URL'] = PHPWIKI_BASE_URL;
 
             foreach ($var as $key => $val) {
                 $initial_content = preg_replace("/%%$key%%/", $val, $initial_content);
@@ -173,6 +175,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/09/10 19:59:38  rurban
+// Parametrized page inclusion ala mediawiki
+//
 
 // For emacs users
 // Local Variables:
