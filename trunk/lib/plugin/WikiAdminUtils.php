@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.17 2005-02-12 17:24:24 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.18 2005-09-10 11:30:40 rurban Exp $');
 /**
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -129,7 +129,7 @@ extends WikiPlugin
         while (($page = $pages->next())) {
             $pagename = $page->getName();
             $wpn = new WikiPageName($pagename);
-            if (! $wpn->isValid()) {
+            if (! $wpn->isValid() ) {
                 $dbi->purgePage($pagename);
                 $list->pushContent(HTML::li($pagename));
                 $count++;
@@ -137,7 +137,7 @@ extends WikiPlugin
         }
         $pages->free();
         if (!$count)
-            return _("No pages with bad names were found.");
+            return _("No pages with bad names had to be deleted.");
         else {
             return HTML(fmt("Deleted %s pages with invalid names:", $count),
                         HTML::div(array('align'=>'left'), $list));
