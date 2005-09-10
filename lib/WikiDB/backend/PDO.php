@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.2 2005-02-11 14:45:45 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.3 2005-09-10 21:30:16 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -832,10 +832,12 @@ extends WikiDB_backend
     /**
      * Title search.
      */
-    function text_search($search, $fullsearch=false) {
+    function text_search($search, $fullsearch=false, $sortby=false, $limit=false, $exclude=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
-        
+        $orderby = $this->sortby($sortby, 'db');
+        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
+
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
         $fields = $this->page_tbl_fields;
@@ -860,7 +862,7 @@ extends WikiDB_backend
         $sth = $dbh->prepare("SELECT $fields FROM $table"
                                 . " WHERE $join_clause"
                                 . " AND ($search_clause)"
-                                . " ORDER BY pagename");
+                                . $orderby);
         $sth->execute();
         $result = $sth->fetch(PDO_FETCH_NUM);
         return new WikiDB_backend_PDO_iter($this, $result, $field_list);
@@ -1450,6 +1452,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2005/02/11 14:45:45  rurban
+// support ENABLE_LIVESEARCH, enable PDO sessions
+//
 // Revision 1.1  2005/02/10 19:01:22  rurban
 // add PDO support
 //

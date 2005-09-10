@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.23 2005-02-11 14:45:44 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.24 2005-09-10 21:30:16 rurban Exp $');
 
 /*
   Pagedata
@@ -328,14 +328,14 @@ class WikiDB_backend
      *
      * @see WikiDB::titleSearch
      */
-    function text_search($search, $fulltext=false) {
+    function text_search($search, $fulltext=false, $sortby=false, $limit=false, $exclude=false) {
         // This is method implements a simple linear search
         // through all the pages in the database.
         //
         // It is expected that most backends will overload
         // this method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/TextSearchIter.php');
-        $pages = $this->get_all_pages(false);
+        $pages = $this->get_all_pages(false, $sortby, $limit, $exclude);
         return new WikiDB_backend_dumb_TextSearchIter($this, $pages, $search, $fulltext);
     }
 
