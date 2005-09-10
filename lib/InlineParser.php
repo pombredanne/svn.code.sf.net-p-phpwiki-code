@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.67 2005-06-06 17:41:20 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.68 2005-09-10 21:24:32 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -619,8 +619,10 @@ class Markup_html_abbr extends BalancedMarkup
     }
 }
 
-// See http://www.pmwiki.org/wiki/PmWiki/WikiStyles and
-//     http://www.flexwiki.com/default.aspx/FlexWiki/FormattingRules.html
+/** ENABLE_MARKUP_COLOR
+ *  See http://www.pmwiki.org/wiki/PmWiki/WikiStyles and
+ *      http://www.flexwiki.com/default.aspx/FlexWiki/FormattingRules.html
+ */
 class Markup_color extends BalancedMarkup {
     // %color=blue% blue text %% and back to normal
     var $_start_regexp = "%color=(?: [^%]*)%";
@@ -655,6 +657,30 @@ class Markup_plugin extends SimpleMarkup
     }
 }
 
+/** ENABLE_MARKUP_TEMPLATE
+ *  Template syntax similar to mediawiki
+ *  {{template}}
+ * => <?plugin Template page=template?>
+ *  {{template|var=value|...}}
+ * => <?plugin Template page=template vars="var=value&..."?>
+ */
+class Markup_template_plugin  extends SimpleMarkup
+{
+    var $_match_regexp = '\{\{\w[^\n]+\}\}';
+    
+    function markup ($match) {
+        $page = substr($match,2,-2); $vars = '';
+        if (preg_match('/^(\S+)\|(.*)$/', $page, $_m)) {
+            $page = $_m[1];
+            $vars = str_replace('|', '&', $_m[2]);
+        }
+        if ($vars)
+    	    $s = '<?plugin Template page=' . $page . ' vars="' . $vars . '"?>';
+    	else
+    	    $s = '<?plugin Template page=' . $page . '?>';
+	return new Cached_PluginInvocation($s);
+    }
+}
 
 // TODO: "..." => "&#133;"  browser specific display (not cached?)
 // TODO: "--" => "&emdash;" browser specific display (not cached?)
@@ -713,6 +739,8 @@ class InlineTransformer
         }
         if (ENABLE_MARKUP_COLOR)
             $this->_addMarkup(new Markup_color);
+        if (ENABLE_MARKUP_TEMPLATE)
+            $this->_addMarkup(new Markup_template_plugin);
     }
 
     function _addMarkup ($markup) {
@@ -842,6 +870,9 @@ function TransformLinks($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.67  2005/06/06 17:41:20  rurban
+// support new ENABLE_MARKUP_COLOR
+//
 // Revision 1.66  2005/04/23 11:15:49  rurban
 // handle allowed inlined objects within INLINE_IMAGES
 //
