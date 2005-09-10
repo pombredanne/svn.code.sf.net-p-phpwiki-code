@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.133 2005-08-27 09:39:10 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.134 2005-09-10 21:28:10 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -332,9 +332,11 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
-    function titleSearch($search) {
-        $result = $this->_backend->text_search($search, false);
-        return new WikiDB_PageIterator($this, $result);
+    function titleSearch($search, $sortby='pagename', $limit=false, $exclude=false) {
+        $result = $this->_backend->text_search($search, false, $sortby, $limit, $exclude);
+        return new WikiDB_PageIterator($this, $result,
+                                       array('exclude' => $exclude,
+                                             'limit' => $limit));
     }
 
     /**
@@ -1743,6 +1745,9 @@ class WikiDB_PageRevision
 /**
  * Class representing a sequence of WikiDB_Pages.
  * TODO: Enhance to php5 iterators
+ * TODO: 
+ *   apply filters for options like 'sortby', 'limit', 'exclude'
+ *   for simple queries like titleSearch, where the backend is not ready yet.
  */
 class WikiDB_PageIterator
 {
@@ -1809,7 +1814,54 @@ class WikiDB_PageIterator
         //$this->reset();
         return $result;
     }
-  
+    
+    /**
+     * Apply filters for options like 'sortby', 'limit', 'exclude'
+     * for simple queries like titleSearch, where the backend is not ready yet.
+     * Since iteration is usually destructive for SQL results,
+     * we have to generate a copy.
+     */
+    function applyFilters($options = false) {
+        if (!$options) $options = $this->_options;
+        if (isset($options['sortby'])) {
+            $array = array();
+            /* this is destructive */
+            while ($page = $this->next())
+                $result[] = $page->getName();
+            $this->_doSort($array, $options['sortby']);
+        }
+        /* the rest is not destructive.
+         * reconstruct a new iterator 
+         */
+        $pagenames = array(); $i = 0;
+        if (isset($options['limit']))
+            $limit = $options['limit'];
+        else 
+            $limit = 0;
+        if (isset($options['exclude']))
+            $exclude = $options['exclude'];
+        if (is_string($exclude) and !is_array($exclude))
+            $exclude = PageList::explodePageList($exclude, false, false, $limit);
+        foreach($array as $pagename) {
+            if ($limit and $i++ > $limit)
+                return new WikiDB_Array_PageIterator($pagenames);
+            if (!empty($exclude) and !in_array($pagename, $exclude))
+                $pagenames[] = $pagename;
+            elseif (empty($exclude))
+                $pagenames[] = $pagename;
+        }
+        return new WikiDB_Array_PageIterator($pagenames);
+    }
+
+    /* pagename only */
+    function _doSort(&$array, $sortby) {
+        $sortby = PageList::sortby($sortby, 'init');
+        if ($sortby == '+pagename')
+            sort($array, SORT_STRING);
+        elseif ($sortby == '-pagename')
+            rsort($array, SORT_STRING);
+        reset($array);
+    }
 
 };
 
@@ -2136,6 +2188,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.133  2005/08/27 09:39:10  rurban
+// dumphtml when not at admin page: dump the current or given page
+//
 // Revision 1.132  2005/08/07 10:10:07  rurban
 // clean whole version cache
 //
