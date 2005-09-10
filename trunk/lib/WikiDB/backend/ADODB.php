@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.74 2005-02-10 19:04:22 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.75 2005-09-10 21:30:16 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -747,9 +747,11 @@ extends WikiDB_backend
     /**
      * Title search.
      */
-    function text_search($search, $fullsearch=false) {
+    function text_search($search, $fullsearch=false, $sortby=false, $limit=false, $exclude=false)) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
+        $orderby = $this->sortby($sortby, 'db');
+        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
         
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
@@ -775,7 +777,7 @@ extends WikiDB_backend
         $result = $dbh->Execute("SELECT $fields FROM $table"
                                 . " WHERE $join_clause"
                                 . " AND ($search_clause)"
-                                . " ORDER BY pagename");
+                                . $orderby);
         return new WikiDB_backend_ADODB_iter($this, $result, $field_list);
     }
     /*
@@ -1429,6 +1431,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.74  2005/02/10 19:04:22  rurban
+// move getRow up one level to our backend class
+//
 // Revision 1.73  2005/02/04 13:43:30  rurban
 // fix purge cache error
 //

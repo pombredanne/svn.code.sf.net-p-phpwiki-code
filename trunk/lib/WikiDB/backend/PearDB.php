@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.88 2005-08-06 13:20:05 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.89 2005-09-10 21:30:16 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -646,9 +646,11 @@ extends WikiDB_backend
     /**
      * Title search.
      */
-    function text_search($search, $fulltext=false) {
+    function text_search($search, $fulltext=false, $sortby=false, $limit=false, $exclude=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
+        $orderby = $this->sortby($sortby, 'db');
+        if ($orderby) $orderby = ' ORDER BY ' . $orderby;
 
         $searchclass = get_class($this)."_search";
         // no need to define it everywhere and then fallback. memory!
@@ -677,7 +679,7 @@ extends WikiDB_backend
         $result = $dbh->query("SELECT $fields FROM $table"
                               . " WHERE $join_clause"
                               . "  AND ($search_clause)"
-                              . " ORDER BY pagename");
+                              . $orderby);
         
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
@@ -1232,6 +1234,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.88  2005/08/06 13:20:05  rurban
+// add comments
+//
 // Revision 1.87  2005/02/10 19:04:24  rurban
 // move getRow up one level to our backend class
 //
