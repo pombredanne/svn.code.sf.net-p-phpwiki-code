@@ -37,22 +37,37 @@ class TextSearchTest extends phpwiki_TestCase {
     function testFulltextSearch() {
         global $request;
         $dbi = $request->getDbh();
+	$sortby = false; $limit = 2; $exclude = "";
 
-        $query = new TextSearchQuery('Indent the paragraph*', true); // auto
-        $pages = $dbi->fullSearch($query);
+        $query = new TextSearchQuery('WikiPlugin to let users attach comments', true); // auto
+        $pages = $dbi->fullSearch($query, $sortby, $limit, $exclude);
         $result = array();
 	while ($page = $pages->next())
 	    $result[] = $page->getName();
+        $this->assertTrue(in_array("AddCommentPlugin", $result), "found all, no regex");
 
-        $this->assertTrue(in_array("TextFormattingRules", $result), "found all");
+        $query = new TextSearchQuery('WikiPlugin* to let users attach comments*', false); // auto
+        $pages = $dbi->fullSearch($query, $sortby, $limit, $exclude);
+        $result = array();
+	while ($page = $pages->next())
+	    $result[] = $page->getName();
+        $this->assertTrue(in_array("AddCommentPlugin", $result), "found regex all");
 
+	$sortby = false; $limit = 2; $exclude = "";
         $query = new TextSearchQuery('"Indent the paragraph"', false); // case-insensitive, auto
-        $pages = $dbi->fullSearch($query);
+        $pages = $dbi->fullSearch($query, $sortby, $limit, $exclude);
         $result = array();
 	while ($page = $pages->next())
 	    $result[] = $page->getName();
         $this->assertTrue(in_array("TextFormattingRules", $result), "found phrase");
 
+        $query = new TextSearchQuery('"Indent the paragraph"', false); // case-insensitive, auto
+        $pages = $dbi->fullSearch($query, $sortby, $limit, $exclude);
+        $result = array();
+	while ($page = $pages->next())
+	    $result[] = $page->getName();
+        $this->assertTrue(in_array("TextFormattingRules", $result), "found case phrase");
+        
     }
 }
 
