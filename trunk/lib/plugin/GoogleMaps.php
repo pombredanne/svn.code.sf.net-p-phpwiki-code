@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GoogleMaps.php,v 1.1 2005-09-07 16:53:46 rurban Exp $');
+rcs_id('$Id: GoogleMaps.php,v 1.2 2005-09-11 13:29:56 rurban Exp $');
 /**
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -53,6 +53,8 @@ rcs_id('$Id: GoogleMaps.php,v 1.1 2005-09-07 16:53:46 rurban Exp $');
  *   Search for keywords (search=)
  *   mult. markers would need a new syntax
  *   directions (from - to)
+ *   drawing polygons
+ *   Automatic route following
  */
 class WikiPlugin_GoogleMaps
 extends WikiPlugin
@@ -67,7 +69,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -77,8 +79,7 @@ extends WikiPlugin
 		     'ZoomFactor'=>	5,
 		     'Marker'    =>	true,
 		     'InfoText'  => 	'',
-		     'InfoLink'  => 	'',
-		     'MapType'   =>  	'Hybrid',    // Map|Satellite|Hybrid,
+		     'MapType'   =>  	'Hybrid', // Map|Satellite|Hybrid,
 		     'SmallMapControl' => false,  // large or small
 		     'width'     =>	'500px',
 		     'height'    =>	'400px',
@@ -97,18 +98,29 @@ extends WikiPlugin
         if ($Latitude === '') {
             return $this->error(fmt("%s parameter missing", "'Latitude'"));
         }
-        if ($InfoLink and ! IsSafeURL($InfoLink)) {
-            return $this->error(sprintf(_("Bad url in %s: remove all of <, >, \""), "InfoLink"));
-        }
 
+	$maps = JavaScript('',array('src'=>"http://maps.google.com/maps?file=api&v=1&key=" . GOOGLE_LICENSE_KEY));
+	$id = GenerateId("googlemap");
+	switch ($MapType) {
+	case "Satellite": $type = "_SATELLITE_TYPE"; break;
+	case "Map":       $type = "_MAP_TYPE"; break;
+	case "Hybrid":    $type = "_HYBRID_TYPE"; break;
+	default: return $this->error(sprintf(_("invalid argument %s"), $MapType));
+	}
+	$div = HTML::div(array('id'=>$id,'style'=>'width: '.$width.'; height: '.$height));
+
+        // TODO: Check for multiple markers or polygons
         if (!$InfoText) 
             $Marker = false;
+        // Create a marker whose info window displays the given text
 	if ($Marker) {
-            if (!$InfoLink and $InfoText)
-                $InfoLink = $InfoText;
-	    $markerlink = HTML::a(array('href'=>$InfoLink,'target'=>"_blank"),
-				  $InfoText);
-            // Creates a marker whose info window displays the given number
+            if ($InfoText) {
+                include_once("lib/BlockParser.php");
+                $page = $dbi->getPage($request->getArg('pagename'));
+                $rev = $p->getCurrentRevision(false);
+                $markup = $rev->get('markup');
+                $markertext = TransformText($InfoText, $markup, $basepage);
+            }
 	    $markerjs = JavaScript("
 function createMarker(point, text) {
   var marker = new GMarker(point);
@@ -119,15 +131,7 @@ function createMarker(point, text) {
   return marker;
 }");
 	}
-	$maps = JavaScript('',array('src'=>"http://maps.google.com/maps?file=api&v=1&key=" . GOOGLE_LICENSE_KEY));
-	$id = GenerateId("googlemap");
-	switch ($MapType) {
-	case "Satellite": $type = "_SATELLITE_TYPE"; break;
-	case "Map":       $type = "_MAP_TYPE"; break;
-	case "Hybrid":    $type = "_HYBRID_TYPE"; break;
-	default: return $this->error(sprintf(_("invalid argument %s"), $MapType));
-	}
-	$div = HTML::div(array('id'=>$id,'style'=>'width: '.$width.'; height: '.$height));
+
 	$run = JavaScript("
 var map = new GMap(document.getElementById('".$id."'));\n" .
 ($SmallMapControl 
@@ -135,10 +139,11 @@ var map = new GMap(document.getElementById('".$id."'));\n" .
  : "map.addControl(new GLargeMapControl());\n") . "
 map.addControl(new GMapTypeControl());
 map.centerAndZoom(new GPoint(".$Longitude.", ".$Latitude."), ".$ZoomFactor.");
-map.setMapType(".$type.");
-var point = new GPoint(".$Longitude.",".$Latitude.");\n" . 
+map.setMapType(".$type.");" . 
 ($Marker 
- ? "var marker = createMarker(point, '".$markerlink->asXml()."'); map.addOverlay(marker);\n"
+ ? "
+var point = new GPoint(".$Longitude.",".$Latitude.");
+var marker = createMarker(point, '".$markertext->asXml()."'); map.addOverlay(marker);"
  : "")
 );
         if ($Marker)
@@ -149,6 +154,9 @@ var point = new GPoint(".$Longitude.",".$Latitude.");\n" .
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/09/07 16:53:46  rurban
+// initial version, idea from http://www.giswiki.de/index.php/Google_Maps_Extensions
+//
 //
 
 // (c-file-style: "gnu")
