@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.18 2005-02-26 18:30:40 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.19 2005-09-11 14:12:13 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -327,14 +327,14 @@ extends TextSearchQuery_node
 class TextSearchQuery_node_starts_with
 extends TextSearchQuery_node_word {
     var $op = "STARTS_WITH";
-    function regexp() { return '(?=\b' . preg_quote($this->word, '/') . ')'; }
+    function regexp() { return '(?=.*\b' . preg_quote($this->word, '/') . ')'; }
     function sql()    { return $this->_sql_quote($this->word).'%'; }
 }
 
 class TextSearchQuery_node_ends_with
 extends TextSearchQuery_node_word {
     var $op = "ENDS_WITH";
-    function regexp() { return '(?=' . preg_quote($this->word, '/') . '\b)'; }
+    function regexp() { return '(?=.*' . preg_quote($this->word, '/') . '\b)'; }
     function sql()    { return '%'.$this->_sql_quote($this->word); }
 }
 
@@ -348,14 +348,14 @@ extends TextSearchQuery_node_word {
 class TextSearchQuery_node_regex // posix regex. FIXME!
 extends TextSearchQuery_node_word {
     var $op = "REGEX"; // using REGEXP or ~ extension
-    function regexp() { return '(?=\b' . $this->word . '\b)'; }
+    function regexp() { return '(?=.*\b' . $this->word . '\b)'; }
     function sql()    { return $this->_sql_quote($this->word); }
 }
 
 class TextSearchQuery_node_regex_glob
 extends TextSearchQuery_node_regex {
     var $op = "REGEX_GLOB";
-    function regexp() { return '(?=\b' . glob_to_pcre($this->word) . '\b)'; }
+    function regexp() { return '(?=.*\b' . glob_to_pcre($this->word) . '\b)'; }
 }
 
 class TextSearchQuery_node_regex_pcre // how to handle pcre modifiers? /i
@@ -479,6 +479,11 @@ extends TextSearchQuery_node_binop
         return $this;
     }
 
+    /* FIXME!
+     * Either we need all combinations of all words to be position independent,
+     * or we have to use multiple match calls for each AND
+     * (AND x y) => /(?(:x)(:y))|(?(:y)(:x))/
+     */
     function regexp() {
         $regexp = '';
         foreach ($this->leaves as $leaf)
