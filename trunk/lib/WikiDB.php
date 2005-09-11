@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.134 2005-09-10 21:28:10 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.135 2005-09-11 14:19:44 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -355,9 +355,11 @@ class WikiDB {
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
-    function fullSearch($search) {
-        $result = $this->_backend->text_search($search, true);
-        return new WikiDB_PageIterator($this, $result);
+    function fullSearch($search, $sortby='pagename', $limit=false, $exclude=false) {
+        $result = $this->_backend->text_search($search, true, $sortby, $limit, $exclude);
+        return new WikiDB_PageIterator($this, $result,
+                                       array('exclude' => $exclude,
+                                             'limit' => $limit));
     }
 
     /**
@@ -2188,6 +2190,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.134  2005/09/10 21:28:10  rurban
+// applyFilters hack to use filters after methods, which do not support them (titleSearch)
+//
 // Revision 1.133  2005/08/27 09:39:10  rurban
 // dumphtml when not at admin page: dump the current or given page
 //
