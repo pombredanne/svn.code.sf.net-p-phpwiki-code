@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.243 2005-08-06 15:01:38 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.244 2005-09-11 13:24:33 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -665,12 +665,14 @@ class WikiPageName
                         list($name, $dummy) = split("?", $name, 2);
                 }
             }
-        
+	    // FIXME: We should really fix the cause for "/PageName" in the WikiDB
             if ($name == '' or $name[0] == SUBPAGE_SEPARATOR) {
                 if ($basename)
                     $name = $this->_pagename($basename) . $name;
-                else
+                else {
                     $name = $this->_normalize_bad_pagename($name);
+		    $this->shortName = $name;
+                }
             }
         }
         else {
@@ -738,6 +740,7 @@ class WikiPageName
             return $request->getArg('pagename');
         }
         assert($name[0] == SUBPAGE_SEPARATOR);
+        $this->_errors[] = sprintf(_("Leading %s not allowed"), SUBPAGE_SEPARATOR);
         return substr($name, 1);
     }
 
@@ -770,7 +773,7 @@ class WikiPageName
             $pagename = str_replace(';', '', $pagename);
         }*/
         
-        // not only for the db backend, also to restrict url length
+        // not only for SQL, also to restrict url length
         if (strlen($pagename) > MAX_PAGENAME_LENGTH) {
             $pagename = substr($pagename, 0, MAX_PAGENAME_LENGTH);
             $this->_errors[] = _("too long");
@@ -1444,7 +1447,7 @@ class fileSet {
 class ListRegexExpand {
     //var $match, $list, $index, $case_sensitive;
     function ListRegexExpand (&$list, $match, $case_sensitive = true) {
-    	$this->match = str_replace('/','\/',$match);
+    	$this->match = $match;
     	$this->list = &$list;
     	$this->case_sensitive = $case_sensitive;	
         //$this->index = false;
@@ -2004,16 +2007,18 @@ function printSimpleTrace($bt) {
 function getMemoryUsage() {
     if (function_exists('memory_get_usage') and memory_get_usage()) {
         return memory_get_usage();
-//  } elseif (function_exists('getrusage') and ($u = getrusage()) and !empty($u['ru_maxrss'])) {
-//      $mem = $u['ru_maxrss'];
-    } elseif (1 and substr(PHP_OS,0,3) == 'WIN') { // requires a newer cygwin
+    } elseif (function_exists('getrusage') and ($u = getrusage()) and !empty($u['ru_maxrss'])) {
+        $mem = $u['ru_maxrss'];
+    } elseif (substr(PHP_OS,0,3) == 'WIN') { // requires a newer cygwin
         // what we want is the process memory only: apache or php
         $pid = getmypid();
+        $memstr = '';
         // This works only if it's a cygwin process (apache or php)
-        //$mem = (integer) trim(exec("cat /proc/$pid/statm |cut -f1"));
+        //$memstr = exec("cat /proc/$pid/statm |cut -f1");
+
         // if it's native windows use something like this: 
         //   (requires pslist from sysinternals.com)
-        $memstr = exec("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
+        //$memstr = exec("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
         return (integer) trim($memstr);
     } elseif (1) {
         $pid = getmypid();
@@ -2028,6 +2033,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.243  2005/08/06 15:01:38  rurban
+// workaround php VBASIC alike limitation: allow integer pagenames
+//
 // Revision 1.242  2005/08/06 13:07:04  rurban
 // quote paths correctly (not the best method though)
 //
