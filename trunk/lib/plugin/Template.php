@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.3 2005-09-10 20:43:19 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.4 2005-09-11 13:30:22 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -29,6 +29,7 @@ rcs_id('$Id: Template.php,v 1.3 2005-09-10 20:43:19 rurban Exp $');
  * Usage:   <?plugin Template page=TemplateFilm vars="title=rurban&year=1999" ?>
  * Author:  Reini Urban
  * See also: http://meta.wikimedia.org/wiki/Help:Template
+ *
  * Parameter expansion:
  *   vars="var1=value1&var2=value2"
  * We only support named parameters, not numbered ones as in mediawiki, and 
@@ -48,9 +49,9 @@ rcs_id('$Id: Template.php,v 1.3 2005-09-10 20:43:19 rurban Exp $');
  * In work:
  * - ENABLE_MARKUP_TEMPLATE = true: (lib/InlineParser.php)
  *   Support a mediawiki-style syntax extension which maps 
- *     {{TemplateFilm|title=rurban|year=1999}}
+ *     {{TemplateFilm|title=Some Good Film|year=1999}}
  *   to 
- *     <?plugin Template page=TemplateFilm vars="title=rurban&year=1999" ?>
+ *     <?plugin Template page=TemplateFilm vars="title=Some Good Film&year=1999" ?>
  */
 
 class WikiPlugin_Template
@@ -66,7 +67,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -183,6 +184,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2005/09/10 20:43:19  rurban
+// support <noinclude>
+//
 // Revision 1.2  2005/09/10 20:07:16  rurban
 // fix BASE_URL
 //
