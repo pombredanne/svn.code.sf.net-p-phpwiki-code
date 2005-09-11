@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.22 2005-08-07 10:11:24 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.23 2005-09-11 13:21:45 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -349,11 +349,11 @@ extends WikiDB_backend_iterator
     }
 
     function next() {
-        if ( ! ($next = array_shift($this->_pages)) )
+        if ( ! ($pagename = array_shift($this->_pages)) )
             return false;
-        if (!empty($options['exclude']) and in_array($next, $options['exclude']))
+        if (!empty($options['exclude']) and in_array($pagename, $options['exclude']))
             return $this->next();
-        return array('pagename' => $next);
+        return array('pagename' => $pagename);
     }
             
     function count() {
