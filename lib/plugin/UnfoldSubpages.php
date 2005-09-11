@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UnfoldSubpages.php,v 1.20 2005-04-11 19:45:17 rurban Exp $');
+rcs_id('$Id: UnfoldSubpages.php,v 1.21 2005-09-11 13:20:07 rurban Exp $');
 /*
  Copyright 2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -53,8 +53,8 @@ extends WikiPlugin
                    'pagename' => '[pagename]', // default: current page
                    //'header'  => '',  // expandable string
                    'quiet'   => false, // print no header
-                   'sortby'   => 'pagename', // [+|-]pagename, [+|-]mtime, [+|-]hits
-                   'maxpages' => false, // maximum number of pages to include
+                   'sortby'   => '',    // [+|-]pagename, [+|-]mtime, [+|-]hits
+                   'maxpages' => false, // maximum number of pages to include (== limit)
                    'sections' => false, // maximum number of sections per page to include
                    'smalltitle' => false, // if set, hide transclusion-title,
                    			//  just have a small link at the start of 
@@ -77,29 +77,34 @@ extends WikiPlugin
         
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        $subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*', false, 
-                                    $sortby, $limit, $exclude);
-        if (! $subpages ) {
-            return $this->error(_("The current page has no subpages defined."));
-        }           
+        $query = new TextSearchQuery($pagename . SUBPAGE_SEPARATOR . '*', true, 'glob');
+        $subpages = $dbi->titleSearch($query, $sortby, $limit, $exclude);
+        //if ($sortby)
+        //    $subpages = $subpages->applyFilters(array('sortby' => $sortby, 'limit' => $limit, 'exclude' => $exclude));
+        //$subpages = explodePageList($pagename . SUBPAGE_SEPARATOR . '*', false, 
+        //                            $sortby, $limit, $exclude);
+	if (is_string($exclude) and !is_array($exclude))
+            $exclude = PageList::explodePageList($exclude, false, false, $limit);
         $content = HTML();
-        if ($maxpages) {
-            $subpages = array_slice ($subpages, 0, $maxpages);
-        }
 
         include_once('lib/BlockParser.php');
-
-        foreach ($subpages as $page) {
+	$i = 0;
+        while ($page = $subpages->next()) {
+            $cpagename = $page->getName();
+     	    if ($maxpages and ($i++ > $maxpages)) {
+                return $content;
+            }
+            if (in_array($cpagename, $exclude))
+            	continue;
             // A page cannot include itself. Avoid doublettes.
-            if (in_array($page, $included_pages)) {
+            if (in_array($cpagename, $included_pages)) {
                 $content->pushContent(HTML::p(sprintf(_("recursive inclusion of page %s ignored"),
-                                                      $page)));
+                                                      $cpagename)));
                 continue;
             }
             // trap any remaining nonexistant subpages
-            if ($dbi->isWikiPage($page)) {
-                $p = $dbi->getPage($page);
-                $r = $p->getCurrentRevision();
+            if ($page->exists()) {
+                $r = $page->getCurrentRevision();
                 $c = $r->getContent();   // array of lines
                 // trap recursive redirects
                 if (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\w+)\s+\?'.'>/', 
@@ -109,12 +114,12 @@ extends WikiPlugin
                     	if (!$quiet)
                             $content->pushContent(
                                 HTML::p(sprintf(_("recursive inclusion of page %s ignored"),
-                                                $page.' => '.$m[1])));
+                                                $cpagename.' => '.$m[1])));
                         continue;
                     }
                 }
                 if ($section)
-                    $c = extractSection($section, $c, $page, $quiet,
+                    $c = extractSection($section, $c, $cpagename, $quiet,
                                         $sectionhead);
                 if ($lines)
                     $c = array_slice($c, 0, $lines)
@@ -128,34 +133,40 @@ extends WikiPlugin
                 }
                 $ct = implode("\n", $c); // one string
 
-                array_push($included_pages, $page);
+                array_push($included_pages, $cpagename);
                 if ($smalltitle) {
-                    $pname = array_pop(explode(SUBPAGE_SEPARATOR, $page)); // get last subpage name
+                    $pname = array_pop(explode(SUBPAGE_SEPARATOR, $cpagename)); // get last subpage name
                     // Use _("%s: %s") instead of .": ". for French punctuation
-                    $ct = TransformText(sprintf(_("%s: %s"), "[$pname|$page]",
+                    $ct = TransformText(sprintf(_("%s: %s"), "[$pname|$cpagename]",
                                                 $ct),
-                                        $r->get('markup'), $page);
+                                        $r->get('markup'), $cpagename);
                 }
                 else {
-                    $ct = TransformText($ct, $r->get('markup'), $page);
+                    $ct = TransformText($ct, $r->get('markup'), $cpagename);
                 }
                 array_pop($included_pages);
                 if (! $smalltitle) {
                     $content->pushContent(HTML::p(array('class' => $quiet ?
                                                         '' : 'transclusion-title'),
                                                   fmt("Included from %s:",
-                                                      WikiLink($page))));
+                                                      WikiLink($cpagename))));
                 }
                 $content->pushContent(HTML(HTML::div(array('class' => $quiet ?
                                                            '' : 'transclusion'),
                                                      false, $ct)));
             }
         }
+        if (! $cpagename ) {
+            return $this->error(sprintf(_("%s has no subpages defined."), $pagename));
+        }
         return $content;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2005/04/11 19:45:17  rurban
+// proper linebreaks
+//
 // Revision 1.19  2005/01/21 14:12:48  rurban
 // clarify $ct
 //
