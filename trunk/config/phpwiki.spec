@@ -132,7 +132,6 @@ cat schemas/mysql.sql | mysql %{DB_NAME}
 
 %{prefix}/%{name}/*.php
 %{prefix}/%{name}/*.wsdl
-%{prefix}/%{name}/*.wdsl
 %{prefix}/%{name}/wiki
 
 %{prefix}/%{name}/lib
