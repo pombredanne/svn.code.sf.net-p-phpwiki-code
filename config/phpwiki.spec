@@ -144,8 +144,6 @@ cat schemas/mysql.sql | mysql %{DB_NAME}
 
 %config %{prefix}/%{name}/uploads/.htaccess
 %config %{prefix}/%{name}/config/config.ini
-%config %{prefix}/%{name}/config/Tools.php
-%config %{prefix}/%{name}/config/Values.php
 
 
 
