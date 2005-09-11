@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.75 2005-09-10 21:30:16 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.76 2005-09-11 13:25:12 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -166,6 +166,9 @@ extends WikiDB_backend
         return $result->GetArray();
     }
 
+    /*
+     * filter (nonempty pages) currently ignored
+     */
     function numPages($filter=false, $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -214,7 +217,7 @@ extends WikiDB_backend
             // Note that this will fail silently if the page does not
             // have a record in the page table.  Since it's just the
             // hit count, who cares?
-            $dbh->Execute(sprintf("UPDATE $page_tbl SET hits=%d WHERE pagename=%s",
+            $dbh->Execute(sprintf("UPDATE $page_tbl SET hits=%d WHERE pagename=%s LIMIT 1",
                                   $newdata['hits'], $dbh->qstr($pagename)));
             return;
         }
@@ -241,7 +244,7 @@ extends WikiDB_backend
         }
         if ($dbh->Execute("UPDATE $page_tbl"
                           . " SET hits=?, pagedata=?"
-                          . " WHERE pagename=?",
+                          . " WHERE pagename=? LIMIT 1",
                           array($hits, $this->_serialize($data),$pagename))) {
             $dbh->CommitTrans( );
             return true;
@@ -265,7 +268,8 @@ extends WikiDB_backend
         if (empty($data)) $data = '';
         $rs = $dbh->Execute("UPDATE $page_tbl"
                             . " SET cached_html=?"
-                            . " WHERE pagename=?",
+                            . " WHERE pagename=?"
+                            . " LIMIT 1",
                             array($data, $pagename));
     }
 
@@ -342,8 +346,8 @@ extends WikiDB_backend
                                         . " WHERE $version_tbl.id=$page_tbl.id"
                                         . "  AND pagename=%s"
                                         . "  AND version < %d"
-                                        . " ORDER BY version DESC"
-                                        ,$dbh->qstr($pagename),
+                                        . " ORDER BY version DESC",
+                                        $dbh->qstr($pagename),
                                         $version),
                                 1);
         return $rs->fields ? (int)$rs->fields[0] : false;
@@ -641,26 +645,26 @@ extends WikiDB_backend
             $exclude = " AND $want.pagename NOT IN ".$this->_sql_set($exclude);
         else 
             $exclude='';
-        if ($limit) {
-            list($offset, $count) = $this->limit($limit);
-            // TODO: check pqsql LIMIT count OFFSET offset 
-            $limit = " LIMIT $offset, $count";
-        } else 
-            $limit = '';
 
         $qpagename = $dbh->qstr($pagename);
         // removed ref to FETCH_MODE in next line
-        $result = $dbh->Execute("SELECT $want.id AS id, $want.pagename AS pagename,"
-                                . " $want.hits AS hits"
-                                . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee"
-                                . (!$include_empty ? ", $nonempty_tbl" : '')
-                                . " WHERE linkfrom=linker.id AND linkto=linkee.id"
-                                . " AND $have.pagename=$qpagename"
-                                . (!$include_empty ? " AND $nonempty_tbl.id=$want.id" : "")
-                                //. " GROUP BY $want.id"
-                                . $exclude
-                                . $orderby
-                                . $limit);
+        $sql = "SELECT $want.id AS id, $want.pagename AS pagename,"
+            . " $want.hits AS hits"
+            . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee"
+            . (!$include_empty ? ", $nonempty_tbl" : '')
+            . " WHERE linkfrom=linker.id AND linkto=linkee.id"
+            . " AND $have.pagename=$qpagename"
+            . (!$include_empty ? " AND $nonempty_tbl.id=$want.id" : "")
+            //. " GROUP BY $want.id"
+            . $exclude
+            . $orderby;
+        if ($limit) {
+            // extract from,count from limit
+            list($offset,$count) = $this->limit($limit);
+            $result = $dbh->SelectLimit($sql, $count, $offset);
+        } else {
+            $result = $dbh->Execute($sql);
+        }
         return new WikiDB_backend_ADODB_iter($this, $result, $this->page_tbl_field_list);
     }
 
@@ -678,14 +682,17 @@ extends WikiDB_backend
         $qpagename = $dbh->qstr($pagename);
         $qlink = $dbh->qstr($link);
         $row = $dbh->GetRow("SELECT IF($want.pagename,1,0)"
-                                . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
-                                . " WHERE linkfrom=linker.id AND linkto=linkee.id"
-                                . " AND $have.pagename=$qpagename"
-                                . " AND $want.pagename=$qlink"
-                                . "LIMIT 1");
+                            . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
+                            . " WHERE linkfrom=linker.id AND linkto=linkee.id"
+                            . " AND $have.pagename=$qpagename"
+                            . " AND $want.pagename=$qlink"
+                            . "LIMIT 1");
         return $row[0];
     }
 
+    /*
+     * 
+     */
     function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -747,7 +754,7 @@ extends WikiDB_backend
     /**
      * Title search.
      */
-    function text_search($search, $fullsearch=false, $sortby=false, $limit=false, $exclude=false)) {
+    function text_search($search, $fullsearch=false, $sortby=false, $limit=false, $exclude=false) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
@@ -774,10 +781,17 @@ extends WikiDB_backend
         }
         
         $search_clause = $search->makeSqlClauseObj($callback);
-        $result = $dbh->Execute("SELECT $fields FROM $table"
-                                . " WHERE $join_clause"
-                                . " AND ($search_clause)"
-                                . $orderby);
+        $sql = "SELECT $fields FROM $table"
+            . " WHERE $join_clause"
+            . " AND ($search_clause)"
+            . $orderby;
+        if ($limit) {
+            // extract from,count from limit
+            list($offset,$count) = $this->limit($limit);
+            $result = $dbh->SelectLimit($sql, $count, $offset);
+        } else {
+            $result = $dbh->Execute($sql);
+        }
         return new WikiDB_backend_ADODB_iter($this, $result, $field_list);
     }
     /*
@@ -1431,6 +1445,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.75  2005/09/10 21:30:16  rurban
+// enhance titleSearch
+//
 // Revision 1.74  2005/02/10 19:04:22  rurban
 // move getRow up one level to our backend class
 //
