@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.36 2005-08-06 09:59:21 rurban Exp $
+<?php // $Id: configurator.php,v 1.37 2005-09-11 15:56:16 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -153,7 +153,7 @@ echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.36 2005-08-06 09:59:21 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.37 2005-09-11 15:56:16 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -1554,6 +1554,7 @@ $properties["AUTHORPAGE_URL"] =
     new _define_commented_optional('AUTHORPAGE_URL', "http://phpwiki.org/ThePhpWikiProgrammingTeam", "
 Default Author URL");
 
+$properties["TOC_FULL_SYNTAX"] =
 new boolean_define_optional
 ('TOC_FULL_SYNTAX', 
  array('true'  => "Enabled",
@@ -1563,6 +1564,22 @@ Allow full markup in headers to be parsed by the CreateToc plugin.
 If false you may not use WikiWords or [] links or any other markup in 
 headers in pages with the CreateToc plugin. But if false the parsing is 
 faster and more stable.");
+
+$properties["ENABLE_MARKUP_COLOR"] =
+new boolean_define_optional
+('ENABLE_MARKUP_COLOR', 
+ array('true'  => "Enabled",
+       'false' => "Disabled"), "
+If disabled the %color=... %% syntax will be disabled. Since 1.3.11
+Default: true");
+
+$properties["ENABLE_MARKUP_TEMPLATE"] =
+new boolean_define_optional
+('ENABLE_MARKUP_TEMPLATE', 
+ array('true'  => "Enabled",
+       'false' => "Disabled"), "
+Enable mediawiki-style {{TemplatePage|vars=value|...}} syntax. Since 1.3.11
+Default: undefined. Enabled automatically on the MonoBook theme if undefined.");
 
 ///////////////////
 
