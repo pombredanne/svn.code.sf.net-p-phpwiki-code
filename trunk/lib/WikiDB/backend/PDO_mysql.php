@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO_mysql.php,v 1.2 2005-04-10 10:43:25 rurban Exp $');
+rcs_id('$Id: PDO_mysql.php,v 1.3 2005-09-11 13:25:12 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -131,9 +131,29 @@ extends WikiDB_backend_PDO
         return $field_list;
     }
 
+    /*
+     * offset specific syntax within mysql
+     * convert from,count to SQL "LIMIT $offset, $count"
+     */
+    function _limit_sql($limit = false) {
+        if ($limit) {
+            list($offset, $count) = $this->limit($limit);
+            if ($offset)
+                // pgsql needs "LIMIT $count OFFSET $from"
+                $limit = " LIMIT $offset, $count"; 
+            else
+                $limit = " LIMIT $count"; 
+        } else
+            $limit = '';
+        return $limit;
+    }
+
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2005/04/10 10:43:25  rurban
+// more mysql-4.1 quirks: add utf8 to the charset aliases table. (Bug #1180108)
+//
 // Revision 1.1  2005/02/10 19:01:24  rurban
 // add PDO support
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.89 2005-09-10 21:30:16 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.90 2005-09-11 13:25:12 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -676,10 +676,16 @@ extends WikiDB_backend
         }
         $search_clause = $search->makeSqlClauseObj($callback);
         
-        $result = $dbh->query("SELECT $fields FROM $table"
-                              . " WHERE $join_clause"
-                              . "  AND ($search_clause)"
-                              . $orderby);
+        $sql = "SELECT $fields FROM $table"
+            . " WHERE $join_clause"
+            . "  AND ($search_clause)"
+            . $orderby;
+         if ($limit) {
+             list($from, $count) = $this->limit($limit);
+             $result = $dbh->limitQuery($sql, $from, $count);
+         } else {
+             $result = $dbh->query($sql);
+         }
         
         return new WikiDB_backend_PearDB_iter($this, $result);
     }
@@ -716,7 +722,7 @@ extends WikiDB_backend
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular($limit=0, $sortby='-hits') {
+    function most_popular($limit=20, $sortby='-hits') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         if ($limit < 0){ 
@@ -1121,7 +1127,6 @@ extends WikiDB_backend
             trigger_error("Unsupported dbtype and backend. Either switch to ADODB or check it manually.");
         }
     }
-
 };
 
 /**
@@ -1234,6 +1239,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.89  2005/09/10 21:30:16  rurban
+// enhance titleSearch
+//
 // Revision 1.88  2005/08/06 13:20:05  rurban
 // add comments
 //

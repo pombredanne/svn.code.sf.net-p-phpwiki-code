@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.16 2005-07-01 05:19:26 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.17 2005-09-11 13:25:12 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -98,7 +98,6 @@ extends WikiDB_backend_PearDB
             return unserialize($data);
         return unserialize(base64_decode($data));
     }
-
 };
 
 class WikiDB_backend_PearDB_pgsql_search

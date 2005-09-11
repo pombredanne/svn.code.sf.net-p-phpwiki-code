@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.3 2005-09-10 21:30:16 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.4 2005-09-11 13:25:12 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -222,7 +222,8 @@ extends WikiDB_backend
         extract($this->_table_names);
         $sth = $dbh->exec("SELECT pagename"
                           . " FROM $nonempty_tbl, $page_tbl"
-                          . " WHERE $nonempty_tbl.id=$page_tbl.id");
+                          . " WHERE $nonempty_tbl.id=$page_tbl.id"
+                          . " LIMIT 1");
         return $sth->fetchAll(PDO_FETCH_NUM);
     }
 
@@ -239,7 +240,8 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         $sth = $dbh->prepare("UPDATE $page_tbl SET hits=hits+1"
-                             ." WHERE pagename=?");
+                             . " WHERE pagename=?"
+                             . " LIMIT 1");
         $sth->bindParam(1, $pagename, PDO_PARAM_STR, 100);
         $sth->execute();
     }
@@ -251,7 +253,7 @@ extends WikiDB_backend
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         $sth = $dbh->prepare("SELECT id,pagename,hits,pagedata FROM $page_tbl"
-                             ." WHERE pagename=?");
+                             ." WHERE pagename=? LIMIT 1");
         $sth->bindParam(1, $pagename, PDO_PARAM_STR, 100);
         $sth->execute();
         $row = $sth->fetch(PDO_FETCH_NUM);
@@ -274,7 +276,7 @@ extends WikiDB_backend
             // Note that this will fail silently if the page does not
             // have a record in the page table.  Since it's just the
             // hit count, who cares?
-            $sth = $dbh->prepare("UPDATE $page_tbl SET hits=? WHERE pagename=?");
+            $sth = $dbh->prepare("UPDATE $page_tbl SET hits=? WHERE pagename=? LIMIT 1");
             $sth->bindParam(1, $newdata['hits'], PDO_PARAM_INT);
             $sth->bindParam(2, $pagename, PDO_PARAM_STR, 100);
             $sth->execute();
@@ -300,7 +302,8 @@ extends WikiDB_backend
         }
         $sth = $dbh->prepare("UPDATE $page_tbl"
                              . " SET hits=?, pagedata=?"
-                             . " WHERE pagename=?");
+                             . " WHERE pagename=?"
+                             . " LIMIT 1");
         $sth->bindParam(1, $hits, PDO_PARAM_INT);
         $sth->bindParam(2, $this->_serialize($data), PDO_PARAM_LOB);
         $sth->bindParam(3, $pagename, PDO_PARAM_STR, 100);
@@ -316,7 +319,7 @@ extends WikiDB_backend
     function get_cached_html($pagename) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        $sth = $dbh->prepare("SELECT cached_html FROM $page_tbl WHERE pagename=?");
+        $sth = $dbh->prepare("SELECT cached_html FROM $page_tbl WHERE pagename=? LIMIT 1");
         $sth->bindParam(1, $pagename, PDO_PARAM_STR, 100);
         $sth->execute();
         return $sth->fetchSingle(PDO_FETCH_NUM);
@@ -327,8 +330,9 @@ extends WikiDB_backend
         $page_tbl = $this->_table_names['page_tbl'];
         if (empty($data)) $data = '';
         $sth = $dbh->prepare("UPDATE $page_tbl"
-                            . " SET cached_html=?"
-                             . " WHERE pagename=?");
+                             . " SET cached_html=?"
+                             . " WHERE pagename=?"
+                             . " LIMIT 1");
         $sth->bindParam(1, $data, PDO_PARAM_STR);
         $sth->bindParam(2, $pagename, PDO_PARAM_STR, 100);
         $sth->execute();
@@ -346,7 +350,7 @@ extends WikiDB_backend
         
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        $sth = $dbh->prepare("SELECT id FROM $page_tbl WHERE pagename=?");
+        $sth = $dbh->prepare("SELECT id FROM $page_tbl WHERE pagename=? LIMIT 1");
         $sth->bindParam(1, $pagename, PDO_PARAM_STR, 100);
         $id = $sth->fetchSingle();
         if (! $create_if_missing ) {
@@ -389,7 +393,8 @@ extends WikiDB_backend
         $sth = $dbh->prepare("SELECT latestversion"
                              . " FROM $page_tbl, $recent_tbl"
                              . " WHERE $page_tbl.id=$recent_tbl.id"
-                             . "  AND pagename=?");
+                             . "  AND pagename=?"
+                             . " LIMIT 1");
         $sth->bindParam(1, $pagename, PDO_PARAM_STR, 100);
         $sth->execute();
         return $sth->fetchSingle();
@@ -403,7 +408,8 @@ extends WikiDB_backend
                              . " WHERE $version_tbl.id=$page_tbl.id"
                              . "  AND pagename=?"
                              . "  AND version < ?"
-                             . " ORDER BY version DESC");
+                             . " ORDER BY version DESC"
+                             . " LIMIT 1");
         $sth->bindParam(1, $pagename, PDO_PARAM_STR, 100);
         $sth->bindParam(2, $version, PDO_PARAM_INT);
         $sth->execute();
@@ -440,7 +446,8 @@ extends WikiDB_backend
                              . " FROM $page_tbl, $version_tbl"
                              . " WHERE $page_tbl.id=$version_tbl.id"
                              . "  AND pagename=?"
-                             . "  AND version=?");
+                             . "  AND version=?"
+                             . " LIMIT 1");
         $sth->bindParam(1, $pagename, PDO_PARAM_STR, 100);
         $sth->bindParam(2, $version, PDO_PARAM_INT);
         $sth->execute();
@@ -725,11 +732,7 @@ extends WikiDB_backend
             $exclude = " AND $want.pagename NOT IN ".$this->_sql_set($exclude);
         else 
             $exclude='';
-        if ($limit) {
-            list($offset, $count) = $this->limit($limit);
-            $limit = " LIMIT $offset, $count";
-        } else 
-            $limit = '';
+        $limit = $this->_limit_sql($limit);
 
         $sth = $dbh->prepare("SELECT $want.id AS id, $want.pagename AS pagename,"
                              . " $want.hits AS hits"
@@ -780,6 +783,7 @@ extends WikiDB_backend
             $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
         else 
             $exclude='';
+        $limit = $this->_limit_sql($limit);
 
         if (strstr($orderby, 'mtime ')) { // was ' mtime'
             if ($include_empty) {
@@ -817,13 +821,7 @@ extends WikiDB_backend
                     . $orderby;
             }
         }
-        if ($limit) {
-            // extract from,count from limit
-            list($offset, $count) = $this->limit($limit);
-            $sth = $dbh->prepare($sql . " LIMIT $offset, $count");
-        } else {
-            $sth = $dbh->prepare($sql);
-        }
+        $sth = $dbh->prepare($sql . $limit); 
         $sth->execute();
         $result = $sth->fetch(PDO_FETCH_BOTH);
         return new WikiDB_backend_PDO_iter($this, $result, $this->page_tbl_field_list);
@@ -837,6 +835,7 @@ extends WikiDB_backend
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = ' ORDER BY ' . $orderby;
+        $limit = $this->_limit_sql($limit);
 
         $table = "$nonempty_tbl, $page_tbl";
         $join_clause = "$nonempty_tbl.id=$page_tbl.id";
@@ -860,9 +859,10 @@ extends WikiDB_backend
         
         $search_clause = $search->makeSqlClauseObj($callback);
         $sth = $dbh->prepare("SELECT $fields FROM $table"
-                                . " WHERE $join_clause"
-                                . " AND ($search_clause)"
-                                . $orderby);
+                             . " WHERE $join_clause"
+                             . " AND ($search_clause)"
+                             . $orderby
+                             . $limit);
         $sth->execute();
         $result = $sth->fetch(PDO_FETCH_NUM);
         return new WikiDB_backend_PDO_iter($this, $result, $field_list);
@@ -908,9 +908,7 @@ extends WikiDB_backend
             . $where
             . $orderby;
         if ($limit) {
-            // extract from,count from limit
-            list($offset,$count) = $this->limit($limit);
-            $sth = $dbh->prepare($sql . " LIMIT $offset, $count");
+            $sth = $dbh->prepare($sql . $this->_limit_sql($limit));
         } else {
             $sth = $dbh->prepare($sql);
         }
@@ -984,8 +982,7 @@ extends WikiDB_backend
             . " WHERE $where_clause"
             . " ORDER BY mtime $order";
         if ($limit) {
-            list($offset,$count) = $this->limit($limit);
-            $sth = $dbh->prepare($sql . " LIMIT $offset, $count");
+            $sth = $dbh->prepare($sql . $this->_limit_sql($limit));
         } else {
             $sth = $dbh->prepare($sql);
         }
@@ -1026,9 +1023,7 @@ extends WikiDB_backend
             . $exclude
             . $orderby;
         if ($limit) {
-            // extract from,count from limit
-            list($offset,$count) = $this->limit($limit);
-            $sth = $dbh->prepare($sql . " LIMIT $offset, $count");
+            $sth = $dbh->prepare($sql . $this->_limit_sql($limit));
         } else {
             $sth = $dbh->prepare($sql);
         }
@@ -1215,6 +1210,36 @@ extends WikiDB_backend
     function listOfFields($database, $table) {
         trigger_error("PDO: virtual listOfFields", E_USER_ERROR);
         return array();
+    }
+
+    /*
+     * LIMIT with OFFSET is not SQL specified. 
+     *   mysql: LIMIT $offset, $count
+     *   pgsql,sqlite: LIMIT $count OFFSET $offset
+     *   InterBase,FireBird: ROWS $offset TO $last
+     *   mssql: TOP $rows => TOP $last
+     *   oci8: ROWNUM
+     *   IBM DB2: FetchFirst
+     * See http://search.cpan.org/dist/SQL-Abstract-Limit/lib/SQL/Abstract/Limit.pm
+
+     SELECT field_list FROM $table X WHERE where_clause AND
+     (
+         SELECT COUNT(*) FROM $table WHERE $pk > X.$pk
+     )
+     BETWEEN $offset AND $last
+     ORDER BY $pk $asc_desc
+     */
+    function _limit_sql($limit = false) {
+        if ($limit) {
+            list($offset, $count) = $this->limit($limit);
+            if ($offset) {
+                $limit = " LIMIT $count"; 
+                trigger_error("unsupported OFFSET in SQL ignored", E_USER_WARNING);
+            } else
+                $limit = " LIMIT $count"; 
+        } else
+            $limit = '';
+        return $limit;
     }
 };
 
@@ -1452,6 +1477,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2005/09/10 21:30:16  rurban
+// enhance titleSearch
+//
 // Revision 1.2  2005/02/11 14:45:45  rurban
 // support ENABLE_LIVESEARCH, enable PDO sessions
 //
