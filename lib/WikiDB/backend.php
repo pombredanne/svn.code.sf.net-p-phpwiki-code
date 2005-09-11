@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.24 2005-09-10 21:30:16 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.25 2005-09-11 13:23:21 rurban Exp $');
 
 /*
   Pagedata
@@ -335,8 +335,11 @@ class WikiDB_backend
         // It is expected that most backends will overload
         // this method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/TextSearchIter.php');
-        $pages = $this->get_all_pages(false, $sortby, $limit, $exclude);
-        return new WikiDB_backend_dumb_TextSearchIter($this, $pages, $search, $fulltext);
+        // ignore $limit
+        $pages = $this->get_all_pages(false, $sortby, false, $exclude);
+        return new WikiDB_backend_dumb_TextSearchIter($this, $pages, $search, $fulltext, 
+                                                      array('limit' => $limit, 
+                                                            'exclude' => $exclude));
     }
 
     /**
@@ -357,7 +360,7 @@ class WikiDB_backend
         // It is expected that most backends will overload
         // method with something more efficient.
         include_once('lib/WikiDB/backend/dumb/MostPopularIter.php');
-        $pages = $this->get_all_pages(false, $sortby, $limit);
+        $pages = $this->get_all_pages(false, $sortby, false);
         return new WikiDB_backend_dumb_MostPopularIter($this, $pages, $limit);
     }
 
@@ -476,10 +479,10 @@ class WikiDB_backend
     }
 
     /** 
-     * Split the given limit parameter into offset,pagesize. (offset is optional. default: 0)
+     * Split the given limit parameter into offset,limit. (offset is optional. default: 0)
      * Duplicate the PageList function here to avoid loading the whole PageList.php 
      * Usage: 
-     *   list($offset,$pagesize) = $this->limit($args['limit']);
+     *   list($offset,$count) = $this->limit($args['limit']);
      */
     function limit($limit) {
         if (strstr($limit, ','))
