@@ -1,14 +1,22 @@
 <?php // -*-php-*-
-rcs_id('$Id: TextSearchIter.php,v 1.4 2004-11-29 17:55:04 rurban Exp $');
+rcs_id('$Id: TextSearchIter.php,v 1.5 2005-09-11 13:20:52 rurban Exp $');
 
 class WikiDB_backend_dumb_TextSearchIter
 extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_dumb_TextSearchIter(&$backend, &$pages, $search, $fulltext=false) {
+    function WikiDB_backend_dumb_TextSearchIter(&$backend, &$pages, $search, $fulltext=false, 
+                                                $options=array()) 
+    {
         $this->_backend = &$backend;
         $this->_pages = $pages;
         $this->_fulltext = $fulltext;
-        $this->_search = $search;
+        $this->_search  = $search;
+        $this->_index   = 0;
+
+        if (isset($options['limit'])) $this->_limit = $options['limit'];
+        else $this->_limit = 0;
+        if (isset($options['exclude'])) $this->_exclude = $options['exclude'];
+        else $this->_exclude = false;
     }
 
     function _get_content(&$page) {
@@ -37,8 +45,11 @@ extends WikiDB_backend_iterator
     function next() {
         $pages = &$this->_pages;
         while ($page = $pages->next()) {
-            if ($this->_match($page))
+            if ($this->_match($page)) {
+                if ($this->_limit and ($this->_index++ >= $this->_limit))
+                    return false;
                 return $page;
+            }
         }
         return false;
     }
