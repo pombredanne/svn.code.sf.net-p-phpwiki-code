@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.133 2005-08-27 09:41:37 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.134 2005-09-11 14:55:05 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -832,7 +832,7 @@ class PageList {
             //TODO: do the sorting, normally not needed if used for exclude only
             return explode(',',$input);
         }
-    }
+    } 
 
     function allPagesByAuthor($wildcard, $include_empty=false, $sortby=false, 
                               $limit=false, $exclude=false) {
@@ -1475,6 +1475,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.133  2005/08/27 09:41:37  rurban
+// new helper method
+//
 // Revision 1.132  2005/04/09 09:16:15  rurban
 // fix recursive PageList azhead+cols listing
 //

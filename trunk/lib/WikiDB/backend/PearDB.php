@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.90 2005-09-11 13:25:12 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.91 2005-09-11 14:55:05 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -1217,28 +1217,32 @@ extends WikiDB_backend_search
     function WikiDB_backend_PearDB_search(&$search, &$dbh) {
         $this->_dbh = $dbh;
         $this->_case_exact = $search->_case_exact;
+        $this->_stoplist =& $search->_stoplist;
     }
     function _pagename_match_clause($node) { 
         $word = $node->sql();
-        if ($node->op == 'REGEX') { // posix regex extensions
-            if (preg_match("/mysql/i", $this->_dbh->phptype))
-                return "pagename REGEXP '$word'";
-        } else {
-            return ($this->_case_exact 
-                    ? "pagename LIKE '$word'" 
-                    : "LOWER(pagename) LIKE '$word'");
-        }
+        return ($this->_case_exact 
+                ? "pagename LIKE '$word'" 
+                : "LOWER(pagename) LIKE '$word'");
     }
     function _fulltext_match_clause($node) { 
         $word = $node->sql();
-        return $this->_pagename_match_clause($node)
-               // probably convert this MATCH AGAINST or SUBSTR/POSITION without wildcards
-               . ($this->_case_exact ? " OR content LIKE '$word'" 
-                                     : " OR LOWER(content) LIKE '$word'");
+        // eliminate stoplist words
+        if (preg_match("/^%".$this->_stoplist."%/i", $word) 
+            or preg_match("/^".$this->_stoplist."$/i", $word))
+            return $this->_pagename_match_clause($node);
+        else
+            return $this->_pagename_match_clause($node)
+                // probably convert this MATCH AGAINST or SUBSTR/POSITION without wildcards
+                . ($this->_case_exact ? " OR content LIKE '$word'" 
+                                      : " OR LOWER(content) LIKE '$word'");
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.90  2005/09/11 13:25:12  rurban
+// enhance LIMIT support
+//
 // Revision 1.89  2005/09/10 21:30:16  rurban
 // enhance titleSearch
 //

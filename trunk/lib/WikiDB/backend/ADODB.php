@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.76 2005-09-11 13:25:12 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.77 2005-09-11 14:55:05 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -1270,6 +1270,7 @@ extends WikiDB_backend_search
     function WikiDB_backend_ADODB_search(&$search, &$dbh) {
         $this->_dbh =& $dbh;
         $this->_case_exact = $search->_case_exact;
+        $this->_stoplist =& $search->_stoplist;
     }
     function _pagename_match_clause($node) {
         $word = $node->sql();
@@ -1279,9 +1280,14 @@ extends WikiDB_backend_search
     }
     function _fulltext_match_clause($node) { 
         $word = $node->sql();
-        return ($this->_case_exact
-                ? "pagename LIKE '$word' OR content LIKE '$word'"
-                : "LOWER(pagename) LIKE '$word' OR content LIKE '$word'");
+        // eliminate stoplist words
+        if (preg_match("/^%".$this->_stoplist."%/i", $word) 
+            or preg_match("/^".$this->_stoplist."$/i", $word))
+            return $this->_pagename_match_clause($node);
+        else
+            return ($this->_case_exact
+                    ? "pagename LIKE '$word' OR content LIKE '$word'"
+                    : "LOWER(pagename) LIKE '$word' OR content LIKE '$word'");
     }
 }
 
@@ -1445,6 +1451,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.76  2005/09/11 13:25:12  rurban
+// enhance LIMIT support
+//
 // Revision 1.75  2005/09/10 21:30:16  rurban
 // enhance titleSearch
 //
