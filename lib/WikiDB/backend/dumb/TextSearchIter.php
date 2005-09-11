@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TextSearchIter.php,v 1.5 2005-09-11 13:20:52 rurban Exp $');
+rcs_id('$Id: TextSearchIter.php,v 1.6 2005-09-11 14:55:05 rurban Exp $');
 
 class WikiDB_backend_dumb_TextSearchIter
 extends WikiDB_backend_iterator
@@ -12,6 +12,7 @@ extends WikiDB_backend_iterator
         $this->_fulltext = $fulltext;
         $this->_search  = $search;
         $this->_index   = 0;
+        $this->_stoplist =& $search->_stoplist;
 
         if (isset($options['limit'])) $this->_limit = $options['limit'];
         else $this->_limit = 0;
@@ -36,6 +37,9 @@ extends WikiDB_backend_iterator
             return $result;
 
         if ($this->_fulltext) {
+            // eliminate stoplist words from fulltext search
+            if (preg_match("/^".$this->_stoplist."$/i", $text))
+                return $result;
             $text .= "\n" . $this->_get_content($page);
             return $this->_search->match($text);
         } else

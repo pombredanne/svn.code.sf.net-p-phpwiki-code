@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.24 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.25 2005-09-11 14:55:05 rurban Exp $');
 /*
 Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
@@ -70,7 +70,7 @@ extends WikiPlugin
         extract($args);
 
         $query = new TextSearchQuery($s, $case_exact, $regex);
-        $pages = $dbi->fullSearch($query);
+        $pages = $dbi->fullSearch($query, $sortby, $limit, $exclude);
         $lines = array();
         $hilight_re = $hilight ? $query->getHighlightRegexp() : false;
         $count = 0;
@@ -136,6 +136,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2004/11/26 18:39:02  rurban
+// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
+//
 // Revision 1.23  2004/11/23 15:17:19  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:

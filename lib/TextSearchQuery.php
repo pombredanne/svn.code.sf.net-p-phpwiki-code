@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.19 2005-09-11 14:12:13 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.20 2005-09-11 14:55:05 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -83,6 +83,7 @@ class TextSearchQuery {
         $parser = new TextSearchQuery_Parser;
         $this->_tree = $parser->parse($search_query, $case_exact, $this->_regex);
         //$this->_optimize(); // broken under certain circumstances: "word -word -word"
+        $this->_stoplist = '(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)';
     }
 
     function _optimize() {
