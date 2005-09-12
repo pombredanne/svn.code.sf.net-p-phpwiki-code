@@ -3,13 +3,13 @@
 $locale["%4d  %s\n"] =
    "%4d  %s\n";
 $locale["%d best incoming links: "] =
-   "%d mejores enlaces de entrada:";
+   "%d mejores enlaces de entrada: ";
 $locale["%d best outgoing links: "] =
-   "%d mejores enlaces de salida:";
+   "%d mejores enlaces de salida: ";
 $locale["%d minutes"] =
    "%d minutas";
 $locale["%d most popular nearby: "] =
-   "%d las más populares:";
+   "%d las más populares: ";
 $locale["%d not-empty pages"] =
    "%d not-empty páginas";
 $locale["%d pages"] =
@@ -82,6 +82,8 @@ $locale["CategoryCategory"] =
    "CategoriaCategoria";
 $locale["CategoryGroup"] =
    "GrupoCategoría";
+$locale["CategoryPage"] =
+   "CategoríaPágina";
 $locale["Change Password"] =
    "Change Contraseña";
 $locale["Click to reverse sort order"] =
@@ -98,6 +100,8 @@ $locale["Content"] =
    "Contenido";
 $locale["Convert"] =
    "Convertido";
+$locale["Create a Wiki page."] =
+   "Cree una página de Wiki.";
 $locale["Create: %s"] =
    "Cree: %s";
 $locale["CreatePage"] =
@@ -106,6 +110,10 @@ $locale["CreateToc"] =
    "CreeToc";
 $locale["Created by CreatePage"] =
    "Cree par CreeLaPágina";
+$locale["DB admin password:"] =
+   "DB admin contraseña:";
+$locale["DB admin user:"] =
+   "DB admin username:";
 $locale["Describe %s here."] =
    "Describe %s aquí.";
 $locale["Diff"] =
@@ -160,8 +168,8 @@ $locale["HomePageAlias"] =
    "PáginaPrincipalAlias";
 $locale["Horizontal line"] =
    "Linea horizontal";
-$locale["Include of '%s' failed"] =
-   "Inserción de '%s' falló";
+$locale["Include of '%s' failed."] =
+   "Inserción de '%s' falló.";
 $locale["Included from %s"] =
    "Inserción de '%s'";
 $locale["Included from %s:"] =
@@ -175,17 +183,17 @@ $locale["Insert Categories (double-click)"] =
 $locale["Insert Plugin (double-click)"] =
    "Relleno Plugin (doble-tecleo)";
 $locale["Insufficient permissions."] =
-   "Permisos escasos";
+   "Permisos escasos.";
 $locale["InterWiki"] =
    "InterWiki";
 $locale["InterWikiSearch"] =
    "InterWikiBúsqueda";
 $locale["Invalid password or userid."] =
-   "Contraseña o userid inválida";
+   "Contraseña o userid inválida.";
 $locale["Invalid password."] =
    "Contraseña inválido.";
 $locale["Invalid username."] =
-   "Username inválido";
+   "Username inválido.";
 $locale["Last"] =
    "Final";
 $locale["Last Modified"] =
@@ -244,6 +252,8 @@ $locale["OrphanedPages"] =
    "BuscarPágina";
 $locale["Other version"] =
    "Altro versión";
+$locale["Page %s not found."] =
+   "%s: Página no encontrado.";
 $locale["Page Content: "] =
    "Contenido De la Página: ";
 $locale["Page Locked"] =
@@ -268,8 +278,10 @@ $locale["Password was not changed."] =
    "Contraseña non actualizado.";
 $locale["Password:"] =
    "Contraseña:";
+$locale["Plugin %s disabled."] =
+   "Plugin '%s' lisiado.";
 $locale["Plugin %s failed."] =
-   "Inserción de '%s' falló";
+   "Plugin '%s' falló.";
 $locale["Plugin %s: undefined"] =
    "Plugin %s: indefinido";
 $locale["Preferences"] =
@@ -311,8 +323,6 @@ $locale["Removing pages"] =
 $locale["SandBox"] =
    "CajaDeArena";
 $locale["Save"] =
-   "Guardar";
-$locale["Saved on:"] =
    "Guardar";
 $locale["Saved: %s"] =
    "Guardar: %s";
@@ -438,6 +448,8 @@ $locale["version %d"] =
    "versión %d";
 $locale["version %s"] =
    "versión %s";
+$locale["weeks"] =
+   "semanas";
 $locale["yesterday"] =
    "ayer";
 
