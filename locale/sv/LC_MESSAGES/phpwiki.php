@@ -2,6 +2,12 @@
 
 $locale["%4d  %s\n"] =
    "%4d  %s\n";
+$locale["%d best incoming links: "] =
+   "De %d mest använda ingående länkarna: ";
+$locale["%d best outgoing links: "] =
+   "De %d mest använda utgående länkarna: ";
+$locale["%d most popular nearby: "] =
+   "De %d mest populära grannarna: ";
 $locale["%s at %s"] =
    "%s i %s";
 $locale["%s days"] =
@@ -66,8 +72,6 @@ $locale["Hits:"] =
    "Träffar:";
 $locale["HomePage"] =
    "Framsida";
-$locale["Include of '%s' failed"] =
-   "Insättning för '%s' misslyckades";
 $locale["Included from %s"] =
    "Insättning från %s";
 $locale["Last"] =
@@ -132,6 +136,8 @@ $locale["Sign Out"] =
    "Logga ut";
 $locale["Sorry for the inconvenience."] =
    "Ledsen för allt besvär.";
+$locale["String \"%s\" not found."] =
+   "\"%s\" ingen funna.";
 $locale["Synopsis"] =
    "Översikt";
 $locale["TextFormattingRules"] =

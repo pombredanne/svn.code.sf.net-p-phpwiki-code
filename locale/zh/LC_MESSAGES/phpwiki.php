@@ -106,8 +106,6 @@ $locale["%s: file not found"] =
    "%s: 找不到檔案.";
 $locale["%s: no such class"] =
    "%s: 無此類別";
-$locale["%s: not a subclass of WikiPlugin"] =
-   "%s: 不是 WikiPlugin 的子類別";
 $locale["%s: not defined"] =
    "%s: 未被定義";
 $locale["'%s': Bad page name"] =
@@ -134,8 +132,6 @@ $locale["(hist)"] =
    "(歷程)";
 $locale["(max. recursion level: %d)"] =
    "(最大遞迴層級: %d)";
-$locale["(no regex, case-sensitive)"] =
-   "(no regex, 不分大小寫)";
 $locale["(ugo : rwx)"] =
    "(ugo : rwx)";
 $locale["- saved to database as version %d"] =
@@ -398,8 +394,6 @@ $locale["Current theme: '%s'"] =
    "目前佈景主題: '%s'";
 $locale["Currently not recommended!"] =
    "現在不建議使用!";
-$locale["DBA files are in the %s directory. Please read the INSTALL file and move the DB file to a permanent location or risk losing all the pages!"] =
-   "DBA 檔案在 %s 目錄中. 請閱讀 INSTALL 檔案並移動 DB 檔案到一個永久的位置否則可能遺失所有頁面!";
 $locale["Database"] =
    "資料庫";
 $locale["Date Format"] =
@@ -538,10 +532,6 @@ $locale["Error: Empty search string."] =
    "錯誤: 空白的搜尋字串.";
 $locale["Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."] =
    "錯誤: 使用者的首頁必須是一個合法的 WikiWord. 抱歉, UserPreferences 無法儲存.";
-$locale["Error: can't open the upload logfile"] =
-   "錯誤: 無法開啟上傳日誌檔案";
-$locale["Error: the upload log is not writable"] =
-   "錯誤: 上傳日誌無法寫入";
 $locale["Every"] =
    "每";
 $locale["Existing page-level metadata for %s:"] =
@@ -558,8 +548,6 @@ $locale["Fatal PhpWiki Error"] =
    "致命的 PhpWiki 錯誤";
 $locale["File successfully uploaded."] =
    "檔案已經成功地上傳.";
-$locale["Files with extension %s are not allowed"] =
-   "副檔名 %s 不被允許";
 $locale["FindPage"] =
    "FindPage";
 $locale["First"] =
@@ -600,6 +588,8 @@ $locale["GoodStyle"] =
    "GoodStyle";
 $locale["GooglePlugin"] =
    "GooglePlugin";
+$locale["Group %s does not exist"] =
+   "群組 %s 不存在";
 $locale["Guest"] =
    "訪客";
 $locale["Guests"] =
@@ -654,12 +644,8 @@ $locale["Image saved to cache file: %s"] =
    "影像存於快取檔案: %s";
 $locale["In the time since you started editing this page, another user has saved a new version of it."] =
    "從你上次修改這個頁面到現在的這段時間,已經有使用者儲存了較新的版本.";
-$locale["In total there are %d user sessions online :: Unique %d Registered and %d Guests"] =
-   "In total there are %d user sessions online :: Unique %d Registered and %d Guests";
 $locale["Include an external web page within the body of a wiki page."] =
    "含括外部網頁到 wiki 頁面的內容中.";
-$locale["Include of '%s' failed"] =
-   "含括 '%s' 失敗";
 $locale["Include recursively all linked pages starting at %s"] =
    "遞迴地含括所有從 %s 開始有連結到的網頁.";
 $locale["Include text from another wiki page."] =
@@ -806,8 +792,6 @@ $locale["Moniker"] =
    "名字";
 $locale["MoreAboutMechanics"] =
    "MoreAboutMechanics";
-$locale["Most users ever online was %d at %s"] =
-   "Most users ever online was %d at %s";
 $locale["MostPopular"] =
    "MostPopular";
 $locale["Name"] =
@@ -848,8 +832,6 @@ $locale["No pages changed."] =
    "沒有頁面被變更.";
 $locale["No pages renamed."] =
    "沒有頁面被更名";
-$locale["No pages with bad names were found."] =
-   "找不到錯誤名稱的頁面.";
 $locale["No revisions found"] =
    "沒找到修訂";
 $locale["No uploaded file to upload?"] =
@@ -1132,8 +1114,6 @@ $locale["Rename"] =
    "更名";
 $locale["Rename selected pages"] =
    "更名已選定的頁面";
-$locale["Rename selected pages."] =
-   "更名選定的頁面.";
 $locale["Rename to"] =
    "更名為";
 $locale["Renamed page '%s' to '%s'."] =
@@ -1248,16 +1228,12 @@ $locale["Size"] =
    "大小";
 $locale["Size:"] =
    "大小";
-$locale["Skipped."] =
-   "跳過";
 $locale["Skipping"] =
    "跳過";
 $locale["Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save."] =
    "部份更動無法自動合併. 請搜尋以 '%s' 開頭並以 '%s' 結尾的部份.在儲存之前,你需要手動編輯這些部份.";
 $locale["Someone has edited the page!"] =
    "有人編輯了此頁面!";
-$locale["Sorry but this file is too big"] =
-   "抱歉,因為檔案太大了.";
 $locale["Sorry for the inconvenience."] =
    "抱歉造成你的不便.";
 $locale["Sorry! You must wait at least 20 minutes until you can vote again!"] =
@@ -1362,8 +1338,6 @@ $locale["The most recent %s during the past %s days are listed below."] =
    "最新的紀錄已經列在下面 - 頁面 %s - 在過去 %s 天以來.";
 $locale["The most recent %s during the past day are listed below."] =
    "最新的紀錄已經列在下面 - 頁面 %s - 在過去一天以來.";
-$locale["The newest registered user is %s"] =
-   "最近註冊的使用者是 %s";
 $locale["The result of this poll so far:"] =
    "這次投票的結果是這樣:";
 $locale["The session.save_path directory"] =
@@ -1372,16 +1346,12 @@ $locale["The wordwrap of the preview doesn't take nested markup or list indentat
    "預覽的自動換行無法處理巢狀標記或縮排列出.";
 $locale["Theme"] =
    "佈景主題";
-$locale["There is already a file with name %s uploaded"] =
-   "已經有個名為 %s 的檔案存在";
 $locale["There is no image creation data available to id '%s'. Please reload referring page."] =
    "沒有id '%s' 可用的圖片創作資料. 請重新載入參照頁面.";
 $locale["These page titles match fuzzy with '%s'"] =
    "這些頁面標題與 '%s' 有點接近";
 $locale["These pages share an initial or final title word with '%s'"] =
    "這些頁面分享為 '%s' 開頭或結尾的標題字.";
-$locale["This data is based on users active over the past %s"] =
-   "This data is based on users active over the past %s";
 $locale["This internal action page cannot viewed."] =
    "內部動作頁面無法瀏覽.";
 $locale["This is a minor change."] =
@@ -1432,8 +1402,6 @@ $locale["Translation Error!"] =
    "轉換錯誤!";
 $locale["Type it again"] =
    "再輸入一次:";
-$locale["Type: "] =
-   "型態:";
 $locale["Unable to connect to IMAP server "] =
    "無法連結到 IMAP 伺服器";
 $locale["Unable to connect to LDAP server %s"] =

@@ -4,6 +4,8 @@ $locale["%4d  %s\n"] =
    "%4d  %s\n";
 $locale["%s: %s"] =
    "%s: %s";
+$locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
+   "Kopier je veranderingen naar het klipbord of een andere tijdelijke plaats (bijv. een tekst editor).";
 $locale["(diff)"] =
    "(diff)";
 $locale["- saved to database as version %d"] =
@@ -16,10 +18,14 @@ $locale["Cancel"] =
    "Annuleer";
 $locale["Complete."] =
    "Klaar.";
+$locale["Couldn't connect to %s"] =
+   "Kan verbinding naar data base %s niet tot stand brengen, geef op.";
 $locale["Describe %s here."] =
    "Beschrijf %s hier.";
 $locale["Diff"] =
    "Diff";
+$locale["Diff: %s"] =
+   "Diff van: %s";
 $locale["Edit"] =
    "Verander";
 $locale["Edit %s"] =
@@ -48,10 +54,12 @@ $locale["Hits"] =
    "Teller";
 $locale["Hits:"] =
    "Teller:";
+$locale["Home"] =
+   "Thuis";
 $locale["HomePage"] =
    "ThuisPagina";
-$locale["Include of '%s' failed"] =
-   "Insert van '%s' gefaald";
+$locale["Include of '%s' failed."] =
+   "Insert van '%s' gefaald.";
 $locale["Last Author"] =
    "Vorige Auteur";
 $locale["Last Modified"] =
@@ -60,14 +68,26 @@ $locale["Last edited %s"] =
    "Meest recente verandering %s";
 $locale["Last edited on %s"] =
    "Meest recente verandering op %s";
+$locale["LdapSearch"] =
+   "LdapZoek";
+$locale["Links"] =
+   "Links";
+$locale["LiveSearch"] =
+   "LiveZoek";
 $locale["Loading up virgin wiki"] =
    "Laden van maagdelijke wiki";
 $locale["Lock Page"] =
    "Open Pagina";
 $locale["Locked"] =
    "Låst";
+$locale["MIME file %s"] =
+   "MIME bestand %s";
 $locale["MostPopular"] =
    "Meestbezochte";
+$locale["New page"] =
+   "Nieuw pagina";
+$locale["Newer page:"] =
+   "Nieuw pagina:";
 $locale["Next"] =
    "Volgende";
 $locale["None"] =
@@ -182,6 +202,8 @@ $locale["You must specify a directory to dump to"] =
    "Je moet een directory specificeren om in te storten";
 $locale["Your careful attention to detail is much appreciated."] =
    "Je zorgvuldige aandacht voor detail wordt erg gewaardeerd.";
+$locale["Your home page has not been created yet so your preferences cannot not be saved."] =
+   "Deze pagina is afgesloten door de beheerder en je veranderingen kan niet bewaar worden.";
 $locale["[%d] See [%s]"] =
    "[%d] Zie [%s]";
 $locale["by %s"] =
@@ -194,11 +216,15 @@ $locale["from %s"] =
    "van %s";
 $locale["locked"] =
    "låst";
+$locale["plain file %s"] =
+   "plat bestand %s";
 $locale["saved as %s"] =
    "bewaard als %s";
 $locale["version %d"] =
    "versie %d";
 $locale["version %s"] =
    "versie %s";
+$locale["version <em>%s</em>"] =
+   "versie <em>%s</em>";
 
 ?>

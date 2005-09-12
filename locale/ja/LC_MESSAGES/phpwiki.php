@@ -166,8 +166,6 @@ $locale["Hits:"] =
    "ヒット数:";
 $locale["HomePage"] =
    "ホームページ";
-$locale["Include of '%s' failed"] =
-   "%s のインクルードに失敗しました。";
 $locale["Included from %s"] =
    "%s から読込まれました。";
 $locale["Index"] =
