@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.96 2005-08-07 10:52:43 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.97 2005-09-14 05:58:17 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -425,15 +425,10 @@ class Request {
             global $RUNTIMER;
             if ($RUNTIMER) $this->_accesslog->setDuration($RUNTIMER->getTime());
             // sql logging must be done before the db is closed.
-            $this->_accesslog->write_sql();
+            if ($this->_accesslog->logtable)
+                $this->_accesslog->write_sql();
         }
         
-        session_write_close();
-        if (!empty($this->_dbi)) {
-            $this->_dbi->close();
-            unset($this->_dbi);
-        }
-
         if (!empty($this->_is_buffering_output)) {
             /* This cannot work because it might destroy xml markup */
             /*
@@ -446,16 +441,22 @@ class Request {
                 echo $html;
             } else {
             */
-            if (empty($this->_do_chunked_output)) {
-                $this->_ob_get_length = ob_get_length();
+	    if (!headers_sent()) {
+		if (empty($this->_do_chunked_output)) {
+		    $this->_ob_get_length = ob_get_length();
+		}
+		header(sprintf("Content-Length: %d", $this->_ob_get_length));
             }
-            header(sprintf("Content-Length: %d", $this->_ob_get_length));
-            //}
-            while (@ob_end_flush());
             $this->_is_buffering_output = false;
-        } else {
-            while (@ob_end_flush()); // hmm. there's some error in redirect
+	}
+
+        while (@ob_end_flush()); // hmm. there's some error in redirect
+        session_write_close();
+        if (!empty($this->_dbi)) {
+            $this->_dbi->close();
+            unset($this->_dbi);
         }
+
         exit;
     }
 
@@ -1148,9 +1149,9 @@ function Request_AccessLogEntry_shutdown_function () {
     global $request;
     
     if (isset($request->_accesslog->entries) and $request->_accesslog->logfile)
-      foreach ($request->_accesslog->entries as $entry) {
-          $entry->write_file();
-      }
+        foreach ($request->_accesslog->entries as $entry) {
+            $entry->write_file();
+        }
     unset($request->_accesslog->entries);
 }
 
@@ -1335,6 +1336,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.96  2005/08/07 10:52:43  rurban
+// stricter error handling: dba errors are fatal, display errors on Request->finish or session_close
+//
 // Revision 1.95  2005/08/07 10:09:33  rurban
 // set _COOKIE also
 //
