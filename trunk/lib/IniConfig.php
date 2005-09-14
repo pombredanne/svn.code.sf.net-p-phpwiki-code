@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.92 2005-08-06 13:00:21 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.93 2005-09-14 05:57:19 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -163,7 +163,7 @@ function IniConfig($file) {
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
          'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD',
          'SESSION_SAVE_PATH', 'TOOLBAR_PAGELINK_PULLDOWN', 'TOOLBAR_TEMPLATE_PULLDOWN',
-         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL'
+         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL', 'ENABLE_MARKUP_TEMPLATE'
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -840,6 +840,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.92  2005/08/06 13:00:21  rurban
+// accept config.ini ACCESS_LOG_SQL = 0
+//
 // Revision 1.91  2005/06/30 04:53:46  rurban
 // use better /tmp/cache, dependent on TEMP_DIR and getenv("TEMP")
 //
