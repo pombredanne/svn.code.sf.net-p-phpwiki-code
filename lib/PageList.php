@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.134 2005-09-11 14:55:05 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.135 2005-09-14 05:59:03 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -819,8 +819,16 @@ class PageList {
         if (empty($input)) return array();
         // expand wildcards from list of all pages
         if (preg_match('/[\?\*]/', $input)) {
+            include_once("lib/TextSearchQuery.php");
+            $search = new TextSearchQuery(str_replace(",", " ", $input), true, 'glob'); 
             $dbi = $GLOBALS['request']->getDbh();
-            // $dbi->titleSearch($input);
+            $iter = $dbi->titleSearch($search, $sortby, $limit, $exclude);
+            $pages = array();
+            while ($pagehandle = $iter->next()) {
+                $pages[] = $pagehandle->getName();
+            }
+            return $pages;
+            /*
             //TODO: need an SQL optimization here
             $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, 
                                                 $exclude);
@@ -828,9 +836,10 @@ class PageList {
                 $allPages[] = $pagehandle->getName();
             }
             return explodeList($input, $allPages);
+            */
         } else {
             //TODO: do the sorting, normally not needed if used for exclude only
-            return explode(',',$input);
+            return explode(',', $input);
         }
     } 
 
@@ -1475,6 +1484,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.134  2005/09/11 14:55:05  rurban
+// implement fulltext stoplist
+//
 // Revision 1.133  2005/08/27 09:41:37  rurban
 // new helper method
 //
