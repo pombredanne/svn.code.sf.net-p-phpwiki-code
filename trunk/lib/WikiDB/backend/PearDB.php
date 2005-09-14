@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.91 2005-09-11 14:55:05 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.92 2005-09-14 06:04:43 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -1221,12 +1221,17 @@ extends WikiDB_backend_search
     }
     function _pagename_match_clause($node) { 
         $word = $node->sql();
-        return ($this->_case_exact 
-                ? "pagename LIKE '$word'" 
-                : "LOWER(pagename) LIKE '$word'");
+        if ($word == '%')
+            return "1=1";
+        else
+            return ($this->_case_exact 
+                    ? "pagename LIKE '$word'" 
+                    : "LOWER(pagename) LIKE '$word'");
     }
     function _fulltext_match_clause($node) { 
         $word = $node->sql();
+        if ($word == '%')
+            return "1=1";
         // eliminate stoplist words
         if (preg_match("/^%".$this->_stoplist."%/i", $word) 
             or preg_match("/^".$this->_stoplist."$/i", $word))
@@ -1240,6 +1245,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.91  2005/09/11 14:55:05  rurban
+// implement fulltext stoplist
+//
 // Revision 1.90  2005/09/11 13:25:12  rurban
 // enhance LIMIT support
 //
