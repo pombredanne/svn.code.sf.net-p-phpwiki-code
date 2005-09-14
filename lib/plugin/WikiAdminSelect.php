@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.22 2004-12-06 19:50:05 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.23 2005-09-14 06:06:09 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
@@ -60,7 +60,7 @@ extends WikiPlugin
                      'exclude' => '',
                      'info'    => 'most',
                      'sortby'  => 'pagename',
-                     'limit'    => 0,
+                     'limit'    => 150,
                      'debug'   => false);
     }
 
@@ -247,6 +247,14 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/12/06 19:50:05  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.21  2004/11/23 15:17:20  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:
