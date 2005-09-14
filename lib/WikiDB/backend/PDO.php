@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.4 2005-09-11 13:25:12 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.5 2005-09-14 06:04:43 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -1305,15 +1305,25 @@ extends WikiDB_backend_search
     function _pagename_match_clause($node) {
         // word already quoted by TextSearchQuery_node_word::_sql_quote()
         $word = $node->sql();
-        return ($this->_case_exact 
-                ? "pagename LIKE '$word'"
-                : "LOWER(pagename) LIKE '$word'");
+        if ($word == '%')
+            return "1=1";
+        else
+            return ($this->_case_exact 
+                    ? "pagename LIKE '$word'"
+                    : "LOWER(pagename) LIKE '$word'");
     }
     function _fulltext_match_clause($node) { 
         $word = $node->sql();
-        return ($this->_case_exact
-                ? "pagename LIKE '$word' OR content LIKE '$word'"
-                : "LOWER(pagename) LIKE '$word' OR content LIKE '$word'");
+        if ($word == '%')
+            return "1=1";
+        // eliminate stoplist words
+        if (preg_match("/^%".$this->_stoplist."%/i", $word) 
+            or preg_match("/^".$this->_stoplist."$/i", $word))
+            return $this->_pagename_match_clause($node);
+        else
+            return $this->_pagename_match_clause($node)
+                . ($this->_case_exact ? " OR content LIKE '$word'" 
+                                      : " OR LOWER(content) LIKE '$word'");
     }
 }
 
@@ -1477,6 +1487,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2005/09/11 13:25:12  rurban
+// enhance LIMIT support
+//
 // Revision 1.3  2005/09/10 21:30:16  rurban
 // enhance titleSearch
 //
