@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.20 2005-09-11 14:55:05 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.21 2005-09-14 05:59:48 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -82,7 +82,7 @@ class TextSearchQuery {
         $this->_case_exact = $case_exact;
         $parser = new TextSearchQuery_Parser;
         $this->_tree = $parser->parse($search_query, $case_exact, $this->_regex);
-        //$this->_optimize(); // broken under certain circumstances: "word -word -word"
+        $this->_optimize(); // broken under certain circumstances: "word -word -word"
         $this->_stoplist = '(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)';
     }
 
@@ -209,6 +209,8 @@ class TextSearchQuery {
                 $subclauses[] = "(" . $this->_sql_clause_obj($leaf) . ")";
             return join(" $node->op ", $subclauses);
         case 'VOID':
+            return '0=1';
+        case 'ALL':
             return '1=1';
         default:
             return $this->_sql_clause_cb->call($node);
@@ -233,6 +235,8 @@ class TextSearchQuery {
             return $indent . "WORD: $node->word";
         case 'VOID':
             return $indent . "VOID";
+        case 'ALL':
+            return $indent . "ALL";
         default:
             $lines = array($indent . $node->op . ":");
             $indent .= "  ";
@@ -269,7 +273,7 @@ class NullTextSearchQuery extends TextSearchQuery {
 /**
  * Virtual base class for nodes in a TextSearchQuery parse tree.
  *
- * Also servers as a 'VOID' (contentless) node.
+ * Also serves as a 'VOID' (contentless) node.
  */
 class TextSearchQuery_node
 {
@@ -325,6 +329,12 @@ extends TextSearchQuery_node
     function sql()    { return '%'.$this->_sql_quote($this->word).'%'; }
 }
 
+class TextSearchQuery_node_all
+extends TextSearchQuery_node {
+    var $op = "ALL";
+    function regexp() { return '(?=.*)'; }
+    function sql()    { return '%'; }
+}
 class TextSearchQuery_node_starts_with
 extends TextSearchQuery_node_word {
     var $op = "STARTS_WITH";
@@ -551,8 +561,9 @@ define ('TSQ_TOK_REGEX', 256);
 define ('TSQ_TOK_REGEX_GLOB', 512);
 define ('TSQ_TOK_REGEX_PCRE', 1024);
 define ('TSQ_TOK_REGEX_SQL', 2048);
+define ('TSQ_TOK_ALL', 4096);
 // all bits from word to the last.
-define ('TSQ_ALLWORDS', (2048*2)-1 - (16-1));
+define ('TSQ_ALLWORDS', (4096*2)-1 - (16-1));
 
 class TextSearchQuery_Parser 
 {
@@ -592,6 +603,7 @@ class TextSearchQuery_Parser
      * WORD*              STARTS_WITH
      * *WORD              ENDS_WITH
      * ^WORD$             EXACT
+     * *                  ALL
      */
 
     function parse ($search_expr, $case_exact=false, $regex=TSQ_REGEX_AUTO) {
@@ -670,7 +682,7 @@ class TextSearchQuery_Parser
 
     function get_word($accept = TSQ_ALLWORDS) {
         foreach (array("WORD","STARTS_WITH","ENDS_WITH","EXACT",
-                       "REGEX","REGEX_GLOB","REGEX_PCRE") as $tok) {
+                       "REGEX","REGEX_GLOB","REGEX_PCRE","ALL") as $tok) {
             $const = constant("TSQ_TOK_".$tok);
             if ( $accept & $const and ($word = $this->lexer->get($const)) ) {
                 $classname = "TextSearchQuery_node_".strtolower($tok);
@@ -719,6 +731,26 @@ class TextSearchQuery_Lexer {
                 $val = $m[1];
                 $type = $m[1] == '(' ? TSQ_TOK_LPAREN : TSQ_TOK_RPAREN;
             }
+            
+            // * => ALL
+            elseif ($regex & (TSQ_REGEX_AUTO|TSQ_REGEX_POSIX|TSQ_REGEX_GLOB)
+                    and preg_match('/^\*\s*/', $buf, $m)) {
+                $val = "*";
+                $type = TSQ_TOK_ALL;
+            }
+            // .* => ALL
+            elseif ($regex & (TSQ_REGEX_PCRE)
+                    and preg_match('/^\.\*\s*/', $buf, $m)) {
+                $val = ".*";
+                $type = TSQ_TOK_ALL;
+            }
+            // % => ALL
+            elseif ($regex & (TSQ_REGEX_SQL)
+                    and preg_match('/^%\s*/', $buf, $m)) {
+                $val = "%";
+                $type = TSQ_TOK_ALL;
+            }
+            
             // ^word
             elseif ($regex & (TSQ_REGEX_AUTO|TSQ_REGEX_POSIX|TSQ_REGEX_PCRE)
                     and preg_match('/^\^([^-()][^()\s]*)\s*/', $buf, $m)) {
@@ -749,6 +781,7 @@ class TextSearchQuery_Lexer {
                 $val = $m[1];
                 $type = TSQ_TOK_EXACT;
             }
+            
             // "words "
             elseif (preg_match('/^ " ( (?: [^"]+ | "" )* ) " \s*/x', $buf, $m)) {
                 $val = str_replace('""', '"', $m[1]);
