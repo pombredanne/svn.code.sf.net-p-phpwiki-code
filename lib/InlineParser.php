@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.68 2005-09-10 21:24:32 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.69 2005-09-14 05:57:19 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -739,7 +739,7 @@ class InlineTransformer
         }
         if (ENABLE_MARKUP_COLOR)
             $this->_addMarkup(new Markup_color);
-        if (ENABLE_MARKUP_TEMPLATE)
+        if (defined("ENABLE_MARKUP_TEMPLATE") and ENABLE_MARKUP_TEMPLATE)
             $this->_addMarkup(new Markup_template_plugin);
     }
 
@@ -870,6 +870,9 @@ function TransformLinks($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2005/09/10 21:24:32  rurban
+// optionally support {{Template|vars}} syntax
+//
 // Revision 1.67  2005/06/06 17:41:20  rurban
 // support new ENABLE_MARKUP_COLOR
 //
