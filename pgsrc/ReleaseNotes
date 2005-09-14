@@ -1,15 +1,31 @@
-Date: Sat, 2 Apr 2005 17:24:44 +0100
+Date: Thu, 15 Sep 2005 17:24:44 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.53 2005-04-02 15:33:12 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.54 2005-09-14 06:10:00 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.53 $";
+  pgsrc_version="2 $Revision: 1.54 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-1.3.11 (not yet), Reini Urban, Joel Uckelman:
+1.3.11p1 Sep, 15 2005, Reini Urban:
+
+fixes:
+* added missing pgsrc/OldStyleTablesPlugin
+* fixed OldStyleTables plugin with args
+* protect against Content-Length if headers_sent()
+* fixed ENABLE_MARKUP_TEMPLATE warning if undefined
+* fixed writing unwanted accesslog sql entries
+* WikiAdminSelect preselection
+
+changes:
+* optimized explodePageList to use SQL when available 
+  (titleSearch instead of getAllPages)
+* added optimization for a new ALL textsearch token 
+  (* => pcre: .*, sql: %)
+
+1.3.11 Sep, 11 2005, Reini Urban, Joel Uckelman:
 
 Lots of bugfixes, and some feature and performance enhancements.
 A new EDIT_TOOLBAR from mediawiki, more page permission enhancements, 
@@ -74,6 +90,7 @@ fixes:
 * silently ignore jshide argument on MacIE for AddCommentPlugin and CreateTocPlugin
 * fixed xmlrpc to be able to use the native xmlrpc extension.
 * fixed xmlrpc wiki.listLinks method: "name" => "page" param
+* fixed xmlrpc security not using eval on usercode anymore
 * fixed WikiAdminUtils behaviour on POST
 * fixed strict login on "Db" (by Mikhail Vladimirov)
 * more /tmp warnings on flatfile (by Joel Uckelman)
@@ -115,6 +132,7 @@ changes:
   call ?action=upgrade
 * extended all plugins which take "pages" and "exclude" params to accept 
   <!plugin-list !> pagelists
+* enabled limit, exclude and sortby PageList options for almost all db backends natively
 * improved SqlResult: templates and variable expansion.
   automatic paging not yet.
 * use latest Pear DB features, which will break on older PearDB libs. 
@@ -132,6 +150,7 @@ changes:
 * changed config.ini options:
   KEYWORDS: "Category:Topic" => "Category* OR Topic*", 
   KEYWORD_LINK_REGEXP removed,
+* action=dumphtml dumps only the current page unless done from PhpWikiAdministration
 
 new:
 * new ENABLE_EDIT_TOOLBAR (from mediawiki), JS_SEARCHREPLACE, 
@@ -149,7 +168,7 @@ new:
    PLUGIN_CACHED_FORCE_SYNCMAP, PLUGIN_CACHED_HIGHWATER, 
    PLUGIN_CACHED_IMGTYPES, PLUGIN_CACHED_LOWWATER, PLUGIN_CACHED_MAXARGLEN, 
    PLUGIN_CACHED_MAXLIFETIME, PLUGIN_CACHED_USECACHE, TEMP_DIR, USECACHE, 
-   USE_EXTERNAL_HTML2PDF
+   USE_EXTERNAL_HTML2PDF, ENABLE_MARKUP_COLOR, ENABLE_MARKUP_TEMPLATE
 * implemented WikiDB page creator and ownership
 * added paging support for simple one-column pagelists
 * added new PageList options: cols, azhead, comma, commasep, ordered
@@ -210,8 +229,20 @@ new:
 * action=upgrade performs now a mysql LOCK TABLE privileges check and fix
 * action=upgrade asks now for the admin's user and password if not defined
 * added lib/ASCIIMathPHP and AsciiMath plugin
-* added AnalyseAccessLogSqlPlugin (by Charles Corrigan)
+* new AnalyseAccessLogSqlPlugin (by Charles Corrigan)
+* new TemplatePlugin, optionally mediawiki-style {{Template}} syntax
+* new ENABLE_ACDROPDOWN moacdropdown library. fast xmlrpc communication nyi
 
+PhpWiki 1.2.11:
+* support remove for $WhichDatabase = file
+
+PhpWiki 1.2.10:
+* support php5 with register_long_arrays = off 
+
+PhpWiki 1.2.9 bugfix:
+* Jose Vina fixed MostPopular sorting for dba and dbm, 
+  which was broken since 1.2.3
+ 
 1.2.8 (the old-stable branch) Jan, 30 2005, Reini Urban:
 * register_globals=off fix:
   fix and centralize broken register_globals=off logic.
