@@ -8,6 +8,7 @@
     <?=$SEP?><?= Button("Diff") ?>
     <?=$SEP?><?= Button(array('action'=>'diff','previous' => 'minor'),_("Diff previous Revision"),$page->getName()) ?>
     <?=$SEP?><?= Button(array('action'=>'diff','previous' => 'author'),_("Diff previous Author"),$page->getName()) ?>
+    <?=$SEP?><?= Button("PageDump", _("PageDump")) ?>
   <?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?>
     <!-- Buttons really only for debugging -->
     <?=$SEP?><?= Button("DebugInfo", _("DebugInfo")) ?>
