@@ -1,12 +1,12 @@
 <?php // -*-html-*-
-rcs_id('$Id: top.tmpl,v 1.1 2004-12-19 17:34:19 rurban Exp $');
+rcs_id('$Id: top.tmpl,v 1.2 2005-09-15 05:57:53 rurban Exp $');
 ?>
 <!-- The logo -->
-<div align="right" id="logo"><a class="wikilink" 
-                  href="<?=WikiURL(HOME_PAGE)?>" target="_top"
-                  ><img src="<?=$WikiTheme->getImageURL('logo')?>" id="logo-img"
-                        border="0" alt="<?=fmt(_("%s: %s"), WIKI_NAME, HOME_PAGE) ?>"
-                        align="right" /></a></div>
+<div id="logo"><a class="wikilink" 
+    href="<?=WikiURL(HOME_PAGE)?>" target="_top"
+    ><img src="<?=$WikiTheme->getImageURL('logo')?>" id="logo-img"
+      border="0" alt="<?=fmt(_("%s: %s"), WIKI_NAME, HOME_PAGE) ?>"
+    align="right" /></a></div>
 <!-- The top navigation/search bar -->
 <div class="wikinavbar">
 <a class="wikilink" href="<?=WikiURL(HOME_PAGE)?>" target="_top">

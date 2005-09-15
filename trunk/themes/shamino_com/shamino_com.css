@@ -1,5 +1,5 @@
 /**
- * $Id: shamino_com.css,v 1.1 2004-12-19 17:34:19 rurban Exp $
+ * $Id: shamino_com.css,v 1.2 2005-09-15 05:57:53 rurban Exp $
  *
  * shamino.com style sheet based on the original Wiki
  *
@@ -140,3 +140,7 @@ a:focus { font-weight:normal; color:#445566; text-decoration:underline }
 .signin, .signin a.wiki, .signin a.wikiaction { font-size: xx-small; }
 .top { font-size: 75%; margin:4px; }
 .plugin { margin:0px; }
+
+div#logo {
+  float: right;
+}
