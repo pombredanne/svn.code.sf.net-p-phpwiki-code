@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.38 2005-09-15 05:56:12 rurban Exp $
+<?php // $Id: configurator.php,v 1.39 2005-09-15 19:37:55 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -153,7 +153,7 @@ echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.38 2005-09-15 05:56:12 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.39 2005-09-15 19:37:55 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -487,62 +487,36 @@ See <a href=\"http://chxo.com/scripts/safe_html-test.php\" target=\"_new\">chxo.
 ");
 
 $properties["Maximum Upload Size"] =
-new numeric_define_optional('MAX_UPLOAD_SIZE', MAX_UPLOAD_SIZE /*"16 * 1024 * 1024"*/, "
-The maximum file upload size.");
+new numeric_define_optional('MAX_UPLOAD_SIZE', MAX_UPLOAD_SIZE);
 
 $properties["Minor Edit Timeout"] =
-new numeric_define_optional('MINOR_EDIT_TIMEOUT', MINOR_EDIT_TIMEOUT /*"7 * 24 * 3600"*/, "
-If the last edit is older than MINOR_EDIT_TIMEOUT seconds, the
-default state for the \"minor edit\" checkbox on the edit page form
-will be off.");
+new numeric_define_optional('MINOR_EDIT_TIMEOUT', MINOR_EDIT_TIMEOUT);
 
 $properties["Disabled Actions"] =
-new array_define('DISABLED_ACTIONS', DISABLED_ACTIONS /*array()*/, "
-Actions listed in this array will not be allowed. Actions are:
-browse, create, diff, dumphtml, dumpserial, edit, loadfile, lock, remove, 
-unlock, upload, viewsource, zip, ziphtml");
+new array_define('DISABLED_ACTIONS', DISABLED_ACTIONS /*array()*/);
+
+$properties["Moderate all Pagechanges"] =
+new boolean_define_commented_optional
+('ENABLE_MODERATEDPAGE_ALL', 
+ array('false' => "Disabled",
+       'true'  => "Enabled"));
 
 $properties["Access Log File"] =
-new _define_commented_optional('ACCESS_LOG', ACCESS_LOG /*"/var/logs/wiki_access.log"*/, "
-PhpWiki can generate an access_log (in \"NCSA combined log\" format)
-for you. If you want one, define this to the name of the log file,
-such as /tmp/wiki_access_log. Preferred is to use SQL access logging as below.
-
-Default: empty - no access log file will be generated.");
+new _define_commented_optional('ACCESS_LOG', ACCESS_LOG);
 
 $properties["Access Log SQL"] =
 new _define_selection(
 'ACCESS_LOG_SQL', 
-array('0' => 'disable',
+array('0' => 'disabled',
       '1' => 'read only',
-      '2' => 'read + write'), "
-PhpWiki can read and/or write apache-style mod_log_sql accesslog tables for faster
-abuse detection and referer lists. 
-See http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
-
-If defined (e.g. 1) only read-access is done via SQL. 
-If flag 2 is set, phpwiki also writes. (Default on SQL or ADODB)
-This must use DATABASE_TYPE = SQL or ADODB.
-");
+      '2' => 'read + write'));
 
 $properties["Compress Output"] =
 new boolean_define_commented_optional
 ( 'COMPRESS_OUTPUT', 
-  array(''      => 'GZIP compress when PhpWiki thinks appropriate.',
+  array(''      => 'undefined - GZIP compress when appropriate.',
         'false' => 'Never compress output.',
-        'true'  => 'Always try to compress output.'),
-"
-By default PhpWiki will try to have PHP compress it's output
-before sending it to the browser (if you have a recent enough
-version of PHP and the action and the browser supports it.)
-
-Define COMPRESS_OUTPUT to false to prevent output compression at all.
-
-Define COMPRESS_OUTPUT to true to force output compression,
-even if we think your version of PHP does this in a buggy
-fashion.
-
-Leave it undefined to leave the choice up to PhpWiki.");
+        'true'  => 'Always try to compress output.'));
 
 $properties["HTTP Cache Control"] =
 new _define_selection_optional
@@ -596,48 +570,29 @@ Choose one of:
 
 The default is currently LOOSE.");
 
-// FIXME: should be numeric_define_optional
 $properties["HTTP Cache Control Max Age"] =
-new numeric_define_optional('CACHE_CONTROL_MAX_AGE', CACHE_CONTROL_MAX_AGE,
-            "
-Maximum page staleness, in seconds.");
+new numeric_define_optional('CACHE_CONTROL_MAX_AGE', CACHE_CONTROL_MAX_AGE);
 
 $properties["Markup Caching"] =
 new boolean_define_commented_optional
 ('WIKIDB_NOCACHE_MARKUP',
  array('false' => 'Enable markup cache',
-       'true'  => 'Disable markup cache'),
-"
-MARKUP CACHING
+       'true'  => 'Disable markup cache'));
 
-PhpWiki normally caches a preparsed version (i.e. mostly
-converted to HTML) of the most recent version of each page.
-(Parsing the wiki-markup takes a fair amount of CPU.)
+$properties["COOKIE_EXPIRATION_DAYS"] =
+new numeric_define_optional('COOKIE_EXPIRATION_DAYS', COOKIE_EXPIRATION_DAYS);
 
-Define WIKIDB_NOCACHE_MARKUP to true to disable the
-caching of marked-up page content.
-
-Note that you can also disable markup caching on a per-page
-temporary basis by addinging a query arg of '?nocache=1'
-to the URL to the page.  (Use '?nocache=purge' to completely
-discard the cached version of the page.)
-
-You can also purge the cached markup globally by using the
-\"Purge Markup Cache\" button on the PhpWikiAdministration page.");
+$properties["COOKIE_DOMAIN"] =
+new _define_commented_optional('COOKIE_DOMAIN', COOKIE_DOMAIN);
 
 $properties["Path for PHP Session Support"] =
-    new _define_optional('SESSION_SAVE_PATH', defined('SESSION_SAVE_PATH') ? SESSION_SAVE_PATH : ini_get('session.save_path'), "
-The login code now uses PHP session support. Usually, the default
-configuration of PHP is to store the session state information in
-/tmp. That probably will work fine, but fails e.g. on clustered
-servers where each server has their own distinct /tmp (this is the
-case on SourceForge's project web server.) You can specify an
-alternate directory in which to store state information like so
-(whatever user your httpd runs as must have read/write permission
-in this directory).
+new _define_optional('SESSION_SAVE_PATH', defined('SESSION_SAVE_PATH') ? SESSION_SAVE_PATH : ini_get('session.save_path'));
 
-On USE_DB_SESSION = true you can ignore this.
-");
+$properties["Force PHP Database Sessions"] =
+new boolean_define_commented_optional
+('USE_DB_SESSION', 
+ array('false' => 'Disable database sessions, use files',
+       'true'  => 'Enable database sessions'));
 
 ///////// database selection
 
@@ -655,14 +610,14 @@ new _define_selection("DATABASE_TYPE",
                     'ADODB' => "SQL ADODB",
                     'PDO'   => "PDO (php5 only)",
                     'file'   => "flatfile",
-                    'cvs'   => "CVS File handler"), "
+                    'cvs'   => "CVS File handler")/*, "
 Select the database backend type:
 Choose dba (default) to use one of the standard UNIX dba libraries. This is the fastest.
 Choose ADODB or SQL to use an SQL database with ADODB or PEAR.
-Choose PDO on php5 to use an SQL database.
+Choose PDO on php5 to use an SQL database. (experimental, no paging yet)
 flatfile is simple and slow.
 CVS is highly experimental and slow.
-Recommended is dba or SQL: PEAR or ADODB.");
+Recommended is dba or SQL: PEAR or ADODB."*/);
 
 $properties["SQL DSN Setup"] =
 new unchangeable_variable('_sqldsnstuff', "", "
@@ -747,6 +702,12 @@ Currently <b>you MUST EDIT THE SQL file too!</b> (in the schemas/
 directory because we aren't doing on the fly sql generation
 during the installation.");
 
+$properties["DATABASE_PERSISTENT"] =
+new boolean_define_commented_optional
+('DATABASE_PERSISTENT', 
+ array('false' => "Disabled",
+       'true'  => "Enabled"));
+
 $properties["DB Session table"] =
 new _define_optional("DATABASE_SESSION_TABLE", DATABASE_SESSION_TABLE, "
 Tablename to store session information. Only supported by SQL backends.
@@ -757,32 +718,32 @@ A word of warning - any prefix defined above will be prepended to whatever is gi
 //TODO: $TEMP
 $temp = !empty($_ENV['TEMP']) ? $_ENV['TEMP'] : "/tmp";
 $properties["dba directory"] =
-new _define("DATABASE_DIRECTORY", $temp, "
-dba directory:");
+new _define("DATABASE_DIRECTORY", $temp);
 
 // TODO: list the available methods
 $properties["dba handler"] =
 new _define_selection('DATABASE_DBA_HANDLER',
-              array('gdbm' => "Gdbm - GNU database manager (recommended)",
-                    'dbm'  => "DBM - Redhat default. On sf.net there's dbm and gdbm",
-                    'db2'  => "DB2 - Sleepycat Software's DB2",
-                    'db3'  => "DB3 - Sleepycat Software's DB3. Default on Windows but not on every Linux",
-                    'db4'  => "DB4 - Sleepycat Software's DB4."), "
+              array('gdbm' => "gdbm - GNU database manager (not recommended anymore)",
+                    'dbm'  => "DBM - Redhat default. On sf.net there's dbm and not gdbm anymore",
+                    'db2'  => "DB2 - BerkeleyDB (Sleepycat) DB2",
+                    'db3'  => "DB3 - BerkeleyDB (Sleepycat) DB3. Default on Windows but not on every Linux",
+                    'db4'  => "DB4 - BerkeleyDB (Sleepycat) DB4."), "
 Use 'gdbm', 'dbm', 'db2', 'db3' or 'db4' depending on your DBA handler methods supported: <br >  "
-                      . (function_exists("dba_handlers") ? join(", ",dba_handlers()) : ""));
+                      . (function_exists("dba_handlers") ? join(", ",dba_handlers()) : "")
+		      . "\n\nBetter not use other hacks such as inifile, flatfile or cdb");
 
 $properties["dba timeout"] =
 new numeric_define("DATABASE_TIMEOUT", DATABASE_TIMEOUT, "
 Recommended values are 10-20 seconds. The more load the server has, the higher the timeout.");
 
-$properties["DATABASE_PERSISTENT"] =
-new boolean_define_commented_optional
-('DATABASE_PERSISTENT', 
- array('false' => "Disabled",
-       'true'  => "Enabled"), "
-Use persistent database connections for SQL databases, if the database backend supports it.
-Not recommended for heavily loaded servers.
-Default: false");
+$properties["DBADMIN_USER"] =
+new _define_commented_optional('DBADMIN_USER', DBADMIN_USER. "
+If action=upgrade detects mysql problems, but has no ALTER permissions, 
+give here a database username which has the necessary ALTER or CREATE permissions.
+Of course you can fix your database manually. See lib/upgrade.php for known issues.");
+
+$properties["DBADMIN_PASSWD"] =
+new _define_password_commented_optional('DBADMIN_PASSWD', DBADMIN_PASSWD);
 
 ///////////////////
 
@@ -843,13 +804,13 @@ is not changed.
 // an unchangeable property. You'll have to edit the resulting
 // config file if you really want to change these from the default.
 
-$properties["Major Edits: keep minumum days"] =
+$properties["Major Edits: keep minimum days"] =
     new numeric_define("MAJOR_MIN_KEEP", MAJOR_MIN_KEEP, "
-Default: Keep at least for unlimited time. 
+Default: Keep for unlimited time. 
 Set to 0 to enable archive cleanup");
 $properties["Minor Edits: keep minumum days"] =
     new numeric_define("MINOR_MIN_KEEP", MINOR_MIN_KEEP, "
-Default: Keep at least for unlimited time. 
+Default: Keep for unlimited time. 
 Set to 0 to enable archive cleanup");
 
 $properties["Major Edits: how many"] =
@@ -1786,6 +1747,7 @@ class _variable {
 	if (!$description)
 	    $description = text_from_dist($config_item_name);
         $this->description = $description;
+	// TODO: get boolean default value from config-default.ini
 	if (defined($config_item_name) 
 	    and !preg_match("/(selection|boolean)/", get_class($this))
 	    and !preg_match("/(SCRIPT_NAME|VIRTUAL_PATH)/", $config_item_name))
@@ -1795,9 +1757,9 @@ class _variable {
 	else
 	    $this->default_value = $default_value;
 	$this->jscheck = $jscheck;
-        if (preg_match("/variable/i",get_class($this)))
+        if (preg_match("/variable/i", get_class($this)))
 	    $this->prefix = "\$";
-	elseif (preg_match("/ini_set/i",get_class($this)))
+	elseif (preg_match("/ini_set/i", get_class($this)))
             $this->prefix = "ini_get: ";
         else
 	    $this->prefix = "";
@@ -2132,7 +2094,27 @@ extends _define {
 }
 
 class _define_password_optional
-extends _define_password { }
+extends _define_password { 
+
+    function _define_password_optional($config_item_name, $default_value, $description = '', $jscheck = '') {
+    	if ($config_item_name == $default_value) $default_value = '';
+        $this->_define($config_item_name, $default_value, $description, $jscheck);
+    }
+
+    function _get_config_line($posted_value) {
+        if ($this->description)
+            $n = "\n";
+        if ($posted_value == '') {
+            return "${n};" . $this->_config_format("");
+        } else {
+	    return "${n}" . $this->_config_format($posted_value);
+        }
+    }
+
+}
+
+class _define_password_commented_optional
+extends _define_password_optional { }
 
 class _variable_password
 extends _variable {
@@ -2305,10 +2287,11 @@ extends _define {
     }
     function get_html() {
         $output = $this->get_config_item_header();
-        $output .= '<select name="' . $this->get_config_item_name() . "\" {$this->jscheck}>\n";
+	$name = $this->get_config_item_name();
+        $output .= '<select name="' . $name . "\" {$this->jscheck}>\n";
 	$values = $this->default_value;
-	if (defined($this->get_config_item_name()))
-	    $this->default_value = constant($this->get_config_item_name());
+	if (defined($name))
+	    $this->default_value = constant($name);
 	else {
 	    $this->default_value = null;
 	    list($option, $label) = each($values);
