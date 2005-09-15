@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.4 2005-01-25 07:22:19 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.5 2005-09-15 05:59:45 rurban Exp $');
 /**
  * The new mediawiki (Wikipedia.org) default style.
  * Mediawiki 'monobook' style sheet for CSS2-capable browsers.
@@ -16,6 +16,8 @@ rcs_id('$Id: themeinfo.php,v 1.4 2005-01-25 07:22:19 rurban Exp $');
  * and convert back and forth.
  */
 require_once('lib/Theme.php');
+if (!defined("ENABLE_MARKUP_TEMPLATE"))
+    define("ENABLE_MARKUP_TEMPLATE", true);
 
 class Theme_MonoBook extends Theme {
 
