@@ -669,19 +669,12 @@ cAutocomplete.prototype.afterRemoteLoadXMLRPC = function()
 	var hInput = document.getElementById( this.sInputId )
 
 	var hArr = new Array()
-	var hTmpArray = this.hXMLHttp.responseText.split( '|' )
-	var aValueArr
+	/* how does the response XML look like? */
+	var hTmpArray = this.hXMLHttp.documentElement.getElementsByTagName("array");
 	for( hKey in hTmpArray )
 	{
-		aValueArr = hTmpArray[ hKey ].split( cAutocomplete.CS_ARRAY_SEPARATOR )
-		if( aValueArr.length == 1 )
-		{
-			hArr[ hKey ] = hTmpArray[ hKey ]
-		}
-		else
-		{
-			hArr[ aValueArr[ 0 ] ] = aValueArr[ 1 ]
-		}
+	    if (hTmpArray[ hKey ].getAttribute("string"))
+	        hArr[ hKey ] = hTmpArray[ hKey ].getAttribute("string")
 	}
 
 	hInput.className = ''
