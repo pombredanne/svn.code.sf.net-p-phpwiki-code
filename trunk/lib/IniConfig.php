@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.93 2005-09-14 05:57:19 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.94 2005-09-15 05:56:12 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -121,7 +121,8 @@ function IniConfig($file) {
         // somewhow to the script
         include_once(dirname(__FILE__)."/install.php");
         run_install("_part1");
-        trigger_error("Datasource file '$file' does not exist", E_USER_ERROR);
+        if (!defined("_PHPWIKI_INSTALL_RUNNING"))
+            trigger_error("Datasource file '$file' does not exist", E_USER_ERROR);
         exit();
     }
 
@@ -214,7 +215,7 @@ function IniConfig($file) {
                                  'PLUGIN_CACHED_CACHE_DIR'))) 
         {
             ;
-        } else {
+        } elseif (!defined("_PHPWIKI_INSTALL_RUNNING")) {
             trigger_error(sprintf("missing config setting for %s",$item));
         }
     }
@@ -587,23 +588,32 @@ function fixup_static_configs($file) {
     if (!defined('ADMIN_USER') or ADMIN_USER == '') {
     	$error = sprintf("%s may not be empty. Please update your configuration.", 
        			 "ADMIN_USER");
-        if (!preg_match("/config\-(dist|default)\.ini$/", $file)) { // protect against recursion
+        // protect against recursion
+        if (!preg_match("/config\-(dist|default)\.ini$/", $file)
+            and !defined("_PHPWIKI_INSTALL_RUNNING"))
+        {
             include_once(dirname(__FILE__)."/install.php");
             run_install("_part1");
             trigger_error($error, E_USER_ERROR);
             exit();
-        } else {
+        } elseif ($HTTP_SERVER_VARS["REQUEST_METHOD"] == "POST") {
+            $GLOBALS['HTTP_GET_VARS']['show'] = '_part1';
             trigger_error($error, E_USER_WARNING);
         }
     }
     if (!defined('ADMIN_PASSWD') or ADMIN_PASSWD == '') {
-        $error = "The ADMIN_USER password cannot be empty. Please update your configuration.";
-        if (!preg_match("/config\-(dist|default)\.ini$/", $file)) { // protect against recursion
+    	$error = sprintf("%s may not be empty. Please update your configuration.", 
+       			 "ADMIN_PASSWD");
+    	// protect against recursion
+        if (!preg_match("/config\-(dist|default)\.ini$/", $file)
+           and !defined("_PHPWIKI_INSTALL_RUNNING")) 
+        { 
             include_once(dirname(__FILE__)."/install.php");
             run_install("_part1");
             trigger_error($error, E_USER_ERROR);
             exit();
-        } else {
+        } elseif ($HTTP_SERVER_VARS["REQUEST_METHOD"] == "POST") {
+            $GLOBALS['HTTP_GET_VARS']['show'] = '_part1';
             trigger_error($error, E_USER_WARNING);
         }
     }
@@ -840,6 +850,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.93  2005/09/14 05:57:19  rurban
+// make ENABLE_MARKUP_TEMPLATE optional
+//
 // Revision 1.92  2005/08/06 13:00:21  rurban
 // accept config.ini ACCESS_LOG_SQL = 0
 //

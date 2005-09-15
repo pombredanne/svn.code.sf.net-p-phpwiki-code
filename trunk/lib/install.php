@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: install.php,v 1.3 2005-02-28 20:24:23 rurban Exp $');
+rcs_id('$Id: install.php,v 1.4 2005-09-15 05:56:12 rurban Exp $');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
@@ -42,17 +42,26 @@ function init_install() {
  * 3. dump the current settings to config/config.ini. 
  */
 function run_install($part = '') {
+    static $already = 0;
     if ($part) {
         if (empty($_GET)) $_GET =& $GLOBALS['HTTP_GET_VARS'];
         $_GET['show'] = $part;
     }
-    include(dirname(__FILE__)."/../configurator.php");
+    // setup default settings
+    if (!$already and !defined("_PHPWIKI_INSTALL_RUNNING")) {
+    	define("_PHPWIKI_INSTALL_RUNNING", true);
+        include(dirname(__FILE__)."/../configurator.php");
+    }
+    $already = 1;
 }
 
 init_install();
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.3  2005/02/28 20:24:23  rurban
+ _GET is different from HTPP_GET_VARS. use the correct one
+
  Revision 1.2  2005/02/26 17:47:57  rurban
  configurator: add (c), support show=_part1 initial expand, enable
    ENABLE_FILE_OUTPUT, use part.id not name

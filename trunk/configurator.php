@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.37 2005-09-11 15:56:16 rurban Exp $
+<?php // $Id: configurator.php,v 1.38 2005-09-15 05:56:12 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -36,7 +36,7 @@
  * o fix include_path
  *
  * 1.3.11 TODO: (or 1.3.12?)
- * o parse_ini_file("config-default.ini") for the commented vars
+ * o parse_ini_file("config-dist.ini") for the commented vars
  * o check automatically for commented and optional vars
  * o mixin class for commented 
  * o fix SQL quotes, AUTH_ORDER quotes and file forward slashes
@@ -153,7 +153,7 @@ echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.37 2005-09-11 15:56:16 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.38 2005-09-15 05:56:12 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -312,6 +312,7 @@ $preamble = "
 ; This file is divided into several parts: Each one has different configuration 
 ; settings you can change; in all cases the default should work on your system,
 ; however, we recommend you tailor things to your particular setting.
+; Here undefined definitions get defined by config-default.ini settings.
 ";
 
 $properties["Part Zero"] =
@@ -332,132 +333,103 @@ else {
 }
 
 $properties["PHP include_path"] =
-    new _define('INCLUDE_PATH', $include_path, "
-If PHP needs help in finding where you installed the rest of the PhpWiki
-code, you can set the include_path here.
-
-Override the PHP include path so that it can find some needed additional libraries.
-You shouldn't need to do this unless your system include_path esp. your 
-system pear libs are broken or oudated. The PHPWIKI_DIR is automatically 
-put to the front and the local lib/pear path is automatically added to the end.
-But if you define it, be sure to include either the system pear path or 
-the phpwiki/lib/pear path to override your Pear_DB.
-Note that on Windows-based servers, you should use ; rather than :
-as the path separator.");
+new _define('INCLUDE_PATH', $include_path);
 
 // TODO: convert this a checkbox row as in tests/unit/test.pgp
 $properties["DEBUG"] =
-new numeric_define_optional('DEBUG', DEBUG, "
-Set DEBUG to 1 to view the XHTML and CSS validator icons, page
-processing timer, and possibly other debugging messages at the
-bottom of each page. 65 for a more verbose level with AUTH hints. 
-See lib/config.php for all supported values.");
+new numeric_define_optional('DEBUG', DEBUG);
 
 // TODO: bring the default to the front
 $properties["ENABLE_USER_NEW"] =
 new boolean_define_commented_optional
 ('ENABLE_USER_NEW', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
-Enable the new method of handling WikiUser Authetincation and Preferences. 
-It's best to leave it on, and only disable it if you have problems with it.
-Servers with memory-limit problems might want to turn it off. It costs ~300KB
-Default: true");
+       'false' => "Disabled."));
 
 $properties["ENABLE_PAGEPERM"] =
 new boolean_define_commented_optional
 ('ENABLE_PAGEPERM', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
-Use access control lists (as in Solaris and Windows NTFS) per page and group, 
-not per user for the whole wiki.
-
-I suspect ACL page permissions to degrade speed by 10%. 
-GROUP_METHOD=WIKIPAGE is slowest. (See Part 3a)
-Default: true");
+       'false' => "Disabled."));
 
 $properties["ENABLE_EDIT_TOOLBAR"] =
 new boolean_define_commented_optional
 ('ENABLE_EDIT_TOOLBAR', 
  array('true'  => "Enabled",
-       'false' => "Disabled."), "
-Graphical buttons on edit. Default: true.
-Reportedly broken on MacOSX Safari");
+       'false' => "Disabled."));
 
 $properties["JS_SEARCHREPLACE"] =
 new boolean_define_commented_optional
 ('JS_SEARCHREPLACE', 
  array('true'  => "Enabled",
-       'false' => "Disabled"), "
-Adds two additional buttons in EDIT_TOOLBAR, Search&Replace and Undo. 
-Undo is experimental.");
+       'false' => "Disabled"));
 
 $properties["ENABLE_DOUBLECLICKEDIT"] =
 new boolean_define_commented_optional
 ('ENABLE_DOUBLECLICKEDIT', 
  array('true'  => "Enabled",
-       'false' => "Disabled"), "
-Default: true");
+       'false' => "Disabled"));
 
 $properties["ENABLE_XHTML_XML"] =
 new boolean_define_commented_optional
 ('ENABLE_XHTML_XML', 
  array('false' => "Disabled",
-       'true'  => "Enabled"), "
-Needed for inlined SVG and MathM, but may conflict with javascript:document.write(). 
-Experimental. Default: false");
+       'true'  => "Enabled"));
 
 $properties["USECACHE"] =
 new boolean_define_commented_optional
 ('USECACHE', 
  array('true'  => "Enabled",
-       'false' => "Disabled"), "
-Store DB query results in memory to avoid duplicate queries.
-Disable only for old php's with low memory or memory_limit=8MB.
-Default: true");
+       'false' => "Disabled"));
 
 $properties["ENABLE_SPAMASSASSIN"] =
 new boolean_define_commented_optional
 ('ENABLE_SPAMASSASSIN', 
  array('true'  => "Enabled",
-       'false' => "Disabled"), "
-Needs babycart installed. See http://phpwiki.org/SpamAssassinIntegration
-Optionally define BABYCART_PATH. Default: /usr/local/bin/babycart");
+       'false' => "Disabled"));
 
 $properties["GOOGLE_LINKS_NOFOLLOW"] =
 new boolean_define_commented_optional
 ('GOOGLE_LINKS_NOFOLLOW', 
  array('true'  => "Enabled",
-       'false' => "Disabled"), "
-If enabled ref=nofollow is added to all external links to discourage spam. 
-You might want to turn it off, if you want to improve pageranks on external links.");
+       'false' => "Disabled"));
 
 $properties["ENABLE_LIVESEARCH"] =
 new boolean_define_commented_optional
 ('ENABLE_LIVESEARCH', 
  array('true'  => "Enabled",
-       'false' => "Disabled"), "
-LiveSearch enables immediate title search results via XMLHttpRequest.
-Displays the results in a dropdown under the titlesearch inputbox
-while typing. (experimental, only with certain themes)
-You'll have to copy livesearch.js from http://blog.bitflux.ch/wiki/LiveSearch
-to themes/default/ and define ENABLE_LIVESEARCH in config.ini to true. 
-See themes/blog/themeinfo.php.
-Currently we use the bitflux.ch library, but we will change to 
-the russian acdropdown soon. http://momche.net/publish/article.php?page=acdropdown");
+       'false' => "Disabled"));
+
+$properties["ENABLE_ACDROPDOWN"] =
+new boolean_define_commented_optional
+('ENABLE_ACDROPDOWN', 
+ array('true'  => "Enabled",
+       'false' => "Disabled"));
+
+$properties["ENABLE_DISCUSSION_LINK"] =
+new boolean_define_commented_optional
+('ENABLE_DISCUSSION_LINK', 
+ array('true'  => "Enabled",
+       'false' => "Disabled"));
+
+$properties["ENABLE_CAPTCHA"] =
+new boolean_define_commented_optional
+('ENABLE_CAPTCHA', 
+ array('true'  => "Enabled",
+       'false' => "Disabled"));
 
 $properties["USE_SAFE_DBSESSION"] =
 new boolean_define_commented_optional
 ('USE_SAFE_DBSESSION', 
  array('false' => "Disabled",
-       'true'  => "Enabled"), "
-USE_SAFE_DBSESSION should be enabled, if you encounter session problems, with duplicate INSERT 
-sess_id warnings at the bottom of the page. Reason is a unreliable affected_rows implementation() 
-in the sql backend. Default is Disabled, using the fastest DbSession UPDATE method.");
+       'true'  => "Enabled"));
 
 $properties["Part One"] =
 new part('_part1', $SEPARATOR."\n", "
 Part One: Authentication and security settings. See Part Three for more.");
+
+$properties["Wiki Name"] =
+new _define_optional('WIKI_NAME', WIKI_NAME);
 
 $properties["Admin Username"] =
 new _define_notempty('ADMIN_USER', ADMIN_USER, "
@@ -466,7 +438,9 @@ You must set this! Username and password of the administrator.",
 
 $properties["Admin Password"] =
 new _define_password('ADMIN_PASSWD', ADMIN_PASSWD, "
+You must set this! 
 For heaven's sake pick a good password.
+
 If your version of PHP supports encrypted passwords, your password will be
 automatically encrypted within the generated config file. 
 Use the \"Create Random Password\" button to create a good (random) password.
@@ -478,63 +452,30 @@ $properties["Encrypted Passwords"] =
 new boolean_define
 ('ENCRYPTED_PASSWD',
  array('true'  => "true.  use crypt for all passwords",
-       'false' => "false. use plaintest passwords (not recommended)"), "
-It is recommended that you use encrypted passwords to be stored in the 
-config.ini and the users homepages metadata.
-You might want to use the passencrypt.php utility to encode the
-admin password, in the event that someone gains ftp or ssh access to the
-server and directory containing phpwiki. 
-<i>SQL access passwords cannot be encrypted, besides using external DATABASE_DSN aliases within PDO.</i>
-
-If true, all user passwords will be stored encrypted.
-You might have to set it to false, if your PHP doesn't support crypt().
-");
-
-$properties["Wiki Name"] =
-new _define_optional('WIKI_NAME', WIKI_NAME, "
-The name of your wiki.
-
-This is used to generate a keywords meta tag in the HTML templates,
-in bookmark titles for any bookmarks made to pages in your wiki,
-and during RSS generation for the title of the RSS channel.
-
-It is recommended this be a relatively short WikiWord like the
-InterWiki monikers found in the InterWikiMap. (For examples, see
-lib/interwiki.map).
-");
+       'false' => "false. use plaintest passwords (not recommended)"));
 
 $properties["Reverse DNS"] =
 new boolean_define_optional
 ('ENABLE_REVERSE_DNS',
  array('true'  => "true. perform additional reverse dns lookups",
-       'false' => "false. just record the address as given by the httpd server"),
-" 
-If set, we will perform reverse dns lookups to try to convert the
-users IP number to a host name, even if the http server didn't do it for us.");
+       'false' => "false. just record the address as given by the httpd server"));
 
 $properties["ZIPdump Authentication"] =
 new boolean_define_optional('ZIPDUMP_AUTH', 
                     array('false' => "false. Everyone may download zip dumps",
-                          'true'  => "true. Only admin may download zip dumps"), "
-If true, only the admin user can make zip dumps, else zip dumps
-require no authentication.");
+                          'true'  => "true. Only admin may download zip dumps"));
 
 $properties["Enable RawHtml Plugin"] =
 new boolean_define_commented_optional
 ('ENABLE_RAW_HTML', 
  array('true'  => "Enabled",
-       'false' => "Disabled"), "
-The RawHtml plugin allows page authors to embed real, raw HTML into Wiki
-pages.  This is a possible security threat, as much HTML (or, rather,
-JavaScript) can be very risky.  If you are in a controlled environment,
-however, it could be of use.");
+       'false' => "Disabled"));
 
 $properties["Allow RawHtml Plugin only on locked pages"] =
 new boolean_define_commented_optional
 ('ENABLE_RAW_HTML_LOCKEDONLY', 
  array('true'  => "Enabled",
-       'false' => "Disabled"), "
-If this is set, only pages locked by the Administrator may contain the RawHtml plugin.");
+       'false' => "Disabled"));
 
 $properties["Allow RawHtml Plugin if safe HTML code"] =
 new boolean_define_commented_optional
@@ -1817,6 +1758,9 @@ Handle those image types via GD handles. Check your GD supported image types.");
 
 $end = "\n".$SEPARATOR."\n";
 
+// performance hack
+text_from_dist("_MAGIC_CLOSE_FILE");
+
 // end of configuration options
 ///////////////////////////////
 // begin class definitions
@@ -1837,8 +1781,10 @@ class _variable {
     var $prefix;
     var $jscheck;
 
-    function _variable($config_item_name, $default_value, $description, $jscheck = '') {
+    function _variable($config_item_name, $default_value, $description = '', $jscheck = '') {
         $this->config_item_name = $config_item_name;
+	if (!$description)
+	    $description = text_from_dist($config_item_name);
         $this->description = $description;
 	if (defined($config_item_name) 
 	    and !preg_match("/(selection|boolean)/", get_class($this))
@@ -2072,7 +2018,7 @@ extends _variable {
 class numeric_define
 extends _define {
 
-    function numeric_define($config_item_name, $default_value, $description, $jscheck = '') {
+    function numeric_define($config_item_name, $default_value, $description = '', $jscheck = '') {
         $this->_define($config_item_name, $default_value, $description, $jscheck);
         if (!$jscheck)
             $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);\"";
@@ -2144,7 +2090,7 @@ extends _define_selection_optional {
 class _define_password
 extends _define {
 
-    function _define_password($config_item_name, $default_value, $description, $jscheck = '') {
+    function _define_password($config_item_name, $default_value, $description = '', $jscheck = '') {
     	if ($config_item_name == $default_value) $default_value = '';
         $this->_define($config_item_name, $default_value, $description, $jscheck);
         if (!$jscheck)
@@ -2190,7 +2136,7 @@ extends _define_password { }
 
 class _variable_password
 extends _variable {
-    function _variable_password($config_item_name, $default_value, $description, $jscheck = '') {
+    function _variable_password($config_item_name, $default_value, $description = '', $jscheck = '') {
     	if ($config_item_name == $default_value) $default_value = '';
         $this->_define($config_item_name, $default_value, $description, $jscheck);
         if (!$jscheck)
@@ -2307,8 +2253,12 @@ extends _define {
             return "\n;" . $this->_config_format('');
     }
     function get_html() {
-        $list_values = join("\n", $this->default_value);
-        $rows = max(3, count($this->default_value) +1);
+	if (!$this->default_value)
+	    $this->default_value = array();
+	elseif (is_string($this->default_value))
+	    $this->default_value = preg_split("/[\s,:]+/", $this->default_value, -1, PREG_SPLIT_NO_EMPTY);
+	$list_values = join(" : \n", $this->default_value);
+        $rows = max(3, count($this->default_value) + 1);
         $ta = $this->get_config_item_header();
         $ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\" {$this->jscheck}>";
         $ta .= $list_values . "</textarea>";
@@ -2433,6 +2383,37 @@ function nl2p($text) {
     $text .= $par;
   }
   return $text;
+}
+
+function text_from_dist($var) {
+    static $distfile = 0;
+    static $f;
+    
+    if (!$distfile) {
+    	$sep = (substr(PHP_OS,0,3) == 'WIN' ? '\\' : '/');
+	$distfile = dirname(__FILE__) . $sep . "config" . $sep . "config-dist.ini";
+	$f = fopen($distfile, "r");
+    }
+    if ($var == '_MAGIC_CLOSE_FILE') {
+	fclose($f);
+	return;
+    }
+    // if all vars would be in natural order as in the config-dist this would not be needed.
+    fseek($f, 0); 
+    $par = "\n";
+    while (!feof($f)) {
+	$s = fgets($f);
+	if (preg_match("/^; \w/", $s)) {
+	    $par .= (substr($s,2) . " ");
+	} elseif (preg_match("/^;\s*$/", $s)) {
+	    $par .= "\n\n";
+	}
+	if (preg_match("/^;?".preg_quote($var)."\s*=/", $s))
+	    return $par;
+	if (preg_match("/^\s*$/", $s)) // new paragraph
+	    $par = "\n";
+    }
+    return '';
 }
 
 function stripHtml($text) {
