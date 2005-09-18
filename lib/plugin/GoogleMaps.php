@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GoogleMaps.php,v 1.2 2005-09-11 13:29:56 rurban Exp $');
+rcs_id('$Id: GoogleMaps.php,v 1.3 2005-09-18 16:11:40 rurban Exp $');
 /**
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -69,7 +69,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -117,7 +117,7 @@ extends WikiPlugin
             if ($InfoText) {
                 include_once("lib/BlockParser.php");
                 $page = $dbi->getPage($request->getArg('pagename'));
-                $rev = $p->getCurrentRevision(false);
+                $rev  = $page->getCurrentRevision(false);
                 $markup = $rev->get('markup');
                 $markertext = TransformText($InfoText, $markup, $basepage);
             }
@@ -154,6 +154,9 @@ var marker = createMarker(point, '".$markertext->asXml()."'); map.addOverlay(mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2005/09/11 13:29:56  rurban
+// remove InfoLink, wiki parse Infotext instead
+//
 // Revision 1.1  2005/09/07 16:53:46  rurban
 // initial version, idea from http://www.giswiki.de/index.php/Google_Maps_Extensions
 //
