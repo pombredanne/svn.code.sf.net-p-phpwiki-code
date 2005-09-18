@@ -78,6 +78,8 @@ $locale["%s does not exist"] =
    "%s n'existe pas";
 $locale["%s does not know about the language '%s', using 'en' instead."] =
    "%s ne connait pas le langage '%s', utilisation de 'en' a la place.";
+$locale["%s has no subpages defined."] =
+   "La page %s n'a aucune sous-page définie.";
 $locale["%s is disallowed on this wiki."] =
    "L'action %s est interdite sur ce wiki.";
 $locale["%s is empty"] =
@@ -416,6 +418,8 @@ $locale["Cannot create directory '%s'"] =
    "Impossible de créer le répertoire '%s'";
 $locale["Cannot open AUTH_GROUP_FILE %s"] =
    "Impossible d'ouvrir AUTH_GROUP_FILE %s";
+$locale["Case insensitive?"] =
+   "Sensible à la casse ?";
 $locale["Category"] =
    "Catégorie";
 $locale["CategoryCategory"] =
@@ -976,8 +980,8 @@ $locale["Like Pages"] =
    "PagesSemblables";
 $locale["LikePages"] =
    "PagesSemblables";
-$locale["Line does not begin with a '|'."] =
-   "La ligne ne commence pas par un '|'.";
+$locale["Line %s does not begin with a '|'."] =
+   "La ligne %s ne commence pas par un '|'.";
 $locale["Link to page"] =
    "Lien vers la page";
 $locale["LinkDatabase"] =
@@ -1690,6 +1694,8 @@ $locale["Sorry! You must wait at least 20 minutes until you can vote again!"] =
    "Désolé, vous devez attendre au moins 20 minutes avant de pouvoir revoter !";
 $locale["Sorry, no dynamic DB Session support."] =
    "Désolé, Session dynamique non supportées.";
+$locale["Sorry, this page is not in the database."] =
+   "Je suis désolé. Cet page n'est pas dans la base de données.";
 $locale["Sorry, this version of PHP cannot create PNG image files."] =
    "Désolé, cette version de PHP ne peut pas créer des fichiers d'image PNG.";
 $locale["Sorry. Access Restrictions not yet implemented"] =
@@ -1904,6 +1910,8 @@ $locale["Unable to load: %s"] =
    "Impossible de charger : %s";
 $locale["Unable to open directory '%s' for reading"] =
    "Impossible d'ouvrir le répertoire '%s' en lecture";
+$locale["Unable to read src='%s'"] =
+   "Impossible de lire src=%s";
 $locale["Undefined method %s for special group %s"] =
    "Méthode non définie %s pour le groupe %s";
 $locale["Undo"] =
@@ -2056,6 +2064,8 @@ $locale["WikiAdminChmod"] =
    "AdministrationDePhpWiki/Droits";
 $locale["WikiAdminChown"] =
    "WikiAdminChown";
+$locale["WikiAdminMarkup from %s to %s"] =
+   "WikiAdminMarkup %s par %s";
 $locale["WikiAdminRemove"] =
    "WikiAdminSupprimer";
 $locale["WikiAdminRename"] =
@@ -2144,6 +2154,8 @@ $locale["Your WikiDB DB backend '%s' cannot be used for DbSession."] =
    "Votre choix '%s' de WikiDB DB ne peut pas être utilisé pour DbSession.";
 $locale["Your access permissions are only for a BogoUser."] =
    "Vos permissions d'acces sont celles d'un utilisateur Bogo.";
+$locale["Your are probably trying to edit/create an invalid version of this page."] =
+   "Vous lisez une ancienne révision de cette page.";
 $locale["Your browser should have redirected you to %s."] =
    "Votre navigateur aurait du vous redirigé vers %s.";
 $locale["Your careful attention to detail is much appreciated."] =

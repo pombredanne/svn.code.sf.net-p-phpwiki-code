@@ -712,8 +712,6 @@ $locale["Legend"] =
    "圖例";
 $locale["LikePages"] =
    "LikePages";
-$locale["Line does not begin with a '|'."] =
-   "線沒有以 '|' 為首.";
 $locale["LinkIcons"] =
    "LinkIcons";
 $locale["List PageHistory for %s"] =
