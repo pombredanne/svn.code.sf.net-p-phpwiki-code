@@ -1004,8 +1004,8 @@ $locale["Like Pages"] =
    "Ähnliche Seiten";
 $locale["LikePages"] =
    "ÄhnlicheSeiten";
-$locale["Line does not begin with a '|'."] =
-   "Zeile beginnt nicht mit '|'.";
+$locale["Line %s does not begin with a '|'."] =
+   "Zeile %s beginnt nicht mit '|'.";
 $locale["Link to page"] =
    "Link auf Seite";
 $locale["LinkDatabase"] =
@@ -1216,6 +1216,8 @@ $locale["One page links to %s:"] =
    "Eine Seite ist mit %s verlinkt:";
 $locale["One page would link to %s:"] =
    "Eine Seite würde mit %s verlinkt sein:";
+$locale["Only files with extension HTML are allowed"] =
+   "Nur Dateien mit der Endung HTML sind erlaubt";
 $locale["Oops! Revision %s of %s seems to have been deleted!"] =
    "Hoppla! Es scheint, die Version %s von %s wurde gelöscht!";
 $locale["Optimizing database"] =
@@ -2068,6 +2070,8 @@ $locale["WikiAdminChmod"] =
    "WikiAdminChmod";
 $locale["WikiAdminChown"] =
    "WikiAdminChown";
+$locale["WikiAdminMarkup"] =
+   "WikiAdminFormattierung";
 $locale["WikiAdminMarkup from %s to %s"] =
    "WikiAdminFormattierung von %s auf %s";
 $locale["WikiAdminRemove"] =

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-11 20:30+0000\n"
+"POT-Creation-Date: 2005-09-18 12:12+0000\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -225,16 +225,16 @@ msgstr "%s: Fehler während der Fehlerbehandlung von:"
 msgid "%s: file not found"
 msgstr "»%s«: Datei nicht gefunden"
 
-#: ../lib/IniConfig.php:711
+#: ../lib/IniConfig.php:721
 msgid "CategoryGroup"
 msgstr "KategorieGruppen"
 
 # (namenlos=unbenannt; depends on interpretation)
-#: ../lib/IniConfig.php:713
+#: ../lib/IniConfig.php:723
 msgid "An unnamed PhpWiki"
 msgstr "Unbenanntes PhpWiki"
 
-#: ../lib/IniConfig.php:715 ../lib/upgrade.php:149
+#: ../lib/IniConfig.php:725 ../lib/upgrade.php:149
 #: ../themes/Wordpress/templates/actionbar.tmpl:18
 #: ../themes/default/templates/userprefs.tmpl:123
 msgid "HomePage"
@@ -292,56 +292,56 @@ msgstr "Seitenname"
 msgid "<no matches>"
 msgstr "<nichts gefunden>"
 
-#: ../lib/PageList.php:925 ../lib/plugin/WikiAdminSearchReplace.php:171
+#: ../lib/PageList.php:934 ../lib/plugin/WikiAdminSearchReplace.php:171
 msgid "Content"
 msgstr "Inhalt"
 
-#: ../lib/PageList.php:941
+#: ../lib/PageList.php:950
 msgid "Select"
 msgstr "Auswahl"
 
-#: ../lib/PageList.php:945 ../themes/MonoBook/templates/info.tmpl:71
+#: ../lib/PageList.php:954 ../themes/MonoBook/templates/info.tmpl:71
 #: ../themes/default/templates/info.tmpl:64
 #: ../themes/shamino_com/templates/info.tmpl:70
 msgid "Last Modified"
 msgstr "Zuletzt geändert"
 
-#: ../lib/PageList.php:947
+#: ../lib/PageList.php:956
 msgid "Hits"
 msgstr "Treffer"
 
-#: ../lib/PageList.php:949 ../themes/Crao/templates/editpage.tmpl:37
+#: ../lib/PageList.php:958 ../themes/Crao/templates/editpage.tmpl:37
 #: ../themes/Wordpress/templates/editpage.tmpl:59
 #: ../themes/default/templates/editpage.tmpl:39
 msgid "Size"
 msgstr "Größe"
 
-#: ../lib/PageList.php:952 ../themes/MonoBook/templates/info.tmpl:73
+#: ../lib/PageList.php:961 ../themes/MonoBook/templates/info.tmpl:73
 #: ../themes/default/templates/info.tmpl:66
 #: ../themes/shamino_com/templates/info.tmpl:72
 msgid "Last Summary"
 msgstr "Letzte Zusammenfassung"
 
-#: ../lib/PageList.php:954 ../lib/plugin/AuthorHistory.php:123
+#: ../lib/PageList.php:963 ../lib/plugin/AuthorHistory.php:123
 #: ../lib/plugin/AuthorHistory.php:176 ../lib/plugin/PluginManager.php:90
 msgid "Version"
 msgstr "Version"
 
-#: ../lib/PageList.php:957 ../themes/MonoBook/templates/info.tmpl:72
+#: ../lib/PageList.php:966 ../themes/MonoBook/templates/info.tmpl:72
 #: ../themes/default/templates/info.tmpl:65
 #: ../themes/shamino_com/templates/info.tmpl:71
 msgid "Last Author"
 msgstr "Letzter Autor"
 
-#: ../lib/PageList.php:959 ../lib/WikiGroup.php:36
+#: ../lib/PageList.php:968 ../lib/WikiGroup.php:36
 msgid "Owner"
 msgstr "Besitzer"
 
-#: ../lib/PageList.php:961 ../lib/WikiGroup.php:37
+#: ../lib/PageList.php:970 ../lib/WikiGroup.php:37
 msgid "Creator"
 msgstr "Erzeuger"
 
-#: ../lib/PageList.php:967 ../themes/Crao/templates/editpage.tmpl:67
+#: ../lib/PageList.php:976 ../themes/Crao/templates/editpage.tmpl:67
 #: ../themes/MonoBook/templates/info.tmpl:132
 #: ../themes/default/templates/editpage.tmpl:73
 #: ../themes/default/templates/info.tmpl:127
@@ -349,23 +349,23 @@ msgstr "Erzeuger"
 msgid "Locked"
 msgstr "Gesperrt"
 
-#: ../lib/PageList.php:968
+#: ../lib/PageList.php:977
 msgid "locked"
 msgstr "gesperrt"
 
-#: ../lib/PageList.php:971
+#: ../lib/PageList.php:980
 msgid "Minor Edit"
 msgstr "Kleinere Änderung"
 
-#: ../lib/PageList.php:971
+#: ../lib/PageList.php:980
 msgid "minor"
 msgstr "kleinere"
 
-#: ../lib/PageList.php:973
+#: ../lib/PageList.php:982
 msgid "Markup"
 msgstr "Quelltext"
 
-#: ../lib/PageList.php:1230 ../lib/plugin/WantedPagesOld.php:178
+#: ../lib/PageList.php:1239 ../lib/plugin/WantedPagesOld.php:178
 #, php-format
 msgid "Columns: %s."
 msgstr "Spalten: %s."
@@ -507,39 +507,39 @@ msgstr "InterWiki-Adresse"
 msgid "RecentChanges"
 msgstr "NeuesteÄnderungen"
 
-#: ../lib/Request.php:681 ../lib/Request.php:684
+#: ../lib/Request.php:682 ../lib/Request.php:685
 msgid "Upload error: file too big"
 msgstr ""
 
-#: ../lib/Request.php:687
+#: ../lib/Request.php:688
 msgid "Upload error: file only partially recieved"
 msgstr ""
 
-#: ../lib/Request.php:690
+#: ../lib/Request.php:691
 msgid "Upload error: no file selected"
 msgstr ""
 
-#: ../lib/Request.php:693
+#: ../lib/Request.php:694
 msgid "Upload error: unknown error #"
 msgstr ""
 
-#: ../lib/Request.php:800 ../lib/main.php:1143 ../lib/main.php:1156
+#: ../lib/Request.php:801 ../lib/main.php:1157 ../lib/main.php:1170
 #, php-format
 msgid "%s is not writable."
 msgstr "%s is nicht änderbar."
 
-#: ../lib/Request.php:800
+#: ../lib/Request.php:801
 msgid "The PhpWiki access log file"
 msgstr "Die PhpWiki Zugriffslog Datei"
 
-#: ../lib/Request.php:802 ../lib/main.php:1146
+#: ../lib/Request.php:803 ../lib/main.php:1160
 #, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
 "Bitte überprüfen Sie, daß %s änderbar ist, oder ändern Sie %s in config/"
 "config.ini."
 
-#: ../lib/Request.php:803
+#: ../lib/Request.php:804
 #, php-format
 msgid "the file '%s'"
 msgstr "die Datei %s"
@@ -674,7 +674,7 @@ msgstr "Seite Freigeben"
 msgid "Remove Page"
 msgstr "Seite Löschen"
 
-#: ../lib/Theme.php:1192 ../lib/main.php:998
+#: ../lib/Theme.php:1192 ../lib/main.php:1012
 #: ../lib/plugin/RecentChanges.php:591 ../lib/plugin/TitleSearch.php:43
 #: ../themes/Crao/templates/navbar.tmpl:4
 #: ../themes/Crao/templates/navbar.tmpl:8
@@ -897,7 +897,7 @@ msgstr "k.A."
 # must also be renamed to match what is here.
 #: ../lib/WikiPlugin.php:121 ../lib/loadsave.php:82 ../lib/loadsave.php:408
 #: ../lib/loadsave.php:844 ../lib/loadsave.php:850 ../lib/loadsave.php:858
-#: ../lib/main.php:951 ../lib/main.php:1055
+#: ../lib/main.php:965 ../lib/main.php:1069
 #: ../lib/plugin/WikiAdminSelect.php:192 ../themes/Crao/templates/head.tmpl:79
 #: ../themes/Crao/templates/head.tmpl:80
 #: ../themes/Crao/templates/navbar.tmpl:37
@@ -1692,237 +1692,237 @@ msgstr "Keine Datei zum Hochladen?"
 msgid "Uploading %s"
 msgstr "%s wird hochgeladen"
 
-#: ../lib/main.php:403
+#: ../lib/main.php:413
 msgid "FORBIDDEN"
 msgstr "VERBOTEN"
 
-#: ../lib/main.php:404 ../lib/main.php:414
+#: ../lib/main.php:414 ../lib/main.php:424
 msgid "ANON"
 msgstr "ANON"
 
-#: ../lib/main.php:405
+#: ../lib/main.php:415
 msgid "BOGO"
 msgstr "BOGO"
 
-#: ../lib/main.php:406
+#: ../lib/main.php:416
 msgid "USER"
 msgstr "BENUTZER"
 
-#: ../lib/main.php:407
+#: ../lib/main.php:417
 msgid "ADMIN"
 msgstr "ADMIN"
 
-#: ../lib/main.php:408
+#: ../lib/main.php:418
 msgid "UNOBTAINABLE"
 msgstr "UNERREICHBAR"
 
-#: ../lib/main.php:436 ../lib/main.php:455
+#: ../lib/main.php:446 ../lib/main.php:465
 #, php-format
 msgid "%s is disallowed on this wiki."
 msgstr "»%s« ist auf diesem Wiki nicht zugelassen."
 
-#: ../lib/main.php:444
+#: ../lib/main.php:454
 msgid "authenticated"
 msgstr "authentifizierten"
 
-#: ../lib/main.php:444
+#: ../lib/main.php:454
 msgid "not authenticated"
 msgstr "nicht authentifizierten"
 
 # Missing PagePermission:| access | pagename
-#: ../lib/main.php:445
+#: ../lib/main.php:455
 #, php-format
 msgid "%s %s %s is disallowed on this wiki for %s user '%s' (level: %s)."
 msgstr ""
 "%s %s »%s« ist auf diesem Wiki für %s Benutzer »%s« (Level: %s) nicht "
 "zugelassen."
 
-#: ../lib/main.php:446
+#: ../lib/main.php:456
 msgid "Missing PagePermission:"
 msgstr "Fehlende Zugriffsberechtigung:"
 
-#: ../lib/main.php:463
+#: ../lib/main.php:473
 #, php-format
 msgid "You must sign in to %s."
 msgstr "Sie müssen sich anmelden %s."
 
-#: ../lib/main.php:465
+#: ../lib/main.php:475
 #, php-format
 msgid "You must log in to %s."
 msgstr "Sie müssen sich anmelden %s."
 
-#: ../lib/main.php:467
+#: ../lib/main.php:477
 #, php-format
 msgid "Access for you is forbidden to %s."
 msgstr ""
 
-#: ../lib/main.php:469 ../lib/plugin/PluginManager.php:65
+#: ../lib/main.php:479 ../lib/plugin/PluginManager.php:65
 #, php-format
 msgid "You must be an administrator to %s."
 msgstr "Sie müssen Administratorrechte haben %s."
 
-#: ../lib/main.php:481
+#: ../lib/main.php:491
 msgid "view this page"
 msgstr "um diese Seite anzuzeigen"
 
-#: ../lib/main.php:482
+#: ../lib/main.php:492
 msgid "diff this page"
 msgstr "um von dieser Seite die Änderungen anzuzeigen"
 
-#: ../lib/main.php:483
+#: ../lib/main.php:493
 msgid "dump html pages"
 msgstr "um von diesem Wiki HTML-Dateien lokal abzuspeichern"
 
-#: ../lib/main.php:484
+#: ../lib/main.php:494
 msgid "dump serial pages"
 msgstr "um von diesem Wiki die Seiten lokal abzuspeichern"
 
-#: ../lib/main.php:485
+#: ../lib/main.php:495
 msgid "edit this page"
 msgstr "um diese Seite zu bearbeiten"
 
-#: ../lib/main.php:486
+#: ../lib/main.php:496
 msgid "revert to a previous version of this page"
 msgstr "Zurückspeichern einer älteren Version dieser Seite."
 
 # Erzeugen??
-#: ../lib/main.php:487
+#: ../lib/main.php:497
 msgid "create this page"
 msgstr "um diese Seite zu erzeugen"
 
-#: ../lib/main.php:488
+#: ../lib/main.php:498
 msgid "load files into this wiki"
 msgstr "um Seiten in dieses Wiki zu laden"
 
-#: ../lib/main.php:489
+#: ../lib/main.php:499
 msgid "lock this page"
 msgstr "um diese Seite zu sperren"
 
-#: ../lib/main.php:490
+#: ../lib/main.php:500
 msgid "remove this page"
 msgstr "um diese Seite zu löschen"
 
-#: ../lib/main.php:491
+#: ../lib/main.php:501
 msgid "unlock this page"
 msgstr "um diese Seite zu entsperren"
 
-#: ../lib/main.php:492
+#: ../lib/main.php:502
 msgid "upload a zip dump"
 msgstr "um einen ZIP-Speicherauszug in dieses Wiki zu laden"
 
 # (verify=verwirklichen, in die Tat umsetzen, durch- oder ausführen)
-#: ../lib/main.php:493
+#: ../lib/main.php:503
 msgid "verify the current action"
 msgstr "um die gegenwärtige Aktion durchzuführen"
 
-#: ../lib/main.php:494
+#: ../lib/main.php:504
 msgid "view the source of this page"
 msgstr "um den Quelltext dieser Seiten anzusehen"
 
-#: ../lib/main.php:495
+#: ../lib/main.php:505
 msgid "access this wiki via XML-RPC"
 msgstr "um via XML-RPC auf dieses Wiki zuzugreifen"
 
-#: ../lib/main.php:496
+#: ../lib/main.php:506
 msgid "access this wiki via SOAP"
 msgstr "um via SOAP auf dieses Wiki zuzugreifen"
 
-#: ../lib/main.php:497
+#: ../lib/main.php:507
 msgid "download a zip dump from this wiki"
 msgstr "um eine gezippte Sicherung von allen Wiki Seiten herunterzuladen"
 
-#: ../lib/main.php:498
+#: ../lib/main.php:508
 msgid "download an html zip dump from this wiki"
 msgstr "um alle HTML Seiten als Zipdatei von diesem Wiki herunterzuladen"
 
-#: ../lib/main.php:522
+#: ../lib/main.php:532
 msgid "Browsing pages"
 msgstr "Das Durchblättern der Seiten dieses Wikis"
 
-#: ../lib/main.php:523
+#: ../lib/main.php:533
 msgid "Diffing pages"
 msgstr "Die Inhalts-Differenz-Seiten dieses Wikis"
 
-#: ../lib/main.php:524
+#: ../lib/main.php:534
 msgid "Dumping html pages"
 msgstr "Die Speicherung von Wiki Seiten als HTML-Dateien"
 
-#: ../lib/main.php:525
+#: ../lib/main.php:535
 msgid "Dumping serial pages"
 msgstr "Die Speicherung von Wiki Seiten als Dateien"
 
-#: ../lib/main.php:526
+#: ../lib/main.php:536
 msgid "Editing pages"
 msgstr "Ändern in diesem Wiki"
 
-#: ../lib/main.php:527
+#: ../lib/main.php:537
 msgid "Reverting to a previous version of pages"
 msgstr "Zurückspeichern einer älteren Version"
 
 # Erzeugen??
-#: ../lib/main.php:528
+#: ../lib/main.php:538
 msgid "Creating pages"
 msgstr "Das Seitenerzeugung in diesem Wiki"
 
-#: ../lib/main.php:529
+#: ../lib/main.php:539
 msgid "Loading files"
 msgstr "Das Dateienladen in diesem Wiki"
 
-#: ../lib/main.php:530
+#: ../lib/main.php:540
 msgid "Locking pages"
 msgstr "Das Seitensperrung in diesem Wiki"
 
-#: ../lib/main.php:531
+#: ../lib/main.php:541
 msgid "Removing pages"
 msgstr "Die Seitenlöschung in diesem Wiki"
 
-#: ../lib/main.php:532
+#: ../lib/main.php:542
 msgid "Unlocking pages"
 msgstr "Die Seitenfreigabe in diesem Wiki"
 
-#: ../lib/main.php:533
+#: ../lib/main.php:543
 msgid "Uploading zip dumps"
 msgstr "Das Hochladen vonr ZIP-Speicherauszüge in diesem Wiki"
 
-#: ../lib/main.php:534
+#: ../lib/main.php:544
 msgid "Verify the current action"
 msgstr "Bestätigen Sie die gegenwärtige Aktion"
 
-#: ../lib/main.php:535
+#: ../lib/main.php:545
 msgid "Viewing the source of pages"
 msgstr "DieQuelltextansicht der Seiten in diesem Wiki"
 
-#: ../lib/main.php:536
+#: ../lib/main.php:546
 msgid "XML-RPC access"
 msgstr "XML-RPC Zugriff"
 
-#: ../lib/main.php:537
+#: ../lib/main.php:547
 msgid "SOAP access"
 msgstr "SOAP Zugriff"
 
-#: ../lib/main.php:538
+#: ../lib/main.php:548
 msgid "Downloading zip dumps"
 msgstr "Das Herunterladen aller Wiki Seiten als gezippte Datei"
 
-#: ../lib/main.php:539
+#: ../lib/main.php:549
 msgid "Downloading html zip dumps"
 msgstr ""
 "Das Herunterladen aller Wiki Seiten als HTML-Dateien in einer Zip Datei"
 
-#: ../lib/main.php:673
+#: ../lib/main.php:683
 #, php-format
 msgid "%s: action forwarded to a moderator."
 msgstr ""
 
-#: ../lib/main.php:676
+#: ../lib/main.php:686
 msgid "This action requires moderator approval. Please be patient."
 msgstr ""
 
-#: ../lib/main.php:681
+#: ../lib/main.php:691
 msgid "You must wait for moderator approval."
 msgstr "Sie müssen auf Moderator approval warten."
 
-#: ../lib/main.php:686 ../lib/main.php:1035 ../lib/plugin/ModeratedPage.php:41
+#: ../lib/main.php:696 ../lib/main.php:1049 ../lib/plugin/ModeratedPage.php:41
 #: ../lib/plugin/ModeratedPage.php:137 ../lib/plugin/ModeratedPage.php:205
 #: ../lib/plugin/ModeratedPage.php:238 ../lib/plugin/ModeratedPage.php:241
 #: ../lib/plugin/ModeratedPage.php:243 ../lib/plugin/ModeratedPage.php:245
@@ -1930,28 +1930,28 @@ msgstr "Sie müssen auf Moderator approval warten."
 msgid "ModeratedPage"
 msgstr "ModerierteSeite"
 
-#: ../lib/main.php:702
+#: ../lib/main.php:712
 #, php-format
 msgid "%s: Bad action"
 msgstr "%s: Ungültige Aktion"
 
-#: ../lib/main.php:719
+#: ../lib/main.php:729
 msgid "Fatal PhpWiki Error"
 msgstr "Fataler PhpWiki Fehler"
 
-#: ../lib/main.php:964 ../lib/plugin/WikiAdminChown.php:183
+#: ../lib/main.php:978 ../lib/plugin/WikiAdminChown.php:183
 msgid "Chown"
 msgstr "Chown"
 
-#: ../lib/main.php:968 ../lib/plugin/WikiAdminSetAcl.php:183
+#: ../lib/main.php:982 ../lib/plugin/WikiAdminSetAcl.php:183
 msgid "SetAcl"
 msgstr "AclSetzen"
 
-#: ../lib/main.php:972 ../lib/plugin/WikiAdminRename.php:208
+#: ../lib/main.php:986 ../lib/plugin/WikiAdminRename.php:208
 msgid "Rename"
 msgstr "Umbenennen"
 
-#: ../lib/main.php:976 ../lib/main.php:981 ../lib/plugin/PageDump.php:36
+#: ../lib/main.php:990 ../lib/main.php:995 ../lib/plugin/PageDump.php:36
 #: ../themes/Crao/templates/actionbar.tmpl:28
 #: ../themes/MonoBook/templates/actionbar.tmpl:48
 #: ../themes/Wordpress/templates/actionbar.tmpl:75
@@ -1963,26 +1963,26 @@ msgstr "Umbenennen"
 msgid "PageDump"
 msgstr "SeiteSpeichern"
 
-#: ../lib/main.php:995 ../lib/plugin/FullTextSearch.php:39
+#: ../lib/main.php:1009 ../lib/plugin/FullTextSearch.php:39
 #: ../lib/plugin/WantedPagesOld.php:134
 msgid "FullTextSearch"
 msgstr "VolltextSuche"
 
-#: ../lib/main.php:1144
+#: ../lib/main.php:1158
 msgid "The session.save_path directory"
 msgstr "Das session.save_path Verzeichnis"
 
-#: ../lib/main.php:1147
+#: ../lib/main.php:1161
 #, php-format
 msgid "the session.save_path directory '%s'"
 msgstr "das session.save_path Verzeichnis »%s«"
 
-#: ../lib/main.php:1151
+#: ../lib/main.php:1165
 #, php-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr "Versuche stattdessen das Verzeichnis »%s« zu verwenden."
 
-#: ../lib/main.php:1158
+#: ../lib/main.php:1172
 msgid "Users will not be able to sign in."
 msgstr "Benutzer werden sich nicht anmelden können."
 
@@ -2691,9 +2691,8 @@ msgid "Upload"
 msgstr "Hochladen"
 
 #: ../lib/plugin/HtmlConverter.php:78
-#, fuzzy
-msgid "Only files with extension HTML are not allowed"
-msgstr "Dateien mit der Endung %s sind nicht erlaubt."
+msgid "Only files with extension HTML are allowed"
+msgstr "Nur Dateien mit der Endung HTML sind erlaubt"
 
 #: ../lib/plugin/HtmlConverter.php:81
 msgid "Copy the output below and paste it into your Wiki page."
@@ -2967,9 +2966,10 @@ msgid "Layout tables using the old markup style."
 msgstr ""
 "Tabellen unter Verwendung traditioneller (alter) Wikitext Formatierung."
 
-#: ../lib/plugin/OldStyleTable.php:109
-msgid "Line does not begin with a '|'."
-msgstr "Zeile beginnt nicht mit '|'."
+#: ../lib/plugin/OldStyleTable.php:112
+#, php-format
+msgid "Line %s does not begin with a '|'."
+msgstr "Zeile %s beginnt nicht mit '|'."
 
 #: ../lib/plugin/OrphanedPages.php:36
 msgid "OrphanedPages"
@@ -4487,7 +4487,6 @@ msgid "to"
 msgstr "nach"
 
 #: ../lib/plugin/WikiAdminMarkup.php:37
-#, fuzzy
 msgid "WikiAdminMarkup"
 msgstr "WikiAdminFormattierung"
 
