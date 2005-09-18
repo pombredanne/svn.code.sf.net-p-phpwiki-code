@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.216 2005-08-27 09:40:46 rurban Exp $');
+rcs_id('$Id: main.php,v 1.217 2005-09-18 12:44:00 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -196,7 +196,7 @@ class WikiRequest extends Request {
     // This really maybe should be part of the constructor, but since it
     // may involve HTML/template output, the global $request really needs
     // to be initialized before we do this stuff.
-    // [50ms]: 36ms is wikidb_page::exists
+    // [50ms]: 36ms if wikidb_page::exists
     function updateAuthAndPrefs () {
 
         if (isset($this->_user) and (!isa($this->_user, WikiUserClassname()))) {
@@ -238,9 +238,19 @@ class WikiRequest extends Request {
             else
                 $action = 'edit';
   	}
-        $require_level = $this->requiredAuthority($action);
-        if (! $this->_user->hasAuthority($require_level))
-            $this->_notAuthorized($require_level); // NORETURN
+        if (0) {
+            $require_level = $this->requiredAuthority($action);
+            if (! $this->_user->hasAuthority($require_level))
+                $this->_notAuthorized($require_level); // NORETURN
+        } else {
+            // novatrope patch to let only _AUTHENTICATED view pages.
+            // If there's not enough authority or forbidden, ask for a password, 
+            // unless it's explicitly unobtainable. Some bad magic though.
+            if ($this->requiredAuthorityForAction($action) == WIKIAUTH_UNOBTAINABLE) {
+                $require_level = $this->requiredAuthority($action);
+                $this->_notAuthorized($require_level); // NORETURN
+            }
+        }
     }
 
     function & getUser () {
@@ -790,7 +800,11 @@ class WikiRequest extends Request {
 
     function _deduceAction () {
         if (!($action = $this->getArg('action'))) {
-            // Detect XML-RPC requests. TODO: SOAP?
+            // TODO: improve this SOAP.php hack by letting SOAP use index.php 
+            // or any other virtual url as with xmlrpc
+            if (defined('WIKI_SOAP')   and WIKI_SOAP)
+                return 'soap';
+            // Detect XML-RPC requests.
             if ($this->isPost()
                 && $this->get('CONTENT_TYPE') == 'text/xml'
                 && strstr($GLOBALS['HTTP_RAW_POST_DATA'], '<methodCall>')
@@ -1258,6 +1272,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.216  2005/08/27 09:40:46  rurban
+// fix login with HttpAuth
+//
 // Revision 1.215  2005/08/07 10:50:27  rurban
 // postpone guard
 //
