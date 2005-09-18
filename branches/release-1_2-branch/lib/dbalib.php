@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2.2.7 2005-08-28 14:03:37 rurban Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2.2.8 2005-09-18 14:19:12 rurban Exp $');
 
    /*
       Database functions:
@@ -124,7 +124,7 @@
 
       $pagedata = PadSerializedData(serialize($pagehash));
 
-      if (!dba_insert($pagename, $pagedata, $dbi[$pagestore])) {
+      if (!@dba_insert($pagename, $pagedata, $dbi[$pagestore])) {
          if (!dba_replace($pagename, $pagedata, $dbi[$pagestore])) {
             ExitWiki("Error inserting page '$pagename'");
          }
@@ -138,8 +138,8 @@
 
       $pagedata = PadSerializedData(serialize($pagehash));
 
-      if (!dba_insert($pagename, $pagedata, $dbi[$ArchivePageStore])) {
-         if (!dba_replace($pagename, $pagedata, $dbi['archive'])) {
+      if (!@dba_insert($pagename, $pagedata, $dbi[$ArchivePageStore])) {
+         if (!dba_replace($pagename, $pagedata, $dbi[$ArchivePageStore])) {
             ExitWiki("Error storing '$pagename' into archive");
          }
       } 
