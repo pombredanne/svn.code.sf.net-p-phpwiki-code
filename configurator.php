@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.39 2005-09-15 19:37:55 rurban Exp $
+<?php // $Id: configurator.php,v 1.40 2005-09-18 12:06:41 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -38,6 +38,7 @@
  * 1.3.11 TODO: (or 1.3.12?)
  * o parse_ini_file("config-dist.ini") for the commented vars
  * o check automatically for commented and optional vars
+ * o fix _optional, to ignore existing config.ini and only use config-default.ini values
  * o mixin class for commented 
  * o fix SQL quotes, AUTH_ORDER quotes and file forward slashes
  * o posted values validation, extend js validation for sane DB values
@@ -147,13 +148,13 @@ if (file_exists($fs_config_file)) {
     IniConfig($fs_def_file);
 }
 
-echo "<","?xml version=\"1.0\" encoding=\"'iso-8859-1'\"?",">\n";
+echo '<','?xml version="1.0" encoding="iso-8859-1"?',">\n";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.39 2005-09-15 19:37:55 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.40 2005-09-18 12:06:41 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -689,7 +690,7 @@ $dsn_sqlstring = $dsn_sqltype."://{$dsn_sqluser}:{$dsn_sqlpass}@{$dsn_sqlhostors
 
 $properties["SQL dsn"] =
 new unchangeable_define("DATABASE_DSN", 
-                        "DATABASE_DSN = \"$dsn_sqlstring\"", "
+                        $dsn_sqlstring, "
 Calculated from the settings above:");
 
 $properties["Filename / Table name Prefix"] =
@@ -737,13 +738,13 @@ new numeric_define("DATABASE_TIMEOUT", DATABASE_TIMEOUT, "
 Recommended values are 10-20 seconds. The more load the server has, the higher the timeout.");
 
 $properties["DBADMIN_USER"] =
-new _define_commented_optional('DBADMIN_USER', DBADMIN_USER. "
+new _define_optional('DBADMIN_USER', DBADMIN_USER. "
 If action=upgrade detects mysql problems, but has no ALTER permissions, 
 give here a database username which has the necessary ALTER or CREATE permissions.
 Of course you can fix your database manually. See lib/upgrade.php for known issues.");
 
 $properties["DBADMIN_PASSWD"] =
-new _define_password_commented_optional('DBADMIN_PASSWD', DBADMIN_PASSWD);
+new _define_password_optional('DBADMIN_PASSWD', DBADMIN_PASSWD);
 
 ///////////////////
 
@@ -876,7 +877,7 @@ new boolean_define_optional('ALLOW_USER_PASSWORDS',
 If ALLOW_USER_PASSWORDS is true, the authentication settings below define where and how to 
 check against given username/passwords. For completely security disable BOGO_LOGIN and ANON_EDIT above.");
 
-$properties["Allow User Passwords"] =
+$properties["User Authentication Methods"] =
     new array_define('USER_AUTH_ORDER', array("PersonalPage", "Db"), "
 Many different methods can be used to check user's passwords. 
 Try any of these in the given order:
@@ -914,10 +915,7 @@ separate the name of each one with colons.
 </pre>");
 
 $properties["PASSWORD_LENGTH_MINIMUM"] =
-    new numeric_define("PASSWORD_LENGTH_MINIMUM", "6", "
-For 'security' purposes, you can specify that a password be at least a
-certain number of characters long.  This applies even to the BogoLogin method. 
-Default: 0 (to allow immediate passwordless BogoLogin)");
+    new numeric_define("PASSWORD_LENGTH_MINIMUM", "6");
 
 $properties["USER_AUTH_POLICY"] =
 new _define_selection('USER_AUTH_POLICY',
@@ -1135,7 +1133,7 @@ Default: ou=Groups");
 } else { // function_exists('ldap_connect')
 
 $properties["LDAP Authentication"] =
-new unchangeable_define('LDAP Authentication', "
+new unchangeable_variable('LDAP Authentication', "
 ; If USER_AUTH_ORDER contains Ldap:
 ; 
 ; The LDAP server to connect to.  Can either be a hostname, or a complete
@@ -1194,7 +1192,7 @@ Some IMAP_AUTH_HOST samples:
 } else { // function_exists('imap_open')
 
 $properties["IMAP Authentication"] =
-  new unchangeable_define('IMAP_AUTH_HOST',"
+  new unchangeable_variable('IMAP_AUTH_HOST',"
 ; If USER_AUTH_ORDER contains IMAP:
 ; The IMAP server to check usernames from. Defaults to localhost.
 ; 
@@ -1860,8 +1858,15 @@ extends _variable {
 
 class unchangeable_define
 extends unchangeable_variable {
+    function _get_config_line($posted_value) {
+        if ($this->description)
+            $n = "\n";
+        if (!$posted_value)
+            $posted_value = $this->default_value;
+        return "${n}".$this->_config_format($posted_value);
+    }
     function _config_format($value) {
-        return "";
+        return sprintf("%s = \"%s\"", $this->get_config_item_name(), $value);
     }
 }
 class unchangeable_ini_set
@@ -2229,7 +2234,7 @@ extends _define {
         // which include " ", \r, \t, \n and \f
         $list_values = preg_split("/[\s,:]+/", $posted_value, -1, PREG_SPLIT_NO_EMPTY);
         if (!empty($list_values)) {
-            $list_values = "'".join("' : '", $list_values)."'";
+            $list_values = join(" : ", $list_values);
             return "\n" . $this->_config_format($list_values);
         } else
             return "\n;" . $this->_config_format('');
@@ -2539,6 +2544,8 @@ if (!empty($HTTP_POST_VARS['action'])
     $posted = $GLOBALS['HTTP_POST_VARS'];
     // No action has been specified - we make a form.
 
+    if (!empty($GLOBALS['HTTP_GET_VARS']['start_debug'])) 
+    	$configurator .= ("?start_debug=" . $GLOBALS['HTTP_GET_VARS']['start_debug']);
     echo '
 <form action="',$configurator,'" method="post">
 <input type="hidden" name="action" value="make_config" />
