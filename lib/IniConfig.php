@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.94 2005-09-15 05:56:12 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.95 2005-09-18 15:15:53 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -245,7 +245,9 @@ function IniConfig($file) {
                                   'ALLOW_HTTP_AUTH_LOGIN', 'ALLOW_LDAP_LOGIN',
                                   'ALLOW_IMAP_LOGIN', 'ALLOW_USER_LOGIN',
                                   'REQUIRE_SIGNIN_BEFORE_EDIT',
-                                  'WIKIDB_NOCACHE_MARKUP')))
+                                  'WIKIDB_NOCACHE_MARKUP',
+                                  'COMPRESS_OUTPUT'
+                                  )))
         {
             ;
         }
@@ -850,6 +852,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.94  2005/09/15 05:56:12  rurban
+// read configurator desc from config-dist.ini, update desc, fix some warnings
+//
 // Revision 1.93  2005/09/14 05:57:19  rurban
 // make ENABLE_MARKUP_TEMPLATE optional
 //
