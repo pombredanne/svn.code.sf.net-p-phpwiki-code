@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.98 2005-09-18 15:15:53 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.99 2005-09-18 16:01:09 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -269,7 +269,7 @@ class Request {
         if ($status) {
             // Return short response due to failed conditionals
             $this->setStatus($status);
-            print "\n\n";
+            echo "\n\n";
             $this->discardOutput();
             $this->finish();
             exit();
@@ -336,6 +336,7 @@ class Request {
             
         if ($this->getArg('start_debug'))
             $compress = false;
+        
         // Should we compress even when apache_note is not available?
         // sf.net bug #933183 and http://bugs.php.net/17557
         // This effectively eliminates CGI, but all other servers also. hmm.
@@ -343,7 +344,9 @@ class Request {
             and (!function_exists('ob_gzhandler') 
                  or !function_exists('apache_note'))) 
             $compress = false;
-        // http://www.php.net/ob_gzhandler "output handler 'ob_gzhandler' cannot be used twice"
+            
+        // "output handler 'ob_gzhandler' cannot be used twice"
+        // http://www.php.net/ob_gzhandler
         if ($compress and ini_get("zlib.output_compression"))
             $compress = false;
 
@@ -365,9 +368,9 @@ class Request {
             $compress = false;
 
         if ($compress) {
-            ob_start('ob_gzhandler');
+            ob_start('phpwiki_gzhandler');
             
-            // dont send a length or get the gzipp'ed data length.
+            // TODO: dont send a length or get the gzip'ed data length.
             $this->_is_compressing_output = true; 
             header("Content-Encoding: gzip");
             /*
@@ -424,7 +427,7 @@ class Request {
     	$this->_finishing = true;
         if (!empty($this->_accesslog)) {
             $this->_accesslog->push($this);
-            if (empty($this->_do_chunked_output))
+            if (empty($this->_do_chunked_output) and empty($this->_ob_get_length))
                 $this->_ob_get_length = ob_get_length();
             $this->_accesslog->setSize($this->_ob_get_length);
             global $RUNTIMER;
@@ -448,7 +451,7 @@ class Request {
             */
             // if _is_compressing_output then ob_get_length() returns 
             // the uncompressed length, not the gzip'ed as required.
-	    if (!headers_sent() and ! $this->_is_compressing_output) {
+	    if (!headers_sent() and !$this->_is_compressing_output) {
 		if (empty($this->_do_chunked_output)) {
 		    $this->_ob_get_length = ob_get_length();
 		}
@@ -1343,6 +1346,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.98  2005/09/18 15:15:53  rurban
+// add a proper Content-Encoding: gzip if compressed, and omit Content-Length then.
+//
 // Revision 1.97  2005/09/14 05:58:17  rurban
 // protect against Content-Length if headers_sent(), fixed writing unwanted accesslog sql entries
 //

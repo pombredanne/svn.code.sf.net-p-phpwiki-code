@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.244 2005-09-11 13:24:33 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.245 2005-09-18 16:01:09 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1751,6 +1751,16 @@ function phpwiki_version() {
     return $PHPWIKI_VERSION;
 }
 
+function phpwiki_gzhandler($ob) {
+    if (function_exists('gzencode'))
+        $ob = gzencode($ob);
+    $GLOBALS['request']->_ob_get_length = strlen($ob);
+    if (!headers_sent()) {
+        header(sprintf("Content-Length: %d", $GLOBALS['request']->_ob_get_length));
+    }
+    return $ob;
+}
+
 function isWikiWord($word) {
     global $WikiNameRegexp;
     //or preg_match('/\A' . $WikiNameRegexp . '\z/', $word) ??
@@ -2033,6 +2043,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.244  2005/09/11 13:24:33  rurban
+// fix shortname, dont quote twice in ListRegexExpand
+//
 // Revision 1.243  2005/08/06 15:01:38  rurban
 // workaround php VBASIC alike limitation: allow integer pagenames
 //
