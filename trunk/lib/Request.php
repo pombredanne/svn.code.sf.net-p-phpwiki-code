@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.97 2005-09-14 05:58:17 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.98 2005-09-18 15:15:53 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -366,6 +366,10 @@ class Request {
 
         if ($compress) {
             ob_start('ob_gzhandler');
+            
+            // dont send a length or get the gzipp'ed data length.
+            $this->_is_compressing_output = true; 
+            header("Content-Encoding: gzip");
             /*
              * Attempt to prevent Apache from doing the dreaded double-gzip.
              *
@@ -382,6 +386,7 @@ class Request {
             // at any point.
             // FIXME: change the name of this method.
             ob_start();
+            $this->_is_compressing_output = false;
         }
         $this->_is_buffering_output = true;
         $this->_ob_get_length = 0;
@@ -441,7 +446,9 @@ class Request {
                 echo $html;
             } else {
             */
-	    if (!headers_sent()) {
+            // if _is_compressing_output then ob_get_length() returns 
+            // the uncompressed length, not the gzip'ed as required.
+	    if (!headers_sent() and ! $this->_is_compressing_output) {
 		if (empty($this->_do_chunked_output)) {
 		    $this->_ob_get_length = ob_get_length();
 		}
@@ -1336,6 +1343,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.97  2005/09/14 05:58:17  rurban
+// protect against Content-Length if headers_sent(), fixed writing unwanted accesslog sql entries
+//
 // Revision 1.96  2005/08/07 10:52:43  rurban
 // stricter error handling: dba errors are fatal, display errors on Request->finish or session_close
 //
