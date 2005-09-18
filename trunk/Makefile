@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.9 2005-08-07 09:15:38 rurban Exp $
+# $Id: Makefile,v 1.10 2005-09-18 12:41:24 rurban Exp $
 # user-definable settings:
 # for mysqladmin
 DBADMIN_USER=root
@@ -45,7 +45,7 @@ endif
 # ****************************************************************************
 PHP_SRC := $(wildcard *.php ./lib/*.php ./lib/WikiDB/*.php ./lib/plugin/*.php)
 
-.PHONY: all install locale mysql pqsql sqlite dbtest
+.PHONY: all install locale mysql pqsql sqlite dbtest install-config
 
 all:  TAGS
 
