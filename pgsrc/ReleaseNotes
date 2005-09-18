@@ -1,15 +1,15 @@
-Date: Thu, 15 Sep 2005 17:24:44 +0100
+Date: Sun, 18 Sep 2005 14:06:44 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.54 2005-09-14 06:10:00 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.55 2005-09-18 12:07:25 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.54 $";
+  pgsrc_version="2 $Revision: 1.55 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-1.3.11p1 Sep, 15 2005, Reini Urban:
+1.3.11p1 Sep, 18 2005, Reini Urban:
 
 fixes:
 * added missing pgsrc/OldStyleTablesPlugin
@@ -17,13 +17,17 @@ fixes:
 * protect against Content-Length if headers_sent()
 * fixed ENABLE_MARKUP_TEMPLATE warning if undefined
 * fixed writing unwanted accesslog sql entries
-* WikiAdminSelect preselection
+* fixed WikiAdminSelect preselection
+* fixed passencrypt.php for PHP5 !register_long_arrays
+* fixed configurator for DATABASE_DSN, USER_AUTH_ORDER
 
 changes:
 * optimized explodePageList to use SQL when available 
   (titleSearch instead of getAllPages)
 * added optimization for a new ALL textsearch token 
   (* => pcre: .*, sql: %)
+* configurator takes default description from config-dist.ini
+* added some missing configurator constants
 
 1.3.11 Sep, 11 2005, Reini Urban, Joel Uckelman:
 
