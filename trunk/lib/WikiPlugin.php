@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.58 2005-02-12 17:22:17 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.59 2005-09-26 06:25:50 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.58 $");
+        //                    "\$Revision: 1.59 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -410,6 +410,25 @@ class WikiPlugin
         }
         return $string . '?'.'>';
     }
+
+    function getArgumentsDescription() {
+        $arguments = HTML();
+        foreach ($this->getDefaultArguments() as $arg => $default) {
+            // Work around UserPreferences plugin to avoid error
+            if ((is_array($default))) {
+                $default = '(array)';
+                // This is a bit flawed with UserPreferences object
+                //$default = sprintf("array('%s')",
+                //                   implode("', '", array_keys($default)));
+            }
+            else
+                if (stristr($default, ' '))
+                    $default = "'$default'";
+            $arguments->pushcontent("$arg=$default", HTML::br());
+        }
+        return $arguments;
+    }
+
 }
 
 class WikiPluginLoader {
