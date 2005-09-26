@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.49 2005-04-11 19:41:23 rurban Exp $
+ * $Id: phpwiki.css,v 1.50 2005-09-26 06:30:11 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -881,6 +881,14 @@ table.sqlresult td {
 img.tex { 
   border: 0ex;
   vertical-align: middle; 
+}
+
+/**
+ * PhotoAlbum plugin
+ */
+.boldsmall {
+  font-weight: bold;
+  font-size: 11px;
 }
 
 /* For emacs users
