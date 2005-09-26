@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.2 2005-05-06 18:43:41 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.3 2005-09-26 06:25:50 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -108,7 +108,7 @@ _("Operation undone")
       }
    }
 }
-//save a snapshot in the undo buffer (unused)
+//save a snapshot in the undo buffer
 function undo_save() {
    undo_buffer[undo_buffer_index]=f.editarea.value;
    undo_buffer_index++;
@@ -117,7 +117,7 @@ function undo_save() {
 "));
             $WikiTheme->addMoreAttr('body', "SearchReplace"," onload='define_f()'");
         } else {
-            $WikiTheme->addMoreAttr('body', "editfocus", "document.getElementById('edit[content]').editarea.focus()");
+            $WikiTheme->addMoreAttr('body', "editfocus", "document.getElementById('edit:content]').editarea.focus()");
         }
     
         if (ENABLE_EDIT_TOOLBAR) {
@@ -214,26 +214,29 @@ function undo_save() {
             $undo_d_btn = $WikiTheme->getImageURL("ed_undo_d.png"); 
             //$redo_btn = $WikiTheme->getImageURL("ed_redo.png");
             $sr_btn   = $WikiTheme->getImageURL("ed_replace.png");
-            $sr_html = HTML(HTML::img(array('class'=>"toolbar",
-                                            'id'   =>"sr_undo",
-                                            'src'  =>$undo_d_btn,
-                                            'title'=>_("Undo Search & Replace"),
-                                            'alt'  =>_("Undo Search & Replace"),
-                                            'disabled'=>"disabled", 
-                                            'value'   =>"Undo",
-                                            'onfocus' =>"if(this.blur && undo_buffer_index==0) this.blur()",
-                                            'onclick' =>"do_undo()")),
-                            HTML::img(array('class'=>"toolbar",
-                                            'src'  => $sr_btn,
-                                            'alt'  =>_("Search & Replace"),
-                                            'title'=>_("Search & Replace"),
-                                            'onclick'=>"replace()")));
+            //TODO: generalize the UNDO button and fix it for Search & Replace
+            $sr_html = HTML(HTML::img
+                            (array('class'=>"toolbar",
+                                   'id'   =>"sr_undo",
+                                   'src'  =>$undo_d_btn,
+                                   'title'=>_("Undo Search & Replace"),
+                                   'alt'  =>_("Undo Search & Replace"),
+                                   //'disabled'=>"disabled",   //non-XHTML conform
+                                   //'onfocus' =>"if(this.blur && undo_buffer_index==0) this.blur()",
+                                   'onclick' =>"do_undo()")),
+                            HTML::img
+                            (array('class'=>"toolbar",
+                                   'src'  => $sr_btn,
+                                   'alt'  =>_("Search & Replace"),
+                                   'title'=>_("Search & Replace"),
+                                   'onclick'=>"replace()")));
         } else {
             $sr_html = '';
         }
 
-        //TODO: delegate these calculations to a seperate popup action request
-        //   action=pulldown or xmlrpc/soap (see google: WebServiceProxyFactory.createProxyAsync)
+        //TODO: delegate these calculations to a seperate popup/pulldown action request
+        // using moacdropdown and xmlrpc:titleSearch
+        // action=pulldown or xmlrpc/soap (see google: WebServiceProxyFactory.createProxyAsync)
 
         // Button to generate categories, display in extra window as popup and insert
         $sr_html = HTML($sr_html, $this->categoriesPulldown());
@@ -247,7 +250,6 @@ function undo_save() {
         if (TOOLBAR_TEMPLATE_PULLDOWN)
             $sr_html = HTML($sr_html, $this->templatePulldown(TOOLBAR_TEMPLATE_PULLDOWN));
 
-
         // don't use document.write for replace, otherwise self.opener is not defined.
         $toolbar_end = "document.writeln(\"</div>\");";
         if ($sr_html)
@@ -258,33 +260,35 @@ function undo_save() {
             return HTML(Javascript($toolbar . $toolbar_end));
     }
 
+    //TODO: make the result cached
     function categoriesPulldown() {
         global $WikiTheme;
 
         require_once('lib/TextSearchQuery.php');
         $dbi =& $GLOBALS['request']->_dbi;
-        $pages = $dbi->titleSearch(new TextSearchQuery(''.
-                                                       _("Category").' OR '.
-                                                       _("Topic").''));
-        if ($pages->count()) {
+        // KEYWORDS formerly known as $KeywordLinkRegexp
+        $pages = $dbi->titleSearch(new TextSearchQuery(KEYWORDS, true));
+        if ($pages) {
             $categories = array();
             while ($p = $pages->next()){
                 $categories[] = $p->getName();
             }
+            if (!$categories) return '';
             $more_buttons = HTML::img(array('class'=>"toolbar",
                                             'src'  => $WikiTheme->getImageURL("ed_category.png"),
                                             'title'=>_("AddCategory"),
+                                            'alt'=>_("AddCategory"),
                                             'onclick'=>"showPulldown('".
                                             _("Insert Categories (double-click)")
                                             ."',['".join("','",$categories)."'],'"
                                             ._("Insert")."','"
-                                            ._("Close")
-                                            ."')"));
+                                            ._("Close")."')"));
             return HTML("\n", $more_buttons);
         }
         return '';
     }
 
+    //TODO: Make the result cached. Esp. the args are expensive
     function pluginPulldown() {
         global $WikiTheme;
 
@@ -295,24 +299,36 @@ function undo_save() {
         $plugins = $pd->getFiles();
         unset($pd);
         sort($plugins);
-
         if (!empty($plugins)) {
             $plugin_js = '';
+            require_once("lib/WikiPlugin.php");
+            $w = new WikiPluginLoader;
             foreach ($plugins as $plugin) {
                 $pluginName = str_replace(".php", "", $plugin);
-                $toinsert = "<?plugin $pluginName ?>"; // args?
-                $plugin_js .= ",['$pluginName','$toinsert']";
+                $p = $w->getPlugin($pluginName, false); // second arg?
+                // trap php files which aren't WikiPlugin~s
+                if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
+                    $plugin_args = '';
+                    $desc = $p->getArgumentsDescription();
+                    $src = array("\n",'"',"'",'|','[',']','\\');
+                    $replace = array('%0A','%22','%27','%7C','%5B','%5D','%5C');
+                    $desc = str_replace("<br />",' ',$desc->asXML());
+                    if ($desc)
+                        $plugin_args = '\n'.str_replace($src, $replace, $desc);
+                    $toinsert = "%0A<?plugin ".$pluginName.$plugin_args."?>"; // args?
+                    $plugin_js .= ",['$pluginName','$toinsert']";
+                }
             }
             $plugin_js = substr($plugin_js, 1);
             $more_buttons = HTML::img(array('class'=>"toolbar",
                                             'src'  => $WikiTheme->getImageURL("ed_plugins.png"),
                                             'title'=>_("AddPlugin"),
+                                            'alt'=>_("AddPlugin"),
                                             'onclick'=>"showPulldown('".
                                             _("Insert Plugin (double-click)")
                                             ."',[".$plugin_js."],'"
                                             ._("Insert")."','"
-                                            ._("Close")
-                                            ."')"));
+                                            ._("Close")."')"));
             return HTML("\n", $more_buttons);
         }
         return '';
@@ -331,27 +347,32 @@ function undo_save() {
             return HTML("\n", HTML::img(array('class'=>"toolbar",
                                               'src'  => $WikiTheme->getImageURL("ed_pages.png"),
                                               'title'=>_("AddPageLink"),
+                                              'alt'=>_("AddPageLink"),
                                               'onclick'=>"showPulldown('".
                                               _("Insert PageLink (double-click)")
                                               ."',['".join("','",$pages)."'],'"
                                               ._("Insert")."','"
-                                              ._("Close")
-                                              ."')")));
+                                              ._("Close")."')")));
         }
         return '';
     }
 
+    //TODO: make the result cached
     function templatePulldown($query, $case_exact=false, $regex='auto') {
         require_once('lib/TextSearchQuery.php');
         $dbi =& $GLOBALS['request']->_dbi;
         $page_iter = $dbi->titleSearch(new TextSearchQuery($query, $case_exact, $regex));
+        $count = 0;
         if ($page_iter->count()) {
             global $WikiTheme;
             $pages_js = '';
             while ($p = $page_iter->next()) {
                 $rev = $p->getCurrentRevision();
-                $toinsert = str_replace("\n",'\n',addslashes($rev->_get_content()));
-                $pages_js .= ",['".$p->getName()."','$toinsert']";
+                $src = array("\n",'"');
+                $replace = array('_nl','_quot'); 
+                $toinsert = str_replace($src, $replace, $rev->_get_content());
+                //$toinsert = str_replace("\n",'\n',addslashes($rev->_get_content()));
+                $pages_js .= ",['".$p->getName()."','_nl$toinsert']";
             }
             $pages_js = substr($pages_js, 1);
             if (!empty($pages_js))
@@ -359,12 +380,12 @@ function undo_save() {
                             (array('class'=>"toolbar",
                                    'src'  => $WikiTheme->getImageURL("ed_template.png"),
                                    'title'=>_("AddTemplate"),
+                                   'alt'=>_("AddTemplate"),
                                    'onclick'=>"showPulldown('".
                                    _("Insert Template (double-click)")
                                    ."',[".$pages_js."],'"
                                    ._("Insert")."','"
-                                   ._("Close")
-                                   ."')")));
+                                   ._("Close")."')")));
         }
         return '';
     }
@@ -373,6 +394,12 @@ function undo_save() {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.3  2005/09/22 13:40:00 tharding
+ add modules arguments
+ 
+ Revision 1.2  2005/05/06 18:43:41  rurban
+ add AddTemplate EditToolbar icon
+
  Revision 1.1  2005/01/25 15:19:09  rurban
  extract Toolbar code from editpage.php
 
