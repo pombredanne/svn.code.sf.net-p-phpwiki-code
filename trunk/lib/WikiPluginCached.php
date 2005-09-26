@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.19 2004-12-16 18:30:59 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.20 2005-09-26 06:28:46 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004 Reini Urban
@@ -787,8 +787,12 @@ class WikiPluginCached extends WikiPlugin
     }
 
     function tempnam($prefix = false) {
-        return tempnam(isWindows() ? str_replace('/', "\\", PLUGIN_CACHED_CACHE_DIR) : PLUGIN_CACHED_CACHE_DIR,
+        $temp = tempnam(isWindows() ? str_replace('/', "\\", PLUGIN_CACHED_CACHE_DIR) 
+                                    : PLUGIN_CACHED_CACHE_DIR,
                        $prefix ? $prefix : PLUGIN_CACHED_FILENAME_PREFIX);
+        if (isWindows())
+            $temp = preg_replace("/\.tmp$/", "_tmp", $temp);
+        return $temp;
     }
 
     /** 
@@ -1092,10 +1096,46 @@ class WikiPluginCached extends WikiPlugin
             return $this->oldFilterThroughCmd($source, $commandLine);
     }
 
+    /**
+     * Execute system command until the outfile $until exists.
+     *
+     * @param  cmd   string   command to be invoked
+     * @param  until string   expected output filename
+     * @return       boolean  error status; true=ok; false=error
+     */
+    function execute($cmd, $until = false) {
+        // cmd must redirect stderr to stdout though!
+        $errstr = exec($cmd); //, $outarr, $returnval); // normally 127
+        //$errstr = join('',$outarr);
+        $ok = empty($errstr);
+        if (!$ok) {
+            trigger_error("\n".$cmd." failed: $errstr", E_USER_WARNING);
+        } elseif ($GLOBALS['request']->getArg('debug'))
+            trigger_error("\n".$cmd.": success\n", E_USER_NOTICE);
+        if (!isWindows()) {
+            if ($until) {
+                $loop = 100000;
+                while (!file_exists($until) and $loop > 0) {
+                    $loop -= 100;
+                    usleep(100);
+                }
+            } else {
+                usleep(5000);
+            }
+        }
+        if ($until)
+            return file_exists($until);
+        return $ok;
+    }
+
+
 } // WikiPluginCached
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/12/16 18:30:59  rurban
+// avoid ugly img border
+//
 // Revision 1.18  2004/11/01 10:43:57  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
