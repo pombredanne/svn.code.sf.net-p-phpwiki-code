@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.96 2005-05-06 17:54:22 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.97 2005-09-26 06:32:22 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -486,7 +486,7 @@ class PageEditor
          */
         $textarea = HTML::textarea(array('class' => 'wikiedit',
                                          'name' => 'edit[content]',
-                                         'id'   => 'edit[content]',
+                                         'id'   => 'edit:content',
                                          'rows' => $request->getPref('editHeight'),
                                          'cols' => $request->getPref('editWidth'),
                                          'readonly' => (bool) $readonly),
@@ -519,17 +519,17 @@ class PageEditor
 	    $el['CAPTCHA_INPUT']
 		= HTML::input(array('type'  => 'text',
 				    'class' => 'wikitext',
-				    'id'    => 'edit[captcha_input]',
+				    'id'    => 'edit:captcha_input',
 				    'name'  => 'edit[captcha_input]',
 				    'size'  => 20,
 				    'maxlength' => 256));
 	    $el['CAPTCHA_IMAGE'] = '<img src="?action=captcha" alt="captcha" />';
-	    $el['CAPTCHA_LABEL'] = '<label for="edit[captcha_input]">'._("Type word above:").' </label>';
+	    $el['CAPTCHA_LABEL'] = '<label for="edit:captcha_input">'._("Type word above:").' </label>';
 	}
         $el['SUMMARY_INPUT']
             = HTML::input(array('type'  => 'text',
                                 'class' => 'wikitext',
-                                'id' => 'edit[summary]',
+                                'id' => 'edit:summary',
                                 'name'  => 'edit[summary]',
                                 'size'  => 50,
                                 'maxlength' => 256,
@@ -537,7 +537,7 @@ class PageEditor
         $el['MINOR_EDIT_CB']
             = HTML::input(array('type' => 'checkbox',
                                 'name'  => 'edit[minor_edit]',
-                                'id' => 'edit[minor_edit]',
+                                'id' => 'edit:minor_edit',
                                 'checked' => (bool) $this->meta['is_minor_edit']));
         $el['OLD_MARKUP_CB']
             = HTML::input(array('type' => 'checkbox',
@@ -551,7 +551,7 @@ class PageEditor
         $el['LOCKED_CB']
             = HTML::input(array('type' => 'checkbox',
                                 'name' => 'edit[locked]',
-                                'id'   => 'edit[locked]',
+                                'id'   => 'edit:locked',
                                 'disabled' => (bool) !$this->user->isadmin(),
                                 'checked'  => (bool) $this->locked));
 
@@ -568,7 +568,7 @@ class PageEditor
                                     'maxlength' => 4,
                                     'class' => "numeric",
                                     'name' => 'pref[editWidth]',
-                                    'id'   => 'pref[editWidth]',
+                                    'id'   => 'pref:editWidth',
                                     'value' => $request->getPref('editWidth'),
                                     'onchange' => 'this.form.submit();'));
         $el['HEIGHT_PREF'] = HTML::input(array('type' => 'text',
@@ -576,7 +576,7 @@ class PageEditor
                                      'maxlength' => 4,
                                      'class' => "numeric",
                                      'name' => 'pref[editHeight]',
-                                     'id'   => 'pref[editHeight]',
+                                     'id'   => 'pref:editHeight',
                                      'value' => $request->getPref('editHeight'),
                                      'onchange' => 'this.form.submit();'));
         $el['SEP'] = $WikiTheme->getButtonSeparator();
@@ -758,6 +758,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.96  2005/05/06 17:54:22  rurban
+ silence Preview warnings for PAGE_LOCKED_MESSAGE, CONCURRENT_UPDATE_MESSAGE (thanks to schorni)
+
  Revision 1.95  2005/04/25 20:17:14  rurban
  captcha feature by Benjamin Drieu. Patch #1110699
 
