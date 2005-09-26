@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.17 2005-01-25 06:58:22 rurban Exp $');
+rcs_id('$Id: PluginManager.php,v 1.18 2005-09-26 06:38:00 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
 
     function getDefaultArguments() {
@@ -126,23 +126,9 @@ extends WikiPlugin
             }
             $desc = $p->getDescription();
             $ver = $p->getVersion();
-            $args = $p->getDefaultArguments();
+            //$args = $p->getDefaultArguments();
+            $arguments = $p->getArgumentsDescription();
             unset($p); //done querying plugin object, release from memory
-
-            $arguments = HTML();
-            foreach ($args as $arg => $default) {
-                // Word around UserPreferences plugin to avoid error
-                if ((is_array($default))) {
-                    $default = '(array)';
-                    // This is a bit flawed with UserPreferences object
-                    //$default = sprintf("array('%s')",
-                    //                   implode("', '", array_keys($default)));
-                }
-                else
-                    if (stristr($default, ' '))
-                        $default = "'$default'";
-                $arguments->pushcontent("$arg=$default", HTML::br());
-            }
 
             // This section was largely improved by Pierrick Meignen:
             // make a link if an actionpage exists
@@ -203,6 +189,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2005/01/25 06:58:22  rurban
+// reformatting
+//
 // Revision 1.16  2004/06/04 20:32:54  rurban
 // Several locale related improvements suggested by Pierrick Meignen
 // LDAP fix by John Cole
