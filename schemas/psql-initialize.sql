@@ -1,7 +1,6 @@
--- $Id: psql-initialize.sql,v 1.4 2005-06-21 05:59:18 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.5 2005-09-26 06:34:13 rurban Exp $
 
 \set QUIET
-
 
 --================================================================
 -- Prefix for table names.
@@ -20,7 +19,7 @@
 -- Commonly, connections from php are made under
 -- the user name of 'nobody', 'apache' or 'www'.
 
-\set httpd_user	'rurban'
+\set httpd_user	'nobody'
 
 --================================================================
 --
@@ -34,7 +33,7 @@
 \echo '       prefix = ' :qprefix
 \echo '   httpd_user = ' :qhttp_user
 \echo
-\echo 'Expect some \'Relation \'*\' does not exists\' errors unless you are'
+\echo 'Expect some \'Relation \'*\' already exists\' errors if you are'
 \echo 'overwriting existing tables.'
 
 \set page_tbl		:prefix 'page'
