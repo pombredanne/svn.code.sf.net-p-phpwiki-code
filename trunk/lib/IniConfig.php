@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.95 2005-09-18 15:15:53 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.96 2005-09-26 06:27:33 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -508,9 +508,8 @@ function IniConfig($file) {
 
 // moved from lib/config.php [1ms]
 function fixup_static_configs($file) {
-    global $FieldSeparator, $charset, $WikiNameRegexp, $KeywordLinkRegexp, $AllActionPages;
+    global $FieldSeparator, $charset, $WikiNameRegexp, $AllActionPages;
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
-
     // init FileFinder to add proper include paths
     FindFile("lib/interwiki.map",true);
     
@@ -657,7 +656,7 @@ function fixup_static_configs($file) {
  * by startup scripts for wiki farms.
  */
 function fixup_dynamic_configs($file) {
-    global $WikiNameRegexp, $KeywordLinkRegexp;
+    global $WikiNameRegexp;
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
 
     if (defined('INCLUDE_PATH') and INCLUDE_PATH)
@@ -667,12 +666,14 @@ function fixup_dynamic_configs($file) {
     if (!defined('DEFAULT_LANGUAGE'))   // not needed anymore
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
-    update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
+    //update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
     if (empty($LANG)) {
-        if (!defined("DEFAULT_LANGUAGE") or !DEFAULT_LANGUAGE)
+        if (!defined("DEFAULT_LANGUAGE") or !DEFAULT_LANGUAGE) {
             // TODO: defer this to WikiRequest::initializeLang()
             $LANG = guessing_lang(); 
-        else    
+            guessing_setlocale (LC_ALL,$LANG);
+            }
+      else    
             $LANG = DEFAULT_LANGUAGE;
     }
  
@@ -717,8 +718,7 @@ function fixup_dynamic_configs($file) {
 
     // language dependent updates:
     $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
-    if ($KeywordLinkRegexp)
-    	$KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
+    //if ($KeywordLinkRegexp) $KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
     if (!defined('CATEGORY_GROUP_PAGE'))
         define('CATEGORY_GROUP_PAGE',_("CategoryGroup"));
     if (!defined('WIKI_NAME'))
@@ -852,6 +852,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.95  2005/09/18 15:15:53  rurban
+// add a proper Content-Encoding: gzip if compressed, and omit Content-Length then.
+//
 // Revision 1.94  2005/09/15 05:56:12  rurban
 // read configurator desc from config-dist.ini, update desc, fix some warnings
 //
