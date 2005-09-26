@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.12 2005-09-20 19:34:51 rurban Exp $');
+rcs_id('$Id: PhotoAlbum.php,v 1.13 2005-09-26 06:39:55 rurban Exp $');
 /*
  Copyright 2003, 2004, 2005 $ThePhpWikiProgrammingTeam
  
@@ -30,12 +30,14 @@ rcs_id('$Id: PhotoAlbum.php,v 1.12 2005-09-20 19:34:51 rurban Exp $');
  * Usage:
  * <?plugin PhotoAlbum
  *          src="http://server/textfile" or localfile or localdir
- *          mode=[normal|thumbs|tiles|list|slide]
+ *          mode=[normal|column|row|thumbs|tiles|list|slide]
  *          desc=true
  *          numcols=3
  *          height=50%
  *          width=50%
+ *          thumbswidth=80
  *          align=[center|left|right]
+ *          duration=6
  * ?>
  *
  * "src": textfile of images or directory of images or a single image (local or remote)
@@ -98,7 +100,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
 // Avoid nameclash, so it's disabled. We allow any url.
@@ -115,6 +117,8 @@ extends WikiPlugin
                          // "thumbs" - WinXP thumbnail style
                          // "tiles"  - WinXP tiles style
                          // "list"   - WinXP list style
+                         // "row"    - inline thumbnails
+                         // "column" - photos full-size, displayed in 1 column
                          // "slide"  - slideshow mode, needs javascript on client
                      'numcols'    => 3,        // photos per row, columns
                      'showdesc'    => 'both',    // none|name|desc|both
@@ -145,7 +149,8 @@ extends WikiPlugin
                      'tablewidth'=> false,    // table (75|100%)
                      'p'    => false,     // "displaythissinglephoto.jpg"
                      'h'    => false,     // "highlightcolorofthisphoto.jpg"
-                     'duration' => 6 // in slide mode, in seconds
+                     'duration' => 6, // in slide mode, in seconds
+                     'thumbswidth' => 80 //width of thumbnails
                      );
     }
     // descriptions (instead of filenames) for image alt-tags
@@ -182,6 +187,11 @@ extends WikiPlugin
         
         if ($p) {
             $mode = "normal";
+        }
+    
+        if ($mode == "column") {
+            $mode="normal";
+            $numcols="1";
         }
 
         // set some fixed properties for each $mode
@@ -310,8 +320,10 @@ display_slides();"));
             }
             //create url to display single larger version of image on page
             $url     = WikiURL($request->getPage(),
-                               array("p" => basename($value["name"])));
-    
+                               array("p" => basename($value["name"])))
+                . "#"
+                . basename($value["name"]);
+ 
             $b_url    = WikiURL($request->getPage(),
                                 array("h" => basename($value["name"])))
                 . "#"
@@ -323,23 +335,27 @@ display_slides();"));
                 if ($mode == 'normal' || $mode == 'slide') {
                     if(!@empty($params['location'])) $params['src'] = $params['location'];
                     unset ($params['location'],$params['src_tile']);
-                    $url_image = $link ? HTML::a(array("href" => "$url"), HTML::img($params)) :  HTML::img($params);
+                    $url_image = $link ? HTML::a(array("id" => basename($value["name"])),
+                                         HTML::a(array("href" => "$url"), HTML::img($params))) :  HTML::img($params);
                 } else {
                     $keep = $params; 
                     if (!@empty ($params['src_tile']))
                         $params['src'] = $params['src_tile'] ;
                     unset ($params['location'],$params['src_tile']);
-                    $url_image = $link ? HTML::a(array("href" => "$url"),
-                                                 ImageTile::image_tile($params)) : HTML::img($params);
+                    $url_image = $link ? HTML::a(array("id" => basename($value["name"])),
+                                         HTML::a(array("href" => "$url"),
+                                                 ImageTile::image_tile($params))) : HTML::img($params);
                     $params = $keep;
                     unset ($keep);
                 }
             } else {
                 if(!@empty($params['location'])) $params['src'] = $params['location'];
                 unset ($params['location'],$params['src_tile']);
-                $url_image = $link ? HTML::a(array("href" => "$b_url"), HTML::img($params)) : HTML::img($params);
+                $url_image = $link ? HTML::a(array("id" =>  basename($value["name"])),
+                                     HTML::a(array("href" => "$b_url"), HTML::img($params))) : HTML::img($params);
             }
-            $url_text = HTML::a(array("name" => basename($value["name"])),
+            if ($mode == 'list')
+            $url_text = HTML::a(array("id" => basename($value["name"])),
                                       $url_text);
             // here we use different modes
             if ($mode == 'tiles') {
@@ -446,6 +462,16 @@ display_slides();"));
                                             HTML::span(array('class'=>'gensmall'), $desc)
                                             )));
                 $count ++;
+            } elseif ($mode == 'row') {
+                $desc = ($showdesc != 'none') ? HTML::p($value["desc"]) : '';
+                $row->pushContent(
+                        HTML::table(array("style" => "display: inline"),
+                              HTML::tr(HTML::td($url_image)),
+                              HTML::tr(HTML::td(array("class" => "gensmall",
+                                                      "style" => "text-align: center; "
+                                                                ."background-color: $color"),
+                                                $desc))
+                                    ));
             } else {
                 return $this->error(fmt("Invalid argument: %s=%s", 'mode', $mode));
             }
@@ -454,8 +480,11 @@ display_slides();"));
             if ( ($key + 1) % $numcols == 0 ||
                  ($key + 1) == count($photos) ||
                  $p) {
-                $html->pushcontent(HTML::tr($row));
-                $row->setContent('');
+                    if ($mode == 'row')
+                        $html->pushcontent(HTML::span($row));
+                    else
+                        $html->pushcontent(HTML::tr($row));
+                    $row->setContent('');
             }
         }
         
@@ -468,7 +497,8 @@ display_slides();"));
         if (!@empty($tableheight))
             $table_attributes = array_merge($table_attributes,
                                             array("height"  => $tableheight));
-        $html = HTML::table($table_attributes, $html);
+        if ($mode != 'row')
+            $html = HTML::table($table_attributes, $html);
         // align all
         return HTML::div(array("align" => $align), $html);
     }
@@ -519,6 +549,10 @@ display_slides();"));
      */
     function fromFile($src, &$photos, $webpath='') {
         $src_bak = $src;
+        //there has a big security hole... as loading config/config.ini !
+        if (!preg_match('/(\.csv|\.jpg|\.jpeg|\.png|\.gif|\/)$/',$src)) {
+           return $this->error(_("File extension for csv file has to be '.csv'"));
+        }
         if (! IsSafeURL($src)) {
             return $this->error(_("Bad url in src: remove all of <, >, \""));
         }
@@ -583,7 +617,9 @@ display_slides();"));
                 return $this->error(fmt("Unable to read src='%s'", $src));
             }
             while ($data = fgetcsv($fp, 1024, ';')) {
-                if (count($data) == 0 || empty($data[0]) || preg_match('/^#/',$data[0]))
+                if (count($data) == 0 || empty($data[0]) 
+                                      || preg_match('/^#/',$data[0])
+                                      || preg_match('/^[[:space:]]*$/',$data[0]))
                     continue;
                 if (empty($data[1])) $data[1] = '';
                 $photos[] = array ("name" => dirname($src)."/".trim($data[0]),
@@ -598,10 +634,13 @@ display_slides();"));
             $contents = preg_split('/\n/',$contents);
             while (list($key,$value) = each($contents)) {
                 $data = preg_split('/\;/',$value);
-                if (count($data) == 0 || empty($data[0]) || preg_match('/^#/',$data[0]))
+                if (count($data) == 0 || empty($data[0]) 
+                                      || preg_match('/^#/',$data[0]) 
+                                      || preg_match('/^[[:space:]]*$/',$data[0]))
                     continue;
                 if (empty($data[1])) $data[1] = '';
                 $photos[] = array ("name" => dirname($src)."/".trim($data[0]),
+                                   "src" => dirname($src)."/".trim($data[0]),
                                    "desc" => trim($data[1]),
                                    "name_tile" => dirname($src)."/".trim($data[0]));
             }
@@ -610,6 +649,9 @@ display_slides();"));
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2005/09/20 19:34:51  rurban
+// slide and thumbs mode by Thomas Harding
+//
 //
 // Revision 1.14  2005/09/19 23:49:00 tharding
 // added slide mode, correct url retrieving with url_get_contents
