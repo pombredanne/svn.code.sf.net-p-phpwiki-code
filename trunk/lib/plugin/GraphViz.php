@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GraphViz.php,v 1.4 2005-05-06 16:54:59 rurban Exp $');
+rcs_id('$Id: GraphViz.php,v 1.5 2005-09-26 06:39:14 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -35,7 +35,7 @@ rcs_id('$Id: GraphViz.php,v 1.4 2005-05-06 16:54:59 rurban Exp $');
    multiline dot script ...
 ?>
 
- * See also: VisualWiki, which also uses dot and WikiPluginCached.
+ * See also: VisualWiki, which depends on GraphViz and WikiPluginCached.
  *
  * TODO: 
  * - neato binary ?
@@ -122,7 +122,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
     function getDefaultArguments() {
         return array(
@@ -202,8 +202,8 @@ extends WikiPluginCached
                                array(255, 255, 255));
     }
 
-    function createDotFile($tempfile='', $argarray=false) {
-        $source =& $this->source;
+    function processSource($argarray=false) {
+        $source = $this->source;
         if (empty($source)) {
             // create digraph from pages
             $source = "digraph GraphViz {\n";  // }
@@ -227,21 +227,23 @@ extends WikiPluginCached
              $source = $src;
         }
         */
+	return $source;
+    }
+
+    function createDotFile($tempfile='', $argarray=false) {
+        $this->source = $this->processSource($argarray);
         if (!$tempfile) {
             $tempfile = $this->tempnam($this->getName().".dot");
             unlink($tempfile);
         }
         if (!$fp = fopen($tempfile, 'w'))
             return false;
-        $ok = fwrite($fp, $source);
+        $ok = fwrite($fp, $this->source);
         $ok = fclose($fp) && $ok;  // close anyway
-        return $ok;
+        return $ok ? $tempfile : false;
     }
 
     function getImage($dbi, $argarray, $request) {
-        if (!($dotfile = $this->createDotFile($argarray)))
-            return $this->error(fmt("empty source"));
-
         $dotbin = GRAPHVIZ_EXE;
         $tempfiles = $this->tempnam($this->getName());
         $gif = $argarray['imgtype'];
@@ -257,22 +259,37 @@ extends WikiPluginCached
             $tempdir = dirname($tempfiles);
             $tempout = $tempdir . "/.debug";
         }
+        $source = $this->processSource($argarray);
+        if (empty($source))
+            return $this->error(fmt("No dot graph given"));
         //$ok = $tempfiles;
-        $this->createDotFile($tempfiles.'.dot', $argarray);
-        $this->execute("$dotbin -T$gif $dotfile -o $outfile" . 
-                       ($debug ? " > $tempout 2>&1" : " 2>&1"), $outfile);
-        //$code = $this->filterThroughCmd($source, GRAPHVIZ_EXE . "$args");
-        //if (empty($code))
-        //    return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
-        sleep(1);
+        //$dotfile = $this->createDotFile($tempfiles.'.dot', $argarray);
+        //$args = "-T$gif $dotfile -o $outfile";
+        $args = "-T$gif -o $outfile";
+        $cmdline = "$dotbin $args";
+        if ($debug) $cmdline .= " > $tempout";
+        //if (!isWindows()) $cmdline .= " 2>&1";
+        //$this->execute($cmdline, $outfile);
+        $code = $this->filterThroughCmd($source, $cmdline);
+        if (!empty($code))
+            $this->complain(sprintf(_("Couldn't start commandline '%s'", $cmdline)));
+        sleep(0.1);
         if (! file_exists($outfile) ) {
-            $this->_errortext .= sprintf(_("%s error: outputfile '%s' not created"), 
-                                         "GraphViz", $outfile);
-            $this->_errortext .= ("\ncmd-line: $dotbin -T$gif $dotfile -o $outfile");
+            $this->complain(sprintf(_("%s error: outputfile '%s' not created"), 
+                                    "GraphViz", $outfile));
+            $this->complain("\ncmd-line: $cmdline");
             return false;
         }
-        if (function_exists($ImageCreateFromFunc))
-            return $ImageCreateFromFunc( $outfile );
+        if (function_exists($ImageCreateFromFunc)) {
+            $img = $ImageCreateFromFunc( $outfile );
+	    // clean up tempfiles
+	    if (!$argarray['debug'])
+		foreach (array('',".$gif",'.dot') as $ext) {
+		    if (file_exists($tempfiles.$ext))
+			unlink($tempfiles.$ext);
+		}
+	    return $img;
+	}
         return $outfile;
     }
     
@@ -311,18 +328,29 @@ extends WikiPluginCached
             $tempdir = dirname($tempfiles);
             $tempout = $tempdir . "/.debug";
         }
-        $ok = $tempfiles
-            && $this->createDotFile($tempfiles.'.dot',$argarray)
-            // && $this->filterThroughCmd('',"$dotbin -T$gif $tempfiles.dot -o $outfile")
-            // && $this->filterThroughCmd('',"$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map")
-            && $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" . 
-                              ($debug ? " > $tempout 2>&1" : " 2>&1"), $outfile)
-            && $this->execute("$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map" . 
-                              ($debug ? " > $tempout 2>&1" : " 2>&1"), $tempfiles.".map")
-            && file_exists( $outfile )
-            && file_exists( $tempfiles.'.map' )
-            && ($img = $ImageCreateFromFunc($outfile))
-            && ($fp = fopen($tempfiles.'.map', 'r'));
+        $ok = $tempfiles;
+        $source = $this->processSource($argarray);
+        if (empty($source))
+            return $this->error(fmt("No dot graph given"));
+	//$ok = $ok and $this->createDotFile($tempfiles.'.dot', $argarray);
+
+        $args = "-T$gif $tempfiles.dot -o $outfile";
+        $cmdline1 = "$dotbin $args";
+        if ($debug) $cmdline1 .= " > $tempout";
+	$ok = $ok and $this->filterThroughCmd($source, $cmdline1);
+	// $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" . 
+        //                    ($debug ? " > $tempout 2>&1" : " 2>&1"), $outfile)
+
+        $args = "-Timap $tempfiles.dot -o $tempfiles.map";
+        $cmdline2 = "$dotbin $args";
+        if ($debug) $cmdline2 .= " > $tempout";
+        $ok = $ok and $this->filterThroughCmd($source, $cmdline2);
+	// $this->execute("$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map" . 
+        //                    ($debug ? " > $tempout 2>&1" : " 2>&1"), $tempfiles.".map")
+	$ok = $ok and file_exists( $outfile );
+	$ok = $ok and file_exists( $tempfiles.'.map' );
+	$ok = $ok and ($img = $ImageCreateFromFunc($outfile));
+        $ok = $ok and ($fp = fopen($tempfiles.'.map', 'r'));
 
         $map = HTML();
         if ($debug == 'static') {
@@ -367,20 +395,22 @@ extends WikiPluginCached
             fclose($fp);
             //trigger_error("url=".$url);
         } else {
-            $this->_errortext = 
-                ("$outfile: ".(file_exists($outfile) ? filesize($outfile):'missing')."\n".
-                 "$tempfiles.map: ".(file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'missing'));
-            $this->_errortext .= ("\ncmd-line: $dotbin -T$gif $tempfiles.dot -o $outfile");
-            $this->_errortext .= ("\ncmd-line: $dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map");
-            trigger_error($this->_errortext, E_USER_WARNING);
+            $this->complain("$outfile: "
+                            . (file_exists($outfile) ? filesize($outfile):'missing')
+                            ."\n"
+                            . "$tempfiles.map: "
+                            . (file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'missing'));
+            $this->complain("\ncmd-line: $cmdline1");
+            $this->complain("\ncmd-line: $cmdline2");
+            trigger_error($this->GetError(), E_USER_WARNING);
             return array(false, false);
         }
 
         // clean up tempfiles
         if ($ok and !$argarray['debug'])
             foreach (array('',".$gif",'.map','.dot') as $ext) {
-                if (file_exists($tempfiles.$ext))
-                    unlink($tempfiles.$ext);
+                //if (file_exists($tempfiles.$ext))
+		@unlink($tempfiles.$ext);
             }
 
         if ($ok)
@@ -389,40 +419,12 @@ extends WikiPluginCached
             return array(false, false);
     }
 
-    /**
-     * Execute system command.
-     * TODO: better use invokeDot for imagemaps, linking to the pages.
-     *
-     * @param  cmd string   command to be invoked
-     * @return     boolean  error status; true=ok; false=error
-     */
-    function execute($cmd, $until = false) {
-        // cmd must redirect stderr to stdout though!
-        $errstr = exec($cmd); //, $outarr, $returnval); // normally 127
-        //$errstr = join('',$outarr);
-        $ok = empty($errstr);
-        if (!$ok) {
-            trigger_error("\n".$cmd." failed: $errstr", E_USER_WARNING);
-        } elseif ($GLOBALS['request']->getArg('debug'))
-            trigger_error("\n".$cmd.": success\n", E_USER_NOTICE);
-        if (!isWindows()) {
-            if ($until) {
-                $loop = 100000;
-                while (!file_exists($until) and $loop > 0) {
-                    $loop -= 100;
-                    usleep(100);
-                }
-            } else {
-                usleep(5000);
-            }
-        }
-        if ($until)
-            return file_exists($until);
-        return $ok;
-    }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2005/05/06 16:54:59  rurban
+// add failing cmdline for .map
+//
 // Revision 1.3  2004/12/17 16:49:52  rurban
 // avoid Invalid username message on Sign In button click
 //
