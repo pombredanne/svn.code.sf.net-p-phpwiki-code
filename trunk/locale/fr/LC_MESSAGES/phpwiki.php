@@ -420,8 +420,6 @@ $locale["Cannot open AUTH_GROUP_FILE %s"] =
    "Impossible d'ouvrir AUTH_GROUP_FILE %s";
 $locale["Case insensitive?"] =
    "Sensible à la casse ?";
-$locale["Category"] =
-   "Catégorie";
 $locale["CategoryCategory"] =
    "CatégorieCatégorie";
 $locale["CategoryGroup"] =
@@ -1868,8 +1866,6 @@ $locale["Too many external links."] =
    "Trop de liens exterieurs.";
 $locale["Top & bottom toolbars"] =
    "Barres d'outils en haut et en bas";
-$locale["Topic"] =
-   "Sujet";
 $locale["Total %d plugins: "] =
    "%d plugins au total : ";
 $locale["Total of %d languages: "] =

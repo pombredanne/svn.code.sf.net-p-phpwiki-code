@@ -72,8 +72,6 @@ $locale["Cancel"] =
    "Annulla";
 $locale["Cancel rating"] =
    "Annulla";
-$locale["Category"] =
-   "Categoria";
 $locale["CategoryGroup"] =
    "CategoriaGruppo";
 $locale["CategoryPage"] =

@@ -76,8 +76,6 @@ $locale["Cancel"] =
    "Cancelar";
 $locale["Cancel rating"] =
    "Cancelar";
-$locale["Category"] =
-   "Categoría";
 $locale["CategoryCategory"] =
    "CategoriaCategoria";
 $locale["CategoryGroup"] =
@@ -376,8 +374,6 @@ $locale["TitleSearch"] =
    "BúsquedaDeTítulos";
 $locale["Today"] =
    "Hoy";
-$locale["Topic"] =
-   "Asunto";
 $locale["Unlock"] =
    "Desbloquear";
 $locale["Unlock Page"] =

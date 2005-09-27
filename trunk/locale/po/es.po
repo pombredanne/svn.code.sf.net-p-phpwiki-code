@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-18 12:12+0000\n"
+"POT-Creation-Date: 2005-09-27 17:30+0000\n"
 "PO-Revision-Date: 2000-02-01 00:50-0500\n"
 "Last-Translator: Pablo Roca <proca@clavo.net>\n"
 "Language-Team: \n"
@@ -50,8 +50,8 @@ msgstr ""
 msgid "Undo disabled"
 msgstr ""
 
-#: ../lib/EditToolbar.php:57 ../lib/EditToolbar.php:228
-#: ../lib/EditToolbar.php:229 ../lib/plugin/WikiAdminSearchReplace.php:187
+#: ../lib/EditToolbar.php:57 ../lib/EditToolbar.php:230
+#: ../lib/EditToolbar.php:231 ../lib/plugin/WikiAdminSearchReplace.php:187
 msgid "Search & Replace"
 msgstr ""
 
@@ -83,9 +83,9 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../lib/EditToolbar.php:65 ../lib/EditToolbar.php:281
-#: ../lib/EditToolbar.php:314 ../lib/EditToolbar.php:338
-#: ../lib/EditToolbar.php:366
+#: ../lib/EditToolbar.php:65 ../lib/EditToolbar.php:285
+#: ../lib/EditToolbar.php:331 ../lib/EditToolbar.php:355
+#: ../lib/EditToolbar.php:388
 msgid "Close"
 msgstr "Cierre"
 
@@ -174,54 +174,45 @@ msgstr "Previsualizar"
 msgid "Click a button to get an example text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:220 ../lib/EditToolbar.php:221
+#: ../lib/EditToolbar.php:222 ../lib/EditToolbar.php:223
 msgid "Undo Search & Replace"
 msgstr ""
 
 # lib/diff.php:997
-#: ../lib/EditToolbar.php:267
-msgid "Category"
-msgstr "Categoría"
-
-#: ../lib/EditToolbar.php:268
-msgid "Topic"
-msgstr "Asunto"
-
-# lib/diff.php:997
-#: ../lib/EditToolbar.php:276
+#: ../lib/EditToolbar.php:279 ../lib/EditToolbar.php:280
 msgid "AddCategory"
 msgstr "AgregueCategoría"
 
-#: ../lib/EditToolbar.php:278
+#: ../lib/EditToolbar.php:282
 msgid "Insert Categories (double-click)"
 msgstr "Relleno Categorías (doble-tecleo)"
 
-#: ../lib/EditToolbar.php:280 ../lib/EditToolbar.php:313
-#: ../lib/EditToolbar.php:337 ../lib/EditToolbar.php:365
+#: ../lib/EditToolbar.php:284 ../lib/EditToolbar.php:330
+#: ../lib/EditToolbar.php:354 ../lib/EditToolbar.php:387
 msgid "Insert"
 msgstr "Relleno"
 
-#: ../lib/EditToolbar.php:309
+#: ../lib/EditToolbar.php:325 ../lib/EditToolbar.php:326
 msgid "AddPlugin"
 msgstr "AgreguePlugin"
 
-#: ../lib/EditToolbar.php:311
+#: ../lib/EditToolbar.php:328
 msgid "Insert Plugin (double-click)"
 msgstr "Relleno Plugin (doble-tecleo)"
 
-#: ../lib/EditToolbar.php:333
+#: ../lib/EditToolbar.php:349 ../lib/EditToolbar.php:350
 msgid "AddPageLink"
 msgstr ""
 
-#: ../lib/EditToolbar.php:335
+#: ../lib/EditToolbar.php:352
 msgid "Insert PageLink (double-click)"
 msgstr ""
 
-#: ../lib/EditToolbar.php:361
+#: ../lib/EditToolbar.php:382 ../lib/EditToolbar.php:383
 msgid "AddTemplate"
 msgstr ""
 
-#: ../lib/EditToolbar.php:363
+#: ../lib/EditToolbar.php:385
 #, fuzzy
 msgid "Insert Template (double-click)"
 msgstr "Relleno Categorías (doble-tecleo)"
@@ -237,15 +228,15 @@ msgid "%s: file not found"
 msgstr "%s: fichero no encontrado"
 
 # lib/diff.php:997
-#: ../lib/IniConfig.php:721
+#: ../lib/IniConfig.php:723
 msgid "CategoryGroup"
 msgstr "GrupoCategoría"
 
-#: ../lib/IniConfig.php:723
+#: ../lib/IniConfig.php:725
 msgid "An unnamed PhpWiki"
 msgstr "Un PhpWiki sin un nombre"
 
-#: ../lib/IniConfig.php:725 ../lib/upgrade.php:149
+#: ../lib/IniConfig.php:727 ../lib/upgrade.php:149
 #: ../themes/Wordpress/templates/actionbar.tmpl:18
 #: ../themes/default/templates/userprefs.tmpl:123
 msgid "HomePage"
@@ -471,7 +462,7 @@ msgstr ""
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr ""
 
-#: ../lib/PageType.php:231 ../lib/PageType.php:234 ../lib/stdlib.php:658
+#: ../lib/PageType.php:231 ../lib/PageType.php:234 ../lib/stdlib.php:660
 #: ../themes/MonoBook/templates/actionbar.tmpl:15
 #: ../themes/MonoBook/templates/actionbar.tmpl:19
 #: ../themes/MonoBook/templates/actionbar.tmpl:23
@@ -515,37 +506,37 @@ msgstr ""
 msgid "RecentChanges"
 msgstr "CambiosRecientes"
 
-#: ../lib/Request.php:682 ../lib/Request.php:685
+#: ../lib/Request.php:692 ../lib/Request.php:695
 msgid "Upload error: file too big"
 msgstr ""
 
-#: ../lib/Request.php:688
+#: ../lib/Request.php:698
 msgid "Upload error: file only partially recieved"
 msgstr ""
 
-#: ../lib/Request.php:691
+#: ../lib/Request.php:701
 msgid "Upload error: no file selected"
 msgstr ""
 
-#: ../lib/Request.php:694
+#: ../lib/Request.php:704
 msgid "Upload error: unknown error #"
 msgstr ""
 
-#: ../lib/Request.php:801 ../lib/main.php:1157 ../lib/main.php:1170
+#: ../lib/Request.php:811 ../lib/main.php:1157 ../lib/main.php:1170
 #, php-format
 msgid "%s is not writable."
 msgstr ""
 
-#: ../lib/Request.php:801
+#: ../lib/Request.php:811
 msgid "The PhpWiki access log file"
 msgstr ""
 
-#: ../lib/Request.php:803 ../lib/main.php:1160
+#: ../lib/Request.php:813 ../lib/main.php:1160
 #, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
 
-#: ../lib/Request.php:804
+#: ../lib/Request.php:814
 #, php-format
 msgid "the file '%s'"
 msgstr "el archivo %s"
@@ -939,17 +930,17 @@ msgid "Plugin %s disabled."
 msgstr "Plugin '%s' lisiado."
 
 # lib/msql.php:237 lib/msql.php:312
-#: ../lib/WikiPlugin.php:501
+#: ../lib/WikiPlugin.php:520
 #, php-format
 msgid "Include of '%s' failed."
 msgstr "Inserción de '%s' falló."
 
-#: ../lib/WikiPlugin.php:503
+#: ../lib/WikiPlugin.php:522
 #, php-format
 msgid "%s: no such class"
 msgstr ""
 
-#: ../lib/WikiPlugin.php:509
+#: ../lib/WikiPlugin.php:528
 #, php-format
 msgid "%s: not a subclass of WikiPlugin."
 msgstr ""
@@ -961,7 +952,7 @@ msgid ""
 "referring page."
 msgstr ""
 
-#: ../lib/WikiPluginCached.php:841
+#: ../lib/WikiPluginCached.php:845
 msgid "Image map expired. Reload wiki page to recreate its html part."
 msgstr ""
 
@@ -1138,7 +1129,7 @@ msgstr ""
 msgid "E-Mail address '%s' is properly formatted"
 msgstr ""
 
-#: ../lib/XmlElement.php:456 ../lib/stdlib.php:1332
+#: ../lib/XmlElement.php:456 ../lib/stdlib.php:1334
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr ""
@@ -1472,7 +1463,7 @@ msgstr ""
 msgid "Dumping Pages"
 msgstr ""
 
-#: ../lib/loadsave.php:318 ../lib/loadsave.php:451 ../lib/stdlib.php:833
+#: ../lib/loadsave.php:318 ../lib/loadsave.php:451 ../lib/stdlib.php:835
 msgid "Skipped."
 msgstr ""
 
@@ -2243,8 +2234,8 @@ msgstr ""
 msgid "List all pages which link to %s."
 msgstr ""
 
-#: ../lib/plugin/BackLinks.php:70 ../lib/plugin/ListPages.php:116
-#: ../lib/plugin/ListPages.php:119 ../lib/plugin/ListSubpages.php:89
+#: ../lib/plugin/BackLinks.php:70 ../lib/plugin/ListPages.php:122
+#: ../lib/plugin/ListPages.php:125 ../lib/plugin/ListSubpages.php:89
 msgid "#"
 msgstr ""
 
@@ -2606,12 +2597,17 @@ msgstr ""
 msgid "GraphViz image or imagemap creation of directed graphs"
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:243 ../lib/plugin/Ploticus.php:249
-#: ../lib/plugin/SyntaxHighlighter.php:180
-msgid "empty source"
+#: ../lib/plugin/GraphViz.php:264 ../lib/plugin/GraphViz.php:334
+msgid "No dot graph given"
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:269 ../lib/plugin/Ploticus.php:239
+# lib/msql.php:29 lib/mysql.php:36
+#: ../lib/plugin/GraphViz.php:275 ../lib/plugin/SyntaxHighlighter.php:173
+#, php-format
+msgid "Couldn't start commandline '%s'"
+msgstr ""
+
+#: ../lib/plugin/GraphViz.php:278 ../lib/plugin/Ploticus.php:239
 #, php-format
 msgid "%s error: outputfile '%s' not created"
 msgstr ""
@@ -2775,7 +2771,7 @@ msgstr "ListaPáginas"
 msgid "List pages that are explicitly given as the pages argument."
 msgstr ""
 
-#: ../lib/plugin/ListPages.php:93
+#: ../lib/plugin/ListPages.php:99
 msgid "You must be logged in to view ratings."
 msgstr ""
 
@@ -3011,7 +3007,7 @@ msgstr ""
 msgid "Contents"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:91 ../lib/stdlib.php:1943
+#: ../lib/plugin/PageGroup.php:91 ../lib/stdlib.php:1955
 #, php-format
 msgid "<%s: no such section>"
 msgstr ""
@@ -3126,26 +3122,35 @@ msgstr ""
 msgid "PageTrail Plugin"
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:69
+#: ../lib/plugin/PhotoAlbum.php:94
 msgid "PhotoAlbum"
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:73
+#: ../lib/plugin/PhotoAlbum.php:98
 msgid ""
 "Displays a set of photos listed in a text file with optional descriptions"
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:328
+#: ../lib/plugin/PhotoAlbum.php:476
 #, php-format
 msgid "Invalid argument: %s=%s"
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:380 ../lib/plugin/PhotoAlbum.php:397
+#: ../lib/plugin/PhotoAlbum.php:536 ../lib/plugin/PhotoAlbum.php:557
 #: ../lib/plugin/Transclude.php:85
 msgid "Bad url in src: remove all of <, >, \""
 msgstr ""
 
-#: ../lib/plugin/PhotoAlbum.php:430
+#: ../lib/plugin/PhotoAlbum.php:554
+msgid "File extension for csv file has to be '.csv'"
+msgstr ""
+
+#: ../lib/plugin/PhotoAlbum.php:605
+#, php-format
+msgid "Unable to find src='%s'"
+msgstr ""
+
+#: ../lib/plugin/PhotoAlbum.php:617
 #, php-format
 msgid "Unable to read src='%s'"
 msgstr ""
@@ -3207,6 +3212,10 @@ msgstr ""
 
 #: ../lib/plugin/Ploticus.php:201
 msgid "shell commands not allowed in Ploticus"
+msgstr ""
+
+#: ../lib/plugin/Ploticus.php:249 ../lib/plugin/SyntaxHighlighter.php:180
+msgid "empty source"
 msgstr ""
 
 #: ../lib/plugin/PluginManager.php:31
@@ -3619,12 +3628,6 @@ msgstr ""
 #: ../lib/plugin/SyntaxHighlighter.php:162
 #, php-format
 msgid "invalid %s ignored"
-msgstr ""
-
-# lib/msql.php:29 lib/mysql.php:36
-#: ../lib/plugin/SyntaxHighlighter.php:173
-#, php-format
-msgid "Couldn't start commandline '%s'"
 msgstr ""
 
 #: ../lib/plugin/SystemInfo.php:52
@@ -4739,7 +4742,7 @@ msgstr ""
 msgid "WikiAdminUtils says:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:103 ../lib/stdlib.php:1728
+#: ../lib/plugin/WikiAdminUtils.php:103 ../lib/stdlib.php:1730
 msgid "Okay"
 msgstr ""
 
@@ -5350,115 +5353,115 @@ msgstr ""
 msgid "Back to the previous page."
 msgstr ""
 
-#: ../lib/stdlib.php:352 ../lib/stdlib.php:381
+#: ../lib/stdlib.php:354 ../lib/stdlib.php:383
 msgid "BAD URL -- remove all of <, >, \""
 msgstr ""
 
-#: ../lib/stdlib.php:421 ../lib/stdlib.php:438
+#: ../lib/stdlib.php:423 ../lib/stdlib.php:440
 msgid "Invalid image size"
 msgstr ""
 
-#: ../lib/stdlib.php:548
+#: ../lib/stdlib.php:550
 msgid "BAD phpwiki: URL"
 msgstr ""
 
-#: ../lib/stdlib.php:586
+#: ../lib/stdlib.php:588
 msgid "Lock page to enable link"
 msgstr ""
 
-#: ../lib/stdlib.php:713
+#: ../lib/stdlib.php:715
 #, php-format
 msgid "'%s': Bad page name: %s"
 msgstr ""
 
-#: ../lib/stdlib.php:743 ../lib/stdlib.php:768
+#: ../lib/stdlib.php:745 ../lib/stdlib.php:770
 #, php-format
 msgid "Leading %s not allowed"
 msgstr ""
 
-#: ../lib/stdlib.php:752
+#: ../lib/stdlib.php:754
 msgid "White space converted to single space"
 msgstr ""
 
-#: ../lib/stdlib.php:758
+#: ../lib/stdlib.php:760
 msgid "Control characters not allowed"
 msgstr ""
 
-#: ../lib/stdlib.php:779
+#: ../lib/stdlib.php:781
 msgid "too long"
 msgstr ""
 
-#: ../lib/stdlib.php:785
+#: ../lib/stdlib.php:787
 #, php-format
 msgid "Illegal chars %s removed"
 msgstr ""
 
-#: ../lib/stdlib.php:831
+#: ../lib/stdlib.php:833
 msgid "The CreateTocPlugin is not yet old markup compatible! "
 msgstr ""
 
-#: ../lib/stdlib.php:832
+#: ../lib/stdlib.php:834
 msgid ""
 "Please remove the CreateToc line to be able to reformat this page to old "
 "markup. "
 msgstr ""
 
-#: ../lib/stdlib.php:1093
+#: ../lib/stdlib.php:1095
 msgid "Revision Not Found"
 msgstr ""
 
 # lib/pageinfo.php:36
-#: ../lib/stdlib.php:1094
+#: ../lib/stdlib.php:1096
 #, php-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr ""
 
-#: ../lib/stdlib.php:1097
+#: ../lib/stdlib.php:1099
 msgid "Bad Version"
 msgstr ""
 
-#: ../lib/stdlib.php:1233
+#: ../lib/stdlib.php:1235
 msgid "-???"
 msgstr ""
 
-#: ../lib/stdlib.php:1236
+#: ../lib/stdlib.php:1238
 #, php-format
 msgid "%s b"
 msgstr "%s o"
 
-#: ../lib/stdlib.php:1238 ../themes/MonoBook/templates/info.tmpl:29
+#: ../lib/stdlib.php:1240 ../themes/MonoBook/templates/info.tmpl:29
 #: ../themes/shamino_com/templates/info.tmpl:29
 #, php-format
 msgid "%s bytes"
 msgstr "%s octetos"
 
-#: ../lib/stdlib.php:1243
+#: ../lib/stdlib.php:1245
 #, php-format
 msgid "%s k"
 msgstr ""
 
-#: ../lib/stdlib.php:1245 ../themes/MonoBook/templates/info.tmpl:32
+#: ../lib/stdlib.php:1247 ../themes/MonoBook/templates/info.tmpl:32
 #: ../themes/shamino_com/templates/info.tmpl:32
 #, php-format
 msgid "%s Kb (%s bytes)"
 msgstr "%s Kb (%s octetos)"
 
-#: ../lib/stdlib.php:1341
+#: ../lib/stdlib.php:1343
 #, php-format
 msgid "%s: argument index out of range"
 msgstr ""
 
-#: ../lib/stdlib.php:1419 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1421 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
 msgstr ""
 
-#: ../lib/stdlib.php:1426
+#: ../lib/stdlib.php:1428
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
 
-#: ../lib/stdlib.php:1900 ../lib/stdlib.php:1913
+#: ../lib/stdlib.php:1912 ../lib/stdlib.php:1925
 #, php-format
 msgid "... (first %s words)"
 msgstr ""
@@ -6750,6 +6753,13 @@ msgstr ""
 #: ../themes/shamino_com/templates/browse-footer.tmpl:11
 msgid "TermsOfUse"
 msgstr ""
+
+# lib/diff.php:997
+#~ msgid "Category"
+#~ msgstr "Categoría"
+
+#~ msgid "Topic"
+#~ msgstr "Asunto"
 
 #, fuzzy
 #~ msgid "PreferenceApp"
