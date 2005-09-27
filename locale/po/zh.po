@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-18 12:12+0000\n"
+"POT-Creation-Date: 2005-09-27 17:30+0000\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -45,8 +45,8 @@ msgstr ""
 msgid "Undo disabled"
 msgstr "<未能顯示>"
 
-#: ../lib/EditToolbar.php:57 ../lib/EditToolbar.php:228
-#: ../lib/EditToolbar.php:229 ../lib/plugin/WikiAdminSearchReplace.php:187
+#: ../lib/EditToolbar.php:57 ../lib/EditToolbar.php:230
+#: ../lib/EditToolbar.php:231 ../lib/plugin/WikiAdminSearchReplace.php:187
 msgid "Search & Replace"
 msgstr "搜尋與取代"
 
@@ -78,9 +78,9 @@ msgstr "取代:"
 msgid "OK"
 msgstr ""
 
-#: ../lib/EditToolbar.php:65 ../lib/EditToolbar.php:281
-#: ../lib/EditToolbar.php:314 ../lib/EditToolbar.php:338
-#: ../lib/EditToolbar.php:366
+#: ../lib/EditToolbar.php:65 ../lib/EditToolbar.php:285
+#: ../lib/EditToolbar.php:331 ../lib/EditToolbar.php:355
+#: ../lib/EditToolbar.php:388
 msgid "Close"
 msgstr ""
 
@@ -170,57 +170,48 @@ msgstr "預覽"
 msgid "Click a button to get an example text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:220 ../lib/EditToolbar.php:221
+#: ../lib/EditToolbar.php:222 ../lib/EditToolbar.php:223
 #, fuzzy
 msgid "Undo Search & Replace"
 msgstr "搜尋與取代"
 
-#: ../lib/EditToolbar.php:267
-#, fuzzy
-msgid "Category"
-msgstr "CategoryPage"
-
-#: ../lib/EditToolbar.php:268
-msgid "Topic"
-msgstr ""
-
-#: ../lib/EditToolbar.php:276
+#: ../lib/EditToolbar.php:279 ../lib/EditToolbar.php:280
 #, fuzzy
 msgid "AddCategory"
 msgstr "CategoryPage"
 
-#: ../lib/EditToolbar.php:278
+#: ../lib/EditToolbar.php:282
 msgid "Insert Categories (double-click)"
 msgstr ""
 
-#: ../lib/EditToolbar.php:280 ../lib/EditToolbar.php:313
-#: ../lib/EditToolbar.php:337 ../lib/EditToolbar.php:365
+#: ../lib/EditToolbar.php:284 ../lib/EditToolbar.php:330
+#: ../lib/EditToolbar.php:354 ../lib/EditToolbar.php:387
 msgid "Insert"
 msgstr ""
 
-#: ../lib/EditToolbar.php:309
+#: ../lib/EditToolbar.php:325 ../lib/EditToolbar.php:326
 #, fuzzy
 msgid "AddPlugin"
 msgstr "Plugin"
 
-#: ../lib/EditToolbar.php:311
+#: ../lib/EditToolbar.php:328
 msgid "Insert Plugin (double-click)"
 msgstr ""
 
-#: ../lib/EditToolbar.php:333
+#: ../lib/EditToolbar.php:349 ../lib/EditToolbar.php:350
 #, fuzzy
 msgid "AddPageLink"
 msgstr "AddingPages"
 
-#: ../lib/EditToolbar.php:335
+#: ../lib/EditToolbar.php:352
 msgid "Insert PageLink (double-click)"
 msgstr ""
 
-#: ../lib/EditToolbar.php:361
+#: ../lib/EditToolbar.php:382 ../lib/EditToolbar.php:383
 msgid "AddTemplate"
 msgstr ""
 
-#: ../lib/EditToolbar.php:363
+#: ../lib/EditToolbar.php:385
 msgid "Insert Template (double-click)"
 msgstr ""
 
@@ -234,15 +225,15 @@ msgstr "%s: 處理錯誤時發生錯誤"
 msgid "%s: file not found"
 msgstr "%s: 找不到檔案."
 
-#: ../lib/IniConfig.php:721
+#: ../lib/IniConfig.php:723
 msgid "CategoryGroup"
 msgstr "CategoryGroup"
 
-#: ../lib/IniConfig.php:723
+#: ../lib/IniConfig.php:725
 msgid "An unnamed PhpWiki"
 msgstr "未被命名的 PhpWiki"
 
-#: ../lib/IniConfig.php:725 ../lib/upgrade.php:149
+#: ../lib/IniConfig.php:727 ../lib/upgrade.php:149
 #: ../themes/Wordpress/templates/actionbar.tmpl:18
 #: ../themes/default/templates/userprefs.tmpl:123
 msgid "HomePage"
@@ -469,7 +460,7 @@ msgstr "InterWikiMap"
 msgid "WARNING: InterWikiMap page is unlocked, so not using those links."
 msgstr ""
 
-#: ../lib/PageType.php:231 ../lib/PageType.php:234 ../lib/stdlib.php:658
+#: ../lib/PageType.php:231 ../lib/PageType.php:234 ../lib/stdlib.php:660
 #: ../themes/MonoBook/templates/actionbar.tmpl:15
 #: ../themes/MonoBook/templates/actionbar.tmpl:19
 #: ../themes/MonoBook/templates/actionbar.tmpl:23
@@ -513,37 +504,37 @@ msgstr "InterWiki 位址"
 msgid "RecentChanges"
 msgstr "RecentChanges"
 
-#: ../lib/Request.php:682 ../lib/Request.php:685
+#: ../lib/Request.php:692 ../lib/Request.php:695
 msgid "Upload error: file too big"
 msgstr ""
 
-#: ../lib/Request.php:688
+#: ../lib/Request.php:698
 msgid "Upload error: file only partially recieved"
 msgstr ""
 
-#: ../lib/Request.php:691
+#: ../lib/Request.php:701
 msgid "Upload error: no file selected"
 msgstr ""
 
-#: ../lib/Request.php:694
+#: ../lib/Request.php:704
 msgid "Upload error: unknown error #"
 msgstr ""
 
-#: ../lib/Request.php:801 ../lib/main.php:1157 ../lib/main.php:1170
+#: ../lib/Request.php:811 ../lib/main.php:1157 ../lib/main.php:1170
 #, php-format
 msgid "%s is not writable."
 msgstr "%s 無法寫入."
 
-#: ../lib/Request.php:801
+#: ../lib/Request.php:811
 msgid "The PhpWiki access log file"
 msgstr "PhpWiki 存取日誌檔案"
 
-#: ../lib/Request.php:803 ../lib/main.php:1160
+#: ../lib/Request.php:813 ../lib/main.php:1160
 #, fuzzy, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr "請確定 %s 可以寫入,或重新定義 index.php 裡的 %s."
 
-#: ../lib/Request.php:804
+#: ../lib/Request.php:814
 #, php-format
 msgid "the file '%s'"
 msgstr "檔案 '%s'"
@@ -936,17 +927,17 @@ msgstr "Plugin %s 失敗."
 msgid "Plugin %s disabled."
 msgstr "Plugin %s 關閉."
 
-#: ../lib/WikiPlugin.php:501
+#: ../lib/WikiPlugin.php:520
 #, fuzzy, php-format
 msgid "Include of '%s' failed."
 msgstr "含括 '%s' 失敗"
 
-#: ../lib/WikiPlugin.php:503
+#: ../lib/WikiPlugin.php:522
 #, php-format
 msgid "%s: no such class"
 msgstr "%s: 無此類別"
 
-#: ../lib/WikiPlugin.php:509
+#: ../lib/WikiPlugin.php:528
 #, fuzzy, php-format
 msgid "%s: not a subclass of WikiPlugin."
 msgstr "%s: 不是 WikiPlugin 的子類別"
@@ -958,7 +949,7 @@ msgid ""
 "referring page."
 msgstr "沒有id '%s' 可用的圖片創作資料. 請重新載入參照頁面."
 
-#: ../lib/WikiPluginCached.php:841
+#: ../lib/WikiPluginCached.php:845
 msgid "Image map expired. Reload wiki page to recreate its html part."
 msgstr ""
 
@@ -1146,7 +1137,7 @@ msgstr ""
 msgid "E-Mail address '%s' is properly formatted"
 msgstr ""
 
-#: ../lib/XmlElement.php:456 ../lib/stdlib.php:1332
+#: ../lib/XmlElement.php:456 ../lib/stdlib.php:1334
 #, php-format
 msgid "Can't mix '%s' with '%s' type format strings"
 msgstr "無法混合 '%s' 和 '%s' 型態的格式字串."
@@ -1489,7 +1480,7 @@ msgstr "使用目錄 '%s'"
 msgid "Dumping Pages"
 msgstr "傾印頁面中"
 
-#: ../lib/loadsave.php:318 ../lib/loadsave.php:451 ../lib/stdlib.php:833
+#: ../lib/loadsave.php:318 ../lib/loadsave.php:451 ../lib/stdlib.php:835
 #, fuzzy
 msgid "Skipped."
 msgstr "跳過"
@@ -2273,8 +2264,8 @@ msgstr "被 %s 修改的主要所有頁面變更歷程."
 msgid "List all pages which link to %s."
 msgstr "列出所有連結到 %s 的頁面."
 
-#: ../lib/plugin/BackLinks.php:70 ../lib/plugin/ListPages.php:116
-#: ../lib/plugin/ListPages.php:119 ../lib/plugin/ListSubpages.php:89
+#: ../lib/plugin/BackLinks.php:70 ../lib/plugin/ListPages.php:122
+#: ../lib/plugin/ListPages.php:125 ../lib/plugin/ListSubpages.php:89
 msgid "#"
 msgstr ""
 
@@ -2636,13 +2627,16 @@ msgstr ""
 msgid "GraphViz image or imagemap creation of directed graphs"
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:243 ../lib/plugin/Ploticus.php:249
-#: ../lib/plugin/SyntaxHighlighter.php:180
-#, fuzzy
-msgid "empty source"
-msgstr "查看源碼"
+#: ../lib/plugin/GraphViz.php:264 ../lib/plugin/GraphViz.php:334
+msgid "No dot graph given"
+msgstr ""
 
-#: ../lib/plugin/GraphViz.php:269 ../lib/plugin/Ploticus.php:239
+#: ../lib/plugin/GraphViz.php:275 ../lib/plugin/SyntaxHighlighter.php:173
+#, fuzzy, php-format
+msgid "Couldn't start commandline '%s'"
+msgstr "無法設定頁面 '%s' 的 acl."
+
+#: ../lib/plugin/GraphViz.php:278 ../lib/plugin/Ploticus.php:239
 #, php-format
 msgid "%s error: outputfile '%s' not created"
 msgstr ""
@@ -2806,7 +2800,7 @@ msgstr "LikePages"
 msgid "List pages that are explicitly given as the pages argument."
 msgstr ""
 
-#: ../lib/plugin/ListPages.php:93
+#: ../lib/plugin/ListPages.php:99
 #, fuzzy
 msgid "You must be logged in to view ratings."
 msgstr "你必須登入才能 %s."
@@ -3051,7 +3045,7 @@ msgstr "頁面群組 - %s"
 msgid "Contents"
 msgstr "內容"
 
-#: ../lib/plugin/PageGroup.php:91 ../lib/stdlib.php:1943
+#: ../lib/plugin/PageGroup.php:91 ../lib/stdlib.php:1955
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s: 沒有此部份>"
@@ -3164,26 +3158,35 @@ msgstr "PageTrail"
 msgid "PageTrail Plugin"
 msgstr "PageTrail Plugin"
 
-#: ../lib/plugin/PhotoAlbum.php:69
+#: ../lib/plugin/PhotoAlbum.php:94
 msgid "PhotoAlbum"
 msgstr "PhotoAlbum"
 
-#: ../lib/plugin/PhotoAlbum.php:73
+#: ../lib/plugin/PhotoAlbum.php:98
 msgid ""
 "Displays a set of photos listed in a text file with optional descriptions"
 msgstr "顯示帶有簡單描述的文字檔內的相片集合"
 
-#: ../lib/plugin/PhotoAlbum.php:328
+#: ../lib/plugin/PhotoAlbum.php:476
 #, fuzzy, php-format
 msgid "Invalid argument: %s=%s"
 msgstr "錯誤的顏色值: %s"
 
-#: ../lib/plugin/PhotoAlbum.php:380 ../lib/plugin/PhotoAlbum.php:397
+#: ../lib/plugin/PhotoAlbum.php:536 ../lib/plugin/PhotoAlbum.php:557
 #: ../lib/plugin/Transclude.php:85
 msgid "Bad url in src: remove all of <, >, \""
 msgstr "在 src 中錯誤的 url: 移除所有的 <, .>, \""
 
-#: ../lib/plugin/PhotoAlbum.php:430
+#: ../lib/plugin/PhotoAlbum.php:554
+msgid "File extension for csv file has to be '.csv'"
+msgstr ""
+
+#: ../lib/plugin/PhotoAlbum.php:605
+#, fuzzy, php-format
+msgid "Unable to find src='%s'"
+msgstr "無法讀取 %s"
+
+#: ../lib/plugin/PhotoAlbum.php:617
 #, fuzzy, php-format
 msgid "Unable to read src='%s'"
 msgstr "無法讀取 %s"
@@ -3246,6 +3249,11 @@ msgstr ""
 #: ../lib/plugin/Ploticus.php:201
 msgid "shell commands not allowed in Ploticus"
 msgstr ""
+
+#: ../lib/plugin/Ploticus.php:249 ../lib/plugin/SyntaxHighlighter.php:180
+#, fuzzy
+msgid "empty source"
+msgstr "查看源碼"
 
 #: ../lib/plugin/PluginManager.php:31
 msgid "PluginManager"
@@ -3661,11 +3669,6 @@ msgstr "沒有指定頁面"
 #, php-format
 msgid "invalid %s ignored"
 msgstr ""
-
-#: ../lib/plugin/SyntaxHighlighter.php:173
-#, fuzzy, php-format
-msgid "Couldn't start commandline '%s'"
-msgstr "無法設定頁面 '%s' 的 acl."
 
 #: ../lib/plugin/SystemInfo.php:52
 msgid "SystemInfo"
@@ -4802,7 +4805,7 @@ msgstr "你必須是管理者才能使用此 plugin."
 msgid "WikiAdminUtils says:"
 msgstr "WikiAdminUtils 說:"
 
-#: ../lib/plugin/WikiAdminUtils.php:103 ../lib/stdlib.php:1728
+#: ../lib/plugin/WikiAdminUtils.php:103 ../lib/stdlib.php:1730
 msgid "Okay"
 msgstr "Okay"
 
@@ -5429,115 +5432,115 @@ msgstr ""
 msgid "Back to the previous page."
 msgstr "上次主要變更的原始文件"
 
-#: ../lib/stdlib.php:352 ../lib/stdlib.php:381
+#: ../lib/stdlib.php:354 ../lib/stdlib.php:383
 msgid "BAD URL -- remove all of <, >, \""
 msgstr "錯誤 URL -- 移除所有的 <, >, \""
 
-#: ../lib/stdlib.php:421 ../lib/stdlib.php:438
+#: ../lib/stdlib.php:423 ../lib/stdlib.php:440
 #, fuzzy
 msgid "Invalid image size"
 msgstr "Inline 圖片"
 
-#: ../lib/stdlib.php:548
+#: ../lib/stdlib.php:550
 msgid "BAD phpwiki: URL"
 msgstr "錯誤 phpwiki: URL"
 
-#: ../lib/stdlib.php:586
+#: ../lib/stdlib.php:588
 msgid "Lock page to enable link"
 msgstr "鎖定頁面以打開此連結"
 
-#: ../lib/stdlib.php:713
+#: ../lib/stdlib.php:715
 #, php-format
 msgid "'%s': Bad page name: %s"
 msgstr "'%s': 錯誤頁面名稱: %s"
 
-#: ../lib/stdlib.php:743 ../lib/stdlib.php:768
+#: ../lib/stdlib.php:745 ../lib/stdlib.php:770
 #, php-format
 msgid "Leading %s not allowed"
 msgstr "前面的 %s 是不被允許的"
 
-#: ../lib/stdlib.php:752
+#: ../lib/stdlib.php:754
 msgid "White space converted to single space"
 msgstr "空白空格轉換為單一空格"
 
-#: ../lib/stdlib.php:758
+#: ../lib/stdlib.php:760
 msgid "Control characters not allowed"
 msgstr "控制字元是不被允許的"
 
-#: ../lib/stdlib.php:779
+#: ../lib/stdlib.php:781
 msgid "too long"
 msgstr "太長"
 
-#: ../lib/stdlib.php:785
+#: ../lib/stdlib.php:787
 #, php-format
 msgid "Illegal chars %s removed"
 msgstr ""
 
-#: ../lib/stdlib.php:831
+#: ../lib/stdlib.php:833
 msgid "The CreateTocPlugin is not yet old markup compatible! "
 msgstr ""
 
-#: ../lib/stdlib.php:832
+#: ../lib/stdlib.php:834
 msgid ""
 "Please remove the CreateToc line to be able to reformat this page to old "
 "markup. "
 msgstr ""
 
-#: ../lib/stdlib.php:1093
+#: ../lib/stdlib.php:1095
 msgid "Revision Not Found"
 msgstr "修訂未找到"
 
-#: ../lib/stdlib.php:1094
+#: ../lib/stdlib.php:1096
 #, php-format
 msgid "I'm sorry.  Version %d of %s is not in the database."
 msgstr "抱歉, 版本是 %d 的 %s 不在資料庫中."
 
-#: ../lib/stdlib.php:1097
+#: ../lib/stdlib.php:1099
 msgid "Bad Version"
 msgstr "錯誤的版本"
 
-#: ../lib/stdlib.php:1233
+#: ../lib/stdlib.php:1235
 msgid "-???"
 msgstr "-???"
 
-#: ../lib/stdlib.php:1236
+#: ../lib/stdlib.php:1238
 #, php-format
 msgid "%s b"
 msgstr "%s b"
 
-#: ../lib/stdlib.php:1238 ../themes/MonoBook/templates/info.tmpl:29
+#: ../lib/stdlib.php:1240 ../themes/MonoBook/templates/info.tmpl:29
 #: ../themes/shamino_com/templates/info.tmpl:29
 #, php-format
 msgid "%s bytes"
 msgstr "%s bytes"
 
-#: ../lib/stdlib.php:1243
+#: ../lib/stdlib.php:1245
 #, php-format
 msgid "%s k"
 msgstr "%s k"
 
-#: ../lib/stdlib.php:1245 ../themes/MonoBook/templates/info.tmpl:32
+#: ../lib/stdlib.php:1247 ../themes/MonoBook/templates/info.tmpl:32
 #: ../themes/shamino_com/templates/info.tmpl:32
 #, php-format
 msgid "%s Kb (%s bytes)"
 msgstr "%s Kb (%s bytes)"
 
-#: ../lib/stdlib.php:1341
+#: ../lib/stdlib.php:1343
 #, php-format
 msgid "%s: argument index out of range"
 msgstr "%s: 引數索引超出範圍"
 
-#: ../lib/stdlib.php:1419 ../themes/Hawaiian/lib/random.php:20
+#: ../lib/stdlib.php:1421 ../themes/Hawaiian/lib/random.php:20
 #, php-format
 msgid "%s is empty."
 msgstr "%s 是空白的."
 
-#: ../lib/stdlib.php:1426
+#: ../lib/stdlib.php:1428
 #, php-format
 msgid "Unable to open directory '%s' for reading"
 msgstr "無法開啟目錄 '%s' 進行讀取"
 
-#: ../lib/stdlib.php:1900 ../lib/stdlib.php:1913
+#: ../lib/stdlib.php:1912 ../lib/stdlib.php:1925
 #, fuzzy, php-format
 msgid "... (first %s words)"
 msgstr "... 頭 %d 個字"
@@ -6857,6 +6860,10 @@ msgstr "User: %s"
 #: ../themes/shamino_com/templates/browse-footer.tmpl:11
 msgid "TermsOfUse"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Category"
+#~ msgstr "CategoryPage"
 
 #, fuzzy
 #~ msgid ""
