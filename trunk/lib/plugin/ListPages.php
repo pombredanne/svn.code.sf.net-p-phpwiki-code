@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListPages.php,v 1.9 2004-11-23 15:17:19 rurban Exp $');
+rcs_id('$Id: ListPages.php,v 1.10 2005-09-27 17:34:19 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -53,7 +53,7 @@ extends WikiPlugin
              PageList::supportedArgs(),
              array('pages'    => false,
                    //'exclude'  => false,
-                   'info'     => 'pagename,top3recs',
+                   'info'     => 'pagename',
                    'dimension' => 0,
                    ));
     }
@@ -68,12 +68,15 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
+        // If the ratings table does not exist, or on dba it will break otherwise. 
+        // Check if Theme isa 'wikilens'
+	if ($info == 'pagename' and isa($GLOBALS['WikiTheme'], 'wikilens'))
+	    $info .= ",top3recs";
         if ($info)
             $info = split(',', $info);
         else
             $info = array();
-        // Fixme: if the ratings table does not exist it will break. 
-        // check if Theme isa 'wikilens'?
+
         if (in_array('top3recs', $info)) {
             require_once('lib/wikilens/Buddy.php');
             require_once('lib/wikilens/PageListColumns.php');
@@ -85,7 +88,10 @@ extends WikiPlugin
             if (!isset($userids) || !is_array($userids) || !count($userids)) {
                 // TKL: moved getBuddies call inside if statement because it was
                 // causing the userids[] parameter to be ignored
-                if (is_string($active_userid) && strlen($active_userid) && $active_user->isSignedIn()) {
+                if (is_string($active_userid) 
+		    and strlen($active_userid) 
+		    and $active_user->isSignedIn()) 
+		{
                     $userids = getBuddies($active_userid, $dbi);
                 } else {
                     $userids = array();
@@ -140,6 +146,14 @@ class _PageList_Column_ListPages_count extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/11/23 15:17:19  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.8  2004/10/14 19:19:34  rurban
 // loadsave: check if the dumped file will be accessible from outside.
 // and some other minor fixes. (cvsclient native not yet ready)
