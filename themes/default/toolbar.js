@@ -1,5 +1,5 @@
 // Toolbar JavaScript support functions. Taken from mediawiki 
-// $Id: toolbar.js,v 1.11 2005-09-26 06:25:50 rurban Exp $
+// $Id: toolbar.js,v 1.12 2005-09-28 18:51:03 rurban Exp $
 
 // Un-trap us from framesets
 if( window.top != window ) window.top.location = window.location;
@@ -38,7 +38,7 @@ function addTagButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
 function showPulldown(title, pages, okbutton, closebutton) {
   height = new String(Math.min(270, 70 + (pages.length * 12))); // 270 or smaller
   pullwin = window.open('','','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,height='+height+',width=180');
-  pullwin.window.document.write('<html><head><title>'+escapeQuotes(title)+'</title><style type=\"text/css\"><'+'!'+'-- body {font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:10pt;background-color:#dddddd;} input { font-weight:bold;margin-left:2px;margin-right:2px;} option {font-size:9pt} #buttons { background-color:#dddddd;padding-top:5px;padding-bottom:5px;padding-right:10px;width:180px;} --'+'></style></head>');
+  pullwin.window.document.write('<html><head><title>'+escapeQuotes(title)+'</title><style type=\"text/css\"><'+'!'+'-- body {font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:10pt;background-color:#dddddd;} input { font-weight:bold;margin-left:2px;margin-right:2px;} option {font-size:9pt} #buttons { background-color:#dddddd;padding-right:10px;width:180px;} --'+'></style></head>');
   pullwin.window.document.write('\n<body bgcolor=\"#dddddd\"><form><div id=\"buttons\"><input type=\"button\" value=\"'+okbutton+'\" onclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value); return false;\"><input type=\"button\" value=\"'+closebutton+'\" onclick=\"self.close(); return false;\"></div>\n<select style=\"margin-top:10px;\" name=\"select\" size=\"'+((pages.length>20)?'20':new String(pages.length))+'\" ondblclick=\"if(self.opener)self.opener.do_pulldown(document.forms[0].select.value); return false;\">');
   for (i=0; i<pages.length; i++){
     if (typeof pages[i] == 'string')
@@ -95,8 +95,8 @@ function insertTags(tagOpen, tagClose, sampleText) {
   tagOpen = tagOpen.replace(re,'"');
   var re=new RegExp('%27',"g");
   tagOpen = tagOpen.replace(re,'\'');
-  //var re=new RegExp('<br />',"g");
-  //tagOpen = tagOpen.replace(re,'\n');
+  var re=new RegExp('%09',"g");
+  tagOpen = tagOpen.replace(re,'    ');
   var re=new RegExp('%7C',"g");
   tagOpen = tagOpen.replace(re,'|');
   var re=new RegExp('%5B',"g");
