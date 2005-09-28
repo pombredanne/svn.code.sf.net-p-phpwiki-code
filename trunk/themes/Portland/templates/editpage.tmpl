@@ -1,26 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.21 2004-06-14 11:26:50 rurban Exp $ -->
-<?php
-
-$WidthI = HTML::input(array('type' => 'text',
-                            'size' => 3,
-                            'maxlength' => 4,
-                            'class' => "numeric",
-                            'name' => 'pref[editWidth]',
-                            'value' => $request->getPref('editWidth'),
-                            'onchange' => 'this.form.submit();'));
-
-$HeightI = HTML::input(array('type' => 'text',
-                             'size' => 3,
-                             'maxlength' => 4,
-                             'class' => "numeric",
-                             'name' => 'pref[editHeight]',
-                             'value' => $request->getPref('editHeight'),
-                             'onchange' => 'this.form.submit();'));
-
-$s = $WikiTheme->getButtonSeparator();
-?>
-
+<!-- $Id: editpage.tmpl,v 1.22 2005-09-28 19:00:24 rurban Exp $ -->
 <?php /*
  * FIXME: Hack!
  * The funky URL used for the form action parameter is bogus.
@@ -50,7 +29,7 @@ $s = $WikiTheme->getButtonSeparator();
   <td align="right">
     <?= $PREVIEW_B ?>
     <?php if ($SAVE_B) { ?>
-      <?=$s?> <?= $SAVE_B ?>
+      <?=$SEP?> <?= $SAVE_B ?>
     <?php } ?>
   </td>
 </tr>
@@ -66,10 +45,8 @@ $s = $WikiTheme->getButtonSeparator();
         WikiLink(_("RecentEdits"))) ?>
 <br />
 <p>
-  <?=_("Edit Area Size")?>: <b><?=_("H")?></b>
-  <?=$HeightI?>
-  <b><?=_("W")?></b>
-  <?=$WidthI?>
+  <?=_("Edit Area Size")?>: <b><?=_("H")?></b> <?=$HEIGHT_PREF?> 
+  <b><?=_("W")?></b> <?=$WIDTH_PREF?>
   <?=Button("submit:", _("Adjust"), 'wikiaction')?>
   <br />
   <?=$OLD_MARKUP_CB?>  <?=_("Use old markup")?>
