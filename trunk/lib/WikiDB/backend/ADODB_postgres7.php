@@ -1,57 +1,50 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.18 2005-09-28 19:26:05 rurban Exp $');
+rcs_id('$Id: ADODB_postgres7.php,v 1.1 2005-09-28 19:26:05 rurban Exp $');
 
-require_once('lib/ErrorManager.php');
-require_once('lib/WikiDB/backend/PearDB.php');
+require_once('lib/WikiDB/backend/ADODB.php');
 
 if (!defined("USE_BYTEA")) // see schemas/psql-initialize.sql
     define("USE_BYTEA", true);
     //define("USE_BYTEA", false);
-/*
+
+/**
+ * WikiDB layer for ADODB-postgres (7 or 8), called by lib/WikiDB/ADODB.php.
  * Since 1.3.12 changed to use Foreign Keys and ON DELETE CASCADE
+ * 
+ * @author: Reini Urban
  */
-
-class WikiDB_backend_PearDB_pgsql
-extends WikiDB_backend_PearDB
+class WikiDB_backend_ADODB_postgres7
+extends WikiDB_backend_ADODB
 {
-    function WikiDB_backend_PearDB_pgsql($dbparams) {
-        // The pgsql handler of (at least my version of) the PEAR::DB
-        // library generates three warnings when a database is opened:
-        //
-        //     Undefined index: options
-        //     Undefined index: tty
-        //     Undefined index: port
-        //
-        // This stuff is all just to catch and ignore these warnings,
-        // so that they don't get reported to the user.  (They are
-        // not consequential.)  
+    /**
+     * Constructor.
+     */
+    function WikiDB_backend_ADODB_postgres7($dbparams) {
+        $this->WikiDB_backend_ADODB($dbparams);
 
-        global $ErrorManager;
-        $ErrorManager->pushErrorHandler(new WikiMethodCb($this,'_pgsql_open_error'));
-        $this->WikiDB_backend_PearDB($dbparams);
-        $ErrorManager->popErrorHandler();
+        $this->_serverinfo = $this->_dbh->ServerInfo();
+        if (!empty($this->_serverinfo['version'])) {
+            $arr = explode('.',$this->_serverinfo['version']);
+            $this->_serverinfo['version'] = (string)(($arr[0] * 100) + $arr[1]);
+	    if (!empty($arr[2]))
+		$this->_serverinfo['version'] .= ("." . (integer)$arr[2]);
+        }
     }
+    
 
-    function _pgsql_open_error($error) {
-        if (preg_match('/^Undefined\s+index:\s+(options|tty|port)/',
-                       $error->errstr))
-            return true;        // Ignore error
-        return false;
-    }
-            
     /**
      * Pack tables.
      */
     function optimize() {
         foreach ($this->_table_names as $table) {
-            $this->_dbh->query("VACUUM ANALYZE $table");
+            $this->_dbh->Execute("VACUUM ANALYZE $table");
         }
         return 1;
     }
 
     function _quote($s) {
-        if (USE_BYTEA)
-            return pg_escape_bytea($s);
+	if (USE_BYTEA) 
+	    return pg_escape_bytea($s);
 	if (function_exists('pg_escape_string'))
 	    return pg_escape_string($s);
 	else
@@ -59,8 +52,8 @@ extends WikiDB_backend_PearDB
     }
 
     function _unquote($s) {
-        if (USE_BYTEA)
-            return pg_unescape_bytea($s);
+	if (USE_BYTEA) 
+	    return pg_unescape_bytea($s);
 	if (function_exists('pg_escape_string'))
 	    return $s;
 	else
@@ -71,8 +64,8 @@ extends WikiDB_backend_PearDB
     function get_cached_html($pagename) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        $data = $dbh->GetOne(sprintf("SELECT cached_html FROM $page_tbl WHERE pagename='%s'",
-                                     $dbh->escapeSimple($pagename)));
+	$data = $dbh->GetOne(sprintf("SELECT cached_html FROM $page_tbl WHERE pagename=%s",
+                                     $dbh->qstr($pagename)));
         if ($data) return $this->_unquote($data);
         else return '';
     }
@@ -80,32 +73,32 @@ extends WikiDB_backend_PearDB
     function set_cached_html($pagename, $data) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        if (USE_BYTEA)
-            $sth = $dbh->query(sprintf("UPDATE $page_tbl"
-                                       . " SET cached_html='%s'"
-                                       . " WHERE pagename='%s'",
-                                       $this->_quote($data), 
-                                       $dbh->escapeSimple($pagename)));
-        else
-            $sth = $dbh->query("UPDATE $page_tbl"
-                                       . " SET cached_html=?"
-                                       . " WHERE pagename=?",
-                                       // PearDB does NOT use pg_escape_string()! Oh dear.
-                                       array($this->_quote($data), $pagename));
+        // TODO: Maybe use UpdateBlob
+	if (USE_BYTEA)
+	    $sth = $dbh->Execute(sprintf("UPDATE $page_tbl"
+					 . " SET cached_html='%s'"
+					 . " WHERE pagename=%s",
+					 $this->_quote($data), 
+					 $dbh->qstr($pagename)));
+	else
+	    $sth = $dbh->Execute("UPDATE $page_tbl"
+				 . " SET cached_html=?"
+				 . " WHERE pagename=?",
+				 array($this->_quote($data), $pagename));
     }
 
     /**
      * Lock all tables we might use.
      */
-    function _lock_tables($write_lock = true) {
-        $this->_dbh->query("BEGIN");
+    function _lock_tables($tables, $write_lock = true) {
+        $this->_dbh->Execute("BEGIN");
     }
 
     /**
      * Unlock all tables.
      */
-    function _unlock_tables() {
-        $this->_dbh->query("COMMIT");
+    function _unlock_tables($tables, $write_lock=false) {
+        $this->_dbh->Execute("COMMIT");
     }
 
     /**
@@ -130,10 +123,11 @@ extends WikiDB_backend_PearDB
             return unserialize($data);
         return unserialize($this->_unquote($data));
     }
+
 };
 
-class WikiDB_backend_PearDB_pgsql_search
-extends WikiDB_backend_PearDB_search
+class WikiDB_backend_ADOBE_postgres7_search
+extends WikiDB_backend_ADOBE_search
 {
     function _pagename_match_clause($node) {
         $word = $node->sql();
@@ -148,8 +142,7 @@ extends WikiDB_backend_PearDB_search
         }
     }
 
-    // TODO: use tsearch2. For now the same as parent
-    /*
+    // TODO: use tsearch2
     function _fulltext_match_clause($node) { 
         $word = $node->sql();
         if ($word == '%')
@@ -158,13 +151,12 @@ extends WikiDB_backend_PearDB_search
         if (preg_match("/^%".$this->_stoplist."%/i", $word) 
             or preg_match("/^".$this->_stoplist."$/i", $word))
             return $this->_pagename_match_clause($node);
-        else
+        else 
             return $this->_pagename_match_clause($node) 
                 . ($this->_case_exact
                    ? " OR content LIKE '$word'"
                    : " OR content ILIKE '$word'");
     }
-    */
 }
 
 // (c-file-style: "gnu")
