@@ -1,6 +1,6 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id: sqlite-initialize.sql,v 1.3 2005-06-21 05:59:18 rurban Exp $
+-- $Id: sqlite-initialize.sql,v 1.4 2005-09-28 19:27:23 rurban Exp $
 
 CREATE TABLE page (
 	id              INTEGER PRIMARY KEY,
@@ -56,8 +56,19 @@ CREATE INDEX sessip_index ON session (sess_ip);
 
 CREATE TABLE pref (
   	userid 	CHAR(48) NOT NULL PRIMARY KEY,
-  	prefs  	TEXT NULL DEFAULT ''
+  	prefs  	MEDIUMTEXT NULL DEFAULT '',
+  	passwd 	CHAR(48) DEFAULT '',
+	groupname CHAR(48) DEFAULT 'users',
 );
+
+-- Use the member table, if you need it for n:m user-group relations,
+-- and adjust your DBAUTH_AUTH_ SQL statements.
+CREATE TABLE member (
+	userid    CHAR(48) NOT NULL,
+   	groupname CHAR(48) NOT NULL DEFAULT 'users'
+);
+CREATE INDEX member_userid ON member (userid);
+CREATE INDEX member_groupname ON member (groupname);
 
 -- only if you plan to use the wikilens theme
 CREATE TABLE rating (
