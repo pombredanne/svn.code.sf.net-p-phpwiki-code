@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.79 2005-09-28 19:08:41 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.80 2005-09-28 19:26:05 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -1283,14 +1283,15 @@ extends WikiDB_backend_search
         $word = $node->sql();
         if ($word == '%')
             return "1=1";
-        // eliminate stoplist words
+        // Eliminate stoplist words
         if (preg_match("/^%".$this->_stoplist."%/i", $word) 
             or preg_match("/^".$this->_stoplist."$/i", $word))
             return $this->_pagename_match_clause($node);
         else
-            return ($this->_case_exact
-                    ? "pagename LIKE '$word' OR content LIKE '$word'"
-                    : "LOWER(pagename) LIKE '$word' OR content LIKE '$word'");
+            return $this->_pagename_match_clause($node) 
+                . ($this->_case_exact
+                    ? " OR content LIKE '$word'"
+                    : " OR content LIKE '$word'");
     }
 }
 
@@ -1454,6 +1455,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.79  2005/09/28 19:08:41  rurban
+// dont use LIMIT on modifying queries
+//
 // Revision 1.78  2005/09/14 06:04:43  rurban
 // optimize searching for ALL (ie %), use the stoplist on PDO
 //
