@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.78 2005-09-14 06:04:43 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.79 2005-09-28 19:08:41 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -107,7 +107,7 @@ extends WikiDB_backend
         $page_tbl = $this->_table_names['page_tbl'];
         $version_tbl = $this->_table_names['version_tbl'];
         $this->page_tbl_fields = "$page_tbl.id AS id, $page_tbl.pagename AS pagename, "
-            . "$page_tbl.hits hits";
+            . "$page_tbl.hits AS hits";
         $this->page_tbl_field_list = array('id', 'pagename', 'hits');
         $this->version_tbl_fields = "$version_tbl.version AS version, "
             . "$version_tbl.mtime AS mtime, "
@@ -184,7 +184,7 @@ extends WikiDB_backend
         // Note that this will fail silently if the page does not
         // have a record in the page table.  Since it's just the
         // hit count, who cares?
-        $dbh->Execute(sprintf("UPDATE %s SET hits=hits+1 WHERE pagename=%s LIMIT 1",
+        $dbh->Execute(sprintf("UPDATE %s SET hits=hits+1 WHERE pagename=%s",
                               $this->_table_names['page_tbl'],
                               $dbh->qstr($pagename)));
         return;
@@ -217,7 +217,7 @@ extends WikiDB_backend
             // Note that this will fail silently if the page does not
             // have a record in the page table.  Since it's just the
             // hit count, who cares?
-            $dbh->Execute(sprintf("UPDATE $page_tbl SET hits=%d WHERE pagename=%s LIMIT 1",
+            $dbh->Execute(sprintf("UPDATE $page_tbl SET hits=%d WHERE pagename=%s",
                                   $newdata['hits'], $dbh->qstr($pagename)));
             return;
         }
@@ -244,7 +244,7 @@ extends WikiDB_backend
         }
         if ($dbh->Execute("UPDATE $page_tbl"
                           . " SET hits=?, pagedata=?"
-                          . " WHERE pagename=? LIMIT 1",
+                          . " WHERE pagename=?",
                           array($hits, $this->_serialize($data),$pagename))) {
             $dbh->CommitTrans( );
             return true;
@@ -268,8 +268,7 @@ extends WikiDB_backend
         if (empty($data)) $data = '';
         $rs = $dbh->Execute("UPDATE $page_tbl"
                             . " SET cached_html=?"
-                            . " WHERE pagename=?"
-                            . " LIMIT 1",
+                            . " WHERE pagename=?",
                             array($data, $pagename));
     }
 
@@ -685,8 +684,7 @@ extends WikiDB_backend
                             . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
                             . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                             . " AND $have.pagename=$qpagename"
-                            . " AND $want.pagename=$qlink"
-                            . "LIMIT 1");
+                            . " AND $want.pagename=$qlink");
         return $row[0];
     }
 
@@ -1072,7 +1070,7 @@ extends WikiDB_backend
      * @access protected
      */
     function lock($tables, $write_lock = true) {
-            $this->_dbh->StartTrans();
+	$this->_dbh->StartTrans();
         if ($this->_lock_count++ == 0) {
             $this->_current_lock = $tables;
             $this->_lock_tables($tables, $write_lock);
@@ -1103,7 +1101,7 @@ extends WikiDB_backend
             return;
         }
         if (--$this->_lock_count <= 0 || $force) {
-            $this->_unlock_tables($tables);
+            $this->_unlock_tables($tables, $force);
             $this->_current_lock = false;
             $this->_lock_count = 0;
         }
@@ -1113,7 +1111,7 @@ extends WikiDB_backend
     /**
      * overridden by non-transaction safe backends
      */
-    function _unlock_tables($tables, $write_lock) {
+    function _unlock_tables($tables, $write_lock=false) {
         return;
     }
 
@@ -1456,6 +1454,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2005/09/14 06:04:43  rurban
+// optimize searching for ALL (ie %), use the stoplist on PDO
+//
 // Revision 1.77  2005/09/11 14:55:05  rurban
 // implement fulltext stoplist
 //
