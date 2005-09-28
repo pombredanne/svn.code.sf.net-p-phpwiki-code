@@ -1,4 +1,4 @@
--- $Id: psql-destroy.sql,v 1.3 2005-04-07 06:13:57 rurban Exp $
+-- $Id: psql-destroy.sql,v 1.4 2005-09-28 19:27:23 rurban Exp $
 
 \set QUIET
 
@@ -22,6 +22,7 @@
 \echo
 
 \set page_tbl		:prefix 'page'
+\set page_id_seq 	:prefix 'page_id_seq'
 \set version_tbl	:prefix 'version'
 \set recent_tbl		:prefix 'recent'
 \set nonempty_tbl	:prefix 'nonempty'
@@ -29,12 +30,9 @@
 \set session_tbl	:prefix 'session'
 \set pref_tbl		:prefix 'pref'
 -- \set user_tbl	:prefix 'user'
--- \set member_tbl	:prefix 'member'
+\set member_tbl 	:prefix 'member'
 \set rating_tbl		:prefix 'rating'
 \set accesslog_tbl	:prefix 'accesslog'
-
-\echo Dropping :page_tbl
-DROP TABLE :page_tbl;
 
 \echo Dropping :version_tbl
 DROP TABLE :version_tbl;
@@ -48,17 +46,25 @@ DROP TABLE :nonempty_tbl;
 \echo Dropping :link_tbl
 DROP TABLE :link_tbl;
 
-\echo Dropping :session_tbl
-DROP TABLE :session_tbl;
+--\echo Dropping :user_tbl
+-- DROP TABLE :user_tbl;
+
+\echo Dropping :rating_tbl
+DROP TABLE :rating_tbl;
+
+\echo Dropping :page_tbl
+DROP TABLE :page_tbl;
+\echo Dropping :page_id_seq only needed for postgresql < 7.2
+DROP SEQUENCE :page_id_seq;
+
+\echo Dropping :member_tbl
+DROP TABLE :member_tbl;
 
 \echo Dropping :pref_tbl
 DROP TABLE :pref_tbl;
 
--- DROP TABLE :user_tbl;
--- DROP TABLE :member_tbl;
-
-\echo Dropping :rating_tbl
-DROP TABLE :rating_tbl;
+\echo Dropping :session_tbl
+DROP TABLE :session_tbl;
 
 \echo Dropping :accesslog_tbl
 DROP TABLE :accesslog_tbl;

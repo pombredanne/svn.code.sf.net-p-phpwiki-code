@@ -1,4 +1,4 @@
--- $Id: mssql-initialize.sql,v 1.3 2005-06-21 05:59:18 rurban Exp $
+-- $Id: mssql-initialize.sql,v 1.4 2005-09-28 19:27:23 rurban Exp $
 -- UNTESTED!
 
 CREATE TABLE page (
@@ -57,29 +57,35 @@ CREATE INDEX sessip_index ON session (sess_ip);
 -- in the DBAuthParam SQL statements also.
 
 CREATE TABLE pref (
-  	userid 	CHAR(48) NOT NULL UNIQUE,
+  	userid 	CHAR(48) NOT NULL,
   	prefs  	TEXT NULL DEFAULT '',
-  	PRIMARY KEY (userid)
+  	passwd 	CHAR(48) DEFAULT '',
+	groupname CHAR(48) DEFAULT 'users',
+        PRIMARY KEY (userid)
 );
 
+-- update to 1.3.12: (see lib/upgrade.php)
+-- ALTER TABLE pref ADD passwd 	CHAR(48) BINARY DEFAULT '';
+-- ALTER TABLE pref ADD groupname CHAR(48) BINARY DEFAULT 'users';
+
+-- deprecated since 1.3.12. only useful for seperate databases.
 -- better use the extra pref table where such users can be created easily 
 -- without password.
 --CREATE TABLE user (
---  	userid 	CHAR(48) NOT NULL UNIQUE,
+--  	userid 	CHAR(48) NOT NULL,
 --  	passwd 	CHAR(48) DEFAULT '',
 --	prefs  	TEXT NULL DEFAULT '',
---	groupname CHAR(48) DEFAULT 'users',
---  	PRIMARY KEY (userid)
+--	groupname CHAR(48) DEFAULT 'users'
 --);
 
---CREATE TABLE member (
---	userid    CHAR(48) NOT NULL,
---   	groupname CHAR(48) NOT NULL DEFAULT 'users',
---   	INDEX (userid),
---   	INDEX (groupname)
---);
---CREATE INDEX member_userid ON member (userid);
---CREATE INDEX member_groupname ON member (groupname);
+-- Use the member table, if you need it for n:m user-group relations,
+-- and adjust your DBAUTH_AUTH_ SQL statements.
+CREATE TABLE member (
+	userid    CHAR(48) NOT NULL,
+   	groupname CHAR(48) NOT NULL DEFAULT 'users'
+);
+CREATE INDEX member_userid ON member (userid);
+CREATE INDEX member_groupname ON member (groupname);
 
 -- only if you plan to use the wikilens theme
 CREATE TABLE rating (
