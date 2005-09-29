@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.3 2005-09-26 06:25:50 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.4 2005-09-29 23:07:58 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -123,7 +123,30 @@ function undo_save() {
         if (ENABLE_EDIT_TOOLBAR) {
             $WikiTheme->addMoreHeaders(JavaScript('',array('src' => $WikiTheme->_findData("toolbar.js"))));
         }
-        $this->tokens['EDIT_TOOLBAR'] = $this->_generate();
+
+        include_once("lib/WikiPluginCached.php");
+        $cache = WikiPluginCached::newCache();
+        $dbi = $GLOBALS['request']->getDbh();
+        // regenerate if number of pages changes (categories, pages, templates)
+        $key = $dbi->numPages();
+        $key .= '+categories+plugin';
+        if (TOOLBAR_PAGELINK_PULLDOWN) {
+            $key .= "+pages";
+        }
+        if (TOOLBAR_TEMPLATE_PULLDOWN) {
+            $key .= "+templates_" . $dbi->getTimestamp();
+        }
+        $id = $cache->generateId($key);
+        $content = $cache->get($id, 'toolbarcache');
+
+        if (!empty($content)) {
+            $this->tokens['EDIT_TOOLBAR'] =& $content;
+        } else {
+            $content = $this->_generate();
+            // regenerate buttons every 3600 seconds
+            $cache->save($id, $content, '+3600', 'toolbarcache'); 
+            $this->tokens['EDIT_TOOLBAR'] =& $content;
+        }
     }
 
     function getTokens () {
@@ -394,6 +417,9 @@ function undo_save() {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.3  2005/09/26 06:25:50  rurban
+ EditToolbar enhancements by Thomas Harding: add plugins args, properly quote control chars. added plugin method getArgumentsDescription to override the default description string
+
  Revision 1.3  2005/09/22 13:40:00 tharding
  add modules arguments
  
