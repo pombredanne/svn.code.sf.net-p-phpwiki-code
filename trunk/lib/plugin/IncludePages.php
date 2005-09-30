@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePages.php,v 1.1 2004-09-06 08:37:31 rurban Exp $');
+rcs_id('$Id: IncludePages.php,v 1.2 2005-09-30 18:41:39 uckelman Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin_IncludePage
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -74,7 +74,7 @@ extends WikiPlugin_IncludePage
         
     	foreach ($args['pages'] as $page) {
             if (empty($args['exclude']) or !in_array($page, $args['exclude'])) {
-                $html = HTML($html, $include->run($dbi, "page='$page' ".$argstr, &$request, $basepage));
+                $html = HTML($html, $include->run($dbi, "page='$page' ".$argstr, $request, $basepage));
             }
     	}
         return $html;
@@ -82,6 +82,9 @@ extends WikiPlugin_IncludePage
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/09/06 08:37:31  rurban
+// plugin-list support for pages and exclude args
+//
 
 // For emacs users
 // Local Variables:

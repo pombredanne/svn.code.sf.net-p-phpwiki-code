@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageListColumns.php,v 1.9 2004-12-26 17:08:36 rurban Exp $');
+rcs_id('$Id: PageListColumns.php,v 1.10 2005-09-30 18:41:39 uckelman Exp $');
 
 /*
  Copyright 2004 Mike Cassano
@@ -50,7 +50,7 @@ class _PageList_Column_numbacklinks extends _PageList_Column_custom
     }
     
     function _getSortableValue ($page_handle, &$revision_handle) {
-        return $this->_getValue($page_handle, &$revision_handle);
+        return $this->_getValue($page_handle, $revision_handle);
     }
 };
 
@@ -199,7 +199,7 @@ class _PageList_Column_ratingvalue extends _PageList_Column {
     }
     
     function _getSortableValue ($page_handle, &$revision_handle) {
-        return $this->_getValue($page_handle, &$revision_handle);
+        return $this->_getValue($page_handle, $revision_handle);
     }
 };
 
@@ -236,7 +236,7 @@ class _PageList_Column_ratingwidget extends _PageList_Column_custom
     }
     
     function _getSortableValue ($page_handle, &$revision_handle) {
-        return $this->_getValue($page_handle, &$revision_handle);
+        return $this->_getValue($page_handle, $revision_handle);
     }
 };
 
@@ -283,7 +283,7 @@ class _PageList_Column_prediction extends _PageList_Column
     }
     
     function _getSortableValue ($page_handle, &$revision_handle) {
-        return $this->_getValue($page_handle, &$revision_handle);
+        return $this->_getValue($page_handle, $revision_handle);
     }
 };
 
@@ -376,6 +376,9 @@ $WikiTheme->addPageListColumn
     ));
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/12/26 17:08:36  rurban
+// php5 fixes: case-sensitivity, no & new
+//
 // Revision 1.8  2004/11/06 17:13:17  rurban
 // init is easier this way: no ->init(), pass params instead
 //
