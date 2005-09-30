@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserRatings.php,v 1.3 2004-11-07 16:02:52 rurban Exp $');
+rcs_id('$Id: UserRatings.php,v 1.4 2005-09-30 18:41:39 uckelman Exp $');
 /**
  Copyright 2004 Dan Frankowski
 
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -187,10 +187,10 @@ extends WikiPlugin
             $user = & RatingsUserFactory::getUser($userid);
             if($user->allow_view_ratings($active_user))
             {
-                array_push($allowed_users_toshow, &$user);
+                array_push($allowed_users_toshow, $user);
             }
             // all users should be allowed in calculation
-            array_push($allowed_users, &$user);
+            array_push($allowed_users, $user);
             // This line ensures $user is not a reference type after this loop
             // If it is a reference type, that can produce very unexpected behavior!
             unset($user);
@@ -205,7 +205,7 @@ extends WikiPlugin
             while($people_array = $people_iter->next()){
                 $userid = $people_array['pagename']; 
                 $user = & RatingsUserFactory::getUser($userid);
-                array_push($allowed_users, &$user);
+                array_push($allowed_users, $user);
             }
             
          }
