@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Diff.php,v 1.2 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: Diff.php,v 1.3 2005-09-30 18:53:10 uckelman Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin {
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     // Establish default values for each of this plugin's arguments.
@@ -284,7 +284,7 @@ class WordLevelDiff extends MappedDiff
         return $orig->getLines();
     }
 
-    function final () {
+    function _final () {
         $final = new _HWLDF_WordAccumulator;
 
         foreach ($this->edits as $edit) {
@@ -360,7 +360,7 @@ class HtmlUnifiedDiffFormatter extends UnifiedDiffFormatter
     function _changed($orig, $final) {
         $diff = new WordLevelDiff($orig, $final);
         $this->_lines($diff->orig(), 'original', '-');
-        $this->_lines($diff->final(), 'final', '+');
+        $this->_lines($diff->_final(), 'final', '+');
     }
 }
 
@@ -422,6 +422,14 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.1  2004/02/26 23:02:17  rurban
 // lib/diff.php converted to a plugin by electrawn,
 // plugin cleaned up by rurban,
