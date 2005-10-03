@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.135 2005-09-11 14:19:44 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.136 2005-10-03 16:14:57 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1230,23 +1230,26 @@ class WikiDB_Page
     }
             
     /**
-     * Access WikiDB_Page meta-data.
+     * Access WikiDB_Page non version-specific meta-data.
      *
      * @access public
      *
      * @param string $key Which meta data to get.
      * Some reserved meta-data keys are:
      * <dl>
-     * <dt>'locked'<dd> Is page locked?
+     * <dt>'date'  <dd> Created as unixtime
+     * <dt>'locked'<dd> Is page locked? 'yes' or 'no'
      * <dt>'hits'  <dd> Page hit counter.
-     * <dt>'pref'  <dd> Users preferences, stored in homepages.
+     * <dt>'_cached_html' <dd> Transformed CachedMarkup object, serialized + optionally gzipped.
+     *                         In SQL stored now in an extra column.
+     * Optional data:
+     * <dt>'pref'  <dd> Users preferences, stored only in homepages.
      * <dt>'owner' <dd> Default: first author_id. We might add a group with a dot here:
      *                  E.g. "owner.users"
      * <dt>'perm'  <dd> Permission flag to authorize read/write/execution of 
      *                  page-headers and content.
+     + <dt>'moderation'<dd> ModeratedPage data
      * <dt>'score' <dd> Page score (not yet implement, do we need?)
-     * <dt>'_cached_html' <dd> Transformed CachedMarkup object, serialized + optionally gzipped.
-     *                         In SQL stored in an extra column.
      * </dl>
      *
      * @return scalar The requested value, or false if the requested data
@@ -2190,6 +2193,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.135  2005/09/11 14:19:44  rurban
+// enable LIMIT support for fulltext search
+//
 // Revision 1.134  2005/09/10 21:28:10  rurban
 // applyFilters hack to use filters after methods, which do not support them (titleSearch)
 //
