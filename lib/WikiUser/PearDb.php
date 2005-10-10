@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PearDb.php,v 1.8 2005-08-06 13:21:09 rurban Exp $');
+rcs_id('$Id: PearDb.php,v 1.9 2005-10-10 19:43:49 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -74,9 +74,26 @@ extends _DbPassUser
             $packed = $this->_prefs->store();
             if (!$id_only and isset($this->_prefs->_update)) {
                 $dbh = &$this->_auth_dbi;
-                $dbh->simpleQuery(sprintf($this->_prefs->_update,
-                                          $dbh->quote($packed),
-                                          $dbh->quote($this->_userid)));
+		// check if the user already exists (not needed with mysql REPLACE)
+		$db_result = $dbh->query(sprintf($this->_prefs->_select, 
+						 $dbh->quote($this->_userid)));
+		$prefs = $db_result->fetchRow();
+		$prefs_blob = @$prefs["prefs"]; 
+		// If there are prefs for the user, update them.
+		if($prefs_blob != "" ){
+		    $dbh->simpleQuery(sprintf($this->_prefs->_update,
+					      $dbh->quote($packed),
+					      $dbh->quote($this->_userid)));
+		} else {
+		    // Otherwise, insert a record for them and set it to the defaults.
+		    // johst@deakin.edu.au
+		    $dbi = $GLOBALS['request']->getDbh();
+		    $this->_prefs->_insert = $this->prepare($dbi->getAuthParam('pref_insert'),
+							    array("pref_blob", "userid"));
+		    $dbh->query(sprintf($this->_prefs->_insert,
+					$dbh->quote($packed),
+					$dbh->quote($this->_userid)));
+		}
                 //delete pageprefs:
                 if ($this->_HomePagehandle and $this->_HomePagehandle->get('pref'))
                     $this->_HomePagehandle->set('pref', '');
@@ -224,6 +241,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2005/08/06 13:21:09  rurban
+// switch to natural order password, userid
+//
 // Revision 1.7  2005/02/14 12:28:27  rurban
 // fix policy strict. Thanks to Mikhail Vladimirov
 //

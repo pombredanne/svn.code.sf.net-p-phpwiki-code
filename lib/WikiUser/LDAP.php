@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: LDAP.php,v 1.4 2004-12-26 17:11:17 rurban Exp $');
+rcs_id('$Id: LDAP.php,v 1.5 2005-10-10 19:43:49 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -30,9 +30,10 @@ extends _PassUser
                     $r = ldap_bind($this->_ldap, LDAP_AUTH_USER); 
             else
                 $r = true; // anonymous bind allowed
-            if (!$r) {    
+            if (!$r) {
                 $this->_free();
-                trigger_error(sprintf("Unable to bind LDAP server %s", LDAP_AUTH_HOST), 
+                trigger_error(sprintf(_("Unable to bind LDAP server %s using %s %s"),
+				      LDAP_AUTH_HOST, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD), 
                               E_USER_WARNING);
                 return false;
             }
@@ -54,14 +55,14 @@ extends _PassUser
         $this->_authmethod = 'LDAP';
         $userid = $this->_userid;
         if (!$this->isValidName()) {
-            trigger_error(_("Invalid username."),E_USER_WARNING);
+            trigger_error(_("Invalid username."), E_USER_WARNING);
             return $this->_tryNextPass($submitted_password);
         }
         if (!$this->_checkPassLength($submitted_password)) {
             return WIKIAUTH_FORBIDDEN;
         }
         if (strstr($userid,'*')) {
-            trigger_error(fmt("Invalid username '%s' for LDAP Auth",$userid), 
+            trigger_error(fmt("Invalid username '%s' for LDAP Auth", $userid), 
                           E_USER_WARNING);
             return WIKIAUTH_FORBIDDEN;
         }
@@ -135,6 +136,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2004/12/26 17:11:17  rurban
+// just copyright
+//
 // Revision 1.3  2004/12/20 16:05:01  rurban
 // gettext msg unification
 //
