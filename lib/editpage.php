@@ -1,16 +1,21 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.97 2005-09-26 06:32:22 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.98 2005-10-10 19:37:04 rurban Exp $');
 
 require_once('lib/Template.php');
 
-// USE_HTMLAREA - Support for some WYSIWYG HTML Editor
+// ENABLE_WYSIWYG - Support for some WYSIWYG HTML Editor (tinymce or htmlarea3)
 // Not yet enabled, since we cannot convert HTML to Wiki Markup yet.
 // (See HtmlParser.php for the ongoing efforts)
-// We might use a HTML PageType, which is contra wiki, but some people might prefer HTML markup.
-// TODO: Change from constant to user preference variable (checkbox setting),
+// We might use a HTML PageType, which is contra wiki, but some people 
+// might prefer HTML markup.
+// TODO: Change from constant to user preference variable 
+//       (checkbox setting or edit click as in gmail),
 //       when HtmlParser is finished.
-if (!defined('USE_HTMLAREA')) define('USE_HTMLAREA', false);
-if (USE_HTMLAREA) require_once('lib/htmlarea.php');
+if (ENABLE_WYSIWYG) {
+    if (!defined('USE_HTMLAREA')) define('USE_HTMLAREA', false);
+    if (USE_TINYMCE) require_once('lib/tinymce.php');
+    else if (USE_HTMLAREA) require_once('lib/htmlarea.php');
+}
 if (ENABLE_CAPTCHA)  require_once('lib/Captcha.php'); 
 
 class PageEditor
@@ -148,7 +153,7 @@ class PageEditor
         // FIXME: NOT_CURRENT_MESSAGE?
         $tokens = array_merge($tokens, $this->getFormElements());
 
-        if (ENABLE_EDIT_TOOLBAR) {
+        if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG) {
             include_once("lib/EditToolbar.php");
             $toolbar = new EditToolbar();
             $tokens = array_merge($tokens, $toolbar->getTokens());
@@ -171,11 +176,11 @@ class PageEditor
             $pagelink = WikiLink($this->page);
         }
 
-
         $title = new FormattedText ($title_fs, $pagelink);
-        if (USE_HTMLAREA and $template == 'editpage') {
-            $WikiTheme->addMoreHeaders(Edit_HtmlArea_Head());
-            //$tokens['PAGE_SOURCE'] = Edit_HtmlArea_ConvertBefore($this->_content);
+        // not for dumphtml or viewsource
+        if (ENABLE_WYSIWYG and $template == 'editpage') { 
+            $WikiTheme->addMoreHeaders(Edit_WYSIWYG_Head());
+            //$tokens['PAGE_SOURCE'] = Edit_WYSIWYG_ConvertBefore($this->_content);
         }
         $template = Template($template, $this->tokens);
         GeneratePage($template, $title, $rev);
@@ -360,9 +365,13 @@ class PageEditor
 
         $oldtext = $current->getPackedContent();
         $newtext =& $this->_content;
+
+        // FIXME: in longer texts the NUM_SPAM_LINKS number should be increased.
+        //        better use a certain  text:link ratio.
+
         // 1. Not more then 20 new external links
-        if ($this->numLinks($newtext) - $this->numLinks($oldtext) >= 20) {
-            // mail the admin?
+        if ($this->numLinks($newtext) - $this->numLinks($oldtext) >= NUM_SPAM_LINKS) {
+            // TODO: mail the admin?
             $this->tokens['PAGE_LOCKED_MESSAGE'] = 
                 HTML($this->getSpamMessage(),
                      HTML::p(HTML::em(_("Too many external links."))));
@@ -420,9 +429,9 @@ class PageEditor
 
     // possibly convert HTMLAREA content back to Wiki markup
     function getContent () {
-        if (USE_HTMLAREA) {
-            $xml_output = Edit_HtmlArea_ConvertAfter($this->_content);
-            $this->_content = join("", $xml_output->_content);
+        if (ENABLE_WYSIWYG) {
+            $xml_output = Edit_WYSIWYG_ConvertAfter($this->_content);
+            //$this->_content = join("", $xml_output->_content);
             return $this->_content;
         } else {
             return $this->_content;
@@ -472,29 +481,30 @@ class PageEditor
     function getTextArea () {
         $request = &$this->request;
 
-        // wrap=virtual is not HTML4, but without it NS4 doesn't wrap
-        // long lines
         $readonly = ! $this->canEdit(); // || $this->isConcurrentUpdate();
-        if (USE_HTMLAREA) {
-            $html = $this->getPreview();
+
+        // WYSIWYG will need two pagetypes: raw wikitest and converted html
+        if (ENABLE_WYSIWYG) {
             $this->_wikicontent = $this->_content;
-            $this->_content = $html->asXML();
+            $this->_content = $this->getPreview();
+            // $html = $this->getPreview();
+            // $this->_content = $html->asXML();
         }
 
-        /** <textarea wrap="virtual"> is not valid xhtml but Netscape 4 requires it
-         * to wrap long lines.
-         */
-        $textarea = HTML::textarea(array('class' => 'wikiedit',
+        $textarea = HTML::textarea(array('class'=> 'wikiedit',
                                          'name' => 'edit[content]',
                                          'id'   => 'edit:content',
                                          'rows' => $request->getPref('editHeight'),
                                          'cols' => $request->getPref('editWidth'),
                                          'readonly' => (bool) $readonly),
                                    $this->_content);
+        /** <textarea wrap="virtual"> is not valid xhtml but Netscape 4 requires it
+         * to wrap long lines.
+         */
         if (isBrowserNS4())
             $textarea->setAttr('wrap', 'virtual');
-        if (USE_HTMLAREA)
-            return Edit_HtmlArea_Textarea($textarea,$this->_wikicontent,'edit[content]');
+        if (ENABLE_WYSIWYG)
+            return Edit_WYSIWYG_Textarea($textarea, $this->_wikicontent, $textarea->getAttr('name'));
         else
             return $textarea;
     }
@@ -563,22 +573,24 @@ class PageEditor
 
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
 
-        $el['WIDTH_PREF'] = HTML::input(array('type' => 'text',
-                                    'size' => 3,
-                                    'maxlength' => 4,
-                                    'class' => "numeric",
-                                    'name' => 'pref[editWidth]',
-                                    'id'   => 'pref:editWidth',
-                                    'value' => $request->getPref('editWidth'),
-                                    'onchange' => 'this.form.submit();'));
-        $el['HEIGHT_PREF'] = HTML::input(array('type' => 'text',
-                                     'size' => 3,
-                                     'maxlength' => 4,
-                                     'class' => "numeric",
-                                     'name' => 'pref[editHeight]',
-                                     'id'   => 'pref:editHeight',
-                                     'value' => $request->getPref('editHeight'),
-                                     'onchange' => 'this.form.submit();'));
+        $el['WIDTH_PREF'] 
+            = HTML::input(array('type'     => 'text',
+                                'size'     => 3,
+                                'maxlength'=> 4,
+                                'class'    => "numeric",
+                                'name'     => 'pref[editWidth]',
+                                'id'       => 'pref:editWidth',
+                                'value'    => $request->getPref('editWidth'),
+                                'onchange' => 'this.form.submit();'));
+        $el['HEIGHT_PREF'] 
+            = HTML::input(array('type'     => 'text',
+                                'size'     => 3,
+                                'maxlength'=> 4,
+                                'class'    => "numeric",
+                                'name'     => 'pref[editHeight]',
+                                'id'       => 'pref:editHeight',
+                                'value'    => $request->getPref('editHeight'),
+                                'onchange' => 'this.form.submit();'));
         $el['SEP'] = $WikiTheme->getButtonSeparator();
         $el['AUTHOR_MESSAGE'] = fmt("Author will be logged as %s.", HTML::em($this->user->getId()));
         
@@ -758,6 +770,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.97  2005/09/26 06:32:22  rurban
+ [] is forbidden in id tags. Renamed to use :
+
  Revision 1.96  2005/05/06 17:54:22  rurban
  silence Preview warnings for PAGE_LOCKED_MESSAGE, CONCURRENT_UPDATE_MESSAGE (thanks to schorni)
 
