@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.18 2005-09-28 19:26:05 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.19 2005-10-10 19:42:15 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -7,6 +7,10 @@ require_once('lib/WikiDB/backend/PearDB.php');
 if (!defined("USE_BYTEA")) // see schemas/psql-initialize.sql
     define("USE_BYTEA", true);
     //define("USE_BYTEA", false);
+/*
+ * Since 1.3.12 changed to use Foreign Keys and ON DELETE CASCADE
+ */
+
 /*
  * Since 1.3.12 changed to use Foreign Keys and ON DELETE CASCADE
  */
@@ -149,22 +153,7 @@ extends WikiDB_backend_PearDB_search
     }
 
     // TODO: use tsearch2. For now the same as parent
-    /*
-    function _fulltext_match_clause($node) { 
-        $word = $node->sql();
-        if ($word == '%')
-            return "1=1";
-        // Eliminate stoplist words
-        if (preg_match("/^%".$this->_stoplist."%/i", $word) 
-            or preg_match("/^".$this->_stoplist."$/i", $word))
-            return $this->_pagename_match_clause($node);
-        else
-            return $this->_pagename_match_clause($node) 
-                . ($this->_case_exact
-                   ? " OR content LIKE '$word'"
-                   : " OR content ILIKE '$word'");
-    }
-    */
+    //function _fulltext_match_clause($node)
 }
 
 // (c-file-style: "gnu")

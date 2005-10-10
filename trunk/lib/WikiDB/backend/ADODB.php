@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.80 2005-09-28 19:26:05 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.81 2005-10-10 19:42:14 rurban Exp $');
 
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
@@ -950,23 +950,24 @@ extends WikiDB_backend
             $orderby = 'ORDER BY ' . $orderby;
             
         if ($exclude_from) // array of pagenames
-            $exclude_from = " AND linked.pagename NOT IN ".$this->_sql_set($exclude_from);
+            $exclude_from = " AND pp.pagename NOT IN ".$this->_sql_set($exclude_from);
         if ($exclude) // array of pagenames
-            $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
+            $exclude = " AND p.pagename NOT IN ".$this->_sql_set($exclude);
 
         /* 
          all empty pages, independent of linkstatus:
            select pagename as empty from page left join nonempty using(id) where isnull(nonempty.id);
          only all empty pages, which have a linkto:
-           select page.pagename, linked.pagename as wantedfrom from link, page as linked 
-             left join page on(link.linkto=page.id) left join nonempty on(link.linkto=nonempty.id) 
-             where isnull(nonempty.id) and linked.id=link.linkfrom;  
+            select page.pagename, linked.pagename as wantedfrom from link, page linked 
+              left join page on link.linkto=page.id left join nonempty on link.linkto=nonempty.id
+              where nonempty.id is null and linked.id=link.linkfrom;  
         */
-        $sql = "SELECT $page_tbl.pagename,linked.pagename as wantedfrom"
-            . " FROM $link_tbl,$page_tbl as linked "
-            . " LEFT JOIN $page_tbl ON($link_tbl.linkto=$page_tbl.id)"
-            . " LEFT JOIN $nonempty_tbl ON($link_tbl.linkto=$nonempty_tbl.id)" 
-            . " WHERE ISNULL($nonempty_tbl.id) AND linked.id=$link_tbl.linkfrom"
+        $sql = "SELECT p.pagename, pp.pagename as wantedfrom"
+            . " FROM $page_tbl p, $link_tbl linked "
+            . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
+            . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id" 
+            . " WHERE ne.id is NULL"
+            .       " AND p.id = linked.linkfrom"
             . $exclude_from
             . $exclude
             . $orderby;
@@ -1053,10 +1054,10 @@ extends WikiDB_backend
                       . " SELECT $recent_tbl.id"
                       . " FROM $recent_tbl, $version_tbl"
                       . " WHERE $recent_tbl.id=$version_tbl.id"
-                      . "       AND version=latestversion"
+                      .       " AND version=latestversion"
                       // We have some specifics here (Oracle)
                       //. "  AND content<>''"
-                      . "  AND content $notempty"
+                      . "  AND content $notempty" // On Oracle not just "<>''"
                       . ( $pageid ? " AND $recent_tbl.id=$pageid" : ""));
         $this->unlock(array('nonempty'));
     }
@@ -1455,6 +1456,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.80  2005/09/28 19:26:05  rurban
+// working on improved postgresql support: better quoting, bytea support
+//
 // Revision 1.79  2005/09/28 19:08:41  rurban
 // dont use LIMIT on modifying queries
 //

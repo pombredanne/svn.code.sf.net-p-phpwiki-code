@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_postgres7.php,v 1.1 2005-09-28 19:26:05 rurban Exp $');
+rcs_id('$Id: ADODB_postgres7.php,v 1.2 2005-10-10 19:42:15 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -30,7 +30,6 @@ extends WikiDB_backend_ADODB
 		$this->_serverinfo['version'] .= ("." . (integer)$arr[2]);
         }
     }
-    
 
     /**
      * Pack tables.
@@ -143,20 +142,7 @@ extends WikiDB_backend_ADOBE_search
     }
 
     // TODO: use tsearch2
-    function _fulltext_match_clause($node) { 
-        $word = $node->sql();
-        if ($word == '%')
-            return "1=1";
-        // Eliminate stoplist words
-        if (preg_match("/^%".$this->_stoplist."%/i", $word) 
-            or preg_match("/^".$this->_stoplist."$/i", $word))
-            return $this->_pagename_match_clause($node);
-        else 
-            return $this->_pagename_match_clause($node) 
-                . ($this->_case_exact
-                   ? " OR content LIKE '$word'"
-                   : " OR content ILIKE '$word'");
-    }
+    //function _fulltext_match_clause($node)
 }
 
 // (c-file-style: "gnu")
