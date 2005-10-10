@@ -1,13 +1,13 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.37 2005-01-25 07:04:27 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.38 2005-10-10 19:36:09 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
  * @author: Jeff Dairiki,
  *          Reini Urban (php5 tricks)
  *
- * FIXME: This module is very php5 sensitive: It was fixed for 1.3.9, 
- *          but is again broken with the 1.3.11.
- *        With allow_call_time_pass_reference clean fixes
+ * WARNING: This module is very php5 sensitive. 
+ *        Fixed for 1.3.9 and 1.3.11.
+ *        With allow_call_time_pass_reference clean fixes.
  */
 
 /**
@@ -604,6 +604,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2005/01/25 07:04:27  rurban
+// case-sensitive for php5
+//
 // Revision 1.36  2004/12/06 19:49:56  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.
