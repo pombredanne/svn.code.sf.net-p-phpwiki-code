@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.245 2005-09-18 16:01:09 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.246 2005-10-10 19:38:48 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -54,8 +54,10 @@
 
     file_mtime ($filename)
     sort_file_mtime ($a, $b)
-    class fileSet {fileSet($directory, $filepattern = false), getFiles($exclude=false, $sortby=false, $limit=false) }
-    class ListRegexExpand { listMatchCallback($item, $key),  expandRegex ($index, &$pages) }
+    class fileSet {fileSet($directory, $filepattern = false), 
+                   getFiles($exclude=false, $sortby=false, $limit=false) }
+    class ListRegexExpand { listMatchCallback($item, $key),  
+                            expandRegex ($index, &$pages) }
 
     glob_to_pcre ($glob)
     glob_match ($glob, $against, $case_sensitive = true)
@@ -462,7 +464,7 @@ function LinkImage($url, $alt = false) {
  * $alt may be an alternate img
  * TODO: Need to unify with WikiPluginCached::embedObject()
  *
- * Note that Safari 1.0 will crash with <object>, use only <embed>
+ * Note that Safari 1.0 will crash with <object>, so use only <embed>
  *   http://www.alleged.org.uk/pdc/2002/svg-object.html
  */
 function ImgObject($img, $url) {
@@ -2020,15 +2022,22 @@ function getMemoryUsage() {
     } elseif (function_exists('getrusage') and ($u = getrusage()) and !empty($u['ru_maxrss'])) {
         $mem = $u['ru_maxrss'];
     } elseif (substr(PHP_OS,0,3) == 'WIN') { // requires a newer cygwin
-        // what we want is the process memory only: apache or php
+        // what we want is the process memory only: apache or php (if CGI)
         $pid = getmypid();
         $memstr = '';
-        // This works only if it's a cygwin process (apache or php)
-        //$memstr = exec("cat /proc/$pid/statm |cut -f1");
+	// win32_ps_stat_proc, win32_ps_stat_mem
+ 	if (function_exists('win32_ps_list_procs')) {
+	    $info = win32_ps_stat_proc($pid);
+	    $memstr = $info['mem'];
+	} else {
+	    // This works only if it's a cygwin process (apache or php)
+	    // requires a newer cygwin
+	    //$memstr = exec("cat /proc/$pid/statm |cut -f1");
 
-        // if it's native windows use something like this: 
-        //   (requires pslist from sysinternals.com)
-        //$memstr = exec("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
+	    // if it's native windows use something like this: 
+	    //   (requires pslist from sysinternals.com)
+	    $memstr = exec("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
+        }
         return (integer) trim($memstr);
     } elseif (1) {
         $pid = getmypid();
@@ -2043,6 +2052,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.245  2005/09/18 16:01:09  rurban
+// trick to send the correct gzipped Content-Length
+//
 // Revision 1.244  2005/09/11 13:24:33  rurban
 // fix shortname, dont quote twice in ListRegexExpand
 //
