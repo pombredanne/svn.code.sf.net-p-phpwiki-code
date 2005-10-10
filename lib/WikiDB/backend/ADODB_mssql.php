@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mssql.php,v 1.1 2004-10-12 13:50:56 rurban Exp $');
+rcs_id('$Id: ADODB_mssql.php,v 1.2 2005-10-10 19:42:15 rurban Exp $');
 
 /**
  * MS SQL extensions for the ADODB DB backend.
@@ -26,7 +26,6 @@ extends WikiDB_backend_ADODB
         //$this->_expressions['iscontent'] = "content NOT LIKE ''";
 
         $this->_prefix = isset($dbparams['prefix']) ? $dbparams['prefix'] : '';
-
     }
     
     /**

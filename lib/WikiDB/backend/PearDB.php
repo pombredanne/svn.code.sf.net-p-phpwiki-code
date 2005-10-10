@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.92 2005-09-14 06:04:43 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.93 2005-10-10 19:42:15 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -844,15 +844,15 @@ extends WikiDB_backend
             $orderby = 'ORDER BY ' . $orderby;
 
         if ($exclude_from) // array of pagenames
-            $exclude_from = " AND linked.pagename NOT IN ".$this->_sql_set($exclude_from);
+            $exclude_from = " AND pp.pagename NOT IN ".$this->_sql_set($exclude_from);
         if ($exclude) // array of pagenames
-            $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
-
-        $sql = "SELECT $page_tbl.pagename,linked.pagename as wantedfrom"
-            . " FROM $link_tbl,$page_tbl as linked "
-            . " LEFT JOIN $page_tbl ON($link_tbl.linkto=$page_tbl.id)"
-            . " LEFT JOIN $nonempty_tbl ON($link_tbl.linkto=$nonempty_tbl.id)" 
-            . " WHERE ISNULL($nonempty_tbl.id) AND linked.id=$link_tbl.linkfrom"
+            $exclude = " AND p.pagename NOT IN ".$this->_sql_set($exclude);
+        $sql = "SELECT p.pagename, pp.pagename as wantedfrom"
+            . " FROM $page_tbl p, $link_tbl linked "
+            . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
+            . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id" 
+            . " WHERE ne.id is NULL"
+	    .       " AND p.id = linked.linkfrom"
             . $exclude_from
             . $exclude
             . $orderby;
@@ -1245,6 +1245,9 @@ extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.92  2005/09/14 06:04:43  rurban
+// optimize searching for ALL (ie %), use the stoplist on PDO
+//
 // Revision 1.91  2005/09/11 14:55:05  rurban
 // implement fulltext stoplist
 //
