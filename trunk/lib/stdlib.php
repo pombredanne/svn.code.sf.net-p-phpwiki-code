@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.246 2005-10-10 19:38:48 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.247 2005-10-10 20:31:21 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -2028,7 +2028,7 @@ function getMemoryUsage() {
 	// win32_ps_stat_proc, win32_ps_stat_mem
  	if (function_exists('win32_ps_list_procs')) {
 	    $info = win32_ps_stat_proc($pid);
-	    $memstr = $info['mem'];
+	    $memstr = $info['mem']['working_set_size'];
 	} else {
 	    // This works only if it's a cygwin process (apache or php)
 	    // requires a newer cygwin
@@ -2052,6 +2052,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.246  2005/10/10 19:38:48  rurban
+// add win32ps
+//
 // Revision 1.245  2005/09/18 16:01:09  rurban
 // trick to send the correct gzipped Content-Length
 //
