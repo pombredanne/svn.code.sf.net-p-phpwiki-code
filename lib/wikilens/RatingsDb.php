@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.12 2004-11-15 16:00:02 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.13 2005-10-10 19:51:41 rurban Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens group manager), Reini Urban (as plugin)
@@ -355,26 +355,36 @@ class RatingsDb extends WikiDB {
         if (is_null($pagename))  $pagename = $this->pagename;
         if (RATING_STORAGE == 'SQL') {
             $dbi = &$this->_sqlbackend;
-            $where = "WHERE 1";
+	    if (isset($pagename) || isset($dimension)) {
+		$where = "WHERE";
+	    }
             if (isset($pagename)) {
                 $raterid = $this->_backend->_get_pageid($pagename, true);
-                $where .= " AND raterpage=$raterid";
+                $where .= " raterpage=$raterid";
             }
             if (isset($dimension)) {
-                $where .= " AND dimension=$dimension";
+		if (isset($pagename)) $where .= " AND";
+                $where .= " dimension=$dimension";
             }
             //$dbh = &$this->_dbi;
             extract($dbi->_table_names);
             $query = "SELECT AVG(ratingvalue) as avg"
-                   . " FROM $rating_tbl r, $page_tbl p "
-                   . $where. " GROUP BY raterpage";
+		   . " FROM $rating_tbl r, $page_tbl p "
+		   . $where
+		   . " GROUP BY raterpage";
             $result = $dbi->_dbh->query($query);
             $iter = new $this->iter_class($this, $result);
             $row = $iter->next();
             return $row['avg'];
         } else {
             if (!$pagename) return 0;
-            return 2.5;
+            $page = $this->_dbi->getPage($pagename);
+            $data = $page->get('rating');
+            if (!empty($data[$dimension]))
+                // hash of userid => rating
+                return array_sum(array_values($data[$dimension])) / count($data[$dimension]);
+	    else
+		return 0;
         }
     }
 //*******************************************************************************
@@ -702,6 +712,11 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/11/15 16:00:02  rurban
+// enable RateIt imgPrefix: '' or 'Star' or 'BStar',
+// enable blue prediction icons,
+// enable buddy predictions.
+//
 // Revision 1.11  2004/11/01 10:44:00  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
