@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.22 2005-01-25 07:15:47 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.23 2005-10-10 20:02:54 rurban Exp $');
 ?>
 <head>
 <?php if (ENABLE_XHTML_XML and strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml')) { ?>
@@ -7,7 +7,8 @@
 <?php } else { ?>
 <meta http-equiv="Content-Type" content="text/html; charset=<?=$charset?>" />
 <?php } ?>
-<meta http-equiv="content-language" content="<?=$GLOBALS['LANG']?>" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Language" content="<?=$GLOBALS['LANG']?>" />
 <?php $ROBOTS_CONTENT = isset($ROBOTS_META) ? $ROBOTS_META : "noindex,nofollow"; ?>
 <meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
 <?php if (!empty($PAGE_DESCRIPTION)) { ?>
@@ -119,6 +120,9 @@ _("UserPreferences"))?>" />
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2005/01/25 07:15:47  rurban
+// fix ROBOTS_META warning, break xgettext strings, add log as comment
+//
 // Revision 1.4  2004/06/18 08:40:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 //
