@@ -1,4 +1,4 @@
--- $Id: psql-destroy.sql,v 1.4 2005-09-28 19:27:23 rurban Exp $
+-- $Id: psql-destroy.sql,v 1.5 2005-10-12 06:08:37 rurban Exp $
 
 \set QUIET
 
@@ -56,6 +56,11 @@ DROP TABLE :rating_tbl;
 DROP TABLE :page_tbl;
 \echo Dropping :page_id_seq only needed for postgresql < 7.2
 DROP SEQUENCE :page_id_seq;
+-- implicit 
+DROP INDEX :page_id_idx;
+DROP INDEX :page_name_idx;
+DROP INDEX :page_pkey;
+DROP INDEX :page_pagename_key;
 
 \echo Dropping :member_tbl
 DROP TABLE :member_tbl;
@@ -68,4 +73,11 @@ DROP TABLE :session_tbl;
 
 \echo Dropping :accesslog_tbl
 DROP TABLE :accesslog_tbl;
+
+DROP INDEX :page_id_idx;
+DROP INDEX :page_name_idx;
+DROP INDEX :vers_id_idx;
+DROP INDEX :vers_mtime_idx;
+DROP INDEX :recent_id_idx;
+
 
