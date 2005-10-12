@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.18 2004-12-17 16:49:52 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.19 2005-10-12 06:19:31 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -55,7 +55,7 @@ extends WikiPlugin_GraphViz
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     /**
@@ -162,7 +162,8 @@ extends WikiPlugin_GraphViz
         /* ($dbi,  $large, $recent, $refined, $backlink,
             $neighbour, $excludelist, $includelist, $color); */
         return $this->invokeDot($argarray);
-        /* ($width, $height, $color, $shape, $text); */
+        /* => ($width, $height, $color, $shape, $text); */
+	
     }
 
     // ------------------------------------------------------------------------------------------
@@ -274,7 +275,7 @@ extends WikiPlugin_GraphViz
     *                              should not be displayed (like PhpWiki, for
     *                              example)
     * @param  INCLUDELIST string   colon separated list of pages which are
-    *                              allways included (for example your own
+    *                              always included (for example your own
     *                              page :)
     * @param  COLOR       string   'age', 'revtime' or 'none'; Selects which
     *                              page feature is used to determine the
@@ -288,20 +289,25 @@ extends WikiPlugin_GraphViz
 
         extract($argarray);
         // FIXME: gettextify?
-        $exclude_list   = explode(':', $exclude_list);
-        $include_list   = explode(':', $include_list);
-        $neighbour_list = explode(':', $neighbour_list);
+        $exclude_list   = $exclude_list ? explode(':', $exclude_list) : array();
+        $include_list   = $include_list ? explode(':', $include_list) : array();
+        $neighbour_list = $neighbour_list ? explode(':', $neighbour_list) : array();
 
-        // FIXME remove INCLUDED from EXCLUDED
+        // remove INCLUDED from EXCLUDED, includes override excludes.
+        if ($exclude_list and $include_list) {
+        	$diff = array_diff($exclude_list, $include_list);
+        	if ($diff)
+        	    $exclude_list = $diff;
+        }
 
         // collect all pages
-        $allpages = $dbi->getAllPages();
+        $allpages = $dbi->getAllPages(false, false, false, $exclude_list);
         $pages = &$this->pages;
         $countpages = 0;
         while ($page = $allpages->next()) {
             $name = $page->getName();
 
-            // skip exluded pages
+            // skip excluded pages
             if (in_array($name, $exclude_list)) {
             	$page->free();	
                 continue;
@@ -331,12 +337,12 @@ extends WikiPlugin_GraphViz
                 unset($con);
             }
 
-            unset($currev);
-            $currev = $page->getCurrentRevision();
+            unset($rev);
+            $rev = $page->getCurrentRevision();
 
             $pages[$name] = array(
-                'age'         => $now - $currev->get('mtime'),
-                'revnr'       => $currev->getVersion(),
+                'age'         => $now - $rev->get('mtime'),
+                'revnr'       => $rev->getVersion(),
                 'links'       => array(),
                 'backlink_nb' => count($bconnection),
                 'backlinks'   => $bconnection,
@@ -375,7 +381,7 @@ extends WikiPlugin_GraphViz
 
         // remove dead links and collect links
         reset($pages);
-        while( list($name,$page) = each($pages) ) {
+        while( list($name, $page) = each($pages) ) {
             if (is_array($page['backlinks'])) {
                 reset($page['backlinks']);
                 while ( list($index, $link) = each( $page['backlinks'] ) ) {
@@ -421,7 +427,7 @@ extends WikiPlugin_GraphViz
         $ok = true;
         $names = &$this->names;
         $pages = &$this->pages;
-	if ($names)
+        if ($names)
             $nametonumber = array_flip($names);
 
         $dot = "digraph VisualWiki {\n" // }
@@ -498,13 +504,13 @@ extends WikiPlugin_GraphViz
                 $legend[] = $name;
             }
             $dot .= '        '. join(' -> ', $legend)
-                 . ";\n    }\n";
-
+		. ";\n    }\n";
         }
 
         // {
         $dot .= "}\n";
-
+        $this->source = $dot;
+        // write a temp file
         $ok = fwrite($fp, $dot);
         $ok = fclose($fp) && $ok;  // close anyway
 
@@ -611,6 +617,9 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/12/17 16:49:52  rurban
+// avoid Invalid username message on Sign In button click
+//
 // Revision 1.17  2004/10/14 19:19:34  rurban
 // loadsave: check if the dumped file will be accessible from outside.
 // and some other minor fixes. (cvsclient native not yet ready)
