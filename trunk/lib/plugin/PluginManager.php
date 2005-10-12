@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.18 2005-09-26 06:38:00 rurban Exp $');
+rcs_id('$Id: PluginManager.php,v 1.19 2005-10-12 06:15:25 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -126,7 +126,6 @@ extends WikiPlugin
             }
             $desc = $p->getDescription();
             $ver = $p->getVersion();
-            //$args = $p->getDefaultArguments();
             $arguments = $p->getArgumentsDescription();
             unset($p); //done querying plugin object, release from memory
 
@@ -189,6 +188,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2005/09/26 06:38:00  rurban
+// use the new method
+//
 // Revision 1.17  2005/01/25 06:58:22  rurban
 // reformatting
 //

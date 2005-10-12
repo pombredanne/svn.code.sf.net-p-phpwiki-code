@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.27 2005-10-10 19:50:45 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.28 2005-10-12 06:15:25 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,25 +52,25 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     function getDefaultArguments() {
-        return array( 'pagename'  => '[pagename]', // not sure yet. TOC of another page here?
+        return array( 'pagename'  => '[pagename]', // TOC of another page here?
                       // or headers=1,2,3 is also possible.
-                      'headers'   => "!!!,!!,!",   // "!!!" => h1, "!!" => h2, "!" => h3
+                      'headers'   => "!!!,!!,!",   // "!!!"=>h1, "!!"=>h2, "!"=>h3
                       'noheader'  => 0,            // omit <h1>Table of Contents</h1>
                       'align'     => 'left',
                       'with_toclink' => 0,         // link back to TOC
                       'jshide'    => 0,            // collapsed TOC as DHTML button
                       'liststyle' => 'dl',         // or 'ul' or 'ol'
                       'indentstr' => '&nbsp;&nbsp;',
-		      'with_counter'   => 0,                      
+		      'with_counter' => 0,
                       );
     }
     // Initialisation of toc counter
     function _initTocCounter() {
-        $counter=array(1=>1, 2=>0, 3=>0);
+        $counter = array(1=>1, 2=>0, 3=>0);
         return $counter;
     }
 
@@ -137,11 +137,11 @@ extends WikiPlugin
             }
             elseif (isa($content[$j], 'cached_link'))
             {
-		// shortcut for single wikiword or link headers
 		if (method_exists($content[$j],'asXML'))
 		    $content[$j] = $content[$j]->asXML();
 		else
 		    $content[$j] = $content[$j]->asString();
+		// shortcut for single wikiword or link headers
 		if ($content[$j] == $heading
 		    and substr($content[$j-1],-4,4) == "<$h>" 
 		    and substr($content[$j+1],0,5) == "</$h>") 
@@ -387,6 +387,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2005/10/10 19:50:45  rurban
+// fix the missing formatting problems, add with_counter arg by ?? (20050106), Thanks to ManuelVacelet for the testcase
+//
 // Revision 1.26  2004/09/20 14:07:16  rurban
 // fix Constant toc_full_syntax already defined warning
 //
