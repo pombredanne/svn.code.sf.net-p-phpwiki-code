@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.11 2004-12-10 22:15:00 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.12 2005-10-12 06:17:45 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -18,8 +18,13 @@ class WikiDB_ADODB extends WikiDB
             $backend = $dbparams['dsn']['phptype'];
         elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
             $backend = $m[1];
-        // Do we have a override? (currently: mysql, sqlite, oracle, mssql)
-        // TODO: pgsql, mysqlt (innodb or bdb)
+        // Do we have a override? (currently: mysql, sqlite, oracle, mssql, oci8po, postgres7)
+        // TODO: mysqlt (innodb or bdb)
+	if ($backend_type == 'pgsql') { // PearDB DSN cross-compatiblity hack (for unit testing)
+	    $backend_type = 'postgres7';
+	    if (is_string($dbparams['dsn']))
+		$dbparams['dsn'] = $backend_type . ':' . substr($dbparams['dsn'], 6);
+	}
         if (FindFile("lib/WikiDB/backend/ADODB_$backend.php",true)) {
             $backend = 'ADODB_' . $backend;
         } else {
