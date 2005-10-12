@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.130 2005-08-07 09:14:39 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.131 2005-10-12 06:16:48 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -730,7 +730,7 @@ extends _WikiUser
         $packed = $prefs->store();
         $unpacked = $prefs->unpack($packed);
         if (count($unpacked)) {
-            foreach (array('_method','_select','_update') as $param) {
+            foreach (array('_method','_select','_update','_insert') as $param) {
             	if (!empty($this->_prefs->{$param}))
             	    $prefs->{$param} = $this->_prefs->{$param};
             }
