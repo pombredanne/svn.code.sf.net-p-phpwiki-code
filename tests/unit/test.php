@@ -64,6 +64,7 @@ $ini_sep = substr(PHP_OS,0,3) == 'WIN' ? ';' : ':';
 $include_path = ini_get('include_path') . $ini_sep . $rootdir . $ini_sep . $rootdir . "lib/pear";
 ini_set('include_path', $include_path);
 define('DEFAULT_LANGUAGE','en'); // don't use browser detection
+$LANG='en';
 
 if (!empty($HTTP_SERVER_VARS) and $HTTP_SERVER_VARS["SERVER_NAME"] == 'phpwiki.sourceforge.net') {
     ini_set('include_path', ini_get('include_path') . ":/usr/share/pear");
@@ -76,8 +77,17 @@ if (!empty($HTTP_SERVER_VARS) and $HTTP_SERVER_VARS["SERVER_NAME"] == 'phpwiki.s
 $database_backends = array(
                            'file',
                            'dba',
-                           'SQL',
-                           'ADODB',
+                           'SQL',   // default backend defined in the config.ini DSN
+                           'ADODB', // same backend as defined in the config.ini DSN
+			   // specific backends (need to be setup)
+			   'PearDB_pgsql', 'PearDB_sqlite',
+			   //'PearDB_oci8', 'PearDB_mysql', 
+			   //'PearDB_mssql', 
+			   'ADODB_postgres7', 'ADODB_sqlite', 
+			   //'ADODB_oci8', 'ADODB_mysql', 
+			   //'ADODB_mssql', 
+			   'PDO_pqsql', 'PDO_sqlite', 
+			   //'PDO_oci', 'PDO_mysql', 'PDO_odbc', 
                            );
 //TODO: convert cvs test                           
 //TODO: read some database values from config.ini, just use the "test_" prefix
@@ -194,6 +204,7 @@ function purge_testbox() {
         break;
     case 'SQL':
     case 'ADODB':
+    case 'PDO':
         foreach ($dbi->_backend->_table_names as $table) {
             $dbi->genericSqlQuery("DELETE FROM $table");
         }
@@ -516,7 +527,6 @@ else {
     $request->_prefs = $request->_user->getPreferences();
 }
 */
-include_once("themes/" . THEME . "/themeinfo.php");
 if (DEBUG & _DEBUG_TRACE)
     printMemoryUsage("PhpWikiLoaded");
 
@@ -528,7 +538,8 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
 // save and restore all args for each test.
 class phpwiki_TestCase extends PHPUnit_TestCase {
     function setUp() { 
-        global $request;
+        global $request, $WikiTheme;
+	include_once("themes/" . THEME . "/themeinfo.php");
         $this->_savedargs = $request->_args;
         $request->_args = array();
         if (DEBUG & 1) {
@@ -548,12 +559,22 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
 foreach ($run_database_backends as $dbtype) {
     //    if (DEBUG & _DEBUG_TRACE)
     //        printMemoryUsage("PHPUnitInitialized");
-
-    $DBParams['dbtype']               = $dbtype;
+    $DBParams['dbtype'] = $dbtype;
+    if (string_starts_with($dbtype, 'PearDB_')) {
+	$DBParams['dbtype'] = 'SQL';
+	preg_replace("/^([^:]+):/", substr($dbtype, 7).":", $DBParams['dsn']);
+    }
+    if (string_starts_with($dbtype, 'ADODB_')) {
+	$DBParams['dbtype'] = 'ADODB';
+	preg_replace("/^([^:]+):/", substr($dbtype, 6).":", $DBParams['dsn']);
+    }
+    if (string_starts_with($dbtype, 'PDO_')) {
+	$DBParams['dbtype'] = 'PDO';
+	preg_replace("/^([^:]+):/", substr($dbtype, 4).":", $DBParams['dsn']);
+    }
     $DBParams['directory']            = $cur_dir . '/.testbox';
     $DBParams['prefix']               = $database_prefix;
     // from config.ini
-    //$DBParams['dsn']                  = $database_dsn;
     //$DBParams['dba_handler']          = $database_dba_handler;
 
     echo "Testing DB Backend \"$dbtype\" ...\n";
