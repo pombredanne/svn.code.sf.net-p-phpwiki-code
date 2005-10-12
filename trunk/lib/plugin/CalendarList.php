@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CalendarList.php,v 1.7 2005-07-21 18:55:55 rurban Exp $');
+rcs_id('$Id: CalendarList.php,v 1.8 2005-10-12 06:18:31 rurban Exp $');
 
 /**
  Copyright 1999,2000,2001,2002,2005 $ThePhpWikiProgrammingTeam
@@ -22,10 +22,6 @@ rcs_id('$Id: CalendarList.php,v 1.7 2005-07-21 18:55:55 rurban Exp $');
  */
 
 // if not defined in config.ini
-if (!defined('SECONDS_PER_DAY'))		
-  define('SECONDS_PER_DAY',		24 * 3600);
-if (!defined('SUBPAGE_SEPARATOR'))		
-  define('SUBPAGE_SEPARATOR',		"/");
 if (!defined('PLUGIN_CALENDARLIST_ORDER'))	
   define('PLUGIN_CALENDARLIST_ORDER',	'normal');
 if (!defined('PLUGIN_CALENDARLIST_NEXT_N_DAYS'))
@@ -110,7 +106,7 @@ extends WikiPlugin
                 $timeTMP = $t;			    //  capture the date of this event for return
                 if ($n-- <= 0) break;		    //  if we reached the limit, return the date
             }
-            $t += SECONDS_PER_DAY * $direction;	    // advance one day back or forward
+            $t += 24 * 3600 * $direction;	    // advance one day back or forward
         }
         
         // return the date of the N-th or last, most past/future event in the range
@@ -226,19 +222,19 @@ extends WikiPlugin
         // ***************************************************
         //	run up or down the date range; this is the real workhorse loop
         if ($args['order'] == "reverse") {
-            $timeBreak -= SECONDS_PER_DAY;
+            $timeBreak -= (24 * 3600);
         } else {
-            $timeBreak += SECONDS_PER_DAY;
+            $timeBreak += (24 * 3600);
         }
         while (!$done) {
             $success = $cal->pushContent($this->_date($dbi, $time));
             if ($args['order'] == "reverse") {
-                $time -= SECONDS_PER_DAY;
+                $time -= (24 * 3600);
                 if ($time < $timeBreak) {
                     break;
                 }
             } else {
-                $time += SECONDS_PER_DAY;
+                $time += (24 * 3600);
                 if ($time > $timeBreak) {
                     break;
                 }
@@ -253,6 +249,10 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2005/07/21 18:55:55  rurban
+// applied mpullen patch (Revised to work on all date range combinations...),
+// but still does not work as documented.
+//
 // Revision 1.6.2  2005/06/24 12:00:00  mpullen
 //   Corrected bug in the main WHILE loop to detect proper termination point in time
 //   {it was stopping one day too soon in either direction}.
