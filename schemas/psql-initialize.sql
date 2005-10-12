@@ -1,6 +1,7 @@
--- $Id: psql-initialize.sql,v 1.6 2005-09-28 19:27:23 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.7 2005-10-12 06:08:37 rurban Exp $
 
 \set QUIET
+
 
 --================================================================
 -- Prefix for table names.
@@ -15,6 +16,7 @@
 --
 -- You should set this to the name of the postgres
 -- user who will be accessing the tables.
+-- See DATABASE_DSN in config.ini
 --
 -- Commonly, connections from php are made under
 -- the user name of 'nobody', 'apache' or 'www'.
@@ -62,15 +64,15 @@
 
 \set pref_tbl 	 	:prefix 'pref'
 \set pref_id_idx 	:prefix 'pref_id_idx'
-\set user_tbl 	 	:prefix 'users'
-\set user_id_idx  	:prefix 'users_id_idx'
+--\set user_tbl 	 	:prefix 'users'
+--\set user_id_idx  	:prefix 'users_id_idx'
 \set member_tbl  	:prefix 'member'
 \set member_id_idx  	:prefix 'member_id_idx'
 \set member_group_idx 	:prefix 'member_group_idx'
 
 \set rating_tbl		:prefix 'rating'
 \set rating_id_idx 	:prefix 'rating_id_idx'
-  
+
 \set accesslog_tbl 	:prefix 'accesslog'
 \set accesslog_time_idx :prefix 'log_time_idx'
 \set accesslog_host_idx :prefix 'log_host_idx'
@@ -84,7 +86,7 @@ CREATE TABLE :page_tbl (
 	cached_html  	bytea DEFAULT ''
 );
 -- CREATE UNIQUE INDEX :page_id_idx ON :page_tbl (id);
-CREATE UNIQUE INDEX :page_name_idx ON :page_tbl (pagename);
+-- CREATE UNIQUE INDEX :page_name_idx ON :page_tbl (pagename);
 
 \echo Creating :version_tbl
 CREATE TABLE :version_tbl (
@@ -108,9 +110,10 @@ CREATE TABLE :recent_tbl (
 );
 CREATE UNIQUE INDEX :recent_id_idx ON :recent_tbl (id);
 
+
 \echo Creating :nonempty_tbl
 CREATE TABLE :nonempty_tbl (
-	INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE
+	id		INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX :nonmt_id_idx ON :nonempty_tbl (id);
 
@@ -155,13 +158,12 @@ CREATE INDEX :sess_ip_idx   ON :session_tbl (sess_ip);
 
 \echo Creating :pref_tbl
 CREATE TABLE :pref_tbl (
-  	userid    CHAR(48) PRIMARY KEY,
-  	prefs  	  TEXT NULL DEFAULT '',
-	passwd    CHAR(48) DEFAULT '',
+  	userid 	CHAR(48) PRIMARY KEY,
+  	prefs  	TEXT NULL DEFAULT '',
+	passwd  CHAR(48) DEFAULT '',
 	groupname CHAR(48) DEFAULT 'users'
 );
 -- CREATE UNIQUE INDEX :pref_id_idx ON :pref_tbl (userid);
-CREATE INDEX :pref_group_idx ON :pref_tbl (groupname);
 
 -- Use the member table, if you need it for n:m user-group relations,
 -- and adjust your DBAUTH_AUTH_ SQL statements.

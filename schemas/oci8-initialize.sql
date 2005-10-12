@@ -1,4 +1,4 @@
--- $Id: oci8-initialize.sql,v 1.4 2005-06-21 05:59:18 rurban Exp $
+-- $Id: oci8-initialize.sql,v 1.5 2005-10-12 06:08:37 rurban Exp $
 
 set verify off
 set feedback off
@@ -7,7 +7,7 @@ set feedback off
 -- Prefix for table names.
 --
 -- You should set this to the same value you specify for
--- $DBParams['prefix'] in index.php.
+-- DATABASE_PREFIX in config.ini
 --
 -- You have to use a prefix, because some phpWiki tablenames are 
 -- Oracle reserved words!
@@ -62,8 +62,8 @@ define sess_ip=&prefix.sess_ip
 define pref_tbl=&prefix.pref
 define pref_id=&prefix.pref_id
 
-define user_tbl=&prefix.user
-define user_id=&prefix.user_id
+--define user_tbl=&prefix.user
+--define user_id=&prefix.user_id
 
 define member_tbl=&prefix.member
 define member_userid=&prefix.member_userid
@@ -144,20 +144,21 @@ prompt Creating &pref_tbl
 CREATE TABLE &pref_tbl (
   	userid 	CHAR(48) NOT NULL,
   	prefs  	CLOB DEFAULT '',
+	passwd  CHAR(48) DEFAULT '',
+	groupname CHAR(48) DEFAULT 'users',
 	CONSTRAINT &pref_id PRIMARY KEY (userid)
 );
 
 -- better use the extra pref table where such users can be created easily 
 -- without password.
-
-prompt Creating &user_tbl
-CREATE TABLE &user_tbl (
-  	userid 	CHAR(48) NOT NULL,
-  	passwd 	CHAR(48) DEFAULT '',
+--prompt Creating &user_tbl
+--CREATE TABLE &user_tbl (
+--  	userid 	CHAR(48) NOT NULL,
+--  	passwd 	CHAR(48) DEFAULT '',
 --	prefs  	CLOB DEFAULT '',
 --	groupname CHAR(48) DEFAULT 'users',
-  	CONSTRAINT &user_id PRIMARY KEY (userid)
-);
+--  	CONSTRAINT &user_id PRIMARY KEY (userid)
+--);
 
 prompt Creating &member_tbl
 CREATE TABLE &member_tbl (
