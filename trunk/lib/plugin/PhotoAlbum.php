@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.13 2005-09-26 06:39:55 rurban Exp $');
+rcs_id('$Id: PhotoAlbum.php,v 1.14 2005-10-12 06:19:07 rurban Exp $');
 /*
  Copyright 2003, 2004, 2005 $ThePhpWikiProgrammingTeam
  
@@ -100,7 +100,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
 // Avoid nameclash, so it's disabled. We allow any url.
@@ -133,15 +133,15 @@ extends WikiPlugin
                          // attrib arg allows multiple attributes: attrib=sort,nowrap,alt
                          // 'sort' sorts alphabetically, 'nowrap' for cells, 'alt' to use
                         // descs instead of filenames in image ALT-tags
-                     'bgcolor'  => '#eae8e8',    // cell bgcolor (lightgrey)
-                     'hlcolor'    => '#c0c0ff',    // highlight color (lightblue)
-                     'align'    => 'center',    // alignment of table
-                     'height'   => 'auto',    // image height (auto|75|100%)
-                     'width'    => 'auto',    // image width (auto|75|100%)
+                     'bgcolor'  => '#eae8e8',	// cell bgcolor (lightgrey)
+                     'hlcolor'	=> '#c0c0ff',	// highlight color (lightblue)
+                     'align'	=> 'center',	// alignment of table
+                     'height'   => 'auto',	// image height (auto|75|100%)
+                     'width'    => 'auto',	// image width (auto|75|100%)
                      // Size of shown photos. Either absolute value (e.g. "50") or
                      // HTML style percentage (e.g. "75%") or "auto" for no special
                      // action.
-                     'cellwidth'=> 'image',    // cell (auto|equal|image|75|100%)
+                     'cellwidth'=> 'image',	// cell (auto|equal|image|75|100%)
                      // Width of cells in table. Either absolute value in pixels, HTML
                      // style percentage, "auto" (no special action), "equal" (where
                      // all columns are equally sized) or "image" (take height and
@@ -277,7 +277,7 @@ display_slides();"));
             // convert $value["name"] from webpath to local path
             $size = @getimagesize($value["name"]); // try " " => "\\ "
             if (!$size and !empty($value["src"])) {
-                $size = getimagesize($value["src"]);
+                $size = @getimagesize($value["src"]);
                 if (!$size) {
                     trigger_error("Unable to getimagesize(".$value["name"].")", 
                                   E_USER_NOTICE);
@@ -487,7 +487,7 @@ display_slides();"));
                     $row->setContent('');
             }
         }
-        
+
         //create main table
         $table_attributes = array("border"      => 0,
                                   "cellpadding" => 5,
@@ -528,14 +528,14 @@ display_slides();"));
     * @return string Error if fixed location is not allowed
     */
     function fromLocation($src, &$photos) {
-        /*if (!allow_album_location) {
-             return $this->error(_("Fixed album location is not allowed. Please specify parameter src."));
+    	/*if (!allow_album_location) {
+    	    return $this->error(_("Fixed album location is not allowed. Please specify parameter src."));
         }*/
         //FIXME!
         if (! IsSafeURL($src)) {
             return $this->error(_("Bad url in src: remove all of <, >, \""));
         }
-        $photos[] = array ("name" => $src, //album_location."/$src".album_default_extension,
+    	$photos[] = array ("name" => $src, //album_location."/$src".album_default_extension,
                            "desc" => "");
     }
 
@@ -649,6 +649,9 @@ display_slides();"));
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2005/09/26 06:39:55  rurban
+// re-add lost mode=column|row. by Thomas Harding
+//
 // Revision 1.12  2005/09/20 19:34:51  rurban
 // slide and thumbs mode by Thomas Harding
 //
