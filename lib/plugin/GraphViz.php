@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GraphViz.php,v 1.5 2005-09-26 06:39:14 rurban Exp $');
+rcs_id('$Id: GraphViz.php,v 1.6 2005-10-12 06:19:07 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -122,7 +122,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
     function getDefaultArguments() {
         return array(
@@ -209,7 +209,8 @@ extends WikiPluginCached
             $source = "digraph GraphViz {\n";  // }
             foreach ($argarray['pages'] as $name) { // support <!plugin-list !> pagelists
                 // allow Page/SubPage
-                $url = str_replace(urlencode(SUBPAGE_SEPARATOR), SUBPAGE_SEPARATOR, rawurlencode($name));
+                $url = str_replace(urlencode(SUBPAGE_SEPARATOR), SUBPAGE_SEPARATOR, 
+				   rawurlencode($name));
                 $source .= "  \"$name\" [URL=\"$url\"];\n";
             }
             // {
@@ -285,8 +286,8 @@ extends WikiPluginCached
 	    // clean up tempfiles
 	    if (!$argarray['debug'])
 		foreach (array('',".$gif",'.dot') as $ext) {
-		    if (file_exists($tempfiles.$ext))
-			unlink($tempfiles.$ext);
+		    //if (file_exists($tempfiles.$ext))
+		    @unlink($tempfiles.$ext);
 		}
 	    return $img;
 	}
@@ -410,7 +411,7 @@ extends WikiPluginCached
         if ($ok and !$argarray['debug'])
             foreach (array('',".$gif",'.map','.dot') as $ext) {
                 //if (file_exists($tempfiles.$ext))
-		@unlink($tempfiles.$ext);
+		        @unlink($tempfiles.$ext);
             }
 
         if ($ok)
@@ -422,6 +423,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2005/09/26 06:39:14  rurban
+// use cached img and map - again. Remove execute from here
+//
 // Revision 1.4  2005/05/06 16:54:59  rurban
 // add failing cmdline for .map
 //
