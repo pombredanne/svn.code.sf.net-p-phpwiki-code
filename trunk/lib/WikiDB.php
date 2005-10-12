@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.136 2005-10-03 16:14:57 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.137 2005-10-12 06:16:18 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -220,20 +220,24 @@ class WikiDB {
         if (! $this->isWikiPage($pagename) and !isa($GLOBALS['request'],'MockRequest')) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
+                global $request;
                 //TODO: deferr it (quite a massive load if you remove some pages).
                 //TODO: notification class which catches all changes,
-                //  and decides at the end of the request what to mail. (type, page, who, what, users, emails)
+                //  and decides at the end of the request what to mail. 
+                //  (type, page, who, what, users, emails)
                 // could be used for PageModeration and RSS2 Cloud xml-rpc also.
                 $page = new WikiDB_Page($this, $pagename);
                 list($emails, $userids) = $page->getPageChangeEmails($notify);
                 if (!empty($emails)) {
-                    $editedby = sprintf(_("Removed by: %s"), $GLOBALS['request']->_user->getId()); // Todo: host_id
+                    $from = $request->_user->getId() . '@' .  $request->get('REMOTE_HOST');
+                    $editedby = sprintf(_("Removed by: %s"), $from);
                     $emails = join(',', $emails);
                     $subject = sprintf(_("Page removed %s"), urlencode($pagename));
-                    if (mail($emails,"[".WIKI_NAME."] ".$subject, 
+                    if (mail("<undisclosed-recipients>","[".WIKI_NAME."] ".$subject, 
                              $subject."\n".
                              $editedby."\n\n".
-                             "Deleted $pagename"))
+                             "Deleted $pagename",
+                             "From: $from\r\nBcc: $emails"))
                         trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
                                               $pagename, join(',',$userids)), E_USER_NOTICE);
                     else
@@ -997,7 +1001,8 @@ class WikiDB_Page
         global $request;
         if (@is_array($request->_deferredPageChangeNotification)) {
             // collapse multiple changes (loaddir) into one email
-            $request->_deferredPageChangeNotification[] = array($this->_pagename, $emails, $userids);
+            $request->_deferredPageChangeNotification[] 
+		= array($this->_pagename, $emails, $userids);
             return;
         }
         $backend = &$this->_wikidb->_backend;
@@ -1032,13 +1037,13 @@ class WikiDB_Page
                 Iso8601DateTime($meta['mtime']) . "\n";
             $content .= _("New page");
         }
-        $editedby = sprintf(_("Edited by: %s"), $meta['author']);
+        $from = $request->_user->getId() . '@' .  $request->get('REMOTE_HOST');
+        $editedby = sprintf(_("Edited by: %s"), $from);
         $emails = join(',',$emails);
-        if (mail($emails,"[".WIKI_NAME."] ".$subject, 
-                 $subject."\n".
-                 $editedby."\n".
-                 $difflink."\n\n".
-                 $content))
+        if (mail("<undisclosed-recipients>",
+                 "[".WIKI_NAME."] ".$subject, 
+                 $subject."\n". $editedby."\n". $difflink."\n\n". $content,
+                 "From: $from\r\nBcc: $emails"))
             trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
                                   $this->_pagename, join(',',$userids)), E_USER_NOTICE);
         else
@@ -1054,21 +1059,21 @@ class WikiDB_Page
             $request->_deferredPageRenameNotification[] = array($this->_pagename, 
                                                                 $to, $meta, $emails, $userids);
         } else {
-            $from = $this->_pagename;
-            $editedby = sprintf(_("Edited by: %s"), $meta['author']) . ' ' . $meta['author_id'];
+            $oldname = $this->_pagename;
+            $from = $request->_user->getId() . '@' .  $request->get('REMOTE_HOST');
+            $editedby = sprintf(_("Edited by: %s"), $from);
             $emails = join(',',$emails);
-            $subject = sprintf(_("Page rename %s to %s"), urlencode($from), urlencode($to));
+            $subject = sprintf(_("Page rename %s to %s"), urlencode($oldname), urlencode($to));
             $link = WikiURL($to, true);
-            if (mail($emails,"[".WIKI_NAME."] ".$subject, 
-                     $subject."\n".
-                     $editedby."\n".
-                     $link."\n\n".
-                     "Renamed $from to $to"))
+            if (mail("<undisclosed-recipients>",
+                     "[".WIKI_NAME."] ".$subject, 
+                     $subject."\n".$editedby."\n".$link."\n\n"."Renamed $from to $to",
+                     "From: $from\r\nBcc: $emails"))
                 trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
-                                      $from, join(',',$userids)), E_USER_NOTICE);
+                                      $oldname, join(',',$userids)), E_USER_NOTICE);
             else
                 trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
-                                      $from, join(',',$userids)), E_USER_WARNING);
+                                      $oldname, join(',',$userids)), E_USER_WARNING);
         }
     }
 
@@ -2193,6 +2198,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.136  2005/10/03 16:14:57  rurban
+// improve description
+//
 // Revision 1.135  2005/09/11 14:19:44  rurban
 // enable LIMIT support for fulltext search
 //
