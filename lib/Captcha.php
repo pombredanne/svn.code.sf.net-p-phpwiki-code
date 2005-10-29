@@ -1,8 +1,10 @@
 <?php
+rcs_id('$Id: Captcha.php,v 1.3 2005-10-29 07:37:56 rurban Exp $');
 /*
   Session Captcha v1.0
   by Gavin M. Roy <gmr@bteg.net>
   Modified by Benjamin Drieu <bdrieu@april.org> - 2005 for PhpWiki
+  get_captcha_random_word() contributed by Dan Frankowski 2005 for PhpWiki
 
   This File is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -20,7 +22,14 @@
 */
 
 
-function get_captcha_word () {
+function get_captcha_word () { 
+    if (USE_CAPTCHA_RANDOM_WORD)
+	return get_captcha_dictionary_word(); 
+    else
+	return get_captcha_random_word(); 
+}
+
+function get_captcha_dictionary_word () {
     // Load In the Word List
     $fp = fopen(FindFile("lib/captcha/dictionary"), "r");
     while ( !feof($fp) )
@@ -33,6 +42,20 @@ function get_captcha_word () {
 	$x = rand(0, Count($text));
 	return $text[$x];
     }
+}
+
+/* by Dan Frankowski.
+ */
+function get_captcha_random_word () {
+    // Pick a few random letters or numbers
+    $word = "";
+    // Don't use 1 <=> l or 0 (for o), because they're hard to read
+    $letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHIJKMNOPQRSTUVWXYZ23456789";
+    $letter_len = strlen($letters);
+    for ($i=0; $i<4; $i++) {
+        $word .= $letters[mt_rand(0, $letter_len-1)];
+    }
+    return $word;
 }
 
 // Draw the Spiral
@@ -79,7 +102,9 @@ function captcha_image ( $word ) {
 	$y = rand(25, 50);
     $x = rand(10, $width-100);
 
-    imagettftext($jpg, $size, $angle, $x, $y, $tx, realpath(FindFile("lib/captcha/Vera.ttf")), $word);
+    imagettftext($jpg, $size, $angle, $x, $y, $tx, 
+		 realpath(FindFile("lib/captcha/Vera.ttf")), 
+		 $word);
 
     $x = rand(0, 280);
     $y = rand(0, 115);
@@ -93,4 +118,14 @@ function captcha_image ( $word ) {
     header("Content-type: image/jpeg");
     ImageJpeg($jpg);
 }
+
+// $Log: not supported by cvs2svn $
+
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:   
 ?>
