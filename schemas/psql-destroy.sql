@@ -1,4 +1,4 @@
--- $Id: psql-destroy.sql,v 1.5 2005-10-12 06:08:37 rurban Exp $
+-- $Id: psql-destroy.sql,v 1.6 2005-10-29 09:20:15 rurban Exp $
 
 \set QUIET
 
@@ -73,6 +73,20 @@ DROP TABLE :session_tbl;
 
 \echo Dropping :accesslog_tbl
 DROP TABLE :accesslog_tbl;
+
+DROP INDEX :page_id_idx;
+DROP INDEX :page_name_idx;
+DROP INDEX :vers_id_idx;
+DROP INDEX :vers_mtime_idx;
+DROP INDEX :recent_id_idx;
+
+
+DROP INDEX :page_id_idx;
+DROP INDEX :page_name_idx;
+DROP INDEX :vers_id_idx;
+DROP INDEX :vers_mtime_idx;
+DROP INDEX :recent_id_idx;
+
 
 DROP INDEX :page_id_idx;
 DROP INDEX :page_name_idx;
