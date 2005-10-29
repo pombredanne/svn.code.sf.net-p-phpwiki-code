@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-27 17:30+0000\n"
+"POT-Creation-Date: 2005-10-29 13:06+0000\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -45,8 +45,8 @@ msgstr ""
 msgid "Undo disabled"
 msgstr "<未能顯示>"
 
-#: ../lib/EditToolbar.php:57 ../lib/EditToolbar.php:230
-#: ../lib/EditToolbar.php:231 ../lib/plugin/WikiAdminSearchReplace.php:187
+#: ../lib/EditToolbar.php:57 ../lib/EditToolbar.php:253
+#: ../lib/EditToolbar.php:254 ../lib/plugin/WikiAdminSearchReplace.php:187
 msgid "Search & Replace"
 msgstr "搜尋與取代"
 
@@ -78,15 +78,15 @@ msgstr "取代:"
 msgid "OK"
 msgstr ""
 
-#: ../lib/EditToolbar.php:65 ../lib/EditToolbar.php:285
-#: ../lib/EditToolbar.php:331 ../lib/EditToolbar.php:355
-#: ../lib/EditToolbar.php:388
+#: ../lib/EditToolbar.php:65 ../lib/EditToolbar.php:308
+#: ../lib/EditToolbar.php:354 ../lib/EditToolbar.php:378
+#: ../lib/EditToolbar.php:411
 msgid "Close"
 msgstr ""
 
 #: ../lib/EditToolbar.php:80
 #, php-format
-msgid "Substring \"%s\" found %s times. Replace with with \"%s\"?"
+msgid "Substring \"%s\" found %s times. Replace with \"%s\"?"
 msgstr ""
 
 #: ../lib/EditToolbar.php:82
@@ -98,120 +98,120 @@ msgstr "未找到頁面 %s."
 msgid "Operation undone"
 msgstr ""
 
-#: ../lib/EditToolbar.php:144 ../lib/EditToolbar.php:145
+#: ../lib/EditToolbar.php:167 ../lib/EditToolbar.php:168
 msgid "Bold text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:149 ../lib/EditToolbar.php:150
+#: ../lib/EditToolbar.php:172 ../lib/EditToolbar.php:173
 msgid "Italic text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:154
+#: ../lib/EditToolbar.php:177
 msgid "optional label | PageName"
 msgstr ""
 
-#: ../lib/EditToolbar.php:155
+#: ../lib/EditToolbar.php:178
 #, fuzzy
 msgid "Link to page"
 msgstr "解除鎖定此頁面"
 
-#: ../lib/EditToolbar.php:159
+#: ../lib/EditToolbar.php:182
 msgid "optional label | http://www.example.com"
 msgstr ""
 
-#: ../lib/EditToolbar.php:160
+#: ../lib/EditToolbar.php:183
 msgid "External link (remember http:// prefix)"
 msgstr ""
 
-#: ../lib/EditToolbar.php:164
+#: ../lib/EditToolbar.php:187
 msgid "Headline text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:165
+#: ../lib/EditToolbar.php:188
 msgid "Level 1 headline"
 msgstr ""
 
-#: ../lib/EditToolbar.php:169
+#: ../lib/EditToolbar.php:192
 msgid "Example.jpg"
 msgstr ""
 
-#: ../lib/EditToolbar.php:170
+#: ../lib/EditToolbar.php:193
 msgid "Embedded image"
 msgstr ""
 
-#: ../lib/EditToolbar.php:174
+#: ../lib/EditToolbar.php:197
 msgid "Insert non-formatted text here"
 msgstr ""
 
-#: ../lib/EditToolbar.php:175
+#: ../lib/EditToolbar.php:198
 msgid "Ignore wiki formatting"
 msgstr ""
 
-#: ../lib/EditToolbar.php:180
+#: ../lib/EditToolbar.php:203
 #, fuzzy
 msgid "Your signature"
 msgstr "你的版本"
 
-#: ../lib/EditToolbar.php:185
+#: ../lib/EditToolbar.php:208
 msgid "Horizontal line"
 msgstr ""
 
-#: ../lib/EditToolbar.php:187 ../lib/EditToolbar.php:189
-#: ../lib/editpage.php:562
+#: ../lib/EditToolbar.php:210 ../lib/EditToolbar.php:212
+#: ../lib/editpage.php:592
 msgid "Save"
 msgstr "儲存"
 
-#: ../lib/EditToolbar.php:191 ../lib/EditToolbar.php:193
-#: ../lib/editpage.php:558
+#: ../lib/EditToolbar.php:214 ../lib/EditToolbar.php:216
+#: ../lib/editpage.php:588
 msgid "Preview"
 msgstr "預覽"
 
-#: ../lib/EditToolbar.php:209
+#: ../lib/EditToolbar.php:232
 msgid "Click a button to get an example text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:222 ../lib/EditToolbar.php:223
+#: ../lib/EditToolbar.php:245 ../lib/EditToolbar.php:246
 #, fuzzy
 msgid "Undo Search & Replace"
 msgstr "搜尋與取代"
 
-#: ../lib/EditToolbar.php:279 ../lib/EditToolbar.php:280
+#: ../lib/EditToolbar.php:302 ../lib/EditToolbar.php:303
 #, fuzzy
 msgid "AddCategory"
 msgstr "CategoryPage"
 
-#: ../lib/EditToolbar.php:282
+#: ../lib/EditToolbar.php:305
 msgid "Insert Categories (double-click)"
 msgstr ""
 
-#: ../lib/EditToolbar.php:284 ../lib/EditToolbar.php:330
-#: ../lib/EditToolbar.php:354 ../lib/EditToolbar.php:387
+#: ../lib/EditToolbar.php:307 ../lib/EditToolbar.php:353
+#: ../lib/EditToolbar.php:377 ../lib/EditToolbar.php:410
 msgid "Insert"
 msgstr ""
 
-#: ../lib/EditToolbar.php:325 ../lib/EditToolbar.php:326
+#: ../lib/EditToolbar.php:348 ../lib/EditToolbar.php:349
 #, fuzzy
 msgid "AddPlugin"
 msgstr "Plugin"
 
-#: ../lib/EditToolbar.php:328
+#: ../lib/EditToolbar.php:351
 msgid "Insert Plugin (double-click)"
 msgstr ""
 
-#: ../lib/EditToolbar.php:349 ../lib/EditToolbar.php:350
+#: ../lib/EditToolbar.php:372 ../lib/EditToolbar.php:373
 #, fuzzy
 msgid "AddPageLink"
 msgstr "AddingPages"
 
-#: ../lib/EditToolbar.php:352
+#: ../lib/EditToolbar.php:375
 msgid "Insert PageLink (double-click)"
 msgstr ""
 
-#: ../lib/EditToolbar.php:382 ../lib/EditToolbar.php:383
+#: ../lib/EditToolbar.php:405 ../lib/EditToolbar.php:406
 msgid "AddTemplate"
 msgstr ""
 
-#: ../lib/EditToolbar.php:385
+#: ../lib/EditToolbar.php:408
 msgid "Insert Template (double-click)"
 msgstr ""
 
@@ -310,7 +310,7 @@ msgid "Hits"
 msgstr "點擊"
 
 #: ../lib/PageList.php:958 ../themes/Crao/templates/editpage.tmpl:37
-#: ../themes/Wordpress/templates/editpage.tmpl:59
+#: ../themes/Wordpress/templates/editpage.tmpl:38
 #: ../themes/default/templates/editpage.tmpl:39
 msgid "Size"
 msgstr "大小"
@@ -441,7 +441,7 @@ msgid "add "
 msgstr ""
 
 #: ../lib/PagePerm.php:650
-msgid "Check to add this Acl"
+msgid "Check to add this ACL"
 msgstr ""
 
 #: ../lib/PageType.php:134 ../lib/loadsave.php:733
@@ -495,7 +495,7 @@ msgstr "InterWiki 位址"
 #: ../themes/Portland/templates/navbar.tmpl:28
 #: ../themes/Wordpress/templates/actionbar.tmpl:21
 #: ../themes/blog/templates/actionbar.tmpl:20
-#: ../themes/default/templates/head.tmpl:68
+#: ../themes/default/templates/head.tmpl:69
 #: ../themes/default/templates/navbar.tmpl:19
 #: ../themes/shamino_com/templates/top.tmpl:20
 #: ../themes/smaller/templates/navbar.tmpl:7
@@ -544,7 +544,7 @@ msgstr "檔案 '%s'"
 msgid "%4d  %s\n"
 msgstr "%4d  %s\n"
 
-#: ../lib/TextSearchQuery.php:79
+#: ../lib/TextSearchQuery.php:79 ../lib/plugin/FileInfo.php:97
 #, fuzzy, php-format
 msgid "Unsupported argument: %s=%s"
 msgstr "已支援的語言"
@@ -651,8 +651,10 @@ msgid "Sign Out"
 msgstr "簽出"
 
 #: ../lib/Theme.php:940 ../lib/WikiUser.php:221 ../lib/WikiUserNew.php:473
+#: ../themes/Crao/templates/signin.tmpl:54
 #: ../themes/Crao/templates/signin.tmpl:59
 #: ../themes/default/templates/login.tmpl:76
+#: ../themes/smaller/templates/signin.tmpl:54
 msgid "Sign In"
 msgstr "簽入"
 
@@ -705,75 +707,75 @@ msgstr "相關連結"
 msgid "External Links"
 msgstr "外部連結"
 
-#: ../lib/WikiDB.php:230
+#: ../lib/WikiDB.php:233
 #, fuzzy, php-format
 msgid "Removed by: %s"
 msgstr "由 %s 編輯"
 
-#: ../lib/WikiDB.php:232
+#: ../lib/WikiDB.php:235
 #, fuzzy, php-format
 msgid "Page removed %s"
 msgstr "頁面已被鎖定"
 
-#: ../lib/WikiDB.php:237 ../lib/WikiDB.php:1042 ../lib/WikiDB.php:1067
+#: ../lib/WikiDB.php:241 ../lib/WikiDB.php:1047 ../lib/WikiDB.php:1072
 #: ../lib/loadsave.php:99
 #, php-format
 msgid "PageChange Notification of %s sent to %s"
 msgstr "%s 的 PageChange 通知已送給 %s"
 
-#: ../lib/WikiDB.php:240 ../lib/WikiDB.php:1045 ../lib/WikiDB.php:1070
+#: ../lib/WikiDB.php:244 ../lib/WikiDB.php:1050 ../lib/WikiDB.php:1075
 #: ../lib/loadsave.php:102
 #, php-format
 msgid "PageChange Notification Error: Couldn't send %s to %s"
 msgstr "PageChange 通知錯誤: 無法送 %s 給 %s"
 
-#: ../lib/WikiDB.php:468
+#: ../lib/WikiDB.php:472
 #, php-format
 msgid "renamed from %s"
 msgstr "從 %s 更名"
 
-#: ../lib/WikiDB.php:476
+#: ../lib/WikiDB.php:480
 msgid "WikiDB::renamePage() not yet implemented for this backend"
 msgstr "後台的 WikiDB::renamePage() 還沒實作出來."
 
-#: ../lib/WikiDB.php:840
+#: ../lib/WikiDB.php:844
 #, php-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: 新版本的日期是 %s"
 
-#: ../lib/WikiDB.php:901 ../lib/main.php:96
+#: ../lib/WikiDB.php:905 ../lib/main.php:96
 #, fuzzy
 msgid "Optimizing database"
 msgstr "最佳化 %s"
 
-#: ../lib/WikiDB.php:1005
+#: ../lib/WikiDB.php:1010
 #, fuzzy
 msgid "Page change"
 msgstr "沒有頁面被變更."
 
-#: ../lib/WikiDB.php:1033 ../lib/loadsave.php:787
+#: ../lib/WikiDB.php:1038 ../lib/loadsave.php:787
 #: ../lib/plugin/RecentChanges.php:107
 #, fuzzy
 msgid "New page"
 msgstr "新頁面."
 
-#: ../lib/WikiDB.php:1035 ../lib/WikiDB.php:1058 ../lib/loadsave.php:93
+#: ../lib/WikiDB.php:1041 ../lib/WikiDB.php:1064 ../lib/loadsave.php:93
 #, php-format
 msgid "Edited by: %s"
 msgstr "由 %s 編輯"
 
-#: ../lib/WikiDB.php:1060
+#: ../lib/WikiDB.php:1066
 #, fuzzy, php-format
 msgid "Page rename %s to %s"
 msgstr "頁面名稱以 '%s' 開頭的"
 
-#: ../lib/WikiDB.php:1618 ../lib/WikiDB.php:1622
+#: ../lib/WikiDB.php:1626 ../lib/WikiDB.php:1630
 #: ../themes/default/templates/homepage.tmpl:7
 #, php-format
 msgid "Describe %s here."
 msgstr "在這兒描述 %s."
 
-#: ../lib/WikiDB.php:1657
+#: ../lib/WikiDB.php:1665
 #, php-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr "Acck! 修訂 %s - %s 看來已經被刪除了!"
@@ -859,24 +861,26 @@ msgstr "群組 %s 不存在"
 msgid "No or not enough GROUP_DB SQL statements defined"
 msgstr "沒有或缺少足夠的 GROUP_DB SQL 敘述定義"
 
-#: ../lib/WikiGroup.php:838
-msgid "AUTH_GROUP_FILE not defined"
-msgstr "AUTH_GROUP_FILE 未定義"
+#: ../lib/WikiGroup.php:838 ../lib/loadsave.php:921
+#, php-format
+msgid "%s: not defined"
+msgstr "%s: 未被定義"
 
-#: ../lib/WikiGroup.php:842
+#: ../lib/WikiGroup.php:843
 #, php-format
 msgid "Cannot open AUTH_GROUP_FILE %s"
 msgstr "無法開啟 AUTH_GROUP_FILE %s"
 
-#: ../lib/WikiGroup.php:950
-msgid "LDAP_AUTH_HOST not defined"
-msgstr "LDAP_AUTH_HOST 未定義"
+#: ../lib/WikiGroup.php:951
+#, fuzzy, php-format
+msgid "%s not defined"
+msgstr "%s: 未被定義"
 
-#: ../lib/WikiGroup.php:959
+#: ../lib/WikiGroup.php:961
 msgid "No LDAP in this PHP version"
 msgstr "此版本的 PHP 無 LDAP"
 
-#: ../lib/WikiGroup.php:1048
+#: ../lib/WikiGroup.php:1050
 #, php-format
 msgid "Unable to connect to LDAP server %s"
 msgstr "無法連結到 LDAP 伺服器 %s"
@@ -896,8 +900,8 @@ msgstr "n/a"
 #: ../themes/Sidebar/templates/navbar.tmpl:38
 #: ../themes/Wordpress/templates/actionbar.tmpl:25
 #: ../themes/blog/templates/navbar.tmpl:14
-#: ../themes/default/templates/head.tmpl:85
 #: ../themes/default/templates/head.tmpl:86
+#: ../themes/default/templates/head.tmpl:87
 #: ../themes/default/templates/navbar.tmpl:55
 #: ../themes/shamino_com/templates/actionbar.tmpl:18
 #: ../themes/smaller/templates/navbar.tmpl:19
@@ -909,7 +913,7 @@ msgstr "PhpWikiAdministration"
 
 #: ../lib/WikiPlugin.php:125
 #, fuzzy, php-format
-msgid "argument '%s' not declared by plugin."
+msgid "Argument '%s' not declared by plugin."
 msgstr "引數 '%s' 沒有被 plugin 宣告"
 
 #: ../lib/WikiPlugin.php:235
@@ -954,12 +958,12 @@ msgid "Image map expired. Reload wiki page to recreate its html part."
 msgstr ""
 
 #: ../lib/WikiUser.php:188 ../lib/WikiUser.php:268
-#: ../lib/WikiUser/AdoDb.php:29 ../lib/WikiUser/AdoDb.php:167
+#: ../lib/WikiUser/AdoDb.php:29 ../lib/WikiUser/AdoDb.php:186
 #: ../lib/WikiUser/Db.php:43 ../lib/WikiUser/File.php:58
-#: ../lib/WikiUser/IMAP.php:17 ../lib/WikiUser/LDAP.php:57
+#: ../lib/WikiUser/IMAP.php:17 ../lib/WikiUser/LDAP.php:58
 #: ../lib/WikiUser/POP3.php:17 ../lib/WikiUser/PdoDb.php:28
 #: ../lib/WikiUser/PdoDb.php:103 ../lib/WikiUser/PearDb.php:27
-#: ../lib/WikiUser/PearDb.php:101 ../lib/WikiUserNew.php:559
+#: ../lib/WikiUser/PearDb.php:118 ../lib/WikiUserNew.php:559
 #, fuzzy
 msgid "Invalid username."
 msgstr "錯誤的 acl"
@@ -1014,15 +1018,15 @@ msgstr ""
 "Old UserPage %s without stored password updated with empty password. Set a "
 "password in your UserPreferences."
 
-#: ../lib/WikiUser/AdoDb.php:126 ../lib/WikiUser/PdoDb.php:134
-#: ../lib/WikiUser/PearDb.php:121
+#: ../lib/WikiUser/AdoDb.php:145 ../lib/WikiUser/PdoDb.php:134
+#: ../lib/WikiUser/PearDb.php:138
 #, fuzzy, php-format
 msgid "%s is missing"
 msgstr "%s 參數遺漏"
 
-#: ../lib/WikiUser/AdoDb.php:182 ../lib/WikiUser/AdoDb.php:236
+#: ../lib/WikiUser/AdoDb.php:201 ../lib/WikiUser/AdoDb.php:255
 #: ../lib/WikiUser/PdoDb.php:190 ../lib/WikiUser/PdoDb.php:255
-#: ../lib/WikiUser/PearDb.php:164 ../lib/WikiUser/PearDb.php:208
+#: ../lib/WikiUser/PearDb.php:181 ../lib/WikiUser/PearDb.php:225
 #, php-format
 msgid "Either %s is missing or DATABASE_TYPE != '%s'"
 msgstr ""
@@ -1031,7 +1035,12 @@ msgstr ""
 msgid "Unable to connect to IMAP server "
 msgstr "無法連結到 IMAP 伺服器"
 
-#: ../lib/WikiUser/LDAP.php:64 ../lib/WikiUser/LDAP.php:107
+#: ../lib/WikiUser/LDAP.php:35
+#, fuzzy, php-format
+msgid "Unable to bind LDAP server %s using %s %s"
+msgstr "無法連結到 LDAP 伺服器 %s"
+
+#: ../lib/WikiUser/LDAP.php:65 ../lib/WikiUser/LDAP.php:108
 #, php-format
 msgid "Invalid username '%s' for LDAP Auth"
 msgstr ""
@@ -1234,7 +1243,7 @@ msgstr "版本相同"
 #: ../themes/Sidebar/templates/frame-header.tmpl:16
 #: ../themes/Sidebar/templates/top.tmpl:10
 #: ../themes/Wordpress/templates/body.tmpl:13
-#: ../themes/default/templates/head.tmpl:52
+#: ../themes/default/templates/head.tmpl:53
 #: ../themes/default/templates/top.tmpl:11
 #: ../themes/shamino_com/templates/top.tmpl:8
 #: ../themes/wikilens/templates/head.tmpl:45
@@ -1267,94 +1276,103 @@ msgstr "(已從 %s 重導向)"
 msgid "You searched for: "
 msgstr ""
 
-#: ../lib/editpage.php:95 ../lib/editpage.php:107
+#: ../lib/editpage.php:100 ../lib/editpage.php:112
 msgid "Typed in verification word mismatch ... are you a bot?"
 msgstr ""
 
-#: ../lib/editpage.php:128 ../lib/editpage.php:451
+#: ../lib/editpage.php:134 ../lib/editpage.php:480
 msgid "Your version"
 msgstr "你的版本"
 
-#: ../lib/editpage.php:128 ../lib/editpage.php:452
+#: ../lib/editpage.php:134 ../lib/editpage.php:481
 msgid "Other version"
 msgstr "其他版本"
 
-#: ../lib/editpage.php:138
+#: ../lib/editpage.php:144
 msgid "Some internal editing error"
 msgstr ""
 
-#: ../lib/editpage.php:139
+#: ../lib/editpage.php:145
 #, fuzzy
 msgid ""
 "Your are probably trying to edit/create an invalid version of this page."
 msgstr "你正在查看此頁面的較舊修訂."
 
-#: ../lib/editpage.php:140
+#: ../lib/editpage.php:146
 msgid "&version=-1 might help."
 msgstr ""
 
-#: ../lib/editpage.php:157
+#: ../lib/editpage.php:163
 #, php-format
 msgid "Edit: %s"
 msgstr "編輯: %s"
 
-#: ../lib/editpage.php:191
+#: ../lib/editpage.php:197
 #, php-format
 msgid "View Source: %s"
 msgstr "查看源碼: %s"
 
-#: ../lib/editpage.php:205
+#: ../lib/editpage.php:211
 msgid "Page now locked."
 msgstr "頁面已被鎖定."
 
-#: ../lib/editpage.php:205
+#: ../lib/editpage.php:211
 msgid "Page now unlocked."
 msgstr "頁面已被解鎖定."
 
-#: ../lib/editpage.php:306
+#: ../lib/editpage.php:313
 #, php-format
 msgid "Saved: %s"
 msgstr "已存於: %s"
 
-#: ../lib/editpage.php:368
+#: ../lib/editpage.php:376
 #, fuzzy
 msgid "Too many external links."
 msgstr "外部連結"
 
-#: ../lib/editpage.php:382
+#: ../lib/editpage.php:390
 msgid "SpamAssassin reports: "
 msgstr ""
 
-#: ../lib/editpage.php:400
+#: ../lib/editpage.php:407
+msgid "External links contain blocked domains:"
+msgstr ""
+
+#: ../lib/editpage.php:408
+#, fuzzy, php-format
+msgid "%s is listed at %s"
+msgstr "%s 個頁面連結到 %s:"
+
+#: ../lib/editpage.php:429
 msgid "Spam Prevention"
 msgstr ""
 
-#: ../lib/editpage.php:401
+#: ../lib/editpage.php:430
 msgid "This page edit seems to contain spam and was therefore not saved."
 msgstr ""
 
-#: ../lib/editpage.php:403 ../lib/editpage.php:437
+#: ../lib/editpage.php:432 ../lib/editpage.php:466
 msgid "Sorry for the inconvenience."
 msgstr "抱歉造成你的不便."
 
-#: ../lib/editpage.php:434 ../themes/MacOSX/themeinfo.php:137
+#: ../lib/editpage.php:463 ../themes/MacOSX/themeinfo.php:137
 msgid "Page Locked"
 msgstr "頁面已被鎖定"
 
-#: ../lib/editpage.php:435
+#: ../lib/editpage.php:464
 msgid ""
 "This page has been locked by the administrator so your changes can not be "
 "saved."
 msgstr "此頁面已被管理者鎖定,所以你的更動無法儲存."
 
-#: ../lib/editpage.php:436
+#: ../lib/editpage.php:465
 msgid ""
 "(Copy your changes to the clipboard. You can try editing a different page or "
 "save your text in a text editor.)"
 msgstr ""
 "(複製你的更動到剪貼簿中. 你可以試著編輯另一個不同的頁面或存到文字編輯器中.)"
 
-#: ../lib/editpage.php:450 ../lib/editpage.php:751
+#: ../lib/editpage.php:479 ../lib/editpage.php:784
 #, php-format
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
@@ -1364,21 +1382,21 @@ msgstr ""
 "部份更動無法自動合併. 請搜尋以 '%s' 開頭並以 '%s' 結尾的部份.在儲存之前,你需"
 "要手動編輯這些部份."
 
-#: ../lib/editpage.php:454 ../lib/editpage.php:754
+#: ../lib/editpage.php:483 ../lib/editpage.php:787
 msgid "Please check it through before saving."
 msgstr "在儲存之前請再檢查一次."
 
-#: ../lib/editpage.php:465
+#: ../lib/editpage.php:494
 msgid "Conflicting Edits!"
 msgstr "發生衝突!"
 
-#: ../lib/editpage.php:466
+#: ../lib/editpage.php:495
 msgid ""
 "In the time since you started editing this page, another user has saved a "
 "new version of it."
 msgstr "從你上次修改這個頁面到現在的這段時間,已經有使用者儲存了較新的版本."
 
-#: ../lib/editpage.php:467
+#: ../lib/editpage.php:496
 msgid ""
 "Your changes can not be saved as they are, since doing so would overwrite "
 "the other author's changes. So, your changes and those of the other author "
@@ -1387,22 +1405,22 @@ msgstr ""
 "無法儲存你所變更的部份,在你編輯的這段時間,已經有其他作者變更了.所以你所變更的"
 "部份已經和其他作者變更的部份合併.結果顯示在下面."
 
-#: ../lib/editpage.php:527
+#: ../lib/editpage.php:557
 msgid "Type word above:"
 msgstr ""
 
-#: ../lib/editpage.php:550
+#: ../lib/editpage.php:580
 #, fuzzy
 msgid "Convert"
 msgstr "內容"
 
-#: ../lib/editpage.php:583 ../themes/Portland/templates/editpage.tmpl:62
-#: ../themes/Wordpress/templates/editpage.tmpl:71
+#: ../lib/editpage.php:615 ../themes/Portland/templates/editpage.tmpl:41
+#: ../themes/Wordpress/templates/editpage.tmpl:50
 #, php-format
 msgid "Author will be logged as %s."
 msgstr "作者將登入為 %s."
 
-#: ../lib/editpage.php:726
+#: ../lib/editpage.php:759
 #, php-format
 msgid "Merge and Edit: %s"
 msgstr "合併並離開: %s"
@@ -1615,11 +1633,6 @@ msgstr "版本 %d"
 msgid "- version %d saved to database as version %d"
 msgstr "- 已經以版本 %d 存入資料庫中"
 
-#: ../lib/loadsave.php:921
-#, php-format
-msgid "%s: not defined"
-msgstr "%s: 未被定義"
-
 #: ../lib/loadsave.php:931
 msgid "Default InterWiki map file not loaded."
 msgstr "預設 InterWiki map 檔案未能載入."
@@ -1796,7 +1809,8 @@ msgid "download a zip dump from this wiki"
 msgstr "從此 wiki 下載 zip dump"
 
 #: ../lib/main.php:508
-msgid "download an html zip dump from this wiki"
+#, fuzzy
+msgid "download a html zip dump from this wiki"
 msgstr "從此 wiki 下載 html zip dump"
 
 #: ../lib/main.php:532
@@ -1973,8 +1987,8 @@ msgstr ""
 msgid "Click to display all comments"
 msgstr "點擊以顯示"
 
-#: ../lib/plugin/AddComment.php:111 ../lib/plugin/CreateToc.php:260
-#: ../lib/plugin/CreateToc.php:265
+#: ../lib/plugin/AddComment.php:111 ../lib/plugin/CreateToc.php:370
+#: ../lib/plugin/CreateToc.php:375
 msgid "Click to display"
 msgstr "點擊以顯示"
 
@@ -2106,7 +2120,7 @@ msgstr "%d 分鐘"
 msgid "hours"
 msgstr ""
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:204 ../lib/plugin/VisualWiki.php:493
+#: ../lib/plugin/AnalyseAccessLogSql.php:204 ../lib/plugin/VisualWiki.php:499
 msgid "days"
 msgstr "天"
 
@@ -2194,7 +2208,7 @@ msgstr ""
 
 #: ../lib/plugin/AuthorHistory.php:70
 #: ../themes/MonoBook/templates/info.tmpl:168
-#: ../themes/blog/templates/_info.tmpl:3 ../themes/blog/templates/info.tmpl:3
+#: ../themes/blog/templates/info.tmpl:3
 #: ../themes/shamino_com/templates/info.tmpl:167
 #: ../themes/smaller/templates/info.tmpl:7
 msgid "AuthorHistory"
@@ -2225,8 +2239,8 @@ msgstr "作者"
 #: ../themes/Crao/templates/blogform.tmpl:12
 #: ../themes/Crao/templates/editpage.tmpl:48
 #: ../themes/MonoBook/templates/info.tmpl:78
-#: ../themes/Portland/templates/editpage.tmpl:60
-#: ../themes/Wordpress/templates/editpage.tmpl:69
+#: ../themes/Portland/templates/editpage.tmpl:39
+#: ../themes/Wordpress/templates/editpage.tmpl:48
 #: ../themes/blog/templates/blogform.tmpl:15
 #: ../themes/default/templates/blogform.tmpl:15
 #: ../themes/default/templates/editpage.tmpl:47
@@ -2299,7 +2313,7 @@ msgstr "一個頁面連結到 %s:"
 msgid "%s pages link to %s:"
 msgstr "%s 個頁面連結到 %s:"
 
-#: ../lib/plugin/BlogArchives.php:24 ../lib/plugin/BlogArchives.php:159
+#: ../lib/plugin/BlogArchives.php:24 ../lib/plugin/BlogArchives.php:134
 #: ../themes/blog/templates/actionbar.tmpl:17
 msgid "Archives"
 msgstr ""
@@ -2308,17 +2322,17 @@ msgstr ""
 msgid "List blog months links for the current or ADMIN user"
 msgstr ""
 
-#: ../lib/plugin/BlogArchives.php:113 ../lib/plugin/BlogJournal.php:110
+#: ../lib/plugin/BlogArchives.php:88 ../lib/plugin/BlogJournal.php:85
 #, php-format
 msgid "Blog Entries for %s:"
 msgstr ""
 
-#: ../lib/plugin/BlogArchives.php:121
+#: ../lib/plugin/BlogArchives.php:96
 #: ../themes/blog/templates/actionbar.tmpl:17
 msgid "BlogArchives"
 msgstr ""
 
-#: ../lib/plugin/BlogArchives.php:147
+#: ../lib/plugin/BlogArchives.php:122
 msgid "Blog Archives:"
 msgstr ""
 
@@ -2330,11 +2344,11 @@ msgstr ""
 msgid "Include latest blog entries for the current or ADMIN user"
 msgstr ""
 
-#: ../lib/plugin/BlogJournal.php:106 ../lib/plugin/WikiBlog.php:75
+#: ../lib/plugin/BlogJournal.php:81 ../lib/plugin/WikiBlog.php:75
 msgid "WikiBlog"
 msgstr "WikiBlog"
 
-#: ../lib/plugin/BlogJournal.php:108
+#: ../lib/plugin/BlogJournal.php:83
 msgid "No Blog Entries"
 msgstr ""
 
@@ -2345,7 +2359,7 @@ msgstr ""
 #: ../themes/Sidebar/templates/body.tmpl:26 ../themes/Sidebar/themeinfo.php:44
 #: ../themes/Wordpress/templates/actionbar.tmpl:31
 #: ../themes/blog/templates/sidebar.tmpl:18
-#: ../themes/default/templates/head.tmpl:95
+#: ../themes/default/templates/head.tmpl:96
 #: ../themes/default/templates/homepage.tmpl:15
 #: ../themes/default/templates/navbar.tmpl:45
 #: ../themes/wikilens/templates/head.tmpl:89
@@ -2361,12 +2375,12 @@ msgstr "上個月"
 msgid "Next Month"
 msgstr "下個月"
 
-#: ../lib/plugin/Calendar.php:168 ../lib/plugin/CalendarList.php:139
+#: ../lib/plugin/Calendar.php:168 ../lib/plugin/CalendarList.php:135
 #, php-format
 msgid "Edit %s"
 msgstr "編輯 %s"
 
-#: ../lib/plugin/CalendarList.php:55 ../lib/plugin/CalendarList.php:59
+#: ../lib/plugin/CalendarList.php:51 ../lib/plugin/CalendarList.php:55
 msgid "CalendarList"
 msgstr "月曆列表"
 
@@ -2413,20 +2427,20 @@ msgstr "CreateToc"
 msgid "Automatically link headers at the top"
 msgstr "在上面自動連結表頭"
 
-#: ../lib/plugin/CreateToc.php:193 ../lib/plugin/IncludePage.php:77
-#: ../lib/plugin/RateIt.php:208
+#: ../lib/plugin/CreateToc.php:300 ../lib/plugin/IncludePage.php:77
+#: ../lib/plugin/RateIt.php:208 ../lib/plugin/Template.php:102
 msgid "no page specified"
 msgstr "沒有指定頁面"
 
-#: ../lib/plugin/CreateToc.php:204
+#: ../lib/plugin/CreateToc.php:311
 msgid "CreateToc disabled for old markup"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:257
+#: ../lib/plugin/CreateToc.php:367
 msgid "Click to hide the TOC"
 msgstr ""
 
-#: ../lib/plugin/CreateToc.php:267 ../lib/plugin/CreateToc.php:270
+#: ../lib/plugin/CreateToc.php:377 ../lib/plugin/CreateToc.php:380
 msgid "Table Of Contents"
 msgstr "目錄"
 
@@ -2482,6 +2496,22 @@ msgstr "外部搜尋"
 msgid "Redirects to an external web site based on form input"
 msgstr "以表單輸入方式重導向到另外一個外部站台"
 
+#: ../lib/plugin/FileInfo.php:39
+#, fuzzy
+msgid "FileInfo"
+msgstr "Info"
+
+#: ../lib/plugin/FileInfo.php:43
+msgid "Display file information like version,size,date,... of uploaded files."
+msgstr ""
+
+#: ../lib/plugin/FileInfo.php:63 ../lib/plugin/FileInfo.php:65
+#: ../lib/plugin/PageGroup.php:104 ../lib/plugin/WikiFormRich.php:162
+#: ../lib/plugin/WikiFormRich.php:178
+#, php-format
+msgid "A required argument '%s' is missing."
+msgstr "缺少引數 '%s'."
+
 #: ../lib/plugin/FoafViewer.php:52
 msgid "FoafViewer"
 msgstr ""
@@ -2529,6 +2559,7 @@ msgid ""
 msgstr "在內容的分離框架中顯示 url. 只能放一個框架."
 
 #: ../lib/plugin/FrameInclude.php:93 ../lib/plugin/IncludePage.php:84
+#: ../lib/plugin/Template.php:108
 #, php-format
 msgid "recursive inclusion of page %s"
 msgstr "遞迴含括頁面 %s"
@@ -2606,6 +2637,30 @@ msgstr "前往或建立頁面."
 msgid "Go"
 msgstr "Go"
 
+#: ../lib/plugin/GoogleMaps.php:63
+msgid "GoogleMaps"
+msgstr ""
+
+#: ../lib/plugin/GoogleMaps.php:67
+msgid ""
+"Displays a marker with further infos (when clicking) on given coordinates"
+msgstr ""
+
+#: ../lib/plugin/GoogleMaps.php:96 ../lib/plugin/GoogleMaps.php:99
+#: ../lib/plugin/Transclude.php:76
+#, php-format
+msgid "%s parameter missing"
+msgstr "%s 參數遺漏"
+
+#: ../lib/plugin/GoogleMaps.php:108
+#, fuzzy, php-format
+msgid "invalid argument %s"
+msgstr "錯誤的顏色值: %s"
+
+#: ../lib/plugin/GoogleMaps.php:128
+msgid "new&nbsp;window"
+msgstr ""
+
 #: ../lib/plugin/GooglePlugin.php:43
 msgid "GooglePlugin"
 msgstr "GooglePlugin"
@@ -2627,16 +2682,16 @@ msgstr ""
 msgid "GraphViz image or imagemap creation of directed graphs"
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:264 ../lib/plugin/GraphViz.php:334
+#: ../lib/plugin/GraphViz.php:265 ../lib/plugin/GraphViz.php:335
 msgid "No dot graph given"
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:275 ../lib/plugin/SyntaxHighlighter.php:173
+#: ../lib/plugin/GraphViz.php:276 ../lib/plugin/SyntaxHighlighter.php:173
 #, fuzzy, php-format
 msgid "Couldn't start commandline '%s'"
 msgstr "無法設定頁面 '%s' 的 acl."
 
-#: ../lib/plugin/GraphViz.php:278 ../lib/plugin/Ploticus.php:239
+#: ../lib/plugin/GraphViz.php:279 ../lib/plugin/Ploticus.php:239
 #, php-format
 msgid "%s error: outputfile '%s' not created"
 msgstr ""
@@ -2676,6 +2731,7 @@ msgid "Include text from another wiki page."
 msgstr "從其他 wiki 頁面含括文字."
 
 #: ../lib/plugin/IncludePage.php:92 ../lib/plugin/PageGroup.php:131
+#: ../lib/plugin/Template.php:116
 #, php-format
 msgid "%s(%d): no such revision"
 msgstr "%s(%d): 沒有這個修訂."
@@ -3049,12 +3105,6 @@ msgstr "內容"
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s: 沒有此部份>"
-
-#: ../lib/plugin/PageGroup.php:104 ../lib/plugin/WikiFormRich.php:162
-#: ../lib/plugin/WikiFormRich.php:178
-#, php-format
-msgid "A required argument '%s' is missing."
-msgstr "缺少引數 '%s'."
 
 #: ../lib/plugin/PageGroup.php:108 ../lib/plugin/PrevNext.php:66
 msgid "Next"
@@ -3491,8 +3541,8 @@ msgstr "所有 %s 已被列在下面."
 #: ../lib/plugin/RecentChanges.php:388 ../lib/plugin/RecentChanges.php:464
 #: ../lib/plugin/RecentEdits.php:10 ../lib/plugin/RecentEdits.php:36
 #: ../lib/plugin/RelatedChanges.php:27
-#: ../themes/Portland/templates/editpage.tmpl:66
-#: ../themes/Wordpress/templates/editpage.tmpl:75
+#: ../themes/Portland/templates/editpage.tmpl:45
+#: ../themes/Wordpress/templates/editpage.tmpl:54
 msgid "RecentEdits"
 msgstr "RecentEdits"
 
@@ -3670,58 +3720,42 @@ msgstr "沒有指定頁面"
 msgid "invalid %s ignored"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:52
+#: ../lib/plugin/SystemInfo.php:51
 msgid "SystemInfo"
 msgstr "SystemInfo"
 
-#: ../lib/plugin/SystemInfo.php:56
+#: ../lib/plugin/SystemInfo.php:55
 msgid "Provides access to PhpWiki's lower level system information."
 msgstr "提供存取 PhpWiki 下層系統資訊."
 
-#: ../lib/plugin/SystemInfo.php:83
-msgid "db type:"
-msgstr "db 型態:"
-
-#: ../lib/plugin/SystemInfo.php:88
-msgid "db backend:"
-msgstr "db 後台:"
-
-#: ../lib/plugin/SystemInfo.php:96
-msgid "dba handler:"
-msgstr "dba handler:"
-
-#: ../lib/plugin/SystemInfo.php:106
-msgid "timeout:"
-msgstr "逾時:"
-
-#: ../lib/plugin/SystemInfo.php:112
+#: ../lib/plugin/SystemInfo.php:123
 msgid "no cache used"
 msgstr "沒有快取被使用"
 
-#: ../lib/plugin/SystemInfo.php:115
+#: ../lib/plugin/SystemInfo.php:126
 msgid "cached pagedata:"
 msgstr "已置於快取的頁面資料:"
 
-#: ../lib/plugin/SystemInfo.php:116
+#: ../lib/plugin/SystemInfo.php:127
 msgid "cached versiondata:"
 msgstr "已快取的版本資料:"
 
-#: ../lib/plugin/SystemInfo.php:125
+#: ../lib/plugin/SystemInfo.php:136
 #, php-format
 msgid "Keep up to %d major edits, but keep them no longer than %d days."
 msgstr "保持 %d 份主要編輯,但不超過 %d 天."
 
-#: ../lib/plugin/SystemInfo.php:128
+#: ../lib/plugin/SystemInfo.php:139
 #, php-format
 msgid " Keep up to %d minor edits, but keep them no longer than %d days."
 msgstr "保持 %d 份次要編輯,但不超過 %d 天."
 
-#: ../lib/plugin/SystemInfo.php:131
+#: ../lib/plugin/SystemInfo.php:142
 #, php-format
 msgid " Keep the latest contributions of the last %d authors up to %d days."
 msgstr "保存最後 %d 位作者的最新貢獻直到 %d 天."
 
-#: ../lib/plugin/SystemInfo.php:133
+#: ../lib/plugin/SystemInfo.php:144
 #, php-format
 msgid ""
 " Additionally, try to keep the latest contributions of all authors in the "
@@ -3731,163 +3765,167 @@ msgstr ""
 " 除此之外, 試著保存最近 %d 天之內所有作者的最新貢獻 (即使超過他們的 %d ,) 但"
 "是沒保存超過 %d 份單一作者修訂."
 
-#: ../lib/plugin/SystemInfo.php:142
+#: ../lib/plugin/SystemInfo.php:153
 #, php-format
 msgid "%d pages"
 msgstr "%d 個頁面"
 
-#: ../lib/plugin/SystemInfo.php:143
+#: ../lib/plugin/SystemInfo.php:154
 #, php-format
 msgid "%d not-empty pages"
 msgstr "%d 個非空白頁面"
 
-#: ../lib/plugin/SystemInfo.php:154 ../lib/plugin/SystemInfo.php:184
+#: ../lib/plugin/SystemInfo.php:165 ../lib/plugin/SystemInfo.php:195
 msgid "not yet"
 msgstr "尚未"
 
-#: ../lib/plugin/SystemInfo.php:171
+#: ../lib/plugin/SystemInfo.php:182
 #, php-format
 msgid "%d homepages"
 msgstr "%d 個主頁"
 
-#: ../lib/plugin/SystemInfo.php:219
+#: ../lib/plugin/SystemInfo.php:259
 #, php-format
 msgid "total hits: %d"
 msgstr "總擊閱數: %d"
 
-#: ../lib/plugin/SystemInfo.php:220
+#: ../lib/plugin/SystemInfo.php:260
 #, php-format
 msgid "max: %d"
 msgstr "最大: %d"
 
-#: ../lib/plugin/SystemInfo.php:221
+#: ../lib/plugin/SystemInfo.php:261
 #, php-format
 msgid "mean: %2.3f"
 msgstr "表示: %2.3f"
 
-#: ../lib/plugin/SystemInfo.php:222
+#: ../lib/plugin/SystemInfo.php:262
 #, php-format
 msgid "median: %d"
 msgstr "median: %d"
 
-#: ../lib/plugin/SystemInfo.php:223
+#: ../lib/plugin/SystemInfo.php:263
 #, php-format
 msgid "stddev: %2.3f"
 msgstr "stddev: %2.3f"
 
-#: ../lib/plugin/SystemInfo.php:235
+#: ../lib/plugin/SystemInfo.php:264
 #, php-format
 msgid "%d pages with less than %d hits (<%d%%)."
 msgstr "%d 個頁面少於 %d 個擊閱數(<%d%%)."
 
-#: ../lib/plugin/SystemInfo.php:237
+#: ../lib/plugin/SystemInfo.php:266
 #, php-format
 msgid "%d page(s) with more than %d hits (>%d%%)."
 msgstr "%d 個頁面超過 %d 個擊閱數(>%d%%)."
 
-#: ../lib/plugin/SystemInfo.php:279
+#: ../lib/plugin/SystemInfo.php:404
 #, php-format
 msgid "Application size: %d Kb"
 msgstr "應用程式大小: %d Kb"
 
-#: ../lib/plugin/SystemInfo.php:281
+#: ../lib/plugin/SystemInfo.php:406
 #, php-format
 msgid "Pagedata size: %d Kb"
 msgstr "頁面資料大小: %d Kb"
 
-#: ../lib/plugin/SystemInfo.php:299
+#: ../lib/plugin/SystemInfo.php:424
 #, php-format
 msgid "Total %d plugins: "
 msgstr "共有 %d 個 plugin:"
 
-#: ../lib/plugin/SystemInfo.php:308
+#: ../lib/plugin/SystemInfo.php:433
 #, php-format
 msgid "Total of %d languages: "
 msgstr "共有 %d 種語言:"
 
-#: ../lib/plugin/SystemInfo.php:311
+#: ../lib/plugin/SystemInfo.php:436
 #, php-format
 msgid "Current language: '%s'"
 msgstr "目前語言: '%s'"
 
-#: ../lib/plugin/SystemInfo.php:313
+#: ../lib/plugin/SystemInfo.php:438
 #, php-format
 msgid "Default language: '%s'"
 msgstr "預設語言: '%s'"
 
-#: ../lib/plugin/SystemInfo.php:321
+#: ../lib/plugin/SystemInfo.php:446
 #, php-format
 msgid "Total of %d themes: "
 msgstr "共有 %d 組佈景主題: "
 
-#: ../lib/plugin/SystemInfo.php:323
+#: ../lib/plugin/SystemInfo.php:448
 #, php-format
 msgid "Current theme: '%s'"
 msgstr "目前佈景主題: '%s'"
 
-#: ../lib/plugin/SystemInfo.php:325
+#: ../lib/plugin/SystemInfo.php:450
 #, php-format
 msgid "Default theme: '%s'"
 msgstr "預設佈景主題: '%s'"
 
-#: ../lib/plugin/SystemInfo.php:338
+#: ../lib/plugin/SystemInfo.php:463
 #, php-format
 msgid "unknown argument '%s' to SystemInfo"
 msgstr "SystemInfo 未知的引數 '%s'"
 
-#: ../lib/plugin/SystemInfo.php:361
+#: ../lib/plugin/SystemInfo.php:487
 msgid "Application name"
 msgstr "應用程式名稱"
 
-#: ../lib/plugin/SystemInfo.php:362
+#: ../lib/plugin/SystemInfo.php:488
 msgid "PhpWiki engine version"
 msgstr "PhpWiki 引擎版本"
 
-#: ../lib/plugin/SystemInfo.php:363
+#: ../lib/plugin/SystemInfo.php:489
 msgid "Database"
 msgstr "資料庫"
 
-#: ../lib/plugin/SystemInfo.php:364
+#: ../lib/plugin/SystemInfo.php:490
 msgid "Cache statistics"
 msgstr "快取統計"
 
-#: ../lib/plugin/SystemInfo.php:365
+#: ../lib/plugin/SystemInfo.php:491
 msgid "Page statistics"
 msgstr "頁面統計"
 
-#: ../lib/plugin/SystemInfo.php:368
+#: ../lib/plugin/SystemInfo.php:494
 msgid "User statistics"
 msgstr "使用者統計"
 
-#: ../lib/plugin/SystemInfo.php:370
+#: ../lib/plugin/SystemInfo.php:496
 msgid "Hit statistics"
 msgstr "擊閱數統計"
 
-#: ../lib/plugin/SystemInfo.php:372
+#: ../lib/plugin/SystemInfo.php:497
+msgid "Harddisc usage"
+msgstr ""
+
+#: ../lib/plugin/SystemInfo.php:498
 msgid "Expiry parameters"
 msgstr "過期參數"
 
-#: ../lib/plugin/SystemInfo.php:373
+#: ../lib/plugin/SystemInfo.php:499
 msgid "Wikiname regexp"
 msgstr "Wikiname regexp"
 
-#: ../lib/plugin/SystemInfo.php:374
+#: ../lib/plugin/SystemInfo.php:500
 msgid "Allowed protocols"
 msgstr "允許的協定"
 
-#: ../lib/plugin/SystemInfo.php:375
+#: ../lib/plugin/SystemInfo.php:501
 msgid "Inline images"
 msgstr "Inline 圖片"
 
-#: ../lib/plugin/SystemInfo.php:376
+#: ../lib/plugin/SystemInfo.php:502
 msgid "Available plugins"
 msgstr "可用的 plugin"
 
-#: ../lib/plugin/SystemInfo.php:377
+#: ../lib/plugin/SystemInfo.php:503
 msgid "Supported languages"
 msgstr "已支援的語言"
 
-#: ../lib/plugin/SystemInfo.php:378
+#: ../lib/plugin/SystemInfo.php:504
 msgid "Supported themes"
 msgstr "已支援的佈景主題"
 
@@ -3916,6 +3954,15 @@ msgstr "%s 無法寫入."
 msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr "抱歉, 這個版本的 PHP 無法建立 PNG 圖片檔."
 
+#: ../lib/plugin/Template.php:61
+#, fuzzy
+msgid "Template"
+msgstr "佈景主題"
+
+#: ../lib/plugin/Template.php:65
+msgid "Parametrized page inclusion."
+msgstr ""
+
 #: ../lib/plugin/TexToPng.php:103
 msgid "Converts TeX to an image. May be used to embed formulas in PhpWiki."
 msgstr "轉換 TeX 為圖片. 可以用來在 PhpWiki 嵌入方程式."
@@ -3936,11 +3983,6 @@ msgstr "Transclude"
 #: ../lib/plugin/Transclude.php:55
 msgid "Include an external web page within the body of a wiki page."
 msgstr "含括外部網頁到 wiki 頁面的內容中."
-
-#: ../lib/plugin/Transclude.php:76
-#, php-format
-msgid "%s parameter missing"
-msgstr "%s 參數遺漏"
 
 #: ../lib/plugin/Transclude.php:88
 msgid "Transcluded page"
@@ -4120,8 +4162,8 @@ msgstr "錯誤: 無法開啟上傳日誌檔案"
 #: ../themes/Crao/templates/navbar.tmpl:23
 #: ../themes/MonoBook/templates/navbar.tmpl:49
 #: ../themes/blog/templates/navbar.tmpl:17
-#: ../themes/default/templates/head.tmpl:91
 #: ../themes/default/templates/head.tmpl:92
+#: ../themes/default/templates/head.tmpl:93
 #: ../themes/default/templates/homepage.tmpl:11
 #: ../themes/default/templates/navbar.tmpl:40
 #: ../themes/shamino_com/templates/top.tmpl:28
@@ -4230,7 +4272,7 @@ msgid ""
 "from graphviz."
 msgstr "從 graphviz 使用 'dot' 命令列工具以圖形視覺化 Wiki 結構."
 
-#: ../lib/plugin/VisualWiki.php:487
+#: ../lib/plugin/VisualWiki.php:493
 msgid "Legend"
 msgstr "圖例"
 
@@ -5122,8 +5164,8 @@ msgstr "ExternalSearchPlugin"
 #: ../themes/MonoBook/templates/navbar.tmpl:25
 #: ../themes/Portland/templates/navbar.tmpl:8
 #: ../themes/Sidebar/templates/navbar.tmpl:24
-#: ../themes/default/templates/head.tmpl:41
 #: ../themes/default/templates/head.tmpl:42
+#: ../themes/default/templates/head.tmpl:43
 #: ../themes/default/templates/navbar.tmpl:20
 #: ../themes/shamino_com/templates/top.tmpl:21
 #: ../themes/smaller/templates/navbar.tmpl:8
@@ -5346,8 +5388,8 @@ msgstr "WikiPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:123
 #: ../themes/Crao/templates/head.tmpl:73 ../themes/Crao/templates/head.tmpl:74
-#: ../themes/default/templates/head.tmpl:78
 #: ../themes/default/templates/head.tmpl:79
+#: ../themes/default/templates/head.tmpl:80
 #: ../themes/wikilens/templates/head.tmpl:71
 #: ../themes/wikilens/templates/head.tmpl:72
 msgid "WikiWikiWeb"
@@ -5812,7 +5854,7 @@ msgstr "編輯舊的修訂"
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 #: ../themes/blog/templates/actionbar.tmpl:7
 #: ../themes/default/templates/actionbar.tmpl:17
-#: ../themes/default/templates/head.tmpl:52
+#: ../themes/default/templates/head.tmpl:53
 #: ../themes/shamino_com/templates/info.tmpl:165
 #: ../themes/smaller/templates/actionbar.tmpl:20
 #: ../themes/smaller/templates/info.tmpl:5
@@ -5888,8 +5930,8 @@ msgid "View the current version"
 msgstr "查看目前版本"
 
 #: ../themes/Crao/templates/editpage.tmpl:4
-#: ../themes/Portland/templates/editpage.tmpl:80
-#: ../themes/Wordpress/templates/editpage.tmpl:80
+#: ../themes/Portland/templates/editpage.tmpl:57
+#: ../themes/Wordpress/templates/editpage.tmpl:59
 #: ../themes/default/templates/editpage.tmpl:4
 msgid "Preview only!  Changes not saved."
 msgstr "僅能預覽! 更動將不被儲存."
@@ -5907,36 +5949,36 @@ msgid "edit area"
 msgstr "編輯區域"
 
 #: ../themes/Crao/templates/editpage.tmpl:18
-#: ../themes/Portland/templates/editpage.tmpl:46
-#: ../themes/Wordpress/templates/editpage.tmpl:44
+#: ../themes/Portland/templates/editpage.tmpl:25
+#: ../themes/Wordpress/templates/editpage.tmpl:23
 #: ../themes/default/templates/editpage.tmpl:20
 msgid "Warning: You are editing an old revision."
 msgstr "警告: 你正在編輯較舊的修訂."
 
 #: ../themes/Crao/templates/editpage.tmpl:19
-#: ../themes/Portland/templates/editpage.tmpl:47
-#: ../themes/Wordpress/templates/editpage.tmpl:45
+#: ../themes/Portland/templates/editpage.tmpl:26
+#: ../themes/Wordpress/templates/editpage.tmpl:24
 #: ../themes/default/templates/editpage.tmpl:21
 msgid "Saving this page will overwrite the current version."
 msgstr "儲存此頁面將會覆寫掉目前版本."
 
 #: ../themes/Crao/templates/editpage.tmpl:38
-#: ../themes/Portland/templates/editpage.tmpl:69
-#: ../themes/Wordpress/templates/editpage.tmpl:60
+#: ../themes/Portland/templates/editpage.tmpl:48
+#: ../themes/Wordpress/templates/editpage.tmpl:39
 #: ../themes/default/templates/editpage.tmpl:40
 msgid "H"
 msgstr "高"
 
 #: ../themes/Crao/templates/editpage.tmpl:39
-#: ../themes/Portland/templates/editpage.tmpl:71
-#: ../themes/Wordpress/templates/editpage.tmpl:61
+#: ../themes/Portland/templates/editpage.tmpl:49
+#: ../themes/Wordpress/templates/editpage.tmpl:40
 #: ../themes/default/templates/editpage.tmpl:41
 msgid "W"
 msgstr "寬"
 
 #: ../themes/Crao/templates/editpage.tmpl:40
-#: ../themes/Portland/templates/editpage.tmpl:73
-#: ../themes/Wordpress/templates/editpage.tmpl:62
+#: ../themes/Portland/templates/editpage.tmpl:50
+#: ../themes/Wordpress/templates/editpage.tmpl:41
 #: ../themes/default/templates/editpage.tmpl:42
 msgid "Adjust"
 msgstr "調整"
@@ -5952,18 +5994,18 @@ msgid "This is a minor change."
 msgstr "這是次要變更."
 
 #: ../themes/Crao/templates/editpage.tmpl:53
-#: ../themes/Portland/templates/editpage.tmpl:75
-#: ../themes/Wordpress/templates/editpage.tmpl:65
+#: ../themes/Portland/templates/editpage.tmpl:52
+#: ../themes/Wordpress/templates/editpage.tmpl:44
 #: ../themes/default/templates/editpage.tmpl:60
 msgid "Use old markup"
 msgstr "使用舊標記"
 
 #: ../themes/Crao/templates/editpage.tmpl:88
 #: ../themes/Crao/templates/editpage.tmpl:93
-#: ../themes/Portland/templates/editpage.tmpl:103
-#: ../themes/Portland/templates/editpage.tmpl:108
-#: ../themes/Wordpress/templates/editpage.tmpl:103
-#: ../themes/Wordpress/templates/editpage.tmpl:108
+#: ../themes/Portland/templates/editpage.tmpl:80
+#: ../themes/Portland/templates/editpage.tmpl:85
+#: ../themes/Wordpress/templates/editpage.tmpl:82
+#: ../themes/Wordpress/templates/editpage.tmpl:87
 #: ../themes/default/templates/editpage.tmpl:113
 #: ../themes/default/templates/editpage.tmpl:118
 #, php-format
@@ -5972,44 +6014,44 @@ msgstr "參照編輯時的 %s 小秘訣."
 
 #: ../themes/Crao/templates/editpage.tmpl:88
 #: ../themes/Crao/templates/editpage.tmpl:93
-#: ../themes/Portland/templates/editpage.tmpl:103
-#: ../themes/Portland/templates/editpage.tmpl:108
-#: ../themes/Wordpress/templates/editpage.tmpl:103
-#: ../themes/Wordpress/templates/editpage.tmpl:108
+#: ../themes/Portland/templates/editpage.tmpl:80
+#: ../themes/Portland/templates/editpage.tmpl:85
+#: ../themes/Wordpress/templates/editpage.tmpl:82
+#: ../themes/Wordpress/templates/editpage.tmpl:87
 #: ../themes/default/templates/editpage.tmpl:113
 #: ../themes/default/templates/editpage.tmpl:118
 msgid "GoodStyle"
 msgstr "GoodStyle"
 
 #: ../themes/Crao/templates/editpage.tmpl:89
-#: ../themes/Portland/templates/editpage.tmpl:104
-#: ../themes/Wordpress/templates/editpage.tmpl:104
+#: ../themes/Portland/templates/editpage.tmpl:81
+#: ../themes/Wordpress/templates/editpage.tmpl:83
 #: ../themes/default/templates/editpage.tmpl:114
 msgid "OldTextFormattingRules"
 msgstr "OldTextFormattingRules"
 
 #: ../themes/Crao/templates/editpage.tmpl:89
 #: ../themes/Crao/templates/editpage.tmpl:94
-#: ../themes/Portland/templates/editpage.tmpl:104
-#: ../themes/Portland/templates/editpage.tmpl:109
-#: ../themes/Wordpress/templates/editpage.tmpl:104
-#: ../themes/Wordpress/templates/editpage.tmpl:109
+#: ../themes/Portland/templates/editpage.tmpl:81
+#: ../themes/Portland/templates/editpage.tmpl:86
+#: ../themes/Wordpress/templates/editpage.tmpl:83
+#: ../themes/Wordpress/templates/editpage.tmpl:88
 #: ../themes/default/templates/editpage.tmpl:114
 #: ../themes/default/templates/editpage.tmpl:119
 msgid "Synopsis"
 msgstr "概要"
 
 #: ../themes/Crao/templates/editpage.tmpl:94
-#: ../themes/Portland/templates/editpage.tmpl:109
-#: ../themes/Wordpress/templates/editpage.tmpl:109
+#: ../themes/Portland/templates/editpage.tmpl:86
+#: ../themes/Wordpress/templates/editpage.tmpl:88
 #: ../themes/default/templates/editpage.tmpl:119
 msgid "TextFormattingRules"
 msgstr "TextFormattingRules"
 
 #: ../themes/Crao/templates/head.tmpl:31 ../themes/Crao/templates/head.tmpl:32
 #: ../themes/Crao/templates/htmldump.tmpl:22
-#: ../themes/default/templates/head.tmpl:36
 #: ../themes/default/templates/head.tmpl:37
+#: ../themes/default/templates/head.tmpl:38
 #: ../themes/default/templates/htmldump.tmpl:22
 #: ../themes/wikilens/templates/head.tmpl:30
 #: ../themes/wikilens/templates/head.tmpl:31
@@ -6017,8 +6059,8 @@ msgid "HowToUseWiki"
 msgstr "HowToUseWiki"
 
 #: ../themes/Crao/templates/head.tmpl:70 ../themes/Crao/templates/head.tmpl:71
-#: ../themes/default/templates/head.tmpl:75
 #: ../themes/default/templates/head.tmpl:76
+#: ../themes/default/templates/head.tmpl:77
 #: ../themes/wikilens/templates/head.tmpl:68
 #: ../themes/wikilens/templates/head.tmpl:69
 msgid "SandBox"
@@ -6060,12 +6102,6 @@ msgstr "你必須簽入才能 %s."
 #: ../themes/smaller/templates/signin.tmpl:37
 msgid "Enter your UserId to sign in"
 msgstr "輸入你的帳號進行簽入"
-
-#: ../themes/Crao/templates/signin.tmpl:54
-#: ../themes/smaller/templates/signin.tmpl:54
-#, fuzzy
-msgid "Sign in:"
-msgstr "簽入:"
 
 #: ../themes/Crao/templates/wikiblog.tmpl:19
 #: ../themes/blog/templates/wikiblog.tmpl:20
@@ -6241,14 +6277,14 @@ msgid "Page Type:"
 msgstr "頁面型態:"
 
 #: ../themes/MonoBook/templates/info.tmpl:170
-#: ../themes/blog/templates/_info.tmpl:5 ../themes/blog/templates/info.tmpl:5
+#: ../themes/blog/templates/info.tmpl:5
 #: ../themes/shamino_com/templates/info.tmpl:170
 #: ../themes/smaller/templates/info.tmpl:9
 msgid "Diff previous Revision"
 msgstr "與上個修訂做比對"
 
 #: ../themes/MonoBook/templates/info.tmpl:171
-#: ../themes/blog/templates/_info.tmpl:6 ../themes/blog/templates/info.tmpl:6
+#: ../themes/blog/templates/info.tmpl:6
 #: ../themes/shamino_com/templates/info.tmpl:171
 #: ../themes/smaller/templates/info.tmpl:10
 msgid "Diff previous Author"
@@ -6325,14 +6361,14 @@ msgstr "此頁面的 %s"
 msgid "Page Execution took %s seconds"
 msgstr "執行此頁面花了 %s 秒"
 
-#: ../themes/Portland/templates/editpage.tmpl:65
-#: ../themes/Wordpress/templates/editpage.tmpl:74
+#: ../themes/Portland/templates/editpage.tmpl:44
+#: ../themes/Wordpress/templates/editpage.tmpl:53
 #, php-format
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."
 msgstr "我正在做次要編輯. 請轉移常用日誌到替代的 %s."
 
-#: ../themes/Portland/templates/editpage.tmpl:69
+#: ../themes/Portland/templates/editpage.tmpl:48
 #: ../themes/default/templates/userprefs.tmpl:195
 msgid "Edit Area Size"
 msgstr "編輯區域大小"
@@ -6860,6 +6896,28 @@ msgstr "User: %s"
 #: ../themes/shamino_com/templates/browse-footer.tmpl:11
 msgid "TermsOfUse"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Sign in:"
+#~ msgstr "簽入:"
+
+#~ msgid "AUTH_GROUP_FILE not defined"
+#~ msgstr "AUTH_GROUP_FILE 未定義"
+
+#~ msgid "LDAP_AUTH_HOST not defined"
+#~ msgstr "LDAP_AUTH_HOST 未定義"
+
+#~ msgid "db type:"
+#~ msgstr "db 型態:"
+
+#~ msgid "db backend:"
+#~ msgstr "db 後台:"
+
+#~ msgid "dba handler:"
+#~ msgstr "dba handler:"
+
+#~ msgid "timeout:"
+#~ msgstr "逾時:"
 
 #, fuzzy
 #~ msgid "Category"

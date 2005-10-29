@@ -6,6 +6,7 @@ lib/XMLRPC/
 lib/ASCIIMathPHP/
 lib/WikiDB/backend/cvsclient.php
 lib/SemanticWeb.php
+lib/weather_class_inc.php
 lib/plugin/CreateBib.php
 lib/plugin/Imdb.php
 lib/plugin/NewUserWelcomePage.php
@@ -21,3 +22,4 @@ themes/wikilens/templates/newuserwelcomepage.tmpl
 themes/wikilens/templates/categorypage.tmpl
 themes/archX/
 themes/film/
+themes/blog/templates/_info.tmpl

@@ -444,12 +444,6 @@ $locale["compare revisions"] =
    "リビジョン比較";
 $locale["current version"] =
    "現在のバージョン";
-$locale["db backend:"] =
-   "データベースバックエンド";
-$locale["db type:"] =
-   "データベースタイプ";
-$locale["dba handler:"] =
-   "dbaハンドラー";
 $locale["diff"] =
    "差分";
 $locale["edit area"] =
@@ -470,8 +464,6 @@ $locale["previous revision"] =
    "前のリビジョン";
 $locale["saved as %s"] =
    "%s を保存しました。";
-$locale["timeout:"] =
-   "タイムアウト";
 $locale["today"] =
    "今日";
 $locale["too long"] =
