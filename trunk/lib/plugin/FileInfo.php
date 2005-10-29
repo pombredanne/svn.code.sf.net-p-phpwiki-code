@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FileInfo.php,v 1.1 2005-10-29 09:00:05 rurban Exp $');
+rcs_id('$Id: FileInfo.php,v 1.2 2005-10-29 12:39:14 uckelman Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -254,7 +254,19 @@ struct VS_VERSIONINFO { struct VS_VERSIONINFO
     }
 };
 
+
+/*
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/10/29 09:00:05  rurban
+// This plugin displays the version, date, size, perms of an uploaded file.
+// Only files relative and below to the uploads path can be handled.
+//
+// Usage:
+//   <?plugin FileVersion file=uploads/setup.exe display=version,date ?>
+//   <?plugin FileVersion file=uploads/setup.exe display=name,version,date
+//                        format="%s (version: %s, date: %s)" ?>
+//
+*/
 
 // For emacs users
 // Local Variables:
