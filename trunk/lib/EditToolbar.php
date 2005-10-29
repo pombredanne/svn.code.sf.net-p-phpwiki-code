@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.4 2005-09-29 23:07:58 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.5 2005-10-29 14:16:17 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -77,7 +77,7 @@ function do_replace() {
    txt=txt.replace(ein,aus);
    ein=ein.toString().substring(1,ein.toString().length-2);
    result(z_repl, '"
-.sprintf(_("Substring \"%s\" found %s times. Replace with with \"%s\"?"), "'+ein+'", "'+z_repl+'", "'+aus+'")
+.sprintf(_("Substring \"%s\" found %s times. Replace with \"%s\"?"), "'+ein+'", "'+z_repl+'", "'+aus+'")
 ."', txt, '"
 .sprintf(_("String \"%s\" not found."), "'+ein+'")
 ."');
@@ -417,6 +417,9 @@ function undo_save() {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.4  2005/09/29 23:07:58  rurban
+ cache toolbar
+
  Revision 1.3  2005/09/26 06:25:50  rurban
  EditToolbar enhancements by Thomas Harding: add plugins args, properly quote control chars. added plugin method getArgumentsDescription to override the default description string
 

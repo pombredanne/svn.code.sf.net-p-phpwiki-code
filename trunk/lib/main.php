@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.217 2005-09-18 12:44:00 rurban Exp $');
+rcs_id('$Id: main.php,v 1.218 2005-10-29 14:18:06 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -505,7 +505,7 @@ class WikiRequest extends Request {
                     'xmlrpc'     => _("access this wiki via XML-RPC"),
                     'soap'       => _("access this wiki via SOAP"),
                     'zip'        => _("download a zip dump from this wiki"),
-                    'ziphtml'    => _("download an html zip dump from this wiki")
+                    'ziphtml'    => _("download a html zip dump from this wiki")
                     );
         }
         if (in_array($action, array_keys($actionDescriptions)))
@@ -1272,6 +1272,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.217  2005/09/18 12:44:00  rurban
+// novatrope patch to let only _AUTHENTICATED view pages
+//
 // Revision 1.216  2005/08/27 09:40:46  rurban
 // fix login with HttpAuth
 //
