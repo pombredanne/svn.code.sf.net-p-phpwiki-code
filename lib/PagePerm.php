@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.39 2005-05-06 16:57:54 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.40 2005-10-29 14:16:58 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -647,7 +647,7 @@ class PagePermission {
                              HTML::td($newgroup),
                              HTML::td(array('align'=>'center'),$nbsp,$newperm),
                              HTML::td(array('align'=>'right','style' => 'background: #ccc url('.$addsrc.') no-repeat'),$addbutton),
-                             HTML::td(HTML::small(_("Check to add this Acl")))));
+                             HTML::td(HTML::small(_("Check to add this ACL")))));
         }
         if ($type == 'default')
             $table->setAttr('style','border: dotted thin black; background-color:#eee;');
@@ -724,6 +724,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2005/05/06 16:57:54  rurban
+// support captcha
+//
 // Revision 1.38  2004/11/30 17:48:38  rurban
 // just comments
 //
