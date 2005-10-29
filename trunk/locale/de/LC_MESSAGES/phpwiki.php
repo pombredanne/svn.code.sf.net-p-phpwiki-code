@@ -80,6 +80,8 @@ $locale["%s is empty"] =
    "%s ist leer";
 $locale["%s is empty."] =
    "%s ist leer.";
+$locale["%s is listed at %s"] =
+   "%s blockiert von %s";
 $locale["%s is missing"] =
    "%s Argument fehlt";
 $locale["%s is not locked!"] =
@@ -92,6 +94,8 @@ $locale["%s is only allowed in locked pages."] =
    "%s wird/werden nur in gesperrten Seiten erlaubt.";
 $locale["%s k"] =
    "%s k";
+$locale["%s not defined"] =
+   "%s nicht definiert";
 $locale["%s not found"] =
    "%s nicht gefunden";
 $locale["%s of this page"] =
@@ -234,8 +238,6 @@ $locale["ADMIN"] =
    "ADMIN";
 $locale["ANON"] =
    "ANON";
-$locale["AUTH_GROUP_FILE not defined"] =
-   "AUTH_GROUP_FILE nicht definiert";
 $locale["About"] =
    "Über";
 $locale["Access"] =
@@ -266,6 +268,8 @@ $locale["AddPageLink"] =
    "SeitenLink einfügen";
 $locale["AddPlugin"] =
    "Plugin einfügen";
+$locale["AddTemplate"] =
+   "NeueVorlage";
 $locale["AddingPages"] =
    "SeitenErzeugen";
 $locale["Adjust"] =
@@ -332,6 +336,8 @@ $locale["Are you sure you want to permanently rename the selected files?"] =
    "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich umbenennen wollen?";
 $locale["Are you sure you want to permanently search & replace text in the selected files?"] =
    "Sind Sie sicher, dass Sie alle Wörter in den angegebenen Seiten ersetzen wollen?";
+$locale["Argument '%s' not declared by plugin."] =
+   "Argument »%s« nicht im Zusatzprogramm deklariert.";
 $locale["Arguments"] =
    "Parameter";
 $locale["Attempting to use the directory '%s' instead."] =
@@ -460,7 +466,7 @@ $locale["Check any two boxes then %s."] =
    "Wählen Sie zwei Versionen aus, dann %s.";
 $locale["Check any two boxes to compare revisions."] =
    "Wählen Sie zwei Versionen zum Vergleich aus.";
-$locale["Check to add this Acl"] =
+$locale["Check to add this ACL"] =
    "Anklicken um diese ACL hinzuzufügen";
 $locale["Chmod"] =
    "Chmod";
@@ -482,6 +488,8 @@ $locale["Click to display"] =
    "Klicken um anzuzeigen";
 $locale["Click to display all comments"] =
    "Klicken um Kommentare anzuzeigen";
+$locale["Click to hide the TOC"] =
+   "Hier klicken um zu verstecken";
 $locale["Click to hide the comments"] =
    "Klicken um Kommentare zu verstecken";
 $locale["Click to reverse sort order"] =
@@ -550,6 +558,8 @@ $locale["CreatePage"] =
    "NeueSeite";
 $locale["CreateToc"] =
    "InhaltsVerzeichnis";
+$locale["CreateToc disabled for old markup"] =
+   "InhaltsVerzeichnis deaktiviert für altes Markup";
 $locale["CreateTocPlugin"] =
    "InhaltsVerzeichnisPlugin";
 $locale["Created by CreatePage"] =
@@ -764,6 +774,8 @@ $locale["File names may only contain alphanumeric characters and dot, underscore
    "Dateinamen dürfen nur folgende Zeichen enthalten: alphanumerische Zeichen, Punkt, Unterstrich und Bindestrich.";
 $locale["File successfully uploaded."] =
    "Datei erfolgreich hochgeladen.";
+$locale["FileInfo"] =
+   "DateiInfo";
 $locale["Files with extension %s are not allowed."] =
    "Dateien mit der Endung %s sind nicht erlaubt.";
 $locale["FindPage"] =
@@ -968,8 +980,6 @@ $locale["JabberPresence"] =
    "JabberAnwesend";
 $locale["Keep up to %d major edits, but keep them no longer than %d days."] =
    "Aufbewahrung größerer Änderungen für %d, aber nicht länger als %d Tage.";
-$locale["LDAP_AUTH_HOST not defined"] =
-   "LDAP_AUTH_HOST nicht definiert";
 $locale["Language"] =
    "Sprache";
 $locale["Last"] =
@@ -1218,6 +1228,8 @@ $locale["Only files with extension HTML are allowed"] =
    "Nur Dateien mit der Endung HTML sind erlaubt";
 $locale["Oops! Revision %s of %s seems to have been deleted!"] =
    "Hoppla! Es scheint, die Version %s von %s wurde gelöscht!";
+$locale["Operation undone"] =
+   "Aktion rückgängig gemacht";
 $locale["Optimizing database"] =
    "Datenbank wird optimiert";
 $locale["Original (1.2 or 1.0)"] =
@@ -1668,8 +1680,6 @@ $locale["Sign Out"] =
    "Abmelden";
 $locale["Sign in as:"] =
    "Anmelden als:";
-$locale["Sign in:"] =
-   "Anmelden:";
 $locale["SignIn"] =
    "AnMelden";
 $locale["SignOut"] =
@@ -1740,6 +1750,8 @@ $locale["Submit location"] =
    "Land eingeben";
 $locale["Subpage"] =
    "Unterseite";
+$locale["Substring \"%s\" found %s times. Replace with \"%s\"?"] =
+   "Substring \"%s\" %s mal gefunden. Ersetze mit \"%s\"?";
 $locale["Summary"] =
    "Zusammenfassung";
 $locale["Supplanted on:"] =
@@ -1766,6 +1778,8 @@ $locale["Table Of Contents"] =
    "Inhaltsverzeichnis";
 $locale["TeX directory not writable."] =
    "Keine Schreibrechte für das TeX Verzeichnis.";
+$locale["Template"] =
+   "Benutzeroberfläche";
 $locale["TermsOfUse"] =
    "BenutzungsBedingungen";
 $locale["TextFormattingRules"] =
@@ -1908,10 +1922,14 @@ $locale["UNOBTAINABLE"] =
    "UNERREICHBAR";
 $locale["USER"] =
    "BENUTZER";
+$locale["Unable to bind LDAP server %s using %s %s"] =
+   "Konnte nicht mit LDAP Server %s verbinden mit %s %s";
 $locale["Unable to connect to IMAP server "] =
    "IMAP Server nicht gefunden ";
 $locale["Unable to connect to LDAP server %s"] =
    "Konnte LDAP Server %s nicht finden";
+$locale["Unable to find src='%s'"] =
+   "Konnte src='%s' nicht lesen";
 $locale["Unable to load: %s"] =
    "Konnte %s nicht laden";
 $locale["Unable to open directory '%s' for reading"] =
@@ -2131,7 +2149,7 @@ $locale["You forgot to set ENCRYPTED_PASSWD to true. Please update your config/c
 $locale["You have not made any changes so no new version has been saved."] =
    "Sie haben keine Änderungen vorgenommen, deshalb konnte keine neue Version gespeichert werden.";
 $locale["You may sign in using any [WikiWord|AddingPages] as a user id. (Any characters in %s etc. may be used too). The user id will be used as a link in RecentChanges to your home page."] =
-   "Sie können sich mit jedem gewünschten [WikiWort|SeitenErzeugen] als Benutzernamen ins Wiki eintragen. (Auch %s u. deutsche Umlaute sind zulässig). Der Benutzername wird in NeuesteÄnderungen als Link auf Ihre Homepage verwendet. Sie können Ihre Seite in die Browser Favoriten eintragen oder auch gleich als URL verwenden: ~http://www.wikiname.de/~IhrName";
+   "Sie können sich mit jedem gewünschten [WikiWort|SeitenErzeugen] als Benutzernamen ins Wiki eintragen. (Auch %s u. deutsche Umlaute sind zulässig). Der Benutzername wird in NeuesteÄnderungen als Link auf Ihre Homepage verwendet.";
 $locale["You must be an administrator to %s."] =
    "Sie müssen Administratorrechte haben %s.";
 $locale["You must be an administrator to use this plugin."] =
@@ -2198,8 +2216,6 @@ $locale["add "] =
    "hinzufügen ";
 $locale["argument '%s' not declared by plugin"] =
    "Argument »%s« nicht im Zusatzprogramm deklariert";
-$locale["argument '%s' not declared by plugin."] =
-   "Argument »%s« nicht im Zusatzprogramm deklariert.";
 $locale["authenticated"] =
    "authentifizierten";
 $locale["blog"] =
@@ -2248,18 +2264,16 @@ $locale["current version"] =
    "aktuelle Version";
 $locale["days"] =
    "Tage";
-$locale["db type:"] =
-   "Dbtyp:";
 $locale["default page permission"] =
    "Vorgabe Zugriffsrecht";
 $locale["diff"] =
    "diff";
 $locale["diff this page"] =
    "um von dieser Seite die Änderungen anzuzeigen";
+$locale["download a html zip dump from this wiki"] =
+   "um alle HTML Seiten als Zipdatei von diesem Wiki herunterzuladen";
 $locale["download a zip dump from this wiki"] =
    "um eine gezippte Sicherung von allen Wiki Seiten herunterzuladen";
-$locale["download an html zip dump from this wiki"] =
-   "um alle HTML Seiten als Zipdatei von diesem Wiki herunterzuladen";
 $locale["dump html pages"] =
    "um von diesem Wiki HTML-Dateien lokal abzuspeichern";
 $locale["dump serial pages"] =
@@ -2290,6 +2304,8 @@ $locale["hours"] =
    "Stunden";
 $locale["invalid %s ignored"] =
    "ungültiges %s ignoriert";
+$locale["invalid argument %s"] =
+   "Ungültiger Parameter %s";
 $locale["invidual page permission"] =
    "individuelles Zugriffsrecht";
 $locale["latest comment by "] =
@@ -2324,6 +2340,8 @@ $locale["n/a"] =
    "k.A.";
 $locale["name"] =
    "Name";
+$locale["new&nbsp;window"] =
+   "neues&nbsp;Fenster";
 $locale["newer than the existing page."] =
    "neuer als die bestehende Seite.";
 $locale["no RSS items"] =
@@ -2388,8 +2406,6 @@ $locale["the file '%s'"] =
    "die Datei %s";
 $locale["the session.save_path directory '%s'"] =
    "das session.save_path Verzeichnis »%s«";
-$locale["timeout:"] =
-   "Zeitüberschreitung:";
 $locale["to"] =
    "nach";
 $locale["today"] =

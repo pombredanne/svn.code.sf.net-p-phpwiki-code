@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-27 17:30+0000\n"
+"POT-Creation-Date: 2005-10-29 13:06+0000\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
 "Last-Translator: Reini Urban <rurban@x-ray.at>, Carsten Klapp "
 "<carstenklapp@users.sourceforge.net>, Helmer Pardun <pardunpress@t-online."
@@ -44,8 +44,8 @@ msgstr "Rückgängig"
 msgid "Undo disabled"
 msgstr "Undo deaktiviert"
 
-#: ../lib/EditToolbar.php:57 ../lib/EditToolbar.php:230
-#: ../lib/EditToolbar.php:231 ../lib/plugin/WikiAdminSearchReplace.php:187
+#: ../lib/EditToolbar.php:57 ../lib/EditToolbar.php:253
+#: ../lib/EditToolbar.php:254 ../lib/plugin/WikiAdminSearchReplace.php:187
 msgid "Search & Replace"
 msgstr "Suchen & Ersetzen"
 
@@ -76,16 +76,16 @@ msgstr "Ersetze mit"
 msgid "OK"
 msgstr "OK"
 
-#: ../lib/EditToolbar.php:65 ../lib/EditToolbar.php:285
-#: ../lib/EditToolbar.php:331 ../lib/EditToolbar.php:355
-#: ../lib/EditToolbar.php:388
+#: ../lib/EditToolbar.php:65 ../lib/EditToolbar.php:308
+#: ../lib/EditToolbar.php:354 ../lib/EditToolbar.php:378
+#: ../lib/EditToolbar.php:411
 msgid "Close"
 msgstr "Schließen"
 
 #: ../lib/EditToolbar.php:80
 #, php-format
-msgid "Substring \"%s\" found %s times. Replace with with \"%s\"?"
-msgstr ""
+msgid "Substring \"%s\" found %s times. Replace with \"%s\"?"
+msgstr "Substring \"%s\" %s mal gefunden. Ersetze mit \"%s\"?"
 
 #: ../lib/EditToolbar.php:82
 #, php-format
@@ -94,116 +94,116 @@ msgstr "Zeichenkette \"%s\" nicht gefunden."
 
 #: ../lib/EditToolbar.php:105
 msgid "Operation undone"
-msgstr ""
+msgstr "Aktion rückgängig gemacht"
 
-#: ../lib/EditToolbar.php:144 ../lib/EditToolbar.php:145
+#: ../lib/EditToolbar.php:167 ../lib/EditToolbar.php:168
 msgid "Bold text"
 msgstr "Fetter Text"
 
-#: ../lib/EditToolbar.php:149 ../lib/EditToolbar.php:150
+#: ../lib/EditToolbar.php:172 ../lib/EditToolbar.php:173
 msgid "Italic text"
 msgstr "Kursiver Text"
 
-#: ../lib/EditToolbar.php:154
+#: ../lib/EditToolbar.php:177
 msgid "optional label | PageName"
 msgstr "optionaler Name | SeitenName"
 
-#: ../lib/EditToolbar.php:155
+#: ../lib/EditToolbar.php:178
 msgid "Link to page"
 msgstr "Link auf Seite"
 
-#: ../lib/EditToolbar.php:159
+#: ../lib/EditToolbar.php:182
 msgid "optional label | http://www.example.com"
 msgstr "optionaler Name | http://www.example.com"
 
-#: ../lib/EditToolbar.php:160
+#: ../lib/EditToolbar.php:183
 msgid "External link (remember http:// prefix)"
 msgstr "Externer Link (http:// prefix)"
 
-#: ../lib/EditToolbar.php:164
+#: ../lib/EditToolbar.php:187
 msgid "Headline text"
 msgstr "Überschrift"
 
-#: ../lib/EditToolbar.php:165
+#: ../lib/EditToolbar.php:188
 msgid "Level 1 headline"
 msgstr "H1 Überschrift"
 
-#: ../lib/EditToolbar.php:169
+#: ../lib/EditToolbar.php:192
 msgid "Example.jpg"
 msgstr "Beispiel.jpg"
 
-#: ../lib/EditToolbar.php:170
+#: ../lib/EditToolbar.php:193
 msgid "Embedded image"
 msgstr "Bild einfügen"
 
-#: ../lib/EditToolbar.php:174
+#: ../lib/EditToolbar.php:197
 msgid "Insert non-formatted text here"
 msgstr "Füge unformatierten Text hier ein"
 
-#: ../lib/EditToolbar.php:175
+#: ../lib/EditToolbar.php:198
 msgid "Ignore wiki formatting"
 msgstr "Keine Wiki Formatierung"
 
-#: ../lib/EditToolbar.php:180
+#: ../lib/EditToolbar.php:203
 msgid "Your signature"
 msgstr "Deine Signatur"
 
-#: ../lib/EditToolbar.php:185
+#: ../lib/EditToolbar.php:208
 msgid "Horizontal line"
 msgstr "Horizontale Trennlinie"
 
-#: ../lib/EditToolbar.php:187 ../lib/EditToolbar.php:189
-#: ../lib/editpage.php:562
+#: ../lib/EditToolbar.php:210 ../lib/EditToolbar.php:212
+#: ../lib/editpage.php:592
 msgid "Save"
 msgstr "Speichern"
 
-#: ../lib/EditToolbar.php:191 ../lib/EditToolbar.php:193
-#: ../lib/editpage.php:558
+#: ../lib/EditToolbar.php:214 ../lib/EditToolbar.php:216
+#: ../lib/editpage.php:588
 msgid "Preview"
 msgstr "Vorschau"
 
-#: ../lib/EditToolbar.php:209
+#: ../lib/EditToolbar.php:232
 msgid "Click a button to get an example text"
 msgstr ""
 
-#: ../lib/EditToolbar.php:222 ../lib/EditToolbar.php:223
+#: ../lib/EditToolbar.php:245 ../lib/EditToolbar.php:246
 msgid "Undo Search & Replace"
 msgstr "Suchen & Ersetzen rückgängig machen"
 
-#: ../lib/EditToolbar.php:279 ../lib/EditToolbar.php:280
+#: ../lib/EditToolbar.php:302 ../lib/EditToolbar.php:303
 msgid "AddCategory"
 msgstr "NeueKategorie"
 
-#: ../lib/EditToolbar.php:282
+#: ../lib/EditToolbar.php:305
 msgid "Insert Categories (double-click)"
 msgstr "Kategorien einfügen (Doppelklick)"
 
-#: ../lib/EditToolbar.php:284 ../lib/EditToolbar.php:330
-#: ../lib/EditToolbar.php:354 ../lib/EditToolbar.php:387
+#: ../lib/EditToolbar.php:307 ../lib/EditToolbar.php:353
+#: ../lib/EditToolbar.php:377 ../lib/EditToolbar.php:410
 msgid "Insert"
 msgstr "Einfügen"
 
-#: ../lib/EditToolbar.php:325 ../lib/EditToolbar.php:326
+#: ../lib/EditToolbar.php:348 ../lib/EditToolbar.php:349
 msgid "AddPlugin"
 msgstr "Plugin einfügen"
 
-#: ../lib/EditToolbar.php:328
+#: ../lib/EditToolbar.php:351
 msgid "Insert Plugin (double-click)"
 msgstr "Plugin einfügen (Doppelklick)"
 
-#: ../lib/EditToolbar.php:349 ../lib/EditToolbar.php:350
+#: ../lib/EditToolbar.php:372 ../lib/EditToolbar.php:373
 msgid "AddPageLink"
 msgstr "SeitenLink einfügen"
 
-#: ../lib/EditToolbar.php:352
+#: ../lib/EditToolbar.php:375
 msgid "Insert PageLink (double-click)"
 msgstr "SeitenLink einfügen (Doppelklick)"
 
-#: ../lib/EditToolbar.php:382 ../lib/EditToolbar.php:383
+#: ../lib/EditToolbar.php:405 ../lib/EditToolbar.php:406
 msgid "AddTemplate"
-msgstr ""
+msgstr "NeueVorlage"
 
-#: ../lib/EditToolbar.php:385
+#: ../lib/EditToolbar.php:408
 msgid "Insert Template (double-click)"
 msgstr "Vorlage einfügen (Doppelklick)"
 
@@ -303,7 +303,7 @@ msgid "Hits"
 msgstr "Treffer"
 
 #: ../lib/PageList.php:958 ../themes/Crao/templates/editpage.tmpl:37
-#: ../themes/Wordpress/templates/editpage.tmpl:59
+#: ../themes/Wordpress/templates/editpage.tmpl:38
 #: ../themes/default/templates/editpage.tmpl:39
 msgid "Size"
 msgstr "Größe"
@@ -434,7 +434,7 @@ msgid "add "
 msgstr "hinzufügen "
 
 #: ../lib/PagePerm.php:650
-msgid "Check to add this Acl"
+msgid "Check to add this ACL"
 msgstr "Anklicken um diese ACL hinzuzufügen"
 
 #: ../lib/PageType.php:134 ../lib/loadsave.php:733
@@ -490,7 +490,7 @@ msgstr "InterWiki-Adresse"
 #: ../themes/Portland/templates/navbar.tmpl:28
 #: ../themes/Wordpress/templates/actionbar.tmpl:21
 #: ../themes/blog/templates/actionbar.tmpl:20
-#: ../themes/default/templates/head.tmpl:68
+#: ../themes/default/templates/head.tmpl:69
 #: ../themes/default/templates/navbar.tmpl:19
 #: ../themes/shamino_com/templates/top.tmpl:20
 #: ../themes/smaller/templates/navbar.tmpl:7
@@ -541,7 +541,7 @@ msgstr "die Datei %s"
 msgid "%4d  %s\n"
 msgstr "%4d  %s\n"
 
-#: ../lib/TextSearchQuery.php:79
+#: ../lib/TextSearchQuery.php:79 ../lib/plugin/FileInfo.php:97
 #, php-format
 msgid "Unsupported argument: %s=%s"
 msgstr "Nicht unterstütztes Argument: %s=%s"
@@ -649,8 +649,10 @@ msgid "Sign Out"
 msgstr "Abmelden"
 
 #: ../lib/Theme.php:940 ../lib/WikiUser.php:221 ../lib/WikiUserNew.php:473
+#: ../themes/Crao/templates/signin.tmpl:54
 #: ../themes/Crao/templates/signin.tmpl:59
 #: ../themes/default/templates/login.tmpl:76
+#: ../themes/smaller/templates/signin.tmpl:54
 msgid "Sign In"
 msgstr "Anmelden"
 
@@ -705,74 +707,74 @@ msgstr "Externe Links"
 
 # (Wrong Translation; sorry, but the German term for edit is NOT
 # editieren, but  e d i e r e n).
-#: ../lib/WikiDB.php:230
+#: ../lib/WikiDB.php:233
 #, php-format
 msgid "Removed by: %s"
 msgstr "Gelöscht von: %s"
 
-#: ../lib/WikiDB.php:232
+#: ../lib/WikiDB.php:235
 #, php-format
 msgid "Page removed %s"
 msgstr "Seite gelöscht %s"
 
-#: ../lib/WikiDB.php:237 ../lib/WikiDB.php:1042 ../lib/WikiDB.php:1067
+#: ../lib/WikiDB.php:241 ../lib/WikiDB.php:1047 ../lib/WikiDB.php:1072
 #: ../lib/loadsave.php:99
 #, php-format
 msgid "PageChange Notification of %s sent to %s"
 msgstr "SeitenÄnderung Benachrichtigung von %s an %s gesendet"
 
-#: ../lib/WikiDB.php:240 ../lib/WikiDB.php:1045 ../lib/WikiDB.php:1070
+#: ../lib/WikiDB.php:244 ../lib/WikiDB.php:1050 ../lib/WikiDB.php:1075
 #: ../lib/loadsave.php:102
 #, php-format
 msgid "PageChange Notification Error: Couldn't send %s to %s"
 msgstr "SeitenÄnderung Benachrichtigung Fehler: Konnte %s nicht an %s senden"
 
-#: ../lib/WikiDB.php:468
+#: ../lib/WikiDB.php:472
 #, php-format
 msgid "renamed from %s"
 msgstr "umbenannt von %s"
 
-#: ../lib/WikiDB.php:476
+#: ../lib/WikiDB.php:480
 msgid "WikiDB::renamePage() not yet implemented for this backend"
 msgstr "WikiDB::renamePage() für dieses Backend noch nicht implementiert"
 
-#: ../lib/WikiDB.php:840
+#: ../lib/WikiDB.php:844
 #, php-format
 msgid "%s: Date of new revision is %s"
 msgstr "%s: Datum dieser aktuellen Neubearbeitung ist %s"
 
-#: ../lib/WikiDB.php:901 ../lib/main.php:96
+#: ../lib/WikiDB.php:905 ../lib/main.php:96
 msgid "Optimizing database"
 msgstr "Datenbank wird optimiert"
 
-#: ../lib/WikiDB.php:1005
+#: ../lib/WikiDB.php:1010
 msgid "Page change"
 msgstr "Seiten Änderung"
 
-#: ../lib/WikiDB.php:1033 ../lib/loadsave.php:787
+#: ../lib/WikiDB.php:1038 ../lib/loadsave.php:787
 #: ../lib/plugin/RecentChanges.php:107
 msgid "New page"
 msgstr "Neue Seite"
 
 # (Wrong Translation; sorry, but the German term for edit is NOT
 # editieren, but  e d i e r e n).
-#: ../lib/WikiDB.php:1035 ../lib/WikiDB.php:1058 ../lib/loadsave.php:93
+#: ../lib/WikiDB.php:1041 ../lib/WikiDB.php:1064 ../lib/loadsave.php:93
 #, php-format
 msgid "Edited by: %s"
 msgstr "Bearbeitet von: %s"
 
-#: ../lib/WikiDB.php:1060
+#: ../lib/WikiDB.php:1066
 #, php-format
 msgid "Page rename %s to %s"
 msgstr "Seite »%s« nach umbenennen »%s«"
 
-#: ../lib/WikiDB.php:1618 ../lib/WikiDB.php:1622
+#: ../lib/WikiDB.php:1626 ../lib/WikiDB.php:1630
 #: ../themes/default/templates/homepage.tmpl:7
 #, php-format
 msgid "Describe %s here."
 msgstr "Beschreiben Sie %s hier."
 
-#: ../lib/WikiDB.php:1657
+#: ../lib/WikiDB.php:1665
 #, php-format
 msgid "Oops! Revision %s of %s seems to have been deleted!"
 msgstr "Hoppla! Es scheint, die Version %s von %s wurde gelöscht!"
@@ -859,24 +861,26 @@ msgstr "Gruppe %s existiert nicht"
 msgid "No or not enough GROUP_DB SQL statements defined"
 msgstr "Keine oder zu wenige GROUP_DB SQL Statements definiert"
 
-#: ../lib/WikiGroup.php:838
-msgid "AUTH_GROUP_FILE not defined"
-msgstr "AUTH_GROUP_FILE nicht definiert"
+#: ../lib/WikiGroup.php:838 ../lib/loadsave.php:921
+#, php-format
+msgid "%s: not defined"
+msgstr "%s: nicht definiert"
 
-#: ../lib/WikiGroup.php:842
+#: ../lib/WikiGroup.php:843
 #, php-format
 msgid "Cannot open AUTH_GROUP_FILE %s"
 msgstr "Kann AUTH_GROUP_FILE %s nicht öffnen"
 
-#: ../lib/WikiGroup.php:950
-msgid "LDAP_AUTH_HOST not defined"
-msgstr "LDAP_AUTH_HOST nicht definiert"
+#: ../lib/WikiGroup.php:951
+#, php-format
+msgid "%s not defined"
+msgstr "%s nicht definiert"
 
-#: ../lib/WikiGroup.php:959
+#: ../lib/WikiGroup.php:961
 msgid "No LDAP in this PHP version"
 msgstr "Kein LDAP in dieser PHP Version"
 
-#: ../lib/WikiGroup.php:1048
+#: ../lib/WikiGroup.php:1050
 #, php-format
 msgid "Unable to connect to LDAP server %s"
 msgstr "Konnte LDAP Server %s nicht finden"
@@ -898,8 +902,8 @@ msgstr "k.A."
 #: ../themes/Sidebar/templates/navbar.tmpl:38
 #: ../themes/Wordpress/templates/actionbar.tmpl:25
 #: ../themes/blog/templates/navbar.tmpl:14
-#: ../themes/default/templates/head.tmpl:85
 #: ../themes/default/templates/head.tmpl:86
+#: ../themes/default/templates/head.tmpl:87
 #: ../themes/default/templates/navbar.tmpl:55
 #: ../themes/shamino_com/templates/actionbar.tmpl:18
 #: ../themes/smaller/templates/navbar.tmpl:19
@@ -911,7 +915,7 @@ msgstr "PhpWikiSystemverwalten"
 
 #: ../lib/WikiPlugin.php:125
 #, php-format
-msgid "argument '%s' not declared by plugin."
+msgid "Argument '%s' not declared by plugin."
 msgstr "Argument »%s« nicht im Zusatzprogramm deklariert."
 
 #: ../lib/WikiPlugin.php:235
@@ -957,12 +961,12 @@ msgid "Image map expired. Reload wiki page to recreate its html part."
 msgstr ""
 
 #: ../lib/WikiUser.php:188 ../lib/WikiUser.php:268
-#: ../lib/WikiUser/AdoDb.php:29 ../lib/WikiUser/AdoDb.php:167
+#: ../lib/WikiUser/AdoDb.php:29 ../lib/WikiUser/AdoDb.php:186
 #: ../lib/WikiUser/Db.php:43 ../lib/WikiUser/File.php:58
-#: ../lib/WikiUser/IMAP.php:17 ../lib/WikiUser/LDAP.php:57
+#: ../lib/WikiUser/IMAP.php:17 ../lib/WikiUser/LDAP.php:58
 #: ../lib/WikiUser/POP3.php:17 ../lib/WikiUser/PdoDb.php:28
 #: ../lib/WikiUser/PdoDb.php:103 ../lib/WikiUser/PearDb.php:27
-#: ../lib/WikiUser/PearDb.php:101 ../lib/WikiUserNew.php:559
+#: ../lib/WikiUser/PearDb.php:118 ../lib/WikiUserNew.php:559
 msgid "Invalid username."
 msgstr "Ungültiger Benutzername."
 
@@ -1026,15 +1030,15 @@ msgstr ""
 "einem leeren Password gespeichert. Setzen Sie ein Passwort in Ihren "
 "BenutzerEinstellungen."
 
-#: ../lib/WikiUser/AdoDb.php:126 ../lib/WikiUser/PdoDb.php:134
-#: ../lib/WikiUser/PearDb.php:121
+#: ../lib/WikiUser/AdoDb.php:145 ../lib/WikiUser/PdoDb.php:134
+#: ../lib/WikiUser/PearDb.php:138
 #, php-format
 msgid "%s is missing"
 msgstr "%s Argument fehlt"
 
-#: ../lib/WikiUser/AdoDb.php:182 ../lib/WikiUser/AdoDb.php:236
+#: ../lib/WikiUser/AdoDb.php:201 ../lib/WikiUser/AdoDb.php:255
 #: ../lib/WikiUser/PdoDb.php:190 ../lib/WikiUser/PdoDb.php:255
-#: ../lib/WikiUser/PearDb.php:164 ../lib/WikiUser/PearDb.php:208
+#: ../lib/WikiUser/PearDb.php:181 ../lib/WikiUser/PearDb.php:225
 #, php-format
 msgid "Either %s is missing or DATABASE_TYPE != '%s'"
 msgstr ""
@@ -1043,7 +1047,12 @@ msgstr ""
 msgid "Unable to connect to IMAP server "
 msgstr "IMAP Server nicht gefunden "
 
-#: ../lib/WikiUser/LDAP.php:64 ../lib/WikiUser/LDAP.php:107
+#: ../lib/WikiUser/LDAP.php:35
+#, php-format
+msgid "Unable to bind LDAP server %s using %s %s"
+msgstr "Konnte nicht mit LDAP Server %s verbinden mit %s %s"
+
+#: ../lib/WikiUser/LDAP.php:65 ../lib/WikiUser/LDAP.php:108
 #, php-format
 msgid "Invalid username '%s' for LDAP Auth"
 msgstr "Ungültiger Benutzername »%s« für LDAP Auth"
@@ -1248,7 +1257,7 @@ msgstr "Versionen sind identisch"
 #: ../themes/Sidebar/templates/frame-header.tmpl:16
 #: ../themes/Sidebar/templates/top.tmpl:10
 #: ../themes/Wordpress/templates/body.tmpl:13
-#: ../themes/default/templates/head.tmpl:52
+#: ../themes/default/templates/head.tmpl:53
 #: ../themes/default/templates/top.tmpl:11
 #: ../themes/shamino_com/templates/top.tmpl:8
 #: ../themes/wikilens/templates/head.tmpl:45
@@ -1283,83 +1292,92 @@ msgstr "(Weitergeleitet von %s)"
 msgid "You searched for: "
 msgstr "Sie suchten nach: "
 
-#: ../lib/editpage.php:95 ../lib/editpage.php:107
+#: ../lib/editpage.php:100 ../lib/editpage.php:112
 msgid "Typed in verification word mismatch ... are you a bot?"
 msgstr ""
 
-#: ../lib/editpage.php:128 ../lib/editpage.php:451
+#: ../lib/editpage.php:134 ../lib/editpage.php:480
 msgid "Your version"
 msgstr "Ihre Version"
 
-#: ../lib/editpage.php:128 ../lib/editpage.php:452
+#: ../lib/editpage.php:134 ../lib/editpage.php:481
 msgid "Other version"
 msgstr "Andere Version"
 
-#: ../lib/editpage.php:138
+#: ../lib/editpage.php:144
 msgid "Some internal editing error"
 msgstr ""
 
-#: ../lib/editpage.php:139
+#: ../lib/editpage.php:145
 msgid ""
 "Your are probably trying to edit/create an invalid version of this page."
 msgstr ""
 "Sie versuchen offenbar eine ungültige Version dieser Seite zu bearbeiten."
 
-#: ../lib/editpage.php:140
+#: ../lib/editpage.php:146
 msgid "&version=-1 might help."
 msgstr "&version=-1 wird empfohlen."
 
 # (Wrong Translation; sorry, but the German term for edit is NOT
 # editieren, but  e d i e r e n).
-#: ../lib/editpage.php:157
+#: ../lib/editpage.php:163
 #, php-format
 msgid "Edit: %s"
 msgstr "Bearbeite: %s"
 
-#: ../lib/editpage.php:191
+#: ../lib/editpage.php:197
 #, php-format
 msgid "View Source: %s"
 msgstr "Quelltext Ansicht: %s"
 
-#: ../lib/editpage.php:205
+#: ../lib/editpage.php:211
 msgid "Page now locked."
 msgstr "Seite jetzt gesperrt."
 
-#: ../lib/editpage.php:205
+#: ../lib/editpage.php:211
 msgid "Page now unlocked."
 msgstr "Seite jetzt freigegeben."
 
-#: ../lib/editpage.php:306
+#: ../lib/editpage.php:313
 #, php-format
 msgid "Saved: %s"
 msgstr "Gespeichert: %s"
 
-#: ../lib/editpage.php:368
+#: ../lib/editpage.php:376
 msgid "Too many external links."
 msgstr "Zu viele externe Links."
 
-#: ../lib/editpage.php:382
+#: ../lib/editpage.php:390
 msgid "SpamAssassin reports: "
 msgstr "SpamAssassin sagt: "
 
-#: ../lib/editpage.php:400
+#: ../lib/editpage.php:407
+msgid "External links contain blocked domains:"
+msgstr ""
+
+#: ../lib/editpage.php:408
+#, php-format
+msgid "%s is listed at %s"
+msgstr "%s blockiert von %s"
+
+#: ../lib/editpage.php:429
 msgid "Spam Prevention"
 msgstr "AntiSpam"
 
-#: ../lib/editpage.php:401
+#: ../lib/editpage.php:430
 msgid "This page edit seems to contain spam and was therefore not saved."
 msgstr "Diese Bearbeitung scheint Spam beinzuhalten und wurde ignoriert."
 
-#: ../lib/editpage.php:403 ../lib/editpage.php:437
+#: ../lib/editpage.php:432 ../lib/editpage.php:466
 msgid "Sorry for the inconvenience."
 msgstr ""
 "Entschuldigen Sie bitte die hiermit für Sie verbundenen Unannehmlichkeiten."
 
-#: ../lib/editpage.php:434 ../themes/MacOSX/themeinfo.php:137
+#: ../lib/editpage.php:463 ../themes/MacOSX/themeinfo.php:137
 msgid "Page Locked"
 msgstr "Seite Gesperrt"
 
-#: ../lib/editpage.php:435
+#: ../lib/editpage.php:464
 msgid ""
 "This page has been locked by the administrator so your changes can not be "
 "saved."
@@ -1367,7 +1385,7 @@ msgstr ""
 "Diese Seite wurde vom Administrator für die allgemeine Bearbeitung gesperrt. "
 "Ihre Änderungen können deshalb nicht gespeichert werden."
 
-#: ../lib/editpage.php:436
+#: ../lib/editpage.php:465
 msgid ""
 "(Copy your changes to the clipboard. You can try editing a different page or "
 "save your text in a text editor.)"
@@ -1375,7 +1393,7 @@ msgstr ""
 "(Kopieren Sie Ihre Veränderungen in die Zwischenablage. Sie können versuchen "
 "eine andere Seite zu edieren oder Ihr Text in einem Texteditor speichern.)"
 
-#: ../lib/editpage.php:450 ../lib/editpage.php:751
+#: ../lib/editpage.php:479 ../lib/editpage.php:784
 #, php-format
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
@@ -1387,15 +1405,15 @@ msgstr ""
 "enden. Sie müssen diese Teile von Hand bearbeiten, bevor Sie auf Speichern "
 "klicken."
 
-#: ../lib/editpage.php:454 ../lib/editpage.php:754
+#: ../lib/editpage.php:483 ../lib/editpage.php:787
 msgid "Please check it through before saving."
 msgstr "Bitte überprüfen Sie erst alles, bevor Sie es abspeichern."
 
-#: ../lib/editpage.php:465
+#: ../lib/editpage.php:494
 msgid "Conflicting Edits!"
 msgstr "Widersprechende Änderungen!"
 
-#: ../lib/editpage.php:466
+#: ../lib/editpage.php:495
 msgid ""
 "In the time since you started editing this page, another user has saved a "
 "new version of it."
@@ -1403,7 +1421,7 @@ msgstr ""
 "Während der Zeit, seit Sie mit der Bearbeitung dieser Seite begonnen haben, "
 "hat ein anderer Benutzer bereits eine neuere Version gespeichert."
 
-#: ../lib/editpage.php:467
+#: ../lib/editpage.php:496
 msgid ""
 "Your changes can not be saved as they are, since doing so would overwrite "
 "the other author's changes. So, your changes and those of the other author "
@@ -1414,23 +1432,23 @@ msgstr ""
 "überschrieben. Deshalb sind Ihre und die Änderungen des anderen Autors "
 "miteinander kombiniert worden. Das Ergebnis sehen Sie unten."
 
-#: ../lib/editpage.php:527
+#: ../lib/editpage.php:557
 msgid "Type word above:"
 msgstr ""
 
-#: ../lib/editpage.php:550
+#: ../lib/editpage.php:580
 msgid "Convert"
 msgstr "Konvertieren"
 
-#: ../lib/editpage.php:583 ../themes/Portland/templates/editpage.tmpl:62
-#: ../themes/Wordpress/templates/editpage.tmpl:71
+#: ../lib/editpage.php:615 ../themes/Portland/templates/editpage.tmpl:41
+#: ../themes/Wordpress/templates/editpage.tmpl:50
 #, php-format
 msgid "Author will be logged as %s."
 msgstr "%s wird als Autor aufgenommen."
 
 # (Wrong Translation; sorry, but the German term for edit is NOT
 # editieren, but  e d i e r e n).
-#: ../lib/editpage.php:726
+#: ../lib/editpage.php:759
 #, php-format
 msgid "Merge and Edit: %s"
 msgstr "Zusammenfügen und Bearbeiten: %s"
@@ -1643,11 +1661,6 @@ msgstr "Speichere Version %d zurück."
 msgid "- version %d saved to database as version %d"
 msgstr "- version %d in der Datenbank gespeichert als Version %d."
 
-#: ../lib/loadsave.php:921
-#, php-format
-msgid "%s: not defined"
-msgstr "%s: nicht definiert"
-
 #: ../lib/loadsave.php:931
 msgid "Default InterWiki map file not loaded."
 msgstr "Standard-Datei der InterWiki-Karte nicht geladen."
@@ -1824,7 +1837,7 @@ msgid "download a zip dump from this wiki"
 msgstr "um eine gezippte Sicherung von allen Wiki Seiten herunterzuladen"
 
 #: ../lib/main.php:508
-msgid "download an html zip dump from this wiki"
+msgid "download a html zip dump from this wiki"
 msgstr "um alle HTML Seiten als Zipdatei von diesem Wiki herunterzuladen"
 
 #: ../lib/main.php:532
@@ -1999,8 +2012,8 @@ msgstr "Klicken um Kommentare zu verstecken"
 msgid "Click to display all comments"
 msgstr "Klicken um Kommentare anzuzeigen"
 
-#: ../lib/plugin/AddComment.php:111 ../lib/plugin/CreateToc.php:260
-#: ../lib/plugin/CreateToc.php:265
+#: ../lib/plugin/AddComment.php:111 ../lib/plugin/CreateToc.php:370
+#: ../lib/plugin/CreateToc.php:375
 msgid "Click to display"
 msgstr "Klicken um anzuzeigen"
 
@@ -2132,7 +2145,7 @@ msgstr "Minuten"
 msgid "hours"
 msgstr "Stunden"
 
-#: ../lib/plugin/AnalyseAccessLogSql.php:204 ../lib/plugin/VisualWiki.php:493
+#: ../lib/plugin/AnalyseAccessLogSql.php:204 ../lib/plugin/VisualWiki.php:499
 msgid "days"
 msgstr "Tage"
 
@@ -2215,7 +2228,7 @@ msgstr ""
 
 #: ../lib/plugin/AuthorHistory.php:70
 #: ../themes/MonoBook/templates/info.tmpl:168
-#: ../themes/blog/templates/_info.tmpl:3 ../themes/blog/templates/info.tmpl:3
+#: ../themes/blog/templates/info.tmpl:3
 #: ../themes/shamino_com/templates/info.tmpl:167
 #: ../themes/smaller/templates/info.tmpl:7
 msgid "AuthorHistory"
@@ -2246,8 +2259,8 @@ msgstr "Autor"
 #: ../themes/Crao/templates/blogform.tmpl:12
 #: ../themes/Crao/templates/editpage.tmpl:48
 #: ../themes/MonoBook/templates/info.tmpl:78
-#: ../themes/Portland/templates/editpage.tmpl:60
-#: ../themes/Wordpress/templates/editpage.tmpl:69
+#: ../themes/Portland/templates/editpage.tmpl:39
+#: ../themes/Wordpress/templates/editpage.tmpl:48
 #: ../themes/blog/templates/blogform.tmpl:15
 #: ../themes/default/templates/blogform.tmpl:15
 #: ../themes/default/templates/editpage.tmpl:47
@@ -2325,7 +2338,7 @@ msgstr "Eine Seite ist mit %s verlinkt:"
 msgid "%s pages link to %s:"
 msgstr "%s Seiten sind mit %s verlinkt:"
 
-#: ../lib/plugin/BlogArchives.php:24 ../lib/plugin/BlogArchives.php:159
+#: ../lib/plugin/BlogArchives.php:24 ../lib/plugin/BlogArchives.php:134
 #: ../themes/blog/templates/actionbar.tmpl:17
 msgid "Archives"
 msgstr ""
@@ -2334,17 +2347,17 @@ msgstr ""
 msgid "List blog months links for the current or ADMIN user"
 msgstr ""
 
-#: ../lib/plugin/BlogArchives.php:113 ../lib/plugin/BlogJournal.php:110
+#: ../lib/plugin/BlogArchives.php:88 ../lib/plugin/BlogJournal.php:85
 #, php-format
 msgid "Blog Entries for %s:"
 msgstr "Blog-Einträge für %s:"
 
-#: ../lib/plugin/BlogArchives.php:121
+#: ../lib/plugin/BlogArchives.php:96
 #: ../themes/blog/templates/actionbar.tmpl:17
 msgid "BlogArchives"
 msgstr "BlogArchiv"
 
-#: ../lib/plugin/BlogArchives.php:147
+#: ../lib/plugin/BlogArchives.php:122
 msgid "Blog Archives:"
 msgstr "Blog-Archive:"
 
@@ -2356,11 +2369,11 @@ msgstr ""
 msgid "Include latest blog entries for the current or ADMIN user"
 msgstr ""
 
-#: ../lib/plugin/BlogJournal.php:106 ../lib/plugin/WikiBlog.php:75
+#: ../lib/plugin/BlogJournal.php:81 ../lib/plugin/WikiBlog.php:75
 msgid "WikiBlog"
 msgstr "WikiBlog"
 
-#: ../lib/plugin/BlogJournal.php:108
+#: ../lib/plugin/BlogJournal.php:83
 msgid "No Blog Entries"
 msgstr "Keine Blog-Einträge"
 
@@ -2371,7 +2384,7 @@ msgstr "Keine Blog-Einträge"
 #: ../themes/Sidebar/templates/body.tmpl:26 ../themes/Sidebar/themeinfo.php:44
 #: ../themes/Wordpress/templates/actionbar.tmpl:31
 #: ../themes/blog/templates/sidebar.tmpl:18
-#: ../themes/default/templates/head.tmpl:95
+#: ../themes/default/templates/head.tmpl:96
 #: ../themes/default/templates/homepage.tmpl:15
 #: ../themes/default/templates/navbar.tmpl:45
 #: ../themes/wikilens/templates/head.tmpl:89
@@ -2387,12 +2400,12 @@ msgstr "Voriger Monat"
 msgid "Next Month"
 msgstr "Nächster Monat"
 
-#: ../lib/plugin/Calendar.php:168 ../lib/plugin/CalendarList.php:139
+#: ../lib/plugin/Calendar.php:168 ../lib/plugin/CalendarList.php:135
 #, php-format
 msgid "Edit %s"
 msgstr "Bearbeite %s"
 
-#: ../lib/plugin/CalendarList.php:55 ../lib/plugin/CalendarList.php:59
+#: ../lib/plugin/CalendarList.php:51 ../lib/plugin/CalendarList.php:55
 msgid "CalendarList"
 msgstr "KalenderListe"
 
@@ -2439,20 +2452,20 @@ msgstr "InhaltsVerzeichnis"
 msgid "Automatically link headers at the top"
 msgstr "Verlinke Überschriften mit Inhaltsverzeichnis"
 
-#: ../lib/plugin/CreateToc.php:193 ../lib/plugin/IncludePage.php:77
-#: ../lib/plugin/RateIt.php:208
+#: ../lib/plugin/CreateToc.php:300 ../lib/plugin/IncludePage.php:77
+#: ../lib/plugin/RateIt.php:208 ../lib/plugin/Template.php:102
 msgid "no page specified"
 msgstr "Keine Seite angegeben"
 
-#: ../lib/plugin/CreateToc.php:204
+#: ../lib/plugin/CreateToc.php:311
 msgid "CreateToc disabled for old markup"
-msgstr ""
+msgstr "InhaltsVerzeichnis deaktiviert für altes Markup"
 
-#: ../lib/plugin/CreateToc.php:257
+#: ../lib/plugin/CreateToc.php:367
 msgid "Click to hide the TOC"
-msgstr ""
+msgstr "Hier klicken um zu verstecken"
 
-#: ../lib/plugin/CreateToc.php:267 ../lib/plugin/CreateToc.php:270
+#: ../lib/plugin/CreateToc.php:377 ../lib/plugin/CreateToc.php:380
 msgid "Table Of Contents"
 msgstr "Inhaltsverzeichnis"
 
@@ -2507,6 +2520,21 @@ msgstr ""
 "Weiterleitung der Suche zu einer externen Webseite aufgrund einer "
 "Formulareingabe"
 
+#: ../lib/plugin/FileInfo.php:39
+msgid "FileInfo"
+msgstr "DateiInfo"
+
+#: ../lib/plugin/FileInfo.php:43
+msgid "Display file information like version,size,date,... of uploaded files."
+msgstr ""
+
+#: ../lib/plugin/FileInfo.php:63 ../lib/plugin/FileInfo.php:65
+#: ../lib/plugin/PageGroup.php:104 ../lib/plugin/WikiFormRich.php:162
+#: ../lib/plugin/WikiFormRich.php:178
+#, php-format
+msgid "A required argument '%s' is missing."
+msgstr "Erforderliches Argument »%s« fehlt."
+
 #: ../lib/plugin/FoafViewer.php:52
 msgid "FoafViewer"
 msgstr "FoafBetrachter"
@@ -2557,6 +2585,7 @@ msgstr ""
 "Seite. Nur ein Frame ist erlaubt."
 
 #: ../lib/plugin/FrameInclude.php:93 ../lib/plugin/IncludePage.php:84
+#: ../lib/plugin/Template.php:108
 #, php-format
 msgid "recursive inclusion of page %s"
 msgstr "Fehler beim Einbetten der Seite %s: Rekursiver Selbstaufruf der Seite"
@@ -2635,6 +2664,30 @@ msgstr "Gehe zu oder erzeuge diese Seite."
 msgid "Go"
 msgstr "Los"
 
+#: ../lib/plugin/GoogleMaps.php:63
+msgid "GoogleMaps"
+msgstr ""
+
+#: ../lib/plugin/GoogleMaps.php:67
+msgid ""
+"Displays a marker with further infos (when clicking) on given coordinates"
+msgstr ""
+
+#: ../lib/plugin/GoogleMaps.php:96 ../lib/plugin/GoogleMaps.php:99
+#: ../lib/plugin/Transclude.php:76
+#, php-format
+msgid "%s parameter missing"
+msgstr "%s Argument fehlt"
+
+#: ../lib/plugin/GoogleMaps.php:108
+#, php-format
+msgid "invalid argument %s"
+msgstr "Ungültiger Parameter %s"
+
+#: ../lib/plugin/GoogleMaps.php:128
+msgid "new&nbsp;window"
+msgstr "neues&nbsp;Fenster"
+
 #: ../lib/plugin/GooglePlugin.php:43
 msgid "GooglePlugin"
 msgstr "GoogleZusatzprogramm"
@@ -2655,16 +2708,16 @@ msgstr ""
 msgid "GraphViz image or imagemap creation of directed graphs"
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:264 ../lib/plugin/GraphViz.php:334
+#: ../lib/plugin/GraphViz.php:265 ../lib/plugin/GraphViz.php:335
 msgid "No dot graph given"
 msgstr ""
 
-#: ../lib/plugin/GraphViz.php:275 ../lib/plugin/SyntaxHighlighter.php:173
+#: ../lib/plugin/GraphViz.php:276 ../lib/plugin/SyntaxHighlighter.php:173
 #, php-format
 msgid "Couldn't start commandline '%s'"
 msgstr "Konnte Programm »%s« nicht starten"
 
-#: ../lib/plugin/GraphViz.php:278 ../lib/plugin/Ploticus.php:239
+#: ../lib/plugin/GraphViz.php:279 ../lib/plugin/Ploticus.php:239
 #, php-format
 msgid "%s error: outputfile '%s' not created"
 msgstr ""
@@ -2703,6 +2756,7 @@ msgid "Include text from another wiki page."
 msgstr "Text von einer andere Seite einfügen."
 
 #: ../lib/plugin/IncludePage.php:92 ../lib/plugin/PageGroup.php:131
+#: ../lib/plugin/Template.php:116
 #, php-format
 msgid "%s(%d): no such revision"
 msgstr "%s(%d): keine solche Version"
@@ -3098,12 +3152,6 @@ msgstr "Inhalt"
 msgid "<%s: no such section>"
 msgstr "<%s: unbekannte Sektion>"
 
-#: ../lib/plugin/PageGroup.php:104 ../lib/plugin/WikiFormRich.php:162
-#: ../lib/plugin/WikiFormRich.php:178
-#, php-format
-msgid "A required argument '%s' is missing."
-msgstr "Erforderliches Argument »%s« fehlt."
-
 #: ../lib/plugin/PageGroup.php:108 ../lib/plugin/PrevNext.php:66
 msgid "Next"
 msgstr "Nächste"
@@ -3233,7 +3281,7 @@ msgid "File extension for csv file has to be '.csv'"
 msgstr ""
 
 #: ../lib/plugin/PhotoAlbum.php:605
-#, fuzzy, php-format
+#, php-format
 msgid "Unable to find src='%s'"
 msgstr "Konnte src='%s' nicht lesen"
 
@@ -3543,8 +3591,8 @@ msgstr "Alle %s sind unten aufgelistet."
 #: ../lib/plugin/RecentChanges.php:388 ../lib/plugin/RecentChanges.php:464
 #: ../lib/plugin/RecentEdits.php:10 ../lib/plugin/RecentEdits.php:36
 #: ../lib/plugin/RelatedChanges.php:27
-#: ../themes/Portland/templates/editpage.tmpl:66
-#: ../themes/Wordpress/templates/editpage.tmpl:75
+#: ../themes/Portland/templates/editpage.tmpl:45
+#: ../themes/Wordpress/templates/editpage.tmpl:54
 msgid "RecentEdits"
 msgstr "GeringfügigeÄnderungen"
 
@@ -3718,60 +3766,44 @@ msgstr "Keine Syntax angegeben."
 msgid "invalid %s ignored"
 msgstr "ungültiges %s ignoriert"
 
-#: ../lib/plugin/SystemInfo.php:52
+#: ../lib/plugin/SystemInfo.php:51
 msgid "SystemInfo"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:56
+#: ../lib/plugin/SystemInfo.php:55
 msgid "Provides access to PhpWiki's lower level system information."
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:83
-msgid "db type:"
-msgstr "Dbtyp:"
-
-#: ../lib/plugin/SystemInfo.php:88
-msgid "db backend:"
-msgstr ""
-
-#: ../lib/plugin/SystemInfo.php:96
-msgid "dba handler:"
-msgstr ""
-
-#: ../lib/plugin/SystemInfo.php:106
-msgid "timeout:"
-msgstr "Zeitüberschreitung:"
-
-#: ../lib/plugin/SystemInfo.php:112
+#: ../lib/plugin/SystemInfo.php:123
 msgid "no cache used"
 msgstr "kein Cache verwendet"
 
-#: ../lib/plugin/SystemInfo.php:115
+#: ../lib/plugin/SystemInfo.php:126
 msgid "cached pagedata:"
 msgstr "Seitendaten in den Cachespeicher aufgenommen:"
 
-#: ../lib/plugin/SystemInfo.php:116
+#: ../lib/plugin/SystemInfo.php:127
 msgid "cached versiondata:"
 msgstr "Versionendaten in den Cachespeicher aufgenommen:"
 
-#: ../lib/plugin/SystemInfo.php:125
+#: ../lib/plugin/SystemInfo.php:136
 #, php-format
 msgid "Keep up to %d major edits, but keep them no longer than %d days."
 msgstr ""
 "Aufbewahrung größerer Änderungen für %d, aber nicht länger als %d Tage."
 
-#: ../lib/plugin/SystemInfo.php:128
+#: ../lib/plugin/SystemInfo.php:139
 #, php-format
 msgid " Keep up to %d minor edits, but keep them no longer than %d days."
 msgstr ""
 "Aufbewahrung kleinerer Änderungen für %d, aber nicht länger als %d Tage."
 
-#: ../lib/plugin/SystemInfo.php:131
+#: ../lib/plugin/SystemInfo.php:142
 #, php-format
 msgid " Keep the latest contributions of the last %d authors up to %d days."
 msgstr "Aufbewahrung der neueren Beiträge der letzten %d Autoren für %d Tage."
 
-#: ../lib/plugin/SystemInfo.php:133
+#: ../lib/plugin/SystemInfo.php:144
 #, php-format
 msgid ""
 " Additionally, try to keep the latest contributions of all authors in the "
@@ -3782,164 +3814,168 @@ msgstr ""
 "aufzubewahren (auch wenn es mehr als %d sind), keinesfalls jedoch mehr als %"
 "d einzelne Autoren Revisionen."
 
-#: ../lib/plugin/SystemInfo.php:142
+#: ../lib/plugin/SystemInfo.php:153
 #, php-format
 msgid "%d pages"
 msgstr "%d Seiten"
 
-#: ../lib/plugin/SystemInfo.php:143
+#: ../lib/plugin/SystemInfo.php:154
 #, php-format
 msgid "%d not-empty pages"
 msgstr "%d nicht leere Seiten"
 
-#: ../lib/plugin/SystemInfo.php:154 ../lib/plugin/SystemInfo.php:184
+#: ../lib/plugin/SystemInfo.php:165 ../lib/plugin/SystemInfo.php:195
 msgid "not yet"
 msgstr "noch nicht"
 
-#: ../lib/plugin/SystemInfo.php:171
+#: ../lib/plugin/SystemInfo.php:182
 #, php-format
 msgid "%d homepages"
 msgstr "%d Homepages"
 
-#: ../lib/plugin/SystemInfo.php:219
+#: ../lib/plugin/SystemInfo.php:259
 #, php-format
 msgid "total hits: %d"
 msgstr "Anzahl aller Seitenaufrufe %d"
 
-#: ../lib/plugin/SystemInfo.php:220
+#: ../lib/plugin/SystemInfo.php:260
 #, php-format
 msgid "max: %d"
 msgstr "Max: %d"
 
-#: ../lib/plugin/SystemInfo.php:221
+#: ../lib/plugin/SystemInfo.php:261
 #, php-format
 msgid "mean: %2.3f"
 msgstr "Mittel: %2.3f"
 
-#: ../lib/plugin/SystemInfo.php:222
+#: ../lib/plugin/SystemInfo.php:262
 #, php-format
 msgid "median: %d"
 msgstr "Median: %d"
 
 # Abbreviation in German for standard deviation / Standardabweichung?
-#: ../lib/plugin/SystemInfo.php:223
+#: ../lib/plugin/SystemInfo.php:263
 #, php-format
 msgid "stddev: %2.3f"
 msgstr "Standardabweichung: %2.3f"
 
-#: ../lib/plugin/SystemInfo.php:235
+#: ../lib/plugin/SystemInfo.php:264
 #, php-format
 msgid "%d pages with less than %d hits (<%d%%)."
 msgstr "%d Seiten die weniger als %d aufgerufen haben (<%d%%)."
 
-#: ../lib/plugin/SystemInfo.php:237
+#: ../lib/plugin/SystemInfo.php:266
 #, php-format
 msgid "%d page(s) with more than %d hits (>%d%%)."
 msgstr "%d Seite(n) die mehr als %d aufgerufen haben (>%d%%)."
 
-#: ../lib/plugin/SystemInfo.php:279
+#: ../lib/plugin/SystemInfo.php:404
 #, php-format
 msgid "Application size: %d Kb"
 msgstr "Anwendungsplatzbedarf: %d KB"
 
-#: ../lib/plugin/SystemInfo.php:281
+#: ../lib/plugin/SystemInfo.php:406
 #, php-format
 msgid "Pagedata size: %d Kb"
 msgstr "Größe der Seitendaten: %d KB"
 
-#: ../lib/plugin/SystemInfo.php:299
+#: ../lib/plugin/SystemInfo.php:424
 #, php-format
 msgid "Total %d plugins: "
 msgstr "%d Gesamte Zusatzprogramme: "
 
-#: ../lib/plugin/SystemInfo.php:308
+#: ../lib/plugin/SystemInfo.php:433
 #, php-format
 msgid "Total of %d languages: "
 msgstr "%d Sprache gesamt: "
 
-#: ../lib/plugin/SystemInfo.php:311
+#: ../lib/plugin/SystemInfo.php:436
 #, php-format
 msgid "Current language: '%s'"
 msgstr "Ihre Sprache: »%s«"
 
-#: ../lib/plugin/SystemInfo.php:313
+#: ../lib/plugin/SystemInfo.php:438
 #, php-format
 msgid "Default language: '%s'"
 msgstr "Standardsprache für dieses Wiki: »%s«"
 
-#: ../lib/plugin/SystemInfo.php:321
+#: ../lib/plugin/SystemInfo.php:446
 #, php-format
 msgid "Total of %d themes: "
 msgstr "%d Benutzeroberfläche gesamt: "
 
-#: ../lib/plugin/SystemInfo.php:323
+#: ../lib/plugin/SystemInfo.php:448
 #, php-format
 msgid "Current theme: '%s'"
 msgstr "Ihre Benutzeroberfläche: »%s«"
 
-#: ../lib/plugin/SystemInfo.php:325
+#: ../lib/plugin/SystemInfo.php:450
 #, php-format
 msgid "Default theme: '%s'"
 msgstr "Darstellung des Systems: »%s«"
 
-#: ../lib/plugin/SystemInfo.php:338
+#: ../lib/plugin/SystemInfo.php:463
 #, php-format
 msgid "unknown argument '%s' to SystemInfo"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:361
+#: ../lib/plugin/SystemInfo.php:487
 msgid "Application name"
 msgstr "Anwendungsname"
 
-#: ../lib/plugin/SystemInfo.php:362
+#: ../lib/plugin/SystemInfo.php:488
 msgid "PhpWiki engine version"
 msgstr "PhpWikitriebwerksversion"
 
-#: ../lib/plugin/SystemInfo.php:363
+#: ../lib/plugin/SystemInfo.php:489
 msgid "Database"
 msgstr "Datenbank"
 
-#: ../lib/plugin/SystemInfo.php:364
+#: ../lib/plugin/SystemInfo.php:490
 msgid "Cache statistics"
 msgstr "Cache Statistiken"
 
-#: ../lib/plugin/SystemInfo.php:365
+#: ../lib/plugin/SystemInfo.php:491
 msgid "Page statistics"
 msgstr "Seiten Statistiken"
 
-#: ../lib/plugin/SystemInfo.php:368
+#: ../lib/plugin/SystemInfo.php:494
 msgid "User statistics"
 msgstr "Benutzer Statistiken"
 
-#: ../lib/plugin/SystemInfo.php:370
+#: ../lib/plugin/SystemInfo.php:496
 msgid "Hit statistics"
 msgstr "Treffer Statistiken"
 
-#: ../lib/plugin/SystemInfo.php:372
+#: ../lib/plugin/SystemInfo.php:497
+msgid "Harddisc usage"
+msgstr ""
+
+#: ../lib/plugin/SystemInfo.php:498
 msgid "Expiry parameters"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:373
+#: ../lib/plugin/SystemInfo.php:499
 msgid "Wikiname regexp"
 msgstr "Wikiname regexp"
 
-#: ../lib/plugin/SystemInfo.php:374
+#: ../lib/plugin/SystemInfo.php:500
 msgid "Allowed protocols"
 msgstr ""
 
-#: ../lib/plugin/SystemInfo.php:375
+#: ../lib/plugin/SystemInfo.php:501
 msgid "Inline images"
 msgstr "Eingebundene Bilder"
 
-#: ../lib/plugin/SystemInfo.php:376
+#: ../lib/plugin/SystemInfo.php:502
 msgid "Available plugins"
 msgstr "Verfügbare Einschubprogramme"
 
-#: ../lib/plugin/SystemInfo.php:377
+#: ../lib/plugin/SystemInfo.php:503
 msgid "Supported languages"
 msgstr "Unterstützte Sprachen"
 
-#: ../lib/plugin/SystemInfo.php:378
+#: ../lib/plugin/SystemInfo.php:504
 msgid "Supported themes"
 msgstr "Unterstützte Benutzeroberfläche"
 
@@ -3968,6 +4004,14 @@ msgid "Sorry, this version of PHP cannot create PNG image files."
 msgstr ""
 "Das geht leider nicht. Diese PHP Version kann keine PNG Bilder erzeugen."
 
+#: ../lib/plugin/Template.php:61
+msgid "Template"
+msgstr "Benutzeroberfläche"
+
+#: ../lib/plugin/Template.php:65
+msgid "Parametrized page inclusion."
+msgstr ""
+
 #: ../lib/plugin/TexToPng.php:103
 msgid "Converts TeX to an image. May be used to embed formulas in PhpWiki."
 msgstr ""
@@ -3990,11 +4034,6 @@ msgstr "Einbetten"
 #: ../lib/plugin/Transclude.php:55
 msgid "Include an external web page within the body of a wiki page."
 msgstr "Einbetten einer externen Webseite im Body dieser Wiki Seite."
-
-#: ../lib/plugin/Transclude.php:76
-#, php-format
-msgid "%s parameter missing"
-msgstr "%s Argument fehlt"
 
 #: ../lib/plugin/Transclude.php:88
 msgid "Transcluded page"
@@ -4176,8 +4215,8 @@ msgstr "Die Upload-Logdatei konnte nicht geöffnet worden."
 #: ../themes/Crao/templates/navbar.tmpl:23
 #: ../themes/MonoBook/templates/navbar.tmpl:49
 #: ../themes/blog/templates/navbar.tmpl:17
-#: ../themes/default/templates/head.tmpl:91
 #: ../themes/default/templates/head.tmpl:92
+#: ../themes/default/templates/head.tmpl:93
 #: ../themes/default/templates/homepage.tmpl:11
 #: ../themes/default/templates/navbar.tmpl:40
 #: ../themes/shamino_com/templates/top.tmpl:28
@@ -4283,7 +4322,7 @@ msgid ""
 "from graphviz."
 msgstr ""
 
-#: ../lib/plugin/VisualWiki.php:487
+#: ../lib/plugin/VisualWiki.php:493
 msgid "Legend"
 msgstr "Legende"
 
@@ -5170,8 +5209,8 @@ msgstr "FremdSuchePlugin"
 #: ../themes/MonoBook/templates/navbar.tmpl:25
 #: ../themes/Portland/templates/navbar.tmpl:8
 #: ../themes/Sidebar/templates/navbar.tmpl:24
-#: ../themes/default/templates/head.tmpl:41
 #: ../themes/default/templates/head.tmpl:42
+#: ../themes/default/templates/head.tmpl:43
 #: ../themes/default/templates/navbar.tmpl:20
 #: ../themes/shamino_com/templates/top.tmpl:21
 #: ../themes/smaller/templates/navbar.tmpl:8
@@ -5391,8 +5430,8 @@ msgstr "WikiPlugin"
 
 #: ../lib/plugin/_WikiTranslation.php:123
 #: ../themes/Crao/templates/head.tmpl:73 ../themes/Crao/templates/head.tmpl:74
-#: ../themes/default/templates/head.tmpl:78
 #: ../themes/default/templates/head.tmpl:79
+#: ../themes/default/templates/head.tmpl:80
 #: ../themes/wikilens/templates/head.tmpl:71
 #: ../themes/wikilens/templates/head.tmpl:72
 msgid "WikiWikiWeb"
@@ -5851,7 +5890,7 @@ msgstr "Alte Version Bearbeiten"
 #: ../themes/Wordpress/templates/actionbar.tmpl:10
 #: ../themes/blog/templates/actionbar.tmpl:7
 #: ../themes/default/templates/actionbar.tmpl:17
-#: ../themes/default/templates/head.tmpl:52
+#: ../themes/default/templates/head.tmpl:53
 #: ../themes/shamino_com/templates/info.tmpl:165
 #: ../themes/smaller/templates/actionbar.tmpl:20
 #: ../themes/smaller/templates/info.tmpl:5
@@ -5928,8 +5967,8 @@ msgid "View the current version"
 msgstr "Die aktuelle Version ansehen"
 
 #: ../themes/Crao/templates/editpage.tmpl:4
-#: ../themes/Portland/templates/editpage.tmpl:80
-#: ../themes/Wordpress/templates/editpage.tmpl:80
+#: ../themes/Portland/templates/editpage.tmpl:57
+#: ../themes/Wordpress/templates/editpage.tmpl:59
 #: ../themes/default/templates/editpage.tmpl:4
 msgid "Preview only!  Changes not saved."
 msgstr ""
@@ -5948,15 +5987,15 @@ msgid "edit area"
 msgstr "Texteingabe Fenster"
 
 #: ../themes/Crao/templates/editpage.tmpl:18
-#: ../themes/Portland/templates/editpage.tmpl:46
-#: ../themes/Wordpress/templates/editpage.tmpl:44
+#: ../themes/Portland/templates/editpage.tmpl:25
+#: ../themes/Wordpress/templates/editpage.tmpl:23
 #: ../themes/default/templates/editpage.tmpl:20
 msgid "Warning: You are editing an old revision."
 msgstr "Achtung: Sie bearbeiten eine alte Version."
 
 #: ../themes/Crao/templates/editpage.tmpl:19
-#: ../themes/Portland/templates/editpage.tmpl:47
-#: ../themes/Wordpress/templates/editpage.tmpl:45
+#: ../themes/Portland/templates/editpage.tmpl:26
+#: ../themes/Wordpress/templates/editpage.tmpl:24
 #: ../themes/default/templates/editpage.tmpl:21
 msgid "Saving this page will overwrite the current version."
 msgstr ""
@@ -5964,22 +6003,22 @@ msgstr ""
 "überschrieben."
 
 #: ../themes/Crao/templates/editpage.tmpl:38
-#: ../themes/Portland/templates/editpage.tmpl:69
-#: ../themes/Wordpress/templates/editpage.tmpl:60
+#: ../themes/Portland/templates/editpage.tmpl:48
+#: ../themes/Wordpress/templates/editpage.tmpl:39
 #: ../themes/default/templates/editpage.tmpl:40
 msgid "H"
 msgstr "H."
 
 #: ../themes/Crao/templates/editpage.tmpl:39
-#: ../themes/Portland/templates/editpage.tmpl:71
-#: ../themes/Wordpress/templates/editpage.tmpl:61
+#: ../themes/Portland/templates/editpage.tmpl:49
+#: ../themes/Wordpress/templates/editpage.tmpl:40
 #: ../themes/default/templates/editpage.tmpl:41
 msgid "W"
 msgstr "Br."
 
 #: ../themes/Crao/templates/editpage.tmpl:40
-#: ../themes/Portland/templates/editpage.tmpl:73
-#: ../themes/Wordpress/templates/editpage.tmpl:62
+#: ../themes/Portland/templates/editpage.tmpl:50
+#: ../themes/Wordpress/templates/editpage.tmpl:41
 #: ../themes/default/templates/editpage.tmpl:42
 msgid "Adjust"
 msgstr "Justieren"
@@ -5994,18 +6033,18 @@ msgid "This is a minor change."
 msgstr "Kleinere Änderung."
 
 #: ../themes/Crao/templates/editpage.tmpl:53
-#: ../themes/Portland/templates/editpage.tmpl:75
-#: ../themes/Wordpress/templates/editpage.tmpl:65
+#: ../themes/Portland/templates/editpage.tmpl:52
+#: ../themes/Wordpress/templates/editpage.tmpl:44
 #: ../themes/default/templates/editpage.tmpl:60
 msgid "Use old markup"
 msgstr "Alte Formatierungssyntax verwenden"
 
 #: ../themes/Crao/templates/editpage.tmpl:88
 #: ../themes/Crao/templates/editpage.tmpl:93
-#: ../themes/Portland/templates/editpage.tmpl:103
-#: ../themes/Portland/templates/editpage.tmpl:108
-#: ../themes/Wordpress/templates/editpage.tmpl:103
-#: ../themes/Wordpress/templates/editpage.tmpl:108
+#: ../themes/Portland/templates/editpage.tmpl:80
+#: ../themes/Portland/templates/editpage.tmpl:85
+#: ../themes/Wordpress/templates/editpage.tmpl:82
+#: ../themes/Wordpress/templates/editpage.tmpl:87
 #: ../themes/default/templates/editpage.tmpl:113
 #: ../themes/default/templates/editpage.tmpl:118
 #, php-format
@@ -6014,44 +6053,44 @@ msgstr "Siehe %s Tips fürs Edieren."
 
 #: ../themes/Crao/templates/editpage.tmpl:88
 #: ../themes/Crao/templates/editpage.tmpl:93
-#: ../themes/Portland/templates/editpage.tmpl:103
-#: ../themes/Portland/templates/editpage.tmpl:108
-#: ../themes/Wordpress/templates/editpage.tmpl:103
-#: ../themes/Wordpress/templates/editpage.tmpl:108
+#: ../themes/Portland/templates/editpage.tmpl:80
+#: ../themes/Portland/templates/editpage.tmpl:85
+#: ../themes/Wordpress/templates/editpage.tmpl:82
+#: ../themes/Wordpress/templates/editpage.tmpl:87
 #: ../themes/default/templates/editpage.tmpl:113
 #: ../themes/default/templates/editpage.tmpl:118
 msgid "GoodStyle"
 msgstr "GuterStil"
 
 #: ../themes/Crao/templates/editpage.tmpl:89
-#: ../themes/Portland/templates/editpage.tmpl:104
-#: ../themes/Wordpress/templates/editpage.tmpl:104
+#: ../themes/Portland/templates/editpage.tmpl:81
+#: ../themes/Wordpress/templates/editpage.tmpl:83
 #: ../themes/default/templates/editpage.tmpl:114
 msgid "OldTextFormattingRules"
 msgstr "AlteTextFormatierungsRegeln"
 
 #: ../themes/Crao/templates/editpage.tmpl:89
 #: ../themes/Crao/templates/editpage.tmpl:94
-#: ../themes/Portland/templates/editpage.tmpl:104
-#: ../themes/Portland/templates/editpage.tmpl:109
-#: ../themes/Wordpress/templates/editpage.tmpl:104
-#: ../themes/Wordpress/templates/editpage.tmpl:109
+#: ../themes/Portland/templates/editpage.tmpl:81
+#: ../themes/Portland/templates/editpage.tmpl:86
+#: ../themes/Wordpress/templates/editpage.tmpl:83
+#: ../themes/Wordpress/templates/editpage.tmpl:88
 #: ../themes/default/templates/editpage.tmpl:114
 #: ../themes/default/templates/editpage.tmpl:119
 msgid "Synopsis"
 msgstr "Übersicht"
 
 #: ../themes/Crao/templates/editpage.tmpl:94
-#: ../themes/Portland/templates/editpage.tmpl:109
-#: ../themes/Wordpress/templates/editpage.tmpl:109
+#: ../themes/Portland/templates/editpage.tmpl:86
+#: ../themes/Wordpress/templates/editpage.tmpl:88
 #: ../themes/default/templates/editpage.tmpl:119
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
 #: ../themes/Crao/templates/head.tmpl:31 ../themes/Crao/templates/head.tmpl:32
 #: ../themes/Crao/templates/htmldump.tmpl:22
-#: ../themes/default/templates/head.tmpl:36
 #: ../themes/default/templates/head.tmpl:37
+#: ../themes/default/templates/head.tmpl:38
 #: ../themes/default/templates/htmldump.tmpl:22
 #: ../themes/wikilens/templates/head.tmpl:30
 #: ../themes/wikilens/templates/head.tmpl:31
@@ -6059,8 +6098,8 @@ msgid "HowToUseWiki"
 msgstr "WieManWikiBenutzt"
 
 #: ../themes/Crao/templates/head.tmpl:70 ../themes/Crao/templates/head.tmpl:71
-#: ../themes/default/templates/head.tmpl:75
 #: ../themes/default/templates/head.tmpl:76
+#: ../themes/default/templates/head.tmpl:77
 #: ../themes/wikilens/templates/head.tmpl:68
 #: ../themes/wikilens/templates/head.tmpl:69
 msgid "SandBox"
@@ -6101,11 +6140,6 @@ msgstr "Sie sind angemeldet als %s"
 #: ../themes/smaller/templates/signin.tmpl:37
 msgid "Enter your UserId to sign in"
 msgstr "Tragen Sie bitte für die Anmeldung im Wiki Ihren Benutzernamen ein"
-
-#: ../themes/Crao/templates/signin.tmpl:54
-#: ../themes/smaller/templates/signin.tmpl:54
-msgid "Sign in:"
-msgstr "Anmelden:"
 
 #: ../themes/Crao/templates/wikiblog.tmpl:19
 #: ../themes/blog/templates/wikiblog.tmpl:20
@@ -6280,14 +6314,14 @@ msgid "Page Type:"
 msgstr "Seitentyp:"
 
 #: ../themes/MonoBook/templates/info.tmpl:170
-#: ../themes/blog/templates/_info.tmpl:5 ../themes/blog/templates/info.tmpl:5
+#: ../themes/blog/templates/info.tmpl:5
 #: ../themes/shamino_com/templates/info.tmpl:170
 #: ../themes/smaller/templates/info.tmpl:9
 msgid "Diff previous Revision"
 msgstr "Diff zu voriger Version"
 
 #: ../themes/MonoBook/templates/info.tmpl:171
-#: ../themes/blog/templates/_info.tmpl:6 ../themes/blog/templates/info.tmpl:6
+#: ../themes/blog/templates/info.tmpl:6
 #: ../themes/shamino_com/templates/info.tmpl:171
 #: ../themes/smaller/templates/info.tmpl:10
 msgid "Diff previous Author"
@@ -6365,14 +6399,14 @@ msgstr "%s von dieser Seite"
 msgid "Page Execution took %s seconds"
 msgstr "Ausführung dieser Seite dauerte %s Sekunden"
 
-#: ../themes/Portland/templates/editpage.tmpl:65
-#: ../themes/Wordpress/templates/editpage.tmpl:74
+#: ../themes/Portland/templates/editpage.tmpl:44
+#: ../themes/Wordpress/templates/editpage.tmpl:53
 #, php-format
 msgid ""
 "I'm just doing minor edits. Please divert the usual logging to %s instead."
 msgstr "Ich mache nur kleinere Änderungen. Protokolliere stattdessen in %s."
 
-#: ../themes/Portland/templates/editpage.tmpl:69
+#: ../themes/Portland/templates/editpage.tmpl:48
 #: ../themes/default/templates/userprefs.tmpl:195
 msgid "Edit Area Size"
 msgstr "Texteingabe Fenstergröße"
@@ -6526,8 +6560,7 @@ msgstr ""
 "Sie können sich mit jedem gewünschten [WikiWort|SeitenErzeugen] als "
 "Benutzernamen ins Wiki eintragen. (Auch %s u. deutsche Umlaute sind "
 "zulässig). Der Benutzername wird in NeuesteÄnderungen als Link auf Ihre "
-"Homepage verwendet. Sie können Ihre Seite in die Browser Favoriten eintragen "
-"oder auch gleich als URL verwenden: ~http://www.wikiname.de/~IhrName"
+"Homepage verwendet."
 
 #: ../themes/default/templates/login.tmpl:60
 msgid ""
@@ -6904,6 +6937,21 @@ msgstr "Gepostet: %s"
 msgid "TermsOfUse"
 msgstr "BenutzungsBedingungen"
 
+#~ msgid "Sign in:"
+#~ msgstr "Anmelden:"
+
+#~ msgid "AUTH_GROUP_FILE not defined"
+#~ msgstr "AUTH_GROUP_FILE nicht definiert"
+
+#~ msgid "LDAP_AUTH_HOST not defined"
+#~ msgstr "LDAP_AUTH_HOST nicht definiert"
+
+#~ msgid "db type:"
+#~ msgstr "Dbtyp:"
+
+#~ msgid "timeout:"
+#~ msgstr "Zeitüberschreitung:"
+
 #~ msgid "Category"
 #~ msgstr "Kategorie"
 
@@ -7017,9 +7065,6 @@ msgstr "BenutzungsBedingungen"
 
 #~ msgid "No opinion"
 #~ msgstr "Keine Bewertung"
-
-#~ msgid "Unable to bind LDAP server %s"
-#~ msgstr "Konnte nicht LDAP Server %s verbinden"
 
 #~ msgid "Unable to connect to LDAP server "
 #~ msgstr "LDAP Server nicht gefunden"

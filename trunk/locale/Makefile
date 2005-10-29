@@ -1,4 +1,4 @@
- # $Id: Makefile,v 1.47 2005-09-12 06:12:06 rurban Exp $
+ # $Id: Makefile,v 1.48 2005-10-29 13:07:14 rurban Exp $
 #
 # locale/Makefile
 #
@@ -9,6 +9,7 @@
 POT_FILE = po/phpwiki.pot
 SYMLINK  = cp
 #SYMLINK  = ln -s
+GETTEXT_LINT_REPORTXSL = /usr/local/share/gettext-lint/report.xsl
 
 .PHONY: all po mo clean depend ${POT_FILE}
 
@@ -62,7 +63,7 @@ dep :
 
 # requires gettext-lint into /usr/local
 check: 
-	POFileChecker po/*.po | xsltproc /usr/local/share/gettext-lint/report.xsl - | \
+	POFileChecker po/*.po | xsltproc $(GETTEXT_LINT_REPORTXSL) - | \
 		perl -pe's/<table>/<table border="1">/; s/<tr><td rowspan=/<tr valign="top"><td rowspan=/g' \
 	        > POFileChecker.html
 
@@ -121,6 +122,7 @@ ${POT_FILE}: ../lib/Request.php
 ${POT_FILE}: ../lib/RssParser.php
 ${POT_FILE}: ../lib/RssWriter.php
 ${POT_FILE}: ../lib/RssWriter2.php
+${POT_FILE}: ../lib/SpamBlocklist.php
 ${POT_FILE}: ../lib/Template.php
 ${POT_FILE}: ../lib/TextSearchQuery.php
 ${POT_FILE}: ../lib/Theme.php
@@ -134,9 +136,11 @@ ${POT_FILE}: ../lib/WikiDB/backend/ADODB.php
 ${POT_FILE}: ../lib/WikiDB/backend/ADODB_mssql.php
 ${POT_FILE}: ../lib/WikiDB/backend/ADODB_mysql.php
 ${POT_FILE}: ../lib/WikiDB/backend/ADODB_oci8po.php
+${POT_FILE}: ../lib/WikiDB/backend/ADODB_postgres7.php
 ${POT_FILE}: ../lib/WikiDB/backend/ADODB_sqlite.php
 ${POT_FILE}: ../lib/WikiDB/backend/PDO.php
 ${POT_FILE}: ../lib/WikiDB/backend/PDO_mysql.php
+${POT_FILE}: ../lib/WikiDB/backend/PDO_pgsql.php
 ${POT_FILE}: ../lib/WikiDB/backend/PearDB.php
 ${POT_FILE}: ../lib/WikiDB/backend/PearDB_mysql.php
 ${POT_FILE}: ../lib/WikiDB/backend/PearDB_oci8.php
@@ -184,6 +188,7 @@ ${POT_FILE}: ../lib/display.php
 ${POT_FILE}: ../lib/editpage.php
 ${POT_FILE}: ../lib/fortune.php
 ${POT_FILE}: ../lib/gif.php
+${POT_FILE}: ../lib/htmlarea.php
 ${POT_FILE}: ../lib/imagecache.php
 ${POT_FILE}: ../lib/install.php
 ${POT_FILE}: ../lib/loadsave.php
@@ -210,11 +215,13 @@ ${POT_FILE}: ../lib/plugin/DeadEndPages.php
 ${POT_FILE}: ../lib/plugin/Diff.php
 ${POT_FILE}: ../lib/plugin/EditMetaData.php
 ${POT_FILE}: ../lib/plugin/ExternalSearch.php
+${POT_FILE}: ../lib/plugin/FileInfo.php
 ${POT_FILE}: ../lib/plugin/FoafViewer.php
 ${POT_FILE}: ../lib/plugin/FrameInclude.php
 ${POT_FILE}: ../lib/plugin/FullTextSearch.php
 ${POT_FILE}: ../lib/plugin/FuzzyPages.php
 ${POT_FILE}: ../lib/plugin/GoTo.php
+${POT_FILE}: ../lib/plugin/GoogleMaps.php
 ${POT_FILE}: ../lib/plugin/GooglePlugin.php
 ${POT_FILE}: ../lib/plugin/GraphViz.php
 ${POT_FILE}: ../lib/plugin/HelloWorld.php
@@ -265,6 +272,7 @@ ${POT_FILE}: ../lib/plugin/SqlResult.php
 ${POT_FILE}: ../lib/plugin/SyntaxHighlighter.php
 ${POT_FILE}: ../lib/plugin/SystemInfo.php
 ${POT_FILE}: ../lib/plugin/TeX2png.php
+${POT_FILE}: ../lib/plugin/Template.php
 ${POT_FILE}: ../lib/plugin/TexToPng.php
 ${POT_FILE}: ../lib/plugin/TitleSearch.php
 ${POT_FILE}: ../lib/plugin/Transclude.php
@@ -301,6 +309,7 @@ ${POT_FILE}: ../lib/prepend.php
 ${POT_FILE}: ../lib/removepage.php
 ${POT_FILE}: ../lib/spam_babycart.php
 ${POT_FILE}: ../lib/stdlib.php
+${POT_FILE}: ../lib/tinymce.php
 ${POT_FILE}: ../lib/upgrade.php
 ${POT_FILE}: ../lib/wikilens/Buddy.php
 ${POT_FILE}: ../lib/wikilens/CustomPrefs.php
@@ -373,7 +382,6 @@ ${POT_FILE}: ../themes/Wordpress/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/Wordpress/themeinfo.php
 ${POT_FILE}: ../themes/alphatest.php
 ${POT_FILE}: ../themes/blog/lib/RecentChanges.php
-${POT_FILE}: ../themes/blog/templates/_info.tmpl
 ${POT_FILE}: ../themes/blog/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/blog/templates/blogform.tmpl
 ${POT_FILE}: ../themes/blog/templates/body.tmpl
@@ -388,6 +396,7 @@ ${POT_FILE}: ../themes/blog/templates/sidebar.tmpl
 ${POT_FILE}: ../themes/blog/templates/top.tmpl
 ${POT_FILE}: ../themes/blog/templates/wikiblog.tmpl
 ${POT_FILE}: ../themes/blog/themeinfo.php
+${POT_FILE}: ../themes/default/htmlarea3/popups/insert_pagelink.php
 ${POT_FILE}: ../themes/default/hyperapplet.php
 ${POT_FILE}: ../themes/default/hyperwiki.php
 ${POT_FILE}: ../themes/default/templates/actionbar.tmpl
@@ -427,6 +436,7 @@ ${POT_FILE}: ../themes/default/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/default/templates/wikiblog.tmpl
 ${POT_FILE}: ../themes/default/templates/wikiforum.tmpl
 ${POT_FILE}: ../themes/default/themeinfo.php
+${POT_FILE}: ../themes/default/tiny_mce/tiny_mce_gzip.php
 ${POT_FILE}: ../themes/shamino_com/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/shamino_com/templates/bottom.tmpl
 ${POT_FILE}: ../themes/shamino_com/templates/browse-footer.tmpl

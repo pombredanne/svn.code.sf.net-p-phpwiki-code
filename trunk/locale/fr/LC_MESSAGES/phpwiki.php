@@ -236,8 +236,6 @@ $locale["ADMIN"] =
    "ADMIN";
 $locale["ANON"] =
    "ANONYME";
-$locale["AUTH_GROUP_FILE not defined"] =
-   "AUTH_GROUP_FILE non défini";
 $locale["About"] =
    "À propos de";
 $locale["Access"] =
@@ -444,8 +442,6 @@ $locale["Check any two boxes then %s."] =
    "Cochez une boîte puis %s.";
 $locale["Check any two boxes to compare revisions."] =
    "Cochez une des boîtes pour comparer les révisions.";
-$locale["Check to add this Acl"] =
-   "Vérifier pour ajouter cette ACL";
 $locale["Chmod"] =
    "Chmod";
 $locale["Chmod to permission:"] =
@@ -944,8 +940,6 @@ $locale["JabberPresence"] =
    "JabberPresence";
 $locale["Keep up to %d major edits, but keep them no longer than %d days."] =
    "Garder jusqu'à %d édition majeures, mais pas plus que %d jours.";
-$locale["LDAP_AUTH_HOST not defined"] =
-   "LDAP_AUTH_HOST non défini";
 $locale["Language"] =
    "Langage";
 $locale["Last"] =
@@ -1654,8 +1648,6 @@ $locale["Sign Out"] =
    "Déconnexion";
 $locale["Sign in as:"] =
    "Se connecter en tant que :";
-$locale["Sign in:"] =
-   "S'enregistrer :";
 $locale["SignIn"] =
    "Connexion";
 $locale["SignOut"] =
@@ -2190,8 +2182,6 @@ $locale["always skip the HomePage."] =
    "toujours ignorer la page d'accueil.";
 $locale["argument '%s' not declared by plugin"] =
    "argument '%s' non déclaré par le plugin";
-$locale["argument '%s' not declared by plugin."] =
-   "argument '%s' non déclaré par le plugin.";
 $locale["authenticated"] =
    "authentifié";
 $locale["blog"] =
@@ -2246,12 +2236,6 @@ $locale["current version"] =
    "version actuelle";
 $locale["days"] =
    "jours";
-$locale["db backend:"] =
-   "db backend:";
-$locale["db type:"] =
-   "type de bd :";
-$locale["dba handler:"] =
-   "gestionnaire dba:";
 $locale["default page permission"] =
    "Permission de page par défaut";
 $locale["diff"] =
@@ -2260,8 +2244,6 @@ $locale["diff this page"] =
    "diff de cette page";
 $locale["download a zip dump from this wiki"] =
    "télécharger une sauvegarde compressée de ce wiki";
-$locale["download an html zip dump from this wiki"] =
-   "télécharger une sauvegarde HTML compressée de ce wiki";
 $locale["dump html pages"] =
    "récupération des pages HTML";
 $locale["dump serial pages"] =
@@ -2386,8 +2368,6 @@ $locale["the file '%s'"] =
    "le fichier %s";
 $locale["the session.save_path directory '%s'"] =
    "le répertoire 'session.save_path' '%s'";
-$locale["timeout:"] =
-   "temps mort :";
 $locale["to"] =
    "à";
 $locale["today"] =

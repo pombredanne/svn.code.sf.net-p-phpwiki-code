@@ -170,8 +170,6 @@ $locale["ACCESS DENIED: You must log in to upload files."] =
    "拒絕存取: 請先登入才能上傳檔案";
 $locale["ACL"] =
    "ACL";
-$locale["AUTH_GROUP_FILE not defined"] =
-   "AUTH_GROUP_FILE 未定義";
 $locale["Action page"] =
    "動作頁面";
 $locale["Add %s hours to the server's local time when reporting times."] =
@@ -688,8 +686,6 @@ $locale["JabberPresence"] =
    "JabberPresence";
 $locale["Keep up to %d major edits, but keep them no longer than %d days."] =
    "保持 %d 份主要編輯,但不超過 %d 天.";
-$locale["LDAP_AUTH_HOST not defined"] =
-   "LDAP_AUTH_HOST 未定義";
 $locale["Language"] =
    "語言";
 $locale["Last"] =
@@ -1638,12 +1634,6 @@ $locale["current version"] =
    "目前版本";
 $locale["days"] =
    "天";
-$locale["db backend:"] =
-   "db 後台:";
-$locale["db type:"] =
-   "db 型態:";
-$locale["dba handler:"] =
-   "dba handler:";
 $locale["default page permission"] =
    "預設頁面權限";
 $locale["diff"] =
@@ -1652,8 +1642,6 @@ $locale["diff this page"] =
    "比對此頁面";
 $locale["download a zip dump from this wiki"] =
    "從此 wiki 下載 zip dump";
-$locale["download an html zip dump from this wiki"] =
-   "從此 wiki 下載 html zip dump";
 $locale["dump html pages"] =
    "傾印 html 頁面";
 $locale["dump serial pages"] =
@@ -1732,8 +1720,6 @@ $locale["stddev: %2.3f"] =
    "stddev: %2.3f";
 $locale["the file '%s'"] =
    "檔案 '%s'";
-$locale["timeout:"] =
-   "逾時:";
 $locale["to"] =
    "到";
 $locale["today"] =
