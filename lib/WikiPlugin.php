@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.59 2005-09-26 06:25:50 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.60 2005-10-29 14:17:37 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.59 $");
+        //                    "\$Revision: 1.60 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -122,7 +122,7 @@ class WikiPlugin
                 and $arg == 'overwrite') // silence this warning
                 ;
             else
-                trigger_error(sprintf(_("argument '%s' not declared by plugin."),
+                trigger_error(sprintf(_("Argument '%s' not declared by plugin."),
                                       $arg), E_USER_NOTICE);
         }
 
