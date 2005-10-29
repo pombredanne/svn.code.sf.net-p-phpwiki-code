@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.40 2005-09-18 12:06:41 rurban Exp $
+<?php // $Id: configurator.php,v 1.41 2005-10-29 08:21:58 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -154,7 +154,7 @@ echo '<','?xml version="1.0" encoding="iso-8859-1"?',">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.40 2005-09-18 12:06:41 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.41 2005-10-29 08:21:58 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -388,6 +388,17 @@ new boolean_define_commented_optional
 ('ENABLE_SPAMASSASSIN', 
  array('true'  => "Enabled",
        'false' => "Disabled"));
+
+$properties["ENABLE_SPAMBLOCKLIST"] =
+new boolean_define_optional
+('ENABLE_SPAMBLOCKLIST', 
+ array('true'  => "Enabled",
+       'false' => "Disabled"));
+
+$properties["NUM_SPAM_LINKS"] =
+    new numeric_define_optional('NUM_SPAM_LINKS', "20", "
+If more than this number of external links appear on non-authenticated 
+edits it will be rejected as spam.");
 
 $properties["GOOGLE_LINKS_NOFOLLOW"] =
 new boolean_define_commented_optional
