@@ -1,6 +1,6 @@
 <?php // #!/usr/local/bin/php -Cq
 /* Copyright (C) 2004 Dan Frankowski <dfrankow@cs.umn.edu>
- * Copyright (C) 2004 Reini Urban <rurban@x-ray.at>
+ * Copyright (C) 2004,2005 Reini Urban <rurban@x-ray.at>
  *
  * This file is part of PhpWiki.
  * 
@@ -56,7 +56,7 @@
 ####################################################################
 
 $cur_dir = getcwd();
-# Add root dir to the path
+// Add root dir to the path
 if (substr(PHP_OS,0,3) == 'WIN')
     $cur_dir = str_replace("\\","/", $cur_dir);
 $rootdir = $cur_dir . '/../../';
@@ -80,14 +80,14 @@ $database_backends = array(
                            'SQL',   // default backend defined in the config.ini DSN
                            'ADODB', // same backend as defined in the config.ini DSN
 			   // specific backends (need to be setup)
-			   'PearDB_pgsql', 'PearDB_sqlite',
-			   //'PearDB_oci8', 'PearDB_mysql', 
+			   'PearDB_pgsql', 'PearDB_sqlite', 'PearDB_mysql',
+			   //'PearDB_oci8', 
 			   //'PearDB_mssql', 
-			   'ADODB_postgres7', 'ADODB_sqlite', 
-			   //'ADODB_oci8', 'ADODB_mysql', 
+			   'ADODB_postgres7', 'ADODB_sqlite', 'ADODB_mysql', 
+			   //'ADODB_oci8', 
 			   //'ADODB_mssql', 
-			   'PDO_pqsql', 'PDO_sqlite', 
-			   //'PDO_oci', 'PDO_mysql', 'PDO_odbc', 
+			   'PDO_pqsql', 'PDO_sqlite', 'PDO_mysql', 
+			   //'PDO_oci', 'PDO_odbc', 
                            );
 //TODO: convert cvs test                           
 //TODO: read some database values from config.ini, just use the "test_" prefix
@@ -100,7 +100,7 @@ $database_backends = array(
 $database_prefix = "test_";
 // For "cvs" see the seperate tests/unit_test_backend_cvs.php (cvs is experimental)
 
-# Quiet warnings in IniConfig.php
+// Quiet warnings in IniConfig.php
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
 $HTTP_SERVER_VARS['HTTP_USER_AGENT'] = "PHPUnit";
 
@@ -133,7 +133,7 @@ function printSimpleTrace($bt) {
     }
 }
 */
-# Show lots of detail when an assert() in the code fails
+// Show lots of detail when an assert() in the code fails
 function assert_callback( $script, $line, $message ) {
    echo "assert failed: script ", $script," line ", $line," :";
    echo "$message";
@@ -145,9 +145,9 @@ function assert_callback( $script, $line, $message ) {
 }
 $foo = assert_options( ASSERT_CALLBACK, 'assert_callback');
 
-#
-# Get error reporting to call back, too
-#
+//
+// Get error reporting to call back, too
+//
 // set the error reporting level for this script
 if (defined('E_STRICT') and (E_ALL & E_STRICT)) // strict php5?
     error_reporting(E_ALL & ~E_STRICT); 	// exclude E_STRICT
@@ -349,11 +349,11 @@ function updateLevelEdit(formObj) {
     return $table->printXml();
 }
 
-####################################################################
-#
-# End of preamble, run the test suite ..
-#
-####################################################################
+//####################################################################
+//
+// End of preamble, run the test suite ..
+//
+//####################################################################
 
 ob_start();
 
@@ -453,7 +453,7 @@ if (DEBUG & 8)
     printMemoryUsage("beforePhpWiki");
 
 define('PHPWIKI_NOMAIN', true);
-# Other needed files
+// Other needed files
 require_once $rootdir.'index.php';
 require_once $rootdir.'lib/main.php';
 
@@ -478,7 +478,7 @@ if ($debug_level & 1) {
 
 global $ErrorManager;
 $ErrorManager->setPostponedErrorMask(EM_FATAL_ERRORS|EM_WARNING_ERRORS|EM_NOTICE_ERRORS);
-//FIXME: ignore cached requests (if-modified-since) from cli
+// FIXME: ignore cached requests (if-modified-since) from cli
 class MockRequest extends WikiRequest {
     function MockRequest(&$dbparams) {
         $this->_dbi = WikiDB::open($dbparams);
@@ -555,7 +555,7 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
     }
 }
 
-# Test all db backends.
+// Test all db backends.
 foreach ($run_database_backends as $dbtype) {
     //    if (DEBUG & _DEBUG_TRACE)
     //        printMemoryUsage("PHPUnitInitialized");
