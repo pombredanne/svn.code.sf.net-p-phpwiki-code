@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.247 2005-10-10 20:31:21 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.248 2005-10-29 14:18:30 uckelman Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1537,7 +1537,8 @@ function explodePageList($input, $include_empty=false, $sortby='pagename',
 /** 
  * Determine whether object is of a specified type.
  * In PHP builtin since 4.2.0 as is_a()
- *
+ * is_a() deprecated in PHP 5, in favor of instanceof operator
+
  * @param $object object An object.
  * @param $class string Class name.
  * @return bool True iff $object is a $class
@@ -2052,6 +2053,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.247  2005/10/10 20:31:21  rurban
+// fix win32ps call
+//
 // Revision 1.246  2005/10/10 19:38:48  rurban
 // add win32ps
 //
