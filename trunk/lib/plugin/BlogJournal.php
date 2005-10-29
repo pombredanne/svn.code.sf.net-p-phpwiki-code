@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BlogJournal.php,v 1.1 2005-10-29 09:03:17 rurban Exp $');
+rcs_id('$Id: BlogJournal.php,v 1.2 2005-10-29 09:06:37 rurban Exp $');
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam
  */
@@ -28,7 +28,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -40,31 +40,6 @@ extends WikiPlugin_WikiBlog
                      );
     }
 
-    // "2004-12" => "December 2004"
-    function _monthTitle($month){
-        //list($year,$mon) = explode("-",$month);
-        return strftime("%B %Y", strtotime($month."-01"));
-    }
-
-    // "User/Blog/2004-12-13/12:28:50+01:00" => array('month' => "2004-12", ...)
-    function _blog($rev_or_page) {
-    	$pagename = $rev_or_page->getName();
-        if (preg_match("/^(.*Blog)\/(\d\d\d\d-\d\d)-(\d\d)\/(.*)/", $pagename, $m))
-            list(,$prefix,$month,$day,$time) = $m;
-        return array('pagename' => $pagename,
-                     // page (list pages per month) or revision (list months)?
-                     //'title' => isa($rev_or_page,'WikiDB_PageRevision') ? $rev_or_page->get('summary') : '',
-                     //'monthtitle' => $this->_monthTitle($month),
-                     'month'   => $month,
-                     'day'   => $day,
-                     'time'  => $time,
-                     'prefix' => $prefix);
-    }
-
-    function _nonDefaultArgs($args) {
-    	return array_diff_assoc($args, $this->getDefaultArguments());
-    }
-    
     function run($dbi, $argstr, &$request, $basepage) {
         if (is_array($argstr)) { // can do with array also.
             $args =& $argstr;
@@ -115,6 +90,13 @@ extends WikiPlugin_WikiBlog
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/10/29 09:03:17  rurban
+// Include the latest blog entries for the current users blog if signed,
+// or the ADMIN_USER's Blog if not.
+// UnfoldSubpages for blogs.
+// Rui called this plugin "JournalLast", but this was written completely
+// independently, without having seen the src (yet).
+//
 
 // Local Variables:
 // mode: php
