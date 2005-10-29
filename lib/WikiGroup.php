@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.52 2004-11-28 15:59:17 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.53 2005-10-29 14:17:21 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -835,7 +835,8 @@ class GroupFile extends WikiGroup {
         $this->membership = array();
 
         if (!defined('AUTH_GROUP_FILE')) {
-            trigger_error(_("AUTH_GROUP_FILE not defined"), E_USER_WARNING);
+            trigger_error(sprintf(_("%s: not defined"), "AUTH_GROUP_FILE"),
+                          E_USER_WARNING);
             return false;
         }
         if (!file_exists(AUTH_GROUP_FILE)) {
@@ -947,7 +948,8 @@ class GroupLdap extends WikiGroup {
         $this->membership = array();
 
         if (!defined("LDAP_AUTH_HOST")) {
-            trigger_error(_("LDAP_AUTH_HOST not defined"), E_USER_WARNING);
+            trigger_error(sprintf(_("%s not defined"), "LDAP_AUTH_HOST"),
+                          E_USER_WARNING);
             return false;
         }
         // We should ignore multithreaded environments, not generally windows.
@@ -1100,6 +1102,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2004/11/28 15:59:17  rurban
+// patch by Charles Corrigan so that WikiGroup->isSpecialMember knows about CREATOR and OWNER
+//
 // Revision 1.51  2004/11/27 14:39:04  rurban
 // simpified regex search architecture:
 //   no db specific node methods anymore,
