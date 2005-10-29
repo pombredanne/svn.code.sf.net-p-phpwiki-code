@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.96 2005-09-26 06:27:33 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.97 2005-10-29 14:16:38 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -666,14 +666,14 @@ function fixup_dynamic_configs($file) {
     if (!defined('DEFAULT_LANGUAGE'))   // not needed anymore
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
-    //update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
+    update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
     if (empty($LANG)) {
         if (!defined("DEFAULT_LANGUAGE") or !DEFAULT_LANGUAGE) {
             // TODO: defer this to WikiRequest::initializeLang()
             $LANG = guessing_lang(); 
             guessing_setlocale (LC_ALL,$LANG);
-            }
-      else    
+        }
+        else
             $LANG = DEFAULT_LANGUAGE;
     }
  
@@ -852,6 +852,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.96  2005/09/26 06:27:33  rurban
+// default locale fix Thomas Harding
+//
 // Revision 1.95  2005/09/18 15:15:53  rurban
 // add a proper Content-Encoding: gzip if compressed, and omit Content-Length then.
 //
