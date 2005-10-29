@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.22 2004-12-15 15:33:18 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.23 2005-10-29 09:06:37 rurban Exp $');
 /*
  Copyright 2002, 2003 $ThePhpWikiProgrammingTeam
  
@@ -81,7 +81,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     // Arguments:
@@ -356,9 +356,38 @@ extends WikiPlugin
         return new Template($template, $request,
                             array('PAGENAME' => $args['pagename']));
     }
+
+    // "2004-12" => "December 2004"
+    function _monthTitle($month){
+        //list($year,$mon) = explode("-",$month);
+        return strftime("%B %Y", strtotime($month."-01"));
+    }
+
+    // "User/Blog/2004-12-13/12:28:50+01:00" => array('month' => "2004-12", ...)
+    function _blog($rev_or_page) {
+    	$pagename = $rev_or_page->getName();
+        if (preg_match("/^(.*Blog)\/(\d\d\d\d-\d\d)-(\d\d)\/(.*)/", $pagename, $m))
+            list(,$prefix,$month,$day,$time) = $m;
+        return array('pagename' => $pagename,
+                     // page (list pages per month) or revision (list months)?
+                     //'title' => isa($rev_or_page,'WikiDB_PageRevision') ? $rev_or_page->get('summary') : '',
+                     //'monthtitle' => $this->_monthTitle($month),
+                     'month'   => $month,
+                     'day'     => $day,
+                     'time'    => $time,
+                     'prefix'  => $prefix);
+    }
+
+    function _nonDefaultArgs($args) {
+    	return array_diff_assoc($args, $this->getDefaultArguments());
+    }
+
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/12/15 15:33:18  rurban
+// Blogs => Blog
+//
 // Revision 1.21  2004/12/14 21:35:15  rurban
 // support new BLOG_EMPTY_DEFAULT_PREFIX
 //
