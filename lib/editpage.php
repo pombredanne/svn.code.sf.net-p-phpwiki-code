@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.98 2005-10-10 19:37:04 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.99 2005-10-29 08:21:58 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -114,8 +114,9 @@ class PageEditor
             elseif ($this->savePage()) {
                 return true;    // Page saved.
             }
-            else
+            else {
                 $saveFailed = true;
+            }
         }
 
         if ($saveFailed and $this->isConcurrentUpdate())
@@ -138,7 +139,7 @@ class PageEditor
             $this->version = $this->_currentVersion;
             $unresolved = $diff->ConflictingBlocks;
             $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage($unresolved);
-        } elseif ($saveFailed) {
+        } elseif ($saveFailed && !$this->_isSpam) {
             $tokens['CONCURRENT_UPDATE_MESSAGE'] = 
                 HTML(HTML::h2(_("Some internal editing error")),
             	     HTML::p(_("Your are probably trying to edit/create an invalid version of this page.")),
@@ -233,6 +234,7 @@ class PageEditor
         }
 
         if ($this->isSpam()) {
+            $this->_isSpam = true;
             return false;
             /*
             // Save failed. No changes made.
@@ -352,12 +354,9 @@ class PageEditor
      * Need to check dynamically some blacklist wikipage settings 
      * (plugin WikiAccessRestrictions) and some static blacklist.
      * DONE: 
-     *   More then 20 new external links
-     *   content patterns by babycart (only php >= 4.3 for now)
-     * TODO:
-     *   IP blacklist 
-     *   domain blacklist
-     *   url patterns
+     *   Always: More then 20 new external links
+     *   ENABLE_SPAMASSASSIN: content patterns by babycart (only php >= 4.3 for now)
+     *   ENABLE_SPAMBLOCKLIST: IP blacklist, domain blacklist, url patterns
      */
     function isSpam () {
         $current = &$this->current;
@@ -367,14 +366,14 @@ class PageEditor
         $newtext =& $this->_content;
 
         // FIXME: in longer texts the NUM_SPAM_LINKS number should be increased.
-        //        better use a certain  text:link ratio.
+        //        better use a certain text : link ratio.
 
         // 1. Not more then 20 new external links
         if ($this->numLinks($newtext) - $this->numLinks($oldtext) >= NUM_SPAM_LINKS) {
             // TODO: mail the admin?
             $this->tokens['PAGE_LOCKED_MESSAGE'] = 
                 HTML($this->getSpamMessage(),
-                     HTML::p(HTML::em(_("Too many external links."))));
+                     HTML::p(HTML::strong(_("Too many external links."))));
             return true;
         }
         // 2. external babycart (SpamAssassin) check
@@ -384,7 +383,7 @@ class PageEditor
             include_once("lib/spam_babycart.php");
             if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"), 
                                            $user->getId())) {
-                // mail the admin?
+                // TODO: mail the admin
                 if (is_array($babycart))
                     $this->tokens['PAGE_LOCKED_MESSAGE'] = 
                         HTML($this->getSpamMessage(),
@@ -393,13 +392,34 @@ class PageEditor
                 return true;
             }
         }
+        // 3. extract (new) links and check surbl for blocked domains
+        if (ENABLE_SPAMBLOCKLIST and $this->numLinks($newtext)) {
+            include_once("lib/SpamBlocklist.php");
+            include_once("lib/InlineParser.php");
+            $parsed = TransformLinks($newtext);
+            foreach ($parsed->_content as $link) {
+            	if (isa($link, 'Cached_ExternalLink')) {
+                  $uri = $link->_getURL($this->page->getName());
+                  if ($res = IsBlackListed($uri)) {
+                    // TODO: mail the admin
+                    $this->tokens['PAGE_LOCKED_MESSAGE'] = 
+                        HTML($this->getSpamMessage(),
+                             HTML::p(HTML::strong(_("External links contain blocked domains:")),
+                             HTML::ul(HTML::li(sprintf(_("%s is listed at %s"), 
+                                                       $res[2], $res[0])))));
+                    return true;
+                  }
+            	}
+            }
+        }
+
         return false;
     }
 
     /** Number of external links in the wikitext
      */
     function numLinks(&$text) {
-        return substr_count($text, "http://");
+        return substr_count($text, "http://") + substr_count($text, "https://");
     }
 
     /** Header of the Anti Spam message 
@@ -592,7 +612,8 @@ class PageEditor
                                 'value'    => $request->getPref('editHeight'),
                                 'onchange' => 'this.form.submit();'));
         $el['SEP'] = $WikiTheme->getButtonSeparator();
-        $el['AUTHOR_MESSAGE'] = fmt("Author will be logged as %s.", HTML::em($this->user->getId()));
+        $el['AUTHOR_MESSAGE'] = fmt("Author will be logged as %s.", 
+                                    HTML::em($this->user->getId()));
         
         return $el;
     }
@@ -770,6 +791,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.98  2005/10/10 19:37:04  rurban
+ change USE_HTMLAREA to ENABLE WYSIWYG, add NUM_SPAM_LINKS=20
+
  Revision 1.97  2005/09/26 06:32:22  rurban
  [] is forbidden in id tags. Renamed to use :
 
