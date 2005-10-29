@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FileInfo.php,v 1.3 2005-10-29 13:35:00 rurban Exp $');
+rcs_id('$Id: FileInfo.php,v 1.4 2005-10-29 14:18:47 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -81,6 +81,7 @@ extends WikiPlugin
 	    switch ($mode) {
 	    case 'version':  $s[] = $this->exeversion($file); break;
 	    case 'size':     $s[] = filesize($file); break;
+	    case 'phonysize':$s[] = $this->phonysize(filesize($file)); break;
 	    case 'date':     $s[] = strftime("%x %X", filemtime($file)); break;
 	    case 'mtime':    $s[] = filemtime($file); break;
 	    case 'name':     $s[] = basename($file); break;
@@ -131,6 +132,29 @@ extends WikiPlugin
 
     function mime_type($file) {
 	return '';
+    }
+
+    function _formatsize ($n, $factor, $suffix = '') {
+        if ($n > $factor) {
+            $b = $n / $factor;
+            $n -= floor($factor * $b);
+            return number_format($b, $n ? 3 : 0). $suffix;
+        }
+    }
+    function phonysize ($a) {
+        $factor = 1024 * 1024 * 1000;
+        if ($a > $factor)
+            return $this->_formatsize($a, $factor, ' GB');
+        $factor = 1024 * 1000;
+        if ($a > $factor)
+            return $this->_formatsize($a, $factor, ' MB');
+        $factor = 1024;
+        if ($a > $factor)
+            return $this->_formatsize($a, $factor, ' KB');
+        if ($a > 1)
+            return $this->_formatsize($a, 1, ' byte');
+        else
+            return $a;
     }
 
     function exeversion($file) {
@@ -259,6 +283,9 @@ struct VS_VERSIONINFO { struct VS_VERSIONINFO
 
 /* 
  $Log: not supported by cvs2svn $
+ Revision 1.3  2005/10/29 13:35:00  rurban
+ fix Log:, add chdir() if not in PHPWIKI_DIR, fix ->warning
+
 
 */
 
