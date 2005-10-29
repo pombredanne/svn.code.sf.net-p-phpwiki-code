@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FileInfo.php,v 1.2 2005-10-29 12:39:14 uckelman Exp $');
+rcs_id('$Id: FileInfo.php,v 1.3 2005-10-29 13:35:00 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -64,13 +64,15 @@ extends WikiPlugin
         if (!$display)
             return $this->error(sprintf(_("A required argument '%s' is missing."), 'display'));
 
+        $dir = getcwd();
+        chdir(PHPWIKI_DIR);
 	// sanify $file name
 	if (!file_exists($file)) {
-	    return $this->warning("file \"$file\" not found");
+	    trigger_error("file \"$file\" not found", E_USER_WARNING);
 	}
 	$realfile = realpath($file);
 	if (!string_starts_with($realfile, realpath(getUploadDataPath())))
-	    return $this->warning("invalid path \"$file\"");
+	    return $this->error("invalid path \"$file\"");
 	else 
 	    $isuploaded = 1;
 	$s = array();
@@ -98,6 +100,7 @@ extends WikiPlugin
 		break;
 	    }
 	}
+        chdir($dir);
 	if (!$format) {
 	    $format = '';
 	    foreach ($s as $x) { $format .= " %s"; }
@@ -254,18 +257,9 @@ struct VS_VERSIONINFO { struct VS_VERSIONINFO
     }
 };
 
+/* 
+ $Log: not supported by cvs2svn $
 
-/*
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2005/10/29 09:00:05  rurban
-// This plugin displays the version, date, size, perms of an uploaded file.
-// Only files relative and below to the uploads path can be handled.
-//
-// Usage:
-//   <?plugin FileVersion file=uploads/setup.exe display=version,date ?>
-//   <?plugin FileVersion file=uploads/setup.exe display=name,version,date
-//                        format="%s (version: %s, date: %s)" ?>
-//
 */
 
 // For emacs users
