@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.14 2005-07-21 19:27:04 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.15 2005-10-29 08:57:12 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -55,8 +55,8 @@ Done:
 */
 
 // Intercept GET requests from confused users.  Only POST is allowed here!
-// There is some indication that $HTTP_SERVER_VARS is deprecated in php > 4.1.0
-// in favour of $_Server, but as far as I know, it still works.
+if (empty($GLOBALS['HTTP_SERVER_VARS']))
+    $GLOBALS['HTTP_SERVER_VARS'] =& $_SERVER;
 if ($GLOBALS['HTTP_SERVER_VARS']['REQUEST_METHOD'] != "POST")
 {
     die('This is the address of the XML-RPC interface.' .
@@ -638,7 +638,7 @@ function mailPasswordToUser($params)
 }
 
 /** 
- * struct titleSearch(String substring [, Integer option = 0])
+ * struct wiki.titleSearch(String substring [, Integer option = 0])
  * returns an array of matching pagenames.
  * TODO: standardize options
  *
@@ -689,18 +689,198 @@ function titleSearch($params)
     return new xmlrpcresp(new xmlrpcval($pages, "array"));
 }
 
+/** 
+ * array wiki.listPlugins()
+ *
+ * Returns an array of all available plugins. 
+ * For EditToolbar pluginPulldown via AJAX
+ *
+ * @author: Reini Urban
+ */
+$wiki_dmap['listPlugins']
+= array('signature'     => array(array($xmlrpcArray)),
+        'documentation' => "Return names of all plugins",
+        'function'      => 'listPlugins');
+
+function listPlugins($params)
+{
+    $plugin_dir = 'lib/plugin';
+    if (defined('PHPWIKI_DIR'))
+        $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
+    $pd = new fileSet($plugin_dir, '*.php');
+    $plugins = $pd->getFiles();
+    unset($pd);
+    sort($plugins);
+    $RetArray = array();
+    if (!empty($plugins)) {
+        require_once("lib/WikiPlugin.php");
+        $w = new WikiPluginLoader;
+        foreach ($plugins as $plugin) {
+            $pluginName = str_replace(".php", "", $plugin);
+            $p = $w->getPlugin($pluginName, false); // second arg?
+            // trap php files which aren't WikiPlugin~s: wikiplugin + wikiplugin_cached only
+            if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
+                $RetArray[] = short_string($pluginName);
+            }
+        }
+    }
+  
+    return new xmlrpcresp(new xmlrpcval($RetArray, "array"));
+}
+
+/** 
+ * String wiki.getPluginSynopsis(String plugin)
+ *
+ * For EditToolbar pluginPulldown via AJAX
+ *
+ * @author: Reini Urban
+ */
+$wiki_dmap['getPluginSynopsis']
+= array('signature'     => array(array($xmlrpcArray, $xmlrpcString)),
+        'documentation' => "Return plugin synopsis",
+        'function'      => 'getPluginSynopsis');
+
+function getPluginSynopsis($params)
+{
+    $ParamPlugin = $params->getParam(0);
+    $pluginName = short_string_decode($ParamPlugin->scalarval());
+
+    require_once("lib/WikiPlugin.php");
+    $w = new WikiPluginLoader;
+    $synopsis = '';
+    $p = $w->getPlugin($pluginName, false); // second arg?
+    // trap php files which aren't WikiPlugin~s: wikiplugin + wikiplugin_cached only
+    if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
+        $plugin_args = '';
+        $desc = $p->getArgumentsDescription();
+        $src = array("\n",'"',"'",'|','[',']','\\');
+        $replace = array('%0A','%22','%27','%7C','%5B','%5D','%5C');
+        $desc = str_replace("<br />",' ',$desc->asXML());
+        if ($desc)
+            $plugin_args = '\n'.str_replace($src, $replace, $desc);
+        $synopsis = "<?plugin ".$pluginName.$plugin_args."?>"; // args?
+    }
+   
+    return new xmlrpcresp(short_string($synopsis));
+}
+
+
+/** 
+ * struct pingback.ping(String sourceURI, String targetURI)
+ * returns a String.
+
+Spec: http://www.hixie.ch/specs/pingback/pingback
+
+Parameters
+    sourceURI of type string
+        The absolute URI of the post on the source page containing the
+        link to the target site.
+    targetURI of type string
+        The absolute URI of the target of the link, as given on the source page.
+Return Value
+    A string, as described below.
+Faults
+    If an error condition occurs, then the appropriate fault code from
+    the following list should be used. Clients can quickly determine
+    the kind of error from bits 5-8. 0×001x fault codes are used for
+    problems with the source URI, 0×002x codes are for problems with
+    the target URI, and 0×003x codes are used when the URIs are fine
+    but the pingback cannot be acknowledged for some other reaon.
+
+    0 
+    	A generic fault code. Servers MAY use this error code instead
+    	of any of the others if they do not have a way of determining
+    	the correct fault code.
+    0×0010 (16)
+        The source URI does not exist.
+    0×0011 (17)
+        The source URI does not contain a link to the target URI, and
+        so cannot be used as a source.
+    0×0020 (32)
+        The specified target URI does not exist. This MUST only be
+        used when the target definitely does not exist, rather than
+        when the target may exist but is not recognised. See the next
+        error.
+    0×0021 (33)
+        The specified target URI cannot be used as a target. It either
+        doesn't exist, or it is not a pingback-enabled resource. For
+        example, on a blog, typically only permalinks are
+        pingback-enabled, and trying to pingback the home page, or a
+        set of posts, will fail with this error.
+    0×0030 (48)
+        The pingback has already been registered.
+    0×0031 (49)
+        Access denied.
+    0×0032 (50)
+        The server could not communicate with an upstream server, or
+        received an error from an upstream server, and therefore could
+        not complete the request. This is similar to HTTP's 402 Bad
+        Gateway error. This error SHOULD be used by pingback proxies
+        when propagating errors.
+
+    In addition, [FaultCodes] defines some standard fault codes that
+    servers MAY use to report higher level errors.
+
+Servers MUST respond to this function call either with a single string
+or with a fault code.
+
+If the pingback request is successful, then the return value MUST be a
+single string, containing as much information as the server deems
+useful. This string is only expected to be used for debugging
+purposes.
+
+If the result is unsuccessful, then the server MUST respond with an
+RPC fault value. The fault code should be either one of the codes
+listed above, or the generic fault code zero if the server cannot
+determine the correct fault code.
+
+Clients MAY ignore the return value, whether the request was
+successful or not. It is RECOMMENDED that clients do not show the
+result of successful requests to the user.
+
+Upon receiving a request, servers MAY do what they like. However, the
+following steps are RECOMMENDED:
+
+   1. The server MAY attempt to fetch the source URI to verify that
+   the source does indeed link to the target.
+   2. The server MAY check its own data to ensure that the target
+   exists and is a valid entry.
+   3. The server MAY check that the pingback has not already been registered.
+   4. The server MAY record the pingback.
+   5. The server MAY regenerate the site's pages (if the pages are static).
+
+ * @author: Reini Urban
+ */
+$wiki_dmap['pingback.ping']
+= array('signature'     => array(array($xmlrpcString, $xmlrpcString, $xmlrpcString)),
+        'documentation' => "",
+        'function'      => 'pingBack');
+function pingBack($params)
+{
+    global $request;
+    $Param0 = $params->getParam(0);
+    $sourceURI = short_string_decode($Param0->scalarval());
+    $Param1 = $params->getParam(1);
+    $targetURI = short_string_decode($Param1->scalarval());
+    // TODO...
+}
  
 /** 
  * Construct the server instance, and set up the dispatch map, 
  * which maps the XML-RPC methods on to the wiki functions.
- * Provide the "wiki." prefix to each function
+ * Provide the "wiki." prefix to each function. Besides 
+ * the blog - pingback, ... - functions with a seperate namespace.
  */
 class XmlRpcServer extends xmlrpc_server
 {
     function XmlRpcServer ($request = false) {
         global $wiki_dmap;
-        foreach ($wiki_dmap as $name => $val)
-            $dmap['wiki.' . $name] = $val;
+        foreach ($wiki_dmap as $name => $val) {
+            if ($name == 'pingback.ping') // non-wiki methods
+                $dmap[$name] = $val;
+            else
+                $dmap['wiki.' . $name] = $val;
+        }
 
         $this->xmlrpc_server($dmap, 0 /* delay service*/);
     }
@@ -723,6 +903,10 @@ class XmlRpcServer extends xmlrpc_server
     }
 }
 
+/*
+ $Log: not supported by cvs2svn $
+
+ */
 
 // (c-file-style: "gnu")
 // Local Variables:
