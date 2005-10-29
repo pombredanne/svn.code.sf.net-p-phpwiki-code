@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.44 2005-08-07 10:52:43 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.45 2005-10-29 14:28:08 uckelman Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -261,8 +261,8 @@ class ErrorManager
         }
         else if (($error->errno & error_reporting()) != 0) {
             if  (($error->errno & $this->_postpone_mask) != 0) {
-                if ((function_exists('is_a') and is_a($error, 'PhpErrorOnce'))
-                    or (!function_exists('is_a') and 
+                if ((function_exists('isa') and isa($error, 'PhpErrorOnce'))
+                    or (!function_exists('isa') and 
                     (
                      // stdlib independent isa()
                      (strtolower(get_class($error)) == 'phperroronce')
@@ -617,6 +617,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2005/08/07 10:52:43  rurban
+// stricter error handling: dba errors are fatal, display errors on Request->finish or session_close
+//
 // Revision 1.43  2005/04/11 19:41:23  rurban
 // Improve postponed errors+warnins list layout.
 //
