@@ -1,10 +1,11 @@
 <?php
-rcs_id('$Id: Captcha.php,v 1.3 2005-10-29 07:37:56 rurban Exp $');
-/*
+rcs_id('$Id: Captcha.php,v 1.4 2005-10-30 14:20:42 rurban Exp $');
+/**
   Session Captcha v1.0
-  by Gavin M. Roy <gmr@bteg.net>
+    by Gavin M. Roy <gmr@bteg.net>
   Modified by Benjamin Drieu <bdrieu@april.org> - 2005 for PhpWiki
   get_captcha_random_word() contributed by Dan Frankowski 2005 for PhpWiki
+  objectified and randomized 2005 by Reini Urban
 
   This File is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -21,105 +22,154 @@ rcs_id('$Id: Captcha.php,v 1.3 2005-10-29 07:37:56 rurban Exp $');
   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 */
 
+class Captcha {
 
-function get_captcha_word () { 
-    if (USE_CAPTCHA_RANDOM_WORD)
-	return get_captcha_dictionary_word(); 
-    else
-	return get_captcha_random_word(); 
-}
-
-function get_captcha_dictionary_word () {
-    // Load In the Word List
-    $fp = fopen(FindFile("lib/captcha/dictionary"), "r");
-    while ( !feof($fp) )
-	$text[] = Trim(fgets($fp, 1024));
-    fclose($fp);
-
-    // Pick a Word
-    $word = "";
-    while ( strlen(Trim($word)) == 0 ) {
-	$x = rand(0, Count($text));
-	return $text[$x];
+    function Captcha($meta = array(), $width = 250, $height = 80) {
+        $this->meta   =& $meta;
+        $this->width  = $width;
+        $this->height = $height;
+        $this->length = 8;
+        $this->failed_msg = _("Typed in verification word mismatch ... are you a bot?");
+        $this->request =& $GLOBALS['request'];
     }
-}
 
-/* by Dan Frankowski.
- */
-function get_captcha_random_word () {
-    // Pick a few random letters or numbers
-    $word = "";
-    // Don't use 1 <=> l or 0 (for o), because they're hard to read
-    $letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHIJKMNOPQRSTUVWXYZ23456789";
-    $letter_len = strlen($letters);
-    for ($i=0; $i<4; $i++) {
-        $word .= $letters[mt_rand(0, $letter_len-1)];
+    function captchaword() {
+        if ( ! $this->request->getSessionVar('captchaword')) {
+	    $this->request->setSessionVar('captchaword', $this->get_word());
+	}
+        return $this->request->getSessionVar('captchaword');
     }
-    return $word;
-}
 
-// Draw the Spiral
-function spiral( &$im, $origin_x = 100, $origin_y = 100, $r = 0, $g = 0, $b = 0 ) {
-    $theta = 1;
-    $thetac = 6;  
-    $radius = 15;  
-    $circles = 10;  
-    $points = 35;  
-    $lcolor = imagecolorallocate( $im, $r, $g, $b );
-    for( $i = 0; $i < ( $circles * $points ) - 1; $i++ ) {
-	$theta = $theta + $thetac;
-	$rad = $radius * ( $i / $points );
-	$x = ( $rad * cos( $theta ) ) + $origin_x;
-	$y = ( $rad * sin( $theta ) ) + $origin_y;
-	$theta = $theta + $thetac;
-	$rad1 = $radius * ( ( $i + 1 ) / $points );
-	$x1 = ( $rad1 * cos( $theta ) ) + $origin_x;
-	$y1 = ( $rad1 * sin( $theta ) ) + $origin_y;
-	imageline( $im, $x, $y, $x1, $y1, $lcolor );
-	$theta = $theta - $thetac;
+    function Failed () {
+        if ($this->request->getSessionVar('captcha_ok') == true)
+            return false;
+	
+        if ( ! array_key_exists ( 'captcha_input', $this->meta )
+             or ($this->request->getSessionVar('captchaword')
+                 and ($this->request->getSessionVar('captchaword') != $this->meta['captcha_input'])))
+            return true;
+	
+        $this->request->setSessionVar('captcha_ok', true);
+        return false;
     }
-}
 
-function captcha_image ( $word ) {
-    $width = 250;
-    $height = 80;
+    function getFormElements() {
+        $el = array();
+        if (! $this->request->getSessionVar('captcha_ok')) {
+            $el['CAPTCHA_INPUT']
+                = HTML::input(array('type'  => 'text',
+                                    'class' => 'wikitext',
+                                    'id'    => 'edit:captcha_input',
+                                    'name'  => 'edit[captcha_input]',
+                                    'size'  => $this->length + 2,
+                                    'maxlength' => 256));
+            $url = WikiURL("", array("action"=>"captcha","id"=>time()), false);
+            $el['CAPTCHA_IMAGE'] = "<img src=\"$url\" alt=\"captcha\" />";
+            $el['CAPTCHA_LABEL'] = '<label for="edit:captcha_input">'._("Type word above:").' </label>';
+        }
+        return $el;
+    }
+
+    function get_word () { 
+        if (USE_CAPTCHA_RANDOM_WORD)
+            return get_dictionary_word(); 
+        else
+            return rand_ascii_readable($this->length); // lib/stdlib.php
+    }
+
+    function get_dictionary_word () {
+        // Load In the Word List
+        $fp = fopen(findfile("lib/captcha/dictionary"), "r");
+        while ( !feof($fp) )
+            $text[] = trim(fgets($fp, 1024));
+        fclose($fp);
+
+        // Pick a Word
+        $word = "";
+        better_srand();
+        while ( strlen(trim($word)) == 0 ) {
+            if (function_exists('mt_rand'))
+                $x = mt_rand(0, count($text));
+            else
+                $x = rand(0, count($text));
+            return $text[$x];
+        }
+    }
+
+    // Draw the Spiral
+    function spiral( &$im, $origin_x = 100, $origin_y = 100, $r = 0, $g = 0, $b = 0 ) {
+        $theta = 1;
+        $thetac = 6;  
+        $radius = 15;  
+        $circles = 10;  
+        $points = 35;  
+        $lcolor = imagecolorallocate( $im, $r, $g, $b );
+        for( $i = 0; $i < ( $circles * $points ) - 1; $i++ ) {
+            $theta = $theta + $thetac;
+            $rad = $radius * ( $i / $points );
+            $x = ( $rad * cos( $theta ) ) + $origin_x;
+            $y = ( $rad * sin( $theta ) ) + $origin_y;
+            $theta = $theta + $thetac;
+            $rad1 = $radius * ( ( $i + 1 ) / $points );
+            $x1 = ( $rad1 * cos( $theta ) ) + $origin_x;
+            $y1 = ( $rad1 * sin( $theta ) ) + $origin_y;
+            imageline( $im, $x, $y, $x1, $y1, $lcolor );
+            $theta = $theta - $thetac;
+        }
+    }
+
+    function image ( $word ) {
+        $width  =& $this->width;
+        $height =& $this->height;
     
-    // Create the Image
-    $jpg = ImageCreate($width,$height);
-    $bg = ImageColorAllocate($jpg,255,255,255);
-    $tx = ImageColorAllocate($jpg,185,140,140);
-    ImageFilledRectangle($jpg,0,0,$width,$height,$bg);
+        // Create the Image
+        $jpg = ImageCreate($width,$height);
+        $bg  = ImageColorAllocate($jpg,255,255,255);
+        $tx  = ImageColorAllocate($jpg,185,140,140);
+        ImageFilledRectangle($jpg,0,0,$width,$height,$bg);
 
-    $x = rand(0, $width);
-    $y = rand(0, $height);
-    spiral($jpg, $x, $y, 225, 190, 190);
+        $x = rand(0, $width);
+        $y = rand(0, $height);
+        $this->spiral($jpg, $x, $y, $width-25, 190, 190);
 
-    $angle = rand(-25, 25);
-    $size = rand(14,20);
-    if ( $angle >= 0 )
-	$y = rand(50,$height-20);
-    else 
-	$y = rand(25, 50);
-    $x = rand(10, $width-100);
+        $x = rand(10, 30);
+        $y = rand(50, $height-20); //50-60
+        
+        // randomize the chars
+        for ($i=0; $i < strlen($word); $i++) {
+            $angle += rand(-5, 5);
+            if ( $angle > 25 )  $angle = 15;
+            elseif ( $angle < -25 ) $angle = -15;
+            $size  = rand(14, 20);
+            $y += rand(-10, 10);
+            if ( $y < 10 )  $y = 11;
+            elseif ( $y > $height-10 ) $y = $height-11;
+            $x += rand($size, $size*2);
+            imagettftext($jpg, $size, $angle, $x, $y, $tx, 
+                         realpath(findfile("lib/captcha/Vera.ttf")), 
+                         $word[$i]);
+        }
 
-    imagettftext($jpg, $size, $angle, $x, $y, $tx, 
-		 realpath(FindFile("lib/captcha/Vera.ttf")), 
-		 $word);
+        $x = rand(0, $width+30);
+        $y = rand(0, $height+35); // 115
+        $this->spiral($jpg, $x, $y, 255,190,190);
 
-    $x = rand(0, 280);
-    $y = rand(0, 115);
-    spiral($jpg, $x, $y, 255,190,190);
+        imageline($jpg, 0,0,$width-1,0,$tx);
+        imageline($jpg, 0,0,0,$height-1,$tx);
+        imageline($jpg, 0,$height-1,$width-1,$height-1,$tx);
+        imageline($jpg, $width-1,0,$width-1,$height-1,$tx);
 
-    imageline($jpg, 0,0,$width-1,0,$tx);
-    imageline($jpg, 0,0,0,$height-1,$tx);
-    imageline($jpg, 0,$height-1,$width-1,$height-1,$tx);
-    imageline($jpg, $width-1,0,$width-1,$height-1,$tx);
+        //TODO: JPEG or PNG?
+        header("Content-type: image/jpeg");
+        ImageJpeg($jpg);
+    }
 
-    header("Content-type: image/jpeg");
-    ImageJpeg($jpg);
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2005/10/29 07:37:56  rurban
+// USE_CAPTCHA_RANDOM_WORD by Dan Frankowski
+//
 
 // Local Variables:
 // mode: php

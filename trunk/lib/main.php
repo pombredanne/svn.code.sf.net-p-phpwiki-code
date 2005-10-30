@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.218 2005-10-29 14:18:06 rurban Exp $');
+rcs_id('$Id: main.php,v 1.219 2005-10-30 14:20:42 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1134,7 +1134,8 @@ class WikiRequest extends Request {
 
     function action_captcha () {
         include_once "lib/Captcha.php";
-        captcha_image ( $this->getSessionVar('captchaword')); 
+        $captcha = new Captcha();
+        $captcha->image ( $captcha->captchaword() ); 
     }
     
 }
@@ -1272,6 +1273,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.218  2005/10/29 14:18:06  rurban
+// fix typo
+//
 // Revision 1.217  2005/09/18 12:44:00  rurban
 // novatrope patch to let only _AUTHENTICATED view pages
 //
