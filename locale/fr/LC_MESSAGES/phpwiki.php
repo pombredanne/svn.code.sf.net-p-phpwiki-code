@@ -86,6 +86,8 @@ $locale["%s is empty"] =
    "%s est vide.";
 $locale["%s is empty."] =
    "%s est vide.";
+$locale["%s is listed at %s"] =
+   "%s pages pointent vers %s :";
 $locale["%s is missing"] =
    "%s est manquant";
 $locale["%s is not locked!"] =
@@ -98,6 +100,8 @@ $locale["%s is only allowed in locked pages."] =
    "%s n'est autorisé que dans les pages verrouillées.";
 $locale["%s k"] =
    "%s k";
+$locale["%s not defined"] =
+   "%s : non défini";
 $locale["%s not found"] =
    "%s non trouvé";
 $locale["%s of this page"] =
@@ -328,6 +332,8 @@ $locale["Are you sure you want to permanently rename the selected files?"] =
    "Êtes-vous certain de renommer définitivement les pages sélectionnées ?";
 $locale["Are you sure you want to permanently search & replace text in the selected files?"] =
    "Etes-vous sur de vouloir rechercher et remplacer dans les fichiers sélectionnées ?";
+$locale["Argument '%s' not declared by plugin."] =
+   "argument '%s' non déclaré par le plugin.";
 $locale["Arguments"] =
    "Arguments";
 $locale["Attempting to use the directory '%s' instead."] =
@@ -442,6 +448,8 @@ $locale["Check any two boxes then %s."] =
    "Cochez une boîte puis %s.";
 $locale["Check any two boxes to compare revisions."] =
    "Cochez une des boîtes pour comparer les révisions.";
+$locale["Check to add this ACL"] =
+   "Vérifier pour ajouter cette ACL";
 $locale["Chmod"] =
    "Chmod";
 $locale["Chmod to permission:"] =
@@ -1752,6 +1760,8 @@ $locale["TeX directory not writable."] =
    "Répertoire TeX non accessible en écriture.";
 $locale["TeX2png"] =
    "TeX2png";
+$locale["Template"] =
+   "Thème";
 $locale["TextFormattingRules"] =
    "RèglesDeFormatageDesTextes";
 $locale["Thank you for editing %s."] =
@@ -1890,10 +1900,14 @@ $locale["UNOBTAINABLE"] =
    "INACCESSIBLE";
 $locale["USER"] =
    "UTILISATEUR";
+$locale["Unable to bind LDAP server %s using %s %s"] =
+   "Impossible de se connecter au serveur LDAP %s";
 $locale["Unable to connect to IMAP server "] =
    "Impossible de se connecter au serveur IMAP ";
 $locale["Unable to connect to LDAP server %s"] =
    "Impossible de se connecter au serveur LDAP %s";
+$locale["Unable to find src='%s'"] =
+   "Impossible de lire src=%s";
 $locale["Unable to load: %s"] =
    "Impossible de charger : %s";
 $locale["Unable to open directory '%s' for reading"] =
@@ -2154,6 +2168,8 @@ $locale["Your home page has not been created yet so your preferences cannot not 
    "Cette page a été verrouillée par l'administrateur et vos changements n'ont pas pu être enregistrée.";
 $locale["Your home page is locked so your preferences cannot not be saved."] =
    "Cette page a été verrouillée par l'administrateur et vos changements n'ont pas pu être enregistrée.";
+$locale["Your rating "] =
+   "Votre note ";
 $locale["Your rating was %.1f"] =
    "Votre note est %.1f";
 $locale["Your signature"] =
@@ -2242,6 +2258,8 @@ $locale["diff"] =
    "diff";
 $locale["diff this page"] =
    "diff de cette page";
+$locale["download a html zip dump from this wiki"] =
+   "télécharger une sauvegarde HTML compressée de ce wiki";
 $locale["download a zip dump from this wiki"] =
    "télécharger une sauvegarde compressée de ce wiki";
 $locale["dump html pages"] =
@@ -2270,6 +2288,8 @@ $locale["home page"] =
    "Page d'accueil";
 $locale["invalid %s ignored"] =
    "%s non valable ignoré";
+$locale["invalid argument %s"] =
+   "Argument non valable : %s";
 $locale["invidual page permission"] =
    "Permission de page individuelle";
 $locale["latest comment by "] =

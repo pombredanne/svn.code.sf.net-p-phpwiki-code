@@ -6,13 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-29 13:06+0000\n"
+"POT-Creation-Date: 2005-10-30 16:28+0000\n"
 "PO-Revision-Date: 2003-06-07 09:01+0900\n"
 "Last-Translator: Tadashi Jokagi <webmaster@elf.no-ip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=euc-jp\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../lib/Captcha.php:32
+msgid "Typed in verification word mismatch ... are you a bot?"
+msgstr ""
+
+#: ../lib/Captcha.php:68
+msgid "Type word above:"
+msgstr ""
 
 #: ../lib/DbSession.php:50
 #, php-format
@@ -153,12 +161,12 @@ msgid "Horizontal line"
 msgstr ""
 
 #: ../lib/EditToolbar.php:210 ../lib/EditToolbar.php:212
-#: ../lib/editpage.php:592
+#: ../lib/editpage.php:571
 msgid "Save"
 msgstr "保存する"
 
 #: ../lib/EditToolbar.php:214 ../lib/EditToolbar.php:216
-#: ../lib/editpage.php:588
+#: ../lib/editpage.php:567
 msgid "Preview"
 msgstr "プレビューする"
 
@@ -522,7 +530,7 @@ msgstr ""
 msgid "Upload error: unknown error #"
 msgstr ""
 
-#: ../lib/Request.php:811 ../lib/main.php:1157 ../lib/main.php:1170
+#: ../lib/Request.php:811 ../lib/main.php:1158 ../lib/main.php:1171
 #, php-format
 msgid "%s is not writable."
 msgstr ""
@@ -531,7 +539,7 @@ msgstr ""
 msgid "The PhpWiki access log file"
 msgstr ""
 
-#: ../lib/Request.php:813 ../lib/main.php:1160
+#: ../lib/Request.php:813 ../lib/main.php:1161
 #, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
@@ -546,7 +554,7 @@ msgstr "MIMEファイル %s"
 msgid "%4d  %s\n"
 msgstr ""
 
-#: ../lib/TextSearchQuery.php:79 ../lib/plugin/FileInfo.php:97
+#: ../lib/TextSearchQuery.php:79 ../lib/plugin/FileInfo.php:100
 #, fuzzy, php-format
 msgid "Unsupported argument: %s=%s"
 msgstr "サポート言語一覧"
@@ -1265,100 +1273,96 @@ msgstr ""
 msgid "You searched for: "
 msgstr ""
 
-#: ../lib/editpage.php:100 ../lib/editpage.php:112
-msgid "Typed in verification word mismatch ... are you a bot?"
-msgstr ""
-
-#: ../lib/editpage.php:134 ../lib/editpage.php:480
+#: ../lib/editpage.php:135 ../lib/editpage.php:469
 msgid "Your version"
 msgstr ""
 
-#: ../lib/editpage.php:134 ../lib/editpage.php:481
+#: ../lib/editpage.php:135 ../lib/editpage.php:470
 msgid "Other version"
 msgstr ""
 
-#: ../lib/editpage.php:144
+#: ../lib/editpage.php:145
 msgid "Some internal editing error"
 msgstr ""
 
-#: ../lib/editpage.php:145
+#: ../lib/editpage.php:146
 msgid ""
 "Your are probably trying to edit/create an invalid version of this page."
 msgstr ""
 
-#: ../lib/editpage.php:146
+#: ../lib/editpage.php:147
 msgid "&version=-1 might help."
 msgstr ""
 
-#: ../lib/editpage.php:163
+#: ../lib/editpage.php:164
 #, php-format
 msgid "Edit: %s"
 msgstr "編集: %s"
 
-#: ../lib/editpage.php:197
+#: ../lib/editpage.php:199
 #, php-format
 msgid "View Source: %s"
 msgstr "ソースを見る: %s"
 
-#: ../lib/editpage.php:211
+#: ../lib/editpage.php:213
 msgid "Page now locked."
 msgstr "ページはロック中です。"
 
-#: ../lib/editpage.php:211
+#: ../lib/editpage.php:213
 msgid "Page now unlocked."
 msgstr "ページはロック解除中です。"
 
-#: ../lib/editpage.php:313
+#: ../lib/editpage.php:315
 #, fuzzy, php-format
 msgid "Saved: %s"
 msgstr "保存しました: 5s"
 
-#: ../lib/editpage.php:376
+#: ../lib/editpage.php:365
 msgid "Too many external links."
 msgstr ""
 
-#: ../lib/editpage.php:390
+#: ../lib/editpage.php:379
 msgid "SpamAssassin reports: "
 msgstr ""
 
-#: ../lib/editpage.php:407
+#: ../lib/editpage.php:396
 msgid "External links contain blocked domains:"
 msgstr ""
 
-#: ../lib/editpage.php:408
+#: ../lib/editpage.php:397
 #, php-format
 msgid "%s is listed at %s"
 msgstr ""
 
-#: ../lib/editpage.php:429
+#: ../lib/editpage.php:418
 msgid "Spam Prevention"
 msgstr ""
 
-#: ../lib/editpage.php:430
+#: ../lib/editpage.php:419
 msgid "This page edit seems to contain spam and was therefore not saved."
 msgstr ""
 
-#: ../lib/editpage.php:432 ../lib/editpage.php:466
+#: ../lib/editpage.php:421 ../lib/editpage.php:455
 msgid "Sorry for the inconvenience."
 msgstr ""
 
-#: ../lib/editpage.php:463 ../themes/MacOSX/themeinfo.php:137
+#: ../lib/editpage.php:452 ../themes/MacOSX/themeinfo.php:137
 msgid "Page Locked"
 msgstr "ページをロックしました。"
 
-#: ../lib/editpage.php:464
+#: ../lib/editpage.php:453
 msgid ""
 "This page has been locked by the administrator so your changes can not be "
 "saved."
 msgstr ""
 
-#: ../lib/editpage.php:465
+#: ../lib/editpage.php:454
 msgid ""
 "(Copy your changes to the clipboard. You can try editing a different page or "
 "save your text in a text editor.)"
 msgstr ""
 
-#: ../lib/editpage.php:479 ../lib/editpage.php:784
+#: ../lib/editpage.php:468 ../lib/editpage.php:764
 #, php-format
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
@@ -1366,43 +1370,39 @@ msgid ""
 "those sections by hand before you click Save."
 msgstr ""
 
-#: ../lib/editpage.php:483 ../lib/editpage.php:787
+#: ../lib/editpage.php:472 ../lib/editpage.php:767
 msgid "Please check it through before saving."
 msgstr ""
 
-#: ../lib/editpage.php:494
+#: ../lib/editpage.php:483
 msgid "Conflicting Edits!"
 msgstr ""
 
-#: ../lib/editpage.php:495
+#: ../lib/editpage.php:484
 msgid ""
 "In the time since you started editing this page, another user has saved a "
 "new version of it."
 msgstr ""
 
-#: ../lib/editpage.php:496
+#: ../lib/editpage.php:485
 msgid ""
 "Your changes can not be saved as they are, since doing so would overwrite "
 "the other author's changes. So, your changes and those of the other author "
 "have been combined. The result is shown below."
 msgstr ""
 
-#: ../lib/editpage.php:557
-msgid "Type word above:"
-msgstr ""
-
-#: ../lib/editpage.php:580
+#: ../lib/editpage.php:559
 #, fuzzy
 msgid "Convert"
 msgstr "コンテンツ"
 
-#: ../lib/editpage.php:615 ../themes/Portland/templates/editpage.tmpl:41
+#: ../lib/editpage.php:594 ../themes/Portland/templates/editpage.tmpl:41
 #: ../themes/Wordpress/templates/editpage.tmpl:50
 #, php-format
 msgid "Author will be logged as %s."
 msgstr ""
 
-#: ../lib/editpage.php:759
+#: ../lib/editpage.php:738
 #, php-format
 msgid "Merge and Edit: %s"
 msgstr ""
@@ -1936,21 +1936,21 @@ msgstr "ページグループ"
 msgid "FullTextSearch"
 msgstr "全文検索"
 
-#: ../lib/main.php:1158
+#: ../lib/main.php:1159
 msgid "The session.save_path directory"
 msgstr ""
 
-#: ../lib/main.php:1161
+#: ../lib/main.php:1162
 #, fuzzy, php-format
 msgid "the session.save_path directory '%s'"
 msgstr "ディレクトリ '%s' を使用しています。"
 
-#: ../lib/main.php:1165
+#: ../lib/main.php:1166
 #, php-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr ""
 
-#: ../lib/main.php:1172
+#: ../lib/main.php:1173
 msgid "Users will not be able to sign in."
 msgstr ""
 
@@ -3092,7 +3092,7 @@ msgstr ""
 msgid "Contents"
 msgstr "コンテンツ"
 
-#: ../lib/plugin/PageGroup.php:91 ../lib/stdlib.php:1955
+#: ../lib/plugin/PageGroup.php:91 ../lib/stdlib.php:1974
 #, php-format
 msgid "<%s: no such section>"
 msgstr ""
@@ -4829,7 +4829,7 @@ msgstr ""
 msgid "WikiAdminUtils says:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:103 ../lib/stdlib.php:1730
+#: ../lib/plugin/WikiAdminUtils.php:103 ../lib/stdlib.php:1749
 msgid "Okay"
 msgstr "おっけー"
 
@@ -5575,7 +5575,7 @@ msgstr "%s が空です。"
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
 
-#: ../lib/stdlib.php:1912 ../lib/stdlib.php:1925
+#: ../lib/stdlib.php:1931 ../lib/stdlib.php:1944
 #, php-format
 msgid "... (first %s words)"
 msgstr ""
@@ -5893,6 +5893,7 @@ msgstr "コメント追加"
 #: ../themes/Wordpress/templates/browse.tmpl:9
 #: ../themes/Wordpress/templates/viewsource.tmpl:7
 #: ../themes/blog/templates/browse.tmpl:6
+#: ../themes/blog/templates/viewsource.tmpl:5
 #: ../themes/default/templates/browse.tmpl:6
 #: ../themes/default/templates/viewsource.tmpl:5
 msgid "Note:"
@@ -5904,6 +5905,7 @@ msgstr "ノート:"
 #: ../themes/Wordpress/templates/browse.tmpl:10
 #: ../themes/Wordpress/templates/viewsource.tmpl:12
 #: ../themes/blog/templates/browse.tmpl:7
+#: ../themes/blog/templates/viewsource.tmpl:10
 #: ../themes/default/templates/browse.tmpl:7
 #: ../themes/default/templates/viewsource.tmpl:10
 msgid "You are viewing an old revision of this page."
@@ -5915,6 +5917,7 @@ msgstr ""
 #: ../themes/Wordpress/templates/browse.tmpl:11
 #: ../themes/Wordpress/templates/viewsource.tmpl:13
 #: ../themes/blog/templates/browse.tmpl:8
+#: ../themes/blog/templates/viewsource.tmpl:11
 #: ../themes/default/templates/browse.tmpl:8
 #: ../themes/default/templates/viewsource.tmpl:11
 msgid "View the current version"
@@ -6370,6 +6373,7 @@ msgstr "編集エリアのサイズ"
 
 #: ../themes/Portland/templates/viewsource.tmpl:6
 #: ../themes/Wordpress/templates/viewsource.tmpl:8
+#: ../themes/blog/templates/viewsource.tmpl:6
 #: ../themes/default/templates/viewsource.tmpl:6
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""

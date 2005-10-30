@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-29 13:06+0000\n"
+"POT-Creation-Date: 2005-10-30 16:28+0000\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Date: 2001-09-22 00:00-0000\n"
 "From: Pierrick Meignen <meignen.pierrick@wanadoo.fr>\n"
+
+#: ../lib/Captcha.php:32
+msgid "Typed in verification word mismatch ... are you a bot?"
+msgstr ""
+
+#: ../lib/Captcha.php:68
+msgid "Type word above:"
+msgstr ""
 
 #: ../lib/DbSession.php:50
 #, php-format
@@ -157,12 +165,12 @@ msgid "Horizontal line"
 msgstr "Ligne horizontale"
 
 #: ../lib/EditToolbar.php:210 ../lib/EditToolbar.php:212
-#: ../lib/editpage.php:592
+#: ../lib/editpage.php:571
 msgid "Save"
 msgstr "Enregistrer"
 
 #: ../lib/EditToolbar.php:214 ../lib/EditToolbar.php:216
-#: ../lib/editpage.php:588
+#: ../lib/editpage.php:567
 msgid "Preview"
 msgstr "Prévisualiser"
 
@@ -442,7 +450,6 @@ msgid "add "
 msgstr "ajouter"
 
 #: ../lib/PagePerm.php:650
-#, fuzzy
 msgid "Check to add this ACL"
 msgstr "Vérifier pour ajouter cette ACL"
 
@@ -523,7 +530,7 @@ msgstr ""
 msgid "Upload error: unknown error #"
 msgstr ""
 
-#: ../lib/Request.php:811 ../lib/main.php:1157 ../lib/main.php:1170
+#: ../lib/Request.php:811 ../lib/main.php:1158 ../lib/main.php:1171
 #, php-format
 msgid "%s is not writable."
 msgstr "%s n'est pas accessible en écriture."
@@ -532,7 +539,7 @@ msgstr "%s n'est pas accessible en écriture."
 msgid "The PhpWiki access log file"
 msgstr "Le journal d'évènement de PhpWiki"
 
-#: ../lib/Request.php:813 ../lib/main.php:1160
+#: ../lib/Request.php:813 ../lib/main.php:1161
 #, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
@@ -549,7 +556,7 @@ msgstr "le fichier %s"
 msgid "%4d  %s\n"
 msgstr "%4d  %s\n"
 
-#: ../lib/TextSearchQuery.php:79 ../lib/plugin/FileInfo.php:97
+#: ../lib/TextSearchQuery.php:79 ../lib/plugin/FileInfo.php:100
 #, php-format
 msgid "Unsupported argument: %s=%s"
 msgstr ""
@@ -881,7 +888,7 @@ msgid "Cannot open AUTH_GROUP_FILE %s"
 msgstr "Impossible d'ouvrir AUTH_GROUP_FILE %s"
 
 #: ../lib/WikiGroup.php:951
-#, fuzzy, php-format
+#, php-format
 msgid "%s not defined"
 msgstr "%s : non défini"
 
@@ -921,7 +928,7 @@ msgid "PhpWikiAdministration"
 msgstr "AdministrationDePhpWiki"
 
 #: ../lib/WikiPlugin.php:125
-#, fuzzy, php-format
+#, php-format
 msgid "Argument '%s' not declared by plugin."
 msgstr "argument '%s' non déclaré par le plugin."
 
@@ -1052,7 +1059,7 @@ msgid "Unable to connect to IMAP server "
 msgstr "Impossible de se connecter au serveur IMAP "
 
 #: ../lib/WikiUser/LDAP.php:35
-#, fuzzy, php-format
+#, php-format
 msgid "Unable to bind LDAP server %s using %s %s"
 msgstr "Impossible de se connecter au serveur LDAP %s"
 
@@ -1294,92 +1301,88 @@ msgstr "(Redirigé de %s)"
 msgid "You searched for: "
 msgstr ""
 
-#: ../lib/editpage.php:100 ../lib/editpage.php:112
-msgid "Typed in verification word mismatch ... are you a bot?"
-msgstr ""
-
 # lib/pageinfo.php:64
-#: ../lib/editpage.php:134 ../lib/editpage.php:480
+#: ../lib/editpage.php:135 ../lib/editpage.php:469
 msgid "Your version"
 msgstr "Votre version"
 
 # lib/pageinfo.php:70
-#: ../lib/editpage.php:134 ../lib/editpage.php:481
+#: ../lib/editpage.php:135 ../lib/editpage.php:470
 msgid "Other version"
 msgstr "L'autre version"
 
-#: ../lib/editpage.php:144
+#: ../lib/editpage.php:145
 msgid "Some internal editing error"
 msgstr ""
 
-#: ../lib/editpage.php:145
+#: ../lib/editpage.php:146
 msgid ""
 "Your are probably trying to edit/create an invalid version of this page."
 msgstr "Vous lisez une ancienne révision de cette page."
 
-#: ../lib/editpage.php:146
+#: ../lib/editpage.php:147
 msgid "&version=-1 might help."
 msgstr ""
 
-#: ../lib/editpage.php:163
+#: ../lib/editpage.php:164
 #, php-format
 msgid "Edit: %s"
 msgstr "Éditer : %s"
 
-#: ../lib/editpage.php:197
+#: ../lib/editpage.php:199
 #, php-format
 msgid "View Source: %s"
 msgstr "Afficher la Source : %s"
 
-#: ../lib/editpage.php:211
+#: ../lib/editpage.php:213
 msgid "Page now locked."
 msgstr "La page est maintenant verrouillée."
 
-#: ../lib/editpage.php:211
+#: ../lib/editpage.php:213
 msgid "Page now unlocked."
 msgstr "La page est maintenant déverrouillée."
 
-#: ../lib/editpage.php:313
+#: ../lib/editpage.php:315
 #, php-format
 msgid "Saved: %s"
 msgstr "Enregistrée : %s"
 
-#: ../lib/editpage.php:376
+#: ../lib/editpage.php:365
 msgid "Too many external links."
 msgstr "Trop de liens exterieurs."
 
-#: ../lib/editpage.php:390
+#: ../lib/editpage.php:379
 msgid "SpamAssassin reports: "
 msgstr ""
 
-#: ../lib/editpage.php:407
+#: ../lib/editpage.php:396
 msgid "External links contain blocked domains:"
 msgstr ""
 
-#: ../lib/editpage.php:408
-#, fuzzy, php-format
+#: ../lib/editpage.php:397
+#, php-format
 msgid "%s is listed at %s"
 msgstr "%s pages pointent vers %s :"
 
-#: ../lib/editpage.php:429
+#: ../lib/editpage.php:418
 msgid "Spam Prevention"
 msgstr ""
 
-#: ../lib/editpage.php:430
+#: ../lib/editpage.php:419
 msgid "This page edit seems to contain spam and was therefore not saved."
 msgstr ""
 
 # lib/editpage.php:33 lib/savepage.php:32 lib/savepage.php:53
-#: ../lib/editpage.php:432 ../lib/editpage.php:466
+#: ../lib/editpage.php:421 ../lib/editpage.php:455
 msgid "Sorry for the inconvenience."
 msgstr "Désolé pour la gène occasionnée."
 
-#: ../lib/editpage.php:463 ../themes/MacOSX/themeinfo.php:137
+#: ../lib/editpage.php:452 ../themes/MacOSX/themeinfo.php:137
 msgid "Page Locked"
 msgstr "Page Verrouillée"
 
 # lib/editpage.php:31 lib/savepage.php:52
-#: ../lib/editpage.php:464
+#: ../lib/editpage.php:453
 msgid ""
 "This page has been locked by the administrator so your changes can not be "
 "saved."
@@ -1388,7 +1391,7 @@ msgstr ""
 "pas pu être enregistrée."
 
 # lib/savepage.php:24
-#: ../lib/editpage.php:465
+#: ../lib/editpage.php:454
 msgid ""
 "(Copy your changes to the clipboard. You can try editing a different page or "
 "save your text in a text editor.)"
@@ -1396,7 +1399,7 @@ msgstr ""
 "(Copiez vos modifications dans le presse-papier. Vous pouvez essayer "
 "d'éditer une page différente ou sauver votre texte dans un éditeur)."
 
-#: ../lib/editpage.php:479 ../lib/editpage.php:784
+#: ../lib/editpage.php:468 ../lib/editpage.php:764
 #, php-format
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
@@ -1407,15 +1410,15 @@ msgstr ""
 "Veuillez regarder les sections commençant par '%s', et se terminant par '%"
 "s'. Vous devrez éditer ces sections à la main avant cliquer sur Enregistrer."
 
-#: ../lib/editpage.php:483 ../lib/editpage.php:787
+#: ../lib/editpage.php:472 ../lib/editpage.php:767
 msgid "Please check it through before saving."
 msgstr "Veuillez la vérifier avant de la sauver."
 
-#: ../lib/editpage.php:494
+#: ../lib/editpage.php:483
 msgid "Conflicting Edits!"
 msgstr "Conflit d'éditions !"
 
-#: ../lib/editpage.php:495
+#: ../lib/editpage.php:484
 msgid ""
 "In the time since you started editing this page, another user has saved a "
 "new version of it."
@@ -1423,7 +1426,7 @@ msgstr ""
 "Depuis que vous avez commencé à éditer cette page, un autre utilisateur en a "
 "enregistré une nouvelle version."
 
-#: ../lib/editpage.php:496
+#: ../lib/editpage.php:485
 msgid ""
 "Your changes can not be saved as they are, since doing so would overwrite "
 "the other author's changes. So, your changes and those of the other author "
@@ -1433,21 +1436,17 @@ msgstr ""
 "celles de l'autre utilisateur. Ainsi donc, vos modifications et celles de "
 "l'autre auteur ont été combinées. Le résultat est affiché ci-dessous."
 
-#: ../lib/editpage.php:557
-msgid "Type word above:"
-msgstr ""
-
-#: ../lib/editpage.php:580
+#: ../lib/editpage.php:559
 msgid "Convert"
 msgstr "Converti"
 
-#: ../lib/editpage.php:615 ../themes/Portland/templates/editpage.tmpl:41
+#: ../lib/editpage.php:594 ../themes/Portland/templates/editpage.tmpl:41
 #: ../themes/Wordpress/templates/editpage.tmpl:50
 #, php-format
 msgid "Author will be logged as %s."
 msgstr "L'auteur sera enregistré sous le nom %s."
 
-#: ../lib/editpage.php:759
+#: ../lib/editpage.php:738
 #, php-format
 msgid "Merge and Edit: %s"
 msgstr "Fusioner et éditer : %s"
@@ -1828,7 +1827,6 @@ msgid "download a zip dump from this wiki"
 msgstr "télécharger une sauvegarde compressée de ce wiki"
 
 #: ../lib/main.php:508
-#, fuzzy
 msgid "download a html zip dump from this wiki"
 msgstr "télécharger une sauvegarde HTML compressée de ce wiki"
 
@@ -1967,21 +1965,21 @@ msgstr "RécupérationDeLaPage"
 msgid "FullTextSearch"
 msgstr "RechercheEnTexteIntégral"
 
-#: ../lib/main.php:1158
+#: ../lib/main.php:1159
 msgid "The session.save_path directory"
 msgstr "Le répertoire 'session.save_path'"
 
-#: ../lib/main.php:1161
+#: ../lib/main.php:1162
 #, php-format
 msgid "the session.save_path directory '%s'"
 msgstr "le répertoire 'session.save_path' '%s'"
 
-#: ../lib/main.php:1165
+#: ../lib/main.php:1166
 #, php-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr "Tentative d'utilisation du répertoire '%s' à la place."
 
-#: ../lib/main.php:1172
+#: ../lib/main.php:1173
 msgid "Users will not be able to sign in."
 msgstr "Les utilisateurs ne pourront pas s'inscrire."
 
@@ -2659,9 +2657,8 @@ msgid "Go"
 msgstr "OK"
 
 #: ../lib/plugin/GoogleMaps.php:63
-#, fuzzy
 msgid "GoogleMaps"
-msgstr "Google: %s"
+msgstr ""
 
 #: ../lib/plugin/GoogleMaps.php:67
 msgid ""
@@ -2675,9 +2672,9 @@ msgid "%s parameter missing"
 msgstr "%s paramètre manquant"
 
 #: ../lib/plugin/GoogleMaps.php:108
-#, fuzzy, php-format
+#, php-format
 msgid "invalid argument %s"
-msgstr "Argument non valable : %s=%s"
+msgstr "Argument non valable : %s"
 
 #: ../lib/plugin/GoogleMaps.php:128
 msgid "new&nbsp;window"
@@ -2735,9 +2732,8 @@ msgid "Upload"
 msgstr "Déposer"
 
 #: ../lib/plugin/HtmlConverter.php:78
-#, fuzzy
 msgid "Only files with extension HTML are allowed"
-msgstr "%s: extension interdit."
+msgstr ""
 
 #: ../lib/plugin/HtmlConverter.php:81
 msgid "Copy the output below and paste it into your Wiki page."
@@ -3124,7 +3120,7 @@ msgstr "Groupe de pages pour %s"
 msgid "Contents"
 msgstr "Contenu"
 
-#: ../lib/plugin/PageGroup.php:91 ../lib/stdlib.php:1955
+#: ../lib/plugin/PageGroup.php:91 ../lib/stdlib.php:1974
 #, php-format
 msgid "<%s: no such section>"
 msgstr "<%s : pas de section de ce type>"
@@ -3259,7 +3255,7 @@ msgid "File extension for csv file has to be '.csv'"
 msgstr ""
 
 #: ../lib/plugin/PhotoAlbum.php:605
-#, fuzzy, php-format
+#, php-format
 msgid "Unable to find src='%s'"
 msgstr "Impossible de lire src=%s"
 
@@ -3435,7 +3431,6 @@ msgid "Rating system. Store user ratings per page"
 msgstr "Système de vote. Stocke les votes d'utilisateur par page."
 
 #: ../lib/plugin/RateIt.php:117
-#, fuzzy
 msgid "Your rating "
 msgstr "Votre note "
 
@@ -3994,7 +3989,6 @@ msgstr ""
 "Désolé, cette version de PHP ne peut pas créer des fichiers d'image PNG."
 
 #: ../lib/plugin/Template.php:61
-#, fuzzy
 msgid "Template"
 msgstr "Thème"
 
@@ -4523,9 +4517,8 @@ msgid "to"
 msgstr "à"
 
 #: ../lib/plugin/WikiAdminMarkup.php:37
-#, fuzzy
 msgid "WikiAdminMarkup"
-msgstr "WikiAdminRenommer"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminMarkup.php:41
 #, fuzzy
@@ -4892,7 +4885,7 @@ msgstr "Vous devez être un administrateur pour utiliser ce plugin."
 msgid "WikiAdminUtils says:"
 msgstr "WikiAdminUtils dit :"
 
-#: ../lib/plugin/WikiAdminUtils.php:103 ../lib/stdlib.php:1730
+#: ../lib/plugin/WikiAdminUtils.php:103 ../lib/stdlib.php:1749
 msgid "Okay"
 msgstr "OK"
 
@@ -5616,7 +5609,7 @@ msgstr "%s est vide."
 msgid "Unable to open directory '%s' for reading"
 msgstr "Impossible d'ouvrir le répertoire '%s' en lecture"
 
-#: ../lib/stdlib.php:1912 ../lib/stdlib.php:1925
+#: ../lib/stdlib.php:1931 ../lib/stdlib.php:1944
 #, php-format
 msgid "... (first %s words)"
 msgstr "... (%s premiers mots)"
@@ -5695,9 +5688,8 @@ msgstr "recherche une nouvelle colonne session.sess_ip"
 # lib/diff.php:1003 lib/diff.php:1021
 #: ../lib/upgrade.php:432 ../lib/upgrade.php:437 ../lib/upgrade.php:469
 #: ../lib/upgrade.php:478
-#, fuzzy
 msgid "fixed"
-msgstr "Dernière modification"
+msgstr ""
 
 #: ../lib/upgrade.php:446
 msgid "check for mysql LOCK TABLE privilege"
@@ -5936,6 +5928,7 @@ msgstr "Ajouter un commentaire"
 #: ../themes/Wordpress/templates/browse.tmpl:9
 #: ../themes/Wordpress/templates/viewsource.tmpl:7
 #: ../themes/blog/templates/browse.tmpl:6
+#: ../themes/blog/templates/viewsource.tmpl:5
 #: ../themes/default/templates/browse.tmpl:6
 #: ../themes/default/templates/viewsource.tmpl:5
 msgid "Note:"
@@ -5947,6 +5940,7 @@ msgstr "Note :"
 #: ../themes/Wordpress/templates/browse.tmpl:10
 #: ../themes/Wordpress/templates/viewsource.tmpl:12
 #: ../themes/blog/templates/browse.tmpl:7
+#: ../themes/blog/templates/viewsource.tmpl:10
 #: ../themes/default/templates/browse.tmpl:7
 #: ../themes/default/templates/viewsource.tmpl:10
 msgid "You are viewing an old revision of this page."
@@ -5959,6 +5953,7 @@ msgstr "Vous lisez une ancienne révision de cette page."
 #: ../themes/Wordpress/templates/browse.tmpl:11
 #: ../themes/Wordpress/templates/viewsource.tmpl:13
 #: ../themes/blog/templates/browse.tmpl:8
+#: ../themes/blog/templates/viewsource.tmpl:11
 #: ../themes/default/templates/browse.tmpl:8
 #: ../themes/default/templates/viewsource.tmpl:11
 msgid "View the current version"
@@ -6415,6 +6410,7 @@ msgstr "Éditez la taille de la zone"
 # lib/editpage.php:31 lib/savepage.php:52
 #: ../themes/Portland/templates/viewsource.tmpl:6
 #: ../themes/Wordpress/templates/viewsource.tmpl:8
+#: ../themes/blog/templates/viewsource.tmpl:6
 #: ../themes/default/templates/viewsource.tmpl:6
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
