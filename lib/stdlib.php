@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.248 2005-10-29 14:18:30 uckelman Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.249 2005-10-30 14:24:33 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1648,6 +1648,24 @@ function rand_ascii($length = 1) {
     return $s;
 }
 
+/* by Dan Frankowski.
+ */
+function rand_ascii_readable ($length = 6) {
+    // Pick a few random letters or numbers
+    $word = "";
+    better_srand();
+    // Don't use 1lI0O, because they're hard to read
+    $letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    $letter_len = strlen($letters);
+    for ($i=0; $i < $length; $i++) {
+        if (function_exists('mt_rand'))
+            $word .= $letters[mt_rand(0, $letter_len-1)];
+        else
+            $word .= $letters[rand(0, $letter_len-1)];
+    }
+    return $word;
+}
+
 /**
  * Recursively count all non-empty elements 
  * in array of any dimension or mixed - i.e. 
@@ -2053,6 +2071,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.248  2005/10/29 14:18:30  uckelman
+// Added is_a() deprecation note.
+//
 // Revision 1.247  2005/10/10 20:31:21  rurban
 // fix win32ps call
 //
