@@ -1,22 +1,7 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.99 2005-10-29 08:21:58 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.100 2005-10-30 14:20:42 rurban Exp $');
 
 require_once('lib/Template.php');
-
-// ENABLE_WYSIWYG - Support for some WYSIWYG HTML Editor (tinymce or htmlarea3)
-// Not yet enabled, since we cannot convert HTML to Wiki Markup yet.
-// (See HtmlParser.php for the ongoing efforts)
-// We might use a HTML PageType, which is contra wiki, but some people 
-// might prefer HTML markup.
-// TODO: Change from constant to user preference variable 
-//       (checkbox setting or edit click as in gmail),
-//       when HtmlParser is finished.
-if (ENABLE_WYSIWYG) {
-    if (!defined('USE_HTMLAREA')) define('USE_HTMLAREA', false);
-    if (USE_TINYMCE) require_once('lib/tinymce.php');
-    else if (USE_HTMLAREA) require_once('lib/htmlarea.php');
-}
-if (ENABLE_CAPTCHA)  require_once('lib/Captcha.php'); 
 
 class PageEditor
 {
@@ -40,7 +25,23 @@ class PageEditor
                             'mtime' => time());
         
         $this->tokens = array();
-        
+
+        if (ENABLE_WYSIWYG) {
+            require_once("lib/WysiwygEdit.php");
+            if (USE_TINYMCE)       $backend = "tinymce";
+            elseif (USE_HTMLAREA3) $backend = "htmlarea3";
+            elseif (USE_HTMLAREA2) $backend = "htmlarea2";
+            else trigger_error("undefined WysiwygEdit backend", E_USER_ERROR);
+
+            require_once("lib/WysiwygEdit/$backend.php");
+            $class = "WysiwygEdit_$backend";
+            $this->WysiwygEdit = new $class();
+        }
+        if (ENABLE_CAPTCHA) {
+            require_once('lib/Captcha.php');
+            $this->Captcha = new Captcha($this->meta);
+        }
+
         $version = $request->getArg('version');
         if ($version !== false) {
             $this->selected = $this->page->getRevision($version);
@@ -95,9 +96,9 @@ class PageEditor
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
         }
         elseif ($this->request->getArg('save_and_redirect_to') != "") {
-            if (ENABLE_CAPTCHA && $this->captchaFailed()) {
+            if (ENABLE_CAPTCHA && $this->Captcha->Failed()) {
 		$this->tokens['PAGE_LOCKED_MESSAGE'] = 
-                    HTML::p(HTML::h1(_("Typed in verification word mismatch ... are you a bot?")));
+                    HTML::p(HTML::h1($this->Captcha->failed_msg));
 	    }
             elseif ( $this->savePage()) {
                 // noreturn
@@ -107,9 +108,9 @@ class PageEditor
             $saveFailed = true;
         }
         elseif ($this->editaction == 'save') {
-            if (ENABLE_CAPTCHA && $this->captchaFailed()) {
+            if (ENABLE_CAPTCHA && $this->Captcha->Failed()) {
 		$this->tokens['PAGE_LOCKED_MESSAGE'] = 
-                    HTML::p(HTML::h1(_("Typed in verification word mismatch ... are you a bot?")));
+                    HTML::p(HTML::h1($this->Captcha->failed_msg));
 	    }
             elseif ($this->savePage()) {
                 return true;    // Page saved.
@@ -179,9 +180,9 @@ class PageEditor
 
         $title = new FormattedText ($title_fs, $pagelink);
         // not for dumphtml or viewsource
-        if (ENABLE_WYSIWYG and $template == 'editpage') { 
-            $WikiTheme->addMoreHeaders(Edit_WYSIWYG_Head());
-            //$tokens['PAGE_SOURCE'] = Edit_WYSIWYG_ConvertBefore($this->_content);
+        if (ENABLE_WYSIWYG and $template == 'editpage') {
+            $WikiTheme->addMoreHeaders($this->WysiwygEdit->Head());
+            //$tokens['PAGE_SOURCE'] = $WysiwygEdit->ConvertBefore($this->_content);
         }
         $template = Template($template, $this->tokens);
         GeneratePage($template, $title, $rev);
@@ -283,7 +284,7 @@ class PageEditor
           (admin plugins) */
 
         // look at the errorstack
-        $errors = $GLOBALS['ErrorManager']->_postponed_errors;
+        $errors   = $GLOBALS['ErrorManager']->_postponed_errors;
         $warnings = $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML(); 
         $GLOBALS['ErrorManager']->_postponed_errors = $errors;
 
@@ -312,19 +313,6 @@ class PageEditor
 
         GeneratePage($template, fmt("Saved: %s", $pagelink), $newrevision);
         return true;
-    }
-
-    function captchaFailed () {
-	if ($this->request->getSessionVar('captcha_ok') == true)
-	    return false;
-	
-	if ( ! array_key_exists ( 'captcha_input', $this->meta )
-             or ($this->request->getSessionVar('captchaword')
-                 and ($this->request->getSessionVar('captchaword') != $this->meta['captcha_input'])))
-	    return true;
-	
-	$this->request->setSessionVar('captcha_ok', true);
-	return false;
     }
 
     function isConcurrentUpdate () {
@@ -450,7 +438,7 @@ class PageEditor
     // possibly convert HTMLAREA content back to Wiki markup
     function getContent () {
         if (ENABLE_WYSIWYG) {
-            $xml_output = Edit_WYSIWYG_ConvertAfter($this->_content);
+            $xml_output = $this->WysiwygEdit->ConvertAfter($this->_content);
             //$this->_content = join("", $xml_output->_content);
             return $this->_content;
         } else {
@@ -523,9 +511,10 @@ class PageEditor
          */
         if (isBrowserNS4())
             $textarea->setAttr('wrap', 'virtual');
-        if (ENABLE_WYSIWYG)
-            return Edit_WYSIWYG_Textarea($textarea, $this->_wikicontent, $textarea->getAttr('name'));
-        else
+        if (ENABLE_WYSIWYG) {
+            return $this->WysiwygEdit->Textarea($textarea, $this->_wikicontent, 
+                                                $textarea->getAttr('name'));
+        } else
             return $textarea;
     }
 
@@ -542,20 +531,9 @@ class PageEditor
 
         $el['HIDDEN_INPUTS'] = HiddenInputs($h);
         $el['EDIT_TEXTAREA'] = $this->getTextArea();
-        if ( ENABLE_CAPTCHA && ! $request->getSessionVar('captchaword')) {
-	    $request->setSessionVar('captchaword', get_captcha_word());
-	}
-	if ( ENABLE_CAPTCHA && ! $request->getSessionVar('captcha_ok')) {
-	    $el['CAPTCHA_INPUT']
-		= HTML::input(array('type'  => 'text',
-				    'class' => 'wikitext',
-				    'id'    => 'edit:captcha_input',
-				    'name'  => 'edit[captcha_input]',
-				    'size'  => 20,
-				    'maxlength' => 256));
-	    $el['CAPTCHA_IMAGE'] = '<img src="?action=captcha" alt="captcha" />';
-	    $el['CAPTCHA_LABEL'] = '<label for="edit:captcha_input">'._("Type word above:").' </label>';
-	}
+        if ( ENABLE_CAPTCHA ) {
+            $el = array_merge($el, $this->Captcha->getFormElements());
+        }
         $el['SUMMARY_INPUT']
             = HTML::input(array('type'  => 'text',
                                 'class' => 'wikitext',
@@ -780,6 +758,7 @@ extends PageEditor
         PrintXML($template);
         return true;
     }
+
     function getConflictMessage () {
         $message = HTML(HTML::p(fmt("Some of the changes could not automatically be combined.  Please look for sections beginning with '%s', and ending with '%s'.  You will need to edit those sections by hand before you click Save.",
                                     "<<<<<<<",
@@ -791,6 +770,11 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.99  2005/10/29 08:21:58  rurban
+ ENABLE_SPAMBLOCKLIST:
+   Check for links to blocked external tld domains in new edits, against
+   multi.surbl.org and bl.spamcop.net.
+
  Revision 1.98  2005/10/10 19:37:04  rurban
  change USE_HTMLAREA to ENABLE WYSIWYG, add NUM_SPAM_LINKS=20
 
