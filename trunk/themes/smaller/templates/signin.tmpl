@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: signin.tmpl,v 1.6 2005-02-02 18:54:16 rurban Exp $');
+rcs_id('$Id: signin.tmpl,v 1.7 2005-10-30 14:27:53 rurban Exp $');
 
 if (empty($FORMNAME))
     $FORMNAME = 'signin';
@@ -51,7 +51,7 @@ if ($user->isAuthenticated()) {
 ?>
   <?= $SignInJS ?>
   <?= $SignInInput ?>
-  <?= Button("submit:auth[login]", _("Sign in:"), 'wikiaction')?>
+  <?= Button("submit:auth[login]", _("Sign In"), 'wikiaction')?>
 <?php } ?>
 <?php if (empty($NOFORM)) { ?>
   </form>
