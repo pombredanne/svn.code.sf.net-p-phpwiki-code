@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.100 2005-10-30 14:20:42 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.101 2005-10-30 16:12:28 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -195,6 +195,7 @@ class PageEditor
         assert($this->selected);
 
         $this->tokens['PAGE_SOURCE'] = $this->_content;
+        $this->tokens['HIDDEN_INPUTS'] = HiddenInputs($this->request->getArgs());
         return $this->output('viewsource', _("View Source: %s"));
     }
 
@@ -751,7 +752,7 @@ extends PageEditor
             $pagelink = WikiLink($this->page);
         }
 
-        $title = new FormattedText ($title_fs, $pagelink);
+        //$title = new FormattedText ($title_fs, $pagelink);
         $template = Template($template, $this->tokens);
 
         //GeneratePage($template, $title, $rev);
@@ -770,6 +771,10 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.100  2005/10/30 14:20:42  rurban
+ move Captcha specific vars and methods into a Captcha object
+ randomize Captcha chars positions and angles (smoothly)
+
  Revision 1.99  2005/10/29 08:21:58  rurban
  ENABLE_SPAMBLOCKLIST:
    Check for links to blocked external tld domains in new edits, against
