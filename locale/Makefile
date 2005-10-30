@@ -1,4 +1,4 @@
- # $Id: Makefile,v 1.48 2005-10-29 13:07:14 rurban Exp $
+ # $Id: Makefile,v 1.49 2005-10-30 16:38:14 rurban Exp $
 #
 # locale/Makefile
 #
@@ -177,6 +177,10 @@ ${POT_FILE}: ../lib/WikiUser/PearDb.php
 ${POT_FILE}: ../lib/WikiUser/PersonalPage.php
 ${POT_FILE}: ../lib/WikiUser/Session.php
 ${POT_FILE}: ../lib/WikiUserNew.php
+${POT_FILE}: ../lib/WysiwygEdit.php
+${POT_FILE}: ../lib/WysiwygEdit/htmlarea2.php
+${POT_FILE}: ../lib/WysiwygEdit/htmlarea3.php
+${POT_FILE}: ../lib/WysiwygEdit/tinymce.php
 ${POT_FILE}: ../lib/XmlElement.php
 ${POT_FILE}: ../lib/XmlParser.php
 ${POT_FILE}: ../lib/XmlRpcServer.php
@@ -188,7 +192,6 @@ ${POT_FILE}: ../lib/display.php
 ${POT_FILE}: ../lib/editpage.php
 ${POT_FILE}: ../lib/fortune.php
 ${POT_FILE}: ../lib/gif.php
-${POT_FILE}: ../lib/htmlarea.php
 ${POT_FILE}: ../lib/imagecache.php
 ${POT_FILE}: ../lib/install.php
 ${POT_FILE}: ../lib/loadsave.php
@@ -309,7 +312,6 @@ ${POT_FILE}: ../lib/prepend.php
 ${POT_FILE}: ../lib/removepage.php
 ${POT_FILE}: ../lib/spam_babycart.php
 ${POT_FILE}: ../lib/stdlib.php
-${POT_FILE}: ../lib/tinymce.php
 ${POT_FILE}: ../lib/upgrade.php
 ${POT_FILE}: ../lib/wikilens/Buddy.php
 ${POT_FILE}: ../lib/wikilens/CustomPrefs.php
@@ -394,6 +396,7 @@ ${POT_FILE}: ../themes/blog/templates/navbar.tmpl
 ${POT_FILE}: ../themes/blog/templates/search.tmpl
 ${POT_FILE}: ../themes/blog/templates/sidebar.tmpl
 ${POT_FILE}: ../themes/blog/templates/top.tmpl
+${POT_FILE}: ../themes/blog/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/blog/templates/wikiblog.tmpl
 ${POT_FILE}: ../themes/blog/themeinfo.php
 ${POT_FILE}: ../themes/default/htmlarea3/popups/insert_pagelink.php

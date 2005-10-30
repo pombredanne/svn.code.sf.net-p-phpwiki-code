@@ -9,11 +9,11 @@ if (preg_match('/^(http|ftp|https):\/\//i',$_REQUEST['url'])) {
     list($usec, $sec) = explode(" ", microtime());
     
     $fp = fopen('config/config.ini','r');
-    while($config=fgetcsv($fp,1024,';')) {
+    while($config = fgetcsv($fp,1024,';')) {
         if (preg_match('/DATA_PATH/',$config[0])) {
             list($key,$value) = split('=',$config[0]);
             $data_path = trim($value).'/';
-	}    
+	}
     }
     fclose($fp);
     @mkdir($data_path."uploads/thumbs");
@@ -24,7 +24,7 @@ if (preg_match('/^(http|ftp|https):\/\//i',$_REQUEST['url'])) {
     if (!$fp) {
         header ("Content-type: text/html");
         echo "<html><head></head><body>ERROR : unable to open $file in write mode</body></html>";
-        }
+    }
     fwrite($fp,$source);
     $remove = 1;
     
@@ -131,7 +131,7 @@ function show_plain () {
     $mime = mime_content_type ($_REQUEST['url']);
     header ("Content-type: $mime");
     readfile($_REQUEST['url']);
-    exit ();
+    exit();
 }
 
 ?>
