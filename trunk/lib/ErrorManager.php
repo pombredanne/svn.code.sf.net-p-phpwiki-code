@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.45 2005-10-29 14:28:08 uckelman Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.46 2005-10-30 16:38:13 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -617,6 +617,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2005/10/29 14:28:08  uckelman
+// existence of isa should be checked, not built-in is_a()
+//
 // Revision 1.44  2005/08/07 10:52:43  rurban
 // stricter error handling: dba errors are fatal, display errors on Request->finish or session_close
 //
