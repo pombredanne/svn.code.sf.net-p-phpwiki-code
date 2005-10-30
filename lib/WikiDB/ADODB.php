@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.12 2005-10-12 06:17:45 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.13 2005-10-30 15:49:00 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -14,24 +14,25 @@ require_once('lib/WikiDB.php');
 class WikiDB_ADODB extends WikiDB
 {
     function WikiDB_ADODB ($dbparams) {
+        $backend = 'ADODB';
         if (is_array($dbparams['dsn']))
             $backend = $dbparams['dsn']['phptype'];
         elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
             $backend = $m[1];
         // Do we have a override? (currently: mysql, sqlite, oracle, mssql, oci8po, postgres7)
         // TODO: mysqlt (innodb or bdb)
-	if ($backend_type == 'pgsql') { // PearDB DSN cross-compatiblity hack (for unit testing)
-	    $backend_type = 'postgres7';
+	if ($backend == 'pgsql') { // PearDB DSN cross-compatiblity hack (for unit testing)
+	    $backend = 'postgres7';
 	    if (is_string($dbparams['dsn']))
-		$dbparams['dsn'] = $backend_type . ':' . substr($dbparams['dsn'], 6);
+		$dbparams['dsn'] = $backend . ':' . substr($dbparams['dsn'], 6);
 	}
-        if (FindFile("lib/WikiDB/backend/ADODB_$backend.php",true)) {
+        if (FindFile("lib/WikiDB/backend/ADODB_".$backend.".php",true)) {
             $backend = 'ADODB_' . $backend;
         } else {
             $backend = 'ADODB';
         }
-        include_once("lib/WikiDB/backend/$backend.php");
-        $backend_class = "WikiDB_backend_$backend";
+        include_once("lib/WikiDB/backend/".$backend.".php");
+        $backend_class = "WikiDB_backend_".$backend;
         $backend = new $backend_class($dbparams);
         $this->WikiDB($backend, $dbparams);
     }
