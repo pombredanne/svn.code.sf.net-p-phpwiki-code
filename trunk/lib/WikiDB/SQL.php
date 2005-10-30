@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.14 2005-10-12 06:17:45 rurban Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.15 2005-10-30 15:49:00 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 //require_once('lib/WikiDB/backend/PearDB.php');
@@ -10,18 +10,18 @@ require_once('lib/WikiDB.php');
 class WikiDB_SQL extends WikiDB
 {
     function WikiDB_SQL ($dbparams) {
-        $backend_type = 'PearDB';
+        $backend = 'PearDB';
         if (is_array($dbparams['dsn']))
-            $backend_type = $dbparams['dsn']['phptype'];
+            $backend = $dbparams['dsn']['phptype'];
         elseif (preg_match('/^(\w+):/', $dbparams['dsn'], $m))
-            $backend_type = $m[1];
-	if ($backend_type == 'postgres7') { // ADODB cross-compatiblity hack (for unit testing)
-	    $backend_type = 'pgsql';
+            $backend = $m[1];
+	if ($backend == 'postgres7') { // ADODB cross-compatiblity hack (for unit testing)
+	    $backend = 'pgsql';
 	    if (is_string($dbparams['dsn']))
-		$dbparams['dsn'] = $backend_type . ':' . substr($dbparams['dsn'], 10);
+		$dbparams['dsn'] = $backend . ':' . substr($dbparams['dsn'], 10);
 	}
-        include_once ("lib/WikiDB/backend/PearDB_".$backend_type.".php");
-        $backend_class = "WikiDB_backend_PearDB_".$backend_type;
+        include_once ("lib/WikiDB/backend/PearDB_".$backend.".php");
+        $backend_class = "WikiDB_backend_PearDB_".$backend;
         $backend = & new $backend_class($dbparams);
         $this->WikiDB($backend, $dbparams);
     }
