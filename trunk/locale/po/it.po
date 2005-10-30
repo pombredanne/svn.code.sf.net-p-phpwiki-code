@@ -7,13 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.4pre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-29 13:06+0000\n"
+"POT-Creation-Date: 2005-10-30 16:28+0000\n"
 "PO-Revision-Date: 2005-02-12 16:23+0100\n"
 "Last-Translator: Marco Milanesi <kpanic@ada2.unipv.it>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../lib/Captcha.php:32
+msgid "Typed in verification word mismatch ... are you a bot?"
+msgstr ""
+
+#: ../lib/Captcha.php:68
+msgid "Type word above:"
+msgstr ""
 
 #: ../lib/DbSession.php:50
 #, php-format
@@ -152,12 +160,12 @@ msgid "Horizontal line"
 msgstr ""
 
 #: ../lib/EditToolbar.php:210 ../lib/EditToolbar.php:212
-#: ../lib/editpage.php:592
+#: ../lib/editpage.php:571
 msgid "Save"
 msgstr "Registra"
 
 #: ../lib/EditToolbar.php:214 ../lib/EditToolbar.php:216
-#: ../lib/editpage.php:588
+#: ../lib/editpage.php:567
 msgid "Preview"
 msgstr ""
 
@@ -200,12 +208,11 @@ msgstr "Inserto Pagina (doppio-scatto)"
 
 #: ../lib/EditToolbar.php:405 ../lib/EditToolbar.php:406
 msgid "AddTemplate"
-msgstr ""
+msgstr "AggiungaLaMascherina"
 
 #: ../lib/EditToolbar.php:408
-#, fuzzy
 msgid "Insert Template (double-click)"
-msgstr "Inserto Categorias (doppio-scatto)"
+msgstr "Inserto Mascherina (doppio-scatto)"
 
 #: ../lib/ErrorManager.php:210
 #, php-format
@@ -510,7 +517,7 @@ msgstr ""
 msgid "Upload error: unknown error #"
 msgstr ""
 
-#: ../lib/Request.php:811 ../lib/main.php:1157 ../lib/main.php:1170
+#: ../lib/Request.php:811 ../lib/main.php:1158 ../lib/main.php:1171
 #, php-format
 msgid "%s is not writable."
 msgstr ""
@@ -519,7 +526,7 @@ msgstr ""
 msgid "The PhpWiki access log file"
 msgstr ""
 
-#: ../lib/Request.php:813 ../lib/main.php:1160
+#: ../lib/Request.php:813 ../lib/main.php:1161
 #, php-format
 msgid "Please ensure that %s is writable, or redefine %s in config/config.ini."
 msgstr ""
@@ -534,7 +541,7 @@ msgstr ""
 msgid "%4d  %s\n"
 msgstr "%4d  %s\n"
 
-#: ../lib/TextSearchQuery.php:79 ../lib/plugin/FileInfo.php:97
+#: ../lib/TextSearchQuery.php:79 ../lib/plugin/FileInfo.php:100
 #, php-format
 msgid "Unsupported argument: %s=%s"
 msgstr ""
@@ -690,16 +697,16 @@ msgstr "Plugin '%s': non definito"
 
 #: ../lib/Theme.php:1392
 msgid "Related Links"
-msgstr ""
+msgstr "Collegamenti Relativi"
 
 #: ../lib/Theme.php:1412
 msgid "External Links"
-msgstr ""
+msgstr "Collegamenti Esterni"
 
 #: ../lib/WikiDB.php:233
-#, fuzzy, php-format
+#, php-format
 msgid "Removed by: %s"
-msgstr "Modifica: %s"
+msgstr "Rimosso vicino: %s"
 
 #: ../lib/WikiDB.php:235
 #, php-format
@@ -710,13 +717,15 @@ msgstr "Pagina rimosso %s"
 #: ../lib/loadsave.php:99
 #, php-format
 msgid "PageChange Notification of %s sent to %s"
-msgstr ""
+msgstr "Pagini la notifica del cambiamento di %s trasmesso a %s"
 
 #: ../lib/WikiDB.php:244 ../lib/WikiDB.php:1050 ../lib/WikiDB.php:1075
 #: ../lib/loadsave.php:102
 #, php-format
 msgid "PageChange Notification Error: Couldn't send %s to %s"
 msgstr ""
+"Errore Di Notifica Del Cambiamento Della Pagina:  Non ha potuto trasmettere %"
+"s a %s"
 
 #: ../lib/WikiDB.php:472
 #, php-format
@@ -738,7 +747,7 @@ msgstr "Base di dati d'ottimizzazione"
 
 #: ../lib/WikiDB.php:1010
 msgid "Page change"
-msgstr ""
+msgstr "Cambiamento della pagina"
 
 #: ../lib/WikiDB.php:1038 ../lib/loadsave.php:787
 #: ../lib/plugin/RecentChanges.php:107
@@ -753,7 +762,7 @@ msgstr "Modifica: %s"
 #: ../lib/WikiDB.php:1066
 #, php-format
 msgid "Page rename %s to %s"
-msgstr ""
+msgstr "La pagina cambia titolo %s a %s"
 
 #: ../lib/WikiDB.php:1626 ../lib/WikiDB.php:1630
 #: ../themes/default/templates/homepage.tmpl:7
@@ -789,31 +798,31 @@ msgstr ""
 
 #: ../lib/WikiGroup.php:29
 msgid "Every"
-msgstr ""
+msgstr "Ogni"
 
 #: ../lib/WikiGroup.php:30
 msgid "Anonymous Users"
-msgstr ""
+msgstr "Utenti Anonimi"
 
 #: ../lib/WikiGroup.php:31
 msgid "Bogo Users"
-msgstr ""
+msgstr "Utenti Bogo"
 
 #: ../lib/WikiGroup.php:32
 msgid "HasHomePage"
-msgstr ""
+msgstr "HaHomePage"
 
 #: ../lib/WikiGroup.php:33
 msgid "Signed Users"
-msgstr ""
+msgstr "Utenti Firmati"
 
 #: ../lib/WikiGroup.php:34
 msgid "Authenticated Users"
-msgstr ""
+msgstr "Utenti Autenticati"
 
 #: ../lib/WikiGroup.php:35
 msgid "Administrators"
-msgstr ""
+msgstr "Coordinatori"
 
 #: ../lib/WikiGroup.php:185 ../lib/WikiGroup.php:232 ../lib/WikiGroup.php:314
 #: ../lib/WikiGroup.php:373 ../lib/WikiGroup.php:389
@@ -856,7 +865,7 @@ msgid "Cannot open AUTH_GROUP_FILE %s"
 msgstr ""
 
 #: ../lib/WikiGroup.php:951
-#, fuzzy, php-format
+#, php-format
 msgid "%s not defined"
 msgstr "%s: non definito"
 
@@ -1244,88 +1253,84 @@ msgstr ""
 msgid "You searched for: "
 msgstr ""
 
-#: ../lib/editpage.php:100 ../lib/editpage.php:112
-msgid "Typed in verification word mismatch ... are you a bot?"
-msgstr ""
-
-#: ../lib/editpage.php:134 ../lib/editpage.php:480
+#: ../lib/editpage.php:135 ../lib/editpage.php:469
 msgid "Your version"
 msgstr "versione corrente"
 
-#: ../lib/editpage.php:134 ../lib/editpage.php:481
+#: ../lib/editpage.php:135 ../lib/editpage.php:470
 msgid "Other version"
 msgstr "Mostra il versione corrente"
 
-#: ../lib/editpage.php:144
+#: ../lib/editpage.php:145
 msgid "Some internal editing error"
 msgstr ""
 
-#: ../lib/editpage.php:145
+#: ../lib/editpage.php:146
 msgid ""
 "Your are probably trying to edit/create an invalid version of this page."
 msgstr ""
 
-#: ../lib/editpage.php:146
+#: ../lib/editpage.php:147
 msgid "&version=-1 might help."
 msgstr ""
 
-#: ../lib/editpage.php:163
+#: ../lib/editpage.php:164
 #, php-format
 msgid "Edit: %s"
 msgstr "Modifica: %s"
 
-#: ../lib/editpage.php:197
+#: ../lib/editpage.php:199
 #, php-format
 msgid "View Source: %s"
 msgstr ""
 
-#: ../lib/editpage.php:211
+#: ../lib/editpage.php:213
 msgid "Page now locked."
 msgstr "Pagina bloccata."
 
-#: ../lib/editpage.php:211
+#: ../lib/editpage.php:213
 msgid "Page now unlocked."
 msgstr "Pagina sbloccata."
 
-#: ../lib/editpage.php:313
+#: ../lib/editpage.php:315
 #, php-format
 msgid "Saved: %s"
 msgstr "Salvata: %s"
 
-#: ../lib/editpage.php:376
+#: ../lib/editpage.php:365
 msgid "Too many external links."
 msgstr ""
 
-#: ../lib/editpage.php:390
+#: ../lib/editpage.php:379
 msgid "SpamAssassin reports: "
 msgstr ""
 
-#: ../lib/editpage.php:407
+#: ../lib/editpage.php:396
 msgid "External links contain blocked domains:"
 msgstr ""
 
-#: ../lib/editpage.php:408
-#, fuzzy, php-format
+#: ../lib/editpage.php:397
+#, php-format
 msgid "%s is listed at %s"
-msgstr "%s a %s"
+msgstr "%s è elencato a %s"
 
-#: ../lib/editpage.php:429
+#: ../lib/editpage.php:418
 msgid "Spam Prevention"
 msgstr ""
 
-#: ../lib/editpage.php:430
+#: ../lib/editpage.php:419
 msgid "This page edit seems to contain spam and was therefore not saved."
 msgstr ""
 
-#: ../lib/editpage.php:432 ../lib/editpage.php:466
+#: ../lib/editpage.php:421 ../lib/editpage.php:455
 msgid "Sorry for the inconvenience."
 msgstr "Scusa per l'inconveniente."
 
-#: ../lib/editpage.php:463 ../themes/MacOSX/themeinfo.php:137
+#: ../lib/editpage.php:452 ../themes/MacOSX/themeinfo.php:137
 msgid "Page Locked"
 msgstr "Pagina Bloccata"
 
-#: ../lib/editpage.php:464
+#: ../lib/editpage.php:453
 msgid ""
 "This page has been locked by the administrator so your changes can not be "
 "saved."
@@ -1333,7 +1338,7 @@ msgstr ""
 "Questa pagina è stata bloccata dall'amministratore in modo da i vostri "
 "cambiamenti non possono essere salvati."
 
-#: ../lib/editpage.php:465
+#: ../lib/editpage.php:454
 msgid ""
 "(Copy your changes to the clipboard. You can try editing a different page or "
 "save your text in a text editor.)"
@@ -1341,53 +1346,58 @@ msgstr ""
 "(Copia le tue modifiche nella clipboard. Potete provare a modificare "
 "un'altra pagina o registra il vostro testo in un editor di testo.)"
 
-#: ../lib/editpage.php:479 ../lib/editpage.php:784
+#: ../lib/editpage.php:468 ../lib/editpage.php:764
 #, php-format
 msgid ""
 "Some of the changes could not automatically be combined.  Please look for "
 "sections beginning with '%s', and ending with '%s'.  You will need to edit "
 "those sections by hand before you click Save."
 msgstr ""
+"Alcuni dei cambiamenti non hanno potuto essere uniti automaticamente. Cerchi "
+"prego le sezioni che cominciano con '%s 'e concludentesi con '%s '. Dovrete "
+"pubblicare a mano quelle sezioni prima che vi scattiate risparmi."
 
-#: ../lib/editpage.php:483 ../lib/editpage.php:787
+#: ../lib/editpage.php:472 ../lib/editpage.php:767
 msgid "Please check it through before saving."
-msgstr ""
+msgstr "Controllilo prego attraverso prima del risparmio."
 
-#: ../lib/editpage.php:494
+#: ../lib/editpage.php:483
 msgid "Conflicting Edits!"
-msgstr ""
+msgstr "Il Conflitto Pubblica!"
 
-#: ../lib/editpage.php:495
+#: ../lib/editpage.php:484
 msgid ""
 "In the time since you started editing this page, another user has saved a "
 "new version of it."
 msgstr ""
+"Nel tempo da quando avete cominciato pubblicare questa pagina, un altro "
+"utente ha conservato una nuova versione di esso."
 
-#: ../lib/editpage.php:496
+#: ../lib/editpage.php:485
 msgid ""
 "Your changes can not be saved as they are, since doing so would overwrite "
 "the other author's changes. So, your changes and those of the other author "
 "have been combined. The result is shown below."
 msgstr ""
+"I vostri cambiamenti non possono essere conservati mentre sono, dal fare in "
+"modo da scriverebbero sopra i cambiamenti dell'altro autore. Così, i vostri "
+"cambiamenti e quelli dell'altro autore sono stati uniti. Il risultato è "
+"indicato sotto."
 
-#: ../lib/editpage.php:557
-msgid "Type word above:"
-msgstr ""
-
-#: ../lib/editpage.php:580
+#: ../lib/editpage.php:559
 msgid "Convert"
 msgstr "Convertito"
 
-#: ../lib/editpage.php:615 ../themes/Portland/templates/editpage.tmpl:41
+#: ../lib/editpage.php:594 ../themes/Portland/templates/editpage.tmpl:41
 #: ../themes/Wordpress/templates/editpage.tmpl:50
 #, php-format
 msgid "Author will be logged as %s."
-msgstr ""
+msgstr "L'autore sarà annotato come %s."
 
-#: ../lib/editpage.php:759
+#: ../lib/editpage.php:738
 #, php-format
 msgid "Merge and Edit: %s"
-msgstr ""
+msgstr "Fondasi e pubblichi: %s"
 
 #: ../lib/loadsave.php:70
 msgid "ZIP files of database"
@@ -1543,19 +1553,19 @@ msgstr "archivio del testo %s"
 
 #: ../lib/loadsave.php:843
 msgid "Merge Edit"
-msgstr ""
+msgstr "La Fusione Pubblica"
 
 #: ../lib/loadsave.php:849
 msgid "Restore Anyway"
-msgstr ""
+msgstr "Restore Comunque"
 
 #: ../lib/loadsave.php:857
 msgid "Overwrite All"
-msgstr ""
+msgstr "Scriva sopra Tutti"
 
 #: ../lib/loadsave.php:864
 msgid " Sorry, cannot merge."
-msgstr ""
+msgstr " Spiacente, non può fondersi."
 
 #: ../lib/loadsave.php:884 ../lib/loadsave.php:893 ../lib/loadsave.php:909
 #: ../themes/MonoBook/templates/actionbar.tmpl:37
@@ -1563,7 +1573,7 @@ msgstr ""
 #: ../themes/default/templates/actionbar.tmpl:26
 #: ../themes/smaller/templates/actionbar.tmpl:29
 msgid "Revert"
-msgstr ""
+msgstr "Ritorni"
 
 #: ../lib/loadsave.php:885
 msgid "missing required version argument"
@@ -1653,14 +1663,12 @@ msgid "%s is disallowed on this wiki."
 msgstr ""
 
 #: ../lib/main.php:454
-#, fuzzy
 msgid "authenticated"
-msgstr "salvata a %s"
+msgstr "autenticato"
 
 #: ../lib/main.php:454
-#, fuzzy
 msgid "not authenticated"
-msgstr "non salvata a %s"
+msgstr "non autenticato"
 
 #: ../lib/main.php:455
 #, php-format
@@ -1760,9 +1768,8 @@ msgid "download a zip dump from this wiki"
 msgstr ""
 
 #: ../lib/main.php:508
-#, fuzzy
 msgid "download a html zip dump from this wiki"
-msgstr "Le %d pagine più popolari di questo wiki sono:"
+msgstr ""
 
 #: ../lib/main.php:532
 msgid "Browsing pages"
@@ -1797,17 +1804,14 @@ msgid "Loading files"
 msgstr ""
 
 #: ../lib/main.php:540
-#, fuzzy
 msgid "Locking pages"
 msgstr "Blocca la Pagina"
 
 #: ../lib/main.php:541
-#, fuzzy
 msgid "Removing pages"
 msgstr "Rimuovi la pagina"
 
 #: ../lib/main.php:542
-#, fuzzy
 msgid "Unlocking pages"
 msgstr "Sblocca la Pagina"
 
@@ -1898,21 +1902,21 @@ msgstr ""
 msgid "FullTextSearch"
 msgstr "RicercaDelTesto"
 
-#: ../lib/main.php:1158
+#: ../lib/main.php:1159
 msgid "The session.save_path directory"
 msgstr ""
 
-#: ../lib/main.php:1161
+#: ../lib/main.php:1162
 #, php-format
 msgid "the session.save_path directory '%s'"
 msgstr ""
 
-#: ../lib/main.php:1165
+#: ../lib/main.php:1166
 #, php-format
 msgid "Attempting to use the directory '%s' instead."
 msgstr ""
 
-#: ../lib/main.php:1172
+#: ../lib/main.php:1173
 msgid "Users will not be able to sign in."
 msgstr ""
 
@@ -2702,7 +2706,6 @@ msgid "Wiki Name"
 msgstr "Wiki Nome"
 
 #: ../lib/plugin/JabberPresence.php:23
-#, fuzzy
 msgid "JabberPresence"
 msgstr "JabberPresenca"
 
@@ -3018,7 +3021,7 @@ msgstr ""
 msgid "Contents"
 msgstr "Indice"
 
-#: ../lib/plugin/PageGroup.php:91 ../lib/stdlib.php:1955
+#: ../lib/plugin/PageGroup.php:91 ../lib/stdlib.php:1974
 #, php-format
 msgid "<%s: no such section>"
 msgstr ""
@@ -4366,7 +4369,7 @@ msgstr ""
 
 #: ../lib/plugin/WikiAdminMarkup.php:37
 msgid "WikiAdminMarkup"
-msgstr ""
+msgstr "WikiAmministrazioneDisposizione"
 
 #: ../lib/plugin/WikiAdminMarkup.php:41
 msgid "Change the markup type of selected pages."
@@ -4388,16 +4391,14 @@ msgid "Couldn't change page '%s' to markup type '%s'."
 msgstr ""
 
 #: ../lib/plugin/WikiAdminMarkup.php:103
-#, fuzzy
 msgid "PhpWikiAdministration/Markup"
-msgstr "AmministrazioneDiPhpWiki/Rimuovi"
+msgstr "AmministrazioneDiPhpWiki/Disposizione"
 
 #: ../lib/plugin/WikiAdminMarkup.php:152
-#, fuzzy
 msgid ""
 "Are you sure you want to permanently change the markup type of the selected "
 "files?"
-msgstr "Rimuovi la pagina"
+msgstr ""
 
 #: ../lib/plugin/WikiAdminMarkup.php:156
 msgid "Change markup type"
@@ -4715,7 +4716,7 @@ msgstr ""
 msgid "WikiAdminUtils says:"
 msgstr ""
 
-#: ../lib/plugin/WikiAdminUtils.php:103 ../lib/stdlib.php:1730
+#: ../lib/plugin/WikiAdminUtils.php:103 ../lib/stdlib.php:1749
 msgid "Okay"
 msgstr ""
 
@@ -5421,7 +5422,7 @@ msgstr ""
 msgid "Unable to open directory '%s' for reading"
 msgstr ""
 
-#: ../lib/stdlib.php:1912 ../lib/stdlib.php:1925
+#: ../lib/stdlib.php:1931 ../lib/stdlib.php:1944
 #, php-format
 msgid "... (first %s words)"
 msgstr ""
@@ -5734,6 +5735,7 @@ msgstr ""
 #: ../themes/Wordpress/templates/browse.tmpl:9
 #: ../themes/Wordpress/templates/viewsource.tmpl:7
 #: ../themes/blog/templates/browse.tmpl:6
+#: ../themes/blog/templates/viewsource.tmpl:5
 #: ../themes/default/templates/browse.tmpl:6
 #: ../themes/default/templates/viewsource.tmpl:5
 msgid "Note:"
@@ -5745,6 +5747,7 @@ msgstr "Nota:"
 #: ../themes/Wordpress/templates/browse.tmpl:10
 #: ../themes/Wordpress/templates/viewsource.tmpl:12
 #: ../themes/blog/templates/browse.tmpl:7
+#: ../themes/blog/templates/viewsource.tmpl:10
 #: ../themes/default/templates/browse.tmpl:7
 #: ../themes/default/templates/viewsource.tmpl:10
 msgid "You are viewing an old revision of this page."
@@ -5756,6 +5759,7 @@ msgstr ""
 #: ../themes/Wordpress/templates/browse.tmpl:11
 #: ../themes/Wordpress/templates/viewsource.tmpl:13
 #: ../themes/blog/templates/browse.tmpl:8
+#: ../themes/blog/templates/viewsource.tmpl:11
 #: ../themes/default/templates/browse.tmpl:8
 #: ../themes/default/templates/viewsource.tmpl:11
 msgid "View the current version"
@@ -6202,6 +6206,7 @@ msgstr ""
 
 #: ../themes/Portland/templates/viewsource.tmpl:6
 #: ../themes/Wordpress/templates/viewsource.tmpl:8
+#: ../themes/blog/templates/viewsource.tmpl:6
 #: ../themes/default/templates/viewsource.tmpl:6
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr ""
