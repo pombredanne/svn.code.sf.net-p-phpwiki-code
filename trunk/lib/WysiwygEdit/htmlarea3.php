@@ -1,54 +1,21 @@
 <?php
 /**
- * Output the javascript function to check for MS Internet Explorer >= 5.5 on Windows
- * and call the real js script then, else just a nil func.
- * version 2: only for MSIE 5.5 and better
- * version 3: also Mozilla >= 1.3
+ * requires installation into themes/default/htmlarea3/
+ * MSIE => 5.5,  Mozilla >= 1.3
  *
  * @package WysiwygEdit
  * @author Reini Urban
  */
 
-function Edit_WYSIWYG_Head($name='edit[content]') {
-    //return Edit_HtmlArea2_Head($name);
-    return Edit_HtmlArea3_Head($name);
-}
-function Edit_WYSIWYG_Textarea($textarea,$wikitext,$name='edit[content]') {
-    //return Edit_HtmlArea2_Textarea($textarea,$name);
-    return Edit_HtmlArea3_Textarea($textarea,$wikitext,$name);
-}
+require_once("lib/WysiwygEdit.php");
 
-function Edit_HtmlArea2_Head($name='edit[content]') {
-  return JavaScript("_editor_url = \"".DATA_PATH."/themes/default/htmlarea2/\";
-var win_ie_ver = parseFloat(navigator.appVersion.split(\"MSIE\")[1]);
-if (navigator.userAgent.indexOf('Mac')        >= 0) { win_ie_ver = 0; }
-if (navigator.userAgent.indexOf('Windows CE') >= 0) { win_ie_ver = 0; }
-if (navigator.userAgent.indexOf('Opera')      >= 0) { win_ie_ver = 0; }
-if (win_ie_ver >= 5.5) {
-  document.write('<scr' + 'ipt src=\"' +_editor_url+ 'editor.js\"');
-  document.write(' language=\"Javascript1.2\"></scr' + 'ipt>');
-} else {
-  document.write('<scr'+'ipt>function editor_generate() { return false; }</scr'+'ipt>'); 
-}
- ",
-		    array('version' => 'JavaScript1.2',
-			  'type' => 'text/javascript'));
-}
-// for testing only
-function Edit_HtmlAreaHead2_IEonly() {
-    return HTML(JavaScript("_editor_url = \"".DATA_PATH."/themes/default/htmlarea2/\""),
-                "\n",
-                JavaScript("",
-                           array('version' => 'JavaScript1.2',
-                                 'type' => 'text/javascript',
-                                 'src' => DATA_PATH."/themes/default/htmlarea2/editor.js")));
-}
+class WysiwygEdit_htmlarea3 extends WysiwygEdit {
 
-function Edit_HtmlArea3_Head($name='edit[content]') {
-    global $WikiTheme;
-    $WikiTheme->addMoreAttr('body'," onload='initEditor()'");
-    //Todo: language selection from available lang/*.js files
-    return new RawXml('
+    function Head($name='edit[content]') {
+        global $WikiTheme;
+        $WikiTheme->addMoreAttr('body'," onload='initEditor()'");
+        //Todo: language selection from available lang/*.js files
+        return new RawXml('
 <script type="text/javascript" src="'.DATA_PATH.'/themes/default/htmlarea3/htmlarea.js"></script>
 <script type="text/javascript" src="'.DATA_PATH.'/themes/default/htmlarea3/lang/en.js"></script>
 <script type="text/javascript" src="'.DATA_PATH.'/themes/default/htmlarea3/dialog.js"></script> 
@@ -70,7 +37,7 @@ function initEditor() {
   function clickHandler(editor, buttonId) {
     switch (buttonId) {
       case "my-toc":
-        editor.insertHTML("<h1>Table Of Contents</h1>");
+        editor.insertHTML("<?plugin CreateToc ?>");
         break;
       case "my-date":
         editor.insertHTML((new Date()).toString());
@@ -130,29 +97,14 @@ function highlight() {
 }
 </script>
  ');
-}
+    }
 
-// to be called after </textarea>
-// version 2
-function Edit_HtmlArea2_Textarea($textarea,$wikitext,$name='edit[content]') {
-  $out = HTML($textarea);
-  // some more custom links 
-  //$out->pushContent(HTML::a(array('href'=>"javascript:editor_insertHTML('".$name."',\"<font style='background-color: yellow'>\",'</font>',1)"),_("Highlight selected text")));
-  //$out->pushContent(HTML("\n"));
-  $out->pushContent(JavaScript("editor_generate('".$name."');",
-			       array('version' => 'JavaScript1.2',
-				     'defer' => 1)));
-  return $out;
-  //return "\n".'<script language="JavaScript1.2" defer> editor_generate(\'CONTENT\'); </script>'."\n";
+    function Textarea($textarea,$wikitext,$name='edit[content]') {
+        $out = HTML($textarea,HTML::div(array("id"=>"editareawiki",'style'=>'display:none'),$wikitext),"\n");
+        //TODO: maybe some more custom links
+        return $out;
+    }
 }
-
-function Edit_HtmlArea3_Textarea($textarea,$wikitext,$name='edit[content]') {
-    $out = HTML($textarea,HTML::div(array("id"=>"editareawiki",'style'=>'display:none'),$wikitext),"\n");
-    //TODO: maybe some more custom links
-    return $out;
-}
-
-require_once("lib/InlineParser.php");
 
 // re-use these classes for the regexp's.
 // just output strings instead of XmlObjects
@@ -164,7 +116,7 @@ class Markup_html_br extends Markup_linebreak {
 
 class Markup_html_simple_tag extends Markup_html_emphasis {
     function markup ($match, $body) {
-        $tag = mb_substr($match, 1, -1);
+        $tag = substr($match, 1, -1);
         switch ($tag) {
         case 'b':
         case 'strong':
@@ -183,7 +135,7 @@ class Markup_html_bold extends BalancedMarkup
     var $_start_regexp = "<(?:span|SPAN) style=\"FONT-WEIGHT: bold\">";
 
     function getEndRegexp ($match) {
-        return "<\\/" . mb_substr($match, 1);
+        return "<\\/" . substr($match, 1);
     }
     function markup ($match, $body) {
         //Todo: convert style formatting to simplier nested <b><i> tags
@@ -205,28 +157,10 @@ class HtmlTransformer extends InlineTransformer
     }
 }
 
-/**
- * Handler to convert the Wiki Markup to HTML before editing.
- * This will be converted back by Edit_HtmlArea_ConvertAfter
- *  *text* => '<b>text<b>'
- */
-function Edit_WYSIWYG_ConvertBefore($text) {
-    return asXML(TransformInline($text, 2.0, false));
-}
+/*
+ $Log: not supported by cvs2svn $
 
-/**
- * Handler to convert the HTML formatting back to wiki formatting.
- * Derived from InlineParser, but returning wiki text instead of HtmlElement objects.
- * '<b>text<b>' => '<SPAN style="FONT-WEIGHT: bold">text</SPAN>' => '*text*'
- */
-function Edit_WYSIWYG_ConvertAfter($text) {
-    static $trfm;
-    if (empty($trfm)) {
-        $trfm = new HtmlTransformer();
-    }
-    $markup = $trfm->parse($text); // version 2.0
-    return $markup;
-}
+*/
 
 // Local Variables:
 // mode: php
