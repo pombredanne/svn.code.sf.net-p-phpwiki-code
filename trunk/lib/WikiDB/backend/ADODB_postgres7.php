@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_postgres7.php,v 1.2 2005-10-10 19:42:15 rurban Exp $');
+rcs_id('$Id: ADODB_postgres7.php,v 1.3 2005-10-31 16:49:02 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -9,7 +9,9 @@ if (!defined("USE_BYTEA")) // see schemas/psql-initialize.sql
 
 /**
  * WikiDB layer for ADODB-postgres (7 or 8), called by lib/WikiDB/ADODB.php.
- * Since 1.3.12 changed to use Foreign Keys and ON DELETE CASCADE
+ * Changes 1.3.12: 
+ *  - use Foreign Keys and ON DELETE CASCADE.
+ *  - bytea blob type
  * 
  * @author: Reini Urban
  */
@@ -41,25 +43,30 @@ extends WikiDB_backend_ADODB
         return 1;
     }
 
+    // just for blobs. the rest is escaped with qstr()
     function _quote($s) {
-	if (USE_BYTEA) 
-	    return pg_escape_bytea($s);
+	if (USE_BYTEA)
+	    return $this->_dbh->BlobEncode($s);
 	if (function_exists('pg_escape_string'))
 	    return pg_escape_string($s);
 	else
 	    return base64_encode($s);
     }
 
+    // just for blobs, which might be base64_encoded
     function _unquote($s) {
-	if (USE_BYTEA) 
-	    return pg_unescape_bytea($s);
+	if (USE_BYTEA) {
+	    //if function_exists('pg_unescape_bytea')
+	    //return pg_unescape_bytea($s);
+	    // TODO: already unescaped by ADORecordSet_postgres64::_decode?
+	    return $s;
+	}
 	if (function_exists('pg_escape_string'))
 	    return $s;
 	else
 	    return base64_decode($s);
     }
 
-    // Until the binary escape problems on pear pgsql are solved */
     function get_cached_html($pagename) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
@@ -72,18 +79,20 @@ extends WikiDB_backend_ADODB
     function set_cached_html($pagename, $data) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        // TODO: Maybe use UpdateBlob
-	if (USE_BYTEA)
-	    $sth = $dbh->Execute(sprintf("UPDATE $page_tbl"
-					 . " SET cached_html='%s'"
-					 . " WHERE pagename=%s",
-					 $this->_quote($data), 
-					 $dbh->qstr($pagename)));
-	else
-	    $sth = $dbh->Execute("UPDATE $page_tbl"
-				 . " SET cached_html=?"
-				 . " WHERE pagename=?",
-				 array($this->_quote($data), $pagename));
+	if (USE_BYTEA) {
+	    $dbh->UpdateBlob($page_tbl,'cached_html',$data,"pagename=".$dbh->qstr($pagename));
+	    /*
+	    $dbh->Execute(sprintf("UPDATE $page_tbl"
+				  . " SET cached_html='%s'"
+				  . " WHERE pagename=%s",
+				  $this->_quote($data), 
+				  $dbh->qstr($pagename)));
+	    */
+	} else {
+	    $dbh->Execute("UPDATE $page_tbl"
+			  . " SET cached_html=?"
+			  . " WHERE pagename=?",
+			  array($this->_quote($data), $pagename));
     }
 
     /**
