@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Captcha.php,v 1.4 2005-10-30 14:20:42 rurban Exp $');
+rcs_id('$Id: Captcha.php,v 1.5 2005-10-31 16:44:13 rurban Exp $');
 /**
   Session Captcha v1.0
     by Gavin M. Roy <gmr@bteg.net>
@@ -159,14 +159,27 @@ class Captcha {
         imageline($jpg, 0,$height-1,$width-1,$height-1,$tx);
         imageline($jpg, $width-1,0,$width-1,$height-1,$tx);
 
-        //TODO: JPEG or PNG?
-        header("Content-type: image/jpeg");
-        ImageJpeg($jpg);
+	if (function_exists("ImageJpeg")) {
+	    header("Content-type: image/jpeg");
+	    ImageJpeg($jpg);
+	} elseif (function_exists("ImagePNG")) {
+	    header("Content-type: image/png");
+	    ImagePNG($jpg);
+	} elseif (function_exists("ImageGIF")) {
+	    header("Content-type: image/gif");
+	    ImageGIF($jpg);
+	} else {
+	    trigger_error("missing GD bitmap support", E_USER_WARNING);
+	}
     }
 
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2005/10/30 14:20:42  rurban
+// move Captcha specific vars and methods into a Captcha object
+// randomize Captcha chars positions and angles (smoothly)
+//
 // Revision 1.3  2005/10/29 07:37:56  rurban
 // USE_CAPTCHA_RANDOM_WORD by Dan Frankowski
 //
