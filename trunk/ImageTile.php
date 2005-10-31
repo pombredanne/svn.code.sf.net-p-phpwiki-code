@@ -29,7 +29,7 @@ if (preg_match('/^(http|ftp|https):\/\//i',$_REQUEST['url'])) {
     $remove = 1;
     
 } else {
-    @$fp = fopen($_REQUEST['url'],r);
+    @$fp = fopen($_REQUEST['url'],"r");
     
     if (!$fp) {
     
@@ -44,14 +44,11 @@ if (preg_match('/^(http|ftp|https):\/\//i',$_REQUEST['url'])) {
 }
 list ($a, $b, $type, $attr) = @getimagesize ($file);
 
-if ($type == 0) {
-
+if (!$type) {
     $type = basename ($_REQUEST['url']);
     $type = preg_split ('/\./',$type);
     $type = array_pop ($type);
-
 }
-
 
 switch ($type) {
     case '2':
@@ -134,4 +131,16 @@ function show_plain () {
     exit();
 }
 
+
+/*
+ $Log: not supported by cvs2svn $
+*/
+
+// Local Variables:
+// mode: php
+// tab-width: 8
+// c-basic-offset: 4
+// c-hanging-comment-ender-p: nil
+// indent-tabs-mode: nil
+// End:
 ?>
