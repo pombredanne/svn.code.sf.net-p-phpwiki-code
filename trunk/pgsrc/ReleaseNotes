@@ -1,9 +1,9 @@
-Date: Sun, 30 Oct 2005 18:15:58 +0100
+Date: Mon, 31 Oct 2005 18:06:58 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.60 2005-10-30 17:17:57 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.61 2005-10-31 17:10:31 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.60 $";
+  pgsrc_version="2 $Revision: 1.61 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -13,14 +13,15 @@ Content-Transfer-Encoding: binary
 
 fixes:
 * DB: ANSI SQL statements
-* testsuite: force C locale and EN $LANG 
+* testsuite: force C locale and EN $LANG
+* fix setting the locale
 * PHP 5: compatibility fixes
 * fixed blog theme layout
+* don't log on ACCESS_LOG_SQL < 2
 
 changes:
 * updated locale for de and es (google translation)
-* generalized ENABLE_HTMLAREA3 to ENABLE_WYSIWYG, 
-  added preliminary tiny_mce support
+* generalized ENABLE_HTMLAREA3 to ENABLE_WYSIWYG
 * cache EditToolbar popup content
 * DB: foreign key support in schemas, simplify methods
 * improved Captcha
@@ -32,6 +33,8 @@ new:
 * add more backends to the testsuite (PearDB_pgsql, ...)
 * FileInfoPlugin: exeversion
 * USE_CAPTCHA_RANDOM_WORD by Dan Frankowski
+* new experimental WYSIWYG libraries 
+  (tinymce, FCKeditor, htmlarea3, htmlarea2, spaw)
 
 1.3.11p1 Sep, 18 2005, Reini Urban:
 
