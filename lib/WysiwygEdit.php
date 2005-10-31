@@ -1,18 +1,21 @@
 <?php
+rcs_id('$Id: WysiwygEdit.php,v 1.2 2005-10-31 16:46:13 rurban Exp $');
 /**
- * Baseclass for WysiwygEdit/tinymce, WysiwygEdit/htmlarea3, WysiwygEdit/htmlarea2
+ * Baseclass for WysiwygEdit/tinymce, WysiwygEdit/htmlarea3, WysiwygEdit/htmlarea2, ...
  *
- * ENABLE_WYSIWYG - Support for some WYSIWYG HTML Editor (tinymce or htmlarea3)
+ * ENABLE_WYSIWYG - Support for some WYSIWYG HTML Editors 
+ * (tinymce, htmlarea3, FCKeditor, spaw, htmlarea2, ...)
  * Not yet enabled, since we cannot convert HTML to Wiki Markup yet.
  * (See HtmlParser.php for the ongoing efforts)
- * We might use a HTML PageType, which is contra wiki, but some people 
+ * We might use a PageType=html, which is contra wiki, but some people 
  * might prefer HTML markup.
  *
- * TODO: Change from constant to user preference variable 
+ * TODO: Change from ENABLE_WYSIWYG constant to user preference variable 
  *       (checkbox setting or edit click as in gmail),
  *       when HtmlParser is finished.
  * Based upon htmlarea3.php and tinymce.php
- * WARNING! Incompatible with ENABLE_XHTML_XML
+ *
+ * WARNING! Probably incompatible with ENABLE_XHTML_XML (TestMe)
  *
  * @package WysiwygEdit
  * @author Reini Urban
@@ -20,14 +23,11 @@
 
 require_once("lib/InlineParser.php");
 
-// TODO: move to config-default.ini
-if (!defined('USE_HTMLAREA3')) define('USE_HTMLAREA3', false);
-if (!defined('USE_HTMLAREA2')) define('USE_HTMLAREA2', false);
-if (!defined('USE_TINYMCE'))   define('USE_TINYMCE',   true);
-
 class WysiwygEdit {
 
-    function WysiwygEdit() { }
+    function WysiwygEdit() { 
+        $this->_transformer_tags = false;
+    }
 
     function Head($name='edit[content]') {
         trigger_error("virtual", E_USER_ERROR); 
@@ -51,19 +51,90 @@ class WysiwygEdit {
      * Handler to convert the HTML formatting back to wiki formatting.
      * Derived from InlineParser, but returning wiki text instead of HtmlElement objects.
      * '<b>text<b>' => '<SPAN style="FONT-WEIGHT: bold">text</SPAN>' => '*text*'
+     *
+     * TODO: Switch over to HtmlParser
      */
     function ConvertAfter($text) {
         static $trfm;
         if (empty($trfm)) {
-            $trfm = new HtmlTransformer();
+            $trfm = new HtmlTransformer($this->_transformer_tags);
         }
         $markup = $trfm->parse($text); // version 2.0
         return $markup;
     }
 }
 
+// re-use these classes for the regexp's.
+// just output strings instead of XmlObjects
+class Markup_html_br extends Markup_linebreak {
+    function markup ($match) {
+        return $match;
+    }
+}
+
+class Markup_html_simple_tag extends Markup_html_emphasis {
+    function markup ($match, $body) {
+        $tag = substr($match, 1, -1);
+        switch ($tag) {
+        case 'b':
+        case 'strong':
+            return "*".$body."*";
+        case 'big': 
+            return "<big>".$body."</big>";
+        case 'i':
+        case 'em':
+            return "_".$body."_";
+        }
+    }
+}
+
+class Markup_html_p extends BalancedMarkup
+{
+    var $_start_regexp = "<(?:p|P)( class=\".*\")?>";
+
+    function getEndRegexp ($match) {
+        return "<\\/" . substr($match, 1);
+    }
+    function markup ($match, $body) {
+        return $body."\n";
+    }
+}
+
+//'<SPAN style="FONT-WEIGHT: bold">text</SPAN>' => '*text*'
+class Markup_html_spanbold extends BalancedMarkup
+{
+    var $_start_regexp = "<(?:span|SPAN) style=\"FONT-WEIGHT: bold\">";
+
+    function getEndRegexp ($match) {
+        return "<\\/" . substr($match, 1);
+    }
+    function markup ($match, $body) {
+        //Todo: convert style formatting to simplier nested <b><i> tags
+        return "*".$body."*";
+    }
+}
+
+class HtmlTransformer extends InlineTransformer
+{
+    function HtmlTransformer ($tags = false) {
+        if (!$tags) $tags = 
+            array('escape','html_br','html_spanbold','html_simple_tag',
+                  'html_p',);
+        /*
+         'html_a','html_span','html_div',
+         'html_table','html_hr','html_pre',
+         'html_blockquote',
+         'html_indent','html_ol','html_li','html_ul','html_img'
+        */
+        return $this->InlineTransformer($tags);
+    }
+}
+
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.1  2005/10/30 14:22:15  rurban
+ refactor WysiwygEdit
+
 
 */
 
