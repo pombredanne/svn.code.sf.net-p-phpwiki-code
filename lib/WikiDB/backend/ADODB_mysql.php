@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.15 2005-04-10 10:43:25 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.16 2005-10-31 16:48:22 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -151,6 +151,77 @@ extends WikiDB_backend_ADODB
         return;
     }
 
+    function _get_pageid($pagename, $create_if_missing = false) {
+
+        // check id_cache
+        global $request;
+        $cache =& $request->_dbi->_cache->_id_cache;
+        if (isset($cache[$pagename])) {
+            if ($cache[$pagename] or !$create_if_missing) {
+                return $cache[$pagename];
+            }
+        }
+        
+        $dbh = &$this->_dbh;
+        $page_tbl = $this->_table_names['page_tbl'];
+        $query = sprintf("SELECT id FROM $page_tbl WHERE pagename=%s",
+                         $dbh->qstr($pagename));
+        if (! $create_if_missing ) {
+            $row = $dbh->GetRow($query);
+            return $row ? $row[0] : false;
+        }
+        $row = $dbh->GetRow($query);
+        if (! $row ) {
+	    // have auto-incrementing, atomic version
+	    $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
+					. " (id,pagename)"
+					. " VALUES(NULL,%s)",
+					$dbh->qstr($pagename)));
+	    $id = $dbh->_insertid();
+        } else {
+            $id = $row[0];
+        }
+        assert($id);
+        return $id;
+    }
+
+    /**
+     * Create a new revision of a page.
+     */
+    function set_versiondata($pagename, $version, $data) {
+        $dbh = &$this->_dbh;
+        $version_tbl = $this->_table_names['version_tbl'];
+        
+        $minor_edit = (int) !empty($data['is_minor_edit']);
+        unset($data['is_minor_edit']);
+        
+        $mtime = (int)$data['mtime'];
+        unset($data['mtime']);
+        assert(!empty($mtime));
+
+        @$content = (string) $data['%content'];
+        unset($data['%content']);
+        unset($data['%pagedata']);
+        
+        $this->lock(array('page','recent','version','nonempty'));
+        $dbh->BeginTrans( );
+        $dbh->CommitLock($version_tbl);
+        $id = $this->_get_pageid($pagename, true);
+        $backend_type = $this->backendType();
+        // optimize: mysql can do this with one REPLACE INTO.
+	$rs = $dbh->Execute(sprintf("REPLACE INTO $version_tbl"
+				    . " (id,version,mtime,minor_edit,content,versiondata)"
+				    . " VALUES(%d,%d,%d,%d,%s,%s)",
+				    $id, $version, $mtime, $minor_edit,
+				    $dbh->qstr($content),
+				    $dbh->qstr($this->_serialize($data))));
+        $this->_update_recent_table($id);
+        $this->_update_nonempty_table($id);
+        if ($rs) $dbh->CommitTrans( );
+        else $dbh->RollbackTrans( );
+        $this->unlock(array('page','recent','version','nonempty'));
+    }
+    
 };
 
 // (c-file-style: "gnu")

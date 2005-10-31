@@ -1,8 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.81 2005-10-10 19:42:14 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.82 2005-10-31 16:48:22 rurban Exp $');
 
 /*
- Copyright 2002,2004 $ThePhpWikiProgrammingTeam
+ Copyright 2002,2004,2005 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -26,7 +26,7 @@ rcs_id('$Id: ADODB.php,v 1.81 2005-10-10 19:42:14 rurban Exp $');
  * Based on PearDB.php. 
  * @author: Lawrence Akka, Reini Urban
  *
- * Now (phpwiki-1.3.10) with adodb-4.22, by Reini Urban:
+ * Now (since phpwiki-1.3.10) with adodb-4.22, by Reini Urban:
  * 1) Extended to use all available database backends, not only mysql.
  * 2) It uses the ultra-fast binary adodb extension if loaded.
  * 3) We use FETCH_NUM instead of FETCH_ASSOC (faster and more generic)
@@ -245,7 +245,7 @@ extends WikiDB_backend
         if ($dbh->Execute("UPDATE $page_tbl"
                           . " SET hits=?, pagedata=?"
                           . " WHERE pagename=?",
-                          array($hits, $this->_serialize($data),$pagename))) {
+                          array($hits, $this->_serialize($data), $pagename))) {
             $dbh->CommitTrans( );
             return true;
         } else {
@@ -293,31 +293,21 @@ extends WikiDB_backend
         }
         $row = $dbh->GetRow($query);
         if (! $row ) {
-            //mysql, mysqli or mysqlt
-            if (substr($dbh->databaseType,0,5) == 'mysql') {
-                // have auto-incrementing, atomic version
-                $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
-                                            . " (id,pagename)"
-                                            . " VALUES(NULL,%s)",
-                                            $dbh->qstr($pagename)));
-                $id = $dbh->_insertid();
-            } else {
-                //$id = $dbh->GenID($page_tbl . 'seq');
-                // Better generic version than with adodob::genID
-                //TODO: Does the DBM has subselects? Then we can do it with select max(id)+1
-                $this->lock(array('page'));
-                $dbh->BeginTrans( );
-                $dbh->CommitLock($page_tbl);
-                $row = $dbh->GetRow("SELECT MAX(id) FROM $page_tbl");
-                $id = $row[0] + 1;
-                $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
-                                            . " (id,pagename,hits)"
-                                            . " VALUES (%d,%s,0)",
-                                            $id, $dbh->qstr($pagename)));
-                if ($rs) $dbh->CommitTrans( );
-                else $dbh->RollbackTrans( );
-                $this->unlock(array('page'));
-            }
+	    //$id = $dbh->GenID($page_tbl . 'seq');
+	    // Better generic version than with adodob::genID
+	    //TODO: Does the DBM has subselects? Then we can do it with select max(id)+1
+	    $this->lock(array('page'));
+	    $dbh->BeginTrans( );
+	    $dbh->CommitLock($page_tbl);
+	    $row = $dbh->GetRow("SELECT MAX(id) FROM $page_tbl");
+	    $id = $row[0] + 1;
+	    $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
+					. " (id,pagename,hits)"
+					. " VALUES (%d,%s,0)",
+					$id, $dbh->qstr($pagename)));
+	    if ($rs) $dbh->CommitTrans( );
+	    else $dbh->RollbackTrans( );
+	    $this->unlock(array('page'));
         } else {
             $id = $row[0];
         }
@@ -450,24 +440,14 @@ extends WikiDB_backend
         $dbh->CommitLock($version_tbl);
         $id = $this->_get_pageid($pagename, true);
         $backend_type = $this->backendType();
-        // optimize: mysql can do this with one REPLACE INTO.
-        if (substr($backend_type,0,5) == 'mysql') {
-            $rs = $dbh->Execute(sprintf("REPLACE INTO $version_tbl"
-                                  . " (id,version,mtime,minor_edit,content,versiondata)"
-                                  . " VALUES(%d,%d,%d,%d,%s,%s)",
-                                  $id, $version, $mtime, $minor_edit,
-                                  $dbh->qstr($content),
-                                  $dbh->qstr($this->_serialize($data))));
-        } else {
-            $dbh->Execute(sprintf("DELETE FROM $version_tbl"
-                                  . " WHERE id=%d AND version=%d",
-                                  $id, $version));
-            $rs = $dbh->Execute("INSERT INTO $version_tbl"
-                                . " (id,version,mtime,minor_edit,content,versiondata)"
-                                . " VALUES(?,?,?,?,?,?)",
-                                  array($id, $version, $mtime, $minor_edit,
+	$dbh->Execute(sprintf("DELETE FROM $version_tbl"
+			      . " WHERE id=%d AND version=%d",
+			      $id, $version));
+	$rs = $dbh->Execute("INSERT INTO $version_tbl"
+			    . " (id,version,mtime,minor_edit,content,versiondata)"
+			    . " VALUES(?,?,?,?,?,?)",
+			    array($id, $version, $mtime, $minor_edit,
                                   $content, $this->_serialize($data)));
-        }
         $this->_update_recent_table($id);
         $this->_update_nonempty_table($id);
         if ($rs) $dbh->CommitTrans( );
@@ -794,7 +774,7 @@ extends WikiDB_backend
     }
     /*
     function _sql_match_clause($word) {
-        //not sure if we need this.  ADODB may do it for us
+        //not sure if we need this.  ADODB may do it for usand function_exists('pg_escape_bytea')
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);  
 
         // (we need it for at least % and _ --- they're the wildcard characters
@@ -1456,6 +1436,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.81  2005/10/10 19:42:14  rurban
+// fix wanted_pages SQL syntax
+//
 // Revision 1.80  2005/09/28 19:26:05  rurban
 // working on improved postgresql support: better quoting, bytea support
 //
