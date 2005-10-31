@@ -1,13 +1,13 @@
-# $Id: Makefile,v 1.10 2005-09-18 12:41:24 rurban Exp $
+# $Id: Makefile,v 1.11 2005-10-31 17:03:57 rurban Exp $
 # user-definable settings:
 # for mysqladmin
 DBADMIN_USER=root
 DBADMIN_PASS=secret
 
 # etags (GNU Emacs 21.5.x)
-#ETAGS_STDIN = /usr/bin/etags -L -
+ETAGS_STDIN = /usr/bin/etags -L -
 # etags (GNU Emacs 21.4.15)
-ETAGS_STDIN = /usr/bin/etags -
+#ETAGS_STDIN = /usr/bin/etags -
 
 DB_SQLITE_DBFILE = /tmp/phpwiki-sqlite.db
 
