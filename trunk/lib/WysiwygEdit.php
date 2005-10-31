@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WysiwygEdit.php,v 1.2 2005-10-31 16:46:13 rurban Exp $');
+rcs_id('$Id: WysiwygEdit.php,v 1.3 2005-10-31 17:20:40 rurban Exp $');
 /**
  * Baseclass for WysiwygEdit/tinymce, WysiwygEdit/htmlarea3, WysiwygEdit/htmlarea2, ...
  *
@@ -44,11 +44,13 @@ class WysiwygEdit {
      *  *text* => '<b>text<b>'
      */
     function ConvertBefore($text) {
-        return asXML(TransformInline($text, 2.0, false));
+        require_once("lib/BlockParser.php");
+    	$xml = TransformText($text, 2.0, $GLOBALS['request']->getArg('pagename'));
+        return $xml->AsXML();
     }
     
     /**
-     * Handler to convert the HTML formatting back to wiki formatting.
+     * FIXME: Handler to convert the HTML formatting back to wiki formatting.
      * Derived from InlineParser, but returning wiki text instead of HtmlElement objects.
      * '<b>text<b>' => '<SPAN style="FONT-WEIGHT: bold">text</SPAN>' => '*text*'
      *
@@ -132,6 +134,9 @@ class HtmlTransformer extends InlineTransformer
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.2  2005/10/31 16:46:13  rurban
+ move old default transformers to baseclass
+
  Revision 1.1  2005/10/30 14:22:15  rurban
  refactor WysiwygEdit
 

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.103 2005-10-31 17:09:13 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.104 2005-10-31 17:20:40 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -28,6 +28,7 @@ class PageEditor
 
         if (ENABLE_WYSIWYG) {
             $backend = WYSIWYG_BACKEND;
+            // TODO: error message
             require_once("lib/WysiwygEdit/$backend.php");
             $class = "WysiwygEdit_$backend";
             $this->WysiwygEdit = new $class();
@@ -339,8 +340,8 @@ class PageEditor
      * (plugin WikiAccessRestrictions) and some static blacklist.
      * DONE: 
      *   Always: More then 20 new external links
-     *   ENABLE_SPAMASSASSIN: content patterns by babycart (only php >= 4.3 for now)
-     *   ENABLE_SPAMBLOCKLIST: IP blacklist, domain blacklist, url patterns
+     *   ENABLE_SPAMASSASSIN:  content patterns by babycart (only php >= 4.3 for now)
+     *   ENABLE_SPAMBLOCKLIST: content domain blacklist
      */
     function isSpam () {
         $current = &$this->current;
@@ -771,6 +772,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.103  2005/10/31 17:09:13  rurban
+ use better constant WYSIWYG_DEFAULT_PAGETYPE_HTML
+
  Revision 1.102  2005/10/31 16:47:14  rurban
  enable wysiwyg html converters
 
