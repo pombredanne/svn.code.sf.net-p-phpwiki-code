@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.101 2005-10-30 16:12:28 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.102 2005-10-31 16:47:14 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -27,12 +27,7 @@ class PageEditor
         $this->tokens = array();
 
         if (ENABLE_WYSIWYG) {
-            require_once("lib/WysiwygEdit.php");
-            if (USE_TINYMCE)       $backend = "tinymce";
-            elseif (USE_HTMLAREA3) $backend = "htmlarea3";
-            elseif (USE_HTMLAREA2) $backend = "htmlarea2";
-            else trigger_error("undefined WysiwygEdit backend", E_USER_ERROR);
-
+            $backend = WYSIWYG_BACKEND;
             require_once("lib/WysiwygEdit/$backend.php");
             $class = "WysiwygEdit_$backend";
             $this->WysiwygEdit = new $class();
@@ -182,7 +177,7 @@ class PageEditor
         // not for dumphtml or viewsource
         if (ENABLE_WYSIWYG and $template == 'editpage') {
             $WikiTheme->addMoreHeaders($this->WysiwygEdit->Head());
-            //$tokens['PAGE_SOURCE'] = $WysiwygEdit->ConvertBefore($this->_content);
+            //$tokens['PAGE_SOURCE'] = $this->WysiwygEdit->ConvertBefore($this->_content);
         }
         $template = Template($template, $this->tokens);
         GeneratePage($template, $title, $rev);
@@ -439,8 +434,13 @@ class PageEditor
     // possibly convert HTMLAREA content back to Wiki markup
     function getContent () {
         if (ENABLE_WYSIWYG) {
-            $xml_output = $this->WysiwygEdit->ConvertAfter($this->_content);
-            //$this->_content = join("", $xml_output->_content);
+            // don't store everything as html
+            if (!USE_DEFAULT_PAGETYPE_HTML) {
+                $xml_output = $this->WysiwygEdit->ConvertAfter($this->_content);
+                $this->_content = join("", $xml_output->_content);
+            } else {
+                $this->meta['pagetype'] = 'html';
+            }
             return $this->_content;
         } else {
             return $this->_content;
@@ -495,9 +495,9 @@ class PageEditor
         // WYSIWYG will need two pagetypes: raw wikitest and converted html
         if (ENABLE_WYSIWYG) {
             $this->_wikicontent = $this->_content;
-            $this->_content = $this->getPreview();
-            // $html = $this->getPreview();
-            // $this->_content = $html->asXML();
+            $this->_content = $this->WysiwygEdit->ConvertBefore($this->_content);
+            //                $this->getPreview();
+            //$this->_htmlcontent = $this->_content->asXML();
         }
 
         $textarea = HTML::textarea(array('class'=> 'wikiedit',
@@ -507,7 +507,7 @@ class PageEditor
                                          'cols' => $request->getPref('editWidth'),
                                          'readonly' => (bool) $readonly),
                                    $this->_content);
-        /** <textarea wrap="virtual"> is not valid xhtml but Netscape 4 requires it
+        /** <textarea wrap="virtual"> is not valid XHTML but Netscape 4 requires it
          * to wrap long lines.
          */
         if (isBrowserNS4())
@@ -771,6 +771,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.101  2005/10/30 16:12:28  rurban
+ simplify viewsource tokens
+
  Revision 1.100  2005/10/30 14:20:42  rurban
  move Captcha specific vars and methods into a Captcha object
  randomize Captcha chars positions and angles (smoothly)
