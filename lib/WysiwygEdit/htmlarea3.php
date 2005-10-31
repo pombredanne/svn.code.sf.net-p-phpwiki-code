@@ -1,4 +1,5 @@
 <?php
+rcs_id('$Id: htmlarea3.php,v 1.2 2005-10-31 16:41:46 rurban Exp $');
 /**
  * requires installation into themes/default/htmlarea3/
  * MSIE => 5.5,  Mozilla >= 1.3
@@ -106,59 +107,11 @@ function highlight() {
     }
 }
 
-// re-use these classes for the regexp's.
-// just output strings instead of XmlObjects
-class Markup_html_br extends Markup_linebreak {
-    function markup ($match) {
-        return $match;
-    }
-}
-
-class Markup_html_simple_tag extends Markup_html_emphasis {
-    function markup ($match, $body) {
-        $tag = substr($match, 1, -1);
-        switch ($tag) {
-        case 'b':
-        case 'strong':
-            return "*".$body."*";
-        case 'big': return "<big>".$body."</big>";
-        case 'i':
-        case 'em':
-            return "_".$body."_";
-        }
-    }
-}
-
-//'<SPAN style="FONT-WEIGHT: bold">text</SPAN>' => '*text*'
-class Markup_html_bold extends BalancedMarkup
-{
-    var $_start_regexp = "<(?:span|SPAN) style=\"FONT-WEIGHT: bold\">";
-
-    function getEndRegexp ($match) {
-        return "<\\/" . substr($match, 1);
-    }
-    function markup ($match, $body) {
-        //Todo: convert style formatting to simplier nested <b><i> tags
-        return "*".$body."*";
-    }
-}
-
-class HtmlTransformer extends InlineTransformer
-{
-    function HtmlTransformer () {
-        $this->InlineTransformer(array('escape',
-                                       'html_br','html_bold','html_simple_tag',
-                                       /*
-                                       'html_a','html_span','html_div',
-                                       'html_table','html_hr','html_pre',
-                                       'html_blockquote',
-                                       'html_indent','html_ol','html_li','html_ul','html_img',
-                                       */));
-    }
-}
-
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.1  2005/10/30 14:22:15  rurban
+ refactor WysiwygEdit
+
 
 */
 
