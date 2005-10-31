@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.16 2005-10-29 14:17:51 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.17 2005-10-31 16:49:31 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -638,7 +638,7 @@ function mailPasswordToUser($params)
 }
 
 /** 
- * struct wiki.titleSearch(String substring [, Integer option = 0])
+ * array wiki.titleSearch(String substring [, Integer option = 0])
  * returns an array of matching pagenames.
  * TODO: standardize options
  *
@@ -904,6 +904,9 @@ class XmlRpcServer extends xmlrpc_server
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.16  2005/10/29 14:17:51  rurban
+ fix doc
+
  Revision 1.15  2005/10/29 08:57:12  rurban
  fix for !register_long_arrays
  new: array wiki.listPlugins()
