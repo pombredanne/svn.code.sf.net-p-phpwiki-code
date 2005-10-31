@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.69 2005-09-14 05:57:19 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.70 2005-10-31 16:45:23 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -726,20 +726,23 @@ class InlineTransformer
     var $_markup = array();
     
     function InlineTransformer ($markup_types = false) {
-        if (!$markup_types)
+        if (!$markup_types) {
+            $non_default = false;
             $markup_types = array('escape', 'bracketlink', 'url',
                                   'interwiki', 'wikiword', 'linebreak',
                                   'old_emphasis', 'nestled_emphasis',
                                   'html_emphasis', 'html_abbr', 'plugin',
                                   'isonumchars', 'isohexchars', /*'html_entities',*/
                                   );
+        } else 
+            $non_default = true;
         foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";
             $this->_addMarkup(new $class);
         }
-        if (ENABLE_MARKUP_COLOR)
+        if (ENABLE_MARKUP_COLOR and !$non_default)
             $this->_addMarkup(new Markup_color);
-        if (defined("ENABLE_MARKUP_TEMPLATE") and ENABLE_MARKUP_TEMPLATE)
+        if (ENABLE_MARKUP_TEMPLATE and !$non_default)
             $this->_addMarkup(new Markup_template_plugin);
     }
 
@@ -870,6 +873,9 @@ function TransformLinks($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2005/09/14 05:57:19  rurban
+// make ENABLE_MARKUP_TEMPLATE optional
+//
 // Revision 1.68  2005/09/10 21:24:32  rurban
 // optionally support {{Template|vars}} syntax
 //
