@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.46 2005-10-30 16:38:13 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.47 2005-10-31 17:20:40 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -617,6 +617,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2005/10/30 16:38:13  rurban
+// minor fixes
+//
 // Revision 1.45  2005/10/29 14:28:08  uckelman
 // existence of isa should be checked, not built-in is_a()
 //
