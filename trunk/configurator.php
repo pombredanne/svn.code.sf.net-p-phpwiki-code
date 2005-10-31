@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.41 2005-10-29 08:21:58 rurban Exp $
+<?php // $Id: configurator.php,v 1.42 2005-10-31 17:02:57 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -154,7 +154,7 @@ echo '<','?xml version="1.0" encoding="iso-8859-1"?',">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.41 2005-10-29 08:21:58 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.42 2005-10-31 17:02:57 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -371,17 +371,33 @@ new boolean_define_commented_optional
  array('true'  => "Enabled",
        'false' => "Disabled"));
 
+$properties["ENABLE_WYSIWYG"] =
+new boolean_define_commented_optional
+('ENABLE_WYSIWYG', 
+ array('false' => "Disabled",
+       'true'  => "Enabled"));
+
+$properties["WYSIWYG_BACKEND"] =
+new _define_selection(
+'WYSIWYG_BACKEND', 
+array('tinymce'   => 'tinymce',
+      'FCKeditor' => 'FCKeditor', 
+      'spaw'      => 'spaw', 
+      'htmlarea3' => 'htmlarea3', 
+      'htmlarea2' => 'htmlarea2',
+));
+
+$properties["WYSIWYG_DEFAULT_PAGETYPE_HTML"] =
+new boolean_define_commented_optional
+('WYSIWYG_DEFAULT_PAGETYPE_HTML', 
+ array('false' => "Disabled",
+       'true'  => "Enabled"));
+
 $properties["ENABLE_XHTML_XML"] =
 new boolean_define_commented_optional
 ('ENABLE_XHTML_XML', 
  array('false' => "Disabled",
        'true'  => "Enabled"));
-
-$properties["USECACHE"] =
-new boolean_define_commented_optional
-('USECACHE', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
 
 $properties["ENABLE_SPAMASSASSIN"] =
 new boolean_define_commented_optional
@@ -756,6 +772,12 @@ Of course you can fix your database manually. See lib/upgrade.php for known issu
 
 $properties["DBADMIN_PASSWD"] =
 new _define_password_optional('DBADMIN_PASSWD', DBADMIN_PASSWD);
+
+$properties["USECACHE"] =
+new boolean_define_commented_optional
+('USECACHE', 
+ array('true'  => "Enabled",
+       'false' => "Disabled"));
 
 ///////////////////
 
