@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.102 2005-10-31 16:47:14 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.103 2005-10-31 17:09:13 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -435,7 +435,7 @@ class PageEditor
     function getContent () {
         if (ENABLE_WYSIWYG) {
             // don't store everything as html
-            if (!USE_DEFAULT_PAGETYPE_HTML) {
+            if (!WYSIWYG_DEFAULT_PAGETYPE_HTML) {
                 $xml_output = $this->WysiwygEdit->ConvertAfter($this->_content);
                 $this->_content = join("", $xml_output->_content);
             } else {
@@ -771,6 +771,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.102  2005/10/31 16:47:14  rurban
+ enable wysiwyg html converters
+
  Revision 1.101  2005/10/30 16:12:28  rurban
  simplify viewsource tokens
 
