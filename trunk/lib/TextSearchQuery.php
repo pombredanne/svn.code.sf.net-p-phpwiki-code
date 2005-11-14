@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.21 2005-09-14 05:59:48 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.22 2005-11-14 22:30:17 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -185,7 +185,7 @@ class TextSearchQuery {
                 $subclauses[] = "(" . $this->_sql_clause($leaf) . ")";
             return join(" $node->op ", $subclauses);
         default:
-            assert($node->op == VOID);
+            assert($node->op == 'VOID');
             return '1=1';
         }
     }
@@ -212,6 +212,38 @@ class TextSearchQuery {
             return '0=1';
         case 'ALL':
             return '1=1';
+        default:
+            return $this->_sql_clause_cb->call($node);
+        }
+    }
+
+    /*
+     postgresql tsearch2 uses no WHERE operators, just & | and ! in the searchstring
+     */
+    function makeTsearch2SqlClauseObj(&$sql_search_cb) {
+        $this->_sql_clause_cb = $sql_search_cb;
+        return $this->_Tsearch2Sql_clause_obj($this->_tree);
+    }
+
+    function _Tsearch2Sql_clause_obj($node) {
+        // TODO: "such a phrase"
+        switch ($node->op) {
+        case 'NOT':
+            return "!" . $node->leaves[0];
+        case 'AND':
+            $subclauses = array();
+            foreach ($node->leaves as $leaf)
+                $subclauses[] = $this->_Tsearch2Sql_clause_obj($leaf);
+            return join("&", $subclauses);
+        case 'OR':
+            $subclauses = array();
+            foreach ($node->leaves as $leaf)
+                $subclauses[] = $this->_Tsearch2Sql_clause_obj($leaf);
+            return join("|", $subclauses);
+        case 'VOID':
+            return '';
+        case 'ALL':
+            return '1';
         default:
             return $this->_sql_clause_cb->call($node);
         }
@@ -319,7 +351,7 @@ extends TextSearchQuery_node
     function regexp() {
         return '(?=.*' . preg_quote($this->word, '/') . ')';
     }
-    function highlight_words($negated = false) {
+    function highlight_words ($negated = false) {
         return $negated ? array() : array($this->word);
     }
     function _sql_quote() {
@@ -339,28 +371,28 @@ class TextSearchQuery_node_starts_with
 extends TextSearchQuery_node_word {
     var $op = "STARTS_WITH";
     function regexp() { return '(?=.*\b' . preg_quote($this->word, '/') . ')'; }
-    function sql()    { return $this->_sql_quote($this->word).'%'; }
+    function sql ()   { return $this->_sql_quote($this->word).'%'; }
 }
 
 class TextSearchQuery_node_ends_with
 extends TextSearchQuery_node_word {
     var $op = "ENDS_WITH";
     function regexp() { return '(?=.*' . preg_quote($this->word, '/') . '\b)'; }
-    function sql()    { return '%'.$this->_sql_quote($this->word); }
+    function sql ()   { return '%'.$this->_sql_quote($this->word); }
 }
 
 class TextSearchQuery_node_exact
 extends TextSearchQuery_node_word {
     var $op = "EXACT";
     function regexp() { return '(?=\b' . preg_quote($this->word, '/') . '\b)'; }
-    function sql()    { return $this->_sql_squote($this->word); }
+    function sql ()   { return $this->_sql_squote($this->word); }
 }
 
 class TextSearchQuery_node_regex // posix regex. FIXME!
 extends TextSearchQuery_node_word {
     var $op = "REGEX"; // using REGEXP or ~ extension
     function regexp() { return '(?=.*\b' . $this->word . '\b)'; }
-    function sql()    { return $this->_sql_quote($this->word); }
+    function sql ()   { return $this->_sql_quote($this->word); }
 }
 
 class TextSearchQuery_node_regex_glob
@@ -407,7 +439,7 @@ extends TextSearchQuery_node
         return '(?!' . $leaf->regexp() . ')';
     }
 
-    function highlight_words($negated = false) {
+    function highlight_words ($negated = false) {
         return $this->leaves[0]->highlight_words(!$negated);
     }
 }
