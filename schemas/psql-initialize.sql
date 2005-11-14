@@ -1,7 +1,12 @@
--- $Id: psql-initialize.sql,v 1.7 2005-10-12 06:08:37 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.8 2005-11-14 22:20:21 rurban Exp $
 
 \set QUIET
 
+-- init the database with: 
+-- $ createdb phpwiki
+-- $ createuser -S -R -d phpwiki # (see httpd_user below)
+-- $ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
+-- $ psql phpwiki < psql-initialize.sql
 
 --================================================================
 -- Prefix for table names.
@@ -35,8 +40,7 @@
 \echo '       prefix = ' :qprefix
 \echo '   httpd_user = ' :qhttp_user
 \echo
-\echo 'Expect some \'ERROR: relation \'*\'  already exists\' errors '
-\echo 'preventing from overwriting existing tables,sequences,indices.'
+\echo 'Expect some \'NOTICE:  CREATE ... will create implicit sequence ...\' messages '
 
 \set page_tbl 		:prefix 'page'
 \set page_id_seq 	:prefix 'page_id_seq'
@@ -47,15 +51,16 @@
 \set vers_id_idx 	:prefix 'vers_id_idx'
 \set vers_mtime_idx 	:prefix 'vers_mtime_idx'
 
-\set recent_tbl		:prefix 'recent'
+\set recent_tbl  	:prefix 'recent'
 \set recent_id_idx 	:prefix 'recent_id_idx'
 
-\set nonempty_tbl	:prefix 'nonempty'
+\set nonempty_tbl 	:prefix 'nonempty'
 \set nonmt_id_idx 	:prefix 'nonmt_id_idx'
 
-\set link_tbl 		:prefix 'link'
+\set link_tbl  		:prefix 'link'
 \set link_from_idx 	:prefix 'link_from_idx'
 \set link_to_idx 	:prefix 'link_to_idx'
+\set relation_idx 	:prefix 'relation_idx'
 
 \set session_tbl 	:prefix 'session'
 \set sess_id_idx 	:prefix 'sess_id_idx'
@@ -93,8 +98,9 @@ CREATE TABLE :version_tbl (
 	id		INT4 REFERENCES :page_tbl ON DELETE CASCADE,
         version		INT4 NOT NULL,
 	mtime		INT4 NOT NULL,
---FIXME: should use boolean, but that returns 't' or 'f'. not 0 or 1. 
+-- FIXME: should use boolean, but that returns 't' or 'f'. not 0 or 1. 
 	minor_edit	INT2 DEFAULT 0,
+-- use bytea instead?
         content		TEXT NOT NULL DEFAULT '',
         versiondata	TEXT NOT NULL DEFAULT ''
 );
@@ -119,11 +125,13 @@ CREATE UNIQUE INDEX :nonmt_id_idx ON :nonempty_tbl (id);
 
 \echo Creating :link_tbl
 CREATE TABLE :link_tbl (
-        linkfrom	INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
-        linkto		INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE
+        linkfrom 	INT4 NOT NULL REFERENCES :page_tbl,
+        linkto 	 	INT4 NOT NULL REFERENCES :page_tbl,
+        relation 	INT4 DEFAULT 0
 );
 CREATE INDEX :link_from_idx ON :link_tbl (linkfrom);
 CREATE INDEX :link_to_idx   ON :link_tbl (linkto);
+CREATE INDEX :relation_idx  ON :link_tbl (relation);
 
 -- if you plan to use the wikilens theme
 \echo Creating :rating_tbl
@@ -200,6 +208,27 @@ CREATE INDEX :accesslog_host_idx ON :accesslog_tbl (remote_host);
 
 --================================================================
 
+-- Use the tsearch2 fulltextsearch extension: (recommended) 7.4, 8.0, 8.1
+-- at first init it for the database:
+-- $ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
+
+-- example of ISpell dictionary
+--   UPDATE pg_ts_dict SET dict_initoption='DictFile="/usr/local/share/ispell/russian.dict" ,AffFile ="/usr/local/share/ispell/russian.aff", StopFile="/usr/local/share/ispell/russian.stop"' WHERE dict_name='ispell_template';
+-- example of synonym dict
+--   UPDATE pg_ts_dict SET dict_initoption='/usr/local/share/ispell/english.syn' WHERE dict_id=5; 
+
+\echo Initializing tsearch2 indices
+GRANT SELECT ON pg_ts_dict, pg_ts_parser, pg_ts_cfg, pg_ts_cfgmap TO :httpd_user;
+ALTER TABLE :version_tbl ADD COLUMN idxFTI tsvector;
+UPDATE :version_tbl SET idxFTI=to_tsvector('default', content);
+VACUUM FULL ANALYZE;
+CREATE INDEX idxFTI_idx ON :version_tbl USING gist(idxFTI);
+VACUUM FULL ANALYZE;
+CREATE TRIGGER tsvectorupdate BEFORE UPDATE OR INSERT ON :version_tbl
+       FOR EACH ROW EXECUTE PROCEDURE tsearch2(idxFTI, content);
+
+--================================================================
+
 \echo You might want to ignore the following errors or run 
 \echo /usr/sbin/createuser -S -R -d  :httpd_user
 
@@ -217,3 +246,71 @@ GRANT SELECT,INSERT,UPDATE,DELETE ON :pref_tbl		TO :httpd_user;
 GRANT SELECT ON :member_tbl	TO :httpd_user;
 GRANT SELECT,INSERT,UPDATE,DELETE ON :rating_tbl	TO :httpd_user;
 GRANT SELECT,INSERT,UPDATE,DELETE ON :accesslog_tbl	TO :httpd_user;
+
+--================================================================
+-- some stored procedures to put unneccesary syntax into the server
+
+\echo Initializing stored procedures
+
+\set maxversion 'MAX(version)'
+\set maxmajor   'MAX(CASE WHEN minor_edit=0  THEN version END)'
+\set maxminor   'MAX(CASE WHEN minor_edit<>0 THEN version END)'
+
+CREATE OR REPLACE FUNCTION delete_versiondata (id INT4, version INT4) 
+	RETURNS void AS '
+BEGIN;
+DELETE FROM version WHERE id=$1 AND version=$2;
+DELETE FROM recent WHERE id=$1;
+INSERT INTO recent (id, latestversion, latestmajor, latestminor)
+  SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
+	                   MAX(CASE WHEN minor_edit<>0 THEN version END)
+    FROM version WHERE id=$2 GROUP BY id;
+DELETE FROM nonempty WHERE id=$1;
+INSERT INTO nonempty (id)
+  SELECT recent.id
+    FROM recent, version
+    WHERE recent.id=version.id
+          AND version=latestversion
+          AND content<>''''
+          AND recent.id=$1;
+COMMIT;
+' LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION 
+        set_versiondata (id INT4, version INT4, mtime INT4, minor_edit INT2,
+                         content TEXT, versiondata TEXT)
+	RETURNS void AS 
+'
+BEGIN;
+DELETE FROM version WHERE id=$1 AND version=$2;
+INSERT INTO version (id,version,mtime,minor_edit,content,versiondata)
+       VALUES($1, $2, $3, $4, $5, $6);
+DELETE FROM recent WHERE id=$1;
+INSERT INTO recent (id, latestversion, latestmajor, latestminor)
+  SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
+	                   MAX(CASE WHEN minor_edit<>0 THEN version END)
+    FROM version WHERE id=$2 GROUP BY id;
+DELETE FROM nonempty WHERE id=$1;
+INSERT INTO nonempty (id)
+  SELECT recent.id
+    FROM recent, version
+    WHERE recent.id=version.id
+          AND version=latestversion
+          AND content<>''''
+          AND recent.id=$1;
+COMMIT; 
+' LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION prepare_rename_page (oldid INT4, newid INT4) 
+        RETURNS void AS
+'
+BEGIN;
+DELETE FROM page     WHERE id=$2;
+DELETE FROM version  WHERE id=$2;
+DELETE FROM recent   WHERE id=$2;
+DELETE FROM nonempty WHERE id=$2;
+-- We have to fix all referring tables to the old id
+UPDATE link SET linkfrom=$1 WHERE linkfrom=$2;
+UPDATE link SET linkto=$1   WHERE linkto=$2;
+COMMIT;
+' LANGUAGE sql;
