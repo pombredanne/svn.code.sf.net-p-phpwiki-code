@@ -1,4 +1,4 @@
--- $Id: psql-destroy.sql,v 1.6 2005-10-29 09:20:15 rurban Exp $
+-- $Id: psql-destroy.sql,v 1.7 2005-11-14 22:20:21 rurban Exp $
 
 \set QUIET
 
@@ -55,12 +55,6 @@ DROP TABLE :rating_tbl;
 \echo Dropping :page_tbl
 DROP TABLE :page_tbl;
 \echo Dropping :page_id_seq only needed for postgresql < 7.2
-DROP SEQUENCE :page_id_seq;
--- implicit 
-DROP INDEX :page_id_idx;
-DROP INDEX :page_name_idx;
-DROP INDEX :page_pkey;
-DROP INDEX :page_pagename_key;
 
 \echo Dropping :member_tbl
 DROP TABLE :member_tbl;
@@ -74,24 +68,6 @@ DROP TABLE :session_tbl;
 \echo Dropping :accesslog_tbl
 DROP TABLE :accesslog_tbl;
 
-DROP INDEX :page_id_idx;
-DROP INDEX :page_name_idx;
-DROP INDEX :vers_id_idx;
-DROP INDEX :vers_mtime_idx;
-DROP INDEX :recent_id_idx;
-
-
-DROP INDEX :page_id_idx;
-DROP INDEX :page_name_idx;
-DROP INDEX :vers_id_idx;
-DROP INDEX :vers_mtime_idx;
-DROP INDEX :recent_id_idx;
-
-
-DROP INDEX :page_id_idx;
-DROP INDEX :page_name_idx;
-DROP INDEX :vers_id_idx;
-DROP INDEX :vers_mtime_idx;
-DROP INDEX :recent_id_idx;
-
-
+DROP FUNCTION delete_versiondata (INT4, INT4);
+DROP FUNCTION set_versiondata (INT4, INT4, INT4, INT2, TEXT, TEXT);
+DROP FUNCTION prepare_rename_page (INT4, INT4);
