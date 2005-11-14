@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.93 2005-10-10 19:42:15 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.94 2005-11-14 22:24:33 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -417,6 +417,7 @@ extends WikiDB_backend
     /**
      * Delete an old revision of a page.
      */
+
     function delete_versiondata($pagename, $version) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -510,12 +511,20 @@ extends WikiDB_backend
 
 	if ($links) {
             foreach($links as $link) {
-                if (isset($linkseen[$link]))
+                $linkto = $link['linkto'];
+                if ($link['relation'])
+                    $relation = $this->_get_pageid($link['relation'], true);
+                else 
+                    $relation = 0;
+                // avoid duplicates
+                if (isset($linkseen[$linkto]) and !$relation)
                     continue;
-                $linkseen[$link] = true;
-                $linkid = $this->_get_pageid($link, true);
-                $dbh->query("INSERT INTO $link_tbl (linkfrom, linkto)"
-                            . " VALUES ($pageid, $linkid)");
+                if (!$relation)
+                    $linkseen[$linkto] = true;
+                $linkid = $this->_get_pageid($linkto, true);
+                assert($linkid);
+                $dbh->query("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
+                            . " VALUES ($pageid, $linkid, $relation)");
             }
 	}
         $this->unlock();
@@ -525,7 +534,9 @@ extends WikiDB_backend
      * Find pages which link to or are linked from a page.
      */
     function get_links($pagename, $reversed=true, $include_empty=false,
-                       $sortby=false, $limit=false, $exclude='') {
+                       $sortby=false, $limit=false, $exclude='', 
+                       $want_relations = false)
+    {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
@@ -541,14 +552,14 @@ extends WikiDB_backend
             $exclude='';
 
         $qpagename = $dbh->escapeSimple($pagename);
-        $sql = "SELECT $want.id as id, $want.pagename as pagename, $want.hits as hits"
-            // Looks like 'AS' in column alias is a MySQL thing, Oracle does not like it
-            // and the PostgresSQL manual does not have it either
-            // Since it is optional in mySQL, just remove it...
-            . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee"
-            . (!$include_empty ? ", $nonempty_tbl" : '')
+        $sql = "SELECT $want.id AS id, $want.pagename AS pagename, "
+            . ($want_relations ? " related.pagename as linkrelation" : " $want.hits AS hits")
+            . " FROM "
+            . (!$include_empty ? "$nonempty_tbl, " : '')
+            . " $page_tbl linkee, $page_tbl linker, $link_tbl "
+            . ($want_relations ? " JOIN $page_tbl related ON ($link_tbl.relation=related.id)" : '')
             . " WHERE linkfrom=linker.id AND linkto=linkee.id"
-            . "  AND $have.pagename='$qpagename'"
+            . " AND $have.pagename='$qpagename'"
             . (!$include_empty ? " AND $nonempty_tbl.id=$want.id" : "")
             //. " GROUP BY $want.id"
             . $exclude
@@ -646,11 +657,14 @@ extends WikiDB_backend
     /**
      * Title search.
      */
-    function text_search($search, $fulltext=false, $sortby=false, $limit=false, $exclude=false) {
+    function text_search($search, $fulltext=false, $sortby=false, $limit=false, 
+                         $exclude=false) 
+    {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
         if ($orderby) $orderby = ' ORDER BY ' . $orderby;
+        //else " ORDER BY rank($field, to_tsquery('$searchon')) DESC";
 
         $searchclass = get_class($this)."_search";
         // no need to define it everywhere and then fallback. memory!
@@ -687,7 +701,9 @@ extends WikiDB_backend
              $result = $dbh->query($sql);
          }
         
-        return new WikiDB_backend_PearDB_iter($this, $result);
+        $iter = new WikiDB_backend_PearDB_iter($this, $result);
+        $iter->stoplisted = @$searchobj->stoplisted;
+        return $iter;
     }
 
     //Todo: check if the better Mysql MATCH operator is supported,
@@ -876,7 +892,7 @@ extends WikiDB_backend
     /**
      * Rename page in the database.
      */
-    function rename_page($pagename, $to) {
+    function rename_page ($pagename, $to) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         
@@ -1210,41 +1226,16 @@ extends WikiDB_backend_PearDB_generic_iter
     }
 }
 
-// word search
-class WikiDB_backend_PearDB_search
-extends WikiDB_backend_search
+class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql 
 {
-    function WikiDB_backend_PearDB_search(&$search, &$dbh) {
-        $this->_dbh = $dbh;
-        $this->_case_exact = $search->_case_exact;
-        $this->_stoplist =& $search->_stoplist;
-    }
-    function _pagename_match_clause($node) { 
-        $word = $node->sql();
-        if ($word == '%')
-            return "1=1";
-        else
-            return ($this->_case_exact 
-                    ? "pagename LIKE '$word'" 
-                    : "LOWER(pagename) LIKE '$word'");
-    }
-    function _fulltext_match_clause($node) { 
-        $word = $node->sql();
-        if ($word == '%')
-            return "1=1";
-        // eliminate stoplist words
-        if (preg_match("/^%".$this->_stoplist."%/i", $word) 
-            or preg_match("/^".$this->_stoplist."$/i", $word))
-            return $this->_pagename_match_clause($node);
-        else
-            return $this->_pagename_match_clause($node)
-                // probably convert this MATCH AGAINST or SUBSTR/POSITION without wildcards
-                . ($this->_case_exact ? " OR content LIKE '$word'" 
-                                      : " OR LOWER(content) LIKE '$word'");
-    }
+    // no surrounding quotes because we know it's a string
+    // function _quote($word) { return $this->_dbh->addq($word); }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.93  2005/10/10 19:42:15  rurban
+// fix wanted_pages SQL syntax
+//
 // Revision 1.92  2005/09/14 06:04:43  rurban
 // optimize searching for ALL (ie %), use the stoplist on PDO
 //

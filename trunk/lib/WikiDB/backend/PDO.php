@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.5 2005-09-14 06:04:43 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.6 2005-11-14 22:24:33 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -865,7 +865,9 @@ extends WikiDB_backend
                              . $limit);
         $sth->execute();
         $result = $sth->fetch(PDO_FETCH_NUM);
-        return new WikiDB_backend_PDO_iter($this, $result, $field_list);
+        $iter = new WikiDB_backend_PDO_iter($this, $result, $field_list);
+        $iter->stoplisted = $searchobj->stoplisted;
+        return $iter;
     }
 
     /*
@@ -1295,37 +1297,7 @@ extends WikiDB_backend_PDO_generic_iter
     }
 }
 
-class WikiDB_backend_PDO_search
-extends WikiDB_backend_search
-{
-    function WikiDB_backend_PDO_search(&$search, &$dbh) {
-        $this->_dbh =& $dbh;
-        $this->_case_exact = $search->_case_exact;
-    }
-    function _pagename_match_clause($node) {
-        // word already quoted by TextSearchQuery_node_word::_sql_quote()
-        $word = $node->sql();
-        if ($word == '%')
-            return "1=1";
-        else
-            return ($this->_case_exact 
-                    ? "pagename LIKE '$word'"
-                    : "LOWER(pagename) LIKE '$word'");
-    }
-    function _fulltext_match_clause($node) { 
-        $word = $node->sql();
-        if ($word == '%')
-            return "1=1";
-        // eliminate stoplist words
-        if (preg_match("/^%".$this->_stoplist."%/i", $word) 
-            or preg_match("/^".$this->_stoplist."$/i", $word))
-            return $this->_pagename_match_clause($node);
-        else
-            return $this->_pagename_match_clause($node)
-                . ($this->_case_exact ? " OR content LIKE '$word'" 
-                                      : " OR LOWER(content) LIKE '$word'");
-    }
-}
+class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql {}
 
 // Following function taken from Pear::DB (prev. from adodb-pear.inc.php).
 // Eventually, change index.php to provide the relevant information
@@ -1487,6 +1459,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2005/09/14 06:04:43  rurban
+// optimize searching for ALL (ie %), use the stoplist on PDO
+//
 // Revision 1.4  2005/09/11 13:25:12  rurban
 // enhance LIMIT support
 //

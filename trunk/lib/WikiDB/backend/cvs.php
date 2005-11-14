@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.25 2005-09-11 13:23:21 rurban Exp $');
+rcs_id('$Id: cvs.php,v 1.26 2005-11-14 22:24:33 rurban Exp $');
 /**
  * Backend for handling CVS repository. 
  *
@@ -413,13 +413,15 @@ extends WikiDB_backend
                               $this->_getAllFileNamesInDir( $this->_docDir ));
     }
 
-    function text_search($search = '', $fullsearch = false, $orderby=false, $limit=false, $exclude=false) 
+    function text_search($search, $fullsearch = false, $orderby=false, $limit=false, $exclude=false) 
     {
         if ( $fullsearch ) {
-            return new Cvs_Backend_Full_Search_Iterator(
+            $iter = new Cvs_Backend_Full_Search_Iterator(
                                $this->_getAllFileNamesInDir( $this->_docDir ), 
                                $search, 
                                $this->_docDir );
+            $iter->stoplisted =& $search->stoplisted;
+            return $iter;
         } else {
             return new Cvs_Backend_Title_Search_Iterator(
                                $this->_getAllFileNamesInDir( $this->_docDir ),
