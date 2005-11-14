@@ -1,4 +1,4 @@
--- $Id: psql-1_3_12.sql,v 1.1 2005-11-14 22:20:21 rurban Exp $
+-- $Id: psql-1_3_12.sql,v 1.2 2005-11-14 23:09:40 rurban Exp $
 
 \set QUIET
 
@@ -52,6 +52,7 @@
 \set link_tbl 		:prefix 'link'
 \set link_from_idx 	:prefix 'link_from_idx'
 \set link_to_idx 	:prefix 'link_to_idx'
+\set relation_idx 	:prefix 'relation_idx'
 
 \set session_tbl 	:prefix 'session'
 \set sess_id_idx 	:prefix 'sess_id_idx'
@@ -77,21 +78,38 @@
 \echo schema enhancements
 
 ALTER TABLE :page_tbl 
-	ALTER COLUMN id TYPE SERIAL PRIMARY KEY
-        ALTER COLUMN pagename TYPE VARCHAR(100) 
-	ALTER COLUMN pagename SET NOT NULL 
-	ALTER COLUMN pagename ADD CONSTRAINT pagename_key UNIQUE CHECK (pagename <> '');
-ALTER TABLE :version_tbl  ALTER COLUMN id INT4 REFERENCES :page_tbl ON DELETE CASCADE;
-ALTER TABLE :nonempty_tbl ALTER COLUMN id INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE;
+	ALTER COLUMN id TYPE SERIAL /* PRIMARY KEY */,
+        ALTER COLUMN pagename TYPE VARCHAR(100),
+	ALTER COLUMN pagename SET NOT NULL,
+	ADD UNIQUE(pagename),
+	ADD CHECK (pagename <> '');
+ALTER TABLE :version_tbl
+	ALTER COLUMN id TYPE INT4,
+        ADD FOREIGN KEY (id) REFERENCES :page_tbl ON DELETE CASCADE;
+ALTER TABLE :nonempty_tbl 
+	ALTER COLUMN id TYPE INT4, 
+	ALTER COLUMN id SET NOT NULL,
+        ADD FOREIGN KEY (id) REFERENCES :page_tbl ON DELETE CASCADE;
 ALTER TABLE :link_tbl 
-	ALTER COLUMN linkfrom INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE
-	ALTER COLUMN linkto   INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE
-	ADD COLUMN relation   INT4 DEFAULT 0;
+	ALTER COLUMN linkfrom TYPE INT4,
+	ALTER COLUMN linkfrom SET NOT NULL,
+	ALTER COLUMN linkto   TYPE INT4,
+	ALTER COLUMN linkto   SET NOT NULL,
+	ADD COLUMN relation INT4 DEFAULT 0,
+        ADD FOREIGN KEY (linkfrom) REFERENCES :page_tbl (id) ON DELETE CASCADE,
+        ADD FOREIGN KEY (linkto) REFERENCES :page_tbl (id) ON DELETE CASCADE;
 CREATE INDEX :relation_idx ON :link_tbl (relation);
 ALTER TABLE :rating_tbl 
-	ALTER COLUMN raterpage INT8 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE
-	ALTER COLUMN rateepage INT8 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE;
-ALTER TABLE :member_tbl ALTER COLUMN userid CHAR(48) NOT NULL REFERENCES :pref_tbl ON DELETE CASCADE;
+	ALTER COLUMN raterpage TYPE INT8,
+	ALTER COLUMN raterpage SET NOT NULL,
+	ALTER COLUMN rateepage TYPE INT8,
+	ALTER COLUMN rateepage SET NOT NULL,
+        ADD FOREIGN KEY (raterpage) REFERENCES :page_tbl (id) ON DELETE CASCADE,
+        ADD FOREIGN KEY (rateepage) REFERENCES :page_tbl (id) ON DELETE CASCADE;
+ALTER TABLE :member_tbl 
+	ALTER COLUMN userid TYPE CHAR(48), 
+	ALTER COLUMN userid SET NOT NULL,
+	ADD FOREIGN KEY (userid) REFERENCES :pref_tbl;
 
 --================================================================
 
@@ -138,13 +156,13 @@ INSERT INTO nonempty (id)
 ' LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION 
-        set_versiondata (id integer, version integer, mtime integer, minor_edit integer,
-                         content TEXT, versiondata TEXT)
+        set_versiondata (id integer, version integer, mtime integer, minor_edit smallint,
+                         content text, versiondata text)
 	RETURNS void AS 
 '
 DELETE FROM version WHERE id=$1 AND version=$2;
 INSERT INTO version (id,version,mtime,minor_edit,content,versiondata)
-       VALUES($1, $2, $3, $4, $5, $6);
+       VALUES($1, $2, $3, $4, ''$5''::text, ''$6''::text);
 DELETE FROM recent WHERE id=$1;
 INSERT INTO recent (id, latestversion, latestmajor, latestminor)
   SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
