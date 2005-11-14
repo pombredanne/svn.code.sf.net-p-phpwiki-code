@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.70 2005-10-31 16:45:23 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.71 2005-11-14 22:31:12 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -388,6 +388,9 @@ function LinkBracketLink($bracketlink) {
     }
     elseif (preg_match("/^phpwiki:/", $link))
         return new Cached_PhpwikiURL($link, $label);
+    /* Semantic relations and attributes */
+    elseif (preg_match("/:[:-]/", $link) and !isImageLink($link))
+        return new Cached_SemanticLink($link, $label);
     /*
      * Inline images in Interwiki urls's:
      * [File:my_image.gif] inlines the image,
@@ -873,6 +876,9 @@ function TransformLinks($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2005/10/31 16:45:23  rurban
+// added cfg-able markups only for default TextTransformation, not for links and others
+//
 // Revision 1.69  2005/09/14 05:57:19  rurban
 // make ENABLE_MARKUP_TEMPLATE optional
 //
