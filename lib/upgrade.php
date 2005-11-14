@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.47 2005-02-27 19:13:27 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.48 2005-11-14 22:32:38 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -367,7 +367,7 @@ function CheckDatabaseUpdate(&$request) {
     $backend_type = $dbh->_backend->backendType();
     echo "<h4>",_("Backend type: "),$backend_type,"</h4>\n";
     $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
-    foreach (explode(':','session:user:pref:member') as $table) {
+    foreach (explode(':','session:pref:member') as $table) {
         echo sprintf(_("check for table %s"), $table)," ...";
     	if (!in_array($prefix.$table, $tables)) {
             installTable($dbh, $table, $backend_type);
@@ -403,7 +403,9 @@ function CheckDatabaseUpdate(&$request) {
   	assert(!empty($DBParams['db_session_table']));
         $session_tbl = $prefix . $DBParams['db_session_table'];
         $sess_fields = $dbh->_backend->listOfFields($database, $session_tbl);
-        if (!strstr(strtolower(join(':', $sess_fields)), "sess_ip")) {
+        if (!$sess_fields) {
+            echo _("SKIP");
+        } elseif (!strstr(strtolower(join(':', $sess_fields)), "sess_ip")) {
             // TODO: postgres test (should be able to add columns at the end, but not in between)
             echo "<b>",_("ADDING"),"</b>"," ... ";		
             $dbh->genericSqlQuery("ALTER TABLE $session_tbl ADD sess_ip CHAR(15) NOT NULL");
@@ -441,8 +443,13 @@ function CheckDatabaseUpdate(&$request) {
         }
     }
 
+    /*
+     ALTER TABLE link ADD relation INT default 0;
+     CREATE INDEX linkrelation on link (relation);
+    */
+
     // mysql >= 4.0.4 requires LOCK TABLE privileges
-    if (substr($backend_type,0,5) == 'mysql'/* and $DBParams['dbtype'] != 'PDO' */) {
+    if (0 and substr($backend_type,0,5) == 'mysql'/* and $DBParams['dbtype'] != 'PDO' */) {
   	echo _("check for mysql LOCK TABLE privilege")," ...";
         $mysql_version = $dbh->_backend->_serverinfo['version'];
         if ($mysql_version > 400.40) {
@@ -691,7 +698,7 @@ _("And on windows at least the privilege to SELECT FROM mysql, and possibly UPDA
  */
 function _upgrade_cached_html (&$dbh, $verbose=true) {
     global $DBParams;
-    if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
+    if (!in_array($DBParams['dbtype'], array('SQL','ADODB','PDO'))) return;
     $count = 0;
     if (phpwiki_version() >= 1030.10) {
         if ($verbose)
@@ -699,6 +706,10 @@ function _upgrade_cached_html (&$dbh, $verbose=true) {
   	$database = $dbh->_backend->database();
         extract($dbh->_backend->_table_names);
         $fields = $dbh->_backend->listOfFields($database, $page_tbl);
+        if (!$fields) {
+            echo _("SKIP"), "<br />\n";
+            return 0;
+        }
         if (!strstr(strtolower(join(':', $fields)), "cached_html")) {
             if ($verbose)
                 echo "<b>",_("ADDING"),"</b>"," ... ";
@@ -884,6 +895,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.47  2005/02/27 19:13:27  rurban
+ latin1 mysql fix
+
  Revision 1.46  2005/02/12 17:22:18  rurban
  locale update: missing . : fixed. unified strings
  proper linebreaks
