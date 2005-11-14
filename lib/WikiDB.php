@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.137 2005-10-12 06:16:18 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.138 2005-11-14 22:27:07 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -363,7 +363,9 @@ class WikiDB {
         $result = $this->_backend->text_search($search, true, $sortby, $limit, $exclude);
         return new WikiDB_PageIterator($this, $result,
                                        array('exclude' => $exclude,
-                                             'limit' => $limit));
+                                             'limit'   => $limit,
+                                             'stoplisted' => $result->stoplisted
+                                             ));
     }
 
     /**
@@ -801,7 +803,7 @@ class WikiDB_Page
      * @param hash $metadata Metadata for new revision.
      * All values in the hash should be scalars (strings or integers).
      *
-     * @param array $links List of pagenames which this page links to.
+     * @param hash $links List of linkto=>pagename, relation=>pagename which this page links to.
      *
      * @return WikiDB_PageRevision  Returns the new WikiDB_PageRevision object. If
      * $version was incorrect, returns false
@@ -1084,7 +1086,7 @@ class WikiDB_Page
      *
      * @return WikiDB_PageRevision The current WikiDB_PageRevision object. 
      */
-    function getCurrentRevision($need_content = true) {
+    function getCurrentRevision ($need_content = true) {
         $backend = &$this->_wikidb->_backend;
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
@@ -1115,7 +1117,7 @@ class WikiDB_Page
      * false if the requested revision does not exist in the {@link WikiDB}.
      * Note that version zero of any page always exists.
      */
-    function getRevision($version, $need_content=true) {
+    function getRevision ($version, $need_content=true) {
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
         
@@ -1147,7 +1149,7 @@ class WikiDB_Page
      * unless $version is greater than zero, a revision (perhaps version zero,
      * the default revision) will always be found.
      */
-    function getRevisionBefore($version=false, $need_content=true) {
+    function getRevisionBefore ($version=false, $need_content=true) {
         $backend = &$this->_wikidb->_backend;
         $pagename = &$this->_pagename;
         if ($version === false)
@@ -1191,8 +1193,8 @@ class WikiDB_Page
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing
      * all matching pages.
      */
-    function getLinks($reversed = true, $include_empty=false, $sortby=false, 
-                      $limit=false, $exclude=false) {
+    function getLinks ($reversed = true, $include_empty=false, $sortby=false, 
+                       $limit=false, $exclude=false) {
         $backend = &$this->_wikidb->_backend;
         $result =  $backend->get_links($this->_pagename, $reversed, 
                                        $include_empty, $sortby, $limit, $exclude);
@@ -1215,6 +1217,22 @@ class WikiDB_Page
     function getPageLinks($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
         return $this->getLinks(false, $include_empty, $sortby, $limit, $exclude);
     }
+    /**
+     * Relations: All links from this page to other pages with relation <> 0. 
+     * Like isa:=page
+     */
+    function getRelations($sortby=false, $limit=false, $exclude=false) {
+        $backend = &$this->_wikidb->_backend;
+        $result =  $backend->get_links($this->_pagename, false, true,
+                                       $sortby, $limit, $exclude, 
+                                       true);
+        // we do not care for the linked page versiondata, just the pagename and relationname
+        return new WikiDB_PageIterator($this->_wikidb, $result, 
+                                       array('include_empty' => true,
+                                             'sortby'        => $sortby, 
+                                             'limit'         => $limit, 
+                                             'exclude'       => $exclude));
+    }
     
     /**
      * possibly faster link existance check. not yet accelerated.
@@ -1233,6 +1251,17 @@ class WikiDB_Page
         $iter->free();
         return false;
     }
+
+    /* Semantic relations are links with the relation pointing to another page,
+       the so called "RDF Triple".
+       [San Diego] is%20a::city
+       => "At the page San Diego there is a relation link of 'is a' to the page 'city'."
+     */
+
+    /* Semantic attributes for a page. 
+       [San Diego] population:=1,305,736
+       Attributes are links with the relation pointing to another page.
+    */
             
     /**
      * Access WikiDB_Page non version-specific meta-data.
@@ -1798,7 +1827,10 @@ class WikiDB_PageIterator
                   and !$this->_options['include_empty'] and isset($next['id'])) {
             $this->_wikidb->_cache->_id_cache[$next['pagename']] = $next['id'];
         }
-        return new WikiDB_Page($this->_wikidb, $pagename);
+        $page = new WikiDB_Page($this->_wikidb, $pagename);
+        if (isset($next['linkrelation']))
+            $page->set('linkrelation', $next['linkrelation']);
+        return $page;
     }
 
     /**
@@ -2198,6 +2230,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.137  2005/10/12 06:16:18  rurban
+// better From header
+//
 // Revision 1.136  2005/10/03 16:14:57  rurban
 // improve description
 //
