@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.25 2005-09-11 13:23:21 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.26 2005-11-14 22:24:33 rurban Exp $');
 
 /*
   Pagedata
@@ -603,13 +603,15 @@ class WikiDB_backend_iterator
 };
 
 /**
- * search baseclass, pcre-specific. only overriden by sql backends.
+ * search baseclass, pcre-specific
  */
 class WikiDB_backend_search
 {
-    function WikiDB_backend_search(&$dbh, $search) {
+    function WikiDB_backend_search($search, &$dbh) {
         $this->_dbh = $dbh;
-        $this->_case_exact = $search->_case_exact;
+        $this->_case_exact =  $search->_case_exact;
+        $this->_stoplist   =& $search->_stoplist;
+        $this->_stoplisted = array();
     }
     function _quote($word) {
         return preg_quote($word, "/");
@@ -625,6 +627,50 @@ class WikiDB_backend_search
         $method = $node->op;
         $word = $this->$method($node->word);
         return "preg_match(\"/\".$word.\"/\"".($this->_case_exact ? "i":"").")";
+    }
+    /* Eliminate stoplist words.
+       Keep a list of Stoplisted words to inform the poor user. */
+    function isStoplisted ($node) {
+    	// check only on WORD or EXACT fulltext search
+    	if ($node->op != 'WORD' and $node->op != 'EXACT')
+    	    return false;
+        if (preg_match("/^".$this->_stoplist."$/i", $node->word)) {
+            array_push($this->_stoplisted, $node->word);
+            return true;
+        }
+        return false;
+    }
+    function getStoplisted($word) {
+        return $this->_stoplisted;
+    }
+}
+
+/**
+ * search baseclass, sql-specific
+ */
+class WikiDB_backend_search_sql extends WikiDB_backend_search
+{
+    function _pagename_match_clause($node) {
+        // word already quoted by TextSearchQuery_node_word::_sql_quote()
+        $word = $node->sql();
+        if ($word == '%') // ALL shortcut
+            return "1=1";
+        else
+            return ($this->_case_exact 
+                    ? "pagename LIKE '$word'"
+                    : "LOWER(pagename) LIKE '$word'");
+    }
+    function _fulltext_match_clause($node) {
+        // force word-style %word% for fulltext search
+        $word = '%' . $node->_sql_quote($node->word) . '%';
+        // eliminate stoplist words
+        if ($this->isStoplisted($node))
+            return "1=1";  // and (pagename or 1) => and 1
+        else
+            return $this->_pagename_match_clause($node)
+                // probably convert this MATCH AGAINST or SUBSTR/POSITION without wildcards
+                . ($this->_case_exact ? " OR content LIKE '$word'" 
+                                      : " OR LOWER(content) LIKE '$word'");
     }
 }
 

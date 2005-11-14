@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_oci8po.php,v 1.3 2005-01-18 20:55:47 rurban Exp $');
+rcs_id('$Id: ADODB_oci8po.php,v 1.4 2005-11-14 22:24:33 rurban Exp $');
 
 /**
  * Oracle extensions for the ADODB DB backend.
@@ -130,8 +130,10 @@ extends WikiDB_backend_ADODB_search
     // Intermedia Text option, so let's stick to the 'simple' thing
     // Note that this does only an exact fulltext search, not using MATCH or LIKE.
     function _fulltext_match_clause($node) { 
-        $page = $node->sql($word);
-        $exactword = $node->_sql_quote();
+        if ($this->isStoplisted($node))
+            return "1=1";
+        $page = $node->sql();
+        $exactword = $node->_sql_quote($node->word);
         return ($this->_case_exact
                 ? "pagename LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0"
                 : "LOWER(pagename) LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0");

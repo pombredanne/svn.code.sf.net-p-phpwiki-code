@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.82 2005-10-31 16:48:22 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.83 2005-11-14 22:24:33 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -412,7 +412,9 @@ extends WikiDB_backend
         else
             $data['%content'] = '';
         if (!empty($pagedata)) {
-            $data['%pagedata'] = $this->_extract_page_data($pagedata, $hits);
+            // hmm, $pagedata = is already extracted by WikiDB_backend_ADODB_iter
+            //$data['%pagedata'] = $this->_extract_page_data($pagedata, $hits);
+            $data['%pagedata'] = $pagedata;
         }
         return $data;
     }
@@ -573,13 +575,20 @@ extends WikiDB_backend
         if ($links) {
             $dbh->Execute("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
             foreach ($links as $link) {
-                if (isset($linkseen[$link]))
+                $linkto = $link['linkto'];
+                if ($link['relation'])
+                    $relation = $this->_get_pageid($link['relation'], true);
+                else 
+                    $relation = 0;
+                // avoid duplicates
+                if (isset($linkseen[$linkto]) and !$relation)
                     continue;
-                $linkseen[$link] = true;
-                $linkid = $this->_get_pageid($link, true);
+                if (!$relation)
+                    $linkseen[$linkto] = true;
+                $linkid = $this->_get_pageid($linkto, true);
                 assert($linkid);
-                $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
-                            . " VALUES ($pageid, $linkid)");
+                $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
+                            . " VALUES ($pageid, $linkid, $relation)");
             }
         } elseif (DEBUG) {
             // purge page table: delete all non-referenced pages
@@ -609,8 +618,10 @@ extends WikiDB_backend
      * (linkExistingWikiWord or linkUnknownWikiWord)
      * This is called on every page header GleanDescription, so we can store all the existing links.
      */
-    function get_links($pagename, $reversed=true, $include_empty=false,
-                       $sortby=false, $limit=false, $exclude='') {
+    function get_links($pagename, $reversed=true,   $include_empty=false,
+                       $sortby=false, $limit=false, $exclude='',
+                       $want_relations = false)
+    {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
@@ -627,16 +638,23 @@ extends WikiDB_backend
 
         $qpagename = $dbh->qstr($pagename);
         // removed ref to FETCH_MODE in next line
-        $sql = "SELECT $want.id AS id, $want.pagename AS pagename,"
-            . " $want.hits AS hits"
-            . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee"
-            . (!$include_empty ? ", $nonempty_tbl" : '')
+        $sql = "SELECT $want.id AS id, $want.pagename AS pagename, "
+            . ($want_relations ? " related.pagename as linkrelation" : " $want.hits AS hits")
+            . " FROM "
+            . (!$include_empty ? "$nonempty_tbl, " : '')
+            . " $page_tbl linkee, $page_tbl linker, $link_tbl "
+            . ($want_relations ? " JOIN $page_tbl related ON ($link_tbl.relation=related.id)" : '')
             . " WHERE linkfrom=linker.id AND linkto=linkee.id"
             . " AND $have.pagename=$qpagename"
             . (!$include_empty ? " AND $nonempty_tbl.id=$want.id" : "")
             //. " GROUP BY $want.id"
             . $exclude
             . $orderby;
+/*
+  echo "SELECT linkee.id AS id, linkee.pagename AS pagename, related.pagename as linkrelation FROM link, page linkee, page linker JOIN page related ON (link.relation=related.id) WHERE linkfrom=linker.id AND linkto=linkee.id AND linker.pagename='SanDiego'" | mysql phpwiki
+id      pagename        linkrelation
+2268    California      located_in
+*/            
         if ($limit) {
             // extract from,count from limit
             list($offset,$count) = $this->limit($limit);
@@ -644,7 +662,10 @@ extends WikiDB_backend
         } else {
             $result = $dbh->Execute($sql);
         }
-        return new WikiDB_backend_ADODB_iter($this, $result, $this->page_tbl_field_list);
+        $fields = $this->page_tbl_field_list;
+        if ($want_relations) // instead of hits
+            $fields[2] = 'linkrelation';
+        return new WikiDB_backend_ADODB_iter($this, $result, $fields);
     }
 
     /**
@@ -730,9 +751,11 @@ extends WikiDB_backend
     }
         
     /**
-     * Title search.
+     * Title and fulltext search.
      */
-    function text_search($search, $fullsearch=false, $sortby=false, $limit=false, $exclude=false) {
+    function text_search($search, $fullsearch=false, 
+                         $sortby=false, $limit=false, $exclude=false) 
+    {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
@@ -752,7 +775,8 @@ extends WikiDB_backend
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
             $fields .= ",$page_tbl.pagedata as pagedata," . $this->version_tbl_fields;
-            $field_list = array_merge($field_list, array('pagedata'), $this->version_tbl_field_list);
+            $field_list = array_merge($field_list, array('pagedata'), 
+                                      $this->version_tbl_field_list);
             $callback = new WikiMethodCb($searchobj, "_fulltext_match_clause");
         } else {
             $callback = new WikiMethodCb($searchobj, "_pagename_match_clause");
@@ -770,29 +794,11 @@ extends WikiDB_backend
         } else {
             $result = $dbh->Execute($sql);
         }
-        return new WikiDB_backend_ADODB_iter($this, $result, $field_list);
+        $iter = new WikiDB_backend_ADODB_iter($this, $result, $field_list);
+        if ($fullsearch)
+            $iter->stoplisted = $searchobj->stoplisted;
+        return $iter;
     }
-    /*
-    function _sql_match_clause($word) {
-        //not sure if we need this.  ADODB may do it for usand function_exists('pg_escape_bytea')
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);  
-
-        // (we need it for at least % and _ --- they're the wildcard characters
-        //  for the LIKE operator, and we need to quote them if we're searching
-        //  for literal '%'s or '_'s.  --- I'm not sure about \, but it seems to
-        //  work as is.
-        $word = $this->_dbh->qstr("%".strtolower($word)."%");
-        $page_tbl = $this->_table_names['page_tbl'];
-        return "LOWER($page_tbl.pagename) LIKE $word";
-    }
-    function _fullsearch_sql_match_clause($word) {
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $word);  //not sure if we need this
-        // (see above)
-        $word = $this->_dbh->qstr("%".strtolower($word)."%");
-        $page_tbl = $this->_table_names['page_tbl'];
-        return "LOWER($page_tbl.pagename) LIKE $word OR content LIKE $word";
-    }
-    */
 
     /*
      * TODO: efficiently handle wildcards exclusion: exclude=Php* => 'Php%', 
@@ -811,7 +817,7 @@ extends WikiDB_backend
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular($limit=20, $sortby='-hits') {
+    function most_popular ($limit=20, $sortby='-hits') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
@@ -1239,41 +1245,17 @@ extends WikiDB_backend_ADODB_generic_iter
         if (!empty($rec_assoc['version'])) {
             $rec_assoc['versiondata'] = $backend->_extract_version_data_assoc($rec_assoc);
         }
+        if (!empty($rec_assoc['linkrelation'])) {
+            $rec_assoc['linkrelation'] = $rec_assoc['linkrelation']; // pagename enough?
+        }
         return $rec_assoc;
     }
 }
 
-class WikiDB_backend_ADODB_search
-extends WikiDB_backend_search
+class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql 
 {
-    function WikiDB_backend_ADODB_search(&$search, &$dbh) {
-        $this->_dbh =& $dbh;
-        $this->_case_exact = $search->_case_exact;
-        $this->_stoplist =& $search->_stoplist;
-    }
-    function _pagename_match_clause($node) {
-        $word = $node->sql();
-        if ($word == '%')
-            return "1=1";
-        else
-            return ($this->_case_exact 
-                    ? "pagename LIKE '$word'"
-                    : "LOWER(pagename) LIKE '$word'");
-    }
-    function _fulltext_match_clause($node) { 
-        $word = $node->sql();
-        if ($word == '%')
-            return "1=1";
-        // Eliminate stoplist words
-        if (preg_match("/^%".$this->_stoplist."%/i", $word) 
-            or preg_match("/^".$this->_stoplist."$/i", $word))
-            return $this->_pagename_match_clause($node);
-        else
-            return $this->_pagename_match_clause($node) 
-                . ($this->_case_exact
-                    ? " OR content LIKE '$word'"
-                    : " OR content LIKE '$word'");
-    }
+    // no surrounding quotes because we know it's a string
+    // function _quote($word) { return $this->_dbh->escapeSimple($word); }
 }
 
 // Following function taken from Pear::DB (prev. from adodb-pear.inc.php).
@@ -1436,6 +1418,9 @@ extends WikiDB_backend_search
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.82  2005/10/31 16:48:22  rurban
+// move mysql-specifics into its special class
+//
 // Revision 1.81  2005/10/10 19:42:14  rurban
 // fix wanted_pages SQL syntax
 //
