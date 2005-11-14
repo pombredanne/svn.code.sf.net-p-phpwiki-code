@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.25 2005-09-11 14:55:05 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.26 2005-11-14 22:33:04 rurban Exp $');
 /*
 Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
@@ -106,6 +106,10 @@ extends WikiPlugin
         if (!$list->getContent())
             $list->pushContent(HTML::dd(_("<no matches>")));
 
+        if (!empty($pages->stoplisted))
+            $list = HTML(HTML::p(fmt(_("Ignored stoplist words '%s'"), 
+                                     join(', ', $pages->stoplisted))), 
+                         $list);
         if ($noheader)
             return $list;
         return HTML(HTML::p(fmt("Full text search results for '%s'", $s)),
@@ -136,6 +140,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2005/09/11 14:55:05  rurban
+// implement fulltext stoplist
+//
 // Revision 1.24  2004/11/26 18:39:02  rurban
 // new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
 //
