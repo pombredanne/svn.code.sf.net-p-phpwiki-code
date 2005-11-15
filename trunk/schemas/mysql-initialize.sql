@@ -1,4 +1,4 @@
--- $Id: mysql-initialize.sql,v 1.9 2005-09-28 19:27:23 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.10 2005-11-15 21:12:22 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
@@ -43,8 +43,10 @@ CREATE TABLE nonempty (
 CREATE TABLE link (
 	linkfrom        INT NOT NULL,
         linkto          INT NOT NULL,
+        relation        INT DEFAULT 0,
 	INDEX (linkfrom),
-        INDEX (linkto)
+        INDEX (linkto),
+        INDEX (relation)
 );
 
 CREATE TABLE session (

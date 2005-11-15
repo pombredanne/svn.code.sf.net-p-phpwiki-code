@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.8 2005-11-14 22:20:21 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.9 2005-11-15 21:12:22 rurban Exp $
 
 \set QUIET
 
@@ -40,7 +40,7 @@
 \echo '       prefix = ' :qprefix
 \echo '   httpd_user = ' :qhttp_user
 \echo
-\echo 'Expect some \'NOTICE:  CREATE ... will create implicit sequence ...\' messages '
+\echo 'Expect some \'NOTICE:  CREATE ... will create implicit sequence/index ...\' messages '
 
 \set page_tbl 		:prefix 'page'
 \set page_id_seq 	:prefix 'page_id_seq'
@@ -110,18 +110,33 @@ CREATE INDEX :vers_mtime_idx ON :version_tbl (mtime);
 \echo Creating :recent_tbl
 CREATE TABLE :recent_tbl (
 	id		INT4 REFERENCES :page_tbl ON DELETE CASCADE,
-	latestversion	INT4,
+	latestversion	INT4, 
 	latestmajor	INT4,
-	latestminor	INT4
+	latestminor	INT4,
+	FOREIGN KEY (id, latestversion) REFERENCES :version_tbl (id, version),
+	CHECK (latestminor >= latestmajor)
 );
 CREATE UNIQUE INDEX :recent_id_idx ON :recent_tbl (id);
-
 
 \echo Creating :nonempty_tbl
 CREATE TABLE :nonempty_tbl (
 	id		INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX :nonmt_id_idx ON :nonempty_tbl (id);
+
+\echo Creating page views
+
+-- nonempty versiondata
+CREATE VIEW existing_page AS
+  SELECT * FROM :page_tbl P INNER JOIN :nonempty_tbl N USING (id);
+
+-- latest page version
+CREATE VIEW curr_page AS
+  SELECT P.id,P.pagename,P.hits,P.pagedata,P.cached_html,
+	 V.version,V.mtime,V.minor_edit,V.content,V.versiondata
+  FROM :page_tbl P 
+    JOIN :version_tbl V USING (id)
+    JOIN :recent_tbl  R ON (V.id=R.id AND V.version=R.latestversion);
 
 \echo Creating :link_tbl
 CREATE TABLE :link_tbl (
@@ -136,12 +151,12 @@ CREATE INDEX :relation_idx  ON :link_tbl (relation);
 -- if you plan to use the wikilens theme
 \echo Creating :rating_tbl
 CREATE TABLE :rating_tbl (
-        dimension INTEGER NOT NULL,
-        raterpage INT8 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
-        rateepage INT8 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
-        ratingvalue FLOAT NOT NULL,
+        dimension    INTEGER NOT NULL,
+        raterpage    INT8 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
+        rateepage    INT8 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
+        ratingvalue  FLOAT NOT NULL,
         rateeversion INT8 NOT NULL,
-        tstamp TIMESTAMP NOT NULL
+        tstamp       TIMESTAMP NOT NULL
 );
 CREATE UNIQUE INDEX :rating_id_idx ON :rating_tbl (dimension, raterpage, rateepage);
 
@@ -166,9 +181,9 @@ CREATE INDEX :sess_ip_idx   ON :session_tbl (sess_ip);
 
 \echo Creating :pref_tbl
 CREATE TABLE :pref_tbl (
-  	userid 	CHAR(48) PRIMARY KEY,
-  	prefs  	TEXT NULL DEFAULT '',
-	passwd  CHAR(48) DEFAULT '',
+  	userid 	  CHAR(48) PRIMARY KEY,
+  	prefs  	  TEXT NULL DEFAULT '',
+	passwd    CHAR(48) DEFAULT '',
 	groupname CHAR(48) DEFAULT 'users'
 );
 -- CREATE UNIQUE INDEX :pref_id_idx ON :pref_tbl (userid);
@@ -176,7 +191,7 @@ CREATE TABLE :pref_tbl (
 -- Use the member table, if you need it for n:m user-group relations,
 -- and adjust your DBAUTH_AUTH_ SQL statements.
 CREATE TABLE :member_tbl (
-	userid CHAR(48) NOT NULL REFERENCES :pref_tbl ON DELETE CASCADE, 
+	userid    CHAR(48) NOT NULL REFERENCES :pref_tbl ON DELETE CASCADE, 
 	groupname CHAR(48) NOT NULL DEFAULT 'users'
 );
 CREATE INDEX :member_id_idx    ON :member_tbl (userid);
@@ -187,19 +202,19 @@ CREATE INDEX :member_group_idx ON :member_tbl (groupname);
 -- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
 \echo Creating :accesslog_tbl
 CREATE TABLE :accesslog_tbl (
-        time_stamp    INT,
-	remote_host   VARCHAR(50),
-	remote_user   VARCHAR(50),
-        request_method VARCHAR(10),
-	request_line  VARCHAR(255),
-	request_args  VARCHAR(255),
-	request_file  VARCHAR(255),
-	request_uri   VARCHAR(255),
-	request_time  CHAR(28),
-	status 	      INT2,
-	bytes_sent    INT4,
-        referer       VARCHAR(255), 
-	agent         VARCHAR(255),
+        time_stamp       INT,
+	remote_host      VARCHAR(50),
+	remote_user      VARCHAR(50),
+        request_method   VARCHAR(10),
+	request_line     VARCHAR(255),
+	request_args     VARCHAR(255),
+	request_file     VARCHAR(255),
+	request_uri      VARCHAR(255),
+	request_time     CHAR(28),
+	status 	         INT2,
+	bytes_sent       INT4,
+        referer          VARCHAR(255), 
+	agent            VARCHAR(255),
 	request_duration FLOAT
 );
 CREATE INDEX :accesslog_time_idx ON :accesslog_tbl (time_stamp);
@@ -252,15 +267,10 @@ GRANT SELECT,INSERT,UPDATE,DELETE ON :accesslog_tbl	TO :httpd_user;
 
 \echo Initializing stored procedures
 
-\set maxversion 'MAX(version)'
-\set maxmajor   'MAX(CASE WHEN minor_edit=0  THEN version END)'
-\set maxminor   'MAX(CASE WHEN minor_edit<>0 THEN version END)'
-
 CREATE OR REPLACE FUNCTION delete_versiondata (id INT4, version INT4) 
 	RETURNS void AS '
-BEGIN;
 DELETE FROM version WHERE id=$1 AND version=$2;
-DELETE FROM recent WHERE id=$1;
+DELETE FROM recent  WHERE id=$1;
 INSERT INTO recent (id, latestversion, latestmajor, latestminor)
   SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
 	                   MAX(CASE WHEN minor_edit<>0 THEN version END)
@@ -273,18 +283,15 @@ INSERT INTO nonempty (id)
           AND version=latestversion
           AND content<>''''
           AND recent.id=$1;
-COMMIT;
 ' LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION 
         set_versiondata (id INT4, version INT4, mtime INT4, minor_edit INT2,
                          content TEXT, versiondata TEXT)
-	RETURNS void AS 
-'
-BEGIN;
+	RETURNS void AS '
 DELETE FROM version WHERE id=$1 AND version=$2;
 INSERT INTO version (id,version,mtime,minor_edit,content,versiondata)
-       VALUES($1, $2, $3, $4, $5, $6);
+       VALUES($1, $2, $3, $4, ''$5''::text, ''$6''::text);
 DELETE FROM recent WHERE id=$1;
 INSERT INTO recent (id, latestversion, latestmajor, latestminor)
   SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
@@ -298,13 +305,10 @@ INSERT INTO nonempty (id)
           AND version=latestversion
           AND content<>''''
           AND recent.id=$1;
-COMMIT; 
 ' LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION prepare_rename_page (oldid INT4, newid INT4) 
-        RETURNS void AS
-'
-BEGIN;
+        RETURNS void AS '
 DELETE FROM page     WHERE id=$2;
 DELETE FROM version  WHERE id=$2;
 DELETE FROM recent   WHERE id=$2;
@@ -312,5 +316,4 @@ DELETE FROM nonempty WHERE id=$2;
 -- We have to fix all referring tables to the old id
 UPDATE link SET linkfrom=$1 WHERE linkfrom=$2;
 UPDATE link SET linkto=$1   WHERE linkto=$2;
-COMMIT;
 ' LANGUAGE sql;
