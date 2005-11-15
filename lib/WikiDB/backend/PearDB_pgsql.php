@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.20 2005-11-14 22:24:33 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.21 2005-11-15 21:15:13 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -117,7 +117,7 @@ extends WikiDB_backend_PearDB
         unset($data['%pagedata']);
         
         $id = $this->_get_pageid($pagename, true);
-        $dbh->query(sprintf("SELECT set_versiondata (%d, %d, %d; %d, '%s'::text, '%s'::text)",
+        $dbh->query(sprintf("SELECT set_versiondata (%d, %d, %d, %d, '%s'::text, '%s'::text)",
                             $id, $version, $mtime, $minor_edit, 
                             $this->_quote($content),
                             $this->_serialize($data)));
