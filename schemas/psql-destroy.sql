@@ -1,4 +1,4 @@
--- $Id: psql-destroy.sql,v 1.7 2005-11-14 22:20:21 rurban Exp $
+-- $Id: psql-destroy.sql,v 1.8 2005-11-15 21:12:22 rurban Exp $
 
 \set QUIET
 
@@ -29,45 +29,54 @@
 \set link_tbl		:prefix 'link'
 \set session_tbl	:prefix 'session'
 \set pref_tbl		:prefix 'pref'
--- \set user_tbl	:prefix 'user'
+--\set user_tbl	        :prefix 'user'
 \set member_tbl 	:prefix 'member'
 \set rating_tbl		:prefix 'rating'
 \set accesslog_tbl	:prefix 'accesslog'
 
-\echo Dropping :version_tbl
+\echo Dropping table :version_tbl
 DROP TABLE :version_tbl;
 
-\echo Dropping :recent_tbl
+\echo Dropping table :recent_tbl
 DROP TABLE :recent_tbl;
 
-\echo Dropping :nonempty_tbl
+\echo Dropping table :nonempty_tbl
 DROP TABLE :nonempty_tbl;
 
-\echo Dropping :link_tbl
+\echo Dropping table :link_tbl
 DROP TABLE :link_tbl;
 
---\echo Dropping :user_tbl
--- DROP TABLE :user_tbl;
-
-\echo Dropping :rating_tbl
+\echo Dropping table :rating_tbl
 DROP TABLE :rating_tbl;
 
-\echo Dropping :page_tbl
-DROP TABLE :page_tbl;
+\set existing_page :prefix 'existing_page'
+\echo Dropping view :existing_page
+DROP VIEW :existing_page;
+
+\set curr_page     :prefix 'curr_page'
+\echo Dropping view :curr_page
+DROP VIEW :curr_page;
+
+\echo Dropping table :page_tbl
+DROP TABLE :page_tbl CASCADE;
 \echo Dropping :page_id_seq only needed for postgresql < 7.2
 
-\echo Dropping :member_tbl
+\echo Dropping table :member_tbl
 DROP TABLE :member_tbl;
 
-\echo Dropping :pref_tbl
+\echo Dropping table :pref_tbl
 DROP TABLE :pref_tbl;
 
-\echo Dropping :session_tbl
+--\echo Dropping table :user_tbl
+--DROP TABLE :user_tbl;
+
+\echo Dropping table :session_tbl
 DROP TABLE :session_tbl;
 
-\echo Dropping :accesslog_tbl
+\echo Dropping table :accesslog_tbl
 DROP TABLE :accesslog_tbl;
 
+\echo Dropping stored procedures
 DROP FUNCTION delete_versiondata (INT4, INT4);
 DROP FUNCTION set_versiondata (INT4, INT4, INT4, INT2, TEXT, TEXT);
 DROP FUNCTION prepare_rename_page (INT4, INT4);

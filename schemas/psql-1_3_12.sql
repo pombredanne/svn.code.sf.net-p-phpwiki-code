@@ -1,4 +1,4 @@
--- $Id: psql-1_3_12.sql,v 1.2 2005-11-14 23:09:40 rurban Exp $
+-- $Id: psql-1_3_12.sql,v 1.3 2005-11-15 21:12:22 rurban Exp $
 
 \set QUIET
 
@@ -88,24 +88,34 @@ ALTER TABLE :version_tbl
         ADD FOREIGN KEY (id) REFERENCES :page_tbl ON DELETE CASCADE;
 ALTER TABLE :nonempty_tbl 
 	ALTER COLUMN id TYPE INT4, 
-	ALTER COLUMN id SET NOT NULL,
         ADD FOREIGN KEY (id) REFERENCES :page_tbl ON DELETE CASCADE;
+
+\echo Creating page views
+
+-- nonempty versiondata
+CREATE VIEW existing_page AS
+  SELECT * FROM :page_tbl P INNER JOIN :nonempty_tbl N USING (id);
+
+-- latest page version
+CREATE VIEW curr_page AS
+  SELECT P.id,P.pagename,P.hits,P.pagedata,P.cached_html,
+	 V.version,V.mtime,V.minor_edit,V.content,V.versiondata
+  FROM :page_tbl P 
+    JOIN :version_tbl V USING (id)
+    JOIN :recent_tbl  R ON (V.id=R.id AND V.version=R.latestversion);
+
 ALTER TABLE :link_tbl 
 	ALTER COLUMN linkfrom TYPE INT4,
-	ALTER COLUMN linkfrom SET NOT NULL,
 	ALTER COLUMN linkto   TYPE INT4,
-	ALTER COLUMN linkto   SET NOT NULL,
 	ADD COLUMN relation INT4 DEFAULT 0,
-        ADD FOREIGN KEY (linkfrom) REFERENCES :page_tbl (id) ON DELETE CASCADE,
-        ADD FOREIGN KEY (linkto) REFERENCES :page_tbl (id) ON DELETE CASCADE;
+        ADD FOREIGN KEY (linkfrom) REFERENCES :page_tbl (id),
+        ADD FOREIGN KEY (linkto)   REFERENCES :page_tbl (id);
 CREATE INDEX :relation_idx ON :link_tbl (relation);
 ALTER TABLE :rating_tbl 
 	ALTER COLUMN raterpage TYPE INT8,
-	ALTER COLUMN raterpage SET NOT NULL,
 	ALTER COLUMN rateepage TYPE INT8,
-	ALTER COLUMN rateepage SET NOT NULL,
-        ADD FOREIGN KEY (raterpage) REFERENCES :page_tbl (id) ON DELETE CASCADE,
-        ADD FOREIGN KEY (rateepage) REFERENCES :page_tbl (id) ON DELETE CASCADE;
+        ADD FOREIGN KEY (raterpage) REFERENCES :page_tbl (id),
+        ADD FOREIGN KEY (rateepage) REFERENCES :page_tbl (id);
 ALTER TABLE :member_tbl 
 	ALTER COLUMN userid TYPE CHAR(48), 
 	ALTER COLUMN userid SET NOT NULL,
@@ -140,10 +150,11 @@ CREATE TRIGGER tsvectorupdate BEFORE UPDATE OR INSERT ON :version_tbl
 CREATE OR REPLACE FUNCTION delete_versiondata (id integer, version integer) 
 	RETURNS void AS '
 DELETE FROM version WHERE id=$1 AND version=$2;
-DELETE FROM recent WHERE id=$1;
+DELETE FROM recent  WHERE id=$1;
 INSERT INTO recent (id, latestversion, latestmajor, latestminor)
-  SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
-	                   MAX(CASE WHEN minor_edit<>0 THEN version END)
+  SELECT id, MAX(version), 
+	 MAX(CASE WHEN minor_edit=0  THEN version END), 
+	 MAX(CASE WHEN minor_edit<>0 THEN version END)
     FROM version WHERE id=$2 GROUP BY id;
 DELETE FROM nonempty WHERE id=$1;
 INSERT INTO nonempty (id)
@@ -158,8 +169,7 @@ INSERT INTO nonempty (id)
 CREATE OR REPLACE FUNCTION 
         set_versiondata (id integer, version integer, mtime integer, minor_edit smallint,
                          content text, versiondata text)
-	RETURNS void AS 
-'
+	RETURNS void AS '
 DELETE FROM version WHERE id=$1 AND version=$2;
 INSERT INTO version (id,version,mtime,minor_edit,content,versiondata)
        VALUES($1, $2, $3, $4, ''$5''::text, ''$6''::text);
@@ -179,8 +189,7 @@ INSERT INTO nonempty (id)
 ' LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION prepare_rename_page (oldid integer, newid integer) 
-        RETURNS void AS
-'
+        RETURNS void AS '
 DELETE FROM page     WHERE id=$2;
 DELETE FROM version  WHERE id=$2;
 DELETE FROM recent   WHERE id=$2;
