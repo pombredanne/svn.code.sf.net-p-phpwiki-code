@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.21 2005-11-15 21:15:13 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.22 2005-11-16 07:36:22 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -116,11 +116,16 @@ extends WikiDB_backend_PearDB
         unset($data['%content']);
         unset($data['%pagedata']);
         
+        $this->lock();
         $id = $this->_get_pageid($pagename, true);
-        $dbh->query(sprintf("SELECT set_versiondata (%d, %d, %d, %d, '%s'::text, '%s'::text)",
-                            $id, $version, $mtime, $minor_edit, 
+        $dbh->query(sprintf("DELETE FROM version WHERE id=%d AND version=%d", $id, $version));
+        $dbh->query(sprintf("INSERT INTO version (id,version,mtime,minor_edit,content,versiondata)" .
+                            " VALUES (%d, %d, %d, %d, '%s', '%s')",
+                            $id, $version, $mtime, $minor_edit,
                             $this->_quote($content),
                             $this->_serialize($data)));
+        $dbh->query(sprintf("SELECT update_recent (%d, %d)", $id, $version));
+        $this->unlock();
     }
 
     /**
