@@ -1,12 +1,12 @@
--- $Id: psql-initialize.sql,v 1.9 2005-11-15 21:12:22 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.10 2005-11-16 07:33:43 rurban Exp $
 
 \set QUIET
 
--- init the database with: 
--- $ createdb phpwiki
--- $ createuser -S -R -d phpwiki # (see httpd_user below)
--- $ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
--- $ psql phpwiki < psql-initialize.sql
+\echo At first init the database with: 
+\echo $ createdb phpwiki
+\echo $ createuser -S -R -d phpwiki      # (see httpd_user below)
+\echo $ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
+\echo $ psql phpwiki < psql-initialize.sql
 
 --================================================================
 -- Prefix for table names.
@@ -117,6 +117,7 @@ CREATE TABLE :recent_tbl (
 	CHECK (latestminor >= latestmajor)
 );
 CREATE UNIQUE INDEX :recent_id_idx ON :recent_tbl (id);
+CREATE INDEX recent_latestversion_idx ON :recent_tbl (latestversion);
 
 \echo Creating :nonempty_tbl
 CREATE TABLE :nonempty_tbl (
@@ -124,7 +125,38 @@ CREATE TABLE :nonempty_tbl (
 );
 CREATE UNIQUE INDEX :nonmt_id_idx ON :nonempty_tbl (id);
 
-\echo Creating page views
+\echo Creating experimental pagedata (not yet used)
+CREATE TABLE pagedata (
+	id	INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
+	date    INT4,
+	locked  BOOLEAN,
+        rest	TEXT NOT NULL DEFAULT ''
+);
+CREATE INDEX pagedata_id_idx ON pagedata (id);
+
+\echo Creating experimental versiondata (not yet used)
+CREATE TABLE versiondata (
+	id	  INT4 NOT NULL,
+	version	  INT4 NOT NULL,
+	markup    INT2 DEFAULT 2, 
+	author    VARCHAR(48), 
+	author_id VARCHAR(48), 
+	pagetype  VARCHAR(20) DEFAULT 'wikitext', 
+        rest	  TEXT NOT NULL DEFAULT '',
+	FOREIGN KEY (id, version) REFERENCES :version_tbl (id, version)
+);
+\echo Creating experimental pageperm (not yet used)
+CREATE TABLE pageperm (
+	id	 INT4 NOT NULL REFERENCES :page_tbl(id) ON DELETE CASCADE,
+        -- view,edit,create,list,remove,change,dump
+	access   CHAR(12) NOT NULL, 
+	groupname VARCHAR(48),
+	allowed  BOOLEAN
+);
+CREATE INDEX pageperm_id_idx ON pageperm (id);
+CREATE INDEX pageperm_access_idx ON pageperm (access);
+
+\echo Creating experimental page views (not yet used)
 
 -- nonempty versiondata
 CREATE VIEW existing_page AS
@@ -187,6 +219,7 @@ CREATE TABLE :pref_tbl (
 	groupname CHAR(48) DEFAULT 'users'
 );
 -- CREATE UNIQUE INDEX :pref_id_idx ON :pref_tbl (userid);
+CREATE INDEX pref_group_idx ON :pref_tbl (groupname);
 
 -- Use the member table, if you need it for n:m user-group relations,
 -- and adjust your DBAUTH_AUTH_ SQL statements.
@@ -267,9 +300,8 @@ GRANT SELECT,INSERT,UPDATE,DELETE ON :accesslog_tbl	TO :httpd_user;
 
 \echo Initializing stored procedures
 
-CREATE OR REPLACE FUNCTION delete_versiondata (id INT4, version INT4) 
+CREATE OR REPLACE FUNCTION update_recent (id INT4, version INT4) 
 	RETURNS void AS '
-DELETE FROM version WHERE id=$1 AND version=$2;
 DELETE FROM recent  WHERE id=$1;
 INSERT INTO recent (id, latestversion, latestmajor, latestminor)
   SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
@@ -284,28 +316,6 @@ INSERT INTO nonempty (id)
           AND content<>''''
           AND recent.id=$1;
 ' LANGUAGE SQL;
-
-CREATE OR REPLACE FUNCTION 
-        set_versiondata (id INT4, version INT4, mtime INT4, minor_edit INT2,
-                         content TEXT, versiondata TEXT)
-	RETURNS void AS '
-DELETE FROM version WHERE id=$1 AND version=$2;
-INSERT INTO version (id,version,mtime,minor_edit,content,versiondata)
-       VALUES($1, $2, $3, $4, ''$5''::text, ''$6''::text);
-DELETE FROM recent WHERE id=$1;
-INSERT INTO recent (id, latestversion, latestmajor, latestminor)
-  SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
-	                   MAX(CASE WHEN minor_edit<>0 THEN version END)
-    FROM version WHERE id=$2 GROUP BY id;
-DELETE FROM nonempty WHERE id=$1;
-INSERT INTO nonempty (id)
-  SELECT recent.id
-    FROM recent, version
-    WHERE recent.id=version.id
-          AND version=latestversion
-          AND content<>''''
-          AND recent.id=$1;
-' LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION prepare_rename_page (oldid INT4, newid INT4) 
         RETURNS void AS '

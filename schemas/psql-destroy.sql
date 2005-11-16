@@ -1,4 +1,4 @@
--- $Id: psql-destroy.sql,v 1.8 2005-11-15 21:12:22 rurban Exp $
+-- $Id: psql-destroy.sql,v 1.9 2005-11-16 07:33:43 rurban Exp $
 
 \set QUIET
 
@@ -35,13 +35,18 @@
 \set accesslog_tbl	:prefix 'accesslog'
 
 \echo Dropping table :version_tbl
-DROP TABLE :version_tbl;
+DROP TABLE :version_tbl CASCADE;
 
 \echo Dropping table :recent_tbl
-DROP TABLE :recent_tbl;
+DROP TABLE :recent_tbl CASCADE;
 
 \echo Dropping table :nonempty_tbl
-DROP TABLE :nonempty_tbl;
+DROP TABLE :nonempty_tbl CASCADE;
+
+\echo Dropping experimental pagedata tables (not yet used)
+DROP TABLE pagedata CASCADE;
+DROP TABLE versiondata CASCADE;
+DROP TABLE pageperm CASCADE;
 
 \echo Dropping table :link_tbl
 DROP TABLE :link_tbl;
@@ -77,6 +82,5 @@ DROP TABLE :session_tbl;
 DROP TABLE :accesslog_tbl;
 
 \echo Dropping stored procedures
-DROP FUNCTION delete_versiondata (INT4, INT4);
-DROP FUNCTION set_versiondata (INT4, INT4, INT4, INT2, TEXT, TEXT);
+DROP FUNCTION update_recent (INT4, INT4);
 DROP FUNCTION prepare_rename_page (INT4, INT4);

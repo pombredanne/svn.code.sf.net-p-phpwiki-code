@@ -1,4 +1,4 @@
--- $Id: psql-1_3_12.sql,v 1.3 2005-11-15 21:12:22 rurban Exp $
+-- $Id: psql-1_3_12.sql,v 1.4 2005-11-16 07:33:43 rurban Exp $
 
 \set QUIET
 
@@ -172,7 +172,7 @@ CREATE OR REPLACE FUNCTION
 	RETURNS void AS '
 DELETE FROM version WHERE id=$1 AND version=$2;
 INSERT INTO version (id,version,mtime,minor_edit,content,versiondata)
-       VALUES($1, $2, $3, $4, ''$5''::text, ''$6''::text);
+       VALUES($1, $2, $3, $4, $5, $6);
 DELETE FROM recent WHERE id=$1;
 INSERT INTO recent (id, latestversion, latestmajor, latestminor)
   SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
