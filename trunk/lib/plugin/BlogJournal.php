@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BlogJournal.php,v 1.3 2005-11-21 20:47:21 rurban Exp $');
+rcs_id('$Id: BlogJournal.php,v 1.4 2005-11-21 20:56:23 rurban Exp $');
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam
  */
@@ -28,7 +28,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
@@ -74,7 +74,7 @@ extends WikiPlugin_WikiBlog
             if ($rev->get('pagetype') != 'wikiblog') continue;
             $i++;
             $blog = $this->_blog($rev);
-            $html->pushContent(HTML::h3(WikiLink($page, 'known', $rev->get('summary'))));
+            //$html->pushContent(HTML::h3(WikiLink($page, 'known', $rev->get('summary'))));
             $html->pushContent($rev->getTransformedContent('wikiblog'));
         }
         if ($args['user'] == $user->UserName())
@@ -90,6 +90,9 @@ extends WikiPlugin_WikiBlog
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2005/11/21 20:47:21  rurban
+// fix count error
+//
 // Revision 1.2  2005/10/29 09:06:37  rurban
 // move common blog methods to WikiBlog
 //
