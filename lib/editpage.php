@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.104 2005-10-31 17:20:40 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.105 2005-11-21 20:53:59 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -18,7 +18,6 @@ class PageEditor
             if (! $this->current->hasDefaultContents()) 
                 $request->redirect(WikiURL($this->page->getName())); // noreturn
         }
-        
         
         $this->meta = array('author' => $this->user->getId(),
                             'author_id' => $this->user->getAuthenticatedId(),
@@ -57,7 +56,8 @@ class PageEditor
 
             // The edit request has specified some initial content from a template 
             if (  ($template = $request->getArg('template'))
-                   and $request->_dbi->isWikiPage($template)) {
+                   and $request->_dbi->isWikiPage($template)) 
+            {
                 $page = $request->_dbi->getPage($template);
                 $current = $page->getCurrentRevision();
                 $this->_content = $current->getPackedContent();
@@ -76,14 +76,15 @@ class PageEditor
         $tokens = &$this->tokens;
         $tokens['PAGE_LOCKED_MESSAGE'] = '';
         $tokens['CONCURRENT_UPDATE_MESSAGE'] = '';
+        $r =& $this->request;
 
-        if (isset($this->request->args['pref']['editWidth'])
-            and ($this->request->getPref('editWidth') != $this->request->args['pref']['editWidth'])) {
-            $this->request->_prefs->set('editWidth', $this->request->args['pref']['editWidth']);
+        if (isset($r->args['pref']['editWidth'])
+            and ($r->getPref('editWidth') != $r->args['pref']['editWidth'])) {
+            $r->_prefs->set('editWidth', $r->args['pref']['editWidth']);
         }
-        if (isset($this->request->args['pref']['editHeight'])
-            and ($this->request->getPref('editHeight') != $this->request->args['pref']['editHeight'])) {
-            $this->request->_prefs->set('editHeight', $this->request->args['pref']['editHeight']);
+        if (isset($r->args['pref']['editHeight'])
+            and ($r->getPref('editHeight') != $r->args['pref']['editHeight'])) {
+            $r->_prefs->set('editHeight', $r->args['pref']['editHeight']);
         }
 
         if (! $this->canEdit()) {
@@ -91,14 +92,14 @@ class PageEditor
                 return $this->viewSource();
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
         }
-        elseif ($this->request->getArg('save_and_redirect_to') != "") {
+        elseif ($r->getArg('save_and_redirect_to') != "") {
             if (ENABLE_CAPTCHA && $this->Captcha->Failed()) {
 		$this->tokens['PAGE_LOCKED_MESSAGE'] = 
                     HTML::p(HTML::h1($this->Captcha->failed_msg));
 	    }
             elseif ( $this->savePage()) {
                 // noreturn
-                $this->request->redirect(WikiURL($this->request->getArg('save_and_redirect_to')));
+                $r->redirect(WikiURL($r->getArg('save_and_redirect_to')));
                 return true;    // Page saved.
             }
             $saveFailed = true;
@@ -135,7 +136,8 @@ class PageEditor
             $this->_currentVersion = $this->current->getVersion();
             $this->version = $this->_currentVersion;
             $unresolved = $diff->ConflictingBlocks;
-            $tokens['CONCURRENT_UPDATE_MESSAGE'] = $this->getConflictMessage($unresolved);
+            $tokens['CONCURRENT_UPDATE_MESSAGE'] 
+                = $this->getConflictMessage($unresolved);
         } elseif ($saveFailed && !$this->_isSpam) {
             $tokens['CONCURRENT_UPDATE_MESSAGE'] = 
                 HTML(HTML::h2(_("Some internal editing error")),
@@ -231,7 +233,7 @@ class PageEditor
             return true;
         }
 
-        if ($this->isSpam()) {
+        if (!$this->user->isAdmin() and $this->isSpam()) {
             $this->_isSpam = true;
             return false;
             /*
@@ -277,8 +279,8 @@ class PageEditor
         $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
         $cleaner->cleanPageRevisions($page);
 
-        /* generate notification emails done in WikiDB::save to catch all direct calls 
-          (admin plugins) */
+        /* generate notification emails done in WikiDB::save to catch 
+         all direct calls (admin plugins) */
 
         // look at the errorstack
         $errors   = $GLOBALS['ErrorManager']->_postponed_errors;
@@ -354,7 +356,9 @@ class PageEditor
         //        better use a certain text : link ratio.
 
         // 1. Not more then 20 new external links
-        if ($this->numLinks($newtext) - $this->numLinks($oldtext) >= NUM_SPAM_LINKS) {
+        if ($this->numLinks($newtext) - $this->numLinks($oldtext) >= NUM_SPAM_LINKS)
+        {
+            // Allow strictly authenticated users?
             // TODO: mail the admin?
             $this->tokens['PAGE_LOCKED_MESSAGE'] = 
                 HTML($this->getSpamMessage(),
@@ -364,10 +368,9 @@ class PageEditor
         // 2. external babycart (SpamAssassin) check
         // This will probably prevent from discussing sex or viagra related topics. So beware.
         if (ENABLE_SPAMASSASSIN) {
-            $user = $request->getUser();
             include_once("lib/spam_babycart.php");
             if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"), 
-                                           $user->getId())) {
+                                           $this->user->getId())) {
                 // TODO: mail the admin
                 if (is_array($babycart))
                     $this->tokens['PAGE_LOCKED_MESSAGE'] = 
@@ -772,6 +775,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.104  2005/10/31 17:20:40  rurban
+ fix ConvertBefore
+
  Revision 1.103  2005/10/31 17:09:13  rurban
  use better constant WYSIWYG_DEFAULT_PAGETYPE_HTML
 
