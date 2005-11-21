@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.105 2005-11-21 20:53:59 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.106 2005-11-21 22:03:08 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -375,8 +375,8 @@ class PageEditor
                 if (is_array($babycart))
                     $this->tokens['PAGE_LOCKED_MESSAGE'] = 
                         HTML($this->getSpamMessage(),
-                             HTML::p(HTML::em(_("SpamAssassin reports: ", 
-                                                join("\n", $babycart)))));
+                             HTML::p(HTML::em(_("SpamAssassin reports: "), 
+                                                join("\n", $babycart))));
                 return true;
             }
         }
@@ -775,6 +775,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.105  2005/11/21 20:53:59  rurban
+ beautify request pref lines, no antispam if admin (netznetz request), user is a member anyway
+
  Revision 1.104  2005/10/31 17:20:40  rurban
  fix ConvertBefore
 
