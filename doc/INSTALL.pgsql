@@ -1,7 +1,19 @@
-Note: postgresql does work with phpwiki 1.2.x and 1.3.x
+NOTE: postgresql does work with phpwiki 1.2.x and 1.3.x
 
 You might want to see http://www.sslug.dk/~chlor/phpwiki-pgsql-install.html 
 for notes how to install it for 1.3.4 (and later)
+
+UPGRADE FROM 1.3.11 to 1.3.12
+
+  tsearch2 is mandatory now.
+  stored procedures and referential integrity was added.
+  auto-incrementing indices were added (SERIAL INDEX)
+  The user table is deprecated now, pref is enough.
+
+  There's a special upgrade script:
+
+  bash$ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
+  bash$ pgql phpwiki < schemas/psql-1_3_12.sql
 
 ----------
 NOTE for the 1.2 release: You may see a few warnings when you first
@@ -24,21 +36,22 @@ Installation of Postgresql will not be discussed here... you can get a
 copy from http://www.postgresql.org/. However if you are running 
 Red Hat Linux, all you need to do is install the PHP RPM and the 
 Postgresql RPM and edit your Apache httpd.conf file, and uncomment 
-the lines for all PHP files (and add index.php to the list of directory
-files while you're at it... you may also need to add .php as a type
-handled by mod_php: 
+the lines for all PHP files.
 
-<IfModule mod_php3.c>
-  AddType application/x-httpd-php3 .php3
-  AddType application/x-httpd-php3 .php
-  AddType application/x-httpd-php3-source .phps
-</IfModule>
+  And BTW. add index.php to the list of directory files while you're 
+  at it... you may also need to add .php as a type handled by mod_php: 
 
-FIXME: php4
+  <IfModule mod_php3.c>
+    AddType application/x-httpd-php3 .php3
+    AddType application/x-httpd-php3 .php
+    AddType application/x-httpd-php3-source .phps
+  </IfModule>
 
-(This is from a stock 6.2 Red Hat distro, which ships with an rpm of
-PHP 3.0.12, but should give you an idea. I had to add the line for
-.php).
+  FIXME: php4
+
+  (This is from a stock 6.2 Red Hat distro, which ships with an rpm of
+  PHP 3.0.12, but should give you an idea. I had to add the line for
+  .php).
 
 Also note that Postgresql by default has a hard limit of 8K per
 row. This is a Really Bad Thing. You can change that when you compile
@@ -66,6 +79,14 @@ Now run the script schemas/psql-initialize.sql to create the tables:
 Newer versions of postgresql will require: 
   bash$ pgql phpwiki < schemas/psql-initialize.sql
 
+Since phpwiki-1.3.12 you'll need to initialize the tsearch2 module before.
+You may want to manually inspect schemas/psql-initialize.sql and add 
+dictionaries and stopword lists for your language.
+See http://www.sai.msu.su/~megera/postgres/gist/tsearch/V2/
+
+  bash$ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
+  bash$ pgql phpwiki < schemas/psql-initialize.sql
+
 If the schema starts to load but then fails near the end, you might
 need to change the user name at the top of psql-initialize.sql to
 match that which is used by your web server; e.g. nobody, apache, or
@@ -75,10 +96,9 @@ For some reason I had to stop/start the database so that these changes took
 effect.. after that just open up the Wiki in your browser and you should
 have a brand-new PhpWiki running!
 
-If you find something I missed, please let me know.
-Steve Wainstead
-swain@panix.com
+If you find something I missed, please let us know.
+Reini Urban, Steve Wainstead <swain@panix.com>
 
 Report bugs to phpwiki-talk@lists.sourceforge.net
 
-$Id: INSTALL.pgsql,v 1.6 2004-12-17 09:28:40 rurban Exp $
+$Id: INSTALL.pgsql,v 1.7 2005-11-21 20:50:26 rurban Exp $
