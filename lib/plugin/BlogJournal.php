@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BlogJournal.php,v 1.2 2005-10-29 09:06:37 rurban Exp $');
+rcs_id('$Id: BlogJournal.php,v 1.3 2005-11-21 20:47:21 rurban Exp $');
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam
  */
@@ -28,7 +28,7 @@ extends WikiPlugin_WikiBlog
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -69,7 +69,7 @@ extends WikiPlugin_WikiBlog
             $prefix .= (SUBPAGE_SEPARATOR . $args['month']);
         $pages = $dbi->titleSearch(new TextSearchQuery("^".$prefix, true, 'posix'));
         $html = HTML(); $i = 0;
-        while (($page = $pages->next()) and $i < $count) {
+        while (($page = $pages->next()) and $i < $args['count']) {
             $rev = $page->getCurrentRevision(false);
             if ($rev->get('pagetype') != 'wikiblog') continue;
             $i++;
@@ -90,6 +90,9 @@ extends WikiPlugin_WikiBlog
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2005/10/29 09:06:37  rurban
+// move common blog methods to WikiBlog
+//
 // Revision 1.1  2005/10/29 09:03:17  rurban
 // Include the latest blog entries for the current users blog if signed,
 // or the ADMIN_USER's Blog if not.
