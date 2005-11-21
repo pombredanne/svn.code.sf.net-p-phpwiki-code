@@ -79,16 +79,16 @@ $database_backends = array(
                            'dba',
                            'SQL',   // default backend defined in the config.ini DSN
                            'ADODB', // same backend as defined in the config.ini DSN
-			   // specific backends (need to be setup)
+			   // specific backends (need to be setup as db=test_phpwiki
 			   'PearDB_pgsql', 'PearDB_sqlite', 'PearDB_mysql',
-			   //'PearDB_oci8', 
-			   //'PearDB_mssql', 
+			   //'PearDB_oci8','PearDB_mssql', 
 			   'ADODB_postgres7', 'ADODB_sqlite', 'ADODB_mysql', 
-			   //'ADODB_oci8', 
-			   //'ADODB_mssql', 
-			   'PDO_pqsql', 'PDO_sqlite', 'PDO_mysql', 
-			   //'PDO_oci', 'PDO_odbc', 
+			   //'ADODB_oci8', 'ADODB_mssql', 
                            );
+if ((int)substr(phpversion(), 1) >= 5)
+    array_push($database_backends, 'PDO_pqsql', 'PDO_sqlite', 'PDO_mysql');
+                                   //'PDO_oci', 'PDO_odbc'
+
 //TODO: convert cvs test                           
 //TODO: read some database values from config.ini, just use the "test_" prefix
 // "flatfile" testing occurs in "tests/unit/.testbox/"
@@ -373,7 +373,8 @@ $user_level  = 1; // BOGO (conflicts with RateIt)
 $alltests = array('InlineParserTest','HtmlParserTest',
                   'PageListTest','ListPagesTest',
                   'SetupWiki',
-                  'AllPagesTest','AllUsersTest','OrphanedPagesTest','WantedPagesTest','TextSearchTest',
+                  'AllPagesTest','AllUsersTest','OrphanedPagesTest','WantedPagesTest',
+                  'TextSearchTest','IncludePageTest',
                   'DumpHtml');
 // support db=file db=dba test=SetupWiki test=DumpHtml debug=num -dconstant=value
 // or  db=file,dba test=SetupWiki,DumpHtml debug=num -dconstant=value
@@ -394,6 +395,7 @@ if (!empty($argv)) {
     $runtests = array();
     $define = array();
     $run_database_backends = array();
+    $m = array();
     foreach ($argv as $arg) {
         if (preg_match("/^test=(.+)$/",$arg,$m) and in_array($m[1], $alltests))
             $runtests[] = $m[1];
@@ -480,7 +482,7 @@ global $ErrorManager;
 $ErrorManager->setPostponedErrorMask(EM_FATAL_ERRORS|EM_WARNING_ERRORS|EM_NOTICE_ERRORS);
 // FIXME: ignore cached requests (if-modified-since) from cli
 class MockRequest extends WikiRequest {
-    function MockRequest(&$dbparams) {
+    function MockRequest($dbparams) {
         $this->_dbi = WikiDB::open($dbparams);
         $this->_user = new MockUser("a_user", $GLOBALS['user_level']);
         $this->_group = new GroupNone();
@@ -533,6 +535,7 @@ if (DEBUG & _DEBUG_TRACE)
 // provide a nice input form for all options
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD'])) {
     echo html_option_form();
+    flush();
 }
 
 // save and restore all args for each test.
