@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: InlineParserTest.php,v 1.7 2005-07-24 10:22:53 rurban Exp $');
+rcs_id('$Id: InlineParserTest.php,v 1.8 2005-11-21 22:16:46 rurban Exp $');
 
 /* Copyright (C) 2004, Dan Frankowski <dfrankow@cs.umn.edu>
  * testLinks: Reini Urban
@@ -83,7 +83,7 @@ actual
             $this->assertEquals($expected, $actual);
         }
     }
-    
+   
 }
 
 // (c-file-style: "gnu")
