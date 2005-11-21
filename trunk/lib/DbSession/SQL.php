@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.1 2005-02-11 14:41:40 rurban Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.2 2005-11-21 20:57:58 rurban Exp $');
 
 /**
  * DB sessions for pear DB
@@ -31,7 +31,7 @@ extends DbSession
         return $this;
     }
 
-    function _connect() {
+    function & _connect() {
         $dbh = &$this->_dbh;
         $this->_connected = is_resource($dbh->connection);
         if (!$this->_connected) {
@@ -94,7 +94,7 @@ extends DbSession
      */
     function read ($id) {
         //$this->log("_read($id)");
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $table = $this->_table;
         $qid = $dbh->quote($id);
     
@@ -134,7 +134,7 @@ extends DbSession
      */
     function write ($id, $sess_data) {
         
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         //$dbh->unlock(false,1);
         $table = $this->_table;
         $qid = $dbh->quote($id);
@@ -182,7 +182,7 @@ extends DbSession
      * @access private
      */
     function destroy ($id) {
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $table = $this->_table;
         $qid = $dbh->quote($id);
 
@@ -200,7 +200,7 @@ extends DbSession
      * @access private
      */
     function gc ($maxlifetime) {
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $table = $this->_table;
         $threshold = time() - $maxlifetime;
 
@@ -214,7 +214,7 @@ extends DbSession
     // TODO: ip-accesstime dynamic blocking API
     function currentSessions() {
         $sessions = array();
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $table = $this->_table;
         $res = $dbh->query("SELECT sess_data,sess_date,sess_ip FROM $table ORDER BY sess_date DESC");
         if (DB::isError($res) || empty($res))
@@ -241,6 +241,9 @@ extends DbSession
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/02/11 14:41:40  rurban
+// seperate DbSession classes: less memory, a bit slower
+//
 
 // Local Variables:
 // mode: php
