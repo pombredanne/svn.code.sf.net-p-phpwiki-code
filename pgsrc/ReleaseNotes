@@ -1,9 +1,9 @@
-Date: Mon, 31 Oct 2005 18:06:58 +0100
+Date: Tue, 1 Nov 2005 23:19:01 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.61 2005-10-31 17:10:31 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.62 2005-11-21 22:19:00 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.61 $";
+  pgsrc_version="2 $Revision: 1.62 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -17,6 +17,7 @@ fixes:
 * fix setting the locale
 * PHP 5: compatibility fixes
 * fixed blog theme layout
+* fixed fulltext search and stoplist handling
 * don't log on ACCESS_LOG_SQL < 2
 
 changes:
@@ -24,6 +25,7 @@ changes:
 * generalized ENABLE_HTMLAREA3 to ENABLE_WYSIWYG
 * cache EditToolbar popup content
 * DB: foreign key support in schemas, simplify methods
+* print Ignored stoplist words on FullTextSearch
 * improved Captcha
 
 new:
