@@ -1,9 +1,9 @@
-Date: Mon, 17 Jan 2005 08:44:07 +0100
+Date: Mon, 17 Nov 2005 08:44:07 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
-X-Rcs-Id: $Id: PgsrcTranslation%2Fsv,v 1.1 2005-02-02 19:44:49 rurban Exp $
+X-Rcs-Id: $Id: PgsrcTranslation%2Fsv,v 1.2 2005-11-21 22:19:00 rurban Exp $
 Content-Type: application/x-phpwiki;
-  pagename=PgsrcTranslation%5Fsv;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pagename=PgsrcTranslation%2Fsv;
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
