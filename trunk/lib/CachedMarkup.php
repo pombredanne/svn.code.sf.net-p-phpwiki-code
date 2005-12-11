@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.38 2005-11-14 22:27:07 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.39 2005-12-11 11:13:06 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -578,7 +578,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
     }
 
     function expand($basepage, &$markup) {
-        $loader = &$this->_getLoader();
+        $loader = $this->_getLoader();
 
         $xml = $loader->expandPI($this->_pi, $GLOBALS['request'], $markup, $basepage);
         $div = HTML::div(array('class' => 'plugin'));
@@ -613,7 +613,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
         return $loader->getWikiPageLinks($this->_pi, $basepage);
     }
 
-    function _getLoader() {
+    function & _getLoader() {
         static $loader = false;
 
 	if (!$loader) {
