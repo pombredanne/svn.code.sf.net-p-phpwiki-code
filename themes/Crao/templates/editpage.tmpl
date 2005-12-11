@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.7 2005-09-28 19:00:24 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.8 2005-12-11 11:25:18 rurban Exp $ -->
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong>
 <!-- FIXME: it would be nice to put a link to the #editarea anchor below,
@@ -40,17 +40,26 @@
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
   </div></td></tr></table>
   <fieldset class="editarea">
-  <legend><?=_("Page Content: ")?></legend>
-  <a name="editarea"></a><?=$EDIT_TEXTAREA?>
-</fieldset>
+    <legend><?=_("Page Content: ")?></legend>
+    <a name="editarea"></a><?=$EDIT_TEXTAREA?>
+  </fieldset>
 <!-- FIXME: fix layout, move CSS to CSS -->
- <fieldset class="editarea">
-<legend><?=_("Summary").':'?></legend>
-<br /> <?=$SUMMARY_INPUT?>
-</fieldset>
+  <fieldset class="editarea">
+    <legend><?=_("Summary").':'?></legend><br />
+    <?=$SUMMARY_INPUT?>
+  </fieldset>
+<?php if (ENABLE_CAPTCHA) { ?>
+  <fieldset class="toolbar" style="text-align: center;">
+    <?php echo $CAPTCHA_IMAGE ?><br/>
+    <?php echo $CAPTCHA_LABEL ?><?= $CAPTCHA_INPUT ?>
+  </fieldset> 
+  <?php } ?>
   <fieldset class="toolbar"> 
     <?=$MINOR_EDIT_CB ?> <label for="edit:minor_edit"><?=_("This is a minor change.")?></label>&nbsp;&nbsp;
     <?=$OLD_MARKUP_CB?>  <label for="useOldMarkup"><?=_("Use old markup")?></label> <?=$OLD_MARKUP_CONVERT?>
+<?php if ($user->isAdmin()) { ?>
+    <?= $LOCKED_CB ?> <label for="edit:lock"><?=_("Locked")?></label>
+<?php } ?>
   </fieldset>
   <fieldset class="toolbar">
     <?= $PREVIEW_B ?>
@@ -62,11 +71,6 @@
     <?=$AUTHOR_MESSAGE?>
     <label><?= Template('signin', array('FORMNAME' => 'editpage')) ?></label>
   </fieldset>
-<?php if ($user->isAdmin()) { ?>
-  <fieldset class="toolbar">
-    <?= $LOCKED_CB ?> <label for="edit:lock"><?=_("Locked")?></label>
-  </fieldset>
-<?php } ?>
 <hr noshade="noshade" />
 <script language="JavaScript1.3" type="text/javascript">
 <!--
