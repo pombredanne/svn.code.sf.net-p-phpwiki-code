@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.39 2005-12-11 11:13:06 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.40 2005-12-27 08:50:45 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -58,7 +58,7 @@ class CacheableMarkup extends XmlContent {
             } else {
                 // user our php lib. TESTME
                 include_once("ziplib.php");
-                $zip = ZipReader($packed);
+                $zip = new ZipReader($packed);
                 list(,$data,$§attrib) = $zip->readFile();
                 return unserialize($data);
             }
