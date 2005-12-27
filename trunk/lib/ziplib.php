@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.44 2005-01-31 00:28:48 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.45 2005-12-27 18:05:48 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -39,17 +39,6 @@ function gzip_compress ($data) {
     if (!gzclose($fp)) {
         trigger_error(sprintf("%s failed", 'gzclose'), E_USER_ERROR);
     }
-/* ---- Original code ----  
-	$size = filesize($filename);
-    if (!($fp = fopen($filename, "rb"))) {
-        trigger_error(sprintf("%s failed", 'fopen'), E_USER_ERROR);
-	}
-    if (!($z = fread($fp, $size)) || strlen($z) != $size)
-        trigger_error(sprintf("%s failed", 'fread'), E_USER_ERROR);
-    if (!fclose($fp))
-        trigger_error(sprintf("%s failed", 'fclose'), E_USER_ERROR);
-*/
-// -- FIX -------------
     $z = NULL;
     if (!($fp = fopen($filename,"rb"))) {
         trigger_error(sprintf("%s failed", 'fopen'), E_USER_ERROR);
@@ -59,7 +48,6 @@ function gzip_compress ($data) {
     }
     if (!fclose($fp))
         trigger_error(sprintf("%s failed", 'fclose'), E_USER_ERROR);
-// -- End FIX ----------
     unlink($filename);
     return $z;
 }
@@ -373,7 +361,7 @@ class ZipWriter
 
 
 /**
- * Class for reading zip files.
+ * Class for reading zip files. Handles buffers also.
  *
  * BUGS:
  *
@@ -391,27 +379,50 @@ class ZipWriter
 class ZipReader
 {
     function ZipReader ($zipfile) {
-        if (!is_string($zipfile))
-            $this->fp = $zipfile;	// File already open
-        else if (!($this->fp = fopen($zipfile, "rb")))
-            trigger_error(sprintf(_("Can't open zip file '%s' for reading"),
-                                  $zipfile), E_USER_ERROR);
+        if (!is_string($zipfile)) { // filepointer: File already open
+            $this->fp = $zipfile;
+            $zipfile = NULL;
+        } elseif (((ord($zipfile[0]) * 256 + ord($zipfile[1])) % 31 == 0) // buffer
+		and (substr($zipfile,0,2) == "\037\213")
+		or (substr($zipfile,0,2) == "x\332")) {  // 120, 218
+	    $this->fp = NULL;	
+	    $this->buf = $zipfile;
+            $zipfile = NULL;
+	} 
+        if ($zipfile) {
+            $this->zipfile = $zipfile;
+            if (!($this->fp = fopen($zipfile, "rb"))) {
+                trigger_error(sprintf(_("Can't open zip file '%s' for reading"),
+                                    $zipfile), E_USER_ERROR);
+            }
+        }
     }
     
     function _read ($nbytes) {
-        $chunk = fread($this->fp, $nbytes);
-        if (strlen($chunk) != $nbytes)
-            trigger_error(_("Unexpected EOF in zip file"), E_USER_ERROR);
-        return $chunk;
+	if ($this->fp) {
+            $chunk = fread($this->fp, $nbytes);
+            if (strlen($chunk) != $nbytes)
+                trigger_error(_("Unexpected EOF in zip file"), E_USER_ERROR);
+            return $chunk;
+	} elseif ($this->buf)  {
+	    if (strlen($this->buf) < $nbytes)
+		trigger_error(_("Unexpected EOF in zip file"), E_USER_ERROR);
+	    $chunk = substr($this->buf, 0, $nbytes);
+	    $this->buf = substr($this->buf, $nbytes);
+	    return $chunk;
+	}
     }
     
     function done () {
-        fclose($this->fp);
+	if ($this->fp)
+            fclose($this->fp);
+	else
+	    $this->buf = '';
         return false;
     }
     
   function readFile () {
-      $head = $this->_read(30);
+      $head = $this->_read(30); // FIXME: This is bad for gzip compressed buffers
       
       extract(unpack("a4magic/vreq_version/vflags/vcomp_type"
                      . "/vmod_time/vmod_date"
@@ -419,13 +430,26 @@ class ZipReader
                      . "/vfilename_len/vextrafld_len",
                      $head));
       
-      //FIXME: we should probably check $req_version.
-      $attrib['mtime'] = dostime2unixtime($mod_date, $mod_time);
-      
       if ($magic != ZIP_LOCHEAD_MAGIC) {
+          // maybe gzip?
+          //$x = substr($magic,0,3);
+          if (substr($magic,0,3) == "\037\213\225")
+              //and (substr($magic,3,1) & 0x3e) == 0) 
+          {
+              if ($this->fp) {
+                  fclose($this->fp);
+                  $this->fp = fopen($this->zipfile, "rb");
+                  $content = $this->_read(filesize($this->fp));
+              } else {
+                  $content = $this->buf;
+              }
+              // TODO...
+              $data = zip_deflate($content);
+              return array($filename, $data, $attrib);
+          }
           if ($magic != ZIP_CENTHEAD_MAGIC)
               // FIXME: better message?
-              ExitWiki(sprintf("Bad header type: %s", $magic));
+              ExitWiki(sprintf("Unsupported ZIP header type: %s", $magic));
           return $this->done();
       }
       if (($flags & 0x21) != 0)
@@ -435,6 +459,8 @@ class ZipReader
           ExitWiki("Postponed CRC not yet supported.");
       
       $filename = $this->_read($filename_len);
+      //FIXME: we should probably check $req_version.
+      $attrib['mtime'] = dostime2unixtime($mod_date, $mod_time);
       if ($extrafld_len != 0)
           $attrib['extra_field'] = $this->_read($extrafld_len);
       
@@ -834,6 +860,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2005/01/31 00:28:48  rurban
+// fix bug 1044945: pgsrc upgrade problem if mime wo/body
+//
 // Revision 1.43  2005/01/25 08:00:09  rurban
 // use unix type to support subdirs with forward slash and long filenames
 //
