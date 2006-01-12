@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.138 2005-11-14 22:27:07 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.139 2006-01-12 16:38:07 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -430,6 +430,27 @@ class WikiDB {
         //return new WikiDB_PageIterator($this, $result);
     }
 
+    /**
+     * @access public
+     *
+     * @return array rows of pagenames.
+     */
+    function listRelations() {
+        if (method_exists($this->_backend, "list_relations"))
+            return $this->_backend->list_relations();
+        $iter = $this->getAllPages(false, false, false, $exclude);
+        while ($page = $iter->next()) {
+            $reliter = $page->getRelations();
+            $names = array();
+            while ($rel = $reliter->next()) {
+                $names[] = $rel->getName();
+            }
+            $relations = array_merge($relations, $names);
+            $reliter->free();
+        }
+        $iter->free();
+        return $relations;
+    }
 
     /**
      * Call the appropriate backend method.
@@ -657,8 +678,9 @@ class WikiDB_Page
                 trigger_error("empty pagename", E_USER_WARNING);
                 return false;
             }
-        } else 
+        } else {
             assert(is_string($pagename) and $pagename != '');
+        }
     }
 
     /**
@@ -1812,12 +1834,14 @@ class WikiDB_PageIterator
             return false;
 
         $pagename = &$next['pagename'];
+        if (!is_string($pagename)) // Bug #1327912 fixed by Joachim Lous
+            $pagename = strval($pagename);
         if (!$pagename) {
             trigger_error('empty pagename in WikiDB_PageIterator::next()', E_USER_WARNING);
             var_dump($next);
             return false;
         }
-        // there's always hits, but we cache only if more 
+        // There's always hits, but we cache only if more 
         // (well not with file, cvs and dba)
         if (isset($next['pagedata']) and count($next['pagedata']) > 1) {
             $this->_wikidb->_cache->cache_data($next);
@@ -2230,6 +2254,11 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.138  2005/11/14 22:27:07  rurban
+// add linkrelation support
+//   getPageLinks returns now an array of hashes
+// pass stoplist through iterator
+//
 // Revision 1.137  2005/10/12 06:16:18  rurban
 // better From header
 //
