@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.97 2005-10-29 14:16:38 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.98 2006-01-12 16:22:47 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -292,10 +292,12 @@ function IniConfig($file) {
             unset($rsdef[$item]);
         }
     }
-    if (!in_array(DATABASE_TYPE, array('SQL','ADODB','PDO','dba','file','cvs','cvsclient')))
+    $valid_database_types = array('SQL','ADODB','PDO','dba','file','flatfile','cvs','cvsclient');
+    if (!in_array(DATABASE_TYPE, $valid_database_types))
         trigger_error(sprintf("Invalid DATABASE_TYPE=%s. Choose one of %s", 
-                              DATABASE_TYPE, "SQL,ADODB,PDO,dba,file,cvs"), 
+                              DATABASE_TYPE, join(",", $valid_database_types)), 
                       E_USER_ERROR);
+    unset($valid_database_types);                  
     if (DATABASE_TYPE == 'PDO') {
         if (!check_php_version(5))
             trigger_error("Invalid DATABASE_TYPE=PDO. PDO requires at least php-5.0!", 
@@ -679,7 +681,11 @@ function fixup_dynamic_configs($file) {
  
     // Set up (possibly fake) gettext()
     // Todo: this could be moved to fixup_static_configs()
-    if (!function_exists ('bindtextdomain')) {
+    // Bug #1381464 with php-5.1.1
+    if (!function_exists ('bindtextdomain')
+        and !function_exists ('gettext')
+        and !function_exists ('_'))
+    {
         $locale = array();
 
         function gettext ($text) { 
@@ -688,7 +694,6 @@ function fixup_dynamic_configs($file) {
                 return $locale[$text];
             return $text;
         }
-
         function _ ($text) {
             return gettext($text);
         }
@@ -852,6 +857,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.97  2005/10/29 14:16:38  rurban
+// fix broken locale update
+//
 // Revision 1.96  2005/09/26 06:27:33  rurban
 // default locale fix Thomas Harding
 //
