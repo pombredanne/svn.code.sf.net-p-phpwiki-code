@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.99 2005-09-18 16:01:09 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.100 2006-01-17 18:57:09 uckelman Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -433,7 +433,7 @@ class Request {
             global $RUNTIMER;
             if ($RUNTIMER) $this->_accesslog->setDuration($RUNTIMER->getTime());
             // sql logging must be done before the db is closed.
-            if ($this->_accesslog->logtable)
+            if (isset($this->_accesslog->logtable))
                 $this->_accesslog->write_sql();
         }
         
@@ -1346,6 +1346,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.99  2005/09/18 16:01:09  rurban
+// trick to send the correct gzipped Content-Length
+//
 // Revision 1.98  2005/09/18 15:15:53  rurban
 // add a proper Content-Encoding: gzip if compressed, and omit Content-Length then.
 //
