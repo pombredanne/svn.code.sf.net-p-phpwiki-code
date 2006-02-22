@@ -1,10 +1,10 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_postgres7.php,v 1.4 2006-02-22 18:58:43 rurban Exp $');
+rcs_id('$Id: ADODB_postgres7.php,v 1.5 2006-02-22 21:51:27 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
-if (!defined("USE_BYTEA")) // see schemas/psql-initialize.sql
-    define("USE_BYTEA", true);
+if (!defined("USE_BYTEA"))     // see schemas/psql-initialize.sql
+    define("USE_BYTEA", true); // only BYTEA is binary safe
     //define("USE_BYTEA", false);
 
 /**
@@ -47,10 +47,7 @@ extends WikiDB_backend_ADODB
     function _quote($s) {
 	if (USE_BYTEA)
 	    return $this->_dbh->BlobEncode($s);
-	if (function_exists('pg_escape_string'))
-	    return pg_escape_string($s);
-	else
-	    return base64_encode($s);
+        return base64_encode($s);
     }
 
     // just for blobs, which might be base64_encoded
@@ -61,10 +58,7 @@ extends WikiDB_backend_ADODB
 	    // TODO: already unescaped by ADORecordSet_postgres64::_decode?
 	    return $s;
 	}
-	if (function_exists('pg_escape_string'))
-	    return $s;
-	else
-	    return base64_decode($s);
+        return base64_decode($s);
     }
 
     function get_cached_html($pagename) {
@@ -93,20 +87,23 @@ extends WikiDB_backend_ADODB
 			  . " SET cached_html=?"
 			  . " WHERE pagename=?",
 			  array($this->_quote($data), $pagename));
+        }
     }
 
     /**
      * Lock all tables we might use.
+     * postgresql has proper transactions so we dont need table locks.
      */
     function _lock_tables($tables, $write_lock = true) {
-        $this->_dbh->Execute("BEGIN");
+        ;
     }
 
     /**
      * Unlock all tables.
+     * postgresql has proper transactions so we dont need table locks.
      */
     function _unlock_tables($tables, $write_lock=false) {
-        $this->_dbh->Execute("COMMIT");
+        ;
     }
 
     /**
