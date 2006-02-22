@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dba.php,v 1.3 2005-08-07 10:49:57 rurban Exp $');
+<?php rcs_id('$Id: dba.php,v 1.4 2006-02-22 20:56:24 rurban Exp $');
 
 /** DBA Sessions
  *  session:
@@ -27,7 +27,7 @@ extends DbSession
     function quote($str) { return $str; }
     function query($sql) { return false; }
 
-    function _connect() {
+    function & _connect() {
         global $DBParams;
         $dbh = &$this->_dbh;
         if (!$dbh) {
@@ -112,7 +112,7 @@ extends DbSession
     // TODO: ip-accesstime dynamic blocking API
     function currentSessions() {
         $sessions = array();
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         for ($id = $dbh->firstkey(); $id !== false; $id = $dbh->nextkey()) {
             $result = $dbh->get($id);
             list($date,$ip,$packed) = explode(':', $result, 3);
@@ -132,6 +132,9 @@ extends DbSession
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2005/08/07 10:49:57  rurban
+// do not connect/disconnect each time. fix refs
+//
 // Revision 1.2  2005/08/07 10:07:55  rurban
 // dba simplification: use default timeout
 //
