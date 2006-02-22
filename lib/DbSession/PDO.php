@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PDO.php,v 1.1 2005-02-11 14:41:40 rurban Exp $');
+<?php rcs_id('$Id: PDO.php,v 1.2 2006-02-22 20:56:24 rurban Exp $');
 
 /** 
  * Db sessions for PDO, based on pear DB Sessions.
@@ -26,7 +26,7 @@ extends DbSession
         return $this;
     }
 
-    function _connect() {
+    function & _connect() {
         $dbh =& $this->_dbh;
         if (!$dbh or !is_object($dbh)) {
             global $DBParams;
@@ -88,7 +88,7 @@ extends DbSession
      */
     function read ($id) {
         //$this->log("_read($id)");
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $table = $this->_table;
         $sth = $dbh->prepare("SELECT sess_data FROM $table WHERE sess_id=?");
         $sth->bindParam(1, $id, PDO_PARAM_STR, 32);
@@ -125,7 +125,7 @@ extends DbSession
      */
     function write ($id, $sess_data) {
         
-        $dbh = &$this->_connect();
+        $dbh = $this->_connect();
         $table = $this->_table;
         $time = time();
 
@@ -244,6 +244,9 @@ extends DbSession
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/02/11 14:41:40  rurban
+// seperate DbSession classes: less memory, a bit slower
+//
 
 // Local Variables:
 // mode: php
