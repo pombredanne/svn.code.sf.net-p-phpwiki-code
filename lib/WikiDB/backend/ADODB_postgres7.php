@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_postgres7.php,v 1.3 2005-10-31 16:49:02 rurban Exp $');
+rcs_id('$Id: ADODB_postgres7.php,v 1.4 2006-02-22 18:58:43 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -134,8 +134,8 @@ extends WikiDB_backend_ADODB
 
 };
 
-class WikiDB_backend_ADOBE_postgres7_search
-extends WikiDB_backend_ADOBE_search
+class WikiDB_backend_ADODB_postgres7_search
+extends WikiDB_backend_ADODB_search
 {
     function _pagename_match_clause($node) {
         $word = $node->sql();
