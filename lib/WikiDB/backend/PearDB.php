@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.94 2005-11-14 22:24:33 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.95 2006-02-22 21:52:28 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -417,7 +417,6 @@ extends WikiDB_backend
     /**
      * Delete an old revision of a page.
      */
-
     function delete_versiondata($pagename, $version) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -510,7 +509,7 @@ extends WikiDB_backend
         $dbh->query("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
 
 	if ($links) {
-            foreach($links as $link) {
+            foreach ($links as $link) {
                 $linkto = $link['linkto'];
                 if ($link['relation'])
                     $relation = $this->_get_pageid($link['relation'], true);
@@ -1233,6 +1232,13 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.94  2005/11/14 22:24:33  rurban
+// fix fulltext search,
+// Eliminate stoplist words,
+// don't extract %pagedate twice in ADODB,
+// add SemanticWeb support: link(relation),
+// major postgresql update: stored procedures, tsearch2 for fulltext
+//
 // Revision 1.93  2005/10/10 19:42:15  rurban
 // fix wanted_pages SQL syntax
 //
