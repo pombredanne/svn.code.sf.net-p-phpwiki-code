@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.3 2005-06-22 05:20:47 rurban Exp $
+ * $Id: phpwiki.css,v 1.4 2006-02-22 06:51:37 rurban Exp $
  * We have two possibilities to override the default:
  * 1. import is ns4 incompatible
  * 2. add a 2nd css in themeinfo.php
@@ -29,23 +29,6 @@ body {
 h1 { margin: 0; font-size: 140% }
 pre { font-size: 110% }
 
-/* IE5.0 */
-@media tty { 
-    i{content:"\";/*" "*/}}; @import 'IEFixes.css'; {;}/*";} 
-}
-
-/* IE5.5 */
-@media tty {
-    i{content:"\";/*" "*/}}@m; @import 'IEFixes.css'; /*";}
-}
-
-/* IE6.0 */
-@import "null?\"\{"; 
-@import "IEFixes.css";
-
-voice-family: "\"}\"";
-voice-family:inherit;
- 
 /* For emacs users
  *
  * Local Variables:

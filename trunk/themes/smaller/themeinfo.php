@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.4 2005-04-23 11:44:54 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.5 2006-02-22 06:51:37 rurban Exp $');
 /**
  * tiny actionbar, only Edit (if signed in) and Info => PageInfo,
  *   all other Actionbars buttons in info.tmpl
@@ -36,7 +36,6 @@ class Theme_smaller extends Theme {
 }
 
 $WikiTheme = new Theme_smaller('smaller');
-
 // CSS file defines fonts, colors and background images for this
 // style.  The companion '*-heavy.css' file isn't defined, it's just
 // expected to be in the same directory that the base style is in.
@@ -52,6 +51,12 @@ $WikiTheme->setDefaultCSS('PhpWiki',
 $WikiTheme->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
 $WikiTheme->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
 $WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+
+if (isBrowserIE()) {
+    $WikiTheme->addMoreHeaders($WikiTheme->_CSSlink(0,
+        $WikiTheme->_findFile('IEFixes.css'),'all'));
+    $WikiTheme->addMoreHeaders("\n");
+}
 
 /**
  * The logo image appears on every page and links to the HomePage.
