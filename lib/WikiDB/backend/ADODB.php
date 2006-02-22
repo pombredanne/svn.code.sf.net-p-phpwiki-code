@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.83 2005-11-14 22:24:33 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.84 2006-02-22 21:49:50 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -39,6 +39,8 @@ rcs_id('$Id: ADODB.php,v 1.83 2005-11-14 22:24:33 rurban Exp $');
  *
  * phpwiki-1.3.11, by Philippe Vanhaesendonck
  * - pass column list to iterators so we can FETCH_NUM in all cases
+ * phpwiki-1.3.12: get rid of ISNULL
+ * phpwiki-1.3.13: tsearch2 and stored procedures
  *
  * ADODB basic differences to PearDB: It pre-fetches the first row into fields, 
  * is dirtier in style, layout and more low-level ("worse is better").
@@ -108,6 +110,7 @@ extends WikiDB_backend
         $version_tbl = $this->_table_names['version_tbl'];
         $this->page_tbl_fields = "$page_tbl.id AS id, $page_tbl.pagename AS pagename, "
             . "$page_tbl.hits AS hits";
+        $this->links_field_list = array('id', 'pagename');
         $this->page_tbl_field_list = array('id', 'pagename', 'hits');
         $this->version_tbl_fields = "$version_tbl.version AS version, "
             . "$version_tbl.mtime AS mtime, "
@@ -572,7 +575,7 @@ extends WikiDB_backend
         $this->lock(array('link'));
         $pageid = $this->_get_pageid($pagename, true);
 
-        if ($links) {
+        if (1 or $links) {
             $dbh->Execute("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
             foreach ($links as $link) {
                 $linkto = $link['linkto'];
@@ -590,7 +593,7 @@ extends WikiDB_backend
                 $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
                             . " VALUES ($pageid, $linkid, $relation)");
             }
-        } elseif (DEBUG) {
+        } elseif (0 and DEBUG) {
             // purge page table: delete all non-referenced pages
             // for all previously linked pages...
             foreach ($dbh->getRow("SELECT $link_tbl.linkto as id FROM $link_tbl".
@@ -599,8 +602,9 @@ extends WikiDB_backend
                 if ($dbh->getRow("SELECT $page_tbl.id FROM $page_tbl"
                                  . " LEFT JOIN $nonempty_tbl USING (id) "
                                  . " LEFT JOIN $version_tbl USING (id)"
-                                 . " WHERE ISNULL($nonempty_tbl.id) AND"
-                                 . " ISNULL($version_tbl.id) AND $page_tbl.id=$id")) {
+                                 . " WHERE $nonempty_tbl.id is NULL"
+                                 . " AND $version_tbl.id is NULL"
+                                 . " AND $page_tbl.id=$id")) {
                     $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id");   // this purges the link
                     $dbh->Execute("DELETE FROM $recent_tbl WHERE id=$id"); // may fail
                 }
@@ -662,7 +666,7 @@ id      pagename        linkrelation
         } else {
             $result = $dbh->Execute($sql);
         }
-        $fields = $this->page_tbl_field_list;
+        $fields = $this->links_field_list;
         if ($want_relations) // instead of hits
             $fields[2] = 'linkrelation';
         return new WikiDB_backend_ADODB_iter($this, $result, $fields);
@@ -942,7 +946,7 @@ id      pagename        linkrelation
 
         /* 
          all empty pages, independent of linkstatus:
-           select pagename as empty from page left join nonempty using(id) where isnull(nonempty.id);
+           select pagename as empty from page left join nonempty using(id) where is null(nonempty.id);
          only all empty pages, which have a linkto:
             select page.pagename, linked.pagename as wantedfrom from link, page linked 
               left join page on link.linkto=page.id left join nonempty on link.linkto=nonempty.id
@@ -1418,6 +1422,13 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.83  2005/11/14 22:24:33  rurban
+// fix fulltext search,
+// Eliminate stoplist words,
+// don't extract %pagedate twice in ADODB,
+// add SemanticWeb support: link(relation),
+// major postgresql update: stored procedures, tsearch2 for fulltext
+//
 // Revision 1.82  2005/10/31 16:48:22  rurban
 // move mysql-specifics into its special class
 //
