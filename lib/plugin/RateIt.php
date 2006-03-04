@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.19 2004-11-15 16:00:01 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.20 2006-03-04 13:57:28 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -94,7 +94,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function RatingWidgetJavascript() {
@@ -226,7 +226,7 @@ function deleteRating(actionImg, page, dimension) {
             $dbi->touch();
             //fake validators without args
             $request->appendValidators(array('wikiname' => WIKI_NAME,
-                                             'args'     => hash('')));
+                                             'args'     => wikihash('')));
             header('Content-type: image/png');
             readfile($actionImg);
             exit();
@@ -243,7 +243,7 @@ function deleteRating(actionImg, page, dimension) {
             $dbi->touch();
             //fake validators without args
             $request->appendValidators(array('wikiname' => WIKI_NAME,
-                                             'args'     => hash('')));
+                                             'args'     => wikihash('')));
             header('Content-type: image/png');
             readfile($actionImg);
             exit();
@@ -402,6 +402,11 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/11/15 16:00:01  rurban
+// enable RateIt imgPrefix: '' or 'Star' or 'BStar',
+// enable blue prediction icons,
+// enable buddy predictions.
+//
 // Revision 1.18  2004/11/01 10:43:59  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
