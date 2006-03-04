@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.131 2005-10-12 06:16:48 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.132 2006-03-04 13:19:12 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1839,7 +1839,10 @@ class UserPreferences
         if ($name == 'theme' and $value == '')
            return true;
         */
-        if (!isset($pref->{$value}) or $pref->{$value} != $pref->default_value) {
+        if ((!$value and $pref->default_value)
+            or ($value and !isset($pref->$value))
+            or ($value and ($pref->$value != $pref->default_value)))
+        {
             if ($name == 'emailVerified') $newvalue = $value;
             else $newvalue = $pref->sanify($value);
 	    $pref->set($name, $newvalue);
@@ -2005,7 +2008,7 @@ class UserPreferences
     }
 
     function hash () {
-        return hash($this->_prefs);
+        return wikihash($this->_prefs);
     }
 }
 
@@ -2078,6 +2081,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.131  2005/10/12 06:16:48  rurban
+// add new _insert statement
+//
 // Revision 1.129  2005/06/10 06:10:35  rurban
 // ensure Update Preferences gets through
 //
