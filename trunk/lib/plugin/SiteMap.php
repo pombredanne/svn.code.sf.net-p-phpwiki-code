@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.13 2004-12-14 21:36:06 rurban Exp $');
+rcs_id('$Id: SiteMap.php,v 1.14 2006-03-04 13:58:02 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -57,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -96,11 +96,13 @@ extends WikiPlugin
         while ($link = $pagelinks->next()) {
             $linkpagename = $link->getName();
             if (($linkpagename != $startpagename)
-                && !preg_match("/$this->ExcludedPages/", $linkpagename)) {
-                $pagearr[$level . " [$linkpagename]"] = $link;
-                $pagearr = $this->recursivelyGetBackLinks($link, $pagearr,
-                                                          $level . '*',
-                                                          $reclimit);
+                and (!$this->ExcludedPages or !preg_match("/".$this->ExcludedPages."/", $linkpagename))
+                {
+                    $pagearr[$level . " [$linkpagename]"] = $link;
+                    $pagearr = $this->recursivelyGetBackLinks($link, $pagearr,
+                                                              $level . '*',
+                                                              $reclimit);
+                }
             }
         }
         return $pagearr;
@@ -123,10 +125,10 @@ extends WikiPlugin
         $pagelinks = $startpage->getLinks($reversed);
         while ($link = $pagelinks->next()) {
             $linkpagename = $link->getName();
-            if (($linkpagename != $startpagename)
-                && !preg_match("/$this->ExcludedPages/", $linkpagename)) {
-                if (!$this->excludeunknown
-                    || $this->dbi->isWikiPage($linkpagename)) {
+            if (($linkpagename != $startpagename) and 
+                (!$this->ExcludedPages or !preg_match("/$this->ExcludedPages/", $linkpagename)))
+            {
+                if (!$this->excludeunknown or $this->dbi->isWikiPage($linkpagename)) {
                     $pagearr[$level . " [$linkpagename]"] = $link;
                     $pagearr = $this->recursivelyGetLinks($link, $pagearr,
                                                           $level . '*',
@@ -151,7 +153,7 @@ extends WikiPlugin
         if (empty($exclude)) $exclude = array();
         if (!$include_self)
             $exclude[] = $page;
-        $this->ExcludedPages = "^(?:" . join("|", $exclude) . ")";
+        $this->ExcludedPages = empty($exclude) ? "" : ("^(?:" . join("|", $exclude) . ")");
         $this->_default_limit = str_pad('', 3, '*');
         if (is_numeric($reclimit)) {
             if ($reclimit < 0)
@@ -202,7 +204,8 @@ extends WikiPlugin
                 $a = substr_count($key, '*');
                 $indenter = str_pad($nothing, $a);
                 //$request->setArg('IncludePage', 1);
-                $plugin_args = 'page=' . $link->getName() . ' ' . $includepages;
+                // quote linkname, by Stefan Schorn
+                $plugin_args = 'page=\'' . $link->getName() . '\' ' . $includepages;
                 $pagehtml = $plugin->run($dbi, $plugin_args, $request, $basepage);
                 $html->pushContent($pagehtml); 
                 //$html->pushContent( HTML(TransformText($indenter, 1.0, $page), $pagehtml)); 
@@ -221,6 +224,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2004/12/14 21:36:06  rurban
+// exclude is already handled by getArgs
+//
 // Revision 1.12  2004/11/01 09:14:25  rurban
 // avoid ConvertOldMarkup step, using markup=2 (memory problems)
 //
