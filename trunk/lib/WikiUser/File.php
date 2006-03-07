@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: File.php,v 1.7 2005-08-06 13:21:37 rurban Exp $');
+rcs_id('$Id: File.php,v 1.8 2006-03-07 18:03:51 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -78,11 +78,11 @@ extends _PassUser
             return false;
         }
         if ($this->_may_change) {
-            $this->_file = new File_Passwd($this->_file->_filename, true, 
-                                           $this->_file->_filename.'.lock');
+            $this->_file = new File_Passwd($this->_file->filename, true, 
+                                           $this->_file->filename.'.lock');
             $result = $this->_file->modUser($this->_userid, $submitted_password);
             $this->_file->close();
-            $this->_file = new File_Passwd($this->_file->_filename, false);
+            $this->_file = new File_Passwd($this->_file->filename, false);
             return $result;
         }
         return false;
@@ -91,6 +91,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2005/08/06 13:21:37  rurban
+// only cosmetics
+//
 // Revision 1.6  2005/05/04 05:37:34  rurban
 // fix #1191096 by Karel
 //
