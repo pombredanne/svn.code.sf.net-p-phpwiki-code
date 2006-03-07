@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.45 2005-12-27 18:05:48 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.46 2006-03-07 20:47:36 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -572,8 +572,9 @@ function MimeMultipart ($parts)
  * automatically convert encodings to a safe type if they receive
  * mail encoded in '8bit' and/or 'binary' encodings.
  */
-function MimeifyPageRevision ($revision) {
-    $page = $revision->getPage();
+function MimeifyPageRevision (&$page, &$revision) {
+    // $wikidb =& $revision->_wikidb;
+    // $page = $wikidb->getPage($revision->getName());
     // FIXME: add 'hits' to $params 
     $params = array('pagename'     => $page->getName(),
                     'flags'        => "",
@@ -840,8 +841,10 @@ function ParseMimeifiedPages ($data)
     //        haven't got one yet?
     if (!isset($versiondata['author'])) {
         global $request;
-        $user = $request->getUser();
-        $versiondata['author'] = $user->getId(); //FIXME:?
+        if (is_object($request)) {
+            $user = $request->getUser();
+            $versiondata['author'] = $user->getId(); //FIXME:?
+        }
     }
     
     $encoding = strtolower($headers['content-transfer-encoding']);
@@ -860,6 +863,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2005/12/27 18:05:48  rurban
+// start with GZIP reading within ZipReader (not yet ready)
+//
 // Revision 1.44  2005/01/31 00:28:48  rurban
 // fix bug 1044945: pgsrc upgrade problem if mime wo/body
 //
