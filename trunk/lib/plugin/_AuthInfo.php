@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.19 2005-04-01 14:04:31 rurban Exp $');
+rcs_id('$Id: _AuthInfo.php,v 1.20 2006-03-07 21:07:42 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -52,7 +52,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($userid) or $userid == $request->_user->UserName()) {
-            $user =& $request->_user;
+            $user = $request->_user;
             $userid = $user->UserName();
         } else {
             $user = WikiUser($userid);
@@ -106,6 +106,11 @@ extends WikiPlugin
                                        'cellspacing' => 0));
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $userdata = obj2hash($user, array('_dbi','_request', 'password', 'passwd'));
+            if (isa($user, "_FilePassUser")) {
+            	foreach ($userdata['_file']->users as $u => $p) {
+            	    $userdata['_file']->users[$u] = "<hidden>";
+            	}
+            }
             $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
             if (ENABLE_USER_NEW) {
               $group = &$request->getGroup();
@@ -198,6 +203,11 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2005/04/01 14:04:31  rurban
+// use obj2hash exclude arg,
+// fix minor security flaw: enable _AuthInfo only if Admin or DEBUG && _DEBUG_LOGIN
+//   not on any DEBUG value
+//
 // Revision 1.18  2005/03/27 19:46:12  rurban
 // security fixes (unknown why and where these get defined)
 //
