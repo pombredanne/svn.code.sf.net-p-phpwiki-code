@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SiteMap.php,v 1.14 2006-03-04 13:58:02 rurban Exp $');
+rcs_id('$Id: SiteMap.php,v 1.15 2006-03-07 21:09:16 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -57,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.14 $");
+                            "\$Revision: 1.15 $");
     }
 
     function getDefaultArguments() {
@@ -96,13 +96,12 @@ extends WikiPlugin
         while ($link = $pagelinks->next()) {
             $linkpagename = $link->getName();
             if (($linkpagename != $startpagename)
-                and (!$this->ExcludedPages or !preg_match("/".$this->ExcludedPages."/", $linkpagename))
-                {
-                    $pagearr[$level . " [$linkpagename]"] = $link;
-                    $pagearr = $this->recursivelyGetBackLinks($link, $pagearr,
-                                                              $level . '*',
-                                                              $reclimit);
-                }
+                and (!$this->ExcludedPages or !preg_match("/".$this->ExcludedPages."/", $linkpagename)))
+            {
+                $pagearr[$level . " [$linkpagename]"] = $link;
+                $pagearr = $this->recursivelyGetBackLinks($link, $pagearr,
+                                                          $level . '*',
+                                                          $reclimit);
             }
         }
         return $pagearr;
