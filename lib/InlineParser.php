@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.71 2005-11-14 22:31:12 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.72 2006-03-07 20:43:29 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -356,6 +356,12 @@ function LinkBracketLink($bracketlink) {
     } else
         $link  = UnWikiEscape($rawlink);
 
+    /* Relatives links by Joel Schaubert.
+     * Recognize [../bla] or [/bla] as relative links, without needing http://
+     */
+    if (preg_match('/^(\.\.\/|\/)/', $link)) {
+        return new Cached_ExternalLink($link, $label);
+    }
     // [label|link]
     // if label looks like a url to an image, we want an image link.
     if (isImageLink($label)) {
@@ -876,6 +882,9 @@ function TransformLinks($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2005/11/14 22:31:12  rurban
+// add SemanticWeb support
+//
 // Revision 1.70  2005/10/31 16:45:23  rurban
 // added cfg-able markups only for default TextTransformation, not for links and others
 //
