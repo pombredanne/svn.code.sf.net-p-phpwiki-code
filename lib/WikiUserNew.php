@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.132 2006-03-04 13:19:12 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.133 2006-03-07 18:39:21 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -973,7 +973,9 @@ extends _AnonUser
                 unset($this->_auth_dbi);
         }
         if (empty($this->_auth_dbi)) {
-            if ($dbh->getParam('dbtype') != 'SQL' and $dbh->getParam('dbtype') != 'ADODB')
+            if ($dbh->getParam('dbtype') != 'SQL' 
+                and $dbh->getParam('dbtype') != 'ADODB'
+                and $dbh->getParam('dbtype') != 'PDO')
                 return false;
             if (empty($GLOBALS['DBAuthParams']))
                 return false;
@@ -1037,13 +1039,14 @@ extends _AnonUser
             ($dbi->getAuthParam('auth_dsn') and $dbi->getParam('dsn') == $dbi->getAuthParam('auth_dsn')))
         {
             if (!stristr($stmt, $prefix)) {
-                //Do it automatically for the lazy admin? Esp. on sf.net it's nice to have
-                trigger_error("TODO: Need to prefix the DBAuthParam tablename in config/config.ini:\n  $stmt",
-                              E_USER_WARNING);
+            	$oldstmt = $stmt;
                 $stmt = str_replace(array(" user "," pref "," member "),
                                     array(" ".$prefix."user ",
                                           " ".$prefix."pref ",
-                                          " ".$prefix."member "),$stmt);
+                                          " ".$prefix."member "), $stmt);
+                //Do it automatically for the lazy admin? Esp. on sf.net it's nice to have
+                trigger_error("Need to prefix the DBAUTH tablename in config/config.ini:\n  $oldstmt \n=> $stmt",
+                              E_USER_WARNING);
             }
         }
         // Preparate the SELECT statement, for ADODB and PearDB (MDB not).
@@ -1068,13 +1071,18 @@ extends _AnonUser
             	// FIXME: strange why this should be needed...
             	include_once("lib/WikiUser/Db.php");
             	include_once("lib/WikiUser/AdoDb.php");
-                _AdoDbPassUser::_AdoDbPassUser($this->_userid,$this->_prefs);
+                _AdoDbPassUser::_AdoDbPassUser($this->_userid, $this->_prefs);
                 return _AdoDbPassUser::getPreferences();
             } elseif ($this->_prefs->_method == 'SQL') {
             	include_once("lib/WikiUser/Db.php");
             	include_once("lib/WikiUser/PearDb.php");
-                _PearDbPassUser::_PearDbPassUser($this->_userid,$this->_prefs);
+                _PearDbPassUser::_PearDbPassUser($this->_userid, $this->_prefs);
                 return _PearDbPassUser::getPreferences();
+            } elseif ($this->_prefs->_method == 'PDO') {
+            	include_once("lib/WikiUser/Db.php");
+            	include_once("lib/WikiUser/PdoDb.php");
+                _PdoDbPassUser::_PdoDbPassUser($this->_userid, $this->_prefs);
+                return _PdoDbPassUser::getPreferences();
             }
         }
 
@@ -1101,7 +1109,7 @@ extends _AnonUser
             	// FIXME: strange why this should be needed...
             	include_once("lib/WikiUser/Db.php");
             	include_once("lib/WikiUser/AdoDb.php");
-                _AdoDbPassUser::_AdoDbPassUser($this->_userid,$prefs);
+                _AdoDbPassUser::_AdoDbPassUser($this->_userid, $prefs);
                 return _AdoDbPassUser::setPreferences($prefs, $id_only);
             }
             elseif ($this->_prefs->_method == 'SQL') {
@@ -1110,14 +1118,20 @@ extends _AnonUser
                 _PearDbPassUser::_PearDbPassUser($this->_userid, $prefs);
                 return _PearDbPassUser::setPreferences($prefs, $id_only);
             }
+            elseif ($this->_prefs->_method == 'PDO') {
+            	include_once("lib/WikiUser/Db.php");
+            	include_once("lib/WikiUser/PdoDb.php");
+                _PdoDbPassUser::_PdoDbPassUser($this->_userid, $prefs);
+                return _PdoDbPassUser::setPreferences($prefs, $id_only);
+            }
         }
-        if (_AnonUser::setPreferences($prefs, $id_only)) {
+        if ($num = _AnonUser::setPreferences($prefs, $id_only)) {
             // Encode only the _prefs array of the UserPreference object
-            if ($this->_HomePagehandle and !$id_only) {
+            if (!empty($this->_HomePagehandle) and !$id_only) {
                 $this->_HomePagehandle->set('pref', $this->_prefs->store());
             }
         }
-        return;
+        return $num;
     }
 
     function mayChangePass() {
@@ -1839,6 +1853,7 @@ class UserPreferences
         if ($name == 'theme' and $value == '')
            return true;
         */
+        // Fix Fatal error for undefined value. Thanks to Jim Ford and Joel Schaubert
         if ((!$value and $pref->default_value)
             or ($value and !isset($pref->$value))
             or ($value and ($pref->$value != $pref->default_value)))
@@ -2081,6 +2096,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.132  2006/03/04 13:19:12  rurban
+// fix for fatal error on empty pref value (sign out). Thanks to Jim Ford and Joel Schaubert. rename hash for php-5.1
+//
 // Revision 1.131  2005/10/12 06:16:48  rurban
 // add new _insert statement
 //
