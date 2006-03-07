@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Db.php,v 1.3 2005-06-10 06:11:56 rurban Exp $');
+rcs_id('$Id: Db.php,v 1.4 2006-03-07 21:05:24 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -68,6 +68,16 @@ extends _PassUser
                 return $user;
             }
         }
+        elseif ($dbtype == 'PDO') {
+            include_once("lib/WikiUser/PdoDb.php");
+            if (check_php_version(5))
+                return new _PdoDbPassUser($UserName,$this->_prefs);
+            else {
+                $user = new _PdoDbPassUser($UserName,$this->_prefs);
+                eval("\$this = \$user;");
+                return $user;
+            }
+        }
         return false;
     }
 
@@ -88,6 +98,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2005/06/10 06:11:56  rurban
+// special validname method
+//
 // Revision 1.2  2004/12/26 17:11:15  rurban
 // just copyright
 //
