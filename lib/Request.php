@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.100 2006-01-17 18:57:09 uckelman Exp $');
+rcs_id('$Id: Request.php,v 1.101 2006-03-07 20:45:43 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -1168,7 +1168,7 @@ function Request_AccessLogEntry_shutdown_function () {
 
 class HTTP_ETag {
     function HTTP_ETag($val, $is_weak=false) {
-        $this->_val = hash($val);
+        $this->_val = wikihash($val);
         $this->_weak = $is_weak;
     }
 
@@ -1346,6 +1346,10 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2006/01/17 18:57:09  uckelman
+// _accesslog->logtable is not set when using non-SQL logging; check should
+//  be isset to avoid a PHP warning
+//
 // Revision 1.99  2005/09/18 16:01:09  rurban
 // trick to send the correct gzipped Content-Length
 //

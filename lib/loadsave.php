@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.139 2005-08-27 18:02:43 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.140 2006-03-07 20:45:43 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -155,7 +155,7 @@ function MailifyPage ($page, $nversions = 1)
     $iter = $page->getAllRevisions();
     $parts = array();
     while ($revision = $iter->next()) {
-        $parts[] = MimeifyPageRevision($revision);
+        $parts[] = MimeifyPageRevision($page, $revision);
         if ($nversions > 0 && count($parts) >= $nversions)
             break;
     }
@@ -1270,7 +1270,7 @@ function SetupWiki (&$request)
 
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder;
-    foreach (array_merge(explode(':','OldTextFormattingRules:TextFormattingRules:PhpWikiAdministration'),
+    foreach (array_merge(explode(':','Help/OldTextFormattingRules:Help/TextFormattingRules:PhpWikiAdministration'),
                          $GLOBALS['AllActionPages'],
                          array(constant('HOME_PAGE'))) as $f) 
     {
@@ -1319,6 +1319,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.139  2005/08/27 18:02:43  rurban
+ fix and expand pages
+
  Revision 1.138  2005/08/27 09:39:10  rurban
  dumphtml when not at admin page: dump the current or given page
 
