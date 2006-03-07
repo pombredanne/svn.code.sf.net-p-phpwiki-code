@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.36 2005-06-30 05:17:14 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.37 2006-03-07 21:06:56 rurban Exp $');
 /**
  Copyright (C) 2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.36 $");
+                            "\$Revision: 1.37 $");
     }
 
     function getDefaultArguments() {
@@ -69,9 +69,9 @@ extends WikiPlugin
             return '';
         if ((!$request->isActionPage($request->getArg('pagename')) 
              and (!isset($user->_prefs->_method) 
-                  or !in_array($user->_prefs->_method,array('ADODB','SQL'))))
-            or (in_array($request->getArg('action'),array('zip','ziphtml','dumphtml')))
-            or (isa($user,'_ForbiddenUser'))) 
+                  or !in_array($user->_prefs->_method, array('ADODB','SQL','PDO'))))
+            or (in_array($request->getArg('action'), array('zip','ziphtml','dumphtml')))
+            or (isa($user,'_ForbiddenUser')))
         {
             $no_args = $this->getDefaultArguments();
 // ?
@@ -169,6 +169,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2005/06/30 05:17:14  rurban
+// update (c) date
+//
 // Revision 1.35  2004/10/13 14:13:55  rurban
 // fix cannot edit prefs
 //
