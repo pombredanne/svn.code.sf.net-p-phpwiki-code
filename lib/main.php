@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.219 2005-10-30 14:20:42 rurban Exp $');
+rcs_id('$Id: main.php,v 1.220 2006-03-07 21:04:15 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -662,7 +662,7 @@ class WikiRequest extends Request {
         if ($current->getVersion() > 0)
             return;             // Homepage exists.
 
-        include('lib/loadsave.php');
+        include_once('lib/loadsave.php');
         SetupWiki($this);
         $this->finish();        // NORETURN
     }
@@ -1238,8 +1238,8 @@ if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
 if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
 
     $validators = array('wikiname' => WIKI_NAME,
-                        'args'     => hash($request->getArgs()),
-                        'prefs'    => hash($request->getPrefs()));
+                        'args'     => wikihash($request->getArgs()),
+                        'prefs'    => wikihash($request->getPrefs()));
     if (CACHE_CONTROL == 'STRICT') {
         $dbi = $request->getDbh();
         $timestamp = $dbi->getTimestamp();
@@ -1273,6 +1273,10 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.219  2005/10/30 14:20:42  rurban
+// move Captcha specific vars and methods into a Captcha object
+// randomize Captcha chars positions and angles (smoothly)
+//
 // Revision 1.218  2005/10/29 14:18:06  rurban
 // fix typo
 //
