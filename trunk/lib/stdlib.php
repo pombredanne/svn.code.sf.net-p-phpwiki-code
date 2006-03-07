@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.249 2005-10-30 14:24:33 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.250 2006-03-07 20:45:44 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -66,7 +66,7 @@
     isa ($object, $class)
     can ($object, $method)
     function_usable ($function_name)
-    hash ($x)
+    wikihash ($x)
     better_srand ($seed = '')
     count_all ($arg)
     isSubPage ($pagename)
@@ -1600,7 +1600,7 @@ function function_usable($function_name) {
  *
  * This is used for generating ETags.
  */
-function hash ($x) {
+function wikihash ($x) {
     if (is_scalar($x)) {
         return $x;
     }
@@ -1775,7 +1775,7 @@ function phpwiki_version() {
 function phpwiki_gzhandler($ob) {
     if (function_exists('gzencode'))
         $ob = gzencode($ob);
-    $GLOBALS['request']->_ob_get_length = strlen($ob);
+        $GLOBALS['request']->_ob_get_length = strlen($ob);
     if (!headers_sent()) {
         header(sprintf("Content-Length: %d", $GLOBALS['request']->_ob_get_length));
     }
@@ -2071,6 +2071,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.249  2005/10/30 14:24:33  rurban
+// move rand_ascii_readable from Captcha to stdlib
+//
 // Revision 1.248  2005/10/29 14:18:30  uckelman
 // Added is_a() deprecation note.
 //

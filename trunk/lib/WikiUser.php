@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.65 2005-06-05 05:38:02 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.66 2006-03-07 20:45:44 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -741,11 +741,14 @@ class UserPreferences {
     }
 
     function hash () {
-        return hash($this->_prefs);
+        return wikihash($this->_prefs);
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2005/06/05 05:38:02  rurban
+// Default ENABLE_DOUBLECLICKEDIT = false. Moved to UserPreferences
+//
 // Revision 1.64  2005/02/08 13:25:50  rurban
 // encrypt password. fix strict logic.
 // both bugs reported by Mikhail Vladimirov

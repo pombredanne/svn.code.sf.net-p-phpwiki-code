@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.137 2005-08-06 14:31:10 rurban Exp $');
+rcs_id('$Id: config.php,v 1.138 2006-03-07 20:45:43 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -426,7 +426,7 @@ if (!function_exists('array_key_exists')) { // lib/IniConfig.php, sqlite, adodb,
 }
 
 // => php-4.0.5
-if (!function_exists('is_scalar')) { // lib/stdlib.php:hash()
+if (!function_exists('is_scalar')) { // lib/stdlib.php:wikihash()
     function is_scalar($x) {
         return is_numeric($x) or is_string($x) or is_float($x) or is_bool($x); 
     }
@@ -560,6 +560,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.137  2005/08/06 14:31:10  rurban
+// ensure absolute uploads path
+//
 // Revision 1.136  2005/05/06 16:49:24  rurban
 // Safari comment
 //
