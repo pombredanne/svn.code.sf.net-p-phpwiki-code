@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.98 2006-01-12 16:22:47 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.99 2006-03-07 20:42:34 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -365,6 +365,7 @@ function IniConfig($file) {
                       'DBAUTH_AUTH_UPDATE' => 'auth_update',
                       'DBAUTH_AUTH_CREATE' => 'auth_create',
                       'DBAUTH_PREF_SELECT' => 'pref_select',
+                      'DBAUTH_PREF_INSERT' => 'pref_insert',
                       'DBAUTH_PREF_UPDATE' => 'pref_update',
                       'DBAUTH_IS_MEMBER' => 'is_member',
                       'DBAUTH_GROUP_MEMBERS' => 'group_members',
@@ -857,6 +858,10 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.98  2006/01/12 16:22:47  rurban
+// Add flatfile and cvsclient to $valid_database_types (internal testing)
+// Fix bug #1381464 "Duplicate functions ver. 1.3.11p1"
+//
 // Revision 1.97  2005/10/29 14:16:38  rurban
 // fix broken locale update
 //
