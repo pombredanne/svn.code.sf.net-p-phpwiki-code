@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.30 2005-04-02 03:05:44 uckelman Exp $');
+rcs_id('$Id: Calendar.php,v 1.31 2006-03-19 14:26:29 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.30 $");
+                            "\$Revision: 1.31 $");
     }
 
     function getDefaultArguments() {
@@ -163,6 +163,7 @@ extends WikiPlugin
         }
         else {
             $date = HTML::a(array('class' => 'cal-hide',
+                                  'rel'   => 'nofollow',
                                   'href'  => WikiURL($page_for_date,
                                                      array('action' => 'edit')),
                                   'title' => sprintf(_("Edit %s"),
@@ -239,6 +240,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2005/04/02 03:05:44  uckelman
+// Removed & from vars passed by reference (not needed, causes PHP to complain).
+//
 // Revision 1.29  2004/12/06 19:15:04  rurban
 // save edit-time links as requested in #946679
 //

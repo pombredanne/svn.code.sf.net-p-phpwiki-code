@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.65 2005-05-05 08:54:40 rurban Exp $');
+rcs_id('$Id: display.php,v 1.66 2006-03-19 14:26:29 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -76,7 +76,10 @@ function actionPage(&$request, $action) {
             header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
     }
 */    
-    GeneratePage($template, $pagetitle, $revision);
+    /* Tell google (and others) not to take notice of action pages */
+    if (GOOGLE_LINKS_NOFOLLOW)
+	$args = array('ROBOTS_META' => "noindex,nofollow");
+    GeneratePage($template, $pagetitle, $revision, $args);
     $request->checkValidators();
     flush();
 }
@@ -90,6 +93,8 @@ function displayPage(&$request, $template=false) {
         $revision = $page->getRevision($version);
         if (!$revision)
             NoSuchRevision($request, $page, $version);
+        /* Tell Google (and others) to ignore old versions of pages */
+	$toks['ROBOTS_META'] = "noindex,nofollow";
     }
     else {
         $revision = $page->getCurrentRevision();
@@ -202,6 +207,20 @@ function displayPage(&$request, $template=false) {
         }
     }
    
+    /* Check for special pagenames */
+    /*
+    if ( $pagename == _("RecentChanges") 
+         || $pagename == _("RecentEdits")
+         || $pagename == _("RecentVisitors")) {
+        $toks['ROBOTS_META']="noindex,follow";
+    } else
+    */
+    if ($pagename == _("SandBox")) {
+        $toks['ROBOTS_META']="noindex,nofollow";
+    } else if (!isset($toks['ROBOTS_META'])) {
+        $toks['ROBOTS_META'] = "index,follow";
+    }
+   
     $toks['CONTENT'] = new Template('browse', $request, $page_content);
     
     $toks['TITLE'] = $pagetitle;   // <title> tag
@@ -209,7 +228,6 @@ function displayPage(&$request, $template=false) {
     $toks['revision'] = $revision;
     if (!empty($redirect_message))
         $toks['redirected'] = $redirect_message;
-    $toks['ROBOTS_META'] = 'index,follow';
     $toks['PAGE_DESCRIPTION'] = $page_content->getDescription();
     $toks['PAGE_KEYWORDS'] = GleanKeywords($page);
     if (!$template)
@@ -224,6 +242,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.65  2005/05/05 08:54:40  rurban
+// fix pagename split for title and header
+//
 // Revision 1.64  2005/04/23 11:21:55  rurban
 // honor theme-specific SplitWikiWord in the HEADER
 //

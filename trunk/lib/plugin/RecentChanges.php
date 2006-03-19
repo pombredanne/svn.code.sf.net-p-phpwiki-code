@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.108 2005-04-01 16:09:35 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.109 2006-03-19 14:26:29 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -125,7 +125,9 @@ extends _RecentChanges_Formatter
 {
     function diffLink ($rev) {
         global $WikiTheme;
-        return $WikiTheme->makeButton(_("(diff)"), $this->diffURL($rev), 'wiki-rc-action');
+        $button = $WikiTheme->makeButton(_("(diff)"), $this->diffURL($rev), 'wiki-rc-action');
+        $button->setAttr('rel', 'nofollow');
+        return $button;
     }
 
     function historyLink ($rev) {
@@ -415,6 +417,7 @@ extends _RecentChanges_HtmlFormatter
     function diffLink ($rev) {
         $linkurl = parent::diffLink($rev);
         $linkurl->setAttr('target', '_content');
+        $linkurl->setAttr('rel', 'nofollow');
         // FIXME: Smelly hack to get smaller diff buttons in sidebar
         $linkurl = new RawXML(str_replace('<img ', '<img style="height:2ex" ', asXML($linkurl)));
         return $linkurl;
@@ -736,7 +739,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.108 $");
+                            "\$Revision: 1.109 $");
     }
 
     function managesValidators() {
@@ -924,6 +927,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2005/04/01 16:09:35  rurban
+// fix defaults in RecentChanges plugins: e.g. invalid pagenames for PageHistory
+//
 // Revision 1.107  2005/02/04 13:45:28  rurban
 // improve box layout a bit
 //
