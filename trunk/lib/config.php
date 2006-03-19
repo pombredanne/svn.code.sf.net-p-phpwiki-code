@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.138 2006-03-07 20:45:43 rurban Exp $');
+rcs_id('$Id: config.php,v 1.139 2006-03-19 14:50:42 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -148,6 +148,7 @@ function guessing_lang ($languages=false) {
         */
     }
 
+    $accept = false; 
     if (isset($GLOBALS['request'])) // in fixup-dynamic-config there's no request yet
         $accept = $GLOBALS['request']->get('HTTP_ACCEPT_LANGUAGE');
     elseif (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
@@ -560,6 +561,9 @@ function getUploadDataPath() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.138  2006/03/07 20:45:43  rurban
+// wikihash for php-5.1
+//
 // Revision 1.137  2005/08/06 14:31:10  rurban
 // ensure absolute uploads path
 //
