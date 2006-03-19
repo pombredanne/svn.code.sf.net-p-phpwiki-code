@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.250 2006-03-07 20:45:44 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.251 2006-03-19 15:01:00 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -135,6 +135,16 @@ function UnMangleXmlIdentifier($str) {
     return preg_replace('/x(\w\w)\./e',
                         "sprintf('%c', hex('\\0'))",
                         $str);
+}
+
+/**
+ * Returns a name for the WIKI_ID cookie that should be unique on the host.
+ * But for it to be unique you must have set a unique WIKI_NAME in your
+ * configuration file.
+ * @return string The name of the WIKI_ID cookie to use for this wiki.
+ */
+function GetCookieName() {
+    return preg_replace("/[^\d\w]/", "_", WIKI_NAME) . "_WIKI_ID";
 }
 
 /**
@@ -2071,6 +2081,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.250  2006/03/07 20:45:44  rurban
+// wikihash for php-5.1
+//
 // Revision 1.249  2005/10/30 14:24:33  rurban
 // move rand_ascii_readable from Captcha to stdlib
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.101 2006-03-07 20:45:43 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.102 2006-03-19 15:01:00 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -627,7 +627,7 @@ class Request_CookieVars {
 
     function set($key, $val, $persist_days = false, $path = false) {
     	// if already defined, ignore
-    	if (defined('MAIN_setUser') and $key = 'WIKI_ID') return;
+    	if (defined('MAIN_setUser') and $key = getCookieName()) return;
         if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
 
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
@@ -1346,6 +1346,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2006/03/07 20:45:43  rurban
+// wikihash for php-5.1
+//
 // Revision 1.100  2006/01/17 18:57:09  uckelman
 // _accesslog->logtable is not set when using non-SQL logging; check should
 //  be isset to avoid a PHP warning
