@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: AdoDb.php,v 1.7 2005-10-10 19:43:49 rurban Exp $');
+rcs_id('$Id: AdoDb.php,v 1.8 2006-03-19 16:26:40 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -125,7 +125,7 @@ extends _DbPassUser
         // Prepare the configured auth statements
         if ($dbi->getAuthParam('auth_check') and empty($this->_authselect)) {
             $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'), 
-                                                array("userid", "password"));
+                                                array("password", "userid"));
         }
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if ( !$dbi->getAuthParam('auth_user_exists') 
@@ -249,7 +249,7 @@ extends _DbPassUser
         $dbi =& $GLOBALS['request']->_dbi;
         if ($dbi->getAuthParam('auth_update') and empty($this->_authupdate)) {
             $this->_authupdate = $this->prepare($dbi->getAuthParam('auth_update'),
-                                                array("userid", "password"));
+                                                array("password", "userid"));
         }
         if (!isset($this->_authupdate)) {
             trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
@@ -272,6 +272,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2005/10/10 19:43:49  rurban
+// add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
+//
 // Revision 1.6  2005/08/06 13:21:09  rurban
 // switch to natural order password, userid
 //

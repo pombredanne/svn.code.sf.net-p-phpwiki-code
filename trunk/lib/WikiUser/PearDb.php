@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PearDb.php,v 1.9 2005-10-10 19:43:49 rurban Exp $');
+rcs_id('$Id: PearDb.php,v 1.10 2006-03-19 16:26:40 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -11,7 +11,6 @@ extends _DbPassUser
  * Now optimized not to use prepare, ...query(sprintf($sql,quote())) instead.
  * We use FETCH_MODE_ROW, so we don't need aliases in the auth_* SQL statements.
  *
- * @tables: user
  * @tables: pref
  */
 {
@@ -90,9 +89,8 @@ extends _DbPassUser
 		    $dbi = $GLOBALS['request']->getDbh();
 		    $this->_prefs->_insert = $this->prepare($dbi->getAuthParam('pref_insert'),
 							    array("pref_blob", "userid"));
-		    $dbh->query(sprintf($this->_prefs->_insert,
-					$dbh->quote($packed),
-					$dbh->quote($this->_userid)));
+		    $dbh->simpleQuery(sprintf($this->_prefs->_insert, 
+		                              $dbh->quote($packed), $dbh->quote($this->_userid)));
 		}
                 //delete pageprefs:
                 if ($this->_HomePagehandle and $this->_HomePagehandle->get('pref'))
@@ -122,7 +120,7 @@ extends _DbPassUser
         // Prepare the configured auth statements
         if ($dbi->getAuthParam('auth_check') and empty($this->_authselect)) {
             $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'), 
-                                                array("userid", "password"));
+                                                array("password", "userid"));
         }
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
         if (!$dbi->getAuthParam('auth_user_exists') 
@@ -148,15 +146,15 @@ extends _DbPassUser
         // reasons
         if (empty($this->_authcreate) and $dbi->getAuthParam('auth_create')) {
             $this->_authcreate = $this->prepare($dbi->getAuthParam('auth_create'),
-                                                array("userid", "password"));
+                                                array("password", "userid"));
         }
         if (!empty($this->_authcreate) and 
             isset($GLOBALS['HTTP_POST_VARS']['auth']) and
             isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) 
         {
             $passwd = $GLOBALS['HTTP_POST_VARS']['auth']['passwd'];
-            $dbh->simpleQuery(sprintf($this->_authcreate,
-                                      $dbh->quote($passwd),
+            $dbh->simpleQuery(sprintf($this->_authcreate, 
+                                      $dbh->quote($passwd), 
                                       $dbh->quote($this->_userid)));
             return true;
         }
@@ -185,11 +183,11 @@ extends _DbPassUser
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         $dbh = &$this->_auth_dbi;
         if ($this->_auth_crypt_method == 'crypt') {
-            $stored_password = $dbh->getOne(sprintf($this->_authselect, 
-                                                    $dbh->quote($this->_userid)));
+            $stored_password = $dbh->getOne(sprintf($this->_authselect, $dbh->quote($this->_userid)));
             $result = $this->_checkPass($submitted_password, $stored_password);
         } else {
-            $okay = $dbh->getOne(sprintf($this->_authselect,
+            // be position independent
+            $okay = $dbh->getOne(sprintf($this->_authselect, 
                                          $dbh->quote($submitted_password),
                                          $dbh->quote($this->_userid)));
             $result = !empty($okay);
@@ -219,7 +217,7 @@ extends _DbPassUser
         $dbi =& $GLOBALS['request']->_dbi;
         if ($dbi->getAuthParam('auth_update') and empty($this->_authupdate)) {
             $this->_authupdate = $this->prepare($dbi->getAuthParam('auth_update'),
-                                                array("userid", "password"));
+                                                array("password", "userid"));
         }
         if (empty($this->_authupdate)) {
             trigger_error(fmt("Either %s is missing or DATABASE_TYPE != '%s'",
@@ -233,14 +231,15 @@ extends _DbPassUser
                 $submitted_password = crypt($submitted_password);
         }
         $dbh->simpleQuery(sprintf($this->_authupdate,
-                                  $dbh->quote($submitted_password),
-        			  $dbh->quote($this->_userid)
-                                  ));
+                                  $dbh->quote($submitted_password), $dbh->quote($this->_userid)));
         return true;
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2005/10/10 19:43:49  rurban
+// add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
+//
 // Revision 1.8  2005/08/06 13:21:09  rurban
 // switch to natural order password, userid
 //
