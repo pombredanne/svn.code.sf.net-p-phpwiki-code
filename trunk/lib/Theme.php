@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.132 2005-07-24 09:51:22 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.133 2006-03-19 14:24:38 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -463,16 +463,17 @@ class Theme {
         }
     }
 
-    function getAuthorMessage ($revision, $only_authenticated = true) {
+    /* New behaviour: (by Matt Brown)
+       Prefer author (name) over internal author_id (IP)
+    function getAuthorMessage ($revision) {
         if (!$revision) return '';
         $dbi =& $GLOBALS['request']->_dbi;
-        $author = $revision->get('author_id');
-        if ( $author or $only_authenticated ) {
-            if (!$author) $author = $revision->get('author');
+        $author = $revision->get('author');
+        if (!$author) $author = $revision->get('author_id');
             if (!$author) return '';
-            if ( $dbi->isWikiPage($author) )
+        if ( $dbi->isWikiPage($author) ) {
                 return fmt("by %s", WikiLink($author));
-            else
+        } else {
                 return fmt("by %s", '"'.$author.'"');
         }
     }
@@ -1465,6 +1466,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.132  2005/07/24 09:51:22  rurban
+// guard doubleClickEdit for unittests, add AcDropDown support
+//
 // Revision 1.131  2005/06/10 06:09:06  rurban
 // enable getPref('doubleClickEdit')
 //
