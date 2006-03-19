@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.141 2006-03-19 17:11:32 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.142 2006-03-19 17:16:32 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -888,14 +888,15 @@ function RevertPage (&$request)
     $dbi =& $request->_dbi;
     $page = $dbi->getPage($pagename);
     $current = $page->getCurrentRevision();
-    if ($current->getVersion() == 0) {
+    $currversion = $current->getVersion();
+    if ($currversion == 0) {
         $mesg->pushContent(' ', _("no page content"));
         PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
                  $mesg);
         flush();
         return;
     }
-    if ($current->getVersion() == $version) {
+    if ($currversion == $version) {
         $mesg->pushContent(' ', _("same version page"));
         PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
                  $mesg);
@@ -933,9 +934,9 @@ function RevertPage (&$request)
     }
     $rev = $page->getRevision($version);
     $content = $rev->getPackedContent();
-    $versiondata = $rev->getMetaData(); //$rev->_data;
+    $versiondata = $rev->_data;
     $versiondata['summary'] = sprintf(_("revert to version %d"), $version);
-    $new = $page->save($content, $current->getVersion() + 1, $versiondata);
+    $new = $page->save($content, $currversion + 1, $versiondata);
     $dbi->touch();
     
     $pagelink = WikiLink($pagename);
@@ -946,8 +947,6 @@ function RevertPage (&$request)
     $request->setArg('version', false);
     $template = Template('savepage', array());
     $template->replace('CONTENT', $new->getTransformedContent());
-    if (!empty($warnings->_content))
-        $template->replace('WARNINGS', $warnings);
     
     GeneratePage($template, $mesg, $new);
     flush();
@@ -1361,6 +1360,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.141  2006/03/19 17:11:32  rurban
+ add verify to RevertPage, display reverted page as template
+
  Revision 1.140  2006/03/07 20:45:43  rurban
  wikihash for php-5.1
 
