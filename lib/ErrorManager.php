@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.47 2005-10-31 17:20:40 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.48 2006-03-19 14:29:40 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -246,11 +246,10 @@ class ErrorManager
             }
         }
 
-        $this->_noCacheHeaders();
-
         // Error was either fatal, or was not handled by a handler.
         // Handle it ourself.
         if ($error->isFatal()) {
+            $this->_noCacheHeaders();
             echo "<html><body><div style=\"font-weight:bold; color:red\">Fatal Error:</div>\n";
             if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
                 echo "error_reporting=",error_reporting(),"\n<br>";
@@ -276,6 +275,7 @@ class ErrorManager
             }
             else {
                 //echo "postponed errors: ";
+                $this->_noCacheHeaders();
                 if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
                     echo "error_reporting=",error_reporting(),"\n";
                     if (function_exists("debug_backtrace")) // >= 4.3.0
@@ -617,6 +617,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2005/10/31 17:20:40  rurban
+// fix ConvertBefore
+//
 // Revision 1.46  2005/10/30 16:38:13  rurban
 // minor fixes
 //
