@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.133 2006-03-19 14:24:38 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.134 2006-03-19 16:24:38 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -464,7 +464,7 @@ class Theme {
     }
 
     /* New behaviour: (by Matt Brown)
-       Prefer author (name) over internal author_id (IP)
+       Prefer author (name) over internal author_id (IP) */
     function getAuthorMessage ($revision) {
         if (!$revision) return '';
         $dbi =& $GLOBALS['request']->_dbi;
@@ -1466,6 +1466,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.133  2006/03/19 14:24:38  rurban
+// sf.net patch #1377650 by Matt Brown:  Always prefer legible author name over author_id property
+//
 // Revision 1.132  2005/07/24 09:51:22  rurban
 // guard doubleClickEdit for unittests, add AcDropDown support
 //
