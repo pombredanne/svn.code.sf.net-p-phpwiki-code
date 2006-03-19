@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.221 2006-03-19 14:23:51 rurban Exp $');
+rcs_id('$Id: main.php,v 1.222 2006-03-19 14:53:12 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -240,7 +240,7 @@ class WikiRequest extends Request {
             else
                 $action = 'edit';
   	}
-        if (0) {
+        if (! ENABLE_PAGEPERM) { // Bug #1438392 by Matt Brown
             $require_level = $this->requiredAuthority($action);
             if (! $this->_user->hasAuthority($require_level))
                 $this->_notAuthorized($require_level); // NORETURN
@@ -1275,6 +1275,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.221  2006/03/19 14:23:51  rurban
+// sf.net patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
+//
 // Revision 1.220  2006/03/07 21:04:15  rurban
 // wikihash for php-5.1
 //
