@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.139 2006-01-12 16:38:07 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.140 2006-03-19 14:23:51 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -923,8 +923,10 @@ class WikiDB_Page
 	// in the backend to control when to optimize.
         //
         // We're doing this here rather than in createRevision because
-        // postgres can't optimize while locked.
-        if ((DEBUG & _DEBUG_SQL) or (time() % 5 == 0)) {
+        // postgresql can't optimize while locked.
+        if ((DEBUG & _DEBUG_SQL)
+	    or (DATABASE_OPTIMISE_FREQUENCY > 0 and 
+                (time() % DATABASE_OPTIMISE_FREQUENCY == 0))) {
             if ($backend->optimize())
                 trigger_error(_("Optimizing database"), E_USER_NOTICE);
         }
@@ -2254,6 +2256,10 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.139  2006/01/12 16:38:07  rurban
+// add page method listRelations()
+// fix bug #1327912 numeric pagenames can break plugins (Joachim Lous)
+//
 // Revision 1.138  2005/11/14 22:27:07  rurban
 // add linkrelation support
 //   getPageLinks returns now an array of hashes

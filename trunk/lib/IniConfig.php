@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.99 2006-03-07 20:42:34 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.100 2006-03-19 14:23:51 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -141,6 +141,7 @@ function IniConfig($file) {
          'ALLOWED_PROTOCOLS', 'INLINE_IMAGES', 'SUBPAGE_SEPARATOR', /*'KEYWORDS',*/
          // extra logic:
          //'DATABASE_PREFIX', 'DATABASE_DSN', 'DATABASE_TYPE', 'DATABASE_DBHANDLER',
+	 'DATABASE_OPTIMISE_FREQUENCY',
          'INTERWIKI_MAP_FILE', 'COPYRIGHTPAGE_TITLE', 'COPYRIGHTPAGE_URL',
          'AUTHORPAGE_TITLE', 'AUTHORPAGE_URL', 
          'WIKI_NAME_REGEXP',
@@ -858,6 +859,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.99  2006/03/07 20:42:34  rurban
+// add DBAUTH_PREF_INSERT support
+//
 // Revision 1.98  2006/01/12 16:22:47  rurban
 // Add flatfile and cvsclient to $valid_database_types (internal testing)
 // Fix bug #1381464 "Duplicate functions ver. 1.3.11p1"
