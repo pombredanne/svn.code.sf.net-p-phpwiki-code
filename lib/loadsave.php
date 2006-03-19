@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.140 2006-03-07 20:45:43 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.141 2006-03-19 17:11:32 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -892,22 +892,64 @@ function RevertPage (&$request)
         $mesg->pushContent(' ', _("no page content"));
         PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
                  $mesg);
+        flush();
         return;
     }
     if ($current->getVersion() == $version) {
         $mesg->pushContent(' ', _("same version page"));
+        PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
+                 $mesg);
+        flush();
+        return;
+    }
+    if ($request->getArg('cancel')) {
+        $mesg->pushContent(' ', _("Cancelled"));
+        PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
+                 $mesg);
+        flush();
+        return;
+    }
+    if (!$request->getArg('verify')) {
+        $mesg->pushContent(HTML::br(),
+                           _("Are you sure?"),
+                           HTML::br(),
+                           HTML::form(array('action' => $request->getPostURL(),
+                                            'method' => 'post'),
+                                      HiddenInputs($request->getArgs(), false, array('verify')),
+                                      HiddenInputs(array('verify' => 1)),
+                                      Button('submit:verify', _("Yes"), 'button'),
+                                      HTML::Raw('&nbsp;'),
+                                      Button('submit:cancel', _("Cancel"), 'button')));
+        $rev = $page->getRevision($version);
+        $html = HTML(HTML::dt(fmt("Revert %s to version $version", WikiLink($pagename))), 
+                     $mesg,
+                     $rev->getTransformedContent()); 
+        $template = Template('browse', 
+                             array('CONTENT' => $html));
+        GeneratePage($template, $pagename, $rev);
+        $request->checkValidators();
+        flush();
         return;
     }
     $rev = $page->getRevision($version);
     $content = $rev->getPackedContent();
-    $versiondata = $rev->_data;
+    $versiondata = $rev->getMetaData(); //$rev->_data;
     $versiondata['summary'] = sprintf(_("revert to version %d"), $version);
     $new = $page->save($content, $current->getVersion() + 1, $versiondata);
     $dbi->touch();
-    $mesg->pushContent(' ', fmt("- version %d saved to database as version %d",
-                                $version, $new->getVersion()));
-    PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
-             $mesg);
+    
+    $pagelink = WikiLink($pagename);
+    $mesg->pushContent(fmt("Revert: %s", $pagelink), 
+                       fmt("- version %d saved to database as version %d",
+                           $version, $new->getVersion()));
+    // Force browse of current page version.
+    $request->setArg('version', false);
+    $template = Template('savepage', array());
+    $template->replace('CONTENT', $new->getTransformedContent());
+    if (!empty($warnings->_content))
+        $template->replace('WARNINGS', $warnings);
+    
+    GeneratePage($template, $mesg, $new);
     flush();
 }
 
@@ -1319,6 +1361,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.140  2006/03/07 20:45:43  rurban
+ wikihash for php-5.1
+
  Revision 1.139  2005/08/27 18:02:43  rurban
  fix and expand pages
 
