@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.222 2006-03-19 14:53:12 rurban Exp $');
+rcs_id('$Id: main.php,v 1.223 2006-03-19 15:01:00 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -390,7 +390,7 @@ class WikiRequest extends Request {
     function _setUser (&$user) {
         $this->_user =& $user;
         if (defined('MAIN_setUser')) return; // don't set cookies twice
-        $this->setCookieVar('WIKI_ID', $user->getAuthenticatedId(),
+        $this->setCookieVar(getCookieName(), $user->getAuthenticatedId(),
                             COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
         if ($user->isSignedIn())
             $user->_authhow = 'signin';
@@ -864,7 +864,7 @@ class WikiRequest extends Request {
         if (!empty($HTTP_ENV_VARS['REMOTE_USER']))
             return $HTTP_ENV_VARS['REMOTE_USER'];
 
-        if ($userid = $this->getCookieVar('WIKI_ID')) {
+        if ($userid = $this->getCookieVar(getCookieName())) {
             if (!empty($userid) and substr($userid,0,2) != 's:') {
                 $this->_user->authhow = 'cookie';
                 return $userid;
@@ -1275,6 +1275,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.222  2006/03/19 14:53:12  rurban
+// sf.net patch #1438392 by Matt Brown: Bogo Login is broken when ENABLE_PAGEPERM=false
+//
 // Revision 1.221  2006/03/19 14:23:51  rurban
 // sf.net patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
 //

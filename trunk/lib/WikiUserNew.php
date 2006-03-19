@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.133 2006-03-07 18:39:21 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.134 2006-03-19 15:01:00 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -669,14 +669,14 @@ extends _WikiUser
         }
         if (! $UserName ) {
             // Try reading userid from old PhpWiki cookie formats:
-            if ($cookie = $request->cookies->get_old('WIKI_ID')) {
+            if ($cookie = $request->cookies->get_old(getCookieName())) {
                 if (is_string($cookie) and (substr($cookie,0,2) != 's:'))
                     $UserName = $cookie;
                 elseif (is_array($cookie) and !empty($cookie['userid']))
                     $UserName = $cookie['userid'];
             }
             if (! $UserName and !headers_sent())
-                $request->deleteCookieVar("WIKI_ID");
+                $request->deleteCookieVar(getCookieName());
             else
                 $this->_userid = $UserName;
         }
@@ -721,7 +721,7 @@ extends _WikiUser
                 // new 1.3.8 policy: no array cookies, only plain userid string as in 
                 // the pre 1.3.x versions.
                 // prefs should be stored besides the session in the homepagehandle or in a db.
-                $request->setCookieVar('WIKI_ID', $this->_userid,
+                $request->setCookieVar(getCookieName(), $this->_userid,
                                        COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
                 //$request->setCookieVar(WIKI_NAME, array('userid' => $prefs->get('userid')),
                 //                       COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
@@ -1125,13 +1125,13 @@ extends _AnonUser
                 return _PdoDbPassUser::setPreferences($prefs, $id_only);
             }
         }
-        if ($num = _AnonUser::setPreferences($prefs, $id_only)) {
+        if ($updated = _AnonUser::setPreferences($prefs, $id_only)) {
             // Encode only the _prefs array of the UserPreference object
             if (!empty($this->_HomePagehandle) and !$id_only) {
                 $this->_HomePagehandle->set('pref', $this->_prefs->store());
             }
         }
-        return $num;
+        return $updated;
     }
 
     function mayChangePass() {
@@ -2096,6 +2096,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.133  2006/03/07 18:39:21  rurban
+// add PdoDb, rename hash to wikihash (php-5.1), fix output of Homepage prefs update
+//
 // Revision 1.132  2006/03/04 13:19:12  rurban
 // fix for fatal error on empty pref value (sign out). Thanks to Jim Ford and Joel Schaubert. rename hash for php-5.1
 //

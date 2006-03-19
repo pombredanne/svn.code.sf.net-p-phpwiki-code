@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.66 2006-03-07 20:45:44 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.67 2006-03-19 15:01:01 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -355,7 +355,7 @@ class WikiUser {
         $this->_request->setSessionVar('wiki_prefs', $prefs);
         // $this->_request->setCookieVar('WIKI_PREFS2', $this->_prefs, 365);
         // simple unpacked cookie
-        if ($this->_userid) setcookie('WIKI_ID', $this->_userid, 365, '/');
+        if ($this->_userid) setcookie(getCookieName(), $this->_userid, 365, '/');
 
         // We must ensure that any password is encrypted.
         // We don't need any plaintext password.
@@ -746,6 +746,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2006/03/07 20:45:44  rurban
+// wikihash for php-5.1
+//
 // Revision 1.65  2005/06/05 05:38:02  rurban
 // Default ENABLE_DOUBLECLICKEDIT = false. Moved to UserPreferences
 //

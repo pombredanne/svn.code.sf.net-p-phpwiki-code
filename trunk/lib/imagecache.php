@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: imagecache.php,v 1.12 2004-11-21 11:59:20 rurban Exp $');
+<?php rcs_id('$Id: imagecache.php,v 1.13 2006-03-19 15:01:00 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -75,7 +75,7 @@ function deduceUsername() {
         $request->_user->_authhow = 'session';
         return ENABLE_USER_NEW ? $user->UserName() : $request->_user;
     }
-    if ($userid = $request->getCookieVar('WIKI_ID')) {
+    if ($userid = $request->getCookieVar(getCookieName())) {
         if (!empty($userid) and substr($userid,0,2) != 's:') {
             $request->_user->authhow = 'cookie';
             return $userid;
