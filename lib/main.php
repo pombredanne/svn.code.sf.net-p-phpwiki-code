@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.220 2006-03-07 21:04:15 rurban Exp $');
+rcs_id('$Id: main.php,v 1.221 2006-03-19 14:23:51 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -91,7 +91,9 @@ class WikiRequest extends Request {
         $this->setArg('pagename', $this->_deducePagename());
         $this->setArg('action', $this->_deduceAction());
 
-        if ((DEBUG & _DEBUG_SQL) or (time() % 50 == 0)) {
+        if ((DEBUG & _DEBUG_SQL)
+	    or (DATABASE_OPTIMISE_FREQUENCY > 0 and 
+                (time() % DATABASE_OPTIMISE_FREQUENCY == 0))) {
             if ($this->_dbi->_backend->optimize())
                 trigger_error(_("Optimizing database"), E_USER_NOTICE);
         }
@@ -1273,6 +1275,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.220  2006/03/07 21:04:15  rurban
+// wikihash for php-5.1
+//
 // Revision 1.219  2005/10/30 14:20:42  rurban
 // move Captcha specific vars and methods into a Captcha object
 // randomize Captcha chars positions and angles (smoothly)
