@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.134 2006-03-19 15:01:00 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.135 2006-03-19 16:26:39 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1006,7 +1006,11 @@ extends _AnonUser
     }
 
     // TODO: use it again for the auth and member tables
-    function prepare ($stmt, $variables, $oldstyle = false) {
+    // sprintfstyle vs prepare style: %s or ?
+    //   multiple vars should be executed via prepare(?,?)+execute, 
+    //   single vars with execute(sprintf(quote(var)))
+    // help with position independency
+    function prepare ($stmt, $variables, $oldstyle = false, $sprintfstyle = true) {
         global $request;
         $dbi = $request->getDbh();
         $this->getAuthDbh();
@@ -1015,6 +1019,7 @@ extends _AnonUser
         // old-style strings don't survive pear/Config/IniConfig treatment, that's why we changed it.
         $new = array();
         if (is_array($variables)) {
+            //$sprintfstyle = false;
             for ($i=0; $i < count($variables); $i++) { 
                 $var = $this->_normalize_stmt_var($variables[$i], $oldstyle);
                 if (!$var)
@@ -1022,7 +1027,10 @@ extends _AnonUser
                                           $variables[$i], $stmt), E_USER_WARNING);
                 $variables[$i] = $var;
                 if (!$var) $new[] = '';
-                else $new[] = '%s';
+                else {
+                    $s = "%" . ($i+1) . "s";	
+                    $new[] = $sprintfstyle ? $s : "?";
+                }
             }
         } else {
             $var = $this->_normalize_stmt_var($variables, $oldstyle);
@@ -1031,7 +1039,7 @@ extends _AnonUser
                                       $variables, $stmt), E_USER_WARNING);
             $variables = $var;
             if (!$var) $new = ''; 
-            else $new = '%s'; 
+            else $new = $sprintfstyle ? '%s' : "?"; 
         }
         $prefix = $dbi->getParam('prefix');
         // probably prefix table names if in same database
@@ -2096,6 +2104,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.134  2006/03/19 15:01:00  rurban
+// sf.net patch #1333957 by Matt Brown: Authentication cookie identical across all wikis on a host
+//
 // Revision 1.133  2006/03/07 18:39:21  rurban
 // add PdoDb, rename hash to wikihash (php-5.1), fix output of Homepage prefs update
 //
