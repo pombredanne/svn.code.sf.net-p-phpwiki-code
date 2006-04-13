@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.22 2005-11-14 22:30:17 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.23 2006-04-13 19:30:44 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -55,7 +55,7 @@
 // regex-style: 'auto', 'none', 'glob', 'posix', 'pcre', 'sql'
 define ('TSQ_REGEX_NONE', 0);
 define ('TSQ_REGEX_AUTO', 1);
-define ('TSQ_REGEX_POSIX', 2);
+define ('TSQ_REGEX_POSIX',2);
 define ('TSQ_REGEX_GLOB', 4);
 define ('TSQ_REGEX_PCRE', 8);
 define ('TSQ_REGEX_SQL', 16);
@@ -83,7 +83,10 @@ class TextSearchQuery {
         $parser = new TextSearchQuery_Parser;
         $this->_tree = $parser->parse($search_query, $case_exact, $this->_regex);
         $this->_optimize(); // broken under certain circumstances: "word -word -word"
-        $this->_stoplist = '(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)';
+        if (defined("FULLTEXTSEARCH_STOPLIST"))
+            $this->_stoplist = FULLTEXTSEARCH_STOPLIST;
+        else // default stoplist, localizable.
+            $this->_stoplist = _("(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)");
     }
 
     function _optimize() {
@@ -862,6 +865,8 @@ class TextSearchQuery_Lexer {
         return $val;
     }
 }
+
+// $Log: not supported by cvs2svn $ 
 
 // Local Variables:
 // mode: php
