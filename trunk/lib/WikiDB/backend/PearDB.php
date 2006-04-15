@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.95 2006-02-22 21:52:28 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.96 2006-04-15 12:28:53 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -258,8 +258,7 @@ extends WikiDB_backend
         $id = $dbh->getOne($query);
         if (empty($id)) {
             $this->lock(array($page_tbl), true); // write lock
-            $max_id = $dbh->getOne("SELECT MAX(id) FROM $page_tbl");
-            $id = $max_id + 1;
+            $id = $dbh->nextId($page_tbl . "_id");
             $dbh->query(sprintf("INSERT INTO $page_tbl"
                                 . " (id,pagename,hits)"
                                 . " VALUES (%d,'%s',0)",
@@ -1232,6 +1231,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.95  2006/02/22 21:52:28  rurban
+// whitespace only
+//
 // Revision 1.94  2005/11/14 22:24:33  rurban
 // fix fulltext search,
 // Eliminate stoplist words,
