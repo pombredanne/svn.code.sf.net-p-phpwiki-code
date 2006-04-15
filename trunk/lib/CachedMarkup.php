@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.40 2005-12-27 08:50:45 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.41 2006-04-15 12:22:07 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -302,6 +302,7 @@ class Cached_WikiLink extends Cached_Link {
             $this->_anchor = $anchor;
         if ($label and $label != $page)
             $this->_label = $label;
+        $this->_basepage = false;    
     }
 
     function _getType() {
@@ -331,6 +332,7 @@ class Cached_WikiLink extends Cached_Link {
     }
 
     function expand($basepage, &$markup) {
+    	$this->_basepage = $basepage;
 	$label = isset($this->_label) ? $this->_label : false;
 	$anchor = isset($this->_anchor) ? (string)$this->_anchor : '';
         $page = new WikiPageName($this->_page, $basepage, $anchor);
@@ -341,7 +343,8 @@ class Cached_WikiLink extends Cached_Link {
     function asXML() {
 	$label = isset($this->_label) ? $this->_label : false;
 	$anchor = isset($this->_anchor) ? (string)$this->_anchor : '';
-        $page = new WikiPageName($this->_page, false, $anchor);
+	//TODO: need basepage for subpages like /Remove (within CreateTOC)
+        $page = new WikiPageName($this->_page, $this->_basepage, $anchor);
 	$link = WikiLink($page, 'auto', $label);
         return $link->asXML();
     }
