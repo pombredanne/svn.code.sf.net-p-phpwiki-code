@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.23 2005-09-11 13:21:45 rurban Exp $');
+<?php rcs_id('$Id: dbaBase.php,v 1.24 2006-04-15 12:26:16 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -279,12 +279,15 @@ extends WikiDB_backend
     }
 
     function get_links($pagename, $reversed=true, $include_empty=false,
-                       $sortby=false, $limit=false, $exclude=false) {
-        $links = $this->_linkdb->get_links($pagename, $reversed);
+                       $sortby=false, $limit=false, $exclude=false,
+                       $want_relations=false) 
+    {
+        $links = $this->_linkdb->get_links($pagename, $reversed, $want_relations);
         return new WikiDB_backend_dbaBase_pageiter($this, $links, 
                                                    array('sortby'=>$sortby,
                                                          'limit' =>$limit,
                                                          'exclude'=>$exclude,
+                                                         'want_relations'=>$want_relations,
                                                          ));
     }
 };
@@ -329,6 +332,7 @@ function WikiDB_backend_dbaBase_sortby_num($aname, $bname, $field) {
 class WikiDB_backend_dbaBase_pageiter
 extends WikiDB_backend_iterator
 {
+    // FIXME: for linkrelations
     function WikiDB_backend_dbaBase_pageiter(&$backend, &$pages, $options=false) {
         $this->_backend = $backend;
         $this->_options = $options;
@@ -378,8 +382,29 @@ class WikiDB_backend_dbaBase_linktable
 
     //FIXME: try storing link lists as hashes rather than arrays.
     // (backlink deletion would be faster.)
-    function get_links($page, $reversed=true) {
-        return $this->_get_links($reversed ? 'i' : 'o', $page);
+    function get_links($page, $reversed=true, $want_relations=false) {
+        if ($want_relations) {
+            //return $this->_get_links($reversed ? 'i' : 'o', $page);
+            $links = $this->_get_links($reversed ? 'i' : 'o', $page);
+            $linksonly = array();
+            foreach ($links as $link) {
+                if (is_array($link))
+                    $linksonly[] = $link['relation'];
+                else
+                    $linksonly[] = $link;
+            }
+            return $linksonly;
+        } else {
+            $links = $this->_get_links($reversed ? 'i' : 'o', $page);
+            $linksonly = array();
+            foreach ($links as $link) {
+                if (is_array($link))
+                    $linksonly[] = $link['linkto'];
+                else
+                    $linksonly[] = $link;
+            }
+            return $linksonly;
+        }
     }
     
     function set_links($page, $newlinks) {
