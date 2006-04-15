@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.18 2005-09-10 11:30:40 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.19 2006-04-15 12:27:40 rurban Exp $');
 /**
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -42,7 +42,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -228,7 +228,10 @@ extends WikiPlugin
             if ($prefs->get('email')) {
             	if (!$prefs->get('userid'))
             	    $prefs->set('userid',$username);
-                $group = (int)(count($pagelist->_rows) / $pagelist->_group_rows);
+                if (!empty($pagelist->_rows))
+                    $group = (int)(count($pagelist->_rows) / $pagelist->_group_rows);
+                else 
+                    $group = 0;
                 $class = ($group % 2) ? 'oddrow' : 'evenrow';
                 $row = HTML::tr(array('class' => $class));
                 $page_handle = $dbi->getPage($username);
