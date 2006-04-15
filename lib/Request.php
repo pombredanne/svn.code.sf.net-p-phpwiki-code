@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.102 2006-03-19 15:01:00 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.103 2006-04-15 12:23:32 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -251,7 +251,7 @@ class Request {
         $validators = &$this->_validators;
         
         // Set validator headers
-        if ($this->_is_buffering_output or !headers_sent()) {
+        if (!empty($this->_is_buffering_output) or !headers_sent()) {
             if (($etag = $validators->getETag()) !== false)
                 header("ETag: " . $etag->asString());
             if (($mtime = $validators->getModificationTime()) !== false)
@@ -1346,6 +1346,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2006/03/19 15:01:00  rurban
+// sf.net patch #1333957 by Matt Brown: Authentication cookie identical across all wikis on a host
+//
 // Revision 1.101  2006/03/07 20:45:43  rurban
 // wikihash for php-5.1
 //
