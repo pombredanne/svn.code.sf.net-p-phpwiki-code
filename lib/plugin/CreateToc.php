@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.28 2005-10-12 06:15:25 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.29 2006-04-15 12:26:54 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.28 $");
+                            "\$Revision: 1.29 $");
     }
 
     function getDefaultArguments() {
@@ -124,7 +124,7 @@ extends WikiPlugin
      * @param $hend   id (in $content) of heading end
      */
     function searchHeader ($content, $start_index, $heading, 
-                           $level, &$hstart, &$hend) {
+                           $level, &$hstart, &$hend, $basepage=false) {
         $hstart = 0;
         $hend = 0;
     	$h = $this->_getHeader($level);
@@ -137,9 +137,10 @@ extends WikiPlugin
             }
             elseif (isa($content[$j], 'cached_link'))
             {
-		if (method_exists($content[$j],'asXML'))
+		if (method_exists($content[$j],'asXML')) {
+		    $content[$j]->_basepage = $basepage;
 		    $content[$j] = $content[$j]->asXML();
-		else
+		} else
 		    $content[$j] = $content[$j]->asString();
 		// shortcut for single wikiword or link headers
 		if ($content[$j] == $heading
@@ -162,7 +163,7 @@ extends WikiPlugin
 			        $joined .= $content[$k];
 			    elseif (method_exists($content[$k],'asXML'))
 		                $joined .= $content[$k]->asXML();
-		            else
+			    else
 		                $joined .= $content[$k]->asString();
 			    if (preg_match("/<$h>$qheading<\/$h>/",$joined)) {
 				$hend=$k;
@@ -228,7 +229,8 @@ extends WikiPlugin
                         /* Url for backlink */
                         $url = WikiURL(new WikiPageName($basepage,false,"TOC"));
                         $j = $this->searchHeader($markup->_content, $j, $s, 
-                                                 $match[1], $hstart, $hend);
+                                                 $match[1], $hstart, $hend, 
+                                                 $markup->_basepage);
                         if ($j and isset($markup->_content[$j])) {
                             $x = $markup->_content[$j];
 			    $qheading = $this->_quote($s);
@@ -387,6 +389,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2005/10/12 06:15:25  rurban
+// just aesthetics
+//
 // Revision 1.27  2005/10/10 19:50:45  rurban
 // fix the missing formatting problems, add with_counter arg by ?? (20050106), Thanks to ManuelVacelet for the testcase
 //
