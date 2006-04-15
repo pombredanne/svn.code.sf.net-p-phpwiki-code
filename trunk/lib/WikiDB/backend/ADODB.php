@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.84 2006-02-22 21:49:50 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.85 2006-04-15 12:48:04 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -296,21 +296,24 @@ extends WikiDB_backend
         }
         $row = $dbh->GetRow($query);
         if (! $row ) {
-	    //$id = $dbh->GenID($page_tbl . 'seq');
-	    // Better generic version than with adodob::genID
 	    //TODO: Does the DBM has subselects? Then we can do it with select max(id)+1
-	    $this->lock(array('page'));
+	    // $this->lock(array('page'));
 	    $dbh->BeginTrans( );
 	    $dbh->CommitLock($page_tbl);
-	    $row = $dbh->GetRow("SELECT MAX(id) FROM $page_tbl");
-	    $id = $row[0] + 1;
+            if ($dbh->hasGenID) {
+                $id = $dbh->GenID($page_tbl."_id");
+            } else {
+                // Better generic version than with adodb::genID
+                $row = $dbh->GetRow("SELECT MAX(id) FROM $page_tbl");
+                $id = $row[0] + 1;
+            }
 	    $rs = $dbh->Execute(sprintf("INSERT INTO $page_tbl"
 					. " (id,pagename,hits)"
 					. " VALUES (%d,%s,0)",
 					$id, $dbh->qstr($pagename)));
 	    if ($rs) $dbh->CommitTrans( );
 	    else $dbh->RollbackTrans( );
-	    $this->unlock(array('page'));
+	    // $this->unlock(array('page'));
         } else {
             $id = $row[0];
         }
@@ -590,8 +593,13 @@ extends WikiDB_backend
                     $linkseen[$linkto] = true;
                 $linkid = $this->_get_pageid($linkto, true);
                 assert($linkid);
-                $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
-                            . " VALUES ($pageid, $linkid, $relation)");
+                if ($relation) {
+                    $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
+                                . " VALUES ($pageid, $linkid, $relation)");
+                else {              
+                    $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
+                                . " VALUES ($pageid, $linkid)");
+                }
             }
         } elseif (0 and DEBUG) {
             // purge page table: delete all non-referenced pages
@@ -1422,6 +1430,10 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.84  2006/02/22 21:49:50  rurban
+// Remove hits from links query
+// force old set_links method. need to test IS NULL
+//
 // Revision 1.83  2005/11/14 22:24:33  rurban
 // fix fulltext search,
 // Eliminate stoplist words,
