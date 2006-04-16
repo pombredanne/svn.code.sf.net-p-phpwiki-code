@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.135 2006-03-19 16:26:39 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.136 2006-04-16 11:07:48 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1945,7 +1945,10 @@ class UserPreferences
             if ($name == 'email' and ($value = $object->getraw('emailVerified')))
                 $prefs['emailVerified'] = $value;
             if ($name == 'passwd' and $value and ENCRYPTED_PASSWD) {
-            	$prefs['passwd'] = crypt($value);
+                if (strlen($value) != strlen(crypt('test')))
+                    $prefs['passwd'] = crypt($value);
+                else // already crypted
+                    $prefs['passwd'] = $value;
             }
         }
         return $this->pack($prefs);
@@ -2104,6 +2107,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.135  2006/03/19 16:26:39  rurban
+// fix DBAUTH arguments to be position independent, fixes bug #1358973
+//
 // Revision 1.134  2006/03/19 15:01:00  rurban
 // sf.net patch #1333957 by Matt Brown: Authentication cookie identical across all wikis on a host
 //
