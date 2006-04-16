@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.103 2006-04-15 12:23:32 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.104 2006-04-16 11:42:16 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -452,15 +452,19 @@ class Request {
             // if _is_compressing_output then ob_get_length() returns 
             // the uncompressed length, not the gzip'ed as required.
 	    if (!headers_sent() and !$this->_is_compressing_output) {
-		if (empty($this->_do_chunked_output)) {
-		    $this->_ob_get_length = ob_get_length();
-		}
-		header(sprintf("Content-Length: %d", $this->_ob_get_length));
+                // php url-rewriting miscalculates the ob length. fixes bug #1376007
+                if (ini_get('use_trans_sid') == 'off') {
+                    if (empty($this->_do_chunked_output)) {
+                        $this->_ob_get_length = ob_get_length();
+                    }
+                    header(sprintf("Content-Length: %d", $this->_ob_get_length));
+                }
             }
             $this->_is_buffering_output = false;
-	}
-
-        while (@ob_end_flush()); // hmm. there's some error in redirect
+            while (@ob_end_flush());
+	} elseif (function_exists('ob_get_level') and @ob_get_level()) {
+            while (@ob_end_flush());
+        }
         session_write_close();
         if (!empty($this->_dbi)) {
             $this->_dbi->close();
@@ -1346,6 +1350,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2006/04/15 12:23:32  rurban
+// silence $this->_is_buffering_output warning
+//
 // Revision 1.102  2006/03/19 15:01:00  rurban
 // sf.net patch #1333957 by Matt Brown: Authentication cookie identical across all wikis on a host
 //
