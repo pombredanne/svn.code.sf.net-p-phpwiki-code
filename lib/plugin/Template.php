@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.4 2005-09-11 13:30:22 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.5 2006-04-17 17:28:21 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -67,7 +67,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -88,7 +88,7 @@ extends WikiPlugin
         }
         if (!$page or !$page->name)
             return false;
-        return array($page->name);
+        return array(array('linkto' => $page->name, 'relation' => 0));
     }
                 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -184,6 +184,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2005/09/11 13:30:22  rurban
+// improve comments
+//
 // Revision 1.3  2005/09/10 20:43:19  rurban
 // support <noinclude>
 //
