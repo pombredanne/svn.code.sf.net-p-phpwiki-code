@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.26 2005-11-14 22:24:33 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.27 2006-04-17 17:30:35 rurban Exp $');
 
 /*
   Pagedata
@@ -629,7 +629,8 @@ class WikiDB_backend_search
         return "preg_match(\"/\".$word.\"/\"".($this->_case_exact ? "i":"").")";
     }
     /* Eliminate stoplist words.
-       Keep a list of Stoplisted words to inform the poor user. */
+     *  Keep a list of Stoplisted words to inform the poor user. 
+     */
     function isStoplisted ($node) {
     	// check only on WORD or EXACT fulltext search
     	if ($node->op != 'WORD' and $node->op != 'EXACT')

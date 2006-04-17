@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.17 2005-08-07 10:52:43 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.18 2006-04-17 17:30:35 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 
@@ -150,7 +150,7 @@ class DbaDatabase
             return $this->_error("sync()");
     }
 
-    function optimize() {
+    function optimize () {
         if (!dba_optimize($this->_dbh))
             return $this->_error("optimize()");
         return 1;
