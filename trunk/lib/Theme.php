@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.134 2006-03-19 16:24:38 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.135 2006-04-17 17:28:21 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1399,8 +1399,9 @@ class RelatedLinksBox extends SidebarBox {
         $counter = 0;
         $sp = HTML::Raw('&middot; ');
         foreach ($page_content->getWikiPageLinks() as $link) {
-            if (!$request->_dbi->isWikiPage($link)) continue;
-            $this->body->pushContent($sp, WikiLink($link), HTML::br());
+            $linkto = $link['linkto'];
+            if (!$request->_dbi->isWikiPage($linkto)) continue;
+            $this->body->pushContent($sp, WikiLink($linkto), HTML::br());
             $counter++;
             if ($limit and $counter > $limit) continue;
         }
@@ -1417,8 +1418,9 @@ class RelatedExternalLinksBox extends SidebarBox {
         $counter = 0;
         $sp = HTML::Raw('&middot; ');
         foreach ($cache->getWikiPageLinks() as $link) {
-            if ($link) {
-                $this->body->pushContent($sp, WikiLink($link), HTML::br());
+            $linkto = $link['linkto'];
+            if ($linkto) {
+                $this->body->pushContent($sp, WikiLink($linkto), HTML::br());
                 $counter++;
                 if ($limit and $counter > $limit) continue;
             }
@@ -1466,6 +1468,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.134  2006/03/19 16:24:38  rurban
+// fix syntax error with patch #1377650
+//
 // Revision 1.133  2006/03/19 14:24:38  rurban
 // sf.net patch #1377650 by Matt Brown:  Always prefer legible author name over author_id property
 //

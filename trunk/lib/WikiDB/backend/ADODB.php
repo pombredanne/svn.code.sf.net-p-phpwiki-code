@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.86 2006-04-17 10:02:44 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.87 2006-04-17 17:28:21 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -628,7 +628,12 @@ extends WikiDB_backend
      *
      * Optimization: save request->_dbi->_iwpcache[] to avoid further iswikipage checks
      * (linkExistingWikiWord or linkUnknownWikiWord)
-     * This is called on every page header GleanDescription, so we can store all the existing links.
+     * This is called on every page header GleanDescription, so we can store all the 
+     * existing links.
+     * 
+     * relations: $backend->get_links is responsible to add the relation to the pagehash 
+     * as 'linkrelation' key as pagename. See WikiDB_PageIterator::next 
+     *   if (isset($next['linkrelation']))
      */
     function get_links($pagename, $reversed=true,   $include_empty=false,
                        $sortby=false, $limit=false, $exclude='',
@@ -1430,6 +1435,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.86  2006/04/17 10:02:44  rurban
+// fix syntax error missing }
+//
 // Revision 1.85  2006/04/15 12:48:04  rurban
 // use genID, dont lock here
 //

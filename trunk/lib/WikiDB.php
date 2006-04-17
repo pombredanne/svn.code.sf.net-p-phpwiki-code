@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.140 2006-03-19 14:23:51 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.141 2006-04-17 17:28:21 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -912,7 +912,7 @@ class WikiDB_Page
 	$formatted = new TransformedText($this, $wikitext, $meta);
         $type = $formatted->getType();
 	$meta['pagetype'] = $type->getName();
-	$links = $formatted->getWikiPageLinks();
+	$links = $formatted->getWikiPageLinks(); // linkto => relation
 
 	$backend = &$this->_wikidb->_backend;
 	$newrevision = $this->createRevision($version, $wikitext, $meta, $links);
@@ -1209,6 +1209,9 @@ class WikiDB_Page
     
     /**
      * Find pages which link to or are linked from a page.
+     * relations: $backend->get_links is responsible to add the relation to the pagehash 
+     * as 'linkrelation' key as pagename. See WikiDB_PageIterator::next 
+     *   if (isset($next['linkrelation']))
      *
      * @access public
      *
@@ -1218,27 +1221,34 @@ class WikiDB_Page
      * all matching pages.
      */
     function getLinks ($reversed = true, $include_empty=false, $sortby=false, 
-                       $limit=false, $exclude=false) {
+                       $limit=false, $exclude=false, $want_relations=false) 
+    {
         $backend = &$this->_wikidb->_backend;
         $result =  $backend->get_links($this->_pagename, $reversed, 
-                                       $include_empty, $sortby, $limit, $exclude);
+                                       $include_empty, $sortby, $limit, $exclude,
+                                       $want_relations);
         return new WikiDB_PageIterator($this->_wikidb, $result, 
                                        array('include_empty' => $include_empty,
-                                             'sortby' => $sortby, 
-                                             'limit' => $limit, 
-                                             'exclude' => $exclude));
+                                             'sortby'        => $sortby, 
+                                             'limit'         => $limit, 
+                                             'exclude'       => $exclude,
+                                             'want_relations'=> $want_relations));
     }
 
     /**
      * All Links from other pages to this page.
      */
-    function getBackLinks($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function getBackLinks($include_empty=false, $sortby=false, $limit=false, $exclude=false, 
+                          $want_relations=false) 
+    {
         return $this->getLinks(true, $include_empty, $sortby, $limit, $exclude);
     }
     /**
      * Forward Links: All Links from this page to other pages.
      */
-    function getPageLinks($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function getPageLinks($include_empty=false, $sortby=false, $limit=false, $exclude=false, 
+                          $want_relations=false) 
+    {
         return $this->getLinks(false, $include_empty, $sortby, $limit, $exclude);
     }
     /**
@@ -1255,7 +1265,8 @@ class WikiDB_Page
                                        array('include_empty' => true,
                                              'sortby'        => $sortby, 
                                              'limit'         => $limit, 
-                                             'exclude'       => $exclude));
+                                             'exclude'       => $exclude,
+                                             'want_relations'=> true));
     }
     
     /**
@@ -1836,8 +1847,9 @@ class WikiDB_PageIterator
             return false;
 
         $pagename = &$next['pagename'];
-        if (!is_string($pagename)) // Bug #1327912 fixed by Joachim Lous
+        if (!is_string($pagename)) { // Bug #1327912 fixed by Joachim Lous
             $pagename = strval($pagename);
+        }
         if (!$pagename) {
             trigger_error('empty pagename in WikiDB_PageIterator::next()', E_USER_WARNING);
             var_dump($next);
@@ -2256,6 +2268,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.140  2006/03/19 14:23:51  rurban
+// sf.net patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
+//
 // Revision 1.139  2006/01/12 16:38:07  rurban
 // add page method listRelations()
 // fix bug #1327912 numeric pagenames can break plugins (Joachim Lous)
