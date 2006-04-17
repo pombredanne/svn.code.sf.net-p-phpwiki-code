@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.104 2006-04-16 11:42:16 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.105 2006-04-17 17:25:19 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -461,9 +461,9 @@ class Request {
                 }
             }
             $this->_is_buffering_output = false;
-            while (@ob_end_flush());
+            ob_end_flush();
 	} elseif (function_exists('ob_get_level') and @ob_get_level()) {
-            while (@ob_end_flush());
+            ob_end_flush();
         }
         session_write_close();
         if (!empty($this->_dbi)) {
@@ -1350,6 +1350,12 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2006/04/16 11:42:16  rurban
+// php url-rewriting miscalculates the ob length. fixes bug #1376007
+//
+// do not flush a not existing buffer to avoid Pragma: no-cache on @ error.
+// fixes bug #1438448
+//
 // Revision 1.103  2006/04/15 12:23:32  rurban
 // silence $this->_is_buffering_output warning
 //
