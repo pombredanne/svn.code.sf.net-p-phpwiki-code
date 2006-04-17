@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.85 2006-04-15 12:48:04 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.86 2006-04-17 10:02:44 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -596,7 +596,7 @@ extends WikiDB_backend
                 if ($relation) {
                     $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
                                 . " VALUES ($pageid, $linkid, $relation)");
-                else {              
+                } else {              
                     $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
                                 . " VALUES ($pageid, $linkid)");
                 }
@@ -1430,6 +1430,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.85  2006/04/15 12:48:04  rurban
+// use genID, dont lock here
+//
 // Revision 1.84  2006/02/22 21:49:50  rurban
 // Remove hits from links query
 // force old set_links method. need to test IS NULL
