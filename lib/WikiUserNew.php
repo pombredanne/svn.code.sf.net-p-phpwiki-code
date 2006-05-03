@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.136 2006-04-16 11:07:48 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.137 2006-05-03 06:05:37 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1796,7 +1796,7 @@ class UserPreferences
                     'noLinkIcons'   => new _UserPreference_bool(),    // 1.3.8 
                     'editHeight'    => new _UserPreference_int(EDITHEIGHT_DEFAULT_ROWS,
                                                                EDITHEIGHT_MIN_ROWS,
-                                                               EDITHEIGHT_DEFAULT_ROWS),
+                                                               EDITHEIGHT_MAX_ROWS),
                     'timeOffset'    => new _UserPreference_numeric(TIMEOFFSET_DEFAULT_HOURS,
                                                                    TIMEOFFSET_MIN_HOURS,
                                                                    TIMEOFFSET_MAX_HOURS),
@@ -2107,6 +2107,10 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.136  2006/04/16 11:07:48  rurban
+// Dont crypt the passwd twice on storing prefs. Patch by Thomas Harding.
+// Fixes bug #1327470
+//
 // Revision 1.135  2006/03/19 16:26:39  rurban
 // fix DBAUTH arguments to be position independent, fixes bug #1358973
 //
