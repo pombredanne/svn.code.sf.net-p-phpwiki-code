@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.100 2006-03-19 14:23:51 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.101 2006-05-13 19:59:54 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -148,6 +148,7 @@ function IniConfig($file) {
          'PLUGIN_CACHED_DATABASE', 'PLUGIN_CACHED_FILENAME_PREFIX',
          'PLUGIN_CACHED_HIGHWATER', 'PLUGIN_CACHED_LOWWATER', 'PLUGIN_CACHED_MAXLIFETIME',
          'PLUGIN_CACHED_MAXARGLEN', 'PLUGIN_CACHED_IMGTYPES',
+         'WYSIWYG_BACKEND',
          // extra logic:
          'SERVER_NAME','SERVER_PORT','SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
          );
@@ -184,7 +185,8 @@ function IniConfig($file) {
          'DISABLE_HTTP_REDIRECT',
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
          'BLOG_EMPTY_DEFAULT_PREFIX', 'DATABASE_PERSISTENT',
-         'ENABLE_DISCUSSION_LINK', 'ENABLE_CAPTCHA'
+         'ENABLE_DISCUSSION_LINK', 'ENABLE_CAPTCHA',
+         'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML'
          );
 
     $rs = @parse_ini_file($file);
@@ -859,6 +861,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2006/03/19 14:23:51  rurban
+// sf.net patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
+//
 // Revision 1.99  2006/03/07 20:42:34  rurban
 // add DBAUTH_PREF_INSERT support
 //

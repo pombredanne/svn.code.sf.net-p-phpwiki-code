@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.223 2006-03-19 15:01:00 rurban Exp $');
+rcs_id('$Id: main.php,v 1.224 2006-05-13 19:59:55 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -672,7 +672,12 @@ class WikiRequest extends Request {
     // [574ms] mainly template:printexpansion: 393ms and template::expandsubtemplate [100+70+60ms]
     function handleAction () {
         $action = $this->getArg('action');
-        if ($this->isPost() and !$this->_user->isAdmin() and $action != 'browse') {
+        if ($this->isPost() and 
+            !$this->_user->isAdmin()
+            and $action != 'browse' 
+            and $action !='wikitohtml' 
+            )
+        {
             $page = $this->getPage();
             if ( $page->get('moderation') ) {
                 require_once("lib/WikiPlugin.php");
@@ -1140,6 +1145,15 @@ class WikiRequest extends Request {
         $captcha->image ( $captcha->captchaword() ); 
     }
     
+    function action_wikitohtml () {
+       $content = $this->getArg("content");
+
+       require_once("lib/BlockParser.php");
+       $xml = TransformText($content, 2.0, $this->getArg('pagename'));
+       $xml->printXML();
+       return true;
+    }
+
 }
 
 //FIXME: deprecated with ENABLE_PAGEPERM (?)
@@ -1221,6 +1235,12 @@ function main () {
     // Should this go into constructor?
     $request->initializeTheme();
 
+    // convert wiki to html
+    if ($action == 'wikitohtml') {
+      $request->handleAction();
+      return;
+    }
+
     $request->updateAuthAndPrefs();
     $request->initializeLang();
     
@@ -1275,6 +1295,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.223  2006/03/19 15:01:00  rurban
+// sf.net patch #1333957 by Matt Brown: Authentication cookie identical across all wikis on a host
+//
 // Revision 1.222  2006/03/19 14:53:12  rurban
 // sf.net patch #1438392 by Matt Brown: Bogo Login is broken when ENABLE_PAGEPERM=false
 //

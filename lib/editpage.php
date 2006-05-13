@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.106 2005-11-21 22:03:08 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.107 2006-05-13 19:59:54 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -440,6 +440,8 @@ class PageEditor
         if (ENABLE_WYSIWYG) {
             // don't store everything as html
             if (!WYSIWYG_DEFAULT_PAGETYPE_HTML) {
+                // Wikiwyg shortcut to avoid the InlineTransformer:
+                if (WYSIWYG_BACKEND == "Wikiwyg") return $this->_content;
                 $xml_output = $this->WysiwygEdit->ConvertAfter($this->_content);
                 $this->_content = join("", $xml_output->_content);
             } else {
@@ -775,6 +777,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.106  2005/11/21 22:03:08  rurban
+ fix syntax error inside ENABLE_SPAMBLOCKLIST
+
  Revision 1.105  2005/11/21 20:53:59  rurban
  beautify request pref lines, no antispam if admin (netznetz request), user is a member anyway
 
