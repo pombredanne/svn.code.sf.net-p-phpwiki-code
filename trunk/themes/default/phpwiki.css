@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.50 2005-09-26 06:30:11 rurban Exp $
+ * $Id: phpwiki.css,v 1.51 2006-05-13 19:59:55 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -890,6 +890,61 @@ img.tex {
   font-weight: bold;
   font-size: 11px;
 }
+
+
+.wikiwyg_toolbar {
+    background: #D3D3D3;
+    border: 1px outset;
+    letter-spacing: 0;
+    padding: 2px;
+}
+
+span.wikiwyg_control_link a {
+    padding-right: 8px;
+}
+
+.wikiwyg_button {
+    background: #D3D3D3;
+    border: 1px solid #D3D3D3;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    vertical-align: bottom;
+}
+
+.wikiwyg_button:hover {
+    border: 1px outset;
+}
+
+.wikiwyg_button:active {
+    border: 1px inset;
+}
+
+.wikiwyg_separator {
+    background: #D3D3D3;
+    border: 1px solid #D3D3D3;
+    width: 9px;
+    height: 20px;
+    vertical-align: bottom;
+}
+
+.wikiwyg_selector {
+    width: 70px;
+}
+
+.wikiwyg_wysiwyg table {
+    border-collapse: collapse;
+    margin-bottom: .2em;
+}
+
+.wikiwyg_wysiwyg table td {
+    border: 1px;
+    border-style: solid;
+    padding: .2em;
+    vertical-align: top;
+}
+
+
 
 /* For emacs users
  *

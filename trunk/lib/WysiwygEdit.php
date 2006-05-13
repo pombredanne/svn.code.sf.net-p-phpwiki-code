@@ -1,11 +1,11 @@
 <?php
-rcs_id('$Id: WysiwygEdit.php,v 1.3 2005-10-31 17:20:40 rurban Exp $');
+rcs_id('$Id: WysiwygEdit.php,v 1.4 2006-05-13 19:59:54 rurban Exp $');
 /**
- * Baseclass for WysiwygEdit/tinymce, WysiwygEdit/htmlarea3, WysiwygEdit/htmlarea2, ...
+ * Baseclass for WysiwygEdit/*
  *
- * ENABLE_WYSIWYG - Support for some WYSIWYG HTML Editors 
- * (tinymce, htmlarea3, FCKeditor, spaw, htmlarea2, ...)
- * Not yet enabled, since we cannot convert HTML to Wiki Markup yet.
+ * ENABLE_WYSIWYG - Support for some WYSIWYG_BACKEND Editors:
+ *   tinymce, htmlarea3, FCKeditor, spaw, htmlarea2, Wikiwyg
+ * Not yet enabled as default, since we cannot convert HTML to Wiki Markup yet.
  * (See HtmlParser.php for the ongoing efforts)
  * We might use a PageType=html, which is contra wiki, but some people 
  * might prefer HTML markup.
@@ -40,7 +40,7 @@ class WysiwygEdit {
 
     /**
      * Handler to convert the Wiki Markup to HTML before editing.
-     * This will be converted back by WysiwygEdit_ConvertAfter
+     * This will be converted back by WysiwygEdit_ConvertAfter if required.
      *  *text* => '<b>text<b>'
      */
     function ConvertBefore($text) {
@@ -134,6 +134,9 @@ class HtmlTransformer extends InlineTransformer
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.3  2005/10/31 17:20:40  rurban
+ fix ConvertBefore
+
  Revision 1.2  2005/10/31 16:46:13  rurban
  move old default transformers to baseclass
 
