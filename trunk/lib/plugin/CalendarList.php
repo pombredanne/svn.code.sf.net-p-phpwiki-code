@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CalendarList.php,v 1.8 2005-10-12 06:18:31 rurban Exp $');
+rcs_id('$Id: CalendarList.php,v 1.9 2006-05-14 17:40:31 rurban Exp $');
 
 /**
  Copyright 1999,2000,2001,2002,2005 $ThePhpWikiProgrammingTeam
@@ -147,6 +147,7 @@ extends WikiPlugin
         $args       = &$this->args;
         $this->_links = array();
 
+        // default to this month
         $now = localtime(time() + 3600 * $request->getPref('timeOffset'), 1);
         foreach ( array('month' => $now['tm_mon'] + 1,
                         'year'  => $now['tm_year'] + 1900)
@@ -156,89 +157,63 @@ extends WikiPlugin
                 $args[$param]   = $dflt;
         }
 
-        // set up default range for TODAY only
-        $time = time();
-        $timeBreak = $time;
-
         // ***************************************************
-        //	SET UP THE START/END DATE CONDITIONS
-        
-        //	last_n_days or last_n events
+        // start of Plugin CalendarList display logic
+        // determine start date
         if ($args['last_n_days']) {
-            $timeBreak = time();
-            $time = mktime(23, 59, 54,                      // hh, mm, ss,
-                           $args['month'] + $args['month_offset'], // month (1-12)
-                           $now['tm_mday'] - $args['last_n_days'], // back up so many days
-                           $args['year']);
-        } elseif ($args['last_n']) {
-            $timeBreak = time();
-            $time = $this->_count_events($dbi, $args['last_n'], -1);
+            // n days ago (should not be affected by month or month_offset)
+            $start = mktime(0, 0, 0, // h, m, s
+                            $now['tm_mon'] + 1, // month (1-12)
+                            $now['tm_mday'] - $args['last_n_days'], // days prior
+                            $now['tm_year'] + 1900);
+        }
+        elseif ($args['last_n']) {
+            // get date for last nth event
+            $start = $this->_count_events($dbi, $args['last_n'], -1);
+        }
+        else {
+            // start of requested month
+            $start = mktime(0, 0, 0, // h, m, s
+                            $args['month'] + $args['month_offset'], // month (1-12)
+                            1, // days prior
+                            $args['year']);
         }
 
-       	if ($args['order'] == 'reverse') {	// if reverse order, swap the start/end dates
-            $timeTMP = $time;
-            $time = $timeBreak;
-            $timeBreak = $timeTMP;
-            unset($timeTMP);
-       	}
-
-        //	next_n_days or next_n events
+        // determine end date
         if ($args['next_n_days']) {
-            if ($args['order'] == 'reverse') {
-            	$time = mktime(23, 59, 54,                         // hh, mm, ss,
-                               $args['month'] + $args['month_offset'], // month (1-12)
-                               $now['tm_mday'] + $args['next_n_days'] ,// starting today + next_n_days
-                               $args['year']);
-            } else {
-                $timeBreak = mktime(23, 59, 54,                    // hh, mm, ss,
-                                    $args['month'] + $args['month_offset'], // month (1-12)
-                                    $now['tm_mday'] + $args['next_n_days'], // starting at 1st of month
-                                    $args['year']);
-            }
-        } elseif ($args['next_n']) {
-            $timeTMP = $this->_count_events($dbi, $args['next_n'], 1);
-            if ($args['order'] == 'reverse') {
-                $time = $timeTMP + 5;
-            } else {
-                $timeBreak = $timeTMP - 5;
-            }
-            unset($timeTMP);
+            // n days from now (should not be affected by month or month_offset)
+            $end = mktime(23, 59, 59, // h, m, s
+                            $now['tm_mon'] + 1, // month (1-12)
+                            $now['tm_mday'] + $args['next_n_days'], // days prior
+                            $now['tm_year'] + 1900);
+        }
+        elseif ($args['last_n']) {
+            // get date for next nth event
+            $end = $this->_count_events($dbi, $args['next_n'], 1);
+        }
+        else {
+            // trick to get last day of requested month
+            $end = mktime(0, 0, -1, // h, m, s
+                            $args['month'] + 1 + $args['month_offset'], // month (1-12)
+                            1, // days prior
+                            $args['year']);
         }
 
-        // NOTE: I don't know what this does or why it is here, but it was in the original plugin
-        $t = localtime($time, 1);
-        if ($now['tm_year'] == $t['tm_year'] && $now['tm_mon'] == $t['tm_mon'])
-            $this->_today = $now['tm_mday'];
-        else
-            $this->_today = false;
+        // switch values for reverse order
+        $step = 24 * 3600;
+        if ($args['order'] == 'reverse') {
+            $time_tmp = $start;
+            $start = $end;
+            $end = $time_tmp;
+            $step *= -1;
+        }
 
+        // style tag on wiki description but not in here
         $cal = HTML::dl();
 
-        $done = false;
-
-        //	all the start/stop range controls are set up now
-        // ***************************************************
-
-        // ***************************************************
-        //	run up or down the date range; this is the real workhorse loop
-        if ($args['order'] == "reverse") {
-            $timeBreak -= (24 * 3600);
-        } else {
-            $timeBreak += (24 * 3600);
-        }
-        while (!$done) {
-            $success = $cal->pushContent($this->_date($dbi, $time));
-            if ($args['order'] == "reverse") {
-                $time -= (24 * 3600);
-                if ($time < $timeBreak) {
-                    break;
-                }
-            } else {
-                $time += (24 * 3600);
-                if ($time > $timeBreak) {
-                    break;
-                }
-            }
+        // loop through dates and create list
+        for ($i = $start; ($step > 0) ? $i < $end : $i > $end; $i += $step) {
+            $cal->pushContent($this->_date($dbi, $i));
         }
         //	end of Plugin CalendarList display logic
         // ***************************************************
@@ -249,6 +224,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2005/10/12 06:18:31  rurban
+// dont overdo constants
+//
 // Revision 1.7  2005/07/21 18:55:55  rurban
 // applied mpullen patch (Revised to work on all date range combinations...),
 // but still does not work as documented.
