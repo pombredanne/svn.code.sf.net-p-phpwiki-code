@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.101 2006-05-13 19:59:54 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.102 2006-05-14 18:02:27 rurban Exp $');
 
 /**
  * A configurator intended to read its config from a PHP-style INI file,
@@ -719,6 +719,9 @@ function fixup_dynamic_configs($file) {
             $chback = 1;
             $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
         }
+        // tell gettext not to use unicode. PHP >= 4.2.0. Thanks to Kai Krakow.
+        if (defined('CHARSET') and function_exists('bind_textdomain_codeset'))
+            @bind_textdomain_codeset("phpwiki", CHARSET);
         textdomain("phpwiki");
         if ($chback) { // change back
             chdir($bindtextdomain_real . (isWindows() ? "\\.." : "/.."));
@@ -861,6 +864,11 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2006/05/13 19:59:54  rurban
+// added wysiwyg_editor-1.3a feature by Jean-Nicolas GEREONE <jean-nicolas.gereone@st.com>
+// converted wysiwyg_editor-1.3a js to WysiwygEdit framework
+// changed default ENABLE_WYSIWYG = true and added WYSIWYG_BACKEND = Wikiwyg
+//
 // Revision 1.100  2006/03/19 14:23:51  rurban
 // sf.net patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
 //
