@@ -458,11 +458,11 @@ proto.do_verbatim = Wikiwyg.Wikitext.make_do('verbatim');
 proto.do_line_break = Wikiwyg.Wikitext.make_do('line_break');
 proto.do_richtable = Wikiwyg.Wikitext.make_do('richtable');
 
-proto = new Subclass('Wikiwyg.Preview.phpwiki', 'Wikiwyg.Preview');
+proto = new Subclass('Wikiwyg.Preview.Phpwiki', 'Wikiwyg.Preview');
 
 proto.fromHtml = function(html) {
     if (this.wikiwyg.previous_mode.classname.match(/(Wysiwyg|HTML)/)) {
-        var wikitext_mode = this.wikiwyg.mode_objects['Wikiwyg.Wikitext.phpwiki'];
+        var wikitext_mode = this.wikiwyg.mode_objects['Wikiwyg.Wikitext.Phpwiki'];
         var self = this;
         wikitext_mode.convertWikitextToHtml(
             wikitext_mode.convert_html_to_wikitext(html),
