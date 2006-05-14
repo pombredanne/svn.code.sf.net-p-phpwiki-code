@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.1 2006-05-13 19:59:55 rurban Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.2 2006-05-14 17:52:20 rurban Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -31,9 +31,6 @@ var script_url = '".deduce_script_name()."';
 
     function Head($name='edit[content]') {
         global $WikiTheme;
-        $WikiTheme->addMoreHeaders
-            (array('src' => $this->BasePath . '/' . $js,
-                                  'language' => 'JavaScript')));
         foreach (array("Wikiwyg.js","Wikiwyg/Toolbar.js","Wikiwyg/Preview.js","Wikiwyg/Wikitext.js",
                        "Wikiwyg/Wysiwyg.js","Wikiwyg/Phpwiki.js","Wikiwyg/HTML.js",
                        "Wikiwyg/Toolbar.js") as $js) {
@@ -118,6 +115,11 @@ window.onload = function() {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.1  2006/05/13 19:59:55  rurban
+ added wysiwyg_editor-1.3a feature by Jean-Nicolas GEREONE <jean-nicolas.gereone@st.com>
+ converted wysiwyg_editor-1.3a js to WysiwygEdit framework
+ changed default ENABLE_WYSIWYG = true and added WYSIWYG_BACKEND = Wikiwyg
+
 
 */
 
