@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.87 2006-04-17 17:28:21 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.88 2006-05-14 12:28:03 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005 $ThePhpWikiProgrammingTeam
@@ -966,7 +966,7 @@ id      pagename        linkrelation
               where nonempty.id is null and linked.id=link.linkfrom;  
         */
         $sql = "SELECT p.pagename, pp.pagename as wantedfrom"
-            . " FROM $page_tbl p, $link_tbl linked "
+            . " FROM $page_tbl p JOIN $link_tbl linked "
             . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
             . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id" 
             . " WHERE ne.id is NULL"
@@ -1435,6 +1435,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.87  2006/04/17 17:28:21  rurban
+// honor getWikiPageLinks change linkto=>relation
+//
 // Revision 1.86  2006/04/17 10:02:44  rurban
 // fix syntax error missing }
 //
