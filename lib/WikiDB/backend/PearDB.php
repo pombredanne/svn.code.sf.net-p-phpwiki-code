@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.96 2006-04-15 12:28:53 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.97 2006-05-14 12:28:03 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -530,6 +530,10 @@ extends WikiDB_backend
     
     /**
      * Find pages which link to or are linked from a page.
+     *
+     * TESTME relations: get_links is responsible to add the relation to the pagehash 
+     * as 'linkrelation' key as pagename. See WikiDB_PageIterator::next 
+     *   if (isset($next['linkrelation']))
      */
     function get_links($pagename, $reversed=true, $include_empty=false,
                        $sortby=false, $limit=false, $exclude='', 
@@ -862,7 +866,7 @@ extends WikiDB_backend
         if ($exclude) // array of pagenames
             $exclude = " AND p.pagename NOT IN ".$this->_sql_set($exclude);
         $sql = "SELECT p.pagename, pp.pagename as wantedfrom"
-            . " FROM $page_tbl p, $link_tbl linked "
+            . " FROM $page_tbl p JOIN $link_tbl linked"
             . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
             . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id" 
             . " WHERE ne.id is NULL"
@@ -1231,6 +1235,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.96  2006/04/15 12:28:53  rurban
+// use pear nextID
+//
 // Revision 1.95  2006/02/22 21:52:28  rurban
 // whitespace only
 //

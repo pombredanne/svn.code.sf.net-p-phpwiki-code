@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.6 2005-11-14 22:24:33 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.7 2006-05-14 12:28:03 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -1016,11 +1016,12 @@ extends WikiDB_backend
              left join page on(link.linkto=page.id) left join nonempty on(link.linkto=nonempty.id) 
              where isnull(nonempty.id) and linked.id=link.linkfrom;  
         */
-        $sql = "SELECT $page_tbl.pagename,linked.pagename as wantedfrom"
-            . " FROM $link_tbl,$page_tbl as linked "
-            . " LEFT JOIN $page_tbl ON($link_tbl.linkto=$page_tbl.id)"
-            . " LEFT JOIN $nonempty_tbl ON($link_tbl.linkto=$nonempty_tbl.id)" 
-            . " WHERE ISNULL($nonempty_tbl.id) AND linked.id=$link_tbl.linkfrom"
+        $sql = "SELECT p.pagename, pp.pagename as wantedfrom"
+            . " FROM $page_tbl p JOIN $link_tbl linked"
+            . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
+            . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id" 
+            . " WHERE ne.id is NULL"
+	    .       " AND p.id = linked.linkfrom"
             . $exclude_from
             . $exclude
             . $orderby;
@@ -1459,6 +1460,13 @@ class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql {}
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2005/11/14 22:24:33  rurban
+// fix fulltext search,
+// Eliminate stoplist words,
+// don't extract %pagedate twice in ADODB,
+// add SemanticWeb support: link(relation),
+// major postgresql update: stored procedures, tsearch2 for fulltext
+//
 // Revision 1.5  2005/09/14 06:04:43  rurban
 // optimize searching for ALL (ie %), use the stoplist on PDO
 //
