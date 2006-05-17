@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.42 2005-10-31 17:02:57 rurban Exp $
+<?php // $Id: configurator.php,v 1.43 2006-05-17 17:27:12 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -55,6 +55,7 @@
 global $HTTP_SERVER_VARS, $HTTP_POST_VARS, $tdwidth;
 if (empty($_GET)) $_GET =& $GLOBALS['HTTP_GET_VARS'];
 if (empty($_ENV)) $_ENV =& $GLOBALS['HTTP_ENV_VARS'];
+if (empty($_POST)) $_POST =& $GLOBALS['HTTP_POST_VARS'];
 
 if (empty($configurator))
     $configurator = "configurator.php";
@@ -154,7 +155,7 @@ echo '<','?xml version="1.0" encoding="iso-8859-1"?',">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.42 2005-10-31 17:02:57 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.43 2006-05-17 17:27:12 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -316,6 +317,10 @@ $preamble = "
 ; Here undefined definitions get defined by config-default.ini settings.
 ";
 
+// Detect not here listed configs:
+// for x in `perl -ne 'print $1,"\n" if /^;(\w+) =/' config/config-dist.ini`; do \
+//   grep \'$x\' configurator.php >/dev/null || echo $x ; done
+
 $properties["Part Zero"] =
 new part('_part0', $SEPARATOR."\n", "
 Part Zero: (optional)
@@ -340,47 +345,24 @@ new _define('INCLUDE_PATH', $include_path);
 $properties["DEBUG"] =
 new numeric_define_optional('DEBUG', DEBUG);
 
-// TODO: bring the default to the front
-$properties["ENABLE_USER_NEW"] =
-new boolean_define_commented_optional
-('ENABLE_USER_NEW', 
- array('true'  => "Enabled",
-       'false' => "Disabled."));
-
-$properties["ENABLE_PAGEPERM"] =
-new boolean_define_commented_optional
-('ENABLE_PAGEPERM', 
- array('true'  => "Enabled",
-       'false' => "Disabled."));
-
 $properties["ENABLE_EDIT_TOOLBAR"] =
-new boolean_define_commented_optional
-('ENABLE_EDIT_TOOLBAR', 
- array('true'  => "Enabled",
-       'false' => "Disabled."));
+new boolean_define_commented_optional('ENABLE_EDIT_TOOLBAR');
 
 $properties["JS_SEARCHREPLACE"] =
-new boolean_define_commented_optional
-('JS_SEARCHREPLACE', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('JS_SEARCHREPLACE');
 
+// TESTME: use config-default:  = false
 $properties["ENABLE_DOUBLECLICKEDIT"] =
-new boolean_define_commented_optional
-('ENABLE_DOUBLECLICKEDIT', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('ENABLE_DOUBLECLICKEDIT');
 
 $properties["ENABLE_WYSIWYG"] =
-new boolean_define_commented_optional
-('ENABLE_WYSIWYG', 
- array('false' => "Disabled",
-       'true'  => "Enabled"));
+new boolean_define_commented_optional('ENABLE_WYSIWYG');
 
 $properties["WYSIWYG_BACKEND"] =
 new _define_selection(
 'WYSIWYG_BACKEND', 
-array('tinymce'   => 'tinymce',
+array('Wikiwyg'   => 'Wikiwyg',
+      'tinymce'   => 'tinymce',
       'FCKeditor' => 'FCKeditor', 
       'spaw'      => 'spaw', 
       'htmlarea3' => 'htmlarea3', 
@@ -388,28 +370,16 @@ array('tinymce'   => 'tinymce',
 ));
 
 $properties["WYSIWYG_DEFAULT_PAGETYPE_HTML"] =
-new boolean_define_commented_optional
-('WYSIWYG_DEFAULT_PAGETYPE_HTML', 
- array('false' => "Disabled",
-       'true'  => "Enabled"));
+new boolean_define_commented_optional('WYSIWYG_DEFAULT_PAGETYPE_HTML');
 
 $properties["ENABLE_XHTML_XML"] =
-new boolean_define_commented_optional
-('ENABLE_XHTML_XML', 
- array('false' => "Disabled",
-       'true'  => "Enabled"));
+new boolean_define_commented_optional('ENABLE_XHTML_XML');
 
 $properties["ENABLE_SPAMASSASSIN"] =
-new boolean_define_commented_optional
-('ENABLE_SPAMASSASSIN', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('ENABLE_SPAMASSASSIN');
 
 $properties["ENABLE_SPAMBLOCKLIST"] =
-new boolean_define_optional
-('ENABLE_SPAMBLOCKLIST', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_optional('ENABLE_SPAMBLOCKLIST');
 
 $properties["NUM_SPAM_LINKS"] =
     new numeric_define_optional('NUM_SPAM_LINKS', "20", "
@@ -417,40 +387,29 @@ If more than this number of external links appear on non-authenticated
 edits it will be rejected as spam.");
 
 $properties["GOOGLE_LINKS_NOFOLLOW"] =
-new boolean_define_commented_optional
-('GOOGLE_LINKS_NOFOLLOW', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('GOOGLE_LINKS_NOFOLLOW');
 
 $properties["ENABLE_LIVESEARCH"] =
-new boolean_define_commented_optional
-('ENABLE_LIVESEARCH', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('ENABLE_LIVESEARCH');
 
 $properties["ENABLE_ACDROPDOWN"] =
-new boolean_define_commented_optional
-('ENABLE_ACDROPDOWN', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('ENABLE_ACDROPDOWN');
 
 $properties["ENABLE_DISCUSSION_LINK"] =
-new boolean_define_commented_optional
-('ENABLE_DISCUSSION_LINK', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('ENABLE_DISCUSSION_LINK');
 
 $properties["ENABLE_CAPTCHA"] =
-new boolean_define_commented_optional
-('ENABLE_CAPTCHA', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('ENABLE_CAPTCHA');
+
+$properties["USE_CAPTCHA_RANDOM_WORD"] =
+new boolean_define_commented_optional('USE_CAPTCHA_RANDOM_WORD');
 
 $properties["USE_SAFE_DBSESSION"] =
-new boolean_define_commented_optional
-('USE_SAFE_DBSESSION', 
- array('false' => "Disabled",
-       'true'  => "Enabled"));
+new boolean_define_commented_optional('USE_SAFE_DBSESSION');
+
+$properties["BLOG_DEFAULT_EMPTY_PREFIX"] =
+new boolean_define_commented_optional('BLOG_DEFAULT_EMPTY_PREFIX');
+
 
 $properties["Part One"] =
 new part('_part1', $SEPARATOR."\n", "
@@ -494,22 +453,13 @@ new boolean_define_optional('ZIPDUMP_AUTH',
                           'true'  => "true. Only admin may download zip dumps"));
 
 $properties["Enable RawHtml Plugin"] =
-new boolean_define_commented_optional
-('ENABLE_RAW_HTML', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('ENABLE_RAW_HTML');
 
 $properties["Allow RawHtml Plugin only on locked pages"] =
-new boolean_define_commented_optional
-('ENABLE_RAW_HTML_LOCKEDONLY', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('ENABLE_RAW_HTML_LOCKEDONLY');
 
 $properties["Allow RawHtml Plugin if safe HTML code"] =
-new boolean_define_commented_optional
-('ENABLE_RAW_HTML_SAFE', 
- array('true'  => "Enabled",
-       'false' => "Disabled"), "
+    new boolean_define_commented_optional('ENABLE_RAW_HTML_SAFE','', "
 If this is set, all unsafe html code is stripped automatically (experimental!)
 See <a href=\"http://chxo.com/scripts/safe_html-test.php\" target=\"_new\">chxo.com/scripts/safe_html-test.php</a>
 ");
@@ -524,10 +474,7 @@ $properties["Disabled Actions"] =
 new array_define('DISABLED_ACTIONS', DISABLED_ACTIONS /*array()*/);
 
 $properties["Moderate all Pagechanges"] =
-new boolean_define_commented_optional
-('ENABLE_MODERATEDPAGE_ALL', 
- array('false' => "Disabled",
-       'true'  => "Enabled"));
+new boolean_define_commented_optional('ENABLE_MODERATEDPAGE_ALL');
 
 $properties["Access Log File"] =
 new _define_commented_optional('ACCESS_LOG', ACCESS_LOG);
@@ -721,14 +668,18 @@ new unchangeable_define("DATABASE_DSN",
 Calculated from the settings above:");
 
 $properties["Filename / Table name Prefix"] =
-new _define_commented("DATABASE_PREFIX", DATABASE_PREFIX, "
+new _define_commented('DATABASE_PREFIX', DATABASE_PREFIX, "
 Used by all DB types:
 
 Prefix for filenames or table names, e.g. \"phpwiki_\"
 
 Currently <b>you MUST EDIT THE SQL file too!</b> (in the schemas/
 directory because we aren't doing on the fly sql generation
-during the installation.");
+during the installation.
+
+Note: This prefix is NOT prepended to the default DBAUTH_
+      tables user, pref and member!
+");
 
 $properties["DATABASE_PERSISTENT"] =
 new boolean_define_commented_optional
@@ -764,20 +715,17 @@ $properties["dba timeout"] =
 new numeric_define("DATABASE_TIMEOUT", DATABASE_TIMEOUT, "
 Recommended values are 10-20 seconds. The more load the server has, the higher the timeout.");
 
+$properties["DATABASE_OPTIMISE_FREQUENCY"] =
+new numeric_define_optional('DATABASE_OPTIMISE_FREQUENCY', DATABASE_OPTIMISE_FREQUENCY);
+
 $properties["DBADMIN_USER"] =
-new _define_optional('DBADMIN_USER', DBADMIN_USER. "
-If action=upgrade detects mysql problems, but has no ALTER permissions, 
-give here a database username which has the necessary ALTER or CREATE permissions.
-Of course you can fix your database manually. See lib/upgrade.php for known issues.");
+new _define_optional('DBADMIN_USER', DBADMIN_USER);
 
 $properties["DBADMIN_PASSWD"] =
 new _define_password_optional('DBADMIN_PASSWD', DBADMIN_PASSWD);
 
 $properties["USECACHE"] =
-new boolean_define_commented_optional
-('USECACHE', 
- array('true'  => "Enabled",
-       'false' => "Disabled"));
+new boolean_define_commented_optional('USECACHE');
 
 ///////////////////
 
@@ -839,19 +787,19 @@ is not changed.
 // config file if you really want to change these from the default.
 
 $properties["Major Edits: keep minimum days"] =
-    new numeric_define("MAJOR_MIN_KEEP", MAJOR_MIN_KEEP, "
+    new numeric_define('MAJOR_MIN_KEEP', MAJOR_MIN_KEEP, "
 Default: Keep for unlimited time. 
 Set to 0 to enable archive cleanup");
 $properties["Minor Edits: keep minumum days"] =
-    new numeric_define("MINOR_MIN_KEEP", MINOR_MIN_KEEP, "
+    new numeric_define('MINOR_MIN_KEEP', MINOR_MIN_KEEP, "
 Default: Keep for unlimited time. 
 Set to 0 to enable archive cleanup");
 
 $properties["Major Edits: how many"] =
-    new numeric_define("MAJOR_KEEP", MAJOR_KEEP, "
+    new numeric_define('MAJOR_KEEP', MAJOR_KEEP, "
 Keep up to 8 major edits");
 $properties["Major Edits: how many days"] =
-    new numeric_define("MAJOR_MAX_AGE", MAJOR_MAX_AGE, "
+    new numeric_define('MAJOR_MAX_AGE', MAJOR_MAX_AGE, "
 keep them no longer than a month");
 
 $properties["Minor Edits: how many"] =
@@ -948,7 +896,7 @@ separate the name of each one with colons.
 </pre>");
 
 $properties["PASSWORD_LENGTH_MINIMUM"] =
-    new numeric_define("PASSWORD_LENGTH_MINIMUM", "6");
+new numeric_define('PASSWORD_LENGTH_MINIMUM', PASSWORD_LENGTH_MINIMUM);
 
 $properties["USER_AUTH_POLICY"] =
 new _define_selection('USER_AUTH_POLICY',
@@ -970,6 +918,12 @@ The following policies are available for user authentication:
 <dt>stacked</dt>
 	<dd>check the given user - password combination for all
         methods and return true on the first success.</dd></dl>");
+
+$properties["ENABLE_USER_NEW"] =
+new boolean_define_commented_optional('ENABLE_USER_NEW');
+
+$properties["ENABLE_PAGEPERM"] =
+new boolean_define_commented_optional('ENABLE_PAGEPERM');
 
 ///////////////////
 
@@ -1090,6 +1044,11 @@ $properties["Update the user's preferences"] =
 Note that REPLACE works only with mysql and destroy all other columns!
 
 Mysql: DBAUTH_PREF_UPDATE = \"REPLACE INTO pref SET prefs='\$pref_blob',userid='\$userid'\"");
+
+$properties["Create new user's preferences"] =
+    new _define_optional('DBAUTH_PREF_INSERT', "INSERT INTO pref (userid,prefs) VALUES ('\$userid','\$pref_blob')", "
+Define this if new user can be create by themselves.
+");
 
 $properties["USERS/GROUPS queries"] =
     new _define_optional('DBAUTH_IS_MEMBER', "SELECT user FROM user WHERE user='\$userid' AND group='\$groupname'", "
@@ -1250,13 +1209,7 @@ File to read for authentication information.
 Popular choices are /etc/shadow and /etc/httpd/.htpasswd");
 
 $properties["File Storable?"] =
-new boolean_define_commented_optional
-('AUTH_USER_FILE_STORABLE',
- array('false'  => "Disabled",
-       'true'   => "Enabled"), "
-Defines whether the user is able to change their own password via PhpWiki.
-Note that this means that the webserver user must be able to write to the
-file specified in AUTH_USER_FILE.");
+new boolean_define_commented_optional('AUTH_USER_FILE_STORABLE');
 
 $properties["Session Auth USER"] =
   new _define_optional('AUTH_SESS_USER', 'userid', "
@@ -1381,25 +1334,18 @@ define('WIKI_PGSRC',
        '../Logs/Hamwiki/hamwiki-20010830.zip'); 
 </pre>");
 
-/*
 $properties["Default Wiki Page Source"] =
 new _define('DEFAULT_WIKI_PGSRC', 'pgsrc', "
 DEFAULT_WIKI_PGSRC is only used when the language is *not* the
 default (English) and when reading from a directory: in that case
 some English pages are inserted into the wiki as well.
 DEFAULT_WIKI_PGSRC defines where the English pages reside.
-
-FIXME: is this really needed?
 ");
 
 $properties["Generic Pages"] =
-new array_variable('GenericPages', array('ReleaseNotes', 'SteveWainstead', 'TestPage'), "
-These are the pages which will get loaded from DEFAULT_WIKI_PGSRC.	
-
-FIXME: is this really needed?  Cannot we just copy these pages into
-the localized pgsrc?
+new array_variable('DEFAULT_WIKI_PAGES', array('ReleaseNotes', 'SteveWainstead', 'TestPage'), "
+These are ':'-seperated pages which will get loaded untranslated from DEFAULT_WIKI_PGSRC.
 ");
-*/
 
 ///////////////////
 
@@ -1441,12 +1387,7 @@ data can not be found in it, then the file specified
 by INTERWIKI_MAP_FILE (if any) will be used.");
 
 $properties["WARN_NONPUBLIC_INTERWIKIMAP"] =
-new boolean_define('WARN_NONPUBLIC_INTERWIKIMAP',   
-	array('true'  => "true",
-              'false' => "false"), "
-Display a warning if the internal lib/interwiki.map is used, and 
-not the public InterWikiMap page. This map is not readable from outside.");
-
+new boolean_define('WARN_NONPUBLIC_INTERWIKIMAP');
 
 $properties["Keyword Link Regexp"] =
 new _define_optional('KEYWORDS', '\"Category* OR Topic*\"', "
@@ -1488,31 +1429,13 @@ $properties["AUTHORPAGE_URL"] =
 Default Author URL");
 
 $properties["TOC_FULL_SYNTAX"] =
-new boolean_define_optional
-('TOC_FULL_SYNTAX', 
- array('true'  => "Enabled",
-       'false' => "Disabled"), "
-Allow full markup in headers to be parsed by the CreateToc plugin.
-
-If false you may not use WikiWords or [] links or any other markup in 
-headers in pages with the CreateToc plugin. But if false the parsing is 
-faster and more stable.");
+new boolean_define_optional('TOC_FULL_SYNTAX');
 
 $properties["ENABLE_MARKUP_COLOR"] =
-new boolean_define_optional
-('ENABLE_MARKUP_COLOR', 
- array('true'  => "Enabled",
-       'false' => "Disabled"), "
-If disabled the %color=... %% syntax will be disabled. Since 1.3.11
-Default: true");
+new boolean_define_optional('ENABLE_MARKUP_COLOR');
 
 $properties["ENABLE_MARKUP_TEMPLATE"] =
-new boolean_define_optional
-('ENABLE_MARKUP_TEMPLATE', 
- array('true'  => "Enabled",
-       'false' => "Disabled"), "
-Enable mediawiki-style {{TemplatePage|vars=value|...}} syntax. Since 1.3.11
-Default: undefined. Enabled automatically on the MonoBook theme if undefined.");
+new boolean_define_optional('ENABLE_MARKUP_TEMPLATE');
 
 ///////////////////
 
@@ -1602,6 +1525,10 @@ In that case you should set VIRTUAL_PATH to '/wiki'.
 (VIRTUAL_PATH is only used if USE_PATH_INFO is true.)
 ");
 
+$temp = !empty($_ENV['TEMP']) ? $_ENV['TEMP'] : "/tmp";
+$properties["TEMP_DIR"] =
+new _define_optional('TEMP_DIR', $temp);
+
 ///////////////////
 
 $properties["Part Seven"] =
@@ -1649,65 +1576,64 @@ new _define_optional('RECENT_CHANGES', 'RecentChanges', "
 Page name of RecentChanges page.  Used for RSS Auto-discovery.");
 
 $properties["Disable HTTP Redirects"] =
-new boolean_define_commented_optional
-('DISABLE_HTTP_REDIRECT',
- array('false' => 'Enable HTTP Redirects',
-       'true' => 'Disable HTTP Redirects'),
-"
-(You probably don't need to touch this.)
-
-PhpWiki uses HTTP redirects for some of it's functionality.
-(e.g. after saving changes, PhpWiki redirects your browser to
-view the page you just saved.)
-
-Some web service providers (notably free European Lycos) don't seem to
-allow these redirects.  (On Lycos the result in an \"Internal Server Error\"
-report.)  In that case you can set DISABLE_HTTP_REDIRECT to true.
-(In which case, PhpWiki will revert to sneakier tricks to try to
-redirect the browser...)");
+new boolean_define_commented_optional('DISABLE_HTTP_REDIRECT');
 
 $properties["Disable GETIMAGESIZE"] =
-new boolean_define_commented_optional
-('DISABLE_GETIMAGESIZE',
- array('false' => 'Enable',
-       'true'  => 'Disable'), "
-Set GETIMAGESIZE to disabled, if your php fails to calculate the size on 
-inlined images, or you don't want to disable too small images to be inlined.
-
-Per default too small ploaded or external images are not displayed, 
-to prevent from external 1 pixel spam.");
+new boolean_define_commented_optional('DISABLE_GETIMAGESIZE');
 
 $properties["EDITING_POLICY"] =
   new _define_optional('EDITING_POLICY', "EditingPolicy", "
 An interim page which gets displayed on every edit attempt, if it exists.");
 
-$properties["ENABLE_MODERATEDPAGE_ALL"] =
-new boolean_define_commented_optional
-('ENABLE_MODERATEDPAGE_ALL',
- array('false' => 'Disable',
-       'true'  => 'Enable'), "
-");
-
-$properties["FORTUNE_DIR"] =
-  new _define_commented_optional('FORTUNE_DIR', "/usr/share/fortune", "
-");
-$properties["DBADMIN_USER"] =
-  new _define_commented_optional('DBADMIN_USER', "", "
-");
-$properties["DBADMIN_PASSWD"] =
-  new _define_commented_optional('DBADMIN_PASSWD', "", "
-");
-$properties["USE_EXTERNAL_HTML2PDF"] =
-  new _define_commented_optional('USE_EXTERNAL_HTML2PDF', "htmldoc --quiet --format pdf14 --no-toc --no-title %s", "
-");
-$properties["BABYCART_PATH"] =
-  new _define_commented_optional('BABYCART_PATH', "/usr/local/bin/babycart", "
-");
+$properties["TOOLBAR_PAGELINK_PULLDOWN"] =
+    new _define_commented_optional('TOOLBAR_PAGELINK_PULLDOWN');
+$properties["TOOLBAR_TEMPLATE_PULLDOWN"] =
+    new _define_commented_optional('TOOLBAR_TEMPLATE_PULLDOWN');
+$properties["FULLTEXTSEARCH_STOPLIST"] =
+    new _define_commented_optional('FULLTEXTSEARCH_STOPLIST');
 
 $properties["Part Seven A"] =
 new part('_part7a', $SEPARATOR."\n", "
 
 Part Seven A:
+
+Optional Plugin Settings and external executables
+");
+
+$properties["FORTUNE_DIR"] =
+  new _define_commented_optional('FORTUNE_DIR', "/usr/share/fortune");
+$properties["USE_EXTERNAL_HTML2PDF"] =
+    new _define_commented_optional('USE_EXTERNAL_HTML2PDF', "htmldoc --quiet --format pdf14 --no-toc --no-title %s");
+$properties["BABYCART_PATH"] =
+    new _define_commented_optional('BABYCART_PATH', "/usr/local/bin/babycart");
+$properties["GOOGLE_LICENSE_KEY"] =
+  new _define_commented_optional('GOOGLE_LICENSE_KEY');
+$properties["RATEIT_IMGPREFIX"] =
+    new _define_commented_optional('RATEIT_IMGPREFIX'); //BStar
+$properties["GRAPHVIZ_EXE"] =
+    new _define_commented_optional('GRAPHVIZ_EXE'); // /usr/local/bin/dot
+$properties["VISUALWIKIFONT"] =
+    new _define_commented_optional('VISUALWIKIFONT'); // Arial
+$properties["VISUALWIKI_ALLOWOPTIONS"] =
+    new boolean_define_commented_optional('VISUALWIKI_ALLOWOPTIONS'); // false
+$properties["PLOTICUS_EXE"] =
+    new _define_commented_optional('PLOTICUS_EXE'); // /usr/local/bin/pl
+$properties["PLOTICUS_PREFABS"] =
+    new _define_commented_optional('PLOTICUS_PREFABS'); // /usr/share/ploticus
+$properties["MY_JABBER_ID"] =
+    new _define_commented_optional('MY_JABBER_ID'); //
+$properties["PHPWEATHER_BASE_DIR"] =
+    new _define_commented_optional('PHPWEATHER_BASE_DIR'); //
+$properties["HIGHLIGHT_EXE"] =
+    new _define_commented_optional('HIGHLIGHT_EXE'); // /usr/local/bin/highlight
+$properties["HIGHLIGHT_DATA_DIR"] =
+    new _define_commented_optional('HIGHLIGHT_DATA_DIR'); // /usr/share/highlight
+
+
+$properties["Part Eight"] =
+new part('_part8', $SEPARATOR."\n", "
+
+Part Eight:
 
 Cached Plugin Settings. (pear Cache)
 ");
@@ -1778,10 +1704,9 @@ class _variable {
 	if (!$description)
 	    $description = text_from_dist($config_item_name);
         $this->description = $description;
-	// TODO: get boolean default value from config-default.ini
 	if (defined($config_item_name) 
 	    and !preg_match("/(selection|boolean)/", get_class($this))
-	    and !preg_match("/(SCRIPT_NAME|VIRTUAL_PATH)/", $config_item_name))
+	    and !preg_match("/^(SCRIPT_NAME|VIRTUAL_PATH|TEMP_DIR)$/", $config_item_name))
 	    $this->default_value = constant($config_item_name); // ignore given default value
 	elseif ($config_item_name == $default_value)
 	    $this->default_value = '';
@@ -2136,6 +2061,7 @@ extends _define_password {
 
     function _define_password_optional($config_item_name, $default_value, $description = '', $jscheck = '') {
     	if ($config_item_name == $default_value) $default_value = '';
+        if (!$jscheck) $this->jscheck = " ";
         $this->_define($config_item_name, $default_value, $description, $jscheck);
     }
 
@@ -2148,7 +2074,18 @@ extends _define_password {
 	    return "${n}" . $this->_config_format($posted_value);
         }
     }
-
+    function get_html() {
+	$s = $this->get_config_item_header();
+	// dont re-encrypt already encrypted passwords
+	$value = $this->value();
+	$encrypted = !empty($GLOBALS['properties']["Encrypted Passwords"]) and 
+	             $GLOBALS['properties']["Encrypted Passwords"]->value();
+	if (empty($value))
+	    $encrypted = false;
+        $s .= "<input type=\"". ($encrypted ? "text" : "password") . "\" name=\"" . $this->get_config_item_name()
+           . "\" value=\"" . $value . "\" {$this->jscheck} />";
+	return $s;
+    }
 }
 
 class _define_password_commented_optional
@@ -2272,7 +2209,7 @@ extends _define {
         } else
             return "\n;" . $this->_config_format('');
     }
-    function get_html() {
+    function get_html () {
 	if (!$this->default_value)
 	    $this->default_value = array();
 	elseif (is_string($this->default_value))
@@ -2312,6 +2249,25 @@ extends _variable {
 
 class boolean_define
 extends _define {
+
+    // adds ->values property, instead of ->default_value
+    function boolean_define($config_item_name, $values = false, $description = '', $jscheck = '') {
+        $this->config_item_name = $config_item_name;
+	if (!$description)
+	    $description = text_from_dist($config_item_name);
+        $this->description = $description;
+	// TESTME: get boolean default value from config-default.ini
+	if (defined($config_item_name))
+	    $this->default_value = constant($config_item_name); // ignore given default value
+        elseif (is_array($values))
+	    list($this->default_value,$dummy) = $values[0];
+        if (!$values) 
+            $values = array('false' => "Disabled",
+                            'true'  => "Enabled");
+	$this->values  = $values;
+	$this->jscheck = $jscheck;
+	$this->prefix = "";
+    }
     function _get_config_line($posted_value) {
         if ($this->description)
             $n = "\n";
@@ -2323,22 +2279,17 @@ extends _define {
         return sprintf("%s = %s", $this->get_config_item_name(),
                        (bool)$value ? 'true' : 'false');
     }
+    //TODO: radiobuttons, no list
     function get_html() {
         $output = $this->get_config_item_header();
 	$name = $this->get_config_item_name();
         $output .= '<select name="' . $name . "\" {$this->jscheck}>\n";
-	$values = $this->default_value;
-	if (defined($name))
-	    $this->default_value = constant($name);
-	else {
-	    $this->default_value = null;
-	    list($option, $label) = each($values);
-	    $output .= "  <option value=\"$option\" selected=\"selected\">$label</option>\n";
-	}
-        /* There can usually, only be two options, there can be
+	$values = $this->values;
+	$default_value = $this->default_value ? 'true' : 'false';
+        /* There can usually only be two options, there can be
          * three options in the case of a boolean_define_commented_optional */
         while (list($option, $label) = each($values)) {
-	    if (!is_null($this->default_value) and $this->default_value === $option)
+	    if (!is_null($this->default_value) and $option === $default_value)
 		$output .= "  <option value=\"$option\" selected=\"selected\">$label</option>\n";
 	    else
 		$output .= "  <option value=\"$option\">$label</option>\n";
