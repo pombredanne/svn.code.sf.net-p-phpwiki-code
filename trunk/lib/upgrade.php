@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.48 2005-11-14 22:32:38 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.49 2006-05-18 06:03:39 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -168,7 +168,7 @@ function CheckPgsrcUpdate(&$request) {
  */
 function installTable(&$dbh, $table, $backend_type) {
     global $DBParams;
-    if (!in_array($DBParams['dbtype'],array('SQL','ADODB','PDO'))) return;
+    if (!$dbh->_backend->isSQL()) return;
     echo _("MISSING")," ... \n";
     $backend = &$dbh->_backend->_dbh;
     /*
@@ -351,11 +351,11 @@ CREATE TABLE $log_tbl (
  *   people should export/import their pages if using that old versions.
  */
 function CheckDatabaseUpdate(&$request) {
-    global $DBParams, $DBAuthParams;
-    if (!in_array($DBParams['dbtype'], array('SQL','ADODB','PDO'))) return;
-    echo "<h3>",_("check for necessary database updates"), " - ", $DBParams['dbtype'], "</h3>\n";
-
+    global $DBAuthParams;
     $dbh = $request->getDbh(); 
+    if (!$dbh->_backend->isSQL()) return;
+    echo "<h3>",_("check for necessary database updates"), " - ", DATABASE_TYPE, "</h3>\n";
+
     $dbadmin = $request->getArg('dbadmin');
     _upgrade_db_init($dbh);
     if (isset($dbadmin['cancel'])) {
@@ -419,12 +419,12 @@ function CheckDatabaseUpdate(&$request) {
             // sess_id => varchar(10), sess_data => varchar(5). For others obviously also.
   	    echo _("check for mysql session.sess_id sanity")," ... ";
             $result = $dbh->genericSqlQuery("DESCRIBE $session_tbl");
-            if ($DBParams['dbtype'] == 'SQL') {
+            if (DATABASE_TYPE == 'SQL') {
             	$iter = new WikiDB_backend_PearDB_generic_iter($backend, $result);
-            } elseif ($DBParams['dbtype'] == 'ADODB') {
+            } elseif (DATABASE_TYPE == 'ADODB') {
             	$iter = new WikiDB_backend_ADODB_generic_iter($backend, $result, 
             		        array("Field", "Type", "Null", "Key", "Default", "Extra"));
-            } elseif ($DBParams['dbtype'] == 'PDO') {
+            } elseif (DATABASE_TYPE == 'PDO') {
             	$iter = new WikiDB_backend_PDO_generic_iter($backend, $result);
             }
             while ($col = $iter->next()) {
@@ -443,13 +443,13 @@ function CheckDatabaseUpdate(&$request) {
         }
     }
 
-    /*
-     ALTER TABLE link ADD relation INT default 0;
-     CREATE INDEX linkrelation on link (relation);
+    /* TODO:
+     ALTER TABLE link ADD relation INT DEFAULT 0;
+     CREATE INDEX linkrelation ON link (relation);
     */
 
     // mysql >= 4.0.4 requires LOCK TABLE privileges
-    if (0 and substr($backend_type,0,5) == 'mysql'/* and $DBParams['dbtype'] != 'PDO' */) {
+    if (0 and substr($backend_type,0,5) == 'mysql') {
   	echo _("check for mysql LOCK TABLE privilege")," ...";
         $mysql_version = $dbh->_backend->_serverinfo['version'];
         if ($mysql_version > 400.40) {
@@ -503,7 +503,7 @@ function CheckDatabaseUpdate(&$request) {
     // 1.3.10 mysql requires page.id auto_increment
     // mysql, mysqli or mysqlt
     if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql' 
-        and $DBParams['dbtype'] != 'PDO') {
+        and DATABASE_TYPE != 'PDO') {
   	echo _("check for mysql page.id auto_increment flag")," ...";
         assert(!empty($page_tbl));
   	$database = $dbh->_backend->database();
@@ -564,7 +564,7 @@ function CheckDatabaseUpdate(&$request) {
                     " <b>",_("FIXED"),"</b>",
                     "<br />\n";
             }
-        } elseif ($DBParams['dbtype'] != 'PDO') {
+        } elseif (DATABASE_TYPE != 'PDO') {
             // check if already fixed
             extract($dbh->_backend->_table_names);
             assert(!empty($page_tbl));
@@ -614,12 +614,12 @@ function CheckDatabaseUpdate(&$request) {
 
 function _upgrade_db_init (&$dbh) {
     global $request, $DBParams, $DBAuthParams;
-    if (!in_array($DBParams['dbtype'], array('SQL','ADODB','PDO'))) return;
+    if (!$dbh->_backend->isSQL()) return;
 
     if (DBADMIN_USER) {
         // if need to connect as the root user, for CREATE and ALTER privileges
         $AdminParams = $DBParams;
-        if ($DBParams['dbtype'] == 'SQL')
+        if (DATABASE_TYPE == 'SQL')
             $dsn = DB::parseDSN($AdminParams['dsn']);
         else // ADODB or PDO
             $dsn = parseDSN($AdminParams['dsn']);
@@ -629,7 +629,7 @@ function _upgrade_db_init (&$dbh) {
                                       DBADMIN_PASSWD,
                                       $dsn['hostspec'],
                                       $dsn['database']);
-        if (DEBUG & _DEBUG_SQL and $DBParams['dbtype'] == 'PDO') {
+        if (DEBUG & _DEBUG_SQL and DATABASE_TYPE == 'PDO') {
             echo "<br>\nDBParams['dsn']: '", $DBParams['dsn'], "'";
             echo "<br>\ndsn: '", print_r($dsn), "'";
             echo "<br>\nAdminParams['dsn']: '", $AdminParams['dsn'], "'";
@@ -640,7 +640,7 @@ function _upgrade_db_init (&$dbh) {
             $dbh = &$request->_dbi;
         else {
             $AdminParams = $DBParams;
-            if ($DBParams['dbtype'] == 'SQL')
+            if (DATABASE_TYPE == 'SQL')
                 $dsn = DB::parseDSN($AdminParams['dsn']);
             else
                 $dsn = parseDSN($AdminParams['dsn']);
@@ -698,7 +698,8 @@ _("And on windows at least the privilege to SELECT FROM mysql, and possibly UPDA
  */
 function _upgrade_cached_html (&$dbh, $verbose=true) {
     global $DBParams;
-    if (!in_array($DBParams['dbtype'], array('SQL','ADODB','PDO'))) return;
+    if (!$dbh->_backend->isSQL()) return;
+    //if (!in_array(DATABASE_TYPE, array('SQL','ADODB','PDO'))) return;
     $count = 0;
     if (phpwiki_version() >= 1030.10) {
         if ($verbose)
@@ -737,7 +738,8 @@ function _upgrade_cached_html (&$dbh, $verbose=true) {
  */
 function _convert_cached_html (&$dbh) {
     global $DBParams;
-    if (!in_array($DBParams['dbtype'], array('SQL','ADODB'))) return;
+    if (!$dbh->_backend->isSQL()) return;
+    //if (!in_array(DATABASE_TYPE, array('SQL','ADODB'))) return;
 
     $pages = $dbh->getAllPages();
     $cache =& $dbh->_cache;
@@ -895,6 +897,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.48  2005/11/14 22:32:38  rurban
+ remove user, SKIP on !session
+
  Revision 1.47  2005/02/27 19:13:27  rurban
  latin1 mysql fix
 
