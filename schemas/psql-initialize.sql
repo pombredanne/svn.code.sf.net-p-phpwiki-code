@@ -1,12 +1,6 @@
--- $Id: psql-initialize.sql,v 1.10 2005-11-16 07:33:43 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.11 2006-05-18 06:08:33 rurban Exp $
 
 \set QUIET
-
-\echo At first init the database with: 
-\echo $ createdb phpwiki
-\echo $ createuser -S -R -d phpwiki      # (see httpd_user below)
-\echo $ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
-\echo $ psql phpwiki < psql-initialize.sql
 
 --================================================================
 -- Prefix for table names.
@@ -23,10 +17,15 @@
 -- user who will be accessing the tables.
 -- See DATABASE_DSN in config.ini
 --
+-- NOTE: To be able to vacuum the tables from ordinary page requests
+--       :httpd_user must be the table owner.
+--       To run autovacuum and disable page requests vacuums edit the 
+--       pqsql backend optimize method.
+--
 -- Commonly, connections from php are made under
 -- the user name of 'nobody', 'apache' or 'www'.
 
-\set httpd_user	'phpwiki'
+\set httpd_user	'wikiuser'
 
 --================================================================
 --
@@ -36,6 +35,13 @@
 
 \set qprefix '\'' :prefix '\''
 \set qhttp_user '\'' :httpd_user '\''
+
+\echo At first init the database with: 
+\echo '$ createdb phpwiki'
+\echo '$ createuser -S -R -d ' :qhttpd_user
+\echo '$ psql -U ' :qhttpd_user ' phpwiki < /usr/share/postgresql/contrib/tsearch2.sql'
+\echo '$ psql -U ' :qhttpd_user ' phpwiki < psql-initialize.sql'
+
 \echo Initializing PhpWiki tables with:
 \echo '       prefix = ' :qprefix
 \echo '   httpd_user = ' :qhttp_user
@@ -172,9 +178,9 @@ CREATE VIEW curr_page AS
 
 \echo Creating :link_tbl
 CREATE TABLE :link_tbl (
-        linkfrom 	INT4 NOT NULL REFERENCES :page_tbl,
-        linkto 	 	INT4 NOT NULL REFERENCES :page_tbl,
-        relation 	INT4 DEFAULT 0
+        linkfrom  INT4 NOT NULL REFERENCES :page_tbl,
+        linkto 	  INT4 NOT NULL REFERENCES :page_tbl,
+        relation  INT4 REFERENCES :page_tbl (id) ON DELETE CASCADE
 );
 CREATE INDEX :link_from_idx ON :link_tbl (linkfrom);
 CREATE INDEX :link_to_idx   ON :link_tbl (linkto);
