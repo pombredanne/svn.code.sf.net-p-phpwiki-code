@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.17 2005-10-31 16:49:31 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.18 2006-05-18 06:10:45 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -764,6 +764,26 @@ function getPluginSynopsis($params)
     return new xmlrpcresp(short_string($synopsis));
 }
 
+/** 
+ * array wiki.listRelations()
+ *
+ * Returns an array of all available relations. 
+ * For SemanticSearch autofill method.
+ *
+ * @author: Reini Urban
+ */
+$wiki_dmap['listRelations']
+= array('signature'     => array(array($xmlrpcArray)),
+        'documentation' => "Return names of all relations",
+        'function'      => 'listRelations');
+
+function listRelations($params)
+{
+    global $request;
+    $dbh = $request->getDbh();
+    $RetArray = $dbh->listRelations();
+    return new xmlrpcresp(new xmlrpcval($RetArray->asArray(), "array"));
+}
 
 /** 
  * String pingback.ping(String sourceURI, String targetURI)
@@ -904,6 +924,9 @@ class XmlRpcServer extends xmlrpc_server
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.17  2005/10/31 16:49:31  rurban
+ fix doc
+
  Revision 1.16  2005/10/29 14:17:51  rurban
  fix doc
 
