@@ -1,4 +1,4 @@
--- $Id: psql-destroy.sql,v 1.9 2005-11-16 07:33:43 rurban Exp $
+-- $Id: psql-destroy.sql,v 1.10 2006-05-18 06:08:33 rurban Exp $
 
 \set QUIET
 
@@ -6,7 +6,7 @@
 -- Prefix for table names.
 --
 -- You should set this to the same value you specify for
--- $DBParams['prefix'] in index.php.
+-- DATABASE_PREFIX in config/config.ini
 
 \set prefix 	''
 
