@@ -1,48 +1,105 @@
-Date: Tue, 1 Nov 2005 23:19:01 +0100
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.62 2005-11-21 22:19:00 rurban Exp $
+Date: Tue, 7 Mar 2006 15:13:37 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.12p1)
+X-Rcs-Id: $Id: ReleaseNotes,v 1.63 2006-05-18 06:07:05 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.62 $";
+  pgsrc_version="2 $Revision: 1.63 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-1.3.12 (not yet), Reini Urban, Joel Uckelman
+1.3.13 (not yet), Reini Urban, Joel Uckelman
 
 fixes:
 * DB: ANSI SQL statements
 * testsuite: force C locale and EN $LANG
-* fix setting the locale
-* PHP 5: compatibility fixes
 * fixed blog theme layout
-* fixed fulltext search and stoplist handling
-* don't log on ACCESS_LOG_SQL < 2
 
 changes:
 * updated locale for de and es (google translation)
 * generalized ENABLE_HTMLAREA3 to ENABLE_WYSIWYG
-* cache EditToolbar popup content
 * DB: foreign key support in schemas, simplify methods
 * print Ignored stoplist words on FullTextSearch
-* improved Captcha
 
 new:
-* new ENABLE_SPAMBLOCKLIST, lib/SpamBlocklist.php:
-  check external links against surbl.org and bl.spamcop.net
 * added new xml-rpc methods: listPlugins, getPluginSynopsis
-* add more backends to the testsuite (PearDB_pgsql, ...)
 * FileInfoPlugin: exeversion
-* USE_CAPTCHA_RANDOM_WORD by Dan Frankowski
 * new experimental WYSIWYG libraries 
   (tinymce, FCKeditor, htmlarea3, htmlarea2, spaw)
+
+1.3.12p2 Mar, 7 2006, Reini Urban:
+
+* fix change prefs for File WikiUser
+* fix HomepagePrefs update message
+* remove plugin/Imdb
+* apply PluginToolbarButton fix from cvs
+
+1.3.12p1 Mar, 4 2006, Reini Urban:
+
+* fix "Call-time pass-by-reference" in CreateBib
+* fix parse error in SiteMap.php
+
+1.3.12 Mar, 4 2006, Reini Urban:
+
+Rename function hash() and method final() for php-5.1 compatibility.
+Add various backports from cvs:
+
+fixes:
+* fix ZipReader
+* Fix "Call-time pass-by-reference has been deprecated" errors,
+  allow_call_time_pass_reference = Off
+* fix broken locale update for php-5.1.1
+* default locale fix by Thomas Harding
+* fix Bug #1381464 "Duplicate functions" with php-5.1.1
+* InterWikiMap: allow spaces in paths, even implicitly. fixes bug #1218733
+* fix 'VOID' in TextSearchQuery
+* remove LIMIT 1 in ADODB
+* fix SQL WantedPages
+* fixed fulltext search and stoplist handling
+* fix bug #1327912 numeric pagenames can break plugins (Joachim Lous)
+* fix xmlrpc and tests/unit for !register_long_arrays
+* ensure absolute uploads path
+* fix GoogleMaps syntax error
+* fix ListPages for non-SQL backends. Add top3recs as default only if 
+  ratings are available
+* plugin/PageTrail improved empty cookie
+* plugin/_WikiTranslation: protect against 2x define
+* remove mysql specific ISNULL()
+* fix signout pref error
+* don't log on ACCESS_LOG_SQL < 2
+
+changes:
+* cache EditToolbar popup content
+* beautify SCRIPT lines
+* added cfg-able markups only for default TextTransformation, not 
+  for links and others
+* add a proper Content-Encoding: gzip if compressed, and omit Content-Length then.
+  Trick to send the correct gzipped Content-Length
+* set dsn after SQL/ADODB switches in WikiDB backends for easier unit testing
+* email notifications: better From: header
+* add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
+* improved WikiUser/Ldap error description
+* cache SystemInfo methods
+* VisualWiki: remove INCLUDED from EXCLUDED, includes override excludes.
+* improve postgresql schemas (tsearch2 and stored procedures not yet)
+
+new:
+* added NUM_SPAM_LINKS as config.ini option
+* new ENABLE_SPAMBLOCKLIST, lib/SpamBlocklist.php:
+  check external links against surbl.org and bl.spamcop.net 
+* added Captcha class and better spiral
+* added get_captcha_random_word() contributed by Dan Frankowski
+* dumphtml when not at admin page: dump the current or given page
+* added plugin FileInfo
+* major PhotoAlbum feature enhancements by Thomas Harding: 
+  slides mode, real thumbnails
+* add more backends to the testsuite (PearDB_pgsql, ...)
 
 1.3.11p1 Sep, 18 2005, Reini Urban:
 
 fixes:
 * added missing pgsrc/OldStyleTablesPlugin
-* novatrope patch to let only _AUTHENTICATED view pages
 * fixed OldStyleTables plugin with args
 * protect against Content-Length if headers_sent()
 * fixed ENABLE_MARKUP_TEMPLATE warning if undefined
