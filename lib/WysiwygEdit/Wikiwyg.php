@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.2 2006-05-14 17:52:20 rurban Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.3 2006-05-31 19:59:57 jeannicolas Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -52,10 +52,12 @@ window.onload = function() {
 		       'save','mode_selector', '/',
 		       'p','|',
 		       'h2', 'h3', 'h4','|',
-		       'bold', 'italic', '|'
-		       //'pre','|',
-		       //'ordered', 'unordered','hr','|',
-		       //'link','table', '|'
+		       'bold', 'italic', '|',
+		       'pre','|',
+		       'ordered', 'unordered','hr','|',
+		       'link','unlink','|',
+                       'table', 'sup', 'sub', '|'
+                       //'plugins' 
 		       ],
 		styleSelector: [
 		       'label', 'p', 'h2', 'h3', 'h4', 'pre'
@@ -67,7 +69,9 @@ window.onload = function() {
 		       h3:       '"._("Title 2")."',
 		       h4:       '"._("Title 3")."',
 		       verbatim: '"._("Verbatim")."',
-		       richtable: '"._("Rich Table")."'
+                       unlink:   '"._("Remove link")."', 
+                       sup:      '"._("Sup")."', 
+                       sub:      '"._("Sub")."'   
 	              }
             },
             wysiwyg: {
@@ -88,8 +92,8 @@ window.onload = function() {
         $htmltextid = $this->_htmltextid;
         $textarea->SetAttr('id', $htmltextid);
         $iframe0 = new RawXml('<iframe id="iframe0" height="0" width="0" frameborder="0"></iframe>');
-        $out = HTML($iframe0,
-                    $textarea,
+        $out = HTML($textarea,
+                    $iframe0,
 		    "\n");
 	return $out;
     }
@@ -115,6 +119,9 @@ window.onload = function() {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.2  2006/05/14 17:52:20  rurban
+ fix syntax error. delete a left-over attempt to add CSS links also. We did put everything into phpwiki.css for browser compatibility.
+
  Revision 1.1  2006/05/13 19:59:55  rurban
  added wysiwyg_editor-1.3a feature by Jean-Nicolas GEREONE <jean-nicolas.gereone@st.com>
  converted wysiwyg_editor-1.3a js to WysiwygEdit framework

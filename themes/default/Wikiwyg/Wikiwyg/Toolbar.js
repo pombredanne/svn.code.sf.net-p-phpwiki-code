@@ -179,11 +179,9 @@ proto.addControlItem = function(text, method) {
     var self = this;
     link.onclick = function() { eval('self.wikiwyg.' + method + '()'); return false };
 
-
-    // XXX Hack to auto-save wikitext on mouse move 
-    this.div.ownerDocument.onmousemove = function() {      
-      self.wikiwyg.saveChanges();     
-    }
+    // For phpwiki only
+    var form= document.getElementById("editpage");  
+    form.onsubmit = function() { eval('self.wikiwyg.saveChanges()');return true }
 
     this.div.appendChild(span);
 }

@@ -276,7 +276,7 @@ proto.toggle_same_format = function(start, finish) {
 }
 
 proto.clean_regexp = function(string) {
-    string = string.replace(/([\^\$\*\+\.\?\[\]\{\}])/g, '\\$1');
+    string = string.replace(/([\^\$\*\+\.\?\[\]\{\}\|])/g, '\\$1');
     return string;
 }
 
@@ -582,7 +582,9 @@ proto.walk = function(element) {
                     this.assert_space_or_newline();
                     string = this.trim(string);
                 }
+		this._tag = "text";
                 this.appendOutput(this.collapse(string));
+		this._tag = "false";
             }
         }
     }
