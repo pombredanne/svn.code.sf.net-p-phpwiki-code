@@ -51,8 +51,6 @@ proto.set_design_mode_early = function() { // Se IE, below
 }
 
 proto.fromHtml = function(html) {
-
-    html = html.replace(/\n/g,'<br>') ;
     this.set_inner_html(html);
 }
 
@@ -214,14 +212,31 @@ proto.do_pre = proto.format_command;
 proto.do_p = proto.format_command;
 
 proto.do_table = function() {
-    var html =
-        '<table border="5"><tbody>' +
-        '<tr><td>A</td>' +
-            '<td>B</td>' +
-            '<td>C</td></tr>' +
-        '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>' +
-        '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>' +
-        '</tbody></table>';
+    var rows = prompt("Number of rows");
+    var cols = prompt("Number of columns");
+
+    // Test if variables are valid numbers
+    if( isNaN(rows) == true || isNaN(cols) == true 
+	||(rows = parseInt(rows).toFixed(0)) <= 0
+	||(cols = parseInt(cols).toFixed(0)) <= 0)
+      {
+	alert("Please enter positive numbers");
+	return false;
+      }
+
+    var html = 
+    '<table border="5"><tbody>';
+  
+    for(i=0; i<rows;i++) {
+      html = html + "<tr>";
+      for(var j=0;j<cols;j++) {
+ 	html = html + "<td>&nbsp;</td>";
+       }
+      html = html + "</tr>";
+    }
+
+    html = html + "<tbody></table>";
+   
     if (! Wikiwyg.is_ie)
         this.get_edit_window().focus();
     this.insert_table(html);
@@ -235,15 +250,15 @@ proto.do_link = function() {
     var selection = this.get_link_selection_text();
     if (! selection) return;
     var url;
-    var match = selection.match(/(.*?)\b((?:http|https|ftp|irc):\/\/\S+)(.*)/);
-    if (match) {
-        if (match[1] || match[3]) return null;
-        url = match[2];
+    url = selection; 
+    url = prompt('Enter the URL');
+    if (url) {
+      this.exec_command('Unlink');
+      this.exec_command('CreateLink',url);
+      this.exec_command('ForeColor','blue');
     }
-    else {
-        url = '?' + escape(selection); 
-    }
-    this.exec_command('createlink', url);
+    else
+      alert('You have to enter an URL');
 }
 
 proto.get_selection_text = function() { // See IE, below
@@ -257,6 +272,25 @@ proto.get_link_selection_text = function() {
         return;
     }
     return selection;
+
+}
+
+// Unlink the selection text
+// if linked
+proto.do_unlink = function() {
+    var selection = this.get_link_selection_text();
+    if (! selection) return;
+
+    this.exec_command('Unlink');
+    this.exec_command('ForeColor','black');
+}
+
+proto.do_sup = function() {
+  this.exec_command('SuperScript');
+}
+
+proto.do_sub = function() {
+  this.exec_command('SubScript');
 }
 
 /*==============================================================================

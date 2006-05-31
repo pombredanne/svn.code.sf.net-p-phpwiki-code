@@ -32,7 +32,7 @@ var wikiwyg_divs = [];
 proto = new Subclass('Wikiwyg.Phpwiki', 'Wikiwyg');
 
 proto.submit_action_form = function(action, value) {
-    this.div.value = value;
+
 }
 
 // Convert to wikitext mode if needed
@@ -41,9 +41,10 @@ proto.saveChanges = function() {
 
     var self = this;
     var submit_changes = function(wikitext) {
-        self.submit_action_form(
-            'wikiwyg_save_wikitext',wikitext
-        );
+      self.div.value = wikitext;
+      self.submit_action_form(
+			      'wikiwyg_save_wikitext',wikitext
+			      );
     }  
     //   var self = this;
     if (this.current_mode.classname.match(/(Wysiwyg|Preview)/)) {
@@ -64,13 +65,37 @@ proto.saveChanges = function() {
 
 proto.modeClasses = [
        'Wikiwyg.Wikitext.Phpwiki',
+
        'Wikiwyg.Wysiwyg'
-       // 'Wikiwyg.HTML'
+       //       'Wikiwyg.HTML'
 ];
 
+/*==============================================================================
+Hack to clean not supported conversion to html yet
+ =============================================================================*/
+proto.clean_wikitext = function(text_to_clean) {
+    var text_cleaned = text_to_clean.replace(/\~*\<\?plugin/g,'~<?plugin');
+
+    if( text_to_clean.match(/^\#{3,}/gm) ) {
+      alert("Warning : Only two levels of indentation is allowed for ordered lists.\n More won't be converted");
+      text_cleaned = text_to_clean.replace(/^\#{3,}/gm,'## ');
+      
+    }
+    
+    if( text_to_clean.match(/^\*{3,}/gm) ) {
+      alert("Warning : Only two levels of indentation is allowed for unordered lists. \n More won't be converted");
+      text_cleaned = text_to_clean.replace(/^\*{3,}/gm,'## ');
+      
+    }
+
+    return(text_cleaned);
+}
+
 proto.call_action = function(action, content, func) {
+
+  content = this.clean_wikitext(content);
   var postdata = 'action=wikitohtml' + 
-                   '&content=' + encodeURIComponent(content);
+                 '&content=' + encodeURIComponent(content);
   Wikiwyg.liveUpdate(
 		     'POST',
 		     script_url,
@@ -86,7 +111,6 @@ proto.convertWikitextToHtml = function(wikitext, func) {
 }
 
 proto.markupRules = {
-    link: ['bound_phrase', '[', ']'],
     bold: ['bound_phrase', '<b>', '</b>'],
     italic: ['bound_phrase', '<i>', '</i>'],
     underline: ['bound_phrase', '<u>', '</u>'],
@@ -99,26 +123,35 @@ proto.markupRules = {
     unordered: ['start_lines', '*'],
     indent: ['start_lines', ' '],
     hr: ['line_alone', '----'],
-    table: ['line_alone', 'A |\n B |\n  C\n |\n  |\n   \n |\n  |\n   \n'],
-    link: ['bound_phrase', '[ Name of the link | ', ' ]' ],
+    link: ['bound_phrase', '[ ', '| Link ] '],
     verbatim: ['bound_phrase', '<verbatim>\n','\n</verbatim>\n'],
-    richtable:['line_alone', 
-   '<?plugin RichTable *border=1, cellpadding=4, cellspacing=0,\n-\n|ligne1\n|ligne1\n|ligne1\n-\n|ligne2\n|ligne2\n|ligne2\n\n ?>']
+    table:['line_alone', 
+	   '<?plugin RichTable *border=1, cellpadding=4, cellspacing=0,\n-\n|line1\n|line1\n|line1\n-\n|line2\n|line2\n|line2\n\n?>\n\n'],
+    sup:['bound_phrase', '<sup>','</sup>'],
+    sub:['bound_phrase', '<sub>','</sub>'],
+    big:['bound_phrase', '<big>','</big>'],
+    small:['bound_phrase', '<small>','</small>'],
+    tt:['bound_phrase', '<tt>','</tt>'],
+    em:['bound_phrase', '<em>','</em>'],
+    strong:['bound_phrase', '<strong>','</strong>'],
+    abbr:['bound_phrase', '<abbr>','</abbr>'],
+    acronym:['bound_phrase', '<acronym>','</acronym>'],
+    cite:['bound_phrase', '<cite>','</cite>'],
+    code:['bound_phrase', '<code>','</code>'],
+    dfn:['bound_phrase', '<dfn>','</dfn>'],
+    kbd:['bound_phrase', '<kbd>','</kbd>'],
+    samp:['bound_phrase', '<samp>','</samp>'],
+    var_html:['bound_phrase', '<var>','</var>']        
 };
 
 /*==============================================================================
-Code to convert from html to wikitext. Hack for phpwiki and IE
+Code to convert html to wikitext. Hack for phpwiki and IE
  =============================================================================*/
 proto.convert_html_to_wikitext = function(html) {
     this.copyhtml = html;
     var dom = document.createElement('div');
     html = html.replace(/<!-=-/g, '<!--').
                 replace(/-=->/g, '-->');
-
-    // Change * to ~* for phpwiki
-    html = html.replace(/\*/g,'~*');
-    // Change _ to ~_ for phpwiki 
-    html = html.replace(/\_/g,'~_');
 
     // Hack for IE 
     // convert <p>&nbsp;</p> into Â ( unknown char :)
@@ -129,6 +162,12 @@ proto.convert_html_to_wikitext = function(html) {
     this.list_type = [];
     this.indent_level = 0;
 
+    this._chomp = "false";
+    this._isplugin = "false";
+    this._iswikitext = "false";
+    this._tag = "false";
+    this._table = "false";
+
     this.walk(dom);
 
     // add final whitespace
@@ -138,7 +177,161 @@ proto.convert_html_to_wikitext = function(html) {
 }
 
 /*==============================================================================
-Code to convert from html to wikitext.
+Find the <tag> element to convert and apply the appropriate method
+ =============================================================================*/
+proto.dispatch_formatter = function(element) {
+    var dispatch = 'format_' + element.nodeName.toLowerCase();
+    this._tag = element.nodeName.toLowerCase();
+    if (! this[dispatch])
+        dispatch = 'handle_undefined';
+    this[dispatch](element);
+}
+
+/*==============================================================================
+[Wikitext.js] Insert string in the output buffer
+ =============================================================================*/
+proto.appendOutput = function(string) {
+    var string_escaped = string;
+
+    // if this method is called by chomp method
+    // string has been escaped before
+    if ( this._chomp == 'false' ) {
+      string_escaped = this.is_escape_char_needed(string);
+      if( this._iswikitext == "true" && this._tag != "text" && string != "\n") {
+	return ;
+      }
+    }
+    else {
+      this._chomp = 'false';
+    }
+    
+    this.output.push(string_escaped);    
+    this._tag = "false";
+}
+
+/*==============================================================================
+  [Wikitext.js] Remove fang : not used in phpwiki
+ =============================================================================*/
+proto.insert_new_line = function() {
+    var fang = '';
+    if (this.indent_level > 0)
+        fang = ''.times(this.indent_level) + '';
+    // XXX - ('\n' + fang) MUST be in the same element in this.output so that
+    // it can be properly matched by chomp above.
+    if (this.output.length)
+        this.appendOutput('\n' + fang);
+    else if (fang.length)
+        this.appendOutput(fang);
+}
+
+/*==============================================================================
+Test if escape char is needed in string
+ =============================================================================*/
+proto.is_escape_char_needed = function(string) {
+    var escape_string = string;
+    if ( typeof(string) == 'string' ) {
+      escape_string = this.is_it_wikitext(escape_string);
+      this.match_plugin(escape_string);
+      
+      if( this._iswikitext == 'false' && this._tag == "text" ) {	  
+	escape_string = this.insert_escape_char(escape_string);
+      }
+    }
+    return escape_string;
+}    
+
+/*==============================================================================
+Insert escape char in the string ( escape char is '~' for phpwiki )
+ =============================================================================*/
+proto.insert_escape_char = function(string) {
+    // Insert the escape charater before
+    // interpreted markups      
+    var basic_markup = /(\*|\_|^\!|\[|^\>|\~|\%\%\%|^\-\-\-|^\-|\|)/g;
+    string = string.replace(basic_markup, "~$1");
+    
+    var tag_markup = 
+    /(\<\/{0,1}(b|i|tt|em|strong|abbr|acronym|cite|code|dfn|kbd|samp|sup|sub|big|small|var)\>)/g;
+    string = string.replace(tag_markup, "~$1");
+
+    var tag_plugin = /(\<\?)/g;
+    string = string.replace(tag_plugin, "~$1");
+
+    var links =  /(http|https|ftp:\/\/)/g;
+    string = string.replace(links, "~$1");
+
+
+    return string;
+}
+
+/*==============================================================================
+Test the string to match a wikitext section
+ =============================================================================*/
+proto.is_it_wikitext = function(string) {
+    var _string = string;
+
+    var  begin_wikitext_section = /Wikitext \{/;
+    var end_wikitext_section = /^\}$/;
+
+    if ( typeof(_string) == 'string' ) {
+      if( this._iswikitext == 'false' ) {
+	if( _string.match(begin_wikitext_section) ) {
+	  this._iswikitext = 'true';
+	  _string = _string.replace(begin_wikitext_section,"");
+	}
+      }
+      else {
+	if ( this._iswikitext == 'true' && _string.match(end_wikitext_section) ) {
+	    this._iswikitext = 'false';
+	    _string = string.replace(end_wikitext_section,'');
+	  }
+	}	
+    }    
+    return _string;
+}
+
+/*==============================================================================
+Match if the string contains the beginning or the end of a plugin
+ =============================================================================*/
+proto.match_plugin = function(string) {
+  var match_plugin = string.match(/^\<\?plugin/);
+  var match_end_plugin = string.match(/\?\>$/);
+
+  if(this._isplugin == "false") {
+    if(match_plugin) {
+      this._isplugin = "true";
+    }
+  }
+    else {
+      if( match_end_plugin && this._isplugin == "true" )
+	this._isplugin = "false";
+    }
+}
+/*==============================================================================
+End Match if the string contain a plugin
+ =============================================================================*/
+
+/*==============================================================================
+[Wikitext.js] Treatment before "assert a new line"
+ =============================================================================*/
+proto.chomp = function() {
+    var string;
+    while (this.output.length) {
+        string = this.output.pop();
+        if (typeof(string) != 'string') {
+            this.appendOutput(string);
+            return;
+        }
+        if (! string.match(/^\n>+ $/) && string.match(/\S/))
+            break;
+    }
+    if (string) {
+        string = string.replace(/[\r\n\s]+$/, '');
+	this._chomp = 'true';
+        this.appendOutput(string);
+    }
+}
+/*==============================================================================
+End Treatment before "assert a new line"
  =============================================================================*/
 
 /*==============================================================================
@@ -199,24 +392,18 @@ proto.add_markup_lines = function(markup_start) {
 }
 
 /*==============================================================================
-End Hack for headings in phpwiki
- =============================================================================*/
-
-
-/*==============================================================================
-Support for incremental numbers :
+[ Wikitext.js] Support for incremental numbers :
 When there is 
 # list1
 ## list 2
 phpwiki convert it with a <p> element inside the <li> element
 So the <p> element have to be ignored
  =============================================================================*/
-
 proto.format_p = function(element) {
 
   // Hack to avoid \n to be inserted if an li element is parent
-  if( element.parentNode.nodeType == '1' 
-      && element.parentNode.nodeName.toLowerCase() == "li") {
+  if( (element.parentNode.nodeType == '1' 
+	&& element.parentNode.nodeName.toLowerCase() == "li")) {
     this.walk(element);
   }
   else {
@@ -262,93 +449,60 @@ proto.format_p = function(element) {
   }
 }
 
-
 /*==============================================================================
-End Support for incremental numbers
+Support for <li> tag
+Only two levels of indentation is possible
  =============================================================================*/
+proto.format_li = function(element) {
+    var level = this.list_type.length;
+    if (!level) die("List error");
+    var type = this.list_type[level - 1];
+    var markup = this.config.markupRules[type];
+
+    if(level<=2) 
+      this.appendOutput(markup[1].times(level) + ' ');
+    else {
+      this.appendOutput(markup[1].times(2) + ' ');
+      alert("Only two levels of indentation is possible");
+    }
+
+    this.walk(element);
+
+    this.chomp();
+    this.insert_new_line();
+}
+
 
 /*==============================================================================
 Support for <br> tag
  =============================================================================*/
-
-  proto.format_br = function(element) {
+proto.format_br = function(element) {
     this.assert_new_line();
-  }
+}
 
 /*==============================================================================
-End Support for <br> tag
+Support for links
  =============================================================================*/
-
-
-/*==============================================================================
-Support for links in phpwiki
- =============================================================================*/
-
 proto.make_wikitext_link = function(label, href, element) {
-
-  // comes with label = ?
-  // element = anchor element
-
-  // href have the link
-
-  // come here with phpwiki conversion of the link
-  // So this.output contains something like :
-  // [....,<u>,object,label,</u>]
-
-  //alert(' in link');
-
     var before = '[';
     var after  = ']';
 
-    // XXX Hack to remove <u> and </u> on the label name
-    // because phpwiki convert links in : 
-    // <u> label </u> <a href=link?action=create> ? </a>
+    href = unescape(href);
 
-    //alert('before ?');
+    // Hack : IE add the base url 
+    // to all links in wysiwyg mode
+    // 10 is sizeof 'index.php/'
+    var base_url="";
+    var url = document.location.toString();
+    var index = url.lastIndexOf("index.php");
+    if( index > 0)
+      base_url = url.substring(0,index+10);
 
-    if (label == '?') {
-      // Verify if the output poped is </u>
-
-      //alert(' ? found ');
-
-      if ( this.output[this.output.length-1] == '</u>' ) {
-	//alert('</u> found');
-	
-	// removed_u1 is </u> and have to be removed
-	var removed_u1 = this.output.pop();
-
-	// XXX Verify if the output poped is text ( => =textnode => 3)
-	var oldlabel = label;
-	label = this.output.pop();
-	
-	// XXX Verify if the output poped is  ... an object ?
-	var object = this.output.pop();
-
-	//Verify if the output poped is <u>
-	if ( this.output[this.output.length-1] == '<u>' ) {
-	  var removed_u2 = this.output.pop();
-	  
-	}
-	// If <u> not found
-	// the ouput will be restored
-	else {
-	  alert('Error : <u> not found in the link');
-	  this.appendOutput(removed_u2);
-	  this.appendOutput(object);
-	  this.appendOutput(oldlabel);
-	  this.appendOutput(removed_u1);
-	}
-      } 
+    // Base URL removed
+    regexp_url = new RegExp(this.clean_regexp(base_url));
+    if( href.match( regexp_url,'gm' ) ) {
+	href = href.replace( regexp_url, "");
     }
-
-    // XXX If the link really have a '?'
-    // if the link cointains ?
-    // it takes the first part
-    if ( href.match(/\?/) )
-	 href = href.split('?')[0];
-
-    //    alert('label '+label );
-    //    alert('href '+href);
 
     this.assert_space_or_newline();
     if (! href) {
@@ -360,18 +514,14 @@ proto.make_wikitext_link = function(label, href, element) {
       else
         this.appendOutput(before + href + after);
     }
-    else if (this.href_is_wiki_link(href)) {
-        if (this.camel_case_link(label))
-            this.appendOutput(label);
-        else
-            this.appendOutput(before + label + '|' + href + after);
-    }
     else {
         this.appendOutput(before + label + '|' + href + after);
     }
 }
 
-// IE support of links
+/*==============================================================================
+Convert <span> tag and 
+ =============================================================================*/
 proto.format_span = function(element) {
     if (this.is_opaque(element)) {
         this.handle_opaque_phrase(element);
@@ -386,7 +536,6 @@ proto.format_span = function(element) {
     }
 
     if ( !Wikiwyg.is_ie ) {
-
       this.assert_space_or_newline();
       if (style.match(/\bbold\b/))
         this.appendOutput(this.config.markupRules.bold[1]);
@@ -396,15 +545,12 @@ proto.format_span = function(element) {
         this.appendOutput(this.config.markupRules.underline[1]);
       if (style.match(/\bline-through\b/))
         this.appendOutput(this.config.markupRules.strike[1]);
-
     }
 
     this.no_following_whitespace();
     this.walk(element);
 
-
     if ( !Wikiwyg.is_ie ) {
-
       if (style.match(/\bline-through\b/))
         this.appendOutput(this.config.markupRules.strike[2]);
       if (style.match(/\bunderline\b/))
@@ -417,20 +563,16 @@ proto.format_span = function(element) {
 }
 
 /*==============================================================================
-End Support for links in phpwiki
- =============================================================================*/
-
-
-/*==============================================================================
 Support for plugin RichTable in phpwiki
  =============================================================================*/
-
 proto.format_table = function(element) {
+    this._table="true";
     this.assert_blank_line();
-    this.appendOutput('<?plugin RichTable *border=1, cellpadding=4, cellspacing=0,\n\n');
+    this.appendOutput('<?plugin RichTable *border=1, cellpadding=4, cellspacing=0,\n');
     this.walk(element);
-    this.appendOutput(' \n ?> \n\n');
+    this.appendOutput('\n?>\n\n');
     this.assert_blank_line();
+    this._table = "false";
 }
 
 proto.format_tr = function(element) {
@@ -447,16 +589,187 @@ proto.format_td = function(element) {
 proto.format_th = function(element) {
     this.appendOutput('|');
     this.walk(element);
-    this.appendOutput(' \n');
+    this.appendOutput('\n');
+}
+
+proto.format_img = function(element) {
+    var uri = element.getAttribute('src');
+    if( uri.match(/\/uploads\//) ){
+      uri = escape( uri.substring( uri.lastIndexOf('/')+1, uri.length ) );
+      uri = "[Upload:"+uri+" border=1]";
+    }
+
+    if (uri) {
+        this.assert_space_or_newline();
+        this.appendOutput(uri);
+    }
 }
 
 /*==============================================================================
-END RichTable 
+Support for <sup> tag
  =============================================================================*/
+proto.format_sup = function(element) {
+    this.appendOutput(this.config.markupRules.sup[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.sup[2]);
+}
+
+/*==============================================================================
+Support for <sub> tag
+ =============================================================================*/
+proto.format_sub = function(element) {
+    this.appendOutput(this.config.markupRules.sub[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.sub[2]);
+}
+
+/*==============================================================================
+Support for <big> tag
+ =============================================================================*/
+proto.format_big = function(element) {
+    this.appendOutput(this.config.markupRules.big[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.big[2]);
+}
+
+/*==============================================================================
+Support for <small> tag
+ =============================================================================*/
+proto.format_small = function(element) {
+    this.appendOutput(this.config.markupRules.small[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.small[2]);
+}
+
+/*==============================================================================
+Support for <tt> tag
+ =============================================================================*/
+proto.format_tt = function(element) {
+    this.appendOutput(this.config.markupRules.tt[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.tt[2]);
+}
+
+/*==============================================================================
+Support for <em> tag
+ =============================================================================*/
+proto.format_em = function(element) {
+    this.appendOutput(this.config.markupRules.em[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.em[2]);
+}
+
+/*==============================================================================
+Support for <strong> tag
+ =============================================================================*/
+proto.format_strong = function(element) {
+    this.appendOutput(this.config.markupRules.strong[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.strong[2]);
+}
+
+/*==============================================================================
+Support for <abbr> tag
+ =============================================================================*/
+proto.format_abbr = function(element) {
+    this.appendOutput(this.config.markupRules.abbr[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.abbr[2]);
+}
+
+/*==============================================================================
+Support for <acronym> tag
+ =============================================================================*/
+proto.format_acronym = function(element) {
+    this.appendOutput(this.config.markupRules.acronym[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.acronym[2]);
+}
+
+/*==============================================================================
+Support for <cite> tag
+ =============================================================================*/
+proto.format_cite = function(element) {
+    this.appendOutput(this.config.markupRules.cite[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.cite[2]);
+}
+
+/*==============================================================================
+Support for <code> tag
+ =============================================================================*/
+proto.format_code = function(element) {
+    this.appendOutput(this.config.markupRules.code[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.code[2]);
+}
+
+/*==============================================================================
+Support for <dfn> tag
+ =============================================================================*/
+proto.format_dfn = function(element) {
+    this.appendOutput(this.config.markupRules.dfn[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.dfn[2]);
+}
+
+/*==============================================================================
+Support for <kbd> tag
+ =============================================================================*/
+proto.format_kbd = function(element) {
+    this.appendOutput(this.config.markupRules.kbd[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.kbd[2]);
+}
+
+/*==============================================================================
+Support for <samp> tag
+ =============================================================================*/
+proto.format_samp = function(element) {
+    this.appendOutput(this.config.markupRules.samp[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.samp[2]);
+}
+
+/*==============================================================================
+Support for <var> tag
+ =============================================================================*/
+proto.format_var = function(element) {
+    this.appendOutput(this.config.markupRules.var_html[1]);
+    this.walk(element);
+    this.appendOutput(this.config.markupRules.var_html[2]);
+}
 
 proto.do_verbatim = Wikiwyg.Wikitext.make_do('verbatim');
 proto.do_line_break = Wikiwyg.Wikitext.make_do('line_break');
-proto.do_richtable = Wikiwyg.Wikitext.make_do('richtable');
+proto.do_sub = Wikiwyg.Wikitext.make_do('sub');
+proto.do_sup = Wikiwyg.Wikitext.make_do('sup');
+
+proto.do_unlink = function() {
+  this.get_words();
+  var string = this.sel.toString();
+  if( string.length == 0 || !string.match(/\[(.*?)\|(.*?)\]/) ){
+     alert('You must select a link');
+   }
+   else
+     {
+       string = string.replace(/\[(.*?)\|(.*?)\]/gm,'$1');
+       var text = this.start + string + this.finish;
+       var start = this.selection_start;
+       var end = this.selection_start + this.sel.length;
+       this.set_text_and_selection(text, start, end);
+       this.area.focus();
+     }
+   return ;
+}
+
+// Draft function to add plugins 
+// in wikitext mode
+// Doesn't work yet
+proto.do_plugins = function() {
+    showPulldown('Insert Plugin (double-click)',[['AddComment','%0A<?plugin AddComment\npagename=%5Bpagename%5D order=normal mode=add,show jshide=0 noheader= ?>'],['text2png','%0A<?plugin text2png\ntext=%27Hello WikiWorld!%27 l=en ?>']],'Insert','Close');
+  return;
+}
 
 proto = new Subclass('Wikiwyg.Preview.Phpwiki', 'Wikiwyg.Preview');
 

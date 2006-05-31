@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.224 2006-05-13 19:59:55 rurban Exp $');
+rcs_id('$Id: main.php,v 1.225 2006-05-31 19:59:57 jeannicolas Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1146,14 +1146,10 @@ class WikiRequest extends Request {
     }
     
     function action_wikitohtml () {
-       $content = $this->getArg("content");
-
-       require_once("lib/BlockParser.php");
-       $xml = TransformText($content, 2.0, $this->getArg('pagename'));
-       $xml->printXML();
-       return true;
+       include_once("lib/WikiToHtml.php");
+       $wikitohtml = new WikiToHtml( $this->getArg("content") , $this);
+              $wikitohtml->send();
     }
-
 }
 
 //FIXME: deprecated with ENABLE_PAGEPERM (?)
@@ -1295,6 +1291,11 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.224  2006/05/13 19:59:55  rurban
+// added wysiwyg_editor-1.3a feature by Jean-Nicolas GEREONE <jean-nicolas.gereone@st.com>
+// converted wysiwyg_editor-1.3a js to WysiwygEdit framework
+// changed default ENABLE_WYSIWYG = true and added WYSIWYG_BACKEND = Wikiwyg
+//
 // Revision 1.223  2006/03/19 15:01:00  rurban
 // sf.net patch #1333957 by Matt Brown: Authentication cookie identical across all wikis on a host
 //
