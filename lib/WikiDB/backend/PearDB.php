@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.97 2006-05-14 12:28:03 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.98 2006-06-03 08:50:41 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -258,7 +258,10 @@ extends WikiDB_backend
         $id = $dbh->getOne($query);
         if (empty($id)) {
             $this->lock(array($page_tbl), true); // write lock
-            $id = $dbh->nextId($page_tbl . "_id");
+            $max_id = $dbh->getOne("SELECT MAX(id) FROM $page_tbl");
+            $id = $max_id + 1;
+            // requires createSequence and on mysql lock the interim table ->getSequenceName
+            //$id = $dbh->nextId($page_tbl . "_id");
             $dbh->query(sprintf("INSERT INTO $page_tbl"
                                 . " (id,pagename,hits)"
                                 . " VALUES (%d,'%s',0)",
@@ -1235,6 +1238,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.97  2006/05/14 12:28:03  rurban
+// mysql 5.x fix for wantedpages join
+//
 // Revision 1.96  2006/04/15 12:28:53  rurban
 // use pear nextID
 //
