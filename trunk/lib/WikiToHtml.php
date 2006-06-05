@@ -1,4 +1,5 @@
 <?php //-*-php-*-
+rcs_id('$Id: WikiToHtml.php,v 1.2 2006-06-05 08:10:19 rurban Exp $');
 /*
  * Copyright(c) STMicroelectronics, 2006
  *
@@ -21,13 +22,12 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 class WikiToHtml {
-  function WikiToHtml ($wikitext, &$_this) {
+  function WikiToHtml ($wikitext, &$request) {
         $this->_wikitext = $wikitext;
+	$this->_request =& $request;
 	$this->_html = "";
 	$this->html_content = "";
-	$this->_this = &$_this;
     }
 
     function send() {
@@ -37,8 +37,9 @@ class WikiToHtml {
 
     function convert() {
         require_once("lib/BlockParser.php");       
-	$xmlcontent = TransformText($this->_wikitext, 2.0, $GLOBALS['request']->getArg('pagename')); 
+	$xmlcontent = TransformText($this->_wikitext, 2.0, $this->_request->getArg('pagename')); 
 	$this->_html = $xmlcontent->AsXML();
+
 	$this->replace_inside_html();
     }
 
@@ -53,8 +54,8 @@ class WikiToHtml {
 	$this->html_content = $this->_html;
     }
 
-    // Draft function to replace Richtable
-    //by a html table
+    // Draft function to replace RichTable
+    // by a html table
     // Works only on one plugin for the moment
     function replace_known_plugins() {
       // If match a plugin
@@ -125,8 +126,7 @@ class WikiToHtml {
     } 
 }
 
-// This is called to replace 
-// Richtable plugin by an html table
+// This is called to replace the RichTable plugin by an html table
 // $matched contains html <p> tags so 
 // they are deleted before the conversion.
 function replace_rich_table($matched) {
@@ -136,7 +136,7 @@ function replace_rich_table($matched) {
   
   // if the plugin contains one of the options bellow
   // it won't be converted
-  if( preg_match($unknown_options,$plugin) ) 
+  if (preg_match($unknown_options,$plugin))
     return $matched[0]."\n";   
   else {
     //Replace unused <p...>
@@ -162,4 +162,7 @@ function replace_rich_table($matched) {
     return $xmlcontent->AsXML();
   }
 }
+
+// $Log: not supported by cvs2svn $
+
 ?>
