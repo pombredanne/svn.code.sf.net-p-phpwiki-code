@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.11 2006-05-18 06:08:33 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.12 2006-06-05 09:36:15 rurban Exp $
 
 \set QUIET
 
@@ -38,9 +38,9 @@
 
 \echo At first init the database with: 
 \echo '$ createdb phpwiki'
-\echo '$ createuser -S -R -d ' :qhttpd_user
-\echo '$ psql -U ' :qhttpd_user ' phpwiki < /usr/share/postgresql/contrib/tsearch2.sql'
-\echo '$ psql -U ' :qhttpd_user ' phpwiki < psql-initialize.sql'
+\echo '$ createuser -S -R -d ' :qhttp_user
+\echo '$ psql -U ' :qhttp_user ' phpwiki < /usr/share/postgresql/contrib/tsearch2.sql'
+\echo '$ psql -U ' :qhttp_user ' phpwiki < psql-initialize.sql'
 
 \echo Initializing PhpWiki tables with:
 \echo '       prefix = ' :qprefix
