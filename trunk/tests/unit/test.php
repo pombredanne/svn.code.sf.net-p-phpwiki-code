@@ -1,6 +1,6 @@
 <?php // #!/usr/local/bin/php -Cq
 /* Copyright (C) 2004 Dan Frankowski <dfrankow@cs.umn.edu>
- * Copyright (C) 2004,2005 Reini Urban <rurban@x-ray.at>
+ * Copyright (C) 2004,2005,2006 Reini Urban <rurban@x-ray.at>
  *
  * This file is part of PhpWiki.
  * 
@@ -49,11 +49,11 @@
 // web: Mem29424 => Mem35400  (without USECACHE) (6MB)
 //define('USECACHE', false);
 
-####################################################################
-#
-# Preamble needed to get the tests to run.
-#
-####################################################################
+//##################################################################
+//
+// Preamble needed to get the tests to run.
+//
+//##################################################################
 
 $cur_dir = getcwd();
 // Add root dir to the path
@@ -61,10 +61,16 @@ if (substr(PHP_OS,0,3) == 'WIN')
     $cur_dir = str_replace("\\","/", $cur_dir);
 $rootdir = $cur_dir . '/../../';
 $ini_sep = substr(PHP_OS,0,3) == 'WIN' ? ';' : ':';
-$include_path = ini_get('include_path') . $ini_sep . $rootdir . $ini_sep . $rootdir . "lib/pear";
+$include_path = ini_get('include_path') . $ini_sep 
+              . $rootdir . $ini_sep . $rootdir . "lib/pear";
 ini_set('include_path', $include_path);
 define('DEFAULT_LANGUAGE','en'); // don't use browser detection
 $LANG='en';
+if (!isset($HTTP_SERVER_VARS)) {
+   $HTTP_SERVER_VARS =& $_SERVER;
+   $HTTP_GET_VARS    =& $_GET;
+   $HTTP_POST_VARS   =& $_POST;
+}
 
 if (!empty($HTTP_SERVER_VARS) and $HTTP_SERVER_VARS["SERVER_NAME"] == 'phpwiki.sourceforge.net') {
     ini_set('include_path', ini_get('include_path') . ":/usr/share/pear");
@@ -76,20 +82,23 @@ if (!empty($HTTP_SERVER_VARS) and $HTTP_SERVER_VARS["SERVER_NAME"] == 'phpwiki.s
 // available database backends to test:
 $database_backends = array(
                            'file',
+                           'flatfile', // not yet committed
                            'dba',
                            'SQL',   // default backend defined in the config.ini DSN
                            'ADODB', // same backend as defined in the config.ini DSN
-			   // specific backends (need to be setup as db=test_phpwiki
+			   // specific backends (need to be setup as db=test_phpwiki)
 			   'PearDB_pgsql', 'PearDB_sqlite', 'PearDB_mysql',
 			   //'PearDB_oci8','PearDB_mssql', 
 			   'ADODB_postgres7', 'ADODB_sqlite', 'ADODB_mysql', 
 			   //'ADODB_oci8', 'ADODB_mssql', 
+                           // 'cvs'
                            );
 if ((int)substr(phpversion(), 1) >= 5)
     array_push($database_backends, 'PDO_pqsql', 'PDO_sqlite', 'PDO_mysql');
                                    //'PDO_oci', 'PDO_odbc'
 
 //TODO: convert cvs test                           
+// For "cvs" see the seperate tests/unit_test_backend_cvs.php (cvs is experimental)
 //TODO: read some database values from config.ini, just use the "test_" prefix
 // "flatfile" testing occurs in "tests/unit/.testbox/"
 // "dba" needs the DATABASE_DBA_HANDLER, also in the .textbox directory
@@ -98,7 +107,6 @@ if ((int)substr(phpversion(), 1) >= 5)
 //  You have to create that database beforehand with our schema
 //$database_dsn = "mysql://wikiuser:@localhost/phpwiki";
 $database_prefix = "test_";
-// For "cvs" see the seperate tests/unit_test_backend_cvs.php (cvs is experimental)
 
 // Quiet warnings in IniConfig.php
 $HTTP_SERVER_VARS['REMOTE_ADDR'] = '127.0.0.1';
@@ -197,6 +205,7 @@ function purge_testbox() {
     $dir = $DBParams['directory'];
     switch ($DBParams['dbtype']) {
     case 'file':
+    case 'flatfile':
         assert(!empty($dir));
         foreach (array('latest_ver','links','page_data','ver_data') as $d) {
             purge_dir("$dir/$d");
@@ -289,8 +298,11 @@ function updateLevelEdit(formObj) {
    }
 }");
     $option = HTML::div(array('class' => 'option'),
-                        HTML::span(array('style'=>'font-weight: bold','onDblClick'=>'flipAll(\'_debug[\')'), 'debug: '),
-                        HTML::input(array('name'=>'debug','id'=>'debug','value'=>$debug_level,'size'=>5)),
+                        HTML::span(array('style'=>'font-weight: bold',
+                                         'onDblClick'=>'flipAll(\'_debug[\')'), 
+                                   'debug: '),
+                        HTML::input(array('name'=>'debug','id'=>'debug',
+                                          'value'=>$debug_level,'size'=>5)),
                         HTML::br());
     foreach (array('VERBOSE' 	=> 1,
                    'PAGELINKS' 	=> 2,
@@ -310,7 +322,8 @@ function updateLevelEdit(formObj) {
 
     $option = HTML::div(array('class' => 'option'), 
                         HTML::span(array('style'=>'font-weight: bold'), "level: "),
-                        HTML::input(array('name'=>'level','id'=>'level','value'=>$user_level,'size'=>5)),
+                        HTML::input(array('name'=>'level','id'=>'level',
+                                          'value'=>$user_level,'size'=>5)),
                         HTML::br());
     foreach (array('FORBIDDEN' 	=> -1,
                    'ANON' 	=> 0,
@@ -373,7 +386,8 @@ $user_level  = 1; // BOGO (conflicts with RateIt)
 $alltests = array('InlineParserTest','HtmlParserTest',
                   'PageListTest','ListPagesTest',
                   'SetupWiki',
-                  'AllPagesTest','AllUsersTest','OrphanedPagesTest','WantedPagesTest',
+                  'AllPagesTest','AllUsersTest','OrphanedPagesTest',
+                  'WantedPagesTest',
                   'TextSearchTest','IncludePageTest',
                   'DumpHtml');
 // support db=file db=dba test=SetupWiki test=DumpHtml debug=num -dconstant=value
@@ -468,10 +482,12 @@ ob_end_flush();
 
 if ($debug_level & 1) {
     //echo "\n";
-    echo "PHPWIKI_VERSION=",PHPWIKI_VERSION, strstr(PHPWIKI_VERSION,"pre") ? strftime(" / %Y%m%d") : "","\n";
+    echo "PHPWIKI_VERSION=",PHPWIKI_VERSION, 
+        strstr(PHPWIKI_VERSION,"pre") ? strftime(" / %Y%m%d") : "","\n";
     if ($debug_level & 9) {
         // which constants affect memory?
-        foreach (explode(",","USECACHE,WIKIDB_NOCACHE_MARKUP,ENABLE_USER_NEW,ENABLE_PAGEPERM") as $v) {
+        foreach (explode(",","USECACHE,WIKIDB_NOCACHE_MARKUP,"
+                            ."ENABLE_USER_NEW,ENABLE_PAGEPERM") as $v) {
             printConstant($v);
         }
     }
@@ -560,6 +576,7 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
 
 // Test all db backends.
 foreach ($run_database_backends as $dbtype) {
+    global $request;
     //    if (DEBUG & _DEBUG_TRACE)
     //        printMemoryUsage("PHPUnitInitialized");
     $DBParams['dbtype'] = $dbtype;
@@ -576,6 +593,8 @@ foreach ($run_database_backends as $dbtype) {
 	preg_replace("/^([^:]+):/", substr($dbtype, 4).":", $DBParams['dsn']);
     }
     $DBParams['directory']            = $cur_dir . '/.testbox';
+    if ($dbtype == 'flatfile')
+        $DBParams['directory']        = $cur_dir . '/.testbox/flatfile';
     $DBParams['prefix']               = $database_prefix;
     // from config.ini
     //$DBParams['dba_handler']          = $database_dba_handler;
@@ -619,6 +638,8 @@ foreach ($run_database_backends as $dbtype) {
 
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "</pre>\n";
+
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:

@@ -1,4 +1,4 @@
--- $Id: mysql-test-initialize.sql,v 1.4 2005-11-21 22:16:46 rurban Exp $
+-- $Id: mysql-test-initialize.sql,v 1.5 2006-06-05 09:35:02 rurban Exp $
 -- for the regression suite
 
 drop table if exists test_page;
@@ -83,17 +83,17 @@ CREATE TABLE test_pref (
   	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
   	prefs  	TEXT NULL DEFAULT '',
   	PRIMARY KEY (userid)
-) TYPE=MyISAM;
+);
 
 -- better use the extra pref table where such users can be created easily 
 -- without password.
-CREATE TABLE test_user (
-  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
-  	passwd 	CHAR(48) BINARY DEFAULT '',
+--CREATE TABLE test_user (
+--  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
+--  	passwd 	CHAR(48) BINARY DEFAULT '',
 --	prefs  	TEXT NULL DEFAULT '',
 --	groupname CHAR(48) BINARY DEFAULT 'users',
-  	PRIMARY KEY (userid)
-) TYPE=MyISAM;
+--  	PRIMARY KEY (userid)
+--) TYPE=MyISAM;
 
 -- only if you plan to use the wikilens theme
 CREATE TABLE test_rating (
