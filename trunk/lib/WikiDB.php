@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.141 2006-04-17 17:28:21 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.142 2006-06-10 11:55:58 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -927,8 +927,10 @@ class WikiDB_Page
         if ((DEBUG & _DEBUG_SQL)
 	    or (DATABASE_OPTIMISE_FREQUENCY > 0 and 
                 (time() % DATABASE_OPTIMISE_FREQUENCY == 0))) {
-            if ($backend->optimize())
-                trigger_error(_("Optimizing database"), E_USER_NOTICE);
+            if ($backend->optimize()) {
+                if (DEBUG)
+                    trigger_error(_("Optimizing database"), E_USER_NOTICE);
+            }
         }
 
         /* Generate notification emails? */
@@ -2268,6 +2270,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.141  2006/04/17 17:28:21  rurban
+// honor getWikiPageLinks change linkto=>relation
+//
 // Revision 1.140  2006/03/19 14:23:51  rurban
 // sf.net patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
 //
