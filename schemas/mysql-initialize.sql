@@ -1,4 +1,4 @@
--- $Id: mysql-initialize.sql,v 1.10 2005-11-15 21:12:22 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.11 2006-06-10 12:02:18 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
@@ -14,7 +14,7 @@ CREATE TABLE page (
 	cached_html 	MEDIUMBLOB,
         PRIMARY KEY (id),
 	UNIQUE KEY (pagename)
-) CHARSET=latin1;
+);
 
 CREATE TABLE version (
 	id              INT NOT NULL,
@@ -78,23 +78,27 @@ CREATE TABLE pref (
 	groupname CHAR(48) BINARY DEFAULT 'users',
   	PRIMARY KEY (userid)
 );
+
 -- update to 1.3.12: (see lib/upgrade.php)
+
 -- ALTER TABLE pref ADD passwd 	CHAR(48) BINARY DEFAULT '';
 -- ALTER TABLE pref ADD groupname CHAR(48) BINARY DEFAULT 'users';
 
 -- deprecated since 1.3.12. only useful for seperate databases.
 -- better use the extra pref table where such users can be created easily 
 -- without password.
---CREATE TABLE user (
+
+-- CREATE TABLE user (
 --  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
 --  	passwd 	CHAR(48) BINARY DEFAULT '',
 --	prefs  	TEXT NULL DEFAULT '',
 --	groupname CHAR(48) BINARY DEFAULT 'users',
 --  	PRIMARY KEY (userid)
---);
+-- );
 
 -- Use the member table, if you need it for n:m user-group relations,
 -- and adjust your DBAUTH_AUTH_ SQL statements.
+
 CREATE TABLE member (
 	userid    CHAR(48) BINARY NOT NULL,
    	groupname CHAR(48) BINARY NOT NULL DEFAULT 'users',
