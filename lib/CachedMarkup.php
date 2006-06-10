@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.41 2006-04-15 12:22:07 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.42 2006-06-10 11:57:20 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -81,9 +81,6 @@ class CacheableMarkup extends XmlContent {
      * A hash of linkto=>pagenames, relation=>pagenames (strings).
      */
     function getWikiPageLinks() {
-        // include_once('lib/WikiPlugin.php');
-        // $ploader = new WikiPluginLoader();
-        
 	$links = array();
 	foreach ($this->_content as $item) {
 	    if (!isa($item, 'Cached_DynamicContent'))
@@ -92,7 +89,9 @@ class CacheableMarkup extends XmlContent {
                 continue;
             $links = array_merge($links, $item_links);
         }
-	return array_unique($links);
+        // array_unique has a bug with hashes! set_links checks for duplicates, array_merge does not
+	//return array_unique($links);
+	return $links;
     }
 
     /** Get link info.
