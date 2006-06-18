@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_sqlite.php,v 1.2 2004-07-05 13:56:23 rurban Exp $');
+rcs_id('$Id: ADODB_sqlite.php,v 1.3 2006-06-18 11:25:15 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -20,7 +20,7 @@ extends WikiDB_backend_ADODB
         if (! file_exists($parsed['database'])) {
             // creating the empty database
             $db = $parsed['database'];
-            $schema = FindFile("schemas/sqlite.sql");
+            $schema = FindFile("schemas/sqlite-initialize.sql");
             `sqlite $db < $schema`;
         }
         $this->WikiDB_backend_ADODB($dbparams);
