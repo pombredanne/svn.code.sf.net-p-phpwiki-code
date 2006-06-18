@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.49 2006-05-18 06:03:39 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.50 2006-06-18 11:04:09 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -661,7 +661,8 @@ function _upgrade_db_init (&$dbh) {
 HTML::p(_("Upgrade requires database privileges to CREATE and ALTER the phpwiki database."),
                                    HTML::br(),
 _("And on windows at least the privilege to SELECT FROM mysql, and possibly UPDATE mysql")),
-                           HiddenInputs(array('action' => 'upgrade')),
+                           HiddenInputs(array('action' => 'upgrade',
+                                              'overwrite' => $request->getArg('overwrite'))),
                            HTML::table(array("cellspacing"=>4),
                                        HTML::tr(HTML::td(array('align'=>'right'),
                                                          _("DB admin user:")),
@@ -897,6 +898,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.49  2006/05/18 06:03:39  rurban
+ use $dbh->_backend->isSQL
+
  Revision 1.48  2005/11/14 22:32:38  rurban
  remove user, SKIP on !session
 
