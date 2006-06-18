@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.18 2006-04-17 17:30:35 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.19 2006-06-18 11:01:25 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 
@@ -174,6 +174,7 @@ class DbaDatabase
     }
 }
 
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:
