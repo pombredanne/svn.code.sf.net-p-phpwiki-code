@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.251 2006-03-19 15:01:00 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.252 2006-06-18 11:03:36 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1770,13 +1770,14 @@ class Alert {
 // 1.3.9-p1  => 1030.091
 // 1.3.10pre => 1030.099
 // 1.3.11pre-20041120 => 1030.1120041120
+// 1.3.12-rc1 => 1030.119
 function phpwiki_version() {
     static $PHPWIKI_VERSION;
     if (!isset($PHPWIKI_VERSION)) {
         $arr = explode('.',preg_replace('/\D+$/','', PHPWIKI_VERSION)); // remove the pre
         $arr[2] = preg_replace('/\.+/','.',preg_replace('/\D/','.',$arr[2]));
         $PHPWIKI_VERSION = $arr[0]*1000 + $arr[1]*10 + 0.01*$arr[2];
-        if (strstr(PHPWIKI_VERSION, 'pre'))
+        if (strstr(PHPWIKI_VERSION, 'pre') or strstr(PHPWIKI_VERSION, 'rc'))
             $PHPWIKI_VERSION -= 0.01;
     }
     return $PHPWIKI_VERSION;
@@ -2059,8 +2060,8 @@ function getMemoryUsage() {
 	    $info = win32_ps_stat_proc($pid);
 	    $memstr = $info['mem']['working_set_size'];
 	} else {
-	    // This works only if it's a cygwin process (apache or php)
-	    // requires a newer cygwin
+	    // This works only if it's a cygwin process (apache or php).
+	    // Requires a newer cygwin
 	    //$memstr = exec("cat /proc/$pid/statm |cut -f1");
 
 	    // if it's native windows use something like this: 
@@ -2081,6 +2082,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.251  2006/03/19 15:01:00  rurban
+// sf.net patch #1333957 by Matt Brown: Authentication cookie identical across all wikis on a host
+//
 // Revision 1.250  2006/03/07 20:45:44  rurban
 // wikihash for php-5.1
 //
