@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HttpClient.php,v 1.6 2004-11-01 10:43:55 rurban Exp $');
+rcs_id('$Id: HttpClient.php,v 1.7 2006-06-18 11:02:01 rurban Exp $');
 
 /** 
    Version 0.9, 6th April 2003 - Simon Willison ( http://simon.incutio.com/ )
@@ -264,8 +264,9 @@ class HttpClient {
     function getRequestURL() {
         $url = 'http://'.$this->host;
         if ($this->port != 80) {
+            $url = 'https://'.$this->host;
             $url .= ':'.$this->port;
-        }            
+        }
         $url .= $this->path;
         return $url;
     }
@@ -346,6 +347,12 @@ class HttpClient {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2004/11/01 10:43:55  rurban
+// seperate PassUser methods into seperate dir (memory usage)
+// fix WikiUser (old) overlarge data session
+// remove wikidb arg from various page class methods, use global ->_dbi instead
+// ...
+//
 // Revision 1.5  2004/04/29 19:34:24  rurban
 // omit "socket_set_timeout() is not supported in this PHP build" warning
 //
