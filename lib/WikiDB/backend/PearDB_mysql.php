@@ -1,7 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.22 2006-05-14 12:28:03 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.23 2006-06-18 11:13:25 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
+
+// See http://sql-info.de/mysql/gotchas.html for mysql specific quirks.
 
 // The slowest function overall is mysql_connect with [680ms]
 // 2nd is db_mysql::simpleQuery with [257ms]
@@ -123,7 +125,7 @@ extends WikiDB_backend_PearDB
         if ($exclude) // array of pagenames
             $exclude = " AND $page_tbl.pagename NOT IN ".$this->_sql_set($exclude);
 
-        $sql = "SELECT $page_tbl.pagename,linked.pagename as wantedfrom"
+        $sql = "SELECT $page_tbl.pagename,pp.pagename as wantedfrom"
             . " FROM $page_tbl p JOIN $link_tbl linked"
             . " LEFT JOIN $page_tbl pp ON (linked.linkto = pp.id)"
             . " LEFT JOIN $nonempty_tbl ne ON (linked_tbl.linkto = ne.id)" 
