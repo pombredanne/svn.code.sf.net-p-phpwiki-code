@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.42 2006-06-10 11:57:20 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.43 2006-06-18 11:00:58 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -610,7 +610,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 
 
     function getWikiPageLinks($basepage) {
-        $loader = &$this->_getLoader();
+        $loader = $this->_getLoader();
 
         return $loader->getWikiPageLinks($this->_pi, $basepage);
     }
