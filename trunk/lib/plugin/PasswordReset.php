@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PasswordReset.php,v 1.1 2006-03-19 16:31:57 rurban Exp $');
+rcs_id('$Id: PasswordReset.php,v 1.2 2006-06-18 11:04:50 rurban Exp $');
 /**
  Copyright (C) 2006 $ThePhpWikiProgrammingTeam
 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -125,7 +125,7 @@ extends WikiPlugin
 	$isadmin = $user->isAdmin();
 	if ($request->isPost()) {
 	    if (!$userid) {
-		$alert = new Alert(_("Warning"),
+		$alert = new Alert(_("Warning:"),
 				   _("You need to specify the userid!"));
 		$alert->show();
 		return $this->doForm($request);
@@ -185,6 +185,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2006/03/19 16:31:57  rurban
+// I would have needed that very often
+//
 
 // For emacs users
 // Local Variables:
