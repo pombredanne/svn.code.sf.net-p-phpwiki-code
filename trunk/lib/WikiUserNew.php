@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.137 2006-05-03 06:05:37 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.138 2006-06-18 11:02:55 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1808,7 +1808,7 @@ class UserPreferences
         // FIXME: on theme changes the wiki_user session pref object will fail. 
         // We will silently ignore this.
         if (!empty($customUserPreferenceColumns))
-            $this->_prefs = array_merge($this->_prefs,$customUserPreferenceColumns);
+            $this->_prefs = array_merge($this->_prefs, $customUserPreferenceColumns);
 /*
         if (isset($this->_method) and $this->_method == 'SQL') {
             //unset($this->_prefs['userid']);
@@ -1863,8 +1863,8 @@ class UserPreferences
         */
         // Fix Fatal error for undefined value. Thanks to Jim Ford and Joel Schaubert
         if ((!$value and $pref->default_value)
-            or ($value and !isset($pref->$value))
-            or ($value and ($pref->$value != $pref->default_value)))
+            or ($value and !isset($pref->{$name})) // bug #1355533
+            or ($value and ($pref->{$name} != $pref->default_value)))
         {
             if ($name == 'emailVerified') $newvalue = $value;
             else $newvalue = $pref->sanify($value);
@@ -1883,7 +1883,7 @@ class UserPreferences
             $type = 'emailVerified'; $obj =& $this->_prefs['email'];
             $obj->_init = $init;
             if ($obj->get($type) !== $prefs->get($type)) {
-                if ($obj->set($type,$prefs->get($type)))
+                if ($obj->set($type, $prefs->get($type)))
                     $count++;
             }
             foreach (array_keys($this->_prefs) as $type) {
@@ -1895,7 +1895,7 @@ class UserPreferences
                         $obj->get($type) == THEME) continue;
                     if ($type == 'lang' and $prefs->get($type) == '' and 
                         $obj->get($type) == DEFAULT_LANGUAGE) continue;
-                    if ($this->_prefs[$type]->set($type,$prefs->get($type)))
+                    if ($this->_prefs[$type]->set($type, $prefs->get($type)))
                         $count++;
                 }
             }
@@ -2107,6 +2107,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.137  2006/05/03 06:05:37  rurban
+// Fix default preferences for editheight maxrows, by Manuel Vacelet.
+//
 // Revision 1.136  2006/04/16 11:07:48  rurban
 // Dont crypt the passwd twice on storing prefs. Patch by Thomas Harding.
 // Fixes bug #1327470
