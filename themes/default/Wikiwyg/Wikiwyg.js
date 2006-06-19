@@ -229,8 +229,11 @@ proto.switchMode = function(new_mode_key) {
     var new_mode = this.mode_objects[new_mode_key];
     var old_mode = this.current_mode;
 
-    if( new_mode == old_mode)
+    if(new_mode == old_mode)
       return;
+
+    //Set cookie to keep last editing mode
+    document.cookie = "Mode="+new_mode_key;
 
     var self = this;
     new_mode.enableStarted();

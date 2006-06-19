@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiToHtml.php,v 1.2 2006-06-05 08:10:19 rurban Exp $');
+rcs_id('$Id: WikiToHtml.php,v 1.3 2006-06-19 17:33:06 jeannicolas Exp $');
 /*
  * Copyright(c) STMicroelectronics, 2006
  *
@@ -78,9 +78,23 @@ class WikiToHtml {
 				    $this->_html);
     }
 
-    // Clean links to keep only 
-    // the <a href="link">name</a> tag
+    // Clean links to keep only <a href="link">name</a>
     function clean_links() {
+      // Existing links
+      $pattern = '/\<a href\=\"index.php\?pagename\=(\w+)\"([^>])*\>/Umsi';      
+      $replace_string = '<a href="\1">';      
+      $this->_html = preg_replace($pattern,
+				  $replace_string,
+				  $this->_html) ;
+      // Non existing links
+	$pattern = '/\<a href\=\"index.php\?pagename\=([^"]*)(&amp;action){1}([^>])*\>/Umsi';
+	$replace_string = '<a href="\1">';
+	
+	$this->_html = preg_replace($pattern,
+				    $replace_string,
+				    $this->_html) ;
+
+	// Clean underline 
         $pattern = '/\<u\>(.*)\<\/u\>(\<a href="(.*))[?"]{1}.*\>.*\<\/a\>/Umsi';
 	$replace_string = 
 	  '<span>\2" style="color:blue;">\1</a></span>';
@@ -164,5 +178,8 @@ function replace_rich_table($matched) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2006/06/05 08:10:19  rurban
+// stylistic fixup: clarify request argument
+//
 
 ?>

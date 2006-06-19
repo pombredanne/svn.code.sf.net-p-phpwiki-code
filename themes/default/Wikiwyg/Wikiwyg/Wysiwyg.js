@@ -37,6 +37,7 @@ proto.config = {
     disabledToolbarButtons: [],
     editHeightMinimum: 150,
     editHeightAdjustment: 1.3,
+    editHeightOffset: 500,
     clearRegex: null
 };
     
@@ -52,6 +53,14 @@ proto.set_design_mode_early = function() { // Se IE, below
 
 proto.fromHtml = function(html) {
     this.set_inner_html(html);
+}
+
+// Added to allow wysiwyg mode by default
+proto.fromWikitext = function(wikitext) {
+  var edit_iframe = this.get_edit_document().body;
+
+  this.wikiwyg.call_action('wikiwyg_wikitext_to_html', wikitext, 
+			   function(html) {edit_iframe.innerHTML = html;} );
 }
 
 proto.toHtml = function(func) {
@@ -212,8 +221,8 @@ proto.do_pre = proto.format_command;
 proto.do_p = proto.format_command;
 
 proto.do_table = function() {
-    var rows = prompt("Number of rows");
-    var cols = prompt("Number of columns");
+  var rows = prompt("Number of rows", '2');
+  var cols = prompt("Number of columns", '2');
 
     // Test if variables are valid numbers
     if( isNaN(rows) == true || isNaN(cols) == true 
@@ -246,19 +255,71 @@ proto.insert_table = function(html) { // See IE
     this.exec_command('inserthtml', html);
 }
 
+proto.do_toc = function() {
+    var html = '<p><div style="background-color:#D3D3D3;font-size:smaller;">'+
+               'Wikitext { <br> &lt;?plugin  CreateToc  ?&gt; <br>}</div><br></p>';
+    this.insert_html(html);
+}
+
+proto.do_wikitext = function() {
+    var html = '<p><div style="background-color:#D3D3D3;font-size:smaller;">'+
+               'Wikitext { <br>  <br>}</div><br></p>';
+    this.insert_html(html);
+}
+
+proto.insert_html = function(html) { // See IE
+    this.exec_command('inserthtml', html);
+}
+
 proto.do_link = function() {
     var selection = this.get_link_selection_text();
     if (! selection) return;
-    var url;
-    url = selection; 
-    url = prompt('Enter the URL');
-    if (url) {
+
+    var url = "";
+    var url_selection = "";
+
+    if(Wikiwyg.is_ie) {
+      url_selection = this.get_edit_document().selection.createRange().htmlText;
+    }
+    else {
+      if(this.get_edit_window().getSelection())
+	url_selection = this.get_edit_window().getSelection();
+    }
+
+    // If IE, 
+    if(Wikiwyg.is_ie) {
+      var tmp_match = url_selection.match(/href=.*/m);
+      if(tmp_match!=null) {
+	var toreplace = /.*href=\"(.*?)\".*/m;
+	url = tmp_match.toString().replace(toreplace,'$1');
+      }
+    }
+    else {
+      // If gecko
+      if(url_selection.focusNode.innerHTML) {
+	var reg_match = new RegExp('(href=\".*?\".*?'
+				    +unescape(selection)
+				    +').*?\/a\>','m');
+	var tmp_match = url_selection.focusNode.innerHTML.match(reg_match);
+	if(tmp_match!=null) {
+	  var toreplace = /.*href=\"(.*?)\".*/m;
+	  url = tmp_match.toString().replace(toreplace,'$1');
+	}
+      }
+    }
+
+    url = prompt('Enter the URL. No URL will remove the link.',unescape(url));
+    if(url==null)
+      return;
+    else if (url) {
       this.exec_command('Unlink');
       this.exec_command('CreateLink',url);
       this.exec_command('ForeColor','blue');
     }
-    else
-      alert('You have to enter an URL');
+    else if(!url) {// No URL entered by the user
+      this.exec_command('Unlink');
+      this.exec_command('ForeColor','black');
+    }
 }
 
 proto.get_selection_text = function() { // See IE, below
@@ -272,17 +333,6 @@ proto.get_link_selection_text = function() {
         return;
     }
     return selection;
-
-}
-
-// Unlink the selection text
-// if linked
-proto.do_unlink = function() {
-    var selection = this.get_link_selection_text();
-    if (! selection) return;
-
-    this.exec_command('Unlink');
-    this.exec_command('ForeColor','black');
 }
 
 proto.do_sup = function() {
@@ -319,6 +369,16 @@ proto.get_selection_text = function() {
 }
 
 proto.insert_table = function(html) {
+    var doc = this.get_edit_document();
+    var range = this.get_edit_document().selection.createRange();
+    if (range.boundingTop == 2 && range.boundingLeft == 2)
+        return;
+    range.pasteHTML(html);
+    range.collapse(false);
+    range.select();
+}
+
+proto.insert_html = function(html) {
     var doc = this.get_edit_document();
     var range = this.get_edit_document().selection.createRange();
     if (range.boundingTop == 2 && range.boundingLeft == 2)
