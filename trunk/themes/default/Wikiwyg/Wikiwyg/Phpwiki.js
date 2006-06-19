@@ -27,6 +27,26 @@ General Public License for more details.
 
  =============================================================================*/
 
+function getCookieVal(offset) {
+    var endstr=document.cookie.indexOf (";", offset);
+    if (endstr==-1) endstr=document.cookie.length;
+    return unescape(document.cookie.substring(offset, endstr));
+}
+
+function readCookie(name) {
+    var arg = name+"=";
+    var alen = arg.length;
+    var clen=document.cookie.length;
+    var i=0;
+    while (i<clen) {
+      var j=i+alen;
+      if (document.cookie.substring(i, j)==arg) return getCookieVal(j);
+      i=document.cookie.indexOf(" ",i)+1;
+      if (i==0) break;      
+    }
+    return null;
+}
+
 var wikiwyg_divs = [];
 
 proto = new Subclass('Wikiwyg.Phpwiki', 'Wikiwyg');
@@ -64,11 +84,25 @@ proto.saveChanges = function() {
 }
 
 proto.modeClasses = [
-       'Wikiwyg.Wikitext.Phpwiki',
+		     'Wikiwyg.Wikitext.Phpwiki',
+		     'Wikiwyg.Wysiwyg'
+		     ];
 
-       'Wikiwyg.Wysiwyg'
-       //       'Wikiwyg.HTML'
-];
+// //  Put the last edition mode of the user by default
+// if(document.cookie) {
+//     var mode = readCookie('Mode');
+// if( mode=="Wikiwyg.Wysiwyg" ) 
+//     proto.modeClasses = [
+// 			 'Wikiwyg.Wysiwyg',
+// 			 'Wikiwyg.Wikitext.Phpwiki'
+// 			 ];
+// else if( mode=="Wikiwyg.Wikitext.Phpwiki" ){
+//     proto.modeClasses = [			 
+// 			 'Wikiwyg.Wikitext.Phpwiki',
+// 			 'Wikiwyg.Wysiwyg'
+// 			  ];
+//  }
+// }
 
 /*==============================================================================
 Hack to clean not supported conversion to html yet
@@ -123,7 +157,7 @@ proto.markupRules = {
     unordered: ['start_lines', '*'],
     indent: ['start_lines', ' '],
     hr: ['line_alone', '----'],
-    link: ['bound_phrase', '[ ', '| Link ] '],
+    link: ['bound_phrase', '[ ', '| Link ]'],
     verbatim: ['bound_phrase', '<verbatim>\n','\n</verbatim>\n'],
     table:['line_alone', 
 	   '<?plugin RichTable *border=1, cellpadding=4, cellspacing=0,\n-\n|line1\n|line1\n|line1\n-\n|line2\n|line2\n|line2\n\n?>\n\n'],
@@ -141,7 +175,8 @@ proto.markupRules = {
     dfn:['bound_phrase', '<dfn>','</dfn>'],
     kbd:['bound_phrase', '<kbd>','</kbd>'],
     samp:['bound_phrase', '<samp>','</samp>'],
-    var_html:['bound_phrase', '<var>','</var>']        
+    var_html:['bound_phrase', '<var>','</var>'],
+    toc: ['line_alone', '<?plugin CreateToc ?>\n\n']    
 };
 
 /*==============================================================================
@@ -172,6 +207,12 @@ proto.convert_html_to_wikitext = function(html) {
 
     // add final whitespace
     this.assert_new_line();
+
+    if(this._iswikitext=="true") {
+      var alert_message = "Warning : One of the 'Wikitext {}' section "
+	+"is not well formatted !!!\nIt may cause some issues";
+      alert(alert_message);
+    }
 
     return this.join_output(this.output);
 }
@@ -744,24 +785,7 @@ proto.do_verbatim = Wikiwyg.Wikitext.make_do('verbatim');
 proto.do_line_break = Wikiwyg.Wikitext.make_do('line_break');
 proto.do_sub = Wikiwyg.Wikitext.make_do('sub');
 proto.do_sup = Wikiwyg.Wikitext.make_do('sup');
-
-proto.do_unlink = function() {
-  this.get_words();
-  var string = this.sel.toString();
-  if( string.length == 0 || !string.match(/\[(.*?)\|(.*?)\]/) ){
-     alert('You must select a link');
-   }
-   else
-     {
-       string = string.replace(/\[(.*?)\|(.*?)\]/gm,'$1');
-       var text = this.start + string + this.finish;
-       var start = this.selection_start;
-       var end = this.selection_start + this.sel.length;
-       this.set_text_and_selection(text, start, end);
-       this.area.focus();
-     }
-   return ;
-}
+proto.do_toc = Wikiwyg.Wikitext.make_do('toc');
 
 // Draft function to add plugins 
 // in wikitext mode

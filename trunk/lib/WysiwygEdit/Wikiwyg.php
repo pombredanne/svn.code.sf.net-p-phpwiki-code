@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.3 2006-05-31 19:59:57 jeannicolas Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.4 2006-06-19 17:33:06 jeannicolas Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -45,19 +45,21 @@ window.onload = function() {
    var wikiwyg = new Wikiwyg.Phpwiki();
    var config = {
             doubleClickToEdit:  $doubleClickToEdit,
-            javascriptLocation: data_url,
+            javascriptLocation: base_url+'/themes/default/Wikiwyg/',
             toolbar: {
-	        imagesLocation: data_url+'/images/',
+	        imagesLocation: base_url+'/themes/default/Wikiwyg/images/',
 		controlLayout: [
 		       'save','mode_selector', '/',
 		       'p','|',
 		       'h2', 'h3', 'h4','|',
 		       'bold', 'italic', '|',
+                       'sup', 'sub', '|',
+                       'toc',
+                       'wikitext','|',
 		       'pre','|',
 		       'ordered', 'unordered','hr','|',
-		       'link','unlink','|',
-                       'table', 'sup', 'sub', '|'
-                       //'plugins' 
+		       'link','|',
+                       'table'
 		       ],
 		styleSelector: [
 		       'label', 'p', 'h2', 'h3', 'h4', 'pre'
@@ -69,7 +71,8 @@ window.onload = function() {
 		       h3:       '"._("Title 2")."',
 		       h4:       '"._("Title 3")."',
 		       verbatim: '"._("Verbatim")."',
-                       unlink:   '"._("Remove link")."', 
+                       toc:   '"._("Table of content")."', 
+                       wikitext:   '"._("Insert Wikitext section")."', 
                        sup:      '"._("Sup")."', 
                        sub:      '"._("Sub")."'   
 	              }
@@ -119,6 +122,11 @@ window.onload = function() {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.3  2006/05/31 19:59:57  jeannicolas
+
+
+ Added wysiwyg_editor 1.1b
+
  Revision 1.2  2006/05/14 17:52:20  rurban
  fix syntax error. delete a left-over attempt to add CSS links also. We did put everything into phpwiki.css for browser compatibility.
 
