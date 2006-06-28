@@ -58,7 +58,6 @@ proto.submit_action_form = function(action, value) {
 // Convert to wikitext mode if needed
 // and save changes in the textarea of phpwiki 
 proto.saveChanges = function() {
-
     var self = this;
     var submit_changes = function(wikitext) {
       self.div.value = wikitext;
@@ -83,26 +82,92 @@ proto.saveChanges = function() {
     }
 }
 
+// Called in WYSIWYG mode by proto.do_preview_button to submit preview button 
+// by clicking on the preview button of the toolbar
+proto.previewChanges_button = function() {
+    var self = this;
+    var submit_preview = function(wikitext) {
+        var form_element = document.getElementById('editpage');
+	var input = document.createElement('input');
+	input.setAttribute('type', 'hidden');
+	input.setAttribute('name', 'edit[preview]');
+	input.setAttribute('value', 'Preview');
+	input.setAttribute('class', 'Wikiaction');
+	form_element.appendChild(input);
+	
+	var input_content = document.createElement('input');
+	input_content.setAttribute('type', 'hidden');
+	input_content.setAttribute('name', 'edit[content]');
+	input_content.setAttribute('value', wikitext);
+	input_content.setAttribute('class', 'wikiedit');
+	input_content.setAttribute('id', 'edit:content');
+	form_element.appendChild(input_content);
+	form_element.submit();
+    }  
+
+    this.current_mode.toHtml(
+    function(html) {
+      var wikitext_mode = self.mode_objects['Wikiwyg.Wikitext.Phpwiki'];
+      wikitext_mode.convertHtmlToWikitext(html,
+					  function(wikitext) { submit_preview(wikitext); }
+					  );
+    }
+    );    
+}
+
+// Called in WYSIWYG mode by proto.do_save_button to submit save button 
+// by clicking on the save button of the toolbar
+proto.saveChanges_button = function() {
+      var self = this;
+      var submit_save = function(wikitext) {
+      var form_element = document.getElementById('editpage');
+      var input = document.createElement('input');
+      input.setAttribute('type', 'hidden');
+      input.setAttribute('name', 'edit[save]');
+      input.setAttribute('value', 'Save');
+      input.setAttribute('class', 'Wikiaction');
+      form_element.appendChild(input);
+      
+      var input_content = document.createElement('input');
+      input_content.setAttribute('type', 'hidden');
+      input_content.setAttribute('name', 'edit[content]');
+      input_content.setAttribute('value', wikitext);
+      input_content.setAttribute('class', 'wikiedit');
+      input_content.setAttribute('id', 'edit:content');
+      form_element.appendChild(input_content);
+      form_element.submit();
+      }  
+      
+      this.current_mode.toHtml(
+	   function(html) {
+	     var wikitext_mode = self.mode_objects['Wikiwyg.Wikitext.Phpwiki'];
+	     wikitext_mode.convertHtmlToWikitext(html,
+	  		   function(wikitext) { submit_save(wikitext); }
+						 );
+	   }
+	   );    
+}
+
 proto.modeClasses = [
 		     'Wikiwyg.Wikitext.Phpwiki',
 		     'Wikiwyg.Wysiwyg'
 		     ];
 
-// //  Put the last edition mode of the user by default
-// if(document.cookie) {
-//     var mode = readCookie('Mode');
-// if( mode=="Wikiwyg.Wysiwyg" ) 
-//     proto.modeClasses = [
-// 			 'Wikiwyg.Wysiwyg',
-// 			 'Wikiwyg.Wikitext.Phpwiki'
-// 			 ];
-// else if( mode=="Wikiwyg.Wikitext.Phpwiki" ){
-//     proto.modeClasses = [			 
-// 			 'Wikiwyg.Wikitext.Phpwiki',
-// 			 'Wikiwyg.Wysiwyg'
-// 			  ];
-//  }
-// }
+//  Put the last edition mode of the user by default
+if(document.cookie) {
+    var mode = readCookie('Mode');
+if( mode=="Wikiwyg.Wysiwyg" ) 
+    proto.modeClasses = [
+			 'Wikiwyg.Wysiwyg',
+			 'Wikiwyg.Wikitext.Phpwiki'
+			 ];
+else if( mode=="Wikiwyg.Wikitext.Phpwiki" ){
+    proto.modeClasses = [			 
+			 'Wikiwyg.Wikitext.Phpwiki',
+			 'Wikiwyg.Wysiwyg'
+			  ];
+ }
+}
 
 /*==============================================================================
 Hack to clean not supported conversion to html yet
@@ -786,6 +851,47 @@ proto.do_line_break = Wikiwyg.Wikitext.make_do('line_break');
 proto.do_sub = Wikiwyg.Wikitext.make_do('sub');
 proto.do_sup = Wikiwyg.Wikitext.make_do('sup');
 proto.do_toc = Wikiwyg.Wikitext.make_do('toc');
+
+// Preview button
+proto.do_preview = function() {
+    var form_element = document.getElementById('editpage');
+    var input = document.createElement('input');
+    input.setAttribute('type', 'hidden');
+    input.setAttribute('name', 'edit[preview]');
+    input.setAttribute('value', 'Preview');
+    input.setAttribute('class', 'Wikiaction');
+    form_element.appendChild(input);
+
+    var input_content = document.createElement('input');
+    input_content.setAttribute('type', 'hidden');
+    input_content.setAttribute('name', 'edit[content]');
+    input_content.setAttribute('value', this.area.value);
+    input_content.setAttribute('class', 'wikiedit');
+    input_content.setAttribute('id', 'edit:content');
+    form_element.appendChild(input_content);
+    form_element.submit();
+};
+
+// Save button
+proto.do_save_button = function() {
+    var form_element = document.getElementById('editpage');
+    var input = document.createElement('input');
+    input.setAttribute('type', 'hidden');
+    input.setAttribute('name', 'edit[save]');
+    input.setAttribute('value', 'Save');
+    input.setAttribute('class', 'Wikiaction');
+    form_element.appendChild(input);
+
+    var input_content = document.createElement('input');
+    input_content.setAttribute('type', 'hidden');
+    input_content.setAttribute('name', 'edit[content]');
+    input_content.setAttribute('value', this.area.value);
+    input_content.setAttribute('class', 'wikiedit');
+    input_content.setAttribute('id', 'edit:content');
+    form_element.appendChild(input_content);
+    form_element.submit();
+};
+
 
 // Draft function to add plugins 
 // in wikitext mode
