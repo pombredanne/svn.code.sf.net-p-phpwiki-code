@@ -174,13 +174,16 @@ proto.addControlItem = function(text, method) {
         'a', { href: '#' }
     );
     link.innerHTML = text;
+
+    if( method != 'saveChanges' ) {
     span.appendChild(link);
+    }
     
     var self = this;
     link.onclick = function() { eval('self.wikiwyg.' + method + '()'); return false };
 
     // For phpwiki only
-    var form= document.getElementById("editpage");  
+    var form = document.getElementById("editpage");  
     form.onsubmit = function() { eval('self.wikiwyg.saveChanges()');return true }
 
     this.div.appendChild(span);

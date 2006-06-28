@@ -57,10 +57,10 @@ proto.fromHtml = function(html) {
 
 // Added to allow wysiwyg mode by default
 proto.fromWikitext = function(wikitext) {
-  var edit_iframe = this.get_edit_document().body;
+  var editiframe = this.get_edit_document();
 
   this.wikiwyg.call_action('wikiwyg_wikitext_to_html', wikitext, 
-			   function(html) {edit_iframe.innerHTML = html;} );
+			   function(html) {editiframe.body.innerHTML = html;} );
 }
 
 proto.toHtml = function(func) {
@@ -85,7 +85,7 @@ proto.enableThis = function() {
     this.fix_up_relative_imgs();
     this.get_edit_document().designMode = 'on';
     // XXX - Doing stylesheets in initializeObject might get rid of blue flash
-    this.apply_stylesheets();
+    //    this.apply_stylesheets();
     this.enable_keybindings();
     this.clear_inner_html();
 }
@@ -222,7 +222,11 @@ proto.do_p = proto.format_command;
 
 proto.do_table = function() {
   var rows = prompt("Number of rows", '2');
+  if(rows == null)
+    return;
   var cols = prompt("Number of columns", '2');
+  if(cols == null)
+    return;
 
     // Test if variables are valid numbers
     if( isNaN(rows) == true || isNaN(cols) == true 
@@ -257,13 +261,13 @@ proto.insert_table = function(html) { // See IE
 
 proto.do_toc = function() {
     var html = '<p><div style="background-color:#D3D3D3;font-size:smaller;">'+
-               'Wikitext { <br> &lt;?plugin  CreateToc  ?&gt; <br>}</div><br></p>';
+               'Wikitext { <br> &lt;?plugin  CreateToc  ?&gt; <br>}</div></p>';
     this.insert_html(html);
 }
 
 proto.do_wikitext = function() {
     var html = '<p><div style="background-color:#D3D3D3;font-size:smaller;">'+
-               'Wikitext { <br>  <br>}</div><br></p>';
+               'Wikitext { <br>  <br>}</div></p>';
     this.insert_html(html);
 }
 
@@ -343,6 +347,14 @@ proto.do_sub = function() {
   this.exec_command('SubScript');
 }
 
+proto.do_preview = function() {
+    this.wikiwyg.previewChanges_button();
+}
+
+proto.do_save_button = function() {
+    this.wikiwyg.saveChanges_button();
+}
+
 /*==============================================================================
 Support for Internet Explorer in Wikiwyg.Wysiwyg
  =============================================================================*/
@@ -371,6 +383,12 @@ proto.get_selection_text = function() {
 proto.insert_table = function(html) {
     var doc = this.get_edit_document();
     var range = this.get_edit_document().selection.createRange();
+
+    if(range.parentElement().isContentEditable == false){
+      alert("Please click where you want to insert the table"); 
+      return;
+    }
+
     if (range.boundingTop == 2 && range.boundingLeft == 2)
         return;
     range.pasteHTML(html);
@@ -381,6 +399,12 @@ proto.insert_table = function(html) {
 proto.insert_html = function(html) {
     var doc = this.get_edit_document();
     var range = this.get_edit_document().selection.createRange();
+
+    if(range.parentElement().isContentEditable == false){
+      alert("Please click in the edit area"); 
+      return;
+    }
+
     if (range.boundingTop == 2 && range.boundingLeft == 2)
         return;
     range.pasteHTML(html);

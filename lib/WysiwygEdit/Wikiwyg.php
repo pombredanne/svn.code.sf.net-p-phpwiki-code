@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.4 2006-06-19 17:33:06 jeannicolas Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.5 2006-06-28 14:28:14 jeannicolas Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -49,7 +49,8 @@ window.onload = function() {
             toolbar: {
 	        imagesLocation: base_url+'/themes/default/Wikiwyg/images/',
 		controlLayout: [
-		       'save','mode_selector', '/',
+		       'save','preview','|','save_button','|',
+                       'mode_selector', '/',
 		       'p','|',
 		       'h2', 'h3', 'h4','|',
 		       'bold', 'italic', '|',
@@ -74,7 +75,9 @@ window.onload = function() {
                        toc:   '"._("Table of content")."', 
                        wikitext:   '"._("Insert Wikitext section")."', 
                        sup:      '"._("Sup")."', 
-                       sub:      '"._("Sub")."'   
+                       sub:      '"._("Sub")."',
+                       preview:  '"._("Preview")."',   
+                       save_button:'"._("Save")."'   
 	              }
             },
             wysiwyg: {
@@ -122,6 +125,13 @@ window.onload = function() {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.4  2006/06/19 17:33:06  jeannicolas
+
+ Add button to insert table of content plugin
+ Add button to insert wikitext section in wysiwyg mode
+
+ Fix internet explorer issue in wikitext mode. The toolbar in this mode didn't work.
+
  Revision 1.3  2006/05/31 19:59:57  jeannicolas
 
 
