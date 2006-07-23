@@ -1,11 +1,13 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.16 2005-10-31 16:48:22 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.17 2006-07-23 14:16:59 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
 /*
  * PROBLEM: mysql seems to be the simpliest (or most stupid) db on earth. 
  * (tested with 4.0.18)
+ * See http://sql-info.de/mysql/gotchas.html for mysql specific quirks.
+ *
  * Whenever a table is write-locked, you cannot even write to other unrelated 
  * tables. So it seems that we have to lock all tables!
  * As workaround we try it with application locks, uniquely named locks, 
@@ -17,7 +19,7 @@ define('DO_FULL_LOCK',false);
 
 /**
  * WikiDB layer for ADODB-mysql, called by lib/WikiDB/ADODB.php.
- * Now with support for the newer adodb library, the adodb extension library 
+ * Now with support for the newer ADODB library, the ADODB extension library 
  * and more database drivers.
  * To use transactions use the mysqlt driver: "mysqlt:..."
  * 
@@ -89,12 +91,12 @@ extends WikiDB_backend_ADODB
     }
 
     /**
-     * Lock tables. As fine-grained application lock, which locks only the same transaction
-     * (conflicting updates and edits), and as full table write lock.
+     * Lock tables. As fine-grained application lock, which locks only the 
+     * same transaction (conflicting updates and edits), and as full table 
+     * write lock.
      *
      * New: which tables as params,
      *      support nested locks via app locks
-     *
      */
     function _lock_tables($tables, $write_lock = true) {
     	if (!$tables) return;
