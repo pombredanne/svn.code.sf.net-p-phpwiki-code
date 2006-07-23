@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.55 2005-01-29 21:08:41 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.56 2006-07-23 14:03:18 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -910,7 +910,7 @@ class Block_oldlists extends Block_list
 
 class Block_pre extends BlockMarkup
 {
-    var $_re = '<(?:pre|verbatim)>';
+    var $_re = '<(?:pre|verbatim|nowiki)>';
 
     function _match (&$input, $m) {
         $endtag = '</' . substr($m->match, 1);
@@ -927,14 +927,21 @@ class Block_pre extends BlockMarkup
         }
         $input->advance();
         
-        $text = join("\n", $text);
+	if ($m->match == '<nowiki>')
+	    $text = join("<br>\n", $text);
+	else
+            $text = join("\n", $text);
         
         // FIXME: no <img>, <big>, <small>, <sup>, or <sub>'s allowed
         // in a <pre>.
         if ($m->match == '<pre>')
             $text = TransformInline($text);
-
-        $this->_element = new Block_HtmlElement('pre', false, $text);
+	if ($m->match == '<nowiki>') {
+            $text = TransformInlineNowiki($text);
+	    $this->_element = new Block_HtmlElement('p', false, $text);
+	} else {
+            $this->_element = new Block_HtmlElement('pre', false, $text);
+	}
         return true;
     }
 }
@@ -1092,6 +1099,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.55  2005/01/29 21:08:41  rurban
+// update (C)
+//
 // Revision 1.54  2005/01/29 21:00:54  rurban
 // do not warn on empty nextBlock
 //

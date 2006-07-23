@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.73 2006-04-15 12:20:36 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.74 2006-07-23 14:03:18 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -696,20 +696,29 @@ class Markup_template_plugin  extends SimpleMarkup
     }
 }
 
-// TODO: "..." => "&#133;"  browser specific display (not cached?)
+// "..." => "&#133;"  browser specific display (not cached?)
+// Support some HTML::Entities: (C) for copy, --- for mdash, -- for ndash
 // TODO: "--" => "&emdash;" browser specific display (not cached?)
-// TODO: Support more HTML::Entities: (C) for copy, --- for mdash, -- for ndash
 
 class Markup_html_entities  extends SimpleMarkup {
-    var $_match_regexp = '(: \.\.\.|\-\-|\-\-\-|\(C\) )';
-   
-    function markup ($match) {
-        static $entities = array('...'  => '&#133;',
+    //var $_match_regexp = '(: \.\.\.|\-\-|\-\-\-|\(C\) )';
+
+    function Markup_html_entities() {
+        $this->_entities = array('...'  => '&#133;',
                                  '--'   => '&ndash;',
                                  '---'  => '&mdash;',
                                  '(C)'  => '&copy;',
+                                 '&copy;' => '&copy;',
+                                 '&trade;'  => '&trade;',
                                  );
-        return HTML::Raw($entities[$match]);
+        $this->_match_regexp = 
+            '(: ' . 
+            join('|', array_map('preg_quote', array_keys($this->_entities))) . 
+            ' )';
+    }
+   
+    function markup ($match) {
+        return HTML::Raw($this->_entities[$match]);
     }
 }
 
@@ -742,14 +751,25 @@ class InlineTransformer
     function InlineTransformer ($markup_types = false) {
         if (!$markup_types) {
             $non_default = false;
-            $markup_types = array('escape', 'bracketlink', 'url',
-                                  'interwiki', 'wikiword', 'linebreak',
-                                  'old_emphasis', 'nestled_emphasis',
-                                  'html_emphasis', 'html_abbr', 'plugin',
-                                  'isonumchars', 'isohexchars', /*'html_entities',*/
-                                  );
-        } else 
+	    if (DISABLE_MARKUP_WIKIWORD)
+		$markup_types = array
+		    ('escape', 'bracketlink', 'url',
+		     'interwiki', /* 'wikiword', */ 'linebreak',
+		     'old_emphasis', 'nestled_emphasis',
+		     'html_emphasis', 'html_abbr', 'plugin',
+		     'isonumchars', 'isohexchars', 'html_entities'
+		     );
+	    else
+		$markup_types = array
+		    ('escape', 'bracketlink', 'url',
+                     'interwiki', 'wikiword', 'linebreak',
+                     'old_emphasis', 'nestled_emphasis',
+                     'html_emphasis', 'html_abbr', 'plugin',
+                     'isonumchars', 'isohexchars', /*'html_entities'*/
+                     );
+        } else {
             $non_default = true;
+	}
         foreach ($markup_types as $mtype) {
             $class = "Markup_$mtype";
             $this->_addMarkup(new $class);
@@ -788,7 +808,9 @@ class InlineTransformer
             if ($match->regexp_ind == 0) {
                 // No start pattern found before end pattern.
                 // We're all done!
-                if (isset($markup) and is_object($markup) and isa($markup,'Markup_plugin')) {
+                if (isset($markup) and is_object($markup) 
+                    and isa($markup,'Markup_plugin')) 
+                {
                     $current =& $output->_content[count($output->_content)-1];
                     $current->setTightness(true,true);
                 }
@@ -798,7 +820,8 @@ class InlineTransformer
             }
 
             $markup = $this->_markup[$match->regexp_ind - 1];
-            $body = $this->_parse_markup_body($markup, $match->match, $match->postmatch, $end_regexps);
+            $body = $this->_parse_markup_body($markup, $match->match, 
+                                              $match->postmatch, $end_regexps);
             if (!$body) {
                 // Couldn't match balanced expression.
                 // Ignore and look for next matching start regexp.
@@ -813,7 +836,9 @@ class InlineTransformer
             else
                 $current = $markup->markup($match->match, $body);
             $input = $match->postmatch;
-            if (isset($markup) and is_object($markup) and isa($markup,'Markup_plugin')) {
+            if (isset($markup) and is_object($markup) 
+                and isa($markup,'Markup_plugin')) 
+            {
                 $current->setTightness(true,true);
             }
             $output->pushContent($match->prematch, $current);
@@ -852,6 +877,17 @@ class LinkTransformer extends InlineTransformer
     }
 }
 
+class NowikiTransformer extends InlineTransformer
+{
+    function NowikiTransformer () {
+        $this->InlineTransformer
+            (array('linebreak',
+                   'html_emphasis', 'html_abbr', 'plugin',
+                   'isonumchars', 'isohexchars', /*'html_entities',*/
+                   ));
+    }
+}
+
 function TransformInline($text, $markup = 2.0, $basepage=false) {
     static $trfm;
     
@@ -886,7 +922,26 @@ function TransformLinks($text, $markup = 2.0, $basepage = false) {
     return $trfm->parse($text);
 }
 
+/**
+ * Transform only html markup and entities.
+ */
+function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
+    static $trfm;
+    
+    if (empty($trfm)) {
+        $trfm = new NowikiTransformer;
+    }
+    if ($basepage) {
+        return new CacheableMarkup($trfm->parse($text), $basepage);
+    }
+    return $trfm->parse($text);
+}
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2006/04/15 12:20:36  rurban
+// fix relatives links patch by Joel Schaubert for [/
+//
 // Revision 1.72  2006/03/07 20:43:29  rurban
 // relative external link, if no internal subpage. by joel Schaubert
 //

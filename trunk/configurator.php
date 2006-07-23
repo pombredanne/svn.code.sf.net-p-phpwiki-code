@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.43 2006-05-17 17:27:12 rurban Exp $
+<?php // $Id: configurator.php,v 1.44 2006-07-23 14:03:18 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -155,7 +155,7 @@ echo '<','?xml version="1.0" encoding="iso-8859-1"?',">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.43 2006-05-17 17:27:12 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.44 2006-07-23 14:03:18 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -1436,6 +1436,9 @@ new boolean_define_optional('ENABLE_MARKUP_COLOR');
 
 $properties["ENABLE_MARKUP_TEMPLATE"] =
 new boolean_define_optional('ENABLE_MARKUP_TEMPLATE');
+
+$properties["DISABLE_MARKUP_WIKIWORD"] =
+new boolean_define_optional('DISABLE_MARKUP_WIKIWORD');
 
 ///////////////////
 
