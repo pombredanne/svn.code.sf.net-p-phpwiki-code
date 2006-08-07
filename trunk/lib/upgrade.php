@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.50 2006-06-18 11:04:09 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.51 2006-08-07 21:05:30 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -205,25 +205,6 @@ CREATE TABLE $session_tbl (
             $dbh->genericSqlQuery("CREATE UNIQUE INDEX sess_id ON $session_tbl (sess_id)");
         }
         $dbh->genericSqlQuery("CREATE INDEX sess_date on session (sess_date)");
-        echo "  ",_("CREATED");
-        break;
-    case 'user':
-        $user_tbl = $prefix.'user';
-        if ($backend_type == 'mysql') {
-            $dbh->genericSqlQuery("
-CREATE TABLE $user_tbl (
-  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
-  	passwd 	CHAR(48) BINARY DEFAULT '',
-  	PRIMARY KEY (userid)
-)");
-        } else {
-            $dbh->genericSqlQuery("
-CREATE TABLE $user_tbl (
-  	userid 	CHAR(48) NOT NULL,
-  	passwd 	CHAR(48) DEFAULT ''
-)");
-            $dbh->genericSqlQuery("CREATE UNIQUE INDEX userid ON $user_tbl (userid)");
-        }
         echo "  ",_("CREATED");
         break;
     case 'pref':
@@ -898,6 +879,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.50  2006/06/18 11:04:09  rurban
+ keep overwrite arg
+
  Revision 1.49  2006/05/18 06:03:39  rurban
  use $dbh->_backend->isSQL
 
