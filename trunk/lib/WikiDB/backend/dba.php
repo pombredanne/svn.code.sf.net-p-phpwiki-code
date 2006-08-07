@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dba.php,v 1.7 2004-11-21 11:59:26 rurban Exp $');
+<?php rcs_id('$Id: dba.php,v 1.8 2006-08-07 21:03:17 rurban Exp $');
 
 require_once('lib/WikiDB/backend/dbaBase.php');
 require_once('lib/DbaDatabase.php');
@@ -18,7 +18,14 @@ extends WikiDB_backend_dbaBase
         // FIXME: error checking.
         $db = new DbaDatabase($dbfile, false, $dba_handler);
         $db->set_timeout($timeout);
-        if (!$db->open('c')) {
+	
+	// Workaround for BDB 4.1 bugs
+	if (file_exists($dbfile)) {
+            $mode = 'w';
+	} else {
+            $mode = 'c';
+	}
+        if (!$db->open($mode)) {
             trigger_error(sprintf(_("%s: Can't open dba database"), $dbfile), E_USER_ERROR);
             global $request;
             $request->finish(fmt("%s: Can't open dba database", $dbfile));
