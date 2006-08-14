@@ -1,6 +1,6 @@
 <?php  
 
-   rcs_id('$Id: dbalib.php,v 1.2.2.8 2005-09-18 14:19:12 rurban Exp $');
+   rcs_id('$Id: dbalib.php,v 1.2.2.9 2006-08-14 12:45:41 rurban Exp $');
 
    /*
       Database functions:
@@ -123,11 +123,12 @@
       }
 
       $pagedata = PadSerializedData(serialize($pagehash));
-
-      if (!@dba_insert($pagename, $pagedata, $dbi[$pagestore])) {
-         if (!dba_replace($pagename, $pagedata, $dbi[$pagestore])) {
-            ExitWiki("Error inserting page '$pagename'");
-         }
+      
+      // dba_replace does an implicit insert. insert obviously 
+      // has a race with a subsequent replace if erronous.
+      // https://sourceforge.net/forum/message.php?msg_id=3866035
+      if (!dba_replace($pagename, $pagedata, $dbi[$pagestore])) {
+	  ExitWiki("Error inserting page '$pagename'");
       } 
    }
 
