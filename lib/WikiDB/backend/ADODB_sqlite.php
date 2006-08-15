@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_sqlite.php,v 1.3 2006-06-18 11:25:15 rurban Exp $');
+rcs_id('$Id: ADODB_sqlite.php,v 1.4 2006-08-15 13:42:20 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -22,6 +22,7 @@ extends WikiDB_backend_ADODB
             $db = $parsed['database'];
             $schema = FindFile("schemas/sqlite-initialize.sql");
             `sqlite $db < $schema`;
+            `echo "CREATE USER wikiuser" | sqlite $db`;
         }
         $this->WikiDB_backend_ADODB($dbparams);
     }
