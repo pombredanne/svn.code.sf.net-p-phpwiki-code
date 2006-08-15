@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.74 2006-07-23 14:03:18 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.75 2006-08-15 13:43:10 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -671,12 +671,51 @@ class Markup_plugin extends SimpleMarkup
     }
 }
 
+// Special version for plugins in xml syntax 
+// <name arg=value>body</name> or <name /> => < ? plugin pluginname arg=value body ? >
+// PLUGIN_MARKUP_MAP = "html:RawHtml dot:GraphViz toc:CreateToc amath:AsciiMath richtable:RichTable include:IncludePage tex:TexToPng"
+class Markup_xml_plugin extends BalancedMarkup
+{
+    //var $_start_regexp = "<(?: ".join('|',PLUGIN_MARKUP_MAP)." )(?: \s[^>]*)>";
+
+    function getStartRegexp ($match) {
+        static $_start_regexp;
+        if ($_start_regexp) return $_start_regexp;
+        if (!defined('PLUGIN_MARKUP_MAP'))
+            return '';
+        $pairs = split(' ', PLUGIN_MARKUP_MAP);
+        $this->_map = array();
+        foreach ($pairs as $pair) {
+            list($xml,$plugin) = split(':',$pair);
+            $this->_map[$xml] = $plugin;
+        }
+        //"<(?: html|dot|toc|amath|richtable|include|tex )(?: \s[^>]*)>"
+        return "<(?: ".join('|',array_keys($this->_map))." )(?:(?:\s[^>]*|/))>";;
+    }
+    function getEndRegexp ($match) {
+        return "<\\/" . $match . '>';
+    }
+    function markup ($match, $body) {
+        $name = substr($match,2,-2); $vars = '';
+        if (preg_match('/^(\S+)\|(.*)$/', $name, $_m)) {
+            $name = $_m[1];
+            $vars = $_m[2]; //str_replace(' ', '&', $_m[2]);
+        }
+        if (!isset($this->_map[$name])) {
+            trigger_error("No plugin for $ name $ vars defined.", E_USER_WARNING);
+            return "";
+        }
+        $plugin = $this->_map[$name];
+	return new Cached_PluginInvocation("<"."?plugin $plugin $vars $body ?".">");
+    }
+}
+
 /** ENABLE_MARKUP_TEMPLATE
  *  Template syntax similar to mediawiki
  *  {{template}}
- * => <?plugin Template page=template?>
+ * => < ? plugin Template page=template ? >
  *  {{template|var=value|...}}
- * => <?plugin Template page=template vars="var=value&..."?>
+ * => < ? plugin Template page=template vars="var=value&..." ? >
  */
 class Markup_template_plugin  extends SimpleMarkup
 {
@@ -689,9 +728,9 @@ class Markup_template_plugin  extends SimpleMarkup
             $vars = str_replace('|', '&', $_m[2]);
         }
         if ($vars)
-    	    $s = '<?plugin Template page=' . $page . ' vars="' . $vars . '"?>';
+    	    $s = '<'.'?plugin Template page=' . $page . ' vars="' . $vars . '"?'.'>';
     	else
-    	    $s = '<?plugin Template page=' . $page . '?>';
+    	    $s = '<'.'?plugin Template page=' . $page . '?'.'>';
 	return new Cached_PluginInvocation($s);
     }
 }
@@ -939,6 +978,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.74  2006/07/23 14:03:18  rurban
+// add new feature: DISABLE_MARKUP_WIKIWORD
+//
 // Revision 1.73  2006/04/15 12:20:36  rurban
 // fix relatives links patch by Joel Schaubert for [/
 //
