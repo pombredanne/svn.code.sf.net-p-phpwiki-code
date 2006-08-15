@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.19 2005-04-11 19:40:15 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.20 2006-08-15 13:40:40 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -99,6 +99,8 @@ ws[cfh]");
         extract($args);
 
         $file_dir = getUploadFilePath();
+        if (!preg_match("/(\/|\\)$/", $file_dir))
+            $file_dir .= "/";
         //$url_prefix = SERVER_NAME . DATA_PATH; 
 
         $form = HTML::form(array('action' => $request->getPostURL(),
@@ -231,6 +233,11 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2005/04/11 19:40:15  rurban
+// Simplify upload. See https://sourceforge.net/forum/message.php?msg_id=3093651
+// Improve UpLoad warnings.
+// Move auth check before upload.
+//
 // Revision 1.18  2005/02/12 17:24:24  rurban
 // locale update: missing . : fixed. unified strings
 // proper linebreaks
