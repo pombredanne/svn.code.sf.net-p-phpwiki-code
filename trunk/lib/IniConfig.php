@@ -1,6 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.102 2006-05-14 18:02:27 rurban Exp $');
-
+rcs_id('$Id: IniConfig.php,v 1.103 2006-08-15 13:36:23 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -14,7 +13,7 @@ rcs_id('$Id: IniConfig.php,v 1.102 2006-05-14 18:02:27 rurban Exp $');
  * @author: Joby Walker, Reini Urban, Matthew Palmer
  */
 /*
- * Copyright 2004,2005 $ThePhpWikiProgrammingTeam
+ * Copyright 2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  *
@@ -166,7 +165,7 @@ function IniConfig($file) {
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
          'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD',
          'SESSION_SAVE_PATH', 'TOOLBAR_PAGELINK_PULLDOWN', 'TOOLBAR_TEMPLATE_PULLDOWN',
-         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL', 'ENABLE_MARKUP_TEMPLATE'
+         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL', 
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -186,7 +185,8 @@ function IniConfig($file) {
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
          'BLOG_EMPTY_DEFAULT_PREFIX', 'DATABASE_PERSISTENT',
          'ENABLE_DISCUSSION_LINK', 'ENABLE_CAPTCHA',
-         'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML'
+         'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML',
+         'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE'
          );
 
     $rs = @parse_ini_file($file);
@@ -388,7 +388,7 @@ function IniConfig($file) {
     }
     unset($rskey); unset($apkey);
 
-    // TODO: Currently unsupported on non-SQL
+    // TODO: Currently unsupported on non-SQL. Nice to have for RhNavPlugin
     // CHECKME: PDO
     if (array_key_exists('ACCESS_LOG_SQL', $rs)) {
     	// WikiDB_backend::isSql() not yet loaded
@@ -512,10 +512,20 @@ function IniConfig($file) {
     fixup_dynamic_configs($file); // [100ms]
 }
 
+function _ignore_unknown_charset_warning(&$error) {
+    //htmlspecialchars(): charset `iso-8859-2' not supported, assuming iso-8859-1
+    if (preg_match('/^htmlspecialchars\(\): charset \`.+\' not supported, assuming iso-8859-1/',
+                   $error->errstr)) {
+        $error->errno = 0;
+        return true;  // Ignore error
+    }
+    return false;
+}
+
 // moved from lib/config.php [1ms]
 function fixup_static_configs($file) {
     global $FieldSeparator, $charset, $WikiNameRegexp, $AllActionPages;
-    global $HTTP_SERVER_VARS, $DBParams, $LANG;
+    global $HTTP_SERVER_VARS, $DBParams, $LANG, $ErrorManager;
     // init FileFinder to add proper include paths
     FindFile("lib/interwiki.map",true);
     
@@ -523,7 +533,7 @@ function fixup_static_configs($file) {
     // chars in iso-8859-*
     // $FieldSeparator = "\263"; // this is a superscript 3 in ISO-8859-1.
     // $FieldSeparator = "\xFF"; // this byte should never appear in utf-8
-    // FIXME: get rid of constant. pref is dynamic and language specific
+    // Get rid of constant. pref is dynamic and language specific
     $charset = CHARSET;
     // Disabled: Let the admin decide which charset.
     //if (isset($LANG) and in_array($LANG,array('zh')))
@@ -532,6 +542,14 @@ function fixup_static_configs($file) {
         $FieldSeparator = "\xFF";
     else
         $FieldSeparator = "\x81";
+
+    // Some exotic charsets are not supported by htmlspecialchars, which just prints an E_WARNING.
+    // Even on simple 8bit charsets, where just <>& need to be replaced. For iso-8859-[2-4] e.g.
+    // See <php-src>/ext/standard/html.c
+    // For performance reasons we require a magic constant to ignore this warning.
+    if (defined('IGNORE_CHARSET_NOT_SUPPORTED_WARNING') and IGNORE_CHARSET_NOT_SUPPORTED_WARNING) {
+        $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_unknown_charset_warning'));
+    }
 
     $AllActionPages = explode(':',
                               'AllPages:BackLinks:CreatePage:DebugInfo:EditMetaData:FindPage:'
@@ -864,6 +882,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2006/05/14 18:02:27  rurban
+// patch from bug #1480077 by Kai Krakow
+//
 // Revision 1.101  2006/05/13 19:59:54  rurban
 // added wysiwyg_editor-1.3a feature by Jean-Nicolas GEREONE <jean-nicolas.gereone@st.com>
 // converted wysiwyg_editor-1.3a js to WysiwygEdit framework
