@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.38 2005-10-10 19:36:09 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.39 2006-08-15 13:36:23 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -495,13 +495,18 @@ class FormattedText {
 /**
  * PHP5 compatibility
  * Error[2048]: Non-static method XmlContent::_quote() should not be called statically
+ * Note: There's lot of room for performance increase if the right charset variant can 
+ * be created on load-time.
  */
 function XmlContent_quote ($string) {
     if (!$string) return $string;
-    if (check_php_version(4,1) and isset($GLOBALS['charset']))
+    if (check_php_version(4,1) and isset($GLOBALS['charset'])
+        and (!defined('IGNORE_CHARSET_NOT_SUPPORTED_WARNING') or !IGNORE_CHARSET_NOT_SUPPORTED_WARNING))
+    {
         return htmlspecialchars($string, ENT_COMPAT, $GLOBALS['charset']);
-    else
+    } else {
         return htmlspecialchars($string);
+    }
 }
 
 function PrintXML ($val /* , ... */ ) {
@@ -604,6 +609,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.38  2005/10/10 19:36:09  rurban
+// fix comment
+//
 // Revision 1.37  2005/01/25 07:04:27  rurban
 // case-sensitive for php5
 //
