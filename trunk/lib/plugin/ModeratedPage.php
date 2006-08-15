@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ModeratedPage.php,v 1.4 2005-01-29 19:52:09 rurban Exp $');
+rcs_id('$Id: ModeratedPage.php,v 1.5 2006-08-15 13:41:08 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
     function getDefaultArguments() {
         return array('page'          => '[pagename]',
@@ -207,14 +207,16 @@ extends WikiPlugin
             $moderated['_status'] = $status;
     	}
         if (!empty($status['emails'])) {
-            trigger_error(_("ModeratedPage: No emails for the moderators defined"), E_USER_WARNING);
+            trigger_error(_("ModeratedPage: No emails for the moderators defined"),
+                          E_USER_WARNING);
             return true;
         }
         // which action?
         if (!empty($status['require_access']) 
             and !in_array(action2access($action), $status['require_access']))
             return false; // allow and fall through, not moderated
-        if (!empty($status['require_level']) and $request->_user->_level >= $status['require_level'])
+        if (!empty($status['require_level']) 
+            and $request->_user->_level >= $status['require_level'])
             return false; // allow and fall through, not moderated
         // else all post actions are moderated by default
     	if (1) /* or in_array($action, array('edit','remove','rename')*/ {
@@ -228,11 +230,12 @@ extends WikiPlugin
                                             'args' => $request->getArgs(),
                                             'user'   => serialize($request->_user),
                                             );
-            $this->_tokens['CONTENT'] = HTML::div(array('class' => 'wikitext'),
-            					  fmt("%s: action forwarded to moderator %s", 
-                                                      $action, 
-                                                      join(", ", $status['moderators'])
-                                                      ));
+            $this->_tokens['CONTENT'] = 
+                HTML::div(array('class' => 'wikitext'),
+                          fmt("%s: action forwarded to moderator %s", 
+                              $action, 
+                              join(", ", $status['moderators'])
+                              ));
 	    // send email
             $pagename = $page->getName();
             $subject = "[".WIKI_NAME.'] '.$action.': '._("ModeratedPage").' '.$pagename;
@@ -248,7 +251,7 @@ extends WikiPlugin
                 $page->set('moderated', $moderated);
                 return false; // pass thru
             } else {
-            	//FIXME: This msg get lost on the edit redirect
+            	//FIXME: This msg gets lost on the edit redirect
                 trigger_error(_("ModeratedPage Notification Error: Couldn't send email"), 
                               E_USER_WARNING);
                 return true;
@@ -303,8 +306,9 @@ extends WikiPlugin
                                 'method' => 'post'),
                           $header,
                           $content,
-                          ENABLE_PAGEPERM ? ''
-                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
+                          ENABLE_PAGEPERM 
+                            ? ''
+                            : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
                           HiddenInputs($args),
                           $pass == 'approve' ? HTML::p($approve, $reject) 
                           		     : HTML::p($reject, $approve));
@@ -337,6 +341,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2005/01/29 19:52:09  rurban
+// more work on the last part
+//
 // Revision 1.3  2004/12/06 19:50:05  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.
