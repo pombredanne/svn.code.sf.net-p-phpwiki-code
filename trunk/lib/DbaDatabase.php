@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.19 2006-06-18 11:01:25 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.20 2006-08-15 13:35:33 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 
@@ -150,7 +150,7 @@ class DbaDatabase
             return $this->_error("sync()");
     }
 
-    function optimize () {
+    function optimize() {
         if (!dba_optimize($this->_dbh))
             return $this->_error("optimize()");
         return 1;
@@ -175,6 +175,9 @@ class DbaDatabase
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2006/06/18 11:01:25  rurban
+// add rcsid log
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
