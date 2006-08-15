@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.105 2006-04-17 17:25:19 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.106 2006-08-15 13:37:59 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -60,8 +60,11 @@ class Request {
     function get($key) {
         if (!empty($GLOBALS['HTTP_SERVER_VARS']))
             $vars = &$GLOBALS['HTTP_SERVER_VARS'];
-        else // cgi or other servers than Apache
-            $vars = &$GLOBALS['HTTP_ENV_VARS'];
+        elseif (!empty($GLOBALS['HTTP_ENV_VARS']))
+            $vars = &$GLOBALS['HTTP_ENV_VARS']; // cgi or other servers than Apache
+        else
+            trigger_error("Serious Webserver configuration error!"
+                          ."No HTTP_SERVER_VARS, _SERVER, HTTP_ENV_VARS, _ENV vars available.");
 
         if (isset($vars[$key]))
             return $vars[$key];
@@ -1350,6 +1353,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2006/04/17 17:25:19  rurban
+// make the flush error go away. die
+//
 // Revision 1.104  2006/04/16 11:42:16  rurban
 // php url-rewriting miscalculates the ob length. fixes bug #1376007
 //
