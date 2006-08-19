@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.75 2006-08-15 13:43:10 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.76 2006-08-19 11:02:35 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -593,7 +593,7 @@ class Markup_nestled_emphasis extends BalancedMarkup
 class Markup_html_emphasis extends BalancedMarkup
 {
     var $_start_regexp = 
-        "<(?: b|big|i|small|tt|em|strong|cite|code|dfn|kbd|samp|var|sup|sub )>";
+        "<(?: b|big|i|small|tt|em|strong|cite|code|dfn|kbd|samp|strike|del|var|sup|sub )>";
 
     function getEndRegexp ($match) {
         return "<\\/" . substr($match, 1);
@@ -978,6 +978,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.75  2006/08/15 13:43:10  rurban
+// add Markup_xml_plugin (untested) and fix Markup_template_plugin
+//
 // Revision 1.74  2006/07/23 14:03:18  rurban
 // add new feature: DISABLE_MARKUP_WIKIWORD
 //
