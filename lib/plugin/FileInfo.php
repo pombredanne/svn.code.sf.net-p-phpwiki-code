@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FileInfo.php,v 1.4 2005-10-29 14:18:47 rurban Exp $');
+rcs_id('$Id: FileInfo.php,v 1.5 2006-08-25 22:10:16 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
  
@@ -25,9 +25,9 @@ rcs_id('$Id: FileInfo.php,v 1.4 2005-10-29 14:18:47 rurban Exp $');
  * Only files relative and below to the uploads path can be handled.
  *
  * Usage:
- *   <?plugin FileVersion file=uploads/setup.exe display=version,date ?>
- *   <?plugin FileVersion file=uploads/setup.exe display=name,version,date 
- *                        format="%s (version: %s, date: %s)" ?>
+ *   <?plugin FileInfo file=uploads/setup.exe display=version,date ?>
+ *   <?plugin FileInfo file=uploads/setup.exe display=name,version,date 
+ *                     format="%s (version: %s, date: %s)" ?>
  *
  * @author: ReiniUrban
  */
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -283,6 +283,9 @@ struct VS_VERSIONINFO { struct VS_VERSIONINFO
 
 /* 
  $Log: not supported by cvs2svn $
+ Revision 1.4  2005/10/29 14:18:47  rurban
+ add display=phonysize
+
  Revision 1.3  2005/10/29 13:35:00  rurban
  fix Log:, add chdir() if not in PHPWIKI_DIR, fix ->warning
 
