@@ -1,7 +1,7 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.76 2006-08-19 11:02:35 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.77 2006-08-25 19:02:02 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004,2005 Reini Urban
+ * Copyright (C) 2004,2005,2006 Reini Urban
  *
  * This file is part of PhpWiki.
  * 
@@ -358,7 +358,8 @@ function LinkBracketLink($bracketlink) {
 
     /* Relatives links by Joel Schaubert.
      * Recognize [../bla] or [/bla] as relative links, without needing http://
-     * but {/link] only if SUBPAG_SEPERATOR is not /
+     * but [ /link ] only if SUBPAGE_SEPERATOR is not "/". 
+     * Normally /Page links to the subpage /Page.
      */
     if (SUBPAGE_SEPARATOR == '/') {
     	if (preg_match('/^\.\.\//', $link)) {
@@ -392,7 +393,7 @@ function LinkBracketLink($bracketlink) {
 
     if (preg_match("#^(" . ALLOWED_PROTOCOLS . "):#", $link)) {
         // if it's an image, embed it; otherwise, it's a regular link
-        if (isImageLink($link))
+        if (isImageLink($link) and empty($label)) // patch #1348996 by Robert Litwiniec
             return LinkImage($link, $label);
         else
             return new Cached_ExternalLink($link, $label);
@@ -978,6 +979,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.76  2006/08/19 11:02:35  rurban
+// add strike and del to html emphasis: Patch #1542894 by Kai Krakow
+//
 // Revision 1.75  2006/08/15 13:43:10  rurban
 // add Markup_xml_plugin (untested) and fix Markup_template_plugin
 //
