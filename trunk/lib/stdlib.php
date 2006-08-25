@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.252 2006-06-18 11:03:36 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.253 2006-08-25 22:20:52 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1090,6 +1090,7 @@ function SplitPagename ($page) {
         $RE[] = '/(\d)([[:alpha:]])/';
         // Split at subpage seperators. TBD in Theme.php
         $RE[] = "/([^${sep}]+)(${sep})/";
+        $RE[] = "/(${sep})([^${sep}]+)/";
         
         foreach ($RE as $key)
             $RE[$key] = pcre_fix_posix_classes($key);
@@ -2082,6 +2083,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.252  2006/06/18 11:03:36  rurban
+// support rc version
+//
 // Revision 1.251  2006/03/19 15:01:00  rurban
 // sf.net patch #1333957 by Matt Brown: Authentication cookie identical across all wikis on a host
 //
