@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.5 2006-06-28 14:28:14 jeannicolas Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.6 2006-08-25 22:42:51 rurban Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -98,7 +98,9 @@ window.onload = function() {
         $htmltextid = $this->_htmltextid;
         $textarea->SetAttr('id', $htmltextid);
         $iframe0 = new RawXml('<iframe id="iframe0" height="0" width="0" frameborder="0"></iframe>');
-        $out = HTML($textarea,
+        $out = HTML(HTML::div(array('class' => 'hint'), 
+                              _("Warning: This Wikiwyg editor has only Beta quality!")),
+                    $textarea,
                     $iframe0,
 		    "\n");
 	return $out;
@@ -125,6 +127,12 @@ window.onload = function() {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.5  2006/06/28 14:28:14  jeannicolas
+
+
+ Add preview and save button on the toolbar.
+ Fix an IE issue in wikitext mode.
+
  Revision 1.4  2006/06/19 17:33:06  jeannicolas
 
  Add button to insert table of content plugin
