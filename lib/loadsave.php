@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.143 2006-08-25 21:48:39 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.144 2006-08-25 22:06:13 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -476,7 +476,8 @@ function DumpHtmlToDir (&$request)
         $filename = FilenameForPage($pagename) . $WikiTheme->HTML_DUMP_SUFFIX;
         $revision = $page->getCurrentRevision();
 	$args = array('revision' => $revision,
-		      'CONTENT' => $revision->getTransformedContent());
+		      'CONTENT' => $revision->getTransformedContent(),
+                      'relative_base' => $relative_base);
 	// For every %2F will need to mkdir -p dirname($pagename)
 	if (preg_match("/%2F/", $filename)) {
 	    // mkdir -p and set relative base for subdir pages
@@ -492,11 +493,9 @@ function DumpHtmlToDir (&$request)
 	    $args['relative_base'] = $relative_base;
 	}
         $msg = HTML();
-        $template = new Template('browse', $request,
-                                 array('revision' => $revision,
-                                       'CONTENT' => $revision->getTransformedContent()));
+        $template = new Template('browse', $request, $args);
 
-        $data = GeneratePageasXML($template, $pagename);
+        $data = GeneratePageasXML($template, $pagename, $revision, $args);
 
         if ( !($fd = fopen($directory."/".$filename, "wb")) ) {
             $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
@@ -1393,6 +1392,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.143  2006/08/25 21:48:39  rurban
+ dumphtml subpages
+
  Revision 1.142  2006/03/19 17:16:32  rurban
  remove remaining cruft
 
