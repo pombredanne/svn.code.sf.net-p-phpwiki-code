@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: actionbar.tmpl,v 1.36 2005-04-23 11:43:44 rurban Exp $');
+rcs_id('$Id: actionbar.tmpl,v 1.37 2006-08-25 22:21:24 rurban Exp $');
 ?>
 <?php /* I would like not to have to use these tables, and managed to
        * get this stuff to work more or less correctly using
@@ -21,6 +21,7 @@ rcs_id('$Id: actionbar.tmpl,v 1.36 2005-04-23 11:43:44 rurban Exp $');
     <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $page->getName())) { ?>
       <?=$SEP?><?= Button('chown') ?>
       <?=$SEP?><?= Button('setacl') ?>
+      <?=$SEP?><?= Button('rename') ?>
     <?php }} ?>
     <?php if ($user->isAdmin() or mayAccessPage('remove', $page->getName())) { ?>
       <?=$SEP?><?= Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
