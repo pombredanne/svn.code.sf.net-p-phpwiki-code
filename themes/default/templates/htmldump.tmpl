@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-rcs_id('$Id: htmldump.tmpl,v 1.6 2005-02-04 13:25:08 rurban Exp $');
+rcs_id('$Id: htmldump.tmpl,v 1.7 2006-08-25 22:06:54 rurban Exp $');
 /*
  * This template is used only for html file dumps, and is responsible
  * mainly for the outer level <html> stuff and the and <head>.
@@ -10,7 +10,7 @@ echo "<","?xml version=\"1.0\" encoding=\"", $charset, "\"?", ">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
+<meta http-equiv="Content-Type" content="text/html; charset=<?=$charset?>" />
 <?php /**
        * Additional navigation links are provided here in the html header for browsers
        * which support them: Mozilla, iCab, Amaya (and certain versions of Opera??).
@@ -22,6 +22,22 @@ echo "<","?xml version=\"1.0\" encoding=\"", $charset, "\"?", ">\n";
 <link rel="help" title="<?=_("HowToUseWiki")?>" href="<?=WikiURL(_("HowToUseWiki"))?>" />
 <link rel="copyright" title="<?=COPYRIGHTPAGE_TITLE?>" href="<?=COPYRIGHTPAGE_URL?>" />
 <link rel="author" title="<?=AUTHORPAGE_TITLE?>" href="<?=AUTHORPAGE_URL?>" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Language" content="<?=$GLOBALS['LANG']?>" />
+<?php $ROBOTS_CONTENT = isset($ROBOTS_META) ? $ROBOTS_META : "noindex,nofollow"; ?>
+<meta name="robots" content="<?= $ROBOTS_CONTENT ?>" />
+<?php if (!empty($PAGE_DESCRIPTION)) { ?>
+<meta name="description" content="<?=$PAGE_DESCRIPTION?>" />
+<?php } ?>
+<?php if (!empty($PAGE_KEYWORDS)) { ?>
+<meta name="keywords" content="<?=$PAGE_KEYWORDS?>" />
+<?php } ?>
+<meta name="language" content="<?=$GLOBALS['LANG']?>" />
+<meta name="document-type" content="Public" />
+<meta name="document-rating" content="General" />
+<meta name="generator" content="PhpWiki" />
+<meta name="PHPWIKI_VERSION" content="<?=PHPWIKI_VERSION?>" />
+<base href="<?=$relative_base?>" />
 
 <?= $WikiTheme->getCSS() ?>
 <?php
