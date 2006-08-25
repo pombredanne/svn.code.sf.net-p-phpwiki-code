@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: actionbar.tmpl,v 1.6 2005-04-23 11:43:44 rurban Exp $');
+rcs_id('$Id: actionbar.tmpl,v 1.7 2006-08-25 22:28:40 rurban Exp $');
 // Only [Info] button when not signed in.
 // The rest behind Info
 ?>
@@ -13,17 +13,18 @@ rcs_id('$Id: actionbar.tmpl,v 1.6 2005-04-23 11:43:44 rurban Exp $');
 <tr valign="baseline">
   <td>
   <div id="actionbuttons">
-    <?php if ( $user->isSignedIn()) { ?>
-      <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
-        <?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
-      <?php } else { ?>
-        <?= Button("viewsource", _("View Source")) ?>
+     <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
+       <?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
+     <?php } else { ?>
+       <?= Button("viewsource", _("View Source")) ?>
      <?php } ?>
-     <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
-      <?=$SEP?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
-      <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $page->getName())) { ?>
+     <?php if ( $user->isSignedIn()) { ?>
+      <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
+       <?=$SEP?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
+       <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $page->getName())) { ?>
         <?=$SEP?><?= Button('chown') ?>
         <?=$SEP?><?= Button('setacl') ?>
+        <?=$SEP?><?= Button('rename') ?>
      <?php }} ?>
      <?php if ($user->isAdmin() or mayAccessPage('remove', $page->getName())) { ?>
       <?=$SEP?><?= Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
@@ -44,7 +45,8 @@ rcs_id('$Id: actionbar.tmpl,v 1.6 2005-04-23 11:43:44 rurban Exp $');
 <?php } ?>
   </div>
   </td>
-<?php if (empty($NOSIGNIN)) { ?>
+<?php if (empty($NOSIGNIN) and $user->isSignedIn()) {
+/* Only signin to signout. Edit implicitly signs in. */ ?>
   <td align="right">
     <div id="signin"><?= Template('signin') ?></div>
   </td>
