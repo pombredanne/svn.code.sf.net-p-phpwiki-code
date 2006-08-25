@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf.php,v 1.7 2004-09-22 13:46:26 rurban Exp $');
+rcs_id('$Id: pdf.php,v 1.8 2006-08-25 22:09:00 rurban Exp $');
 /*
  Copyright (C) 2003 Olivier PLATHEY
  Copyright (C) 200? Don Sebà
@@ -134,12 +134,19 @@ class PDF extends FPDF {
     }
 }
 
+/*
+ * main action handler: action=pdf
+ * TODO: Multiple pages (pages=names), recurse - all forward linked pages (recurse=1)
+ * TODO: inline cached content: /getimg.php? => image.png
+ *
+ * uses either an external exe, or the bad internal php library
+ */
 function ConvertAndDisplayPdf (&$request) {
     if (empty($request->_is_buffering_output))
         $request->buffer_output(false/*'nocompress'*/);
     $pagename = $request->getArg('pagename');
     $dest = $request->getArg('dest');
-    //TODO: inline cached content: /getimg.php? => image.png
+    Header('Content-Type: application/pdf');
     // Disable CACHE
 
     include_once("lib/display.php");
@@ -160,7 +167,6 @@ function ConvertAndDisplayPdf (&$request) {
         $fp = fopen($tmpfile, "wb");
         fwrite($fp, $html);
         fclose($fp);
-        Header('Content-Type: application/pdf');
         passthru(sprintf(USE_EXTERNAL_HTML2PDF, $tmpfile));
         unlink($tmpfile);
     } else {
@@ -187,6 +193,12 @@ function ConvertAndDisplayPdf (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/09/22 13:46:26  rurban
+// centralize upload paths.
+// major WikiPluginCached feature enhancement:
+//   support _STATIC pages in uploads/ instead of dynamic getimg.php? subrequests.
+//   mainly for debugging, cache problems and action=pdf
+//
 // Revision 1.6  2004/09/20 13:40:19  rurban
 // define all config.ini settings, only the supported will be taken from -default.
 // support USE_EXTERNAL_HTML2PDF renderer (htmldoc tested)
