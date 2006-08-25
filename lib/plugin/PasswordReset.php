@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PasswordReset.php,v 1.2 2006-06-18 11:04:50 rurban Exp $');
+rcs_id('$Id: PasswordReset.php,v 1.3 2006-08-25 22:13:56 rurban Exp $');
 /**
  Copyright (C) 2006 $ThePhpWikiProgrammingTeam
 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -124,20 +124,22 @@ extends WikiPlugin
         $userid = $request->getArg('user');
 	$isadmin = $user->isAdmin();
 	if ($request->isPost()) {
+            @$reset = $post_args['reset'];
+            if (empty($reset))
+		return $this->doForm($request);
 	    if (!$userid) {
 		$alert = new Alert(_("Warning:"),
 				   _("You need to specify the userid!"));
 		$alert->show();
 		return $this->doForm($request);
 	    }
-	    @$reset = $post_args['reset'];
-	    if ($reset and $userid and !empty($post_args['verify'])) {
+	    if ($userid and !empty($post_args['verify'])) {
 		if ($user->isAdmin()) {
 		    return $this->doReset($userid);
 		} else {
 		    return $this->doEmail($request, $userid);
 		}
-	    } elseif ($reset and empty($post_args['verify'])) {
+	    } elseif (empty($post_args['verify'])) {
 		$buttons = HTML::p(Button('submit:admin_reset[reset]', 
 					  $isadmin ? _("Yes") : _("Send email"), 
 					  $isadmin ? 'wikiadmin' : 'button'),
@@ -175,7 +177,7 @@ extends WikiPlugin
 					  $isadmin ? '' : _("An email will be sent."),
 					  HiddenInputs(array('admin_reset[verify]' => 1, 'user' => $userid)),
 					  $buttons));
-	    } else {
+	    } else { // verify ok, but no userid
 		return $this->doForm($request);
 	    }
 	} else {
@@ -185,6 +187,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2006/06/18 11:04:50  rurban
+// unify gettext msg
+//
 // Revision 1.1  2006/03/19 16:31:57  rurban
 // I would have needed that very often
 //
