@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: IMAP.php,v 1.5 2005-04-25 19:46:08 rurban Exp $');
+rcs_id('$Id: IMAP.php,v 1.6 2006-08-25 22:35:50 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -42,7 +42,7 @@ extends _PassUser
     function userExists() {
         return true;
 
-        if (checkPass($this->_prefs->get('passwd')))
+        if ($this->checkPass($this->_prefs->get('passwd')))
             return true;
         return $this->_tryNextUser();
     }
@@ -53,6 +53,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2005/04/25 19:46:08  rurban
+// trivial tuning by michael pruitt. Patch #1120185
+//
 // Revision 1.4  2004/12/26 17:11:17  rurban
 // just copyright
 //
