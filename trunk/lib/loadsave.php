@@ -1,8 +1,8 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.142 2006-03-19 17:16:32 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.143 2006-08-25 21:48:39 rurban Exp $');
 
 /*
- Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -181,7 +181,8 @@ function MailifyPage ($page, $nversions = 1)
 function FilenameForPage ($pagename)
 {
     $enc = rawurlencode($pagename);
-    return preg_replace('/^\./', '%2e', $enc);
+    // For every %2F will need to mkdir -p dirname($pagename)
+    return preg_replace('/^\./', '%2E', $enc);
 }
 
 /**
@@ -360,6 +361,23 @@ function _copyMsg($page, $smallmsg) {
     }
 }
 
+function mkdir_p($pathname, $permission = 0777) {
+    $arr = explode("/", $pathname);
+    if (empty($arr)) {
+	return mkdir($pathname, $permission);
+    }
+    $s = array_shift($arr);
+    $ok = TRUE;
+    foreach ($arr as $p) {
+	$curr = "$s/$p";
+	if (!is_dir($curr))
+	    $ok = mkdir($curr, $permission);
+	$s = $curr;
+	if (!$ok) return FALSE;
+    }
+    return TRUE;
+}
+
 /**
  * Dump all pages as XHTML to a directory, as pagename.html.
  * Copies all used css files to the directory, all used images to a 
@@ -456,9 +474,24 @@ function DumpHtmlToDir (&$request)
 
         $request->setArg('pagename', $pagename); // Template::_basepage fix
         $filename = FilenameForPage($pagename) . $WikiTheme->HTML_DUMP_SUFFIX;
-        $msg = HTML();
-
         $revision = $page->getCurrentRevision();
+	$args = array('revision' => $revision,
+		      'CONTENT' => $revision->getTransformedContent());
+	// For every %2F will need to mkdir -p dirname($pagename)
+	if (preg_match("/%2F/", $filename)) {
+	    // mkdir -p and set relative base for subdir pages
+	    $dirname = dirname($pagename);
+	    mkdir_p($directory."/".$dirname);
+	    $count = substr_count($filename, "%2F");
+	    $filename = preg_replace("/%2F/", "/", $filename);
+	    $relative_base = "../";
+	    while ($count > 1) {
+		$relative_base .= "../";
+		$count--;
+	    }
+	    $args['relative_base'] = $relative_base;
+	}
+        $msg = HTML();
         $template = new Template('browse', $request,
                                  array('revision' => $revision,
                                        'CONTENT' => $revision->getTransformedContent()));
@@ -1360,6 +1393,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.142  2006/03/19 17:16:32  rurban
+ remove remaining cruft
+
  Revision 1.141  2006/03/19 17:11:32  rurban
  add verify to RevertPage, display reverted page as template
 
