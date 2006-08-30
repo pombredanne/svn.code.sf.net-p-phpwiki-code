@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.51 2006-05-13 19:59:55 rurban Exp $
+ * $Id: phpwiki.css,v 1.52 2006-08-30 05:26:15 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -81,6 +81,13 @@ div.wikitext {
    */
   clear: both;
 }
+/* for the login template */
+#content  {
+  margin-top:    1ex;
+  margin-bottom: 0.5ex;
+  background: white;
+}
+
 /* .interwiki-map thead td { text-decoration: underline; } */
 
 /* Mozilla RecentChanges Sidebar */
