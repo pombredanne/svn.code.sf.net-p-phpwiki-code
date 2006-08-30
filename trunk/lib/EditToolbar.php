@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.5 2005-10-29 14:16:17 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.6 2006-08-30 05:25:40 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -283,7 +283,7 @@ function undo_save() {
             return HTML(Javascript($toolbar . $toolbar_end));
     }
 
-    //TODO: make the result cached
+    //result is cached
     function categoriesPulldown() {
         global $WikiTheme;
 
@@ -293,8 +293,12 @@ function undo_save() {
         $pages = $dbi->titleSearch(new TextSearchQuery(KEYWORDS, true));
         if ($pages) {
             $categories = array();
-            while ($p = $pages->next()){
-                $categories[] = $p->getName();
+            while ($p = $pages->next()) {
+		$page = $p->getName();
+		if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($page)))
+		    $categories[] = "['$page', '%5B".$page."%5D']";
+		else
+		    $categories[] = "['$page', '$page']";
             }
             if (!$categories) return '';
             $more_buttons = HTML::img(array('class'=>"toolbar",
@@ -303,7 +307,7 @@ function undo_save() {
                                             'alt'=>_("AddCategory"),
                                             'onclick'=>"showPulldown('".
                                             _("Insert Categories (double-click)")
-                                            ."',['".join("','",$categories)."'],'"
+                                            ."',[".join(",",$categories)."],'"
                                             ._("Insert")."','"
                                             ._("Close")."')"));
             return HTML("\n", $more_buttons);
@@ -311,7 +315,7 @@ function undo_save() {
         return '';
     }
 
-    //TODO: Make the result cached. Esp. the args are expensive
+    // result is cached. Esp. the args are expensive
     function pluginPulldown() {
         global $WikiTheme;
 
@@ -357,6 +361,7 @@ function undo_save() {
         return '';
     }
 
+    // result is cached. Esp. the args are expensive
     function pagesPulldown($query, $case_exact=false, $regex='auto') {
         require_once('lib/TextSearchQuery.php');
         $dbi =& $GLOBALS['request']->_dbi;
@@ -364,8 +369,12 @@ function undo_save() {
         if ($page_iter->count()) {
             global $WikiTheme;
             $pages = array();
-            while ($p = $page_iter->next()){
-                $pages[] = $p->getName();
+            while ($p = $page_iter->next()) {
+		$page = $p->getName();
+		if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($page)))
+		    $pages[] = "['$page', '%5B".$page."%5D']";
+		else
+		    $pages[] = "['$page', '$page']";
             }
             return HTML("\n", HTML::img(array('class'=>"toolbar",
                                               'src'  => $WikiTheme->getImageURL("ed_pages.png"),
@@ -373,14 +382,14 @@ function undo_save() {
                                               'alt'=>_("AddPageLink"),
                                               'onclick'=>"showPulldown('".
                                               _("Insert PageLink (double-click)")
-                                              ."',['".join("','",$pages)."'],'"
+                                              ."',[".join(",",$pages)."],'"
                                               ._("Insert")."','"
                                               ._("Close")."')")));
         }
         return '';
     }
 
-    //TODO: make the result cached
+    // result is cached. Esp. the args are expensive
     function templatePulldown($query, $case_exact=false, $regex='auto') {
         require_once('lib/TextSearchQuery.php');
         $dbi =& $GLOBALS['request']->_dbi;
@@ -391,9 +400,7 @@ function undo_save() {
             $pages_js = '';
             while ($p = $page_iter->next()) {
                 $rev = $p->getCurrentRevision();
-                $src = array("\n",'"');
-                $replace = array('_nl','_quot'); 
-                $toinsert = str_replace($src, $replace, $rev->_get_content());
+                $toinsert = str_replace(array("\n",'"'), array('_nl','_quot'), $rev->_get_content());
                 //$toinsert = str_replace("\n",'\n',addslashes($rev->_get_content()));
                 $pages_js .= ",['".$p->getName()."','_nl$toinsert']";
             }
@@ -417,6 +424,9 @@ function undo_save() {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.5  2005/10/29 14:16:17  rurban
+ fix typo
+
  Revision 1.4  2005/09/29 23:07:58  rurban
  cache toolbar
 
