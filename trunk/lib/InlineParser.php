@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.77 2006-08-25 19:02:02 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.78 2006-09-03 09:53:52 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -644,16 +644,16 @@ class Markup_color extends BalancedMarkup {
     var $_end_regexp = "%%";
     
     function markup ($match, $body) {
-    	$color = substr($match, 7, -1);
+    	$color = strtoupper(substr($match, 7, -1));
         if (strlen($color) != 7 
-            and in_array($color, array('red', 'blue', 'grey', 'black'))) {
-            // must be a name
+            and in_array($color, array('RED', 'BLUE', 'GREY', 'YELLOW', 'GREEN', 'CYAN', 'BLACK'))) 
+	{   // must be a valid color name
             return new HtmlElement('font', array('color' => $color), $body);
         } elseif ((substr($color,0,1) == '#') 
-                  and (strspn(substr($color,1),'0123456789ABCDEFabcdef') == strlen($color)-1)) {
+                  and (strspn(substr($color,1),'0123456789ABCDEF') == strlen($color)-1)) {
             return new HtmlElement('font', array('color' => $color), $body);
         } else {
-            trigger_error(sprintf(_("unknown color %s ignored"), $color), E_USER_WARNING);
+            trigger_error(sprintf(_("unknown color %s ignored"), substr($match, 7, -1)), E_USER_WARNING);
         }
         	
     }
@@ -792,6 +792,7 @@ class InlineTransformer
         if (!$markup_types) {
             $non_default = false;
 	    if (DISABLE_MARKUP_WIKIWORD)
+                // TODO: easily and portably remove wikiword from array
 		$markup_types = array
 		    ('escape', 'bracketlink', 'url',
 		     'interwiki', /* 'wikiword', */ 'linebreak',
@@ -979,6 +980,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.77  2006/08/25 19:02:02  rurban
+// patch #1348996 by Robert Litwiniec: fix show image semantics if label is given
+//
 // Revision 1.76  2006/08/19 11:02:35  rurban
 // add strike and del to html emphasis: Patch #1542894 by Kai Krakow
 //
