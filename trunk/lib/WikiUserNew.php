@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.138 2006-06-18 11:02:55 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.139 2006-09-03 09:55:37 rurban Exp $');
 /* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -227,7 +227,7 @@ function _determineBogoUserOrPassUser($UserName) {
  * 
  */
 function WikiUser ($UserName = '') {
-    global $ForbiddenUser;
+    global $ForbiddenUser, $HTTP_SESSION_VARS;
 
     //Maybe: Check sessionvar for username & save username into
     //sessionvar (may be more appropriate to do this in lib/main.php).
@@ -236,7 +236,7 @@ function WikiUser ($UserName = '') {
         // Found a user name.
         return _determineAdminUserOrOtherUser($UserName);
     }
-    elseif (!empty($_SESSION['userid'])) {
+    elseif (!empty($HTTP_SESSION_VARS['userid'])) {
         // Found a user name.
         $ForbiddenUser = new _ForbiddenUser($_SESSION['userid']);
         return _determineAdminUserOrOtherUser($_SESSION['userid']);
@@ -526,7 +526,7 @@ class _WikiUser
     */
     function isValidName ($userid = false) {
         if (!$userid) $userid = $this->_userid;
-        return preg_match("/^[\w\.@\-]+$/",$userid) and strlen($userid) < 32;
+        return preg_match("/^[\w\.@\-]+$/", $userid) and strlen($userid) < 32;
     }
 
     /**
@@ -828,8 +828,8 @@ extends _AnonUser
     function _PassUser($UserName='', $prefs=false) {
         //global $DBAuthParams, $DBParams;
         if ($UserName) {
-            if (!$this->isValidName($UserName))
-                return false;
+            /*if (!$this->isValidName($UserName))
+                return false;*/
             $this->_userid = $UserName;
             if ($this->hasHomePage())
                 $this->_HomePagehandle = $GLOBALS['request']->getPage($this->_userid);
@@ -1155,7 +1155,7 @@ extends _AnonUser
             if (!check_php_version(5))
                 eval("\$this = \$user;");
             // /*PHP5 patch*/$this = $user;
-            UpgradeUser($this,$user);
+            UpgradeUser($this, $user);
             if ($user->userExists()) {
                 return true;
             }
@@ -2107,6 +2107,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.138  2006/06/18 11:02:55  rurban
+// pref->value > -name, fix bug #1355533
+//
 // Revision 1.137  2006/05/03 06:05:37  rurban
 // Fix default preferences for editheight maxrows, by Manuel Vacelet.
 //
