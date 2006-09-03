@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: HttpAuth.php,v 1.6 2006-09-03 09:57:19 rurban Exp $');
+rcs_id('$Id: HttpAuth.php,v 1.7 2006-09-03 10:10:00 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -107,7 +107,7 @@ extends _PassUser
         {
             $this->logout();
             $user = $GLOBALS['ForbiddenUser'];
-            $user->_userid = "";
+            $user->_userid = $this->_userid =  "";
             $this->_level = WIKIAUTH_FORBIDDEN;
             return $user;
             //exit;
@@ -134,6 +134,10 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2006/09/03 09:57:19  rurban
+// Support AUTH_TYPE=NTLM (Windows domain\username)
+// Workaround PHP _SERVER bug adding \\ => \\\\
+//
 // Revision 1.5  2005/02/28 20:35:45  rurban
 // linebreaks
 //
