@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.89 2006-06-10 11:59:46 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.90 2006-09-06 05:50:19 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -568,8 +568,9 @@ extends WikiDB_backend
     //function update_versiondata($pagename, $version, $data) {
     //}
 
-    /* Update link table.
-     * TestMe: delete old, deleted links from page
+    /* 
+     * Update link table.
+     * on DEBUG: delete old, deleted links from page
      */
     function set_links($pagename, $links) {
         // FIXME: optimize: mysql can do this all in one big INSERT/REPLACE.
@@ -609,6 +610,92 @@ extends WikiDB_backend
                     $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
                                   . " VALUES ($pageid, $linkid)");
                 }
+                if (array_key_exists($linkid, $oldlinks)) {
+                    // This was also in the previous page
+                    unset($oldlinks[$linkid]); 
+                }
+            }
+        }
+        // purge page table: delete all non-referenced pages
+        // for all previously linked pages...
+        if (DEBUG and $oldlinks) {
+            // trigger_error("purge page table: delete all non-referenced pages...", E_USER_NOTICE);
+            foreach ($oldlinks as $id => $name) {
+                // ...check if the page is empty and has no version
+                if ($dbh->getRow("SELECT $page_tbl.id FROM $page_tbl"
+                                     . " LEFT JOIN $nonempty_tbl USING (id) "
+                                     . " LEFT JOIN $version_tbl USING (id)"
+                                     . " WHERE $nonempty_tbl.id is NULL"
+                                     . " AND $version_tbl.id is NULL"
+                                     . " AND $page_tbl.id=$id")) 
+                {
+                        trigger_error("delete empty and non-referenced link $name ($id)", E_USER_NOTICE);
+                        $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id");   // this purges the link
+                        $dbh->Execute("DELETE FROM $recent_tbl WHERE id=$id"); // may fail
+                }
+            }
+        }
+        $this->unlock(array('link'));
+        return true;
+    }
+
+    /* get all oldlinks in hash => id, relation
+       check for all new links
+     */
+    function set_links1($pagename, $links) {
+
+        $dbh = &$this->_dbh;
+        extract($this->_table_names);
+
+        $this->lock(array('link'));
+        $pageid = $this->_get_pageid($pagename, true);
+
+        $oldlinks = $dbh->getAssoc("SELECT $link_tbl.linkto as linkto, $link_tbl.relation, page.pagename"
+                                  ." FROM $link_tbl"
+                                  ." JOIN page ON ($link_tbl.linkto = page.id)"
+                                  ." WHERE linkfrom=$pageid");
+        /*      old                  new
+         *      X => [1,0 2,0 1,1]   X => [1,1 3,0]
+         * => delete 1,0 2,0 + insert 3,0
+         */
+        if ($links) {
+            foreach ($links as $link) {
+                $linkto = $link['linkto'];
+                if ($link['relation'])
+                    $relation = $this->_get_pageid($link['relation'], true);
+                else 
+                    $relation = 0;
+                // avoid duplicates
+                if (isset($linkseen[$linkto]) and !$relation) {
+                    continue;
+                }
+                if (!$relation) {
+                    $linkseen[$linkto] = true;
+                }
+                $linkid = $this->_get_pageid($linkto, true);
+                assert($linkid);
+                $skip = 0;
+                // find linkfrom,linkto,relation triple in oldlinks
+                foreach ($oldlinks as $l) {
+                    if ($relation) { // relation NOT NULL
+                        if ($l['linkto'] == $linkid and $l['relation'] == $relation) {
+                            // found and skip
+                            $skip = 1;
+                        }
+                    }
+                }
+                if (! $skip ) {
+                    if ($update) {
+                    }
+                    if ($relation) {
+                        $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
+                                      . " VALUES ($pageid, $linkid, $relation)");
+                    } else {              
+                        $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
+                                      . " VALUES ($pageid, $linkid)");
+                    }
+                }
+
                 if (array_key_exists($linkid, $oldlinks)) {
                     // This was also in the previous page
                     unset($oldlinks[$linkid]); 
@@ -849,7 +936,7 @@ id      pagename        linkrelation
     /**
      * Find highest or lowest hit counts.
      */
-    function most_popular ($limit=20, $sortby='-hits') {
+    function most_popular($limit=20, $sortby='-hits') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $order = "DESC";
@@ -1450,6 +1537,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.89  2006/06/10 11:59:46  rurban
+// purge empty, non-references pages when link is deleted
+//
 // Revision 1.88  2006/05/14 12:28:03  rurban
 // mysql 5.x fix for wantedpages join
 //
