@@ -1,32 +1,51 @@
 Date: Tue, 7 Mar 2006 15:13:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.12p1)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.63 2006-05-18 06:07:05 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.64 2006-09-06 06:04:22 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.63 $";
+  pgsrc_version="2 $Revision: 1.64 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-1.3.13 (not yet), Reini Urban, Joel Uckelman
+1.3.13 (not yet), Reini Urban, Jean-Nicolas Gereone, Joel Uckelman
 
 fixes:
 * DB: ANSI SQL statements
 * testsuite: force C locale and EN $LANG
 * fixed blog theme layout
+* xhtml dump for subpages into subdirectories
+* ErrorManager: patch #1438439 by Matt Brown: Only set no-cache headers when error output is generated
+* ImageLinks: patch #1348996 by Robert Litwiniec
+* fix bug #1327912 numeric pagenames can break plugins (Joachim Lous)
+* improve pdf output via external converter
 
 changes:
-* updated locale for de and es (google translation)
+* add linkrelation support: getPageLinks returns now an array of hashes
 * generalized ENABLE_HTMLAREA3 to ENABLE_WYSIWYG
 * DB: foreign key support in schemas, simplify methods
-* print Ignored stoplist words on FullTextSearch
+* print Ignored stoplist words on FullTextSearch, add FULLTEXTSEARCH_STOPLIST constant,
+  make TextSearchQuery->_stoplist localizable
+* add <nowiki></nowiki> tag: Transform only html markup and entities
+* fix arg order in WikiDB_backend_search()
+* remove user table upgrade from SQL db.
+* updated locale for it, de and es (google translation)
+* improve loading multiple version archives such as full zipdumps. force temp. overwrite
 
 new:
+* add SemanticRelations syntax and db structure.
+  Sample: pagename=SanDiego isa::city => SanDiego relation=isa, linkto=city
+  population:=1,305,736 (store unified attribute in pagedata)
+* postgresql tsearch2 support
 * added new xml-rpc methods: listPlugins, getPluginSynopsis
-* FileInfoPlugin: exeversion
-* new experimental WYSIWYG libraries 
-  (tinymce, FCKeditor, htmlarea3, htmlarea2, spaw)
+* new FileInfoPlugin
+* new experimental WYSIWYG edit libraries 
+  (WikiWyg, tinymce, FCKeditor, htmlarea3, htmlarea2, spaw)
+* new wysiwyg_editor-1.3a feature by Jean-Nicolas GEREONE 
+* add DISABLE_MARKUP_WIKIWORD to force [ ] for links	
+* support Windows NTLM Auth via HttpAuth: mod_ntlm (apache1) and mod_auth_sspi (apache2)
+* patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
 
 1.3.12p2 Mar, 7 2006, Reini Urban:
 
