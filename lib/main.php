@@ -1,7 +1,7 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.225 2006-05-31 19:59:57 jeannicolas Exp $');
+rcs_id('$Id: main.php,v 1.226 2006-09-06 06:01:45 rurban Exp $');
 /*
- Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -1148,7 +1148,7 @@ class WikiRequest extends Request {
     function action_wikitohtml () {
        include_once("lib/WikiToHtml.php");
        $wikitohtml = new WikiToHtml( $this->getArg("content") , $this);
-              $wikitohtml->send();
+       $wikitohtml->send();
     }
 }
 
@@ -1291,6 +1291,11 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.225  2006/05/31 19:59:57  jeannicolas
+//
+//
+// Added wysiwyg_editor 1.1b
+//
 // Revision 1.224  2006/05/13 19:59:55  rurban
 // added wysiwyg_editor-1.3a feature by Jean-Nicolas GEREONE <jean-nicolas.gereone@st.com>
 // converted wysiwyg_editor-1.3a js to WysiwygEdit framework
