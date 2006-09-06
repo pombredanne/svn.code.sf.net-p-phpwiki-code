@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.27 2006-04-17 17:30:35 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.28 2006-09-06 05:47:58 rurban Exp $');
 
 /*
   Pagedata
@@ -576,16 +576,19 @@ class WikiDB_backend_iterator
      *
      * This returns a hash. The hash may contain the following keys:
      * <dl>
-     * <dt> pagename <dt> (string) the page name
+     * <dt> pagename <dt> (string) the page name or linked page name on link iterators
      * <dt> version  <dt> (int) the version number
      * <dt> pagedata <dt> (hash) page meta-data (as returned from backend::get_pagedata().)
      * <dt> versiondata <dt> (hash) page meta-data (as returned from backend::get_versiondata().)
+     * <dt> linkrelation <dt> (string) the page naming the relation (e.g. isa:=page <=> isa)
      *
      * If this is a page iterator, it must contain the 'pagename' entry --- the others
      * are optional.
      *
      * If this is a version iterator, the 'pagename', 'version', <strong>and</strong> 'versiondata'
      * entries are mandatory.  ('pagedata' is optional.)
+     *
+     * If this is a link iterator, the 'pagename' is mandatory, 'linkrelation' is optional.
      */
     function next() {
         trigger_error("virtual", E_USER_ERROR);
@@ -593,6 +596,11 @@ class WikiDB_backend_iterator
 
     function count() {
         return count($this->_pages);
+    }
+
+    function asArray() {
+        reset($this->_pages);
+        return $this->_pages;
     }
 
     /**
