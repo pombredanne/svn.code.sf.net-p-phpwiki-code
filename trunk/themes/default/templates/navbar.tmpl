@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-  rcs_id('$Id: navbar.tmpl,v 1.41 2005-04-06 06:41:05 rurban Exp $');
+  rcs_id('$Id: navbar.tmpl,v 1.42 2006-09-06 06:08:37 rurban Exp $');
 ?>
 <!-- The top navigation/search bar -->
 <form action="<?= WikiURL(
@@ -32,9 +32,9 @@ _("Quick Search")?>'; return true;"
 <?php if (!empty($revision)) { ?>
 <?=$SEP?><?= $WikiTheme->makeLinkButton($revision,_("LikePages"),_("LikePages")) 
 ?><?=$SEP?><?= $WikiTheme->makeLinkButton($revision,_("BackLinks"),_("BackLinks")) 
-?><?php
+?><?php /* RelatedChanges disabled
   $links = $page->getPageLinks();
-  if ($links->count() > 1) { ?><?=$SEP?><?= $WikiTheme->makeLinkButton($revision,_("RelatedChanges"),_("RelatedChanges")) ?><?php } ?>
+  if ($links->count() > 1) { ?><?=$SEP?><?= $WikiTheme->makeLinkButton($revision,_("RelatedChanges"),_("RelatedChanges")) ?><?php } */ ?>
 <?php } ?>
 <?php if (!empty($user) && $user->isSignedIn()) { ?>
 <?=$SEP?><?= WikiLink(_("UserPreferences"), 'button',_("Preferences")) ?>
