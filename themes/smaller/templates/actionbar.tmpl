@@ -1,5 +1,6 @@
 <?php // -*-php-*-
-rcs_id('$Id: actionbar.tmpl,v 1.7 2006-08-25 22:28:40 rurban Exp $');
+rcs_id('$Id: actionbar.tmpl,v 1.8 2006-09-06 06:12:26 rurban Exp $');
+if (!$WikiTheme->DUMP_MODE) {
 // Only [Info] button when not signed in.
 // The rest behind Info
 ?>
@@ -45,11 +46,11 @@ rcs_id('$Id: actionbar.tmpl,v 1.7 2006-08-25 22:28:40 rurban Exp $');
 <?php } ?>
   </div>
   </td>
-<?php if (empty($NOSIGNIN) and $user->isSignedIn()) {
-/* Only signin to signout. Edit implicitly signs in. */ ?>
+<?php if (empty($NOSIGNIN)) { ?>
   <td align="right">
     <div id="signin"><?= Template('signin') ?></div>
   </td>
 <?php } ?>
 </tr>
 </table>
+<?php } ?>
