@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.142 2006-06-10 11:55:58 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.143 2006-09-06 05:46:40 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -122,8 +122,9 @@ class WikiDB {
         if ($this->get('_timestamp') === false)
             $this->touch();
         
-        //FIXME: devel checking.
-        //$this->_backend->check();
+        // devel checking.
+        if (DEBUG || _DEBUG_SQL)
+            $this->_backend->check();
     }
     
     /**
@@ -433,11 +434,11 @@ class WikiDB {
     /**
      * @access public
      *
-     * @return array rows of pagenames.
+     * @return array of pagename => linkrelation or just all related pages
      */
-    function listRelations() {
+    function listRelations($sortby=false, $limit=false, $exclude=false) {
         if (method_exists($this->_backend, "list_relations"))
-            return $this->_backend->list_relations();
+            return $this->_backend->list_relations($sortby, $limit, $exclude);
         $iter = $this->getAllPages(false, false, false, $exclude);
         while ($page = $iter->next()) {
             $reliter = $page->getRelations();
@@ -1262,7 +1263,7 @@ class WikiDB_Page
         $result =  $backend->get_links($this->_pagename, false, true,
                                        $sortby, $limit, $exclude, 
                                        true);
-        // we do not care for the linked page versiondata, just the pagename and relationname
+        // we do not care for the linked page versiondata, just the pagename and linkrelation
         return new WikiDB_PageIterator($this->_wikidb, $result, 
                                        array('include_empty' => true,
                                              'sortby'        => $sortby, 
@@ -2270,6 +2271,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.142  2006/06/10 11:55:58  rurban
+// print optimize only when DEBUG
+//
 // Revision 1.141  2006/04/17 17:28:21  rurban
 // honor getWikiPageLinks change linkto=>relation
 //
