@@ -1,6 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: actionbar.tmpl,v 1.37 2006-08-25 22:21:24 rurban Exp $');
+rcs_id('$Id: actionbar.tmpl,v 1.38 2006-09-06 06:09:42 rurban Exp $');
 ?>
+<?php if (!$WikiTheme->DUMP_MODE) { ?>
 <?php /* I would like not to have to use these tables, and managed to
        * get this stuff to work more or less correctly using
        * CSSs float:left; and float:right;.  However float:right; seems
@@ -60,3 +61,4 @@ rcs_id('$Id: actionbar.tmpl,v 1.37 2006-08-25 22:21:24 rurban Exp $');
 <?php } ?>
 </tr>
 </table>
+<?php } ?>
