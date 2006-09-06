@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.24 2005-01-29 19:47:43 rurban Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.25 2006-09-06 06:02:36 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
@@ -78,6 +78,19 @@ extends WikiPlugin
                 $table->pushContent($this->_showhash("get_versiondata('$page',$version)",
                                                      $vdata));
             }
+
+        $linkdata = $backend->get_links($page, false);
+        if ($linkdata->count())
+            $table->pushContent($this->_showhash("get_links('$page')", $linkdata->asArray()));
+        $relations = $backend->get_links($page, false, false, false, false,  false, true);
+        if ($relations->count()) {
+            $table->pushContent($this->_showhash("get_relations('$page')", array()));
+            while ($rel = $relations->next())
+                $table->pushContent($this->_showhash(false, $rel));
+        }
+        $linkdata = $backend->get_links($page, true);
+        if ($linkdata->count())
+            $table->pushContent($this->_showhash("get_backlinks('$page')", $linkdata->asArray()));
 
         $html->pushContent($table);
         return $html;
@@ -158,6 +171,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2005/01/29 19:47:43  rurban
+// support bool
+//
 // Revision 1.23  2005/01/21 14:13:23  rurban
 // stabilize on numeric keys (strange php problem)
 //
