@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.6 2006-08-30 05:25:40 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.7 2006-09-06 05:45:26 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -162,13 +162,13 @@ function undo_save() {
             $toolarray = array(
                            array(
                                  "image"=>"ed_format_bold.png",
-                                 "open"=>"*",
-                                 "close"=>"*",
+                                 "open"=>"<strong>",
+                                 "close"=>"</strong>",
                                  "sample"=>_("Bold text"),
                                  "tip"=>_("Bold text")),
                            array("image"=>"ed_format_italic.png",
-                                 "open"=>"_",
-                                 "close"=>"_",
+                                 "open"=>"<em>",
+                                 "close"=>"</em>",
                                  "sample"=>_("Italic text"),
                                  "tip"=>_("Italic text")),
                            array("image"=>"ed_pagelink.png",
@@ -192,8 +192,8 @@ function undo_save() {
                                  "sample"=>_("Example.jpg"),
                                  "tip"=>_("Embedded image")),
                            array("image"=>"ed_nowiki.png",
-                                 "open"=>"\\n\\<verbatim\\>\\n",
-                                 "close"=>"\\n\\</verbatim\\>\\n",
+                                 "open"=>"\\<verbatim\\>\\n",
+                                 "close"=>"\\n\\</verbatim\\>",
                                  "sample"=>_("Insert non-formatted text here"),
                                  "tip"=>_("Ignore wiki formatting")),
                            array("image"=>"ed_sig.png",
@@ -257,7 +257,7 @@ function undo_save() {
             $sr_html = '';
         }
 
-        //TODO: delegate these calculations to a seperate popup/pulldown action request
+        //TODO: delegate this to run-time with a seperate popup/pulldown action request
         // using moacdropdown and xmlrpc:titleSearch
         // action=pulldown or xmlrpc/soap (see google: WebServiceProxyFactory.createProxyAsync)
 
@@ -423,26 +423,27 @@ function undo_save() {
 }
 
 /*
- $Log: not supported by cvs2svn $
- Revision 1.5  2005/10/29 14:16:17  rurban
- fix typo
+$Log: not supported by cvs2svn $
+Revision 1.6  2006/08/30 05:25:40  rurban
+Handle inserting DISABLE_MARKUP_WIKIWORD and non wikiword links.
 
- Revision 1.4  2005/09/29 23:07:58  rurban
- cache toolbar
+Revision 1.5  2005/10/29 14:16:17  rurban
+fix typo
 
- Revision 1.3  2005/09/26 06:25:50  rurban
- EditToolbar enhancements by Thomas Harding: add plugins args, properly quote control chars. added plugin method getArgumentsDescription to override the default description string
+Revision 1.4  2005/09/29 23:07:58  rurban
+cache toolbar
 
- Revision 1.3  2005/09/22 13:40:00 tharding
- add modules arguments
+Revision 1.3  2005/09/26 06:25:50  rurban
+EditToolbar enhancements by Thomas Harding: add plugins args, properly quote control chars. added plugin method getArgumentsDescription to override the default description string
+
+Revision 1.3  2005/09/22 13:40:00 tharding
+add modules arguments
  
- Revision 1.2  2005/05/06 18:43:41  rurban
- add AddTemplate EditToolbar icon
+Revision 1.2  2005/05/06 18:43:41  rurban
+add AddTemplate EditToolbar icon
 
- Revision 1.1  2005/01/25 15:19:09  rurban
- extract Toolbar code from editpage.php
-
-
+Revision 1.1  2005/01/25 15:19:09  rurban
+extract Toolbar code from editpage.php
 */
 
 // Local Variables:
