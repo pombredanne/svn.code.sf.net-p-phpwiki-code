@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.144 2006-08-25 22:06:13 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.145 2006-09-06 06:01:18 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -1115,10 +1115,21 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
 
     $default_pagename = rawurldecode($basename);
     if ( ($parts = ParseMimeifiedPages($text)) ) {
+    	if (count($parts) > 1)
+    	    $overwrite = $request->getArg('overwrite');
         usort($parts, 'SortByPageVersion');
-        foreach ($parts as $pageinfo)
+        foreach ($parts as $pageinfo) {
+            // force overwrite
+            if (count($parts) > 1)
+                $request->setArg('overwrite', 1);
             SavePage($request, $pageinfo, sprintf(_("MIME file %s"),
                                                   $filename), $basename);
+    }
+        if (count($parts) > 1)
+            if ($overwrite) 
+                $request->setArg('overwrite', $overwrite);
+            else     
+	        unset($request->_args['overwrite']);
     }
     else if ( ($pageinfo = ParseSerializedPage($text, $default_pagename,
                                                $request->getUser())) ) {
@@ -1265,7 +1276,7 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
     }
 
     if (! $type) {
-        $request->finish(fmt("Unable to load: %s", $file_or_dir));
+        $request->finish(fmt("Empty or not existing source. Unable to load: %s", $file_or_dir));
     }
     else if ($type == 'dir') {
         LoadDir($request, $file_or_dir, $files, $exclude);
@@ -1392,6 +1403,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.144  2006/08/25 22:06:13  rurban
+ args fix to pass $args to the template
+
  Revision 1.143  2006/08/25 21:48:39  rurban
  dumphtml subpages
 
