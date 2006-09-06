@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf.php,v 1.8 2006-08-25 22:09:00 rurban Exp $');
+rcs_id('$Id: pdf.php,v 1.9 2006-09-06 06:02:05 rurban Exp $');
 /*
  Copyright (C) 2003 Olivier PLATHEY
  Copyright (C) 200? Don Sebà
@@ -142,6 +142,7 @@ class PDF extends FPDF {
  * uses either an external exe, or the bad internal php library
  */
 function ConvertAndDisplayPdf (&$request) {
+    global $WikiTheme;
     if (empty($request->_is_buffering_output))
         $request->buffer_output(false/*'nocompress'*/);
     $pagename = $request->getArg('pagename');
@@ -149,9 +150,11 @@ function ConvertAndDisplayPdf (&$request) {
     Header('Content-Type: application/pdf');
     // Disable CACHE
 
+    $WikiTheme->DUMP_MODE = true;
     include_once("lib/display.php");
-    displayPage($request);
+    displayPage($request, new Template('htmldump', $request));
     $html = ob_get_contents();
+    $WikiTheme->DUMP_MODE = false;
     
     // check hook for external converters
     if (defined('USE_EXTERNAL_HTML2PDF')
@@ -193,6 +196,9 @@ function ConvertAndDisplayPdf (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2006/08/25 22:09:00  rurban
+// print pdf header earlier
+//
 // Revision 1.7  2004/09/22 13:46:26  rurban
 // centralize upload paths.
 // major WikiPluginCached feature enhancement:
