@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.20 2006-08-15 13:35:33 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.21 2006-09-06 05:42:54 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 
@@ -140,7 +140,7 @@ class DbaDatabase
             }
         }
         else {
-            if (!dba_insert($key, $val, $this->_dbh))
+            if (!dba_insert($key, $val, $dbh))
                 return $this->_error("store[insert]($key)");
         }
     }
@@ -168,13 +168,16 @@ class DbaDatabase
             printf("%10s: %s\n", $key, $this->fetch($key));
     }
 
-    function _dba_open_error_handler ($error) {
+    function _dba_open_error_handler($error) {
         $this->_dba_open_error = $error;
         return true;
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2006/08/15 13:35:33  rurban
+// just aesthetics
+//
 // Revision 1.19  2006/06/18 11:01:25  rurban
 // add rcsid log
 //
