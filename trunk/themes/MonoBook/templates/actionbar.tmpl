@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.6 2005-08-28 11:10:15 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.7 2006-09-30 09:47:14 rurban Exp $ -->
 <?php
 $dbh = $request->getDbh();
 $Sep = HTML::raw("<li>");
@@ -8,9 +8,9 @@ $Sep = HTML::raw("<li>");
     <h5>Views</h5>
     <ul>
     <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
-      <?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
+      <?=$Sep?><?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
     <?php } else { ?>
-      <?= Button("viewsource", _("View Source")) ?>
+      <?=$Sep?><?= Button("viewsource", _("View Source")) ?>
     <?php } ?>
     <?php if (!string_ends_with($page->getName(), _("Discussion"))) { ?>
     <?php 
@@ -26,6 +26,12 @@ $Sep = HTML::raw("<li>");
       <?php $talk = new WikiPageName($page->getName()); ?>
       <?=$Sep?><?= Button(array(),_("Article"), $talk->getParent()) ?>
     <?php } ?>
+    </ul>
+</div>
+<div class="portlet" id="p-tbx">
+  <h5>Actions</h5>
+  <div class="pBody">
+  <ul>
     <? if ( $user->isSignedIn() ) { ?>
      <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
       <?=$Sep?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
@@ -59,4 +65,6 @@ $Sep = HTML::raw("<li>");
   <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
     <?=$Sep?><?= Button("pdf") ?>
   <?php } ?>
+  </div>
+  </ul>
 </div>
