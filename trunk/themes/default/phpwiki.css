@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.52 2006-08-30 05:26:15 rurban Exp $
+ * $Id: phpwiki.css,v 1.53 2006-09-30 09:46:20 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -62,7 +62,7 @@ div.wikitext pre { font-family: monospace; }
 div.wikitext {
   margin-top:    1ex;
   margin-bottom: 0.5ex;
-  background: white;
+  background-color: white;
   /* Netscape 4 requires this 1px border.
      Without it, the paper borders below cause
      the white background to disappear. */
@@ -82,10 +82,10 @@ div.wikitext {
   clear: both;
 }
 /* for the login template */
-#content  {
-  margin-top:    1ex;
-  margin-bottom: 0.5ex;
-  background: white;
+div#browse  {
+  margin-top:    1px;
+  margin-bottom: 0.5px;
+  /*background: #dddddd;*/
 }
 
 /* .interwiki-map thead td { text-decoration: underline; } */
