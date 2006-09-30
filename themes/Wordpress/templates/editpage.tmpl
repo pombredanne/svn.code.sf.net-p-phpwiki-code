@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.4 2005-09-28 19:00:24 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.5 2006-09-30 09:49:59 rurban Exp $ -->
 <?php /*
  * FIXME: Hack!
  * The funky URL used for the form action parameter is bogus.
@@ -47,6 +47,10 @@
 <br />
 <?=_("Summary")?>: <?= $SUMMARY_INPUT ?>
 <br />
+<?php if (ENABLE_CAPTCHA) { ?>
+  <?php echo $CAPTCHA_IMAGE ?><br/>
+  <?php echo $CAPTCHA_LABEL ?><?= $CAPTCHA_INPUT ?><br/>
+<?php } ?>
 <?= fmt("Author will be logged as %s.", HTML::em($user->getId())) ?>
 <br />
 <?= $MINOR_EDIT_CB ?>
