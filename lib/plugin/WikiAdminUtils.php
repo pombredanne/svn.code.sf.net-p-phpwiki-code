@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.19 2006-04-15 12:27:40 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.20 2006-09-30 10:08:38 rurban Exp $');
 /**
- Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2003,2004,2006 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -28,6 +28,8 @@ rcs_id('$Id: WikiAdminUtils.php,v 1.19 2006-04-15 12:27:40 rurban Exp $');
         access-restrictions
         email-verification
         convert-cached-html
+        db-check
+        db-rebuild
  */
 class WikiPlugin_WikiAdminUtils
 extends WikiPlugin
@@ -42,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -98,7 +100,7 @@ extends WikiPlugin
         $message = call_user_func(array(&$this, $method), $request, $args);
 
         // display as seperate page or as alert?
-        $alert = new Alert(_("WikiAdminUtils says:"),
+        $alert = new Alert(fmt("WikiAdminUtils %s returned:", $args['action']),
                            $message,
                            array(_("Okay") => $args['return_url']));
         $alert->show();         // noreturn
@@ -153,7 +155,10 @@ extends WikiPlugin
         $list = HTML::ol(array('align'=>'left'));
         $pages = $dbi->getAllPages('include_empty');
         while (($page = $pages->next())) {
-            if (!$page->exists() and ($links = $page->getBackLinks('include_empty')) and !$links->next()) {
+            if (!$page->exists() 
+                and ($links = $page->getBackLinks('include_empty')) 
+                     and !$links->next())
+            {
                 $pagename = $page->getName();
                 if ($pagename == 'global_data' or $pagename == '.') continue;
                 if ($dbi->purgePage($pagename))
@@ -194,6 +199,19 @@ extends WikiPlugin
         }
     }
 
+    function _do_db_check(&$request, $args) {
+        $dbh = $request->_dbi;
+	//FIXME: display result.
+        $result = $dbh->_backend->check();
+        return $result;
+    }
+
+    function _do_db_rebuild(&$request, $args) {
+        $dbh = $request->_dbi;
+	//FIXME: display result.
+        $result = $dbh->_backend->rebuild();
+        return $result;
+    }
 
     //TODO: We need a seperate plugin for this.
     //      Too many options.
