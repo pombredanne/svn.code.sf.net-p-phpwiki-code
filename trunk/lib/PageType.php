@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.47 2005-08-07 09:14:38 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.48 2006-10-08 12:38:11 rurban Exp $');
 /*
- Copyright 1999,2000,2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2003,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -187,7 +187,11 @@ class PageType_interwikimap extends PageType
 
         $link = HTML::a(array('href' => $url));
 
-        if (!$linktext) {
+        if ($moniker == '') { // ":LinkName"
+            $link->pushContent(HTML::span(array('class' => 'wikipage'), $page));
+            $link->setAttr('class', $linktext ? 'named-wiki' : 'wiki');
+	}
+	elseif (!$linktext) {
             $link->pushContent(PossiblyGlueIconToText('interwiki', "$moniker:"),
                                HTML::span(array('class' => 'wikipage'), $page));
             $link->setAttr('class', 'interwiki');
@@ -210,7 +214,7 @@ class PageType_interwikimap extends PageType
             $map[$m[1]] = $m[2];
         }
 
-        // Add virtual monikers Upload: Talk: User:
+        // Add virtual monikers: "Upload:" "Talk:" "User:", ":"
         // and expand special variables %u, %b, %d
 
         // Upload: Should be expanded later to user-specific upload dirs. 
@@ -224,6 +228,7 @@ class PageType_interwikimap extends PageType
         if (empty($map["User"])) {
             $map["User"] = "%s";
         }
+        // Talk:UserName => UserName/Discussion
         // Talk:PageName => PageName/Discussion as default, which might be overridden
         if (empty($map["Talk"])) {
             $pagename = $GLOBALS['request']->getArg('pagename');
@@ -232,6 +237,9 @@ class PageType_interwikimap extends PageType
                 $map["Talk"] = "%s";
             else
                 $map["Talk"] = "%s".SUBPAGE_SEPARATOR._("Discussion");
+        }
+        if (empty($map[''])) { // Magic syntax: Don't store links ":PageName" as backlink
+            $map[''] = '%s';
         }
 
         foreach (array('Upload','User','Talk') as $special) {
@@ -503,6 +511,9 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2005/08/07 09:14:38  rurban
+// fix comments
+//
 // Revision 1.46  2005/08/06 13:09:33  rurban
 // allow spaces in interwiki paths, even implicitly. fixes bug #1218733
 //
