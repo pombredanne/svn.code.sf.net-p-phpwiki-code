@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.98 2006-06-03 08:50:41 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.99 2006-10-08 12:40:51 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -212,10 +212,10 @@ extends WikiDB_backend
                             $dbh->escapeSimple($this->_serialize($data)),
                             $dbh->escapeSimple($pagename)));
         */
-        $sth = $dbh->query("UPDATE $page_tbl"
-                           . " SET hits=?, pagedata=?"
-                           . " WHERE pagename=?",
-                           array($hits, $this->_serialize($data), $pagename));
+        $dbh->query("UPDATE $page_tbl"
+                    . " SET hits=?, pagedata=?"
+                    . " WHERE pagename=?",
+                    array($hits, $this->_serialize($data), $pagename));
         $this->unlock(array($page_tbl));
     }
 
@@ -229,10 +229,10 @@ extends WikiDB_backend
     function set_cached_html($pagename, $data) {
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
-        $sth = $dbh->query("UPDATE $page_tbl"
-                           . " SET cached_html=?"
-                           . " WHERE pagename=?",
-                           array($data, $pagename));
+        $dbh->query("UPDATE $page_tbl"
+                    . " SET cached_html=?"
+                    . " WHERE pagename=?",
+                    array($data, $pagename));
     }
 
     function _get_pageid($pagename, $create_if_missing = false) {
@@ -661,6 +661,7 @@ extends WikiDB_backend
         
     /**
      * Title search.
+     * Todo: exclude
      */
     function text_search($search, $fulltext=false, $sortby=false, $limit=false, 
                          $exclude=false) 
@@ -1146,6 +1147,7 @@ extends WikiDB_backend
         } else {
             // TODO: try ADODB version?
             trigger_error("Unsupported dbtype and backend. Either switch to ADODB or check it manually.");
+            return false;
         }
     }
 };
@@ -1182,7 +1184,6 @@ extends WikiDB_backend_iterator
     }
     
     function next() {
-        $backend = &$this->_backend;
         if (!$this->_result)
             return false;
 
@@ -1238,6 +1239,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.98  2006/06/03 08:50:41  rurban
+// revert wrong pear DB nextID() usage, our old is easier
+//
 // Revision 1.97  2006/05/14 12:28:03  rurban
 // mysql 5.x fix for wantedpages join
 //
