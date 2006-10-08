@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.20 2006-09-30 10:08:38 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.21 2006-10-08 12:50:44 rurban Exp $');
 /**
  Copyright 2003,2004,2006 $ThePhpWikiProgrammingTeam
 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function getDefaultArguments() {
@@ -266,9 +266,9 @@ extends WikiPlugin
             }
         }
         $request->_user = $current_user;
-        if (!empty($args['verify'])) {
+        if (!empty($args['verify']) or empty($pagelist->_rows)) {
             return HTML($pagelist->_generateTable(false));
-        } else {
+        } elseif (!empty($pagelist->_rows)) {
             $args['verify'] = 1;
 	    $args['return_url'] = $request->getURLtoSelf();
             return HTML::form(array('action' => $request->getPostURL(),
