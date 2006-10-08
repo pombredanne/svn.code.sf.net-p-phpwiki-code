@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.78 2006-09-03 09:53:52 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.79 2006-10-08 12:38:11 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -403,6 +403,9 @@ function LinkBracketLink($bracketlink) {
     /* Semantic relations and attributes */
     elseif (preg_match("/:[:-]/", $link) and !isImageLink($link))
         return new Cached_SemanticLink($link, $label);
+    /* Do not store the link */    
+    elseif (substr($link,0,1) == ':')
+        return new Cached_InterwikiLink($link, $label);
     /*
      * Inline images in Interwiki urls's:
      * [File:my_image.gif] inlines the image,
@@ -798,7 +801,7 @@ class InlineTransformer
 		     'interwiki', /* 'wikiword', */ 'linebreak',
 		     'old_emphasis', 'nestled_emphasis',
 		     'html_emphasis', 'html_abbr', 'plugin',
-		     'isonumchars', 'isohexchars', 'html_entities'
+		     'isonumchars', 'isohexchars', /*'html_entities'*/
 		     );
 	    else
 		$markup_types = array
@@ -980,6 +983,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2006/09/03 09:53:52  rurban
+// more colors, case-insensitive color names
+//
 // Revision 1.77  2006/08/25 19:02:02  rurban
 // patch #1348996 by Robert Litwiniec: fix show image semantics if label is given
 //

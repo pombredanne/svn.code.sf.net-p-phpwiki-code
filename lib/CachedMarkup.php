@@ -1,7 +1,7 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.43 2006-06-18 11:00:58 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.44 2006-10-08 12:38:11 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -77,8 +77,7 @@ class CacheableMarkup extends XmlContent {
     
     /** Get names of wikipages linked to.
      *
-     * @return array
-     * A hash of linkto=>pagenames, relation=>pagenames (strings).
+     * @return array of hashes { linkto=>pagename, relation=>pagename }
      */
     function getWikiPageLinks() {
 	$links = array();
@@ -89,7 +88,8 @@ class CacheableMarkup extends XmlContent {
                 continue;
             $links = array_merge($links, $item_links);
         }
-        // array_unique has a bug with hashes! set_links checks for duplicates, array_merge does not
+        // array_unique has a bug with hashes! 
+        // set_links checks for duplicates, array_merge does not
 	//return array_unique($links);
 	return $links;
     }
@@ -524,9 +524,26 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
             $this->_label = $label;
     }
 
+    function getPagename($basepage) {
+        list ($moniker, $page) = split (":", $this->_link, 2);
+	$page = new WikiPageName($page, $basepage);
+	if ($page->isValid()) return $page->name;
+	else return false;
+    }
+
+    function getWikiPageLinks($basepage) {
+        if ($basepage == '') return false;
+	/* ":DontStoreLink" */
+	if (substr($this->_link,0,1) == ':') return false;
+	/* store only links to valid pagenames */
+        if ($link = $this->getPagename($basepage)) 
+            return array(array('linkto' => $link, 'relation' => 0));
+        else return false; // dont store external links
+    }
+
     function _getName($basepage) {
 	$label = isset($this->_label) ? $this->_label : false;
-	return ($label and is_string($label)) ? $label : $link;
+	return ($label and is_string($label)) ? $label : $this->_link;
     }
     
     function _getURL($basepage) {
