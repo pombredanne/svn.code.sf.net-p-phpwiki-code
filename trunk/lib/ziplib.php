@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.46 2006-03-07 20:47:36 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.47 2006-10-08 12:32:26 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -189,8 +189,12 @@ function zip_inflate ($data, $crc32, $uncomp_size)
         $data = gzinflate($data);
         if (strlen($data) != $uncomp_size)
             trigger_error("not enough output from gzinflate", E_USER_ERROR);
-        if (zip_crc32($data) != $crc32)
-            trigger_error("CRC32 mismatch", E_USER_ERROR);
+        $zcrc32 = zip_crc32($data);
+        if ($zcrc32 < 0) { // force unsigned
+            $zcrc32 += 4294967296;
+        }
+        if ($zcrc32 != $crc32)
+            trigger_error("CRC32 mismatch: calculated=$zcrc32, expected=$crc32", E_USER_ERROR);
         return $data;
     }
     
@@ -797,6 +801,7 @@ function ParseMimeifiedPages ($data)
     $page        = array();
     $pagedata    = array();
     $versiondata = array();
+    if (isset($headers['date']))
     $pagedata['date'] = strtotime($headers['date']);
 
     //DONE: support owner and acl
@@ -863,6 +868,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2006/03/07 20:47:36  rurban
+// MimeifyPageRevision refactoring. see loadsave
+//
 // Revision 1.45  2005/12/27 18:05:48  rurban
 // start with GZIP reading within ZipReader (not yet ready)
 //
