@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.103 2006-08-15 13:36:23 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.104 2006-10-12 06:36:09 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -100,6 +100,13 @@ function save_dump($file) {
     fclose($fp);
 }
 
+function _check_int_constant(&$c) {
+  // if int value == string value, force int type
+  if (sprintf("%d",(int)$c) === $c) { // DEBUG & _DEBUG_bla
+    $c = (int)$c;
+  }
+}
+
 function IniConfig($file) {
 
     // check config/config.php dump for faster startup
@@ -147,7 +154,7 @@ function IniConfig($file) {
          'PLUGIN_CACHED_DATABASE', 'PLUGIN_CACHED_FILENAME_PREFIX',
          'PLUGIN_CACHED_HIGHWATER', 'PLUGIN_CACHED_LOWWATER', 'PLUGIN_CACHED_MAXLIFETIME',
          'PLUGIN_CACHED_MAXARGLEN', 'PLUGIN_CACHED_IMGTYPES',
-         'WYSIWYG_BACKEND',
+         'WYSIWYG_BACKEND', 'PLUGIN_MARKUP_MAP',
          // extra logic:
          'SERVER_NAME','SERVER_PORT','SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
          );
@@ -206,6 +213,7 @@ function IniConfig($file) {
             continue;
         }
         if (array_key_exists($item, $rs)) {
+            _check_int_constant($rs[$item]);
             define($item, $rs[$item]);
             unset($rs[$item]);
         //} elseif (array_key_exists($item, $rsdef)) {
@@ -348,12 +356,13 @@ function IniConfig($file) {
     unset($item); unset($major); unset($max); 
     
     // User authentication
-    if (!isset($GLOBALS['USER_AUTH_ORDER']))
+    if (!isset($GLOBALS['USER_AUTH_ORDER'])) {
         if (isset($rs['USER_AUTH_ORDER']))
             $GLOBALS['USER_AUTH_ORDER'] = preg_split('/\s*:\s*/', 
                                                      $rs['USER_AUTH_ORDER']);
         else 
             $GLOBALS['USER_AUTH_ORDER'] = array("PersonalPage");
+    }
 
     // Now it's the external DB authentication stuff's turn
     if (in_array('Db', $GLOBALS['USER_AUTH_ORDER']) && empty($rs['DBAUTH_AUTH_DSN'])) {
@@ -402,6 +411,17 @@ function IniConfig($file) {
                in_array(DATABASE_TYPE, array('SQL','ADODB','PDO')) ? 2 : 0);
     }
 
+    global $PLUGIN_MARKUP_MAP;
+    $PLUGIN_MARKUP_MAP = array();
+    if (defined('PLUGIN_MARKUP_MAP') and trim(PLUGIN_MARKUP_MAP) != "") {
+	$_map = preg_split('/\s*/', PLUGIN_MARKUP_MAP);
+	foreach ($_map as $v) {
+	    list($xml,$plugin) = split(':', $v);
+	    $PLUGIN_MARKUP_MAP[$xml] = $plugin;
+	}
+	unset($_map); unset($xml); unset($plugin); unset($v);
+    }
+
     // optional values will be set to '' to simplify the logic.
     foreach ($_IC_OPTIONAL_VALUE as $item) {
         if (defined($item)) {
@@ -409,6 +429,7 @@ function IniConfig($file) {
             continue;
         }
         if (array_key_exists($item, $rs)) {
+	    _check_int_constant($rs[$item]);
             define($item, $rs[$item]);
             unset($rs[$item]);
         } else 
@@ -494,6 +515,7 @@ function IniConfig($file) {
         if (defined($item)) {
             continue;
         } else {
+	    _check_int_constant($v);
             define($item, $v);
         }
     }
@@ -882,6 +904,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2006/08/15 13:36:23  rurban
+// support iso-8859-2
+//
 // Revision 1.102  2006/05/14 18:02:27  rurban
 // patch from bug #1480077 by Kai Krakow
 //
