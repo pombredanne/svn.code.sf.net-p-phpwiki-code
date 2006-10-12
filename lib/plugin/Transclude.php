@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: Transclude.php,v 1.9 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: Transclude.php,v 1.10 2006-10-12 18:45:40 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -57,7 +57,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -75,12 +75,21 @@ extends WikiPlugin
         if (!$src) {
             return $this->error(fmt("%s parameter missing", "'src'"));
         }
+	// Expand possible interwiki link for src
+	if (strstr($src,':')
+            and (!strstr($src,'://'))
+            and ($intermap = getInterwikiMap()) 
+            and preg_match("/^" . $intermap->getRegexp() . ":/", $src)) 
+        {
+	    $link = $intermap->link($src);
+	    $src = $link->getAttr('href');
+	}
+
         // FIXME: Better recursion detection.
         // FIXME: Currently this doesnt work at all.
         if ($src == $request->getURLtoSelf() ) {
             return $this->error(fmt("recursive inclusion of url %s", $src));
         }
-
         if (! IsSafeURL($src)) {
             return $this->error(_("Bad url in src: remove all of <, >, \""));
         }
@@ -149,6 +158,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.8  2004/02/17 12:11:36  rurban
 // added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
 //
