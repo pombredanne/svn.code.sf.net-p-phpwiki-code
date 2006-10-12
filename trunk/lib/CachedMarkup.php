@@ -1,7 +1,7 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.44 2006-10-08 12:38:11 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.45 2006-10-12 06:33:50 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -546,6 +546,11 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
 	return ($label and is_string($label)) ? $label : $this->_link;
     }
     
+    /* there may be internal interwiki links also */
+    function _getType() {
+        return $this->getPagename(false) ? 'internal' : 'external';
+    }
+
     function _getURL($basepage) {
 	$link = $this->expand($basepage, $this);
 	return $link->getAttr('href');
@@ -642,6 +647,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
         return $loader;
     }
 }
+
+// $Log: not supported by cvs2svn $
+
 
 // (c-file-style: "gnu")
 // Local Variables:
