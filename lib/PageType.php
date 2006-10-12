@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.48 2006-10-08 12:38:11 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.49 2006-10-12 06:25:09 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -187,11 +187,7 @@ class PageType_interwikimap extends PageType
 
         $link = HTML::a(array('href' => $url));
 
-        if ($moniker == '') { // ":LinkName"
-            $link->pushContent(HTML::span(array('class' => 'wikipage'), $page));
-            $link->setAttr('class', $linktext ? 'named-wiki' : 'wiki');
-	}
-	elseif (!$linktext) {
+	if (!$linktext) {
             $link->pushContent(PossiblyGlueIconToText('interwiki', "$moniker:"),
                                HTML::span(array('class' => 'wikipage'), $page));
             $link->setAttr('class', 'interwiki');
@@ -511,6 +507,9 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2006/10/08 12:38:11  rurban
+// New special interwiki link markup [:LinkTo] without storing the backlink
+//
 // Revision 1.47  2005/08/07 09:14:38  rurban
 // fix comments
 //
