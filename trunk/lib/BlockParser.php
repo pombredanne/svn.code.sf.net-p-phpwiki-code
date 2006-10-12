@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.56 2006-07-23 14:03:18 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.57 2006-10-12 06:32:30 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -372,10 +372,13 @@ class ParsedBlock extends Block_HtmlElement {
     	static $_regexpset, $_block_types;
 
     	if (!is_object($_regexpset)) {
-            foreach (array('oldlists', 'list', 'dl', 'table_dl',
-                           'blockquote', 'heading', 'hr', 'pre', 'email_blockquote',
-                           'plugin', 'p')
-                     as $type) {
+	    $Block_types = array
+		    ('oldlists', 'list', 'dl', 'table_dl',
+                     'blockquote', 'heading', 'hr', 'pre', 'email_blockquote',
+		     'plugin', 'p');
+            if (ENABLE_MARKUP_DIVSPAN)
+ 		$Block_types[] = 'divspan';
+            foreach ($Block_types as $type) {
                 $class = "Block_$type";
                 $proto = new $class;
                 $this->_block_types[] = $proto;
@@ -384,6 +387,7 @@ class ParsedBlock extends Block_HtmlElement {
             $this->_regexpset = new AnchoredRegexpSet($this->_regexps);
             $_regexpset = $this->_regexpset;
             $_block_types = $this->_block_types;
+            unset($Block_types);
     	} else {
              $this->_regexpset = $_regexpset;
              $this->_block_types = $_block_types;
@@ -1058,6 +1062,36 @@ class Block_p extends BlockMarkup
     }
 }
 
+class Block_divspan extends BlockMarkup
+{
+    var $_re = '<(?: div|span)(?:[^>]*)?>';
+
+    function _match (&$input, $m) {
+    	if (substr($m->match,1,4) == 'span') {
+    	    $tag = 'span';
+	} else {
+    	    $tag = 'div';
+	}
+	// without last >
+        $args = substr(trim(substr($m->match,strlen($tag))),-1,1); 
+        $pos = $input->getPos();
+        $pi  = $m->postmatch;
+        while (!preg_match('/(?:</'.$tag.'>/', $pi)) {
+            if (($line = $input->nextLine()) === false) {
+                $input->setPos($pos);
+                return false;
+            }
+            $pi .= "\n$line";
+        }
+        $input->advance();
+        $content = TransformInline(trim($pi));
+        $this->_element = new Block_HtmlElement($tag, $args, $content);
+        $this->_element->setTightness($this->_tight_top, $this->_tight_bot);
+        return true;
+    }
+}
+
+
 ////////////////////////////////////////////////////////////////
 //
 
@@ -1099,6 +1133,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2006/07/23 14:03:18  rurban
+// add new feature: DISABLE_MARKUP_WIKIWORD
+//
 // Revision 1.55  2005/01/29 21:08:41  rurban
 // update (C)
 //

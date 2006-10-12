@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.79 2006-10-08 12:38:11 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.80 2006-10-12 06:32:30 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -24,7 +24,7 @@ rcs_id('$Id: InlineParser.php,v 1.79 2006-10-08 12:38:11 rurban Exp $');
  * wiki-markup.
  *
  * @package Markup
- * @author Geoffrey T. Dairiki
+ * @author Geoffrey T. Dairiki, Reini Urban
  */
 /**
  */
@@ -328,7 +328,7 @@ function LinkBracketLink($bracketlink) {
     // $bracketlink will start and end with brackets; in between will
     // be either a page name, a URL or both separated by a pipe.
     
-    // strip brackets and leading space
+    // Strip brackets and leading space
     // FIXME: \n inside [] will lead to errors
     preg_match('/(\#?) \[\s* (?: (.*?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
 	       $bracketlink, $matches);
@@ -398,7 +398,7 @@ function LinkBracketLink($bracketlink) {
         else
             return new Cached_ExternalLink($link, $label);
     }
-    elseif (preg_match("/^phpwiki:/", $link))
+    elseif (substr($link,0,8) == 'phpwiki:')
         return new Cached_PhpwikiURL($link, $label);
     /* Semantic relations and attributes */
     elseif (preg_match("/:[:-]/", $link) and !isImageLink($link))
@@ -609,6 +609,34 @@ class Markup_html_emphasis extends BalancedMarkup
     }
 }
 
+class Markup_html_divspan extends BalancedMarkup
+{
+    var $_start_regexp = 
+        "<(?: div|span )(?: \s[^>]*)?>";
+
+    function getEndRegexp ($match) {
+    	if (substr($match,1,4) == 'span')
+    	    $tag = 'span';
+    	else
+    	    $tag = 'div';
+        return "<\\/" . $tag . '>';
+    }
+    
+    function markup ($match, $body) {
+    	if (substr($match,1,4) == 'span')
+    	    $tag = 'span';
+    	else
+    	    $tag = 'div';
+    	$rest = substr($match,1+strlen($tag),-1);
+    	if (!empty($rest)) {
+    	    list($key,$val) = explode("=",$rest);
+    	    $args = array($key => $val);
+    	} else $args = array();
+        return new HtmlElement($tag, $args, $body);
+    }
+}
+
+
 class Markup_html_abbr extends BalancedMarkup
 {
     //rurban: abbr|acronym need an optional title tag.
@@ -682,34 +710,31 @@ class Markup_xml_plugin extends BalancedMarkup
 {
     //var $_start_regexp = "<(?: ".join('|',PLUGIN_MARKUP_MAP)." )(?: \s[^>]*)>";
 
-    function getStartRegexp ($match) {
+    function getStartRegexp () {
+	global $PLUGIN_MARKUP_MAP;
         static $_start_regexp;
         if ($_start_regexp) return $_start_regexp;
-        if (!defined('PLUGIN_MARKUP_MAP'))
+        if (empty($PLUGIN_MARKUP_MAP))
             return '';
-        $pairs = split(' ', PLUGIN_MARKUP_MAP);
-        $this->_map = array();
-        foreach ($pairs as $pair) {
-            list($xml,$plugin) = split(':',$pair);
-            $this->_map[$xml] = $plugin;
-        }
         //"<(?: html|dot|toc|amath|richtable|include|tex )(?: \s[^>]*)>"
-        return "<(?: ".join('|',array_keys($this->_map))." )(?:(?:\s[^>]*|/))>";;
+	$_start_regexp = "<(?: ".join('|',array_keys($PLUGIN_MARKUP_MAP))." )(?:\s[^>]*|/)>";
+        return $_start_regexp;
     }
     function getEndRegexp ($match) {
         return "<\\/" . $match . '>';
     }
     function markup ($match, $body) {
+	global $PLUGIN_MARKUP_MAP;
         $name = substr($match,2,-2); $vars = '';
         if (preg_match('/^(\S+)\|(.*)$/', $name, $_m)) {
             $name = $_m[1];
             $vars = $_m[2]; //str_replace(' ', '&', $_m[2]);
         }
-        if (!isset($this->_map[$name])) {
-            trigger_error("No plugin for $ name $ vars defined.", E_USER_WARNING);
+        if (!isset($PLUGIN_MARKUP_MAP[$name])) {
+            trigger_error("No plugin for $name $vars defined.", E_USER_WARNING);
             return "";
         }
-        $plugin = $this->_map[$name];
+        $plugin = $PLUGIN_MARKUP_MAP[$name];
 	return new Cached_PluginInvocation("<"."?plugin $plugin $vars $body ?".">");
     }
 }
@@ -818,10 +843,14 @@ class InlineTransformer
             $class = "Markup_$mtype";
             $this->_addMarkup(new $class);
         }
+        if (ENABLE_MARKUP_DIVSPAN and !$non_default)
+            $this->_addMarkup(new Markup_html_divspan);
         if (ENABLE_MARKUP_COLOR and !$non_default)
             $this->_addMarkup(new Markup_color);
         if (ENABLE_MARKUP_TEMPLATE and !$non_default)
             $this->_addMarkup(new Markup_template_plugin);
+        if (PLUGIN_MARKUP_MAP and !$non_default)
+            $this->_addMarkup(new Markup_xml_plugin);
     }
 
     function _addMarkup ($markup) {
@@ -983,6 +1012,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.79  2006/10/08 12:38:11  rurban
+// New special interwiki link markup [:LinkTo] without storing the backlink
+//
 // Revision 1.78  2006/09/03 09:53:52  rurban
 // more colors, case-insensitive color names
 //
