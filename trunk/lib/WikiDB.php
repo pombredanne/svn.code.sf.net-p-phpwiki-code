@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.143 2006-09-06 05:46:40 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.144 2006-10-12 06:36:09 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -123,8 +123,9 @@ class WikiDB {
             $this->touch();
         
         // devel checking.
-        if (DEBUG || _DEBUG_SQL)
+        if ((int)DEBUG & _DEBUG_SQL) {
             $this->_backend->check();
+    }
     }
     
     /**
@@ -156,7 +157,7 @@ class WikiDB {
     function getPage($pagename) {
         static $error_displayed = false;
         $pagename = (string) $pagename;
-        if (DEBUG) {
+        if ((int)DEBUG) {
             if ($pagename === '') {
                 if ($error_displayed) return false;
                 $error_displayed = true;
@@ -669,7 +670,7 @@ class WikiDB_Page
     function WikiDB_Page(&$wikidb, $pagename) {
         $this->_wikidb = &$wikidb;
         $this->_pagename = $pagename;
-        if (DEBUG) {
+        if ((int)DEBUG) {
             if (!(is_string($pagename) and $pagename != '')) {
                 if (function_exists("xdebug_get_function_stack")) {
                     echo "xdebug_get_function_stack(): "; var_dump(xdebug_get_function_stack());
@@ -925,11 +926,11 @@ class WikiDB_Page
         //
         // We're doing this here rather than in createRevision because
         // postgresql can't optimize while locked.
-        if ((DEBUG & _DEBUG_SQL)
+        if (((int)DEBUG & _DEBUG_SQL)
 	    or (DATABASE_OPTIMISE_FREQUENCY > 0 and 
                 (time() % DATABASE_OPTIMISE_FREQUENCY == 0))) {
             if ($backend->optimize()) {
-                if (DEBUG)
+                if ((int)DEBUG)
                     trigger_error(_("Optimizing database"), E_USER_NOTICE);
             }
         }
@@ -1981,19 +1982,19 @@ class WikiDB_PageRevisionIterator
         $pagename = $next['pagename'];
         $version = $next['version'];
         $versiondata = $next['versiondata'];
-        if (DEBUG) {
+        if ((int)DEBUG) {
             if (!(is_string($pagename) and $pagename != '')) {
                 trigger_error("empty pagename",E_USER_WARNING);
                 return false;
             }
         } else assert(is_string($pagename) and $pagename != '');
-        if (DEBUG) {
+        if ((int)DEBUG) {
             if (!is_array($versiondata)) {
                 trigger_error("empty versiondata",E_USER_WARNING);
                 return false;
             }
         } else assert(is_array($versiondata));
-        if (DEBUG) {
+        if ((int)DEBUG) {
             if (!($version > 0)) {
                 trigger_error("invalid version",E_USER_WARNING);
                 return false;
@@ -2271,6 +2272,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.143  2006/09/06 05:46:40  rurban
+// do db backend check on _DEBUG_SQL
+//
 // Revision 1.142  2006/06/10 11:55:58  rurban
 // print optimize only when DEBUG
 //
