@@ -1,9 +1,9 @@
-Date: Tue, 7 Mar 2006 15:13:37 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.12p1)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.64 2006-09-06 06:04:22 rurban Exp $
+Date: Wed, 11 Oct 2006 09:16:43 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13pre-20061010)
+X-Rcs-Id: $Id: ReleaseNotes,v 1.65 2006-10-12 06:38:53 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.64 $";
+  pgsrc_version="2 $Revision: 1.65 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -14,12 +14,15 @@ Content-Transfer-Encoding: binary
 fixes:
 * DB: ANSI SQL statements
 * testsuite: force C locale and EN $LANG
-* fixed blog theme layout
+* fixed blog and Monobook theme layout
 * xhtml dump for subpages into subdirectories
-* ErrorManager: patch #1438439 by Matt Brown: Only set no-cache headers when error output is generated
+* ErrorManager: patch #1438439 by Matt Brown: 
+  Only set no-cache headers when error output is generated
 * ImageLinks: patch #1348996 by Robert Litwiniec
 * fix bug #1327912 numeric pagenames can break plugins (Joachim Lous)
 * improve pdf output via external converter
+* force integer constants to be set as integer
+* partially fix CRC overflow in ziplib (Bob Apthorpe)
 
 changes:
 * add linkrelation support: getPageLinks returns now an array of hashes
@@ -32,6 +35,12 @@ changes:
 * remove user table upgrade from SQL db.
 * updated locale for it, de and es (google translation)
 * improve loading multiple version archives such as full zipdumps. force temp. overwrite
+* add new empty InterWiki moniker ":", not to store backlinks [:DontStoreLink]
+* omit actionbar from pdf output
+* support loadfile for multipart archives (full dumps) automatically
+* _BackendInfoPlugin prints linkoinfo also.
+* ExternalSearchPlugin displays the button at the right. Change it with 
+  EXTERNALSEARCH_DEFAULT_BUTTON_POSITION = left, or the argument button_position = left or none.
 
 new:
 * add SemanticRelations syntax and db structure.
@@ -40,12 +49,17 @@ new:
 * postgresql tsearch2 support
 * added new xml-rpc methods: listPlugins, getPluginSynopsis
 * new FileInfoPlugin
+* new BoxRightPlugin
+* new PasswordResetPlugin
 * new experimental WYSIWYG edit libraries 
   (WikiWyg, tinymce, FCKeditor, htmlarea3, htmlarea2, spaw)
-* new wysiwyg_editor-1.3a feature by Jean-Nicolas GEREONE 
-* add DISABLE_MARKUP_WIKIWORD to force [ ] for links	
+* new wysiwyg_editor feature by Jean-Nicolas GEREONE 
+* new option DISABLE_MARKUP_WIKIWORD to force [ ] for links
+* new option ENABLE_MARKUP_DIVSPAN (experimental)
+* new option PLUGIN_MARKUP_MAP for xml-style plugin syntax (experimental)
 * support Windows NTLM Auth via HttpAuth: mod_ntlm (apache1) and mod_auth_sspi (apache2)
 * patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
+* new options db-check and db-rebuild for WikiAdminPlugin.
 
 1.3.12p2 Mar, 7 2006, Reini Urban:
 
