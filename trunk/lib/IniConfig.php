@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.105 2006-11-19 11:24:11 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.106 2006-11-19 13:52:18 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -193,7 +193,8 @@ function IniConfig($file) {
          'BLOG_EMPTY_DEFAULT_PREFIX', 'DATABASE_PERSISTENT',
          'ENABLE_DISCUSSION_LINK', 'ENABLE_CAPTCHA',
          'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML',
-         'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE'
+         'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
+         'ENABLE_MARKUP_DIVSPAN'
          );
 
     $rs = @parse_ini_file($file);
@@ -414,10 +415,11 @@ function IniConfig($file) {
     global $PLUGIN_MARKUP_MAP;
     $PLUGIN_MARKUP_MAP = array();
     if (defined('PLUGIN_MARKUP_MAP') and trim(PLUGIN_MARKUP_MAP) != "") {
-	$_map = preg_split('/\s*/', PLUGIN_MARKUP_MAP);
+	$_map = preg_split('/\s+/', PLUGIN_MARKUP_MAP);
 	foreach ($_map as $v) {
 	    list($xml,$plugin) = split(':', $v);
-	    $PLUGIN_MARKUP_MAP[$xml] = $plugin;
+	    if (!empty($xml) and !empty($plugin))
+	        $PLUGIN_MARKUP_MAP[$xml] = $plugin;
 	}
 	unset($_map); unset($xml); unset($plugin); unset($v);
     }
@@ -911,6 +913,10 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2006/11/19 11:24:11  rurban
+// IPV6 fix by matt brown, #1546571
+// An IPv6 address must be surrounded by square brackets to form a valid server name.
+//
 // Revision 1.104  2006/10/12 06:36:09  rurban
 // Guard against unwanted DEBUG="DEBUG" logic. In detail (WikiDB),
 // and generally by forcing all int constants to be defined as int.
