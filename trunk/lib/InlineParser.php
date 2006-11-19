@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.80 2006-10-12 06:32:30 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.81 2006-11-19 13:52:52 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -203,10 +203,13 @@ class RegexpSet
         $match->match = $m[2];
 
         /* DEBUGGING */
-        /*
         if (DEBUG & 4) {
-          var_dump($regexps); var_dump($matched); var_dump($matched_inc); 
-        PrintXML(HTML::dl(HTML::dt("input"),
+          static $_already_dumped = 0;
+          if (!$_already_dumped) {
+            var_dump($regexps); var_dump($matched); var_dump($matched_inc); 
+          }
+          $_already_dumped = 1;
+          PrintXML(HTML::dl(HTML::dt("input"),
                           HTML::dd(HTML::pre($text)),
                           HTML::dt("regexp"),
                           HTML::dd(HTML::pre($match->regexp_ind, ":", $regexps[$match->regexp_ind])),
@@ -218,7 +221,7 @@ class RegexpSet
                           HTML::dd(HTML::pre($match->postmatch))
                           ));
         }
-        */
+        
         return $match;
     }
 }
@@ -717,7 +720,7 @@ class Markup_xml_plugin extends BalancedMarkup
         if (empty($PLUGIN_MARKUP_MAP))
             return '';
         //"<(?: html|dot|toc|amath|richtable|include|tex )(?: \s[^>]*)>"
-	$_start_regexp = "<(?: ".join('|',array_keys($PLUGIN_MARKUP_MAP))." )(?:\s[^>]*|/)>";
+	$_start_regexp = "<(?: ".join('|',array_keys($PLUGIN_MARKUP_MAP))." )(?: \s[^>]* | / )>";
         return $_start_regexp;
     }
     function getEndRegexp ($match) {
@@ -1012,6 +1015,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.80  2006/10/12 06:32:30  rurban
+// Optionally support new tags <div>, <span> with ENABLE_MARKUP_DIVSPAN (in work)
+//
 // Revision 1.79  2006/10/08 12:38:11  rurban
 // New special interwiki link markup [:LinkTo] without storing the backlink
 //
