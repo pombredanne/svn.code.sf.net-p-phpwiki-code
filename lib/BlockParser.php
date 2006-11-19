@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.57 2006-10-12 06:32:30 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.58 2006-11-19 13:57:14 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -1076,7 +1076,7 @@ class Block_divspan extends BlockMarkup
         $args = substr(trim(substr($m->match,strlen($tag))),-1,1); 
         $pos = $input->getPos();
         $pi  = $m->postmatch;
-        while (!preg_match('/(?:</'.$tag.'>/', $pi)) {
+        while (!preg_match('/(?:</'.$tag.'>)/', $pi)) {
             if (($line = $input->nextLine()) === false) {
                 $input->setPos($pos);
                 return false;
@@ -1133,6 +1133,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.57  2006/10/12 06:32:30  rurban
+// Optionally support new tags <div>, <span> with ENABLE_MARKUP_DIVSPAN (in work)
+//
 // Revision 1.56  2006/07/23 14:03:18  rurban
 // add new feature: DISABLE_MARKUP_WIKIWORD
 //
