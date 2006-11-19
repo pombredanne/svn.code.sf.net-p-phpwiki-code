@@ -1,4 +1,4 @@
--- $Id: oci8-initialize.sql,v 1.5 2005-10-12 06:08:37 rurban Exp $
+-- $Id: oci8-initialize.sql,v 1.6 2006-11-19 11:10:11 rurban Exp $
 
 set verify off
 set feedback off
@@ -190,16 +190,16 @@ prompt Creating &accesslog_tbl
 CREATE TABLE &accesslog_tbl (
 -- for OCI 9i+ use:   time_stamp TIMESTAMP,
         time_stamp    DATE,
-	remote_host   VARCHAR2(50),
+	remote_host   VARCHAR2(100),
 	remote_user   VARCHAR2(50),
         request_method VARCHAR2(10),
 	request_line  VARCHAR2(255),
 	request_args  VARCHAR2(255),
 	request_file  VARCHAR2(255),
 	request_uri   VARCHAR2(255),
-	request_time  DATE,
+	request_time  VARCHAR2(28),
 	status 	      NUMBER(4),
-	bytes_sent    NUMBER(4),
+	bytes_sent    NUMBER,
         referer       VARCHAR(255), 
 	agent         VARCHAR(255),
 	request_duration FLOAT

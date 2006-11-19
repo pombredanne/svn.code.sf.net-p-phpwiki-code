@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_oci8.php,v 1.9 2005-11-14 22:24:33 rurban Exp $');
+rcs_id('$Id: PearDB_oci8.php,v 1.10 2006-11-19 11:10:11 rurban Exp $');
 
 /**
  * Oracle extensions for the Pear DB backend.
@@ -63,6 +63,15 @@ extends WikiDB_backend_PearDB_pgsql
             $dbh->query("SET TRANSACTION READ ONLY");
         }
     }
+
+    function _quote($s) {
+        return base64_encode($s);
+    }
+
+    function _unquote($s) {
+        return base64_decode($s);
+    }
+
 };
 
 class WikiDB_backend_PearDB_oci8_search

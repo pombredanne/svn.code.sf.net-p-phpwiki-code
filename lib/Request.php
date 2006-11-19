@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.106 2006-08-15 13:37:59 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.107 2006-11-19 11:10:11 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -1142,18 +1142,19 @@ class Request_AccessLogEntry
                  sprintf("INSERT INTO $log_tbl"
                          . " (time_stamp,remote_host,remote_user,request_method,request_line,request_uri,"
                          .   "request_args,request_time,status,bytes_sent,referer,agent,request_duration)"
-                         . " VALUES(%d,%s,%s,%s,%s,%s,%s,%s,%d,%d,%s,%s,'%s')",
-                     $this->time,
-                     $dbh->quote($this->host), $dbh->quote($this->user),
-                     $dbh->quote($request->get('REQUEST_METHOD')), $dbh->quote($this->request), 
-                     $dbh->quote($request->get('REQUEST_URI')), $dbh->quote($this->request_args),
-                     $dbh->quote($this->_ncsa_time($this->time)), $this->status, $this->size,
-                     $dbh->quote($this->referer),
-                     $dbh->quote($this->user_agent),
-                     $this->duration));
+                         . " VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%s,%s,'%F')",
+                         // Problem: date formats are backend specific. Either use unixtime as %d (long),
+                         // or the native timestamp format.
+                         date('d-M-Y H:i:s', $this->time),
+                         $dbh->quote($this->host), $dbh->quote($this->user),
+                         $dbh->quote($request->get('REQUEST_METHOD')), $dbh->quote($this->request), 
+                         $dbh->quote($request->get('REQUEST_URI')), $dbh->quote($this->request_args),
+                         $dbh->quote($this->_ncsa_time($this->time)), $this->status, $this->size,
+                         $dbh->quote($this->referer),
+                         $dbh->quote($this->user_agent),
+                         $this->duration));
         }
     }
-
 }
 
 /**
@@ -1353,6 +1354,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2006/08/15 13:37:59  rurban
+// error on no long arrays
+//
 // Revision 1.105  2006/04/17 17:25:19  rurban
 // make the flush error go away. die
 //
