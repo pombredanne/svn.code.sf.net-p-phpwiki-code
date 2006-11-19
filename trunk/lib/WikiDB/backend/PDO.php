@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.8 2006-11-19 14:03:32 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.9 2006-11-19 14:04:39 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -762,7 +762,7 @@ extends WikiDB_backend
             list($have, $want) = array('linkee', 'linker');
         else
             list($have, $want) = array('linker', 'linkee');
-        $sth = $dbh->prepare("SELECT CASE $want.pagename WHEN 1 ELSE 0 END"
+        $sth = $dbh->prepare("SELECT CASE WHEN $want.pagename THEN 1 ELSE 0 END"
                              . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
                              . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                              . " AND $have.pagename=?"
@@ -1459,6 +1459,9 @@ class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql {}
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2006/11/19 14:03:32  rurban
+// Replace IF by CASE in exists_link()
+//
 // Revision 1.7  2006/05/14 12:28:03  rurban
 // mysql 5.x fix for wantedpages join
 //
