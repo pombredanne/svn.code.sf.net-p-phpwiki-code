@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.104 2006-10-12 06:36:09 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.105 2006-11-19 11:24:11 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -785,7 +785,14 @@ function fixup_dynamic_configs($file) {
     foreach (array('SERVER_NAME','SERVER_PORT') as $var) {
         //FIXME: for CGI without _SERVER
         if (!defined($var) and !empty($HTTP_SERVER_VARS[$var]))
-            define($var, $HTTP_SERVER_VARS[$var]);
+            // IPV6 fix by matt brown, #1546571
+            // An IPv6 address must be surrounded by square brackets to form a valid server name.
+            if ($var == 'SERVER_NAME' &&
+                    strstr($HTTP_SERVER_VARS[$var], ':')) {
+                define($var, '[' . $HTTP_SERVER_VARS[$var] . ']');
+            } else {
+                define($var, $HTTP_SERVER_VARS[$var]);
+            }
     }
     if (!defined('SERVER_NAME')) define('SERVER_NAME', '127.0.0.1');
     if (!defined('SERVER_PORT')) define('SERVER_PORT', 80);
@@ -904,6 +911,10 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2006/10/12 06:36:09  rurban
+// Guard against unwanted DEBUG="DEBUG" logic. In detail (WikiDB),
+// and generally by forcing all int constants to be defined as int.
+//
 // Revision 1.103  2006/08/15 13:36:23  rurban
 // support iso-8859-2
 //
