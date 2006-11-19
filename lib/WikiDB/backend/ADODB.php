@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.90 2006-09-06 05:50:19 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.91 2006-11-19 14:03:32 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -800,7 +800,7 @@ id      pagename        linkrelation
             list($have, $want) = array('linker', 'linkee');
         $qpagename = $dbh->qstr($pagename);
         $qlink = $dbh->qstr($link);
-        $row = $dbh->GetRow("SELECT IF($want.pagename,1,0)"
+        $row = $dbh->GetRow("SELECT CASE WHEN $want.pagename THEN 1 ELSE 0 END"
                             . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
                             . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                             . " AND $have.pagename=$qpagename"
@@ -1537,6 +1537,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.90  2006/09/06 05:50:19  rurban
+// please XEmacs font-lock
+//
 // Revision 1.89  2006/06/10 11:59:46  rurban
 // purge empty, non-references pages when link is deleted
 //
