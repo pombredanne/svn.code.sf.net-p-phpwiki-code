@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.7 2006-05-14 12:28:03 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.8 2006-11-19 14:03:32 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -762,12 +762,11 @@ extends WikiDB_backend
             list($have, $want) = array('linkee', 'linker');
         else
             list($have, $want) = array('linker', 'linkee');
-        $sth = $dbh->prepare("SELECT IF($want.pagename,1,0)"
+        $sth = $dbh->prepare("SELECT CASE $want.pagename WHEN 1 ELSE 0 END"
                              . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
                              . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                              . " AND $have.pagename=?"
-                             . " AND $want.pagename=?"
-                             . "LIMIT 1");
+                             . " AND $want.pagename=?);
         $sth->bindParam(1, $pagename, PDO_PARAM_STR, 100);
         $sth->bindParam(2, $link, PDO_PARAM_STR, 100);
         $sth->execute();
@@ -1460,6 +1459,9 @@ class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql {}
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2006/05/14 12:28:03  rurban
+// mysql 5.x fix for wantedpages join
+//
 // Revision 1.6  2005/11/14 22:24:33  rurban
 // fix fulltext search,
 // Eliminate stoplist words,
