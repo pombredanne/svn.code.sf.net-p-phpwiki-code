@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.107 2006-11-19 11:10:11 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.108 2006-11-29 19:49:48 rurban Exp $');
 /*
- Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
+ Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
  This file is part of PhpWiki.
 
@@ -1145,7 +1145,7 @@ class Request_AccessLogEntry
                          . " VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%s,%s,'%F')",
                          // Problem: date formats are backend specific. Either use unixtime as %d (long),
                          // or the native timestamp format.
-                         date('d-M-Y H:i:s', $this->time),
+                         $dbh->quote(date('d-M-Y H:i:s', $this->time)),
                          $dbh->quote($this->host), $dbh->quote($this->user),
                          $dbh->quote($request->get('REQUEST_METHOD')), $dbh->quote($this->request), 
                          $dbh->quote($request->get('REQUEST_URI')), $dbh->quote($this->request_args),
@@ -1354,6 +1354,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.107  2006/11/19 11:10:11  rurban
+// Patch from Bug# 1569424 by Bob Peele (bob.peele@oracle.com)
+//
 // Revision 1.106  2006/08/15 13:37:59  rurban
 // error on no long arrays
 //
