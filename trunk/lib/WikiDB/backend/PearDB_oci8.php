@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_oci8.php,v 1.10 2006-11-19 11:10:11 rurban Exp $');
+rcs_id('$Id: PearDB_oci8.php,v 1.11 2006-11-29 19:49:05 rurban Exp $');
 
 /**
  * Oracle extensions for the Pear DB backend.
@@ -33,8 +33,6 @@ extends WikiDB_backend_PearDB_pgsql
             DB_PORTABILITY_LOWERCASE | DB_PORTABILITY_NULL_TO_EMPTY | DB_PORTABILITY_NUMROWS);
     }
 
-            
-    /**
      * Pack tables.
      */
     function optimize() {
