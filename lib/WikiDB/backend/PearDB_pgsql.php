@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.22 2005-11-16 07:36:22 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.23 2006-11-29 19:49:05 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -92,16 +92,16 @@ extends WikiDB_backend_PearDB
                                        $dbh->escapeSimple($pagename)));
         else
             $sth = $dbh->query("UPDATE $page_tbl"
-                                       . " SET cached_html=?"
-                                       . " WHERE pagename=?",
-                                       // PearDB does NOT use pg_escape_string()! Oh dear.
-                                       array($this->_quote($data), $pagename));
+                               . " SET cached_html=?"
+                               . " WHERE pagename=?",
+                               // PearDB does NOT use pg_escape_string()! Oh dear.
+                               array($this->_quote($data), $pagename));
     }
 
     /**
      * Create a new revision of a page.
      */
-    function set_versiondata($pagename, $version, $data) {
+    function _todo_set_versiondata($pagename, $version, $data) {
         $dbh = &$this->_dbh;
         $version_tbl = $this->_table_names['version_tbl'];
         
@@ -124,6 +124,7 @@ extends WikiDB_backend_PearDB
                             $id, $version, $mtime, $minor_edit,
                             $this->_quote($content),
                             $this->_serialize($data)));
+        // TODO: This function does not work yet
         $dbh->query(sprintf("SELECT update_recent (%d, %d)", $id, $version));
         $this->unlock();
     }
@@ -131,15 +132,16 @@ extends WikiDB_backend_PearDB
     /**
      * Delete an old revision of a page.
      */
-    function delete_versiondata($pagename, $version) {
+    function _todo_delete_versiondata($pagename, $version) {
         $dbh = &$this->_dbh;
+        // TODO: This function was removed
         $dbh->query(sprintf("SELECT delete_versiondata (%d, %d)", $id, $version));
     }
 
     /**
      * Rename page in the database.
      */
-    function rename_page ($pagename, $to) {
+    function _todo_rename_page ($pagename, $to) {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         
@@ -149,13 +151,7 @@ extends WikiDB_backend_PearDB
                 // Cludge Alert!
                 // This page does not exist (already verified before), but exists in the page table.
                 // So we delete this page.
-                $dbh->query("DELETE FROM $page_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $version_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $recent_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$new");
-                // We have to fix all referring tables to the old id
-                $dbh->query("UPDATE $link_tbl SET linkfrom=$id WHERE linkfrom=$new");
-                $dbh->query("UPDATE $link_tbl SET linkto=$id WHERE linkto=$new");
+                $dbh->query("SELECT prepare_rename_page($id, $new)");
             }
             $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
                                 $dbh->escapeSimple($to)));

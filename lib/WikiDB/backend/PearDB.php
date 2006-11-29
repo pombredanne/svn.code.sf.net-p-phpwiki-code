@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.100 2006-11-19 13:59:11 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.101 2006-11-29 19:49:05 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -593,7 +593,7 @@ extends WikiDB_backend
             list($have, $want) = array('linker', 'linkee');
         $qpagename = $dbh->escapeSimple($pagename);
         $qlink = $dbh->escapeSimple($link);
-        $row = $dbh->GetRow("SELECT CASE $want.pagename WHEN 1 ELSE 0 END as result"
+        $row = $dbh->GetRow("SELECT CASE WHEN $want.pagename THEN 1 ELSE 0 END as result"
                             . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
                             . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                             . " AND $have.pagename='$qpagename'"
@@ -1238,6 +1238,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2006/11/19 13:59:11  rurban
+// Replace IF by CASE in exists_link()
+//
 // Revision 1.99  2006/10/08 12:40:51  rurban
 // minor cleanup: remove unused vars
 //
