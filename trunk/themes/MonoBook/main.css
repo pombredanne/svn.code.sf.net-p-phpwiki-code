@@ -15,7 +15,7 @@
     width: 100%;
     float: right;
     margin: 0 0 0.6em -12.2em;
-    padding:0;
+    padding:0 0 0 0 ;
 }
 #content {
     margin: 2.8em 0 0 12.2em;
@@ -37,7 +37,7 @@
 */
 
 body {
-    font: x-small sans-serif;
+    font: small sans-serif;
     background: #f9f9f9 url("images/headbg.jpg") 0px 0px no-repeat;
     color: Black;
     margin: 0;
@@ -92,7 +92,8 @@ hr {
 h1, h2, h3, h4, h5, h6 {
     color: Black;
     background: none;
-    font-weight: normal;
+    font-weight: bold;
+    font-family: Tahoma;
     margin: 0;
     padding-top: 0.5em;
     padding-bottom: 0.17em;
@@ -100,15 +101,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 h1 { font-size: 188%; }
 h2 { font-size: 150%; }
-h3, h4, h5, h6 { 
-    border-bottom: none;
-    font-weight: bold;
-}
 h3 { font-size: 132%; }
 h4 { font-size: 116%; }
 h5 { font-size: 100%; }
 h6 { font-size: 80%;  }
-
+h4, h5, h6 { 
+    border-bottom: none;
+    font-weight: normal;
+}
 ul { 
     line-height: 1.5em;
     list-style-type: square;
@@ -621,7 +621,7 @@ input.searchButton {
     margin:0;
     position:absolute;
     left:0px;
-    top:0px;
+    top:50px;
     z-index: 0;
     border: none;
     background: none;
@@ -769,8 +769,8 @@ li#ca-watch { margin-left: 1.6em; }
     background-color: White;
     border-top: 1px solid #fabd23;
     border-bottom: 1px solid #fabd23;
-    margin: 0.6em 0em 1em 0em;
-    padding: 0.4em 0em 1.2em 0em;
+    margin: 2em 0em 1em 0em;
+/*  padding: 0.4em 0em 1.2em 0em; */
     text-align: center;
     font-size: 90%;
 }
