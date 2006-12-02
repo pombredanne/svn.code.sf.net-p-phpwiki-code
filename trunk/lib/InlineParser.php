@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.81 2006-11-19 13:52:52 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.82 2006-12-02 19:53:05 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -822,23 +822,15 @@ class InlineTransformer
     function InlineTransformer ($markup_types = false) {
         if (!$markup_types) {
             $non_default = false;
+            $markup_types = array
+                ('escape', 'bracketlink', 'url',
+                 'interwiki', 'wikiword', 'linebreak',
+                 'old_emphasis', 'nestled_emphasis',
+                 'html_emphasis', 'html_abbr', 'plugin',
+                 'isonumchars', 'isohexchars', /*'html_entities'*/
+                 );
 	    if (DISABLE_MARKUP_WIKIWORD)
-                // TODO: easily and portably remove wikiword from array
-		$markup_types = array
-		    ('escape', 'bracketlink', 'url',
-		     'interwiki', /* 'wikiword', */ 'linebreak',
-		     'old_emphasis', 'nestled_emphasis',
-		     'html_emphasis', 'html_abbr', 'plugin',
-		     'isonumchars', 'isohexchars', /*'html_entities'*/
-		     );
-	    else
-		$markup_types = array
-		    ('escape', 'bracketlink', 'url',
-                     'interwiki', 'wikiword', 'linebreak',
-                     'old_emphasis', 'nestled_emphasis',
-                     'html_emphasis', 'html_abbr', 'plugin',
-                     'isonumchars', 'isohexchars', /*'html_entities'*/
-                     );
+                $markup_types = array_remove($markup_types, 'wikiword');
         } else {
             $non_default = true;
 	}
@@ -1015,6 +1007,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.81  2006/11/19 13:52:52  rurban
+// improve debug output: regex only once
+//
 // Revision 1.80  2006/10/12 06:32:30  rurban
 // Optionally support new tags <div>, <span> with ENABLE_MARKUP_DIVSPAN (in work)
 //
