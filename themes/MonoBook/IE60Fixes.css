@@ -1,6 +1,7 @@
 /* 6.0 - only fixes */
 /* content area */ 
 /* workaround for various ie float bugs */
+/*
 #column-content { 
     float: none; 
     margin-left: 0;
@@ -17,10 +18,17 @@
     left: 0;
     z-index: 4;
 }
-#footer {
-    margin-left: 13.6em;
-    border-left: 1px solid #fabd23;
+*/
+
+#content {
+    margin: 2.9em 0 0 12.2em;
 }
+
+#footer {
+    margin-top: 2em;
+}
+
+body { font-size: x-small; }
 
 /* the tabs */
 
