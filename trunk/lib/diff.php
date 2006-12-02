@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.52 2005-04-01 14:45:14 rurban Exp $');
+rcs_id('$Id: diff.php,v 1.53 2006-12-02 13:58:27 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -285,7 +285,7 @@ function showDiff (&$request) {
     $page = $request->getPage();
     $current = $page->getCurrentRevision();
     if ($current->getVersion() < 1) {
-        $html = HTML::div(array('id'=>'content'),
+        $html = HTML::div(array('class'=>'wikitext','id'=>'difftext'),
                           HTML::p(fmt("I'm sorry, there is no such page as %s.",
                                       WikiLink($pagename, 'unknown'))));
         include_once('lib/Template.php');
@@ -343,7 +343,7 @@ function showDiff (&$request) {
     $old_link = $old ? WikiLink($old, '', $old_version) : $old_version;
     $page_link = WikiLink($page);
 
-    $html = HTML::div(array('id'=>'content'),
+    $html = HTML::div(array('class'=>'wikitext','id'=>'difftext'),
                      HTML::p(fmt("Differences between %s and %s of %s.",
                                  $new_link, $old_link, $page_link)));
 
@@ -362,7 +362,6 @@ function showDiff (&$request) {
         $otherdiffs->pushContent(Button($args, $label[$other]));
     }
     $html->pushContent($otherdiffs);
-
 
     if ($old and $old->getVersion() == 0)
         $old = false;
@@ -388,6 +387,11 @@ function showDiff (&$request) {
             //$fmt = new TableUnifiedDiffFormatter;
             $html->pushContent($fmt->format($diff));
         }
+
+        
+        $html->pushContent(HTML::hr(), HTML::h1($new_version));
+        include_once("lib/BlockParser.php");
+        $html->pushContent(TransformText($new,$new->get('markup'),$page));
     }
 
     include_once('lib/Template.php');
@@ -395,6 +399,10 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2005/04/01 14:45:14  rurban
+// fix dirty side-effect: dont printf too early bypassing ob_buffering.
+// fixes MSIE.
+//
 // Revision 1.51  2005/02/04 15:26:57  rurban
 // need div=content for blog
 //
