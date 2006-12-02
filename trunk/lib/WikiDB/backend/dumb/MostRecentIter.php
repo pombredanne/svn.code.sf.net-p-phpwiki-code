@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostRecentIter.php,v 1.6 2005-04-09 09:16:54 rurban Exp $');
+rcs_id('$Id: MostRecentIter.php,v 1.7 2006-12-02 13:19:50 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -23,7 +23,7 @@ extends WikiDB_backend_iterator
         $this->_revisions = array();
         while ($page = $pages->next()) {
             $revs = $backend->get_all_revisions($page['pagename']);
-            while ($revision = &$revs->next()) {
+            while ($revision = $revs->next()) {
                 $vdata = &$revision['versiondata'];
                 assert(is_array($vdata));
                 if (!empty($vdata['is_minor_edit'])) {

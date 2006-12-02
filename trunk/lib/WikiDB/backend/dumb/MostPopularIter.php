@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopularIter.php,v 1.7 2004-01-25 08:17:29 rurban Exp $');
+rcs_id('$Id: MostPopularIter.php,v 1.8 2006-12-02 13:19:50 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -18,7 +18,7 @@ extends WikiDB_backend_iterator
         $this->_pages = array();
         $pages = &$this->_pages;
 
-        while ($page = & $all_pages->next()) {
+        while ($page = $all_pages->next()) {
             if (!isset($page['pagedata']))
                 $page['pagedata'] = $backend->get_pagedata($page['pagename']);
             $pages[] = $page;
