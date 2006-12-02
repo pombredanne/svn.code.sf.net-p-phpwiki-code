@@ -1,4 +1,4 @@
--- $Id: mysql-initialize.sql,v 1.11 2006-06-10 12:02:18 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.12 2006-12-02 21:09:56 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
@@ -72,10 +72,10 @@ CREATE TABLE session (
 -- in the DBAuthParam SQL statements also.
 
 CREATE TABLE pref (
-  	userid 	CHAR(48) BINARY NOT NULL UNIQUE,
+  	userid 	VARCHAR(48) BINARY NOT NULL UNIQUE,
   	prefs  	TEXT NULL DEFAULT '',
-  	passwd 	CHAR(48) BINARY DEFAULT '',
-	groupname CHAR(48) BINARY DEFAULT 'users',
+  	passwd 	VARCHAR(48) BINARY DEFAULT '',
+	groupname VARCHAR(48) BINARY DEFAULT 'users',
   	PRIMARY KEY (userid)
 );
 
