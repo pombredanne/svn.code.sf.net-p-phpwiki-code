@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.253 2006-08-25 22:20:52 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.254 2006-12-02 19:53:05 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -2016,6 +2016,9 @@ function string_starts_with($string, $prefix) {
 function string_ends_with($string, $suffix) {
     return (substr($string, -strlen($suffix)) == $suffix);
 }
+function array_remove($arr,$value) {
+   return array_values(array_diff($arr,array($value)));
+}
 
 /** 
  * Ensure that the script will have another $secs time left. 
@@ -2083,6 +2086,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.253  2006/08/25 22:20:52  rurban
+// better split subpages at sep
+//
 // Revision 1.252  2006/06/18 11:03:36  rurban
 // support rc version
 //
