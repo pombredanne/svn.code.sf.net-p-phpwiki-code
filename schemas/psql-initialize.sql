@@ -1,12 +1,12 @@
--- $Id: psql-initialize.sql,v 1.12 2006-06-05 09:36:15 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.13 2006-12-02 22:28:31 rurban Exp $
 
 \set QUIET
 
 --================================================================
 -- Prefix for table names.
 --
--- You should set this to the same value you specified for
--- DATABASE_PREFIX in config.ini
+-- You should set this to the same value you specify for
+-- DATABASE_PREFIX in config/config.ini
 
 \set prefix 	''
 
@@ -112,6 +112,7 @@ CREATE TABLE :version_tbl (
 );
 CREATE UNIQUE INDEX :vers_id_idx ON :version_tbl (id, version);
 CREATE INDEX :vers_mtime_idx ON :version_tbl (mtime);
+-- deletion order: version, recent, nonempty
 
 \echo Creating :recent_tbl
 CREATE TABLE :recent_tbl (
@@ -119,7 +120,7 @@ CREATE TABLE :recent_tbl (
 	latestversion	INT4, 
 	latestmajor	INT4,
 	latestminor	INT4,
-	FOREIGN KEY (id, latestversion) REFERENCES :version_tbl (id, version),
+	FOREIGN KEY (id, latestversion) REFERENCES :version_tbl (id, version) ON DELETE CASCADE,
 	CHECK (latestminor >= latestmajor)
 );
 CREATE UNIQUE INDEX :recent_id_idx ON :recent_tbl (id);
@@ -180,11 +181,13 @@ CREATE VIEW curr_page AS
 CREATE TABLE :link_tbl (
         linkfrom  INT4 NOT NULL REFERENCES :page_tbl,
         linkto 	  INT4 NOT NULL REFERENCES :page_tbl,
-        relation  INT4 REFERENCES :page_tbl (id) ON DELETE CASCADE
+        relation  INT4
 );
 CREATE INDEX :link_from_idx ON :link_tbl (linkfrom);
 CREATE INDEX :link_to_idx   ON :link_tbl (linkto);
 CREATE INDEX :relation_idx  ON :link_tbl (relation);
+-- update:
+-- ALTER TABLE link DROP CONSTRAINT link_relation_fkey;
 
 -- if you plan to use the wikilens theme
 \echo Creating :rating_tbl
@@ -306,30 +309,36 @@ GRANT SELECT,INSERT,UPDATE,DELETE ON :accesslog_tbl	TO :httpd_user;
 
 \echo Initializing stored procedures
 
-CREATE OR REPLACE FUNCTION update_recent (id INT4, version INT4) 
-	RETURNS void AS '
-DELETE FROM recent  WHERE id=$1;
+DROP FUNCTION update_recent (INT4, INT4);
+-- id, version
+CREATE OR REPLACE FUNCTION update_recent (INT4, INT4) 
+	RETURNS integer AS $$
+DELETE FROM recent WHERE id = $1;
 INSERT INTO recent (id, latestversion, latestmajor, latestminor)
-  SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
-	                   MAX(CASE WHEN minor_edit<>0 THEN version END)
-    FROM version WHERE id=$2 GROUP BY id;
-DELETE FROM nonempty WHERE id=$1;
-INSERT INTO nonempty (id)
+  SELECT id, MAX(version) AS latestversion, 
+	     MAX(CASE WHEN minor_edit =  0 THEN version END) AS latestmajor, 
+             MAX(CASE WHEN minor_edit <> 0 THEN version END) AS latestminor
+    FROM version WHERE id = $2 GROUP BY id;
+DELETE FROM nonempty WHERE id = $1;
+INSERT INTO nonempty (id) 
   SELECT recent.id
     FROM recent, version
-    WHERE recent.id=version.id
-          AND version=latestversion
-          AND content<>''''
-          AND recent.id=$1;
-' LANGUAGE SQL;
+    WHERE recent.id = version.id
+          AND version = latestversion
+          AND content <> ''
+          AND recent.id = $1;
+SELECT id FROM nonempty WHERE id = $1;
+$$ LANGUAGE SQL;
 
-CREATE OR REPLACE FUNCTION prepare_rename_page (oldid INT4, newid INT4) 
-        RETURNS void AS '
-DELETE FROM page     WHERE id=$2;
-DELETE FROM version  WHERE id=$2;
-DELETE FROM recent   WHERE id=$2;
-DELETE FROM nonempty WHERE id=$2;
+DROP FUNCTION prepare_rename_page (INT4, INT4);
+-- oldid, newid
+CREATE OR REPLACE FUNCTION prepare_rename_page (INT4, INT4) 
+        RETURNS void AS $$
+DELETE FROM page     WHERE id = $2;
+DELETE FROM version  WHERE id = $2;
+DELETE FROM recent   WHERE id = $2;
+DELETE FROM nonempty WHERE id = $2;
 -- We have to fix all referring tables to the old id
-UPDATE link SET linkfrom=$1 WHERE linkfrom=$2;
-UPDATE link SET linkto=$1   WHERE linkto=$2;
-' LANGUAGE sql;
+UPDATE link SET linkfrom = $1 WHERE linkfrom = $2;
+UPDATE link SET linkto = $1   WHERE linkto = $2;
+$$ LANGUAGE SQL;
