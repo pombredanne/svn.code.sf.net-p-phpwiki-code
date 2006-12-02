@@ -1,6 +1,6 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id: sqlite-initialize.sql,v 1.4 2005-09-28 19:27:23 rurban Exp $
+-- $Id: sqlite-initialize.sql,v 1.5 2006-12-02 22:29:29 rurban Exp $
 
 CREATE TABLE page (
 	id              INTEGER PRIMARY KEY,
@@ -106,3 +106,4 @@ CREATE TABLE accesslog (
 CREATE INDEX log_time ON accesslog (time_stamp);
 CREATE INDEX log_host ON accesslog (remote_host);
 -- create extra indices on demand (usually referer. see plugin/AccessLogSql)
+
