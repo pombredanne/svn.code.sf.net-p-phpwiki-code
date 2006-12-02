@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.101 2006-11-29 19:49:05 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.102 2006-12-02 21:57:27 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -593,7 +593,7 @@ extends WikiDB_backend
             list($have, $want) = array('linker', 'linkee');
         $qpagename = $dbh->escapeSimple($pagename);
         $qlink = $dbh->escapeSimple($link);
-        $row = $dbh->GetRow("SELECT CASE WHEN $want.pagename THEN 1 ELSE 0 END as result"
+        $row = $dbh->GetRow("SELECT CASE WHEN $want.pagename='$qlink' THEN 1 ELSE 0 END as result"
                             . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
                             . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                             . " AND $have.pagename='$qpagename'"
@@ -868,16 +868,17 @@ extends WikiDB_backend
             $exclude_from = " AND pp.pagename NOT IN ".$this->_sql_set($exclude_from);
         if ($exclude) // array of pagenames
             $exclude = " AND p.pagename NOT IN ".$this->_sql_set($exclude);
-        $sql = "SELECT p.pagename, pp.pagename as wantedfrom"
-            . " FROM $page_tbl p JOIN $link_tbl linked"
-            . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
-            . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id" 
-            . " WHERE ne.id is NULL"
-	    .       " AND p.id = linked.linkfrom"
+        $sql = "SELECT p.pagename, pp.pagename AS wantedfrom"
+            . " FROM $page_tbl p, $link_tbl linked"
+            .   " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
+            .   " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id"
+            . " WHERE ne.id IS NULL"
+            .       " AND p.id = linked.linkfrom"
             . $exclude_from
             . $exclude
             . $orderby;
         if ($limit) {
+            // oci8 error: WHERE NULL = NULL appended
             list($from, $count) = $this->limit($limit);
             $result = $dbh->limitQuery($sql, $from, $count * 3);
         } else {
@@ -1238,6 +1239,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2006/11/29 19:49:05  rurban
+// fix CASE WHEN SQL syntax error from previous commit
+//
 // Revision 1.100  2006/11/19 13:59:11  rurban
 // Replace IF by CASE in exists_link()
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.91 2006-11-19 14:03:32 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.92 2006-12-02 21:57:27 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -800,7 +800,7 @@ id      pagename        linkrelation
             list($have, $want) = array('linker', 'linkee');
         $qpagename = $dbh->qstr($pagename);
         $qlink = $dbh->qstr($link);
-        $row = $dbh->GetRow("SELECT CASE WHEN $want.pagename THEN 1 ELSE 0 END"
+        $row = $dbh->GetRow("SELECT CASE WHEN $want.pagename=$qlink THEN 1 ELSE 0 END"
                             . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
                             . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                             . " AND $have.pagename=$qpagename"
@@ -1068,11 +1068,11 @@ id      pagename        linkrelation
               where nonempty.id is null and linked.id=link.linkfrom;  
         */
         $sql = "SELECT p.pagename, pp.pagename as wantedfrom"
-            . " FROM $page_tbl p JOIN $link_tbl linked "
-            . " LEFT JOIN $page_tbl pp ON linked.linkto = pp.id"
-            . " LEFT JOIN $nonempty_tbl ne ON linked.linkto = ne.id" 
+            . " FROM $page_tbl p, $link_tbl linked"
+            .   " LEFT JOIN $page_tbl pp ON (linked.linkto = pp.id)"
+            .   " LEFT JOIN $nonempty_tbl ne ON (linked.linkto = ne.id)" 
             . " WHERE ne.id is NULL"
-            .       " AND p.id = linked.linkfrom"
+            .       " AND (p.id = linked.linkfrom)"
             . $exclude_from
             . $exclude
             . $orderby;
@@ -1537,6 +1537,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.91  2006/11/19 14:03:32  rurban
+// Replace IF by CASE in exists_link()
+//
 // Revision 1.90  2006/09/06 05:50:19  rurban
 // please XEmacs font-lock
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.24 2006-07-23 14:17:51 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.25 2006-12-02 21:57:27 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -126,7 +126,7 @@ extends WikiDB_backend_PearDB
             $exclude = " AND p.pagename NOT IN ".$this->_sql_set($exclude);
 
         $sql = "SELECT p.pagename, pp.pagename as wantedfrom"
-            . " FROM $page_tbl p JOIN $link_tbl linked"
+            . " FROM $page_tbl p, $link_tbl linked"
             . " LEFT JOIN $page_tbl pp ON (linked.linkto = pp.id)"
             . " LEFT JOIN $nonempty_tbl ne ON (linked.linkto = ne.id)" 
             . " WHERE ISNULL(ne.id)"
