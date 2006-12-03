@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.102 2006-12-02 21:57:27 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.103 2006-12-03 17:11:53 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -344,6 +344,13 @@ extends WikiDB_backend
         if (!$query_result)
             return false;
 
+        /* Earlier versions (<= 1.3.7) stored the version data in base64.
+           This could be done here or in upgrade.
+        */
+        if (!strstr($query_result['versiondata'], ":")) {
+            $query_result['versiondata'] = 
+                base64_decode($query_result['versiondata']);
+        }
         $data = $this->_unserialize($query_result['versiondata']);
         
         $data['mtime'] = $query_result['mtime'];
@@ -1239,6 +1246,10 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2006/12/02 21:57:27  rurban
+// fix WantedPages SQL: no JOIN
+// clarify first condition in CASE WHEN
+//
 // Revision 1.101  2006/11/29 19:49:05  rurban
 // fix CASE WHEN SQL syntax error from previous commit
 //
