@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_postgres7.php,v 1.5 2006-02-22 21:51:27 rurban Exp $');
+rcs_id('$Id: ADODB_postgres7.php,v 1.6 2006-12-03 16:25:20 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -37,6 +37,7 @@ extends WikiDB_backend_ADODB
      * Pack tables.
      */
     function optimize() {
+        return 0; // if the wikiuser is not the table owner
         foreach ($this->_table_names as $table) {
             $this->_dbh->Execute("VACUUM ANALYZE $table");
         }
