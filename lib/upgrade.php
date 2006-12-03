@@ -1,7 +1,7 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.51 2006-08-07 21:05:30 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.52 2006-12-03 17:01:18 rurban Exp $');
 /*
- Copyright 2004,2005 $ThePhpWikiProgrammingTeam
+ Copyright 2004,2005,2006 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -220,7 +220,7 @@ CREATE TABLE $pref_tbl (
             $dbh->genericSqlQuery("
 CREATE TABLE $pref_tbl (
   	userid 	CHAR(48) NOT NULL,
-  	prefs  	TEXT NULL DEFAULT '',
+  	prefs  	TEXT NULL DEFAULT ''
 )");
             $dbh->genericSqlQuery("CREATE UNIQUE INDEX userid ON $pref_tbl (userid)");
         }
@@ -240,7 +240,7 @@ CREATE TABLE $member_tbl (
             $dbh->genericSqlQuery("
 CREATE TABLE $member_tbl (
 	userid    CHAR(48) NOT NULL,
-   	groupname CHAR(48) NOT NULL DEFAULT 'users',
+   	groupname CHAR(48) NOT NULL DEFAULT 'users'
 )");
             $dbh->genericSqlQuery("CREATE INDEX userid ON $member_tbl (userid)");
             $dbh->genericSqlQuery("CREATE INDEX groupname ON $member_tbl (groupname)");
@@ -268,7 +268,7 @@ CREATE TABLE $rating_tbl (
         rateepage INT(11) NOT NULL,
         ratingvalue FLOAT NOT NULL,
         rateeversion INT(11) NOT NULL,
-        tstamp TIMESTAMP(14) NOT NULL,
+        tstamp TIMESTAMP(14) NOT NULL
 )");
             $dbh->genericSqlQuery("CREATE UNIQUE INDEX rating"
                                   ." ON $rating_tbl (dimension, raterpage, rateepage)");
@@ -304,7 +304,7 @@ v	Virtual host servicing the request	virtual_host	varchar(255)
         $dbh->genericSqlQuery("
 CREATE TABLE $log_tbl (
         time_stamp    int unsigned,
-	remote_host   varchar(50),
+	remote_host   varchar(100),
 	remote_user   varchar(50),
         request_method varchar(10),
 	request_line  varchar(255),
@@ -588,6 +588,7 @@ function CheckDatabaseUpdate(&$request) {
         else 
             echo _("OK"),"<br />\n";
     }
+    // TODO: change access_log.remote_host from varchar(50) to varchar(100)
     _upgrade_cached_html($dbh);
 
     return;
@@ -879,6 +880,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.51  2006/08/07 21:05:30  rurban
+ patch #1535837  (debian)
+
  Revision 1.50  2006/06/18 11:04:09  rurban
  keep overwrite arg
 
