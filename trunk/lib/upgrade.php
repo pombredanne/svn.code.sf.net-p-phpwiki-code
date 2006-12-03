@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.52 2006-12-03 17:01:18 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.53 2006-12-03 17:03:18 rurban Exp $');
 /*
  Copyright 2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -598,6 +598,12 @@ function _upgrade_db_init (&$dbh) {
     global $request, $DBParams, $DBAuthParams;
     if (!$dbh->_backend->isSQL()) return;
 
+    /* SQLite never needs admin params */
+    $backend_type = $dbh->_backend->backendType();
+    if (substr($backend_type,0,6)=="sqlite") {
+        return;
+    }
+
     if (DBADMIN_USER) {
         // if need to connect as the root user, for CREATE and ALTER privileges
         $AdminParams = $DBParams;
@@ -880,6 +886,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.52  2006/12/03 17:01:18  rurban
+ #1535839 by matt brown
+
  Revision 1.51  2006/08/07 21:05:30  rurban
  patch #1535837  (debian)
 
