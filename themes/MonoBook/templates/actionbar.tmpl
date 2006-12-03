@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.8 2006-12-02 13:35:04 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.9 2006-12-03 14:03:12 rurban Exp $ -->
 <?php
   $dbh = $request->getDbh();
   $Sep = HTML::raw("<li>"); $SepE = HTML::raw("</li>");
@@ -52,6 +52,12 @@
     <li><?= Button(_("PageHistory")) ?></li>
     <li><?= Button("diff") ?></li> 
     <li><?= Button(_("PageDump")) ?></li>
+    <?php if (DEBUG & _DEBUG_SQL and USECACHE) {
+      $PurgeCache = Button(array('nocache' => 'purge'),
+                     _("PurgeHtmlCache"), $page->getName());
+      $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed.")); ?>
+      <li><?= $PurgeCache ?></li>
+    <?php } ?>
   </div>
   </ul>
 </div>
