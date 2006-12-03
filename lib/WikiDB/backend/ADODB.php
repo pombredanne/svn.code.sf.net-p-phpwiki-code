@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.92 2006-12-02 21:57:27 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.93 2006-12-03 16:25:20 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -1202,7 +1202,6 @@ id      pagename        linkrelation
      */
     function unlock($tables = false, $force = false) {
         if ($this->_lock_count == 0) {
-            $this->_dbh->CompleteTrans(! $force);
             $this->_current_lock = false;
             return;
         }
@@ -1537,6 +1536,10 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.92  2006/12/02 21:57:27  rurban
+// fix WantedPages SQL: no JOIN
+// clarify first condition in CASE WHEN
+//
 // Revision 1.91  2006/11/19 14:03:32  rurban
 // Replace IF by CASE in exists_link()
 //
