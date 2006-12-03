@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.53 2006-12-03 17:03:18 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.54 2006-12-03 17:07:29 rurban Exp $');
 /*
  Copyright 2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -575,15 +575,22 @@ function CheckDatabaseUpdate(&$request) {
     if ((ACCESS_LOG_SQL & 2)) {
     	echo _("check for ACCESS_LOG_SQL passwords in POST requests")," ...";
         // Don't display passwords in POST requests (up to 2005-02-04 12:03:20)
-        $result = $dbh->genericSqlQuery(
-                    "UPDATE ".$prefix."accesslog"
-                    .' SET request_args=CONCAT(left(request_args, LOCATE("s:6:\"passwd\"",request_args)+12),"...")'
-                    .' WHERE LOCATE("s:6:\"passwd\"", request_args)'
-                    .' AND NOT(LOCATE("s:6:\"passwd\";s:15:\"<not displayed>\"", request_args))'
-                    .' AND request_method="POST"');
-        if ((DATABASE_TYPE == 'SQL' and $backend->AffectedRows()) 
-            or (DATABASE_TYPE == 'ADODB' and $backend->Affected_Rows())
-            or (DATABASE_TYPE == 'PDO' and $result))
+        $res = $dbh->genericSqlIter("SELECT time_stamp, remote_host, " .
+            "request_args FROM ${prefix}accesslog WHERE request_args LIKE " .
+            "'%s:6:\"passwd\"%' AND request_args NOT LIKE '%s:6:\"passwd\";" .
+            "s:15:\"<not displayed>\"%'");
+        $count=0;
+        while ($row = $res->next()) {
+            $args = preg_replace("/(s:6:\"passwd\";s:15:\").*(\")/", 
+                "$1<not displayed>$2", $row["request_args"]);
+            $ts = $row["time_stamp"];
+            $rh = $row["remote_host"];
+            $dbh->genericSqlQuery("UPDATE ${prefix}accesslog SET " .
+                "request_args='$args' WHERE time_stamp=$ts AND " .
+                "remote_host='$rh'");
+            $count++;
+        }
+        if ($count > 0)
             echo "<b>",_("FIXED"),"</b>", "<br />\n";
         else 
             echo _("OK"),"<br />\n";
@@ -886,6 +893,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.53  2006/12/03 17:03:18  rurban
+ #1535851 by matt brown
+
  Revision 1.52  2006/12/03 17:01:18  rurban
  #1535839 by matt brown
 
