@@ -1,34 +1,38 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.9 2006-12-03 14:03:12 rurban Exp $ -->
-<?php
-  $dbh = $request->getDbh();
-  $Sep = HTML::raw("<li>"); $SepE = HTML::raw("</li>");
-?>
+<!-- $Id: actionbar.tmpl,v 1.10 2006-12-06 22:05:38 rurban Exp $ -->
+<?php $dbh = $request->getDbh(); ?>
 <div id="p-cactions" class="portlet">
     <h5>Views</h5>
     <ul>
     <?php if (!string_ends_with($page->getName(), _("Discussion"))) { ?>
-    <?php 
-	$talk = new WikiPageName('Talk:'.$page->getName());
-        if ($dbh->isWikiPage($talk->getName())) { ?>
-	  <li><?= Button(array('action'=>'browse'), _("Discussion"), $talk->getName()) ?></li>
+    <?php $talk = new WikiPageName('Talk:'.$page->getName()); ?>
+      <?= ActionButton(array(),
+		       $request->isActionPage($request->getArg("action")) ? _("ActionPage") : _("Article"), 
+		       $talk->getParent(), array('class'=>"selected")) ?>
+      <?php if (!$request->isActionPage($request->getArg("action"))) { ?>
+        <?php if ($dbh->isWikiPage($talk->getName())) { ?>
+	  <?= ActionButton(array('action'=>'browse'), _("Discussion"), $talk->getName()) ?>
         <?php } else { ?>
-	  <li><?= Button(array('action'=>'create',
+	  <?= ActionButton(array('action'=>'create',
                               'template'=>'TemplateTalk'),
-			  _("Discussion"), $talk->getName()) ?></li>
+			   _("Discussion"), $talk->getName()) ?>
         <?php } ?>
-    <?php } else { ?>
-      <?php $talk = new WikiPageName($page->getName()); ?>
-      <li><?= Button(array(),_("Article"), $talk->getParent()) ?></li>
+      <?php } ?>
+    <?php } else {
+      $talk = new WikiPageName($page->getName()); ?>
+      <?= ActionButton(array(),_("Article"), $talk->getParent()) ?>
+      <?= ActionButton(array(),_("Discussion"), $talk->getParent(), array('class'=>"selected")) ?>
     <?php } ?>
-    <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
-      <li><?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?></li>
+    <?php if ((!$page->get('locked') || $user->isAdmin()) and !(empty($revision))) { ?>
+      <?= ActionButton("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
     <?php } else { ?>
-      <li><?= Button("viewsource", _("View Source")) ?></li>
+      <?= ActionButton("viewsource", _("View Source")) ?>
     <?php } ?>
-    <li><?= Button(_("PageHistory")) ?></li>
-    <li><?= Button("diff") ?> </li>
-    <li><?= Button("WatchPage",_("Watch")) ?></li>
+    <?= ActionButton(_("PageHistory")) ?>
+    <?= ActionButton("diff") ?> 
+    <? if ( $user->isSignedIn() ) { ?>
+      <?= ActionButton("WatchPage", _("Watch")) ?>
+    <?php } ?>
     </ul>
 </div>
 <div class="portlet" id="p-tbx">
@@ -37,26 +41,26 @@
   <ul>
     <? if ( $user->isSignedIn() ) { ?>
      <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
-      <li><?= Button($page->get('locked') ? 'unlock' : 'lock') ?></li>
+      <?= ActionButton($page->get('locked') ? 'unlock' : 'lock') ?>
      <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $page->getName())) { ?>
-      <li><?= Button('chown') ?></li>
-      <li><?= Button('setacl') ?></li>
+      <?= ActionButton('chown') ?>
+      <?= ActionButton('setacl') ?>
      <?php }} ?>
      <?php if ($user->isAdmin() or mayAccessPage('remove', $page->getName())) { ?>
-      <li><?= Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?></li>
-      <li><?= Button('remove') ?></li>
+      <?= ActionButton('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
+      <?= ActionButton('remove') ?>
      <?php } ?>
     <?php } ?>
-    <li><?= Button(array('action'=>'PageInfo'),
-                        _("Info"),$page->getName()) ?></li>
-    <li><?= Button(_("PageHistory")) ?></li>
-    <li><?= Button("diff") ?></li> 
-    <li><?= Button(_("PageDump")) ?></li>
+    <?= ActionButton(array('action'=>'PageInfo'),
+                        _("Info"),$page->getName()) ?>
+    <?= ActionButton(_("PageHistory")) ?>
+    <?= ActionButton("diff") ?> 
+    <?= ActionButton(_("PageDump")) ?>
     <?php if (DEBUG & _DEBUG_SQL and USECACHE) {
       $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $page->getName());
       $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed.")); ?>
-      <li><?= $PurgeCache ?></li>
+      <?= $PurgeCache ?>
     <?php } ?>
   </div>
   </ul>
