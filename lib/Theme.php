@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.135 2006-04-17 17:28:21 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.136 2006-12-06 22:07:31 rurban Exp $');
 /* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -179,15 +179,14 @@ function WikiLink ($page_or_rev, $type = 'known', $label = false) {
  * </dl>
  * ($Page_or_rev is ignored for submit buttons.)
  */
-function Button ($action, $label = false, $page_or_rev = false) {
+function Button ($action, $label = false, $page_or_rev = false, $options = false) {
     global $WikiTheme;
 
     if (!is_array($action) && preg_match('/^submit:(.*)/', $action, $m))
-        return $WikiTheme->makeSubmitButton($label, $m[1], $page_or_rev);
+        return $WikiTheme->makeSubmitButton($label, $m[1], $page_or_rev, $options);
     else
-        return $WikiTheme->makeActionButton($action, $label, $page_or_rev);
+        return $WikiTheme->makeActionButton($action, $label, $page_or_rev, $options);
 }
-
 
 class Theme {
     var $HTML_DUMP_SUFFIX = '';
@@ -804,28 +803,29 @@ class Theme {
     //
     ////////////////////////////////////////////////////////////////
 
-    function makeButton ($text, $url, $class = false) {
+    function makeButton ($text, $url, $class = false, $options = false) {
         // FIXME: don't always try for image button?
 
         // Special case: URLs like 'submit:preview' generate form
         // submission buttons.
         if (preg_match('/^submit:(.*)$/', $url, $m))
-            return $this->makeSubmitButton($text, $m[1], $class);
+            return $this->makeSubmitButton($text, $m[1], $class, $options);
 
         $imgurl = $this->getButtonURL($text);
         if ($imgurl)
-            return new ImageButton($text, $url, $class, $imgurl);
+            return new ImageButton($text, $url, $class, $imgurl, $options);
         else
-            return new Button($this->maybeSplitWikiWord($text), $url, $class);
+            return new Button($this->maybeSplitWikiWord($text), $url, 
+                              $class, $options);
     }
 
-    function makeSubmitButton ($text, $name, $class = false) {
+    function makeSubmitButton ($text, $name, $class = false, $options = false) {
         $imgurl = $this->getButtonURL($text);
 
         if ($imgurl)
-            return new SubmitImageButton($text, $name, $class, $imgurl);
+            return new SubmitImageButton($text, $name, $class, $imgurl, $options);
         else
-            return new SubmitButton($text, $name, $class);
+            return new SubmitButton($text, $name, $class, $options);
     }
 
     /**
@@ -852,7 +852,7 @@ class Theme {
      *
      * @return object A Button object.
      */
-    function makeActionButton ($action, $label = false, $page_or_rev = false) {
+    function makeActionButton ($action, $label = false, $page_or_rev = false, $options = false) {
         extract($this->_get_name_and_rev($page_or_rev));
 
         if (is_array($action)) {
@@ -1228,8 +1228,9 @@ class Button extends HtmlElement {
      * @param $text string The text for the button.
      * @param $url string The url (href) for the button.
      * @param $class string The CSS class for the button.
+     * @param $options array Additional attributes for the &lt;input&gt; tag.
      */
-    function Button ($text, $url, $class = false) {
+    function Button ($text, $url, $class = false, $options = false) {
         global $request;
         //php5 workaround
         if (check_php_version(5)) {
@@ -1241,6 +1242,10 @@ class Button extends HtmlElement {
             $this->setAttr('class', $class);
         if ($request->getArg('frame'))
             $this->setAttr('target', '_top');
+        if (!empty($options)) {
+            foreach ($options as $key => $val)
+                $this->setAttr($key, $val);
+        }
         // Google honors this
         if (in_array(strtolower($text), array('edit','create','diff','pdf'))
             and !$request->_user->isAuthenticated())
@@ -1291,14 +1296,19 @@ class SubmitButton extends HtmlElement {
      * @param $text string The text for the button.
      * @param $name string The name of the form field.
      * @param $class string The CSS class for the button.
+     * @param $options array Additional attributes for the &lt;input&gt; tag.
      */
-    function SubmitButton ($text, $name = false, $class = false) {
+    function SubmitButton ($text, $name = false, $class = false, $options = false) {
         $this->__construct('input', array('type' => 'submit',
                                           'value' => $text));
         if ($name)
             $this->setAttr('name', $name);
         if ($class)
             $this->setAttr('class', $class);
+        if (!empty($options)) {
+            foreach ($options as $key => $val)
+                $this->setAttr($key, $val);
+        }
     }
 
 };
@@ -1316,7 +1326,7 @@ class SubmitImageButton extends SubmitButton {
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
-    function SubmitImageButton ($text, $name = false, $class = false, $img_url) {
+    function SubmitImageButton ($text, $name = false, $class = false, $img_url, $img_attr = false) {
         $this->__construct('input', array('type'  => 'image',
                                           'src'   => $img_url,
                                           'value' => $text,
@@ -1325,6 +1335,10 @@ class SubmitImageButton extends SubmitButton {
             $this->setAttr('name', $name);
         if ($class)
             $this->setAttr('class', $class);
+        if (!empty($img_attr)) {
+            foreach ($img_attr as $key => $val)
+                $this->setAttr($key, $val);
+        }
     }
 
 };
@@ -1468,6 +1482,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.135  2006/04/17 17:28:21  rurban
+// honor getWikiPageLinks change linkto=>relation
+//
 // Revision 1.134  2006/03/19 16:24:38  rurban
 // fix syntax error with patch #1377650
 //
