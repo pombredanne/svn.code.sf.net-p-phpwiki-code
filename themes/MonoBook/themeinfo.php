@@ -1,17 +1,18 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.6 2006-12-06 22:05:38 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.7 2006-12-06 22:10:15 rurban Exp $');
 /**
  * The new mediawiki (Wikipedia.org) default style.
  * Mediawiki 'monobook' style sheet for CSS2-capable browsers.
  * Copyright Gabriel Wicke - http://www.aulinx.de/
  * See main.css for more.
  *
- * Problems: IE: buttons, comment textarea, signin is at the left.
+ * Problems with IE: signin is at the left.
  *
  * We don't (yet) support all mediawiki UI options, but we try to.
  * Besides that, maybe the mediawiki folks will see how much better phpwiki 
  * will scale, esp. with a true database, not just mysql.
- * Technically phpwiki has about 2-3 years advantage.
+ * Technically phpwiki has about 2-3 years advantage and our plugins 
+ * cannot destroy the layout.
  * Anyway, the WikiParser perl module (and our php version) will be able to import
  * and convert back and forth.
  */
