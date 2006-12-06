@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.5 2005-09-15 05:59:45 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.6 2006-12-06 22:05:38 rurban Exp $');
 /**
  * The new mediawiki (Wikipedia.org) default style.
  * Mediawiki 'monobook' style sheet for CSS2-capable browsers.
@@ -19,9 +19,32 @@ require_once('lib/Theme.php');
 if (!defined("ENABLE_MARKUP_TEMPLATE"))
     define("ENABLE_MARKUP_TEMPLATE", true);
 
+function ActionButton ($action, $label = false, $page_or_rev = false, $options = false) {
+    global $WikiTheme;
+    global $request;
+    if (is_array($action)) {
+        $attr = $action;
+        $act = isset($attr['action']) ? $attr['action'] : 'browse';
+    } else 
+        $act = $action;
+    $class = is_safe_action($act) ? 'named-wiki' : 'wikiadmin';
+    /* if selected action is current then prepend selected */
+    $curract = $request->getArg("action");
+    if ($curract == $act and $curract != 'browse')
+        $class = "selected $class";
+    if (!empty($options['class'])) {
+        if ($curract == 'browse')
+            $class = "$class ".$options['class'];
+        else
+            $class = $options['class'];
+    }
+    return HTML::li(array('class' => $class), 
+                    $WikiTheme->makeActionButton($action, $label, $page_or_rev, $options));
+}
+
 class Theme_MonoBook extends Theme {
 
-    function makeActionButton ($action, $label = false, $page_or_rev = false) {
+    function makeActionButton ($action, $label = false, $page_or_rev = false, $options = false) {
         extract($this->_get_name_and_rev($page_or_rev));
 
         if (is_array($action)) {
@@ -31,7 +54,14 @@ class Theme_MonoBook extends Theme {
         else
             $attr['action'] = $action;
 
-        $class = is_safe_action($action) ? 'named-wiki' : 'wikiadmin';
+        $class = is_safe_action($action) ? /*'named-wiki'*/'new' : 'wikiadmin';
+        /* if selected action is current then prepend selected */
+        global $request;
+        if ($request->getArg("action") == $action)
+            $class = "selected $class";
+            //$class = "selected";
+        if (!empty($options['class']))
+            $class = $options['class'];
         if (!$label)
             $label = $this->_labelForAction($action);
 

@@ -1,12 +1,12 @@
 <?php // -*-php-*- ?>
-<!-- $Id: navbar.tmpl,v 1.4 2006-12-03 14:03:12 rurban Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.5 2006-12-06 22:05:39 rurban Exp $ -->
 <?php
 // With MonoBook it is similar to Sidebar, named boxes at the left.
-// navigation, search, toolbox
+// actiobuttons, navigation, search, toolbox
 ?>
 <!-- The left navigation/search bar -->
 <!-- Here you should add favorite Links and Categories -->
-<div class="portlet" id="p-nav">
+<div class="portlet" id="p-navigation">
   <h5>Navigation</h5>
   <div class="pBody">
     <ul>
@@ -18,7 +18,7 @@
     </ul>
   </div>
 </div>
-<div id="p-search" class="portlet">
+<div class="portlet" id="p-search">
   <h5>Search</h5>
   <div class="pBody">
     <form action="<?= WikiURL(_("TitleSearch"))?>"
