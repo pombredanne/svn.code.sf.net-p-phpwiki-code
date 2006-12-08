@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.13 2006-12-02 22:28:31 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.14 2006-12-08 08:04:10 rurban Exp $
 
 \set QUIET
 
@@ -245,7 +245,7 @@ CREATE INDEX :member_group_idx ON :member_tbl (groupname);
 \echo Creating :accesslog_tbl
 CREATE TABLE :accesslog_tbl (
         time_stamp       INT,
-	remote_host      VARCHAR(50),
+	remote_host      VARCHAR(100),
 	remote_user      VARCHAR(50),
         request_method   VARCHAR(10),
 	request_line     VARCHAR(255),

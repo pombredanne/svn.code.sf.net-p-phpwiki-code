@@ -1,4 +1,4 @@
--- $Id: mysql-initialize.sql,v 1.12 2006-12-02 21:09:56 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.13 2006-12-08 08:04:10 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
@@ -126,7 +126,7 @@ CREATE INDEX rating_rateepage ON rating (rateepage);
 -- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
 CREATE TABLE accesslog (
         time_stamp    INT UNSIGNED,
-	remote_host   VARCHAR(50),
+	remote_host   VARCHAR(100),
 	remote_user   VARCHAR(50),
         request_method VARCHAR(10),
 	request_line  VARCHAR(255),
