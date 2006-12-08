@@ -1,4 +1,4 @@
--- $Id: mssql-initialize.sql,v 1.4 2005-09-28 19:27:23 rurban Exp $
+-- $Id: mssql-initialize.sql,v 1.5 2006-12-08 08:04:10 rurban Exp $
 -- UNTESTED!
 
 CREATE TABLE page (
@@ -106,7 +106,7 @@ CREATE INDEX rating_rateepage ON rating (rateepage);
 -- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
 CREATE TABLE accesslog (
         time_stamp    INT UNSIGNED,
-	remote_host   VARCHAR(50),
+	remote_host   VARCHAR(100),
 	remote_user   VARCHAR(50),
         request_method VARCHAR(10),
 	request_line  VARCHAR(255),

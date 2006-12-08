@@ -1,6 +1,6 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id: sqlite-initialize.sql,v 1.5 2006-12-02 22:29:29 rurban Exp $
+-- $Id: sqlite-initialize.sql,v 1.6 2006-12-08 08:04:10 rurban Exp $
 
 CREATE TABLE page (
 	id              INTEGER PRIMARY KEY,
@@ -89,7 +89,7 @@ CREATE INDEX rating_rateepage ON rating (rateepage);
 -- see http://www.outoforder.cc/projects/apache/mod_log_sql/docs-2.0/#id2756178
 CREATE TABLE accesslog (
         time_stamp    INTEGER UNSIGNED,
-	remote_host   VARCHAR(50),
+	remote_host   VARCHAR(100),
 	remote_user   VARCHAR(50),
         request_method VARCHAR(10),
 	request_line  VARCHAR(255),
