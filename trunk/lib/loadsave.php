@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.145 2006-09-06 06:01:18 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.146 2006-12-17 18:35:23 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -481,10 +481,10 @@ function DumpHtmlToDir (&$request)
 	// For every %2F will need to mkdir -p dirname($pagename)
 	if (preg_match("/%2F/", $filename)) {
 	    // mkdir -p and set relative base for subdir pages
-	    $dirname = dirname($pagename);
-	    mkdir_p($directory."/".$dirname);
 	    $count = substr_count($filename, "%2F");
 	    $filename = preg_replace("/%2F/", "/", $filename);
+	    $dirname = dirname($filename);
+	    mkdir_p($directory."/".$dirname);
 	    $relative_base = "../";
 	    while ($count > 1) {
 		$relative_base .= "../";
@@ -659,7 +659,7 @@ function MakeWikiZipHtml (&$request)
         if ($page->get('locked'))
             $attrib['write_protected'] = 1;
 
-        $request->setArg('pagename',$pagename); // Template::_basepage fix
+        $request->setArg('pagename', $pagename); // Template::_basepage fix
         $filename = FilenameForPage($pagename) . $WikiTheme->HTML_DUMP_SUFFIX;
         $revision = $page->getCurrentRevision();
 
@@ -1403,6 +1403,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.145  2006/09/06 06:01:18  rurban
+ support loadfile multipart archives automatically
+
  Revision 1.144  2006/08/25 22:06:13  rurban
  args fix to pass $args to the template
 
