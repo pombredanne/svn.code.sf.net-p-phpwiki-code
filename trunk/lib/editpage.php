@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.107 2006-05-13 19:59:54 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.108 2006-12-22 17:47:34 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -301,12 +301,14 @@ class PageEditor
 
         // Force browse of current page version.
         $request->setArg('version', false);
-        //$request->setArg('action', false);
+        $request->setArg('action', "browse");
 
         $template = Template('savepage', $this->tokens);
         $template->replace('CONTENT', $newrevision->getTransformedContent());
-        if (!empty($warnings->_content))
+        if (!empty($warnings->_content)) {
             $template->replace('WARNINGS', $warnings);
+            unset($GLOBALS['ErrorManager']->_postponed_errors); 
+        }
 
         $pagelink = WikiLink($page);
 
@@ -571,11 +573,13 @@ class PageEditor
                                 'checked'  => (bool) $this->locked));
 
         $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"),
-                                  'wikiaction');
+                                  'wikiaction',
+                                  array('accesskey'=> 'p'));
 
         //if (!$this->isConcurrentUpdate() && $this->canEdit())
-        $el['SAVE_B'] = Button('submit:edit[save]', _("Save"), 'wikiaction');
-
+        $el['SAVE_B'] = Button('submit:edit[save]',
+                               _("Save"), 'wikiaction',
+                               array('accesskey'=> 's'));
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
 
         $el['WIDTH_PREF'] 
@@ -697,13 +701,15 @@ extends PageEditor
         $tokens = &$this->tokens;
 
         if (!$this->canEdit()) {
-            if ($this->isInitialEdit())
+            if ($this->isInitialEdit()) {
                 return $this->viewSource();
+	    }
             $tokens['PAGE_LOCKED_MESSAGE'] = $this->getLockedMessage();
         }
         elseif ($this->editaction == 'save') {
-            if ($this->savePage())
+            if ($this->savePage()) {
                 return true;    // Page saved.
+	    }
             $saveFailed = true;
         }
 
@@ -777,6 +783,11 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.107  2006/05/13 19:59:54  rurban
+ added wysiwyg_editor-1.3a feature by Jean-Nicolas GEREONE <jean-nicolas.gereone@st.com>
+ converted wysiwyg_editor-1.3a js to WysiwygEdit framework
+ changed default ENABLE_WYSIWYG = true and added WYSIWYG_BACKEND = Wikiwyg
+
  Revision 1.106  2005/11/21 22:03:08  rurban
  fix syntax error inside ENABLE_SPAMBLOCKLIST
 
