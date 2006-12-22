@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.146 2006-12-17 18:35:23 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.147 2006-12-22 17:44:15 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -471,7 +471,7 @@ function DumpHtmlToDir (&$request)
             }
             continue;
         }
-
+        $relative_base = '';
         $request->setArg('pagename', $pagename); // Template::_basepage fix
         $filename = FilenameForPage($pagename) . $WikiTheme->HTML_DUMP_SUFFIX;
         $revision = $page->getCurrentRevision();
@@ -748,6 +748,7 @@ function MakeWikiZipHtml (&$request)
 function SavePage (&$request, &$pageinfo, $source, $filename)
 {
     static $overwite_all = false;
+    global $charset;
     $pagedata    = $pageinfo['pagedata'];    // Page level meta-data.
     $versiondata = $pageinfo['versiondata']; // Revision level meta-data.
 
@@ -788,7 +789,8 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     $current = $page->getCurrentRevision();
     if ( $current and (! $current->hasDefaultContents())
          && ($current->getPackedContent() != $content)
-         && ($merging == true) ) {
+         && ($merging == true) ) 
+    {
         include_once('lib/editpage.php');
         $request->setArg('pagename', $pagename);
         $r = $current->getVersion();
@@ -1077,6 +1079,14 @@ function ParseSerializedPage($text, $default_pagename, $user)
                 break;
         }
     }
+    if (empty($pagehash['charset']))
+        $pagehash['charset'] = 'iso-8859-1';
+    // compare to target charset
+    if (strtolower($pagehash['charset']) != strtolower($GLOBALS['charset'])) {
+        loadPhpExtension("iconv");
+        $pageinfo['content'] = iconv($params['charset'], $GLOBALS['charset'], $pageinfo['content']);
+        $pageinfo['pagename'] = iconv($params['charset'], $GLOBALS['charset'], $pageinfo['pagename']);
+    }
     return $pageinfo;
 }
 
@@ -1113,6 +1123,9 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
     if (!$mtime)
         $mtime = time();    // Last resort.
 
+    // DONE: check source - target charset for content and pagename
+    // but only for pgsrc'ed content, not from the browser.
+
     $default_pagename = rawurldecode($basename);
     if ( ($parts = ParseMimeifiedPages($text)) ) {
     	if (count($parts) > 1)
@@ -1137,7 +1150,16 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
                                               $filename), $basename);
     }
     else {
+        // plain old file
         $user = $request->getUser();
+
+        $file_charset = 'iso-8859-1';
+        // compare to target charset
+        if ($file_charset != strtolower($GLOBALS['charset'])) {
+            loadPhpExtension("iconv");
+            $text = iconv($file_charset, $GLOBALS['charset'], $text);
+            $default_pagename = iconv($file_charset, $GLOBALS['charset'], $default_pagename);
+        }
 
         // Assume plain text file.
         $pageinfo = array('pagename' => $default_pagename,
@@ -1403,6 +1425,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.146  2006/12/17 18:35:23  rurban
+ Create the right subdirectory name, urlencoded.
+
  Revision 1.145  2006/09/06 06:01:18  rurban
  support loadfile multipart archives automatically
 

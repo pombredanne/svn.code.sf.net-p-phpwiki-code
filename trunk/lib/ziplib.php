@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.47 2006-10-08 12:32:26 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.48 2006-12-22 17:44:15 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -857,6 +857,14 @@ function ParseMimeifiedPages ($data)
         $data = QuotedPrintableDecode($data);
     else if ($encoding && $encoding != 'binary')
         ExitWiki( sprintf("Unknown %s", 'encoding type: $encoding') );
+
+    if (empty($params['charset']))
+        $params['charset'] = 'iso-8859-1';
+    // compare to target charset
+    if (strtolower($params['charset']) != strtolower($GLOBALS['charset'])) {
+        loadPhpExtension("iconv");
+        $data = iconv($params['charset'], $GLOBALS['charset'], $data);
+    }
     
     $data .= GenerateFootnotesFromRefs($params);
     
@@ -868,6 +876,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2006/10/08 12:32:26  rurban
+// workaround signed-unsigned issue (not solved). patch by Bob Apthorpe
+//
 // Revision 1.46  2006/03/07 20:47:36  rurban
 // MimeifyPageRevision refactoring. see loadsave
 //
