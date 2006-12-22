@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.19 2005-10-12 06:19:31 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.20 2006-12-22 17:57:10 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -55,7 +55,7 @@ extends WikiPlugin_GraphViz
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     /**
@@ -161,9 +161,12 @@ extends WikiPlugin_GraphViz
         $this->extract_wikipages($dbi, $argarray);
         /* ($dbi,  $large, $recent, $refined, $backlink,
             $neighbour, $excludelist, $includelist, $color); */
-        return $this->invokeDot($argarray);
+    	$result = $this->invokeDot($argarray);
+        if (isa($result, 'HtmlElement'))
+            return array(false, $result);
+        else
+            return $result;
         /* => ($width, $height, $color, $shape, $text); */
-	
     }
 
     // ------------------------------------------------------------------------------------------
@@ -544,9 +547,8 @@ extends WikiPlugin_GraphViz
         $this->extract_wikipages($dbi, $argarray);
         list($imagehandle, $content['html']) = $this->invokeDot($argarray);
         // write to uploads and produce static url
-        $file_dir = defined('PHPWIKI_DIR') ? 
-            PHPWIKI_DIR . "/uploads" : "uploads";
-        $upload_dir = SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/uploads/';
+        $file_dir = getUploadFilePath();
+        $upload_dir = getUploadDataPath();
         $tmpfile = tempnam($file_dir,"VisualWiki").".".$argarray['imgtype'];
         WikiPluginCached::writeImage($argarray['imgtype'], $imagehandle, $tmpfile);             
         ImageDestroy($imagehandle);
@@ -617,6 +619,9 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2005/10/12 06:19:31  rurban
+// remove INCLUDED from EXCLUDED, includes override excludes.
+//
 // Revision 1.18  2004/12/17 16:49:52  rurban
 // avoid Invalid username message on Sign In button click
 //
