@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.7 2006-09-06 05:45:26 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.8 2006-12-22 00:17:06 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -159,6 +159,11 @@ function undo_save() {
         $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
 
         if (ENABLE_EDIT_TOOLBAR) {
+            $username = $GLOBALS['request']->_user->UserName();
+            if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($username))) {
+                $username = '['.$username.']';
+            }
+	    $signature = " --".$username." ".CTime();
             $toolarray = array(
                            array(
                                  "image"=>"ed_format_bold.png",
@@ -197,7 +202,7 @@ function undo_save() {
                                  "sample"=>_("Insert non-formatted text here"),
                                  "tip"=>_("Ignore wiki formatting")),
                            array("image"=>"ed_sig.png",
-                                 "open" => " --" . $GLOBALS['request']->_user->UserName(),
+                                 "open" => $signature,
                                  "close" => "",
                                  "sample"=>"",
                                  "tip"=>_("Your signature")),
@@ -424,6 +429,9 @@ function undo_save() {
 
 /*
 $Log: not supported by cvs2svn $
+Revision 1.7  2006/09/06 05:45:26  rurban
+use html tags for emphasis. workaround ^* problem
+
 Revision 1.6  2006/08/30 05:25:40  rurban
 Handle inserting DISABLE_MARKUP_WIKIWORD and non wikiword links.
 
