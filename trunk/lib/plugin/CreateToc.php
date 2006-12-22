@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.29 2006-04-15 12:26:54 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.30 2006-12-22 17:49:38 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
 
     function getDefaultArguments() {
@@ -112,11 +112,13 @@ extends WikiPlugin
     function _quote($heading) {
         if (TOC_FULL_SYNTAX ) {
             $theading = TransformInline($heading);
-            $qheading = preg_quote($theading->asXML(), "/");
+            if ($theading)
+                return preg_quote($theading->asXML(), "/");
+            else 
+                return XmlContent::_quote(preg_quote($heading, "/"));
         } else {
-            $qheading = XmlContent::_quote(preg_quote($heading, "/"));
+            return XmlContent::_quote(preg_quote($heading, "/"));
         }
-        return $qheading;
     }
     
     /*
@@ -389,6 +391,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2006/04/15 12:26:54  rurban
+// need basepage for subpages like /Remove (within CreateTOC)
+//
 // Revision 1.28  2005/10/12 06:15:25  rurban
 // just aesthetics
 //
