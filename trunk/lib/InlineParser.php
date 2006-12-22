@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.82 2006-12-02 19:53:05 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.83 2006-12-22 00:23:24 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -203,10 +203,12 @@ class RegexpSet
         $match->match = $m[2];
 
         /* DEBUGGING */
-        if (DEBUG & 4) {
+        if (DEBUG & _DEBUG_PARSER) {
           static $_already_dumped = 0;
           if (!$_already_dumped) {
-            var_dump($regexps); var_dump($matched); var_dump($matched_inc); 
+            var_dump($regexps); 
+            var_dump($matched); 
+            var_dump($matched_inc); 
           }
           $_already_dumped = 1;
           PrintXML(HTML::dl(HTML::dt("input"),
@@ -221,7 +223,6 @@ class RegexpSet
                           HTML::dd(HTML::pre($match->postmatch))
                           ));
         }
-        
         return $match;
     }
 }
@@ -754,10 +755,23 @@ class Markup_template_plugin  extends SimpleMarkup
     var $_match_regexp = '\{\{\w[^\n]+\}\}';
     
     function markup ($match) {
-        $page = substr($match,2,-2); $vars = '';
+        $page = substr($match, 2, -2); $vars = '';
         if (preg_match('/^(\S+)\|(.*)$/', $page, $_m)) {
             $page = $_m[1];
-            $vars = str_replace('|', '&', $_m[2]);
+            /* Bug #1540007 "hardened-php issue, crawlers related" 
+               php bug #24175 and similar.
+               Alternative:
+               $vars = preg_replace('/\|/', '&', $_m[2]); 
+             */
+            $vars = "";
+            if (strlen($_m[2]) > 200) {
+                while (strlen($_m[2]) > 200) {
+                    $vars .= str_replace('|', '&', substr($_m[2], 0, 200));
+                    $_m[2] = substr($_m[2], 200);
+                } 
+            } else {
+                $vars = str_replace('|', '&', $_m[2]);
+            }
         }
         if ($vars)
     	    $s = '<'.'?plugin Template page=' . $page . ' vars="' . $vars . '"?'.'>';
@@ -1007,6 +1021,11 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.82  2006/12/02 19:53:05  rurban
+// Simplify DISABLE_MARKUP_WIKIWORD handling by adding the new function
+// stdlib: array_remove(). Hopefully PHP will not add this natively sooner
+// or later.
+//
 // Revision 1.81  2006/11/19 13:52:52  rurban
 // improve debug output: regex only once
 //
