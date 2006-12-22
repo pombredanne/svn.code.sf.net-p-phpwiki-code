@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.21 2006-10-08 12:50:44 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.22 2006-12-22 17:57:41 rurban Exp $');
 /**
  Copyright 2003,2004,2006 $ThePhpWikiProgrammingTeam
 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function getDefaultArguments() {
@@ -107,9 +107,15 @@ extends WikiPlugin
     }
 
     function _getLabel($action) {
-        $labels = array('purge-cache' => _("Purge Markup Cache"),
-                        'purge-bad-pagenames' => _("Purge all Pages With Invalid Names"),
-                        'purge-empty-pages' => _("Purge all empty, unreferenced Pages"));
+        $labels = array('purge-cache' 		=> _("Purge Markup Cache"),
+                        'purge-bad-pagenames' 	=> _("Purge all Pages With Invalid Names"),
+                        'purge-empty-pages' 	=> _("Purge all empty, unreferenced Pages"),
+                        'access-restrictions' 	=> _("Access Restrictions"),
+                        'email-verification' 	=> _("Email Verification"),
+                        'convert-cached-html' 	=> _("Convert cached_html"),
+                        'db-check' 		=> _("DB Check"),
+                        'db-rebuild' 		=> _("Db Rebuild")
+                        );
         return @$labels[$action];
     }
 
@@ -235,7 +241,10 @@ extends WikiPlugin
             $group = $request->getGroup();
 	    $allusers = $group->_allUsers();
 	} else {
-	    $allusers = array_keys($args['user']);
+            if (!empty($args['user']))
+                $allusers = array_keys($args['user']);
+            else 
+                $allusers = array();
 	}
         foreach ($allusers as $username) {
             if (ENABLE_USER_NEW)
