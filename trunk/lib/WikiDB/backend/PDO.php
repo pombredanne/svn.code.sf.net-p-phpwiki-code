@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.9 2006-11-19 14:04:39 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.10 2006-12-22 01:04:12 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -766,7 +766,7 @@ extends WikiDB_backend
                              . " FROM $link_tbl, $page_tbl linker, $page_tbl linkee, $nonempty_tbl"
                              . " WHERE linkfrom=linker.id AND linkto=linkee.id"
                              . " AND $have.pagename=?"
-                             . " AND $want.pagename=?);
+                             . " AND $want.pagename=?");
         $sth->bindParam(1, $pagename, PDO_PARAM_STR, 100);
         $sth->bindParam(2, $link, PDO_PARAM_STR, 100);
         $sth->execute();
@@ -1459,6 +1459,9 @@ class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql {}
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2006/11/19 14:04:39  rurban
+// Oops. Syntax error in prev commit
+//
 // Revision 1.8  2006/11/19 14:03:32  rurban
 // Replace IF by CASE in exists_link()
 //
