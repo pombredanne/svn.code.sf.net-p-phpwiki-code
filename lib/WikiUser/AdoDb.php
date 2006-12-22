@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: AdoDb.php,v 1.8 2006-03-19 16:26:40 rurban Exp $');
+rcs_id('$Id: AdoDb.php,v 1.9 2006-12-22 17:25:23 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -222,7 +222,10 @@ extends _DbPassUser
             elseif (isset($rs->fields[0]))
                 $okay = $rs->fields[0];
             else {
-                $okay = reset($rs->fields);
+                if (is_array($rs->fields))
+                    $okay = reset($rs->fields);
+                else
+                    $okay = false;
             }
             $rs->Close();
             $result = !empty($okay);
@@ -272,6 +275,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2006/03/19 16:26:40  rurban
+// fix DBAUTH arguments to be position independent, fixes bug #1358973
+//
 // Revision 1.7  2005/10/10 19:43:49  rurban
 // add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
 //
