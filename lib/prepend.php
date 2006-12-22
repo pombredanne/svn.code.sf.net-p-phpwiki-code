@@ -9,10 +9,10 @@ function rcs_id ($id) {
     if (defined('DEBUG') and DEBUG)
         $GLOBALS['RCS_IDS'] .= "$id\n"; 
 }
-rcs_id('$Id: prepend.php,v 1.57 2006-10-12 06:36:37 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.58 2006-12-22 00:28:25 rurban Exp $');
 
 // see lib/stdlib.php: phpwiki_version()
-define('PHPWIKI_VERSION', '1.3.13pre-20061010');
+define('PHPWIKI_VERSION', '1.3.13pre-20061221');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
