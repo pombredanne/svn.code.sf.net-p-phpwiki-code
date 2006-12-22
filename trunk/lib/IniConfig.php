@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.106 2006-11-19 13:52:18 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.107 2006-12-22 17:45:28 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -194,7 +194,7 @@ function IniConfig($file) {
          'ENABLE_DISCUSSION_LINK', 'ENABLE_CAPTCHA',
          'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML',
          'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
-         'ENABLE_MARKUP_DIVSPAN'
+         'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA'
          );
 
     $rs = @parse_ini_file($file);
@@ -258,7 +258,7 @@ function IniConfig($file) {
                                   'ALLOW_IMAP_LOGIN', 'ALLOW_USER_LOGIN',
                                   'REQUIRE_SIGNIN_BEFORE_EDIT',
                                   'WIKIDB_NOCACHE_MARKUP',
-                                  'COMPRESS_OUTPUT'
+                                  'COMPRESS_OUTPUT', 'USE_BYTEA'
                                   )))
         {
             ;
@@ -913,6 +913,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2006/11/19 13:52:18  rurban
+// fix and stabilize MAP splitting
+//
 // Revision 1.105  2006/11/19 11:24:11  rurban
 // IPV6 fix by matt brown, #1546571
 // An IPv6 address must be surrounded by square brackets to form a valid server name.
