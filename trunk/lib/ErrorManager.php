@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.48 2006-03-19 14:29:40 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.49 2006-12-22 00:17:49 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -460,12 +460,16 @@ class PhpError {
         $errfile = preg_replace('|^' . preg_quote($dir) . '|', '', $this->errfile);
         $lines = explode("\n", $this->errstr);
         if (DEBUG & _DEBUG_VERBOSE) {
-          $msg = sprintf("%s:%d: %s[%d]: %s",
+          $msg = sprintf("%s:%d %s[%d]: %s",
                          $errfile, $this->errline,
                          $this->getDescription(), $this->errno,
                          array_shift($lines));
+        } elseif (! $this->isFatal()) {
+          $msg = sprintf("%s: \"%s\"",
+                         $this->getDescription(),
+                         array_shift($lines));
         } else {
-          $msg = sprintf("%s:%d: %s: \"%s\"",
+          $msg = sprintf("%s:%d %s: \"%s\"",
                          $errfile, $this->errline,
                          $this->getDescription(),
                          array_shift($lines));
@@ -591,12 +595,19 @@ class PhpErrorOnce extends PhpError {
 	        $lines = array($this->errstr->asXML());
         $errtype = (DEBUG & _DEBUG_VERBOSE) ? sprintf("%s[%d]", $this->getDescription(), $this->errno)
                                             : sprintf("%s", $this->getDescription());
-        $msg = sprintf("%s:%d: %s: %s %s",
+        if ((DEBUG & _DEBUG_VERBOSE) or $this->isFatal()) {
+	    $msg = sprintf("%s:%d %s: %s %s",
                        $errfile, $this->errline,
                        $errtype,
                        array_shift($lines),
                        $count > 1 ? sprintf(" (...repeated %d times)",$count) : ""
                        );
+	} else {
+          $msg = sprintf("%s: \"%s\" %s",
+			 $errtype,
+			 array_shift($lines),
+			 $count > 1 ? sprintf(" (...repeated %d times)",$count) : "");
+	}
         $html = HTML::div(array('class' => $this->getHtmlClass()), 
                           HTML::p($msg));
         if ($lines) {
@@ -617,6 +628,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2006/03/19 14:29:40  rurban
+// sf.net patch #1438439 by Matt Brown: Only set no-cache headers when error output is generated
+//
 // Revision 1.47  2005/10/31 17:20:40  rurban
 // fix ConvertBefore
 //
