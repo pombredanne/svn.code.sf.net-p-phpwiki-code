@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.28 2006-09-06 05:47:58 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.29 2006-12-22 00:27:37 rurban Exp $');
 
 /*
   Pagedata
@@ -682,6 +682,8 @@ class WikiDB_backend_search_sql extends WikiDB_backend_search
                                       : " OR LOWER(content) LIKE '$word'");
     }
 }
+
+// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:
