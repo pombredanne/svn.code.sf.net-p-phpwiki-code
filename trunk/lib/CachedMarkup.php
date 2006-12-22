@@ -1,7 +1,7 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.45 2006-10-12 06:33:50 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.46 2006-12-22 00:11:38 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -409,6 +409,9 @@ class Cached_SemanticLink extends Cached_WikiLink {
     }
 
     function getPagename($basepage) {
+	if (!isset($this->_page)) {
+	    $this->_expandurl($this->_url);
+	}
 	$page = new WikiPageName($this->_page, $basepage);
 	if ($page->isValid()) return $page->name;
 	else return false;
@@ -422,42 +425,48 @@ class Cached_SemanticLink extends Cached_WikiLink {
         else return false;
     }
 
-    function _expand($url, $label = false) {
+    function _expandurl($url) {
         $m = array();
         if (!preg_match('/^ ([^:]*) (:[:-]) (.*) $/x', $url, $m)) {
             return HTML::strong(array('class' => 'rawurl'),
                                 HTML::u(array('class' => 'baduri'),
                                         _("BAD semantic relation link")));
         }
-        $relation = $this->_relation = urldecode($m[1]);
-        $page   = $this->_page = urldecode($m[3]);
-        $class = 'wikilink';
+	$this->_relation = urldecode($m[1]);
+	$this->_page = urldecode($m[3]);
+	return $m;
+    }
+
+    function _expand($url, $label = false) {
+	$m = $this->_expandurl($url);
+        $class = 'wiki';
         // do not link to the attribute value, but to the attribute
         $is_attribute = ($m[2] == ':-');
         if ($label) {
             return HTML::span(
-                              HTML::a(array('href'  => WikiURL($is_attribute ? $relation : $page),
+                              HTML::a(array('href'  => WikiURL($is_attribute ? $this->_relation : $page),
                                             'class' => $class),
                                       $label)
                               );
         } elseif ($is_attribute) {
             return HTML::span(
-                              HTML::a(array('href'  => WikiURL($relation),
+                              HTML::a(array('href'  => WikiURL($this->_relation),
                                             'class' => $class),
                                       $url)
                               );
         } else {
             return HTML::span(
-                              HTML::a(array('href'  => WikiURL($relation),
+                              HTML::a(array('href'  => WikiURL($this->_relation),
                                             'class' => $class),
-                                      $relation),
-                              $m[2],
-                              HTML::a(array('href'  => WikiURL($page),
+                                      $this->_relation),
+                              HTML::strong($m[2]),
+                              HTML::a(array('href'  => WikiURL($this->_page),
                                             'class' => $class),
-                                      $page)
+                                      $this->_page)
                               );
         }
     }
+
     function expand($basepage, &$markup) {
         $label = isset($this->_label) ? $this->_label : false;
         return $this->_expand($this->_url, $label);
@@ -649,7 +658,8 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
-
+// Revision 1.45  2006/10/12 06:33:50  rurban
+// decide later with which class to render this link (fixes interwiki link layout)
 
 // (c-file-style: "gnu")
 // Local Variables:
