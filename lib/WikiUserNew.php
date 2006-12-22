@@ -1,6 +1,6 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.139 2006-09-03 09:55:37 rurban Exp $');
-/* Copyright (C) 2004,2005 $ThePhpWikiProgrammingTeam
+rcs_id('$Id: WikiUserNew.php,v 1.140 2006-12-22 01:20:14 rurban Exp $');
+/* Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -404,6 +404,16 @@ class _WikiUser
         return false;
     }
 
+    // 
+    function createHomePage() {
+        global $request;
+        $versiondata = array('author' => _("The PhpWiki programming team"));
+        $request->_dbi->save("Automatically created users homepage to be able to store UserPreferences.",
+                             1, $versiondata);
+        $request->_dbi->touch();                             
+        $this->_HomePagehandle = $request->getPage($this->_userid);
+    }
+    
     // innocent helper: case-insensitive position in _auth_methods
     function array_position ($string, $array) {
         $string = strtolower($string);
@@ -1135,6 +1145,13 @@ extends _AnonUser
         }
         if ($updated = _AnonUser::setPreferences($prefs, $id_only)) {
             // Encode only the _prefs array of the UserPreference object
+	    // If no DB method exists to store the prefs we must store it in the page, not in the cookies.
+            if (empty($this->_HomePagehandle)) {
+                $this->_HomePagehandle = $GLOBALS['request']->getPage($this->_userid);
+	    }
+            if (! $this->_HomePagehandle->exists() ) {
+                $this->createHomePage();
+            }
             if (!empty($this->_HomePagehandle) and !$id_only) {
                 $this->_HomePagehandle->set('pref', $this->_prefs->store());
             }
@@ -1656,8 +1673,11 @@ extends _UserPreference
             list($ok,$msg) = ValidateMail($value);
             if ($ok and mail($value,"[".WIKI_NAME ."] "._("Email Verification"),
                      sprintf(_("Welcome to %s!\nYour email account is verified and\nwill be used to send page change notifications.\nSee %s"),
-                             WIKI_NAME, WikiURL($GLOBALS['request']->getArg('pagename'),'',true))))
+                             WIKI_NAME, WikiURL($GLOBALS['request']->getArg('pagename'),'',true)))) {
                 $this->set('emailVerified',1);
+            } else {
+            	trigger_error($msg, E_USER_WARNING);
+            }
         }
     }
 }
@@ -1671,7 +1691,7 @@ function ValidateMail($email, $noconnect=false) {
 
     // if this check is too strict (like invalid mail addresses in a local network only)
     // uncomment the following line:
-    // return array(true,"not validated");
+    //return array(true,"not validated");
     // see http://sourceforge.net/tracker/index.php?func=detail&aid=1053681&group_id=6121&atid=106121
 
     $result = array();
@@ -1705,6 +1725,9 @@ function ValidateMail($email, $noconnect=false) {
     $mailbox = "(?:$addr_spec|$phrase$route_addr)";
 
     $rfc822re = "/$lwsp*$mailbox/";
+    unset($domain, $route_addr, $route, $phrase, $addr_spec, $sub_domain, $localpart, 
+          $atom, $word, $quoted_string);
+    unset($dtext, $controls, $specials, $lwsp, $domain_literal);
 
     if (!preg_match($rfc822re, $email)) {
         $result[0] = false;
@@ -1715,12 +1738,13 @@ function ValidateMail($email, $noconnect=false) {
       return array(true,sprintf(_("E-Mail address '%s' is properly formatted"), $email));
 
     list ( $Username, $Domain ) = split ("@", $email);
-    //Todo: getmxrr workaround on windows or manual input field to verify it manually
+    // Todo: getmxrr workaround on windows or manual input field to verify it manually
     if (!isWindows() and getmxrr($Domain, $MXHost)) { // avoid warning on Windows. 
         $ConnectAddress = $MXHost[0];
     } else {
         $ConnectAddress = $Domain;
     }
+    // Todo: company specific (behind a firewall) verification options
     $Connect = @fsockopen ( $ConnectAddress, 25 );
     if ($Connect) {
         if (ereg("^220", $Out = fgets($Connect, 1024))) {
@@ -2107,6 +2131,10 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.139  2006/09/03 09:55:37  rurban
+// Remove too early and too strict isValidName check in _PassUser. This really should be done in
+// the method, when we know it. This fixes NTLM auth. (userid=domain\user)
+//
 // Revision 1.138  2006/06/18 11:02:55  rurban
 // pref->value > -name, fix bug #1355533
 //
