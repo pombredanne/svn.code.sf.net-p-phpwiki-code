@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.58 2006-11-19 13:57:14 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.59 2006-12-22 16:21:29 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -506,6 +506,7 @@ class Block_blockquote extends BlockMarkup
         if (get_class($nextBlock) == get_class($this)) {
             assert ($nextBlock->_depth < $this->_depth);
             $nextBlock->_element->unshiftContent($this->_element);
+	    if (!empty($this->_tight_top))
             $nextBlock->_tight_top = $this->_tight_top;
             return $nextBlock;
         }
@@ -1133,6 +1134,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2006/11/19 13:57:14  rurban
+// fix Regex Syntax Error
+//
 // Revision 1.57  2006/10/12 06:32:30  rurban
 // Optionally support new tags <div>, <span> with ENABLE_MARKUP_DIVSPAN (in work)
 //
