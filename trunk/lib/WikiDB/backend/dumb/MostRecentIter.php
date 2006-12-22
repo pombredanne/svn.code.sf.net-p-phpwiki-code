@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostRecentIter.php,v 1.7 2006-12-02 13:19:50 rurban Exp $');
+rcs_id('$Id: MostRecentIter.php,v 1.8 2006-12-22 00:27:37 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -74,6 +74,8 @@ function WikiDB_backend_dumb_MostRecentIter_sortf_rev($a, $b) {
     $bcreated = $b['versiondata']['mtime'];
     return $acreated - $bcreated;
 }
+
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:

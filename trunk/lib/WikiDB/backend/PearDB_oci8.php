@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_oci8.php,v 1.11 2006-11-29 19:49:05 rurban Exp $');
+rcs_id('$Id: PearDB_oci8.php,v 1.12 2006-12-22 00:27:37 rurban Exp $');
 
 /**
  * Oracle extensions for the Pear DB backend.
@@ -89,6 +89,9 @@ extends WikiDB_backend_PearDB_search
                 : "LOWER(pagename) LIKE '$page' OR DBMS_LOB.INSTR(content, '$exactword') > 0");
     }
 }
+
+// $Log: not supported by cvs2svn $
+
 
 // (c-file-style: "gnu")
 // Local Variables:

@@ -1,4 +1,5 @@
-<?php rcs_id('$Id: dbaBase.php,v 1.25 2006-09-06 05:49:32 rurban Exp $');
+<?php // -*-php-*-
+rcs_id('$Id: dbaBase.php,v 1.26 2006-12-22 00:27:37 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -572,6 +573,8 @@ class WikiDB_backend_dbaBase_linktable
             $this->_db->set($key, false);
     }
 }
+
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:

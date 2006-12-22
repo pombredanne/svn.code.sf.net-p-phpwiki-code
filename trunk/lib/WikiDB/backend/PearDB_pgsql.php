@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.23 2006-11-29 19:49:05 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.24 2006-12-22 00:27:37 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -150,7 +150,7 @@ extends WikiDB_backend_PearDB
             if ($new = $this->_get_pageid($to, false)) {
                 // Cludge Alert!
                 // This page does not exist (already verified before), but exists in the page table.
-                // So we delete this page.
+                // So we delete this page in one step.
                 $dbh->query("SELECT prepare_rename_page($id, $new)");
             }
             $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
@@ -311,6 +311,8 @@ select * from stat('select idxfti from version') order by ndoc desc, nentry desc
         return $this->_pagename_match_clause($node) . " OR idxFTI @@ to_tsquery('$word')";
     }
 }
+
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:

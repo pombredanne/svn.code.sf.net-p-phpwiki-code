@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MostPopularIter.php,v 1.8 2006-12-02 13:19:50 rurban Exp $');
+rcs_id('$Id: MostPopularIter.php,v 1.9 2006-12-22 00:27:37 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -66,6 +66,8 @@ function WikiDB_backend_dumb_MostPopularIter_sortf_rev($a,$b) {
     return $ahits - $bhits;
 }
 
+// $Log: not supported by cvs2svn $
+
 // For emacs users
 // Local Variables:
 // mode: php
@@ -74,5 +76,4 @@ function WikiDB_backend_dumb_MostPopularIter_sortf_rev($a,$b) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:
-
 ?>
