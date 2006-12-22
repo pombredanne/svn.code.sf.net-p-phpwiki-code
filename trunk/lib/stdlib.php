@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.254 2006-12-02 19:53:05 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.255 2006-12-22 16:53:38 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1857,9 +1857,11 @@ function fixTitleEncoding( $s ) {
         // if charset == 'iso-8859-1' then simply use utf8_decode()
         if ($locharset == 'iso-8859-1')
             return utf8_decode( $s );
-        else
-            // TODO: check for iconv support
+        else {
+            // check for iconv support
+            loadPhpExtension("iconv");
             return iconv( "UTF-8", $charset, $s );
+        }
 
     if ($locharset == "utf-8" and $ishigh and !$isutf )
         return utf8_encode( $s );
@@ -2086,6 +2088,11 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.254  2006/12/02 19:53:05  rurban
+// Simplify DISABLE_MARKUP_WIKIWORD handling by adding the new function
+// stdlib: array_remove(). Hopefully PHP will not add this natively sooner
+// or later.
+//
 // Revision 1.253  2006/08/25 22:20:52  rurban
 // better split subpages at sep
 //
