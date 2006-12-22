@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.108 2006-11-29 19:49:48 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.109 2006-12-22 00:24:09 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -421,7 +421,7 @@ class Request {
             if (empty($this->_ob_get_length)) $this->_ob_get_length = 0;
             $this->_ob_get_length += ob_get_length();
             while (@ob_end_flush());
-            ob_end_clean();
+            if (ob_get_length()) ob_end_clean();
             ob_start();
         }
     }
@@ -1354,6 +1354,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2006/11/29 19:49:48  rurban
+// quote the date
+//
 // Revision 1.107  2006/11/19 11:10:11  rurban
 // Patch from Bug# 1569424 by Bob Peele (bob.peele@oracle.com)
 //
