@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.73 2005-04-08 05:41:00 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.74 2006-12-22 00:24:43 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -18,7 +18,7 @@ class Template
         $this->_basepage = $request->getArg('pagename');
 
         if (strstr($name, "/")) {
-            $oldname = $WikiTheme->_name;
+            $oldname  = $WikiTheme->_name;
             $oldtheme = $WikiTheme->_theme;
             list($themename, $name) = explode("/", $name);
             $WikiTheme->_theme = "themes/$themename";
@@ -282,6 +282,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2005/04/08 05:41:00  rurban
+// fix Template("theme/name") inclusion
+//
 // Revision 1.72  2005/02/02 20:35:41  rurban
 // add $SEP
 //
