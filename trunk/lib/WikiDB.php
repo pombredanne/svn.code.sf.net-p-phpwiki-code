@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.144 2006-10-12 06:36:09 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.145 2006-12-22 17:59:55 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -219,35 +219,9 @@ class WikiDB {
             $result = -1;
 
         /* Generate notification emails? */
-        if (! $this->isWikiPage($pagename) and !isa($GLOBALS['request'],'MockRequest')) {
-            $notify = $this->get('notify');
-            if (!empty($notify) and is_array($notify)) {
-                global $request;
-                //TODO: deferr it (quite a massive load if you remove some pages).
-                //TODO: notification class which catches all changes,
-                //  and decides at the end of the request what to mail. 
-                //  (type, page, who, what, users, emails)
-                // could be used for PageModeration and RSS2 Cloud xml-rpc also.
-                $page = new WikiDB_Page($this, $pagename);
-                list($emails, $userids) = $page->getPageChangeEmails($notify);
-                if (!empty($emails)) {
-                    $from = $request->_user->getId() . '@' .  $request->get('REMOTE_HOST');
-                    $editedby = sprintf(_("Removed by: %s"), $from);
-                    $emails = join(',', $emails);
-                    $subject = sprintf(_("Page removed %s"), urlencode($pagename));
-                    if (mail("<undisclosed-recipients>","[".WIKI_NAME."] ".$subject, 
-                             $subject."\n".
-                             $editedby."\n\n".
-                             "Deleted $pagename",
-                             "From: $from\r\nBcc: $emails"))
-                        trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
-                                              $pagename, join(',',$userids)), E_USER_NOTICE);
-                    else
-                        trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
-                                              $pagename, join(',',$userids)), E_USER_WARNING);
-                }
-            }
-        }
+        include_once("lib/MailNotify.php");
+        $MailNotify = new MailNotify($pagename);
+        $MailNotify->onDeletePage ($this, $pagename);
 
         //How to create a RecentChanges entry with explaining summary? Dynamically
         /*
@@ -509,10 +483,9 @@ class WikiDB {
         if ($result and !isa($GLOBALS['request'], 'MockRequest')) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
-                list($emails, $userids) = $oldpage->getPageChangeEmails($notify);
-                if (!empty($emails)) {
-                    $oldpage->sendPageRenameNotification($to, $meta, $emails, $userids);
-                }
+                include_once("lib/MailNotify.php");
+                $MailNotify = new MailNotify($from);
+                $MailNotify->onRenamePage ($this, $from, $to);
             }
         }
         return $result;
@@ -940,171 +913,14 @@ class WikiDB_Page
             // Save didn't fail because of concurrent updates.
             $notify = $this->_wikidb->get('notify');
             if (!empty($notify) and is_array($notify) and !isa($GLOBALS['request'],'MockRequest')) {
-                list($emails, $userids) = $this->getPageChangeEmails($notify);
-                if (!empty($emails)) {
-                    $this->sendPageChangeNotification($wikitext, $version, $meta, $emails, $userids);
-                }
+                include_once("lib/MailNotify.php");
+                $MailNotify = new MailNotify($newrevision->getName());
+                $MailNotify->onChangePage ($this, $wikitext, $version, $meta);
             }
             $newrevision->_transformedContent = $formatted;
         }
 
 	return $newrevision;
-    }
-
-    function getPageChangeEmails($notify) {
-        $emails = array(); $userids = array();
-        foreach ($notify as $page => $users) {
-            if (glob_match($page, $this->_pagename)) {
-                foreach ($users as $userid => $user) {
-                    if (!$user) { // handle the case for ModeratePage: no prefs, just userid's.
-                        global $request;
-                        $u = $request->getUser();
-                        if ($u->UserName() == $userid) {
-                            $prefs = $u->getPreferences();
-                        } else {
-                            // not current user
-                            if (ENABLE_USER_NEW) {
-                                $u = WikiUser($userid);
-                                $u->getPreferences();
-                                $prefs = &$u->_prefs;
-                            } else {
-                                $u = new WikiUser($GLOBALS['request'], $userid);
-                                $prefs = $u->getPreferences();
-                            }
-                        }
-                        $emails[] = $prefs->get('email');
-                        $userids[] = $userid;
-                    } else {
-                      if (!empty($user['verified']) and !empty($user['email'])) {
-                        $emails[]  = $user['email'];
-                        $userids[] = $userid;
-                      } elseif (!empty($user['email'])) {
-                        global $request;
-                        // do a dynamic emailVerified check update
-                        $u = $request->getUser();
-                        if ($u->UserName() == $userid) {
-                            if ($request->_prefs->get('emailVerified')) {
-                                $emails[] = $user['email'];
-                                $userids[] = $userid;
-                                $notify[$page][$userid]['verified'] = 1;
-                                $request->_dbi->set('notify', $notify);
-                            }
-                        } else {
-                            // not current user
-                            if (ENABLE_USER_NEW) {
-                                $u = WikiUser($userid);
-                                $u->getPreferences();
-                                $prefs = &$u->_prefs;
-                            } else {
-                                $u = new WikiUser($GLOBALS['request'], $userid);
-                                $prefs = $u->getPreferences();
-                            }
-                            if ($prefs->get('emailVerified')) {
-                                $emails[] = $user['email'];
-                                $userids[] = $userid;
-                                $notify[$page][$userid]['verified'] = 1;
-                                $request->_dbi->set('notify', $notify);
-                            }
-                        }
-                        // ignore verification
-                        /*
-                        if (DEBUG) {
-                            if (!in_array($user['email'],$emails))
-                                $emails[] = $user['email'];
-                        }
-                        */
-                    }
-                  }
-                }
-            }
-        }
-        $emails = array_unique($emails);
-        $userids = array_unique($userids);
-        return array($emails, $userids);
-    }
-
-    /**
-     * Send udiff for a changed page to multiple users.
-     * See rename and remove methods also
-     */
-    function sendPageChangeNotification(&$wikitext, $version, $meta, $emails, $userids) {
-        global $request;
-        if (@is_array($request->_deferredPageChangeNotification)) {
-            // collapse multiple changes (loaddir) into one email
-            $request->_deferredPageChangeNotification[] 
-		= array($this->_pagename, $emails, $userids);
-            return;
-        }
-        $backend = &$this->_wikidb->_backend;
-        //$backend = &$request->_dbi->_backend;
-        $subject = _("Page change").' '.urlencode($this->_pagename);
-        $previous = $backend->get_previous_version($this->_pagename, $version);
-        if (!isset($meta['mtime'])) $meta['mtime'] = time();
-        if ($previous) {
-            $difflink = WikiURL($this->_pagename, array('action'=>'diff'), true);
-            $cache = &$this->_wikidb->_cache;
-            //$cache = &$request->_dbi->_cache;
-            $this_content = explode("\n", $wikitext);
-            $prevdata = $cache->get_versiondata($this->_pagename, $previous, true);
-            if (empty($prevdata['%content']))
-                $prevdata = $backend->get_versiondata($this->_pagename, $previous, true);
-            $other_content = explode("\n", $prevdata['%content']);
-            
-            include_once("lib/difflib.php");
-            $diff2 = new Diff($other_content, $this_content);
-            //$context_lines = max(4, count($other_content) + 1,
-            //                     count($this_content) + 1);
-            $fmt = new UnifiedDiffFormatter(/*$context_lines*/);
-            $content  = $this->_pagename . " " . $previous . " " . 
-                Iso8601DateTime($prevdata['mtime']) . "\n";
-            $content .= $this->_pagename . " " . $version . " " .  
-                Iso8601DateTime($meta['mtime']) . "\n";
-            $content .= $fmt->format($diff2);
-            
-        } else {
-            $difflink = WikiURL($this->_pagename,array(),true);
-            $content = $this->_pagename . " " . $version . " " .  
-                Iso8601DateTime($meta['mtime']) . "\n";
-            $content .= _("New page");
-        }
-        $from = $request->_user->getId() . '@' .  $request->get('REMOTE_HOST');
-        $editedby = sprintf(_("Edited by: %s"), $from);
-        $emails = join(',',$emails);
-        if (mail("<undisclosed-recipients>",
-                 "[".WIKI_NAME."] ".$subject, 
-                 $subject."\n". $editedby."\n". $difflink."\n\n". $content,
-                 "From: $from\r\nBcc: $emails"))
-            trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
-                                  $this->_pagename, join(',',$userids)), E_USER_NOTICE);
-        else
-            trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
-                                  $this->_pagename, join(',',$userids)), E_USER_WARNING);
-    }
-
-    /** support mass rename / remove (not yet tested)
-     */
-    function sendPageRenameNotification($to, &$meta, $emails, $userids) {
-        global $request;
-        if (@is_array($request->_deferredPageRenameNotification)) {
-            $request->_deferredPageRenameNotification[] = array($this->_pagename, 
-                                                                $to, $meta, $emails, $userids);
-        } else {
-            $oldname = $this->_pagename;
-            $from = $request->_user->getId() . '@' .  $request->get('REMOTE_HOST');
-            $editedby = sprintf(_("Edited by: %s"), $from);
-            $emails = join(',',$emails);
-            $subject = sprintf(_("Page rename %s to %s"), urlencode($oldname), urlencode($to));
-            $link = WikiURL($to, true);
-            if (mail("<undisclosed-recipients>",
-                     "[".WIKI_NAME."] ".$subject, 
-                     $subject."\n".$editedby."\n".$link."\n\n"."Renamed $from to $to",
-                     "From: $from\r\nBcc: $emails"))
-                trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
-                                      $oldname, join(',',$userids)), E_USER_NOTICE);
-            else
-                trigger_error(sprintf(_("PageChange Notification Error: Couldn't send %s to %s"),
-                                      $oldname, join(',',$userids)), E_USER_WARNING);
-        }
     }
 
     /**
@@ -1292,7 +1108,7 @@ class WikiDB_Page
     }
 
     /* Semantic relations are links with the relation pointing to another page,
-       the so called "RDF Triple".
+       the so-called "RDF Triple".
        [San Diego] is%20a::city
        => "At the page San Diego there is a relation link of 'is a' to the page 'city'."
      */
@@ -1468,7 +1284,7 @@ class WikiDB_Page
     // May be empty. Either the stored owner (/Chown), or the first authorized author
     function getOwner() {
         if ($owner = $this->get('owner'))
-            return ($owner == "The PhpWiki programming team") ? ADMIN_USER : $owner;
+            return ($owner == _("The PhpWiki programming team")) ? ADMIN_USER : $owner;
         // check all revisions forwards for the first author_id
         $backend = &$this->_wikidb->_backend;
         $pagename = &$this->_pagename;
@@ -1476,7 +1292,7 @@ class WikiDB_Page
         for ($v=1; $v <= $latestversion; $v++) {
             $rev = $this->getRevision($v,false);
             if ($rev and $owner = $rev->get('author_id')) {
-            	return ($owner == "The PhpWiki programming team") ? ADMIN_USER : $owner;
+            	return ($owner == _("The PhpWiki programming team")) ? ADMIN_USER : $owner;
             }
         }
         return '';
@@ -2272,6 +2088,10 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.144  2006/10/12 06:36:09  rurban
+// Guard against unwanted DEBUG="DEBUG" logic. In detail (WikiDB),
+// and generally by forcing all int constants to be defined as int.
+//
 // Revision 1.143  2006/09/06 05:46:40  rurban
 // do db backend check on _DEBUG_SQL
 //
