@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.226 2006-09-06 06:01:45 rurban Exp $');
+rcs_id('$Id: main.php,v 1.227 2006-12-22 17:53:55 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -315,7 +315,7 @@ class WikiRequest extends Request {
      * the URL.  (These should be ignored when we receive the POST
      * request.)
      */
-    function getPostURL ($pagename=false) {
+    function getPostURL ($pagename = false) {
         global $HTTP_GET_VARS;
 
         if ($pagename === false)
@@ -323,6 +323,8 @@ class WikiRequest extends Request {
         $action = $this->getArg('action');
         if (!empty($HTTP_GET_VARS['start_debug'])) // zend ide support
             return WikiURL($pagename, array('action' => $action, 'start_debug' => 1));
+        elseif ($action == 'edit')
+            return WikiURL($pagename);
         else
             return WikiURL($pagename, array('action' => $action));
     }
@@ -1146,7 +1148,7 @@ class WikiRequest extends Request {
     }
     
     function action_wikitohtml () {
-       include_once("lib/WikiToHtml.php");
+       include_once("lib/WysiwygEdit/Wikiwyg.php");
        $wikitohtml = new WikiToHtml( $this->getArg("content") , $this);
        $wikitohtml->send();
     }
@@ -1291,6 +1293,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.226  2006/09/06 06:01:45  rurban
+// minor cleanup
+//
 // Revision 1.225  2006/05/31 19:59:57  jeannicolas
 //
 //
