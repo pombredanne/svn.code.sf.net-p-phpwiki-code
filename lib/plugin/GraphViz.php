@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GraphViz.php,v 1.6 2005-10-12 06:19:07 rurban Exp $');
+rcs_id('$Id: GraphViz.php,v 1.7 2006-12-22 17:55:06 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -122,7 +122,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
     function getDefaultArguments() {
         return array(
@@ -203,9 +203,12 @@ extends WikiPluginCached
     }
 
     function processSource($argarray=false) {
-        $source = $this->source;
-        if (empty($source)) {
+        if (empty($this->source)) {
             // create digraph from pages
+            if (empty($argarray['pages'])) {
+                trigger_error(sprintf("%s is empty",'GraphViz argument source'), E_USER_WARNING);
+                return '';
+            }
             $source = "digraph GraphViz {\n";  // }
             foreach ($argarray['pages'] as $name) { // support <!plugin-list !> pagelists
                 // allow Page/SubPage
@@ -215,6 +218,8 @@ extends WikiPluginCached
             }
             // {
             $source .= "\n  }";
+        } else {
+            $source = $this->source;
         }
         /* //TODO: expand inlined plugin-list arg
          $i = 0;
@@ -233,6 +238,8 @@ extends WikiPluginCached
 
     function createDotFile($tempfile='', $argarray=false) {
         $this->source = $this->processSource($argarray);
+        if (!$this->source)
+            return false;
         if (!$tempfile) {
             $tempfile = $this->tempnam($this->getName().".dot");
             unlink($tempfile);
@@ -301,7 +308,11 @@ extends WikiPluginCached
     }
     
     function getMap($dbi, $argarray, $request) {
-    	return $this->invokeDot($argarray);
+    	$result = $this->invokeDot($argarray);
+        if (isa($result, 'HtmlElement'))
+            return array(false, $result);
+        else
+            return $result;
         // $img = $this->getImage($dbi, $argarray, $request);
     	//return array($this->_mapfile, $img);
     }
@@ -331,8 +342,10 @@ extends WikiPluginCached
         }
         $ok = $tempfiles;
         $source = $this->processSource($argarray);
-        if (empty($source))
-            return $this->error(fmt("No dot graph given"));
+        if (empty($source)) {
+            $this->complain("No dot graph given");
+            return array(false, $this->GetError());
+        }
 	//$ok = $ok and $this->createDotFile($tempfiles.'.dot', $argarray);
 
         $args = "-T$gif $tempfiles.dot -o $outfile";
@@ -403,8 +416,8 @@ extends WikiPluginCached
                             . (file_exists("$tempfiles.map") ? filesize("$tempfiles.map"):'missing'));
             $this->complain("\ncmd-line: $cmdline1");
             $this->complain("\ncmd-line: $cmdline2");
-            trigger_error($this->GetError(), E_USER_WARNING);
-            return array(false, false);
+            //trigger_error($this->GetError(), E_USER_WARNING);
+            return array(false, $this->GetError());
         }
 
         // clean up tempfiles
@@ -417,12 +430,15 @@ extends WikiPluginCached
         if ($ok)
             return array($img, $map);
         else
-            return array(false, false);
+            return array(false, $this->GetError());
     }
 
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2005/10/12 06:19:07  rurban
+// protect unsafe calls
+//
 // Revision 1.5  2005/09/26 06:39:14  rurban
 // use cached img and map - again. Remove execute from here
 //
