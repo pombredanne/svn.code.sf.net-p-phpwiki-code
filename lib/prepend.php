@@ -9,10 +9,10 @@ function rcs_id ($id) {
     if (defined('DEBUG') and DEBUG)
         $GLOBALS['RCS_IDS'] .= "$id\n"; 
 }
-rcs_id('$Id: prepend.php,v 1.58 2006-12-22 00:28:25 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.59 2006-12-23 11:51:23 rurban Exp $');
 
 // see lib/stdlib.php: phpwiki_version()
-define('PHPWIKI_VERSION', '1.3.13pre-20061221');
+define('PHPWIKI_VERSION', '1.3.13pre-20061222');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
@@ -30,9 +30,22 @@ function check_php_version ($a = '0', $b = '0', $c = '0') {
   * We want to work with those old ones instead of the new superglobals, 
   * for easier coding.
   */
+/*
 foreach (array('SERVER','REQUEST','GET','POST','SESSION','ENV','COOKIE') as $k) {
-    if (!isset($GLOBALS['HTTP_'.$k.'_VARS']) and isset($GLOBALS['_'.$k]))
+    if (!isset($GLOBALS['HTTP_'.$k.'_VARS']) and isset($GLOBALS['_'.$k])) {
         $GLOBALS['HTTP_'.$k.'_VARS'] =& $GLOBALS['_'.$k];
+    }
+}
+*/
+// A new php-5.1.x feature: Turn off php-5.1.x auto_globals_jit = On, or use this mess below.
+if (empty($GLOBALS['HTTP_SERVER_VARS'])) {
+    $GLOBALS['HTTP_SERVER_VARS']  =& $_SERVER;
+    $GLOBALS['HTTP_ENV_VARS'] 	  =& $_ENV;
+    $GLOBALS['HTTP_GET_VARS'] 	  =& $_GET;
+    $GLOBALS['HTTP_POST_VARS'] 	  =& $_POST;
+    $GLOBALS['HTTP_SESSION_VARS'] =& $_SESSION;
+    $GLOBALS['HTTP_COOKIE_VARS']  =& $_COOKIE;
+    $GLOBALS['HTTP_REQUEST_VARS'] =& $_REQUEST;
 }
 unset($k);
 
