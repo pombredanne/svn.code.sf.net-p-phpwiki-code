@@ -214,7 +214,7 @@ function purge_testbox() {
     case 'SQL':
     case 'ADODB':
     case 'PDO':
-        foreach ($dbi->_backend->_table_names as $table) {
+        foreach (array_reverse($dbi->_backend->_table_names) as $table) {
             $dbi->genericSqlQuery("DELETE FROM $table");
         }
         break;
@@ -576,22 +576,30 @@ class phpwiki_TestCase extends PHPUnit_TestCase {
 
 // Test all db backends.
 foreach ($run_database_backends as $dbtype) {
-    global $request;
+    global $request, $DBParams;
     //    if (DEBUG & _DEBUG_TRACE)
     //        printMemoryUsage("PHPUnitInitialized");
     $DBParams['dbtype'] = $dbtype;
     if (string_starts_with($dbtype, 'PearDB_')) {
 	$DBParams['dbtype'] = 'SQL';
-	preg_replace("/^([^:]+):/", substr($dbtype, 7).":", $DBParams['dsn']);
+	$DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 7).":", $DBParams['dsn']);
+        echo "dsn: ",$DBParams['dsn'],"\n";
     }
     if (string_starts_with($dbtype, 'ADODB_')) {
 	$DBParams['dbtype'] = 'ADODB';
-	preg_replace("/^([^:]+):/", substr($dbtype, 6).":", $DBParams['dsn']);
+	$DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 6).":", $DBParams['dsn']);
+        echo "dsn: ",$DBParams['dsn'],"\n";
     }
     if (string_starts_with($dbtype, 'PDO_')) {
 	$DBParams['dbtype'] = 'PDO';
-	preg_replace("/^([^:]+):/", substr($dbtype, 4).":", $DBParams['dsn']);
+	$DBParams['dsn'] = preg_replace("/^([^:]+):/", substr($dbtype, 4).":", $DBParams['dsn']);
+        echo "dsn: ",$DBParams['dsn'],"\n";
     }
+    // sqlite fix: 
+    /* if (preg_match('/sqlite$/', $dbtype)) {
+	$DBParams['dsn'] = preg_replace("/127\.0\.0\.1/", '', $DBParams['dsn']);
+        echo "dsn: ",$DBParams['dsn'],"\n";
+    } */
     $DBParams['directory']            = $cur_dir . '/.testbox';
     if ($dbtype == 'flatfile')
         $DBParams['directory']        = $cur_dir . '/.testbox/flatfile';
@@ -600,6 +608,7 @@ foreach ($run_database_backends as $dbtype) {
     //$DBParams['dba_handler']          = $database_dba_handler;
 
     echo "Testing DB Backend \"$dbtype\" ...\n";
+    flush();
     $request = new MockRequest($DBParams);
     if ( ! ENABLE_USER_NEW ) {
         $request->_user->_request =& $request;
@@ -640,6 +649,9 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "</pre>\n";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2006/06/05 09:35:02  rurban
+// add experimental backend flatfile, minor fixes
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

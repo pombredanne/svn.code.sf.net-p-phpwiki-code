@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.93 2006-12-03 16:25:20 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.94 2006-12-23 11:44:56 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -539,9 +539,9 @@ extends WikiDB_backend
         
         $this->lock(array('version','recent','nonempty','page','link'));
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
-            $dbh->Execute("DELETE FROM $version_tbl  WHERE id=$id");
-            $dbh->Execute("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->Execute("DELETE FROM $nonempty_tbl WHERE id=$id");
+            $dbh->Execute("DELETE FROM $recent_tbl   WHERE id=$id");
+            $dbh->Execute("DELETE FROM $version_tbl  WHERE id=$id");
             $this->set_links($pagename, false);
             $row = $dbh->GetRow("SELECT COUNT(*) FROM $link_tbl WHERE linkto=$id");
             if ($row and $row[0]) {
@@ -617,21 +617,24 @@ extends WikiDB_backend
             }
         }
         // purge page table: delete all non-referenced pages
-        // for all previously linked pages...
+        // for all previously linked pages, which have no other linkto links
         if (DEBUG and $oldlinks) {
             // trigger_error("purge page table: delete all non-referenced pages...", E_USER_NOTICE);
             foreach ($oldlinks as $id => $name) {
                 // ...check if the page is empty and has no version
-                if ($dbh->getRow("SELECT $page_tbl.id FROM $page_tbl"
+                $result = $dbh->getRow("SELECT $page_tbl.id FROM $page_tbl"
                                      . " LEFT JOIN $nonempty_tbl USING (id) "
                                      . " LEFT JOIN $version_tbl USING (id)"
                                      . " WHERE $nonempty_tbl.id is NULL"
                                      . " AND $version_tbl.id is NULL"
-                                     . " AND $page_tbl.id=$id")) 
+                                     . " AND $page_tbl.id=$id");
+                $linkto = $dbh->getRow("SELECT linkfrom FROM $link_tbl WHERE linkto=$id");
+                if ($result and empty($linkto))
                 {
-                        trigger_error("delete empty and non-referenced link $name ($id)", E_USER_NOTICE);
-                        $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id");   // this purges the link
-                        $dbh->Execute("DELETE FROM $recent_tbl WHERE id=$id"); // may fail
+                    trigger_error("delete empty and non-referenced link $name ($id)", E_USER_NOTICE);
+                    $dbh->Execute("DELETE FROM $recent_tbl WHERE id=$id"); // may fail
+        	    $dbh->Execute("DELETE FROM $link_tbl WHERE linkto=$id");
+                    $dbh->Execute("DELETE FROM $page_tbl WHERE id=$id");   // this purges the link
                 }
             }
         }
@@ -1536,6 +1539,11 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.93  2006/12/03 16:25:20  rurban
+// remove closing Smart ROLLBACK, cannot be forced if never started.
+// remove postgresql user VACUUM, autovacumm must do that. (can be easily
+// enabled)
+//
 // Revision 1.92  2006/12/02 21:57:27  rurban
 // fix WantedPages SQL: no JOIN
 // clarify first condition in CASE WHEN

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.103 2006-12-03 17:11:53 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.104 2006-12-23 11:44:56 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -35,7 +35,7 @@ extends WikiDB_backend
 
         // Install filter to handle bogus error notices from buggy DB.php's.
         // TODO: check the Pear_DB version, but how?
-        if (0) {
+        if (DEBUG) {
             global $ErrorManager;
             $ErrorManager->pushErrorHandler(new WikiMethodCb($this, '_pear_notice_filter'));
             $this->_pearerrhandler = true;
@@ -915,13 +915,13 @@ extends WikiDB_backend
                 // Cludge Alert!
                 // This page does not exist (already verified before), but exists in the page table.
                 // So we delete this page.
-                $dbh->query("DELETE FROM $page_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $version_tbl WHERE id=$new");
-                $dbh->query("DELETE FROM $recent_tbl WHERE id=$new");
                 $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$new");
+                $dbh->query("DELETE FROM $recent_tbl WHERE id=$new");
+                $dbh->query("DELETE FROM $version_tbl WHERE id=$new");
                 // We have to fix all referring tables to the old id
                 $dbh->query("UPDATE $link_tbl SET linkfrom=$id WHERE linkfrom=$new");
                 $dbh->query("UPDATE $link_tbl SET linkto=$id WHERE linkto=$new");
+                $dbh->query("DELETE FROM $page_tbl WHERE id=$new");
             }
             $dbh->query(sprintf("UPDATE $page_tbl SET pagename='%s' WHERE id=$id",
                                 $dbh->escapeSimple($to)));
@@ -1246,6 +1246,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2006/12/03 17:11:53  rurban
+// #1535832 by matt brown: Check for base 64 encoded version data
+//
 // Revision 1.102  2006/12/02 21:57:27  rurban
 // fix WantedPages SQL: no JOIN
 // clarify first condition in CASE WHEN
