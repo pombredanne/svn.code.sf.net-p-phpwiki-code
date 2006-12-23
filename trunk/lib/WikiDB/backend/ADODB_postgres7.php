@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_postgres7.php,v 1.6 2006-12-03 16:25:20 rurban Exp $');
+rcs_id('$Id: ADODB_postgres7.php,v 1.7 2006-12-23 11:56:17 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -35,9 +35,11 @@ extends WikiDB_backend_ADODB
 
     /**
      * Pack tables.
+     * NOTE: Only the table owner can do this. Either fix the schema or setup autovacuum.
      */
     function optimize() {
-        return 0; // if the wikiuser is not the table owner
+        return 0; 	// if the wikiuser is not the table owner
+
         foreach ($this->_table_names as $table) {
             $this->_dbh->Execute("VACUUM ANALYZE $table");
         }
