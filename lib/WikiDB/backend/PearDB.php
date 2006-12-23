@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.104 2006-12-23 11:44:56 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.105 2006-12-23 13:03:32 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -397,19 +397,9 @@ extends WikiDB_backend
         $this->lock();
         $id = $this->_get_pageid($pagename, true);
 
-        // FIXME: optimize: mysql can do this with one REPLACE INTO (I think).
         $dbh->query(sprintf("DELETE FROM $version_tbl"
                             . " WHERE id=%d AND version=%d",
                             $id, $version));
-
-        /* mysql optimized version. 
-        $dbh->query(sprintf("INSERT INTO $version_tbl"
-                            . " (id,version,mtime,minor_edit,content,versiondata)"
-                            . " VALUES(%d,%d,%d,%d,'%s','%s')",
-                            $id, $version, $mtime, $minor_edit,
-                            $dbh->quoteSmart($content),
-                            $dbh->quoteSmart($this->_serialize($data))));
-        */
         // generic slow PearDB bind eh quoting.
         $dbh->query("INSERT INTO $version_tbl"
                     . " (id,version,mtime,minor_edit,content,versiondata)"
@@ -434,6 +424,7 @@ extends WikiDB_backend
         if ( ($id = $this->_get_pageid($pagename)) ) {
             $dbh->query("DELETE FROM $version_tbl"
                         . " WHERE id=$id AND version=$version");
+
             $this->_update_recent_table($id);
             // This shouldn't be needed (as long as the latestversion
             // never gets deleted.)  But, let's be safe.
@@ -475,9 +466,9 @@ extends WikiDB_backend
         
         $this->lock();
         if ( ($id = $this->_get_pageid($pagename, false)) ) {
-            $dbh->query("DELETE FROM $version_tbl  WHERE id=$id");
-            $dbh->query("DELETE FROM $recent_tbl   WHERE id=$id");
             $dbh->query("DELETE FROM $nonempty_tbl WHERE id=$id");
+            $dbh->query("DELETE FROM $recent_tbl   WHERE id=$id");
+            $dbh->query("DELETE FROM $version_tbl  WHERE id=$id");
             $dbh->query("DELETE FROM $link_tbl     WHERE linkfrom=$id");
             $nlinks = $dbh->getOne("SELECT COUNT(*) FROM $link_tbl WHERE linkto=$id");
             if ($nlinks) {
@@ -1246,6 +1237,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.104  2006/12/23 11:44:56  rurban
+// deal with strict references and the order of deletion
+//
 // Revision 1.103  2006/12/03 17:11:53  rurban
 // #1535832 by matt brown: Check for base 64 encoded version data
 //
