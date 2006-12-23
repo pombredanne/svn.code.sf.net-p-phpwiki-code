@@ -1,4 +1,4 @@
--- $Id: oci8-initialize.sql,v 1.6 2006-11-19 11:10:11 rurban Exp $
+-- $Id: oci8-initialize.sql,v 1.7 2006-12-23 11:47:40 rurban Exp $
 
 set verify off
 set feedback off
@@ -53,6 +53,7 @@ define nonmt_id=&prefix.nonmt_id
 define link_tbl=&prefix.link
 define link_from=&prefix.link_from
 define link_to=&prefix.link_to
+define link_rel=&prefix.link_rel
 
 define session_tbl=&prefix.session
 define sess_id=&prefix.sess_id
@@ -90,6 +91,9 @@ CREATE TABLE &page_tbl (
 	CONSTRAINT &page_nm UNIQUE (pagename)
 );
 
+-- we use 0 <=> global_data to satisfy the relation = 0 constraint
+INSERT INTO &page_tbl VALUES (0,'global_data',0,'','');
+
 prompt Creating &version_tbl
 CREATE TABLE &version_tbl (
 	id		INT NOT NULL,
@@ -120,10 +124,12 @@ CREATE TABLE &nonempty_tbl (
 prompt Creating &link_tbl
 CREATE TABLE &link_tbl (
         linkfrom	INT NOT NULL,
-        linkto		INT NOT NULL
+        linkto		INT NOT NULL,
+        relation  	INT 
 );
 CREATE INDEX &link_from ON &link_tbl (linkfrom);
 CREATE INDEX &link_to   ON &link_tbl (linkto);
+CREATE INDEX &link_rel  ON &link_tbl (relation);
 
 prompt Creating &session_tbl
 CREATE TABLE &session_tbl (
