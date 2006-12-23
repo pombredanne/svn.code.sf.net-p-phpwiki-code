@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.15 2006-12-23 11:48:58 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.16 2006-12-23 13:04:56 rurban Exp $
 
 \set QUIET
 
@@ -209,8 +209,8 @@ CREATE INDEX :relation_idx  ON :link_tbl (relation);
 \echo Creating :rating_tbl
 CREATE TABLE :rating_tbl (
         dimension    INTEGER NOT NULL,
-        raterpage    INT8 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
-        rateepage    INT8 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
+        raterpage    INT8 NOT NULL REFERENCES :page_tbl,
+        rateepage    INT8 NOT NULL REFERENCES :page_tbl,
         ratingvalue  FLOAT NOT NULL,
         rateeversion INT8 NOT NULL,
         tstamp       TIMESTAMP NOT NULL
@@ -249,7 +249,7 @@ CREATE INDEX pref_group_idx ON :pref_tbl (groupname);
 -- Use the member table, if you need it for n:m user-group relations,
 -- and adjust your DBAUTH_AUTH_ SQL statements.
 CREATE TABLE :member_tbl (
-	userid    CHAR(48) NOT NULL REFERENCES :pref_tbl ON DELETE CASCADE, 
+	userid    CHAR(48) NOT NULL REFERENCES :pref_tbl, 
 	groupname CHAR(48) NOT NULL DEFAULT 'users'
 );
 CREATE INDEX :member_id_idx    ON :member_tbl (userid);
