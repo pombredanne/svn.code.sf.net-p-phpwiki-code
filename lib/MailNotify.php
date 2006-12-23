@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.1 2006-12-22 17:59:55 rurban Exp $');
+rcs_id('$Id: MailNotify.php,v 1.2 2006-12-23 11:50:45 rurban Exp $');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -228,6 +228,7 @@ class MailNotify {
     }
 
     function onDeletePage (&$wikidb, $pagename) {
+        $result = true;
 	/* Generate notification emails? */
 	if (! $wikidb->isWikiPage($pagename) and !isa($GLOBALS['request'],'MockRequest')) {
 	    $notify = $wikidb->get('notify');
@@ -279,6 +280,9 @@ class MailNotify {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2006/12/22 17:59:55  rurban
+// Move mailer functions into seperate MailNotify.php
+//
 
 // Local Variables:
 // mode: php
