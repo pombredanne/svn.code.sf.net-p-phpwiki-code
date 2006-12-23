@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.14 2006-12-08 08:04:10 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.15 2006-12-23 11:48:58 rurban Exp $
 
 \set QUIET
 
@@ -20,7 +20,7 @@
 -- NOTE: To be able to vacuum the tables from ordinary page requests
 --       :httpd_user must be the table owner.
 --       To run autovacuum and disable page requests vacuums edit the 
---       pqsql backend optimize method.
+--       pqsql backend optimize method in lib/WikiDB/backend/*_psql.php
 --
 -- Commonly, connections from php are made under
 -- the user name of 'nobody', 'apache' or 'www'.
@@ -59,6 +59,7 @@
 
 \set recent_tbl  	:prefix 'recent'
 \set recent_id_idx 	:prefix 'recent_id_idx'
+\set recent_lv_idx 	:prefix 'recent_lv_idx'
 
 \set nonempty_tbl 	:prefix 'nonempty'
 \set nonmt_id_idx 	:prefix 'nonmt_id_idx'
@@ -67,6 +68,15 @@
 \set link_from_idx 	:prefix 'link_from_idx'
 \set link_to_idx 	:prefix 'link_to_idx'
 \set relation_idx 	:prefix 'relation_idx'
+
+\set pagedata_tbl 	:prefix 'pagedata'
+\set pagedata_id_idx 	:prefix 'pagedata_id_idx'
+\set versiondata_tbl 	:prefix 'versiondata'
+\set pageperm_tbl 	:prefix 'pageperm'
+\set pageperm_id_idx	:prefix 'pageperm_id_idx'
+\set pageperm_access_idx :prefix 'pageperm_access_idx'
+\set existing_page_view :prefix 'existing_page'
+\set curr_page_view	:prefix 'curr_page'
 
 \set session_tbl 	:prefix 'session'
 \set sess_id_idx 	:prefix 'sess_id_idx'
@@ -88,6 +98,9 @@
 \set accesslog_time_idx :prefix 'log_time_idx'
 \set accesslog_host_idx :prefix 'log_host_idx'
 
+\set update_recent_fn	:prefix 'update_recent'
+\set prepare_rename_fn	:prefix 'prepare_rename_page'
+
 \echo Creating :page_tbl
 CREATE TABLE :page_tbl (
 	id 		SERIAL PRIMARY KEY,
@@ -99,9 +112,12 @@ CREATE TABLE :page_tbl (
 -- CREATE UNIQUE INDEX :page_id_idx ON :page_tbl (id);
 -- CREATE UNIQUE INDEX :page_name_idx ON :page_tbl (pagename);
 
+-- we use 0 <=> global_data to satisfy the relation = 0 constraint
+INSERT INTO :page_tbl VALUES (0,'global_data',0,'','');
+
 \echo Creating :version_tbl
 CREATE TABLE :version_tbl (
-	id		INT4 REFERENCES :page_tbl ON DELETE CASCADE,
+	id		INT4 REFERENCES :page_tbl,
         version		INT4 NOT NULL,
 	mtime		INT4 NOT NULL,
 -- FIXME: should use boolean, but that returns 't' or 'f'. not 0 or 1. 
@@ -116,33 +132,33 @@ CREATE INDEX :vers_mtime_idx ON :version_tbl (mtime);
 
 \echo Creating :recent_tbl
 CREATE TABLE :recent_tbl (
-	id		INT4 REFERENCES :page_tbl ON DELETE CASCADE,
+	id		INT4 REFERENCES :page_tbl,
 	latestversion	INT4, 
 	latestmajor	INT4,
 	latestminor	INT4,
-	FOREIGN KEY (id, latestversion) REFERENCES :version_tbl (id, version) ON DELETE CASCADE,
+	FOREIGN KEY (id, latestversion) REFERENCES :version_tbl (id, version),
 	CHECK (latestminor >= latestmajor)
 );
 CREATE UNIQUE INDEX :recent_id_idx ON :recent_tbl (id);
-CREATE INDEX recent_latestversion_idx ON :recent_tbl (latestversion);
+CREATE INDEX :recent_lv_idx ON :recent_tbl (latestversion);
 
 \echo Creating :nonempty_tbl
 CREATE TABLE :nonempty_tbl (
-	id		INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE
+	id		INT4 NOT NULL REFERENCES :page_tbl
 );
 CREATE UNIQUE INDEX :nonmt_id_idx ON :nonempty_tbl (id);
 
 \echo Creating experimental pagedata (not yet used)
-CREATE TABLE pagedata (
-	id	INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
+CREATE TABLE :pagedata_tbl (
+	id	INT4 NOT NULL REFERENCES :page_tbl,
 	date    INT4,
 	locked  BOOLEAN,
         rest	TEXT NOT NULL DEFAULT ''
 );
-CREATE INDEX pagedata_id_idx ON pagedata (id);
+CREATE INDEX :pagedata_id_idx ON pagedata (id);
 
 \echo Creating experimental versiondata (not yet used)
-CREATE TABLE versiondata (
+CREATE TABLE :versiondata_tbl (
 	id	  INT4 NOT NULL,
 	version	  INT4 NOT NULL,
 	markup    INT2 DEFAULT 2, 
@@ -153,24 +169,24 @@ CREATE TABLE versiondata (
 	FOREIGN KEY (id, version) REFERENCES :version_tbl (id, version)
 );
 \echo Creating experimental pageperm (not yet used)
-CREATE TABLE pageperm (
-	id	 INT4 NOT NULL REFERENCES :page_tbl(id) ON DELETE CASCADE,
+CREATE TABLE :pageperm_tbl (
+	id	 INT4 NOT NULL REFERENCES :page_tbl(id),
         -- view,edit,create,list,remove,change,dump
 	access   CHAR(12) NOT NULL, 
 	groupname VARCHAR(48),
 	allowed  BOOLEAN
 );
-CREATE INDEX pageperm_id_idx ON pageperm (id);
-CREATE INDEX pageperm_access_idx ON pageperm (access);
+CREATE INDEX :pageperm_id_idx ON pageperm (id);
+CREATE INDEX :pageperm_access_idx ON pageperm (access);
 
 \echo Creating experimental page views (not yet used)
 
 -- nonempty versiondata
-CREATE VIEW existing_page AS
+CREATE VIEW :existing_page_view AS
   SELECT * FROM :page_tbl P INNER JOIN :nonempty_tbl N USING (id);
 
 -- latest page version
-CREATE VIEW curr_page AS
+CREATE VIEW :curr_page_view AS
   SELECT P.id,P.pagename,P.hits,P.pagedata,P.cached_html,
 	 V.version,V.mtime,V.minor_edit,V.content,V.versiondata
   FROM :page_tbl P 
@@ -299,8 +315,8 @@ GRANT SELECT,INSERT,UPDATE,DELETE ON :link_tbl		TO :httpd_user;
 GRANT SELECT,INSERT,UPDATE,DELETE ON :session_tbl	TO :httpd_user;
 -- you may want to fine tune this:
 GRANT SELECT,INSERT,UPDATE,DELETE ON :pref_tbl		TO :httpd_user;
--- GRANT SELECT ON :user_tbl	TO :httpd_user;
-GRANT SELECT ON :member_tbl	TO :httpd_user;
+-- GRANT SELECT ON :user_tbl				TO :httpd_user;
+GRANT SELECT ON :member_tbl				TO :httpd_user;
 GRANT SELECT,INSERT,UPDATE,DELETE ON :rating_tbl	TO :httpd_user;
 GRANT SELECT,INSERT,UPDATE,DELETE ON :accesslog_tbl	TO :httpd_user;
 
@@ -309,9 +325,8 @@ GRANT SELECT,INSERT,UPDATE,DELETE ON :accesslog_tbl	TO :httpd_user;
 
 \echo Initializing stored procedures
 
-DROP FUNCTION update_recent (INT4, INT4);
 -- id, version
-CREATE OR REPLACE FUNCTION update_recent (INT4, INT4) 
+CREATE OR REPLACE FUNCTION :update_recent_fn (INT4, INT4) 
 	RETURNS integer AS $$
 DELETE FROM recent WHERE id = $1;
 INSERT INTO recent (id, latestversion, latestmajor, latestminor)
@@ -330,9 +345,8 @@ INSERT INTO nonempty (id)
 SELECT id FROM nonempty WHERE id = $1;
 $$ LANGUAGE SQL;
 
-DROP FUNCTION prepare_rename_page (INT4, INT4);
 -- oldid, newid
-CREATE OR REPLACE FUNCTION prepare_rename_page (INT4, INT4) 
+CREATE OR REPLACE FUNCTION :prepare_rename_fn (INT4, INT4) 
         RETURNS void AS $$
 DELETE FROM page     WHERE id = $2;
 DELETE FROM version  WHERE id = $2;
