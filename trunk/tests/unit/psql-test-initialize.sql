@@ -1,4 +1,4 @@
--- $Id: psql-test-initialize.sql,v 1.1 2006-06-05 09:33:22 rurban Exp $
+-- $Id: psql-test-initialize.sql,v 1.2 2006-12-23 13:01:59 rurban Exp $
 -- for the regression suite
 
 \set prefix 	'test_'
@@ -15,6 +15,7 @@
 
 \set recent_tbl  	:prefix 'recent'
 \set recent_id_idx 	:prefix 'recent_id_idx'
+\set recent_lv_idx 	:prefix 'recent_lv_idx'
 
 \set nonempty_tbl 	:prefix 'nonempty'
 \set nonmt_id_idx 	:prefix 'nonmt_id_idx'
@@ -23,6 +24,15 @@
 \set link_from_idx 	:prefix 'link_from_idx'
 \set link_to_idx 	:prefix 'link_to_idx'
 \set relation_idx 	:prefix 'relation_idx'
+
+\set pagedata_tbl 	:prefix 'pagedata'
+\set pagedata_id_idx 	:prefix 'pagedata_id_idx'
+\set versiondata_tbl 	:prefix 'versiondata'
+\set pageperm_tbl 	:prefix 'pageperm'
+\set pageperm_id_idx	:prefix 'pageperm_id_idx'
+\set pageperm_access_idx :prefix 'pageperm_access_idx'
+\set existing_page_view :prefix 'existing_page'
+\set curr_page_view	:prefix 'curr_page'
 
 \set session_tbl 	:prefix 'session'
 \set sess_id_idx 	:prefix 'sess_id_idx'
@@ -46,6 +56,9 @@
 \set accesslog_time_idx :prefix 'log_time_idx'
 \set accesslog_host_idx :prefix 'log_host_idx'
 
+\set update_recent_fn	:prefix 'update_recent'
+\set prepare_rename_fn	:prefix 'prepare_rename_page'
+
 \echo Dropping all test relations
 
 DROP TABLE :version_tbl CASCADE;
@@ -54,16 +67,23 @@ DROP TABLE :nonempty_tbl CASCADE;
 DROP TABLE :link_tbl CASCADE;
 DROP TABLE :rating_tbl CASCADE;
 
+DROP TABLE :pagedata_tbl CASCADE;
+DROP TABLE :versiondata_tbl CASCADE;
+DROP TABLE :pageperm_tbl CASCADE;
+
+DROP VIEW :existing_page_view;
+DROP VIEW :curr_page_view;
+
 DROP TABLE :page_tbl CASCADE;
-DROP SEQUENCE :page_id_seq;
+--DROP SEQUENCE :page_id_seq;
 
 DROP TABLE :member_tbl CASCADE;
 DROP TABLE :pref_tbl CASCADE;
 DROP TABLE :session_tbl CASCADE;
 DROP TABLE :accesslog_tbl CASCADE;
 
-DROP FUNCTION update_recent (INT4, INT4);
-DROP FUNCTION prepare_rename_page (INT4, INT4);
+DROP FUNCTION :update_recent_fn (INT4, INT4);
+DROP FUNCTION :prepare_rename_fn (INT4, INT4);
 
 ------------------------------------------------------------
 
@@ -78,9 +98,12 @@ CREATE TABLE :page_tbl (
 -- CREATE UNIQUE INDEX :page_id_idx ON :page_tbl (id);
 -- CREATE UNIQUE INDEX :page_name_idx ON :page_tbl (pagename);
 
+-- we use 0 <=> global_data to satisfy the relation = 0 constraint
+INSERT INTO :page_tbl VALUES (0,'global_data',0,'','');
+
 \echo Creating :version_tbl
 CREATE TABLE :version_tbl (
-	id		INT4 REFERENCES :page_tbl ON DELETE CASCADE,
+	id		INT4 REFERENCES :page_tbl,
         version		INT4 NOT NULL,
 	mtime		INT4 NOT NULL,
 -- FIXME: should use boolean, but that returns 't' or 'f'. not 0 or 1. 
@@ -91,10 +114,11 @@ CREATE TABLE :version_tbl (
 );
 CREATE UNIQUE INDEX :vers_id_idx ON :version_tbl (id, version);
 CREATE INDEX :vers_mtime_idx ON :version_tbl (mtime);
+-- deletion order: version, recent, nonempty
 
 \echo Creating :recent_tbl
 CREATE TABLE :recent_tbl (
-	id		INT4 REFERENCES :page_tbl ON DELETE CASCADE,
+	id		INT4 REFERENCES :page_tbl,
 	latestversion	INT4, 
 	latestmajor	INT4,
 	latestminor	INT4,
@@ -102,30 +126,77 @@ CREATE TABLE :recent_tbl (
 	CHECK (latestminor >= latestmajor)
 );
 CREATE UNIQUE INDEX :recent_id_idx ON :recent_tbl (id);
-CREATE INDEX recent_latestversion_idx ON :recent_tbl (latestversion);
+CREATE INDEX :recent_lv_idx ON :recent_tbl (latestversion);
 
 \echo Creating :nonempty_tbl
 CREATE TABLE :nonempty_tbl (
-	id		INT4 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE
+	id		INT4 NOT NULL REFERENCES :page_tbl
 );
 CREATE UNIQUE INDEX :nonmt_id_idx ON :nonempty_tbl (id);
+
+\echo Creating experimental pagedata (not yet used)
+CREATE TABLE :pagedata_tbl (
+	id	INT4 NOT NULL REFERENCES :page_tbl,
+	date    INT4,
+	locked  BOOLEAN,
+        rest	TEXT NOT NULL DEFAULT ''
+);
+CREATE INDEX :pagedata_id_idx ON pagedata (id);
+
+\echo Creating experimental versiondata (not yet used)
+CREATE TABLE :versiondata_tbl (
+	id	  INT4 NOT NULL,
+	version	  INT4 NOT NULL,
+	markup    INT2 DEFAULT 2, 
+	author    VARCHAR(48), 
+	author_id VARCHAR(48), 
+	pagetype  VARCHAR(20) DEFAULT 'wikitext', 
+        rest	  TEXT NOT NULL DEFAULT '',
+	FOREIGN KEY (id, version) REFERENCES :version_tbl (id, version)
+);
+\echo Creating experimental pageperm (not yet used)
+CREATE TABLE :pageperm_tbl (
+	id	 INT4 NOT NULL REFERENCES :page_tbl(id),
+        -- view,edit,create,list,remove,change,dump
+	access   CHAR(12) NOT NULL, 
+	groupname VARCHAR(48),
+	allowed  BOOLEAN
+);
+CREATE INDEX :pageperm_id_idx ON pageperm (id);
+CREATE INDEX :pageperm_access_idx ON pageperm (access);
+
+\echo Creating experimental page views (not yet used)
+
+-- nonempty versiondata
+CREATE VIEW :existing_page_view AS
+  SELECT * FROM :page_tbl P INNER JOIN :nonempty_tbl N USING (id);
+
+-- latest page version
+CREATE VIEW :curr_page_view AS
+  SELECT P.id,P.pagename,P.hits,P.pagedata,P.cached_html,
+	 V.version,V.mtime,V.minor_edit,V.content,V.versiondata
+  FROM :page_tbl P 
+    JOIN :version_tbl V USING (id)
+    JOIN :recent_tbl  R ON (V.id=R.id AND V.version=R.latestversion);
 
 \echo Creating :link_tbl
 CREATE TABLE :link_tbl (
         linkfrom  INT4 NOT NULL REFERENCES :page_tbl,
         linkto 	  INT4 NOT NULL REFERENCES :page_tbl,
-        relation  INT4 REFERENCES :page_tbl (id) ON DELETE CASCADE
+        relation  INT4
 );
 CREATE INDEX :link_from_idx ON :link_tbl (linkfrom);
 CREATE INDEX :link_to_idx   ON :link_tbl (linkto);
 CREATE INDEX :relation_idx  ON :link_tbl (relation);
+-- update:
+-- ALTER TABLE link DROP CONSTRAINT link_relation_fkey;
 
 -- if you plan to use the wikilens theme
 \echo Creating :rating_tbl
 CREATE TABLE :rating_tbl (
         dimension    INTEGER NOT NULL,
-        raterpage    INT8 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
-        rateepage    INT8 NOT NULL REFERENCES :page_tbl ON DELETE CASCADE,
+        raterpage    INT8 NOT NULL REFERENCES :page_tbl,
+        rateepage    INT8 NOT NULL REFERENCES :page_tbl,
         ratingvalue  FLOAT NOT NULL,
         rateeversion INT8 NOT NULL,
         tstamp       TIMESTAMP NOT NULL
@@ -164,7 +235,7 @@ CREATE INDEX pref_group_idx ON :pref_tbl (groupname);
 -- Use the member table, if you need it for n:m user-group relations,
 -- and adjust your DBAUTH_AUTH_ SQL statements.
 CREATE TABLE :member_tbl (
-	userid    CHAR(48) NOT NULL REFERENCES :pref_tbl ON DELETE CASCADE, 
+	userid    CHAR(48) NOT NULL REFERENCES :pref_tbl, 
 	groupname CHAR(48) NOT NULL DEFAULT 'users'
 );
 CREATE INDEX :member_id_idx    ON :member_tbl (userid);
@@ -176,7 +247,7 @@ CREATE INDEX :member_group_idx ON :member_tbl (groupname);
 \echo Creating :accesslog_tbl
 CREATE TABLE :accesslog_tbl (
         time_stamp       INT,
-	remote_host      VARCHAR(50),
+	remote_host      VARCHAR(100),
 	remote_user      VARCHAR(50),
         request_method   VARCHAR(10),
 	request_line     VARCHAR(255),
@@ -218,7 +289,7 @@ CREATE TRIGGER tsvectorupdate BEFORE UPDATE OR INSERT ON :version_tbl
 --================================================================
 
 \echo You might want to ignore the following errors or run 
-\echo /usr/sbin/createuser -S -R -d :httpd_user
+\echo /usr/sbin/createuser -S -R -d  :httpd_user
 
 \echo Applying permissions for role :httpd_user
 GRANT SELECT,INSERT,UPDATE,DELETE ON :page_tbl		TO :httpd_user;
@@ -240,30 +311,34 @@ GRANT SELECT,INSERT,UPDATE,DELETE ON :accesslog_tbl	TO :httpd_user;
 
 \echo Initializing stored procedures
 
-CREATE OR REPLACE FUNCTION update_recent (id INT4, version INT4) 
-	RETURNS void AS '
-DELETE FROM recent  WHERE id=$1;
-INSERT INTO recent (id, latestversion, latestmajor, latestminor)
-  SELECT id, MAX(version), MAX(CASE WHEN minor_edit=0  THEN version END), 
-	                   MAX(CASE WHEN minor_edit<>0 THEN version END)
-    FROM version WHERE id=$2 GROUP BY id;
-DELETE FROM nonempty WHERE id=$1;
-INSERT INTO nonempty (id)
+-- id, version
+CREATE OR REPLACE FUNCTION :update_recent_fn (INT4, INT4) 
+	RETURNS integer AS $$
+DELETE FROM test_recent WHERE id = $1;
+INSERT INTO test_recent (id, latestversion, latestmajor, latestminor)
+  SELECT id, MAX(version) AS latestversion, 
+	     MAX(CASE WHEN minor_edit =  0 THEN version END) AS latestmajor, 
+             MAX(CASE WHEN minor_edit <> 0 THEN version END) AS latestminor
+    FROM test_version version WHERE id = $2 GROUP BY id;
+DELETE FROM test_nonempty WHERE id = $1;
+INSERT INTO test_nonempty (id) 
   SELECT recent.id
-    FROM recent, version
-    WHERE recent.id=version.id
-          AND version=latestversion
-          AND content<>''''
-          AND recent.id=$1;
-' LANGUAGE SQL;
+    FROM test_recent recent, test_version version
+    WHERE recent.id = version.id
+          AND version = latestversion
+          AND content <> ''
+          AND recent.id = $1;
+SELECT id FROM test_nonempty WHERE id = $1;
+$$ LANGUAGE SQL;
 
-CREATE OR REPLACE FUNCTION prepare_rename_page (oldid INT4, newid INT4) 
-        RETURNS void AS '
-DELETE FROM page     WHERE id=$2;
-DELETE FROM version  WHERE id=$2;
-DELETE FROM recent   WHERE id=$2;
-DELETE FROM nonempty WHERE id=$2;
+-- oldid, newid
+CREATE OR REPLACE FUNCTION :prepare_rename_fn (INT4, INT4) 
+        RETURNS void AS $$
+DELETE FROM test_page     WHERE id = $2;
+DELETE FROM test_version  WHERE id = $2;
+DELETE FROM test_recent   WHERE id = $2;
+DELETE FROM test_nonempty WHERE id = $2;
 -- We have to fix all referring tables to the old id
-UPDATE link SET linkfrom=$1 WHERE linkfrom=$2;
-UPDATE link SET linkto=$1   WHERE linkto=$2;
-' LANGUAGE sql;
+UPDATE test_link SET linkfrom = $1 WHERE linkfrom = $2;
+UPDATE test_link SET linkto = $1   WHERE linkto = $2;
+$$ LANGUAGE SQL;
