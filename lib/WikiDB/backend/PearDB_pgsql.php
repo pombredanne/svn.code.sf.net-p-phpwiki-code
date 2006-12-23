@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.24 2006-12-22 00:27:37 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.25 2006-12-23 11:56:17 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -44,9 +44,12 @@ extends WikiDB_backend_PearDB
     }
             
     /**
-     * Pack tables.
+     * Pack tables. 
+     * NOTE: Only the table owner can do this. Either fix the schema or setup autovacuum.
      */
     function optimize() {
+        return 0;	// if the wikiuser is not the table owner
+
         foreach ($this->_table_names as $table) {
             $this->_dbh->query("VACUUM ANALYZE $table");
         }
@@ -313,6 +316,9 @@ select * from stat('select idxfti from version') order by ndoc desc, nentry desc
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2006/12/22 00:27:37  rurban
+// just add Log
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
