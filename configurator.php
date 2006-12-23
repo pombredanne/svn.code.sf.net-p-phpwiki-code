@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.44 2006-07-23 14:03:18 rurban Exp $
+<?php // $Id: configurator.php,v 1.45 2006-12-23 16:12:16 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -53,20 +53,27 @@
  */
 
 global $HTTP_SERVER_VARS, $HTTP_POST_VARS, $tdwidth;
-if (empty($_GET)) $_GET =& $GLOBALS['HTTP_GET_VARS'];
-if (empty($_ENV)) $_ENV =& $GLOBALS['HTTP_ENV_VARS'];
-if (empty($_POST)) $_POST =& $GLOBALS['HTTP_POST_VARS'];
+if (empty($_SERVER)) 	$_SERVER =& $GLOBALS['HTTP_SERVER_VARS'];
+if (empty($_GET)) 	$_GET    =& $GLOBALS['HTTP_GET_VARS'];
+if (empty($_ENV)) 	$_ENV    =& $GLOBALS['HTTP_ENV_VARS'];
+if (empty($_POST)) 	$_POST   =& $GLOBALS['HTTP_POST_VARS'];
 
 if (empty($configurator))
     $configurator = "configurator.php";
-if (!strstr($HTTP_SERVER_VARS["SCRIPT_NAME"], $configurator) and defined('DATA_PATH'))
+if (!strstr($_SERVER["SCRIPT_NAME"], $configurator) and defined('DATA_PATH'))
     $configurator = DATA_PATH . "/" . $configurator;
-$scriptname = str_replace('configurator.php', 'index.php', $HTTP_SERVER_VARS["SCRIPT_NAME"]);
+$scriptname = str_replace('configurator.php', 'index.php', $_SERVER["SCRIPT_NAME"]);
+if (strstr($_SERVER["SCRIPT_NAME"],"/php")) {  // cgi got this different
+    if (defined('DATA_PATH'))
+	$scriptname = DATA_PATH . "/index.php";
+    else
+	$scriptname = str_replace('configurator.php', 'index.php', $_SERVER["PHP_SELF"]);
+}
 
 $tdwidth = 700;
 $config_file = (substr(PHP_OS,0,3) == 'WIN') ? 'config\\config.ini' : 'config/config.ini';
 $fs_config_file = dirname(__FILE__) . (substr(PHP_OS,0,3) == 'WIN' ? '\\' : '/') . $config_file;
-if (isset($HTTP_POST_VARS['create']))  header('Location: '.$configurator.'?show=_part1&create=1#create');
+if (isset($_POST['create']))  header('Location: '.$configurator.'?show=_part1&create=1#create');
 
 // helpers from lib/WikiUser/HttpAuth.php
 if (!function_exists('_http_user')) {
@@ -155,7 +162,7 @@ echo '<','?xml version="1.0" encoding="iso-8859-1"?',">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.44 2006-07-23 14:03:18 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.45 2006-12-23 16:12:16 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -382,9 +389,7 @@ $properties["ENABLE_SPAMBLOCKLIST"] =
 new boolean_define_optional('ENABLE_SPAMBLOCKLIST');
 
 $properties["NUM_SPAM_LINKS"] =
-    new numeric_define_optional('NUM_SPAM_LINKS', "20", "
-If more than this number of external links appear on non-authenticated 
-edits it will be rejected as spam.");
+new numeric_define_optional('NUM_SPAM_LINKS');
 
 $properties["GOOGLE_LINKS_NOFOLLOW"] =
 new boolean_define_commented_optional('GOOGLE_LINKS_NOFOLLOW');
@@ -447,7 +452,7 @@ new boolean_define_optional
  array('true'  => "true. perform additional reverse dns lookups",
        'false' => "false. just record the address as given by the httpd server"));
 
-$properties["ZIPdump Authentication"] =
+$properties["ZIP Dump Authentication"] =
 new boolean_define_optional('ZIPDUMP_AUTH', 
                     array('false' => "false. Everyone may download zip dumps",
                           'true'  => "true. Only admin may download zip dumps"));
@@ -1252,17 +1257,18 @@ Most of the page appearance is controlled by files in the theme
 subdirectory.
 
 There are a number of pre-defined themes shipped with PhpWiki.
-Or you may create your own (e.g. by copying and then modifying one of
-stock themes.)
+Or you may create your own, e.g. by copying and then modifying one of
+stock themes.
 <pre>
   THEME = default
   THEME = MacOSX
+  THEME = MonoBook (WikiPedia)
   THEME = smaller
   THEME = Wordpress
   THEME = Portland
   THEME = Sidebar
   THEME = Crao
-  THEME = wikilens (Ratings)
+  THEME = wikilens (with Ratings)
   THEME = Hawaiian
   THEME = SpaceWiki
   THEME = Hawaiian
@@ -1270,25 +1276,14 @@ stock themes.)
   
 Problems:
 <pre>
-  THEME = MonoBook (WikiPedia) [experimental. MSIE problems]
   THEME = blog     (Kubrick)   [experimental. Several links missing]
 </pre>");
 
 $properties["Character Set"] =
-new _define_optional('CHARSET', 'iso-8859-1', "
-Select a valid charset name to be inserted into the xml/html pages, 
-and to reference links to the stylesheets (css). For more info see: 
-http://www.iana.org/assignments/character-sets. Note that PhpWiki 
-has been extensively tested only with the latin1 (iso-8859-1) 
-character set.
+    new _define_optional('CHARSET', 'iso-8859-1');
 
-If you change the default from iso-8859-1 PhpWiki may not work 
-properly and it will require code modifications. However, character 
-sets similar to iso-8859-1 may work with little or no modification 
-depending on your setup. The database must also support the same 
-charset, and of course the same is true for the web browser. (Some 
-work is in progress hopefully to allow more flexibility in this 
-area in the future).");
+$properties["Ignore Charset Not Supported Warning"] =
+    new _define_optional('IGNORE_CHARSET_NOT_SUPPORTED_WARNING');
 
 $properties["Language"] =
 new _define_selection_optional('DEFAULT_LANGUAGE',
@@ -1362,9 +1357,7 @@ URL of these types will be automatically linked.
 within a named link [name|uri] one more protocol is defined: phpwiki");
 
 $properties["Inline Images"] =
-new list_define('INLINE_IMAGES', 'png|jpg|gif', "
-URLs ending with the following extension should be inlined as images. 
-Scripts shoud not be allowed!");
+    new list_define('INLINE_IMAGES', 'png|jpg|gif');
 
 $properties["WikiName Regexp"] =
 new _define('WIKI_NAME_REGEXP', "(?<![[:alnum:]])(?:[[:upper:]][[:lower:]]+){2,}(?![[:alnum:]])", "
@@ -1440,6 +1433,9 @@ new boolean_define_optional('ENABLE_MARKUP_TEMPLATE');
 $properties["DISABLE_MARKUP_WIKIWORD"] =
 new boolean_define_optional('DISABLE_MARKUP_WIKIWORD');
 
+$properties["ENABLE_MARKUP_DIVSPAN" ] = 
+new boolean_define_optional('ENABLE_MARKUP_DIVSPAN');
+
 ///////////////////
 
 $properties["Part Six"] =
@@ -1450,36 +1446,28 @@ URL options -- you can probably skip this section.
 
 For a pretty wiki (no index.php in the url) set a seperate DATA_PATH.");
 
-global $HTTP_SERVER_VARS;
 $properties["Server Name"] =
-new _define_commented_optional('SERVER_NAME', $HTTP_SERVER_VARS['SERVER_NAME'], "
+    new _define_commented_optional('SERVER_NAME', $_SERVER['SERVER_NAME'], "
 Canonical name of the server on which this PhpWiki resides.");
 
 $properties["Server Port"] =
-new numeric_define_commented('SERVER_PORT', $HTTP_SERVER_VARS['SERVER_PORT'], "
+    new numeric_define_commented('SERVER_PORT', $_SERVER['SERVER_PORT'], "
 Canonical httpd port of the server on which this PhpWiki resides.",
 "onchange=\"validate_ereg('Sorry, \'%s\' is no valid port number.', '^[0-9]+$', 'SERVER_PORT', this);\"");
 
+$properties["Server Protocol"] =
+    new _define_selection_optional_commented('SERVER_PROTOCOL', 
+		    array('http'  => 'http',
+			  'https' => 'https'));
+
 $properties["Script Name"] =
-new _define_commented_optional('SCRIPT_NAME', $scriptname, "
-Relative URL (from the server root) of the PhpWiki script.");
+    new _define_commented_optional('SCRIPT_NAME', $scriptname);
 
 $properties["Data Path"] =
-new _define_commented_optional('DATA_PATH', dirname($scriptname), "
-URL of the PhpWiki install directory.  (You only need to set this
-if you've moved index.php out of the install directory.)  This can
-be either a relative URL (from the directory where the top-level
-PhpWiki script is) or an absolute one.");
-
+    new _define_commented_optional('DATA_PATH', dirname($scriptname));
 
 $properties["PhpWiki Install Directory"] =
-new _define_commented_optional('PHPWIKI_DIR', dirname(__FILE__), "
-Path to the PhpWiki install directory.  This is the local
-filesystem counterpart to DATA_PATH.  (If you have to set
-DATA_PATH, your probably have to set this as well.)  This can be
-either an absolute path, or a relative path interpreted from the
-directory where the top-level PhpWiki script (normally index.php)
-resides.");
+new _define_commented_optional('PHPWIKI_DIR', dirname(__FILE__));
 
 $properties["Use PATH_INFO"] =
 new _define_selection_optional_commented('USE_PATH_INFO', 
@@ -1543,50 +1531,31 @@ Miscellaneous settings
 ");
 
 $properties["Strict Mailable Pagedumps"] =
-new boolean_define_optional
-('STRICT_MAILABLE_PAGEDUMPS', 
- array('false' => "binary",
-       'true'  => "quoted-printable"),
-"
-If you define this to true, (MIME-type) page-dumps (either zip dumps,
-or \"dumps to directory\" will be encoded using the quoted-printable
-encoding.  If you're actually thinking of mailing the raw page dumps,
-then this might be useful, since (among other things,) it ensures
-that all lines in the message body are under 80 characters in length.
-
-Also, setting this will cause a few additional mail headers
-to be generated, so that the resulting dumps are valid
-RFC 2822 e-mail messages.
-
-Probably, you can just leave this set to false, in which case you get
-raw ('binary' content-encoding) page dumps.");
-
-$properties["HTML Dump Filename Suffix"] =
-new _define_optional('HTML_DUMP_SUFFIX', ".html", "
-Here you can change the filename suffix used for XHTML page dumps.
-If you don't want any suffix just comment this out.");
+    new boolean_define_optional('STRICT_MAILABLE_PAGEDUMPS', 
+     array('false' => "binary",
+           'true'  => "quoted-printable"));
 
 $properties["Default local Dump Directory"] =
-new _define_optional('DEFAULT_DUMP_DIR', "/tmp/wikidump", "
-Specify the default directory for local backups.");
+    new _define_optional('DEFAULT_DUMP_DIR');
 
 $properties["Default local HTML Dump Directory"] =
-new _define_optional('HTML_DUMP_DIR', "/tmp/wikidumphtml", "
-Specify the default directory for local XHTML dumps.");
+    new _define_optional('HTML_DUMP_DIR');
+
+$properties["HTML Dump Filename Suffix"] =
+    new _define_optional('HTML_DUMP_SUFFIX');
 
 $properties["Pagename of Recent Changes"] =
-new _define_optional('RECENT_CHANGES', 'RecentChanges', "
-Page name of RecentChanges page.  Used for RSS Auto-discovery.");
+    new _define_optional('RECENT_CHANGES', 
+			 "RecentChanges");
 
 $properties["Disable HTTP Redirects"] =
-new boolean_define_commented_optional('DISABLE_HTTP_REDIRECT');
+    new boolean_define_commented_optional('DISABLE_HTTP_REDIRECT');
 
 $properties["Disable GETIMAGESIZE"] =
-new boolean_define_commented_optional('DISABLE_GETIMAGESIZE');
+    new boolean_define_commented_optional('DISABLE_GETIMAGESIZE');
 
 $properties["EDITING_POLICY"] =
-  new _define_optional('EDITING_POLICY', "EditingPolicy", "
-An interim page which gets displayed on every edit attempt, if it exists.");
+    new _define_optional('EDITING_POLICY');
 
 $properties["TOOLBAR_PAGELINK_PULLDOWN"] =
     new _define_commented_optional('TOOLBAR_PAGELINK_PULLDOWN');
@@ -1596,7 +1565,7 @@ $properties["FULLTEXTSEARCH_STOPLIST"] =
     new _define_commented_optional('FULLTEXTSEARCH_STOPLIST');
 
 $properties["Part Seven A"] =
-new part('_part7a', $SEPARATOR."\n", "
+    new part('_part7a', $SEPARATOR."\n", "
 
 Part Seven A:
 
