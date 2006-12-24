@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.2 2006-12-23 11:50:45 rurban Exp $');
+rcs_id('$Id: MailNotify.php,v 1.3 2006-12-24 13:35:43 rurban Exp $');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -7,11 +7,12 @@ rcs_id('$Id: MailNotify.php,v 1.2 2006-12-23 11:50:45 rurban Exp $');
  * Generate notification emails.
  *
  * We add WikiDB handlers and register ourself there:
- *   onDeletePage, onRenamePage
+ *   onChangePage, onDeletePage, onRenamePage
  * Administrative actions:
  *   [Watch] WatchPage - add a page, or delete watch handlers into the users 
  *                       pref[notifyPages] slot.
  *   My WatchList      - view or edit list/regex of pref[notifyPages].
+ *   EMailConfirm methods: send and verify
  *
  * Helper functions:
  *   getPageChangeEmails
@@ -109,8 +110,11 @@ class MailNotify {
         $this->userids = array_unique($userids);
         return array($this->emails, $this->userids);
     }
-
-    function sendMail($subject, $content) {
+    
+    function sendMail($subject, $content, 
+                      $notice = _("PageChange Notification of %s"),
+                      $silent = false)
+    {
         global $request;
         $emails = $this->emails;
         $from = $this->from;
@@ -118,18 +122,23 @@ class MailNotify {
                  "[".WIKI_NAME."] ".$subject, 
                  $subject."\n".$content,
                  "From: $from\r\nBcc: ".join(',', $emails)
-                 )) 
+                 ))
         {
-            trigger_error(sprintf(_("PageChange Notification of %s sent to %s"),
-                                  $this->pagename, join(',',$this->userids)), E_USER_NOTICE);
+            if (!$silent)
+                trigger_error(sprintf($notice, $this->pagename)
+                              . " "
+                              . sprintf(_("sent to %s"), join(',',$this->userids)),
+                              E_USER_NOTICE);
             return true;
         } else {
-            trigger_error(sprintf(_("PageChange Notification of %s Error: Couldn't send to %s"),
-                                  $this->pagename, join(',',$this->userids)), E_USER_WARNING);
+            trigger_error(sprintf($notice, $this->pagename)
+                          . " "
+                          . sprintf(_("Error: Couldn't send to %s"), join(',',$this->userids)), 
+                          E_USER_WARNING);
             return false;
         }
     }
-
+    
     /**
      * Send udiff for a changed page to multiple users.
      * See rename and remove methods also
@@ -276,10 +285,86 @@ class MailNotify {
 	    }
 	}
     }
+
+    /**
+     * send mail to user and store the cookie in the db
+     * wikiurl?action=ConfirmEmail&id=bla
+     */
+    function sendEmailConfirmation ($email, $userid) {
+        $id = rand_ascii_readable(16);
+        $wikidb = $GLOBALS['request']->getDbh();
+        $data = $wikidb->get('ConfirmEmail');
+        while(!empty($data[$id])) { // id collision
+            $id = rand_ascii_readable(16);
+        }
+        $subject = WIKI_NAME . " " . _("e-mail address confirmation");
+        $ip = $request->get('REMOTE_HOST');
+        $expire_date = time() + 7*86400;
+        $content = fmt("Someone, probably you from IP address %s, has registered an
+account \"%s\" with this e-mail address on %s.
+
+To confirm that this account really does belong to you and activate
+e-mail features on %s, open this link in your browser:
+
+%s
+
+If this is *not* you, don't follow the link. This confirmation code
+will expire at %s.", 
+                       $ip, $userid, WIKI_NAME, WIKI_NAME, 
+                       WikiURL(HOME_PAGE, array('action' => 'ConfirmEmail',
+                                                'id' => $id), 
+                               true),
+                       CTime($expire_date));
+        $this->sendMail($subject, $content, "", true);
+        $data[$id] = array('email' => $email,
+                           'userid' => $userid,
+                           'expire' => $expire_date);
+        $wikidb->set('ConfirmEmail', $data);
+        return '';
+    }
+
+    function checkEmailConfirmation () {
+        global $request;
+        $wikidb = $request->getDbh();
+        $data = $wikidb->get('ConfirmEmail');
+        $id = $request->getArg('id');
+        if (empty($data[$id])) { // id not found
+            return HTML(HTML::h1("Confirm E-mail address"),
+                        HTML::h1("Sorry! Wrong URL"));
+        }
+        // upgrade the user
+        $userid = $data['userid'];
+        $email = $data['email'];
+        $u = $request->getUser();
+        if ($u->UserName() == $userid) { // lucky: current user (session)
+            $prefs = $u->getPreferences();
+            $request->_user->_level = WIKIAUTH_USER;
+            $request->_prefs->set('emailVerified', true);
+        } else {  // not current user
+            if (ENABLE_USER_NEW) {
+                $u = WikiUser($userid);
+                $u->getPreferences();
+                $prefs = &$u->_prefs;
+            } else {
+                $u = new WikiUser($request, $userid);
+                $prefs = $u->getPreferences();
+            }
+            $u->_level = WIKIAUTH_USER;
+            $request->setUser($u);
+            $request->_prefs->set('emailVerified', true);
+        }
+        unset($data[$id]);
+        $wikidb->set('ConfirmEmail', $data);
+        return HTML(HTML::h1("Confirm E-mail address"),
+                    HTML::p("Your e-mail address has now been confirmed."));
+    }
 }
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2006/12/23 11:50:45  rurban
+// added missing result init
+//
 // Revision 1.1  2006/12/22 17:59:55  rurban
 // Move mailer functions into seperate MailNotify.php
 //
