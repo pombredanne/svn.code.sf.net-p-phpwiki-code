@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.46 2006-12-22 00:11:38 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.47 2007-01-02 13:17:57 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
@@ -396,12 +396,20 @@ class Cached_PhpwikiURL extends Cached_DynamicContent
     }
 }    
 
+/*
+ * Relations (::) are named links to pages.
+ * Attributes (:=) are named metadata per page, "named links to numbers". 
+ * We don't want to exhaust the linktable with numbers,
+ * since this would create empty pages per each value, 
+ * so we don't store the attributes as relationlink
+ */
 class Cached_SemanticLink extends Cached_WikiLink {
 
     function Cached_SemanticLink ($url, $label) {
 	$this->_url = $url;
         if ($label && $label != $url)
             $this->_label = $label;
+        $this->_expandurl($this->_url);    
     }
 
     function isInlineElement() {
@@ -409,31 +417,44 @@ class Cached_SemanticLink extends Cached_WikiLink {
     }
 
     function getPagename($basepage) {
-	if (!isset($this->_page)) {
-	    $this->_expandurl($this->_url);
-	}
+	if (!isset($this->_page)) return false;
 	$page = new WikiPageName($this->_page, $basepage);
 	if ($page->isValid()) return $page->name;
 	else return false;
     }
 
-    /* add relation to the link table */
+    /* add relation to the link table.
+     * attributes have the _relation, but not the _page set. 
+     */
     function getWikiPageLinks($basepage) {
         if ($basepage == '') return false;
+	if (!isset($this->_page) and isset($this->_attribute)) {
+            // an attribute, we store it in the basepage now.
+            $page = $GLOBALS['request']->getPage($basepage);	
+            $page->setAttribute($this->_relation, $this->_attribute);
+            return array(array('linkto' => '', 'relation' => $this->_relation));
+	    //return false;
+	}
         if ($link = $this->getPagename($basepage)) 
             return array(array('linkto' => $link, 'relation' => $this->_relation));
-        else return false;
+        else
+            return false;
     }
 
     function _expandurl($url) {
         $m = array();
-        if (!preg_match('/^ ([^:]*) (:[:-]) (.*) $/x', $url, $m)) {
+        if (!preg_match('/^ ([^:]+) (:[:=]) (.+) $/x', $url, $m)) {
             return HTML::strong(array('class' => 'rawurl'),
                                 HTML::u(array('class' => 'baduri'),
                                         _("BAD semantic relation link")));
         }
 	$this->_relation = urldecode($m[1]);
-	$this->_page = urldecode($m[3]);
+        $is_attribute = ($m[2] == ':=');
+        if ($is_attribute) {
+            $this->_attribute = urldecode($m[3]);	
+        } else {
+	    $this->_page = urldecode($m[3]);
+        }
 	return $m;
     }
 
@@ -441,29 +462,32 @@ class Cached_SemanticLink extends Cached_WikiLink {
 	$m = $this->_expandurl($url);
         $class = 'wiki';
         // do not link to the attribute value, but to the attribute
-        $is_attribute = ($m[2] == ':-');
+        $is_attribute = ($m[2] == ':=');
         if ($label) {
-            return HTML::span(
-                              HTML::a(array('href'  => WikiURL($is_attribute ? $this->_relation : $page),
-                                            'class' => $class),
-                                      $label)
-                              );
+            return HTML::span
+		(
+		 HTML::a(array('href'  => WikiURL($is_attribute ? $this->_relation : $this->_page),
+			       'class' => "wiki ".($is_attribute?"attribute":"relation")),
+			 $label)
+		 );
         } elseif ($is_attribute) {
-            return HTML::span(
-                              HTML::a(array('href'  => WikiURL($this->_relation),
-                                            'class' => $class),
-                                      $url)
-                              );
+            return HTML::span
+		(
+		 HTML::a(array('href'  => WikiURL($this->_relation),
+			       'class' => "wiki attribute"),
+			 $url)
+		 );
         } else {
-            return HTML::span(
-                              HTML::a(array('href'  => WikiURL($this->_relation),
-                                            'class' => $class),
-                                      $this->_relation),
-                              HTML::strong($m[2]),
-                              HTML::a(array('href'  => WikiURL($this->_page),
-                                            'class' => $class),
-                                      $this->_page)
-                              );
+            return HTML::span
+		(
+		 HTML::a(array('href'  => WikiURL($this->_relation),
+			       'class' => "wiki relation"),
+			 $this->_relation),
+		 HTML::strong($m[2]),
+		 HTML::a(array('href'  => WikiURL($this->_page),
+			       'class' => "wiki"),
+			 $this->_page)
+		 );
         }
     }
 
@@ -511,7 +535,7 @@ class Cached_ExternalLink extends Cached_Link {
         if (GOOGLE_LINKS_NOFOLLOW) {
             // Ignores nofollow when the user who saved the page was authenticated. 
             $page = $request->getPage($basepage);
-            $current = $page->getCurrentRevision();
+            $current = $page->getCurrentRevision(false);
             if (!$current->get('author_id'))
                 $link->setAttr('rel', 'nofollow');
         }
@@ -658,6 +682,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2006/12/22 00:11:38  rurban
+// add seperate expandurl method, to simplify pagename parsing
+//
 // Revision 1.45  2006/10/12 06:33:50  rurban
 // decide later with which class to render this link (fixes interwiki link layout)
 
