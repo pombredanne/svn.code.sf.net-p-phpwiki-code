@@ -1,8 +1,8 @@
 <?php // -*-php-*- ?>
-<!-- $Id: navbar.tmpl,v 1.5 2006-12-06 22:05:39 rurban Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.6 2007-01-02 13:30:10 rurban Exp $ -->
 <?php
 // With MonoBook it is similar to Sidebar, named boxes at the left.
-// actiobuttons, navigation, search, toolbox
+// actionbuttons, navigation, search, toolbox
 ?>
 <!-- The left navigation/search bar -->
 <!-- Here you should add favorite Links and Categories -->
@@ -11,17 +11,23 @@
   <div class="pBody">
     <ul>
       <li id="n-mainpage"><?= WikiLink(HOME_PAGE) ?></li>
-      <li id="t-recentchanges"><?= WikiLink(_("RecentChanges")) ?></li>
-      <li id="t-recentcomments"><?= WikiLink(_("RecentComments")) ?></li>
+      <li id="n-recentchanges"><?= WikiLink(_("RecentChanges")) ?></li>
+      <li id="n-recentcomments"><?= WikiLink(_("RecentComments")) ?></li>
+      <li id="n-likepages"><?= Button(array('action'=>'LikePages'),_("Like Pages"), $page->getName()) ?></li>
       <li id="n-randompage"><?= WikiLink(_("RandomPage")) ?></li>
-      <li id="n-help"><a href="http://www.phpwiki.org/PhpWikiDocumentation">Help</a></li>
+<li id="n-help"><?= WikiLink(_("PhpWikiDocumentation"),"",_("Help")) ?></li>
     </ul>
   </div>
 </div>
+
 <div class="portlet" id="p-search">
   <h5>Search</h5>
   <div class="pBody">
-    <form action="<?= WikiURL(_("TitleSearch"))?>"
+<?= Template("search",
+             array('SEARCH_BEFORE' => WikiLink(_("FindPage")),
+		   'SEARCH_AFTER' => HTML::input(array('type'=>'submit',
+						       'value'=>_("Go"))))) ?>
+<!-- <form action="<?= WikiURL(_("TitleSearch"))?>"
       method="get" accept-charset="<?=$charset?>">
       <?= WikiLink(_("FindPage"), "searchButton",_("Search:")) ?>
       <input type="hidden" name="auto_redirect" value="1" />
@@ -30,25 +36,27 @@
 	      onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
 	      onmouseout="window.status=''; return true;" />
     </form>
+-->
   </div>
 </div>
+
 <div class="portlet" id="p-tb">
   <h5>Toolbox</h5>
   <div class="pBody">
     <ul>
-    <?php if (!empty($revision)) { ?>
+    <li><?= WikiLink(_("RecentChanges"), "",_("RecentChanges")) ?></li>
+    <?php if ($revision) { ?>
       <li id="t-whatlinkshere"><?= Button(array('action'=>'BackLinks'), _("What links here"), $page->getName()) ?></li>
-      <li id="t-whatlinkshere"><?= Button(array('action'=>'LikePages'),_("Like Pages"), $page->getName()) ?></li>
     <?php } ?>
     <?php $links = $page->getPageLinks(); if ($links->count() > 1) { ?>
       <li id="t-recentchangeslinked"><?= $WikiTheme->makeLinkButton($revision,_("RelatedChanges"),_("RelatedChanges")) ?></li>
     <?php } ?> 
-    <li><?= Button(array('page' => $page->getName()),_("Upload file"),_("UpLoad"),'wikiunsafe') ?></li>
-    <?php if (!empty($user) && $user->isAdmin()) { ?>
-      <li><?= WikiLink(_("PhpWikiAdministration"), "","Administration") ?></li>
+    <?php if ($user->isAdmin()) { ?>
+      <li><?= WikiLink(_("PhpWikiAdministration"), "", _("Administration")) ?></li>
     <?php } ?>
-    <?php if (!empty($user) && $user->isSignedIn()) { ?>
-      <li><?= WikiLink(_("UserPreferences"),"","Preferences") ?></li>
+    <?php if ($user->isSignedIn()) { ?>
+      <li><?= WikiLink(_("UpLoad"),"",_("Upload file")) ?></li>
+      <li><?= WikiLink(_("UserPreferences"), "",_("Preferences")) ?></li>
     <?php } ?>
     <li>
       <?php $PrintableLink = $WikiTheme->makeButton(_("Printable version"), "javascript:PrinterStylesheet();", 'wikiaction'); ?>
@@ -86,6 +94,7 @@ document.write('<?= $PrintableLink ?>'); // -->
       ?>
       <li><?= $btn ?></li>
     <?php } ?>
+    <li><?= WikiLink(_("AllPages")) ?></li>
   </ul>
   </div>
 </div>
