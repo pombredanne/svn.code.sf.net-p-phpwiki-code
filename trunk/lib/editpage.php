@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.108 2006-12-22 17:47:34 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.109 2007-01-02 13:21:39 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -115,6 +115,25 @@ class PageEditor
             else {
                 $saveFailed = true;
             }
+        }
+	// coming from loadfile conflicts 
+        elseif ($this->editaction == 'keep_old') {
+	    // keep old page and do nothing
+            $this->_redirectToBrowsePage();
+            //$r->redirect(WikiURL($r->getArg('save_and_redirect_to')));
+	    return true;
+        }
+        elseif ($this->editaction == 'overwrite') { 
+            // take the new content without diff
+	    $source = $this->request->getArg('loadfile');
+	    include_once('lib/loadsave.php');
+	    $this->request->setArg('loadfile', 1);
+	    $this->request->setArg('overwrite', 1);
+	    $this->request->setArg('merge', 0);
+	    LoadFileOrDir($this->request);
+            $this->_redirectToBrowsePage();
+            //$r->redirect(WikiURL($r->getArg('save_and_redirect_to')));
+            return true;
         }
 
         if ($saveFailed and $this->isConcurrentUpdate())
@@ -617,8 +636,9 @@ class PageEditor
         $posted = $request->getArg('edit');
         $request->setArg('edit', false);
 
-        if (!$posted || !$request->isPost()
-            || $request->getArg('action') != 'edit')
+        if (!$posted 
+	    || !$request->isPost()
+            || !in_array($request->getArg('action'),array('edit','loadfile')))
             return false;
 
         if (!isset($posted['content']) || !is_string($posted['content']))
@@ -646,13 +666,13 @@ class PageEditor
         $this->meta = array_merge($this->meta, $meta);
         $this->locked = !empty($posted['locked']);
 
-        if (!empty($posted['preview']))
-            $this->editaction = 'preview';
-        elseif (!empty($posted['save']))
-            $this->editaction = 'save';
-        elseif (!empty($posted['edit_convert']))
-            $this->editaction = 'edit_convert';
-        else
+	foreach (array('preview','save','edit_convert',
+		       'keep_old','overwrite') as $o) 
+	{
+	    if (!empty($posted[$o]))
+		$this->editaction = $o;
+	}
+        if (empty($this->editaction))
             $this->editaction = 'edit';
 
         return true;
@@ -746,9 +766,31 @@ extends PageEditor
 
         // FIXME: NOT_CURRENT_MESSAGE?
         $tokens = array_merge($tokens, $this->getFormElements());
+	// we need all GET params for loadfile overwrite
+	if ($this->request->getArg('action') == 'loadfile') {
+		
+	    $this->tokens['HIDDEN_INPUTS'] = 
+		HTML(HiddenInputs
+		    (array('source' => $this->request->getArg('source'),
+		           'merge'  => 1)),
+		     $this->tokens['HIDDEN_INPUTS']);
+	    // add two conflict resolution buttons before preview and save.
+	    $tokens['PREVIEW_B'] = HTML(
+				    Button('submit:edit[keep_old]', 
+					   _("Keep old"), 'wikiaction'),
+				    $tokens['SEP'],
+				    Button('submit:edit[overwrite]', 
+					   _("Overwrite with new"), 'wikiaction'),
+				    $tokens['SEP'],
+				    $tokens['PREVIEW_B']);
+	}
+	if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG) {
+            include_once("lib/EditToolbar.php");
+            $toolbar = new EditToolbar();
+            $tokens = array_merge($tokens, $toolbar->getTokens());
+	}
 
         return $this->output('editpage', _("Merge and Edit: %s"));
-        // FIXME: this doesn't display
     }
 
     function output ($template, $title_fs) {
@@ -764,7 +806,14 @@ extends PageEditor
             $pagelink = WikiLink($this->page);
         }
 
-        //$title = new FormattedText ($title_fs, $pagelink);
+        $title = new FormattedText ($title_fs, $pagelink);
+	$this->tokens['HEADER'] = $title;
+	//hack! there's no TITLE in editpage, but in the previous top template
+	if (empty($this->tokens['PAGE_LOCKED_MESSAGE']))
+	    $this->tokens['PAGE_LOCKED_MESSAGE'] = HTML::h3($title);
+	else
+	    $this->tokens['PAGE_LOCKED_MESSAGE'] = HTML(HTML::h3($title),
+							$this->tokens['PAGE_LOCKED_MESSAGE']);
         $template = Template($template, $this->tokens);
 
         //GeneratePage($template, $title, $rev);
@@ -783,6 +832,10 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.108  2006/12/22 17:47:34  rurban
+ Display Warnings only once.
+ Add button accesskeys
+
  Revision 1.107  2006/05/13 19:59:54  rurban
  added wysiwyg_editor-1.3a feature by Jean-Nicolas GEREONE <jean-nicolas.gereone@st.com>
  converted wysiwyg_editor-1.3a js to WysiwygEdit framework
