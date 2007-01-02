@@ -8,6 +8,7 @@
 //	:: if you want to use this code PLEASE send me a note
 //	:: and please keep this disclaimer intact
 //
+//  xmlrpc support by Reini Urban for PhpWiki, 2006-12-29
 
 function cAutocomplete( sInputId )
 {
@@ -125,6 +126,7 @@ if( cAutocomplete.CB_AUTOINIT )
 
 cAutocomplete.prototype.init = function( sInputId )
 {
+        this.bDebug = false
 	this.sInputId = sInputId
 	this.sListId = cAutocomplete.CS_LIST_PREFIX + sInputId
 
@@ -142,7 +144,7 @@ cAutocomplete.prototype.init = function( sInputId )
 
 	//if I transform a select option or the supplied array is associative I create a hidden input
 	//with the name of the original input and replace the original input's name
-	this.bAssociative = false
+	this.bAssociative = true
 	this.sHiddenInputId = null
 	this.bHasButton = false
 
@@ -174,7 +176,7 @@ cAutocomplete.prototype.init = function( sInputId )
 	var sMatchSubstring = document.getElementById( this.sInputId ).getAttribute( 'autocomplete_matchsubstring' )
 	if( sMatchSubstring != null && sMatchSubstring.length > 0 )
 	{
-		this.bMatchSubstring = true
+		this.bMatchSubstring = eval( sMatchSubstring )
 	}
 
 	//autocomplete with the first option from the list
@@ -200,21 +202,10 @@ cAutocomplete.prototype.init = function( sInputId )
 		this.onSelect = eval( sOnSelectFunction )
 	}
 
-	//I assume that we always have the associative type
-	//you can turn it off only with the autocomplete_assoc=false attribute
-	this.bAssociative = true
-	var sAssociative = document.getElementById( this.sInputId ).getAttribute( 'autocomplete_assoc' )
-	if( sAssociative != null && sAssociative.length > 0 )
-	{
-		if( sAssociative == 'false' )
-		{
-			this.bAssociative = false
-		}
-	}
-
-	//if we have remote list then we postpone the list creation
+	//if we have remote list then we postpone the list creation and set associative off
 	if( this.getListArrayType() == 'url' || this.getListArrayType() == 'xmlrpc' )
 	{
+	        this.bAssociative = false
 		this.bRemoteList = true
 		this.sListURL = this.getListURL()
 		this.hXMLHttp = XmlHttp.create()
@@ -225,6 +216,16 @@ cAutocomplete.prototype.init = function( sInputId )
 	{
 		this.bRemoteList = false
 	}
+
+	//you can turn associative type on or off (separate name-value pairs) 
+	//with the autocomplete_assoc="true" or "false" attribute.
+	//for remote search it is off
+	var sAssociative = document.getElementById( this.sInputId ).getAttribute( 'autocomplete_assoc' )
+	if( sAssociative != null && sAssociative.length > 0 )
+	{
+	    this.bAssociative = eval( sAssociative )
+	}
+
 	this.initListArray()
 	this.initListContainer()
 	//this.createList()
@@ -496,26 +497,28 @@ cAutocomplete.prototype.initListArray = function()
 
 		switch( sArrayType )
 		{
-			case 'array'	:	hArr = eval( sAA.substring( 6 ) )
-								break
+			case 'array'	:
+			hArr = eval( sAA.substring( 6 ) )
+			break
 
-			case 'list'		:	hArr = new Array()
-								var hTmpArray = sAA.substring( 5 ).split( '|' )
-								var aValueArr
-								for( hKey in hTmpArray )
-								{
-									aValueArr = hTmpArray[ hKey ].split( cAutocomplete.CS_ARRAY_SEPARATOR )
-									if( aValueArr.length == 1 )
-									{
-										hArr[ hKey ] = hTmpArray[ hKey ]
-										this.bAssociative = false
-									}
-									else
-									{
-										hArr[ aValueArr[ 0 ] ] = aValueArr[ 1 ]
-									}
-								}
-								break
+			case 'list'	:
+			hArr = new Array()
+			var hTmpArray = sAA.substring( 5 ).split( '|' )
+			var aValueArr
+			for( hKey in hTmpArray )
+			    {
+				aValueArr = hTmpArray[ hKey ].split( cAutocomplete.CS_ARRAY_SEPARATOR )
+				if( aValueArr.length == 1 )
+				    {
+					hArr[ hKey ] = hTmpArray[ hKey ]
+					this.bAssociative = false
+				    }
+				else
+				    {
+					hArr[ aValueArr[ 0 ] ] = aValueArr[ 1 ]
+				    }
+			    }
+			break
 		}
 		if( sAAS != null && eval( sAAS ) )
 		{
@@ -582,11 +585,11 @@ cAutocomplete.prototype.getListURL = function()
 	{
 		if(  sAA.indexOf( 'url:' ) >= 0 )
 		{
-			return sAA.substring( 4 )
+		    return sAA.substring( 4 )
 		}
 		if(  sAA.indexOf( 'xmlrpc:' ) >= 0 )
 		{
-			return sAA.substring( 7 )
+		    return sAA.substring( 7 )
 		}
 	}
 }
@@ -598,25 +601,99 @@ cAutocomplete.prototype.setListURL = function( sURL )
 
 cAutocomplete.onXmlHttpLoad = function( hThis )
 {
-	if( hThis.hXMLHttp.readyState == 4 )
+    if( hThis.hXMLHttp.readyState == 4 )
 	{
-		var hError = hThis.hXMLHttp.parseError
-		if( hError && hError.errorCode != 0 )
+	    var hError = hThis.hXMLHttp.parseError
+	    if( hError && hError.errorCode != 0 )
 		{
-			alert( hError.reason )
+		    alert( hError.reason )
 		}
-		else
+	    else
 		{
-		    if (hthis.bXMLRPC)
-		    {
-			hThis.afterRemoteLoadXMLRPC()
-		    }
-		    else 
-		    {
-			hThis.afterRemoteLoad()
-		    }
+		    hThis.afterRemoteLoad()
 		}
 	}
+}
+cAutocomplete.onXMLRPCHttpLoad = function( hThis )
+{
+    if( hThis.hXMLHttp.readyState == 4 )
+	{
+	    var hError = hThis.hXMLHttp.parseError
+	    if( hError && hError.errorCode != 0 )
+		{
+		    alert( hError.reason )
+		}
+	    else
+		{
+		    hThis.afterRemoteLoadXMLRPC()
+		}
+	}
+}
+
+cAutocomplete.prototype.loadXMLRPCListArray = function()
+{
+	// encoding: "xmlrpc:wiki.titleSearch [S]"
+	// or "xmlrpc:http://localhost/wiki/?wiki.titleSearch [S]"
+	//    encode the methodname as optional query_arg and the args space seperated
+	var sURL = this.sListURL
+	var aMethodArgs = sURL.split( ' ' )
+	var sMethodName = aMethodArgs[ 0 ]
+	var sStartWith = this.getStringForAutocompletion( this.sActiveValue, this.nInsertPoint )
+	sStartWith = sStartWith.replace( /^\s/, '' )
+	sStartWith = sStartWith.replace( /\s$/, '' )
+
+	if( sMethodName.indexOf( '?' ) > 0 )
+	    {
+		sMethodName = sMethodName.replace( '/^.+\?/', '' )
+		sURL = sURL.replace( '/\?.+$/', '' )
+	    }
+	else
+	    {
+		sURL = xmlrpc_url
+	    }
+
+	if (sMethodName.length < 1) 
+	    { 
+		var hInput = document.getElementById( this.sInputId )
+		hInput.value = this.sActiveValue
+		return
+	    }
+
+	// Construct the xmlrpc request.
+	// which charset to send? for sure we get back utf-8
+	var sRequest = '<?xml version=\'1.0\' encoding="iso-8859-1" ?>\n'
+	sRequest += '<methodCall><methodName>'+sMethodName+'</methodName>\n'
+	if (aMethodArgs.length <= 1) // the first arg is the name
+	    {
+		sRequest += '<params/>\n'
+	    }
+	else
+	    {
+		sRequest += '<params>\n'
+		for( var nI = 1; nI < aMethodArgs.length; nI++ )
+		    {
+			var sArg = aMethodArgs[ nI ];
+			//alert('sMethodName: "'+sMethodName+'" sArg['+nI+']: "'+sArg+'"')
+			if( sArg.indexOf( '[S]' ) >= 0 )
+			    {
+				//alert('sArg['+nI+']: "'+sArg+'" sStartWith: "'+sStartWith+'"')
+				sArg = sArg.replace( '[S]', sStartWith )
+			    }
+			// can only do string args so far
+			sRequest += '<param><value><string>'
+			sRequest += sArg
+			sRequest += '</string></value></param>\n'
+		    }
+		sRequest += '</params>\n'
+	    }
+	sRequest += '</methodCall>'
+	if (this.bDebug) {
+	    alert('url: "'+sURL+'" sRequest: "'+sRequest.substring(20)+'"')
+	    sURL += '?start_debug=1'
+	}
+	this.hXMLHttp.open( 'POST', sURL, true )
+	this.hXMLHttp.onreadystatechange = new Function( 'var sAC = "'+this.sObjName+'"; cAutocomplete.onXMLRPCHttpLoad( eval( sAC ) )' )
+	this.hXMLHttp.send( sRequest )
 }
 
 cAutocomplete.prototype.loadListArray = function()
@@ -669,12 +746,26 @@ cAutocomplete.prototype.afterRemoteLoadXMLRPC = function()
 	var hInput = document.getElementById( this.sInputId )
 
 	var hArr = new Array()
-	/* how does the response XML look like? */
-	var hTmpArray = this.hXMLHttp.documentElement.getElementsByTagName("array");
-	for( hKey in hTmpArray )
-	{
-	    if (hTmpArray[ hKey ].getAttribute("string"))
-	        hArr[ hKey ] = hTmpArray[ hKey ].getAttribute("string")
+	sResult = this.hXMLHttp.responseText
+	if ( this.bDebug ) {
+	    alert( sResult.substring(70,190) )
+	}
+	sResult.replace('\n','');
+	sResult.replace('\r','');
+        var hKey = 0
+	var i = sResult.indexOf('<string>')
+	while (i >= 0) {
+	    var j
+	    sResult = sResult.substring(i+8)
+	    j = sResult.indexOf('</string>')
+	    hArr[ hKey ] = sResult.substring(0, j)
+	    // TODO: convert it from utf-8 to result charset and encoding
+	    //alert( 'i:'+i+' j:'+j+' "'+hArr[ hKey ]+'"' )
+	    /*if( hArr[ hKey ] == hArr[ hKey-1 ] )
+	      return*/
+	    hKey += 1
+	    sResult = sResult.substring(j+9)
+	    i = sResult.indexOf('<string>')
 	}
 
 	hInput.className = ''
@@ -701,7 +792,8 @@ cAutocomplete.prototype.prepareList = function( bFullList )
 			hInput.className = 'search'
 			hInput.readonly = true
 			hInput.value = 'please wait...'
-			this.loadListArray()
+			// hInput.value = this.sListURL
+			this.bXMLRPC ? this.loadXMLRPCListArray() : this.loadListArray()
 			return
 		}
 		this.updateAndShowList( bFullList )
