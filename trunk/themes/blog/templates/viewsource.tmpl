@@ -1,7 +1,8 @@
 <?php // -*-html-*- ?>
-<!-- $Id: viewsource.tmpl,v 1.1 2005-10-30 16:12:10 rurban Exp $ -->
-
-<?php if ($page->get('locked') && !$user->isAdmin()) { ?>
+<!-- $Id: viewsource.tmpl,v 1.2 2007-01-02 13:30:28 rurban Exp $ -->
+<?php 
+if (empty($revision)) $revision = $page->getCurrentRevision(false);
+if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?=_("Note:")?></strong>
   <?=_("This page has been locked by the administrator and cannot be edited.")?>
   </p>
