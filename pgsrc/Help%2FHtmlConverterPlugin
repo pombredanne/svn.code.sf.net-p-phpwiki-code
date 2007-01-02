@@ -1,0 +1,38 @@
+Date: Fri, 29 Dec 2006 18:57:39 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: Help%2FHtmlConverterPlugin,v 1.1 2007-01-02 13:26:05 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FHtmlConverterPlugin;
+  pgsrc_version="2 $Revision: 1.1 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+_short description_
+
+! Usage
+<verbatim>
+  <?plugin HtmlConverter ?>
+</verbatim>
+
+! Arguments
+
+page _(default: current pagename)_:
+  The page to execute upon.
+
+! Example
+
+<verbatim>
+<?plugin HtmlConverter ?>
+</verbatim>
+
+<?plugin HtmlConverter ?>
+
+! Author
+PhpWiki:ReiniUrban
+
+! See Also
+
+----
+PhpWikiDocumentation Help:WikiPlugin

@@ -1,0 +1,136 @@
+Date: Fri, 29 Dec 2006 18:57:39 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: Help%2FPloticusPlugin,v 1.1 2007-01-02 13:26:05 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FPloticusPlugin;
+  pgsrc_version="2 $Revision: 1.1 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+The Ploticus plugin passes all its arguments to the ploticus 
+binary and displays the result as PNG, GIF, EPS, SVG or SWF.
+Ploticus is a free, GPL, non-interactive software package 
+for producing plots, charts, and graphics from data.
+See http://ploticus.sourceforge.net/doc/welcome.html
+
+Note: 
+- For windows you need either a gd library with GIF support or 
+  a ploticus with PNG support. This comes e.g. with the cygwin build.
+- We support only images supported by GD so far (PNG most likely). 
+  No EPS, PS, SWF, SVG or SVGZ support yet, due to limitations in WikiPluginCached.
+  This will be fixed soon.
+
+Ploticus uses a cache expire date of days.
+
+! Usage:
+<verbatim>
+<?plugin Ploticus device=png [ploticus options...]
+   multiline ploticus script ...
+?>
+</verbatim>
+
+or without any script: (not tested)
+
+<verbatim>
+<?plugin Ploticus -prefab vbars
+	data=myfile.dat delim=tab y=1 
+	clickmapurl="http://mywiki.url/wiki/?pagename=@2" 
+	clickmaplabel="@3" -csmap 
+?>
+</verbatim>
+
+TODO: PloticusSql - create intermediate data from SQL. Similar to [SqlResult|Help:SqlResultPlugin], 
+just in graphic form.
+For example to produce nice looking pagehit statistics or ratings statistics.
+Ploticus has its own sql support within #getproc data, but this would expose security information.
+
+! Arguments
+
+device (_optional_):
+  png,gif,svgz,svg,jpeg,
+
+-prefab <name>:
+  passed to ploticus. requires PLOTICUS_PREFABS
+
+-csmap:
+  create an clickable imagemap. passed to ploticus as -csmap -mapfile $tempfile.map 
+
+data:
+  <!plugin-list name !> pagelist support. See Help:WikiPlugin. The resulting list of 
+  pages is used as source for #proc getdata\ndata:
+
+alt:
+  alternate text for the resulting image
+
+help:
+  Display the argument synopsis as image.
+
+All other arguments are used as source to ploticus.
+
+! Optional Configuration
+
+config.ini:
+  PLOTICUS_EXE = pl.exe (on windows)
+  PLOTICUS_EXE = /usr/local/bin/pl (elsewhere)
+
+prefabs need the environment variable PLOTICUS_PREFABS. Default: /usr/share/ploticus.
+Maybe also set by the config variable PLOTICUS_PREFABS.
+
+See also [WikiPluginCached|Help:WikiPluginCached] options in config.ini.
+
+! Examples
+
+<verbatim>
+<?plugin Ploticus -prefab vbars data=all_dba.data x=2 y=1 
+        barwidth=line vals=yes ylbl="memory (kb)" title="dba cli-4.3.9WIN" 
+	xlbl="consecutive tests" stubvert=yes ygrid=yes 
+	ylbldet="adjust=-0.1,0" xlbldet="adjust=0,-1.2"
+?>
+</verbatim>
+
+<?plugin Ploticus -prefab vbars x=2 y=1 
+	barwidth=line vals=yes ylbl="memory (kb)" title="dba cli-4.3.9WIN" 
+	xlbl="consecutive tests" stubvert=yes ygrid=yes 
+	ylbldet="adjust=-0.1,0" xlbldet="adjust=0,-1.2"
+
+#proc getdata
+fieldnames: test nr USECACHE=on USECACHE=off USER_NEW=on USER_NEW=off
+delim: tab
+data:
+// test      	nr	USECACHE=on	USECACHE=off	USER_NEW=on	USER_NEW=off
+PhpWikiLoaded	1	14020608	14041088	14020608	13623296
+PhpWikiInitial	2	14594048	14594048	14565376	14163968
+testoldmarkupt	3	22450176	22446080	22446080	22024192
+testincludepag	4	22781952	22794240	22769664	22355968
+testsetupwiki	5	28540928	28368896	28516352	28098560
+testallpages	6	34832384	34381824	34951168	34385920
+test01rateit	7	36380672	35889152	36409344	35983360
+test02orphaned	8	37617664	37351424	37605376	37212160
+test03oldtextf	9	38514688	50708480	38506496	38137856
+test04linkdata	10	39157760	51384320	39161856	38776832
+test99dumphtml	11	132849664	260100096	193171456	194863104
+#endproc
+
+// PARAMS:
+// PHP_SAPI=cgi-fcgi
+// PHP_OS=WINNT
+// PHP_VERSION=4.3.11
+// test=SetupWiki,AllPagesTest,DumpHtml
+// db=dba
+// debug=9
+// level=2
+// WIKIDB_NOCACHE_MARKUP=false
+// ENABLE_PAGEPERM=1
+// CREATED=Mon Oct 10 20:51:08 GMT 2005
+?>
+
+
+! Author
+PhpWiki:ReiniUrban
+
+! See Also
+
+----
+PhpWikiDocumentation Help:WikiPlugin
