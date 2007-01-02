@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: actionbar.tmpl,v 1.38 2006-09-06 06:09:42 rurban Exp $');
+rcs_id('$Id: actionbar.tmpl,v 1.39 2007-01-02 13:29:14 rurban Exp $');
 ?>
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
 <?php /* I would like not to have to use these tables, and managed to
@@ -24,7 +24,7 @@ rcs_id('$Id: actionbar.tmpl,v 1.38 2006-09-06 06:09:42 rurban Exp $');
       <?=$SEP?><?= Button('setacl') ?>
       <?=$SEP?><?= Button('rename') ?>
     <?php }} ?>
-    <?php if ($user->isAdmin() or mayAccessPage('remove', $page->getName())) { ?>
+    <?php if ($revision and ($user->isAdmin() or mayAccessPage('remove', $page->getName()))) { ?>
       <?=$SEP?><?= Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
       <?=$SEP?><?= Button('remove') ?>
     <?php } ?>

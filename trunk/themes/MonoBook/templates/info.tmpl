@@ -1,7 +1,7 @@
 <?php // -*-php-*- ?>
-<!-- $Id: info.tmpl,v 1.3 2005-08-28 11:04:08 rurban Exp $ -->
+<!-- $Id: info.tmpl,v 1.4 2007-01-02 13:29:14 rurban Exp $ -->
 <?php
-
+if (empty($revision)) $revision = $page->getCurrentRevision(false);
 $modifed = $WikiTheme->formatDateTime($revision->get('mtime'));
 
 $author = $revision->get('author');
@@ -186,6 +186,9 @@ if (0 and isSubPage($page->getName())) {
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2005/08/28 11:04:08  rurban
+// fix Article link, reorder Discussion before admin actions, use default SEP in info, custom Sep in actionbar
+//
 // Revision 1.2  2004/06/14 11:26:49  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 //
