@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: actionbar.tmpl,v 1.8 2006-09-06 06:12:26 rurban Exp $');
+rcs_id('$Id: actionbar.tmpl,v 1.9 2007-01-02 13:29:14 rurban Exp $');
 if (!$WikiTheme->DUMP_MODE) {
 // Only [Info] button when not signed in.
 // The rest behind Info
@@ -27,7 +27,7 @@ if (!$WikiTheme->DUMP_MODE) {
         <?=$SEP?><?= Button('setacl') ?>
         <?=$SEP?><?= Button('rename') ?>
      <?php }} ?>
-     <?php if ($user->isAdmin() or mayAccessPage('remove', $page->getName())) { ?>
+     <?php if ($revision and ($user->isAdmin() or mayAccessPage('remove', $page->getName()))) { ?>
       <?=$SEP?><?= Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
       <?=$SEP?><?= Button('remove') ?>
      <?php } ?>

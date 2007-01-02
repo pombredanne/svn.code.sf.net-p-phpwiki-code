@@ -1,12 +1,12 @@
 <?php // -*-html-*- ?>
-<!-- $Id: viewsource.tmpl,v 1.24 2005-10-30 16:11:09 rurban Exp $ -->
+<!-- $Id: viewsource.tmpl,v 1.25 2007-01-02 13:29:14 rurban Exp $ -->
 
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
   <p><strong><?=_("Note:")?></strong>
   <?=_("This page has been locked by the administrator and cannot be edited.")?>
   </p>
   <?php } ?>
-<?php if (! $revision->isCurrent()) { ?>
+<?php if ($revision and !$revision->isCurrent()) { ?>
   <p><?=_("You are viewing an old revision of this page.")?>
   <?= Button('edit', _("View the current version"), $page) ?>.
   </p>

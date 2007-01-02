@@ -1,11 +1,11 @@
 <?php // -*-html-*- ?>
-<!-- $Id: browse.tmpl,v 1.6 2003-02-27 23:55:51 dairiki Exp $ -->
+<!-- $Id: browse.tmpl,v 1.7 2007-01-02 13:29:14 rurban Exp $ -->
 <?php
 ?>
 
 <br clear="all" class="clear-floats" />
 
-<?php if (! $revision->isCurrent()) { ?>
+<?php if ($revision and !$revision->isCurrent()) { ?>
   <p><strong><?=_("Note:")?></strong>
      <?=_("You are viewing an old revision of this page.")?>
      <?= WikiLink($page, 'existing', _("View the current version"))?>.</p>
