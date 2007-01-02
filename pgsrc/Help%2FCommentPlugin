@@ -1,9 +1,9 @@
 Date: Wed, 11 Oct 2006 09:16:43 +0200
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.13pre-20061010)
-X-Rcs-Id: $Id: Help%2FCommentPlugin,v 1.2 2006-10-12 06:38:33 rurban Exp $
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: Help%2FCommentPlugin,v 1.3 2007-01-02 13:24:58 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCommentPlugin;
-  pgsrc_version="2 $Revision: 1.2 $";
+  pgsrc_version="2 $Revision: 1.3 $";
   flags="";
   markup=2;
   charset=iso-8859-1

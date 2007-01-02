@@ -1,9 +1,9 @@
-Date: Mon, 14 Nov 2005 02:20:43 -0800
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.12)
-X-Rcs-Id: $Id: Help%2FWikiPlugin,v 1.2 2006-05-18 06:06:16 rurban Exp $
+Date: Mon, 14 Nov 2006 02:20:43 -0800
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: Help%2FWikiPlugin,v 1.3 2007-01-02 13:24:58 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiPlugin;
-  pgsrc_version="2 $Revision: 1.2 $";
+  pgsrc_version="2 $Revision: 1.3 $";
   flags="";
   markup=2;
   charset=iso-8859-1
