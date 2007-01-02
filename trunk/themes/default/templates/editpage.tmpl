@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.59 2006-09-06 06:10:49 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.60 2007-01-02 13:27:35 rurban Exp $ -->
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong>
 <!-- FIXME: it would be nice to put a link to the #editarea anchor below,
@@ -70,7 +70,7 @@
 <tr>
   <td>
     <?php if ($user->isAdmin()) { ?> 
-    <?= $LOCKED_CB ?> <label for="edit:lock"><?=_("Locked")?></label>
+    <?= $LOCKED_CB ?> <label for="edit:locked"><?=_("Locked")?></label>
     <?php } ?>
   </td>
   <td colspan="2" align="right">
