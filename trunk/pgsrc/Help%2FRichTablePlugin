@@ -1,18 +1,18 @@
-Date: Sun, 4 Jul 2004 01:31:02 -0700
+Date: Fri, 29 Dec 2006 18:57:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.8a)
-X-Rcs-Id: $Id: Help%2FRichTablePlugin,v 1.1 2005-11-21 22:19:00 rurban Exp $ 
+X-Rcs-Id: $Id: Help%2FRichTablePlugin,v 1.2 2007-01-02 13:25:07 rurban Exp $ 
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRichTablePlugin;
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
-  author=ReiniUrban;
-  version=1;
-  lastmodified=1075205974;
-  author_id=ReiniUrban;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-RichTablePlugin is a plugin that takes off from the OldStyleTablePlugin. It allows a user to specify arbitrary properties of <tt><table></tt>, <tt><tr></tt> and <tt><td></tt> with a very simple markup.
+
+! Synopsis
+
+The Help:RichTablePlugin is a plugin that takes off from the Help:OldStyleTablePlugin. It allows a user to specify arbitrary properties of <tt><table></tt>, <tt><tr></tt> and <tt><td></tt> with a very simple markup.
 
 NEW: The plugin is now fixed so that the contents of each cell are individually processed by the ~BlockParser. This means that if everything works correctly,  you can do interesting things like put *invoke plugins*, use *enumerated lists* etc within each cell!
 
@@ -31,11 +31,11 @@ NEW: The plugin is now fixed so that the contents of each cell are individually 
   *If there is no cell in the current row, content lines are dropped silently.
 *The two special characters <tt>"~~"</tt> and <tt>"?>"</tt> should be escaped as <tt>"\~~"</tt> and <tt>"?\>"</tt>. I havn't discovered any other characters yet that might need to be escaped. This is required for the block parser to work.
 
-Bugs:
+! Bugs
 * The source code sucks
 * The plugin can't nest itself yet. Thus nested tables are currently not possible.
 
-Example:
+! Example
 
 <?plugin RichTable
 
@@ -105,8 +105,8 @@ This cell uses the row color
 ?>
 </verbatim>
 
-;__Author__: Sameer D. Sahasrabuddhe
-;__Url__: http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin
+;<strong>Author</strong>: Sameer D. Sahasrabuddhe
+;<strong>Url</strong>: http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin
 
 
 -------------
