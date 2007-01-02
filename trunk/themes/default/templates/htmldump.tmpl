@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-rcs_id('$Id: htmldump.tmpl,v 1.7 2006-08-25 22:06:54 rurban Exp $');
+rcs_id('$Id: htmldump.tmpl,v 1.8 2007-01-02 13:28:16 rurban Exp $');
 /*
  * This template is used only for html file dumps, and is responsible
  * mainly for the outer level <html> stuff and the and <head>.
@@ -37,8 +37,10 @@ echo "<","?xml version=\"1.0\" encoding=\"", $charset, "\"?", ">\n";
 <meta name="document-rating" content="General" />
 <meta name="generator" content="PhpWiki" />
 <meta name="PHPWIKI_VERSION" content="<?=PHPWIKI_VERSION?>" />
-<base href="<?=$relative_base?>" />
 
+<?php if (!empty($relative_base)) { ?>
+<base href="<?=$relative_base?>" />
+<?php } ?>
 <?= $WikiTheme->getCSS() ?>
 <?php
   // avoid redundant bookmark title for custom home page
