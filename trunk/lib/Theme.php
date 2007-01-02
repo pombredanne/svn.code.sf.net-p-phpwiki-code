@@ -1,5 +1,5 @@
-<?php rcs_id('$Id: Theme.php,v 1.136 2006-12-06 22:07:31 rurban Exp $');
-/* Copyright (C) 2002,2004,2005 $ThePhpWikiProgrammingTeam
+<?php rcs_id('$Id: Theme.php,v 1.137 2007-01-02 13:19:23 rurban Exp $');
+/* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -1182,7 +1182,7 @@ class Theme {
             $this->addMoreAttr('body', 'DoubleClickEdit', HTML::Raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
     }
 
-    // Immediate title search results via XMLHTML(HttpRequest
+    // Immediate title search results via XMLHTML(HttpRequest)
     // by Bitflux GmbH, bitflux.ch. You need to install the livesearch.js seperately.
     // Google's or acdropdown is better.
     function initLiveSearch() {
@@ -1201,9 +1201,9 @@ class Theme {
     function initMoAcDropDown() {
         if (!$this->HTML_DUMP_SUFFIX) {
             $dir = $this->_findData('moacdropdown');
-            // if autocomplete_remote is used:
+            // if autocomplete_remote is used: (getobject2 also for calc. the showlist width)
             foreach (array("mobrowser.js","modomevent.js","modomt.js",
-                           "modomext.js","xmlextras.js") as $js) 
+                           "modomext.js","getobject2.js","xmlextras.js") as $js) 
             {
                 $this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/$js")));
             }
@@ -1211,6 +1211,13 @@ class Theme {
             //$this->addMoreHeaders($this->_CSSlink(0, 
             //                      $this->_findFile('moacdropdown/css/dropdown.css'), 'all'));
             $this->addMoreHeaders(HTML::style("  @import url( $dir/css/dropdown.css );\n"));
+	    // for local xmlrpc requests
+	    $xmlrpc_url = deduce_script_name();
+	    if (1 or DATABASE_TYPE == 'dba')
+		$xmlrpc_url = DATA_PATH . "/RPC2.php";
+	    if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
+		$xmlrpc_url .= ("?start_debug=".$_GET['start_debug']);
+            $this->addMoreHeaders(JavaScript("var xmlrpc_url = '$xmlrpc_url'"));
         }
     }
 };
@@ -1230,7 +1237,7 @@ class Button extends HtmlElement {
      * @param $class string The CSS class for the button.
      * @param $options array Additional attributes for the &lt;input&gt; tag.
      */
-    function Button ($text, $url, $class = false, $options = false) {
+    function Button ($text, $url, $class=false, $options=false) {
         global $request;
         //php5 workaround
         if (check_php_version(5)) {
@@ -1268,7 +1275,7 @@ class ImageButton extends Button {
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
-    function ImageButton ($text, $url, $class, $img_url, $img_attr = false) {
+    function ImageButton ($text, $url, $class, $img_url, $img_attr=false) {
         $this->__construct('a', array('href' => $url));
         if ($class)
             $this->setAttr('class', $class);
@@ -1298,7 +1305,7 @@ class SubmitButton extends HtmlElement {
      * @param $class string The CSS class for the button.
      * @param $options array Additional attributes for the &lt;input&gt; tag.
      */
-    function SubmitButton ($text, $name = false, $class = false, $options = false) {
+    function SubmitButton ($text, $name=false, $class=false, $options=false) {
         $this->__construct('input', array('type' => 'submit',
                                           'value' => $text));
         if ($name)
@@ -1326,7 +1333,7 @@ class SubmitImageButton extends SubmitButton {
      * @param $img_url string URL for button's image.
      * @param $img_attr array Additional attributes for the &lt;img&gt; tag.
      */
-    function SubmitImageButton ($text, $name = false, $class = false, $img_url, $img_attr = false) {
+    function SubmitImageButton ($text, $name=false, $class=false, $img_url, $img_attr=false) {
         $this->__construct('input', array('type'  => 'image',
                                           'src'   => $img_url,
                                           'value' => $text,
@@ -1450,9 +1457,9 @@ function listAvailableThemes() {
     $dir = dir($dir_root);
     if ($dir) {
         while($entry = $dir->read()) {
-            if (is_dir($dir_root.'/'.$entry)
-                && (substr($entry,0,1) != '.')
-                && $entry != 'CVS') {
+            if (is_dir($dir_root.'/'.$entry) 
+                and file_exists($dir_root.'/'.$entry.'/themeinfo.php')) 
+            {
                 array_push($available_themes, $entry);
             }
         }
@@ -1468,10 +1475,7 @@ function listAvailableLanguages() {
         $dir_root = PHPWIKI_DIR . "/$dir_root";
     if ($dir = dir($dir_root)) {
         while($entry = $dir->read()) {
-            if (is_dir($dir_root."/".$entry)
-                && (substr($entry,0,1) != '.')
-                && $entry != 'po'
-                && $entry != 'CVS') 
+            if (is_dir($dir_root."/".$entry) and is_dir($dir_root.'/'.$entry.'/LC_MESSAGES'))
             {
                 array_push($available_languages, $entry);
             }
@@ -1482,6 +1486,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.136  2006/12/06 22:07:31  rurban
+// Add new Button argument to override any option.
+//
 // Revision 1.135  2006/04/17 17:28:21  rurban
 // honor getWikiPageLinks change linkto=>relation
 //
