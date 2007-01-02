@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.54 2006-12-03 17:07:29 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.55 2007-01-02 13:24:01 rurban Exp $');
 /*
  Copyright 2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -109,14 +109,22 @@ function isActionPage($filename) {
 }
 
 function CheckActionPageUpdate(&$request) {
-    echo "<h3>",_("check for necessary ActionPage updates"),"</h3>\n";
-    $dbi = $request->getDbh(); 
+    echo "<h3>",sprintf(_("check for necessary %s updates"),
+			_("ActionPage")),"</h3>\n";
+    $dbi = $request->getDbh();
+    // 1.3.13
+    _rename_page_helper($dbi, _("_AuthInfo"), _("DebugAuthInfo"));
+    // this is in some templates. so we keep the old name
+    //_rename_page_helper($dbi, _("DebugInfo"), _("DebugBackendInfo")); 
+    _rename_page_helper($dbi, _("_GroupInfo"), _("GroupAuthInfo")); //never officially existed
+ 
     $path = FindFile('pgsrc');
     $pgsrc = new fileSet($path);
     // most actionpages have the same name as the plugin
     $loc_path = FindLocalizedFile('pgsrc');
     foreach ($pgsrc->getFiles() as $filename) {
         if (substr($filename,-1,1) == '~') continue;
+        if (substr($filename,-5,5) == '.orig') continue;
         $pagename = urldecode($filename);
         if (isActionPage($filename)) {
             $translation = gettext($pagename);
@@ -133,14 +141,19 @@ function CheckActionPageUpdate(&$request) {
 
 // see loadsave.php for saving new pages.
 function CheckPgsrcUpdate(&$request) {
-    echo "<h3>",_("check for necessary pgsrc updates"),"</h3>\n";
+    echo "<h3>",sprintf(_("check for necessary %s updates"),
+			"pgsrc"),"</h3>\n";
     $dbi = $request->getDbh(); 
+    if ($dbi->get_db_version() < 1030.12200612) {
+	echo "<h4>",_("rename to Help: pages"),"</h4>\n";
+    }
     $path = FindLocalizedFile(WIKI_PGSRC);
     $pgsrc = new fileSet($path);
     // fixme: verification, ...
     $isHomePage = false;
     foreach ($pgsrc->getFiles() as $filename) {
         if (substr($filename,-1,1) == '~') continue;
+        if (substr($filename,-5,5) == '.orig') continue;
         $pagename = urldecode($filename);
         // don't ever update the HomePage
         if (defined(HOME_PAGE))
@@ -155,10 +168,35 @@ function CheckPgsrcUpdate(&$request) {
             continue;
         }
         if (!isActionPage($filename)) {
+	    // There're a lot of now unneeded pages around. 
+	    // At first rename the BlaPlugin pages to Help/<pagename> and then to the update.
+ 	    if ($dbi->get_db_version() < 1030.12200612) {
+                _rename_to_help_page($dbi, $pagename);    
+ 	    }
             doPgsrcUpdate($request,$pagename,$path,$filename);
         }
     }
     return;
+}
+
+function _rename_page_helper(&$dbi, $oldname, $pagename) {
+    echo sprintf(_("rename %s to %s"), $oldname, $pagename)," ...";
+    if ($dbi->isWikiPage($oldname) and !$dbi->isWikiPage($pagename)) {
+	if ($dbi->_backend->rename_page($oldname, $pagename))
+	    echo _("OK")," <br />\n";
+	else
+	    echo " <b><font color=\"red\">", _("FAILED"), "</font></b>",
+		 " <br />\n";
+    } else {
+	echo _(" skipped")," <br />\n";
+    }
+}
+
+function _rename_to_help_page($dbi, $pagename) {
+    $newprefix = _("Help") . "/";
+    if (substr($pagename,0,strlen($newprefix)) != $newprefix) return;	
+    $oldname = substr($pagename,strlen($newprefix));
+    _rename_page_helper($dbi, $oldname, $pagename);
 }
 
 /**
@@ -327,35 +365,50 @@ CREATE TABLE $log_tbl (
 
 /**
  * Update from ~1.3.4 to current.
- * Only session, user, pref and member
+ * tables: Only session, user, pref and member
  * jeffs-hacks database api (around 1.3.2) later:
  *   people should export/import their pages if using that old versions.
  */
 function CheckDatabaseUpdate(&$request) {
     global $DBAuthParams;
-    $dbh = $request->getDbh(); 
-    if (!$dbh->_backend->isSQL()) return;
-    echo "<h3>",_("check for necessary database updates"), " - ", DATABASE_TYPE, "</h3>\n";
+    $dbh = $request->getDbh();
 
+    echo "<h3>",sprintf(_("check for necessary %s updates"),
+			_("database")),
+	" - ", DATABASE_TYPE,"</h3>\n";
     $dbadmin = $request->getArg('dbadmin');
-    _upgrade_db_init($dbh);
-    if (isset($dbadmin['cancel'])) {
-        echo _("CANCEL")," <br />\n";
-        return;
+    if ($dbh->_backend->isSQL()) {
+	_upgrade_db_init($dbh);
+	if (isset($dbadmin['cancel'])) {
+	    echo _("CANCEL")," <br />\n";
+	    return;
+	}
     }
 
-    $tables = $dbh->_backend->listOfTables();
-    $backend_type = $dbh->_backend->backendType();
-    echo "<h4>",_("Backend type: "),$backend_type,"</h4>\n";
-    $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
-    foreach (explode(':','session:pref:member') as $table) {
-        echo sprintf(_("check for table %s"), $table)," ...";
-    	if (!in_array($prefix.$table, $tables)) {
-            installTable($dbh, $table, $backend_type);
-    	} else {
-    	    echo _("OK")," <br />\n";
-        }
+    if ($dbh->_backend->isSQL()) {
+        $backend_type = $dbh->_backend->backendType();
+        echo "<h4>",_("Backend type: "),$backend_type,"</h4>\n";
+        $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
+	$tables = $dbh->_backend->listOfTables();
+	foreach (explode(':','session:pref:member') as $table) {
+	    echo sprintf(_("check for table %s"), $table)," ...";
+	    if (!in_array($prefix.$table, $tables)) {
+		installTable($dbh, $table, $backend_type);
+	    } else {
+		echo _("OK")," <br />\n";
+	    }
+	}
     }
+
+    if (phpwiki_version() >= 1030.12200612 and $dbh->get_db_version() < 1030.13) {
+	if ($dbh->_backend->isSQL() 
+	    and preg_match("/(pgsql|postgres)/", $backend_type))
+	    _upgrade_psql_tsearch2($dbh);
+	_upgrade_relation_links($dbh);
+    }
+
+    if (!$dbh->_backend->isSQL()) return;
+
     if (ACCESS_LOG_SQL) {
         $table = "accesslog";
         echo sprintf(_("check for table %s"), $table)," ...";
@@ -484,7 +537,8 @@ function CheckDatabaseUpdate(&$request) {
     // 1.3.10 mysql requires page.id auto_increment
     // mysql, mysqli or mysqlt
     if (phpwiki_version() >= 1030.099 and substr($backend_type,0,5) == 'mysql' 
-        and DATABASE_TYPE != 'PDO') {
+        and DATABASE_TYPE != 'PDO') 
+    {
   	echo _("check for mysql page.id auto_increment flag")," ...";
         assert(!empty($page_tbl));
   	$database = $dbh->_backend->database();
@@ -574,12 +628,12 @@ function CheckDatabaseUpdate(&$request) {
     }
     if ((ACCESS_LOG_SQL & 2)) {
     	echo _("check for ACCESS_LOG_SQL passwords in POST requests")," ...";
-        // Don't display passwords in POST requests (up to 2005-02-04 12:03:20)
+	// Don't display passwords in POST requests (up to 2005-02-04 12:03:20)
         $res = $dbh->genericSqlIter("SELECT time_stamp, remote_host, " .
             "request_args FROM ${prefix}accesslog WHERE request_args LIKE " .
             "'%s:6:\"passwd\"%' AND request_args NOT LIKE '%s:6:\"passwd\";" .
             "s:15:\"<not displayed>\"%'");
-        $count=0;
+        $count = 0;
         while ($row = $res->next()) {
             $args = preg_replace("/(s:6:\"passwd\";s:15:\").*(\")/", 
                 "$1<not displayed>$2", $row["request_args"]);
@@ -594,9 +648,29 @@ function CheckDatabaseUpdate(&$request) {
             echo "<b>",_("FIXED"),"</b>", "<br />\n";
         else 
             echo _("OK"),"<br />\n";
+
+	if (phpwiki_version() >= 1030.13) {
+	    echo _("check for ACCESS_LOG_SQL remote_host varchar(50)")," ...";
+	    $database = $dbh->_backend->database();
+	    $accesslog_tbl = $prefix . 'accesslog';
+	    $fields = $dbh->_backend->listOfFields($database, $accesslog_tbl);
+	    if (!$fields) {
+		echo _("SKIP");
+	    } elseif (strstr(strtolower(join(':', $sess_fields)), "remote_host")) {
+		// TODO: how to check size, already done?
+		echo "<b>",_("FIXING"),"remote_host</b>"," ... ";
+		$dbh->genericSqlQuery("ALTER TABLE $accesslog_tbl CHANGE remote_host VARCHAR(100)");
+	    } else {
+		echo _("FAIL");
+	    }
+	    echo "<br />\n";
+	}
     }
-    // TODO: change access_log.remote_host from varchar(50) to varchar(100)
     _upgrade_cached_html($dbh);
+
+    if (phpwiki_version() >= 1030.122006 and $dbh->get_db_version() < 1030.13) {
+	$dbh->set_db_version(1030.13);
+    }
 
     return;
 }
@@ -687,15 +761,15 @@ _("And on windows at least the privilege to SELECT FROM mysql, and possibly UPDA
 
 /**
  * if page.cached_html does not exists:
- *   put _cached_html from pagedata into a new seperate blob, not huge serialized string.
+ *   put _cached_html from pagedata into a new seperate blob, 
+ *   not into the huge serialized string.
  *
- * it is only rarelely needed: for current page only, if-not-modified
+ * It is only rarelely needed: for current page only, if-not-modified,
  * but was extracetd for every simple page iteration.
  */
 function _upgrade_cached_html (&$dbh, $verbose=true) {
     global $DBParams;
     if (!$dbh->_backend->isSQL()) return;
-    //if (!in_array(DATABASE_TYPE, array('SQL','ADODB','PDO'))) return;
     $count = 0;
     if (phpwiki_version() >= 1030.10) {
         if ($verbose)
@@ -757,11 +831,28 @@ function _convert_cached_html (&$dbh) {
     return $count;
 }
 
+/**
+ * upgrade to 1.3.13 link structure.
+ */
+function _upgrade_relation_links (&$dbh, $verbose=true) {
+    if (phpwiki_version() >= 1030.12200610) {
+        echo _("Rebuild entire database to upgrade relation links")," ... ";
+        if (DATABASE_TYPE == 'dba') {
+            echo "<b>",_("CONVERTING")," dba linktable</b>"," ... ";
+        }
+        longer_timeout(240);
+        $dbh->_backend->rebuild();
+        echo _("OK"), "<br />\n";
+    }
+}
+
 function CheckPluginUpdate(&$request) {
-    echo "<h3>",_("check for necessary plugin argument updates"),"</h3>\n";
-    $process = array('msg' => _("change RandomPage pages => numpages"),
-                     'match' => "/(<\?\s*plugin\s+ RandomPage\s+)pages/",
-                     'replace' => "\\1numpages");
+    echo "<h3>",sprintf(_("check for necessary %s updates"),
+			_("plugin argument")),"</h3>\n";
+    $process = array(array('msg' => _("change RandomPage pages => numpages"),
+			   'match' => "/(<\?\s*plugin\s+ RandomPage\s+)pages/",
+			   'replace' => "\\1numpages")
+		     );
     $dbi = $request->getDbh();
     $allpages = $dbi->getAllPages(false);
     while ($page = $allpages->next()) {
@@ -824,7 +915,8 @@ function fixConfigIni($match, $new) {
 }
 
 function CheckConfigUpdate(&$request) {
-    echo "<h3>",_("check for necessary config updates"),"</h3>\n";
+    echo "<h3>",sprintf(_("check for necessary %s updates"),
+			"config.ini"),"</h3>\n";
     echo _("check for old CACHE_CONTROL = NONE")," ... ";
     if (defined('CACHE_CONTROL') and CACHE_CONTROL == '') {
         echo "<br />&nbsp;&nbsp;",
@@ -885,7 +977,7 @@ function DoUpgrade($request) {
     CheckActionPageUpdate($request);
     CheckPgsrcUpdate($request);
     //CheckThemeUpdate($request);
-    //CheckPluginUpdate($request);
+    CheckPluginUpdate($request);
     CheckConfigUpdate($request);
     EndLoadDump($request);
 }
@@ -893,6 +985,9 @@ function DoUpgrade($request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.54  2006/12/03 17:07:29  rurban
+ #1535843 by matt brown: Upgrade Wizard Password fixes are not portable
+
  Revision 1.53  2006/12/03 17:03:18  rurban
  #1535851 by matt brown
 
