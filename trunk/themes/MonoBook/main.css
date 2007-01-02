@@ -321,14 +321,21 @@ table.small {
 /*
 ** content styles
 */
-
-#toc,
-.toc,
 .mw-warning {
 	border: 1px solid #aaa;
 	background-color: #f9f9f9;
 	padding: 5px;
 	font-size: 95%;
+}
+#toc,
+.toc {
+  	width: 200px;
+	border: 1px solid #aaa;
+	background-color: #f9f9f9;
+	padding: 5px;
+	font-size: 95%;
+  	float: right;
+  	clear: right;
 }
 #toc h2,
 .toc h2 {
@@ -337,6 +344,10 @@ table.small {
 	padding: 0;
 	font-size: 100%;
 	font-weight: bold;
+}
+.toc #toclist {
+  width: auto;
+  border: none;
 }
 #toc #toctitle,
 .toc #toctitle,
@@ -660,6 +671,61 @@ span.diffchange {
 /* added words */
 .diff ins { background: #9f9; }
 
+/**
+ * PageHistory, Info
+ */
+td.pageinfo { font-weight: bold; }
+.pageinfo-minoredit, .pageinfo-authorid {
+  font-size: smaller;
+  font-style: oblique;
+}
+
+/**
+ * Calendar plugin
+ */
+table.cal {
+  border: 1px outset gray;
+  background: white;
+  margin: 0.5ex 0.5em;
+  padding: 1px;
+  /* For Mozilla */
+  empty-cells: hide;
+} 
+
+/* cells */
+table.cal td {
+  background: white;
+  text-align: right;
+} 
+
+/* Month-name header */
+table.cal-header { font-size: larger; }
+table.cal-header tr, table.cal-header td { text-align: center; }
+.cal-arrow {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Day-names header */
+table.cal tbody tr .cal-dayname {  }
+.cal-dayname td {
+  text-align: center;
+  font-size: smaller;
+  text-decoration: underline;
+}
+
+/* Individual days */
+a.cal-hide { text-decoration: none; }
+
+/* Today */
+ /* cell */
+table.cal td.cal-today {
+  margin: 1px;
+  border: 1px solid gray;
+}
+ /* text */
+table.cal td.cal-today a.cal-hide {  }
+
 /* 
 ** keep the whitespace in front of the ^=, hides rule from konqueror
 ** this is css3, the validator doesn't like it when validating as css2 
@@ -812,7 +878,6 @@ special external link styling */
 	position: relative;
 	z-index: 3;
 }
-
 #p-navigation .pBody {
 	padding-right: 0;
 }
@@ -836,8 +901,12 @@ special external link styling */
     z-index:3;
 }    
 input.searchButton {
-	margin-top: 1px;
-	font-size: 95%;
+    margin-top:1px;
+    padding: 0 0.4em !important;
+    font-size: 95%;
+    cursor: pointer;
+    background-color: White;
+    border: 1px solid #2f6fab;  
 }
 #searchGoButton {
 	padding-left: .5em;
@@ -939,11 +1008,13 @@ in bg url to hide it from iemac */
 li#pt-userpage,
 li#pt-anonuserpage,
 li#pt-login {
-    background:  url('images/wikiuser.png') top left bottom no-repeat;
+    /*background:  url('images/wikiuser.png') top left bottom no-repeat;*/
+    /*background:  url('images/wikiuser.png') left no-repeat;*/
     background-repeat: no-repeat;
     padding-left: 20px;
     text-transform: none;
 }
+#p-personal a.new { color:#ba0000; }
 
 /*
 ** the page-related actions- page/talk, edit etc
@@ -979,8 +1050,8 @@ li#pt-login {
 	background: white;
 }
 #p-cactions li.selected {
-    border-color: #fabd23;
-    padding: 0 0 0.2em 0;
+	border-color: #fabd23;
+	padding: 0 0 0.2em 0;
 }
 #p-cactions li a {
 	background-color: #fbfbfb;
@@ -994,9 +1065,9 @@ li#pt-login {
 	margin: 0;
 }
 #p-cactions li.selected a {
-  z-index: 3;
-  background-color: #fff;
-  padding: 0 1em .2em !important;
+  	z-index: 3;
+	background-color: #fff;
+	padding: 0 1em .2em !important;
 }
 #p-cactions .new a {
 	color: #ba0000;
@@ -1004,7 +1075,7 @@ li#pt-login {
 #p-cactions li a:hover {
 	z-index: 3;
 	text-decoration: none;
-		background-color: #fff;
+	background-color: #fff;
 }
 #p-cactions h5 {
 	display: none;
@@ -1470,3 +1541,141 @@ table.multipageimage td {
 .imagelist .TablePager_col_links { background-color: #eeeeff }
 .imagelist .TablePager_col_img_description { white-space: normal }
 .imagelist th.TablePager_sort { background-color: #ccccff }
+
+/**
+ * PhpWiki Tables
+ */
+.pagelist { }
+.pagelist thead td {
+  background: #e8e8e8;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: smaller;
+}
+.pagelist thead td u { text-decoration: none; }
+.pagelist tr.evenrow { background: #eee; }
+.pagelist tr.oddrow  { background: white; }
+th.gridbutton {
+  background-color: ThreedLightShadow;
+  color: black;
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  font-size: small;
+  font-weight: normal;
+  /*font-style: menu;*/
+  white-space: nowrap;
+  margin: 5px 0px;
+  max-height: 24px;
+  padding: 5px 0px 5px 0px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ThreedHighlight ThreedDarkShadow ThreedDarkShadow ThreedHighlight;
+}
+input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
+  text-decoration: none;
+  font-size: small;
+  font-weight: normal;
+  /*font-style: menu;*/
+  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  background-color: ThreedLightShadow;
+  color: black;
+}
+
+.wikipaging { font-size: 80% }
+.wikipaging-disabled { color: #999 }
+
+/* <?plugin RawHtml <div class="boxright"> </div> */
+
+div.boxright {
+  width: 200px; 
+  right: 10px;
+  padding: 0.5em; 
+  float: right; 
+  border: thin solid #888888; 
+  padding: 0.5em;
+}
+
+/* PHP Warnings */
+div.errors {
+  color: black;
+  background: #eee;
+  margin-top:    1em;
+  margin-bottom: 1em;
+  padding-left:  0.8em; 
+  padding-right: 0.8em; 
+  padding-top:    0.8ex;
+  padding-bottom: 0;
+  border: medium solid red;
+  clear: both;
+}
+h4.errors {
+  color: red;
+  margin:  0;
+  padding: 0;
+  text-decoration: underline;
+}
+div.warning {
+  color: black;
+  background: #eee;
+  margin-top:    1em;
+  margin-bottom: 1em;
+  padding-left:  0.8em; 
+  padding-right: 0.8em; 
+  padding-top:    0.8ex;
+  padding-bottom: 0;
+  border: thin solid blue;
+  clear: both;
+}
+.error { font-family: monospace; font-size: 120%; }
+.error ul { font-family: monospace; }
+
+/* Debug */
+.debug {
+  color: black;
+  background: white;
+  font-family: monospace;
+  font-size: smaller;
+  margin: 1ex 0;
+  padding: 0.5ex 0.5em;
+  border: medium solid #fff8dc; /* darker ivory */
+}
+/* Hints */
+.hint {
+  color: black;
+  background: #eeeeee;
+   /* font-size: smaller; */
+  font-style: italic;
+  margin-left: 3em;
+  padding: 0.5ex 0.5em;
+  border: thin solid #aaaaaa;
+}
+span.hint {
+  padding: 0;
+}
+/* Disabled Plugins */
+.disabled-plugin
+{
+  clear: both;
+  margin: 1ex 0;
+  padding: 0;
+}
+.disabled-plugin .title {
+  color: #400;
+  background-color: inherit;
+  font-size: x-small;
+  text-align: right;
+  padding: 0 0.5em;
+}
+.disabled-plugin pre {
+  color: black;
+  background: #ddd;
+  margin: 0;
+  padding: 0.3ex 0.5em;
+}
+
+/* "(Redirected from ...)" message. */
+span.redirectfrom {
+  font-size: small;
+  font-style: oblique;
+  font-weight: normal;
+  padding-left: 1em;
+}
