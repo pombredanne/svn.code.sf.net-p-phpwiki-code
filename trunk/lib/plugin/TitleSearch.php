@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.28 2005-09-10 21:33:08 rurban Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.29 2007-01-02 13:23:30 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -49,7 +49,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.28 $");
+                            "\$Revision: 1.29 $");
     }
 
     function getDefaultArguments() {
@@ -83,6 +83,7 @@ extends WikiPlugin
             $pagelist->addPage($page);
             $last_name = $page->getName();
         }
+	// this hack will go away
         if ($args['format'] == 'livesearch') {
             $request->discardOutput();
             $request->buffer_output(false);
@@ -113,6 +114,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2005/09/10 21:33:08  rurban
+// support enhanced API
+//
 // Revision 1.27  2005/02/03 05:09:57  rurban
 // livesearch.js support
 //
