@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: dbaBase.php,v 1.26 2006-12-22 00:27:37 rurban Exp $');
+rcs_id('$Id: dbaBase.php,v 1.27 2007-01-02 13:19:33 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -73,6 +73,8 @@ extends WikiDB_backend
     }
 
     function rebuild() {
+    	parent::rebuild();
+    	// rebuild backlink table
         $this->_linkdb->rebuild();
         $this->optimize();
     }
@@ -230,7 +232,7 @@ extends WikiDB_backend
         $pagedb->set($pagename, (int)$latest . ':' . (int)$flags . ":$pagedata");
     }
 
-    function numPages($include_empty=false, $exclude=false) {
+    function numPages($include_empty=false, $exclude='') {
         $pagedb = &$this->_pagedb;
         $count = 0;
         for ($page = $pagedb->firstkey(); $page!== false; $page = $pagedb->nextkey()) {
@@ -251,7 +253,7 @@ extends WikiDB_backend
         return $count;
     }
 
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function get_all_pages($include_empty=false, $sortby='', $limit='', $exclude='') {
         $pagedb = &$this->_pagedb;
         $pages = array();
         for ($page = $pagedb->firstkey(); $page!== false; $page = $pagedb->nextkey()) {
@@ -280,23 +282,131 @@ extends WikiDB_backend
     }
 
     function get_links($pagename, $reversed=true, $include_empty=false,
-                       $sortby=false, $limit=false, $exclude=false,
+                       $sortby='', $limit='', $exclude='',
                        $want_relations=false) 
     {
+    	// optimization: if no relation at all is found, mark it in the iterator.
         $links = $this->_linkdb->get_links($pagename, $reversed, $want_relations);
-        return new WikiDB_backend_dbaBase_pageiter($this, $links, 
-                                                   array('sortby'=>$sortby,
-                                                         'limit' =>$limit,
-                                                         'exclude'=>$exclude,
-                                                         'want_relations'=>$want_relations,
-                                                         ));
+        return new WikiDB_backend_dbaBase_pageiter
+	    ($this, $links, 
+	     array('sortby'=>$sortby,
+		   'limit' =>$limit,
+		   'exclude'=>$exclude,
+		   'want_relations'=>$want_relations,
+		   'found_relations' => $want_relations ? $this->_linkdb->found_relations : 0
+		   ));
     }
     
-    function list_relations($pagename) {
-        $links = $this->_linkdb->get_links($pagename, false, true);
-        return new WikiDB_backend_pageiter($this, $links, 
-                                                   array('want_relations'=>true));
+    /**
+     * @access public
+     *
+     * @return array of all linkrelations
+     * Faster than the dumb WikiDB method.
+     */
+    function list_relations($also_attributes=false, $only_attributes=false, $sorted=true) {
+        $linkdb = &$this->_linkdb;
+        $relations = array();
+        for ($link = $linkdb->_db->firstkey(); $link!== false; $link = $linkdb->_db->nextkey()) {
+            if ($link[0] != 'o') continue;	
+            $links = $linkdb->_get_links('o', substr($link,1));
+            foreach ($links as $link) { // linkto => page, linkrelation => page
+                if (is_array($link)
+                    and $link['relation'] 
+                    and !in_array($link['relation'], $relations)) 
+		{
+		    $is_attribute = empty($link['linkto']); // a relation has both
+		    if ($is_attribute) {
+			if ($only_attributes or $also_attributes)
+			    $relations[] = $link['relation'];
+		    } elseif (!$only_attributes) {
+			  $relations[] = $link['relation'];
+		    }
+		}
+            }
+        }
+	if ($sorted) {
+	    sort($relations);
+	    reset($relations);
+	}
+        return $relations;
     }
+
+    /**
+     * WikiDB_backend_dumb_LinkSearchIter searches over all pages and then all its links.
+     * Since there are less links than pages, and we easily get the pagename from the link key,
+     * we iterate here directly over the linkdb and check the pagematch there.
+     *
+     * @param $pages     object A TextSearchQuery object.
+     * @param $linkvalue object A TextSearchQuery object for the linkvalues 
+     *                          (linkto, relation or backlinks or attribute values).
+     * @param $linktype  string One of the 4 linktypes.
+     * @param $relation  object A TextSearchQuery object or false.
+     * @param $options   array Currently ignored. hash of sortby, limit, exclude.
+     * @return object A WikiDB_backend_iterator.
+     * @see WikiDB::linkSearch
+     */
+    function link_search( $pages, $linkvalue, $linktype, $relation=false, $options=array() ) {
+        $linkdb = &$this->_linkdb;
+        $links = array();
+	$reverse = false;
+	$want_relations = false;
+	if ($linktype == 'relation') {
+	    $want_relations = true;
+	    $field = 'linkrelation';
+	}
+	if ($linktype == 'attribute') {
+	    $want_relations = true;
+	    $field = 'attribute';
+	}
+	if ($linktype == 'linkfrom') {
+	    $reverse = true;
+	}
+
+        for ($link = $linkdb->_db->firstkey(); $link!== false; $link = $linkdb->_db->nextkey()) {
+	    $type = $reverse ? 'i' : 'o';
+            if ($link[0] != $type) continue;
+	    $pagename = substr($link, 1);
+	    if (!$pages->match($pagename)) continue;
+	    if ($linktype == 'attribute') {
+		$page = $GLOBALS['request']->_dbi->getPage($pagename);
+		$attribs = $page->get('attributes');
+		if ($attribs) {
+		    foreach ($attribs as $attribute => $value) {
+			if ($relation and !$relation->match($attribute)) continue; 
+			if (!$linkvalue->match($value)) continue; 
+			$links[] = array('pagename'  => $pagename,
+					 'linkname'  => $attribute,
+					 'linkvalue' => $value);
+		    }
+		}
+	    } else {
+		if ($want_relations) {
+		    // MAP linkrelation : pagename => thispagename : linkname : linkvalue  
+		    $_links = $linkdb->_get_links('o', $pagename);
+		    foreach ($_links as $link) { // linkto => page, linkrelation => page
+			if ($relation and !$relation->match($link['linkrelation'])) continue; 
+			if (!$linkvalue->match($link['linkto'])) continue; 
+			$links[] = array('pagename'  => $pagename,
+					 'linkname'  => $link['linkrelation'],
+					 'linkvalue' => $link['linkto']);
+		    }
+		} else {
+		    $_links = $linkdb->_get_links($reverse ? 'i' : 'o', $pagename);
+		    foreach ($_links as $link) { // linkto => page
+			if (is_array($link))
+			    $link = $link['linkto'];
+			if (!$linkvalue->match($link)) continue; 
+			$links[] = array('pagename'  => $pagename,
+					 'linkname'  => '',
+					 'linkvalue' => $link);
+		    }
+		}
+	    }
+        }
+	$options['want_relations'] = true; // Iter hack to force return of the whole hash
+        return new WikiDB_backend_dbaBase_pageiter($this, $links, $options);
+    }
+
 };
 
 function WikiDB_backend_dbaBase_sortby_pagename_ASC ($a, $b) {
@@ -361,19 +471,18 @@ extends WikiDB_backend_iterator
 
     // fixed for relations
     function next() {
-        if ( ! ($pagename = array_shift($this->_pages)) )
+        if ( ! ($page = array_shift($this->_pages)) )
             return false;
-	if (!empty($options['want_relations'])) {
-	    $linkrelation = $pagename['linkrelation'];
-	    $pagename = $pagename['pagename'];
-        if (!empty($options['exclude']) and in_array($pagename, $options['exclude']))
+	if (!empty($this->_options['want_relations'])) {
+	    // $linkrelation = $page['linkrelation'];
+	    $pagename = $page['pagename'];
+            if (!empty($this->_options['exclude']) and in_array($pagename, $this->_options['exclude']))
+        	return $this->next();
+	    return $page;
+    	}
+        if (!empty($this->_options['exclude']) and in_array($page, $this->_options['exclude']))
             return $this->next();
-	    return array('pagename' => $pagename,
-			 'linkrelation' => $linkrelation);
-    }
-        if (!empty($options['exclude']) and in_array($pagename, $options['exclude']))
-            return $this->next();
-        return array('pagename' => $pagename);
+        return array('pagename' => $page);
     }
 
     function free() {
@@ -391,13 +500,16 @@ class WikiDB_backend_dbaBase_linktable
     // (backlink deletion would be faster.)
     function get_links($page, $reversed=true, $want_relations=false) {
         if ($want_relations) {
+            $this->found_relations = 0;	
             $links = $this->_get_links($reversed ? 'i' : 'o', $page);
             $linksonly = array();
             foreach ($links as $link) { // linkto => page, linkrelation => page
-                if (is_array($link) and $link['relation'])
+                if (is_array($link) and isset($link['relation'])) {
+                    if ($link['relation'])
+                        $this->found_relations++;
                     $linksonly[] = array('pagename'     => $link['linkto'],
-                    			 'linkrelation' => $link['relation']);
-                else { // empty relations are stripped
+                    		         'linkrelation' => $link['relation']);
+                } else { // empty relations are stripped
                     $linksonly[] = array('pagename' => $link['linkto']);
                 }
             }
@@ -406,9 +518,9 @@ class WikiDB_backend_dbaBase_linktable
             $links = $this->_get_links($reversed ? 'i' : 'o', $page);
             $linksonly = array();
             foreach ($links as $link) {
-                if (is_array($link))
+                if (is_array($link)) {
                     $linksonly[] = $link['linkto'];
-                else
+                } else
                     $linksonly[] = $link;
             }
             return $linksonly;
@@ -427,11 +539,14 @@ class WikiDB_backend_dbaBase_linktable
         $this->_set_links('o', $page, $links);
         
         /* Now for the backlink update we squash the linkto hashes into a simple array */
-            $newlinks = array();
+        $newlinks = array();
         foreach ($links as $hash) {
-            $newlinks[] = $hash['linkto'];		
+            if (!empty($hash['linkto']) 
+                and !in_array($hash['linkto'],$newlinks))
+                 // for attributes it's empty
+                $newlinks[] = $hash['linkto'];		
         }
-            $newlinks = array_unique($newlinks);
+        //$newlinks = array_unique($newlinks);
         sort($oldlinks);
         sort($newlinks);
 
@@ -575,6 +690,9 @@ class WikiDB_backend_dbaBase_linktable
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2006/12/22 00:27:37  rurban
+// just add Log
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
