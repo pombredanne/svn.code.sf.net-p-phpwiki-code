@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.54 2006-10-12 06:30:30 rurban Exp $
+ * $Id: phpwiki.css,v 1.55 2007-01-02 13:30:45 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -118,6 +118,11 @@ form.wikiadmin div { background-color: #fee; }
  */
 .wiki, .named-wiki {
   text-decoration: none;
+  /* font-weight: normal; */
+  font-weight: bold;
+}
+.wiki relation, .named-wiki relation, .wiki attribute, .named-wiki attribute {
+  font-style: oblique;
   /* font-weight: normal; */
   font-weight: bold;
 }
