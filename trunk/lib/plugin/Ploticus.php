@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.12 2004-12-13 14:37:22 rurban Exp $');
+rcs_id('$Id: Ploticus.php,v 1.13 2007-01-02 13:22:33 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -100,7 +100,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
     function getDefaultArguments() {
         return array(
@@ -228,6 +228,8 @@ extends WikiPluginCached
                 if (empty($HTTP_ENV_VARS['PLOTICUS_PREFABS'])) {
                     if (file_exists("/usr/share/ploticus"))
                         $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = "/usr/share/ploticus";
+		    elseif (defined('PLOTICUS_PREFABS'))
+                        $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = constant('PLOTICUS_PREFABS');
                 }
             	$args .= (" -prefab " . $argarray['-prefab']);
             }
@@ -263,6 +265,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2004/12/13 14:37:22  rurban
+// simplify msg for new GraphViz plugin
+//
 // Revision 1.11  2004/10/14 13:48:07  rurban
 // wait for fs and print failing cmdline
 //
