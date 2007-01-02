@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.147 2006-12-22 17:44:15 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.148 2007-01-02 13:21:57 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -129,7 +129,7 @@ function EndLoadDump(&$request)
  */
 function MailifyPage ($page, $nversions = 1)
 {
-    $current = $page->getCurrentRevision();
+    $current = $page->getCurrentRevision(false);
     $head = '';
 
     if (STRICT_MAILABLE_PAGEDUMPS) {
@@ -502,7 +502,8 @@ function DumpHtmlToDir (&$request)
                                                "$directory/$filename")));
             $request->finish($msg);
         }
-        $num = fwrite($fd, $data, strlen($data));
+        $len = strlen($data);
+        $num = fwrite($fd, $data, $len);
         if ($page->getName() != $filename) {
             $link = LinkURL($link_prefix.$filename, $filename);
             $msg->pushContent(HTML::small(_("saved as "), $link, " ... "));
@@ -514,7 +515,7 @@ function DumpHtmlToDir (&$request)
         flush();
         $request->chunkOutput();
 
-        assert($num == strlen($data));
+        assert($num == $len);
         fclose($fd);
 
         if (USECACHE) {
@@ -748,7 +749,6 @@ function MakeWikiZipHtml (&$request)
 function SavePage (&$request, &$pageinfo, $source, $filename)
 {
     static $overwite_all = false;
-    global $charset;
     $pagedata    = $pageinfo['pagedata'];    // Page level meta-data.
     $versiondata = $pageinfo['versiondata']; // Revision level meta-data.
 
@@ -763,7 +763,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     $pagename = $pageinfo['pagename'];
     $content  = $pageinfo['content'];
 
-    if ($pagename ==_("InterWikiMap"))
+    if ($pagename == _("InterWikiMap"))
         $content = _tryinsertInterWikiMap($content);
 
     $dbi =& $request->_dbi;
@@ -787,28 +787,38 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     }
 
     $current = $page->getCurrentRevision();
-    if ( $current and (! $current->hasDefaultContents())
-         && ($current->getPackedContent() != $content)
-         && ($merging == true) ) 
-    {
-        include_once('lib/editpage.php');
-        $request->setArg('pagename', $pagename);
-        $r = $current->getVersion();
-        $request->setArg('revision', $current->getVersion());
-        $p = new LoadFileConflictPageEditor($request);
-        $p->_content = $content;
-        $p->_currentVersion = $r - 1;
-        $p->editPage($saveFailed = true);
-        return; //early return
+    $skip = false;
+    $edit = $request->getArg('edit');
+    if ($merging) { 
+    	if (isset($edit['keep_old'])) {
+            $merging = false;
+            $skip = true;
+    	}
+    	elseif (isset($edit['overwrite'])) {
+            $merging = false;
+            $overwrite = true;
+    	}
+        elseif ( $current and (! $current->hasDefaultContents())
+         && ($current->getPackedContent() != $content) ) 
+        {
+            include_once('lib/editpage.php');
+            $request->setArg('pagename', $pagename);
+            $v = $current->getVersion();
+            $request->setArg('revision', $current->getVersion());
+            $p = new LoadFileConflictPageEditor($request);
+            $p->_content = $content;
+            $p->_currentVersion = $v - 1;
+            $p->editPage($saveFailed = true);
+            return; //early return
+       }
     }
-
-    foreach ($pagedata as $key => $value) {
+    if (!$skip)
+      foreach ($pagedata as $key => $value) {
         if (!empty($value))
             $page->set($key, $value);
-    }
+      }
 
     $mesg = HTML::dd();
-    $skip = false;
     if ($source)
         $mesg->pushContent(' ', fmt("from %s", $source));
 
@@ -834,8 +844,12 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
                 }
             }
             else {
-                $mesg->pushContent(' ', fmt("has edit conflicts - skipped"));
-                $needs_merge = true; // hackish
+		if (isset($edit['keep_old'])) {
+		    $mesg->pushContent(' ', fmt("keep old"));
+		} else {
+		    $mesg->pushContent(' ', fmt("has edit conflicts - skipped"));
+		    $needs_merge = true; // hackish, to display the buttons
+		}
                 $skip = true;
             }
         }
@@ -954,7 +968,8 @@ function RevertPage (&$request)
                                       HiddenInputs(array('verify' => 1)),
                                       Button('submit:verify', _("Yes"), 'button'),
                                       HTML::Raw('&nbsp;'),
-                                      Button('submit:cancel', _("Cancel"), 'button')));
+                                      Button('submit:cancel', _("Cancel"), 'button')),
+                           HTML::hr());
         $rev = $page->getRevision($version);
         $html = HTML(HTML::dt(fmt("Revert %s to version $version", WikiLink($pagename))), 
                      $mesg,
@@ -1425,6 +1440,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.147  2006/12/22 17:44:15  rurban
+ support importing foreign charsets. e.g latin1 => utf8
+
  Revision 1.146  2006/12/17 18:35:23  rurban
  Create the right subdirectory name, urlencoded.
 
