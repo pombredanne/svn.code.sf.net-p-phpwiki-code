@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.74 2006-12-22 00:24:43 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.75 2007-01-02 13:18:55 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -18,7 +18,7 @@ class Template
         $this->_basepage = $request->getArg('pagename');
 
         if (strstr($name, "/")) {
-            $oldname  = $WikiTheme->_name;
+            $oldname = $WikiTheme->_name;
             $oldtheme = $WikiTheme->_theme;
             list($themename, $name) = explode("/", $name);
             $WikiTheme->_theme = "themes/$themename";
@@ -132,6 +132,9 @@ class Template
             $user = $request->getUser();
         if (!isset($page))
             $page = $request->getPage();
+	// Speedup. I checked all templates
+        if (!isset($revision)) 
+	    $revision = false;
 
         global $WikiTheme, $RCS_IDS, $charset; 
         //$this->_dump_template();
@@ -231,7 +234,7 @@ function alreadyTemplateProcessed($name) {
  *
  * @param $content mixed html content to put into the page
  * @param $title string page title
- * @param $page_revision object A WikiDB_PageRevision object
+ * @param $page_revision object A WikiDB_PageRevision object or false
  * @param $args hash Extract args for top-level template
  *
  * @return string HTML expansion of template.
