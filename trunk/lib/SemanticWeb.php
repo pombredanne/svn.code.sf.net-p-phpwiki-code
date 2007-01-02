@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SemanticWeb.php,v 1.1 2006-03-07 20:53:55 rurban Exp $');
+<?php rcs_id('$Id: SemanticWeb.php,v 1.2 2007-01-02 13:19:13 rurban Exp $');
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *
@@ -19,9 +19,11 @@
  * DAML should also be supported.
  *
  * Purpose:
- * - Another way to represent various KB models in various DL languages. (OWL/DAML/other DL)
+ * - Another way to represent various KB models in various DL languages. 
+ *   (OWL/DAML/other DL)
  * - Frontend to various KB model reasoners and representations. 
- * - Generation/update of static wiki pages based on external OWL/DL/KB (=> ModelTest/Categories)
+ * - Generation/update of static wiki pages based on external OWL/DL/KB 
+ *   (=> ModelTest/Categories)
  *   KB Blackboard and Visualization.
  * - OWL generation based on static wiki pages (ModelTest?format=owl)
  *
@@ -82,7 +84,7 @@
  */
 /*============================================================================*/
 /*
- Copyright 2004 Reini Urban
+ Copyright 2004,2007 Reini Urban
 
  This file is part of PhpWiki.
 
@@ -101,6 +103,9 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+include_once('lib/RssWriter.php');
+include_once("lib/TextSearchQuery.lib");
+
 /**
  * RdfWriter - A class to represent a wikipage as RDF. Supports ?format=rdf
  *
@@ -109,7 +114,6 @@
  *    - RecentChanges (RecentChanges?format=rss)
  *      channel: ... item: ...
  */
-include_once('lib/RssWriter.php');
 class RdfWriter extends RssWriter // in fact it should be rewritten to be other way round.
 {
     function RdfWriter () {
@@ -150,6 +154,23 @@ class OwlWriter extends RdfWriter {
 class ModelWriter extends OwlWriter {
 };
 
+/**
+ *  NumericSearchQuery can do: 
+ *         ("population < 20000 and area > 1000000", array("population", "area"))
+ *  ->match(array('population' => 100000, 'area' => 10000000)) 
+ * @see NumericSearchQuery
+ *
+ *  SemanticAttributeSearchQuery can detect and unify units in numbers.
+ *         ("population < 2million and area > 100km2", array("population", "area"))
+ *  ->match(array('population' => 100000, 'area' => 10000000))
+ *
+ * Do we need a real parser or can we just regexp over some allowed unit 
+ * suffixes to detect the numbers?
+ */
+class SemanticAttributeSearchQuery
+extends NumericSearchQuery
+{
+}
 
 /**
  * ReasonerBackend - hooks to reasoner backends.
