@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.255 2006-12-22 16:53:38 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.256 2007-01-02 13:23:49 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -55,7 +55,7 @@
     file_mtime ($filename)
     sort_file_mtime ($a, $b)
     class fileSet {fileSet($directory, $filepattern = false), 
-                   getFiles($exclude=false, $sortby=false, $limit=false) }
+                   getFiles($exclude='', $sortby='', $limit='') }
     class ListRegexExpand { listMatchCallback($item, $key),  
                             expandRegex ($index, &$pages) }
 
@@ -989,7 +989,7 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
                 preg_match('/^\[\s*(\d+)\s*\]/', $block, $m);
                 $footnum = $m[1];
                 $block = substr($block, strlen($m[0]));
-                $prefix = "#[|ftnt_${footnum}]~[[${footnum}|#ftnt_ref_${footnum}]~] ";
+                $prefix = "#[|ftnt_".${footnum}."]~[[".${footnum}."|#ftnt_ref_".${footnum}."]~] ";
             }
             elseif ($block[0] == '<') {
                 // Plugin.
@@ -1385,7 +1385,7 @@ class fileSet {
      * (This was a function LoadDir in lib/loadsave.php)
      * See also http://www.php.net/manual/en/function.readdir.php
      */
-    function getFiles($exclude=false, $sortby=false, $limit=false) {
+    function getFiles($exclude='', $sortby='', $limit='') {
         $list = $this->_fileList;
 
         if ($sortby) {
@@ -1538,7 +1538,7 @@ function explodeList($input, $allnames, $glob_style = true, $case_sensitive = tr
 
 // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
 function explodePageList($input, $include_empty=false, $sortby='pagename', 
-			 $limit=false, $exclude=false) {
+			 $limit='', $exclude='') {
     include_once("lib/PageList.php");
     return PageList::explodePageList($input, $include_empty, $sortby, $limit, $exclude);
 }
@@ -2055,7 +2055,7 @@ function printSimpleTrace($bt) {
 function getMemoryUsage() {
     if (function_exists('memory_get_usage') and memory_get_usage()) {
         return memory_get_usage();
-    } elseif (function_exists('getrusage') and ($u = getrusage()) and !empty($u['ru_maxrss'])) {
+    } elseif (function_exists('getrusage') and ($u = @getrusage()) and !empty($u['ru_maxrss'])) {
         $mem = $u['ru_maxrss'];
     } elseif (substr(PHP_OS,0,3) == 'WIN') { // requires a newer cygwin
         // what we want is the process memory only: apache or php (if CGI)
@@ -2088,6 +2088,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.255  2006/12/22 16:53:38  rurban
+// Try to dl() load the iconv extension, if not already loaded
+//
 // Revision 1.254  2006/12/02 19:53:05  rurban
 // Simplify DISABLE_MARKUP_WIKIWORD handling by adding the new function
 // stdlib: array_remove(). Hopefully PHP will not add this natively sooner
