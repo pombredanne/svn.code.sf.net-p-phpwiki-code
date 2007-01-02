@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.135 2005-09-14 05:59:03 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.136 2007-01-02 13:18:46 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -110,7 +110,7 @@ class _PageList_Column_base {
     }
 
     // new grid-style sortable heading
-    // see activeui.js 
+    // TODO: via activeui.js ? (fast dhtml sorting)
     function button_heading ($pagelist, $colNum) {
         global $WikiTheme, $request;
         // allow sorting?
@@ -531,7 +531,8 @@ class PageList {
             if (!in_array('pagename',$columns))
                 $this->_addColumn('pagename');
             foreach ($columns as $col) {
-                $this->_addColumn($col);
+		if (!empty($col))
+		    $this->_addColumn($col);
             }
         }
         // If 'pagename' is already present, _addColumn() will not add it again
@@ -593,11 +594,17 @@ class PageList {
                      			    // 1 if without links, 2 if with
                      'commasep' => false,   // Default: ', '
                      'ordered'  => false,   // OL or just UL lists (ignored for comma)
+		     'linkmore' => '',      // If count>0 and limit>0 display a link with 
+		     // the number of all results, linked to the given pagename.
                      );
     }
 
     function setCaption ($caption_string) {
         $this->_caption = $caption_string;
+    }
+
+    function addCaption ($caption_string) {
+        $this->_caption = HTML($this->_caption," ",$caption_string);
     }
 
     function getCaption () {
@@ -633,8 +640,11 @@ class PageList {
 
     function pageNames() {
         $pages = array();
+	$limit = @$this->_options['limit'];
         foreach ($this->_pages as $page_handle) {
             $pages[] = $page_handle->getName();
+	    if ($limit and count($pages) > $limit)
+		break;
         }
         return $pages;
     }
@@ -642,7 +652,7 @@ class PageList {
     function _getPageFromHandle($page_handle) {
         if (is_string($page_handle)) {
             if (empty($page_handle)) return $page_handle;
-            //$dbi = $GLOBALS['request']->getDbh(); // no, safe memory!
+            //$dbi = $GLOBALS['request']->getDbh(); // no, safe some memory!
             $page_handle = $GLOBALS['request']->_dbi->getPage($page_handle);
         }
         return $page_handle;
@@ -676,10 +686,17 @@ class PageList {
 
         if (count($this->_columns) > 1) {
             $row = HTML::tr(array('class' => $class));
-            foreach ($this->_columns as $col)
+            $j = 0;
+            foreach ($this->_columns as $col) {
+	        $col->current_row = $i;
+	        $col->current_column = $j;
                 $row->pushContent($col->format($this, $page_handle, $revision_handle));
+                $j++;
+            }
         } else {
             $col = $this->_columns[0];
+	    $col->current_row = $i;
+	    $col->current_column = 0;
             $row = $col->_getValue($page_handle, $revision_handle);
         }
 
@@ -813,8 +830,8 @@ class PageList {
     }
 
     // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
-    function explodePageList($input, $include_empty=false, $sortby=false, 
-                             $limit=false, $exclude=false) 
+    function explodePageList($input, $include_empty=false, $sortby='', 
+                             $limit='', $exclude='') 
     {
         if (empty($input)) return array();
         // expand wildcards from list of all pages
@@ -843,8 +860,9 @@ class PageList {
         }
     } 
 
-    function allPagesByAuthor($wildcard, $include_empty=false, $sortby=false, 
-                              $limit=false, $exclude=false) {
+    function allPagesByAuthor($wildcard, $include_empty=false, $sortby='', 
+                              $limit='', $exclude='') 
+    {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
         $allPages = array();
@@ -869,8 +887,8 @@ class PageList {
         return $allPages;
     }
 
-    function allPagesByOwner($wildcard, $include_empty=false, $sortby=false, 
-                             $limit=false, $exclude=false) {
+    function allPagesByOwner($wildcard, $include_empty=false, $sortby='', 
+                             $limit='', $exclude='') {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
         $allPages = array();
@@ -894,8 +912,8 @@ class PageList {
         return $allPages;
     }
 
-    function allPagesByCreator($wildcard, $include_empty=false, $sortby=false, 
-                               $limit=false, $exclude=false) {
+    function allPagesByCreator($wildcard, $include_empty=false, $sortby='', 
+                               $limit='', $exclude='') {
         $dbi = $GLOBALS['request']->getDbh();
         $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
         $allPages = array();
@@ -1206,9 +1224,12 @@ class PageList {
         $table = HTML::table(array('cellpadding' => 0,
                                    'cellspacing' => 1,
                                    'border'      => 0,
-                                   'class'       => 'pagelist'));
-        if ($caption)
+                                   'class'       => 'pagelist', 
+				   ));
+        if ($caption) {
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
+            $table->setAttr('width', '100%');
+	}
 
         //Warning: This is quite fragile. It depends solely on a private variable
         //         in ->_addColumn()
@@ -1386,10 +1407,11 @@ function flipAll(formObj) {
 	else    
             $list = HTML::ul(array('class' => 'pagelist'));
         $i = 0;
-        //TODO: currently we ignore limit here and hope tha the backend didn't ignore it. (BackLinks)
+        //TODO: currently we ignore limit here and hope that the backend didn't ignore it. (BackLinks)
         if (!empty($this->_options['limit']))
             list($offset, $pagesize) = $this->limit($this->_options['limit']);
-        else $pagesize=0;
+        else 
+	    $pagesize=0;
         foreach ($this->_pages as $pagenum => $page) {
             $pagehtml = $this->_renderPageRow($page);
             $group = ($i++ / $this->_group_rows);
@@ -1459,7 +1481,7 @@ function flipAll(formObj) {
 class PageList_Selectable
 extends PageList {
 
-    function PageList_Selectable ($columns=false, $exclude=false, $options = false) {
+    function PageList_Selectable ($columns=false, $exclude='', $options = false) {
         if ($columns) {
             if (!is_array($columns))
                 $columns = explode(',', $columns);
@@ -1484,6 +1506,10 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.135  2005/09/14 05:59:03  rurban
+// optimized explodePageList to use SQL when available
+//   (titleSearch instead of getAllPages)
+//
 // Revision 1.134  2005/09/11 14:55:05  rurban
 // implement fulltext stoplist
 //
