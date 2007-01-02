@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SemanticRelations.php,v 1.1 2005-11-21 20:14:20 rurban Exp $');
+rcs_id('$Id: SemanticRelations.php,v 1.2 2007-01-02 13:22:41 rurban Exp $');
 /*
  Copyright 2005 Reini Urban
 
@@ -38,11 +38,11 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getDefaultArguments() { 
         return array(
-                     'page'       => "", // which pages (glob allowed), default: current
+                     'page'       => "[pagename]", // which pages (glob allowed), default: current
                      'relations'  => '', // which relations. default all
                      'attributes' => '', // which attributes. default all
                      'units'      => '', // ?
@@ -63,16 +63,18 @@ extends WikiPlugin
             // TODO: merge same relations together located_in::here, located_in::there
             while ($object = $links->next()) {
                 if ($related = $object->get('linkrelation')) { // a page name
+                    $rellink = WikiLink($related, false, $related);
+                    $rellink->setAttr('class', $rellink->getAttr('class').' relation');
                     $relhtml->pushContent
                         ($pagename . " ",
                          // Link to a special "Relation:" InterWiki link?
-                         WikiLink($related, false, $related), 
-                         " :: ", // use spaces?
+                         $rellink, 
+                         HTML::strong(" :: "), // use spaces?
                          WikiLink($object->_pagename), 
                          " ",
                          // Link to SemanticSearch
                          $WikiTheme->makeActionButton(array('relation' => $related,
-                                                            'object'   => $object->_pagename),
+                                                            's'   => $object->_pagename),
                                                       '+',
                                                       _("SemanticSearch")),
                          HTML::br());
@@ -80,20 +82,30 @@ extends WikiPlugin
             }
             if (!empty($relhtml->_content) and !$noheader)
                 $relhtml = HTML(HTML::hr(),
-                                HTML::h3(fmt("Semantic relations for %s", $p->getName())),
+                                HTML::h3(fmt("Semantic relations for %s", $pagename)),
                                 $relhtml);
             $atthtml = HTML();
             if ($attributes = $p->get('attributes')) { // a hash of unique pairs
                 foreach ($attributes as $att => $val) {
-                    if ($noheader)
-                        $atthtml->pushContent("$pagename  $att := $val", HTML::br());
-                    else
-                        $atthtml->pushContent("$att := $val", HTML::br());
+                    $rellink = WikiLink($att, false, $att);
+                    $rellink->setAttr('class', $rellink->getAttr('class').' relation');
+                    $searchlink = $WikiTheme->makeActionButton
+			(array('attribute' => $att,
+			       's'         => $val),
+			 '+',
+			 _("SemanticSearch"));
+                    if (!$noheader)
+                        $atthtml->pushContent("$pagename  ");
+		    $atthtml->pushContent(HTML::span($rellink, 
+						     HTML::strong(" := "), 
+						     HTML($val)),
+					  " ", $searchlink,
+					  HTML::br());
                 }
                 if (!$noheader)
                     $relhtml = HTML($relhtml,
                                     HTML::hr(),
-                                    HTML::h3(fmt("Attributes of %s", $p->getName())), 
+                                    HTML::h3(fmt("Attributes of %s", $pagename)), 
                                     $atthtml);
                 else
                     $relhtml = HTML($relhtml, $atthtml);
@@ -111,6 +123,12 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/11/21 20:14:20  rurban
+// Plugin to display the list of SemanticRelations - list of relations and
+// attributes of given page(s).
+// Relations are stored in the link table.
+// Attributes as simple page meta-data.
+//
 
 // Local Variables:
 // mode: php
