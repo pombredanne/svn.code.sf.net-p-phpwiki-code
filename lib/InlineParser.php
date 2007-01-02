@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.83 2006-12-22 00:23:24 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.84 2007-01-02 13:18:07 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -404,8 +404,8 @@ function LinkBracketLink($bracketlink) {
     }
     elseif (substr($link,0,8) == 'phpwiki:')
         return new Cached_PhpwikiURL($link, $label);
-    /* Semantic relations and attributes */
-    elseif (preg_match("/:[:-]/", $link) and !isImageLink($link))
+    /* Semantic relations and attributes. Relations must be word chars only! no space */
+    elseif (preg_match("/^ (\w+) (:[:=]) (\w.*) $/x", $link) and !isImageLink($link))
         return new Cached_SemanticLink($link, $label);
     /* Do not store the link */    
     elseif (substr($link,0,1) == ':')
@@ -852,13 +852,15 @@ class InlineTransformer
             $class = "Markup_$mtype";
             $this->_addMarkup(new $class);
         }
-        if (ENABLE_MARKUP_DIVSPAN and !$non_default)
+        // this does not work yet
+        if (0 and ENABLE_MARKUP_DIVSPAN and !$non_default)
             $this->_addMarkup(new Markup_html_divspan);
         if (ENABLE_MARKUP_COLOR and !$non_default)
             $this->_addMarkup(new Markup_color);
         if (ENABLE_MARKUP_TEMPLATE and !$non_default)
             $this->_addMarkup(new Markup_template_plugin);
-        if (PLUGIN_MARKUP_MAP and !$non_default)
+        // this does not work yet
+        if (0 and PLUGIN_MARKUP_MAP and !$non_default)
             $this->_addMarkup(new Markup_xml_plugin);
     }
 
@@ -1021,6 +1023,10 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.83  2006/12/22 00:23:24  rurban
+// Fix Bug #1540007 "hardened-php issue, crawlers related"
+// Broken str_replace with strings > 200 chars
+//
 // Revision 1.82  2006/12/02 19:53:05  rurban
 // Simplify DISABLE_MARKUP_WIKIWORD handling by adding the new function
 // stdlib: array_remove(). Hopefully PHP will not add this natively sooner
