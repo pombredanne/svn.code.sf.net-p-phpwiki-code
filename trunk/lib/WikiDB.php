@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.145 2006-12-22 17:59:55 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.146 2007-01-02 13:20:00 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -9,7 +9,7 @@ require_once('lib/PageType.php');
  *
  * @package WikiDB
  * @author Geoffrey T. Dairiki <dairiki@dairiki.org>
- *         Reini Urban
+ * Minor enhancements by Reini Urban
  */
 
 /**
@@ -125,7 +125,7 @@ class WikiDB {
         // devel checking.
         if ((int)DEBUG & _DEBUG_SQL) {
             $this->_backend->check();
-    }
+	}
     }
     
     /**
@@ -188,9 +188,7 @@ class WikiDB {
      * manner in certain back-ends.
      *
      * @access public
-     *
      * @param string $pagename string Which page to check.
-     *
      * @return boolean True if the page actually exists with
      * non-default contents in the WikiDataBase.
      */
@@ -208,8 +206,8 @@ class WikiDB {
      * Note: purgePage() effectively destroys all revisions of the page from the WikiDB. 
      *
      * @access public
-     *
      * @param string $pagename Name of page to delete.
+     * @see purgePage
      */
     function deletePage($pagename) {
     	// don't create empty revisions of already purged pages.
@@ -237,6 +235,9 @@ class WikiDB {
 
     /**
      * Completely remove the page from the WikiDB, without undo possibility.
+     * @access public
+     * @param string $pagename Name of page to delete.
+     * @see deletePage
      */
     function purgePage($pagename) {
         $result = $this->_cache->purge_page($pagename);
@@ -251,16 +252,20 @@ class WikiDB {
      *
      * @access public
      *
-     * @param boolean $include_defaulted Normally pages whose most
+     * @param boolean $include_empty Optional. Normally pages whose most
      * recent revision has empty content are considered to be
      * non-existant. Unless $include_defaulted is set to true, those
      * pages will not be returned.
+     * @param string or false $sortby Optional. "+-column,+-column2". 
+     *		If false the result is faster in natural order.
+     * @param string or false $limit Optional. Encoded as "$offset,$count".
+     * 		$offset defaults to 0.
+     * @param string $exclude: Optional comma-seperated list of pagenames. 
      *
      * @return WikiDB_PageIterator A WikiDB_PageIterator which contains all pages
      *     in the WikiDB which have non-default contents.
      */
-    function getAllPages($include_empty=false, $sortby=false, $limit=false, 
-                         $exclude=false) 
+    function getAllPages($include_empty=false, $sortby='', $limit='', $exclude='') 
     {
         // HACK: memory_limit=8M will fail on too large pagesets. old php on unix only!
         if (USECACHE) {
@@ -280,8 +285,13 @@ class WikiDB {
     }
 
     /**
-     * $include_empty = true: include also empty pages
-     * exclude: comma-seperated list pagenames: TBD: array of pagenames
+     * @access public
+     *
+     * @param boolean $include_empty If true include also empty pages
+     * @param string $exclude: comma-seperated list of pagenames. 
+     * 			TBD: array of pagenames
+     * @return integer
+     * 
      */
     function numPages($include_empty=false, $exclude='') {
     	if (method_exists($this->_backend, 'numPages'))
@@ -305,14 +315,17 @@ class WikiDB {
      * Pages are returned in alphabetical order whenever it is
      * practical to do so.
      *
-     * FIXME: clarify $search syntax. provide glob=>TextSearchQuery converters
-     *
      * @access public
      * @param TextSearchQuery $search A TextSearchQuery object
+     * @param string or false $sortby Optional. "+-column,+-column2". 
+     *		If false the result is faster in natural order.
+     * @param string or false $limit Optional. Encoded as "$offset,$count".
+     * 		$offset defaults to 0.
+     * @param string $exclude: Optional comma-seperated list of pagenames. 
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
-    function titleSearch($search, $sortby='pagename', $limit=false, $exclude=false) {
+    function titleSearch($search, $sortby='pagename', $limit='', $exclude='') {
         $result = $this->_backend->text_search($search, false, $sortby, $limit, $exclude);
         return new WikiDB_PageIterator($this, $result,
                                        array('exclude' => $exclude,
@@ -332,10 +345,15 @@ class WikiDB {
      * @access public
      *
      * @param TextSearchQuery $search A TextSearchQuery object.
+     * @param string or false $sortby Optional. "+-column,+-column2". 
+     *		If false the result is faster in natural order.
+     * @param string or false $limit Optional. Encoded as "$offset,$count".
+     * 		$offset defaults to 0.
+     * @param string $exclude: Optional comma-seperated list of pagenames. 
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching pages.
      * @see TextSearchQuery
      */
-    function fullSearch($search, $sortby='pagename', $limit=false, $exclude=false) {
+    function fullSearch($search, $sortby='pagename', $limit='', $exclude='') {
         $result = $this->_backend->text_search($search, true, $sortby, $limit, $exclude);
         return new WikiDB_PageIterator($this, $result,
                                        array('exclude' => $exclude,
@@ -354,6 +372,8 @@ class WikiDB {
      * @param integer $limit The maximum number of pages to return.
      * Set $limit to zero to return all pages.  If $limit < 0, pages will
      * be sorted in decreasing order of popularity.
+     * @param string or false $sortby Optional. "+-column,+-column2". 
+     *		If false the result is faster in natural order.
      *
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing the matching
      * pages.
@@ -376,7 +396,8 @@ class WikiDB {
      * <dt> limit 
      *    <dd> (integer) At most this many revisions will be returned.
      * <dt> since
-     *    <dd> (integer) Only revisions since this time (unix-timestamp) will be returned. 
+     *    <dd> (integer) Only revisions since this time (unix-timestamp) 
+     *		will be returned. 
      * <dt> include_minor_revisions
      *    <dd> (boolean) Also include minor revisions.  (Default is not to.)
      * <dt> exclude_major_revisions
@@ -388,8 +409,8 @@ class WikiDB {
      *         for each page.
      * </dl>
      *
-     * @return WikiDB_PageRevisionIterator A WikiDB_PageRevisionIterator containing the
-     * matching revisions.
+     * @return WikiDB_PageRevisionIterator A WikiDB_PageRevisionIterator 
+     * containing the matching revisions.
      */
     function mostRecent($params = false) {
         $result = $this->_backend->most_recent($params);
@@ -399,32 +420,77 @@ class WikiDB {
     /**
      * @access public
      *
-     * @return Iterator A generic iterator containing rows of (duplicate) pagename, wantedfrom.
+     * @param string or false $sortby Optional. "+-column,+-column2". 
+     *		If false the result is faster in natural order.
+     * @param string or false $limit Optional. Encoded as "$offset,$count".
+     * 		$offset defaults to 0.
+     * @return Iterator A generic iterator containing rows of 
+     * 		(duplicate) pagename, wantedfrom.
      */
-    function wantedPages($exclude_from='', $exclude='', $sortby=false, $limit=false) {
+    function wantedPages($exclude_from='', $exclude='', $sortby='', $limit='') {
         return $this->_backend->wanted_pages($exclude_from, $exclude, $sortby, $limit);
         //return new WikiDB_PageIterator($this, $result);
     }
 
     /**
+     * Generic interface to the link table. Esp. useful to search for rdf triples as in 
+     * SemanticSearch and ListRelations.
+     *
      * @access public
      *
-     * @return array of pagename => linkrelation or just all related pages
+     * @param $pages  object A TextSearchQuery object.
+     * @param $search object A TextSearchQuery object.
+     * @param string $linktype One of "linkto", "linkfrom", "relation", "attribute".
+     *   linktype parameter:
+     * <dl>
+     * <dt> "linkto"
+     *    <dd> search for simple out-links
+     * <dt> "linkfrom"
+     *    <dd> in-links, i.e BackLinks
+     * <dt> "relation"
+     *    <dd> the first part in a <>::<> link 
+     * <dt> "attribute"
+     *    <dd> the first part in a <>:=<> link 
+     * </dl>
+     * @param $relation object An optional TextSearchQuery to match the 
+     * relation name. Ignored on simple in-out links.
+     *
+     * @return Iterator A generic iterator containing links to pages or values.
+     *                  hash of "pagename", "linkname", "linkvalue. 
      */
-    function listRelations($sortby=false, $limit=false, $exclude=false) {
+    function linkSearch($pages, $search, $linktype, $relation=false) {
+        return $this->_backend->link_search($pages, $search, $linktype, $relation);
+    }
+
+    /**
+     * Return a simple list of all defined relations (and attributes), mainly 
+     * for the SemanticSearch autocompletion.
+     *
+     * @access public
+     *
+     * @return array of strings
+     */
+    function listRelations($also_attributes=false, $only_attributes=false, $sorted=true) {
         if (method_exists($this->_backend, "list_relations"))
-            return $this->_backend->list_relations($sortby, $limit, $exclude);
-        $iter = $this->getAllPages(false, false, false, $exclude);
+            return $this->_backend->list_relations($also_attributes, $only_attributes, $sorted);
+	// dumb, slow fallback. no iter, so simply define it here.
+        $relations = array();
+        $iter = $this->getAllPages();
         while ($page = $iter->next()) {
             $reliter = $page->getRelations();
             $names = array();
             while ($rel = $reliter->next()) {
+		// if there's no pagename it's an attribute
                 $names[] = $rel->getName();
             }
             $relations = array_merge($relations, $names);
             $reliter->free();
         }
         $iter->free();
+	if ($sorted) {
+	    sort($relations);
+	    reset($relations);
+	}
         return $relations;
     }
 
@@ -469,6 +535,7 @@ class WikiDB {
                     $meta = $current->_data;
                     $version = $current->getVersion();
                     $meta['summary'] = sprintf(_("renamed from %s"), $from);
+		    unset($meta['mtime']); // force new date
                     $page->save($current->getPackedContent(), $version + 1, $meta);
                 }
             } elseif (!$oldpage->getCurrentRevision(false) and !$newpage->exists()) {
@@ -516,6 +583,15 @@ class WikiDB {
         $this->set('_timestamp', array(time(), $ts[1] + 1));
     }
 
+    /**
+     * Roughly similar to the float in phpwiki_version(). Set by action=upgrade.
+     */
+    function get_db_version() {
+        return (float) $this->get('_db_version');
+    }
+    function set_db_version($ver) {
+        return $this->set('_db_version', (float)$ver);
+    }
         
     /**
      * Access WikiDB global meta-data.
@@ -930,7 +1006,7 @@ class WikiDB_Page
      *
      * @return WikiDB_PageRevision The current WikiDB_PageRevision object. 
      */
-    function getCurrentRevision ($need_content = true) {
+    function getCurrentRevision ($need_content=true) {
         $backend = &$this->_wikidb->_backend;
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
@@ -1040,8 +1116,8 @@ class WikiDB_Page
      * @return WikiDB_PageIterator A WikiDB_PageIterator containing
      * all matching pages.
      */
-    function getLinks ($reversed = true, $include_empty=false, $sortby=false, 
-                       $limit=false, $exclude=false, $want_relations=false) 
+    function getLinks ($reversed=true, $include_empty=false, $sortby='', 
+                       $limit='', $exclude='', $want_relations=false) 
     {
         $backend = &$this->_wikidb->_backend;
         $result =  $backend->get_links($this->_pagename, $reversed, 
@@ -1058,7 +1134,7 @@ class WikiDB_Page
     /**
      * All Links from other pages to this page.
      */
-    function getBackLinks($include_empty=false, $sortby=false, $limit=false, $exclude=false, 
+    function getBackLinks($include_empty=false, $sortby='', $limit='', $exclude='', 
                           $want_relations=false) 
     {
         return $this->getLinks(true, $include_empty, $sortby, $limit, $exclude);
@@ -1066,16 +1142,16 @@ class WikiDB_Page
     /**
      * Forward Links: All Links from this page to other pages.
      */
-    function getPageLinks($include_empty=false, $sortby=false, $limit=false, $exclude=false, 
+    function getPageLinks($include_empty=false, $sortby='', $limit='', $exclude='', 
                           $want_relations=false) 
     {
         return $this->getLinks(false, $include_empty, $sortby, $limit, $exclude);
     }
     /**
      * Relations: All links from this page to other pages with relation <> 0. 
-     * Like isa:=page
+     * is_a:=page or population:=number
      */
-    function getRelations($sortby=false, $limit=false, $exclude=false) {
+    function getRelations($sortby='', $limit='', $exclude='') {
         $backend = &$this->_wikidb->_backend;
         $result =  $backend->get_links($this->_pagename, false, true,
                                        $sortby, $limit, $exclude, 
@@ -1310,6 +1386,18 @@ class WikiDB_Page
         else return '';
     }
 
+    /* Semantic Web value, not stored in the links
+     * todo: unify with some unit knowledge
+     */
+    function setAttribute($relation, $value) {
+    	$attr = $this->get('attributes');
+    	if (empty($attr))
+    	    $attr = array($relation => $value);
+    	else
+    	    $attr[$relation] = $value;
+    	$this->set('attributes', $attr);
+    }
+
 };
 
 /**
@@ -1506,9 +1594,16 @@ class WikiDB_PageRevision
             {
                 include_once("lib/fortune.php");
                 $fortune = new Fortune();
-                $quote = str_replace("\n<br>","\n", $fortune->quoteFromDir(FORTUNE_DIR));
-                return sprintf("<verbatim>\n%s</verbatim>\n\n"._("Describe %s here."), 
-                               $quote, "[" . WikiEscape($this->_pagename) . "]");
+		$quote = $fortune->quoteFromDir(FORTUNE_DIR);
+		if ($quote != -1)
+		    $quote = "<verbatim>\n"
+			. str_replace("\n<br>","\n", $quote)
+			. "</verbatim>\n\n";
+		else 
+		    $quote = "";
+                return $quote
+		    . sprintf(_("Describe %s here."), 
+			      "[" . WikiEscape($this->_pagename) . "]");
             }
             // Replace empty content with default value.
             return sprintf(_("Describe %s here."), 
@@ -1671,6 +1766,7 @@ class WikiDB_PageIterator
             $pagename = strval($pagename);
         }
         if (!$pagename) {
+            if (isset($next['linkrelation'])) return false;	
             trigger_error('empty pagename in WikiDB_PageIterator::next()', E_USER_WARNING);
             var_dump($next);
             return false;
@@ -2088,6 +2184,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.145  2006/12/22 17:59:55  rurban
+// Move mailer functions into seperate MailNotify.php
+//
 // Revision 1.144  2006/10/12 06:36:09  rurban
 // Guard against unwanted DEBUG="DEBUG" logic. In detail (WikiDB),
 // and generally by forcing all int constants to be defined as int.
