@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.29 2006-12-22 00:27:37 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.30 2007-01-02 13:20:26 rurban Exp $');
 
 /*
   Pagedata
@@ -271,7 +271,7 @@ class WikiDB_backend
      * @return object A WikiDB_backend_iterator.
      */
     function get_links($pagename, $reversed, $include_empty=false,
-                       $sortby=false, $limit=false, $exclude=false) {
+                       $sortby='', $limit='', $exclude='') {
         //FIXME: implement simple (but slow) link finder.
         die("FIXME get_links");
     }
@@ -306,7 +306,7 @@ class WikiDB_backend
      *
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_pages($include_defaulted, $orderby=false, $limit=false, $exclude=false) {
+    function get_all_pages($include_defaulted, $orderby=false, $limit='', $exclude='') {
         trigger_error("virtual", E_USER_ERROR);
     }
         
@@ -328,7 +328,9 @@ class WikiDB_backend
      *
      * @see WikiDB::titleSearch
      */
-    function text_search($search, $fulltext=false, $sortby=false, $limit=false, $exclude=false) {
+    function text_search($search, $fulltext=false, $sortby='', 
+			 $limit='', $exclude='') 
+    {
         // This is method implements a simple linear search
         // through all the pages in the database.
         //
@@ -342,6 +344,25 @@ class WikiDB_backend
                                                             'exclude' => $exclude));
     }
 
+
+    /**
+     *
+     * @access protected
+     * @param $pages     object A TextSearchQuery object.
+     * @param $linkvalue object A TextSearchQuery object for the linkvalues 
+     *                          (linkto, relation or backlinks or attribute values).
+     * @param $linktype  string One of the 4 linktypes.
+     * @param $relation  object A TextSearchQuery object or false.
+     * @param $options   array Currently ignored. hash of sortby, limit, exclude.
+     * @return object A WikiDB_backend_iterator.
+     * @see WikiDB::linkSearch
+     */
+    function link_search( $pages, $linkvalue, $linktype, $relation=false, $options=array() ) {
+        include_once('lib/WikiDB/backend/dumb/LinkSearchIter.php');
+        $pageiter = $this->text_search($pages);
+        return new WikiDB_backend_dumb_LinkSearchIter($this, $pageiter, $linkvalue, $linktype, $relation, $options);
+    }
+
     /**
      * Find pages with highest hit counts.
      *
@@ -349,7 +370,7 @@ class WikiDB_backend
      * be returned in reverse order by hit count.
      *
      * @access protected
-     * @param $limit integer  No more than this many pages
+     * @param integer $limit No more than this many pages
      * @return object A WikiDB_backend_iterator.
      */
     function most_popular($limit, $sortby='-hits') {
@@ -384,7 +405,7 @@ class WikiDB_backend
         return new WikiDB_backend_dumb_MostRecentIter($this, $pages, $params);
     }
 
-    function wanted_pages($exclude_from='', $exclude='', $sortby=false, $limit=false) {
+    function wanted_pages($exclude_from='', $exclude='', $sortby='', $limit='') {
         include_once('lib/WikiDB/backend/dumb/WantedPagesIter.php');
         $allpages = $this->get_all_pages(true,false,false,$exclude_from);
         return new WikiDB_backend_dumb_WantedPagesIter($this, $allpages, $exclude, $sortby, $limit);
@@ -451,7 +472,8 @@ class WikiDB_backend
     }
 
     /**
-     * Put the database into a consistent state.
+     * Put the database into a consistent state 
+     * by reparsing and restoring all pages.
      *
      * This should put the database into a consistent state.
      * (I.e. rebuild indexes, etc...)
@@ -459,6 +481,24 @@ class WikiDB_backend
      * @return boolean True iff successful.
      */
     function rebuild() {
+	global $request;
+	$dbh = $request->getDbh();
+    	$iter = $dbh->getAllPages(false);
+        while ($page = $iter->next()) {
+	    $current = $page->getCurrentRevision(true);
+	    $pagename = $page->getName();
+	    $meta = $current->_data;
+	    $version = $current->getVersion();
+	    $content =& $meta['%content'];
+	    $formatted = new TransformedText($page, $content, $current->getMetaData());
+	    $type = $formatted->getType();
+	    $meta['pagetype'] = $type->getName();
+	    $links = $formatted->getWikiPageLinks(); // linkto => relation
+	    $this->lock(array('version','page','recent','link','nonempty'));
+	    $this->set_versiondata($pagename, $version, $meta);
+	    $this->set_links($pagename, $links);
+	    $this->unlock(array('version','page','recent','link','nonempty'));
+        }
     }
 
     function _parse_searchwords($search) {
@@ -617,7 +657,7 @@ class WikiDB_backend_search
 {
     function WikiDB_backend_search($search, &$dbh) {
         $this->_dbh = $dbh;
-        $this->_case_exact =  $search->_case_exact;
+        $this->_case_exact = $search->_case_exact;
         $this->_stoplist   =& $search->_stoplist;
         $this->_stoplisted = array();
     }
