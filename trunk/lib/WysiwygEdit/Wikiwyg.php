@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.7 2006-12-22 16:53:38 rurban Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.8 2007-01-02 13:20:57 rurban Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -18,16 +18,19 @@ require_once("lib/WysiwygEdit.php");
 class WysiwygEdit_Wikiwyg extends WysiwygEdit {
 
     function WysiwygEdit_Wikiwyg() {
-        global $LANG;
+        global $request, $LANG;
         $this->_transformer_tags = false;
 	$this->BasePath = DATA_PATH.'/themes/default/Wikiwyg';
 	$this->_htmltextid = "edit:content";
         $this->_wikitextid = "editareawiki";
+	$script_url = deduce_script_name();
+	if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
+	    $script_url .= ("?start_debug=".$_GET['start_debug']);
     	$this->_jsdefault = "
 var base_url = '".DATA_PATH."';
 var data_url = '$this->BasePath';
-var script_url = '".deduce_script_name()."';
-var pagename = '".$GLOBALS['request']->getArg('pagename')."';
+var script_url = '$script_url';
+var pagename = '".$request->getArg('pagename')."';
 ";
     }
 
@@ -158,9 +161,13 @@ class WikiToHtml {
 	$this->clean_plugin();
 
 	if ($charset != 'utf-8') {
-            // check for iconv support
-            loadPhpExtension("iconv");
-	    $this->_html = iconv("UTF-8", $charset, $this->_html);
+ 	    if ($charset == 'iso-8959-1') {
+ 	        $this->_html = utf8_decode($this->_html);
+	    } else {    
+                // check for iconv support
+                loadPhpExtension("iconv");
+	        $this->_html = iconv("UTF-8", $charset, $this->_html);
+ 	    }
         }
 	$this->html_content = $this->_html;
     }
@@ -192,6 +199,7 @@ class WikiToHtml {
     // Clean links to keep only <a href="link">name</a>
     function clean_links() {
         // Existing links
+        // FIXME: use VIRTUAL_PATH
         $pattern = '/\<a href\=\"index.php\?pagename\=(\w+)\"([^>])*\>/Umsi';      
         $replace_string = '<a href="\1">';      
         $this->_html = preg_replace($pattern,
@@ -289,6 +297,9 @@ function replace_rich_table($matched) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.7  2006/12/22 16:53:38  rurban
+ Try to dl() load the iconv extension, if not already loaded
+
  Revision 1.6  2006/08/25 22:42:51  rurban
  warn user about beta quality, not to save wrong edits
 
