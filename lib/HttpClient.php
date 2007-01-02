@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HttpClient.php,v 1.7 2006-06-18 11:02:01 rurban Exp $');
+rcs_id('$Id: HttpClient.php,v 1.8 2007-01-02 13:18:35 rurban Exp $');
 
 /** 
    Version 0.9, 6th April 2003 - Simon Willison ( http://simon.incutio.com/ )
@@ -7,6 +7,8 @@ rcs_id('$Id: HttpClient.php,v 1.7 2006-06-18 11:02:01 rurban Exp $');
 
    Copyright © 2003 Incutio Limited
    License: http://www.opensource.org/licenses/artistic-license.php
+
+   File upload and xmlrpc support by Reini Urban for PhpWiki, 2006-12-28 18:12:47 
 */
 
 class HttpClient {
@@ -21,7 +23,8 @@ class HttpClient {
     var $accept = 'text/xml,application/xml,application/xhtml+xml,text/html,text/plain,image/png,image/jpeg,image/gif,*/*';
     var $accept_encoding = 'gzip';
     var $accept_language = 'en-us';
-    var $user_agent = 'Incutio HttpClient v0.9';
+    var $user_agent = 'Incutio HttpClient v1.0';
+    var $boundary = "xYzZY"; // FIXME: check if this string doesn't occur in the data
     // Options
     var $timeout = 10;
     var $use_gzip = true;
@@ -45,7 +48,7 @@ class HttpClient {
     var $redirect_count = 0;
     var $cookie_host = '';
 
-    function HttpClient($host, $port=80) {
+    function HttpClient($host='localhost', $port=80) {
         $this->host = $host;
         $this->port = $port;
     }
@@ -61,6 +64,20 @@ class HttpClient {
         $this->path = $path;
         $this->method = 'POST';
         $this->postdata = $this->buildQueryString($data);
+    	return $this->doRequest();
+    }
+    function postfile($path, $filename) {
+        $this->path = $path;
+        $this->method = 'POST';
+	$boundary = $this->boundary; //"httpclient_boundary";
+	$headers[] = "Content-Type: multipart/form-data; boundary=\"$boundary\"";
+	$basename = basename($filename); 
+	$this->postdata =
+	    "\r\n--$boundary\r\n"
+	    ."Content-Disposition: form-data; filename=\"$basename\"\r\n"
+	    ."Content-Type: application/octet-stream\r\n\r\n";
+	$this->postdata .= join("",file($filename));
+	$this->postdata .= "\r\n\r\n--$boundary--\r\n";
     	return $this->doRequest();
     }
     function buildQueryString($data) {
@@ -82,6 +99,7 @@ class HttpClient {
     	}
     	return $querystring;
     }
+
     function doRequest() {
         // Performs the actual HTTP request, returning true or false depending on outcome
         // Ensure that the PHP timeout is longer than the socket timeout
@@ -104,7 +122,16 @@ class HttpClient {
         }
         if (check_php_version(4,3,0))
             socket_set_timeout($fp, $this->timeout);
-        $request = $this->buildRequest();
+	if ( $this->method == 'POST' and preg_match("/\<methodCall\>/", $this->postdata))
+	    $request = $this->buildRequest("text/xml"); //xmlrpc
+	else if ( $this->method == 'POST' and strstr("\r\nContent-Disposition: form-data; filename=", 
+						     $this->postdata)) 
+	{
+	    //file upload
+	    $boundary = $this->boundary;
+	    $request = $this->buildRequest("multipart/form-data; boundary=\"$boundary\"");
+	} else
+	    $request = $this->buildRequest();
         $this->debug('Request', $request);
         fwrite($fp, $request);
     	// Reset all the variables that should not persist between requests
@@ -205,9 +232,10 @@ class HttpClient {
         }
         return true;
     }
-    function buildRequest() {
+    function buildRequest($ContentType = 'application/x-www-form-urlencoded') {
         $headers = array();
-        $headers[] = "{$this->method} {$this->path} HTTP/1.0"; // Using 1.1 leads to all manner of problems, such as "chunked" encoding
+	// Using 1.1 leads to all manner of problems, such as "chunked" encoding
+        $headers[] = "{$this->method} {$this->path} HTTP/1.0"; 
         $headers[] = "Host: {$this->host}";
         $headers[] = "User-Agent: {$this->user_agent}";
         $headers[] = "Accept: {$this->accept}";
@@ -232,7 +260,7 @@ class HttpClient {
     	}
     	// If this is a POST, set the content type and length
     	if ($this->postdata) {
-    	    $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+	    $headers[] = 'Content-Type: ' . $ContentType;
     	    $headers[] = 'Content-Length: '.strlen($this->postdata);
     	}
     	$request = implode("\r\n", $headers)."\r\n\r\n".$this->postdata;
@@ -347,6 +375,9 @@ class HttpClient {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2006/06/18 11:02:01  rurban
+// assume https <>80
+//
 // Revision 1.6  2004/11/01 10:43:55  rurban
 // seperate PassUser methods into seperate dir (memory usage)
 // fix WikiUser (old) overlarge data session
