@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.53 2006-12-02 13:58:27 rurban Exp $');
+rcs_id('$Id: diff.php,v 1.54 2007-01-02 13:18:16 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -234,7 +234,6 @@ class TableUnifiedDiffFormatter extends HtmlUnifiedDiffFormatter
     }
 }
 
-
 /////////////////////////////////////////////////////////////////
 
 function PageInfoRow ($label, $rev, &$request, $is_current = false)
@@ -283,9 +282,9 @@ function showDiff (&$request) {
     // abort if page doesn't exist
     $dbi = $request->getDbh();
     $page = $request->getPage();
-    $current = $page->getCurrentRevision();
+    $current = $page->getCurrentRevision(false);
     if ($current->getVersion() < 1) {
-        $html = HTML::div(array('class'=>'wikitext','id'=>'difftext'),
+	$html = HTML::div(array('class'=>'wikitext','id'=>'difftext'),
                           HTML::p(fmt("I'm sorry, there is no such page as %s.",
                                       WikiLink($pagename, 'unknown'))));
         include_once('lib/Template.php');
@@ -388,7 +387,6 @@ function showDiff (&$request) {
             $html->pushContent($fmt->format($diff));
         }
 
-        
         $html->pushContent(HTML::hr(), HTML::h1($new_version));
         include_once("lib/BlockParser.php");
         $html->pushContent(TransformText($new,$new->get('markup'),$page));
@@ -399,6 +397,10 @@ function showDiff (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2006/12/02 13:58:27  rurban
+// Fix MonoBook layout (id content forbidden here)
+// Add new revision to the bottom of the diff as in mediawiki.
+//
 // Revision 1.52  2005/04/01 14:45:14  rurban
 // fix dirty side-effect: dont printf too early bypassing ob_buffering.
 // fixes MSIE.
