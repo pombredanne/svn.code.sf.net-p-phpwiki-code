@@ -334,8 +334,6 @@ $locale["Given password ignored."] =
    "Contraseña no hecho caso.";
 $locale["Go"] =
    "Aceptar";
-$locale["GoodStyle"] =
-   "BuenEstilo";
 $locale["Grant"] =
    "Concesión";
 $locale["Group %s does not exist"] =
@@ -520,8 +518,6 @@ $locale["Note:"] =
    "Nota:";
 $locale["Old UserPage %s without stored password updated with empty password. Set a password in your UserPreferences."] =
    "Viejo UserPage %s sin la contraseña almacenada puesta al día con contraseña vacía. Fije una contraseña en su UsuarioPreferencias.";
-$locale["OldTextFormattingRules"] =
-   "ViejoReglasDeFormatoDeTexto";
 $locale["Older page:"] =
    "Página más viejo:";
 $locale["Oops! Revision %s of %s seems to have been deleted!"] =
@@ -734,8 +730,6 @@ $locale["Supported handlers are: %s"] =
    "Los tratantes apoyados son: %s";
 $locale["Synopsis"] =
    "Sinopsis";
-$locale["TextFormattingRules"] =
-   "ReglasDeFormatoDeTexto";
 $locale["Thank you for editing %s."] =
    "Gracias por editar %s.";
 $locale["Thanks for participating!"] =
@@ -814,8 +808,6 @@ $locale["Unable to connect to IMAP server "] =
    "Incapaz conectar con el IMAP el servidor ";
 $locale["Unable to connect to LDAP server %s"] =
    "Incapaz conectar con el servidor %s de LDAP";
-$locale["Unable to load: %s"] =
-   "Incapaz cargar:  %s";
 $locale["Undefined method %s for special group %s"] =
    "Método indefinido %s para el grupo especial %s";
 $locale["Undo"] =

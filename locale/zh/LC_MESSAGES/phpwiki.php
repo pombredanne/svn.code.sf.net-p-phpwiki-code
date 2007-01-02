@@ -582,8 +582,6 @@ $locale["Go to or create page."] =
    "前往或建立頁面.";
 $locale["GoTo"] =
    "GoTo";
-$locale["GoodStyle"] =
-   "GoodStyle";
 $locale["GooglePlugin"] =
    "GooglePlugin";
 $locale["Group %s does not exist"] =
@@ -844,8 +842,6 @@ $locale["Note, that user accounts with bouncing emails will be disabled."] =
    "注意, 使用者帳號的回信(bouncing emails)將被關閉.";
 $locale["Note:"] =
    "注意:";
-$locale["Ok"] =
-   "確定";
 $locale["Okay"] =
    "Okay";
 $locale["Old UserPage %s without stored password updated with empty password. Set a password in your UserPreferences."] =
@@ -856,8 +852,6 @@ $locale["OldStyleTable"] =
    "OldStyleTable";
 $locale["OldStyleTablePlugin"] =
    "OldStyleTablePlugin";
-$locale["OldTextFormattingRules"] =
-   "OldTextFormattingRules";
 $locale["Older page:"] =
    "較舊的頁面:";
 $locale["One page links to %s:"] =
@@ -1286,8 +1280,6 @@ $locale["TODO: Google can only translate from english and french. Find a transla
    "TODO: Google 只能從英文與法文轉換. 為 %s 尋找轉換到語言 %s 的服務.";
 $locale["Table Of Contents"] =
    "目錄";
-$locale["TextFormattingRules"] =
-   "TextFormattingRules";
 $locale["Thank you for editing %s."] =
    "謝謝你編輯了 %s.";
 $locale["Thanks for adding this translation!"] =
@@ -1400,8 +1392,6 @@ $locale["Unable to connect to IMAP server "] =
    "無法連結到 IMAP 伺服器";
 $locale["Unable to connect to LDAP server %s"] =
    "無法連結到 LDAP 伺服器 %s";
-$locale["Unable to load: %s"] =
-   "無法載入: %s";
 $locale["Unable to open directory '%s' for reading"] =
    "無法開啟目錄 '%s' 進行讀取";
 $locale["Undefined method %s for special group %s"] =
@@ -1494,8 +1484,6 @@ $locale["Wanted Pages in this wiki (%d total):"] =
    "在此 wiki 所需要的頁面 (共 %d):";
 $locale["WantedPages"] =
    "WantedPages";
-$locale["Warning!"] =
-   "警告!";
 $locale["Warning:"] =
    "警告:";
 $locale["Warning: The search string cannot be empty!"] =
@@ -1532,8 +1520,6 @@ $locale["WikiAdminSetAcl"] =
    "WikiAdminSetAcl";
 $locale["WikiAdminUtils"] =
    "WikiAdminUtils";
-$locale["WikiAdminUtils says:"] =
-   "WikiAdminUtils 說:";
 $locale["WikiBlog"] =
    "WikiBlog";
 $locale["WikiBlogPlugin"] =

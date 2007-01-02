@@ -800,8 +800,6 @@ $locale["Go?"] =
    "Allons-y ?";
 $locale["GoTo"] =
    "AllerVers";
-$locale["GoodStyle"] =
-   "StyleCorrect";
 $locale["Google:%s"] =
    "Google: %s";
 $locale["GooglePlugin"] =
@@ -1182,8 +1180,6 @@ $locale["Nothing found"] =
    "Aucun résultat";
 $locale["OK"] =
    "OK";
-$locale["Ok"] =
-   "Ok";
 $locale["Okay"] =
    "OK";
 $locale["Old UserPage %s without stored password updated with empty password. Set a password in your UserPreferences."] =
@@ -1194,8 +1190,6 @@ $locale["OldStyleTable"] =
    "TableauAncienStyle";
 $locale["OldStyleTablePlugin"] =
    "PluginTableauAncienStyle";
-$locale["OldTextFormattingRules"] =
-   "RèglesDeFormatageDesTextes";
 $locale["Older page:"] =
    "Ancienne page :";
 $locale["One page links to %s:"] =
@@ -1662,8 +1656,6 @@ $locale["SignOut"] =
    "Déconnexion";
 $locale["Signed Users"] =
    "Utilisateurs signés";
-$locale["Signed as %s"] =
-   "Connecté comme %s";
 $locale["Simple RSS Feed aggregator Plugin"] =
    "Importer des ressources RSS";
 $locale["Simple Sample Plugin"] =
@@ -1762,8 +1754,6 @@ $locale["TeX2png"] =
    "TeX2png";
 $locale["Template"] =
    "Thème";
-$locale["TextFormattingRules"] =
-   "RèglesDeFormatageDesTextes";
 $locale["Thank you for editing %s."] =
    "Merci d'avoir édité %s.";
 $locale["Thanks for adding this translation!"] =
@@ -1908,8 +1898,6 @@ $locale["Unable to connect to LDAP server %s"] =
    "Impossible de se connecter au serveur LDAP %s";
 $locale["Unable to find src='%s'"] =
    "Impossible de lire src=%s";
-$locale["Unable to load: %s"] =
-   "Impossible de charger : %s";
 $locale["Unable to open directory '%s' for reading"] =
    "Impossible d'ouvrir le répertoire '%s' en lecture";
 $locale["Unable to read src='%s'"] =
@@ -2036,8 +2024,6 @@ $locale["Wanted Pages in this wiki:"] =
    "Pages recherchées dans ce wiki :";
 $locale["WantedPages"] =
    "PagesRecherchées";
-$locale["Warning!"] =
-   "Attention !";
 $locale["Warning:"] =
    "Attention:";
 $locale["Warning: The search string cannot be empty!"] =
@@ -2082,8 +2068,6 @@ $locale["WikiAdminSetAcl"] =
    "WikiAdminSetAcl";
 $locale["WikiAdminUtils"] =
    "WikiAdminUtils";
-$locale["WikiAdminUtils says:"] =
-   "WikiAdminUtils dit :";
 $locale["WikiBlog"] =
    "WikiBlog";
 $locale["WikiBlogPlugin"] =
@@ -2220,16 +2204,6 @@ $locale["check for mysql page.id auto_increment flag"] =
    "vérifie le marqueur auto_increment pour page.id";
 $locale["check for mysql session.sess_id sanity"] =
    "recherche une nouvelle colonne session.sess_ip";
-$locale["check for necessary ActionPage updates"] =
-   "vérifie les mises à jour d'ActionPage nécessaire";
-$locale["check for necessary config updates"] =
-   "vérifie les mises à jour de configuration nécessaire";
-$locale["check for necessary database updates"] =
-   "rechercher des mises à jour nécessaire dans la base de données";
-$locale["check for necessary pgsrc updates"] =
-   "recherche les mises à jour nécessaire des pages sources";
-$locale["check for necessary plugin argument updates"] =
-   "recherche les mises à jour nécessaire des plugin argument";
 $locale["check for new session.sess_ip column"] =
    "recherche une nouvelle colonne session.sess_ip";
 $locale["check for table %s"] =
