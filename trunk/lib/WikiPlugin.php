@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.61 2005-10-31 17:20:40 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.62 2007-01-02 13:20:35 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.61 $");
+        //                    "\$Revision: 1.62 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -136,13 +136,14 @@ class WikiPlugin
                     : $args[$key]; // <! plugin-list !>
         }
 
-        // always override sortby,limit from the REQUEST. ignore defaults if defined as such.
+        // globally override sortby,limit from the REQUEST. ignore defaults if defined as such.
         foreach (array('sortby', 'limit') as $key) {
             if (array_key_exists($key, $defaults)) {
                 if ($val = $request->getArg($key))
                     $args[$key] = $val;
-                elseif (!empty($args[$key])) {
-                    $GLOBALS['request']->setArg($key, $args[$key]);
+                else {
+                    // multiple pagelists will get overwritten. so dont store it back
+                    ; //$GLOBALS['request']->setArg($key, @$args[$key]);
                 }
             }
         }
@@ -241,13 +242,12 @@ class WikiPlugin
         $dbi = $request->getDbh();
         $pagelist = $this->run($dbi, $plugin_args, $request, $basepage);
         $list = array();
-        if (is_object($pagelist) and isa($pagelist, 'PageList')) {
-            // table or list?
-            foreach ($pagelist->_pages as $page) {
-            	$list[] = $page->getName();
-            }
-        }
-        return $list;
+        if (is_object($pagelist) and isa($pagelist, 'PageList'))
+            return $pagelist->pageNames();
+        elseif (is_array($pagelist))
+            return $pagelist;
+        else    
+            return $list;
     }
 
     function getDefaultLinkArguments() {
