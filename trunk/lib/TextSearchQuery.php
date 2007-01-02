@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.23 2006-04-13 19:30:44 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.24 2007-01-02 13:19:05 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -80,13 +80,22 @@ class TextSearchQuery {
             $this->_regex = 0;
         }
         $this->_case_exact = $case_exact;
-        $parser = new TextSearchQuery_Parser;
-        $this->_tree = $parser->parse($search_query, $case_exact, $this->_regex);
-        $this->_optimize(); // broken under certain circumstances: "word -word -word"
-        if (defined("FULLTEXTSEARCH_STOPLIST"))
-            $this->_stoplist = FULLTEXTSEARCH_STOPLIST;
-        else // default stoplist, localizable.
-            $this->_stoplist = _("(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)");
+        if ($regex != 'pcre') {
+	    $parser = new TextSearchQuery_Parser;
+	    $this->_tree = $parser->parse($search_query, $case_exact, $this->_regex);
+	    $this->_optimize(); // broken under certain circumstances: "word -word -word"
+	    if (defined("FULLTEXTSEARCH_STOPLIST"))
+		$this->_stoplist = FULLTEXTSEARCH_STOPLIST;
+	    else // default stoplist, localizable.
+		$this->_stoplist = _("(A|An|And|But|By|For|From|In|Is|It|Of|On|Or|The|To|With)");
+	}
+	else {
+	    $this->_tree = new TextSearchQuery_node_regex_pcre($search_query);
+	    if (preg_match("/^\/(.*)\/(\w*)$/", $search_query, $m)) {
+	    	$this->_tree->word = $m[1];
+	    	$this->_regex_modifier = $m[2]; // overrides case_exact
+	    }
+	}
     }
 
     function _optimize() {
@@ -98,10 +107,12 @@ class TextSearchQuery {
      */
     function asRegexp() {
         if (!isset($this->_regexp)) {
+            if (!isset($this->_regex_modifier)) 
+                $this->_regex_modifier = ($this->_case_exact?'':'i').'sS';
             if ($this->_regex)
-                $this->_regexp =  '/' . $this->_tree->regexp() . '/'.($this->_case_exact?'':'i').'sS';
+                $this->_regexp =  '/' . $this->_tree->regexp() . '/'.$this->_regex_modifier;
             else
-                $this->_regexp =  '/^' . $this->_tree->regexp() . '/'.($this->_case_exact?'':'i').'sS';
+                $this->_regexp =  '/^' . $this->_tree->regexp() . '/'.$this->_regex_modifier;
         }
         return $this->_regexp;
     }
@@ -298,6 +309,127 @@ class NullTextSearchQuery extends TextSearchQuery {
     function makeSqlClause($make_sql_clause_cb) { return "(1 = 0)"; }
     function asString() { return "NullTextSearchQuery"; }
 };
+
+/**
+ * A simple algebraic matcher for numeric attributes.
+ *  NumericSearchQuery can do ("population < 20000 and area > 1000000", array("population", "area"))
+ *  ->match(array('population' => 100000, 'area' => 10000000)) 
+ *
+ * Supports all mathematical PHP comparison operators, plus ':=' for equality.
+ *   "(x < 2000000 and x >= 10000) or (x >= 100 and x < 2000)"
+ *   "x := 100000" is the same as "x == 100000"
+ *
+ * Since this is basic numerics only, we simply try to get away with 
+ * replacing the variable values at the right positions and do an eval then. 
+ *
+ * @package NumericSearchQuery
+ * @author Reini Urban
+ * @see TextSearchQuery @see SemanticAttributeSearchQuery
+ */
+class NumericSearchQuery
+extends TextSearchQuery
+{
+    /**
+     * Create a new query.
+     *   NumericSearchQuery("population > 20000 or population < 200", "population")
+     *   NumericSearchQuery("population < 20000 and area > 1000000", array("population", "area"))
+     *
+     * @access public
+     * @param $search_query string   A numerical query with placeholders as variable.
+     * @param $placeholders array or string  All placeholders in the query must be defined 
+     * 	here, and will be replaced by the matcher.
+     */
+    function NumericSearchQuery($search_query, $placeholders) {
+	// FIXME: add some basic security checks against user input
+        $this->_query = $search_query;
+	$this->_placeholders = $placeholders;
+
+	// we also allow the M_ constants
+	$this->_allowed_functions = explode(':','abs:acos:acosh:asin:asinh:atan2:atan:atanh:base_convert:bindec:ceil:cos:cosh:decbin:dechex:decoct:deg2rad:exp:expm1:floor:fmod:getrandmax:hexdec:hypot:is_finite:is_infinite:is_nan:lcg_value:log10:log1p:log:max:min:mt_getrandmax:mt_rand:mt_srand:octdec:pi:pow:rad2deg:rand:round:sin:sinh:sqrt:srand:tan:tanh');
+	$this->_allowed_operators = explode(',', '<,<=,>,>=,==,!=,*,+,/,(,),-');
+
+	// This is a speciality: := looks like the attribute definition and is 
+	// therefore a dummy check for this definition.
+	$this->_query = preg_replace("/\b:=\b/", "==", $this->_query);
+	$this->_query = $this->check($this->_query);
+    }
+
+    /**
+     * Check the symbolic definition query against unwanted functions and characters.
+     * "population < 20000 and area > 1000000"
+     */
+    function check ($query) {
+	while (preg_match("/\A\b(\w.+)\s*\(\b\Z/", $query, $m)) {
+	    if (!in_array($m[1],$this->_allowed_functions)) {
+		trigger_error("Illegal function in query: ".$m[1], E_USER_WARNING);
+		return '';
+	    }
+	}
+	// TODO: check for illegal operators. which are no placeholders and functions.
+	
+	// Detect illegal characters
+	$c = "/([^\d\w.,\s".preg_quote(join("",$this->_allowed_operators),"/")."])/";
+	if (preg_match($c, $query, $m)) {
+	    trigger_error("Illegal character in query: ".$m[1], E_USER_WARNING);
+	    return '';
+	}
+	return $query;
+    }
+
+    /**
+     * Check the bound, numeric only query against unwanted functions and sideeffects.
+     * "4560000 < 20000 and 1456022 > 1000000"
+     */
+    function _live_check ($query) {
+	return $query;
+    }
+
+    /**
+     * Strip non-numeric chars from the variable (as the groupseperator) and replace 
+     * it in the symbolic query for evaluation.
+     *
+     * @access private
+     * @param $value number   A numerical value: integer, float or string.
+     * @param $x string  The variable name to be replaced in the query.
+     * @return string
+     */
+    function bind($value, $x) {
+	// TODO: check is_number, is_float, is_integer and do casting
+	$value = preg_replace("/[^-+0123456789.]/", "", $value);
+	//$c = "/\b".preg_quote($x,"/")."\b/";
+	$result = preg_replace("/\b".preg_quote($x,"/")."\b/", $value, $this->_query);
+	// FIXME: do again a final check. now only numbers and some operators are allowed.
+	return $this->_live_check($result);
+    }
+
+    /**
+     * We can match against a single variable or against a hash of variables.
+     *
+     * @access public
+     * @param $search_query string   A numerical query with placeholders as variable.
+     * @param $variable array or string  Must have the same structure as placeholders in the definition.
+     * @return boolean
+     */
+    function match($variable) {
+	if (!is_array($this->_placeholders)) {
+	    if (is_array($variable))
+		trigger_error("Not enough placeholders in NumericSearchQuery() defined.\n"
+			      ."Require ".count($variables)." variables to be defined.");
+	    $search = $this->bind($variable, $this->_placeholders);
+	} else {
+	    if (count($variables) <> count($this->_placeholders))
+		trigger_error("Not matching number of variables and placeholders in NumericSearchQuery->match.\n"
+			      ."Require ".count($variables)." variables to be bound");
+	    foreach ($this->_placeholders as $x) {
+		if (!isset($variable[$x]))
+		    trigger_error("Required NumericSearchQuery->match variable $x not defined.");
+		$search = $this->bind($variable[$x], $x);
+	    }
+	}
+	eval("\$result = (boolean)($search);");
+        return $result;
+    }
+}
 
 
 ////////////////////////////////////////////////////////////////
@@ -866,7 +998,10 @@ class TextSearchQuery_Lexer {
     }
 }
 
-// $Log: not supported by cvs2svn $ 
+// $Log: not supported by cvs2svn $
+// Revision 1.23  2006/04/13 19:30:44  rurban
+// make TextSearchQuery->_stoplist localizable and overridable within config.ini
+// 
 
 // Local Variables:
 // mode: php
