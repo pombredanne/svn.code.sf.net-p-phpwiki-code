@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.139 2006-03-19 14:50:42 rurban Exp $');
+rcs_id('$Id: config.php,v 1.140 2007-01-02 13:21:30 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -24,7 +24,9 @@ define ('_DEBUG_TRACE',     8); // test php memory usage, prints php debug backt
 define ('_DEBUG_INFO',     16);
 define ('_DEBUG_APD',      32);
 define ('_DEBUG_LOGIN',    64); // verbose login debug-msg (settings and reason for failure)
-define ('_DEBUG_SQL',     128);
+define ('_DEBUG_SQL',     128); // force check db, force optimize, print some debugging logs
+define ('_DEBUG_REMOTE',  256); // remote debug into subrequests (xmlrpc, ajax, wikiwyg, ...).
+				// internal links have persistent ?start_debug=1 
 
 function isCGI() {
     return (substr(php_sapi_name(),0,3) == 'cgi' and 
@@ -560,7 +562,37 @@ function getUploadDataPath() {
   return SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/uploads/';
 }
 
+/**
+ * htmlspecialchars doesn't support some special 8bit charsets, which we do want to support.
+ * Well it just prints a warning which we could circumvent.
+ * Note: unused, since php htmlspecialchars does the same, just prints a warning which we silence
+ */
+/*
+function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859-1') {
+    if (in_array(strtolower($charset), 
+                 array('iso-8859-2', 'iso8859-2', 'latin-2', 'latin2'))) 
+    {
+        if (! ($quote & ENT_NOQUOTES)) {
+            $str = str_replace("\"", "&quot;",
+                               $str);
+        }
+        if ($quote & ENT_QUOTES) {
+            $str = str_replace("\'", "&#039;",
+                               $str);
+        }
+        return str_replace(array("<", ">", "&"),
+                           array("&lt;", "&gt;", "&amp;"), $str);
+    }
+    else {
+        return htmlspecialchars($str, $quote, $charset);
+    }
+}
+*/
+
 // $Log: not supported by cvs2svn $
+// Revision 1.139  2006/03/19 14:50:42  rurban
+// sf.net patch #1438442 by Matt Brown: Unitialised variable reference in config.php
+//
 // Revision 1.138  2006/03/07 20:45:43  rurban
 // wikihash for php-5.1
 //
