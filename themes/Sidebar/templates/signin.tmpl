@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: signin.tmpl,v 1.4 2004-06-14 11:26:51 rurban Exp $');
+rcs_id('$Id: signin.tmpl,v 1.5 2007-01-02 13:29:31 rurban Exp $');
 
 if (empty($FORMNAME))
     $FORMNAME = 'signin';
@@ -12,11 +12,10 @@ else
 <?php } ?>
 <?php
 if ($user->isAuthenticated()) {
-    $Sep = $WikiTheme->getButtonSeparator();
     $SignOutB = $WikiTheme->makeButton(_("Sign Out"), "javascript:SignOut();", 'wikiaction');
 ?>
   <?= fmt("User: %s", WikiLink($user->getAuthenticatedId(), 'auto')) ?>
-  <?=$Sep?>
+  <?=$SEP?>
   <script language="JavaScript" type="text/javascript"><!--
     document.write('<input type="hidden" name="auth[logout]" value="0" />');
     function SignOut() {
