@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.8 2006-12-22 00:17:06 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.9 2007-01-02 13:18:26 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -30,7 +30,7 @@ var f, sr_undo, replacewin, undo_buffer=new Array(), undo_buffer_index=0;
 
 function define_f() {
    f=document.getElementById('editpage');
-   f.editarea=document.getElementById('edit[content]');
+   f.editarea=document.getElementById('edit:content');
    sr_undo=document.getElementById('sr_undo');
    undo_enable(false);
    f.editarea.focus();
@@ -429,6 +429,9 @@ function undo_save() {
 
 /*
 $Log: not supported by cvs2svn $
+Revision 1.8  2006/12/22 00:17:06  rurban
+add time to signature
+
 Revision 1.7  2006/09/06 05:45:26  rurban
 use html tags for emphasis. workaround ^* problem
 
