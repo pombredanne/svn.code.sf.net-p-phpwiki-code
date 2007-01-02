@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.227 2006-12-22 17:53:55 rurban Exp $');
+rcs_id('$Id: main.php,v 1.228 2007-01-02 13:22:17 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -811,11 +811,12 @@ class WikiRequest extends Request {
         if (!($action = $this->getArg('action'))) {
             // TODO: improve this SOAP.php hack by letting SOAP use index.php 
             // or any other virtual url as with xmlrpc
-            if (defined('WIKI_SOAP')   and WIKI_SOAP)
+            if (defined('WIKI_SOAP') and WIKI_SOAP)
                 return 'soap';
             // Detect XML-RPC requests.
             if ($this->isPost()
-                && $this->get('CONTENT_TYPE') == 'text/xml'
+                && ($this->get('CONTENT_TYPE') == 'text/xml' 
+                    or $this->get('CONTENT_TYPE') == 'application/xml')
                 && strstr($GLOBALS['HTTP_RAW_POST_DATA'], '<methodCall>')
                )
             {
@@ -879,6 +880,8 @@ class WikiRequest extends Request {
         }
 
         if ($this->getArg('action') == 'xmlrpc') { // how about SOAP?
+	    if (empty($GLOBALS['HTTP_RAW_POST_DATA']))
+		trigger_error("Wrong always_populate_raw_post_data = Off setting in your php.ini\nCannot use xmlrpc!", E_USER_ERROR);
             // wiki.putPage has special otional userid/passwd arguments. check that later.
             $userid = '';
             if (isset($HTTP_SERVER_VARS['REMOTE_USER']))
@@ -910,6 +913,7 @@ class WikiRequest extends Request {
 
     function findActionPage ($action) {
         static $cache;
+        if (!$action) return false;
 
         // check for translated version, as per users preferred language
         // (or system default in case it is not en)
@@ -919,7 +923,7 @@ class WikiRequest extends Request {
             return $cache[$translation];
 
         // check for cached translated version
-        if ($this->_isActionPage($translation))
+        if ($translation and $this->_isActionPage($translation))
             return $cache[$action] = $translation;
 
         // Allow for, e.g. action=LikePages
@@ -934,7 +938,7 @@ class WikiRequest extends Request {
             $trans = new WikiPlugin__WikiTranslation();
             $trans->lang = $LANG;
 	    $default = $trans->translate_to_en($action, $LANG);
-            if ($this->_isActionPage($default))
+            if ($default and $this->_isActionPage($default))
                 return $cache[$action] = $default;
         } else {
             $default = $translation;
@@ -1293,6 +1297,10 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.227  2006/12/22 17:53:55  rurban
+// Remove action from edited url
+// move wikitohtml to lib/WysiwygEdit/Wikiwyg.php
+//
 // Revision 1.226  2006/09/06 06:01:45  rurban
 // minor cleanup
 //
