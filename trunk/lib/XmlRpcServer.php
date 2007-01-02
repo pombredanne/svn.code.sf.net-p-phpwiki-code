@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.18 2006-05-18 06:10:45 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.19 2007-01-02 13:21:21 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -45,62 +45,35 @@
 
 /*
 ToDo:
-        Remove all warnings from xmlrpc.inc 
+        Remove all warnings from xmlrpc.inc
         Return list of external links in listLinks
-        Support RSS2 cloud subscription
+        Support RSS2 cloud subscription: wiki.rssPleaseNotify, pingback.ping
 Done:
         Test hwiki.jar xmlrpc interface (java visualization plugin)
      	Make use of the xmlrpc extension if found. http://xmlrpc-epi.sourceforge.net/
 	Resolved namespace conflicts
+	Added various phpwiki specific methods (mailPasswordToUser, getUploadedFileInfo, 
+	putPage, titleSearch, listPlugins, getPluginSynopsis, listRelations)
+	Use client methods in inter-phpwiki calls: SyncWiki, tests/xmlrpc/
 */
 
 // Intercept GET requests from confused users.  Only POST is allowed here!
 if (empty($GLOBALS['HTTP_SERVER_VARS']))
-    $GLOBALS['HTTP_SERVER_VARS'] =& $_SERVER;
-if ($GLOBALS['HTTP_SERVER_VARS']['REQUEST_METHOD'] != "POST")
+    $GLOBALS['HTTP_SERVER_VARS']  =& $_SERVER;
+if ($GLOBALS['HTTP_SERVER_VARS']['REQUEST_METHOD'] != "POST")  
 {
     die('This is the address of the XML-RPC interface.' .
-        '  You must use XML-RPC calls to access information here');
+        '  You must use XML-RPC calls to access information here.');
 }
-
-// All these global declarations make it so that this file
-// (XmlRpcServer.php) can be included within a function body
-// (not in global scope), and things will still work....
-
-global $xmlrpcI4, $xmlrpcInt, $xmlrpcBoolean, $xmlrpcDouble, $xmlrpcString;
-global $xmlrpcDateTime, $xmlrpcBase64, $xmlrpcArray, $xmlrpcStruct;
-global $xmlrpcTypes;
-global $xmlEntities;
-global $xmlrpcerr, $xmlrpcstr;
-global $xmlrpc_defencoding;
-global $xmlrpcName, $xmlrpcVersion;
-global $xmlrpcerruser, $xmlrpcerrxml;
-global $xmlrpc_backslash;
-global $_xh;
-
+  
+include_once("lib/XmlRpcClient.php");
 if (loadPhpExtension('xmlrpc')) { // fast c lib
-    define('XMLRPC_EXT_LOADED', true);
-
-    global $xmlrpc_util_path;
-    $xmlrpc_util_path = dirname(__FILE__)."/XMLRPC/";
-    include_once("lib/XMLRPC/xmlrpc_emu.inc"); 
-    global $_xmlrpcs_debug;
     include_once("lib/XMLRPC/xmlrpcs_emu.inc");
-
- } else { // slow php lib
-    define('XMLRPC_EXT_LOADED', true);
-
-    // Include the php XML-RPC library
-    include_once("lib/XMLRPC/xmlrpc.inc");
-
+} else { // slow php lib
     global $_xmlrpcs_dmap;
-    global $_xmlrpcs_debug;
     include_once("lib/XMLRPC/xmlrpcs.inc");
 }
- 
 
-//  API version
-define ("WIKI_XMLRPC_VERSION", 2);
 
 /**
  * Helper function:  Looks up a page revision (most recent by default) in the wiki database
@@ -129,50 +102,6 @@ function _getPageRevision ($params)
     } 
     return false;
 } 
-
-/*
- * Helper functions for encoding/decoding strings.
- *
- * According to WikiRPC spec, all returned strings take one of either
- * two forms.  Short strings (page names, and authors) are converted to
- * UTF-8, then rawurlencode()d, and returned as XML-RPC <code>strings</code>.
- * Long strings (page content) are converted to UTF-8 then returned as
- * XML-RPC <code>base64</code> binary objects.
- */
-
-/**
- * Urlencode ASCII control characters.
- *
- * (And control characters...)
- *
- * @param string $str
- * @return string
- * @see urlencode
- */
-function UrlencodeControlCharacters($str) {
-    return preg_replace('/([\x00-\x1F])/e', "urlencode('\\1')", $str);
-}
-
-/**
- * Convert a short string (page name, author) to xmlrpcval.
- */
-function short_string ($str) {
-    return new xmlrpcval(UrlencodeControlCharacters(utf8_encode($str)), 'string');
-}
-
-/**
- * Convert a large string (page content) to xmlrpcval.
- */
-function long_string ($str) {
-    return new xmlrpcval(utf8_encode($str), 'base64');
-}
-
-/**
- * Decode a short string (e.g. page name)
- */
-function short_string_decode ($str) {
-    return utf8_decode(urldecode($str));
-}
 
 /**
  * Get an xmlrpc "No such page" error message
@@ -352,7 +281,7 @@ function getAllPages($params)
  *   name (string): the canonical page name 
  *   lastModified (date): Last modification date 
  *   version (int): current version 
- * 	 author (string): author name 
+ *   author (string): author name 
  */
 $wiki_dmap['getPageInfo']
 = array('signature'	=> array(array($xmlrpcStruct, $xmlrpcString)),
@@ -581,6 +510,39 @@ function putPage($params) {
 }
 
 /**
+ * struct getUploadedFileInfo( string localpath ) : returns a struct with elements: 
+ *   lastModified (date): Last modification date 
+ *   size (int): current version 
+ * This is to sync uploaded files up to a remote master wiki. (SyncWiki)
+ * Not existing files return both 0.
+ */
+$wiki_dmap['getUploadedFileInfo']
+= array('signature'	=> array(array($xmlrpcStruct, $xmlrpcString)),
+        'documentation' => 'Gets date and size about an uploaded local file',
+        'function'	=> 'getUploadedFileInfo');
+
+function getUploadedFileInfo($params)
+{
+    // localpath is the relative part after "Upload:"	
+    $ParamPath = $params->getParam(0);
+    $localpath = short_string_decode($ParamPath->scalarval());
+    preg_replace("/^[\\ \/ \.]/", "", $localpath); // strip hacks
+    $file = getUploadFilePath() . $localpath;
+    if (file_exists($file)) {
+        $size = filesize($file);
+        $lastmodified = filemtime($file);
+    } else {
+    	$size = 0;
+    	$lastmodified = 0;
+    }        
+    return new xmlrpcresp(new xmlrpcval
+    	(array('lastModified' => new xmlrpcval(iso8601_encode($lastmodified, 1),
+                                               "dateTime.iso8601"),
+               'size' => new xmlrpcval($size, "int")), 
+        "struct"));
+}
+
+/**
  * Publish-Subscribe
  * Client subscribes to a RecentChanges-like channel, getting a short 
  * callback notification on every change. Like PageChangeNotification, just shorter 
@@ -611,7 +573,7 @@ function rssPleaseNotify($params)
 }
 
 /*
- *  String wiki.rssPleaseNotify ( username )
+ *  boolean wiki.mailPasswordToUser ( username )
  *  returns: true or false 
 
  */
@@ -657,7 +619,7 @@ function titleSearch($params)
     $searchstring = short_string_decode($ParamPageName->scalarval());
     if (count($params->params) > 1) {
         $ParamOption = $params->getParam(1);
-        $option = $ParamOption->scalarval();
+        $option = (int) $ParamOption->scalarval();
     } else $option = 0;
     // default option: substring, case-inexact
 
@@ -674,8 +636,8 @@ function titleSearch($params)
         }
     } else {
     	if ($option & 4 or $option & 8) { 
-		    global $xmlrpcerruser;
-    		return new xmlrpcresp(0, $xmlrpcerruser + 1, "Invalid option");
+	    global $xmlrpcerruser;
+    	    return new xmlrpcresp(0, $xmlrpcerruser + 1, "Invalid option");
     	}
     }
     include_once("lib/TextSearchQuery.php");
@@ -765,10 +727,48 @@ function getPluginSynopsis($params)
 }
 
 /** 
+ * array wiki.callPlugin(String name, String args)
+ *
+ * Returns an array of pages as returned by the plugins PageList call. 
+ * Only valid for plugins returning pagelists, e.g. BackLinks, AllPages, ...
+ * For various AJAX or WikiFormRich calls.
+ *
+ * @author: Reini Urban
+ */
+$wiki_dmap['callPlugin']
+= array('signature'     => array(array($xmlrpcArray, $xmlrpcString, $xmlrpcString)),
+        'documentation' => "Returns an array of pages as returned by the plugins PageList call",
+        'function'      => 'callPlugin');
+
+function callPlugin($params)
+{
+    global $request;
+    $dbi = $request->getDbh();
+    $ParamPlugin = $params->getParam(0);
+    $pluginName = short_string_decode($ParamPlugin->scalarval());
+    $ParamArgs = $params->getParam(1);
+    $plugin_args = short_string_decode($ParamArgs->scalarval());
+    $basepage = ''; //$pluginName;
+
+    require_once("lib/WikiPlugin.php");
+    $w = new WikiPluginLoader;
+    $p = $w->getPlugin($pluginName, false); // second arg?
+    $pagelist = $p->run($dbi, $plugin_args, $request, $basepage);
+    $list = array();
+    if (is_object($pagelist) and isa($pagelist, 'PageList')) {
+	foreach ($pagelist->_pages as $page) {
+	    $list[] = $page->getName();
+	}
+    }
+    return new xmlrpcresp(new xmlrpcval($list, "array"));
+}
+
+
+/** 
  * array wiki.listRelations()
  *
  * Returns an array of all available relations. 
- * For SemanticSearch autofill method.
+ * For the SemanticSearch autofill method.
  *
  * @author: Reini Urban
  */
@@ -781,8 +781,7 @@ function listRelations($params)
 {
     global $request;
     $dbh = $request->getDbh();
-    $RetArray = $dbh->listRelations();
-    return new xmlrpcresp(new xmlrpcval($RetArray->asArray(), "array"));
+    return new xmlrpcresp(new xmlrpcval($dbh->listRelations(), "array"));
 }
 
 /** 
@@ -924,6 +923,9 @@ class XmlRpcServer extends xmlrpc_server
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.18  2006/05/18 06:10:45  rurban
+ add xmlrpc listRelations signature
+
  Revision 1.17  2005/10/31 16:49:31  rurban
  fix doc
 
