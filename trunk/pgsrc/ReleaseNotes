@@ -1,21 +1,21 @@
-Date: Wed, 11 Oct 2006 09:16:43 +0200
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.13pre-20061010)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.65 2006-10-12 06:38:53 rurban Exp $
+Date: Tue, 2 Jan 2007 12:35:17 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: ReleaseNotes,v 1.66 2007-01-02 13:24:41 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.65 $";
+  pgsrc_version="2 $Revision: 1.66 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-1.3.13 (not yet), Reini Urban, Jean-Nicolas Gereone, Joel Uckelman
+1.3.13  Jan, 15 2007 Reini Urban
 
 fixes:
-* DB: ANSI SQL statements
-* testsuite: force C locale and EN $LANG
+* DB: use ANSI SQL statements (oracle by umfang699, postgresql by Reini Urban)
 * fixed blog and Monobook theme layout
-* xhtml dump for subpages into subdirectories
+* xhtml dump for subpages into subdirectories, fixed filenames and subdir names
+* fixed loading pages into foreign charsets (such as utf-8)
 * ErrorManager: patch #1438439 by Matt Brown: 
   Only set no-cache headers when error output is generated
 * ImageLinks: patch #1348996 by Robert Litwiniec
@@ -23,43 +23,128 @@ fixes:
 * improve pdf output via external converter
 * force integer constants to be set as integer
 * partially fix CRC overflow in ziplib (Bob Apthorpe)
+* testsuite: force C locale and EN $LANG
+* fixed display of edited InterWikiMap. static var issue
+* fixed display of "Merge and Edit: pagename" header in merge edit (hack!)
+* WikiFormRich: fix name=value parsing. fix limit with plugin-list invocations
+* plugin/Diff: fix lib/diff loading conflicts by removing duplicate classes
+* plugin/Ploticus: support PLOTICUS_PREFABS config.ini setting (documented but never worked)
+* fix edit:locked label selection: typo, was edit:lock
+* fixed moacdropdown integration
+* fixed fortune error handling
+* fixed limit handling with multiple pagelists: don't overwrite request arg
 
 changes:
-* add linkrelation support: getPageLinks returns now an array of hashes
+* add linkrelation support: getPageLinks returns now an array of hashes. optimize get_links for relations.
+* moved default help pages to Help/ subpages
 * generalized ENABLE_HTMLAREA3 to ENABLE_WYSIWYG
 * DB: foreign key support in schemas, simplify methods
-* print Ignored stoplist words on FullTextSearch, add FULLTEXTSEARCH_STOPLIST constant,
+* print "Ignored stoplist words" on FullTextSearch, 
+  add FULLTEXTSEARCH_STOPLIST constant,
   make TextSearchQuery->_stoplist localizable
-* add <nowiki></nowiki> tag: Transform only html markup and entities
 * fix arg order in WikiDB_backend_search()
-* remove user table upgrade from SQL db.
+* remove user table: upgrade from SQL db.
 * updated locale for it, de and es (google translation)
-* improve loading multiple version archives such as full zipdumps. force temp. overwrite
-* add new empty InterWiki moniker ":", not to store backlinks [:DontStoreLink]
+* improve loading multiple version archives such as full zipdumps. force temp. overwrite.
+  support loadfile for multipart archives (full dumps) automatically
+* add new empty InterWiki moniker ":", not to store backlinks [:DontStoreLink] (experimental)
 * omit actionbar from pdf output
-* support loadfile for multipart archives (full dumps) automatically
-* _BackendInfoPlugin prints linkoinfo also.
+* support charsets in pagedumps for loadfile and virgin setup 
+* _BackendInfoPlugin prints linkinfo also.
 * ExternalSearchPlugin displays the button at the right. Change it with 
-  EXTERNALSEARCH_DEFAULT_BUTTON_POSITION = left, or the argument button_position = left or none.
+  EXTERNALSEARCH_DEFAULT_BUTTON_POSITION = left, or the argument button_position=left or none.
+* disabled postgresql optimize() in favor of autovacuum, 
+  enable it in the backend method if the web user is the table owner (security risk)
+* protected tests. only allow localhost
+* optimize ArchiveCleaner for the new default case (since 1.3.11): Keep all revisions.
+* changed the default DB backend from gdbm to dba db4
+* changed action=upgrade to check and store a db version
+* don't loadfile *.orig files (this might be a limitation. sorry)
+* rename _AuthFile to DebugAuthFile in upgrade
+* support more WikiFormRich method arguments: url, dynurl, xmlrpc, dynxmlrpc, 
+  the autocomplete option for pulldown[] and editbox[] and the new combobox[] widget.
+* updated most template files for harmonisation
+* changed default LiveSearch method in search.tmpl from url to xmlrpc. faster and less hackish.
+* fixed all templates with missing revision check. can be false.
+* rewrote and redefined WikiDB::listRelations. list only all relations as array.
+* changed Semantic attribute syntax from ":-" to ":=" (relevant to cvs users only)
+* change TextSearchQuery handling of regex=pcre: plain string, no parsing at all, 
+  detect and apply modifiers
 
 new:
 * add SemanticRelations syntax and db structure.
   Sample: pagename=SanDiego isa::city => SanDiego relation=isa, linkto=city
   population:=1,305,736 (store unified attribute in pagedata)
-* postgresql tsearch2 support
-* added new xml-rpc methods: listPlugins, getPluginSynopsis
-* new FileInfoPlugin
-* new BoxRightPlugin
-* new PasswordResetPlugin
-* new experimental WYSIWYG edit libraries 
-  (WikiWyg, tinymce, FCKeditor, htmlarea3, htmlarea2, spaw)
-* new wysiwyg_editor feature by Jean-Nicolas GEREONE 
+* new experimental WYSIWYG edit library framework: 
+  WikiWyg, tinymce, FCKeditor, htmlarea3, htmlarea2, spaw
+* new wysiwyg_editor feature by Jean-Nicolas GEREONE and Sabri LABBENE (experimental)
+* added postgresql tsearch2 support
+* new experimental flatfile backend: readable page source files (experimental)
+* added new xmlrpc methods: listPlugins, getPluginSynopsis, mailPasswordToUser, 
+  getUploadedFileInfo, listRelations, callPlugin
+* new plugins: SemanticSearch, ListRelations, FileInfo, BoxRight, PasswordReset, WatchPage
+* add <nowiki></nowiki> tag: Transform only html markup and entities
 * new option DISABLE_MARKUP_WIKIWORD to force [ ] for links
 * new option ENABLE_MARKUP_DIVSPAN (experimental)
 * new option PLUGIN_MARKUP_MAP for xml-style plugin syntax (experimental)
-* support Windows NTLM Auth via HttpAuth: mod_ntlm (apache1) and mod_auth_sspi (apache2)
+* support Windows NTLM Auth via HttpAuth: mod_ntlm (apache1+2. also on linux) 
+  and mod_auth_sspi (apache2. better, but windows only)
 * patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
 * new options db-check and db-rebuild for WikiAdminPlugin.
+* new MailNotify class, simplified WikiDB.php
+* added "Printable version" js to monobook theme. See License in 
+  http://www.howtocreate.co.uk/jslibs/termsOfUse.html
+* new ActionButton function for MonoBook with selected state. (tab state)
+* added SyncWiki plugin to sync pages and uploads with master wiki.
+* added boolean UPLOAD_USERDIR to upload into user-specific directory.
+* added support for multiple page arguments in BackLinks. Logical AND.
+* added wikidb->backend->rebuild()
+* added "Keep old" and "Overwrite with new" buttons and actions for loadfile merge edit.
+* added lib/XmlRpcClient, xmlrpc methods to lib/HttpClient and acdropdown.js
+* created Help/*Plugin stubs for all plugins in pgsrc
+* added a new _DEBUG_REMOTE flag to debug into remote sessions (xmlrpc, ajax, ...)
+* added WikiDB::linkSearch and backend/dumb/~LinkSearchIter.php. Mainly for SemanticSearch, 
+  but can be used for BackLinks et al also
+
+1.3.12p3 Jun, 18 2006, Reini Urban:
+
+* fix [/Subpage] links
+* fix pref storing of already crypted passwords. bug #1327470 (Tom Harding)
+* fix cache headers on errors (@ob_end_flush issue). (matt brown)
+* fix BogoLogin when ENABLE_PAGEPERM=false. patch #1438392 by Matt Brown
+* unique WIKI_ID cookies per WIKI_NAME. patch #1333957 by Matt Brown
+* added DATABASE_OPTIMISE_FREQUENCY feature. patch #1377011 by Matt Brown
+* don't check lock_table priv on action=upgrade
+* fix _accesslog->logtable and _is_buffering_output warnings (uckelman)
+* do not print wrong length header on url-rewriting. bug #1376007
+* fix pref->set: Error generated when login out. bug #1355533 (Thierry Nabeth)
+* fix default preferences for editheight maxrows, by Manuel Vacelet.
+* fix DBAUTH arguments to be position independent, bug #1358973
+* add PdoDbPassUser user
+* fix output of Homepage prefs update
+* update config-dist.ini format from CVS
+* update configurator.php from CVS
+* print optimize wikidb only when DEBUG
+* simplify messages for translators
+* added ImageTile.php
+* added tsearch2 to doc/INSTALL.pgsql
+* added basepage to Cached_WikiLink::asXML for subpages within CreateTOC
+* print filename on dba access error
+* use bind_textdomain_codeset. bug #1480077 (Kai Krakow)
+* make TextSearchQuery->_stoplist localizable and overridable within config.ini
+* fixes for mysql 5.x wantedpages join
+* add rel=nofollow to more actions. patch by Matt Brown
+* add verify to RevertPage, display reverted page as template
+* update plugin/CalendarList: patches by mpullen and banjo
+* update plugin/GraphViz
+* added plugin/PasswordReset
+* fixed hash() in plugin/RateIt
+* plugin/_AuthInfo: protect File passwords
+* added Captcha to Crao edit template
+* added MacOSX Pdf button
+* fixed Portland and Wordpress editpage template
+* removed Wordpress buttons, transparent default buttons should be used.
+* disabled RelatedChanges button
 
 1.3.12p2 Mar, 7 2006, Reini Urban:
 
