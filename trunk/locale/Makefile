@@ -1,4 +1,4 @@
- # $Id: Makefile,v 1.49 2005-10-30 16:38:14 rurban Exp $
+ # $Id: Makefile,v 1.50 2007-01-02 13:32:24 rurban Exp $
 #
 # locale/Makefile
 #
@@ -114,6 +114,7 @@ ${POT_FILE}: ../lib/HtmlParser.php
 ${POT_FILE}: ../lib/HttpClient.php
 ${POT_FILE}: ../lib/IniConfig.php
 ${POT_FILE}: ../lib/InlineParser.php
+${POT_FILE}: ../lib/MailNotify.php
 ${POT_FILE}: ../lib/PageList.php
 ${POT_FILE}: ../lib/PagePerm.php
 ${POT_FILE}: ../lib/PageType.php
@@ -156,9 +157,11 @@ ${POT_FILE}: ../lib/WikiDB/backend/dumb/MostRecentIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/TextSearchIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/WantedPagesIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/file.php
+${POT_FILE}: ../lib/WikiDB/backend/flatfile.php
 ${POT_FILE}: ../lib/WikiDB/cvs.php
 ${POT_FILE}: ../lib/WikiDB/dba.php
 ${POT_FILE}: ../lib/WikiDB/file.php
+${POT_FILE}: ../lib/WikiDB/flatfile.php
 ${POT_FILE}: ../lib/WikiGroup.php
 ${POT_FILE}: ../lib/WikiPlugin.php
 ${POT_FILE}: ../lib/WikiPluginCached.php
@@ -166,6 +169,7 @@ ${POT_FILE}: ../lib/WikiUser.php
 ${POT_FILE}: ../lib/WikiUser/AdoDb.php
 ${POT_FILE}: ../lib/WikiUser/BogoLogin.php
 ${POT_FILE}: ../lib/WikiUser/Db.php
+${POT_FILE}: ../lib/WikiUser/EMailConfim.php
 ${POT_FILE}: ../lib/WikiUser/File.php
 ${POT_FILE}: ../lib/WikiUser/Forbidden.php
 ${POT_FILE}: ../lib/WikiUser/HttpAuth.php
@@ -178,11 +182,15 @@ ${POT_FILE}: ../lib/WikiUser/PersonalPage.php
 ${POT_FILE}: ../lib/WikiUser/Session.php
 ${POT_FILE}: ../lib/WikiUserNew.php
 ${POT_FILE}: ../lib/WysiwygEdit.php
+${POT_FILE}: ../lib/WysiwygEdit/FCKeditor.php
+${POT_FILE}: ../lib/WysiwygEdit/Wikiwyg.php
 ${POT_FILE}: ../lib/WysiwygEdit/htmlarea2.php
 ${POT_FILE}: ../lib/WysiwygEdit/htmlarea3.php
+${POT_FILE}: ../lib/WysiwygEdit/spaw.php
 ${POT_FILE}: ../lib/WysiwygEdit/tinymce.php
 ${POT_FILE}: ../lib/XmlElement.php
 ${POT_FILE}: ../lib/XmlParser.php
+${POT_FILE}: ../lib/XmlRpcClient.php
 ${POT_FILE}: ../lib/XmlRpcServer.php
 ${POT_FILE}: ../lib/config.php
 ${POT_FILE}: ../lib/diff.php
@@ -207,6 +215,7 @@ ${POT_FILE}: ../lib/plugin/AuthorHistory.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
 ${POT_FILE}: ../lib/plugin/BlogArchives.php
 ${POT_FILE}: ../lib/plugin/BlogJournal.php
+${POT_FILE}: ../lib/plugin/BoxRight.php
 ${POT_FILE}: ../lib/plugin/CacheTest.php
 ${POT_FILE}: ../lib/plugin/Calendar.php
 ${POT_FILE}: ../lib/plugin/CalendarList.php
@@ -249,6 +258,7 @@ ${POT_FILE}: ../lib/plugin/PageGroup.php
 ${POT_FILE}: ../lib/plugin/PageHistory.php
 ${POT_FILE}: ../lib/plugin/PageInfo.php
 ${POT_FILE}: ../lib/plugin/PageTrail.php
+${POT_FILE}: ../lib/plugin/PasswordReset.php
 ${POT_FILE}: ../lib/plugin/PhotoAlbum.php
 ${POT_FILE}: ../lib/plugin/PhpHighlight.php
 ${POT_FILE}: ../lib/plugin/PhpWeather.php
@@ -270,6 +280,8 @@ ${POT_FILE}: ../lib/plugin/RelatedChanges.php
 ${POT_FILE}: ../lib/plugin/RichTable.php
 ${POT_FILE}: ../lib/plugin/RssFeed.php
 ${POT_FILE}: ../lib/plugin/SearchHighlight.php
+${POT_FILE}: ../lib/plugin/SemanticRelations.php
+${POT_FILE}: ../lib/plugin/SemanticSearch.php
 ${POT_FILE}: ../lib/plugin/SiteMap.php
 ${POT_FILE}: ../lib/plugin/SqlResult.php
 ${POT_FILE}: ../lib/plugin/SyntaxHighlighter.php
@@ -287,6 +299,8 @@ ${POT_FILE}: ../lib/plugin/UserRatings.php
 ${POT_FILE}: ../lib/plugin/VisualWiki.php
 ${POT_FILE}: ../lib/plugin/WantedPages.php
 ${POT_FILE}: ../lib/plugin/WantedPagesOld.php
+${POT_FILE}: ../lib/plugin/WatchList.php
+${POT_FILE}: ../lib/plugin/WatchPage.php
 ${POT_FILE}: ../lib/plugin/WhoIsOnline.php
 ${POT_FILE}: ../lib/plugin/WikiAdminChmod.php
 ${POT_FILE}: ../lib/plugin/WikiAdminChown.php
@@ -344,6 +358,8 @@ ${POT_FILE}: ../themes/MacOSX/themeinfo.php
 ${POT_FILE}: ../themes/MonoBook/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/body.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/browse-footer.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/browse.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/editpage.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/info.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/logo.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/navbar.tmpl
@@ -439,9 +455,7 @@ ${POT_FILE}: ../themes/default/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/default/templates/wikiblog.tmpl
 ${POT_FILE}: ../themes/default/templates/wikiforum.tmpl
 ${POT_FILE}: ../themes/default/themeinfo.php
-${POT_FILE}: ../themes/default/tiny_mce/tiny_mce_gzip.php
 ${POT_FILE}: ../themes/shamino_com/templates/actionbar.tmpl
-${POT_FILE}: ../themes/shamino_com/templates/bottom.tmpl
 ${POT_FILE}: ../themes/shamino_com/templates/browse-footer.tmpl
 ${POT_FILE}: ../themes/shamino_com/templates/debug.tmpl
 ${POT_FILE}: ../themes/shamino_com/templates/info.tmpl

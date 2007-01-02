@@ -300,6 +300,8 @@ $locale["Allow / Deny"] =
    "Erlaube / Sperre";
 $locale["Allows selection of multiple pages which get passed to other WikiAdmin plugins."] =
    "Erlaubt die Auswahl mehrerer Seiten, die dann mit weiteren WikiAdmin Zusatzprogrammen bearbeitet werden.";
+$locale["Already logged in"] =
+   "Bereits eingeloggt";
 $locale["Also pages which have been deleted at least %s days."] =
    "Auch Seiten, die in den letzten %s Tagen gelöscht wurden.";
 $locale["An unnamed PhpWiki"] =
@@ -336,12 +338,16 @@ $locale["Are you sure you want to permanently rename the selected files?"] =
    "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich umbenennen wollen?";
 $locale["Are you sure you want to permanently search & replace text in the selected files?"] =
    "Sind Sie sicher, dass Sie alle Wörter in den angegebenen Seiten ersetzen wollen?";
+$locale["Are you sure?"] =
+   "Sind Sie sicher?";
 $locale["Argument '%s' not declared by plugin."] =
    "Argument »%s« nicht im Zusatzprogramm deklariert.";
 $locale["Arguments"] =
    "Parameter";
 $locale["Attempting to use the directory '%s' instead."] =
    "Versuche stattdessen das Verzeichnis »%s« zu verwenden.";
+$locale["Attributes of %s"] =
+   "Attribute für %s";
 $locale["Auth Level"] =
    "Auth. Ebene";
 $locale["Auth Method"] =
@@ -432,6 +438,8 @@ $locale["Cancel"] =
    "Abbrechen";
 $locale["Cancel rating"] =
    "Bewertung löschen";
+$locale["Cancelled"] =
+   "Abgebrochen";
 $locale["Cannot create directory '%s'"] =
    "Das Verzeichnis »%s« kann nicht erzeugt werden";
 $locale["Cannot open AUTH_GROUP_FILE %s"] =
@@ -595,7 +603,7 @@ $locale["DebugGroupInfo"] =
 $locale["DebugInfo"] =
    "DebugInfo";
 $locale["Default InterWiki map file not loaded."] =
-   "Standard-Datei der InterWiki-Karte nicht geladen.";
+   "Standard-Datei der InterWikiListe nicht geladen.";
 $locale["Default language: '%s'"] =
    "Standardsprache für dieses Wiki: »%s«";
 $locale["Default preferences will be used."] =
@@ -742,6 +750,8 @@ $locale["Enter pages seperated by space or comma. Wildcards (fileglobbing) allow
    "Liste aller Seiten durch Leerzeichen oder Komma getrennt. Reguläre Ausdrücke (fileglobbing) erlaubt.";
 $locale["Enter your UserId to sign in"] =
    "Tragen Sie bitte für die Anmeldung im Wiki Ihren Benutzernamen ein";
+$locale["Error sending email with password for user %s."] =
+   "Fehler beim Versenden der E-Mail mit dem neuen Passwort für Benutzer %s.";
 $locale["Error: Empty search string."] =
    "Fehler: Leeres Suchwort.";
 $locale["Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."] =
@@ -824,8 +834,6 @@ $locale["Go?"] =
    "Los?";
 $locale["GoTo"] =
    "GeheZu";
-$locale["GoodStyle"] =
-   "GuterStil";
 $locale["GooglePlugin"] =
    "GoogleZusatzprogramm";
 $locale["Grant"] =
@@ -852,6 +860,8 @@ $locale["HelloWorld"] =
    "HalloWelt";
 $locale["HelloWorldPlugin"] =
    "HalloWeltPlugin";
+$locale["Help"] =
+   "Hilfe";
 $locale["Here you can override site-specific default values."] =
    "Hier können Sie einige Voreinstellungen ändern.";
 $locale["Hide %s:"] =
@@ -951,7 +961,7 @@ $locale["InterWiki"] =
 $locale["InterWiki Address"] =
    "InterWiki-Adresse";
 $locale["InterWikiMap"] =
-   "InterWikiKarte";
+   "InterWikiListe";
 $locale["InterWikiSearch"] =
    "InterWikiSuche";
 $locale["Invalid ACL"] =
@@ -1069,7 +1079,7 @@ $locale["LoadDump"] =
 $locale["Loading '%s'"] =
    "»%s« wird geladen";
 $locale["Loading InterWikiMap from external file %s."] =
-   "Die InterWikikarte wird von der externen Datei %s geladen.";
+   "Die InterWikiListe wird von der externen Datei %s geladen.";
 $locale["Loading files"] =
    "Das Dateienladen in diesem Wiki";
 $locale["Loading up virgin wiki"] =
@@ -1206,8 +1216,6 @@ $locale["Nothing found"] =
    "Nichts gefunden";
 $locale["OK"] =
    "OK";
-$locale["Ok"] =
-   "Ok";
 $locale["Okay"] =
    "OK";
 $locale["Old UserPage %s without stored password updated with empty password. Set a password in your UserPreferences."] =
@@ -1216,8 +1224,6 @@ $locale["OldStyleTable"] =
    "TraditionellerTabellenStil";
 $locale["OldStyleTablePlugin"] =
    "TraditionellerTabellenStilPlugin";
-$locale["OldTextFormattingRules"] =
-   "AlteTextFormatierungsRegeln";
 $locale["Older page:"] =
    "Ältere Seite:";
 $locale["One page links to %s:"] =
@@ -1328,6 +1334,8 @@ $locale["Password was not changed."] =
    "Passwort wurde nicht geändert.";
 $locale["Password:"] =
    "Passwort:";
+$locale["PasswordReset"] =
+   "PasswortZurücksetzen";
 $locale["Perform searches on InterWiki sites listed in InterWikiMap."] =
    "Durchsuchen im InterWiki sites die im InterWikiMap verzeichnet sind.";
 $locale["Permanently remove all selected pages."] =
@@ -1568,12 +1576,16 @@ $locale["Requires WikiAdmin privileges to edit."] =
    "Verlangt Administratorenrechte zur Bearbeitung.";
 $locale["Reset"] =
    "Zurücksetzen";
+$locale["Reset password of user: "] =
+   "Setze Passwort für Benutzer zurück: ";
 $locale["Restore Anyway"] =
    "Ungeprüft überschreiben";
 $locale["Return to %s"] =
    "Zurück zu %s";
 $locale["Revert"] =
    "Zurückspeichern";
+$locale["Revert: %s"] =
+   "Zurückspeichern: %s";
 $locale["Reverting to a previous version of pages"] =
    "Zurückspeichern einer älteren Version";
 $locale["Revision Not Found"] =
@@ -1642,6 +1654,14 @@ $locale["Selected Pages: "] =
    "Ausgewählte Seiten: ";
 $locale["Selected page '%s' passed to '%s'."] =
    "Ausgewählte Seite »%s« an »%s« übergeben.";
+$locale["Semantic relations for %s"] =
+   "Semantische Beziehungen für %s";
+$locale["SemanticRelations"] =
+   "SemantischeBeziehungen";
+$locale["SemanticSearch"] =
+   "SemantischeSuche";
+$locale["Send email"] =
+   "Versende E-Mail";
 $locale["Serialized file %s"] =
    "Serialisierte Datei %s";
 $locale["Set Password"] =
@@ -1686,8 +1706,6 @@ $locale["SignOut"] =
    "Abmelden";
 $locale["Signed Users"] =
    "Angemeldete Benutzer";
-$locale["Signed as %s"] =
-   "Angemeldet as %s";
 $locale["Simple RSS Feed aggregator Plugin"] =
    "Einfaches RSS Feed Plugin";
 $locale["Simple Sample Plugin"] =
@@ -1782,8 +1800,6 @@ $locale["Template"] =
    "Benutzeroberfläche";
 $locale["TermsOfUse"] =
    "BenutzungsBedingungen";
-$locale["TextFormattingRules"] =
-   "TextFormatierungsRegeln";
 $locale["Thank you for editing %s."] =
    "Danke für das Bearbeiten von %s.";
 $locale["Thanks for adding this translation!"] =
@@ -1930,8 +1946,6 @@ $locale["Unable to connect to LDAP server %s"] =
    "Konnte LDAP Server %s nicht finden";
 $locale["Unable to find src='%s'"] =
    "Konnte src='%s' nicht lesen";
-$locale["Unable to load: %s"] =
-   "Konnte %s nicht laden";
 $locale["Unable to open directory '%s' for reading"] =
    "Konnte Verzeichnis »%s« nicht zum Lesen öffnen";
 $locale["Unable to read src='%s'"] =
@@ -2043,7 +2057,7 @@ $locale["Visited pages on this wiki, ordered by popularity:"] =
 $locale["W"] =
    "Br.";
 $locale["WARNING: InterWikiMap page is unlocked, so not using those links."] =
-   "ACHTUNG: Die InterWikiKarte Seite ist ungesperrt. Ignoriert.";
+   "ACHTUNG: Die InterWikiListe Seite ist ungesperrt. Ignoriert.";
 $locale["Wanted From"] =
    "Benötigt von";
 $locale["Wanted Pages for %s (%d total):"] =
@@ -2056,8 +2070,6 @@ $locale["Wanted Pages in this wiki:"] =
    "WunschZettelSeiten in diesem Wiki:";
 $locale["WantedPages"] =
    "WunschZettelSeiten";
-$locale["Warning!"] =
-   "Achtung!";
 $locale["Warning:"] =
    "Achtung:";
 $locale["Warning: The search string cannot be empty!"] =
@@ -2102,8 +2114,8 @@ $locale["WikiAdminSetAcl"] =
    "WikiAdminAclSetzen";
 $locale["WikiAdminUtils"] =
    "WikiAdminUtils";
-$locale["WikiAdminUtils says:"] =
-   "WikiAdminUtils sagt:";
+$locale["WikiAdminUtils %s returned:"] =
+   "WikiAdminUtils %s gibt zurück:";
 $locale["WikiBlog"] =
    "WikiBlog";
 $locale["WikiBlogPlugin"] =
@@ -2164,6 +2176,8 @@ $locale["You must specify a directory to dump to"] =
    "Sie müssen zum Sichern ein Verzeichnis angeben.";
 $locale["You must wait for moderator approval."] =
    "Sie müssen auf die Zustimmung des Moderators warten.";
+$locale["You need to specify the userid!"] =
+   "Sie müssen den Benutzernamen angeben!";
 $locale["You searched for: "] =
    "Sie suchten nach: ";
 $locale["You stored an empty password in your '%s' page."] =
