@@ -1,4 +1,4 @@
-<?php // $Id: configurator.php,v 1.45 2006-12-23 16:12:16 rurban Exp $
+<?php // $Id: configurator.php,v 1.46 2007-01-03 21:36:14 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -162,7 +162,7 @@ echo '<','?xml version="1.0" encoding="iso-8859-1"?',">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.45 2006-12-23 16:12:16 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.46 2007-01-03 21:36:14 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -378,6 +378,9 @@ array('Wikiwyg'   => 'Wikiwyg',
 
 $properties["WYSIWYG_DEFAULT_PAGETYPE_HTML"] =
 new boolean_define_commented_optional('WYSIWYG_DEFAULT_PAGETYPE_HTML');
+
+$properties["UPLOAD_USERDIR"] =
+new boolean_define_commented_optional('UPLOAD_USERDIR');
 
 $properties["ENABLE_XHTML_XML"] =
 new boolean_define_commented_optional('ENABLE_XHTML_XML');
