@@ -1,9 +1,9 @@
-Date: Mon, 14 Nov 2006 02:20:43 -0800
+Date: Fri, 29 Dec 2006 18:57:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2FWikiPlugin,v 1.3 2007-01-02 13:24:58 rurban Exp $
+X-Rcs-Id: $Id: Help%2FWikiPlugin,v 1.4 2007-01-03 21:27:28 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiPlugin;
-  pgsrc_version="2 $Revision: 1.3 $";
+  pgsrc_version="2 $Revision: 1.4 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -17,9 +17,10 @@ A plugin is some PHP code that
 * implements the ~WikiPlugin interface by extending that class.
 
 There are many plugins already distributed with PhpWiki. Simply look in the =lib/plugin=
-directory or see the PluginManager list.
+directory or see the PluginManager list or see all the 
+[Help/*Plugin pages|phpwiki:TitleSearch?s="Help/*Plugin"].
 
-To write your own, look at the HelloWorldPlugin (~HelloWorld.php in that directory), 
+To write your own, look at the Help:HelloWorldPlugin (~HelloWorld.php in that directory), 
 which is a minimal example of a plugin.
 Publish your self-written plugin at a new PhpWiki page with ~PluginName + *Plugin* appended 
 and add a link to [CategoryContributedPlugin | PhpWiki:CategoryContributedPlugin].
@@ -27,22 +28,23 @@ and add a link to [CategoryContributedPlugin | PhpWiki:CategoryContributedPlugin
 A Help:WikiPlugin allows one to easily add new types of dynamic content 
 (as well as other functionality) to wiki pages within PhpWiki.
 In this very wiki all actions which are not entirely lowercased
-are implemented using plugins, and some lowercased convenience actions also. (rename, revert, setacl, diff, ...)
+are implemented using plugins, and some lowercased convenience actions also. 
+(rename, revert, setacl, diff, ...)
 
-(The old-style  Help:MagicPhpWikiURLs have been replaced by plugins entirely.)
+The old-style Help:MagicPhpWikiURLs have been replaced by plugins entirely.
 
 !!!Example
 
 Currently, one invokes a plugin by putting something like:
 
 <verbatim>
-<?plugin AllPages limit=5?>
+<?plugin AllPages limit=20 col=3?>
 </verbatim>
 
 into a regular wiki-page.  That particular example produces a list of
-the first 5 existing pages (via the ~PageList library).
+the first 20 existing pages in 3 columns, via the PhpWiki:PageListLibrary.
 
-<?plugin AllPages limit=5 ?>
+<?plugin AllPages limit=20 cols=3 ?>
 
 !!!Details
 
@@ -145,7 +147,7 @@ See the config.ini PLUGIN_CACHED_* settings and PhpWiki:WikiPluginCached
 
 !! Action Pages
 
-The term *~ActionPage* refers to a page containing a plugin invocation.
+The term *Help:ActionPage* refers to a page containing a plugin invocation.
 An *action* is together with the *pagename* argument the a basic PhpWiki argument. 
 It can both be GET or POST actions. Actions are untranslated, always english. 
 Basic (and old) actions are all lowercase, like edit, browse, remove, ...
@@ -169,8 +171,8 @@ So for a hypothetical new ~MyActionPage plugin ~MyActionPage will invoke the plu
 
 !!! Existing Plugins
 
-See PluginManager for a detailed list. Most plugins should have their own description page with the name 
-*Plugin* appended.
+See PluginManager for a detailed list. All plugins should have their own 
+description page as subpage of *Help/* with the name *Plugin* appended.
 
 <?plugin BackLinks noheader=1 ?>
 
