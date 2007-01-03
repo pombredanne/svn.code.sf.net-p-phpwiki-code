@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.22 2006-12-22 17:57:41 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.23 2007-01-03 21:24:24 rurban Exp $');
 /**
  Copyright 2003,2004,2006 $ThePhpWikiProgrammingTeam
 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision: 1.23 $");
     }
 
     function getDefaultArguments() {
@@ -89,20 +89,20 @@ extends WikiPlugin
                           HiddenInputs($args, 'wikiadminutils'),
                           HiddenInputs(array('require_authority_for_post' =>
                                              WIKIAUTH_ADMIN)),
-                          HiddenInputs($request->getArgs()));
+                          HiddenInputs($request->getArgs(),false,array('action')));
     }
     
     function do_action(&$request, $args) {
         $method = strtolower('_do_' . str_replace('-', '_', $args['action']));
         if (!method_exists($this, $method))
-            return $this->error("Bad action");
+            return $this->error("Bad action $method");
 
         $message = call_user_func(array(&$this, $method), $request, $args);
 
         // display as seperate page or as alert?
         $alert = new Alert(fmt("WikiAdminUtils %s returned:", $args['action']),
                            $message,
-                           array(_("Okay") => $args['return_url']));
+                           array(_("Back") => $args['return_url']));
         $alert->show();         // noreturn
     }
 
@@ -206,14 +206,16 @@ extends WikiPlugin
     }
 
     function _do_db_check(&$request, $args) {
-        $dbh = $request->_dbi;
+	longer_timeout(180);
+        $dbh = $request->getDbh();
 	//FIXME: display result.
         $result = $dbh->_backend->check();
         return $result;
     }
 
     function _do_db_rebuild(&$request, $args) {
-        $dbh = $request->_dbi;
+	longer_timeout(240);
+        $dbh = $request->getDbh();
 	//FIXME: display result.
         $result = $dbh->_backend->rebuild();
         return $result;
