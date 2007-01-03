@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.19 2007-01-02 13:21:21 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.20 2007-01-03 21:25:52 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -765,15 +765,19 @@ function callPlugin($params)
 
 
 /** 
- * array wiki.listRelations()
+ * array wiki.listRelations([ Integer option = 1 ])
  *
- * Returns an array of all available relations. 
- * For the SemanticSearch autofill method.
+ * Returns an array of all available relation names.
+ *   option: 1 relations only ( with 0 also )
+ *   option: 2 attributes only
+ *   option: 3 both, all names of relations and attributes 
+ *   option: 4 unsorted, this might be added as bitvalue: 7 = 4+3. default: sorted
+ * For some semanticweb autofill methods.
  *
  * @author: Reini Urban
  */
 $wiki_dmap['listRelations']
-= array('signature'     => array(array($xmlrpcArray)),
+= array('signature'     => array(array($xmlrpcArray, $xmlrpcInt)),
         'documentation' => "Return names of all relations",
         'function'      => 'listRelations');
 
@@ -781,7 +785,18 @@ function listRelations($params)
 {
     global $request;
     $dbh = $request->getDbh();
-    return new xmlrpcresp(new xmlrpcval($dbh->listRelations(), "array"));
+    if (count($params->params) > 0) {
+        $ParamOption = $params->getParam(0);
+        $option = (int) $ParamOption->scalarval();
+    } else 
+	$option = 1;
+    $also_attributes = $option & 2; 
+    $only_attributes = $option & 2 and !($option & 1); 
+    $sorted = !($option & 4);
+    return new xmlrpcresp(new xmlrpcval($dbh->listRelations($also_attributes,
+							    $only_attributes,
+							    $sorted), 
+					"array"));
 }
 
 /** 
@@ -923,6 +938,9 @@ class XmlRpcServer extends xmlrpc_server
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.19  2007/01/02 13:21:21  rurban
+ split client from server. added getUploadedFileInfo (for SyncWiki), callPlugin (for WikiFormRich)
+
  Revision 1.18  2006/05/18 06:10:45  rurban
  add xmlrpc listRelations signature
 
