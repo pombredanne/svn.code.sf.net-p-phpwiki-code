@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SemanticWeb.php,v 1.2 2007-01-02 13:19:13 rurban Exp $');
+<?php rcs_id('$Id: SemanticWeb.php,v 1.3 2007-01-03 21:25:21 rurban Exp $');
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *
@@ -104,6 +104,7 @@
  */
 
 include_once('lib/RssWriter.php');
+include_once('lib/Units.php');
 include_once("lib/TextSearchQuery.lib");
 
 /**
@@ -166,10 +167,89 @@ class ModelWriter extends OwlWriter {
  *
  * Do we need a real parser or can we just regexp over some allowed unit 
  * suffixes to detect the numbers?
+ * see man units(1) and /usr/share/units.dat
+ * base units: $ units "1 million miles"
+ *                     Definition: 1.609344e+09 m
  */
 class SemanticAttributeSearchQuery
 extends NumericSearchQuery
 {
+    /*
+    var $base_units = array('m'   => explode(',','km,miles,cm,dm,mm,ft,inch,inches,meter'),
+			    'm^2' => explode(',','km^2,ha,cm^2,mi^2'),
+			    'm^3' => explode(',','km^3,lit,cm^3,dm^3,gallons'),
+			    );
+    */
+
+    /**
+     * We need to detect units from the freetext query:
+     * population > 1 million
+     */
+    function SemanticAttributeSearchQuery($search_query, $placeholders, $unit = '') {
+	$this->NumericSearchQuery($search_query, $placeholders);
+	$this->_units = new Units();
+	$this->unit = $unit;
+    }
+
+    /**
+     * Strip non-numeric chars from the variable (as the groupseperator) and replace 
+     * it in the symbolic query for evaluation.
+     * This version unifies the attribute values from the database to a 
+     * numeric basevalue before comparison. (area:=963.6km^2 => 9.366e+08 m^2)
+     *
+     * @access private
+     * @param $value number   A numerical value: integer, float or string.
+     * @param $x string       The variable name to be replaced in the query.
+     * @return string
+     */
+    function _bind($value, $x) {
+    	$ori_value = $value;
+	$value = preg_replace("/,/", "", $value);
+	$this->_bound[] = array('linkname'  => $x,
+	        		'linkvalue' => $value);
+	// We must ensure that the same baseunits are matched against. 
+	// We cannot compare m^2 to m or ''
+	$val_base = $this->_units->basevalue($value);
+        if (!DISABLE_UNITS and $this->_units->baseunit($value) != $this->unit) {
+	    // Poor user has selected an attribute, but no unit. assume he means the baseunit
+	    if (count($this->getVars() == 1) and $this->unit == '') {
+		;
+	    } else {
+		// non-matching units are silently ignored
+		$this->_workquery = '';
+		return '';
+	    }
+        }
+        $value = $val_base;
+	if (!is_numeric($value)) {
+	    $this->_workquery = ''; //must return false
+	    trigger_error("Cannot match against non-numeric attribute value $x := $ori_value", 
+			  E_USER_NOTICE);
+	    return '';
+	}
+
+	$this->_workquery = preg_replace("/\b".preg_quote($x,"/")."\b/", $value, $this->_workquery);
+	return $this->_workquery;
+    }
+
+}
+
+/**
+ *  SemanticSearchQuery can do:
+ *     (is_a::city and population < 20000) and (*::city and area > 1000000)
+ *  ->match(array('is_a' => 'city', 'linkfrom' => array(), 
+ *          population' => 100000, 'area' => 10000000))
+ * @return array  A list of found and bound matches
+ */
+class SemanticSearchQuery
+extends SemanticAttributeSearchQuery
+{
+    function hasAttributes() { // TODO 
+    }
+    function hasRelations()  { // TODO 
+    }
+    function getLinkNames()  { // TODO 
+    }
 }
 
 /**
