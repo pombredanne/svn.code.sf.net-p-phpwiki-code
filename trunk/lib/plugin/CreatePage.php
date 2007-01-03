@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreatePage.php,v 1.7 2004-09-06 10:22:15 rurban Exp $');
+rcs_id('$Id: CreatePage.php,v 1.8 2007-01-03 21:23:32 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -21,19 +21,22 @@ rcs_id('$Id: CreatePage.php,v 1.7 2004-09-06 10:22:15 rurban Exp $');
  */
 
 /**
- * This allows you to create a page geting the new pagename from a 
+ * This allows you to create a page getting the new pagename from a 
  * forms-based interface, and optionally with the initial content from 
  * some template, plus expansion of some variables via %%variable%% statements 
  * in the template.
  *
- * Put it <?plugin-form CreatePage ?> at some page, browse this page, 
+ * Put <?plugin-form CreatePage ?> at some page, browse this page, 
  * enter the name of the page to create, then click the button.
  *
  * Usage: <?plugin-form CreatePage template=SomeTemplatePage vars="year=2004&name=None" ?>
  * @authors: Dan Frankowski, Reini Urban
  */
+
+include_once("lib/plugin/Template.php");
+
 class WikiPlugin_CreatePage
-extends WikiPlugin
+extends WikiPlugin_Template
 {
     function getName() {
         return _("CreatePage");
@@ -45,7 +48,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -99,8 +102,22 @@ extends WikiPlugin
                     $currenttmpl = $tmplpage->getCurrentRevision();
                     $initial_content = $currenttmpl->getPackedContent();
                     $meta['markup'] = $currenttmpl->_data['markup'];
+
+		    if (preg_match('/<noinclude>.+<\/noinclude>/s', $initial_content)) {
+			$initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "", 
+							$initial_content);
+		    }
                 }
                 $meta['summary'] = _("Created by CreatePage");
+		$content = $this->doVariableExpansion($initial_content, $vars, $s, $dbi);
+
+		if ($content !== $initial_content) {
+                    // need to destroy the template so that editpage doesn't overwrite it.
+                    unset($param['template']);
+                    $url = WikiURL($s, $param, 'absurl');
+                }
+
+		/*
                 // expand variables in $initial_content
                 if (preg_match('/%%\w+%%/', $initial_content)) {
                     $var = array();
@@ -118,13 +135,12 @@ extends WikiPlugin
                         $var['author'] = $user->getId();
 
                     foreach ($var as $key => $val) {
-                        $initial_content = preg_replace("/%%$key%%/",$val,$initial_content);
+                        $initial_content = preg_replace("/%%\b".$key."\b%%/",$val,$initial_content);
                     }
-                    // need to destroy the template so that editpage doesn't overwrite it.
-                    unset($param['template']);
-                    $url = WikiURL($s, $param, 'absurl');
-                }
-                $page->save($initial_content, $version+1, $meta);
+		}
+		*/
+
+                $page->save($content, $version+1, $meta);
             }
         }
         return HTML($request->redirect($url, true));
@@ -132,6 +148,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2004/09/06 10:22:15  rurban
+// oops, forgot global request
+//
 // Revision 1.6  2004/09/06 08:35:32  rurban
 // support template variables (not yet working)
 //
