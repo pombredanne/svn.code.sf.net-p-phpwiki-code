@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.148 2007-01-02 13:21:57 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.149 2007-01-03 21:25:10 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -1098,9 +1098,8 @@ function ParseSerializedPage($text, $default_pagename, $user)
         $pagehash['charset'] = 'iso-8859-1';
     // compare to target charset
     if (strtolower($pagehash['charset']) != strtolower($GLOBALS['charset'])) {
-        loadPhpExtension("iconv");
-        $pageinfo['content'] = iconv($params['charset'], $GLOBALS['charset'], $pageinfo['content']);
-        $pageinfo['pagename'] = iconv($params['charset'], $GLOBALS['charset'], $pageinfo['pagename']);
+        $pageinfo['content'] = charset_convert($params['charset'], $GLOBALS['charset'], $pageinfo['content']);
+        $pageinfo['pagename'] = charset_convert($params['charset'], $GLOBALS['charset'], $pageinfo['pagename']);
     }
     return $pageinfo;
 }
@@ -1171,9 +1170,8 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         $file_charset = 'iso-8859-1';
         // compare to target charset
         if ($file_charset != strtolower($GLOBALS['charset'])) {
-            loadPhpExtension("iconv");
-            $text = iconv($file_charset, $GLOBALS['charset'], $text);
-            $default_pagename = iconv($file_charset, $GLOBALS['charset'], $default_pagename);
+            $text = charset_convert($file_charset, $GLOBALS['charset'], $text);
+            $default_pagename = charset_convert($file_charset, $GLOBALS['charset'], $default_pagename);
         }
 
         // Assume plain text file.
@@ -1440,6 +1438,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.148  2007/01/02 13:21:57  rurban
+ omit want_content if not necessary. support keep_old and overwrite buttons
+
  Revision 1.147  2006/12/22 17:44:15  rurban
  support importing foreign charsets. e.g latin1 => utf8
 
