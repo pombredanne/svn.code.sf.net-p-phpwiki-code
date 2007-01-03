@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.16 2007-01-02 13:23:38 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.17 2007-01-03 21:24:33 rurban Exp $');
 /*
  Copyright 2004,2006 $ThePhpWikiProgrammingTeam
 
@@ -107,7 +107,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.16 $");
+                            "\$Revision: 1.17 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -369,9 +369,6 @@ extends WikiPlugin
 			        $values[] = (string)$page;
 			}
 		    }
-		} elseif (DEBUG and ($input['method'] == 'listRelations')) {
-		    $dbi = $GLOBALS['request']->getDbh();
-		    $values = $dbi->listRelations();
 		} elseif (string_starts_with($input['method'], "array:")) {
 		    // some predefined values (e.g. in a template or themeinfo.php)
 		    $input['autocomplete_list'] = $input['method'];
@@ -401,6 +398,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2007/01/02 13:23:38  rurban
+// support more WikiFormRich method arguments: url, dynurl, xmlrpc, dynxmlrpc, the autocomplete option for pulldown[] and editbox[] and the new combobox[] widget. fix name=value parsing. fix limit with plugin-list invocations
+//
 // Revision 1.15  2004/11/26 18:25:33  rurban
 // pulldown[] values="val1,val2,val3,..." simple comma seperated values
 //
