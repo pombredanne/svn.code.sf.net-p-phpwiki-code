@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.256 2007-01-02 13:23:49 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.257 2007-01-03 21:24:56 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1854,15 +1854,7 @@ function fixTitleEncoding( $s ) {
     $locharset = strtolower($charset);
 
     if( $locharset != "utf-8" and $ishigh and $isutf )
-        // if charset == 'iso-8859-1' then simply use utf8_decode()
-        if ($locharset == 'iso-8859-1')
-            return utf8_decode( $s );
-        else {
-            // check for iconv support
-            loadPhpExtension("iconv");
-            return iconv( "UTF-8", $charset, $s );
-        }
-
+	$s = charset_convert('UTF-8', $locharset, $s);
     if ($locharset == "utf-8" and $ishigh and !$isutf )
         return utf8_encode( $s );
 
@@ -2012,6 +2004,24 @@ function loadPhpExtension($extension) {
     return extension_loaded($extension);
 }
 
+function charset_convert($from, $to, $data) {
+    if (strtolower($from) == 'utf-8' and strtolower($to) == 'iso-8859-1')
+	return utf8_decode($data);
+    if (strtolower($to) == 'utf-8' and strtolower($from) == 'iso-8859-1')
+	return utf8_encode($data);
+
+    if (loadPhpExtension("iconv")) {
+	$tmpdata = iconv($from, $to, $data);
+	if (!$tmpdata)
+	    trigger_error("charset conversion $from => $to failed. Wrong source charset?", E_USER_WARNING);
+	else
+	    $data = $tmpdata;
+    } else {
+	trigger_error("The iconv extension cannot be loaded", E_USER_WARNING);
+    }
+    return $data;
+}
+
 function string_starts_with($string, $prefix) {
     return (substr($string, 0, strlen($prefix)) == $prefix);
 }
@@ -2053,11 +2063,12 @@ function printSimpleTrace($bt) {
  * Special quirks for Windows: Requires cygwin.
  */
 function getMemoryUsage() {
+    //if (!(DEBUG & _DEBUG_VERBOSE)) return;
     if (function_exists('memory_get_usage') and memory_get_usage()) {
         return memory_get_usage();
     } elseif (function_exists('getrusage') and ($u = @getrusage()) and !empty($u['ru_maxrss'])) {
         $mem = $u['ru_maxrss'];
-    } elseif (substr(PHP_OS,0,3) == 'WIN') { // requires a newer cygwin
+    } elseif (substr(PHP_OS,0,3) == 'WIN') { // may require a newer cygwin
         // what we want is the process memory only: apache or php (if CGI)
         $pid = getmypid();
         $memstr = '';
@@ -2065,7 +2076,7 @@ function getMemoryUsage() {
  	if (function_exists('win32_ps_list_procs')) {
 	    $info = win32_ps_stat_proc($pid);
 	    $memstr = $info['mem']['working_set_size'];
-	} else {
+	} elseif(0) {
 	    // This works only if it's a cygwin process (apache or php).
 	    // Requires a newer cygwin
 	    //$memstr = exec("cat /proc/$pid/statm |cut -f1");
@@ -2075,7 +2086,7 @@ function getMemoryUsage() {
 	    $memstr = exec("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
         }
         return (integer) trim($memstr);
-    } elseif (1) {
+    } elseif (0) {
         $pid = getmypid();
         //%MEM: Percentage of total memory in use by this process
         //VSZ: Total virtual memory size, in 1K blocks.
@@ -2088,6 +2099,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.256  2007/01/02 13:23:49  rurban
+// ftnt_${footnum}: do not confuse old php string definition parsers. Clarify API: sortby,limit and exclude are strings.
+//
 // Revision 1.255  2006/12/22 16:53:38  rurban
 // Try to dl() load the iconv extension, if not already loaded
 //
