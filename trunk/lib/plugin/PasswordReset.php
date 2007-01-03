@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PasswordReset.php,v 1.3 2006-08-25 22:13:56 rurban Exp $');
+rcs_id('$Id: PasswordReset.php,v 1.4 2007-01-03 21:23:48 rurban Exp $');
 /**
  Copyright (C) 2006 $ThePhpWikiProgrammingTeam
 
@@ -44,11 +44,11 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
 
     function getDefaultArguments() {
-	return array('user' => 0);
+	return array('user' => '');
     }
 
     /* reset password, verified */
@@ -87,9 +87,8 @@ extends WikiPlugin
 	$alert->show();
     }
 
-    function doForm(&$request, $header = '', $footer = '') { 
+    function doForm(&$request, $userid='', $header = '', $footer = '') { 
 	$post_args = $request->getArg('admin_reset');
-	$userid = $request->getArg('user');
 	if (!$header) {
 	    $header = HTML::p(_("Reset password of user: "),
 			      HTML::Raw('&nbsp;'),
@@ -121,12 +120,13 @@ extends WikiPlugin
 
         $user =& $request->_user;
 	$post_args = $request->getArg('admin_reset');
-        $userid = $request->getArg('user');
+	$userid = $args['user'];
+        if (!$userid) $userid = $request->getArg('user');
 	$isadmin = $user->isAdmin();
 	if ($request->isPost()) {
             @$reset = $post_args['reset'];
             if (empty($reset))
-		return $this->doForm($request);
+		return $this->doForm($request, $userid);
 	    if (!$userid) {
 		$alert = new Alert(_("Warning:"),
 				   _("You need to specify the userid!"));
@@ -140,6 +140,8 @@ extends WikiPlugin
 		    return $this->doEmail($request, $userid);
 		}
 	    } elseif (empty($post_args['verify'])) {
+		//TODO: verify should check if the user exists, his prefs can be read/safed 
+		//      and the email is verified, even if admin.
 		$buttons = HTML::p(Button('submit:admin_reset[reset]', 
 					  $isadmin ? _("Yes") : _("Send email"), 
 					  $isadmin ? 'wikiadmin' : 'button'),
@@ -170,7 +172,7 @@ extends WikiPlugin
 		    if (!$verified)
 			$header->pushContent(HTML::br(), "Warning: This users email address is unverified!");
 		}
-		return $this->doForm($request,
+		return $this->doForm($request, $userid,
 				     $header,
 				     HTML(HTML::hr(),
 					  fmt("Do you really want to reset the password of user %s?", $userid),
@@ -178,15 +180,18 @@ extends WikiPlugin
 					  HiddenInputs(array('admin_reset[verify]' => 1, 'user' => $userid)),
 					  $buttons));
 	    } else { // verify ok, but no userid
-		return $this->doForm($request);
+		return $this->doForm($request, $userid);
 	    }
 	} else {
-	    return $this->doForm($request);
+	    return $this->doForm($request, $userid);
         }
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2006/08/25 22:13:56  rurban
+// display init form
+//
 // Revision 1.2  2006/06/18 11:04:50  rurban
 // unify gettext msg
 //
