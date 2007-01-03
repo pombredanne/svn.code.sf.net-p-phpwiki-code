@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PluginManager.php,v 1.19 2005-10-12 06:15:25 rurban Exp $');
+rcs_id('$Id: PluginManager.php,v 1.20 2007-01-03 21:23:57 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -132,7 +132,7 @@ extends WikiPlugin
             // This section was largely improved by Pierrick Meignen:
             // make a link if an actionpage exists
             $pluginNamelink = $pluginName;
-            $pluginDocPageName = $pluginName . "Plugin";
+            $pluginDocPageName = _("Help")."/" . $pluginName . "Plugin";
 
             $pluginDocPageNamelink = false;
             $localizedPluginName = '';
@@ -188,6 +188,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2005/10/12 06:15:25  rurban
+// just aesthetics
+//
 // Revision 1.18  2005/09/26 06:38:00  rurban
 // use the new method
 //
