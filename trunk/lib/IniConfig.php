@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.107 2006-12-22 17:45:28 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.108 2007-01-03 21:22:22 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -13,7 +13,7 @@ rcs_id('$Id: IniConfig.php,v 1.107 2006-12-22 17:45:28 rurban Exp $');
  * @author: Joby Walker, Reini Urban, Matthew Palmer
  */
 /*
- * Copyright 2004,2005,2006 $ThePhpWikiProgrammingTeam
+ * Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  *
@@ -172,7 +172,7 @@ function IniConfig($file) {
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
          'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD',
          'SESSION_SAVE_PATH', 'TOOLBAR_PAGELINK_PULLDOWN', 'TOOLBAR_TEMPLATE_PULLDOWN',
-         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL', 
+         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL'
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -194,7 +194,7 @@ function IniConfig($file) {
          'ENABLE_DISCUSSION_LINK', 'ENABLE_CAPTCHA',
          'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML',
          'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
-         'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA'
+         'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS'
          );
 
     $rs = @parse_ini_file($file);
@@ -913,6 +913,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.107  2006/12/22 17:45:28  rurban
+// add USE_BYTEA
+//
 // Revision 1.106  2006/11/19 13:52:18  rurban
 // fix and stabilize MAP splitting
 //
