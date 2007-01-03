@@ -1,7 +1,7 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.47 2007-01-02 13:17:57 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.48 2007-01-03 21:22:08 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -19,6 +19,8 @@ rcs_id('$Id: CachedMarkup.php,v 1.47 2007-01-02 13:17:57 rurban Exp $');
  * along with PhpWiki; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+include_once("lib/Units.php");
 
 class CacheableMarkup extends XmlContent {
 
@@ -409,7 +411,8 @@ class Cached_SemanticLink extends Cached_WikiLink {
 	$this->_url = $url;
         if ($label && $label != $url)
             $this->_label = $label;
-        $this->_expandurl($this->_url);    
+        $this->_expandurl($this->_url);
+	$this->_units = new Units();
     }
 
     function isInlineElement() {
@@ -451,7 +454,15 @@ class Cached_SemanticLink extends Cached_WikiLink {
 	$this->_relation = urldecode($m[1]);
         $is_attribute = ($m[2] == ':=');
         if ($is_attribute) {
-            $this->_attribute = urldecode($m[3]);	
+            $this->_attribute = urldecode($m[3]);
+	    // since this stored in the markup cache, we are extra sensible 
+	    // not to store false empty stuff.
+            if (!DISABLE_UNITS and isset($this->_units) 
+		and is_object($this->_units) and !$this->_units->errcode) 
+	    {
+		$this->_attribute_base = $this->_units->Definition($this->_attribute);
+		$this->_unit = $this->_units->baseunit($this->_attribute);
+	    }
         } else {
 	    $this->_page = urldecode($m[3]);
         }
@@ -467,14 +478,19 @@ class Cached_SemanticLink extends Cached_WikiLink {
             return HTML::span
 		(
 		 HTML::a(array('href'  => WikiURL($is_attribute ? $this->_relation : $this->_page),
-			       'class' => "wiki ".($is_attribute?"attribute":"relation")),
+			       'class' => "wiki ".($is_attribute ? "attribute" : "relation"),
+			       'title' => $is_attribute 
+			           ? (isset($this->_attribute_base) ? ("Attribute base value: ").$this->_attribute_base 
+				      				    : ("Attribute value: ").$this->_attribute)
+			       	   : sprintf(_("Relation %s to page %s"), $this->_relation, $this->_page)),
 			 $label)
 		 );
         } elseif ($is_attribute) {
             return HTML::span
 		(
 		 HTML::a(array('href'  => WikiURL($this->_relation),
-			       'class' => "wiki attribute"),
+			       'class' => "wiki attribute",
+			       'title' => "Attribute base value: " .$this->_attribute_base),
 			 $url)
 		 );
         } else {
@@ -682,6 +698,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.47  2007/01/02 13:17:57  rurban
+// fix semantic page links and attributes, esp. attributes. they get stored as link to empty page also. tighten semantic url expander regex, omit want_content if not necessary
+//
 // Revision 1.46  2006/12/22 00:11:38  rurban
 // add seperate expandurl method, to simplify pagename parsing
 //
