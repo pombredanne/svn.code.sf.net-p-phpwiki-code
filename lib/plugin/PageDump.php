@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.18 2004-10-14 19:19:34 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.19 2007-01-03 21:23:40 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -96,19 +96,19 @@ extends WikiPlugin
                    . FilenameForPage($page) . "\"");
             // Read charset from generated page itself.
             // Inconsequential at the moment, since loadsave.php
-            // always generates headers
+            // always generates headers.
             $charset = $p->get('charset');
             if (!$charset) $charset = $GLOBALS['charset'];
             // We generate 3 Content-Type headers! first in loadsave,
             // then here and the mimified string $mailified also has it!
-            Header("Content-Type: text/plain; name=\""
+	    // This one is correct and overwrites the others.
+            Header("Content-Type: application/octet-stream; name=\""
                    . FilenameForPage($page) . "\"; charset=\"" . $charset
                    . "\"");
             $request->checkValidators();
-            // let $request provide last modifed & etag
+            // let $request provide last modified & etag
             Header("Content-Id: <" . $this->MessageId . ">");
             // be nice to http keepalive~s
-            // FIXME: he length is wrong BTW. must strip the header.
             Header("Content-Length: " . strlen($mailified)); 
 
             // Here comes our prepared mime file
@@ -290,6 +290,10 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/10/14 19:19:34  rurban
+// loadsave: check if the dumped file will be accessible from outside.
+// and some other minor fixes. (cvsclient native not yet ready)
+//
 // Revision 1.17  2004/09/16 07:49:01  rurban
 // use the page charset instead if the global one on download
 //   (need to clarify header order, since we print the same header type 3 times!)
