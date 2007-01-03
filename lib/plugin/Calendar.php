@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.31 2006-03-19 14:26:29 rurban Exp $');
+rcs_id('$Id: Calendar.php,v 1.32 2007-01-03 21:23:24 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.31 $");
+                            "\$Revision: 1.32 $");
     }
 
     function getDefaultArguments() {
@@ -59,7 +59,8 @@ extends WikiPlugin
 
                      'month_format'     => '%B, %Y',
                      'wday_format'      => '%a',
-                     'start_wday'       => '0');
+                     'start_wday'       => '0',
+		     'display_weeknum'  => 0);
     }
 
     /**
@@ -107,7 +108,7 @@ extends WikiPlugin
                                                        $time))),
                         HTML::td(array('align' => 'right'), $next));
 
-        return HTML::tr(HTML::td(array('colspan' => 7,
+        return HTML::tr(HTML::td(array('colspan' => $args['display_weeknum'] ? 8 : 7,
                                        'align'   => 'center'),
                                  HTML::table(array('width' => '100%',
                                                    'class' => 'cal-header'),
@@ -126,6 +127,10 @@ extends WikiPlugin
         $fs = $this->args['wday_format'];
         $row = HTML::tr();
         $row->setattr('class', 'cal-dayname');
+	if ($this->args['display_weeknum'])
+            $row->pushContent(HTML::td(array('class' => 'cal-dayname',
+                                             'align' => 'center'),
+                                       _("Wk")));
         for ($i = 0; $i < 7; $i++) {
             $row->pushContent(HTML::td(array('class' => 'cal-dayname',
                                              'align' => 'center'),
@@ -193,6 +198,7 @@ extends WikiPlugin
                        1,                                      // mday (1-31)
                        $args['year']);
 
+	$colnum = $args['display_weeknum'] ? 8 : 7;
         $cal = HTML::table(array('cellspacing' => 0,
                                  'cellpadding' => 2,
                                  'class'       => 'cal'),
@@ -211,11 +217,13 @@ extends WikiPlugin
         $tbody = HTML::tbody();
         $row = HTML::tr();
 
+	if ($args['display_weeknum'])
+            $row->pushContent(HTML::td(array('class' => 'cal-weeknum'),
+				       strftime("%U",$time)));
         $col = (7 + $t['tm_wday'] - $args['start_wday']) % 7;
         if ($col > 0)
             $row->pushContent(HTML::td(array('colspan' => $col)));
         $done = false;
-
         while (!$done) {
             $row->pushContent($this->__date($dbi, $time));
 
@@ -228,6 +236,9 @@ extends WikiPlugin
             $time += SECONDS_PER_DAY;
             $t     = localtime($time, 1);
             $done  = $t['tm_mday'] == 1;
+	    if (!$col and !$done and $args['display_weeknum'])
+		$row->pushContent(HTML::td(array('class' => 'cal-weeknum'),
+					   strftime("%U", $time)));
         }
 
         if ($row->getContent()) {
@@ -240,6 +251,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2006/03/19 14:26:29  rurban
+// sf.net patch by Matt Brown: Add rel=nofollow to more actions
+//
 // Revision 1.30  2005/04/02 03:05:44  uckelman
 // Removed & from vars passed by reference (not needed, causes PHP to complain).
 //
