@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SemanticRelations.php,v 1.2 2007-01-02 13:22:41 rurban Exp $');
+rcs_id('$Id: SemanticRelations.php,v 1.3 2007-01-03 21:23:06 rurban Exp $');
 /*
  Copyright 2005 Reini Urban
 
@@ -26,6 +26,7 @@ rcs_id('$Id: SemanticRelations.php,v 1.2 2007-01-02 13:22:41 rurban Exp $');
  * Attributes as simple page meta-data.
  *
  * @author: Reini Urban
+ * @see WikiPlugin_SemanticSearch
  */
 class WikiPlugin_SemanticRelations
 extends WikiPlugin
@@ -34,11 +35,11 @@ extends WikiPlugin
         return _("SemanticRelations");
     }
     function getDescription() {
-        return _("Display the list of relations and attributes");
+        return _("Display the list of relations and attributes on this page.");
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
     function getDefaultArguments() { 
         return array(
@@ -123,6 +124,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2007/01/02 13:22:41  rurban
+// default pagename: current. improve output: class, linked attributes. switch to SemanticSearch argument s
+//
 // Revision 1.1  2005/11/21 20:14:20  rurban
 // Plugin to display the list of SemanticRelations - list of relations and
 // attributes of given page(s).
