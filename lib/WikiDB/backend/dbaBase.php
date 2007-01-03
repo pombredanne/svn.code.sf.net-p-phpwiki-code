@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: dbaBase.php,v 1.27 2007-01-02 13:19:33 rurban Exp $');
+rcs_id('$Id: dbaBase.php,v 1.28 2007-01-03 21:26:01 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -336,16 +336,17 @@ extends WikiDB_backend
      * Since there are less links than pages, and we easily get the pagename from the link key,
      * we iterate here directly over the linkdb and check the pagematch there.
      *
-     * @param $pages     object A TextSearchQuery object.
-     * @param $linkvalue object A TextSearchQuery object for the linkvalues 
-     *                          (linkto, relation or backlinks or attribute values).
-     * @param $linktype  string One of the 4 linktypes.
-     * @param $relation  object A TextSearchQuery object or false.
+     * @param $pages     object A TextSearchQuery object for the pagename filter.
+     * @param $query     object A SearchQuery object (Text or Numeric) for the linkvalues, 
+     *                          linkto, linkfrom (=backlink), relation or attribute values.
+     * @param $linktype  string One of the 4 linktypes "linkto", "linkfrom" (=backlink), "relation" or "attribute".
+     * 				Maybe also "relation+attribute" for the advanced search.
+     * @param $relation  object A TextSearchQuery for the linkname or false.
      * @param $options   array Currently ignored. hash of sortby, limit, exclude.
      * @return object A WikiDB_backend_iterator.
      * @see WikiDB::linkSearch
      */
-    function link_search( $pages, $linkvalue, $linktype, $relation=false, $options=array() ) {
+    function link_search( $pages, $query, $linktype, $relation=false, $options=array() ) {
         $linkdb = &$this->_linkdb;
         $links = array();
 	$reverse = false;
@@ -371,23 +372,46 @@ extends WikiDB_backend
 		$page = $GLOBALS['request']->_dbi->getPage($pagename);
 		$attribs = $page->get('attributes');
 		if ($attribs) {
-		    foreach ($attribs as $attribute => $value) {
-			if ($relation and !$relation->match($attribute)) continue; 
-			if (!$linkvalue->match($value)) continue; 
-			$links[] = array('pagename'  => $pagename,
-					 'linkname'  => $attribute,
-					 'linkvalue' => $value);
+		    /* Optimization on expressive searches: 
+		       for queries with multiple attributes.
+		       Just take the defined placeholders from the query(ies)
+		       if there are more attributes than query variables. 
+		    */
+		    if ($query->getType() != 'text'
+		        and !$relation
+			and ((count($vars = $query->getVars()) > 1) 
+			     or (count($attribs) > count($vars))))
+		    {
+			// names must strictly match. no * allowed
+			if (!$query->can_match($attribs)) continue;
+			if (!($result = $query->match($attribs))) continue;
+			foreach ($result as $r) {
+			    $r['pagename'] = $pagename;
+			    $links[] = $r;
+			}
+		    } else {
+			// textsearch or simple value. no strict bind by name needed 
+			foreach ($attribs as $attribute => $value) {
+			    if ($relation and !$relation->match($attribute)) continue;
+			    if (!$query->match($value)) continue; 
+			    $links[] = array('pagename'  => $pagename,
+					     'linkname'  => $attribute,
+					     'linkvalue' => $value);
+			}
 		    }
 		}
-	    } else {
+	    }
+	    else {
+		// TODO: honor limits. this can get large.
 		if ($want_relations) {
 		    // MAP linkrelation : pagename => thispagename : linkname : linkvalue  
 		    $_links = $linkdb->_get_links('o', $pagename);
 		    foreach ($_links as $link) { // linkto => page, linkrelation => page
-			if ($relation and !$relation->match($link['linkrelation'])) continue; 
-			if (!$linkvalue->match($link['linkto'])) continue; 
+			if (!isset($link['relation']) or !$link['relation']) continue;
+			if ($relation and !$relation->match($link['relation'])) continue;
+			if (!$query->match($link['linkto'])) continue;
 			$links[] = array('pagename'  => $pagename,
-					 'linkname'  => $link['linkrelation'],
+					 'linkname'  => $link['relation'],
 					 'linkvalue' => $link['linkto']);
 		    }
 		} else {
@@ -395,7 +419,7 @@ extends WikiDB_backend
 		    foreach ($_links as $link) { // linkto => page
 			if (is_array($link))
 			    $link = $link['linkto'];
-			if (!$linkvalue->match($link)) continue; 
+			if (!$query->match($link)) continue; 
 			$links[] = array('pagename'  => $pagename,
 					 'linkname'  => '',
 					 'linkvalue' => $link);
@@ -407,6 +431,65 @@ extends WikiDB_backend
         return new WikiDB_backend_dbaBase_pageiter($this, $links, $options);
     }
 
+    /**
+     * Handle multi-searches for many relations and attributes in one expression.
+     * Bind all required attributes and relations per page together and pass it to one query.
+     *   (is_a::city and population < 20000) and (*::city and area > 1000000)
+     *   (is_a::city or linkto::CategoryCountry) and population < 20000 and area > 1000000
+     * Note that the 'linkto' and 'linkfrom' links are relations, containing an array.
+     *
+     * @param $pages     object A TextSearchQuery object for the pagename filter.
+     * @param $query     object A SemanticSearchQuery object for the links. 
+     * @param $options   array  Currently ignored. hash of sortby, limit, exclude for the pagelist.
+     * @return object A WikiDB_backend_iterator.
+     * @see WikiDB::linkSearch
+     */
+    function relation_search( $pages, $query, $options=array() ) {
+        $linkdb = &$this->_linkdb;
+        $links = array();
+	// We need to detect which attributes and relation names we should look for. NYI
+	$want_attributes = $query->hasAttributes();
+	$want_relation = $query->hasRelations();
+	$linknames = $query->getLinkNames();
+	// create a hash for faster checks
+	$linkcheck = array();
+	foreach ($linknames as $l) $linkcheck[$l] = 1;
+
+        for ($link = $linkdb->_db->firstkey(); $link!== false; $link = $linkdb->_db->nextkey()) {
+	    $type = $reverse ? 'i' : 'o';
+            if ($link[0] != $type) continue;
+	    $pagename = substr($link, 1);
+	    if (!$pages->match($pagename)) continue;
+	    $pagelinks = array();
+	    if ($want_attributes) {
+		$page = $GLOBALS['request']->_dbi->getPage($pagename);
+		$attribs = $page->get('attributes');
+		$pagelinks = $attribs;
+	    }
+	    if ($want_relations) {
+		// all links contain arrays of pagenames, just the attributes 
+		// are guaranteed to be singular
+		if (isset($linkcheck['linkfrom'])) {
+		    $pagelinks['linkfrom'] = $linkdb->_get_links('i', $pagename);
+		}
+		$outlinks = $linkdb->_get_links('o', $pagename);
+		$want_to = isset($linkcheck['linkto']);
+		foreach ($outlinks as $link) { // linkto => page, relation => page
+		    // all named links
+		    if ((isset($link['relation'])) and $link['relation'] 
+		        and isset($linkcheck[$link['relation']]))
+			$pagelinks[$link['relation']][] = $link['linkto'];
+		    if ($want_to)
+			$pagelinks['linkto'][] = is_array($link) ? $link['linkto'] : $link;
+		}
+	    }
+	    if ($result = $query->match($pagelinks)) {
+		$links = array_merge($links, $result);		
+	    }
+        }
+	$options['want_relations'] = true; // Iter hack to force return of the whole hash
+        return new WikiDB_backend_dbaBase_pageiter($this, $links, $options);
+    }
 };
 
 function WikiDB_backend_dbaBase_sortby_pagename_ASC ($a, $b) {
@@ -690,6 +773,9 @@ class WikiDB_backend_dbaBase_linktable
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2007/01/02 13:19:33  rurban
+// faster list_relations method. new native link_search method. additions to rebuild() (still very slow), fix iterator options (for want_relations and exclude). Clarify API: sortby,limit and exclude are strings
+//
 // Revision 1.26  2006/12/22 00:27:37  rurban
 // just add Log
 //
