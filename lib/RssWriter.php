@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.12 2005-07-24 09:52:59 rurban Exp $');
+<?php rcs_id('$Id: RssWriter.php,v 1.13 2007-01-03 21:24:43 rurban Exp $');
 /*
  * Code for creating RSS 1.0.
  */
@@ -112,7 +112,6 @@ class RssWriter extends XmlElement
         $this->_finished = true;
     }
             
-
     /**
      * Write output to HTTP client.
      */
@@ -182,6 +181,61 @@ class RssWriter extends XmlElement
         return new XmlElement($predicate, $attr);
     }
 };
+
+/* taken from mediawiki */
+class AtomFeed extends RssWriter {
+  
+    /**
+     * Write output to HTTP client.
+     */
+    function __spew() {
+        header("Content-Type: application/atom+xml; charset=" . RSS_ENCODING);
+        printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", RSS_ENCODING);
+        printf("<!-- generator=\"PhpWiki-%s\" -->\n", PHPWIKI_VERSION);
+        /*
+        <feed version="0.3" xml:lang="$LANG">	
+        <title><?php print $this->getTitle() ?></title>
+        <link rel="alternate" type="text/html" href="<?php print $this->getUrl() ?>"/>
+        <modified><?= gmdate( 'Y-m-d\TH:i:s', wfTimestamp( TS_UNIX, $ts ) ) ?>Z</modified>
+        <tagline><?php print $this->getDescription() ?></tagline>
+        */
+        $this->printXML();
+    }
+
+    /**
+     * Create a new entry
+     */
+    function __node($type, $properties, $uri = false) {
+	if (! $uri)
+	    $uri = $properties['link'];
+	//$attr['rdf:about'] = $this->__uniquify_uri($uri);
+	return new XmlElement($type, $attr,
+                              $this->__elementize($properties));
+    }
+
+    // Args should include:
+    //  'title', 'link'
+    // and can include:
+    //  'description', 'URI'
+    function addItem($properties, $uri = false) {
+        $this->_items[] = $this->__node('entry', $properties, $uri);
+    /*
+	<entry>
+		<title><?php print $item->getTitle() ?></title>
+		<link rel="alternate" type="<?php print $wgMimeType ?>" href="<?php print $item->getUrl() ?>"/>
+		<?php if( $item->getDate() ) { ?>
+		<modified><?php print $this->formatTime( $item->getDate() ) ?>Z</modified>
+		<issued><?php print $this->formatTime( $item->getDate() ) ?></issued>
+		<created><?php print $this->formatTime( $item->getDate() ) ?>Z</created><?php } ?>
+	
+		<summary type="text/plain"><?php print $item->getDescription() ?></summary>
+		<?php if( $item->getAuthor() ) { ?><author><name><?php print $item->getAuthor() ?></name><!-- <url></url><email></email> --></author><?php }?>
+		<comment>foobar</comment>
+                <?php if( $item->getComments() ) { ?><dc:comment><?php print $item->getComments() ?></dc:comment><?php }?> 
+	</entry> 
+    */
+    }
+}
 
 
 // (c-file-style: "gnu")
