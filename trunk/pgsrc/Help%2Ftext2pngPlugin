@@ -1,38 +1,60 @@
 Date: Fri, 29 Dec 2006 18:57:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2Ftext2pngPlugin,v 1.1 2007-01-02 13:26:07 rurban Exp $
+X-Rcs-Id: $Id: Help%2Ftext2pngPlugin,v 1.2 2007-01-03 21:27:45 rurban Exp $
 Content-Type: application/x-phpwiki;
-  pagename=Template%2FNewPlugin;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pagename=Help%2Ftext2pngPlugin;
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
-Content-Transfer-Encoding: binary
+Content-Transfer-Encoding: 
 
-_short description_
+Convert text into a png image using GD without using [WikiPluginCached|Help:WikiPlugin].
+The images are stored in a private <PHPWIKI_DIR>/images/<LANG> subdirectory instead, 
+which are not timestamp checked at all. Delete the .png file(s) if you change anything.
+
+This is a really simple and stupid plugin, which might need some work.
 
 ! Usage
 <verbatim>
-  <?plugin text2png ?>
+  <?plugin text2png text="some text" ?>
 </verbatim>
 
 ! Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+text:
+  some text to display
+lang:
+  language subdirectory
+_force:
+  set to 1 to recreate the image
+fontsize:
+  18. with GD1 it's the pixelsize, with GD2 the pointsize
+with_shadow:
+  1
+fontcolor:
+  #000000
+shadowcolor:
+  #AFAFAF
+backcolor:
+  #ffffff
+
+
+! Configurable Options
+
+See the sourcecode. You'd probably need to adjust $ttfont and text2png_debug.
 
 ! Example
 
 <verbatim>
-<?plugin text2png ?>
+<?plugin text2png text='Hello WikiWorld!' ?>
 </verbatim>
-
-<?plugin text2png ?>
-
-! Author
-PhpWiki:ReiniUrban
+would produce:
+<?plugin text2png text='Hello WikiWorld!' ?>
 
 ! See Also
+
+Help:TeX2PngPlugin, Help:TexToPngPlugin
 
 ----
 PhpWikiDocumentation Help:WikiPlugin
