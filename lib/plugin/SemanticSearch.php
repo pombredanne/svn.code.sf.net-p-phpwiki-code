@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SemanticSearch.php,v 1.2 2007-01-02 13:23:06 rurban Exp $');
+rcs_id('$Id: SemanticSearch.php,v 1.3 2007-01-03 21:23:15 rurban Exp $');
 /*
  Copyright 2007 Reini Urban
 
@@ -20,21 +20,33 @@ rcs_id('$Id: SemanticSearch.php,v 1.2 2007-01-02 13:23:06 rurban Exp $');
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
+require_once("lib/SemanticWeb.php");
+//require_once('lib/TextSearchQuery.php');
+//require_once('lib/Units.php');
 
 /**
  * Search for relations/attributes and its values.
  * page - relation::object. e.g list all cities: is_a::city => relation=is_a&s=city
+ * We search for both a relation and if the search is valid for attributes also, 
+ * and OR combine the result.
  *
  * An attribute has just a value, which is a number, and which is for sure no pagename, 
  * and its value goes through some units unification. (not yet)
- * We can also do numerical comparison (e.g. range searching) with attributes. 
- *   population>1000000 (not yet)
+ * We can also do numerical comparison and unit lifting with attributes. 
+ *   population > 1000000 
+ *   population > 1 million
  *
- * A more generic <ask> feature will use multiple comparison and nesting. 
- *   <ask is_a::city and population &gt; 1.000.000 and population &lt; 10.000.000>
- *   <ask (is_a::city or is_a::country) and population &lt; 10.000.000>
+ * Limitation: 
+ * - The backends can already do simple AND/OR combination of multiple 
+ *   relations and attributes to search for. Just the UI not. TODO: implement the AND/OR buttons.
+ *     population < 1 million AND area > 50 km2
+ * - Due to attribute internals a relation search with matching attribute names will also 
+ *   find those attribute names, but not the values. You must explicitly search for attributes then.
+ *
+ * The Advanced query can do a freeform query expression with multiple comparison and nesting. 
+ *   "is_a::city and population > 1.000.000 and population < 10.000.000"
+ *   "(is_a::city or is_a::country) and population < 10.000.000"
  * 
  * @author: Reini Urban
  */
@@ -49,7 +61,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
     function getDefaultArguments() { 
         return array_merge
@@ -74,7 +86,8 @@ extends WikiPlugin
     	global $WikiTheme;
 	$action = $request->getPostURL();
 	$hiddenfield = HiddenInputs($request->getArgs(),'',
-				    array('action','page','s','relation','attribute'));
+				    array('action','page','s','semsearch',
+					  'relation','attribute'));
 	$pagefilter = HTML::input(array('name' => 'page',
 					'value' => $args['page'],
 					'title' => _("Search only in these pages. With autocompletion."),
@@ -122,7 +135,7 @@ extends WikiPlugin
 				      'title' => _("Add an OR query")));
 	if (DEBUG)
 	    $enhancements = HTML::span($andbutton, $nbsp, $orbutton);  
-	$instructions = _("Search in pages for a relation with that value, which is a pagename.");
+	$instructions = _("Search in pages for a relation with that value (a pagename).");
 	$form1 = HTML::form(array('action' => $action,
 				  'method' => 'post',
 				  'accept-charset' => $GLOBALS['charset']),
@@ -147,12 +160,14 @@ extends WikiPlugin
 
 	$allattrs = $dbi->listRelations(false,true,true);
 	if (empty($allrelations) and empty($allattrs)) // be nice to the dummy.
-	    $this->_norelations_warning = _("No relations nor attributes in the whole wikidb defined!");
+	    $this->_norelations_warning = 1;
 	$svalues = empty($allattrs) ? "" : join("','", $allattrs);
 	$attdef = JavaScript("var semsearch_attributes = new Array('".$svalues."')\n"
 	                    ."var semsearch_op = new Array('"
 	                          .join("','", $this->_supported_operators)
 	                          ."')");
+        // TODO: We want some more tricks: Autofill the base unit of the selected 
+        // attribute into the s area.
 	$attribute = HTML::input(array('name' => 'attribute', 
 				       'value' => $args['attribute'],
 				       'title' => _("Filter by this attribute name. With autocompletion."),
@@ -163,10 +178,11 @@ extends WikiPlugin
 				       'autocomplete_matchsubstring' => 'true', 
 				       'autocomplete_assoc' => 'false', 
 				       'autocomplete_list' => 'array:semsearch_attributes'
+				       /* 'autocomplete_onselect' => 'check_unit' */
 				      ), '');
 	$attr_op = HTML::input(array('name' => 'attr_op', 
 				        'value' => $args['attr_op'],
-				        'title' => _("Logical operator. With autocompletion."),
+				        'title' => _("Comparison operator. With autocompletion."),
 				        'class' => 'dropdown', 
 				        'style' => 'width:2em',
 				        'acdropdown' => 'true', 
@@ -183,7 +199,7 @@ extends WikiPlugin
 				      'autocomplete_complete' => 'true', 
 				      'autocomplete_matchsubstring' => 'false', 
 				      'autocomplete_assoc' => 'false',
-				      'autocomplete_list' => 'plugin:SemanticSearch page='.$args['page'].' attribute=^[S]'
+				      'autocomplete_list' => 'plugin:SemanticSearch page='.$args['page'].' attribute=^[S] attr_op==~'
 				      ), '');
 	$andbutton = new Button(_("AND"),$this_uri,'wikiaction',
 				array(
@@ -199,7 +215,7 @@ extends WikiPlugin
 	$instructions = HTML::span(_("Search in pages for an attribute with that numeric value."),"\n");
 	if (DEBUG)
 	    $instructions->pushContent
-	      (HTML(" ", new Button(_("Advanced..."),$this_uri)));
+		(HTML(" ", new Button(_("Advanced..."),_("SemanticSearchAdvanced"))));
 	$form2 = HTML::form(array('action' => $action,
 				  'method' => 'post',
 				  'accept-charset' => $GLOBALS['charset']),
@@ -229,15 +245,21 @@ extends WikiPlugin
         global $WikiTheme;
 	                          
 	$this->_supported_operators = array(':=','<','<=','>','>=','!=','==','=~'); 
+        $this->_text_operators = array(':=','==','=~','!=');
         $args = $this->getArgs($argstr, $request);
         if (empty($args['page']))
             $args['page'] = "*";
         if (!isset($args['s'])) // it might be (integer) 0
             $args['s'] = "*";
+	$posted = $request->getArg("semsearch");
 	$form = $this->showForm($dbi, $request, $args);
 	if (isset($this->_norelations_warning))
-	    $form->pushContent(HTML::div(array('class' => 'warning'),
-	                                 _("Warning:").$this->_norelations_warning));
+	    $form->pushContent
+		(HTML::div(array('class' => 'warning'),
+			   _("Warning:"),HTML::br(),
+			   _("No relations nor attributes in the whole wikidb defined!") 
+			   ,"\n"
+			   ,fmt("See %s",WikiLink(_("Help:SemanticRelations")))));
         extract($args);
 	// for convenience and harmony we allow GET requests also.
 	if (!$request->isPost()) {
@@ -251,11 +273,14 @@ extends WikiPlugin
 	if (empty($relation) and empty($attribute)) {
 	    // so we just clicked without selecting any relation. 
 	    // hmm. check which button we clicked, before we do the massive alltogether search.
-	    $posted = $request->getArg("semsearch");
-	    if (isset($semsearch['relations']))
+	    if (isset($posted['relations']) and $posted['relations'])
 		$relation = '*';
-	    elseif (isset($posted['attributes']))
+	    elseif (isset($posted['attributes']) and $posted['attributes']) {
 		$attribute = '*';
+		// here we have to check for invalid text operators. ignore it then
+		if (!in_array($attr_op, $this->_text_operators))
+		    $attribute = '';
+	    }
 	}
 	$searchtype = "Text";
 	if (!empty($relation)) {
@@ -281,23 +306,37 @@ extends WikiPlugin
 		return HTML($form,$this->error(fmt("Illegal operator: %s",
 					           HTML::tt($attr_op))));
 	    }
-	    // TODO: support unit suffixes
-	    if (preg_match('/^\d+$/', $s)) { // do comparison only with numbers 
-		//include_once("lib/SemanticWeb.php");
-		// TODO: Unify units to some format before comparison.
-		/* Sooner or later we want logical expressions also:
-		 *  population < 1million AND area > 50km2
-		 * Here we check only for one attribute per page.
+	    $s_base = preg_replace("/,/","", $s);
+	    $units = new Units();
+	    if (!is_numeric($s_base)) {
+	        $s_base = $units->basevalue($s_base);
+	        $is_numeric = is_numeric($s_base);
+	    } else {
+	        $is_numeric = true;
+	    }
+	    // check which type to search with:
+	    // at first check if forced text matcher
+	    if ($attr_op == '=~') {
+		if ($s == '*') $s = '.*'; // help the poor user. we need pcre syntax.	
+		$linkquery = new TextSearchQuery("$s", $args['case_exact'], 'pcre');
+		$querydesc = "$attribute $attr_op $s";
+	    } elseif ($is_numeric) { // do comparison with numbers 
+		/* We want to search for multiple attributes also. linkSearch can do this. 
+		 * But we have to construct the query somehow. (that's why we try the AND OR dhtml)
+		 *     population < 1 million AND area > 50 km2
+		 * Here we check only for one attribute per page.  
+		 * See SemanticSearchAdvanced for the full expression.
 		 */
-		// it might not be the best idea to use '*' as variable to expand
-		if ($attribute == '*') $attribute = '_x'; 
-		$querydesc = $attribute." ".$attr_op." ".$s;
+		// it might not be the best idea to use '*' as variable to expand. hmm.
+		if ($attribute == '*') $attribute = '_star_'; 
 		$searchtype = "Numeric";
-		$linkquery = new NumericSearchQuery($querydesc, $attribute);
-		if ($attribute == '_x') $attribute = '*'; 
+		$query = $attribute." ".$attr_op." ".$s_base;
+		$linkquery = new SemanticAttributeSearchQuery($query, $attribute, $units->baseunit($s));
+		if ($attribute == '_star_') $attribute = '*'; 
 		$querydesc = $attribute." ".$attr_op." ".$s;
-	    // text matcher or '*' MATCH_ALL
-	    } elseif (in_array($attr_op, array(':=','==','=~'))) { 
+
+	    // no number or unit: check other text matchers or '*' MATCH_ALL
+	    } elseif (in_array($attr_op, $this->_text_operators)) {
 		if ($attr_op == '=~') {
 		    if ($s == '*') $s = '.*'; // help the poor user. we need pcre syntax.	
 		    $linkquery = new TextSearchQuery("$s", $args['case_exact'], 'pcre');
@@ -305,24 +344,31 @@ extends WikiPlugin
 		else		                                 
 		    $linkquery = new TextSearchQuery("$s", $args['case_exact'], $args['regex']);
 		$querydesc = "$attribute $attr_op $s";
+
+	    // should we fail or skip when the user clicks on Relations?
+	    } elseif (isset($posted['relations']) and $posted['relations'])  {
+		$linkquery = false; // skip
 	    } else {
 		$querydesc = $attribute." ".$attr_op." ".$s;
-		return HTML($form, $this->error(fmt("Only text operators can used with strings: %s",
-		                                    HTML::tt($querydesc))));
+		return HTML($form, $this->error(fmt("Only text operators can be used with strings: %s",
+						    HTML::tt($querydesc))));
+		
 	    }
-	    $links = $dbi->linkSearch($pagequery, $linkquery, 'attribute', $relquery);
-	    if (empty($relation)) {
-	        $pagelist = new PageList($args['info'], $args['exclude'], $args);
-	        $pagelist->_links = array();
+	    if ($linkquery) {
+		$links = $dbi->linkSearch($pagequery, $linkquery, 'attribute', $relquery);
+		if (empty($relation)) {
+		    $pagelist = new PageList($args['info'], $args['exclude'], $args);
+		    $pagelist->_links = array();
+		}
+		while ($link = $links->next()) {
+		    $pagelist->addPage($link['pagename']);
+		    $pagelist->_links[] = $link;
+		}
+		$pagelist->addColumnObject
+		    (new _PageList_Column_SemanticSearch_relation('attribute', _("Attribute"), $pagelist));
+		$pagelist->addColumnObject
+		    (new _PageList_Column_SemanticSearch_link('value', _("Value"), $pagelist));
 	    }
-	    while ($link = $links->next()) {
-	        $pagelist->addPage($link['pagename']);
-	        $pagelist->_links[] = $link;
-	    }
-	    $pagelist->addColumnObject
-		(new _PageList_Column_SemanticSearch_relation('attribute', _("Attribute"), $pagelist));
-	    $pagelist->addColumnObject
-		(new _PageList_Column_SemanticSearch_link('value', _("Value"), $pagelist));
 	}
 	if (!isset($pagelist)) {
 	    $querydesc = _("<empty>");
@@ -374,6 +420,9 @@ extends _PageList_Column_SemanticSearch_relation
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2007/01/02 13:23:06  rurban
+// add SemanticSearch with internal form
+//
 // Revision 1.1  2006/03/07 20:52:01  rurban
 // not yet working good enough
 //
