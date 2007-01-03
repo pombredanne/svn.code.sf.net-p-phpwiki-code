@@ -791,7 +791,8 @@ cAutocomplete.prototype.prepareList = function( bFullList )
 		{
 			hInput.className = 'search'
 			hInput.readonly = true
-			hInput.value = 'please wait...'
+			// TODO: print please wait somewhere else
+			// hInput.value = 'please wait...'
 			// hInput.value = this.sListURL
 			this.bXMLRPC ? this.loadXMLRPCListArray() : this.loadListArray()
 			return
