@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.24 2007-01-02 13:19:05 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.25 2007-01-03 21:22:34 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -97,6 +97,8 @@ class TextSearchQuery {
 	    }
 	}
     }
+
+    function getType() { return 'text'; }
 
     function _optimize() {
         $this->_tree = $this->_tree->optimize();
@@ -324,15 +326,22 @@ class NullTextSearchQuery extends TextSearchQuery {
  *
  * @package NumericSearchQuery
  * @author Reini Urban
- * @see TextSearchQuery @see SemanticAttributeSearchQuery
+ * @see SemanticAttributeSearchQuery
  */
 class NumericSearchQuery
-extends TextSearchQuery
 {
     /**
      * Create a new query.
      *   NumericSearchQuery("population > 20000 or population < 200", "population")
      *   NumericSearchQuery("population < 20000 and area > 1000000", array("population", "area"))
+     *
+     * With a single variable it is easy: The valid name must be matched elsewhere, just 
+     * replace the given number in match in the query.
+     *   ->match(2000)
+     *
+     * With matching a struct we need strict names, no * as name is allowed.
+     * So always when the placeholder is an array, the names of the target struct must match 
+     * and all vars be defined. Use the method can_match($struct) therefore.
      *
      * @access public
      * @param $search_query string   A numerical query with placeholders as variable.
@@ -340,48 +349,112 @@ extends TextSearchQuery
      * 	here, and will be replaced by the matcher.
      */
     function NumericSearchQuery($search_query, $placeholders) {
-	// FIXME: add some basic security checks against user input
+	// added some basic security checks against user input
         $this->_query = $search_query;
 	$this->_placeholders = $placeholders;
 
-	// we also allow the M_ constants
+	// we should also allow the M_ constants
 	$this->_allowed_functions = explode(':','abs:acos:acosh:asin:asinh:atan2:atan:atanh:base_convert:bindec:ceil:cos:cosh:decbin:dechex:decoct:deg2rad:exp:expm1:floor:fmod:getrandmax:hexdec:hypot:is_finite:is_infinite:is_nan:lcg_value:log10:log1p:log:max:min:mt_getrandmax:mt_rand:mt_srand:octdec:pi:pow:rad2deg:rand:round:sin:sinh:sqrt:srand:tan:tanh');
-	$this->_allowed_operators = explode(',', '<,<=,>,>=,==,!=,*,+,/,(,),-');
+	$this->_allowed_operators = explode(',', '-,<,<=,>,>=,==,!=,*,+,/,(,),%,and,or,xor,<<,>>,===,!==,&,^,|,&&,||');
+	$this->_parser_check = array();
+	// check should be fast, so make a hash
+	foreach ($this->_allowed_functions as $f)
+	    $this->_parser_check[$f] = 1;
+	foreach ($this->_allowed_operators as $f)
+	    $this->_parser_check[$f] = 1;
+	if (is_array($placeholders))
+	    foreach ($placeholders as $f)
+		$this->_parser_check[$f] = 1;
+	else $this->_parser_check[$placeholders] = 1;	
 
 	// This is a speciality: := looks like the attribute definition and is 
 	// therefore a dummy check for this definition.
 	$this->_query = preg_replace("/\b:=\b/", "==", $this->_query);
-	$this->_query = $this->check($this->_query);
+	$this->_query = $this->check_query($this->_query);
     }
+
+    function getType() { return 'numeric'; }
 
     /**
      * Check the symbolic definition query against unwanted functions and characters.
-     * "population < 20000 and area > 1000000"
+     * "population < 20000 and area > 1000000" vs "area > 1000000 and mail($me,file("/etc/passwd"),...)" 
+     * http://localhost/wikicvs/SemanticSearch?attribute=*&attr_op=<0 and find(1)>&s=-0.01&start_debug=1
      */
-    function check ($query) {
-	while (preg_match("/\A\b(\w.+)\s*\(\b\Z/", $query, $m)) {
-	    if (!in_array($m[1],$this->_allowed_functions)) {
+    function check_query ($query) {
+	// Fixme!
+    	while (preg_match("/\A(\w.+)\s*\(\Z/", $query, $m)) {
+	    if (!in_array($m[1], $this->_allowed_functions)
+		and !in_array($m[1], $this->_allowed_operators))
+	    {
 		trigger_error("Illegal function in query: ".$m[1], E_USER_WARNING);
 		return '';
 	    }
 	}
-	// TODO: check for illegal operators. which are no placeholders and functions.
 	
-	// Detect illegal characters
-	$c = "/([^\d\w.,\s".preg_quote(join("",$this->_allowed_operators),"/")."])/";
-	if (preg_match($c, $query, $m)) {
-	    trigger_error("Illegal character in query: ".$m[1], E_USER_WARNING);
-	    return '';
+	// Check for illegal functions and operators, which are no placeholders.
+	if (function_exists('token_get_all')) {
+	    $parsed = token_get_all("<?$query?>");
+	    foreach ($parsed as $x) { // flat, non-recursive array
+		if (is_string($x) and !isset($this->_parser_check[$x])) {
+		    // single char op or name
+		    trigger_error("illegal string or operator: \"$x\"". E_USER_WARNING);
+		    $query = '';
+	        }
+		elseif (is_array($x)) {
+		    $n = token_name($x[0]);
+		    if ($n == 'T_OPEN_TAG' or $n == 'T_WHITESPACE' 
+		        or $n == 'T_CLOSE_TAG' or $n == 'T_LNUMBER'
+		        or $n == 'T_CONST' or $n == 'T_DNUMBER' ) continue;
+		    if ($n == 'T_VARIABLE') { // but we do allow consts
+			trigger_error("illegal variable: \"$x[1]\"", E_USER_WARNING);
+			$query = '';
+		    }    
+		    if (is_string($x[1]) and !isset($this->_parser_check[$x[1]])) {
+			// multi-char char op or name
+			trigger_error("illegal $n: \"$x[1]\"", E_USER_WARNING);
+			$query = '';
+		    }
+		}
+	    }
+	    //echo "$query <br>";
+	    //$this->_parse_token($parsed);
+	    //echo "<br>\n";
+	    //var_dump($parsed);
+	    /* 
+"_x > 0" => 
+{ T_OPEN_TAG "<?"} { T_STRING "_x"} { T_WHITESPACE " "} ">" { T_WHITESPACE " "} { T_LNUMBER "0"} { T_CLOSE_TAG "?>"}
+	Interesting: on-char ops, as ">" are not tokenized.
+"_x <= 0"
+{ T_OPEN_TAG "< ?" } { T_STRING "_x" } { T_WHITESPACE " " } { T_IS_SMALLER_OR_EQUAL "<=" } { T_WHITESPACE " " } { T_LNUMBER "0" } { T_CLOSE_TAG "?>" }
+	     */
+	} else {
+	    // Detect illegal characters besides nums, words and ops. So attribute names can not be utf-8
+	    $c = "/([^\d\w.,\s".preg_quote(join("",$this->_allowed_operators),"/")."])/";
+	    if (preg_match($c, $query, $m)) {
+		trigger_error("Illegal character in query: ".$m[1], E_USER_WARNING);
+		return '';
+	    }
 	}
 	return $query;
     }
 
     /**
-     * Check the bound, numeric only query against unwanted functions and sideeffects.
+     * Check the bound, numeric-only query against unwanted functions and sideeffects.
      * "4560000 < 20000 and 1456022 > 1000000"
      */
-    function _live_check ($query) {
-	return $query;
+    function _live_check () {
+	// TODO: check $this->_workquery again?
+	return !empty($this->_workquery);
+    }
+
+    /**
+     * A numeric query can only operate with predefined variables. "x < 0 and y < 1"
+     *
+     * @return array The names as array of strings. => ('x', 'y') the placeholders.
+     */
+    function getVars() {
+	if(is_array($this->_placeholders)) return $this->_placeholders;
+	else return array($this->_placeholders);
     }
 
     /**
@@ -390,43 +463,92 @@ extends TextSearchQuery
      *
      * @access private
      * @param $value number   A numerical value: integer, float or string.
-     * @param $x string  The variable name to be replaced in the query.
+     * @param $x string       The variable name to be replaced in the query.
      * @return string
      */
-    function bind($value, $x) {
+    function _bind($value, $x) {
 	// TODO: check is_number, is_float, is_integer and do casting
-	$value = preg_replace("/[^-+0123456789.]/", "", $value);
+	$this->_bound[] = array('linkname'  => $x,
+	        		'linkvalue' => $value);
+	$value = preg_replace("/[^-+0123456789.,]/", "", $value);
 	//$c = "/\b".preg_quote($x,"/")."\b/";
-	$result = preg_replace("/\b".preg_quote($x,"/")."\b/", $value, $this->_query);
+	$this->_workquery = preg_replace("/\b".preg_quote($x,"/")."\b/", $value, $this->_workquery);
 	// FIXME: do again a final check. now only numbers and some operators are allowed.
-	return $this->_live_check($result);
+	return $this->_workquery;
+    }
+    
+    /* array of successfully bound vars, and in case of success, the resulting vars
+     */
+    function _bound() {
+    	return $this->_bound;
+    }
+
+    /** 
+     * With an array of placeholders we need a hash to check against, if all required names are given.
+     * Purpose: Be silent about missing vars, just return false.
+     `*
+     * @access public
+     * @param $variable string or hash of name => value  The keys must satisfy all placeholders in the definition.
+     * We want the full hash and not just the keys because a hash check is faster than the array of keys check.
+     * @return boolean
+     */
+    function can_match(&$variables) {
+    	if (empty($this->_query))
+    	    return false;
+	$p =& $this->_placeholders;
+	if (!is_array($variables) and !is_array($p))
+	    return $variables == $p; // This was easy.
+	// Check if all placeholders have definitions. can be overdefined but not underdefined.
+	if (!is_array($p)) {
+	    if (!isset($variables[$p])) return false;
+	} else {
+	    foreach ($p as $x) {
+		if (!isset($variables[$x])) return false;
+	    }
+	}
+	return true;
     }
 
     /**
      * We can match against a single variable or against a hash of variables.
+     * With one placeholder we need just a number.
+     * With an array of placeholders we need a hash.
      *
      * @access public
-     * @param $search_query string   A numerical query with placeholders as variable.
-     * @param $variable array or string  Must have the same structure as placeholders in the definition.
+     * @param $variable number or array of name => value  The keys must satisfy all placeholders in the definition.
      * @return boolean
      */
-    function match($variable) {
-	if (!is_array($this->_placeholders)) {
-	    if (is_array($variable))
-		trigger_error("Not enough placeholders in NumericSearchQuery() defined.\n"
-			      ."Require ".count($variables)." variables to be defined.");
-	    $search = $this->bind($variable, $this->_placeholders);
+    function match(&$variable) {
+	$p =& $this->_placeholders;
+	$this->_workquery = $this->_query;
+	if (!is_array($p)) {
+	    if (is_array($variable)) { // which var to match? we cannot decide this here
+		if (!isset($variable[$p]))
+		    trigger_error("Required NumericSearchQuery->match variable $x not defined.", E_USER_ERROR);
+		$this->_bind($variable[$p], $p);
+	    } else {
+		$this->_bind($variable, $p);
+	    }
 	} else {
-	    if (count($variables) <> count($this->_placeholders))
-		trigger_error("Not matching number of variables and placeholders in NumericSearchQuery->match.\n"
-			      ."Require ".count($variables)." variables to be bound");
-	    foreach ($this->_placeholders as $x) {
+	    foreach ($p as $x) {
 		if (!isset($variable[$x]))
-		    trigger_error("Required NumericSearchQuery->match variable $x not defined.");
-		$search = $this->bind($variable[$x], $x);
+		    trigger_error("Required NumericSearchQuery->match variable $x not defined.", E_USER_ERROR);
+		$this->_bind($variable[$x], $x);
 	    }
 	}
+    	if (!$this->_live_check()) // check returned an error
+    	    return false;
+    	$search = $this->_workquery;
+	$result = false;
+	//if (DEBUG & _DEBUG_VERBOSE)
+	//    trigger_error("\$result = (boolean)($search);", E_USER_NOTICE);
+	// we might have a numerical problem:
+	// php-4.2.2 eval'ed as module: "9.636e+08 > 1000" false; 
+	// php-5.1.2 cgi true, 4.2.2 cgi true
 	eval("\$result = (boolean)($search);");
+	if ($result and is_array($p)) {
+	    return $this->_bound();
+	}
         return $result;
     }
 }
@@ -999,6 +1121,9 @@ class TextSearchQuery_Lexer {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2007/01/02 13:19:05  rurban
+// add NumericSearchQuery. change on pcre: no parsing done, detect modifiers
+//
 // Revision 1.23  2006/04/13 19:30:44  rurban
 // make TextSearchQuery->_stoplist localizable and overridable within config.ini
 // 
