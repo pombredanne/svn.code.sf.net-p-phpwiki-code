@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.5 2006-04-17 17:28:21 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.6 2007-01-03 21:24:06 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -19,7 +19,6 @@ rcs_id('$Id: Template.php,v 1.5 2006-04-17 17:28:21 rurban Exp $');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
 
 /**
  * Template: Parametrized blocks.
@@ -46,7 +45,7 @@ rcs_id('$Id: Template.php,v 1.5 2006-04-17 17:28:21 rurban Exp $');
  *
  * <noinclude> .. </noinclude> is stripped
  *
- * In work:
+ * See also:
  * - ENABLE_MARKUP_TEMPLATE = true: (lib/InlineParser.php)
  *   Support a mediawiki-style syntax extension which maps 
  *     {{TemplateFilm|title=Some Good Film|year=1999}}
@@ -67,7 +66,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -80,13 +79,14 @@ extends WikiPlugin
                      );
     }
 
+    // TODO: check if page can really be pulled from the args, or if it is just the basepage. 
     function getWikiPageLinks($argstr, $basepage) {
         extract($this->getArgs($argstr));
-        if ($page) {
+        if (isset($page)) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);
         }
-        if (!$page or !$page->name)
+        if (!isset($page) or !$page->name)
             return false;
         return array(array('linkto' => $page->name, 'relation' => 0));
     }
@@ -131,7 +131,23 @@ extends WikiPlugin
             $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "", 
                                             $initial_content);
         }
-        if (preg_match('/%%\w+%%/', $initial_content)) // need variable expansion
+	$this->doVariableExpansion($initial_content, $vars, $basepage, $dbi);
+
+        array_push($included_pages, $page);
+
+        include_once('lib/BlockParser.php');
+        $content = TransformText($initial_content, $r->get('markup'), $page);
+
+        array_pop($included_pages);
+
+        return HTML::div(array('class' => 'template'), $content);
+    }
+
+    /**
+     * Expand template variables. Used by the TemplatePlugin and the CreatePagePlugin
+     */
+    function doVariableExpansion($content, $vars, $basepage, &$dbi) {
+        if (preg_match('/%%\w+%%/', $content)) // need variable expansion
         {
             $var = array();
             if (!empty($vars)) {
@@ -145,45 +161,40 @@ extends WikiPlugin
             if (empty($var['pagename']))
                 $var['pagename'] = $page;
             // those are overridable
-            if (empty($var['mtime']) and preg_match('/%%mtime%%/', $initial_content)) {
+            if (empty($var['mtime']) and preg_match('/%%mtime%%/', $content)) {
                 $thisrev  = $thispage->getCurrentRevision(false);
                 $var['mtime'] = $GLOBALS['WikiTheme']->formatDateTime($thisrev->get('mtime'));
             }
-            if (empty($var['ctime']) and preg_match('/%%ctime%%/', $initial_content)) {
+            if (empty($var['ctime']) and preg_match('/%%ctime%%/', $content)) {
                 if ($first = $thispage->getRevision(1,false))
                     $var['ctime'] = $GLOBALS['WikiTheme']->formatDateTime($first->get('mtime'));
             }
-            if (empty($var['author']) and preg_match('/%%author%%/', $initial_content))
+            if (empty($var['author']) and preg_match('/%%author%%/', $content))
                 $var['author'] = $thispage->getAuthor();
-            if (empty($var['owner']) and preg_match('/%%owner%%/', $initial_content))
+            if (empty($var['owner']) and preg_match('/%%owner%%/', $content))
                 $var['owner'] = $thispage->getOwner();
-            if (empty($var['creator']) and preg_match('/%%creator%%/', $initial_content))
+            if (empty($var['creator']) and preg_match('/%%creator%%/', $content))
                 $var['creator'] = $thispage->getCreator();
             foreach (array("SERVER_URL", "DATA_PATH", "SCRIPT_NAME", "PHPWIKI_BASE_URL") as $c) {
                 // constants are not overridable
-                if (preg_match('/%%'.$c.'%%/', $initial_content))
+                if (preg_match('/%%\b'.$c.'\b%%/', $content))
                     $var[$c] = constant($c);
             }
-            if (preg_match('/%%BASE_URL%%/', $initial_content))
+            if (preg_match('/%%BASE_URL%%/', $content))
                 $var['BASE_URL'] = PHPWIKI_BASE_URL;
 
             foreach ($var as $key => $val) {
-                $initial_content = preg_replace("/%%$key%%/", $val, $initial_content);
+                $content = preg_replace("/%%".preg_quote($key,"/")."%%/", $val, $content);
             }
         }
-
-        array_push($included_pages, $page);
-
-        include_once('lib/BlockParser.php');
-        $content = TransformText($initial_content, $r->get('markup'), $page);
-
-        array_pop($included_pages);
-
-        return HTML::div(array('class' => 'template'), $content);
+	return $content;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2006/04/17 17:28:21  rurban
+// honor getWikiPageLinks change linkto=>relation
+//
 // Revision 1.4  2005/09/11 13:30:22  rurban
 // improve comments
 //
