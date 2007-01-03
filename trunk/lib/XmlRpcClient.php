@@ -1,5 +1,5 @@
 <?php // -*- php -*-
-// $Id: XmlRpcClient.php,v 1.1 2007-01-02 13:21:12 rurban Exp $
+// $Id: XmlRpcClient.php,v 1.2 2007-01-03 21:25:43 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
  */
@@ -77,8 +77,10 @@ function short_string_decode ($str) {
 }
 
 function wiki_xmlrpc_post($method, $args = null, $url = null) {
-    if (is_null($url))
-	$url = deduce_script_name();
+    if (is_null($url)) {
+	//$url = deduce_script_name();
+	$url = DATA_PATH . "/RPC2.php";
+    }
     $debug = 0;
     $server = parse_url($url);
     if (empty($server['host'])) $server['host'] = 'localhost';
@@ -98,6 +100,9 @@ function wiki_xmlrpc_post($method, $args = null, $url = null) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.1  2007/01/02 13:21:12  rurban
+ split client from server
+
  */
 
 // (c-file-style: "gnu")
