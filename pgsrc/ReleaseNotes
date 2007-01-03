@@ -1,15 +1,20 @@
-Date: Tue, 2 Jan 2007 13:30:17 +0000
+Date: Wed, 3 Jan 2007 16:57:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.67 2007-01-02 13:32:41 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.68 2007-01-03 21:28:03 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.67 $";
+  pgsrc_version="2 $Revision: 1.68 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 1.3.13  Jan, 15 2007 Reini Urban
+
+This is major feature release which will the base for 1.4.0. The highlights are 
+SemanticWeb support, various WYSIWYG editors, a stable ~MonoBook theme (wikipedia), 
+stabilized acdropdown support (~LiveSearch), postgresql and oracle enhancements, 
+moving Help pages into Help/, support pgsrc charsets and Windows NTLM auth support via HttpAuth.
 
 fixes:
 * DB: use ANSI SQL statements (oracle by Christopher Jones, postgresql by Reini Urban)
@@ -33,22 +38,22 @@ fixes:
 * fixed moacdropdown integration
 * fixed fortune error handling
 * fixed limit handling with multiple pagelists: don't overwrite request arg
+* change PageDump Content-Type header for download to application/octet-stream to avoid 
+  pesty .txt suffixes on windows clients
 
 changes:
-* add linkrelation support: getPageLinks returns now an array of hashes. 
+* SemanticWeb: add linkrelation support, getPageLinks returns now an array of hashes. 
   optimize get_links for relations.
-* moved default help pages to Help/ subpages
+* add new empty InterWiki moniker ":", not to store backlinks [:DontStoreLink] (experimental)
+* moved default help pages to Help/ subpages. Partially for "de" also.
 * generalized ENABLE_HTMLAREA3 to ENABLE_WYSIWYG
+* support more WikiFormRich method arguments: url, dynurl, xmlrpc, dynxmlrpc, plugin,
+  the autocomplete option for pulldown[] and editbox[] and the new combobox[] widget.
 * DB: foreign key support in schemas, simplify methods
-* print "Ignored stoplist words" on FullTextSearch, 
-  add FULLTEXTSEARCH_STOPLIST constant,
-  make TextSearchQuery->_stoplist localizable
-* fix arg order in WikiDB_backend_search()
 * remove user table: upgrade from SQL db.
 * updated locale for it, de and es (google translation)
 * improve loading multiple version archives such as full zipdumps. force temp. overwrite.
   support loadfile for multipart archives (full dumps) automatically
-* add new empty InterWiki moniker ":", not to store backlinks [:DontStoreLink] (experimental)
 * omit actionbar from pdf output
 * support charsets in pagedumps for loadfile and virgin setup 
 * _BackendInfoPlugin prints linkinfo also.
@@ -56,21 +61,24 @@ changes:
   EXTERNALSEARCH_DEFAULT_BUTTON_POSITION = left, or the argument button_position=left or none.
 * disabled postgresql optimize() in favor of autovacuum, 
   enable it in the backend method if the web user is the table owner (security risk)
+* print "Ignored stoplist words" on FullTextSearch, 
+  add FULLTEXTSEARCH_STOPLIST constant,
+  make TextSearchQuery->_stoplist localizable
+* fix arg order in WikiDB_backend_search()
 * protected tests. only allow localhost
 * optimize ArchiveCleaner for the new default case (since 1.3.11): Keep all revisions.
 * changed the default DB backend from gdbm to dba db4
 * changed action=upgrade to check and store a db version
 * don't loadfile *.orig files (this might be a limitation. sorry)
 * rename _AuthFile to DebugAuthFile in upgrade
-* support more WikiFormRich method arguments: url, dynurl, xmlrpc, dynxmlrpc, 
-  the autocomplete option for pulldown[] and editbox[] and the new combobox[] widget.
 * updated most template files for harmonisation
 * changed default LiveSearch method in search.tmpl from url to xmlrpc. faster and less hackish.
 * fixed all templates with missing revision check. can be false.
 * rewrote and redefined WikiDB::listRelations. list only all relations as array.
 * changed Semantic attribute syntax from ":-" to ":=" (relevant to cvs users only)
 * change TextSearchQuery handling of regex=pcre: plain string, no parsing at all, 
-  detect and apply modifiers
+  detect and apply modifiers.
+* enhance text2png arguments and features. See Help:text2pngPlugin 
 
 new:
 * add SemanticRelations syntax and db structure.
@@ -83,8 +91,8 @@ new:
 * new experimental flatfile backend: readable page source files (experimental)
 * added new xmlrpc methods: listPlugins, getPluginSynopsis, mailPasswordToUser, 
   getUploadedFileInfo, listRelations, callPlugin
-* new plugins: SemanticSearch, LinkSearch, ListRelations, FileInfo, BoxRight, 
-  PasswordReset, WatchPage
+* new plugins: SemanticSearch, SemanticRelations, LinkSearch, ListRelations, 
+  FileInfo, BoxRight, PasswordReset, WatchPage
 * add <nowiki></nowiki> tag: Transform only html markup and entities
 * new option DISABLE_MARKUP_WIKIWORD to force [ ] for links
 * new option ENABLE_MARKUP_DIVSPAN (experimental)
@@ -93,6 +101,7 @@ new:
   and mod_auth_sspi (apache2. better, but windows only)
 * patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
 * new options db-check and db-rebuild for WikiAdminPlugin.
+  You can now retransform all pages at once.
 * new MailNotify class, simplified WikiDB.php
 * added "Printable version" js to monobook theme. See License in 
   http://www.howtocreate.co.uk/jslibs/termsOfUse.html
@@ -103,11 +112,12 @@ new:
 * added wikidb->backend->rebuild()
 * added "Keep old" and "Overwrite with new" buttons and actions for loadfile merge edit.
 * added lib/XmlRpcClient, xmlrpc methods to lib/HttpClient and acdropdown.js
-* created Help/*Plugin stubs for all plugins in pgsrc
+* created Help/*Plugin stubs for *ALL* plugins in pgsrc
 * added a new _DEBUG_REMOTE flag to debug into remote sessions (xmlrpc, ajax, ...)
 * added WikiDB::linkSearch and backend/dumb/~LinkSearchIter.php. Mainly for SemanticSearch, 
   and LinkSearch, but can be used for a better SemanticSearch (combined queries) and 
   BackLinks et al also
+* added Calendar display_weeknum argument
 
 1.3.12p3 Jun, 18 2006, Reini Urban:
 
