@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.55 2007-01-02 13:24:01 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.56 2007-01-03 21:25:34 rurban Exp $');
 /*
  Copyright 2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -112,11 +112,12 @@ function CheckActionPageUpdate(&$request) {
     echo "<h3>",sprintf(_("check for necessary %s updates"),
 			_("ActionPage")),"</h3>\n";
     $dbi = $request->getDbh();
-    // 1.3.13
+    // 1.3.13 before we pull in all missing pages, we rename existing ones
     _rename_page_helper($dbi, _("_AuthInfo"), _("DebugAuthInfo"));
     // this is in some templates. so we keep the old name
     //_rename_page_helper($dbi, _("DebugInfo"), _("DebugBackendInfo")); 
     _rename_page_helper($dbi, _("_GroupInfo"), _("GroupAuthInfo")); //never officially existed
+    _rename_page_helper($dbi, "InterWikiKarte", "InterWikiListe"); // german only
  
     $path = FindFile('pgsrc');
     $pgsrc = new fileSet($path);
@@ -973,18 +974,26 @@ function DoUpgrade($request) {
 
     StartLoadDump($request, _("Upgrading this PhpWiki"));
     //CheckOldIndexUpdate($request); // to upgrade from < 1.3.10
-    CheckDatabaseUpdate($request);   // first check cached_html and friends
-    CheckActionPageUpdate($request);
-    CheckPgsrcUpdate($request);
+    if (!$request->getArg('nosql'))
+	CheckDatabaseUpdate($request);   // first check cached_html and friends
+    if (!$request->getArg('nopgsrc')) {
+	CheckActionPageUpdate($request);
+	CheckPgsrcUpdate($request);
+    }
     //CheckThemeUpdate($request);
-    CheckPluginUpdate($request);
-    CheckConfigUpdate($request);
+    if (!$request->getArg('noplugin'))
+	CheckPluginUpdate($request);
+    if (!$request->getArg('noconfig'))
+	CheckConfigUpdate($request);
     EndLoadDump($request);
 }
 
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.55  2007/01/02 13:24:01  rurban
+ 1.3.13 support: _rename_page_helper, _rename_to_help_page, _upgrade_relation_links, check for ACCESS_LOG_SQL remote_host varchar(50), _upgrade_psql_tsearch2
+
  Revision 1.54  2006/12/03 17:07:29  rurban
  #1535843 by matt brown: Upgrade Wizard Password fixes are not portable
 
