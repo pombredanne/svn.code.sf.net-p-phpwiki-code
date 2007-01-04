@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.26 2005-11-14 22:33:04 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.27 2007-01-04 16:46:40 rurban Exp $');
 /*
-Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
+Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
 This file is part of PhpWiki.
 
@@ -24,10 +24,16 @@ require_once('lib/TextSearchQuery.php');
 require_once("lib/PageList.php");
 
 /**
- * Simple case insensitive fulltext search
- * TODO: case-sensitivity argument, regex argument
+ * Case insensitive fulltext search
+ * Options: case_exact, regex, hilight
+ *          Stoplist
  *
- * See https://sourceforge.net/tracker/index.php?func=detail&aid=927395&group_id=6121&atid=106121
+ * TODO: Hooks to search in external documents: ExternalTextSearch
+ *   Only uploaded: textfiles, PDF, HTML, DOC, XLS, ... or 
+ *   External apps: xapian-omages seems to be the best, over lucene.net, 
+ *   swish, nakamazu, ...
+ *
+ * See http://sf.net/tracker/index.php?aid=927395&group_id=6121&atid=106121
  * Wordaround to let the dead locks occur somewhat later:
  * increased the memory limit of PHP4 from 8 MB to 32 MB
  * php.ini: memory_limit = 32 MB
@@ -45,7 +51,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.26 $");
+                            "\$Revision: 1.27 $");
     }
 
     function getDefaultArguments() {
@@ -74,7 +80,6 @@ extends WikiPlugin
         $lines = array();
         $hilight_re = $hilight ? $query->getHighlightRegexp() : false;
         $count = 0;
-        $found = 0;
 
         if ($quiet) { // see how easy it is with PageList...
             $list = new PageList(false,$exclude,$args);
@@ -140,6 +145,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2005/11/14 22:33:04  rurban
+// print ignored stoplist words
+//
 // Revision 1.25  2005/09/11 14:55:05  rurban
 // implement fulltext stoplist
 //
