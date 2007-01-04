@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.48 2007-01-03 21:22:08 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.49 2007-01-04 16:40:35 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -412,7 +412,7 @@ class Cached_SemanticLink extends Cached_WikiLink {
         if ($label && $label != $url)
             $this->_label = $label;
         $this->_expandurl($this->_url);
-	$this->_units = new Units();
+	//$this->_units = new Units();
     }
 
     function isInlineElement() {
@@ -457,11 +457,11 @@ class Cached_SemanticLink extends Cached_WikiLink {
             $this->_attribute = urldecode($m[3]);
 	    // since this stored in the markup cache, we are extra sensible 
 	    // not to store false empty stuff.
-            if (!DISABLE_UNITS and isset($this->_units) 
-		and is_object($this->_units) and !$this->_units->errcode) 
+	    $units = new Units();
+            if (!DISABLE_UNITS and !$units->errcode) 
 	    {
-		$this->_attribute_base = $this->_units->Definition($this->_attribute);
-		$this->_unit = $this->_units->baseunit($this->_attribute);
+		$this->_attribute_base = $units->Definition($this->_attribute);
+		$this->_unit = $units->baseunit($this->_attribute);
 	    }
         } else {
 	    $this->_page = urldecode($m[3]);
@@ -698,6 +698,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.48  2007/01/03 21:22:08  rurban
+// Use Units for attributes. Store the unified base value as Cached_SemanticLink->_attribute_base in the wikimarkup and display it as title.
+//
 // Revision 1.47  2007/01/02 13:17:57  rurban
 // fix semantic page links and attributes, esp. attributes. they get stored as link to empty page also. tighten semantic url expander regex, omit want_content if not necessary
 //
