@@ -1,5 +1,5 @@
-<?php
-rcs_id('$Id: dialog.tmpl,v 1.5 2004-06-14 11:26:52 rurban Exp $');
+<?php // -*-html-*-
+rcs_id('$Id: dialog.tmpl,v 1.6 2007-01-04 16:49:08 rurban Exp $');
 /* 
  * A "popup" dialog.  (Though it doesn't pop up yet.)
  */
@@ -24,6 +24,10 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <div class="message"><?=$CONTENT?></div>
 <p class="buttons"><?=$BUTTONS?></a></p>
 </div>
+<?php if (!$WikiTheme->DUMP_MODE) { ?>
+  <?= $WARNINGS ?>
+  <?= $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
+<?php } ?>
 </body>
 <?php
 if (defined('DEBUG') and DEBUG) {
