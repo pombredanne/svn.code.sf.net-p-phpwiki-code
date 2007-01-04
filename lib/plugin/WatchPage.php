@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WatchPage.php,v 1.1 2006-12-22 01:28:23 rurban Exp $');
+rcs_id('$Id: WatchPage.php,v 1.2 2007-01-04 16:47:02 rurban Exp $');
 /**
  Copyright (C) 2006 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -80,7 +80,7 @@ extends WikiPlugin
 	             $this->showWatchList($this->addpagelist($page, $pagelist))));
 	if ($isNecessary) {
 	    $form->pushContent(HTML::p(sprintf(_("Do you %s want to add this page \"%s\" to your WatchList?"), 
-                                               ($verified ? "really " : ""), $page)),
+                                               ($verified ? _("really") : ""), $page)),
 			       HTML::p(Button('submit:add', _("Yes")),
 				       HTML::Raw('&nbsp;'),
 				       Button('submit:cancel', _("Cancel"))));
@@ -158,6 +158,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2006/12/22 01:28:23  rurban
+// new plugin similar to mediawiki
+//
 
 // For emacs users
 // Local Variables:
