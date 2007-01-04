@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.3 2006-12-24 13:35:43 rurban Exp $');
+rcs_id('$Id: MailNotify.php,v 1.4 2007-01-04 16:47:49 rurban Exp $');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -112,12 +112,13 @@ class MailNotify {
     }
     
     function sendMail($subject, $content, 
-                      $notice = _("PageChange Notification of %s"),
+                      $notice = false,
                       $silent = false)
     {
         global $request;
         $emails = $this->emails;
         $from = $this->from;
+        if (!$notice) $notice = _("PageChange Notification of %s");
         if (mail(array_shift($emails),
                  "[".WIKI_NAME."] ".$subject, 
                  $subject."\n".$content,
@@ -244,10 +245,11 @@ class MailNotify {
 	    if (!empty($notify) and is_array($notify)) {
 		//TODO: deferr it (quite a massive load if you remove some pages).
 		//TODO: notification class which catches all changes,
-		//  and decides at the end of the request what to mail. (type, page, who, what, users, emails)
+		//  and decides at the end of the request what to mail. 
+		// (type, page, who, what, users, emails)
+
 		// could be used for PageModeration and RSS2 Cloud xml-rpc also.
-		$page = new WikiDB_Page($wikidb, $pagename);
-		$page->getPageChangeEmails($notify);
+		$this->getPageChangeEmails($notify);
 		if (!empty($this->emails)) {
 		    $editedby = sprintf(_("Removed by: %s"), $this->from); // Todo: host_id
 		    $emails = join(',', $emails);
@@ -362,6 +364,11 @@ will expire at %s.",
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2006/12/24 13:35:43  rurban
+// added experimental EMailConfirm auth. (not yet tested)
+// requires actionpage ConfirmEmail
+// TBD: purge expired cookies
+//
 // Revision 1.2  2006/12/23 11:50:45  rurban
 // added missing result init
 //
