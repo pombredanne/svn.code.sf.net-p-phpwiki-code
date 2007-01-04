@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.49 2006-10-12 06:25:09 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.50 2007-01-04 16:44:57 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -119,9 +119,9 @@ class PageType_comment extends PageType {}
 class PageType_wikiforum extends PageType {}
 
 /* To prevent from PHP5 Fatal error: Using $this when not in object context */
-function getInterwikiMap ($pagetext = false) {
+function getInterwikiMap ($pagetext=false, $force=false) {
     static $map;
-    if (empty($map))
+    if (empty($map) or $force)
         $map = new PageType_interwikimap($pagetext);
     return $map;
 }
@@ -361,7 +361,7 @@ class PageFormatter_interwikimap extends PageFormatter
     }
     
     function _getMap($pagetext) {
-        $map = getInterwikiMap($pagetext);
+        $map = getInterwikiMap($pagetext, 'force');
         return $map->_map;
     }
     
@@ -506,7 +506,11 @@ class PageFormatter_pdf extends PageFormatter
         return $pdf;
     }
 }
+
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2006/10/12 06:25:09  rurban
+// use the same class for $moniker == ""
+//
 // Revision 1.48  2006/10/08 12:38:11  rurban
 // New special interwiki link markup [:LinkTo] without storing the backlink
 //
