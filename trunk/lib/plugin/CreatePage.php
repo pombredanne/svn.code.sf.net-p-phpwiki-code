@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreatePage.php,v 1.8 2007-01-03 21:23:32 rurban Exp $');
+rcs_id('$Id: CreatePage.php,v 1.9 2007-01-04 16:42:23 rurban Exp $');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_Template
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -83,7 +83,7 @@ extends WikiPlugin_Template
         $url = WikiURL($s, $param, 'absurl');
         // FIXME: expand vars in templates here.
         if (strlen($url) > 255 
-            or (!empty($vars) and !empty($param['template']))
+            or ($param['template'])
             or preg_match('/%%\w+%%/', $initial_content)) // need variable expansion
         {
             unset($param['initial_content']);
@@ -148,6 +148,9 @@ extends WikiPlugin_Template
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2007/01/03 21:23:32  rurban
+// Derive from Template. Use same variable expansion. Support <noinclude> as in Template.
+//
 // Revision 1.7  2004/09/06 10:22:15  rurban
 // oops, forgot global request
 //
