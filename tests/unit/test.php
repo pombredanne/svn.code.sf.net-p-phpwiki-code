@@ -100,7 +100,7 @@ if ((int)substr(phpversion(), 1) >= 5)
 //TODO: convert cvs test                           
 // For "cvs" see the seperate tests/unit_test_backend_cvs.php (cvs is experimental)
 //TODO: read some database values from config.ini, just use the "test_" prefix
-// "flatfile" testing occurs in "tests/unit/.testbox/"
+// "flatfile" testing occurs in "tests/unit/.testbox/flatfile"
 // "dba" needs the DATABASE_DBA_HANDLER, also in the .textbox directory
 //$database_dba_handler = (substr(PHP_OS,0,3) == 'WIN') ? "db3" : "gdbm";
 // "SQL" and "ADODB" need delete permissions to the test db
@@ -596,10 +596,10 @@ foreach ($run_database_backends as $dbtype) {
         echo "dsn: ",$DBParams['dsn'],"\n";
     }
     // sqlite fix: 
-    /* if (preg_match('/sqlite$/', $dbtype)) {
+    if (preg_match('/sqlite$/', $dbtype)) {
 	$DBParams['dsn'] = preg_replace("/127\.0\.0\.1/", '', $DBParams['dsn']);
         echo "dsn: ",$DBParams['dsn'],"\n";
-    } */
+    }
     $DBParams['directory']            = $cur_dir . '/.testbox';
     if ($dbtype == 'flatfile')
         $DBParams['directory']        = $cur_dir . '/.testbox/flatfile';
@@ -649,6 +649,9 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "</pre>\n";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2006/12/23 11:44:56  rurban
+// deal with strict references and the order of deletion
+//
 // Revision 1.43  2006/06/05 09:35:02  rurban
 // add experimental backend flatfile, minor fixes
 //
