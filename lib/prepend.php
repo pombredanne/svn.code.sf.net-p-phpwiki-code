@@ -9,10 +9,10 @@ function rcs_id ($id) {
     if (defined('DEBUG') and DEBUG)
         $GLOBALS['RCS_IDS'] .= "$id\n"; 
 }
-rcs_id('$Id: prepend.php,v 1.59 2006-12-23 11:51:23 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.60 2007-01-04 16:41:14 rurban Exp $');
 
 // see lib/stdlib.php: phpwiki_version()
-define('PHPWIKI_VERSION', '1.3.13pre-20061222');
+define('PHPWIKI_VERSION', '1.3.13');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
@@ -48,6 +48,10 @@ if (empty($GLOBALS['HTTP_SERVER_VARS'])) {
     $GLOBALS['HTTP_REQUEST_VARS'] =& $_REQUEST;
 }
 unset($k);
+// catch connection failures on upgrade
+if (isset($GLOBALS['HTTP_GET_VARS']['action']) 
+    and $GLOBALS['HTTP_GET_VARS']['action'] == 'upgrade')
+    define('ADODB_ERROR_HANDLER_TYPE', E_USER_WARNING);
 
 // If your php was compiled with --enable-trans-sid it tries to
 // add a PHPSESSID query argument to all URL strings when cookie

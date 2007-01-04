@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.13 2005-10-30 15:49:00 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.14 2007-01-04 16:41:14 rurban Exp $');
 
 require_once('lib/WikiDB.php');
 
@@ -34,6 +34,7 @@ class WikiDB_ADODB extends WikiDB
         include_once("lib/WikiDB/backend/".$backend.".php");
         $backend_class = "WikiDB_backend_".$backend;
         $backend = new $backend_class($dbparams);
+	if (!$backend->_dbh->_connectionID) return false;
         $this->WikiDB($backend, $dbparams);
     }
     

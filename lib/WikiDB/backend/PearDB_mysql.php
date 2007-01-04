@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_mysql.php,v 1.26 2006-12-22 17:49:05 rurban Exp $');
+rcs_id('$Id: PearDB_mysql.php,v 1.27 2007-01-04 16:41:14 rurban Exp $');
 
 require_once('lib/WikiDB/backend/PearDB.php');
 
@@ -15,6 +15,7 @@ extends WikiDB_backend_PearDB
      */
     function WikiDB_backend_PearDB_mysql($dbparams) {
         $this->WikiDB_backend_PearDB($dbparams);
+        if (DB::isError($this->_dbh)) return;
         //$this->_serverinfo = $this->_dbh->ServerInfo();
         $row = $this->_dbh->GetOne("SELECT version()");
         if (!DB::isError($row) and !empty($row)) {
@@ -114,7 +115,7 @@ extends WikiDB_backend_PearDB
     }
 
     /* ISNULL is mysql specific */
-    function wanted_pages($exclude_from='', $exclude='', $sortby=false, $limit=false) {
+    function wanted_pages($exclude_from='', $exclude='', $sortby='', $limit='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         if ($orderby = $this->sortby($sortby, 'db', array('pagename','wantedfrom')))
@@ -225,6 +226,9 @@ extends WikiDB_backend_PearDB_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2006/12/22 17:49:05  rurban
+// add Log
+//
 
 // (c-file-style: "gnu")
 // Local Variables:

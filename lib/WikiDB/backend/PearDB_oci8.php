@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_oci8.php,v 1.12 2006-12-22 00:27:37 rurban Exp $');
+rcs_id('$Id: PearDB_oci8.php,v 1.13 2007-01-04 16:41:14 rurban Exp $');
 
 /**
  * Oracle extensions for the Pear DB backend.
@@ -17,7 +17,8 @@ extends WikiDB_backend_PearDB_pgsql
     function WikiDB_backend_PearDB_oci8($dbparams) {
         // Backend constructor
         $this->WikiDB_backend_PearDB($dbparams);
-        
+        if (DB::isError($this->_dbh)) return;
+
         // Empty strings are NULLS
         $this->_expressions['notempty'] = "IS NOT NULL";
         $this->_expressions['iscontent'] = "DECODE(DBMS_LOB.GETLENGTH(content), NULL, 0, 0, 0, 1)";
@@ -91,6 +92,9 @@ extends WikiDB_backend_PearDB_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2006/12/22 00:27:37  rurban
+// just add Log
+//
 
 
 // (c-file-style: "gnu")
