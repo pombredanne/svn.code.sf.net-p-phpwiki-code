@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FileInfo.php,v 1.5 2006-08-25 22:10:16 rurban Exp $');
+rcs_id('$Id: FileInfo.php,v 1.6 2007-01-04 16:42:31 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
  
@@ -25,8 +25,8 @@ rcs_id('$Id: FileInfo.php,v 1.5 2006-08-25 22:10:16 rurban Exp $');
  * Only files relative and below to the uploads path can be handled.
  *
  * Usage:
- *   <?plugin FileInfo file=uploads/setup.exe display=version,date ?>
- *   <?plugin FileInfo file=uploads/setup.exe display=name,version,date 
+ *   <?plugin FileInfo file=Upload:setup.exe display=version,date ?>
+ *   <?plugin FileInfo file=Upload:setup.exe display=name,version,date 
  *                     format="%s (version: %s, date: %s)" ?>
  *
  * @author: ReiniUrban
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
 
     function getDefaultArguments() {
@@ -53,6 +53,7 @@ extends WikiPlugin
                      'file'      => false, // relative path from PHPWIKI_DIR. (required)
                      'display'   => false, // version,size,date,mtime,owner,name,path,dirname,link.  (required)
                      'format'    => false, // printf format string with %s only, all display modes 
+		     'quiet'     => false  // print no error if file not found
 		     			   // from above vars return strings (optional)
                     );
     }
@@ -66,13 +67,27 @@ extends WikiPlugin
 
         $dir = getcwd();
         chdir(PHPWIKI_DIR);
-	// sanify $file name
 	if (!file_exists($file)) {
-	    trigger_error("file \"$file\" not found", E_USER_WARNING);
+	    if ($quiet)
+		return '';
+	    else
+		trigger_error("file \"$file\" not found", E_USER_WARNING);
 	}
+	// sanify $file name
 	$realfile = realpath($file);
-	if (!string_starts_with($realfile, realpath(getUploadDataPath())))
-	    return $this->error("invalid path \"$file\"");
+	// Hmm, allow ADMIN to check a local file? Only if its locked
+	if (!string_starts_with($realfile, realpath(getUploadDataPath()))) {
+	    $page = $dbi->getPage($basepage);
+	    $user = $request->getUser();
+	    if ($page->getOwner() != ADMIN_USER or !$page->get('locked')) {
+		// For convenience we warn the admin
+		if ($quiet and $user->isAdmin())
+		    return HTML::span(array('title' => _("Output suppressed. FileInfoPlugin with local files require a locked page.")),
+				      HTML::em(_("page not locked")));
+		else
+		    return $this->error("Invalid path \"$file\". Only ADMIN can allow local paths, and the page must be locked.");
+	    }
+	}
 	else 
 	    $isuploaded = 1;
 	$s = array();
@@ -97,7 +112,9 @@ extends WikiPlugin
 		}
 		break;
 	    default:
-		return $this->error(sprintf(_("Unsupported argument: %s=%s"), 'display', $mode)); 
+		if (!$quiet)
+		    return $this->error(sprintf(_("Unsupported argument: %s=%s"), 'display', $mode)); 
+		else return '';
 		break;
 	    }
 	}
@@ -283,6 +300,9 @@ struct VS_VERSIONINFO { struct VS_VERSIONINFO
 
 /* 
  $Log: not supported by cvs2svn $
+ Revision 1.5  2006/08/25 22:10:16  rurban
+ fix docs: FileVersion => FileInfo
+
  Revision 1.4  2005/10/29 14:18:47  rurban
  add display=phonysize
 
