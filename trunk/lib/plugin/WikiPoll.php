@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiPoll.php,v 1.9 2004-06-16 10:38:59 rurban Exp $');
+rcs_id('$Id: WikiPoll.php,v 1.10 2007-01-04 16:47:24 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
@@ -65,7 +65,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -221,7 +221,7 @@ extends WikiPlugin
             $html->pushContent(HTML::p(
         	HTML::input(array('type' => 'submit',
                                   'name' => "WikiPoll",
-                                  'value' => _("Ok"))),
+                                  'value' => _("OK"))),
         	HTML::input(array('type' => 'reset',
                                   'name' => "reset",
                                   'value' => _("Reset")))));
@@ -330,6 +330,15 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2004/06/16 10:38:59  rurban
+// Disallow refernces in calls if the declaration is a reference
+// ("allow_call_time_pass_reference clean").
+//   PhpWiki is now allow_call_time_pass_reference = Off clean,
+//   but several external libraries may not.
+//   In detail these libs look to be affected (not tested):
+//   * Pear_DB odbc
+//   * adodb oracle
+//
 // Revision 1.8  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
