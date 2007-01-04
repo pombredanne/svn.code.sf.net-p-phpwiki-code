@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.31 2005-02-28 21:24:32 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.32 2007-01-04 16:44:47 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -6,7 +6,7 @@ require_once(dirname(__FILE__).'/stdlib.php');
  * A class for finding files.
  * 
  * This should really provided by pear. We don't want really to mess around 
- * with all the lousy systems. (WindowsNT, Win95, Mac, VMS, ...)
+ * with all the lousy systems. (WindowsNT, Win95, Mac, ...)
  * But pear has only System and File, which do nothing.
  * Anyway, in good PHP style we ignore the rest of the world and try to behave 
  * as on unix only. That means we use / as pathsep in all our constants.
@@ -587,6 +587,9 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2005/02/28 21:24:32  rurban
+// ignore forbidden ini_set warnings. Bug #1117254 by Xavier Roche
+//
 // Revision 1.30  2004/11/10 19:32:21  rurban
 // * optimize increaseHitCount, esp. for mysql.
 // * prepend dirs to the include_path (phpwiki_dir for faster searches)
