@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.2 2005-11-21 20:57:58 rurban Exp $');
+<?php rcs_id('$Id: SQL.php,v 1.3 2007-01-04 16:45:31 rurban Exp $');
 
 /**
  * DB sessions for pear DB
@@ -133,6 +133,7 @@ extends DbSession
      * @access private
      */
     function write ($id, $sess_data) {
+        if (defined("WIKI_XMLRPC") or defined("WIKI_SOAP")) return;    	
         
         $dbh = $this->_connect();
         //$dbh->unlock(false,1);
@@ -241,6 +242,9 @@ extends DbSession
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2005/11/21 20:57:58  rurban
+// fix ref warnings, analog to ADODB
+//
 // Revision 1.1  2005/02/11 14:41:40  rurban
 // seperate DbSession classes: less memory, a bit slower
 //
