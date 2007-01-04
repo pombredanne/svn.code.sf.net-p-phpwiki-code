@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.25 2007-01-03 21:22:34 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.26 2007-01-04 16:41:52 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -369,7 +369,8 @@ class NumericSearchQuery
 
 	// This is a speciality: := looks like the attribute definition and is 
 	// therefore a dummy check for this definition.
-	$this->_query = preg_replace("/\b:=\b/", "==", $this->_query);
+	// php-4.2.2 has a problem with /\b:=\b/ matching "population := 1223400"
+	$this->_query = preg_replace("/:=/", "==", $this->_query);
 	$this->_query = $this->check_query($this->_query);
     }
 
@@ -381,23 +382,24 @@ class NumericSearchQuery
      * http://localhost/wikicvs/SemanticSearch?attribute=*&attr_op=<0 and find(1)>&s=-0.01&start_debug=1
      */
     function check_query ($query) {
-	// Fixme!
-    	while (preg_match("/\A(\w.+)\s*\(\Z/", $query, $m)) {
+	$tmp = $query; // check for all function calls, in case the tokenizer is not available.
+    	while (preg_match("/([a-z][a-z0-9]+)\s*\((.*)$/i", $tmp, $m)) {
 	    if (!in_array($m[1], $this->_allowed_functions)
 		and !in_array($m[1], $this->_allowed_operators))
 	    {
 		trigger_error("Illegal function in query: ".$m[1], E_USER_WARNING);
 		return '';
 	    }
+	    $tmp = $m[2];
 	}
 	
-	// Check for illegal functions and operators, which are no placeholders.
+	// Strictly check for illegal functions and operators, which are no placeholders.
 	if (function_exists('token_get_all')) {
 	    $parsed = token_get_all("<?$query?>");
 	    foreach ($parsed as $x) { // flat, non-recursive array
 		if (is_string($x) and !isset($this->_parser_check[$x])) {
 		    // single char op or name
-		    trigger_error("illegal string or operator: \"$x\"". E_USER_WARNING);
+		    trigger_error("Illegal string or operator in query: \"$x\"", E_USER_WARNING);
 		    $query = '';
 	        }
 		elseif (is_array($x)) {
@@ -406,12 +408,12 @@ class NumericSearchQuery
 		        or $n == 'T_CLOSE_TAG' or $n == 'T_LNUMBER'
 		        or $n == 'T_CONST' or $n == 'T_DNUMBER' ) continue;
 		    if ($n == 'T_VARIABLE') { // but we do allow consts
-			trigger_error("illegal variable: \"$x[1]\"", E_USER_WARNING);
+			trigger_error("Illegal variable in query: \"$x[1]\"", E_USER_WARNING);
 			$query = '';
 		    }    
 		    if (is_string($x[1]) and !isset($this->_parser_check[$x[1]])) {
 			// multi-char char op or name
-			trigger_error("illegal $n: \"$x[1]\"", E_USER_WARNING);
+			trigger_error("Illegal $n in query: \"$x[1]\"", E_USER_WARNING);
 			$query = '';
 		    }
 		}
@@ -1121,6 +1123,9 @@ class TextSearchQuery_Lexer {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2007/01/03 21:22:34  rurban
+// add getType(). NumericSearchQuery::check Improve hacker detection using token_get_all(). Better support for multiple attributes. Add getVars().
+//
 // Revision 1.24  2007/01/02 13:19:05  rurban
 // add NumericSearchQuery. change on pcre: no parsing done, detect modifiers
 //
