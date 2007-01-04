@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.22 2004-12-06 19:50:04 rurban Exp $');
+rcs_id('$Id: file.php,v 1.23 2007-01-04 16:45:49 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -517,7 +517,7 @@ extends WikiDB_backend
      * @return object A WikiDB_backend_iterator.
      */
     function get_links($pagename, $reversed=true, $include_empty=false,
-                       $sortby=false, $limit=false, $exclude=false) {
+                       $sortby='', $limit='', $exclude='') {
         if ($reversed == false)
             return new WikiDB_backend_file_iter($this, $this->_loadPageLinks($pagename));
 
@@ -568,7 +568,7 @@ extends WikiDB_backend
      *
      * @return object A WikiDB_backend_iterator.
      */
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude=false) {
+    function get_all_pages($include_empty=false, $sortby='', $limit='', $exclude='') {
     	require_once("lib/PageList.php");
         $this->_loadLatestVersions();
         $a = array_keys($this->_latest_versions);
@@ -735,6 +735,14 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2004/12/06 19:50:04  rurban
+// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
+// renamed delete_page to purge_page.
+// enable action=edit&version=-1 to force creation of a new version.
+// added BABYCART_PATH config
+// fixed magiqc in adodb.inc.php
+// and some more docs
+//
 // Revision 1.21  2004/11/25 17:20:52  rurban
 // and again a couple of more native db args: backlinks
 //
