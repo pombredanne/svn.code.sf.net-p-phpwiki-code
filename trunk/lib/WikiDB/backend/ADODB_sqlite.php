@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_sqlite.php,v 1.4 2006-08-15 13:42:20 rurban Exp $');
+rcs_id('$Id: ADODB_sqlite.php,v 1.5 2007-01-04 16:57:32 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -36,6 +36,9 @@ extends WikiDB_backend_ADODB
             $row = $dbh->GetRow($query);
             return $row ? $row[0] : false;
         }
+	// attributes play this game.
+        if ($pagename === '') return 0;
+
         $row = $dbh->GetRow($query);
         if (! $row ) {
             // atomic version 	

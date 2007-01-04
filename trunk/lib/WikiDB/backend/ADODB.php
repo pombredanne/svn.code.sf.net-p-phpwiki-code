@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.94 2006-12-23 11:44:56 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.95 2007-01-04 16:57:32 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -86,12 +86,15 @@ extends WikiDB_backend
         $this->_dsn = $parsed;
         // persistent is defined as DSN option, or with a config value.
         //   phptype://username:password@hostspec/database?persistent=false
+
+	//FIXME: how to catch connection errors for dbamin_user?
         if (!empty($parsed['persistent']) or DATABASE_PERSISTENT)
             $conn = $this->_dbh->PConnect($parsed['hostspec'],$parsed['username'], 
                                           $parsed['password'], $parsed['database']);
         else
             $conn = $this->_dbh->Connect($parsed['hostspec'],$parsed['username'], 
                                          $parsed['password'], $parsed['database']);
+	if (!$conn) return;
 
         // Since 1.3.10 we use the faster ADODB_FETCH_NUM,
         // with some ASSOC based recordsets.
@@ -285,7 +288,9 @@ extends WikiDB_backend
                 return $cache[$pagename];
             }
         }
-        
+	// attributes play this game.
+        if ($pagename === '') return 0;
+
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         $query = sprintf("SELECT id FROM $page_tbl WHERE pagename=%s",
@@ -741,7 +746,7 @@ extends WikiDB_backend
      *   if (isset($next['linkrelation']))
      */
     function get_links($pagename, $reversed=true,   $include_empty=false,
-                       $sortby=false, $limit=false, $exclude='',
+                       $sortby='', $limit='', $exclude='',
                        $want_relations = false)
     {
         $dbh = &$this->_dbh;
@@ -814,7 +819,7 @@ id      pagename        linkrelation
     /*
      * 
      */
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude='') {
+    function get_all_pages($include_empty=false, $sortby='', $limit='', $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
@@ -876,7 +881,7 @@ id      pagename        linkrelation
      * Title and fulltext search.
      */
     function text_search($search, $fullsearch=false, 
-                         $sortby=false, $limit=false, $exclude=false) 
+                         $sortby='', $limit='', $exclude='') 
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -1051,7 +1056,7 @@ id      pagename        linkrelation
     /**
      * Find referenced empty pages.
      */
-    function wanted_pages($exclude_from='', $exclude='', $sortby=false, $limit=false) {
+    function wanted_pages($exclude_from='', $exclude='', $sortby='', $limit='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         if ($orderby = $this->sortby($sortby, 'db', array('pagename','wantedfrom')))
@@ -1539,6 +1544,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.94  2006/12/23 11:44:56  rurban
+// deal with strict references and the order of deletion
+//
 // Revision 1.93  2006/12/03 16:25:20  rurban
 // remove closing Smart ROLLBACK, cannot be forced if never started.
 // remove postgresql user VACUUM, autovacumm must do that. (can be easily

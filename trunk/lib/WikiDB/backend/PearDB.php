@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.105 2006-12-23 13:03:32 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.106 2007-01-04 16:57:32 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -56,7 +56,10 @@ extends WikiDB_backend
         if (DB::isError($dbh)) {
             trigger_error(sprintf("Can't connect to database: %s",
                                   $this->_pear_error_message($dbh)),
-                          E_USER_ERROR);
+                          isset($dbparams['_tryroot_from_upgrade']) // hack!
+                            ? E_USER_WARNING : E_USER_ERROR);
+            if (isset($dbparams['_tryroot_from_upgrade']))
+                return;                
         }
         $dbh->setErrorHandling(PEAR_ERROR_CALLBACK,
                                array($this, '_pear_error_callback'));
@@ -245,6 +248,9 @@ extends WikiDB_backend
                 return $cache[$pagename];
             }
         }
+
+	// attributes play this game.
+        if ($pagename === '') return 0;
 
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
@@ -537,7 +543,7 @@ extends WikiDB_backend
      *   if (isset($next['linkrelation']))
      */
     function get_links($pagename, $reversed=true, $include_empty=false,
-                       $sortby=false, $limit=false, $exclude='', 
+                       $sortby='', $limit='', $exclude='', 
                        $want_relations = false)
     {
         $dbh = &$this->_dbh;
@@ -599,7 +605,7 @@ extends WikiDB_backend
         return $row['result'];
     }
 
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude='') {
+    function get_all_pages($include_empty=false, $sortby='', $limit='', $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
@@ -660,8 +666,8 @@ extends WikiDB_backend
      * Title search.
      * Todo: exclude
      */
-    function text_search($search, $fulltext=false, $sortby=false, $limit=false, 
-                         $exclude=false) 
+    function text_search($search, $fulltext=false, $sortby='', $limit='', 
+                         $exclude='') 
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -856,7 +862,7 @@ extends WikiDB_backend
     /**
      * Find referenced empty pages.
      */
-    function wanted_pages($exclude_from='', $exclude='', $sortby=false, $limit=false) {
+    function wanted_pages($exclude_from='', $exclude='', $sortby='', $limit='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         if ($orderby = $this->sortby($sortby, 'db', array('pagename','wantedfrom')))
@@ -1237,6 +1243,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2006/12/23 13:03:32  rurban
+// reorder deletion
+//
 // Revision 1.104  2006/12/23 11:44:56  rurban
 // deal with strict references and the order of deletion
 //

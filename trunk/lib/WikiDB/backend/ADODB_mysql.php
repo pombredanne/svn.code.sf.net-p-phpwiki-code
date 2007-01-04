@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.17 2006-07-23 14:16:59 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.18 2007-01-04 16:57:32 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -33,7 +33,8 @@ extends WikiDB_backend_ADODB
      */
     function WikiDB_backend_ADODB_mysql($dbparams) {
         $this->WikiDB_backend_ADODB($dbparams);
-
+        if (!$this->_dbh->_connectionID) return;
+        
         $this->_serverinfo = $this->_dbh->ServerInfo();
         if (!empty($this->_serverinfo['version'])) {
             $arr = explode('.',$this->_serverinfo['version']);
@@ -164,6 +165,9 @@ extends WikiDB_backend_ADODB
             }
         }
         
+	// attributes play this game.
+        if ($pagename === '') return 0;
+
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
         $query = sprintf("SELECT id FROM $page_tbl WHERE pagename=%s",
