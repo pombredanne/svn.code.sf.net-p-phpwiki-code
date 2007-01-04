@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Units.php,v 1.1 2007-01-03 21:22:48 rurban Exp $');
+<?php rcs_id('$Id: Units.php,v 1.2 2007-01-04 16:40:58 rurban Exp $');
 /**
  * Interface to man units(1), /usr/share/units.dat
  *
@@ -29,6 +29,8 @@ class Units {
 	if ($this->errcode)
             return $query;
 	$query = preg_replace("/,/","", $query);
+	if ($query == '' or $query == '*') 
+	    return ($Definitions[$query] = '');
 	$def = $this->_cmd("\"$query\"");
 	if (preg_match("/Definition: (.+)$/",$def,$m))
 	    return ($Definitions[$query] = $m[1]);
