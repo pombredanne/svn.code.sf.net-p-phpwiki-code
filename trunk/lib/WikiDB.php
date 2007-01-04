@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.146 2007-01-02 13:20:00 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.147 2007-01-04 16:41:41 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1766,7 +1766,8 @@ class WikiDB_PageIterator
             $pagename = strval($pagename);
         }
         if (!$pagename) {
-            if (isset($next['linkrelation'])) return false;	
+            if (isset($next['linkrelation']) 
+                or isset($next['pagedata']['linkrelation'])) return false;	
             trigger_error('empty pagename in WikiDB_PageIterator::next()', E_USER_WARNING);
             var_dump($next);
             return false;
@@ -2184,6 +2185,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.146  2007/01/02 13:20:00  rurban
+// rewrote listRelations. added linkSearch. force new date in renamePage. fix fortune error handling. added page->setAttributes. use translated initial owner. Clarify API: sortby,limit and exclude are strings. Enhance documentation.
+//
 // Revision 1.145  2006/12/22 17:59:55  rurban
 // Move mailer functions into seperate MailNotify.php
 //
