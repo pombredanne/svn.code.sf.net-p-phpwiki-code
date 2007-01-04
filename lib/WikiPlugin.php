@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.62 2007-01-02 13:20:35 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.63 2007-01-04 16:43:18 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.62 $");
+        //                    "\$Revision: 1.63 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -116,14 +116,14 @@ class WikiPlugin
             unset($argstr_args[$arg]);
             unset($argstr_defaults[$arg]);
         }
-
+        
         foreach (array_merge($argstr_args, $argstr_defaults) as $arg => $val) {
-            if ($request and $request->getArg('pagename') == _("PhpWikiAdministration") 
+	    // TODO: where the heck comes this from? Put the new method over there and peace.
+            /*if ($request and $request->getArg('pagename') == _("PhpWikiAdministration") 
                 and $arg == 'overwrite') // silence this warning
-                ;
-            else
-                trigger_error(sprintf(_("Argument '%s' not declared by plugin."),
-                                      $arg), E_USER_NOTICE);
+                ;*/
+            if ($this->allow_undeclared_arg($arg, $val))
+                $args[$arg] = $val;
         }
 
         // add special handling of pages and exclude args to accept <! plugin-list !>
@@ -235,6 +235,15 @@ class WikiPlugin
     function handle_plugin_args_cruft($argstr, $args) {
         trigger_error(sprintf(_("trailing cruft in plugin args: '%s'"),
                               $argstr), E_USER_NOTICE);
+    }
+    
+    /* A plugin can override this to allow undeclared arguments.
+       Or to silence the warning.
+     */
+    function allow_undeclared_arg($name, $value) {
+        trigger_error(sprintf(_("Argument '%s' not declared by plugin."),
+                              $name), E_USER_NOTICE);
+	return false;
     }
 
     /* handle plugin-list argument: use run(). */
