@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.25 2006-12-23 11:56:17 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.26 2007-01-04 16:45:49 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
@@ -166,7 +166,7 @@ extends WikiDB_backend_PearDB
     /**
      * Lock all tables we might use.
      */
-    function _lock_tables($write_lock = true) {
+    function _lock_tables($write_lock=true) {
         $this->_dbh->query("BEGIN");
     }
 
@@ -203,8 +203,8 @@ extends WikiDB_backend_PearDB
     /**
      * Title search.
      */
-    function text_search($search, $fulltext=false, $sortby=false, $limit=false, 
-                         $exclude=false) 
+    function text_search($search, $fulltext=false, $sortby='', $limit='', 
+                         $exclude='') 
     {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
@@ -316,6 +316,9 @@ select * from stat('select idxfti from version') order by ndoc desc, nentry desc
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2006/12/23 11:56:17  rurban
+// note about vacuum permissions
+//
 // Revision 1.24  2006/12/22 00:27:37  rurban
 // just add Log
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.23 2005-09-14 06:06:09 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.24 2007-01-04 16:47:13 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function getDefaultArguments() {
@@ -68,7 +68,7 @@ extends WikiPlugin
      * Default collector for all WikiAdmin* plugins.
      * preSelectS() is similar, but fills $this->_list
      */
-    function collectPages(&$list, &$dbi, $sortby, $limit=0, $exclude=false) {
+    function collectPages(&$list, &$dbi, $sortby, $limit=0, $exclude='') {
         $allPages = $dbi->getAllPages(0, $sortby, $limit, $exclude);
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
@@ -247,6 +247,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2005/09/14 06:06:09  rurban
+// use a sane limit of 150
+//
 // Revision 1.22  2004/12/06 19:50:05  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.
