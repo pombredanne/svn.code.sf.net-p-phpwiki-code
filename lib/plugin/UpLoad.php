@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.20 2006-08-15 13:40:40 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.21 2007-01-04 16:46:50 rurban Exp $');
 /*
  Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -99,10 +99,6 @@ ws[cfh]");
         extract($args);
 
         $file_dir = getUploadFilePath();
-        if (!preg_match("/(\/|\\)$/", $file_dir))
-            $file_dir .= "/";
-        //$url_prefix = SERVER_NAME . DATA_PATH; 
-
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'enctype' => 'multipart/form-data',
                                  'method' => 'post'));
@@ -136,6 +132,15 @@ ws[cfh]");
         if ($userfile) {
             $userfile_name = $userfile->getName();
             $userfile_name = trim(basename($userfile_name));
+	    if (UPLOAD_USERDIR) {
+		$file_dir .= $request->_user->_userid;
+		if (!file_exists($file_dir))
+		    mkdir($file_dir, 0775);
+		$file_dir .= "/";
+		$u_userfile = $request->_user->_userid . "/" . $userfile_name;
+	    } else {
+		$u_userfile = $userfile_name;
+	    }
             $userfile_tmpname = $userfile->getTmpName();
 	    $err_header = HTML::h2(fmt("ERROR uploading '%s': ", $userfile_name));
             if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")\$/",
@@ -154,7 +159,7 @@ ws[cfh]");
             elseif (file_exists($file_dir . $userfile_name)) {
             	$message->pushContent($err_header);
                 $message->pushContent(fmt("There is already a file with name %s uploaded.",
-                                          $userfile_name),HTML::br(),HTML::br());
+                                          $u_userfile),HTML::br(),HTML::br());
             }
             elseif ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
             	$message->pushContent($err_header);
@@ -165,7 +170,7 @@ ws[cfh]");
                     )
             {
             	$interwiki = new PageType_interwikimap();
-            	$link = $interwiki->link("Upload:$userfile_name");
+		$link = $interwiki->link("Upload:$u_userfile");
                 $message->pushContent(HTML::h2(_("File successfully uploaded.")));
                 $message->pushContent(HTML::ul(HTML::li($link)));
 
@@ -181,9 +186,9 @@ ws[cfh]");
                         $current = $pagehandle->getCurrentRevision();
                         $version = $current->getVersion();
                         $text = $current->getPackedContent();
-                        $newtext = $text . "\n* [Upload:$userfile_name]";
+                        $newtext = $text . "\n* [Upload:$u_userfile]";
                         $meta = $current->_data;
-                        $meta['summary'] = sprintf(_("uploaded %s"),$userfile_name);
+                        $meta['summary'] = sprintf(_("uploaded %s"),$u_userfile);
                         $pagehandle->save($newtext, $version + 1, $meta);
                     }
                 }
@@ -233,6 +238,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2006/08/15 13:40:40  rurban
+// help finding the file (should not be needed)
+//
 // Revision 1.19  2005/04/11 19:40:15  rurban
 // Simplify upload. See https://sourceforge.net/forum/message.php?msg_id=3093651
 // Improve UpLoad warnings.
