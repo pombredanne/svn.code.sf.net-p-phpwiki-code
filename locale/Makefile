@@ -1,4 +1,4 @@
- # $Id: Makefile,v 1.50 2007-01-02 13:32:24 rurban Exp $
+ # $Id: Makefile,v 1.51 2007-01-04 16:47:32 rurban Exp $
 #
 # locale/Makefile
 #
@@ -127,6 +127,7 @@ ${POT_FILE}: ../lib/SpamBlocklist.php
 ${POT_FILE}: ../lib/Template.php
 ${POT_FILE}: ../lib/TextSearchQuery.php
 ${POT_FILE}: ../lib/Theme.php
+${POT_FILE}: ../lib/Units.php
 ${POT_FILE}: ../lib/WikiCallback.php
 ${POT_FILE}: ../lib/WikiDB.php
 ${POT_FILE}: ../lib/WikiDB/ADODB.php
@@ -152,6 +153,7 @@ ${POT_FILE}: ../lib/WikiDB/backend/dba.php
 ${POT_FILE}: ../lib/WikiDB/backend/dbaBase.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/AllRevisionsIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/BackLinkIter.php
+${POT_FILE}: ../lib/WikiDB/backend/dumb/LinkSearchIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/MostPopularIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/MostRecentIter.php
 ${POT_FILE}: ../lib/WikiDB/backend/dumb/TextSearchIter.php
@@ -246,7 +248,9 @@ ${POT_FILE}: ../lib/plugin/JabberPresence.php
 ${POT_FILE}: ../lib/plugin/LdapSearch.php
 ${POT_FILE}: ../lib/plugin/LikePages.php
 ${POT_FILE}: ../lib/plugin/LinkDatabase.php
+${POT_FILE}: ../lib/plugin/LinkSearch.php
 ${POT_FILE}: ../lib/plugin/ListPages.php
+${POT_FILE}: ../lib/plugin/ListRelations.php
 ${POT_FILE}: ../lib/plugin/ListSubpages.php
 ${POT_FILE}: ../lib/plugin/ModeratedPage.php
 ${POT_FILE}: ../lib/plugin/MostPopular.php
@@ -284,6 +288,7 @@ ${POT_FILE}: ../lib/plugin/SemanticRelations.php
 ${POT_FILE}: ../lib/plugin/SemanticSearch.php
 ${POT_FILE}: ../lib/plugin/SiteMap.php
 ${POT_FILE}: ../lib/plugin/SqlResult.php
+${POT_FILE}: ../lib/plugin/SyncWiki.php
 ${POT_FILE}: ../lib/plugin/SyntaxHighlighter.php
 ${POT_FILE}: ../lib/plugin/SystemInfo.php
 ${POT_FILE}: ../lib/plugin/TeX2png.php
