@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: EditMetaData.php,v 1.11 2004-06-01 16:48:11 rurban Exp $');
+rcs_id('$Id: EditMetaData.php,v 1.12 2007-01-04 16:46:31 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -51,7 +51,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     // Arguments:
@@ -105,9 +105,8 @@ extends WikiPlugin
         // Now we show the meta data and provide entry box for new data.
 
         $html = HTML();
-
-        $html->pushContent(fmt("Existing page-level metadata for %s:",
-                               $page));
+        $html->pushContent(HTML::h3(fmt("Existing page-level metadata for %s:",
+					$page)));
         $dl = HTML::dl();
         foreach ($pagemeta as $key => $val) {
             if (is_string($val) and (substr($val,0,2) == 'a:')) {
@@ -156,7 +155,7 @@ extends WikiPlugin
                                HTML::raw('&nbsp;'), $button
                                );
 
-            $html->pushContent(HTML::br(), $form);
+            $html->pushContent($form);
         } else {
             $html->pushContent(HTML::em(_("Requires WikiAdmin privileges to edit.")));
         }
@@ -165,6 +164,10 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2004/06/01 16:48:11  rurban
+// dbi->touch
+// security fix to allow post admin only.
+//
 // Revision 1.10  2004/04/18 01:11:52  rurban
 // more numeric pagename fixes.
 // fixed action=upload with merge conflict warnings.
