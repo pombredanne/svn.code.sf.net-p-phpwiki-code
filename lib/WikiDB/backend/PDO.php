@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.10 2006-12-22 01:04:12 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.11 2007-01-04 16:57:32 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -102,13 +102,17 @@ extends WikiDB_backend
                                         ));
         }
         catch (PDOException $e) {
-            echo "<br>\nDB Connection failed: " . $e->getMessage();
+            echo "<br>\nCan't connect to database: %s" . $e->getMessage();
             if (DEBUG & _DEBUG_VERBOSE or DEBUG & _DEBUG_SQL) {
                 echo "<br>\nDSN: '", $dbparams['dsn'], "'";
                 echo "<br>\n_parsedDSN: '", print_r($this->_parsedDSN), "'";
                 echo "<br>\nparsed: '", print_r($parsed), "'";
             }
-            exit();
+            if (isset($dbparams['_tryroot_from_upgrade']))
+                trigger_error(sprintf("Can't connect to database: %s", $e->getMessage()),
+                              E_USER_WARNING);
+            else 
+                exit();
         }
         if (DEBUG & _DEBUG_SQL) { // not yet implemented
             $this->_dbh->debug = true;
@@ -347,6 +351,9 @@ extends WikiDB_backend
                 return $cache[$pagename];
             }
         }
+
+	// attributes play this game.
+        if ($pagename === '') return 0;
         
         $dbh = &$this->_dbh;
         $page_tbl = $this->_table_names['page_tbl'];
@@ -718,7 +725,7 @@ extends WikiDB_backend
      * This is called on every page header GleanDescription, so we can store all the existing links.
      */
     function get_links($pagename, $reversed=true, $include_empty=false,
-                       $sortby=false, $limit=false, $exclude='') {
+                       $sortby='', $limit='', $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
 
@@ -773,7 +780,7 @@ extends WikiDB_backend
         return $sth->fetchSingle();
     }
 
-    function get_all_pages($include_empty=false, $sortby=false, $limit=false, $exclude='') {
+    function get_all_pages($include_empty=false, $sortby='', $limit='', $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
@@ -829,7 +836,7 @@ extends WikiDB_backend
     /**
      * Title search.
      */
-    function text_search($search, $fullsearch=false, $sortby=false, $limit=false, $exclude=false) {
+    function text_search($search, $fullsearch=false, $sortby='', $limit='', $exclude='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         $orderby = $this->sortby($sortby, 'db');
@@ -996,7 +1003,7 @@ extends WikiDB_backend
     /**
      * Find referenced empty pages.
      */
-    function wanted_pages($exclude_from='', $exclude='', $sortby=false, $limit=false) {
+    function wanted_pages($exclude_from='', $exclude='', $sortby='', $limit='') {
         $dbh = &$this->_dbh;
         extract($this->_table_names);
         if ($orderby = $this->sortby($sortby, 'db', array('pagename','wantedfrom')))
@@ -1459,6 +1466,9 @@ class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql {}
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2006/12/22 01:04:12  rurban
+// fix syntax error
+//
 // Revision 1.9  2006/11/19 14:04:39  rurban
 // Oops. Syntax error in prev commit
 //
