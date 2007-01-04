@@ -9,14 +9,15 @@ if (preg_match('/^(http|ftp|https):\/\//i',$_REQUEST['url'])) {
     list($usec, $sec) = explode(" ", microtime());
     
     $fp = fopen('config/config.ini','r');
-    while($config = fgetcsv($fp,1024,';')) {
+    while ($config = fgetcsv($fp,1024,';')) {
         if (preg_match('/DATA_PATH/',$config[0])) {
             list($key,$value) = split('=',$config[0]);
             $data_path = trim($value).'/';
+	    break;
 	}
     }
     fclose($fp);
-    @mkdir($data_path."uploads/thumbs");
+    @mkdir($data_path."uploads/thumbs",0775);
     $file = $data_path."uploads/thumbs/image_" . ((float)$usec + (float)$sec);
     $source = url_get_contents($_REQUEST['url']);
 
@@ -131,9 +132,11 @@ function show_plain () {
     exit();
 }
 
-
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.4  2005/10/31 17:03:19  rurban
+ fix "r"
+
 */
 
 // Local Variables:
