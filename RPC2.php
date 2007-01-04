@@ -1,5 +1,5 @@
 <?php 
-// $Id: RPC2.php,v 1.5 2005-01-21 11:23:58 rurban Exp $
+// $Id: RPC2.php,v 1.6 2007-01-04 16:44:27 rurban Exp $
 /*
  * The guts of this code have been moved to lib/XmlRpcServer.php.
  *
@@ -10,8 +10,8 @@
  */
 
 // Intercept GET requests from confused users.  Only POST is allowed here!
-// There is some indication that $HTTP_SERVER_VARS is deprecated in php > 4.1.0
-// in favour of $_Server, but as far as I know, it still works.
+if (empty($GLOBALS['HTTP_SERVER_VARS']))
+    $GLOBALS['HTTP_SERVER_VARS']  =& $_SERVER;
 if ($HTTP_SERVER_VARS['REQUEST_METHOD'] != "POST")  
 {
     die('This is the address of the XML-RPC interface.' .
