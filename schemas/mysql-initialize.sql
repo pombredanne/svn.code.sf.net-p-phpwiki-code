@@ -1,4 +1,4 @@
--- $Id: mysql-initialize.sql,v 1.13 2006-12-08 08:04:10 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.14 2007-01-04 16:48:05 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
@@ -143,3 +143,6 @@ CREATE TABLE accesslog (
 CREATE INDEX log_time ON accesslog (time_stamp);
 CREATE INDEX log_host ON accesslog (remote_host);
 -- create extra indices on demand (usually referer. see plugin/AccessLogSql)
+
+-- upgrade to 1.3.13:
+-- ALTER TABLE accesslog CHANGE remote_host VARCHAR(100);
