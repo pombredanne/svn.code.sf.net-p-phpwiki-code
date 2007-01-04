@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LinkSearchIter.php,v 1.1 2007-01-02 13:20:17 rurban Exp $');
+rcs_id('$Id: LinkSearchIter.php,v 1.2 2007-01-04 16:41:25 rurban Exp $');
 /*
  Copyright 2007 Reini Urban
 
@@ -75,6 +75,8 @@ extends WikiDB_backend_iterator
 	    if (!isset($this->_links) or count($this->_links) == 0) {
 		$page = $this->_next_page(); // initialize all links of this page
 		if (!$page) return false;
+	    } else {
+	    	$page = $this->_page;
 	    }
 	    // iterate the links. the links are pushed into the handy triple by _get_links 
 	    while ($link = array_shift($this->_links)) {
