@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.6 2007-01-03 21:24:06 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.7 2007-01-04 16:42:41 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -66,33 +66,41 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
 
     function getDefaultArguments() {
         return array( 
                      'page'    => false, // the page to include
-                     'vars'    => false,
+                     'vars'    => false, // TODO: get rid of this, all remaining args should be vars
                      'rev'     => false, // the revision (defaults to most recent)
                      'section' => false, // just include a named section
                      'sectionhead' => false // when including a named section show the heading
                      );
     }
-
+    function allow_undeclared_arg($name, $value) {
+    	// either just allow it or you can store it here away also. 
+    	$this->vars[$name] = $value;
+    	return $name != 'action';
+    }
     // TODO: check if page can really be pulled from the args, or if it is just the basepage. 
     function getWikiPageLinks($argstr, $basepage) {
-        extract($this->getArgs($argstr));
-        if (isset($page)) {
+        $args = $this->getArgs($argstr);
+	$page = $args['page'];
+        if ($page) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);
         }
-        if (!isset($page) or !$page->name)
+        if (!$page or !$page->name)
             return false;
         return array(array('linkto' => $page->name, 'relation' => 0));
     }
                 
     function run($dbi, $argstr, &$request, $basepage) {
-        extract($this->getArgs($argstr, $request));
+    	$this->vars = array();
+        $args = $this->getArgs($argstr, $request);
+	$vars = $args['vars'] ? $args['vars'] : $this->vars;
+	$page = $args['page'];
         if ($page) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);
@@ -110,11 +118,11 @@ extends WikiPlugin
         }
 
         $p = $dbi->getPage($page);
-        if ($rev) {
-            $r = $p->getRevision($rev);
+        if ($args['rev']) {
+            $r = $p->getRevision($args['rev']);
             if (!$r) {
                 return $this->error(sprintf(_("%s(%d): no such revision"),
-                                            $page, $rev));
+                                            $page, $args['rev']));
             }
         } else {
             $r = $p->getCurrentRevision();
@@ -122,8 +130,8 @@ extends WikiPlugin
         $initial_content = $r->getPackedContent();
         $c = explode("\n", $initial_content);
 
-        if ($section) {
-            $c = extractSection($section, $c, $page, $quiet, $sectionhead);
+        if ($args['section']) {
+            $c = extractSection($args['section'], $c, $page, $quiet, $args['sectionhead']);
             $initial_content = implode("\n", $c);
         }
 
@@ -146,20 +154,22 @@ extends WikiPlugin
     /**
      * Expand template variables. Used by the TemplatePlugin and the CreatePagePlugin
      */
-    function doVariableExpansion($content, $vars, $basepage, &$dbi) {
+    function doVariableExpansion(&$content, $vars, $basepage, &$dbi) {
         if (preg_match('/%%\w+%%/', $content)) // need variable expansion
         {
             $var = array();
-            if (!empty($vars)) {
+            if (is_string($vars) and !empty($vars)) {
                 foreach (split("&",$vars) as $pair) {
                     list($key,$val) = split("=",$pair);
                     $var[$key] = $val;
                 }
-            }
+            } elseif (is_array($vars)) {
+		$var =& $vars;
+	    }
             $thispage = $dbi->getPage($basepage);
             // pagename is not overridable
             if (empty($var['pagename']))
-                $var['pagename'] = $page;
+                $var['pagename'] = $thispage->getName();
             // those are overridable
             if (empty($var['mtime']) and preg_match('/%%mtime%%/', $content)) {
                 $thisrev  = $thispage->getCurrentRevision(false);
@@ -177,7 +187,7 @@ extends WikiPlugin
                 $var['creator'] = $thispage->getCreator();
             foreach (array("SERVER_URL", "DATA_PATH", "SCRIPT_NAME", "PHPWIKI_BASE_URL") as $c) {
                 // constants are not overridable
-                if (preg_match('/%%\b'.$c.'\b%%/', $content))
+                if (preg_match('/%%'.$c.'%%/', $content))
                     $var[$c] = constant($c);
             }
             if (preg_match('/%%BASE_URL%%/', $content))
@@ -192,6 +202,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2007/01/03 21:24:06  rurban
+// protect page in links. new doVariableExpansion() for CreatePage. preg_quote custom vars.
+//
 // Revision 1.5  2006/04/17 17:28:21  rurban
 // honor getWikiPageLinks change linkto=>relation
 //
