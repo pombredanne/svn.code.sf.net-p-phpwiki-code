@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RssWriter2.php,v 1.2 2005-07-24 09:52:59 rurban Exp $');
+<?php rcs_id('$Id: RssWriter2.php,v 1.3 2007-01-04 16:45:20 rurban Exp $');
 /*
  * Code for creating RSS 2.0
  * Author: Reini Urban for PhpWiki
@@ -73,7 +73,6 @@ class RssWriter2 extends RssWriter
         echo "              %HTMLlat1;]>\n";
         $this->printXML();
     }
-
 };
 
 // (c-file-style: "gnu")

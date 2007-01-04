@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.20 2006-12-22 17:57:10 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.21 2007-01-04 16:43:00 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -41,7 +41,8 @@ extends WikiPlugin_GraphViz
      * Sets plugin type to map production
      */
     function getPluginType() {
-        return ($GLOBALS['request']->getArg('debug')) ? PLUGIN_CACHED_IMG_ONDEMAND : PLUGIN_CACHED_MAP;
+        return ($GLOBALS['request']->getArg('debug')) ? PLUGIN_CACHED_IMG_ONDEMAND 
+	    					      : PLUGIN_CACHED_MAP;
     }
 
     /**
@@ -55,7 +56,7 @@ extends WikiPlugin_GraphViz
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     /**
@@ -619,6 +620,10 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2006/12/22 17:57:10  rurban
+// use getUploadxxxPath
+// improve error display
+//
 // Revision 1.19  2005/10/12 06:19:31  rurban
 // remove INCLUDED from EXCLUDED, includes override excludes.
 //

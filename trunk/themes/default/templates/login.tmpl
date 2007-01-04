@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: login.tmpl,v 1.35 2004-11-05 21:03:27 rurban Exp $ -->
+<!-- $Id: login.tmpl,v 1.36 2007-01-04 16:49:18 rurban Exp $ -->
 <!-- The login form -->
 <?php if ($fail_message) { ?>
   <p><strong><?=$fail_message?></strong></p>
@@ -24,9 +24,9 @@ if (DEBUG & _DEBUG_LOGIN) {
               $t .= " ($fail)";
       }
     } else
-      $t .= sprintf("  USER_AUTH_ORDER: %s", join(" => ", $GLOBALS['USER_AUTH_ORDER']));
-    $t .= sprintf(",  USER_AUTH_POLICY: %s", USER_AUTH_POLICY)
-       . sprintf(",  PASSWORD_LENGTH_MINIMUM: %s", PASSWORD_LENGTH_MINIMUM);
+	$t .= sprintf("  USER_AUTH_ORDER: %s", join(" => ", $GLOBALS['USER_AUTH_ORDER']));
+        $t .= sprintf(",  USER_AUTH_POLICY: %s", USER_AUTH_POLICY)
+            . sprintf(",  PASSWORD_LENGTH_MINIMUM: %s", PASSWORD_LENGTH_MINIMUM);
   }
   echo asXML(HTML::div(array('class' => 'debug'),$t));
   echo "<br />\n";
