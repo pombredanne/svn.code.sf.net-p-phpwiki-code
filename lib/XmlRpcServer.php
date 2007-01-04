@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.20 2007-01-03 21:25:52 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.21 2007-01-04 16:42:13 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -66,12 +66,12 @@ if ($GLOBALS['HTTP_SERVER_VARS']['REQUEST_METHOD'] != "POST")
         '  You must use XML-RPC calls to access information here.');
 }
   
-include_once("lib/XmlRpcClient.php");
+require_once("lib/XmlRpcClient.php");
 if (loadPhpExtension('xmlrpc')) { // fast c lib
-    include_once("lib/XMLRPC/xmlrpcs_emu.inc");
+    require_once("lib/XMLRPC/xmlrpcs_emu.inc");
 } else { // slow php lib
     global $_xmlrpcs_dmap;
-    include_once("lib/XMLRPC/xmlrpcs.inc");
+    require_once("lib/XMLRPC/xmlrpcs.inc");
 }
 
 
@@ -938,6 +938,9 @@ class XmlRpcServer extends xmlrpc_server
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.20  2007/01/03 21:25:52  rurban
+ add option argument to listRelations.
+
  Revision 1.19  2007/01/02 13:21:21  rurban
  split client from server. added getUploadedFileInfo (for SyncWiki), callPlugin (for WikiFormRich)
 

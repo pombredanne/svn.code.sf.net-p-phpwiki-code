@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SemanticWeb.php,v 1.3 2007-01-03 21:25:21 rurban Exp $');
+<?php rcs_id('$Id: SemanticWeb.php,v 1.4 2007-01-04 16:42:13 rurban Exp $');
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *
@@ -103,9 +103,10 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-include_once('lib/RssWriter.php');
-include_once('lib/Units.php');
-include_once("lib/TextSearchQuery.lib");
+require_once('lib/RssWriter.php');
+require_once('lib/TextSearchQuery.php');
+require_once('lib/Units.php');
+
 
 /**
  * RdfWriter - A class to represent a wikipage as RDF. Supports ?format=rdf
