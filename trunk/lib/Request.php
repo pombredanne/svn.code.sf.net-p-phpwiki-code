@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.109 2006-12-22 00:24:09 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.110 2007-01-04 16:45:10 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -63,8 +63,10 @@ class Request {
         elseif (!empty($GLOBALS['HTTP_ENV_VARS']))
             $vars = &$GLOBALS['HTTP_ENV_VARS']; // cgi or other servers than Apache
         else
-            trigger_error("Serious Webserver configuration error!"
-                          ."No HTTP_SERVER_VARS, _SERVER, HTTP_ENV_VARS, _ENV vars available.");
+            trigger_error("Serious php configuration error!"
+                          ." No HTTP_SERVER_VARS and HTTP_ENV_VARS vars available."
+                          ." These should get defined in lib/prepend.php",
+                          E_USER_WARNING);
 
         if (isset($vars[$key]))
             return $vars[$key];
@@ -415,13 +417,15 @@ class Request {
      * sections with ob_buffering.
      */
     function chunkOutput() {
-        if (!empty($this->_is_buffering_output) or 
-            (function_exists('ob_get_level') and @ob_get_level())) {
+        if (!empty($this->_is_buffering_output) 
+	    or 
+            (function_exists('ob_get_level') and @ob_get_level())) 
+	{
             $this->_do_chunked_output = true;
             if (empty($this->_ob_get_length)) $this->_ob_get_length = 0;
             $this->_ob_get_length += ob_get_length();
             while (@ob_end_flush());
-            if (ob_get_length()) ob_end_clean();
+            @ob_end_clean();
             ob_start();
         }
     }
@@ -1354,6 +1358,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.109  2006/12/22 00:24:09  rurban
+// silence empty obcache messages
+//
 // Revision 1.108  2006/11/29 19:49:48  rurban
 // quote the date
 //
