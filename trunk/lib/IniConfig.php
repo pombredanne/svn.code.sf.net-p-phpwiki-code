@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.108 2007-01-03 21:22:22 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.109 2007-01-04 16:40:47 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -574,19 +574,23 @@ function fixup_static_configs($file) {
     if (defined('IGNORE_CHARSET_NOT_SUPPORTED_WARNING') and IGNORE_CHARSET_NOT_SUPPORTED_WARNING) {
         $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_unknown_charset_warning'));
     }
-
+    // Used by SetupWiki to pull in required pages, if not translated, then in english. 
+    // Real actionpages react on page=[]
+    // These here contain also other important requirements, linked from elsewhere.
+    // Also used by _WikiTranslation
     $AllActionPages = explode(':',
                               'AllPages:BackLinks:CreatePage:DebugInfo:EditMetaData:FindPage:'
                               .'FullRecentChanges:FullTextSearch:FuzzyPages:InterWikiSearch:'
-                              .'LikePages:MostPopular:'
+                              .'LeastPopular:LikePages:MostPopular:'
                               .'OrphanedPages:PageDump:PageHistory:PageInfo:RandomPage:RateIt:'
                               .'RecentChanges:RecentEdits:RecentComments:RelatedChanges:TitleSearch:'
                               .'TranslateText:UpLoad:UserPreferences:WantedPages:WhoIsOnline:'
                               .'PhpWikiAdministration/Remove:PhpWikiAdministration/Chmod:'
                               .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace:'
                               .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown'
+                              .'SemanticRelations:SemanticSearch:SearchHighlight:LinkSearch:'
+			      .'AppendText:AuthorHistory'
                               );
-
     // If user has not defined PHPWIKI_DIR, and we need it
     if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
     	$themes_dir = FindFile("themes");
@@ -913,6 +917,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2007/01/03 21:22:22  rurban
+// Add DISABLE_UNITS.
+//
 // Revision 1.107  2006/12/22 17:45:28  rurban
 // add USE_BYTEA
 //
