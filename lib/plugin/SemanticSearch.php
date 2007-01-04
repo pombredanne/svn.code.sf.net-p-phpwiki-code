@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SemanticSearch.php,v 1.3 2007-01-03 21:23:15 rurban Exp $');
+rcs_id('$Id: SemanticSearch.php,v 1.4 2007-01-04 16:44:22 rurban Exp $');
 /*
  Copyright 2007 Reini Urban
 
@@ -21,9 +21,9 @@ rcs_id('$Id: SemanticSearch.php,v 1.3 2007-01-03 21:23:15 rurban Exp $');
  */
 
 require_once('lib/PageList.php');
+require_once('lib/TextSearchQuery.php');
+require_once('lib/Units.php');
 require_once("lib/SemanticWeb.php");
-//require_once('lib/TextSearchQuery.php');
-//require_once('lib/Units.php');
 
 /**
  * Search for relations/attributes and its values.
@@ -61,7 +61,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
     function getDefaultArguments() { 
         return array_merge
@@ -78,7 +78,8 @@ extends WikiPlugin
 		   'case_exact' => false,
 		   'regex'      => 'auto',
 		   'noform'     => false, // don't show form with results.
-		   'noheader'   => false  // no caption
+		   'noheader'   => false,  // no caption
+		   'info'       => false  // valid: pagename,relation,linkto,attribute,value and all other pagelist columns
 		   ));
     }
 
@@ -288,16 +289,20 @@ extends WikiPlugin
 	    $linkquery = new TextSearchQuery($s, $args['case_exact'], $args['regex']);
 	    $relquery = new TextSearchQuery($relation, $args['case_exact'], $args['regex']);
 	    $links = $dbi->linkSearch($pagequery, $linkquery, 'relation', $relquery);
-	    $pagelist = new PageList($args['info'], $args['exclude'], $args);
+	    $pagelist = new PageList($info, $exclude, $args);
 	    $pagelist->_links = array();
 	    while ($link = $links->next()) {
 	        $pagelist->addPage($link['pagename']);
 	        $pagelist->_links[] = $link;
 	    }
-	    $pagelist->addColumnObject
-		(new _PageList_Column_SemanticSearch_relation('relation', _("Relation"), $pagelist));
-	    $pagelist->addColumnObject
-		(new _PageList_Column_SemanticSearch_link('link', _("Link"), $pagelist));
+	    // default (=empty info) wants all three. but we want to be able to override this.
+	    // $pagelist->_columns_seen is the exploded info
+	    if (!$info or ($info and isset($pagelist->_columns_seen['relation'])))
+	        $pagelist->addColumnObject
+		    (new _PageList_Column_SemanticSearch_relation('relation', _("Relation"), $pagelist));
+	    if (!$args['info'] or ($args['info'] and isset($pagelist->_columns_seen['linkto'])))
+	        $pagelist->addColumnObject
+		    (new _PageList_Column_SemanticSearch_link('linkto', _("Link"), $pagelist));
 	}
 	// can we merge two different pagelist?
 	if (!empty($attribute)) {
@@ -364,10 +369,13 @@ extends WikiPlugin
 		    $pagelist->addPage($link['pagename']);
 		    $pagelist->_links[] = $link;
 		}
-		$pagelist->addColumnObject
-		    (new _PageList_Column_SemanticSearch_relation('attribute', _("Attribute"), $pagelist));
-		$pagelist->addColumnObject
-		    (new _PageList_Column_SemanticSearch_link('value', _("Value"), $pagelist));
+	        // default (=empty info) wants all three. but we want to override this.
+	        if (!$args['info'] or ($args['info'] and isset($pagelist->_columns_seen['attribute'])))
+		    $pagelist->addColumnObject
+		        (new _PageList_Column_SemanticSearch_relation('attribute', _("Attribute"), $pagelist));
+	        if (!$args['info'] or ($args['info'] and isset($pagelist->_columns_seen['value'])))
+		    $pagelist->addColumnObject
+		        (new _PageList_Column_SemanticSearch_link('value', _("Value"), $pagelist));
 	    }
 	}
 	if (!isset($pagelist)) {
@@ -420,6 +428,9 @@ extends _PageList_Column_SemanticSearch_relation
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2007/01/03 21:23:15  rurban
+// Use Units and SemanticWeb: "population > 0.5 million or area < 100m^2" will work. Add help link if no relations are defined yet. Add attr_op=~ to attribute livesearch
+//
 // Revision 1.2  2007/01/02 13:23:06  rurban
 // add SemanticSearch with internal form
 //
