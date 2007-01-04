@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_postgres7.php,v 1.7 2006-12-23 11:56:17 rurban Exp $');
+rcs_id('$Id: ADODB_postgres7.php,v 1.8 2007-01-04 16:41:14 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -23,6 +23,7 @@ extends WikiDB_backend_ADODB
      */
     function WikiDB_backend_ADODB_postgres7($dbparams) {
         $this->WikiDB_backend_ADODB($dbparams);
+        if (!$this->_dbh->_connectionID) return;
 
         $this->_serverinfo = $this->_dbh->ServerInfo();
         if (!empty($this->_serverinfo['version'])) {
