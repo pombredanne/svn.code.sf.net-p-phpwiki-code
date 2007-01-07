@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.110 2007-01-04 16:45:10 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.111 2007-01-07 18:43:26 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -725,11 +725,13 @@ class Request_UploadedFile {
                     $tmp_file = dirname(tempnam('', ''));
                 }
                 $tmp_file .= '/' . basename($fileinfo['tmp_name']);
-                /* but ending slash in php.ini upload_tmp_dir is required. */
+                /* ending slash in php.ini upload_tmp_dir is required. */
                 if (realpath(ereg_replace('/+', '/', $tmp_file)) != realpath($fileinfo['tmp_name'])) {
                     trigger_error(sprintf("Uploaded tmpfile illegal: %s != %s.",$tmp_file, $fileinfo['tmp_name']).
                     	          "\n".
-                    	          "Probably illegal TEMP environment or upload_tmp_dir setting.",
+                    	          "Probably illegal TEMP environment or upload_tmp_dir setting. ".
+                    	          "Esp. on WINDOWS be sure to set upload_tmp_dir in php.ini to use forward slashes and ".
+                    	          "end with a slash. upload_tmp_dir = \"C:/WINDOWS/TEMP/\" is good suggestion.",
                                   E_USER_ERROR);
                     return false;
                 } else {
@@ -1358,6 +1360,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.110  2007/01/04 16:45:10  rurban
+// Be more verbose in serious php problem.
+//
 // Revision 1.109  2006/12/22 00:24:09  rurban
 // silence empty obcache messages
 //
