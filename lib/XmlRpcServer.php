@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.21 2007-01-04 16:42:13 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.22 2007-01-07 18:44:11 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -170,6 +170,7 @@ function getRecentChanges($params)
         $pages[] = new xmlrpcval(array('name' => $name, 
                                        'lastModified' => $lastmodified,
                                        'author' => $author,
+				       'summary' => short_string($page->get('summary')),
                                        'version' => $version),
                                  'struct');
     } 
@@ -748,8 +749,8 @@ function callPlugin($params)
     $pluginName = short_string_decode($ParamPlugin->scalarval());
     $ParamArgs = $params->getParam(1);
     $plugin_args = short_string_decode($ParamArgs->scalarval());
-    $basepage = ''; //$pluginName;
 
+    $basepage = ''; //$pluginName;
     require_once("lib/WikiPlugin.php");
     $w = new WikiPluginLoader;
     $p = $w->getPlugin($pluginName, false); // second arg?
@@ -938,6 +939,9 @@ class XmlRpcServer extends xmlrpc_server
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.21  2007/01/04 16:42:13  rurban
+ Use require, not include!
+
  Revision 1.20  2007/01/03 21:25:52  rurban
  add option argument to listRelations.
 
