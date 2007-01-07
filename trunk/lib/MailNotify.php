@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.4 2007-01-04 16:47:49 rurban Exp $');
+rcs_id('$Id: MailNotify.php,v 1.5 2007-01-07 18:42:58 rurban Exp $');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -23,14 +23,17 @@ rcs_id('$Id: MailNotify.php,v 1.4 2007-01-04 16:47:49 rurban Exp $');
  * @author  Reini Urban
  */
 
+if (!defined("MAILER_LOG"))
+    define("MAILER_LOG", 'c:/wikimail.log');
+
 class MailNotify {
 
     function MailNotify($pagename) {
 	$this->pagename = $pagename; /* which page */
-        $this->emails  = array();    /* to whch addresses */
+        $this->emails  = array();    /* to which addresses */
         $this->userids = array();    /* corresponding array of displayed names, 
-                                      dont display the email addersses */
-        /* from: from which the mail appears to be */
+                                        don't display the email addresses */
+        /* From: from whom the mail appears to be */
         $this->from = $this->fromId();
     }
 
@@ -98,7 +101,7 @@ class MailNotify {
                         // ignore verification
                         /*
                         if (DEBUG) {
-                            if (!in_array($user['email'],$emails))
+                            if (!in_array($user['email'], $emails))
                                 $emails[] = $user['email'];
                         }
                         */
@@ -119,12 +122,29 @@ class MailNotify {
         $emails = $this->emails;
         $from = $this->from;
         if (!$notice) $notice = _("PageChange Notification of %s");
-        if (mail(array_shift($emails),
+        $ok = mail(($to = array_shift($emails)),
                  "[".WIKI_NAME."] ".$subject, 
-                 $subject."\n".$content,
-                 "From: $from\r\nBcc: ".join(',', $emails)
-                 ))
-        {
+		   $subject."\n".$content,
+		   "From: $from\r\nBcc: ".join(',', $emails)
+		   );
+	if (MAILER_LOG and is_writable(MAILER_LOG)) {
+	    $f = fopen(MAILER_LOG, "a");
+	    fwrite($f, "\n\nX-MailSentOK: " . $ok ? 'OK' : 'FAILED');
+	    if (!$ok) {
+		global $ErrorManager;
+		// get last error message
+		$last_err = $ErrorManager->_postponed_errors[count($ErrorHandler->_postponed_errors)-1];
+		fwrite($f, "\nX-MailFailure: " . $last_err);
+	    }
+	    fwrite($f, "\nDate: " . CTime());
+	    fwrite($f, "\nSubject: $subject");
+	    fwrite($f, "\nFrom: $from");
+	    fwrite($f, "\nTo: $to");
+	    fwrite($f, "\nBcc: ".join(',', $emails));
+	    fwrite($f, "\n\n". $content);
+	    fclose($f);
+	}
+        if ($ok) {
             if (!$silent)
                 trigger_error(sprintf($notice, $this->pagename)
                               . " "
@@ -134,7 +154,8 @@ class MailNotify {
         } else {
             trigger_error(sprintf($notice, $this->pagename)
                           . " "
-                          . sprintf(_("Error: Couldn't send to %s"), join(',',$this->userids)), 
+                          . sprintf(_("Error: Couldn't send %s to %s"), 
+                                   $subject."\n".$content, join(',',$this->userids)), 
                           E_USER_WARNING);
             return false;
         }
@@ -154,8 +175,7 @@ class MailNotify {
                 array($this->pagename, $this->emails, $this->userids);
             return;
         }
-        $backend = &$this->_wikidb->_backend;
-        //$backend = &$request->_dbi->_backend;
+        $backend = &$request->_dbi->_backend;
         $subject = _("Page change").' '.urlencode($this->pagename);
         $previous = $backend->get_previous_version($this->pagename, $version);
         if (!isset($meta['mtime'])) $meta['mtime'] = time();
@@ -178,7 +198,7 @@ class MailNotify {
             $content  = $this->pagename . " " . $previous . " " . 
                 Iso8601DateTime($prevdata['mtime']) . "\n";
             $content .= $this->pagename . " " . $version . " " .  
-                Iso8601DateTime($meta['mtime']) . "\n";
+                Iso8601@ateTime($meta['mtime']) . "\n";
             $content .= $fmt->format($diff2);
             
         } else {
@@ -219,15 +239,16 @@ class MailNotify {
     function onChangePage (&$wikidb, &$wikitext, $version, &$meta) {
         $result = true;
 	if (!isa($GLOBALS['request'],'MockRequest')) {
-	    $notify = $wikidb->_wikidb->get('notify');
+	    $notify = $wikidb->get('notify');
             /* Generate notification emails? */
 	    if (!empty($notify) and is_array($notify)) {
                 if (empty($this->pagename))
                     $this->pagename = $meta['pagename'];
 		//TODO: defer it (quite a massive load if you MassRevert some pages).
 		//TODO: notification class which catches all changes,
-		//  and decides at the end of the request what to mail. (type, page, who, what, users, emails)
-		// could be used for PageModeration and RSS2 Cloud xml-rpc also.
+		//  and decides at the end of the request what to mail. 
+		//  (type, page, who, what, users, emails)
+		// Could be used for ModeratePage and RSS2 Cloud xml-rpc also.
                 $this->getPageChangeEmails($notify);
                 if (!empty($this->emails)) {
                     $result = $this->sendPageChangeNotification($wikitext, $version, $meta);
@@ -244,11 +265,6 @@ class MailNotify {
 	    $notify = $wikidb->get('notify');
 	    if (!empty($notify) and is_array($notify)) {
 		//TODO: deferr it (quite a massive load if you remove some pages).
-		//TODO: notification class which catches all changes,
-		//  and decides at the end of the request what to mail. 
-		// (type, page, who, what, users, emails)
-
-		// could be used for PageModeration and RSS2 Cloud xml-rpc also.
 		$this->getPageChangeEmails($notify);
 		if (!empty($this->emails)) {
 		    $editedby = sprintf(_("Removed by: %s"), $this->from); // Todo: host_id
@@ -289,7 +305,7 @@ class MailNotify {
     }
 
     /**
-     * send mail to user and store the cookie in the db
+     * Send mail to user and store the cookie in the db
      * wikiurl?action=ConfirmEmail&id=bla
      */
     function sendEmailConfirmation ($email, $userid) {
@@ -364,6 +380,9 @@ will expire at %s.",
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2007/01/04 16:47:49  rurban
+// improve text
+//
 // Revision 1.3  2006/12/24 13:35:43  rurban
 // added experimental EMailConfirm auth. (not yet tested)
 // requires actionpage ConfirmEmail
