@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.49 2007-01-04 16:40:35 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.50 2007-01-07 18:41:51 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -61,7 +61,7 @@ class CacheableMarkup extends XmlContent {
                 // user our php lib. TESTME
                 include_once("ziplib.php");
                 $zip = new ZipReader($packed);
-                list(,$data,$§attrib) = $zip->readFile();
+                list(,$data,$attrib) = $zip->readFile();
                 return unserialize($data);
             }
         }
@@ -400,19 +400,21 @@ class Cached_PhpwikiURL extends Cached_DynamicContent
 
 /*
  * Relations (::) are named links to pages.
- * Attributes (:=) are named metadata per page, "named links to numbers". 
+ * Attributes (:=) are named metadata per page, "named links to numbers with units". 
  * We don't want to exhaust the linktable with numbers,
  * since this would create empty pages per each value, 
- * so we don't store the attributes as relationlink
+ * so we don't store the attributes as full relationlink. 
+ * But we do store the attribute name as relation with an empty pagename 
+ * to denote that this is an attribute, 
+ * and to enable a fast listRelations mode=attributes
  */
 class Cached_SemanticLink extends Cached_WikiLink {
 
-    function Cached_SemanticLink ($url, $label) {
+    function Cached_SemanticLink ($url, $label=false) {
 	$this->_url = $url;
         if ($label && $label != $url)
             $this->_label = $label;
         $this->_expandurl($this->_url);
-	//$this->_units = new Units();
     }
 
     function isInlineElement() {
@@ -634,10 +636,21 @@ class Cached_UserLink extends Cached_WikiLink {
     }
 }
 
+/**
+ * 1.3.13: Previously stored was only _pi. 
+ * A fresh generated cache has now ->name and ->args also.
+ * main::isActionPage only checks the raw content.
+ */
 class Cached_PluginInvocation extends Cached_DynamicContent {
 
     function Cached_PluginInvocation ($pi) {
 	$this->_pi = $pi;
+	$loader = $this->_getLoader();
+        if (is_array($plugin_cmdline = $loader->parsePI($pi)) and $plugin_cmdline[1]) {
+            $this->pi_name = $plugin_cmdline[0]; // plugin, plugin-form, plugin-list, plugin-link
+            $this->name = $plugin_cmdline[1]->getName();
+            $this->args = $plugin_cmdline[2];
+        }
     }
 
     function setTightness($top, $bottom) {
@@ -655,9 +668,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 
         $xml = $loader->expandPI($this->_pi, $GLOBALS['request'], $markup, $basepage);
         $div = HTML::div(array('class' => 'plugin'));
-        if (is_array($plugin_cmdline = $loader->parsePI($this->_pi)) and $plugin_cmdline[1])
-            $id = GenerateId($plugin_cmdline[1]->getName() . 'Plugin');
-        
+        if (isset($this->name))
+            $id = GenerateId($this->name . 'Plugin');
+   
 	if (isset($this->_tightenable)) {
 	    if ($this->_tightenable == 3) {
                 $span = HTML::span(array('class' => 'plugin'), $xml);
@@ -698,6 +711,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2007/01/04 16:40:35  rurban
+// Remove units object from CachedMarkup links, Store parsed linkinfo only: basevalue, baseunit.
+//
 // Revision 1.48  2007/01/03 21:22:08  rurban
 // Use Units for attributes. Store the unified base value as Cached_SemanticLink->_attribute_base in the wikimarkup and display it as title.
 //
