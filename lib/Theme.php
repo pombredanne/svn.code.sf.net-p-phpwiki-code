@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.137 2007-01-02 13:19:23 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.138 2007-01-07 18:43:37 rurban Exp $');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -192,14 +192,18 @@ class Theme {
     var $HTML_DUMP_SUFFIX = '';
     var $DUMP_MODE = false, $dumped_images, $dumped_css; 
 
-    function Theme ($theme_name = 'default') {
+    /**
+     * noinit: Do not initialize unnecessary items in default_theme fallback twice.
+     */
+    function Theme ($theme_name = 'default', $noinit = false) {
         $this->_name = $theme_name;
         $this->_themes_dir = NormalizeLocalFileName("themes");
         $this->_path  = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
         $this->_theme = "themes/$theme_name";
 
         if ($theme_name != 'default')
-            $this->_default_theme = new Theme;
+            $this->_default_theme = new Theme('default',true);
+        if ($noinit) return;
 
         // by pixels
         if ((is_object($GLOBALS['request']) // guard against unittests
@@ -1089,10 +1093,10 @@ class Theme {
             return $this->_path . $tmp;
         else {
             $f1 = $this->file("templates/$name.tmpl");
-            trigger_error("pwd: ".getcwd(), E_USER_ERROR);
+            //trigger_error("findTemplate($name) pwd: ".getcwd(), E_USER_ERROR);
             if (isset($this->_default_theme)) {
                $f2 = $this->_default_theme->file("templates/$name.tmpl");
-               trigger_error("$f1 nor $f2 found", E_USER_ERROR);
+               //trigger_error("$f1 nor $f2 found", E_USER_ERROR);
             } else 
                trigger_error("$f1 not found", E_USER_ERROR);
             return false;
@@ -1101,9 +1105,21 @@ class Theme {
 
     var $_MoreHeaders = array();
     function addMoreHeaders ($element) {
-        array_push($this->_MoreHeaders, $element);
+        $this->_MoreHeaders[] = $element;
+        if (!empty($this->_headers_printed) and $this->_headers_printed) {
+	    trigger_error(_("Some action(page) wanted to add more headers, but they were already printed.")
+			  ."\n". $element->asXML(),
+                           E_USER_NOTICE);
+        }
     }
+
+    /**
+      * Singleton. Only called once, by the head template. See the warning above.
+      */
     function getMoreHeaders () {
+    	// actionpages cannot add headers, because recursive template expansion
+    	// already expanded the head template before.
+    	$this->_headers_printed = 1;
         if (empty($this->_MoreHeaders))
             return '';
         $out = '';
@@ -1186,20 +1202,25 @@ class Theme {
     // by Bitflux GmbH, bitflux.ch. You need to install the livesearch.js seperately.
     // Google's or acdropdown is better.
     function initLiveSearch() {
-        if (!$this->HTML_DUMP_SUFFIX) {
+	//subclasses of Sidebar will init this twice 
+	static $already = 0;
+        if (!$this->HTML_DUMP_SUFFIX and !$already) {
             $this->addMoreAttr('body', 'LiveSearch', 
                                HTML::Raw(" onload=\"liveSearchInit()"));
             $this->addMoreHeaders(JavaScript('var liveSearchURI="'
                                              .WikiURL(_("TitleSearch"),false,true).'";'));
             $this->addMoreHeaders(JavaScript('', array
                                              ('src' => $this->_findData('livesearch.js'))));
+	    $already = 1;
         }
     }
 
     // Immediate title search results via XMLHttpRequest
     // using the shipped moacdropdown js-lib
     function initMoAcDropDown() {
-        if (!$this->HTML_DUMP_SUFFIX) {
+	//subclasses of Sidebar will init this twice 
+	static $already = 0;
+        if (!$this->HTML_DUMP_SUFFIX and !$already) {
             $dir = $this->_findData('moacdropdown');
             // if autocomplete_remote is used: (getobject2 also for calc. the showlist width)
             foreach (array("mobrowser.js","modomevent.js","modomt.js",
@@ -1218,6 +1239,86 @@ class Theme {
 	    if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
 		$xmlrpc_url .= ("?start_debug=".$_GET['start_debug']);
             $this->addMoreHeaders(JavaScript("var xmlrpc_url = '$xmlrpc_url'"));
+	    $already = 1;
+        }
+    }
+
+    function calendarLink($date = false) {
+        return $this->calendarBase() . SUBPAGE_SEPARATOR . 
+               strftime("%Y-%m-%d", $date ? $date : time());
+    }
+
+    function calendarBase() {
+        static $UserCalPageTitle = false;
+        global $request;
+
+        if (!$UserCalPageTitle) 
+            $UserCalPageTitle = $request->_user->getId() . 
+                                SUBPAGE_SEPARATOR . _("Calendar");
+        if (!$UserCalPageTitle)
+            $UserCalPageTitle = (BLOG_EMPTY_DEFAULT_PREFIX ? '' 
+                                 : ($request->_user->getId() . SUBPAGE_SEPARATOR)) . "Blog";
+        return $UserCalPageTitle;
+    }
+
+    function calendarInit($force = false) {
+        $dbi = $GLOBALS['request']->getDbh();
+        // display flat calender dhtml in the sidebar
+        if ($force or $dbi->isWikiPage($this->calendarBase())) {
+            $jslang = @$GLOBALS['LANG'];
+            $this->addMoreHeaders
+                (
+                 $this->_CSSlink(0, 
+                                 $this->_findFile('jscalendar/calendar-phpwiki.css'), 'all'));
+            $this->addMoreHeaders
+                (JavaScript('',
+                            array('src' => $this->_findData('jscalendar/calendar'.(DEBUG?'':'_stripped').'.js'))));
+            if (!($langfile = $this->_findData("jscalendar/lang/calendar-$jslang.js")))
+                $langfile = $this->_findData("jscalendar/lang/calendar-en.js");
+            $this->addMoreHeaders(JavaScript('',array('src' => $langfile)));
+            $this->addMoreHeaders
+                (JavaScript('',
+                            array('src' => 
+                                  $this->_findData('jscalendar/calendar-setup'.(DEBUG?'':'_stripped').'.js'))));
+
+            // Get existing date entries for the current user
+            require_once("lib/TextSearchQuery.php");
+            $iter = $dbi->titleSearch(new TextSearchQuery("^".$this->calendarBase().SUBPAGE_SEPARATOR, true, "auto"));
+            $existing = array();
+            while ($page = $iter->next()) {
+                if ($page->exists())
+                    $existing[] = basename($page->_pagename);
+            }
+            if (!empty($existing)) {
+                $js_exist = '{"'.join('":1,"',$existing).'":1}';
+                //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
+                $this->addMoreHeaders(JavaScript('
+// This table holds the existing calender entries for the current user
+// calculated from the database
+var SPECIAL_DAYS = '.$js_exist.';
+// This function returns true if the date exists in SPECIAL_DAYS
+function dateExists(date, y, m, d) {
+    var year = date.getFullYear();
+    m = m + 1;
+    m = m < 10 ? "0" + m : m;  // integer, 0..11
+    d = d < 10 ? "0" + d : d;  // integer, 1..31
+    var date = year+"-"+m+"-"+d;
+    var exists = SPECIAL_DAYS[date];
+    if (!exists) return false;
+    else return true;
+}
+// This is the actual date status handler. 
+// Note that it receives the date object as well as separate 
+// values of year, month and date.
+function dateStatusFunc(date, y, m, d) {
+    if (dateExists(date, y, m, d)) return "existing";
+    else return false;
+}'));
+            }
+            else {
+                $this->addMoreHeaders(JavaScript('
+function dateStatusFunc(date, y, m, d) { return false;}'));
+            }
         }
     }
 };
@@ -1486,6 +1587,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.137  2007/01/02 13:19:23  rurban
+// add getobject2.js to acdropdown to calculate the sizes. add global xmlrpc_url for local xml requests (interface simplification). stabilize theme and language detection: require magic files there
+//
 // Revision 1.136  2006/12/06 22:07:31  rurban
 // Add new Button argument to override any option.
 //
