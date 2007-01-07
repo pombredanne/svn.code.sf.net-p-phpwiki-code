@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.59 2006-12-22 16:21:29 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.60 2007-01-07 18:41:32 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -376,8 +376,12 @@ class ParsedBlock extends Block_HtmlElement {
 		    ('oldlists', 'list', 'dl', 'table_dl',
                      'blockquote', 'heading', 'hr', 'pre', 'email_blockquote',
 		     'plugin', 'p');
-            if (ENABLE_MARKUP_DIVSPAN)
+            // insert it before p!
+            if (ENABLE_MARKUP_DIVSPAN) {
+            	array_pop($Block_types);
  		$Block_types[] = 'divspan';
+ 		$Block_types[] = 'p';
+            }
             foreach ($Block_types as $type) {
                 $class = "Block_$type";
                 $proto = new $class;
@@ -1065,7 +1069,7 @@ class Block_p extends BlockMarkup
 
 class Block_divspan extends BlockMarkup
 {
-    var $_re = '<(?: div|span)(?:[^>]*)?>';
+    var $_re = '<(?im)(?: div|span)(?:[^>]*)?>';
 
     function _match (&$input, $m) {
     	if (substr($m->match,1,4) == 'span') {
@@ -1074,21 +1078,33 @@ class Block_divspan extends BlockMarkup
     	    $tag = 'div';
 	}
 	// without last >
-        $args = substr(trim(substr($m->match,strlen($tag))),-1,1); 
+        $argstr = substr(trim(substr($m->match,strlen($tag)+1)),0,-1); 
         $pos = $input->getPos();
-        $pi  = $m->postmatch;
-        while (!preg_match('/(?:</'.$tag.'>)/', $pi)) {
-            if (($line = $input->nextLine()) === false) {
+        $pi  = $content = $m->postmatch;
+        while (!preg_match('/^(.*)\<\/'.$tag.'\>(.*)$/i', $pi, $me)) {
+            $content .= "\n$pi";;
+            if (($pi = $input->nextLine()) === false) {
                 $input->setPos($pos);
                 return false;
             }
-            $pi .= "\n$line";
         }
+        $content .= $me[1]; // prematch
         $input->advance();
-        $content = TransformInline(trim($pi));
+        $content = TransformInline(trim($content));
+        if (!$argstr) $args = false;
+        else {
+            foreach (preg_split("/\s+/", $argstr) as $a) {
+                @list($k, $v) = preg_split("/\s*=\s*/", $a);
+                if ($v) $v = preg_replace(array("/^[\"']/","/['\"]$/"), array('',''), $v);
+                if (trim($k) and trim($v)) $args[$k] = $v;
+            }
+        }
         $this->_element = new Block_HtmlElement($tag, $args, $content);
-        $this->_element->setTightness($this->_tight_top, $this->_tight_bot);
+        //$this->_element->setTightness($tag == 'span', $tag == 'span');
         return true;
+    }
+    function _setTightness($top, $bot) {
+	// Don't tighten user <div|span>
     }
 }
 
@@ -1134,6 +1150,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.59  2006/12/22 16:21:29  rurban
+// silence one BlockParser use-case
+//
 // Revision 1.58  2006/11/19 13:57:14  rurban
 // fix Regex Syntax Error
 //
