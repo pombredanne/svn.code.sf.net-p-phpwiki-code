@@ -1,12 +1,10 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.11 2007-01-02 13:29:59 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.12 2007-01-07 20:19:56 rurban Exp $ -->
 <?php
 $dbh = $request->getDbh();
 $isActionPage = $request->isActionPage($request->getArg("action"));
 $isAdmin = $user->isAdmin();
 $pagename = $page->getName();
-/*if (empty($revision))
-  $revision = $page->getCurrentRevision(false);*/
 ?>
 <div class="portlet" id="p-cactions">
   <h5>Views</h5>
@@ -30,7 +28,7 @@ $pagename = $page->getName();
       <?= ActionButton(array(),$isActionPage ? _("ActionPage") : _("Article"), $talk->getParent()) ?>
       <?= ActionButton(array(),_("Discussion"), $talk->getParent(), array('class'=>"selected")) ?>
     <?php } ?>
-    <?php if ((!$page->get('locked') || $isAdmin) and !$revision) { ?>
+    <?php if (($isAdmin or mayAccessPage('edit', $pagename)) and $revision) { ?>
       <?= ActionButton("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
     <?php } else { ?>
       <?= ActionButton("viewsource", _("View Source")) ?>
