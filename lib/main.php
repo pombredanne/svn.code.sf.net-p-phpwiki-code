@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.228 2007-01-02 13:22:17 rurban Exp $');
+rcs_id('$Id: main.php,v 1.229 2007-01-07 18:44:30 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -674,10 +674,10 @@ class WikiRequest extends Request {
     // [574ms] mainly template:printexpansion: 393ms and template::expandsubtemplate [100+70+60ms]
     function handleAction () {
         $action = $this->getArg('action');
-        if ($this->isPost() and 
-            !$this->_user->isAdmin()
+        if ($this->isPost()  
+            and !$this->_user->isAdmin()
             and $action != 'browse' 
-            and $action !='wikitohtml' 
+            and $action != 'wikitohtml' 
             )
         {
             $page = $this->getPage();
@@ -1052,7 +1052,7 @@ class WikiRequest extends Request {
         $page->set('locked', true);
         $this->_dbi->touch();
         // check ModeratedPage hook
-        if ($moderated = $page->get('moderated')) {
+        if ($moderated = $page->get('moderation')) {
             require_once("lib/WikiPlugin.php");
             $plugin = WikiPluginLoader::getPlugin("ModeratedPage");
             if ($retval = $plugin->lock_check($this, $page, $moderated))
@@ -1297,6 +1297,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.228  2007/01/02 13:22:17  rurban
+// allow application/xml for xmlrpc detection: acdropdown uses this type. silence findActionPage warnings
+//
 // Revision 1.227  2006/12/22 17:53:55  rurban
 // Remove action from edited url
 // move wikitohtml to lib/WysiwygEdit/Wikiwyg.php
