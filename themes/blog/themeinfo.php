@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.5 2005-02-03 05:19:48 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.6 2007-01-07 18:48:20 rurban Exp $');
 
 /**
  * This file defines a blog theme for PhpWiki, 
@@ -37,9 +37,17 @@ liveSearchReq.open("GET", liveSearchURI + "?format=livesearch&paging=none&limit=
  */
 
 require_once('lib/Theme.php');
-require_once('themes/Sidebar/themeinfo.php');
+// Oh holy shit. This creates the wrong theme, which would result in double initializations.
+// So never derive from themes
+//require_once('themes/Sidebar/themeinfo.php');
 
-class Theme_blog extends Theme_Sidebar {
+class Theme_blog extends Theme {
+
+    function Theme_blog ($theme_name='blog') {
+        $this->Theme($theme_name);
+        $this->calendarInit(true);
+    }
+    
     function _findFile ($file, $missing_okay=false) {
         if (file_exists($this->_path . "themes/".$this->_name."/$file"))
             return "themes/".$this->_name."/$file";
