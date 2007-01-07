@@ -1,5 +1,5 @@
 <?php // -*-html-*-
-rcs_id('$Id: body.tmpl,v 1.5 2007-01-04 16:48:33 rurban Exp $');
+rcs_id('$Id: body.tmpl,v 1.6 2007-01-07 18:49:13 rurban Exp $');
 // Todo: set the body attr dynamically. here class="ns-2" for mozilla
 ?>
 <body <?= $WikiTheme->getMoreAttr('body') ?>>
@@ -14,12 +14,12 @@ rcs_id('$Id: body.tmpl,v 1.5 2007-01-04 16:48:33 rurban Exp $');
 	    <div class="visualClear"></div>
 	  </div>
 	</div>
-      </div>
-      <div id="column-one">
 	<?php if (empty($NOSIGNIN)) { ?>
 	  <?= Template('signin') ?>
 	<?php } ?>
 	<?= Template('logo') ?>
+      </div>
+      <div id="column-one">
 	<?= Template('navbar') ?>
 	<?php if (empty($GLOBALS['HIDE_TOOLBARS'])) { ?>
 	  <?= Template('actionbar') ?>
