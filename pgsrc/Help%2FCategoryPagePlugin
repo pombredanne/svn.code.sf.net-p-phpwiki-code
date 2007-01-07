@@ -1,9 +1,9 @@
 Date: Fri, 29 Dec 2006 18:57:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2FCategoryPagePlugin,v 1.1 2007-01-02 13:26:05 rurban Exp $
+X-Rcs-Id: $Id: Help%2FCategoryPagePlugin,v 1.2 2007-01-07 18:46:58 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCategoryPagePlugin;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -24,15 +24,15 @@ page _(default: current pagename)_:
 ! Example
 
 <verbatim>
-<?plugin CategoryPage ?>
+<?plugin CategoryPage pagename=CategoryTest ?>
 </verbatim>
 
-<?plugin CategoryPage ?>
+<?plugin CategoryPage pagename=CategoryTest ?>
 
 ! Author
-PhpWiki:ReiniUrban
+WikiLens:DanFr
 
 ! See Also
-
+Help:TemplatePlugin Help:CreatePagePlugin
 ----
 PhpWikiDocumentation Help:WikiPlugin
