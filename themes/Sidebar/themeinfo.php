@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.24 2005-08-06 13:26:25 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.25 2007-01-07 18:49:42 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki,
@@ -14,8 +14,7 @@ require_once('lib/WikiPlugin.php');
 class Theme_Sidebar extends Theme {
 
     function Theme_Sidebar ($theme_name='Sidebar') {
-        parent::Theme($theme_name);
-
+        $this->Theme($theme_name);
         $this->calendarInit(true);
     }
 
@@ -28,85 +27,6 @@ class Theme_Sidebar extends Theme {
             $this->setButtonSeparator(" ");
         }
         return parent::findTemplate($name);
-    }
-
-    function calendarLink($date = false) {
-        return $this->calendarBase() . SUBPAGE_SEPARATOR . 
-               strftime("%Y-%m-%d", $date ? $date : time());
-    }
-
-    function calendarBase() {
-        static $UserCalPageTitle = false;
-        global $request;
-
-        if (!$UserCalPageTitle) 
-            $UserCalPageTitle = $request->_user->getId() . 
-                                SUBPAGE_SEPARATOR . _("Calendar");
-        if (!$UserCalPageTitle)
-            $UserCalPageTitle = (BLOG_EMPTY_DEFAULT_PREFIX ? '' 
-                                 : ($request->_user->getId() . SUBPAGE_SEPARATOR)) . "Blog";
-        return $UserCalPageTitle;
-    }
-
-    function calendarInit($force = false) {
-        $dbi = $GLOBALS['request']->getDbh();
-        // display flat calender dhtml in the sidebar
-        if ($force or $dbi->isWikiPage($this->calendarBase())) {
-            $jslang = @$GLOBALS['LANG'];
-            $this->addMoreHeaders
-                (
-                 $this->_CSSlink(0, 
-                                 $this->_findFile('jscalendar/calendar-phpwiki.css'), 'all'));
-            $this->addMoreHeaders
-                (JavaScript('',
-                            array('src' => $this->_findData('jscalendar/calendar'.(DEBUG?'':'_stripped').'.js'))));
-            if (!($langfile = $this->_findData("jscalendar/lang/calendar-$jslang.js")))
-                $langfile = $this->_findData("jscalendar/lang/calendar-en.js");
-            $this->addMoreHeaders(JavaScript('',array('src' => $langfile)));
-            $this->addMoreHeaders
-                (JavaScript('',
-                            array('src' => 
-                                  $this->_findData('jscalendar/calendar-setup'.(DEBUG?'':'_stripped').'.js'))));
-
-            // Get existing date entries for the current user
-            require_once("lib/TextSearchQuery.php");
-            $iter = $dbi->titleSearch(new TextSearchQuery("^".$this->calendarBase().SUBPAGE_SEPARATOR, true, "auto"));
-            $existing = array();
-            while ($page = $iter->next()) {
-                if ($page->exists())
-                    $existing[] = basename($page->_pagename);
-            }
-            if (!empty($existing)) {
-                $js_exist = '{"'.join('":1,"',$existing).'":1}';
-                //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
-                $this->addMoreHeaders(JavaScript('
-// This table holds the existing calender entries for the current user
-// calculated from the database
-var SPECIAL_DAYS = '.$js_exist.';
-// This function returns true if the date exists in SPECIAL_DAYS
-function dateExists(date, y, m, d) {
-    var year = date.getFullYear();
-    m = m + 1;
-    m = m < 10 ? "0" + m : m;  // integer, 0..11
-    d = d < 10 ? "0" + d : d;  // integer, 1..31
-    var date = year+"-"+m+"-"+d;
-    var exists = SPECIAL_DAYS[date];
-    if (!exists) return false;
-    else return true;
-}
-// This is the actual date status handler. 
-// Note that it receives the date object as well as separate 
-// values of year, month and date.
-function dateStatusFunc(date, y, m, d) {
-    if (dateExists(date, y, m, d)) return "existing";
-    else return false;
-}'));
-            }
-            else {
-                $this->addMoreHeaders(JavaScript('
-function dateStatusFunc(date, y, m, d) { return false;}'));
-            }
-        }
     }
 }
 
