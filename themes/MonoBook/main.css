@@ -4,10 +4,11 @@
 ** License: GPL (http://www.gnu.org/copyleft/gpl.html)
 **
 ** Loosely based on http://www.positioniseverything.net/ordered-floats.html by Big John
-** and the Plone 2.0 styles, see http://plone.org/ (Alexander Limi,Joe Geldart & Tom Croucher,
+** and the Plone 2.0 styles, see http://plone.org/ (Alexander Limi, Joe Geldart & Tom Croucher,
 ** Michael Zeltner and Geir Bækholt)
 ** All you guys rock :)
-** Added phpwiki integration: Reini Urban, based on the phpwiki.css by Jeff Dairiki
+** Added phpwiki integration: Reini Urban, based on the phpwiki.css 
+** by Jeff Dairiki
 */
 
 #column-content {
@@ -15,9 +16,10 @@
 	float: right;
 	margin: 0 0 .6em -12.2em;
 	padding: 0;
+	height: 1%;
 }
 #content {
-	margin: 2.8em 0 0 12.2em;
+	margin: 2.9em 0 0 12.2em;
 	padding: 0 1em 1.5em 1em;
 	background: white;
 	color: black;
@@ -28,7 +30,11 @@
 	z-index: 2;
 }
 #column-one {
-	padding-top: 160px;
+	padding-top:160px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 4;
 }
 /* the left column width is specified in class .portlet */
 
@@ -846,10 +852,11 @@ special external link styling */
 
 /* 
 ** Logo properties 
+ * Optionally at the right also an image
 */
 
 #p-logo {
-	z-index: 3;
+	z-index: 0;
 	position: absolute; /*needed to use z-index */
 	top: 0;
 	left: 0;
@@ -868,6 +875,18 @@ special external link styling */
 	background-repeat: no-repeat;
 	background-position: 35% 50% !important;
 	text-decoration: none;
+}
+/* At the right we put a small "wiki star" */
+#img-logo-right {
+  position: absolute;
+  z-index: 4;
+  top:  0;
+  right: 0;
+  height: 86px;
+  width: 86px;
+  background: url("images/wiki_stamp.png") left no-repeat;
+  background-repeat: no-repeat;
+  overflow: visible;
 }
 
 /*
@@ -898,7 +917,7 @@ special external link styling */
 */
 #p-search {
     position:relative;
-    z-index:3;
+    z-index: 3;
 }    
 input.searchButton {
     margin-top:1px;
@@ -906,17 +925,19 @@ input.searchButton {
     font-size: 95%;
     cursor: pointer;
     background-color: White;
-    border: 1px solid #2f6fab;  
+    border: 1px solid #2f6fab;
 }
 #searchGoButton {
 	padding-left: .5em;
 	padding-right: .5em;
 	font-weight: bold;
 }
-#searchInput {
-	width: 10.9em;
-	margin: 0;
-	font-size: 95%;
+/*#searchInput, */
+#livesearch, #p-search input.dropdown {
+  text-align: left;
+  width: 9.9em;
+  /*margin: 0;*/
+  font-size: 95%;
 }
 #p-search .pBody {
 	padding: .5em .4em .4em .4em;
@@ -926,24 +947,19 @@ input.searchButton {
 /*
 ** the personal toolbar
 */
-#p-personal .portlet,
-#p-personal .pBody {
-    padding:0;
-    margin:0;
-}
-/*
+
 #p-personal {
     width:40em;
     white-space:nowrap;
     padding:0 0 0 0;
     margin:0;
     position:absolute;
-    right:0px;
+    right: 90px;
     top:0.1em;
-    z-index: 0;
+    z-index: 4;
     border: none;
-    background: none;
     overflow: visible;
+    color: black;
     line-height: 1.2em;
 }
 
@@ -955,39 +971,33 @@ input.searchButton {
     padding:0;
     margin:0;
     border: none;
-    z-index:0;
+    z-index: 0;
     overflow: visible;
     background: none;
 }
-*/
 /* this is the ul contained in the portlet */
-/*
 #p-personal ul {
     border: none;
-    line-height: 1.4em;
+    line-height: 1.5em;
     color: #2f6fab;
     padding: 0em 2em 0 3em;
     margin: 0;
     text-align: right;
-    text-transform: lowercase;
+    /*text-transform: lowercase;*/
     list-style: none;
-    z-index:0;
+    z-index: 0;
     background: none;
     cursor: default;
 }
-*/
 #p-personal li {
-	z-index: 0;
-	border: none;
-	padding: 0;
-	display: inline;
-	color: #2f6fab;
-	margin-left: 1em;
-	line-height: 1.2em;
-	background: none;
-}
-#p-personal li.active {
-	font-weight: bold;
+    z-index: 0;
+    border:none;
+    padding:0;
+    display: inline;
+    color: #2f6fab;
+    margin-left: 1em;
+    line-height: 1.2em;
+    background: none;
 }
 #p-personal li a {
     text-decoration: none;
@@ -1009,7 +1019,7 @@ li#pt-userpage,
 li#pt-anonuserpage,
 li#pt-login {
     /*background:  url('images/wikiuser.png') top left bottom no-repeat;*/
-    /*background:  url('images/wikiuser.png') left no-repeat;*/
+    background:  url('images/wikiuser.png') left no-repeat;
     background-repeat: no-repeat;
     padding-left: 20px;
     text-transform: none;
@@ -1021,6 +1031,7 @@ li#pt-login {
 */
 #p-cactions {
     position:absolute;
+    z-index: 0;
     top: 1.3em;
     left: 11.5em;
     margin: 0;
@@ -1115,6 +1126,8 @@ li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
 	border-top: 1px solid #fabd23;
 	border-bottom: 1px solid #fabd23;
 	margin: .6em 0 1em 0;
+	border-left: 1px solid #fabd23;
+	margin-left: 13.6em;
 	padding: .4em 0 1.2em 0;
 	text-align: center;
 	font-size: 90%;
@@ -1678,4 +1691,9 @@ span.redirectfrom {
   font-style: oblique;
   font-weight: normal;
   padding-left: 1em;
+}
+.search-context { background: white; }
+.search-term {
+  background: yellow;
+  font-weight: normal;
 }
