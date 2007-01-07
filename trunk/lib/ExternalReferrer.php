@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ExternalReferrer.php,v 1.3 2004-10-12 14:22:14 rurban Exp $');
+rcs_id('$Id: ExternalReferrer.php,v 1.4 2007-01-07 18:42:29 rurban Exp $');
 
 /** 
  * Detect external referrers
@@ -8,7 +8,7 @@ rcs_id('$Id: ExternalReferrer.php,v 1.3 2004-10-12 14:22:14 rurban Exp $');
  * Todo: 
  *   store all external referrers in (rotatable) log/db for a RecentReferrers plugin.
  */
-if (!function_exists('isExternalReferrer')) { // better define that in stdlib.php
+if (!function_exists('isExternalReferrer')) { // also defined in stdlib.php
   function isExternalReferrer(&$request) {
     if ($referrer = $request->get('HTTP_REFERER')) {
     	$home = SCRIPT_NAME; // was SERVER_URL, check sister wiki's: same host but other other script url
@@ -113,6 +113,9 @@ class SearchEngines {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/10/12 14:22:14  rurban
+// lib/ExternalReferrer.php:99: Notice[8]: Undefined index: query
+//
 // Revision 1.2  2004/09/26 14:55:55  rurban
 // fixed warning
 //
