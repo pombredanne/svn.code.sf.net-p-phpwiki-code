@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.84 2007-01-02 13:18:07 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.85 2007-01-07 18:42:49 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -149,27 +149,27 @@ class RegexpSet
         // sf.net: Fatal error: Allowed memory size of 8388608 bytes exhausted 
         //         (tried to allocate 634 bytes)
         if (_INLINE_OPTIMIZATION) { // disabled, wrong
-        // So we try to minize memory usage, by looping explicitly,
-        // and storing only those regexp which actually match. 
-        // There may be more than one, so we have to find the longest, 
-        // and match inside until the shortest is empty.
-	$matched = array(); $matched_ind = array();
-        for ($i=0; $i<count($regexps); $i++) {
-            if (!trim($regexps[$i])) {
-                trigger_error("empty regexp $i", E_USER_WARNING);
-                continue;
-            }
-            $pat= "/ ( . $repeat ) ( " . $regexps[$i] . " ) /x";
-            if (preg_match($pat, $text, $_m)) {
-            	$m = $_m; // FIXME: prematch, postmatch is wrong
-                $matched[] = $regexps[$i];
-                $matched_ind[] = $i;
-                $regexp_ind = $i;
-            }
-        }
-        // To overcome ANCHORED:
-        // We could sort by longest match and iterate over these.
-        if (empty($matched)) return false;
+	    // So we try to minize memory usage, by looping explicitly,
+	    // and storing only those regexp which actually match. 
+	    // There may be more than one, so we have to find the longest, 
+	    // and match inside until the shortest is empty.
+	    $matched = array(); $matched_ind = array();
+	    for ($i=0; $i<count($regexps); $i++) {
+		if (!trim($regexps[$i])) {
+		    trigger_error("empty regexp $i", E_USER_WARNING);
+		    continue;
+		}
+		$pat= "/ ( . $repeat ) ( " . $regexps[$i] . " ) /x";
+		if (preg_match($pat, $text, $_m)) {
+		    $m = $_m; // FIXME: prematch, postmatch is wrong
+		    $matched[] = $regexps[$i];
+		    $matched_ind[] = $i;
+		    $regexp_ind = $i;
+		}
+	    }
+	    // To overcome ANCHORED:
+	    // We could sort by longest match and iterate over these.
+	    if (empty($matched)) return false;
         }
         $match = new RegexpSet_match;
         
@@ -177,12 +177,6 @@ class RegexpSet
         if (! _INLINE_OPTIMIZATION or count($matched) > 2) {
             assert(!empty($repeat));
             assert(!empty($regexps));
-            for ($i=0; $i<count($regexps); $i++) {
-                if (!trim($regexps[$i])) {
-                    trigger_error("empty regexp $i", E_USER_WARNING);
-                    $regexps[$i] = '\Wxxxx\w\W\w\W\w\W\w\W\w\W\w'; // some placeholder
-                }
-            }
             // We could do much better, if we would know the matching markup for the 
             // longest regexp match:
             $hugepat= "/ ( . $repeat ) ( (" . join(')|(', $regexps) . ") ) /Asx";
@@ -470,18 +464,24 @@ class Markup_url extends SimpleMarkup
     }
 }
 
-
 class Markup_interwiki extends SimpleMarkup
 {
     function getMatchRegexp () {
-        global $request;
         $map = getInterwikiMap();
-        return "(?<! [[:alnum:]])" . $map->getRegexp(). ": \S+ (?<![ ,.?;! \] \) \" \' ])";
+        return "(?<! [[:alnum:]])" . $map->getRegexp(). ": [^:=]\S+ (?<![ ,.?;! \] \) \" \' ])";
     }
 
     function markup ($match) {
-        //$map = getInterwikiMap();
         return new Cached_InterwikiLink(UnWikiEscape($match));
+    }
+}
+
+class Markup_semanticlink extends SimpleMarkup
+{
+    var $_match_regexp = "(?:\w+:[:=]\S+)"; // no units seperated by space allowed here
+
+    function markup ($match) {
+        return new Cached_SemanticLink(UnWikiEscape($match));
     }
 }
 
@@ -729,7 +729,8 @@ class Markup_xml_plugin extends BalancedMarkup
     }
     function markup ($match, $body) {
 	global $PLUGIN_MARKUP_MAP;
-        $name = substr($match,2,-2); $vars = '';
+        $name = substr($match,2,-2); 
+	$vars = '';
         if (preg_match('/^(\S+)\|(.*)$/', $name, $_m)) {
             $name = $_m[1];
             $vars = $_m[2]; //str_replace(' ', '&', $_m[2]);
@@ -748,7 +749,7 @@ class Markup_xml_plugin extends BalancedMarkup
  *  {{template}}
  * => < ? plugin Template page=template ? >
  *  {{template|var=value|...}}
- * => < ? plugin Template page=template vars="var=value&..." ? >
+ * => < ? plugin Template page=template var=value ... ? >
  */
 class Markup_template_plugin  extends SimpleMarkup
 {
@@ -758,25 +759,12 @@ class Markup_template_plugin  extends SimpleMarkup
         $page = substr($match, 2, -2); $vars = '';
         if (preg_match('/^(\S+)\|(.*)$/', $page, $_m)) {
             $page = $_m[1];
-            /* Bug #1540007 "hardened-php issue, crawlers related" 
-               php bug #24175 and similar.
-               Alternative:
-               $vars = preg_replace('/\|/', '&', $_m[2]); 
-             */
-            $vars = "";
-            if (strlen($_m[2]) > 200) {
-                while (strlen($_m[2]) > 200) {
-                    $vars .= str_replace('|', '&', substr($_m[2], 0, 200));
-                    $_m[2] = substr($_m[2], 200);
-                } 
-            } else {
-                $vars = str_replace('|', '&', $_m[2]);
-            }
+            $vars = preg_replace('/\|/', ' ', $_m[2]); 
         }
         if ($vars)
-    	    $s = '<'.'?plugin Template page=' . $page . ' vars="' . $vars . '"?'.'>';
+    	    $s = '<'.'?plugin Template page="' . $page . '" ' . $vars . ' ?'.'>';
     	else
-    	    $s = '<'.'?plugin Template page=' . $page . '?'.'>';
+    	    $s = '<'.'?plugin Template page="' . $page . '" ?'.'>';
 	return new Cached_PluginInvocation($s);
     }
 }
@@ -838,7 +826,7 @@ class InlineTransformer
             $non_default = false;
             $markup_types = array
                 ('escape', 'bracketlink', 'url',
-                 'interwiki', 'wikiword', 'linebreak',
+                 'interwiki',  'semanticlink', 'wikiword', 'linebreak',
                  'old_emphasis', 'nestled_emphasis',
                  'html_emphasis', 'html_abbr', 'plugin',
                  'isonumchars', 'isohexchars', /*'html_entities'*/
@@ -852,14 +840,14 @@ class InlineTransformer
             $class = "Markup_$mtype";
             $this->_addMarkup(new $class);
         }
-        // this does not work yet
+        // This does not work yet
         if (0 and ENABLE_MARKUP_DIVSPAN and !$non_default)
             $this->_addMarkup(new Markup_html_divspan);
         if (ENABLE_MARKUP_COLOR and !$non_default)
             $this->_addMarkup(new Markup_color);
         if (ENABLE_MARKUP_TEMPLATE and !$non_default)
             $this->_addMarkup(new Markup_template_plugin);
-        // this does not work yet
+        // This does not work yet
         if (0 and PLUGIN_MARKUP_MAP and !$non_default)
             $this->_addMarkup(new Markup_xml_plugin);
     }
@@ -870,7 +858,8 @@ class InlineTransformer
         else
             $regexp = $markup->getStartRegexp();
 
-        assert(!isset($this->_markup[$regexp]));
+        assert( !isset($this->_markup[$regexp]) );
+        assert( strlen(trim($regexp)) > 0 );
         $this->_regexps[] = $regexp;
         $this->_markup[] = $markup;
     }
@@ -957,7 +946,8 @@ class LinkTransformer extends InlineTransformer
 {
     function LinkTransformer () {
         $this->InlineTransformer(array('escape', 'bracketlink', 'url',
-                                       'interwiki', 'wikiword'));
+                                       'semanticlink', 'interwiki', 'wikiword', 
+                                       ));
     }
 }
 
@@ -1023,6 +1013,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.84  2007/01/02 13:18:07  rurban
+// fix semantic attributes syntax :=, not :-, disable DIVSPAN and PLUGIN_MARKUP_MAP
+//
 // Revision 1.83  2006/12/22 00:23:24  rurban
 // Fix Bug #1540007 "hardened-php issue, crawlers related"
 // Broken str_replace with strings > 200 chars
