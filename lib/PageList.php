@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.136 2007-01-02 13:18:46 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.137 2007-01-07 18:43:08 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1215,8 +1215,9 @@ class PageList {
     // make a table given the caption
     function _generateTable($caption) {
         if (count($this->_sortby) > 0) $this->_sortPages();
-
-        $rows = array(); $i = 0;
+        
+        // wikiadminutils hack. that's a way to pagelist non-pages
+        $rows = isset($this->_rows) ? $this->_rows : array(); $i = 0;
         foreach ($this->_pages as $pagenum => $page) {
             $rows[] = $this->_renderPageRow($page, $i++);
         }
@@ -1506,6 +1507,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.136  2007/01/02 13:18:46  rurban
+// filter pageNames through limit, needed for xmlrpc. publish col->current_row and col->current_column counters during iteration. use table width=100% with captions. Clarify API: sortby,limit and exclude are strings.
+//
 // Revision 1.135  2005/09/14 05:59:03  rurban
 // optimized explodePageList to use SQL when available
 //   (titleSearch instead of getAllPages)
