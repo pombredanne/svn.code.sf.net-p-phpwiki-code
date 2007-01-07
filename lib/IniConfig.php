@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.109 2007-01-04 16:40:47 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.110 2007-01-07 18:42:39 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -157,6 +157,7 @@ function IniConfig($file) {
          'WYSIWYG_BACKEND', 'PLUGIN_MARKUP_MAP',
          // extra logic:
          'SERVER_NAME','SERVER_PORT','SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
+	 'EXTERNAL_HTML2PDF_PAGELIST', 'PLUGIN_CACHED_CACHE_DIR'
          );
 
     // Optional values which need to be defined.
@@ -172,7 +173,7 @@ function IniConfig($file) {
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
          'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD',
          'SESSION_SAVE_PATH', 'TOOLBAR_PAGELINK_PULLDOWN', 'TOOLBAR_TEMPLATE_PULLDOWN',
-         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL'
+         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL', 'USE_EXTERNAL_HTML2PDF'
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -190,11 +191,12 @@ function IniConfig($file) {
          'WARN_NONPUBLIC_INTERWIKIMAP', 'USE_PATH_INFO',
          'DISABLE_HTTP_REDIRECT',
          'PLUGIN_CACHED_USECACHE', 'PLUGIN_CACHED_FORCE_SYNCMAP',
-         'BLOG_EMPTY_DEFAULT_PREFIX', 'DATABASE_PERSISTENT',
+         'BLOG_DEFAULT_EMPTY_PREFIX', 'DATABASE_PERSISTENT',
          'ENABLE_DISCUSSION_LINK', 'ENABLE_CAPTCHA',
          'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML',
          'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
-         'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS'
+         'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS',
+	 'USE_SEARCHHIGHLIGHT'
          );
 
     $rs = @parse_ini_file($file);
@@ -224,7 +226,7 @@ function IniConfig($file) {
                            array('DATABASE_PREFIX', 'SERVER_NAME', 'SERVER_PORT',
                                  'SCRIPT_NAME', 'DATA_PATH', 'PHPWIKI_DIR', 'VIRTUAL_PATH',
                                  'LDAP_AUTH_HOST','IMAP_AUTH_HOST','POP3_AUTH_HOST',
-                                 'PLUGIN_CACHED_CACHE_DIR'))) 
+                                 'PLUGIN_CACHED_CACHE_DIR','EXTERNAL_HTML2PDF_PAGELIST'))) 
         {
             ;
         } elseif (!defined("_PHPWIKI_INSTALL_RUNNING")) {
@@ -437,8 +439,20 @@ function IniConfig($file) {
         } else 
             define($item, '');
     }
+
+    if (USE_EXTERNAL_HTML2PDF) {
+	$item = 'EXTERNAL_HTML2PDF_PAGELIST';
+        if (defined($item)) {
+            unset($rs[$item]);
+        } elseif (array_key_exists($item, $rs)) {
+            define($item, $rs[$item]);
+            unset($rs[$item]);
+        } elseif (array_key_exists($item, $rsdef)) {
+            define($item, $rsdef[$item]);
+	}
+    }
     unset($item); 
-    
+        
     // LDAP bind options
     global $LDAP_SET_OPTION;
     if (defined('LDAP_SET_OPTION') and LDAP_SET_OPTION) {
@@ -574,23 +588,25 @@ function fixup_static_configs($file) {
     if (defined('IGNORE_CHARSET_NOT_SUPPORTED_WARNING') and IGNORE_CHARSET_NOT_SUPPORTED_WARNING) {
         $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_unknown_charset_warning'));
     }
-    // Used by SetupWiki to pull in required pages, if not translated, then in english. 
-    // Real actionpages react on page=[]
-    // These here contain also other important requirements, linked from elsewhere.
-    // Also used by _WikiTranslation
+    // Used by SetupWiki to pull in required pages, if not translated, then in english.
+    // Also used by _WikiTranslation. Really important are only those which return pagelists 
+    // or contain basic functionality.
+    /*
+      All pages containing plugins of the same name as the filename:
+      cd pgsrc
+      grep -l '\?plugin ' *| perl -ne'$/=0;chop; s/%([\da-fA-F]{2})/pack("C",hex($1))/ge; next LINE if m{^(Help/|Template|Pgsrc)}; print "$_\n"; {local $/;open F,"<$_"; $f=join("",<F>);} push @a,$_ if $f=~/plugin $_/; END{print join(":",@a)};'
+     */
     $AllActionPages = explode(':',
-                              'AllPages:BackLinks:CreatePage:DebugInfo:EditMetaData:FindPage:'
-                              .'FullRecentChanges:FullTextSearch:FuzzyPages:InterWikiSearch:'
-                              .'LeastPopular:LikePages:MostPopular:'
-                              .'OrphanedPages:PageDump:PageHistory:PageInfo:RandomPage:RateIt:'
-                              .'RecentChanges:RecentEdits:RecentComments:RelatedChanges:TitleSearch:'
-                              .'TranslateText:UpLoad:UserPreferences:WantedPages:WhoIsOnline:'
+			      'AllPages:AllUsers:AppendText:AuthorHistory:BackLinks:CreatePage:EditMetaData:FindPage:FullTextSearch:'
+			      .'FuzzyPages:InterWikiSearch:LikePages:LinkDatabase:LinkSearch:ListRelations:ModeratedPage:'
+			      .'MostPopular:OrphanedPages:PageDump:PageHistory:PageInfo:PasswordReset:PluginManager:RandomPage:'
+			      .'RateIt:RecentChanges:RecentComments:RelatedChanges:SearchHighlight:SemanticRelations:SemanticSearch:'
+			      .'TitleSearch:TranslateText:UpLoad:UserPreferences:WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect'
+			      // plus some derivations
+			      .':DebugInfo:LeastPopular:RecentEdits:AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:'
                               .'PhpWikiAdministration/Remove:PhpWikiAdministration/Chmod:'
                               .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace:'
-                              .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown'
-                              .'SemanticRelations:SemanticSearch:SearchHighlight:LinkSearch:'
-			      .'AppendText:AuthorHistory'
-                              );
+                              .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown');
     // If user has not defined PHPWIKI_DIR, and we need it
     if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
     	$themes_dir = FindFile("themes");
@@ -917,6 +933,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.109  2007/01/04 16:40:47  rurban
+// Add more action pages
+//
 // Revision 1.108  2007/01/03 21:22:22  rurban
 // Add DISABLE_UNITS.
 //
