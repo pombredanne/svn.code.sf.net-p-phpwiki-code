@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: navbar.tmpl,v 1.6 2007-01-02 13:30:10 rurban Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.7 2007-01-07 18:49:23 rurban Exp $ -->
 <?php
 // With MonoBook it is similar to Sidebar, named boxes at the left.
 // actionbuttons, navigation, search, toolbox
@@ -25,7 +25,8 @@
   <div class="pBody">
 <?= Template("search",
              array('SEARCH_BEFORE' => WikiLink(_("FindPage")),
-		   'SEARCH_AFTER' => HTML::input(array('type'=>'submit',
+		   'SEARCH_AFTER' => HTML::input(array('id' => 'searchGoButton',
+						       'type'=>'submit',
 						       'value'=>_("Go"))))) ?>
 <!-- <form action="<?= WikiURL(_("TitleSearch"))?>"
       method="get" accept-charset="<?=$charset?>">
