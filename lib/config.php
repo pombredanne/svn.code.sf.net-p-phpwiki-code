@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.140 2007-01-02 13:21:30 rurban Exp $');
+rcs_id('$Id: config.php,v 1.141 2007-01-07 18:41:42 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -488,6 +488,26 @@ if (!check_php_version(5)) {
     ');
 }
 
+/**
+ * array_diff_assoc() returns an array containing all the values from array1 that are not
+ * present in any of the other arguments. Note that the keys are used in the comparison 
+ * unlike array_diff(). In core since php-4.3.0
+ * Our fallback here supports only hashes and two args.
+ * $array1 = array("a" => "green", "b" => "brown", "c" => "blue");
+ * $array2 = array("a" => "green", "y" => "yellow", "r" => "red");
+ * => b => brown, c => blue
+ */
+if (!function_exists('array_diff_assoc')) {
+    function array_diff_assoc($a1, $a2) {
+    	$result = array();
+    	foreach ($a1 as $k => $v) {
+    	    if (!isset($a2[$k]) or !$a2[$k])
+    	        $result[$k] = $v;	
+    	}
+    	return $result;
+    }
+}
+
 /** 
  * wordwrap() might crash between 4.1.2 and php-4.3.0RC2, fixed in 4.3.0
  * See http://bugs.php.net/bug.php?id=20927 and 
@@ -554,12 +574,14 @@ function safe_wordwrap($str, $width=80, $break="\n", $cut=false) {
 }
 
 function getUploadFilePath() {
+    if (defined('UPLOAD_FILE_PATH')) return UPLOAD_FILE_PATH;
     return defined('PHPWIKI_DIR') 
         ? PHPWIKI_DIR . "/uploads/" 
         : realpath(dirname(__FILE__) . "/../uploads/");
 }
 function getUploadDataPath() {
-  return SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/uploads/';
+    if (defined('UPLOAD_DATA_PATH')) return UPLOAD_DATA_PATH;
+    return SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/uploads/';
 }
 
 /**
@@ -590,6 +612,9 @@ function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.140  2007/01/02 13:21:30  rurban
+// added _DEBUG_REMOTE flag, omit want_content if not necessary
+//
 // Revision 1.139  2006/03/19 14:50:42  rurban
 // sf.net patch #1438442 by Matt Brown: Unitialised variable reference in config.php
 //
