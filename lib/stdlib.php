@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.257 2007-01-03 21:24:56 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.258 2007-01-07 18:43:51 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1989,6 +1989,7 @@ function isExternalReferrer(&$request) {
         $se = new SearchEngines();
         return $se->parseSearchQuery($referrer);
     }
+    //if (DEBUG) return array('query' => 'wiki');
     return false;
 }
 
@@ -1997,7 +1998,10 @@ function isExternalReferrer(&$request) {
  */
 function loadPhpExtension($extension) {
     if (!extension_loaded($extension)) {
-        $soname = (isWindows() ? 'php_' : '') . $extension . (isWindows() ? '.dll' : '.so');
+	$isWindows = (substr(PHP_OS,0,3) == 'WIN');
+        $soname = ($isWindows ? 'php_' : '') 
+	        . $extension 
+	        . ($isWindows ? '.dll' : '.so');
         if (!@dl($soname))
             return false;
     }
@@ -2099,6 +2103,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.257  2007/01/03 21:24:56  rurban
+// Disable noisy ps subprocess on DEBUG. Turn it on explicitly on memory debugging. Add convert_charset helper. Use convert_charset().
+//
 // Revision 1.256  2007/01/02 13:23:49  rurban
 // ftnt_${footnum}: do not confuse old php string definition parsers. Clarify API: sortby,limit and exclude are strings.
 //
