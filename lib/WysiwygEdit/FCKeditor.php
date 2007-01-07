@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: FCKeditor.php,v 1.1 2005-10-31 16:41:46 rurban Exp $');
+rcs_id('$Id: FCKeditor.php,v 1.2 2007-01-07 18:44:00 rurban Exp $');
 /**
  * FCKeditor is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -21,7 +21,7 @@ class WysiwygEdit_FCKeditor extends WysiwygEdit {
         global $LANG;
         $this->_transformer_tags = false;
 	$this->BasePath = DATA_PATH.'/themes/default/FCKeditor/';
-	$this->_htmltextid = "edit:content"; // FCKEditor1;
+	$this->_htmltextid = "edit-content"; // FCKEditor1;
         $this->_wikitextid = "editareawiki";
     	$this->_jsdefault = "
 oFCKeditor.BasePath	= '$this->BasePath';
@@ -88,7 +88,7 @@ oFCKeditor.Create();"),
         global $LANG;
 	$this->FilePath = realpath(PHPWIKI_DIR.'/themes/default/FCKeditor') . "/";
 
-        $htmltextid = "edit:content";
+        $htmltextid = "edit-content";
 
 	include_once($this->FilePath . 'fckeditor.php');
 	$this->oFCKeditor = new FCKeditor($htmltextid) ;
@@ -109,6 +109,9 @@ oFCKeditor.Create();"),
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.1  2005/10/31 16:41:46  rurban
+ added FCKeditor + spaw
+
 
 */
 

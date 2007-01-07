@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: tinymce.php,v 1.2 2005-10-31 16:41:46 rurban Exp $');
+rcs_id('$Id: tinymce.php,v 1.3 2007-01-07 18:44:00 rurban Exp $');
 /**
  * Multiple browser support, currently Mozilla (PC, Mac and Linux), 
  * MSIE (PC) and FireFox (PC, Mac and Linux) and some limited Safari support.
@@ -21,7 +21,7 @@ class WysiwygEdit_tinymce extends WysiwygEdit {
     function WysiwygEdit_tinymce() {
         $this->_transformer_tags = false;
 	$this->BasePath = DATA_PATH.'/themes/default/tiny_mce/';
-	$this->_htmltextid = "edit:content";
+	$this->_htmltextid = "edit-content";
         $this->_wikitextid = "editareawiki";
     }
 
@@ -38,8 +38,8 @@ tinyMCE.init({
         language: \"$LANG\",
         ask     : false,
 	theme_advanced_toolbar_location : \"top\",
-	theme_advanced_toolbar_align    : \"left\",
-	theme_advanced_path_location    : \"bottom\",
+	theme_advanced_toolbar_align : \"left\",
+	theme_advanced_path_location : \"bottom\",
 	theme_advanced_buttons1 : \"bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,undo,redo,link,unlink\",
 	theme_advanced_buttons2 : \"\",
 	theme_advanced_buttons3 : \"\",
@@ -57,7 +57,7 @@ tinyMCE.init({
         $out = HTML($textarea,
                     HTML::div(array("id" => $this->_wikitextid, 
                                     'style'=>'display:none'),
-                              $wikitext),"\n");
+                                         $wikitext),"\n");
         //TODO: maybe some more custom links
         return $out;
     }
@@ -65,6 +65,9 @@ tinyMCE.init({
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.2  2005/10/31 16:41:46  rurban
+ added FCKeditor + spaw
+
  Revision 1.1  2005/10/30 14:22:15  rurban
  refactor WysiwygEdit
 

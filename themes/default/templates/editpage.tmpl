@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.60 2007-01-02 13:27:35 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.61 2007-01-07 18:42:10 rurban Exp $ -->
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong>
 <!-- FIXME: it would be nice to put a link to the #editarea anchor below,
@@ -37,14 +37,14 @@
     <tr><td><?= $EDIT_TOOLBAR ?></td>
         <td align="right"><div id="editarea-size">
     <?=_("Size").':'?>
-    <label for="pref:editHeight"><b><?=_("H")?></b></label> <?=$HEIGHT_PREF?> 
-    <label for="pref:editWidth"><b><?=_("W")?></b></label> <?=$WIDTH_PREF?>
+    <label for="pref-editHeight"><b><?=_("H")?></b></label> <?=$HEIGHT_PREF?> 
+    <label for="pref-editWidth"><b><?=_("W")?></b></label> <?=$WIDTH_PREF?>
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
   </div></td></tr></table>
   <a name="editarea"></a><?=$EDIT_TEXTAREA?>
 <!-- FIXME: fix layout, move CSS to CSS -->
 <div class="toolbar" style="text-align: center;">
-  <label for="edit:summary"><?=_("Summary").':'?></label> <?=$SUMMARY_INPUT?>
+  <label for="edit-summary"><?=_("Summary").':'?></label> <?=$SUMMARY_INPUT?>
 </div>
 <?php if (ENABLE_CAPTCHA) { ?>
 <div class="toolbar" style="text-align: center;">
@@ -56,7 +56,7 @@
        cellpadding="0" cellspacing="0" border="0">
 <tr valign="middle">
   <td> 
-    <?=$MINOR_EDIT_CB ?> <label for="edit:minor_edit"><?=_("This is a minor change.")?></label><br />
+    <?=$MINOR_EDIT_CB ?> <label for="edit-minor_edit"><?=_("This is a minor change.")?></label><br />
     <?=$OLD_MARKUP_CB?>  <label for="useOldMarkup"><?=_("Use old markup")?></label> <?=$OLD_MARKUP_CONVERT?>
   </td>
   <td align="center">
@@ -70,7 +70,7 @@
 <tr>
   <td>
     <?php if ($user->isAdmin()) { ?> 
-    <?= $LOCKED_CB ?> <label for="edit:locked"><?=_("Locked")?></label>
+    <?= $LOCKED_CB ?> <label for="edit-locked"><?=_("Locked")?></label>
     <?php } ?>
   </td>
   <td colspan="2" align="right">

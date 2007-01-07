@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.8 2007-01-02 13:20:57 rurban Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.9 2007-01-07 18:44:00 rurban Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -21,7 +21,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit {
         global $request, $LANG;
         $this->_transformer_tags = false;
 	$this->BasePath = DATA_PATH.'/themes/default/Wikiwyg';
-	$this->_htmltextid = "edit:content";
+	$this->_htmltextid = "edit-content";
         $this->_wikitextid = "editareawiki";
 	$script_url = deduce_script_name();
 	if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
@@ -297,6 +297,9 @@ function replace_rich_table($matched) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.8  2007/01/02 13:20:57  rurban
+ use the new _DEBUG_REMOTE flag. simplify default utf-8 charset conversion, not requiring iconv
+
  Revision 1.7  2006/12/22 16:53:38  rurban
  Try to dl() load the iconv extension, if not already loaded
 
