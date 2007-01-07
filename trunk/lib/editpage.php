@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.109 2007-01-02 13:21:39 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.110 2007-01-07 18:42:00 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -86,6 +86,9 @@ class PageEditor
             and ($r->getPref('editHeight') != $r->args['pref']['editHeight'])) {
             $r->_prefs->set('editHeight', $r->args['pref']['editHeight']);
         }
+        
+        if ($this->isModerated())
+            $tokens['PAGE_LOCKED_MESSAGE'] = $this->getModeratedMessage();
 
         if (! $this->canEdit()) {
             if ($this->isInitialEdit())
@@ -202,6 +205,9 @@ class PageEditor
             //$tokens['PAGE_SOURCE'] = $this->WysiwygEdit->ConvertBefore($this->_content);
         }
         $template = Template($template, $this->tokens);
+	/* Tell google (and others) not to take notice of edit links */
+	if (GOOGLE_LINKS_NOFOLLOW)
+	    $args = array('ROBOTS_META' => "noindex,nofollow");
         GeneratePage($template, $title, $rev);
         return true;
     }
@@ -482,6 +488,16 @@ class PageEditor
                  HTML::p(_("Sorry for the inconvenience.")));
     }
 
+    function isModerated() {
+        return $this->page->get('moderation');
+    }
+    function getModeratedMessage() {
+        return
+            HTML(HTML::h2(WikiLink(_("ModeratedPage"))),
+                 HTML::p(fmt("You can edit away, but your changes will have to be approved by the defined moderators at the definition in %s", WikiLink(_("ModeratedPage")))),
+                 HTML::p(fmt("The approval has a grace period of 5 days. If you have your E-Mail defined in your %s, you will get a notification of approval or rejection.", 
+                         WikiLink(_("UserPreferences")))));
+    }
     function getConflictMessage ($unresolved = false) {
         /*
          xgettext only knows about c/c++ line-continuation strings
@@ -529,7 +545,7 @@ class PageEditor
 
         $textarea = HTML::textarea(array('class'=> 'wikiedit',
                                          'name' => 'edit[content]',
-                                         'id'   => 'edit:content',
+                                         'id'   => 'edit-content',
                                          'rows' => $request->getPref('editHeight'),
                                          'cols' => $request->getPref('editWidth'),
                                          'readonly' => (bool) $readonly),
@@ -565,7 +581,7 @@ class PageEditor
         $el['SUMMARY_INPUT']
             = HTML::input(array('type'  => 'text',
                                 'class' => 'wikitext',
-                                'id' => 'edit:summary',
+                                'id' => 'edit-summary',
                                 'name'  => 'edit[summary]',
                                 'size'  => 50,
                                 'maxlength' => 256,
@@ -573,7 +589,7 @@ class PageEditor
         $el['MINOR_EDIT_CB']
             = HTML::input(array('type' => 'checkbox',
                                 'name'  => 'edit[minor_edit]',
-                                'id' => 'edit:minor_edit',
+                                'id' => 'edit-minor_edit',
                                 'checked' => (bool) $this->meta['is_minor_edit']));
         $el['OLD_MARKUP_CB']
             = HTML::input(array('type' => 'checkbox',
@@ -587,7 +603,7 @@ class PageEditor
         $el['LOCKED_CB']
             = HTML::input(array('type' => 'checkbox',
                                 'name' => 'edit[locked]',
-                                'id'   => 'edit:locked',
+                                'id'   => 'edit-locked',
                                 'disabled' => (bool) !$this->user->isadmin(),
                                 'checked'  => (bool) $this->locked));
 
@@ -607,7 +623,7 @@ class PageEditor
                                 'maxlength'=> 4,
                                 'class'    => "numeric",
                                 'name'     => 'pref[editWidth]',
-                                'id'       => 'pref:editWidth',
+                                'id'       => 'pref-editWidth',
                                 'value'    => $request->getPref('editWidth'),
                                 'onchange' => 'this.form.submit();'));
         $el['HEIGHT_PREF'] 
@@ -616,7 +632,7 @@ class PageEditor
                                 'maxlength'=> 4,
                                 'class'    => "numeric",
                                 'name'     => 'pref[editHeight]',
-                                'id'       => 'pref:editHeight',
+                                'id'       => 'pref-editHeight',
                                 'value'    => $request->getPref('editHeight'),
                                 'onchange' => 'this.form.submit();'));
         $el['SEP'] = $WikiTheme->getButtonSeparator();
@@ -832,6 +848,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.109  2007/01/02 13:21:39  rurban
+ add two merge conflict buttons within loadfile: "Keep Old" and "Overwrite with new". enable edit toolbar there also. fix display of the Merge and Edit header.
+
  Revision 1.108  2006/12/22 17:47:34  rurban
  Display Warnings only once.
  Add button accesskeys
