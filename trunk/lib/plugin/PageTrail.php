@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageTrail.php,v 1.8 2005-08-06 13:23:14 rurban Exp $');
+rcs_id('$Id: PageTrail.php,v 1.9 2007-01-07 18:45:56 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     // default values
@@ -75,7 +75,7 @@ extends WikiPlugin
         $Pages = $request->session->get("PageTrail");
         if (!is_array($Pages)) $Pages = array();
 
-        if ($duplicates || ($thispage != $Pages[0])) {
+        if (!isset($Pages[0]) or ($duplicates || ($thispage != $Pages[0]))) {
             array_unshift($Pages, $thispage);
             $request->session->set("PageTrail", $Pages);
         }
@@ -95,6 +95,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2005/08/06 13:23:14  rurban
+// improved empty cookie
+//
 // Revision 1.7  2005/02/28 21:24:34  rurban
 // ignore forbidden ini_set warnings. Bug #1117254 by Xavier Roche
 //
