@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.50 2007-01-04 16:44:57 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.51 2007-01-07 18:43:17 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -234,9 +234,6 @@ class PageType_interwikimap extends PageType
             else
                 $map["Talk"] = "%s".SUBPAGE_SEPARATOR._("Discussion");
         }
-        if (empty($map[''])) { // Magic syntax: Don't store links ":PageName" as backlink
-            $map[''] = '%s';
-        }
 
         foreach (array('Upload','User','Talk') as $special) {
             // Expand special variables:
@@ -259,10 +256,6 @@ class PageType_interwikimap extends PageType
                                              Iso8601DateTime());
         }
 
-        // Maybe add other monikers also - SemanticWeb link predicates
-        // Should they be defined in a RDF? (strict mode)
-        // Or should the SemanticWeb lib add it by itself? 
-        // (adding only a subset dependent on the context = model)
         return $map;
     }
 
@@ -508,6 +501,9 @@ class PageFormatter_pdf extends PageFormatter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2007/01/04 16:44:57  rurban
+// Force interwiki updates and page edits
+//
 // Revision 1.49  2006/10/12 06:25:09  rurban
 // use the same class for $moniker == ""
 //
