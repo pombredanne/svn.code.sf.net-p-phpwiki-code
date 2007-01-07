@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf.php,v 1.9 2006-09-06 06:02:05 rurban Exp $');
+rcs_id('$Id: pdf.php,v 1.10 2007-01-07 18:44:39 rurban Exp $');
 /*
  Copyright (C) 2003 Olivier PLATHEY
  Copyright (C) 200? Don Sebà
@@ -134,6 +134,69 @@ class PDF extends FPDF {
     }
 }
 
+function ConvertAndDisplayPdfPageList (&$request, $pagelist) {
+    global $WikiTheme;
+    if (empty($request->_is_buffering_output))
+        $request->buffer_output(false/*'nocompress'*/);
+    $pagename = $request->getArg('pagename');
+    $dest = $request->getArg('dest');
+    $request->setArg('dest',false);
+    $request->setArg('format',false);
+    include_once("lib/display.php");
+
+    // Disable CACHE
+    //while ($page = $pagelist->next())
+    foreach ($pagelist->_pages as $page_handle) {
+	$WikiTheme->DUMP_MODE = true;
+	
+        $request->setArg('action','pdf'); // to omit cache headers
+	displayPage($request, new Template('htmldump', $request));
+        $html = ob_get_contents();
+	$WikiTheme->DUMP_MODE = false;
+	$request->discardOutput();
+	$request->buffer_output(false/*'nocompress'*/);
+    
+	// check hook for external converters
+	if (USE_EXTERNAL_HTML2PDF) {
+	    // See http://phpwiki.sourceforge.net/phpwiki/PhpWikiToDocBookAndPDF
+	    // htmldoc or ghostscript + html2ps or docbook (dbdoclet, xsltproc, fop)
+	    require_once("lib/WikiPluginCached.php");
+	    $cache = new WikiPluginCached;
+	    $cache->newCache();
+	    $tmpfile = $cache->tempnam('pdf').".html";
+	    $fp = fopen($tmpfile, "wb");
+	    fwrite($fp, $html);
+	    fclose($fp);
+	    $tmpfiles[] = $tmpfile;
+	} else {
+	    // use fpdf:
+	    if ($GLOBALS['LANG'] == 'ja') {
+		include_once("lib/fpdf/japanese.php");
+		$pdf = new PDF_Japanese;
+	    } elseif ($GLOBALS['LANG'] == 'zh') {
+		include_once("lib/fpdf/chinese.php");
+		$pdf = new PDF_Chinese;
+	    } else {
+		$pdf = new PDF;
+	    }
+	    $pdf->Open();
+	    $pdf->AddPage();
+	    $pdf->ConvertFromHTML($html);
+	}
+    }
+    Header('Content-Type: application/pdf');
+    if (USE_EXTERNAL_HTML2PDF) {
+	passthru(EXTERNAL_HTML2PDF_PAGELIST." ".join(" ", $tmpfiles));
+	foreach($tmpfiles as $f)
+	    unlink($f);
+    } else {
+        $pdf->Output($pagename.".pdf", $dest ? $dest : 'I');
+    }
+    if (!empty($errormsg)) {
+        $request->discardOutput();
+    }
+}
+
 /*
  * main action handler: action=pdf
  * TODO: Multiple pages (pages=names), recurse - all forward linked pages (recurse=1)
@@ -196,6 +259,9 @@ function ConvertAndDisplayPdf (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2006/09/06 06:02:05  rurban
+// omit actionbar from pdf
+//
 // Revision 1.8  2006/08/25 22:09:00  rurban
 // print pdf header earlier
 //
