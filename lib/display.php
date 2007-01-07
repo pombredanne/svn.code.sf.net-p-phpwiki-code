@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.66 2006-03-19 14:26:29 rurban Exp $');
+rcs_id('$Id: display.php,v 1.67 2007-01-07 18:44:20 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -63,23 +63,88 @@ function actionPage(&$request, $action) {
                                      '%mtime' => $actionrev->get('mtime')));
 
     $transformedContent = $actionrev->getTransformedContent();
-    $template = Template('browse', array('CONTENT' => $transformedContent));
-/*
-    if (!headers_sent()) {
-        //FIXME: does not work yet. document.write not supported (signout button)
-        // http://www.w3.org/People/mimasa/test/xhtml/media-types/results
-        if (ENABLE_XHTML_XML 
-            and (!isBrowserIE() and
-                 strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml')))
-            header("Content-Type: application/xhtml+xml; charset=" . $GLOBALS['charset']);
-        else
-            header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
-    }
-*/    
-    /* Tell google (and others) not to take notice of action pages */
+ 
+   /* Optionally tell google (and others) not to take notice of action pages.
+       RecentChanges or AllPages might be an exception.
+     */
+    $args = array();
     if (GOOGLE_LINKS_NOFOLLOW)
 	$args = array('ROBOTS_META' => "noindex,nofollow");
-    GeneratePage($template, $pagetitle, $revision, $args);
+
+    /* Handle other formats: So far we had html only.
+       xml is requested by loaddump, rss is handled by recentchanges, 
+       pdf is a special action, but should be a format to dump multiple pages
+       if the actionpage plugin returns a pagelist.
+       rdf and owl are handled by SemanticWeb.
+    */
+    $format = $request->getArg('format');
+    /* At first the single page formats: html, xml */
+    if (!$format or $format == 'html') {
+	$template = Template('browse', array('CONTENT' => $transformedContent));
+	GeneratePage($template, $pagetitle, $revision, $args);
+    } elseif ($format == 'xml') {
+	$template = Template('browse', array('CONTENT' => $transformedContent));
+	GeneratePageAsXML($template, $pagetitle, $revision, $args);
+    } else {
+    	$pagelist = null;
+	// Then the multi-page formats
+	// rss (if not already handled by RecentChanges)
+	// Need the pagelist from the first plugin
+	foreach($transformedContent->_content as $cached_element) {
+	    if (is_a($cached_element, "Cached_PluginInvocation")) {
+	    	include_once('lib/WikiPlugin.php');
+	        $loader = new WikiPluginLoader;
+	        $markup = null;
+	        // return the first found pagelist
+	        $pagelist = $loader->expandPI($cached_element->_pi, $GLOBALS['request'], $markup, $pagename);
+	        if (is_a($pagelist, 'PageList'))
+	            break;
+	    }
+	}
+        if (!$pagelist or !is_a($pagelist, 'PageList')) {
+	    if (!in_array($format, array("atom","rss","rdf")))
+		trigger_error(sprintf("Format %s requires an actionpage returning an pagelist.", $format)
+			      . ("Fall back to single page mode"), E_USER_WARNING);
+	    $pagelist = new PageList();
+	    $pagelist->addPage($page);
+	}
+	if ($format == 'pdf') {
+	    include_once("lib/pdf.php");
+	    ConvertAndDisplayPdfPageList($request, $pagelist);
+	} elseif ($format == 'rss') {
+	    include_once("lib/plugin/RecentChanges.php");
+	    $rdf = new RssWriter($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'rss91') {
+	    include_once("lib/plugin/RecentChanges.php");
+	    $rdf = new RSS91Writer($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'rss2') {
+	    include_once("lib/RssWriter2.php");
+	    $rdf = new RssWriter2($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'atom') {
+	    include_once("lib/plugin/RssWriter.php");
+	    $rdf = new AtomWriter($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'rdf') { // all semantic relations and attributes
+	    include_once("lib/SemanticWeb.php");
+	    $rdf = new RdfWriter($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'owl') {
+	    include_once("lib/SemanticWeb.php");
+	    $rdf = new OwlWriter($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'kbmodel') {
+	    include_once("lib/SemanticWeb.php");
+	    $model = new ModelWriter($request, $pagelist);
+	    $model->format();
+	} else {
+	    trigger_error(sprintf("Unhandled format %s. Reverting to html", $format), E_USER_WARNING);
+	    $template = Template('browse', array('CONTENT' => $transformedContent));
+	    GeneratePage($template, $pagetitle, $revision, $args);
+	}
+    }
     $request->checkValidators();
     flush();
 }
@@ -158,60 +223,66 @@ function displayPage(&$request, $template=false) {
 */
     $page_content = $revision->getTransformedContent();
 
-    // if external searchengine (google) referrer, highlight the searchterm
+    // If external searchengine (google) referrer, highlight the searchterm
     // FIXME: move that to the transformer?
-    // OR: add the searchhightplugin line to the content?
+    // OR: add the SearchHighlight plugin line to the content?
     if ($result = isExternalReferrer($request)) {
-    	if (DEBUG and !empty($result['query'])) {
-            //$GLOBALS['SearchHighlightQuery'] = $result['query'];
-            /* simply add the SearchHighlight plugin to the top of the page. 
-               This just parses the wikitext, and doesn't highlight the markup */
-            include_once('lib/WikiPlugin.php');
-	    $loader = new WikiPluginLoader;
-            $xml = $loader->expandPI('<'.'?plugin SearchHighlight s="'.$result['query'].'"?'.'>', $request, $markup);
-            if ($xml and is_array($xml)) {
-              foreach (array_reverse($xml) as $line) {
-                array_unshift($page_content->_content, $line);
-              }
-              array_unshift($page_content->_content, 
-                            HTML::div(_("You searched for: "), HTML::strong($result['query'])));
-            }
-            
-            if (0) {
-            /* Parse the transformed (mixed HTML links + strings) lines?
-               This looks like overkill.
-             */
-            require_once("lib/TextSearchQuery.php");
-            $query = new TextSearchQuery($result['query']);
-            $hilight_re = $query->getHighlightRegexp();
-            //$matches = preg_grep("/$hilight_re/i", $revision->getContent());
-            // FIXME!
-            for ($i=0; $i < count($page_content->_content); $i++) {
-                $found = false;
-                $line = $page_content->_content[$i];
-            	if (is_string($line)) {
-                    while (preg_match("/^(.*?)($hilight_re)/i", $line, $m)) {
-                        $found = true;
-                        $line = substr($line, strlen($m[0]));
-                        $html[] = $m[1];    // prematch
-                        $html[] = HTML::strong(array('class' => 'search-term'), $m[2]); // match
-                    }
-            	}
-                if ($found) {
-                    $html[] = $line;  // postmatch
-                    $page_content->_content[$i] = HTML::span(array('class' => 'search-context'),
-                                                             $html);
-                }
-            }
-            }
-        }
+    	if (!empty($result['query'])) {
+    	    if (USE_SEARCHHIGHLIGHT) {	
+		/* Simply add the SearchHighlight plugin to the top of the page. 
+		   This just parses the wikitext, and doesn't highlight the markup.
+		   At the top are some ugly references to the hits.
+		*/
+		include_once('lib/WikiPlugin.php');
+		$loader = new WikiPluginLoader;
+		$xml = $loader->expandPI('<'.'?plugin SearchHighlight s="'.$result['query'].'"?'.'>', $request, $markup);
+		if ($xml and is_array($xml)) {
+		    foreach (array_reverse($xml) as $line) {
+			array_unshift($page_content->_content, $line);
+		    }
+		    array_unshift($page_content->_content, 
+				  HTML::div(_("You searched for: "), HTML::strong($result['query'])));
+		}
+    	    } else {            
+		if (DEBUG) {
+		    /* Parse the transformed (mixed HTML links + strings) lines
+		       This looks like overkill, and should really be done in the expansion.
+		       Maybe by some expansion hook, which would make expansion even slower.
+		    */
+		    require_once("lib/TextSearchQuery.php");
+		    $query = new TextSearchQuery($result['query']);
+		    $hilight_re = $query->getHighlightRegexp();
+		    //$matches = preg_grep("/$hilight_re/i", $revision->getContent());
+		    // FIXME!
+		    for ($i=0; $i < count($page_content->_content); $i++) {
+			$found = false;
+			$line = $page_content->_content[$i];
+			if (is_string($line)) {
+			    $visline = strip_tags($line);	
+			    while (preg_match("/^(.*?)($hilight_re)/i", $visline, $m)) {
+				$visline = substr($visline, strlen($m[0]));
+				$found = true;
+				preg_match("/^(.*?)($hilight_re)/i", $line, $m);
+				$line = substr($line, strlen($m[0]));
+				$html[] = HTML::Raw($m[1]);    // prematch
+				$html[] = HTML::strong(array('class' => 'search-term'), $m[2]); // match
+			    }
+			}
+			if ($found) {
+			    $html[] = HTML::Raw($line);  // postmatch
+			    $page_content->_content[$i] = HTML::span(array('class' => 'search-context'),
+								     $html);
+			    $html = array();
+			}
+		    }
+		}
+	    }
+	}
     }
    
-    /* Check for special pagenames */
+    /* Check for special pagenames, which are no actionpages. */
     /*
-    if ( $pagename == _("RecentChanges") 
-         || $pagename == _("RecentEdits")
-         || $pagename == _("RecentVisitors")) {
+    if ( $pagename == _("RecentVisitors")) {
         $toks['ROBOTS_META']="noindex,follow";
     } else
     */
@@ -232,8 +303,62 @@ function displayPage(&$request, $template=false) {
     $toks['PAGE_KEYWORDS'] = GleanKeywords($page);
     if (!$template)
         $template = new Template('html', $request);
+
+    // Handle other formats: So far we had html only.
+    // xml is requested by loaddump, rss is handled by RecentChanges, 
+    // pdf is a special action, but should be a format to dump multiple pages
+    // if the actionpage plugin returns a pagelist.
+    // rdf, owl, kbmodel, daml, ... are handled by SemanticWeb.
+    $format = $request->getArg('format');
+    /* Only single page versions. rss only if not already handled by RecentChanges.
+     */
+    if (!$format or $format == 'html') {
+	$template->printExpansion($toks);
+    } elseif ($format == 'xml') {
+        $template = new Template('htmldump', $request);
+	$template->printExpansion($toks);
+    } else {
+	// No pagelist. Single page version only
+	include_once("lib/PageList.php");
+	$pagelist = new PageList();
+	$pagelist->addPage($page);
+	if ($format == 'pdf') {
+	    include_once("lib/pdf.php");
+	    ConvertAndDisplayPdfPageList($request, $pagelist);
+	} elseif ($format == 'rss') {
+	    include_once("lib/plugin/RecentChanges.php");
+	    $rdf = new RssWriter($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'rss91') {
+	    include_once("lib/plugin/RecentChanges.php");
+	    $rdf = new RSS91Writer($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'rss2') {
+	    include_once("lib/RssWriter2.php");
+	    $rdf = new RssWriter2($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'atom') {
+	    include_once("lib/plugin/RssWriter.php");
+	    $rdf = new AtomWriter($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'rdf') { // all semantic relations and attributes
+	    include_once("lib/SemanticWeb.php");
+	    $rdf = new RdfWriter($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'owl') {
+	    include_once("lib/SemanticWeb.php");
+	    $rdf = new OwlWriter($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'kbmodel') {
+	    include_once("lib/SemanticWeb.php");
+	    $model = new ModelWriter($request, $pagelist);
+	    $model->format();
+	} else {
+	    trigger_error(sprintf("Unhandled format %s. Reverting to html", $format), E_USER_WARNING);
+	    $template->printExpansion($toks);
+	}
+    }
     
-    $template->printExpansion($toks);
     $page->increaseHitCount();
 
     if ($request->getArg('action') != 'pdf')
@@ -242,6 +367,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.66  2006/03/19 14:26:29  rurban
+// sf.net patch by Matt Brown: Add rel=nofollow to more actions
+//
 // Revision 1.65  2005/05/05 08:54:40  rurban
 // fix pagename split for title and header
 //
