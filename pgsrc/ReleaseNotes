@@ -1,9 +1,9 @@
 Date: Wed, 3 Jan 2007 16:57:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.69 2007-01-04 16:59:13 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.70 2007-01-07 20:19:30 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.69 $";
+  pgsrc_version="2 $Revision: 1.70 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -11,15 +11,16 @@ Content-Transfer-Encoding: binary
 
 1.3.13  Jan, 15 2007 Reini Urban
 
-This is major feature release which will the base for 1.4.0. The highlights are 
-SemanticWeb support, various WYSIWYG editors, a stable ~MonoBook theme (wikipedia), 
-enabled acdropdown support (~LiveSearch), postgresql and oracle enhancements, 
-moving Help pages into Help/, support different charsets in pgsrc and Windows NTLM 
-auth support via HttpAuth. utf-8 should work.
+This is major feature release which will be the base for the stable 1.4.0. 
+The highlights are SemanticWeb support, various WYSIWYG editors, 
+a stable ~MonoBook theme (wikipedia), enabled acdropdown support 
+(~LiveSearch), postgresql and oracle enhancements, 
+moving Help pages into Help/, support different charsets in pgsrc 
+and Windows NTLM auth support via HttpAuth. utf-8 should work.
 
 fixes:
 * DB: use ANSI SQL statements (oracle by Christopher Jones, postgresql by Reini Urban)
-* fixed blog and Monobook theme layout
+* fixed blog and MonoBook theme layout
 * fix Template and CreatePage variable expansion
 * xhtml dump for subpages into subdirectories, fixed filenames and subdir names
 * fixed loading pages into foreign charsets (such as utf-8)
@@ -81,19 +82,20 @@ changes:
 * change TextSearchQuery handling of regex=pcre: plain string, no parsing at all, 
   detect and apply modifiers.
 * enhance text2png arguments and features. See Help:text2pngPlugin 
-* Template plugin: allow passing arbitrary args, not just in vars. 
+* Template plugin: allow passing arbitrary args, not just in vars.
+* added old gd support to PhotoAlbum thumbs (ImageTile)
 
 new:
 * add SemanticRelations syntax and db structure.
-  Sample: pagename=SanDiego isa::city => SanDiego relation=isa, linkto=city
-  population:=1,305,736 (store unified attribute in pagedata)
+  Sample: pagename=SanDiego is_a::city => SanDiego relation=is_a, linkto=city
+          population:=1,305,736, store unified attribute in pagedata
 * new experimental WYSIWYG edit library framework: 
   WikiWyg, tinymce, FCKeditor, htmlarea3, htmlarea2, spaw
 * new wysiwyg_editor feature by Jean-Nicolas GEREONE and Sabri LABBENE (experimental)
 * added postgresql tsearch2 support
 * new experimental flatfile backend: readable page source files (experimental)
-* added new xmlrpc methods: listPlugins, getPluginSynopsis, mailPasswordToUser, 
-  getUploadedFileInfo, listRelations, callPlugin
+* added new xmlrpc and SOAP methods: listPlugins, getPluginSynopsis, mailPasswordToUser, 
+  getUploadedFileInfo, listRelations, callPlugin, linkSearch
 * new plugins: SemanticSearch, SemanticRelations, LinkSearch, ListRelations, 
   FileInfo, BoxRight, PasswordReset, WatchPage
 * add <nowiki></nowiki> tag: Transform only html markup and entities
