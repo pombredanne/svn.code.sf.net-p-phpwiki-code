@@ -1,38 +1,43 @@
 Date: Fri, 29 Dec 2006 18:57:39 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2FAllPagesPlugin,v 1.1 2007-01-02 13:26:04 rurban Exp $
+X-Rcs-Id: $Id: Help%2FAllPagesPlugin,v 1.2 2007-01-07 20:18:29 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAllPagesPlugin;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-_short description_
+List all pages in this wiki.
 
 ! Usage
 <verbatim>
-  <?plugin AllPages ?>
+  <?plugin AllPages [pagelist args] ?>
 </verbatim>
 
 ! Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+All [PageList|Help:PageList] options.<br>
+Plus:
+	'noheader'      => false,
+        'include_empty' => false,
+        'info'          => '',
+        'debug'         => false
 
 ! Example
 
 <verbatim>
-<?plugin AllPages ?>
+<?plugin AllPages limit=20 cols=3 ?>
 </verbatim>
 
-<?plugin AllPages ?>
+<?plugin AllPages  limit=20 cols=3 ?>
 
 ! Author
 PhpWiki:ReiniUrban
 
 ! See Also
 
+AllPages, Help:ListPagesPlugin
 ----
 PhpWikiDocumentation Help:WikiPlugin
