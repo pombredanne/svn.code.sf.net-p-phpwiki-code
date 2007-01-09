@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.5 2007-01-07 18:42:58 rurban Exp $');
+rcs_id('$Id: MailNotify.php,v 1.6 2007-01-09 12:34:55 rurban Exp $');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -198,7 +198,7 @@ class MailNotify {
             $content  = $this->pagename . " " . $previous . " " . 
                 Iso8601DateTime($prevdata['mtime']) . "\n";
             $content .= $this->pagename . " " . $version . " " .  
-                Iso8601@ateTime($meta['mtime']) . "\n";
+                Iso8601DateTime($meta['mtime']) . "\n";
             $content .= $fmt->format($diff2);
             
         } else {
@@ -380,6 +380,9 @@ will expire at %s.",
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2007/01/07 18:42:58  rurban
+// Add MAILER_LOG logfile
+//
 // Revision 1.4  2007/01/04 16:47:49  rurban
 // improve text
 //
