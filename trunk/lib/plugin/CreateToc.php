@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.30 2006-12-22 17:49:38 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.31 2007-01-09 12:35:05 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.30 $");
+                            "\$Revision: 1.31 $");
     }
 
     function getDefaultArguments() {
@@ -60,10 +60,11 @@ extends WikiPlugin
                       // or headers=1,2,3 is also possible.
                       'headers'   => "!!!,!!,!",   // "!!!"=>h1, "!!"=>h2, "!"=>h3
                       'noheader'  => 0,            // omit <h1>Table of Contents</h1>
-                      'align'     => 'left',
+                      'position'  => 'right',      // or left
                       'with_toclink' => 0,         // link back to TOC
                       'jshide'    => 0,            // collapsed TOC as DHTML button
-                      'liststyle' => 'dl',         // or 'ul' or 'ol'
+		      'extracollapse' => 1,        // provide an entry +/- link to collapse
+                      'liststyle' => 'dl',         // 'dl' or 'ul' or 'ol'
                       'indentstr' => '&nbsp;&nbsp;',
 		      'with_counter' => 0,
                       );
@@ -317,7 +318,7 @@ extends WikiPlugin
 	    }
         }
         $content = $current->getContent();
-        $html = HTML::div(array('class' => 'toc','align' => $align));
+        $html = HTML::div(array('class' => 'toc','id'=>'toc','align' => $align));
         if ($liststyle == 'dl')
             $list = HTML::dl(array('id'=>'toclist','class' => 'toc'));
         elseif ($liststyle == 'ul')
@@ -361,36 +362,48 @@ extends WikiPlugin
                         (str_repeat($indentstr,$indent)),$li));
             }
         }
-        if ($jshide) {
-            $list->setAttr('style','display:none;');
-            $html->pushContent(Javascript("
+	$list->setAttr('style','display:'.($jshide?'none;':'block;'));
+	$html->pushContent(Javascript("
 function toggletoc(a) {
-  toc=document.getElementById('toclist');
+  toc=document.getElementById('toclist')
+  toctoggle=document.getElementById('toctoggle')
   if (toc.style.display=='none') {
-    toc.style.display='block';
-    a.title='"._("Click to hide the TOC")."';
+    toc.style.display='block'
+    a.title='"._("Click to hide the TOC")."'
+    toctoggle.innerHTML='[-]'
   } else {
     toc.style.display='none';
-    a.title='"._("Click to display")."';
+    a.title='"._("Click to display")."'
+    toctoggle.innerHTML='[+]'
   }
 }"));
-            $html->pushContent(HTML::h4(HTML::a(array('name'=>'TOC',
-                                                      'class'=>'wikiaction',
-                                                      'title'=>_("Click to display"),
-                                                      'onclick'=>"toggletoc(this)"),
-                                                _("Table Of Contents"))));
-        } else {
-            if (!$noheader)
-                $html->pushContent(HTML::h2(HTML::a(array('name'=>'TOC'),_("Table Of Contents"))));
-            else 
-                $html->pushContent(HTML::a(array('name'=>'TOC'),""));
-        }
+	if ($extracollapse)
+	    $toclink = HTML(_("Table Of Contents"),
+			    " ",
+			    HTML::a(array('name'=>'TOC',
+					  'id'=>'toctoggle',
+					  'class'=>'wikiaction',
+					  'title'=>_("Click to display to TOC"),
+					  'onclick'=>"toggletoc(this)"),
+				    $jshide?'[+]':'[-]'));
+	else
+	    $toclink = HTML::a(array('name'=>'TOC',
+				     'class'=>'wikiaction',
+				     'title'=>_("Click to display"),
+				     'onclick'=>"toggletoc(this)"),
+			       _("Table Of Contents"),
+			       HTML::span(array('style'=>'display:none',
+						'id'=>'toctoggle')," "));
+	$html->pushContent(HTML::h4($toclink));
         $html->pushContent($list);
         return $html;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2006/12/22 17:49:38  rurban
+// fix quoting
+//
 // Revision 1.29  2006/04/15 12:26:54  rurban
 // need basepage for subpages like /Remove (within CreateTOC)
 //
