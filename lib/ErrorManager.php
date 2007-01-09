@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.49 2006-12-22 00:17:49 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.50 2007-01-09 12:35:28 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -22,7 +22,8 @@ define ('EM_NOTICE_ERRORS', E_NOTICE | E_USER_NOTICE);
    Only where absolute speed is necessary you might want to turn 
    them off.
 */
-if (1 or (defined('DEBUG') and DEBUG))
+//also turn it on if phpwiki_version notes no release
+if (defined('DEBUG') and DEBUG)
     assert_options (ASSERT_ACTIVE, 1);
 else
     assert_options (ASSERT_ACTIVE, 0);
@@ -628,6 +629,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2006/12/22 00:17:49  rurban
+// improve and unify error messages
+//
 // Revision 1.48  2006/03/19 14:29:40  rurban
 // sf.net patch #1438439 by Matt Brown: Only set no-cache headers when error output is generated
 //
