@@ -327,12 +327,6 @@ table.small {
 /*
 ** content styles
 */
-.mw-warning {
-	border: 1px solid #aaa;
-	background-color: #f9f9f9;
-	padding: 5px;
-	font-size: 95%;
-}
 #toc,
 .toc {
   	width: 200px;
@@ -348,7 +342,7 @@ table.small {
 	display: inline;
 	border: none;
 	padding: 0;
-	font-size: 100%;
+	font-size: 110%;
 	font-weight: bold;
 }
 .toc #toclist {
@@ -359,8 +353,9 @@ table.small {
 .toc #toctitle,
 #toc .toctitle,
 .toc .toctitle {
-	text-align: center;
+  text-align: center;
 }
+/*
 #toc ul,
 .toc ul {
 	list-style-type: none;
@@ -369,28 +364,46 @@ table.small {
 	padding-left: 0;
 	text-align: left;
 }
+*/
+#toc ul,
+.toc ul {
+  width: auto;
+  border: none;
+  line-height: 1.5em;
+  list-style-type: square;
+  list-style-image: url("images/bullet.png");
+  font-size: 95%;
+  margin-left: 5px;
+  padding-left: 5px;
+}
 #toc ul ul,
 .toc ul ul {
-	margin: 0 0 0 2em;
+  margin: 0 0 0 2em;
 }
 #toc .toctoggle,
 .toc .toctoggle {
-	font-size: 94%;
+  font-size: 94%;
 }
 
 .mw-warning {
-	margin-left: 50px;
-	margin-right: 50px;
-	text-align: center;
+  border: 1px solid #aaa;
+  background-color: #f9f9f9;
+  padding: 5px;
+  font-size: 95%;
+}
+.mw-warning {
+  margin-left: 50px;
+  margin-right: 50px;
+  text-align: center;
 }
 
 /* images */
 div.floatright, table.floatright {
-	clear: right;
-	float: right;
-	position: relative;
-	margin: 0 0 .5em .5em;
-	border: 0;
+  clear: right;
+  float: right;
+  position: relative;
+  margin: 0 0 .5em .5em;
+  border: 0;
 /*
 	border: .5em solid white;
 	border-width: .5em 0 .8em 1.4em;
