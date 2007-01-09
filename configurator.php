@@ -1,4 +1,4 @@
-<?php // -*-php-*- $Id: configurator.php,v 1.48 2007-01-07 18:41:23 rurban Exp $
+<?php // -*-php-*- $Id: configurator.php,v 1.49 2007-01-09 12:34:48 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -162,7 +162,7 @@ echo '<','?xml version="1.0" encoding="iso-8859-1"?',">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.48 2007-01-07 18:41:23 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.49 2007-01-09 12:34:48 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -1526,6 +1526,12 @@ In that case you should set VIRTUAL_PATH to '/wiki'.
 
 (VIRTUAL_PATH is only used if USE_PATH_INFO is true.)
 ");
+
+$upload_file_path = defined('UPLOAD_FILE_PATH') ? UPLOAD_FILE_PATH : getUploadFilePath();
+new _define_optional('UPLOAD_FILE_PATH', $temp);
+
+$upload_data_path = defined('UPLOAD_DATA_PATH') ? UPLOAD_DATA_PATH : getUploadDataPath();
+new _define_optional('UPLOAD_DATA_PATH', $temp);
 
 $temp = !empty($_ENV['TEMP']) ? $_ENV['TEMP'] : "/tmp";
 $properties["TEMP_DIR"] =
