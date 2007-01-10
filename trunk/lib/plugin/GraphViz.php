@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GraphViz.php,v 1.7 2006-12-22 17:55:06 rurban Exp $');
+rcs_id('$Id: GraphViz.php,v 1.8 2007-01-10 22:28:43 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -122,7 +122,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
     function getDefaultArguments() {
         return array(
@@ -242,7 +242,7 @@ extends WikiPluginCached
             return false;
         if (!$tempfile) {
             $tempfile = $this->tempnam($this->getName().".dot");
-            unlink($tempfile);
+            @unlink($tempfile);
         }
         if (!$fp = fopen($tempfile, 'w'))
             return false;
@@ -270,18 +270,24 @@ extends WikiPluginCached
         $source = $this->processSource($argarray);
         if (empty($source))
             return $this->error(fmt("No dot graph given"));
-        //$ok = $tempfiles;
-        //$dotfile = $this->createDotFile($tempfiles.'.dot', $argarray);
-        //$args = "-T$gif $dotfile -o $outfile";
-        $args = "-T$gif -o $outfile";
-        $cmdline = "$dotbin $args";
-        if ($debug) $cmdline .= " > $tempout";
-        //if (!isWindows()) $cmdline .= " 2>&1";
-        //$this->execute($cmdline, $outfile);
-        $code = $this->filterThroughCmd($source, $cmdline);
-        if (!empty($code))
-            $this->complain(sprintf(_("Couldn't start commandline '%s'", $cmdline)));
-        sleep(0.1);
+        if (isWindows()) {
+          $ok = $tempfiles;
+          $dotfile = $this->createDotFile($tempfiles.'.dot', $argarray);
+          $args = "-T$gif $dotfile -o $outfile";
+          $cmdline = "$dotbin $args";
+          $code = $this->execute($cmdline, $outfile);
+          if (!$code)
+            $this->complain(sprintf(_("Couldn't start commandline '%s'"), $cmdline));
+        } else {
+          $args = "-T$gif -o $outfile";
+          $cmdline = "$dotbin $args";
+          if ($debug) $cmdline .= " > $tempout";
+          //if (!isWindows()) $cmdline .= " 2>&1";
+          $code = $this->filterThroughCmd($source, $cmdline);
+          if ($code)
+            $this->complain(sprintf(_("Couldn't start commandline '%s'"), $cmdline));
+          sleep(0.1);
+        }
         if (! file_exists($outfile) ) {
             $this->complain(sprintf(_("%s error: outputfile '%s' not created"), 
                                     "GraphViz", $outfile));
@@ -291,7 +297,7 @@ extends WikiPluginCached
         if (function_exists($ImageCreateFromFunc)) {
             $img = $ImageCreateFromFunc( $outfile );
 	    // clean up tempfiles
-	    if (!$argarray['debug'])
+	    if (empty($argarray['debug']))
 		foreach (array('',".$gif",'.dot') as $ext) {
 		    //if (file_exists($tempfiles.$ext))
 		    @unlink($tempfiles.$ext);
@@ -352,8 +358,8 @@ extends WikiPluginCached
         $cmdline1 = "$dotbin $args";
         if ($debug) $cmdline1 .= " > $tempout";
 	$ok = $ok and $this->filterThroughCmd($source, $cmdline1);
-	// $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" . 
-        //                    ($debug ? " > $tempout 2>&1" : " 2>&1"), $outfile)
+	//$ok = $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" . 
+	//		     ($debug ? " > $tempout 2>&1" : " 2>&1"), $outfile)
 
         $args = "-Timap $tempfiles.dot -o $tempfiles.map";
         $cmdline2 = "$dotbin $args";
@@ -436,6 +442,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2006/12/22 17:55:06  rurban
+// fix source handling
+//
 // Revision 1.6  2005/10/12 06:19:07  rurban
 // protect unsafe calls
 //
