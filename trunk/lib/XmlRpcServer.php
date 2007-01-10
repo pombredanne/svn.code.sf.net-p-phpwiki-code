@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.22 2007-01-07 18:44:11 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.23 2007-01-10 20:47:45 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
  *
@@ -601,14 +601,14 @@ function mailPasswordToUser($params)
 }
 
 /** 
- * array wiki.titleSearch(String substring [, Integer option = 0])
+ * array wiki.titleSearch(String substring [, String option = "0"])
  * returns an array of matching pagenames.
  * TODO: standardize options
  *
  * @author: Reini Urban
  */
 $wiki_dmap['titleSearch']
-= array('signature'     => array(array($xmlrpcArray, $xmlrpcString, $xmlrpcInt)),
+= array('signature'     => array(array($xmlrpcArray, $xmlrpcString, $xmlrpcString)),
         'documentation' => "Return matching pagenames. 
 Option 1: caseexact, 2: regex, 4: starts_with, 8: exact",
         'function'      => 'titleSearch');
@@ -621,8 +621,9 @@ function titleSearch($params)
     if (count($params->params) > 1) {
         $ParamOption = $params->getParam(1);
         $option = (int) $ParamOption->scalarval();
-    } else $option = 0;
-    // default option: substring, case-inexact
+    } else 
+	$option = 0;
+    	// default option: substring, case-inexact
 
     $case_exact = $option & 1;
     $regex      = $option & 2;
@@ -939,6 +940,9 @@ class XmlRpcServer extends xmlrpc_server
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.22  2007/01/07 18:44:11  rurban
+ Add summary to getRecentChanges result
+
  Revision 1.21  2007/01/04 16:42:13  rurban
  Use require, not include!
 
