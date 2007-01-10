@@ -1,9 +1,9 @@
 Date: Sun, 27 Jan 2005 17:28:55 -0500
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
-X-Rcs-Id: $Id: Help%2FHowToUseWiki,v 1.1 2005-11-21 22:19:00 rurban Exp $
+X-Rcs-Id: $Id: Help%2FHowToUseWiki,v 1.2 2007-01-10 20:48:11 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FHowToUseWiki;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -63,7 +63,7 @@ Content-Transfer-Encoding: binary
   ~[~http://www.yourhost.yourdomain/images/picture.png]. Image URLs not
   in brackets will just appear as hyperlinks to the image.
 
-* Now you are ready to begin AddingPages.
+* Now you are ready to begin Help:AddingPages.
 
 ----
 
