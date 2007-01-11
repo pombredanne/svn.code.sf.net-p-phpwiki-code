@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GraphViz.php,v 1.8 2007-01-10 22:28:43 rurban Exp $');
+rcs_id('$Id: GraphViz.php,v 1.9 2007-01-11 21:16:30 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -122,7 +122,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
     function getDefaultArguments() {
         return array(
@@ -131,6 +131,7 @@ extends WikiPluginCached
                      'pages'   => false,  // <!plugin-list !> support
                      'exclude' => false,
                      'help'    => false,
+                     'debug'    => false,
                      );
     }
     function handle_plugin_args_cruft(&$argstr, &$args) {
@@ -181,9 +182,9 @@ extends WikiPluginCached
         $helparr = array(
             '<?plugin GraphViz ' .
             'imgtype'          => ' = "' . $def['imgtype'] . "(default)|" . join('|',$imgtypes).'"',
-            'alt'              => ' = "alternate text"',
-            'pages'            => ' = "pages,*" or <!plugin-list !> pagelist as input',
-            'exclude'          => ' = "pages,*" or <!plugin-list !> pagelist as input',
+            'alt'              => ' = "alternate image text"',
+            'pages'            => ' = "pagenames,*" or <!plugin-list !> pagelist as input',
+            'exclude'          => ' = "pagenames,*" or <!plugin-list !> pagelist as input',
             'help'             => ' bool: displays this screen',
             '...'              => ' all further lines below the first plugin line ',
             ''                 => ' and inside the tags are the dot script.',
@@ -206,7 +207,7 @@ extends WikiPluginCached
         if (empty($this->source)) {
             // create digraph from pages
             if (empty($argarray['pages'])) {
-                trigger_error(sprintf("%s is empty",'GraphViz argument source'), E_USER_WARNING);
+                trigger_error(sprintf(_("%s is empty"), 'GraphViz argument source'), E_USER_WARNING);
                 return '';
             }
             $source = "digraph GraphViz {\n";  // }
@@ -258,6 +259,7 @@ extends WikiPluginCached
         if (in_array($gif, array("imap", "cmapx", "ismap", "cmap"))) {
             $this->_mapfile = "$tempfiles.map";
             $gif = $this->decideImgType($argarray['imgtype']);
+	    if ($gif == $argarray['imgtype']) $gif = 'png';
         }
 
         $ImageCreateFromFunc = "ImageCreateFrom$gif";
@@ -297,8 +299,9 @@ extends WikiPluginCached
         if (function_exists($ImageCreateFromFunc)) {
             $img = $ImageCreateFromFunc( $outfile );
 	    // clean up tempfiles
+	    @unlink($tempfiles);
 	    if (empty($argarray['debug']))
-		foreach (array('',".$gif",'.dot') as $ext) {
+		foreach (array(".$gif",'.dot') as $ext) {
 		    //if (file_exists($tempfiles.$ext))
 		    @unlink($tempfiles.$ext);
 		}
@@ -427,10 +430,10 @@ extends WikiPluginCached
         }
 
         // clean up tempfiles
+        @unlink($tempfiles);
         if ($ok and !$argarray['debug'])
             foreach (array('',".$gif",'.map','.dot') as $ext) {
-                //if (file_exists($tempfiles.$ext))
-		        @unlink($tempfiles.$ext);
+		@unlink($tempfiles.$ext);
             }
 
         if ($ok)
@@ -442,6 +445,9 @@ extends WikiPluginCached
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2007/01/10 22:28:43  rurban
+// use temp dotfile on windows
+//
 // Revision 1.7  2006/12/22 17:55:06  rurban
 // fix source handling
 //
