@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.25 2007-01-07 18:49:42 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.26 2007-01-13 23:42:20 rurban Exp $');
 
 /*
  * This file defines the Sidebar appearance ("theme") of PhpWiki,
@@ -56,6 +56,8 @@ $WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
 
 // Comment this next line out to enable signature.
 $WikiTheme->addImageAlias('signature', false);
+
+$WikiTheme->addImageAlias('search', 'search.png');
 
 /*
  * Link icons.
