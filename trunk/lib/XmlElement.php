@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.39 2006-08-15 13:36:23 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.40 2007-01-13 23:28:56 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -132,14 +132,20 @@ class XmlContent
         return $pdf;
     }
 
+    /* php-5.2 magic */
+    function __toString () {
+        return $this->asString();
+    }
+
     function asString () {
         $val = '';
         foreach ($this->_content as $item) {
             if (is_object($item)) {
-                if (method_exists($item, 'asString'))
-                    $val .= $item->asString();
-                else
+                if (method_exists($item, 'asString')) {
+                    $val .= (string) $item->asString();
+                } else {
                     $val .= sprintf("==Object(%s)==", get_class($item));
+                }
             }
             else
                 $val .= (string) $item;
@@ -609,6 +615,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2006/08/15 13:36:23  rurban
+// support iso-8859-2
+//
 // Revision 1.38  2005/10/10 19:36:09  rurban
 // fix comment
 //
