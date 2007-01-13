@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: signin.tmpl,v 1.3 2007-01-07 20:20:09 rurban Exp $'); ?>
+rcs_id('$Id: signin.tmpl,v 1.4 2007-01-13 23:56:04 rurban Exp $'); ?>
 <?php // On MonoBook we do away with only GET urls, no form.
   $sp = HTML::Raw("&nbsp;"); $id = $user->UserName();
 ?>
@@ -7,10 +7,10 @@ rcs_id('$Id: signin.tmpl,v 1.3 2007-01-07 20:20:09 rurban Exp $'); ?>
  <ul>
   <?php if ($user->isAuthenticated()) { ?>
   <li id="pt-userpage"><?= WikiLink($id, 'auto', HTML($sp,$id,$sp)) ?></li>
-  <li><?= HTML::a(array('href'=>'?auth[logout]=1'), $sp,_("Logout"),$sp) ?></li>
+  <li><?= HTML::a(array('href'=>'?auth[logout]=1'),$sp,_("Logout"),$sp) ?></li>
   <?php } else { ?>
-  <li id="pt-userpage"><?= WikiLink($id, 'auto', HTML($sp,$id,$sp)) ?></li>
-  <li id="pt-login"><?= HTML::a(array('href'=>'?auth[login]=1'), $sp,_("Login"),$sp) ?></a></li>
+  <!-- Login or Register -->
+  <li id="pt-login"><?= HTML::a(array('href'=>'?auth[login]=1'),$sp,_("Login"),$sp) ?></a></li>
 <?php } ?>
   </li>
  </ul>
