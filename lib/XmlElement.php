@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.40 2007-01-13 23:28:56 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.41 2007-01-13 23:34:49 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -428,6 +428,11 @@ class RawXml {
         echo $this->_xml;
     }
 
+    /* php-5.2 magic */
+    function __toString () {
+        return $this->_xml;
+    }
+
     function asXML () {
         return $this->_xml;
     }
@@ -495,6 +500,11 @@ class FormattedText {
         foreach ($this->_args as $arg)
             $args[] = AsString($arg);
         return call_user_func_array('sprintf', $args);
+    }
+
+    /* php-5.2 magic */
+    function __toString () {
+        return $this->asString();
     }
 }
 
@@ -615,6 +625,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2007/01/13 23:28:56  rurban
+// php-5.2.0 fix for string fallback: Provide the magic method __toString
+//
 // Revision 1.39  2006/08/15 13:36:23  rurban
 // support iso-8859-2
 //
