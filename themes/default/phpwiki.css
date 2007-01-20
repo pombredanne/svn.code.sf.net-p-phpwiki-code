@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.56 2007-01-20 11:42:12 rurban Exp $
+ * $Id: phpwiki.css,v 1.57 2007-01-20 18:20:42 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -294,7 +294,7 @@ textarea.wikiedit {
 /**
  * Search Results
  */
-.search-context { background: white; }
+.search-context { background: white; font-style: oblique; }
 .search-term {
   background: yellow;
   font-weight: normal;

@@ -1,5 +1,5 @@
 /**
- * $Id: shamino_com.css,v 1.3 2007-01-02 13:28:25 rurban Exp $
+ * $Id: shamino_com.css,v 1.4 2007-01-20 18:20:42 rurban Exp $
  *
  * shamino.com style sheet based on the original Wiki
  *
@@ -150,3 +150,11 @@ div#logo {
 
 div.boxright { width: 200px; right: 10px; padding: 0.5em; float: right; border: thin solid #888888; padding: 0.5em; }
 
+/**
+ * Search Results
+ */
+.search-context { background: white; font-style: oblique; }
+.search-term {
+  background: yellow;
+  font-weight: normal;
+}

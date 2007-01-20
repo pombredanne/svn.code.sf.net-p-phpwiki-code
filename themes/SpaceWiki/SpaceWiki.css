@@ -1,5 +1,5 @@
 /**
- * $Id: SpaceWiki.css,v 1.7 2004-05-14 10:52:44 rurban Exp $
+ * $Id: SpaceWiki.css,v 1.8 2007-01-20 18:20:41 rurban Exp $
  *
  * This theme will probably be renamed something like "Space" to
  * avoid any potential copyright issues.
@@ -586,6 +586,14 @@ div.errors {
 
 .clear-floats {
   clear: both;
+}
+/**
+ * Search Results
+ */
+.search-context { background: white; font-style: oblique; }
+.search-term {
+  background: yellow;
+  font-weight: normal;
 }
 
 /* For emacs users

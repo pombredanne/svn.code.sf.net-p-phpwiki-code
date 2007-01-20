@@ -931,7 +931,7 @@ special external link styling */
 #p-search {
     position:relative;
     z-index: 3;
-}    
+}
 input.searchButton {
     margin-top:1px;
     padding: 0 0.4em !important;
@@ -1705,7 +1705,7 @@ span.redirectfrom {
   font-weight: normal;
   padding-left: 1em;
 }
-.search-context { background: white; }
+.search-context { background: white; font-style: oblique; }
 .search-term {
   background: yellow;
   font-weight: normal;
