@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.24 2007-01-07 18:46:40 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.25 2007-01-20 11:23:37 rurban Exp $');
 /*
  Copyright 2002,2003,2007 $ThePhpWikiProgrammingTeam
  
@@ -93,7 +93,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     // Arguments:
@@ -162,16 +162,27 @@ extends WikiPlugin
         return $html;
     }
 
-    function add (&$request, $blog, $type='wikiblog', $basepage=false) {
+    /**
+     * posted: required: pagename, content. optional: summary
+     */
+    function add (&$request, $posted, $type='wikiblog') {
 	// This is similar to editpage. Shouldn't we use just this for preview?
-        $parent = $blog['pagename'];
+        $parent = $posted['pagename'];
         if (empty($parent)) {
             $prefix = "";   // allow empty parent for default "Blog/day"
-            $parent = HOME_PAGE; 
-        } elseif ($parent == 'Blog' or $parent = 'WikiBlog')
+            $parent = HOME_PAGE;
+        } elseif (($parent == 'Blog' or $parent == 'WikiBlog') and $type == 'wikiblog')
 	{ // avoid Blog/Blog/2003-01-11/14:03:02+00:00
             $prefix = "";
 	    $parent = ''; // 'Blog';
+        } elseif ($parent == 'Comment' and $type == "comment")
+	{
+            $prefix = "";
+	    $parent = ''; // 'Comment';
+        } elseif ($parent == 'Forum' and $type == "wikiforum")
+	{
+            $prefix = "";
+	    $parent = ''; // 'Forum';
         } else {
             $prefix = $parent . SUBPAGE_SEPARATOR;
         }
@@ -201,7 +212,7 @@ extends WikiPlugin
         
 
         // Version meta-data
-        $summary = trim($blog['summary']);
+        $summary = trim($posted['summary']);
         $version_meta = array('author'    => $blog_meta['creator'],
                               'author_id' => $blog_meta['creator_id'],
                               'markup'    => 2.0,   // assume new markup
@@ -214,10 +225,18 @@ extends WikiPlugin
             unset($version_meta['summary']);
 
         // Comment body.
-        $body = trim($blog['content']);
+        $body = trim($posted['content']);
 
         $saved = false;
-        $pagename = $this->_blogPrefix($type);
+	if ($type != 'wikiforum')
+	    $pagename = $this->_blogPrefix($type);
+	else {
+	    $pagename = substr($summary,0,12);
+	    if (empty($pagename)) {
+		$saved = true;
+		trigger_error("Empty title", E_USER_WARNING);
+	    }
+	}
         while (!$saved) {
             // Generate the page name.  For now, we use the format:
             //   Rootname/Blog/2003-01-11/14:03:02+00:00
@@ -308,7 +327,7 @@ extends WikiPlugin
             $name = $this->_blogPrefix($type);
             if (!$args['noheader'])
                 $html->pushContent(HTML::h4(array('class' => "$type-heading"),
-                                            fmt("%s on %s:", $name, WikiLink($parent))));
+                                            fmt("%s on %s:", $name, WikiLink($basepage))));
             foreach ($blogs as $rev) {
                 if (!$rev->get($type)) {
                     // Ack! this is an old-style blog with data ctime in page meta-data.
@@ -414,6 +433,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2007/01/07 18:46:40  rurban
+// Add EditToolbar support. Omit Blog/Blog/
+//
 // Revision 1.23  2005/10/29 09:06:37  rurban
 // move common blog methods to WikiBlog
 //
