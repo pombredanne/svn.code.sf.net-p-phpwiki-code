@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.258 2007-01-07 18:43:51 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.259 2007-01-20 11:41:38 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -756,7 +756,13 @@ class WikiPageName
         return substr($name, 1);
     }
 
-
+    /**
+     * Compress internal white-space to single space character.
+     *
+     * This leads to problems with loading a foreign charset pagename, 
+     * which cannot be deleted anymore, because unknown chars are compressed.
+     * So BEFORE importing a file _check must be done !!!
+     */
     function _check($pagename) {
         // Compress internal white-space to single space character.
         $pagename = preg_replace('/[\s\xa0]+/', ' ', $orig = $pagename);
@@ -764,7 +770,7 @@ class WikiPageName
             $this->_warnings[] = _("White space converted to single space");
     
         // Delete any control characters.
-        if (DATABASE_TYPE == 'cvs' or DATABASE_TYPE == 'file') {
+        if (DATABASE_TYPE == 'cvs' or DATABASE_TYPE == 'file' or DATABASE_TYPE == 'flatfile') {
             $pagename = preg_replace('/[\x00-\x1f\x7f\x80-\x9f]/', '', $orig = $pagename);
             if ($pagename != $orig)
                 $this->_errors[] = _("Control characters not allowed");
@@ -792,8 +798,11 @@ class WikiPageName
         }
 
         // disallow some chars only on file and cvs
-        if ((DATABASE_TYPE == 'cvs' or DATABASE_TYPE == 'file') 
-            and preg_match('/(:|\.\.)/', $pagename, $m)) {
+        if ((DATABASE_TYPE == 'cvs' 
+            or DATABASE_TYPE == 'file' 
+            or DATABASE_TYPE == 'flatfile') 
+            and preg_match('/(:|\.\.)/', $pagename, $m)) 
+        {
             $this->_warnings[] = sprintf(_("Illegal chars %s removed"), $m[1]);
             $pagename = str_replace('..', '', $pagename);
             $pagename = str_replace(':', '', $pagename);
@@ -2103,6 +2112,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.258  2007/01/07 18:43:51  rurban
+// Remove FileFinder dependency for loadPhpExtension()
+//
 // Revision 1.257  2007/01/03 21:24:56  rurban
 // Disable noisy ps subprocess on DEBUG. Turn it on explicitly on memory debugging. Add convert_charset helper. Use convert_charset().
 //
