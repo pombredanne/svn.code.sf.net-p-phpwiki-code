@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.68 2007-01-20 11:25:19 rurban Exp $');
+rcs_id('$Id: display.php,v 1.69 2007-01-20 15:53:51 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -65,8 +65,8 @@ function actionPage(&$request, $action) {
     $transformedContent = $actionrev->getTransformedContent();
  
    /* Optionally tell google (and others) not to take notice of action pages.
-       RecentChanges or AllPages might be an exception.
-     */
+      RecentChanges or AllPages might be an exception.
+   */
     $args = array();
     if (GOOGLE_LINKS_NOFOLLOW)
 	$args = array('ROBOTS_META' => "noindex,nofollow");
@@ -103,8 +103,8 @@ function actionPage(&$request, $action) {
 	}
         if (!$pagelist or !is_a($pagelist, 'PageList')) {
 	    if (!in_array($format, array("atom","rss","rdf")))
-		trigger_error(sprintf("Format %s requires an actionpage returning an pagelist.", $format)
-			      . ("Fall back to single page mode"), E_USER_WARNING);
+		trigger_error(sprintf("Format %s requires an actionpage returning a pagelist.", $format)
+			      ."\n".("Fall back to single page mode"), E_USER_WARNING);
 	    $pagelist = new PageList();
 	    $pagelist->addPage($page);
 	}
@@ -221,63 +221,50 @@ function displayPage(&$request, $template=false) {
             header("Content-Type: text/html; charset=" . $GLOBALS['charset']);
     }
 */
-    $page_content = $revision->getTransformedContent();
 
-    // If external searchengine (google) referrer, highlight the searchterm
-    // FIXME: move that to the transformer?
-    // OR: add the SearchHighlight plugin line to the content?
+    $toks['TITLE'] = $pagetitle;   // <title> tag
+    $toks['HEADER'] = $pageheader; // h1 with backlink
+    $toks['revision'] = $revision;
+
+    // On external searchengine (google) referrer, highlight the searchterm and 
+    // pass through the Searchhighlight actionpage.
     if ($result = isExternalReferrer($request)) {
     	if (!empty($result['query'])) {
-    	    if (USE_SEARCHHIGHLIGHT) {	
-		/* Simply add the SearchHighlight plugin to the top of the page. 
-		   This just parses the wikitext, and doesn't highlight the markup.
-		   At the top are some ugly references to the hits.
+    	    if (ENABLE_SEARCHHIGHLIGHT) {
+                $request->_searchhighlight = $result;
+                $request->appendValidators(array('%mtime' => time())); // force no cache(?)
+                // Should be changed to check the engine and search term only
+                // $request->setArg('nocache', 1); 
+                $page_content = new TransformedText($revision->getPage(),
+                                                    $revision->getPackedContent(),
+                                                    $revision->getMetaData());
+		/* Now add the SearchHighlight plugin to the top of the page, in memory only.
+		   You can parametrize this by changing the SearchHighlight action page.
 		*/
-		include_once('lib/WikiPlugin.php');
-		$loader = new WikiPluginLoader;
-		$xml = $loader->expandPI('<'.'?plugin SearchHighlight s="'.$result['query'].'"?'.'>', $request, $markup);
-		if ($xml and is_array($xml)) {
-		    foreach (array_reverse($xml) as $line) {
-			array_unshift($page_content->_content, $line);
-		    }
-		    array_unshift($page_content->_content, 
-				  HTML::div(_("You searched for: "), HTML::strong($result['query'])));
-		}
-    	    } else {            
-		if (DEBUG) {
-		    /* Parse the transformed (mixed HTML links + strings) lines
-		       This looks like overkill, and should really be done in the expansion.
-		       Maybe by some expansion hook, which would make expansion even slower.
-		    */
-		    require_once("lib/TextSearchQuery.php");
-		    $query = new TextSearchQuery($result['query']);
-		    $hilight_re = $query->getHighlightRegexp();
-		    //$matches = preg_grep("/$hilight_re/i", $revision->getContent());
-		    // FIXME!
-		    for ($i=0; $i < count($page_content->_content); $i++) {
-			$found = false;
-			$line = $page_content->_content[$i];
-			if (is_string($line)) {
-			    $visline = strip_tags($line);	
-			    while (preg_match("/^(.*?)($hilight_re)/i", $visline, $m)) {
-				$visline = substr($visline, strlen($m[0]));
-				$found = true;
-				preg_match("/^(.*?)($hilight_re)/i", $line, $m);
-				$line = substr($line, strlen($m[0]));
-				$html[] = HTML::Raw($m[1]);    // prematch
-				$html[] = HTML::strong(array('class' => 'search-term'), $m[2]); // match
-			    }
-			}
-			if ($found) {
-			    $html[] = HTML::Raw($line);  // postmatch
-			    $page_content->_content[$i] = HTML::span(array('class' => 'search-context'),
-								     $html);
-			    $html = array();
-			}
-		    }
-		}
+                if ($actionpage = $request->findActionPage('SearchHighlight')) {
+                    $actionpage = $request->getPage($actionpage);
+                    $actionrev = $actionpage->getCurrentRevision();
+                    $pagetitle = HTML(fmt("%s: %s", 
+                                          $actionpage->getName(),
+                                          $WikiTheme->linkExistingWikiWord($pagename, false, $version)));
+                    $request->appendValidators(array('actionpagerev' => $actionrev->getVersion(),
+                                                     '%mtime' => $actionrev->get('mtime')));
+                    $toks['SEARCH_ENGINE'] = $result['engine'];
+                    $toks['SEARCH_ENGINE_URL'] = $result['engine_url'];
+                    $toks['SEARCH_TERM'] = $result['query'];
+		    //$toks['HEADER'] = HTML($actionpage->getName(),": ",$pageheader); // h1 with backlink
+                    $actioncontent = new TransformedText($actionrev->getPage(),
+                                                         $actionrev->getPackedContent(),
+                                                         $actionrev->getMetaData());
+		    // prepend the actionpage in front of the hightlighted content
+	            $toks['CONTENT'] = HTML($actioncontent, $page_content);
+                }
 	    }
+	} else {
+            $page_content = $revision->getTransformedContent();
 	}
+    } else {
+        $page_content = $revision->getTransformedContent();
     }
    
     /* Check for special pagenames, which are no actionpages. */
@@ -291,14 +278,11 @@ function displayPage(&$request, $template=false) {
     } else if (!isset($toks['ROBOTS_META'])) {
         $toks['ROBOTS_META'] = "index,follow";
     }
-   
-    $toks['CONTENT'] = new Template('browse', $request, $page_content);
-    
-    $toks['TITLE'] = $pagetitle;   // <title> tag
-    $toks['HEADER'] = $pageheader; // h1 with backlink
-    $toks['revision'] = $revision;
+    if (!isset($toks['CONTENT']))
+        $toks['CONTENT'] = new Template('browse', $request, $page_content);
     if (!empty($redirect_message))
         $toks['redirected'] = $redirect_message;
+    
     $toks['PAGE_DESCRIPTION'] = $page_content->getDescription();
     $toks['PAGE_KEYWORDS'] = GleanKeywords($page);
     if (!$template)
@@ -318,7 +302,7 @@ function displayPage(&$request, $template=false) {
         $template = new Template('htmldump', $request);
 	$template->printExpansion($toks);
     } else {
-	// No pagelist. Single page version only
+	// No pagelist here. Single page version only
 	include_once("lib/PageList.php");
 	$pagelist = new PageList();
 	$pagelist->addPage($page);
@@ -367,6 +351,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2007/01/20 11:25:19  rurban
+// actionPage: request is already global
+//
 // Revision 1.67  2007/01/07 18:44:20  rurban
 // Support format handlers for single- and multi-page: pagelists from actionpage plugins. Use USE_SEARCHHIGHLIGHT. Fix InlineHighlight (still experimental).
 //

@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.86 2007-01-20 11:25:07 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.87 2007-01-20 15:53:51 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -472,6 +472,23 @@ class Markup_spellcheck extends SimpleMarkup
     }
 }
 
+class Markup_searchhighlight extends SimpleMarkup
+{
+    function Markup_searchhighlight () {
+        $result = $GLOBALS['request']->_searchhighlight;
+        require_once("lib/TextSearchQuery.php");
+        $query = new TextSearchQuery($result['query']);
+        $this->hilight_re = $query->getHighlightRegexp();
+        $this->engine = $result['engine'];
+    }
+    function getMatchRegexp () {
+        return $this->hilight_re;
+    }
+    function markup ($match) {
+        return new Cached_SearchHighlight(UnWikiEscape($match), $this->engine);
+    }
+}
+
 class Markup_url extends SimpleMarkup
 {
     function getMatchRegexp () {
@@ -841,6 +858,7 @@ class InlineTransformer
     var $_markup = array();
     
     function InlineTransformer ($markup_types = false) {
+        global $request;
 	// We need to extend the inline parsers by certain actions, like SearchHighlight, 
 	// SpellCheck and maybe CreateToc.
         if (!$markup_types) {
@@ -855,10 +873,15 @@ class InlineTransformer
 	    if (DISABLE_MARKUP_WIKIWORD)
                 $markup_types = array_remove($markup_types, 'wikiword');
 
-	    $action = $GLOBALS['request']->getArg('action');
-	    if ($action == 'SpellCheck' and $GLOBALS['request']->getArg('suggestions'))
+	    $action = $request->getArg('action');
+	    if ($action == 'SpellCheck' and $request->getArg('suggestions'))
 	    {   // insert it after url
 		array_splice($markup_types, 2, 1, array('url','spellcheck'));
+	    }
+	    if (isset($request->_searchhighlight))
+	    {   // insert it after url
+		array_splice($markup_types, 2, 1, array('url','searchhighlight'));
+                //$request->setArg('searchhighlight', false);
 	    }
         } else {
             $non_default = true;
@@ -1039,6 +1062,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.86  2007/01/20 11:25:07  rurban
+// add SpellCheck support
+//
 // Revision 1.85  2007/01/07 18:42:49  rurban
 // Add support for non-bracket semantic relation parsing. Assert empty regex (interwikimap?) earlier. Change {{Template||}} vars handling to new style. Stricter interwikimap matching not to find semantic links
 //
