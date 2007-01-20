@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.149 2007-01-03 21:25:10 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.150 2007-01-20 15:53:42 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -760,7 +760,13 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     if (empty($versiondata['author_id']))
         $versiondata['author_id'] = $versiondata['author'];
 
-    $pagename = $pageinfo['pagename'];
+    // remove invalid backend specific chars. utf8 issues mostly
+    $pagename_check = new WikiPagename($pageinfo['pagename']);
+    if (!$pagename_check->isValid()) {
+        PrintXML(HTML::dt(HTML::strong(_("Invalid pagename!")." ".$pageinfo['pagename'])));
+        return;
+    }
+    $pagename = $pagename_check->getName();
     $content  = $pageinfo['content'];
 
     if ($pagename == _("InterWikiMap"))
@@ -1438,6 +1444,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.149  2007/01/03 21:25:10  rurban
+ Use convert_charset()
+
  Revision 1.148  2007/01/02 13:21:57  rurban
  omit want_content if not necessary. support keep_old and overwrite buttons
 
