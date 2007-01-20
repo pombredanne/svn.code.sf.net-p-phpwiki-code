@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SyncWiki.php,v 1.1 2007-01-02 13:22:57 rurban Exp $');
+rcs_id('$Id: SyncWiki.php,v 1.2 2007-01-20 11:24:46 rurban Exp $');
 /**
  Copyright 2006 $ThePhpWikiProgrammingTeam
 
@@ -22,12 +22,17 @@ rcs_id('$Id: SyncWiki.php,v 1.1 2007-01-02 13:22:57 rurban Exp $');
 
 /**
  * required argument:  url = <rpc interface to main wiki>
- * optional arguments: noimport, noexport
+ * optional arguments: noimport, noexport, noupload
  *	
  * 1. check RPC2 interface or admin url (lang?) of external wiki
- * 2. get external pagelist, only later than our last checkpoint
+ *    get external pagelist, only later than our last mergepoint
+ * 2. Download all externally changed sources:
+ *    If local page is older than the mergepoint, import it.
+ *    If local page does not exist (deleted?), and there is no revision, import it.
+ *    Else we deleted it. Skip the import, but don't delete the external. Should be added to conflict.
+ *    If local page is newer than the mergepoint, then add it to the conflict pages.
  * 3. check our to_delete, to_add, to_merge 
- * 4. get our pagelist of pages only later than our last checkpoint
+ * 4. get our pagelist of pages only later than our last mergepoint
  * 5. check external to_delete, to_add, to_merge
  * 6. store log (where, how?)
  */
@@ -47,7 +52,7 @@ extends WikiPlugin_WikiAdminUtils
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -119,18 +124,28 @@ extends WikiPlugin_WikiAdminUtils
 		    // we might have deleted or moved it on purpose?
 		    // check date of latest revision if there's one, and > mergepoint
 		    if (($ourrev->getVersion() > 1) and ($ourrev->get('mtime') > $merge_point)) {
+			// our was deleted after sync, and changed after last sync.
+			$this->_addConflict('delete', $args, $our, $extdate);
 			$reaction = (_(" skipped")." ("."locally deleted or moved".")");
 		    } else {
 			$reaction = $this->_import($args, $our, $extdate);
 		    }
 		} else {
 		    $ourdate = $ourrev->get('mtime');
-		    if ($extdate > $ourdate) {
+		    if ($extdate > $ourdate and $ourdate < $merge_point) {
 		    	$rel = '>';
 			$reaction = $this->_import($args, $our, $extdate);
-		    } else if ($extdate < $ourdate) {
+		    } elseif ($extdate > $ourdate and $ourdate >= $merge_point) {
+		    	$rel = '>';
+			// our is older then external but newer than last sync
+			$reaction = $this->_addConflict('import', $args, $our, $extdate);
+		    } elseif ($extdate < $ourdate and $extdate < $merge_point) {
 		    	$rel = '>';
 			$reaction = $this->_export($args, $our);
+		    } elseif ($extdate < $ourdate and $extdate >= $merge_point) {
+		    	$rel = '>';
+			// our is newer and external is also newer
+			$reaction = $this->_addConflict('export', $args, $our, $extdate);
 		    } else {
 		    	$rel = '==';
 			$reaction = _("same date");
@@ -167,8 +182,11 @@ extends WikiPlugin_WikiAdminUtils
 		if (is_array($ext)) {
 		    $extdate = iso8601_decode($ext['lastModified']->scalar,1);
 		    $ourdate = $our->get('mtime');
-		    if ($extdate < $ourdate) {
+		    if ($extdate < $ourdate and $extdate < $merge_point) {
 			$reaction = $this->_export($args, $our);
+		    } elseif ($extdate < $ourdate and $extdate >= $merge_point) {
+			// our newer and external newer
+			$reaction = $this->_addConflict($args, $our, $extdate);
 		    }
 		} else {
 		    $reaction = 'xmlrpc error';
@@ -232,6 +250,24 @@ extends WikiPlugin_WikiAdminUtils
 		$this->_dir($path . $filename . "/");
 	}
 	closedir($dh);
+    }
+
+    function _addConflict($what, $args, $our, $extdate = null) {
+	$pagename = $our->getName();
+	$meb = Button(array('action' => $args['action'],
+			    'merge'=> true,
+			    'source'=> $f),
+		      _("Merge Edit"),
+		      $args['pagename'],
+		      'wikiadmin');
+	$owb = Button(array('action' => $args['action'],
+			    'overwrite'=> true,
+			    'source'=> $f),
+		      sprintf(_("%s force"), strtoupper(substr($what, 0, 1)).substr($what, 1)),
+		      $args['pagename'],
+		      'wikiunsafe');
+	$this->_conflicts[] = $pagename;
+	return HTML(fmt(_("Postponed %s for %s."), $what, $pagename), " ", $meb, " ", $owb);
     }
 
     // TODO: store log or checkpoint for restauration?
@@ -311,6 +347,9 @@ extends WikiPlugin_WikiAdminUtils
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2007/01/02 13:22:57  rurban
+// add SyncWiki
+//
 
 // For emacs users
 // Local Variables:
