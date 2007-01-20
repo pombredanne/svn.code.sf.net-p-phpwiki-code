@@ -1,7 +1,7 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.20 2005-09-26 06:28:46 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.21 2007-01-20 11:24:23 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
- Copyright (C) 2004 Reini Urban
+ Copyright (C) 2004,2007 Reini Urban
 
  This file is part of PhpWiki.
 
@@ -112,7 +112,7 @@ class WikiPluginCached extends WikiPlugin
             $url .= '/' . PLUGIN_CACHED_FILENAME_PREFIX . $id . '.img' 
                 . ($plugincall_arg ? '?args='.$plugincall_arg : '');
         }
-        if ($request->getArg("start_debug"))
+        if ($request->getArg("start_debug") and (DEBUG & _DEBUG_REMOTE))
             $url .= "&start_debug=1";
         return array($id, $url);
     } // genUrl
@@ -1064,10 +1064,31 @@ class WikiPluginCached extends WikiPlugin
         }
     }
 
+    function oldFilterThroughCmd_File($input, $commandLine) {
+	$ext = ".txt";
+	$tmpfile = tempnam(getUploadFilePath(), $ext);
+	$fp = fopen($tmpfile,'wb');
+	fwrite($fp, $input);
+	fclose($fp);
+	$cat = isWindows() ? 'cat' : 'type';
+	$pipe = popen("$cat \"$tmpfile\" | $commandLine", 'r');
+	if (!$pipe) {
+            print "pipe failed.";
+            return "";
+	}
+	$output = '';
+	while (!feof($pipe)) {
+            $output .= fread($pipe, 1024);
+	}
+	pclose($pipe);
+	unlink($tmpfile);
+	return $output;
+    }
+
     /* PHP versions < 4.3
      * TODO: via temp file looks more promising
      */
-    function OldFilterThroughCmd($input, $commandLine) {
+    function oldFilterThroughCmd($input, $commandLine) {
          $input = str_replace ("\\", "\\\\", $input);
          $input = str_replace ("\"", "\\\"", $input);
          $input = str_replace ("\$", "\\\$", $input);
@@ -1075,7 +1096,7 @@ class WikiPluginCached extends WikiPlugin
          $input = str_replace ("'", "\'", $input);
          //$input = str_replace (";", "\;", $input);
 
-         $pipe = popen("echo \"$input\"|$commandLine", 'r');
+         $pipe = popen("echo \"$input\" | $commandLine", 'r');
          if (!$pipe) {
             print "pipe failed.";
             return "";
@@ -1092,12 +1113,14 @@ class WikiPluginCached extends WikiPlugin
     function filterThroughCmd($source, $commandLine) {
         if (check_php_version(4,3,0))
             return $this->newFilterThroughCmd($source, $commandLine);
-        else 
+        elseif (strlen($source) < 255)
             return $this->oldFilterThroughCmd($source, $commandLine);
+        else
+            return $this->oldFilterThroughCmd_File($source, $commandLine);
     }
 
     /**
-     * Execute system command until the outfile $until exists.
+     * Execute system command and wait until the outfile $until exists.
      *
      * @param  cmd   string   command to be invoked
      * @param  until string   expected output filename
@@ -1133,6 +1156,9 @@ class WikiPluginCached extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2005/09/26 06:28:46  rurban
+// beautify tempnam() on Windows. Move execute() from above here
+//
 // Revision 1.19  2004/12/16 18:30:59  rurban
 // avoid ugly img border
 //
