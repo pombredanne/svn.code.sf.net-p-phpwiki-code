@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.6 2007-01-09 12:34:55 rurban Exp $');
+rcs_id('$Id: MailNotify.php,v 1.7 2007-01-20 11:25:38 rurban Exp $');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -268,8 +268,11 @@ class MailNotify {
 		$this->getPageChangeEmails($notify);
 		if (!empty($this->emails)) {
 		    $editedby = sprintf(_("Removed by: %s"), $this->from); // Todo: host_id
-		    $emails = join(',', $emails);
+		    //$emails = join(',', $this->emails);
 		    $subject = sprintf(_("Page removed %s"), urlencode($pagename));
+		    $page = $wikidb->getPage($pagename);
+		    $rev = $page->getCurrentRevision(true);
+		    $content = $rev->getPackedContent();
                     $result = $this->sendMail($subject, 
                                               $editedby."\n"."Deleted $pagename"."\n\n".$content);
 		}
@@ -380,6 +383,9 @@ will expire at %s.",
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2007/01/09 12:34:55  rurban
+// Fix typo (syntax error)
+//
 // Revision 1.5  2007/01/07 18:42:58  rurban
 // Add MAILER_LOG logfile
 //
