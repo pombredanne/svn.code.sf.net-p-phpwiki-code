@@ -14,7 +14,8 @@
    onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
 <?php if (ENABLE_ACDROPDOWN) { ?>
    class="dropdown" id="livesearch" title="<?=_("LiveSearch")?>" 
-   acdropdown="true" autocomplete_complete="false" autocomplete_matchsubstring="true"
+   style="width:120px;"
+   acdropdown="true" autocomplete_complete="false" autocomplete_matchsubstring="false"
    autocomplete_list="xmlrpc:wiki.titleSearch [S] 4" />
 <?php } elseif (ENABLE_LIVESEARCH) { ?>
    type="text" id="livesearch" title="<?=_("LiveSearch")?>" 
