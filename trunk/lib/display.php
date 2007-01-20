@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.67 2007-01-07 18:44:20 rurban Exp $');
+rcs_id('$Id: display.php,v 1.68 2007-01-20 11:25:19 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -96,7 +96,7 @@ function actionPage(&$request, $action) {
 	        $loader = new WikiPluginLoader;
 	        $markup = null;
 	        // return the first found pagelist
-	        $pagelist = $loader->expandPI($cached_element->_pi, $GLOBALS['request'], $markup, $pagename);
+	        $pagelist = $loader->expandPI($cached_element->_pi, $request, $markup, $pagename);
 	        if (is_a($pagelist, 'PageList'))
 	            break;
 	    }
@@ -367,6 +367,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.67  2007/01/07 18:44:20  rurban
+// Support format handlers for single- and multi-page: pagelists from actionpage plugins. Use USE_SEARCHHIGHLIGHT. Fix InlineHighlight (still experimental).
+//
 // Revision 1.66  2006/03/19 14:26:29  rurban
 // sf.net patch by Matt Brown: Add rel=nofollow to more actions
 //
