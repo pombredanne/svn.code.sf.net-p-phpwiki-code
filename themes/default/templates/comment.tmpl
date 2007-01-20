@@ -1,6 +1,5 @@
-<?php // -*- php -*- ?>
-<!-- $Id: comment.tmpl,v 1.6 2006-12-08 07:16:44 rurban Exp $ -->
-<?php 
+<?php // -*- php -*-
+rcs_id('$Id: comment.tmpl,v 1.7 2007-01-20 11:23:58 rurban Exp $');
 $CDATE = $WikiTheme->formatDateTime($COMMENT_CTIME);
 $buttons = $modified = '';
 
@@ -8,7 +7,7 @@ if ($user->isAdmin() or $user->getId() == $COMMENT_CREATOR) {
     $buttons = HTML::small(array('class' => 'floatleft'),
                            Button('edit', false, $page));
     if ($user->isAdmin())
-      $buttons->pushContent(HTML::Raw('\n&nbsp;'),Button('remove', false, $page));
+	$buttons->pushContent($SEP, Button('remove', false, $page));
 }
 
 // This is a hack, but since we only have a fake PageRevision,
@@ -16,7 +15,7 @@ if ($user->isAdmin() or $user->getId() == $COMMENT_CREATOR) {
 if ($rev->get('mtime') != $COMMENT_CTIME) {
     $mtime = $WikiTheme->formatDateTime($rev->get('mtime'));
     $modified = HTML::small(array('class' => 'floatright'),
-			    fmt("Comment modified on %s by %s",
+			    fmt("Modified on %s by %s",
 				$mtime, $rev->get('author')));
 }
 ?>
