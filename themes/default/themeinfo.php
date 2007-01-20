@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.35 2005-09-18 13:04:37 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.36 2007-01-20 11:45:21 rurban Exp $');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
@@ -29,6 +29,8 @@ $WikiTheme->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
  * The logo image appears on every page and links to the HomePage.
  */
 $WikiTheme->addImageAlias('logo', WIKI_NAME . 'Logo.png');
+
+$WikiTheme->addImageAlias('search', 'search.png');
 
 /**
  * The Signature image is shown after saving an edited page. If this
