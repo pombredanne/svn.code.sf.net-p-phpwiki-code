@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.50 2007-01-07 18:41:51 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.51 2007-01-20 11:24:53 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -367,6 +367,22 @@ class Cached_WikiLinkIfKnown extends Cached_WikiLink
         return WikiLink($this->_page, 'if_known');
     }
 }    
+
+class Cached_SpellCheck extends Cached_WikiLink
+{
+    function Cached_SpellCheck ($word, $suggs) {
+	$this->_page = $word;
+	$this->suggestions = $suggs;
+    }
+
+    function expand($basepage, &$markup) {
+        $link = HTML::a(array('class' => 'spell-wrong', 
+			      'title' => 'SpellCheck: '.join(', ', $this->suggestions),
+			      'name' => $this->_page), 
+			$this->_page);
+        return $link;
+    }
+}    
     
 class Cached_PhpwikiURL extends Cached_DynamicContent
 {
@@ -711,6 +727,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2007/01/07 18:41:51  rurban
+// Fix fallback ZipReader syntax error. Use label=false. Add parsed plugin names to the stored tree.
+//
 // Revision 1.49  2007/01/04 16:40:35  rurban
 // Remove units object from CachedMarkup links, Store parsed linkinfo only: basevalue, baseunit.
 //
