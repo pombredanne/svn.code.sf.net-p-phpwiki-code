@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.51 2007-01-20 11:24:53 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.52 2007-01-20 15:53:51 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -542,6 +542,23 @@ class Cached_SemanticLink extends Cached_WikiLink {
         return $this->_url;
     }
 }
+
+/** 
+ * Highlight found search engine terms
+ */
+class Cached_SearchHighlight extends Cached_DynamicContent
+{
+    function Cached_SearchHighlight ($word, $engine) {
+	$this->_word = $word;
+	$this->engine = $engine;
+    }
+
+    function expand($basepage, &$markup) {
+        return HTML::span(array('class' => 'search-term',
+                                'title' => 'Found by ' . $this->engine),
+                          $this->_word);
+    }
+}    
     
 class Cached_ExternalLink extends Cached_Link {
 
@@ -727,6 +744,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2007/01/20 11:24:53  rurban
+// add SpellCheck support
+//
 // Revision 1.50  2007/01/07 18:41:51  rurban
 // Fix fallback ZipReader syntax error. Use label=false. Add parsed plugin names to the stored tree.
 //
