@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.41 2007-01-13 23:34:49 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.42 2007-01-20 11:41:30 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -6,8 +6,8 @@
  *          Reini Urban (php5 tricks)
  *
  * WARNING: This module is very php5 sensitive. 
- *        Fixed for 1.3.9 and 1.3.11.
- *        With allow_call_time_pass_reference clean fixes.
+ *          Fixed for 1.3.9, 1.3.11 and 1.3.13 (php-5.2).
+ *          With allow_call_time_pass_reference clean fixes.
  */
 
 /**
@@ -625,6 +625,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2007/01/13 23:34:49  rurban
+// More php-5.2.0 fixes __toString
+//
 // Revision 1.40  2007/01/13 23:28:56  rurban
 // php-5.2.0 fix for string fallback: Provide the magic method __toString
 //
