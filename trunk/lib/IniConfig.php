@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.110 2007-01-07 18:42:39 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.111 2007-01-20 15:54:04 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -196,7 +196,7 @@ function IniConfig($file) {
          'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML',
          'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
          'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS',
-	 'USE_SEARCHHIGHLIGHT'
+	 'ENABLE_SEARCHHIGHLIGHT'
          );
 
     $rs = @parse_ini_file($file);
@@ -933,6 +933,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.110  2007/01/07 18:42:39  rurban
+// Fix typo: BLOG_EMPTY_DEFAULT_PREFIX => BLOG_DEFAULT_EMPTY_PREFIX. Add USE_SEARCHHIGHLIGHT. Add EXTERNAL_HTML2PDF_PAGELIST logic. Update $AllActionPages.
+//
 // Revision 1.109  2007/01/04 16:40:47  rurban
 // Add more action pages
 //

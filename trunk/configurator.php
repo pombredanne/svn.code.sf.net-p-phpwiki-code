@@ -1,4 +1,4 @@
-<?php // -*-php-*- $Id: configurator.php,v 1.49 2007-01-09 12:34:48 rurban Exp $
+<?php // -*-php-*- $Id: configurator.php,v 1.50 2007-01-20 15:54:03 rurban Exp $
 /*
  * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
@@ -162,7 +162,7 @@ echo '<','?xml version="1.0" encoding="iso-8859-1"?',">\n";
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- $Id: configurator.php,v 1.49 2007-01-09 12:34:48 rurban Exp $ -->
+<!-- $Id: configurator.php,v 1.50 2007-01-20 15:54:03 rurban Exp $ -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
@@ -424,8 +424,8 @@ new boolean_define_commented_optional('USE_SAFE_DBSESSION');
 $properties["BLOG_DEFAULT_EMPTY_PREFIX"] =
 new boolean_define_commented_optional('BLOG_DEFAULT_EMPTY_PREFIX');
 
-$properties["USE_SEARCHHIGHLIGHT"] =
-new boolean_define_commented_optional('USE_SEARCHHIGHLIGHT');
+$properties["ENABLE_SEARCHHIGHLIGHT"] =
+new boolean_define_commented_optional('ENABLE_SEARCHHIGHLIGHT');
 
 $properties["Part One"] =
 new part('_part1', $SEPARATOR."\n", "
