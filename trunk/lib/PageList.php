@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.137 2007-01-07 18:43:08 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.138 2007-01-20 11:24:15 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -858,8 +858,9 @@ class PageList {
             //TODO: do the sorting, normally not needed if used for exclude only
             return explode(',', $input);
         }
-    } 
+    }
 
+    // TODO: optimize getTotal => store in count
     function allPagesByAuthor($wildcard, $include_empty=false, $sortby='', 
                               $limit='', $exclude='') 
     {
@@ -1218,10 +1219,20 @@ class PageList {
         
         // wikiadminutils hack. that's a way to pagelist non-pages
         $rows = isset($this->_rows) ? $this->_rows : array(); $i = 0;
+        $count = $this->getTotal();
+        $do_paging = ( isset($this->_options['paging']) 
+        	       and !empty($this->_options['limit']) 
+        	       and $count 
+        	       and $this->_options['paging'] != 'none' );
+        if ($do_paging) {
+            $tokens = $this->pagingTokens($count, 
+                                           count($this->_columns), 
+                                           $this->_options['limit']);
+            $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['NUMPAGES']);
+        }
         foreach ($this->_pages as $pagenum => $page) {
             $rows[] = $this->_renderPageRow($page, $i++);
         }
-
         $table = HTML::table(array('cellpadding' => 0,
                                    'cellspacing' => 1,
                                    'border'      => 0,
@@ -1237,10 +1248,7 @@ class PageList {
         if (!empty($this->_columns_seen['checkbox'])) {
             $table->pushContent($this->_jsFlipAll());
         }
-        $do_paging = ( isset($this->_options['paging']) 
-        	       and !empty($this->_options['limit']) 
-        	       and $this->getTotal() 
-        	       and $this->_options['paging'] != 'none' );
+
         $row = HTML::tr();
         $table_summary = array();
         $i = 1; // start with 1!
@@ -1262,9 +1270,6 @@ class PageList {
                                            join(", ", $table_summary)));
         $table->pushContent(HTML::colgroup(array('span' => count($this->_columns))));
         if ( $do_paging ) {
-            $tokens = $this->pagingTokens($this->getTotal(), 
-                                           count($this->_columns), 
-                                           $this->_options['limit']);
             if ($tokens === false) {
                 $table->pushContent(HTML::thead($row),
                                     HTML::tbody(false, $rows));
@@ -1507,6 +1512,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.137  2007/01/07 18:43:08  rurban
+// Honor predefined ->_rows: hack to (re-)allow non-pagenames, used by WikiAdminUtils
+//
 // Revision 1.136  2007/01/02 13:18:46  rurban
 // filter pageNames through limit, needed for xmlrpc. publish col->current_row and col->current_column counters during iteration. use table width=100% with captions. Clarify API: sortby,limit and exclude are strings.
 //
