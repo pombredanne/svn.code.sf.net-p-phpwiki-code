@@ -1,0 +1,12 @@
+Date: Sat, 20 Jan 2007 13:30:17 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: SpellCheck,v 1.1 2007-01-20 11:23:26 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=SpellCheck;
+  pgsrc_version="2 $Revision: 1.1 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+<?plugin SpellCheck ?>
