@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.17 2007-01-03 21:24:33 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.18 2007-01-20 11:41:47 rurban Exp $');
 /*
- Copyright 2004,2006 $ThePhpWikiProgrammingTeam
+ Copyright 2004,2006,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -107,7 +107,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.17 $");
+                            "\$Revision: 1.18 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -398,6 +398,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.17  2007/01/03 21:24:33  rurban
+// remove debugging cruft.
+//
 // Revision 1.16  2007/01/02 13:23:38  rurban
 // support more WikiFormRich method arguments: url, dynurl, xmlrpc, dynxmlrpc, the autocomplete option for pulldown[] and editbox[] and the new combobox[] widget. fix name=value parsing. fix limit with plugin-list invocations
 //
