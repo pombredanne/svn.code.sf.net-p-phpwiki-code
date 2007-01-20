@@ -1,9 +1,9 @@
 Date: Wed, 3 Jan 2007 16:57:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.70 2007-01-07 20:19:30 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.71 2007-01-20 11:41:22 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.70 $";
+  pgsrc_version="2 $Revision: 1.71 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -19,7 +19,8 @@ moving Help pages into Help/, support different charsets in pgsrc
 and Windows NTLM auth support via HttpAuth. utf-8 should work.
 
 fixes:
-* DB: use ANSI SQL statements (oracle by Christopher Jones, postgresql by Reini Urban)
+* DB: use ANSI SQL statements (oracle by Bob Peele & Christopher Jones, 
+  postgresql by Reini Urban)
 * fixed blog and MonoBook theme layout
 * fix Template and CreatePage variable expansion
 * xhtml dump for subpages into subdirectories, fixed filenames and subdir names
@@ -97,7 +98,7 @@ new:
 * added new xmlrpc and SOAP methods: listPlugins, getPluginSynopsis, mailPasswordToUser, 
   getUploadedFileInfo, listRelations, callPlugin, linkSearch
 * new plugins: SemanticSearch, SemanticRelations, LinkSearch, ListRelations, 
-  FileInfo, BoxRight, PasswordReset, WatchPage
+  FileInfo, BoxRight, PasswordReset, WatchPage, SpellCheck
 * add <nowiki></nowiki> tag: Transform only html markup and entities
 * new option DISABLE_MARKUP_WIKIWORD to force [ ] for links
 * new option ENABLE_MARKUP_DIVSPAN (experimental)
