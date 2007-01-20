@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.85 2007-01-07 18:42:49 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.86 2007-01-20 11:25:07 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -453,6 +453,25 @@ class Markup_bracketlink  extends SimpleMarkup
     }
 }
 
+class Markup_spellcheck extends SimpleMarkup
+{
+    function Markup_spellcheck () {
+	$this->suggestions = $GLOBALS['request']->getArg('suggestions');
+    }
+    function getMatchRegexp () {
+    	if (empty($this->suggestions))
+    	    return "(?# false )";
+	$words = array_keys($this->suggestions);
+        return "(?<= \W ) (?:" . join('|', $words) . ") (?= \W )";
+    }
+    
+    function markup ($match) {
+    	if (empty($this->suggestions) or empty($this->suggestions[$match]))
+    	    return $match;
+        return new Cached_SpellCheck(UnWikiEscape($match), $this->suggestions[$match]);
+    }
+}
+
 class Markup_url extends SimpleMarkup
 {
     function getMatchRegexp () {
@@ -822,6 +841,8 @@ class InlineTransformer
     var $_markup = array();
     
     function InlineTransformer ($markup_types = false) {
+	// We need to extend the inline parsers by certain actions, like SearchHighlight, 
+	// SpellCheck and maybe CreateToc.
         if (!$markup_types) {
             $non_default = false;
             $markup_types = array
@@ -833,6 +854,12 @@ class InlineTransformer
                  );
 	    if (DISABLE_MARKUP_WIKIWORD)
                 $markup_types = array_remove($markup_types, 'wikiword');
+
+	    $action = $GLOBALS['request']->getArg('action');
+	    if ($action == 'SpellCheck' and $GLOBALS['request']->getArg('suggestions'))
+	    {   // insert it after url
+		array_splice($markup_types, 2, 1, array('url','spellcheck'));
+	    }
         } else {
             $non_default = true;
 	}
@@ -840,8 +867,7 @@ class InlineTransformer
             $class = "Markup_$mtype";
             $this->_addMarkup(new $class);
         }
-        // This does not work yet
-        if (0 and ENABLE_MARKUP_DIVSPAN and !$non_default)
+        if (ENABLE_MARKUP_DIVSPAN and !$non_default)
             $this->_addMarkup(new Markup_html_divspan);
         if (ENABLE_MARKUP_COLOR and !$non_default)
             $this->_addMarkup(new Markup_color);
@@ -964,8 +990,8 @@ class NowikiTransformer extends InlineTransformer
 
 function TransformInline($text, $markup = 2.0, $basepage=false) {
     static $trfm;
-    
-    if (empty($trfm)) {
+    $action = $GLOBALS['request']->getArg('action');
+    if (empty($trfm) or $action == 'SpellCheck') {
         $trfm = new InlineTransformer;
     }
     
@@ -1013,6 +1039,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.85  2007/01/07 18:42:49  rurban
+// Add support for non-bracket semantic relation parsing. Assert empty regex (interwikimap?) earlier. Change {{Template||}} vars handling to new style. Stricter interwikimap matching not to find semantic links
+//
 // Revision 1.84  2007/01/02 13:18:07  rurban
 // fix semantic attributes syntax :=, not :-, disable DIVSPAN and PLUGIN_MARKUP_MAP
 //
