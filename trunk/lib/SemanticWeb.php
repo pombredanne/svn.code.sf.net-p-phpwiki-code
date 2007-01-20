@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SemanticWeb.php,v 1.4 2007-01-04 16:42:13 rurban Exp $');
+<?php rcs_id('$Id: SemanticWeb.php,v 1.5 2007-01-20 11:41:10 rurban Exp $');
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *
@@ -109,7 +109,7 @@ require_once('lib/Units.php');
 
 
 /**
- * RdfWriter - A class to represent a wikipage as RDF. Supports ?format=rdf
+ * RdfWriter - A class to represent a single(?) wikipage as RDF. Supports ?format=rdf
  *
  * RdfWriter
  *  - RssWriter
@@ -132,10 +132,15 @@ class RdfWriter extends RssWriter // in fact it should be rewritten to be other 
 	$this->_uris_seen = array();
         $this->_items = array();
     }
+
+    function output() {
+	echo "not yet supported!";
+    }
 }
 
 /**
- * OwlWriter - A class to represent a set of wiki pages (a DL model) as OWL. 
+ * OwlWriter - A class to represent a set of wiki pages (a DL model) as OWL.
+ * Requires an actionpage returning a pagelist.
  * Supports ?format=owl
  *
  * OwlWriter
@@ -147,6 +152,7 @@ class OwlWriter extends RdfWriter {
 
 /**
  * ModelWriter - Export a KB as set of wiki pages. 
+ * Requires an actionpage returning a pagelist.
  * Probably based on some convenient DL expression syntax. (deffact, defrule, ...)
  *
  * ModelWriter
