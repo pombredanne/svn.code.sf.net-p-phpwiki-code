@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.31 2007-01-09 12:35:05 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.32 2007-01-20 11:25:30 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.31 $");
+                            "\$Revision: 1.32 $");
     }
 
     function getDefaultArguments() {
@@ -318,7 +318,7 @@ extends WikiPlugin
 	    }
         }
         $content = $current->getContent();
-        $html = HTML::div(array('class' => 'toc','id'=>'toc','align' => $align));
+        $html = HTML::div(array('class' => 'toc', 'id'=>'toc'));
         if ($liststyle == 'dl')
             $list = HTML::dl(array('id'=>'toclist','class' => 'toc'));
         elseif ($liststyle == 'ul')
@@ -401,6 +401,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2007/01/09 12:35:05  rurban
+// Change align to position. Add extracollapse. js now always active, jshide just denotes the initial state.
+//
 // Revision 1.30  2006/12/22 17:49:38  rurban
 // fix quoting
 //
