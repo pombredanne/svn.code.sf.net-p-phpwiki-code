@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllPages.php,v 1.36 2005-01-28 12:08:42 rurban Exp $');
+rcs_id('$Id: AllPages.php,v 1.37 2007-01-20 11:24:32 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -23,9 +23,9 @@ rcs_id('$Id: AllPages.php,v 1.36 2005-01-28 12:08:42 rurban Exp $');
 require_once('lib/PageList.php');
 
 /**
- * DONE: support author=[] (current user) and owner, creator
- * to be able to have pages: 
- * AllPagesCreatedByMe, AllPagesOwnedByMe, AllPagesLastAuthoredByMe
+ * Supports author=[] (current user), owner=[] and creator=[]
+ * to be able to have the action pages:
+ *   AllPagesCreatedByMe, AllPagesOwnedByMe, AllPagesLastAuthoredByMe
  */
 class WikiPlugin_AllPages
 extends WikiPlugin
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.36 $");
+                            "\$Revision: 1.37 $");
     }
 
     function getDefaultArguments() {
@@ -72,40 +72,47 @@ extends WikiPlugin
         
         if ( !empty($args['owner']) ) {
             $pages = PageList::allPagesByOwner($args['owner'], $args['include_empty'],
-                                               $args['sortby'], $args['limit']);
-            if ($args['owner'])
-                $caption = fmt("List of pages owned by [%s] (%d total):", 
-                               WikiLink($args['owner'] == '[]' 
-                                        ? $request->_user->getAuthenticatedId() 
-                                        : $args['owner'], 
-                                        'if_known'),
-                               count($pages));
+                                               $args['sortby'], ''
+					       );
+	    $caption = fmt("List of pages owned by [%s] (%d total):", 
+			   WikiLink($args['owner'] == '[]' 
+				    ? $request->_user->getAuthenticatedId() 
+				    : $args['owner'], 
+				    'if_known'),
+			   count($pages));
+	    $args['count'] = $request->getArg('count');
+	    $pages->_options['count'] = $args['count'];
         } elseif ( !empty($args['author']) ) {
             $pages = PageList::allPagesByAuthor($args['author'], $args['include_empty'],
-                                                $args['sortby'], $args['limit']);
-            if ($args['author'])
-                $caption = fmt("List of pages last edited by [%s] (%d total):", 
-                               WikiLink($args['author'] == '[]' 
-                                        ? $request->_user->getAuthenticatedId() 
-                                        : $args['author'], 
-                                        'if_known'), 
-                               count($pages));
+                                                $args['sortby'], '' 
+						);
+	    $caption = fmt("List of pages last edited by [%s] (%d total):", 
+			   WikiLink($args['author'] == '[]' 
+				    ? $request->_user->getAuthenticatedId() 
+				    : $args['author'], 
+				    'if_known'), 
+			   count($pages));
+	    $args['count'] = $request->getArg('count');
+	    $pages->_options['count'] = $args['count'];
         } elseif ( !empty($args['creator']) ) {
             $pages = PageList::allPagesByCreator($args['creator'], $args['include_empty'],
-                                                 $args['sortby'], $args['limit']);
-            if ($args['creator'])
-                $caption = fmt("List of pages created by [%s] (%d total):", 
-                               WikiLink($args['creator'] == '[]' 
-                                        ? $request->_user->getAuthenticatedId() 
-                                        : $args['creator'],
-                                        'if_known'), 
-                               count($pages));
+                                                 $args['sortby'], ''
+						 );
+	    $caption = fmt("List of pages created by [%s] (%d total):", 
+			   WikiLink($args['creator'] == '[]' 
+				    ? $request->_user->getAuthenticatedId() 
+				    : $args['creator'],
+				    'if_known'), 
+			   count($pages));
+	    $args['count'] = $request->getArg('count');
+	    $pages->_options['count'] = $args['count'];
         //} elseif ($pages) {
         //    $args['count'] = count($pages);
         } else {
             if (! $request->getArg('count'))  
                 $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude']);
-            else $args['count'] = $request->getArg('count');
+            else 
+		$args['count'] = $request->getArg('count');
         }
         if (empty($args['count']) and !empty($pages))
             $args['count'] = count($pages);
@@ -136,6 +143,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2005/01/28 12:08:42  rurban
+// dont print [] as user
+//
 // Revision 1.35  2004/12/06 19:50:04  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.
