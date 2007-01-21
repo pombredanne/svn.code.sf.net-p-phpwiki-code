@@ -391,12 +391,15 @@ $debug_level = 1; //was 9, _DEBUG_VERBOSE | _DEBUG_TRACE
 $user_level  = 1; // BOGO (conflicts with RateIt)
 // use argv (from cli) or tests (from browser) params to run only certain tests
 // avoid pear: Console::Getopt
-$alltests = array('InlineParserTest','HtmlParserTest',
-                  'PageListTest','ListPagesTest',
+$alltests = array(/* valid tests without clean virgin setup */
+                  'InlineParserTest','HtmlParserTest',
+                  'PageListTest','ListPagesTest','XmlRpcTest',
+                  /* virgin setup */
                   'SetupWiki',
+                  /* valid tests only with clean virgin setup */
                   'AllPagesTest','AllUsersTest','OrphanedPagesTest',
-                  'WantedPagesTest',
-                  'TextSearchTest','IncludePageTest',
+                  'WantedPagesTest','TextSearchTest','IncludePageTest',
+                  /* final tests which require all valid pages and consumes > 32MB */
                   'DumpHtml');
 // support db=file db=dba test=SetupWiki test=DumpHtml debug=num -dconstant=value
 // or  db=file,dba test=SetupWiki,DumpHtml debug=num -dconstant=value
@@ -657,6 +660,9 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "</pre>\n";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.46  2007/01/21 12:26:38  rurban
+// Improve UI (label, button)
+//
 // Revision 1.45  2007/01/04 16:48:15  rurban
 // Do sqlite
 //
