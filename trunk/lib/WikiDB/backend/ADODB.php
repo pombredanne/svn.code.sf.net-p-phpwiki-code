@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.95 2007-01-04 16:57:32 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.96 2007-01-21 23:28:32 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -305,7 +305,8 @@ extends WikiDB_backend
 	    // $this->lock(array('page'));
 	    $dbh->BeginTrans( );
 	    $dbh->CommitLock($page_tbl);
-            if ($dbh->hasGenID) {
+            if (0 and $dbh->hasGenID) {
+            	// requires create permissions
                 $id = $dbh->GenID($page_tbl."_id");
             } else {
                 // Better generic version than with adodb::genID
@@ -1544,6 +1545,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.95  2007/01/04 16:57:32  rurban
+// Clarify API: sortby,limit and exclude are strings. fix upgrade test connection
+//
 // Revision 1.94  2006/12/23 11:44:56  rurban
 // deal with strict references and the order of deletion
 //
