@@ -1,14 +1,13 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.13 2005-10-10 19:51:41 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.14 2007-01-21 23:16:29 rurban Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens group manager), Reini Urban (as plugin)
  *
  * TODO: 
- * - fix RATING_STORAGE = WIKIPAGE
+ * - fix RATING_STORAGE = WIKIPAGE (dba, file)
  * - fix smart caching
  * - finish mysuggest.c (external engine with data from mysql)
- * - add php_prediction from wikilens
  * - add the various show modes (esp. TopN queries in PHP)
  */
 /*
@@ -24,10 +23,14 @@ rcs_id('$Id: RatingsDb.php,v 1.13 2005-10-10 19:51:41 rurban Exp $');
  );
 */
 
-//FIXME! for other than SQL backends
+// For other than SQL backends. dba + adodb SQL ratings are allowed but deprecated.
+// We will probablöy drop this hack.
 if (!defined('RATING_STORAGE'))
-    define('RATING_STORAGE', 'SQL');         //TODO: support ADODB
+    // for DATABASE_TYPE=dba and forced RATING_STORAGE=SQL we must use ADODB,
+    // but this is problematic.
+    define('RATING_STORAGE', $GLOBALS['request']->_dbi->_backend->isSQL() ? 'SQL' : 'WIKIPAGE');
     //define('RATING_STORAGE','WIKIPAGE');   // not fully supported yet
+   
 // leave undefined for internal, slow php engine.
 //if (!defined('RATING_EXTERNAL'))
 //    define('RATING_EXTERNAL',PHPWIKI_DIR . 'suggest.exe');
@@ -52,13 +55,17 @@ class RatingsDb extends WikiDB {
         $this->_backend = &$this->_dbi->_backend;
         $this->dimension = null;
         if (RATING_STORAGE == 'SQL') {
-            $this->_sqlbackend = &$this->_backend;
-            if (isa($this->_backend, 'WikiDB_backend_PearDB'))
+            if (isa($this->_backend, 'WikiDB_backend_PearDB')) {
+                $this->_sqlbackend = &$this->_backend;
                 $this->dbtype = "PearDB";
-            elseif (isa($this->_backend, 'WikiDB_backend_ADODOB'))
+            } elseif (isa($this->_backend, 'WikiDB_backend_ADODOB')) {
+                $this->_sqlbackend = &$this->_backend;
                 $this->dbtype = "ADODB";
-            else {
+            } else { 
             	include_once("lib/WikiDB/backend/ADODB.php");
+            	// It is not possible to decouple a ref from the source again. (4.3.11)
+            	// It replaced the main request backend. So we don't initialize _sqlbackend before.
+            	//$this->_sqlbackend = clone($this->_backend);
                 $this->_sqlbackend = new WikiDB_backend_ADODB($GLOBALS['DBParams']);
             	$this->dbtype = "ADODB";
             }
@@ -290,7 +297,7 @@ class RatingsDb extends WikiDB {
         if (is_null($pagename))  $pagename = $this->pagename;
 
         if (RATING_STORAGE == 'SQL') {
-            $dbh = &$this->_dbi->_backend;
+            $dbh = &$this->_sqlbackend;
             if (isset($pagename))
                 $page = $dbh->_get_pageid($pagename);
             else 
@@ -359,7 +366,7 @@ class RatingsDb extends WikiDB {
 		$where = "WHERE";
 	    }
             if (isset($pagename)) {
-                $raterid = $this->_backend->_get_pageid($pagename, true);
+                $raterid = $this->_sqlbackend->_get_pageid($pagename, true);
                 $where .= " raterpage=$raterid";
             }
             if (isset($dimension)) {
@@ -459,14 +466,14 @@ class RatingsDb extends WikiDB {
             $where .= " AND dimension=$dimension";
         }
         if (isset($rater)) {
-            $raterid = $this->_backend->_get_pageid($rater, true);
+            $raterid = $dbi->_get_pageid($rater, true);
             $where .= " AND raterpage=$raterid";
         }
         if (isset($ratee)) {
             if(is_array($ratee)){
         		$where .= " AND (";
         		for($i = 0; $i < count($ratee); $i++){
-        			$rateeid = $this->_backend->_get_pageid($ratee[$i], true);
+        			$rateeid = $dbi->_get_pageid($ratee[$i], true);
             		$where .= "rateepage=$rateeid";
         			if($i != (count($ratee) - 1)){
         				$where .= " OR ";
@@ -474,7 +481,7 @@ class RatingsDb extends WikiDB {
         		}
         		$where .= ")";
         	} else {
-        		$rateeid = $this->_backend->_get_pageid($ratee, true);
+        		$rateeid = $dbi->_get_pageid($ratee, true);
             	$where .= " AND rateepage=$rateeid";
         	}
         }
@@ -512,8 +519,8 @@ class RatingsDb extends WikiDB {
         extract($dbi->_table_names);
 
         $dbi->lock();
-        $raterid = $this->_backend->_get_pageid($rater, true);
-        $rateeid = $this->_backend->_get_pageid($ratee, true);
+        $raterid = $dbi->_get_pageid($rater, true);
+        $rateeid = $dbi->_get_pageid($ratee, true);
         $where = "WHERE raterpage=$raterid and rateepage=$rateeid";
         if (isset($dimension)) {
             $where .= " AND dimension=$dimension";
@@ -545,8 +552,8 @@ class RatingsDb extends WikiDB {
             $rating_tbl = $this->_dbi->getParam('prefix') . 'rating';
 
         $dbi->lock();
-        $raterid = $this->_backend->_get_pageid($rater, true);
-        $rateeid = $this->_backend->_get_pageid($ratee, true);
+        $raterid = $dbi->_get_pageid($rater, true);
+        $rateeid = $dbi->_get_pageid($ratee, true);
         assert($raterid);
         assert($rateeid);
         //mysql optimize: REPLACE if raterpage and rateepage are keys
@@ -712,6 +719,9 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2005/10/10 19:51:41  rurban
+// fix aesthetic issues by John Stevens
+//
 // Revision 1.12  2004/11/15 16:00:02  rurban
 // enable RateIt imgPrefix: '' or 'Star' or 'BStar',
 // enable blue prediction icons,
