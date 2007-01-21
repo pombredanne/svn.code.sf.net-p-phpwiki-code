@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.52 2007-01-20 15:53:51 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.53 2007-01-21 23:26:52 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -555,7 +555,7 @@ class Cached_SearchHighlight extends Cached_DynamicContent
 
     function expand($basepage, &$markup) {
         return HTML::span(array('class' => 'search-term',
-                                'title' => 'Found by ' . $this->engine),
+                                'title' => _("Found by ") . $this->engine),
                           $this->_word);
     }
 }    
@@ -744,6 +744,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2007/01/20 15:53:51  rurban
+// Rewrite of SearchHighlight: through ActionPage and InlineParser
+//
 // Revision 1.51  2007/01/20 11:24:53  rurban
 // add SpellCheck support
 //
