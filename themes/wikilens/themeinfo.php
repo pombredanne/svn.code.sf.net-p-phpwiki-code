@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.8 2004-06-18 15:17:19 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.9 2007-01-21 23:19:52 rurban Exp $');
 /**
  * The wikilens theme is just a normal Theme (can be based on any, here based on default),
  * which additionally loads some wikilens libraries.
@@ -16,7 +16,7 @@ $WikiTheme = new Theme('wikilens');
 // This should result in phpwiki-printer.css being used when
 // printing or print-previewing with style "PhpWiki" or "MacOSX" selected.
 $WikiTheme->setDefaultCSS('PhpWiki',
-                       array(''      => 'phpwiki.css',
+                       array(''      => 'wikilens.css',
                              'print' => 'phpwiki-printer.css'));
 
 // This allows one to manually select "Printer" style (when browsing page)
@@ -51,7 +51,7 @@ $WikiTheme->setLinkIcon('mailto');
 $WikiTheme->setLinkIcon('wikiuser');
 //$WikiTheme->setLinkIcon('*', 'url');
 
-//$WikiTheme->setButtonSeparator("\n | ");
+//$WikiTheme->setButtonSeparator(HTML::br());
 
 /**
  * WikiWords can automatically be split by inserting spaces between
