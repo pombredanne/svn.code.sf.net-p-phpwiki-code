@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.87 2007-01-20 15:53:51 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.88 2007-01-21 13:15:50 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006 Reini Urban
  *
@@ -343,7 +343,9 @@ function LinkBracketLink($bracketlink) {
      *   "[http:/server/~name/]" will work as expected
      *   "http:/server/~name/"   will NOT work as expected, will remove the ~
      */
-    if (strstr($rawlink, "http://") or strstr($rawlink, "https://")) {
+    if (   string_starts_with ($rawlink, "http://")
+        or string_starts_with ($rawlink, "https://") ) 
+    {
         $link = $rawlink;
         // Mozilla Browser URI Obfuscation Weakness 2004-06-14
         //   http://www.securityfocus.com/bid/10532/
@@ -398,12 +400,18 @@ function LinkBracketLink($bracketlink) {
     }
     elseif (substr($link,0,8) == 'phpwiki:')
         return new Cached_PhpwikiURL($link, $label);
-    /* Semantic relations and attributes. Relations must be word chars only! no space */
-    elseif (preg_match("/^ (\w+) (:[:=]) (\w.*) $/x", $link) and !isImageLink($link))
+
+    /* Semantic relations and attributes. 
+     * Relation and attribute names must be word chars only, no space.
+     * Links and Attributes may contain everything. word, nums, units, space, groupsep, numsep, ...
+     */
+    elseif (preg_match("/^ (\w+) (:[:=]) (.*) $/x", $link) and !isImageLink($link))
         return new Cached_SemanticLink($link, $label);
+
     /* Do not store the link */    
     elseif (substr($link,0,1) == ':')
         return new Cached_InterwikiLink($link, $label);
+
     /*
      * Inline images in Interwiki urls's:
      * [File:my_image.gif] inlines the image,
@@ -1062,6 +1070,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.87  2007/01/20 15:53:51  rurban
+// Rewrite of SearchHighlight: through ActionPage and InlineParser
+//
 // Revision 1.86  2007/01/20 11:25:07  rurban
 // add SpellCheck support
 //
