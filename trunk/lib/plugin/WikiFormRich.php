@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiFormRich.php,v 1.18 2007-01-20 11:41:47 rurban Exp $');
+rcs_id('$Id: WikiFormRich.php,v 1.19 2007-01-21 23:29:49 rurban Exp $');
 /*
  Copyright 2004,2006,2007 $ThePhpWikiProgrammingTeam
 
@@ -107,7 +107,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
@@ -178,7 +178,7 @@ extends WikiPlugin
         }
         $form = HTML::form(array('action' => $request->getPostURL(),
                                  'method' => strtolower($method),
-                                 'class'  => 'wikiaction',
+                                 'class'  => 'wikiformrich',
                                  'accept-charset' => $GLOBALS['charset']),
                            HiddenInputs(array('action' => $action)));
         $nbsp = HTML::Raw('&nbsp;');
@@ -197,7 +197,7 @@ extends WikiPlugin
                   unset($input['text']);
               }
 	      switch($inputtype) {
-              case 'checkbox':
+              case 'checkbox': // text right
               case 'radio':
                 if (empty($input['value'])) $input['value'] = 1;
                 if (is_array($input['value'])) {
@@ -231,18 +231,18 @@ extends WikiPlugin
                         $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $nbsp, $text));
                 }
                 break;
-              case 'editbox':
+              case 'editbox': // text left
                   $input['type'] = 'text';
                   if (empty($input['value']) and ($s = $request->getArg($input['name'])))
                       $input['value'] = $s;
 		  if (!empty($input['autocomplete']))
 		      $this->_doautocomplete($form, $inputtype, $input, $input['value']);
                   if ($nobr)
-                      $form->pushContent(HTML::input($input), $nbsp, $text, $nbsp);
+                      $form->pushContent($text, $nbsp, HTML::input($input));
                   else
-                      $form->pushContent(HTML::div(array('class' => $class), HTML::input($input), $nbsp, $text));
+                      $form->pushContent(HTML::div(array('class' => $class), $text, $nbsp, HTML::input($input)));
                   break;
-              case 'combobox':
+              case 'combobox': // text left
 		  $input['autocomplete'] = 1;
               case 'pulldown':
                   $values = @$input['value'];
@@ -278,7 +278,7 @@ extends WikiPlugin
                   $form->pushContent(HTML::input($input));
                   break;
               // change the order of inputs, by explicitly placing a submit button here.
-              case 'submit':
+              case 'submit': // text right (?)
                   //$input['type'] = 'submit';
                   if (empty($input['value'])) $input['value'] = $buttontext ? $buttontext : $action;
                   unset($input['text']);
@@ -398,6 +398,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2007/01/20 11:41:47  rurban
+// Updated (c) year
+//
 // Revision 1.17  2007/01/03 21:24:33  rurban
 // remove debugging cruft.
 //
