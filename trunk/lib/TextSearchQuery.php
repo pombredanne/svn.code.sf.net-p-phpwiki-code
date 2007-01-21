@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.26 2007-01-04 16:41:52 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.27 2007-01-21 23:27:32 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -615,7 +615,7 @@ extends TextSearchQuery_node
     }
     function _sql_quote() {
         $word = preg_replace('/(?=[%_\\\\])/', "\\", $this->word);
-        return $GLOBALS['request']->_dbi->qstr($word);
+        return $GLOBALS['request']->_dbi->_backend->qstr($word);
     }
     function sql()    { return '%'.$this->_sql_quote($this->word).'%'; }
 }
@@ -1123,6 +1123,9 @@ class TextSearchQuery_Lexer {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2007/01/04 16:41:52  rurban
+// Improve error description. Fix the function parser for illegal functions, when the tokenizer cannot be used.
+//
 // Revision 1.25  2007/01/03 21:22:34  rurban
 // add getType(). NumericSearchQuery::check Improve hacker detection using token_get_all(). Better support for multiple attributes. Add getVars().
 //
