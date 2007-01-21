@@ -1,12 +1,12 @@
 <!--{{{ LiveSearch --> <? // -*- php -*- ?>
 <div id="searchholder">
 <form id="searchform" name="searchform" action="<?= WikiURL(_("TitleSearch"))?>"
-      method="get" accept-charset="<?=$charset?>">
+      method="get" accept-charset="<?=$charset?>" style="display:inline">
 <?php if (! USE_PATH_INFO) { ?>
 <input type="hidden" name="pagename" value="<?= _("TitleSearch")?>" />
 <?php } ?>
 <input type="hidden" name="auto_redirect" value="1" />
-<?= $SEARCH_BEFORE ?>
+<?= $SEARCH_BEFORE ?>&nbsp;
 <input name="s" size="12" maxlength="256"
    value="<?=_("Search")?>"
    onfocus="if (this.value == '<?=_("Search")?>') {this.value = '';}"
@@ -28,7 +28,7 @@
    type="text" id="search" 
    title="<?=_("TitleSearch")?>" /> 
 <?php } ?>
-<?= $SEARCH_AFTER ?>
+&nbsp;<?= $SEARCH_AFTER ?>
 </form>
 </div>
 <!--}}}-->

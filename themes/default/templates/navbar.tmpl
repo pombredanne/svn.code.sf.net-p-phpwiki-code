@@ -1,10 +1,7 @@
 <?php // -*-php-*-
-  rcs_id('$Id: navbar.tmpl,v 1.42 2006-09-06 06:08:37 rurban Exp $');
+  rcs_id('$Id: navbar.tmpl,v 1.43 2007-01-21 23:11:16 rurban Exp $');
 ?>
 <!-- The top navigation/search bar -->
-<form action="<?= WikiURL(
-_("TitleSearch"))?>" target="_top"
-      method="get" accept-charset="<?=CHARSET?>">
 <div id="navbuttons">
 <?php if (ENABLE_DISCUSSION_LINK) { ?>
 <?php // This requires Talk: map to end in "/Discussion"
@@ -17,19 +14,9 @@ _("TitleSearch"))?>" target="_top"
   <?=$SEP?>
 <?php } ?>
 <?= WikiLink(_("RecentChanges"), "button") ?>
-<?=$SEP?><?= WikiLink(_("FindPage"), "button") ?>
-<?=HTML::raw('&nbsp;')?><input type="hidden" name="auto_redirect" value="1" />
-<?php if (! USE_PATH_INFO) { ?>
-<input type="hidden" name="pagename" value="<?=
-_("TitleSearch")?>" />
-<?php } ?>
-<input type="text"  name="s" size="12" maxlength="256"
-       title='<?=
-_("Quick Search")?>'
-       onmouseover="window.status='<?=
-_("Quick Search")?>'; return true;"
-       onmouseout="window.status=''; return true;" />
-<?php if (!empty($revision)) { ?>
+<?=$SEP?><?= Template('search', 
+		      array('SEARCH_BEFORE' => HTML::Button(_("FindPage"))))
+?><?php if (!empty($revision)) { ?>
 <?=$SEP?><?= $WikiTheme->makeLinkButton($revision,_("LikePages"),_("LikePages")) 
 ?><?=$SEP?><?= $WikiTheme->makeLinkButton($revision,_("BackLinks"),_("BackLinks")) 
 ?><?php /* RelatedChanges disabled
