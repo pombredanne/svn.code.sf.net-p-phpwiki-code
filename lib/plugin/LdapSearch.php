@@ -1,6 +1,7 @@
-<?php // -*-php-*- rcs_id('$Id: LdapSearch.php,v 1.3 2004-12-20 16:05:14 rurban Exp $');
+<?php // -*-php-*- rcs_id('$Id: LdapSearch.php,v 1.4 2007-01-21 23:23:49 rurban Exp $');
 /**
  Copyright 2004 John Lines
+ Copyright 2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -22,9 +23,9 @@
 /**
  * WikiPlugin which searches an LDAP directory.
  *
- * Note that for this version the attributes are required.
- * TODO: use the config.ini constants as defaults
+ * Uses the config.ini constants as defaults.
  * See http://phpwiki.org/LdapSearchPlugin
+ * TODO: Return a pagelist on certain attributes
  *
  * Usage Samples:
   <?plugin LdapSearch?>
@@ -32,7 +33,7 @@
            host="localhost"
            port=389
            basedn=""
- 	    filter="(cn=*)"
+ 	   filter="(cn=*)"
            attributes=""  
   ?>
   <?plugin LdapSearch host=ldap.example.com filter="(ou=web-team)" 
@@ -46,10 +47,6 @@
  * @author John Lines
  */
 
-// Constants are defined before the class.
-// if (!defined('THE_END'))
-//    define('THE_END', "!");
-
 class WikiPlugin_LdapSearch
 extends WikiPlugin
 {
@@ -62,33 +59,87 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
     function getDefaultArguments() {
-        return array('host' 	=> "localhost", // change to LDAP_AUTH_HOST
-		     'port' 	=> 389,		// ditto
+        return array('host' 	=> "", 		// default: LDAP_AUTH_HOST
+		     'port' 	=> 389,		// ignored if host = full uri
 		     'basedn' 	=> "",		// LDAP_BASE_DN
                      'filter'   => "(cn=*)",
-		     'attributes' => "");
+		     'attributes' => "",
+                     'user'     => '',
+                     'password' => '',
+                     'options'   => "",
+                     );
     }
 
     // I ought to require the ldap extension, but fail sanely, if I cant get it.
     // - however at the moment this seems to work as is
     function run($dbi, $argstr, $request) {
-        extract($this->getArgs($argstr, $request));
-
-	$html = HTML::table(array('cellpadding' => 1,'cellspacing' => 1, 'border' => 1));
-	$connect = ldap_connect($host, $port);
-	if (!ldap_set_option($connect, LDAP_OPT_PROTOCOL_VERSION, 3)) {
-            $this->error(_("Failed to set LDAP protocol version to 3"));
+        if (!function_exists('ldap_connect')) {
+            if (!loadPhpExtension('ldap'))
+                return $this->error(_("Missing ldap extension"));
         }
-	$bind = ldap_bind($connect);
-	$attr_array = array("");		// for now - 
+        $args = $this->getArgs($argstr, $request);
+        extract($args);
+        if (!$host) {
+            if (defined('LDAP_AUTH_HOST')) {
+                $host = LDAP_AUTH_HOST;
+                if (strstr(LDAP_AUTH_HOST, '://'))
+                    $port = null;
+            } else {
+                $host = 'localhost';
+            }
+        } else {
+            if (strstr($host, '://'))
+                $port = null;
+        }
+	$html = HTML();
+        if (is_null($port))
+            $connect = ldap_connect($host);
+        else
+            $connect = ldap_connect($host, $port);
+        if (!$connect)
+            return $this->error(_("Failed to connect to LDAP host"));
+        if (!$options and defined('LDAP_AUTH_HOST') and $args['host'] == LDAP_AUTH_HOST) {
+            if (!empty($GLOBALS['LDAP_SET_OPTION'])) {
+                $options = $GLOBALS['LDAP_SET_OPTION'];
+            }
+        }
+        if ($options) {
+            foreach ($options as $key => $value) {
+                if (!ldap_set_option($connect, $key, $value))
+                    $this->error(_("Failed to set LDAP $key $value"));
+            }
+        }
+	$html->pushContent(HTML::table(array('cellpadding' => 1,'cellspacing' => 1, 'border' => 1)));
+        // special convenience: if host = LDAP_AUTH_HOST
+        // then take user and password from config.ini also
+        if ($user) {
+            if ($password)
+                // required for Windows Active Directory Server
+                $bind = ldap_bind($connect, $user, $password);
+            else
+                $bind = ldap_bind($connect, $user);
+        } elseif (defined('LDAP_AUTH_HOST') and $args['host'] == LDAP_AUTH_HOST) {
+            if (LDAP_AUTH_USER)
+                if (LDAP_AUTH_PASSWORD)
+                    // Windows Active Directory Server is strict
+                    $r = ldap_bind($connect, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD); 
+                else
+                    $r = ldap_bind($connect, LDAP_AUTH_USER); 
+            else // anonymous bind
+                $bind = ldap_bind($connect);
+        } else { // other anonymous bind
+            $bind = ldap_bind($connect);
+        }
+        if (!$bind) return $this->error(_("Failed to bind LDAP host"));
+	$attr_array = array("");
 	if (!$attributes) {
             $res = ldap_search($connect, $basedn, $filter);
         } else {
             $attr_array = split (" ",$attributes);
-            $res = ldap_search($connect, $basedn, $filter,$attr_array);
+            $res = ldap_search($connect, $basedn, $filter, $attr_array);
         }
 	$entries = ldap_get_entries($connect, $res);
  
@@ -153,13 +204,14 @@ extends WikiPlugin
                 $html->pushContent($row);
             }
         }
-        
-        // THE_END); // ??
         return $html;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/12/20 16:05:14  rurban
+// gettext msg unification
+//
 // Revision 1.2  2004/10/04 23:39:34  rurban
 // just aesthetics
 //
