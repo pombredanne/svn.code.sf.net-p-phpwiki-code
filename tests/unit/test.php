@@ -244,22 +244,27 @@ function html_option_form() {
 
     $form = HTML();
     $option = HTML::div(array('class' => 'option'), 
-                        HTML::span(array('style'=>'font-weight: bold','onDblClick'=>'flipAll(\'test[\')'), 'test: '),
+                        HTML::span(array('title' => 'doubleclick to (un)select all', 'style'=>'font-weight: bold; padding: 1px; border: 2px outset;','onDblClick'=>'flipAll(\'test[\')'), 
+                                   ' test: '),
                         HTML::br());
+    $i = 0;
     foreach ($GLOBALS['alltests'] as $s) {
-        $input = array('type' => 'checkbox', 'name' => 'test['.$s.']', 'value' => '1');
+        $id = preg_replace("/\W/", "", $s) . $i++;
+        $input = array('type' => 'checkbox', 'name' => 'test['.$s.']', 'value' => '1', 'id' => $id);
         if (in_array($s,$GLOBALS['runtests'])) $input['checked'] = 'checked';
-        $option->pushContent(HTML::input($input), $s, HTML::br());
+        $option->pushContent(HTML::input($input), HTML::label(array('for' => $id), $s), HTML::br());
     }
     $form->pushContent(HTML::td($option));
 
     $option = HTML::div(array('class' => 'option'), 
-                        HTML::span(array('style'=>'font-weight: bold','onDblClick'=>'flipAll(\'db[\')'), 'db: '),
+                        HTML::span(array('title' => 'doubleclick to (un)select all', 'style'=>'font-weight: bold; padding: 1px; border: 2px outset;', 'onDblClick'=>'flipAll(\'db[\')'), 
+                                   ' db: '),
                         HTML::br());
     foreach ($GLOBALS['database_backends'] as $s) {
-        $input = array('type' => 'checkbox', 'name' => 'db['.$s.']', 'value' => '1');
+        $id = preg_replace("/\W/", "", $s) . $i++;
+        $input = array('type' => 'checkbox', 'name' => 'db['.$s.']', 'value' => '1', 'id' => $id);
         if (in_array($s,$GLOBALS['run_database_backends'])) $input['checked'] = 'checked';
-        $option->pushContent(HTML::input($input), $s, HTML::br());
+        $option->pushContent(HTML::input($input), HTML::label(array('for' => $id), $s), HTML::br());
     }
     $form->pushContent(HTML::td($option));
 
@@ -298,9 +303,9 @@ function updateLevelEdit(formObj) {
    }
 }");
     $option = HTML::div(array('class' => 'option'),
-                        HTML::span(array('style'=>'font-weight: bold',
+                        HTML::span(array('title' => 'doubleclick to (un)select all', 'style'=>'font-weight: bold; padding: 1px; border: 2px outset;',
                                          'onDblClick'=>'flipAll(\'_debug[\')'), 
-                                   'debug: '),
+                                   ' debug: '),' ',
                         HTML::input(array('name'=>'debug','id'=>'debug',
                                           'value'=>$debug_level,'size'=>5)),
                         HTML::br());
@@ -312,16 +317,18 @@ function updateLevelEdit(formObj) {
                    'APD' 	=> 32,
                    'LOGIN' 	=> 64,
                    'SQL' 	=> 128,
+                   'REMOTE' 	=> 256,
                    ) as $s => $v) {
-        $input = array('type' => 'checkbox', 'name' => '_debug[]', 'value' => $v, 
+        $id = preg_replace("/\W/", "", $s) . $i++;
+        $input = array('type' => 'checkbox', 'name' => '_debug[]', 'value' => $v, 'id' => $id,
                        'onClick' => 'updateDebugEdit(this.form)');
         if ($debug_level & $v) $input['checked'] = 'checked';
-        $option->pushContent(HTML::input($input), "_DEBUG_".$s, HTML::br());
+        $option->pushContent(HTML::input($input), HTML::label(array('for' => $id), "_DEBUG_".$s), HTML::br());
     }
     $form->pushContent(HTML::td($option));
 
     $option = HTML::div(array('class' => 'option'), 
-                        HTML::span(array('style'=>'font-weight: bold'), "level: "),
+                        HTML::span(array('style'=>'font-weight: bold;'), "level: "),
                         HTML::input(array('name'=>'level','id'=>'level',
                                           'value'=>$user_level,'size'=>5)),
                         HTML::br());
@@ -332,10 +339,11 @@ function updateLevelEdit(formObj) {
                    'ADMIN' 	=> 10,
                    'UNOBTAINABLE'=> 100,
                    ) as $s => $v) {
-        $input = array('type' => 'radio', 'name' => '_level[]', 'value' => $v,
+        $id = preg_replace("/\W/", "", $s) . $i++;
+        $input = array('type' => 'radio', 'name' => '_level[]', 'value' => $v, 'id' => $id,
                        'onClick' => 'updateLevelEdit(this.form)');
         if ($user_level & $v) $input['checked'] = 'checked';
-        $option->pushContent(HTML::input($input), "WIKIAUTH_".$s, HTML::br());
+        $option->pushContent(HTML::input($input), HTML::label(array('for' => $id), "WIKIAUTH_".$s), HTML::br());
     }
     $form->pushContent(HTML::td($option));
 
@@ -345,7 +353,7 @@ function updateLevelEdit(formObj) {
       foreach ($GLOBALS['define'] as $s) {
         if (defined($s)) {
             $input = array('type' => 'edit', 'name' => $s, 'value' => constant($s));
-            $option->pushContent(HTML::input($input), $s, HTML::br());
+            $option->pushContent(HTML::input($input), HTML::label(array('for' => $id), $s), HTML::br());
         }
     }
     if (!empty($input))
@@ -649,6 +657,9 @@ if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "</pre>\n";
 
 // $Log: not supported by cvs2svn $
+// Revision 1.45  2007/01/04 16:48:15  rurban
+// Do sqlite
+//
 // Revision 1.44  2006/12/23 11:44:56  rurban
 // deal with strict references and the order of deletion
 //
