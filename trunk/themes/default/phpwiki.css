@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.57 2007-01-20 18:20:42 rurban Exp $
+ * $Id: phpwiki.css,v 1.58 2007-01-21 23:11:16 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -111,7 +111,7 @@ body.sidebar h2 { margin-top: 0; }
 div.wikiaction { background-color: #eee; }
 /* div.wikiadmin { background-color: #fee; } */
 form.wikiadmin div { background-color: #fee; }
-
+form.wikiformrich { background-color: #eee; }
 
 /**
  * Link styles
@@ -290,6 +290,11 @@ textarea.wikiedit {
   font-size: smaller;
 }
 #toolbar { padding:0px; }
+
+/**
+ * Search
+ */
+#searchholder { display: inline; }
 
 /**
  * Search Results
