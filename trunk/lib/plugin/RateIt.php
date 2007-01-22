@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.20 2006-03-04 13:57:28 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.21 2007-01-22 23:50:48 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -77,7 +77,6 @@ rcs_id('$Id: RateIt.php,v 1.20 2006-03-04 13:57:28 rurban Exp $');
  * - fix RATING_STORAGE = WIKIPAGE
  * - fix smart caching
  * - finish mysuggest.c (external engine with data from mysql)
- * - add php_prediction
  */
 
 require_once("lib/WikiPlugin.php");
@@ -94,7 +93,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.20 $");
+                            "\$Revision: 1.21 $");
     }
 
     function RatingWidgetJavascript() {
@@ -182,8 +181,7 @@ function deleteRating(actionImg, page, dimension) {
         $WikiTheme->addMoreHeaders($this->RatingWidgetJavascript());
     }
 
-    // todo: only for signed users
-    // todo: set rating dbi for external rating database
+    // Only for signed users done in template only yet.
     function run($dbi, $argstr, &$request, $basepage) {
         global $WikiTheme;
         //$this->_request = & $request;
@@ -192,6 +190,7 @@ function deleteRating(actionImg, page, dimension) {
         //FIXME: fails on test with DumpHtml:RateIt
         if (!is_object($user)) return HTML();
         $this->userid = $user->getId();
+        if (!$this->userid) return HTML();
         $args = $this->getArgs($argstr, $request);
         $this->dimension = $args['dimension'];
         $this->imgPrefix = $args['imgPrefix'];
@@ -402,6 +401,9 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.20  2006/03/04 13:57:28  rurban
+// rename hash for php-5.1
+//
 // Revision 1.19  2004/11/15 16:00:01  rurban
 // enable RateIt imgPrefix: '' or 'Star' or 'BStar',
 // enable blue prediction icons,
