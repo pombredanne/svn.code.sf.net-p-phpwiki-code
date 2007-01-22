@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.69 2007-01-20 15:53:51 rurban Exp $');
+rcs_id('$Id: display.php,v 1.70 2007-01-22 23:43:06 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -79,7 +79,7 @@ function actionPage(&$request, $action) {
     */
     $format = $request->getArg('format');
     /* At first the single page formats: html, xml */
-    if (!$format or $format == 'html') {
+    if (!$format or $format == 'html' or $format == 'sidebar') {
 	$template = Template('browse', array('CONTENT' => $transformedContent));
 	GeneratePage($template, $pagetitle, $revision, $args);
     } elseif ($format == 'xml') {
@@ -296,7 +296,7 @@ function displayPage(&$request, $template=false) {
     $format = $request->getArg('format');
     /* Only single page versions. rss only if not already handled by RecentChanges.
      */
-    if (!$format or $format == 'html') {
+    if (!$format or $format == 'html' or $format == 'sidebar') {
 	$template->printExpansion($toks);
     } elseif ($format == 'xml') {
         $template = new Template('htmldump', $request);
@@ -351,6 +351,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2007/01/20 15:53:51  rurban
+// Rewrite of SearchHighlight: through ActionPage and InlineParser
+//
 // Revision 1.68  2007/01/20 11:25:19  rurban
 // actionPage: request is already global
 //
