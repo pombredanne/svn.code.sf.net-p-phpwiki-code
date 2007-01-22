@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.109 2006-03-19 14:26:29 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.110 2007-01-22 23:51:36 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -202,7 +202,9 @@ extends _RecentChanges_Formatter
             $edits = _("minor edits");
         if (isset($caption) and $caption == _("Recent Comments"))
             $edits = _("comments");
-
+	if ($only_new) {
+            $edits = _("created new pages");
+	}
         if ($timespan = $days > 0) {
             if (intval($days) != $days)
                 $days = sprintf("%.1f", $days);
@@ -223,7 +225,7 @@ extends _RecentChanges_Formatter
          * fr: 1 jour   "Les %d %s les plus récentes pendant [le dernier (d'une] jour) sont énumérées ci-dessous."
          * fr: %s jours "Les %d %s les plus récentes pendant [les derniers (%s] jours) sont énumérées ci-dessous."
          */
-        if ($limit > 0) {
+	if ($limit > 0) {
             if ($timespan) {
                 if (intval($days) == 1)
                     $desc = fmt("The %d most recent %s during the past day are listed below.",
@@ -730,6 +732,30 @@ class NonDeletedRevisionIterator extends WikiDB_PageRevisionIterator
 
 }
 
+/**
+ * only_new: Only new created pages
+ */
+class NewPageRevisionIterator extends WikiDB_PageRevisionIterator
+{
+    /** Constructor
+     *
+     * @param $revisions object a WikiDB_PageRevisionIterator.
+     */
+    function NewPageRevisionIterator ($revisions) {
+        $this->_revisions = $revisions;
+    }
+
+    function next () {
+        while (($rev = $this->_revisions->next())) {
+            if ($rev->getVersion() == 1)
+                return $rev;
+        }
+        $this->free();
+        return false;
+    }
+
+}
+
 class WikiPlugin_RecentChanges
 extends WikiPlugin
 {
@@ -739,7 +765,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.109 $");
+                            "\$Revision: 1.110 $");
     }
 
     function managesValidators() {
@@ -766,6 +792,7 @@ extends WikiPlugin
                      'show_major'   => true,
                      'show_all'     => false,
                      'show_deleted' => 'sometimes',
+		     'only_new'     => false,
                      'limit'        => false,
                      'format'       => false,
                      'daylist'      => false,
@@ -818,7 +845,9 @@ extends WikiPlugin
         if ($show_deleted == 'sometimes')
             $show_deleted = $args['show_minor'];
 
-        if (!$show_deleted)
+        if ($args['only_new'])
+            $changes = new NewPageRevisionIterator($changes);
+        elseif (!$show_deleted)
             $changes = new NonDeletedRevisionIterator($changes, !$args['show_all']);
 
         return $changes;
@@ -895,6 +924,8 @@ class DayButtonBar extends HtmlElement {
                 $caption = _("Show all changes for:");
             else
                 $caption = _("Show changes for:");
+	    if ($only_new)
+                $caption = _("All new pages since:");
         }
 
         $this->pushContent($caption, ' ');
@@ -927,6 +958,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.109  2006/03/19 14:26:29  rurban
+// sf.net patch by Matt Brown: Add rel=nofollow to more actions
+//
 // Revision 1.108  2005/04/01 16:09:35  rurban
 // fix defaults in RecentChanges plugins: e.g. invalid pagenames for PageHistory
 //
