@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AsciiSVG.php,v 1.1 2007-01-21 23:14:55 rurban Exp $');
+rcs_id('$Id: AsciiSVG.php,v 1.2 2007-01-22 23:48:05 rurban Exp $');
 /*
 Copyright 2007 $ThePhpWikiProgrammingTeam
 
@@ -38,12 +38,14 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
         return array('width'  => 200,
                      'height' => 200,
+		     'script' => false, // one line script. not very likely
+		     'onmousemove' => false
                      );
     }
     function handle_plugin_args_cruft(&$argstr, &$args) {
@@ -58,20 +60,28 @@ extends WikiPlugin
         $html = HTML();
         if (empty($WikiTheme->_asciiSVG)) {
             $js = JavaScript('', array
-                             ('src' => $WikiTheme->_findData('asciiSVG.js')));
+                             ('src' => $WikiTheme->_findData('ASCIIsvg.js')));
             if (empty($WikiTheme->_headers_printed))
                 $WikiTheme->addMoreHeaders($js);
             else
                 $html->pushContent($js);
             $WikiTheme->_asciiSVG = 1; // prevent duplicates
         }
+	// extract <script>
+	if (preg_match("/^(.*)<script>(.*)<\/script>/ism", $this->source, $m)) {
+	    $this->source = $m[1];
+	    $args['script'] = $m[2];
+	}
+	$embedargs = array('width'  => $args['width'],
+			   'height' => $args['height'],
+			   //'src'    => "d.svg",
+			   'script' => $this->source);
+	// additional onmousemove argument
+	if ($args['onmousemove']) $embedargs['onmousemove'] = $args['onmousemove'];
         // we need script='data' and not script="data"
-        $embed = new AsciiSVG_HTML("embed", 
-                                   array('width'  => $args['width'],
-                                         'height' => $args['height'],
-                                         'src'    => "d.svg",
-                                         'script' => $this->source));
+        $embed = new AsciiSVG_HTML("embed", $embedargs);
         $html->pushContent($embed);
+	if ($args['script']) $html->pushContent(JavaScript($args['script']));
         return $html;
     }
 };
@@ -88,6 +98,7 @@ class AsciiSVG_HTML extends HtmlElement {
             }
             $qval = str_replace("\"", '&quot;', $this->_quote((string)$val));
             if ($attr == 'script')
+		// note the ' not "
                 $start .= " $attr='$qval'";
             else
                 $start .= " $attr=\"$qval\"";
@@ -98,6 +109,9 @@ class AsciiSVG_HTML extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2007/01/21 23:14:55  rurban
+// new plugin. see license in the .js
+//
 
 // Local Variables:
 // mode: php
