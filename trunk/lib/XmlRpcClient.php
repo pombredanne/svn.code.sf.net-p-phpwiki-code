@@ -1,5 +1,5 @@
 <?php // -*- php -*-
-// $Id: XmlRpcClient.php,v 1.2 2007-01-03 21:25:43 rurban Exp $
+// $Id: XmlRpcClient.php,v 1.3 2007-01-22 23:42:13 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
  */
@@ -29,8 +29,10 @@ if (loadPhpExtension('xmlrpc')) { // fast c lib
     include_once("lib/XMLRPC/xmlrpc.inc");
 }
 
-//  API version
-define ("WIKI_XMLRPC_VERSION", 2);
+// API version
+// See http://www.jspwiki.org/wiki/WikiRPCInterface  for version 1
+// See http://www.jspwiki.org/wiki/WikiRPCInterface2 for version 2 (we support 80%)
+define ("WIKI_XMLRPC_VERSION", 1);
 
 /*
  * Helper functions for encoding/decoding strings.
@@ -100,6 +102,9 @@ function wiki_xmlrpc_post($method, $args = null, $url = null) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.2  2007/01/03 21:25:43  rurban
+ use explicit RPC2 url because of still unresolved dba problem.
+
  Revision 1.1  2007/01/02 13:21:12  rurban
  split client from server
 
