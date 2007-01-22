@@ -1,7 +1,7 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.23 2007-01-10 20:47:45 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.24 2007-01-22 23:42:13 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
- * Copyright (C) 2004, 2005 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
  * LICENCE
  * =======
@@ -45,9 +45,20 @@
 
 /*
 ToDo:
-        Remove all warnings from xmlrpc.inc
-        Return list of external links in listLinks
-        Support RSS2 cloud subscription: wiki.rssPleaseNotify, pingback.ping
+    * Change to unit tests: XmlRpcTest v1, v2 and private
+    * Return list of external links in listLinks
+    * Support RSS2 cloud subscription: wiki.rssPleaseNotify, pingback.ping
+
+    * API v2 http://www.jspwiki.org/wiki/WikiRPCInterface2 :
+
+    * array listAttachments( utf8 page ) - Lists attachments on a given page. 
+            The array consists of utf8 attachment names that can be fed to getAttachment (or putAttachment).
+    * base64 getAttachment( utf8 attachmentName ) - returns the content of an attachment.
+    * putAttachment( utf8 attachmentName, base64 content ) - (over)writes an attachment. 
+    * array system.listMethods()
+    * string system.methodHelp (string methodName)
+    * array system.methodSignature (string methodName) 
+
 Done:
         Test hwiki.jar xmlrpc interface (java visualization plugin)
      	Make use of the xmlrpc extension if found. http://xmlrpc-epi.sourceforge.net/
@@ -137,12 +148,14 @@ function getRPCVersionSupported($params)
  * array getRecentChanges(Date timestamp) : Get list of changed pages since 
  * timestamp, which should be in UTC. The result is an array, where each element
  * is a struct: 
- *     name (string) : Name of the page. The name is UTF-8 with URL encoding to make it ASCII. 
+ *     name (string)       : Name of the page. The name is UTF-8 with URL encoding to make it ASCII. 
  *     lastModified (date) : Date of last modification, in UTC. 
- *     author (string) : Name of the author (if available). Again, name is UTF-8 with URL encoding. 
- * 	   version (int) : Current version. 
+ *     author (string)     : Name of the author (if available). Again, name is UTF-8 with URL encoding. 
+ *     version (int)       : Current version. 
+ *     summary (string)    : UTF-8 with URL encoding. 
  * A page MAY be specified multiple times. A page MAY NOT be specified multiple 
  * times with the same modification date.
+ * Additionally to API version 1 and 2 we added the summary field.
  */
 $wiki_dmap['getRecentChanges']
 = array('signature'	=> array(array($xmlrpcArray, $xmlrpcDateTime)),
@@ -327,8 +340,8 @@ function getPageInfoVersion($params)
 /*  array listLinks( string pagename ): Lists all links for a given page. The
  *  returned array contains structs, with the following elements: 
  *   	 name (string) : The page name or URL the link is to. 
- *       type (int) : The link type. Zero (0) for internal Wiki link,
- *         one (1) for external link (URL - image link, whatever).
+ *       type (int)    : The link type. Zero (0) for internal Wiki link,
+ *                        one (1) for external link (URL - image link, whatever).
  */
 $wiki_dmap['listLinks']
 = array('signature'	=> array(array($xmlrpcArray, $xmlrpcString)),
@@ -400,6 +413,10 @@ function listLinks($params)
     return new xmlrpcresp(new xmlrpcval ($linkstruct, "array"));
 } 
 
+/* End of WikiXMLRpc API v1 */
+/* ======================================================================== */
+/* Start of partial WikiXMLRpc API v2 support */
+
 /** 
  * struct putPage(String pagename, String content, [String author[, String password]})
  * returns a struct with elements: 
@@ -408,6 +425,8 @@ function listLinks($params)
  *   version (int): version of new page
  *
  * @author: Arnaud Fontaine, Reini Urban
+ *
+ * API notes: Contrary to the API v2 specs we dropped attributes and added author + password
  */
 $wiki_dmap['putPage']
 = array('signature'     => array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString)),
@@ -510,12 +529,19 @@ function putPage($params) {
                                         "struct"));
 }
 
+/* End of WikiXMLRpc API v2 */
+/* ======================================================================== */
+/* Start of private extensions */
+
 /**
  * struct getUploadedFileInfo( string localpath ) : returns a struct with elements: 
  *   lastModified (date): Last modification date 
  *   size (int): current version 
  * This is to sync uploaded files up to a remote master wiki. (SyncWiki)
  * Not existing files return both 0.
+ *
+ * API notes: API v2 specs have array listAttachments( utf8 page ), 
+ * base64 getAttachment( utf8 attachmentName ), putAttachment( utf8 attachmentName, base64 content )
  */
 $wiki_dmap['getUploadedFileInfo']
 = array('signature'	=> array(array($xmlrpcStruct, $xmlrpcString)),
@@ -544,7 +570,7 @@ function getUploadedFileInfo($params)
 }
 
 /**
- * Publish-Subscribe
+ * Publish-Subscribe (not yet implemented)
  * Client subscribes to a RecentChanges-like channel, getting a short 
  * callback notification on every change. Like PageChangeNotification, just shorter 
  * and more complicated
@@ -899,6 +925,9 @@ function pingBack($params)
     $targetURI = short_string_decode($Param1->scalarval());
     // TODO...
 }
+
+/* End of private WikiXMLRpc API extensions */
+/* ======================================================================== */
  
 /** 
  * Construct the server instance, and set up the dispatch map, 
@@ -940,6 +969,9 @@ class XmlRpcServer extends xmlrpc_server
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.23  2007/01/10 20:47:45  rurban
+ change int to string because of acdropdown
+
  Revision 1.22  2007/01/07 18:44:11  rurban
  Add summary to getRecentChanges result
 
