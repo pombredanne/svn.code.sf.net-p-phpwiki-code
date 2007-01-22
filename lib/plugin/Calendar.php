@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.32 2007-01-03 21:23:24 rurban Exp $');
+rcs_id('$Id: Calendar.php,v 1.33 2007-01-22 23:48:54 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.32 $");
+                            "\$Revision: 1.33 $");
     }
 
     function getDefaultArguments() {
@@ -219,7 +219,7 @@ extends WikiPlugin
 
 	if ($args['display_weeknum'])
             $row->pushContent(HTML::td(array('class' => 'cal-weeknum'),
-				       strftime("%U",$time)));
+				       ((int)strftime("%U", $time))+1)); // %U problem. starts with 0
         $col = (7 + $t['tm_wday'] - $args['start_wday']) % 7;
         if ($col > 0)
             $row->pushContent(HTML::td(array('colspan' => $col)));
@@ -238,7 +238,7 @@ extends WikiPlugin
             $done  = $t['tm_mday'] == 1;
 	    if (!$col and !$done and $args['display_weeknum'])
 		$row->pushContent(HTML::td(array('class' => 'cal-weeknum'),
-					   strftime("%U", $time)));
+					   ((int)strftime("%U", $time))+1)); // starts with 0
         }
 
         if ($row->getContent()) {
@@ -251,6 +251,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2007/01/03 21:23:24  rurban
+// add display_weeknum support.
+//
 // Revision 1.31  2006/03/19 14:26:29  rurban
 // sf.net patch by Matt Brown: Add rel=nofollow to more actions
 //
