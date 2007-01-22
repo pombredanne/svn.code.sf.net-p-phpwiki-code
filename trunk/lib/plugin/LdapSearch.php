@@ -1,4 +1,4 @@
-<?php // -*-php-*- rcs_id('$Id: LdapSearch.php,v 1.4 2007-01-21 23:23:49 rurban Exp $');
+<?php // -*-php-*- rcs_id('$Id: LdapSearch.php,v 1.5 2007-01-22 23:50:00 rurban Exp $');
 /**
  Copyright 2004 John Lines
  Copyright 2007 $ThePhpWikiProgrammingTeam
@@ -59,7 +59,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
     function getDefaultArguments() {
         return array('host' 	=> "", 		// default: LDAP_AUTH_HOST
@@ -112,7 +112,7 @@ extends WikiPlugin
                     $this->error(_("Failed to set LDAP $key $value"));
             }
         }
-	$html->pushContent(HTML::table(array('cellpadding' => 1,'cellspacing' => 1, 'border' => 1)));
+	
         // special convenience: if host = LDAP_AUTH_HOST
         // then take user and password from config.ini also
         if ($user) {
@@ -144,71 +144,68 @@ extends WikiPlugin
 	$entries = ldap_get_entries($connect, $res);
  
         // If we were given attributes then we return them in the order given
-        if ( $attributes ) {
-            for ($i=0; $i < count($attr_array) ; $i++) { $attrcols[$i] = 0; }
-            // Work out how many columns we need for each attribute.
-            for ($i = 0; $i < $entries["count"]; $i++) {
-                for ($ii=0; $ii<$entries[$i]["count"]; $ii++){
-                    $data = $entries[$i][$ii];
-                    $datalen = $entries[$i][$data]["count"];
-                    if ($attrcols[$ii] < $datalen ) {
-                        $attrcols[$ii] = $datalen;
-                    }
-                }
-            }
-
-            // Now print the headers
-            $row = HTML::tr(); 
-            for ($i=0; $i < count($attr_array) ; $i++) {
-                $row->pushContent(HTML::th(array('colspan' => $attrcols[$i]), $attr_array[$i]));
-            }
-            $html->pushContent($row);
-            for ($i = 0; $i<$entries["count"]; $i++) {
-                // start a new row for every data value.
-                $row = HTML::tr(); $nc=0;
-                for ($ii=0; $ii < $entries[$i]["count"]; $ii++){
-                    $data = $entries[$i][$ii];
-                    // 3 possible cases for the values of each attribute.
-                    switch ($entries[$i][$data]["count"]) {
-                    case 0:
-                        $row->pushContent(HTML::td("")); $nc++;
-                        break;
-                    default:
-                        for ($iii=0; $iii < $entries[$i][$data]["count"]; $iii++) {
-                            $row->pushContent(HTML::td($entries[$i][$data][$iii])); $nc++;
-                        }
-                    }
-                    // Make up some blank cells if required to pad this row
-                    for ( $j=0 ; $j < ($attrcols[$ii] - $nc); $j++ ) {
-                        $row->pushContent(HTML::td(""));
-                    }
-                }
-                $html->pushContent($row);
-            }
-        } else {
-            // $i = entries
-            // $ii = attributes for entry
-            // $iii = values per attribute
+	// else take all 
+        if ( !$attributes ) {
+	    $attr_array = array();
             for ($i = 0; $i < $entries["count"]; $i++) {
                 $row = HTML::tr();
                 for ($ii=0; $ii < $entries[$i]["count"]; $ii++){
                     $data = $entries[$i][$ii];
-                    for ($iii=0; $iii < $entries[$i][$data]["count"]; $iii++) {
-                        //echo $data.":&nbsp;&nbsp;".$entries[$i][$data][$iii]."<br>";
-                        if ( ! $attributes ) {
-                            $row->pushContent(HTML::td($data));
-                        }
-                        $row->pushContent(HTML::td($entries[$i][$data][$iii]));
-                    }
-                }         	
-                $html->pushContent($row);
-            }
-        }
-        return $html;
+		    $attr_array[] = $data;
+		}
+	    }
+	}
+	for ($i=0; $i < count($attr_array) ; $i++) { $attrcols[$i] = 0; }
+	// Work out how many columns we need for each attribute. objectclass has more
+	for ($i = 0; $i < $entries["count"]; $i++) {
+	    for ($ii=0; $ii<$entries[$i]["count"]; $ii++){
+		$data = $entries[$i][$ii];
+		$datalen = $entries[$i][$data]["count"];
+		if ($attrcols[$ii] < $datalen ) {
+		    $attrcols[$ii] = $datalen;
+		}
+	    }
+	}
+	// Print the headers
+	$row = HTML::tr(); 
+	for ($i=0; $i < count($attr_array) ; $i++) {
+	    if ($attrcols[$i] > 1)
+		$row->pushContent(HTML::th(array('colspan' => $attrcols[$i]), $attr_array[$i]));
+	    else
+		$row->pushContent(HTML::th(array(), $attr_array[$i]));
+	}
+	$html->pushContent($row);
+
+	// Print the data rows
+	for ($i = 0; $i<$entries["count"]; $i++) {
+	    $row = HTML::tr(); $nc=0;
+	    for ($ii=0; $ii < $entries[$i]["count"]; $ii++){
+		$data = $entries[$i][$ii];
+		// 3 possible cases for the values of each attribute.
+		switch ($entries[$i][$data]["count"]) {
+		case 0:
+		    $row->pushContent(HTML::td("")); $nc++;
+		    break;
+		default:
+		    for ($iii=0; $iii < $entries[$i][$data]["count"]; $iii++) {
+			$row->pushContent(HTML::td($entries[$i][$data][$iii])); $nc++;
+		    }
+		}
+		// Make up some blank cells if required to pad this row
+		for ( $j=0 ; $j < ($attrcols[$ii] - $nc); $j++ ) {
+		    $row->pushContent(HTML::td(""));
+		}
+	    }
+	    $html->pushContent($row);
+	}
+	return HTML::table(array('cellpadding' => 1,'cellspacing' => 1, 'border' => 1), $html);
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2007/01/21 23:23:49  rurban
+// Improve LdapSearch
+//
 // Revision 1.3  2004/12/20 16:05:14  rurban
 // gettext msg unification
 //
