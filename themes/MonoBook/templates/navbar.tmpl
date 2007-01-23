@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: navbar.tmpl,v 1.7 2007-01-07 18:49:23 rurban Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.8 2007-01-23 00:14:19 rurban Exp $ -->
 <?php
 // With MonoBook it is similar to Sidebar, named boxes at the left.
 // actionbuttons, navigation, search, toolbox
@@ -13,6 +13,7 @@
       <li id="n-mainpage"><?= WikiLink(HOME_PAGE) ?></li>
       <li id="n-recentchanges"><?= WikiLink(_("RecentChanges")) ?></li>
       <li id="n-recentcomments"><?= WikiLink(_("RecentComments")) ?></li>
+      <li id="n-recentnewpages"><?= WikiLink(_("RecentNewPages")) ?></li>
       <li id="n-likepages"><?= Button(array('action'=>'LikePages'),_("Like Pages"), $page->getName()) ?></li>
       <li id="n-randompage"><?= WikiLink(_("RandomPage")) ?></li>
 <li id="n-help"><?= WikiLink(_("PhpWikiDocumentation"),"",_("Help")) ?></li>
