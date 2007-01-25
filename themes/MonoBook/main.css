@@ -1710,3 +1710,95 @@ span.redirectfrom {
   background: yellow;
   font-weight: normal;
 }
+
+a.spell-wrong {
+  color:#ba0000; 
+  background: yellow;
+}
+span.spell-wrong {
+  color:#ba0000; 
+}
+
+
+/**
+ * Wiki Forms
+ * 
+ * The div inside the wikiadmin upload form does not
+ * have a class yet, so it must be referenced indirectly
+ */
+/* div.wikiaction { background-color: #eee; } */
+/* div.wikiadmin { background-color: #fee; } */
+/* form.wikiadmin div { background-color: #fee; } */
+form.wikiformrich { background-color: #eee; }
+
+/**
+ * Link styles
+ */
+.wiki, .named-wiki {
+  text-decoration: none;
+  font-weight: normal;
+  /* font-weight: bold; */
+}
+.wiki relation, .named-wiki relation, .wiki attribute, .named-wiki attribute {
+  font-style: oblique;
+  /* font-weight: normal; */
+  font-weight: bold;
+}
+
+span.relation-symbol {
+  font-weight: bold;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+}
+
+/* Action buttons */
+a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe,
+input.wikiaction, input.button, input.wikiadmin {
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  /* don't wrap text buttons */
+  white-space: nowrap;
+  /*font-size: inherit; */
+}
+
+/*
+a.wikiaction, a.wikiaction:visited, input.wikiaction, input.button { 
+  background-color: #ddd; 
+}
+*/
+
+.wikiunsafe { background-color: #fcc; }
+
+/*
+a.wikiadmin, a.wikiadmin:visited, input.wikiadmin  { 
+  background-color: #fdd; 
+}
+*/
+
+/* Unknown links */
+.wikiunknown, .named-wikiunknown {
+  font-weight: normal;
+  font-size: 100%;
+}
+ /* QuestionMark #600 */
+.wikiunknown a, .named-wikiunknown a {
+  color: #447;
+  background-color: #eee;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: smaller;
+}
+
+/* Backlinks */
+.backlinks {
+  text-decoration: underline;
+  color: #006;
+}
+h1 .backlinks { text-decoration: underline; }
+
+/* Interwiki links */
+/* .wikipage  { font-weight: bold; } */
+.wikipage  { font-weight: normal; }
+.interwiki { text-decoration: none; }
+.interwiki, i.interwiki .wikipage, em .interwiki .wikipage { font-style: oblique; }
+.interwiki .wikipage, i .interwiki, em .interwiki { font-style: normal; }
