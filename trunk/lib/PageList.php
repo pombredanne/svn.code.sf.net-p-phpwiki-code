@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.138 2007-01-20 11:24:15 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.139 2007-01-25 07:42:01 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -52,6 +52,8 @@
  *   cols > 1, comma, azhead, ordered (OL lists)
  *   ->supportedArgs() which arguments are supported, so that the plugin 
  *                     doesn't explictly need to declare it 
+ * TODO:
+ *   info=relation,linkto nopage=1
  *
  * FIXED: 
  *   fix memory exhaustion on large pagelists with old --memory-limit php's only. 
@@ -528,7 +530,7 @@ class PageList {
                     $columns = array_diff(array_merge($columns,$cols),array($symbol));
                 }
             }
-            if (!in_array('pagename',$columns))
+            if (empty($this->_options['nopage']) and !in_array('pagename',$columns))
                 $this->_addColumn('pagename');
             foreach ($columns as $col) {
 		if (!empty($col))
@@ -536,14 +538,15 @@ class PageList {
             }
         }
         // If 'pagename' is already present, _addColumn() will not add it again
-        $this->_addColumn('pagename');
+	if (empty($this->_options['nopage']))
+	    $this->_addColumn('pagename');
 
         foreach (array('sortby','limit','paging','count','dosort') as $key) {
-          if (!empty($options) and !empty($options[$key])) {
-            $this->_options[$key] = $options[$key];
-          } else {
-            $this->_options[$key] = $GLOBALS['request']->getArg($key);
-          }
+	    if (!empty($options) and !empty($options[$key])) {
+		$this->_options[$key] = $options[$key];
+	    } else {
+		$this->_options[$key] = $GLOBALS['request']->getArg($key);
+	    }
         }
         $this->_options['sortby'] = $this->sortby($this->_options['sortby'], 'init');
         if ($exclude) {
@@ -596,6 +599,8 @@ class PageList {
                      'ordered'  => false,   // OL or just UL lists (ignored for comma)
 		     'linkmore' => '',      // If count>0 and limit>0 display a link with 
 		     // the number of all results, linked to the given pagename.
+		     
+		     'nopage'   => false,   // for info=col omit the pagename column
                      );
     }
 
@@ -1064,7 +1069,8 @@ class PageList {
                                      'rating',/*'ratingwidget',*/
                                      'coagreement', 'minmisery',
                                      /*'prediction',*/
-                                     'averagerating', 'top3recs');
+                                     'averagerating', 'top3recs', 
+                                     'relation', 'linkto');
             if (!in_array($column, $silently_ignore))
                 trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
             return false;
@@ -1147,6 +1153,7 @@ class PageList {
                     $need_sort = true;
             }
             if ($need_sort) { // There are some columns to sort by
+		// only if sortby=pagename then. consider nopage
                 usort($this->_pages, array($this, '_pageCompare'));
             }
         }
@@ -1330,11 +1337,16 @@ function flipAll(formObj) {
     // 'azhead' - support <h3> grouping into initials
     // 'ordered' - OL or UL list (not yet inherited to all plugins)
     // 'comma'  - condensed comma-list only, 1: no links, >1: with links
+    // TODO: only unique list entries, esp. with nopage
     function _generateList($caption='') {
     	if (empty($this->_pages)) return; // stop recursion
         $out = HTML();
         if ($caption)
             $out->pushContent(HTML::p($caption));
+	// Semantic Search et al: only unique list entries, esp. with nopage
+	if (!is_array($this->_pages[0]) and is_string($this->_pages[0])) {
+	    $this->_pages = array_unique($this->_pages);
+	}
 
         // need a recursive switch here for the azhead and cols grouping.
         if (!empty($this->_options['cols']) and $this->_options['cols'] > 1) {
@@ -1512,6 +1524,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.138  2007/01/20 11:24:15  rurban
+// Support paging limit if ->_pages is not yet limited by the backend (AllPagesByMe)
+//
 // Revision 1.137  2007/01/07 18:43:08  rurban
 // Honor predefined ->_rows: hack to (re-)allow non-pagenames, used by WikiAdminUtils
 //
