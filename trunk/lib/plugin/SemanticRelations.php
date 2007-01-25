@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SemanticRelations.php,v 1.3 2007-01-03 21:23:06 rurban Exp $');
+rcs_id('$Id: SemanticRelations.php,v 1.4 2007-01-25 07:42:22 rurban Exp $');
 /*
  Copyright 2005 Reini Urban
 
@@ -39,7 +39,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision: 1.4 $");
     }
     function getDefaultArguments() { 
         return array(
@@ -70,7 +70,7 @@ extends WikiPlugin
                         ($pagename . " ",
                          // Link to a special "Relation:" InterWiki link?
                          $rellink, 
-                         HTML::strong(" :: "), // use spaces?
+                         HTML::span(array('class'=>'relation-symbol'), "::"), // use spaces?
                          WikiLink($object->_pagename), 
                          " ",
                          // Link to SemanticSearch
@@ -98,7 +98,8 @@ extends WikiPlugin
                     if (!$noheader)
                         $atthtml->pushContent("$pagename  ");
 		    $atthtml->pushContent(HTML::span($rellink, 
-						     HTML::strong(" := "), 
+						     HTML::span(array('class'=>'relation-symbol'), 
+								":="), 
 						     HTML($val)),
 					  " ", $searchlink,
 					  HTML::br());
@@ -124,6 +125,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2007/01/03 21:23:06  rurban
+// Clarify description: "on this page".
+//
 // Revision 1.2  2007/01/02 13:22:41  rurban
 // default pagename: current. improve output: class, linked attributes. switch to SemanticSearch argument s
 //
