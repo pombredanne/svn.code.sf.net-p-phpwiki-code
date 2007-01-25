@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.7 2007-01-04 16:42:41 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.8 2007-01-25 07:42:29 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -66,7 +66,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -139,7 +139,7 @@ extends WikiPlugin
             $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "", 
                                             $initial_content);
         }
-	$this->doVariableExpansion($initial_content, $vars, $basepage, $dbi);
+	$this->doVariableExpansion($initial_content, $vars, $basepage, $request);
 
         array_push($included_pages, $page);
 
@@ -154,9 +154,10 @@ extends WikiPlugin
     /**
      * Expand template variables. Used by the TemplatePlugin and the CreatePagePlugin
      */
-    function doVariableExpansion(&$content, $vars, $basepage, &$dbi) {
+    function doVariableExpansion(&$content, $vars, $basepage, &$request) {
         if (preg_match('/%%\w+%%/', $content)) // need variable expansion
         {
+            $dbi =& $request->_dbi;
             $var = array();
             if (is_string($vars) and !empty($vars)) {
                 foreach (split("&",$vars) as $pair) {
@@ -167,24 +168,24 @@ extends WikiPlugin
 		$var =& $vars;
 	    }
             $thispage = $dbi->getPage($basepage);
-            // pagename is not overridable
-            if (empty($var['pagename']))
-                $var['pagename'] = $thispage->getName();
-            // those are overridable
-            if (empty($var['mtime']) and preg_match('/%%mtime%%/', $content)) {
+            // pagename and userid are not overridable
+            $var['PAGENAME'] = $thispage->getName();
+            if (preg_match('/%%USERID%%/', $content))
+		$var['USERID'] = $request->_user->getId();
+            if (empty($var['MTIME']) and preg_match('/%%MTIME%%/', $content)) {
                 $thisrev  = $thispage->getCurrentRevision(false);
-                $var['mtime'] = $GLOBALS['WikiTheme']->formatDateTime($thisrev->get('mtime'));
+                $var['MTIME'] = $GLOBALS['WikiTheme']->formatDateTime($thisrev->get('mtime'));
             }
-            if (empty($var['ctime']) and preg_match('/%%ctime%%/', $content)) {
+            if (empty($var['CTIME']) and preg_match('/%%CTIME%%/', $content)) {
                 if ($first = $thispage->getRevision(1,false))
-                    $var['ctime'] = $GLOBALS['WikiTheme']->formatDateTime($first->get('mtime'));
+                    $var['CTIME'] = $GLOBALS['WikiTheme']->formatDateTime($first->get('mtime'));
             }
-            if (empty($var['author']) and preg_match('/%%author%%/', $content))
-                $var['author'] = $thispage->getAuthor();
-            if (empty($var['owner']) and preg_match('/%%owner%%/', $content))
-                $var['owner'] = $thispage->getOwner();
-            if (empty($var['creator']) and preg_match('/%%creator%%/', $content))
-                $var['creator'] = $thispage->getCreator();
+            if (empty($var['AUTHOR']) and preg_match('/%%AUTHOR%%/', $content))
+                $var['AUTHOR'] = $thispage->getAuthor();
+            if (empty($var['OWNER']) and preg_match('/%%OWNER%%/', $content))
+                $var['OWNER'] = $thispage->getOwner();
+            if (empty($var['CREATOR']) and preg_match('/%%CREATOR%%/', $content))
+                $var['CREATOR'] = $thispage->getCreator();
             foreach (array("SERVER_URL", "DATA_PATH", "SCRIPT_NAME", "PHPWIKI_BASE_URL") as $c) {
                 // constants are not overridable
                 if (preg_match('/%%'.$c.'%%/', $content))
@@ -194,7 +195,8 @@ extends WikiPlugin
                 $var['BASE_URL'] = PHPWIKI_BASE_URL;
 
             foreach ($var as $key => $val) {
-                $content = preg_replace("/%%".preg_quote($key,"/")."%%/", $val, $content);
+                //$content = preg_replace("/%%".preg_quote($key,"/")."%%/", $val, $content);
+                $content = str_replace("%%".$key."%%", $val, $content);
             }
         }
 	return $content;
@@ -202,6 +204,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2007/01/04 16:42:41  rurban
+// Improve vars passing. Use new method allow_undeclared_arg to allow arbitrary args for the template. Fix doVariableExpansion: use a ref. Fix pagename. Put away \b in regex.
+//
 // Revision 1.6  2007/01/03 21:24:06  rurban
 // protect page in links. new doVariableExpansion() for CreatePage. preg_quote custom vars.
 //
