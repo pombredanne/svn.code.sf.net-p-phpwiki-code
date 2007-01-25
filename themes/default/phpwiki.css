@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.58 2007-01-21 23:11:16 rurban Exp $
+ * $Id: phpwiki.css,v 1.59 2007-01-25 07:42:50 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -127,28 +127,39 @@ form.wikiformrich { background-color: #eee; }
   font-weight: bold;
 }
 
+span.relation-symbol {
+    font-weight: bold;
+    font-family: monospace;
+    letter-spacing: 0.1em;
+}
+
 /* Action buttons */
 a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe,
 input.wikiaction, input.button, input.wikiadmin {
-  text-decoration: none;
-  font-family: Arial, Helvetica, sans-serif;
-  /* don't wrap text buttons */
-  white-space: nowrap;
-  /*font-size: inherit; */
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    /* don't wrap text buttons */
+    white-space: nowrap;
+    /* font-size: inherit; */
 }
 
-a.wikiaction, a.wikiaction:visited, input.wikiaction, input.button { background-color: #ddd; }
+a.wikiaction, a.wikiaction:visited, input.wikiaction, input.button { 
+    background-color: #ddd; 
+}
 
 .wikiunsafe { background-color: #fcc; }
 
-a.wikiadmin, a.wikiadmin:visited, input.wikiadmin  { background-color: #fdd; }
+a.wikiadmin, a.wikiadmin:visited, input.wikiadmin  { 
+    background-color: #fdd; 
+}
 
 /* Unknown links */
 .wikiunknown, .named-wikiunknown {
   font-weight: normal;
   font-size: 100%;
 }
- /* QuestionMark #600 */
+
+/* QuestionMark #600 */
 .wikiunknown a, .named-wikiunknown a {
   color: #447;
   background-color: #eee;
