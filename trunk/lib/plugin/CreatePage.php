@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreatePage.php,v 1.9 2007-01-04 16:42:23 rurban Exp $');
+rcs_id('$Id: CreatePage.php,v 1.10 2007-01-25 07:42:16 rurban Exp $');
 /**
- Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -48,7 +48,7 @@ extends WikiPlugin_Template
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -109,36 +109,13 @@ extends WikiPlugin_Template
 		    }
                 }
                 $meta['summary'] = _("Created by CreatePage");
-		$content = $this->doVariableExpansion($initial_content, $vars, $s, $dbi);
+		$content = $this->doVariableExpansion($initial_content, $vars, $s, $request);
 
 		if ($content !== $initial_content) {
                     // need to destroy the template so that editpage doesn't overwrite it.
                     unset($param['template']);
                     $url = WikiURL($s, $param, 'absurl');
                 }
-
-		/*
-                // expand variables in $initial_content
-                if (preg_match('/%%\w+%%/', $initial_content)) {
-                    $var = array();
-                    if (!empty($vars)) {
-                        foreach (split("&",$vars) as $pair) {
-                            list($key,$val) = split("=",$pair);
-                            $var[$key] = $val;
-                        }
-                    }
-                    if (empty($var['pagename']))
-                        $var['pagename'] = $s;
-                    if (empty($var['ctime']) and preg_match('/%%ctime%%/', $initial_content))
-                        $var['ctime'] = $GLOBALS['WikiTheme']->formatDateTime(time());
-                    if (empty($var['author']) and preg_match('/%%author%%/', $initial_content))
-                        $var['author'] = $user->getId();
-
-                    foreach ($var as $key => $val) {
-                        $initial_content = preg_replace("/%%\b".$key."\b%%/",$val,$initial_content);
-                    }
-		}
-		*/
 
                 $page->save($content, $version+1, $meta);
             }
@@ -148,6 +125,9 @@ extends WikiPlugin_Template
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2007/01/04 16:42:23  rurban
+// Expand even if no vars are given. They may be defaults, i.e %%pagename%%
+//
 // Revision 1.8  2007/01/03 21:23:32  rurban
 // Derive from Template. Use same variable expansion. Support <noinclude> as in Template.
 //
