@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.7 2007-01-20 11:25:38 rurban Exp $');
+rcs_id('$Id: MailNotify.php,v 1.8 2007-01-25 07:41:54 rurban Exp $');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -24,7 +24,10 @@ rcs_id('$Id: MailNotify.php,v 1.7 2007-01-20 11:25:38 rurban Exp $');
  */
 
 if (!defined("MAILER_LOG"))
-    define("MAILER_LOG", 'c:/wikimail.log');
+    if (isWindows())
+        define("MAILER_LOG", 'c:/wikimail.log');
+    else
+        define("MAILER_LOG", '/var/log/wikimail.log');
 
 class MailNotify {
 
@@ -383,6 +386,9 @@ will expire at %s.",
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2007/01/20 11:25:38  rurban
+// Fix onDeletePage warning and content
+//
 // Revision 1.6  2007/01/09 12:34:55  rurban
 // Fix typo (syntax error)
 //
