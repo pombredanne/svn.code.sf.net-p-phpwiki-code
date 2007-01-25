@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.110 2007-01-22 23:51:36 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.111 2007-01-25 21:48:52 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -204,6 +204,12 @@ extends _RecentChanges_Formatter
             $edits = _("comments");
 	if ($only_new) {
             $edits = _("created new pages");
+	}
+	if ($author) {
+            global $request;
+            if ($author == '[]')
+                $author = $request->_user->getID();
+            $edits .= sprintf(_(" from author %s"), $author);
 	}
         if ($timespan = $days > 0) {
             if (intval($days) != $days)
@@ -693,7 +699,8 @@ extends _RecentChanges_RssFormatter {
                                  ));
     }
 
-    function cloud_properties () { return false; } // xml-rpc registerProcedure not yet implemented
+    // xml-rpc registerProcedure not yet implemented
+    function cloud_properties () { return false; } 
     function cloud_properties_test () {
         return array('protocol' => 'xml-rpc', // xml-rpc or soap or http-post
                      'registerProcedure' => 'wiki.rssPleaseNotify',
@@ -703,6 +710,9 @@ extends _RecentChanges_RssFormatter {
     }
 }
 
+/**
+ * Filter by non-empty
+ */
 class NonDeletedRevisionIterator extends WikiDB_PageRevisionIterator
 {
     /** Constructor
@@ -733,7 +743,8 @@ class NonDeletedRevisionIterator extends WikiDB_PageRevisionIterator
 }
 
 /**
- * only_new: Only new created pages
+ * Filter by only_new.
+ * Only new created pages
  */
 class NewPageRevisionIterator extends WikiDB_PageRevisionIterator
 {
@@ -753,7 +764,26 @@ class NewPageRevisionIterator extends WikiDB_PageRevisionIterator
         $this->free();
         return false;
     }
+}
 
+/**
+ * Filter by author
+ */
+class AuthorPageRevisionIterator extends WikiDB_PageRevisionIterator
+{
+    function AuthorPageRevisionIterator ($revisions, $author) {
+        $this->_revisions = $revisions;
+        $this->_author = $author;
+    }
+
+    function next () {
+        while (($rev = $this->_revisions->next())) {
+            if ($rev->get('author_id') == $this->_author)
+                return $rev;
+        }
+        $this->free();
+        return false;
+    }
 }
 
 class WikiPlugin_RecentChanges
@@ -765,7 +795,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.110 $");
+                            "\$Revision: 1.111 $");
     }
 
     function managesValidators() {
@@ -793,6 +823,7 @@ extends WikiPlugin
                      'show_all'     => false,
                      'show_deleted' => 'sometimes',
 		     'only_new'     => false,
+		     'author'       => false,
                      'limit'        => false,
                      'format'       => false,
                      'daylist'      => false,
@@ -821,7 +852,7 @@ extends WikiPlugin
         return $args;
     }
 
-    function getMostRecentParams ($args) {
+    function getMostRecentParams (&$args) {
         extract($args);
 
         $params = array('include_minor_revisions' => $show_minor,
@@ -829,6 +860,12 @@ extends WikiPlugin
                         'include_all_revisions' => !empty($show_all));
         if ($limit != 0)
             $params['limit'] = $limit;
+        if (!empty($args['author'])) {
+            global $request;
+            if ($args['author'] == '[]')
+                $args['author'] = $request->_user->getID();
+            $params['author'] = $args['author'];
+        }
 
         if ($days > 0.0)
             $params['since'] = time() - 24 * 3600 * $days;
@@ -847,6 +884,8 @@ extends WikiPlugin
 
         if ($args['only_new'])
             $changes = new NewPageRevisionIterator($changes);
+        elseif ($args['author'])
+            $changes = new AuthorPageRevisionIterator($changes, $args['author']);
         elseif (!$show_deleted)
             $changes = new NonDeletedRevisionIterator($changes, !$args['show_all']);
 
@@ -901,8 +940,10 @@ extends WikiPlugin
         $args['show_deleted'] = 'sometimes';
         $args['show_all'] = false;
         $args['days'] = 90;
-        return $this->makeBox(WikiLink($this->getName(),'',SplitPagename($this->getName())),
-                              $this->format($this->getChanges($request->_dbi, $args), $args));
+        return $this->makeBox(WikiLink($this->getName(),'',
+                                       SplitPagename($this->getName())),
+                              $this->format
+                              ($this->getChanges($request->_dbi, $args), $args));
     }
 
 };
@@ -958,6 +999,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.110  2007/01/22 23:51:36  rurban
+// new arg: only_new
+//
 // Revision 1.109  2006/03/19 14:26:29  rurban
 // sf.net patch by Matt Brown: Add rel=nofollow to more actions
 //
