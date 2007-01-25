@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.21 2007-01-20 11:24:23 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.22 2007-01-25 07:42:09 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004,2007 Reini Urban
@@ -29,20 +29,17 @@
 require_once "lib/WikiPlugin.php";
 // require_once "lib/plugincache-config.php"; // replaced by config.ini settings!
 
-// Try the system pear class. See newCache()
-@require_once('Cache.php');
-
 // types:
 define('PLUGIN_CACHED_HTML', 0);         // cached html (extensive calculation)
 define('PLUGIN_CACHED_IMG_INLINE', 1);   // gd images
-define('PLUGIN_CACHED_MAP', 2);    	     // area maps
-define('PLUGIN_CACHED_SVG', 3);    	     // special SVG/SVGZ object
+define('PLUGIN_CACHED_MAP', 2);    	 // area maps
+define('PLUGIN_CACHED_SVG', 3);    	 // special SVG/SVGZ object
 define('PLUGIN_CACHED_SVG_PNG', 4);      // special SVG/SVGZ object with PNG fallback
-define('PLUGIN_CACHED_SWF', 5);    	     // special SWF (flash) object
-define('PLUGIN_CACHED_PDF', 6);    	     // special PDF object (inlinable?)
-define('PLUGIN_CACHED_PS', 7);    	     // special PS object (inlinable?)
+define('PLUGIN_CACHED_SWF', 5);    	 // special SWF (flash) object
+define('PLUGIN_CACHED_PDF', 6);    	 // special PDF object (inlinable?)
+define('PLUGIN_CACHED_PS', 7);    	 // special PS object (inlinable?)
 // boolean tests:
-define('PLUGIN_CACHED_IMG_ONDEMAND', 64); // don't cache
+define('PLUGIN_CACHED_IMG_ONDEMAND', 64);// don't cache
 define('PLUGIN_CACHED_STATIC', 128); 	 // make it available via /uploads/, not via /getimg.php?id=
 
 /**
@@ -1156,6 +1153,9 @@ class WikiPluginCached extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2007/01/20 11:24:23  rurban
+// Use cat/type for text pipe commands if input > 255 chars
+//
 // Revision 1.20  2005/09/26 06:28:46  rurban
 // beautify tempnam() on Windows. Move execute() from above here
 //
