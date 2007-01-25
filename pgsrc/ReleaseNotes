@@ -1,15 +1,15 @@
-Date: Wed, 3 Jan 2007 16:57:56 +0000
+Date: Sat, 20 Jan 2007 16:57:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.71 2007-01-20 11:41:22 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.72 2007-01-25 07:42:36 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.71 $";
+  pgsrc_version="2 $Revision: 1.72 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-1.3.13  Jan, 15 2007 Reini Urban
+1.3.13  (planned end of January) Reini Urban
 
 This is major feature release which will be the base for the stable 1.4.0. 
 The highlights are SemanticWeb support, various WYSIWYG editors, 
@@ -44,15 +44,18 @@ fixes:
 * fixed limit handling with multiple pagelists: don't overwrite request arg
 * change PageDump Content-Type header for download to application/octet-stream to avoid 
   pesty .txt suffixes on windows clients
+* fixed wikilens with dba and RATING_STORAGE=SQL. RATING_STORAGE=WIKIPAGE not yet fixed.
 
 changes:
 * SemanticWeb: add linkrelation support, getPageLinks returns now an array of hashes. 
   optimize get_links for relations.
-* add new empty InterWiki moniker ":", not to store backlinks [:DontStoreLink] (experimental)
+* add new linksyntax "[:pagename]" inside square brackets only, not to store backlinks.
+  [:DontStoreLink] (experimental)
 * moved default help pages to Help/ subpages. Partially for "de" also.
 * generalized ENABLE_HTMLAREA3 to ENABLE_WYSIWYG
 * support more WikiFormRich method arguments: url, dynurl, xmlrpc, dynxmlrpc, plugin,
   the autocomplete option for pulldown[] and editbox[] and the new combobox[] widget.
+  Improve WikiFormRich layout.
 * DB: foreign key support in schemas, simplify methods
 * remove user table: upgrade from SQL db.
 * updated locale for it, de and es (google translation)
@@ -85,11 +88,15 @@ changes:
 * enhance text2png arguments and features. See Help:text2pngPlugin 
 * Template plugin: allow passing arbitrary args, not just in vars.
 * added old gd support to PhotoAlbum thumbs (ImageTile)
+* Improve LdapSearch plugin and add action page.
+* Improved wikilens theme.
+* Changed all default Template vars to expanded to uppercase: PAGENAME, USERID, ...
 
 new:
-* add SemanticRelations syntax and db structure.
+* add SemanticRelations syntax, db structure and attribute units.
   Sample: pagename=SanDiego is_a::city => SanDiego relation=is_a, linkto=city
-          population:=1,305,736, store unified attribute in pagedata
+          population:=1,305,736 (numeric units)
+  Store unified attribute in pagedata.
 * new experimental WYSIWYG edit library framework: 
   WikiWyg, tinymce, FCKeditor, htmlarea3, htmlarea2, spaw
 * new wysiwyg_editor feature by Jean-Nicolas GEREONE and Sabri LABBENE (experimental)
@@ -98,13 +105,15 @@ new:
 * added new xmlrpc and SOAP methods: listPlugins, getPluginSynopsis, mailPasswordToUser, 
   getUploadedFileInfo, listRelations, callPlugin, linkSearch
 * new plugins: SemanticSearch, SemanticRelations, LinkSearch, ListRelations, 
-  FileInfo, BoxRight, PasswordReset, WatchPage, SpellCheck
+  FileInfo, BoxRight, PasswordReset, WatchPage, SpellCheck, SearchHighlight, AsciiSVG
 * add <nowiki></nowiki> tag: Transform only html markup and entities
 * new option DISABLE_MARKUP_WIKIWORD to force [ ] for links
 * new option ENABLE_MARKUP_DIVSPAN (experimental)
 * new option PLUGIN_MARKUP_MAP for xml-style plugin syntax (experimental)
 * support Windows NTLM Auth via HttpAuth: mod_ntlm (apache1+2. also on linux) 
   and mod_auth_sspi (apache2. better, but windows only)
+* new stable option ENABLE_SEARCHHIGHLIGHT with actionpage and plugin SearchHighlight.
+  In CVS for some time called USE_SEARCHHIGHLIGHT.
 * patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
 * new options db-check and db-rebuild for WikiAdminPlugin.
   You can now retransform all pages at once.
@@ -112,18 +121,21 @@ new:
 * added "Printable version" js to monobook theme. See License in 
   http://www.howtocreate.co.uk/jslibs/termsOfUse.html
 * new ActionButton function for MonoBook with selected state. (tab state)
-* added SyncWiki plugin to sync pages and uploads with master wiki.
+* added SyncWiki plugin to sync pages and uploads with a master wiki.
 * added boolean UPLOAD_USERDIR to upload into user-specific directory.
 * added support for multiple page arguments in BackLinks. Logical AND.
 * added wikidb->backend->rebuild()
 * added "Keep old" and "Overwrite with new" buttons and actions for loadfile merge edit.
-* added lib/XmlRpcClient, xmlrpc methods to lib/HttpClient and acdropdown.js
+* added lib/XmlRpcClient, xmlrpc methods to lib/HttpClient and acdropdown.js. JSON not yet.
 * created Help/*Plugin stubs for *ALL* plugins in pgsrc
 * added a new _DEBUG_REMOTE flag to debug into remote sessions (xmlrpc, ajax, ...)
 * added WikiDB::linkSearch and backend/dumb/~LinkSearchIter.php. Mainly for SemanticSearch, 
-  and LinkSearch, but can be used for a better SemanticSearch (combined queries) and 
-  BackLinks et al also
+  and LinkSearch, but can be used for SemanticSearchAdvanced (combined queries as <ask>) and 
+  BackLinks et al also.
 * added Calendar display_weeknum argument
+* added new AsciiSVG plugin
+* added XmlRpcTest tests
+* Added nopage argument to PageList and all its plugins
 
 1.3.12p3 Jun, 18 2006, Reini Urban:
 
