@@ -1,9 +1,9 @@
 Date: Sat, 20 Jan 2007 16:57:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.72 2007-01-25 07:42:36 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.73 2007-01-25 22:05:09 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.72 $";
+  pgsrc_version="2 $Revision: 1.73 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -16,12 +16,13 @@ The highlights are SemanticWeb support, various WYSIWYG editors,
 a stable ~MonoBook theme (wikipedia), enabled acdropdown support 
 (~LiveSearch), postgresql and oracle enhancements, 
 moving Help pages into Help/, support different charsets in pgsrc 
-and Windows NTLM auth support via HttpAuth. utf-8 should work.
+and Windows NTLM auth support via HttpAuth, a lot more plugins 
+and enhancements. UTF-8 should work.
 
 fixes:
 * DB: use ANSI SQL statements (oracle by Bob Peele & Christopher Jones, 
   postgresql by Reini Urban)
-* fixed blog and MonoBook theme layout
+* fixed blog, MonoBook, sidebar and wikilens theme layout
 * fix Template and CreatePage variable expansion
 * xhtml dump for subpages into subdirectories, fixed filenames and subdir names
 * fixed loading pages into foreign charsets (such as utf-8)
@@ -94,8 +95,8 @@ changes:
 
 new:
 * add SemanticRelations syntax, db structure and attribute units.
-  Sample: pagename=SanDiego is_a::city => SanDiego relation=is_a, linkto=city
-          population:=1,305,736 (numeric units)
+  Sample: pagename=SanDiego is_a :: city => SanDiego relation = is_a, linkto = city
+          population := 1,305,736 (numeric units)
   Store unified attribute in pagedata.
 * new experimental WYSIWYG edit library framework: 
   WikiWyg, tinymce, FCKeditor, htmlarea3, htmlarea2, spaw
@@ -105,7 +106,8 @@ new:
 * added new xmlrpc and SOAP methods: listPlugins, getPluginSynopsis, mailPasswordToUser, 
   getUploadedFileInfo, listRelations, callPlugin, linkSearch
 * new plugins: SemanticSearch, SemanticRelations, LinkSearch, ListRelations, 
-  FileInfo, BoxRight, PasswordReset, WatchPage, SpellCheck, SearchHighlight, AsciiSVG
+  FileInfo, BoxRight, PasswordReset, WatchPage, SpellCheck, SearchHighlight, 
+  AsciiSVG
 * add <nowiki></nowiki> tag: Transform only html markup and entities
 * new option DISABLE_MARKUP_WIKIWORD to force [ ] for links
 * new option ENABLE_MARKUP_DIVSPAN (experimental)
@@ -135,7 +137,10 @@ new:
 * added Calendar display_weeknum argument
 * added new AsciiSVG plugin
 * added XmlRpcTest tests
-* Added nopage argument to PageList and all its plugins
+* Added nopage argument to PageList and all its plugins. Unique rows only not yet.
+* Added author argument to RecentChanges and added two action pages: 
+  MyRecentChanges, MyRecentEdits
+
 
 1.3.12p3 Jun, 18 2006, Reini Urban:
 
