@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.53 2007-01-21 23:26:52 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.54 2007-01-25 07:41:41 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -498,9 +498,10 @@ class Cached_SemanticLink extends Cached_WikiLink {
 		 HTML::a(array('href'  => WikiURL($is_attribute ? $this->_relation : $this->_page),
 			       'class' => "wiki ".($is_attribute ? "attribute" : "relation"),
 			       'title' => $is_attribute 
-			           ? (isset($this->_attribute_base) ? ("Attribute base value: ").$this->_attribute_base 
-				      				    : ("Attribute value: ").$this->_attribute)
-			       	   : sprintf(_("Relation %s to page %s"), $this->_relation, $this->_page)),
+			       ? (isset($this->_attribute_base)
+				  ? sprintf(_("Attribute %s base value: %s"), $this->_relation, $this->_attribute_base)
+				  : sprintf(_("Attribute %s value: "), $this->_attribute))
+			       : sprintf(_("Relation %s to page %s"), $this->_relation, $this->_page)),
 			 $label)
 		 );
         } elseif ($is_attribute) {
@@ -508,7 +509,7 @@ class Cached_SemanticLink extends Cached_WikiLink {
 		(
 		 HTML::a(array('href'  => WikiURL($this->_relation),
 			       'class' => "wiki attribute",
-			       'title' => "Attribute base value: " .$this->_attribute_base),
+			       'title' => sprintf(_("Attribute %s base value: %s"), $this->_relation, $this->_attribute_base)),
 			 $url)
 		 );
         } else {
@@ -517,7 +518,7 @@ class Cached_SemanticLink extends Cached_WikiLink {
 		 HTML::a(array('href'  => WikiURL($this->_relation),
 			       'class' => "wiki relation"),
 			 $this->_relation),
-		 HTML::strong($m[2]),
+		 HTML::span(array('class'=>'relation-symbol'), $m[2]),
 		 HTML::a(array('href'  => WikiURL($this->_page),
 			       'class' => "wiki"),
 			 $this->_page)
@@ -744,6 +745,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2007/01/21 23:26:52  rurban
+// Translate Found by
+//
 // Revision 1.52  2007/01/20 15:53:51  rurban
 // Rewrite of SearchHighlight: through ActionPage and InlineParser
 //
