@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.147 2007-01-04 16:41:41 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.148 2007-01-27 21:53:03 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -216,7 +216,7 @@ class WikiDB {
         else 
             $result = -1;
 
-        /* Generate notification emails? */
+        /* Generate notification emails */
         include_once("lib/MailNotify.php");
         $MailNotify = new MailNotify($pagename);
         $MailNotify->onDeletePage ($this, $pagename);
@@ -988,7 +988,10 @@ class WikiDB_Page
         if (isa($newrevision, 'WikiDB_PageRevision')) {
             // Save didn't fail because of concurrent updates.
             $notify = $this->_wikidb->get('notify');
-            if (!empty($notify) and is_array($notify) and !isa($GLOBALS['request'],'MockRequest')) {
+            if (!empty($notify) 
+		and is_array($notify) 
+		and !isa($GLOBALS['request'],'MockRequest')) 
+	    {
                 include_once("lib/MailNotify.php");
                 $MailNotify = new MailNotify($newrevision->getName());
                 $MailNotify->onChangePage ($this, $wikitext, $version, $meta);
@@ -2170,7 +2173,7 @@ function _sql_debuglog($msg, $newline=true, $shutdown=false) {
     static $i = 0;
     if (!$fp) {
         $stamp = strftime("%y%m%d-%H%M%S");
-        $fp = fopen("/tmp/sql-$stamp.log", "a");
+        $fp = fopen(TEMP_DIR."/sql-$stamp.log", "a");
         register_shutdown_function("_sql_debuglog_shutdown_function");
     } elseif ($shutdown) {
         fclose($fp);
@@ -2185,6 +2188,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.147  2007/01/04 16:41:41  rurban
+// Some pageiterators also set ['pagedata']['linkrelation'], hmm
+//
 // Revision 1.146  2007/01/02 13:20:00  rurban
 // rewrote listRelations. added linkSearch. force new date in renamePage. fix fortune error handling. added page->setAttributes. use translated initial owner. Clarify API: sortby,limit and exclude are strings. Enhance documentation.
 //
