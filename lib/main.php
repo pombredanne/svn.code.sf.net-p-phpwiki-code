@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.229 2007-01-07 18:44:30 rurban Exp $');
+rcs_id('$Id: main.php,v 1.230 2007-01-27 21:52:15 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -475,14 +475,17 @@ class WikiRequest extends Request {
         }
         elseif ($require_level == WIKIAUTH_BOGO)
             $msg = fmt("You must sign in to %s.", $what);
-        elseif ($require_level == WIKIAUTH_USER)
+        elseif ($require_level == WIKIAUTH_USER) {
             $msg = fmt("You must log in to %s.", $what);
-        elseif ($require_level == WIKIAUTH_ANON)
+	    if (!ALLOW_ANON_USER)
+		$msg = fmt("You must log in first", $what);
+        } elseif ($require_level == WIKIAUTH_ANON)
             $msg = fmt("Access for you is forbidden to %s.", $what);
         else
             $msg = fmt("You must be an administrator to %s.", $what);
 
-        $this->_user->PrintLoginForm($this, compact('require_level','pass_required'), $msg);
+        $this->_user->PrintLoginForm($this, compact('require_level','pass_required'), 
+				     $msg);
         $this->finish();    // NORETURN
     }
 
@@ -1297,6 +1300,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.229  2007/01/07 18:44:30  rurban
+// Fix typo for moderation
+//
 // Revision 1.228  2007/01/02 13:22:17  rurban
 // allow application/xml for xmlrpc detection: acdropdown uses this type. silence findActionPage warnings
 //
