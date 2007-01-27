@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.112 2007-01-22 23:59:52 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.113 2007-01-27 21:52:54 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -502,17 +502,17 @@ function IniConfig($file) {
     global $PLUGIN_CACHED_IMGTYPES;
     $PLUGIN_CACHED_IMGTYPES = preg_split('/\s*[|:]\s*/', PLUGIN_CACHED_IMGTYPES);
 
+    if (empty($rs['TEMP_DIR'])) {
+	$rs['TEMP_DIR'] = "/tmp";
+	if (getenv("TEMP"))
+	    $rs['TEMP_DIR'] = getenv("TEMP");
+    }
     if (!defined('PLUGIN_CACHED_CACHE_DIR')) {
         if (empty($rs['PLUGIN_CACHED_CACHE_DIR']) and !empty($rsdef['PLUGIN_CACHED_CACHE_DIR']))
             $rs['PLUGIN_CACHED_CACHE_DIR'] = $rsdef['PLUGIN_CACHED_CACHE_DIR'];
         if (empty($rs['PLUGIN_CACHED_CACHE_DIR'])) {
             if (!empty($rs['INCLUDE_PATH'])) {
                 @ini_set('include_path', $rs['INCLUDE_PATH']);
-            }
-            if (empty($rs['TEMP_DIR'])) {
-                $rs['TEMP_DIR'] = "/tmp";
-                if (getenv("TEMP"))
-                    $rs['TEMP_DIR'] = getenv("TEMP");
             }
             $rs['PLUGIN_CACHED_CACHE_DIR'] = $rs['TEMP_DIR'] . '/cache';
             if (!FindFile($rs['PLUGIN_CACHED_CACHE_DIR'], 1)) { // [29ms]
@@ -935,6 +935,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.112  2007/01/22 23:59:52  rurban
+// protect against PLUGIN_CACHED_CACHE_DIR definition
+//
 // Revision 1.111  2007/01/20 15:54:04  rurban
 // rename USE_SEARCHHIGHLIGHT to ENABLE_SEARCHHIGHLIGHT
 //
