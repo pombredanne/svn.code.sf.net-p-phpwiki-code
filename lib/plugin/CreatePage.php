@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreatePage.php,v 1.10 2007-01-25 07:42:16 rurban Exp $');
+rcs_id('$Id: CreatePage.php,v 1.11 2007-01-27 21:36:52 rurban Exp $');
 /**
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_Template
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -91,7 +91,8 @@ extends WikiPlugin_Template
             $page = $dbi->getPage($s);
             $current = $page->getCurrentRevision();
             $version = $current->getVersion();
-            if ($version and !$overwrite) {
+	    // overwrite empty (deleted) pages
+            if ($version and !$current->hasDefaultContents() and !$overwrite) {
                 return $this->error(fmt("%s already exists", WikiLink($s)));
             } else {
                 $user = $request->getUser();
@@ -125,6 +126,9 @@ extends WikiPlugin_Template
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2007/01/25 07:42:16  rurban
+// Changed doVariableExpansion API.
+//
 // Revision 1.9  2007/01/04 16:42:23  rurban
 // Expand even if no vars are given. They may be defaults, i.e %%pagename%%
 //
