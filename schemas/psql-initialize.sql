@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.16 2006-12-23 13:04:56 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.17 2007-01-28 23:35:59 rurban Exp $
 
 \set QUIET
 
@@ -11,9 +11,9 @@
 \set prefix 	''
 
 --================================================================
--- Which postgres user gets access to the tables?
+-- Which postgresql user gets access to the tables?
 --
--- You should set this to the name of the postgres
+-- You should set this to the name of the postgresql
 -- user who will be accessing the tables.
 -- See DATABASE_DSN in config.ini
 --
@@ -27,20 +27,24 @@
 
 \set httpd_user	'wikiuser'
 
---================================================================
---
--- Don't modify below this point unless you know what you are doing.
---
---================================================================
-
 \set qprefix '\'' :prefix '\''
 \set qhttp_user '\'' :httpd_user '\''
 
 \echo At first init the database with: 
 \echo '$ createdb phpwiki'
 \echo '$ createuser -S -R -d ' :qhttp_user
-\echo '$ psql -U ' :qhttp_user ' phpwiki < /usr/share/postgresql/contrib/tsearch2.sql'
-\echo '$ psql -U ' :qhttp_user ' phpwiki < psql-initialize.sql'
+\echo '$ psql -U ' :qhttp_user ' ' :qprefix 'phpwiki < /usr/share/postgresql/contrib/tsearch2.sql'
+\echo 'Did you customize the ispell and synonym dictionaries in psql-initialize.sql ?'
+\echo '$ psql -U ' :qhttp_user ' ' :qprefix 'phpwiki < psql-initialize.sql'
+-- remove the quit line below
+\quit
+
+--================================================================
+--
+-- Don't modify below this point unless you know what you are doing.
+--
+--================================================================
+
 
 \echo Initializing PhpWiki tables with:
 \echo '       prefix = ' :qprefix
@@ -281,13 +285,13 @@ CREATE INDEX :accesslog_host_idx ON :accesslog_tbl (remote_host);
 
 --================================================================
 
--- Use the tsearch2 fulltextsearch extension: (recommended) 7.4, 8.0, 8.1
--- at first init it for the database:
+-- Use the tsearch2 fulltextsearch extension: (recommended) 7.4, 8.0, 8.1, 8.2
+-- At first init it for the database:
 -- $ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
 
--- example of ISpell dictionary
+-- Example of ISpell dictionary:
 --   UPDATE pg_ts_dict SET dict_initoption='DictFile="/usr/local/share/ispell/russian.dict" ,AffFile ="/usr/local/share/ispell/russian.aff", StopFile="/usr/local/share/ispell/russian.stop"' WHERE dict_name='ispell_template';
--- example of synonym dict
+-- Example of synonym dict:
 --   UPDATE pg_ts_dict SET dict_initoption='/usr/local/share/ispell/english.syn' WHERE dict_id=5; 
 
 \echo Initializing tsearch2 indices
