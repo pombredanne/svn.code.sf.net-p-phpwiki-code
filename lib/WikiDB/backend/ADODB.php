@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.96 2007-01-21 23:28:32 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.97 2007-01-28 22:53:23 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -616,7 +616,7 @@ extends WikiDB_backend
                     $dbh->Execute("INSERT INTO $link_tbl (linkfrom, linkto)"
                                   . " VALUES ($pageid, $linkid)");
                 }
-                if (array_key_exists($linkid, $oldlinks)) {
+                if ($oldlinks and array_key_exists($linkid, $oldlinks)) {
                     // This was also in the previous page
                     unset($oldlinks[$linkid]); 
                 }
@@ -1545,6 +1545,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.96  2007/01/21 23:28:32  rurban
+// Disable hasGenID. requires CREATE perms
+//
 // Revision 1.95  2007/01/04 16:57:32  rurban
 // Clarify API: sortby,limit and exclude are strings. fix upgrade test connection
 //
