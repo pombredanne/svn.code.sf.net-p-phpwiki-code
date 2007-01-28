@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.30 2007-01-02 13:20:26 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.31 2007-01-28 22:49:55 rurban Exp $');
 
 /*
   Pagedata
@@ -600,6 +600,33 @@ class WikiDB_backend
     function isSQL () {
         return in_array(DATABASE_TYPE, array('SQL','ADODB','PDO'));
     }
+
+    function write_accesslog(&$entry) {
+        global $request;
+        $dbh = &$this->_dbh;
+        $log_tbl = $entry->_accesslog->logtable;
+        // duration problem: sprintf "%f" might use comma e.g. "100,201" in european locales
+        $dbh->query("INSERT INTO $log_tbl"
+                    . " (time_stamp,remote_host,remote_user,request_method,request_line,request_uri,"
+                    .   "request_args,request_time,status,bytes_sent,referer,agent,request_duration)"
+                    . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    array(
+                          // Problem: date formats are backend specific. Either use unixtime as %d (long),
+                          // or the native timestamp format.
+                          $entry->time,
+                          $entry->host, 
+                          $entry->user,
+                          $entry->request_method, 
+                          $entry->request, 
+                          $entry->request_uri,    
+                          $entry->request_args,
+                          $entry->_ncsa_time($entry->time), 
+                          $entry->status, 
+                          $entry->size,
+                          $entry->referer,
+                          $entry->user_agent,
+                          $entry->duration));
+    }
 };
 
 /**
@@ -659,7 +686,7 @@ class WikiDB_backend_search
         $this->_dbh = $dbh;
         $this->_case_exact = $search->_case_exact;
         $this->_stoplist   =& $search->_stoplist;
-        $this->_stoplisted = array();
+        $this->stoplisted = array();
     }
     function _quote($word) {
         return preg_quote($word, "/");
@@ -684,13 +711,13 @@ class WikiDB_backend_search
     	if ($node->op != 'WORD' and $node->op != 'EXACT')
     	    return false;
         if (preg_match("/^".$this->_stoplist."$/i", $node->word)) {
-            array_push($this->_stoplisted, $node->word);
+            array_push($this->stoplisted, $node->word);
             return true;
         }
         return false;
     }
     function getStoplisted($word) {
-        return $this->_stoplisted;
+        return $this->stoplisted;
     }
 }
 
@@ -724,6 +751,9 @@ class WikiDB_backend_search_sql extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2007/01/02 13:20:26  rurban
+// added link_search. Clarify API: sortby,limit and exclude are strings.
+//
 
 // For emacs users
 // Local Variables:
