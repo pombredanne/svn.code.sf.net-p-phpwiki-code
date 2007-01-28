@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO.php,v 1.11 2007-01-04 16:57:32 rurban Exp $');
+rcs_id('$Id: PDO.php,v 1.12 2007-01-28 22:49:55 rurban Exp $');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
@@ -1250,6 +1250,32 @@ extends WikiDB_backend
             $limit = '';
         return $limit;
     }
+
+    function write_accesslog(&$entry) {
+        global $request;
+        $dbh = &$this->_dbh;
+        $log_tbl = $entry->_accesslog->logtable;
+        $dbh->prepare("INSERT INTO $log_tbl"
+                      . " (time_stamp,remote_host,remote_user,request_method,request_line,request_args,"
+                      .   "request_file,request_uri,request_time,status,bytes_sent,referer,agent,request_duration)"
+                      . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        // Either use unixtime as %d (long), or the native timestamp format.
+        $sth->bindParam(1, $entry->time, PDO_PARAM_INT);
+        $sth->bindParam(2, $entry->host, PDO_PARAM_STR, 100);
+        $sth->bindParam(3, $entry->user, PDO_PARAM_STR, 50);
+        $sth->bindParam(4, $entry->request_method, PDO_PARAM_STR, 10);
+        $sth->bindParam(5, $entry->request, PDO_PARAM_STR, 255);
+        $sth->bindParam(6, $entry->request_args, PDO_PARAM_STR, 255);
+        $sth->bindParam(7, $entry->request_uri, PDO_PARAM_STR, 255);
+        $sth->bindParam(8, $entry->_ncsa_time($entry->time), PDO_PARAM_STR, 28);
+        $sth->bindParam(9, $entry->time, PDO_PARAM_INT);
+        $sth->bindParam(10,$entry->status, PDO_PARAM_INT);
+        $sth->bindParam(11,$entry->size, PDO_PARAM_INT);
+        $sth->bindParam(12,$entry->referer, PDO_PARAM_STR, 255);
+        $sth->bindParam(13,$entry->user_agent, PDO_PARAM_STR, 255);
+        $sth->bindParam(14,$entry->duration, PDO_PARAM_FLOAT);
+        $sth->execute();
+    }
 };
 
 class WikiDB_backend_PDO_generic_iter
@@ -1466,6 +1492,9 @@ class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql {}
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2007/01/04 16:57:32  rurban
+// Clarify API: sortby,limit and exclude are strings. fix upgrade test connection
+//
 // Revision 1.10  2006/12/22 01:04:12  rurban
 // fix syntax error
 //

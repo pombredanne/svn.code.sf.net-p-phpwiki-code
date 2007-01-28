@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.111 2007-01-07 18:43:26 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.112 2007-01-28 22:49:55 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -1126,7 +1126,7 @@ class Request_AccessLogEntry
     	
         $dbh =& $request->_dbi;
         if ($dbh and $dbh->isOpen() and $this->_accesslog->logtable) {
-            $log_tbl =& $this->_accesslog->logtable;
+            //$log_tbl =& $this->_accesslog->logtable;
             if ($request->get('REQUEST_METHOD') == "POST") {
                 // strangely HTTP_POST_VARS doesn't contain all posted vars.
           	if (check_php_version(4,2))
@@ -1142,23 +1142,10 @@ class Request_AccessLogEntry
             } else {
           	$this->request_args = $request->get('QUERY_STRING'); 
             }
+            $this->request_method = $request->get('REQUEST_METHOD');
+            $this->request_uri = $request->get('REQUEST_URI');
             // duration problem: sprintf "%f" might use comma e.g. "100,201" in european locales
-            $dbh->genericSqlQuery
-                (
-                 sprintf("INSERT INTO $log_tbl"
-                         . " (time_stamp,remote_host,remote_user,request_method,request_line,request_uri,"
-                         .   "request_args,request_time,status,bytes_sent,referer,agent,request_duration)"
-                         . " VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%s,%s,'%F')",
-                         // Problem: date formats are backend specific. Either use unixtime as %d (long),
-                         // or the native timestamp format.
-                         $dbh->quote(date('d-M-Y H:i:s', $this->time)),
-                         $dbh->quote($this->host), $dbh->quote($this->user),
-                         $dbh->quote($request->get('REQUEST_METHOD')), $dbh->quote($this->request), 
-                         $dbh->quote($request->get('REQUEST_URI')), $dbh->quote($this->request_args),
-                         $dbh->quote($this->_ncsa_time($this->time)), $this->status, $this->size,
-                         $dbh->quote($this->referer),
-                         $dbh->quote($this->user_agent),
-                         $this->duration));
+            $dbh->_backend->write_accesslog($this);
         }
     }
 }
@@ -1360,6 +1347,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.111  2007/01/07 18:43:26  rurban
+// Explain failed UpLoad on Windows to the user.
+//
 // Revision 1.110  2007/01/04 16:45:10  rurban
 // Be more verbose in serious php problem.
 //
