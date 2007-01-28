@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.33 2007-01-28 22:37:04 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.34 2007-01-28 22:47:06 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.33 $");
+                            "\$Revision: 1.34 $");
     }
 
     function getDefaultArguments() {
@@ -385,7 +385,8 @@ function toggletoc(a) {
 	if ($extracollapse)
 	    $toclink = HTML(_("Table Of Contents"),
 			    " ",
-			    HTML::img(array('name'=>'TOC',
+                            HTML::a(array('name'=>'TOC')),
+			    HTML::img(array(
                                             'id'=>'toctoggle',
                                             'class'=>'wikiaction',
                                             'title'=>_("Click to display to TOC"),
@@ -409,6 +410,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2007/01/28 22:37:04  rurban
+// beautify +/- collapse icon
+//
 // Revision 1.32  2007/01/20 11:25:30  rurban
 // remove align
 //
