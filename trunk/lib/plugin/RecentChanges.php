@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.111 2007-01-25 21:48:52 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.112 2007-01-28 20:32:07 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -202,10 +202,10 @@ extends _RecentChanges_Formatter
             $edits = _("minor edits");
         if (isset($caption) and $caption == _("Recent Comments"))
             $edits = _("comments");
-	if ($only_new) {
+	if (!empty($only_new)) {
             $edits = _("created new pages");
 	}
-	if ($author) {
+	if (!empty($author)) {
             global $request;
             if ($author == '[]')
                 $author = $request->_user->getID();
@@ -795,7 +795,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.111 $");
+                            "\$Revision: 1.112 $");
     }
 
     function managesValidators() {
@@ -999,6 +999,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.111  2007/01/25 21:48:52  rurban
+// new argument author=[]
+//
 // Revision 1.110  2007/01/22 23:51:36  rurban
 // new arg: only_new
 //
