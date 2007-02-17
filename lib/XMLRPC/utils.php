@@ -193,7 +193,7 @@ function find_and_decode_xml($buf, $debug) {
  */
 function xu_rpc_http_concise($params) {
    $host = $uri = $port = $method = $args = $debug = null;
-   $timeout = $user = $pass = $secure = $debug = null;
+   $timeout = $user = $pass = $secure = $cookies = null;
 
    extract($params);
 
@@ -217,13 +217,21 @@ function xu_rpc_http_concise($params) {
 	   if ($timeout)
 	       $http->timeout = $timeout;
 	   $http->setDebug($debug);
+	   // todo: new auth and/or session cookies
+	   if ($user)
+	       $http->setAuthorization($user, $pass);
+	   if ($cookies)
+	       $http->setCookies($cookies);
 	   if ($http->post($uri, $request_xml))
 	       $response_buf = $http->content;
-	   else
+	   else {
 	       $response_buf = $http->errormsg;
-       } else 
+	       return $response_buf;
+	   }
+       } else {
 	   $response_buf = xu_query_http_post($request_xml, $host, $uri, $port, $debug,
 					      $timeout, $user, $pass, $secure);
+       }
        $retval = find_and_decode_xml($response_buf, $debug);
    }
    return $retval;
