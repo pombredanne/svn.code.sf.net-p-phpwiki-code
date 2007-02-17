@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: file.php,v 1.24 2007-02-17 20:24:56 rurban Exp $');
+rcs_id('$Id: file.php,v 1.25 2007-02-17 21:49:13 rurban Exp $');
 
 /**
  Copyright 1999, 2000, 2001, 2002, 2003 $ThePhpWikiProgrammingTeam
@@ -533,7 +533,7 @@ extends WikiDB_backend
         foreach ($pagenames as $key => $val) {
             $links = $this->_loadPageLinks($key);
 	    foreach ($links as $key2 => $val2) {
-                if ($val2 == $pagename)
+                if ($val2['linkto'] == $pagename)
                     array_push($out, $key);
             }
         }
@@ -745,6 +745,9 @@ class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2007/02/17 20:24:56  rurban
+// fix getLinks for relation and linkto
+//
 // Revision 1.23  2007/01/04 16:45:49  rurban
 // Clarify API: sortby,limit and exclude are strings.
 //
