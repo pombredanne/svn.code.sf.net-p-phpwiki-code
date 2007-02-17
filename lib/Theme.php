@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.138 2007-01-07 18:43:37 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.139 2007-02-17 14:14:34 rurban Exp $');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -205,6 +205,8 @@ class Theme {
             $this->_default_theme = new Theme('default',true);
         if ($noinit) return;
 
+	$this->addMoreHeaders(JavaScript("var data_path = '". DATA_PATH ."'\n"
+					."var pagename = '". $GLOBALS['request']->getArg('pagename') ."'"));
         // by pixels
         if ((is_object($GLOBALS['request']) // guard against unittests
              and $GLOBALS['request']->getPref('doubleClickEdit'))
@@ -1079,9 +1081,13 @@ class Theme {
         foreach ($this->_css as $title => $css_files) {
             ksort($css_files); // move $css_files[''] to front.
             foreach ($css_files as $media => $css_file) {
-                $css[] = $this->_CSSlink($title, $css_file, $media, $is_alt);
+		if (!empty($this->DUMP_MODE)) {
+		    if ($media == 'print')
+			$css[] = $this->_CSSlink($title, $css_file, '', $is_alt);
+		} else {
+		    $css[] = $this->_CSSlink($title, $css_file, $media, $is_alt);
+		}
                 if ($is_alt) break;
-                
             }
             $is_alt = true;
         }
@@ -1223,22 +1229,28 @@ class Theme {
         if (!$this->HTML_DUMP_SUFFIX and !$already) {
             $dir = $this->_findData('moacdropdown');
             // if autocomplete_remote is used: (getobject2 also for calc. the showlist width)
-            foreach (array("mobrowser.js","modomevent.js","modomt.js",
-                           "modomext.js","getobject2.js","xmlextras.js") as $js) 
-            {
-                $this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/$js")));
-            }
-            $this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/acdropdown.js")));
+	    if (DEBUG) {
+		foreach (array("mobrowser.js","modomevent3.js","modomt.js",
+			       "modomext.js","getobject2.js","xmlextras.js") as $js) 
+		{
+		    $this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/$js")));
+		}
+		$this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/acdropdown.js")));
+	    } else {
+		$this->addMoreHeaders(JavaScript('', array('src' => DATA_PATH . "themes/default/moacdropdown.js")));
+	    }
             //$this->addMoreHeaders($this->_CSSlink(0, 
             //                      $this->_findFile('moacdropdown/css/dropdown.css'), 'all'));
             $this->addMoreHeaders(HTML::style("  @import url( $dir/css/dropdown.css );\n"));
+	    /*
 	    // for local xmlrpc requests
 	    $xmlrpc_url = deduce_script_name();
-	    if (1 or DATABASE_TYPE == 'dba')
-		$xmlrpc_url = DATA_PATH . "/RPC2.php";
+	    //if (1 or DATABASE_TYPE == 'dba')
+	    $xmlrpc_url = DATA_PATH . "/RPC2.php";
 	    if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
 		$xmlrpc_url .= ("?start_debug=".$_GET['start_debug']);
             $this->addMoreHeaders(JavaScript("var xmlrpc_url = '$xmlrpc_url'"));
+	    */
 	    $already = 1;
         }
     }
@@ -1587,6 +1599,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.138  2007/01/07 18:43:37  rurban
+// Remove fatals when no intermediate template was found. Deprecate subclasses of subthemes (blog of Sidebar). Warn about lost _MoreHeaders. $noinit: Do not initialize unnecessary items in default_theme fallback twice. Move over calendarInit from themes/Sidebar/themeinfo.php.
+//
 // Revision 1.137  2007/01/02 13:19:23  rurban
 // add getobject2.js to acdropdown to calculate the sizes. add global xmlrpc_url for local xml requests (interface simplification). stabilize theme and language detection: require magic files there
 //
