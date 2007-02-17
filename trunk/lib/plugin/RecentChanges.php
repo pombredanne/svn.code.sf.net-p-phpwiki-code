@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.113 2007-02-17 14:15:52 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.114 2007-02-17 22:39:44 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -19,6 +19,8 @@ rcs_id('$Id: RecentChanges.php,v 1.113 2007-02-17 14:15:52 rurban Exp $');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+include_once("lib/WikiPlugin.php");
 
 /**
  */
@@ -179,21 +181,21 @@ extends _RecentChanges_Formatter
     function rss_icon () {
         global $request, $WikiTheme;
 
-        $rss_url = $request->getURLtoSelf(array('format' => 'rss'));
+        $rss_url = $request->getURLtoSelf(array('action' => 'RecentChanges', 'format' => 'rss'));
         return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
                            $WikiTheme->makeButton("RSS", $rss_url, 'rssicon'));
     }
     function rss2_icon () {
         global $request, $WikiTheme;
 
-        $rss_url = $request->getURLtoSelf(array('format' => 'rss2'));
+        $rss_url = $request->getURLtoSelf(array('action' => 'RecentChanges', 'format' => 'rss2'));
         return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
                            $WikiTheme->makeButton("xml", $rss_url, 'rssicon'));
     }
     function atom_icon () {
         global $request, $WikiTheme;
 	if (DEBUG) {
-	    $rss_url = $request->getURLtoSelf(array('format' => 'atom'));
+	    $rss_url = $request->getURLtoSelf(array('action' => 'RecentChanges', 'format' => 'atom'));
 	    return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
                            $WikiTheme->makeButton("atom", $rss_url, 'rssicon'));
 	}
@@ -201,7 +203,7 @@ extends _RecentChanges_Formatter
     function grazr_icon () {
         global $request, $WikiTheme;
         $rss_url = 'http://grazr.com/gzpanel.html?' . 
-	    WikiURL($request->getArg('pagename'),array('format' => 'rss2'),true);
+	    WikiURL($request->getArg('pagename'),array('action' => 'RecentChanges', 'format' => 'rss2'),true);
         return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
                            $WikiTheme->makeButton("grazr-it", $rss_url, 'rssicon'));
     }
@@ -840,7 +842,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.113 $");
+                            "\$Revision: 1.114 $");
     }
 
     function managesValidators() {
@@ -899,6 +901,8 @@ extends WikiPlugin
     }
 
     function getMostRecentParams (&$args) {
+    	$show_all = false; $show_minor = false; $show_major = false;
+    	$limit = false;
         extract($args);
 
         $params = array('include_minor_revisions' => $show_minor,
@@ -918,7 +922,7 @@ extends WikiPlugin
                 $args['owner'] = $request->_user->getID();
             $params['owner'] = $args['owner'];
         }
-
+        if (empty($days)) $days = 2;
         if ($days > 0.0)
             $params['since'] = time() - 24 * 3600 * $days;
         elseif ($days < 0.0)
@@ -930,9 +934,10 @@ extends WikiPlugin
     function getChanges ($dbi, $args) {
         $changes = $dbi->mostRecent($this->getMostRecentParams($args));
 
-        $show_deleted = $args['show_deleted'];
+        $show_deleted = @$args['show_deleted'];
+        $show_all = @$args['show_all'];
         if ($show_deleted == 'sometimes')
-            $show_deleted = $args['show_minor'];
+            $show_deleted = @$args['show_minor'];
 
         if (!empty($args['only_new']))
             $changes = new NewPageRevisionIterator($changes);
@@ -941,7 +946,7 @@ extends WikiPlugin
         elseif (!empty($args['owner']))
             $changes = new OwnerPageRevisionIterator($changes, $args['owner']);
         elseif (!$show_deleted)
-            $changes = new NonDeletedRevisionIterator($changes, !$args['show_all']);
+            $changes = new NonDeletedRevisionIterator($changes, !$show_all);
 
         return $changes;
     }
@@ -1053,6 +1058,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.113  2007/02/17 14:15:52  rurban
+// new argument owner=[] for RecentChangesMyPages
+//
 // Revision 1.112  2007/01/28 20:32:07  rurban
 // silence empty warning
 //

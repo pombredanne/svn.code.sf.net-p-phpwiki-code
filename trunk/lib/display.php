@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.70 2007-01-22 23:43:06 rurban Exp $');
+rcs_id('$Id: display.php,v 1.71 2007-02-17 22:39:05 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -87,12 +87,12 @@ function actionPage(&$request, $action) {
 	GeneratePageAsXML($template, $pagetitle, $revision, $args);
     } else {
     	$pagelist = null;
+    	include_once('lib/WikiPlugin.php');
 	// Then the multi-page formats
 	// rss (if not already handled by RecentChanges)
 	// Need the pagelist from the first plugin
 	foreach($transformedContent->_content as $cached_element) {
 	    if (is_a($cached_element, "Cached_PluginInvocation")) {
-	    	include_once('lib/WikiPlugin.php');
 	        $loader = new WikiPluginLoader;
 	        $markup = null;
 	        // return the first found pagelist
@@ -102,7 +102,7 @@ function actionPage(&$request, $action) {
 	    }
 	}
         if (!$pagelist or !is_a($pagelist, 'PageList')) {
-	    if (!in_array($format, array("atom","rss","rdf")))
+	    if (!in_array($format, array("rss91","rss2","rss","atom","rdf")))
 		trigger_error(sprintf("Format %s requires an actionpage returning a pagelist.", $format)
 			      ."\n".("Fall back to single page mode"), E_USER_WARNING);
 	    $pagelist = new PageList();
@@ -111,22 +111,19 @@ function actionPage(&$request, $action) {
 	if ($format == 'pdf') {
 	    include_once("lib/pdf.php");
 	    ConvertAndDisplayPdfPageList($request, $pagelist);
-	} elseif ($format == 'rss') {
-	    include_once("lib/plugin/RecentChanges.php");
-	    $rdf = new RssWriter($request, $pagelist);
-	    $rdf->format();
-	} elseif ($format == 'rss91') {
-	    include_once("lib/plugin/RecentChanges.php");
-	    $rdf = new RSS91Writer($request, $pagelist);
-	    $rdf->format();
-	} elseif ($format == 'rss2') {
-	    include_once("lib/RssWriter2.php");
-	    $rdf = new RssWriter2($request, $pagelist);
-	    $rdf->format();
+	} elseif (in_array($format, array("rss91","rss2","rss"))) {
+            if ($pagename == _("RecentChanges")) {
+                $template->printExpansion($toks);
+	    } else {
+	        include_once("lib/plugin/RecentChanges.php");
+	        $plugin = new WikiPlugin_RecentChanges();
+                $args = $request->getargs();
+                return $plugin->format($plugin->getChanges($request->_dbi, $args), $args);
+	    }
 	} elseif ($format == 'atom') {
-	    include_once("lib/plugin/RssWriter.php");
-	    $rdf = new AtomWriter($request, $pagelist);
-	    $rdf->format();
+	    include_once("lib/RssWriter.php");
+	    $rdf = new AtomFeed($request, $pagelist);
+	    $rdf->__spew();
 	} elseif ($format == 'rdf') { // all semantic relations and attributes
 	    include_once("lib/SemanticWeb.php");
 	    $rdf = new RdfWriter($request, $pagelist);
@@ -309,22 +306,19 @@ function displayPage(&$request, $template=false) {
 	if ($format == 'pdf') {
 	    include_once("lib/pdf.php");
 	    ConvertAndDisplayPdfPageList($request, $pagelist);
-	} elseif ($format == 'rss') {
-	    include_once("lib/plugin/RecentChanges.php");
-	    $rdf = new RssWriter($request, $pagelist);
-	    $rdf->format();
-	} elseif ($format == 'rss91') {
-	    include_once("lib/plugin/RecentChanges.php");
-	    $rdf = new RSS91Writer($request, $pagelist);
-	    $rdf->format();
-	} elseif ($format == 'rss2') {
-	    include_once("lib/RssWriter2.php");
-	    $rdf = new RssWriter2($request, $pagelist);
-	    $rdf->format();
-	} elseif ($format == 'atom') {
-	    include_once("lib/plugin/RssWriter.php");
+	} elseif (in_array($format, array("rss91","rss2","rss"))) {
+            if ($pagename == _("RecentChanges"))
+                $template->printExpansion($toks);
+            else {    
+	        include_once("lib/plugin/RecentChanges.php");
+	        $plugin = new WikiPlugin_RecentChanges();
+                $args = $request->getargs();
+                return $plugin->format($plugin->getChanges($request->_dbi, $args), $args);
+            }
+	/*} elseif ($format == 'atom') {
+	    include_once("lib/RssWriter.php");
 	    $rdf = new AtomWriter($request, $pagelist);
-	    $rdf->format();
+	    $rdf->format();*/
 	} elseif ($format == 'rdf') { // all semantic relations and attributes
 	    include_once("lib/SemanticWeb.php");
 	    $rdf = new RdfWriter($request, $pagelist);
@@ -351,6 +345,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.70  2007/01/22 23:43:06  rurban
+// Add RecentChanges format=sidebar
+//
 // Revision 1.69  2007/01/20 15:53:51  rurban
 // Rewrite of SearchHighlight: through ActionPage and InlineParser
 //
