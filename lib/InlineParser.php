@@ -1,7 +1,7 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.88 2007-01-21 13:15:50 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.89 2007-02-17 14:16:28 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004,2005,2006 Reini Urban
+ * Copyright (C) 2004,2005,2006,2007 Reini Urban
  *
  * This file is part of PhpWiki.
  * 
@@ -725,7 +725,7 @@ class Markup_color extends BalancedMarkup {
     function markup ($match, $body) {
     	$color = strtoupper(substr($match, 7, -1));
         if (strlen($color) != 7 
-            and in_array($color, array('RED', 'BLUE', 'GREY', 'YELLOW', 'GREEN', 'CYAN', 'BLACK'))) 
+            and in_array($color, array('RED', 'BLUE', 'GRAY', 'YELLOW', 'GREEN', 'CYAN', 'BLACK'))) 
 	{   // must be a valid color name
             return new HtmlElement('font', array('color' => $color), $body);
         } elseif ((substr($color,0,1) == '#') 
@@ -1070,6 +1070,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.88  2007/01/21 13:15:50  rurban
+// Support spaces in attributes and relation links
+//
 // Revision 1.87  2007/01/20 15:53:51  rurban
 // Rewrite of SearchHighlight: through ActionPage and InlineParser
 //
