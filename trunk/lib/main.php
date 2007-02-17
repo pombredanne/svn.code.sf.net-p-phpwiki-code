@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.230 2007-01-27 21:52:15 rurban Exp $');
+rcs_id('$Id: main.php,v 1.231 2007-02-17 14:16:44 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -602,6 +602,8 @@ class WikiRequest extends Request {
             case 'search':
             case 'pdf':
             case 'captcha':
+            case 'wikitohtml':
+            case 'setpref':
                 return WIKIAUTH_ANON;
 
             case 'zip':
@@ -1096,6 +1098,15 @@ class WikiRequest extends Request {
         $xmlrpc->service();
     }
     
+    function action_soap () {
+	if (defined("WIKI_SOAP") and WIKI_SOAP) // already loaded
+	    return;
+	/*
+	  allow VIRTUAL_PATH or action=soap SOAP access
+	 */
+	include_once("SOAP.php");
+    }
+
     function action_revert () {
         include_once "lib/loadsave.php";
         RevertPage($this);
@@ -1158,6 +1169,14 @@ class WikiRequest extends Request {
        include_once("lib/WysiwygEdit/Wikiwyg.php");
        $wikitohtml = new WikiToHtml( $this->getArg("content") , $this);
        $wikitohtml->send();
+    }
+
+    function action_setpref () {
+	$what = $this->getArg('pref');
+	$value = $this->getArg('value');
+	$prefs =& $this->_user->_prefs;
+	$prefs->set($what, $value);
+	$num = $this->_user->setPreferences($prefs);
     }
 }
 
@@ -1237,15 +1256,8 @@ function main () {
     }
     
     // Initialize with system defaults in case user not logged in.
-    // Should this go into constructor?
+    // Should this go into the constructor?
     $request->initializeTheme();
-
-    // convert wiki to html
-    if ($action == 'wikitohtml') {
-      $request->handleAction();
-      return;
-    }
-
     $request->updateAuthAndPrefs();
     $request->initializeLang();
     
@@ -1261,8 +1273,8 @@ function main () {
     $request->possiblyDeflowerVirginWiki();
     
 // hack! define proper actions for these.
-if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
-if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
+//if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
+//if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
 
     $validators = array('wikiname' => WIKI_NAME,
                         'args'     => wikihash($request->getArgs()),
@@ -1279,8 +1291,10 @@ if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
     //
     // (If DEBUG if off, this may be a strong validator, but I'm going
     // to go the paranoid route here pending further study and testing.)
-    //
-    $validators['%weak'] = true;
+    // access hits and edit stats in the footer violate strong ETags also. 
+    if (1 or DEBUG) {
+	$validators['%weak'] = true;
+    }
     $request->setValidators($validators);
    
     $request->handleAction();
@@ -1300,6 +1314,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.230  2007/01/27 21:52:15  rurban
+// Improved login header for !ALLOW_ANON_USER
+//
 // Revision 1.229  2007/01/07 18:44:30  rurban
 // Fix typo for moderation
 //
