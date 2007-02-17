@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.148 2007-01-27 21:53:03 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.149 2007-02-17 14:16:37 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -194,7 +194,7 @@ class WikiDB {
      */
     function isWikiPage ($pagename) {
         $page = $this->getPage($pagename);
-        return $page->exists();
+        return ($page and $page->exists());
     }
 
     /**
@@ -994,7 +994,7 @@ class WikiDB_Page
 	    {
                 include_once("lib/MailNotify.php");
                 $MailNotify = new MailNotify($newrevision->getName());
-                $MailNotify->onChangePage ($this, $wikitext, $version, $meta);
+                $MailNotify->onChangePage ($this->_wikidb, $wikitext, $version, $meta);
             }
             $newrevision->_transformedContent = $formatted;
         }
@@ -1583,9 +1583,10 @@ class WikiDB_PageRevision
      */
     function getPackedContent() {
         $data = &$this->_data;
-
         
-        if (empty($data['%content'])) {
+        if (empty($data['%content'])
+            || (!$this->_wikidb->isWikiPage($this->_pagename)
+                && $this->isCurrent())) {
             include_once('lib/InlineParser.php');
 
             // A feature similar to taglines at http://www.wlug.org.nz/
@@ -1765,9 +1766,13 @@ class WikiDB_PageIterator
             return false;
 
         $pagename = &$next['pagename'];
-        if (!is_string($pagename)) { // Bug #1327912 fixed by Joachim Lous
-            $pagename = strval($pagename);
-        }
+	if (!is_string($pagename)) { // Bug #1327912 fixed by Joachim Lous
+	    /*if (is_array($pagename) && isset($pagename['linkto'])) {
+		$pagename = $pagename['linkto'];
+	    }
+            $pagename = strval($pagename);*/
+            trigger_error("WikiDB_PageIterator->next pagename", E_USER_WARNING);
+	}
         if (!$pagename) {
             if (isset($next['linkrelation']) 
                 or isset($next['pagedata']['linkrelation'])) return false;	
@@ -2188,6 +2193,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.148  2007/01/27 21:53:03  rurban
+// Use TEMP_DIR for debug sql.log
+//
 // Revision 1.147  2007/01/04 16:41:41  rurban
 // Some pageiterators also set ['pagedata']['linkrelation'], hmm
 //
