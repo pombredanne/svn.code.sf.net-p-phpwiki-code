@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.34 2007-01-28 22:47:06 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.35 2007-02-17 14:17:48 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.34 $");
+                            "\$Revision: 1.35 $");
     }
 
     function getDefaultArguments() {
@@ -368,10 +368,10 @@ extends WikiPlugin
         $close = DATA_PATH.'/'.$WikiTheme->_findFile("images/folderArrowClosed.png");
 	$html->pushContent(Javascript("
 function toggletoc(a) {
-  toc=document.getElementById('toclist')
+  var toc=document.getElementById('toclist')
   //toctoggle=document.getElementById('toctoggle')
-  open='".$open."'
-  close='".$close."'
+  var open='".$open."'
+  var close='".$close."'
   if (toc.style.display=='none') {
     toc.style.display='block'
     a.title='"._("Click to hide the TOC")."'
@@ -410,6 +410,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2007/01/28 22:47:06  rurban
+// fix # back link
+//
 // Revision 1.33  2007/01/28 22:37:04  rurban
 // beautify +/- collapse icon
 //
