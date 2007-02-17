@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.51 2007-01-07 18:43:17 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.52 2007-02-17 14:17:41 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -167,6 +167,7 @@ class PageType_interwikimap extends PageType
     }
 
     function link ($link, $linktext = false) {
+	global $WikiTheme;
         list ($moniker, $page) = split (":", $link, 2);
         
         if (!isset($this->_map[$moniker])) {
@@ -175,6 +176,20 @@ class PageType_interwikimap extends PageType
         }
 
         $url = $this->_map[$moniker];
+	// localize Upload:links for WIKIDUMP
+	if (!empty($WikiTheme->DUMP_MODE) and $moniker == 'Upload') {
+	    global $request;
+	    $url = getUploadFilePath();
+	    //calculate to a relative local path to /uploads for pdf images.
+	    $doc_root = $request->get("DOCUMENT_ROOT");
+    	    $ldir = NormalizeLocalFileName($url);
+            $wikiroot = NormalizeLocalFileName('');
+    	    if (string_starts_with($ldir, $doc_root)) {
+        	$link_prefix = substr($url, strlen($doc_root));
+    	    } elseif (string_starts_with($ldir, $wikiroot)) {
+        	$link_prefix = NormalizeWebFileName(substr($url, strlen($wikiroot)));
+	    }
+	}
         
         // Urlencode page only if it's a query arg.
         // FIXME: this is a somewhat broken heuristic.
@@ -501,6 +516,9 @@ class PageFormatter_pdf extends PageFormatter
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2007/01/07 18:43:17  rurban
+// Disallow ":" as interwikmap and use it as proper LinkedBracket match.
+//
 // Revision 1.50  2007/01/04 16:44:57  rurban
 // Force interwiki updates and page edits
 //
