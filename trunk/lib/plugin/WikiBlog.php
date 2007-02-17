@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.25 2007-01-20 11:23:37 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.26 2007-02-17 14:17:03 rurban Exp $');
 /*
  Copyright 2002,2003,2007 $ThePhpWikiProgrammingTeam
  
@@ -93,7 +93,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     // Arguments:
@@ -253,7 +253,7 @@ extends WikiPlugin
             	if (!$parent) $parent = HOME_PAGE;
                 require_once('lib/loadsave.php');
                 $pageinfo = array('pagename' => $redirected,
-                                  'content'  => '<?plugin RedirectTo page='.$parent.' ?>',
+                                  'content'  => '<?plugin RedirectTo page="'.$parent.'" ?>',
                                   'pagedata' => array(),
                                   'versiondata' => array('author' => $blog_meta['creator']),
                                   );
@@ -264,7 +264,7 @@ extends WikiPlugin
             	if (!$parent) $parent = HOME_PAGE;
                 require_once('lib/loadsave.php');
                 $pageinfo = array('pagename' => $redirected,
-                                  'content'  => '<?plugin RedirectTo page='.$parent.' ?>',
+                                  'content'  => '<?plugin RedirectTo page="'.$parent.'" ?>',
                                   'pagedata' => array(),
                                   'versiondata' => array('author' => $blog_meta['creator']),
                                   );
@@ -433,6 +433,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2007/01/20 11:23:37  rurban
+// Fix forum parent. Fix addcomment header.
+//
 // Revision 1.24  2007/01/07 18:46:40  rurban
 // Add EditToolbar support. Omit Blog/Blog/
 //
