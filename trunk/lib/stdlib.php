@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.259 2007-01-20 11:41:38 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.260 2007-02-17 14:15:21 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -82,6 +82,8 @@
     firstNWordsOfContent ($n, $content)
     extractSection ($section, $content, $page, $quiet = false, $sectionhead = false)
     isExternalReferrer()
+    
+    charset_convert($from, $to, $data)
 
   function: LinkInterWikiLink($link, $linktext)
   moved to: lib/interwiki.php
@@ -380,7 +382,7 @@ function LinkURL($url, $linktext = '') {
  *
  * Syntax: [image.png size=50% border=n align= hspace= vspace= width= height=]
  * Disallows sizes which are too small. 
- * Spammers may use such (typically invisible) image attributes to higher their GoogleRank.
+ * Spammers may use such (typically invisible) image attributes to raise their GoogleRank.
  *
  * Handle embeddable objects, like svg, class, vrml, swf, svgz, pdf, avi, wmv especially.
  */
@@ -393,8 +395,8 @@ function LinkImage($url, $alt = false) {
                                      _("BAD URL -- remove all of <, >, \"")));
     } else {
         // support new syntax: [image.jpg size=50% border=n]
-        if (!preg_match("/\.(".$force_img.")/i", $url))
-            $ori_url = $url;
+        //if (!preg_match("/\.(".$force_img.")/i", $url))
+        $ori_url = $url;
         $arr = split(' ',$url);
         if (count($arr) > 1) {
             $url = $arr[0];
@@ -2018,6 +2020,9 @@ function loadPhpExtension($extension) {
 }
 
 function charset_convert($from, $to, $data) {
+    //global $CHARSET;
+    //$wikicharset = strtolower($CHARSET);
+    //$systemcharset = strtolower(get_cfg_var('iconv.internal_encoding')); // 'iso-8859-1';
     if (strtolower($from) == 'utf-8' and strtolower($to) == 'iso-8859-1')
 	return utf8_decode($data);
     if (strtolower($to) == 'utf-8' and strtolower($from) == 'iso-8859-1')
@@ -2112,6 +2117,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.259  2007/01/20 11:41:38  rurban
+// WikiPagename::_check: add flatfile support
+//
 // Revision 1.258  2007/01/07 18:43:51  rurban
 // Remove FileFinder dependency for loadPhpExtension()
 //
