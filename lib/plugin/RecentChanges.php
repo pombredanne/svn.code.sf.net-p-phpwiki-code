@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.112 2007-01-28 20:32:07 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.113 2007-02-17 14:15:52 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -188,7 +188,22 @@ extends _RecentChanges_Formatter
 
         $rss_url = $request->getURLtoSelf(array('format' => 'rss2'));
         return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
-                           $WikiTheme->makeButton("RSS2", $rss_url, 'rssicon'));
+                           $WikiTheme->makeButton("xml", $rss_url, 'rssicon'));
+    }
+    function atom_icon () {
+        global $request, $WikiTheme;
+	if (DEBUG) {
+	    $rss_url = $request->getURLtoSelf(array('format' => 'atom'));
+	    return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
+                           $WikiTheme->makeButton("atom", $rss_url, 'rssicon'));
+	}
+    }
+    function grazr_icon () {
+        global $request, $WikiTheme;
+        $rss_url = 'http://grazr.com/gzpanel.html?' . 
+	    WikiURL($request->getArg('pagename'),array('format' => 'rss2'),true);
+        return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
+                           $WikiTheme->makeButton("grazr-it", $rss_url, 'rssicon'));
     }
 
     function pre_description () {
@@ -210,6 +225,12 @@ extends _RecentChanges_Formatter
             if ($author == '[]')
                 $author = $request->_user->getID();
             $edits .= sprintf(_(" from author %s"), $author);
+	}
+	if (!empty($owner)) {
+            global $request;
+            if ($owner == '[]')
+                $owner = $request->_user->getID();
+            $edits .= sprintf(_(" from owner %s"), $owner);
 	}
         if ($timespan = $days > 0) {
             if (intval($days) != $days)
@@ -279,7 +300,10 @@ extends _RecentChanges_Formatter
         extract($this->_args);
         return array($show_minor ? _("RecentEdits") : _("RecentChanges"),
                      ' ',
-                     $this->rss_icon(), HTML::raw('&nbsp;'), $this->rss2_icon(),
+                     $this->rss_icon(), 
+		     HTML::raw('&nbsp;'), $this->rss2_icon(),
+		     HTML::raw('&nbsp;'), $this->grazr_icon(),
+		     HTML::raw('&nbsp;'), $this->atom_icon(),
                      $this->sidebar_link());
     }
 
@@ -786,6 +810,27 @@ class AuthorPageRevisionIterator extends WikiDB_PageRevisionIterator
     }
 }
 
+/**
+ * Filter by owner
+ */
+class OwnerPageRevisionIterator extends WikiDB_PageRevisionIterator
+{
+    function OwnerPageRevisionIterator ($revisions, $owner) {
+        $this->_revisions = $revisions;
+        $this->_owner = $owner;
+    }
+
+    function next () {
+        while (($rev = $this->_revisions->next())) {
+	    $page = $rev->getPage();
+            if ($page->getOwner() == $this->_owner)
+                return $rev;
+        }
+        $this->free();
+        return false;
+    }
+}
+
 class WikiPlugin_RecentChanges
 extends WikiPlugin
 {
@@ -795,7 +840,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.112 $");
+                            "\$Revision: 1.113 $");
     }
 
     function managesValidators() {
@@ -824,6 +869,7 @@ extends WikiPlugin
                      'show_deleted' => 'sometimes',
 		     'only_new'     => false,
 		     'author'       => false,
+		     'owner'        => false,
                      'limit'        => false,
                      'format'       => false,
                      'daylist'      => false,
@@ -866,6 +912,12 @@ extends WikiPlugin
                 $args['author'] = $request->_user->getID();
             $params['author'] = $args['author'];
         }
+        if (!empty($args['owner'])) {
+            global $request;
+            if ($args['owner'] == '[]')
+                $args['owner'] = $request->_user->getID();
+            $params['owner'] = $args['owner'];
+        }
 
         if ($days > 0.0)
             $params['since'] = time() - 24 * 3600 * $days;
@@ -882,10 +934,12 @@ extends WikiPlugin
         if ($show_deleted == 'sometimes')
             $show_deleted = $args['show_minor'];
 
-        if ($args['only_new'])
+        if (!empty($args['only_new']))
             $changes = new NewPageRevisionIterator($changes);
-        elseif ($args['author'])
+        elseif (!empty($args['author']))
             $changes = new AuthorPageRevisionIterator($changes, $args['author']);
+        elseif (!empty($args['owner']))
+            $changes = new OwnerPageRevisionIterator($changes, $args['owner']);
         elseif (!$show_deleted)
             $changes = new NonDeletedRevisionIterator($changes, !$args['show_all']);
 
@@ -999,6 +1053,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.112  2007/01/28 20:32:07  rurban
+// silence empty warning
+//
 // Revision 1.111  2007/01/25 21:48:52  rurban
 // new argument author=[]
 //
