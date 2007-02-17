@@ -15,6 +15,8 @@ function cAutocomplete( sInputId )
 	this.init( sInputId )
 }
 
+xmlrpc_url = data_path + '/RPC2.php'
+
 cAutocomplete.CS_NAME = 'Autocomplete component'
 cAutocomplete.CS_OBJ_NAME = 'AC_COMPONENT'
 cAutocomplete.CS_LIST_PREFIX = 'ACL_'
@@ -48,8 +50,8 @@ cAutocomplete.CN_NUMBER_OF_LINES = 10
 cAutocomplete.CN_HEIGHT_FIX = 2
 
 cAutocomplete.CN_CLEAR_TIMEOUT = 300
-cAutocomplete.CN_SHOW_TIMEOUT = 300
-cAutocomplete.CN_REMOTE_SHOW_TIMEOUT = 500
+cAutocomplete.CN_SHOW_TIMEOUT = 400
+cAutocomplete.CN_REMOTE_SHOW_TIMEOUT = 1000
 cAutocomplete.CN_MARK_TIMEOUT = 400
 
 cAutocomplete.hListDisplayed = null
@@ -126,7 +128,8 @@ if( cAutocomplete.CB_AUTOINIT )
 
 cAutocomplete.prototype.init = function( sInputId )
 {
-        this.bDebug = false
+    this.bDebug = false
+    /*this.bDebug = true*/
 	this.sInputId = sInputId
 	this.sListId = cAutocomplete.CS_LIST_PREFIX + sInputId
 
@@ -194,7 +197,8 @@ cAutocomplete.prototype.init = function( sInputId )
 	{
 		this.formatOptions = eval( sFormatFunction )
 	}
-	//onselect callback function - get called when a new option is selected
+	//onselect callback function - get called when a new option is selected, either by changing the focus in the list by using the keyboard or by 
+	//clicking on it with the mouse
 	this.onSelect = null
 	var sOnSelectFunction = document.getElementById( this.sInputId ).getAttribute( 'autocomplete_onselect' )
 	if( sOnSelectFunction != null && sOnSelectFunction.length > 0 )
@@ -241,13 +245,18 @@ cAutocomplete.prototype.initInput = function()
 	var hContainer = document.getElementById( this.sListId )
 	hContainer.hAutocomplete = this
 
-	//any element (and it's children) with display:none have offset values of 0 (in mozilla)
-	var hOWInput = hInput.cloneNode( true )
-	hOWInput.style.position = 'absolute'
-	hOWInput.style.top = '-1000px'
-	document.body.appendChild( hOWInput )
-	var nWidth = hOWInput.offsetWidth
-	document.body.removeChild( hOWInput )
+	//any element ( and it's children ) with display:none have offset values of 0 ( in mozilla )
+	var nWidth = hInput.offsetWidth
+	if( !nWidth || nWidth == 0 )
+	{
+		//any element ( and it's children ) with display:none have offset values of 0 ( in mozilla )
+		var hOWInput = hInput.cloneNode( true )
+		hOWInput.style.position = 'absolute'
+		hOWInput.style.top = '-1000px'
+		document.body.appendChild( hOWInput )
+		var nWidth = hOWInput.offsetWidth
+		document.body.removeChild( hOWInput ) 
+ 	}
 
 	var sInputName = hInput.name
 	var hForm = hInput.form
@@ -321,7 +330,7 @@ cAutocomplete.prototype.initInput = function()
 
 		hNewInput.type = 'text'
 		hNewInput.value = sValue
-		hNewInput.style.width = nWidth-20
+		hNewInput.style.width = nWidth-22
 		hNewInput.className = cAutocomplete.CS_INPUT_CLASSNAME
 		hNewInput.tabIndex = hInput.tabIndex
 		hNewInput.hAutocomplete = this
@@ -371,10 +380,12 @@ cAutocomplete.prototype.initInput = function()
 		if( hForm.attachEvent )
 		{
 			hForm.attachEvent( 'onsubmit', cAutocomplete.onFormSubmit )
+			if (this.bDebug) { this.debug ("attachEvent added") }
 		}
 		else if( hForm.addEventListener )
 		{
 			hForm.addEventListener( 'submit', cAutocomplete.onFormSubmit, false )
+			if (this.bDebug) { this.debug ("addEventListener") }
 		}
 	}
 }
@@ -444,15 +455,32 @@ cAutocomplete.prototype.createList = function()
 
 	var hArr = this.aData
 	var nI = 0
+	var sRealText
 	for( hArrKey in hArr )
 	{
 		sArrEl = hArr[ hArrKey ]
 		hListItem = document.createElement( 'LI' )
 		hListItemLink = document.createElement( 'A' )
 		hListItemLink.setAttribute( 'itemvalue', hArrKey )
+
+		/* so you can attach data to the element */
+		/* it's a hack but seems to work */
+		var sArrData = sArrEl.split( cAutocomplete.CS_ARRAY_SEPARATOR )
+		if( sArrData.length > 1 )
+		{
+			this.aData[ hArrKey ] = sArrData[ 0 ]
+			hListItemLink.setAttribute( 'itemdata', sArrEl.substring( sArrEl.indexOf( cAutocomplete.CS_ARRAY_SEPARATOR ) + 1 ) )
+			sRealText = sArrData[ 0 ]
+		}
+		else
+		{
+			sRealText = sArrEl
+		}
+		/* end of attach data to the element */
+
 		hListItemLink.href = '#'
-		hListItemLink.appendChild( document.createTextNode( sArrEl ) )
-		hListItemLink.realText = sArrEl
+		hListItemLink.appendChild( document.createTextNode( sRealText ) )
+		hListItemLink.realText = sRealText
 		if( nI == this.nSelectedItemIdx )
 		{
 			this.hActiveSelection = hListItemLink
@@ -460,7 +488,7 @@ cAutocomplete.prototype.createList = function()
 		}
 		hListItem.appendChild( hListItemLink )
 		hList.appendChild( hListItem )
-		this.aSearchData[ nI++ ] = sArrEl.toLowerCase()
+		this.aSearchData[ nI++ ] = sRealText.toLowerCase()
 	}
 	var hSecondBorder = hContainer.firstChild.firstChild
 	hSecondBorder.appendChild( hList )
@@ -599,41 +627,42 @@ cAutocomplete.prototype.setListURL = function( sURL )
 	this.sListURL = sURL;
 }
 
-cAutocomplete.onXmlHttpLoad = function( hThis )
+cAutocomplete.prototype.onXmlHttpLoad = function( )
 {
-    if( hThis.hXMLHttp.readyState == 4 )
+    if( this.hXMLHttp.readyState == 4 )
 	{
-	    var hError = hThis.hXMLHttp.parseError
+	    var hError = this.hXMLHttp.parseError
 	    if( hError && hError.errorCode != 0 )
 		{
 		    alert( hError.reason )
 		}
 	    else
 		{
-		    hThis.afterRemoteLoad()
+		    this.afterRemoteLoad()
 		}
 	}
 }
-cAutocomplete.onXMLRPCHttpLoad = function( hThis )
+
+cAutocomplete.prototype.onXMLRPCHttpLoad = function( )
 {
-    if( hThis.hXMLHttp.readyState == 4 )
+	if( this.hXMLHttp.readyState == 4 )
 	{
-	    var hError = hThis.hXMLHttp.parseError
-	    if( hError && hError.errorCode != 0 )
+		var hError = this.hXMLHttp.parseError
+		if( hError && hError.errorCode != 0 )
 		{
-		    alert( hError.reason )
+			alert( hError.reason )
 		}
-	    else
+		else
 		{
-		    hThis.afterRemoteLoadXMLRPC()
+			this.afterRemoteLoadXMLRPC()
 		}
 	}
 }
 
 cAutocomplete.prototype.loadXMLRPCListArray = function()
 {
-	// encoding: "xmlrpc:wiki.titleSearch [S]"
-	// or "xmlrpc:http://localhost/wiki/?wiki.titleSearch [S]"
+	// encoding: "xmlrpc:wiki.titleSearch [S] 4"
+	// or "xmlrpc:http://localhost/wiki/?wiki.titleSearch [S] 4"
 	//    encode the methodname as optional query_arg and the args space seperated
 	var sURL = this.sListURL
 	var aMethodArgs = sURL.split( ' ' )
@@ -660,8 +689,8 @@ cAutocomplete.prototype.loadXMLRPCListArray = function()
 	    }
 
 	// Construct the xmlrpc request.
-	// which charset to send? for sure we get back utf-8
-	var sRequest = '<?xml version=\'1.0\' encoding="iso-8859-1" ?>\n'
+	// Which charset to send? for sure we get back utf-8
+	var sRequest = '<?xml version=\'1.0\' encoding="utf-8" ?>\n'
 	sRequest += '<methodCall><methodName>'+sMethodName+'</methodName>\n'
 	if (aMethodArgs.length <= 1) // the first arg is the name
 	    {
@@ -673,13 +702,14 @@ cAutocomplete.prototype.loadXMLRPCListArray = function()
 		for( var nI = 1; nI < aMethodArgs.length; nI++ )
 		    {
 			var sArg = aMethodArgs[ nI ];
-			//alert('sMethodName: "'+sMethodName+'" sArg['+nI+']: "'+sArg+'"')
+			//this.debug('sMethodName: "'+sMethodName+'" sArg['+nI+']: "'+sArg+'"')
 			if( sArg.indexOf( '[S]' ) >= 0 )
 			    {
-				//alert('sArg['+nI+']: "'+sArg+'" sStartWith: "'+sStartWith+'"')
+				//this.debug('sArg['+nI+']: "'+sArg+'" sStartWith: "'+sStartWith+'"')
 				sArg = sArg.replace( '[S]', sStartWith )
 			    }
-			// can only do string args so far
+			// We could parse a prepended "(int)" cast.
+			// Can only do string args so far
 			sRequest += '<param><value><string>'
 			sRequest += sArg
 			sRequest += '</string></value></param>\n'
@@ -688,11 +718,13 @@ cAutocomplete.prototype.loadXMLRPCListArray = function()
 	    }
 	sRequest += '</methodCall>'
 	if (this.bDebug) {
-	    alert('url: "'+sURL+'" sRequest: "'+sRequest.substring(20)+'"')
-	    sURL += '?start_debug=1'
+	    this.debug('url: "'+sURL+'" sRequest: "'+sRequest.substring(20)+'"')
+	    /*sURL += '?start_debug=1'*/
 	}
 	this.hXMLHttp.open( 'POST', sURL, true )
-	this.hXMLHttp.onreadystatechange = new Function( 'var sAC = "'+this.sObjName+'"; cAutocomplete.onXMLRPCHttpLoad( eval( sAC ) )' )
+	var hAC = this
+	this.hXMLHttp.onreadystatechange = function() { hAC.onXMLRPCHttpLoad() }
+	/*this.hXMLHttp.onreadystatechange = new Function( 'var sAC = "'+this.sObjName+'"; cAutocomplete.onXMLRPCHttpLoad( eval( sAC ) )' )*/
 	this.hXMLHttp.send( sRequest )
 }
 
@@ -711,7 +743,9 @@ cAutocomplete.prototype.loadListArray = function()
 		sURL += this.sActiveValue
 	}
 	this.hXMLHttp.open( 'GET', sURL, true )
-	this.hXMLHttp.onreadystatechange = new Function( 'var sAC = "'+this.sObjName+'"; cAutocomplete.onXmlHttpLoad( eval( sAC ) )' )
+
+	var hAC = this
+	this.hXMLHttp.onreadystatechange = function() { hAC.onXmlHttpLoad() }
 	this.hXMLHttp.send( null )
 }
 
@@ -724,15 +758,15 @@ cAutocomplete.prototype.afterRemoteLoad = function()
 	var aValueArr
 	for( hKey in hTmpArray )
 	{
-		aValueArr = hTmpArray[ hKey ].split( cAutocomplete.CS_ARRAY_SEPARATOR )
-		if( aValueArr.length == 1 )
-		{
-			hArr[ hKey ] = hTmpArray[ hKey ]
-		}
-		else
-		{
-			hArr[ aValueArr[ 0 ] ] = aValueArr[ 1 ]
-		}
+	    aValueArr = hTmpArray[ hKey ].split( cAutocomplete.CS_ARRAY_SEPARATOR )
+	    if( aValueArr.length == 1 )
+	    {
+		hArr[ hKey ] = hTmpArray[ hKey ]
+	    }
+	    else
+	    {
+		hArr[ aValueArr[ 0 ] ] = hTmpArray[ hKey ].substr( hTmpArray[ hKey ].indexOf( cAutocomplete.CS_ARRAY_SEPARATOR ) + 1 )
+	    }
 	}
 
 	hInput.className = ''
@@ -748,7 +782,7 @@ cAutocomplete.prototype.afterRemoteLoadXMLRPC = function()
 	var hArr = new Array()
 	sResult = this.hXMLHttp.responseText
 	if ( this.bDebug ) {
-	    alert( sResult.substring(70,190) )
+	    this.debug( "response: "+sResult.substring(70,190) )
 	}
 	sResult.replace('\n','');
 	sResult.replace('\r','');
@@ -760,7 +794,7 @@ cAutocomplete.prototype.afterRemoteLoadXMLRPC = function()
 	    j = sResult.indexOf('</string>')
 	    hArr[ hKey ] = sResult.substring(0, j)
 	    // TODO: convert it from utf-8 to result charset and encoding
-	    //alert( 'i:'+i+' j:'+j+' "'+hArr[ hKey ]+'"' )
+	    //this.debug( 'i:'+i+' j:'+j+' "'+hArr[ hKey ]+'"' )
 	    /*if( hArr[ hKey ] == hArr[ hKey-1 ] )
 	      return*/
 	    hKey += 1
@@ -781,7 +815,7 @@ cAutocomplete.prototype.prepareList = function( bFullList )
 	var hInput = document.getElementById( this.sInputId )
 	this.sActiveValue = hInput.value
 
-	//check if this was invoked by a key that did not change the value
+	// Check if this was invoked by a key that did not change the value
 	var sST = this.getStringForAutocompletion( this.sActiveValue, this.nInsertPoint )
 	var sLST = this.getStringForAutocompletion( this.sLastActiveValue, this.nInsertPoint )
 
@@ -790,7 +824,7 @@ cAutocomplete.prototype.prepareList = function( bFullList )
 		if( this.bRemoteList )
 		{
 			hInput.className = 'search'
-			hInput.readonly = true
+			//hInput.readonly = true
 			// TODO: print please wait somewhere else
 			// hInput.value = 'please wait...'
 			// hInput.value = this.sListURL
@@ -1130,7 +1164,8 @@ cAutocomplete.prototype.hideOptions = function()
 {
 	var hContainer = document.getElementById( this.sListId )
 	hContainer.style.visibility = 'hidden'
-	cAutocomplete.hListDisplayed = null
+	hContainer.style.display = 'none'
+	this.hListDisplayed = null
 }
 
 cAutocomplete.prototype.markAutocompletedValue = function()
@@ -1155,7 +1190,10 @@ cAutocomplete.prototype.markAutocompletedValue = function()
 	{
 		clearTimeout( this.hMarkRangeTimeout )
 	}
-	this.hMarkRangeTimeout = setTimeout( 'cAutocomplete.markInputRange2("'+hInput.id+'")', cAutocomplete.CN_MARK_TIMEOUT )
+	this.hMarkRangeTimeout = setTimeout( function() { 
+						 cAutocomplete.markInputRange2( hInput.id ) 
+						     }
+					     , cAutocomplete.CN_MARK_TIMEOUT )
 	//cAutocomplete.markInputRange( hInput, nStartPos, nEndPos )
 }
 
@@ -1172,6 +1210,33 @@ cAutocomplete.prototype.selectOptionByIndex = function( nOptionIndex )
 	if( nOptionIndex >=0 && nOptionIndex < nItemsLength )
 	{
 		this.selectOption( hList.childNodes[ nOptionIndex ].getElementsByTagName( 'A' )[ 0 ] )
+	}
+}
+
+cAutocomplete.prototype.selectOptionByValue = function( sValue )
+{
+	if( this.bListUpdated )
+	{
+		this.createList()
+	}
+
+	sValue = sValue.toLowerCase()
+	
+	var hContainer = document.getElementById( this.sListId )
+	var hList = hContainer.getElementsByTagName( 'UL' )[ 0 ]
+	var nItemsLength = hList.childNodes.length
+
+	var nSelectedIndex = -1
+	for( var nI = 0; nI < nItemsLength; nI++ )
+	{
+		if( this.aSearchData[ nI ].indexOf( sValue ) == 0 )
+		{
+			nSelectedIndex = nI
+		}
+	}
+	if( nSelectedIndex >=0 )
+	{
+		this.selectOption( hList.childNodes[ nSelectedIndex ].getElementsByTagName( 'A' )[ 0 ] )
 	}
 }
 
@@ -1213,8 +1278,10 @@ cAutocomplete.prototype.selectOption = function( hNewOption )
 		}
 		else
 		{
+		    var aPos = this.getInsertPos( this.sLastActiveValue, this.nInsertPoint, this.hActiveSelection.realText )
 			hInput.value = this.insertString( this.sActiveValue, this.nInsertPoint, this.hActiveSelection.realText )
-			cAutocomplete.setInputCaretPosition( hInput, this.nInsertPoint )
+			//cAutocomplete.setInputCaretPosition( hInput, this.nInsertPoint )
+			cAutocomplete.setInputCaretPosition( hInput, aPos[ 1 ] )
 		}
 
 		this.sActiveValue = hInput.value
@@ -1291,6 +1358,18 @@ cAutocomplete.prototype.getNextDisplayedItem = function( hItem )
 	return null
 }
 
+cAutocomplete.prototype.debug = function(s)
+{
+    if (this.bDebug) {
+	var hInput = document.getElementById( this.sInputId )
+	var hContainer = document.createElement( 'DIV' )
+	hContainer.className = 'debug'
+	hContainer.innerHTML = s
+	hInput.form.appendChild( hContainer )
+	/*alert(s)*/
+    }
+}
+
 cAutocomplete.onInputKeyDown = function ( hEvent )
 {
 	if( hEvent == null )
@@ -1307,15 +1386,17 @@ cAutocomplete.onInputKeyDown = function ( hEvent )
 	{
 		var hLI = null
 		var hLINext = null
-		//the new active selection
+		// The new active selection
 		if( ( hEvent.keyCode == 13 ) || ( hEvent.keyCode == 27 ) )
 		{
 			var bItemSelected = hEvent.keyCode == 13 ? true : false
 			hAC.clearList()
+			if (hAC.bDebug) { hAC.debug ("key "+hEvent.keyCode+" new active selection") }
 		}
 		if( hEvent.keyCode == 38 )
 		{
 			//up key pressed
+			if (hAC.bDebug) { hAC.debug ("key "+hEvent.keyCode+" up") }
 			hLINext = hAC.getPrevDisplayedItem( hAC.hActiveSelection )
 			if( hLINext != null )
 			{
@@ -1340,6 +1421,7 @@ cAutocomplete.onInputKeyDown = function ( hEvent )
 		else if ( hEvent.keyCode == 40 )
 		{
 			//down key pressed
+			if (hAC.bDebug) { hAC.debug ("key "+hEvent.keyCode+" down") }
 			hLINext = hAC.getNextDisplayedItem( hAC.hActiveSelection )
 			if( hLINext != null )
 			{
@@ -1365,12 +1447,21 @@ cAutocomplete.onInputKeyDown = function ( hEvent )
 	if( hInput.form )
 	{
 		hInput.form.bLocked = true
+		if (hAC.bDebug) { hAC.debug ("onInputKeyDown form blocked") }
 	}
-	if ( hEvent.keyCode == 13 || hEvent.keyCode == 27 )
+	if ( hEvent.keyCode == 13 || hEvent.keyCode == 27 || hEvent.keyCode == 38 || hEvent.keyCode == 40 )
 	{
 		if( hEvent.preventDefault )
 		{
-			hEvent.preventDefault()
+		    hEvent.preventDefault()
+		    /*
+		    if (hEvent.keyCode == 13) {
+			if (hAC.bDebug) { hAC.debug ("preventDefault: return true") }
+			return true
+		    }
+		    */
+		} else {
+		    if (hAC.bDebug) { hAC.debug ("no preventDefault return false") }
 		}
 		hEvent.cancelBubble = true
 		hEvent.returnValue = false
@@ -1380,7 +1471,7 @@ cAutocomplete.onInputKeyDown = function ( hEvent )
 
 cAutocomplete.onInputKeyPress = function ( hEvent )
 {
-	if ( hEvent.keyCode == 13 )
+	if ( hEvent.keyCode == 13 || hEvent.keyCode == 38 || hEvent.keyCode == 40 )
 	{
 		if( hEvent.preventDefault )
 		{
@@ -1424,26 +1515,33 @@ cAutocomplete.onInputKeyUp = function ( hEvent )
 					break
 		case 32	:
 		case 46	:
-		case 37	:
-		case 39	:
+		//case 37	:
+		//case 39	:
 		case 35	:
 		case 36	:	break;
-		default	:	if( hEvent.keyCode < 48 )
-					{
-						if( hEvent.preventDefault )
-						{
-							hEvent.preventDefault()
-						}
-						hEvent.cancelBubble = true
-						hEvent.returnValue = false
-						return false
-					}
-					break
+		default	:	
+		if( hEvent.keyCode < 48 )
+		{
+		    if( hEvent.preventDefault )
+		    {
+			hEvent.preventDefault()
+		    }
+		    /*
+		    if (hEvent.keyCode == 13) {
+			return true
+		    }
+		    */
+		    if (hAC.bDebug) { hAC.debug ("keyUp: hEvent.returnValue = false") }
+		    hEvent.cancelBubble = true
+		    hEvent.returnValue = false
+		    return false
+		}
+		break
 	}
 
-	if( this.hMarkRangeTimeout != null )
+	if( hAC.hMarkRangeTimeout != null )
 	{
-		clearTimeout( this.hMarkRangeTimeout )
+		clearTimeout( hAC.hMarkRangeTimeout )
 	}
 
 	if( hAC.hShowTimeout )
@@ -1451,8 +1549,9 @@ cAutocomplete.onInputKeyUp = function ( hEvent )
 		clearTimeout( hAC.hShowTimeout )
 		hAC.hShowTimeout = null
 	}
-	var nTimeout = this.bRemoteList ? cAutocomplete.CN_REMOTE_SHOW_TIMEOUT : cAutocomplete.CN_SHOW_TIMEOUT
-	hAC.hShowTimeout = setTimeout( hAC.hObj+'.prepareList()', nTimeout )
+	var nTimeout = hAC.bRemoteList ? cAutocomplete.CN_REMOTE_SHOW_TIMEOUT : cAutocomplete.CN_SHOW_TIMEOUT
+	hAC.hShowTimeout = setTimeout( function(){ hAC.prepareList() }, nTimeout )
+	if (hAC.bDebug) { hAC.debug ("setTimeout "+nTimeout) }
 }
 
 cAutocomplete.onInputBlur = function( hEvent )
@@ -1469,7 +1568,7 @@ cAutocomplete.onInputBlur = function( hEvent )
 	var hAC = hElement.hAutocomplete
 	if( !hAC.hClearTimeout )
 	{
-		hAC.hClearTimeout = setTimeout( hAC.hObj+'.clearList()', cAutocomplete.CN_CLEAR_TIMEOUT )
+		hAC.hClearTimeout = setTimeout( function(){ hAC.clearList() }, cAutocomplete.CN_CLEAR_TIMEOUT )
 	}
 }
 
@@ -1592,7 +1691,7 @@ cAutocomplete.onListBlur = function( hEvent )
 	var hAC = hElement.hAutocomplete
 	if( !hAC.hClearTimeout )
 	{
-		hAC.hClearTimeout = setTimeout( hAC.hObj+'.clearList()', cAutocomplete.CN_CLEAR_TIMEOUT )
+		hAC.hClearTimeout = setTimeout( function() { hAC.clearList() }, cAutocomplete.CN_CLEAR_TIMEOUT )
 	}
 }
 
@@ -1632,6 +1731,8 @@ cAutocomplete.onItemClick = function( hEvent )
 	{
 		hEvent.preventDefault()
 	}
+	/*var hAC = hElement.hAutocomplete
+	  if (hAC.bDebug) { hAC.debug ("onItemClick") }*/
 	hEvent.cancelBubble = true
 	hEvent.returnValue = false
 	return false
@@ -1650,6 +1751,7 @@ cAutocomplete.onButtonClick = function ( hEvent )
 	{
 		return
 	}
+	if (hAC.bDebug) { hAC.debug ("onButtonClick") }
 	hAC.prepareList( true )
 	var hInput = document.getElementById( hAC.sInputId )
 	hInput.focus()
@@ -1664,6 +1766,8 @@ cAutocomplete.onFormSubmit = function ( hEvent )
 	var hElement = ( hEvent.srcElement ) ? hEvent.srcElement : hEvent.originalTarget
 	if( hElement.bLocked )
 	{
+	    var hAC = hElement.hAutocomplete
+	    if (hAC.bDebug) { hAC.debug ("onSubmit: hElement.bLocked") }
 		hElement.bLocked = false
 		hEvent.returnValue = false
 		if( hEvent.preventDefault )
