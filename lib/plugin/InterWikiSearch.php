@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: InterWikiSearch.php,v 1.8 2004-06-28 12:51:41 rurban Exp $');
+rcs_id('$Id: InterWikiSearch.php,v 1.9 2007-02-17 14:15:06 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -37,11 +37,13 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
-        return array();
+        return array('s' => '',
+                     'formsize' => 30,
+        	    );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -121,6 +123,9 @@ extends PageType_interwikimap
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2004/06/28 12:51:41  rurban
+// improved dumphtml and virgin setup
+//
 // Revision 1.7  2004/06/15 14:56:37  rurban
 // more allow_call_time_pass_reference false fixes
 //
