@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.49 2007-01-03 21:25:10 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.50 2007-02-17 14:15:59 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -802,7 +802,7 @@ function ParseMimeifiedPages ($data)
     $pagedata    = array();
     $versiondata = array();
     if (isset($headers['date']))
-    $pagedata['date'] = strtotime($headers['date']);
+	$pagedata['date'] = strtotime($headers['date']);
 
     //DONE: support owner and acl
     foreach ($params as $key => $value) {
@@ -860,9 +860,13 @@ function ParseMimeifiedPages ($data)
 
     if (empty($params['charset']))
         $params['charset'] = 'iso-8859-1';
+
     // compare to target charset
     if (strtolower($params['charset']) != strtolower($GLOBALS['charset'])) {
     	$data = charset_convert($params['charset'], $GLOBALS['charset'], $data);
+    	//$page['pagename'] = charset_convert($params['charset'], $GLOBALS['charset'], $page['pagename']);
+	$versiondata['summary'] = charset_convert($params['charset'], $GLOBALS['charset'], $versiondata['summary']);
+
     }
     
     $data .= GenerateFootnotesFromRefs($params);
@@ -875,6 +879,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.49  2007/01/03 21:25:10  rurban
+// Use convert_charset()
+//
 // Revision 1.48  2006/12/22 17:44:15  rurban
 // support importing foreign charsets. e.g latin1 => utf8
 //
