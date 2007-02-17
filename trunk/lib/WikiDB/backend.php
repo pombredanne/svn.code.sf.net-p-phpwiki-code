@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.31 2007-01-28 22:49:55 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.32 2007-02-17 14:14:41 rurban Exp $');
 
 /*
   Pagedata
@@ -622,7 +622,7 @@ class WikiDB_backend
                           $entry->request_args,
                           $entry->_ncsa_time($entry->time), 
                           $entry->status, 
-                          $entry->size,
+                          (int)$entry->size,
                           $entry->referer,
                           $entry->user_agent,
                           $entry->duration));
@@ -751,6 +751,9 @@ class WikiDB_backend_search_sql extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2007/01/28 22:49:55  rurban
+// use backend specific SQL write_accesslog
+//
 // Revision 1.30  2007/01/02 13:20:26  rurban
 // added link_search. Clarify API: sortby,limit and exclude are strings.
 //
