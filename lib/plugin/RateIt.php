@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.21 2007-01-22 23:50:48 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.22 2007-02-17 14:15:14 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -93,7 +93,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     function RatingWidgetJavascript() {
@@ -137,14 +137,14 @@ function submitRating(actionImg, page, version, dimension, rating) {
   var myRand = Math.round(Math.random()*(1000000));
   var imgSrc = '".$urlprefix."' + escape(page) + '?version=' + version + '&action=".urlencode(_("RateIt"))."&mode=add&rating=' + rating + '&dimension=' + dimension + '&nopurge=1&rand=' + myRand"
         .(!empty($_GET['start_debug']) ? "+'&start_debug=1'" : '').";
-  ".(DEBUG ? '' : '//')."alert('submitRating(\"'+actionImg+'\", \"'+page+'\", '+version+', '+dimension+', '+rating+') => '+imgSrc);
+  ".(DEBUG & _DEBUG_REMOTE ? '' : '//')."alert('submitRating(\"'+actionImg+'\", \"'+page+'\", '+version+', '+dimension+', '+rating+') => '+imgSrc);
   document[actionImg].src = imgSrc;
 }
 function deleteRating(actionImg, page, dimension) {
   var myRand = Math.round(Math.random()*(1000000));
   var imgSrc = '".$urlprefix."' + escape(page) + '?action=".urlencode(_("RateIt"))."&mode=delete&dimension=' + dimension + '&nopurge=1&rand=' + myRand"
         .(!empty($_GET['start_debug']) ? "+'&start_debug=1'" : '').";
-  ".(DEBUG ? '' : '//')."alert('deleteRating(\"'+actionImg+'\", \"'+page+'\", '+version+', '+dimension+')');
+  ".(DEBUG & _DEBUG_REMOTE ? '' : '//')."alert('deleteRating(\"'+actionImg+'\", \"'+page+'\", '+version+', '+dimension+')');
   document[actionImg].src = imgSrc;
 }
 ";
@@ -369,6 +369,7 @@ function deleteRating(actionImg, page, dimension) {
         $msg = _("Cancel rating");
         $a0->pushContent(HTML::img(array('src' => $WikiTheme->getImageUrl("RateIt".$imgPrefix."Cancel"),
                                          'name'=> $imgPrefix.'Cancel',
+					 'border' => 0,
                                          'alt' => $msg)));
         $a0->addToolTip($msg);
         $html->pushContent($a0);
@@ -401,6 +402,9 @@ function deleteRating(actionImg, page, dimension) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2007/01/22 23:50:48  rurban
+// Do not diplay if not signed in
+//
 // Revision 1.20  2006/03/04 13:57:28  rurban
 // rename hash for php-5.1
 //
