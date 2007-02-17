@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.21 2007-01-04 16:46:50 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.22 2007-02-17 14:16:56 rurban Exp $');
 /*
- Copyright 2003, 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -141,6 +141,7 @@ ws[cfh]");
 	    } else {
 		$u_userfile = $userfile_name;
 	    }
+	    $u_userfile = preg_replace("/ /", "%20", $u_userfile);
             $userfile_tmpname = $userfile->getTmpName();
 	    $err_header = HTML::h2(fmt("ERROR uploading '%s': ", $userfile_name));
             if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")\$/",
@@ -150,10 +151,10 @@ ws[cfh]");
                 $message->pushContent(fmt("Files with extension %s are not allowed.",
                                           join(", ", $this->disallowed_extensions)),HTML::br(),HTML::br());
             } 
-            elseif (preg_match("/[^._a-zA-Z0-9-]/", $userfile_name))
+            elseif (preg_match("/[^._a-zA-Z0-9- ]/", $userfile_name))
             {
             	$message->pushContent($err_header);
-                $message->pushContent(_("File names may only contain alphanumeric characters and dot, underscore or dash."),
+                $message->pushContent(_("Invalid filename. File names may only contain alphanumeric characters and dot, underscore, space or dash."),
                                       HTML::br(),HTML::br());
             }
             elseif (file_exists($file_dir . $userfile_name)) {
@@ -238,6 +239,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2007/01/04 16:46:50  rurban
+// Support UPLOAD_USERDIR
+//
 // Revision 1.20  2006/08/15 13:40:40  rurban
 // help finding the file (should not be needed)
 //
