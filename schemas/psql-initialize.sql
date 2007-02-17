@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.17 2007-01-28 23:35:59 rurban Exp $
+-- $Id: psql-initialize.sql,v 1.18 2007-02-17 14:15:28 rurban Exp $
 
 \set QUIET
 
@@ -11,9 +11,9 @@
 \set prefix 	''
 
 --================================================================
--- Which postgresql user gets access to the tables?
+-- Which postgres user gets access to the tables?
 --
--- You should set this to the name of the postgresql
+-- You should set this to the name of the postgres
 -- user who will be accessing the tables.
 -- See DATABASE_DSN in config.ini
 --
@@ -27,24 +27,20 @@
 
 \set httpd_user	'wikiuser'
 
-\set qprefix '\'' :prefix '\''
-\set qhttp_user '\'' :httpd_user '\''
-
-\echo At first init the database with: 
-\echo '$ createdb phpwiki'
-\echo '$ createuser -S -R -d ' :qhttp_user
-\echo '$ psql -U ' :qhttp_user ' ' :qprefix 'phpwiki < /usr/share/postgresql/contrib/tsearch2.sql'
-\echo 'Did you customize the ispell and synonym dictionaries in psql-initialize.sql ?'
-\echo '$ psql -U ' :qhttp_user ' ' :qprefix 'phpwiki < psql-initialize.sql'
--- remove the quit line below
-\quit
-
 --================================================================
 --
 -- Don't modify below this point unless you know what you are doing.
 --
 --================================================================
 
+\set qprefix '\'' :prefix '\''
+\set qhttp_user '\'' :httpd_user '\''
+
+\echo At first init the database with: 
+\echo '$ createdb phpwiki'
+\echo '$ createuser -S -R -d ' :qhttp_user
+\echo '$ psql -U ' :qhttp_user ' phpwiki < /usr/share/pgsql/contrib/tsearch2.sql'
+\echo '$ psql -U ' :qhttp_user ' phpwiki < psql-initialize.sql'
 
 \echo Initializing PhpWiki tables with:
 \echo '       prefix = ' :qprefix
@@ -111,7 +107,8 @@ CREATE TABLE :page_tbl (
         pagename 	VARCHAR(100) NOT NULL UNIQUE CHECK (pagename <> ''),
 	hits 		INT4 NOT NULL DEFAULT 0,
         pagedata 	TEXT NOT NULL DEFAULT '',
-	cached_html  	bytea DEFAULT ''
+	--cached_html  	bytea DEFAULT ''
+	cached_html  	TEXT DEFAULT ''
 );
 -- CREATE UNIQUE INDEX :page_id_idx ON :page_tbl (id);
 -- CREATE UNIQUE INDEX :page_name_idx ON :page_tbl (pagename);
@@ -285,13 +282,13 @@ CREATE INDEX :accesslog_host_idx ON :accesslog_tbl (remote_host);
 
 --================================================================
 
--- Use the tsearch2 fulltextsearch extension: (recommended) 7.4, 8.0, 8.1, 8.2
--- At first init it for the database:
+-- Use the tsearch2 fulltextsearch extension: (recommended) 7.4, 8.0, 8.1
+-- at first init it for the database:
 -- $ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
 
--- Example of ISpell dictionary:
+-- example of ISpell dictionary
 --   UPDATE pg_ts_dict SET dict_initoption='DictFile="/usr/local/share/ispell/russian.dict" ,AffFile ="/usr/local/share/ispell/russian.aff", StopFile="/usr/local/share/ispell/russian.stop"' WHERE dict_name='ispell_template';
--- Example of synonym dict:
+-- example of synonym dict
 --   UPDATE pg_ts_dict SET dict_initoption='/usr/local/share/ispell/english.syn' WHERE dict_id=5; 
 
 \echo Initializing tsearch2 indices
@@ -303,6 +300,10 @@ CREATE INDEX idxFTI_idx ON :version_tbl USING gist(idxFTI);
 VACUUM FULL ANALYZE;
 CREATE TRIGGER tsvectorupdate BEFORE UPDATE OR INSERT ON :version_tbl
        FOR EACH ROW EXECUTE PROCEDURE tsearch2(idxFTI, content);
+
+-- this might be needed:
+-- see http://www.sai.msu.su/~megera/oddmuse/index.cgi/Tsearch_V2_Notes
+-- update pg_ts_cfg set locale='en_US.UTF-8' where ts_name='default';
 
 --================================================================
 
