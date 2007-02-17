@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.113 2007-01-27 21:52:54 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.114 2007-02-17 22:49:24 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -426,6 +426,11 @@ function IniConfig($file) {
 	unset($_map); unset($xml); unset($plugin); unset($v);
     }
 
+    if (empty($rs['TEMP_DIR'])) {
+	$rs['TEMP_DIR'] = "/tmp";
+	if (getenv("TEMP"))
+	    $rs['TEMP_DIR'] = getenv("TEMP");
+    }
     // optional values will be set to '' to simplify the logic.
     foreach ($_IC_OPTIONAL_VALUE as $item) {
         if (defined($item)) {
@@ -502,11 +507,6 @@ function IniConfig($file) {
     global $PLUGIN_CACHED_IMGTYPES;
     $PLUGIN_CACHED_IMGTYPES = preg_split('/\s*[|:]\s*/', PLUGIN_CACHED_IMGTYPES);
 
-    if (empty($rs['TEMP_DIR'])) {
-	$rs['TEMP_DIR'] = "/tmp";
-	if (getenv("TEMP"))
-	    $rs['TEMP_DIR'] = getenv("TEMP");
-    }
     if (!defined('PLUGIN_CACHED_CACHE_DIR')) {
         if (empty($rs['PLUGIN_CACHED_CACHE_DIR']) and !empty($rsdef['PLUGIN_CACHED_CACHE_DIR']))
             $rs['PLUGIN_CACHED_CACHE_DIR'] = $rsdef['PLUGIN_CACHED_CACHE_DIR'];
@@ -514,9 +514,9 @@ function IniConfig($file) {
             if (!empty($rs['INCLUDE_PATH'])) {
                 @ini_set('include_path', $rs['INCLUDE_PATH']);
             }
-            $rs['PLUGIN_CACHED_CACHE_DIR'] = $rs['TEMP_DIR'] . '/cache';
+            $rs['PLUGIN_CACHED_CACHE_DIR'] = TEMP_DIR . '/cache';
             if (!FindFile($rs['PLUGIN_CACHED_CACHE_DIR'], 1)) { // [29ms]
-                FindFile($rs['TEMP_DIR'], false, 1);            // TEMP must exist!
+                FindFile(TEMP_DIR, false, 1);            // TEMP must exist!
                 mkdir($rs['PLUGIN_CACHED_CACHE_DIR'], 777);
             }
             // will throw an error if not exists.
@@ -935,6 +935,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.113  2007/01/27 21:52:54  rurban
+// Define TEMP_DIR always
+//
 // Revision 1.112  2007/01/22 23:59:52  rurban
 // protect against PLUGIN_CACHED_CACHE_DIR definition
 //
