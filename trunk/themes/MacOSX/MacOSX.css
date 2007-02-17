@@ -1,5 +1,5 @@
 /*
- $Id: MacOSX.css,v 1.40 2007-01-20 18:20:41 rurban Exp $
+ $Id: MacOSX.css,v 1.41 2007-02-17 14:16:07 rurban Exp $
 
  Classes:
 
@@ -461,6 +461,11 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   background-color: threedlightshadow;
   color: black;
 }
+
+/**
+ * Search
+ */
+#searchholder { display: inline; }
 
 /**
  * Search Results
