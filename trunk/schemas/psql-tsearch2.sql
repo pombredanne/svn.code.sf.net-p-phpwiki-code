@@ -1,21 +1,20 @@
--- $Id: psql-tsearch2.sql,v 1.2 2007-01-28 23:35:59 rurban Exp $
--- Add the tsearch2 fulltextsearch extension to an existing phpwiki database. Recommended.
--- Tested with 7.4, 8.0, 8.1, 8.2
+-- $Id: psql-tsearch2.sql,v 1.3 2007-02-17 14:15:37 rurban Exp $
+-- use the tsearch2 fulltextsearch extension: (recommended)
+--   7.4, 8.0, 8.1
+-- $ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
 
 \set QUIET
 \set prefix 	''
-\set httpd_user	'wikiuser'
+\set httpd_user	'phpwiki'
 
-\echo 'You have to initialize the tsearch2 module first:'
-\echo '  psql ' :prefix 'phpwiki < /usr/share/postgresql/contrib/tsearch2.sql'
-
-\echo 'Did you customize the ispell and synonym dictionaries?'
--- remove the quit line below
-\quit
 --example of ISpell dictionary:
 -- UPDATE pg_ts_dict SET dict_initoption='DictFile="/usr/local/share/ispell/russian.dict" ,AffFile ="/usr/local/share/ispell/russian.aff", StopFile="/usr/local/share/ispell/russian.stop"' WHERE dict_name='ispell_template';
 --example of synonym dict:
 -- UPDATE pg_ts_dict SET dict_initoption='/usr/local/share/ispell/english.syn' WHERE dict_id=5; 
+
+-- this might be needed:
+-- see http://www.sai.msu.su/~megera/oddmuse/index.cgi/Tsearch_V2_Notes
+-- update pg_ts_cfg set locale='en_US.UTF-8' where ts_name='default';
 
 --================================================================
 --
