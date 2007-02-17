@@ -1,5 +1,5 @@
 <?php // -*- php -*-
-rcs_id('$Id: comment.tmpl,v 1.7 2007-01-20 11:23:58 rurban Exp $');
+rcs_id('$Id: comment.tmpl,v 1.8 2007-02-17 14:15:45 rurban Exp $');
 $CDATE = $WikiTheme->formatDateTime($COMMENT_CTIME);
 $buttons = $modified = '';
 
@@ -7,7 +7,7 @@ if ($user->isAdmin() or $user->getId() == $COMMENT_CREATOR) {
     $buttons = HTML::small(array('class' => 'floatleft'),
                            Button('edit', false, $page));
     if ($user->isAdmin())
-	$buttons->pushContent($SEP, Button('remove', false, $page));
+	$buttons->pushContent($SEP, Button('remove', _("Remove Comment"), $page));
 }
 
 // This is a hack, but since we only have a fake PageRevision,
