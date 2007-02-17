@@ -1,5 +1,5 @@
 <?php 
-// $Id: RPC2.php,v 1.6 2007-01-04 16:44:27 rurban Exp $
+// $Id: RPC2.php,v 1.7 2007-02-17 14:14:27 rurban Exp $
 /*
  * The guts of this code have been moved to lib/XmlRpcServer.php.
  *
@@ -19,7 +19,7 @@ if ($HTTP_SERVER_VARS['REQUEST_METHOD'] != "POST")
 }
 
 // Constant defined to indicate to phpwiki that it is being accessed via XML-RPC
-define ("WIKI_XMLRPC", "true");
+define ("WIKI_XMLRPC", true);
 
 // Start up the main code
 include_once("index.php");
