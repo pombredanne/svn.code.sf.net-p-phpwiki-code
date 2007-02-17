@@ -1,5 +1,5 @@
 // Toolbar JavaScript support functions. Taken from mediawiki 
-// $Id: toolbar.js,v 1.13 2007-01-07 18:48:10 rurban Exp $
+// $Id: toolbar.js,v 1.14 2007-02-17 14:16:14 rurban Exp $
 
 // Un-trap us from framesets
 if( window.top != window ) window.top.location = window.location;
@@ -50,13 +50,14 @@ function showPulldown(title, pages, okbutton, closebutton, fromid) {
   pullwin.window.document.close();
   return false;
 }
-function do_pulldown(value,fromid) {
+function do_pulldown(text,fromid) {
     // do special actions dependent on fromid: tb-categories
     if (fromid == 'tb-categories') {
 	var txtarea = document.getElementById('edit-content');
-	txtarea.value += '\n'+value;
+	text = unescapeSpecial(text)
+	txtarea.value += '\n'+text;
     } else {
-	insertTags(value, '', '\n');
+	insertTags(text, '', '\n');
     }
     return;
 }
@@ -86,6 +87,27 @@ function escapeQuotesHTML(text) {
   text=text.replace(re,"&quot;");
   return text;
 }
+function unescapeSpecial(text) {
+    // IE
+    var re=new RegExp('%0A',"g");
+    text = text.replace(re,'\n');
+    var re=new RegExp('%22',"g");
+    text = text.replace(re,'"');
+    var re=new RegExp('%27',"g");
+    text = text.replace(re,'\'');
+    var re=new RegExp('%09',"g");
+    text = text.replace(re,'    ');
+    var re=new RegExp('%7C',"g");
+    text = text.replace(re,'|');
+    var re=new RegExp('%5B',"g");
+    text = text.replace(re,'[');
+    var re=new RegExp('%5D',"g");
+    text = text.replace(re,']');
+    var re=new RegExp('%5C',"g");
+    text = text.replace(re,'\\');
+    return text;
+}
+
 // apply tagOpen/tagClose to selection in textarea,
 // use sampleText instead of selection if there is none
 // copied and adapted from phpBB
@@ -93,24 +115,7 @@ function insertTags(tagOpen, tagClose, sampleText) {
   //f=document.getElementById('editpage');
   var txtarea = document.getElementById('edit-content');
   // var txtarea = document.editpage.edit[content];
-  
-  // IE
-  var re=new RegExp('%0A',"g");
-  tagOpen = tagOpen.replace(re,'\n');
-  var re=new RegExp('%22',"g");
-  tagOpen = tagOpen.replace(re,'"');
-  var re=new RegExp('%27',"g");
-  tagOpen = tagOpen.replace(re,'\'');
-  var re=new RegExp('%09',"g");
-  tagOpen = tagOpen.replace(re,'    ');
-  var re=new RegExp('%7C',"g");
-  tagOpen = tagOpen.replace(re,'|');
-  var re=new RegExp('%5B',"g");
-  tagOpen = tagOpen.replace(re,'[');
-  var re=new RegExp('%5D',"g");
-  tagOpen = tagOpen.replace(re,']');
-  var re=new RegExp('%5C',"g");
-  tagOpen = tagOpen.replace(re,'\\');
+  tagOpen = unescapeSpecial(tagOpen)
 
   if(document.selection) {
     var theSelection = document.selection.createRange().text;
