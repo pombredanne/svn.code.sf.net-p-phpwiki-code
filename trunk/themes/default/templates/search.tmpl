@@ -1,20 +1,22 @@
 <!--{{{ LiveSearch --> <? // -*- php -*- ?>
 <div id="searchholder">
 <form id="searchform" name="searchform" action="<?= WikiURL(_("TitleSearch"))?>"
-      method="get" accept-charset="<?=$charset?>" style="display:inline">
-<?php if (! USE_PATH_INFO) { ?>
+      method="get" accept-charset="<?=$charset?>" style="display:inline" class="searchform">
+<?php 
+$s = $request->getArg('s') ? $request->getArg('s') : _("Search");
+if (! USE_PATH_INFO) { ?>
 <input type="hidden" name="pagename" value="<?= _("TitleSearch")?>" />
 <?php } ?>
 <input type="hidden" name="auto_redirect" value="1" />
-<?= $SEARCH_BEFORE ?>&nbsp;
-<input name="s" size="12" maxlength="256"
-   value="<?=_("Search")?>"
+<?= $SEARCH_BEFORE ?> 
+<input name="s" size="16" maxlength="256"
+   value="<?=$s?>"
    onfocus="if (this.value == '<?=_("Search")?>') {this.value = '';}"
    onmouseout="window.status=''; return true;" 
    onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
 <?php if (ENABLE_ACDROPDOWN) { ?>
-   class="dropdown" id="livesearch" title="<?=_("LiveSearch")?>" 
-   style="width:120px;"
+   class="dropdown" id="searchInput" title="<?=_("LiveSearch")?>" 
+   style="width:115px;"
    acdropdown="true" autocomplete_complete="false" autocomplete_matchsubstring="false"
    autocomplete_list="xmlrpc:wiki.titleSearch [S] 4" />
 <?php } elseif (ENABLE_LIVESEARCH) { ?>
@@ -27,8 +29,7 @@
 <?php } else { ?>
    type="text" id="search" 
    title="<?=_("TitleSearch")?>" /> 
-<?php } ?>
-&nbsp;<?= $SEARCH_AFTER ?>
+<?php } ?> <?= $SEARCH_AFTER ?>
 </form>
 </div>
 <!--}}}-->
