@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.150 2007-01-20 15:53:42 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.151 2007-02-17 14:17:34 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -180,7 +180,8 @@ function MailifyPage ($page, $nversions = 1)
  */
 function FilenameForPage ($pagename)
 {
-    $enc = rawurlencode($pagename);
+    //$enc = rawurlencode($pagename);
+    $enc = preg_replace('/:/', '%3A', $pagename);
     // For every %2F will need to mkdir -p dirname($pagename)
     return preg_replace('/^\./', '%2E', $enc);
 }
@@ -447,7 +448,7 @@ function DumpHtmlToDir (&$request)
     } else {
         $prefix = '';
         if (isWindows()) {
-            $prefix = '/' . substr($doc_root,0,2); // add drive where apache is installed
+            $prefix = '/'; // . substr($doc_root,0,2); // add drive where apache is installed
         }
         $link_prefix = "file://".$prefix.$directory."/";
     }
@@ -548,6 +549,7 @@ function DumpHtmlToDir (&$request)
                 } else {
                     _copyMsg($from, fmt("... not copied to %s", $target));
                 }
+		//TODO: fix to local path for uploaded images, so that pdf will work
             } else {
                 _copyMsg($from, _("... not found"));
             }
@@ -584,6 +586,7 @@ function DumpHtmlToDir (&$request)
                 } else {
                     _copyMsg($from, fmt("... not copied to %s", $target));
                 }
+		// TODO: fix @import url(main.css);
             } else {
                 _copyMsg($from, _("... not found"));
             }
@@ -1444,6 +1447,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.150  2007/01/20 15:53:42  rurban
+ Use WikiPagename treatment for imported pagenames
+
  Revision 1.149  2007/01/03 21:25:10  rurban
  Use convert_charset()
 
