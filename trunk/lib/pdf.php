@@ -1,9 +1,9 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf.php,v 1.10 2007-01-07 18:44:39 rurban Exp $');
+rcs_id('$Id: pdf.php,v 1.11 2007-02-17 14:14:55 rurban Exp $');
 /*
  Copyright (C) 2003 Olivier PLATHEY
  Copyright (C) 200? Don Sebà
- Copyright (C) 2004 Reini Urban
+ Copyright (C) 2004,2006,2007 Reini Urban
 
  This file is part of PhpWiki.
 
@@ -150,6 +150,7 @@ function ConvertAndDisplayPdfPageList (&$request, $pagelist) {
 	$WikiTheme->DUMP_MODE = true;
 	
         $request->setArg('action','pdf'); // to omit cache headers
+        $request->setArg('pagename',$page_handle->getName()); // to omit cache headers
 	displayPage($request, new Template('htmldump', $request));
         $html = ob_get_contents();
 	$WikiTheme->DUMP_MODE = false;
@@ -259,6 +260,9 @@ function ConvertAndDisplayPdf (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2007/01/07 18:44:39  rurban
+// Add ConvertAndDisplayPdfPageList
+//
 // Revision 1.9  2006/09/06 06:02:05  rurban
 // omit actionbar from pdf
 //
