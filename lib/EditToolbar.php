@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.10 2007-01-07 18:42:19 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.11 2007-02-17 14:16:21 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -44,7 +44,6 @@ msg_repl_close     = '"._("Close")."'
 		$WikiTheme->addMoreAttr('body', "SearchReplace"," onload='define_f()'");
 	    } else { // from an actionpage: WikiBlog, AddComment, WikiForum
 		printXML($js);
-		printXML(JavaScript('define_f()'));
 	    }
         } else {
             $WikiTheme->addMoreAttr('body', "editfocus", "document.getElementById('edit-content]').editarea.focus()");
@@ -56,6 +55,7 @@ msg_repl_close     = '"._("Close")."'
 		$WikiTheme->addMoreHeaders($js);
 	    else { // from an actionpage: WikiBlog, AddComment, WikiForum
 		printXML($js);
+		printXML(JavaScript('define_f()'));
 	    }
         }
 
@@ -371,6 +371,9 @@ msg_repl_close     = '"._("Close")."'
 
 /*
 $Log: not supported by cvs2svn $
+Revision 1.10  2007/01/07 18:42:19  rurban
+Improve id: edit: to edit-. Move search&replace js from body (defined in EditToolbar) to the toolbar.js. Support actionpages. Add tb-name argument to showPulldown
+
 Revision 1.9  2007/01/02 13:18:26  rurban
 fix id to edit:content
 
