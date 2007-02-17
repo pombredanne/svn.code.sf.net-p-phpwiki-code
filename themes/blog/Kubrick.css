@@ -36,7 +36,7 @@ body {
   background-color: transparent;
   font: bolder 67px/50px  Verdana, Arial, Helvetica, sans-serif;
   letter-spacing: -0.1em;
-  font-variant: condensed; 
+  /*font-variant: condensed;*/ 
 }
 
 #yoursiteheader a:hover, #yoursiteheader a:link, #yoursiteheader a:visited {
@@ -642,7 +642,7 @@ ol li, #sidebar ul ol li {
 /* Begin Form Elements */
 #searchform {
   text-align: right;
-  font-
+  display: inline;
 }
 #wikiblog-summary { 
   font-weight: bold;
