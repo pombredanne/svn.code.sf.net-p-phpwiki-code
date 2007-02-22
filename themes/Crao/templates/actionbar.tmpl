@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-  rcs_id('$Id: actionbar.tmpl,v 1.5 2007-01-02 13:29:39 rurban Exp $');
+  rcs_id('$Id: actionbar.tmpl,v 1.6 2007-02-22 20:12:53 rurban Exp $');
   if (!$page->get('locked') || $user->isAdmin() and $revision)
       $EditB = Button("edit",
                       $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"));
@@ -8,7 +8,7 @@
   if (empty($revision)) $revision = $page->getCurrentRevision(false);
 //MSIE needs sticky.js
 ?>
-<div <?= isBrowserIE() ? "class=ie-actionbuttons" : "id=actionbuttons"?>>
+<div <?= isBrowserIE() ? "class=\"ie-actionbuttons\"" : "id=\"actionbuttons\""?>>
 <?= $EditB ?>
 <?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>
 <?=$SEP?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
