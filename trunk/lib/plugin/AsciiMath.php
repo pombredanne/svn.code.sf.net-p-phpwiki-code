@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AsciiMath.php,v 1.1 2005-01-29 21:50:38 rurban Exp $');
+rcs_id('$Id: AsciiMath.php,v 1.2 2007-02-22 19:55:44 rurban Exp $');
 /*
 Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -50,7 +50,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -65,7 +65,7 @@ extends WikiPlugin
         if (empty($this->source))
             return '';
 
-        include_once("lib/ASCIIMathPHP/ASCIIMathPHP.cfg.php");
+        include("lib/ASCIIMathPHP/ASCIIMathPHP.cfg.php");
         $ascii_math = new ASCIIMathPHP($symbol_arr, $this->source);
         $ascii_math->genMathML();
         return HTML::Raw($ascii_math->getMathML());
@@ -73,6 +73,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2005/01/29 21:50:38  rurban
+// new MathML plugin and lib
+//
 
 // Local Variables:
 // mode: php
