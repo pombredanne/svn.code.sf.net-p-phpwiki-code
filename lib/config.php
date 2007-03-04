@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.141 2007-01-07 18:41:42 rurban Exp $');
+rcs_id('$Id: config.php,v 1.142 2007-03-04 14:07:17 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -25,7 +25,8 @@ define ('_DEBUG_INFO',     16);
 define ('_DEBUG_APD',      32);
 define ('_DEBUG_LOGIN',    64); // verbose login debug-msg (settings and reason for failure)
 define ('_DEBUG_SQL',     128); // force check db, force optimize, print some debugging logs
-define ('_DEBUG_REMOTE',  256); // remote debug into subrequests (xmlrpc, ajax, wikiwyg, ...).
+define ('_DEBUG_REMOTE',  256); // remote debug into subrequests (xmlrpc, ajax, wikiwyg, ...) 
+				// or test local SearchHighlight.
 				// internal links have persistent ?start_debug=1 
 
 function isCGI() {
@@ -612,6 +613,9 @@ function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.141  2007/01/07 18:41:42  rurban
+// Add array_diff_assoc() fallback: fixes Blog with php < 4.3.x. Support UPLOAD_FILE_PATH, UPLOAD_DATA_PATH overrides.
+//
 // Revision 1.140  2007/01/02 13:21:30  rurban
 // added _DEBUG_REMOTE flag, omit want_content if not necessary
 //
