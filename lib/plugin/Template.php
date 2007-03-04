@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.8 2007-01-25 07:42:29 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.9 2007-03-04 14:09:13 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -66,7 +66,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -86,7 +86,7 @@ extends WikiPlugin
     // TODO: check if page can really be pulled from the args, or if it is just the basepage. 
     function getWikiPageLinks($argstr, $basepage) {
         $args = $this->getArgs($argstr);
-	$page = $args['page'];
+	$page = @$args['page'];
         if ($page) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);
@@ -204,6 +204,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2007/01/25 07:42:29  rurban
+// Changed doVariableExpansion API. Uppercase default vars. Use str_replace.
+//
 // Revision 1.7  2007/01/04 16:42:41  rurban
 // Improve vars passing. Use new method allow_undeclared_arg to allow arbitrary args for the template. Fix doVariableExpansion: use a ref. Fix pagename. Put away \b in regex.
 //
