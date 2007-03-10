@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.139 2007-02-17 14:14:34 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.140 2007-03-10 18:27:20 rurban Exp $');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1237,7 +1237,7 @@ class Theme {
 		}
 		$this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/acdropdown.js")));
 	    } else {
-		$this->addMoreHeaders(JavaScript('', array('src' => DATA_PATH . "themes/default/moacdropdown.js")));
+		$this->addMoreHeaders(JavaScript('', array('src' => DATA_PATH . "/themes/default/moacdropdown.js")));
 	    }
             //$this->addMoreHeaders($this->_CSSlink(0, 
             //                      $this->_findFile('moacdropdown/css/dropdown.css'), 'all'));
