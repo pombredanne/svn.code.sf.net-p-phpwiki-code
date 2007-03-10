@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.8 2007-01-25 07:41:54 rurban Exp $');
+rcs_id('$Id: MailNotify.php,v 1.9 2007-03-10 18:22:51 rurban Exp $');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -187,7 +187,7 @@ class MailNotify {
             $dbh = &$request->getDbh();
             $cache = &$dbh->_wikidb->_cache;
             //$cache = &$request->_dbi->_cache;
-            $content = explode("\n", $wikitext);
+            $this_content = explode("\n", $wikitext);
             $prevdata = $cache->get_versiondata($this->pagename, $previous, true);
             if (empty($prevdata['%content']))
                 $prevdata = $backend->get_versiondata($this->pagename, $previous, true);
@@ -386,6 +386,9 @@ will expire at %s.",
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2007/01/25 07:41:54  rurban
+// Add wikimail.log default on unix
+//
 // Revision 1.7  2007/01/20 11:25:38  rurban
 // Fix onDeletePage warning and content
 //
