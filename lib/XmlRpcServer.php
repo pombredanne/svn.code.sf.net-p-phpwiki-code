@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.24 2007-01-22 23:42:13 rurban Exp $
+// $Id: XmlRpcServer.php,v 1.25 2007-03-18 10:27:11 rurban Exp $
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -791,7 +791,6 @@ function callPlugin($params)
     return new xmlrpcresp(new xmlrpcval($list, "array"));
 }
 
-
 /** 
  * array wiki.listRelations([ Integer option = 1 ])
  *
@@ -969,6 +968,9 @@ class XmlRpcServer extends xmlrpc_server
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.24  2007/01/22 23:42:13  rurban
+ Back to WIKI_XMLRPC_VERSION 1. Explain why
+
  Revision 1.23  2007/01/10 20:47:45  rurban
  change int to string because of acdropdown
 
