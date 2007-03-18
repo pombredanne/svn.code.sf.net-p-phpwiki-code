@@ -2,6 +2,9 @@
 * bring 1.3.x to sf.net again. request loops, proxy issues?
 
 TODO for 1.3.13:
+* fix backlinks (pagelists) for multiple plugins per page
+* fix pagelist nopage unification
+* fix $MailNotify->onChangePage: breaks after-edit-redirect
 * format=printable (?)
 * WatchList (?)
 * WikiUser/EMailConfirm
