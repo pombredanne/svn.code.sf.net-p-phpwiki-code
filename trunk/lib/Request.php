@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.112 2007-01-28 22:49:55 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.113 2007-03-18 10:25:21 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -1048,10 +1048,10 @@ class Request_AccessLogEntry
      * @param $size integer
      */
     function setSize ($size=0) {
-        $this->size = $size;
+        $this->size = (int)$size;
     }
     function setDuration ($seconds) {
-        $this->duration = $seconds;
+        $this->duration = (float)$seconds;
     }
     
     /**
@@ -1347,6 +1347,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.112  2007/01/28 22:49:55  rurban
+// use backend specific SQL write_accesslog
+//
 // Revision 1.111  2007/01/07 18:43:26  rurban
 // Explain failed UpLoad on Windows to the user.
 //
