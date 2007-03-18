@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.27 2007-01-21 23:27:32 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.28 2007-03-18 17:35:26 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -153,7 +153,8 @@ class TextSearchQuery {
     }
 
     /**
-     * Make an SQL clause which matches the query. (deprecated, use makeSqlClause instead)
+     * Make an SQL clause which matches the query. 
+     * Deprecated, use makeSqlClauseObj instead.
      *
      * @param $make_sql_clause_cb WikiCallback
      * A callback which takes a single word as an argument and
@@ -161,9 +162,9 @@ class TextSearchQuery {
      * containing the word.  The word passed to the callback will always
      * be in all lower case.
      *
-     * TODO: support db-specific extensions, like MATCH AGAINST or REGEX
-     *       mysql => 4.0.1 can also do Google: MATCH AGAINST IN BOOLEAN MODE
-     *       How? WikiDB backend method?
+     * Support db-specific extensions, like MATCH AGAINST or REGEX
+     * mysql => 4.0.1 can also do Google: MATCH AGAINST IN BOOLEAN MODE
+     * by using makeSqlClauseObj
      *
      * Old example usage:
      * <pre>
@@ -378,7 +379,8 @@ class NumericSearchQuery
 
     /**
      * Check the symbolic definition query against unwanted functions and characters.
-     * "population < 20000 and area > 1000000" vs "area > 1000000 and mail($me,file("/etc/passwd"),...)" 
+     * "population < 20000 and area > 1000000" vs 
+     *   "area > 1000000 and mail($me,file("/etc/passwd"),...)" 
      * http://localhost/wikicvs/SemanticSearch?attribute=*&attr_op=<0 and find(1)>&s=-0.01&start_debug=1
      */
     function check_query ($query) {
@@ -430,7 +432,8 @@ class NumericSearchQuery
 { T_OPEN_TAG "< ?" } { T_STRING "_x" } { T_WHITESPACE " " } { T_IS_SMALLER_OR_EQUAL "<=" } { T_WHITESPACE " " } { T_LNUMBER "0" } { T_CLOSE_TAG "?>" }
 	     */
 	} else {
-	    // Detect illegal characters besides nums, words and ops. So attribute names can not be utf-8
+	    // Detect illegal characters besides nums, words and ops. 
+	    // So attribute names can not be utf-8
 	    $c = "/([^\d\w.,\s".preg_quote(join("",$this->_allowed_operators),"/")."])/";
 	    if (preg_match($c, $query, $m)) {
 		trigger_error("Illegal character in query: ".$m[1], E_USER_WARNING);
@@ -544,7 +547,7 @@ class NumericSearchQuery
 	$result = false;
 	//if (DEBUG & _DEBUG_VERBOSE)
 	//    trigger_error("\$result = (boolean)($search);", E_USER_NOTICE);
-	// we might have a numerical problem:
+	// We might have a numerical problem:
 	// php-4.2.2 eval'ed as module: "9.636e+08 > 1000" false; 
 	// php-5.1.2 cgi true, 4.2.2 cgi true
 	eval("\$result = (boolean)($search);");
@@ -1123,6 +1126,9 @@ class TextSearchQuery_Lexer {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2007/01/21 23:27:32  rurban
+// Fix ->_backend->qstr()
+//
 // Revision 1.26  2007/01/04 16:41:52  rurban
 // Improve error description. Fix the function parser for illegal functions, when the tokenizer cannot be used.
 //
