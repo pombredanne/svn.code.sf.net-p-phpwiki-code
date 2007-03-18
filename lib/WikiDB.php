@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.149 2007-02-17 14:16:37 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.150 2007-03-18 17:35:27 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -314,6 +314,7 @@ class WikiDB {
      *
      * Pages are returned in alphabetical order whenever it is
      * practical to do so.
+     * TODO: Sort by ranking. Only postgresql with tsearch2 can do ranking so far.
      *
      * @access public
      * @param TextSearchQuery $search A TextSearchQuery object
@@ -341,6 +342,7 @@ class WikiDB {
      *
      * Pages are returned in alphabetical order whenever it is
      * practical to do so.
+     * TODO: Sort by ranking. Only postgresql with tsearch2 can do ranking so far.
      *
      * @access public
      *
@@ -994,6 +996,7 @@ class WikiDB_Page
 	    {
                 include_once("lib/MailNotify.php");
                 $MailNotify = new MailNotify($newrevision->getName());
+		// FIXME: this breaks after-edit-redirect
                 $MailNotify->onChangePage ($this->_wikidb, $wikitext, $version, $meta);
             }
             $newrevision->_transformedContent = $formatted;
@@ -2193,6 +2196,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.149  2007/02/17 14:16:37  rurban
+// isWikiPage no error on empty pagenames. MailNotify->onChangePage fix by ??
+//
 // Revision 1.148  2007/01/27 21:53:03  rurban
 // Use TEMP_DIR for debug sql.log
 //

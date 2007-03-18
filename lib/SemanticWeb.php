@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SemanticWeb.php,v 1.5 2007-01-20 11:41:10 rurban Exp $');
+<?php rcs_id('$Id: SemanticWeb.php,v 1.6 2007-03-18 17:35:27 rurban Exp $');
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *
@@ -174,7 +174,7 @@ class ModelWriter extends OwlWriter {
  *
  * Do we need a real parser or can we just regexp over some allowed unit 
  * suffixes to detect the numbers?
- * see man units(1) and /usr/share/units.dat
+ * See man units(1) and /usr/share/units.dat
  * base units: $ units "1 million miles"
  *                     Definition: 1.609344e+09 m
  */
