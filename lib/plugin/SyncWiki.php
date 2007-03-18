@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SyncWiki.php,v 1.2 2007-01-20 11:24:46 rurban Exp $');
+rcs_id('$Id: SyncWiki.php,v 1.3 2007-03-18 10:34:42 rurban Exp $');
 /**
  Copyright 2006 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin_WikiAdminUtils
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -60,7 +60,11 @@ extends WikiPlugin_WikiAdminUtils
 		     'noimport' => 0,
 		     'noexport' => 0,
 		     'noupload' => 0,
-		     'label'  => $this->getName());
+		     'label'  => $this->getName(),
+		     //'userid' => false,
+		     'passwd' => false,
+		     'sid'    => false,
+		     );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -72,7 +76,10 @@ extends WikiPlugin_WikiAdminUtils
         if ($request->getArg('action') != 'browse')
             return $this->disabled("(action != 'browse')");
 	$posted = $request->getArg('wikiadminutils');
-	if ($request->isPost() and $posted['action'] == $action) {
+	if ($request->isPost() 
+	    and $posted['action'] == $action 
+	    and $posted['url'] == $url) // multiple buttons
+	{
 	    return $this->_do_syncwiki($request, $posted);
 	}
         return $this->_makeButton($request, $args, $label);
@@ -94,8 +101,10 @@ extends WikiPlugin_WikiAdminUtils
 	    $merge_point = $last->get("mtime");    // for testing: 1160396075
 	    $dbh->set('mergepoint', $merge_point);
 	}
+	//TODO: remote auth, set session cookie
 	$pagelist = wiki_xmlrpc_post('wiki.getRecentChanges', 
-				     iso8601_encode($merge_point,1), $args['url']);
+				     iso8601_encode($merge_point,1), 
+				     $args['url'], $args);
 	$html = HTML();
 	//$html->pushContent(HTML::div(HTML::em("check RPC2 interface...")));
 	if (gettype($pagelist) === "array") {
@@ -162,10 +171,12 @@ extends WikiPlugin_WikiAdminUtils
 	    }
 	    //$html->pushContent($ol);
 	} else {
+	    $html->pushContent("xmlrpc error:  wiki.getRecentChanges returned "
+	                  ."(".gettype($pagelist).") ".$pagelist);
 	    trigger_error("xmlrpc error:  wiki.getRecentChanges returned "
 	                  ."(".gettype($pagelist).") ".$pagelist, E_USER_WARNING);
 	    EndLoadDump($request);
-            return $html;
+            return $this->error($html);
 	}
 
 	if (empty($args['noexport'])) {
@@ -275,7 +286,7 @@ extends WikiPlugin_WikiAdminUtils
 	global $request;
 	$reaction = 'import ';
 	if ($args['noimport']) return ($reaction._("skipped"));
-	$userid = $request->_user->_userid;
+	//$userid = $request->_user->_userid;
 	$name = $our->getName();
 	$pagedata = wiki_xmlrpc_post('wiki.getPage', $name, $args['url']);
 	if (is_object($pagedata)) {
@@ -347,6 +358,9 @@ extends WikiPlugin_WikiAdminUtils
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2007/01/20 11:24:46  rurban
+// Be more strict: link to merge conflicts (not yet handled)
+//
 // Revision 1.1  2007/01/02 13:22:57  rurban
 // add SyncWiki
 //
