@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.89 2007-02-17 14:16:28 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.90 2007-03-18 17:35:14 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 Reini Urban
  *
@@ -410,7 +410,7 @@ function LinkBracketLink($bracketlink) {
 
     /* Do not store the link */    
     elseif (substr($link,0,1) == ':')
-        return new Cached_InterwikiLink($link, $label);
+        return new Cached_WikiLink($link, $label);
 
     /*
      * Inline images in Interwiki urls's:
@@ -1070,6 +1070,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.89  2007/02/17 14:16:28  rurban
+// fix color GREY to GRAY
+//
 // Revision 1.88  2007/01/21 13:15:50  rurban
 // Support spaces in attributes and relation links
 //
