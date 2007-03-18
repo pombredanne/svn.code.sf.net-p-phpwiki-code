@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HttpClient.php,v 1.8 2007-01-02 13:18:35 rurban Exp $');
+rcs_id('$Id: HttpClient.php,v 1.9 2007-03-18 10:16:30 rurban Exp $');
 
 /** 
    Version 0.9, 6th April 2003 - Simon Willison ( http://simon.incutio.com/ )
@@ -209,6 +209,10 @@ class HttpClient {
             // Record domain of cookies for security reasons
             $this->cookie_host = $this->host;
         }
+        if ($this->status == '401') {
+            $this->errormsg = '401 ' . $status_string;
+            return false;
+        }
         // If $persist_referers, set the referer ready for the next request
         if (isset($this->persist_referers)) {
             $this->debug('Persisting referer: '.$this->getRequestURL());
@@ -226,12 +230,16 @@ class HttpClient {
             $uri = isset($this->headers['uri']) ? $this->headers['uri'] : '';
             if ($location || $uri) {
                 $url = parse_url($location.$uri);
-                // This will FAIL if redirect is to a different site
-                return $this->get($url['path']);
+                if ($this->method == 'POST')
+                    return $this->doRequest();
+                else    
+                    // This will FAIL if redirect is to a different site
+                    return $this->get($url['path']);
             }
         }
         return true;
     }
+    
     function buildRequest($ContentType = 'application/x-www-form-urlencoded') {
         $headers = array();
 	// Using 1.1 leads to all manner of problems, such as "chunked" encoding
@@ -375,6 +383,9 @@ class HttpClient {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2007/01/02 13:18:35  rurban
+// added postfile and xmlrpc support. added ContentType arg to buildRequest
+//
 // Revision 1.7  2006/06/18 11:02:01  rurban
 // assume https <>80
 //
