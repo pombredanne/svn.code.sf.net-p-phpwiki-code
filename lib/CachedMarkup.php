@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.54 2007-01-25 07:41:41 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.55 2007-03-18 17:35:14 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -299,6 +299,11 @@ class Cached_WikiLink extends Cached_Link {
 
     function Cached_WikiLink ($page, $label = false, $anchor = false) {
 	$this->_page = $page;
+	/* ":DontStoreLink" */
+	if (substr($this->_page,0,1) == ':') {
+	    $this->_page = substr($this->_page,1);
+	    $this->_nolink = true;
+        }    
         if ($anchor)
             $this->_anchor = $anchor;
         if ($label and $label != $page)
@@ -311,16 +316,18 @@ class Cached_WikiLink extends Cached_Link {
     }
     
     function getPagename($basepage) {
-	$page = new WikiPageName($this->_page, $basepage);
+        $page = new WikiPageName($this->_page, $basepage);
 	if ($page->isValid()) return $page->name;
 	else return false;
     }
 
     function getWikiPageLinks($basepage) {
         if ($basepage == '') return false;
+	if (isset($this->_nolink)) return false;
         if ($link = $this->getPagename($basepage)) 
             return array(array('linkto' => $link, 'relation' => 0));
-        else return false;
+        else 
+            return false;
     }
 
     function _getName($basepage) {
@@ -745,6 +752,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2007/01/25 07:41:41  rurban
+// Print attribute in title. Use CSS formatting for ::=
+//
 // Revision 1.53  2007/01/21 23:26:52  rurban
 // Translate Found by
 //
