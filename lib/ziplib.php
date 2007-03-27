@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.50 2007-02-17 14:15:59 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.51 2007-03-27 07:12:06 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -192,6 +192,9 @@ function zip_inflate ($data, $crc32, $uncomp_size)
         $zcrc32 = zip_crc32($data);
         if ($zcrc32 < 0) { // force unsigned
             $zcrc32 += 4294967296;
+        }
+        if ($crc32 < 0) { // force unsigned
+            $crc32 += 4294967296;
         }
         if ($zcrc32 != $crc32)
             trigger_error("CRC32 mismatch: calculated=$zcrc32, expected=$crc32", E_USER_ERROR);
@@ -879,6 +882,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2007/02/17 14:15:59  rurban
+// also charset convert summary
+//
 // Revision 1.49  2007/01/03 21:25:10  rurban
 // Use convert_charset()
 //
