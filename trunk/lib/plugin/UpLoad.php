@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.22 2007-02-17 14:16:56 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.23 2007-04-08 12:43:45 rurban Exp $');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -144,7 +144,7 @@ ws[cfh]");
 	    $u_userfile = preg_replace("/ /", "%20", $u_userfile);
             $userfile_tmpname = $userfile->getTmpName();
 	    $err_header = HTML::h2(fmt("ERROR uploading '%s': ", $userfile_name));
-            if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")\$/",
+            if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/",
                            $userfile_name))
             {
             	$message->pushContent($err_header);
@@ -239,6 +239,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2007/02/17 14:16:56  rurban
+// allow spaces in filenames
+//
 // Revision 1.21  2007/01/04 16:46:50  rurban
 // Support UPLOAD_USERDIR
 //
