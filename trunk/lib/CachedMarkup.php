@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.55 2007-03-18 17:35:14 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.56 2007-04-08 16:39:40 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -499,15 +499,17 @@ class Cached_SemanticLink extends Cached_WikiLink {
         $class = 'wiki';
         // do not link to the attribute value, but to the attribute
         $is_attribute = ($m[2] == ':=');
+	if ($is_attribute)
+	    $title = isset($this->_attribute_base)
+		? sprintf(_("Attribute %s, base value: %s"), $this->_relation, $this->_attribute_base)
+		: sprintf(_("Attribute %s, value: %s"), $this->_relation, $this->_attribute);
         if ($label) {
             return HTML::span
 		(
 		 HTML::a(array('href'  => WikiURL($is_attribute ? $this->_relation : $this->_page),
 			       'class' => "wiki ".($is_attribute ? "attribute" : "relation"),
 			       'title' => $is_attribute 
-			       ? (isset($this->_attribute_base)
-				  ? sprintf(_("Attribute %s base value: %s"), $this->_relation, $this->_attribute_base)
-				  : sprintf(_("Attribute %s value: "), $this->_attribute))
+			       ? $title 
 			       : sprintf(_("Relation %s to page %s"), $this->_relation, $this->_page)),
 			 $label)
 		 );
@@ -516,7 +518,7 @@ class Cached_SemanticLink extends Cached_WikiLink {
 		(
 		 HTML::a(array('href'  => WikiURL($this->_relation),
 			       'class' => "wiki attribute",
-			       'title' => sprintf(_("Attribute %s base value: %s"), $this->_relation, $this->_attribute_base)),
+			       'title' => $title),
 			 $url)
 		 );
         } else {
@@ -752,6 +754,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.55  2007/03/18 17:35:14  rurban
+// Fix :DontStoreLink
+//
 // Revision 1.54  2007/01/25 07:41:41  rurban
 // Print attribute in title. Use CSS formatting for ::=
 //
