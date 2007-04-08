@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.114 2007-02-17 22:39:44 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.115 2007-04-08 16:24:10 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -162,11 +162,7 @@ extends _RecentChanges_Formatter
     }
 
     function authorLink ($rev) {
-        $author = $rev->get('author');
-        if ( $this->authorHasPage($author) ) {
-            return WikiLink($author);
-        } else
-            return $author;
+        return WikiLink($rev->get('author'), 'if_known');
     }
 
     function summaryAsHTML ($rev) {
@@ -842,7 +838,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.114 $");
+                            "\$Revision: 1.115 $");
     }
 
     function managesValidators() {
@@ -1058,6 +1054,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.114  2007/02/17 22:39:44  rurban
+// format=rss overhaul
+//
 // Revision 1.113  2007/02/17 14:15:52  rurban
 // new argument owner=[] for RecentChangesMyPages
 //
