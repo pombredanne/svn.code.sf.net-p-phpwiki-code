@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.23 2007-04-08 12:43:45 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.24 2007-04-11 17:49:01 rurban Exp $');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -82,7 +82,7 @@ ocx
 ops
 pcd
 p[ir]f
-php
+php\d?
 pl
 py
 reg
@@ -239,6 +239,10 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2007/04/08 12:43:45  rurban
+// Important security fix!
+// Disallow files like "deface.php.3" also. Those are actually in the wild!
+//
 // Revision 1.22  2007/02/17 14:16:56  rurban
 // allow spaces in filenames
 //
