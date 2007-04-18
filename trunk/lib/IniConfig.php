@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.114 2007-02-17 22:49:24 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.115 2007-04-18 20:40:49 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -196,7 +196,7 @@ function IniConfig($file) {
          'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML',
          'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
          'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS',
-	 'ENABLE_SEARCHHIGHLIGHT'
+	 'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS'
          );
 
     $rs = @parse_ini_file($file);
@@ -935,6 +935,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.114  2007/02/17 22:49:24  rurban
+// enable TEMP_DIR, fixes bug 1646080
+//
 // Revision 1.113  2007/01/27 21:52:54  rurban
 // Define TEMP_DIR always
 //

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.24 2007-04-11 17:49:01 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.25 2007-04-18 20:40:48 rurban Exp $');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -56,6 +56,21 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
+        $this->allowed_extensions = explode("\n",
+"7z
+bz2
+doc
+gif
+gz
+jpeg
+jpg
+mp3
+pdf
+png
+rar
+tar
+txt
+zip");
         $this->disallowed_extensions = explode("\n",
 "ad[ep]
 asd
@@ -83,6 +98,7 @@ ops
 pcd
 p[ir]f
 php\d?
+phtml
 pl
 py
 reg
@@ -144,13 +160,21 @@ ws[cfh]");
 	    $u_userfile = preg_replace("/ /", "%20", $u_userfile);
             $userfile_tmpname = $userfile->getTmpName();
 	    $err_header = HTML::h2(fmt("ERROR uploading '%s': ", $userfile_name));
-            if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/",
+            if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/i",
                            $userfile_name))
             {
             	$message->pushContent($err_header);
                 $message->pushContent(fmt("Files with extension %s are not allowed.",
                                           join(", ", $this->disallowed_extensions)),HTML::br(),HTML::br());
-            } 
+            }
+            elseif (! DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS and 
+                    ! preg_match("/(\." . join("|\.", $this->allowed_extensions) . ")\$/i", 
+                               $userfile_name))
+            {
+            	$message->pushContent($err_header);
+                $message->pushContent(fmt("Only files with the extension %s are allowed.",
+                                          join(", ", $this->allowed_extensions)),HTML::br(),HTML::br());
+            }
             elseif (preg_match("/[^._a-zA-Z0-9- ]/", $userfile_name))
             {
             	$message->pushContent($err_header);
@@ -239,6 +263,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2007/04/11 17:49:01  rurban
+// Chgeck against .php\d, i.e. php3
+//
 // Revision 1.23  2007/04/08 12:43:45  rurban
 // Important security fix!
 // Disallow files like "deface.php.3" also. Those are actually in the wild!
