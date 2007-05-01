@@ -1,8 +1,8 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.151 2007-02-17 14:17:34 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.152 2007-05-01 16:22:41 rurban Exp $');
 
 /*
- Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -184,6 +184,7 @@ function FilenameForPage ($pagename)
     $enc = preg_replace('/:/', '%3A', $pagename);
     // For every %2F will need to mkdir -p dirname($pagename)
     return preg_replace('/^\./', '%2E', $enc);
+    // return preg_replace(array('/^\./','%20'), array('%2E',' '), $enc);
 }
 
 /**
@@ -1418,8 +1419,12 @@ function SetupWiki (&$request)
                           E_USER_WARNING);
         }
     }
-
     echo "</dl>\n";
+    
+    $pagename = _("InterWikiMap");
+    $map = $dbi->getPage($pagename);
+    $map->set('locked', true);
+    PrintXML(HTML::dt(HTML::em(WikiLink($pagename))), HTML::dd("locked"));
     EndLoadDump($request);
 }
 
@@ -1447,6 +1452,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.151  2007/02/17 14:17:34  rurban
+ only media=print css for htmldump and pdf
+
  Revision 1.150  2007/01/20 15:53:42  rurban
  Use WikiPagename treatment for imported pagenames
 
