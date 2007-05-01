@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.9 2007-03-10 18:22:51 rurban Exp $');
+rcs_id('$Id: MailNotify.php,v 1.10 2007-05-01 16:14:21 rurban Exp $');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -184,9 +184,7 @@ class MailNotify {
         if (!isset($meta['mtime'])) $meta['mtime'] = time();
         if ($previous) {
             $difflink = WikiURL($this->pagename, array('action'=>'diff'), true);
-            $dbh = &$request->getDbh();
-            $cache = &$dbh->_wikidb->_cache;
-            //$cache = &$request->_dbi->_cache;
+            $cache = &$request->_dbi->_cache;
             $this_content = explode("\n", $wikitext);
             $prevdata = $cache->get_versiondata($this->pagename, $previous, true);
             if (empty($prevdata['%content']))
@@ -217,7 +215,7 @@ class MailNotify {
     }
 
     /** 
-     * support mass rename / remove (not yet tested)
+     * Support mass rename / remove (not yet tested)
      */
     function sendPageRenameNotification ($to, &$meta) {
         global $request;
@@ -247,11 +245,7 @@ class MailNotify {
 	    if (!empty($notify) and is_array($notify)) {
                 if (empty($this->pagename))
                     $this->pagename = $meta['pagename'];
-		//TODO: defer it (quite a massive load if you MassRevert some pages).
-		//TODO: notification class which catches all changes,
-		//  and decides at the end of the request what to mail. 
-		//  (type, page, who, what, users, emails)
-		// Could be used for ModeratePage and RSS2 Cloud xml-rpc also.
+		// TODO: Should be used for ModeratePage and RSS2 Cloud xml-rpc also.
                 $this->getPageChangeEmails($notify);
                 if (!empty($this->emails)) {
                     $result = $this->sendPageChangeNotification($wikitext, $version, $meta);
@@ -386,6 +380,9 @@ will expire at %s.",
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2007/03/10 18:22:51  rurban
+// Patch 1677950 by Erwann Penet
+//
 // Revision 1.8  2007/01/25 07:41:54  rurban
 // Add wikimail.log default on unix
 //
