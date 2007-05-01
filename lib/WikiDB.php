@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.150 2007-03-18 17:35:27 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.151 2007-05-01 16:20:12 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -997,7 +997,8 @@ class WikiDB_Page
                 include_once("lib/MailNotify.php");
                 $MailNotify = new MailNotify($newrevision->getName());
 		// FIXME: this breaks after-edit-redirect
-                $MailNotify->onChangePage ($this->_wikidb, $wikitext, $version, $meta);
+		if (DEBUG)
+		    $MailNotify->onChangePage ($this->_wikidb, $wikitext, $version, $meta);
             }
             $newrevision->_transformedContent = $formatted;
         }
@@ -2196,6 +2197,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.150  2007/03/18 17:35:27  rurban
+// Improve comments
+//
 // Revision 1.149  2007/02/17 14:16:37  rurban
 // isWikiPage no error on empty pagenames. MailNotify->onChangePage fix by ??
 //
