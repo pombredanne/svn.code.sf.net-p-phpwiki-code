@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PopularTags.php,v 1.1 2007-03-10 18:30:51 rurban Exp $');
+rcs_id('$Id: PopularTags.php,v 1.2 2007-05-01 16:05:29 rurban Exp $');
 /*
  Copyright 2007 Reini Urban
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function getDefaultArguments() {
@@ -77,7 +77,8 @@ extends WikiPlugin
 	    if ($i > $limit) break;
 	    $wo = preg_replace("/^("._("Category")."|"
 			       ._("Topic").")/", "", $name);
-	    $link = WikiLink($name, 'auto', $wo . " (" .$count.")");
+	    $wo = HTML(HTML::span($wo),HTML::raw("&nbsp;"),HTML::small("(".$count.")"));
+	    $link = WikiLink($name, 'auto', $wo);
 	    $html->pushContent(HTML::li($link));
 	}
 	return $html;
@@ -92,6 +93,9 @@ function cmp_by_count($a, $b) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2007/03/10 18:30:51  rurban
+// Most popular list of Categories
+//
 
 // Local Variables:
 // mode: php
