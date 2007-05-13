@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.115 2007-04-08 16:24:10 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.116 2007-05-13 18:13:41 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -222,13 +222,13 @@ extends _RecentChanges_Formatter
             global $request;
             if ($author == '[]')
                 $author = $request->_user->getID();
-            $edits .= sprintf(_(" from author %s"), $author);
+            $edits .= sprintf(_(" for pages changed by %s"), $author);
 	}
 	if (!empty($owner)) {
             global $request;
             if ($owner == '[]')
                 $owner = $request->_user->getID();
-            $edits .= sprintf(_(" from owner %s"), $owner);
+            $edits .= sprintf(_(" for pages owned by %s"), $owner);
 	}
         if ($timespan = $days > 0) {
             if (intval($days) != $days)
@@ -305,7 +305,7 @@ extends _RecentChanges_Formatter
                      $this->sidebar_link());
     }
 
-    function empty_message () {
+    function empty_message() {
         if (isset($this->_args['caption']) and $this->_args['caption'] == _("Recent Comments"))
             return _("No comments found");
         else 
@@ -838,7 +838,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.115 $");
+                            "\$Revision: 1.116 $");
     }
 
     function managesValidators() {
@@ -918,11 +918,12 @@ extends WikiPlugin
                 $args['owner'] = $request->_user->getID();
             $params['owner'] = $args['owner'];
         }
-        if (empty($days)) $days = 2;
-        if ($days > 0.0)
+        if (!empty($days)) {
+          if ($days > 0.0)
             $params['since'] = time() - 24 * 3600 * $days;
-        elseif ($days < 0.0)
+          elseif ($days < 0.0)
             $params['since'] = 24 * 3600 * $days - time();
+        }
 
         return $params;
     }
@@ -937,11 +938,11 @@ extends WikiPlugin
 
         if (!empty($args['only_new']))
             $changes = new NewPageRevisionIterator($changes);
-        elseif (!empty($args['author']))
+        if (!empty($args['author']))
             $changes = new AuthorPageRevisionIterator($changes, $args['author']);
-        elseif (!empty($args['owner']))
+        if (!empty($args['owner']))
             $changes = new OwnerPageRevisionIterator($changes, $args['owner']);
-        elseif (!$show_deleted)
+        if (!$show_deleted)
             $changes = new NonDeletedRevisionIterator($changes, !$show_all);
 
         return $changes;
@@ -1054,6 +1055,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.115  2007/04/08 16:24:10  rurban
+// Remove redundant code in ->authorLink(): 'if_known' does the same
+//
 // Revision 1.114  2007/02/17 22:39:44  rurban
 // format=rss overhaul
 //
