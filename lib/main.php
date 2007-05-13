@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.231 2007-02-17 14:16:44 rurban Exp $');
+rcs_id('$Id: main.php,v 1.232 2007-05-13 18:13:20 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -222,7 +222,7 @@ class WikiRequest extends Request {
 
         // Save preferences in session and cookie
         if ((defined('WIKI_XMLRPC') and !WIKI_XMLRPC) or $action != 'xmlrpc') {
-            if (isset($this->_user)) {
+            if (isset($this->_user) and $this->_user->_userid) {
             	if (!isset($this->_user->_authhow) or $this->_user->_authhow != 'session') {
                     $this->_user->setPreferences($this->_prefs, true);
             	}
@@ -858,9 +858,9 @@ class WikiRequest extends Request {
             return $this->args['auth']['userid'];
 
         if ($user = $this->getSessionVar('wiki_user')) {
-            // switched auth between sessions. 
+            // Switched auth between sessions. 
             // Note: There's no way to demandload a missing class-definition 
-            // afterwards! (Stupid php)
+            // afterwards! Stupid php.
             if (isa($user, WikiUserClassname())) {
                 $this->_user = $user;
                 $this->_user->_authhow = 'session';
@@ -1314,6 +1314,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.231  2007/02/17 14:16:44  rurban
+// action_soap, action_setpref, anon perms for wikitohtml, setpref
+//
 // Revision 1.230  2007/01/27 21:52:15  rurban
 // Improved login header for !ALLOW_ANON_USER
 //
