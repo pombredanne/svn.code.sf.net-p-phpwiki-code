@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.139 2007-01-25 07:42:01 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.140 2007-05-13 18:12:55 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -54,11 +54,11 @@
  *                     doesn't explictly need to declare it 
  * TODO:
  *   info=relation,linkto nopage=1
+ *   use custom format method (RecentChanges, rss, ...)
  *
  * FIXED: 
  *   fix memory exhaustion on large pagelists with old --memory-limit php's only. 
  *   Status: improved 2004-06-25 16:19:36 rurban 
- *     but needs further testing.
  */
 class _PageList_Column_base {
     var $_tdattr = array();
@@ -507,12 +507,8 @@ class PageList {
         if ($options)
             $this->_options = $options;
 
-        // let plugins predefine only certain objects, such its own custom pagelist columns
-        if (!empty($this->_options['types'])) {
-            $this->_types = $this->_options['types'];
-            unset($this->_options['types']);
-        }
         $this->_initAvailableColumns();
+        // let plugins predefine only certain objects, such its own custom pagelist columns
         $symbolic_columns = 
             array(
                   'all' =>  array_diff(array_keys($this->_types), // all but...
@@ -540,6 +536,14 @@ class PageList {
         // If 'pagename' is already present, _addColumn() will not add it again
 	if (empty($this->_options['nopage']))
 	    $this->_addColumn('pagename');
+
+	if (!empty($this->_options['types'])) {
+            foreach ($this->_options['types'] as $type) {	
+            	$this->_types[$type->_field] = $type;
+                $this->_addColumn($type->_field);
+            }
+            unset($this->_options['types']);
+        }
 
         foreach (array('sortby','limit','paging','count','dosort') as $key) {
 	    if (!empty($options) and !empty($options[$key])) {
@@ -1524,6 +1528,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.139  2007/01/25 07:42:01  rurban
+// Support nopage
+//
 // Revision 1.138  2007/01/20 11:24:15  rurban
 // Support paging limit if ->_pages is not yet limited by the backend (AllPagesByMe)
 //
