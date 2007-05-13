@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.75 2007-01-02 13:18:55 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.76 2007-05-13 18:13:04 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -40,7 +40,7 @@ class Template
         }
         $request->_TemplatesProcessed[$name] = 1;
         $this->_tmpl = fread($fp, filesize($file));
-        fclose($fp);
+        if ($fp) fclose($fp);
         //$userid = $request->_user->_userid;
         if (is_array($args))
             $this->_locals = $args;
@@ -285,6 +285,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.75  2007/01/02 13:18:55  rurban
+// speed up Template expansion. revision only necessary. fixed all affected templates
+//
 // Revision 1.73  2005/04/08 05:41:00  rurban
 // fix Template("theme/name") inclusion
 //
