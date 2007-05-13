@@ -22,7 +22,7 @@
 	border-left: 1px solid #fabd23;
 }
 
-body { font-size: x-small; }
+body, pre { font-size: x-small; }
 
 /* the tabs */
 
