@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.30 2004-06-14 11:31:39 rurban Exp $');
+rcs_id('$Id: PageHistory.php,v 1.31 2007-05-13 18:13:34 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -253,7 +253,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.30 $");
+                            "\$Revision: 1.31 $");
     }
 
     function getDefaultArguments() {
@@ -281,6 +281,7 @@ extends WikiPlugin_RecentChanges
         $page = $dbi->getPage($args['page']);
         $iter = $page->getAllRevisions();
         $params = $this->getMostRecentParams($args);
+        if (empty($args['days'])) unset($params['since']);
         return new _PageHistory_PageRevisionIter($iter, $params);
     }
 
@@ -319,6 +320,14 @@ extends WikiPlugin_RecentChanges
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2004/06/14 11:31:39  rurban
+// renamed global $Theme to $WikiTheme (gforge nameclash)
+// inherit PageList default options from PageList
+//   default sortby=pagename
+// use options in PageList_Selectable (limit, sortby, ...)
+// added action revert, with button at action=diff
+// added option regex to WikiAdminSearchReplace
+//
 // Revision 1.29  2004/05/18 16:23:40  rurban
 // rename split_pagename to SplitPagename
 //
