@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.140 2006-12-22 01:20:14 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.141 2007-05-13 18:31:24 rurban Exp $');
 /* Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -113,6 +113,13 @@ define('TIMEOFFSET_MIN_HOURS', -26);
 define('TIMEOFFSET_MAX_HOURS',  26);
 if (!defined('TIMEOFFSET_DEFAULT_HOURS')) define('TIMEOFFSET_DEFAULT_HOURS', 0);
 
+/* EMAIL VERIFICATION
+ * On certain nets or hosts the email domain cannot be determined automatically from the DNS.
+ * Provide some overrides here.
+ *    ( username @ ) domain => mail-domain
+ */
+$EMailHosts = array('avl.com' => 'mail.avl.com');
+
 /**
  * There are be the following constants in config/config.ini to 
  * establish login parameters:
@@ -202,8 +209,16 @@ function _determineBogoUserOrPassUser($UserName) {
         else { 
             $_PassUser = new _PassUser($UserName,
                                        isset($_BogoUser) ? $_BogoUser->_prefs : false);
-            if ($_PassUser->userExists() or $GLOBALS['request']->getArg('auth'))
-                return $_PassUser;
+            if ($_PassUser->userExists() or $GLOBALS['request']->getArg('auth')) {
+            	if (strtolower(get_class($_PassUser)) == "_passuser") {
+	    	    $class = $_PassUser->nextClass();
+    		    if ($user = new $class($UserName, $_PassUser->_prefs)) {
+	                return $user;
+    		    }
+            	} else {
+            	    return $_PassUser;
+            	}
+            }
         }
     }
     // No Bogo- or PassUser exists, or
@@ -279,28 +294,28 @@ function WikiUserClassname() {
  * (on php4 it works ok, on php5 it's currently disallowed on the parser level)
  * that's why try it the hard way.
  */
-function UpgradeUser ($olduser, $user) {
-    if (isa($user,'_WikiUser') and isa($olduser,'_WikiUser')) {
-        // populate the upgraded class $olduser with the values from the new user object
+function UpgradeUser ($user, $newuser) {
+    if (isa($user,'_WikiUser') and isa($newuser,'_WikiUser')) {
+        // populate the upgraded class $newuser with the values from the current user object
         //only _auth_level, _current_method, _current_index,
         if (!empty($user->_level) and 
-            $user->_level > $olduser->_level)
-            $olduser->_level = $user->_level;
+            $user->_level > $newuser->_level)
+            $newuser->_level = $user->_level;
         if (!empty($user->_current_index) and
-            $user->_current_index > $olduser->_current_index) {
-            $olduser->_current_index = $user->_current_index;
-            $olduser->_current_method = $user->_current_method;
+            $user->_current_index > $newuser->_current_index) {
+            $newuser->_current_index = $user->_current_index;
+            $newuser->_current_method = $user->_current_method;
         }
         if (!empty($user->_authmethod))
-            $olduser->_authmethod = $user->_authmethod;
+            $newuser->_authmethod = $user->_authmethod;
         /*
         foreach (get_object_vars($user) as $k => $v) {
             if (!empty($v)) $olduser->$k = $v;	
         }
         */
-        $olduser->hasHomePage(); // revive db handle, because these don't survive sessions
+        $newuser->hasHomePage(); // revive db handle, because these don't survive sessions
         //$GLOBALS['request']->_user = $olduser;
-        return $olduser;
+        return $newuser;
     } else {
         return false;
     }
@@ -480,7 +495,7 @@ class _WikiUser
         if ($seperate_page) {
             $page = $request->getPage($pagename);
             $revision = $page->getCurrentRevision();
-            return GeneratePage($login,_("Sign In"),$revision);
+            return GeneratePage($login,_("Sign In"), $revision);
         } else {
             return $login->printExpansion();
         }
@@ -1152,7 +1167,7 @@ extends _AnonUser
             if (! $this->_HomePagehandle->exists() ) {
                 $this->createHomePage();
             }
-            if (!empty($this->_HomePagehandle) and !$id_only) {
+	    if (!empty($this->_HomePagehandle) and !$id_only) {
                 $this->_HomePagehandle->set('pref', $this->_prefs->store());
             }
         }
@@ -1167,12 +1182,18 @@ extends _AnonUser
     // child methods obtain $stored_password from external auth.
     function userExists() {
         //if ($this->_HomePagehandle) return true;
-        $class = $this->nextClass();
-        while ($user = new $class($this->_userid, $this->_prefs)) {
+        if (strtolower(get_class($this)) == "_passuser") {
+            $class = $this->nextClass();
+            $user = new $class($this->_userid, $this->_prefs);
+        } else {
+            $user = $this;
+        }
+        while ($user) {
             if (!check_php_version(5))
                 eval("\$this = \$user;");
-            // /*PHP5 patch*/$this = $user;
-            UpgradeUser($this, $user);
+            	// /*PHP5 patch*/$this = $user;
+            else    
+            	UpgradeUser($this, $user);
             if ($user->userExists()) {
                 return true;
             }
@@ -1687,6 +1708,7 @@ extends _UserPreference
     Note: too strict, Bug #1053681
  */
 function ValidateMail($email, $noconnect=false) {
+    global $EMailHosts;
     $HTTP_HOST = $GLOBALS['request']->get('HTTP_HOST');
 
     // if this check is too strict (like invalid mail addresses in a local network only)
@@ -1735,16 +1757,18 @@ function ValidateMail($email, $noconnect=false) {
         return $result;
     }
     if ($noconnect)
-      return array(true,sprintf(_("E-Mail address '%s' is properly formatted"), $email));
+      return array(true, sprintf(_("E-Mail address '%s' is properly formatted"), $email));
 
     list ( $Username, $Domain ) = split ("@", $email);
-    // Todo: getmxrr workaround on windows or manual input field to verify it manually
+    //Todo: getmxrr workaround on windows or manual input field to verify it manually
     if (!isWindows() and getmxrr($Domain, $MXHost)) { // avoid warning on Windows. 
         $ConnectAddress = $MXHost[0];
     } else {
         $ConnectAddress = $Domain;
+	if (isset($EMailHosts[ $Domain ])) {
+            $ConnectAddress = $EMailHosts[ $Domain ];
+        }
     }
-    // Todo: company specific (behind a firewall) verification options
     $Connect = @fsockopen ( $ConnectAddress, 25 );
     if ($Connect) {
         if (ereg("^220", $Out = fgets($Connect, 1024))) {
@@ -2131,6 +2155,10 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.140  2006/12/22 01:20:14  rurban
+// Automatically create a Users homepage, when no SQL method exists
+// not to rely on cookies.
+//
 // Revision 1.139  2006/09/03 09:55:37  rurban
 // Remove too early and too strict isValidName check in _PassUser. This really should be done in
 // the method, when we know it. This fixes NTLM auth. (userid=domain\user)
