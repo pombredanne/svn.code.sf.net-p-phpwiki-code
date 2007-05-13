@@ -31,6 +31,8 @@
 
 body { font-size: xx-small; }
 
+pre { font-size: x-small; }
+
 #p-cactions {
     width: 76% !important;
     z-index: 3 !important;
