@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.71 2007-02-17 22:39:05 rurban Exp $');
+rcs_id('$Id: display.php,v 1.72 2007-05-13 18:13:12 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -79,7 +79,10 @@ function actionPage(&$request, $action) {
     */
     $format = $request->getArg('format');
     /* At first the single page formats: html, xml */
-    if (!$format or $format == 'html' or $format == 'sidebar') {
+    if ($pagename == _("LinkDatabase")) {
+        $template = Template('browse', array('CONTENT' => $transformedContent));
+	GeneratePage($template, $pagetitle, $revision, $args);
+    } elseif (!$format or $format == 'html' or $format == 'sidebar') {
 	$template = Template('browse', array('CONTENT' => $transformedContent));
 	GeneratePage($template, $pagetitle, $revision, $args);
     } elseif ($format == 'xml') {
@@ -137,7 +140,6 @@ function actionPage(&$request, $action) {
 	    $model = new ModelWriter($request, $pagelist);
 	    $model->format();
 	} else {
-	    trigger_error(sprintf("Unhandled format %s. Reverting to html", $format), E_USER_WARNING);
 	    $template = Template('browse', array('CONTENT' => $transformedContent));
 	    GeneratePage($template, $pagetitle, $revision, $args);
 	}
@@ -332,7 +334,8 @@ function displayPage(&$request, $template=false) {
 	    $model = new ModelWriter($request, $pagelist);
 	    $model->format();
 	} else {
-	    trigger_error(sprintf("Unhandled format %s. Reverting to html", $format), E_USER_WARNING);
+	    if (!in_array($pagename, array(_("LinkDatabase"))))
+	    	trigger_error(sprintf("Unhandled format %s. Reverting to html", $format), E_USER_WARNING);
 	    $template->printExpansion($toks);
 	}
     }
@@ -345,6 +348,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.71  2007/02/17 22:39:05  rurban
+// format=rss overhaul
+//
 // Revision 1.70  2007/01/22 23:43:06  rurban
 // Add RecentChanges format=sidebar
 //
