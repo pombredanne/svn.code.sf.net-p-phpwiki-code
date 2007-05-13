@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.26 2007-01-07 18:44:47 rurban Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.27 2007-05-13 18:13:48 rurban Exp $');
 /**
- Copyright 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2006,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.26 $");
+                            "\$Revision: 1.27 $");
     }
 
     function getDefaultArguments() {
@@ -51,6 +51,9 @@ extends WikiPlugin
             return '';
 
         $backend = &$dbi->_backend;
+        $this->chunk_split = true;
+        $this->readonly_pagemeta = array();
+        $this->hidden_pagemeta = array ('_cached_html');
 
         $html = HTML(HTML::h3(fmt("Querying backend directly for '%s'",
                                   $page)));
@@ -106,11 +109,13 @@ extends WikiPlugin
 
     /**
      * Really should have a _fixupPagedata and _fixupVersiondata, but this works.
+     * also used in plugin/EditMetaData
      */
     function _fixupData(&$data) {
+	if (!is_array($data)) return;
+	
         global $request;
         $user = $request->getUser();
-
         foreach ($data as $key => $val) {
             if (is_integer($key)) {
             	;
@@ -124,7 +129,7 @@ extends WikiPlugin
                 ob_end_clean();
             }
             elseif (is_bool($val)) {
-            	$data[$key] = $val ? "<true>" : "<false>";
+            	$data[$key] = $this->_showvalue($key, $val ? "true" : "false");
             }
             elseif (is_string($val) && ((substr($val, 0, 2) == 'a:' 
 					 or (substr($val, 0, 2) == 'O:')))) 
@@ -165,8 +170,9 @@ extends WikiPlugin
         }
         unset($data['%pagedata']); // problem in backend
     }
-            
-    function _showhash ($heading, $hash, $pagename = '') {
+
+    /* also used in plugin/EditMetaData */
+    function _showhash ($heading, $hash) {
         $rows = array();
         if ($heading)
             $rows[] = HTML::tr(array('bgcolor' => '#ffcccc',
@@ -174,9 +180,10 @@ extends WikiPlugin
                                HTML::td(array('colspan' => 2,
                                               'style' => 'color:#000000'),
                                         $heading));
+	if (!is_array($hash)) return array();
         ksort($hash);
         foreach ($hash as $key => $val) {
-            if (is_string($val)) $val = chunk_split($val);	
+            if ($this->chunk_split and is_string($val)) $val = chunk_split($val);	
             $rows[] = HTML::tr(HTML::td(array('align' => 'right',
                                               'bgcolor' => '#cccccc',
                                               'style' => 'color:#000000'),
@@ -184,14 +191,23 @@ extends WikiPlugin
                                              HTML::raw('&nbsp;'))),
                                HTML::td(array('bgcolor' => '#ffffff',
                                               'style' => 'color:#000000'),
-                                        $val ? $val : HTML::raw('&nbsp;'))
+                                        $this->_showvalue($key, $val))
                                );
         }
         return $rows;
     }
+
+    /* also used in plugin/EditMetaData */
+    function _showvalue ($key, $val) {
+	return $val ? $val : HTML::raw('&nbsp;');
+    }
+
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2007/01/07 18:44:47  rurban
+// Add notallversion argument. Support more types: objects, serialized objects. split overlong strings
+//
 // Revision 1.25  2006/09/06 06:02:36  rurban
 // print linkinfo also
 //
