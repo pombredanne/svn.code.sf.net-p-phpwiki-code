@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: EditMetaData.php,v 1.12 2007-01-04 16:46:31 rurban Exp $');
+rcs_id('$Id: EditMetaData.php,v 1.13 2007-05-15 16:32:25 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -36,10 +36,13 @@ rcs_id('$Id: EditMetaData.php,v 1.12 2007-01-04 16:46:31 rurban Exp $');
  * Written by MichaelVanDam, to test out some ideas about
  * PagePermissions and PageTypes.
  *
- * Array support added by ReiniUrban.
+ * Rewritten for recursive array support by ReiniUrban.
  */
-class WikiPlugin_EditMetaData
-extends WikiPlugin
+
+require_once('lib/plugin/_BackendInfo.php');
+
+class WikiPlugin_EditMetaData 
+extends WikiPlugin__BackendInfo
 {
     function getName () {
         return _("EditMetaData");
@@ -51,19 +54,13 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
-
-    // Arguments:
-    //
-    //  page - page whose metadata is editted
-
 
     function getDefaultArguments() {
         return array('page'       => '[pagename]'
                     );
     }
-
 
     function run($dbi, $argstr, &$request, $basepage) {
         $this->_args = $this->getArgs($argstr, $request);
@@ -71,73 +68,77 @@ extends WikiPlugin
         if (!$page)
             return '';
 
-        $hidden_pagemeta = array ('_cached_html');
-        $readonly_pagemeta = array ('hits');
+        $this->hidden_pagemeta = array ('_cached_html');
+        $this->readonly_pagemeta = array ('hits', 'passwd');
         $dbi = $request->getDbh();
         $p = $dbi->getPage($page);
         $pagemeta = $p->getMetaData();
-
+        $this->chunk_split = false;
+        
         // Look at arguments to see if submit was entered. If so,
         // process this request before displaying.
         //
-        if ($request->isPost() and $request->_user->isAdmin() and $request->getArg('metaedit')) {
+        if ($request->isPost() 
+	    and $request->_user->isAdmin() 
+	    and $request->getArg('metaedit')) 
+	{
             $metafield = trim($request->getArg('metafield'));
             $metavalue = trim($request->getArg('metavalue'));
-            if (!in_array($metafield, $readonly_pagemeta)) {
+            $meta = $request->getArg('meta');
+            $changed = 0;
+            // meta[__global[_upgrade][name]] => 1030.13
+            foreach ($meta as $key => $val) {
+            	if ($val != $pagemeta[$key] 
+		    and !in_array($key, $this->readonly_pagemeta)) 
+		{
+            	    $changed++;
+                    $p->set($key, $val);
+                }
+            }
+            if ($metafield and !in_array($metafield, $this->readonly_pagemeta)) {
+            	// __global[_upgrade][name] => 1030.13
                 if (preg_match('/^(.*?)\[(.*?)\]$/', $metafield, $matches)) {
-                    list(,$array_field, $array_key) = $matches;
+                    list(, $array_field, $array_key) = $matches;
                     $array_value = $pagemeta[$array_field];
                     $array_value[$array_key] = $metavalue;
-                    $p->set($array_field, $array_value);
-                } else {
+                    if ($pagemeta[$array_field] != $array_value) {
+	            	$changed++;
+                    	$p->set($array_field, $array_value);
+                    }
+                } elseif ($pagemeta[$metafield] != $metavalue) {
+	            $changed++;
                     $p->set($metafield, $metavalue);
                 }
             }
-            $dbi->touch();
-            $url = $request->getURLtoSelf(false, 
-                                          array('metaedit','metafield','metavalue'));
-            $request->redirect($url);
-            // The rest of the output will not be seen due to the
-            // redirect.
-
+            if ($changed) {
+                $dbi->touch();
+		$url = $request->getURLtoSelf(false, 
+                                          array('meta','metaedit','metafield','metavalue'));
+		$request->redirect($url);
+		// The rest of the output will not be seen due to the
+		// redirect.
+		return;
+	    }
         }
 
         // Now we show the meta data and provide entry box for new data.
-
         $html = HTML();
-        $html->pushContent(HTML::h3(fmt("Existing page-level metadata for %s:",
-					$page)));
-        $dl = HTML::dl();
-        foreach ($pagemeta as $key => $val) {
-            if (is_string($val) and (substr($val,0,2) == 'a:')) {
-                $dl->pushContent(HTML::dt("\n$key => $val\n",
-                                          $dl1 = HTML::dl()));
-                foreach (unserialize($val) as $akey => $aval) {
-                    $dl1->pushContent(HTML::dt(HTML::strong("$key" . '['
-                                                            . $akey
-                                                            . "] => $aval\n"))
-                                      );
-                }
-                $dl->pushContent($dl1);
-            } elseif (is_array($val)) {
-                $dl->pushContent(HTML::dt("\n$key:\n", $dl1 = HTML::dl()));
-                foreach ($val as $akey => $aval) {
-                    $dl1->pushContent(HTML::dt(HTML::strong("$key" . '['
-                                                            . $akey
-                                                            . "] => $aval\n"))
-                                      );
-                }
-                $dl->pushContent($dl1);
-            } elseif (in_array($key,$hidden_pagemeta)) {
-                ;
-            } elseif (in_array($key,$readonly_pagemeta)) {
-                $dl->pushContent(HTML::dt(array('style' => 'background: #dddddd'),
-                                          "$key => $val\n"));
-            } else {
-                $dl->pushContent(HTML::dt(HTML::strong("$key => $val\n")));
-            }
+        //$html->pushContent(HTML::h3(fmt("Existing page-level metadata for %s:",
+	//				$page)));
+	//$dl = $this->_display_values('', $pagemeta);
+        //$html->pushContent($dl);
+        if (!$pagemeta) {
+            // FIXME: invalid HTML
+            $html->pushContent(HTML::p(fmt("No metadata for %s", $page)));
+	    $table = HTML();
         }
-        $html->pushContent($dl);
+        else {
+	    $table = HTML::table(array('border' => 1,
+				       'cellpadding' => 2,
+				       'cellspacing' => 0));
+            $this->_fixupData($pagemeta);
+            $table->pushContent($this->_showhash("MetaData('$page')", $pagemeta));
+        }
 
         if ($request->_user->isAdmin()) {
             $action = $request->getPostURL();
@@ -150,6 +151,9 @@ extends WikiPlugin
                                      'method' => 'post',
                                      'accept-charset' => $GLOBALS['charset']),
                                $hiddenfield,
+			       // edit existing fields
+			       $table,
+			       // add new ones
                                $instructions, HTML::br(),
                                $keyfield, ' => ', $valfield,
                                HTML::raw('&nbsp;'), $button
@@ -161,9 +165,40 @@ extends WikiPlugin
         }
         return $html;
     }
+
+    function _showvalue ($key, $val, $prefix='') {
+    	if (is_array($val) or is_object($val)) return $val;
+	if (in_array($key, $this->hidden_pagemeta)) return '';
+	if ($prefix) {
+	    $fullkey = $prefix . '[' . $key . ']';
+	    if (substr($fullkey,0,1) == '[') {
+	    	$meta = "meta".$fullkey;
+	    	$fullkey = preg_replace("/\]\[/", "[", substr($fullkey, 1), 1);
+	    } else {
+		$meta = preg_replace("/^([^\[]+)\[/", "meta[$1][", $fullkey, 1);
+	    }
+	} else {
+	    $fullkey = $key;
+	    $meta = "meta[".$key."]";
+	}
+	//$meta = "meta[".$fullkey."]";
+        $arr = array('name' => $meta, 'value' => $val);
+	if (strlen($val) > 20)
+	    $arr['size'] = strlen($val);
+	if (in_array($key, $this->readonly_pagemeta)) {
+	    $arr['readonly'] = 'readonly';
+	    return HTML::input($arr);
+	} else {
+	    return HTML(HTML::em($fullkey), HTML::br(),
+	    		HTML::input($arr));
+	}
+    }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2007/01/04 16:46:31  rurban
+// Make the header a h3
+//
 // Revision 1.11  2004/06/01 16:48:11  rurban
 // dbi->touch
 // security fix to allow post admin only.
