@@ -2,12 +2,15 @@
 * bring 1.3.x to sf.net again. request loops, proxy issues?
 
 TODO for 1.3.13:
+* check new auth fallback with php4 and php5
 * fix backlinks (pagelists) for multiple plugins per page
 * fix pagelist nopage unification
+* clarify issues with pagenames with ":" and ","
+  ":" in links omit the first part, "," breaks PageList
 * fix $MailNotify->onChangePage: breaks after-edit-redirect
 * format=printable (?)
 * WatchList (?)
-* WikiUser/EMailConfirm
+* WikiUser/EMailConfirm (?)
 * fix Wikiwys with prettyurl and link labels
 
 TODO for 1.4.0:
@@ -21,7 +24,8 @@ architecture:
 * Move serialized data from page_data / version_data to seperate SQL columns.
 * WikiDB hooks. (?)
 * Content expansion hooks in transformer. (SearchHighlight)
-* Convert RecentChanges to PageList as source for format options. Generic rss, rdf handling.
+* Convert RecentChanges to PageList as source for format options. 
+  Generic rss, rdf handling.
 
 new:
 * stabilize WYSIWYG converters
