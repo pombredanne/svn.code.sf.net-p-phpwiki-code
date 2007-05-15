@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _BackendInfo.php,v 1.27 2007-05-13 18:13:48 rurban Exp $');
+rcs_id('$Id: _BackendInfo.php,v 1.28 2007-05-15 16:32:43 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2006,2007 $ThePhpWikiProgrammingTeam
 
@@ -36,7 +36,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     function getDefaultArguments() {
@@ -111,12 +111,13 @@ extends WikiPlugin
      * Really should have a _fixupPagedata and _fixupVersiondata, but this works.
      * also used in plugin/EditMetaData
      */
-    function _fixupData(&$data) {
+    function _fixupData(&$data, $prefix='') {
 	if (!is_array($data)) return;
 	
         global $request;
         $user = $request->getUser();
         foreach ($data as $key => $val) {
+            $fullkey = $prefix . '[' . $key . ']';
             if (is_integer($key)) {
             	;
             } elseif ($key == 'passwd' and !$user->isAdmin()) {
@@ -129,26 +130,26 @@ extends WikiPlugin
                 ob_end_clean();
             }
             elseif (is_bool($val)) {
-            	$data[$key] = $this->_showvalue($key, $val ? "true" : "false");
+            	$data[$key] = $this->_showvalue($key, $val ? "true" : "false", $prefix);
             }
             elseif (is_string($val) && ((substr($val, 0, 2) == 'a:' 
 					 or (substr($val, 0, 2) == 'O:')))) 
 	    {
                 // how to indent this table?
                 $val = unserialize($val);
-                $this->_fixupData($val);
+                $this->_fixupData($val, $fullkey);
                 $data[$key] = HTML::table(array('border' => 1,
                                                 'cellpadding' => 2,
                                                 'cellspacing' => 0),
-                                          $this->_showhash(false, $val));
+                                          $this->_showhash(false, $val, $fullkey));
             }
             elseif (is_array($val)) {
                 // how to indent this table?
-                $this->_fixupData($val);
+                $this->_fixupData($val, $fullkey);
                 $data[$key] = HTML::table(array('border' => 1,
                                                 'cellpadding' => 2,
                                                 'cellspacing' => 0),
-                                          $this->_showhash(false, $val));
+                                          $this->_showhash(false, $val, $fullkey));
             } elseif (is_object($val)) {
                 // how to indent this table?
                 ob_start();
@@ -158,7 +159,7 @@ extends WikiPlugin
                 $data[$key] = HTML::table(array('border' => 1,
                                                 'cellpadding' => 2,
                                                 'cellspacing' => 0),
-                                          $this->_showhash(false, $val));
+                                          $this->_showhash(false, $val, $fullkey));
             }
             elseif ($key and $key == '%content') {
                 if ($val === true)
@@ -172,7 +173,7 @@ extends WikiPlugin
     }
 
     /* also used in plugin/EditMetaData */
-    function _showhash ($heading, $hash) {
+    function _showhash ($heading, $hash, $prefix='') {
         $rows = array();
         if ($heading)
             $rows[] = HTML::tr(array('bgcolor' => '#ffcccc',
@@ -191,20 +192,23 @@ extends WikiPlugin
                                              HTML::raw('&nbsp;'))),
                                HTML::td(array('bgcolor' => '#ffffff',
                                               'style' => 'color:#000000'),
-                                        $this->_showvalue($key, $val))
+                                        $this->_showvalue($key, $val, $prefix))
                                );
         }
         return $rows;
     }
 
     /* also used in plugin/EditMetaData */
-    function _showvalue ($key, $val) {
+    function _showvalue ($key, $val, $prefix='') {
 	return $val ? $val : HTML::raw('&nbsp;');
     }
 
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2007/05/13 18:13:48  rurban
+// base class for EditmetaData
+//
 // Revision 1.26  2007/01/07 18:44:47  rurban
 // Add notallversion argument. Support more types: objects, serialized objects. split overlong strings
 //
