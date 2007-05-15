@@ -1,6 +1,6 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.141 2007-05-13 18:31:24 rurban Exp $');
-/* Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
+rcs_id('$Id: WikiUserNew.php,v 1.142 2007-05-15 16:32:34 rurban Exp $');
+/* Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -210,11 +210,14 @@ function _determineBogoUserOrPassUser($UserName) {
             $_PassUser = new _PassUser($UserName,
                                        isset($_BogoUser) ? $_BogoUser->_prefs : false);
             if ($_PassUser->userExists() or $GLOBALS['request']->getArg('auth')) {
-            	if (strtolower(get_class($_PassUser)) == "_passuser") {
+            	if (isset($GLOBALS['request']->_user_class))
+	    	    $class = $GLOBALS['request']->_user_class;
+            	elseif (strtolower(get_class($_PassUser)) == "_passuser")
 	    	    $class = $_PassUser->nextClass();
-    		    if ($user = new $class($UserName, $_PassUser->_prefs)) {
-	                return $user;
-    		    }
+	    	else
+		    $class = get_class($_PassUser);
+    		if ($user = new $class($UserName, $_PassUser->_prefs)) {
+	            return $user;
             	} else {
             	    return $_PassUser;
             	}
@@ -308,6 +311,7 @@ function UpgradeUser ($user, $newuser) {
         }
         if (!empty($user->_authmethod))
             $newuser->_authmethod = $user->_authmethod;
+	$GLOBALS['request']->_user_class = get_class($newuser);
         /*
         foreach (get_object_vars($user) as $k => $v) {
             if (!empty($v)) $olduser->$k = $v;	
@@ -338,7 +342,7 @@ function UserExists ($UserName) {
     if (isa($user,'_BogoUser'))
         $user = new _PassUser($UserName,$user->_prefs);
     $class = $user->nextClass();
-    if ($user = new $class($UserName,$user->_prefs)) {
+    if ($user = new $class($UserName, $user->_prefs)) {
         return $user->userExists($UserName);
     }
     $request->_user = $GLOBALS['ForbiddenUser'];
@@ -1191,10 +1195,9 @@ extends _AnonUser
         while ($user) {
             if (!check_php_version(5))
                 eval("\$this = \$user;");
-            	// /*PHP5 patch*/$this = $user;
-            else    
-            	UpgradeUser($this, $user);
+            $user = UpgradeUser($this, $user);
             if ($user->userExists()) {
+                $user = UpgradeUser($this, $user);
                 return true;
             }
             // prevent endless loop. does this work on all PHP's?
@@ -1344,14 +1347,15 @@ extends _AnonUser
             if (substr($class,-10) == "dbpassuser") $class = "_dbpassuser";
             $GLOBALS['USER_AUTH_ERROR'][$class] = 'nosuchuser';
         }
-        if (USER_AUTH_POLICY === 'strict') {
+        if (USER_AUTH_POLICY === 'strict'
+	    or USER_AUTH_POLICY === 'stacked') {
             $class = $this->nextClass();
-            while ($user = new $class($this->_userid,$this->_prefs)) {
+            while ($user = new $class($this->_userid, $this->_prefs)) {
                 if (!check_php_version(5))
                     eval("\$this = \$user;");
-                // /*PHP5 patch*/$this = $user;
-                //$user = UpgradeUser($this, $user);
+	        $user = UpgradeUser($this, $user);
                 if ($user->userExists()) {
+                    $user = UpgradeUser($this, $user);
                     return true;
                 }
                 $class = $this->nextClass();
@@ -2155,6 +2159,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.141  2007/05/13 18:31:24  rurban
+// Refactor UpgradeUser. Added EMailHosts
+//
 // Revision 1.140  2006/12/22 01:20:14  rurban
 // Automatically create a Users homepage, when no SQL method exists
 // not to rely on cookies.
