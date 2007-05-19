@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BackLinks.php,v 1.33 2007-01-04 16:46:22 rurban Exp $');
+rcs_id('$Id: BackLinks.php,v 1.34 2007-05-19 13:31:20 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
 
@@ -37,7 +37,7 @@ extends WikiPlugin
     
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.33 $");
+                            "\$Revision: 1.34 $");
     }
     
     function getDefaultArguments() {
@@ -87,7 +87,11 @@ extends WikiPlugin
 		$dp = $dbi->getPage($p);
 		$bi = $dp->getBackLinks(false, $sortby, 0, $exclude);
 		while ($b = $bi->next())
-	            $bl[$b->getName()]++;
+		    $name = $b->getName();
+	            if (isset($bl[$name]))
+	                $bl[$name]++;
+	            else 
+	                $bl[$name] = 1;    
 	    }
 	    foreach ($bl as $b => $v)
 	        if ($v == $count)
@@ -184,6 +188,9 @@ class _PageList_Column_BackLinks_count extends _PageList_Column {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2007/01/04 16:46:22  rurban
+// Add linkmore. Support multiple pages logically AND them.
+//
 // Revision 1.32  2004/12/06 19:50:05  rurban
 // enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
 // renamed delete_page to purge_page.
