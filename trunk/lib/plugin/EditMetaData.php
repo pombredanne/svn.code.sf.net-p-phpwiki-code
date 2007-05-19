@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: EditMetaData.php,v 1.13 2007-05-15 16:32:25 rurban Exp $');
+rcs_id('$Id: EditMetaData.php,v 1.14 2007-05-19 14:41:08 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -54,7 +54,7 @@ extends WikiPlugin__BackendInfo
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision: 1.14 $");
     }
 
     function getDefaultArguments() {
@@ -117,7 +117,7 @@ extends WikiPlugin__BackendInfo
 		$request->redirect($url);
 		// The rest of the output will not be seen due to the
 		// redirect.
-		return;
+		return '';
 	    }
         }
 
@@ -196,6 +196,9 @@ extends WikiPlugin__BackendInfo
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2007/05/15 16:32:25  rurban
+// Recursive array editing: support global_data
+//
 // Revision 1.12  2007/01/04 16:46:31  rurban
 // Make the header a h3
 //
