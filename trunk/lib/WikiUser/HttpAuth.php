@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: HttpAuth.php,v 1.7 2006-09-03 10:10:00 rurban Exp $');
+rcs_id('$Id: HttpAuth.php,v 1.8 2007-05-19 14:34:42 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -94,7 +94,7 @@ extends _PassUser
         $username = $this->_http_username();
         if (strstr($username, "\\") 
             and isset($_SERVER['AUTH_TYPE']) 
-            and $_SERVER['AUTH_TYPE'] == 'NTLM') 
+            and $_SERVER['AUTH_TYPE'] == 'NTLM')
         {
             // allow domain\user, change userid to domain/user
             $username = str_ireplace("\\\\", "\\", $username); // php bug with _SERVER
@@ -134,6 +134,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2006/09/03 10:10:00  rurban
+// oops: reset this->_userid also
+//
 // Revision 1.6  2006/09/03 09:57:19  rurban
 // Support AUTH_TYPE=NTLM (Windows domain\username)
 // Workaround PHP _SERVER bug adding \\ => \\\\
