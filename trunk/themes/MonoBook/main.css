@@ -19,7 +19,7 @@
 	height: 1%;
 }
 #content {
-	margin: 2.9em 0 0 12.2em;
+	margin: 2.92em 0 0 12.2em;
 	padding: 0 1em 1.5em 1em;
 	background: white;
 	color: black;
@@ -1091,7 +1091,7 @@ li#pt-login {
 #p-cactions li.selected a {
   	z-index: 3;
 	background-color: #fff;
-	padding: 0 1em .2em !important;
+	padding: 0 1em 0 !important;
 }
 #p-cactions .new a {
 	color: #ba0000;
@@ -1099,7 +1099,8 @@ li#pt-login {
 #p-cactions li a:hover {
 	z-index: 3;
 	text-decoration: none;
-	background-color: #fff;
+	background-color: #eee;
+	padding: 0 1em 0.2em !important;
 }
 #p-cactions h5 {
 	display: none;
@@ -1620,6 +1621,9 @@ div.boxright {
   padding: 0.5em;
 }
 
+div#bottom {   
+  margin-left:   12.2em;
+}
 /* PHP Warnings */
 div.errors {
   color: black;
