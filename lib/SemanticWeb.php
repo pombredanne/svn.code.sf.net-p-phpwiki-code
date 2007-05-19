@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SemanticWeb.php,v 1.6 2007-03-18 17:35:27 rurban Exp $');
+<?php rcs_id('$Id: SemanticWeb.php,v 1.7 2007-05-19 14:34:37 rurban Exp $');
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *
@@ -289,6 +289,9 @@ class ReasonerBackend {
 };
 
 class ReasonerBackend_LISA extends ReasonerBackend {
+};
+
+class ReasonerBackend_Racer extends ReasonerBackend {
 };
 
 class ReasonerBackend_KM extends ReasonerBackend {
