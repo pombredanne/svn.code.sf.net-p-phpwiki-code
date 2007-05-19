@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.52 2007-05-15 16:36:36 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.53 2007-05-19 14:41:14 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -586,6 +586,7 @@ function MimeifyPageRevision (&$page, &$revision) {
     $params = array('pagename'     => $page->getName(),
                     'flags'        => "",
                     'author'       => $revision->get('author'),
+                    'owner'        => $page->getOwner(),
                     'version'      => $revision->getVersion(),
                     'lastmodified' => $revision->get('mtime'));
     
@@ -883,6 +884,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2007/05/15 16:36:36  rurban
+// nowarn on nosummary
+//
 // Revision 1.51  2007/03/27 07:12:06  rurban
 // Patch #1688929 by Erwann Penet: force $crc32 unsigned also
 //
