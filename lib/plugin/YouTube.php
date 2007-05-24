@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: YouTube.php,v 1.1 2007-05-24 18:40:30 rurban Exp $');
+rcs_id('$Id: YouTube.php,v 1.2 2007-05-24 19:03:07 rurban Exp $');
 /*
  Copyright 2007 Reini Urban
 */
@@ -29,7 +29,7 @@ extends WikiPlugin
     }
     
     function getVersion() {
-        return preg_replace("/[Revision: $]/", '',"\$Revision: 1.1 $");
+        return preg_replace("/[Revision: $]/", '',"\$Revision: 1.2 $");
     }
     
     function getDefaultArguments() {
@@ -45,7 +45,6 @@ extends WikiPlugin
 		     'width' => "425",
 		     'height' => "350");
     }
-    
    
     function run($dbi, $argstr, &$request, $basepage) {
 	$args = $this->getArgs($argstr, $request);
@@ -107,17 +106,17 @@ extends WikiPlugin
 		$m = array('','');
 		if ($xml = url_get_contents($url)) {
 		    if ($index) {
-			preg_match_all('/<div class="vtitle">.*?\n.*?<a href="\/watch?v=(\w+)" onclick=/', $xml, $m);
-			$v = $m[1][$index];
+			if (preg_match_all('/<div class="vtitle">.*?\n.*?<a href="\/watch\?v=(\w+)" onclick=/s', $xml, $m))
+			    $v = $m[1][$index];
 		    }
 		    else {
-			$found = preg_match('/<div class="vtitle">.*?\n.*?<a href="\/watch?v=(\w+)" onclick=/', $xml, $m);
-			$v = $m[1];
+			if (preg_match('/<div class="vtitle">.*?\n.*?<a href="\/watch\?v=(\w+)" onclick=/s', $xml, $m))
+			    $v = $m[1];
 		    }
 		}
 	    }
 	}
-	//sanify check
+	// sanify check
 	if (strlen($v) < 10 or strlen($v) > 12)
 	    return $this->error(fmt("Invalid argument %s", "v"));
 	if (strcspn($v,"-_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"))
@@ -166,14 +165,18 @@ extends WikiPlugin
     }
 
     function Daily_pick() {
-    	$m = array('','');
-	if ($xml = url_get_contents("http://www.youtube.com/categories"))
-	    $f = preg_match('/<div class="heading"><b>Pick of The Day<\/b><\/div>.*?<a href="\/watch?v=(\w+)">/', $xml, $m);
-	return $m[1];
+	if ($xml = url_get_contents("http://www.youtube.com/categories")) {
+	    if (preg_match('/<div class="heading"><b>Pick of The Day<\/b><\/div>.*?<a href="\/watch\?v=(\w+)">/s', $xml, $m))
+	        return $m[1];
+	}
+	return '';
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2007/05/24 18:40:30  rurban
+// new plugin
+//
 //
 
 // For emacs users
