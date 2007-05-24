@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: dbaBase.php,v 1.28 2007-01-03 21:26:01 rurban Exp $');
+rcs_id('$Id: dbaBase.php,v 1.29 2007-05-24 18:39:10 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -256,13 +256,19 @@ extends WikiDB_backend
     function get_all_pages($include_empty=false, $sortby='', $limit='', $exclude='') {
         $pagedb = &$this->_pagedb;
         $pages = array();
+        if ($limit) // extract from,count from limit
+            list($from,$count) = $this->limit($limit);
         for ($page = $pagedb->firstkey(); $page!== false; $page = $pagedb->nextkey()) {
             if (!$page) {
                 assert(!empty($page));
                 continue;
             }
             if ($exclude and in_array($page, $exclude)) continue; 
-            if ($limit and count($pages) > $limit) break;
+            if ($limit and $from) {
+		$i++;
+		if ($i < $from) continue;
+	    }
+            if ($limit and count($pages) > $count) break;
             if (!$include_empty) {
             	if (!($data = $pagedb->get($page))) continue;
                 list($latestversion,$flags,) = explode(':', $data, 3);
@@ -273,8 +279,8 @@ extends WikiDB_backend
             $pages[] = $page;
         }
         return new WikiDB_backend_dbaBase_pageiter($this, $pages, 
-                                                   array('sortby'=>$sortby,
-                                                         'limit' =>$limit));
+                                                   array('sortby'=>$sortby/*,
+                                                         'limit' =>$limit*/));
     }
 
     function set_links($pagename, $links) {
@@ -287,6 +293,7 @@ extends WikiDB_backend
     {
     	// optimization: if no relation at all is found, mark it in the iterator.
         $links = $this->_linkdb->get_links($pagename, $reversed, $want_relations);
+
         return new WikiDB_backend_dbaBase_pageiter
 	    ($this, $links, 
 	     array('sortby'=>$sortby,
@@ -773,6 +780,9 @@ class WikiDB_backend_dbaBase_linktable
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2007/01/03 21:26:01  rurban
+// Fix dba searching for relations. Optimize link_search for strict attribute search. Add relation_search()
+//
 // Revision 1.27  2007/01/02 13:19:33  rurban
 // faster list_relations method. new native link_search method. additions to rebuild() (still very slow), fix iterator options (for want_relations and exclude). Clarify API: sortby,limit and exclude are strings
 //
