@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.142 2007-05-15 16:32:34 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.143 2007-05-24 18:37:53 rurban Exp $');
 /* Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1129,7 +1129,7 @@ extends _AnonUser
         _AnonUser::getPreferences();
         // User may have deleted cookie, retrieve from his
         // PersonalPage if there is one.
-        if ($this->_HomePagehandle) {
+        if (!empty($this->_HomePagehandle)) {
             if ($restored_from_page = $this->_prefs->retrieve
                 ($this->_HomePagehandle->get('pref'))) {
                 $updated = $this->_prefs->updatePrefs($restored_from_page,'init');
@@ -2159,6 +2159,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.142  2007/05/15 16:32:34  rurban
+// Refactor class upgrading at ->UserExists
+//
 // Revision 1.141  2007/05/13 18:31:24  rurban
 // Refactor UpgradeUser. Added EMailHosts
 //
