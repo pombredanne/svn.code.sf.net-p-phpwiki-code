@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.140 2007-05-13 18:12:55 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.141 2007-05-24 18:40:55 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -48,7 +48,7 @@
  * DONE: 
  *   paging support: limit, offset args
  *   check PagePerm "list" access-type,
- *   all columns are sortable (Thanks to the wikilens team).
+ *   all columns are sortable. Thanks to the wikilens team.
  *   cols > 1, comma, azhead, ordered (OL lists)
  *   ->supportedArgs() which arguments are supported, so that the plugin 
  *                     doesn't explictly need to declare it 
@@ -1239,7 +1239,8 @@ class PageList {
             $tokens = $this->pagingTokens($count, 
                                            count($this->_columns), 
                                            $this->_options['limit']);
-            $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['NUMPAGES']);
+            if ($tokens)                               
+                $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['NUMPAGES']);
         }
         foreach ($this->_pages as $pagenum => $page) {
             $rows[] = $this->_renderPageRow($page, $i++);
@@ -1341,7 +1342,7 @@ function flipAll(formObj) {
     // 'azhead' - support <h3> grouping into initials
     // 'ordered' - OL or UL list (not yet inherited to all plugins)
     // 'comma'  - condensed comma-list only, 1: no links, >1: with links
-    // TODO: only unique list entries, esp. with nopage
+    // FIXME: only unique list entries, esp. with nopage
     function _generateList($caption='') {
     	if (empty($this->_pages)) return; // stop recursion
         $out = HTML();
@@ -1453,6 +1454,7 @@ function flipAll(formObj) {
     // comma=1
     // Condense list without a href links: "Page1, Page2, ..." 
     // Alternative $seperator = HTML::Raw(' &middot; ')
+    // FIXME: only unique list entries, esp. with nopage
     function _generateCommaListAsString() {
     	if (defined($this->_options['commasep']))
     	    $seperator = $this->_options['commasep'];
@@ -1470,6 +1472,7 @@ function flipAll(formObj) {
     // Normal WikiLink list.
     // Future: 1 = reserved for plain string (see above)
     //         2 and more => HTML link specialization?
+    // FIXME: only unique list entries, esp. with nopage
     function _generateCommaList($style = false) {
     	if (defined($this->_options['commasep']))
     	    $seperator = HTLM::Raw($this->_options['commasep']);
@@ -1528,6 +1531,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.140  2007/05/13 18:12:55  rurban
+// force adding a options[type] column: fixes LinkDatabase
+//
 // Revision 1.139  2007/01/25 07:42:01  rurban
 // Support nopage
 //
