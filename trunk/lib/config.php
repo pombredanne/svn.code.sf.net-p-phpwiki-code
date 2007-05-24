@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.142 2007-03-04 14:07:17 rurban Exp $');
+rcs_id('$Id: config.php,v 1.143 2007-05-24 18:36:56 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -612,7 +612,37 @@ function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859
 }
 */
 
+/**
+ * htmlspecialchars doesn't support some special 8bit charsets, which we do want to support.
+ * Well it just prints a warning which we could circumvent.
+ * Note: unused, since php htmlspecialchars does the same, just prints a warning which we silence
+ */
+/*
+function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859-1') {
+    if (in_array(strtolower($charset), 
+                 array('iso-8859-2', 'iso8859-2', 'latin-2', 'latin2'))) 
+    {
+        if (! ($quote & ENT_NOQUOTES)) {
+            $str = str_replace("\"", "&quot;",
+                               $str);
+        }
+        if ($quote & ENT_QUOTES) {
+            $str = str_replace("\'", "&#039;",
+                               $str);
+        }
+        return str_replace(array("<", ">", "&"),
+                           array("&lt;", "&gt;", "&amp;"), $str);
+    }
+    else {
+        return htmlspecialchars($str, $quote, $charset);
+    }
+}
+*/
+
 // $Log: not supported by cvs2svn $
+// Revision 1.142  2007/03/04 14:07:17  rurban
+// Added SearchHighlight comment
+//
 // Revision 1.141  2007/01/07 18:41:42  rurban
 // Add array_diff_assoc() fallback: fixes Blog with php < 4.3.x. Support UPLOAD_FILE_PATH, UPLOAD_DATA_PATH overrides.
 //
