@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.47 2005-08-06 12:53:36 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.48 2007-05-24 18:51:35 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -404,6 +404,10 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('embed');
         return $el->_init2(func_get_args());
     }
+    function param (/*...*/) {
+        $el = new HtmlElement('param');
+        return $el->_init2(func_get_args());
+    }
 }
 
 define('HTMLTAG_EMPTY', 1);
@@ -535,6 +539,9 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.47  2005/08/06 12:53:36  rurban
+ beautify SCRIPT lines
+
  Revision 1.46  2005/01/25 06:50:33  rurban
  added label
 
