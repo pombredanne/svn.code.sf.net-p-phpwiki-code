@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: XmlRpcTest.php,v 1.1 2007-01-21 23:25:19 rurban Exp $');
+rcs_id('$Id: XmlRpcTest.php,v 1.2 2007-05-27 18:56:16 rurban Exp $');
 
 /* Copyright (C) 2007 Reini Urban
  */
@@ -20,11 +20,13 @@ class XmlRpcTest extends phpwiki_TestCase {
         $this->assertTrue($v >= 1);
     }
 
+    /*
     function testSelfAPI_v2() {
         $v = wiki_xmlrpc_post("wiki.getRPCVersionSupported");
         $this->assertTrue($v >= 2);
 	// struct getAttachment( string localpath )
     }
+    */
 
     /*
     function testSelfAPI_private() {
