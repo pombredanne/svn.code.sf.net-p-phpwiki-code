@@ -1,6 +1,7 @@
-<?php rcs_id('$Id: SemanticWeb.php,v 1.7 2007-05-19 14:34:37 rurban Exp $');
+<?php rcs_id('$Id: SemanticWeb.php,v 1.8 2007-05-27 19:46:11 rurban Exp $');
 /**
- * What to do on ?format=rdf  What to do on ?format=owl
+ * Search support and Import/Export
+ * Export: ?format=rdf, ?format=owl
  *
  * Map relations on a wikipage to a RDF ressource to build a "Semantic Web" 
  * - a web ontology frontend compatible to OWL (web ontology language).
@@ -182,6 +183,7 @@ class SemanticAttributeSearchQuery
 extends NumericSearchQuery
 {
     /*
+    // base_units are extracted dynamicly via /usr/bin/units
     var $base_units = array('m'   => explode(',','km,miles,cm,dm,mm,ft,inch,inches,meter'),
 			    'm^2' => explode(',','km^2,ha,cm^2,mi^2'),
 			    'm^3' => explode(',','km^3,lit,cm^3,dm^3,gallons'),
@@ -218,7 +220,8 @@ extends NumericSearchQuery
 	// We cannot compare m^2 to m or ''
 	$val_base = $this->_units->basevalue($value);
         if (!DISABLE_UNITS and $this->_units->baseunit($value) != $this->unit) {
-	    // Poor user has selected an attribute, but no unit. assume he means the baseunit
+	    // Poor user has selected an attribute, but no unit. 
+            // Assume he means the baseunit
 	    if (count($this->getVars() == 1) and $this->unit == '') {
 		;
 	    } else {
@@ -262,7 +265,7 @@ extends SemanticAttributeSearchQuery
 /**
  * ReasonerBackend - hooks to reasoner backends.
  * via http as with DIG,
- * or internally
+ * or internally. sockets
  */
 class ReasonerBackend {
     function ReasonerBackend () {
