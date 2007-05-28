@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.151 2007-05-01 16:20:12 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.152 2007-05-28 20:13:46 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -966,6 +966,13 @@ class WikiDB_Page
         $type = $formatted->getType();
 	$meta['pagetype'] = $type->getName();
 	$links = $formatted->getWikiPageLinks(); // linkto => relation
+        $attributes = array();
+        foreach ($links as $link) {
+            if ($link['linkto'] === "" and $link['relation']) {
+                $attributes[$link['relation']] = $this->getAttribute($link['relation']);
+            }
+        }
+        $meta['attribute'] = $attributes;
 
 	$backend = &$this->_wikidb->_backend;
 	$newrevision = $this->createRevision($version, $wikitext, $meta, $links);
@@ -1393,7 +1400,7 @@ class WikiDB_Page
         else return '';
     }
 
-    /* Semantic Web value, not stored in the links
+    /* Semantic Web value, not stored in the links.
      * todo: unify with some unit knowledge
      */
     function setAttribute($relation, $value) {
@@ -1403,6 +1410,14 @@ class WikiDB_Page
     	else
     	    $attr[$relation] = $value;
     	$this->set('attributes', $attr);
+    }
+
+    function getAttribute($relation) {
+    	$meta = $this->get('attributes');
+    	if (empty($meta))
+    	    return '';
+    	else
+    	    return $meta[$relation];
     }
 
 };
@@ -2197,6 +2212,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.151  2007/05/01 16:20:12  rurban
+// MailNotify->onChangePage only on DEBUG (still broken)
+//
 // Revision 1.150  2007/03/18 17:35:27  rurban
 // Improve comments
 //

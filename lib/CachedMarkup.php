@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.56 2007-04-08 16:39:40 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.57 2007-05-28 20:13:46 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -451,17 +451,18 @@ class Cached_SemanticLink extends Cached_WikiLink {
 	else return false;
     }
 
-    /* add relation to the link table.
-     * attributes have the _relation, but not the _page set. 
+    /* Add relation to the link table.
+     * attributes have the _relation, but not the _page set.
      */
     function getWikiPageLinks($basepage) {
         if ($basepage == '') return false;
 	if (!isset($this->_page) and isset($this->_attribute)) {
-            // an attribute, we store it in the basepage now.
-            $page = $GLOBALS['request']->getPage($basepage);	
+            // An attribute: we store it in the basepage now, to fill the cache for page->save
+            // TODO: side-effect free query
+            $page = $GLOBALS['request']->getPage($basepage); 
             $page->setAttribute($this->_relation, $this->_attribute);
+            $this->_page = $basepage;
             return array(array('linkto' => '', 'relation' => $this->_relation));
-	    //return false;
 	}
         if ($link = $this->getPagename($basepage)) 
             return array(array('linkto' => $link, 'relation' => $this->_relation));
@@ -754,6 +755,10 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.56  2007/04/08 16:39:40  rurban
+// fix when DISABLE_UNITS = true (thanks to Walter Rafelsberger)
+// simplify title calculation
+//
 // Revision 1.55  2007/03/18 17:35:14  rurban
 // Fix :DontStoreLink
 //

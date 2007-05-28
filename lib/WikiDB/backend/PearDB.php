@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.106 2007-01-04 16:57:32 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.107 2007-05-28 20:13:46 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -513,10 +513,13 @@ extends WikiDB_backend
         $pageid = $this->_get_pageid($pagename, true);
 
         $dbh->query("DELETE FROM $link_tbl WHERE linkfrom=$pageid");
-
 	if ($links) {
+	    $linkseen = array();
             foreach ($links as $link) {
                 $linkto = $link['linkto'];
+                if ($linkto === "") { // ignore attributes
+                    continue;
+                }
                 if ($link['relation'])
                     $relation = $this->_get_pageid($link['relation'], true);
                 else 
@@ -527,10 +530,16 @@ extends WikiDB_backend
                 if (!$relation)
                     $linkseen[$linkto] = true;
                 $linkid = $this->_get_pageid($linkto, true);
+              	if (!$linkid) {
+               	    echo("No link for $linkto on page $pagename");
+               	    //printSimpleTrace(debug_backtrace());
+               	    trigger_error("No link for $linkto on page $pagename");
+                }
                 assert($linkid);
                 $dbh->query("INSERT INTO $link_tbl (linkfrom, linkto, relation)"
                             . " VALUES ($pageid, $linkid, $relation)");
             }
+	    unset($linkseen);
 	}
         $this->unlock();
     }
@@ -1243,6 +1252,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2007/01/04 16:57:32  rurban
+// Clarify API: sortby,limit and exclude are strings. fix upgrade test connection
+//
 // Revision 1.105  2006/12/23 13:03:32  rurban
 // reorder deletion
 //
