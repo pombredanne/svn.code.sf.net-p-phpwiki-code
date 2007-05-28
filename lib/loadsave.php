@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.152 2007-05-01 16:22:41 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.153 2007-05-28 20:54:40 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
@@ -481,7 +481,7 @@ function DumpHtmlToDir (&$request)
 		      'CONTENT' => $revision->getTransformedContent(),
                       'relative_base' => $relative_base);
 	// For every %2F will need to mkdir -p dirname($pagename)
-	if (preg_match("/%2F/", $filename)) {
+	if (preg_match("/(%2F|\/)/", $filename)) {
 	    // mkdir -p and set relative base for subdir pages
 	    $count = substr_count($filename, "%2F");
 	    $filename = preg_replace("/%2F/", "/", $filename);
@@ -1297,14 +1297,14 @@ function LoadAny (&$request, $file_or_dir, $files = false, $exclude = false)
         // with broken dirname or basename functions.
         // FIXME: windows uses \ and :
         if (is_integer(strpos($file_or_dir, "/"))) {
-            $file_or_dir = FindFile($file_or_dir);
-            // Panic
-            if (!file_exists($file_or_dir))
+            $newfile = FindFile($file_or_dir, true);
+            // Panic. urlencoded by the browser (e.g. San%20Diego => San Diego)
+            if (!$newfile)
                 $file_or_dir = dirname($file_or_dir) . "/"
-                    . urlencode(basename($file_or_dir));
+                    . rawurlencode(basename($file_or_dir));
         } else {
             // This is probably just a file.
-            $file_or_dir = urlencode($file_or_dir);
+            $file_or_dir = rawurlencode($file_or_dir);
         }
     }
 
@@ -1452,6 +1452,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.152  2007/05/01 16:22:41  rurban
+ lock InterWikiMap on init
+
  Revision 1.151  2007/02/17 14:17:34  rurban
  only media=print css for htmldump and pdf
 
