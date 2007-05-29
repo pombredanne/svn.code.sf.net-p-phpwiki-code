@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: LDAP.php,v 1.5 2005-10-10 19:43:49 rurban Exp $');
+rcs_id('$Id: LDAP.php,v 1.6 2007-05-29 16:56:15 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -49,7 +49,7 @@ extends _PassUser
         unset($this->_sr);
         unset($this->_ldap);
     }
-    
+
     function checkPass($submitted_password) {
 
         $this->_authmethod = 'LDAP';
@@ -71,7 +71,7 @@ extends _PassUser
             // Need to set the right root search information. See config/config.ini
             $st_search = LDAP_SEARCH_FIELD
                 ? LDAP_SEARCH_FIELD."=$userid"
-                : "uid=$userid";
+                : "cn=$userid";
             if (!$this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search)) {
  		$this->_free();
                 return $this->_tryNextPass($submitted_password);
@@ -86,11 +86,21 @@ extends _PassUser
             for ($i = 0; $i < $info["count"]; $i++) {
                 $dn = $info[$i]["dn"];
                 // The password is still plain text.
+		// LDAP allows all chars but *, (, ), \, NUL
+		// Quoting is done by \xx (two-digit hexcode). * <=> \2a
+		// Handling '?' is unspecified
+		$password = preg_replace(array("/\*/","/\(/","/\)/","/\\/","/\0/"), 
+					 array('\2a',  '\28','\29', '\5c', '\00'), 
+					$submitted_password);
                 // On wrong password the ldap server will return: 
                 // "Unable to bind to server: Server is unwilling to perform"
                 // The @ catches this error message.
-                if ($r = @ldap_bind($ldap, $dn, $submitted_password)) {
+                if ($r = @ldap_bind($ldap, $dn, $password)) {
                     // ldap_bind will return TRUE if everything matches
+		    // Get the mail from ldap
+		    if (!empty($info[$i]["mail"][0])) {
+			$this->_prefs->_prefs['email']->default_value = $info[$i]["mail"][0];
+		    }
             	    $this->_free();
                     $this->_level = WIKIAUTH_USER;
                     return $this->_level;
@@ -102,6 +112,15 @@ extends _PassUser
         return $this->_tryNextPass($submitted_password);
     }
 
+
+    function isValidName ($userid = false) {
+        if (!$userid) $userid = $this->_userid;
+	// LDAP allows all chars but *, (, ), \, NUL
+	// Quoting is done by \xx (two-digit hexcode). * <=> \2a
+	// We are more restrictive here, but must allow explitly utf-8
+        return preg_match("/^[\-\w_\.@ ]+$/u", $userid) and strlen($userid) < 64;
+    }
+    
     function userExists() {
         $userid = $this->_userid;
         if (strstr($userid, '*')) {
@@ -113,7 +132,7 @@ extends _PassUser
             // Need to set the right root search information. see ../index.php
             $st_search = LDAP_SEARCH_FIELD
                 ? LDAP_SEARCH_FIELD."=$userid"
-                : "uid=$userid";
+                : "cn=$userid";
             if (!$this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search)) {
  		$this->_free();
         	return $this->_tryNextUser();
@@ -136,6 +155,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2005/10/10 19:43:49  rurban
+// add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
+//
 // Revision 1.4  2004/12/26 17:11:17  rurban
 // just copyright
 //
