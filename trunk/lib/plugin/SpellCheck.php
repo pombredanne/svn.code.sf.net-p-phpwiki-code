@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SpellCheck.php,v 1.1 2007-01-20 11:23:26 rurban Exp $');
+rcs_id('$Id: SpellCheck.php,v 1.2 2007-05-29 16:56:41 rurban Exp $');
 /**
  Copyright 2006,2007 $ThePhpWikiProgrammingTeam
 
@@ -75,7 +75,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getDefaultArguments() {
         return array('pagename' => '[]', // button or preview highlight?
@@ -121,6 +121,8 @@ extends WikiPlugin
 
         if (empty($source))
             return $this->error(fmt("empty source"));
+	if ($basepage == _("SpellCheck"))
+            return $this->error(fmt("Cannot SpellCheck myself"));
 	$lang = $page->get('lang');
 	if (empty($lang)) $lang = $GLOBALS['LANG'];
 	$html = HTML();
@@ -186,6 +188,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2007/01/20 11:23:26  rurban
+// New plugin and ActionPage
+//
 //
 
 // For emacs users
