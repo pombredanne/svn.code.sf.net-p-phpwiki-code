@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.14 2007-01-21 23:16:29 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.15 2007-05-29 16:56:54 rurban Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens group manager), Reini Urban (as plugin)
@@ -133,8 +133,8 @@ class RatingsDb extends WikiDB {
 
     function getUsersRated($dimension=null, $orderby = null) {
         if (is_null($dimension)) $dimension = $this->dimension;
-        if (is_null($userid))    $userid = $this->userid; 
-        if (is_null($pagename))  $pagename = $this->pagename;
+        //if (is_null($userid))    $userid = $this->userid; 
+        //if (is_null($pagename))  $pagename = $this->pagename;
         if (RATING_STORAGE == 'SQL') {
             $ratings_iter = $this->sql_get_users_rated($dimension, $orderby);
             if ($rating = $ratings_iter->next() and isset($rating['ratingvalue'])) {
@@ -227,9 +227,9 @@ class RatingsDb extends WikiDB {
         if (RATING_STORAGE == 'SQL') {
             return $this->sql_get_rating($dimension, $rater, $ratee, $orderby, $pageinfo);
         } else {
-        	// empty dummy iterator
-        	$pages = array();
-        	return new WikiDB_Array_PageIterator($pages);
+	    // empty dummy iterator
+	    $pages = array();
+	    return new WikiDB_Array_PageIterator($pages);
         }
     }
 
@@ -459,6 +459,8 @@ class RatingsDb extends WikiDB {
         if (($pageinfo != "ratee") && ($pageinfo != "rater"))
             return;
         $dbi = &$this->_sqlbackend;
+        if (is_null($dbi))
+            return;
         //$dbh = &$this->_dbi;
         extract($dbi->_table_names);
         $where = "WHERE r." . $pageinfo . "page = p.id";
@@ -497,7 +499,7 @@ class RatingsDb extends WikiDB {
                . " FROM $rating_tbl r, $page_tbl p "
                . $where
                . $orderbyStr;
-        $result = $dbi->_dbh->query($query);
+        $result = $dbi->query($query);
         return $result;
     }
 
@@ -719,6 +721,9 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.14  2007/01/21 23:16:29  rurban
+// Fix dba with RATING_STORAGE=SQL
+//
 // Revision 1.13  2005/10/10 19:51:41  rurban
 // fix aesthetic issues by John Stevens
 //
