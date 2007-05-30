@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.72 2007-05-13 18:13:12 rurban Exp $');
+rcs_id('$Id: display.php,v 1.73 2007-05-30 20:43:31 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -82,7 +82,7 @@ function actionPage(&$request, $action) {
     if ($pagename == _("LinkDatabase")) {
         $template = Template('browse', array('CONTENT' => $transformedContent));
 	GeneratePage($template, $pagetitle, $revision, $args);
-    } elseif (!$format or $format == 'html' or $format == 'sidebar') {
+    } elseif (!$format or $format == 'html' or $format == 'sidebar' or $format == 'contribs') {
 	$template = Template('browse', array('CONTENT' => $transformedContent));
 	GeneratePage($template, $pagetitle, $revision, $args);
     } elseif ($format == 'xml') {
@@ -295,7 +295,7 @@ function displayPage(&$request, $template=false) {
     $format = $request->getArg('format');
     /* Only single page versions. rss only if not already handled by RecentChanges.
      */
-    if (!$format or $format == 'html' or $format == 'sidebar') {
+    if (!$format or $format == 'html' or $format == 'sidebar' or $format == 'contribs') {
 	$template->printExpansion($toks);
     } elseif ($format == 'xml') {
         $template = new Template('htmldump', $request);
@@ -348,6 +348,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.72  2007/05/13 18:13:12  rurban
+// LinkDatabase format exceptions
+//
 // Revision 1.71  2007/02/17 22:39:05  rurban
 // format=rss overhaul
 //

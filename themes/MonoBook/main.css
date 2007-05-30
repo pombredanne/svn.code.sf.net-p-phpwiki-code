@@ -534,6 +534,17 @@ div.townBox dl dd {
 	padding: 0;
 }
 
+/*
+** RecentChanges
+*/
+.pageinfo-majoredit { 
+	font-weight: normal; /*bold;*/
+}
+.wiki-summary {
+  	font-size: 94%;
+  	font-style: italic;
+}
+
 /* Page history styling */
 /* the auto-generated edit comments */
 .autocomment {

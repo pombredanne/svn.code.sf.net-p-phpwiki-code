@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.116 2007-05-13 18:13:41 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.117 2007-05-30 20:43:31 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -127,14 +127,22 @@ extends _RecentChanges_Formatter
 {
     function diffLink ($rev) {
         global $WikiTheme;
-        $button = $WikiTheme->makeButton(_("(diff)"), $this->diffURL($rev), 'wiki-rc-action');
+        $button = $WikiTheme->makeButton(_("diff"), $this->diffURL($rev), 'wiki-rc-action');
         $button->setAttr('rel', 'nofollow');
-        return $button;
+        return HTML("(",$button,")");
+    }
+
+    /* deletions: red, additions: green */
+    function diffSummary ($rev) {
+        $html = $this->diffURL($rev);
+        return '';
     }
 
     function historyLink ($rev) {
         global $WikiTheme;
-        return $WikiTheme->makeButton(_("(hist)"), $this->historyURL($rev), 'wiki-rc-action');
+        $button = $WikiTheme->makeButton(_("hist"), $this->historyURL($rev), 'wiki-rc-action');
+        $button->setAttr('rel', 'nofollow');
+        return HTML("(",$button,")");
     }
 
     function pageLink ($rev, $link_text=false) {
@@ -165,13 +173,34 @@ extends _RecentChanges_Formatter
         return WikiLink($rev->get('author'), 'if_known');
     }
 
+    /* Link to all users contributions (contribs and owns) */
+    function authorContribs ($rev) {
+	$author = $rev->get('author');
+	if (preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $author)) return '';
+        return HTML('(',
+		    Button(array('action' => _("RecentChanges"), 
+				 'format' => 'contribs',
+				 'author' => $author,
+				 'days' => 360),
+			   _("contribs"),
+			   $author),
+		    ' | ',
+		    Button(array('action' => _("RecentChanges"), 
+				 'format' => 'contribs',
+				 'owner' => $author,
+				 'days' => 360),
+			   _("new pages"),
+			   $author),
+		    ')');
+    }
+
     function summaryAsHTML ($rev) {
         if ( !($summary = $this->summary($rev)) )
             return '';
-        return  HTML::strong( array('class' => 'wiki-summary'),
-                              "[",
-                              TransformLinks($summary, $rev->get('markup'), $rev->getPageName()),
-                              "]");
+        return  HTML::span( array('class' => 'wiki-summary'),
+			    "(",
+			    TransformLinks($summary, $rev->get('markup'), $rev->getPageName()),
+			    ")");
     }
 
     function rss_icon () {
@@ -356,6 +385,7 @@ extends _RecentChanges_Formatter
             if (($date = $this->date($rev)) != $last_date) {
                 if ($lines)
                     $html->pushContent($lines);
+		// for user contributions no extra date line
                 $html->pushContent(HTML::h3($date));
                 $lines = HTML::ul();
                 $last_date = $date;
@@ -364,7 +394,6 @@ extends _RecentChanges_Formatter
             // enforce view permission
             if (mayAccessPage('view', $rev->_pagename)) {
                 $lines->pushContent($this->format_revision($rev));
-
                 if ($first)
                     $this->setValidators($rev);
                 $first = false;
@@ -386,10 +415,9 @@ extends _RecentChanges_Formatter
 
         $time = $this->time($rev);
         if (! $rev->get('is_minor_edit'))
-            $time = HTML::strong(array('class' => 'pageinfo-majoredit'), $time);
+            $time = HTML::span(array('class' => 'pageinfo-majoredit'), $time);
 
         $line = HTML::li(array('class' => $class));
-
 
         if ($args['difflinks'])
             $line->pushContent($this->diffLink($rev), ' ');
@@ -397,15 +425,89 @@ extends _RecentChanges_Formatter
         if ($args['historylinks'])
             $line->pushContent($this->historyLink($rev), ' ');
 
-        $line->pushContent($this->pageLink($rev), ' ',
-                           $time, ' ',
-                           $this->summaryAsHTML($rev),
-                           ' ... ',
-                           $this->authorLink($rev));
+	if (isa($GLOBALS['WikiTheme'],'Theme_MonoBook')) {
+	    $line->pushContent(
+			       $args['historylinks'] ? '' : $this->historyLink($rev),
+			       ' . . ', $this->pageLink($rev), '; ',
+			       $time, ' . . ',
+			       $this->authorLink($rev),' ',
+			       $this->authorContribs($rev),' ',
+			       $this->summaryAsHTML($rev));
+	} else {
+	    $line->pushContent($this->pageLink($rev), ' ',
+			       $time, ' ',
+			       $this->summaryAsHTML($rev),
+			       ' ... ',
+			       $this->authorLink($rev));
+	}
+        return $line;
+    }
+
+}
+
+/* format=contribs: no seperation into extra dates
+ * 14:41, 3 December 2006 (hist) (diff) Talk:PhpWiki (added diff link)  (top)
+ */
+class _RecentChanges_UserContribsFormatter
+extends _RecentChanges_HtmlFormatter
+{
+    function title () {
+        extract($this->_args);
+        return array(_("UserContribs"),":",$author ? $author : $owner,
+                     ' ',
+                     $this->rss_icon(), 
+		     HTML::raw('&nbsp;'), $this->rss2_icon(),
+		     //HTML::raw('&nbsp;'), $this->grazr_icon(),
+		     HTML::raw('&nbsp;'), $this->atom_icon());
+    }
+
+    function format ($changes) {
+        include_once('lib/InlineParser.php');
+        
+        $html = HTML(HTML::h2(false, $this->title()));
+	$lines = HTML::ol();
+        $first = true; $count = 0;
+        while ($rev = $changes->next()) {
+            if (mayAccessPage('view', $rev->_pagename)) {
+                $lines->pushContent($this->format_revision($rev));
+                if ($first)
+                    $this->setValidators($rev);
+                $first = false;
+            }
+            $count++;
+        }
+        $this->_args['limit'] = $count;
+        if (($desc = $this->description()))
+            $html->pushContent($desc);
+        if ($this->_args['daylist'])
+            $html->pushContent(new DayButtonBar($this->_args));
+        if ($first)
+            $html->pushContent(HTML::p(array('class' => 'rc-empty'),
+                                       $this->empty_message()));
+        else                               
+            $html->pushContent($lines);
+        
+        return $html;
+    }
+
+    function format_revision ($rev) {
+        $args = &$this->_args;
+        $class = 'rc-' . $this->importance($rev);
+        $time = $this->time($rev);
+        if (! $rev->get('is_minor_edit'))
+            $time = HTML::span(array('class' => 'pageinfo-majoredit'), $time);
+
+        $line = HTML::li(array('class' => $class));
+
+	$line->pushContent($this->time($rev),", ");
+	$line->pushContent($this->date($rev)," ");
+	$line->pushContent($this->diffLink($rev), ' ');
+	$line->pushContent($this->historyLink($rev), ' ');
+	$line->pushContent($this->pageLink($rev), ' ',
+			   $this->summaryAsHTML($rev));
         return $line;
     }
 }
-
 
 class _RecentChanges_SideBarFormatter
 extends _RecentChanges_HtmlFormatter
@@ -473,10 +575,10 @@ extends _RecentChanges_HtmlFormatter
     function summaryAsHTML ($rev) {
         if ( !($summary = $this->summary($rev)) )
             return '';
-        return HTML::strong(array('class' => 'wiki-summary'),
-                                "[",
-                                /*TransformLinks(*/$summary,/* $rev->get('markup')),*/
-                                "]");
+        return HTML::span(array('class' => 'wiki-summary'),
+			  "[",
+			  /*TransformLinks(*/$summary,/* $rev->get('markup')),*/
+			  "]");
     }
 
 
@@ -838,7 +940,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.116 $");
+                            "\$Revision: 1.117 $");
     }
 
     function managesValidators() {
@@ -966,6 +1068,8 @@ extends WikiPlugin
                 $fmt_class = '_RecentChanges_SideBarFormatter';
             elseif ($format == 'box')
                 $fmt_class = '_RecentChanges_BoxFormatter';
+            elseif ($format == 'contribs')
+                $fmt_class = '_RecentChanges_UserContribsFormatter';
             else
                 $fmt_class = '_RecentChanges_HtmlFormatter';
         }
@@ -1055,6 +1159,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.116  2007/05/13 18:13:41  rurban
+// use all filters, not just the first, ignoring the others. improve wording a bit
+//
 // Revision 1.115  2007/04/08 16:24:10  rurban
 // Remove redundant code in ->authorLink(): 'if_known' does the same
 //
