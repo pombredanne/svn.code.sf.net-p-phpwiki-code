@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PearDb.php,v 1.10 2006-03-19 16:26:40 rurban Exp $');
+rcs_id('$Id: PearDb.php,v 1.11 2007-05-30 21:53:52 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -153,8 +153,8 @@ extends _DbPassUser
             isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) 
         {
             $passwd = $GLOBALS['HTTP_POST_VARS']['auth']['passwd'];
-            $dbh->simpleQuery(sprintf($this->_authcreate, 
-                                      $dbh->quote($passwd), 
+            $dbh->simpleQuery(sprintf($this->_authcreate,
+                                      $dbh->quote($passwd),
                                       $dbh->quote($this->_userid)));
             return true;
         }
@@ -187,7 +187,7 @@ extends _DbPassUser
             $result = $this->_checkPass($submitted_password, $stored_password);
         } else {
             // be position independent
-            $okay = $dbh->getOne(sprintf($this->_authselect, 
+            $okay = $dbh->getOne(sprintf($this->_authselect,
                                          $dbh->quote($submitted_password),
                                          $dbh->quote($this->_userid)));
             $result = !empty($okay);
@@ -237,6 +237,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2006/03/19 16:26:40  rurban
+// fix DBAUTH arguments to be position independent, fixes bug #1358973
+//
 // Revision 1.9  2005/10/10 19:43:49  rurban
 // add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
 //
