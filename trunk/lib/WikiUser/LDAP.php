@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: LDAP.php,v 1.6 2007-05-29 16:56:15 rurban Exp $');
+rcs_id('$Id: LDAP.php,v 1.7 2007-05-30 21:56:17 rurban Exp $');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -71,7 +71,7 @@ extends _PassUser
             // Need to set the right root search information. See config/config.ini
             $st_search = LDAP_SEARCH_FIELD
                 ? LDAP_SEARCH_FIELD."=$userid"
-                : "cn=$userid";
+                : "uid=$userid";
             if (!$this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search)) {
  		$this->_free();
                 return $this->_tryNextPass($submitted_password);
@@ -132,7 +132,7 @@ extends _PassUser
             // Need to set the right root search information. see ../index.php
             $st_search = LDAP_SEARCH_FIELD
                 ? LDAP_SEARCH_FIELD."=$userid"
-                : "cn=$userid";
+                : "uid=$userid";
             if (!$this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search)) {
  		$this->_free();
         	return $this->_tryNextUser();
@@ -155,6 +155,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2007/05/29 16:56:15  rurban
+// Allow more password und userid chars. uid => cn: default for certain testusers
+//
 // Revision 1.5  2005/10/10 19:43:49  rurban
 // add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
 //
