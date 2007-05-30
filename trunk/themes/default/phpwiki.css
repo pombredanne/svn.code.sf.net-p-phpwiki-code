@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.59 2007-01-25 07:42:50 rurban Exp $
+ * $Id: phpwiki.css,v 1.60 2007-05-30 21:58:18 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -89,6 +89,17 @@ div#browse  {
 }
 
 /* .interwiki-map thead td { text-decoration: underline; } */
+
+/*
+** RecentChanges
+*/
+.pageinfo-majoredit { 
+	font-weight: bold;
+}
+.wiki-summary {
+  	font-size: 94%;
+  	font-style: italic;
+}
 
 /* Mozilla RecentChanges Sidebar */
 body.sidebar {
