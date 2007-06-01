@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: diff.php,v 1.54 2007-01-02 13:18:16 rurban Exp $');
+rcs_id('$Id: diff.php,v 1.55 2007-06-01 06:32:13 rurban Exp $');
 // diff.php
 //
 // PhpWiki diff output code.
@@ -287,7 +287,7 @@ function showDiff (&$request) {
 	$html = HTML::div(array('class'=>'wikitext','id'=>'difftext'),
                           HTML::p(fmt("I'm sorry, there is no such page as %s.",
                                       WikiLink($pagename, 'unknown'))));
-        include_once('lib/Template.php');
+        require_once('lib/Template.php');
         GeneratePage($html, sprintf(_("Diff: %s"), $pagename), false);
         return; //early return
     }
@@ -388,15 +388,18 @@ function showDiff (&$request) {
         }
 
         $html->pushContent(HTML::hr(), HTML::h1($new_version));
-        include_once("lib/BlockParser.php");
-        $html->pushContent(TransformText($new,$new->get('markup'),$page));
+        require_once("lib/BlockParser.php");
+        $html->pushContent(TransformText($new,$new->get('markup'),$pagename));
     }
 
-    include_once('lib/Template.php');
+    require_once('lib/Template.php');
     GeneratePage($html, sprintf(_("Diff: %s"), $pagename), $new);
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2007/01/02 13:18:16  rurban
+// omit want_content if not necessary
+//
 // Revision 1.53  2006/12/02 13:58:27  rurban
 // Fix MonoBook layout (id content forbidden here)
 // Add new revision to the bottom of the diff as in mediawiki.
