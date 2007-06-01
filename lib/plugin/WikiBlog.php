@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.26 2007-02-17 14:17:03 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.27 2007-06-01 06:39:07 rurban Exp $');
 /*
  Copyright 2002,2003,2007 $ThePhpWikiProgrammingTeam
  
@@ -93,7 +93,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.26 $");
+                            "\$Revision: 1.27 $");
     }
 
     // Arguments:
@@ -396,7 +396,7 @@ extends WikiPlugin
 	$args = array('PAGENAME' => $args['pagename'],
 		      'HIDDEN_INPUTS' => 
 		      HiddenInputs($request->getArgs()));
-	if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG) {
+	if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG and ($template != 'addcomment')) {
             include_once("lib/EditToolbar.php");
             $toolbar = new EditToolbar();
             $args = array_merge($args, $toolbar->getTokens());
@@ -433,6 +433,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2007/02/17 14:17:03  rurban
+// redirect page=""
+//
 // Revision 1.25  2007/01/20 11:23:37  rurban
 // Fix forum parent. Fix addcomment header.
 //
