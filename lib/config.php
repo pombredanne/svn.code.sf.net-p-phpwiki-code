@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.143 2007-05-24 18:36:56 rurban Exp $');
+rcs_id('$Id: config.php,v 1.144 2007-06-01 06:34:54 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -74,12 +74,13 @@ function browserDetect($match) {
 }
 // returns a similar number for Netscape/Mozilla (gecko=5.0)/IE/Opera features.
 function browserVersion() {
-    if (strstr(browserAgent(),    "Mozilla/4.0 (compatible; MSIE"))
-        return (float) substr(browserAgent(),30);
-    elseif (strstr(browserAgent(),"Mozilla/5.0 (compatible; Konqueror/"))
-        return (float) substr(browserAgent(),36);
+    $agent = browserAgent();
+    if (strstr($agent, "Mozilla/4.0 (compatible; MSIE"))
+        return (float) substr($agent, 30);
+    elseif (strstr($agent, "Mozilla/5.0 (compatible; Konqueror/"))
+        return (float) substr($agent, 36);
     else
-        return (float) substr(browserAgent(),8);
+        return (float) substr($agent, 8);
 }
 function isBrowserIE() {
     return (browserDetect('Mozilla/') and 
@@ -117,6 +118,10 @@ function isBrowserKonqueror($version = false) {
 function isBrowserSafari($version = false) {
     if ($version) return browserDetect('Safari/') and browserVersion() >= $version; 
     return browserDetect('Safari/');
+}
+function isBrowserOpera($version = false) {
+    if ($version) return browserDetect('Opera/') and browserVersion() >= $version; 
+    return browserDetect('Opera/');
 }
 
 
@@ -640,6 +645,9 @@ function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.143  2007/05/24 18:36:56  rurban
+// *** empty log message ***
+//
 // Revision 1.142  2007/03/04 14:07:17  rurban
 // Added SearchHighlight comment
 //
