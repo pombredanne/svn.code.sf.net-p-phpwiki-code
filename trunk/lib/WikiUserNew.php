@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.143 2007-05-24 18:37:53 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.144 2007-06-01 06:36:57 rurban Exp $');
 /* Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -550,12 +550,12 @@ class _WikiUser
     }
 
     /* This is quite restrictive and not according the login description online. 
-       Any word char (A-Za-z0-9_), ".", "@" and "-"
-       The backends may loosen this.
+       Any word char (A-Za-z0-9_), " ", ".", "@" and "-"
+       The backends may loosen or tighten this.
     */
     function isValidName ($userid = false) {
         if (!$userid) $userid = $this->_userid;
-        return preg_match("/^[\w\.@\-]+$/", $userid) and strlen($userid) < 32;
+        return preg_match("/^[\-\w\.@ ]+$/u", $userid) and strlen($userid) < 32;
     }
 
     /**
@@ -2159,6 +2159,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.143  2007/05/24 18:37:53  rurban
+// silence AdminUser HomePagehandle warning
+//
 // Revision 1.142  2007/05/15 16:32:34  rurban
 // Refactor class upgrading at ->UserExists
 //
