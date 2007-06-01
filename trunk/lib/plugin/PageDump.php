@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageDump.php,v 1.19 2007-01-03 21:23:40 rurban Exp $');
+rcs_id('$Id: PageDump.php,v 1.20 2007-06-01 06:38:19 rurban Exp $');
 /**
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -90,10 +90,11 @@ extends WikiPlugin
             // TODO: we need a way to hook into the generated headers, to override 
             // Content-Type, Set-Cookie, Cache-control, ...
             $request->discardOutput(); // Hijack the http request from PhpWiki.
-            ob_end_clean(); // clean up after hijacking $request
+            ob_end_clean();            // clean up after hijacking $request
             //ob_end_flush(); //debugging
+            $filename = FilenameForPage($page);
             Header("Content-disposition: attachment; filename=\""
-                   . FilenameForPage($page) . "\"");
+                   . $filename . "\"");
             // Read charset from generated page itself.
             // Inconsequential at the moment, since loadsave.php
             // always generates headers.
@@ -103,7 +104,7 @@ extends WikiPlugin
             // then here and the mimified string $mailified also has it!
 	    // This one is correct and overwrites the others.
             Header("Content-Type: application/octet-stream; name=\""
-                   . FilenameForPage($page) . "\"; charset=\"" . $charset
+                   . $filename . "\"; charset=\"" . $charset
                    . "\"");
             $request->checkValidators();
             // let $request provide last modified & etag
@@ -290,6 +291,9 @@ _("PhpWiki developers should manually inspect the downloaded file for nested mar
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2007/01/03 21:23:40  rurban
+// fix Content-Type header to application/octet-stream to avoid pesty .txt suffixes on windows clients
+//
 // Revision 1.18  2004/10/14 19:19:34  rurban
 // loadsave: check if the dumped file will be accessible from outside.
 // and some other minor fixes. (cvsclient native not yet ready)
