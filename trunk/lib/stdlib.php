@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.260 2007-02-17 14:15:21 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.261 2007-06-01 06:37:53 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -2065,13 +2065,17 @@ function longer_timeout($secs = 30) {
 
 function printSimpleTrace($bt) {
     //print_r($bt);
-    echo "Traceback:\n";
-    foreach ($bt as $i => $elem) {
-        if (!array_key_exists('file', $elem)) {
-            continue;
-        }
-        echo join(" ",array_values($elem)),"\n";
-        //print "  " . $elem['file'] . ':' . $elem['line'] . " " .$elem['function']"\n";
+    echo "\nTraceback:\n";
+    if (function_exists('debug_print_backtrace')) { // >= 5
+	debug_print_backtrace();
+    } else {
+	foreach ($bt as $i => $elem) {
+	    if (!array_key_exists('file', $elem)) {
+		continue;
+	    }
+	    //echo join(" ",array_values($elem)),"\n";
+	    echo "  ",$elem['file'],':',$elem['line']," ",$elem['function'],"\n";
+	}
     }
 }
 
@@ -2117,6 +2121,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.260  2007/02/17 14:15:21  rurban
+// fix ImgLink params: $ori_url
+//
 // Revision 1.259  2007/01/20 11:41:38  rurban
 // WikiPagename::_check: add flatfile support
 //
