@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.117 2007-05-30 20:43:31 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.118 2007-06-02 18:24:59 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -409,6 +409,7 @@ extends _RecentChanges_Formatter
     }
 
     function format_revision ($rev) {
+        global $WikiTheme;
         $args = &$this->_args;
 
         $class = 'rc-' . $this->importance($rev);
@@ -425,7 +426,7 @@ extends _RecentChanges_Formatter
         if ($args['historylinks'])
             $line->pushContent($this->historyLink($rev), ' ');
 
-	if (isa($GLOBALS['WikiTheme'],'Theme_MonoBook')) {
+	if (isa($WikiTheme, 'Theme_MonoBook')) {
 	    $line->pushContent(
 			       $args['historylinks'] ? '' : $this->historyLink($rev),
 			       ' . . ', $this->pageLink($rev), '; ',
@@ -940,7 +941,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.117 $");
+                            "\$Revision: 1.118 $");
     }
 
     function managesValidators() {
@@ -1159,6 +1160,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.117  2007/05/30 20:43:31  rurban
+// added MonoBook UserContribs
+//
 // Revision 1.116  2007/05/13 18:13:41  rurban
 // use all filters, not just the first, ignoring the others. improve wording a bit
 //
