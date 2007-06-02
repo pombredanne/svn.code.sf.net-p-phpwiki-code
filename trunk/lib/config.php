@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.144 2007-06-01 06:34:54 rurban Exp $');
+rcs_id('$Id: config.php,v 1.145 2007-06-02 18:24:39 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -70,7 +70,7 @@ function browserAgent() {
     return $HTTP_USER_AGENT;
 }
 function browserDetect($match) {
-    return strstr(browserAgent(), $match);
+    return strstr(strtolower(browserAgent()), strtolower($match));
 }
 // returns a similar number for Netscape/Mozilla (gecko=5.0)/IE/Opera features.
 function browserVersion() {
@@ -116,8 +116,9 @@ function isBrowserKonqueror($version = false) {
 // MacOSX Safari has certain limitations. Need detection and patches.
 // * no <object>, only <embed>
 function isBrowserSafari($version = false) {
-    if ($version) return browserDetect('Safari/') and browserVersion() >= $version; 
-    return browserDetect('Safari/');
+    $found = browserDetect('spoofer') or browserDetect('applewebkit');
+    if ($version) return $found and browserVersion() >= $version; 
+    return $found;
 }
 function isBrowserOpera($version = false) {
     if ($version) return browserDetect('Opera/') and browserVersion() >= $version; 
