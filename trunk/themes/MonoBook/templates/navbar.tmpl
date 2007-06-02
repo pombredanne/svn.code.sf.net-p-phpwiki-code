@@ -1,8 +1,9 @@
 <?php // -*-php-*- ?>
-<!-- $Id: navbar.tmpl,v 1.9 2007-06-02 18:40:32 rurban Exp $ -->
+<!-- $Id: navbar.tmpl,v 1.10 2007-06-02 18:49:18 rurban Exp $ -->
 <?php
 // With MonoBook it is similar to Sidebar, named boxes at the left.
 // actionbuttons, navigation, search, toolbox
+$p = $WikiTheme->tooltipAccessKeyPrefix();
 ?>
 <!-- The left navigation/search bar -->
 <!-- Here you should add favorite Links and Categories -->
@@ -11,7 +12,7 @@
   <div class="pBody">
     <ul>
       <li id="n-mainpage"><?= WikiLink(HOME_PAGE) ?></li>
-      <li id="n-recentchanges"><?= WikiLink(_("RecentChanges")) ?></li>
+      <li><? $link = WikiLink(_("RecentChanges"), "",_("RecentChanges")); $link->setAttr("accesskey","r"); $link->addTooltip(_("The list of recent changes in the wiki.")." [$p-r]"); ?><?= $link ?></li>
       <li id="n-recentcomments"><?= WikiLink(_("RecentComments")) ?></li>
       <li id="n-recentnewpages"><?= WikiLink(_("RecentNewPages")) ?></li>
       <li id="n-likepages"><?= Button(array('action'=>'LikePages'),_("Like Pages"), $page->getName()) ?></li>
@@ -46,7 +47,6 @@
   <h5>Toolbox</h5>
   <div class="pBody">
     <ul>
-    <li><?= WikiLink(_("RecentChanges"), "",_("RecentChanges")) ?></li>
     <?php if ($revision) { ?>
       <li id="t-whatlinkshere"><?= Button(array('action'=>'BackLinks'), _("What links here"), $page->getName()) ?></li>
     <?php } ?>
@@ -57,7 +57,7 @@
       <li><?= WikiLink(_("PhpWikiAdministration"), "", _("Administration")) ?></li>
     <?php } ?>
     <?php if ($user->isSignedIn()) { ?>
-      <li><?= WikiLink(_("UpLoad"),"",_("Upload file")) ?></li>
+      <li><? $link = WikiLink(_("UpLoad"),"",_("Upload file")); $link->setAttr("accesskey","u"); $link->addTooltip(_("Upload images or media files")." [$p-u]"); ?><?= $link ?></li>
       <li><?= WikiLink(_("UserPreferences"), "",_("Preferences")) ?></li>
     <?php } ?>
     <li>
