@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.48 2007-05-24 18:51:35 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.49 2007-06-02 18:23:49 rurban Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -63,8 +63,9 @@ class HtmlElement extends XmlElement
      *
      * @param $tooltip_text string The tooltip text.
      */
-    function addTooltip ($tooltip_text) {
+    function addTooltip ($tooltip_text, $accesskey = null) {
         $this->setAttr('title', $tooltip_text);
+	if ($accesskey) $this->setAccesskey($accesskey);
 
         // FIXME: this should be initialized from title by an onLoad() function.
         //        (though, that may not be possible.)
@@ -73,6 +74,23 @@ class HtmlElement extends XmlElement
                        sprintf('window.status="%s"; return true;',
                                addslashes($tooltip_text)));
         $this->setAttr('onmouseout', "window.status='';return true;");
+    }
+
+    function setAccesskey ($key) {
+	global $WikiTheme;
+	if (strlen($key) != 1) return;
+	$this->setAttr("accesskey", $key);
+
+        if (!empty($this->_attr['title'])) {
+	    if (preg_match("/\[(alt-)?(.)\]$/", $this->_attr['title'], $m))
+	    {
+		$this->_attr['title'] = preg_replace("/\[(alt-)?(.)\]$/", "[".$WikiTheme->tooltipAccessKeyPrefix()."-\\2]", $this->_attr['title']);
+	    } else  {
+		$this->_attr['title'] .= " [".$WikiTheme->tooltipAccessKeyPrefix()."-$key]";
+	    }
+	} else {
+	    $this->_attr['title'] = "[".$WikiTheme->tooltipAccessKeyPrefix()."-$key]";
+	}
     }
 
     function emptyTag () {
@@ -539,6 +557,9 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.48  2007/05/24 18:51:35  rurban
+ add param (for YouTube)
+
  Revision 1.47  2005/08/06 12:53:36  rurban
  beautify SCRIPT lines
 
