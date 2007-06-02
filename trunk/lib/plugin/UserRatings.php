@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserRatings.php,v 1.4 2005-09-30 18:41:39 uckelman Exp $');
+rcs_id('$Id: UserRatings.php,v 1.5 2007-06-02 18:25:16 rurban Exp $');
 /**
  Copyright 2004 Dan Frankowski
 
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {
@@ -202,10 +202,12 @@ extends WikiPlugin
            //$people_iter = $dbi->get_users_rated();
             $people_dbi = RatingsDb::getTheRatingsDb();
             $people_iter = $people_dbi->sql_get_users_rated();
-            while($people_array = $people_iter->next()){
-                $userid = $people_array['pagename']; 
-                $user = & RatingsUserFactory::getUser($userid);
-                array_push($allowed_users, $user);
+            while ($people_array = $people_iter->next()) {
+		if (isset($people_array['pagename'])) {
+		    $userid = $people_array['pagename']; 
+		    $user = & RatingsUserFactory::getUser($userid);
+		    array_push($allowed_users, $user);
+		}
             }
             
          }
