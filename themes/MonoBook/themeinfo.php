@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.8 2007-06-01 06:34:14 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.9 2007-06-02 18:37:33 rurban Exp $');
 /**
  * The new mediawiki (Wikipedia.org) default style.
  * Mediawiki 'monobook' style sheet for CSS2-capable browsers.
@@ -44,7 +44,8 @@ function ActionButton ($action, $label = false, $page_or_rev = false, $options =
 }
 
 class Theme_MonoBook extends Theme {
-
+    
+    /* this adds selected to the class */
     function makeActionButton ($action, $label = false, $page_or_rev = false, $options = false) {
         extract($this->_get_name_and_rev($page_or_rev));
 
@@ -72,11 +73,13 @@ class Theme_MonoBook extends Theme {
         if ($action == 'browse')
             unset($attr['action']);
 
-        return $this->makeButton($label, WikiURL($pagename, $attr), $class);
+        $options = $this->fixAccesskey($options);
+        return $this->makeButton($label, WikiURL($pagename, $attr), $class, $options);
     }
 }
 
 $WikiTheme = new Theme_MonoBook('MonoBook');
+$WikiTheme->addMoreHeaders(JavaScript("var ta;\nvar skin = 'MonoBook';\n"));
 $WikiTheme->addMoreHeaders(JavaScript('',array('src' => $WikiTheme->_findData("wikibits.js"))));
 if (isBrowserIE()) {
     $ver = browserVersion();
@@ -93,7 +96,9 @@ if (isBrowserIE()) {
     $WikiTheme->addMoreHeaders(JavaScript('',array('src' => $WikiTheme->_findData("IEFixes.js"))));
     $WikiTheme->addMoreHeaders("\n");
     $WikiTheme->addMoreHeaders(HTML::Raw('<meta http-equiv="imagetoolbar" content="no" />'));
-} elseif (isBrowserSafari()) {
+} 
+// better done in wikibits.js
+/*elseif (isBrowserSafari()) {
     $WikiTheme->addMoreHeaders($WikiTheme->_CSSlink(0,$WikiTheme->_findFile('IEMacFixes.css'),'all'));
 } elseif (isBrowserKonqueror()) {
     $WikiTheme->addMoreHeaders($WikiTheme->_CSSlink(0,$WikiTheme->_findFile('KHTMLFixes.css'),'all'));
@@ -103,6 +108,7 @@ if (isBrowserIE()) {
 				isBrowserOpera(7) ? $WikiTheme->_findFile('Opera7Fixes.css')
 				: $WikiTheme->_findFile('Opera6Fixes.css'),'all'));
 }
+*/
 // TODO: IEMAC, KHTML, Opera6, Opera7
 $WikiTheme->addMoreAttr('body', "class-ns-0", HTML::Raw('class="ns-0"'));
 
