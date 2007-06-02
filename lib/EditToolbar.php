@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.11 2007-02-17 14:16:21 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.12 2007-06-02 18:23:36 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -9,7 +9,6 @@ rcs_id('$Id: EditToolbar.php,v 1.11 2007-02-17 14:16:21 rurban Exp $');
  * - save-preview and formatting buttons from mediawiki
  * - Search&Replace from walterzorn.de
  * - pageinsert popup by Reini Urban (TODO: should be a pulldown, use acdropdown))
- *
  */
 
 class EditToolbar {
@@ -59,7 +58,7 @@ msg_repl_close     = '"._("Close")."'
 	    }
         }
 
-        include_once("lib/WikiPluginCached.php");
+        require_once("lib/WikiPluginCached.php");
         $cache = WikiPluginCached::newCache();
         $dbi = $GLOBALS['request']->getDbh();
         // regenerate if number of pages changes (categories, pages, templates)
@@ -92,6 +91,7 @@ msg_repl_close     = '"._("Close")."'
         global $WikiTheme;
 
         $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
+        $accessKeyPrefix = $WikiTheme->tooltipAccessKeyPrefix();
 
         if (ENABLE_EDIT_TOOLBAR) {
             $username = $GLOBALS['request']->_user->UserName();
@@ -105,71 +105,75 @@ msg_repl_close     = '"._("Close")."'
                                  "open"=>"<strong>",
                                  "close"=>"</strong>",
                                  "sample"=>_("Bold text"),
-                                 "tip"=>_("Bold text")),
+                                 "title"=>_("Bold text [alt-b]")),
                            array("image"=>"ed_format_italic.png",
                                  "open"=>"<em>",
                                  "close"=>"</em>",
                                  "sample"=>_("Italic text"),
-                                 "tip"=>_("Italic text")),
+                                 "title"=>_("Italic text [alt-i]")),
                            array("image"=>"ed_pagelink.png",
                                  "open"=>"[",
                                  "close"=>"]",
                                  "sample"=>_("optional label | PageName"),
-                                 "tip"=>_("Link to page")),
+                                 "title"=>_("Link to page")),
                            array("image"=>"ed_link.png",
                                  "open"=>"[",
                                  "close"=>"]",
                                  "sample"=>_("optional label | http://www.example.com"),
-                                 "tip"=>_("External link (remember http:// prefix)")),
+                                 "title"=>_("External link (remember http:// prefix)")),
                            array("image"=>"ed_headline.png",
                                  "open"=>"\\n!!! ",
                                  "close"=>"\\n",
                                  "sample"=>_("Headline text"),
-                                 "tip"=>_("Level 1 headline")),
+                                 "title"=>_("Level 1 headline")),
                            array("image"=>"ed_image.png",
                                  "open"=>"[ ",
                                  "close"=>" ]",
                                  "sample"=>_("Example.jpg"),
-                                 "tip"=>_("Embedded image")),
+                                 "title"=>_("Embedded image")),
                            array("image"=>"ed_nowiki.png",
                                  "open"=>"\\<verbatim\\>\\n",
                                  "close"=>"\\n\\</verbatim\\>",
                                  "sample"=>_("Insert non-formatted text here"),
-                                 "tip"=>_("Ignore wiki formatting")),
+                                 "title"=>_("Ignore wiki formatting")),
                            array("image"=>"ed_sig.png",
                                  "open" => $signature,
                                  "close" => "",
                                  "sample"=>"",
-                                 "tip"=>_("Your signature")),
+                                 "title"=>_("Your signature")),
                            array("image"=>"ed_hr.png",
                                  "open"=>"\\n----\\n",
                                  "close"=>"",
                                  "sample"=>"",
-                                 "tip"=>_("Horizontal line"))
+                                 "title"=>_("Horizontal line"))
                            );
             $btn = new SubmitImageButton(_("Save"), "edit[save]", 'toolbar', 
                                          $WikiTheme->getImageURL("ed_save.png"));
             $btn->addTooltip(_("Save"));
+	    $btn->setAccesskey("s");
             $toolbar .= ('document.writeln("'.addslashes($btn->asXml()).'");'."\n");
 	    // preview not supported yet on Wikiblog
             if (empty($WikiTheme->_headers_printed)) {
 		$btn = new SubmitImageButton(_("Preview"), "edit[preview]", 'toolbar', 
 					     $WikiTheme->getImageURL("ed_preview.png"));
 		$btn->addTooltip(_("Preview"));
+		$btn->setAccesskey("p");
 		$toolbar .= ('document.writeln("'.addslashes($btn->asXml()).'");'."\n");
 	    }
     
             foreach ($toolarray as $tool) {
+            	global $WikiTheme;
                 $image = $WikiTheme->getImageURL($tool["image"]);
                 $open  = $tool["open"];
                 $close = $tool["close"];
                 $sample = addslashes( $tool["sample"] );
-                // Note that we use the tip both for the ALT tag and the TITLE tag of the image.
+                // Note that we use the title both for the ALT tag and the TITLE tag of the image.
                 // Older browsers show a "speedtip" type message only for ALT.
                 // Ideally these should be different, realistically they
                 // probably don't need to be.
-                $tip = addslashes( $tool["tip"] );
-                $toolbar .= ("addTagButton('$image','$tip','$open','$close','$sample');\n");
+                $tool = $WikiTheme->fixAccesskey($tool);
+                $title = addslashes( $tool["title"] );
+                $toolbar .= ("addTagButton('$image','$title','$open','$close','$sample');\n");
             }
             $toolbar .= ("addInfobox('" 
                          . addslashes( _("Click a button to get an example text") ) 
@@ -194,7 +198,8 @@ msg_repl_close     = '"._("Close")."'
                             (array('class'=>"toolbar",
                                    'src'  => $sr_btn,
                                    'alt'  =>_("Search & Replace"),
-                                   'title'=>_("Search & Replace"),
+                                   'title'=>_("Search & Replace")." [$accessKeyPrefix-h]",
+                                   'accesskey' => 'h',
                                    'onclick'=>"replace()")));
         } else {
             $sr_html = '';
@@ -336,9 +341,11 @@ msg_repl_close     = '"._("Close")."'
     }
 
     // result is cached. Esp. the args are expensive
+    // FIXME!
     function templatePulldown($query, $case_exact=false, $regex='auto') {
+        global $request;
         require_once('lib/TextSearchQuery.php');
-        $dbi =& $GLOBALS['request']->_dbi;
+        $dbi =& $request->_dbi;
         $page_iter = $dbi->titleSearch(new TextSearchQuery($query, $case_exact, $regex));
         $count = 0;
         if ($page_iter->count()) {
@@ -371,6 +378,9 @@ msg_repl_close     = '"._("Close")."'
 
 /*
 $Log: not supported by cvs2svn $
+Revision 1.11  2007/02/17 14:16:21  rurban
+move define_f after toolbar.js
+
 Revision 1.10  2007/01/07 18:42:19  rurban
 Improve id: edit: to edit-. Move search&replace js from body (defined in EditToolbar) to the toolbar.js. Support actionpages. Add tb-name argument to showPulldown
 
