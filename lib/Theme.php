@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.140 2007-03-10 18:27:20 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.141 2007-06-02 18:24:30 rurban Exp $');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -206,7 +206,8 @@ class Theme {
         if ($noinit) return;
 
 	$this->addMoreHeaders(JavaScript("var data_path = '". DATA_PATH ."'\n"
-					."var pagename = '". $GLOBALS['request']->getArg('pagename') ."'"));
+					."var pagename  = '". $GLOBALS['request']->getArg('pagename') ."'\n"
+					."var stylepath = '". DATA_PATH . '/'.$this->_theme."/'\n"));
         // by pixels
         if ((is_object($GLOBALS['request']) // guard against unittests
              and $GLOBALS['request']->getPref('doubleClickEdit'))
@@ -878,9 +879,39 @@ class Theme {
         if ($action == 'browse')
             unset($attr['action']);
 
-        return $this->makeButton($label, WikiURL($pagename, $attr), $class);
+        $options = $this->fixAccesskey($options);
+
+        return $this->makeButton($label, WikiURL($pagename, $attr), $class, $options);
+    }
+    
+    function tooltipAccessKeyPrefix() {
+	static $tooltipAccessKeyPrefix = null;
+	if ($tooltipAccessKeyPrefix) return $tooltipAccessKeyPrefix;
+
+        $tooltipAccessKeyPrefix = 'alt';
+	if (isBrowserOpera()) $tooltipAccessKeyPrefix = 'shift-esc';
+	elseif (isBrowserSafari() or browserDetect("Mac") or isBrowserKonqueror()) 
+	    $tooltipAccessKeyPrefix = 'ctrl';
+	// ff2 win and x11 only
+	elseif ((browserDetect("firefox/2") or browserDetect("minefield/3") or browserDetect("SeaMonkey/1.1")) 
+		and ((browserDetect("windows") or browserDetect("x11"))))
+	    $tooltipAccessKeyPrefix = 'alt-shift'; 
+	return $tooltipAccessKeyPrefix;
     }
 
+    /** Define the accesskey in the title only, with ending [p] or [alt-p].
+     *  This fixes the prefix in the title and sets the accesskey.
+     */
+    function fixAccesskey($attrs) {
+        if (!empty($attrs['title']) and preg_match("/\[(alt-)?(.)\]$/", $attrs['title'], $m))
+        {
+    	    if (empty($attrs['accesskey'])) $attrs['accesskey'] = $m[2];
+    	    // firefox 'alt-shift', MSIE: 'alt', ... see wikibits.js
+    	    $attrs['title'] = preg_replace("/\[(alt-)?(.)\]$/", "[".$this->tooltipAccessKeyPrefix()."-\\2]", $attrs['title']);
+        }
+        return $attrs;
+    }
+    
     /**
      * Make a "button" which links to a wiki-page.
      *
@@ -1599,6 +1630,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.140  2007/03/10 18:27:20  rurban
+// Patch 1677965 by Erwann Penet
+//
 // Revision 1.138  2007/01/07 18:43:37  rurban
 // Remove fatals when no intermediate template was found. Deprecate subclasses of subthemes (blog of Sidebar). Warn about lost _MoreHeaders. $noinit: Do not initialize unnecessary items in default_theme fallback twice. Move over calendarInit from themes/Sidebar/themeinfo.php.
 //
