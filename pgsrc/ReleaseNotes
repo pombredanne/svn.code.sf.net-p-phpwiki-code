@@ -1,23 +1,23 @@
-Date: Sat, 20 Jan 2007 16:57:56 +0000
+Date: Mon, 28 May 2007 16:57:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.73 2007-01-25 22:05:09 rurban Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.74 2007-06-02 20:57:05 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
-  pgsrc_version="2 $Revision: 1.73 $";
+  pgsrc_version="2 $Revision: 1.74 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-1.3.13  (planned end of January) Reini Urban
+1.3.13 June, 2 2007, Reini Urban
 
-This is major feature release which will be the base for the stable 1.4.0. 
-The highlights are SemanticWeb support, various WYSIWYG editors, 
-a stable ~MonoBook theme (wikipedia), enabled acdropdown support 
-(~LiveSearch), postgresql and oracle enhancements, 
-moving Help pages into Help/, support different charsets in pgsrc 
-and Windows NTLM auth support via HttpAuth, a lot more plugins 
-and enhancements. UTF-8 should work.
+This is major feature release which will be the base for the stable
+1.4.0.  The highlights are SemanticWeb support, basic support for
+various WYSIWYG editors (not yet stable), a stable ~MonoBook (wikipedia)
+and Blog theme, enabled acdropdown support (~LiveSearch), postgresql and
+oracle enhancements, moving Help pages into Help/, support different
+charsets in pgsrc and Windows NTLM auth support via HttpAuth, a lot
+more plugins and enhancements. UTF-8 should work.
 
 fixes:
 * DB: use ANSI SQL statements (oracle by Bob Peele & Christopher Jones, 
@@ -46,6 +46,7 @@ fixes:
 * change PageDump Content-Type header for download to application/octet-stream to avoid 
   pesty .txt suffixes on windows clients
 * fixed wikilens with dba and RATING_STORAGE=SQL. RATING_STORAGE=WIKIPAGE not yet fixed.
+* fixed action=diff error with external links
 
 changes:
 * SemanticWeb: add linkrelation support, getPageLinks returns now an array of hashes. 
@@ -92,6 +93,7 @@ changes:
 * Improve LdapSearch plugin and add action page.
 * Improved wikilens theme.
 * Changed all default Template vars to expanded to uppercase: PAGENAME, USERID, ...
+* CSS: no MonoBook css hacks/requests, check special browser versions in php
 
 new:
 * add SemanticRelations syntax, db structure and attribute units.
@@ -124,6 +126,7 @@ new:
   http://www.howtocreate.co.uk/jslibs/termsOfUse.html
 * new ActionButton function for MonoBook with selected state. (tab state)
 * added SyncWiki plugin to sync pages and uploads with a master wiki.
+  (foreign auth not yet solved)
 * added boolean UPLOAD_USERDIR to upload into user-specific directory.
 * added support for multiple page arguments in BackLinks. Logical AND.
 * added wikidb->backend->rebuild()
@@ -136,11 +139,13 @@ new:
   BackLinks et al also.
 * added Calendar display_weeknum argument
 * added new AsciiSVG plugin
+* added new YouTube plugin
 * added XmlRpcTest tests
 * Added nopage argument to PageList and all its plugins. Unique rows only not yet.
-* Added author argument to RecentChanges and added two action pages: 
-  MyRecentChanges, MyRecentEdits
-
+* Added author, owner argument to RecentChanges and added action pages: 
+  MyRecentChanges, MyRecentEdits, UserContribs
+* added RecentChanges format=contribs for MonoBook theme: => UserContribs
+* added MonoBook accesskeys
 
 1.3.12p3 Jun, 18 2006, Reini Urban:
 
