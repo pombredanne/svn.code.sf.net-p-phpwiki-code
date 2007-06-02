@@ -25,7 +25,6 @@
 	z-index: 3;
 }
 
-
 #p-cactions li {
 	padding-bottom: 0 !important;
 	border: none;
@@ -43,10 +42,10 @@
 }
 #p-cactions li.selected a {
 	border-color: #fabd23;
-	padding-bottom: 0.17em;
+	padding-bottom: 0.17em !important;
 }
 #p-cactions li a:hover {
-	padding-bottom: 0.17em;
+	padding-bottom: 0.17em !important;
 }
 #p-navigation a {
 	display: inline-block;

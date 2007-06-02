@@ -13,9 +13,9 @@
 }
 #column-one {
 	position: absolute;
+	z-index: 4;
 	top: 0;
 	left: 0;
-	z-index: 4;
 }
 #footer {
 	margin-left: 13.6em;
@@ -46,7 +46,7 @@ body, pre { font-size: x-small; }
 }
 #p-cactions li.selected a {
 	border-color: #fabd23;
-	padding-bottom: 0.17em;
+	padding-bottom: 0.17em !important;
 }
 #p-cactions li a:hover {
 	padding-bottom: 0.17em;
