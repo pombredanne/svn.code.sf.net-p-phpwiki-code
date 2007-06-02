@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.31 2007-05-13 18:13:34 rurban Exp $');
+rcs_id('$Id: PageHistory.php,v 1.32 2007-06-02 18:24:47 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -22,7 +22,7 @@ rcs_id('$Id: PageHistory.php,v 1.31 2007-05-13 18:13:34 rurban Exp $');
 
 /**
  */
-require_once('lib/plugin/RecentChanges.php');
+require_once("lib/plugin/RecentChanges.php");
 
 class _PageHistory_PageRevisionIter
 extends WikiDB_PageRevisionIterator
@@ -168,6 +168,7 @@ extends _RecentChanges_HtmlFormatter
     }
 
     function format_revision ($rev) {
+	global $WikiTheme;
         $class = 'rc-' . $this->importance($rev);
 
         $time = $this->time($rev);
@@ -177,18 +178,30 @@ extends _RecentChanges_HtmlFormatter
                                           "(" . _("minor edit") . ")"));
         }
         else {
-            $time = HTML::strong(array('class' => 'pageinfo-majoredit'), $time);
+            $time = HTML::span(array('class' => 'pageinfo-majoredit'), $time);
             $minor_flag = '';
         }
-
-        return HTML::li(array('class' => $class),
-                        $this->diffLink($rev), ' ',
-                        $this->pageLink($rev), ' ',
-                        $time, ' ',
-                        $this->summaryAsHTML($rev),
-                        ' ... ',
-                        $this->authorLink($rev),
-                        $minor_flag);
+        $line = HTML::li(array('class' => $class));
+	if (isa($WikiTheme,'Theme_MonoBook')) {
+	    $line->pushContent(
+			       $this->diffLink($rev), ' ',
+			       $this->pageLink($rev), ' ',
+			       $time,' ',$this->date($rev), ' . . ',
+			       $this->authorLink($rev),' ',
+			       $this->authorContribs($rev),' ',
+			       $this->summaryAsHTML($rev),' ',
+			       $minor_flag);
+	} else {
+	    $line->pushContent(
+			       $this->diffLink($rev), ' ',
+			       $this->pageLink($rev), ' ',
+			       $time, ' ',
+			       $this->summaryAsHTML($rev),
+			       ' ... ',
+			       $this->authorLink($rev),
+			       $minor_flag);
+	}
+	return $line;
     }
 }
 
@@ -253,7 +266,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.31 $");
+                            "\$Revision: 1.32 $");
     }
 
     function getDefaultArguments() {
@@ -320,6 +333,9 @@ extends WikiPlugin_RecentChanges
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.31  2007/05/13 18:13:34  rurban
+// fix for recent RecentChanges upgrade: display all versions
+//
 // Revision 1.30  2004/06/14 11:31:39  rurban
 // renamed global $Theme to $WikiTheme (gforge nameclash)
 // inherit PageList default options from PageList
