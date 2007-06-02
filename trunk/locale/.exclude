@@ -4,12 +4,10 @@ lib/WikiDB/adodb/
 lib/nusoap/
 lib/fpdf/
 lib/XMLRPC/
+lib/AccessLog.php
 lib/ASCIIMathPHP/
 lib/WikiDB/backend/cvsclient.php
-lib/SemanticWeb.php
 lib/weather_class_inc.php
-lib/plugin/CreateBib.php
-lib/plugin/Imdb.php
 lib/plugin/NewUserWelcomePage.php
 lib/plugin/GridTable.php
 lib/plugin/RdfDefinition.php
@@ -20,8 +18,6 @@ lib/plugin/WikiSettings.php
 lib/plugin/WikiUserAdministration.php
 lib/plugin/BlockQuote.php
 lib/plugin/SpecialTag.php
-lib/plugin/SpellCheck.php
-lib/plugin/PreferenceApp.php
 themes/default/tiny_mce/
 themes/wikilens/templates/newuserwelcomepage.tmpl
 themes/wikilens/templates/categorypage.tmpl
