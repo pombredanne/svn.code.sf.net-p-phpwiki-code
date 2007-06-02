@@ -1,11 +1,12 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.13 2007-06-02 18:39:30 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.14 2007-06-02 20:34:12 rurban Exp $ -->
 <?php
-//$p = $WikiTheme->tooltipAccessKeyPrefix();
-$dbh = $request->getDbh();
-$isActionPage = $request->isActionPage($request->getArg("action"));
-$isAdmin = $user->isAdmin();
-$pagename = $page->getName();
+  //$p = $WikiTheme->tooltipAccessKeyPrefix();
+  $dbh = $request->getDbh();
+  $isAdmin = $user->isAdmin();
+  $pagename = $page->getName();
+  $isActionPage = $request->_isActionPage($pagename, false);
+  $isBrowse = $request->getArg('action') == 'browse';
 ?>
 <div class="portlet" id="p-cactions">
   <h5>Views</h5>
@@ -14,7 +15,7 @@ $pagename = $page->getName();
     <?php $talk = new WikiPageName('Talk:'.$pagename); ?>
       <?= ActionButton(array(),
 		       $isActionPage ? _("ActionPage") : _("Article"), 
-		       $talk->getParent(), array('class'=>"selected", 'title' => "View the page [alt-c]")) ?>
+		       $talk->getParent(), array('class'=>$isBrowse ? "selected" : "", 'title' => "View the page [alt-c]")) ?>
       <?php if (!$isActionPage) { ?>
         <?php if ($dbh->isWikiPage($talk->getName())) { ?>
 	  <?= ActionButton(array('action'=>'browse'), _("Discussion"), $talk->getName()) ?>
@@ -27,7 +28,7 @@ $pagename = $page->getName();
     <?php } else {
       $talk = new WikiPageName($pagename); ?>
       <?= ActionButton(array(),$isActionPage ? _("ActionPage") : _("Article"), $talk->getParent(), array('title' => "View the page [alt-c]")) ?>
-      <?= ActionButton(array(),_("Discussion"), $talk->getParent(), array('class'=>"selected")) ?>
+      <?= ActionButton(array(),_("Discussion"), $talk->getParent(), array('class'=>$isBrowse ? "selected" : "")) ?>
     <?php } ?>
     <?php if (($isAdmin or mayAccessPage('edit', $pagename)) and $revision) { ?>
     <?= ActionButton("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"), false, 

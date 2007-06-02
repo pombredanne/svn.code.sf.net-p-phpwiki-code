@@ -19,22 +19,22 @@
 	height: 1%;
 }
 #content {
-	margin: 2.92em 0 0 12.2em;
+	position: relative;
+	z-index: 2;
+	margin: 2.8em 0 0 12.2em;
 	padding: 0 1em 1.5em 1em;
 	background: white;
 	color: black;
 	border: 1px solid #aaa;
 	border-right: none;
 	line-height: 1.5em;
-	position: relative;
-	z-index: 2;
 }
 #column-one {
-	padding-top:160px;
 	position: absolute;
+	/*z-index: 3;*/
+	padding-top: 160px;
 	top: 0;
 	left: 0;
-	z-index: 4;
 }
 /* the left column width is specified in class .portlet */
 
@@ -45,11 +45,11 @@
 */
 
 body {
-    font: small sans-serif;
-    background: #f9f9f9 url("images/headbg.jpg") 0 0 no-repeat;
-    color: black;
-    margin: 0;
-    padding: 0;
+	font: small sans-serif;
+	background: #f9f9f9 url("images/headbg.jpg") 0 0 no-repeat;
+	color: black;
+	margin: 0;
+	padding: 0;
 }
 
 /* scale back up to a sane default */
@@ -70,14 +70,22 @@ table {
 	color: black;
 }
 a {
-    text-decoration: none;
-    color: #004ba6;
-    background: none;
+	text-decoration: none;
+	color: #002bb8;
+	background: none;
 }
-a:visited { color: #5a3696; }
-a:active { color: #faa700; }
-a:hover { text-decoration: underline; }
-a.stub { color: #772233; }
+a:visited {
+	color: #5a3696;
+}
+a:active {
+	color: #faa700;
+}
+a:hover {
+	text-decoration: underline;
+}
+a.stub {
+	color: #772233;
+}
 a.new, #p-personal a.new {
 	color: #ba0000;
 }
@@ -106,14 +114,14 @@ hr {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: black;
-    background: none;
-    font-weight: bold;
-    font-family: Tahoma, sans-serif;
-    margin: 0;
-    padding-top: 0.5em;
-    padding-bottom: 0.17em;
-    border-bottom: 1px solid #aaa;
+	color: black;
+	background: none;
+	font-weight: bold;
+	font-family: Tahoma, sans-serif;
+	margin: 0;
+	padding-top: 0.5em;
+	padding-bottom: 0.17em;
+	border-bottom: 1px solid #aaa;
 }
 h1 { font-size: 188%; }
 h2 { font-size: 150%; }
@@ -122,15 +130,15 @@ h4 { font-size: 116%; }
 h5 { font-size: 100%; }
 h6 { font-size: 80%;  }
 h4, h5, h6 { 
-    border-bottom: none;
-    font-weight: normal;
+	border-bottom: none;
+	font-weight: normal;
 }
 ul { 
-    line-height: 1.5em;
-    list-style-type: square;
-    margin: 0.3em 0 0 1.5em;
-    padding:0;
-    list-style-image: url("images/bullet.png");
+	line-height: 1.5em;
+	list-style-type: square;
+	margin: 0.3em 0 0 1.5em;
+	padding:0;
+	list-style-image: url("images/bullet.png");
 }
 ol {
 	line-height: 1.5em;
@@ -154,19 +162,19 @@ dd {
 }
 
 fieldset {
-    border: 1px solid #2f6fab;
-    margin: 1em 0 1em 0;
-    padding: 0 1em 1em 1em;
-    line-height: 1.5em;
+	border: 1px solid #2f6fab;
+	margin: 1em 0 1em 0;
+	padding: 0 1em 1em 1em;
+	line-height: 1.5em;
 }
 legend {
-    /*background: white;*/
-    padding: 0.5em;
-    font-size: 95%;
+	/*background: white;*/
+	padding: 0.5em;
+	font-size: 95%;
 }
 form {
-    border: none;
-    margin: 0;
+	border: none;
+	margin: 0;
 }
 
 textarea {
@@ -175,11 +183,11 @@ textarea {
 }
 
 input.historysubmit {
-    padding: 0 0.3em 0.3em 0.3em !important;
-    font-size: 94%;
-    cursor: pointer;
-    height: 1.7em !important;
-    margin-left: 1.6em;
+	padding: 0 0.3em 0.3em 0.3em !important;
+	font-size: 94%;
+	cursor: pointer;
+	height: 1.7em !important;
+	margin-left: 1.6em;
 }
 select {
 	vertical-align: top;
@@ -219,11 +227,11 @@ pre {
 	display: none;
 }
 #contentSub {
-    font-size: 84%;
-    line-height: 1.2em;
-    margin: 0 0 1.4em 1em;
-    color: #7d7d7d;
-    width: auto;
+	font-size: 84%;
+	line-height: 1.2em;
+	margin: 0 0 1.4em 1em;
+	color: #7d7d7d;
+	width: auto;
 }
 span.subpages { display: block; }
 
@@ -346,14 +354,14 @@ table.small {
 	font-weight: bold;
 }
 .toc #toclist {
-  width: auto;
-  border: none;
+	width: auto;
+	border: none;
 }
 #toc #toctitle,
 .toc #toctitle,
 #toc .toctitle,
 .toc .toctitle {
-  text-align: center;
+	text-align: center;
 }
 /*
 #toc ul,
@@ -367,43 +375,43 @@ table.small {
 */
 #toc ul,
 .toc ul {
-  width: auto;
-  border: none;
-  line-height: 1.5em;
-  list-style-type: square;
-  list-style-image: url("images/bullet.png");
-  font-size: 95%;
-  margin-left: 5px;
-  padding-left: 5px;
+	width: auto;
+	border: none;
+	line-height: 1.5em;
+	list-style-type: square;
+	list-style-image: url("images/bullet.png");
+	font-size: 95%;
+	margin-left: 5px;
+	padding-left: 5px;
 }
 #toc ul ul,
 .toc ul ul {
-  margin: 0 0 0 2em;
+	margin: 0 0 0 2em;
 }
 #toc .toctoggle,
 .toc .toctoggle {
-  font-size: 94%;
+	font-size: 94%;
 }
 
 .mw-warning {
-  border: 1px solid #aaa;
-  background-color: #f9f9f9;
-  padding: 5px;
-  font-size: 95%;
+	border: 1px solid #aaa;
+	background-color: #f9f9f9;
+	padding: 5px;
+	font-size: 95%;
 }
 .mw-warning {
-  margin-left: 50px;
-  margin-right: 50px;
-  text-align: center;
+	margin-left: 50px;
+	margin-right: 50px;
+	text-align: center;
 }
 
 /* images */
 div.floatright, table.floatright {
-  clear: right;
-  float: right;
-  position: relative;
-  margin: 0 0 .5em .5em;
-  border: 0;
+	clear: right;
+	float: right;
+	position: relative;
+	margin: 0 0 .5em .5em;
+	border: 0;
 /*
 	border: .5em solid white;
 	border-width: .5em 0 .8em 1.4em;
@@ -541,8 +549,8 @@ div.townBox dl dd {
 	font-weight: normal; /*bold;*/
 }
 .wiki-summary {
-  	font-size: 94%;
-  	font-style: italic;
+		font-size: 94%;
+		font-style: italic;
 }
 
 /* Page history styling */
@@ -593,106 +601,104 @@ span.diffchange {
  */
 /* main box */
 .diff {
-  margin-top:    1ex;
-  margin-bottom: 0.5ex;
-  background: white;
-  /* Netscape 4 requires this 1px border.
-     Without it, the paper borders below cause
-     the white background to disappear. */
-  border: 1px #ccc solid;
-  color: black;
-  border-top: 1px solid #494f5d;
-  border-left:  1px solid #494f5d;
-  border-bottom:  1px solid #c6d2de;
-  border-right: 1px solid #c6d2de;
-  padding-top:    1px;
-  padding-bottom: 1px;
-  padding-left:  .125em;
-  padding-right: .125em;
-  padding: 0;
-  /* "paper" borders */
-  /*border-top: 2px #d2d2d2 solid;
-  border-left:  2px #b2b2b2 solid;
-  border-bottom:  2px #e8e6df solid;
-  border-right: 2px #e8e6df solid;*/
-/*  padding-left:  0em; 
-  padding-bottom: 0ex;*/
+	margin-top:    1ex;
+	margin-bottom: 0.5ex;
+	background: white;
+	/* Netscape 4 requires this 1px border.
+	 Without it, the paper borders below cause
+	 the white background to disappear. */
+	border: 1px #ccc solid;
+	color: black;
+	border-top: 1px solid #494f5d;
+	border-left:  1px solid #494f5d;
+	border-bottom:  1px solid #c6d2de;
+	border-right: 1px solid #c6d2de;
+	padding-top:    1px;
+	padding-bottom: 1px;
+	padding-left:  .125em;
+	padding-right: .125em;
+	padding: 0;
+	/* "paper" borders */
+	/*border-top: 2px #d2d2d2 solid;
+	border-left:  2px #b2b2b2 solid;
+	border-bottom:  2px #e8e6df solid;
+	border-right: 2px #e8e6df solid;*/
 /*  border-style: inset;*/
-  /*This breaks Netscape 4: (display does not go full width).
-   * width: auto;
-   */
-  /* I'm not sure what the intent of this was, but it's
-   *  not valid CSS: */
-  /* display: editarea; */
-  clear: both;
+	/*This breaks Netscape 4: (display does not go full width).
+	 * width: auto;
+	 */
+	/* I'm not sure what the intent of this was, but it's
+	 *  not valid CSS: */
+	/* display: editarea; */
+	clear: both;
 }
 .diff .block {
-  background: #ddd;
-  padding-left: 1em;
-  /* for NS4 */
-  /*border: none;*/
+	background: #ddd;
+	padding-left: 1em;
+	/* for NS4 */
+	/*border: none;*/
 }
 
 /* individual blocks */
 .diff .context {
-  background: white;
-  /* for NS4 */
-  border: none;
+	background: white;
+	/* for NS4 */
+	border: none;
 }
 /* entire difftextblock */
 .difftext {
-  margin-top:    0;
-  margin-bottom: 0;
-  background: white;
-  /* Netscape 4 requires this 1px border.
-     Without it, the paper borders below cause
-     the white background to disappear. */
-  border: 1px black solid;
-  /* "paper" borders */
-  border-top:  1px #e8e6df solid;
-  border-left: 1px #e8e6df solid;
-  border-bottom: 1px #d2d2d2 solid;
-  border-right:  1px #b2b2b2 solid;
-  padding-left:  0em; 
-  padding-right: 0em;
-  padding-top:    0ex;
-  padding-bottom: 0ex;
-  /*This breaks Netscape 4: (display does not go full width).
-   * width: auto;
-   */
-  clear: both;
+	margin-top:    0;
+	margin-bottom: 0;
+	background: white;
+	/* Netscape 4 requires this 1px border.
+	 Without it, the paper borders below cause
+	 the white background to disappear. */
+	border: 1px black solid;
+	/* "paper" borders */
+	border-top:  1px #e8e6df solid;
+	border-left: 1px #e8e6df solid;
+	border-bottom: 1px #d2d2d2 solid;
+	border-right:  1px #b2b2b2 solid;
+	padding-left:  0em; 
+	padding-right: 0em;
+	padding-top:    0ex;
+	padding-bottom: 0ex;
+	/*This breaks Netscape 4: (display does not go full width).
+	 * width: auto;
+	 */
+	clear: both;
 }
 /* + - line prefix */
 .diff .block tt {
-  font-weight: normal;
-  font-family: monospace;
-  color: black;
-  /* for NS4 */
-  margin-left: 0;
-  border: none;
+	font-weight: normal;
+	font-family: monospace;
+	color: black;
+	/* for NS4 */
+	margin-left: 0;
+	border: none;
 }
 /* changed words */
 .diff del, .diff ins {
-  font-weight: bold;
-  text-decoration: none;
+	font-weight: bold;
+	text-decoration: none;
 }
 
 /* blocks containing deleted or added words */
 .diff .original, .diff .deleted,
 .diff .final, .diff .added {
-  background: white;
+	background: white;
 }
 /* blocks containing deleted words */
 .diff .original, .diff .deleted {
-  background: #fcc;
-  /* for NS4 */
-  border: none;
+	background: #fcc;
+	/* for NS4 */
+	border: none;
 }
 /* blocks containing added words */
 .diff .final, .diff .added {
-  background: #cfc;
-  /* for NS4 */
-  border: none;
+	background: #cfc;
+	/* for NS4 */
+	border: none;
 }
 
 /* These don't work in NS4 -- it completely ignores <del> and <ins>. */
@@ -706,42 +712,42 @@ span.diffchange {
  */
 td.pageinfo { font-weight: bold; }
 .pageinfo-minoredit, .pageinfo-authorid {
-  font-size: smaller;
-  font-style: oblique;
+	font-size: smaller;
+	font-style: oblique;
 }
 
 /**
  * Calendar plugin
  */
 table.cal {
-  border: 1px outset gray;
-  background: white;
-  margin: 0.5ex 0.5em;
-  padding: 1px;
-  /* For Mozilla */
-  empty-cells: hide;
+	border: 1px outset gray;
+	background: white;
+	margin: 0.5ex 0.5em;
+	padding: 1px;
+	/* For Mozilla */
+	empty-cells: hide;
 } 
 
 /* cells */
 table.cal td {
-  background: white;
-  text-align: right;
+	background: white;
+	text-align: right;
 } 
 
 /* Month-name header */
 table.cal-header { font-size: larger; }
 table.cal-header tr, table.cal-header td { text-align: center; }
 .cal-arrow {
-  font-weight: bold;
-  text-decoration: none;
+	font-weight: bold;
+	text-decoration: none;
 }
 
 /* Day-names header */
 table.cal tbody tr .cal-dayname {  }
 .cal-dayname td {
-  text-align: center;
-  font-size: smaller;
-  text-decoration: underline;
+	text-align: center;
+	font-size: smaller;
+	text-decoration: underline;
 }
 
 /* Individual days */
@@ -750,8 +756,8 @@ a.cal-hide { text-decoration: none; }
 /* Today */
  /* cell */
 table.cal td.cal-today {
-  margin: 1px;
-  border: 1px solid gray;
+	margin: 1px;
+	border: 1px solid gray;
 }
  /* text */
 table.cal td.cal-today a.cal-hide {  }
@@ -762,32 +768,32 @@ table.cal td.cal-today a.cal-hide {  }
 */
 #bodyContent a.external,
 #bodyContent a[href ^="gopher://"] {
-    background: url("images/url.png") center right no-repeat;
-    padding-right: 13px;
+	background: url("images/url.png") center right no-repeat;
+	padding-right: 13px;
 }
 #bodyContent a[href ^="https://"],
 .link-https {
-    background: url("images/lock_icon.png") center right no-repeat;
-    padding-right: 16px;
+	background: url("images/lock_icon.png") center right no-repeat;
+	padding-right: 16px;
 }
 #bodyContent a[href ^="mailto:"],
 .link-mailto {
-    background: url("images/mail_icon.png") center right no-repeat;
-    padding-right: 18px;
+	background: url("images/mail_icon.png") center right no-repeat;
+	padding-right: 18px;
 }
 #bodyContent a[href ^="news://"] {
-    background: url("images/news_icon.png") center right no-repeat;
-    padding-right: 18px;
+	background: url("images/news_icon.png") center right no-repeat;
+	padding-right: 18px;
 }
 #bodyContent a[href ^="ftp://"],
 .link-ftp {
-    background: url("images/file_icon.png") center right no-repeat;
-    padding-right: 18px;
+	background: url("images/file_icon.png") center right no-repeat;
+	padding-right: 18px;
 }
 #bodyContent a[href ^="irc://"],
 .link-irc {
-    background: url("images/discussionitem_icon.png")  center right no-repeat;
-    padding-right: 18px;
+	background: url("images/discussionitem_icon.png")  center right no-repeat;
+	padding-right: 18px;
 }
 /* disable interwiki styling */
 #bodyContent a.extiw,
@@ -821,31 +827,31 @@ special external link styling */
 	overflow: hidden;
 }
 .portlet h4 {
-    font-size: 95%;
-    font-weight: normal;
-    white-space: nowrap;
+	font-size: 95%;
+	font-weight: normal;
+	white-space: nowrap;
 }
 .portlet h5 { 
-    background: transparent;
-    padding: 0em 1em 0em 0.5em;
-    text-transform: lowercase;
-    display: inline;
-    font-size: 91%;
-    height: 1em;
-    font-weight: normal;
-    white-space: nowrap;
+	background: transparent;
+	padding: 0em 1em 0em 0.5em;
+	text-transform: lowercase;
+	display: inline;
+	font-size: 91%;
+	height: 1em;
+	font-weight: normal;
+	white-space: nowrap;
 }
 .portlet h6 { 
-    background: #ffae2e;
-    border: 1px solid #2f6fab;
-    border-style: solid solid none solid;
-    padding: 0em 1em 0em 1em;
-    text-transform: lowercase;
-    display: block;
-    font-size: 1em;
-    height: 1.2em;
-    font-weight: normal;
-    white-space: nowrap;
+	background: #ffae2e;
+	border: 1px solid #2f6fab;
+	border-style: solid solid none solid;
+	padding: 0em 1em 0em 1em;
+	text-transform: lowercase;
+	display: block;
+	font-size: 1em;
+	height: 1.2em;
+	font-weight: normal;
+	white-space: nowrap;
 }
 .pBody {
 	font-size: 95%;
@@ -863,15 +869,15 @@ special external link styling */
 	padding: 0;
 }
 .portlet ul {
-    line-height: 1.5em;
-    list-style-type: square;
-    list-style-image: url("images/bullet.png");
-    font-size:95%;
+	line-height: 1.5em;
+	list-style-type: square;
+	list-style-image: url("images/bullet.png");
+	font-size:95%;
 }
 .portlet li {
-    padding:0;
-    margin: 0 0 0 0;
-    margin-bottom: 0;
+	padding:0;
+	margin: 0 0 0 0;
+	margin-bottom: 0;
 }
 
 /* 
@@ -880,8 +886,8 @@ special external link styling */
 */
 
 #p-logo {
-	z-index: 0;
 	position: absolute; /*needed to use z-index */
+	z-index: 3;
 	top: 0;
 	left: 0;
 	height: 155px;
@@ -902,15 +908,15 @@ special external link styling */
 }
 /* At the right we put a small "wiki star" */
 #img-logo-right {
-  position: absolute;
-  z-index: 4;
-  top:  0;
-  right: 0;
-  height: 86px;
-  width: 86px;
-  background: url("images/wiki_stamp.png") left no-repeat;
-  background-repeat: no-repeat;
-  overflow: visible;
+	position: absolute;
+	z-index: 4;
+	top:  0;
+	right: 0;
+	height: 86px;
+	width: 86px;
+	background: url("images/wiki_stamp.png") left no-repeat;
+	background-repeat: no-repeat;
+	overflow: visible;
 }
 
 /*
@@ -940,16 +946,16 @@ special external link styling */
 ** Search portlet
 */
 #p-search {
-    position:relative;
-    z-index: 3;
+	position:relative;
+	z-index: 3;
 }
 input.searchButton {
-    margin-top:1px;
-    padding: 0 0.4em !important;
-    font-size: 95%;
-    cursor: pointer;
-    background-color: White;
-    border: 1px solid #2f6fab;
+	margin-top:1px;
+	padding: 0 0.4em !important;
+	font-size: 95%;
+	cursor: pointer;
+	background-color: White;
+	border: 1px solid #2f6fab;
 }
 #searchGoButton {
 	padding-left: .5em;
@@ -958,10 +964,10 @@ input.searchButton {
 }
 /*#searchInput, */
 #livesearch, #p-search input.dropdown {
-  text-align: left;
-  width: 9.9em;
-  /*margin: 0;*/
-  font-size: 95%;
+	text-align: left;
+	width: 9.9em;
+	/*margin: 0;*/
+	font-size: 95%;
 }
 #p-search .pBody {
 	padding: .5em .4em .4em .4em;
@@ -973,61 +979,64 @@ input.searchButton {
 */
 
 #p-personal {
-    width:40em;
-    white-space:nowrap;
-    padding:0 0 0 0;
-    margin:0;
-    position:absolute;
-    right: 90px;
-    top:0.1em;
-    z-index: 4;
-    border: none;
-    overflow: visible;
-    color: black;
-    line-height: 1.2em;
+	position:absolute;
+	z-index: 4;
+	width:40em;
+	white-space:nowrap;
+	padding:0 0 0 0;
+	margin:0;
+	right: 90px;
+	top:0.1em;
+	border: none;
+	overflow: visible;
+	color: black;
+	line-height: 1.2em;
 }
 
 #p-personal h5 {
-    display:none;
+	display:none;
 }
 #p-personal .portlet,
 #p-personal .pBody {
-    padding:0;
-    margin:0;
-    border: none;
-    z-index: 0;
-    overflow: visible;
-    background: none;
+	z-index: 0;
+	padding:0;
+	margin:0;
+	border: none;
+	overflow: visible;
+	background: none;
 }
 /* this is the ul contained in the portlet */
 #p-personal ul {
-    border: none;
-    line-height: 1.5em;
-    color: #2f6fab;
-    padding: 0em 2em 0 3em;
-    margin: 0;
-    text-align: right;
-    /*text-transform: lowercase;*/
-    list-style: none;
-    z-index: 0;
-    background: none;
-    cursor: default;
+	z-index: 0;
+	border: none;
+	line-height: 1.5em;
+	color: #2f6fab;
+	padding: 0em 2em 0 3em;
+	margin: 0;
+	text-align: right;
+	/*text-transform: lowercase;*/
+	list-style: none;
+	background: none;
+	cursor: default;
 }
 #p-personal li {
-    z-index: 0;
-    border:none;
-    padding:0;
-    display: inline;
-    color: #2f6fab;
-    margin-left: 1em;
-    line-height: 1.2em;
-    background: none;
+	z-index: 0;
+	border:none;
+	padding:0;
+	display: inline;
+	color: #2f6fab;
+	margin-left: 1em;
+	line-height: 1.2em;
+	background: none;
+}
+#p-personal li.active {
+	font-weight: bold;
 }
 #p-personal li a {
-    text-decoration: none;
-    color: #005896;
-    padding-bottom: 0.2em;
-    background: none;
+	text-decoration: none;
+	color: #005896;
+	padding-bottom: 0.2em;
+	background: none;
 }
 #p-personal li a:hover {
 	background-color: white;
@@ -1042,11 +1051,11 @@ in bg url to hide it from iemac */
 li#pt-userpage,
 li#pt-anonuserpage,
 li#pt-login {
-    /*background:  url('images/wikiuser.png') top left bottom no-repeat;*/
-    background:  url('images/wikiuser.png') left no-repeat;
-    background-repeat: no-repeat;
-    padding-left: 20px;
-    text-transform: none;
+	/*background:  url('images/wikiuser.png') top left bottom no-repeat;*/
+	background:  url('images/wikiuser.png') left no-repeat;
+	background-repeat: no-repeat;
+	padding-left: 20px;
+	text-transform: none;
 }
 #p-personal a.new { color:#ba0000; }
 
@@ -1054,26 +1063,26 @@ li#pt-login {
 ** the page-related actions- page/talk, edit etc
 */
 #p-cactions {
-    position:absolute;
-    z-index: 0;
-    top: 1.3em;
-    left: 11.5em;
-    margin: 0;
-    white-space:nowrap;
-    width: 76%;
-    line-height: 1.1em;
-    overflow: visible;
-    background: none;
-    border-collapse: collapse;
-    padding-left: 1em;
-    list-style: none;
-    font-size: 95%;
+	position: absolute;
+	/*z-index: 1;*/ /* important! */
+	top: 1.3em;
+	left: 11.5em;
+	margin: 0;
+	white-space: nowrap;
+	width: 76%;
+	line-height: 1.1em;
+	overflow: visible;
+	background: none;
+	border-collapse: collapse;
+	padding-left: 1em;
+	list-style: none;
+	font-size: 95%;
 }
 #p-cactions .hiddenStructure {
 	display: none;
 }
 #p-cactions ul {
-    list-style: none;
+	list-style: none;
 }
 #p-cactions li {
 	display: inline;
@@ -1086,23 +1095,23 @@ li#pt-login {
 }
 #p-cactions li.selected {
 	border-color: #fabd23;
-	padding: 0 0 0.2em 0;
+	padding: 0 0 0.2em 0 !important;
 }
 #p-cactions li a {
+	position: relative;
+	z-index: 0;
 	background-color: #fbfbfb;
 	color: #002bb8;
 	border: none;
 	padding: 0 .8em .3em;
 	text-decoration: none;
 	/*text-transform: lowercase;*/
-	position: relative;
-	z-index: 0;
 	margin: 0;
 }
 #p-cactions li.selected a {
-  	z-index: 3;
+	z-index: 3;
 	background-color: #fff;
-	padding: 0 1em 0 !important;
+	padding: 0 1em 0.2em;
 }
 #p-cactions .new a {
 	color: #ba0000;
@@ -1110,8 +1119,7 @@ li#pt-login {
 #p-cactions li a:hover {
 	z-index: 3;
 	text-decoration: none;
-	background-color: #eee;
-	padding: 0 1em 0.2em !important;
+	background-color: #dedede;
 }
 #p-cactions h5 {
 	display: none;
@@ -1164,43 +1172,43 @@ li#ca-watch, li#ca-unwatch, li#ca-varlang-0, li#ca-print {
 /* hide from incapable browsers */
 head:first-child+body #footer li { white-space: nowrap; }
 #f-poweredbyico, #f-copyrightico {
-    margin: 0 8px;
-    /*vertical-align: middle;*/
-    height: 31px;
-    position: relative;
-    top: -31px; /* Bump it up just a tad */
+	margin: 0 8px;
+	/*vertical-align: middle;*/
+	height: 31px;
+	position: relative;
+	top: -31px; /* Bump it up just a tad */
 }
 #f-poweredbyico {
-    float: right;
+	float: right;
 }
 #f-copyrightico {
-    float: left;
+	float: left;
 }
 
 /* js pref toc */
 #preftoc { 
-    float: left;
-    margin: 1em 1em 1em 1em;
-    width: 13em;
+	float: left;
+	margin: 1em 1em 1em 1em;
+	width: 13em;
 }
 #preftoc li { border: 1px solid White; }
 #preftoc li.selected { 
-    background-color:#f9f9f9;
-    border:1px dashed #aaaaaa;
+	background-color:#f9f9f9;
+	border:1px dashed #aaaaaa;
 }
 #preftoc a,
 #preftoc a:active {
-    display: block;
-    color: #0014a6;
+	display: block;
+	color: #0014a6;
 }
 #prefcontrol { 
-    clear: both;
-    float: left;
-    margin-top: 1em;
+	clear: both;
+	float: left;
+	margin-top: 1em;
 }
 div.prefsectiontip { 
-    font-size: 95%;
-    margin-top: 1em;
+	font-size: 95%;
+	margin-top: 1em;
 }
 fieldset.operaprefsection { margin-left: 15em }
 
@@ -1536,34 +1544,34 @@ div#searchTarget ul li:before {
 }
 
 div.multipageimagenavbox {
-   border: solid 1px silver;
-   padding: 4px;
-   margin: 1em;
-   -moz-border-radius: 6px;
-   background: #f0f0f0;
+	 border: solid 1px silver;
+	 padding: 4px;
+	 margin: 1em;
+	 -moz-border-radius: 6px;
+	 background: #f0f0f0;
 }
 
 div.multipageimagenavbox div.thumb {
-   border: none;
-   margin-left: 2em;
-   margin-right: 2em;
+	 border: none;
+	 margin-left: 2em;
+	 margin-right: 2em;
 }
 
 div.multipageimagenavbox hr {
-   margin: 6px;
+	 margin: 6px;
 }
 
 table.multipageimage td {
-   text-align: center;
+	 text-align: center;
 }
 
 /*
-  Table pager (e.g. Special:Imagelist)
-  - remove underlines from the navigation link
-  - collapse borders
-  - set the borders to outsets (similar to Special:Allmessages)
-  - remove line wrapping for all td and th, set background color
-  - restore line wrapping for the last two table cells (description and size)
+	Table pager (e.g. Special:Imagelist)
+	- remove underlines from the navigation link
+	- collapse borders
+	- set the borders to outsets (similar to Special:Allmessages)
+	- remove line wrapping for all td and th, set background color
+	- restore line wrapping for the last two table cells (description and size)
 */
 .TablePager_nav a { text-decoration: none; }
 .TablePager { border-collapse: collapse; }
@@ -1585,37 +1593,37 @@ table.multipageimage td {
  */
 .pagelist { }
 .pagelist thead td {
-  background: #e8e8e8;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: smaller;
+	background: #e8e8e8;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: smaller;
 }
 .pagelist thead td u { text-decoration: none; }
 .pagelist tr.evenrow { background: #eee; }
 .pagelist tr.oddrow  { background: white; }
 th.gridbutton {
-  background-color: ThreedLightShadow;
-  color: black;
-  font-family: Tahoma, sans-serif, Arial, Helvetica;
-  font-size: small;
-  font-weight: normal;
-  /*font-style: menu;*/
-  white-space: nowrap;
-  margin: 5px 0px;
-  max-height: 24px;
-  padding: 5px 0px 5px 0px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: ThreedHighlight ThreedDarkShadow ThreedDarkShadow ThreedHighlight;
+	background-color: ThreedLightShadow;
+	color: black;
+	font-family: Tahoma, sans-serif, Arial, Helvetica;
+	font-size: small;
+	font-weight: normal;
+	/*font-style: menu;*/
+	white-space: nowrap;
+	margin: 5px 0px;
+	max-height: 24px;
+	padding: 5px 0px 5px 0px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: ThreedHighlight ThreedDarkShadow ThreedDarkShadow ThreedHighlight;
 }
 input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
-  text-decoration: none;
-  font-size: small;
-  font-weight: normal;
-  /*font-style: menu;*/
-  font-family: Tahoma, sans-serif, Arial, Helvetica;
-  background-color: ThreedLightShadow;
-  color: black;
+	text-decoration: none;
+	font-size: small;
+	font-weight: normal;
+	/*font-style: menu;*/
+	font-family: Tahoma, sans-serif, Arial, Helvetica;
+	background-color: ThreedLightShadow;
+	color: black;
 }
 
 .wikipaging { font-size: 80% }
@@ -1624,114 +1632,114 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 /* <?plugin RawHtml <div class="boxright"> </div> */
 
 div.boxright {
-  width: 200px; 
-  right: 10px;
-  padding: 0.5em; 
-  float: right; 
-  border: thin solid #888888; 
-  padding: 0.5em;
+	width: 200px; 
+	right: 10px;
+	padding: 0.5em; 
+	float: right; 
+	border: thin solid #888888; 
+	padding: 0.5em;
 }
 
 div#bottom {   
-  margin-left:   12.2em;
+	margin-left:   12.2em;
 }
 /* PHP Warnings */
 div.errors {
-  color: black;
-  background: #eee;
-  margin-top:    1em;
-  margin-bottom: 1em;
-  padding-left:  0.8em; 
-  padding-right: 0.8em; 
-  padding-top:    0.8ex;
-  padding-bottom: 0;
-  border: medium solid red;
-  clear: both;
+	color: black;
+	background: #eee;
+	margin-top:    1em;
+	margin-bottom: 1em;
+	padding-left:  0.8em; 
+	padding-right: 0.8em; 
+	padding-top:    0.8ex;
+	padding-bottom: 0;
+	border: medium solid red;
+	clear: both;
 }
 h4.errors {
-  color: red;
-  margin:  0;
-  padding: 0;
-  text-decoration: underline;
+	color: red;
+	margin:  0;
+	padding: 0;
+	text-decoration: underline;
 }
 div.warning {
-  color: black;
-  background: #eee;
-  margin-top:    1em;
-  margin-bottom: 1em;
-  padding-left:  0.8em; 
-  padding-right: 0.8em; 
-  padding-top:    0.8ex;
-  padding-bottom: 0;
-  border: thin solid blue;
-  clear: both;
+	color: black;
+	background: #eee;
+	margin-top:    1em;
+	margin-bottom: 1em;
+	padding-left:  0.8em; 
+	padding-right: 0.8em; 
+	padding-top:    0.8ex;
+	padding-bottom: 0;
+	border: thin solid blue;
+	clear: both;
 }
 .error { font-family: monospace; font-size: 120%; }
 .error ul { font-family: monospace; }
 
 /* Debug */
 .debug {
-  color: black;
-  background: white;
-  font-family: monospace;
-  font-size: smaller;
-  margin: 1ex 0;
-  padding: 0.5ex 0.5em;
-  border: medium solid #fff8dc; /* darker ivory */
+	color: black;
+	background: white;
+	font-family: monospace;
+	font-size: smaller;
+	margin: 1ex 0;
+	padding: 0.5ex 0.5em;
+	border: medium solid #fff8dc; /* darker ivory */
 }
 /* Hints */
 .hint {
-  color: black;
-  background: #eeeeee;
-   /* font-size: smaller; */
-  font-style: italic;
-  margin-left: 3em;
-  padding: 0.5ex 0.5em;
-  border: thin solid #aaaaaa;
+	color: black;
+	background: #eeeeee;
+	 /* font-size: smaller; */
+	font-style: italic;
+	margin-left: 3em;
+	padding: 0.5ex 0.5em;
+	border: thin solid #aaaaaa;
 }
 span.hint {
-  padding: 0;
+	padding: 0;
 }
 /* Disabled Plugins */
 .disabled-plugin
 {
-  clear: both;
-  margin: 1ex 0;
-  padding: 0;
+	clear: both;
+	margin: 1ex 0;
+	padding: 0;
 }
 .disabled-plugin .title {
-  color: #400;
-  background-color: inherit;
-  font-size: x-small;
-  text-align: right;
-  padding: 0 0.5em;
+	color: #400;
+	background-color: inherit;
+	font-size: x-small;
+	text-align: right;
+	padding: 0 0.5em;
 }
 .disabled-plugin pre {
-  color: black;
-  background: #ddd;
-  margin: 0;
-  padding: 0.3ex 0.5em;
+	color: black;
+	background: #ddd;
+	margin: 0;
+	padding: 0.3ex 0.5em;
 }
 
 /* "(Redirected from ...)" message. */
 span.redirectfrom {
-  font-size: small;
-  font-style: oblique;
-  font-weight: normal;
-  padding-left: 1em;
+	font-size: small;
+	font-style: oblique;
+	font-weight: normal;
+	padding-left: 1em;
 }
 .search-context { background: white; font-style: oblique; }
 .search-term {
-  background: yellow;
-  font-weight: normal;
+	background: yellow;
+	font-weight: normal;
 }
 
 a.spell-wrong {
-  color:#ba0000; 
-  background: yellow;
+	color:#ba0000; 
+	background: yellow;
 }
 span.spell-wrong {
-  color:#ba0000; 
+	color:#ba0000; 
 }
 
 
@@ -1750,35 +1758,35 @@ form.wikiformrich { background-color: #eee; }
  * Link styles
  */
 .wiki, .named-wiki {
-  text-decoration: none;
-  font-weight: normal;
-  /* font-weight: bold; */
+	text-decoration: none;
+	font-weight: normal;
+	/* font-weight: bold; */
 }
 .wiki relation, .named-wiki relation, .wiki attribute, .named-wiki attribute {
-  font-style: oblique;
-  /* font-weight: normal; */
-  font-weight: bold;
+	font-style: oblique;
+	/* font-weight: normal; */
+	font-weight: bold;
 }
 
 span.relation-symbol {
-  font-weight: bold;
-  font-family: monospace;
-  letter-spacing: 0.1em;
+	font-weight: bold;
+	font-family: monospace;
+	letter-spacing: 0.1em;
 }
 
 /* Action buttons */
 a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe,
 input.wikiaction, input.button, input.wikiadmin {
-  text-decoration: none;
-  font-family: Arial, Helvetica, sans-serif;
-  /* don't wrap text buttons */
-  white-space: nowrap;
-  /*font-size: inherit; */
+	text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+	/* don't wrap text buttons */
+	white-space: nowrap;
+	/*font-size: inherit; */
 }
 
 /*
 a.wikiaction, a.wikiaction:visited, input.wikiaction, input.button { 
-  background-color: #ddd; 
+	background-color: #ddd; 
 }
 */
 
@@ -1786,28 +1794,28 @@ a.wikiaction, a.wikiaction:visited, input.wikiaction, input.button {
 
 /*
 a.wikiadmin, a.wikiadmin:visited, input.wikiadmin  { 
-  background-color: #fdd; 
+	background-color: #fdd; 
 }
 */
 
 /* Unknown links */
 .wikiunknown, .named-wikiunknown {
-  font-weight: normal;
-  font-size: 100%;
+	font-weight: normal;
+	font-size: 100%;
 }
  /* QuestionMark #600 */
 .wikiunknown a, .named-wikiunknown a {
-  color: #447;
-  background-color: #eee;
-  text-decoration: none;
-  font-weight: normal;
-  font-size: smaller;
+	color: #447;
+	background-color: #eee;
+	text-decoration: none;
+	font-weight: normal;
+	font-size: smaller;
 }
 
 /* Backlinks */
 .backlinks {
-  text-decoration: underline;
-  color: #006;
+	text-decoration: underline;
+	color: #006;
 }
 h1 .backlinks { text-decoration: underline; }
 
