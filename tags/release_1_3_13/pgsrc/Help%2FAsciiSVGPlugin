@@ -1,0 +1,77 @@
+Date: Thu, 22 Feb 2007 21:15:59 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: Help%2FAsciiSVGPlugin,v 1.1 2007-02-22 20:25:22 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FAsciiSVGPlugin;
+  pgsrc_version="2 $Revision: 1.1 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+Interface to http://www1.chapman.edu/~jipsen/svg/asciisvg.html
+
+Requires ENABLE_XHTML_XML = true
+
+Syntax: http://www1.chapman.edu/~jipsen/svg/asciisvgcommands.html
+
+If you are using Internet Explorer 6 + Adobe SVGviewer (often included
+by default with Windows XP) or SVG enabled Mozilla/Firefox (and have
+Adobe SVGviewer installed as well!) then you should see the examples.
+
+! Usage
+<verbatim>
+  <?plugin AsciiSVG width= height= onmousemove="" script="" 
+           code...  
+  ?>
+</verbatim>
+
+! Arguments
+
+width, height, script, onmouseover
+
+All other arguments are passed to the ASCIISvg javascript library and
+rendered as SVG.  See
+http://www1.chapman.edu/~jipsen/svg/asciisvg.html
+
+! Example
+
+<verbatim>
+<?plugin AsciiSVG width="117" height="117" 
+  border = 0
+  initPicture(-10,10)
+  axes()
+  stroke = "red"
+  p = []
+  with (Math) 
+    for (t = 0; t < 10.01; t += 0.05)
+      p[p.length] = [t*cos(PI*t), t*sin(PI*t)]
+  path(p)
+?>
+</verbatim>
+
+<?plugin AsciiSvg width="117" height="117" 
+  border = 0
+  initPicture(-10,10)
+  axes()
+  stroke = "red"
+  p = []
+  with (Math) 
+    for (t = 0; t < 10.01; t += 0.05)
+      p[p.length] = [t*cos(PI*t), t*sin(PI*t)]
+  path(p)
+?>
+
+! Known Problems
+
+With multiple ~AsciiSvg plugins on the same page the 2nd and
+subsequent ones will have the same width and height.
+
+! Author
+PhpWiki:ReiniUrban
+
+! See Also
+Help:AsciiMathPlugin
+
+----
+PhpWikiDocumentation Help:WikiPlugin
