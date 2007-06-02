@@ -1,15 +1,16 @@
-Date: Thu, 4 Jan 2007 02:08:10 +0000
+Date: Tue, 22 May 2007 16:04:08 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2FSemanticRelations,v 1.3 2007-01-04 16:43:48 rurban Exp $
+X-Rcs-Id: $Id: Help%2FSemanticRelations,v 1.4 2007-06-02 20:56:20 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSemanticRelations;
-  pgsrc_version="2 $Revision: 1.3 $";
+  pgsrc_version="2 $Revision: 1.4 $";
   flags="";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The PhpWiki:SemanticWeb implementation follows closely the mediawiki implementation. It features:
+The PhpWiki:SemanticWeb implementation follows closely the [semediawiki
+| http://ontoworld.org/wiki/Semantic_MediaWiki] implementation. It features:
 
 * Annotation of article-article-links by means of configurable relations (link-types).
 * Annotation of articles with simple data-values that are assigned to configurable attributes.
@@ -24,42 +25,49 @@ supports RDF, RDFS or XML.
 
 ! Relations
 
-Relations (link-types) are defined as link with the following syntax: 
+Relations (link-types) are defined as link with the following markup
+syntax:
 <verbatim>
   relation::pagename
 </verbatim>
 
 ! Attributes
 
-Attributes are defined as link with the following syntax: 
+Attributes are defined as link with the following markup syntax:
 
 <verbatim>
   attribute:=value
 </verbatim>
 
-Attributes and relations refer only to the current page - the current
-page is the subject, the relation the predicate, the linked page the
-object in a RDF triple. Relations always refer to another page,
-attributes not.
+Attributes and relations refer only to the current page - the
+current page is the subject, the relation the predicate, the linked page the
+object in a RDF triple. Relations always refer to another page - they
+must not exist. Attributes not, since they are numeric only.
+
+With the SemanticSearch feature you can query online simple and
+complex facts.
+
+You can import and export _lists of facts or queries_, as format rdf,
+rdfs, owl.
 
 ! Example
 
-<em>Sample taken from http://wiki.ontoworld.org/index.php/San_Diego </em>
+<em>Sample taken from http://ontoworld.org/wiki/San_Diego, see also
+[San Diego] </em>
 
 <verbatim>
 San Diego [is_a::city] located in the southwestern corner of
-[California|located_in::California], the extreme southwestern corner
-of the [United States|country::United States]. It is the county seat
-of San Diego County. As of
-the 2000 census, the city had a total population of
-[1,223,400|population:=1,223,400]; as of 2005, the California Department
-of Finance estimated the city to have 1,305,736 residents. The city is
-the second-largest in California and the seventh-largest in the United
-States and is noted for its temperate climate and many beaches.
+[California|located_in::California], the extreme southwestern corner of the
+[United States|country::United States]. It is the county seat of San Diego
+County. As of the 2000 census, the city had a total population of
+[1,223,400|population:=1,223,400]; as of 2005, the California Department of
+Finance estimated the city to have 1,305,736 residents. The city is the
+second-largest in California and the seventh-largest in the United States and is
+noted for its temperate climate and many beaches.
 
 According to the United States Census Bureau, the city has a total
-area of [963.6 km²|area:=963.6 km^2] (372.0 mi²). 840.0 km² (324.3 mi²)
-of it is land and 123.5 km² (47.7 mi²) of it is water.
+area of [963.6 km²|area:=963.6 km^2] (372.0 mi²). 840.0 km² (324.3
+mi²) of it is land and 123.5 km² (47.7 mi²) of it is water.
 The total area is 12.82% water.
 
 Most notably, San Diego is the location of the 2005 International
@@ -71,7 +79,10 @@ Chargers.
 
 ! See Also
 
-See PhpWiki:SemanticWeb, Help:SemanticRelationsPlugin, Help:SemanticSearchPlugin
+See PhpWiki:SemanticWeb, 
+SemanticRelations, ListRelations, SemanticSearch, SemanticSearchAdvanced,
+Help:SemanticRelationsPlugin, Help:SemanticSearchPlugin, 
+PhpWiki:RdfImport, PhpWiki:OwlImport, PhpWiki::RdfExport, PhpWiki::RdfsExport, PhpWiki::OwlExport
 
 -------------
 
