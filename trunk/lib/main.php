@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.232 2007-05-13 18:13:20 rurban Exp $');
+rcs_id('$Id: main.php,v 1.233 2007-06-02 21:07:21 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -903,7 +903,7 @@ class WikiRequest extends Request {
         return false;
     }
     
-    function _isActionPage ($pagename) {
+    function _isActionPage ($pagename, $verbose = true) {
         $dbi = $this->getDbh();
         $page = $dbi->getPage($pagename);
         if (!$page) return false;
@@ -911,7 +911,7 @@ class WikiRequest extends Request {
         // FIXME: more restrictive check for sane plugin?
         if (strstr($rev->getPackedContent(), '<?plugin'))
             return true;
-        if (!$rev->hasDefaultContents())
+        if ($verbose and !$rev->hasDefaultContents())
             trigger_error("$pagename: Does not appear to be an 'action page'", E_USER_NOTICE);
         return false;
     }
@@ -928,7 +928,7 @@ class WikiRequest extends Request {
             return $cache[$translation];
 
         // check for cached translated version
-        if ($translation and $this->_isActionPage($translation))
+        if ($translation and $this->_isActionPage($translation, false))
             return $cache[$action] = $translation;
 
         // Allow for, e.g. action=LikePages
@@ -943,7 +943,7 @@ class WikiRequest extends Request {
             $trans = new WikiPlugin__WikiTranslation();
             $trans->lang = $LANG;
 	    $default = $trans->translate_to_en($action, $LANG);
-            if ($default and $this->_isActionPage($default))
+            if ($default and $this->_isActionPage($default, false))
                 return $cache[$action] = $default;
         } else {
             $default = $translation;
@@ -1314,6 +1314,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.232  2007/05/13 18:13:20  rurban
+// improve prefs: only save with userid
+//
 // Revision 1.231  2007/02/17 14:16:44  rurban
 // action_soap, action_setpref, anon perms for wikitohtml, setpref
 //
