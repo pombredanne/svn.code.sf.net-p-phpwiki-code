@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.110 2007-01-07 18:42:00 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.111 2007-06-03 17:12:00 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -129,7 +129,7 @@ class PageEditor
         elseif ($this->editaction == 'overwrite') { 
             // take the new content without diff
 	    $source = $this->request->getArg('loadfile');
-	    include_once('lib/loadsave.php');
+	    require_once('lib/loadsave.php');
 	    $this->request->setArg('loadfile', 1);
 	    $this->request->setArg('overwrite', 1);
 	    $this->request->setArg('merge', 0);
@@ -149,7 +149,7 @@ class PageEditor
             $orig_content = $orig->getContent();
             $this_content = explode("\n", $this->_content);
             $other_content = $this->current->getContent();
-            include_once("lib/diff3.php");
+            require_once("lib/diff3.php");
             $diff = new diff3($orig_content, $this_content, $other_content);
             $output = $diff->merged_output(_("Your version"), _("Other version"));
             // Set the content of the textarea to the merged diff
@@ -176,7 +176,7 @@ class PageEditor
         $tokens = array_merge($tokens, $this->getFormElements());
 
         if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG) {
-            include_once("lib/EditToolbar.php");
+            require_once("lib/EditToolbar.php");
             $toolbar = new EditToolbar();
             $tokens = array_merge($tokens, $toolbar->getTokens());
         }
@@ -251,7 +251,7 @@ class PageEditor
             // Save failed. No changes made.
             $this->_redirectToBrowsePage();
             // user will probably not see the rest of this...
-            include_once('lib/display.php');
+            require_once('lib/display.php');
             // force browse of current version:
             $request->setArg('version', false);
             displayPage($request, 'nochanges');
@@ -265,7 +265,7 @@ class PageEditor
             // Save failed. No changes made.
             $this->_redirectToBrowsePage();
             // user will probably not see the rest of this...
-            include_once('lib/display.php');
+            require_once('lib/display.php');
             // force browse of current version:
             $request->setArg('version', false);
             displayPage($request, 'nochanges');
@@ -300,7 +300,7 @@ class PageEditor
         $this->updateLock();
 
         // Clean out archived versions of this page.
-        include_once('lib/ArchiveCleaner.php');
+        require_once('lib/ArchiveCleaner.php');
         $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
         $cleaner->cleanPageRevisions($page);
 
@@ -395,7 +395,7 @@ class PageEditor
         // 2. external babycart (SpamAssassin) check
         // This will probably prevent from discussing sex or viagra related topics. So beware.
         if (ENABLE_SPAMASSASSIN) {
-            include_once("lib/spam_babycart.php");
+            require_once("lib/spam_babycart.php");
             if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"), 
                                            $this->user->getId())) {
                 // TODO: mail the admin
@@ -408,22 +408,22 @@ class PageEditor
             }
         }
         // 3. extract (new) links and check surbl for blocked domains
-        if (ENABLE_SPAMBLOCKLIST and $this->numLinks($newtext)) {
-            include_once("lib/SpamBlocklist.php");
-            include_once("lib/InlineParser.php");
+        if (ENABLE_SPAMBLOCKLIST and ($this->numLinks($newtext) > 5)) {
+            require_once("lib/SpamBlocklist.php");
+            require_once("lib/InlineParser.php");
             $parsed = TransformLinks($newtext);
             foreach ($parsed->_content as $link) {
             	if (isa($link, 'Cached_ExternalLink')) {
-                  $uri = $link->_getURL($this->page->getName());
-                  if ($res = IsBlackListed($uri)) {
-                    // TODO: mail the admin
-                    $this->tokens['PAGE_LOCKED_MESSAGE'] = 
-                        HTML($this->getSpamMessage(),
-                             HTML::p(HTML::strong(_("External links contain blocked domains:")),
-                             HTML::ul(HTML::li(sprintf(_("%s is listed at %s"), 
-                                                       $res[2], $res[0])))));
-                    return true;
-                  }
+                    $uri = $link->_getURL($this->page->getName());
+                    if ($res = IsBlackListed($uri)) {
+                        // TODO: mail the admin
+                        $this->tokens['PAGE_LOCKED_MESSAGE'] = 
+                            HTML($this->getSpamMessage(),
+                                 HTML::p(HTML::strong(_("External links contain blocked domains:")),
+                                         HTML::ul(HTML::li(sprintf(_("%s is listed at %s"), 
+                                                                   $res[2], $res[0])))));
+                        return true;
+                    }
             	}
             }
         }
@@ -449,13 +449,13 @@ class PageEditor
     }
 
     function getPreview () {
-        include_once('lib/PageType.php');
+        require_once('lib/PageType.php');
         $this->_content = $this->getContent();
 	return new TransformedText($this->page, $this->_content, $this->meta);
     }
 
     function getConvertedPreview () {
-        include_once('lib/PageType.php');
+        require_once('lib/PageType.php');
         $this->_content = $this->getContent();
         $this->meta['markup'] = 2.0;
         $this->_content = ConvertOldMarkup($this->_content);
@@ -757,7 +757,7 @@ extends PageEditor
             $orig = $this->page->getRevision($this->_currentVersion);
             $this_content = explode("\n", $this->_content);
             $other_content = $this->current->getContent();
-            include_once("lib/diff.php");
+            require_once("lib/diff.php");
             $diff2 = new Diff($other_content, $this_content);
             $context_lines = max(4, count($other_content) + 1,
                                  count($this_content) + 1);
@@ -848,6 +848,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.110  2007/01/07 18:42:00  rurban
+ Print ModeratedPage message on edit. Use GOOGLE_LINKS_NOFOLLOW. Improve id: edit: to edit-
+
  Revision 1.109  2007/01/02 13:21:39  rurban
  add two merge conflict buttons within loadfile: "Keep Old" and "Overwrite with new". enable edit toolbar there also. fix display of the Merge and Edit header.
 
