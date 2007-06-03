@@ -1,9 +1,9 @@
 Date: Tue, 22 May 2007 16:04:08 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2FSemanticRelations,v 1.4 2007-06-02 20:56:20 rurban Exp $
+X-Rcs-Id: $Id: Help%2FSemanticRelations,v 1.5 2007-06-03 15:37:32 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSemanticRelations;
-  pgsrc_version="2 $Revision: 1.4 $";
+  pgsrc_version="2 $Revision: 1.5 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -82,7 +82,7 @@ Chargers.
 See PhpWiki:SemanticWeb, 
 SemanticRelations, ListRelations, SemanticSearch, SemanticSearchAdvanced,
 Help:SemanticRelationsPlugin, Help:SemanticSearchPlugin, 
-PhpWiki:RdfImport, PhpWiki:OwlImport, PhpWiki::RdfExport, PhpWiki::RdfsExport, PhpWiki::OwlExport
+PhpWiki:ImportRdf, PhpWiki:ImportOwl, PhpWiki::ExportRdf, PhpWiki::ExportRdfs, PhpWiki::ExportOwl
 
 -------------
 
