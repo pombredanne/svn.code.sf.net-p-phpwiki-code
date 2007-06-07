@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.107 2007-05-28 20:13:46 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.108 2007-06-07 21:37:39 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -1215,6 +1215,13 @@ extends WikiDB_backend_iterator
             $this->_result = false;
         }
     }
+
+    function asArray () {
+    	$result = array();
+    	while ($page = $this->next())
+    	    $result[] = $page;
+        return $result;
+    }
 }
 
 class WikiDB_backend_PearDB_iter
@@ -1252,6 +1259,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.107  2007/05/28 20:13:46  rurban
+// Overwrite all attributes at once at page->save to delete dangling meta
+//
 // Revision 1.106  2007/01/04 16:57:32  rurban
 // Clarify API: sortby,limit and exclude are strings. fix upgrade test connection
 //

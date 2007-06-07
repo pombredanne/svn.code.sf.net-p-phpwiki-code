@@ -1,12 +1,12 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_pgsql.php,v 1.26 2007-01-04 16:45:49 rurban Exp $');
+rcs_id('$Id: PearDB_pgsql.php,v 1.27 2007-06-07 21:37:39 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
 
 if (!defined("USE_BYTEA")) // see schemas/psql-initialize.sql
+    //define("USE_BYTEA", true);
     define("USE_BYTEA", false);
-    //define("USE_BYTEA", false);
 
 /*
 Since 1.3.12 changed to use:
@@ -229,6 +229,7 @@ extends WikiDB_backend_PearDB
             $join_clause .= " AND $page_tbl.id=$version_tbl.id AND latestversion=version";
 
             $fields .= ", $page_tbl.pagedata as pagedata, " . $this->version_tbl_fields;
+	    // TODO: title still ignored, need better rank and subselect
             $callback = new WikiMethodCb($searchobj, "_fulltext_match_clause");
             $search_string = $search->makeTsearch2SqlClauseObj($callback);
             $search_string = str_replace(array("%"," "), array("","&"), $search_string);
@@ -310,12 +311,16 @@ select * from stat('select idxfti from version') order by ndoc desc, nentry desc
         $word = strtolower($node->word);
         $word = str_replace(" ", "&", $word); // phrase fix
         return $word;
-        
+
+        // clause specified above.
         return $this->_pagename_match_clause($node) . " OR idxFTI @@ to_tsquery('$word')";
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2007/01/04 16:45:49  rurban
+// Clarify API: sortby,limit and exclude are strings.
+//
 // Revision 1.25  2006/12/23 11:56:17  rurban
 // note about vacuum permissions
 //
