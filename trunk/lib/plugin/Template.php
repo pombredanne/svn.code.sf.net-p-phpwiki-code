@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.9 2007-03-04 14:09:13 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.10 2007-06-07 17:03:38 rurban Exp $');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
 
@@ -66,7 +66,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision: 1.10 $");
     }
 
     function getDefaultArguments() {
@@ -128,9 +128,9 @@ extends WikiPlugin
             $r = $p->getCurrentRevision();
         }
         $initial_content = $r->getPackedContent();
-        $c = explode("\n", $initial_content);
 
         if ($args['section']) {
+            $c = explode("\n", $initial_content);
             $c = extractSection($args['section'], $c, $page, $quiet, $args['sectionhead']);
             $initial_content = implode("\n", $c);
         }
@@ -204,6 +204,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2007/03/04 14:09:13  rurban
+// silence missing page warning
+//
 // Revision 1.8  2007/01/25 07:42:29  rurban
 // Changed doVariableExpansion API. Uppercase default vars. Use str_replace.
 //
