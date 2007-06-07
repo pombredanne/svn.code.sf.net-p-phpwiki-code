@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.261 2007-06-01 06:37:53 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.262 2007-06-07 17:02:01 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -658,14 +658,15 @@ class WikiPageName
         if (is_string($name)) {
             $this->shortName = $name;
             if (strstr($name, ':')) {
-                list($moniker, $this->shortName) = split (":", $name, 2);
+                list($moniker, $shortName) = split (":", $name, 2);
 	  	$map = getInterwikiMap(); // allow overrides to custom maps
                 if (isset($map->_map[$moniker])) {
                     $url = $map->_map[$moniker];
                     if (strstr($url, '%s'))
-                        $url = sprintf($url, $this->shortName);
+                        $url = sprintf($url, $shortName);
                     else
-                        $url .= $this->shortName;
+                        $url .= $shortName;
+                    $this->shortName = $shortName;
                     // expand Talk or User, but not to absolute urls!
                     if (strstr($url, '//')) {
                         if ($moniker == 'Talk')
@@ -2121,6 +2122,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.261  2007/06/01 06:37:53  rurban
+// use native debug_print_backtrace
+//
 // Revision 1.260  2007/02/17 14:15:21  rurban
 // fix ImgLink params: $ori_url
 //

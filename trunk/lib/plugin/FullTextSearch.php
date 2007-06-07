@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.27 2007-01-04 16:46:40 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.28 2007-06-07 17:02:42 rurban Exp $');
 /*
 Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -51,7 +51,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     function getDefaultArguments() {
@@ -83,7 +83,7 @@ extends WikiPlugin
 
         if ($quiet) { // see how easy it is with PageList...
             $list = new PageList(false,$exclude,$args);
-            while ($page = $pages->next() and (!$limit or ($count < $limit))) {
+            while ($page = $pages->next()) {
                 $list->addPage( $page );
             }
             return $list;
@@ -101,7 +101,7 @@ extends WikiPlugin
             $name = $page->getName();
             if ($exclude and in_array($name,$exclude)) continue;
             $count++;
-            $list->pushContent(HTML::dt(WikiLink($name)));
+            $list->pushContent(HTML::dt(WikiLink($page)));
             if ($hilight_re)
                 $list->pushContent($this->showhits($page, $hilight_re));
             unset($page);
@@ -145,6 +145,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2007/01/04 16:46:40  rurban
+// Only notes
+//
 // Revision 1.26  2005/11/14 22:33:04  rurban
 // print ignored stoplist words
 //
