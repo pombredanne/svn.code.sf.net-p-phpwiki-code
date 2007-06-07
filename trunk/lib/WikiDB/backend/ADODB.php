@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.98 2007-05-28 20:13:46 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.99 2007-06-07 21:37:39 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -1342,6 +1342,13 @@ extends WikiDB_backend_iterator
         return $rec_assoc;
     }
 
+    function asArray () {
+    	$result = array();
+    	while ($page = $this->next())
+    	    $result[] = $page;
+        return $result;
+    }
+
     function free () {
         if ($this->_result) {
             /* call mysql_free_result($this->_queryID) */
@@ -1548,6 +1555,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.98  2007/05/28 20:13:46  rurban
+// Overwrite all attributes at once at page->save to delete dangling meta
+//
 // Revision 1.97  2007/01/28 22:53:23  rurban
 // protect against $oldlinks warning
 //
