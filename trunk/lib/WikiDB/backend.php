@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.32 2007-02-17 14:14:41 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.33 2007-06-07 21:35:04 rurban Exp $');
 
 /*
   Pagedata
@@ -662,12 +662,22 @@ class WikiDB_backend_iterator
     }
 
     function count() {
-        return count($this->_pages);
+    	if (!empty($this->_pages))
+	    return count($this->_pages);
+	else
+	    return 0;    
     }
 
     function asArray() {
-        reset($this->_pages);
-        return $this->_pages;
+    	if (!empty($this->_pages)) {
+            reset($this->_pages);
+            return $this->_pages;
+    	} else {
+    	    $result = array();
+    	    while ($page = $this->next())
+    	        $result[] = $page;
+            return $result;
+    	}
     }
 
     /**
@@ -751,6 +761,9 @@ class WikiDB_backend_search_sql extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2007/02/17 14:14:41  rurban
+// enforce accesslog types
+//
 // Revision 1.31  2007/01/28 22:49:55  rurban
 // use backend specific SQL write_accesslog
 //
