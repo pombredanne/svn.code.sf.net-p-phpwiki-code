@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.63 2007-01-04 16:43:18 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.64 2007-06-07 16:55:09 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.63 $");
+        //                    "\$Revision: 1.64 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -138,7 +138,7 @@ class WikiPlugin
 
         // globally override sortby,limit from the REQUEST. ignore defaults if defined as such.
         foreach (array('sortby', 'limit') as $key) {
-            if (array_key_exists($key, $defaults)) {
+            if ($request and array_key_exists($key, $defaults)) {
                 if ($val = $request->getArg($key))
                     $args[$key] = $val;
                 else {
