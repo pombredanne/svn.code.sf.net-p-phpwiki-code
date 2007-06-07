@@ -1,6 +1,6 @@
 <?php //-*-php-*-
-rcs_id('$Id: LDAP.php,v 1.7 2007-05-30 21:56:17 rurban Exp $');
-/* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
+rcs_id('$Id: LDAP.php,v 1.8 2007-06-07 16:31:33 rurban Exp $');
+/* Copyright (C) 2004,2007 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
 
@@ -56,9 +56,17 @@ extends _PassUser
         $userid = $this->_userid;
         if (!$this->isValidName()) {
             trigger_error(_("Invalid username."), E_USER_WARNING);
+            $this->_free();
             return $this->_tryNextPass($submitted_password);
         }
         if (!$this->_checkPassLength($submitted_password)) {
+            $this->_free();
+            return WIKIAUTH_FORBIDDEN;
+        }
+        // A LDAP speciality: empty passwords are valid with ldap_bind!!!
+        if (strlen($password) == 0) {
+            trigger_error(_("Empty password not allowed for LDAP"), E_USER_WARNING);
+            $this->_free();
             return WIKIAUTH_FORBIDDEN;
         }
         if (strstr($userid,'*')) {
@@ -73,11 +81,14 @@ extends _PassUser
                 ? LDAP_SEARCH_FIELD."=$userid"
                 : "uid=$userid";
             if (!$this->_sr = ldap_search($ldap, LDAP_BASE_DN, $st_search)) {
+		trigger_error(_("Could not search in LDAP"), E_USER_WARNING);
  		$this->_free();
                 return $this->_tryNextPass($submitted_password);
             }
             $info = ldap_get_entries($ldap, $this->_sr); 
             if (empty($info["count"])) {
+		if (DEBUG)
+		    trigger_error(_("User not found in LDAP"), E_USER_WARNING);
             	$this->_free();
                 return $this->_tryNextPass($submitted_password);
             }
@@ -89,9 +100,13 @@ extends _PassUser
 		// LDAP allows all chars but *, (, ), \, NUL
 		// Quoting is done by \xx (two-digit hexcode). * <=> \2a
 		// Handling '?' is unspecified
-		$password = preg_replace(array("/\*/","/\(/","/\)/","/\\/","/\0/"), 
-					 array('\2a',  '\28','\29', '\5c', '\00'), 
-					$submitted_password);
+		$password = strtr($submitted_password, 
+				array("*" => "\\2a",
+				      "?" => "\\3f",
+				      "(" => "\\28",
+				      ")" => "\\29",
+				      "\\" => "\\5c",
+				      "\0" => "\\00"));
                 // On wrong password the ldap server will return: 
                 // "Unable to bind to server: Server is unwilling to perform"
                 // The @ catches this error message.
@@ -106,8 +121,15 @@ extends _PassUser
                     return $this->_level;
                 }
             }
+	    if (DEBUG)
+		trigger_error(_("Wrong password: ") . 
+			      str_repeat("*",strlen($submitted_password)), 
+			      E_USER_WARNING);
             $this->_free();
-        }
+        } else {
+            $this->_free();
+	    trigger_error(_("Could not connect to LDAP"), E_USER_WARNING);
+	}
 
         return $this->_tryNextPass($submitted_password);
     }
@@ -120,7 +142,7 @@ extends _PassUser
 	// We are more restrictive here, but must allow explitly utf-8
         return preg_match("/^[\-\w_\.@ ]+$/u", $userid) and strlen($userid) < 64;
     }
-    
+
     function userExists() {
         $userid = $this->_userid;
         if (strstr($userid, '*')) {
@@ -141,6 +163,7 @@ extends _PassUser
 
             if ($info["count"] > 0) {
          	$this->_free();
+		UpgradeUser($GLOBALS['ForbiddenUser'], $this);
                 return true;
             }
         }
@@ -155,6 +178,9 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2007/05/30 21:56:17  rurban
+// Back to default uid for LDAP
+//
 // Revision 1.6  2007/05/29 16:56:15  rurban
 // Allow more password und userid chars. uid => cn: default for certain testusers
 //
