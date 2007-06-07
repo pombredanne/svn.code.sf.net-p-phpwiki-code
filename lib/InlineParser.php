@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.90 2007-03-18 17:35:14 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.91 2007-06-07 18:56:57 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 Reini Urban
  *
@@ -201,7 +201,8 @@ class RegexpSet
           static $_already_dumped = 0;
           if (!$_already_dumped) {
             var_dump($regexps); 
-            var_dump($matched); 
+            if (_INLINE_OPTIMIZATION)
+            	var_dump($matched);
             var_dump($matched_inc); 
           }
           $_already_dumped = 1;
@@ -797,16 +798,18 @@ class Markup_xml_plugin extends BalancedMarkup
  */
 class Markup_template_plugin  extends SimpleMarkup
 {
-    var $_match_regexp = '\{\{\w[^\n]+\}\}';
+    // patch #1732793: allow \n, mult. {{ }} in one line, and single letters
+    var $_match_regexp = '\{\{.*?\}\}';
     
     function markup ($match) {
-        $page = substr($match, 2, -2); $vars = '';
+        $page = substr(str_replace("\n", "", $match),2,-2); $vars = '';
         if (preg_match('/^(\S+)\|(.*)$/', $page, $_m)) {
             $page = $_m[1];
-            $vars = preg_replace('/\|/', ' ', $_m[2]); 
+            $vars = '"' . preg_replace('/\|/', '" "', $_m[2]) . '"'; 
+            $vars = preg_replace('/"(\S+)=([^"]*)"/', '\\1="\\2"', $vars);
         }
         if ($vars)
-    	    $s = '<'.'?plugin Template page="' . $page . '" ' . $vars . ' ?'.'>';
+    	    $s = '<'.'?plugin Template page="'.$page.'" '.$vars.' ?'.'>';
     	else
     	    $s = '<'.'?plugin Template page="' . $page . '" ?'.'>';
 	return new Cached_PluginInvocation($s);
@@ -1070,6 +1073,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.90  2007/03/18 17:35:14  rurban
+// Fix :DontStoreLink
+//
 // Revision 1.89  2007/02/17 14:16:28  rurban
 // fix color GREY to GRAY
 //
