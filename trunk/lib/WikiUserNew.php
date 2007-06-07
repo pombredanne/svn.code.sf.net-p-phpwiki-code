@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.144 2007-06-01 06:36:57 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.145 2007-06-07 16:56:27 rurban Exp $');
 /* Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -427,7 +427,8 @@ class _WikiUser
     function createHomePage() {
         global $request;
         $versiondata = array('author' => _("The PhpWiki programming team"));
-        $request->_dbi->save("Automatically created users homepage to be able to store UserPreferences.",
+        $request->_dbi->save(_("Automatically created user homepage to be able to store UserPreferences.").
+        		     "\n{{Template/UserPage}}",
                              1, $versiondata);
         $request->_dbi->touch();                             
         $this->_HomePagehandle = $request->getPage($this->_userid);
@@ -555,6 +556,7 @@ class _WikiUser
     */
     function isValidName ($userid = false) {
         if (!$userid) $userid = $this->_userid;
+        if (!$userid) return false;
         return preg_match("/^[\-\w\.@ ]+$/u", $userid) and strlen($userid) < 32;
     }
 
@@ -2159,6 +2161,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.144  2007/06/01 06:36:57  rurban
+// allow space in user names. backends should tighten it
+//
 // Revision 1.143  2007/05/24 18:37:53  rurban
 // silence AdminUser HomePagehandle warning
 //
