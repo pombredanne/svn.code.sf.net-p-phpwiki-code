@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.73 2007-05-30 20:43:31 rurban Exp $');
+rcs_id('$Id: display.php,v 1.74 2007-06-07 17:01:27 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -9,7 +9,7 @@ require_once('lib/Template.php');
  */
 function GleanKeywords ($page) {
     if (!defined('KEYWORDS')) return '';
-    include_once("lib/TextSearchQuery.php");
+    require_once("lib/TextSearchQuery.php");
     $search = new TextSearchQuery(KEYWORDS, true);
     $KeywordLinkRegexp = $search->asRegexp();
     // iterate over the pagelinks (could be a large number) [15ms on PluginManager]
@@ -17,6 +17,7 @@ function GleanKeywords ($page) {
     $links = $page->getPageLinks();
     $keywords[] = SplitPagename($page->getName());
     while ($link = $links->next()) {
+    	$m = array();
         if (preg_match($KeywordLinkRegexp, $link->getName(), $m))
             $keywords[] = SplitPagename($m[0]);
     }
@@ -54,9 +55,8 @@ function actionPage(&$request, $action) {
                           $actionpage->getName(),
                           $WikiTheme->linkExistingWikiWord($pagename, false, $version)));
 
-    $validators = new HTTP_ValidatorSet(array('pageversion' => $revision->getVersion(),
-                                              '%mtime' => $revision->get('mtime')));
-                                        
+    $request->setValidators(array('pageversion' => $revision->getVersion(),
+                                  '%mtime' => $revision->get('mtime')));
     $request->appendValidators(array('pagerev' => $revision->getVersion(),
                                      '%mtime' => $revision->get('mtime')));
     $request->appendValidators(array('actionpagerev' => $actionrev->getVersion(),
@@ -90,7 +90,7 @@ function actionPage(&$request, $action) {
 	GeneratePageAsXML($template, $pagetitle, $revision, $args);
     } else {
     	$pagelist = null;
-    	include_once('lib/WikiPlugin.php');
+    	require_once('lib/WikiPlugin.php');
 	// Then the multi-page formats
 	// rss (if not already handled by RecentChanges)
 	// Need the pagelist from the first plugin
@@ -112,31 +112,31 @@ function actionPage(&$request, $action) {
 	    $pagelist->addPage($page);
 	}
 	if ($format == 'pdf') {
-	    include_once("lib/pdf.php");
+	    require_once("lib/pdf.php");
 	    ConvertAndDisplayPdfPageList($request, $pagelist);
 	} elseif (in_array($format, array("rss91","rss2","rss"))) {
+            $args = $request->getArgs();
             if ($pagename == _("RecentChanges")) {
-                $template->printExpansion($toks);
+                $template->printExpansion($args);
 	    } else {
-	        include_once("lib/plugin/RecentChanges.php");
+	        require_once("lib/plugin/RecentChanges.php");
 	        $plugin = new WikiPlugin_RecentChanges();
-                $args = $request->getargs();
                 return $plugin->format($plugin->getChanges($request->_dbi, $args), $args);
 	    }
 	} elseif ($format == 'atom') {
-	    include_once("lib/RssWriter.php");
+	    require_once("lib/RssWriter.php");
 	    $rdf = new AtomFeed($request, $pagelist);
 	    $rdf->__spew();
 	} elseif ($format == 'rdf') { // all semantic relations and attributes
-	    include_once("lib/SemanticWeb.php");
+	    require_once("lib/SemanticWeb.php");
 	    $rdf = new RdfWriter($request, $pagelist);
 	    $rdf->format();
 	} elseif ($format == 'owl') {
-	    include_once("lib/SemanticWeb.php");
+	    require_once("lib/SemanticWeb.php");
 	    $rdf = new OwlWriter($request, $pagelist);
 	    $rdf->format();
 	} elseif ($format == 'kbmodel') {
-	    include_once("lib/SemanticWeb.php");
+	    require_once("lib/SemanticWeb.php");
 	    $model = new ModelWriter($request, $pagelist);
 	    $model->format();
 	} else {
@@ -146,6 +146,7 @@ function actionPage(&$request, $action) {
     }
     $request->checkValidators();
     flush();
+    return '';
 }
 
 function displayPage(&$request, $template=false) {
@@ -168,7 +169,7 @@ function displayPage(&$request, $template=false) {
         $pages = explode(SUBPAGE_SEPARATOR, $pagename);
         $last_page = array_pop($pages); // deletes last element from array as side-effect
         $pageheader = HTML::span(HTML::a(array('href' => WikiURL($pages[0]),
-                                              'class' => 'pagetitle'
+                                               'class' => 'pagetitle'
                                               ),
                                         $WikiTheme->maybeSplitWikiWord($pages[0] . SUBPAGE_SEPARATOR)));
         $first_pages = $pages[0] . SUBPAGE_SEPARATOR;
@@ -302,35 +303,35 @@ function displayPage(&$request, $template=false) {
 	$template->printExpansion($toks);
     } else {
 	// No pagelist here. Single page version only
-	include_once("lib/PageList.php");
+	require_once("lib/PageList.php");
 	$pagelist = new PageList();
 	$pagelist->addPage($page);
 	if ($format == 'pdf') {
-	    include_once("lib/pdf.php");
+	    require_once("lib/pdf.php");
 	    ConvertAndDisplayPdfPageList($request, $pagelist);
 	} elseif (in_array($format, array("rss91","rss2","rss"))) {
             if ($pagename == _("RecentChanges"))
                 $template->printExpansion($toks);
             else {    
-	        include_once("lib/plugin/RecentChanges.php");
+	        require_once("lib/plugin/RecentChanges.php");
 	        $plugin = new WikiPlugin_RecentChanges();
-                $args = $request->getargs();
+                $args = $request->getArgs();
                 return $plugin->format($plugin->getChanges($request->_dbi, $args), $args);
             }
 	/*} elseif ($format == 'atom') {
-	    include_once("lib/RssWriter.php");
+	    require_once("lib/RssWriter.php");
 	    $rdf = new AtomWriter($request, $pagelist);
 	    $rdf->format();*/
 	} elseif ($format == 'rdf') { // all semantic relations and attributes
-	    include_once("lib/SemanticWeb.php");
+	    require_once("lib/SemanticWeb.php");
 	    $rdf = new RdfWriter($request, $pagelist);
 	    $rdf->format();
 	} elseif ($format == 'owl') {
-	    include_once("lib/SemanticWeb.php");
+	    require_once("lib/SemanticWeb.php");
 	    $rdf = new OwlWriter($request, $pagelist);
 	    $rdf->format();
 	} elseif ($format == 'kbmodel') {
-	    include_once("lib/SemanticWeb.php");
+	    require_once("lib/SemanticWeb.php");
 	    $model = new ModelWriter($request, $pagelist);
 	    $model->format();
 	} else {
@@ -345,9 +346,13 @@ function displayPage(&$request, $template=false) {
     if ($request->getArg('action') != 'pdf')
         $request->checkValidators();
     flush();
+    return '';
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.73  2007/05/30 20:43:31  rurban
+// added MonoBook UserContribs
+//
 // Revision 1.72  2007/05/13 18:13:12  rurban
 // LinkDatabase format exceptions
 //
