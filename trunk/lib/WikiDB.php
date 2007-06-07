@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.152 2007-05-28 20:13:46 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.153 2007-06-07 16:54:29 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -961,8 +961,9 @@ class WikiDB_Page
      *
      * @param hash $meta  Meta-data for new revision.
      */
-    function save($wikitext, $version, $meta) {
-	$formatted = new TransformedText($this, $wikitext, $meta);
+    function save($wikitext, $version, $meta, $formatted = null) {
+	if (is_null($formatted))
+	    $formatted = new TransformedText($this, $wikitext, $meta);
         $type = $formatted->getType();
 	$meta['pagetype'] = $type->getName();
 	$links = $formatted->getWikiPageLinks(); // linkto => relation
@@ -1003,9 +1004,7 @@ class WikiDB_Page
 	    {
                 include_once("lib/MailNotify.php");
                 $MailNotify = new MailNotify($newrevision->getName());
-		// FIXME: this breaks after-edit-redirect
-		if (DEBUG)
-		    $MailNotify->onChangePage ($this->_wikidb, $wikitext, $version, $meta);
+		$MailNotify->onChangePage ($this->_wikidb, $wikitext, $version, $meta);
             }
             $newrevision->_transformedContent = $formatted;
         }
@@ -2212,6 +2211,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.152  2007/05/28 20:13:46  rurban
+// Overwrite all attributes at once at page->save to delete dangling meta
+//
 // Revision 1.151  2007/05/01 16:20:12  rurban
 // MailNotify->onChangePage only on DEBUG (still broken)
 //
