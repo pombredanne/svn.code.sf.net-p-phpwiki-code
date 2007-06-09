@@ -1,11 +1,10 @@
 TODO:
 * fix session loss on php-5.2 (with or without DB_SESSION)
-* bring 1.3.x to sf.net again. request loops, proxy issues?
-* clarify issues with pagenames with ":" and ","
-  ":" in links omit the first part, "," breaks PageList
+* clarify issues with pagenames: "," breaks PageList. Escape with "~" or "\"?
+* check SpamBlockList
 * fix Wikiwys with prettyurl, link labels and killing plugin args
 * ranked FullTextSearch (besides postgresql)
-* format=printable (?)
+* format=printable (?) for non js/dom
 * WatchList (?)
 * ImportMediaWiki, ImportRdf, ImportOwl, ExportMediaWiki, ExportRdf, ExportOwl
 * WikiUser/OpenID (from DokuWiki)
