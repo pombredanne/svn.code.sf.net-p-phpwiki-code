@@ -1,7 +1,6 @@
-<?php rcs_id('$Id: SemanticWeb.php,v 1.8 2007-05-27 19:46:11 rurban Exp $');
+<?php rcs_id('$Id: SemanticWeb.php,v 1.9 2007-06-09 20:02:55 rurban Exp $');
 /**
- * Search support and Import/Export
- * Export: ?format=rdf, ?format=owl
+ * What to do on ?format=rdf  What to do on ?format=owl
  *
  * Map relations on a wikipage to a RDF ressource to build a "Semantic Web" 
  * - a web ontology frontend compatible to OWL (web ontology language).
@@ -132,11 +131,79 @@ class RdfWriter extends RssWriter // in fact it should be rewritten to be other 
 
 	$this->_uris_seen = array();
         $this->_items = array();
+
+	$this->wiki_xmlns_xml = WikiURL(_("URIResolver")."/",false,true);
+	$this->wiki_xmlns_url = PHPWIKI_BASE_URL;
+
+	$this->pre_ns_buffer =
+	    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
+	    "<!DOCTYPE rdf:RDF[\n" .
+	    "\t"."<!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>\n" .
+	    "\t"."<!ENTITY rdfs 'http://www.w3.org/2000/01/rdf-schema#'>\n" .
+	    "\t"."<!ENTITY owl 'http://www.w3.org/2002/07/owl#'>\n" .
+	    "\t"."<!ENTITY smw 'http://smw.ontoware.org/2005/smw#'>\n" .
+	    "\t"."<!ENTITY smwdt 'http://smw.ontoware.org/2005/smw-datatype#'>\n" .
+	    // A note on "wiki": this namespace is crucial as a fallback when it would be illegal to start e.g. with a number. In this case, one can always use wiki:... followed by "_" and possibly some namespace, since _ is legal as a first character.
+	    "\t"."<!ENTITY wiki '" . $this->wiki_xmlns_xml .  "'>\n" .
+	    "\t"."<!ENTITY relation '" . $this->wiki_xmlns_xml .
+	    $this->makeXMLExportId(urlencode(str_replace(' ', '_', _("Relation") . ':'))) .  "'>\n" .
+	    "\t"."<!ENTITY attribute '" . $this->wiki_xmlns_xml .
+	    $this->makeXMLExportId(urlencode(str_replace(' ', '_', _("Attribute") . ':'))) .  "'>\n" .
+	    "\t"."<!ENTITY wikiurl '" . $this->wiki_xmlns_url .  "'>\n" .
+	    "]>\n\n" .
+	    "<rdf:RDF\n" .
+	    "\t"."xmlns:rdf=\"&rdf;\"\n" .
+	    "\t"."xmlns:rdfs=\"&rdfs;\"\n" .
+	    "\t"."xmlns:owl =\"&owl;\"\n" .
+	    "\t"."xmlns:smw=\"&smw;\"\n" .
+	    "\t"."xmlns:wiki=\"&wiki;\"\n" .
+	    "\t"."xmlns:relation=\"&relation;\"\n" .
+	    "\t"."xmlns:attribute=\"&attribute;\"";
+	$this->post_ns_buffer =
+	    "\n\t<!-- reference to the Semantic MediaWiki schema -->\n" .
+	    "\t"."<owl:AnnotationProperty rdf:about=\"&smw;hasArticle\">\n" .
+	    "\t\t"."<rdfs:isDefinedBy rdf:resource=\"http://smw.ontoware.org/2005/smw\"/>\n" .
+	    "\t"."</owl:AnnotationProperty>\n" .
+	    "\t"."<owl:AnnotationProperty rdf:about=\"&smw;hasType\">\n" .
+	    "\t\t"."<rdfs:isDefinedBy rdf:resource=\"http://smw.ontoware.org/2005/smw\"/>\n" .
+	    "\t"."</owl:AnnotationProperty>\n" .
+	    "\t"."<owl:Class rdf:about=\"&smw;Thing\">\n" .
+	    "\t\t"."<rdfs:isDefinedBy rdf:resource=\"http://smw.ontoware.org/2005/smw\"/>\n" .
+	    "\t"."</owl:Class>\n" .
+	    "\t<!-- exported page data -->\n";
     }
 
-    function output() {
-	echo "not yet supported!";
+    function format() {
+	header( "Content-type: application/rdf+xml; charset=UTF-8" );
+	echo $this->pre_ns_buffer;
+	echo ">\n";
+	echo $this->post_ns_buffer;
+	echo "</rdf:RDF>\n";
     }
+
+	/** This function transforms a valid url-encoded URI into a string
+	 *  that can be used as an XML-ID. The mapping should be injective.
+	 */
+	function makeXMLExportId($uri) {
+		$uri = str_replace( '-', '-2D', $uri);
+		//$uri = str_replace( ':', '-3A', $uri); //already done by PHP
+		//$uri = str_replace( '_', '-5F', $uri); //not necessary
+		$uri = str_replace( array('"','#','&',"'",'+','%'),
+		                    array('-22','-23','-26','-27','-2B','-'),
+		                    $uri);
+		return $uri;
+	}
+
+	/** This function transforms an XML-ID string into a valid
+	 *  url-encoded URI. This is the inverse to makeXMLExportID.
+	 */
+	function makeURIfromXMLExportId($id) {
+		$id = str_replace( array('-22','-23','-26','-27','-2B','-'),
+		                   array('"','#','&',"'",'+','%'),
+		                   $id);
+		$id = str_replace( '-2D', '-', $id);
+		return $id;
+	}
 }
 
 /**
@@ -183,7 +250,6 @@ class SemanticAttributeSearchQuery
 extends NumericSearchQuery
 {
     /*
-    // base_units are extracted dynamicly via /usr/bin/units
     var $base_units = array('m'   => explode(',','km,miles,cm,dm,mm,ft,inch,inches,meter'),
 			    'm^2' => explode(',','km^2,ha,cm^2,mi^2'),
 			    'm^3' => explode(',','km^3,lit,cm^3,dm^3,gallons'),
@@ -220,8 +286,7 @@ extends NumericSearchQuery
 	// We cannot compare m^2 to m or ''
 	$val_base = $this->_units->basevalue($value);
         if (!DISABLE_UNITS and $this->_units->baseunit($value) != $this->unit) {
-	    // Poor user has selected an attribute, but no unit. 
-            // Assume he means the baseunit
+	    // Poor user has selected an attribute, but no unit. assume he means the baseunit
 	    if (count($this->getVars() == 1) and $this->unit == '') {
 		;
 	    } else {
@@ -265,7 +330,7 @@ extends SemanticAttributeSearchQuery
 /**
  * ReasonerBackend - hooks to reasoner backends.
  * via http as with DIG,
- * or internally. sockets
+ * or internally
  */
 class ReasonerBackend {
     function ReasonerBackend () {
