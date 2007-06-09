@@ -1,0 +1,77 @@
+Date: Sat, 20 Jan 2007 16:38:14 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: Help%2FLdapSearchPlugin,v 1.2 2007-01-21 23:23:49 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FLdapSearchPlugin;
+  pgsrc_version="2 $Revision: 1.2 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+Help:WikiPlugin which displays a LDAP query as table.
+
+! Usage
+<verbatim>
+  <?plugin LdapSearch ?>
+  <?plugin LdapSearch
+           host="localhost"
+           port=389
+           basedn=""
+ 	   filter="(cn=*)"
+           attributes=""  
+  ?>
+  <?plugin LdapSearch host=ldap.example.com filter="(ou=web-team)" 
+                      attributes="sn cn telephonenumber" ?>
+  <?plugin LdapSearch host="ldap.itd.umich.edu" basedn="" filter="(sn=jensen)" attributes="cn drink" ?>
+  <?plugin LdapSearch host=ldap.example.com attributes="cn sn telephonenumber" ?>
+  <?plugin LdapSearch host=bugs.debian.org port=10101 basedn="dc=current,dc=bugs,dc=debian,dc=org"
+                      filter="(debbugsPackage=phpwiki)" 
+                      attributes="debbugsSeverity debbugsState debbugsTitle" ?>
+</verbatim>
+
+! Arguments
+
+host _(default: from LDAP_AUTH_HOST or localhost)_:
+	hostname or ip or ldap:// uri to connect to.
+
+port _(default: from LDAP_AUTH_HOST or 389)_:
+	portnumber to connect to.
+
+basedn _(default: LDAP_BASE_DN)_:
+	connect string: "ou=Users,o=Development,dc=mycompany.com"
+
+filter _(default: "(cn=*)")_:
+	Optional ldap_search() filter argument
+
+attributes _(default: empty)_ :
+	space seperated fields to return as table columns: "cn sn"
+
+options:
+	ldap_set_option(). Default: LDAP_SET_OPTION if host == LDAP_AUTH_HOST
+	Column seperated name=value pairs. Esp. needed for Windows Active directory:
+	"LDAP_OPT_PROTOCOL_VERSION=3:LDAP_OPT_REFERRALS=0"
+user:
+	Default: LDAP_AUTH_USER if host == LDAP_AUTH_HOST
+password:
+	Default: LDAP_AUTH_PASSWORD if host == LDAP_AUTH_HOST
+	user and password are required for Windows Active directory.
+
+! Examples
+
+<?plugin WikiFormRich action=LdapSearch 
+        editbox[] name=host value=bugs.debian.org size=80
+        editbox[] name=port value=10101 size=80
+        editbox[] name=basedn value="dc=current,dc=bugs,dc=debian,dc=org" size=80
+	editbox[] name=filter value="(debbugsPackage=phpwiki)" size=80
+        editbox[] name=attributes value="debbugsSeverity debbugsState debbugsTitle" size=80
+	submit[] reset[]
+?>
+
+! Author
+PhpWiki:JohnLines
+
+! See Also
+
+----
+PhpWikiDocumentation Help:WikiPlugin

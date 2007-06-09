@@ -1,0 +1,24 @@
+Date: Sun, 4 Jul 2004 01:31:02 -0700
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.7)
+X-Rcs-Id: $Id: Help%2FEditMetaDataPlugin,v 1.1 2005-11-21 22:19:00 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FEditMetaDataPlugin;
+  pgsrc_version="2 $Revision: 1.1 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+<b>This plugin allows you to add/edit/delete metadata key/value pairs for a given page. You must be logged in as the administrator to do this. The page's metadata contains things like the page hit count, last edit time and so on.</b>
+
+<b>Editing the metadata for the homepage would look like this:</b>
+------
+<?plugin EditMetaData page="HomePage" ?>
+------
+<b>With no arguments the plugin defaults to the current page:</b>
+------
+<?plugin EditMetaData ?>
+
+-----
+
+PhpWikiDocumentation Help:WikiPlugin

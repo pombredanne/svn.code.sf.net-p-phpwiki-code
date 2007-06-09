@@ -1,0 +1,38 @@
+Date: Tue, 2 Jan 2007 13:30:17 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: Help%2FWikiAdminSetAclPlugin,v 1.2 2007-01-03 21:27:37 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FWikiAdminSetAclPlugin;
+  pgsrc_version="2 $Revision: 1.2 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+PhpWikiAdministration Page Explorer plugin.
+
+! Usage
+<verbatim>
+  <?plugin WikiAdminSetAcl ?>
+</verbatim>
+
+! Arguments
+
+page _(default: current pagename)_:
+  The page to execute upon.
+
+! Example
+
+<verbatim>
+<?plugin WikiAdminSetAcl s=Temp* ?>
+</verbatim>
+
+<?plugin WikiAdminSetAcl s=Temp* ?>
+
+! Author
+PhpWiki:ReiniUrban
+
+! See Also
+PhpWikiAdministration
+----
+PhpWikiDocumentation Help:WikiPlugin

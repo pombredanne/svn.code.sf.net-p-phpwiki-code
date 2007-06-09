@@ -1,0 +1,18 @@
+<?php // -*-html-*-
+rcs_id('$Id: top.tmpl,v 1.3 2007-01-07 20:20:19 rurban Exp $');
+?>
+<div id="header">
+<?php if ( $request->getArg('action') == 'browse' ) { ?>
+<div id="yoursiteheader">
+<!-- Insert Flash or Logo here -->
+<a href=""><?= WIKI_NAME ?></a>
+</div>
+<?php } ?>
+</div>
+<?php if (empty($GLOBALS['HIDE_TOOLBARS'])) { ?>
+<div id="actionbar">
+<?= Template('actionbar') ?>
+</div>
+<div id="pagetrail"><p><?=_("Page Trail")?>: <?plugin PageTrail numberlinks=7 ?></p></div>
+<?php } ?>
+

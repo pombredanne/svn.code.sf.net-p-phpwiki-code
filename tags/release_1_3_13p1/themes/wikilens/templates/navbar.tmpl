@@ -1,0 +1,42 @@
+<?php // -*-php-*-
+  rcs_id('$Id: navbar.tmpl,v 1.6 2007-01-21 23:19:52 rurban Exp $');
+  $NSEP = HTML::br();
+?>
+<!-- The left navigation/search bar -->
+<div id="navbuttons">
+<?php if (ENABLE_DISCUSSION_LINK) { ?>
+<?php // This requires Talk: map to end in "/Discussion"
+  if (!string_ends_with($page->getName(), _("Discussion"))) { ?>
+    <?=$NSEP?><?= WikiLink(new WikiPagename('Talk:'.$page->getName(), $page->getName()), 
+               'button', _("Discussion")) ?>
+  <?php } else { ?>
+    <?=$NSEP?><?= Button(array(),_("Article"),$page->getName()) ?>
+  <?php } ?>
+  <?=$NSEP?>
+<?php } ?>
+<?= WikiLink(_("RecentChanges"), "button") ?>
+<?=$NSEP?><?= Template('search', 
+		      array('SEARCH_BEFORE' => HTML::Button(_("FindPage"))))
+?><?php if (!empty($revision)) { ?>
+<?=$NSEP?><?= $WikiTheme->makeLinkButton($revision,_("LikePages"),_("LikePages")) 
+?><?=$NSEP?><?= $WikiTheme->makeLinkButton($revision,_("BackLinks"),_("BackLinks"))
+?><?=$NSEP?><?= WikiLink(_("UserPreferences"), 'button',_("Preferences")) ?><?php
+    /* Today's calendar page for the user, if the Calender subpage is defined. */
+    $UserCalPageTitle = $user->getId() . SUBPAGE_SEPARATOR . _("Calendar");
+    $dbi = $request->getDbh();
+    if ($dbi->isWikiPage($UserCalPageTitle)) {
+        $UserCalPageTodayTitle = $UserCalPageTitle . SUBPAGE_SEPARATOR . strftime("%Y-%m-%d", time());
+        //$UserCalPageTodayUrl = WikiURL($UserCalPageTodayTitle);
+?><?=$NSEP?><?= WikiLink($UserCalPageTodayTitle, "button", _("Today")) ?>
+<?php }} ?><?php if (!empty($user) && $user->isAdmin()) { ?>
+<?=$NSEP?><?= WikiLink(_("PhpWikiAdministration"), "button", _("Admin")) ?>
+<?php } ?></div>
+<?php if (DEBUG & 2) {
+        if (isset($links)) {
+            $p = $links->next();
+            $s = $p->_pagename;
+            while ($p = $links->next()) { $s .= ', ' . $p->_pagename; }
+            echo asXML(HTML::strong("PageLinks: "),$s ? HTML::em($s) : HTML::em('<none>'));
+        }
+} ?>
+</div>

@@ -1,0 +1,44 @@
+Date: Fri, 29 Dec 2006 18:57:39 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: Help%2F_BackendInfoPlugin,v 1.1 2007-01-02 13:26:06 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=Help%2F_BackendInfoPlugin;
+  pgsrc_version="2 $Revision: 1.1 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+Administrative plugin, used to debug DATABASE backend problems and settings.
+This plugin is only for testing purposes.
+
+Displays all/most database infos about a page.
+
+Warning! This may display db and user passwords in cleartext. We think we 
+cleared everything out though.
+
+! Usage
+<verbatim>
+  <?plugin _BackendInfo ?>
+</verbatim>
+
+! Arguments
+
+page _(default: current pagename)_:
+  The page to execute upon.
+
+! Example
+
+See DebugInfo
+
+! Author
+PhpWiki:JeffDairiki 2002 for 1.3.2-jeffs-hacks
+
+! See Also
+
+DebugInfo is the corresponding Help:ActionPage.
+
+EditMetaData, Help:EditMetaDataPlugin, Help:_AuthInfoPlugin, Help:_GroupInfoPlugin
+
+----
+PhpWikiDocumentation Help:WikiPlugin
