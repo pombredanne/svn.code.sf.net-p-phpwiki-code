@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.58 2007-01-28 22:54:18 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.59 2007-06-09 18:57:44 rurban Exp $');
 /*
  Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
 
@@ -411,8 +411,10 @@ CREATE TABLE $log_tbl (
 	}
         echo "db version: we want ", $this->current_db_version, "\n<br>";
         echo "db version: we have ", $this->db_version, "\n<br>";
-        if ($this->db_version <= $this->current_db_version)
+        if ($this->db_version >= $this->current_db_version) {
+            echo _("OK"), "<br />\n";
             return;
+        }
 
 	if ($this->isSQL) {
 	    $backend_type = $this->dbi->_backend->backendType();
@@ -438,7 +440,7 @@ CREATE TABLE $log_tbl (
 	    $this->_upgrade_relation_links();
 	}
 
-	if (ACCESS_LOG_SQL) {
+	if (ACCESS_LOG_SQL and $this->isSQL) {
 	    $table = "accesslog";
 	    echo sprintf(_("check for table %s"), $table)," ...";
 	    if (!in_array($prefix.$table, $tables)) {
@@ -447,7 +449,7 @@ CREATE TABLE $log_tbl (
 		echo _("OK")," <br />\n";
 	    }
 	}
-	if ((class_exists("RatingsUserFactory") or $this->dbi->isWikiPage(_("RateIt")))) {
+	if ($this->isSQL and (class_exists("RatingsUserFactory") or $this->dbi->isWikiPage(_("RateIt")))) {
 	    $table = "rating";
 	    echo sprintf(_("check for table %s"), $table)," ...";
 	    if (!in_array($prefix.$table, $tables)) {
@@ -457,10 +459,11 @@ CREATE TABLE $log_tbl (
 	    }
 	}
 	$backend = &$this->dbi->_backend->_dbh;
-	extract($this->dbi->_backend->_table_names);
+	if ($this->isSQL)
+	    extract($this->dbi->_backend->_table_names);
 
 	// 1.3.8 added session.sess_ip
-	if ($this->phpwiki_version >= 1030.08 and USE_DB_SESSION 
+	if ($this->isSQL and $this->phpwiki_version >= 1030.08 and USE_DB_SESSION 
 	    and isset($this->request->_dbsession)) 
 	{
 	    echo _("check for new session.sess_ip column")," ... ";
@@ -657,7 +660,7 @@ CREATE TABLE $log_tbl (
 		}
 	    }
 	}
-	if (ACCESS_LOG_SQL & 2) {
+	if ($this->isSQL and ACCESS_LOG_SQL & 2) {
 	    echo _("check for ACCESS_LOG_SQL passwords in POST requests")," ...";
 	    // Don't display passwords in POST requests (up to 2005-02-04 12:03:20)
 	    $res = $this->dbi->genericSqlIter("SELECT time_stamp, remote_host, " .
@@ -699,10 +702,12 @@ CREATE TABLE $log_tbl (
 	}
 	$this->_upgrade_cached_html();
 
-	if ($this->db_version() < $this->current_db_version) {
+	if ($this->db_version < $this->current_db_version) {
 	    $this->dbi->set_db_version($this->current_db_version);
-            echo "db version: we have now", $this->db_version,"  ";
+	    $this->db_version = $this->dbi->get_db_version();
+            echo "db version: we have now ", $this->db_version,"  ";
             echo _("OK"), "<br />\n";
+            flush();
 	}
 
 	return;
@@ -889,10 +894,15 @@ CREATE TABLE $log_tbl (
 	if ($this->phpwiki_version >= 1030.12200610) {
 	    echo _("Rebuild entire database to upgrade relation links")," ... ";
 	    if (DATABASE_TYPE == 'dba') {
-		echo "<b>",_("CONVERTING")," dba linktable</b>"," ... ";
+		echo "<b>",_("CONVERTING")," dba linktable</b>","(~2 min, max 4 min) ... ";
+	        flush();
+	        longer_timeout(240);
+	        $this->dbi->_backend->_linkdb->rebuild();
+	    } else {
+	        flush();
+	        longer_timeout(180);
+	        $this->dbi->_backend->rebuild();
 	    }
-	    longer_timeout(240);
-	    $this->dbi->_backend->rebuild();
 	    echo _("OK"), "<br />\n";
 	}
     }
@@ -1250,7 +1260,7 @@ function DoUpgrade(&$request) {
     $upgrade = new Upgrade($request);
     //if (!$request->getArg('noindex'))
     //    CheckOldIndexUpdate($request); // index.php => config.ini to upgrade from < 1.3.10
-    if (!$request->getArg('nosql'))
+    if (!$request->getArg('nodb'))
 	$upgrade->CheckDatabaseUpdate($request);   // first check cached_html and friends
     if (!$request->getArg('nopgsrc')) {
 	$upgrade->CheckActionPageUpdate($request);
@@ -1269,6 +1279,9 @@ function DoUpgrade(&$request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.58  2007/01/28 22:54:18  rurban
+ more objectification. store last db update.
+
  Revision 1.57  2007/01/04 16:43:09  rurban
  Changed to class Upgrade: Do not pollute our namespace with global functions. Less arguments needed. Fix missing permissions on wrong DBADMIN_USER. Let user input override the wrong constant.
 
