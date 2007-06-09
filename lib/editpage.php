@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.111 2007-06-03 17:12:00 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.112 2007-06-09 20:05:35 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -129,7 +129,7 @@ class PageEditor
         elseif ($this->editaction == 'overwrite') { 
             // take the new content without diff
 	    $source = $this->request->getArg('loadfile');
-	    require_once('lib/loadsave.php');
+	    include_once('lib/loadsave.php');
 	    $this->request->setArg('loadfile', 1);
 	    $this->request->setArg('overwrite', 1);
 	    $this->request->setArg('merge', 0);
@@ -149,7 +149,7 @@ class PageEditor
             $orig_content = $orig->getContent();
             $this_content = explode("\n", $this->_content);
             $other_content = $this->current->getContent();
-            require_once("lib/diff3.php");
+            include_once("lib/diff3.php");
             $diff = new diff3($orig_content, $this_content, $other_content);
             $output = $diff->merged_output(_("Your version"), _("Other version"));
             // Set the content of the textarea to the merged diff
@@ -176,7 +176,7 @@ class PageEditor
         $tokens = array_merge($tokens, $this->getFormElements());
 
         if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG) {
-            require_once("lib/EditToolbar.php");
+            include_once("lib/EditToolbar.php");
             $toolbar = new EditToolbar();
             $tokens = array_merge($tokens, $toolbar->getTokens());
         }
@@ -251,7 +251,7 @@ class PageEditor
             // Save failed. No changes made.
             $this->_redirectToBrowsePage();
             // user will probably not see the rest of this...
-            require_once('lib/display.php');
+            include_once('lib/display.php');
             // force browse of current version:
             $request->setArg('version', false);
             displayPage($request, 'nochanges');
@@ -265,7 +265,7 @@ class PageEditor
             // Save failed. No changes made.
             $this->_redirectToBrowsePage();
             // user will probably not see the rest of this...
-            require_once('lib/display.php');
+            include_once('lib/display.php');
             // force browse of current version:
             $request->setArg('version', false);
             displayPage($request, 'nochanges');
@@ -300,7 +300,7 @@ class PageEditor
         $this->updateLock();
 
         // Clean out archived versions of this page.
-        require_once('lib/ArchiveCleaner.php');
+        include_once('lib/ArchiveCleaner.php');
         $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
         $cleaner->cleanPageRevisions($page);
 
@@ -378,12 +378,13 @@ class PageEditor
 
         $oldtext = $current->getPackedContent();
         $newtext =& $this->_content;
-
+        $numlinks = $this->numLinks($newtext);
+        $newlinks = $numlinks - $this->numLinks($oldtext);
         // FIXME: in longer texts the NUM_SPAM_LINKS number should be increased.
         //        better use a certain text : link ratio.
 
         // 1. Not more then 20 new external links
-        if ($this->numLinks($newtext) - $this->numLinks($oldtext) >= NUM_SPAM_LINKS)
+        if ($newlinks >= NUM_SPAM_LINKS)
         {
             // Allow strictly authenticated users?
             // TODO: mail the admin?
@@ -395,7 +396,7 @@ class PageEditor
         // 2. external babycart (SpamAssassin) check
         // This will probably prevent from discussing sex or viagra related topics. So beware.
         if (ENABLE_SPAMASSASSIN) {
-            require_once("lib/spam_babycart.php");
+            include_once("lib/spam_babycart.php");
             if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"), 
                                            $this->user->getId())) {
                 // TODO: mail the admin
@@ -408,24 +409,37 @@ class PageEditor
             }
         }
         // 3. extract (new) links and check surbl for blocked domains
-        if (ENABLE_SPAMBLOCKLIST and ($this->numLinks($newtext) > 5)) {
-            require_once("lib/SpamBlocklist.php");
-            require_once("lib/InlineParser.php");
+        if (ENABLE_SPAMBLOCKLIST and ($newlinks > 5)) {
+            include_once("lib/SpamBlocklist.php");
+            include_once("lib/InlineParser.php");
+            $oldparsed = TransformLinks($oldtext);
+            $oldlinks = array();
+            foreach ($oldparsed->_content as $link) {
+            	if (isa($link, 'Cached_ExternalLink') and !isa($link, 'Cached_InterwikiLink')) {
+                    $uri = $link->_getURL($this->page->getName());
+                    $oldlinks[$uri]++;
+            	}
+            }
+            unset($oldparsed);
+            unset($oldtext);
             $parsed = TransformLinks($newtext);
             foreach ($parsed->_content as $link) {
-            	if (isa($link, 'Cached_ExternalLink')) {
+            	if (isa($link, 'Cached_ExternalLink') and !isa($link, 'Cached_InterwikiLink')) {
                     $uri = $link->_getURL($this->page->getName());
-                    if ($res = IsBlackListed($uri)) {
+                    // only check new links, so admins may add blocked links.
+                    if (!array_key_exists($uri, $oldlinks) and ($res = IsBlackListed($uri))) {
                         // TODO: mail the admin
                         $this->tokens['PAGE_LOCKED_MESSAGE'] = 
                             HTML($this->getSpamMessage(),
                                  HTML::p(HTML::strong(_("External links contain blocked domains:")),
-                                         HTML::ul(HTML::li(sprintf(_("%s is listed at %s"), 
-                                                                   $res[2], $res[0])))));
+                                         HTML::ul(HTML::li(sprintf(_("%s is listed at %s with %s"), 
+                                                                   $uri." [".$res[2]."]", $res[0], $res[1])))));
                         return true;
                     }
             	}
             }
+            unset($oldlinks);
+            unset($parsed);
         }
 
         return false;
@@ -449,13 +463,13 @@ class PageEditor
     }
 
     function getPreview () {
-        require_once('lib/PageType.php');
+        include_once('lib/PageType.php');
         $this->_content = $this->getContent();
 	return new TransformedText($this->page, $this->_content, $this->meta);
     }
 
     function getConvertedPreview () {
-        require_once('lib/PageType.php');
+        include_once('lib/PageType.php');
         $this->_content = $this->getContent();
         $this->meta['markup'] = 2.0;
         $this->_content = ConvertOldMarkup($this->_content);
@@ -757,7 +771,7 @@ extends PageEditor
             $orig = $this->page->getRevision($this->_currentVersion);
             $this_content = explode("\n", $this->_content);
             $other_content = $this->current->getContent();
-            require_once("lib/diff.php");
+            include_once("lib/diff.php");
             $diff2 = new Diff($other_content, $this_content);
             $context_lines = max(4, count($other_content) + 1,
                                  count($this_content) + 1);
@@ -848,6 +862,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.111  2007/06/03 17:12:00  rurban
+ convenience: only check above 5 external links for blocked domains
+
  Revision 1.110  2007/01/07 18:42:00  rurban
  Print ModeratedPage message on edit. Use GOOGLE_LINKS_NOFOLLOW. Improve id: edit: to edit-
 
