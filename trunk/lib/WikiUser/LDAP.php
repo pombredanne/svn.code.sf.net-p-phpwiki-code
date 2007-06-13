@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: LDAP.php,v 1.8 2007-06-07 16:31:33 rurban Exp $');
+rcs_id('$Id: LDAP.php,v 1.9 2007-06-13 12:48:14 rurban Exp $');
 /* Copyright (C) 2004,2007 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -64,7 +64,7 @@ extends _PassUser
             return WIKIAUTH_FORBIDDEN;
         }
         // A LDAP speciality: empty passwords are valid with ldap_bind!!!
-        if (strlen($password) == 0) {
+        if (strlen($submitted_password) == 0) {
             trigger_error(_("Empty password not allowed for LDAP"), E_USER_WARNING);
             $this->_free();
             return WIKIAUTH_FORBIDDEN;
@@ -178,6 +178,11 @@ extends _PassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2007/06/07 16:31:33  rurban
+// Important! Fixes bug #1732882 ldap_bind with empty password
+// Adds diagnostics on other ldap failures
+// Fix password quoting
+//
 // Revision 1.7  2007/05/30 21:56:17  rurban
 // Back to default uid for LDAP
 //
