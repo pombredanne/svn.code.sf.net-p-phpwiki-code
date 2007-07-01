@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.64 2007-06-07 16:55:09 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.65 2007-07-01 09:09:19 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.64 $");
+        //                    "\$Revision: 1.65 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -126,7 +126,7 @@ class WikiPlugin
                 $args[$arg] = $val;
         }
 
-        // add special handling of pages and exclude args to accept <! plugin-list !>
+        // Add special handling of pages and exclude args to accept <! plugin-list !>
         // and split explodePageList($args['exclude']) => array()
         // TODO : handle p[] pagehash
         foreach (array('pages', 'exclude') as $key) {
@@ -136,17 +136,6 @@ class WikiPlugin
                     : $args[$key]; // <! plugin-list !>
         }
 
-        // globally override sortby,limit from the REQUEST. ignore defaults if defined as such.
-        foreach (array('sortby', 'limit') as $key) {
-            if ($request and array_key_exists($key, $defaults)) {
-                if ($val = $request->getArg($key))
-                    $args[$key] = $val;
-                else {
-                    // multiple pagelists will get overwritten. so dont store it back
-                    ; //$GLOBALS['request']->setArg($key, @$args[$key]);
-                }
-            }
-        }
         return $args;
     }
 
