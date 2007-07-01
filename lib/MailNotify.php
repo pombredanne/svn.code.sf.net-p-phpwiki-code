@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.10 2007-05-01 16:14:21 rurban Exp $');
+rcs_id('$Id: MailNotify.php,v 1.11 2007-07-01 09:01:16 rurban Exp $');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -119,9 +119,11 @@ class MailNotify {
     
     function sendMail($subject, $content, 
                       $notice = false,
-                      $silent = false)
+                      $silent = 0)
     {
         global $request;
+	if (!DEBUG and $silent === 0)
+	    $silent = true;
         $emails = $this->emails;
         $from = $this->from;
         if (!$notice) $notice = _("PageChange Notification of %s");
@@ -380,6 +382,9 @@ will expire at %s.",
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2007/05/01 16:14:21  rurban
+// fix cache
+//
 // Revision 1.9  2007/03/10 18:22:51  rurban
 // Patch 1677950 by Erwann Penet
 //
