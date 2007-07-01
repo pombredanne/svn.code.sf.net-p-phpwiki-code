@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.13 2007-01-03 21:24:43 rurban Exp $');
+<?php rcs_id('$Id: RssWriter.php,v 1.14 2007-07-01 09:17:45 rurban Exp $');
 /*
  * Code for creating RSS 1.0.
  */
@@ -45,7 +45,7 @@ class RssWriter extends XmlElement
 	assert(!isset($this->_modules[$alias]));
 	$this->_modules[$alias] = $uri;
     }
-        
+
     // Args should include:
     //  'title', 'link', 'description'
     // and can include:
@@ -154,7 +154,12 @@ class RssWriter extends XmlElement
 	$out = array();
         foreach ($elements as $prop => $val) {
 	    $this->__check_predicate($prop);
-	    $out[] = new XmlElement($prop, false, $val);
+	    if (is_array($val))
+	        $out[] = new XmlElement($prop, $val);
+	    elseif (is_object($val))    
+		    $out[] = $val; 
+	    else
+	        $out[] = new XmlElement($prop, false, $val);
 	}
 	return $out;
     }
@@ -185,6 +190,18 @@ class RssWriter extends XmlElement
 /* taken from mediawiki */
 class AtomFeed extends RssWriter {
   
+    // Args should include:
+    //  'title', 'link', 'description'
+    // and can include:
+    //  'URI'
+    function feed($properties, $uri = false) {
+    	global $LANG;
+    	$attr = array('xmlns' => 'http://www.w3.org/2005/Atom',
+        	      'version' => '0.3', // or 1.0
+        	      'lang' => $LANG);
+        $this->_channel = $this->__node('feed', $attr, $properties, $uri);
+    }
+
     /**
      * Write output to HTTP client.
      */
@@ -193,7 +210,7 @@ class AtomFeed extends RssWriter {
         printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", RSS_ENCODING);
         printf("<!-- generator=\"PhpWiki-%s\" -->\n", PHPWIKI_VERSION);
         /*
-        <feed version="0.3" xml:lang="$LANG">	
+        <feed version="0.3" xmlns="http://www.w3.org/2005/Atom" xml:lang="$LANG">	
         <title><?php print $this->getTitle() ?></title>
         <link rel="alternate" type="text/html" href="<?php print $this->getUrl() ?>"/>
         <modified><?= gmdate( 'Y-m-d\TH:i:s', wfTimestamp( TS_UNIX, $ts ) ) ?>Z</modified>
@@ -205,7 +222,7 @@ class AtomFeed extends RssWriter {
     /**
      * Create a new entry
      */
-    function __node($type, $properties, $uri = false) {
+    function __node($type, $attr, $properties, $uri = false) {
 	if (! $uri)
 	    $uri = $properties['link'];
 	//$attr['rdf:about'] = $this->__uniquify_uri($uri);
@@ -214,11 +231,11 @@ class AtomFeed extends RssWriter {
     }
 
     // Args should include:
-    //  'title', 'link'
+    //  'title', 'link', author, modified, issued, created, summary,
     // and can include:
-    //  'description', 'URI'
-    function addItem($properties, $uri = false) {
-        $this->_items[] = $this->__node('entry', $properties, $uri);
+    //  comment
+    function addItem($properties, $attr=false, $uri = false) {
+        $this->_items[] = $this->__node('entry', $attr, $properties, $uri);
     /*
 	<entry>
 		<title><?php print $item->getTitle() ?></title>
@@ -234,6 +251,40 @@ class AtomFeed extends RssWriter {
                 <?php if( $item->getComments() ) { ?><dc:comment><?php print $item->getComments() ?></dc:comment><?php }?> 
 	</entry> 
     */
+    }
+
+    /**
+     * Finish construction of RSS.
+     */
+    function finish() {
+        if (isset($this->_finished))
+            return;
+
+        $channel = &$this->_channel;
+        $items = &$this->_items;
+	/*
+        $seq = new XmlElement('rdf:Seq');
+        if ($items) {
+            foreach ($items as $item)
+                $seq->pushContent($this->__ref('rdf:li', $item));
+        }
+        $channel->pushContent(new XmlElement('items', false, $seq));
+	if (isset($this->_image)) {
+            $channel->pushContent($this->__ref('image', $this->_image));
+	    $items[] = $this->_image;
+	}
+	if (isset($this->_textinput)) {
+            $channel->pushContent($this->__ref('textinput', $this->_textinput));
+	    $items[] = $this->_textinput;
+	}
+	*/
+
+	if ($items)
+	    $channel->pushContent($items);
+	$this->pushContent($channel);
+
+        $this->__spew();
+        $this->_finished = true;
     }
 }
 
