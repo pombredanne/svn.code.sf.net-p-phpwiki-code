@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.233 2007-06-02 21:07:21 rurban Exp $');
+rcs_id('$Id: main.php,v 1.234 2007-07-01 09:36:10 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -161,15 +161,21 @@ class WikiRequest extends Request {
         }
     }
 
-    function initializeTheme () {
+    function initializeTheme ($when = 'default') {
         global $WikiTheme;
+	// if when = 'default', then first time init (default theme, ...)
+	// if when = 'login', then check some callbacks
+	//                    and maybe the theme changed (other theme defined in pref)
+	// if when = 'logout', then check other callbacks
+	//                    and maybe the theme changed (back to default theme)
 
-        // Load non-default theme
+        // Load non-default theme (when = login)
         $_theme = @$this->_prefs->_prefs['theme'];
         if ($_theme and isset($_theme->theme))
             $user_theme = $_theme->theme;
         else 
             $user_theme = $this->getPref('theme');
+
         //check changed LANG and THEME inside a session. 
         // (e.g. by using another baseurl)
         if (isset($this->_user->_authhow) 
@@ -193,6 +199,21 @@ class WikiRequest extends Request {
         if (empty($WikiTheme))
             include_once("themes/default/themeinfo.php");
         assert(!empty($WikiTheme));
+
+	// When all themeinfo.php files do not execute global init code anymore
+	$WikiTheme->load();
+
+	// callbacks
+	if ($when == 'login') {
+	    if (!$this->_user->hasHomePage()) { // NewUser
+		$WikiTheme->CbNewUserLogin($this, $this->_user->_userid);
+		if (in_array($this->getArg('action'), array('edit','create')))
+		    $WikiTheme->CbNewUserEdit($this, $this->_user->_userid);
+	    }
+	}
+	elseif ($when == 'logout') {
+	    $WikiTheme->CbUserLogout($this, $this->_user->_userid);
+	}
     }
 
     // This really maybe should be part of the constructor, but since it
@@ -339,11 +360,7 @@ class WikiRequest extends Request {
 
         $olduser = $this->_user;
         $user = $this->_user->AuthCheck($auth_args);
-        if (isa($user, WikiUserClassname())) {
-            // Successful login (or logout.)
-            $this->_setUser($user);
-        }
-        elseif (is_string($user)) {
+        if (is_string($user)) {
             // Login attempt failed.
             $fail_message = $user;
             $auth_args['pass_required'] = true;
@@ -360,6 +377,10 @@ class WikiRequest extends Request {
             }
             $olduser->PrintLoginForm($this, $auth_args, $fail_message, 'newpage');
             $this->finish();    //NORETURN
+        }
+        elseif (isa($user, WikiUserClassname())) {
+            // Successful login (or logout.)
+            $this->_setUser($user);
         }
         else {
             // Login request cancelled.
@@ -394,8 +415,10 @@ class WikiRequest extends Request {
         if (defined('MAIN_setUser')) return; // don't set cookies twice
         $this->setCookieVar(getCookieName(), $user->getAuthenticatedId(),
                             COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
-        if ($user->isSignedIn())
+	$isSignedIn = $user->isSignedIn();
+        if ($isSignedIn) {
             $user->_authhow = 'signin';
+	}
 
         // Save userid to prefs..
         if ( empty($this->_user->_prefs)) {
@@ -405,8 +428,8 @@ class WikiRequest extends Request {
         $this->_user->_group = $this->getGroup();
         $this->setSessionVar('wiki_user', $user);
         $this->_prefs->set('userid',
-                           $user->isSignedIn() ? $user->getId() : '');
-        $this->initializeTheme();
+                           $isSignedIn ? $user->getId() : '');
+        $this->initializeTheme($isSignedIn ? 'login' : 'logout');
         define('MAIN_setUser', true);
     }
 
@@ -1257,7 +1280,7 @@ function main () {
     
     // Initialize with system defaults in case user not logged in.
     // Should this go into the constructor?
-    $request->initializeTheme();
+    $request->initializeTheme('default');
     $request->updateAuthAndPrefs();
     $request->initializeLang();
     
@@ -1314,6 +1337,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.233  2007/06/02 21:07:21  rurban
+// _isActionPage ($pagename, $verbose = true)
+//
 // Revision 1.232  2007/05/13 18:13:20  rurban
 // improve prefs: only save with userid
 //
