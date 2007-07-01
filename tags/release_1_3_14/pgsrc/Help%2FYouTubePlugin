@@ -1,0 +1,87 @@
+Date: Wed, 23 May 2007 20:12:14 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: Help%2FYouTubePlugin,v 1.1 2007-06-09 20:01:13 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FYouTubePlugin;
+  pgsrc_version="2 $Revision: 1.1 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+! Usage
+<verbatim>
+  <?plugin YouTube v=HxXnYEqaRiQ 
+	   width=425 height=350
+	   size=medium|small|large
+           style=inline|link
+           autoplay=0|1
+	   browse="Daily Pick|Most Recent|Most Viewed|Top Rated|
+		   Most Discussed|Top Favorites|Most Linked|
+		   Recently Featured|Most Responded|Watch on Mobile"
+	   time="Today|This week|This month|All Time"
+	   category="All|Autos & Vehicles|Comedy|Entertainment|
+		   Film & Animation|Gadgets & Games|Howto & DIY|Music
+		   News & Politics|People & Blogs|Pets & Animals|
+	           Sports|Travel & Places"
+	   language="All|English|Spanish|Japanese|German|Chinese|French"
+  ?>
+</verbatim>
+
+! Arguments
+
+  * v=... (required, or define browse)
+    key of the video
+  * browse=... (optional, if v is empty)
+    One of "Daily Pick", "Most Recent", "Most Viewed", "Top Rated",
+    "Most Discussed", "Top Favorites", "Most Linked", "Recently Featured",
+    "Most Responded", "Watch on Mobile"
+  * time=Today (optional)
+    One of "Today", "This Week", "This Month", "All Time"
+  * category=All (optional)
+    One of "All", "Autos & Vehicles", "Comedy", "Entertainment",
+    "Film & Animation", "Gadgets & Games", "Howto & DIY", "Music",
+    "News & Politics", "People & Blogs", "Pets & Animals", "Sports",
+    "Travel & Places"
+  * language=All (optional)
+    One of "All", "English", "Spanish", "Japanese", "German", "Chinese", "French"
+  * width=425 (optional. Default: 425)
+  * height=350 (optional. Default: 350)
+  * autoplay=0 (optional. Default: 0)
+    if autoplay=1 it starts automatically to play, otherwise to have to click on it.
+  * style=inline or link (optional. Default: inline)
+    if link will display a small icon with a link to the youtube video
+  * size=medium or small or large (optional. Default: medium).
+    Overrides width and height.
+
+! Example
+
+<verbatim>
+link:
+  <?plugin YouTube v=HxXnYEqaRiQ style=link ?>
+inline:
+  <?plugin YouTube v=HxXnYEqaRiQ ?>
+Daily Pick:
+  <?plugin YouTube browse="Daily Pick" ?>
+Top Rated (This Month):
+  <?plugin YouTube browse="Top Rated" time="This Month" ?>
+</verbatim>
+
+link:
+  <?plugin YouTube v=HxXnYEqaRiQ style=link ?>
+
+inline:
+  <?plugin YouTube v=HxXnYEqaRiQ ?>
+
+Daily Pick:
+  <?plugin YouTube browse="Daily Pick" ?>
+
+Top Rated (This Month):
+  <?plugin YouTube browse="Top Rated" time="This Month" ?>
+
+See LisaNova
+
+! Author
+PhpWiki:ReiniUrban
+----
+PhpWikiDocumentation Help:WikiPlugin

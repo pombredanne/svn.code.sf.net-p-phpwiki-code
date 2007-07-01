@@ -1,0 +1,27 @@
+Date: Fri, 29 Dec 2006 08:18:48 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: BackLinks,v 1.9 2007-06-02 20:56:20 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=BackLinks;
+  pgsrc_version="2 $Revision: 1.9 $";
+  flags=PAGE_LOCKED;
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+The contents of all pages are searched to find links to the current
+page. The BackLinks function also answers the question: "Which pages
+contain the title of this page?".
+
+----
+
+<?plugin BackLinks exclude||='' include_self||=1 noheader||=0 page||='' info||='' ?>
+
+----
+
+To display the list of pages which all contain multiple links use a pagelist as page argument.
+For example 
+<verbatim>
+  <?plugin BackLinks page=Milk,Honey ?>
+</verbatim>
+would display all pages which contain links to Milk AND Honey.

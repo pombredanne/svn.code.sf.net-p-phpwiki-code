@@ -1,0 +1,25 @@
+Date: Tue, 20 Aug 2006 22:53:22 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+X-Rcs-Id: $Id: CategoryCategory,v 1.4 2007-01-07 18:46:49 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=CategoryCategory;
+  pgsrc_version="2 $Revision: 1.4 $";
+  flags="";
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+
+This is the base Category.
+
+<?plugin BackLinks ?>
+
+-----
+! Category
+<em>This is a Category. Adding a link to this page puts the page under this Category. 
+When [editing|EditPage] a page, point your cursor to the end and use the ~[C~] Button 
+to insert a Category into your page.</em>
+
+! Create a new Category
+
+<?plugin-form CreatePage s=CategoryBla template=Template/Category ?>

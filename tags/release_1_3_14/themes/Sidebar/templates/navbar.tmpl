@@ -1,0 +1,30 @@
+<?php // -*-php-*-
+    rcs_id('$Id: navbar.tmpl,v 1.11 2007-01-13 23:42:20 rurban Exp $');
+    $split = $WikiTheme->_autosplitWikiWords;
+    $WikiTheme->setAutosplitWikiWords(true);
+?>
+<!-- The top navigation/search bar -->
+<div id="navbuttons">
+<!-- &middot; ?= WikiLink(_("RecentChanges"), "button") ? -->
+<?= Template("search",
+	     array('SEARCH_AFTER' => 
+		   HTML::button(array('type' => 'submit', 'id' => 'searchGoButton'),
+				HTML::img(array('src' => $WikiTheme->getImageURL("search"),
+						'alt' => 'search'))))) ?>
+<?=$SEP?><?= WikiLink(_("FindPage"), "button",_("Full Search")) ?>
+<?php 
+if (ENABLE_DISCUSSION_LINK) { // This requires Talk: map to end in "/Discussion"
+  if (!string_ends_with($page->getName(), _("Discussion"))) { ?>
+    <?=$SEP?><?= WikiLink(new WikiPagename('Talk:'.$page->getName(), $page->getName()), 
+               'button', _("Discussion")) ?>
+  <?php } else { ?>
+    <?=$SEP?><?= Button(array(),_("Article"),$page->getName()) ?>
+  <?php } ?>
+<?php } ?>
+<?php if (!empty($revision)) { ?>
+<?=$SEP?><?=Button(_("BackLinks")) ?>
+<?php } ?>
+<?php if (!empty($user) && $user->isAdmin()) { ?>
+<?=$SEP?><?= WikiLink(_("PhpWikiAdministration"), "button", _("Admin")) ?>
+<?php }
+$WikiTheme->setAutosplitWikiWords($split); ?></div>
