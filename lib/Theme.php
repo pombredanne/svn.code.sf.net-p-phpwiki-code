@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.141 2007-06-02 18:24:30 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.142 2007-07-01 09:36:09 rurban Exp $');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -651,7 +651,9 @@ class Theme {
      */
     function addImageAlias ($alias, $image_name) {
         // fall back to the PhpWiki-supplied image if not found
-        if ($this->_findFile("images/$image_name", true))
+	if ((empty($this->_imageAliases[$alias])
+	       and $this->_findFile("images/$image_name", true))
+	    or $image_name === false)
             $this->_imageAliases[$alias] = $image_name;
     }
 
@@ -1199,6 +1201,130 @@ class Theme {
     }
 
     /**
+     * Common Initialisations
+     */
+
+    /**
+     * The ->load() method replaces the formerly global code in themeinfo.php.
+     * Without this you would not be able to derive from other themes.
+     */
+    function load() {
+
+	// CSS file defines fonts, colors and background images for this
+	// style.  The companion '*-heavy.css' file isn't defined, it's just
+	// expected to be in the same directory that the base style is in.
+
+	// This should result in phpwiki-printer.css being used when
+	// printing or print-previewing with style "PhpWiki" or "MacOSX" selected.
+	$this->setDefaultCSS('PhpWiki',
+			     array(''      => 'phpwiki.css',
+				   'print' => 'phpwiki-printer.css'));
+
+	// This allows one to manually select "Printer" style (when browsing page)
+	// to see what the printer style looks like.
+	$this->addAlternateCSS(_("Printer"), 'phpwiki-printer.css', 'print, screen');
+	$this->addAlternateCSS(_("Top & bottom toolbars"), 'phpwiki-topbottombars.css');
+	$this->addAlternateCSS(_("Modern"), 'phpwiki-modern.css');
+
+	if (isBrowserIE()) {
+	    $this->addMoreHeaders($this->_CSSlink(0,
+						  $this->_findFile('IEFixes.css'),'all'));
+	    $this->addMoreHeaders("\n");
+	}
+
+	/**
+	 * The logo image appears on every page and links to the HomePage.
+	 */
+	$this->addImageAlias('logo', WIKI_NAME . 'Logo.png');
+	
+	$this->addImageAlias('search', 'search.png');
+
+	/**
+	 * The Signature image is shown after saving an edited page. If this
+	 * is set to false then the "Thank you for editing..." screen will
+	 * be omitted.
+	 */
+
+	$this->addImageAlias('signature', WIKI_NAME . "Signature.png");
+	// Uncomment this next line to disable the signature.
+	//$this->addImageAlias('signature', false);
+
+	/*
+	 * Link icons.
+	 */
+	$this->setLinkIcon('http');
+	$this->setLinkIcon('https');
+	$this->setLinkIcon('ftp');
+	$this->setLinkIcon('mailto');
+	$this->setLinkIcon('interwiki');
+	$this->setLinkIcon('wikiuser');
+	$this->setLinkIcon('*', 'url');
+
+	$this->setButtonSeparator("\n | ");
+
+	/**
+	 * WikiWords can automatically be split by inserting spaces between
+	 * the words. The default is to leave WordsSmashedTogetherLikeSo.
+	 */
+	$this->setAutosplitWikiWords(false);
+
+	/**
+	 * Layout improvement with dangling links for mostly closed wiki's:
+	 * If false, only users with edit permissions will be presented the 
+	 * special wikiunknown class with "?" and Tooltip.
+	 * If true (default), any user will see the ?, but will be presented 
+	 * the PrintLoginForm on a click.
+	 */
+	//$this->setAnonEditUnknownLinks(false);
+
+	/*
+	 * You may adjust the formats used for formatting dates and times
+	 * below.  (These examples give the default formats.)
+	 * Formats are given as format strings to PHP strftime() function See
+	 * http://www.php.net/manual/en/function.strftime.php for details.
+	 * Do not include the server's zone (%Z), times are converted to the
+	 * user's time zone.
+	 *
+	 * Suggestion for french: 
+	 *   $this->setDateFormat("%A %e %B %Y");
+	 *   $this->setTimeFormat("%H:%M:%S");
+	 * Suggestion for capable php versions, using the server locale:
+	 *   $this->setDateFormat("%x");
+	 *   $this->setTimeFormat("%X");
+	 */
+	//$this->setDateFormat("%B %d, %Y");
+	//$this->setTimeFormat("%I:%M %p");
+
+	/*
+	 * To suppress times in the "Last edited on" messages, give a
+	 * give a second argument of false:
+	 */
+	//$this->setDateFormat("%B %d, %Y", false); 
+
+
+	/**
+	 * Custom UserPreferences:
+	 * A list of name => _UserPreference class pairs.
+	 * Rationale: Certain themes should be able to extend the predefined list 
+	 * of preferences. Display/editing is done in the theme specific userprefs.tmpl
+	 * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
+	 * See themes/wikilens/themeinfo.php
+	 */
+	//$this->customUserPreference(); 
+
+	/**
+	 * Register custom PageList type and define custom PageList classes.
+	 * Rationale: Certain themes should be able to extend the predefined list 
+	 * of pagelist types. E.g. certain plugins, like MostPopular might use 
+	 * info=pagename,hits,rating
+	 * which displays the rating column whenever the wikilens theme is active.
+	 * See themes/wikilens/themeinfo.php
+	 */
+	//$this->addPageListColumn(); 
+
+    } // end of load
+
+    /**
      * Custom UserPreferences:
      * A list of name => _UserPreference class pairs.
      * Rationale: Certain themes should be able to extend the predefined list 
@@ -1364,6 +1490,33 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////
+    //
+    // Events
+    //
+    ////////////////////////////////////////////////////////////////
+
+    /* Callback when a new user creates or edits a page */
+    function CbNewUserEdit (&$request, $userid) {
+	; // i.e. create homepage with Template/UserPage
+    }
+
+    /* Callback when a new user logs in. 
+       What is new? We only record changes, not logins.
+       Should we track user actions?
+       Let's say user without homepage.
+    */
+    function CbNewUserLogin (&$request, $userid) {
+	; // do nothing
+    }
+
+    /* Callback when a user logs out
+    */
+    function CbUserLogout (&$request, $userid) {
+	; // do nothing
+    }
+
 };
 
 
@@ -1529,6 +1682,8 @@ class PluginSidebarBox extends SidebarBox {
     var $_plugin, $_args = false, $_basepage = false;
 
     function PluginSidebarBox($name, $args = false, $basepage = false) {
+	require_once("lib/WikiPlugin.php");
+
         $loader = new WikiPluginLoader();
         $plugin = $loader->getPlugin($name);
         if (!$plugin) {
@@ -1630,6 +1785,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.141  2007/06/02 18:24:30  rurban
+// Added accesskeys. Added js stylepath
+//
 // Revision 1.140  2007/03/10 18:27:20  rurban
 // Patch 1677965 by Erwann Penet
 //

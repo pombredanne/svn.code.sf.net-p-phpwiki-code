@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.6 2007-01-07 18:48:20 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.7 2007-07-01 09:36:10 rurban Exp $');
 
 /**
  * This file defines a blog theme for PhpWiki, 
@@ -113,47 +113,50 @@ class Theme_blog extends Theme {
             $link->setAttr('target', '_top');
         return $link;
     }
+
+    function load() {
+	// CSS file defines fonts, colors and background images for this
+	// style.
+
+	// override sidebar definitions:
+	$this->setDefaultCSS(_("blog"), 'Kubrick.css');
+
+	$this->addButtonAlias(_("(diff)"), "[diff]" );
+	$this->addButtonAlias("...", "alltime");
+
+	$this->setButtonSeparator("");
+
+	/**
+	 * WikiWords can automatically be split by inserting spaces between
+	 * the words. The default is to leave WordsSmashedTogetherLikeSo.
+	 */
+	$this->setAutosplitWikiWords(false);
+
+	/**
+	 * If true (default) show create '?' buttons on not existing pages, even if the 
+	 * user is not signed in.
+	 * If false, anon users get no links and it looks cleaner, but then they 
+	 * cannot easily fix missing pages.
+	 */
+	$this->setAnonEditUnknownLinks(false);
+
+	/*
+	 * You may adjust the formats used for formatting dates and times
+	 * below.  (These examples give the default formats.)
+	 * Formats are given as format strings to PHP strftime() function See
+	 * http://www.php.net/manual/en/function.strftime.php for details.
+	 * Do not include the server's zone (%Z), times are converted to the
+	 * user's time zone.
+	 */
+	//$this->setDateFormat("%B %d, %Y");
+	$this->setDateFormat("%A, %B %e, %Y"); // must not contain time
+	$this->setTimeFormat("%H:%M:%S");
+    }
 }
 
 $WikiTheme = new Theme_blog('blog');
 define("PAGETRAIL_ARROW", " » ");
 
-// CSS file defines fonts, colors and background images for this
-// style.
-
-// override sidebar definitions:
-$WikiTheme->setDefaultCSS(_("blog"), 'Kubrick.css');
-
-$WikiTheme->addButtonAlias(_("(diff)"), "[diff]" );
-$WikiTheme->addButtonAlias("...", "alltime");
-
-$WikiTheme->setButtonSeparator("");
-
-/**
- * WikiWords can automatically be split by inserting spaces between
- * the words. The default is to leave WordsSmashedTogetherLikeSo.
- */
-$WikiTheme->setAutosplitWikiWords(false);
-
-/**
- * If true (default) show create '?' buttons on not existing pages, even if the 
- * user is not signed in.
- * If false, anon users get no links and it looks cleaner, but then they 
- * cannot easily fix missing pages.
- */
-$WikiTheme->setAnonEditUnknownLinks(false);
-
-/*
- * You may adjust the formats used for formatting dates and times
- * below.  (These examples give the default formats.)
- * Formats are given as format strings to PHP strftime() function See
- * http://www.php.net/manual/en/function.strftime.php for details.
- * Do not include the server's zone (%Z), times are converted to the
- * user's time zone.
- */
-//$WikiTheme->setDateFormat("%B %d, %Y");
-$WikiTheme->setDateFormat("%A, %B %e, %Y"); // must not contain time
-$WikiTheme->setTimeFormat("%H:%M:%S");
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
