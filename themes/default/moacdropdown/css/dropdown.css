@@ -2,7 +2,7 @@ div.acinputContainer
 {
 	position: relative;
 	float: left;
-	width: 240px;
+	/*width: 240px;*/
 	height: 20px;
 	margin:0px;
 	padding: 0px;
@@ -20,7 +20,7 @@ div.acinputContainer input
 {
 	position: relative;
 	float: left;
-	width: 220px;
+	/*width: 220px;*/
 	height: 100%;
 	border-width: 1px;
 	margin:0px;
@@ -56,7 +56,7 @@ div.acinputContainer input.button
 
 input.dropdown
 {
-	width: 160px;
+	/*width: 160px;*/
 	border: 1px solid #AAAAAA;
 	border-color: #888 #aaa #aaa #888;
 	margin-bottom: 2px;
@@ -66,9 +66,11 @@ input.dropdown
 div.autocomplete_holder
 {
 	position: absolute;
+/*width:160px;*/
+font-size: 95%;
 	visibility: hidden;
 	background-color: #fff;
-	background-image: url( ../i/bg.gif );
+	/*background-image: url( ../i/bg.gif );*/
 	-moz-box-sizing		: border-box;
 }
 
@@ -76,8 +78,11 @@ div.autocomplete_firstborder
 {
 	border-width: 1px;
 	border-style: solid;
-	border-color: buttonshadow buttonhighlight buttonhighlight buttonshadow;
+	border-color: buttonshadow;
+	/*border-color: buttonshadow buttonhighlight buttonhighlight buttonshadow;*/
 	padding: 0px;
+        margin-left: 3px;
+        margin-bottom: 5px;
 	-moz-box-sizing		: border-box;
 }
 
