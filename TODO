@@ -1,13 +1,18 @@
-TODO:
+short-term TODO:
+* Sidebar: merge AVL theme (internal MonoBook derivate with customizable box states) with Sidebar
 * fix session loss on php-5.2 (with or without DB_SESSION)
 * clarify issues with pagenames: "," breaks PageList. Escape with "~" or "\"?
-* check SpamBlockList
 * fix Wikiwys with prettyurl, link labels and killing plugin args
 * ranked FullTextSearch (besides postgresql)
-* format=printable (?) for non js/dom
-* WatchList (?)
 * ImportMediaWiki, ImportRdf, ImportOwl, ExportMediaWiki, ExportRdf, ExportOwl
 * WikiUser/OpenID (from DokuWiki)
+* more meta stuff: OpenSearch, format=dc (Dublin Core)
+* format=mm (FreeMind) for RecentChanges, SemanticWeb's and simple PageList's. 
+  See http://wikkawiki.org/FreeMind. Maybe format=mmap for the commercial MindMap.
+* format=printable (?) for non js/dom
+* WatchList (?)
+* Spellcheck AJAX backend (see DokuWiki)
+* GeSHi Highlighter plugin
 
 TODO for 1.4.0:
 architecture:
@@ -31,7 +36,7 @@ new:
 * HtmlParser and importer plugins (word, excel, html, interwiki)
 * SemanticWeb link parser+db update, plugins: SemanticSearchAdvanced, SPARQL (php5 only)
   include or support rdfapi? or write our own Sparql parser? (see pOWL OntoWiki)
-* ATOM, TrackBack, PingBack services (take it from DokuWiki)
+* ATOM (experimentally done), TrackBack, PingBack services (take it from DokuWiki)
 * finish Blog theme
 * lang: mapping
 * fix ENABLE_MARKUP_DIVSPAN
@@ -44,60 +49,7 @@ fixes:
   (the two new failing unit tests)
 * fix textsearch optimize with "word -word -word"
 
-2006-03-07 19:54:31 rurban
-TODO for 1.3.13:
-architecture:
-* finish moacdropdown integration (xmlrpc)
-* the new Mailer class
-* maybe evaluate other Template solutions (Smarty or regex replacements)
-* add xml syntax for plugins: 
-  <IncludePagesPlugin pages=<!plugin-list BackLinks !> />
-  <BackLinkPlugin include_self=false />
-* SQL-Schema: add relation to link table, add relation to getPageLinks() extractor
-
-new:
-* finish ModeratedPages
-* WYSIWYG (htmlarea3 + tinymce) integration into EditToolbar
-* HtmlParser and importer plugins (word, excel, html, interwiki)
-* SemanticWeb link parser+db update, plugins: SemanticRelations, SemanticSearch
-* TrackBack, PingBack services
-* Blog theme
-* FileInfoPlugin (done)
-* lang: mapping
-* add Help: and Relation: interwiki map entries. (done)
-* via upgrade also
-
-fixes:
-* pcre textsearch with multiple words: order-independency
-* SQL textsearch with multiple words: AND 
-  (the two new failing unit tests)
-* fix textsearch optimize with "word -word -word"
-* add Help/ prefix to all documention pages, via upgrade also. (done)
-
-and the rest of the sf.net buglist
-
------------------------
-2006-??
-
-FixMe:
-* check why template expansion is so slow (xml parsing and printing, ob + exec)
-*   upgrade => %BODY% in MonoBook
-* more httpauth tests: enforced, server-side ok
-* test reported personalpage auth problems
-* fix random PearDB mysql connection loss (fixed?)
-* fix SystemInfoPlugin dump failure
-* fix jscalendar in sidebar and blog (fixed?)
-* ModeratedPage 3/3 (GET=>POST, Preview?)
-* fix configurator.php (fixed?)
-* pagedata_cache on PageGroupTest/subpage (fixed?)
-  wrong PhpWikiAdmin/Chown owner display
-* re-enable pagedata_cache->next iterator (?, mem test)
-
-Improvements:
-* collapse page change notification on LoadAny (80%, missing: )
-* restrict certain action to groups: RawHtml (could be a define)
-* db.timeout: force mysql.connect_timeout = 60
-
+OLDER TODO's:
 Maybe (probably defer):
 * CalendarList/UnfoldSubpages/Blog changes should update links to the basepage.
 * Warn other editors
