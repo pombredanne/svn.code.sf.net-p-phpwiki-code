@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.74 2007-06-07 17:01:27 rurban Exp $');
+rcs_id('$Id: display.php,v 1.75 2007-07-01 09:17:45 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -114,7 +114,8 @@ function actionPage(&$request, $action) {
 	if ($format == 'pdf') {
 	    require_once("lib/pdf.php");
 	    ConvertAndDisplayPdfPageList($request, $pagelist);
-	} elseif (in_array($format, array("rss91","rss2","rss"))) {
+	// time-sorted RDF á la RecentChanges
+	} elseif (in_array($format, array("rss91","rss2","rss","atom"))) {
             $args = $request->getArgs();
             if ($pagename == _("RecentChanges")) {
                 $template->printExpansion($args);
@@ -123,22 +124,14 @@ function actionPage(&$request, $action) {
 	        $plugin = new WikiPlugin_RecentChanges();
                 return $plugin->format($plugin->getChanges($request->_dbi, $args), $args);
 	    }
-	} elseif ($format == 'atom') {
-	    require_once("lib/RssWriter.php");
-	    $rdf = new AtomFeed($request, $pagelist);
-	    $rdf->__spew();
 	} elseif ($format == 'rdf') { // all semantic relations and attributes
 	    require_once("lib/SemanticWeb.php");
 	    $rdf = new RdfWriter($request, $pagelist);
 	    $rdf->format();
-	} elseif ($format == 'owl') {
+	} elseif ($format == 'owl') { // or daml?
 	    require_once("lib/SemanticWeb.php");
 	    $rdf = new OwlWriter($request, $pagelist);
 	    $rdf->format();
-	} elseif ($format == 'kbmodel') {
-	    require_once("lib/SemanticWeb.php");
-	    $model = new ModelWriter($request, $pagelist);
-	    $model->format();
 	} else {
 	    $template = Template('browse', array('CONTENT' => $transformedContent));
 	    GeneratePage($template, $pagetitle, $revision, $args);
@@ -309,7 +302,8 @@ function displayPage(&$request, $template=false) {
 	if ($format == 'pdf') {
 	    require_once("lib/pdf.php");
 	    ConvertAndDisplayPdfPageList($request, $pagelist);
-	} elseif (in_array($format, array("rss91","rss2","rss"))) {
+	// time-sorted rdf a la RecentChanges
+	} elseif (in_array($format, array("rss91","rss2","rss","atom"))) {
             if ($pagename == _("RecentChanges"))
                 $template->printExpansion($toks);
             else {    
@@ -318,25 +312,18 @@ function displayPage(&$request, $template=false) {
                 $args = $request->getArgs();
                 return $plugin->format($plugin->getChanges($request->_dbi, $args), $args);
             }
-	/*} elseif ($format == 'atom') {
-	    require_once("lib/RssWriter.php");
-	    $rdf = new AtomWriter($request, $pagelist);
-	    $rdf->format();*/
 	} elseif ($format == 'rdf') { // all semantic relations and attributes
 	    require_once("lib/SemanticWeb.php");
 	    $rdf = new RdfWriter($request, $pagelist);
 	    $rdf->format();
-	} elseif ($format == 'owl') {
+	} elseif ($format == 'owl') { // or daml?
 	    require_once("lib/SemanticWeb.php");
 	    $rdf = new OwlWriter($request, $pagelist);
 	    $rdf->format();
-	} elseif ($format == 'kbmodel') {
-	    require_once("lib/SemanticWeb.php");
-	    $model = new ModelWriter($request, $pagelist);
-	    $model->format();
 	} else {
 	    if (!in_array($pagename, array(_("LinkDatabase"))))
-	    	trigger_error(sprintf("Unhandled format %s. Reverting to html", $format), E_USER_WARNING);
+	    	trigger_error(sprintf("Unhandled format %s. Reverting to html", $format), 
+	    	              E_USER_WARNING);
 	    $template->printExpansion($toks);
 	}
     }
@@ -350,6 +337,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.74  2007/06/07 17:01:27  rurban
+// actionPage has no toks: fix format=rss* on actionpages
+//
 // Revision 1.73  2007/05/30 20:43:31  rurban
 // added MonoBook UserContribs
 //
