@@ -1,6 +1,6 @@
-Date: Thu, 21 Jun 2007 21:44:24 +0200
-X-Rcs-Id: $Id: LisaNova,v 1.6 2007-06-21 21:44:30 rurban Exp $
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.13p1)
+Date: Sat, 7 Jul 2007 21:44:24 +0200
+X-Rcs-Id: $Id: LisaNova,v 1.7 2007-07-06 23:27:02 rurban Exp $
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14)
 Content-Type: application/x-phpwiki;
   pagename=LisaNova;
   flags="";
@@ -11,8 +11,9 @@ Content-Transfer-Encoding: binary
 ! A [ YouTube | http://www.youtube.com/ ] star
 
 ! [LisaNova's Profile | http://www.youtube.com/profile?user=LisaNova]
-
+QfdQkyc4omk
 ! Videos (45)
+# LisaNova does George Bush! <br><?plugin YouTube style=link v=QfdQkyc4omk ?>
 # Trying Too Hard? <br><?plugin YouTube style=link v=Cw5-k4OwsOw ?>
 # The Big Debate <br><?plugin YouTube style=link v=8Y2N9FueKak ?>
 # Affirmation Girl - My Body is A Temple <br><?plugin YouTube style=link v=e19NrkUcFEQ ?>
