@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePages.php,v 1.2 2005-09-30 18:41:39 uckelman Exp $');
+rcs_id('$Id: IncludePages.php,v 1.3 2007-07-14 12:04:32 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -24,6 +24,8 @@ rcs_id('$Id: IncludePages.php,v 1.2 2005-09-30 18:41:39 uckelman Exp $');
  * IncludePages: Include a list of multiple pages, based on IncludePage.
  * usage:   <?plugin IncludePages pages=<?plugin-list BackLinks ?> ?>
  * author:  ReiniUrban
+ * 
+ * Todo: follow RedirectTo
  */
 
 include_once("lib/plugin/IncludePage.php");
@@ -41,7 +43,7 @@ extends WikiPlugin_IncludePage
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function getDefaultArguments() {
@@ -82,6 +84,9 @@ extends WikiPlugin_IncludePage
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2005/09/30 18:41:39  uckelman
+// Fixed more passes-by-reference.
+//
 // Revision 1.1  2004/09/06 08:37:31  rurban
 // plugin-list support for pages and exclude args
 //
