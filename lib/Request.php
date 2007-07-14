@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.113 2007-03-18 10:25:21 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.114 2007-07-14 19:17:15 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -1051,7 +1051,7 @@ class Request_AccessLogEntry
         $this->size = (int)$size;
     }
     function setDuration ($seconds) {
-        $this->duration = (float)$seconds;
+        $this->duration = strtr(sprintf("%f", $seconds),",",".");
     }
     
     /**
@@ -1347,6 +1347,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.113  2007/03/18 10:25:21  rurban
+// cast AccessLog types
+//
 // Revision 1.112  2007/01/28 22:49:55  rurban
 // use backend specific SQL write_accesslog
 //
