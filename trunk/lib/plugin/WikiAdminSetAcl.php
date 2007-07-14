@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSetAcl.php,v 1.23 2005-02-12 17:24:24 rurban Exp $');
+rcs_id('$Id: WikiAdminSetAcl.php,v 1.24 2007-07-14 12:05:15 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -28,6 +28,10 @@ rcs_id('$Id: WikiAdminSetAcl.php,v 1.23 2005-02-12 17:24:24 rurban Exp $');
  *
  * KNOWN ISSUES:
  * Requires PHP 4.2 so far.
+ *
+ * TODO: UI to add custom group/username. 
+ * Currently it's easier to dump a page, fix it manually and 
+ * import it, than use Setacl
  */
 require_once('lib/PageList.php');
 require_once('lib/plugin/WikiAdminSelect.php');
@@ -45,7 +49,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function getDefaultArguments() {
@@ -278,6 +282,10 @@ class _PageList_Column_perm extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2005/02/12 17:24:24  rurban
+// locale update: missing . : fixed. unified strings
+// proper linebreaks
+//
 // Revision 1.22  2005/01/25 08:05:17  rurban
 // protect against !ENABLE_PAGEPERM
 //
