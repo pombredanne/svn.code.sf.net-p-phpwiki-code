@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.61 2007-01-07 18:42:10 rurban Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.62 2007-07-14 12:06:20 rurban Exp $ -->
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong>
 <!-- FIXME: it would be nice to put a link to the #editarea anchor below,
@@ -64,6 +64,7 @@
     <?php if ($SAVE_B)  { ?> 
       <?=$SEP?><?= $SAVE_B ?>
     <?php } ?>
+    <?=$SEP?><?= $CHANGES_B ?>
   </td>
   <td>&nbsp; <?=$AUTHOR_MESSAGE?></td>
 </tr>
@@ -79,16 +80,10 @@
     <?php } ?>
   </td>
 </tr>
-<?php if (0) {
-// Not yet supported within the same request. 
-// Better use a button to the external UpLoad page. 
-// Or fix action=edit to handle the uploaded filename within the same request.
-?>
-<tr>
-  <td colspan="3"><?plugin UpLoad ?></td>
-</tr>
-<?php } ?>
 </table>
+<?=$HIDDEN_INPUTS?>
+</form>
+<div style="width:100%;text-align:center;"><?php /*plugin UpLoad autolink=0 mode=edit size=30 */?></div>
 
 <hr noshade="noshade" />
 
@@ -118,8 +113,6 @@ function showOldMarkupRules(show) {
 <p><?= fmt("See %s tips for editing.", WikiLink(_("Help/GoodStyle"))) ?></p>
 <?plugin IncludePage page=_("Help/TextFormattingRules") section=_("Synopsis") quiet=1?>
 </div>
-<?=$HIDDEN_INPUTS?>
-</form>
 
 <script language="JavaScript1.3" type="text/javascript">
 <!--
