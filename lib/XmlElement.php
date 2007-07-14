@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.42 2007-01-20 11:41:30 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.43 2007-07-14 17:55:30 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -625,6 +625,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2007/01/20 11:41:30  rurban
+// Add php-5.2.0 note
+//
 // Revision 1.41  2007/01/13 23:34:49  rurban
 // More php-5.2.0 fixes __toString
 //

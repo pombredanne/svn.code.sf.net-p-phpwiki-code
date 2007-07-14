@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.115 2007-04-18 20:40:49 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.116 2007-07-14 17:55:29 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -513,6 +513,7 @@ function IniConfig($file) {
         if (empty($rs['PLUGIN_CACHED_CACHE_DIR'])) {
             if (!empty($rs['INCLUDE_PATH'])) {
                 @ini_set('include_path', $rs['INCLUDE_PATH']);
+                $GLOBALS['INCLUDE_PATH'] = $rs['INCLUDE_PATH'];
             }
             $rs['PLUGIN_CACHED_CACHE_DIR'] = TEMP_DIR . '/cache';
             if (!FindFile($rs['PLUGIN_CACHED_CACHE_DIR'], 1)) { // [29ms]
@@ -729,8 +730,10 @@ function fixup_dynamic_configs($file) {
     global $WikiNameRegexp;
     global $HTTP_SERVER_VARS, $DBParams, $LANG;
 
-    if (defined('INCLUDE_PATH') and INCLUDE_PATH)
+    if (defined('INCLUDE_PATH') and INCLUDE_PATH) {
         @ini_set('include_path', INCLUDE_PATH);
+        $GLOBALS['INCLUDE_PATH'] = INCLUDE_PATH;
+    }
     if (defined('SESSION_SAVE_PATH') and SESSION_SAVE_PATH)
         @ini_set('session.save_path', SESSION_SAVE_PATH);
     if (!defined('DEFAULT_LANGUAGE'))   // not needed anymore
@@ -935,6 +938,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.115  2007/04/18 20:40:49  rurban
+// added DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS
+//
 // Revision 1.114  2007/02/17 22:49:24  rurban
 // enable TEMP_DIR, fixes bug 1646080
 //

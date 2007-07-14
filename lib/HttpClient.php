@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HttpClient.php,v 1.9 2007-03-18 10:16:30 rurban Exp $');
+rcs_id('$Id: HttpClient.php,v 1.10 2007-07-14 17:55:29 rurban Exp $');
 
 /** 
    Version 0.9, 6th April 2003 - Simon Willison ( http://simon.incutio.com/ )
@@ -9,6 +9,7 @@ rcs_id('$Id: HttpClient.php,v 1.9 2007-03-18 10:16:30 rurban Exp $');
    License: http://www.opensource.org/licenses/artistic-license.php
 
    File upload and xmlrpc support by Reini Urban for PhpWiki, 2006-12-28 18:12:47 
+   Todo: proxy support
 */
 
 class HttpClient {
@@ -383,6 +384,9 @@ class HttpClient {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2007/03/18 10:16:30  rurban
+// Fix POST redirects
+//
 // Revision 1.8  2007/01/02 13:18:35  rurban
 // added postfile and xmlrpc support. added ContentType arg to buildRequest
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.67 2006-03-19 15:01:01 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.68 2007-07-14 17:55:30 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -746,6 +746,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.67  2006/03/19 15:01:01  rurban
+// sf.net patch #1333957 by Matt Brown: Authentication cookie identical across all wikis on a host
+//
 // Revision 1.66  2006/03/07 20:45:44  rurban
 // wikihash for php-5.1
 //
