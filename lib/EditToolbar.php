@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.12 2007-06-02 18:23:36 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.13 2007-07-14 12:03:12 rurban Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -88,13 +88,13 @@ msg_repl_close     = '"._("Close")."'
     }
 
     function _generate () {
-        global $WikiTheme;
+        global $WikiTheme, $request;
 
         $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
         $accessKeyPrefix = $WikiTheme->tooltipAccessKeyPrefix();
 
         if (ENABLE_EDIT_TOOLBAR) {
-            $username = $GLOBALS['request']->_user->UserName();
+            $username = $request->_user->UserName();
             if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($username))) {
                 $username = '['.$username.']';
             }
@@ -378,6 +378,9 @@ msg_repl_close     = '"._("Close")."'
 
 /*
 $Log: not supported by cvs2svn $
+Revision 1.12  2007/06/02 18:23:36  rurban
+Added accesskeys
+
 Revision 1.11  2007/02/17 14:16:21  rurban
 move define_f after toolbar.js
 
