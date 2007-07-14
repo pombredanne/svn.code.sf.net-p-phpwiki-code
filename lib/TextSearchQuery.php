@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.29 2007-07-14 12:03:38 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.30 2007-07-14 12:31:00 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -608,6 +608,12 @@ class TextSearchQuery_node
     }
 
     function sql()    { return $this->word; }
+
+    function _sql_quote() {
+	global $request;
+        $word = preg_replace('/(?=[%_\\\\])/', "\\", $this->word);
+        return $request->_dbi->_backend->qstr($word);
+    }
 }
 
 /**
@@ -626,10 +632,6 @@ extends TextSearchQuery_node
     }
     function highlight_words ($negated = false) {
         return $negated ? array() : array($this->word);
-    }
-    function _sql_quote() {
-        $word = preg_replace('/(?=[%_\\\\])/', "\\", $this->word);
-        return $GLOBALS['request']->_dbi->_backend->qstr($word);
     }
     function sql()    { return '%'.$this->_sql_quote($this->word).'%'; }
 }
@@ -1137,6 +1139,9 @@ class TextSearchQuery_Lexer {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2007/07/14 12:03:38  rurban
+// support ranked search: simple score() function
+//
 // Revision 1.28  2007/03/18 17:35:26  rurban
 // Improve comments
 //
