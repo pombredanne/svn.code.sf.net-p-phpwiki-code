@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.32 2007-06-02 18:24:47 rurban Exp $');
+rcs_id('$Id: PageHistory.php,v 1.33 2007-07-14 12:04:39 rurban Exp $');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -117,7 +117,9 @@ extends _RecentChanges_HtmlFormatter
 
         $pagename = $this->_args['page'];
 
-        $html[] = _RecentChanges_HtmlFormatter::format($changes);
+        $fmt = _RecentChanges_HtmlFormatter::format($changes);
+	$fmt->action = _("PageHistory");
+	$html[] = $fmt;
 
         $html[] = HTML::input(array('type'  => 'hidden',
                                     'name'  => 'action',
@@ -266,7 +268,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.32 $");
+                            "\$Revision: 1.33 $");
     }
 
     function getDefaultArguments() {
@@ -311,6 +313,7 @@ extends WikiPlugin_RecentChanges
         }
 
         $fmt = new $fmt_class($args);
+	$fmt->action = _("PageHistory");
         return $fmt->format($changes);
     }
 
@@ -333,6 +336,9 @@ extends WikiPlugin_RecentChanges
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2007/06/02 18:24:47  rurban
+// Added MonoBook style
+//
 // Revision 1.31  2007/05/13 18:13:34  rurban
 // fix for recent RecentChanges upgrade: display all versions
 //
