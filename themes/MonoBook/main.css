@@ -1121,6 +1121,19 @@ li#pt-login {
 	text-decoration: none;
 	background-color: #dedede;
 }
+/* http://www.aboutus.org/UniversalWikiEditButton */
+#p-cactions li a#btn-edit {
+	background:  url('images/Edit-chalk-10gs.png') top left no-repeat;
+	background-repeat: no-repeat;
+	padding-left: 20px !important;
+	text-transform: none;
+}
+#p-cactions li a#btn-edit:hover {
+	z-index: 3;
+	text-decoration: none;
+	background-color: #fff;
+	/*padding-bottom: 0.3em !important;*/
+}
 #p-cactions h5 {
 	display: none;
 }

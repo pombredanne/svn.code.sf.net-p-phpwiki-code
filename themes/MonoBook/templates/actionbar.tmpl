@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.14 2007-06-02 20:34:12 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.15 2007-07-14 19:22:42 rurban Exp $ -->
 <?php
   //$p = $WikiTheme->tooltipAccessKeyPrefix();
   $dbh = $request->getDbh();
@@ -32,7 +32,7 @@
     <?php } ?>
     <?php if (($isAdmin or mayAccessPage('edit', $pagename)) and $revision) { ?>
     <?= ActionButton("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"), false, 
-		     array('title' => "You can edit this page. Please use the preview button before saving. [alt-e]")) ?>
+		     array('id' => 'btn-edit', 'title' => "You can edit this page. Please use the preview button before saving. [alt-e]")) ?>
     <?php } else { ?>
       <?= ActionButton("viewsource", _("View Source")) ?>
     <?php } ?>
@@ -67,7 +67,7 @@
     <?= ActionButton(_("AuthorHistory")) ?>
     <?= ActionButton("diff") ?> 
     <?= ActionButton(_("PageDump")) ?>
-    <?php if (DEBUG & _DEBUG_SQL and USECACHE) {
+    <?php if (DEBUG and USECACHE) {
       $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $pagename);
       $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed.")); ?>
