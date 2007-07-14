@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiBlog.php,v 1.27 2007-06-01 06:39:07 rurban Exp $');
+rcs_id('$Id: WikiBlog.php,v 1.28 2007-07-14 12:05:22 rurban Exp $');
 /*
  Copyright 2002,2003,2007 $ThePhpWikiProgrammingTeam
  
@@ -93,7 +93,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     // Arguments:
@@ -255,7 +255,7 @@ extends WikiPlugin
                 $pageinfo = array('pagename' => $redirected,
                                   'content'  => '<?plugin RedirectTo page="'.$parent.'" ?>',
                                   'pagedata' => array(),
-                                  'versiondata' => array('author' => $blog_meta['creator']),
+                                  'versiondata' => array('author' => $blog_meta['creator'], 'is_minor_edit' => 1),
                                   );
                 SavePage($request, $pageinfo, '', '');
             }
@@ -266,7 +266,7 @@ extends WikiPlugin
                 $pageinfo = array('pagename' => $redirected,
                                   'content'  => '<?plugin RedirectTo page="'.$parent.'" ?>',
                                   'pagedata' => array(),
-                                  'versiondata' => array('author' => $blog_meta['creator']),
+                                  'versiondata' => array('author' => $blog_meta['creator'], 'is_minor_edit' => 1),
                                   );
                 SavePage($request, $pageinfo, '', '');
             }
@@ -433,6 +433,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2007/06/01 06:39:07  rurban
+// no edittoolbar for comments
+//
 // Revision 1.26  2007/02/17 14:17:03  rurban
 // redirect page=""
 //
