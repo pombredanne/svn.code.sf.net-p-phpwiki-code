@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.28 2007-03-18 17:35:26 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.29 2007-07-14 12:03:38 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -129,6 +129,17 @@ class TextSearchQuery {
         return preg_match($this->asRegexp(), $string);
     }
 
+    /* How good does it match? Returns a number */
+    function score($string) {
+	$score = 0.0;
+	$i = 10;
+	foreach (array_unique($this->_tree->highlight_words()) as $word) {
+	    if ($nummatch = preg_match_all("/".preg_quote($word, '/')."/".$this->_regex_modifier, $string, $out))
+	        $score += ($i-- * $nummatch);
+	}
+	return min(1.0, $score / 10.0);
+    }
+
     
     /**
      * Get a regular expression suitable for highlighting matched words.
@@ -146,7 +157,7 @@ class TextSearchQuery {
             } else {
                 foreach ($words as $key => $word)
                     $words[$key] = preg_quote($word, '/');
-                $this->_hilight_regexp = '(?:' . join('|', $words) . ')';
+                $this->_hilight_regexp = '(?'.($this->_case_exact?'':'i').':' . join('|', $words) . ')';
             }
         }
         return $this->_hilight_regexp;
@@ -1126,6 +1137,9 @@ class TextSearchQuery_Lexer {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2007/03/18 17:35:26  rurban
+// Improve comments
+//
 // Revision 1.27  2007/01/21 23:27:32  rurban
 // Fix ->_backend->qstr()
 //
