@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WikiGroup.php,v 1.53 2005-10-29 14:17:21 rurban Exp $');
+rcs_id('$Id: WikiGroup.php,v 1.54 2007-07-14 12:04:04 rurban Exp $');
 /*
  Copyright (C) 2003, 2004 $ThePhpWikiProgrammingTeam
 
@@ -519,7 +519,7 @@ class GroupWikiPage extends WikiGroup{
             return false;
         }
         $contents = $group_revision->getContent();
-        $match = '/^\s*[\*\#]+\s*\[?' . $this->username . '\]?\s*$/';
+        $match = '/^\s*[\*\#]+\s*\[?' . $this->username . '\]?(\s|$)/';
         foreach ($contents as $line){
             if (preg_match($match, $line)) {
                 return true;
@@ -1102,6 +1102,9 @@ class GroupLdap extends WikiGroup {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2005/10/29 14:17:21  rurban
+// simplify message for translators
+//
 // Revision 1.52  2004/11/28 15:59:17  rurban
 // patch by Charles Corrigan so that WikiGroup->isSpecialMember knows about CREATOR and OWNER
 //
