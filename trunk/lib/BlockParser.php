@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.60 2007-01-07 18:41:32 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.61 2007-07-14 17:55:29 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -1125,7 +1125,10 @@ function TransformTextPre ($text, $markup = 2.0, $basepage=false) {
     if (!empty($markup) && $markup < 2.0) {
         $text = ConvertOldMarkup($text);
     }
-    
+    // WikiCreole
+    /*if (!empty($markup) && $markup == 3) {
+    	$text = ConvertFromCreole($text);
+    }*/
     // Expand leading tabs.
     $text = expand_tabs($text);
     //set_time_limit(3);
@@ -1138,7 +1141,7 @@ function TransformTextPre ($text, $markup = 2.0, $basepage=false) {
  * Transform the text of a page, and return an XmlContent,
  * suitable for printXml()-ing.
  */
-function TransformText ($text, $markup = 2.0, $basepage=false) {
+function TransformText ($text, $markup = 2.0, $basepage = false) {
     $output = TransformTextPre($text, $markup, $basepage);
     if ($basepage) {
         // This is for immediate consumption.
@@ -1150,6 +1153,9 @@ function TransformText ($text, $markup = 2.0, $basepage=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2007/01/07 18:41:32  rurban
+// Fix ENABLE_DIVSPAN
+//
 // Revision 1.59  2006/12/22 16:21:29  rurban
 // silence one BlockParser use-case
 //

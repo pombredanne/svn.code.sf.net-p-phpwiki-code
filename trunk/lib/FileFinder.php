@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.32 2007-01-04 16:44:47 rurban Exp $');
+<?php rcs_id('$Id: FileFinder.php,v 1.33 2007-07-14 17:55:29 rurban Exp $');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 
@@ -274,7 +274,8 @@ class FileFinder
          * This following line should be in the above if-block, but we
          * put it here, as it seems to work-around the bug.
          */
-        @ini_set('include_path', implode($this->_get_ini_separator(), $this->_path));
+        $GLOBALS['INCLUDE_PATH'] = implode($this->_get_ini_separator(), $this->_path);
+        @ini_set('include_path', $GLOBALS['INCLUDE_PATH']);
     }
 
     /**
@@ -292,7 +293,8 @@ class FileFinder
             array_splice($this->_path, $i, 1);
         }
         array_unshift($this->_path, $dir);
-        @ini_set('include_path', implode($this->_path, $this->_get_ini_separator()));
+        $GLOBALS['INCLUDE_PATH'] = implode($this->_path, $this->_get_ini_separator());
+        @ini_set('include_path', $GLOBALS['INCLUDE_PATH']);
     }
 
     // Return all the possible shortened locale specifiers for the given locale.
@@ -587,6 +589,9 @@ function isCygwin() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2007/01/04 16:44:47  rurban
+// Remove VMS from internal note.
+//
 // Revision 1.31  2005/02/28 21:24:32  rurban
 // ignore forbidden ini_set warnings. Bug #1117254 by Xavier Roche
 //

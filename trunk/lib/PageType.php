@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.52 2007-02-17 14:17:41 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.53 2007-07-14 17:55:29 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -117,6 +117,8 @@ class PageType_pdf extends PageType {}
 class PageType_wikiblog extends PageType {}
 class PageType_comment extends PageType {}
 class PageType_wikiforum extends PageType {}
+
+class PageType_MediaWiki extends PageType {}
 
 /* To prevent from PHP5 Fatal error: Using $this when not in object context */
 function getInterwikiMap ($pagetext=false, $force=false) {
@@ -515,7 +517,29 @@ class PageFormatter_pdf extends PageFormatter
     }
 }
 
+class PageFormatter_MediaWiki extends PageFormatter
+{
+    function _transform(&$text) {
+	include_once('lib/BlockParser.php');
+	// Expand leading tabs.
+	$text = expand_tabs($text);
+
+        $input = new BlockParser_Input($text);
+        $output = $this->ParsedBlock($input);
+	return new XmlContent($output->getContent());
+    }
+
+    function format(&$text) {
+	return HTML::div(array('class' => 'wikitext'),
+			 $this->_transform($text));
+    }
+}
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2007/02/17 14:17:41  rurban
+// localize Upload:links for WIKIDUMP: esp. for pdf images
+//
 // Revision 1.51  2007/01/07 18:43:17  rurban
 // Disallow ":" as interwikmap and use it as proper LinkedBracket match.
 //
