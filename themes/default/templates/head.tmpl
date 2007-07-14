@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.23 2005-10-10 20:02:54 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.24 2007-07-14 12:06:27 rurban Exp $');
 ?>
 <head>
 <?php if (ENABLE_XHTML_XML and strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml')) { ?>
@@ -47,8 +47,8 @@ _("FindPage"))?>" />
        * Translated pages could go here too.
        */
       if (!empty($revision)) {
-          $args = $request->getargs();
-          $action = $args['action'];
+          $args = $request->getArgs();
+          $action = empty($args['action']) ? 'browse' : $args['action'];
           if (!($action == "viewsource")) {
             $alternatelinkTitle = fmt("%s: %s", _("View Source"), $page->getName());
             $alternatelinkUrl = WikiURL($revision, array('action' => 'viewsource'));
@@ -120,6 +120,9 @@ _("UserPreferences"))?>" />
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2005/10/10 20:02:54  rurban
+// add one more header
+//
 // Revision 1.22  2005/01/25 07:15:47  rurban
 // fix ROBOTS_META warning, break xgettext strings, add log as comment
 //
