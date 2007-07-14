@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.28 2007-06-07 17:02:42 rurban Exp $');
+rcs_id('$Id: FullTextSearch.php,v 1.29 2007-07-14 12:04:26 rurban Exp $');
 /*
 Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -51,7 +51,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.28 $");
+                            "\$Revision: 1.29 $");
     }
 
     function getDefaultArguments() {
@@ -62,10 +62,10 @@ extends WikiPlugin
                    'hilight'  => true,
                    'case_exact' => false,
                    'regex'    => 'auto',
+		   'sortby'   => '-hi_content',
                    'noheader' => false,
-                   'exclude'  => false,   //comma-seperated list of glob
-                   'limit'    => false,
-                   'quiet'    => false));  // be less verbose
+                   'exclude'  => false,   // comma-seperated list of glob
+                   'quiet'    => true));  // be less verbose
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -82,7 +82,12 @@ extends WikiPlugin
         $count = 0;
 
         if ($quiet) { // see how easy it is with PageList...
-            $list = new PageList(false,$exclude,$args);
+            unset($args['info']);
+            $args['listtype'] = 'dl';
+	    $args['types'] = array(new _PageList_Column_content
+	      ('rev:hi_content', _("Content"), "left", $s));
+            $list = new PageList(false, $exclude, $args);
+            $list->setCaption(fmt("Full text search results for '%s'", $s));
             while ($page = $pages->next()) {
                 $list->addPage( $page );
             }
@@ -144,7 +149,28 @@ extends WikiPlugin
     }
 };
 
+/*
+ * List of Links and link to ListLinks
+ */
+class _PageList_Column_hilight extends _PageList_Column {
+    function _PageList_Column_WantedPages_links (&$params) {
+        $this->parentobj =& $params[3];
+        $this->_PageList_Column($params[0],$params[1],$params[2]);
+    }
+    function _getValue(&$page, $revision_handle) {
+    	$html = false;
+	$pagename = $page->getName();
+	$count = count($this->parentobj->_wpagelist[$pagename]);
+        return LinkURL(WikiURL($page, array('action' => 'BackLinks'), false), 
+			fmt("(%d Links)", $count));
+    }
+}
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2007/06/07 17:02:42  rurban
+// fix display of pagenames containing ":" in certain lists
+//
 // Revision 1.27  2007/01/04 16:46:40  rurban
 // Only notes
 //
