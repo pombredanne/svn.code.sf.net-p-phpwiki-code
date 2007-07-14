@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.262 2007-06-07 17:02:01 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.263 2007-07-14 12:05:29 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -667,6 +667,7 @@ class WikiPageName
                     else
                         $url .= $shortName;
                     $this->shortName = $shortName;
+                    $this->url = $url;
                     // expand Talk or User, but not to absolute urls!
                     if (strstr($url, '//')) {
                         if ($moniker == 'Talk')
@@ -2122,6 +2123,9 @@ function getMemoryUsage() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.262  2007/06/07 17:02:01  rurban
+// fix display of pagenames containing ":" in certain lists
+//
 // Revision 1.261  2007/06/01 06:37:53  rurban
 // use native debug_print_backtrace
 //
