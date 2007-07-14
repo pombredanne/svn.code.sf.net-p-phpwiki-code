@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.119 2007-07-01 09:17:45 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.120 2007-07-14 12:04:50 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -27,6 +27,7 @@ include_once("lib/WikiPlugin.php");
 class _RecentChanges_Formatter
 {
     var $_absurls = false;
+    var $action = "RecentChanges";
 
     function _RecentChanges_Formatter ($rc_args) {
         $this->_args = $rc_args;
@@ -206,30 +207,31 @@ extends _RecentChanges_Formatter
     function rss_icon () {
         global $request, $WikiTheme;
 
-        $rss_url = $request->getURLtoSelf(array('action' => 'RecentChanges', 'format' => 'rss'));
-        return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
+        $rss_url = $request->getURLtoSelf(array('action' => $this->action, 'format' => 'rss'));
+        return HTML::small(array('style' => 'font-weight:normal; vertical-align:middle;'), 
                            $WikiTheme->makeButton("RSS", $rss_url, 'rssicon'));
     }
+
     function rss2_icon () {
         global $request, $WikiTheme;
 
-        $rss_url = $request->getURLtoSelf(array('action' => 'RecentChanges', 'format' => 'rss2'));
-        return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
+        $rss_url = $request->getURLtoSelf(array('action' => $this->action, 'format' => 'rss2'));
+        return HTML::small(array('style' => 'font-weight:normal; vertical-align:middle;'), 
                            $WikiTheme->makeButton("xml", $rss_url, 'rssicon'));
     }
     function atom_icon () {
         global $request, $WikiTheme;
 	if (DEBUG) {
-	    $rss_url = $request->getURLtoSelf(array('action' => 'RecentChanges', 'format' => 'atom'));
-	    return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
+	    $rss_url = $request->getURLtoSelf(array('action' => $this->action, 'format' => 'atom'));
+	    return HTML::small(array('style' => 'font-weight:normal; vertical-align:middle;'), 
                            $WikiTheme->makeButton("atom", $rss_url, 'rssicon'));
 	}
     }
     function grazr_icon () {
         global $request, $WikiTheme;
         $rss_url = 'http://grazr.com/gzpanel.html?' . 
-	    WikiURL($request->getArg('pagename'),array('action' => 'RecentChanges', 'format' => 'rss2'),true);
-        return HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), 
+	    WikiURL($request->getArg('pagename'),array('action' => $this->action, 'format' => 'rss2'),true);
+        return HTML::small(array('style' => 'font-weight:normal; vertical-align:middle;'), 
                            $WikiTheme->makeButton("grazr-it", $rss_url, 'rssicon'));
     }
 
@@ -675,7 +677,6 @@ extends _RecentChanges_Formatter
         
         include_once('lib/RssWriter.php');
         $rss = new RssWriter;
-
         $rss->channel($this->channel_properties());
 
         if (($props = $this->image_properties()))
@@ -730,10 +731,16 @@ extends _RecentChanges_Formatter
     function channel_properties () {
         global $request;
 
+        extract($this->_args);
         $rc_url = WikiURL($request->getArg('pagename'), false, 'absurl');
+        if ($author) $description = _("UserContribs").":$author";
+        elseif ($owner) $description = _("UserContribs").":$owner";
+        elseif ($only_new) $description = _("RecentNewPages");
+        elseif ($show_minor) $description = _("RecentEdits");
+        else $description = _("RecentChanges");
         return array('title' => WIKI_NAME,
                      'link' => $rc_url,
-                     'description' => _("RecentChanges"),
+                     'description' => $description,
                      'dc:date' => Iso8601DateTime(time()),
                      'dc:language' => $GLOBALS['LANG']);
 
@@ -1004,7 +1011,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.119 $");
+                            "\$Revision: 1.120 $");
     }
 
     function managesValidators() {
@@ -1225,6 +1232,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.119  2007/07/01 09:17:45  rurban
+// add ATOM support, a very questionable format
+//
 // Revision 1.118  2007/06/02 18:24:59  rurban
 // global WikiTheme
 //
