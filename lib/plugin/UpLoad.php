@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.25 2007-04-18 20:40:48 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.26 2007-07-14 12:05:07 rurban Exp $');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -52,24 +52,37 @@ extends WikiPlugin
         	     // end of the page (or current page)
         	     'autolink' => true, 
         	     'page'     => '[pagename]',
+        	     'size'     => 50,
+        	     'mode'     => 'actionpage', // or edit
         	     );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
         $this->allowed_extensions = explode("\n",
 "7z
+avi
+bmp
 bz2
+c
+cfg
+diff
 doc
 gif
-gz
+h
+ini
 jpeg
 jpg
+kmz
 mp3
+patch
 pdf
 png
+ppt
 rar
 tar
+tar.gz
 txt
+xls
 zip");
         $this->disallowed_extensions = explode("\n",
 "ad[ep]
@@ -115,19 +128,29 @@ ws[cfh]");
         extract($args);
 
         $file_dir = getUploadFilePath();
-        $form = HTML::form(array('action' => $request->getPostURL(),
+        $form = HTML::form(array('action'  => $request->getPostURL(),
                                  'enctype' => 'multipart/form-data',
-                                 'method' => 'post'));
+                                 'method'  => 'post'));
         $contents = HTML::div(array('class' => 'wikiaction'));
         $contents->pushContent(HTML::input(array('type' => 'hidden',
                                                  'name' => 'MAX_FILE_SIZE',
-                                                 'value' => MAX_UPLOAD_SIZE)));
+                                                 'value'=> MAX_UPLOAD_SIZE)));
         $contents->pushContent(HTML::input(array('name' => 'userfile',
                                                  'type' => 'file',
-                                                 'size' => '50')));
-        $contents->pushContent(HTML::raw(" "));
-        $contents->pushContent(HTML::input(array('value' => _("Upload"),
-                                                 'type' => 'submit')));
+                                                 'size' => $size)));
+        if ($mode == 'edit') {
+            $contents->pushContent(HTML::input(array('name' => 'action',
+                                                     'type' => 'hidden',
+                                                     'value'=> 'edit')));
+            $contents->pushContent(HTML::raw(" "));
+            $contents->pushContent(HTML::input(array('value' => _("Upload"),
+                                                     'name'  => 'edit[upload]',
+                                                     'type'  => 'submit')));
+        } else {
+            $contents->pushContent(HTML::raw(" "));
+            $contents->pushContent(HTML::input(array('value' => _("Upload"),
+                                                     'type'  => 'submit')));
+        }
         $form->pushContent($contents);
 
         $message = HTML();
@@ -211,7 +234,7 @@ ws[cfh]");
                         $current = $pagehandle->getCurrentRevision();
                         $version = $current->getVersion();
                         $text = $current->getPackedContent();
-                        $newtext = $text . "\n* [Upload:$u_userfile]";
+                        $newtext = $text . "\n* Upload:$u_userfile"; // don't inline images
                         $meta = $current->_data;
                         $meta['summary'] = sprintf(_("uploaded %s"),$u_userfile);
                         $pagehandle->save($newtext, $version + 1, $meta);
@@ -223,9 +246,9 @@ ws[cfh]");
                 $message->pushContent(HTML::br(),_("Uploading failed."),HTML::br());
             }
         }
-        else {
+        /*else {
             $message->pushContent(HTML::br(),HTML::br());
-        }
+        }*/
 
         //$result = HTML::div( array( 'class' => 'wikiaction' ) );
         $result = HTML();
@@ -263,6 +286,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2007/04/18 20:40:48  rurban
+// added DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS
+//
 // Revision 1.24  2007/04/11 17:49:01  rurban
 // Chgeck against .php\d, i.e. php3
 //
