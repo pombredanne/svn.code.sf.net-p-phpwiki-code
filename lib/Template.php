@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.76 2007-05-13 18:13:04 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.77 2007-07-14 19:17:57 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -22,6 +22,7 @@ class Template
             $oldtheme = $WikiTheme->_theme;
             list($themename, $name) = explode("/", $name);
             $WikiTheme->_theme = "themes/$themename";
+            $WikiTheme->_name = $name;
         }
         $this->_name = $name;
         $file = $WikiTheme->findTemplate($name);
@@ -285,6 +286,9 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.76  2007/05/13 18:13:04  rurban
+// Protect against erronously closed template file
+//
 // Revision 1.75  2007/01/02 13:18:55  rurban
 // speed up Template expansion. revision only necessary. fixed all affected templates
 //
