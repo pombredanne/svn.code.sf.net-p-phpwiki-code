@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.234 2007-07-01 09:36:10 rurban Exp $');
+rcs_id('$Id: main.php,v 1.235 2007-07-14 12:04:19 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -1044,16 +1044,21 @@ class WikiRequest extends Request {
     }
 
     function action_search () {
-        // This is obsolete: reformulate URL and redirect.
-        // FIXME: this whole section should probably be deleted.
+    	// Decide between title or fulltextsearch (e.g. both buttons available).
+        // Reformulate URL and redirect.
         if ($this->getArg('searchtype') == 'full') {
             $search_page = _("FullTextSearch");
+        }
+        elseif ($this->getArg('searchtype') == 'external') {
+            $s = $this->getArg('searchterm') ? $this->getArg('searchterm') : $this->getArg('s');
+	    $link = new WikiPageName("Search:$s"); // Expand interwiki url. I use xapian-omega
+            $this->redirect($link->url);
         }
         else {
             $search_page = _("TitleSearch");
         }
         $this->redirect(WikiURL($search_page,
-                                array('s' => $this->getArg('searchterm')),
+                                array('s' => $this->getArg('searchterm') ? $this->getArg('searchterm') : $this->getArg('s')),
                                 'absolute_url'));
     }
 
@@ -1337,6 +1342,10 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.234  2007/07/01 09:36:10  rurban
+// themes are now easier derivable classes from other themes.
+// removed global code setters, switched to $WikiTheme->load() in main
+//
 // Revision 1.233  2007/06/02 21:07:21  rurban
 // _isActionPage ($pagename, $verbose = true)
 //
