@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.57 2007-05-28 20:13:46 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.58 2007-07-14 12:30:53 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -20,7 +20,7 @@ rcs_id('$Id: CachedMarkup.php,v 1.57 2007-05-28 20:13:46 rurban Exp $');
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-include_once("lib/Units.php");
+require_once("lib/Units.php");
 
 class CacheableMarkup extends XmlContent {
 
@@ -755,6 +755,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.57  2007/05/28 20:13:46  rurban
+// Overwrite all attributes at once at page->save to delete dangling meta
+//
 // Revision 1.56  2007/04/08 16:39:40  rurban
 // fix when DISABLE_UNITS = true (thanks to Walter Rafelsberger)
 // simplify title calculation
