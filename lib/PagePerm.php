@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.40 2005-10-29 14:16:58 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.41 2007-07-14 12:03:25 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -86,7 +86,7 @@ function pagePermissions($pagename) {
             return array('inherited', pagePermissions(getParentPage($pagename)));
         }
     } elseif ($perm = getPagePermissions($page)) {
-        return array('page',$perm);
+        return array('page', $perm);
     // or no permissions defined; returned inherited permissions, to be displayed in gray
     } elseif ($pagename == '.') { // stop recursion in pathological case. 
     	// "." defined, without any acl
@@ -264,7 +264,7 @@ function _requiredAuthorityForPagename($access, $pagename) {
  */
 function getParentPage($pagename) {
     if (isSubPage($pagename)) {
-        return subPageSlice($pagename,0);
+        return subPageSlice($pagename, 0);
     } else {
         return '.';
     }
@@ -359,15 +359,18 @@ class PagePermission {
      * Must translate the various special groups to the actual users settings 
      * (userid, group membership).
      */
-    function isAuthorized($access,$user) {
+    function isAuthorized($access, $user) {
         if (!empty($this->perm{$access})) {
+            $allow = -1;
             foreach ($this->perm[$access] as $group => $bool) {
-                if ($this->isMember($user,$group)) {
+                if ($this->isMember($user, $group)) {
                     return $bool;
+                } elseif ($allow == -1) { // not a member and undecided: check other groups
+                    $allow = !$bool;
                 }
             }
         }
-        return -1; // undecided
+        return $allow; // undecided
     }
 
     /**
@@ -724,6 +727,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2005/10/29 14:16:58  rurban
+// unify message
+//
 // Revision 1.39  2005/05/06 16:57:54  rurban
 // support captcha
 //
