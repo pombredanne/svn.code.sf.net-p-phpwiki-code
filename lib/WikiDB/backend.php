@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.33 2007-06-07 21:35:04 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.34 2007-07-14 12:03:51 rurban Exp $');
 
 /*
   Pagedata
@@ -331,7 +331,7 @@ class WikiDB_backend
     function text_search($search, $fulltext=false, $sortby='', 
 			 $limit='', $exclude='') 
     {
-        // This is method implements a simple linear search
+        // This method implements a simple linear search
         // through all the pages in the database.
         //
         // It is expected that most backends will overload
@@ -340,7 +340,7 @@ class WikiDB_backend
         // ignore $limit
         $pages = $this->get_all_pages(false, $sortby, false, $exclude);
         return new WikiDB_backend_dumb_TextSearchIter($this, $pages, $search, $fulltext, 
-                                                      array('limit' => $limit, 
+                                                      array('limit'   => $limit, 
                                                             'exclude' => $exclude));
     }
 
@@ -761,6 +761,9 @@ class WikiDB_backend_search_sql extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2007/06/07 21:35:04  rurban
+// fixed backend asArray access to iterators (DebugInfo with SQL)
+//
 // Revision 1.32  2007/02/17 14:14:41  rurban
 // enforce accesslog types
 //
