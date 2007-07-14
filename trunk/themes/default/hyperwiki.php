@@ -12,5 +12,5 @@ global $WikiTheme;
         width="162" height="240">
   <param name="startPage" value="<?= $page->getName() ?>" />
   <param name="properties" value="<?= $WikiTheme->_finddata("hwiki.prop") ?>" />
-  <param name="wikiURL" value="<?= SCRIPT_NAME ?>" />
+  <param name="wikiURL" value="<?= PHPWIKI_BASE_URL ?>" />
 </applet>
