@@ -25,7 +25,7 @@ class SetupWiki extends phpwiki_TestCase {
     function testOldMarkupTestPage() {
     	$this->_loadPage('Help/OldMarkupTestPage');
     }
-
+    
     /* ADODB set_links _id_cache error: IncludePagePlugin => HomePage */
     function testIncludePagePlugin() {
     	$this->_loadPage('Help/IncludePagePlugin');
