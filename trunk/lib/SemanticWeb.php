@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SemanticWeb.php,v 1.9 2007-06-09 20:02:55 rurban Exp $');
+<?php rcs_id('$Id: SemanticWeb.php,v 1.10 2007-07-14 12:03:32 rurban Exp $');
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *
@@ -365,6 +365,7 @@ class ReasonerBackend_Racer extends ReasonerBackend {
 class ReasonerBackend_KM extends ReasonerBackend {
 };
 
+// $Log: not supported by cvs2svn $
 
 // (c-file-style: "gnu")
 // Local Variables:
