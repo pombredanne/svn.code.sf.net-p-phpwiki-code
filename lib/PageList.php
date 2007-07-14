@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.142 2007-07-01 09:09:19 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.143 2007-07-14 12:03:19 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -363,19 +363,20 @@ class _PageList_Column_version extends _PageList_Column {
 // on very large Wikis this will fail if used with AllPages
 // (PHP memory limit exceeded)
 class _PageList_Column_content extends _PageList_Column {
-    function _PageList_Column_content ($field, $default_heading, $align = false) {
+    function _PageList_Column_content ($field, $default_heading, $align = false, $search = false) {
         $this->_PageList_Column($field, $default_heading, $align);
         $this->bytes = 50;
+        $this->search = $search;
         if ($field == 'content') {
             $this->_heading .= sprintf(_(" ... first %d bytes"),
                                        $this->bytes);
-        } elseif ($field == 'hi_content') {
+        } elseif ($field == 'rev:hi_content') {
             global $HTTP_POST_VARS;
-            if (!empty($HTTP_POST_VARS['admin_replace'])) {
-                $search = $HTTP_POST_VARS['admin_replace']['from'];
-                $this->_heading .= sprintf(_(" ... around %s"),
-                                           '»'.$search.'«');
+            if (!$this->search and !empty($HTTP_POST_VARS['admin_replace'])) {
+                $this->search = $HTTP_POST_VARS['admin_replace']['from'];
             }
+            $this->_heading .= sprintf(_(" ... around %s"),
+                                      '»'.$this->search.'«');
         }
     }
     
@@ -390,23 +391,29 @@ class _PageList_Column_content extends _PageList_Column {
         if (empty($pagelist->_sortby[$this->_field]))
             unset($revision_handle->_data['%content']);
         if ($this->_field == 'hi_content') {
-            global $HTTP_POST_VARS;
-            unset($revision_handle->_data['%pagedata']['_cached_html']);
-            $search = $HTTP_POST_VARS['admin_replace']['from'];
-            if ($search and ($i = strpos($c,$search))) {
+            if (!empty($revision_handle->_data['%pagedata']))
+                unset($revision_handle->_data['%pagedata']['_cached_html']);
+            $search = $this->search;
+            $score = '';
+            if (!empty($page_handle->score))
+	        $score = $page_handle->score;
+	    elseif (!empty($page_handle['score']))
+	        $score = $page_handle['score'];
+            if ($search and ($i = strpos(strtolower($c), strtolower($search)))) {
                 $l = strlen($search);
-                $j = max(0,$i - ($this->bytes / 2));
+                $j = max(0, $i - ($this->bytes / 2));
                 return HTML::div(array('style' => 'font-size:x-small'),
                                  HTML::div(array('class' => 'transclusion'),
-                                           HTML::span(substr($c, $j, ($this->bytes / 2))),
-                                           HTML::span(array("style"=>"background:yellow"),$search),
-                                           HTML::span(substr($c, $i+$l, ($this->bytes / 2))))
-                                 );
+                                           HTML::span("...".substr($c, $j, ($this->bytes / 2))),
+                                           HTML::span(array("style"=>"background:yellow"),substr($c, $i, $l)),
+                                           HTML::span(substr($c, $i+$l, ($this->bytes / 2))."..."." ".($score ? sprintf("[%0.1f]",$score):""))));
             } else {
-                $c = sprintf(_("%s not found"),
-                             '»'.$search.'«');
+            	if (strpos($c," "))
+            	    $c = "";
+            	else    
+                    $c = sprintf(_("%s not found"), '»'.$search.'«');
                 return HTML::div(array('style' => 'font-size:x-small','align'=>'center'),
-                                 $c);
+                                 $c." ".($score ? sprintf("[%0.1f]",$score):""));
             }
         } elseif (($len = strlen($c)) > $this->bytes) {
             $c = substr($c, 0, $this->bytes);
@@ -422,9 +429,13 @@ class _PageList_Column_content extends _PageList_Column {
                          ($this->parent->_columns_seen['size'] or !$len) ? "" :
                            ByteFormatter($len, /*$longformat = */true));
     }
-    
     function _getSortableValue ($page_handle, &$revision_handle) {
-        return substr(_PageList_Column::_getValue($page_handle, $revision_handle),0,50);
+	if (!empty($page_handle->score))
+	    return $page_handle->score;
+	elseif (!empty($page_handle['score']))
+	    return $page_handle['score'];
+	else
+	    return substr(_PageList_Column::_getValue($page_handle, $revision_handle),0,50);
     }
 };
 
@@ -535,6 +546,8 @@ class PageList {
                   'most' => array('pagename','mtime','author','hits'),
                   'some' => array('pagename','mtime','author')
                   );
+	if ($this->_options['listtype'] == 'dl')
+	    $this->_options['nopage'] = 1;
         if ($columns) {
             if (!is_array($columns))
                 $columns = explode(',', $columns);
@@ -544,19 +557,21 @@ class PageList {
                     $columns = array_diff(array_merge($columns,$cols),array($symbol));
                 }
             }
+            unset($cols);
             if (empty($this->_options['nopage']) and !in_array('pagename',$columns))
                 $this->_addColumn('pagename');
             foreach ($columns as $col) {
 		if (!empty($col))
 		    $this->_addColumn($col);
             }
+            unset($col);
         }
         // If 'pagename' is already present, _addColumn() will not add it again
 	if (empty($this->_options['nopage']))
 	    $this->_addColumn('pagename');
 
 	if (!empty($this->_options['types'])) {
-            foreach ($this->_options['types'] as $type) {	
+            foreach ($this->_options['types'] as $type) {
             	$this->_types[$type->_field] = $type;
                 $this->_addColumn($type->_field);
             }
@@ -632,7 +647,7 @@ class PageList {
                       * These options may also be given to _generate(List|Table) later
                       * But limit and offset might help the query WikiDB::getAllPages()
                       */
-                     'limit'    => 0,       // number of rows (pagesize)
+                     'limit'    => 50,       // number of rows (pagesize)
                      'paging'   => 'auto',  // 'auto'   top + bottom rows if applicable
                      //			    // 'top'    top only if applicable
                      //			    // 'bottom' bottom only if applicable
@@ -646,6 +661,7 @@ class PageList {
                      'comma'    => 0,       // condensed comma-seperated list, 
                      			    // 1 if without links, 2 if with
                      'commasep' => false,   // Default: ', '
+                     'listtype' => '',      // ul (default), ol, dl, comma
                      'ordered'  => false,   // OL or just UL lists (ignored for comma)
 		     'linkmore' => '',      // If count>0 and limit>0 display a link with 
 		     // the number of all results, linked to the given pagename.
@@ -800,6 +816,8 @@ class PageList {
 
         if ($this->isEmpty())
             return $this->_emptyList($caption);
+        elseif (in_array($this->_options['listtype'], array('ol','ul','comma','dl')))
+            return $this->_generateList($caption);
         elseif (count($this->_columns) == 1)
             return $this->_generateList($caption);
         else
@@ -1197,9 +1215,13 @@ class PageList {
             $pageb = $this->_getPageFromHandle($b);  // If a string, convert to page
             assert(isa($pageb, 'WikiDB_Page'));
             foreach ($this->_sortby as $colNum => $direction) {
-                if (!is_int($colNum)) // or column fieldname
-                    $colNum = $this->_columnsMap[$colNum];
-                $col = $this->_columns[$colNum - 1];
+            	// get column type object
+                if (!is_int($colNum)) { // or column fieldname
+                    if ($temp = $this->_columnsMap[$colNum])
+                        $col = $this->_columns[$temp - 1];
+                    elseif (isset($this->_types[$colNum]))
+                        $col = $this->_types[$colNum];
+                }
 
                 assert(isset($col));
                 $revision_handle = false;
@@ -1413,7 +1435,7 @@ function flipAll(formObj) {
             $this->_options[$k] = $v;
         }
     }
-    
+
     // 'cols'   - split into several columns
     // 'azhead' - support <h3> grouping into initials
     // 'ordered' - OL or UL list (not yet inherited to all plugins)
@@ -1428,6 +1450,7 @@ function flipAll(formObj) {
 	if (!is_array($this->_pages[0]) and is_string($this->_pages[0])) {
 	    $this->_pages = array_unique($this->_pages);
 	}
+        if (count($this->_sortby) > 0) $this->_sortPages();
 
         // need a recursive switch here for the azhead and cols grouping.
         if (!empty($this->_options['cols']) and $this->_options['cols'] > 1) {
@@ -1480,6 +1503,8 @@ function flipAll(formObj) {
             return $out;
         }
             
+        if ($this->_options['listtype'] == 'comma')
+            $this->_options['comma'] = 2;
         if (!empty($this->_options['comma'])) {
             if ($this->_options['comma'] == 1)
                 $out->pushContent($this->_generateCommaListAsString());
@@ -1501,10 +1526,17 @@ function flipAll(formObj) {
                 $out->pushContent(HTML::table($paging));
             }
         }
+        if ($this->_options['listtype'] == 'ol')
+            $this->_options['ordered'] = 1;
+        elseif ($this->_options['listtype'] == 'ul')
+            $this->_options['ordered'] = 0;
         if (!empty($this->_options['ordered']))
 	    $list = HTML::ol(array('class' => 'pagelist'));
-	else    
+	elseif ($this->_options['listtype'] == 'dl') {
+            $list = HTML::dl(array('class' => 'pagelist'));
+	} else {
             $list = HTML::ul(array('class' => 'pagelist'));
+	}
         $i = 0;
         //TODO: currently we ignore limit here and hope that the backend didn't ignore it. (BackLinks)
         if (!empty($this->_options['limit']))
@@ -1513,11 +1545,18 @@ function flipAll(formObj) {
 	    $pagesize=0;
         foreach ($this->_pages as $pagenum => $page) {
             $pagehtml = $this->_renderPageRow($page);
+            if (!$pagehtml) continue;
             $group = ($i++ / $this->_group_rows);
             //TODO: here we switch every row, in tables every third. 
             //      unification or parametrized?
             $class = ($group % 2) ? 'oddrow' : 'evenrow';
-            $list->pushContent(HTML::li(array('class' => $class), $pagehtml));
+            if ($this->_options['listtype'] == 'dl') {
+                $header = WikiLink($page);
+                //if ($this->_sortby['hi_content']) 
+                $list->pushContent(HTML::dt(array('class' => $class), $header),
+                                   HTML::dd(array('class' => $class), $pagehtml));
+            } else
+                $list->pushContent(HTML::li(array('class' => $class), $pagehtml));
             if ($pagesize and $i > $pagesize) break;
         }
         $out->pushContent($list);
@@ -1607,6 +1646,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.142  2007/07/01 09:09:19  rurban
+// fix PageList with multiple lists: added id, fixed sortby REQUEST logic
+//
 // Revision 1.141  2007/05/24 18:40:55  rurban
 // display list with tokens problem
 //
