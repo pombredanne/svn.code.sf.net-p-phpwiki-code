@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.153 2007-06-07 16:54:29 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.154 2007-07-14 12:03:58 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1811,6 +1811,8 @@ class WikiDB_PageIterator
         $page = new WikiDB_Page($this->_wikidb, $pagename);
         if (isset($next['linkrelation']))
             $page->set('linkrelation', $next['linkrelation']);
+        if (isset($next['score']))
+            $page->score = $next['score'];
         return $page;
     }
 
@@ -2211,6 +2213,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.153  2007/06/07 16:54:29  rurban
+// enable $MailNotify->onChangePage. support other formatters (MediaWiki, Creole, ...)
+//
 // Revision 1.152  2007/05/28 20:13:46  rurban
 // Overwrite all attributes at once at page->save to delete dangling meta
 //
