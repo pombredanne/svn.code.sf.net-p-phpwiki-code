@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.112 2007-06-09 20:05:35 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.113 2007-07-14 12:04:12 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -102,6 +102,7 @@ class PageEditor
 	    }
             elseif ( $this->savePage()) {
                 // noreturn
+                $request->setArg('action', false);
                 $r->redirect(WikiURL($r->getArg('save_and_redirect_to')));
                 return true;    // Page saved.
             }
@@ -129,7 +130,7 @@ class PageEditor
         elseif ($this->editaction == 'overwrite') { 
             // take the new content without diff
 	    $source = $this->request->getArg('loadfile');
-	    include_once('lib/loadsave.php');
+	    require_once('lib/loadsave.php');
 	    $this->request->setArg('loadfile', 1);
 	    $this->request->setArg('overwrite', 1);
 	    $this->request->setArg('merge', 0);
@@ -137,6 +138,13 @@ class PageEditor
             $this->_redirectToBrowsePage();
             //$r->redirect(WikiURL($r->getArg('save_and_redirect_to')));
             return true;
+        }
+        elseif ($this->editaction == 'upload') {
+            // run plugin UpLoad
+            $plugin = WikiPluginLoader("UpLoad");
+            $plugin->run();
+            // add link to content	 
+            ;
         }
 
         if ($saveFailed and $this->isConcurrentUpdate())
@@ -149,7 +157,7 @@ class PageEditor
             $orig_content = $orig->getContent();
             $this_content = explode("\n", $this->_content);
             $other_content = $this->current->getContent();
-            include_once("lib/diff3.php");
+            require_once("lib/diff3.php");
             $diff = new diff3($orig_content, $this_content, $other_content);
             $output = $diff->merged_output(_("Your version"), _("Other version"));
             // Set the content of the textarea to the merged diff
@@ -171,12 +179,14 @@ class PageEditor
             $tokens['PREVIEW_CONTENT'] = $this->getConvertedPreview();
         if ($this->editaction == 'preview')
             $tokens['PREVIEW_CONTENT'] = $this->getPreview(); // FIXME: convert to _MESSAGE?
+        if ($this->editaction == 'diff')
+            $tokens['PREVIEW_CONTENT'] = $this->getDiff();
 
         // FIXME: NOT_CURRENT_MESSAGE?
         $tokens = array_merge($tokens, $this->getFormElements());
 
         if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG) {
-            include_once("lib/EditToolbar.php");
+            require_once("lib/EditToolbar.php");
             $toolbar = new EditToolbar();
             $tokens = array_merge($tokens, $toolbar->getTokens());
         }
@@ -251,8 +261,9 @@ class PageEditor
             // Save failed. No changes made.
             $this->_redirectToBrowsePage();
             // user will probably not see the rest of this...
-            include_once('lib/display.php');
+            require_once('lib/display.php');
             // force browse of current version:
+            $request->setArg('action', false);
             $request->setArg('version', false);
             displayPage($request, 'nochanges');
             return true;
@@ -265,7 +276,7 @@ class PageEditor
             // Save failed. No changes made.
             $this->_redirectToBrowsePage();
             // user will probably not see the rest of this...
-            include_once('lib/display.php');
+            require_once('lib/display.php');
             // force browse of current version:
             $request->setArg('version', false);
             displayPage($request, 'nochanges');
@@ -300,7 +311,7 @@ class PageEditor
         $this->updateLock();
 
         // Clean out archived versions of this page.
-        include_once('lib/ArchiveCleaner.php');
+        require_once('lib/ArchiveCleaner.php');
         $cleaner = new ArchiveCleaner($GLOBALS['ExpireParams']);
         $cleaner->cleanPageRevisions($page);
 
@@ -321,12 +332,14 @@ class PageEditor
             // been defined.  In this case, the user will most
             // likely not see the rest of the HTML we generate
             // (below).
+            $request->setArg('action', false);
             $this->_redirectToBrowsePage();
         }
 
         // Force browse of current page version.
         $request->setArg('version', false);
-        $request->setArg('action', "browse");
+        // testme: does preview and more need action=edit?
+        $request->setArg('action', false);
 
         $template = Template('savepage', $this->tokens);
         $template->replace('CONTENT', $newrevision->getTransformedContent());
@@ -396,7 +409,7 @@ class PageEditor
         // 2. external babycart (SpamAssassin) check
         // This will probably prevent from discussing sex or viagra related topics. So beware.
         if (ENABLE_SPAMASSASSIN) {
-            include_once("lib/spam_babycart.php");
+            require_once("lib/spam_babycart.php");
             if ($babycart = check_babycart($newtext, $request->get("REMOTE_ADDR"), 
                                            $this->user->getId())) {
                 // TODO: mail the admin
@@ -410,8 +423,9 @@ class PageEditor
         }
         // 3. extract (new) links and check surbl for blocked domains
         if (ENABLE_SPAMBLOCKLIST and ($newlinks > 5)) {
-            include_once("lib/SpamBlocklist.php");
-            include_once("lib/InlineParser.php");
+            require_once("lib/SpamBlocklist.php");
+            require_once("lib/InlineParser.php");
+            $parsed = TransformLinks($newtext);
             $oldparsed = TransformLinks($oldtext);
             $oldlinks = array();
             foreach ($oldparsed->_content as $link) {
@@ -421,8 +435,6 @@ class PageEditor
             	}
             }
             unset($oldparsed);
-            unset($oldtext);
-            $parsed = TransformLinks($newtext);
             foreach ($parsed->_content as $link) {
             	if (isa($link, 'Cached_ExternalLink') and !isa($link, 'Cached_InterwikiLink')) {
                     $uri = $link->_getURL($this->page->getName());
@@ -440,6 +452,7 @@ class PageEditor
             }
             unset($oldlinks);
             unset($parsed);
+            unset($oldparsed);
         }
 
         return false;
@@ -463,17 +476,37 @@ class PageEditor
     }
 
     function getPreview () {
-        include_once('lib/PageType.php');
+        require_once('lib/PageType.php');
         $this->_content = $this->getContent();
 	return new TransformedText($this->page, $this->_content, $this->meta);
     }
 
     function getConvertedPreview () {
-        include_once('lib/PageType.php');
+        require_once('lib/PageType.php');
         $this->_content = $this->getContent();
         $this->meta['markup'] = 2.0;
         $this->_content = ConvertOldMarkup($this->_content);
 	return new TransformedText($this->page, $this->_content, $this->meta);
+    }
+
+    function getDiff () {
+        require_once('lib/diff.php');
+	$html = HTML();
+	
+	$diff = new Diff($this->current->getContent(), explode("\n", $this->getContent()));
+	if ($diff->isEmpty()) {
+	    $html->pushContent(HTML::hr(),
+			       HTML::p('[', _("Versions are identical"),
+				       ']'));
+	}
+	else {
+	    // New CSS formatted unified diffs (ugly in NS4).
+	    $fmt = new HtmlUnifiedDiffFormatter;
+	    // Use this for old table-formatted diffs.
+	    //$fmt = new TableUnifiedDiffFormatter;
+	    $html->pushContent($fmt->format($diff));
+	}
+        return $html;
     }
 
     // possibly convert HTMLAREA content back to Wiki markup
@@ -623,12 +656,24 @@ class PageEditor
 
         $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"),
                                   'wikiaction',
-                                  array('accesskey'=> 'p'));
+                                  array('accesskey'=> 'p', 
+                                     'title' => 'Preview the current content [alt-p]'));
 
         //if (!$this->isConcurrentUpdate() && $this->canEdit())
         $el['SAVE_B'] = Button('submit:edit[save]',
                                _("Save"), 'wikiaction',
-                               array('accesskey'=> 's'));
+                               array('accesskey'=> 's', 
+                                     'title' => 'Save the current content as wikipage [alt-s]'));
+        $el['CHANGES_B'] = Button('submit:edit[diff]',
+                               _("Changes"), 'wikiaction',
+                               array('accesskey'=> 'c', 
+                                     'title' => 'Preview the current changes as diff [alt-c]'));
+        $el['UPLOAD_B'] = Button('submit:edit[upload]',
+                               _("Upload"), 'wikiaction',
+                                array('title' => 'Select a local file and press Upload to attach into this page'));
+        $el['SPELLCHECK_B'] = Button('submit:edit[SpellCheck]',
+                               _("Spell Check"), 'wikiaction',
+                                array('title' => 'Check the spelling'));
         $el['IS_CURRENT'] = $this->version == $this->current->getVersion();
 
         $el['WIDTH_PREF'] 
@@ -697,7 +742,7 @@ class PageEditor
         $this->locked = !empty($posted['locked']);
 
 	foreach (array('preview','save','edit_convert',
-		       'keep_old','overwrite') as $o) 
+		       'keep_old','overwrite','diff','upload') as $o) 
 	{
 	    if (!empty($posted[$o]))
 		$this->editaction = $o;
@@ -771,7 +816,7 @@ extends PageEditor
             $orig = $this->page->getRevision($this->_currentVersion);
             $this_content = explode("\n", $this->_content);
             $other_content = $this->current->getContent();
-            include_once("lib/diff.php");
+            require_once("lib/diff.php");
             $diff2 = new Diff($other_content, $this_content);
             $context_lines = max(4, count($other_content) + 1,
                                  count($this_content) + 1);
@@ -862,6 +907,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.112  2007/06/09 20:05:35  rurban
+ fix and optimize ENABLE_SPAMBLOCKLIST and ($newlinks > 5))
+
  Revision 1.111  2007/06/03 17:12:00  rurban
  convenience: only check above 5 external links for blocked domains
 
