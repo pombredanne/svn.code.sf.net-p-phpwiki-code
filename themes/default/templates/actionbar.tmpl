@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: actionbar.tmpl,v 1.39 2007-01-02 13:29:14 rurban Exp $');
+rcs_id('$Id: actionbar.tmpl,v 1.40 2007-07-15 17:38:58 rurban Exp $');
 ?>
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
 <?php /* I would like not to have to use these tables, and managed to
@@ -13,7 +13,7 @@ rcs_id('$Id: actionbar.tmpl,v 1.39 2007-01-02 13:29:14 rurban Exp $');
   <td>
   <div id="actionbuttons">
     <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
-      <?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
+      <?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"), false, array('id'=>'btn-edit')) ?>
     <?php } else { ?>
       <?= Button("viewsource", _("View Source")) ?>
     <?php } ?>
@@ -46,7 +46,7 @@ rcs_id('$Id: actionbar.tmpl,v 1.39 2007-01-02 13:29:14 rurban Exp $');
     <!-- End debugging buttons -->
 <?php } ?>
 <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
-    <?=$SEP?><?= Button("pdf") ?>
+      <?=$SEP?><?= Button("pdf","Pdf",'wikiclear',array('id'=>'btn-pdf')) ?>
 <?php } ?>
   </div>
   </td>
