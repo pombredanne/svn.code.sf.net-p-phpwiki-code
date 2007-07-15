@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki-heavy.css,v 1.5 2004-06-29 18:09:20 rurban Exp $
+ * $Id: phpwiki-heavy.css,v 1.6 2007-07-15 17:38:50 rurban Exp $
  *
  * This is stuff which should be in phpwiki.css, but which breaks Netscape 4.
  *
@@ -119,6 +119,22 @@ img.linkicon { vertical-align: middle; }
  * Edit Page & View Source
  */
 /* color: inherit; and background: inherit; display as lime in NS4 */
+
+/* http://www.aboutus.org/UniversalWikiEditButton */
+div#actionbuttons a#btn-edit {
+  background:  url('images/Edit-chalk-10g.png') bottom left no-repeat;
+  background-repeat: no-repeat;
+  padding-left: 20px !important;
+  padding-right: 0.5em !important;
+}
+/* image buttons */
+a.wikibutton, a.wikibutton:visited, input.wikibutton  { 
+  background-color: white;
+  border: 0;
+  -moz-appearance: none;
+  -moz-box-sizing: content-box;
+  -moz-border-radius: 0;
+}
 
 /**
  * Diff Output
