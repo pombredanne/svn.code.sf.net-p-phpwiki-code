@@ -9,14 +9,14 @@ if (! USE_PATH_INFO) { ?>
 <input type="hidden" name="pagename" value="<?= _("TitleSearch")?>" />
 <?php } ?>
 <input type="hidden" name="auto_redirect" value="1" />
-<?= $SEARCH_BEFORE ?> 
+<?= empty($SEARCH_BEFORE) ? '' : $SEARCH_BEFORE ?> 
 <input name="s" size="16" maxlength="256"
    value="<?=$s?>"
    onfocus="if (this.value == '<?=_("Search")?>') {this.value = '';}"
    onmouseout="window.status=''; return true;" 
    onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
    accesskey="f"
-<?php if (0 and ENABLE_ACDROPDOWN) { ?>
+<?php if (ENABLE_ACDROPDOWN) { ?>
    class="dropdown" id="searchInput" title="<?=_("LiveSearch") . " [$p-f]"?>" 
    style="width:115px;"
    acdropdown="true" autocomplete_complete="false" autocomplete_matchsubstring="false"
@@ -31,7 +31,7 @@ if (! USE_PATH_INFO) { ?>
 <?php } else { ?>
    type="text" id="search" 
    title="<?=_("TitleSearch")  . " [$p-f]"?>" /> 
-<?php } ?> <?= $SEARCH_AFTER ?>
+<?php } ?> <?= empty($SEARCH_AFTER) ? '' : $SEARCH_AFTER ?> 
 </form>
 </div>
 <!--}}}-->
