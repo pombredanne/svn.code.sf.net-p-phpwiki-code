@@ -102,7 +102,13 @@ div#f-poweredbyico,
 div#f-copyrightico,
 li#f-viewcount,
 li#f-about,
-li#f-disclaimer {
+li#f-disclaimer,
+div#xhtml-validator,
+li#pt-logout,
+li#pt-login,
+div#p-logo,
+div.hint,
+span.debug {
     /* Hides all the elements irrelevant for printing */
     display: none;
 }
