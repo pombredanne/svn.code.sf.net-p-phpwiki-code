@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.263 2007-07-14 12:05:29 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.264 2007-07-15 17:39:42 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -2082,8 +2082,8 @@ function printSimpleTrace($bt) {
 }
 
 /**
- * Return the used process memory (in byte?)
- * Enable the section which will work for you. (They are very slow)
+ * Return the used process memory, in bytes.
+ * Enable the section which will work for you. They are very slow.
  * Special quirks for Windows: Requires cygwin.
  */
 function getMemoryUsage() {
@@ -2100,17 +2100,17 @@ function getMemoryUsage() {
  	if (function_exists('win32_ps_list_procs')) {
 	    $info = win32_ps_stat_proc($pid);
 	    $memstr = $info['mem']['working_set_size'];
-	} elseif(0) {
+	} elseif(1) {
 	    // This works only if it's a cygwin process (apache or php).
 	    // Requires a newer cygwin
-	    //$memstr = exec("cat /proc/$pid/statm |cut -f1");
+	    $memstr = exec("cat /proc/$pid/statm |cut -f1");
 
 	    // if it's native windows use something like this: 
-	    //   (requires pslist from sysinternals.com)
-	    $memstr = exec("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
+	    //   (requires pslist from sysinternals.com, grep, sed and perl)
+	    //$memstr = exec("pslist $pid|grep -A1 Mem|sed 1d|perl -ane\"print \$"."F[5]\"");
         }
         return (integer) trim($memstr);
-    } elseif (0) {
+    } elseif (1) {
         $pid = getmypid();
         //%MEM: Percentage of total memory in use by this process
         //VSZ: Total virtual memory size, in 1K blocks.
@@ -2122,7 +2122,39 @@ function getMemoryUsage() {
     }
 }
 
+/**
+ * @param var $needle
+ * @param array $haystack one-dimensional numeric array only, no hash
+ * @return integer
+ * @desc Feed a sorted array to $haystack and a value to search for to $needle.
+             It will return false if not found or the index where it was found.
+  From dennis.decoene@moveit.be http://www.php.net/array_search
+*/
+function binary_search($needle, $haystack) {
+    //trigger_error("binary_search() not yet implemented");
+    $high = count($haystack);
+    $low = 0;
+   
+    while ($high - $low >= 1) {
+        $probe = ($high + $low) / 2;
+        if ($haystack[$probe] < $needle){
+            $low = $probe;
+        } else{
+            $high = $probe;
+        }
+    }
+
+    if ($high == count($haystack) || $haystack[$high] != $needle) {
+        return false;
+    } else {
+        return $high;
+    }
+}
+
 // $Log: not supported by cvs2svn $
+// Revision 1.263  2007/07/14 12:05:29  rurban
+// add url field to WikiPageName for interwiki expansion
+//
 // Revision 1.262  2007/06/07 17:02:01  rurban
 // fix display of pagenames containing ":" in certain lists
 //
