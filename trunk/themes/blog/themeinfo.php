@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.7 2007-07-01 09:36:10 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.8 2007-07-15 17:39:57 rurban Exp $');
 
 /**
  * This file defines a blog theme for PhpWiki, 
@@ -37,8 +37,6 @@ liveSearchReq.open("GET", liveSearchURI + "?format=livesearch&paging=none&limit=
  */
 
 require_once('lib/Theme.php');
-// Oh holy shit. This creates the wrong theme, which would result in double initializations.
-// So never derive from themes
 //require_once('themes/Sidebar/themeinfo.php');
 
 class Theme_blog extends Theme {
@@ -47,7 +45,8 @@ class Theme_blog extends Theme {
         $this->Theme($theme_name);
         $this->calendarInit(true);
     }
-    
+
+    /* overload to load from Sidebar */    
     function _findFile ($file, $missing_okay=false) {
         if (file_exists($this->_path . "themes/".$this->_name."/$file"))
             return "themes/".$this->_name."/$file";
@@ -120,7 +119,9 @@ class Theme_blog extends Theme {
 
 	// override sidebar definitions:
 	$this->setDefaultCSS(_("blog"), 'Kubrick.css');
-
+	if (isBrowserIE()) {
+	    $this->addMoreHeaders($this->_CSSlink(0, $this->_findFile('IEFixes.css'),'all'));
+	}
 	$this->addButtonAlias(_("(diff)"), "[diff]" );
 	$this->addButtonAlias("...", "alltime");
 
