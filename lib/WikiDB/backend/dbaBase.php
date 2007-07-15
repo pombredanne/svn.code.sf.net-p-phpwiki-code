@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: dbaBase.php,v 1.29 2007-05-24 18:39:10 rurban Exp $');
+rcs_id('$Id: dbaBase.php,v 1.30 2007-07-15 17:39:25 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -166,12 +166,13 @@ extends WikiDB_backend
     function rename_page($pagename, $to) {
         $result = $this->_pagedb->get($pagename);
         if ($result) {
-            list($version,$flags,$data) = explode(':', $result, 3);
+            list($version, $flags, $data) = explode(':', $result, 3);
             $data = unserialize($data);
         }
         else
             return false;
 
+        $links = $this->_linkdb->get_links($pagename, false, false);
         $this->_pagedb->delete($pagename);
         $data['pagename'] = $to;
         $this->_pagedb->set($to,
@@ -181,6 +182,10 @@ extends WikiDB_backend
         // move over the latest version only
         $pvdata = $this->get_versiondata($pagename, $version, true);
         $this->set_versiondata($to, $version, $pvdata);
+
+	// update links and backlinks
+        $this->_linkdb->set_links($to, $links);
+
 	return true;
     }
             
@@ -586,8 +591,8 @@ class WikiDB_backend_dbaBase_linktable
         $this->_db = &$dba;
     }
 
-    //FIXME: try storing link lists as hashes rather than arrays.
-    // (backlink deletion would be faster.)
+    //TODO: try storing link lists as hashes rather than arrays.
+    //      backlink deletion would be faster.
     function get_links($page, $reversed=true, $want_relations=false) {
         if ($want_relations) {
             $this->found_relations = 0;	
@@ -632,7 +637,7 @@ class WikiDB_backend_dbaBase_linktable
         $newlinks = array();
         foreach ($links as $hash) {
             if (!empty($hash['linkto']) 
-                and !in_array($hash['linkto'],$newlinks))
+                and !in_array($hash['linkto'], $newlinks))
                  // for attributes it's empty
                 $newlinks[] = $hash['linkto'];		
         }
@@ -757,10 +762,13 @@ class WikiDB_backend_dbaBase_linktable
     
     function _has_link($which, $page, $link) {
         $links = $this->_get_links($which, $page);
-        //TODO: since links are always sorted do a binary search or at least break if >
+        // since links are always sorted, break if >
+	// TODO: binary search
         foreach($links as $l) {
             if ($l['linkto'] == $link)
                 return true;
+            if ($l['linkto'] > $link)
+                return false;
         }
         return false;
     }
@@ -780,6 +788,9 @@ class WikiDB_backend_dbaBase_linktable
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2007/05/24 18:39:10  rurban
+// limits for get_all_pages, improved WantedPages
+//
 // Revision 1.28  2007/01/03 21:26:01  rurban
 // Fix dba searching for relations. Optimize link_search for strict attribute search. Add relation_search()
 //
