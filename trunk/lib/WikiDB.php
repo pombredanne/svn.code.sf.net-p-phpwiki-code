@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.154 2007-07-14 12:03:58 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.155 2007-07-15 17:39:33 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -515,23 +515,35 @@ class WikiDB {
             //update all WikiLinks in existing pages
             //non-atomic! i.e. if rename fails the links are not undone
             if ($updateWikiLinks) {
+		$lookbehind = "/(?<=[\W:])\Q";
+		$lookahead = "\E(?=[\W:])/";
+		if (!check_php_version(4,3,3)) {
+		    $lookbehind = "/(?<=[\W:])";
+		    $lookahead  = "(?=[\W:])/";
+		    $from = preg_quote($from, "/");
+		    $to   = preg_quote($to, "/");
+		}
                 require_once('lib/plugin/WikiAdminSearchReplace.php');
                 $links = $oldpage->getBackLinks();
                 while ($linked_page = $links->next()) {
-                    WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,
-                                                                     $linked_page->getName(),
-                                                                     $from, $to);
+                    WikiPlugin_WikiAdminSearchReplace::replaceHelper
+			($this,
+			 $linked_page->getName(),
+			 $lookbehind.$from.$lookahead, $to, 
+			 true, true);
                 }
                 $links = $newpage->getBackLinks();
                 while ($linked_page = $links->next()) {
-                    WikiPlugin_WikiAdminSearchReplace::replaceHelper($this,
-                                                                     $linked_page->getName(),
-                                                                     $from, $to);
+                    WikiPlugin_WikiAdminSearchReplace::replaceHelper
+			($this,
+			 $linked_page->getName(),
+			 $lookbehind.$from.$lookahead, $to, 
+			 true, true);
                 }
             }
             if ($oldpage->exists() and ! $newpage->exists()) {
                 if ($result = $this->_backend->rename_page($from, $to)) {
-                    //create a RecentChanges entry with explaining summary
+                    // create a RecentChanges entry with explaining summary
                     $page = $this->getPage($to);
                     $current = $page->getCurrentRevision();
                     $meta = $current->_data;
@@ -2213,6 +2225,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.154  2007/07/14 12:03:58  rurban
+// support score
+//
 // Revision 1.153  2007/06/07 16:54:29  rurban
 // enable $MailNotify->onChangePage. support other formatters (MediaWiki, Creole, ...)
 //
