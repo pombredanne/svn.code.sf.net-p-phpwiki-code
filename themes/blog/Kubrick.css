@@ -50,6 +50,13 @@ body {
   /*height: 40px;*/
 }
 
+/* http://www.aboutus.org/UniversalWikiEditButton */
+div.actionbuttons a#btn-edit {
+  background:  url('images/Edit-chalk-10bo12.png') bottom left no-repeat;
+  background-repeat: no-repeat;
+  padding-left: 13px !important;
+}
+
 #LSResult {
   position: absolute;
   text-align: left;
