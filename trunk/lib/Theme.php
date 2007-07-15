@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.142 2007-07-01 09:36:09 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.143 2007-07-15 17:39:18 rurban Exp $');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -822,7 +822,9 @@ class Theme {
 
         $imgurl = $this->getButtonURL($text);
         if ($imgurl)
-            return new ImageButton($text, $url, $class, $imgurl, $options);
+            return new ImageButton($text, $url, 
+				   in_array($class,array("wikiaction","wikiadmin"))?"wikibutton":$class, 
+				   $imgurl, $options);
         else
             return new Button($this->maybeSplitWikiWord($text), $url, 
                               $class, $options);
@@ -832,7 +834,7 @@ class Theme {
         $imgurl = $this->getButtonURL($text);
 
         if ($imgurl)
-            return new SubmitImageButton($text, $name, $class, $imgurl, $options);
+            return new SubmitImageButton($text, $name, !$class ? "wikibutton" : $class, $imgurl, $options);
         else
             return new SubmitButton($text, $name, $class, $options);
     }
@@ -1785,6 +1787,10 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.142  2007/07/01 09:36:09  rurban
+// themes are now easier derivable classes from other themes.
+// removed global code setters, switched to $WikiTheme->load() in main
+//
 // Revision 1.141  2007/06/02 18:24:30  rurban
 // Added accesskeys. Added js stylepath
 //
