@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.60 2007-05-30 21:58:18 rurban Exp $
+ * $Id: phpwiki.css,v 1.61 2007-07-15 17:40:13 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -193,6 +193,10 @@ h1 .backlinks { text-decoration: underline; }
 .interwiki, i.interwiki .wikipage, em .interwiki .wikipage { font-style: oblique; }
 .interwiki .wikipage, i .interwiki, em .interwiki { font-style: normal; }
 
+/* image buttons */
+a.wikibutton, a.wikibutton:visited, input.wikibutton  { 
+    background-color: none; 
+}
 
 /**
  * headings: Georgia
