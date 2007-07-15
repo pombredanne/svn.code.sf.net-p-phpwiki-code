@@ -1,9 +1,10 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.10 2007-07-01 09:36:10 rurban Exp $');
+rcs_id('$Id: themeinfo.php,v 1.11 2007-07-15 17:40:31 rurban Exp $');
 /**
  * The wikilens theme is just a normal Theme (can be based on any, here based on default),
  * which additionally loads some wikilens libraries.
  * And of course it has it's own set of icons for the ratingwidget.
+ * http://www.wikilens.org/wiki/
  */
 require_once('lib/Theme.php');
 
