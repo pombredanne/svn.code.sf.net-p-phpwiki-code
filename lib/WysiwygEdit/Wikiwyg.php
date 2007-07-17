@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.10 2007-07-17 14:18:52 labbenes Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.11 2007-07-17 14:38:40 labbenes Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -56,7 +56,6 @@ var pagename = '".$request->getArg('pagename')."';
 	        imagesLocation: base_url+'/themes/default/Wikiwyg/images/',
 		controlLayout: [
 		       'save','preview','save_button','|',
-                       'mode_selector', '/',
 		       'p','|',
 		       'h2', 'h3', 'h4','|',
 		       'bold', 'italic', '|',
