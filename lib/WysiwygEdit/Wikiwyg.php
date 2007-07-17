@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.9 2007-01-07 18:44:00 rurban Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.10 2007-07-17 14:18:52 labbenes Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -45,10 +45,11 @@ var pagename = '".$request->getArg('pagename')."';
         }
         $doubleClickToEdit = ($GLOBALS['request']->getPref('doubleClickEdit') or ENABLE_DOUBLECLICKEDIT) 
             ? 'true' : 'false';
-        return JavaScript($this->_jsdefault . "
-window.onload = function() {
-   var wikiwyg = new Wikiwyg.Phpwiki();
-   var config = {
+	if ($GLOBALS['request']->getArg('mode') && $GLOBALS['request']->getArg('mode') == 'wysiwyg'){
+            return JavaScript($this->_jsdefault . "
+            window.onload = function() {
+            var wikiwyg = new Wikiwyg.Phpwiki();
+            var config = {
             doubleClickToEdit:  $doubleClickToEdit,
             javascriptLocation: base_url+'/themes/default/Wikiwyg/',
             toolbar: {
@@ -91,23 +92,30 @@ window.onload = function() {
 	    wikitext: {
 	      supportCamelCaseLinks: true
 	    }
-   };
-   var div = document.getElementById(\"" . $this->_htmltextid . "\");
-   wikiwyg.createWikiwygArea(div, config);
-   wikiwyg_divs.push(wikiwyg);
-   wikiwyg.editMode();
-}");
+            };
+            var div = document.getElementById(\"" . $this->_htmltextid . "\");
+            wikiwyg.createWikiwygArea(div, config);
+            wikiwyg_divs.push(wikiwyg);
+            wikiwyg.editMode();}"
+	    );
+        }
     }
 
     function Textarea ($textarea, $wikitext, $name='edit[content]') {
+        global $request;
+    
         $htmltextid = $this->_htmltextid;
         $textarea->SetAttr('id', $htmltextid);
         $iframe0 = new RawXml('<iframe id="iframe0" height="0" width="0" frameborder="0"></iframe>');
-        $out = HTML(HTML::div(array('class' => 'hint'), 
-                              _("Warning: This Wikiwyg editor has only Beta quality!")),
-                    $textarea,
-                    $iframe0,
-		    "\n");
+        if ($request->getArg('mode') and $request->getArg('mode') == 'wysiwyg'){
+	    $out = HTML(HTML::div(array('class' => 'hint'), 
+                                  _("Warning: This Wikiwyg editor has only Beta quality!")),
+                        $textarea,
+                        $iframe0,
+		        "\n");
+	}else{
+	    $out = HTML($textarea, $iframe0, "\n");
+	}
 	return $out;
     }
 
@@ -297,6 +305,9 @@ function replace_rich_table($matched) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.9  2007/01/07 18:44:00  rurban
+ Improve id: edit: to edit-
+
  Revision 1.8  2007/01/02 13:20:57  rurban
  use the new _DEBUG_REMOTE flag. simplify default utf-8 charset conversion, not requiring iconv
 
