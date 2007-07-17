@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: actionbar.tmpl,v 1.40 2007-07-15 17:38:58 rurban Exp $');
+rcs_id('$Id: actionbar.tmpl,v 1.41 2007-07-17 14:15:58 labbenes Exp $');
 ?>
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
 <?php /* I would like not to have to use these tables, and managed to
@@ -14,6 +14,7 @@ rcs_id('$Id: actionbar.tmpl,v 1.40 2007-07-15 17:38:58 rurban Exp $');
   <div id="actionbuttons">
     <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
       <?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"), false, array('id'=>'btn-edit')) ?>
+      <?=$SEP?><?= Button(array("action" => "edit", "mode"=> "wysiwyg"), "Wysiwyg Editor", false, array('id' => 'btn-wysiwyg-edit')) ?>
     <?php } else { ?>
       <?= Button("viewsource", _("View Source")) ?>
     <?php } ?>
