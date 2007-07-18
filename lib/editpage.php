@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: editpage.php,v 1.113 2007-07-14 12:04:12 rurban Exp $');
+rcs_id('$Id: editpage.php,v 1.114 2007-07-18 09:49:31 labbenes Exp $');
 
 require_once('lib/Template.php');
 
@@ -654,6 +654,10 @@ class PageEditor
                                 'disabled' => (bool) !$this->user->isadmin(),
                                 'checked'  => (bool) $this->locked));
 
+	if (($this->version == 0) and ($request->getArg('mode') != 'wysiwyg')){
+	$el['WYSIWYG_B'] = Button(array("action" => "edit", "mode" => "wysiwyg"), "Wysiwyg Editor");
+	}
+
         $el['PREVIEW_B'] = Button('submit:edit[preview]', _("Preview"),
                                   'wikiaction',
                                   array('accesskey'=> 'p', 
@@ -907,6 +911,9 @@ extends PageEditor
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.113  2007/07/14 12:04:12  rurban
+ aesthetic request: remove ?action=edit after edit, add upload and diff
+
  Revision 1.112  2007/06/09 20:05:35  rurban
  fix and optimize ENABLE_SPAMBLOCKLIST and ($newlinks > 5))
 
