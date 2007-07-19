@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.35 2007-02-17 14:17:48 rurban Exp $');
+rcs_id('$Id: CreateToc.php,v 1.36 2007-07-19 12:41:25 labbenes Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.35 $");
+                            "\$Revision: 1.36 $");
     }
 
     function getDefaultArguments() {
@@ -71,7 +71,7 @@ extends WikiPlugin
     }
     // Initialisation of toc counter
     function _initTocCounter() {
-        $counter = array(1=>1, 2=>0, 3=>0);
+        $counter = array(1=>0, 2=>0, 3=>0);
         return $counter;
     }
 
@@ -410,6 +410,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.35  2007/02/17 14:17:48  rurban
+// declare vars for IE6
+//
 // Revision 1.34  2007/01/28 22:47:06  rurban
 // fix # back link
 //
