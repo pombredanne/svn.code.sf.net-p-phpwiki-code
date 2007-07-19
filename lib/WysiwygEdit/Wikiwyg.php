@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.11 2007-07-17 14:38:40 labbenes Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.12 2007-07-19 09:33:41 labbenes Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -105,7 +105,7 @@ var pagename = '".$request->getArg('pagename')."';
     
         $htmltextid = $this->_htmltextid;
         $textarea->SetAttr('id', $htmltextid);
-        $iframe0 = new RawXml('<iframe id="iframe0" height="0" width="0" frameborder="0"></iframe>');
+        $iframe0 = new RawXml('<iframe id="iframe0" src="/blank.htm" height="0" width="0" frameborder="0"></iframe>');
         if ($request->getArg('mode') and $request->getArg('mode') == 'wysiwyg'){
 	    $out = HTML(HTML::div(array('class' => 'hint'), 
                                   _("Warning: This Wikiwyg editor has only Beta quality!")),
@@ -304,6 +304,9 @@ function replace_rich_table($matched) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.11  2007/07/17 14:38:40  labbenes
+ Remove the mode selector from wikiwyg toolbar.
+
  Revision 1.9  2007/01/07 18:44:00  rurban
  Improve id: edit: to edit-
 
