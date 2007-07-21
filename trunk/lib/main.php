@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.235 2007-07-14 12:04:19 rurban Exp $');
+rcs_id('$Id: main.php,v 1.236 2007-07-21 18:08:49 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -200,11 +200,11 @@ class WikiRequest extends Request {
             include_once("themes/default/themeinfo.php");
         assert(!empty($WikiTheme));
 
-	// When all themeinfo.php files do not execute global init code anymore
-	$WikiTheme->load();
+	// Do not execute global init code anymore
 
-	// callbacks
+	// Theme callbacks
 	if ($when == 'login') {
+	    $WikiTheme->CbUserLogin($this, $this->_user->_userid);
 	    if (!$this->_user->hasHomePage()) { // NewUser
 		$WikiTheme->CbNewUserLogin($this, $this->_user->_userid);
 		if (in_array($this->getArg('action'), array('edit','create')))
@@ -213,6 +213,13 @@ class WikiRequest extends Request {
 	}
 	elseif ($when == 'logout') {
 	    $WikiTheme->CbUserLogout($this, $this->_user->_userid);
+	}
+	elseif ($when == 'default') {
+	    $WikiTheme->load();
+	    if ($this->_user->_level > 0 and !$this->_user->hasHomePage()) { // NewUser
+		if (in_array($this->getArg('action'), array('edit','create')))
+		    $WikiTheme->CbNewUserEdit($this, $this->_user->_userid);
+	    }
 	}
     }
 
@@ -1046,20 +1053,23 @@ class WikiRequest extends Request {
     function action_search () {
     	// Decide between title or fulltextsearch (e.g. both buttons available).
         // Reformulate URL and redirect.
-        if ($this->getArg('searchtype') == 'full') {
+	$searchtype = $this->getArg('searchtype');
+	$args = array('s' => $this->getArg('searchterm') 
+	                       ? $this->getArg('searchterm') 
+	                       : $this->getArg('s'));
+        if ($searchtype == 'full' or $searchtype == 'fulltext') {
             $search_page = _("FullTextSearch");
         }
-        elseif ($this->getArg('searchtype') == 'external') {
-            $s = $this->getArg('searchterm') ? $this->getArg('searchterm') : $this->getArg('s');
+        elseif ($searchtype == 'external') {
+            $s = $args['s'];
 	    $link = new WikiPageName("Search:$s"); // Expand interwiki url. I use xapian-omega
             $this->redirect($link->url);
         }
         else {
             $search_page = _("TitleSearch");
+	    $args['auto_redirect'] = 1;
         }
-        $this->redirect(WikiURL($search_page,
-                                array('s' => $this->getArg('searchterm') ? $this->getArg('searchterm') : $this->getArg('s')),
-                                'absolute_url'));
+        $this->redirect(WikiURL($search_page, $args, 'absolute_url'));
     }
 
     function action_edit () {
@@ -1342,6 +1352,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.235  2007/07/14 12:04:19  rurban
+// support searchtype=external (mediawiki like search buttons: Text, Title, External)
+//
 // Revision 1.234  2007/07/01 09:36:10  rurban
 // themes are now easier derivable classes from other themes.
 // removed global code setters, switched to $WikiTheme->load() in main
