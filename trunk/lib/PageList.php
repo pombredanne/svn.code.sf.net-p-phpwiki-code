@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.143 2007-07-14 12:03:19 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.144 2007-07-21 19:33:43 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -546,7 +546,8 @@ class PageList {
                   'most' => array('pagename','mtime','author','hits'),
                   'some' => array('pagename','mtime','author')
                   );
-	if ($this->_options['listtype'] == 'dl')
+	if (isset($this->_options['listtype']) 
+	    and $this->_options['listtype'] == 'dl')
 	    $this->_options['nopage'] = 1;
         if ($columns) {
             if (!is_array($columns))
@@ -816,7 +817,9 @@ class PageList {
 
         if ($this->isEmpty())
             return $this->_emptyList($caption);
-        elseif (in_array($this->_options['listtype'], array('ol','ul','comma','dl')))
+        elseif (isset($this->_options['listtype']) 
+		and in_array($this->_options['listtype'], 
+			     array('ol','ul','comma','dl')))
             return $this->_generateList($caption);
         elseif (count($this->_columns) == 1)
             return $this->_generateList($caption);
@@ -1217,8 +1220,8 @@ class PageList {
             foreach ($this->_sortby as $colNum => $direction) {
             	// get column type object
                 if (!is_int($colNum)) { // or column fieldname
-                    if ($temp = $this->_columnsMap[$colNum])
-                        $col = $this->_columns[$temp - 1];
+                    if (isset($this->_columnsMap[$colNum]))
+                        $col = $this->_columns[$this->_columnsMap[$colNum] - 1];
                     elseif (isset($this->_types[$colNum]))
                         $col = $this->_types[$colNum];
                 }
@@ -1443,6 +1446,8 @@ function flipAll(formObj) {
     // FIXME: only unique list entries, esp. with nopage
     function _generateList($caption='') {
     	if (empty($this->_pages)) return; // stop recursion
+	if (!isset($this->_options['listtype'])) 
+	    $this->_options['listtype'] = '';
         $out = HTML();
         if ($caption)
             $out->pushContent(HTML::p($caption));
@@ -1646,6 +1651,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.143  2007/07/14 12:03:19  rurban
+// support listtype=dl and ranked search
+//
 // Revision 1.142  2007/07/01 09:09:19  rurban
 // fix PageList with multiple lists: added id, fixed sortby REQUEST logic
 //
