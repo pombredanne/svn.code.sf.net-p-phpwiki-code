@@ -1,4 +1,4 @@
--- $Id: mysql-initialize.sql,v 1.14 2007-01-04 16:48:05 rurban Exp $
+-- $Id: mysql-initialize.sql,v 1.15 2007-07-23 06:42:21 rurban Exp $
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
@@ -146,3 +146,5 @@ CREATE INDEX log_host ON accesslog (remote_host);
 
 -- upgrade to 1.3.13:
 -- ALTER TABLE accesslog CHANGE remote_host VARCHAR(100);
+-- ALTER TABLE link ADD relation INT DEFAULT 0;
+-- CREATE INDEX relation ON link (relation);
