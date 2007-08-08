@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.264 2007-07-15 17:39:42 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.265 2007-08-08 18:47:14 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -1504,7 +1504,7 @@ function glob_to_pcre ($glob) {
         return $glob;
     // preg_replace cannot handle "\\\\\\2" so convert \\ to \xff
     $glob = strtr($glob, "\\", "\xff");
-    $glob = str_replace("/", '\/', $glob);
+    $glob = str_replace("/", "\\/", $glob);
     // first convert some unescaped expressions to pcre style: . => \.
     $special = ".^$";
     $re = preg_replace('/([^\xff])?(['.preg_quote($special).'])/', 
@@ -1522,7 +1522,7 @@ function glob_to_pcre ($glob) {
     //while (strcspn($re, $escape) != strlen($re)) // loop strangely needed
     $re = preg_replace('/([^\xff])(['.preg_quote($escape, "/").'])/', 
                        "\\1\xff\\2", $re);
-    return strtr($re, "\xff", "\\");
+    return strtr($re, "\xff", "");
 }
 
 function glob_match ($glob, $against, $case_sensitive = true) {
@@ -2131,15 +2131,16 @@ function getMemoryUsage() {
   From dennis.decoene@moveit.be http://www.php.net/array_search
 */
 function binary_search($needle, $haystack) {
-    //trigger_error("binary_search() not yet implemented");
     $high = count($haystack);
     $low = 0;
    
-    while ($high - $low >= 1) {
-        $probe = ($high + $low) / 2;
-        if ($haystack[$probe] < $needle){
+    while (($high - $low) > 1) {
+        $probe = floor(($high + $low) / 2);
+        if ($haystack[$probe] < $needle) {
             $low = $probe;
-        } else{
+        } elseif ($haystack[$probe] == $needle) {
+            $high = $low = $probe;
+        } else {
             $high = $probe;
         }
     }
@@ -2152,6 +2153,9 @@ function binary_search($needle, $haystack) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.264  2007/07/15 17:39:42  rurban
+// add binary_search. enable memory ps calls
+//
 // Revision 1.263  2007/07/14 12:05:29  rurban
 // add url field to WikiPageName for interwiki expansion
 //
