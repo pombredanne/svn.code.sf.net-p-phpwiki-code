@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.61 2007-07-14 17:55:29 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.62 2007-08-10 21:54:08 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -1082,20 +1082,33 @@ class Block_divspan extends BlockMarkup
         $pos = $input->getPos();
         $pi  = $content = $m->postmatch;
         while (!preg_match('/^(.*)\<\/'.$tag.'\>(.*)$/i', $pi, $me)) {
-            $content .= "\n$pi";;
+            if ($pi != $content)
+                $content .= "\n$pi";
             if (($pi = $input->nextLine()) === false) {
                 $input->setPos($pos);
                 return false;
             }
         }
-        $content .= $me[1]; // prematch
+        if ($pi != $content)
+            $content .= $me[1]; // prematch
+        else
+            $content = $me[1];
         $input->advance();
         $content = TransformInline(trim($content));
-        if (!$argstr) $args = false;
+        if (!$argstr) 
+            $args = false;
         else {
-            foreach (preg_split("/\s+/", $argstr) as $a) {
-                @list($k, $v) = preg_split("/\s*=\s*/", $a);
-                if ($v) $v = preg_replace(array("/^[\"']/","/['\"]$/"), array('',''), $v);
+            $args = array();
+            while (preg_match("/(\w+)=(.+)/", $argstr, $m)) {
+            	$k = $m[1]; $v = $m[2];
+            	if (preg_match("/^\"(.+?)\"(.*)$/", $v, $m)) {
+            	    $v = $m[1];
+            	    $argstr = $m[2];
+            	} else {
+            	    preg_match("/^(\s+)(.*)$/", $v, $m);
+            	    $v = $m[1];
+            	    $argstr = $m[2];
+            	}
                 if (trim($k) and trim($v)) $args[$k] = $v;
             }
         }
@@ -1153,6 +1166,9 @@ function TransformText ($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2007/07/14 17:55:29  rurban
+// SemanticWeb.php
+//
 // Revision 1.60  2007/01/07 18:41:32  rurban
 // Fix ENABLE_DIVSPAN
 //
