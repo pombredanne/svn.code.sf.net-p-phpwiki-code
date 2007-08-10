@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.75 2007-07-01 09:17:45 rurban Exp $');
+rcs_id('$Id: display.php,v 1.76 2007-08-10 21:59:27 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -108,6 +108,7 @@ function actionPage(&$request, $action) {
 	    if (!in_array($format, array("rss91","rss2","rss","atom","rdf")))
 		trigger_error(sprintf("Format %s requires an actionpage returning a pagelist.", $format)
 			      ."\n".("Fall back to single page mode"), E_USER_WARNING);
+	    require_once('lib/PageList.php');
 	    $pagelist = new PageList();
 	    $pagelist->addPage($page);
 	}
@@ -127,6 +128,10 @@ function actionPage(&$request, $action) {
 	} elseif ($format == 'rdf') { // all semantic relations and attributes
 	    require_once("lib/SemanticWeb.php");
 	    $rdf = new RdfWriter($request, $pagelist);
+	    $rdf->format();
+	} elseif ($format == 'rdfs') {
+	    require_once("lib/SemanticWeb.php");
+	    $rdf = new RdfsWriter($request, $pagelist);
 	    $rdf->format();
 	} elseif ($format == 'owl') { // or daml?
 	    require_once("lib/SemanticWeb.php");
@@ -337,6 +342,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.75  2007/07/01 09:17:45  rurban
+// add ATOM support, a very questionable format
+//
 // Revision 1.74  2007/06/07 17:01:27  rurban
 // actionPage has no toks: fix format=rss* on actionpages
 //
