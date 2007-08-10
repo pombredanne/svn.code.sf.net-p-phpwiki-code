@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.116 2007-07-14 17:55:29 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.117 2007-08-10 21:56:29 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -173,7 +173,8 @@ function IniConfig($file) {
          'GOOGLE_LICENSE_KEY','FORTUNE_DIR',
          'DISABLE_GETIMAGESIZE','DBADMIN_USER','DBADMIN_PASSWD',
          'SESSION_SAVE_PATH', 'TOOLBAR_PAGELINK_PULLDOWN', 'TOOLBAR_TEMPLATE_PULLDOWN',
-         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL', 'USE_EXTERNAL_HTML2PDF'
+         'EXTERNAL_LINK_TARGET', 'ACCESS_LOG_SQL', 'USE_EXTERNAL_HTML2PDF',
+	 'LOGIN_LOG','LDAP_SEARCH_FILTER'
          );
 
     // List of all valid config options to be define()d which take booleans.
@@ -196,7 +197,8 @@ function IniConfig($file) {
          'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML',
          'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
          'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS',
-	 'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS'
+	 'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS',
+         'ENABLE_AUTH_OPENID'
          );
 
     $rs = @parse_ini_file($file);
@@ -938,6 +940,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.116  2007/07/14 17:55:29  rurban
+// SemanticWeb.php
+//
 // Revision 1.115  2007/04/18 20:40:49  rurban
 // added DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS
 //
