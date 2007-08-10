@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.153 2007-05-28 20:54:40 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.154 2007-08-10 22:00:43 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
@@ -175,16 +175,27 @@ function MailifyPage ($page, $nversions = 1)
  * '.', and '..'. (Also, there's no point in generating "hidden" file
  * names, like '.foo'.)
  *
+ * We have to apply a different "/" logic for dumpserial, htmldump and zipdump.
+ * dirs are allowed for zipdump and htmldump, not for dumpserial
+ * 
+ *
  * @param $pagename string Pagename.
  * @return string Filename for page.
  */
-function FilenameForPage ($pagename)
+function FilenameForPage ($pagename, $action = false)
 {
-    //$enc = rawurlencode($pagename);
-    $enc = preg_replace('/:/', '%3A', $pagename);
-    // For every %2F will need to mkdir -p dirname($pagename)
-    return preg_replace('/^\./', '%2E', $enc);
-    // return preg_replace(array('/^\./','%20'), array('%2E',' '), $enc);
+    $enc = rawurlencode($pagename);
+    if (!$action) {
+    	global $request;
+	$action = $request->getArg('action');
+    }
+    if ($action != 'dumpserial') { // zip, ziphtml, dumphtml
+	// For every %2F we will need to mkdir -p dirname($pagename)
+	$enc = preg_replace('/%2F/', '/', $enc);
+    }
+    $enc = preg_replace('/^\./', '%2E', $enc);
+    $enc = preg_replace('/%20/', ' ', $enc);
+    return $enc;
 }
 
 /**
@@ -1452,6 +1463,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.153  2007/05/28 20:54:40  rurban
+ fix DumpToHtml creating dirs
+
  Revision 1.152  2007/05/01 16:22:41  rurban
  lock InterWikiMap on init
 
