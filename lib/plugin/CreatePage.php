@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreatePage.php,v 1.11 2007-01-27 21:36:52 rurban Exp $');
+rcs_id('$Id: CreatePage.php,v 1.12 2007-08-10 22:03:34 rurban Exp $');
 /**
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_Template
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.11 $");
+                            "\$Revision: 1.12 $");
     }
 
     function getDefaultArguments() {
@@ -64,10 +64,11 @@ extends WikiPlugin_Template
 
     function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
-        if (!$s)
-            return '';
         // Prevent spaces at the start and end of a page name
         $s = trim($s);
+        if (!$s) {
+            return $this->error(_("Cannot create page with empty name!"));
+	}
 
         $param = array('action' => 'edit');
         if ($template and $dbi->isWikiPage($template)) {
@@ -126,6 +127,9 @@ extends WikiPlugin_Template
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2007/01/27 21:36:52  rurban
+// Overwrite empty or deleted pages
+//
 // Revision 1.10  2007/01/25 07:42:16  rurban
 // Changed doVariableExpansion API.
 //
