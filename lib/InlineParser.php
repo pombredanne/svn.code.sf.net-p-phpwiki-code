@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.91 2007-06-07 18:56:57 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.92 2007-08-10 21:58:01 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 Reini Urban
  *
@@ -523,7 +523,11 @@ class Markup_interwiki extends SimpleMarkup
 
 class Markup_semanticlink extends SimpleMarkup
 {
-    var $_match_regexp = "(?:\w+:[:=]\S+)"; // no units seperated by space allowed here
+    // No units seperated by space allowed here
+    // For :: (relations) only words, no comma,
+    // but for := (attributes) comma and dots are allowed. Units with groupsep.
+    // Ending dots or comma are not part of the link.
+    var $_match_regexp = "(?: \w+:=\S+(?<![\.,]))|(?: \w+::[\w\.]+(?<!\.))"; 
 
     function markup ($match) {
         return new Cached_SemanticLink(UnWikiEscape($match));
@@ -1073,6 +1077,10 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.91  2007/06/07 18:56:57  rurban
+// patch #1732793: allow \n, mult. {{ }} in one line, and single
+// letters (slightly improved) by AlJeux and ReiniUrban
+//
 // Revision 1.90  2007/03/18 17:35:14  rurban
 // Fix :DontStoreLink
 //
