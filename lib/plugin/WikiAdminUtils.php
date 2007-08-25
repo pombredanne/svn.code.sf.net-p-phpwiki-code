@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.24 2007-01-07 18:46:31 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.25 2007-08-25 18:55:49 rurban Exp $');
 /**
  Copyright 2003,2004,2006 $ThePhpWikiProgrammingTeam
 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
@@ -209,7 +209,7 @@ extends WikiPlugin
 	longer_timeout(180);
         $dbh = $request->getDbh();
 	//FIXME: display result.
-        $result = $dbh->_backend->check();
+        $result = $dbh->_backend->check($args);
         return $result;
     }
 
@@ -217,7 +217,7 @@ extends WikiPlugin
 	longer_timeout(240);
         $dbh = $request->getDbh();
 	//FIXME: display result.
-        $result = $dbh->_backend->rebuild();
+        $result = $dbh->_backend->rebuild($args);
         return $result;
     }
 
