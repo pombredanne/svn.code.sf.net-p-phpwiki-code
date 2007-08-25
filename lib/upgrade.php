@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.59 2007-06-09 18:57:44 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.60 2007-08-25 18:43:35 rurban Exp $');
 /*
  Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
 
@@ -396,7 +396,7 @@ CREATE TABLE $log_tbl (
      *   people should export/import their pages if using that old versions.
      */
     function CheckDatabaseUpdate() {
-	global $DBAuthParams;
+	global $DBAuthParams, $DBParams;
 
 	echo "<h3>",sprintf(_("check for necessary %s updates"),
 			    _("database")),
@@ -1279,6 +1279,9 @@ function DoUpgrade(&$request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.59  2007/06/09 18:57:44  rurban
+ fix action=upgrade for dba
+
  Revision 1.58  2007/01/28 22:54:18  rurban
  more objectification. store last db update.
 
