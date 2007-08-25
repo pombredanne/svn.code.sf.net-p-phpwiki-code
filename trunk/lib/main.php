@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.236 2007-07-21 18:08:49 rurban Exp $');
+rcs_id('$Id: main.php,v 1.237 2007-08-25 18:03:34 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -506,9 +506,10 @@ class WikiRequest extends Request {
         elseif ($require_level == WIKIAUTH_BOGO)
             $msg = fmt("You must sign in to %s.", $what);
         elseif ($require_level == WIKIAUTH_USER) {
-            $msg = fmt("You must log in to %s.", $what);
 	    if (!ALLOW_ANON_USER)
-		$msg = fmt("You must log in first", $what);
+		$msg = fmt("You must log in first to %s", $what);
+	    else	
+                $msg = fmt("You must log in to %s.", $what);
         } elseif ($require_level == WIKIAUTH_ANON)
             $msg = fmt("Access for you is forbidden to %s.", $what);
         else
@@ -530,6 +531,7 @@ class WikiRequest extends Request {
                     'dumphtml'   => _("dump html pages"),
                     'dumpserial' => _("dump serial pages"),
                     'edit'       => _("edit this page"),
+                    'rename'     => _("rename this page"),
                     'revert'     => _("revert to a previous version of this page"),
                     'create'     => _("create this page"),
                     'loadfile'   => _("load files into this wiki"),
@@ -548,7 +550,7 @@ class WikiRequest extends Request {
         if (in_array($action, array_keys($actionDescriptions)))
             return $actionDescriptions[$action];
         else
-            return $action;
+            return _("use")." ".$action;
     }
     
     /**
@@ -644,6 +646,7 @@ class WikiRequest extends Request {
 
             case 'edit':
             case 'revert':
+            case 'rename':
             case 'soap':
                 if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
                     return WIKIAUTH_BOGO;
@@ -667,7 +670,6 @@ class WikiRequest extends Request {
             case 'upgrade':
             case 'chown':
             case 'setacl':
-            case 'rename':
                 return WIKIAUTH_ADMIN;
 
             /* authcheck occurs only in the plugin.
@@ -1013,9 +1015,11 @@ class WikiRequest extends Request {
         $page = _("PhpWikiAdministration")."/".$subpage;
         $action = $this->findActionPage($page);
         if ($action) {
-            $this->setArg('s',$this->getArg('pagename'));
+            if (!$this->getArg('s'))
+                $this->setArg('s', $this->getArg('pagename'));
             $this->setArg('verify',1);
-            $this->setArg('action',$action);
+            if ($this->getArg('action') != 'rename')
+                $this->setArg('action',  $action);
             $this->actionpage($action);
         } else {
             trigger_error($page.": Cannot find action page", E_USER_WARNING);
@@ -1352,6 +1356,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.236  2007/07/21 18:08:49  rurban
+// more searchtypes
+//
 // Revision 1.235  2007/07/14 12:04:19  rurban
 // support searchtype=external (mediawiki like search buttons: Text, Title, External)
 //

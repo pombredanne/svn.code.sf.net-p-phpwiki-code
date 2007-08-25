@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.41 2007-07-14 12:03:25 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.42 2007-08-25 18:03:34 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -176,6 +176,11 @@ function action2access ($action) {
     case 'dumpserial':
     case 'dumphtml':
         return 'dump';
+    // invent a new access-perm massedit? or switch back to change, or keep it at edit?
+    case _("PhpWikiAdministration")."/"._("Rename"):
+    case _("PhpWikiAdministration")."/"._("Replace"):
+    case 'replace':
+    case 'rename':
     case 'revert':
     case 'edit':
         return 'edit';
@@ -195,7 +200,6 @@ function action2access ($action) {
     case 'upgrade':
     case 'chown':
     case 'setacl':
-    case 'rename':
             return 'change';
     default:
         //Todo: Plugins should be able to override its access type
@@ -727,6 +731,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2007/07/14 12:03:25  rurban
+// fix for mult. group membership: not a member and undecided: check other groups
+//
 // Revision 1.40  2005/10/29 14:16:58  rurban
 // unify message
 //
