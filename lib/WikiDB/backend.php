@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.34 2007-07-14 12:03:51 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.35 2007-08-25 18:17:46 rurban Exp $');
 
 /*
   Pagedata
@@ -468,7 +468,7 @@ class WikiDB_backend
      *
      * @return boolean True iff database is in a consistent state.
      */
-    function check() {
+    function check($args=false) {
     }
 
     /**
@@ -480,7 +480,7 @@ class WikiDB_backend
      *
      * @return boolean True iff successful.
      */
-    function rebuild() {
+    function rebuild($args=false) {
 	global $request;
 	$dbh = $request->getDbh();
     	$iter = $dbh->getAllPages(false);
@@ -607,8 +607,8 @@ class WikiDB_backend
         $log_tbl = $entry->_accesslog->logtable;
         // duration problem: sprintf "%f" might use comma e.g. "100,201" in european locales
         $dbh->query("INSERT INTO $log_tbl"
-                    . " (time_stamp,remote_host,remote_user,request_method,request_line,request_uri,"
-                    .   "request_args,request_time,status,bytes_sent,referer,agent,request_duration)"
+                    . " (time_stamp,remote_host,remote_user,request_method,request_line,request_args,"
+                    .   "request_uri,request_time,status,bytes_sent,referer,agent,request_duration)"
                     . " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     array(
                           // Problem: date formats are backend specific. Either use unixtime as %d (long),
@@ -616,10 +616,10 @@ class WikiDB_backend
                           $entry->time,
                           $entry->host, 
                           $entry->user,
-                          $entry->request_method, 
-                          $entry->request, 
-                          $entry->request_uri,    
+                          $entry->request_method,
+                          $entry->request,
                           $entry->request_args,
+                          $entry->request_uri,
                           $entry->_ncsa_time($entry->time), 
                           $entry->status, 
                           (int)$entry->size,
@@ -761,6 +761,9 @@ class WikiDB_backend_search_sql extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2007/07/14 12:03:51  rurban
+// just typo
+//
 // Revision 1.33  2007/06/07 21:35:04  rurban
 // fixed backend asArray access to iterators (DebugInfo with SQL)
 //
