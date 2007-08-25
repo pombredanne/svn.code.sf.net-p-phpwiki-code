@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.62 2007-08-10 21:54:08 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.63 2007-08-25 18:24:30 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -1094,7 +1094,10 @@ class Block_divspan extends BlockMarkup
         else
             $content = $me[1];
         $input->advance();
-        $content = TransformInline(trim($content));
+        if (strstr($content, "\n"))
+            $content = TransformText($content);
+        else    
+            $content = TransformInline($content);
         if (!$argstr) 
             $args = false;
         else {
@@ -1166,6 +1169,9 @@ function TransformText ($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2007/08/10 21:54:08  rurban
+// fix DIVSPAN parsing
+//
 // Revision 1.61  2007/07/14 17:55:29  rurban
 // SemanticWeb.php
 //
