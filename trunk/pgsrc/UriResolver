@@ -1,0 +1,12 @@
+Date: Mon, 16 Jul 2007 17:28:05 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14)
+X-Rcs-Id: $Id: UriResolver,v 1.1 2007-08-25 18:29:24 rurban Exp $
+Content-Type: application/x-phpwiki;
+  pagename=UriResolver;
+  pgsrc_version="1 $Revision: 1.1 $";
+  flags=PAGE_LOCKED;
+  markup=2;
+  charset=iso-8859-1
+Content-Transfer-Encoding: binary
+
+<?plugin UriResolver ?>
