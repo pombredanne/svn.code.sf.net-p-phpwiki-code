@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.120 2007-07-14 12:04:50 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.121 2007-08-25 18:54:41 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -39,6 +39,21 @@ class _RecentChanges_Formatter
         // PageHistoryPlugin doesn't have a 'daylist' arg.
         if (!isset($this->_args['daylist']))
             $this->_args['daylist'] = false;
+    }
+
+    function title () {
+        extract($this->_args);
+        if ($author) $title = _("UserContribs").":$author";
+        elseif ($owner) $title = _("UserContribs").":$owner";
+        elseif ($only_new) $title = _("RecentNewPages");
+        elseif ($show_minor) $title = _("RecentEdits");
+        else $title = _("RecentChanges");
+
+        if (!empty($category))
+            $title = $category;
+        elseif (!empty($pagematch))
+            $title .= ":$pagematch";
+	return $title;
     }
 
     function include_versions_in_URLs() {
@@ -204,35 +219,25 @@ extends _RecentChanges_Formatter
 			    ")");
     }
 
-    function rss_icon () {
+    function format_icon ($format) {
         global $request, $WikiTheme;
-
-        $rss_url = $request->getURLtoSelf(array('action' => $this->action, 'format' => 'rss'));
-        return HTML::small(array('style' => 'font-weight:normal; vertical-align:middle;'), 
-                           $WikiTheme->makeButton("RSS", $rss_url, 'rssicon'));
+        $rss_url = $request->getURLtoSelf(array('action' => $this->action, 'format' => $format));
+        return $WikiTheme->makeButton($format, $rss_url, 'rssicon');
     }
 
-    function rss2_icon () {
-        global $request, $WikiTheme;
+    function rss_icon ()  { return $this->format_icon("rss"); }
+    function rss2_icon () { return $this->format_icon("rss2"); }
+    function atom_icon () { return $this->format_icon("atom"); }
+    function rdf_icon ()  { return DEBUG ? $this->format_icon("rdf") : ''; }
+    function rdfs_icon () { return DEBUG ? $this->format_icon("rdfs") : ''; }
+    function owl_icon ()  { return DEBUG ? $this->format_icon("owl") : ''; }
 
-        $rss_url = $request->getURLtoSelf(array('action' => $this->action, 'format' => 'rss2'));
-        return HTML::small(array('style' => 'font-weight:normal; vertical-align:middle;'), 
-                           $WikiTheme->makeButton("xml", $rss_url, 'rssicon'));
-    }
-    function atom_icon () {
-        global $request, $WikiTheme;
-	if (DEBUG) {
-	    $rss_url = $request->getURLtoSelf(array('action' => $this->action, 'format' => 'atom'));
-	    return HTML::small(array('style' => 'font-weight:normal; vertical-align:middle;'), 
-                           $WikiTheme->makeButton("atom", $rss_url, 'rssicon'));
-	}
-    }
     function grazr_icon () {
         global $request, $WikiTheme;
+	if (!DEBUG) return '';
         $rss_url = 'http://grazr.com/gzpanel.html?' . 
 	    WikiURL($request->getArg('pagename'),array('action' => $this->action, 'format' => 'rss2'),true);
-        return HTML::small(array('style' => 'font-weight:normal; vertical-align:middle;'), 
-                           $WikiTheme->makeButton("grazr-it", $rss_url, 'rssicon'));
+        return $WikiTheme->makeButton("grazr", $rss_url, 'rssicon');
     }
 
     function pre_description () {
@@ -260,6 +265,12 @@ extends _RecentChanges_Formatter
             if ($owner == '[]')
                 $owner = $request->_user->getID();
             $edits .= sprintf(_(" for pages owned by %s"), $owner);
+	}
+	if (!empty($category)) {
+            $edits .= sprintf(_(" for all pages linking to %s"), $category);
+	}
+	if (!empty($pagematch)) {
+            $edits .= sprintf(_(" for all pages matching '%s'"), $pagematch);
 	}
         if ($timespan = $days > 0) {
             if (intval($days) != $days)
@@ -324,15 +335,18 @@ extends _RecentChanges_Formatter
         return HTML::p(false, $this->pre_description());
     }
 
-
-    function title () {
+    /* was title */
+    function headline () {
         extract($this->_args);
-        return array($show_minor ? _("RecentEdits") : _("RecentChanges"),
+        return array($this->title(),
                      ' ',
                      $this->rss_icon(), 
-		     HTML::raw('&nbsp;'), $this->rss2_icon(),
-		     HTML::raw('&nbsp;'), $this->grazr_icon(),
-		     HTML::raw('&nbsp;'), $this->atom_icon(),
+		     $this->rss2_icon(),
+		     $this->atom_icon(),
+		     $this->rdf_icon(),
+		     /*$this->rdfs_icon(),
+		       $this->owl_icon(),*/
+		     $this->grazr_icon(),
                      $this->sidebar_link());
     }
 
@@ -358,8 +372,10 @@ extends _RecentChanges_Formatter
         $jsf = JavaScript($addsidebarjsfunc);
 
         global $WikiTheme;
-        $sidebar_button = $WikiTheme->makeButton("sidebar", 'javascript:addPanel();', 'sidebaricon');
-        $addsidebarjsclick = asXML(HTML::small(array('style' => 'font-weight:normal;vertical-align:middle;'), $sidebar_button));
+        $sidebar_button = $WikiTheme->makeButton("sidebar", 'javascript:addPanel();', 'sidebaricon', 
+                                                 array('title' => _("Click to add this feed to your sidebar"),
+                                                       'style' => 'font-size:9pt;font-weight:normal; vertical-align:middle;'));
+        $addsidebarjsclick = asXML($sidebar_button);
         $jsc = JavaScript("if ((typeof window.sidebar == 'object') &&\n"
                                 ."    (typeof window.sidebar.addPanel == 'function'))\n"
                                 ."   {\n"
@@ -372,7 +388,7 @@ extends _RecentChanges_Formatter
     function format ($changes) {
         include_once('lib/InlineParser.php');
         
-        $html = HTML(HTML::h2(false, $this->title()));
+        $html = HTML(HTML::h2(false, $this->headline()));
         if (($desc = $this->description()))
             $html->pushContent($desc);
         
@@ -454,20 +470,21 @@ extends _RecentChanges_Formatter
 class _RecentChanges_UserContribsFormatter
 extends _RecentChanges_HtmlFormatter
 {
-    function title () {
+    function headline () {
         extract($this->_args);
         return array(_("UserContribs"),":",$author ? $author : $owner,
                      ' ',
                      $this->rss_icon(), 
-		     HTML::raw('&nbsp;'), $this->rss2_icon(),
-		     //HTML::raw('&nbsp;'), $this->grazr_icon(),
-		     HTML::raw('&nbsp;'), $this->atom_icon());
+		     $this->rss2_icon(),
+		     $this->atom_icon(),
+		     $this->rdf_icon(),
+		     $this->grazr_icon());
     }
 
     function format ($changes) {
         include_once('lib/InlineParser.php');
         
-        $html = HTML(HTML::h2(false, $this->title()));
+        $html = HTML(HTML::h2(false, $this->headline()));
 	$lines = HTML::ol();
         $first = true; $count = 0;
         while ($rev = $changes->next()) {
@@ -519,10 +536,10 @@ extends _RecentChanges_HtmlFormatter
         //omit rssicon
     }
     function rss2_icon () { }
-    function title () {
+    function headline () {
         //title click opens the normal RC or RE page in the main browser frame
         extract($this->_args);
-        $titlelink = WikiLink($show_minor ? _("RecentEdits") : _("RecentChanges"));
+        $titlelink = WikiLink($this->title());
         $titlelink->setAttr('target', '_content');
         return HTML($this->logo(), $titlelink);
     }
@@ -599,7 +616,12 @@ extends _RecentChanges_HtmlFormatter
 
         printf("<head>\n");
         extract($this->_args);
-        $title = WIKI_NAME . $show_minor ? _("RecentEdits") : _("RecentChanges");
+        if (!empty($category))
+            $title = $category;
+        elseif (!empty($pagematch))
+            $title = $pagematch;
+        else
+            $title = WIKI_NAME . $show_minor ? _("RecentEdits") : _("RecentChanges");
         printf("<title>" . $title . "</title>\n");
         global $WikiTheme;
         $css = $WikiTheme->getCSS();
@@ -623,7 +645,7 @@ extends _RecentChanges_HtmlFormatter
     }
     function rss2_icon () {
     }
-    function title () {
+    function headline () {
     }
     function authorLink ($rev) {
     }
@@ -731,14 +753,15 @@ extends _RecentChanges_Formatter
     function channel_properties () {
         global $request;
 
-        extract($this->_args);
         $rc_url = WikiURL($request->getArg('pagename'), false, 'absurl');
-        if ($author) $description = _("UserContribs").":$author";
-        elseif ($owner) $description = _("UserContribs").":$owner";
-        elseif ($only_new) $description = _("RecentNewPages");
-        elseif ($show_minor) $description = _("RecentEdits");
-        else $description = _("RecentChanges");
-        return array('title' => WIKI_NAME,
+        extract($this->_args);
+	$title = WIKI_NAME;
+        $description = $this->title();
+        if ($category)
+	    $title = $category;
+        elseif ($pagematch)
+	    $title = $pagematch;
+        return array('title' => $title,
                      'link' => $rc_url,
                      'description' => $description,
                      'dc:date' => Iso8601DateTime(time()),
@@ -855,7 +878,14 @@ extends _RecentChanges_RssFormatter {
 
 	// "channel" is called "feed" in atom
         $rc_url = WikiURL($request->getArg('pagename'), false, 'absurl');
-        $feed_props = array('title' => WIKI_NAME,
+        extract($this->_args);
+	$title = WIKI_NAME;
+        $description = $this->title();
+        if ($category)
+	    $title = $category;
+        elseif ($pagematch)
+	    $title = $pagematch;
+        $feed_props = array('title' => $description,
 			    'link' => array('rel'=>"alternate",
 			    		    'type'=>"text/html",
 			                    'href' => $rc_url),
@@ -962,6 +992,67 @@ class NewPageRevisionIterator extends WikiDB_PageRevisionIterator
 }
 
 /**
+ * Only pages with links to a certain category
+ */
+class LinkRevisionIterator extends WikiDB_PageRevisionIterator
+{
+    function LinkRevisionIterator ($revisions, $category) {
+        $this->_revisions = $revisions;
+        if (preg_match("/[\?\.\*]/", $category)) {
+          $backlinkiter = $this->_revisions->_wikidb->linkSearch
+            (new TextSearchQuery("*", true), 
+             new TextSearchQuery($category, true), 
+             "linkfrom");
+        } else {
+          $basepage = $GLOBALS['request']->getPage($category);
+          $backlinkiter = $basepage->getBackLinks(true);
+        }
+        $this->links = array();
+        foreach ($backlinkiter->asArray() as $p) {
+            if (is_object($p)) $this->links[] = $p->getName();
+            elseif (is_array($p)) $this->links[] = $p['pagename'];
+            else $this->links[] = $p;
+        }
+        $backlinkiter->free();
+        sort($this->links);
+    }
+
+    function next () {
+        while (($rev = $this->_revisions->next())) {
+            if (binary_search($rev->getName(), $this->links) != false)
+                return $rev;
+        }
+        $this->free();
+        return false;
+    }
+
+    function free () {
+        unset ($this->links);
+    }
+}
+
+class PageMatchRevisionIterator extends WikiDB_PageRevisionIterator
+{
+    function PageMatchRevisionIterator ($revisions, $match) {
+        $this->_revisions = $revisions;
+        $this->search = new TextSearchQuery($match, true);
+    }
+
+    function next () {
+        while (($rev = $this->_revisions->next())) {
+            if ($this->search->match($rev->getName()))
+                return $rev;
+        }
+        $this->free();
+        return false;
+    }
+
+    function free () {
+        unset ($this->search);
+    }
+}
+
+/**
  * Filter by author
  */
 class AuthorPageRevisionIterator extends WikiDB_PageRevisionIterator
@@ -1011,7 +1102,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.120 $");
+                            "\$Revision: 1.121 $");
     }
 
     function managesValidators() {
@@ -1046,7 +1137,9 @@ extends WikiPlugin
                      'daylist'      => false,
                      'difflinks'    => true,
                      'historylinks' => false,
-                     'caption'      => ''
+                     'caption'      => '',
+                     'category'     => '',
+                     'pagematch'    => ''
                      );
     }
 
@@ -1109,6 +1202,15 @@ extends WikiPlugin
         if ($show_deleted == 'sometimes')
             $show_deleted = @$args['show_minor'];
 
+        // only pages (e.g. PageHistory of subpages)
+        if (!empty($args['pagematch'])) {
+            require_once("lib/TextSearchQuery.php");
+            $changes = new PageMatchRevisionIterator($changes, $args['pagematch']);
+        }
+        if (!empty($args['category'])) {
+            require_once("lib/TextSearchQuery.php");
+            $changes = new LinkRevisionIterator($changes, $args['category']);
+        }
         if (!empty($args['only_new']))
             $changes = new NewPageRevisionIterator($changes);
         if (!empty($args['author']))
@@ -1157,6 +1259,12 @@ extends WikiPlugin
         // HACKish: fix for SF bug #622784  (1000 years of RecentChanges ought
         // to be enough for anyone.)
         $args['days'] = min($args['days'], 365000);
+
+	if (empty($args['category']) and empty($args['pagematch'])
+	    and preg_match("/^Category/", $request->getArg('pagename'))) 
+	{
+	    $args['category'] = $request->getArg('pagename');
+	}
         
         // Hack alert: format() is a NORETURN for rss formatters.
         return $this->format($this->getChanges($dbi, $args), $args);
@@ -1232,6 +1340,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.120  2007/07/14 12:04:50  rurban
+// fix rss button actions and rss description according the action
+//
 // Revision 1.119  2007/07/01 09:17:45  rurban
 // add ATOM support, a very questionable format
 //
