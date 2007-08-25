@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ModeratedPage.php,v 1.6 2007-01-07 18:45:46 rurban Exp $');
+rcs_id('$Id: ModeratedPage.php,v 1.7 2007-08-25 18:52:34 rurban Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.6 $");
+                            "\$Revision: 1.7 $");
     }
     function getDefaultArguments() {
         return array('page'          => '[pagename]',
@@ -238,7 +238,8 @@ extends WikiPlugin
     	    while (!empty($moderated['data'][$id])) $id = $this->generateId(); // avoid duplicates
     	    $moderated['id'] = $id; 		// overwrite current id
     	    $tempuser = $request->_user;
-    	    unset($tempuser->_HomePagehandle);
+	    if (isset($tempuser->_HomePagehandle))
+		unset($tempuser->_HomePagehandle);
     	    $moderated['data'][$id] = array( 	// add current request
     	                                    'timestamp' => time(),
     	    	          		    'userid' => $request->_user->getId(),
@@ -446,6 +447,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2007/01/07 18:45:46  rurban
+// Finish 3/3 of the functionality, the Moderators approve and reject, Fix some logical flaws with !empty($status[emails]). Generate a better ID
+//
 // Revision 1.5  2006/08/15 13:41:08  rurban
 // just aesthetics
 //
