@@ -1,5 +1,6 @@
-# $Id: Makefile,v 1.13 2007-07-19 06:21:12 rurban Exp $
+# $Id: Makefile,v 1.14 2007-08-25 17:51:51 rurban Exp $
 # user-definable settings:
+VERSION=
 # for mysqladmin
 DBADMIN_USER=root
 DBADMIN_PASS=secret
@@ -13,6 +14,11 @@ else
   ETAGS_STDIN = /usr/bin/etags -L -
 endif
 
+ifeq ("$(VERSION)", "")
+  TARDIST = ../phpwiki.tar.bz2
+else
+  TARDIST = ../phpwiki-$(VERSION).tar.bz2
+endif
 DB_SQLITE_DBFILE = /tmp/phpwiki-sqlite.db
 
 # ****************************************************************************
@@ -49,7 +55,7 @@ endif
 # ****************************************************************************
 PHP_SRC := $(wildcard *.php ./lib/*.php ./lib/WikiDB/*.php ./lib/plugin/*.php)
 
-.PHONY: all install locale mysql pqsql sqlite dbtest install-config
+.PHONY: all install locale mysql pqsql sqlite dbtest install-config dist
 
 all:  TAGS
 
@@ -119,3 +125,20 @@ ${DB_SQLITE_DBFILE}: schemas/sqlite.sql
 	echo ".dump" | sqlite ${DB_SQLITE_DBFILE} > dump.sql
 	mv ${DB_SQLITE_DBFILE} ${DB_SQLITE_DBFILE}.old
 	sqlite $(DB_SQLITE_DBFILE) < dump.sql
+
+dist: $(TARDIST)
+
+# --exclude='\.*'
+$(TARDIST) :
+	tar cfj $(TARDIST) --exclude=CVS \
+		--exclude=config.ini \
+		--exclude='*~'     \
+		--exclude='*.bak'  \
+		--exclude='*.orig' \
+		--exclude='*.rej'  \
+		--exclude=uploads  \
+		--exclude=.patches \
+		--exclude=TAGS     \
+		--exclude=TAGS.full \
+		--exclude='*.tar.bz2' \
+		.
