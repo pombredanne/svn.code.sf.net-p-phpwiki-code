@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: dbaBase.php,v 1.30 2007-07-15 17:39:25 rurban Exp $');
+rcs_id('$Id: dbaBase.php,v 1.31 2007-08-25 18:16:23 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 
@@ -10,33 +10,34 @@ require_once('lib/WikiDB/backend.php');
  * Tables:
  *
  *  page:
- *   Index: pagename
+ *   Index: 'p' + pagename
  *  Values: latestversion . ':' . flags . ':' serialized hash of page meta data
  *           Currently flags = 1 if latest version has empty content.
  *
  *  version
- *   Index: version:pagename
+ *   Index: 'v' + version:pagename
  *   Value: serialized hash of revision meta data, including:
  *          + quasi-meta-data %content
  *
  *  links
- *   index: 'o' . pagename
+ *   index: 'o' + pagename
  *   value: serialized list of pages (names) which pagename links to.
- *   index: 'i' . pagename
+ *   index: 'i' + pagename
  *   value: serialized list of pages which link to pagename
  *
  *  TODO:
- *  Don't keep tables locked the whole time
+ *  Don't keep tables locked the whole time.
  *
- *  index table with:
- *   list of pagenames for get_all_pages
- *   mostpopular list?
- *   RecentChanges support: 
- *     lists of most recent edits (major, minor, either).
- *   
- *
+ *  More index tables:
+ *   - Yes - RecentChanges support. Lists of most recent edits (major, minor, either).
+ *     't' + mtime => 'a|i' + version+':'+pagename ('a': major, 'i': minor)
+ *     Cost: Currently we have to get_all_pages and sort it by mtime.
+ *     With a seperate t table we have to update this table on every version change.
+ *   - No - list of pagenames for get_all_pages (very cheap: iterate page table)
+ *   - Maybe - mostpopular list? 'h' + pagename => hits
+  *
  *  Separate hit table, so we don't have to update the whole page entry
- *  each time we get a hit.  (Maybe not so important though...).
+ *  each time we get a hit. Maybe not so important though.
  */     
 
 require_once('lib/DbaPartition.php');
@@ -72,14 +73,15 @@ extends WikiDB_backend
         $this->_db->sync();
     }
 
-    function rebuild() {
-    	parent::rebuild();
+    function rebuild($args=false) {
+    	if (!empty($args['all']))
+    	    parent::rebuild();
     	// rebuild backlink table
         $this->_linkdb->rebuild();
         $this->optimize();
     }
     
-    function check() {
+    function check($args=false) {
         return $this->_linkdb->check();
     }
 
@@ -185,6 +187,7 @@ extends WikiDB_backend
 
 	// update links and backlinks
         $this->_linkdb->set_links($to, $links);
+        // better: update all back-/inlinks for all outlinks.
 
 	return true;
     }
@@ -531,13 +534,14 @@ function WikiDB_backend_dbaBase_sortby_num($aname, $bname, $field) {
     $av = $dbi->_backend->get_latest_version($aname);
     $bv = $dbi->_backend->get_latest_version($bname);
     $a = $dbi->_backend->get_versiondata($aname, $av, false);
-    if (!$a) return 0;
+    if (!$a) return -1;
     $b = $dbi->_backend->get_versiondata($bname, $bv, false);
-    if (!$b) return 0;
-    if ((!isset($a[$field]) && !isset($b[$field])) || ($a[$field] === $b[$field])) {
+    if (!$b or !isset($b[$field])) return 0;
+    if (empty($a[$field])) return -1;
+    if ((!isset($a[$field]) and !isset($b[$field])) or ($a[$field] === $b[$field])) {
         return 0; 
     } else {
-        return (!isset($a[$field]) || ($a[$field] < $b[$field])) ? -1 : 1;
+        return ($a[$field] < $b[$field]) ? -1 : 1;
     }
 }
 
@@ -636,10 +640,11 @@ class WikiDB_backend_dbaBase_linktable
         /* Now for the backlink update we squash the linkto hashes into a simple array */
         $newlinks = array();
         foreach ($links as $hash) {
-            if (!empty($hash['linkto']) 
-                and !in_array($hash['linkto'], $newlinks))
+            if (!empty($hash['linkto']) and !in_array($hash['linkto'], $newlinks))
                  // for attributes it's empty
-                $newlinks[] = $hash['linkto'];		
+                $newlinks[] = $hash['linkto'];
+            elseif (is_string($hash) and !in_array($hash, $newlinks))    		
+                $newlinks[] = $hash;
         }
         //$newlinks = array_unique($newlinks);
         sort($oldlinks);
@@ -788,6 +793,9 @@ class WikiDB_backend_dbaBase_linktable
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2007/07/15 17:39:25  rurban
+// update links at rename. optimize _has_link from O(n) to O(n/2) - binary search O(log n) in work
+//
 // Revision 1.29  2007/05/24 18:39:10  rurban
 // limits for get_all_pages, improved WantedPages
 //
