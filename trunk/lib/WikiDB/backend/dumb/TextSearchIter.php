@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TextSearchIter.php,v 1.8 2007-07-14 12:03:44 rurban Exp $');
+rcs_id('$Id: TextSearchIter.php,v 1.9 2007-08-25 18:51:02 rurban Exp $');
 
 class WikiDB_backend_dumb_TextSearchIter
 extends WikiDB_backend_iterator
@@ -59,11 +59,16 @@ extends WikiDB_backend_iterator
     function next() {
         $pages = &$this->_pages;
         while ($page = $pages->next()) {
-	    if (($this->_from > 0) and ($this->_index < $this->_from))
-		continue;
             if ($score = $this->_match($page)) {
 	        $this->_index++;
-                if ($this->_count and ($this->_index >= $this->_count)) return false;
+	        if (($this->_from > 0) and ($this->_index <= $this->_from))
+                    // not yet reached the offset
+		    continue;
+                /*if ($this->_count and ($this->_index > $this->_count)) {
+                    // reached the limit, but need getTotal
+                    $this->_count++;
+                    return false;
+                }*/
                 if (is_array($page))
 		    $page['score'] = $score;
 		else    

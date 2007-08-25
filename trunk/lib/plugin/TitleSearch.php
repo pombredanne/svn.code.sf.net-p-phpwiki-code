@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TitleSearch.php,v 1.29 2007-01-02 13:23:30 rurban Exp $');
+rcs_id('$Id: TitleSearch.php,v 1.30 2007-08-25 18:55:01 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -49,7 +49,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
 
     function getDefaultArguments() {
@@ -79,10 +79,7 @@ extends WikiPlugin
         $pages = $dbi->titleSearch($query,$args['sortby'],$args['limit'],$args['exclude']);
 
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
-        while ($page = $pages->next()) {
-            $pagelist->addPage($page);
-            $last_name = $page->getName();
-        }
+        $pagelist->addPages($pages);
 	// this hack will go away
         if ($args['format'] == 'livesearch') {
             $request->discardOutput();
@@ -99,13 +96,20 @@ extends WikiPlugin
         // when a search returns no results
         if (!$args['noheader']) {
             $s = $args['s'];
-            if (!$pagelist->getTotal() and !$query->_regex)
+            $total = $pagelist->getTotal();
+            if (!$total and !$query->_regex) {
                 $s = WikiLink($args['s'], 'auto');
-            $pagelist->setCaption(fmt("Title search results for '%s'", $s));
+            }
+            if ($total) {
+            	$pagelist->setCaption(fmt("Title search results for '%s' (%d total)", $s, $total));
+            } else {
+                $pagelist->setCaption(fmt("Title search results for '%s'", $s));
+            }
         }
 
         if ($args['auto_redirect'] && ($pagelist->getTotal() == 1)) {
-            return HTML($request->redirect(WikiURL($last_name, false, 'absurl'), false),
+            $page = $pages->next();
+            return HTML($request->redirect(WikiURL($page->getName(), false, 'absurl'), false),
                         $pagelist);
         }
 
@@ -114,6 +118,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2007/01/02 13:23:30  rurban
+// note to deprecate livesearch hack
+//
 // Revision 1.28  2005/09/10 21:33:08  rurban
 // support enhanced API
 //
