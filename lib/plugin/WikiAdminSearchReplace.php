@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.19 2004-11-26 18:39:02 rurban Exp $');
+rcs_id('$Id: WikiAdminSearchReplace.php,v 1.20 2007-08-25 18:09:45 rurban Exp $');
 /*
- Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.19 $");
+                            "\$Revision: 1.20 $");
     }
 
     function getDefaultArguments() {
@@ -94,10 +94,13 @@ extends WikiPlugin_WikiAdminSelect
         $case_exact = !empty($post_args['case_exact']);
         $regex = !empty($post_args['regex']);
         foreach ($pages as $pagename) {
-            if (!mayAccessPage('edit',$pagename)) {
+            if (!mayAccessPage('edit', $pagename)) {
 		$ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
-            } elseif (($result = $this->replaceHelper($dbi, $pagename, $from, $to, $case_exact, $regex))) {
-                $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", $from, $to, WikiLink($pagename))));
+            } elseif (($result = $this->replaceHelper($dbi, $pagename, $from, $to, 
+                                                      $case_exact, $regex))) 
+            {
+                $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", 
+                                              $from, $to, WikiLink($pagename))));
                 $count++;
             } else {
                 $ul->pushContent(HTML::li(fmt("Search string '%s' not found in content of page '%s'.", 
@@ -142,7 +145,8 @@ extends WikiPlugin_WikiAdminSelect
 
             if ($post_args['action'] == 'verify' and !empty($post_args['from'])) {
                 // Real action
-                return $this->searchReplacePages($dbi, $request, array_keys($p), $post_args['from'], $post_args['to']);
+                return $this->searchReplacePages($dbi, $request, array_keys($p), 
+                                                 $post_args['from'], $post_args['to']);
             }
             if ($post_args['action'] == 'select') {
                 if (!empty($post_args['from']))
@@ -155,20 +159,22 @@ extends WikiPlugin_WikiAdminSelect
         if ($next_action == 'select' and empty($pages)) {
             // List all pages to select from.
             //TODO: check for permissions and list only the allowed
-            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
+            $pages = $this->collectPages($pages, $dbi, $args['sortby'], 
+                                         $args['limit'], $args['exclude']);
         }
 
         if ($next_action == 'verify') {
             $args['info'] = "checkbox,pagename,hi_content";
         }
-        $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
-                                            array_merge
-                                            (
-                                             $args,
-                                             array('types' => array
-                                                   (
-                                                    'hi_content' // with highlighted search for SearchReplace
-                                                    => new _PageList_Column_content('rev:hi_content', _("Content"))))));
+        $pagelist = new PageList_Selectable
+	    ($args['info'], $args['exclude'],
+	     array_merge
+	     (
+	      $args,
+	      array('types' => array
+		    (
+		     'hi_content' // with highlighted search for SearchReplace
+		     => new _PageList_Column_content('rev:hi_content', _("Content"))))));
 
         $pagelist->addPageList($pages);
 
@@ -207,30 +213,33 @@ extends WikiPlugin_WikiAdminSelect
                           $buttons);
     }
 
+    function checkBox (&$post_args, $name, $msg) {
+    	$id = 'admin_replace-'.$name;
+    	$checkbox = HTML::input(array('type' => 'checkbox',
+                                      'name' => 'admin_replace['.$name.']',
+                                      'id'   => $id,
+                                      'value' => 1));
+        if (!empty($post_args[$name]))
+            $checkbox->setAttr('checked', 'checked');
+        return HTML::div($checkbox, ' ', HTML::label(array('for' => $id), $msg));
+    }
+
     function replaceForm(&$header, $post_args) {
         $header->pushContent(HTML::div(array('class'=>'hint'),
                                        _("Replace all occurences of the given string in the content of all pages.")),
                              HTML::br());
-        $header->pushContent(_("Replace: "));
-        $header->pushContent(HTML::input(array('name' => 'admin_replace[from]',
-                                               'value' => $post_args['from'])));
-        $header->pushContent(' '._("by").': ');
-        $header->pushContent(HTML::input(array('name' => 'admin_replace[to]',
-                                               'value' => $post_args['to'])));
-        $checkbox = HTML::input(array('type' => 'checkbox',
-                                      'name' => 'admin_replace[case_exact]',
-                                      'value' => 1));
-        if (!empty($post_args['case_exact']))
-            $checkbox->setAttr('checked','checked');
-        $header->pushContent(HTML::br(),$checkbox," ",_("case-exact"));
-        $checkbox_re = HTML::input(array('type' => 'checkbox',
-                                         'name' => 'admin_replace[regex]',
-                                         //'disabled' => 'disabled',
-                                         'value' => 1));
-        if (!empty($post_args['regex']))
-            $checkbox_re->setAttr('checked','checked');
-        $header->pushContent(HTML::br(),HTML::span(//array('style'=>'color: #aaa'),
-                                                   $checkbox_re," ",_("regex")));
+        $table = HTML::table();
+        $this->_tablePush($table, _("Replace").": ",
+			  HTML::input(array('name' => 'admin_replace[from]',
+					    'size' => 90,
+					    'value' => $post_args['from'])));
+        $this->_tablePush($table, _("by").': ',
+			  HTML::input(array('name' => 'admin_replace[to]',
+					    'size' => 90,
+					    'value' => $post_args['to'])));
+        $this->_tablePush($table, '', $this->checkBox($post_args, 'case_exact', _("Case exact?")));
+	$this->_tablePush($table, '', $this->checkBox($post_args, 'regex', _("Regex?")));
+        $header->pushContent($table);
         $header->pushContent(HTML::br());
         return $header;
     }
@@ -264,6 +273,9 @@ function stri_replace($find,$replace,$string) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.19  2004/11/26 18:39:02  rurban
+// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
+//
 // Revision 1.18  2004/11/23 15:17:20  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:
