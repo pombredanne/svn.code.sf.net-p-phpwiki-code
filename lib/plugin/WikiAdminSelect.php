@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.24 2007-01-04 16:47:13 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.25 2007-08-25 18:10:17 rurban Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function getDefaultArguments() {
@@ -79,10 +79,10 @@ extends WikiPlugin
     }
 
     /**
-     * Preselect a list of pagenames by the supporting the follwing args:
+     * Preselect a list of pagenames by the supporting the following args:
      * 's': comma-seperated list of pagename wildcards
      * 'author', 'owner', 'creator': from WikiDB_Page
-     * 'only: forgot what the diffrrence to 's' was.
+     * 'only: forgot what the difference to 's' was.
      * Sets $this->_list, which is picked up by collectPages() and is a default for p[]
      */
     function preSelectS (&$args, &$request) {
@@ -244,9 +244,20 @@ extends WikiPlugin
             ; //return $action_result;
         }
     }
+
+    function _tablePush(&$table, $first, $second) {
+        $table->pushContent(
+			    HTML::tr(
+				     HTML::td($first),
+				     HTML::td($second)));
+    }
+
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2007/01/04 16:47:13  rurban
+// Clarify API: sortby,limit and exclude are strings.
+//
 // Revision 1.23  2005/09/14 06:06:09  rurban
 // use a sane limit of 150
 //
