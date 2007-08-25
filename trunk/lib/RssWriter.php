@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.14 2007-07-01 09:17:45 rurban Exp $');
+<?php rcs_id('$Id: RssWriter.php,v 1.15 2007-08-25 18:25:40 rurban Exp $');
 /*
  * Code for creating RSS 1.0.
  */
@@ -187,7 +187,9 @@ class RssWriter extends XmlElement
     }
 };
 
-/* taken from mediawiki */
+/* Taken from mediawiki. 
+ * See http://www.atomenabled.org/developers/syndication/ 
+ */
 class AtomFeed extends RssWriter {
   
     // Args should include:
@@ -209,13 +211,6 @@ class AtomFeed extends RssWriter {
         header("Content-Type: application/atom+xml; charset=" . RSS_ENCODING);
         printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", RSS_ENCODING);
         printf("<!-- generator=\"PhpWiki-%s\" -->\n", PHPWIKI_VERSION);
-        /*
-        <feed version="0.3" xmlns="http://www.w3.org/2005/Atom" xml:lang="$LANG">	
-        <title><?php print $this->getTitle() ?></title>
-        <link rel="alternate" type="text/html" href="<?php print $this->getUrl() ?>"/>
-        <modified><?= gmdate( 'Y-m-d\TH:i:s', wfTimestamp( TS_UNIX, $ts ) ) ?>Z</modified>
-        <tagline><?php print $this->getDescription() ?></tagline>
-        */
         $this->printXML();
     }
 
@@ -236,25 +231,10 @@ class AtomFeed extends RssWriter {
     //  comment
     function addItem($properties, $attr=false, $uri = false) {
         $this->_items[] = $this->__node('entry', $attr, $properties, $uri);
-    /*
-	<entry>
-		<title><?php print $item->getTitle() ?></title>
-		<link rel="alternate" type="<?php print $wgMimeType ?>" href="<?php print $item->getUrl() ?>"/>
-		<?php if( $item->getDate() ) { ?>
-		<modified><?php print $this->formatTime( $item->getDate() ) ?>Z</modified>
-		<issued><?php print $this->formatTime( $item->getDate() ) ?></issued>
-		<created><?php print $this->formatTime( $item->getDate() ) ?>Z</created><?php } ?>
-	
-		<summary type="text/plain"><?php print $item->getDescription() ?></summary>
-		<?php if( $item->getAuthor() ) { ?><author><name><?php print $item->getAuthor() ?></name><!-- <url></url><email></email> --></author><?php }?>
-		<comment>foobar</comment>
-                <?php if( $item->getComments() ) { ?><dc:comment><?php print $item->getComments() ?></dc:comment><?php }?> 
-	</entry> 
-    */
     }
 
     /**
-     * Finish construction of RSS.
+     * Print it.
      */
     function finish() {
         if (isset($this->_finished))
@@ -262,23 +242,6 @@ class AtomFeed extends RssWriter {
 
         $channel = &$this->_channel;
         $items = &$this->_items;
-	/*
-        $seq = new XmlElement('rdf:Seq');
-        if ($items) {
-            foreach ($items as $item)
-                $seq->pushContent($this->__ref('rdf:li', $item));
-        }
-        $channel->pushContent(new XmlElement('items', false, $seq));
-	if (isset($this->_image)) {
-            $channel->pushContent($this->__ref('image', $this->_image));
-	    $items[] = $this->_image;
-	}
-	if (isset($this->_textinput)) {
-            $channel->pushContent($this->__ref('textinput', $this->_textinput));
-	    $items[] = $this->_textinput;
-	}
-	*/
-
 	if ($items)
 	    $channel->pushContent($items);
 	$this->pushContent($channel);
