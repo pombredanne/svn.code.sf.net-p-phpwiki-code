@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SemanticWeb.php,v 1.10 2007-07-14 12:03:32 rurban Exp $');
+<?php rcs_id('$Id: SemanticWeb.php,v 1.11 2007-08-25 18:27:07 rurban Exp $');
 /**
  * What to do on ?format=rdf  What to do on ?format=owl
  *
@@ -109,16 +109,18 @@ require_once('lib/Units.php');
 
 
 /**
- * RdfWriter - A class to represent a single(?) wikipage as RDF. Supports ?format=rdf
+ * RdfWriter - A class to represent the links of a list of wikipages as RDF. 
+ * Supports ?format=rdf
  *
- * RdfWriter
- *  - RssWriter
- *    - RecentChanges (RecentChanges?format=rss)
- *      channel: ... item: ...
+ * RdfWriter (unsorted)
+ *  - RssWriter (timesorted)
+ *    - RecentChanges (?action=RecentChanges&format=rdf) (filtered)
  */
 class RdfWriter extends RssWriter // in fact it should be rewritten to be other way round.
 {
-    function RdfWriter () {
+    function RdfWriter (&$request, &$pagelist) {
+	$this->_request =& $request;
+	$this->_pagelist =& $pagelist; 
         $this->XmlElement('rdf:RDF',
                           array('xmlns' => "http://purl.org/rss/1.0/",
                                 'xmlns:rdf' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'));
@@ -132,7 +134,7 @@ class RdfWriter extends RssWriter // in fact it should be rewritten to be other 
 	$this->_uris_seen = array();
         $this->_items = array();
 
-	$this->wiki_xmlns_xml = WikiURL(_("URIResolver")."/",false,true);
+	$this->wiki_xmlns_xml = WikiURL(_("UriResolver")."?",false,true);
 	$this->wiki_xmlns_url = PHPWIKI_BASE_URL;
 
 	$this->pre_ns_buffer =
@@ -177,34 +179,64 @@ class RdfWriter extends RssWriter // in fact it should be rewritten to be other 
 	header( "Content-type: application/rdf+xml; charset=UTF-8" );
 	echo $this->pre_ns_buffer;
 	echo ">\n";
+
+	$first = true;
+	$dbi =	$this->_request->_dbi;
+	/* Elements per page:
+	   out-links internal, out-links external
+	   backlinks
+	   relations
+	   attributes
+	*/
+	foreach ($this->_pagelist->_pages as $page) {
+	    $relation = new TextSearchQuery("*");
+	    foreach (array('linkto','linkfrom','relation','attribute') as $linktype) {
+		$linkiter = $dbi->linkSearch($pages, $search, $linktype, $relation);
+	    }
+	    while ($link = $linkiter->next()) {
+		if (mayAccessPage('view', $rev->_pagename)) {
+		    $linkto->addItem($this->item_properties($rev),
+				     $this->pageURI($rev));
+		    if ($first)
+			$this->setValidators($rev);
+		    $first = false;
+		}
+	    }
+	}
+
 	echo $this->post_ns_buffer;
 	echo "</rdf:RDF>\n";
     }
 
-	/** This function transforms a valid url-encoded URI into a string
-	 *  that can be used as an XML-ID. The mapping should be injective.
-	 */
-	function makeXMLExportId($uri) {
-		$uri = str_replace( '-', '-2D', $uri);
-		//$uri = str_replace( ':', '-3A', $uri); //already done by PHP
-		//$uri = str_replace( '_', '-5F', $uri); //not necessary
-		$uri = str_replace( array('"','#','&',"'",'+','%'),
-		                    array('-22','-23','-26','-27','-2B','-'),
-		                    $uri);
-		return $uri;
-	}
+    /** This function transforms a valid url-encoded URI into a string
+     *  that can be used as an XML-ID. The mapping should be injective.
+     */
+    function makeXMLExportId($uri) {
+	$uri = str_replace( '-', '-2D', $uri);
+	//$uri = str_replace( ':', '-3A', $uri); //already done by PHP
+	//$uri = str_replace( '_', '-5F', $uri); //not necessary
+	$uri = str_replace( array('"',  '#',   '&', "'",  '+',  '=',  '%'),
+			    array('-22','-23','-26','-27','-2B','-3D','-'),
+			    $uri);
+	return $uri;
+    }
 
-	/** This function transforms an XML-ID string into a valid
-	 *  url-encoded URI. This is the inverse to makeXMLExportID.
-	 */
-	function makeURIfromXMLExportId($id) {
-		$id = str_replace( array('-22','-23','-26','-27','-2B','-'),
-		                   array('"','#','&',"'",'+','%'),
-		                   $id);
-		$id = str_replace( '-2D', '-', $id);
-		return $id;
-	}
+    /** This function transforms an XML-ID string into a valid
+     *  url-encoded URI. This is the inverse to makeXMLExportID.
+     */
+    function makeURIfromXMLExportId($id) {
+	$id = str_replace( array('-22','-23','-26','-27','-2B','-3D','-'),
+			   array('"',  '#',  '&',  "'",  '+',  '=',  '%'),
+			   $id);
+	$id = str_replace( '-2D', '-', $id);
+	return $id;
+    }
 }
+
+/**
+ */
+class RdfsWriter extends RdfWriter {
+};
 
 /**
  * OwlWriter - A class to represent a set of wiki pages (a DL model) as OWL.
@@ -366,6 +398,9 @@ class ReasonerBackend_KM extends ReasonerBackend {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2007/07/14 12:03:32  rurban
+// add rcs Log
+//
 
 // (c-file-style: "gnu")
 // Local Variables:
