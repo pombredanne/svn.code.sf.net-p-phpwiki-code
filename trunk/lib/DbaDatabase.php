@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbaDatabase.php,v 1.21 2006-09-06 05:42:54 rurban Exp $');
+<?php rcs_id('$Id: DbaDatabase.php,v 1.22 2007-08-25 17:55:56 rurban Exp $');
 
 require_once('lib/ErrorManager.php');
 
@@ -11,7 +11,7 @@ class DbaDatabase
         $this->_handler = $handler;
         $this->_timeout = DBA_DATABASE_DEFAULT_TIMEOUT;
         $this->_dbh = false;
-        if (function_exists("dba_handlers")) { // since 4.3.0
+        if (function_exists("dba_handlers")) { // since php-4.3.0
             if (!in_array($handler, dba_handlers()))
                 $this->_error(
                     sprintf(
@@ -58,7 +58,7 @@ class DbaDatabase
             // "c" failed, try "w" instead.
             if (substr($mode,0,1) == "c" and file_exists($this->_file))
                 $mode = "w";
-            // conflict: wait some random time to unlock (see ethernet)
+            // conflict: wait some random time to unlock (as with ethernet)
             $secs = 0.5 + ((double)rand(1,32767)/32767);
             sleep($secs);
             $watchdog -= $secs;
@@ -175,6 +175,9 @@ class DbaDatabase
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2006/09/06 05:42:54  rurban
+// unify dbh arg
+//
 // Revision 1.20  2006/08/15 13:35:33  rurban
 // just aesthetics
 //
