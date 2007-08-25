@@ -1,11 +1,11 @@
 short-term TODO:
+* rename should check existing subpages and rename these also.
 * Sidebar: merge AVL theme (internal MonoBook derivate with customizable box states) with Sidebar
 * fix session loss on php-5.2 (with or without DB_SESSION)
 * clarify issues with pagenames: "," breaks PageList. Escape with "~" or "\"?
 * fix Wikiwys with prettyurl, link labels and killing plugin args
-* ranked FullTextSearch (besides postgresql)
 * ImportMediaWiki, ImportRdf, ImportOwl, ExportMediaWiki, ExportRdf, ExportOwl
-* WikiUser/OpenID (from DokuWiki)
+* WikiUser/OpenID (from DokuWiki) - Status::in_work
 * more meta stuff: OpenSearch, format=dc (Dublin Core)
 * format=mm (FreeMind) for RecentChanges, SemanticWeb's and simple PageList's. 
   See http://wikkawiki.org/FreeMind. Maybe format=mmap for the commercial MindMap.
