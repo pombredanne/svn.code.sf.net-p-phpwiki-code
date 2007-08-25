@@ -1,4 +1,4 @@
-<?php // -*-php-*- rcs_id('$Id: LdapSearch.php,v 1.5 2007-01-22 23:50:00 rurban Exp $');
+<?php // -*-php-*- rcs_id('$Id: LdapSearch.php,v 1.6 2007-08-25 18:06:46 rurban Exp $');
 /**
  Copyright 2004 John Lines
  Copyright 2007 $ThePhpWikiProgrammingTeam
@@ -59,7 +59,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.5 $");
+                            "\$Revision: 1.6 $");
     }
     function getDefaultArguments() {
         return array('host' 	=> "", 		// default: LDAP_AUTH_HOST
@@ -82,6 +82,7 @@ extends WikiPlugin
         }
         $args = $this->getArgs($argstr, $request);
         extract($args);
+        //include_once("lib/WikiUser/LDAP.php");
         if (!$host) {
             if (defined('LDAP_AUTH_HOST')) {
                 $host = LDAP_AUTH_HOST;
@@ -134,6 +135,7 @@ extends WikiPlugin
             $bind = ldap_bind($connect);
         }
         if (!$bind) return $this->error(_("Failed to bind LDAP host"));
+	if (!$basedn) $basedn = LDAP_BASE_DN;
 	$attr_array = array("");
 	if (!$attributes) {
             $res = ldap_search($connect, $basedn, $filter);
@@ -161,7 +163,7 @@ extends WikiPlugin
 	    for ($ii=0; $ii<$entries[$i]["count"]; $ii++){
 		$data = $entries[$i][$ii];
 		$datalen = $entries[$i][$data]["count"];
-		if ($attrcols[$ii] < $datalen ) {
+		if ($attrcols[$ii] < $datalen) {
 		    $attrcols[$ii] = $datalen;
 		}
 	    }
@@ -177,19 +179,17 @@ extends WikiPlugin
 	$html->pushContent($row);
 
 	// Print the data rows
-	for ($i = 0; $i<$entries["count"]; $i++) {
+	for ($i = 0; $i < $entries["count"]; $i++) {
 	    $row = HTML::tr(); $nc=0;
-	    for ($ii=0; $ii < $entries[$i]["count"]; $ii++){
-		$data = $entries[$i][$ii];
-		// 3 possible cases for the values of each attribute.
-		switch ($entries[$i][$data]["count"]) {
-		case 0:
+	    for ($ii=0; $ii < count($attr_array); $ii++){
+		$data = @$entries[$i][$attr_array[$ii]];
+		if ($data and $data["count"] > 0) {
+		    for ($iii=0; $iii < $data["count"]; $iii++) {
+			$row->pushContent(HTML::td($data[$iii])); $nc++;
+		    }
+		} else {
 		    $row->pushContent(HTML::td("")); $nc++;
 		    break;
-		default:
-		    for ($iii=0; $iii < $entries[$i][$data]["count"]; $iii++) {
-			$row->pushContent(HTML::td($entries[$i][$data][$iii])); $nc++;
-		    }
 		}
 		// Make up some blank cells if required to pad this row
 		for ( $j=0 ; $j < ($attrcols[$ii] - $nc); $j++ ) {
@@ -203,6 +203,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2007/01/22 23:50:00  rurban
+// Improve Table for no attributes
+//
 // Revision 1.4  2007/01/21 23:23:49  rurban
 // Improve LdapSearch
 //
