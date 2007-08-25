@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.144 2007-07-21 19:33:43 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.145 2007-08-25 17:58:14 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -533,6 +533,8 @@ class PageList {
     	else 
     	    $GLOBALS['request']->_pagelist++;    
     	$this->id = $GLOBALS['request']->_pagelist;
+    	if ($GLOBALS['request']->getArg('count'))
+    	    $options['count'] = $GLOBALS['request']->getArg('count');
         if ($options)
             $this->_options = $options;
 
@@ -614,6 +616,8 @@ class PageList {
 	    elseif (!isset($request->args["id"]) and $request->getArg($key)) {
 		$this->_options[$key] = $request->getArg($key);
 	    }
+	    else 
+		$this->_options[$key] = false;
         }
         if ($exclude) {
             if (is_string($exclude) and !is_array($exclude))
@@ -779,19 +783,43 @@ class PageList {
         return $row;
     }
 
+    /* ignore from, but honor limit */
     function addPages ($page_iter) {
-        //Todo: if limit check max(strlen(pagename))
-        while ($page = $page_iter->next()) {
-            $this->addPage($page);
+        // TODO: if limit check max(strlen(pagename))
+	$i = 0;
+        if (isset($this->_options['limit'])) { // extract from,count from limit
+	    list($from, $limit) = WikiDB_backend::limit($this->_options['limit']);
+	    $limit += $from;
+        } else {
+	    $limit = 0;
         }
+        while ($page = $page_iter->next()) {
+            $i++;	
+            if ($from and $i < $from) 
+                continue;
+	    if (!$limit or ($limit and $i < $limit))
+		$this->addPage($page);
+        }
+        if (empty($this->_options['count']))
+	    $this->_options['count'] = $i;
     }
 
     function addPageList (&$list) {
         if (empty($list)) return;  // Protect reset from a null arg
+        if (isset($this->_options['limit'])) { // extract from,count from limit
+	    list($from, $limit) = WikiDB_backend::limit($this->_options['limit']);
+	    $limit += $from;
+        } else {
+	    $limit = 0;
+        }
         foreach ($list as $page) {
-            if (is_object($page))
-                $page = $page->_pagename;
-            $this->addPage((string)$page);
+            $i++;	
+            if ($from and $i < $from) 
+                continue;
+	    if (!$limit or ($limit and $i < $limit)) {
+                if (is_object($page)) $page = $page->_pagename;
+                $this->addPage((string)$page);
+	    }
         }
     }
 
@@ -1070,7 +1098,7 @@ class PageList {
                   => new _PageList_Column_acl('acl', _("ACL")),
                   */
                   'checkbox'
-                  => new _PageList_Column_checkbox('p', _("Select")),
+                  => new _PageList_Column_checkbox('p', _("All")),
                   'pagename'
                   => new _PageList_Column_pagename,
                   'mtime'
@@ -1283,24 +1311,24 @@ class PageList {
 
         list($offset, $pagesize) = $this->limit($limit);
         if (!$pagesize or
-            (!$offset and $numrows <= $pagesize) or
-            ($offset + $pagesize < 0))
+            (!$offset and $numrows < $pagesize) or
+            (($offset + $pagesize) < 0))
             return false;
 
         $request = &$GLOBALS['request'];
         $pagename = $request->getArg('pagename');
-        $defargs = $request->args;
+        $defargs = array_merge(array('id' => $this->id), $request->args);
         if (USE_PATH_INFO) unset($defargs['pagename']);
         if ($defargs['action'] == 'browse') unset($defargs['action']);
         $prev = $defargs;
 
         $tokens = array();
         $tokens['PREV'] = false; $tokens['PREV_LINK'] = "";
-        $tokens['COLS'] = count($this->_columns);
+        $tokens['COLS'] = $ncolumns;
         $tokens['COUNT'] = $numrows; 
         $tokens['OFFSET'] = $offset; 
         $tokens['SIZE'] = $pagesize;
-        $tokens['NUMPAGES'] = (int)($numrows / $pagesize)+1;
+        $tokens['NUMPAGES'] = (int) ceil($numrows / $pagesize);
         $tokens['ACTPAGE'] = (int) (($offset+1) / $pagesize)+1;
         if ($offset > 0) {
             $prev['limit'] = max(0, $offset - $pagesize) . ",$pagesize";
@@ -1313,7 +1341,7 @@ class PageList {
         }
         $next = $defargs;
         $tokens['NEXT'] = false; $tokens['NEXT_LINK'] = "";
-        if ($offset + $pagesize < $numrows) {
+        if (($offset + $pagesize) < $numrows) {
             $next['limit'] = min($offset + $pagesize, $numrows - $pagesize) . ",$pagesize";
             $next['count'] = $numrows;
             $tokens['LIMIT'] = $next['limit'];
@@ -1341,7 +1369,7 @@ class PageList {
                                            count($this->_columns), 
                                            $this->_options['limit']);
             if ($tokens)                               
-                $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['NUMPAGES']);
+                $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['COUNT']);
         }
         foreach ($this->_pages as $pagenum => $page) {
             $rows[] = $this->_renderPageRow($page, $i++);
@@ -1456,6 +1484,20 @@ function flipAll(formObj) {
 	    $this->_pages = array_unique($this->_pages);
 	}
         if (count($this->_sortby) > 0) $this->_sortPages();
+	$count = $this->getTotal();
+        $do_paging = ( isset($this->_options['paging']) 
+        	       and !empty($this->_options['limit']) 
+        	       and $count 
+        	       and $this->_options['paging'] != 'none' );
+        if ( $do_paging ) {
+            $tokens = $this->pagingTokens($count, 
+                                          count($this->_columns), 
+                                          $this->_options['limit']);
+            if ($tokens) {
+                $paging = Template("pagelink", $tokens);
+                $out->pushContent(HTML::table(array('width'=>'50%'), $paging));
+            }
+        }
 
         // need a recursive switch here for the azhead and cols grouping.
         if (!empty($this->_options['cols']) and $this->_options['cols'] > 1) {
@@ -1464,7 +1506,7 @@ function flipAll(formObj) {
             $width = sprintf("%d", 100 / $this->_options['cols']).'%';
             $cols = HTML::tr(array('valign' => 'top'));
             for ($i=0; $i < $count; $i += $length) {
-                $this->_saveOptions(array('cols' => 0));
+                $this->_saveOptions(array('cols' => 0, 'paging' => 'none'));
                 $this->_pages = array_slice($this->_pages, $i, $length);
                 $cols->pushContent(HTML::td(/*array('width' => $width),*/ 
                                             $this->_generateList()));
@@ -1518,19 +1560,6 @@ function flipAll(formObj) {
             return $out;
         }
 
-        $do_paging = ( isset($this->_options['paging']) 
-        	       and !empty($this->_options['limit']) 
-        	       and $this->getTotal() 
-        	       and $this->_options['paging'] != 'none' );
-        if ( $do_paging ) {
-            $tokens = $this->pagingTokens($this->getTotal(), 
-                                           count($this->_columns), 
-                                           $this->_options['limit']);
-            if ($tokens) {
-                $paging = Template("pagelink", $tokens);
-                $out->pushContent(HTML::table($paging));
-            }
-        }
         if ($this->_options['listtype'] == 'ol')
             $this->_options['ordered'] = 1;
         elseif ($this->_options['listtype'] == 'ul')
