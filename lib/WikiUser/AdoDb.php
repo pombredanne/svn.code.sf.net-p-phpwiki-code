@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: AdoDb.php,v 1.10 2007-05-30 21:53:52 rurban Exp $');
+rcs_id('$Id: AdoDb.php,v 1.11 2007-08-25 18:51:25 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
@@ -55,7 +55,7 @@ extends _DbPassUser
                 }
             }
         }
-        if ($this->_HomePagehandle) {
+        if (!empty($this->_HomePagehandle)) {
             if ($restored_from_page = $this->_prefs->retrieve
                 ($this->_HomePagehandle->get('pref'))) {
                 $updated = $this->_prefs->updatePrefs($restored_from_page);
@@ -275,6 +275,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2007/05/30 21:53:52  rurban
+// add userid to authcreate
+//
 // Revision 1.9  2006/12/22 17:25:23  rurban
 // forgot why
 //
