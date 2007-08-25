@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.143 2007-07-15 17:39:18 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.144 2007-08-25 18:31:12 rurban Exp $');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -1499,22 +1499,33 @@ function dateStatusFunc(date, y, m, d) { return false;}'));
     //
     ////////////////////////////////////////////////////////////////
 
-    /* Callback when a new user creates or edits a page */
+    /**  CbUserLogin (&$request, $userid)
+     * Callback when a user logs in
+    */
+    function CbUserLogin (&$request, $userid) {
+	; // do nothing
+    }
+
+    /** CbNewUserEdit (&$request, $userid)
+     * Callback when a new user creates or edits a page 
+     */
     function CbNewUserEdit (&$request, $userid) {
 	; // i.e. create homepage with Template/UserPage
     }
 
-    /* Callback when a new user logs in. 
-       What is new? We only record changes, not logins.
-       Should we track user actions?
-       Let's say user without homepage.
-    */
+    /** CbNewUserLogin (&$request, $userid)
+     * Callback when a "new user" logs in. 
+     *  What is new? We only record changes, not logins.
+     *  Should we track user actions?
+     *  Let's say a new user is a user without homepage.
+     */
     function CbNewUserLogin (&$request, $userid) {
 	; // do nothing
     }
 
-    /* Callback when a user logs out
-    */
+    /** CbUserLogout (&$request, $userid) 
+     * Callback when a user logs out
+     */
     function CbUserLogout (&$request, $userid) {
 	; // do nothing
     }
@@ -1548,7 +1559,7 @@ class Button extends HtmlElement {
             $this->setAttr('class', $class);
         if ($request->getArg('frame'))
             $this->setAttr('target', '_top');
-        if (!empty($options)) {
+        if (!empty($options) and is_array($options)) {
             foreach ($options as $key => $val)
                 $this->setAttr($key, $val);
         }
@@ -1787,6 +1798,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.143  2007/07/15 17:39:18  rurban
+// No mozilla round and background for Image buttons
+//
 // Revision 1.142  2007/07/01 09:36:09  rurban
 // themes are now easier derivable classes from other themes.
 // removed global code setters, switched to $WikiTheme->load() in main
