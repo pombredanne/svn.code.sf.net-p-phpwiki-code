@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.145 2007-06-07 16:56:27 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.146 2007-08-25 18:34:08 rurban Exp $');
 /* Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -574,6 +574,26 @@ class _WikiUser
         $require_level = max(0, min(WIKIAUTH_ADMIN, (int)$require_level));
 
         if ($logout) { // Log out
+	    if (LOGIN_LOG and is_writeable(LOGIN_LOG)) {
+		global $request;
+		$zone_offset = Request_AccessLogEntry::_zone_offset();
+		$ncsa_time = date("d/M/Y:H:i:s", time());
+		$entry = sprintf('%s - %s - [%s %s] "%s" %s - "%s" "%s"',
+				 (string) $request->get('REMOTE_HOST'),
+				 (string) $request->_user->_userid,
+				 $ncsa_time, $zone_offset, 
+				 "logout ".get_class($request->_user),
+				 "401",
+				 (string) $request->get('HTTP_REFERER'),
+				 (string) $request->get('HTTP_USER_AGENT')
+				 );
+		if (($fp = fopen(LOGIN_LOG, "a"))) {
+		    flock($fp, LOCK_EX);
+		    fputs($fp, "$entry\n");
+		    fclose($fp);
+		}
+		//error_log("$entry\n", 3, LOGIN_LOG);
+	    }
             if (method_exists($GLOBALS['request']->_user, "logout")) { //_HttpAuthPassUser
           	$GLOBALS['request']->_user->logout();
             }
@@ -590,6 +610,40 @@ class _WikiUser
             return _("Invalid username.");;
 
         $authlevel = $this->checkPass($passwd === false ? '' : $passwd);
+
+	if (LOGIN_LOG and is_writeable(LOGIN_LOG)) {
+	    global $request;
+	    $zone_offset = Request_AccessLogEntry::_zone_offset();
+	    $ncsa_time = date("d/M/Y:H:i:s", time());
+	    $manglepasswd = $passwd;
+	    for ($i=0; $i<strlen($manglepasswd); $i++) {
+		$c = substr($manglepasswd,$i,1);
+		if (ord($c) < 32) $manglepasswd[$i] = "<";
+		elseif ($c == '*') $manglepasswd[$i] = "*";
+		elseif ($c == '?') $manglepasswd[$i] = "?";
+		elseif ($c == '(') $manglepasswd[$i] = "(";
+		elseif ($c == ')') $manglepasswd[$i] = ")";
+		elseif ($c == "\\") $manglepasswd[$i] = "\\";
+		elseif (ord($c) < 127) $manglepasswd[$i] = "x";
+		elseif (ord($c) >= 127) $manglepasswd[$i] = ">";
+	    }
+	    $entry = sprintf('%s - %s - [%s %s] "%s" %s - "%s" "%s"',
+			     $request->get('REMOTE_HOST'),
+			     (string) $request->_user->_userid,
+			     $ncsa_time, $zone_offset, 
+			     "login $userid/$manglepasswd => $authlevel ".get_class($request->_user),
+			     $authlevel > 0 ? "200" : "403",
+			     (string) $request->get('HTTP_REFERER'),
+			     (string) $request->get('HTTP_USER_AGENT')
+			     );
+	    if (($fp = fopen(LOGIN_LOG, "a"))) {
+		flock($fp, LOCK_EX);
+		fputs($fp, "$entry\n");
+		fclose($fp);
+	    }
+	    //error_log("$entry\n", 3, LOGIN_LOG);
+	}
+
         if ($authlevel <= 0) { // anon or forbidden
             if ($passwd)
                 return _("Invalid password.");
@@ -2161,6 +2215,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.145  2007/06/07 16:56:27  rurban
+// protect against empty username
+//
 // Revision 1.144  2007/06/01 06:36:57  rurban
 // allow space in user names. backends should tighten it
 //
