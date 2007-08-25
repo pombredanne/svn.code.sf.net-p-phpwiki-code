@@ -1,8 +1,8 @@
 <?php 
 /**
- * Themable paging "<< prev | next >>" links
+ * Themable paging "|<< <<   - i/sum - >> >>|" links
  *
- * $Id: pagelink.tmpl,v 1.1 2004-04-20 00:06:04 rurban Exp $ -->
+ * $Id: pagelink.tmpl,v 1.2 2007-08-25 19:55:06 rurban Exp $ -->
  * Variables: PREV, NEXT, PREV_LINK, NEXT_LINK,
  * COUNT, OFFSET, SIZE
  * More ideas: FIRST, LAST, ...
@@ -12,13 +12,13 @@
   <td class="wikipaging<?= $PREF ? "-enabled" : "-disabled" ?>" align="left"">
       <?= $PREV ?  HTML::a(array('href'=>$FIRST_LINK),_("|<<")) : _("|<<") ?>
       &nbsp;
-      <?= $PREV ?  HTML::a(array('href'=>$PREV_LINK),_("<<")) : _("<<") ?>
+      <?= $PREV ?  HTML::a(array('href'=>$PREV_LINK),_("<< Prev")) : _("<<") ?>
   </td>
   <td class="wikipaging-enabled" align="center">
       <?= fmt(" - %d / %d - ", $ACTPAGE, $NUMPAGES) ?>
   </td>
   <td class="wikipaging<?= $NEXT ? "-enabled" : "-disabled" ?>" align="right">
-      <?= $NEXT ?  HTML::a(array('href'=>$NEXT_LINK),_(">>"))  : _(">>") ?> 
+      <?= $NEXT ?  HTML::a(array('href'=>$NEXT_LINK),_("Next >>"))  : _(">>") ?> 
       &nbsp;
       <?= $NEXT ?  HTML::a(array('href'=>$LAST_LINK),_(">>|")) : _(">>|") ?>
   </td>
