@@ -1,5 +1,5 @@
 /**
- * $Id: phpwiki.css,v 1.61 2007-07-15 17:40:13 rurban Exp $
+ * $Id: phpwiki.css,v 1.62 2007-08-25 19:54:26 rurban Exp $
  *
  * This incarnation of this stylesheet is a complete rewrite from the
  * ground up.
@@ -86,6 +86,11 @@ div#browse  {
   margin-top:    1px;
   margin-bottom: 0.5px;
   /*background: #dddddd;*/
+}
+input#inp-openid {
+  background:  url('images/openid.png') bottom left no-repeat;
+  background-repeat: no-repeat;
+  padding-left: 18px !important;
 }
 
 /* .interwiki-map thead td { text-decoration: underline; } */
@@ -195,7 +200,7 @@ h1 .backlinks { text-decoration: underline; }
 
 /* image buttons */
 a.wikibutton, a.wikibutton:visited, input.wikibutton  { 
-    background-color: none; 
+    background-color: white; 
 }
 
 /**
@@ -913,6 +918,7 @@ div.rss { margin: 1em; padding: 1em; font-size: 0.9em; background-color: #eeeeee
 div.feed { color: #333; margin: -0.5em; margin-bottom: 0em; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 1.2em; }
 div.itemdesc {  padding-left: 1em; }
 div.rssitem { border-top: thin dashed #aaa; }
+a.rssicon { font-weight:normal; font-size:small; vertical-align:middle; }
 
 /* SqlResult */
 table.sqlresult { 
