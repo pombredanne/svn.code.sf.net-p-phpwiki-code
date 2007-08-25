@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.10 2007-06-07 17:03:38 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.11 2007-08-25 18:07:26 rurban Exp $');
 /*
- Copyright 2005 $ThePhpWikiProgrammingTeam
+ Copyright 2005,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -34,16 +34,18 @@ rcs_id('$Id: Template.php,v 1.10 2007-06-07 17:03:38 rurban Exp $');
  * We only support named parameters, not numbered ones as in mediawiki, and 
  * the placeholder is %%var%% and not {{{var}}} as in mediawiki.
  *
- * The following predefined variables are automatically expanded if existing:
- *   pagename
- *   mtime     - last modified date + time
- *   ctime     - creation date + time
- *   author    - last author
- *   owner     
- *   creator   - first author
+ * The following predefined uppercase variables are automatically expanded if existing:
+ *   PAGENAME
+ *   MTIME     - last modified date + time
+ *   CTIME     - creation date + time
+ *   AUTHOR    - last author
+ *   OWNER     
+ *   CREATOR   - first author
  *   SERVER_URL, DATA_PATH, SCRIPT_NAME, PHPWIKI_BASE_URL and BASE_URL
  *
- * <noinclude> .. </noinclude> is stripped
+ * <noinclude> .. </noinclude>     is stripped from the template expansion.
+ * <includeonly> .. </includeonly> is only expanded in pages using the template, 
+ *                                 not in the template itself.
  *
  * See also:
  * - ENABLE_MARKUP_TEMPLATE = true: (lib/InlineParser.php)
@@ -66,7 +68,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.10 $");
+                            "\$Revision: 1.11 $");
     }
 
     function getDefaultArguments() {
@@ -83,6 +85,7 @@ extends WikiPlugin
     	$this->vars[$name] = $value;
     	return $name != 'action';
     }
+
     // TODO: check if page can really be pulled from the args, or if it is just the basepage. 
     function getWikiPageLinks($argstr, $basepage) {
         $args = $this->getArgs($argstr);
@@ -134,15 +137,17 @@ extends WikiPlugin
             $c = extractSection($args['section'], $c, $page, $quiet, $args['sectionhead']);
             $initial_content = implode("\n", $c);
         }
-
+	// exclude from expansion
         if (preg_match('/<noinclude>.+<\/noinclude>/s', $initial_content)) {
             $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "", 
                                             $initial_content);
         }
+	// only in expansion
+	$initial_content = preg_replace("/<includeonly>(.+)<\/includeonly>/s", "\\1",
+					$initial_content);
 	$this->doVariableExpansion($initial_content, $vars, $basepage, $request);
 
         array_push($included_pages, $page);
-
         include_once('lib/BlockParser.php');
         $content = TransformText($initial_content, $r->get('markup'), $page);
 
@@ -204,6 +209,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2007/06/07 17:03:38  rurban
+// minor optimization: move explode("\n", $initial_content) to section code
+//
 // Revision 1.9  2007/03/04 14:09:13  rurban
 // silence missing page warning
 //
