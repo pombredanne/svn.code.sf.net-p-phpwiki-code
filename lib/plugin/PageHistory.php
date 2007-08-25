@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.33 2007-07-14 12:04:39 rurban Exp $');
+rcs_id('$Id: PageHistory.php,v 1.34 2007-08-25 18:53:19 rurban Exp $');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 1999, 2000, 2001, 2002, 2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -87,11 +87,18 @@ extends _RecentChanges_HtmlFormatter
         return true;
     }
 
-    function title() {
-        return array(fmt("PageHistory for %s",
+    function headline() {
+        return HTML(fmt("PageHistory for %s",
                          WikiLink($this->_args['page'])),
                      "\n",
-                     $this->rss_icon());
+                     $this->rss_icon(),
+		     $this->rss2_icon(),
+		     $this->atom_icon(),
+		     $this->rdf_icon());
+    }
+
+    function title() {
+        return "PageHistory:".$this->_args['page'];
     }
 
     function empty_message () {
@@ -268,7 +275,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.33 $");
+                            "\$Revision: 1.34 $");
     }
 
     function getDefaultArguments() {
@@ -336,6 +343,9 @@ extends WikiPlugin_RecentChanges
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2007/07/14 12:04:39  rurban
+// fix rss button actions
+//
 // Revision 1.32  2007/06/02 18:24:47  rurban
 // Added MonoBook style
 //
