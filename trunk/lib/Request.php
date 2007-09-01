@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.114 2007-07-14 19:17:15 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.115 2007-09-01 13:28:34 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -1051,6 +1051,8 @@ class Request_AccessLogEntry
         $this->size = (int)$size;
     }
     function setDuration ($seconds) {
+        // Pear DB does not correctly quote , in floats using ?. e.g. in european locales.
+        // Workaround:
         $this->duration = strtr(sprintf("%f", $seconds),",",".");
     }
     
@@ -1347,6 +1349,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.114  2007/07/14 19:17:15  rurban
+// fix bug#1749950 float with ","
+//
 // Revision 1.113  2007/03/18 10:25:21  rurban
 // cast AccessLog types
 //
