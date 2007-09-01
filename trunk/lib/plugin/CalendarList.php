@@ -1,8 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: CalendarList.php,v 1.9 2006-05-14 17:40:31 rurban Exp $');
+rcs_id('$Id: CalendarList.php,v 1.10 2007-09-01 13:39:46 rurban Exp $');
 
 /**
- Copyright 1999,2000,2001,2002,2005 $ThePhpWikiProgrammingTeam
+ Copyright 1999-2002,2005-2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -39,9 +39,12 @@ if (!defined('PLUGIN_CALENDARLIST_LAST_N'))
  * Uses <dl><dd>DATE<dt>page contents...
  * Derived from Calendar.php by Martin Norbäck <martin@safelogic.se>
  *
- * Insert this plugin into your Calendar page, for example in:
- *     WikiUser/Calendar
- * Add the line: <?plugin CalendarList ?>
+ * Insert this plugin into your Calendar page, for example in WikiUser/Calendar:
+ *   <?plugin Calendar ?>
+ *   <?plugin CalendarList ?>
+ *
+ * Honors now year + month args as start base - together with Calendar navigation.
+ * The behaviour before 2007 with last/next_n_days was to start now.
  *
  */
 class WikiPlugin_CalendarList
@@ -71,7 +74,7 @@ extends WikiPlugin
 
                      'month_format' => '%B, %Y',
                      'wday_format'  => '%a',
-                     'start_wday'   => '0');
+                     'start_wday'   => '1');
     }
 
     /**
@@ -150,22 +153,24 @@ extends WikiPlugin
         // default to this month
         $now = localtime(time() + 3600 * $request->getPref('timeOffset'), 1);
         foreach ( array('month' => $now['tm_mon'] + 1,
-                        'year'  => $now['tm_year'] + 1900)
-                  as $param => $dflt ) {
-
-            if (!($args[$param] = intval($args[$param])))
+                        'year'  => $now['tm_year'] + 1900,
+                        'mday'  => $now['tm_mday'])
+                  as $param => $dflt )
+        {
+             if (! @($args[$param] = intval($args[$param])))
                 $args[$param]   = $dflt;
         }
+        $base = mktime(0, 0, 0, // h, m, s
+                       $args['month'],     // month 1-12
+                       $args['mday'],      
+                       $args['year']);     // must have base 1900
 
         // ***************************************************
         // start of Plugin CalendarList display logic
         // determine start date
-        if ($args['last_n_days']) {
-            // n days ago (should not be affected by month or month_offset)
-            $start = mktime(0, 0, 0, // h, m, s
-                            $now['tm_mon'] + 1, // month (1-12)
-                            $now['tm_mday'] - $args['last_n_days'], // days prior
-                            $now['tm_year'] + 1900);
+        if ($args['last_n_days']) { // back by month
+            // n days ago, affected by month or month_offset
+            $start = $base - ($args['last_n_days'] * 24 * 3600.0);
         }
         elseif ($args['last_n']) {
             // get date for last nth event
@@ -181,11 +186,8 @@ extends WikiPlugin
 
         // determine end date
         if ($args['next_n_days']) {
-            // n days from now (should not be affected by month or month_offset)
-            $end = mktime(23, 59, 59, // h, m, s
-                            $now['tm_mon'] + 1, // month (1-12)
-                            $now['tm_mday'] + $args['next_n_days'], // days prior
-                            $now['tm_year'] + 1900);
+            // n days from now, affected by month and year
+            $end = $base + ($args['next_n_days'] * 24 * 3600.0);
         }
         elseif ($args['last_n']) {
             // get date for next nth event
@@ -224,6 +226,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2006/05/14 17:40:31  rurban
+// Patch #1232730 by banjo
+//
 // Revision 1.8  2005/10/12 06:18:31  rurban
 // dont overdo constants
 //
