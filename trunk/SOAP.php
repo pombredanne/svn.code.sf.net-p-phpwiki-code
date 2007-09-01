@@ -218,7 +218,7 @@ function getRecentChanges($limit=false, $since=false, $include_minor=false, $cre
     $page_iter = $dbi->mostRecent($params);
     $pages = array();
     while ($page = $page_iter->next()) {
-        $pages[] = array('pagename' => $page->getName()
+        $pages[] = array('pagename' => $page->getName(),
 			 'lastModified' => $page->get('mtime'),
 			 'author'  => $page->get('author'),
 			 'summary' => $page->get('summary'), // added with 1.3.13
