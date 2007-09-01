@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.117 2007-08-10 21:56:29 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.118 2007-09-01 13:24:23 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -198,7 +198,7 @@ function IniConfig($file) {
          'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
          'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS',
 	 'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS',
-         'ENABLE_AUTH_OPENID'
+         'ENABLE_AUTH_OPENID', 'INSECURE_ACTIONS_LOCALHOST_ONLY'
          );
 
     $rs = @parse_ini_file($file);
@@ -940,6 +940,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.117  2007/08/10 21:56:29  rurban
+// add LOGIN_LOG,LDAP_SEARCH_FILTER,ENABLE_AUTH_OPENID
+//
 // Revision 1.116  2007/07/14 17:55:29  rurban
 // SemanticWeb.php
 //
