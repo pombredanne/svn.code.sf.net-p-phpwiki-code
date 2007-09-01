@@ -1,5 +1,5 @@
-Date: Sat, 7 Jul 2007 21:45:24 +0200
-X-Rcs-Id: $Id: LisaNova,v 1.8 2007-07-07 07:42:37 rurban Exp $
+Date: Mon, 16 Jul 2007 21:45:24 +0200
+X-Rcs-Id: $Id: LisaNova,v 1.9 2007-09-01 13:40:59 rurban Exp $
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14)
 Content-Type: application/x-phpwiki;
   pagename=LisaNova;
@@ -11,7 +11,10 @@ Content-Transfer-Encoding: binary
 ! A [ YouTube | http://www.youtube.com/ ] star
 
 ! [LisaNova's Profile | http://www.youtube.com/profile?user=LisaNova]
-! Videos (46)
+! Videos (49)
+# Daxflame interviews LisaNova! <br><?plugin YouTube style=link v=ySR9LKV76hU ?> _by Daxflame_
+# Word of Mouth <br><?plugin YouTube style=link v=Ajr5AesC5QM ?>
+# LisaNova does YOUTUBE!!!! <br><?plugin YouTube style=link v=W13Wj34Lpto ?>
 # LisaNova does George Bush! <br><?plugin YouTube style=link v=QfdQkyc4omk ?>
 # Trying Too Hard? <br><?plugin YouTube style=link v=Cw5-k4OwsOw ?>
 # The Big Debate <br><?plugin YouTube style=link v=8Y2N9FueKak ?>
