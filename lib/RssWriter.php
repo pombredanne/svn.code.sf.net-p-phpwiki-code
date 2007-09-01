@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.15 2007-08-25 18:25:40 rurban Exp $');
+<?php rcs_id('$Id: RssWriter.php,v 1.16 2007-09-01 13:29:44 rurban Exp $');
 /*
  * Code for creating RSS 1.0.
  */
@@ -118,7 +118,7 @@ class RssWriter extends XmlElement
     function __spew() {
         header("Content-Type: application/xml; charset=" . RSS_ENCODING);
         printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", RSS_ENCODING);
-        printf("<!-- generator=\"PhpWiki-%s\" -->\n", PHPWIKI_VERSION);
+        //printf("<!-- generator=\"PhpWiki-%s\" -->\n", PHPWIKI_VERSION);
         $this->printXML();
     }
         
@@ -210,7 +210,7 @@ class AtomFeed extends RssWriter {
     function __spew() {
         header("Content-Type: application/atom+xml; charset=" . RSS_ENCODING);
         printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", RSS_ENCODING);
-        printf("<!-- generator=\"PhpWiki-%s\" -->\n", PHPWIKI_VERSION);
+        //printf("<!-- generator=\"PhpWiki-%s\" -->\n", PHPWIKI_VERSION);
         $this->printXML();
     }
 
