@@ -1,22 +1,22 @@
-Date: Wed, 2 Feb 2005 20:32:44 +0100
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
-X-Rcs-Id: $Id: Help%2FCalendarPlugin,v 1.1 2005-11-21 22:19:00 rurban Exp $
+Date: Wed, 29 Aug 2007 09:31:31 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20070828)
+X-Rcs-Id: $Id: Help%2FCalendarPlugin,v 1.2 2007-09-01 13:40:12 rurban Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCalendarPlugin;
-  pgsrc_version="2 $Revision: 1.1 $";
+  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The  Help:n | Help:  can be used to generate a monthly calendar in a
+The [CalendarPlugin | Help:CalendarPlugin]  can be used to generate a monthly calendar in a
 wiki page. It's handy for PhpWiki:PersonalWiki~s.
 
 Individual dates in the calendar link to specially named wiki pages.
 The names for the "day pages" are by default formed by appending the
 date to the pagename on which the calendar appears.
 
-_This feature was inspired by  Help:a |http://manila.userland.com/],
+_This feature was inspired by Calendar |http://manila.userland.com/],
 and first implemented by PhpWiki:GaryBenson. It was later implemented as a
 Help:WikiPlugin by PhpWiki:JeffDairiki._
 
@@ -83,6 +83,17 @@ will get you:
 
   <?plugin Calendar start_wday=1 ?>
 
+! See also
+
+Help:CalendarListPlugin.
+
+Often used together like this:
+
+<verbatim>
+<?plugin Calendar?>
+<?plugin CalendarList?>
+</verbatim>
+
 -----
 
 ! Patch for 1.2
@@ -97,4 +108,4 @@ a  Help:h  | http://inauspicious.org/files/phpwiki/phpwiki-1.2.0-calendar.patch]
 
 ----
 
-PhpWikiDocumentation
+PhpWikiDocumentation Help:WikiPlugin
