@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.24 2007-07-14 12:06:27 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.25 2007-09-01 13:24:55 rurban Exp $');
 ?>
 <head>
 <?php if (ENABLE_XHTML_XML and strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml')) { ?>
@@ -67,6 +67,8 @@ _("FindPage"))?>" />
 ?>
 <link rel="alternate" type="application/rss+xml" title="RSS" href="<?=WikiURL(
 _("RecentChanges"), array('format' => 'rss'))?>" />
+<link rel="alternate" type="application/atom+xml" title="ATOM" href="<?=WikiURL(
+_("RecentChanges"), array('format' => 'atom'))?>" />
 <?php /**
        * Add some user-specific links.
        */ ?>
@@ -120,6 +122,9 @@ _("UserPreferences"))?>" />
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2007/07/14 12:06:27  rurban
+// aesthetic request: remove ?action=edit after edit
+//
 // Revision 1.23  2005/10/10 20:02:54  rurban
 // add one more header
 //
