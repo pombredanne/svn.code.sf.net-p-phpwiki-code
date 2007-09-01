@@ -1,7 +1,7 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.237 2007-08-25 18:03:34 rurban Exp $');
+rcs_id('$Id: main.php,v 1.238 2007-09-01 13:24:23 rurban Exp $');
 /*
- Copyright 1999,2000,2001,2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
+ Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -630,7 +630,6 @@ class WikiRequest extends Request {
             case 'viewsource':
             case 'diff':
             case 'select':
-            case 'xmlrpc':
             case 'search':
             case 'pdf':
             case 'captcha':
@@ -638,16 +637,28 @@ class WikiRequest extends Request {
             case 'setpref':
                 return WIKIAUTH_ANON;
 
-            case 'zip':
+            case 'xmlrpc':
+            case 'soap':
+            case 'dumphtml':
+                if (INSECURE_ACTIONS_LOCALHOST_ONLY and !is_localhost())
+		    return WIKIAUTH_ADMIN;
+		return WIKIAUTH_ANON;
+
             case 'ziphtml':
-                if (defined('ZIPDUMP_AUTH') && ZIPDUMP_AUTH)
+                if (ZIPDUMP_AUTH)
+                    return WIKIAUTH_ADMIN;
+                if (INSECURE_ACTIONS_LOCALHOST_ONLY and !is_localhost())
+		    return WIKIAUTH_ADMIN;
+		return WIKIAUTH_ANON;
+
+            case 'zip':
+                if (ZIPDUMP_AUTH)
                     return WIKIAUTH_ADMIN;
                 return WIKIAUTH_ANON;
 
             case 'edit':
             case 'revert':
             case 'rename':
-            case 'soap':
                 if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
                     return WIKIAUTH_BOGO;
                 return WIKIAUTH_ANON;
@@ -662,7 +673,6 @@ class WikiRequest extends Request {
 
             case 'upload':
             case 'dumpserial':
-            case 'dumphtml':
             case 'loadfile':
             case 'remove':
             case 'lock':
@@ -1356,6 +1366,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.237  2007/08/25 18:03:34  rurban
+// change rename action from access perm change to edit: allow the signed in user to rename.
+//
 // Revision 1.236  2007/07/21 18:08:49  rurban
 // more searchtypes
 //

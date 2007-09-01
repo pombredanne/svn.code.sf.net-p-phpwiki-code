@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.42 2007-08-25 18:03:34 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.43 2007-09-01 13:24:23 rurban Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -166,16 +166,20 @@ function action2access ($action) {
     case 'viewsource':
     case 'diff':
     case 'select':
-    case 'xmlrpc':
     case 'search':
     case 'pdf':
     case 'captcha':
-        return 'view';
     case 'zip':
-    case 'ziphtml':
     case 'dumpserial':
+        return 'view';
+
+    // performance and security relevant
+    case 'xmlrpc':
+    case 'soap':
+    case 'ziphtml':
     case 'dumphtml':
         return 'dump';
+
     // invent a new access-perm massedit? or switch back to change, or keep it at edit?
     case _("PhpWikiAdministration")."/"._("Rename"):
     case _("PhpWikiAdministration")."/"._("Replace"):
@@ -193,14 +197,14 @@ function action2access ($action) {
         break;
     case 'upload':
     case 'loadfile': 
-        // probably create/edit but we cannot check all page permissions, can we?
+	// probably create/edit but we cannot check all page permissions, can we?
     case 'remove':
     case 'lock':
     case 'unlock':
     case 'upgrade':
     case 'chown':
     case 'setacl':
-            return 'change';
+	return 'change';
     default:
         //Todo: Plugins should be able to override its access type
         if (isWikiWord($action))
@@ -297,7 +301,7 @@ function getAccessDescription($access) {
                                     'view'     => _("View this page and all subpages"),
                                     'edit'     => _("Edit this page and all subpages"),
                                     'create'   => _("Create a new (sub)page"),
-                                    'dump'     => _("Download the page contents"),
+                                    'dump'     => _("Download page contents"),
                                     'change'   => _("Change page attributes"),
                                     'remove'   => _("Remove this page"),
                                     );
@@ -439,13 +443,21 @@ class PagePermission {
                       'list'   => array(ACL_EVERY => true),
                       'remove' => array(ACL_ADMIN => true,
                                         ACL_OWNER => true),
+                      'dump'   => array(ACL_ADMIN => true,
+                                        ACL_OWNER => true),
                       'change' => array(ACL_ADMIN => true,
                                         ACL_OWNER => true));
         if (ZIPDUMP_AUTH)
             $perm['dump'] = array(ACL_ADMIN => true,
                                   ACL_OWNER => true);
-        else
-            $perm['dump'] = array(ACL_EVERY => true);
+        elseif (INSECURE_ACTIONS_LOCALHOST_ONLY) {
+	    if (is_localhost())
+		$perm['dump'] = array(ACL_ADMIN => true);
+	    else
+		$perm['dump'] = array(ACL_EVERY => true);
+	}
+	else
+	    $perm['dump'] = array(ACL_EVERY => true);
         if (defined('REQUIRE_SIGNIN_BEFORE_EDIT') && REQUIRE_SIGNIN_BEFORE_EDIT)
             $perm['edit'] = array(ACL_SIGNED => true);
         // view:
@@ -731,6 +743,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.42  2007/08/25 18:03:34  rurban
+// change rename action from access perm change to edit: allow the signed in user to rename.
+//
 // Revision 1.41  2007/07/14 12:03:25  rurban
 // fix for mult. group membership: not a member and undecided: check other groups
 //

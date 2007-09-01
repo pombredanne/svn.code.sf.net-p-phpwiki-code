@@ -1,6 +1,6 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.265 2007-08-08 18:47:14 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.266 2007-09-01 13:24:23 rurban Exp $');
 /*
- Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
+ Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -1518,6 +1518,7 @@ function glob_to_pcre ($glob) {
     if (!preg_match('/[\?\*]$/', $glob))
         $re = $re . '$';
 
+    // Fixes Bug 1182997
     // .*? handled above, now escape the rest
     //while (strcspn($re, $escape) != strlen($re)) // loop strangely needed
     $re = preg_replace('/([^\xff])(['.preg_quote($escape, "/").'])/', 
@@ -1745,6 +1746,13 @@ class Alert {
         if ($buttons === false)
             $buttons = array();
 
+	if (is_array($body)) {
+	    $html = HTML::ol();
+	    foreach ($body as $li) {
+		$html->pushContent(HTML::li($li));
+	    }
+	    $body = $html;
+	}
         $this->_tokens = array('HEADER' => $head, 'CONTENT' => $body);
         $this->_buttons = $buttons;
     }
@@ -2152,7 +2160,19 @@ function binary_search($needle, $haystack) {
     }
 }
 
+function is_localhost($url = false) {
+    if (!$url) {
+    	global $HTTP_SERVER_VARS;
+    	return $HTTP_SERVER_VARS['SERVER_ADDR'] == '127.0.0.1';
+    }
+}
+
 // $Log: not supported by cvs2svn $
+// Revision 1.265  2007/08/08 18:47:14  rurban
+// * Fix EmailNotify for Subpages: Unknown modifier ? at any page save.
+//   Quoting error on glob_match.
+// * Fix binary_search
+//
 // Revision 1.264  2007/07/15 17:39:42  rurban
 // add binary_search. enable memory ps calls
 //
