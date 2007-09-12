@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf.php,v 1.11 2007-02-17 14:14:55 rurban Exp $');
+rcs_id('$Id: pdf.php,v 1.12 2007-09-12 19:41:38 rurban Exp $');
 /*
  Copyright (C) 2003 Olivier PLATHEY
  Copyright (C) 200? Don Sebà
@@ -134,7 +134,7 @@ class PDF extends FPDF {
     }
 }
 
-function ConvertAndDisplayPdfPageList (&$request, $pagelist) {
+function ConvertAndDisplayPdfPageList (&$request, $pagelist, $args = array()) {
     global $WikiTheme;
     if (empty($request->_is_buffering_output))
         $request->buffer_output(false/*'nocompress'*/);
@@ -143,16 +143,40 @@ function ConvertAndDisplayPdfPageList (&$request, $pagelist) {
     $request->setArg('dest',false);
     $request->setArg('format',false);
     include_once("lib/display.php");
+    include_once("lib/loadsave.php");
+
+    array_unshift($pagelist->_pages, $request->_dbi->getPage($pagename));
+    require_once("lib/WikiPluginCached.php");
+    $cache = new WikiPluginCached;
+    $cache->newCache();
+    $tmpfile = $cache->tempnam();
+    $tmpdir = dirname($tmpfile); 
+    unlink ($tmpfile);
 
     // Disable CACHE
-    //while ($page = $pagelist->next())
+    if (defined('HTML_DUMP_SUFFIX'))
+        $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
+    $VALID_LINKS = isset($args['VALID_LINKS']) ? $args['VALID_LINKS'] : array();
+    $already = array();
     foreach ($pagelist->_pages as $page_handle) {
-	$WikiTheme->DUMP_MODE = true;
+	$pagename = $page_handle->getName();
+	if (array_key_exists($pagename, $already))
+	    continue;
+	$already[$pagename]++;
+	$WikiTheme->DUMP_MODE = 'HTML';
+        $request->setArg('action', 'pdf'); // to omit cache headers
+        $request->setArg('pagename', $pagename); // to omit cache headers
+	// TODO: remove outside links and convert internal links to tmp anchors
+	$revision = $page_handle->getCurrentRevision();
+        $transformedContent = $revision->getTransformedContent();
+        $template = new Template('browse', $request,
+                                 array('revision' => $revision,
+                                       'CONTENT' => $transformedContent,
+				       'VALID_LINKS' => $VALID_LINKS
+				       ));
+        $html = GeneratePageasXML($template, $pagename, $revision, 
+				  array('VALID_LINKS' => $VALID_LINKS));
 	
-        $request->setArg('action','pdf'); // to omit cache headers
-        $request->setArg('pagename',$page_handle->getName()); // to omit cache headers
-	displayPage($request, new Template('htmldump', $request));
-        $html = ob_get_contents();
 	$WikiTheme->DUMP_MODE = false;
 	$request->discardOutput();
 	$request->buffer_output(false/*'nocompress'*/);
@@ -161,10 +185,9 @@ function ConvertAndDisplayPdfPageList (&$request, $pagelist) {
 	if (USE_EXTERNAL_HTML2PDF) {
 	    // See http://phpwiki.sourceforge.net/phpwiki/PhpWikiToDocBookAndPDF
 	    // htmldoc or ghostscript + html2ps or docbook (dbdoclet, xsltproc, fop)
-	    require_once("lib/WikiPluginCached.php");
-	    $cache = new WikiPluginCached;
-	    $cache->newCache();
-	    $tmpfile = $cache->tempnam('pdf').".html";
+	    $filename = FilenameForPage($page_handle->getName());
+	    $tmpfile = $tmpdir . (isWindows()?"\\":"/") . 
+		 $filename . $WikiTheme->HTML_DUMP_SUFFIX;
 	    $fp = fopen($tmpfile, "wb");
 	    fwrite($fp, $html);
 	    fclose($fp);
@@ -185,16 +208,37 @@ function ConvertAndDisplayPdfPageList (&$request, $pagelist) {
 	    $pdf->ConvertFromHTML($html);
 	}
     }
-    Header('Content-Type: application/pdf');
     if (USE_EXTERNAL_HTML2PDF) {
-	passthru(EXTERNAL_HTML2PDF_PAGELIST." ".join(" ", $tmpfiles));
-	foreach($tmpfiles as $f)
-	    unlink($f);
+	$cmd = EXTERNAL_HTML2PDF_PAGELIST." \"".join("\" \"", $tmpfiles)."\"";
+	$filename = FilenameForPage($pagename);
+	if (DEBUG) {
+	    $tmpfile = $tmpdir . "/createpdf.bat";
+	    $fp = fopen($tmpfile, "wb");
+	    fwrite($fp, $cmd . " > $filename.pdf");
+	    fclose($fp);
+	}
+	if (!headers_sent()) {
+	    Header('Content-Type: application/pdf');
+	    passthru($cmd);
+	}
+	else {
+	    $tmpdir = getUploadFilePath();
+	    $s = passthru($cmd . " > $tmpdir/$filename.pdf");
+	    $errormsg = "<br />\nGenerated <a href=\"".getUploadDataPath()."$filename.pdf\">Upload:$filename.pdf</a>\n";
+	    $errormsg .= $s;
+	    echo $errormsg;
+	}
+	if (!DEBUG) {
+	    foreach($tmpfiles as $f) unlink($f);
+	}
     } else {
+	if (!headers_sent())
+	    Header('Content-Type: application/pdf');
         $pdf->Output($pagename.".pdf", $dest ? $dest : 'I');
     }
     if (!empty($errormsg)) {
         $request->discardOutput();
+        $GLOBALS['ErrorManager']->_postponed_errors = array();
     }
 }
 
@@ -216,6 +260,7 @@ function ConvertAndDisplayPdf (&$request) {
 
     $WikiTheme->DUMP_MODE = true;
     include_once("lib/display.php");
+    // TODO: urldecode pagename to get rid of %20 in filename.pdf
     displayPage($request, new Template('htmldump', $request));
     $html = ob_get_contents();
     $WikiTheme->DUMP_MODE = false;
@@ -230,7 +275,7 @@ function ConvertAndDisplayPdf (&$request) {
         require_once("lib/WikiPluginCached.php");
         $cache = new WikiPluginCached;
         $cache->newCache();
-        $tmpfile = $cache->tempnam();
+        $tmpfile = $cache->tempnam('pdf.html');
         $fp = fopen($tmpfile, "wb");
         fwrite($fp, $html);
         fclose($fp);
@@ -260,6 +305,9 @@ function ConvertAndDisplayPdf (&$request) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2007/02/17 14:14:55  rurban
+// fix pagename for lists
+//
 // Revision 1.10  2007/01/07 18:44:39  rurban
 // Add ConvertAndDisplayPdfPageList
 //
