@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.145 2007-06-02 18:24:39 rurban Exp $');
+rcs_id('$Id: config.php,v 1.146 2007-09-12 19:39:46 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -581,14 +581,24 @@ function safe_wordwrap($str, $width=80, $break="\n", $cut=false) {
 }
 
 function getUploadFilePath() {
-    if (defined('UPLOAD_FILE_PATH')) return UPLOAD_FILE_PATH;
+    if (defined('UPLOAD_FILE_PATH')) {
+    	if (string_ends_with(UPLOAD_FILE_PATH, "/") 
+    	    or string_ends_with(UPLOAD_FILE_PATH, "\\"))
+	    return UPLOAD_FILE_PATH;
+	else
+	    return UPLOAD_FILE_PATH."/";
+    }
     return defined('PHPWIKI_DIR') 
         ? PHPWIKI_DIR . "/uploads/" 
         : realpath(dirname(__FILE__) . "/../uploads/");
 }
 function getUploadDataPath() {
-    if (defined('UPLOAD_DATA_PATH')) return UPLOAD_DATA_PATH;
-    return SERVER_URL . ((substr(DATA_PATH,0,1)=='/') ? '' : "/") . DATA_PATH . '/uploads/';
+    if (defined('UPLOAD_FILE_PATH')) {
+	return string_ends_with(UPLOAD_DATA_PATH, "/") 
+	    ? UPLOAD_DATA_PATH : UPLOAD_DATA_PATH."/";
+    }
+    return SERVER_URL . (string_ends_with(DATA_PATH, "/") ? '' : "/") 
+	 . DATA_PATH . '/uploads/';
 }
 
 /**
@@ -646,6 +656,9 @@ function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.145  2007/06/02 18:24:39  rurban
+// case-insensitive browser check. Imrpoved isBrowserSafari
+//
 // Revision 1.143  2007/05/24 18:36:56  rurban
 // *** empty log message ***
 //
