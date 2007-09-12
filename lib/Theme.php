@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.144 2007-08-25 18:31:12 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.145 2007-09-12 19:37:26 rurban Exp $');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -205,9 +205,13 @@ class Theme {
             $this->_default_theme = new Theme('default',true);
         if ($noinit) return;
 
-	$this->addMoreHeaders(JavaScript("var data_path = '". DATA_PATH ."'\n"
-					."var pagename  = '". $GLOBALS['request']->getArg('pagename') ."'\n"
-					."var stylepath = '". DATA_PATH . '/'.$this->_theme."/'\n"));
+	$script_url = deduce_script_name();
+	if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
+	    $script_url .= ("?start_debug=".$_GET['start_debug']);
+	$this->addMoreHeaders(JavaScript("var data_path = '". DATA_PATH ."';\n"
+					."var pagename  = '". $GLOBALS['request']->getArg('pagename') ."';\n"
+                                        ."var script_url= '". $script_url ."';\n"
+					."var stylepath = '". DATA_PATH . '/'.$this->_theme."/';\n"));
         // by pixels
         if ((is_object($GLOBALS['request']) // guard against unittests
              and $GLOBALS['request']->getPref('doubleClickEdit'))
@@ -1798,6 +1802,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.144  2007/08/25 18:31:12  rurban
+// protect options, improve docs style
+//
 // Revision 1.143  2007/07/15 17:39:18  rurban
 // No mozilla round and background for Image buttons
 //
