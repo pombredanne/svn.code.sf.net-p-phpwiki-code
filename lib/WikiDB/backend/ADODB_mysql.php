@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_mysql.php,v 1.18 2007-01-04 16:57:32 rurban Exp $');
+rcs_id('$Id: ADODB_mysql.php,v 1.19 2007-09-12 19:42:31 rurban Exp $');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 
@@ -13,6 +13,8 @@ require_once('lib/WikiDB/backend/ADODB.php');
  * As workaround we try it with application locks, uniquely named locks, 
  * to prevent from concurrent writes of locks with the same name.
  * The lock name is a strcat of the involved tables.
+ * 
+ * See also http://use.perl.org/~Smylers/journal/34246 for strict mode and warnings.
  */
 define('DO_APP_LOCK',true);
 define('DO_FULL_LOCK',false);
