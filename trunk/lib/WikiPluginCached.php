@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.22 2007-01-25 07:42:09 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.23 2007-09-12 19:38:41 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004,2007 Reini Urban
@@ -783,12 +783,22 @@ class WikiPluginCached extends WikiPlugin
         return $content;
     }
 
-    function tempnam($prefix = false) {
+    function tempnam($prefix = "") {
+	if (preg_match("/^(.+)\.(\w{2,4})$/", $prefix, $m)) {
+	    $prefix = $m[1];
+	    $ext = ".".$m[2];
+	} else {
+	    $ext = isWindows()? ".tmp" : "";
+	}
         $temp = tempnam(isWindows() ? str_replace('/', "\\", PLUGIN_CACHED_CACHE_DIR) 
                                     : PLUGIN_CACHED_CACHE_DIR,
                        $prefix ? $prefix : PLUGIN_CACHED_FILENAME_PREFIX);
-        if (isWindows())
-            $temp = preg_replace("/\.tmp$/", "_tmp", $temp);
+        if (isWindows()) {
+	    if ($ext != ".tmp") unlink($temp);
+            $temp = preg_replace("/\.tmp$/", $ext, $temp);
+	} else {
+	    $temp .= $ext;
+	}
         return $temp;
     }
 
@@ -1153,6 +1163,9 @@ class WikiPluginCached extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.22  2007/01/25 07:42:09  rurban
+// Remove early Cache.php loader. Do it later and better.
+//
 // Revision 1.21  2007/01/20 11:24:23  rurban
 // Use cat/type for text pipe commands if input > 255 chars
 //
