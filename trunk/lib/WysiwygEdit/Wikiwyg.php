@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.12 2007-07-19 09:33:41 labbenes Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.13 2007-09-12 19:42:53 rurban Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -26,12 +26,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit {
 	$script_url = deduce_script_name();
 	if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
 	    $script_url .= ("?start_debug=".$_GET['start_debug']);
-    	$this->_jsdefault = "
-var base_url = '".DATA_PATH."';
-var data_url = '$this->BasePath';
-var script_url = '$script_url';
-var pagename = '".$request->getArg('pagename')."';
-";
+    	$this->_jsdefault = "";
     }
 
     function Head($name='edit[content]') {
@@ -51,9 +46,9 @@ var pagename = '".$request->getArg('pagename')."';
             var wikiwyg = new Wikiwyg.Phpwiki();
             var config = {
             doubleClickToEdit:  $doubleClickToEdit,
-            javascriptLocation: base_url+'/themes/default/Wikiwyg/',
+            javascriptLocation: data_path+'/themes/default/Wikiwyg/',
             toolbar: {
-	        imagesLocation: base_url+'/themes/default/Wikiwyg/images/',
+	        imagesLocation: data_path+'/themes/default/Wikiwyg/images/',
 		controlLayout: [
 		       'save','preview','save_button','|',
 		       'p','|',
@@ -112,7 +107,7 @@ var pagename = '".$request->getArg('pagename')."';
                         $textarea,
                         $iframe0,
 		        "\n");
-	}else{
+	} else {
 	    $out = HTML($textarea, $iframe0, "\n");
 	}
 	return $out;
@@ -304,6 +299,9 @@ function replace_rich_table($matched) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.12  2007/07/19 09:33:41  labbenes
+ Remove Internet Explorer Security Warning about non secure contents display.
+
  Revision 1.11  2007/07/17 14:38:40  labbenes
  Remove the mode selector from wikiwyg toolbar.
 
