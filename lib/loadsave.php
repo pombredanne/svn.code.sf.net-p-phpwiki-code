@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.154 2007-08-10 22:00:43 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.155 2007-09-12 19:40:41 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
@@ -400,7 +400,8 @@ function mkdir_p($pathname, $permission = 0777) {
  * should be enough.
  *
  * @param string directory (optional) path to dump to. Default: HTML_DUMP_DIR
- * @param string pages     (optional) Comma-seperated of glob-style pagenames to dump
+ * @param string pages     (optional) Comma-seperated of glob-style pagenames to dump.
+ *                                    Also array of pagenames allowed.
  * @param string exclude   (optional) Comma-seperated of glob-style pagenames to exclude
  */
 function DumpHtmlToDir (&$request)
@@ -411,7 +412,7 @@ function DumpHtmlToDir (&$request)
     if (empty($directory))
         $request->finish(_("You must specify a directory to dump to"));
 
-    // see if we can access the directory the user wants us to use
+    // See if we can access the directory the user wants us to use
     if (! file_exists($directory)) {
         if (! mkdir($directory, 0755))
             $request->finish(fmt("Cannot create directory '%s'", $directory));
@@ -427,9 +428,9 @@ function DumpHtmlToDir (&$request)
 
     $dbi =& $request->_dbi;
     if ($exclude = $request->getArg('exclude')) {   // exclude which pagenames
-        $excludeList = explodePageList($exclude); 
+        $excludeList = explodePageList($exclude);
     } else {
-        $excludeList = array();
+        $excludeList = array('DebugAuthInfo', 'DebugGroupInfo', 'AuthInfo');
     }
     if ($pages = $request->getArg('pages')) {  // which pagenames
         if ($pages == '[]') // current page
@@ -467,6 +468,9 @@ function DumpHtmlToDir (&$request)
 
     $request_args = $request->args;
     $timeout = (! $request->getArg('start_debug')) ? 20 : 240;
+    $SAVE_RCS_IDS = $GLOBALS['RCS_IDS'];
+    @mkdir("$directory/images");
+    $doc_root = $request->get("DOCUMENT_ROOT");
     
     while ($page = $page_iter->next()) {
 	$request->args = $request_args; // some plugins might change them (esp. on POST)
@@ -494,10 +498,13 @@ function DumpHtmlToDir (&$request)
 	// For every %2F will need to mkdir -p dirname($pagename)
 	if (preg_match("/(%2F|\/)/", $filename)) {
 	    // mkdir -p and set relative base for subdir pages
-	    $count = substr_count($filename, "%2F");
 	    $filename = preg_replace("/%2F/", "/", $filename);
+	    $count = substr_count($filename, "/");
 	    $dirname = dirname($filename);
 	    mkdir_p($directory."/".$dirname);
+	    // Fails with "XX / YY", "XX" is created, "XX / YY" cannot be written
+	    if (isWindows()) // interesting Windows bug: cannot mkdir "bla "
+		$filename = preg_replace("/ \//", "/", $filename);
 	    $relative_base = "../";
 	    while ($count > 1) {
 		$relative_base .= "../";
@@ -510,6 +517,25 @@ function DumpHtmlToDir (&$request)
 
         $data = GeneratePageasXML($template, $pagename, $revision, $args);
 
+	$WikiTheme->other_images = array();
+	if (preg_match_all("/<img .*?src=\"(\/.+?)\"/", $data, $m)) {
+	    // fix to local relative path for uploaded images, so that pdf will work
+	    foreach ($m[1] as $img_file) {
+	    	$base = basename($img_file);
+	    	$data = str_replace('src="'.$img_file.'"','src="images/'.$base.'"', $data);
+		// resolve src from webdata to file
+		$src = $doc_root . $img_file;
+		if (file_exists($src) and $base) {
+		    $target = "$directory/images/$base";
+		    if (copy($src, $target)) {
+			_copyMsg($img_file, fmt("... copied to %s", $target));
+		    } else {
+			_copyMsg($img_file, fmt("... not copied to %s", $target));
+		    }
+		}
+	    }
+	}
+        
         if ( !($fd = fopen($directory."/".$filename, "wb")) ) {
             $msg->pushContent(HTML::strong(fmt("couldn't open file '%s' for writing",
                                                "$directory/$filename")));
@@ -545,11 +571,13 @@ function DumpHtmlToDir (&$request)
         unset($template->_request);
         unset($template);
         unset($data);
+	if (DEBUG)
+	    $GLOBALS['RCS_IDS'] = $SAVE_RCS_IDS;
     }
     $page_iter->free();
 
     if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
-        @mkdir("$directory/images");
+        // @mkdir("$directory/images");
         foreach ($WikiTheme->dumped_images as $img_file) {
             if ($img_file 
                 and ($from = $WikiTheme->_findFile($img_file, true)) 
@@ -561,12 +589,12 @@ function DumpHtmlToDir (&$request)
                 } else {
                     _copyMsg($from, fmt("... not copied to %s", $target));
                 }
-		//TODO: fix to local path for uploaded images, so that pdf will work
             } else {
                 _copyMsg($from, _("... not found"));
             }
         }
     }
+
     if (!empty($WikiTheme->dumped_buttons) and is_array($WikiTheme->dumped_buttons)) {
     	// Buttons also
         @mkdir("$directory/images/buttons");
@@ -625,7 +653,14 @@ function DumpHtmlToDir (&$request)
 function MakeWikiZipHtml (&$request)
 {
     $request->_TemplatesProcessed = array();
-    $zipname = "wikihtml.zip";
+    if ($request->getArg('zipname')) {
+        $zipname = basename($request->getArg('zipname'));
+        if (!preg_match("/\.zip$/i", $zipname))
+            $zipname .= ".zip";
+        $request->setArg('zipname', false);
+    } else {
+        $zipname = "wikihtml.zip";
+    }
     $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
     $dbi =& $request->_dbi;
     $thispage = $request->getArg('pagename'); // for "Return to ..."
@@ -646,6 +681,7 @@ function MakeWikiZipHtml (&$request)
     if (defined('HTML_DUMP_SUFFIX'))
         $WikiTheme->HTML_DUMP_SUFFIX = HTML_DUMP_SUFFIX;
     $WikiTheme->DUMP_MODE = 'ZIPHTML';
+    $WikiTheme->other_images = array();
     $_bodyAttr = @$WikiTheme->_MoreAttr['body'];
     unset($WikiTheme->_MoreAttr['body']);
 
@@ -685,7 +721,17 @@ function MakeWikiZipHtml (&$request)
                                  array('revision' => $revision,
                                        'CONTENT' => $transformedContent));
 
-        $data = GeneratePageasXML($template, $pagename);
+        $data = GeneratePageAsXML($template, $pagename);
+
+	// Detect local images. LinkImage et al...
+	// TODO: defer via Cached_InlinedImage
+	if (preg_match_all("/<img .*?src=\"(\/.+?)\"/", $data, $m)) {
+	    foreach ($m[1] as $match) {
+	    	$WikiTheme->other_images[] = $match; //copy to images. no collisions yet.
+	    	$base = basename($match);
+	    	$data = str_replace('src="'.$match.'"','src="images/'.$base.'"', $data);
+	    }
+	}
 
         $zip->addRegularFile( $filename, $data, $attrib );
         
@@ -706,7 +752,7 @@ function MakeWikiZipHtml (&$request)
     $page_iter->free();
 
     $attrib = false;
-    // Deal with css and images here.
+    // Deal with theme css and theme images here.
     if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
     	// dirs are created automatically
         //if ($WikiTheme->dumped_images) $zip->addRegularFile("images", "", $attrib);
@@ -717,6 +763,20 @@ function MakeWikiZipHtml (&$request)
                     $zip->addRegularFile($target, file_get_contents($WikiTheme->_path . $from), $attrib);
                 else
                     $zip->addRegularFile($target, join('', file($WikiTheme->_path . $from)), $attrib);
+            }
+        }
+    }
+    if (!empty($WikiTheme->other_images) and is_array($WikiTheme->other_images)) {
+	$doc_root = $request->get("DOCUMENT_ROOT");
+        foreach ($WikiTheme->other_images as $img_file) {
+	    // resolve src from webdata to file
+	    $src = $doc_root . $img_file;
+            if (file_exists($src) and basename($src)) {
+                $target = "images/".basename($src);
+                if (check_php_version(4,3))
+                    $zip->addRegularFile($target, file_get_contents($src), $attrib);
+                else
+                    $zip->addRegularFile($target, join('', file($src)), $attrib);
             }
         }
     }
@@ -1463,6 +1523,11 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.154  2007/08/10 22:00:43  rurban
+ FilenameForPage:
+ We have to apply a different "/" logic for dumpserial, htmldump and
+ zipdump. dirs are allowed for zipdump and htmldump, not for dumpserial.
+
  Revision 1.153  2007/05/28 20:54:40  rurban
  fix DumpToHtml creating dirs
 
