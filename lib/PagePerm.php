@@ -1,7 +1,7 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.43 2007-09-01 13:24:23 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.44 2007-09-12 19:34:31 rurban Exp $');
 /*
- Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -170,8 +170,13 @@ function action2access ($action) {
     case 'pdf':
     case 'captcha':
     case 'zip':
-    case 'dumpserial':
         return 'view';
+
+    case 'dumpserial':
+	if (INSECURE_ACTIONS_LOCALHOST_ONLY and is_localhost())
+	    return 'dump';
+	else
+	    return 'view';
 
     // performance and security relevant
     case 'xmlrpc':
@@ -452,9 +457,9 @@ class PagePermission {
                                   ACL_OWNER => true);
         elseif (INSECURE_ACTIONS_LOCALHOST_ONLY) {
 	    if (is_localhost())
-		$perm['dump'] = array(ACL_ADMIN => true);
-	    else
 		$perm['dump'] = array(ACL_EVERY => true);
+	    else
+		$perm['dump'] = array(ACL_ADMIN => true);
 	}
 	else
 	    $perm['dump'] = array(ACL_EVERY => true);
@@ -743,6 +748,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2007/09/01 13:24:23  rurban
+// add INSECURE_ACTIONS_LOCALHOST_ONLY. advanced security settings
+//
 // Revision 1.42  2007/08/25 18:03:34  rurban
 // change rename action from access perm change to edit: allow the signed in user to rename.
 //
