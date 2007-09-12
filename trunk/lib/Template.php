@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.77 2007-07-14 19:17:57 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.78 2007-09-12 19:32:29 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -274,18 +274,23 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
     if (!isset($args['HEADER']))
         $args['HEADER'] = SplitPagename($title);
     
-    global $HIDE_TOOLBARS, $NO_BASEHREF, $HTML_DUMP;
+    global $HIDE_TOOLBARS, $NO_BASEHREF, $HTML_DUMP, $VALID_LINKS;
     $HIDE_TOOLBARS = true;
     $HTML_DUMP = true;
+    $VALID_LINKS = isset($args['VALID_LINKS']) ? $args['VALID_LINKS'] : array();
 
     $html = asXML(new Template('htmldump', $request, $args));
     
     $HIDE_TOOLBARS = false;
     $HTML_DUMP = false;
+    $VALID_LINKS = null;
     return $html;
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.77  2007/07/14 19:17:57  rurban
+// fix template inclusion with a recursion cycle leading e.g. to crashes in blog PageInfo
+//
 // Revision 1.76  2007/05/13 18:13:04  rurban
 // Protect against erronously closed template file
 //

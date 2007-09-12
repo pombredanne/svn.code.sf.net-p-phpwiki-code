@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.266 2007-09-01 13:24:23 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.267 2007-09-12 19:32:29 rurban Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -202,11 +202,20 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
 
     if (USE_PATH_INFO or !empty($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX)) {
         $url = $get_abs_url ? (SERVER_URL . VIRTUAL_PATH . "/") : "";
-        $url = $url . preg_replace('/%2f/i', '/', rawurlencode($pagename));
-        if (!empty($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX))
-            $url .= $GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX;
-        if ($args)
-            $url .= "?$args";
+	$base = preg_replace('/%2f/i', '/', rawurlencode($pagename));
+	$url .= $base;
+        if (!empty($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX)) {
+	    if ($GLOBALS['VALID_LINKS'] and $GLOBALS['request']->getArg('action') == 'pdf') {
+		$url = $base . $GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX;
+	    } else {
+		$url .= $GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX;
+		if ($args)
+		    $url .= "?$args";
+	    }
+        } else {
+	    if ($args)
+		$url .= "?$args";
+	}
     }
     else {
         $url = $get_abs_url ? SERVER_URL . SCRIPT_NAME : basename(SCRIPT_NAME);
@@ -666,7 +675,6 @@ class WikiPageName
                         $url = sprintf($url, $shortName);
                     else
                         $url .= $shortName;
-                    $this->shortName = $shortName;
                     $this->url = $url;
                     // expand Talk or User, but not to absolute urls!
                     if (strstr($url, '//')) {
@@ -677,8 +685,10 @@ class WikiPageName
                     } else {
                         $name = $url;
                     }
-                    if (strstr($name, '?'))
-                        list($name, $dummy) = split("?", $name, 2);
+                    if (strstr($shortName, '?')) {
+                        list($shortName, $dummy) = split("\?", $shortName, 2);
+		    }
+                    $this->shortName = $shortName;
                 }
             }
 	    // FIXME: We should really fix the cause for "/PageName" in the WikiDB
@@ -2108,7 +2118,7 @@ function getMemoryUsage() {
  	if (function_exists('win32_ps_list_procs')) {
 	    $info = win32_ps_stat_proc($pid);
 	    $memstr = $info['mem']['working_set_size'];
-	} elseif(1) {
+	} elseif(0) {
 	    // This works only if it's a cygwin process (apache or php).
 	    // Requires a newer cygwin
 	    $memstr = exec("cat /proc/$pid/statm |cut -f1");
@@ -2168,6 +2178,9 @@ function is_localhost($url = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.266  2007/09/01 13:24:23  rurban
+// add INSECURE_ACTIONS_LOCALHOST_ONLY. advanced security settings
+//
 // Revision 1.265  2007/08/08 18:47:14  rurban
 // * Fix EmailNotify for Subpages: Unknown modifier ? at any page save.
 //   Quoting error on glob_match.

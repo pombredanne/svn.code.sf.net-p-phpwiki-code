@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.58 2007-07-14 12:30:53 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.59 2007-09-12 19:32:29 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -294,6 +294,31 @@ class Cached_Link extends Cached_DynamicContent {
 	return $this->_relation;
     }
 }
+/*
+ * Defer interwiki inline links. img src=upload:xx.png
+ * LinkImage($url, $alt = false)
+ */
+class Cached_InlinedImage extends Cached_DynamicContent {
+    function isInlineElement() {
+	return true;
+    }
+    function _getURL($basepage) {
+	return $this->_url;
+    }
+    // TODO: fix interwiki inline links in case of static dumps
+    function expand($basepage, &$markup) {
+	global $WikiTheme;
+        // In case of static dumps we need to check if we should
+        // inline the image or not: external: keep link, internal: copy locally
+    	$this->_basepage = $basepage;
+	$label = isset($this->_label) ? $this->_label : false;
+	if ($WikiTheme->DUMP_MODE) {
+	    return LinkImage($label);
+	} else {
+	    return LinkImage($label);
+	}
+    }
+}
 
 class Cached_WikiLink extends Cached_Link {
 
@@ -340,21 +365,31 @@ class Cached_WikiLink extends Cached_Link {
     }
 
     function expand($basepage, &$markup) {
+	global $HTML_DUMP, $VALID_LINKS;
     	$this->_basepage = $basepage;
 	$label = isset($this->_label) ? $this->_label : false;
 	$anchor = isset($this->_anchor) ? (string)$this->_anchor : '';
         $page = new WikiPageName($this->_page, $basepage, $anchor);
+	if ($HTML_DUMP and $VALID_LINKS) {
+	    if (!in_array($this->_page, $VALID_LINKS))
+		return HTML($label ? $label : $page->getName());
+	}
         if ($page->isValid()) return WikiLink($page, 'auto', $label);
 	else return HTML($label);
     }
 
     function asXML() {
+	global $HTML_DUMP, $VALID_LINKS;
 	$label = isset($this->_label) ? $this->_label : false;
 	$anchor = isset($this->_anchor) ? (string)$this->_anchor : '';
 	//TODO: need basepage for subpages like /Remove (within CreateTOC)
         $page = new WikiPageName($this->_page, $this->_basepage, $anchor);
+	if ($HTML_DUMP and $VALID_LINKS) {
+	    if (!in_array($this->_page, $VALID_LINKS))
+		return $label ? $label : $page->getName();
+	}
 	$link = WikiLink($page, 'auto', $label);
-        return $link->asXML();
+	return $link->asXML();
     }
 
     function asString() {
@@ -371,6 +406,11 @@ class Cached_WikiLinkIfKnown extends Cached_WikiLink
     }
 
     function expand($basepage, &$markup) {
+	global $HTML_DUMP, $VALID_LINKS;
+	if ($HTML_DUMP and $VALID_LINKS) {
+	    if (!in_array($this->_page, $VALID_LINKS))
+		return HTML($label ? $label : $page->getName());
+	}
         return WikiLink($this->_page, 'if_known');
     }
 }    
@@ -404,7 +444,12 @@ class Cached_PhpwikiURL extends Cached_DynamicContent
     }
 
     function expand($basepage, &$markup) {
+	global $HTML_DUMP, $VALID_LINKS;
         $label = isset($this->_label) ? $this->_label : false;
+	if ($HTML_DUMP and $VALID_LINKS) {
+	    if (!in_array($this->_page, $VALID_LINKS))
+		return HTML($label ? $label : $page->getName());
+	}
         return LinkPhpwikiURL($this->_url, $label, $basepage);
     }
 
@@ -496,6 +541,11 @@ class Cached_SemanticLink extends Cached_WikiLink {
     }
 
     function _expand($url, $label = false) {
+	global $HTML_DUMP, $VALID_LINKS;
+	if ($HTML_DUMP and $VALID_LINKS) {
+	    if (!in_array($this->_page, $VALID_LINKS))
+		return HTML($label ? $label : ($is_attribute ? $this->_relation : $this->_page));
+	}
 	$m = $this->_expandurl($url);
         $class = 'wiki';
         // do not link to the attribute value, but to the attribute
@@ -652,8 +702,14 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
     }
 
     function expand($basepage, &$markup) {
+	global $HTML_DUMP, $VALID_LINKS;
 	$intermap = getInterwikiMap();
 	$label = isset($this->_label) ? $this->_label : false;
+	//FIXME: check Upload: inlined images
+	if ($HTML_DUMP and $VALID_LINKS) {
+	    if (!in_array($this->_page, $VALID_LINKS))
+		return HTML($label ? $label : $this->_link);
+	}
 	return $intermap->link($this->_link, $label);
     }
 
@@ -755,6 +811,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.58  2007/07/14 12:30:53  rurban
+// include => require
+//
 // Revision 1.57  2007/05/28 20:13:46  rurban
 // Overwrite all attributes at once at page->save to delete dangling meta
 //
