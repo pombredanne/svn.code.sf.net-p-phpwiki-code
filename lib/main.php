@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.238 2007-09-01 13:24:23 rurban Exp $');
+rcs_id('$Id: main.php,v 1.239 2007-09-12 19:41:01 rurban Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -651,6 +651,11 @@ class WikiRequest extends Request {
 		    return WIKIAUTH_ADMIN;
 		return WIKIAUTH_ANON;
 
+            case 'dumpserial':
+                if (INSECURE_ACTIONS_LOCALHOST_ONLY and is_localhost())
+		    return WIKIAUTH_ANON;
+		return WIKIAUTH_ADMIN;
+
             case 'zip':
                 if (ZIPDUMP_AUTH)
                     return WIKIAUTH_ADMIN;
@@ -672,7 +677,6 @@ class WikiRequest extends Request {
                 return $this->requiredAuthorityForAction('browse');
 
             case 'upload':
-            case 'dumpserial':
             case 'loadfile':
             case 'remove':
             case 'lock':
@@ -1366,6 +1370,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.238  2007/09/01 13:24:23  rurban
+// add INSECURE_ACTIONS_LOCALHOST_ONLY. advanced security settings
+//
 // Revision 1.237  2007/08/25 18:03:34  rurban
 // change rename action from access perm change to edit: allow the signed in user to rename.
 //
