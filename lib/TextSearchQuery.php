@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.30 2007-07-14 12:31:00 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.31 2007-09-12 19:36:47 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -134,7 +134,9 @@ class TextSearchQuery {
 	$score = 0.0;
 	$i = 10;
 	foreach (array_unique($this->_tree->highlight_words()) as $word) {
-	    if ($nummatch = preg_match_all("/".preg_quote($word, '/')."/".$this->_regex_modifier, $string, $out))
+	    if ($nummatch = preg_match_all("/".preg_quote($word, '/')."/".
+	                                     $this->_regex_modifier, 
+	                                   $string, $out))
 	        $score += ($i-- * $nummatch);
 	}
 	return min(1.0, $score / 10.0);
@@ -157,7 +159,8 @@ class TextSearchQuery {
             } else {
                 foreach ($words as $key => $word)
                     $words[$key] = preg_quote($word, '/');
-                $this->_hilight_regexp = '(?'.($this->_case_exact?'':'i').':' . join('|', $words) . ')';
+                $this->_hilight_regexp = '(?'.($this->_case_exact?'':'i').':' 
+                                             . join('|', $words) . ')';
             }
         }
         return $this->_hilight_regexp;
@@ -932,7 +935,8 @@ class TextSearchQuery_Parser
             $accept_as_words |= TSQ_TOK_LPAREN | TSQ_TOK_RPAREN;
         
         while ( ($expr = $this->get_expr())
-                || ($expr = $this->get_word($accept_as_words)) ) {
+                || ($expr = $this->get_word($accept_as_words)) )
+	{
             $list[] = $expr;
         }
 
@@ -946,11 +950,12 @@ class TextSearchQuery_Parser
     }
 
     function get_expr () {
-        if ( !($expr = $this->get_atom()) )
+        if ( ($expr = $this->get_atom()) === false ) // protect against '0'
             return false;
         
         $savedpos = $this->lexer->tell();
-        while ( ($op = $this->lexer->get(TSQ_TOK_BINOP)) ) {
+        // Bug#1791564: allow string '0'
+        while ( ($op = $this->lexer->get(TSQ_TOK_BINOP)) !== false) {
             if ( ! ($right = $this->get_atom()) ) {
                 break;
             }
@@ -971,13 +976,19 @@ class TextSearchQuery_Parser
     
 
     function get_atom() {
-        if ($word = $this->get_word(TSQ_ALLWORDS))
-            return $word;
+        if ($atom = $this->get_word(TSQ_ALLWORDS)) // Bug#1791564 not involved: '*'
+            return $atom;
 
         $savedpos = $this->lexer->tell();
         if ( $this->lexer->get(TSQ_TOK_LPAREN) ) {
-            if ( ($list = $this->get_list()) && $this->lexer->get(TSQ_TOK_RPAREN) )
+            if ( ($list = $this->get_list()) && $this->lexer->get(TSQ_TOK_RPAREN) ) {
                 return $list;
+            } else {
+            	// Fix Bug#1792170
+                // Handle " ( " or "(test" without closing ")" as plain word
+		$this->lexer->seek($savedpos);
+                return new TextSearchQuery_node_word($this->lexer->get(-1));
+            }
         }
         elseif ( $this->lexer->get(TSQ_TOK_NOT) ) {
             if ( ($atom = $this->get_atom()) )
@@ -988,10 +999,19 @@ class TextSearchQuery_Parser
     }
 
     function get_word($accept = TSQ_ALLWORDS) {
+    	// Performance shortcut for ( and ). This is always false
+	if (!empty($this->lexer->tokens[$this->lexer->pos])) {
+	    list ($type, $val) = $this->lexer->tokens[$this->lexer->pos];
+	    if ($type == TSQ_TOK_LPAREN or $type == TSQ_TOK_RPAREN)
+		return false;
+	}
         foreach (array("WORD","STARTS_WITH","ENDS_WITH","EXACT",
                        "REGEX","REGEX_GLOB","REGEX_PCRE","ALL") as $tok) {
             $const = constant("TSQ_TOK_".$tok);
-            if ( $accept & $const and ($word = $this->lexer->get($const)) ) {
+            // Bug#1791564: allow word '0'
+            if ( $accept & $const and 
+                (($word = $this->lexer->get($const)) !== false))
+            {
                 $classname = "TextSearchQuery_node_".strtolower($tok);
                 return new $classname($word);
             }
@@ -1001,7 +1021,9 @@ class TextSearchQuery_Parser
 }
 
 class TextSearchQuery_Lexer {
-    function TextSearchQuery_Lexer ($query_str, $case_exact=false, $regex=TSQ_REGEX_AUTO) {
+    function TextSearchQuery_Lexer ($query_str, $case_exact=false, 
+                                    $regex=TSQ_REGEX_AUTO) 
+    {
         $this->tokens = $this->tokenize($query_str, $case_exact, $regex);
         $this->pos = 0;
     }
@@ -1139,6 +1161,9 @@ class TextSearchQuery_Lexer {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2007/07/14 12:31:00  rurban
+// fix bug#1752172 undefined method TextSearchQuery_node_or::_sql_quote()
+//
 // Revision 1.29  2007/07/14 12:03:38  rurban
 // support ranked search: simple score() function
 //
