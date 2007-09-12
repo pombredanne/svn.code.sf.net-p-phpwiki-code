@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.76 2007-08-10 21:59:27 rurban Exp $');
+rcs_id('$Id: display.php,v 1.77 2007-09-12 19:32:29 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -78,6 +78,7 @@ function actionPage(&$request, $action) {
        rdf and owl are handled by SemanticWeb.
     */
     $format = $request->getArg('format');
+    
     /* At first the single page formats: html, xml */
     if ($pagename == _("LinkDatabase")) {
         $template = Template('browse', array('CONTENT' => $transformedContent));
@@ -85,9 +86,6 @@ function actionPage(&$request, $action) {
     } elseif (!$format or $format == 'html' or $format == 'sidebar' or $format == 'contribs') {
 	$template = Template('browse', array('CONTENT' => $transformedContent));
 	GeneratePage($template, $pagetitle, $revision, $args);
-    } elseif ($format == 'xml') {
-	$template = Template('browse', array('CONTENT' => $transformedContent));
-	GeneratePageAsXML($template, $pagetitle, $revision, $args);
     } else {
     	$pagelist = null;
     	require_once('lib/WikiPlugin.php');
@@ -99,11 +97,13 @@ function actionPage(&$request, $action) {
 	        $loader = new WikiPluginLoader;
 	        $markup = null;
 	        // return the first found pagelist
-	        $pagelist = $loader->expandPI($cached_element->_pi, $request, $markup, $pagename);
+	        $pagelist = $loader->expandPI($cached_element->_pi, $request, 
+	                                      $markup, $pagename);
 	        if (is_a($pagelist, 'PageList'))
 	            break;
 	    }
 	}
+        $args['VALID_LINKS'] = array($pagename);
         if (!$pagelist or !is_a($pagelist, 'PageList')) {
 	    if (!in_array($format, array("rss91","rss2","rss","atom","rdf")))
 		trigger_error(sprintf("Format %s requires an actionpage returning a pagelist.", $format)
@@ -111,12 +111,34 @@ function actionPage(&$request, $action) {
 	    require_once('lib/PageList.php');
 	    $pagelist = new PageList();
 	    $pagelist->addPage($page);
+	} else {
+            foreach ($pagelist->_pages as $page) {
+            	$name = $page->getName();
+            	if ($name != $pagename)
+                    $args['VALID_LINKS'][] = $name;
+            }
 	}
 	if ($format == 'pdf') {
 	    require_once("lib/pdf.php");
-	    ConvertAndDisplayPdfPageList($request, $pagelist);
-	// time-sorted RDF á la RecentChanges
-	} elseif (in_array($format, array("rss91","rss2","rss","atom"))) {
+	    ConvertAndDisplayPdfPageList($request, $pagelist, $args);
+	}
+	elseif ($format == 'xml') {
+            $template = new Template('browse', $request,
+                                 array('revision' => $revision,
+                                       'CONTENT'  => $transformedContent,
+				       'VALID_LINKS' => $args['VALID_LINKS']
+				       ));
+            $html = GeneratePageAsXML($template, $pagename, $revision, 
+				  array('VALID_LINKS' => $args['VALID_LINKS']));
+	    echo $html;		  
+	}
+	elseif ($format == 'ziphtml') { // need to fix links
+	    require_once('lib/loadsave.php');
+	    $request->setArg('zipname', FilenameForPage($pagename).".zip");
+	    $request->setArg('pages', $args['VALID_LINKS']);
+	    MakeWikiZipHtml($request);
+	} // time-sorted RDF á la RecentChanges 
+	elseif (in_array($format, array("rss91","rss2","rss","atom"))) {
             $args = $request->getArgs();
             if ($pagename == _("RecentChanges")) {
                 $template->printExpansion($args);
@@ -138,6 +160,9 @@ function actionPage(&$request, $action) {
 	    $rdf = new OwlWriter($request, $pagelist);
 	    $rdf->format();
 	} else {
+	    if (!in_array($pagename, array(_("LinkDatabase"))))
+		trigger_error(sprintf(_("Unsupported argument: %s=%s"),"format",$format),
+	    	              E_USER_WARNING);
 	    $template = Template('browse', array('CONTENT' => $transformedContent));
 	    GeneratePage($template, $pagetitle, $revision, $args);
 	}
@@ -327,7 +352,7 @@ function displayPage(&$request, $template=false) {
 	    $rdf->format();
 	} else {
 	    if (!in_array($pagename, array(_("LinkDatabase"))))
-	    	trigger_error(sprintf("Unhandled format %s. Reverting to html", $format), 
+		trigger_error(sprintf(_("Unsupported argument: %s=%s"),"format",$format),
 	    	              E_USER_WARNING);
 	    $template->printExpansion($toks);
 	}
@@ -342,6 +367,10 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.76  2007/08/10 21:59:27  rurban
+// fix missing PageList dependency
+// add format=rdfs
+//
 // Revision 1.75  2007/07/01 09:17:45  rurban
 // add ATOM support, a very questionable format
 //
