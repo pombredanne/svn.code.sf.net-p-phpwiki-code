@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.145 2007-08-25 17:58:14 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.146 2007-09-12 19:33:29 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -966,6 +966,7 @@ class PageList {
                              $limit='', $exclude='') 
     {
         if (empty($input)) return array();
+        if (is_array($input)) return $input;
         // expand wildcards from list of all pages
         if (preg_match('/[\?\*]/', $input)) {
             include_once("lib/TextSearchQuery.php");
@@ -1680,6 +1681,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.145  2007/08/25 17:58:14  rurban
+// more limit fixes: limit earlier, fix COUNT slice
+//
 // Revision 1.143  2007/07/14 12:03:19  rurban
 // support listtype=dl and ranked search
 //
