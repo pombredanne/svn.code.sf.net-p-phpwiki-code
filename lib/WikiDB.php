@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.155 2007-07-15 17:39:33 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.156 2007-09-12 19:38:05 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -51,7 +51,7 @@ class WikiDB {
      * @access public
      *
      * @param hash $dbparams Database configuration parameters.
-     * Some pertinent paramters are:
+     * Some pertinent parameters are:
      * <dl>
      * <dt> dbtype
      * <dd> The back-end type.  Current supported types are:
@@ -328,9 +328,10 @@ class WikiDB {
      */
     function titleSearch($search, $sortby='pagename', $limit='', $exclude='') {
         $result = $this->_backend->text_search($search, false, $sortby, $limit, $exclude);
-        return new WikiDB_PageIterator($this, $result,
-                                       array('exclude' => $exclude,
-                                             'limit' => $limit));
+        $options = array('exclude' => $exclude,
+                         'limit'   => $limit);
+        //if (isset($result->_count)) $options['count'] = $result->_count;
+        return new WikiDB_PageIterator($this, $result, $options);
     }
 
     /**
@@ -1994,7 +1995,7 @@ class WikiDB_Array_PageIterator
         reset($this->_pages);
     }
     function next() {
-        $c =& current($this->_pages);
+        $c = current($this->_pages);
         next($this->_pages);
         return $c !== false ? $this->_dbi->getPage($c) : false;
     }
@@ -2023,7 +2024,7 @@ class WikiDB_Array_generic_iter
             reset($this->_array);
     }
     function next() {
-        $c =& current($this->_array);
+        $c = current($this->_array);
         next($this->_array);
         return $c !== false ? $c : false;
     }
@@ -2225,6 +2226,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.155  2007/07/15 17:39:33  rurban
+// stabilize rename updateWikiLinks to check only words
+//
 // Revision 1.154  2007/07/14 12:03:58  rurban
 // support score
 //
