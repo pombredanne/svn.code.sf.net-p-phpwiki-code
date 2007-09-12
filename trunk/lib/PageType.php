@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.53 2007-07-14 17:55:29 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.54 2007-09-12 19:35:29 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -181,11 +181,17 @@ class PageType_interwikimap extends PageType
 	// localize Upload:links for WIKIDUMP
 	if (!empty($WikiTheme->DUMP_MODE) and $moniker == 'Upload') {
 	    global $request;
+	    include_once("lib/config.php");
 	    $url = getUploadFilePath();
-	    //calculate to a relative local path to /uploads for pdf images.
+	    // calculate to a relative local path to /uploads for pdf images.
 	    $doc_root = $request->get("DOCUMENT_ROOT");
     	    $ldir = NormalizeLocalFileName($url);
             $wikiroot = NormalizeLocalFileName('');
+            if (isWindows()) {
+            	$ldir = strtolower($ldir);
+            	$doc_root = strtolower($doc_root);
+            	$wikiroot = strtolower($wikiroot);
+            }
     	    if (string_starts_with($ldir, $doc_root)) {
         	$link_prefix = substr($url, strlen($doc_root));
     	    } elseif (string_starts_with($ldir, $wikiroot)) {
@@ -537,6 +543,9 @@ class PageFormatter_MediaWiki extends PageFormatter
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2007/07/14 17:55:29  rurban
+// SemanticWeb.php
+//
 // Revision 1.52  2007/02/17 14:17:41  rurban
 // localize Upload:links for WIKIDUMP: esp. for pdf images
 //
