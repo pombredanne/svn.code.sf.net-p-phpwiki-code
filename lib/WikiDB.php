@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.156 2007-09-12 19:38:05 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.157 2007-09-15 12:35:50 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -1844,12 +1844,14 @@ class WikiDB_PageIterator
     function free() {
         $this->_iter->free();
     }
-    
+    function reset() {
+        $this->_iter->reset();
+    }
     function asArray() {
     	$result = array();
     	while ($page = $this->next())
             $result[] = $page;
-        //$this->reset();
+        $this->reset();
         return $result;
     }
     
@@ -2002,6 +2004,9 @@ class WikiDB_Array_PageIterator
     function count() {
         return count($this->_pages);
     }
+    function reset() {
+    	reset($this->_pages);
+    }
     function free() {}
     function asArray() {
         reset($this->_pages);
@@ -2030,6 +2035,9 @@ class WikiDB_Array_generic_iter
     }
     function count() {
         return count($this->_array);
+    }
+    function reset() {
+    	reset($this->_array);
     }
     function free() {}
     function asArray() {
@@ -2226,6 +2234,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.156  2007/09/12 19:38:05  rurban
+// fix wrong ref &current
+//
 // Revision 1.155  2007/07/15 17:39:33  rurban
 // stabilize rename updateWikiLinks to check only words
 //
