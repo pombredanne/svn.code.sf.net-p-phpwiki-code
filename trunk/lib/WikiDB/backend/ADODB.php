@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.99 2007-06-07 21:37:39 rurban Exp $');
+rcs_id('$Id: ADODB.php,v 1.100 2007-09-15 12:35:50 rurban Exp $');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
@@ -1342,6 +1342,11 @@ extends WikiDB_backend_iterator
         return $rec_assoc;
     }
 
+    function reset () {
+        if ($this->_result) {
+            $this->_result->MoveFirst();
+        }
+    }
     function asArray () {
     	$result = array();
     	while ($page = $this->next())
@@ -1555,6 +1560,9 @@ class WikiDB_backend_ADODB_search extends WikiDB_backend_search_sql
     }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.99  2007/06/07 21:37:39  rurban
+// add native asArray methods to generic iters (for DebugInfo)
+//
 // Revision 1.98  2007/05/28 20:13:46  rurban
 // Overwrite all attributes at once at page->save to delete dangling meta
 //
