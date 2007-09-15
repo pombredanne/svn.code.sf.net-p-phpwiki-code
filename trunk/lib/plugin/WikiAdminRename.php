@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.27 2007-08-25 18:08:24 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.28 2007-09-15 12:30:24 rurban Exp $');
 /*
  Copyright 2004,2005,2007 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.27 $");
+                            "\$Revision: 1.28 $");
     }
 
     function getDefaultArguments() {
@@ -221,7 +221,8 @@ extends WikiPlugin_WikiAdminSelect
 	$this->_tablePush($table, '', $this->checkBox($post_args, 'regex', _("Regex?")));
         $this->_tablePush($table, '', $this->checkBox($post_args, 'icase', _("Case insensitive?")));
         $this->_tablePush($table, '', HTML::td());
-        $this->_tablePush($table, '', $this->checkBox($post_args, 'updatelinks', 
+	if (DEBUG) // not yet stable
+	    $this->_tablePush($table, '', $this->checkBox($post_args, 'updatelinks', 
 						      _("Change pagename in all linked pages also?")));
         $header->pushContent($table);
         $header->pushContent(HTML::p());
@@ -258,6 +259,9 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2007/08/25 18:08:24  rurban
+// change rename action from access perm change to edit: allow the signed in user to rename. Improve layout
+//
 // Revision 1.26  2005/04/01 16:06:41  rurban
 // do not trim spaces
 //
