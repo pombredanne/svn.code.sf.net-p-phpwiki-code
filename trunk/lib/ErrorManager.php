@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.50 2007-01-09 12:35:28 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.51 2007-09-15 12:31:37 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -257,7 +257,7 @@ class ErrorManager
                 if (function_exists("debug_backtrace")) // >= 4.3.0
                     $error->printSimpleTrace(debug_backtrace());
             }
-            $this->_die($error);
+	    $this->_die($error);
         }
         else if (($error->errno & error_reporting()) != 0) {
             if  (($error->errno & $this->_postpone_mask) != 0) {
@@ -296,12 +296,14 @@ class ErrorManager
      * @access private
      */
     function _die($error) {
+        global $WikiTheme;
         //echo "\n\n<html><body>";
         $error->printXML();
         PrintXML($this->_flush_errors());
         if ($this->_fatal_handler)
             $this->_fatal_handler->call($error);
-        exit -1;
+	if (!$WikiTheme->DUMP_MODE)
+	    exit -1;
     }
 
     /**
@@ -357,6 +359,9 @@ function ErrorManager_errorHandler($errno, $errstr, $errfile, $errline)
       $GLOBALS['ErrorManager'] = new ErrorManager;
     }
 	
+    /*if (defined('DEBUG') and DEBUG)
+        $error = new PhpWikiError($errno, $errstr, $errfile, $errline);
+    else*/
     $error = new PhpErrorOnce($errno, $errstr, $errfile, $errline);
     $GLOBALS['ErrorManager']->handleError($error);
 }
@@ -465,11 +470,12 @@ class PhpError {
                          $errfile, $this->errline,
                          $this->getDescription(), $this->errno,
                          array_shift($lines));
-        } elseif (! $this->isFatal()) {
-          $msg = sprintf("%s: \"%s\"",
+        }/* elseif (! $this->isFatal()) {
+          $msg = sprintf("%s:%d %s: \"%s\"",
+                         $errfile, $this->errline,
                          $this->getDescription(),
                          array_shift($lines));
-        } else {
+        }*/ else {
           $msg = sprintf("%s:%d %s: \"%s\"",
                          $errfile, $this->errline,
                          $this->getDescription(),
@@ -582,7 +588,7 @@ class PhpErrorOnce extends PhpError {
     
     function _getDetail($count=0) {
     	if (!$count) $count = $this->_count;
-	    $dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__),0,-4);
+	$dir = defined('PHPWIKI_DIR') ? PHPWIKI_DIR : substr(dirname(__FILE__),0,-4);
         if (substr(PHP_OS,0,3) == 'WIN') {
            $dir = str_replace('/','\\',$dir);
            $this->errfile = str_replace('/','\\',$this->errfile);
@@ -592,7 +598,7 @@ class PhpErrorOnce extends PhpError {
         $errfile = preg_replace('|^' . preg_quote($dir) . '|', '', $this->errfile);
         if (is_string($this->errstr))
 	        $lines = explode("\n", $this->errstr);
-	    elseif (is_object($this->errstr))
+	elseif (is_object($this->errstr))
 	        $lines = array($this->errstr->asXML());
         $errtype = (DEBUG & _DEBUG_VERBOSE) ? sprintf("%s[%d]", $this->getDescription(), $this->errno)
                                             : sprintf("%s", $this->getDescription());
@@ -629,6 +635,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.50  2007/01/09 12:35:28  rurban
+// release ready: turn off assert
+//
 // Revision 1.49  2006/12/22 00:17:49  rurban
 // improve and unify error messages
 //
