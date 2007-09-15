@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.146 2007-09-12 19:33:29 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.147 2007-09-15 12:26:25 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -961,7 +961,13 @@ class PageList {
         return '';
     }
 
-    // echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
+    /* Splits pagelist string into array.
+     * Test* or Test1,Test2
+     * Limitation: Doesn't split into comma-sep and then expand wildcards.
+     * "Test1*,Test2*" is expanded into TextSearch "Test1* Test2*"
+     *
+     * echo implode(":",explodeList("Test*",array("xx","Test1","Test2")));
+     */
     function explodePageList($input, $include_empty=false, $sortby='', 
                              $limit='', $exclude='') 
     {
@@ -1681,6 +1687,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.146  2007/09/12 19:33:29  rurban
+// allow array to be exploded (comma problem)
+//
 // Revision 1.145  2007/08/25 17:58:14  rurban
 // more limit fixes: limit earlier, fix COUNT slice
 //
