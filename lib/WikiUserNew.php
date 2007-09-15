@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.146 2007-08-25 18:34:08 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.147 2007-09-15 12:55:56 rurban Exp $');
 /* Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -557,7 +557,7 @@ class _WikiUser
     function isValidName ($userid = false) {
         if (!$userid) $userid = $this->_userid;
         if (!$userid) return false;
-        return preg_match("/^[\-\w\.@ ]+$/u", $userid) and strlen($userid) < 32;
+        return preg_match("/^[\-\w\.@ ]+$/U", $userid) and strlen($userid) < 32;
     }
 
     /**
@@ -2215,6 +2215,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.146  2007/08/25 18:34:08  rurban
+// add LOGIN_LOG to check possible external auth problems
+//
 // Revision 1.145  2007/06/07 16:56:27  rurban
 // protect against empty username
 //
