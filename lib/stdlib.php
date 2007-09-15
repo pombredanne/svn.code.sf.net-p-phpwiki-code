@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.267 2007-09-12 19:32:29 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.268 2007-09-15 12:28:46 rurban Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -159,6 +159,7 @@ function GetCookieName() {
  * @return string The absolute URL to the page passed as $pagename.
  */
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
+    global $request, $WikiTheme;
     $anchor = false;
     
     if (is_object($pagename)) {
@@ -178,13 +179,13 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
             $pagename = $pagename->name;
         }
     }
-    if (!$get_abs_url and DEBUG and $GLOBALS['request']->getArg('start_debug')) {
+    if (!$get_abs_url and DEBUG and $request->getArg('start_debug')) {
     	if (!$args)
-    	    $args = 'start_debug=' . $GLOBALS['request']->getArg('start_debug');
+    	    $args = 'start_debug=' . $request->getArg('start_debug');
     	elseif (is_array($args))
-    	    $args['start_debug'] = $GLOBALS['request']->getArg('start_debug');
+    	    $args['start_debug'] = $request->getArg('start_debug');
     	else 
-    	    $args .= '&start_debug=' . $GLOBALS['request']->getArg('start_debug');
+    	    $args .= '&start_debug=' . $request->getArg('start_debug');
     }
     if (is_array($args)) {
         $enc_args = array();
@@ -200,15 +201,18 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
         $args = join('&', $enc_args);
     }
 
-    if (USE_PATH_INFO or !empty($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX)) {
+    if (USE_PATH_INFO or !empty($WikiTheme->HTML_DUMP_SUFFIX)) {
         $url = $get_abs_url ? (SERVER_URL . VIRTUAL_PATH . "/") : "";
 	$base = preg_replace('/%2f/i', '/', rawurlencode($pagename));
 	$url .= $base;
-        if (!empty($GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX)) {
-	    if ($GLOBALS['VALID_LINKS'] and $GLOBALS['request']->getArg('action') == 'pdf') {
-		$url = $base . $GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX;
+        if (!empty($WikiTheme->HTML_DUMP_SUFFIX)) {
+	    if ($WikiTheme->VALID_LINKS and $request->getArg('action') == 'pdf') {
+	    	if (!in_array($pagename, $WikiTheme->VALID_LINKS))
+	    	    $url = '';
+	    	else    
+		    $url = $base . $WikiTheme->HTML_DUMP_SUFFIX;
 	    } else {
-		$url .= $GLOBALS['WikiTheme']->HTML_DUMP_SUFFIX;
+		$url .= $WikiTheme->HTML_DUMP_SUFFIX;
 		if ($args)
 		    $url .= "?$args";
 	    }
@@ -2178,6 +2182,9 @@ function is_localhost($url = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.267  2007/09/12 19:32:29  rurban
+// link only VALID_LINKS with pagelist HTML_DUMP
+//
 // Revision 1.266  2007/09/01 13:24:23  rurban
 // add INSECURE_ACTIONS_LOCALHOST_ONLY. advanced security settings
 //

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Template.php,v 1.78 2007-09-12 19:32:29 rurban Exp $');
+rcs_id('$Id: Template.php,v 1.79 2007-09-15 12:28:46 rurban Exp $');
 
 require_once("lib/ErrorManager.php");
 
@@ -259,6 +259,7 @@ function GeneratePage($content, $title, $page_revision = false, $args = false) {
 
 /**
  * For dumping pages as html to a file.
+ * Used for action=dumphtml,action=ziphtml,format=pdf,format=xml
  */
 function GeneratePageasXML($content, $title, $page_revision = false, $args = false) {
     global $request;
@@ -274,20 +275,23 @@ function GeneratePageasXML($content, $title, $page_revision = false, $args = fal
     if (!isset($args['HEADER']))
         $args['HEADER'] = SplitPagename($title);
     
-    global $HIDE_TOOLBARS, $NO_BASEHREF, $HTML_DUMP, $VALID_LINKS;
+    global $HIDE_TOOLBARS, $NO_BASEHREF, $WikiTheme;
     $HIDE_TOOLBARS = true;
-    $HTML_DUMP = true;
-    $VALID_LINKS = isset($args['VALID_LINKS']) ? $args['VALID_LINKS'] : array();
+    if (!$WikiTheme->DUMP_MODE)
+	$WikiTheme->DUMP_MODE = 'HTML';
 
+    // FIXME: unfatal errors and login requirements
     $html = asXML(new Template('htmldump', $request, $args));
     
     $HIDE_TOOLBARS = false;
-    $HTML_DUMP = false;
-    $VALID_LINKS = null;
+    //$WikiTheme->DUMP_MODE = false;
     return $html;
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2007/09/12 19:32:29  rurban
+// link only VALID_LINKS with pagelist HTML_DUMP
+//
 // Revision 1.77  2007/07/14 19:17:57  rurban
 // fix template inclusion with a recursion cycle leading e.g. to crashes in blog PageInfo
 //
