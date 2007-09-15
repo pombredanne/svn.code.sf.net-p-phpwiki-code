@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.44 2007-09-12 19:34:31 rurban Exp $');
+rcs_id('$Id: PagePerm.php,v 1.45 2007-09-15 12:26:43 rurban Exp $');
 /*
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -23,7 +23,7 @@ rcs_id('$Id: PagePerm.php,v 1.44 2007-09-12 19:34:31 rurban Exp $');
 /**
    Permissions per page and action based on current user, 
    ownership and group membership implemented with ACL's (Access Control Lists),
-   opposed to the simplier unix like ugo:rwx system.
+   opposed to the simplier unix-like ugo:rwx system.
    The previous system was only based on action and current user. (lib/main.php)
 
    Permissions may be inherited from its parent pages, a optional the 
@@ -748,6 +748,9 @@ class PagePermission {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2007/09/12 19:34:31  rurban
+// revise INSECURE_ACTIONS_LOCALHOST_ONLY actions
+//
 // Revision 1.43  2007/09/01 13:24:23  rurban
 // add INSECURE_ACTIONS_LOCALHOST_ONLY. advanced security settings
 //
