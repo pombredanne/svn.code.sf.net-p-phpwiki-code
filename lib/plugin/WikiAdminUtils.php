@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminUtils.php,v 1.25 2007-08-25 18:55:49 rurban Exp $');
+rcs_id('$Id: WikiAdminUtils.php,v 1.26 2007-09-15 12:30:55 rurban Exp $');
 /**
  Copyright 2003,2004,2006 $ThePhpWikiProgrammingTeam
 
@@ -44,7 +44,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
@@ -209,16 +209,14 @@ extends WikiPlugin
 	longer_timeout(180);
         $dbh = $request->getDbh();
 	//FIXME: display result.
-        $result = $dbh->_backend->check($args);
-        return $result;
+        return $dbh->_backend->check($args);
     }
 
     function _do_db_rebuild(&$request, $args) {
 	longer_timeout(240);
         $dbh = $request->getDbh();
 	//FIXME: display result.
-        $result = $dbh->_backend->rebuild($args);
-        return $result;
+        return $dbh->_backend->rebuild($args);
     }
 
     //TODO: We need a seperate plugin for this.
