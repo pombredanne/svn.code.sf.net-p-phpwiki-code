@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.145 2007-09-12 19:37:26 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.146 2007-09-15 12:34:09 rurban Exp $');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -824,7 +824,10 @@ class Theme {
         if (preg_match('/^submit:(.*)$/', $url, $m))
             return $this->makeSubmitButton($text, $m[1], $class, $options);
 
-        $imgurl = $this->getButtonURL($text);
+        if (is_string($text))    	
+            $imgurl = $this->getButtonURL($text);
+        else 
+            $imgurl = $text;
         if ($imgurl)
             return new ImageButton($text, $url, 
 				   in_array($class,array("wikiaction","wikiadmin"))?"wikibutton":$class, 
@@ -1802,6 +1805,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.145  2007/09/12 19:37:26  rurban
+// Add script_url to global js
+//
 // Revision 1.144  2007/08/25 18:31:12  rurban
 // protect options, improve docs style
 //
