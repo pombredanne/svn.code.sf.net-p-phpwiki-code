@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SemanticRelations.php,v 1.4 2007-01-25 07:42:22 rurban Exp $');
+rcs_id('$Id: SemanticRelations.php,v 1.5 2007-09-15 12:29:38 rurban Exp $');
 /*
  Copyright 2005 Reini Urban
 
@@ -39,7 +39,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
     function getDefaultArguments() { 
         return array(
@@ -58,12 +58,24 @@ extends WikiPlugin
         if (empty($page))
             $page = $request->getArg('pagename');
         $relhtml = HTML();
+	if ($args['relations'] != '') {
+            $relfilter = explode(",", $args['relations']);
+	} else 
+	    $relfilter = array();
+        if ($args['attributes'] != '') {
+            $attfilter = explode(",", $args['attributes']);
+        } else
+	    $attfilter = array();
         foreach (explodePageList($page) as $pagename) {
             $p = $dbi->getPage($pagename);
-            $links = $p->getRelations(); // iter of pagelinks
-            // TODO: merge same relations together located_in::here, located_in::there
-            while ($object = $links->next()) {
+            if ($args['relations'] != '0') {
+              $links = $p->getRelations(); // iter of pagelinks
+              // TODO: merge same relations together located_in::here, located_in::there
+              while ($object = $links->next()) {
                 if ($related = $object->get('linkrelation')) { // a page name
+                    if ($relfilter and !in_array($related, $relfilter)) {
+                    	 continue;
+                    }
                     $rellink = WikiLink($related, false, $related);
                     $rellink->setAttr('class', $rellink->getAttr('class').' relation');
                     $relhtml->pushContent
@@ -78,31 +90,35 @@ extends WikiPlugin
                                                             's'   => $object->_pagename),
                                                       '+',
                                                       _("SemanticSearch")),
-                         HTML::br());
+                         (count($relfilter) > 3 ? HTML::br() : " "));
                 }
+              }
+              if (!empty($relhtml->_content) and !$noheader)
+                  $relhtml = HTML(HTML::hr(),
+                                  HTML::h3(fmt("Semantic relations for %s", $pagename)),
+                                  $relhtml);
             }
-            if (!empty($relhtml->_content) and !$noheader)
-                $relhtml = HTML(HTML::hr(),
-                                HTML::h3(fmt("Semantic relations for %s", $pagename)),
-                                $relhtml);
             $atthtml = HTML();
-            if ($attributes = $p->get('attributes')) { // a hash of unique pairs
+            if ($args['attributes'] != '0') {
+              if ($attributes = $p->get('attributes')) { // a hash of unique pairs
                 foreach ($attributes as $att => $val) {
+                    if ($attfilter and !in_array($att, $attfilter)) continue;
                     $rellink = WikiLink($att, false, $att);
                     $rellink->setAttr('class', $rellink->getAttr('class').' relation');
                     $searchlink = $WikiTheme->makeActionButton
 			(array('attribute' => $att,
 			       's'         => $val),
-			 '+',
+			 $val,
 			 _("SemanticSearch"));
+	            $searchlink->setAttr('class', $searchlink->getAttr('class').' attribute');
                     if (!$noheader)
                         $atthtml->pushContent("$pagename  ");
-		    $atthtml->pushContent(HTML::span($rellink, 
+		    $atthtml->pushContent(HTML::span(array('class' => 'attribute '.$att),
+		                                     $rellink, 
 						     HTML::span(array('class'=>'relation-symbol'), 
 								":="), 
-						     HTML($val)),
-					  " ", $searchlink,
-					  HTML::br());
+						     $searchlink),
+					  (count($attfilter) > 3 ? HTML::br() : " "));
                 }
                 if (!$noheader)
                     $relhtml = HTML($relhtml,
@@ -111,7 +127,8 @@ extends WikiPlugin
                                     $atthtml);
                 else
                     $relhtml = HTML($relhtml, $atthtml);
-            }
+             }
+           }
         }
         if ($nohelp) return $relhtml;
         return HTML($relhtml, 
@@ -121,10 +138,12 @@ extends WikiPlugin
                     " - ",
                     HTML::em(_("Find out how to add relations and attributes to pages.")));
     }
-
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2007/01/25 07:42:22  rurban
+// Use CSS formatting for ::=
+//
 // Revision 1.3  2007/01/03 21:23:06  rurban
 // Clarify description: "on this page".
 //
