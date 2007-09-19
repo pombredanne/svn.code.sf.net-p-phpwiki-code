@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.156 2007-09-15 12:32:50 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.157 2007-09-19 18:01:27 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
@@ -510,8 +510,8 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
     } else {
         $excludeList = array('DebugAuthInfo', 'DebugGroupInfo', 'AuthInfo');
     }
-    if ($request->getArg('pages') or isa($page_iter, "WikiDB_Array_generic_iter")) { // pagelist
-	$WikiTheme->VALID_LINKS = array();
+    $WikiTheme->VALID_LINKS = array();
+    if ($request->getArg('format')) { // pagelist
 	$page_iter_sav = $page_iter;
 	foreach ($page_iter_sav->asArray() as $handle) {
 	    $WikiTheme->VALID_LINKS[] = is_string($handle) ? $handle : $handle->getName();
@@ -550,7 +550,7 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
     }
 
     $request_args = $request->args;
-    $timeout = (! $request->getArg('start_debug')) ? 20 : 240;
+    $timeout = (! $request->getArg('start_debug')) ? 60 : 240;
     $SAVE_RCS_IDS = $GLOBALS['RCS_IDS'];
     if ($directory) {
     	if (isWindows())
@@ -635,6 +635,9 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 	    foreach ($m[1] as $img_file) {
 	    	$base = basename($img_file);
 	    	$data = str_replace('src="'.$img_file.'"','src="images/'.$base.'"', $data);
+	        if (array_key_exists($img_file, $already_images))
+	            continue;
+	        $already_images[$img_file] = 1;
 		// resolve src from webdata to file
 		$src = $doc_root . $img_file;
 		if (file_exists($src) and $base) {
@@ -1565,6 +1568,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.156  2007/09/15 12:32:50  rurban
+ Improve multi-page format handling: abstract _DumpHtmlToDir. get rid of non-external pdf, non-global VALID_LINKS
+
  Revision 1.155  2007/09/12 19:40:41  rurban
  Copy locally uploaded images also
 
