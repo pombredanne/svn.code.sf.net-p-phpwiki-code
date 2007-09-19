@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.147 2007-09-15 12:26:25 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.148 2007-09-19 18:00:49 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -974,9 +974,10 @@ class PageList {
         if (empty($input)) return array();
         if (is_array($input)) return $input;
         // expand wildcards from list of all pages
-        if (preg_match('/[\?\*]/', $input)) {
+        if (preg_match('/[\?\*]/', $input) or substr($input,0,1) == "^") {
             include_once("lib/TextSearchQuery.php");
-            $search = new TextSearchQuery(str_replace(",", " ", $input), true, 'glob'); 
+            $search = new TextSearchQuery(str_replace(",", " ", $input), true, 
+                                         (substr($input,0,1) == "^") ? 'posix' : 'glob'); 
             $dbi = $GLOBALS['request']->getDbh();
             $iter = $dbi->titleSearch($search, $sortby, $limit, $exclude);
             $pages = array();
@@ -1687,6 +1688,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.147  2007/09/15 12:26:25  rurban
+// add explodePageList comments
+//
 // Revision 1.146  2007/09/12 19:33:29  rurban
 // allow array to be exploded (comma problem)
 //
