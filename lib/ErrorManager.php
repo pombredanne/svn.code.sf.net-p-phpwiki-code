@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.51 2007-09-15 12:31:37 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.52 2007-09-19 17:59:26 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -359,10 +359,10 @@ function ErrorManager_errorHandler($errno, $errstr, $errfile, $errline)
       $GLOBALS['ErrorManager'] = new ErrorManager;
     }
 	
-    /*if (defined('DEBUG') and DEBUG)
+    if (defined('DEBUG') and DEBUG)
         $error = new PhpWikiError($errno, $errstr, $errfile, $errline);
-    else*/
-    $error = new PhpErrorOnce($errno, $errstr, $errfile, $errline);
+    else
+	$error = new PhpErrorOnce($errno, $errstr, $errfile, $errline);
     $GLOBALS['ErrorManager']->handleError($error);
 }
 
@@ -635,6 +635,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.51  2007/09/15 12:31:37  rurban
+// dont fatal on multi-page dumps
+//
 // Revision 1.50  2007/01/09 12:35:28  rurban
 // release ready: turn off assert
 //
