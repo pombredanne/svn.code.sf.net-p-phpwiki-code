@@ -1,12 +1,16 @@
-<?php 
+<?php
 /**
  * Themable paging "|<< <<   - i/sum - >> >>|" links
  *
- * $Id: pagelink.tmpl,v 1.2 2007-08-25 19:55:06 rurban Exp $ -->
+ * $Id: pagelink.tmpl,v 1.3 2007-09-22 12:37:55 rurban Exp $ -->
  * Variables: PREV, NEXT, PREV_LINK, NEXT_LINK,
  * COUNT, OFFSET, SIZE
  * More ideas: FIRST, LAST, ...
  */
+if ($WikiTheme->DUMP_MODE) {
+  $PREF = false;
+  $NEXT = false;
+}
 ?>
 <tr><td width="100%" colspan="<?= $COLS ?>"><table width="100%"><tr class="wikipaging">
   <td class="wikipaging<?= $PREF ? "-enabled" : "-disabled" ?>" align="left"">
