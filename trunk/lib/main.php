@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.240 2007-09-19 18:02:12 rurban Exp $');
+rcs_id('$Id: main.php,v 1.241 2007-09-22 12:39:32 rurban Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -517,7 +517,7 @@ class WikiRequest extends Request {
 
         $this->_user->PrintLoginForm($this, compact('require_level','pass_required'), 
 				     $msg);
-	if (!$WikiTheme->DUMP_MODE)
+	if (!$GLOBALS['WikiTheme']->DUMP_MODE)
 	    $this->finish();    // NORETURN
     }
 
@@ -1371,6 +1371,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.240  2007/09/19 18:02:12  rurban
+// htmldump optimization: continue dump on access denied
+//
 // Revision 1.239  2007/09/12 19:41:01  rurban
 // revise INSECURE_ACTIONS_LOCALHOST_ONLY actions
 //
