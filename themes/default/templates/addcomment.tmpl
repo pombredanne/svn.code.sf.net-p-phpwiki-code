@@ -1,8 +1,9 @@
 <?php // -*- php -*-
-  rcs_id('$Id: addcomment.tmpl,v 1.6 2007-01-20 11:23:47 rurban Exp $');
+  rcs_id('$Id: addcomment.tmpl,v 1.7 2007-09-22 12:37:55 rurban Exp $');
   $request->setArg('action',false);
 ?>
 <div class="wikicomment wikicomment-form">
+<?php if (!$WikiTheme->DUMP_MODE) { ?>
 <form action="<?=$request->getPostURL()?>" method="post" class="wikiaction"
       accept-charset="<?=CHARSET?>">
   <input type="hidden" name="comment[pagename]" value="<?=$PAGENAME?>" />
@@ -17,4 +18,5 @@ _("Add Comment")
      </tr>
   </table>
 </form>
+<?php } ?>
 </div>
