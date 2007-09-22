@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.23 2007-09-12 19:38:41 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.24 2007-09-22 12:38:57 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004,2007 Reini Urban
@@ -242,8 +242,8 @@ class WikiPluginCached extends WikiPlugin
                 break;
         }
         if ($do_save) {
-            $expire = $this->getExpire($dbi, $sortedargs, $request);
-            $content['args'] = $sortedargs;
+            $content['args'] = md5($this->_pi);
+            $expire = $this->getExpire($dbi, $content['args'], $request);
             $cache->save($id, $content, $expire, 'imagecache');
         }
         if ($content['html'])
@@ -1163,6 +1163,9 @@ class WikiPluginCached extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2007/09/12 19:38:41  rurban
+// improve tempnam on windows, cleanup zero-sized files
+//
 // Revision 1.22  2007/01/25 07:42:09  rurban
 // Remove early Cache.php loader. Do it later and better.
 //
