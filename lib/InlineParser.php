@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.92 2007-08-10 21:58:01 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.93 2007-09-26 16:54:34 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 Reini Urban
  *
@@ -797,7 +797,7 @@ class Markup_xml_plugin extends BalancedMarkup
  *  Template syntax similar to mediawiki
  *  {{template}}
  * => < ? plugin Template page=template ? >
- *  {{template|var=value|...}}
+ *  {{template|var1=value1|var2=value|...}}
  * => < ? plugin Template page=template var=value ... ? >
  */
 class Markup_template_plugin  extends SimpleMarkup
@@ -807,7 +807,7 @@ class Markup_template_plugin  extends SimpleMarkup
     
     function markup ($match) {
         $page = substr(str_replace("\n", "", $match),2,-2); $vars = '';
-        if (preg_match('/^(\S+)\|(.*)$/', $page, $_m)) {
+        if (preg_match('/^(\S+?)\|(.*)$/', $page, $_m)) {
             $page = $_m[1];
             $vars = '"' . preg_replace('/\|/', '" "', $_m[2]) . '"'; 
             $vars = preg_replace('/"(\S+)=([^"]*)"/', '\\1="\\2"', $vars);
@@ -1077,6 +1077,13 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.92  2007/08/10 21:58:01  rurban
+// Improve SemanticLink parsings:
+//   No units seperated by space allowed without []
+//   For :: (relations) only words, no comma,
+//   but for := (attributes) comma and dots are allowed. Units with groupsep.
+//   Ending dots or comma are not part of the link.
+//
 // Revision 1.91  2007/06/07 18:56:57  rurban
 // patch #1732793: allow \n, mult. {{ }} in one line, and single
 // letters (slightly improved) by AlJeux and ReiniUrban
