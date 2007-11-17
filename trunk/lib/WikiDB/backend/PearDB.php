@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.108 2007-06-07 21:37:39 rurban Exp $');
+rcs_id('$Id: PearDB.php,v 1.109 2007-11-17 15:30:39 rurban Exp $');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');
@@ -563,7 +563,7 @@ extends WikiDB_backend
         else
             list($have,$want) = array('linker', 'linkee');
         $orderby = $this->sortby($sortby, 'db', array('pagename'));
-        if ($orderby) $orderby = ' ORDER BY $want.' . $orderby;
+        if ($orderby) $orderby = " ORDER BY $want." . $orderby;
         if ($exclude) // array of pagenames
             $exclude = " AND $want.pagename NOT IN ".$this->_sql_set($exclude);
         else 
@@ -1259,6 +1259,9 @@ class WikiDB_backend_PearDB_search extends WikiDB_backend_search_sql
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.108  2007/06/07 21:37:39  rurban
+// add native asArray methods to generic iters (for DebugInfo)
+//
 // Revision 1.107  2007/05/28 20:13:46  rurban
 // Overwrite all attributes at once at page->save to delete dangling meta
 //
