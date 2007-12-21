@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.15 2007-05-29 16:56:54 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.16 2007-12-21 17:00:02 rurban Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens group manager), Reini Urban (as plugin)
@@ -586,7 +586,7 @@ class RatingsDb extends WikiDB {
         if ($rating == -1)
             unset($data[$dimension][$userid]);
         else {
-            if (empty($data[$dimension][$userid]))
+            if (empty($data[$dimension]))
                 $data[$dimension] = array($userid => (float)$rating);
             else
                 $data[$dimension][$userid] = $rating;
@@ -721,6 +721,9 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.15  2007/05/29 16:56:54  rurban
+// Fix dba
+//
 // Revision 1.14  2007/01/21 23:16:29  rurban
 // Fix dba with RATING_STORAGE=SQL
 //
