@@ -1,6 +1,6 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id: sqlite-initialize.sql,v 1.6 2006-12-08 08:04:10 rurban Exp $
+-- $Id: sqlite-initialize.sql,v 1.7 2008-01-19 16:41:05 vargenau Exp $
 
 CREATE TABLE page (
 	id              INTEGER PRIMARY KEY,
@@ -58,7 +58,7 @@ CREATE TABLE pref (
   	userid 	CHAR(48) NOT NULL PRIMARY KEY,
   	prefs  	MEDIUMTEXT NULL DEFAULT '',
   	passwd 	CHAR(48) DEFAULT '',
-	groupname CHAR(48) DEFAULT 'users',
+	groupname CHAR(48) DEFAULT 'users'
 );
 
 -- Use the member table, if you need it for n:m user-group relations,
