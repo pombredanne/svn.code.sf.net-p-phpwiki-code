@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RichTable.php,v 1.7 2005-05-06 17:44:24 rurban Exp $');
+rcs_id('$Id: RichTable.php,v 1.8 2008-01-22 14:24:02 vargenau Exp $');
 /**
   RichTablePlugin
   A PhpWiki plugin that allows insertion of tables using a richer syntax.
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -135,19 +135,27 @@ extends WikiPlugin
     }
 
     function _parse_attr($line) {
+        // We allow attributes with or without quotes (")
+        // border=1, cellpadding="5"
+        // style="font-family: sans-serif; border-top:1px solid #dddddd;
+        // What will not work is style with comma inside, e. g.
+        // style="font-family: Verdana, Arial, Helvetica, sans-serif"
         $attr_chunks = preg_split("/\s*,\s*/", strtolower($line));
         $options = array();
         foreach ($attr_chunks as $attr_pair) {
             if (empty($attr_pair)) continue;
             $key_val = preg_split("/\s*=\s*/", $attr_pair);
             if (!empty($key_val[1]))
-                $options[trim($key_val[0])] = trim($key_val[1]);
+                $options[trim($key_val[0])] = trim(str_replace("\"", "", $key_val[1]));
         }
         return $options;
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2005/05/06 17:44:24  rurban
+// silence undefined offset 1 msg
+//
 // Revision 1.6  2005/04/09 08:16:00  rurban
 // fix RichTablePlugin embedded plugin invocation. Bug #1044245
 //
