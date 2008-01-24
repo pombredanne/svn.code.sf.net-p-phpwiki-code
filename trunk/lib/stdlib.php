@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.268 2007-09-15 12:28:46 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.269 2008-01-24 19:17:03 rurban Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -2181,7 +2181,19 @@ function is_localhost($url = false) {
     }
 }
 
+/**
+ * Take a string and quote it sufficiently to be passed as a Javascript
+ * string between ''s
+ */
+function javascript_quote_string($s) {
+    return str_replace("'", "\'", $s);
+}
+
+
 // $Log: not supported by cvs2svn $
+// Revision 1.268  2007/09/15 12:28:46  rurban
+// Improve multi-page format handling: abstract _DumpHtmlToDir. get rid of non-external pdf, non-global VALID_LINKS
+//
 // Revision 1.267  2007/09/12 19:32:29  rurban
 // link only VALID_LINKS with pagelist HTML_DUMP
 //
