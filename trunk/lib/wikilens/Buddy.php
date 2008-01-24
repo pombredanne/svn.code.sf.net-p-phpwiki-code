@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Buddy.php,v 1.3 2004-11-21 11:59:26 rurban Exp $');
+rcs_id('$Id: Buddy.php,v 1.4 2008-01-24 19:33:03 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -38,12 +38,40 @@ function addBuddy($user, $buddy, $dbi)
 function getBuddies($fromUser, $dbi, $thePage = ""){
     $START_DELIM = $thePage . _("Buddies:");
     $DELIM = ",";
-    
     $buddies_array = getPageTextData($fromUser, $dbi, $START_DELIM, $DELIM);
     if (count($buddies_array) == 0 and $thePage !== "") {
         $buddies_array = getPageTextData($fromUser, $dbi, _("Buddies:"), $DELIM);
     }
-    return $buddies_array;
+    if (empty($buddies_array)) {
+	// 1. calculate buddies automatically from the 10 top raters with the most numratings (min. 5 ratings).
+	//    of all pages (only SQL)
+	// or 2. from 10 random raters of this page (non-SQL)
+        // or 3. from all members of your group (department) if <= 20
+	$rdbi = RatingsDb::getTheRatingsDb();
+	$dimension = '';
+        if (RATING_STORAGE == 'SQL') {
+	    //$result = $this->_sql_get_rating_result($dimension, null, null, 'numrating', "rater");
+	    $dbh = &$rdbi->_sqlbackend;
+	    extract($dbh->_table_names);
+	    $query = "SELECT raterpage, COUNT(rateepage) as numrating"
+		. " FROM $rating_tbl r, $page_tbl p "
+		. " WHERE ratingvalue > 0 AND numrating > 5"
+		. " GROUP BY raterpage"
+		. " ORDER BY numrating"
+		. " LIMIT 10";
+	    $result = $dbh->query($query);
+	} else {
+	    // from 10 random raters of this page (non-SQL)
+	    ;
+	}
+
+    }
+    $result = array();
+    if (is_array($buddies_array))
+      foreach ($buddies_array as $userid) { 
+    	$result[] = new RatingsUser($userid);
+      }
+    return $result;
 }
 
 function CoAgreement($dbi, $page, $users, $active_userid){
@@ -141,6 +169,9 @@ function AverageRating($dbi, $page, $users, $active_userid){
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2004/11/21 11:59:26  rurban
+// remove final \n to be ob_cache independent
+//
 // Revision 1.2  2004/11/15 16:00:02  rurban
 // enable RateIt imgPrefix: '' or 'Star' or 'BStar',
 // enable blue prediction icons,
