@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.146 2007-09-15 12:34:09 rurban Exp $');
+<?php rcs_id('$Id: Theme.php,v 1.147 2008-01-24 19:16:26 rurban Exp $');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -208,10 +208,10 @@ class Theme {
 	$script_url = deduce_script_name();
 	if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
 	    $script_url .= ("?start_debug=".$_GET['start_debug']);
-	$this->addMoreHeaders(JavaScript("var data_path = '". DATA_PATH ."';\n"
-					."var pagename  = '". $GLOBALS['request']->getArg('pagename') ."';\n"
-                                        ."var script_url= '". $script_url ."';\n"
-					."var stylepath = '". DATA_PATH . '/'.$this->_theme."/';\n"));
+	$this->addMoreHeaders(JavaScript("var data_path = '". javascript_quote_string(DATA_PATH) ."';\n"
+					 ."var pagename  = '". javascript_quote_string($GLOBALS['request']->getArg('pagename')) ."';\n"
+					 ."var script_url= '". javascript_quote_string($script_url) ."';\n"
+					 ."var stylepath = '". javascript_quote_string(DATA_PATH) . '/'.$this->_theme."/';\n"));
         // by pixels
         if ((is_object($GLOBALS['request']) // guard against unittests
              and $GLOBALS['request']->getPref('doubleClickEdit'))
@@ -1805,6 +1805,9 @@ function listAvailableLanguages() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.146  2007/09/15 12:34:09  rurban
+// allow object button text
+//
 // Revision 1.145  2007/09/12 19:37:26  rurban
 // Add script_url to global js
 //
