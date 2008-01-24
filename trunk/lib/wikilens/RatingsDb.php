@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.16 2007-12-21 17:00:02 rurban Exp $');
+rcs_id('$Id: RatingsDb.php,v 1.17 2008-01-24 19:23:16 rurban Exp $');
 
 /*
  * @author:  Dan Frankowski (wikilens group manager), Reini Urban (as plugin)
@@ -197,25 +197,23 @@ class RatingsDb extends WikiDB {
         } else {
             return $this->metadata_get_rating($rater, $pagename, $dimension);
         }
-        /*
-        return $this->_backend->get_rating($dimension, $rater, $ratee,
-                                           $orderby, $pageinfo);
-        */
     }
-    
-    function get_users_rated($dimension=null, $orderby = null) {
+
+    /* UR: What is this for? NOT USED!
+       Maybe the list of users (ratees) who rated on this page.
+     */
+    function get_users_rated($dimension=null, $pagename = null, $orderby = null) {
         if (RATING_STORAGE == 'SQL') {
-            $ratings_iter = $this->sql_get_users_rated($dimension, $orderby);
-            if ($rating = $ratings_iter->next() and isset($rating['ratingvalue'])) {
-               return $rating['ratingvalue'];
-            } else 
-                return false;
+            $ratings_iter = $this->sql_get_users_rated($dimension, $pagename, $orderby);
+	    // iter as userid
+	    $users = array();
+	    while ($rating = $ratings_iter->next()) {
+		$users[] = $rating['userid'];
+	    }
+	    return $users;
         } else {
-            return $this->metadata_get_users_rated($dimension, $orderby);
+            return $this->metadata_get_users_rated($dimension, $pagename, $orderby);
         }
-        /*
-        return $this->_backend->get_users_rated($dimension, $orderby);
-        */
     }
 
     /**
@@ -321,8 +319,8 @@ class RatingsDb extends WikiDB {
     }
 
     /**
-     * TODO: slow item-based recommendation engine, similar to suggest RType=2.
-     *       Only the SUGGEST_EstimateAlpha part
+     * Slow item-based recommendation engine, similar to suggest RType=2.
+     * Only the SUGGEST_EstimateAlpha part
      * Take wikilens/RatingsUser.php for the php methods.
      */
     function php_prediction($userid=null, $pagename=null, $dimension=null) {
@@ -356,7 +354,6 @@ class RatingsDb extends WikiDB {
         }
     }
 
-    // TODO: metadata method
     function getAvg($pagename=null, $dimension=null) {
         if (is_null($dimension)) $dimension = $this->dimension;
         if (is_null($pagename))  $pagename = $this->pagename;
@@ -438,15 +435,32 @@ class RatingsDb extends WikiDB {
      */
     function sql_get_rating($dimension=null, $rater=null, $ratee=null,
                             $orderby=null, $pageinfo = "ratee") {
-        if (empty($dimension)) $dimension=null;
+        if (is_null($dimension)) $dimension = $this->dimension;
         $result = $this->_sql_get_rating_result($dimension, $rater, $ratee, $orderby, $pageinfo);
         return new $this->iter_class($this, $result);
     }
 
-    function sql_get_users_rated($dimension=null, $orderby=null) {
-        if (empty($dimension)) $dimension=null;
-        $result = $this->_sql_get_rating_result($dimension, null, null, $orderby, "rater");
+    function sql_get_users_rated($dimension=null, $pagename=null, $orderby=null) {
+        if (is_null($dimension)) $dimension = $this->dimension;
+        $result = $this->_sql_get_rating_result($dimension, null, $pagename, $orderby, "rater");
         return new $this->iter_class($this, $result);
+    }
+
+    // all users who rated this page resp if null all pages.. needed?
+    function metadata_get_users_rated($dimension=null, $pagename=null, $orderby=null) {
+        if (is_null($dimension)) $dimension = $this->dimension;
+	$users = array();
+	if (!$pagename) {
+	    // TODO: all pages?
+	    return new WikiDB_Array_PageIterator($users);
+	}
+	$page = $this->_dbi->getPage($pagename);
+	$data = $page->get('rating');
+	if (!empty($data[$dimension])) {
+	    //array($userid => (float)$rating);
+	    return new WikiDB_Array_PageIterator(array_keys($data[$dimension]));
+        }
+        return new WikiDB_Array_PageIterator($users);
     }
 
     /**
@@ -493,7 +507,11 @@ class RatingsDb extends WikiDB {
         }
         if (isset($rater) or isset($ratee)) $what = '*';
         // same as _get_users_rated_result()
-        else $what = 'DISTINCT p.pagename';
+        else {
+	    $what = 'DISTINCT p.pagename';
+	    if ($pageinfo == 'rater')
+		$what = 'DISTINCT p.pagename as userid';
+	}
 
         $query = "SELECT $what"
                . " FROM $rating_tbl r, $page_tbl p "
@@ -589,11 +607,11 @@ class RatingsDb extends WikiDB {
             if (empty($data[$dimension]))
                 $data[$dimension] = array($userid => (float)$rating);
             else
-                $data[$dimension][$userid] = $rating;
+                $data[$dimension][$userid] = (float)$rating;
         }
         $page->set('rating',$data);
     }
-   
+
 }
 
 /*
@@ -721,6 +739,9 @@ extends WikiDB_backend_PearDB {
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.16  2007/12/21 17:00:02  rurban
+// Do not overwrite other ratings with metadata DB
+//
 // Revision 1.15  2007/05/29 16:56:54  rurban
 // Fix dba
 //
