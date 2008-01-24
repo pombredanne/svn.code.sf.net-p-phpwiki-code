@@ -1,8 +1,8 @@
 <?php //-*-php-*-
-rcs_id('$Id: RatingsUser.php,v 1.5 2004-11-15 16:00:02 rurban Exp $');
+rcs_id('$Id: RatingsUser.php,v 1.6 2008-01-24 19:33:50 rurban Exp $');
 /* Copyright (C) 2004 Dan Frankowski
  *
- * This file is (not yet) part of PhpWiki.
+ * This file is part of PhpWiki.
  * 
  * PhpWiki is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -166,7 +166,12 @@ class RatingsUser {
     function get_rating($pagename, $dimension = 0)
     {
         // XXX: does this really want to do a full ratings load?  (scalability?)
-        $this->_load_ratings();
+        if (RATING_STORAGE == 'SQL')
+	    $this->_load_ratings();
+	else {
+	    $rdbi = $this->_get_rating_dbi();
+	    return $rdbi->metadata_get_rating($this->getId(), $pagename, $dimension);
+	}
 
         if ($this->has_rated($pagename, $dimension))
         {
@@ -352,6 +357,7 @@ class RatingsUser {
             $dbi = $this->_get_rating_dbi();
 
             //$rating_iter = $dbi->sql_get_rating(null, $this->_userid, null);
+            //($dimension=null, $rater=null, $ratee=null, $orderby = null, $pageinfo = "ratee")
             $rating_iter = $dbi->get_rating_page(null, $this->_userid);
 
             while($rating = $rating_iter->next())
@@ -422,6 +428,11 @@ class _UserRating
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2004/11/15 16:00:02  rurban
+// enable RateIt imgPrefix: '' or 'Star' or 'BStar',
+// enable blue prediction icons,
+// enable buddy predictions.
+//
 // Revision 1.4  2004/07/08 19:04:49  rurban
 // more unittest fixes (file backend, metadata RatingsDb)
 //
