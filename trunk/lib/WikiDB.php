@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.157 2007-09-15 12:35:50 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.158 2008-01-30 19:29:52 vargenau Exp $');
 
 require_once('lib/PageType.php');
 
@@ -533,14 +533,17 @@ class WikiDB {
 			 $lookbehind.$from.$lookahead, $to, 
 			 true, true);
                 }
-                $links = $newpage->getBackLinks();
-                while ($linked_page = $links->next()) {
-                    WikiPlugin_WikiAdminSearchReplace::replaceHelper
-			($this,
-			 $linked_page->getName(),
-			 $lookbehind.$from.$lookahead, $to, 
-			 true, true);
-                }
+                //      Disabled to avoid recursive modification when renaming
+                //      a page like 'PageFoo to 'PageFooTwo'.
+                // 
+                // $links = $newpage->getBackLinks();
+                // while ($linked_page = $links->next()) {
+                //     WikiPlugin_WikiAdminSearchReplace::replaceHelper
+		// 	($this,
+		// 	 $linked_page->getName(),
+		// 	 $lookbehind.$from.$lookahead, $to, 
+		// 	 true, true);
+                // }
             }
             if ($oldpage->exists() and ! $newpage->exists()) {
                 if ($result = $this->_backend->rename_page($from, $to)) {
@@ -2234,6 +2237,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.157  2007/09/15 12:35:50  rurban
+// basic array reset support - unclear if needed, iteration is usually one-time only
+//
 // Revision 1.156  2007/09/12 19:38:05  rurban
 // fix wrong ref &current
 //
