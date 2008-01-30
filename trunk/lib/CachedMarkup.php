@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.60 2007-09-15 12:28:46 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.61 2008-01-30 19:08:59 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -773,7 +773,8 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
    
 	if (isset($this->_tightenable)) {
 	    if ($this->_tightenable == 3) {
-                $span = HTML::span(array('class' => 'plugin'), $xml);
+		// We need a div here, it might contain a table
+                $span = HTML::div(array('class' => 'plugin'), $xml);
                 if (!empty($id))
                     $span->setAttr('id', $id);
 	        return $span;
@@ -811,6 +812,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.60  2007/09/15 12:28:46  rurban
+// Improve multi-page format handling: abstract _DumpHtmlToDir. get rid of non-external pdf, non-global VALID_LINKS
+//
 // Revision 1.59  2007/09/12 19:32:29  rurban
 // link only VALID_LINKS with pagelist HTML_DUMP
 //
