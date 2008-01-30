@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.37 2006-03-07 21:06:56 rurban Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.38 2008-01-30 19:22:53 vargenau Exp $');
 /**
  Copyright (C) 2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.37 $");
+                            "\$Revision: 1.38 $");
     }
 
     function getDefaultArguments() {
@@ -150,8 +150,12 @@ extends WikiPlugin
                         } else {
                             $request->_setUser($user);
                             $pref = $user->_prefs;	
+                            if ($num == 1) {
+                                $errmsg .= _("One UserPreferences field successfully updated.");
+                            } else { 
                             $errmsg .= sprintf(_("%d UserPreferences fields successfully updated."), $num);
                         }  
+                    }
                     }
                     $args['errmsg'] = HTML(HTML::h2($errmsg), HTML::hr());
                 }
@@ -169,6 +173,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2006/03/07 21:06:56  rurban
+// add PdoDbPassUser
+//
 // Revision 1.36  2005/06/30 05:17:14  rurban
 // update (c) date
 //
