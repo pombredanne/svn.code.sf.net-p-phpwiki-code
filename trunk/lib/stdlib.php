@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.269 2008-01-24 19:17:03 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.270 2008-01-31 20:21:12 vargenau Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -185,7 +185,7 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     	elseif (is_array($args))
     	    $args['start_debug'] = $request->getArg('start_debug');
     	else 
-    	    $args .= '&start_debug=' . $request->getArg('start_debug');
+    	    $args .= '&amp;start_debug=' . $request->getArg('start_debug');
     }
     if (is_array($args)) {
         $enc_args = array();
@@ -2191,6 +2191,9 @@ function javascript_quote_string($s) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.269  2008/01/24 19:17:03  rurban
+// add javascript_quote_string for Theme
+//
 // Revision 1.268  2007/09/15 12:28:46  rurban
 // Improve multi-page format handling: abstract _DumpHtmlToDir. get rid of non-external pdf, non-global VALID_LINKS
 //
