@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.93 2007-09-26 16:54:34 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.94 2008-01-31 20:40:10 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 Reini Urban
  *
@@ -820,6 +820,25 @@ class Markup_template_plugin  extends SimpleMarkup
     }
 }
 
+/** ENABLE_MARKUP_MEDIAWIKI_TABLE
+ *  Table syntax similar to mediawiki
+ *  {|
+ * => <?plugin MediawikiTable
+ *  |}
+ * => ?>
+ */
+class Markup_mediawikitable_plugin  extends SimpleMarkup
+{
+    var $_match_regexp = '\{\|.*?\|\}';
+
+    function markup ($match) {
+        $s = str_replace("{|", "", $match);
+        $s = str_replace("|}", "", $s);
+      $s = '<?plugin MediawikiTable ' . $s . '?>';
+      return new Cached_PluginInvocation($s);
+    }
+}
+
 // "..." => "&#133;"  browser specific display (not cached?)
 // Support some HTML::Entities: (C) for copy, --- for mdash, -- for ndash
 // TODO: "--" => "&emdash;" browser specific display (not cached?)
@@ -911,6 +930,8 @@ class InlineTransformer
             $this->_addMarkup(new Markup_color);
         if (ENABLE_MARKUP_TEMPLATE and !$non_default)
             $this->_addMarkup(new Markup_template_plugin);
+        if (ENABLE_MARKUP_MEDIAWIKI_TABLE)
+            $this->_addMarkup(new Markup_mediawikitable_plugin);
         // This does not work yet
         if (0 and PLUGIN_MARKUP_MAP and !$non_default)
             $this->_addMarkup(new Markup_xml_plugin);
@@ -1077,6 +1098,10 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.93  2007/09/26 16:54:34  rurban
+// Fix Bug#1802827 Template does not get expanded with {{ }} syntax.
+// by vargenau
+//
 // Revision 1.92  2007/08/10 21:58:01  rurban
 // Improve SemanticLink parsings:
 //   No units seperated by space allowed without []

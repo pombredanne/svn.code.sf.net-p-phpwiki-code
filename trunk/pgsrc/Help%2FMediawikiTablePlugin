@@ -1,0 +1,87 @@
+Date: Thu, 31 Jan 2008 17:09:40 +0100
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.12p3)
+Content-Type: application/x-phpwiki;
+  pagename=Help%2FMediawikiTablePlugin;
+  flags="";
+  author=Marc-Etienne%20VARGENAU;
+  version=1;
+  lastmodified=1201795780;
+  created=1201795780;
+  author_id=Marc-Etienne%20VARGENAU;
+  markup=2;
+  hits=2;
+  charset=UTF-8
+Content-Transfer-Encoding: binary
+
+<b>~MediawikiTablePlugin</b> is a plugin that takes off from the [RichTablePlugin|Help:RichTablePlugin]. It allows a user to specify a <tt><table></tt> with (a subset of) the syntax used by Mediawiki.
+
+* The table starts with a line <b>{~|</b> and ends with a line <b>|~}</b>.
+* An optional table caption is made with a line starting with a pipe and a plus sign <b>|+</b> followed by the caption.
+* A table row starts with a pipe and a hyphen: <b>|-</b>.
+* A table cell starts with a pipe on a new line, or a double bar <b>||</b> on the same line.
+
+HTML attributes:
+* for the table:
+<pre>
+{| border="1"
+</pre>
+* for the caption:
+<pre>
+|+ style="font-weight: bold;"
+</pre>
+* for a row:
+<pre>
+|- style="height:100px"
+</pre>
+* for a cell:
+<pre>
+|align="right" |Cell 2 (right aligned)
+</pre>
+
+The attributes might be put with or without double quotes.
+
+The Mediawiki syntax for headers:
+<pre>
+! Header 1
+</pre>
+is not (yet) supported.
+
+!!! Example
+
+{| border="1", style="width: 100%"
+|+ style="font-weight: bold; font-size: 150%;" | This is the table caption
+|- style="white-space: nowrap"
+| <b>Header 1</b>
+| <b>Header 2</b>
+| <b>Header 3</b>
+|- style=height:100px
+| Cell I
+| <b>Cell II</b>,  in bold
+|align=right, width="100%" |Cell III
+|- bgcolor=#f0f0ff, align=center
+|Cell 1||Cell 2||Cell 3
+|}
+
+The above table is rendered from:
+
+<verbatim>
+{| border="1", style="width: 100%"
+|+ style="font-weight: bold; font-size: 150%;" | This is the table caption
+|- style="white-space: nowrap"
+| <b>Header 1</b>
+| <b>Header 2</b>
+| <b>Header 3</b>
+|- style=height:100px
+| Cell I
+| <b>Cell II</b>,  in bold
+|align=right, width="100%" |Cell III
+|- bgcolor=#f0f0ff, align=center
+|Cell 1||Cell 2||Cell 3
+|}
+</verbatim>
+
+;__Author__: Marc-Etienne Vargenau, Alcatel-Lucent
+
+-------------
+
+PhpWikiDocumentation Help:WikiPlugin
