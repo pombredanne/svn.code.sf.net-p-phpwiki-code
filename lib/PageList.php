@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.149 2008-01-26 14:13:29 vargenau Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.150 2008-01-31 20:28:47 vargenau Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1428,9 +1428,9 @@ class PageList {
             $paging = Template("pagelink", $tokens);
             if ($this->_options['paging'] != 'bottom')
                 $table->pushContent(HTML::thead($paging));
-            $table->pushContent(HTML::tbody(false, HTML($row, $rows)));
             if ($this->_options['paging'] != 'top')
                 $table->pushContent(HTML::tfoot($paging));
+            $table->pushContent(HTML::tbody(false, HTML($row, $rows)));
             return $table;
         } else {
             $table->pushContent(HTML::thead($row),
@@ -1688,6 +1688,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.149  2008/01/26 14:13:29  vargenau
+// XHTML is case-sensitive; use correct case
+//
 // Revision 1.148  2007/09/19 18:00:49  rurban
 // enable "^A or ^B" pages argument for PageLists: e.g. large htmldump-s
 //
