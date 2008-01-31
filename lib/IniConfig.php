@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.118 2007-09-01 13:24:23 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.119 2008-01-31 20:40:10 vargenau Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -196,6 +196,7 @@ function IniConfig($file) {
          'ENABLE_DISCUSSION_LINK', 'ENABLE_CAPTCHA',
          'ENABLE_WYSIWYG', 'WYSIWYG_DEFAULT_PAGETYPE_HTML',
          'DISABLE_MARKUP_WIKIWORD', 'ENABLE_MARKUP_COLOR', 'ENABLE_MARKUP_TEMPLATE',
+         'ENABLE_MARKUP_MEDIAWIKI_TABLE',
          'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS',
 	 'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS',
          'ENABLE_AUTH_OPENID', 'INSECURE_ACTIONS_LOCALHOST_ONLY'
@@ -940,6 +941,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.118  2007/09/01 13:24:23  rurban
+// add INSECURE_ACTIONS_LOCALHOST_ONLY. advanced security settings
+//
 // Revision 1.117  2007/08/10 21:56:29  rurban
 // add LOGIN_LOG,LDAP_SEARCH_FILTER,ENABLE_AUTH_OPENID
 //
