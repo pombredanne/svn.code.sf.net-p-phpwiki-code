@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreatePage.php,v 1.12 2007-08-10 22:03:34 rurban Exp $');
+rcs_id('$Id: CreatePage.php,v 1.13 2008-02-14 18:59:10 rurban Exp $');
 /**
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -48,7 +48,7 @@ extends WikiPlugin_Template
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.12 $");
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -69,6 +69,7 @@ extends WikiPlugin_Template
         if (!$s) {
             return $this->error(_("Cannot create page with empty name!"));
 	}
+	// TODO: javascript warning if "/" or SUBPAGE_SEPARATOR in s
 
         $param = array('action' => 'edit');
         if ($template and $dbi->isWikiPage($template)) {
@@ -127,6 +128,9 @@ extends WikiPlugin_Template
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2007/08/10 22:03:34  rurban
+// Cannot create page with empty name
+//
 // Revision 1.11  2007/01/27 21:36:52  rurban
 // Overwrite empty or deleted pages
 //
