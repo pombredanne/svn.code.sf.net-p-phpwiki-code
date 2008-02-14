@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.53 2007-05-19 14:41:14 rurban Exp $');
+<?php rcs_id('$Id: ziplib.php,v 1.54 2008-02-14 18:37:21 rurban Exp $');
 
 /**
  * GZIP stuff.
@@ -263,6 +263,15 @@ class ZipWriter
         $zipname = addslashes($zipname);
         header("Content-Type: application/zip; name=\"$zipname\"");
         header("Content-Disposition: attachment; filename=\"$zipname\"");
+    }
+    
+    function addSrcFile ($target, $src, $attrib = false) {
+	if (empty($attrib['mtime']))
+	    $attrib = array('mtime' => filemtime($src), 'is_ascii' => 0);
+	if (check_php_version(4,3))
+	    $this->addRegularFile($target, file_get_contents($src), $attrib);
+	else
+	    $this->addRegularFile($target, join('', file($src)), $attrib);
     }
     
   function addRegularFile ($filename, $content, $attrib = false) {
@@ -884,6 +893,9 @@ function ParseMimeifiedPages ($data)
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2007/05/19 14:41:14  rurban
+// add owner to header to set correct owner on input
+//
 // Revision 1.52  2007/05/15 16:36:36  rurban
 // nowarn on nosummary
 //
