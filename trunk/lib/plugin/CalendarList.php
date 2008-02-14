@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CalendarList.php,v 1.10 2007-09-01 13:39:46 rurban Exp $');
+rcs_id('$Id: CalendarList.php,v 1.11 2008-02-14 18:58:15 rurban Exp $');
 
 /**
  Copyright 1999-2002,2005-2007 $ThePhpWikiProgrammingTeam
@@ -152,12 +152,13 @@ extends WikiPlugin
 
         // default to this month
         $now = localtime(time() + 3600 * $request->getPref('timeOffset'), 1);
+        $args['mday'] = $now['tm_mday'];
         foreach ( array('month' => $now['tm_mon'] + 1,
                         'year'  => $now['tm_year'] + 1900,
                         'mday'  => $now['tm_mday'])
                   as $param => $dflt )
         {
-             if (! @($args[$param] = intval($args[$param])))
+             if (! ($args[$param] = intval($args[$param])))
                 $args[$param]   = $dflt;
         }
         $base = mktime(0, 0, 0, // h, m, s
@@ -226,6 +227,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2007/09/01 13:39:46  rurban
+//  CalendarList pages now in parallel with Calendar: year + month args as start base, The behaviour before 2007 with last/next_n_days was to start now.
+//
 // Revision 1.9  2006/05/14 17:40:31  rurban
 // Patch #1232730 by banjo
 //
