@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.77 2007-09-12 19:32:29 rurban Exp $');
+rcs_id('$Id: display.php,v 1.78 2008-02-14 18:48:42 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -86,6 +86,15 @@ function actionPage(&$request, $action) {
     } elseif (!$format or $format == 'html' or $format == 'sidebar' or $format == 'contribs') {
 	$template = Template('browse', array('CONTENT' => $transformedContent));
 	GeneratePage($template, $pagetitle, $revision, $args);
+    } elseif ($format == 'xml') {
+	$template = new Template('browse', $request,
+                                 array('revision' => $revision,
+                                       'CONTENT'  => $transformedContent,
+				       ));
+	$html = GeneratePageAsXML($template, $pagename, $revision /*, 
+				  array('VALID_LINKS' => $args['VALID_LINKS'])*/);
+	header("Content-Type: application/xhtml+xml; charset=" . $GLOBALS['charset']);
+	echo $html;
     } else {
     	$pagelist = null;
     	require_once('lib/WikiPlugin.php');
@@ -106,7 +115,8 @@ function actionPage(&$request, $action) {
         $args['VALID_LINKS'] = array($pagename);
         if (!$pagelist or !is_a($pagelist, 'PageList')) {
 	    if (!in_array($format, array("rss91","rss2","rss","atom","rdf")))
-		trigger_error(sprintf("Format %s requires an actionpage returning a pagelist.", $format)
+		trigger_error(sprintf("Format %s requires an actionpage returning a pagelist.", 
+				      $format)
 			      ."\n".("Fall back to single page mode"), E_USER_WARNING);
 	    require_once('lib/PageList.php');
 	    $pagelist = new PageList();
@@ -114,23 +124,13 @@ function actionPage(&$request, $action) {
 	} else {
             foreach ($pagelist->_pages as $page) {
             	$name = $page->getName();
-            	if ($name != $pagename)
+            	if ($name != $pagename and $page->exists())
                     $args['VALID_LINKS'][] = $name;
             }
 	}
 	if ($format == 'pdf') {
 	    require_once("lib/pdf.php");
 	    ConvertAndDisplayPdfPageList($request, $pagelist, $args);
-	}
-	elseif ($format == 'xml') {
-            $template = new Template('browse', $request,
-                                 array('revision' => $revision,
-                                       'CONTENT'  => $transformedContent,
-				       'VALID_LINKS' => $args['VALID_LINKS']
-				       ));
-            $html = GeneratePageAsXML($template, $pagename, $revision, 
-				  array('VALID_LINKS' => $args['VALID_LINKS']));
-	    echo $html;		  
 	}
 	elseif ($format == 'ziphtml') { // need to fix links
 	    require_once('lib/loadsave.php');
@@ -367,6 +367,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.77  2007/09/12 19:32:29  rurban
+// link only VALID_LINKS with pagelist HTML_DUMP
+//
 // Revision 1.76  2007/08/10 21:59:27  rurban
 // fix missing PageList dependency
 // add format=rdfs
