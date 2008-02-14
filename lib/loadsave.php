@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.157 2007-09-19 18:01:27 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.158 2008-02-14 18:36:52 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
@@ -568,7 +568,7 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
     	} else {
             $pagename = $page->getName();
     	}
-	if (!$firstpage) $firstpage = $pagename;
+	if (empty($firstpage)) $firstpage = $pagename;
 	if (array_key_exists($pagename, $already))
 	    continue;
 	$already[$pagename] = 1;
@@ -641,8 +641,8 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 		// resolve src from webdata to file
 		$src = $doc_root . $img_file;
 		if (file_exists($src) and $base) {
-		    $target = "$directory/images/$base";
 		    if ($directory) {
+		        $target = "$directory/images/$base";
 			if (copy($src, $target)) {
 			    if (!$silent)
 				_copyMsg($img_file, fmt("... copied to %s", $target));
@@ -651,13 +651,8 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 				_copyMsg($img_file, fmt("... not copied to %s", $target));
 			}
 		    } else {
-			if (!array_key_exists($img_file, $already_images)) {
-			    $already_images[$img_file] = 1;
-			    if (check_php_version(4,3))
-				$zip->addRegularFile($target, file_get_contents($src), $attrib);
-			    else
-				$zip->addRegularFile($target, join('', file($src)), $attrib);
-			}
+		    	$target = "images/$base";
+			$zip->addSrcFile($target, $src);
 		    }
 		}
 	    }
@@ -702,14 +697,17 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
         unset($msg);
         unset($current->_transformedContent);
         unset($current);
+	if (!empty($template)) {
         unset($template->_request);
         unset($template);
+	}
         unset($data);
 	if (DEBUG)
 	    $GLOBALS['RCS_IDS'] = $SAVE_RCS_IDS;
     }
     $page_iter->free();
 
+    $attrib = false; //array('is_ascii' => 0);
     if (!empty($WikiTheme->dumped_images) and is_array($WikiTheme->dumped_images)) {
         // @mkdir("$directory/images");
         foreach ($WikiTheme->dumped_images as $img_file) {
@@ -733,10 +731,7 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 		    }
 		} else {
 		    $target = "images/".basename($from);
-		    if (check_php_version(4,3))
-			$zip->addRegularFile($target, file_get_contents($WikiTheme->_path . $from), $attrib);
-		    else
-			$zip->addRegularFile($target, join('', file($WikiTheme->_path . $from)), $attrib);
+		    $zip->addSrcFile($target, $WikiTheme->_path . $from);
 		}
             } elseif (!$silent) {
                 _copyMsg($from, _("... not found"));
@@ -771,10 +766,7 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 		    }
 		} else {
 		    $target = "images/buttons/".basename($from);
-		    if (check_php_version(4,3))
-			$zip->addRegularFile($target, file_get_contents($WikiTheme->_path . $from), $attrib);
-		    else
-			$zip->addRegularFile($target, join('', file($WikiTheme->_path . $from)), $attrib);
+		    $zip->addSrcFile($target, $WikiTheme->_path . $from);
 		}
             } elseif (!$silent) {
                 _copyMsg($from, _("... not found"));
@@ -803,11 +795,9 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 			}
 		    }
 		} else {
+		    //$attrib = array('is_ascii' => 0);
 		    $target = basename($css_file);
-		    if (check_php_version(4,3))
-			$zip->addRegularFile($target, file_get_contents($WikiTheme->_path . $from), $attrib);
-		    else
-			$zip->addRegularFile($target, join('', file($WikiTheme->_path . $from)), $attrib);
+		    $zip->addSrcFile($target, $WikiTheme->_path . $from);
 		}
             } elseif (!$silent) {
                 _copyMsg($from, _("... not found"));
@@ -1568,6 +1558,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.157  2007/09/19 18:01:27  rurban
+ better pageset detection: format=
+
  Revision 1.156  2007/09/15 12:32:50  rurban
  Improve multi-page format handling: abstract _DumpHtmlToDir. get rid of non-external pdf, non-global VALID_LINKS
 
