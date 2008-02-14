@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.61 2008-01-30 19:08:59 vargenau Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.62 2008-02-14 18:40:32 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -542,14 +542,14 @@ class Cached_SemanticLink extends Cached_WikiLink {
 
     function _expand($url, $label = false) {
 	global $WikiTheme;
-	if ($WikiTheme->DUMP_MODE and $WikiTheme->VALID_LINKS) {
-	    if (!in_array($this->_page, $WikiTheme->VALID_LINKS))
-		return HTML($label ? $label : ($is_attribute ? $this->_relation : $this->_page));
-	}
 	$m = $this->_expandurl($url);
         $class = 'wiki';
         // do not link to the attribute value, but to the attribute
         $is_attribute = ($m[2] == ':=');
+	if ($WikiTheme->DUMP_MODE and $WikiTheme->VALID_LINKS) {
+	    if (isset($this->_page) and !in_array($this->_page, $WikiTheme->VALID_LINKS))
+		return HTML($label ? $label : ($is_attribute ? $this->_relation : $this->_page));
+	}
 	if ($is_attribute)
 	    $title = isset($this->_attribute_base)
 		? sprintf(_("Attribute %s, base value: %s"), $this->_relation, $this->_attribute_base)
@@ -707,7 +707,7 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
 	$label = isset($this->_label) ? $this->_label : false;
 	//FIXME: check Upload: inlined images
 	if ($WikiTheme->DUMP_MODE and $WikiTheme->VALID_LINKS) {
-	    if (!in_array($this->_page, $WikiTheme->VALID_LINKS))
+	    if (!in_array($this->_link, $WikiTheme->VALID_LINKS))
 		return HTML($label ? $label : $this->_link);
 	}
 	return $intermap->link($this->_link, $label);
@@ -812,6 +812,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.61  2008/01/30 19:08:59  vargenau
+// Valid HTML code: we need a div, it might contain a table
+//
 // Revision 1.60  2007/09/15 12:28:46  rurban
 // Improve multi-page format handling: abstract _DumpHtmlToDir. get rid of non-external pdf, non-global VALID_LINKS
 //
