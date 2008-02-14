@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.150 2008-01-31 20:28:47 vargenau Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.151 2008-02-14 18:42:53 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -812,6 +812,7 @@ class PageList {
         } else {
 	    $limit = 0;
         }
+        $i = 0;
         foreach ($list as $page) {
             $i++;	
             if ($from and $i < $from) 
@@ -1155,8 +1156,8 @@ class PageList {
             foreach ($customPageListColumns as $column => $params) {
                 $class_name = array_shift($params);
                 $params[3] =& $this;
-                $class = new $class_name($params);
-                $this->_types[$column] =& $class;
+                // ref to a class does not work with php-4
+                $this->_types[$column] = new $class_name($params);
             }
         }
     }
@@ -1201,7 +1202,7 @@ class PageList {
         // Omitting this warning should be overridable by the extension
         if (!isset($this->_types[$column])) {
             $silently_ignore = array('numbacklinks',
-                                     'rating',/*'ratingwidget',*/
+                                     'rating','ratingvalue',
                                      'coagreement', 'minmisery',
                                      /*'prediction',*/
                                      'averagerating', 'top3recs', 
@@ -1688,6 +1689,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.150  2008/01/31 20:28:47  vargenau
+// Valid HTML code: tfoot must be before tbody
+//
 // Revision 1.149  2008/01/26 14:13:29  vargenau
 // XHTML is case-sensitive; use correct case
 //
