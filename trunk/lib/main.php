@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.241 2007-09-22 12:39:32 rurban Exp $');
+rcs_id('$Id: main.php,v 1.242 2008-02-14 18:27:49 rurban Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -409,6 +409,9 @@ class WikiRequest extends Request {
             // FIXME: is this always false? shouldn't we try passuser first?
             if (! $this->_user ) 
                 $this->_user = new _PassUser($userid);
+        } else {
+            if (! $this->_user )
+                $this->_user = new WikiUser($this, $userid);
         }
         $user = $this->_user->AuthCheck(array('userid' => $userid));
         if (isa($user, WikiUserClassname())) {
@@ -436,6 +439,12 @@ class WikiRequest extends Request {
         $this->setSessionVar('wiki_user', $user);
         $this->_prefs->set('userid',
                            $isSignedIn ? $user->getId() : '');
+        if (!ENABLE_USER_NEW) {
+            if (empty($this->_user->_request))
+                $this->_user->_request =& $this;
+            if (empty($this->_user->_dbi))
+                $this->_user->_dbi =& $this->_dbi;
+        }
         $this->initializeTheme($isSignedIn ? 'login' : 'logout');
         define('MAIN_setUser', true);
     }
@@ -1280,8 +1289,10 @@ function main () {
         validateSessionPath();
 
     global $request;
-    if ((DEBUG & _DEBUG_APD) and extension_loaded("apd"))
-        apd_set_session_trace(9);
+    if ((DEBUG & _DEBUG_APD) and extension_loaded("apd")) { 
+        //apd_set_session_trace(9);
+        apd_set_pprof_trace();
+    }
 
     // Postpone warnings
     global $ErrorManager;
@@ -1371,6 +1382,9 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.241  2007/09/22 12:39:32  rurban
+// fix unknown variable WikiTheme
+//
 // Revision 1.240  2007/09/19 18:02:12  rurban
 // htmldump optimization: continue dump on access denied
 //
