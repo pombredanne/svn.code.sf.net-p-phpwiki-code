@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.65 2007-07-01 09:09:19 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.66 2008-02-14 18:45:56 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.65 $");
+        //                    "\$Revision: 1.66 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -185,18 +185,29 @@ class WikiPlugin
             }
         }
         while (preg_match("/^$opt_ws $argspec_p $opt_ws/x", $argstr, $m)) {
-            @ list(,$arg,$op,$qq_val,$q_val,$gt_val,$word_val) = $m;
+            //@ list(,$arg,$op,$qq_val,$q_val,$gt_val,$word_val) = $m;
+            $count = count($m);
+            if ($count >= 7) {
+                list(, $arg, $op, $qq_val, $q_val, $gt_val, $word_val) = $m;
+            } elseif ($count == 6) {
+                list(, $arg, $op, $qq_val, $q_val, $gt_val) = $m;
+            } elseif ($count == 5) {
+                list(, $arg, $op, $qq_val, $q_val) = $m;
+            } elseif ($count == 4) {
+                list(, $arg, $op, $qq_val) = $m;
+            }
             $argstr = substr($argstr, strlen($m[0]));
-
             // Remove quotes from string values.
             if ($qq_val)
                 $val = stripslashes($qq_val);
-            elseif ($q_val)
+            elseif ($count >= 4 and $q_val)
                 $val = stripslashes($q_val);
-            elseif ($gt_val)
+            elseif ($count >= 6 and $gt_val)
                 $val = _(stripslashes($gt_val));
-            else
+            elseif ($count >= 7)
                 $val = $word_val;
+            else 
+                $val = '';    
 
             if ($op == '=') {
                 $args[$arg] = $val;
