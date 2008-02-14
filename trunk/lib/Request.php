@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.115 2007-09-01 13:28:34 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.116 2008-02-14 18:31:04 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -105,6 +105,11 @@ class Request {
         $get_args = $this->args;
         if ($args)
             $get_args = array_merge($get_args, $args);
+
+        // leave out empty arg values
+        foreach ($get_args as $g => $v) {
+            if ($v === false or $v === '') unset($get_args[$g]);
+        }
 
         // Err... good point...
         // sortby buttons
@@ -339,7 +344,7 @@ class Request {
         elseif (isCGI()) // necessary?
             $compress = false;
             
-        if ($this->getArg('start_debug'))
+        if ($this->getArg('start_debug') or $this->getArg('nocache'))
             $compress = false;
         
         // Should we compress even when apache_note is not available?
@@ -402,7 +407,7 @@ class Request {
 
     function discardOutput() {
         if (!empty($this->_is_buffering_output)) {
-            ob_clean();
+            if (ob_get_length()) ob_clean();
             $this->_is_buffering_output = false;
         } else {
             trigger_error("Not buffering output", E_USER_NOTICE);
@@ -1349,6 +1354,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.115  2007/09/01 13:28:34  rurban
+// document pear DB problem
+//
 // Revision 1.114  2007/07/14 19:17:15  rurban
 // fix bug#1749950 float with ","
 //
