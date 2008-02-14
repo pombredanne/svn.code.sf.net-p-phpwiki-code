@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.68 2007-07-14 17:55:30 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.69 2008-02-14 18:32:36 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -78,8 +78,8 @@ class WikiUser {
      * @param integer $authlevel Authorization level.
      */
     function WikiUser (&$request, $userid = false, $authlevel = false) {
-        $this->_request = &$request;
-        $this->_dbi = &$this->_request->getDbh();
+        $this->_request =& $request;
+        $this->_dbi =& $this->_request->getDbh();
 
         if (isa($userid, 'WikiUser')) {
             $this->_userid   = $userid->_userid;
@@ -135,12 +135,19 @@ class WikiUser {
     }
 
     function getId () {
+        if ($this->_userid)
+            return $this->_userid;
+        if (!empty($this->_request))
+            return $this->_request->get('REMOTE_ADDR');
+        if (empty($this->_request))
+            return Request::get('REMOTE_ADDR');
         return ( $this->isSignedIn()
                  ? $this->_userid
                  : $this->_request->get('REMOTE_ADDR') ); // FIXME: globals
     }
 
     function getAuthenticatedId() {
+    	//assert($this->_request);
         return ( $this->isAuthenticated()
                  ? $this->_userid
                  : $this->_request->get('REMOTE_ADDR') ); // FIXME: globals
@@ -419,6 +426,9 @@ class WikiUser {
         if (!empty($this->_homepage)) {
             return $this->_homepage;
         } else {
+            if (empty($this->_dbi)) {
+                if (DEBUG) printSimpleTrace(debug_backtrace());
+            }
             $this->_homepage = $this->_dbi->getPage($this->_userid);
             return $this->_homepage;
         }
@@ -461,13 +471,13 @@ class WikiUser {
                           'content' => $text);
         SavePage ($this->_request, $pageinfo, false, false);
 
-        // create Calender
-        $pagename = $this->_userid . SUBPAGE_SEPARATOR . _('Preferences');
+        // create Calendar
+        $pagename = $this->_userid . SUBPAGE_SEPARATOR . _('Calendar');
         if (! isWikiPage($pagename)) {
             $pageinfo = array('pagedata' => array(),
                               'versiondata' => array('author' => $this->_userid),
                               'pagename' => $pagename,
-                              'content' => "<?plugin Calender ?>\n");
+                              'content' => "<?plugin Calendar ?>\n");
             SavePage ($this->_request, $pageinfo, false, false);
         }
 
@@ -746,6 +756,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.68  2007/07/14 17:55:30  rurban
+// SemanticWeb.php
+//
 // Revision 1.67  2006/03/19 15:01:01  rurban
 // sf.net patch #1333957 by Matt Brown: Authentication cookie identical across all wikis on a host
 //
