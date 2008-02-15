@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.151 2008-02-14 18:42:53 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.152 2008-02-15 19:46:12 vargenau Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -223,7 +223,7 @@ class _PageList_Column extends _PageList_Column_base {
         $val = $this->_getValue($page_handle, $revision_handle);
         if ($this->_field == 'hits')
             return (int) $val;
-        elseif (is_object($val))
+        elseif (is_object($val) && method_exists($val, 'asString'))
             return $val->asString();
         else
             return (string) $val;
@@ -1689,6 +1689,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.151  2008/02/14 18:42:53  rurban
+// ref to a class does not work with php-4, add ratingvalue
+//
 // Revision 1.150  2008/01/31 20:28:47  vargenau
 // Valid HTML code: tfoot must be before tbody
 //
