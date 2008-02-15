@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.152 2008-02-15 19:46:12 vargenau Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.153 2008-02-15 19:52:04 vargenau Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1338,7 +1338,7 @@ class PageList {
         $tokens['OFFSET'] = $offset; 
         $tokens['SIZE'] = $pagesize;
         $tokens['NUMPAGES'] = (int) ceil($numrows / $pagesize);
-        $tokens['ACTPAGE'] = (int) (($offset+1) / $pagesize)+1;
+        $tokens['ACTPAGE'] = (int) ceil(($offset / $pagesize)+1);
         if ($offset > 0) {
             $prev['limit'] = max(0, $offset - $pagesize) . ",$pagesize";
             $prev['count'] = $numrows;
@@ -1689,6 +1689,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.152  2008/02/15 19:46:12  vargenau
+// Allow sorting by hits; test method_exists
+//
 // Revision 1.151  2008/02/14 18:42:53  rurban
 // ref to a class does not work with php-4, add ratingvalue
 //
