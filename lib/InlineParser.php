@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.94 2008-01-31 20:40:10 vargenau Exp $');
+rcs_id('$Id: InlineParser.php,v 1.95 2008-02-15 20:02:49 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 Reini Urban
  *
@@ -650,7 +650,7 @@ class Markup_nestled_emphasis extends BalancedMarkup
 class Markup_html_emphasis extends BalancedMarkup
 {
     var $_start_regexp = 
-        "<(?: b|big|i|small|tt|em|strong|cite|code|dfn|kbd|samp|strike|del|var|sup|sub )>";
+        "<(?: b|big|i|small|tt|em|strong|cite|code|dfn|kbd|samp|s|strike|del|var|sup|sub )>";
 
     function getEndRegexp ($match) {
         return "<\\/" . substr($match, 1);
@@ -1098,6 +1098,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.94  2008/01/31 20:40:10  vargenau
+// Implemented Mediawiki-like syntax for tables
+//
 // Revision 1.93  2007/09/26 16:54:34  rurban
 // Fix Bug#1802827 Template does not get expanded with {{ }} syntax.
 // by vargenau
