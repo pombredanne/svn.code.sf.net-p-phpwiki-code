@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Wikiwyg.php,v 1.13 2007-09-12 19:42:53 rurban Exp $');
+rcs_id('$Id: Wikiwyg.php,v 1.14 2008-02-15 19:55:38 vargenau Exp $');
 /**
  * Wikiwyg is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+
@@ -100,7 +100,7 @@ class WysiwygEdit_Wikiwyg extends WysiwygEdit {
     
         $htmltextid = $this->_htmltextid;
         $textarea->SetAttr('id', $htmltextid);
-        $iframe0 = new RawXml('<iframe id="iframe0" src="/blank.htm" height="0" width="0" frameborder="0"></iframe>');
+        $iframe0 = new RawXml('<iframe id="iframe0" src="blank.htm" height="0" width="0" frameborder="0"></iframe>');
         if ($request->getArg('mode') and $request->getArg('mode') == 'wysiwyg'){
 	    $out = HTML(HTML::div(array('class' => 'hint'), 
                                   _("Warning: This Wikiwyg editor has only Beta quality!")),
@@ -299,6 +299,9 @@ function replace_rich_table($matched) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.13  2007/09/12 19:42:53  rurban
+ take global js vars
+
  Revision 1.12  2007/07/19 09:33:41  labbenes
  Remove Internet Explorer Security Warning about non secure contents display.
 
