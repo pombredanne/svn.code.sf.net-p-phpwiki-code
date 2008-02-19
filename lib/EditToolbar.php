@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.13 2007-07-14 12:03:12 rurban Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.14 2008-02-19 19:07:23 vargenau Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -111,6 +111,11 @@ msg_repl_close     = '"._("Close")."'
                                  "close"=>"</em>",
                                  "sample"=>_("Italic text"),
                                  "title"=>_("Italic text [alt-i]")),
+                           array("image"=>"ed_format_strike.png",
+                                 "open"=>"<s>",
+                                 "close"=>"</s>",
+                                 "sample"=>_("Strike-through text"),
+                                 "title"=>_("Strike")),
                            array("image"=>"ed_pagelink.png",
                                  "open"=>"[",
                                  "close"=>"]",
@@ -145,7 +150,32 @@ msg_repl_close     = '"._("Close")."'
                                  "open"=>"\\n----\\n",
                                  "close"=>"",
                                  "sample"=>"",
-                                 "title"=>_("Horizontal line"))
+                                 "title"=>_("Horizontal line")),
+                           array("image"=>"ed_table.png",
+                                 "open"=>"\\n{| class=\"bordered\"\\n|-\\n| Cell A1 || Cell B1 || Cell C1\\n|-\\n| Cell A2 || Cell B2 || Cell C2\\n|-\\n| Cell A3 || Cell B3 || Cell C3\\n|}\\n",
+                                 "close"=>"",
+                                 "sample"=>"",
+                                 "title"=>_("Sample table")),
+                           array("image"=>"ed_enumlist.png",
+                                 "open"=>"\\n# Item 1\\n# Item 2\\n# Item 3\\n",
+                                 "close"=>"",
+                                 "sample"=>"",
+                                 "title"=>_("Enumeration")),
+                           array("image"=>"ed_list.png",
+                                 "open"=>"\\n* Item 1\\n* Item 2\\n* Item 3\\n",
+                                 "close"=>"",
+                                 "sample"=>"",
+                                 "title"=>_("List")),
+                           array("image"=>"ed_redirect.png",
+                                 "open"=>"<?plugin RedirectTo page=\"",
+                                 "close"=>"\" ?>",
+                                 "sample"=>_("Page Name"),
+                                 "title"=>_("Redirect")),
+                           array("image"=>"ed_templateplugin.png",
+                                 "open"=>"{{",
+                                 "close"=>"}}",
+                                 "sample"=>_("template name"),
+                                 "title"=>_("Template"))
                            );
             $btn = new SubmitImageButton(_("Save"), "edit[save]", 'toolbar', 
                                          $WikiTheme->getImageURL("ed_save.png"));
@@ -378,6 +408,9 @@ msg_repl_close     = '"._("Close")."'
 
 /*
 $Log: not supported by cvs2svn $
+Revision 1.13  2007/07/14 12:03:12  rurban
+just aesthetics
+
 Revision 1.12  2007/06/02 18:23:36  rurban
 Added accesskeys
 
