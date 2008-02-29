@@ -1,8 +1,9 @@
 <?php //-*-php-*-
-rcs_id('$Id: PearDb.php,v 1.11 2007-05-30 21:53:52 rurban Exp $');
+rcs_id('$Id: PearDb.php,v 1.12 2008-02-29 17:42:39 rurban Exp $');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
+include_once("lib/WikiUser/Db.php");
 
 class _PearDbPassUser
 extends _DbPassUser
@@ -237,6 +238,9 @@ extends _DbPassUser
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2007/05/30 21:53:52  rurban
+// add userid to authcreate
+//
 // Revision 1.10  2006/03/19 16:26:40  rurban
 // fix DBAUTH arguments to be position independent, fixes bug #1358973
 //
