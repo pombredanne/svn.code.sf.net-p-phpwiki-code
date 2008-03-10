@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.15 2007-07-14 19:22:42 rurban Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.16 2008-03-10 20:13:52 vargenau Exp $ -->
 <?php
   //$p = $WikiTheme->tooltipAccessKeyPrefix();
   $dbh = $request->getDbh();
@@ -11,7 +11,7 @@
 <div class="portlet" id="p-cactions">
   <h5>Views</h5>
   <ul>
-    <?php if (!string_ends_with($pagename, _("Discussion"))) { ?>
+    <?php if (!string_ends_with($pagename, _("/Discussion"))) { ?>
     <?php $talk = new WikiPageName('Talk:'.$pagename); ?>
       <?= ActionButton(array(),
 		       $isActionPage ? _("ActionPage") : _("Article"), 
