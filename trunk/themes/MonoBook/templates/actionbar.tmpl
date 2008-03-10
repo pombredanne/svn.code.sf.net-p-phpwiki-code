@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.16 2008-03-10 20:13:52 vargenau Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.17 2008-03-10 20:19:30 vargenau Exp $ -->
 <?php
   //$p = $WikiTheme->tooltipAccessKeyPrefix();
   $dbh = $request->getDbh();
@@ -28,7 +28,7 @@
     <?php } else {
       $talk = new WikiPageName($pagename); ?>
       <?= ActionButton(array(),$isActionPage ? _("ActionPage") : _("Article"), $talk->getParent(), array('title' => "View the page [alt-c]")) ?>
-      <?= ActionButton(array(),_("Discussion"), $talk->getParent(), array('class'=>$isBrowse ? "selected" : "")) ?>
+      <?= ActionButton(array(),_("Discussion"), $talk->getName(), array('class'=>$isBrowse ? "selected" : "")) ?>
     <?php } ?>
     <?php if (($isAdmin or mayAccessPage('edit', $pagename)) and $revision) { ?>
     <?= ActionButton("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"), false, 
