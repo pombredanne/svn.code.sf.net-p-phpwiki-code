@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.18 2004-11-23 15:17:19 rurban Exp $');
+rcs_id('$Id: AllUsers.php,v 1.19 2008-03-11 19:08:58 vargenau Exp $');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.18 $");
+                            "\$Revision: 1.19 $");
     }
 
     function getDefaultArguments() {
@@ -89,7 +89,7 @@ extends WikiPlugin
         } else {
             for ($i=$offset; $i < $offset + $pagesize - 1; $i++) {
             	if ($i >= $args['count']) break;
-                $pagelist->addPage($allusers[$i]);
+                $pagelist->addPage(trim($allusers[$i]));
             }
         }
         /*
@@ -110,6 +110,14 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.18  2004/11/23 15:17:19  rurban
+// better support for case_exact search (not caseexact for consistency),
+// plugin args simplification:
+//   handle and explode exclude and pages argument in WikiPlugin::getArgs
+//     and exclude in advance (at the sql level if possible)
+//   handle sortby and limit from request override in WikiPlugin::getArgs
+// ListSubpages: renamed pages to maxpages
+//
 // Revision 1.17  2004/11/19 13:25:31  rurban
 // clarify docs
 //
