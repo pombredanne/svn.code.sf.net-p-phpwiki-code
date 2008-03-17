@@ -1,5 +1,5 @@
 <!-- -*-html-*- -->
-<!-- $Id: editpage.tmpl,v 1.64 2007-07-18 13:07:39 labbenes Exp $ -->
+<!-- $Id: editpage.tmpl,v 1.65 2008-03-17 19:16:15 rurban Exp $ -->
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong>
 <!-- FIXME: it would be nice to put a link to the #editarea anchor below,
@@ -41,10 +41,8 @@
     <label for="pref-editWidth"><b><?=_("W")?></b></label> <?=$WIDTH_PREF?>
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
   </div></td></tr></table>
-<?php if ($WYSIWYG_B){ ?>
-<p>
-<div class="hint"><strong>Warning:</strong> Switching to wysiwyg edition mode will not keep your changes.</div>
-</p>
+<?php if (!empty($WYSIWYG_B)) { ?>
+  <br /><div class="hint"><strong>Warning:</strong> Switching to the Wysiwyg editor will not keep your changes.</div>
 <?php } ?>
   <a name="editarea"></a><?=$EDIT_TEXTAREA?>
 <!-- FIXME: fix layout, move CSS to CSS -->
@@ -65,7 +63,7 @@
     <?=$OLD_MARKUP_CB?>  <label for="useOldMarkup"><?=_("Use old markup")?></label> <?=$OLD_MARKUP_CONVERT?>
   </td>
   <td align="center">
-    <?php if ($WYSIWYG_B){ ?>
+    <?php if (!empty($WYSIWYG_B)){ ?>
     <?=$WYSIWYG_B?>
     <?=$SEP?>
     <?php } ?>
