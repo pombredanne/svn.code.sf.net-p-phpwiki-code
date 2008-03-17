@@ -9,10 +9,10 @@ function rcs_id ($id) {
     if (defined('DEBUG') and DEBUG)
         $GLOBALS['RCS_IDS'] .= "$id\n"; 
 }
-rcs_id('$Id: prepend.php,v 1.66 2007-09-15 12:37:00 rurban Exp $');
+rcs_id('$Id: prepend.php,v 1.67 2008-03-17 19:42:36 rurban Exp $');
 
 // see lib/stdlib.php: phpwiki_version()
-define('PHPWIKI_VERSION', '1.3.14-20070915');
+define('PHPWIKI_VERSION', '1.3.14-20080124');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
@@ -67,6 +67,17 @@ if (isset($GLOBALS['HTTP_GET_VARS']['action'])
 if (defined('DEBUG') and (DEBUG & 8) and extension_loaded("xdebug")) {
     xdebug_start_trace("trace"); // on Dbgp protocol add 2
     xdebug_enable();
+}
+if (defined('DEBUG') and (DEBUG & 32) and extension_loaded("apd")) {
+    apd_set_pprof_trace();
+    /*	FUNCTION_TRACE      1
+        ARGS_TRACE          2
+        ASSIGNMENT_TRACE    4
+        STATEMENT_TRACE     8
+        MEMORY_TRACE        16
+        TIMING_TRACE        32
+        SUMMARY_TRACE       64 */
+    //apd_set_session_trace(99);
 }
 
 // Used for debugging purposes
