@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.52 2007-09-19 17:59:26 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.53 2008-03-17 19:04:05 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -96,6 +96,15 @@ class ErrorManager
             PrintXML($this->_flush_errors());
         else
             echo $this->_flush_errors();
+    }
+    
+    /**
+     * Get rid of all pending error messages in case of all non-html
+     * - pdf or image - output.
+     * @access public
+     */
+    function destroyPostponedErrors () {
+    	$this->_postponed_errors = array();
     }
 
     /**
@@ -635,6 +644,9 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.52  2007/09/19 17:59:26  rurban
+// use duplicates to save memory with DEBUG
+//
 // Revision 1.51  2007/09/15 12:31:37  rurban
 // dont fatal on multi-page dumps
 //
