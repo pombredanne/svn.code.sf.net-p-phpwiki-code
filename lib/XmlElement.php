@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.43 2007-07-14 17:55:30 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.44 2008-03-17 19:40:18 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -93,8 +93,16 @@ class XmlContent
                 else
                     printf("==Object(%s)==", get_class($item));
             }
-            else
+            elseif (is_array($item)) {
+	        // DEPRECATED:
+        	// Use XmlContent objects instead of arrays for collections of XmlElements.
+        	trigger_error("Passing arrays to printXML() is deprecated: (" . AsXML($item, true) . ")",
+                      E_USER_NOTICE);
+        	foreach ($item as $x)
+            	    $this->printXML($x);
+            } else {
                 echo $this->_quote((string) $item);
+            }
         }
     }
 
@@ -108,6 +116,18 @@ class XmlContent
                     $xml .= $this->_quote($item->asString());
                 else
                     $xml .= sprintf("==Object(%s)==", get_class($item));
+            }
+            elseif (is_array($item)) {
+        	trigger_error("Passing arrays to ->asXML() is deprecated: (" . AsXML($item, true) . ")",
+                      E_USER_NOTICE);
+        	foreach ($item as $x)
+            	    $xml .= $this->asXML($x);
+            }
+            elseif (is_array($item)) {
+        	trigger_error("Passing arrays to ->asXML() is deprecated: (" . AsXML($item, true) . ")",
+                      E_USER_NOTICE);
+        	foreach ($item as $x)
+            	    $xml .= $this->asXML($x);
             }
             else
                 $xml .= $this->_quote((string) $item);
@@ -625,6 +645,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2007/07/14 17:55:30  rurban
+// SemanticWeb.php
+//
 // Revision 1.42  2007/01/20 11:41:30  rurban
 // Add php-5.2.0 note
 //
