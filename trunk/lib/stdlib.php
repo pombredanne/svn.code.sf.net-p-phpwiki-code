@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.270 2008-01-31 20:21:12 vargenau Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.271 2008-03-17 19:11:06 rurban Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -185,7 +185,7 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
     	elseif (is_array($args))
     	    $args['start_debug'] = $request->getArg('start_debug');
     	else 
-    	    $args .= '&amp;start_debug=' . $request->getArg('start_debug');
+    	    $args .= '&start_debug=' . $request->getArg('start_debug');
     }
     if (is_array($args)) {
         $enc_args = array();
@@ -206,7 +206,7 @@ function WikiURL($pagename, $args = '', $get_abs_url = false) {
 	$base = preg_replace('/%2f/i', '/', rawurlencode($pagename));
 	$url .= $base;
         if (!empty($WikiTheme->HTML_DUMP_SUFFIX)) {
-	    if ($WikiTheme->VALID_LINKS and $request->getArg('action') == 'pdf') {
+	    if (!empty($WikiTheme->VALID_LINKS) and $request->getArg('action') == 'pdf') {
 	    	if (!in_array($pagename, $WikiTheme->VALID_LINKS))
 	    	    $url = '';
 	    	else    
@@ -1450,8 +1450,9 @@ class fileSet {
     function fileSet($directory, $filepattern = false) {
         $this->_fileList = array();
         $this->_pattern = $filepattern;
-        if ($filepattern)
+        if ($filepattern) {
             $this->_pcre_pattern = glob_to_pcre($this->_pattern);
+        }
         $this->_case = !isWindows();
         $this->_pathsep = '/';
 
@@ -1520,7 +1521,7 @@ function glob_to_pcre ($glob) {
     $glob = strtr($glob, "\\", "\xff");
     $glob = str_replace("/", "\\/", $glob);
     // first convert some unescaped expressions to pcre style: . => \.
-    $special = ".^$";
+    $special = '.^$';
     $re = preg_replace('/([^\xff])?(['.preg_quote($special).'])/', 
                        "\\1\xff\\2", $glob);
 
@@ -1537,7 +1538,10 @@ function glob_to_pcre ($glob) {
     //while (strcspn($re, $escape) != strlen($re)) // loop strangely needed
     $re = preg_replace('/([^\xff])(['.preg_quote($escape, "/").'])/', 
                        "\\1\xff\\2", $re);
-    return strtr($re, "\xff", "");
+    // Problem with 'Date/Time' => 'Date\/Time' => 'Date\xff\/Time' => 'Date\/Time'
+    // 'plugin/*.php'
+    $re = preg_replace('/\xff/', '', $re);
+    return $re;
 }
 
 function glob_match ($glob, $against, $case_sensitive = true) {
@@ -2098,7 +2102,7 @@ function printSimpleTrace($bt) {
 		continue;
 	    }
 	    //echo join(" ",array_values($elem)),"\n";
-	    echo "  ",$elem['file'],':',$elem['line']," ",$elem['function'],"\n";
+	    echo "  ",$elem['file'],':',$elem['line']," ",$elem['function'],"<p><hr>\n";
 	}
     }
 }
@@ -2189,8 +2193,14 @@ function javascript_quote_string($s) {
     return str_replace("'", "\'", $s);
 }
 
+function isSerialized($s) {
+    return (!empty($s) and (strlen($s) > 3) and (substr($s,1,1) == ':'));
+}
 
 // $Log: not supported by cvs2svn $
+// Revision 1.270  2008/01/31 20:21:12  vargenau
+// Valid HTML: escape ampersand
+//
 // Revision 1.269  2008/01/24 19:17:03  rurban
 // add javascript_quote_string for Theme
 //
