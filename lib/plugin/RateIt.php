@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.23 2008-01-24 19:19:35 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.24 2008-03-17 19:14:43 rurban Exp $');
 /*
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -65,12 +65,12 @@ rcs_id('$Id: RateIt.php,v 1.23 2008-01-24 19:19:35 rurban Exp $');
  * - MLC++: C++ library http://www.sgi.com/tech/mlc/
  *
  * Usage:    <?plugin RateIt ?>          just the widget without text
- *   Note: The wikilens theme must be enabled, to enable this plugin!
- *   Or use a sidebar based theme with the box method.
+ *   Note: The wikilens theme or any derivate must be enabled, to enable this plugin!
  *           <?plugin RateIt show=top ?> text plus widget below
  *           <?plugin RateIt show=ratings ?> to show my ratings
- *           <?plugin RateIt show=buddies ?> to show my buddies
+ *   TODO:   <?plugin RateIt show=buddies ?> to show my buddies
  *           <?plugin RateIt show=ratings dimension=1 ?>
+ *   TODO:   <?plugin RateIt show=text ?> just text, no widget, for dumps
  *
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
  *
@@ -92,7 +92,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision: 1.24 $");
     }
 
     function RatingWidgetJavascript() {
@@ -305,6 +305,11 @@ IHDR         Ä‰   IDATx^À	   Â0ízçX	ÿ7-`    IEND®B`‚';
                                    $this->RatingWidgetHtml($args['pagename'], $args['version'], 
                                                            $args['imgPrefix'], 
                                                            $args['dimension'], $args['small']));
+            } elseif ($args['show'] == 'text') {
+		if (!$WikiTheme->DUMP_MODE)
+		    $html->pushContent(HTML::br(),
+				       sprintf(_("Your rating was %.1f"),
+					       $this->rating));
             } elseif ($this->rating) {
                 $html->pushContent(HTML::br(),
                                    sprintf(_("Your rating was %.1f"),
@@ -479,6 +484,9 @@ IHDR         Ä‰   IDATx^À	   Â0ízçX	ÿ7-`    IEND®B`‚';
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.23  2008/01/24 19:19:35  rurban
+// support multiple plugins per page (e.g. in plugin lists), added show=top, fixed RATING_STORAGE=WIKIPAGE, fixes smart caching
+//
 // Revision 1.22  2007/02/17 14:15:14  rurban
 // noborder for the recycle bin
 //
