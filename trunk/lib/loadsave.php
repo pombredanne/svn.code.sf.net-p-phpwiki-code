@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.158 2008-02-14 18:36:52 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.159 2008-03-17 19:41:06 rurban Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
@@ -614,8 +614,9 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 	    if ($directory)
 		mkdir_p($directory."/".$dirname);
 	    // Fails with "XX / YY", "XX" is created, "XX / YY" cannot be written
-	    if (isWindows()) // interesting Windows bug: cannot mkdir "bla "
-		$filename = preg_replace("/ \//", "/", $filename);
+	    // if (isWindows()) // interesting Windows bug: cannot mkdir "bla "
+	    // Since dumps needs to be copied, we have to disallow this for all platforms.
+	    $filename = preg_replace("/ \//", "/", $filename);
 	    $relative_base = "../";
 	    while ($count > 1) {
 		$relative_base .= "../";
@@ -698,8 +699,8 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
         unset($current->_transformedContent);
         unset($current);
 	if (!empty($template)) {
-        unset($template->_request);
-        unset($template);
+	    unset($template->_request);
+	    unset($template);
 	}
         unset($data);
 	if (DEBUG)
@@ -1558,6 +1559,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.158  2008/02/14 18:36:52  rurban
+ use addSrcFile
+
  Revision 1.157  2007/09/19 18:01:27  rurban
  better pageset detection: format=
 
