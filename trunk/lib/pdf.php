@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: pdf.php,v 1.13 2007-09-15 12:28:46 rurban Exp $');
+rcs_id('$Id: pdf.php,v 1.14 2008-03-17 19:41:52 rurban Exp $');
 /*
  Copyright (C) 2003 Olivier PLATHEY
  Copyright (C) 200? Don Sebà
@@ -94,12 +94,19 @@ function ConvertAndDisplayPdf (&$request) {
         passthru(sprintf(USE_EXTERNAL_HTML2PDF, $tmpfile));
         unlink($tmpfile);
     }
+    // clean the hints errors
+    global $ErrorManager;
+    $ErrorManager->destroyPostponedErrors();
+    
     if (!empty($errormsg)) {
         $request->discardOutput();
     }
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.13  2007/09/15 12:28:46  rurban
+// Improve multi-page format handling: abstract _DumpHtmlToDir. get rid of non-external pdf, non-global VALID_LINKS
+//
 // Revision 1.12  2007/09/12 19:41:38  rurban
 // Enable format=pdf for pagelists (not yet finished)
 //
