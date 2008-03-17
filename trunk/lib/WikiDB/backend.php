@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.35 2007-08-25 18:17:46 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.36 2008-03-17 19:13:22 rurban Exp $');
 
 /*
   Pagedata
@@ -601,8 +601,13 @@ class WikiDB_backend
         return in_array(DATABASE_TYPE, array('SQL','ADODB','PDO'));
     }
 
+    function backendType() {
+        return DATABASE_TYPE;
+    }
+
     function write_accesslog(&$entry) {
         global $request;
+        if (!$this->isSQL()) return;
         $dbh = &$this->_dbh;
         $log_tbl = $entry->_accesslog->logtable;
         // duration problem: sprintf "%f" might use comma e.g. "100,201" in european locales
@@ -761,6 +766,9 @@ class WikiDB_backend_search_sql extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.35  2007/08/25 18:17:46  rurban
+// rearrange access_log columns into natural order: request_args
+//
 // Revision 1.34  2007/07/14 12:03:51  rurban
 // just typo
 //
