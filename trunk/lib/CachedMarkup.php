@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.62 2008-02-14 18:40:32 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.63 2008-03-17 19:03:08 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
@@ -370,7 +370,7 @@ class Cached_WikiLink extends Cached_Link {
 	$label = isset($this->_label) ? $this->_label : false;
 	$anchor = isset($this->_anchor) ? (string)$this->_anchor : '';
         $page = new WikiPageName($this->_page, $basepage, $anchor);
-	if ($WikiTheme->DUMP_MODE and $WikiTheme->VALID_LINKS) {
+	if ($WikiTheme->DUMP_MODE and !empty($WikiTheme->VALID_LINKS)) {
 	    if (!in_array($this->_page, $WikiTheme->VALID_LINKS))
 		return HTML($label ? $label : $page->getName());
 	}
@@ -706,7 +706,7 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
 	$intermap = getInterwikiMap();
 	$label = isset($this->_label) ? $this->_label : false;
 	//FIXME: check Upload: inlined images
-	if ($WikiTheme->DUMP_MODE and $WikiTheme->VALID_LINKS) {
+	if ($WikiTheme->DUMP_MODE and !empty($WikiTheme->VALID_LINKS)) {
 	    if (!in_array($this->_link, $WikiTheme->VALID_LINKS))
 		return HTML($label ? $label : $this->_link);
 	}
@@ -812,6 +812,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.62  2008/02/14 18:40:32  rurban
+// fix DUMP_MODE with LINKS
+//
 // Revision 1.61  2008/01/30 19:08:59  vargenau
 // Valid HTML code: we need a div, it might contain a table
 //
