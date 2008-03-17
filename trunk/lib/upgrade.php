@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.60 2007-08-25 18:43:35 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.61 2008-03-17 19:12:32 rurban Exp $');
 /*
  Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
 
@@ -75,11 +75,13 @@ class Upgrade {
 		reset($parts);
 		$pageinfo = $parts[0];
 		$stat  = stat($path."/".$filename);
-		$new_mtime = @$pageinfo['versiondata']['mtime'];
-		if (!$new_mtime)
-		    $new_mtime = @$pageinfo['versiondata']['lastmodified'];
-		if (!$new_mtime)
-		    $new_mtime = @$pageinfo['pagedata']['date'];
+		$new_mtime = 0;
+		if (isset($pageinfo['versiondata']['mtime']))
+		    $new_mtime = $pageinfo['versiondata']['mtime'];
+		if (!$new_mtime and isset($pageinfo['versiondata']['lastmodified']))
+		    $new_mtime = $pageinfo['versiondata']['lastmodified'];
+		if (!$new_mtime and isset($pageinfo['pagedata']['date']))
+		    $new_mtime = $pageinfo['pagedata']['date'];
 		if (!$new_mtime)
 		    $new_mtime = $stat[9];
 		if ($new_mtime > $page_mtime) {
@@ -416,8 +418,8 @@ CREATE TABLE $log_tbl (
             return;
         }
 
+	$backend_type = $this->dbi->_backend->backendType();
 	if ($this->isSQL) {
-	    $backend_type = $this->dbi->_backend->backendType();
 	    echo "<h4>",_("Backend type: "),$backend_type,"</h4>\n";
 	    $prefix = isset($DBParams['prefix']) ? $DBParams['prefix'] : '';
 	    $tables = $this->dbi->_backend->listOfTables();
@@ -705,7 +707,7 @@ CREATE TABLE $log_tbl (
 	if ($this->db_version < $this->current_db_version) {
 	    $this->dbi->set_db_version($this->current_db_version);
 	    $this->db_version = $this->dbi->get_db_version();
-            echo "db version: we have now ", $this->db_version,"  ";
+            echo "db version: upgrade to ", $this->db_version,"  ";
             echo _("OK"), "<br />\n";
             flush();
 	}
@@ -891,6 +893,22 @@ CREATE TABLE $log_tbl (
      * upgrade to 1.3.13 link structure.
      */
     function _upgrade_relation_links ( $verbose=true ) {
+        if ($this->phpwiki_version >= 1030.12200610 and $this->isSQL) {
+            echo _("check for relation field in link table")," ...";
+            $database = $this->dbi->_backend->database();
+            $link_tbl = $prefix . 'link';
+            $fields = $this->dbi->_backend->listOfFields($database, $link_tbl);
+            if (!$fields) {
+                echo _("SKIP");
+            } elseif (strstr(strtolower(join(':', $fields)), "link")) {
+                echo "<b>",_("ADDING")," relation</b>"," ... ";
+                $this->dbi->genericSqlQuery("ALTER TABLE $link_tbl ADD relation INT DEFAULT 0;");
+                $this->dbi->genericSqlQuery("CREATE INDEX link_relation ON $link_tbl (relation);");
+            } else {
+                echo _("FAIL");
+            }
+            echo "<br />\n";
+        }
 	if ($this->phpwiki_version >= 1030.12200610) {
 	    echo _("Rebuild entire database to upgrade relation links")," ... ";
 	    if (DATABASE_TYPE == 'dba') {
@@ -1279,6 +1297,9 @@ function DoUpgrade(&$request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.60  2007/08/25 18:43:35  rurban
+ add missing DBParams. Detected by Sacha Schär.
+
  Revision 1.59  2007/06/09 18:57:44  rurban
  fix action=upgrade for dba
 
