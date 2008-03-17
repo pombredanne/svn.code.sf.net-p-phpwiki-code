@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.153 2008-02-15 19:52:04 vargenau Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.154 2008-03-17 19:07:51 rurban Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -120,7 +120,7 @@ class _PageList_Column_base {
         global $WikiTheme, $request;
         // allow sorting?
         $nbsp = HTML::raw('&nbsp;');
-        if (1 /* or in_array($this->_field, PageList::sortable_columns()) */) {
+        if (!$WikiTheme->DUMP_MODE /* or in_array($this->_field, PageList::sortable_columns()) */) {
             // TODO: add to multiple comma-delimited sortby args: "+hits,+pagename"
             $src = false; 
             $noimg_src = $WikiTheme->getButtonURL('no_order');
@@ -313,7 +313,7 @@ class _PageList_Column_checkbox extends _PageList_Column {
             return HTML::input(array('type' => 'checkbox',
                                      'name' => $this->_name . "[$pagename]",
                                      'value' => 1,
-                                     'checked' => 'checked'));
+                                     'checked' => 'CHECKED'));
         } else {
             return HTML::input(array('type' => 'checkbox',
                                      'name' => $this->_name . "[$pagename]",
@@ -634,6 +634,7 @@ class PageList {
     // Here we declare which options are supported, so that 
     // the calling plugin may simply merge this with its own default arguments 
     function supportedArgs () {
+        // Todo: add all supported Columns, like locked, minor, ...
         return array(// Currently supported options:
                      /* what columns, what pages */
                      'info'     => 'pagename',
@@ -672,6 +673,15 @@ class PageList {
 		     // the number of all results, linked to the given pagename.
 		     
 		     'nopage'   => false,   // for info=col omit the pagename column
+                     // array_keys($this->_types). filter by columns: e.g. locked=1
+		     'pagename' => null, // string regex
+		     'locked'   => null,
+		     'minor'    => null,
+		     'mtime'    => null,
+		     'hits'     => null,
+		     'size'     => null,
+		     'version'  => null,
+		     'markup'   => null,
                      );
     }
     
@@ -1689,6 +1699,9 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.153  2008/02/15 19:52:04  vargenau
+// Corrected bug #1847961: In AllPages with a limit, last page is incorrectly numbered
+//
 // Revision 1.152  2008/02/15 19:46:12  vargenau
 // Allow sorting by hits; test method_exists
 //
