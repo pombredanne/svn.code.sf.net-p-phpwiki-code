@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.116 2008-02-14 18:31:04 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.117 2008-03-17 19:08:29 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -47,7 +47,7 @@ class Request {
             break;
         }
         
-        $this->session = new Request_SessionVars; 
+        $this->session = new Request_SessionVars;
         $this->cookies = new Request_CookieVars;
         
         if (ACCESS_LOG or ACCESS_LOG_SQL) {
@@ -615,9 +615,12 @@ class Request_CookieVars {
     function get($key) {
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (isset($vars[$key])) {
-            @$val = unserialize(base64_decode($vars[$key]));
-            if (!empty($val))
-                return $val;
+            @$decode = base64_decode($vars[$key]);
+            if (strlen($decode) > 3 and substr($decode,1,1) == ':') {
+              @$val = unserialize($decode);
+              if (!empty($val))
+                  return $val;
+            }
             @$val = urldecode($vars[$key]);
             if (!empty($val))
                 return $val;
@@ -628,9 +631,12 @@ class Request_CookieVars {
     function get_old($key) {
         $vars = &$GLOBALS['HTTP_COOKIE_VARS'];
         if (isset($vars[$key])) {
-            @$val = unserialize(base64_decode($vars[$key]));
-            if (!empty($val))
+            @$decode = base64_decode($vars[$key]);
+            if (strlen($decode) > 3 and substr($decode,1,1) == ':') {
+              @$val = unserialize($decode);
+              if (!empty($val))
                 return $val;
+            }
             @$val = unserialize($vars[$key]);
             if (!empty($val))
                 return $val;
@@ -1354,6 +1360,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.116  2008/02/14 18:31:04  rurban
+// nocache to omit compress cache headers (fix async calls for rating images)
+//
 // Revision 1.115  2007/09/01 13:28:34  rurban
 // document pear DB problem
 //
