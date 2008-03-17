@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUserNew.php,v 1.147 2007-09-15 12:55:56 rurban Exp $');
+rcs_id('$Id: WikiUserNew.php,v 1.148 2008-03-17 19:39:34 rurban Exp $');
 /* Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
@@ -2070,15 +2070,17 @@ class UserPreferences
         if (!is_array($packed)) return false;
         $prefs = array();
         foreach ($packed as $name => $packed_pref) {
-            if (is_string($packed_pref) and substr($packed_pref, 0, 2) == "O:") {
+            if (is_string($packed_pref) 
+                and isSerialized($packed_pref) 
+                and substr($packed_pref, 0, 2) == "O:") 
+            {
                 //legacy: check if it's an old array of objects
                 // Looks like a serialized object. 
                 // This might fail if the object definition does not exist anymore.
                 // object with ->$name and ->default_value vars.
                 $pref =  @unserialize($packed_pref);
-                if (empty($pref))
-                    $pref = @unserialize(base64_decode($packed_pref));
-                $prefs[$name] = $pref->get($name);
+                if (is_object($pref))
+                    $prefs[$name] = $pref->get($name);
             // fix old-style prefs
             } elseif (is_numeric($name) and is_array($packed_pref)) {
             	if (count($packed_pref) == 1) {
@@ -2086,8 +2088,9 @@ class UserPreferences
             	    $prefs[$name] = $value;
             	}
             } else {
-                $prefs[$name] = @unserialize($packed_pref);
-                if (empty($prefs[$name]))
+            	if (isSerialized($packed_pref))
+                    $prefs[$name] = @unserialize($packed_pref);
+                if (empty($prefs[$name]) and isSerialized(base64_decode($packed_pref)))
                     $prefs[$name] = @unserialize(base64_decode($packed_pref));
                 // patched by frederik@pandora.be
                 if (empty($prefs[$name]))
@@ -2215,6 +2218,9 @@ extends UserPreferences
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.147  2007/09/15 12:55:56  rurban
+// Fix Bug#1795420 by Sven Ginka: Use /U in preg_match
+//
 // Revision 1.146  2007/08/25 18:34:08  rurban
 // add LOGIN_LOG to check possible external auth problems
 //
