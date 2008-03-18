@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.96 2008-03-17 19:06:39 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.97 2008-03-18 20:25:49 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005,2006,2007 Reini Urban
  *
@@ -330,7 +330,7 @@ function LinkBracketLink($bracketlink) {
     // Strip brackets and leading space
     // bug#1904088  Some brackets links on 2 lines cause the parser to crash 
     preg_match('/(\#?) \[\s* (?: (.*?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
-	       str_replace("\n", "", $bracketlink), $matches);
+	       str_replace("\n", " ", $bracketlink), $matches);
     if (count($matches) < 4) {
     	// "[ personal\ninformation manager | PhpWiki:PersonalWiki ]"
     	trigger_error(_("Invalid [] syntax ignored").": ".$bracketlink, E_USER_WARNING);
@@ -1099,6 +1099,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.96  2008/03/17 19:06:39  rurban
+// fix bug#1904088  Some brackets links with \n cause the parser to crash
+//
 // Revision 1.95  2008/02/15 20:02:49  vargenau
 // Allow <s> to strike; update Help for <s> and <strike>
 //
