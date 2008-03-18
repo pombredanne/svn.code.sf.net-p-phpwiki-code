@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.36 2008-03-17 19:13:22 rurban Exp $');
+rcs_id('$Id: backend.php,v 1.37 2008-03-18 20:19:13 vargenau Exp $');
 
 /*
   Pagedata
@@ -36,7 +36,6 @@ rcs_id('$Id: backend.php,v 1.36 2008-03-17 19:13:22 rurban Exp $');
 /**
  * A WikiDB_backend handles the storage and retrieval of data for a WikiDB.
  *
- * A WikiDB_backend handles the storage and retrieval of data for a WikiDB.
  * It does not have to be this way, of course, but the standard WikiDB uses
  * a WikiDB_backend.  (Other WikiDB's could be written which use some other
  * method to access their underlying data store.)
@@ -45,7 +44,7 @@ rcs_id('$Id: backend.php,v 1.36 2008-03-17 19:13:22 rurban Exp $');
  * and flat DBM/hash based methods of data storage.
  *
  * Though it contains some default implementation of certain methods,
- * this is an abstract base class.  It is expected that most effificient
+ * this is an abstract base class.  It is expected that most efficient
  * backends will override nearly all the methods in this class.
  *
  * @access protected
@@ -87,7 +86,7 @@ class WikiDB_backend
      * will not affect the value of 'hits' (or whatever other meta-data
      * may have been stored for the page.)
      *
-     * To delete a particular piece of meta-data, set it's value to false.
+     * To delete a particular piece of meta-data, set its value to false.
      * <pre>
      *   $backend->update_pagedata($pagename, array('locked' => false)); 
      * </pre>
@@ -766,6 +765,9 @@ class WikiDB_backend_search_sql extends WikiDB_backend_search
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2008/03/17 19:13:22  rurban
+// define default $backend_type
+//
 // Revision 1.35  2007/08/25 18:17:46  rurban
 // rearrange access_log columns into natural order: request_args
 //
