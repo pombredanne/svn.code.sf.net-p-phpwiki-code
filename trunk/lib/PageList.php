@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.154 2008-03-17 19:07:51 rurban Exp $');
+<?php rcs_id('$Id: PageList.php,v 1.155 2008-03-18 20:14:15 vargenau Exp $');
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -313,7 +313,7 @@ class _PageList_Column_checkbox extends _PageList_Column {
             return HTML::input(array('type' => 'checkbox',
                                      'name' => $this->_name . "[$pagename]",
                                      'value' => 1,
-                                     'checked' => 'CHECKED'));
+                                     'checked' => 'checked'));
         } else {
             return HTML::input(array('type' => 'checkbox',
                                      'name' => $this->_name . "[$pagename]",
@@ -1699,6 +1699,11 @@ extends PageList {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.154  2008/03/17 19:07:51  rurban
+// No sort links on dumped pages.
+// checked="CHECKED"
+// Add defaults for all supported Columns, like locked, minor, ...
+//
 // Revision 1.153  2008/02/15 19:52:04  vargenau
 // Corrected bug #1847961: In AllPages with a limit, last page is incorrectly numbered
 //
