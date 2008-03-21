@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.78 2008-02-14 18:48:42 rurban Exp $');
+rcs_id('$Id: display.php,v 1.79 2008-03-21 20:37:10 rurban Exp $');
 
 require_once('lib/Template.php');
 
@@ -305,8 +305,10 @@ function displayPage(&$request, $template=false) {
         $toks['CONTENT'] = new Template('browse', $request, $page_content);
     if (!empty($redirect_message))
         $toks['redirected'] = $redirect_message;
-    
-    $toks['PAGE_DESCRIPTION'] = $page_content->getDescription();
+
+    // Massive performance problem parsing at run-time into all xml objects 
+    // looking for p's. Should be optional, if not removed at all.
+    //$toks['PAGE_DESCRIPTION'] = $page_content->getDescription();
     $toks['PAGE_KEYWORDS'] = GleanKeywords($page);
     if (!$template)
         $template = new Template('html', $request);
@@ -367,6 +369,9 @@ function displayPage(&$request, $template=false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.78  2008/02/14 18:48:42  rurban
+// VALID_LINKS only for existing pages
+//
 // Revision 1.77  2007/09/12 19:32:29  rurban
 // link only VALID_LINKS with pagelist HTML_DUMP
 //
