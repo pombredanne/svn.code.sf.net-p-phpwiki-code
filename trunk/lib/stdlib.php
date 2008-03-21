@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.271 2008-03-17 19:11:06 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.272 2008-03-21 20:35:52 rurban Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -403,17 +403,17 @@ function LinkImage($url, $alt = false) {
     $force_img = "png|jpg|gif|jpeg|bmp|pl|cgi";
     // Disallow tags in img src urls. Typical CSS attacks.
     // FIXME: Is this needed (or sufficient?)
+    $ori_url = $url;
+    $arr = split(' ',$url);
+    if (count($arr) > 1) {
+        $url = $arr[0];
+    }
     if(! IsSafeURL($url)) {
         $link = HTML::strong(HTML::u(array('class' => 'baduri'),
                                      _("BAD URL -- remove all of <, >, \"")));
     } else {
         // support new syntax: [image.jpg size=50% border=n]
         //if (!preg_match("/\.(".$force_img.")/i", $url))
-        $ori_url = $url;
-        $arr = split(' ',$url);
-        if (count($arr) > 1) {
-            $url = $arr[0];
-        }
         if (empty($alt)) $alt = basename($url);
         $link = HTML::img(array('src' => $url, 'alt' => $alt, 'title' => $alt));
         if (count($arr) > 1) {
@@ -427,6 +427,10 @@ function LinkImage($url, $alt = false) {
                     $link->setAttr('width',$m[1]);
                     $link->setAttr('height',$m[2]);
                 }
+                if (preg_match('/^width=(\d+[%p]?x?)$/',$attr,$m))
+                    $link->setAttr('width',$m[1]);
+                if (preg_match('/^height=(\d+[%p]?x?)$/',$attr,$m))
+                    $link->setAttr('height',$m[1]);
                 if (preg_match('/^border=(\d+)$/',$attr,$m))
                     $link->setAttr('border',$m[1]);
                 if (preg_match('/^align=(\w+)$/',$attr,$m))
@@ -449,13 +453,32 @@ function LinkImage($url, $alt = false) {
                 return '';
             }
         } else {
+            $size = 0;	
+            // Prepare for getimagesize($url)
+            // $url only valid for external urls, otherwise local path
             // Older php versions crash here with certain png's: 
             // confirmed for 4.1.2, 4.1.3, 4.2.3; 4.3.2 and 4.3.7 are ok
             //   http://phpwiki.sourceforge.net/demo/themes/default/images/http.png
             // See http://bugs.php.net/search.php?cmd=display&search_for=getimagesize
-            if (!check_php_version(4,3) and preg_match("/^http.+\.png$/i",$url))
+            if (DISABLE_GETIMAGESIZE)
+                ;
+            elseif (! preg_match("/\.$force_img$/i", $url))
+            	;  // only valid image extensions or scripts assumed to generate images
+            elseif (!check_php_version(4,3) and preg_match("/^http.+\.png$/i",$url))
                 ; // it's safe to assume that this will fail.
-            elseif (!DISABLE_GETIMAGESIZE and ($size = @getimagesize($url))) {
+            elseif (preg_match("/^http/",$url)) // external url
+            	$size = @getimagesize($url); 
+            else { // local file
+                if (file_exists($file = NormalizeLocalFileName($url)))   // here
+            	    $size = @getimagesize($file);
+            	elseif (string_starts_with($url, getUploadDataPath())) { // there
+            	    $file = substr($file, strlen(getUploadDataPath()));	
+            	    $size = @getimagesize(getUploadFilePath().$file);
+            	} else { // elsewhere
+            	    $size = @getimagesize($request->get('DOCUMENT_ROOT').$url);
+            	}
+            }
+            if ($size) {
                 $width  = $size[0];
                 $height = $size[1];
                 if (($width < 3 and $height < 10) 
@@ -475,7 +498,7 @@ function LinkImage($url, $alt = false) {
      * Note: Allow cgi's (pl,cgi) returning images.
      */
     if (!preg_match("/\.(".$force_img.")/i", $url)) {
-        //HTML::img(array('src' => $url, 'alt' => $alt, 'title' => $alt));
+        // HTML::img(array('src' => $url, 'alt' => $alt, 'title' => $alt));
         // => HTML::object(array('src' => $url)) ...;
         return ImgObject($link, $ori_url);
     }
@@ -483,26 +506,58 @@ function LinkImage($url, $alt = false) {
 }
 
 /**
- * <object> / <embed> tags instead of <img> for all non-image extensions allowed via INLINE_IMAGES
+ * <object> / <embed> tags instead of <img> for all non-image extensions 
+ * in INLINE_IMAGES.
  * Called by LinkImage(), not directly.
- * Syntax: [image.svg size=50% border=n align= hspace= vspace= width= height=]
- * $alt may be an alternate img
+ * Syntax:  [image.svg size=50% alt=image.gif border=n align= hspace= vspace= width= height=]
+ * Samples: [Upload:song.mp3 type=audio/mpeg width=200 height=10]
+ *   $alt may be an alternate img
  * TODO: Need to unify with WikiPluginCached::embedObject()
  *
  * Note that Safari 1.0 will crash with <object>, so use only <embed>
  *   http://www.alleged.org.uk/pdc/2002/svg-object.html
+ *
+ * Allowed object tags:
+ *   DATA=URI (object data) 
+ *   CLASSID=URI (location of implementation) 
+ *   ARCHIVE=CDATA (archive files) 
+ *   CODEBASE=URI (base URI for CLASSID, DATA, ARCHIVE) 
+ *   WIDTH=Length (object width) 
+ *   HEIGHT=Length (object height) 
+ *   NAME=CDATA (name for form submission) 
+ *   USEMAP=URI (client-side image map) 
+ *   TYPE=ContentType (content-type of object) 
+ *   CODETYPE=ContentType (content-type of code) 
+ *   STANDBY=Text (message to show while loading) 
+ *   TABINDEX=NUMBER (position in tabbing order) 
+ *   DECLARE (do not instantiate object)
+ * The rest is added as <param name="" value="" /> tags
  */
 function ImgObject($img, $url) {
     // get the url args: data="sample.svgz" type="image/svg+xml" width="400" height="300"
     $args = split(' ', $url);
+    $params = array();
     if (count($args) >= 1) {
         $url = array_shift($args);
+	$found = array();
         foreach ($args as $attr) {
-            if (preg_match('/^type=(\S+)$/',$attr,$m))
-                $img->setAttr('type', $m[1]);
-            if (preg_match('/^data=(\S+)$/',$attr,$m))
-                $img->setAttr('data', $m[1]);
+	    foreach (explode(",","data,classid,archive,codebase,name,usemap,type,".
+			     "codetype,standby,tabindex,declare") as $param)
+	    {
+		if (preg_match("/^$param=(\S+)$/i",$attr,$m)) {
+		    $img->setAttr($param, $m[1]);
+		    $found[$attr]++;
+		    break;
+		}
+	    }
         }
+	// now all remaing args are added as <param> to the object
+        foreach ($args as $attr) {
+	    if (!$found[$attr] and preg_match("/^(\S+)=(\S+)$/i",$attr,$m)) {
+		$params[] = HTML::param('name'  => $m[1],
+					'value' => $m[2]);
+	    }
+	}
     }
     $type = $img->getAttr('type');
     if (!$type) {
@@ -510,13 +565,17 @@ function ImgObject($img, $url) {
         if (function_exists('mime_content_type'))
             $type = mime_content_type($url);
     }
-    $link = HTML::object(array_merge($img->_attr, array('src' => $url, 'type' => $type)));
-    $link->setAttr('class', 'inlineobject');
-    if (isBrowserSafari()) {
-        return HTML::embed($link->_attr);
+    $object = HTML::object(array_merge($img->_attr, array('src' => $url, 'type' => $type)),
+    			$img->_content);
+    $object->setAttr('class', 'inlineobject');
+    if ($params) {
+	foreach ($params as $param) $object->pushContent($param);
     }
-    $link->pushContent(HTML::embed($link->_attr));
-    return $link;
+    if (isBrowserSafari()) {
+        return HTML::embed($object->_attr, $object->_content);
+    }
+    $object->pushContent(HTML::embed($object->_attr));
+    return $object;
 }
 
 
@@ -2102,7 +2161,7 @@ function printSimpleTrace($bt) {
 		continue;
 	    }
 	    //echo join(" ",array_values($elem)),"\n";
-	    echo "  ",$elem['file'],':',$elem['line']," ",$elem['function'],"<p><hr>\n";
+	    echo "  ",$elem['file'],':',$elem['line']," ",$elem['function'],"\n";
 	}
     }
 }
@@ -2198,6 +2257,13 @@ function isSerialized($s) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.271  2008/03/17 19:11:06  rurban
+// adedd isSerialized: get rid of @ error protection in unserialize
+// revert &amp; links
+// protect  $WikiTheme->VALID_LINKS
+// replace strtr by preg_replace; document problem (still exists?
+//   Todo: glob pattern test)
+//
 // Revision 1.270  2008/01/31 20:21:12  vargenau
 // Valid HTML: escape ampersand
 //

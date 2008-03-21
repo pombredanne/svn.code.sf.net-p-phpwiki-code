@@ -1,7 +1,7 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.97 2008-03-18 20:25:49 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.98 2008-03-21 20:35:52 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004,2005,2006,2007 Reini Urban
+ * Copyright (C) 2004-2008 Reini Urban
  *
  * This file is part of PhpWiki.
  * 
@@ -319,7 +319,7 @@ function isImageLink($link) {
     if (!$link) return false;
     assert(defined('INLINE_IMAGES'));
     return preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $link)
-        or preg_match("/\\.(" . INLINE_IMAGES . ")\s+(size|border|align|hspace|vspace)=/i", $link);
+        or preg_match("/\\.(" . INLINE_IMAGES . ")\s+(size|border|align|hspace|vspace|type|data|width|height)=/i", $link);
 }
 
 function LinkBracketLink($bracketlink) {
@@ -328,7 +328,7 @@ function LinkBracketLink($bracketlink) {
     // be either a page name, a URL or both separated by a pipe.
     
     // Strip brackets and leading space
-    // bug#1904088  Some brackets links on 2 lines cause the parser to crash 
+    // bug#1904088  Some brackets links on 2 lines cause the parser to crash
     preg_match('/(\#?) \[\s* (?: (.*?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
 	       str_replace("\n", " ", $bracketlink), $matches);
     if (count($matches) < 4) {
@@ -371,7 +371,7 @@ function LinkBracketLink($bracketlink) {
         return new Cached_ExternalLink($link, $label);
     }
     // [label|link]
-    // if label looks like a url to an image, we want an image link.
+    // If label looks like a url to an image or object, we want an image link.
     if (isImageLink($label)) {
         $imgurl = $label;
         $intermap = getInterwikiMap();
@@ -383,6 +383,8 @@ function LinkBracketLink($bracketlink) {
             global $WikiTheme;
             $imgurl = $WikiTheme->getImageURL($imgurl);
         }
+        // for objects (non-images) the link is taken as alt tag, 
+        // which is in return taken as alternative img
         $label = LinkImage($imgurl, $link);
     }
 
@@ -432,7 +434,7 @@ function LinkBracketLink($bracketlink) {
         if (empty($label) and isImageLink($link)) {
             // if without label => inlined image [File:xx.gif]
             $imgurl = $intermap->link($link);
-            return LinkImage($imgurl->getAttr('href'), $label);
+            return LinkImage($imgurl->getAttr('href'), $link);
         }
         return new Cached_InterwikiLink($link, $label);
     } else {
@@ -835,7 +837,7 @@ class Markup_mediawikitable_plugin  extends SimpleMarkup
     function markup ($match) {
         $s = str_replace("{|", "", $match);
         $s = str_replace("|}", "", $s);
-      $s = '<?plugin MediawikiTable ' . $s . '?>';
+      $s = '<'.'?plugin MediawikiTable ' . $s . '?'.'>';
       return new Cached_PluginInvocation($s);
     }
 }
@@ -1099,6 +1101,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.97  2008/03/18 20:25:49  rurban
+// Fixed "\n" => " " in [ link parsing ] by suggestion of Marc-Etienne
+//
 // Revision 1.96  2008/03/17 19:06:39  rurban
 // fix bug#1904088  Some brackets links with \n cause the parser to crash
 //

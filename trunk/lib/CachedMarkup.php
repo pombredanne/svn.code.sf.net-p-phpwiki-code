@@ -1,7 +1,7 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.63 2008-03-17 19:03:08 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.64 2008-03-21 20:35:52 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2004-2008 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -139,8 +139,10 @@ class CacheableMarkup extends XmlContent {
 		    $this->_append($subitem);
 		$this->_buf .= "</$item->_tag>";
 
-                if (!isset($this->_description) and $item->getTag() == 'p')
+                if (!$this->getDescription() and $item->getTag() == 'p') {
+                    // performance: when is this really needed?
                     $this->_glean_description($item->asString());
+                }
 	    }
 	    if (!$item->isInlineElement())
 		$this->_buf .= "\n";
@@ -655,7 +657,7 @@ class Cached_ExternalLink extends Cached_Link {
     }
 
     function asString() {
-        if (isset($this->_label))
+        if (isset($this->_label) and is_string($this->_label))
             return $this->_label;
         return $this->_url;
     }
@@ -773,7 +775,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
    
 	if (isset($this->_tightenable)) {
 	    if ($this->_tightenable == 3) {
-		// We need a div here, it might contain a table
+                // We need a div here, it might contain a table
                 $span = HTML::div(array('class' => 'plugin'), $xml);
                 if (!empty($id))
                     $span->setAttr('id', $id);
@@ -812,6 +814,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2008/03/17 19:03:08  rurban
+// protect $WikiTheme->VALID_LINKS
+//
 // Revision 1.62  2008/02/14 18:40:32  rurban
 // fix DUMP_MODE with LINKS
 //

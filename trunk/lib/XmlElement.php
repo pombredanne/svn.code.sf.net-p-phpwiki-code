@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: XmlElement.php,v 1.44 2008-03-17 19:40:18 rurban Exp $');
+<?php rcs_id('$Id: XmlElement.php,v 1.45 2008-03-21 20:35:52 rurban Exp $');
 /**
  * Code for writing XML.
  * @package Markup
@@ -123,12 +123,6 @@ class XmlContent
         	foreach ($item as $x)
             	    $xml .= $this->asXML($x);
             }
-            elseif (is_array($item)) {
-        	trigger_error("Passing arrays to ->asXML() is deprecated: (" . AsXML($item, true) . ")",
-                      E_USER_NOTICE);
-        	foreach ($item as $x)
-            	    $xml .= $this->asXML($x);
-            }
             else
                 $xml .= $this->_quote((string) $item);
         }
@@ -162,7 +156,12 @@ class XmlContent
         foreach ($this->_content as $item) {
             if (is_object($item)) {
                 if (method_exists($item, 'asString')) {
-                    $val .= (string) $item->asString();
+                    $string = $item->asString();
+	            if (is_object($string)) {
+	            	; // ignore error so far: ImageLink labels
+	            } else {
+                        $val .= $this->_quote($item->asString());
+	            }
                 } else {
                     $val .= sprintf("==Object(%s)==", get_class($item));
                 }
@@ -645,6 +644,9 @@ function fmt ($fs /* , ... */) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.44  2008/03/17 19:40:18  rurban
+// print printXML(array) deprecation warnings
+//
 // Revision 1.43  2007/07/14 17:55:30  rurban
 // SemanticWeb.php
 //
