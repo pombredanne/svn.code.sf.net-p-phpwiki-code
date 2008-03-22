@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.69 2008-02-14 18:32:36 rurban Exp $');
+rcs_id('$Id: WikiUser.php,v 1.70 2008-03-22 21:46:33 rurban Exp $');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,
@@ -331,8 +331,10 @@ class WikiUser {
 
         // I'd rather prefer only to store the UserId in the cookie or
         // session, and get the preferences from the db or page.
-        if (!($prefs = $this->_request->getCookieVar('WIKI_PREFS2')))
+        if (isset($this->_request)) {
+          if (!($prefs = $this->_request->getCookieVar('WIKI_PREFS2')))
             $prefs = $this->_request->getSessionVar('wiki_prefs');
+        }
 
         //if (!$this->_userid && !empty($GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'])) {
         //    $this->_userid = $GLOBALS['HTTP_COOKIE_VARS']['WIKI_ID'];
@@ -428,8 +430,9 @@ class WikiUser {
         } else {
             if (empty($this->_dbi)) {
                 if (DEBUG) printSimpleTrace(debug_backtrace());
+            } else {
+            	$this->_homepage = $this->_dbi->getPage($this->_userid);
             }
-            $this->_homepage = $this->_dbi->getPage($this->_userid);
             return $this->_homepage;
         }
     }
@@ -756,6 +759,9 @@ class UserPreferences {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.69  2008/02/14 18:32:36  rurban
+// signin fixes for !ENABLE_USER_NEW (to overcome php-5.2 recursion login problems)
+//
 // Revision 1.68  2007/07/14 17:55:30  rurban
 // SemanticWeb.php
 //
