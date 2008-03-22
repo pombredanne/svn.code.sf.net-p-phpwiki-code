@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.117 2008-03-17 19:08:29 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.118 2008-03-22 21:45:34 rurban Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -585,6 +585,8 @@ class Request_SessionVars {
         $vars = &$GLOBALS['HTTP_SESSION_VARS'];
         if (isset($vars[$key]))
             return $vars[$key];
+        if (isset($_SESSION) and isset($_SESSION[$key])) // php-5.2
+            return $_SESSION[$key];
         return false;
     }
     
@@ -595,7 +597,7 @@ class Request_SessionVars {
             $GLOBALS[$key] = $val;
         }
         $vars[$key] = $val;
-        if (isset($_SESSION))
+        if (isset($_SESSION)) // php-5.2
             $_SESSION[$key] = $val;
         session_register($key);
     }
@@ -1360,6 +1362,9 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.117  2008/03/17 19:08:29  rurban
+// get rid of @ error protection in unserialize
+//
 // Revision 1.116  2008/02/14 18:31:04  rurban
 // nocache to omit compress cache headers (fix async calls for rating images)
 //
