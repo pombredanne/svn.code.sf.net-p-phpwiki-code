@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.242 2008-02-14 18:27:49 rurban Exp $');
+rcs_id('$Id: main.php,v 1.243 2008-03-22 21:49:18 rurban Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -149,7 +149,9 @@ class WikiRequest extends Request {
 
     function initializeLang () {
         // check non-default pref lang
-        $_lang = @$this->_prefs->_prefs['lang'];
+        if (empty($this->_prefs->_prefs['lang']))
+            return;
+        $_lang = $this->_prefs->_prefs['lang'];
         if (isset($_lang->lang) and $_lang->lang != $GLOBALS['LANG']) {
             $user_lang = $_lang->lang;
             //check changed LANG and THEME inside a session. 
@@ -170,9 +172,13 @@ class WikiRequest extends Request {
 	//                    and maybe the theme changed (back to default theme)
 
         // Load non-default theme (when = login)
-        $_theme = @$this->_prefs->_prefs['theme'];
-        if ($_theme and isset($_theme->theme))
-            $user_theme = $_theme->theme;
+        if (!empty($this->_prefs->_prefs['theme'])) {
+            $_theme = $this->_prefs->_prefs['theme'];
+            if (isset($_theme) and isset($_theme->theme))
+                $user_theme = $_theme->theme;
+            else 
+                $user_theme = '';
+        }
         else 
             $user_theme = $this->getPref('theme');
 
@@ -255,7 +261,9 @@ class WikiRequest extends Request {
                     $this->_user->setPreferences($this->_prefs, true);
             	}
             }
-            $this->setSessionVar('wiki_user', $this->_user);
+            $tmpuser = $this->_user; // clone it
+            $this->setSessionVar('wiki_user', $tmpuser);
+            unset($tmpuser);
         }
 
         // Ensure user has permissions for action
@@ -806,6 +814,8 @@ class WikiRequest extends Request {
             $this->_user->action = $this->getArg('action');
             unset($this->_user->_HomePagehandle);
             unset($this->_user->_auth_dbi);
+            unset($this->_user->_dbi);
+            unset($this->_user->_request);
 	}
         Request::finish();
         exit;
@@ -1382,6 +1392,10 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.242  2008/02/14 18:27:49  rurban
+// signin fixes for !ENABLE_USER_NEW (to overcome php-5.2 recursion login
+// problems)
+//
 // Revision 1.241  2007/09/22 12:39:32  rurban
 // fix unknown variable WikiTheme
 //
