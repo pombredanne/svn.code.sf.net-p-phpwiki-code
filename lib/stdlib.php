@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.272 2008-03-21 20:35:52 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.273 2008-03-22 21:43:21 rurban Exp $');
 /*
  Copyright 1999-2007 $ThePhpWikiProgrammingTeam
 
@@ -554,8 +554,8 @@ function ImgObject($img, $url) {
 	// now all remaing args are added as <param> to the object
         foreach ($args as $attr) {
 	    if (!$found[$attr] and preg_match("/^(\S+)=(\S+)$/i",$attr,$m)) {
-		$params[] = HTML::param('name'  => $m[1],
-					'value' => $m[2]);
+		$params[] = HTML::param(array('name'  => $m[1],
+                                              'value' => $m[2]));
 	    }
 	}
     }
@@ -2257,6 +2257,10 @@ function isSerialized($s) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.272  2008/03/21 20:35:52  rurban
+// Improve upon embedded ImgObject, such as [ *.mp3 ], objects.
+// Object tags now render as label correctly and param tags are also added.
+//
 // Revision 1.271  2008/03/17 19:11:06  rurban
 // adedd isSerialized: get rid of @ error protection in unserialize
 // revert &amp; links
