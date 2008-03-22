@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.158 2008-01-30 19:29:52 vargenau Exp $');
+rcs_id('$Id: WikiDB.php,v 1.159 2008-03-22 21:51:11 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -111,7 +111,7 @@ class WikiDB {
      * @see open()
      */
     function WikiDB (&$backend, $dbparams) {
-        $this->_backend = &$backend;
+        $this->_backend =& $backend;
         // don't do the following with the auth_dsn!
         if (isset($dbparams['auth_dsn'])) return;
         
@@ -217,9 +217,11 @@ class WikiDB {
             $result = -1;
 
         /* Generate notification emails */
-        include_once("lib/MailNotify.php");
-        $MailNotify = new MailNotify($pagename);
-        $MailNotify->onDeletePage ($this, $pagename);
+        if (ENABLE_MAILNOTIFY) {
+            include_once("lib/MailNotify.php");
+            $MailNotify = new MailNotify($pagename);
+            $MailNotify->onDeletePage ($this, $pagename);
+        }
 
         //How to create a RecentChanges entry with explaining summary? Dynamically
         /*
@@ -533,17 +535,6 @@ class WikiDB {
 			 $lookbehind.$from.$lookahead, $to, 
 			 true, true);
                 }
-                //      Disabled to avoid recursive modification when renaming
-                //      a page like 'PageFoo to 'PageFooTwo'.
-                // 
-                // $links = $newpage->getBackLinks();
-                // while ($linked_page = $links->next()) {
-                //     WikiPlugin_WikiAdminSearchReplace::replaceHelper
-		// 	($this,
-		// 	 $linked_page->getName(),
-		// 	 $lookbehind.$from.$lookahead, $to, 
-		// 	 true, true);
-                // }
             }
             if ($oldpage->exists() and ! $newpage->exists()) {
                 if ($result = $this->_backend->rename_page($from, $to)) {
@@ -565,7 +556,7 @@ class WikiDB {
                           E_USER_WARNING);
         }
         /* Generate notification emails? */
-        if ($result and !isa($GLOBALS['request'], 'MockRequest')) {
+        if ($result and ENABLE_MAILNOTIFY and !isa($GLOBALS['request'], 'MockRequest')) {
             $notify = $this->get('notify');
             if (!empty($notify) and is_array($notify)) {
                 include_once("lib/MailNotify.php");
@@ -1011,7 +1002,7 @@ class WikiDB_Page
         }
 
         /* Generate notification emails? */
-        if (isa($newrevision, 'WikiDB_PageRevision')) {
+        if (ENABLE_MAILNOTIFY and isa($newrevision, 'WikiDB_PageRevision')) {
             // Save didn't fail because of concurrent updates.
             $notify = $this->_wikidb->get('notify');
             if (!empty($notify) 
@@ -2237,6 +2228,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.158  2008/01/30 19:29:52  vargenau
+// Disabled to avoid recursive modification when renaming a page like 'PageFoo to 'PageFooTwo'
+//
 // Revision 1.157  2007/09/15 12:35:50  rurban
 // basic array reset support - unclear if needed, iteration is usually one-time only
 //
