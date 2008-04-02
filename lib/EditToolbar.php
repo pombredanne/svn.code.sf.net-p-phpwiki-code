@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.14 2008-02-19 19:07:23 vargenau Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.15 2008-04-02 18:07:05 vargenau Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -116,6 +116,11 @@ msg_repl_close     = '"._("Close")."'
                                  "close"=>"</s>",
                                  "sample"=>_("Strike-through text"),
                                  "title"=>_("Strike")),
+                           array("image"=>"ed_format_color.png",
+                                 "open"=>"%color=green% ",
+                                 "close"=>" %%",
+                                 "sample"=>_("Color text"),
+                                 "title"=>_("Color")),
                            array("image"=>"ed_pagelink.png",
                                  "open"=>"[",
                                  "close"=>"]",
@@ -166,6 +171,11 @@ msg_repl_close     = '"._("Close")."'
                                  "close"=>"",
                                  "sample"=>"",
                                  "title"=>_("List")),
+                           array("image"=>"ed_toc.png",
+                                 "open"=>"<?plugin CreateToc with_toclink||=1 headers||=1,2,3 liststyle||=ol?>\\n",
+                                 "close"=>"",
+                                 "sample"=>"",
+                                 "title"=>_("Table of Contents")),
                            array("image"=>"ed_redirect.png",
                                  "open"=>"<?plugin RedirectTo page=\"",
                                  "close"=>"\" ?>",
@@ -408,6 +418,9 @@ msg_repl_close     = '"._("Close")."'
 
 /*
 $Log: not supported by cvs2svn $
+Revision 1.14  2008/02/19 19:07:23  vargenau
+More icons for toolbar
+
 Revision 1.13  2007/07/14 12:03:12  rurban
 just aesthetics
 
