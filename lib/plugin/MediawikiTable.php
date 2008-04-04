@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MediawikiTable.php,v 1.1 2008-01-31 20:40:10 vargenau Exp $');
+rcs_id('$Id: MediawikiTable.php,v 1.2 2008-04-04 18:13:49 vargenau Exp $');
 /**
   MediawikiTablePlugin
   A PhpWiki plugin that allows insertion of tables using a Mediawiki-like
@@ -66,7 +66,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -81,6 +81,7 @@ extends WikiPlugin
 
         $lines = preg_split('/\n/', $argstr);
         $table = HTML::table();
+        $tbody = HTML::tbody();
 
         if ($lines[0][0] != '|') {
             $line = array_shift($lines);
@@ -106,7 +107,7 @@ extends WikiPlugin
                         $row->pushContent($cell);
                         unset($cell);
                     }
-                    $table->pushContent($row);
+                    $tbody->pushContent($row);
                 }
                 $row = HTML::tr();
                 $attrs = $this->_parse_attr(substr($line,2));
@@ -191,7 +192,8 @@ extends WikiPlugin
                     $cell->pushContent(TransformText(trim($content)));
                 $row->pushContent($cell);
             }
-            $table->pushContent($row);
+            $tbody->pushContent($row);
+            $table->pushContent($tbody);
         }
         return $table;
     }
@@ -215,6 +217,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/01/31 20:40:10  vargenau
+// Implemented Mediawiki-like syntax for tables
+//
 //
 
 // For emacs users
