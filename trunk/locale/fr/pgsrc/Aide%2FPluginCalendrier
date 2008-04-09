@@ -1,9 +1,9 @@
 Date: Tue, 22 Jun 2004 17:18:38 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
-X-Rcs-Id: $Id: PluginCalendrier,v 1.4 2004-06-22 15:49:31 pmeignen Exp $
+X-Rcs-Id: $Id: Aide%2FPluginCalendrier,v 1.1 2008-04-09 17:43:31 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=PluginCalendrier;
-  pgsrc_version="2 $Revision: 1.4 $";
+  pgsrc_version="2 $Revision: 1.1 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
