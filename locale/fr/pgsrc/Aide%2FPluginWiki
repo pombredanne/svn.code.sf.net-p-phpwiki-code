@@ -1,9 +1,9 @@
 Date: Sat, 5 Jun 2004 16:49:57 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
-X-Rcs-Id: $Id: PluginWiki,v 1.3 2004-06-08 14:19:04 rurban Exp $
+X-Rcs-Id: $Id: Aide%2FPluginWiki,v 1.1 2008-04-09 17:43:31 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=PluginWiki;
-  pgsrc_version="3 $Revision: 1.3 $";
+  pgsrc_version="3 $Revision: 1.1 $";
   flags="";
   markup=2;
   charset=iso-8859-1
