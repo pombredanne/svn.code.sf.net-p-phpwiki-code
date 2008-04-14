@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminChown.php,v 1.8 2005-01-29 19:48:14 rurban Exp $');
+rcs_id('$Id: WikiAdminChown.php,v 1.9 2008-04-14 17:49:50 vargenau Exp $');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -148,7 +148,7 @@ extends WikiPlugin_WikiAdminSelect
         $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
         $pagelist->addPageList($pages);
 
-        $header = HTML::p();
+        $header = HTML::div();
         if ($next_action == 'verify') {
             $button_label = _("Yes");
             $header->pushContent(
@@ -190,6 +190,9 @@ extends WikiPlugin_WikiAdminSelect
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2005/01/29 19:48:14  rurban
+// reformatting
+//
 // Revision 1.7  2004/11/23 15:17:19  rurban
 // better support for case_exact search (not caseexact for consistency),
 // plugin args simplification:

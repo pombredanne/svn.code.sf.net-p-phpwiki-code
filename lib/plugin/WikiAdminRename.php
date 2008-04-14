@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.28 2007-09-15 12:30:24 rurban Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.29 2008-04-14 17:49:50 vargenau Exp $');
 /*
  Copyright 2004,2005,2007 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.28 $");
+                            "\$Revision: 1.29 $");
     }
 
     function getDefaultArguments() {
@@ -161,7 +161,7 @@ extends WikiPlugin_WikiAdminSelect
                          )));
         $pagelist->addPageList($pages);
 
-        $header = HTML::p();
+        $header = HTML::div();
         if ($next_action == 'verify') {
             $button_label = _("Yes");
             $header->pushContent(
@@ -220,7 +220,6 @@ extends WikiPlugin_WikiAdminSelect
 					    'value' => $post_args['to'])));
 	$this->_tablePush($table, '', $this->checkBox($post_args, 'regex', _("Regex?")));
         $this->_tablePush($table, '', $this->checkBox($post_args, 'icase', _("Case insensitive?")));
-        $this->_tablePush($table, '', HTML::td());
 	if (DEBUG) // not yet stable
 	    $this->_tablePush($table, '', $this->checkBox($post_args, 'updatelinks', 
 						      _("Change pagename in all linked pages also?")));
@@ -259,6 +258,9 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2007/09/15 12:30:24  rurban
+// temp. disable support for Change pagename in all linked pages also. This is broken.
+//
 // Revision 1.27  2007/08/25 18:08:24  rurban
 // change rename action from access perm change to edit: allow the signed in user to rename. Improve layout
 //
