@@ -1,5 +1,5 @@
 <?php // -*-html-*- ?>
-<!-- $Id: savepage.tmpl,v 1.11 2006-12-22 01:47:55 rurban Exp $ -->
+<!-- $Id: savepage.tmpl,v 1.12 2008-05-03 16:41:43 vargenau Exp $ -->
 <?php
     $signatureURL = $WikiTheme->getImageURL('signature');
 ?>
@@ -11,7 +11,7 @@
 <?php } ?>
 
 <?php if ($signatureURL) { ?>
-  <p><img src="<?=$signatureURL?>" id="signature" /></p>
+  <p><img src="<?=$signatureURL?>" id="signature" alt="signature" /></p>
 <?php } ?>
 
 <?php if (!empty($LOCK_CHANGED_MSG)) { ?>
