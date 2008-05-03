@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: signin.tmpl,v 1.5 2007-01-20 11:42:05 rurban Exp $'); ?>
+rcs_id('$Id: signin.tmpl,v 1.6 2008-05-03 17:38:51 vargenau Exp $'); ?>
 <?php // On MonoBook we do away with only GET urls, no form.
   $sp = HTML::Raw("&nbsp;"); $id = $user->UserName();
 ?>
@@ -15,6 +15,5 @@ rcs_id('$Id: signin.tmpl,v 1.5 2007-01-20 11:42:05 rurban Exp $'); ?>
   <?php } ?>
   <li id="pt-login"><?= HTML::a(array('href'=>'?auth[login]=1'),$sp,_("Login"),$sp) ?></a></li>
   <?php } ?>
-  </li>
  </ul>
 </div></div>
