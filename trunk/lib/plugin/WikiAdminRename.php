@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.29 2008-04-14 17:49:50 vargenau Exp $');
+rcs_id('$Id: WikiAdminRename.php,v 1.30 2008-05-04 08:36:27 vargenau Exp $');
 /*
  Copyright 2004,2005,2007 $ThePhpWikiProgrammingTeam
 
@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
 
     function getDefaultArguments() {
@@ -224,7 +224,6 @@ extends WikiPlugin_WikiAdminSelect
 	    $this->_tablePush($table, '', $this->checkBox($post_args, 'updatelinks', 
 						      _("Change pagename in all linked pages also?")));
         $header->pushContent($table);
-        $header->pushContent(HTML::p());
         return $header;
     }
 }
@@ -258,6 +257,9 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2008/04/14 17:49:50  vargenau
+// Generate valid XHTML code
+//
 // Revision 1.28  2007/09/15 12:30:24  rurban
 // temp. disable support for Change pagename in all linked pages also. This is broken.
 //
