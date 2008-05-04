@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.36 2007-07-19 12:41:25 labbenes Exp $');
+rcs_id('$Id: CreateToc.php,v 1.37 2008-05-04 08:37:42 vargenau Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -52,7 +52,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.36 $");
+                            "\$Revision: 1.37 $");
     }
 
     function getDefaultArguments() {
@@ -390,10 +390,11 @@ function toggletoc(a) {
                                             'id'=>'toctoggle',
                                             'class'=>'wikiaction',
                                             'title'=>_("Click to display to TOC"),
-                                            'onClick'=>"toggletoc(this)",
+                                            'onclick'=>"toggletoc(this)",
                                             'height' => 15,
                                             'width' => 15,
                                             'border' => 0,
+                                            'alt' => 'toctoggle',
                                             'src' => $jshide ? $close : $open )));
 	else
 	    $toclink = HTML::a(array('name'=>'TOC',
@@ -410,6 +411,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.36  2007/07/19 12:41:25  labbenes
+// Correct TOC numbering. It should start from '1' not from '1.1'.
+//
 // Revision 1.35  2007/02/17 14:17:48  rurban
 // declare vars for IE6
 //
