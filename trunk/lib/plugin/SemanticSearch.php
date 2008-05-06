@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SemanticSearch.php,v 1.4 2007-01-04 16:44:22 rurban Exp $');
+rcs_id('$Id: SemanticSearch.php,v 1.5 2008-05-06 19:32:41 rurban Exp $');
 /*
  Copyright 2007 Reini Urban
 
@@ -61,7 +61,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
     function getDefaultArguments() { 
         return array_merge
@@ -75,10 +75,11 @@ extends WikiPlugin
 		   'attr_op'    => ':=', // a funny written way for equality for pure aesthetic pleasure 
 		   			 // "All attributes which have this value set"
 		   'units'      => '',   // ?
-		   'case_exact' => false,
-		   'regex'      => 'auto',
+		   'case_exact' => true,
+		   'regex'      => 'auto',// is different here. 
+		    // no word splitting, if no regex op is present, defaults to exact match
 		   'noform'     => false, // don't show form with results.
-		   'noheader'   => false,  // no caption
+		   'noheader'   => false, // no caption
 		   'info'       => false  // valid: pagename,relation,linkto,attribute,value and all other pagelist columns
 		   ));
     }
@@ -241,7 +242,27 @@ extends WikiPlugin
 	
 	return HTML($form1, $form2);
     }
- 
+
+    function regex_query ($string, $case_exact, $regex) {
+    	if ($string != '*' and $regex == 'auto') {
+	    if (strcspn($string, ".+*?^$\"") == strlen($string)) {
+	    	// performance hack: construct an exact query w/o parsing. pcre is fastest.
+	        $q = new TextSearchQuery($string, $case_exact, 'pcre');
+	        // and now override the fields
+	        unset ($q->_stoplist);
+	        $q->_regex = TSQ_REGEX_NONE;
+	        if ($case_exact)
+	            $q->_tree = new TextSearchQuery_node_exact($string); // hardcode this string
+	        else    
+	            $q->_tree = new TextSearchQuery_node_word($string);
+	        return $q;
+	        //$string = "\"" . $string ."\"";
+		//$regex = 'none'; // EXACT or WORD match
+	    }
+	}
+	return new TextSearchQuery($string, $case_exact, $regex);
+    }
+    
     function run ($dbi, $argstr, &$request, $basepage) { 
         global $WikiTheme;
 	                          
@@ -269,7 +290,7 @@ extends WikiPlugin
 	    else     
 	        return $form; // nobody called us, so just display our supadupa form
 	}
-        $pagequery = new TextSearchQuery($page, $args['case_exact'], $args['regex']);
+        $pagequery = $this->regex_query($page, $args['case_exact'], $args['regex']);
         // we might want to check for semsearch['relations'] and semsearch['attributes'] also
 	if (empty($relation) and empty($attribute)) {
 	    // so we just clicked without selecting any relation. 
@@ -286,8 +307,8 @@ extends WikiPlugin
 	$searchtype = "Text";
 	if (!empty($relation)) {
 	    $querydesc = $relation."::".$s;
-	    $linkquery = new TextSearchQuery($s, $args['case_exact'], $args['regex']);
-	    $relquery = new TextSearchQuery($relation, $args['case_exact'], $args['regex']);
+	    $linkquery =  $this->regex_query($s, $args['case_exact'], $args['regex']);
+	    $relquery = $this->regex_query($relation, $args['case_exact'], $args['regex']);
 	    $links = $dbi->linkSearch($pagequery, $linkquery, 'relation', $relquery);
 	    $pagelist = new PageList($info, $exclude, $args);
 	    $pagelist->_links = array();
@@ -306,10 +327,10 @@ extends WikiPlugin
 	}
 	// can we merge two different pagelist?
 	if (!empty($attribute)) {
-	    $relquery = new TextSearchQuery($attribute, $args['case_exact'], $args['regex']);
+	    $relquery =  regex_query($attribute, $args['case_exact'], $args['regex']);
 	    if (!in_array($attr_op, $this->_supported_operators)) {
-		return HTML($form,$this->error(fmt("Illegal operator: %s",
-					           HTML::tt($attr_op))));
+		return HTML($form, $this->error(fmt("Illegal operator: %s",
+					            HTML::tt($attr_op))));
 	    }
 	    $s_base = preg_replace("/,/","", $s);
 	    $units = new Units();
@@ -336,18 +357,19 @@ extends WikiPlugin
 		if ($attribute == '*') $attribute = '_star_'; 
 		$searchtype = "Numeric";
 		$query = $attribute." ".$attr_op." ".$s_base;
-		$linkquery = new SemanticAttributeSearchQuery($query, $attribute, $units->baseunit($s));
+		$linkquery = new SemanticAttributeSearchQuery($query, $attribute, 
+							      $units->baseunit($s));
 		if ($attribute == '_star_') $attribute = '*'; 
 		$querydesc = $attribute." ".$attr_op." ".$s;
 
 	    // no number or unit: check other text matchers or '*' MATCH_ALL
 	    } elseif (in_array($attr_op, $this->_text_operators)) {
 		if ($attr_op == '=~') {
-		    if ($s == '*') $s = '.*'; // help the poor user. we need pcre syntax.	
+		    if ($s == '*') $s = '.*'; // help the poor user. we need pcre syntax.
 		    $linkquery = new TextSearchQuery("$s", $args['case_exact'], 'pcre');
 		}
 		else		                                 
-		    $linkquery = new TextSearchQuery("$s", $args['case_exact'], $args['regex']);
+	            $linkquery =  $this->regex_query($s, $args['case_exact'], $args['regex']);
 		$querydesc = "$attribute $attr_op $s";
 
 	    // should we fail or skip when the user clicks on Relations?
@@ -370,12 +392,16 @@ extends WikiPlugin
 		    $pagelist->_links[] = $link;
 		}
 	        // default (=empty info) wants all three. but we want to override this.
-	        if (!$args['info'] or ($args['info'] and isset($pagelist->_columns_seen['attribute'])))
+	        if (!$args['info'] or 
+	            ($args['info'] and isset($pagelist->_columns_seen['attribute'])))
 		    $pagelist->addColumnObject
-		        (new _PageList_Column_SemanticSearch_relation('attribute', _("Attribute"), $pagelist));
-	        if (!$args['info'] or ($args['info'] and isset($pagelist->_columns_seen['value'])))
+		        (new _PageList_Column_SemanticSearch_relation('attribute', 
+		        	_("Attribute"), $pagelist));
+	        if (!$args['info'] or
+	            ($args['info'] and isset($pagelist->_columns_seen['value'])))
 		    $pagelist->addColumnObject
-		        (new _PageList_Column_SemanticSearch_link('value', _("Value"), $pagelist));
+		        (new _PageList_Column_SemanticSearch_link('value', 
+		        	_("Value"), $pagelist));
 	    }
 	}
 	if (!isset($pagelist)) {
@@ -390,7 +416,8 @@ extends WikiPlugin
 	    $pagelist->setCaption
 	    (   // on mozilla the form doesn't fit into the caption very well.
 		HTML($noform ? '' : HTML($form,HTML::hr()),
-	             fmt("Semantic %s Search Result for \"%s\" in pages \"%s\"",$searchtype,$querydesc,$page)));
+	             fmt("Semantic %s Search Result for \"%s\" in pages \"%s\"",
+	             	 $searchtype, $querydesc, $page)));
 	}
 	return $pagelist;
     }
@@ -428,6 +455,9 @@ extends _PageList_Column_SemanticSearch_relation
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2007/01/04 16:44:22  rurban
+// Fix the info argument: e.g. try info=pagename or info=relation,linkto. Sorry, the pagename is always there.
+//
 // Revision 1.3  2007/01/03 21:23:15  rurban
 // Use Units and SemanticWeb: "population > 0.5 million or area < 100m^2" will work. Add help link if no relations are defined yet. Add attr_op=~ to attribute livesearch
 //
