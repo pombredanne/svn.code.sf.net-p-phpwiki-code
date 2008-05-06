@@ -1,6 +1,6 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.273 2008-03-22 21:43:21 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.274 2008-05-06 19:29:06 rurban Exp $');
 /*
- Copyright 1999-2007 $ThePhpWikiProgrammingTeam
+ Copyright 1999-2008 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -469,13 +469,17 @@ function LinkImage($url, $alt = false) {
             elseif (preg_match("/^http/",$url)) // external url
             	$size = @getimagesize($url); 
             else { // local file
-                if (file_exists($file = NormalizeLocalFileName($url)))   // here
+                if (file_exists($file = NormalizeLocalFileName($url))) {  // here
             	    $size = @getimagesize($file);
-            	elseif (string_starts_with($url, getUploadDataPath())) { // there
+                } elseif (file_exists(NormalizeLocalFileName(urldecode($url)))) {
+            	    $size = @getimagesize($file);
+            	    $link->setAttr('src', rawurldecode($url));
+                } elseif (string_starts_with($url, getUploadDataPath())) { // there
             	    $file = substr($file, strlen(getUploadDataPath()));	
-            	    $size = @getimagesize(getUploadFilePath().$file);
+            	    $size = @getimagesize(getUploadFilePath().rawurldecode($file));
+            	    $link->setAttr('src', getUploadDataPath() . rawurldecode($file));
             	} else { // elsewhere
-            	    $size = @getimagesize($request->get('DOCUMENT_ROOT').$url);
+            	    $size = @getimagesize($request->get('DOCUMENT_ROOT').urldecode($url));
             	}
             }
             if ($size) {
@@ -2257,6 +2261,9 @@ function isSerialized($s) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.273  2008/03/22 21:43:21  rurban
+// Fix syntax error from r1.272
+//
 // Revision 1.272  2008/03/21 20:35:52  rurban
 // Improve upon embedded ImgObject, such as [ *.mp3 ], objects.
 // Object tags now render as label correctly and param tags are also added.
