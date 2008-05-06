@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.146 2007-09-12 19:39:46 rurban Exp $');
+rcs_id('$Id: config.php,v 1.147 2008-05-06 19:27:30 rurban Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -22,7 +22,7 @@ define ('_DEBUG_PAGELINKS', 2); // list the extraced pagelinks at the top of eac
 define ('_DEBUG_PARSER',    4); // verbose parsing steps
 define ('_DEBUG_TRACE',     8); // test php memory usage, prints php debug backtraces
 define ('_DEBUG_INFO',     16);
-define ('_DEBUG_APD',      32);
+define ('_DEBUG_APD',      32); // APD tracing/profiling
 define ('_DEBUG_LOGIN',    64); // verbose login debug-msg (settings and reason for failure)
 define ('_DEBUG_SQL',     128); // force check db, force optimize, print some debugging logs
 define ('_DEBUG_REMOTE',  256); // remote debug into subrequests (xmlrpc, ajax, wikiwyg, ...) 
@@ -656,6 +656,9 @@ function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.146  2007/09/12 19:39:46  rurban
+// Ensure ending uploads slash even on user provided UPLOAD constants. Fixes plugin/UpLoad
+//
 // Revision 1.145  2007/06/02 18:24:39  rurban
 // case-insensitive browser check. Imrpoved isBrowserSafari
 //
