@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.159 2008-03-22 21:51:11 rurban Exp $');
+rcs_id('$Id: WikiDB.php,v 1.160 2008-05-06 19:26:28 rurban Exp $');
 
 require_once('lib/PageType.php');
 
@@ -535,6 +535,18 @@ class WikiDB {
 			 $lookbehind.$from.$lookahead, $to, 
 			 true, true);
                 }
+                // FIXME: Disabled to avoid recursive modification when renaming 
+                // a page like 'PageFoo to 'PageFooTwo'
+                if (0) {
+                  $links = $newpage->getBackLinks();
+                  while ($linked_page = $links->next()) {
+                    WikiPlugin_WikiAdminSearchReplace::replaceHelper
+			($this,
+			 $linked_page->getName(),
+			 $lookbehind.$from.$lookahead, $to, 
+			 true, true);
+                  }
+                }
             }
             if ($oldpage->exists() and ! $newpage->exists()) {
                 if ($result = $this->_backend->rename_page($from, $to)) {
@@ -717,7 +729,7 @@ class WikiDB {
 
 
 /**
- * An abstract base class which representing a wiki-page within a
+ * A base class which representing a wiki-page within a
  * WikiDB.
  *
  * A WikiDB_Page contains a number (at least one) of
@@ -1015,7 +1027,13 @@ class WikiDB_Page
             }
             $newrevision->_transformedContent = $formatted;
         }
-
+        // more pagechange callbacks: (in a hackish manner for now)
+        if (ENABLE_RECENTCHANGESBOX and empty($meta['is_minor_edit'])) {
+            require_once("lib/WikiPlugin.php");
+            $w = new WikiPluginLoader;
+            $p = $w->getPlugin("RecentChangesCached", false);
+            $p->box_update(false, $GLOBALS['request'], $this->_pagename);
+        }
 	return $newrevision;
     }
 
@@ -2228,6 +2246,9 @@ function _sql_debuglog_shutdown_function() {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.159  2008/03/22 21:51:11  rurban
+// check for ENABLE_MAILNOTIFY
+//
 // Revision 1.158  2008/01/30 19:29:52  vargenau
 // Disabled to avoid recursive modification when renaming a page like 'PageFoo to 'PageFooTwo'
 //
