@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageType.php,v 1.54 2007-09-12 19:35:29 rurban Exp $');
+rcs_id('$Id: PageType.php,v 1.55 2008-05-06 19:24:24 rurban Exp $');
 /*
  Copyright 1999,2000,2001,2002,2003,2004,2005,2006 $ThePhpWikiProgrammingTeam
 
@@ -201,8 +201,12 @@ class PageType_interwikimap extends PageType
         
         // Urlencode page only if it's a query arg.
         // FIXME: this is a somewhat broken heuristic.
-        $page_enc = strstr($url, '?') ? rawurlencode($page) : $page;
-
+        if ($moniker == 'Upload') {
+            $page_enc = $page;
+            $page = rawurldecode($page);
+        } else {
+            $page_enc = strstr($url, '?') ? rawurlencode($page) : $page;
+        }
         if (strstr($url, '%s'))
             $url = sprintf($url, $page_enc);
         else
@@ -543,6 +547,9 @@ class PageFormatter_MediaWiki extends PageFormatter
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.54  2007/09/12 19:35:29  rurban
+// Windows fix for local path detection
+//
 // Revision 1.53  2007/07/14 17:55:29  rurban
 // SemanticWeb.php
 //
