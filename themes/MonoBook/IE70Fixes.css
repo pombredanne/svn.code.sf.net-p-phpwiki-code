@@ -57,6 +57,9 @@
 textarea {
 	width: 96%;
 }
+tt {
+	font-size: 110%;
+}
 
 /*
 div.editsection,

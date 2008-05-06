@@ -22,7 +22,10 @@
 	border-left: 1px solid #fabd23;
 }
 
-body, pre { font-size: x-small; }
+body { font-size: 80%;}
+tt {
+	font-size: 110%;
+}
 
 /* the tabs */
 
@@ -83,4 +86,17 @@ div.tleft {
 	position: relative;
 }
 /*{ border:1px solid Red !important;}*/
-
+span.rateit {
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1em;
+}
+div#rateit-widget-top {
+  top:   38px;
+}
+/*
+div#rateit-widget-top {
+  top:   15px;
+  right: 90px;
+}
+*/
