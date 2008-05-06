@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.24 2008-03-17 19:14:43 rurban Exp $');
+rcs_id('$Id: RateIt.php,v 1.25 2008-05-06 19:29:48 rurban Exp $');
 /*
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -92,7 +92,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.24 $");
+                            "\$Revision: 1.25 $");
     }
 
     function RatingWidgetJavascript() {
@@ -301,6 +301,7 @@ IHDR         Ä‰   IDATx^À	   Â0ízçX	ÿ7-`    IEND®B`‚';
                                     $rdbi->getAvg($this->pagename, $this->dimension),
                                     $rdbi->getNumUsers($this->pagename, $this->dimension))));
             if ($args['show'] == 'top') {
+		$html->setAttr('id', "rateit-widget-top");
                 $html->pushContent(HTML::br(),
                                    $this->RatingWidgetHtml($args['pagename'], $args['version'], 
                                                            $args['imgPrefix'], 
@@ -484,6 +485,9 @@ IHDR         Ä‰   IDATx^À	   Â0ízçX	ÿ7-`    IEND®B`‚';
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2008/03/17 19:14:43  rurban
+// add mode=text: just text, no widget, for dumps
+//
 // Revision 1.23  2008/01/24 19:19:35  rurban
 // support multiple plugins per page (e.g. in plugin lists), added show=top, fixed RATING_STORAGE=WIKIPAGE, fixes smart caching
 //
