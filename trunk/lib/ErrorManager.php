@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.53 2008-03-17 19:04:05 rurban Exp $');
+<?php rcs_id('$Id: ErrorManager.php,v 1.54 2008-05-06 19:22:21 rurban Exp $');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 
@@ -298,7 +298,7 @@ class ErrorManager
     }
 
     function warning($msg, $errno = E_USER_NOTICE) {
-        $this->handleError(new PhpWikiError($errno, $msg));
+        $this->handleError(new PhpWikiError($errno, $msg, '?', '?'));
     }
     
     /**
@@ -552,8 +552,8 @@ class PhpWikiError extends PhpError {
      * @param $errno   int
      * @param $errstr  string
      */
-    function PhpWikiError($errno, $errstr) {
-        $this->PhpError($errno, $errstr, '?', '?');
+    function PhpWikiError($errno, $errstr, $errfile, $errline) {
+        $this->PhpError($errno, $errstr, $errfile, $errline);
     }
 
     function _getDetail() {
@@ -644,6 +644,10 @@ if (!isset($GLOBALS['ErrorManager'])) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.53  2008/03/17 19:04:05  rurban
+// added destroyPostponedErrors: Get rid of all pending error messages in case of all
+// non-html - pdf or image - output.
+//
 // Revision 1.52  2007/09/19 17:59:26  rurban
 // use duplicates to save memory with DEBUG
 //
