@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentChanges.php,v 1.122 2008-01-24 19:26:24 rurban Exp $');
+rcs_id('$Id: RecentChanges.php,v 1.123 2008-05-06 19:30:46 rurban Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -247,10 +247,11 @@ extends _RecentChanges_Formatter
     function grazr_icon ($args = array()) {
         global $request, $WikiTheme;
 	if (is_localhost()) return '';
-        $rss_url = 'http://grazr.com/gzpanel.html?' . 
-	    WikiURL($request->getArg('pagename'),
+	if (SERVER_PROTOCOL == "https") return '';
+	$our_url = WikiURL($request->getArg('pagename'),
 		    array_merge(array('action' => $this->action, 'format' => 'rss2'), $args), 
 		    true);
+        $rss_url = 'http://grazr.com/gzpanel.html?' . $our_url;
         return $WikiTheme->makeButton("grazr", $rss_url, 'rssicon');
     }
 
@@ -1126,7 +1127,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.122 $");
+                            "\$Revision: 1.123 $");
     }
 
     function managesValidators() {
@@ -1365,6 +1366,9 @@ class DayButtonBar extends HtmlElement {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.122  2008/01/24 19:26:24  rurban
+// remove unsed filter links from icons
+//
 // Revision 1.121  2007/08/25 18:54:41  rurban
 // split title into extra headline. simplify icons, add category, pagematch arguments
 //
