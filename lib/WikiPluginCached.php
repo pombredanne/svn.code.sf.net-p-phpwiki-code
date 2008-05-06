@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.24 2007-09-22 12:38:57 rurban Exp $');
+<?php rcs_id('$Id: WikiPluginCached.php,v 1.25 2008-05-06 17:35:24 rurban Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004,2007 Reini Urban
@@ -82,7 +82,8 @@ class WikiPluginCached extends WikiPlugin
             'arguments'  => $argarray ) ); 
         $id = $cache->generateId( $plugincall );
         $plugincall_arg = rawurlencode($plugincall);
-        //$plugincall_arg = md5($plugincall); // will not work if plugin has to recreate content and cache is lost
+        //$plugincall_arg = md5($plugincall); 
+        // will not work if plugin has to recreate content and cache is lost
 
         $url = DATA_PATH . '/getimg.php?';
         if (($lastchar = substr($url,-1)) == '/') {
@@ -1158,11 +1159,13 @@ class WikiPluginCached extends WikiPlugin
         return $ok;
     }
 
-
 } // WikiPluginCached
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.24  2007/09/22 12:38:57  rurban
+// smaller cached args footprint
+//
 // Revision 1.23  2007/09/12 19:38:41  rurban
 // improve tempnam on windows, cleanup zero-sized files
 //
