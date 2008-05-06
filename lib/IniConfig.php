@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: IniConfig.php,v 1.120 2008-03-17 19:04:45 rurban Exp $');
+rcs_id('$Id: IniConfig.php,v 1.121 2008-05-06 19:22:51 rurban Exp $');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -200,7 +200,7 @@ function IniConfig($file) {
          'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS',
 	 'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS',
          'ENABLE_AUTH_OPENID', 'INSECURE_ACTIONS_LOCALHOST_ONLY',
-         'ENABLE_MAILNOTIFY'
+         'ENABLE_MAILNOTIFY', 'ENABLE_RECENTCHANGESBOX'
          );
 
     $rs = @parse_ini_file($file);
@@ -942,6 +942,9 @@ function fixup_dynamic_configs($file) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.120  2008/03/17 19:04:45  rurban
+// added ENABLE_MAILNOTIFY (default true)
+//
 // Revision 1.119  2008/01/31 20:40:10  vargenau
 // Implemented Mediawiki-like syntax for tables
 //
