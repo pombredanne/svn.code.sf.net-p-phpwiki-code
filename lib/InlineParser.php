@@ -1,7 +1,8 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.98 2008-03-21 20:35:52 rurban Exp $');
+rcs_id('$Id: InlineParser.php,v 1.99 2008-05-06 19:23:17 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2008 Reini Urban
+ * Copyright (C) 2008 Marc-Etienne Vargenau
  *
  * This file is part of PhpWiki.
  * 
@@ -1101,6 +1102,10 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.98  2008/03/21 20:35:52  rurban
+// Improve upon embedded ImgObject, such as [ *.mp3 ], objects.
+// Object tags now render as label correctly and param tags are also added.
+//
 // Revision 1.97  2008/03/18 20:25:49  rurban
 // Fixed "\n" => " " in [ link parsing ] by suggestion of Marc-Etienne
 //
