@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.66 2008-02-14 18:45:56 rurban Exp $');
+rcs_id('$Id: WikiPlugin.php,v 1.67 2008-05-06 19:27:10 rurban Exp $');
 
 class WikiPlugin
 {
@@ -87,7 +87,7 @@ class WikiPlugin
     function getVersion() {
         return _("n/a");
         //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.66 $");
+        //                    "\$Revision: 1.67 $");
     }
 
     function getArgs($argstr, $request=false, $defaults=false) {
@@ -155,7 +155,7 @@ class WikiPlugin
         $args = array();
         $defaults = array();
 	if (empty($argstr))
-            return array($args,$defaults);
+            return array($args, $defaults);
             
         $arg_p = '\w+';
         $op_p = '(?:\|\|)?=';
@@ -200,7 +200,7 @@ class WikiPlugin
             // Remove quotes from string values.
             if ($qq_val)
                 $val = stripslashes($qq_val);
-            elseif ($count >= 4 and $q_val)
+            elseif ($count > 4 and $q_val)
                 $val = stripslashes($q_val);
             elseif ($count >= 6 and $gt_val)
                 $val = _(stripslashes($gt_val));
