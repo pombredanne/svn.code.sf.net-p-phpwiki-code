@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.147 2008-05-06 19:27:30 rurban Exp $');
+rcs_id('$Id: config.php,v 1.148 2008-05-07 19:10:08 vargenau Exp $');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php
@@ -581,19 +581,25 @@ function safe_wordwrap($str, $width=80, $break="\n", $cut=false) {
 }
 
 function getUploadFilePath() {
+
     if (defined('UPLOAD_FILE_PATH')) {
-    	if (string_ends_with(UPLOAD_FILE_PATH, "/") 
-    	    or string_ends_with(UPLOAD_FILE_PATH, "\\"))
-	    return UPLOAD_FILE_PATH;
-	else
-	    return UPLOAD_FILE_PATH."/";
+        // Force creation of the returned directory if it does not exist.
+        if (!file_exists(UPLOAD_FILE_PATH)) {
+            mkdir(UPLOAD_FILE_PATH, 0775);
+        }
+        if (string_ends_with(UPLOAD_FILE_PATH, "/") 
+            or string_ends_with(UPLOAD_FILE_PATH, "\\")) {
+            return UPLOAD_FILE_PATH;
+        } else {
+            return UPLOAD_FILE_PATH."/";
+        }
     }
     return defined('PHPWIKI_DIR') 
         ? PHPWIKI_DIR . "/uploads/" 
         : realpath(dirname(__FILE__) . "/../uploads/");
 }
 function getUploadDataPath() {
-    if (defined('UPLOAD_FILE_PATH')) {
+    if (defined('UPLOAD_DATA_PATH')) {
 	return string_ends_with(UPLOAD_DATA_PATH, "/") 
 	    ? UPLOAD_DATA_PATH : UPLOAD_DATA_PATH."/";
     }
@@ -656,6 +662,9 @@ function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859
 */
 
 // $Log: not supported by cvs2svn $
+// Revision 1.147  2008/05/06 19:27:30  rurban
+// comments only
+//
 // Revision 1.146  2007/09/12 19:39:46  rurban
 // Ensure ending uploads slash even on user provided UPLOAD constants. Fixes plugin/UpLoad
 //
