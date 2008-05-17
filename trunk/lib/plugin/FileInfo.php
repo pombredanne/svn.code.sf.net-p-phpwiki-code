@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FileInfo.php,v 1.7 2007-08-25 18:06:05 rurban Exp $');
+rcs_id('$Id: FileInfo.php,v 1.8 2008-05-17 06:26:57 vargenau Exp $');
 /*
  Copyright 2005,2007 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision: 1.8 $");
     }
 
     function getDefaultArguments() {
@@ -70,7 +70,9 @@ extends WikiPlugin
             $is_Upload = 1;
         }
         $dir = getcwd();
-        chdir(PHPWIKI_DIR);
+        if (defined('PHPWIKI_DIR')) {
+            chdir(PHPWIKI_DIR);
+        }
 	if (!file_exists($file)) {
 	    if ($quiet)
 		return '';
@@ -307,6 +309,9 @@ struct VS_VERSIONINFO { struct VS_VERSIONINFO
 
 /* 
  $Log: not supported by cvs2svn $
+ Revision 1.7  2007/08/25 18:06:05  rurban
+ fix Upload: links
+
  Revision 1.6  2007/01/04 16:42:31  rurban
  Add quiet argument. Allow local files if owner == ADMIN and page == locked.
 
