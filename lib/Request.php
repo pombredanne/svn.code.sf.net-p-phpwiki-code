@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Request.php,v 1.118 2008-03-22 21:45:34 rurban Exp $');
+rcs_id('$Id: Request.php,v 1.119 2008-05-17 06:29:49 vargenau Exp $');
 /*
  Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  
@@ -719,7 +719,7 @@ class Request_UploadedFile {
                 trigger_error(_("Upload error: file too big"), E_USER_WARNING);
                 break;
             case 3:
-                trigger_error(_("Upload error: file only partially recieved"), E_USER_WARNING);
+                trigger_error(_("Upload error: file only partially received"), E_USER_WARNING);
                 break;
             case 4:
                 trigger_error(_("Upload error: no file selected"), E_USER_WARNING);
@@ -1362,6 +1362,10 @@ class HTTP_ValidatorSet {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.118  2008/03/22 21:45:34  rurban
+// Fixed a blocker for php-5.2. Somehow _SESSION is not copied from
+// HTTP_SESSION_VARS in prepend, so check it explicitly. User logins persist now.
+//
 // Revision 1.117  2008/03/17 19:08:29  rurban
 // get rid of @ error protection in unserialize
 //
