@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.26 2007-07-14 12:05:07 rurban Exp $');
+rcs_id('$Id: UpLoad.php,v 1.27 2008-05-17 06:53:54 vargenau Exp $');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -260,8 +260,8 @@ ws[cfh]");
     function log ($userfile, $upload_log, &$message) {
     	global $WikiTheme;
     	$user = $GLOBALS['request']->_user;
-        if (!is_writable($upload_log)) {
-            trigger_error(_("The upload logfile is not writable."), E_USER_WARNING);
+        if (file_exists($upload_log) and (!is_writable($upload_log))) {
+            trigger_error(_("The upload logfile exists but is not writable."), E_USER_WARNING);
         }
         elseif (!$log_handle = fopen ($upload_log, "a")) {
             trigger_error(_("Can't open the upload logfile."), E_USER_WARNING);
@@ -286,6 +286,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.26  2007/07/14 12:05:07  rurban
+// no inlined [] links anymore, edit inclusion, more extensions allowed.
+//
 // Revision 1.25  2007/04/18 20:40:48  rurban
 // added DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS
 //
