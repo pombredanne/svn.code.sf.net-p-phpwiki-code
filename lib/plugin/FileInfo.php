@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FileInfo.php,v 1.8 2008-05-17 06:26:57 vargenau Exp $');
+rcs_id('$Id: FileInfo.php,v 1.9 2008-05-20 19:55:12 vargenau Exp $');
 /*
  Copyright 2005,2007 $ThePhpWikiProgrammingTeam
  
@@ -45,7 +45,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision: 1.9 $");
     }
 
     function getDefaultArguments() {
@@ -105,6 +105,8 @@ extends WikiPlugin
 	    case 'phonysize':$s[] = $this->phonysize(filesize($file)); break;
 	    case 'date':     $s[] = strftime("%x %X", filemtime($file)); break;
 	    case 'mtime':    $s[] = filemtime($file); break;
+	    case 'owner':    $o = posix_getpwuid(fileowner($file)); $s[] = $o['name']; break;
+	    case 'group':    $o = posix_getgrgid(filegroup($file)); $s[] = $o['name']; break;
 	    case 'name':     $s[] = basename($file); break;
 	    case 'path':     $s[] = $file; break;
 	    case 'dirname':  $s[] = dirname($file); break;
@@ -309,6 +311,9 @@ struct VS_VERSIONINFO { struct VS_VERSIONINFO
 
 /* 
  $Log: not supported by cvs2svn $
+ Revision 1.8  2008/05/17 06:26:57  vargenau
+ Check PHPWIKI_DIR is defined
+
  Revision 1.7  2007/08/25 18:06:05  rurban
  fix Upload: links
 
