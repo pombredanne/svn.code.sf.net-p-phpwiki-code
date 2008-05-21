@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.274 2008-05-06 19:29:06 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.275 2008-05-21 04:30:59 rurban Exp $');
 /*
  Copyright 1999-2008 $ThePhpWikiProgrammingTeam
 
@@ -28,6 +28,7 @@
     IsSafeURL($url)
     LinkURL ($url, $linktext)
     LinkImage ($url, $alt)
+    ImgObject ($img, $url)
 
     SplitQueryArgs ($query_args)
     LinkPhpwikiURL ($url, $text, $basepage)
@@ -403,42 +404,52 @@ function LinkImage($url, $alt = false) {
     $force_img = "png|jpg|gif|jpeg|bmp|pl|cgi";
     // Disallow tags in img src urls. Typical CSS attacks.
     // FIXME: Is this needed (or sufficient?)
+    // FIXED: This was broken for moniker:TP30 test/image.png => url="moniker:TP30" attr="test/image.png"
     $ori_url = $url;
-    $arr = split(' ',$url);
-    if (count($arr) > 1) {
-        $url = $arr[0];
-    }
     if(! IsSafeURL($url)) {
         $link = HTML::strong(HTML::u(array('class' => 'baduri'),
                                      _("BAD URL -- remove all of <, >, \"")));
+        return $link;
     } else {
-        // support new syntax: [image.jpg size=50% border=n]
+        // support new syntax: [prefix/image.jpg size=50% border=n]
         //if (!preg_match("/\.(".$force_img.")/i", $url))
         if (empty($alt)) $alt = basename($url);
+	$arr = split(' ',$url);
         $link = HTML::img(array('src' => $url, 'alt' => $alt, 'title' => $alt));
         if (count($arr) > 1) {
+	    $url = $arr[0];
             array_shift($arr);
             foreach ($arr as $attr) {
                 if (preg_match('/^size=(\d+%)$/',$attr,$m)) {
                     $link->setAttr('width',$m[1]);
                     $link->setAttr('height',$m[1]);
                 }
-                if (preg_match('/^size=(\d+)x(\d+)$/',$attr,$m)) {
+                elseif (preg_match('/^size=(\d+)x(\d+)$/',$attr,$m)) {
                     $link->setAttr('width',$m[1]);
                     $link->setAttr('height',$m[2]);
                 }
-                if (preg_match('/^width=(\d+[%p]?x?)$/',$attr,$m))
+                elseif (preg_match('/^width=(\d+[%p]?x?)$/',$attr,$m))
                     $link->setAttr('width',$m[1]);
-                if (preg_match('/^height=(\d+[%p]?x?)$/',$attr,$m))
+                elseif (preg_match('/^height=(\d+[%p]?x?)$/',$attr,$m))
                     $link->setAttr('height',$m[1]);
-                if (preg_match('/^border=(\d+)$/',$attr,$m))
+                elseif (preg_match('/^border=(\d+)$/',$attr,$m))
                     $link->setAttr('border',$m[1]);
-                if (preg_match('/^align=(\w+)$/',$attr,$m))
+                elseif (preg_match('/^align=(\w+)$/',$attr,$m))
                     $link->setAttr('align',$m[1]);
-                if (preg_match('/^hspace=(\d+)$/',$attr,$m))
+                elseif (preg_match('/^hspace=(\d+)$/',$attr,$m))
                     $link->setAttr('hspace',$m[1]);
-                if (preg_match('/^vspace=(\d+)$/',$attr,$m))
+                elseif (preg_match('/^vspace=(\d+)$/',$attr,$m))
                     $link->setAttr('vspace',$m[1]);
+		else {
+		    $url .= ' '.$attr;
+		    if(! IsSafeURL($url)) {
+			$link = HTML::strong(HTML::u(array('class' => 'baduri'),
+						     _("BAD URL -- remove all of <, >, \"")));
+			return $link;
+		    } else {
+			$link->setAttr('src', $url);
+		    }
+		}
             }
         }
         // Check width and height as spam countermeasure
@@ -466,9 +477,9 @@ function LinkImage($url, $alt = false) {
             	;  // only valid image extensions or scripts assumed to generate images
             elseif (!check_php_version(4,3) and preg_match("/^http.+\.png$/i",$url))
                 ; // it's safe to assume that this will fail.
-            elseif (preg_match("/^http/",$url)) // external url
+            elseif (preg_match("/^http/",$url)) { // external url
             	$size = @getimagesize($url); 
-            else { // local file
+            } else { // local file
                 if (file_exists($file = NormalizeLocalFileName($url))) {  // here
             	    $size = @getimagesize($file);
                 } elseif (file_exists(NormalizeLocalFileName(urldecode($url)))) {
@@ -2261,6 +2272,9 @@ function isSerialized($s) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.274  2008/05/06 19:29:06  rurban
+// support Upload:image_with_foreign_chars: do urldecode links to such files
+//
 // Revision 1.273  2008/03/22 21:43:21  rurban
 // Fix syntax error from r1.272
 //
