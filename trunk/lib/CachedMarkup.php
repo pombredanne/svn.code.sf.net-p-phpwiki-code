@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: CachedMarkup.php,v 1.64 2008-03-21 20:35:52 rurban Exp $');
+rcs_id('$Id: CachedMarkup.php,v 1.65 2008-05-21 04:29:46 rurban Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2008 $ThePhpWikiProgrammingTeam
  *
@@ -310,11 +310,11 @@ class Cached_InlinedImage extends Cached_DynamicContent {
     // TODO: fix interwiki inline links in case of static dumps
     function expand($basepage, &$markup) {
 	global $WikiTheme;
-        // In case of static dumps we need to check if we should
-        // inline the image or not: external: keep link, internal: copy locally
     	$this->_basepage = $basepage;
 	$label = isset($this->_label) ? $this->_label : false;
 	if ($WikiTheme->DUMP_MODE) {
+            // In case of static dumps we need to check if we should
+            // inline the image or not: external: keep link, internal: copy locally
 	    return LinkImage($label);
 	} else {
 	    return LinkImage($label);
@@ -814,6 +814,10 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2008/03/21 20:35:52  rurban
+// Improve upon embedded ImgObject, such as [ *.mp3 ], objects.
+// Object tags now render as label correctly and param tags are also added.
+//
 // Revision 1.63  2008/03/17 19:03:08  rurban
 // protect $WikiTheme->VALID_LINKS
 //
