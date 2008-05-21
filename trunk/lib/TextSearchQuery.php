@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.32 2008-05-06 19:25:55 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.33 2008-05-21 04:28:38 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -112,6 +112,7 @@ class TextSearchQuery {
             trigger_error(fmt("Unsupported argument: %s=%s", 'regex', $regex));
             $this->_regex = 0;
         }
+	$this->_regex_modifier = ($case_exact?'':'i').'sS';
         $this->_case_exact = $case_exact;
         if ($regex != 'pcre') {
 	    $parser = new TextSearchQuery_Parser;
@@ -1186,6 +1187,9 @@ class TextSearchQuery_Lexer {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.32  2008/05/06 19:25:55  rurban
+// perfomance optimisation: do numeric checks. Change EXACT semantics: ignore case_exact, always do strcmp. Change WORD match to use \b word boundary checks
+//
 // Revision 1.31  2007/09/12 19:36:47  rurban
 // Fix Bug#1792170: Handle " ( " or "(test" without closing ")" as plain word. Allow single string token "0"
 //
