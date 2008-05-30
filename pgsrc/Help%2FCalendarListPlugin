@@ -1,9 +1,9 @@
 Date: Wed, 29 Aug 2007 09:31:31 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20070828)
-X-Rcs-Id: $Id: Help%2FCalendarListPlugin,v 1.3 2008-03-01 08:59:05 vargenau Exp $
+X-Rcs-Id: $Id: Help%2FCalendarListPlugin,v 1.4 2008-05-30 18:11:07 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCalendarListPlugin;
-  pgsrc_version="2 $Revision: 1.3 $";
+  pgsrc_version="2 $Revision: 1.4 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -22,20 +22,22 @@ this page. The event should be listed below the calendar.
 Honors now year + month args as start base - together with Calendar navigation.
 The behaviour before 2007 with last/next_n_days was to start now.
 
-Usage:
+!!! Usage
+
 <verbatim>
 <?plugin Calendar ?>
 <?plugin CalendarList ?>
 </verbatim>
 
-Example (_click any date and edit it, then return to this page_):
+!!! Example
+
+_Click any date and edit it, then return to this page_:
 
 <?plugin Calendar ?>
 
 <?plugin CalendarList ?>
 
-
-!! Plugin Arguments
+!!! Arguments
 
 <strong>year</strong>:
 
@@ -64,7 +66,7 @@ Example (_click any date and edit it, then return to this page_):
 
    => 0,
 
-! Support ranges: next or last N days/events
+!! Support ranges: next or last N days/events
 
 <strong>next_n_days</strong>:
 
@@ -109,7 +111,7 @@ Example (_click any date and edit it, then return to this page_):
   Start the week at Sunday or Monday<br>
   Default: 1 for Monday
 
-!! Config Options
+!!! Config Options
 
 * PLUGIN_CALENDARLIST_ORDER       = normal
 * PLUGIN_CALENDARLIST_NEXT_N_DAYS = ''
@@ -119,4 +121,4 @@ Example (_click any date and edit it, then return to this page_):
 
 -----
 
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]

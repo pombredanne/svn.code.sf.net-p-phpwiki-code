@@ -1,9 +1,7 @@
-Date: Mon, 10 Oct 2005 01:31:02 -0700
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.11p1)
-X-Rcs-Id: $Id: Help%2FCreateTocPlugin,v 1.1 2005-11-21 22:19:00 rurban Exp $
+Date: Wed, 28 May 2008 19:07:23 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCreateTocPlugin;
-  pgsrc_version="2 $Revision: 1.1 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -11,15 +9,15 @@ Content-Transfer-Encoding: binary
 
 <?plugin CreateToc jshide||=1 ?>
 
-Help:WikiPlugin to create a dynamical *Table Of Contents* of all headers. Since v1.3.8
+[WikiPlugin|Help:WikiPlugin] to create a dynamical *Table Of Contents* of all headers. Since v1.3.8
 
-!! Usage
+!!! Usage
 <verbatim>
      <?plugin CreateToc ?>
      <?plugin CreateToc jshide||=1 with_toclink||=1 ?>
 </verbatim>
 
-!! Plugin Arguments
+!!! Arguments
 __jshide__: |
   Boolean if the TOC should be initially hidden and on click expanded. Default: 0
 __with_toclink__:  |
@@ -37,9 +35,9 @@ __indentstr__:  |
 __pagename__:  |
   TOC of which page? Default: current pagename
 
-!! Examples
+!!! Examples
 
 See for example PhpWikiDemo:en/TextFormattingRules
 -------------
 
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]

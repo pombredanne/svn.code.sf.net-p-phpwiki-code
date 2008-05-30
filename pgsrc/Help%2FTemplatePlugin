@@ -1,15 +1,11 @@
-Date: Sat, 10 Sep 2005 21:42:11 +0100
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
-X-Rcs-Id: $Id: Help%2FTemplatePlugin,v 1.1 2005-11-21 22:19:00 rurban Exp $
+Date: Wed, 28 May 2008 19:08:07 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTemplatePlugin;
-  pgsrc_version="1 $Revision: 1.1 $";
   flags="";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
-
-!! Synopsis
 
 Template = Parametrized blocks.
 
@@ -17,14 +13,16 @@ Include text from a wiki page and replace certain placeholders by parameters.
 Similiar to CreatePage with the template argument, but at run-time.
 Similiar to the mediawiki templates but not with the "|" parameter seperator.
 
-!!  Usage
+!!!  Usage
+
 <verbatim>
   <?plugin Template page=Templates/Footer?>
   <?plugin Template page=Templates/Film vars="title=SomeFilm&year=1999" ?>
   {{Templates/Film|title=SomeFilm|year=1999}}
 </verbatim>
 
-!! Plugin Arguments
+!!! Arguments
+
 Argument|
   Default Value|
     Description
@@ -37,10 +35,10 @@ vars|
   (empty)|
     optional parameters to be expanded inside the template
 
-! Parameter expansion:
+!! Parameter expansion:
   vars="var1=value1&var2=value2"
 
-We only support named parameters, not numbered ones as in mediawiki, and 
+We only support named parameters, not numbered ones as in mediawiki, and
 the placeholder is %%var%% and not {{~{var~}}} as in mediawiki.
 
 The following predefined variables are automatically expanded if existing:
@@ -49,25 +47,26 @@ The following predefined variables are automatically expanded if existing:
   mtime     - last modified date + time
   ctime     - creation date + time
   author    - last author
-  owner     
+  owner
   creator   - first author
   SERVER_URL, DATA_PATH, SCRIPT_NAME, PHPWIKI_BASE_URL and BASE_URL
 </verbatim>
 
 <noinclude> .. </noinclude> is stripped
 
-! In work:
+!! In work
+
 * ENABLE_MARKUP_TEMPLATE = true: (lib/InlineParser.php)
-  Support a mediawiki-style syntax extension which maps 
+  Support a Mediawiki-style syntax extension which maps
 <verbatim>
     {{TemplateFilm|title=Some Good Film|year=1999}}
 </verbatim>
-  to 
+  to
 <verbatim>
     <?plugin Template page=TemplateFilm vars="title=Some Good Film&year=1999" ?>
 </verbatim>
 
-!! Examples
+!!! Examples
 
 <verbatim>
   <?plugin Template page=TemplateExample vars="title=TestTitle" ?>
@@ -80,4 +79,4 @@ Shorter syntax:
   {{TemplateExample|title=TestTitle}}
 
 -------------
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]

@@ -1,16 +1,11 @@
-Date: Fri, 29 Dec 2006 18:57:39 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.8a)
-X-Rcs-Id: $Id: Help%2FRichTablePlugin,v 1.3 2008-01-22 14:24:02 vargenau Exp $ 
+Date: Wed, 28 May 2008 19:06:08 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRichTablePlugin;
-  pgsrc_version="2 $Revision: 1.3 $";
   flags="";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
-
-
-! Synopsis
 
 The Help:RichTablePlugin is a plugin that takes off from the Help:OldStyleTablePlugin. It allows a user to specify arbitrary properties of <tt><table></tt>, <tt><tr></tt> and <tt><td></tt> with a very simple markup.
 
@@ -45,7 +40,7 @@ What will not work is style with comma inside, e. g.
 style="font-family: Verdana, Arial, Helvetica, sans-serif"
 </verbatim>
 
-! Example
+!!! Example
 
 <?plugin RichTable
 
@@ -121,4 +116,4 @@ This cell uses the row color
 
 -------------
 
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]

@@ -1,9 +1,7 @@
-Date: Wed, 29 Aug 2007 09:31:31 +0200
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20070828)
-X-Rcs-Id: $Id: Help%2FCalendarPlugin,v 1.2 2007-09-01 13:40:12 rurban Exp $
+Date: Wed, 28 May 2008 19:07:59 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCalendarPlugin;
-  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -17,10 +15,10 @@ The names for the "day pages" are by default formed by appending the
 date to the pagename on which the calendar appears.
 
 _This feature was inspired by Calendar |http://manila.userland.com/],
-and first implemented by PhpWiki:GaryBenson. It was later implemented as a
-Help:WikiPlugin by PhpWiki:JeffDairiki._
+and first implemented by [Gary Benson|PhpWiki:GaryBenson]. It was later implemented as a
+Help:WikiPlugin by [Jeff Dairiki|PhpWiki:JeffDairiki]._
 
-!!Usage:
+!!! Usage
 
 <verbatim>
 <?plugin Calendar?>
@@ -29,11 +27,9 @@ Help:WikiPlugin by PhpWiki:JeffDairiki._
 will get you:
 <?plugin Calendar?>
 
---------
+!!! Arguments
 
-!! Plugin Arguments
-
-!Selection of Month
+!! Selection of Month
 
 <strong>year</strong>:
 
@@ -50,7 +46,7 @@ will get you:
 
   <?plugin Calendar month_offset=+1?>
 
-!"Day Page" Names
+!! "Day Page" Names
 
 <strong>date_format</strong>:
 
@@ -63,7 +59,7 @@ will get you:
   Prepended to the date (formatted per ''date_format'') to generate
   the "day page" names. The default value is =~ Help:e ]/=.
 
-!Appearance
+!! Appearance
 
 <strong>month_format</strong>:
 
@@ -83,7 +79,7 @@ will get you:
 
   <?plugin Calendar start_wday=1 ?>
 
-! See also
+!!! See Also
 
 Help:CalendarListPlugin.
 
@@ -96,16 +92,16 @@ Often used together like this:
 
 -----
 
-! Patch for 1.2
+!!! Patch for 1.2
 
-PhpWiki:GaryBenson wrote the first calendar implementation for PhpWiki 1.2.
+[Gary Benson|PhpWiki:GaryBenson] wrote the first calendar implementation for PhpWiki 1.2.
 (Since 1.2 doesn't support plugins, it uses a =###CALENDAR###= token
-as a trigger.) 
-Gary provides a screenshot at [ http://inauspicious.org/files/screenshots/calender.png | screenshot ], 
+as a trigger.)
+Gary provides a screenshot at [ http://inauspicious.org/files/screenshots/calender.png | screenshot ],
 a  Help:h  | http://inauspicious.org/files/phpwiki/phpwiki-1.2.0-calendar.patch] (on 1.2.0), and
  Help:r .php | http://inauspicious.org/files/phpwiki/calendar.php]
 (which renders a view of the year.)
 
 ----
 
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]

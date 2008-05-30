@@ -1,23 +1,19 @@
-Date: Sun, 4 Jul 2004 01:31:02 -0700
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.4)
-X-Rcs-Id: $Id: Help%2FPhpWeatherPlugin,v 1.1 2005-11-21 22:19:00 rurban Exp $
+Date: Wed, 28 May 2008 19:07:54 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpWeatherPlugin;
-  pgsrc_version="2 $Revision: 1.1 $";
   flags="";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-!!! Synopsis
-
-The ~PhpWeatherPlugin is a Help:WikiPlugin that uses PhpWeather to display
+The ~PhpWeatherPlugin is a [WikiPlugin|Help:WikiPlugin] that uses PhpWeather to display
 a block of text with the current weather for some airport in the
 world. It looks like this:
 
 <?plugin PhpWeather menu=true ?>
 
-!!! Plugin Arguments
+!!! Arguments
 
 __menu__:
   Set this to =true= to have the plugin generate a menu after the
@@ -70,4 +66,4 @@ __units__:
 
 ----
 
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
