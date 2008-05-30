@@ -1,9 +1,7 @@
-Date: Tue, 17 Sep 2002 13:03:19 -0700
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.4pre)
-X-Rcs-Id: $Id: Help%2FTranscludePlugin,v 1.2 2007-01-10 20:48:11 rurban Exp $
+Date: Wed, 28 May 2008 19:06:31 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTranscludePlugin;
-  pgsrc_version="2 $Revision: 1.2 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -38,7 +36,7 @@ o The recursion detection code does not currently work.  Be careful to
   avoid recursive transclusions, or you'll be sorry (or at least
   amused.)
 
-! Example
+!!! Example
 
 <verbatim>
 <?plugin Transclude src="http://phpwiki.sourceforge.net/demo/ChangeLog" ?>

@@ -1,17 +1,15 @@
-Date: Wed, 23 May 2007 20:12:14 +0200
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2FYouTubePlugin,v 1.1 2007-06-09 20:01:13 rurban Exp $
+Date: Wed, 28 May 2008 19:07:24 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FYouTubePlugin;
-  pgsrc_version="2 $Revision: 1.1 $";
   flags="";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-! Usage
+!!! Usage
 <verbatim>
-  <?plugin YouTube v=HxXnYEqaRiQ 
+  <?plugin YouTube v=HxXnYEqaRiQ
 	   width=425 height=350
 	   size=medium|small|large
            style=inline|link
@@ -28,7 +26,7 @@ Content-Transfer-Encoding: binary
   ?>
 </verbatim>
 
-! Arguments
+!!! Arguments
 
   * v=... (required, or define browse)
     key of the video
@@ -54,7 +52,7 @@ Content-Transfer-Encoding: binary
   * size=medium or small or large (optional. Default: medium).
     Overrides width and height.
 
-! Example
+!!! Example
 
 <verbatim>
 link:
@@ -81,7 +79,7 @@ Top Rated (This Month):
 
 See LisaNova
 
-! Author
-PhpWiki:ReiniUrban
+!!! Author
+[Reini Urban|PhpWiki:ReiniUrban]
 ----
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]

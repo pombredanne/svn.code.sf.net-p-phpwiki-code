@@ -1,15 +1,11 @@
-Date: Wed, 11 Oct 2006 09:16:43 +0200
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2FFileInfoPlugin,v 1.2 2007-01-02 13:24:58 rurban Exp $
+Date: Wed, 28 May 2008 19:07:34 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FFileInfoPlugin;
   flags=PAGE_LOCKED;
-  pgsrc_version="2 $Revision: 1.2 $";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
-
-!! Synopsis
 
 The [FileInfo|Help:FileInfoPlugin] plugin displays the version, date, size,
 perms of an uploaded file.  Only files relative and below to the uploads path
@@ -19,15 +15,16 @@ For exe files the *version* argument might work to display the VERSIONINFO resso
 
 Since v1.3.13.
 
-!! Typical Usage
+!!! Typical Usage
+
 <verbatim>
   <?plugin FileInfo file=uploads/setup.exe display=version,date ?>
-  <?plugin FileInfo file=uploads/setup.exe display=name,version,date 
+  <?plugin FileInfo file=uploads/setup.exe display=name,version,date
                     format="%s (version: %s, date: %s)" ?>
 </verbatim>
 
+!!! Arguments
 
-!! Arguments
 __file__:
   relative path from PHPWIKI_DIR. (required)
 
@@ -38,10 +35,9 @@ __display__:
 __format__:
   printf format string with %s only, all display modes from above vars return strings (optional)
 
-
-!! Examples
+!!! Examples
 
 This wiki was installed at <?plugin FileInfo file=config/config.ini display=date ?>.
 
 ----
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]

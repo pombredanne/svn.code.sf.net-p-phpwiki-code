@@ -1,9 +1,7 @@
-Date: Tue, 2 Jan 2007 13:30:17 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2FWikiAdminSelectPlugin,v 1.3 2007-01-07 20:18:29 rurban Exp $
+Date: Wed, 28 May 2008 19:08:16 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiAdminSelectPlugin;
-  pgsrc_version="2 $Revision: 1.3 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -11,12 +9,12 @@ Content-Transfer-Encoding: binary
 
 PhpWikiAdministration Page Explorer main plugin.
 
-! Usage
+!!! Usage
 <verbatim>
   <?plugin WikiAdminSelect ?>
 </verbatim>
 
-! Arguments
+!!! Arguments
 
 All [PageList|Help:PageList] options.<br>
 Plus:
@@ -25,7 +23,7 @@ Plus:
         'info'          => '',
         'debug'         => false
 
-! Example
+!!! Example
 
 <verbatim>
 <?plugin WikiAdminSelect s=Temp* ?>
@@ -33,10 +31,10 @@ Plus:
 
 <?plugin WikiAdminSelect s=Temp* ?>
 
-! Author
-PhpWiki:ReiniUrban
+!!! Author
+[Reini Urban|PhpWiki:ReiniUrban]
 
-! See Also
+!!! See Also
 PhpWikiAdministration
 ----
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]

@@ -1,9 +1,7 @@
-Date: Fri, 29 Dec 2006 18:57:39 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2FPluginManagerPlugin,v 1.1 2007-01-02 13:26:05 rurban Exp $
+Date: Wed, 28 May 2008 19:07:25 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPluginManagerPlugin;
-  pgsrc_version="2 $Revision: 1.1 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -11,12 +9,12 @@ Content-Transfer-Encoding: binary
 
 Provides a dynamic list of plugins on this wiki.
 
-! Usage
+!!! Usage
 <verbatim>
   <?plugin PluginManager info=args ?>
 </verbatim>
 
-! Arguments
+!!! Arguments
 
 info _(default: args)_:
   Display the arguments also. Default: enabled
@@ -26,7 +24,7 @@ info _(default: args)_:
 
 define('REQUIRE_ADMIN', true) in the sourcecode to disable general usage.
 
-! Example
+!!! Example
 
 <verbatim>
 <?plugin PluginManager ?>
@@ -34,12 +32,12 @@ define('REQUIRE_ADMIN', true) in the sourcecode to disable general usage.
 
 <?plugin PluginManager ?>
 
-! Author
-PhpWiki:JeffDairiki ?
+!!! Author
+[Jeff Dairiki|PhpWiki:JeffDairiki] ?
 
-! See Also
+!!! See Also
 
-PluginManager
+[PluginManager]
 
 ----
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]

@@ -1,9 +1,7 @@
-Date: Fri, 15 Oct 2004 19:08:04 -0700
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
-X-Rcs-Id: $Id: Help%2FPagePermissions,v 1.1 2007-01-03 21:27:19 rurban Exp $
+Date: Wed, 28 May 2008 19:07:30 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPagePermissions;
-  pgsrc_version="2 $Revision: 1.1 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -40,7 +38,7 @@ Consider the following perm:
 -----
 
 For Authentication see ~WikiUserNew.php, ~WikiGroup.php and main.php
-Page Permissions are in PhpWiki since v1.3.9. 
+Page Permissions are in PhpWiki since v1.3.9.
 I suspect ACL page permissions to degrade performance by 10%
 
 Enable/Disable it in config/config.ini:
@@ -163,4 +161,4 @@ change:
 
 Source: [PhpWikiCvs:lib/PagePerm.php]
 -----
-PhpWikiDocumentation
+[PhpWikiDocumentation]

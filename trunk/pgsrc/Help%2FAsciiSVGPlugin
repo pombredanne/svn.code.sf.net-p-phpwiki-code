@@ -1,9 +1,7 @@
-Date: Thu, 7 Jun 2007 12:23:15 +0200
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: Help%2FAsciiSVGPlugin,v 1.3 2007-06-09 20:01:13 rurban Exp $
+Date: Wed, 28 May 2008 19:06:46 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAsciiSVGPlugin;
-  pgsrc_version="2 $Revision: 1.3 $";
   flags="";
   markup=2;
   charset=iso-8859-1
@@ -19,14 +17,14 @@ If you are using Internet Explorer 6 + Adobe SVGviewer (often included
 by default with Windows XP) or SVG enabled Mozilla/Firefox (and have
 Adobe SVGviewer installed as well!) then you should see the examples.
 
-! Usage
+!!! Usage
 <verbatim>
-  <?plugin AsciiSVG width= height= onmousemove="" script="" 
-           code...  
+  <?plugin AsciiSVG width= height= onmousemove="" script=""
+           code...
   ?>
 </verbatim>
 
-! Arguments
+!!! Arguments
 
 width, height, script, onmouseover
 
@@ -34,29 +32,29 @@ All other arguments are passed to the ASCIISvg javascript library and
 rendered as SVG.  See
 http://www1.chapman.edu/~jipsen/svg/asciisvg.html
 
-! Example
+!!! Example
 
 <verbatim>
-<?plugin AsciiSVG width="117" height="117" 
+<?plugin AsciiSVG width="117" height="117"
   border = 0
   initPicture(-10,10)
   axes()
   stroke = "red"
   p = []
-  with (Math) 
+  with (Math)
     for (t = 0; t < 10.01; t += 0.05)
       p[p.length] = [t*cos(PI*t), t*sin(PI*t)]
   path(p)
 ?>
 </verbatim>
 
-<?plugin AsciiSVG width="117" height="117" 
+<?plugin AsciiSVG width="117" height="117"
   border = 0
   initPicture(-10,10)
   axes()
   stroke = "red"
   p = []
-  with (Math) 
+  with (Math)
     for (t = 0; t < 10.01; t += 0.05)
       p[p.length] = [t*cos(PI*t), t*sin(PI*t)]
   path(p)
@@ -67,11 +65,11 @@ http://www1.chapman.edu/~jipsen/svg/asciisvg.html
 With multiple ~AsciiSVG plugins on the same page the 2nd and
 subsequent ones will have the same width and height.
 
-! Author
-PhpWiki:ReiniUrban
+!!! Author
+[Reini Urban|PhpWiki:ReiniUrban]
 
-! See Also
+!!! See Also
 Help:AsciiMathPlugin
 
 ----
-PhpWikiDocumentation Help:WikiPlugin
+[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]

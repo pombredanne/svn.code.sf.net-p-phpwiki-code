@@ -1,11 +1,10 @@
-Date: Thu, 7 Jun 2007 12:23:15 +0200
-X-Rcs-Id: $Id: Help%2FWikiPlugin,v 1.8 2007-06-09 20:01:13 rurban Exp $
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
+Date: Wed, 28 May 2008 19:05:56 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FWikiPlugin;
-  pgsrc_version="2 $Revision: 1.8 $";
   flags="";
   markup=2;
+  hits=1;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
@@ -17,7 +16,7 @@ A plugin is some PHP code that
 * implements the ~WikiPlugin interface by extending that class.
 
 There are many plugins already distributed with PhpWiki. Simply look
-in the =lib/plugin= directory or see the PluginManager list or see all the
+in the =lib/plugin= directory or see the [PluginManager] list or see all the
 [Help/*Plugin pages|phpwiki:TitleSearch?s=Help/*Plugin].
 
 To write your own, look at the Help:HelloWorldPlugin (~HelloWorld.php
@@ -26,7 +25,7 @@ Publish your self-written plugin at a new PhpWiki page with
 ~PluginName + *Plugin* appended
 and add a link to [CategoryContributedPlugin | PhpWiki:CategoryContributedPlugin].
 
-A Help:WikiPlugin allows one to easily add new types of dynamic
+A ~WikiPlugin allows one to easily add new types of dynamic
 content (as well as other functionality) to wiki pages within PhpWiki.
 In this very wiki all actions which are not entirely lowercased
 are implemented using plugins, and some lowercased convenience
@@ -38,7 +37,7 @@ Note that you can NOT extend the markup syntax with a plugin, as in other wiki e
 (The old-style  Help:MagicPhpWikiURLs have been replaced by plugins
 entirely.)
 
-!!!Example
+!!! Example
 
 Currently, one invokes a plugin by putting something like:
 
@@ -52,7 +51,7 @@ library.
 
 <?plugin AllPages limit=20 cols=3 ?>
 
-!!!Details
+!!! Details
 
 Plugins can take certain named arguments, most do.  The values of
 these arguments can be determined four different ways.  In order of
@@ -85,7 +84,7 @@ precedence:
   (The BackLinks plugin uses the current page as the default value for
   the *page* argument.)
 
-  Most plugins using the PhpWiki:PageList library inherit their 
+  Most plugins using the PhpWiki:PageList library inherit their
   default arguments from the ~PageList.
 
 !! Standard Arguments
@@ -108,7 +107,7 @@ input parameter for other plugins, actions or formats.
 
 !! Basic Plugin Types
 
-All these plugins derive from the Help:WikiPlugin class extending the
+All these plugins derive from the <tt>WikiPlugin</tt> class extending the
 run method,
 which returns a object tree of HTML objects, and may react on any
 provided arguments from the ~WikiPage (see the args below) or
@@ -177,17 +176,17 @@ We decoupled actions from plugins via action pages for the following
 reasons:
 
 # Support translated action buttons and customizable action descriptions.
-# Customize standard actions by tuning the plugin invocation arguments. 
+# Customize standard actions by tuning the plugin invocation arguments.
   Override or add plugin defaults.
-# Split simple plugins into multiple actions, like RecentChanges/RecentEdits, 
+# Split simple plugins into multiple actions, like RecentChanges/RecentEdits,
   MostPopular/LeastPopular, AllPages/AllPagesCreatedByMe/AllPagesLastEditedByMe/
   AllPagesOwnedByMe which differ only in one argument.
 # Simplify the syntax for actions on another actions using a PageList
   as result of an actionpage as input parameter for another action or
   format.
 
-* Those actions which have buttons or links in the theme or are 
-  referenced in the standard pgsrc pageset require their 
+* Those actions which have buttons or links in the theme or are
+  referenced in the standard pgsrc pageset require their
   (possibly localized) actionpages, otherwise the actions will not work.
 * If the localized actionpage is not found the english version is
   used.
@@ -199,7 +198,7 @@ invoke the plugin and ~Help:~MyActionPagePlugin should be the description page.
 
 !!! Existing Plugins
 
-See PluginManager for a detailed list. Most plugins should have their
+See [PluginManager] for a detailed list. Most plugins should have their
 own description page as subpage of *Help/* with the name *Plugin*
 appended.
 
@@ -212,4 +211,4 @@ See PhpWiki:CategoryContributedPlugin.
 <?plugin Backlinks page=CategoryContributedPlugin ?>
 
 -----
-PhpWikiDocumentation
+[PhpWikiDocumentation]

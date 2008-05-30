@@ -1,10 +1,8 @@
-Date: Wed, 27 Feb 2002 19:54:00 -0500
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.3-jeffs-hacks)
-X-Rcs-Id: $Id: Help%2FMagicPhpWikiURLs,v 1.1 2005-11-21 22:19:00 rurban Exp $
+Date: Wed, 28 May 2008 19:06:22 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
   pagename=Help%2FMagicPhpWikiURLs;
   flags=PAGE_LOCKED;
-  pgsrc_version="2 $Revision: 1.1 $";
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -98,7 +96,7 @@ and the plugin supports searching, then it will be rendered as a form.
 
   Specifies the default value for the input.
 
-!Examples:
+!!! Examples:
 
 A search plugin invoked with *<?plugin* instead of *<?plugin-form*
 simply inserts the search results of the plugin:
@@ -131,4 +129,4 @@ yields
 
 ----
 
-PhpWikiDocumentation
+[PhpWikiDocumentation]
