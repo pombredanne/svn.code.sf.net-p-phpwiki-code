@@ -1,10 +1,9 @@
-Date: Sat, 21 Jul 2007 21:24:15 +0200
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.14
-X-Rcs-Id: $Id: Help%2FSemanticRelations,v 1.8 2007-07-21 19:41:57 rurban Exp $
+Date: Mon, 16 Jun 2008 14:15:24 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FSemanticRelations,v 1.9 2008-06-18 01:12:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSemanticRelations;
-  pgsrc_version="2 $Revision: 1.8 $";
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -49,7 +48,7 @@ page is the subject, the relation the predicate, the linked page the
 object in a RDF triple. Relations always refer to another page,
 attributes not.
 
-! Example
+!!! Example
 
 <em>Sample taken from http://wiki.ontoworld.org/index.php/San_Diego</em>
 
@@ -75,14 +74,14 @@ Chargers.
 <?plugin SemanticRelations ?>
 </verbatim>
 
-! See Also
+!!! See Also
 
 See PhpWiki:SemanticWeb, 
 SemanticRelations, ListRelations, SemanticSearch, SemanticSearchAdvanced,
-Help:SemanticRelationsPlugin, Help:SemanticSearchPlugin, 
+[SemanticRelationsPlugin|Help:SemanticRelationsPlugin], [SemanticSearchPlugin|Help:SemanticSearchPlugin], 
 PhpWiki:ImportRdf, PhpWiki:ImportRdfs, PhpWiki:ImportOwl, 
 PhpWiki::ExportRdf, PhpWiki::ExportRdfs, PhpWiki::ExportOwl
 
 -------------
 
-PhpWikiDocumentation
+[PhpWikiDocumentation]

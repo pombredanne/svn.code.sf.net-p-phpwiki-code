@@ -1,19 +1,20 @@
-Date: Wed, 28 May 2008 19:06:27 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FAnalyseAccessLogSqlPlugin,v 1.3 2008-06-18 01:12:38 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAnalyseAccessLogSqlPlugin;
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The AnalyseAccessLogSql plugin provides a framework to analyse the SQL access log
+The *~AnalyseAccessLogSql* plugin provides a framework to analyse the SQL access log 
 and display the results.
-This information may be sensitive and therefore this plugin is limited to
+This information may be sensitive and therefore this plugin is limited to 
 administrator access only.
 
 A small number of queries that may (or might not) use the ~MySQL
-specific dialect of SQL are provided in <tt>lib/plugin/~AnalyseAccessLogSql.php</tt>.
+specific dialect of SQL are provided in <tt>lib/plugin/~AnalyseAccessLogSql.php</tt>. 
 For more information, please see the section *Adding new queries* below.
 
 !!! Usage
@@ -107,4 +108,4 @@ If you do add a query, please consider contributing it back to the PhpWiki proje
 Changes by [Reini Urban|PhpWiki:ReiniUrban]
 
 ----
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+[PhpWikiDocumentation] [CategoryWikiPlugin]

@@ -1,9 +1,8 @@
-Date: Son, 23 Jan 2005 08:44:07 +0100
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
-X-Rcs-Id: $Id: PgsrcTranslation,v 1.17 2005-02-02 19:44:49 rurban Exp $
+Date: Mon, 16 Jun 2008 14:15:24 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: PgsrcTranslation,v 1.18 2008-06-18 01:12:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=PgsrcTranslation;
-  pgsrc_version="2 $Revision: 1.17 $";
   flags="";
   markup=2;
   charset=UTF-8
@@ -83,13 +82,13 @@ Translator's page |
        Nederlands (nl) |
         Svenska (sv)
  n/a |
-  [ReiniUrban|PhpWiki:ReiniUrban] |
-   [KBrown|PhpWiki:KBrown] |
-    [RolandTrique|PhpWiki:RolandTrique] |
-     [MarcoMilanesi|PhpWiki:MarcoMilanesi] |
-      [TadashiJokagi|PhpWiki:TadashiJokagi] |
-       [JanNieuwenhuizen|PhpWiki:JanNieuwenhuizen] |
-        [Jon흒lund|PhpWiki:Jon흒lund]
+  [Reini Urban|PhpWiki:ReiniUrban] |
+   [K Brown|PhpWiki:KBrown] |
+    [Roland Trique|PhpWiki:RolandTrique] |
+     [Marco Milanesi|PhpWiki:MarcoMilanesi] |
+      [Tadashi Jokagi|PhpWiki:TadashiJokagi] |
+       [Jan Nieuwenhuizen|PhpWiki:JanNieuwenhuizen] |
+        [Jon 흒lund|PhpWiki:Jon흒lund]
 
 Obsolete Pages |
  English (en) |
@@ -144,4 +143,4 @@ fr:
 ----
 
 See also: PhpWiki:MultiLingualWiki, PhpWiki:LanguageSelection,
-PhpWikiDocumentation, PhpWikiDemo:de/PhpWikiDokumentation, PhpWikiDemo:fr/DocumentationDePhpWiki
+[PhpWikiDocumentation], PhpWikiDemo:de/PhpWikiDokumentation, PhpWikiDemo:fr/DocumentationDePhpWiki

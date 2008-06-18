@@ -1,13 +1,14 @@
-Date: Wed, 28 May 2008 19:08:00 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FLdapSearchPlugin,v 1.4 2008-06-18 01:12:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FLdapSearchPlugin;
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-[WikiPlugin|Help:WikiPlugin] which displays a LDAP query as table.
+The *~LdapSearch* [plugin|Help:WikiPlugin] displays a LDAP query as table.
 
 !!! Usage
 <verbatim>
@@ -17,14 +18,14 @@ Content-Transfer-Encoding: binary
            port=389
            basedn=""
  	   filter="(cn=*)"
-           attributes=""
+           attributes=""  
   ?>
-  <?plugin LdapSearch host=ldap.example.com filter="(ou=web-team)"
+  <?plugin LdapSearch host=ldap.example.com filter="(ou=web-team)" 
                       attributes="sn cn telephonenumber" ?>
   <?plugin LdapSearch host="ldap.itd.umich.edu" basedn="" filter="(sn=jensen)" attributes="cn drink" ?>
   <?plugin LdapSearch host=ldap.example.com attributes="cn sn telephonenumber" ?>
   <?plugin LdapSearch host=bugs.debian.org port=10101 basedn="dc=current,dc=bugs,dc=debian,dc=org"
-                      filter="(debbugsPackage=phpwiki)"
+                      filter="(debbugsPackage=phpwiki)" 
                       attributes="debbugsSeverity debbugsState debbugsTitle" ?>
 </verbatim>
 
@@ -57,7 +58,7 @@ password:
 
 !!! Examples
 
-<?plugin WikiFormRich action=LdapSearch
+<?plugin WikiFormRich action=LdapSearch 
         editbox[] name=host value=bugs.debian.org size=80
         editbox[] name=port value=10101 size=80
         editbox[] name=basedn value="dc=current,dc=bugs,dc=debian,dc=org" size=80
@@ -72,4 +73,4 @@ password:
 !!! See Also
 
 ----
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+[PhpWikiDocumentation] [CategoryWikiPlugin]

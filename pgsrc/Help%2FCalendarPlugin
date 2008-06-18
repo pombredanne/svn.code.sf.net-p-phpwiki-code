@@ -1,13 +1,14 @@
-Date: Wed, 28 May 2008 19:07:59 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FCalendarPlugin,v 1.4 2008-06-18 01:12:38 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCalendarPlugin;
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The [CalendarPlugin | Help:CalendarPlugin]  can be used to generate a monthly calendar in a
+The ~*Calendar* plugin can be used to generate a monthly calendar in a
 wiki page. It's handy for PhpWiki:PersonalWiki~s.
 
 Individual dates in the calendar link to specially named wiki pages.
@@ -96,12 +97,12 @@ Often used together like this:
 
 [Gary Benson|PhpWiki:GaryBenson] wrote the first calendar implementation for PhpWiki 1.2.
 (Since 1.2 doesn't support plugins, it uses a =###CALENDAR###= token
-as a trigger.)
-Gary provides a screenshot at [ http://inauspicious.org/files/screenshots/calender.png | screenshot ],
+as a trigger.) 
+Gary provides a screenshot at [ http://inauspicious.org/files/screenshots/calender.png | screenshot ], 
 a  Help:h  | http://inauspicious.org/files/phpwiki/phpwiki-1.2.0-calendar.patch] (on 1.2.0), and
  Help:r .php | http://inauspicious.org/files/phpwiki/calendar.php]
 (which renders a view of the year.)
 
 ----
 
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+[PhpWikiDocumentation] [CategoryWikiPlugin]

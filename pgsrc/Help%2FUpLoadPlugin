@@ -1,17 +1,18 @@
-Date: Wed, 28 May 2008 19:05:39 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FUpLoadPlugin,v 1.3 2008-06-18 01:12:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FUpLoadPlugin;
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The UpLoad [WikiPlugin|Help:WikiPlugin] displays an editbox and two buttons.
-The first button let's you choose the file to be uploaded at your local filesystem.
-The textvalue of this button is localised from your browser.
+The *~UpLoad* [plugin|Help:WikiPlugin] displays an editbox and two buttons. 
+The first button let's you choose the file to be uploaded at your local filesystem. 
+The textvalue of this button is localised from your browser. 
 The second "Upload" button actually uploads the given filename to the upload directory.
-This directory is not browsable, any file there may be accessed by using the "Upload~:"
+This directory is not browsable, any file there may be accessed by using the "Upload~:" 
 InterWikiMap prefix to the given filename. This way you can easily inline uploaded images.
 See PhpWiki:InlineUploadedImages
 
@@ -28,7 +29,7 @@ __autolink__:
   Add the uploaded filename to the list of uploaded files at the page.
   Default: true
 __page__:
-  The page where the uploaded files are publicly listed, if autolink is true.
+  The page where the uploaded files are publicly listed, if autolink is true. 
   Default: current page.
 
 !!! Conflicts
@@ -40,11 +41,8 @@ __page__:
 # Already existing uploaded files are NOT overwritten.
 # Certain internal PHP problems for Windows and Mac OS X have been fixed with 1.3.9.
 
-----
-
 !!! Example
 <?plugin UpLoad ?>
 
------
-
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+----
+[PhpWikiDocumentation] [CategoryWikiPlugin]
