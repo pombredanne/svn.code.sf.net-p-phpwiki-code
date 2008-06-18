@@ -1,13 +1,14 @@
-Date: Wed, 28 May 2008 19:06:04 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FPloticusPlugin,v 1.5 2008-06-18 01:12:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPloticusPlugin;
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The Ploticus WikiPlugin passes all its arguments to the ploticus
+The *Ploticus* plugin passes all its arguments to the ploticus
 binary and displays the result as PNG, GIF, EPS, SVG, SVGZ or SWF.
 Ploticus is a free, GPL, non-interactive software package
 for producing plots, charts, and graphics from data.
@@ -26,13 +27,13 @@ or without any script: (not tested)
 
 <verbatim>
 <?plugin Ploticus -prefab vbars
-	data=myfile.dat delim=tab y=1
-	clickmapurl="http://mywiki.url/wiki/?pagename=@2"
-	clickmaplabel="@3" -csmap
+	data=myfile.dat delim=tab y=1 
+	clickmapurl="http://mywiki.url/wiki/?pagename=@2" 
+	clickmaplabel="@3" -csmap 
 ?>
 </verbatim>
 
-TODO: PloticusSql - create intermediate data from SQL. Similar to [SqlResult|Help:SqlResultPlugin],
+TODO: PloticusSql - create intermediate data from SQL. Similar to [SqlResult|Help:SqlResultPlugin], 
 just in graphic form.
 For example to produce nice looking pagehit statistics or ratings statistics.
 Ploticus has its own sql support within #getproc data, but this would expose security information.
@@ -48,7 +49,7 @@ __-prefab__:  |
   use the given prefab script (may need PLOTICUS_PREFABS)
 __-csmap__:  |
   If a clickable map should be produced (not yet tested)
-  passed to ploticus as -csmap -mapfile $tempfile.map
+  passed to ploticus as -csmap -mapfile $tempfile.map 
 __help__:  |
   Show a help screen
 
@@ -57,7 +58,7 @@ All other arguments are used as source to ploticus.
 ! Known Problems
 
 # For windows you need either a gd library with GIF support or
-  a ploticus with PNG support. This comes only with the cygwin
+  a ploticus with PNG support. This comes only with the cygwin 
   build so far.
 
 ! Optional Configuration
@@ -149,4 +150,4 @@ labelfarout: 1.05
 !!! See Also
 Help:GraphVizPlugin
 ----
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+[PhpWikiDocumentation] [CategoryWikiPlugin]

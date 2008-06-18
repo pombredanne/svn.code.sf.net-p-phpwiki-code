@@ -1,20 +1,19 @@
-Date: Wed, 28 May 2008 19:07:56 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FSyntaxHighlighterPlugin,v 1.3 2008-06-18 01:12:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSyntaxHighlighterPlugin;
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The ~SyntaxHighlighter plugin passes all its arguments through a C++
+The *~SyntaxHighlighter* plugin passes all its arguments through a C++
 highlighter called "highlight" (available at http://www.andre-simon.de/).
-
-Author: alecthomas
 
 !!! Arguments
 syntax |
-  (required), See http://www.andre-simon.de/doku/highlight/highlight.html
+  (required), See http://www.andre-simon.de/doku/highlight/highlight.html 
 style |
   ~[ "ansi", "gnu", "kr", "java", "linux" ~] (required)
 color |
@@ -23,7 +22,6 @@ number |
   0  (optional)
 wrap |
   0  (optional)
-
 
 !!! Example
 
@@ -51,9 +49,14 @@ I did not use beautifier, because it used up more than 8M of memory on
 my system and PHP killed it. I'm not sure whether this is a problem
 with my integration, or with beautifier itself.
 
+!!! Author 
+
+alecthomas
+
 Fixes by [Reini Urban|PhpWiki:ReiniUrban]:
 * support options: syntax, style, color.
 * php version switch
 * HIGHLIGHT_DATA_DIR, HIGHLIGHT_EXE constants
+
 ----
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+[PhpWikiDocumentation] [CategoryWikiPlugin] 

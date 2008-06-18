@@ -1,15 +1,14 @@
-Date: Wed, 29 Aug 2007 09:31:31 +0200
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20070828)
-X-Rcs-Id: $Id: Help%2FCalendarListPlugin,v 1.4 2008-05-30 18:11:07 vargenau Exp $
+Date: Mon, 16 Jun 2008 14:15:24 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FCalendarListPlugin,v 1.5 2008-06-18 01:12:38 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCalendarListPlugin;
-  pgsrc_version="2 $Revision: 1.4 $";
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The ~CalendarList [WikiPlugin|Help:WikiPlugin] is used in conjunction
+The *~CalendarList* [WikiPlugin|Help:WikiPlugin] is used in conjunction
 with the [CalendarPlugin|Help:CalendarPlugin].
 It was written for those who use a wiki as a
 [personal information manager|PhpWiki:PersonalWiki].
@@ -29,7 +28,7 @@ The behaviour before 2007 with last/next_n_days was to start now.
 <?plugin CalendarList ?>
 </verbatim>
 
-!!! Example
+!!! Example 
 
 _Click any date and edit it, then return to this page_:
 
@@ -121,4 +120,4 @@ _Click any date and edit it, then return to this page_:
 
 -----
 
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+[PhpWikiDocumentation] [CategoryWikiPlugin]

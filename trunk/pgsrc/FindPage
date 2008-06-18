@@ -1,9 +1,8 @@
-Date: Thu, 11 Nov 2005 18:56:40 +0100
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
-X-Rcs-Id: $Id: FindPage,v 1.19 2005-11-21 22:19:00 rurban Exp $
+Date: Mon, 16 Jun 2008 14:15:24 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: FindPage,v 1.20 2008-06-18 01:12:38 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
-  pgsrc_version="2 $Revision: 1.19 $";
   flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
@@ -11,9 +10,9 @@ Content-Transfer-Encoding: binary
 
 Here are some good starting points for browsing.
 
-* Help:HowToUseWiki gives you the quick lowdown on Wiki markup.
+* [HowToUseWiki|Help:HowToUseWiki] gives you the quick lowdown on Wiki markup.
 * RecentChanges recorded automatically.
-* Help:MoreAboutMechanics of browsing and editing on this server.
+* [MoreAboutMechanics|Help:MoreAboutMechanics] of browsing and editing on this server.
 
 Here's a title search. Try something like <tt>wiki or sandwich</tt>.
 
@@ -55,3 +54,6 @@ Use regex=none to match any wildcards verbatim. %%%
 
 Example: 'wiki text -php' looks for all pages containing the words 'wiki' and 'text',  %%%
          but not containing the word 'php'.
+
+----
+[CategoryActionPage]

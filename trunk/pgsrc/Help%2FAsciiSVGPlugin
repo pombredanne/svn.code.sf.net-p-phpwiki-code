@@ -1,8 +1,9 @@
-Date: Wed, 28 May 2008 19:06:46 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FAsciiSVGPlugin,v 1.5 2008-06-18 01:12:38 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAsciiSVGPlugin;
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -19,8 +20,8 @@ Adobe SVGviewer installed as well!) then you should see the examples.
 
 !!! Usage
 <verbatim>
-  <?plugin AsciiSVG width= height= onmousemove="" script=""
-           code...
+  <?plugin AsciiSVG width= height= onmousemove="" script="" 
+           code...  
   ?>
 </verbatim>
 
@@ -35,26 +36,26 @@ http://www1.chapman.edu/~jipsen/svg/asciisvg.html
 !!! Example
 
 <verbatim>
-<?plugin AsciiSVG width="117" height="117"
+<?plugin AsciiSVG width="117" height="117" 
   border = 0
   initPicture(-10,10)
   axes()
   stroke = "red"
   p = []
-  with (Math)
+  with (Math) 
     for (t = 0; t < 10.01; t += 0.05)
       p[p.length] = [t*cos(PI*t), t*sin(PI*t)]
   path(p)
 ?>
 </verbatim>
 
-<?plugin AsciiSVG width="117" height="117"
+<?plugin AsciiSVG width="117" height="117" 
   border = 0
   initPicture(-10,10)
   axes()
   stroke = "red"
   p = []
-  with (Math)
+  with (Math) 
     for (t = 0; t < 10.01; t += 0.05)
       p[p.length] = [t*cos(PI*t), t*sin(PI*t)]
   path(p)
@@ -72,4 +73,4 @@ subsequent ones will have the same width and height.
 Help:AsciiMathPlugin
 
 ----
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+[PhpWikiDocumentation] [CategoryWikiPlugin]

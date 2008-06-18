@@ -1,18 +1,20 @@
-Date: Wed, 28 May 2008 19:06:13 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FIncludePagePlugin,v 1.4 2008-06-18 01:12:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludePagePlugin;
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-This plugin will "include" other pages in this wiki. In the language of hypertext this is called <i>transclusion</i>. The pages will render in distinct tables. You can also load external pages in a more limited fashion with the FrameIncludePlugin. Examples:
+The *~IncludePage* plugin will "include" other pages in this wiki. In the language of hypertext this is called <i>transclusion</i>. The pages will render in distinct tables. You can also load external pages in a more limited fashion with the FrameIncludePlugin. 
+
+!!! Examples
 
 <?plugin IncludePage page="HomePage" ?>
 
 <?plugin IncludePage page="Help:WabiSabi" ?>
 
 -----
-
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+[PhpWikiDocumentation] [CategoryWikiPlugin]

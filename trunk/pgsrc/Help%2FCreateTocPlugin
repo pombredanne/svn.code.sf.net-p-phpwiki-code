@@ -1,15 +1,16 @@
-Date: Wed, 28 May 2008 19:07:23 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FCreateTocPlugin,v 1.3 2008-06-18 01:12:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCreateTocPlugin;
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 <?plugin CreateToc jshide||=1 ?>
 
-[WikiPlugin|Help:WikiPlugin] to create a dynamical *Table Of Contents* of all headers. Since v1.3.8
+The ~*CreateToc* [plugin|Help:WikiPlugin] allows to create a dynamical *Table Of Contents* of all headers. Since v1.3.8
 
 !!! Usage
 <verbatim>
@@ -40,4 +41,4 @@ __pagename__:  |
 See for example PhpWikiDemo:en/TextFormattingRules
 -------------
 
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+[PhpWikiDocumentation] [CategoryWikiPlugin]

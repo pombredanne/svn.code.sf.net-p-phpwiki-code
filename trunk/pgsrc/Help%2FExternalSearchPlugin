@@ -1,5 +1,6 @@
-Date: Wed, 28 May 2008 19:07:21 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FExternalSearchPlugin,v 1.3 2008-06-18 01:12:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FExternalSearchPlugin;
   flags=PAGE_LOCKED;
@@ -7,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The ExternalSearchPlugin creates a form to query InterWiki~s or other
+The *~ExternalSearch* plugin creates a form to query InterWiki~s or other
 internet sites.
 
 !! Typical Usage
@@ -64,4 +65,4 @@ Enter the name of a PHP function to view the documentation page:%%%
 Enter any existing page name on PhpWiki to jump to that page:
 <?plugin ExternalSearch url=PhpWiki ?>
 ----
-[PhpWikiDocumentation] [WikiPlugin|Help:WikiPlugin]
+[PhpWikiDocumentation] [CategoryWikiPlugin]

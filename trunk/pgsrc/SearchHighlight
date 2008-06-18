@@ -1,10 +1,9 @@
-Date: Tue, 2 Jan 2007 13:30:17 +0000
-Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
-X-Rcs-Id: $Id: SearchHighlight,v 1.5 2007-01-21 23:48:19 rurban Exp $
+Date: Mon, 16 Jun 2008 14:15:24 +0000
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: SearchHighlight,v 1.6 2008-06-18 01:12:40 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=SearchHighlight;
-  pgsrc_version="2 $Revision: 1.5 $";
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -18,3 +17,6 @@ Content-Transfer-Encoding: binary
   See Help/SearchHighlightPlugin
 ?>
 <?plugin SearchHighlight ?>
+
+----
+[CategoryActionPage]

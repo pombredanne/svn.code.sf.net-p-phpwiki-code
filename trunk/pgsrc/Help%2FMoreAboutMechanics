@@ -1,8 +1,9 @@
-Date: Wed, 28 May 2008 19:07:51 +0200
+Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
+X-Rcs-Id: $Id: Help%2FMoreAboutMechanics,v 1.4 2008-06-18 01:12:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FMoreAboutMechanics;
-  flags="";
+  flags=PAGE_LOCKED;
   markup=2;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
@@ -12,7 +13,7 @@ available from http://www.php.net/. PHP resembles C and Perl in its
 syntax, and functions much like ASP, ~EmbPerl or JSP.
 
 PhpWiki consists of a dozen or so files of mixed PHP and HTML. The web
-pages that make up a WikiWikiWeb based on PHP live in a database with
+pages that make up a [WikiWikiWeb] based on PHP live in a database with
 backup copies of previous versions of pages stored as well. (For the
 database, PhpWiki works with DBM, MySQL, PostgreSQL or text files.)
 
