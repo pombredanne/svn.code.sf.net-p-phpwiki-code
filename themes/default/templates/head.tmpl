@@ -1,5 +1,5 @@
 <?php  // -*-html-*-
-  rcs_id('$Id: head.tmpl,v 1.25 2007-09-01 13:24:55 rurban Exp $');
+  rcs_id('$Id: head.tmpl,v 1.26 2008-06-19 17:22:59 rurban Exp $');
 ?>
 <head>
 <?php if (ENABLE_XHTML_XML and strstr($request->get('HTTP_ACCEPT'),'application/xhtml+xml')) { ?>
@@ -81,7 +81,7 @@ _("SandBox"))?>" />
 _("WikiWikiWeb")?>" href="<?=WikiURL(
 _("WikiWikiWeb"))?>" />
 <?php } ?>
-
+<link rel="alternate" type="application/x-wiki" title="Edit this page!" href="<?= WikiURL($page,array('action'=>'edit')) ?>" />
 <?php if ($user->isAdmin()) {
       /* Only for the Administrator */ ?>
 <link rel="bookmark" title="<?=
@@ -122,6 +122,9 @@ _("UserPreferences"))?>" />
 <?php
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -                         
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2007/09/01 13:24:55  rurban
+// add atom link to header
+//
 // Revision 1.24  2007/07/14 12:06:27  rurban
 // aesthetic request: remove ?action=edit after edit
 //
