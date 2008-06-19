@@ -1,6 +1,6 @@
 Date: Mon, 16 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: Help%2FAppendTextPlugin,v 1.4 2008-06-18 01:12:38 vargenau Exp $
+X-Rcs-Id: $Id: Help%2FAppendTextPlugin,v 1.5 2008-06-19 18:22:32 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAppendTextPlugin;
   flags=PAGE_LOCKED;
@@ -8,8 +8,8 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-*~AppendText* is a [WikiPlugin|Help:WikiPlugin] to automatically add text to a page. For general
-usage better use the AddCommentPlugin.
+*~AppendText* is a [plugin|Help:WikiPlugin] to automatically add text to a page. For general
+usage better use the [AddComment|Help:AddCommentPlugin] plugin.
 
 <verbatim>
 <?plugin AppendText ?>
