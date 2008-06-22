@@ -1,7 +1,7 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.243 2008-03-22 21:49:18 rurban Exp $');
+rcs_id('$Id: main.php,v 1.244 2008-06-22 09:51:14 rurban Exp $');
 /*
- Copyright 1999-2007 $ThePhpWikiProgrammingTeam
+ Copyright 1999-2008 $ThePhpWikiProgrammingTeam
 
  This file is part of PhpWiki.
 
@@ -174,8 +174,8 @@ class WikiRequest extends Request {
         // Load non-default theme (when = login)
         if (!empty($this->_prefs->_prefs['theme'])) {
             $_theme = $this->_prefs->_prefs['theme'];
-            if (isset($_theme) and isset($_theme->theme))
-                $user_theme = $_theme->theme;
+            if (isset($_theme) and isset($_theme->default_value))
+                $user_theme = $_theme->default_value;
             else 
                 $user_theme = '';
         }
@@ -198,6 +198,7 @@ class WikiRequest extends Request {
             	              E_USER_WARNING);
                 $user_theme = "default";
             }
+	    if (!$user_theme) $user_theme = "default";
             include_once("themes/$user_theme/themeinfo.php");
         }
         if (empty($WikiTheme) and defined('THEME'))
@@ -1392,6 +1393,11 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.243  2008/03/22 21:49:18  rurban
+// Improve pref handling
+// clone the user object before destroying the important but lengthy fields.
+//   (overlong session data)
+//
 // Revision 1.242  2008/02/14 18:27:49  rurban
 // signin fixes for !ENABLE_USER_NEW (to overcome php-5.2 recursion login
 // problems)
