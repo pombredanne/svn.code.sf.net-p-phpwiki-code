@@ -1,6 +1,6 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Mon, 26 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: Help%2FAnalyseAccessLogSqlPlugin,v 1.3 2008-06-18 01:12:38 vargenau Exp $
+X-Rcs-Id: $Id: Help%2FAnalyseAccessLogSqlPlugin,v 1.4 2008-06-27 20:03:55 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FAnalyseAccessLogSqlPlugin;
   flags=PAGE_LOCKED;
@@ -59,7 +59,7 @@ local_referrers:
 
 !!!Adding new queries
 
-The file <tt>lib/plugin/AnalyseAccessLogSql.php</tt> contains a default set of queries against the SQL access log.
+The file <tt>lib/plugin/~AnalyseAccessLogSql.php</tt> contains a default set of queries against the SQL access log.
 Feel free to change this file to suit your own needs, but please note that this requires filesystem access to the web server where PhpWiki is running.
 In particular, this file may need to be modified to correctly query databases other than MySQL.
 The queries supplied by default are: "*Referring URLs*", "*Referring Domains*", "*Remote Hosts*", "*Users*" and "*Host Users*".
@@ -75,7 +75,7 @@ To add a new query, add a new section towards the end of the file, using one of 
         ."GROUP BY User";
 </pre>
 
-If you do add a query, please consider contributing it back to the PhpWiki project at http://http://sourceforge.net/projects/phpwiki
+If you do add a query, please consider contributing it back to the PhpWiki project at http://sourceforge.net/projects/phpwiki
 
 !!! API for ~AnalyseAccessLogSql
 

@@ -1,6 +1,6 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Mon, 26 Jun 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: FindPage,v 1.20 2008-06-18 01:12:38 vargenau Exp $
+X-Rcs-Id: $Id: FindPage,v 1.21 2008-06-27 20:03:55 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=FindPage;
   flags=PAGE_LOCKED;
@@ -11,7 +11,7 @@ Content-Transfer-Encoding: binary
 Here are some good starting points for browsing.
 
 * [HowToUseWiki|Help:HowToUseWiki] gives you the quick lowdown on Wiki markup.
-* RecentChanges recorded automatically.
+* [RecentChanges] recorded automatically.
 * [MoreAboutMechanics|Help:MoreAboutMechanics] of browsing and editing on this server.
 
 Here's a title search. Try something like <tt>wiki or sandwich</tt>.
