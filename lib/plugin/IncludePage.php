@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.29 2007-06-03 21:58:51 rurban Exp $');
+rcs_id('$Id: IncludePage.php,v 1.30 2008-07-02 17:48:01 vargenau Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.29 $");
+                            "\$Revision: 1.30 $");
     }
 
     function getDefaultArguments() {
@@ -146,7 +146,7 @@ extends WikiPlugin
                                 $sectionhead);
         if ($lines) {
             $c = array_slice($c, 0, $lines);
-            $c[] = sprintf(_(" ... first %d lines"), $bytes);
+            $c[] = sprintf(_(" ... first %d lines"), $lines);
         }
         if ($words) {
             $c = firstNWordsOfContent($words, $c);
@@ -189,6 +189,11 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2007/06/03 21:58:51  rurban
+// Fix for Bug #1713784
+// Includes this patch and a refactoring.
+// RedirectTo is still not handled correctly.
+//
 // Revision 1.28  2006/04/17 17:28:21  rurban
 // honor getWikiPageLinks change linkto=>relation
 //
