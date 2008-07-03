@@ -1,4 +1,4 @@
-<?php //rcs_id('$Id: stdlib.php,v 1.275 2008-05-21 04:30:59 rurban Exp $');
+<?php //rcs_id('$Id: stdlib.php,v 1.276 2008-07-03 19:22:57 vargenau Exp $');
 /*
  Copyright 1999-2008 $ThePhpWikiProgrammingTeam
 
@@ -2093,6 +2093,36 @@ function extractSection ($section, $content, $page, $quiet = false, $sectionhead
     return array(sprintf(_("<%s: no such section>"), $mesg));
 }
 
+// Extract the first $sections sections of the page
+function extractSections ($sections, $content, $page, $quiet = false, $sectionhead = false) {
+
+    $mycontent = $content;
+    $result = "";
+
+    while ($sections > 0) {
+
+        if (preg_match("/ ^(!{1,})\\s*(.*)\\n"   // section header
+                       . "  \\s*$\\n?"           // possible blank lines
+                       . "  ( (?: ^.*\\n? )*? )" // some lines
+                       . "  ( ^\\1 (.|\\n)* | \\Z)/xm", // sec header (same or higher level) (or EOF)
+                       implode("\n", $mycontent),
+                       $match)) {
+            $section = $match[2];
+            // Strip trailing blanks lines and ---- <hr>s
+            $text = preg_replace("/\\s*^-{4,}\\s*$/m", "", $match[3]);
+            if ($sectionhead)
+                $text = $match[1] . $section ."\n". $text;
+            $result .= $text; 
+
+            $mycontent = explode("\n", $match[4]);
+            $sections--;
+            if ($sections === 0) {
+                return explode("\n", $result);
+            }
+        }
+    }
+}
+
 // use this faster version: only load ExternalReferrer if we came from an external referrer
 function isExternalReferrer(&$request) {
     if ($referrer = $request->get('HTTP_REFERER')) {
@@ -2272,6 +2302,9 @@ function isSerialized($s) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.275  2008/05/21 04:30:59  rurban
+// fix space in interwiki url images, like local:my picture.png
+//
 // Revision 1.274  2008/05/06 19:29:06  rurban
 // support Upload:image_with_foreign_chars: do urldecode links to such files
 //

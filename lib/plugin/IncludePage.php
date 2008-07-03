@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludePage.php,v 1.30 2008-07-02 17:48:01 vargenau Exp $');
+rcs_id('$Id: IncludePage.php,v 1.31 2008-07-03 19:22:57 vargenau Exp $');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.30 $");
+                            "\$Revision: 1.31 $");
     }
 
     function getDefaultArguments() {
@@ -141,9 +141,16 @@ extends WikiPlugin
     function extractParts ($c, $pagename, $args) {
         extract($args);
 
-        if ($section)
-            $c = extractSection($section, $c, $pagename, $quiet,
-                                $sectionhead);
+        if ($section) {
+            if ($sections) { 
+                $c = extractSection($section, $c, $pagename, $quiet, 1);
+            } else {
+                $c = extractSection($section, $c, $pagename, $quiet, $sectionhead);
+            }
+        }
+        if ($sections) {
+            $c = extractSections($sections, $c, $pagename, $quiet, 1);
+        }
         if ($lines) {
             $c = array_slice($c, 0, $lines);
             $c[] = sprintf(_(" ... first %d lines"), $lines);
@@ -189,6 +196,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2008/07/02 17:48:01  vargenau
+// Fix mix-up of bytes and lines
+//
 // Revision 1.29  2007/06/03 21:58:51  rurban
 // Fix for Bug #1713784
 // Includes this patch and a refactoring.
