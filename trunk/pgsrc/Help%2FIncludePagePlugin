@@ -1,6 +1,6 @@
-Date: Mon, 26 Jun 2008 14:15:24 +0000
+Date: Thu, 3 Jul 2008 10:56:37 +0200
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: Help%2FIncludePagePlugin,v 1.7 2008-06-27 20:03:55 vargenau Exp $
+X-Rcs-Id: $Id: Help%2FIncludePagePlugin,v 1.8 2008-07-03 19:22:57 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FIncludePagePlugin;
   flags=PAGE_LOCKED;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~IncludePage* plugin will "include" other pages in this wiki. In the language of hypertext this is called <i>transclusion</i>. The pages will render in distinct tables. You can also load external pages in a more limited fashion with the [FrameInclude|Help:FrameIncludePlugin] plugin. 
+The *~IncludePage* plugin will "include" other pages in this wiki. In the language of hypertext this is called <i>transclusion</i>. The pages will render in distinct tables. You can also load external pages in a more limited fashion with the [FrameInclude|Help:FrameIncludePlugin] plugin.
 
 !!! Usage
 <verbatim>
@@ -38,13 +38,52 @@ sectionhead
 
 !!! Examples
 
-<?plugin IncludePage page="HomePage" ?>
+!! ~IncludePage page=samplepage
+<?plugin IncludePage page=samplepage ?>
 
-<?plugin IncludePage page="Help/WabiSabi" ?>
+!! ~IncludePage page=samplepage lines=6
+<?plugin IncludePage page=samplepage lines=6 ?>
 
-!!! Author
+!! ~IncludePage page=samplepage section="Second section"
+<?plugin IncludePage page=samplepage section="Second section" ?>
 
-Joe Edelman
+!! ~IncludePage page=samplepage section="Second section" sectionhead=true
+<?plugin IncludePage page=samplepage section="Second section" sectionhead=true ?>
+
+!! ~IncludePage page=samplepage sections=2
+<?plugin IncludePage page=samplepage sections=2 ?>
+
+!! ~IncludePage page=samplepage section="Second section" sections=2
+<?plugin IncludePage page=samplepage section="Second section" sections=2 ?>
+
+!! ~IncludePage page=samplepage quiet=1
+<?plugin IncludePage page=samplepage quiet=1 ?>
+
+!! ~IncludePage page=samplepage lines=6 quiet=1
+<?plugin IncludePage page=samplepage lines=6 quiet=1 ?>
+
+!! ~IncludePage page=samplepage section="Second section" quiet=1
+<?plugin IncludePage page=samplepage section="Second section" quiet=1 ?>
+
+!! ~IncludePage page=samplepage section="Second section" sectionhead=true quiet=1
+<?plugin IncludePage page=samplepage section="Second section" sectionhead=true quiet=1 ?>
+
+!! ~IncludePage page=samplepage sections=2 quiet=1
+<?plugin IncludePage page=samplepage sections=2 quiet=1 ?>
+
+!! ~IncludePage page=samplepage section="Second section" sections=2 quiet=1
+<?plugin IncludePage page=samplepage section="Second section" sections=2 quiet=1 ?>
+
+!!! Known bugs
+
+* ~RedirectTo plugin is not handled correctly.
+* Line and word limit doesn't work if the included page itself includes a plugin.
+
+!!! Authors
+
+* Joe Edelman
+* bug fixes by [Reini Urban|PhpWiki:ReiniUrban]
+* "sections" parameter implemented by Marc-Etienne Vargenau, Alcatel-Lucent
 
 !!! See Also
 
