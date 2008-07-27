@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllRevisionsIter.php,v 1.2 2004-04-26 20:44:35 rurban Exp $');
+rcs_id('$Id: AllRevisionsIter.php,v 1.3 2008-07-27 21:47:46 rurban Exp $');
     
 /**
  * An iterator which returns all revisions of page.
@@ -45,13 +45,22 @@ extends WikiDB_backend_iterator
         
         if ($version == 0)
             return false;
-
+            
+	if (is_string($vdata)) {
+    	    $vdata =  @unserialize($vdata);
+    	    if (empty($vdata)) {
+    	    	if (DEBUG)
+    	    	    trigger_error ("broken page $pagename ignored", E_USER_WARNING);
+    		return false;
+    	    }
+	}
         $rev = array('versiondata' => $vdata,
                      'pagename' => $pagename,
                      'version' => $version);
         
-        if (!empty($vdata['%pagedata']))
-            $rev['pagedata'] = &$vdata['%pagedata'];
+        if (!empty($vdata['%pagedata'])) {
+            $rev['pagedata'] = $vdata['%pagedata'];
+        }
 
         return $rev;
     }
