@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SemanticSearchAdvanced.php,v 1.1 2007-05-24 18:40:43 rurban Exp $');
+rcs_id('$Id: SemanticSearchAdvanced.php,v 1.2 2008-07-27 21:48:05 rurban Exp $');
 /*
  Copyright 2007 Reini Urban
 
@@ -26,13 +26,29 @@ require_once('lib/plugin/SemanticSearch.php');
  * Advanced search for relations/attributes and its values.
  * Parse the query string, which can contain full mathematical expressions 
  * and various logical and mathematical functions and operators.
+ * Support subqueries (for _pagename ...) and temporary variables 
+ * starting with _
  *
  * Are multiple variables valid for one page only, or is the result 
  * constructed as list of all matches? We'll stick with one page for now.
  * This the only way I can see semantic meaning for now.
  *
- * Queries: "is_a::city and (population < 1.000.000 or population > 10.000.000)"
- *          "(is_a::city or is_a::country) and population < 10.000.000"
+ * Simple queries, with no variables, only against the pagename (implicit):
+ *    "is_a::city and (population < 1.000.000 or population > 10.000.000)"
+ *    "(is_a::city or is_a::country) and population < 10.000.000"
+ *
+ * Subqueries, with variables bound to the matching pagename, with (for ...):
+ *    "works_at::_organization
+ *      and (for _organization located_in::_city
+ *             and (for _city population>1000000))"
+ *
+ *    "works_at::_organization
+ *       and (for _organization
+ *             (located_in::_city 
+ *             and (for _city is_a::City 
+ *                   and population>1000000))
+ *          or (located_in::_country 
+ *               and (for _country is_a::Country and population>5000000)))
  *
  * Relation links may contain wildcards. For relation and attribute names I'm not sure yet. 
  *
@@ -50,7 +66,7 @@ extends WikiPlugin_SemanticSearch
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getDefaultArguments() { 
         return array_merge
@@ -177,10 +193,14 @@ extends WikiPlugin_SemanticSearch
 	return $pagelist;
     }
 
+    // ... (for _variable subquery) ...
+    function bindSubquery($query) {
+    }
+
     // is_a::city* and (population < 1.000.000 or population > 10.000.000)
     // => is_a population
     // Do we support wildcards in relation names also? is_*::city
-    function detectRelationsAndAttributes($query) {
+    function detectRelationsAndAttributes($subquery) {
 	$relations = array();
 	// relations are easy
 	//$reltoken = preg_grep("/::/", preg_split("/\s+/", $query));
@@ -196,6 +216,9 @@ extends WikiPlugin_SemanticSearch
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2007/05/24 18:40:43  rurban
+// new plugin
+//
 
 // Local Variables:
 // mode: php
