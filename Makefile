@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.14 2007-08-25 17:51:51 rurban Exp $
+# $Id: Makefile,v 1.15 2008-07-27 21:47:30 rurban Exp $
 # user-definable settings:
 VERSION=
 # for mysqladmin
@@ -6,7 +6,7 @@ DBADMIN_USER=root
 DBADMIN_PASS=secret
 
 # etags (GNU Emacs 21.4.x)
-ETAGS_21_5=$(shell etags --version|grep "Ctags 5.6")
+ETAGS_21_5=$(shell etags --version|egrep "Ctags 5.[67]")
 ifeq ("$(ETAGS_21_5)", "")
   ETAGS_STDIN = /usr/bin/etags -
 else
