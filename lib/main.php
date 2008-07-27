@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.244 2008-06-22 09:51:14 rurban Exp $');
+rcs_id('$Id: main.php,v 1.245 2008-07-27 21:47:56 rurban Exp $');
 /*
  Copyright 1999-2008 $ThePhpWikiProgrammingTeam
 
@@ -174,9 +174,11 @@ class WikiRequest extends Request {
         // Load non-default theme (when = login)
         if (!empty($this->_prefs->_prefs['theme'])) {
             $_theme = $this->_prefs->_prefs['theme'];
-            if (isset($_theme) and isset($_theme->default_value))
+            if (isset($_theme) and isset($_theme->theme))
+                $user_theme = $_theme->theme;
+            elseif (isset($_theme) and isset($_theme->default_value))
                 $user_theme = $_theme->default_value;
-            else 
+            else
                 $user_theme = '';
         }
         else 
@@ -192,7 +194,7 @@ class WikiRequest extends Request {
         {
             include_once("themes/" . THEME . "/themeinfo.php");
         }
-        if (empty($WikiTheme) and isset($user_theme)) {
+        if (empty($WikiTheme) and $user_theme) {
             if (strcspn($user_theme,"./\x00]") != strlen($user_theme)) {
             	trigger_error(sprintf("invalid theme '%s': Invalid characters detected", $user_theme),
             	              E_USER_WARNING);
@@ -524,10 +526,13 @@ class WikiRequest extends Request {
         elseif ($require_level == WIKIAUTH_BOGO)
             $msg = fmt("You must sign in to %s.", $what);
         elseif ($require_level == WIKIAUTH_USER) {
-	    if (!ALLOW_ANON_USER)
+	    // LoginForm should display the relevant messages...
+	    $msg = "";
+	    /*if (!ALLOW_ANON_USER)
 		$msg = fmt("You must log in first to %s", $what);
 	    else	
                 $msg = fmt("You must log in to %s.", $what);
+	    */
         } elseif ($require_level == WIKIAUTH_ANON)
             $msg = fmt("Access for you is forbidden to %s.", $what);
         else
@@ -1393,6 +1398,11 @@ if (!defined('PHPWIKI_NOMAIN') or !PHPWIKI_NOMAIN)
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.244  2008/06/22 09:51:14  rurban
+//
+// Fix user_theme handling on login. pref store ->default_value
+// Fallback to default if '0'.
+//
 // Revision 1.243  2008/03/22 21:49:18  rurban
 // Improve pref handling
 // clone the user object before destroying the important but lengthy fields.
