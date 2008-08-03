@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.63 2007-08-25 18:24:30 rurban Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.64 2008-08-03 15:29:16 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -374,7 +374,7 @@ class ParsedBlock extends Block_HtmlElement {
     	if (!is_object($_regexpset)) {
 	    $Block_types = array
 		    ('oldlists', 'list', 'dl', 'table_dl',
-                     'blockquote', 'heading', 'hr', 'pre', 'email_blockquote',
+                     'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre', 'email_blockquote',
 		     'plugin', 'p');
             // insert it before p!
             if (ENABLE_MARKUP_DIVSPAN) {
@@ -1032,6 +1032,26 @@ class Block_heading extends BlockMarkup
     }
 }
 
+class Block_heading_wikicreole extends BlockMarkup
+{
+    var $_re = '={2,6}';
+    
+    function _match (&$input, $m) {
+        $tag = "h" . strlen($m->match);
+        // TBD: Remove '='s at the end so that Mediawiki syntax is recognized
+        $text = TransformInline(trim($m->postmatch));
+        $input->advance();
+
+        $this->_element = new Block_HtmlElement($tag, false, $text);
+        
+        return true;
+    }
+
+    function _setTightness($top, $bot) {
+	// Don't tighten headers.
+    }
+}
+
 class Block_p extends BlockMarkup
 {
     var $_tag = 'p';
@@ -1058,7 +1078,7 @@ class Block_p extends BlockMarkup
         }
         return false;
     }
-            
+
     function finish () {
         $content = TransformInline(trim($this->_text));
         $p = new Block_HtmlElement('p', false, $content);
@@ -1169,6 +1189,9 @@ function TransformText ($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.63  2007/08/25 18:24:30  rurban
+// speed up divspan without \n
+//
 // Revision 1.62  2007/08/10 21:54:08  rurban
 // fix DIVSPAN parsing
 //
