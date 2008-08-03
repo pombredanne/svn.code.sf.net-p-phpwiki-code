@@ -1,6 +1,6 @@
-Date: Mon, 30 Jun 2008 14:15:24 +0000
+Date: Sat, 2 Aug 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: Help%2FTextFormattingRules,v 1.7 2008-07-03 18:19:17 vargenau Exp $
+X-Rcs-Id: $Id: Help%2FTextFormattingRules,v 1.8 2008-08-03 16:43:58 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FTextFormattingRules;
   flags=PAGE_LOCKED;
@@ -24,7 +24,7 @@ _Term~:~<new-line> definition_ for definition lists.<br>
 *Preventing linking:* Prefix with "<tt>~~</tt>":
 <tt>~~~DoNotHyperlink</tt>, name links like <tt>~[text | URL or pagename~]</tt>.%%%
 *Misc:* "<tt>!</tt>", "<tt>!!</tt>", "<tt>!!!</tt>" make headings,
-"<tt>~%%%</tt>" or "<tt>~<br></tt>" makes a linebreak,
+"<tt>~%%%</tt>", "<tt>~\~\</tt>" or "<tt>~<br></tt>" makes a linebreak,
 "<tt>~----</tt>" makes a horizontal rule.%%%
 *Allowed HTML tags:* <b>b</b> <big>big</big> <i>i</i>
 <small>small</small> <tt>tt</tt> <em>em</em> <strong>strong</strong>
@@ -64,8 +64,7 @@ _Term~:~<new-line> definition_ for definition lists.<br>
 * Words wrap and fill as needed
 * Use blank lines as separators
 * Four or more minus signs make a horizontal rule
-* =~%%%= or =~<br>= makes a linebreak (in headings and lists too)
-
+* =~%%%=", =~\~\= or =~<br>= makes a linebreak (in headings and lists too)
 
 !!! Lists
 
@@ -85,13 +84,21 @@ _Term~:~<new-line> definition_ for definition lists.<br>
 * Items may contain multiple paragraphs and other multi-lined content,
   just indent the items
 
-
 !!! Headings
 
-* '=!=' at the start of a line makes a small heading
-* '=!!=' at the start of a line makes a medium heading
-* '=!!!=' at the start of a line makes a large heading
+!! Classic Phpwiki syntax
 
+* '=!!!=' at the start of a line makes a large heading (h2)
+* '=!!=' at the start of a line makes a medium heading (h3)
+* '=!=' at the start of a line makes a small heading (h4)
+
+!! Wikicreole syntax
+
+* '~=~=' at the start of a line makes a large heading (h2)
+* '~=~=~=' at the start of a line makes a medium heading (h3)
+* '~=~=~=~=' at the start of a line makes a small heading (h4)
+* '~=~=~=~=~=' at the start of a line makes a smaller heading (h5)
+* '~=~=~=~=~=~=' at the start of a line makes a tiny heading (h6)
 
 !!! Preformatted text
 
@@ -116,7 +123,6 @@ _Term~:~<new-line> definition_ for definition lists.<br>
   Preformatted text. WikiLinks do not work.
   </verbatim>
 
-
 !!!Indented Paragraphs
 
 * Two or more whitespaces signal indented text. Indents may be nested.
@@ -132,7 +138,6 @@ _Term~:~<new-line> definition_ for definition lists.<br>
   renders as
 
   > This is block-quoted text.
-
 
 !!! Emphasis
 
@@ -241,5 +246,4 @@ _Term~:~<new-line> definition_ for definition lists.<br>
   plugins.
 
 ----
-
 [PhpWikiDocumentation]
