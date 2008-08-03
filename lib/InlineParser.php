@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.100 2008-08-03 15:52:31 vargenau Exp $');
+rcs_id('$Id: InlineParser.php,v 1.101 2008-08-03 15:56:20 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2008 Reini Urban
  * Copyright (C) 2008 Marc-Etienne Vargenau
@@ -576,7 +576,7 @@ class Markup_wikiword extends SimpleMarkup
 class Markup_linebreak extends SimpleMarkup
 {
     //var $_match_regexp = "(?: (?<! %) %%% (?! %) | <(?:br|BR)> | <(?:br|BR) \/> )";
-    var $_match_regexp = "(?: (?<! %) %%% (?! %) | <(?:br|BR)> )";
+    var $_match_regexp = "(?: (?<! %) %%% (?! %) | \\\\\\\\ | <(?:br|BR)> )";
 
     function markup ($match) {
         return HTML::br();
@@ -1116,6 +1116,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.100  2008/08/03 15:52:31  vargenau
+// Implement Wikicreole syntax for subscript
+//
 // Revision 1.99  2008/05/06 19:23:17  rurban
 // update (c)
 //
