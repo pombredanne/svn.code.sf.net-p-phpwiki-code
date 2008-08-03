@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.29 2008-08-03 17:06:32 vargenau Exp $');
+rcs_id('$Id: UpLoad.php,v 1.30 2008-08-03 17:25:41 vargenau Exp $');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -250,10 +250,9 @@ ws[cfh]");
             	$message->pushContent($err_header);
                 $message->pushContent(HTML::br(),_("Uploading failed."),HTML::br());
             }
+        } else {
+            $message->pushContent(HTML::br(),_("No file selected. Please select one."),HTML::br());
         }
-        /*else {
-            $message->pushContent(HTML::br(),HTML::br());
-        }*/
 
         //$result = HTML::div( array( 'class' => 'wikiaction' ) );
         $result = HTML();
@@ -291,6 +290,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.29  2008/08/03 17:06:32  vargenau
+// Add Open Document Format suffixes: odg, odp, ods, odt
+//
 // Revision 1.28  2008/08/03 15:14:55  vargenau
 // Add slash to file_dir
 //
