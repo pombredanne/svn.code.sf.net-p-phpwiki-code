@@ -1,8 +1,8 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.102 2008-08-03 16:03:47 vargenau Exp $');
+rcs_id('$Id: InlineParser.php,v 1.103 2008-08-03 16:18:35 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2008 Reini Urban
- * Copyright (C) 2008 Marc-Etienne Vargenau
+ * Copyright (C) 2008 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  * 
@@ -845,6 +845,14 @@ class Markup_template_plugin  extends SimpleMarkup
             $vars = '"' . preg_replace('/\|/', '" "', $_m[2]) . '"'; 
             $vars = preg_replace('/"(\S+)=([^"]*)"/', '\\1="\\2"', $vars);
         }
+ 
+        // page may contain a version number
+        // {{foo?version=5}}
+        // in that case, output is "page=foo rev=5"
+        if (strstr($page, "?")) {
+            $page = str_replace("?version=", "\" rev=\"", $page);
+        }
+
         if ($vars)
     	    $s = '<'.'?plugin Template page="'.$page.'" '.$vars.' ?'.'>';
     	else
@@ -1131,6 +1139,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.102  2008/08/03 16:03:47  vargenau
+// Implement Wikicreole syntax for links
+//
 // Revision 1.101  2008/08/03 15:56:20  vargenau
 // Implement Wikicreole syntax for line break
 //
