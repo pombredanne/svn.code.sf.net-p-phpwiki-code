@@ -38,7 +38,7 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
     }
 
     function getDescription () {
-        return _("Convert HTML markup into wiki markup. (Version 0.5)");
+        return _("Convert HTML markup into wiki markup.");
     }
 
     function getDefaultArguments() {
@@ -63,7 +63,7 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
                                                  'type' => 'file',
                                                  'size' => '50')));
         $contents->pushContent(HTML::raw(" "));
-        $contents->pushContent(HTML::input(array('value' => _("Upload"),
+        $contents->pushContent(HTML::input(array('value' => _("Convert"),
                                                  'type' => 'submit')));
         $form->pushContent($contents);
 
