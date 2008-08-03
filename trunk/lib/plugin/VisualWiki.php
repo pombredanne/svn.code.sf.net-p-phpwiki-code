@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.21 2007-01-04 16:43:00 rurban Exp $');
+rcs_id('$Id: VisualWiki.php,v 1.22 2008-08-03 15:12:23 vargenau Exp $');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 
@@ -28,7 +28,7 @@ rcs_id('$Id: VisualWiki.php,v 1.21 2007-01-04 16:43:00 rurban Exp $');
  * @author Johannes Große
  * @version 0.9
  */
-define('VISUALWIKI_ALLOWOPTIONS', true);
+/* define('VISUALWIKI_ALLOWOPTIONS', true); */
 if (!defined('VISUALWIKI_ALLOWOPTIONS'))
     define('VISUALWIKI_ALLOWOPTIONS', false);
 
@@ -56,7 +56,7 @@ extends WikiPlugin_GraphViz
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.21 $");
+                            "\$Revision: 1.22 $");
     }
 
     /**
@@ -620,6 +620,9 @@ function interpolate($a, $b, $pos) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.21  2007/01/04 16:43:00  rurban
+// Whitespace only
+//
 // Revision 1.20  2006/12/22 17:57:10  rurban
 // use getUploadxxxPath
 // improve error display
