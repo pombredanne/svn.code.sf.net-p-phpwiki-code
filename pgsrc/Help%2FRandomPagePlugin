@@ -1,6 +1,6 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Sat, 2 Aug 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: Help%2FRandomPagePlugin,v 1.3 2008-06-18 01:12:39 vargenau Exp $
+X-Rcs-Id: $Id: Help%2FRandomPagePlugin,v 1.4 2008-08-03 16:53:23 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FRandomPagePlugin;
   flags=PAGE_LOCKED;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-_short description_
+The *~RandomPage* plugin displays a list of randomly chosen pages or redirects to a random page.
 
 !!! Usage
 <verbatim>
@@ -17,8 +17,8 @@ _short description_
 
 !!! Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+numpages _(default: 20)_:
+  Number of pages to list.
 
 !!! Example
 
