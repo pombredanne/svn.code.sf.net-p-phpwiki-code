@@ -1,6 +1,6 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Sat, 2 Aug 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: Help%2FBackLinksPlugin,v 1.3 2008-06-18 01:12:38 vargenau Exp $
+X-Rcs-Id: $Id: Help%2FBackLinksPlugin,v 1.4 2008-08-03 16:48:22 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FBackLinksPlugin;
   flags=PAGE_LOCKED;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-_short description_
+The *~BackLinks* plugin lists all pages which link to a given page.
 
 !!! Usage
 <verbatim>
@@ -23,10 +23,10 @@ page _(default: current pagename)_:
 !!! Example
 
 <verbatim>
-<?plugin BackLinks ?>
+<?plugin BackLinks page=HomePage ?>
 </verbatim>
 
-<?plugin BackLinks ?>
+<?plugin BackLinks page=HomePage ?>
 
 !!! Author
 [Reini Urban|PhpWiki:ReiniUrban]
