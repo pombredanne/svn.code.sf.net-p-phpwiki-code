@@ -1,6 +1,6 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Sat, 2 Aug 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: Help%2FPhpHighlightPlugin,v 1.4 2008-06-18 01:12:39 vargenau Exp $
+X-Rcs-Id: $Id: Help%2FPhpHighlightPlugin,v 1.5 2008-08-03 16:31:58 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FPhpHighlightPlugin;
   flags=PAGE_LOCKED;
@@ -11,7 +11,7 @@ Content-Transfer-Encoding: binary
 The *~PhpHighlight* plugin pretty-prints PHP code using the
 php-function:highlight-string. 
 
-See also SyntaxHighlighterPlugin for highlighting other languages.
+See also [SyntaxHighlighter|Help:SyntaxHighlighterPlugin] plugin for highlighting other languages.
 
 !!! Usage
 
