@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.27 2008-05-17 06:53:54 vargenau Exp $');
+rcs_id('$Id: UpLoad.php,v 1.28 2008-08-03 15:14:55 vargenau Exp $');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -128,6 +128,7 @@ ws[cfh]");
         extract($args);
 
         $file_dir = getUploadFilePath();
+	$file_dir .= "/";
         $form = HTML::form(array('action'  => $request->getPostURL(),
                                  'enctype' => 'multipart/form-data',
                                  'method'  => 'post'));
@@ -286,6 +287,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.27  2008/05/17 06:53:54  vargenau
+// Create log file if it does not exist
+//
 // Revision 1.26  2007/07/14 12:05:07  rurban
 // no inlined [] links anymore, edit inclusion, more extensions allowed.
 //
