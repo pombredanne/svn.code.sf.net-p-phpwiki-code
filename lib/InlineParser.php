@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.101 2008-08-03 15:56:20 vargenau Exp $');
+rcs_id('$Id: InlineParser.php,v 1.102 2008-08-03 16:03:47 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2008 Reini Urban
  * Copyright (C) 2008 Marc-Etienne Vargenau
@@ -328,6 +328,14 @@ function LinkBracketLink($bracketlink) {
     // $bracketlink will start and end with brackets; in between will
     // be either a page name, a URL or both separated by a pipe.
     
+   $wikicreolesyntax = false;
+
+   if (string_starts_with($bracketlink, "[[")) {
+       $wikicreolesyntax = true;
+       $bracketlink = str_replace("[[", "[", $bracketlink);
+       $bracketlink = str_replace("]]", "]", $bracketlink);
+   }
+  
     // Strip brackets and leading space
     // bug#1904088  Some brackets links on 2 lines cause the parser to crash
     preg_match('/(\#?) \[\s* (?: (.*?) \s* (?<!' . ESCAPE_CHAR . ')(\|) )? \s* (.+?) \s*\]/x',
@@ -338,6 +346,12 @@ function LinkBracketLink($bracketlink) {
     	return new Cached_Link;
     }
     list (, $hash, $label, $bar, $rawlink) = $matches;
+
+    if ($wikicreolesyntax and $label) {
+        $temp = $label;
+        $label = $rawlink;
+        $rawlink = $temp;
+    }
 
     $label = UnWikiEscape($label);
     /*
@@ -458,6 +472,7 @@ function LinkBracketLink($bracketlink) {
 class Markup_bracketlink  extends SimpleMarkup
 {
     var $_match_regexp = "\\#? \\[ .*? [^]\\s] .*? \\]";
+    // TODO: include second ] in regexp
     
     function markup ($match) {
         $link = LinkBracketLink($match);
@@ -1116,6 +1131,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.101  2008/08/03 15:56:20  vargenau
+// Implement Wikicreole syntax for line break
+//
 // Revision 1.100  2008/08/03 15:52:31  vargenau
 // Implement Wikicreole syntax for subscript
 //
