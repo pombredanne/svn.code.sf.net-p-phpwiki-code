@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.28 2008-08-03 15:14:55 vargenau Exp $');
+rcs_id('$Id: UpLoad.php,v 1.29 2008-08-03 17:06:32 vargenau Exp $');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -74,6 +74,10 @@ jpeg
 jpg
 kmz
 mp3
+odg
+odp
+ods
+odt
 patch
 pdf
 png
@@ -287,6 +291,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.28  2008/08/03 15:14:55  vargenau
+// Add slash to file_dir
+//
 // Revision 1.27  2008/05/17 06:53:54  vargenau
 // Create log file if it does not exist
 //
