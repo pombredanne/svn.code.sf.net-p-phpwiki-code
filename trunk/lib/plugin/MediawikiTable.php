@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MediawikiTable.php,v 1.2 2008-04-04 18:13:49 vargenau Exp $');
+rcs_id('$Id: MediawikiTable.php,v 1.3 2008-08-06 09:28:42 vargenau Exp $');
 /**
   MediawikiTablePlugin
   A PhpWiki plugin that allows insertion of tables using a Mediawiki-like
@@ -66,7 +66,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision: 1.3 $");
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -75,15 +75,20 @@ extends WikiPlugin
         // MediawikiTablePlugin markup is new.
         $markup = 2.0;
 
-        // We allow the compact Mediawiki syntax with
-        // multiple cells on the same line (separated by "||").
+        // We allow the compact Mediawiki syntax with:
+        // - multiple cells on the same line (separated by "||"),
+        // - multiple header cells on the same line (separated by "!!").
         $argstr = str_replace("||", "\n|", $argstr);
+        $argstr = str_replace("!!", "\n!", $argstr);
 
         $lines = preg_split('/\n/', $argstr);
         $table = HTML::table();
-        $tbody = HTML::tbody();
 
-        if ($lines[0][0] != '|') {
+        if (substr($lines[0],0,2) == "{|") {
+            // Start of table
+            $lines[0] = substr($lines[0],2);
+        }
+        if (($lines[0][0] != '|') and ($lines[0][0] != '!')) {
             $line = array_shift($lines);
             $attrs = $this->_parse_attr($line);
             foreach ($attrs as $key => $value) {
@@ -97,6 +102,10 @@ extends WikiPlugin
         }
 
         foreach ($lines as $line){
+            if (substr($line,0,2) == "|}") {
+                // End of table
+                continue;
+            }
             if (substr($line,0,2) == "|-") {
                 if (isset($row)) {
                     if (isset($cell)) {
@@ -108,6 +117,8 @@ extends WikiPlugin
                         unset($cell);
                     }
                     $tbody->pushContent($row);
+                    $table->pushContent($tbody);
+                    $tbody = HTML::tbody();
                 }
                 $row = HTML::tr();
                 $attrs = $this->_parse_attr(substr($line,2));
@@ -142,7 +153,7 @@ extends WikiPlugin
                 $table->pushContent($caption);
             }
 
-            if (substr($line,0,1) == "|" and isset($row)) {
+            if (((substr($line,0,1) == "|") or (substr($line,0,1) == "!")) and isset($row)) {
                 if (isset($cell)) {
                     if (isset ($content)) {
                         $cell->pushContent(TransformText(trim($content), $markup, $basepage));
@@ -150,7 +161,13 @@ extends WikiPlugin
                     }
                     $row->pushContent($cell);
                 }
-                $cell = HTML::td();
+                if (substr($line,0,1) == "!") {
+                    $cell = HTML::th();   // Header
+                    $tbody = HTML::thead();
+                } else { 
+                    $cell = HTML::td();
+                    $tbody = HTML::tbody();
+                }
                 $line = substr($line, 1);
 
                 // If there is a "|" in the line, the start of line
@@ -217,6 +234,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2008/04/04 18:13:49  vargenau
+// Add tbody to table
+//
 // Revision 1.1  2008/01/31 20:40:10  vargenau
 // Implemented Mediawiki-like syntax for tables
 //
