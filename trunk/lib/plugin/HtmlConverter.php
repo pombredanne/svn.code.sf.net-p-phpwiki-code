@@ -182,11 +182,7 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
 		// strip attributes from <pre>-Tags and add a new-line before
 		$file = preg_replace ("_<pre(\s[^>]*|)>_iU", "\n<pre>", $file);    
 
-        $outputArea = HTML::textarea( array(
-        	'rows' => '30',
-			'cols' => '80',
-			'wrap' => 'virtual')
-		);
+        $outputArea = HTML::textarea(array('rows' => '30', 'cols' => '80'));
 		
 		$outputArea->pushContent( _($file));
 		$result->pushContent( $outputArea);
