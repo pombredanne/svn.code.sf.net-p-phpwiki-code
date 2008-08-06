@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.16 2008-08-03 15:21:45 vargenau Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.17 2008-08-06 09:25:56 vargenau Exp $');
 
 /**
  * EDIT Toolbar Initialization.
@@ -136,11 +136,6 @@ msg_repl_close     = '"._("Close")."'
                                  "close"=>"\\n",
                                  "sample"=>_("Headline text"),
                                  "title"=>_("Level 1 headline")),
-                           array("image"=>"ed_image.png",
-                                 "open"=>"[ ",
-                                 "close"=>" ]",
-                                 "sample"=>_("Example.jpg"),
-                                 "title"=>_("Embedded image")),
                            array("image"=>"ed_nowiki.png",
                                  "open"=>"\\<verbatim\\>\\n",
                                  "close"=>"\\n\\</verbatim\\>",
@@ -260,6 +255,10 @@ msg_repl_close     = '"._("Close")."'
         if (TOOLBAR_TEMPLATE_PULLDOWN)
             $sr_html = HTML($sr_html, $this->templatePulldown(TOOLBAR_TEMPLATE_PULLDOWN));
 
+        // Button to add images, display in extra window as popup and insert
+        if (TOOLBAR_IMAGE_PULLDOWN)
+            $sr_html = HTML($sr_html, $this->imagePulldown(TOOLBAR_IMAGE_PULLDOWN));
+
         // don't use document.write for replace, otherwise self.opener is not defined.
         $toolbar_end = "document.writeln(\"</div>\");";
         if ($sr_html)
@@ -376,6 +375,38 @@ msg_repl_close     = '"._("Close")."'
                                               ."',[".join(",",$pages)."],'"
                                               ._("Insert")."','"
                                               ._("Close")."','tb-pages')")));
+        }
+        return '';
+    }
+
+    // result is cached. Esp. the args are expensive
+    function imagePulldown($query, $case_exact=false, $regex='auto') {
+        global $WikiTheme;
+
+        $image_dir = '.';
+        if (defined('UPLOAD_FILE_PATH'))
+            $image_dir = UPLOAD_FILE_PATH . "/$image_dir";
+        $pd = new fileSet($image_dir, '*');
+        $images = $pd->getFiles();
+        unset($pd);
+        sort($images);
+        if (!empty($images)) {
+            $image_js = '';
+            foreach ($images as $image) {
+                $image_js .= ",['$image','%5BUpload:".$image."%5D']";
+            }
+            $image_js = substr($image_js, 1);
+            $more_buttons = HTML::img(array('class'=>"toolbar",
+					    'id' => 'tb-images',
+                                            'src'  => $WikiTheme->getImageURL("ed_image.png"),
+                                            'title'=>_("AddImage"),
+                                            'alt'=>_("AddImage"),
+                                            'onclick'=>"showPulldown('".
+                                            _("Insert Image (double-click)")
+                                            ."',[".$image_js."],'"
+                                            ._("Insert")."','"
+                                            ._("Close")."','tb-images')"));
+            return HTML("\n", $more_buttons);
         }
         return '';
     }
