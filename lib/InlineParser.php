@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.103 2008-08-03 16:18:35 vargenau Exp $');
+rcs_id('$Id: InlineParser.php,v 1.104 2008-08-06 09:28:41 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2008 Reini Urban
  * Copyright (C) 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -862,20 +862,18 @@ class Markup_template_plugin  extends SimpleMarkup
 }
 
 /** ENABLE_MARKUP_MEDIAWIKI_TABLE
- *  Table syntax similar to mediawiki
+ *  Table syntax similar to Mediawiki
  *  {|
  * => <?plugin MediawikiTable
  *  |}
  * => ?>
  */
-class Markup_mediawikitable_plugin  extends SimpleMarkup
+class Markup_mediawikitable_plugin extends SimpleMarkup
 {
     var $_match_regexp = '\{\|.*?\|\}';
 
     function markup ($match) {
-        $s = str_replace("{|", "", $match);
-        $s = str_replace("|}", "", $s);
-      $s = '<'.'?plugin MediawikiTable ' . $s . '?'.'>';
+      $s = '<'.'?plugin MediawikiTable ' . $match . '?'.'>';
       return new Cached_PluginInvocation($s);
     }
 }
@@ -1139,6 +1137,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.103  2008/08/03 16:18:35  vargenau
+// Implement "{{foo?version=5}}" syntax for templates
+//
 // Revision 1.102  2008/08/03 16:03:47  vargenau
 // Implement Wikicreole syntax for links
 //
