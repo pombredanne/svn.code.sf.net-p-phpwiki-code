@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: TextSearchQuery.php,v 1.33 2008-05-21 04:28:38 rurban Exp $');
+<?php rcs_id('$Id: TextSearchQuery.php,v 1.34 2008-08-12 16:03:08 rurban Exp $');
 /**
  * A text search query, converting queries to PCRE and SQL matchers.
  *
@@ -161,8 +161,8 @@ class TextSearchQuery {
      * @return boolean True if the string matches the query.
      */
     function match($string) {
-    	if ($this->_tree->_op = TSQ_TOK_ALL)   return true;
-    	if ($this->_tree->_op = TSQ_TOK_EXACT) return $this->_tree->word == $string;
+    	if ($this->_tree->_op == TSQ_TOK_ALL)   return true;
+    	if ($this->_tree->_op == TSQ_TOK_EXACT) return $this->_tree->word == $string;
         return preg_match($this->asRegexp(), $string);
     }
 
@@ -1187,6 +1187,9 @@ class TextSearchQuery_Lexer {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.33  2008/05/21 04:28:38  rurban
+// for the previous pcre short-cut
+//
 // Revision 1.32  2008/05/06 19:25:55  rurban
 // perfomance optimisation: do numeric checks. Change EXACT semantics: ignore case_exact, always do strcmp. Change WORD match to use \b word boundary checks
 //
