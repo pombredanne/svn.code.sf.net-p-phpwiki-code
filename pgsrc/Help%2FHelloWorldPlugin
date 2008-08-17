@@ -1,6 +1,6 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Mon, 16 Aug 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: Help%2FHelloWorldPlugin,v 1.4 2008-08-17 10:49:27 vargenau Exp $
+X-Rcs-Id: $Id: Help%2FHelloWorldPlugin,v 1.5 2008-08-17 15:19:39 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FHelloWorldPlugin;
   flags=PAGE_LOCKED;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 A simple example plugin.
 
-<?plugin HelloWorld salutation="Hello," name="WikiUser" ?>
+<?plugin HelloWorld salutation="Hello," name="Wiki User" ?>
 
 From the source of this page:
 
 <verbatim>
-<?plugin HelloWorld salutation="Hello," name="WikiUser" ?>
+<?plugin HelloWorld salutation="Hello," name="Wiki User" ?>
 </verbatim>
 
 -----
@@ -59,7 +59,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision: 1.5 $");
     }
 
     // Establish default values for each of this plugin's arguments.
