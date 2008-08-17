@@ -1,6 +1,6 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Mon, 16 Aug 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.82 2008-06-18 01:12:40 vargenau Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.83 2008-08-17 15:18:52 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
   flags=PAGE_LOCKED;
@@ -32,6 +32,7 @@ fixes:
 * XHTML validation corrections (vargenau)
 * avoid recursive modification when renaming a page like 'PageFoo to 'PageFooTwo' (vargenau)
 * fix Bug#1904088  Some brackets links with \n cause the parser to crash
+* fixed incorrect numbering in Table of Contents numbering (vargenau)
 
 changes:
 * changed SemanticSearch query semantics: all regex=auto terms with no regex chars (.+*?^$") 
@@ -71,6 +72,7 @@ new:
 * new pages: SpecialPages, LockedPages (vargenau)
 * implemented Mediawiki-like syntax for tables (vargenau)
 * enable RecentChangesCached as box, improve performance.
+* implemented Wikicreole syntax for links, headers (including ~CreateToc), tables, pre, subscript (vargenau)
 
 1.3.14 July, 1 2007, Reini Urban
 
