@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CalendarList.php,v 1.11 2008-02-14 18:58:15 rurban Exp $');
+rcs_id('$Id: CalendarList.php,v 1.12 2008-08-17 07:45:03 vargenau Exp $');
 
 /**
  Copyright 1999-2002,2005-2007 $ThePhpWikiProgrammingTeam
@@ -72,7 +72,7 @@ extends WikiPlugin
                      'last_n_days'  => PLUGIN_CALENDARLIST_LAST_N_DAYS,	// one or the other, not both
                      'last_n'	    => PLUGIN_CALENDARLIST_LAST_N,
 
-                     'month_format' => '%B, %Y',
+                     'month_format' => '%B %Y',
                      'wday_format'  => '%a',
                      'start_wday'   => '1');
     }
@@ -227,6 +227,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.11  2008/02/14 18:58:15  rurban
+// provide mday default
+//
 // Revision 1.10  2007/09/01 13:39:46  rurban
 //  CalendarList pages now in parallel with Calendar: year + month args as start base, The behaviour before 2007 with last/next_n_days was to start now.
 //

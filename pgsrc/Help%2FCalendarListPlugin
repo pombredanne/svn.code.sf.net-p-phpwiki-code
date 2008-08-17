@@ -1,6 +1,6 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Mon, 12 Aug 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: Help%2FCalendarListPlugin,v 1.6 2008-06-19 18:22:32 vargenau Exp $
+X-Rcs-Id: $Id: Help%2FCalendarListPlugin,v 1.7 2008-08-17 07:40:47 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=Help%2FCalendarListPlugin;
   flags=PAGE_LOCKED;
@@ -12,8 +12,6 @@ The *~CalendarList* [plugin|Help:WikiPlugin] is used in conjunction
 with the [Calendar|Help:CalendarPlugin] plugin.
 It was written for those who use a wiki as a
 [personal information manager|PhpWiki:PersonalWiki].
-
-Derived from Calendar.php by Martin Norbäck <mailto:martin@safelogic.se>
 
 Just click any date in the calendar, edit the for that date, then come back to
 this page. The event should be listed below the calendar.
@@ -98,7 +96,7 @@ _Click any date and edit it, then return to this page_:
 <strong>month_format</strong>:
 
   How to display the Month.<br>
-  Default: '%B, %Y'
+  Default: '%B %Y'
 
 <strong>wday_format</strong>:
 
@@ -118,6 +116,9 @@ _Click any date and edit it, then return to this page_:
 * PLUGIN_CALENDARLIST_LAST_N_DAYS = ''
 * PLUGIN_CALENDARLIST_LAST_N      = ''
 
------
+!!! Author
 
+Derived from [Calendar|Help:CalendarPlugin] plugin by [Martin Norbäck|mailto:martin@safelogic.se].
+
+-----
 [PhpWikiDocumentation] [CategoryWikiPlugin]
