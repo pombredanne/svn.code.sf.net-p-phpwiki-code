@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Calendar.php,v 1.34 2007-08-25 18:52:21 rurban Exp $');
+rcs_id('$Id: Calendar.php,v 1.35 2008-08-17 07:45:15 vargenau Exp $');
 /**
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 
@@ -47,7 +47,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.34 $");
+                            "\$Revision: 1.35 $");
     }
 
     function getDefaultArguments() {
@@ -56,10 +56,9 @@ extends WikiPlugin
                      'year'             => '',
                      'month'            => '',
                      'month_offset'     => 0,
-
-                     'month_format'     => '%B, %Y',
+                     'month_format'     => '%B %Y',
                      'wday_format'      => '%a',
-                     'start_wday'       => '1', // start now with monday
+                     'start_wday'       => '1', // start now with Monday
 		     'display_weeknum'  => 0);
     }
 
@@ -251,6 +250,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.34  2007/08/25 18:52:21  rurban
+// Calendar weekday: change from Sunday to start now with Monday
+//
 // Revision 1.33  2007/01/22 23:48:54  rurban
 // Fix Calendar %U: weeknum starting with 1
 //
