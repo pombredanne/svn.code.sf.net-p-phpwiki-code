@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.39 2008-08-19 18:19:01 vargenau Exp $');
+rcs_id('$Id: CreateToc.php,v 1.40 2008-08-19 18:21:35 vargenau Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
  Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.39 $");
+                            "\$Revision: 1.40 $");
     }
 
     function getDefaultArguments() {
@@ -430,8 +430,6 @@ function toggletoc(a) {
                                             'class'=>'wikiaction',
                                             'title'=>_("Click to display to TOC"),
                                             'onclick'=>"toggletoc(this)",
-                                            'height' => 15,
-                                            'width' => 15,
                                             'border' => 0,
                                             'alt' => 'toctoggle',
                                             'src' => $jshide ? $close : $open )));
@@ -450,6 +448,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.39  2008/08/19 18:19:01  vargenau
+// Implement "firstlevelstyle" parameter
+//
 // Revision 1.38  2008/08/19 18:15:28  vargenau
 // Implement "notoc" parameter
 //
