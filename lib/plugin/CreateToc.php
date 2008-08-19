@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.40 2008-08-19 18:21:35 vargenau Exp $');
+rcs_id('$Id: CreateToc.php,v 1.41 2008-08-19 18:25:18 vargenau Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
  Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -22,7 +22,7 @@ rcs_id('$Id: CreateToc.php,v 1.40 2008-08-19 18:21:35 vargenau Exp $');
  */
 
 /**
- * CreateToc:  Automatically link to headers
+ * CreateToc:  Create a Table of Contents and automatically link to headers
  *
  * Usage:   
  *  <?plugin CreateToc headers=!!!,!! with_toclink||=1 
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.40 $");
+                            "\$Revision: 1.41 $");
     }
 
     function getDefaultArguments() {
@@ -441,13 +441,16 @@ function toggletoc(a) {
 			       _("Table of Contents"),
 			       HTML::span(array('style'=>'display:none',
 						'id'=>'toctoggle')," "));
-	$html->pushContent(HTML::h4($toclink));
+	$html->pushContent(HTML::p(array('id'=>'toctitle'), $toclink));
         $html->pushContent($list);
         return $html;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.40  2008/08/19 18:21:35  vargenau
+// Do not force height and width of image
+//
 // Revision 1.39  2008/08/19 18:19:01  vargenau
 // Implement "firstlevelstyle" parameter
 //
