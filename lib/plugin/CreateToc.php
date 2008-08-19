@@ -1,7 +1,8 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.37 2008-05-04 08:37:42 vargenau Exp $');
+rcs_id('$Id: CreateToc.php,v 1.38 2008-08-19 18:15:28 vargenau Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
+ Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -26,7 +27,7 @@ rcs_id('$Id: CreateToc.php,v 1.37 2008-05-04 08:37:42 vargenau Exp $');
  * Usage:   
  *  <?plugin CreateToc headers=!!!,!! with_toclink||=1 
  *                     jshide||=1 ?>
- * @author:  Reini Urban
+ * @author:  Reini Urban, Marc-Etienne Vargenau
  *
  * Known problems: 
  * - MacIE will not work with jshide.
@@ -47,19 +48,20 @@ extends WikiPlugin
     }
 
     function getDescription() {
-        return _("Automatically link headers at the top");
+        return _("Create a Table of Contents and automatically link to headers");
     }
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.37 $");
+                            "\$Revision: 1.38 $");
     }
 
     function getDefaultArguments() {
         return array( 'pagename'  => '[pagename]', // TOC of another page here?
                       // or headers=1,2,3 is also possible.
                       'headers'   => "!!!,!!,!",   // "!!!"=>h1, "!!"=>h2, "!"=>h3
-                      'noheader'  => 0,            // omit <h1>Table of Contents</h1>
+                      'noheader'  => 0,            // omit "Table of Contents" header
+                      'notoc'     => 0,            // do not display TOC, only number headers
                       'position'  => 'right',      // or left
                       'with_toclink' => 0,         // link back to TOC
                       'jshide'    => 0,            // collapsed TOC as DHTML button
@@ -309,6 +311,9 @@ extends WikiPlugin
             //trigger_error(_("jshide set to 0 on Mac IE"), E_USER_NOTICE);
             $jshide = 0;
         }
+        if (($notoc) or ($liststyle == 'ol')) {
+            $with_counter = 1;
+        }
         $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
         //FIXME: I suspect this only to crash with Apache2
@@ -320,6 +325,9 @@ extends WikiPlugin
         }
         $content = $current->getContent();
         $html = HTML::div(array('class' => 'toc', 'id'=>'toc'));
+        if ($notoc) {
+            $html->setAttr('style','display:none;');
+        }
         if ($liststyle == 'dl')
             $list = HTML::dl(array('id'=>'toclist','class' => 'toc'));
         elseif ($liststyle == 'ul')
@@ -383,7 +391,7 @@ function toggletoc(a) {
   }
 }"));
 	if ($extracollapse)
-	    $toclink = HTML(_("Table Of Contents"),
+	    $toclink = HTML(_("Table of Contents"),
 			    " ",
                             HTML::a(array('name'=>'TOC')),
 			    HTML::img(array(
@@ -401,7 +409,7 @@ function toggletoc(a) {
 				     'class'=>'wikiaction',
 				     'title'=>_("Click to display"),
 				     'onclick'=>"toggletoc(this)"),
-			       _("Table Of Contents"),
+			       _("Table of Contents"),
 			       HTML::span(array('style'=>'display:none',
 						'id'=>'toctoggle')," "));
 	$html->pushContent(HTML::h4($toclink));
@@ -411,6 +419,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.37  2008/05/04 08:37:42  vargenau
+// Add alt attribute
+//
 // Revision 1.36  2007/07/19 12:41:25  labbenes
 // Correct TOC numbering. It should start from '1' not from '1.1'.
 //
