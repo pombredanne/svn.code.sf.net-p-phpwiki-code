@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.41 2008-08-19 18:25:18 vargenau Exp $');
+rcs_id('$Id: CreateToc.php,v 1.42 2008-08-19 18:27:06 vargenau Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
  Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.41 $");
+                            "\$Revision: 1.42 $");
     }
 
     function getDefaultArguments() {
@@ -421,6 +421,8 @@ function toggletoc(a) {
     a.src = close
   }
 }"));
+      if ($noheader) {
+      } else {
 	if ($extracollapse)
 	    $toclink = HTML(_("Table of Contents"),
 			    " ",
@@ -442,12 +444,16 @@ function toggletoc(a) {
 			       HTML::span(array('style'=>'display:none',
 						'id'=>'toctoggle')," "));
 	$html->pushContent(HTML::p(array('id'=>'toctitle'), $toclink));
-        $html->pushContent($list);
-        return $html;
+      }
+      $html->pushContent($list);
+      return $html;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.41  2008/08/19 18:25:18  vargenau
+// Use p with id=toctitle instead of h4 for TOC (easier to style)
+//
 // Revision 1.40  2008/08/19 18:21:35  vargenau
 // Do not force height and width of image
 //
