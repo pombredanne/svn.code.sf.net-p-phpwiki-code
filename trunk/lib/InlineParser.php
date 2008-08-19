@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.105 2008-08-19 18:05:40 vargenau Exp $');
+rcs_id('$Id: InlineParser.php,v 1.106 2008-08-19 18:08:14 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2008 Reini Urban
  * Copyright (C) 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -893,6 +893,16 @@ class Markup_mediawikitable_plugin extends SimpleMarkup
     }
 }
 
+class Markup_wikicreoletable_plugin extends SimpleMarkup
+{
+    var $_match_regexp = '^\|=.*?\?>';
+
+    function markup ($match) {
+      $s = '<'.'?plugin WikicreoleTable ' . $match . '?'.'>';
+      return new Cached_PluginInvocation($s);
+    }
+}
+
 // "..." => "&#133;"  browser specific display (not cached?)
 // Support some HTML::Entities: (C) for copy, --- for mdash, -- for ndash
 // TODO: "--" => "&emdash;" browser specific display (not cached?)
@@ -982,6 +992,7 @@ class InlineTransformer
             $this->_addMarkup(new Markup_html_divspan);
         if (ENABLE_MARKUP_COLOR and !$non_default)
             $this->_addMarkup(new Markup_color);
+        $this->_addMarkup(new Markup_wikicreoletable_plugin);
         // Markup_wikicreole_preformatted must be before Markup_template_plugin
         $this->_addMarkup(new Markup_wikicreole_preformatted);
         if (ENABLE_MARKUP_TEMPLATE and !$non_default)
@@ -1154,6 +1165,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.105  2008/08/19 18:05:40  vargenau
+// Implemented Wikicreole syntax for preformatted text
+//
 // Revision 1.104  2008/08/06 09:28:41  vargenau
 // Allow header syntax in Mediawiki tables
 //
