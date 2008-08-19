@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.38 2008-08-19 18:15:28 vargenau Exp $');
+rcs_id('$Id: CreateToc.php,v 1.39 2008-08-19 18:19:01 vargenau Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
  Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.38 $");
+                            "\$Revision: 1.39 $");
     }
 
     function getDefaultArguments() {
@@ -69,6 +69,7 @@ extends WikiPlugin
                       'liststyle' => 'dl',         // 'dl' or 'ul' or 'ol'
                       'indentstr' => '&nbsp;&nbsp;',
 		      'with_counter' => 0,
+                      'firstlevelstyle' => 'number' // 'number', 'letter' or 'roman'
                       );
     }
     // Initialisation of toc counter
@@ -86,9 +87,39 @@ extends WikiPlugin
         }
     }
 
+    function _roman_counter($number) {
+
+        $n = intval($number);
+        $result = '';
+
+        $lookup = array('C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40,
+                        'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
+
+        foreach ($lookup as $roman => $value) {
+            $matches = intval($n / $value);
+            $result .= str_repeat($roman, $matches);
+            $n = $n % $value;
+        }
+        return $result;
+    }
+
+    function _letter_counter($number) {
+        if ($number <= 26) {
+            return chr(ord("A") + $number - 1);
+        } else {
+            return chr(ord("A") + ($number/26) - 1) . chr(ord("A") + ($number%26));
+        }
+    }
+
     // Get string corresponding to the current title
-    function _getCounter(&$counter, $level) {
-        $str=$counter[3];
+    function _getCounter(&$counter, $level, $firstlevelstyle) {
+        if ($firstlevelstyle == 'roman') {
+            $str= $this->_roman_counter($counter[3]);
+        } else if ($firstlevelstyle == 'letter') {
+            $str= $this->_letter_counter($counter[3]);
+        } else {
+            $str=$counter[3];
+        }
         for($i = 2; $i > 0; $i--) {
             if($counter[$i] != 0)
                 $str .= '.'.$counter[$i];
@@ -201,7 +232,7 @@ extends WikiPlugin
     
     // Feature request: proper nesting; multiple levels (e.g. 1,3)
     function extractHeaders (&$content, &$markup, $backlink=0, 
-                             $counter=0, $levels=false, $basepage='') 
+                             $counter=0, $levels=false, $firstlevelstyle='number', $basepage='')
     {
         if (!$levels) $levels = array(1,2);
         $tocCounter = $this->_initTocCounter();        
@@ -222,7 +253,7 @@ extends WikiPlugin
                         $manchor = MangleXmlIdentifier($anchor);
                         $texts = $s;
                         if($counter) {
-                            $texts = $this->_getCounter($tocCounter, $level).' '.$s; 
+                            $texts = $this->_getCounter($tocCounter, $level, $firstlevelstyle).' '.$s;
                         }
                         $headers[] = array('text' => $texts, 
                                            'anchor' => $anchor, 
@@ -240,7 +271,7 @@ extends WikiPlugin
                             $x = $markup->_content[$j];
 			    $qheading = $this->_quote($s);
 			    if ($counter)
-				$counterString = $this->_getCounter($tocCounter, $level);
+				 $counterString = $this->_getCounter($tocCounter, $level, $firstlevelstyle);
                             if (($hstart === 0) && is_string($markup->_content[$j])) {
                                 if ($backlink) {
                                     if ($counter)
@@ -355,7 +386,7 @@ extends WikiPlugin
             require_once("lib/InlineParser.php");
         if ($headers = $this->extractHeaders($content, $dbi->_markup, 
                                              $with_toclink, $with_counter, 
-                                             $levels, $basepage)) 
+                                             $levels, $firstlevelstyle, $basepage))
         {
             foreach ($headers as $h) {
                 // proper heading indent
@@ -419,6 +450,9 @@ function toggletoc(a) {
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.38  2008/08/19 18:15:28  vargenau
+// Implement "notoc" parameter
+//
 // Revision 1.37  2008/05/04 08:37:42  vargenau
 // Add alt attribute
 //
