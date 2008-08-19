@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: InlineParser.php,v 1.106 2008-08-19 18:08:14 vargenau Exp $');
+rcs_id('$Id: InlineParser.php,v 1.107 2008-08-19 18:10:17 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2008 Reini Urban
  * Copyright (C) 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -842,7 +842,7 @@ class Markup_wikicreole_preformatted extends SimpleMarkup
 }
 
 /** ENABLE_MARKUP_TEMPLATE
- *  Template syntax similar to mediawiki
+ *  Template syntax similar to Mediawiki
  *  {{template}}
  * => < ? plugin Template page=template ? >
  *  {{template|var1=value1|var2=value|...}}
@@ -854,7 +854,27 @@ class Markup_template_plugin  extends SimpleMarkup
     var $_match_regexp = '\{\{.*?\}\}';
     
     function markup ($match) {
-        $page = substr(str_replace("\n", "", $match),2,-2); $vars = '';
+
+        $page = substr($match,2,-2);
+        if (strpos($page, "|") === false) {
+            $imagename = $page;
+            $alt = $page;
+        } else {
+            $imagename = substr($page, 0, strpos($page, "|"));
+            $alt = ltrim(strstr($page, "|"), "|");
+        }
+
+        // It's not a Mediawiki template, it's a Wikicreole image
+        if ((string_ends_with($imagename, ".jpg"))
+           or (string_ends_with($imagename, ".jpeg"))
+           or (string_ends_with($imagename, ".gif"))
+           or (string_ends_with($imagename, ".png"))) {
+            return LinkImage(UPLOAD_DATA_PATH . $imagename, $alt);
+        }
+
+        $page = str_replace("\n", "", $page); 
+        $vars = '';
+
         if (preg_match('/^(\S+?)\|(.*)$/', $page, $_m)) {
             $page = $_m[1];
             $vars = '"' . preg_replace('/\|/', '" "', $_m[2]) . '"'; 
@@ -1165,6 +1185,9 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.106  2008/08/19 18:08:14  vargenau
+// Implement Wikicreole syntax for tables
+//
 // Revision 1.105  2008/08/19 18:05:40  vargenau
 // Implemented Wikicreole syntax for preformatted text
 //
