@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: HtmlElement.php,v 1.49 2007-06-02 18:23:49 rurban Exp $');
+<?php rcs_id('$Id: HtmlElement.php,v 1.50 2008-08-20 17:11:53 vargenau Exp $');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki
@@ -426,6 +426,10 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('param');
         return $el->_init2(func_get_args());
     }
+    function legend (/*...*/) {
+        $el = new HtmlElement('legend');
+        return $el->_init2(func_get_args());
+    }
 }
 
 define('HTMLTAG_EMPTY', 1);
@@ -557,6 +561,9 @@ function IfJavaScript($if_content = false, $else_content = false) {
     
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.49  2007/06/02 18:23:49  rurban
+ Added accesskeys
+
  Revision 1.48  2007/05/24 18:51:35  rurban
  add param (for YouTube)
 
