@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikicreoleTable.php,v 1.1 2008-08-19 17:58:25 vargenau Exp $');
+rcs_id('$Id: WikicreoleTable.php,v 1.2 2008-08-20 18:15:02 vargenau Exp $');
 /**
   WikicreoleTablePlugin
   A PhpWiki plugin that allows insertion of tables using the Wikicreole
@@ -64,7 +64,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
 
     function handle_plugin_args_cruft($argstr, $args) {
@@ -75,7 +75,7 @@ extends WikiPlugin
         global $WikiTheme;
         include_once('lib/InlineParser.php');
 
-        $table = HTML::table(array('border' => 1));
+        $table = HTML::table(array('class' => "bordered"));
 
         $lines = preg_split('/\s*?\n\s*/', $argstr);
 
@@ -121,6 +121,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/08/19 17:58:25  vargenau
+// Implement Wikicreole syntax for tables
+//
 
 // For emacs users
 // Local Variables:
