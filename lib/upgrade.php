@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.61 2008-03-17 19:12:32 rurban Exp $');
+rcs_id('$Id: upgrade.php,v 1.62 2008-08-20 17:07:48 vargenau Exp $');
 /*
  Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
 
@@ -411,8 +411,8 @@ CREATE TABLE $log_tbl (
 		return;
 	    }
 	}
-        echo "db version: we want ", $this->current_db_version, "\n<br>";
-        echo "db version: we have ", $this->db_version, "\n<br>";
+        echo "db version: we want ", $this->current_db_version, "\n<br />";
+        echo "db version: we have ", $this->db_version, "\n<br />";
         if ($this->db_version >= $this->current_db_version) {
             echo _("OK"), "<br />\n";
             return;
@@ -1297,6 +1297,11 @@ function DoUpgrade(&$request) {
 
 /*
  $Log: not supported by cvs2svn $
+ Revision 1.61  2008/03/17 19:12:32  rurban
+ get rid of @ error protection in unserialize
+ define $backend_type for dba
+ fix _upgrade_relation_links for missing SQL relation field
+
  Revision 1.60  2007/08/25 18:43:35  rurban
  add missing DBParams. Detected by Sacha Schär.
 

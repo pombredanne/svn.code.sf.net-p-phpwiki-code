@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: loadsave.php,v 1.159 2008-03-17 19:41:06 rurban Exp $');
+rcs_id('$Id: loadsave.php,v 1.160 2008-08-20 17:09:38 vargenau Exp $');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
@@ -62,6 +62,8 @@ function StartLoadDump(&$request, $title, $html = '')
 
 function EndLoadDump(&$request)
 {
+    global $WikiTheme;
+
     if (isa($request,'MockRequest'))
         return;
     $action = $request->getArg('action');
@@ -109,6 +111,14 @@ function EndLoadDump(&$request)
 
     PrintXML(HTML::p(HTML::strong(_("Complete."))),
              HTML::p(fmt("Return to %s", $pagelink)));
+    // Ugly hack to get valid XHTML code
+    if (isa($WikiTheme, 'Theme_gforge')) {
+        echo "</div>\n";
+        echo "</td></tr>\n";
+        echo "</table>\n";
+        echo "</td></tr>\n";
+        echo "</table>\n";
+    }
     echo "</body></html>\n";
 }
 
@@ -864,7 +874,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     $versiondata = $pageinfo['versiondata']; // Revision level meta-data.
 
     if (empty($pageinfo['pagename'])) {
-        PrintXML(HTML::dt(HTML::strong(_("Empty pagename!"))));
+        PrintXML(HTML::p(HTML::strong(_("Empty pagename!"))));
         return;
     }
 
@@ -874,7 +884,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     // remove invalid backend specific chars. utf8 issues mostly
     $pagename_check = new WikiPagename($pageinfo['pagename']);
     if (!$pagename_check->isValid()) {
-        PrintXML(HTML::dt(HTML::strong(_("Invalid pagename!")." ".$pageinfo['pagename'])));
+        PrintXML(HTML::p(HTML::strong(_("Invalid pagename!")." ".$pageinfo['pagename'])));
         return;
     }
     $pagename = $pagename_check->getName();
@@ -935,10 +945,9 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
             $page->set($key, $value);
       }
 
-    $mesg = HTML::dd();
+    $mesg = HTML::p(array('style' => 'text-indent: 3em;'));
     if ($source)
         $mesg->pushContent(' ', fmt("from %s", $source));
-
 
     if (!$current) {
     	//FIXME: This should not happen! (empty vdata, corrupt cache or db)
@@ -986,7 +995,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
     if (! $skip ) {
     	// in case of failures print the culprit:
         if (!isa($request,'MockRequest')) {
-    	    PrintXML(HTML::dt(WikiLink($pagename))); flush();
+    	    PrintXML(HTML::p(WikiLink($pagename))); flush();
         }
         $new = $page->save($content, WIKIDB_FORCE_CREATE, $versiondata);
         $dbi->touch();
@@ -1032,7 +1041,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
 
     if (!isa($request,'MockRequest')) {
       if ($skip)
-        PrintXML(HTML::dt(HTML::em(WikiLink($pagename))), $mesg);
+        PrintXML(HTML::p(HTML::em(WikiLink($pagename))), $mesg);
       else
         PrintXML($mesg);
       flush();
@@ -1042,12 +1051,12 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
 // action=revert (by diff)
 function RevertPage (&$request)
 {
-    $mesg = HTML::dd();
+    $mesg = HTML::p();
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
     if (!$version) {
-        PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
-                 HTML::dd(_("missing required version argument")));
+        PrintXML(HTML::p(fmt("Revert")," ",WikiLink($pagename)),
+                 HTML::p(_("missing required version argument")));
         return;
     }
     $dbi =& $request->_dbi;
@@ -1056,21 +1065,21 @@ function RevertPage (&$request)
     $currversion = $current->getVersion();
     if ($currversion == 0) {
         $mesg->pushContent(' ', _("no page content"));
-        PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
+        PrintXML(HTML::p(fmt("Revert")," ",WikiLink($pagename)),
                  $mesg);
         flush();
         return;
     }
     if ($currversion == $version) {
         $mesg->pushContent(' ', _("same version page"));
-        PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
+        PrintXML(HTML::p(fmt("Revert")," ",WikiLink($pagename)),
                  $mesg);
         flush();
         return;
     }
     if ($request->getArg('cancel')) {
         $mesg->pushContent(' ', _("Cancelled"));
-        PrintXML(HTML::dt(fmt("Revert")," ",WikiLink($pagename)),
+        PrintXML(HTML::p(fmt("Revert")," ",WikiLink($pagename)),
                  $mesg);
         flush();
         return;
@@ -1088,7 +1097,7 @@ function RevertPage (&$request)
                                       Button('submit:cancel', _("Cancel"), 'button')),
                            HTML::hr());
         $rev = $page->getRevision($version);
-        $html = HTML(HTML::dt(fmt("Revert %s to version $version", WikiLink($pagename))), 
+        $html = HTML(HTML::p(fmt("Revert %s to version $version", WikiLink($pagename))), 
                      $mesg,
                      $rev->getTransformedContent()); 
         $template = Template('browse', 
@@ -1313,8 +1322,8 @@ function LoadZip (&$request, $zipfile, $files = false, $exclude = false) {
         $fn = basename("/dummy/" . $fn);
         if ( ($files && !in_array($fn, $files))
              || ($exclude && in_array($fn, $exclude)) ) {
-            PrintXML(HTML::dt(WikiLink($fn)),
-                     HTML::dd(_("Skipping")));
+            PrintXML(HTML::p(WikiLink($fn)),
+                     HTML::p(_("Skipping")));
             flush();
             continue;
         }
@@ -1327,11 +1336,11 @@ function LoadDir (&$request, $dirname, $files = false, $exclude = false) {
     $fileset = new LimitedFileSet($dirname, $files, $exclude);
 
     if (!$files and ($skiplist = $fileset->getSkippedFiles())) {
-        PrintXML(HTML::dt(HTML::strong(_("Skipping"))));
+        PrintXML(HTML::p(HTML::strong(_("Skipping"))));
         $list = HTML::ul();
         foreach ($skiplist as $file)
             $list->pushContent(HTML::li(WikiLink($file)));
-        PrintXML(HTML::dd($list));
+        PrintXML(HTML::p($list));
     }
 
     // Defer HomePage loading until the end. If anything goes wrong
@@ -1491,7 +1500,6 @@ function SetupWiki (&$request)
                                        WIKIAUTH_BOGO);
 
     StartLoadDump($request, _("Loading up virgin wiki"));
-    echo "<dl>\n";
 
     $pgsrc = FindLocalizedFile(WIKI_PGSRC);
     $default_pgsrc = FindFile(DEFAULT_WIKI_PGSRC);
@@ -1526,12 +1534,11 @@ function SetupWiki (&$request)
                           E_USER_WARNING);
         }
     }
-    echo "</dl>\n";
     
     $pagename = _("InterWikiMap");
     $map = $dbi->getPage($pagename);
     $map->set('locked', true);
-    PrintXML(HTML::dt(HTML::em(WikiLink($pagename))), HTML::dd("locked"));
+    PrintXML(HTML::p(HTML::em(WikiLink($pagename)), HTML::strong(" locked")));
     EndLoadDump($request);
 }
 
@@ -1559,6 +1566,9 @@ function LoadPostFile (&$request)
 
 /**
  $Log: not supported by cvs2svn $
+ Revision 1.159  2008/03/17 19:41:06  rurban
+ Windows quirks: Since dumps needs to be copied, we have to disallow "bla " dirs for all platforms.
+
  Revision 1.158  2008/02/14 18:36:52  rurban
  use addSrcFile
 
