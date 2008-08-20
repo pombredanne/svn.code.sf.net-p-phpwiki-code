@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.25 2007-08-25 18:10:17 rurban Exp $');
+rcs_id('$Id: WikiAdminSelect.php,v 1.26 2008-08-20 18:16:55 vargenau Exp $');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 
@@ -46,7 +46,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.25 $");
+                            "\$Revision: 1.26 $");
     }
 
     function getDefaultArguments() {
@@ -131,7 +131,7 @@ extends WikiPlugin
         // GetUrlToSelf() with all given params
         //$uri = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']; // without s would be better.
         //$uri = $request->getURLtoSelf();//false, array('verify'));
-        $form = HTML::form(array('action' => $request->getPostURL(), 'method' => 'POST'));
+        $form = HTML::form(array('action' => $request->getPostURL(), 'method' => 'post'));
         if ($request->getArg('WikiAdminSelect') == _("Go"))
             $p = false;
         else
@@ -255,6 +255,9 @@ extends WikiPlugin
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.25  2007/08/25 18:10:17  rurban
+// add default _tablePush
+//
 // Revision 1.24  2007/01/04 16:47:13  rurban
 // Clarify API: sortby,limit and exclude are strings.
 //
