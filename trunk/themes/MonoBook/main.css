@@ -345,8 +345,8 @@ table.small {
   	float: right;
   	clear: right;
 }
-#toc h2,
-.toc h2 {
+#toc #toctitle,
+.toc #toctitle {
 	display: inline;
 	border: none;
 	padding: 0;
