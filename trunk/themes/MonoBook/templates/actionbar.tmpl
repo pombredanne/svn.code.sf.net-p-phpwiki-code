@@ -1,5 +1,5 @@
 <?php // -*-php-*- ?>
-<!-- $Id: actionbar.tmpl,v 1.17 2008-03-10 20:19:30 vargenau Exp $ -->
+<!-- $Id: actionbar.tmpl,v 1.18 2008-08-20 05:54:50 vargenau Exp $ -->
 <?php
   //$p = $WikiTheme->tooltipAccessKeyPrefix();
   $dbh = $request->getDbh();
@@ -68,11 +68,11 @@
     <?= ActionButton("diff") ?> 
     <?= ActionButton(_("PageDump")) ?>
     <?php if (DEBUG and USECACHE) {
-      $PurgeCache = Button(array('nocache' => 'purge'),
+      $PurgeCache = ActionButton(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $pagename);
       $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed.")); ?>
       <?= $PurgeCache ?>
     <?php } ?>
-  </div>
   </ul>
+  </div>
 </div>
