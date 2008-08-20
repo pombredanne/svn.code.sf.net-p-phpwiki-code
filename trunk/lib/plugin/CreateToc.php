@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateToc.php,v 1.43 2008-08-19 18:29:12 vargenau Exp $');
+rcs_id('$Id: CreateToc.php,v 1.44 2008-08-20 17:47:48 vargenau Exp $');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
  Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -53,7 +53,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.43 $");
+                            "\$Revision: 1.44 $");
     }
 
     function getDefaultArguments() {
@@ -446,11 +446,18 @@ function toggletoc(a) {
 	$html->pushContent(HTML::p(array('id'=>'toctitle'), $toclink));
       }
       $html->pushContent($list);
+      if (count($headers) == 0) {
+          // Do not display an empty TOC
+          $html->setAttr('style','display:none;');
+      }
       return $html;
     }
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.43  2008/08/19 18:29:12  vargenau
+// Correct TOC numbering
+//
 // Revision 1.42  2008/08/19 18:27:06  vargenau
 // Implement "noheader" parameter
 //
