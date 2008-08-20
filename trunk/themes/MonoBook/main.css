@@ -1879,3 +1879,17 @@ table.bordered tbody:first-child tr:first-child {
     font-weight: bold;
     background-color: #d8d8d8;
 }
+
+/* Style for feedback
+ * Use this style to tell the user that the operation he
+ * requested was executed successfully, e.g:
+ * User was successfully registered
+*/
+.feedback {
+     font-weight: bold;
+     border-width: 2px;
+     border-style: solid;
+     background-color: #DFD;
+     border-color: green;
+     padding: 0.5em;
+}
