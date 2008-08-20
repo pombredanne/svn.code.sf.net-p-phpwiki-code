@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.38 2008-01-30 19:22:53 vargenau Exp $');
+rcs_id('$Id: UserPreferences.php,v 1.39 2008-08-20 18:23:09 vargenau Exp $');
 /**
  Copyright (C) 2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 
@@ -40,7 +40,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.38 $");
+                            "\$Revision: 1.39 $");
     }
 
     function getDefaultArguments() {
@@ -87,7 +87,7 @@ extends WikiPlugin
              $user->isAuthenticated() and !empty($userid))
         {
             $pref = &$request->_prefs;
-	    $args['isForm'] = true;
+            $args['isForm'] = true;
             //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
  
             if ($request->isPost()) {
@@ -101,16 +101,20 @@ extends WikiPlugin
                     $request->_setUser($user);
                     $request->setArg("verify",false);
                     $request->setArg("delete",false);
-                    $alert = new Alert(_("Message"),
-                                       _("Your UserPreferences have been successfully deleted."));
-                    $alert->show();
-                    return;
+// Alert message removed, display directly the Preference form with the message.
+//                    $alert = new Alert(_("Message"),
+//                                       _("Your UserPreferences have been successfully reset to default."));
+//                    $alert->show();
+//                    return;
+                    $errmsg .= _("Your UserPreferences have been successfully reset to default.");
+                    $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
+                    return Template('userprefs', $args);
                 } elseif ($delete and !$request->getArg('verify')) {
                     return HTML::form(array('action' => $request->getPostURL(),
                                             'method' => 'post'),
                                        HiddenInputs(array('verify' => 1)),
                                        HiddenInputs($request->getArgs()),
-                                       HTML::p(_("Do you really want to delete all your UserPreferences?")),
+                                       HTML::p(_("Do you really want to reset all your UserPreferences?")),
                                        HTML::p(Button('submit:delete', _("Yes"), 'delete'),
                                                HTML::Raw('&nbsp;'),
                                                Button('cancel', _("Cancel")))
@@ -157,7 +161,8 @@ extends WikiPlugin
                         }  
                     }
                     }
-                    $args['errmsg'] = HTML(HTML::h2($errmsg), HTML::hr());
+                    $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
+
                 }
             }
             $args['available_themes'] = listAvailableThemes();
@@ -173,6 +178,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.38  2008/01/30 19:22:53  vargenau
+// Specific message when only one preference is updated
+//
 // Revision 1.37  2006/03/07 21:06:56  rurban
 // add PdoDbPassUser
 //
