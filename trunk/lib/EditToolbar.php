@@ -1,14 +1,14 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.17 2008-08-06 09:25:56 vargenau Exp $');
+rcs_id('$Id: EditToolbar.php,v 1.18 2008-08-20 05:34:38 vargenau Exp $');
 
 /**
  * EDIT Toolbar Initialization.
- * The default/themes/toolbar.js is from mediawiki, this php is written from scratch.
+ * The default/themes/toolbar.js is from Mediawiki, this PHP is written from scratch.
  *
  * Features: 
  * - save-preview and formatting buttons from mediawiki
  * - Search&Replace from walterzorn.de
- * - pageinsert popup by Reini Urban (TODO: should be a pulldown, use acdropdown))
+ * - pageinsert popup by Reini Urban (TODO: should be a pulldown, use acdropdown)
  */
 
 class EditToolbar {
@@ -449,6 +449,12 @@ msg_repl_close     = '"._("Close")."'
 
 /*
 $Log: not supported by cvs2svn $
+Revision 1.17  2008/08/06 09:25:56  vargenau
+Button to add images, display in extra window as popup and insert
+
+Revision 1.16  2008/08/03 15:21:45  vargenau
+Less arguments for CreateToc button
+
 Revision 1.15  2008/04/02 18:07:05  vargenau
 New Edit Toolbar icons for TOC and Color text
 
