@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: BlockParser.php,v 1.64 2008-08-03 15:29:16 vargenau Exp $');
+<?php rcs_id('$Id: BlockParser.php,v 1.65 2008-08-20 17:14:17 vargenau Exp $');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
  *
@@ -1038,8 +1038,11 @@ class Block_heading_wikicreole extends BlockMarkup
     
     function _match (&$input, $m) {
         $tag = "h" . strlen($m->match);
-        // TBD: Remove '='s at the end so that Mediawiki syntax is recognized
-        $text = TransformInline(trim($m->postmatch));
+        // Remove spaces
+        $header = trim($m->postmatch);
+        // Remove '='s at the end so that Mediawiki syntax is recognized
+        $header = trim($header, "=");
+        $text = TransformInline(trim($header));
         $input->advance();
 
         $this->_element = new Block_HtmlElement($tag, false, $text);
@@ -1189,6 +1192,9 @@ function TransformText ($text, $markup = 2.0, $basepage = false) {
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.64  2008/08/03 15:29:16  vargenau
+// Implement Wikicreole headers
+//
 // Revision 1.63  2007/08/25 18:24:30  rurban
 // speed up divspan without \n
 //
