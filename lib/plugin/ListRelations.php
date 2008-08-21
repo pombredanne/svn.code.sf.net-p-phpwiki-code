@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListRelations.php,v 1.1 2007-01-02 13:23:22 rurban Exp $');
+rcs_id('$Id: ListRelations.php,v 1.2 2008-08-21 18:35:33 vargenau Exp $');
 /*
  Copyright 2006 Reini Urban
 
@@ -34,11 +34,11 @@ extends WikiPlugin
         return _("ListRelations");
     }
     function getDescription() {
-        return _("Display the list of all defined relations and optionnally attributes in this entrire wiki");
+        return _("Display the list of all defined relations and optionnally attributes in this entire wiki");
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision: 1.2 $");
     }
     function getDefaultArguments() { 
         return array_merge
@@ -60,6 +60,9 @@ extends WikiPlugin
 };
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2007/01/02 13:23:22  rurban
+// simple lister for relations and/or attributes
+//
 
 // Local Variables:
 // mode: php
