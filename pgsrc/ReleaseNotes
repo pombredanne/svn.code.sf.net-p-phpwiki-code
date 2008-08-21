@@ -1,6 +1,6 @@
-Date: Mon, 16 Aug 2008 14:15:24 +0000
+Date: Mon, 21 Aug 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
-X-Rcs-Id: $Id: ReleaseNotes,v 1.83 2008-08-17 15:18:52 vargenau Exp $
+X-Rcs-Id: $Id: ReleaseNotes,v 1.84 2008-08-21 18:19:22 vargenau Exp $
 Content-Type: application/x-phpwiki;
   pagename=ReleaseNotes;
   flags=PAGE_LOCKED;
@@ -10,11 +10,11 @@ Content-Transfer-Encoding: binary
 
 1.3.15 ?? 2008 Reini Urban, Sabri Labbenes, Marc-Etienne Vargenau
 
-Improved dumping, pageset handling for format= with ActionPages. 
+Improved dumping, pageset handling for format= with ~ActionPages. 
 e.g. dump pagesets or multi-page pdf's.
 
 fixes:
-* fix PagePerm for multiple groups: not a member and undecided: check other groups
+* fix ~PagePerm for multiple groups: not a member and undecided: check other groups
 * fix rss button actions for special RecentChanges actions (UserContribs, PageHistory, ...)
 * fix Bug#1749950 accesslog SQL duration float with ","
 * fix template inclusion with a recursion cycle leading to crashes in blog PageInfo
@@ -28,9 +28,9 @@ fixes:
 * fix Bug#1752172 undefined method TextSearchQuery_node_or::_sql_quote()
 * dba: fix sorting for empty mtime field
 * LdapSearch: fix layout and logic
-* FileInfo: fix Upload: links
+* ~FileInfo: fix Upload: links
 * XHTML validation corrections (vargenau)
-* avoid recursive modification when renaming a page like 'PageFoo to 'PageFooTwo' (vargenau)
+* avoid recursive modification when renaming a page like '~PageFoo to '~PageFooTwo' (vargenau)
 * fix Bug#1904088  Some brackets links with \n cause the parser to crash
 * fixed incorrect numbering in Table of Contents numbering (vargenau)
 
@@ -38,10 +38,10 @@ changes:
 * changed SemanticSearch query semantics: all regex=auto terms with no regex chars (.+*?^$") 
   will be searched exact, and not with regex=auto. This means no word splitting, no substrings.
 * ranked search for title and fulltext for non-SQL backends. Simple score function.
-* allow comments in WikiGroup lists after username
+* allow comments in ~WikiGroup lists after username
 * aesthetic request: remove ?action=edit after edit
 * create interim pages as minor not see them in RecentChanges
-* default theme: use standard search template (LiveSearch)
+* default theme: use standard search template (~LiveSearch)
 * [Help:CalendarPlugin] changed default start_wday from 0 to 1 (Monday)
 * [Help:CalendarListPlugin] pages now in parallel with Calendar: year + month args as start base. 
   The behaviour before 2007 with last/next_n_days was to start now.
@@ -54,15 +54,15 @@ changes:
 * remove Upload button from edit
 * changed Wikiwyg editor workflow (labbenes)
 * allow <s> to strike; update Help for <s> and <strike> (vargenau)
-* RichTable plugin: enrich syntax for attributes (vargenau)
+* ~RichTable plugin: enrich syntax for attributes (vargenau)
 * more icons for toolbar (vargenau)
 * UserPreferences: specific message when only one preference is updated (vargenau)
 
 new:
-* PageList supports listtype=ul,ol,dl. dl used by FullTextSearch
+* ~PageList supports listtype=ul,ol,dl. dl used by FullTextSearch
 * pageable textsearch results
 * external search button by using Search: and searchtype=external
-* added UniversalWikiEditButton to MonoBook, default, blog. More themes later.
+* added ~UniversalWikiEditButton to ~MonoBook, default, blog. More themes later.
 * add INSECURE_ACTIONS_LOCALHOST_ONLY for advanced security actions
 * enable "^A or ^B" pages argument for PageLists: e.g. splitted actions for large htmldump's
 * dba: add args to check and rebuild (full or links only)
@@ -71,8 +71,8 @@ new:
 * AppendText: support pages argument: append to multiple pages
 * new pages: SpecialPages, LockedPages (vargenau)
 * implemented Mediawiki-like syntax for tables (vargenau)
-* enable RecentChangesCached as box, improve performance.
-* implemented Wikicreole syntax for links, headers (including ~CreateToc), tables, pre, subscript (vargenau)
+* enable ~RecentChangesCached as box, improve performance.
+* implemented Wikicreole syntax for links, headers (including ~CreateToc), tables, images, pre, subscript (vargenau)
 
 1.3.14 July, 1 2007, Reini Urban
 
@@ -82,8 +82,8 @@ fixes:
 
 changes:
 * changes all themeinfo.php files, moved global to method load() to be 
-  easier derived from custom theme classes, main now calls $WikiTheme->load
-* MailNotify is now silent unless DEBUG
+  easier derived from custom theme classes, main now calls $~WikiTheme->load
+* ~MailNotify is now silent unless DEBUG
 
 new:
 * added experimental ATOM support
@@ -97,26 +97,26 @@ fixes:
   on empty passwords with ldap_bind().
 * LDAP Auth: fix password quoting
 * fix action=upgrade for dba, rename nosql to nodb
-* fixes SpamBlockList config file locations (config/two-level-tlds, config/whitelist)
-* enable $MailNotify->onChangePage
+* fixes ~SpamBlockList config file locations (config/two-level-tlds, config/whitelist)
+* enable $~MailNotify->onChangePage
 * fix display of pagenames containing ":" in certain lists
 * fixed backend asArray access to iterators (DebugInfo with SQL)
-* fix wrong PhpWikiCvs InterWikiMap entry
+* fix wrong ~PhpWikiCvs InterWikiMap entry
 * fix syntax error in pgsrc/Help%2FActionPage
 * fix case in pgsrc/Help%2FAsciiSVGPlugin
 * fix links in pgsrc/Help%2FSemanticRelations
 * fix pgsrc/Help%2FWikiPlugin
 
 changes:
-* allow \n and single letter pages in {{ }} template syntax. 
-  patch #1732793 by AlJeux and ReiniUrban
+* allow \n and single letter pages in ~{~{ ~}~} template syntax. 
+  patch #1732793 by ~AlJeux and ~ReiniUrban
 * with ENABLE_SPAMBLOCKLIST check only new external links: 
   max 5, allow interwiki links, and improve failed output.
 
 1.3.13 June, 2 2007, Reini Urban
 
 This is major feature release which will be the base for the stable
-1.4.0.  The highlights are SemanticWeb support, basic support for
+1.4.0.  The highlights are ~SemanticWeb support, basic support for
 various WYSIWYG editors (not yet stable), a stable ~MonoBook (wikipedia)
 and Blog theme, enabled acdropdown support (~LiveSearch), postgresql and
 oracle enhancements, moving Help pages into Help/, support different
@@ -127,7 +127,7 @@ fixes:
 * fix UpLoad to disallow all php extensions
 * DB: use ANSI SQL statements (oracle by Bob Peele & Christopher Jones, 
   postgresql by Reini Urban)
-* fixed blog, MonoBook, sidebar and wikilens theme layout
+* fixed blog, ~MonoBook, sidebar and wikilens theme layout
 * fix Template and CreatePage variable expansion
 * xhtml dump for subpages into subdirectories, fixed filenames and subdir names
 * fixed loading pages into foreign charsets (such as utf-8)
@@ -155,7 +155,7 @@ fixes:
 
 changes:
 * add UpLoad policy DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS, default: false
-* SemanticWeb: add linkrelation support, getPageLinks returns now an array of hashes. 
+* ~SemanticWeb: add linkrelation support, getPageLinks returns now an array of hashes. 
   optimize get_links for relations.
 * add new linksyntax "[:pagename]" inside square brackets only, not to store backlinks.
   [:DontStoreLink] (experimental)
@@ -199,10 +199,10 @@ changes:
 * Improve LdapSearch plugin and add action page.
 * Improved wikilens theme.
 * Changed all default Template vars to expanded to uppercase: PAGENAME, USERID, ...
-* CSS: no MonoBook css hacks/requests, check special browser versions in php
+* CSS: no ~MonoBook css hacks/requests, check special browser versions in php
 
 new:
-* add SemanticRelations syntax, db structure and attribute units.
+* add ~SemanticRelations syntax, db structure and attribute units.
   Sample: pagename=SanDiego is_a :: city => SanDiego relation = is_a, linkto = city
           population := 1,305,736 (numeric units)
   Store unified attribute in pagedata.
@@ -227,10 +227,10 @@ new:
 * patch #1377011 by Matt Brown: add DATABASE_OPTIMISE_FREQUENCY
 * new options db-check and db-rebuild for WikiAdminPlugin.
   You can now retransform all pages at once.
-* new MailNotify class, simplified WikiDB.php
+* new ~MailNotify class, simplified WikiDB.php
 * added "Printable version" js to monobook theme. See License in 
   http://www.howtocreate.co.uk/jslibs/termsOfUse.html
-* new ActionButton function for MonoBook with selected state. (tab state)
+* new ActionButton function for ~MonoBook with selected state. (tab state)
 * added SyncWiki plugin to sync pages and uploads with a master wiki.
   (foreign auth not yet solved)
 * added boolean UPLOAD_USERDIR to upload into user-specific directory.
@@ -250,8 +250,8 @@ new:
 * Added nopage argument to PageList and all its plugins. Unique rows only not yet.
 * Added author, owner argument to RecentChanges and added action pages: 
   MyRecentChanges, MyRecentEdits, UserContribs
-* added RecentChanges format=contribs for MonoBook theme: => UserContribs
-* added MonoBook accesskeys
+* added RecentChanges format=contribs for ~MonoBook theme: => UserContribs
+* added ~MonoBook accesskeys
 
 1.3.12p3 Jun, 18 2006, Reini Urban:
 
@@ -351,7 +351,7 @@ changes:
 
 new:
 * added NUM_SPAM_LINKS as config.ini option
-* new ENABLE_SPAMBLOCKLIST, lib/SpamBlocklist.php:
+* new ENABLE_SPAMBLOCKLIST, lib/~SpamBlocklist.php:
   check external links against surbl.org and bl.spamcop.net 
 * added Captcha class and better spiral
 * added get_captcha_random_word() contributed by Dan Frankowski
@@ -537,11 +537,11 @@ new:
 * added new <!plugin-list PluginName args!> syntax within plugin args
 * new plugin IncludePages, esp. for <!plugin-list !>
 * added template variable expansion support to the CreatePagePlugin
-* WikiSpam prevention: 
+* ~WikiSpam prevention: 
   ** On GOOGLE_LINKS_NOFOLLOW add rel=nowfollow to all external 
      links, unless the author was authenticated.
   ** max 20 new links hardcoded
-  ** new babycart module interfacing SpamAssassin
+  ** new babycart module interfacing ~SpamAssassin
 * added WikiPluginCached support for image maps, static cache in uploads/ and SVG
 * added case-sensitive/insensitive and regex searching, replace also
 * added action=pdf: only page formatter missing, use USE_EXTERNAL_HTML2PDF instead
