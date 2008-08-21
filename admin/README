@@ -1,0 +1,35 @@
+!!! Open Office 2.3 (or above) and Star Office to Phpwiki converter
+
+!! Installation
+
+You first have to install (once for all) the Open Office to Phpwiki converter.
+
+To install the export filter:
+* Download the odt2phpwiki.xsl file
+* Start Open Office 2.3 (or above)
+* From Tool choose "XML Filter Settings"
+* Choose "New" and in "General" fill the form with the following data:
+** Filter name: "Phpwiki"
+** Application: ~OpenOffice.org Writer (.odt)
+** Name of file type: "Phpwiki"
+** File extention: txt
+* Choose Transformation and fill the form with the following data:
+** XSLT for Export: put the full path to <strong>odt2phpwiki.xsl</strong>
+
+!! Use
+
+Open your Word document in Open Office 2.3.
+
+Select ''Export...'' in the ''File'' menu, then select ''Phpwiki'' in ''File format'' menu.
+
+You will get a text file (.txt). Copy and paste the content of this file in your wiki page.
+
+Everything should work, except:
+* centered text and right-aligned text (will be left-aligned),
+* the wiki only supports 3 levels of titles,
+* tables will always be bordered (class="bordered"), regardless they are or not in Word; you might want to change this in the generated content,
+* some <nowiki> and </nowiki> tags might remain in the code.
+
+If there was a table of contents in your Word file, you can delete it and replace it with the ~CreateToc plugin (use the TOC button from the Edit Toolbar).
+
+You should also upload the images in your document.
