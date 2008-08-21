@@ -1,5 +1,5 @@
 <?php // -*- php -*-
-  rcs_id('$Id: addcomment.tmpl,v 1.7 2007-09-22 12:37:55 rurban Exp $');
+  rcs_id('$Id: addcomment.tmpl,v 1.8 2008-08-21 18:02:21 vargenau Exp $');
   $request->setArg('action',false);
 ?>
 <div class="wikicomment wikicomment-form">
@@ -10,7 +10,7 @@
   <?= HiddenInputs($request->getArgs()) ?>
   <table class="wikicomment-form">
      <tr><td width="100%"><textarea class="commentedit" rows="3" cols="55"
-                       name="comment[content]" wrap="virtual"></textarea></td>
+                       name="comment[content]"></textarea></td>
          <td class="submit-button"><input type="submit" value="<?=
 _("Add Comment")
 ?>"

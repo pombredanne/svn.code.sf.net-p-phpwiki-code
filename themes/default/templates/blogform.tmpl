@@ -1,5 +1,5 @@
 <?php // -*- php -*-
-  rcs_id('$Id: blogform.tmpl,v 1.7 2007-01-07 20:20:28 rurban Exp $');
+  rcs_id('$Id: blogform.tmpl,v 1.8 2008-08-21 18:03:00 vargenau Exp $');
 ?>
 <div class="wikiblog wikiblog-form">
 <form action="<?=$request->getPostURL()?>" method="post" name="editpage"
@@ -13,7 +13,7 @@
      <?= $EDIT_TOOLBAR ?>
      <a name="editarea"></a>
      <textarea id="edit-content" class="edit-content" rows="8" style="width:540px"
-               name="edit[content]" wrap="virtual"></textarea>
+               name="edit[content]"></textarea>
      <br />
      <input id="wikiblog-submit" type="submit" value="<?=_("Add Entry")?>"
                      name="edit[save]" class="wikiaction" />
