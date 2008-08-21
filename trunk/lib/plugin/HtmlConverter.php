@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HtmlConverter.php,v 1.4 2008-08-19 19:22:39 vargenau Exp $');
+rcs_id('$Id: HtmlConverter.php,v 1.5 2008-08-21 18:32:23 vargenau Exp $');
 /*
  * Copyright 2005 Wincor Nixdorf International GmbH
  *
@@ -39,6 +39,11 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
 
     function getDescription () {
         return _("Convert HTML markup into wiki markup.");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.5 $");
     }
 
     function getDefaultArguments() {

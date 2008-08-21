@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CalendarList.php,v 1.12 2008-08-17 07:45:03 vargenau Exp $');
+rcs_id('$Id: CalendarList.php,v 1.13 2008-08-21 18:28:55 vargenau Exp $');
 
 /**
  Copyright 1999-2002,2005-2007 $ThePhpWikiProgrammingTeam
@@ -56,6 +56,11 @@ extends WikiPlugin
 
     function getDescription () {
         return _("CalendarList");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.13 $");
     }
 
     function getDefaultArguments() {
@@ -227,6 +232,9 @@ extends WikiPlugin
 
 
 // $Log: not supported by cvs2svn $
+// Revision 1.12  2008/08/17 07:45:03  vargenau
+// No comma in default
+//
 // Revision 1.11  2008/02/14 18:58:15  rurban
 // provide mday default
 //

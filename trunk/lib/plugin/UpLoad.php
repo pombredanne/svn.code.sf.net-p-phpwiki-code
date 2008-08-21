@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.30 2008-08-03 17:25:41 vargenau Exp $');
+rcs_id('$Id: UpLoad.php,v 1.31 2008-08-21 18:32:23 vargenau Exp $');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 
@@ -44,6 +44,11 @@ extends WikiPlugin
 
     function getDescription () {
         return _("Upload files to the local InterWiki Upload:<filename>");
+    }
+
+    function getVersion() {
+        return preg_replace("/[Revision: $]/", '',
+                            "\$Revision: 1.31 $");
     }
 
     function getDefaultArguments() {
@@ -290,6 +295,9 @@ ws[cfh]");
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.30  2008/08/03 17:25:41  vargenau
+// Add message: "No file selected. Please select one."
+//
 // Revision 1.29  2008/08/03 17:06:32  vargenau
 // Add Open Document Format suffixes: odg, odp, ods, odt
 //
