@@ -1127,7 +1127,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.123 $");
+                            "\$Revision$");
     }
 
     function managesValidators() {

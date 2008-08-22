@@ -75,7 +75,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision$");
     }
     function getDefaultArguments() {
         return array('pagename' => '[]', // button or preview highlight?

@@ -57,7 +57,7 @@ extends WikiPlugin_SqlResult
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.1 $");
+                            "\$Revision$");
     }
 
     function getDefaultArguments() {

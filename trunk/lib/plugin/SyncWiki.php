@@ -52,7 +52,7 @@ extends WikiPlugin_WikiAdminUtils
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision$");
     }
 
     function getDefaultArguments() {

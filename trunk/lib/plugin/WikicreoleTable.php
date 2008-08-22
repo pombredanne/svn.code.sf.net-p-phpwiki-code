@@ -64,7 +64,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.2 $");
+                            "\$Revision$");
     }
 
     function handle_plugin_args_cruft($argstr, $args) {

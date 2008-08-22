@@ -18,7 +18,7 @@ extends WikiPlugin_RecentChanges
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.4 $");
+                            "\$Revision$");
     }
     function getDefaultArguments() {
     	//php-4.0.4pl1 breaks at the parent:: line even if the 

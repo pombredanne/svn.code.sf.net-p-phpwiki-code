@@ -30,7 +30,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.3 $");
+                            "\$Revision$");
     }
 
     // Establish default values for each of this plugin's arguments.
