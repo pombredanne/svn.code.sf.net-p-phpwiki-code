@@ -56,6 +56,12 @@ extends WikiPlugin_SiteMap
     return sprintf(_("Include recursively all linked pages starting at %s"),
 		   $this->_pagename);
   }
+
+  function getVersion() {
+      return preg_replace("/[Revision: $]/", '',
+                          "\$Revision$");
+  }
+
   function getDefaultArguments() {
       return array('exclude'        => '',
                    'include_self'   => 0,
