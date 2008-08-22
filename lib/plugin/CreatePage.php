@@ -48,7 +48,7 @@ extends WikiPlugin_Template
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.13 $");
+                            "\$Revision$");
     }
 
     function getDefaultArguments() {

@@ -59,7 +59,7 @@ extends WikiPlugin
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.7 $");
+                            "\$Revision$");
     }
     function getDefaultArguments() {
         return array('host' 	=> "", 		// default: LDAP_AUTH_HOST

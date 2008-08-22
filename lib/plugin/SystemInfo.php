@@ -57,7 +57,7 @@ extends WikiPluginCached
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.23 $");
+                            "\$Revision$");
     }
     /* From lib/WikiPlugin.php:
      * If the plugin can deduce a modification time, or equivalent

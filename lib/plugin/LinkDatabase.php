@@ -49,7 +49,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.8 $");
+                            "\$Revision$");
     }
     function getExpire($dbi, $argarray, $request) {
         return '+900'; // 15 minutes

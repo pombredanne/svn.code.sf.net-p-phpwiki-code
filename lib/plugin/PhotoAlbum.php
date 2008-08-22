@@ -103,7 +103,7 @@ extends WikiPlugin
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.15 $");
+                            "\$Revision$");
     }
 
 // Avoid nameclash, so it's disabled. We allow any url.

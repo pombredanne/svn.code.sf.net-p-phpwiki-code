@@ -122,7 +122,7 @@ extends WikiPluginCached
     }
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.9 $");
+                            "\$Revision$");
     }
     function getDefaultArguments() {
         return array(

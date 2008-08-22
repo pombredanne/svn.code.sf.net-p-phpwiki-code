@@ -56,7 +56,7 @@ extends WikiPlugin_GraphViz
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.22 $");
+                            "\$Revision$");
     }
 
     /**

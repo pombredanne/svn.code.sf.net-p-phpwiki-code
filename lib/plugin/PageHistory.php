@@ -275,7 +275,7 @@ extends WikiPlugin_RecentChanges
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 1.34 $");
+                            "\$Revision$");
     }
 
     function getDefaultArguments() {
