@@ -25,8 +25,7 @@ rcs_id('$Id$');
  * CreateToc:  Create a Table of Contents and automatically link to headers
  *
  * Usage:   
- *  <?plugin CreateToc headers=!!!,!! with_toclink||=1 
- *                     jshide||=1 ?>
+ *  <?plugin CreateToc arguments ?>
  * @author:  Reini Urban, Marc-Etienne Vargenau
  *
  * Known problems: 
@@ -58,8 +57,8 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array( 'pagename'  => '[pagename]', // TOC of another page here?
-                      // or headers=1,2,3 is also possible.
-                      'headers'   => "!!!,!!,!",   // "!!!"=>h1, "!!"=>h2, "!"=>h3
+                      'headers'   =>  "1,2,3,4,5", // "!!!"=>h2, "!!"=>h3, "!"=>h4
+                                                   // "1"=>h2, "2"=>h3, "3"=>h4, "4"=>h5, "5"=>h6
                       'noheader'  => 0,            // omit "Table of Contents" header
                       'notoc'     => 0,            // do not display TOC, only number headers
                       'position'  => 'right',      // or left
@@ -74,15 +73,14 @@ extends WikiPlugin
     }
     // Initialisation of toc counter
     function _initTocCounter() {
-        $counter = array(1=>0, 2=>0, 3=>0);
+        $counter = array(1=>0, 2=>0, 3=>0, 4=>0, 5=>0);
         return $counter;
     }
 
     // Update toc counter with a new title
     function _tocCounter(&$counter, $level) {
         $counter[$level]++;
-        $level--;
-        for($i = $level; $i > 0; $i--) {
+        for($i = $level+1; $i <= 5; $i++) {
             $counter[$i] = 0;
         }
     }
@@ -114,13 +112,13 @@ extends WikiPlugin
     // Get string corresponding to the current title
     function _getCounter(&$counter, $level, $firstlevelstyle) {
         if ($firstlevelstyle == 'roman') {
-            $str= $this->_roman_counter($counter[3]);
+            $str= $this->_roman_counter($counter[1]);
         } else if ($firstlevelstyle == 'letter') {
-            $str= $this->_letter_counter($counter[3]);
+            $str= $this->_letter_counter($counter[1]);
         } else {
-            $str=$counter[3];
+            $str=$counter[1];
         }
-        for($i = 2; $i > 0; $i--) {
+        for($i = 2; $i <= 5; $i++) {
             if($counter[$i] != 0)
                 $str .= '.'.$counter[$i];
         }
@@ -132,15 +130,24 @@ extends WikiPlugin
     		           array('\/','\.','\?','\*'), $heading);
     }
     
-    // Get HTML header corresponding to current level (level is set of !)
+    // Get HTML header corresponding to current level (level is set of ! or =)
     function _getHeader($level) {
-     	$count = substr_count($level,'!');
-     	switch ($count) {
-     	    case 1: $h = "h4"; break;
-   	    case 2: $h = "h3"; break;
-     	    case 3: $h = "h2"; break;
-     	}
-        return $h;
+
+        $count = substr_count($level,'!');
+        switch ($count) {
+            case 3: return "h2";
+            case 2: return "h3";
+            case 1: return "h4";
+        }
+        $count = substr_count($level,'=');
+        switch ($count) {
+            case 2: return "h2";
+            case 3: return "h3";
+            case 4: return "h4";
+            case 5: return "h5";
+            case 6: return "h6";
+        }
+        return "";
     }
 
     function _quote($heading) {
@@ -242,9 +249,12 @@ extends WikiPlugin
         $j = 0;
         for ($i=0; $i<count($content); $i++) {
             foreach ($levels as $level) {
-                if ($level < 1 or $level > 3) continue;
-                if (preg_match('/^\s*(!{'.$level.','.$level.'})([^!].*)$/',
-                               $content[$i], $match)) 
+                if ($level < 1 or $level > 5) continue;
+                $phpwikiclassiclevel = 4 -$level;
+                $wikicreolelevel = $level + 1;
+                if ($phpwikiclassiclevel < 1 or $phpwikiclassiclevel > 3) continue;
+                if ((preg_match('/^\s*(!{'.$phpwikiclassiclevel.','.$phpwikiclassiclevel.'})([^!].*)$/', $content[$i], $match))
+                 or (preg_match('/^\s*(={'.$wikicreolelevel.','.$wikicreolelevel.'})([^=].*)$/', $content[$i], $match)) )
                 {
                     $this->_tocCounter($tocCounter, $level);                	
                     if (!strstr($content[$i],'#[')) {
@@ -378,7 +388,7 @@ extends WikiPlugin
                 $level = min(max(1, $hcount),3);
                 $levels[] = $level;
             } else {
-                $level = min(max(1, (int) $h), 3);
+                $level = min(max(1, (int) $h), 5);
                 $levels[] = $level;
             }
         }
@@ -391,7 +401,7 @@ extends WikiPlugin
             foreach ($headers as $h) {
                 // proper heading indent
                 $level = $h['level'];
-                $indent = 3 - $level;
+                $indent = $level - 1;
                 $link = new WikiPageName($pagename,$page,$h['anchor']);
                 $li = WikiLink($link,'known',$h['text']);
                 if ($liststyle == 'dl')
@@ -453,135 +463,6 @@ function toggletoc(a) {
       return $html;
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.43  2008/08/19 18:29:12  vargenau
-// Correct TOC numbering
-//
-// Revision 1.42  2008/08/19 18:27:06  vargenau
-// Implement "noheader" parameter
-//
-// Revision 1.41  2008/08/19 18:25:18  vargenau
-// Use p with id=toctitle instead of h4 for TOC (easier to style)
-//
-// Revision 1.40  2008/08/19 18:21:35  vargenau
-// Do not force height and width of image
-//
-// Revision 1.39  2008/08/19 18:19:01  vargenau
-// Implement "firstlevelstyle" parameter
-//
-// Revision 1.38  2008/08/19 18:15:28  vargenau
-// Implement "notoc" parameter
-//
-// Revision 1.37  2008/05/04 08:37:42  vargenau
-// Add alt attribute
-//
-// Revision 1.36  2007/07/19 12:41:25  labbenes
-// Correct TOC numbering. It should start from '1' not from '1.1'.
-//
-// Revision 1.35  2007/02/17 14:17:48  rurban
-// declare vars for IE6
-//
-// Revision 1.34  2007/01/28 22:47:06  rurban
-// fix # back link
-//
-// Revision 1.33  2007/01/28 22:37:04  rurban
-// beautify +/- collapse icon
-//
-// Revision 1.32  2007/01/20 11:25:30  rurban
-// remove align
-//
-// Revision 1.31  2007/01/09 12:35:05  rurban
-// Change align to position. Add extracollapse. js now always active, jshide just denotes the initial state.
-//
-// Revision 1.30  2006/12/22 17:49:38  rurban
-// fix quoting
-//
-// Revision 1.29  2006/04/15 12:26:54  rurban
-// need basepage for subpages like /Remove (within CreateTOC)
-//
-// Revision 1.28  2005/10/12 06:15:25  rurban
-// just aesthetics
-//
-// Revision 1.27  2005/10/10 19:50:45  rurban
-// fix the missing formatting problems, add with_counter arg by ?? (20050106), Thanks to ManuelVacelet for the testcase
-//
-// Revision 1.26  2004/09/20 14:07:16  rurban
-// fix Constant toc_full_syntax already defined warning
-//
-// Revision 1.25  2004/07/08 20:30:07  rurban
-// plugin->run consistency: request as reference, added basepage.
-// encountered strange bug in AllPages (and the test) which destroys ->_dbi
-//
-// Revision 1.24  2004/06/28 13:27:03  rurban
-// CreateToc disabled for old markup and Apache2 only
-//
-// Revision 1.23  2004/06/28 13:13:58  rurban
-// CreateToc disabled for old markup
-//
-// Revision 1.22  2004/06/15 14:56:37  rurban
-// more allow_call_time_pass_reference false fixes
-//
-// Revision 1.21  2004/06/13 09:45:23  rurban
-// display bug workaround for MacIE browsers, jshide: 0
-//
-// Revision 1.20  2004/05/11 13:57:46  rurban
-// enable TOC_FULL_SYNTAX per default
-// don't <a name>$header</a> to disable css formatting for such anchors
-//   => <a name></a>$header
-//
-// Revision 1.19  2004/05/08 16:59:27  rurban
-// requires optional TOC_FULL_SYNTAX constnat to enable full link and
-// wikiword syntax in headers.
-//
-// Revision 1.18  2004/04/29 21:55:15  rurban
-// fixed TOC backlinks with USE_PATH_INFO false
-//   with_toclink=1, sf.net bug #940682
-//
-// Revision 1.17  2004/04/26 19:43:03  rurban
-// support most cases of header markup. fixed duplicate MangleXmlIdentifier name
-//
-// Revision 1.16  2004/04/26 14:46:14  rurban
-// better comments
-//
-// Revision 1.14  2004/04/21 04:29:50  rurban
-// write WikiURL consistently (not WikiUrl)
-//
-// Revision 1.12  2004/03/22 14:13:53  rurban
-// fixed links to equal named headers
-//
-// Revision 1.11  2004/03/15 09:52:59  rurban
-// jshide button: dynamic titles
-//
-// Revision 1.10  2004/03/14 20:30:21  rurban
-// jshide button
-//
-// Revision 1.9  2004/03/09 19:24:20  rurban
-// custom indentstr
-// h2 toc header
-//
-// Revision 1.8  2004/03/09 19:05:12  rurban
-// new liststyle arg. default: dl (no bullets)
-//
-// Revision 1.7  2004/03/09 11:51:54  rurban
-// support jshide=1: DHTML button hide/unhide TOC
-//
-// Revision 1.6  2004/03/09 10:25:37  rurban
-// slightly better formatted TOC indentation
-//
-// Revision 1.5  2004/03/09 08:57:10  rurban
-// convert space to "_" instead of "x20." in anchors
-// proper heading indent
-// handle duplicate headers
-// allow multiple headers like "!!!,!!" or "1,2"
-//
-// Revision 1.4  2004/03/02 18:21:29  rurban
-// typo: ref=>href
-//
-// Revision 1.1  2004/03/01 18:10:28  rurban
-// first version, without links, anchors and jscript folding
-//
-//
 
 // For emacs users
 // Local Variables:
