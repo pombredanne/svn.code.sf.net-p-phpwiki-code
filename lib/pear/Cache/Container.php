@@ -17,7 +17,7 @@
 // |          Christian Stocker <chregu@phant.ch>                         |
 // +----------------------------------------------------------------------+
 //
-// $Id: Container.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+// $Id$
 
 require_once 'Cache/Error.php';
 
@@ -39,7 +39,7 @@ require_once 'Cache/Error.php';
 * not recommended!
 * 
 * @author   Ulf Wendel <ulf.wendel@phpdoc.de>
-* @version  $Id: Container.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+* @version  $Id$
 * @package  Cache
 * @access   public
 * @abstract

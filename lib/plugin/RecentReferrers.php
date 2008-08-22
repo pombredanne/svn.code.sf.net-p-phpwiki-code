@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentReferrers.php,v 1.2 2004-11-07 18:34:29 rurban Exp $');
+rcs_id('$Id$');
 
 /**
  * Analyze our ACCESS_LOG

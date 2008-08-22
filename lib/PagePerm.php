@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PagePerm.php,v 1.45 2007-09-15 12:26:43 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 

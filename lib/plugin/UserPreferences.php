@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserPreferences.php,v 1.39 2008-08-20 18:23:09 vargenau Exp $');
+rcs_id('$Id$');
 /**
  Copyright (C) 2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
 

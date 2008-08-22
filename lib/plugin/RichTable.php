@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RichTable.php,v 1.8 2008-01-22 14:24:02 vargenau Exp $');
+rcs_id('$Id$');
 /**
   RichTablePlugin
   A PhpWiki plugin that allows insertion of tables using a richer syntax.

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: HtmlParser.php,v 1.4 2007-07-14 17:55:29 rurban Exp $');
+rcs_id('$Id$');
 /**
  * HtmlParser Class: Conversion HTML => wikimarkup
  * Requires XmlParser, XmlElement and the expat (or now the libxml) library. This is all in core.

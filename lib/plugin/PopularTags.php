@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PopularTags.php,v 1.2 2007-05-01 16:05:29 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2007 Reini Urban
 

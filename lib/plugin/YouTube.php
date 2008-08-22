@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: YouTube.php,v 1.2 2007-05-24 19:03:07 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2007 Reini Urban
 */

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BlogJournal.php,v 1.5 2007-01-07 18:45:27 rurban Exp $');
+rcs_id('$Id$');
 /*
  * Copyright 2005 $ThePhpWikiProgrammingTeam
  */

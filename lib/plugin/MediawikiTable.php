@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: MediawikiTable.php,v 1.3 2008-08-06 09:28:42 vargenau Exp $');
+rcs_id('$Id$');
 /**
   MediawikiTablePlugin
   A PhpWiki plugin that allows insertion of tables using a Mediawiki-like

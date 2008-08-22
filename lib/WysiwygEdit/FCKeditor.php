@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: FCKeditor.php,v 1.2 2007-01-07 18:44:00 rurban Exp $');
+rcs_id('$Id$');
 /**
  * FCKeditor is compatible with most internet browsers which
  * include: IE 5.5+ (Windows), Firefox 1.0+, Mozilla 1.3+

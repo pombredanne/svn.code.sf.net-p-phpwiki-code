@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: POP3.php,v 1.7 2006-09-06 05:52:43 rurban Exp $');
+rcs_id('$Id$');
 /* Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */

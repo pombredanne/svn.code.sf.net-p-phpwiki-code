@@ -17,7 +17,7 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: ibase.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+// $Id$
 
 
 // Bugs:
@@ -31,7 +31,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id: ibase.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+ * @version  $Id$
  * @category Database
  * @author   Sterling Hughes <sterling@php.net>
  */

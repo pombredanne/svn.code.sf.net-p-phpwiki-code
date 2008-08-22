@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AllUsers.php,v 1.19 2008-03-11 19:08:58 vargenau Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
 

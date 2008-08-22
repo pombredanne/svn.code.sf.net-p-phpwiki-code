@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PDO.php,v 1.3 2007-01-04 16:45:31 rurban Exp $');
+<?php rcs_id('$Id$');
 
 /** 
  * Db sessions for PDO, based on pear DB Sessions.

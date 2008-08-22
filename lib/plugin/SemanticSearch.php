@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SemanticSearch.php,v 1.5 2008-05-06 19:32:41 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2007 Reini Urban
 

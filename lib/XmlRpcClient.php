@@ -1,5 +1,5 @@
 <?php // -*- php -*-
-// $Id: XmlRpcClient.php,v 1.4 2007-03-18 10:26:35 rurban Exp $
+// $Id$
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004,2005,2006 $ThePhpWikiProgrammingTeam
  */

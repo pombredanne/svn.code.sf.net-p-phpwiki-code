@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Db.php,v 1.4 2006-03-07 21:05:24 rurban Exp $');
+rcs_id('$Id$');
 /* Copyright (C) 2004 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */

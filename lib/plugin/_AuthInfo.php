@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _AuthInfo.php,v 1.20 2006-03-07 21:07:42 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 

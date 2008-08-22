@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RatingsDb.php,v 1.17 2008-01-24 19:23:16 rurban Exp $');
+rcs_id('$Id$');
 
 /*
  * @author:  Dan Frankowski (wikilens group manager), Reini Urban (as plugin)

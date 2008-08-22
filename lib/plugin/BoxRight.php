@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BoxRight.php,v 1.1 2006-10-12 06:30:30 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2006 $ThePhpWikiProgrammingTeam
 

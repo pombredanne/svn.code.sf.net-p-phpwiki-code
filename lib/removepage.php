@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: removepage.php,v 1.26 2004-12-20 12:12:31 rurban Exp $');
+rcs_id('$Id$');
 require_once('lib/Template.php');
 
 function RemovePage (&$request) {

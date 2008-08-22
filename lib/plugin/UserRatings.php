@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UserRatings.php,v 1.5 2007-06-02 18:25:16 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2004 Dan Frankowski
 

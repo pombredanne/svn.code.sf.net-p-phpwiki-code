@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FileInfo.php,v 1.9 2008-05-20 19:55:12 vargenau Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2005,2007 $ThePhpWikiProgrammingTeam
  

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RelatedChanges.php,v 1.5 2005-01-25 03:50:54 uckelman Exp $');
+rcs_id('$Id$');
 
 /**
  * List of changes on all pages which are linked to from this page.

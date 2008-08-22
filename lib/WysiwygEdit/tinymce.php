@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: tinymce.php,v 1.3 2007-01-07 18:44:00 rurban Exp $');
+rcs_id('$Id$');
 /**
  * Multiple browser support, currently Mozilla (PC, Mac and Linux), 
  * MSIE (PC) and FireFox (PC, Mac and Linux) and some limited Safari support.

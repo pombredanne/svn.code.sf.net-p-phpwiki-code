@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: install.php,v 1.4 2005-09-15 05:56:12 rurban Exp $');
+rcs_id('$Id$');
 
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam

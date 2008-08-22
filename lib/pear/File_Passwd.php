@@ -16,7 +16,7 @@
 // | Author: Rasmus Lerdorf <rasmus@php.net>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: File_Passwd.php,v 1.9 2004-06-03 18:06:29 rurban Exp $
+// $Id$
 //
 // Manipulate standard UNIX passwd,.htpasswd and CVS pserver passwd files
 

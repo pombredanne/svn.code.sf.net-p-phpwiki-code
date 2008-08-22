@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: MailNotify.php,v 1.11 2007-07-01 09:01:16 rurban Exp $');
+rcs_id('$Id$');
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users

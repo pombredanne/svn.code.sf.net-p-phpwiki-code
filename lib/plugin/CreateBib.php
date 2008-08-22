@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreateBib.php,v 1.1 2006-03-07 21:02:36 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 

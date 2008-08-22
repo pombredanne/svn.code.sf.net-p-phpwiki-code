@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: upgrade.php,v 1.62 2008-08-20 17:07:48 vargenau Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
 

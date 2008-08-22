@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UpLoad.php,v 1.31 2008-08-21 18:32:23 vargenau Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
 

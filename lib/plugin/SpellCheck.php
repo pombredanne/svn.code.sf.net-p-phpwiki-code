@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SpellCheck.php,v 1.2 2007-05-29 16:56:41 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2006,2007 $ThePhpWikiProgrammingTeam
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PasswordReset.php,v 1.4 2007-01-03 21:23:48 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright (C) 2006 $ThePhpWikiProgrammingTeam
 

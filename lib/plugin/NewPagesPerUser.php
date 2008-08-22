@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: NewPagesPerUser.php,v 1.1 2007-05-24 18:42:48 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2007 AVL
  */

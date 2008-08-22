@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AppendText.php,v 1.8 2007-08-25 18:05:28 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RssWriter.php,v 1.16 2007-09-01 13:29:44 rurban Exp $');
+<?php rcs_id('$Id$');
 /*
  * Code for creating RSS 1.0.
  */

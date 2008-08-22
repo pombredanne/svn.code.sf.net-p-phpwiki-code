@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiPlugin.php,v 1.67 2008-05-06 19:27:10 rurban Exp $');
+rcs_id('$Id$');
 
 class WikiPlugin
 {

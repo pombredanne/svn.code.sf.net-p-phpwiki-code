@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: main.php,v 1.245 2008-07-27 21:47:56 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 1999-2008 $ThePhpWikiProgrammingTeam
 

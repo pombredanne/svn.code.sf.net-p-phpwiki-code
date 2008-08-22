@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WantedPages.php,v 1.17 2007-05-24 18:41:04 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright (C) 2002, 2004 $ThePhpWikiProgrammingTeam
  

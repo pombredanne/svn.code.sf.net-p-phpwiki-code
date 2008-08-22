@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: FileFinder.php,v 1.33 2007-07-14 17:55:29 rurban Exp $');
+<?php rcs_id('$Id$');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 

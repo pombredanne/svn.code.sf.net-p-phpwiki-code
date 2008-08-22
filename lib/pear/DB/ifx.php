@@ -17,7 +17,7 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: ifx.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+// $Id$
 
 
 // Legend:
@@ -36,7 +36,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id: ifx.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+ * @version  $Id$
  * @category Database
  * @author   Tomas V.V.Cox <cox@idecnet.com>
  */

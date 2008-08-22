@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: WysiwygEdit.php,v 1.4 2006-05-13 19:59:54 rurban Exp $');
+rcs_id('$Id$');
 /**
  * Baseclass for WysiwygEdit/*
  *

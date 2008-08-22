@@ -18,7 +18,7 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: mysqli.php,v 1.1 2004-06-21 08:39:38 rurban Exp $
+// $Id$
 
 
 // NOTE:  The tableInfo() method must be redone because the functions it
@@ -38,7 +38,7 @@ require_once 'DB/common.php';
  * Note that persistent connections no longer exist.
  *
  * @package  DB
- * @version  $Id: mysqli.php,v 1.1 2004-06-21 08:39:38 rurban Exp $
+ * @version  $Id$
  * @category Database
  * @author   Chaillan Nicolas <nicos@php.net>
  */

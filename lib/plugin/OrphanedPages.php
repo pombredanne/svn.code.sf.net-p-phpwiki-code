@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: OrphanedPages.php,v 1.10 2004-07-09 13:05:34 rurban Exp $');
+rcs_id('$Id$');
 /**
  This file is part of PhpWiki.
 

@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: htmlarea3.php,v 1.2 2005-10-31 16:41:46 rurban Exp $');
+rcs_id('$Id$');
 /**
  * requires installation into themes/default/htmlarea3/
  * MSIE => 5.5,  Mozilla >= 1.3

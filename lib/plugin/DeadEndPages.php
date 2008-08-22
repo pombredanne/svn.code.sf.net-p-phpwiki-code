@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: DeadEndPages.php,v 1.1 2004-05-27 12:10:31 rurban Exp $');
+rcs_id('$Id$');
 
 /**
  * Alias for OrphanedPages. Idea and name from mediawiki.

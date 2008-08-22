@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TexToPng.php,v 1.5 2004-06-19 10:06:38 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 

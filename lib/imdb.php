@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: imdb.php,v 1.1 2007-01-25 21:54:36 rurban Exp $');
+<?php rcs_id('$Id$');
 /**
  Copyright 2004 Reini Urban
 

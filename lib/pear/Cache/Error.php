@@ -15,7 +15,7 @@
 // | Authors: Ulf Wendel <ulf.wendel@phpdoc.de>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Error.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+// $Id$
 
 require_once 'PEAR.php';
 

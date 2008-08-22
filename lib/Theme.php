@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: Theme.php,v 1.147 2008-01-24 19:16:26 rurban Exp $');
+<?php rcs_id('$Id$');
 /* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.

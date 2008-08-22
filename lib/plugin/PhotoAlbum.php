@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PhotoAlbum.php,v 1.15 2007-01-07 18:46:05 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2003,2004,2005,2007 $ThePhpWikiProgrammingTeam
  

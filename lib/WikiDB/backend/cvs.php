@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: cvs.php,v 1.27 2007-01-04 16:45:49 rurban Exp $');
+rcs_id('$Id$');
 /**
  * Backend for handling CVS repository. 
  *

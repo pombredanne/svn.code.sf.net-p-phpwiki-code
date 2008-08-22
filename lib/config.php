@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: config.php,v 1.148 2008-05-07 19:10:08 vargenau Exp $');
+rcs_id('$Id$');
 /*
  * NOTE: The settings here should probably not need to be changed.
  * The user-configurable settings have been moved to IniConfig.php

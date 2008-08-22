@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: dba.php,v 1.5 2007-01-04 16:45:39 rurban Exp $');
+<?php rcs_id('$Id$');
 
 /** DBA Sessions
  *  session:

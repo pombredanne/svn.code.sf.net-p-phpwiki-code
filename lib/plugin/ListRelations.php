@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListRelations.php,v 1.2 2008-08-21 18:35:33 vargenau Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2006 Reini Urban
 

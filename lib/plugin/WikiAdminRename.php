@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminRename.php,v 1.30 2008-05-04 08:36:27 vargenau Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004,2005,2007 $ThePhpWikiProgrammingTeam
 

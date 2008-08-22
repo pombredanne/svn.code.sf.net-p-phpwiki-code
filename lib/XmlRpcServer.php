@@ -1,5 +1,5 @@
 <?php
-// $Id: XmlRpcServer.php,v 1.25 2007-03-18 10:27:11 rurban Exp $
+// $Id$
 /* Copyright (C) 2002, Lawrence Akka <lakka@users.sourceforge.net>
  * Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
  *

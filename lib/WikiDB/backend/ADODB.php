@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB.php,v 1.100 2007-09-15 12:35:50 rurban Exp $');
+rcs_id('$Id$');
 
 /*
  Copyright 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam

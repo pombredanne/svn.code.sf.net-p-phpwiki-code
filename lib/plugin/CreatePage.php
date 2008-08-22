@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CreatePage.php,v 1.13 2008-02-14 18:59:10 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 

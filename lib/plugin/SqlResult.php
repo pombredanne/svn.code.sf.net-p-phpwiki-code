@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SqlResult.php,v 1.8 2006-08-25 22:15:15 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  
