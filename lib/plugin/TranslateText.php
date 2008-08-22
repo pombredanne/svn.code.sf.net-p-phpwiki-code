@@ -123,8 +123,8 @@ extends WikiPlugin__WikiTranslation
                                                'name' => 'translate[content]',
                                                'id'   => 'translate[content]',
                                                'rows' => 4,
-                                               'cols' => $request->getPref('editWidth'),
-                                               'wrap' => 'virtual'),
+                                               'cols' => $request->getPref('editWidth')
+                                               ),
                                          $trans),
                           HiddenInputs($request->getArgs(),
                                         false,
@@ -135,18 +135,6 @@ extends WikiPlugin__WikiTranslation
                           $buttons);
        }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2004/05/18 13:58:39  rurban
-// verbatim needs a linebreak
-//
-// Revision 1.3  2004/03/17 15:38:03  rurban
-// more translations
-//
-// Revision 1.2  2004/03/17 12:04:36  rurban
-// more docs
-//
-//
 
 // For emacs users
 // Local Variables:
