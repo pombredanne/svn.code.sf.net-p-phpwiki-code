@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiUser.php,v 1.70 2008-03-22 21:46:33 rurban Exp $');
+rcs_id('$Id$');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,

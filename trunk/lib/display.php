@@ -1,6 +1,6 @@
 <?php
 // display.php: fetch page or get default content
-rcs_id('$Id: display.php,v 1.79 2008-03-21 20:37:10 rurban Exp $');
+rcs_id('$Id$');
 
 require_once('lib/Template.php');
 

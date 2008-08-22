@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: ExternalReferrer.php,v 1.5 2007-01-20 15:54:12 rurban Exp $');
+rcs_id('$Id$');
 
 /** 
  * Detect external referrers

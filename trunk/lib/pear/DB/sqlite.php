@@ -18,7 +18,7 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: sqlite.php,v 1.5 2005-02-28 21:24:33 rurban Exp $
+// $Id$
 
 require_once 'DB/common.php';
 
@@ -27,7 +27,7 @@ require_once 'DB/common.php';
  * PECL extension.
  *
  * @package  DB
- * @version  $Id: sqlite.php,v 1.5 2005-02-28 21:24:33 rurban Exp $
+ * @version  $Id$
  * @category Database
  * @author   Urs Gehrig <urs@circle.ch>
  * @author   Mika Tuupola <tuupola@appelsiini.net>

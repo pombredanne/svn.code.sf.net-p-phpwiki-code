@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GraphViz.php,v 1.9 2007-01-11 21:16:30 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB.php,v 1.109 2007-11-17 15:30:39 rurban Exp $');
+rcs_id('$Id$');
 
 require_once('lib/WikiDB/backend.php');
 //require_once('lib/FileFinder.php');

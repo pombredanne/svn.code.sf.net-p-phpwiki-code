@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSearchReplace.php,v 1.20 2007-08-25 18:09:45 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 

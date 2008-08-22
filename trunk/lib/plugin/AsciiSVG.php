@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AsciiSVG.php,v 1.2 2007-01-22 23:48:05 rurban Exp $');
+rcs_id('$Id$');
 /*
 Copyright 2007 $ThePhpWikiProgrammingTeam
 

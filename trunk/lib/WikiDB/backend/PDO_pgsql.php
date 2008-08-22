@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PDO_pgsql.php,v 1.1 2005-09-11 14:55:05 rurban Exp $');
+rcs_id('$Id$');
 
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam

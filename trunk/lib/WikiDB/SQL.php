@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: SQL.php,v 1.16 2007-01-04 16:41:14 rurban Exp $');
+<?php rcs_id('$Id$');
 
 require_once('lib/WikiDB.php');
 //require_once('lib/WikiDB/backend/PearDB.php');

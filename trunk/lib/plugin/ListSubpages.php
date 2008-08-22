@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ListSubpages.php,v 1.7 2007-07-14 17:55:30 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 

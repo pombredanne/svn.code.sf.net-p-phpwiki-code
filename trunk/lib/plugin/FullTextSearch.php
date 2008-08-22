@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: FullTextSearch.php,v 1.29 2007-07-14 12:04:26 rurban Exp $');
+rcs_id('$Id$');
 /*
 Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
 

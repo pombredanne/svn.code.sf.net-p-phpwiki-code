@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: EditToolbar.php,v 1.18 2008-08-20 05:34:38 vargenau Exp $');
+rcs_id('$Id$');
 
 /**
  * EDIT Toolbar Initialization.

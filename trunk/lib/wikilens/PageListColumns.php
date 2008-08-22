@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageListColumns.php,v 1.11 2008-01-24 19:34:54 rurban Exp $');
+rcs_id('$Id$');
 
 /*
  Copyright 2004 Mike Cassano

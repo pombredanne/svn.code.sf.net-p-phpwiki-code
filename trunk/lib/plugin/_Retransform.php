@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _Retransform.php,v 1.1 2007-01-07 18:45:09 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2007 $ThePhpWikiProgrammingTeam
 

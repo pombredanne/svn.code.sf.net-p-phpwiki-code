@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PreferenceApp.php,v 1.5 2007-05-29 16:56:29 rurban Exp $');
+rcs_id('$Id$');
 
 /**
 * 

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ErrorManager.php,v 1.54 2008-05-06 19:22:21 rurban Exp $');
+<?php rcs_id('$Id$');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ModeratedPage.php,v 1.7 2007-08-25 18:52:34 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
  

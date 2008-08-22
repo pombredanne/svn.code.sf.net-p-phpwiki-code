@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikicreoleTable.php,v 1.2 2008-08-20 18:15:02 vargenau Exp $');
+rcs_id('$Id$');
 /**
   WikicreoleTablePlugin
   A PhpWiki plugin that allows insertion of tables using the Wikicreole

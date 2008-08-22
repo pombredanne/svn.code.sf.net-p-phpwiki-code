@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: WikiDB.php,v 1.160 2008-05-06 19:26:28 rurban Exp $');
+rcs_id('$Id$');
 
 require_once('lib/PageType.php');
 

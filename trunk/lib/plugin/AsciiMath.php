@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AsciiMath.php,v 1.2 2007-02-22 19:55:44 rurban Exp $');
+rcs_id('$Id$');
 /*
 Copyright 2005 $ThePhpWikiProgrammingTeam
 

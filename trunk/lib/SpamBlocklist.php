@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: SpamBlocklist.php,v 1.2 2007-06-07 16:52:18 rurban Exp $');
+rcs_id('$Id$');
 /* Copyright (C) 2005 Reini Urban
  *
  * This file is part of PhpWiki.

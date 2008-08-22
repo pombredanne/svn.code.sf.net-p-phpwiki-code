@@ -17,7 +17,7 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: mssql.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+// $Id$
 
 require_once 'DB/common.php';
 
@@ -26,7 +26,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id: mssql.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+ * @version  $Id$
  * @category Database
  * @author   Sterling Hughes <sterling@php.net>
  */

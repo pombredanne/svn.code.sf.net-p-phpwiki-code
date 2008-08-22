@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: LDAP.php,v 1.10 2007-08-10 22:02:58 rurban Exp $');
+rcs_id('$Id$');
 /* Copyright (C) 2004,2007 $ThePhpWikiProgrammingTeam
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */

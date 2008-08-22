@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: _GroupInfo.php,v 1.1 2004-11-28 20:42:33 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 

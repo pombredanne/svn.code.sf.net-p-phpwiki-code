@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: AddComment.php,v 1.9 2008-03-17 19:14:01 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright (C) 2004 $ThePhpWikiProgrammingTeam
  

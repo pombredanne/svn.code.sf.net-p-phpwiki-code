@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RateIt.php,v 1.25 2008-05-06 19:29:48 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 

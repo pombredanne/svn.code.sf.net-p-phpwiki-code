@@ -17,7 +17,7 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: odbc.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+// $Id$
 
 
 // XXX legend:
@@ -35,7 +35,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id: odbc.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+ * @version  $Id$
  * @category Database
  * @author   Stig Bakken <ssb@php.net>
  */

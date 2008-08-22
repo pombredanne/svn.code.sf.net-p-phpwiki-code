@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: PageList.php,v 1.155 2008-03-18 20:14:15 vargenau Exp $');
+<?php rcs_id('$Id$');
 
 /**
  * List a number of pagenames, optionally as table with various columns.

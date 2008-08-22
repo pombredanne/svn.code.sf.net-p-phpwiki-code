@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: HttpAuthUpper.php,v 1.1 2007-06-02 21:02:53 rurban Exp $');
+rcs_id('$Id$');
 /* Copyright (C) 2004,2007 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */

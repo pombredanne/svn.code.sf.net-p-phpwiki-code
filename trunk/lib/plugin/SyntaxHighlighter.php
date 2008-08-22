@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SyntaxHighlighter.php,v 1.7 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 

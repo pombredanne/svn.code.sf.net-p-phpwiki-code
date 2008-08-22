@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Diff.php,v 1.4 2007-01-02 13:22:25 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 1999, 2000, 2001, 2002, 2004 $ThePhpWikiProgrammingTeam
 

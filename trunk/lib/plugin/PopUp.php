@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PopUp.php,v 1.1 2004-11-24 19:03:30 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2004 Nicolas Noble <pixels@users.sf.net>
 

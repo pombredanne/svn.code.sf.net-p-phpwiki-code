@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WatchPage.php,v 1.2 2007-01-04 16:47:02 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright (C) 2006 $ThePhpWikiProgrammingTeam
 

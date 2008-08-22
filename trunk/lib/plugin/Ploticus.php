@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Ploticus.php,v 1.14 2007-01-10 23:14:37 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
 

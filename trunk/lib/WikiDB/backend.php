@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: backend.php,v 1.37 2008-03-18 20:19:13 vargenau Exp $');
+rcs_id('$Id$');
 
 /*
   Pagedata

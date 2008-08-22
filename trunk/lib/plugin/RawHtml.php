@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RawHtml.php,v 1.11 2004-07-05 13:12:58 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
 

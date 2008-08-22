@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: UriResolver.php,v 1.1 2007-08-25 18:29:24 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2007 $ThePhpWikiProgrammingTeam
 

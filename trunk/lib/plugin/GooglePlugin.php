@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GooglePlugin.php,v 1.5 2004-06-13 14:30:26 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2004 $ThePhpWikiProgrammingTeam
 

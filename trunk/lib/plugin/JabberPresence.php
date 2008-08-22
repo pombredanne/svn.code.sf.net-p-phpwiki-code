@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: JabberPresence.php,v 1.3 2004-11-21 11:59:26 rurban Exp $');
+rcs_id('$Id$');
 /**
  * A simple Jabber presence WikiPlugin.
  * http://wiki.crao.net/index.php/JabberPr%E9sence/Source

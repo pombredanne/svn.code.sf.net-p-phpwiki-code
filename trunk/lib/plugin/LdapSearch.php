@@ -1,4 +1,4 @@
-<?php // -*-php-*- rcs_id('$Id: LdapSearch.php,v 1.7 2007-09-01 13:45:39 rurban Exp $');
+<?php // -*-php-*- rcs_id('$Id$');
 /**
  Copyright 2004 John Lines
  Copyright 2007 $ThePhpWikiProgrammingTeam

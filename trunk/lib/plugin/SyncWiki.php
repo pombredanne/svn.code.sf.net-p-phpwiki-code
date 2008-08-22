@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SyncWiki.php,v 1.3 2007-03-18 10:34:42 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2006 $ThePhpWikiProgrammingTeam
 

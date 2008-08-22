@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiForum.php,v 1.4 2007-01-20 11:41:54 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  

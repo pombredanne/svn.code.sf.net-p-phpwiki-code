@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: IncludeSiteMap.php,v 1.2 2004-03-09 12:26:20 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2003,2004 $ThePhpWikiProgrammingTeam
 

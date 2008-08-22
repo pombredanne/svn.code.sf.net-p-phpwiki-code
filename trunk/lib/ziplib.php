@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: ziplib.php,v 1.54 2008-02-14 18:37:21 rurban Exp $');
+<?php rcs_id('$Id$');
 
 /**
  * GZIP stuff.

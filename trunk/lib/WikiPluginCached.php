@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: WikiPluginCached.php,v 1.25 2008-05-06 17:35:24 rurban Exp $');
+<?php rcs_id('$Id$');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  Copyright (C) 2004,2007 Reini Urban

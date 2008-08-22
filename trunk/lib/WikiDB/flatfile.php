@@ -1,6 +1,6 @@
 <?php
 
-rcs_id( '$Id: flatfile.php,v 1.1 2007-01-02 13:19:47 rurban Exp $' );
+rcs_id( '$Id$' );
 
 /**
  Copyright 1999, 2005 $ThePhpWikiProgrammingTeam

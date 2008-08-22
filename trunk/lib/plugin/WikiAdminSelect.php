@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminSelect.php,v 1.26 2008-08-20 18:16:55 vargenau Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
 

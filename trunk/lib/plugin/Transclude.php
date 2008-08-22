@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Transclude.php,v 1.10 2006-10-12 18:45:40 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
 

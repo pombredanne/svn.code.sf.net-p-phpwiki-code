@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ExternalSearch.php,v 1.13 2006-10-08 12:49:49 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 1999,2000,2001,2002,2006 $ThePhpWikiProgrammingTeam
 

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: _WikiTranslation.php,v 1.17 2005-09-10 11:31:16 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
 

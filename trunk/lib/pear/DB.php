@@ -18,7 +18,7 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: DB.php,v 1.6 2004-06-21 08:39:37 rurban Exp $
+// $Id$
 //
 // Database independent query interface.
 
@@ -264,7 +264,7 @@ define('DB_PORTABILITY_ALL', 63);
  * @author   Stig Bakken <ssb@php.net>
  * @author   Tomas V.V.Cox <cox@idecnet.com>
  * @since    PHP 4.0
- * @version  $Id: DB.php,v 1.6 2004-06-21 08:39:37 rurban Exp $
+ * @version  $Id$
  * @category Database
  */
 class DB

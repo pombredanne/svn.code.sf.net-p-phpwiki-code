@@ -18,7 +18,7 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: pgsql.php,v 1.5 2004-06-21 08:39:38 rurban Exp $
+// $Id$
 
 require_once 'DB/common.php';
 
@@ -27,7 +27,7 @@ require_once 'DB/common.php';
  * extension.
  *
  * @package  DB
- * @version  $Id: pgsql.php,v 1.5 2004-06-21 08:39:38 rurban Exp $
+ * @version  $Id$
  * @category Database
  * @author   Rui Hirokawa <hirokawa@php.net>
  * @author   Stig Bakken <ssb@php.net>

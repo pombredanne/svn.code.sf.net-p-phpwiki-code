@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Template.php,v 1.11 2007-08-25 18:07:26 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2005,2007 $ThePhpWikiProgrammingTeam
 

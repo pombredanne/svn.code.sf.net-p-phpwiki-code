@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CategoryPage.php,v 1.3 2007-01-07 18:45:35 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
 

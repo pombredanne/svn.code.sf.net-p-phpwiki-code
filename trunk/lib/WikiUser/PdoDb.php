@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: PdoDb.php,v 1.3 2008-02-29 17:42:39 rurban Exp $');
+rcs_id('$Id$');
 /* Copyright (C) 2004, 2005 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */

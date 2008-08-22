@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: Captcha.php,v 1.6 2007-01-07 18:42:10 rurban Exp $');
+rcs_id('$Id$');
 /**
   Session Captcha v1.0
     by Gavin M. Roy <gmr@bteg.net>

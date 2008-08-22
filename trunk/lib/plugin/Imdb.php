@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Imdb.php,v 1.1 2007-01-25 21:54:36 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
  

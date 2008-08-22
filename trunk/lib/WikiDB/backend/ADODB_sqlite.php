@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: ADODB_sqlite.php,v 1.5 2007-01-04 16:57:32 rurban Exp $');
+rcs_id('$Id$');
 
 require_once('lib/WikiDB/backend/ADODB.php');
 

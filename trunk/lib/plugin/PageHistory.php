@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PageHistory.php,v 1.34 2007-08-25 18:53:19 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 1999, 2000, 2001, 2002, 2007 $ThePhpWikiProgrammingTeam
 

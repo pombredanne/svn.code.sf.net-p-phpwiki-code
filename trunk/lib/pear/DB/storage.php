@@ -17,7 +17,7 @@
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: storage.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+// $Id$
 
 require_once 'DB.php';
 
@@ -28,7 +28,7 @@ require_once 'DB.php';
  * statements.
  *
  * @package  DB
- * @version  $Id: storage.php,v 1.3 2004-06-21 08:39:38 rurban Exp $
+ * @version  $Id$
  * @category Database
  * @author   Stig Bakken <stig@php.net>
  */

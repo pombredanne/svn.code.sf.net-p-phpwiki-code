@@ -1,5 +1,5 @@
 <?php 
-rcs_id('$Id: ArchiveCleaner.php,v 1.8 2006-12-22 00:08:08 rurban Exp $');
+rcs_id('$Id$');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  *
  * This file is part of PhpWiki.

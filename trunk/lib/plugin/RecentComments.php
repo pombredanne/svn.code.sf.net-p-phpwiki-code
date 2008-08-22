@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentComments.php,v 1.4 2007-07-14 12:04:56 rurban Exp $');
+rcs_id('$Id$');
 
 /**
  * List of basepages with recently added comments.

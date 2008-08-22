@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: VisualWiki.php,v 1.22 2008-08-03 15:12:23 vargenau Exp $');
+rcs_id('$Id$');
 /*
  Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
 

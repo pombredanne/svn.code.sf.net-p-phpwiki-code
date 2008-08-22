@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Utils.php,v 1.2 2004-11-15 16:00:02 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004 Mike Cassano
 

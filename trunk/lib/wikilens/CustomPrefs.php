@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CustomPrefs.php,v 1.1 2004-06-18 14:42:17 rurban Exp $');
+rcs_id('$Id$');
 
 /**
  * Custom UserPreferences:

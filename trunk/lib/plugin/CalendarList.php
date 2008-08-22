@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CalendarList.php,v 1.13 2008-08-21 18:28:55 vargenau Exp $');
+rcs_id('$Id$');
 
 /**
  Copyright 1999-2002,2005-2007 $ThePhpWikiProgrammingTeam

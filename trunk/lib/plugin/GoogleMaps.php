@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GoogleMaps.php,v 1.3 2005-09-18 16:11:40 rurban Exp $');
+rcs_id('$Id$');
 /**
  Copyright 2005 $ThePhpWikiProgrammingTeam
 

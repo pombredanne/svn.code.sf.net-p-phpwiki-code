@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: TeX2png.php,v 1.4 2007-01-07 18:46:15 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2004 Pierrick Meignen
 */

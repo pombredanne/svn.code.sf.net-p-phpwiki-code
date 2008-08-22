@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: text2png.php,v 1.15 2007-01-04 16:42:50 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 1999,2000,2001,2002,2007 $ThePhpWikiProgrammingTeam
 

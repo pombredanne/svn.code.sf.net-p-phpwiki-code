@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: RecentEdits.php,v 1.1 2004-04-21 04:29:10 rurban Exp $');
+rcs_id('$Id$');
 
 require_once("lib/plugin/RecentChanges.php");
 

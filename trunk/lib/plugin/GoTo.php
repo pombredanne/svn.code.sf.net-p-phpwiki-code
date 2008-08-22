@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: GoTo.php,v 1.5 2008-08-21 18:32:23 vargenau Exp $');
+rcs_id('$Id$');
 
 /**
  *  Display a form with text entry box and 'Go' button.

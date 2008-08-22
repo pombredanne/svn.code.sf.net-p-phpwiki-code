@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: PearDB_oci8.php,v 1.14 2007-01-28 22:49:55 rurban Exp $');
+rcs_id('$Id$');
 
 /**
  * Oracle extensions for the Pear DB backend.

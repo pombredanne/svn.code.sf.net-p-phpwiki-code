@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: DbSession.php,v 1.35 2005-08-07 10:51:11 rurban Exp $');
+<?php rcs_id('$Id$');
 
 /**
  * Store sessions data in Pear DB / ADODB / dba / PDO, ....

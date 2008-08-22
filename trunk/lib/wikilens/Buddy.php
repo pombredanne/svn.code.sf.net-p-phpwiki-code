@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Buddy.php,v 1.4 2008-01-24 19:33:03 rurban Exp $');
+rcs_id('$Id$');
 
 // It is anticipated that when userid support is added to phpwiki,
 // this object will hold much more information (e-mail,

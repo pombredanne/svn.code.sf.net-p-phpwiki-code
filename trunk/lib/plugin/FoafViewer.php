@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: FoafViewer.php,v 1.4 2004-07-08 20:30:07 rurban Exp $');
+rcs_id('$Id$');
 
 //ini_set('include_path','.;C:/php/pear');
 

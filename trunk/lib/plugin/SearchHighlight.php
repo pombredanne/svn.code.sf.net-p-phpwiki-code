@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SearchHighlight.php,v 1.3 2007-01-21 13:20:08 rurban Exp $');
+rcs_id('$Id$');
 /*
 Copyright 2004,2007 $ThePhpWikiProgrammingTeam
 

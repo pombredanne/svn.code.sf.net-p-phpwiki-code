@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: BlogArchives.php,v 1.6 2007-01-07 18:45:18 rurban Exp $');
+rcs_id('$Id$');
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
  */

@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: SemanticRelations.php,v 1.5 2007-09-15 12:29:38 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2005 Reini Urban
 
