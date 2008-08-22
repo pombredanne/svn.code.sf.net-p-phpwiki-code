@@ -165,7 +165,7 @@ extends WikiPlugin
             // generate table row
             $tr = HTML::tr(array('class' => $class));
             if ($pluginDocPageNamelink) {
-                // plugin has a description page 'PluginName' . 'Plugin'
+                // plugin has a description page 'Help/' . 'PluginName' . 'Plugin'
                 $tr->pushContent(HTML::td($pluginNamelink, HTML::br(),
                                           $pluginDocPageNamelink));
                 $pluginDocPageNamelink = false;
@@ -186,78 +186,6 @@ extends WikiPlugin
         $table->pushContent($tbody);
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.19  2005/10/12 06:15:25  rurban
-// just aesthetics
-//
-// Revision 1.18  2005/09/26 06:38:00  rurban
-// use the new method
-//
-// Revision 1.17  2005/01/25 06:58:22  rurban
-// reformatting
-//
-// Revision 1.16  2004/06/04 20:32:54  rurban
-// Several locale related improvements suggested by Pierrick Meignen
-// LDAP fix by John Cole
-// reanable admin check without ENABLE_PAGEPERM in the admin plugins
-//
-// Revision 1.15  2004/05/25 13:17:12  rurban
-// fixed Fatal error: Call to a member function on a non-object in PluginManager.php on line 222
-//
-// Revision 1.14  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.13  2004/01/25 03:58:44  rurban
-// use stdlib:isWikiWord()
-//
-// Revision 1.12  2004/01/04 18:14:49  wainstead
-// Added "Description:" to the beginning of the description string, so
-// the plugin plays nice with surrounding text.
-//
-// Revision 1.11  2003/12/10 01:01:24  carstenklapp
-// New features: Also show plugin pages for localized variants.
-// Gracefully handle broken plugins in the plugins folder (such as other
-// lingering php files).
-//
-// Bugfix: Cleaned up Php warnings related to oddities of UserPreference
-// plugin (whose default value contains an array).
-//
-// Internal changes: Gave GoodVariableNames to the nightmarish
-// ones. Simplified some code with WikiLink 'if_known'.
-//
-// Revision 1.10  2003/11/30 18:23:48  carstenklapp
-// Code housekeeping: PEAR coding standards reformatting only.
-//
-// Revision 1.9  2003/11/19 00:02:42  carstenklapp
-// Include found locale-specific pages for the current (non-English)
-// locale.
-//
-// Revision 1.8  2003/11/15 21:53:53  wainstead
-// Minor change: list plugins in asciibetical order. It'd be better if
-// they were alphabetical.
-//
-// Revision 1.7  2003/02/24 01:36:25  dairiki
-// Don't use PHPWIKI_DIR unless it's defined.
-// (Also typo/bugfix in SystemInfo plugin.)
-//
-// Revision 1.6  2003/02/24 00:56:53  carstenklapp
-// Updated to work with recent changes to WikiLink function (fix
-// "==Object(wikipagename)==" for unknown wiki links).
-//
-// Revision 1.5  2003/02/22 20:49:56  dairiki
-// Fixes for "Call-time pass by reference has been deprecated" errors.
-//
-// Revision 1.4  2003/02/20 18:13:38  carstenklapp
-// Workaround for recent changes to WikiPlugin->getPlugin.
-// Made admin restriction for viewing this page optional.
-// Now defaults to any user may view this page (mainly for PhpWiki Demo site).
-// Minor code changes & reformatting.
-//
-// Revision 1.3  2003/01/04 02:30:12  carstenklapp
-// Added 'info' argument to show / hide plugin "Arguments"
-// column. Improved row highlighting and error message when viewed by
-// non-admin user. Code refactored. Added copyleft.
 
 // Local Variables:
 // mode: php
