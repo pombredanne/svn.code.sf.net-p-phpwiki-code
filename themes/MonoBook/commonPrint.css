@@ -203,9 +203,9 @@ a, a.external, a.new, a.stub {
 div.townBox {
     position:relative;
     float:right;
-    background:White;
+    background:white;
     margin-left:1em;
-    border: 1px solid Grey;
+    border: 1px solid gray;
     padding:0.3em;
     width: 200px;
     overflow: hidden;
