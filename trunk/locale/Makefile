@@ -83,8 +83,6 @@ po: po/it.po
 mo: it/LC_MESSAGES/phpwiki.mo it/LC_MESSAGES/phpwiki.php
 po: po/ja.po
 mo: ja/LC_MESSAGES/phpwiki.mo ja/LC_MESSAGES/phpwiki.php
-po: po/ja.utf-8.po
-mo: ja.utf-8/LC_MESSAGES/phpwiki.mo ja.utf-8/LC_MESSAGES/phpwiki.php
 po: po/nl.po
 mo: nl/LC_MESSAGES/phpwiki.mo nl/LC_MESSAGES/phpwiki.php
 po: po/sv.po
@@ -123,6 +121,7 @@ ${POT_FILE}: ../lib/Request.php
 ${POT_FILE}: ../lib/RssParser.php
 ${POT_FILE}: ../lib/RssWriter.php
 ${POT_FILE}: ../lib/RssWriter2.php
+${POT_FILE}: ../lib/SemanticWeb.php
 ${POT_FILE}: ../lib/SpamBlocklist.php
 ${POT_FILE}: ../lib/Template.php
 ${POT_FILE}: ../lib/TextSearchQuery.php
@@ -142,6 +141,7 @@ ${POT_FILE}: ../lib/WikiDB/backend/ADODB_postgres7.php
 ${POT_FILE}: ../lib/WikiDB/backend/ADODB_sqlite.php
 ${POT_FILE}: ../lib/WikiDB/backend/PDO.php
 ${POT_FILE}: ../lib/WikiDB/backend/PDO_mysql.php
+${POT_FILE}: ../lib/WikiDB/backend/PDO_oci8.php
 ${POT_FILE}: ../lib/WikiDB/backend/PDO_pgsql.php
 ${POT_FILE}: ../lib/WikiDB/backend/PearDB.php
 ${POT_FILE}: ../lib/WikiDB/backend/PearDB_mysql.php
@@ -171,10 +171,11 @@ ${POT_FILE}: ../lib/WikiUser.php
 ${POT_FILE}: ../lib/WikiUser/AdoDb.php
 ${POT_FILE}: ../lib/WikiUser/BogoLogin.php
 ${POT_FILE}: ../lib/WikiUser/Db.php
-${POT_FILE}: ../lib/WikiUser/EMailConfim.php
+${POT_FILE}: ../lib/WikiUser/EMailConfirm.php
 ${POT_FILE}: ../lib/WikiUser/File.php
 ${POT_FILE}: ../lib/WikiUser/Forbidden.php
 ${POT_FILE}: ../lib/WikiUser/HttpAuth.php
+${POT_FILE}: ../lib/WikiUser/HttpAuthUpper.php
 ${POT_FILE}: ../lib/WikiUser/IMAP.php
 ${POT_FILE}: ../lib/WikiUser/LDAP.php
 ${POT_FILE}: ../lib/WikiUser/POP3.php
@@ -203,6 +204,7 @@ ${POT_FILE}: ../lib/editpage.php
 ${POT_FILE}: ../lib/fortune.php
 ${POT_FILE}: ../lib/gif.php
 ${POT_FILE}: ../lib/imagecache.php
+${POT_FILE}: ../lib/imdb.php
 ${POT_FILE}: ../lib/install.php
 ${POT_FILE}: ../lib/loadsave.php
 ${POT_FILE}: ../lib/main.php
@@ -213,6 +215,7 @@ ${POT_FILE}: ../lib/plugin/AllUsers.php
 ${POT_FILE}: ../lib/plugin/AnalyseAccessLogSql.php
 ${POT_FILE}: ../lib/plugin/AppendText.php
 ${POT_FILE}: ../lib/plugin/AsciiMath.php
+${POT_FILE}: ../lib/plugin/AsciiSVG.php
 ${POT_FILE}: ../lib/plugin/AuthorHistory.php
 ${POT_FILE}: ../lib/plugin/BackLinks.php
 ${POT_FILE}: ../lib/plugin/BlogArchives.php
@@ -223,6 +226,7 @@ ${POT_FILE}: ../lib/plugin/Calendar.php
 ${POT_FILE}: ../lib/plugin/CalendarList.php
 ${POT_FILE}: ../lib/plugin/CategoryPage.php
 ${POT_FILE}: ../lib/plugin/Comment.php
+${POT_FILE}: ../lib/plugin/CreateBib.php
 ${POT_FILE}: ../lib/plugin/CreatePage.php
 ${POT_FILE}: ../lib/plugin/CreateToc.php
 ${POT_FILE}: ../lib/plugin/DeadEndPages.php
@@ -240,6 +244,7 @@ ${POT_FILE}: ../lib/plugin/GooglePlugin.php
 ${POT_FILE}: ../lib/plugin/GraphViz.php
 ${POT_FILE}: ../lib/plugin/HelloWorld.php
 ${POT_FILE}: ../lib/plugin/HtmlConverter.php
+${POT_FILE}: ../lib/plugin/Imdb.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/IncludePages.php
 ${POT_FILE}: ../lib/plugin/IncludeSiteMap.php
@@ -252,8 +257,10 @@ ${POT_FILE}: ../lib/plugin/LinkSearch.php
 ${POT_FILE}: ../lib/plugin/ListPages.php
 ${POT_FILE}: ../lib/plugin/ListRelations.php
 ${POT_FILE}: ../lib/plugin/ListSubpages.php
+${POT_FILE}: ../lib/plugin/MediawikiTable.php
 ${POT_FILE}: ../lib/plugin/ModeratedPage.php
 ${POT_FILE}: ../lib/plugin/MostPopular.php
+${POT_FILE}: ../lib/plugin/NewPagesPerUser.php
 ${POT_FILE}: ../lib/plugin/NoCache.php
 ${POT_FILE}: ../lib/plugin/OldStyleTable.php
 ${POT_FILE}: ../lib/plugin/OrphanedPages.php
@@ -270,6 +277,8 @@ ${POT_FILE}: ../lib/plugin/Ploticus.php
 ${POT_FILE}: ../lib/plugin/PluginManager.php
 ${POT_FILE}: ../lib/plugin/PopUp.php
 ${POT_FILE}: ../lib/plugin/PopularNearby.php
+${POT_FILE}: ../lib/plugin/PopularTags.php
+${POT_FILE}: ../lib/plugin/PreferenceApp.php
 ${POT_FILE}: ../lib/plugin/PrevNext.php
 ${POT_FILE}: ../lib/plugin/RandomPage.php
 ${POT_FILE}: ../lib/plugin/RateIt.php
@@ -286,7 +295,9 @@ ${POT_FILE}: ../lib/plugin/RssFeed.php
 ${POT_FILE}: ../lib/plugin/SearchHighlight.php
 ${POT_FILE}: ../lib/plugin/SemanticRelations.php
 ${POT_FILE}: ../lib/plugin/SemanticSearch.php
+${POT_FILE}: ../lib/plugin/SemanticSearchAdvanced.php
 ${POT_FILE}: ../lib/plugin/SiteMap.php
+${POT_FILE}: ../lib/plugin/SpellCheck.php
 ${POT_FILE}: ../lib/plugin/SqlResult.php
 ${POT_FILE}: ../lib/plugin/SyncWiki.php
 ${POT_FILE}: ../lib/plugin/SyntaxHighlighter.php
@@ -299,12 +310,12 @@ ${POT_FILE}: ../lib/plugin/Transclude.php
 ${POT_FILE}: ../lib/plugin/TranslateText.php
 ${POT_FILE}: ../lib/plugin/UnfoldSubpages.php
 ${POT_FILE}: ../lib/plugin/UpLoad.php
+${POT_FILE}: ../lib/plugin/UriResolver.php
 ${POT_FILE}: ../lib/plugin/UserPreferences.php
 ${POT_FILE}: ../lib/plugin/UserRatings.php
 ${POT_FILE}: ../lib/plugin/VisualWiki.php
 ${POT_FILE}: ../lib/plugin/WantedPages.php
 ${POT_FILE}: ../lib/plugin/WantedPagesOld.php
-${POT_FILE}: ../lib/plugin/WatchList.php
 ${POT_FILE}: ../lib/plugin/WatchPage.php
 ${POT_FILE}: ../lib/plugin/WhoIsOnline.php
 ${POT_FILE}: ../lib/plugin/WikiAdminChmod.php
@@ -321,10 +332,13 @@ ${POT_FILE}: ../lib/plugin/WikiForm.php
 ${POT_FILE}: ../lib/plugin/WikiFormRich.php
 ${POT_FILE}: ../lib/plugin/WikiForum.php
 ${POT_FILE}: ../lib/plugin/WikiPoll.php
+${POT_FILE}: ../lib/plugin/WikicreoleTable.php
+${POT_FILE}: ../lib/plugin/YouTube.php
 ${POT_FILE}: ../lib/plugin/_AuthInfo.php
 ${POT_FILE}: ../lib/plugin/_BackendInfo.php
 ${POT_FILE}: ../lib/plugin/_GroupInfo.php
 ${POT_FILE}: ../lib/plugin/_PreferencesInfo.php
+${POT_FILE}: ../lib/plugin/_Retransform.php
 ${POT_FILE}: ../lib/plugin/_WikiTranslation.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/prepend.php
@@ -340,7 +354,6 @@ ${POT_FILE}: ../lib/wikilens/RatingsUser.php
 ${POT_FILE}: ../lib/wikilens/Utils.php
 ${POT_FILE}: ../lib/ziplib.php
 ${POT_FILE}: ../themes/Crao/templates/actionbar.tmpl
-${POT_FILE}: ../themes/Crao/templates/blogform.tmpl
 ${POT_FILE}: ../themes/Crao/templates/body.tmpl
 ${POT_FILE}: ../themes/Crao/templates/bottom.tmpl
 ${POT_FILE}: ../themes/Crao/templates/browse.tmpl
@@ -369,6 +382,7 @@ ${POT_FILE}: ../themes/MonoBook/templates/info.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/logo.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/navbar.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/signin.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/tags.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/top.tmpl
 ${POT_FILE}: ../themes/MonoBook/themeinfo.php
 ${POT_FILE}: ../themes/Portland/lib/RecentChanges.php
@@ -414,13 +428,11 @@ ${POT_FILE}: ../themes/blog/templates/browse.tmpl
 ${POT_FILE}: ../themes/blog/templates/debug.tmpl
 ${POT_FILE}: ../themes/blog/templates/info.tmpl
 ${POT_FILE}: ../themes/blog/templates/navbar.tmpl
-${POT_FILE}: ../themes/blog/templates/search.tmpl
 ${POT_FILE}: ../themes/blog/templates/sidebar.tmpl
 ${POT_FILE}: ../themes/blog/templates/top.tmpl
 ${POT_FILE}: ../themes/blog/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/blog/templates/wikiblog.tmpl
 ${POT_FILE}: ../themes/blog/themeinfo.php
-${POT_FILE}: ../themes/default/htmlarea3/popups/insert_pagelink.php
 ${POT_FILE}: ../themes/default/hyperapplet.php
 ${POT_FILE}: ../themes/default/hyperwiki.php
 ${POT_FILE}: ../themes/default/templates/actionbar.tmpl
@@ -430,6 +442,7 @@ ${POT_FILE}: ../themes/default/templates/body.tmpl
 ${POT_FILE}: ../themes/default/templates/bottom.tmpl
 ${POT_FILE}: ../themes/default/templates/browse-footer.tmpl
 ${POT_FILE}: ../themes/default/templates/browse.tmpl
+${POT_FILE}: ../themes/default/templates/categorypage.tmpl
 ${POT_FILE}: ../themes/default/templates/comment.tmpl
 ${POT_FILE}: ../themes/default/templates/content.tmpl
 ${POT_FILE}: ../themes/default/templates/debug.tmpl
@@ -460,6 +473,17 @@ ${POT_FILE}: ../themes/default/templates/viewsource.tmpl
 ${POT_FILE}: ../themes/default/templates/wikiblog.tmpl
 ${POT_FILE}: ../themes/default/templates/wikiforum.tmpl
 ${POT_FILE}: ../themes/default/themeinfo.php
+${POT_FILE}: ../themes/gforge/templates/actionbar.tmpl
+${POT_FILE}: ../themes/gforge/templates/body.tmpl
+${POT_FILE}: ../themes/gforge/templates/browse-footer.tmpl
+${POT_FILE}: ../themes/gforge/templates/editpage.tmpl
+${POT_FILE}: ../themes/gforge/templates/head.tmpl
+${POT_FILE}: ../themes/gforge/templates/html.tmpl
+${POT_FILE}: ../themes/gforge/templates/info.tmpl
+${POT_FILE}: ../themes/gforge/templates/login.tmpl
+${POT_FILE}: ../themes/gforge/templates/navbar.tmpl
+${POT_FILE}: ../themes/gforge/templates/pagelink.tmpl
+${POT_FILE}: ../themes/gforge/templates/userprefs.tmpl
 ${POT_FILE}: ../themes/shamino_com/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/shamino_com/templates/browse-footer.tmpl
 ${POT_FILE}: ../themes/shamino_com/templates/debug.tmpl
@@ -472,6 +496,8 @@ ${POT_FILE}: ../themes/smaller/templates/info.tmpl
 ${POT_FILE}: ../themes/smaller/templates/navbar.tmpl
 ${POT_FILE}: ../themes/smaller/templates/signin.tmpl
 ${POT_FILE}: ../themes/smaller/themeinfo.php
+${POT_FILE}: ../themes/wikilens/templates/body.tmpl
 ${POT_FILE}: ../themes/wikilens/templates/head.tmpl
 ${POT_FILE}: ../themes/wikilens/templates/navbar.tmpl
+${POT_FILE}: ../themes/wikilens/templates/top.tmpl
 ${POT_FILE}: ../themes/wikilens/themeinfo.php
