@@ -1,4 +1,4 @@
- # $Id: Makefile,v 1.51 2007-01-04 16:47:32 rurban Exp $
+# $Id$
 #
 # locale/Makefile
 #
