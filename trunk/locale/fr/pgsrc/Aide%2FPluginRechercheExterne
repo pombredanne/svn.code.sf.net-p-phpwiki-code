@@ -68,4 +68,4 @@ Entre le nom d'une fonction PHP pour voir la page de documentation :
 Entre n'importe quel nom de page sur PhpWiki pour arriver sur cette page :
 <?plugin ExternalSearch url=PhpWiki ?>
 ----
-DocumentationDePhpWiki PluginWiki
+[DocumentationDePhpWiki] [CategoryPluginWiki]

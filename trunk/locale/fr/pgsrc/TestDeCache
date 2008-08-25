@@ -22,4 +22,4 @@ will generate
 
 <?plugin CacheTest text="What a wonderful test!" font="5"?>
 ----
-PluginWiki
+[CategoryPluginWiki]
