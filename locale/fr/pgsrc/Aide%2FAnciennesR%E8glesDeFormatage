@@ -115,4 +115,4 @@ Voire [URLMagiquesPhpWiki] pour des détails sur comment écrire toutes sortes de 
 [1] En utilisant [[1] une seconde fois (dans une première colonne) la note de bas de page elle-même est ''référencée''. Vous pouvez vous référer à une note autant de fois que vous le souhaiter mais vous ne pouvez la définir qu'une seule fois dans la page. Notez que le [[1] est lié à la première référence, s'il y a de multiples références alors ce sera des + après le [[1] qui appeleront les autres références (les références qui viennent  ''après'' la ''définition'' de la note ne seront pas liées)
 
 ----
-DocumentationDePhpWiki
+[DocumentationDePhpWiki]
