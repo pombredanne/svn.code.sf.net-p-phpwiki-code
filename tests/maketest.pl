@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# $Id: maketest.pl,v 1.4 2004-09-06 08:30:44 rurban Exp $
+# $Id$
 
 # read in a file, generate Java code to run a test.
 # Steve Wainstead, March 2001.

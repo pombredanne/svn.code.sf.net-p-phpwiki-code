@@ -1,4 +1,4 @@
--- $Id: psql-test-initialize.sql,v 1.2 2006-12-23 13:01:59 rurban Exp $
+-- $Id$
 -- for the regression suite
 
 \set prefix 	'test_'
