@@ -8,12 +8,12 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-!!Descrition
+!!! Descrition
 PluginBeauTableau est un plugin qui remplace OldStyleTablePlugin. Il permet
 à l'utilisateur de spécifier des propriétés arbitraires pour <tt><table></tt>, 
 <tt><tr></tt> et <tt><td></tt> par un très simple marquage.
 
-!!Usage
+!!! Usage
 Ce plugin a été amélioré de telle sorte que maintenant le contenu de chaque 
 cellule est traité individuellement par ~BlockParser. Ceci signifie que si tout 
 va bien, on peut invoquer des plugins, utiliser des listes... à l'intérieur
@@ -34,11 +34,11 @@ de chaque cellule !
   *s'il n'y a pas de cellule dans la ligne du tableau courante alors le contenu est ignoré 
 *les deux caractères spéciaux <tt>"~~"</tt> et <tt>"?>"</tt> doivent être neutralisés comme <tt>"\~~"</tt> and <tt>"?\>"</tt>. Je n'ai pas trouvé d'autres caractères devant être neutralisés. Il faut le faire pour le filtrage du texte.
 
-!!Avertissements
+!!! Avertissements
 * code source à revoir
 * le plugin ne peut pas s'appeler lui-même. Les tableaux récursifs ne sont pas possible
 
-!!Exemple
+!!! Exemple
 
 <?plugin RichTable
 
@@ -108,11 +108,13 @@ Cette cellule utilise la couleur de ligne
 ?>
 </verbatim>
 
-!!Auteur
+!!! Auteur
+
 Sameer D. Sahasrabuddhe
-!!Url 
+
+!!! Url 
+
 http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin
 
 ----
-
 [CategoryPluginWiki]
