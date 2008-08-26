@@ -1,4 +1,4 @@
-# $Id: .htaccess,v 1.8 2004-11-03 18:21:16 rurban Exp $
+# $Id$
 
 <IfModule mod_php4.c>
 
