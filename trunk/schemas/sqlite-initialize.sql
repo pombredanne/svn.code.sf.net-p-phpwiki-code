@@ -1,6 +1,6 @@
 -- http://www.hezmatt.org/~mpalmer/sqlite-phpwiki/sqlite.sql
 
--- $Id: sqlite-initialize.sql,v 1.7 2008-01-19 16:41:05 vargenau Exp $
+-- $Id$
 
 CREATE TABLE page (
 	id              INTEGER PRIMARY KEY,

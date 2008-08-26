@@ -1,4 +1,4 @@
--- $Id: oci8-initialize.sql,v 1.7 2006-12-23 11:47:40 rurban Exp $
+-- $Id$
 
 set verify off
 set feedback off

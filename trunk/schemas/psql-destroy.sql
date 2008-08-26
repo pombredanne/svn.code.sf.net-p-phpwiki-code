@@ -1,4 +1,4 @@
--- $Id: psql-destroy.sql,v 1.11 2006-12-23 11:48:58 rurban Exp $
+-- $Id$
 
 \set QUIET
 

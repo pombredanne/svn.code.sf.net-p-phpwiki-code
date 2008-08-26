@@ -1,4 +1,4 @@
--- $Id: psql-tsearch2.sql,v 1.3 2007-02-17 14:15:37 rurban Exp $
+-- $Id$
 -- use the tsearch2 fulltextsearch extension: (recommended)
 --   7.4, 8.0, 8.1
 -- $ psql phpwiki < /usr/share/postgresql/contrib/tsearch2.sql 
