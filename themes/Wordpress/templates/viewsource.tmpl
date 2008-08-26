@@ -17,13 +17,12 @@ if ($page->get('locked') && !$user->isAdmin()) { ?>
 
 <!-- Dummy form else NS4 does not like the textarea -->
 <form method="post" action="<?=$request->getPostURL()?>" accept-charset="<?=CHARSET?>">
-<!-- wrap=virtual is not HTML4, but without it NS4 does not wrap long lines -->
 <textarea class="wikiedit"
           name="content"
           rows="<?=$request->getPref('editHeight')?>"
           cols="<?=$request->getPref('editWidth')?>"
 	  readonly="readonly"
-          wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
+          ><?= $PAGE_SOURCE ?></textarea>
 <?= HiddenInputs($request->getArgs()) ?>
 </form>
 <hr />
