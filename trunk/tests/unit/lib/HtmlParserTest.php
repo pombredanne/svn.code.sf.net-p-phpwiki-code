@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: HtmlParserTest.php,v 1.2 2004-07-09 12:29:26 rurban Exp $');
+rcs_id('$Id$');
 
 /* Copyright (C) 2004, Reini Urban <rurban@x-ray.at>
  */

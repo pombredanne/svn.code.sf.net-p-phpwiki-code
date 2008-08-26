@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: XmlRpcTest.php,v 1.2 2007-05-27 18:56:16 rurban Exp $');
+rcs_id('$Id$');
 
 /* Copyright (C) 2007 Reini Urban
  */
