@@ -1,4 +1,4 @@
--- $Id: mssql-initialize.sql,v 1.5 2006-12-08 08:04:10 rurban Exp $
+-- $Id$
 -- UNTESTED!
 
 CREATE TABLE page (

@@ -1,4 +1,4 @@
--- $Id: mysql-destroy.sql,v 1.2 2005-09-28 19:27:23 rurban Exp $
+-- $Id$
 
 drop table if exists page;
 drop table if exists version;

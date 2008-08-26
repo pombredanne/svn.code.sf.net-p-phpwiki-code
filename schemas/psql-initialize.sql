@@ -1,4 +1,4 @@
--- $Id: psql-initialize.sql,v 1.18 2007-02-17 14:15:28 rurban Exp $
+-- $Id$
 
 \set QUIET
 

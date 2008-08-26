@@ -1,4 +1,4 @@
--- $Id: oci8-destroy.sql,v 1.2 2005-02-27 09:33:05 rurban Exp $
+-- $Id$
 
 set verify off
 set feedback off

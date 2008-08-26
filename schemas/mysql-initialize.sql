@@ -1,4 +1,4 @@
--- $Id: mysql-initialize.sql,v 1.17 2007-09-01 13:42:48 rurban Exp $
+-- $Id$
 
 CREATE TABLE page (
 	id              INT NOT NULL AUTO_INCREMENT,
