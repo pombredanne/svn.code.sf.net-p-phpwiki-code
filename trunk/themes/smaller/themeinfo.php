@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.6 2007-07-01 09:36:10 rurban Exp $');
+rcs_id('$Id$');
 /**
  * tiny actionbar, only Edit (if signed in) and Info => PageInfo,
  *   all other Actionbars buttons in info.tmpl

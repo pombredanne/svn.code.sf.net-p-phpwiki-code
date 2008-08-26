@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: random.php,v 1.11 2004-06-14 11:26:49 rurban Exp $');
+<?php rcs_id('$Id$');
 /**
  */
 class randomImage {

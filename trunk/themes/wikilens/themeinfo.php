@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.11 2007-07-15 17:40:31 rurban Exp $');
+rcs_id('$Id$');
 /**
  * The wikilens theme is just a normal Theme (can be based on any, here based on default),
  * which additionally loads some wikilens libraries.

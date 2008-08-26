@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.2 2007-07-01 09:36:10 rurban Exp $');
+rcs_id('$Id$');
 /**
  * A minimalistic design by walter rafelsberger
  * See http://www.shamino.com/wiki/

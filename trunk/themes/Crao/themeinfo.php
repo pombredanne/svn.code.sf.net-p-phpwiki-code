@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.4 2007-07-01 09:36:10 rurban Exp $');
+rcs_id('$Id$');
 
 /*
  * This file defines the default appearance ("theme") of PhpWiki.
