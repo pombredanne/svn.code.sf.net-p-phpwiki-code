@@ -1,4 +1,4 @@
--- $Id: mysql-test-initialize.sql,v 1.5 2006-06-05 09:35:02 rurban Exp $
+-- $Id$
 -- for the regression suite
 
 drop table if exists test_page;

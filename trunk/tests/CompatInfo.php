@@ -2,7 +2,7 @@
 /* Get the Compatibility info for phpwiki
    http://pear.php.net/package/PHP_CompatInfo
 
-   $Id: CompatInfo.php,v 1.3 2004-11-03 16:47:09 rurban Exp $
+   $Id$
 */
 /*
  * Copyright (C) 2004 Reini Urban <rurban@x-ray.at>
