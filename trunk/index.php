@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 require_once (dirname(__FILE__).'/lib/prepend.php');
-rcs_id('$Id: index.php,v 1.148 2005-10-30 16:38:13 rurban Exp $');
+rcs_id('$Id$');
 
 require_once(dirname(__FILE__).'/lib/IniConfig.php');
 IniConfig(dirname(__FILE__)."/config/config.ini");
