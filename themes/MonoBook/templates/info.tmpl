@@ -46,8 +46,8 @@ $markupVersion = ($markupVersion = $revision->get('markup'))
 $summary = HTML::textarea(array('name' => 'summary',
                                 'class' => 'summary',
                                 /* use fixed dimensions? */
-                                'rows' => $request->getPref('editHeight')/4,
-                                'cols' => $request->getPref('editWidth')/2,
+                                'rows' => intval($request->getPref('editHeight')/4),
+                                'cols' => intval($request->getPref('editWidth')/2),
                                 'readonly' => 'readonly',
                                ),
                           $revision->get('summary'));
