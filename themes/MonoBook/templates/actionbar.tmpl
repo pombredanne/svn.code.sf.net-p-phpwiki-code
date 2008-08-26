@@ -61,15 +61,14 @@
       <?= ActionButton('remove') ?>
      <?php } ?>
     <?php } ?>
-    <?= ActionButton(array('action'=>_("PageInfo")),
-                        _("Info"), $pagename) ?>
-    <?= ActionButton(_("PageHistory")) ?>
-    <?= ActionButton(_("AuthorHistory")) ?>
+    <?= ActionButton(array('action'=>_("PageInfo")), _("Info"), $pagename) ?>
+    <?= ActionButton(array('action'=>_("PageHistory")), _("Page history"), $pagename) ?>
+    <?= ActionButton(array('action'=>_("AuthorHistory")), _("Author history"), $pagename) ?>
     <?= ActionButton("diff") ?> 
-    <?= ActionButton(_("PageDump")) ?>
+    <?= ActionButton(array('action'=>_("PageDump")), _("Page dump"), $pagename) ?>
     <?php if (DEBUG and USECACHE) {
       $PurgeCache = ActionButton(array('nocache' => 'purge'),
-                     _("PurgeHtmlCache"), $pagename);
+                     _("Purge HTML cache"), $pagename);
       $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed.")); ?>
       <?= $PurgeCache ?>
     <?php } ?>
