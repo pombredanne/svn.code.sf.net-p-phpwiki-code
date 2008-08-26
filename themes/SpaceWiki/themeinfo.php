@@ -1,6 +1,6 @@
 <?php // -*-php-*-
 
-rcs_id('$Id: themeinfo.php,v 1.6 2007-07-01 09:36:10 rurban Exp $');
+rcs_id('$Id$');
 
 /**
  * This theme is by design completely css-based so unfortunately it

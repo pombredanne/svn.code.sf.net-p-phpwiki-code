@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: themeinfo.php,v 1.56 2007-07-01 09:36:10 rurban Exp $');
+rcs_id('$Id$');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.

@@ -1,4 +1,4 @@
-<?php rcs_id('$Id: RecentChanges.php,v 1.2 2005-02-02 19:14:14 rurban Exp $');
+<?php rcs_id('$Id$');
 /*
  * Extensions/modifications to the stock RecentChanges (and PageHistory) format.
  */

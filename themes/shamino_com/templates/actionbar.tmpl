@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 if (empty($revision)) $revision = $page->getCurrentRevision(false);
 ?>
-<!-- $Id: actionbar.tmpl,v 1.2 2007-01-02 13:29:40 rurban Exp $ -->
+<!-- $Id$ -->
 <?= Button(array('action'=>'PageInfo'),_("PageInfo"),$page->getName()) ?>
 <?=$SEP?><?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
 <?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>

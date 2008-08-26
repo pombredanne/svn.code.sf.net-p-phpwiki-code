@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id: themeinfo.php,v 1.8 2007-07-15 17:39:57 rurban Exp $');
+rcs_id('$Id$');
 
 /**
  * This file defines a blog theme for PhpWiki, 
