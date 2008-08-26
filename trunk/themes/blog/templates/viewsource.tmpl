@@ -17,12 +17,11 @@ if ($page->get('locked') && !$user->isAdmin()) { ?>
       action="<?=$request->getPostURL()?>" accept-charset="<?=CHARSET?>">
 <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
 <!br clear="all" class="clear-floats" />
-<!-- wrap=virtual is not HTML4, but without it NS4 does not wrap long lines -->
 <textarea class="wikiedit"
 name="content" 
 rows="<?=$request->getPref('editHeight')?>"
 cols="<?=$request->getPref('editWidth')?>"
 readonly="readonly"
-wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
+><?= $PAGE_SOURCE ?></textarea>
 <?=$HIDDEN_INPUTS?>
 </form>
