@@ -41,7 +41,7 @@ Notes:
 
 // by Edd Dumbill (C) 1999,2000
 // <edd@usefulinc.com>
-// $Id: xmlrpcs_emu.inc,v 1.4 2007-01-04 16:46:11 rurban Exp $
+// $Id$
 
 // License is granted to use or modify this software ("XML-RPC for PHP")
 // for commercial or non-commercial use provided the copyright of the author

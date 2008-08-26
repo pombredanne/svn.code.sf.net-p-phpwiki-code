@@ -36,7 +36,7 @@ Notes:
 // <edd@usefulinc.com>
 //
 
-// $Id: xmlrpc_emu.inc,v 1.2 2007-01-21 23:28:51 rurban Exp $
+// $Id$
 
 
 // Copyright (c) 1999,2000,2001 Edd Dumbill.
