@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: LinkSearchIter.php,v 1.2 2007-01-04 16:41:25 rurban Exp $');
+rcs_id('$Id$');
 /*
  Copyright 2007 Reini Urban
 
