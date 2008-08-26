@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.15 2008-07-27 21:47:30 rurban Exp $
+# $Id$
 # user-definable settings:
 VERSION=
 # for mysqladmin
