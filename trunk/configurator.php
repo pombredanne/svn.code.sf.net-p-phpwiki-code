@@ -266,7 +266,7 @@ function do_init() {
       <h1>Configuration for PhpWiki <?php echo $config_file ?></h1>
 
 <div class="hint">
-    Using this configurator.php is experimental!<br>
+    Using this configurator.php is experimental!<br />
     On any configuration problems, please edit the resulting config.ini manually.
 </div>
 
@@ -1009,10 +1009,10 @@ $properties["Check Query"] =
 
 Check to see if the supplied username/password pair is OK
 
-Plaintext passwords: (DBAUTH_AUTH_CRYPT_METHOD = plain)<br>
+Plaintext passwords: (DBAUTH_AUTH_CRYPT_METHOD = plain)<br />
 ; DBAUTH_AUTH_CHECK = \"SELECT IF(passwd='\$password',1,0) AS ok FROM user WHERE userid='\$userid'\"
 
-database-hashed passwords (more secure):<br>
+database-hashed passwords (more secure):<br />
 ; DBAUTH_AUTH_CHECK = \"SELECT IF(passwd=PASSWORD('\$password'),1,0) AS ok FROM user WHERE userid='\$userid'\"");
 
 $properties["Crypt Method"] =
@@ -1024,7 +1024,7 @@ If you want to use Unix crypt()ed passwords, you can use DBAUTH_AUTH_CHECK
 to get the password out of the database with a simple SELECT query, and
 specify DBAUTH_AUTH_USER_EXISTS and DBAUTH_AUTH_CRYPT_METHOD:
 
-; DBAUTH_AUTH_CHECK = \"SELECT passwd FROM user where userid='\$userid'\" <br>
+; DBAUTH_AUTH_CHECK = \"SELECT passwd FROM user where userid='\$userid'\" <br />
 ; DBAUTH_AUTH_CRYPT_METHOD = crypt");
 
 $properties["Update the user's authentication credential"] =
@@ -1032,9 +1032,9 @@ $properties["Update the user's authentication credential"] =
 If this is not defined but DBAUTH_AUTH_CHECK is, then the user will be unable to update their
 password.
 
-Plaintext passwords:<br>
-  DBAUTH_AUTH_UPDATE = \"UPDATE user SET passwd='\$password' WHERE userid='\$userid'\"<br>
-Database-hashed passwords:<br>
+Plaintext passwords:<br />
+  DBAUTH_AUTH_UPDATE = \"UPDATE user SET passwd='\$password' WHERE userid='\$userid'\"<br />
+Database-hashed passwords:<br />
   DBAUTH_AUTH_UPDATE = \"UPDATE user SET passwd=PASSWORD('\$password') WHERE userid='\$userid'\"");
 
 $properties["Allow the user to create their own account"] =
@@ -1072,14 +1072,14 @@ You can define 1:n or n:m user<=>group relations, as you wish.
 
 Sample configurations:
 
-only one group per user (1:n):<br>
-   DBAUTH_IS_MEMBER = \"SELECT user FROM user WHERE user='\$userid' AND group='\$groupname'\"<br>
-   DBAUTH_GROUP_MEMBERS = \"SELECT user FROM user WHERE group='\$groupname'\"<br>
-   DBAUTH_USER_GROUPS = \"SELECT group FROM user WHERE user='\$userid'\"<br>
-multiple groups per user (n:m):<br>
-   DBAUTH_IS_MEMBER = \"SELECT userid FROM member WHERE userid='\$userid' AND groupname='\$groupname'\"<br>
-   DBAUTH_GROUP_MEMBERS = \"SELECT DISTINCT userid FROM member WHERE groupname='\$groupname'\"<br>
-   DBAUTH_USER_GROUPS = \"SELECT groupname FROM member WHERE userid='\$userid'\"<br>");
+only one group per user (1:n):<br />
+   DBAUTH_IS_MEMBER = \"SELECT user FROM user WHERE user='\$userid' AND group='\$groupname'\"<br />
+   DBAUTH_GROUP_MEMBERS = \"SELECT user FROM user WHERE group='\$groupname'\"<br />
+   DBAUTH_USER_GROUPS = \"SELECT group FROM user WHERE user='\$userid'\"<br />
+multiple groups per user (n:m):<br />
+   DBAUTH_IS_MEMBER = \"SELECT userid FROM member WHERE userid='\$userid' AND groupname='\$groupname'\"<br />
+   DBAUTH_GROUP_MEMBERS = \"SELECT DISTINCT userid FROM member WHERE groupname='\$groupname'\"<br />
+   DBAUTH_USER_GROUPS = \"SELECT groupname FROM member WHERE userid='\$userid'\"<br />");
 $properties["DBAUTH_GROUP_MEMBERS"] =
     new _define_optional('DBAUTH_GROUP_MEMBERS', "SELECT user FROM user WHERE group='\$groupname'", "");
 $properties["DBAUTH_USER_GROUPS"] =
