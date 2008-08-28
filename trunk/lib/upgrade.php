@@ -193,6 +193,8 @@ class Upgrade {
 	// WARNING: Also override the HomePage here.
 	global $WikiTheme;
 	$path = $WikiTheme->file("pgsrc");
+        // TBD: the call to fileSet prints a warning:
+        // Notice: Unable to open directory 'themes/MonoBook/pgsrc' for reading
 	$pgsrc = new fileSet($path);
 	if ($pgsrc->getFiles()) {
 	    echo "<h3>",sprintf(_("check for additional theme %s updates"),
