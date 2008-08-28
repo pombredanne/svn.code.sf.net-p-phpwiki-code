@@ -1,4 +1,4 @@
-Date: Mon, 19 Jun 2008 14:15:24 +0000
+Date: Mon, 28 Aug 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -19,7 +19,12 @@ The *~MediawikiTable* plugin is a plugin that takes off from the [RichTablePlugi
 !!! HTML attributes
 
 <?plugin RichTable
-* border="1", cellpadding="5"
+* class="bordered"
+-
+|
+Attribute
+|
+Syntax
 -
 |
 For the table
@@ -131,3 +136,4 @@ Marc-Etienne Vargenau, Alcatel-Lucent
 
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]
+
