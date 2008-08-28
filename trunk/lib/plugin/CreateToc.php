@@ -56,20 +56,20 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array( 'pagename'  => '[pagename]', // TOC of another page here?
-                      'headers'   =>  "1,2,3,4,5", // "!!!"=>h2, "!!"=>h3, "!"=>h4
-                                                   // "1"=>h2, "2"=>h3, "3"=>h4, "4"=>h5, "5"=>h6
-                      'noheader'  => 0,            // omit "Table of Contents" header
-                      'notoc'     => 0,            // do not display TOC, only number headers
-                      'position'  => 'right',      // or left
-                      'with_toclink' => 0,         // link back to TOC
-                      'jshide'    => 0,            // collapsed TOC as DHTML button
-		      'extracollapse' => 1,        // provide an entry +/- link to collapse
-                      'liststyle' => 'dl',         // 'dl' or 'ul' or 'ol'
-                      'indentstr' => '&nbsp;&nbsp;',
-		      'with_counter' => 0,
-                      'firstlevelstyle' => 'number' // 'number', 'letter' or 'roman'
-                      );
+        return array('extracollapse' => 1,            // provide an entry +/- link to collapse
+                     'firstlevelstyle' => 'number',   // 'number', 'letter' or 'roman'
+                     'headers'   =>  "1,2,3,4,5",     // "!!!"=>h2, "!!"=>h3, "!"=>h4
+                                                      // "1"=>h2, "2"=>h3, "3"=>h4, "4"=>h5, "5"=>h6
+                     'indentstr' => '&nbsp;&nbsp;',
+                     'jshide'    => 0,                // collapsed TOC as DHTML button
+                     'liststyle' => 'dl',             // 'dl' or 'ul' or 'ol'
+                     'noheader'  => 0,                // omit "Table of Contents" header
+                     'notoc'     => 0,                // do not display TOC, only number headers
+                     'pagename'  => '[pagename]',     // TOC of another page here?
+                     'position'  => 'full',           // full, right or left
+                     'with_counter' => 0,
+                     'with_toclink' => 0,             // link back to TOC
+                    );
     }
     // Initialisation of toc counter
     function _initTocCounter() {
