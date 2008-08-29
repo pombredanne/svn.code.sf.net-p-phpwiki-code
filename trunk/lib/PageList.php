@@ -126,8 +126,6 @@ class _PageList_Column_base {
             $noimg_src = $WikiTheme->getButtonURL('no_order');
             if ($noimg_src)
                 $noimg = HTML::img(array('src'    => $noimg_src,
-                                         'width'  => '7', 
-                                         'height' => '7',
                                          'border' => 0,
                                          'alt'    => '.'));
             else 
@@ -147,8 +145,6 @@ class _PageList_Column_base {
                 $img->setAttr('alt', ".");
             } else {
                 $img = HTML::img(array('src' => $src, 
-                                       'width' => '7', 
-                                       'height' => '7', 
                                        'border' => 0,
                                        'alt' => _("Click to reverse sort order")));
             }
