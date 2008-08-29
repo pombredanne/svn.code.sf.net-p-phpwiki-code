@@ -259,6 +259,11 @@ extends WikiPlugin
                     $this->_tocCounter($tocCounter, $level);                	
                     if (!strstr($content[$i],'#[')) {
                         $s = trim($match[2]);
+                        // If it is Wikicreole syntax, remove '='s at the end
+                        if (string_starts_with($match[1], "=")) {
+                            $s = trim($s, "=");
+                            $s = trim($s);
+                        }
                         $anchor = $this->_nextAnchor($s);
                         $manchor = MangleXmlIdentifier($anchor);
                         $texts = $s;
