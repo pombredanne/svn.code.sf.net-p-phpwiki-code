@@ -377,12 +377,7 @@ extends WikiPlugin
         if (($position == "left") or ($position == "right")) {
             $html->setAttr('style','float:'.$position.'; width:'.$width.';');
         }
-        if ($liststyle == 'dl')
-            $list = HTML::dl(array('id'=>'toclist','class' => 'toc'));
-        elseif ($liststyle == 'ul')
-            $list = HTML::ul(array('id'=>'toclist','class' => 'toc'));
-        elseif ($liststyle == 'ol')
-            $list = HTML::ol(array('id'=>'toclist','class' => 'toc'));
+        $list = HTML::div(array('id'=>'toclist'));
         if (!strstr($headers,",")) {
             $headers = array($headers);	
         } else {
@@ -412,12 +407,8 @@ extends WikiPlugin
                 $indent = $level - 1;
                 $link = new WikiPageName($pagename,$page,$h['anchor']);
                 $li = WikiLink($link,'known',$h['text']);
-                if ($liststyle == 'dl')
-                    $list->pushContent(HTML::dt(HTML::raw
-                        (str_repeat($indentstr,$indent)),$li));
-                else
-                    $list->pushContent(HTML::li(HTML::raw
-                        (str_repeat($indentstr,$indent)),$li));
+                $list->pushContent(HTML::p(HTML::raw
+                       (str_repeat($indentstr,$indent)),$li));
             }
         }
 	$list->setAttr('style','display:'.($jshide?'none;':'block;'));
