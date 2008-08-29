@@ -374,6 +374,9 @@ extends WikiPlugin
         if ($notoc) {
             $html->setAttr('style','display:none;');
         }
+        if (($position == "left") or ($position == "right")) {
+            $html->setAttr('style','float:'.$position.'; width:'.$width.';');
+        }
         if ($liststyle == 'dl')
             $list = HTML::dl(array('id'=>'toclist','class' => 'toc'));
         elseif ($liststyle == 'ul')
