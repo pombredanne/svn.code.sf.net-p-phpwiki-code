@@ -8,17 +8,18 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-_short description_
+The *~MostPopular* plugin will display the pages of wiki that
+have the most number of hits.
 
 !!! Usage
 <verbatim>
-  <?plugin MostPopular ?>
+<?plugin MostPopular ?>
 </verbatim>
 
 !!! Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+limit:
+  The number of pages to display. Default 20. If the limit is negative, the least popular pages will be displayed.
 
 !!! Example
 
