@@ -182,7 +182,7 @@ extends WikiPlugin
                 // | class="xxx" | [foo|bar]
                 $pospipe = strpos($line, "|");
                 $posbracket = strpos($line, "[");
-                if (($pospipe) && ((!$posbracket) || ($posbracket > $pospipe))) {
+                if (($pospipe !== false) && (($posbracket === false) || ($posbracket > $pospipe))) {
                     $attrs = $this->_parse_attr(substr($line, 0, $pospipe));
                     foreach ($attrs as $key => $value) {
                         if (in_array ($key, array("id", "class", "title", "style",
