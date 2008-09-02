@@ -9,6 +9,7 @@ rcs_id('$Id$');
 /* 
  * Copyright (C) 2003 Sameer D. Sahasrabuddhe
  * Copyright (C) 2005 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2008 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -126,7 +127,7 @@ extends WikiPlugin
         if (isset($row)) {
             if (isset($cell)) {
                 if (isset($content))
-                    $cell->pushContent(TransformText($content));
+                    $cell->pushContent(TransformText($content, $markup, $basepage));
                 $row->pushContent($cell);
             }
             $table->pushContent($row);
@@ -151,26 +152,6 @@ extends WikiPlugin
         return $options;
     }
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.7  2005/05/06 17:44:24  rurban
-// silence undefined offset 1 msg
-//
-// Revision 1.6  2005/04/09 08:16:00  rurban
-// fix RichTablePlugin embedded plugin invocation. Bug #1044245
-//
-// Revision 1.5  2004/06/14 11:31:39  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.4  2004/03/09 13:08:40  rurban
-// fix undefined TransformText error: load BlockParser,
-// get rid of warnings
-//
 
 // For emacs users
 // Local Variables:

@@ -138,7 +138,7 @@ extends WikiPlugin
                 $line = substr($line,2);
                 $pospipe = strpos($line, "|");
                 $posbracket = strpos($line, "[");
-                if (($pospipe) && ((!$posbracket) || ($posbracket > $pospipe))) {
+                if (($pospipe !== false) && (($posbracket === false) || ($posbracket > $pospipe))) {
                     $attrs = $this->_parse_attr(substr($line, 0, $pospipe));
                     foreach ($attrs as $key => $value) {
                         if (in_array ($key, array("id", "class", "title", "style",
@@ -206,7 +206,7 @@ extends WikiPlugin
         if (isset($row)) {
             if (isset($cell)) {
                 if (isset($content))
-                    $cell->pushContent(TransformText(trim($content)));
+                    $cell->pushContent(TransformText(trim($content), $markup, $basepage));
                 $row->pushContent($cell);
             }
             $tbody->pushContent($row);
@@ -232,15 +232,6 @@ extends WikiPlugin
         return $options;
     }
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2008/04/04 18:13:49  vargenau
-// Add tbody to table
-//
-// Revision 1.1  2008/01/31 20:40:10  vargenau
-// Implemented Mediawiki-like syntax for tables
-//
-//
 
 // For emacs users
 // Local Variables:
