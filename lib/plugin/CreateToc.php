@@ -67,6 +67,7 @@ extends WikiPlugin
                      'notoc'     => 0,                // do not display TOC, only number headers
                      'pagename'  => '[pagename]',     // TOC of another page here?
                      'position'  => 'full',           // full, right or left
+                     'width'     => '200px',
                      'with_counter' => 0,
                      'with_toclink' => 0,             // link back to TOC
                     );
