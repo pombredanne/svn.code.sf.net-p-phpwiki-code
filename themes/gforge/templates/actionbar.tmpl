@@ -52,12 +52,13 @@ $isBrowse = $request->getArg('action') == 'browse';
 
     <?php if ((mayAccessPage('edit', $page->getName())) and $revision) { ?>
       <td class="bold"><?= Button("edit", $dbh->isWikiPage($page->getName()) ? ($revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) : _("Create Page")) ?></td>
-    <?php } else { ?>
+    <?php } else if ($dbh->isWikiPage($page->getName())) { ?>
       <td><?= Button("viewsource", _("View Source")) ?></td>
     <?php } ?>
 
-    <td class="spacer">&nbsp;</td>
+    <?php if ($dbh->isWikiPage($page->getName())) { ?>
 
+    <td class="spacer">&nbsp;</td>
     <td><?= Button("PageHistory", _("History")) ?></td>
 
     <?php if ($curuserprefs->get('diffMenuItem')) { ?>
@@ -131,6 +132,7 @@ $isBrowse = $request->getArg('action') == 'browse';
 <?php } ?>
     <!-- End debugging buttons -->
 <?php } ?>
+    <?php } ?>
   </tr>
   </table>
   </div>
