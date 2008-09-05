@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
+ Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -28,6 +29,7 @@ rcs_id('$Id$');
  * Author:  NathanGass <gass@iogram.ch>
  * Changes: ReiniUrban <rurban@x-ray.at>,
  *          qubit <rtryon@dartmouth.edu>
+ *          Marc-Etienne Vargenau, Alcatel-Lucent
  * Note:    See also Jochen Kalmbach's plugin/UserFileManagement.php
  */
 
@@ -137,7 +139,7 @@ ws[cfh]");
         extract($args);
 
         $file_dir = getUploadFilePath();
-	$file_dir .= "/";
+        $file_dir .= "/";
         $form = HTML::form(array('action'  => $request->getPostURL(),
                                  'enctype' => 'multipart/form-data',
                                  'method'  => 'post'));
@@ -168,8 +170,20 @@ ws[cfh]");
             // Make sure that the user is logged in.
             $user = $request->getUser();
             if (!$user->isAuthenticated()) {
-                $message->pushContent(HTML::h2(_("ACCESS DENIED: You must log in to upload files.")),
-                                          HTML::br(),HTML::br());
+                global $WikiTheme;
+                if (isa($WikiTheme, 'Theme_gforge')) {
+                    $message->pushContent(HTML::div(array('class' => 'error'),
+                                            HTML::p(_("You cannot upload files.")),
+                                            HTML::ul(
+                                              HTML::li(_("Check you are logged in.")),
+                                              HTML::li(_("Check you are in the right project.")),
+                                              HTML::li(_("Check you are a member of the current project."))
+                                            )
+                                         ));
+                } else {
+                    $message->pushContent(HTML::div(array('class' => 'error'),
+                                            HTML::p(_("ACCESS DENIED: You must log in to upload files."))));
+                }
                 $result = HTML();
                 $result->pushContent($form);
                 $result->pushContent($message);
@@ -192,36 +206,36 @@ ws[cfh]");
 	    }
 	    $u_userfile = preg_replace("/ /", "%20", $u_userfile);
             $userfile_tmpname = $userfile->getTmpName();
-	    $err_header = HTML::h2(fmt("ERROR uploading '%s': ", $userfile_name));
+	    $err_header = HTML::div(array('class' => 'error'),
+                                HTML::p(fmt("ERROR uploading '%s'", $userfile_name)));
             if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/i",
                            $userfile_name))
             {
             	$message->pushContent($err_header);
-                $message->pushContent(fmt("Files with extension %s are not allowed.",
-                                          join(", ", $this->disallowed_extensions)),HTML::br(),HTML::br());
+                $message->pushContent(HTML::p(fmt("Files with extension %s are not allowed.",
+                                              join(", ", $this->disallowed_extensions))));
             }
             elseif (! DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS and 
                     ! preg_match("/(\." . join("|\.", $this->allowed_extensions) . ")\$/i", 
                                $userfile_name))
             {
             	$message->pushContent($err_header);
-                $message->pushContent(fmt("Only files with the extension %s are allowed.",
-                                          join(", ", $this->allowed_extensions)),HTML::br(),HTML::br());
+                $message->pushContent(HTML::p(fmt("Only files with the extension %s are allowed.",
+                                              join(", ", $this->allowed_extensions))));
             }
             elseif (preg_match("/[^._a-zA-Z0-9- ]/", $userfile_name))
             {
             	$message->pushContent($err_header);
-                $message->pushContent(_("Invalid filename. File names may only contain alphanumeric characters and dot, underscore, space or dash."),
-                                      HTML::br(),HTML::br());
+                $message->pushContent(HTML::p(_("Invalid filename. File names may only contain alphanumeric characters and dot, underscore, space or dash.")));
             }
             elseif (file_exists($file_dir . $userfile_name)) {
             	$message->pushContent($err_header);
-                $message->pushContent(fmt("There is already a file with name %s uploaded.",
-                                          $u_userfile),HTML::br(),HTML::br());
+                $message->pushContent(HTML::p(fmt("There is already a file with name %s uploaded.",
+                                                  $u_userfile)));
             }
             elseif ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
             	$message->pushContent($err_header);
-                $message->pushContent(_("Sorry but this file is too big."),HTML::br(),HTML::br());
+                $message->pushContent(HTML::p(_("Sorry but this file is too big.")));
             }
             elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name) or
                     (IsWindows() and rename($userfile_tmpname, $file_dir . $userfile_name))
@@ -229,8 +243,9 @@ ws[cfh]");
             {
             	$interwiki = new PageType_interwikimap();
 		$link = $interwiki->link("Upload:$u_userfile");
-                $message->pushContent(HTML::h2(_("File successfully uploaded.")));
-                $message->pushContent(HTML::ul(HTML::li($link)));
+                $message->pushContent(HTML::div(array('class' => 'feedback'),
+                                                HTML::p(_("File successfully uploaded.")),
+                                                HTML::p($link)));
 
                 // the upload was a success and we need to mark this event in the "upload log"
                 if ($logfile) { 
@@ -250,12 +265,12 @@ ws[cfh]");
                         $pagehandle->save($newtext, $version + 1, $meta);
                     }
                 }
-            }
-            else {
+            } else {
             	$message->pushContent($err_header);
                 $message->pushContent(HTML::br(),_("Uploading failed."),HTML::br());
             }
-        } else {
+        }
+        else {
             $message->pushContent(HTML::br(),_("No file selected. Please select one."),HTML::br());
         }
 
@@ -293,140 +308,6 @@ ws[cfh]");
     }
 
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.30  2008/08/03 17:25:41  vargenau
-// Add message: "No file selected. Please select one."
-//
-// Revision 1.29  2008/08/03 17:06:32  vargenau
-// Add Open Document Format suffixes: odg, odp, ods, odt
-//
-// Revision 1.28  2008/08/03 15:14:55  vargenau
-// Add slash to file_dir
-//
-// Revision 1.27  2008/05/17 06:53:54  vargenau
-// Create log file if it does not exist
-//
-// Revision 1.26  2007/07/14 12:05:07  rurban
-// no inlined [] links anymore, edit inclusion, more extensions allowed.
-//
-// Revision 1.25  2007/04/18 20:40:48  rurban
-// added DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS
-//
-// Revision 1.24  2007/04/11 17:49:01  rurban
-// Chgeck against .php\d, i.e. php3
-//
-// Revision 1.23  2007/04/08 12:43:45  rurban
-// Important security fix!
-// Disallow files like "deface.php.3" also. Those are actually in the wild!
-//
-// Revision 1.22  2007/02/17 14:16:56  rurban
-// allow spaces in filenames
-//
-// Revision 1.21  2007/01/04 16:46:50  rurban
-// Support UPLOAD_USERDIR
-//
-// Revision 1.20  2006/08/15 13:40:40  rurban
-// help finding the file (should not be needed)
-//
-// Revision 1.19  2005/04/11 19:40:15  rurban
-// Simplify upload. See https://sourceforge.net/forum/message.php?msg_id=3093651
-// Improve UpLoad warnings.
-// Move auth check before upload.
-//
-// Revision 1.18  2005/02/12 17:24:24  rurban
-// locale update: missing . : fixed. unified strings
-// proper linebreaks
-//
-// Revision 1.17  2004/11/09 08:15:50  rurban
-// trim filename
-//
-// Revision 1.16  2004/10/21 19:03:37  rurban
-// Be more stricter with uploads: Filenames may only contain alphanumeric
-// characters. Patch #1037825
-//
-// Revision 1.15  2004/09/22 13:46:26  rurban
-// centralize upload paths.
-// major WikiPluginCached feature enhancement:
-//   support _STATIC pages in uploads/ instead of dynamic getimg.php? subrequests.
-//   mainly for debugging, cache problems and action=pdf
-//
-// Revision 1.14  2004/06/16 10:38:59  rurban
-// Disallow refernces in calls if the declaration is a reference
-// ("allow_call_time_pass_reference clean").
-//   PhpWiki is now allow_call_time_pass_reference = Off clean,
-//   but several external libraries may not.
-//   In detail these libs look to be affected (not tested):
-//   * Pear_DB odbc
-//   * adodb oracle
-//
-// Revision 1.13  2004/06/14 11:31:39  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.12  2004/06/13 11:34:22  rurban
-// fixed bug #969532 (space in uploaded filenames)
-// improved upload error messages
-//
-// Revision 1.11  2004/06/11 09:07:30  rurban
-// support theme-specific LinkIconAttr: front or after or none
-//
-// Revision 1.10  2004/04/12 10:19:18  rurban
-// fixed copyright year
-//
-// Revision 1.9  2004/04/12 10:18:22  rurban
-// removed the hairy regex line
-//
-// Revision 1.8  2004/04/12 09:12:22  rurban
-// fix syntax errors
-//
-// Revision 1.7  2004/04/09 17:49:03  rurban
-// Added PhpWiki RssFeed to Sidebar
-// sidebar formatting
-// some browser dependant fixes (old-browser support)
-//
-// Revision 1.6  2004/02/27 01:36:51  rurban
-// autolink enabled
-//
-// Revision 1.5  2004/02/27 01:24:43  rurban
-// use IntwerWiki links for uploaded file.
-// autolink to page prepared, but not yet ready
-//
-// Revision 1.4  2004/02/21 19:12:59  rurban
-// patch by Sascha Carlin
-//
-// Revision 1.3  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.2  2004/01/26 09:18:00  rurban
-// * changed stored pref representation as before.
-//   the array of objects is 1) bigger and 2)
-//   less portable. If we would import packed pref
-//   objects and the object definition was changed, PHP would fail.
-//   This doesn't happen with an simple array of non-default values.
-// * use $prefs->retrieve and $prefs->store methods, where retrieve
-//   understands the interim format of array of objects also.
-// * simplified $prefs->get() and fixed $prefs->set()
-// * added $user->_userid and class '_WikiUser' portability functions
-// * fixed $user object ->_level upgrading, mostly using sessions.
-//   this fixes yesterdays problems with loosing authorization level.
-// * fixed WikiUserNew::checkPass to return the _level
-// * fixed WikiUserNew::isSignedIn
-// * added explodePageList to class PageList, support sortby arg
-// * fixed UserPreferences for WikiUserNew
-// * fixed WikiPlugin for empty defaults array
-// * UnfoldSubpages: added pagename arg, renamed pages arg,
-//   removed sort arg, support sortby arg
-//
-// Revision 1.1  2003/11/04 18:41:41  carstenklapp
-// New plugin which was submitted to the mailing list some time
-// ago. (This is the best UpLoad function I have seen for PhpWiki so
-// far. Cleaned up text formatting and typos from the version on the
-// mailing list. Still needs a few adjustments.)
 
 // (c-file-style: "gnu")
 // Local Variables:
