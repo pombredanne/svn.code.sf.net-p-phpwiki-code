@@ -51,7 +51,7 @@ $isBrowse = $request->getArg('action') == 'browse';
     <td class="spacer">&nbsp;</td>
 
     <?php if ((mayAccessPage('edit', $page->getName())) and $revision) { ?>
-      <td class="bold"><?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?></td>
+      <td class="bold"><?= Button("edit", $dbh->isWikiPage($page->getName()) ? ($revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) : _("Create Page")) ?></td>
     <?php } else { ?>
       <td><?= Button("viewsource", _("View Source")) ?></td>
     <?php } ?>
