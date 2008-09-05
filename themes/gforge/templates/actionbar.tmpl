@@ -115,8 +115,8 @@ $isBrowse = $request->getArg('action') == 'browse';
         <td class="spacer">&nbsp;</td>
     <?php } ?>
 
-    <?php if (($user->isAdmin() or mayAccessPage('remove', $page->getName())) && $revision) { ?>
-        <td><?= Button('remove', _("Remove")) ?></td>
+    <?php if (($user->isAdmin() or mayAccessPage('purge', $page->getName())) && $revision) { ?>
+        <td><?= Button('purge', _("Purge")) ?></td>
         <td class="spacer">&nbsp;</td>
     <?php } ?>
 
