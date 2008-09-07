@@ -107,52 +107,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.31  2004/11/23 15:17:19  rurban
-// better support for case_exact search (not caseexact for consistency),
-// plugin args simplification:
-//   handle and explode exclude and pages argument in WikiPlugin::getArgs
-//     and exclude in advance (at the sql level if possible)
-//   handle sortby and limit from request override in WikiPlugin::getArgs
-// ListSubpages: renamed pages to maxpages
-//
-// Revision 1.30  2004/10/14 19:19:34  rurban
-// loadsave: check if the dumped file will be accessible from outside.
-// and some other minor fixes. (cvsclient native not yet ready)
-//
-// Revision 1.29  2004/09/25 16:33:52  rurban
-// add support for all PageList options
-//
-// Revision 1.28  2004/04/20 18:10:55  rurban
-// config refactoring:
-//   FileFinder is needed for WikiFarm scripts calling index.php
-//   config run-time calls moved to lib/IniConfig.php:fix_configs()
-//   added PHPWIKI_DIR smart-detection code (Theme finder)
-//   moved FileFind to lib/FileFinder.php
-//   cleaned lib/config.php
-//
-// Revision 1.27  2004/04/20 00:06:53  rurban
-// paging support
-//
-// Revision 1.26  2004/04/18 01:34:21  rurban
-// protect most_popular from sortby=mtime
-//
-// Revision 1.25  2004/03/30 02:38:06  rurban
-// RateIt support (currently no recommendation engine yet)
-//
-// Revision 1.24  2004/03/01 13:48:46  rurban
-// rename fix
-// p[] consistency fix
-//
-// Revision 1.23  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.22  2003/01/18 21:48:56  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8
