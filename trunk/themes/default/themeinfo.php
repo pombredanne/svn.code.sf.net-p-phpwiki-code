@@ -5,9 +5,9 @@ rcs_id('$Id$');
  * This file defines the default appearance ("theme") of PhpWiki.
  */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 
-$WikiTheme = new Theme('default');
+$WikiTheme = new WikiTheme('default');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

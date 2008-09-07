@@ -15,9 +15,9 @@ rcs_id('$Id$');
  * remaining non-structural html elements from the html templates.
  */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 
-class Theme_SpaceWiki extends Theme {
+class WikiTheme_SpaceWiki extends WikiTheme {
 
     function getRecentChangesFormatter ($format) {
         include_once($this->file('lib/RecentChanges.php'));
@@ -81,7 +81,7 @@ class Theme_SpaceWiki extends Theme {
     }
 }
 
-$WikiTheme = new Theme_SpaceWiki('SpaceWiki');
+$WikiTheme = new WikiTheme_SpaceWiki('SpaceWiki');
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -5,9 +5,9 @@ rcs_id('$Id$');
  * This file defines the default appearance ("theme") of PhpWiki.
  */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 
-class Theme_Crao extends Theme {
+class WikiTheme_Crao extends WikiTheme {
 
     function load() {
 	// CSS file defines fonts, colors and background images for this
@@ -84,7 +84,7 @@ class Theme_Crao extends Theme {
     }
 }
 
-$WikiTheme = new Theme_Crao('Crao');
+$WikiTheme = new WikiTheme_Crao('Crao');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

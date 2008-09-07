@@ -16,7 +16,7 @@ rcs_id('$Id$');
  * Anyway, the WikiParser perl module (and our php version) will be able to import
  * and convert back and forth.
  */
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 if (!defined("ENABLE_MARKUP_TEMPLATE"))
     define("ENABLE_MARKUP_TEMPLATE", true);
 
@@ -43,7 +43,7 @@ function ActionButton ($action, $label = false, $page_or_rev = false, $options =
                     $WikiTheme->makeActionButton($action, $label, $page_or_rev, $options));
 }
 
-class Theme_MonoBook extends Theme {
+class WikiTheme_MonoBook extends WikiTheme {
     
     /* this adds selected to the class */
     function makeActionButton ($action, $label = false, $page_or_rev = false, $options = false) {
@@ -194,7 +194,7 @@ class Theme_MonoBook extends Theme {
     }
 }
 
-$WikiTheme = new Theme_MonoBook('MonoBook');
+$WikiTheme = new WikiTheme_MonoBook('MonoBook');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

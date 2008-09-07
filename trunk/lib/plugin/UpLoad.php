@@ -171,7 +171,7 @@ ws[cfh]");
             $user = $request->getUser();
             if (!$user->isAuthenticated()) {
                 global $WikiTheme;
-                if (isa($WikiTheme, 'Theme_gforge')) {
+                if (isa($WikiTheme, 'WikiTheme_gforge')) {
                     $message->pushContent(HTML::div(array('class' => 'error'),
                                             HTML::p(_("You cannot upload files.")),
                                             HTML::ul(

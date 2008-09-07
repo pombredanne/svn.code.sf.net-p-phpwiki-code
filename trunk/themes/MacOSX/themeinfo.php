@@ -24,13 +24,13 @@ rcs_id('$Id$');
  * you may not see it.
  * */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 
-class Theme_MacOSX extends Theme {
+class WikiTheme_MacOSX extends WikiTheme {
     function getCSS() {
         // FIXME: this is a hack which will not be needed once
         //        we have dynamic CSS.
-        $css = Theme::getCSS();
+        $css = WikiTheme::getCSS();
         $css->pushcontent(HTML::style(array('type' => 'text/css'),
                              new RawXml(sprintf("<!--\nbody {background-image: url(%s);}\n-->\n",
                                                 $this->getImageURL('bgpaper8')))));
@@ -154,7 +154,7 @@ class Theme_MacOSX extends Theme {
     }
 }
 
-$WikiTheme = new Theme_MacOSX('MacOSX');
+$WikiTheme = new WikiTheme_MacOSX('MacOSX');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

@@ -1,14 +1,14 @@
 <?php
 rcs_id('$Id$');
 /**
- * The wikilens theme is just a normal Theme (can be based on any, here based on default),
+ * The wikilens theme is just a normal WikiTheme (can be based on any, here based on default),
  * which additionally loads some wikilens libraries.
  * And of course it has it's own set of icons for the ratingwidget.
  * http://www.wikilens.org/wiki/
  */
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 
-class Theme_Wikilens extends Theme {
+class WikiTheme_Wikilens extends WikiTheme {
 
     function load() {
 	// CSS file defines fonts, colors and background images for this
@@ -90,7 +90,7 @@ class Theme_Wikilens extends Theme {
     }
 }
 
-$WikiTheme = new Theme_Wikilens('wikilens');
+$WikiTheme = new WikiTheme_Wikilens('wikilens');
 require_once("lib/wikilens/CustomPrefs.php");
 require_once("lib/wikilens/PageListColumns.php");
 

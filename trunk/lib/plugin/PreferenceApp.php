@@ -1,14 +1,11 @@
 <?php //-*-php-*-
 rcs_id('$Id$');
 
-/**
-* 
-*/
 require_once('lib/PageList.php');
 require_once('lib/InlineParser.php');
 
 require_once('lib/wikilens/Utils.php');
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 require_once('lib/wikilens/Buddy.php');
 require_once('lib/wikilens/RatingsDb.php');
 
