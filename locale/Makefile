@@ -125,7 +125,6 @@ ${POT_FILE}: ../lib/SemanticWeb.php
 ${POT_FILE}: ../lib/SpamBlocklist.php
 ${POT_FILE}: ../lib/Template.php
 ${POT_FILE}: ../lib/TextSearchQuery.php
-${POT_FILE}: ../lib/Theme.php
 ${POT_FILE}: ../lib/Units.php
 ${POT_FILE}: ../lib/WikiCallback.php
 ${POT_FILE}: ../lib/WikiDB.php
@@ -167,6 +166,7 @@ ${POT_FILE}: ../lib/WikiDB/flatfile.php
 ${POT_FILE}: ../lib/WikiGroup.php
 ${POT_FILE}: ../lib/WikiPlugin.php
 ${POT_FILE}: ../lib/WikiPluginCached.php
+${POT_FILE}: ../lib/WikiTheme.php
 ${POT_FILE}: ../lib/WikiUser.php
 ${POT_FILE}: ../lib/WikiUser/AdoDb.php
 ${POT_FILE}: ../lib/WikiUser/BogoLogin.php
@@ -342,6 +342,7 @@ ${POT_FILE}: ../lib/plugin/_Retransform.php
 ${POT_FILE}: ../lib/plugin/_WikiTranslation.php
 ${POT_FILE}: ../lib/plugin/text2png.php
 ${POT_FILE}: ../lib/prepend.php
+${POT_FILE}: ../lib/purgepage.php
 ${POT_FILE}: ../lib/removepage.php
 ${POT_FILE}: ../lib/spam_babycart.php
 ${POT_FILE}: ../lib/stdlib.php

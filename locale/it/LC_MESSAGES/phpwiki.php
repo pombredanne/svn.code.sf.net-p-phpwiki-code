@@ -20,8 +20,6 @@ $locale["%s bytes"] =
    "%s byte";
 $locale["%s days"] =
    "%s giorni";
-$locale["%s is listed at %s"] =
-   "%s è elencato a %s";
 $locale["%s not defined"] =
    "%s: non definito";
 $locale["%s not found"] =
@@ -92,8 +90,8 @@ $locale["CalendarPlugin"] =
    "CalendarioPlugin";
 $locale["Cancel"] =
    "Annulla";
-$locale["Cancel rating"] =
-   "Annulla";
+$locale["Category"] =
+   "Categoria";
 $locale["CategoryGroup"] =
    "CategoriaGruppo";
 $locale["CategoryPage"] =
@@ -298,6 +296,8 @@ $locale["Plugin %s failed."] =
    "Plugin '%s' fallito.";
 $locale["Plugin %s: undefined"] =
    "Plugin '%s': non definito";
+$locale["PreferenceApp"] =
+   "PreferenzeApp";
 $locale["Preferences"] =
    "Preferenze";
 $locale["PreferencesInfo"] =
@@ -346,8 +346,6 @@ $locale["Search"] =
    "Ricerca";
 $locale["See %s tips for editing."] =
    "Vedere %s consigli per le modifiche.";
-$locale["Select"] =
-   "Prescelto";
 $locale["Show minor edits for:"] =
    "Mostrare le modifiche secondarie per:";
 $locale["Sign In"] =
@@ -458,8 +456,6 @@ $locale["from %s"] =
    "dalla %s";
 $locale["locked"] =
    "bloccata";
-$locale["name"] =
-   "Nome";
 $locale["not authenticated"] =
    "non autenticato";
 $locale["plain file %s"] =

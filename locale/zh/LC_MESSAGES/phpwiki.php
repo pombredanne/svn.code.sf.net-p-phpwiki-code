@@ -82,10 +82,6 @@ $locale["%s pages would link to %s:"] =
    "%s 個頁面可能連結到 %s:";
 $locale["%s parameter missing"] =
    "%s 參數遺漏";
-$locale["%s prediction for you is %.1f stars"] =
-   "%s 對你的預測有 %.1f 星";
-$locale["%s prediction for you is %s stars"] =
-   "%s 對你的預測有 %s 星.";
 $locale["%s words"] =
    "共 %s 字";
 $locale["%s(%d): no such revision"] =
@@ -128,8 +124,6 @@ $locale["(diff)"] =
    "(差異)";
 $locale["(disable individual page permissions, enable inheritance)?"] =
    "(禁制個別網頁的權限,使用繼承)?";
-$locale["(hist)"] =
-   "(歷程)";
 $locale["(max. recursion level: %d)"] =
    "(最大遞迴層級: %d)";
 $locale["(ugo : rwx)"] =
@@ -174,8 +168,6 @@ $locale["Action page"] =
    "動作頁面";
 $locale["Add %s hours to the server's local time when reporting times."] =
    "當回報時間時,在伺服器的本地時間加上 %s 個小時.";
-$locale["Add a Comment"] =
-   "加入意見";
 $locale["AddComment"] =
    "AddComment";
 $locale["AddCommentPlugin"] =
@@ -216,8 +208,6 @@ $locale["Are you sure you want to permanently change the selected files?"] =
    "你確定你想要永久變更選定的檔案?";
 $locale["Are you sure you want to permanently remove the selected files?"] =
    "你確定你想要永久移除選定的檔案?";
-$locale["Are you sure you want to permanently rename the selected files?"] =
-   "你確定你想要永久更名選定的檔案?";
 $locale["Are you sure you want to permanently search & replace text in the selected files?"] =
    "你確定你想要永久新增並取代選定檔案中的文字?";
 $locale["Arguments"] =
@@ -242,8 +232,6 @@ $locale["AuthorHistory"] =
    "作者歷程";
 $locale["AuthorHistoryPlugin"] =
    "AuthorHistoryPlugin";
-$locale["Automatically link headers at the top"] =
-   "在上面自動連結表頭";
 $locale["Available plugins"] =
    "可用的 plugin";
 $locale["BAD URL -- remove all of <, >, \""] =
@@ -284,8 +272,6 @@ $locale["Can't open zip file '%s' for reading"] =
    "無法開啟 zip 檔案 '%s' 進行讀取";
 $locale["Cancel"] =
    "取消";
-$locale["Cancel rating"] =
-   "取消評比";
 $locale["Cannot create directory '%s'"] =
    "無法建立目錄 '%s'";
 $locale["Cannot open AUTH_GROUP_FILE %s"] =
@@ -452,8 +438,6 @@ $locale["Download for CVS"] =
    "給 CVS 的下載";
 $locale["Download for backup"] =
    "給備份用的下載";
-$locale["Download the page contents"] =
-   "下載頁面內容";
 $locale["Downloading html zip dumps"] =
    "下載 html zip dumps";
 $locale["Downloading zip dumps"] =
@@ -532,8 +516,6 @@ $locale["Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferenc
    "錯誤: 使用者的首頁必須是一個合法的 WikiWord. 抱歉, UserPreferences 無法儲存.";
 $locale["Every"] =
    "每";
-$locale["Existing page-level metadata for %s:"] =
-   "已存在的頁面層級中繼資料 %s:";
 $locale["Expiry parameters"] =
    "過期參數";
 $locale["External Links"] =
@@ -610,12 +592,8 @@ $locale["History of all major and minor edits by %s to page %s."] =
    "所有被 %s 修改的主要和次要修訂歷程 - 頁面 %s.";
 $locale["History of all major and minor modifications for any page edited by %s."] =
    "被 %s 修改的所有頁面的主要與次要變更歷程.";
-$locale["History of all major edits by %s to page %s."] =
-   "被 %s 修改的所有主要修訂歷程 - 頁面 %s.";
 $locale["History of changes."] =
    "變更的歷程.";
-$locale["History of major modifications for any page edited by %s."] =
-   "被 %s 修改的主要所有頁面變更歷程.";
 $locale["Hit statistics"] =
    "擊閱數統計";
 $locale["Hits"] =
@@ -1040,12 +1018,8 @@ $locale["Rate"] =
    "Rate";
 $locale["Rate It"] =
    "評比";
-$locale["Rate the topic of this page"] =
-   "評比此頁面的主題";
 $locale["RateIt"] =
    "RateIt";
-$locale["Rated by %d users | Average rating %.1f stars"] =
-   "被 %d 位使用者評比 | 平均評分為 %.1f";
 $locale["Rating system. Store user ratings per page"] =
    "評比系統. 儲存每頁的使用者評比";
 $locale["Raw HTML"] =
@@ -1106,8 +1080,6 @@ $locale["Rename to"] =
    "更名為";
 $locale["Renamed page '%s' to '%s'."] =
    "更名頁面 '%s' 為 '%s'.";
-$locale["Replace: "] =
-   "取代:";
 $locale["Replaced '%s' with '%s' in page '%s'."] =
    "取代 '%s' 以 '%s' 在頁面 '%s'.";
 $locale["Requires WikiAdmin privileges to edit."] =
@@ -1156,8 +1128,6 @@ $locale["See %s tips for editing."] =
    "參照編輯時的 %s 小秘訣.";
 $locale["See: %s"] =
    "參閱: %s";
-$locale["Select"] =
-   "選擇";
 $locale["Select pages"] =
    "選擇頁面";
 $locale["Select the pages to change:"] =
@@ -1278,8 +1248,6 @@ $locale["SystemInfoPlugin"] =
    "SystemInfoPlugin";
 $locale["TODO: Google can only translate from english and french. Find a translation service for %s to language %s"] =
    "TODO: Google 只能從英文與法文轉換. 為 %s 尋找轉換到語言 %s 的服務.";
-$locale["Table Of Contents"] =
-   "目錄";
 $locale["Thank you for editing %s."] =
    "謝謝你編輯了 %s.";
 $locale["Thanks for adding this translation!"] =
@@ -1564,8 +1532,6 @@ $locale["You must be an administrator to %s."] =
    "你必須是一個管理者才能 %s.";
 $locale["You must be an administrator to use this plugin."] =
    "你必須是管理者才能使用此 plugin.";
-$locale["You must log in to %s."] =
-   "你必須登入才能 %s.";
 $locale["You must sign in to %s."] =
    "你必須簽入才能 %s.";
 $locale["You must specify a directory to dump to"] =

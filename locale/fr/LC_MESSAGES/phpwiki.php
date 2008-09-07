@@ -22,8 +22,6 @@ $locale[" Keep up to %d minor edits, but keep them no longer than %d days."] =
    "Garder jusqu'à %d édition mineures, mais pas plus que %d jours.";
 $locale[" Sorry, cannot merge."] =
    " Désolé, impossible de fusionner.";
-$locale[" This is for small text"] =
-   "C'est pour des petits textes";
 $locale[" replace "] =
    " remplace ";
 $locale[" skipped"] =
@@ -86,14 +84,10 @@ $locale["%s is empty"] =
    "%s est vide.";
 $locale["%s is empty."] =
    "%s est vide.";
-$locale["%s is listed at %s"] =
-   "%s pages pointent vers %s :";
 $locale["%s is missing"] =
    "%s est manquant";
 $locale["%s is not locked!"] =
    "%s n'est pas verrouillé!";
-$locale["%s is not writable"] =
-   "%s n'est pas accessible en écriture";
 $locale["%s is not writable."] =
    "%s n'est pas accessible en écriture.";
 $locale["%s is only allowed in locked pages."] =
@@ -124,10 +118,6 @@ $locale["%s pages would link to %s:"] =
    "%s pages pointaient vers %s :";
 $locale["%s parameter missing"] =
    "%s paramètre manquant";
-$locale["%s prediction for you is %.1f stars"] =
-   "la prédiction %s pour vous est de %.1f étoiles.";
-$locale["%s prediction for you is %s stars"] =
-   "La prédiction %s pour vous est de %s étoiles.";
 $locale["%s words"] =
    "%s mots";
 $locale["%s(%d): no such revision"] =
@@ -174,8 +164,6 @@ $locale["(diff)"] =
    "(diff)";
 $locale["(disable individual page permissions, enable inheritance)?"] =
    "(désactive les permissions individuelles par page, activer l'héritage) ?";
-$locale["(hist)"] =
-   "(hist)";
 $locale["(max. recursion level: %d)"] =
    "(niveau maximum de récursivité: %d)";
 $locale["(ugo : rwx)"] =
@@ -260,8 +248,6 @@ $locale["Add Google links to unknown pages behind the '?', and the create action
    "Ajouter un liens vers Google pour les pages inconnues derrière le '?', et l'action de création. voir %s.";
 $locale["Add Message"] =
    "Ajouter un message";
-$locale["Add a Comment"] =
-   "Ajouter un commentaire";
 $locale["Add or change a page-level metadata 'key=>value' pair. Note that you can remove a key by leaving the value-box empty."] =
    "Ajouter ou changer le niveau de page 'key=>value'. Notez que vous pouvez supprimer une clé en lui attribuant une valeur nulle.";
 $locale["Add this ACL"] =
@@ -328,8 +314,6 @@ $locale["Are you sure you want to permanently chown the selected files?"] =
    "Êtes-vous sûr de vouloir changer définitivement le propriétaire des pages sélectionnées ?";
 $locale["Are you sure you want to permanently remove the selected files?"] =
    "Êtes-vous certain de vouloir supprimer définitivement les fichiers sélectionnés ?";
-$locale["Are you sure you want to permanently rename the selected files?"] =
-   "Êtes-vous certain de renommer définitivement les pages sélectionnées ?";
 $locale["Are you sure you want to permanently search & replace text in the selected files?"] =
    "Etes-vous sur de vouloir rechercher et remplacer dans les fichiers sélectionnées ?";
 $locale["Argument '%s' not declared by plugin."] =
@@ -358,8 +342,6 @@ $locale["AuthorHistory"] =
    "HistoriqueAuteur";
 $locale["AuthorHistoryPlugin"] =
    "PluginHistoriqueAuteur";
-$locale["Automatically link headers at the top"] =
-   "Créer une table des matières des titres et sous-titres en haut";
 $locale["Available plugins"] =
    "Plugins disponibles";
 $locale["Avg. Rating"] =
@@ -370,8 +352,8 @@ $locale["BAD phpwiki: URL"] =
    "MAUVAIS phpwiki: URL";
 $locale["BOGO"] =
    "BOGO";
-$locale["Back to the previous page."] =
-   "Retournez à la page précédente.";
+$locale["Back Links"] =
+   "Rétro Liens";
 $locale["BackLinks"] =
    "RétroLiens";
 $locale["BackLinks for %s"] =
@@ -384,8 +366,6 @@ $locale["Bad url in src: remove all of <, >, \""] =
    "Mauvaise url dans la source : retirez tous les <, >, \"";
 $locale["Blog page"] =
    "Page de Blog";
-$locale["Blogs"] =
-   "Blogs";
 $locale["Bogo Users"] =
    "Utilisateurs Bogo";
 $locale["Bold text"] =
@@ -416,14 +396,14 @@ $locale["Can't open zip file '%s' for reading"] =
    "Impossible d'ouvrir le fichier zip '%s' en lecture";
 $locale["Cancel"] =
    "Annuler";
-$locale["Cancel rating"] =
-   "Annuler la notation";
 $locale["Cannot create directory '%s'"] =
    "Impossible de créer le répertoire '%s'";
 $locale["Cannot open AUTH_GROUP_FILE %s"] =
    "Impossible d'ouvrir AUTH_GROUP_FILE %s";
 $locale["Case insensitive?"] =
    "Sensible à la casse ?";
+$locale["Category"] =
+   "Catégorie";
 $locale["CategoryCategory"] =
    "CatégorieCatégorie";
 $locale["CategoryGroup"] =
@@ -504,8 +484,6 @@ $locale["Control characters not allowed"] =
    "Caractères de contrôle, non autorisés";
 $locale["Convert"] =
    "Converti";
-$locale["Convert Tex mathematicals expressions to cached png files."] =
-   "Convertit des expressions mathématiques au format TeX en des fichiers png mis en cache.";
 $locale["Convert text into a png image using GD."] =
    "Converti le texte en une image png utilisant GD.";
 $locale["Converted successfully %d pages"] =
@@ -628,8 +606,6 @@ $locale["Displays a set of photos listed in a text file with optional descriptio
    "Affiche un groupe de photos listées dans un fichier texte avec des descriptions facultatives.";
 $locale["Displays a url in a seperate frame inside our body. Only one frame allowed."] =
    "Affiche une url dans une cadre interne à la page. Un seul cadre autorisé.";
-$locale["Do you really want to delete all your UserPreferences?"] =
-   "Voulez-vous réellement effacer toutes vos PréférencesUtilisateurs ?";
 $locale["Don't cache this page."] =
    "Ne pas mettre en cache cette page.";
 $locale["Double redirect not allowed."] =
@@ -638,8 +614,6 @@ $locale["Download for CVS"] =
    "Télécharger pour CVS";
 $locale["Download for backup"] =
    "Télécharger pour sauvegarder";
-$locale["Download the page contents"] =
-   "Télécharger le contenu de la page";
 $locale["Downloading html zip dumps"] =
    "Téléchargement des sauvegardes html compressées";
 $locale["Downloading zip dumps"] =
@@ -666,8 +640,6 @@ $locale["E-Mail address '%s' is properly formatted"] =
    "L'adresse E-Mail '%s' semble être une adresse correcte.";
 $locale["E-mail"] =
    "E-mail";
-$locale["ERROR uploading '%s': "] =
-   "ERREUR en déposant '%s' : ";
 $locale["Easy navigation buttons for %s"] =
    "Boutons de navigation rapide pour %s";
 $locale["Edit"] =
@@ -712,8 +684,6 @@ $locale["Email verified."] =
    "Email vérifié.";
 $locale["Embed hidden comments in WikiPages."] =
    "Cacher des commentaires dans une PageWiki.";
-$locale["Embedded image"] =
-   "Image embarquée";
 $locale["Empty Preferences or format of UserPreferences cookie not recognised."] =
    "PréférencesUtilisateurs vides, le cookie peut etre mal reconnu.";
 $locale["Empty link to: %s"] =
@@ -732,10 +702,6 @@ $locale["Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferenc
    "La page d'Accueil d'un utilisateur doit être un NomWiki valide. PréférencesUtilisateurs ne peuvent pas être sauvées.";
 $locale["Every"] =
    "Toutes";
-$locale["Example.jpg"] =
-   "Example.jpg";
-$locale["Existing page-level metadata for %s:"] =
-   "Métadonnées existantes pour niveau de pages pour %s :";
 $locale["Expiry parameters"] =
    "Expiration des paramètres";
 $locale["External Links"] =
@@ -840,12 +806,8 @@ $locale["History of all major and minor edits by %s to page %s."] =
    "Historique de toutes les éditions majeures et mineures par %s sur la page %s.";
 $locale["History of all major and minor modifications for any page edited by %s."] =
    "Historique des éditions majeures ou mineures pour n'importe quelle page éditée par %s.";
-$locale["History of all major edits by %s to page %s."] =
-   "Historique de toutes les éditions majeures par %s sur la page %s.";
 $locale["History of changes."] =
    "Historique des changements.";
-$locale["History of major modifications for any page edited by %s."] =
-   "Historique des éditions majeures de toutes les pages éditées par %s.";
 $locale["Hit statistics"] =
    "Statistiques de visites";
 $locale["Hits"] =
@@ -936,8 +898,6 @@ $locale["Invalid password or userid."] =
    "Mot de passe ou identifiant d'utilisateur invalide.";
 $locale["Invalid password."] =
    "Mauvais mot de passe.";
-$locale["Invalid username '%s' for LDAP Auth"] =
-   "Mot de identifiant d'utilisateur '%s' pour LDAP Auth invalide.";
 $locale["Invalid username."] =
    "Mot de identifiant d'utilisateur invalide.";
 $locale["Italic text"] =
@@ -1330,8 +1290,6 @@ $locale["PhotoAlbum"] =
    "AlbumPhotos";
 $locale["PhotoAlbumPlugin"] =
    "PluginAlbumPhotos";
-$locale["Photos"] =
-   "Photos";
 $locale["PhpHighlight"] =
    "ColorationPhp";
 $locale["PhpHighlightPlugin"] =
@@ -1450,12 +1408,8 @@ $locale["Rate"] =
    "Note";
 $locale["Rate It"] =
    "Classez la";
-$locale["Rate the topic of this page"] =
-   "Notez les sujets de cette page";
 $locale["RateIt"] =
    "ClassezLa";
-$locale["Rated by %d users | Average rating %.1f stars"] =
-   "Noté par %d utilisateurs | Moyenne des notes %.1f étoiles.";
 $locale["Rating system. Store user ratings per page"] =
    "Système de vote. Stocke les votes d'utilisateur par page.";
 $locale["Raw HTML"] =
@@ -1512,8 +1466,6 @@ $locale["Remove"] =
    "Supprimer";
 $locale["Remove Page"] =
    "Supprimer la page";
-$locale["Remove Preferences"] =
-   "Effacer les préférences";
 $locale["Remove selected pages"] =
    "Supprimer les pages sélectionnées";
 $locale["Remove this page"] =
@@ -1534,8 +1486,6 @@ $locale["Renamed page '%s' to '%s'."] =
    "Page '%s' renommées en '%s' avec succès.";
 $locale["Replace with"] =
    "Remplacer par";
-$locale["Replace: "] =
-   "Remplacer: ";
 $locale["Replaced '%s' with '%s' in page '%s'."] =
    "%s a bien été modifié par %s dans la page %s.";
 $locale["Reply"] =
@@ -1592,8 +1542,6 @@ $locale["See %s tips for editing."] =
    "Voir les conseils pour éditer les pages dans %s.";
 $locale["See: %s"] =
    "Voir : %s";
-$locale["Select"] =
-   "Sélectionner";
 $locale["Select pages"] =
    "Sélectionner les pages";
 $locale["Select the pages to change the owner:"] =
@@ -1684,8 +1632,6 @@ $locale["Sorry! You must wait at least 20 minutes until you can vote again!"] =
    "Désolé, vous devez attendre au moins 20 minutes avant de pouvoir revoter !";
 $locale["Sorry, no dynamic DB Session support."] =
    "Désolé, Session dynamique non supportées.";
-$locale["Sorry, this page is not in the database."] =
-   "Je suis désolé. Cet page n'est pas dans la base de données.";
 $locale["Sorry, this version of PHP cannot create PNG image files."] =
    "Désolé, cette version de PHP ne peut pas créer des fichiers d'image PNG.";
 $locale["Sorry. Access Restrictions not yet implemented"] =
@@ -1746,10 +1692,6 @@ $locale["SystemInfoPlugin"] =
    "PluginInfosSystème";
 $locale["TODO: Google can only translate from english and french. Find a translation service for %s to language %s"] =
    "A FAIRE: Google peut uniquement traduire l'anglais et le français. Trouver un service pour traduire %s en %s";
-$locale["Table Of Contents"] =
-   "Table des matières";
-$locale["TeX directory not writable."] =
-   "Répertoire TeX non accessible en écriture.";
 $locale["TeX2png"] =
    "TeX2png";
 $locale["Template"] =
@@ -1808,8 +1750,6 @@ $locale["The result of this poll so far:"] =
    "Le résultat du sondage :";
 $locale["The session.save_path directory"] =
    "Le répertoire 'session.save_path'";
-$locale["The upload logfile is not writable."] =
-   "Erreur : le journal des dépôts n'est pas disponible en écriture.";
 $locale["The wordwrap of the preview doesn't take nested markup or list indentation into consideration!"] =
    "Le retour chariot de la prévisualisation ne prend pas en compte les marques des listes indentées !";
 $locale["Theme"] =
@@ -1858,6 +1798,8 @@ $locale["Too many external links."] =
    "Trop de liens exterieurs.";
 $locale["Top & bottom toolbars"] =
    "Barres d'outils en haut et en bas";
+$locale["Topic"] =
+   "Sujet";
 $locale["Total %d plugins: "] =
    "%d plugins au total : ";
 $locale["Total of %d languages: "] =
@@ -2124,8 +2066,6 @@ $locale["You must be an administrator to use this plugin."] =
    "Vous devez être un administrateur pour utiliser ce plugin.";
 $locale["You must be logged in to view ratings."] =
    "Vous devez vous connecter pour voir les scores.";
-$locale["You must log in to %s."] =
-   "Vous devez vous connecter pour %s.";
 $locale["You must sign in to %s."] =
    "Vous devez vous inscrire pour %s.";
 $locale["You must specify a directory to dump to"] =
@@ -2134,8 +2074,6 @@ $locale["You stored an empty password in your '%s' page."] =
    "Vous n'avez pas saisi de mot de passe pour la page %s.";
 $locale["Your E-Mail:"] =
    "Votre E-Mail :";
-$locale["Your UserPreferences have been successfully deleted."] =
-   "Vos PréférencesUtilisateurs ont été effacées avec succès.";
 $locale["Your WikiDB DB backend '%s' cannot be used for DbSession."] =
    "Votre choix '%s' de WikiDB DB ne peut pas être utilisé pour DbSession.";
 $locale["Your access permissions are only for a BogoUser."] =
@@ -2152,8 +2090,6 @@ $locale["Your home page has not been created yet so your preferences cannot not 
    "Cette page a été verrouillée par l'administrateur et vos changements n'ont pas pu être enregistrée.";
 $locale["Your home page is locked so your preferences cannot not be saved."] =
    "Cette page a été verrouillée par l'administrateur et vos changements n'ont pas pu être enregistrée.";
-$locale["Your rating "] =
-   "Votre note ";
 $locale["Your rating was %.1f"] =
    "Votre note est %.1f";
 $locale["Your signature"] =
@@ -2194,8 +2130,6 @@ $locale["cached pagedata:"] =
    "page bufferisée :";
 $locale["cached versiondata:"] =
    "version bufferisée :";
-$locale["case-exact"] =
-   "respect de la casse";
 $locale["check for extra page.cached_html column"] =
    "recherche une extra colonne page.cached_html";
 $locale["check for mysql 4.1.x/5.0.0 binary search on windows problem"] =
@@ -2292,12 +2226,8 @@ $locale["minutes"] =
    "minutes";
 $locale["missing required version argument"] =
    "argument de version requis manquant";
-$locale["mode"] =
-   "mode";
 $locale["n/a"] =
    "n/c";
-$locale["name"] =
-   "nom";
 $locale["newer than the existing page."] =
    "plus récent que la page existante.";
 $locale["no cache used"] =
@@ -2322,8 +2252,6 @@ $locale["optional label | http://www.example.com"] =
    "en option | http://www.example.com";
 $locale["page permission inherited from %s"] =
    "permissions héritées de %s";
-$locale["period"] =
-   "period";
 $locale["plain file %s"] =
    "fichier simple %s";
 $locale["predecessor to the previous major change"] =
@@ -2336,8 +2264,6 @@ $locale["recursive inclusion of page %s ignored"] =
    "insertion récursive de la page %s ignoré";
 $locale["recursive inclusion of url %s"] =
    "insertion récursive de l'URL %s";
-$locale["regex"] =
-   "expression régulière";
 $locale["remove this page"] =
    "supprimer cette page";
 $locale["renamed from %s"] =
