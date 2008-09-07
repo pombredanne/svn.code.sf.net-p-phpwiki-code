@@ -5,9 +5,9 @@ rcs_id('$Id$');
  * This file defines an appearance ("theme") of PhpWiki similar to the Portland Pattern Repository.
  */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 
-class Theme_Portland extends Theme {
+class WikiTheme_Portland extends WikiTheme {
 
     function linkUnknownWikiWord($wikiword, $linktext = '') {
         global $request;
@@ -104,7 +104,7 @@ class Theme_Portland extends Theme {
     }
 }
 
-$WikiTheme = new Theme_Portland('Portland');
+$WikiTheme = new WikiTheme_Portland('Portland');
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

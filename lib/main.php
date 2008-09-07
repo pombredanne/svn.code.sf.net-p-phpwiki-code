@@ -211,7 +211,7 @@ class WikiRequest extends Request {
 
 	// Do not execute global init code anymore
 
-	// Theme callbacks
+	// WikiTheme callbacks
 	if ($when == 'login') {
 	    $WikiTheme->CbUserLogin($this, $this->_user->_userid);
 	    if (!$this->_user->hasHomePage()) { // NewUser

@@ -11,9 +11,9 @@ rcs_id('$Id$');
  * no logo
  */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 
-class Theme_shamino_com extends Theme {
+class WikiTheme_shamino_com extends WikiTheme {
 
     function makeActionButton ($action, $label = false, $page_or_rev = false) {
         extract($this->_get_name_and_rev($page_or_rev));
@@ -117,7 +117,7 @@ class Theme_shamino_com extends Theme {
     }
 }
 
-$WikiTheme = new Theme_shamino_com('shamino_com');
+$WikiTheme = new WikiTheme_shamino_com('shamino_com');
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

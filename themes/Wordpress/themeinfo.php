@@ -7,9 +7,9 @@ rcs_id('$Id$');
  * @author: Mike Pickering
  */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 
-class Theme_Wordpress extends Theme {
+class WikiTheme_Wordpress extends WikiTheme {
 
     function linkUnknownWikiWord($wikiword, $linktext = '') {
         global $request;
@@ -104,7 +104,7 @@ class Theme_Wordpress extends Theme {
     }
 }
 
-$WikiTheme = new Theme_Wordpress('Wordpress');
+$WikiTheme = new WikiTheme_Wordpress('Wordpress');
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

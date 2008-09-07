@@ -69,7 +69,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
         // If the ratings table does not exist, or on dba it will break otherwise. 
-        // Check if Theme isa 'wikilens'
+        // Check if WikiTheme isa 'wikilens'
 	if ($info == 'pagename' and isa($GLOBALS['WikiTheme'], 'wikilens'))
 	    $info .= ",top3recs";
         if ($info)

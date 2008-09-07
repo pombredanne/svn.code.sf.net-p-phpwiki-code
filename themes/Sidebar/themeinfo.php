@@ -8,13 +8,13 @@ rcs_id('$Id$');
  * per month/year change.
  */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 require_once('lib/WikiPlugin.php');
 
-class Theme_Sidebar extends Theme {
+class WikiTheme_Sidebar extends WikiTheme {
 
-    function Theme_Sidebar ($theme_name='Sidebar') {
-        $this->Theme($theme_name);
+    function WikiTheme_Sidebar ($theme_name='Sidebar') {
+        $this->WikiTheme($theme_name);
         $this->calendarInit(true);
     }
 
@@ -95,7 +95,7 @@ class Theme_Sidebar extends Theme {
     }
 }
 
-$WikiTheme = new Theme_Sidebar('Sidebar');
+$WikiTheme = new WikiTheme_Sidebar('Sidebar');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

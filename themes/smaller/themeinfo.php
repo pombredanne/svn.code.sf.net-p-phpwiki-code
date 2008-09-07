@@ -7,9 +7,9 @@ rcs_id('$Id$');
  * navbar also shorter labels and without buttons, just links
  */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 
-class Theme_smaller extends Theme {
+class WikiTheme_smaller extends WikiTheme {
 
     function makeActionButton ($action, $label = false, $page_or_rev = false) {
         extract($this->_get_name_and_rev($page_or_rev));
@@ -36,7 +36,7 @@ class Theme_smaller extends Theme {
     
 }
 
-$WikiTheme = new Theme_smaller('smaller');
+$WikiTheme = new WikiTheme_smaller('smaller');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

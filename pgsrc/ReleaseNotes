@@ -1,4 +1,4 @@
-Date: Mon, 21 Aug 2008 14:15:24 +0000
+Date: Mon, 7 Sep 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -57,6 +57,7 @@ changes:
 * ~RichTable plugin: enrich syntax for attributes (vargenau)
 * more icons for toolbar (vargenau)
 * UserPreferences: specific message when only one preference is updated (vargenau)
+* renamed class Theme to WikiTheme to avoid Gforge name clash (vargenau)
 
 new:
 * ~PageList supports listtype=ul,ol,dl. dl used by FullTextSearch

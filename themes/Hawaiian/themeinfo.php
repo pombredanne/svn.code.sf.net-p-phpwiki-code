@@ -6,13 +6,13 @@ rcs_id('$Id$');
  * WikiWiki Hawaiian theme for PhpWiki.
  */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 
-class Theme_Hawaiian extends Theme {
+class WikiTheme_Hawaiian extends WikiTheme {
     function getCSS() {
         // FIXME: this is a hack which will not be needed once
         //        we have dynamic CSS.
-        $css = Theme::getCSS();
+        $css = WikiTheme::getCSS();
         $css->pushcontent(HTML::style(array('type' => 'text/css'),
                              new RawXml(sprintf("<!--\nbody {background-image: url(%s);}\n-->",
                                                 $this->getImageURL('uhhbackground.jpg')))));
@@ -84,7 +84,7 @@ class Theme_Hawaiian extends Theme {
     }
 }
 
-$WikiTheme = new Theme_Hawaiian('Hawaiian');
+$WikiTheme = new WikiTheme_Hawaiian('Hawaiian');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")

@@ -36,13 +36,13 @@ liveSearchReq.open("GET", liveSearchURI + "?format=livesearch&paging=none&limit=
  * Happy blogging.
  */
 
-require_once('lib/Theme.php');
+require_once('lib/WikiTheme.php');
 //require_once('themes/Sidebar/themeinfo.php');
 
-class Theme_blog extends Theme {
+class WikiTheme_blog extends WikiTheme {
 
-    function Theme_blog ($theme_name='blog') {
-        $this->Theme($theme_name);
+    function WikiTheme_blog ($theme_name='blog') {
+        $this->WikiTheme($theme_name);
         $this->calendarInit(true);
     }
 
@@ -155,7 +155,7 @@ class Theme_blog extends Theme {
     }
 }
 
-$WikiTheme = new Theme_blog('blog');
+$WikiTheme = new WikiTheme_blog('blog');
 define("PAGETRAIL_ARROW", " » ");
 
 
