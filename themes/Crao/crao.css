@@ -165,7 +165,7 @@ p a.wiki-rc-action
 	background-color: transparent;
 	font: bolder 67px/50px  Verdana, Arial, Helvetica, sans-serif;
         letter-spacing: -0.1em;
-        font-variant: condensed;
+        /* font-variant: condensed; */
 }
 #logo img {
 	border: 0px; 
@@ -258,7 +258,7 @@ div.wikitext {
 	text-align: left;
 }
 blockquote.mail-style-quote {
-	border-left: #ff993;/* MODIFY-color */
+	border-left: #FF9933;/* MODIFY-color */
 	margin: 0em;
 	margin-bottom: 1em;
 	border: 1px solid #FF9933;/* MODIFY-color */
