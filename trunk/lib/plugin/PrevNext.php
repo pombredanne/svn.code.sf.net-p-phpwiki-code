@@ -45,7 +45,6 @@ extends WikiPlugin
         return array(
                      'prev'    => '',
                      'next'    => '',
-                     'up'      => '',
                      'contents' => '',
                      'index'   => '',
                      'up'      => '',
@@ -127,16 +126,6 @@ extends WikiPlugin
         return $links;
     }
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.3  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.2  2003/01/18 22:01:43  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
 
 // Local Variables:
 // mode: php
