@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-07 17:03+0200\n"
+"POT-Creation-Date: 2008-09-09 19:32+0200\n"
 "PO-Revision-Date: 2004-04-21 10:08+0800\n"
 "Last-Translator: DruryL <druryl@user.sourceforge.net>\n"
 "Language-Team: DruryL <druryl@users.sourceforge.net>\n"
@@ -1088,7 +1088,7 @@ msgid ""
 msgstr ""
 
 #: ../lib/WikiTheme.php:1234 ../themes/Hawaiian/themeinfo.php:28
-#: ../themes/MacOSX/themeinfo.php:102 ../themes/MonoBook/themeinfo.php:126
+#: ../themes/MacOSX/themeinfo.php:102 ../themes/MonoBook/themeinfo.php:128
 #: ../themes/Portland/themeinfo.php:58 ../themes/Sidebar/themeinfo.php:40
 #: ../themes/SpaceWiki/themeinfo.php:42 ../themes/Wordpress/themeinfo.php:60
 #: ../themes/shamino_com/themeinfo.php:54 ../themes/wikilens/themeinfo.php:26
@@ -1096,13 +1096,13 @@ msgid "Printer"
 msgstr "印表機"
 
 #: ../lib/WikiTheme.php:1235 ../themes/MacOSX/themeinfo.php:103
-#: ../themes/MonoBook/themeinfo.php:127 ../themes/shamino_com/themeinfo.php:55
+#: ../themes/MonoBook/themeinfo.php:129 ../themes/shamino_com/themeinfo.php:55
 #: ../themes/wikilens/themeinfo.php:27
 msgid "Top & bottom toolbars"
 msgstr "Top & bottom 工具列"
 
 #: ../lib/WikiTheme.php:1236 ../themes/Hawaiian/themeinfo.php:29
-#: ../themes/MonoBook/themeinfo.php:128 ../themes/Portland/themeinfo.php:59
+#: ../themes/MonoBook/themeinfo.php:130 ../themes/Portland/themeinfo.php:59
 #: ../themes/Sidebar/themeinfo.php:41 ../themes/SpaceWiki/themeinfo.php:43
 #: ../themes/Wordpress/themeinfo.php:61 ../themes/shamino_com/themeinfo.php:56
 #: ../themes/wikilens/themeinfo.php:28
@@ -2561,7 +2561,8 @@ msgid "Unrecognised parameter 'mode=%s'"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:302
-#: ../lib/plugin/SemanticSearch.php:408 ../lib/plugin/_BackendInfo.php:124
+#: ../lib/plugin/SemanticSearch.php:408 ../lib/plugin/WatchPage.php:57
+#: ../lib/plugin/_BackendInfo.php:124
 msgid "<empty>"
 msgstr "<空白>"
 
@@ -3237,6 +3238,7 @@ msgstr "Wiki 名稱"
 #: ../themes/Crao/templates/navbar.tmpl:42
 #: ../themes/Crao/templates/navbar.tmpl:44
 #: ../themes/Crao/templates/navbar.tmpl:48
+#: ../themes/MonoBook/templates/navbar.tmpl:26
 #: ../themes/default/templates/search.tmpl:6
 #: ../themes/default/templates/search.tmpl:15
 #: ../themes/default/templates/search.tmpl:27
@@ -3652,7 +3654,7 @@ msgid "PageGroup for %s"
 msgstr "頁面群組 - %s"
 
 #: ../lib/plugin/PageGroup.php:60 ../lib/plugin/PageGroup.php:110
-#: ../lib/plugin/PrevNext.php:69
+#: ../lib/plugin/PrevNext.php:68
 msgid "Contents"
 msgstr "內容"
 
@@ -3661,19 +3663,19 @@ msgstr "內容"
 msgid "<%s: no such section>"
 msgstr "<%s: 沒有此部份>"
 
-#: ../lib/plugin/PageGroup.php:108 ../lib/plugin/PrevNext.php:66
+#: ../lib/plugin/PageGroup.php:108 ../lib/plugin/PrevNext.php:65
 msgid "Next"
 msgstr "下一個"
 
-#: ../lib/plugin/PageGroup.php:109 ../lib/plugin/PrevNext.php:65
+#: ../lib/plugin/PageGroup.php:109 ../lib/plugin/PrevNext.php:64
 msgid "Previous"
 msgstr "上一個"
 
-#: ../lib/plugin/PageGroup.php:111 ../lib/plugin/PrevNext.php:64
+#: ../lib/plugin/PageGroup.php:111 ../lib/plugin/PrevNext.php:63
 msgid "First"
 msgstr "開頭"
 
-#: ../lib/plugin/PageGroup.php:112 ../lib/plugin/PrevNext.php:67
+#: ../lib/plugin/PageGroup.php:112 ../lib/plugin/PrevNext.php:66
 msgid "Last"
 msgstr "最後"
 
@@ -4059,11 +4061,11 @@ msgstr "PrevNext"
 msgid "Easy navigation buttons for %s"
 msgstr "簡單的巡覽按鈕 - %s"
 
-#: ../lib/plugin/PrevNext.php:68
+#: ../lib/plugin/PrevNext.php:67
 msgid "Up"
 msgstr "上"
 
-#: ../lib/plugin/PrevNext.php:70
+#: ../lib/plugin/PrevNext.php:69
 msgid "Index"
 msgstr "索引"
 
@@ -7307,6 +7309,10 @@ msgstr "意見在 %s 被 %s 變更"
 msgid "Comments on %s by %s."
 msgstr "%s 的意見:"
 
+#: ../themes/MonoBook/templates/actionbar.tmpl:12
+msgid "Views"
+msgstr ""
+
 #: ../themes/MonoBook/templates/actionbar.tmpl:14
 #: ../themes/gforge/templates/actionbar.tmpl:18
 #, fuzzy
@@ -7337,6 +7343,10 @@ msgstr "PageHistory"
 #, fuzzy
 msgid "Watch"
 msgstr "寬度"
+
+#: ../themes/MonoBook/templates/actionbar.tmpl:48
+msgid "Special Actions"
+msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:64
 #: ../themes/blog/templates/actionbar.tmpl:15
@@ -7482,6 +7492,12 @@ msgstr "與上個修訂做比對"
 msgid "Diff previous Author"
 msgstr "與上個作者做比對"
 
+#: ../themes/MonoBook/templates/navbar.tmpl:11
+#: ../themes/Sidebar/templates/body.tmpl:15
+#: ../themes/blog/templates/navbar.tmpl:7
+msgid "Navigation"
+msgstr ""
+
 #: ../themes/MonoBook/templates/navbar.tmpl:14
 #, fuzzy
 msgid "Home page"
@@ -7538,6 +7554,10 @@ msgstr "搜尋"
 msgid "Quick Search"
 msgstr "完整搜尋"
 
+#: ../themes/MonoBook/templates/navbar.tmpl:47
+msgid "Toolbox"
+msgstr ""
+
 #: ../themes/MonoBook/templates/navbar.tmpl:51
 msgid "What links here"
 msgstr ""
@@ -7580,6 +7600,10 @@ msgstr "AllPages"
 msgid "Logout"
 msgstr ""
 
+#: ../themes/MonoBook/templates/tags.tmpl:6
+msgid "Favorite Categories"
+msgstr ""
+
 #: ../themes/Portland/templates/actionbar.tmpl:6
 msgid "EditText"
 msgstr "EditText"
@@ -7616,11 +7640,6 @@ msgstr "編輯區域大小"
 #: ../themes/default/templates/viewsource.tmpl:6
 msgid "This page has been locked by the administrator and cannot be edited."
 msgstr "此頁面已經被管理者鎖定,並且無法編輯."
-
-#: ../themes/Sidebar/templates/body.tmpl:15
-#: ../themes/blog/templates/navbar.tmpl:7
-msgid "Navigation"
-msgstr ""
 
 #: ../themes/Sidebar/templates/navbar.tmpl:14
 msgid "Full Search"

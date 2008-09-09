@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-07 17:03+0200\n"
+"POT-Creation-Date: 2008-09-09 19:32+0200\n"
 "PO-Revision-Date: 2002-12-14 17:51-0500\n"
 "Last-Translator: Reini Urban <rurban@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1057,7 +1057,7 @@ msgid ""
 msgstr ""
 
 #: ../lib/WikiTheme.php:1234 ../themes/Hawaiian/themeinfo.php:28
-#: ../themes/MacOSX/themeinfo.php:102 ../themes/MonoBook/themeinfo.php:126
+#: ../themes/MacOSX/themeinfo.php:102 ../themes/MonoBook/themeinfo.php:128
 #: ../themes/Portland/themeinfo.php:58 ../themes/Sidebar/themeinfo.php:40
 #: ../themes/SpaceWiki/themeinfo.php:42 ../themes/Wordpress/themeinfo.php:60
 #: ../themes/shamino_com/themeinfo.php:54 ../themes/wikilens/themeinfo.php:26
@@ -1065,13 +1065,13 @@ msgid "Printer"
 msgstr ""
 
 #: ../lib/WikiTheme.php:1235 ../themes/MacOSX/themeinfo.php:103
-#: ../themes/MonoBook/themeinfo.php:127 ../themes/shamino_com/themeinfo.php:55
+#: ../themes/MonoBook/themeinfo.php:129 ../themes/shamino_com/themeinfo.php:55
 #: ../themes/wikilens/themeinfo.php:27
 msgid "Top & bottom toolbars"
 msgstr ""
 
 #: ../lib/WikiTheme.php:1236 ../themes/Hawaiian/themeinfo.php:29
-#: ../themes/MonoBook/themeinfo.php:128 ../themes/Portland/themeinfo.php:59
+#: ../themes/MonoBook/themeinfo.php:130 ../themes/Portland/themeinfo.php:59
 #: ../themes/Sidebar/themeinfo.php:41 ../themes/SpaceWiki/themeinfo.php:43
 #: ../themes/Wordpress/themeinfo.php:61 ../themes/shamino_com/themeinfo.php:56
 #: ../themes/wikilens/themeinfo.php:28
@@ -2465,7 +2465,8 @@ msgid "Unrecognised parameter 'mode=%s'"
 msgstr ""
 
 #: ../lib/plugin/AnalyseAccessLogSql.php:302
-#: ../lib/plugin/SemanticSearch.php:408 ../lib/plugin/_BackendInfo.php:124
+#: ../lib/plugin/SemanticSearch.php:408 ../lib/plugin/WatchPage.php:57
+#: ../lib/plugin/_BackendInfo.php:124
 msgid "<empty>"
 msgstr ""
 
@@ -3120,6 +3121,7 @@ msgstr ""
 #: ../themes/Crao/templates/navbar.tmpl:42
 #: ../themes/Crao/templates/navbar.tmpl:44
 #: ../themes/Crao/templates/navbar.tmpl:48
+#: ../themes/MonoBook/templates/navbar.tmpl:26
 #: ../themes/default/templates/search.tmpl:6
 #: ../themes/default/templates/search.tmpl:15
 #: ../themes/default/templates/search.tmpl:27
@@ -3513,7 +3515,7 @@ msgid "PageGroup for %s"
 msgstr ""
 
 #: ../lib/plugin/PageGroup.php:60 ../lib/plugin/PageGroup.php:110
-#: ../lib/plugin/PrevNext.php:69
+#: ../lib/plugin/PrevNext.php:68
 msgid "Contents"
 msgstr ""
 
@@ -3522,19 +3524,19 @@ msgstr ""
 msgid "<%s: no such section>"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:108 ../lib/plugin/PrevNext.php:66
+#: ../lib/plugin/PageGroup.php:108 ../lib/plugin/PrevNext.php:65
 msgid "Next"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:109 ../lib/plugin/PrevNext.php:65
+#: ../lib/plugin/PageGroup.php:109 ../lib/plugin/PrevNext.php:64
 msgid "Previous"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:111 ../lib/plugin/PrevNext.php:64
+#: ../lib/plugin/PageGroup.php:111 ../lib/plugin/PrevNext.php:63
 msgid "First"
 msgstr ""
 
-#: ../lib/plugin/PageGroup.php:112 ../lib/plugin/PrevNext.php:67
+#: ../lib/plugin/PageGroup.php:112 ../lib/plugin/PrevNext.php:66
 msgid "Last"
 msgstr ""
 
@@ -3909,11 +3911,11 @@ msgstr ""
 msgid "Easy navigation buttons for %s"
 msgstr ""
 
-#: ../lib/plugin/PrevNext.php:68
+#: ../lib/plugin/PrevNext.php:67
 msgid "Up"
 msgstr ""
 
-#: ../lib/plugin/PrevNext.php:70
+#: ../lib/plugin/PrevNext.php:69
 msgid "Index"
 msgstr ""
 
@@ -7026,6 +7028,10 @@ msgstr ""
 msgid "Comments on %s by %s."
 msgstr ""
 
+#: ../themes/MonoBook/templates/actionbar.tmpl:12
+msgid "Views"
+msgstr ""
+
 #: ../themes/MonoBook/templates/actionbar.tmpl:14
 #: ../themes/gforge/templates/actionbar.tmpl:18
 msgid "/Discussion"
@@ -7051,6 +7057,10 @@ msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:42
 msgid "Watch"
+msgstr ""
+
+#: ../themes/MonoBook/templates/actionbar.tmpl:48
+msgid "Special Actions"
 msgstr ""
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:64
@@ -7192,6 +7202,12 @@ msgstr ""
 msgid "Diff previous Author"
 msgstr ""
 
+#: ../themes/MonoBook/templates/navbar.tmpl:11
+#: ../themes/Sidebar/templates/body.tmpl:15
+#: ../themes/blog/templates/navbar.tmpl:7
+msgid "Navigation"
+msgstr ""
+
 #: ../themes/MonoBook/templates/navbar.tmpl:14
 msgid "Home page"
 msgstr ""
@@ -7238,6 +7254,10 @@ msgstr ""
 msgid "Quick Search"
 msgstr ""
 
+#: ../themes/MonoBook/templates/navbar.tmpl:47
+msgid "Toolbox"
+msgstr ""
+
 #: ../themes/MonoBook/templates/navbar.tmpl:51
 msgid "What links here"
 msgstr ""
@@ -7275,6 +7295,10 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
+#: ../themes/MonoBook/templates/tags.tmpl:6
+msgid "Favorite Categories"
+msgstr ""
+
 #: ../themes/Portland/templates/actionbar.tmpl:6
 msgid "EditText"
 msgstr ""
@@ -7310,11 +7334,6 @@ msgstr ""
 #: ../themes/blog/templates/viewsource.tmpl:7
 #: ../themes/default/templates/viewsource.tmpl:6
 msgid "This page has been locked by the administrator and cannot be edited."
-msgstr ""
-
-#: ../themes/Sidebar/templates/body.tmpl:15
-#: ../themes/blog/templates/navbar.tmpl:7
-msgid "Navigation"
 msgstr ""
 
 #: ../themes/Sidebar/templates/navbar.tmpl:14
