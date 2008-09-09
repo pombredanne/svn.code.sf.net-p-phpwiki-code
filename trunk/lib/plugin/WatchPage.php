@@ -52,9 +52,9 @@ extends WikiPlugin
 	return in_array($page, $this->_explodePageList);
     }
 
-    // This could be expanded as in mediawiki to a list of each page with a remove button.
+    // This could be expanded as in Mediawiki to a list of each page with a remove button.
     function showWatchList($pagelist) {
-        return HTML::strong(HTML::tt(empty($pagelist) ? "<empty>" : $pagelist));
+        return HTML::strong(HTML::tt(empty($pagelist) ? _("<empty>") : $pagelist));
     }
 
     function addpagelist($page, $pagelist) {
