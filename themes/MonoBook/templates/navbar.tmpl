@@ -8,7 +8,7 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
 <!-- The left navigation/search bar -->
 <!-- Here you should add favorite Links and Categories -->
 <div class="portlet" id="p-navigation">
-  <h5>Navigation</h5>
+  <h5><?= _("Navigation") ?></h5>
   <div class="pBody">
     <ul>
       <li id="n-mainpage"><?= WikiLink(HOME_PAGE, "",_("Home page")) ?></li>
@@ -23,7 +23,7 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
 </div>
 
 <div class="portlet" id="p-search">
-  <h5>Search</h5>
+  <h5><?= _("Search") ?></h5>
   <div class="pBody">
 <?= Template("search",
              array('SEARCH_BEFORE' => WikiLink(_("FindPage"), "",_("Find page")),
@@ -44,7 +44,7 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
 </div>
 
 <div class="portlet" id="p-tb">
-  <h5>Toolbox</h5>
+  <h5><?= _("Toolbox") ?></h5>
   <div class="pBody">
     <ul>
     <?php if ($revision) { ?>
