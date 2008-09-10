@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-09 19:32+0200\n"
+"POT-Creation-Date: 2008-09-10 18:03+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -865,7 +865,7 @@ msgstr "Méthode non définie %s pour le groupe %s"
 #: ../lib/WikiGroup.php:358
 #, php-format
 msgid "Unknown special group '%s'"
-msgstr "Le groupe speciale %s non définie"
+msgstr "Groupe spécial %s inconnu"
 
 #: ../lib/WikiGroup.php:517
 #, php-format
@@ -1147,7 +1147,7 @@ msgstr "Liens correspondants"
 
 #: ../lib/WikiTheme.php:1754
 msgid "External Links"
-msgstr "Liens exterieurs"
+msgstr "Liens externes"
 
 #: ../lib/WikiUser.php:195 ../lib/WikiUser.php:275
 #: ../lib/WikiUser/AdoDb.php:31 ../lib/WikiUser/AdoDb.php:188
@@ -1157,7 +1157,7 @@ msgstr "Liens exterieurs"
 #: ../lib/WikiUser/PdoDb.php:105 ../lib/WikiUser/PearDb.php:27
 #: ../lib/WikiUser/PearDb.php:117 ../lib/WikiUserNew.php:610
 msgid "Invalid username."
-msgstr "Mot de identifiant d'utilisateur invalide."
+msgstr "Identifiant d'utilisateur invalide."
 
 #: ../lib/WikiUser.php:199 ../lib/WikiUserNew.php:651
 msgid "Invalid password or userid."
@@ -2941,9 +2941,8 @@ msgid ""
 msgstr ""
 
 #: ../lib/plugin/FileInfo.php:94
-#, fuzzy
 msgid "page not locked"
-msgstr "La page est maintenant verrouillée."
+msgstr "page déverrouillée"
 
 #: ../lib/plugin/FoafViewer.php:52
 msgid "FoafViewer"
@@ -4237,7 +4236,7 @@ msgstr "éditions mineures"
 #: ../lib/plugin/RecentChanges.php:267 ../lib/plugin/RecentChanges.php:369
 #: ../lib/plugin/RecentComments.php:31
 msgid "Recent Comments"
-msgstr "Commentaires récents"
+msgstr "Derniers commentaires"
 
 #: ../lib/plugin/RecentChanges.php:268
 msgid "comments"
@@ -7373,7 +7372,7 @@ msgstr "Suivre"
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:48
 msgid "Special Actions"
-msgstr "Actions speciales"
+msgstr "Actions spéciales"
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:64
 #: ../themes/blog/templates/actionbar.tmpl:15
@@ -7391,7 +7390,7 @@ msgstr "Historique de l'auteur"
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:68
 msgid "Page dump"
-msgstr "Cliche de la page"
+msgstr "Cliché de la page"
 
 #: ../themes/MonoBook/templates/actionbar.tmpl:71
 msgid "Purge HTML cache"
@@ -7541,7 +7540,7 @@ msgstr "Commentaires récents"
 # lib/stdlib.php:384 lib/stdlib.php:445
 #: ../themes/MonoBook/templates/navbar.tmpl:17
 msgid "Recent new pages"
-msgstr "Pages recemment creees"
+msgstr "Dernières pages créées"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:18
 msgid "Like pages"
@@ -7575,7 +7574,7 @@ msgstr "Recherche rapide"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:47
 msgid "Toolbox"
-msgstr "Boite a outils"
+msgstr "Boîte à outils"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:51
 msgid "What links here"
@@ -7592,7 +7591,7 @@ msgstr "Administration"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:60
 msgid "Upload file"
-msgstr "Déposer le fichier"
+msgstr "Déposer un fichier"
 
 #: ../themes/MonoBook/templates/navbar.tmpl:60
 msgid "Upload images or media files"
@@ -7614,11 +7613,11 @@ msgstr "Toutes les pages"
 
 #: ../themes/MonoBook/templates/signin.tmpl:10
 msgid "Logout"
-msgstr "Deconnexion"
+msgstr "Déconnexion"
 
 #: ../themes/MonoBook/templates/tags.tmpl:6
 msgid "Favorite Categories"
-msgstr "Categories populaires"
+msgstr "Catégories populaires"
 
 #: ../themes/Portland/templates/actionbar.tmpl:6
 msgid "EditText"
@@ -8327,7 +8326,7 @@ msgstr "Purger"
 
 #: ../themes/gforge/templates/navbar.tmpl:11
 msgid "SpecialPages"
-msgstr "Pages speciales"
+msgstr "Pages spéciales"
 
 #: ../themes/gforge/templates/navbar.tmpl:17
 msgid "Like Pages"

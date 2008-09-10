@@ -749,7 +749,7 @@ $locale["Every"] =
 $locale["Expiry parameters"] =
    "Expiration des paramètres";
 $locale["External Links"] =
-   "Liens exterieurs";
+   "Liens externes";
 $locale["External link (remember http:// prefix)"] =
    "Lien externe (http:// prefix)";
 $locale["ExternalSearch"] =
@@ -765,7 +765,7 @@ $locale["FORBIDDEN"] =
 $locale["Fatal PhpWiki Error"] =
    "Erreur fatale de PhpWiki";
 $locale["Favorite Categories"] =
-   "Categories populaires";
+   "Catégories populaires";
 $locale["File successfully uploaded."] =
    "Fichier transféré avec succès.";
 $locale["Files with extension %s are not allowed."] =
@@ -955,7 +955,7 @@ $locale["Invalid password or userid."] =
 $locale["Invalid password."] =
    "Mauvais mot de passe.";
 $locale["Invalid username."] =
-   "Mot de identifiant d'utilisateur invalide.";
+   "Identifiant d'utilisateur invalide.";
 $locale["Italic text"] =
    "Texte en italique";
 $locale["Italic text [alt-i]"] =
@@ -1075,7 +1075,7 @@ $locale["Locking pages"] =
 $locale["Login"] =
    "S'identifier";
 $locale["Logout"] =
-   "Deconnexion";
+   "Déconnexion";
 $locale["MIME file %s"] =
    "fichier MIME %s";
 $locale["MISSING"] =
@@ -1279,7 +1279,7 @@ $locale["Page Type:"] =
 $locale["Page Version:"] =
    "Version de la page :";
 $locale["Page dump"] =
-   "Cliche de la page";
+   "Cliché de la page";
 $locale["Page history"] =
    "Historique de la page";
 $locale["Page names with prefix '%s'"] =
@@ -1511,7 +1511,7 @@ $locale["Raw HTML is disabled in this wiki."] =
 $locale["RawHtmlPlugin"] =
    "PluginHtmlPur";
 $locale["Recent Comments"] =
-   "Commentaires récents";
+   "Derniers commentaires";
 $locale["Recent Edits"] =
    "Éditions Récentes";
 $locale["Recent changes"] =
@@ -1519,7 +1519,7 @@ $locale["Recent changes"] =
 $locale["Recent comments"] =
    "Commentaires récents";
 $locale["Recent new pages"] =
-   "Pages recemment creees";
+   "Dernières pages créées";
 $locale["RecentChanges"] =
    "DernièresModifs";
 $locale["RecentComments"] =
@@ -1753,9 +1753,9 @@ $locale["Sort by %s"] =
 $locale["Sound Score"] =
    "Score de son";
 $locale["Special Actions"] =
-   "Actions speciales";
+   "Actions spéciales";
 $locale["SpecialPages"] =
-   "Pages speciales";
+   "Pages spéciales";
 $locale["Spelling Score"] =
    "Score d'épellation";
 $locale["SqlResult"] =
@@ -1927,7 +1927,7 @@ $locale["Today"] =
 $locale["Too many external links."] =
    "Trop de liens extérieurs.";
 $locale["Toolbox"] =
-   "Boite a outils";
+   "Boîte à outils";
 $locale["Top & bottom toolbars"] =
    "Barres d'outils en haut et en bas";
 $locale["Topic"] =
@@ -1991,7 +1991,7 @@ $locale["UnfoldSubpages"] =
 $locale["UnfoldSubpagesPlugin"] =
    "PluginListeSousPages";
 $locale["Unknown special group '%s'"] =
-   "Le groupe speciale %s non définie";
+   "Groupe spécial %s inconnu";
 $locale["Unlock"] =
    "Déverrouiller";
 $locale["Unlock Page"] =
@@ -2019,7 +2019,7 @@ $locale["Upload"] =
 $locale["Upload File"] =
    "Déposer un fichier";
 $locale["Upload file"] =
-   "Déposer le fichier";
+   "Déposer un fichier";
 $locale["Upload files to the local InterWiki Upload:<filename>"] =
    "Transférer les fichiers vers Upload:<filename>";
 $locale["Uploading %s"] =
@@ -2402,6 +2402,8 @@ $locale["optional label | PageName"] =
    "en option | PageName";
 $locale["optional label | http://www.example.com"] =
    "en option | http://www.example.com";
+$locale["page not locked"] =
+   "page déverrouillée";
 $locale["page permission inherited from %s"] =
    "permissions héritées de %s";
 $locale["plain file %s"] =
