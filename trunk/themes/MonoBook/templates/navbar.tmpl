@@ -58,7 +58,6 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
     <?php } ?>
     <?php if ($user->isSignedIn()) { ?>
       <li><? $link = WikiLink(_("UpLoad"),"",_("Upload file")); $link->setAttr("accesskey","u"); $link->addTooltip(_("Upload images or media files")." [$p-u]"); ?><?= $link ?></li>
-      <li><?= WikiLink(_("UserPreferences"), "",_("Preferences")) ?></li>
     <?php } ?>
     <li>
       <?php $PrintableLink = $WikiTheme->makeButton(_("Printable version"), "javascript:PrinterStylesheet();", 'wikiaction'); ?>
