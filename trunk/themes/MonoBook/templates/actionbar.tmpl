@@ -65,6 +65,7 @@
      <?php if (!empty($revision) and ($isAdmin or mayAccessPage('remove', $pagename))) { ?>
       <?= ActionButton('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
       <?= ActionButton('remove') ?>
+      <?= ActionButton('purge') ?>
      <?php } ?>
     <?php } ?>
     <?= ActionButton(array('action'=>_("PageInfo")), _("Info"), $pagename) ?>
