@@ -1085,6 +1085,22 @@ class PageList {
         return $allPages;
     }
 
+    // UserPages are pages NOT created by "The PhpWiki programming team"
+    function allUserPages($include_empty=false, $sortby='',
+                          $limit='', $exclude='') {
+        $dbi = $GLOBALS['request']->getDbh();
+        $allPagehandles = $dbi->getAllPages($include_empty, $sortby, $limit, $exclude);
+        $allPages = array();
+        while ($pagehandle = $allPagehandles->next()) {
+            $name = $pagehandle->getName();
+            $creator = $pagehandle->getCreator();
+            if ($creator !== _("The PhpWiki programming team")) {
+                 $allPages[] = $name;
+            }
+        }
+        return $allPages;
+    }
+
     ////////////////////
     // private
     ////////////////////
@@ -1414,7 +1430,7 @@ class PageList {
                  and isset($col->_field) 
                  and $col->_field == 'pagename' 
                  and ($maxlen = $this->maxLen())) {
-               $heading->setAttr('width', $maxlen * 7);
+               // $heading->setAttr('width', $maxlen * 7);
             }
             $row->pushContent($heading);
             if (is_string($col->getHeading()))
