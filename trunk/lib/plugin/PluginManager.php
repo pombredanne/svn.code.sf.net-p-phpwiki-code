@@ -32,7 +32,7 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return _("Description: Provides a list of plugins on this wiki.");
+        return _("List of plugins on this wiki");
     }
 
     function getVersion() {
