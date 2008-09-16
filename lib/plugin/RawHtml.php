@@ -62,6 +62,10 @@ extends WikiPlugin
                             "\$Revision$");
     }
 
+    function getDefaultArguments() {
+        return array();
+    }
+
     function managesValidators() {
         // The plugin output will only change if the plugin
         // invocation (page text) changes --- so the necessary
@@ -226,34 +230,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         return $html;
     }
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.10  2004/07/05 13:09:37  rurban
-// ENABLE_RAW_HTML_LOCKEDONLY, ENABLE_RAW_HTML_SAFE
-//
-// Revision 1.9  2004/07/05 13:04:47  rurban
-// new RawHtml policies: ENABLE_RAW_HTML_LOCKEDONLY, ENABLE_RAW_HTML_SAFE
-//
-// Revision 1.8  2003/11/22 17:50:32  carstenklapp
-// Minor internal change: Removed redundant call to gettext within
-// fmt(). (locale make: RawHtml.php:65: warning: keyword nested in
-// keyword arg)
-//
-// Revision 1.7  2003/03/17 22:32:26  dairiki
-// Minor HTTP caching fix.
-//
-// Revision 1.6  2003/03/17 21:24:53  dairiki
-// Fix security bugs in the RawHtml plugin.
-//
-// Change the default configuration to allow use of plugin, since
-// I believe the plugin is now safe for general use. (Raw HTML will only
-// work on locked pages.)
-//
-// Revision 1.5  2003/01/18 22:01:43  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
 
 // For emacs users
 // Local Variables:

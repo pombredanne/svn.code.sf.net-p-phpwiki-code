@@ -59,6 +59,7 @@ extends WikiPluginCached
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");
     }
+
     /* From lib/WikiPlugin.php:
      * If the plugin can deduce a modification time, or equivalent
      * sort of tag for it's content, then the plugin should
@@ -77,13 +78,12 @@ extends WikiPluginCached
                                  . WikiPluginCached::glueArgs($argarray) // all
                                  . ' ?>', $request, $this, $basepage);
     }
-    /*
+
     function getDefaultArguments() {
         return array(
-                     'seperator' => ' ', // on multiple args
+                     // 'seperator' => ' ', // on multiple args
                      );
     }
-    */
 
     function database() {
         global $request;

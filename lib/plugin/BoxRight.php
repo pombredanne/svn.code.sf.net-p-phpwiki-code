@@ -39,6 +39,10 @@ extends WikiPlugin
                             "\$Revision$");
     }
 
+    function getDefaultArguments() {
+        return array();
+    }
+
     function managesValidators() {
         // The plugin output will only change if the plugin
         // invocation (page text) changes --- so the necessary
@@ -56,8 +60,6 @@ extends WikiPlugin
     }
 
 }
-
-// $Log: not supported by cvs2svn $
 
 // For emacs users
 // Local Variables:
