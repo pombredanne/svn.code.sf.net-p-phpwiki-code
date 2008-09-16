@@ -52,7 +52,8 @@ extends WikiPlugin
                    'include_empty' => false,
                    //'pages'         => false, // DONT, this would be ListPages then.
                    'info'          => '',
-                   'debug'         => false
+                   'debug'         => false,
+                   'userpages'     => false
                    ));
     }
     
@@ -70,7 +71,13 @@ extends WikiPlugin
             $timer = new DebugTimer;
         $caption = _("All pages in this wiki (%d total):");
         
-        if ( !empty($args['owner']) ) {
+        if ( !empty($args['userpages']) ) {
+            $pages = PageList::allUserPages($args['include_empty'],
+                                               $args['sortby'], ''
+					       );
+	    $caption = fmt("List of user-created pages (%d total):", count($pages));
+	    $args['count'] = $request->getArg('count');
+        } elseif ( !empty($args['owner']) ) {
             $pages = PageList::allPagesByOwner($args['owner'], $args['include_empty'],
                                                $args['sortby'], ''
 					       );
