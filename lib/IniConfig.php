@@ -608,9 +608,14 @@ function fixup_static_configs($file) {
 			      .'FuzzyPages:InterWikiSearch:LikePages:LinkDatabase:LinkSearch:ListRelations:ModeratedPage:'
 			      .'MostPopular:OrphanedPages:PageDump:PageHistory:PageInfo:PasswordReset:PluginManager:RandomPage:'
 			      .'RateIt:RecentChanges:RecentComments:RelatedChanges:SearchHighlight:SemanticRelations:SemanticSearch:'
-			      .'TitleSearch:TranslateText:UpLoad:UserPreferences:WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect'
+			      .'TitleSearch:TranslateText:UpLoad:UserPreferences:WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:'
 			      // plus some derivations
-			      .':DebugInfo:LeastPopular:RecentEdits:AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages'
+			      .'DebugInfo:LeastPopular:LockedPages:'
+                              .'RecentEdits:MyRecentEdits:'
+                              .'FullRecentChanges:MyRecentChanges:RecentChangesMyPages:'
+                              .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages'
+                              .'RecentNewPages:'
+                              .'PhpWikiAdministration:'
                               .'PhpWikiAdministration/Remove:PhpWikiAdministration/Chmod:'
                               .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace:'
                               .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown');
