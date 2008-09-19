@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 The list of pages which were created by you. (If you are authenticated only)
 
-<?plugin AllPages creator=[] ?>
+<?plugin AllPages creator=[] info||=mtime,author,hits limit||=1000 sortby=+pagename ?>
 
 ----
 [CategoryActionPage]
