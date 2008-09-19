@@ -1,4 +1,4 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Mon, 16 Sep 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,17 +8,30 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-_short description_
+The *~BlogArchives* plugin lists monthly links for the current users blog if signed, or the ADMIN_USER's blog if not.
 
 !!! Usage
+
 <verbatim>
-  <?plugin BlogArchives ?>
+<?plugin BlogArchives ?>
 </verbatim>
 
 !!! Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+{| class="bordered"
+|-
+| Argument
+| Description
+| Default value
+|-
+| <b>user</b>
+| Blog of given user
+| empty
+|-
+| <b>month</b>
+| List the blog titles per month
+| empty
+|}
 
 !!! Example
 
@@ -29,7 +42,7 @@ page _(default: current pagename)_:
 <?plugin BlogArchives ?>
 
 !!! Author
-[Reini Urban|PhpWiki:ReiniUrban]
+* [Reini Urban|PhpWiki:ReiniUrban]
 
 !!! See Also
 
