@@ -607,7 +607,7 @@ function fixup_static_configs($file) {
 			      'AllPages:AllUsers:AppendText:AuthorHistory:BackLinks:BlogArchives:BlogJournal:CreatePage:EditMetaData:FindPage:FullTextSearch:'
 			      .'FuzzyPages:InterWikiSearch:LikePages:LinkDatabase:LinkSearch:ListRelations:ModeratedPage:'
 			      .'MostPopular:OrphanedPages:PageDump:PageHistory:PageInfo:PasswordReset:PluginManager:RandomPage:'
-			      .'RateIt:RecentChanges:RecentComments:RelatedChanges:SearchHighlight:SemanticRelations:SemanticSearch:'
+			      .'RateIt:RecentChanges:RecentComments:RelatedChanges:SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
 			      .'TitleSearch:TranslateText:UpLoad:UserPreferences:WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:'
 			      // plus some derivations
 			      .'DebugInfo:LeastPopular:LockedPages:'
