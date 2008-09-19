@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 This is the base Category.
 
-<?plugin BackLinks ?>
+<?plugin BackLinks info||=pagename,mtime,hits,author sortby||=pagename ?>
 
 -----
 !!! Category
