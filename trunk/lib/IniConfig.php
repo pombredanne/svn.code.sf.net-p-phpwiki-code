@@ -604,13 +604,13 @@ function fixup_static_configs($file) {
       grep -l '\?plugin ' *| perl -ne'$/=0;chop; s/%([\da-fA-F]{2})/pack("C",hex($1))/ge; next LINE if m{^(Help/|Template|Pgsrc)}; print "$_\n"; {local $/;open F,"<$_"; $f=join("",<F>);} push @a,$_ if $f=~/plugin $_/; END{print join(":",@a)};'
      */
     $AllActionPages = explode(':',
-			      'AllPages:AllUsers:AppendText:AuthorHistory:BackLinks:CreatePage:EditMetaData:FindPage:FullTextSearch:'
+			      'AllPages:AllUsers:AppendText:AuthorHistory:BackLinks:BlogArchives:BlogJournal:CreatePage:EditMetaData:FindPage:FullTextSearch:'
 			      .'FuzzyPages:InterWikiSearch:LikePages:LinkDatabase:LinkSearch:ListRelations:ModeratedPage:'
 			      .'MostPopular:OrphanedPages:PageDump:PageHistory:PageInfo:PasswordReset:PluginManager:RandomPage:'
 			      .'RateIt:RecentChanges:RecentComments:RelatedChanges:SearchHighlight:SemanticRelations:SemanticSearch:'
 			      .'TitleSearch:TranslateText:UpLoad:UserPreferences:WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect'
 			      // plus some derivations
-			      .':DebugInfo:LeastPopular:RecentEdits:AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:'
+			      .':DebugInfo:LeastPopular:RecentEdits:AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages'
                               .'PhpWikiAdministration/Remove:PhpWikiAdministration/Chmod:'
                               .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace:'
                               .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown');
