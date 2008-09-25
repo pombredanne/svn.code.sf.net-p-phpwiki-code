@@ -604,21 +604,35 @@ function fixup_static_configs($file) {
       grep -l '\?plugin ' *| perl -ne'$/=0;chop; s/%([\da-fA-F]{2})/pack("C",hex($1))/ge; next LINE if m{^(Help/|Template|Pgsrc)}; print "$_\n"; {local $/;open F,"<$_"; $f=join("",<F>);} push @a,$_ if $f=~/plugin $_/; END{print join(":",@a)};'
      */
     $AllActionPages = explode(':',
-			      'AllPages:AllUsers:AppendText:AuthorHistory:BackLinks:BlogArchives:BlogJournal:CreatePage:EditMetaData:FindPage:FullTextSearch:'
-			      .'FuzzyPages:InterWikiSearch:LikePages:LinkDatabase:LinkSearch:ListRelations:ModeratedPage:'
-			      .'MostPopular:OrphanedPages:PageDump:PageHistory:PageInfo:PasswordReset:PluginManager:RandomPage:'
-			      .'RateIt:RecentChanges:RecentComments:RelatedChanges:SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
-			      .'TitleSearch:TranslateText:UpLoad:UserPreferences:WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:'
-			      // plus some derivations
-			      .'DebugInfo:LeastPopular:LockedPages:'
-                              .'RecentEdits:MyRecentEdits:'
-                              .'FullRecentChanges:MyRecentChanges:RecentChangesMyPages:'
-                              .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages'
-                              .'RecentNewPages:'
-                              .'PhpWikiAdministration:'
-                              .'PhpWikiAdministration/Remove:PhpWikiAdministration/Chmod:'
-                              .'PhpWikiAdministration/Rename:PhpWikiAdministration/Replace:'
-                              .'PhpWikiAdministration/SetAcl:PhpWikiAdministration/Chown');
+      'AllPages:AllUsers:AppendText:AuthorHistory:'
+      .'BackLinks:BlogArchives:BlogJournal:'
+      .'CreatePage:'
+      .'EditMetaData:'
+      .'FindPage:FullTextSearch:FuzzyPages:'
+      .'InterWikiSearch:'
+      .'LikePages:LinkDatabase:LinkSearch:ListRelations:'
+      .'ModeratedPage:MostPopular:'
+      .'OrphanedPages:'
+      .'PageDump:PageHistory:PageInfo:PasswordReset:PluginManager:'
+      .'RandomPage:RateIt:RecentChanges:RecentComments:RelatedChanges:'
+      .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
+      .'TitleSearch:TranslateText:'
+      .'UpLoad:UserPreferences:'
+      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:'
+      // plus some derivations
+      .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages:'
+      .'DebugInfo:'
+      .'FullRecentChanges:'
+      .'LeastPopular:LockedPages:'
+      .'MyRecentEdits:MyRecentChanges:'
+      .'PhpWikiAdministration:'
+      .'PhpWikiAdministration/Chmod:'
+      .'PhpWikiAdministration/Chown:'
+      .'PhpWikiAdministration/Remove:'
+      .'PhpWikiAdministration/Rename:'
+      .'PhpWikiAdministration/Replace:'
+      .'PhpWikiAdministration/SetAcl:'
+      .'RecentChangesMyPages:RecentEdits:RecentNewPages');
     // If user has not defined PHPWIKI_DIR, and we need it
     if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
     	$themes_dir = FindFile("themes");
