@@ -610,15 +610,15 @@ function fixup_static_configs($file) {
       .'EditMetaData:'
       .'FindPage:FullTextSearch:FuzzyPages:'
       .'InterWikiSearch:'
-      .'LikePages:LinkDatabase:LinkSearch:ListRelations:'
+      .'LdapSearch:LikePages:LinkDatabase:LinkSearch:ListRelations:'
       .'ModeratedPage:MostPopular:'
       .'OrphanedPages:'
       .'PageDump:PageHistory:PageInfo:PasswordReset:PluginManager:'
       .'RandomPage:RateIt:RecentChanges:RecentComments:RelatedChanges:'
-      .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
+      .'SearchHighlight:SemanticRelations:SemanticSearch:SpellCheck:SystemInfo:'
       .'TitleSearch:TranslateText:'
-      .'UpLoad:UserPreferences:'
-      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:'
+      .'UpLoad:UriResolver:UserPreferences:'
+      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:WikiBlog'
       // plus some derivations
       .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages:'
       .'DebugInfo:'
@@ -632,7 +632,8 @@ function fixup_static_configs($file) {
       .'PhpWikiAdministration/Rename:'
       .'PhpWikiAdministration/Replace:'
       .'PhpWikiAdministration/SetAcl:'
-      .'RecentChangesMyPages:RecentEdits:RecentNewPages');
+      .'RecentChangesMyPages:RecentEdits:RecentNewPages:
+      .'UserContribs');
     // If user has not defined PHPWIKI_DIR, and we need it
     if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
     	$themes_dir = FindFile("themes");
