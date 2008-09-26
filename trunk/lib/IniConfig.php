@@ -618,7 +618,7 @@ function fixup_static_configs($file) {
       .'SearchHighlight:SemanticRelations:SemanticSearch:SpellCheck:SystemInfo:'
       .'TitleSearch:TranslateText:'
       .'UpLoad:UriResolver:UserPreferences:'
-      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:WikiBlog'
+      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:WikiBlog:'
       // plus some derivations
       .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages:'
       .'DebugInfo:'
@@ -632,7 +632,7 @@ function fixup_static_configs($file) {
       .'PhpWikiAdministration/Rename:'
       .'PhpWikiAdministration/Replace:'
       .'PhpWikiAdministration/SetAcl:'
-      .'RecentChangesMyPages:RecentEdits:RecentNewPages:
+      .'RecentChangesMyPages:RecentEdits:RecentNewPages:'
       .'UserContribs');
     // If user has not defined PHPWIKI_DIR, and we need it
     if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
