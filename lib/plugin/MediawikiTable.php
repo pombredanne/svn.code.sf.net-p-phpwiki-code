@@ -116,9 +116,14 @@ extends WikiPlugin
                         $row->pushContent($cell);
                         unset($cell);
                     }
-                    $tbody->pushContent($row);
-                    $table->pushContent($tbody);
-                    $tbody = HTML::tbody();
+                    if (isset($thead)) {
+                    	$thead->pushContent($row);
+                    	$table->pushContent($thead);
+                    	unset($thead);
+                    	$tbody = HTML::tbody();
+                    } else {
+                    	$tbody->pushContent($row);
+                    }
                 }
                 $row = HTML::tr();
                 $attrs = $this->_parse_attr(substr($line,2));
@@ -163,10 +168,10 @@ extends WikiPlugin
                 }
                 if (substr($line,0,1) == "!") {
                     $cell = HTML::th();   // Header
-                    $tbody = HTML::thead();
+                    $thead = HTML::thead();
                 } else { 
                     $cell = HTML::td();
-                    $tbody = HTML::tbody();
+                    if (!isset($tbody)) $tbody = HTML::tbody();
                 }
                 $line = substr($line, 1);
 
