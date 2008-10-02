@@ -2,8 +2,9 @@
 rcs_id('$Id$');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
+ Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 
- This file is not yet part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -164,6 +165,7 @@ extends WikiPlugin_WikiAdminSelect
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           $header,
+                          $buttons,
                           $pagelist->getContent(),
                           HiddenInputs($request->getArgs(),
                                         false,
@@ -171,8 +173,7 @@ extends WikiPlugin_WikiAdminSelect
                           HiddenInputs(array('admin_markup[action]' => $next_action)),
                           ENABLE_PAGEPERM
                           ? ''
-                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
-                          $buttons);
+                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
     }
 
     function chmarkupForm(&$header, $post_args) {
@@ -184,9 +185,6 @@ extends WikiPlugin_WikiAdminSelect
         return $header;
     }
 }
-
-// $Log: not supported by cvs2svn $
-//
 
 // Local Variables:
 // mode: php

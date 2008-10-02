@@ -2,8 +2,9 @@
 rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 
- This file is not yet part of PhpWiki. It doesn't work yet.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -161,6 +162,7 @@ extends WikiPlugin_WikiAdminSelect
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           $header,
+                          $buttons,
                           $pagelist->getContent(),
                           HiddenInputs($request->getArgs(),
                                         false,
@@ -168,8 +170,7 @@ extends WikiPlugin_WikiAdminSelect
                           HiddenInputs(array('admin_chmod[action]' => $next_action)),
                           ENABLE_PAGEPERM
                           ? ''
-                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
-                          $buttons);
+                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
     }
 
     function chmodForm(&$header, $post_args) {
@@ -203,75 +204,6 @@ class _PageList_Column_chmod_perm extends _PageList_Column {
                                            $page_handle->get('group'));
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.13  2004/12/06 19:50:05  rurban
-// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
-// renamed delete_page to purge_page.
-// enable action=edit&version=-1 to force creation of a new version.
-// added BABYCART_PATH config
-// fixed magiqc in adodb.inc.php
-// and some more docs
-//
-// Revision 1.12  2004/11/23 15:17:19  rurban
-// better support for case_exact search (not caseexact for consistency),
-// plugin args simplification:
-//   handle and explode exclude and pages argument in WikiPlugin::getArgs
-//     and exclude in advance (at the sql level if possible)
-//   handle sortby and limit from request override in WikiPlugin::getArgs
-// ListSubpages: renamed pages to maxpages
-//
-// Revision 1.11  2004/06/16 10:38:59  rurban
-// Disallow refernces in calls if the declaration is a reference
-// ("allow_call_time_pass_reference clean").
-//   PhpWiki is now allow_call_time_pass_reference = Off clean,
-//   but several external libraries may not.
-//   In detail these libs look to be affected (not tested):
-//   * Pear_DB odbc
-//   * adodb oracle
-//
-// Revision 1.10  2004/06/14 11:31:39  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.9  2004/06/13 15:33:20  rurban
-// new support for arguments owner, author, creator in most relevant
-// PageList plugins. in WikiAdmin* via preSelectS()
-//
-// Revision 1.8  2004/06/04 20:32:54  rurban
-// Several locale related improvements suggested by Pierrick Meignen
-// LDAP fix by John Cole
-// reanable admin check without ENABLE_PAGEPERM in the admin plugins
-//
-// Revision 1.7  2004/06/03 22:24:42  rurban
-// reenable admin check on !ENABLE_PAGEPERM, honor s=Wildcard arg, fix warning after Remove
-//
-// Revision 1.6  2004/03/17 20:23:44  rurban
-// fixed p[] pagehash passing from WikiAdminSelect, fixed problem removing pages with [] in the pagename
-//
-// Revision 1.5  2004/03/12 13:31:43  rurban
-// enforce PagePermissions, errormsg if not Admin
-//
-// Revision 1.4  2004/02/24 15:20:06  rurban
-// fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
-//
-// Revision 1.3  2004/02/24 04:02:06  rurban
-// Better warning messages
-//
-// Revision 1.2  2004/02/24 03:21:40  rurban
-// enabled require_all check in WikiPoll
-// better handling of <20 min visiting client: display results so far
-//
-// Revision 1.1  2004/02/23 21:30:25  rurban
-// more PagePerm stuff: (working against 1.4.0)
-//   ACL editing and simplification of ACL's to simple rwx------ string
-//   not yet working.
-//
-//
 
 // Local Variables:
 // mode: php
