@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -168,6 +169,7 @@ extends WikiPlugin_WikiAdminSelect
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           $header,
+                          $buttons,
                           $pagelist->getContent(),
                           HiddenInputs($request->getArgs(),
                                         false,
@@ -175,8 +177,7 @@ extends WikiPlugin_WikiAdminSelect
                           HiddenInputs(array('admin_chown[action]' => $next_action)),
                           ENABLE_PAGEPERM
                           ? ''
-                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
-                          $buttons);
+                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
     }
 
     function chownForm(&$header, $post_args) {
@@ -188,50 +189,6 @@ extends WikiPlugin_WikiAdminSelect
         return $header;
     }
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.8  2005/01/29 19:48:14  rurban
-// reformatting
-//
-// Revision 1.7  2004/11/23 15:17:19  rurban
-// better support for case_exact search (not caseexact for consistency),
-// plugin args simplification:
-//   handle and explode exclude and pages argument in WikiPlugin::getArgs
-//     and exclude in advance (at the sql level if possible)
-//   handle sortby and limit from request override in WikiPlugin::getArgs
-// ListSubpages: renamed pages to maxpages
-//
-// Revision 1.6  2004/06/16 10:38:59  rurban
-// Disallow refernces in calls if the declaration is a reference
-// ("allow_call_time_pass_reference clean").
-//   PhpWiki is now allow_call_time_pass_reference = Off clean,
-//   but several external libraries may not.
-//   In detail these libs look to be affected (not tested):
-//   * Pear_DB odbc
-//   * adodb oracle
-//
-// Revision 1.5  2004/06/14 11:31:39  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.4  2004/06/13 15:33:20  rurban
-// new support for arguments owner, author, creator in most relevant
-// PageList plugins. in WikiAdmin* via preSelectS()
-//
-// Revision 1.3  2004/06/08 10:05:11  rurban
-// simplified admin action shortcuts
-//
-// Revision 1.2  2004/06/07 18:59:42  rurban
-// added Chown link to Owner in statusbar
-//
-// Revision 1.1  2004/06/07 17:58:58  rurban
-// new chown plugin
-//
-//
 
 // Local Variables:
 // mode: php

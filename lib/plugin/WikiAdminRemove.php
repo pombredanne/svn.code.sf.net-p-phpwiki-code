@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
+ Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -217,13 +218,13 @@ extends WikiPlugin_WikiAdminSelect
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           $header,
+                          $buttons,
                           $pagelist->getContent(),
                           HiddenInputs($request->getArgs(),
                                         false,
                                         array('admin_remove')),
                           HiddenInputs(array('admin_remove[action]' => $next_action,
-                                             'require_authority_for_post' => WIKIAUTH_ADMIN)),
-                          $buttons);
+                                             'require_authority_for_post' => WIKIAUTH_ADMIN)));
     }
 }
 
