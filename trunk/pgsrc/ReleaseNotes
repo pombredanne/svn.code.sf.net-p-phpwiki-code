@@ -58,6 +58,8 @@ changes:
 * more icons for toolbar (vargenau)
 * UserPreferences: specific message when only one preference is updated (vargenau)
 * renamed class Theme to WikiTheme to avoid Gforge name clash (vargenau)
+* in Monobook, use a "Create Page" button instead of "Edit" if the page does not exist (vargenau)
+* in Monobook, do not show the History and Diff buttons if the page does not exist (vargenau)
 
 new:
 * ~PageList supports listtype=ul,ol,dl. dl used by FullTextSearch
@@ -963,5 +965,4 @@ if that sort of thing really interests you :-)
 --SteveWainstead
 
 ----
-
 [PhpWikiDocumentation]
