@@ -1,4 +1,4 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Mon, 4 Oct 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 !!! Usage
 <verbatim>
-  <?plugin YouTube v=HxXnYEqaRiQ 
+  <?plugin YouTube v=HxXnYEqaRiQ
 	   width=425 height=350
 	   size=medium|small|large
            style=inline|link
@@ -53,34 +53,48 @@ Content-Transfer-Encoding: binary
   * size=medium or small or large (optional. Default: medium).
     Overrides width and height.
 
-!!! Example
+!!! Examples
+
+!! Link
 
 <verbatim>
-link:
-  <?plugin YouTube v=HxXnYEqaRiQ style=link ?>
-inline:
-  <?plugin YouTube v=HxXnYEqaRiQ ?>
-Daily Pick:
-  <?plugin YouTube browse="Daily Pick" ?>
-Top Rated (This Month):
-  <?plugin YouTube browse="Top Rated" time="This Month" ?>
+<?plugin YouTube v=HxXnYEqaRiQ style=link ?>
 </verbatim>
 
-link:
-  <?plugin YouTube v=HxXnYEqaRiQ style=link ?>
+<?plugin YouTube v=HxXnYEqaRiQ style=link ?>
 
-inline:
-  <?plugin YouTube v=HxXnYEqaRiQ ?>
+!! Inline
 
-Daily Pick:
-  <?plugin YouTube browse="Daily Pick" ?>
+<verbatim>
+<?plugin YouTube v=HxXnYEqaRiQ ?>
+</verbatim>
 
-Top Rated (This Month):
-  <?plugin YouTube browse="Top Rated" time="This Month" ?>
+<?plugin YouTube v=HxXnYEqaRiQ ?>
 
-See LisaNova
+!! Daily Pick
+
+<verbatim>
+<?plugin YouTube browse="Daily Pick" ?>
+</verbatim>
+
+<?plugin YouTube browse="Daily Pick" ?>
+
+!! Top Rated (This Month)
+
+<verbatim>
+<?plugin YouTube browse="Top Rated" time="This Month" ?>
+</verbatim>
+
+<?plugin YouTube browse="Top Rated" time="This Month" ?>
+
+!!! See also
+
+* [LisaNova]
 
 !!! Author
-[Reini Urban|PhpWiki:ReiniUrban]
+
+* [Reini Urban|PhpWiki:ReiniUrban]
+
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]
+
