@@ -84,7 +84,8 @@ PersonalTelco http://www.personaltelco.net/index.cgi/
 php-function http://www.php.net/%s
 php-lookup http://www.php.net/manual-lookup.php?pattern=
 PhpWiki http://phpwiki.sourceforge.net/phpwiki/
-PhpWikiCvs http://phpwiki.cvs.sourceforge.net/phpwiki/phpwiki/
+PhpWikiCvs http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/pgsrc/%s?view=log
+PhpWikiSvn http://phpwiki.svn.sourceforge.net/viewvc/phpwiki/trunk/pgsrc/%s?view=log
 PhpWikiDemo http://phpwiki.sourceforge.net/demo/
 PhpWikiTest http://phpwiki.sourceforge.net/test/
 Pikie http://pikie.darktech.org/cgi/pikie?
