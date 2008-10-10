@@ -2,7 +2,6 @@
 rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
- Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -190,28 +189,21 @@ extends WikiPlugin_WikiAdminSelect
             $header->pushContent(HTML::p(_("Select the pages to change:")));
         }
 
-		if ($next_action == 'verify') {
-			$req = $request->getArgs();
-		} else {
-			$req = $request->getArgs();
-			unset($req['acl']);
-		}
-		
         $buttons = HTML::p(Button('submit:admin_setacl[acl]', $button_label, 'wikiadmin'),
                            Button('submit:admin_setacl[cancel]', _("Cancel"), 'button'));
 
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           $header,
-                          $buttons,
                           $pagelist->getContent(),
-                          HiddenInputs( $req,
+                          HiddenInputs($request->getArgs(),
                                         false,
                                         array('admin_setacl')),
                           HiddenInputs(array('admin_setacl[action]' => $next_action)),
                           ENABLE_PAGEPERM
                           ? ''
-                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
+                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
+                          $buttons);
     }
 
     function setaclForm(&$header, $post_args, $pagehash) {
