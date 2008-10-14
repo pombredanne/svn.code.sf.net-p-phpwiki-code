@@ -249,10 +249,6 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
                                                   'name' => 'rename[]',
                                                   'value' => $value)));
         $new_page = $request->getPage($value);
-        if ($new_page->exists()) {
-            $div->setAttr('class','error');
-            $div->setAttr('title',_("This page already exists"));
-        }
         return $div;
     }
 };
