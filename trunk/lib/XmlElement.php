@@ -455,6 +455,10 @@ class RawXml {
     function asXML () {
         return $this->_xml;
     }
+    
+    function asString () {
+    	return $this->_xml;
+    }
 
     function isEmpty () {
         return empty($this->_xml);
@@ -633,7 +637,6 @@ function AsString ($val) {
     return (string) $val;
 }
 
-
 function fmt ($fs /* , ... */) {
     $s = new FormattedText(false);
 
@@ -642,55 +645,6 @@ function fmt ($fs /* , ... */) {
     $s->_init($args);
     return $s;
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.44  2008/03/17 19:40:18  rurban
-// print printXML(array) deprecation warnings
-//
-// Revision 1.43  2007/07/14 17:55:30  rurban
-// SemanticWeb.php
-//
-// Revision 1.42  2007/01/20 11:41:30  rurban
-// Add php-5.2.0 note
-//
-// Revision 1.41  2007/01/13 23:34:49  rurban
-// More php-5.2.0 fixes __toString
-//
-// Revision 1.40  2007/01/13 23:28:56  rurban
-// php-5.2.0 fix for string fallback: Provide the magic method __toString
-//
-// Revision 1.39  2006/08/15 13:36:23  rurban
-// support iso-8859-2
-//
-// Revision 1.38  2005/10/10 19:36:09  rurban
-// fix comment
-//
-// Revision 1.37  2005/01/25 07:04:27  rurban
-// case-sensitive for php5
-//
-// Revision 1.36  2004/12/06 19:49:56  rurban
-// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
-// renamed delete_page to purge_page.
-// enable action=edit&version=-1 to force creation of a new version.
-// added BABYCART_PATH config
-// fixed magiqc in adodb.inc.php
-// and some more docs
-//
-// Revision 1.35  2004/11/21 11:59:18  rurban
-// remove final \n to be ob_cache independent
-//
-// Revision 1.34  2004/10/12 13:13:19  rurban
-// php5 compatibility (5.0.1 ok)
-//
-// Revision 1.33  2004/07/02 09:55:58  rurban
-// more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
-//
-// Revision 1.32  2004/06/20 15:30:05  rurban
-// get_class case-sensitivity issues
-//
-// Revision 1.31  2004/06/20 14:42:54  rurban
-// various php5 fixes (still broken at blockparser)
-//
 
 // (c-file-style: "gnu")
 // Local Variables:
