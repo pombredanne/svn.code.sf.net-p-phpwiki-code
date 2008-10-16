@@ -171,7 +171,7 @@ extends WikiPlugin
                 unset($poll['ip'][$ip]);
         }
         $html = HTML::form(array('action' => $request->getPostURL(),
-                                 'method' => 'POST'));
+                                 'method' => 'post'));
 
         if ($request->isPost()) {
             // checkme: check if all answers are answered
