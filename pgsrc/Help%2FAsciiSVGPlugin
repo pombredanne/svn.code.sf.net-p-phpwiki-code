@@ -1,4 +1,4 @@
-Date: Mon, 26 Jun 2008 14:15:24 +0000
+Date: Mon, 16 Oct 2008 4:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,11 +8,11 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-Interface to http://www1.chapman.edu/~jipsen/svg/asciisvg.html
+Interface to [http://www1.chapman.edu/~jipsen/svg/asciisvg.html]
 
 Requires ENABLE_XHTML_XML = true
 
-Syntax: http://www1.chapman.edu/~jipsen/svg/asciisvgcommands.html
+Syntax: [http://www1.chapman.edu/~jipsen/svg/asciisvgcommands.html]
 
 If you are using Internet Explorer 6 + Adobe SVGviewer (often included
 by default with Windows XP) or SVG enabled Mozilla/Firefox (and have
@@ -20,9 +20,9 @@ Adobe SVGviewer installed as well!) then you should see the examples.
 
 !!! Usage
 <verbatim>
-  <?plugin AsciiSVG width= height= onmousemove="" script="" 
-           code...  
-  ?>
+<?plugin AsciiSVG width= height= onmousemove="" script="" 
+         code...  
+?>
 </verbatim>
 
 !!! Arguments
@@ -30,8 +30,9 @@ Adobe SVGviewer installed as well!) then you should see the examples.
 width, height, script, onmouseover
 
 All other arguments are passed to the ASCIISvg javascript library and
-rendered as SVG.  See
-http://www1.chapman.edu/~jipsen/svg/asciisvg.html
+rendered as SVG.
+
+See [http://www1.chapman.edu/~jipsen/svg/asciisvg.html]
 
 !!! Example
 
@@ -67,10 +68,10 @@ With multiple ~AsciiSVG plugins on the same page the 2nd and
 subsequent ones will have the same width and height.
 
 !!! Author
-[Reini Urban|PhpWiki:ReiniUrban]
+* [Reini Urban|PhpWiki:ReiniUrban]
 
 !!! See Also
-Help:AsciiMathPlugin
+* [Help:AsciiMathPlugin]
 
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]
