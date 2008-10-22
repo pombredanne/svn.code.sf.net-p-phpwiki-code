@@ -8,9 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-_*Note:*_  _Most of the actions on this page require administrative
-privileges. They will not work unless you have set an admin username and
-password in the [PhpWiki|PhpWiki:PhpWiki] config file._
+_*Note:*_  _Most of the actions on this page require administrative privileges.
 
 <?plugin CreateToc jshide||=0 with_toclink||=1 position=right with_counter=1 ?>
 
