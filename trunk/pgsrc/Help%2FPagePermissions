@@ -39,7 +39,7 @@ Consider the following perm:
 -----
 
 For Authentication see ~WikiUserNew.php, ~WikiGroup.php and main.php
-Page Permissions are in PhpWiki since v1.3.9. 
+
 I suspect ACL page permissions to degrade performance by 10%
 
 Enable/Disable it in config/config.ini:

@@ -10,7 +10,6 @@ Content-Transfer-Encoding: binary
 
 The *~BoxRight* [plugin|Help:WikiPlugin] displays its content as a wiki-formatted
 right-floating div box with border.
-Since v1.3.13.
 
 If ENABLE_MARKUP_DIVSPAN is enabled then you can produce the same result with a simple =~<div~>=:
 
