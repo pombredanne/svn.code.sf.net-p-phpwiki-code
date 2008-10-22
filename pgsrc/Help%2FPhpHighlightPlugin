@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~PhpHighlight* plugin pretty-prints PHP code using the
+The *~PhpHighlight* [plugin|Help:WikiPlugin] pretty-prints PHP code using the
 php-function:highlight-string. 
 
 See also [SyntaxHighlighter|Help:SyntaxHighlighterPlugin] plugin for highlighting other languages.

@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~PhotoAlbum* plugin makes an 'album' by displaying a set of photos listed in a text file
+The *~PhotoAlbum* [plugin|Help:WikiPlugin] makes an 'album' by displaying a set of photos listed in a text file
 with optional descriptions.
 
 !!! Usage

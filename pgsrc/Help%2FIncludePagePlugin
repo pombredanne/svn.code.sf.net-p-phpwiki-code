@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~IncludePage* plugin will "include" other pages in this wiki. In the language of hypertext this is called <i>transclusion</i>. The pages will render in distinct tables. You can also load external pages in a more limited fashion with the [FrameInclude|Help:FrameIncludePlugin] plugin.
+The *~IncludePage* [plugin|Help:WikiPlugin] will "include" other pages in this wiki. In the language of hypertext this is called <i>transclusion</i>. The pages will render in distinct tables. You can also load external pages in a more limited fashion with the [FrameInclude|Help:FrameIncludePlugin] plugin.
 
 !!! Usage
 <verbatim>
@@ -79,7 +79,7 @@ The *~IncludePage* plugin will "include" other pages in this wiki. In the langua
 
 !!! Known bugs
 
-* ~RedirectTo plugin is not handled correctly.
+* [~RedirectTo|Help:RedirectToPlugin] plugin is not handled correctly.
 * Line and word limit doesn't work if the included page itself includes a plugin.
 
 !!! Authors

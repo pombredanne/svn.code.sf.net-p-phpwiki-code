@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~DeadEndPages* plugin returns a list of pages which are not linked to by any other page.
+The *~DeadEndPages* [plugin|Help:WikiPlugin] returns a list of pages which are not linked to by any other page.
 It is simply an alias for [OrphanedPages|Help:OrphanedPages] plugin.
 
 !!! Usage

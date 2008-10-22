@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~PhpWeather* [plugin|Help:WikiPlugin] is a plugin that uses ~PhpWeather to display
+The *~PhpWeather* [plugin|Help:WikiPlugin] is a [plugin|Help:WikiPlugin] that uses ~PhpWeather to display
 a block of text with the current weather for some airport in the
 world. It looks like this:
 

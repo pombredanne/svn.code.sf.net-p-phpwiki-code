@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~ExternalSearch* plugin creates a form to query InterWiki~s or other
+The *~ExternalSearch* [plugin|Help:WikiPlugin] creates a form to query InterWiki~s or other
 internet sites.
 
 !!! Usage

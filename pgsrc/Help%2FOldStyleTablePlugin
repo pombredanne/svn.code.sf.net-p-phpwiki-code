@@ -1,4 +1,4 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Mon, 20 Oct 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~OldStyleTable* plugin can be used to include tables within a wiki
+The *~OldStyleTable* [plugin|Help:WikiPlugin] can be used to include tables within a wiki
 page using the old-style markup syntax for tables.
 
 !!! Usage
@@ -68,6 +68,5 @@ table cells.
 include multi-line plugin invocations using the old-style markup
 rules.)
 
--------------
-
+----
 [PhpWikiDocumentation] [CategoryWikiPlugin]

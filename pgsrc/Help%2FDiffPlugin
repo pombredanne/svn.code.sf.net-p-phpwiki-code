@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *Diff* plugin displays differences between revisions of a wiki page.
+The *Diff* [plugin|Help:WikiPlugin] displays differences between revisions of a wiki page.
 
 !!! Usage
 <verbatim>

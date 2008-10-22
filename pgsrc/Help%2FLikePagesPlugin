@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~LikePages* plugin lists page names which share an initial or final title word with a given page.
+The *~LikePages* [plugin|Help:WikiPlugin] lists page names which share an initial or final title word with a given page.
 
 !!! Usage
 <verbatim>

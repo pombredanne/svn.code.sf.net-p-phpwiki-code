@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *Transclude* plugin can be used to embed include whole (external) web
+The *Transclude* [plugin|Help:WikiPlugin] can be used to embed include whole (external) web
 pages within a wiki page.
 
 !!! Arguments

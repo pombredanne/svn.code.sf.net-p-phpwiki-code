@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~FrameInclude* plugin will create an HTML frame that will fill the entire display area of the page (that is, the whole area the user is allowed to edit). All other text will be discarded when the page is rendered (anything outside the call to plugin, that is). In the language of hypertext this is called <i>transclusion</i>.
+The *~FrameInclude* [plugin|Help:WikiPlugin] will create an HTML frame that will fill the entire display area of the page (that is, the whole area the user is allowed to edit). All other text will be discarded when the page is rendered (anything outside the call to plugin, that is). In the language of hypertext this is called <i>transclusion</i>.
 
 You might also be interested in the [IncludePage|Help:IncludePagePlugin] plugin.
 

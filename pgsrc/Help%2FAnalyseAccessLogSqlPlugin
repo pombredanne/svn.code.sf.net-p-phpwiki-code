@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~AnalyseAccessLogSql* plugin provides a framework to analyse the SQL access log 
+The *~AnalyseAccessLogSql* [plugin|Help:WikiPlugin] provides a framework to analyse the SQL access log 
 and display the results.
 This information may be sensitive and therefore this plugin is limited to 
 administrator access only.

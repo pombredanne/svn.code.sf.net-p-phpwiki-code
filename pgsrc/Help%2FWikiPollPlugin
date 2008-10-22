@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~WikiPoll* plugin provides configurable polls.
+The *~WikiPoll* [plugin|Help:WikiPlugin] provides configurable polls.
 
 !!! Usage
 <verbatim>

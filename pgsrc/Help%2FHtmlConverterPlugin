@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~HtmlConverter* plugin will convert HTML tags as far to Wiki markup as possible and eliminate all other HTML markup, so the output can be copied and pasted into a wiki page.
+The *~HtmlConverter* [plugin|Help:WikiPlugin] will convert HTML tags as far to Wiki markup as possible and eliminate all other HTML markup, so the output can be copied and pasted into a wiki page.
 
 !!! Usage
 <verbatim>

@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~RichTable* plugin is a plugin that takes off from the [OldStyleTablePlugin|Help:OldStyleTablePlugin]. It allows a user to specify arbitrary properties of <tt><table></tt>, <tt><tr></tt> and <tt><td></tt> with a very simple markup.
+The *~RichTable* [plugin|Help:WikiPlugin] is a plugin that takes off from the [OldStyleTable|Help:OldStyleTablePlugin] plugin. It allows a user to specify arbitrary properties of <tt><table></tt>, <tt><tr></tt> and <tt><td></tt> with a very simple markup.
 
 NEW: The plugin is now fixed so that the contents of each cell are individually processed by the ~BlockParser. This means that if everything works correctly,  you can do interesting things like put *invoke plugins*, use *enumerated lists* etc within each cell!
 

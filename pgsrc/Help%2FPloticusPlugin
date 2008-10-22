@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *Ploticus* plugin passes all its arguments to the ploticus
+The *Ploticus* [plugin|Help:WikiPlugin] passes all its arguments to the ploticus
 binary and displays the result as PNG, GIF, EPS, SVG, SVGZ or SWF.
 Ploticus is a free, GPL, non-interactive software package
 for producing plots, charts, and graphics from data.

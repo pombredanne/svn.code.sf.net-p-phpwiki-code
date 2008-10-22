@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~AllUsers* plugin lists all once authenticated users.
+The *~AllUsers* [plugin|Help:WikiPlugin] lists all once authenticated users.
 
 !!! Usage
 <verbatim>

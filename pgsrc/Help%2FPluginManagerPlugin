@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~PluginManager* plugin provides a dynamic list of plugins on this wiki.
+The *~PluginManager* [plugin|Help:WikiPlugin] provides a dynamic list of plugins on this wiki.
 
 !!! Usage
 
