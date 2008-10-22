@@ -10,4 +10,4 @@ Content-Transfer-Encoding: binary
 <?plugin BackLinks info||=pagename,mtime,hits,author sortby||=pagename ?>
 
 ----
-CategoryCategory
+[CategoryCategory]
