@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~BlogArchives* plugin lists monthly links for the current users blog if signed, or the ADMIN_USER's blog if not.
+The *~BlogArchives* [plugin|Help:WikiPlugin] lists monthly links for the current users blog if signed, or the ADMIN_USER's blog if not.
 
 !!! Usage
 

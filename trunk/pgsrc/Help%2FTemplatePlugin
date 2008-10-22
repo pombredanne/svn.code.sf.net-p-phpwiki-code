@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *Template* plugin allows to include text from a wiki page and replace certain placeholders by parameters.
+The *Template* [plugin|Help:WikiPlugin] allows to include text from a wiki page and replace certain placeholders by parameters.
 
 A template can be seen as a parametrized block. It is similiar to [CreatePage] with the template argument, but at run-time.
 

@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~BackLinks* plugin lists all pages which link to a given page.
+The *~BackLinks* [plugin|Help:WikiPlugin] lists all pages which link to a given page.
 
 !!! Usage
 <verbatim>

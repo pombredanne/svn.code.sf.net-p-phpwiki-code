@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~VisualWiki* plugin produces a graphical site map of ~PhpWiki.
+The *~VisualWiki* [plugin|Help:WikiPlugin] produces a graphical site map of ~PhpWiki.
 
 It produces a graphical sitemap of ~PhpWiki by calling the <code>dot</code> commandline tool from Graphviz (http://www.graphviz.org).
 

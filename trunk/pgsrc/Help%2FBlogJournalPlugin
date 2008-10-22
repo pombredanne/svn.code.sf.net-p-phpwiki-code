@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~BlogJournal* plugin includes the latest blog entries for the current users blog if signed, or the ADMIN_USER's blog if not.
+The *~BlogJournal* [plugin|Help:WikiPlugin] includes the latest blog entries for the current users blog if signed, or the ADMIN_USER's blog if not.
 
 !!! Usage
 

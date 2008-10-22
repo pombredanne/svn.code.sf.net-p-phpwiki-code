@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~GoTo* plugin displays a form with text entry box and 'Go' button.
+The *~GoTo* [plugin|Help:WikiPlugin] displays a form with text entry box and 'Go' button.
 The user enters a page name... if it exists, browse that page; if not, edit (create) that page.
 
 Note: pagenames are absolute, not relative to the actual subpage.

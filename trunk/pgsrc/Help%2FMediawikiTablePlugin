@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~MediawikiTable* plugin is a plugin that takes off from the [RichTablePlugin|Help:RichTablePlugin]. It allows a user to specify a <tt><table></tt> with (a subset of) the syntax used by Mediawiki.
+The *~MediawikiTable* [plugin|Help:WikiPlugin] takes off from the [RichTablePlugin|Help:RichTablePlugin]. It allows a user to specify a <tt><table></tt> with (a subset of) the syntax used by Mediawiki.
 
 * The table starts with a line <b>{~|</b> and ends with a line <b>|~}</b>.
 * An optional table caption is made with a line starting with a pipe and a plus sign <b>|+</b> followed by the caption.

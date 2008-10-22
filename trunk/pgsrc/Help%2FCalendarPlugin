@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *Calendar* plugin can be used to generate a monthly calendar in a
+The *Calendar* [plugin|Help:WikiPlugin] can be used to generate a monthly calendar in a
 wiki page. It's handy for [personal wikis|PhpWiki:PersonalWiki].
 
 Individual dates in the calendar link to specially named wiki pages.

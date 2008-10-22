@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~PrevLink* plugin allows to display Previous and Next buttons on a wiki page for easy navigation.
+The *~PrevLink* [plugin|Help:WikiPlugin] allows to display Previous and Next buttons on a wiki page for easy navigation.
 
 !!! Usage
 <verbatim>
@@ -144,7 +144,7 @@ The *~PrevLink* plugin allows to display Previous and Next buttons on a wiki pag
 * [Reini Urban|PhpWiki:ReiniUrban]
 
 !!! See Also
-* [PageGroup|Help:PageGroupPlugin], plugin which automatically tries to extract the various links.
+* [PageGroup|Help:PageGroupPlugin], [plugin|Help:WikiPlugin] which automatically tries to extract the various links.
 
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]

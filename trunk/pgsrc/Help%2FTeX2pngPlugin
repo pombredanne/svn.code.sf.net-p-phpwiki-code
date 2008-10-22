@@ -40,7 +40,7 @@ possible to display raw text as <?plugin TeX2png text="$\textrm{\LaTeX}$" ?> by 
 <?plugin TeX2png text="$\textrm{\LaTeX}$" ?>
 </verbatim>
 
-This plugin is not able to produce sophisticated mathematicals texts
+This [plugin|Help:WikiPlugin] is not able to produce sophisticated mathematicals texts
 with links, cross references... For that, you can use for example
 [LaTeX2html|http://www.latex2html.org/].
 

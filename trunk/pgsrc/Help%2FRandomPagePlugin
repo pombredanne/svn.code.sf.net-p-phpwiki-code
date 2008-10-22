@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~RandomPage* plugin displays a list of randomly chosen pages or redirects to a random page.
+The *~RandomPage* [plugin|Help:WikiPlugin] displays a list of randomly chosen pages or redirects to a random page.
 
 !!! Usage
 <verbatim>

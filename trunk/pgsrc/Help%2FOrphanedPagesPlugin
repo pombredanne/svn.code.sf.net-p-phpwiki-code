@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~OrphanedPages* plugin returns a list of pages which are not linked to by any other page.
+The *~OrphanedPages* [plugin|Help:WikiPlugin] returns a list of pages which are not linked to by any other page.
 
 !!! Usage
 <verbatim>
