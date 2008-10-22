@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 The *~RichTable* [plugin|Help:WikiPlugin] is a plugin that takes off from the [OldStyleTable|Help:OldStyleTablePlugin] plugin. It allows a user to specify arbitrary properties of <tt><table></tt>, <tt><tr></tt> and <tt><td></tt> with a very simple markup.
 
-NEW: The plugin is now fixed so that the contents of each cell are individually processed by the ~BlockParser. This means that if everything works correctly,  you can do interesting things like put *invoke plugins*, use *enumerated lists* etc within each cell!
+The contents of each cell are individually processed by the ~BlockParser. This means that you can do interesting things like put *invoke plugins*, use *enumerated lists* etc within each cell!
 
 *A <tt>"-"</tt> (dash) at the start of a new line represents a new row in the table.
 *A <tt>"|"</tt> (vertical bar or pipe) at the start of a new line represents a cell.
@@ -26,10 +26,6 @@ NEW: The plugin is now fixed so that the contents of each cell are individually 
   *All content lines that follow a cell line are added to that cell. They can contain arbitrary text except the above cases.
   *If there is no cell in the current row, content lines are dropped silently.
 *The two special characters <tt>"~~"</tt> and <tt>"?>"</tt> should be escaped as <tt>"\~~"</tt> and <tt>"?\>"</tt>. I havn't discovered any other characters yet that might need to be escaped. This is required for the block parser to work.
-
-! Bugs
-* The source code sucks
-* The plugin can't nest itself yet. Thus nested tables are currently not possible.
 
 We allow attributes with or without quotes (")
 <verbatim>
@@ -110,6 +106,9 @@ This cell uses the row color
 | I wish this cell had a nested table inside it! :(
 ?>
 </verbatim>
+
+!!! Known Bugs
+* The plugin can't nest itself yet. Thus nested tables are currently not possible.
 
 !!! Author
 * [Sameer D. Sahasrabuddhe|http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin]
