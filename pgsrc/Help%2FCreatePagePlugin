@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~CreatePage* [plugin|Help:WikiPlugin] allows to easily create new pages, optionally with default content. Since v1.3.8
+The *~CreatePage* [plugin|Help:WikiPlugin] allows to easily create new pages, optionally with default content.
 
 This allows you to create a page geting the new pagename from a 
 forms-based interface, and optionally with the initial content from 

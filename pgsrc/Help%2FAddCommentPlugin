@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~AddComment* [plugin|Help:WikiPlugin] lets users attach comments to the end of a page. Since v1.3.8.
+The *~AddComment* [plugin|Help:WikiPlugin] lets users attach comments to the end of a page.
 Change the layout via the templates comment.tmpl and addcomment.tmpl, and the CSS classes
 wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer
 
