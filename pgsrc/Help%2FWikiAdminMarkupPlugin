@@ -8,11 +8,11 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-PhpWikiAdministration Page Explorer plugin.
+[PhpWikiAdministration] Page Explorer plugin.
 
 !!! Usage
 <verbatim>
-  <?plugin WikiAdminMarkup ?>
+<?plugin WikiAdminMarkup ?>
 </verbatim>
 
 !!! Arguments
@@ -29,9 +29,10 @@ page _(default: current pagename)_:
 <?plugin WikiAdminMarkup s=Temp* ?>
 
 !!! Author
-[Reini Urban|PhpWiki:ReiniUrban]
+* [Reini Urban|PhpWiki:ReiniUrban]
 
 !!! See Also
+* [PhpWikiAdministration]
 
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]
