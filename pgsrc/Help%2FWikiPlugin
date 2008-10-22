@@ -16,7 +16,7 @@ There are many plugins already distributed with PhpWiki. Simply look
 in the =lib/plugin= directory or see the [PluginManager] list or see all the
 [Help/*Plugin pages|phpwiki:TitleSearch?s=Help/*Plugin].
 
-To write your own, look at the Help:HelloWorldPlugin (~HelloWorld.php
+To write your own, look at the [Help:HelloWorldPlugin] (~HelloWorld.php
 in that directory), which is a minimal example of a plugin.
 Publish your self-written plugin at a new PhpWiki page with
 ~PluginName + *Plugin* appended
@@ -113,7 +113,7 @@ if defined via '||='.
 
 A basic plugin just needs the run() method, and optionally getName,
 getDescription, getVersion, getDefaultArguments. See the
-Help:HelloWorldPlugin for a short introduction.
+[Help:HelloWorldPlugin] for a short introduction.
 
   *plugin* reacts on its arguments and the request and displays
   arbitrary HTML.

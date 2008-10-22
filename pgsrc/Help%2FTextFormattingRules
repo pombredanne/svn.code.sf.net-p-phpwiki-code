@@ -11,7 +11,7 @@ Content-Transfer-Encoding: binary
 <?plugin CreateToc jshide||=1 with_toclink||=1 ?>
 ----
 ! Synopsis
-Help:TextFormattingRules <br>
+[Help:TextFormattingRules] <br>
 *Emphasis:* <tt>~_</tt> for _italics_, <tt>~*</tt> for *bold*,
 <tt>~_~*</tt> for _*both*_, <tt>~=</tt> for =fixed width=.%%%
 *Lists:* <tt>~*</tt> for bullet lists, <tt>#</tt> for numbered lists,
@@ -53,7 +53,7 @@ _Term~:~<new-line> definition_ for definition lists.<br>
    Two tildes inside an URL (without brackets) become a single tilde.
    => [http://foo.bar/~user] or http://foo.bar/~~user
 * Special non-ascii or non-latin characters are printed as-is only if supported
-  by the native wiki CHARSET. Add such characters on a non-supported CHARSET with the Help:RawHtmlPlugin if it is enabled by the Admin and e.g. the &#num; syntax. %%%
+  by the native wiki CHARSET. Add such characters on a non-supported CHARSET with the [Help:RawHtmlPlugin] if it is enabled by the Admin and e.g. the &#num; syntax. %%%
   E.g. These japanese euc-jp chars '&#12363;&#12425; &#26032;&#35215;&#12506;&#12540;&#12472;' on this =<?plugin SystemInfo CHARSET?>= wiki.
   And with the plugin: <?plugin RawHtml &#12363;&#12425; &#26032;&#35215;&#12506;&#12540;&#12472; ?> %%%
   And this is how it should look: [http://phpwiki.sourceforge.net/demo/images/chars-releasenotes-japanese.png]
@@ -214,7 +214,7 @@ _Term~:~<new-line> definition_ for definition lists.<br>
   Term 2 |
      Here's definition 2.
 
-* Old-style tables are supported through the Help:OldStyleTablePlugin
+* Old-style tables are supported through the [Help:OldStyleTablePlugin]
 
 !!! HTML Mark-Up Language
 
