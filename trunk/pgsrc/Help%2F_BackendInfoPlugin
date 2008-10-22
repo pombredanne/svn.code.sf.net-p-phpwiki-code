@@ -18,7 +18,7 @@ cleared everything out though.
 
 !!! Usage
 <verbatim>
-  <?plugin _BackendInfo ?>
+<?plugin _BackendInfo ?>
 </verbatim>
 
 !!! Arguments
@@ -28,16 +28,17 @@ page _(default: current pagename)_:
 
 !!! Example
 
-See DebugInfo
+See [DebugInfo]
 
 !!! Author
-[Jeff Dairiki|PhpWiki:JeffDairiki] 2002 for 1.3.2-jeffs-hacks
+* [Jeff Dairiki|PhpWiki:JeffDairiki]
 
 !!! See Also
-
-DebugInfo is the corresponding Help:ActionPage.
-
-EditMetaData, Help:EditMetaDataPlugin, Help:_AuthInfoPlugin, Help:_GroupInfoPlugin
+* [DebugInfo] is the corresponding [Help:ActionPage]
+* [EditMetaData]
+* [Help:EditMetaDataPlugin]
+* [Help:_AuthInfoPlugin]
+* [Help:_GroupInfoPlugin]
 
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]

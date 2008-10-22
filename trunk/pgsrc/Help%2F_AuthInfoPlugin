@@ -18,7 +18,7 @@ cleared everything out though.
 
 !!! Usage
 <verbatim>
-  <?plugin _AuthInfo userid||=AdminUser ?>
+<?plugin _AuthInfo userid||=AdminUser ?>
 </verbatim>
 
 !!! Arguments
@@ -28,15 +28,16 @@ userid:
 
 !!! Example
 
-See DebugAuthInfo
+See [DebugAuthInfo]
 
 !!! Authors
-[Jeff Dairiki|PhpWiki:JeffDairiki], [Reini Urban|PhpWiki:ReiniUrban]
+* [Jeff Dairiki|PhpWiki:JeffDairiki]
+* [Reini Urban|PhpWiki:ReiniUrban]
 
 !!! See Also
+* [DebugAuthInfo] is the corresponding [Help:ActionPage].
+* [Help:_GroupInfoPlugin]
+* [Help:_BackendInfoPlugin]
 
-DebugAuthInfo is the corresponding Help:ActionPage.
-
-Help:_GroupInfoPlugin, Help:_BackendInfoPlugin
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]

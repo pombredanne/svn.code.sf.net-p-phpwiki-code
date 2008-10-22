@@ -18,7 +18,7 @@ cleared everything out though.
 
 !!! Usage
 <verbatim>
-  <?plugin _GroupInfo ?>
+<?plugin _GroupInfo ?>
 </verbatim>
 
 !!! Arguments
@@ -28,16 +28,16 @@ page _(default: current pagename)_:
 
 !!! Example
 
-See DebugGroupInfo
+See [DebugGroupInfo]
 
 !!! Author
 [Charles Corrigan|PhpWiki:CharlesCorrigan]
 
 !!! See Also
 
-DebugGroupInfo is the corresponding Help:ActionPage.
-
-Help:_AuthInfoPlugin, Help:_BackendInfoPlugin
+* [DebugGroupInfo] is the corresponding [Help:ActionPage].
+* [Help:_AuthInfoPlugin]
+* [Help:_BackendInfoPlugin]
 
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]

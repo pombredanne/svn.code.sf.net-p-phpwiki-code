@@ -52,8 +52,8 @@ would produce:
 <?plugin text2png text='Hello WikiWorld!' ?>
 
 !!! See Also
-
-Help:TeX2PngPlugin, Help:TexToPngPlugin
+* [Help:TeX2PngPlugin]
+* [Help:TexToPngPlugin]
 
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]

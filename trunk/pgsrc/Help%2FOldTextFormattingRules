@@ -9,7 +9,7 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 ! Synopsis
-Help:OldTextFormattingRules <br>
+[Help:OldTextFormattingRules] <br>
 <strong>Emphasis:</strong> '<strong></strong>' for <em>italics</em>, _<em></em>~_ for <strong>bold</strong>, '<strong></strong>'_<em></em>~_ for <em><strong>both</strong></em>.%%%
 <strong>Lists:</strong> * for bullet lists, # for numbered lists, <em><strong>;</strong> term <strong>~:</strong> definition</em> for definition lists.%%%
 <strong>References:</strong> ~JoinCapitalizedWords or use square brackets for a ~[page link] or URL ~[~http~://cool.wiki.int/~].%%%
@@ -98,7 +98,7 @@ will not work''
 ?>
 
 ;:Note that multiple <strong>|</strong>'s lead to spanned columns, and <strong>v</strong>'s can be used to span rows.  A <strong>></strong> generates a right justified column, <strong><</strong> a left justified column and <strong>^</strong> a centered column (which is the default.)
-;:With the new Help:TextFormatingsRules tables are only supported with the Help:OldStyleTablePlugin.
+;:With the new [Help:TextFormatingsRules] tables are only supported with the [Help:OldStyleTablePlugin].
 
 
 ! HTML Mark-Up Language

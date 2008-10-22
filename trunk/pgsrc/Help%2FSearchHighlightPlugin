@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~SearchHighLight* [plugin|Help:WikiPlugin] is an Help:ActionPage plugin, 
+The *~SearchHighLight* [plugin|Help:WikiPlugin] is an [Help:ActionPage] plugin, 
 which is only used internally.
 
 When someone is referred from a search engine like Google, Yahoo
