@@ -1,4 +1,4 @@
-Date: Mon, 16 Oct 2008 4:15:24 +0000
+Date: Mon, 22 Oct 2008 4:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -123,6 +123,8 @@ new phpwiki engine update:
 [ Upgrade | phpwiki:HomePage?action=upgrade ]
 
 !!! Format of the files
+
+!! Current Format
 
 Currently the pages are stored, one per file, as MIME (RFC:2045)
 e-mail (RFC:822) messages. The content-type _application/x-phpwiki_
