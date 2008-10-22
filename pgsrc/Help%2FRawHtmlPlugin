@@ -8,9 +8,9 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-<b>With this plugin you can embed raw unfiltered HTML in the page source; say, for example, you want to put in a complicated set of nested tables to display data. By default, raw HTML is not allowed in most Wikis due to security problems (because malicious users can insert redirects, Javascript, etc.)</b>
+With this [plugin|Help:WikiPlugin] you can embed raw unfiltered HTML in the page source; say, for example, you want to put in a complicated set of nested tables to display data. By default, raw HTML is not allowed in most Wikis due to security problems (because malicious users can insert redirects, Javascript, etc.)
 
-<b>For this plugin to work, the page must be locked by the administrator. If you are seeing the raw HTML being displayed below, instead of rendered, try locking the page (log in as the administrator first).</b>
+For this plugin to work, the page must be locked by the administrator. If you are seeing the raw HTML being displayed below, instead of rendered, try locking the page (log in as the administrator first).
 
 <?plugin RawHtml
 
@@ -51,6 +51,5 @@ Content-Transfer-Encoding: binary
 </table>
 ?>
 
--------------
-
+----
 [PhpWikiDocumentation] [CategoryWikiPlugin]
