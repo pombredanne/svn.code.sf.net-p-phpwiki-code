@@ -11,5 +11,4 @@ Content-Transfer-Encoding: binary
 <?plugin IncludePage page=Help/WikiPlugin section="Action Pages" ?>
 
 ----
-
 [PhpWikiDocumentation]
