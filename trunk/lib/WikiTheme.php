@@ -987,9 +987,11 @@ class WikiTheme {
             case 'diff':   return _("Diff");
             case 'logout': return _("Sign Out");
             case 'login':  return _("Sign In");
+            case 'rename': return _("Rename Page");
             case 'lock':   return _("Lock Page");
             case 'unlock': return _("Unlock Page");
             case 'remove': return _("Remove Page");
+            case 'purge':  return _("Purge Page");
             default:
                 // I don't think the rest of these actually get used.
                 // 'setprefs'
