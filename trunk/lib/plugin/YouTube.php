@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2007 Reini Urban
+ Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 */
 
 /**
@@ -141,7 +142,8 @@ extends WikiPlugin
 			    HTML::img(array('src' => "http://img.youtube.com/vi/".
 					    $v."/".(($size == 'large')?"0":"2").".jpg",
 					    'width' => $width,
-					    'height' => $height)));
+					    'height' => $height,
+                                            'alt' => "YouTube video $v")));
 	    return $link;
 	}
 	$object = HTML::object(array('class' => 'inlineobject',
@@ -172,12 +174,6 @@ extends WikiPlugin
 	return '';
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2007/05/24 18:40:30  rurban
-// new plugin
-//
-//
 
 // For emacs users
 // Local Variables:
