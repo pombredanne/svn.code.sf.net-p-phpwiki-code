@@ -150,20 +150,17 @@ extends WikiPlugin
 				     'width' => $width,
 				     'height' => $height,
 				     ));
-	$attrs = array('src' => $url,
+	$attrs = array('data' => $url,
 		       'type' => 'application/x-shockwave-flash', 
-		       'wmode' => 'transparent',
 		       'width' => $width,
 		       'height' => $height);
 	if (isBrowserSafari()) {
-	    return HTML::embed($attrs);
+	    return HTML::object($attrs);
 	}
 	$object->pushContent(HTML::param(array('name' => 'movie', 'value' => $url)));
 	$object->pushContent(HTML::param(array('name' => 'wmode', 'value' => 'transparent')));
-	$object->pushContent(HTML::embed($attrs));
+	$object->pushContent(HTML::object($attrs));
 	return $object;
-
-	//<object width="$w" height="$h"><param name="movie" value="http://www.youtube.com/v/$v"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/$v" type="application/x-shockwave-flash" wmode="transparent" width="$w" height="$h"></embed></object>
     }
 
     function Daily_pick() {
