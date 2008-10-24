@@ -459,16 +459,23 @@ extends _RecentChanges_Formatter
         if ($args['historylinks'])
             $line->pushContent($this->historyLink($rev), ' ');
 
+        // Do not display a link for a deleted page, just the page name
+        if ($rev->hasDefaultContents()) {
+            $linkorname = $rev->_pagename;
+        } else {
+            $linkorname = $this->pageLink($rev);
+        }
+
 	if (isa($WikiTheme, 'WikiTheme_MonoBook')) {
 	    $line->pushContent(
 			       $args['historylinks'] ? '' : $this->historyLink($rev),
-			       ' . . ', $this->pageLink($rev), '; ',
+			       ' . . ', $linkorname, '; ',
 			       $time, ' . . ',
 			       $this->authorLink($rev),' ',
 			       $this->authorContribs($rev),' ',
 			       $this->summaryAsHTML($rev));
 	} else {
-	    $line->pushContent($this->pageLink($rev), ' ',
+	    $line->pushContent($linkorname, ' ',
 			       $time, ' ',
 			       $this->summaryAsHTML($rev),
 			       ' ... ',
