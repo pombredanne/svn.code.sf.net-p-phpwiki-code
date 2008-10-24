@@ -1581,6 +1581,8 @@ $properties["TOOLBAR_PAGELINK_PULLDOWN"] =
     new _define_commented_optional('TOOLBAR_PAGELINK_PULLDOWN');
 $properties["TOOLBAR_TEMPLATE_PULLDOWN"] =
     new _define_commented_optional('TOOLBAR_TEMPLATE_PULLDOWN');
+$properties["TOOLBAR_IMAGE_PULLDOWN"] =
+    new _define_commented_optional('TOOLBAR_IMAGE_PULLDOWN');
 $properties["FULLTEXTSEARCH_STOPLIST"] =
     new _define_commented_optional('FULLTEXTSEARCH_STOPLIST');
 
