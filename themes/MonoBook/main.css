@@ -363,16 +363,10 @@ table.small {
 .toc .toctitle {
 	text-align: center;
 }
-/*
-#toc ul,
-.toc ul {
-	list-style-type: none;
-	list-style-image: none;
-	margin-left: 0;
-	padding-left: 0;
-	text-align: left;
+#toc p, 
+.toc p { 
+        margin: 0;
 }
-*/
 #toc ul,
 .toc ul {
 	width: auto;
