@@ -94,6 +94,8 @@ tar
 tar.gz
 txt
 xls
+xml
+xsd
 zip");
         $this->disallowed_extensions = explode("\n",
 "ad[ep]
