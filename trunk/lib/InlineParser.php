@@ -315,6 +315,7 @@ class Markup_escape  extends SimpleMarkup
  * Support for the following attributes: see stdlib.php:LinkImage()
  *   size=<precent>%, size=<width>x<height>
  *   border=n, align=\w+, hspace=n, vspace=n
+ *   width=n, height=n
  */
 function isImageLink($link) {
     if (!$link) return false;
