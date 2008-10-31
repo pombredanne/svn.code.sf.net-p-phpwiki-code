@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
+ Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -64,6 +65,15 @@ class Upgrade {
      * TODO: check for the pgsrc_version number, not the revision mtime only
      */
     function doPgsrcUpdate($pagename, $path, $filename) {
+	// don't ever update the HomePage
+	if ((defined(HOME_PAGE) and ($pagename == HOME_PAGE))
+	    or ($pagename == _("HomePage"))
+	    or ($pagename == "HomePage")) {
+	    echo "$path/$pagename: ",_("always skip the HomePage."),
+	    _(" skipped"),".<br />\n";
+            return;
+	}
+
 	$page = $this->dbi->getPage($pagename);
 	if ($page->exists()) {
 	    // check mtime: update automatically if pgsrc is newer
@@ -155,23 +165,10 @@ class Upgrade {
 	$path = FindLocalizedFile(WIKI_PGSRC);
 	$pgsrc = new fileSet($path);
 	// fixme: verification, ...
-	$isHomePage = false;
 	foreach ($pgsrc->getFiles() as $filename) {
 	    if (substr($filename,-1,1) == '~') continue;
 	    if (substr($filename,-5,5) == '.orig') continue;
 	    $pagename = urldecode($filename);
-	    // don't ever update the HomePage
-	    if (defined(HOME_PAGE))
-		if ($pagename == HOME_PAGE) $isHomePage = true;
-		else
-		    if ($pagename == _("HomePage")) $isHomePage = true;
-	    if ($pagename == "HomePage") $isHomePage = true;
-	    if ($isHomePage) {
-		echo "$path/$pagename: ",_("always skip the HomePage."),
-		    _(" skipped"),".<br />\n";
-		$isHomePage = false;
-		continue;
-	    }
 	    if (!$this->isActionPage($filename)) {
 		// There're a lot of now unneeded pages around. 
 		// At first rename the BlaPlugin pages to Help/<pagename> and then to the update.
@@ -183,7 +180,6 @@ class Upgrade {
 	}
 
 	// Now check some theme specific pgsrc files (blog, wikilens, custom). 
-	// WARNING: Also override the HomePage here.
 	global $WikiTheme;
 	$path = $WikiTheme->file("pgsrc");
         // TBD: the call to fileSet prints a warning:
