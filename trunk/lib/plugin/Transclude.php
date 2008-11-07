@@ -62,8 +62,9 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array( 'src'     => false, // the src url to include
+                      'title'   =>  _("Transcluded page"), // title of the iframe
                       'height'  => 450, // height of the iframe
-                      'quiet'   => false // if set, frame appears as normal content
+                      'quiet'   => false // if set, iframe appears as normal content
                     );
     }
 
@@ -95,7 +96,7 @@ extends WikiPlugin
             return $this->error(_("Bad url in src: remove all of <, >, \""));
         }
 
-        $params = array('title' => _("Transcluded page"),
+        $params = array('title' => $title,
                         'src' => $src,
                         'width' => "100%",
                         'height' => $height,
