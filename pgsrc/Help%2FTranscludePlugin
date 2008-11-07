@@ -23,6 +23,10 @@ pages within a wiki page.
 | The URL of the page to transclude
 | ''none''
 |-
+| title
+| The title of the page to transclude
+| ''Transcluded page''
+|-
 | height
 | The (initial) height of the transclusion frame. If, possible, after the transcluded page is loaded, the frame is resized via Javascript so that it fits the entire transcluded page. (See below for more.)
 | 450
