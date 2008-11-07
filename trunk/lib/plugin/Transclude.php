@@ -110,7 +110,7 @@ extends WikiPlugin
         $noframe_msg = HTML::div(array('class' => 'transclusion'),
                                  HTML::p(array(), $noframe_msg));
 
-        $iframe = HTML::div(HTML::iframe($params, $noframe_msg));
+        $iframe = HTML::iframe($params, $noframe_msg);
 
         /* This doesn't work very well...  maybe because CSS screws up NS4 anyway...
         $iframe = new HtmlElement('ilayer', array('src' => $src), $iframe);
