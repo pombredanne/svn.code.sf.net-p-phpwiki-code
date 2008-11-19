@@ -60,12 +60,11 @@
 <tr valign="middle">
   <td> 
     <?=$MINOR_EDIT_CB ?> <label for="edit-minor_edit"><?=_("This is a minor change.")?></label><br />
-    <?=$OLD_MARKUP_CB?>  <label for="useOldMarkup"><?=_("Use old markup")?></label> <?=$OLD_MARKUP_CONVERT?>
+    <?=$OLD_MARKUP_CB ?> <label for="useOldMarkup"><?=_("Use old markup")?></label> <?=$OLD_MARKUP_CONVERT?>
   </td>
   <td align="center">
     <?php if (!empty($WYSIWYG_B)){ ?>
-    <?=$WYSIWYG_B?>
-    <?=$SEP?>
+    <?=$WYSIWYG_B?><?=$SEP?>
     <?php } ?>
     <?= $PREVIEW_B ?>
     <?php if ($SAVE_B)  { ?> 
@@ -78,8 +77,10 @@
 <tr>
   <td>
     <?php if ($user->isAdmin()) { ?> 
-    <?= $LOCKED_CB ?> <label for="edit-locked"><?=_("Locked")?></label>
-    <?php } ?>
+    <?= $LOCKED_CB ?> <label for="edit-locked" title="<?=_("Make the page read-only?")?>"><?=_("Locked")?></label>
+    <?php if (ENABLE_PAGE_PUBLIC) { ?>
+    &nbsp;&nbsp;<?= $PUBLIC_CB ?> <label for="edit-public" title="<?=_("Export to a seperate public area?")?>"><?=_("Public")?></label>
+    <?php }} ?>
   </td>
   <td colspan="2" align="right">
     <?php if (!$user->isAuthenticated()) { ?>
