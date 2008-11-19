@@ -233,19 +233,35 @@ class PageEditor
     }
 
     function updateLock() {
-        if ((bool)$this->page->get('locked') == (bool)$this->locked)
-            return false;       // Not changed.
+        $changed = false;
+        if (!ENABLE_PAGE_PUBLIC) {
+            if ((bool)$this->page->get('locked') == (bool)$this->locked)
+                return false;       // Not changed.
+        }
 
         if (!$this->user->isAdmin()) {
             // FIXME: some sort of message
             return false;         // not allowed.
         }
 
-        $this->page->set('locked', (bool)$this->locked);
-        $this->tokens['LOCK_CHANGED_MSG']
-            = $this->locked ? _("Page now locked.") : _("Page now unlocked.");
+        if (ENABLE_PAGE_PUBLIC) {
+            if ((bool)$this->page->get('public') != (bool)$this->public) {
+                $this->page->set('public', (bool)$this->public);
+                $this->tokens['LOCK_CHANGED_MSG']
+                    = ($this->public 
+                       ? _("Page now public.")
+                       : _("Page now not-public.")) . " ";
+                $changed = true;
+            }
 
-        return true;            // lock changed.
+            $this->page->set('locked', (bool)$this->locked);
+            $this->tokens['LOCK_CHANGED_MSG']
+                .= $this->locked 
+                ? _("Page now locked.") 
+                : _("Page now unlocked.");
+            $changed = true;
+        }
+        return $changed;            // lock changed.
     }
 
     function savePage () {
@@ -654,6 +670,14 @@ class PageEditor
                                 'disabled' => (bool) !$this->user->isadmin(),
                                 'checked'  => (bool) $this->locked));
 
+        if (ENABLE_PAGE_PUBLIC) {
+            $el['PUBLIC_CB']
+            = HTML::input(array('type' => 'checkbox',
+                                'name' => 'edit[public]',
+                                'id'   => 'edit-public',
+                                'disabled' => (bool) !$this->user->isAdmin(),
+                                'checked'  => (bool) $this->page->get('public')));
+        }
         if (ENABLE_WYSIWYG) {
 	    if (($this->version == 0) and ($request->getArg('mode') != 'wysiwyg')) {
 		$el['WYSIWYG_B'] = Button(array("action" => "edit", "mode" => "wysiwyg"), "Wysiwyg Editor");
@@ -746,6 +770,8 @@ class PageEditor
 
         $this->meta = array_merge($this->meta, $meta);
         $this->locked = !empty($posted['locked']);
+        if (ENABLE_PAGE_PUBLIC)
+            $this->public = !empty($posted['public']);
 
 	foreach (array('preview','save','edit_convert',
 		       'keep_old','overwrite','diff','upload') as $o) 
