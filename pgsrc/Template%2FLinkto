@@ -4,7 +4,8 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Template%2FLinkto;
   flags="";
-  markup=2
+  markup=2;
+  charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
 <em>SemanticSearch for pages with the relation %%LINKTO%% :: *%%PAGENAME%%* (a Linkto)</em>
