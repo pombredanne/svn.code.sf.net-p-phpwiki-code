@@ -387,8 +387,11 @@ class _PageList_Column_content extends _PageList_Column {
         if (empty($pagelist->_sortby[$this->_field]))
             unset($revision_handle->_data['%content']);
         if ($this->_field == 'hi_content') {
-            if (!empty($revision_handle->_data['%pagedata']))
-                unset($revision_handle->_data['%pagedata']['_cached_html']);
+            if (!empty($revision_handle->_data['%pagedata'])) {
+                $revision_handle->_data['%pagedata']['_cached_html'] = '';
+                // PHP Fatal error:  Cannot unset string offsets
+                //unset($revision_handle->_data['%pagedata']['_cached_html']);
+            }
             $search = $this->search;
             $score = '';
             if (!empty($page_handle->score))
