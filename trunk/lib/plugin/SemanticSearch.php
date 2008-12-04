@@ -327,7 +327,7 @@ extends WikiPlugin
 	}
 	// can we merge two different pagelist?
 	if (!empty($attribute)) {
-	    $relquery =  regex_query($attribute, $args['case_exact'], $args['regex']);
+	    $relquery =  $this->regex_query($attribute, $args['case_exact'], $args['regex']);
 	    if (!in_array($attr_op, $this->_supported_operators)) {
 		return HTML($form, $this->error(fmt("Illegal operator: %s",
 					            HTML::tt($attr_op))));
