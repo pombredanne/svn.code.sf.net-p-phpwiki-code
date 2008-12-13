@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -52,6 +53,7 @@ extends WikiPlugin
                      'last'    => '',
                      'order'   => '',
                      'style'   => 'button', // or 'text'
+                     'align'   => 'left', // or 'right', or 'center'
                      'class'   => 'wikiaction'
                      );
     }
@@ -79,11 +81,27 @@ extends WikiPlugin
 
         global $WikiTheme;
         $sep = $WikiTheme->getButtonSeparator();
-        $links = HTML();
+        if ($align == 'center') {
+            $tr = HTML::tr();
+            $links = HTML::table(array('cellpadding' => 0, 'cellspacing' => 0, 'width' => '100%'), $tr);
+        } else if ($align == 'right') {
+            $td = HTML::td(array('align' => $align));
+            $links = HTML::table(array('cellpadding' => 0, 'cellspacing' => 0, 'width' => '100%'), HTML::tr($td));
+        } else {
+            $links = HTML();
+        }
+
         if ($style == 'text') {
-            if (!$sep)
+            if (!$sep) {
                 $sep = " | "; // force some kind of separator
-            $links->pushcontent(" [ ");
+            }
+            if ($align == 'center') {
+                $tr->pushContent(HTML::td(array('align' => $align), " [ "));
+            } else if ($align == 'right') {
+                $td->pushcontent(" [ ");
+            } else {
+                $links->pushcontent(" [ ");
+            }
         }
         $last_is_text = false;
         $this_is_first = true;
@@ -94,35 +112,92 @@ extends WikiPlugin
                 if ($style == 'button') {
                     // localized version: _("Previous").gif
                     if ($imgurl = $WikiTheme->getButtonURL($label)) {
-                        if ($last_is_text)
-                            $links->pushContent($sep);
-                        $links->pushcontent(new ImageButton($label, $url,
-                                                            false, $imgurl));
+                        if ($last_is_text) {
+                            if ($align == 'center') {
+                                $tr->pushContent(HTML::td(array('align' => $align), $sep));
+                            } else if ($align == 'right') {
+                                $td->pushcontent($sep);
+                            } else {
+                                $links->pushcontent($sep);
+                            }
+                        }
+                        if ($align == 'center') {
+                            $tr->pushContent(HTML::td(array('align' => $align), new ImageButton($label, $url, false, $imgurl)));
+                        } else if ($align == 'right') {
+                            $td->pushContent(new ImageButton($label, $url, false, $imgurl));
+                        } else {
+                            $links->pushcontent(new ImageButton($label, $url, false, $imgurl));
+                        }
                         $last_is_text = false;
                         // generic version: prev.gif
                     } elseif ($imgurl = $WikiTheme->getButtonURL($dir)) {
-                        if ($last_is_text)
-                            $links->pushContent($sep);
-                        $links->pushContent(new ImageButton($label, $url,
-                                                            false, $imgurl));
+                        if ($last_is_text) {
+                            if ($align == 'center') {
+                                $tr->pushContent(HTML::td(array('align' => $align), $sep));
+                            } else if ($align == 'right') {
+                                $td->pushcontent($sep);
+                            } else {
+                                $links->pushcontent($sep);
+                            }
+                        }
+                        if ($align == 'center') {
+                            $tr->pushContent(HTML::td(array('align' => $align), new ImageButton($label, $url, false, $imgurl)));
+                        } else if ($align == 'right') {
+                            $td->pushContent(new ImageButton($label, $url, false, $imgurl));
+                        } else {
+                            $links->pushcontent(new ImageButton($label, $url, false, $imgurl));
+                        }
                         $last_is_text = false;
                     } else { // text only
-                        if (! $this_is_first)
-                            $links->pushContent($sep);
-                        $links->pushContent(new Button($label, $url, $class));
+                        if (! $this_is_first) {
+                            if ($align == 'center') {
+                                $tr->pushContent(HTML::td(array('align' => $align), $sep));
+                            } else if ($align == 'right') {
+                                $td->pushcontent($sep);
+                            } else {
+                                $links->pushcontent($sep);
+                            }
+                        }
+                        if ($align == 'center') {
+                            $tr->pushContent(HTML::td(array('align' => $align), new Button($label, $url, $class)));
+                        } else if ($align == 'right') {
+                            $td->pushContent(new Button($label, $url, $class));
+                        } else {
+                            $links->pushcontent(new Button($label, $url, $class));
+                        }
                         $last_is_text = true;
                     }
                 } else {
-                    if (! $this_is_first)
-                        $links->pushContent($sep);
-                    $links->pushContent(new Button($label, $url, $class));
+                    if (! $this_is_first) {
+                        if ($align == 'center') {
+                            $tr->pushContent(HTML::td(array('align' => $align), $sep));
+                        } else if ($align == 'right') {
+                            $td->pushcontent($sep);
+                        } else {
+                            $links->pushcontent($sep);
+                        }
+                    }
+                    if ($align == 'center') {
+                        $tr->pushContent(HTML::td(array('align' => $align), new Button($label, $url, $class)));
+                    } else if ($align == 'right') {
+                        $td->pushContent(new Button($label, $url, $class));
+                    } else {
+                        $links->pushcontent(new Button($label, $url, $class));
+                    }
                     $last_is_text = true;
                 }
                 $this_is_first = false;
             }
         }
-        if ($style == 'text')
-            $links->pushcontent(" ] ");
+        if ($style == 'text') {
+            if ($align == 'center') {
+                $tr->pushContent(HTML::td(array('align' => $align), " ] "));
+            } else if ($align == 'right') {
+                $td->pushcontent(" ] ");
+            } else {
+                $links->pushcontent(" ] ");
+            }
+        }
         return $links;
     }
 }
