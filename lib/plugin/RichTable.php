@@ -3,8 +3,6 @@ rcs_id('$Id$');
 /**
   RichTablePlugin
   A PhpWiki plugin that allows insertion of tables using a richer syntax.
-  Src: http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin
-  Docs: http://phpwiki.org/RichTablePlugin
 */
 /* 
  * Copyright (C) 2003 Sameer D. Sahasrabuddhe
@@ -61,7 +59,7 @@ extends WikiPlugin
  
         if ($lines[0][0] == '*') {
             $line = substr(array_shift($lines),1);
-            $attrs = $this->_parse_attr($line);
+            $attrs = parse_attributes($line);
             foreach ($attrs as $key => $value) {
                 if (in_array ($key, array("id", "class", "title", "style",
                                           "bgcolor", "frame", "rules", "border",
@@ -86,7 +84,7 @@ extends WikiPlugin
                     $table->pushContent($row);
                 }	
                 $row = HTML::tr();
-                $attrs = $this->_parse_attr(substr($line,1));
+                $attrs = parse_attributes(substr($line,1));
                 foreach ($attrs as $key => $value) {
                     if (in_array ($key, array("id", "class", "title", "style",
                                               "bgcolor", "align", "valign"))) {
@@ -106,7 +104,7 @@ extends WikiPlugin
                 $cell = HTML::td();
                 $line = substr($line, 1);
                 if ($line[0] == "*" ) {
-                    $attrs = $this->_parse_attr(substr($line,1));
+                    $attrs = parse_attributes(substr($line,1));
                     foreach ($attrs as $key => $value) {
                         if (in_array ($key, array("id", "class", "title", "style",
                                                   "colspan", "rowspan", "width", "height",
@@ -133,23 +131,6 @@ extends WikiPlugin
             $table->pushContent($row);
         }
         return $table;
-    }
-
-    function _parse_attr($line) {
-        // We allow attributes with or without quotes (")
-        // border=1, cellpadding="5"
-        // style="font-family: sans-serif; border-top:1px solid #dddddd;
-        // What will not work is style with comma inside, e. g.
-        // style="font-family: Verdana, Arial, Helvetica, sans-serif"
-        $attr_chunks = preg_split("/\s*,\s*/", strtolower($line));
-        $options = array();
-        foreach ($attr_chunks as $attr_pair) {
-            if (empty($attr_pair)) continue;
-            $key_val = preg_split("/\s*=\s*/", $attr_pair);
-            if (!empty($key_val[1]))
-                $options[trim($key_val[0])] = trim(str_replace("\"", "", $key_val[1]));
-        }
-        return $options;
     }
 }
 
