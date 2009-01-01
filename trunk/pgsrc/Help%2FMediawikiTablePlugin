@@ -1,4 +1,4 @@
-Date: Mon, 28 Aug 2008 14:15:24 +0000
+Date: Mon, 22 Dec 2008 14:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,13 +8,18 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~MediawikiTable* [plugin|Help:WikiPlugin] takes off from the [RichTablePlugin|Help:RichTablePlugin]. It allows a user to specify a <tt><table></tt> with (a subset of) the syntax used by Mediawiki.
+The *~MediawikiTable* [plugin|Help:WikiPlugin] takes off from the [RichTable|Help:RichTablePlugin] plugin. It allows a user to specify a <tt><table></tt> with (a subset of) the syntax used by Mediawiki.
 
 * The table starts with a line <b>{~|</b> and ends with a line <b>|~}</b>.
 * An optional table caption is made with a line starting with a pipe and a plus sign <b>|+</b> followed by the caption.
+* An optional table summary is made with a line starting with a pipe and an equal sign <b>|=</b> followed by the summary.
 * A table row starts with a pipe and a hyphen: <b>|-</b>.
 * A table cell starts with a pipe on a new line, or a double bar <b>||</b> on the same line.
 * A header table cell starts with an exclamation mark, or a double exclamation mark <b>!!</b> on the same line (works only with an explicit plugin call).
+
+The summary syntax is an extension to the Mediawiki syntax. 
+You can also simply put the summary as an attribute to the table.
+The summary is necessary to be able to create accessible tables.
 
 !!! HTML attributes
 
@@ -53,6 +58,7 @@ The attributes might be put with or without double quotes.
 
 {| border="1", style="width: 100%"
 |+ style="font-weight: bold; font-size: 150%;" | This is the table caption
+|= This is the table summary
 |- style="white-space: nowrap"
 | <b>Header 1</b>
 | <b>Header 2</b>
@@ -70,6 +76,7 @@ The above table is rendered from:
 <verbatim>
 {| border="1", style="width: 100%"
 |+ style="font-weight: bold; font-size: 150%;" | This is the table caption
+|= This is the table summary
 |- style="white-space: nowrap"
 | <b>Header 1</b>
 | <b>Header 2</b>

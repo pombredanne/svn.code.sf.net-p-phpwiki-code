@@ -136,6 +136,12 @@ extends WikiPlugin
                 continue;
             }
 
+            // Table summary
+            if (substr($line,0,2) == "|=") {
+                $line = substr($line,2);
+                $table->setAttr("summary", trim($line));
+            }
+
             // Table caption
             if (substr($line,0,2) == "|+") {
 
