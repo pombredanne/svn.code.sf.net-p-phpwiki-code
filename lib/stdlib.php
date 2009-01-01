@@ -1,6 +1,7 @@
 <?php //rcs_id('$Id$');
 /*
  Copyright 1999-2008 $ThePhpWikiProgrammingTeam
+ Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -2299,6 +2300,31 @@ function javascript_quote_string($s) {
 
 function isSerialized($s) {
     return (!empty($s) and (strlen($s) > 3) and (substr($s,1,1) == ':'));
+}
+
+/**
+ * Take a string and return an array of pairs (attribute name, attribute value)
+ *
+ * We allow attributes with or without double quotes (")
+ * Attribute-value pairs may be separated by space or comma
+ * border=1, cellpadding="5"
+ * border=1 cellpadding="5"
+ * style="font-family: sans-serif; border-top:1px solid #dddddd;"
+ * What will not work is style with comma inside, e. g.
+ / style="font-family: Verdana, Arial, Helvetica, sans-serif"
+ */
+function parse_attributes($line) {
+    $line = strtolower($line);
+    $line = str_replace(",", "", $line);
+    $attr_chunks = preg_split("/\s* \s*/", $line);
+    $options = array();
+    foreach ($attr_chunks as $attr_pair) {
+        if (empty($attr_pair)) continue;
+        $key_val = preg_split("/\s*=\s*/", $attr_pair);
+        if (!empty($key_val[1]))
+            $options[trim($key_val[0])] = trim(str_replace("\"", "", $key_val[1]));
+    }
+    return $options;
 }
 
 // (c-file-style: "gnu")
