@@ -609,6 +609,20 @@ class Markup_linebreak extends SimpleMarkup
     }
 }
 
+class Markup_wikicreole_monospace extends BalancedMarkup
+{
+    var $_start_regexp = "\\#\\#";
+ 
+    function getEndRegexp ($match) {
+        return "\\#\\#"; 
+    }
+   
+    function markup ($match, $body) {
+        $tag = 'tt';
+        return new HtmlElement($tag, $body);
+    }
+}
+ 
 class Markup_wikicreole_subscript extends BalancedMarkup
 {
     var $_start_regexp = ",,";
@@ -995,6 +1009,7 @@ class InlineTransformer
             $markup_types = array
                 ('escape', 'wikicreolebracketlink', 'bracketlink', 'url',
                  'interwiki',  'semanticlink', 'wikiword', 'linebreak',
+                 'wikicreole_monospace',
                  'wikicreole_subscript', 'old_emphasis', 'nestled_emphasis',
                  'html_emphasis', 'html_abbr', 'plugin',
                  'isonumchars', 'isohexchars', /*'html_entities'*/
