@@ -794,7 +794,8 @@ class Markup_html_abbr extends BalancedMarkup
 {
     //rurban: abbr|acronym need an optional title tag.
     //sf.net bug #728595
-    var $_start_regexp = "<(?: abbr|acronym )(?: \stitle=[^>]*)?>";
+    // allowed attributes: title and lang
+    var $_start_regexp = "<(?: abbr|acronym )(?: [^>]*)?>"; 
 
     function getEndRegexp ($match) {
     	if (substr($match,1,4) == 'abbr')
@@ -809,12 +810,16 @@ class Markup_html_abbr extends BalancedMarkup
     	    $tag = 'abbr';
     	else
     	    $tag = 'acronym';
-    	$rest = substr($match,1+strlen($tag),-1);
-    	if (!empty($rest)) {
-    	    list($key,$val) = explode("=",$rest);
-    	    $args = array($key => $val);
-    	} else $args = array();
-        return new HtmlElement($tag, $args, $body);
+        $rest = substr($match,1+strlen($tag),-1);
+        $attrs = parse_attributes($rest);
+        // Remove attributes other than title and lang
+        $allowedargs = array();
+        foreach ($attrs as $key => $value) {
+            if (in_array ($key, array("title", "lang"))) {
+                $allowedargs[$key] = $value;
+            }
+        }
+        return new HtmlElement($tag, $allowedargs, $body);
     }
 }
 
