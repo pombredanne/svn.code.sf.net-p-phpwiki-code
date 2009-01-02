@@ -470,10 +470,20 @@ function LinkBracketLink($bracketlink) {
     }
 }
 
+class Markup_wikicreolebracketlink  extends SimpleMarkup
+{
+    var $_match_regexp = "\\#? \\[\\[ .*? [^]\\s] .*? \\]\\]";
+
+    function markup ($match) {
+        $link = LinkBracketLink($match);
+        assert($link->isInlineElement());
+        return $link;
+    }
+}
+
 class Markup_bracketlink  extends SimpleMarkup
 {
     var $_match_regexp = "\\#? \\[ .*? [^]\\s] .*? \\]";
-    // TODO: include second ] in regexp
     
     function markup ($match) {
         $link = LinkBracketLink($match);
@@ -983,7 +993,7 @@ class InlineTransformer
         if (!$markup_types) {
             $non_default = false;
             $markup_types = array
-                ('escape', 'bracketlink', 'url',
+                ('escape', 'wikicreolebracketlink', 'bracketlink', 'url',
                  'interwiki',  'semanticlink', 'wikiword', 'linebreak',
                  'wikicreole_subscript', 'old_emphasis', 'nestled_emphasis',
                  'html_emphasis', 'html_abbr', 'plugin',
@@ -1118,7 +1128,7 @@ class InlineTransformer
 class LinkTransformer extends InlineTransformer
 {
     function LinkTransformer () {
-        $this->InlineTransformer(array('escape', 'bracketlink', 'url',
+        $this->InlineTransformer(array('escape', 'wikicreolebracketlink', 'bracketlink', 'url',
                                        'semanticlink', 'interwiki', 'wikiword', 
                                        ));
     }
@@ -1183,145 +1193,6 @@ function TransformInlineNowiki($text, $markup = 2.0, $basepage=false) {
     }
     return $trfm->parse($text);
 }
-
-
-// $Log: not supported by cvs2svn $
-// Revision 1.106  2008/08/19 18:08:14  vargenau
-// Implement Wikicreole syntax for tables
-//
-// Revision 1.105  2008/08/19 18:05:40  vargenau
-// Implemented Wikicreole syntax for preformatted text
-//
-// Revision 1.104  2008/08/06 09:28:41  vargenau
-// Allow header syntax in Mediawiki tables
-//
-// Revision 1.103  2008/08/03 16:18:35  vargenau
-// Implement "{{foo?version=5}}" syntax for templates
-//
-// Revision 1.102  2008/08/03 16:03:47  vargenau
-// Implement Wikicreole syntax for links
-//
-// Revision 1.101  2008/08/03 15:56:20  vargenau
-// Implement Wikicreole syntax for line break
-//
-// Revision 1.100  2008/08/03 15:52:31  vargenau
-// Implement Wikicreole syntax for subscript
-//
-// Revision 1.99  2008/05/06 19:23:17  rurban
-// update (c)
-//
-// Revision 1.98  2008/03/21 20:35:52  rurban
-// Improve upon embedded ImgObject, such as [ *.mp3 ], objects.
-// Object tags now render as label correctly and param tags are also added.
-//
-// Revision 1.97  2008/03/18 20:25:49  rurban
-// Fixed "\n" => " " in [ link parsing ] by suggestion of Marc-Etienne
-//
-// Revision 1.96  2008/03/17 19:06:39  rurban
-// fix bug#1904088  Some brackets links with \n cause the parser to crash
-//
-// Revision 1.95  2008/02/15 20:02:49  vargenau
-// Allow <s> to strike; update Help for <s> and <strike>
-//
-// Revision 1.94  2008/01/31 20:40:10  vargenau
-// Implemented Mediawiki-like syntax for tables
-//
-// Revision 1.93  2007/09/26 16:54:34  rurban
-// Fix Bug#1802827 Template does not get expanded with {{ }} syntax.
-// by vargenau
-//
-// Revision 1.92  2007/08/10 21:58:01  rurban
-// Improve SemanticLink parsings:
-//   No units seperated by space allowed without []
-//   For :: (relations) only words, no comma,
-//   but for := (attributes) comma and dots are allowed. Units with groupsep.
-//   Ending dots or comma are not part of the link.
-//
-// Revision 1.91  2007/06/07 18:56:57  rurban
-// patch #1732793: allow \n, mult. {{ }} in one line, and single
-// letters (slightly improved) by AlJeux and ReiniUrban
-//
-// Revision 1.90  2007/03/18 17:35:14  rurban
-// Fix :DontStoreLink
-//
-// Revision 1.89  2007/02/17 14:16:28  rurban
-// fix color GREY to GRAY
-//
-// Revision 1.88  2007/01/21 13:15:50  rurban
-// Support spaces in attributes and relation links
-//
-// Revision 1.87  2007/01/20 15:53:51  rurban
-// Rewrite of SearchHighlight: through ActionPage and InlineParser
-//
-// Revision 1.86  2007/01/20 11:25:07  rurban
-// add SpellCheck support
-//
-// Revision 1.85  2007/01/07 18:42:49  rurban
-// Add support for non-bracket semantic relation parsing. Assert empty regex (interwikimap?) earlier. Change {{Template||}} vars handling to new style. Stricter interwikimap matching not to find semantic links
-//
-// Revision 1.84  2007/01/02 13:18:07  rurban
-// fix semantic attributes syntax :=, not :-, disable DIVSPAN and PLUGIN_MARKUP_MAP
-//
-// Revision 1.83  2006/12/22 00:23:24  rurban
-// Fix Bug #1540007 "hardened-php issue, crawlers related"
-// Broken str_replace with strings > 200 chars
-//
-// Revision 1.82  2006/12/02 19:53:05  rurban
-// Simplify DISABLE_MARKUP_WIKIWORD handling by adding the new function
-// stdlib: array_remove(). Hopefully PHP will not add this natively sooner
-// or later.
-//
-// Revision 1.81  2006/11/19 13:52:52  rurban
-// improve debug output: regex only once
-//
-// Revision 1.80  2006/10/12 06:32:30  rurban
-// Optionally support new tags <div>, <span> with ENABLE_MARKUP_DIVSPAN (in work)
-//
-// Revision 1.79  2006/10/08 12:38:11  rurban
-// New special interwiki link markup [:LinkTo] without storing the backlink
-//
-// Revision 1.78  2006/09/03 09:53:52  rurban
-// more colors, case-insensitive color names
-//
-// Revision 1.77  2006/08/25 19:02:02  rurban
-// patch #1348996 by Robert Litwiniec: fix show image semantics if label is given
-//
-// Revision 1.76  2006/08/19 11:02:35  rurban
-// add strike and del to html emphasis: Patch #1542894 by Kai Krakow
-//
-// Revision 1.75  2006/08/15 13:43:10  rurban
-// add Markup_xml_plugin (untested) and fix Markup_template_plugin
-//
-// Revision 1.74  2006/07/23 14:03:18  rurban
-// add new feature: DISABLE_MARKUP_WIKIWORD
-//
-// Revision 1.73  2006/04/15 12:20:36  rurban
-// fix relatives links patch by Joel Schaubert for [/
-//
-// Revision 1.72  2006/03/07 20:43:29  rurban
-// relative external link, if no internal subpage. by joel Schaubert
-//
-// Revision 1.71  2005/11/14 22:31:12  rurban
-// add SemanticWeb support
-//
-// Revision 1.70  2005/10/31 16:45:23  rurban
-// added cfg-able markups only for default TextTransformation, not for links and others
-//
-// Revision 1.69  2005/09/14 05:57:19  rurban
-// make ENABLE_MARKUP_TEMPLATE optional
-//
-// Revision 1.68  2005/09/10 21:24:32  rurban
-// optionally support {{Template|vars}} syntax
-//
-// Revision 1.67  2005/06/06 17:41:20  rurban
-// support new ENABLE_MARKUP_COLOR
-//
-// Revision 1.66  2005/04/23 11:15:49  rurban
-// handle allowed inlined objects within INLINE_IMAGES
-//
-// Revision 1.65  2005/03/27 18:24:17  rurban
-// add Log
-//
 
 // (c-file-style: "gnu")
 // Local Variables:
