@@ -75,7 +75,7 @@ extends WikiPlugin
         global $WikiTheme;
         include_once('lib/InlineParser.php');
 
-        $table = HTML::table(array('class' => "bordered"));
+        $table = array();
 
         $lines = preg_split('/\s*?\n\s*/', $argstr);
 
@@ -84,18 +84,42 @@ extends WikiPlugin
                 continue;
             }
             $line = trim($line);
-            // If lines ends with a '|', remove it
+            // If line ends with a '|', remove it
             if ($line[strlen($line)-1] == '|') {
                 $line = substr($line, 0, -1);
             }
             if ($line[0] != '|') {
                 // trigger_error(sprintf(_("Line %s does not begin with a '|'."), $line), E_USER_WARNING);
             } else {
-                $table->pushContent($this->_parse_row($line, $basepage));
+                $table[] = $this->_parse_row($line, $basepage);
             }
         }
 
-        return $table;
+        $nbrows = sizeof($table);
+        $nbcols = sizeof($table[0]);
+
+        for ($i=0; $i<$nbrows; $i++) {
+            for ($j=0; $j<$nbcols; $j++) {
+                if ($table[$i][$j][0] == '@') {
+                    $table[$i][$j] = $this->_compute($table, $i, $j, $nbrows, $nbcols);
+                }
+            }
+        }
+
+        $htmltable = HTML::table(array('class' => "bordered"));
+        foreach ($table as $row) {
+            $htmlrow = HTML::tr();
+            foreach ($row as $cell) {
+                if ($cell[0] == '=') {
+                    $cell = trim(substr($cell, 1));
+                    $htmlrow->pushContent(HTML::th(TransformInline($cell, 2.0, $basepage)));
+                } else {
+                    $htmlrow->pushContent(HTML::td(TransformInline($cell, 2.0, $basepage)));
+                }
+            }
+            $htmltable->pushContent($htmlrow);
+        }
+        return $htmltable;
     }
 
     function _parse_row ($line, $basepage) {
@@ -105,18 +129,33 @@ extends WikiPlugin
         preg_match_all("/(\\|+) \s* ($cell_content) \s* (?=\\||\$)/x",
                        $line, $matches, PREG_SET_ORDER);
 
-        $row = HTML::tr();
+        $row = array();
 
         foreach ($matches as $m) {
             $cell = $m[2];
-            if ($cell[0] == '=') {
-                $cell = trim(substr($cell, 1));
-                $row->pushContent(HTML::th(TransformInline($cell, 2.0, $basepage)));
-            } else {
-                $row->pushContent(HTML::td(TransformInline($cell, 2.0, $basepage)));
-            }
+            $row[]= $cell;
         }
         return $row;
+    }
+
+    function _compute ($mytable, $i, $j, $imax, $jmax) {
+
+        // What is implemented:
+        // @@SUM(R)@@ : sum of cells in current row
+        // @@SUM(C)@@ : sum of cells in current column
+
+        $result=0;
+        if (trim($mytable[$i][$j]) == "@@SUM(C)@@") {
+            for ($index=0; $index<$imax; $index++) {
+                $result += $mytable[$index][$j];
+            }
+        }
+        if (trim($mytable[$i][$j]) == "@@SUM(R)@@") {
+            for ($index=0; $index<$jmax; $index++) {
+                $result += $mytable[$i][$index];
+            }
+        }
+        return $result;
     }
 }
 
