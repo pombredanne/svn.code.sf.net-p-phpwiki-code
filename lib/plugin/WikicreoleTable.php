@@ -89,7 +89,7 @@ extends WikiPlugin
                 $line = substr($line, 0, -1);
             }
             if ($line[0] != '|') {
-                trigger_error(sprintf(_("Line %s does not begin with a '|'."), $line), E_USER_WARNING);
+                // trigger_error(sprintf(_("Line %s does not begin with a '|'."), $line), E_USER_WARNING);
             } else {
                 $table->pushContent($this->_parse_row($line, $basepage));
             }
@@ -119,11 +119,6 @@ extends WikiPlugin
         return $row;
     }
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2008/08/19 17:58:25  vargenau
-// Implement Wikicreole syntax for tables
-//
 
 // For emacs users
 // Local Variables:
