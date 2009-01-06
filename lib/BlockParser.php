@@ -375,7 +375,7 @@ class ParsedBlock extends Block_HtmlElement {
 	    $Block_types = array
 		    ('oldlists', 'list', 'dl', 'table_dl',
                      'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre', 'email_blockquote',
-		     'plugin', 'p');
+		     'plugin', 'plugin_wikicreole', 'p');
             // insert it before p!
             if (ENABLE_MARKUP_DIVSPAN) {
             	array_pop($Block_types);
@@ -984,6 +984,30 @@ class Block_plugin extends Block_pre
     }
 }
 
+class Block_plugin_wikicreole extends Block_pre
+{
+    // var $_re = '<<(?!\S)';
+    var $_re = '<<';
+
+    function _match (&$input, $m) {
+        $pos = $input->getPos();
+        $pi = "<?plugin " . $m->postmatch;
+        while (!preg_match('/(?<!'.ESCAPE_CHAR.')>>\s*$/', $pi)) {
+            if (($line = $input->nextLine()) === false) {
+                $input->setPos($pos);
+                return false;
+            }
+            $pi .= "\n$line";
+        }
+        $input->advance();
+
+        $pi = str_replace(">>", "?>", $pi);
+
+        $this->_element = new Cached_PluginInvocation($pi);
+        return true;
+    }
+}
+
 class Block_email_blockquote extends BlockMarkup
 {
     var $_attr = array('class' => 'mail-style-quote');
@@ -1190,67 +1214,6 @@ function TransformText ($text, $markup = 2.0, $basepage = false) {
     }
     return new XmlContent($output->getContent());
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.64  2008/08/03 15:29:16  vargenau
-// Implement Wikicreole headers
-//
-// Revision 1.63  2007/08/25 18:24:30  rurban
-// speed up divspan without \n
-//
-// Revision 1.62  2007/08/10 21:54:08  rurban
-// fix DIVSPAN parsing
-//
-// Revision 1.61  2007/07/14 17:55:29  rurban
-// SemanticWeb.php
-//
-// Revision 1.60  2007/01/07 18:41:32  rurban
-// Fix ENABLE_DIVSPAN
-//
-// Revision 1.59  2006/12/22 16:21:29  rurban
-// silence one BlockParser use-case
-//
-// Revision 1.58  2006/11/19 13:57:14  rurban
-// fix Regex Syntax Error
-//
-// Revision 1.57  2006/10/12 06:32:30  rurban
-// Optionally support new tags <div>, <span> with ENABLE_MARKUP_DIVSPAN (in work)
-//
-// Revision 1.56  2006/07/23 14:03:18  rurban
-// add new feature: DISABLE_MARKUP_WIKIWORD
-//
-// Revision 1.55  2005/01/29 21:08:41  rurban
-// update (C)
-//
-// Revision 1.54  2005/01/29 21:00:54  rurban
-// do not warn on empty nextBlock
-//
-// Revision 1.53  2005/01/29 20:36:44  rurban
-// very important php5 fix! clone objects
-//
-// Revision 1.52  2004/10/21 19:52:10  rurban
-// Patch #994487: Allow callers to get the parse tree for a page (danfr)
-//
-// Revision 1.51  2004/09/14 09:54:04  rurban
-// cache ParsedBlock::_initBlockTypes
-//
-// Revision 1.50  2004/09/08 13:38:00  rurban
-// improve loadfile stability by using markup=2 as default for undefined markup-style.
-// use more refs for huge objects.
-// fix debug=static issue in WikiPluginCached
-//
-// Revision 1.49  2004/07/02 09:55:58  rurban
-// more stability fixes: new DISABLE_GETIMAGESIZE if your php crashes when loading LinkIcons: failing getimagesize in old phps; blockparser stabilized
-//
-// Revision 1.48  2004/06/21 06:30:16  rurban
-// revert to prev references
-//
-// Revision 1.47  2004/06/20 15:30:04  rurban
-// get_class case-sensitivity issues
-//
-// Revision 1.46  2004/06/20 14:42:53  rurban
-// various php5 fixes (still broken at blockparser)
-//
 
 // (c-file-style: "gnu")
 // Local Variables:
