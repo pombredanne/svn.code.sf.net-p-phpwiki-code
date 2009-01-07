@@ -225,7 +225,10 @@ function MakeWikiZip (&$request)
         $zipname         = WIKI_NAME . _("LatestSnapshot") . date('Ymd-Hi') . '.zip';
         $include_archive = false;
     }
-
+    $include_empty = false;
+    if ($request->getArg('include') == 'empty') {
+	$include_empty = true;
+    }
 
     $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
 
@@ -316,12 +319,16 @@ function DumpToDir (&$request)
     } else {
         $excludeList = array();
     }
+    $include_empty = false;
+    if ($request->getArg('include') == 'empty') {
+	$include_empty = true;
+    }
     if ($pages = $request->getArg('pages')) {  // which pagenames
         if ($pages == '[]') // current page
             $pages = $thispage;
         $page_iter = new WikiDB_Array_PageIterator(explodePageList($pages));
     } else {
-        $page_iter = $dbi->getAllPages(false,false,false,$excludeList);
+        $page_iter = $dbi->getAllPages($include_empty,false,false,$excludeList);
     }
 
     $request_args = $request->args;
