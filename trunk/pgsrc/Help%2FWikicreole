@@ -91,9 +91,9 @@ Optional equal signs can be put at the end of the line (to be compatible with Me
 The content of the headers is parsed, allowing for instance to use subscript and superscript text. (The header content parsing is optional in Wikicreole.)
 
 <pre>
-=~= First level of header (h2 in HTML) ==
-=~== Second level of header (h3 in HTML) ===
-=~=== The XX^^th^^ century.
+~== First level of header (h2 in HTML) ==
+~=== Second level of header (h3 in HTML) ===
+~==== Third level of header (h4 in HTML)
 </pre>
 
 == Links ==
