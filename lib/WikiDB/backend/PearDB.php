@@ -193,7 +193,7 @@ extends WikiDB_backend
             $this->_get_pageid($pagename, true); // Creates page record
         }
         
-        @$hits = (int)$data['hits'];
+        $hits = !empty($data['hits']) ? (int)$data['hits'] : 0;
         unset($data['hits']);
 
         foreach ($newdata as $key => $val) {
