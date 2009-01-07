@@ -102,13 +102,13 @@ msg_repl_close     = '"._("Close")."'
             $toolarray = array(
                            array(
                                  "image"=>"ed_format_bold.png",
-                                 "open"=>"<strong>",
-                                 "close"=>"</strong>",
+                                 "open"=>"**",
+                                 "close"=>"**",
                                  "sample"=>_("Bold text"),
                                  "title"=>_("Bold text [alt-b]")),
                            array("image"=>"ed_format_italic.png",
-                                 "open"=>"<em>",
-                                 "close"=>"</em>",
+                                 "open"=>"//",
+                                 "close"=>"//",
                                  "sample"=>_("Italic text"),
                                  "title"=>_("Italic text [alt-i]")),
                            array("image"=>"ed_format_strike.png",
@@ -122,18 +122,18 @@ msg_repl_close     = '"._("Close")."'
                                  "sample"=>_("Color text"),
                                  "title"=>_("Color")),
                            array("image"=>"ed_pagelink.png",
-                                 "open"=>"[",
-                                 "close"=>"]",
-                                 "sample"=>_("optional label | PageName"),
+                                 "open"=>"[[",
+                                 "close"=>"]]",
+                                 "sample"=>_("PageName|optional label"),
                                  "title"=>_("Link to page")),
                            array("image"=>"ed_link.png",
-                                 "open"=>"[",
-                                 "close"=>"]",
-                                 "sample"=>_("optional label | http://www.example.com"),
+                                 "open"=>"[[",
+                                 "close"=>"]]",
+                                 "sample"=>_("http://www.example.com|optional label"),
                                  "title"=>_("External link (remember http:// prefix)")),
                            array("image"=>"ed_headline.png",
-                                 "open"=>"\\n!!! ",
-                                 "close"=>"\\n",
+                                 "open"=>"\\n== ",
+                                 "close"=>" ==\\n",
                                  "sample"=>_("Headline text"),
                                  "title"=>_("Level 1 headline")),
                            array("image"=>"ed_nowiki.png",
@@ -152,7 +152,7 @@ msg_repl_close     = '"._("Close")."'
                                  "sample"=>"",
                                  "title"=>_("Horizontal line")),
                            array("image"=>"ed_table.png",
-                                 "open"=>"\\n{| class=\"bordered\"\\n|-\\n| Cell A1 || Cell B1 || Cell C1\\n|-\\n| Cell A2 || Cell B2 || Cell C2\\n|-\\n| Cell A3 || Cell B3 || Cell C3\\n|}\\n",
+                                 "open"=>"\\n{| class=\"bordered\"\\n|+ This is the table caption\\n|= This is the table summary\\n|-\\n| Cell A1 || Cell B1 || Cell C1\\n|-\\n| Cell A2 || Cell B2 || Cell C2\\n|-\\n| Cell A3 || Cell B3 || Cell C3\\n|}\\n",
                                  "close"=>"",
                                  "sample"=>"",
                                  "title"=>_("Sample table")),
@@ -167,19 +167,19 @@ msg_repl_close     = '"._("Close")."'
                                  "sample"=>"",
                                  "title"=>_("List")),
                            array("image"=>"ed_toc.png",
-                                 "open"=>"<?plugin CreateToc with_toclink||=1 ?>\\n",
+                                 "open"=>"<<CreateToc with_toclink||=1>>\\n",
                                  "close"=>"",
                                  "sample"=>"",
                                  "title"=>_("Table of Contents")),
                            array("image"=>"ed_redirect.png",
-                                 "open"=>"<?plugin RedirectTo page=\"",
-                                 "close"=>"\" ?>",
+                                 "open"=>"<<RedirectTo page=\"",
+                                 "close"=>"\">>",
                                  "sample"=>_("Page Name"),
                                  "title"=>_("Redirect")),
                            array("image"=>"ed_templateplugin.png",
                                  "open"=>"{{",
                                  "close"=>"}}",
-                                 "sample"=>_("template name"),
+                                 "sample"=>_("Template Name"),
                                  "title"=>_("Template"))
                            );
             $btn = new SubmitImageButton(_("Save"), "edit[save]", 'toolbar', 
@@ -281,10 +281,7 @@ msg_repl_close     = '"._("Close")."'
             $categories = array();
             while ($p = $pages->next()) {
 		$page = $p->getName();
-		if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($page)))
-		    $categories[] = "['$page', '%5B".$page."%5D']";
-		else
-		    $categories[] = "['$page', '$page']";
+		$categories[] = "['$page', '%5B%5B".$page."%5D%5D']";
             }
             if (!$categories) return '';
 	    // Ensure this to be inserted at the very end. Hence we added the id to the function.
@@ -330,7 +327,7 @@ msg_repl_close     = '"._("Close")."'
                     $desc = str_replace("<br />",' ',$desc->asXML());
                     if ($desc)
                         $plugin_args = ' '.str_replace($src, $replace, $desc);
-                    $toinsert = "%0A<?plugin ".$pluginName.$plugin_args."?>"; // args?
+                    $toinsert = "%0A<<".$pluginName.$plugin_args.">>"; // args?
                     $plugin_js .= ",['$pluginName','$toinsert']";
                 }
             }
@@ -393,7 +390,13 @@ msg_repl_close     = '"._("Close")."'
         if (!empty($images)) {
             $image_js = '';
             foreach ($images as $image) {
-                $image_js .= ",['$image','%5BUpload:".$image."%5D']";
+                // Select only files ending in ".png", ".gif", ".jpg", ".jpeg"
+                if ((string_ends_with($image, ".jpg"))
+                   or (string_ends_with($image, ".jpeg"))
+                   or (string_ends_with($image, ".gif"))
+                   or (string_ends_with($image, ".png"))) {
+                     $image_js .= ",['$image','{{".$image."}}']";
+                }
             }
             $image_js = substr($image_js, 1);
             $more_buttons = HTML::img(array('class'=>"toolbar",
