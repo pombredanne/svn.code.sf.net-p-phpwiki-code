@@ -2327,6 +2327,26 @@ function parse_attributes($line) {
     return $options;
 }
 
+/**
+ * Returns true if the filename ends with an image suffix.
+ * Uses INLINE_IMAGES if defined, else "png|jpg|jpeg|gif"
+ */
+function is_image ($filename) {
+
+    if (defined('INLINE_IMAGES')) {
+        $inline_images = INLINE_IMAGES;
+    } else {
+        $inline_images = "png|jpg|jpeg|gif";
+    }
+
+    foreach (explode("|", $inline_images) as $suffix) {
+        if (string_ends_with($filename, "." . $suffix)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

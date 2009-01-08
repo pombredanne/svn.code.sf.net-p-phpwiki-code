@@ -391,11 +391,8 @@ msg_repl_close     = '"._("Close")."'
             $image_js = '';
             foreach ($images as $image) {
                 // Select only files ending in ".png", ".gif", ".jpg", ".jpeg"
-                if ((string_ends_with($image, ".jpg"))
-                   or (string_ends_with($image, ".jpeg"))
-                   or (string_ends_with($image, ".gif"))
-                   or (string_ends_with($image, ".png"))) {
-                     $image_js .= ",['$image','{{".$image."}}']";
+                if (is_image($image)) {
+                    $image_js .= ",['$image','{{".$image."}}']";
                 }
             }
             $image_js = substr($image_js, 1);
