@@ -930,7 +930,7 @@ class Markup_template_plugin  extends SimpleMarkup
         $page = substr($match,2,-2);
         if (strpos($page, "|") === false) {
             $imagename = $page;
-            $alt = $page;
+            $alt = "";
         } else {
             $imagename = substr($page, 0, strpos($page, "|"));
             $alt = ltrim(strstr($page, "|"), "|");

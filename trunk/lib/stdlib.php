@@ -401,7 +401,7 @@ function LinkURL($url, $linktext = '') {
  *
  * Handle embeddable objects, like svg, class, vrml, swf, svgz, pdf, avi, wmv especially.
  */
-function LinkImage($url, $alt = false) {
+function LinkImage($url, $alt = "") {
     $force_img = "png|jpg|gif|jpeg|bmp|pl|cgi";
     // Disallow tags in img src urls. Typical CSS attacks.
     // FIXME: Is this needed (or sufficient?)
@@ -414,9 +414,14 @@ function LinkImage($url, $alt = false) {
     } else {
         // support new syntax: [prefix/image.jpg size=50% border=n]
         //if (!preg_match("/\.(".$force_img.")/i", $url))
-        if (empty($alt)) $alt = basename($url);
+        if (empty($alt)) $alt = "";
 	$arr = split(' ',$url);
-        $link = HTML::img(array('src' => $url, 'alt' => $alt, 'title' => $alt));
+        if ($alt == "") {
+            $link = HTML::img(array('src' => $url, 'alt' => $alt));
+        } else {
+            $link = HTML::img(array('src' => $url, 
+                                    'alt' => $alt, 'title' => $alt));
+        }
         if (count($arr) > 1) {
 	    $url = $arr[0];
             array_shift($arr);
