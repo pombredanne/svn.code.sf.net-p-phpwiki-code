@@ -348,7 +348,7 @@ else {
 $properties["PHP include_path"] =
 new _define('INCLUDE_PATH', $include_path);
 
-// TODO: convert this a checkbox row as in tests/unit/test.pgp
+// TODO: Convert this to a checkbox row as in tests/unit/test.php
 $properties["DEBUG"] =
 new numeric_define_optional('DEBUG', DEBUG);
 
