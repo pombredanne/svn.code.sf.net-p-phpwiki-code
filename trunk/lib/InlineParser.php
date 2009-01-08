@@ -937,10 +937,7 @@ class Markup_template_plugin  extends SimpleMarkup
         }
 
         // It's not a Mediawiki template, it's a Wikicreole image
-        if ((string_ends_with($imagename, ".jpg"))
-           or (string_ends_with($imagename, ".jpeg"))
-           or (string_ends_with($imagename, ".gif"))
-           or (string_ends_with($imagename, ".png"))) {
+        if (is_image($imagename)) {
             return LinkImage(UPLOAD_DATA_PATH . $imagename, $alt);
         }
 
