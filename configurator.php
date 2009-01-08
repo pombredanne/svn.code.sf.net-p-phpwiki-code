@@ -2139,7 +2139,8 @@ extends _variable {
         // split the phrase by any number of commas or space characters,
         // which include " ", \r, \t, \n and \f
         $list_values = preg_split("/[\s,]+/", $posted_value, -1, PREG_SPLIT_NO_EMPTY);
-        $list_values = join("|", $list_values);
+        if ($list_values)
+            $list_values = join("|", $list_values);
         return _variable::_get_config_line($list_values);
     }
     function get_html() {
@@ -2158,13 +2159,15 @@ class list_define
 extends _define {
     function _get_config_line($posted_value) {
         $list_values = preg_split("/[\s,]+/", $posted_value, -1, PREG_SPLIT_NO_EMPTY);
-        $list_values = join("|", $list_values);
+        if ($list_values)
+            $list_values = join("|", $list_values);
         return _variable::_get_config_line($list_values);
     }
     function get_html() {
         $list_values = explode("|", $this->default_value);
         $rows = max(3, count($list_values) +1);
-        $list_values = join("\n", $list_values);
+        if ($list_values)
+            $list_values = join("\n", $list_values);
         $ta = $this->get_config_item_header();
 	$ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\" {$this->jscheck}>";
         $ta .= $list_values . "</textarea>";
@@ -2190,7 +2193,10 @@ extends _variable {
             return "\n;" . $this->_config_format('');
     }
     function get_html() {
-        $list_values = join("\n", $this->default_value);
+    	if (is_array($this->default_value))
+            $list_values = join("\n", $this->default_value);
+        else    
+            $list_values = $this->default_value;
         $rows = max(3, count($this->default_value) +1);
         $ta = $this->get_config_item_header();
         $ta .= "<textarea cols=\"18\" rows=\"". $rows ."\" name=\"".$this->get_config_item_name()."\" {$this->jscheck}>";
