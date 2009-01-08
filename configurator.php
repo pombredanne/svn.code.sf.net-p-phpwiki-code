@@ -1706,7 +1706,7 @@ class _variable {
     var $prefix;
     var $jscheck;
 
-    function _variable($config_item_name, $default_value, $description = '', $jscheck = '') {
+    function _variable($config_item_name, $default_value='', $description = '', $jscheck = '') {
         $this->config_item_name = $config_item_name;
 	if (!$description)
 	    $description = text_from_dist($config_item_name);
@@ -1950,7 +1950,7 @@ extends _variable {
 class numeric_define
 extends _define {
 
-    function numeric_define($config_item_name, $default_value, $description = '', $jscheck = '') {
+    function numeric_define($config_item_name, $default_value='', $description = '', $jscheck = '') {
         $this->_define($config_item_name, $default_value, $description, $jscheck);
         if (!$jscheck)
             $this->jscheck = "onchange=\"validate_ereg('Sorry, \'%s\' is not an integer.', '^[-+]?[0-9]+$', '" . $this->get_config_item_name() . "', this);\"";
@@ -2022,7 +2022,7 @@ extends _define_selection_optional {
 class _define_password
 extends _define {
 
-    function _define_password($config_item_name, $default_value, $description = '', $jscheck = '') {
+    function _define_password($config_item_name, $default_value='', $description = '', $jscheck = '') {
     	if ($config_item_name == $default_value) $default_value = '';
         $this->_define($config_item_name, $default_value, $description, $jscheck);
         if (!$jscheck)
@@ -2066,7 +2066,7 @@ extends _define {
 class _define_password_optional
 extends _define_password { 
 
-    function _define_password_optional($config_item_name, $default_value, $description = '', $jscheck = '') {
+    function _define_password_optional($config_item_name, $default_value='', $description = '', $jscheck = '') {
     	if ($config_item_name == $default_value) $default_value = '';
         if (!$jscheck) $this->jscheck = " ";
         $this->_define($config_item_name, $default_value, $description, $jscheck);
@@ -2100,7 +2100,7 @@ extends _define_password_optional { }
 
 class _variable_password
 extends _variable {
-    function _variable_password($config_item_name, $default_value, $description = '', $jscheck = '') {
+    function _variable_password($config_item_name, $default_value='', $description = '', $jscheck = '') {
     	if ($config_item_name == $default_value) $default_value = '';
         $this->_define($config_item_name, $default_value, $description, $jscheck);
         if (!$jscheck)
