@@ -2352,6 +2352,32 @@ function is_image ($filename) {
     return false;
 }
 
+/**
+ * Compute cell in spreadsheet table
+ * $table: two-dimensional table
+ * $i and $j: indexes of cell to compute
+ * $imax and $jmax: table dimensions
+ */
+function compute_tablecell ($table, $i, $j, $imax, $jmax) {
+
+    // What is implemented:
+    // @@SUM(R)@@ : sum of cells in current row
+    // @@SUM(C)@@ : sum of cells in current column
+
+    $result=0;
+    if (trim($table[$i][$j]) == "@@SUM(C)@@") {
+        for ($index=0; $index<$imax; $index++) {
+            $result += $table[$index][$j];
+        }
+    }
+    if (trim($table[$i][$j]) == "@@SUM(R)@@") {
+        for ($index=0; $index<$jmax; $index++) {
+            $result += $table[$i][$index];
+        }
+    }
+    return $result;
+}
+
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
