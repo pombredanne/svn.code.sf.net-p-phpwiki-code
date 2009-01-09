@@ -6,7 +6,7 @@ rcs_id('$Id$');
   syntax.
 */
 /*
- * Copyright (C) 2008 Alcatel-Lucent
+ * Copyright (C) 2008-2009 Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -114,7 +114,11 @@ extends WikiPlugin
                     $cell = trim(substr($cell, 1));
                     $htmlrow->pushContent(HTML::th(TransformInline($cell, 2.0, $basepage)));
                 } else {
-                    $htmlrow->pushContent(HTML::td(TransformInline($cell, 2.0, $basepage)));
+                    if (is_numeric($cell)) {
+                        $htmlrow->pushContent(HTML::td(array('style' => "text-align:right"), $cell));
+                    } else {
+                        $htmlrow->pushContent(HTML::td(TransformInline($cell, 2.0, $basepage)));
+                    }
                 }
             }
             $htmltable->pushContent($htmlrow);
