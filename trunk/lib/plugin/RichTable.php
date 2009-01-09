@@ -7,7 +7,7 @@ rcs_id('$Id$');
 /* 
  * Copyright (C) 2003 Sameer D. Sahasrabuddhe
  * Copyright (C) 2005 $ThePhpWikiProgrammingTeam
- * Copyright (C) 2008 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -75,7 +75,11 @@ extends WikiPlugin
                 if (isset($row)) {
                     if (isset($cell)) {
                         if (isset($content)) {
-                            $cell->pushContent(TransformText($content, $markup, $basepage));
+                            if (is_numeric(trim($content))) {
+                                $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
+                            } else {
+                                $cell->pushContent(TransformText($content, $markup, $basepage));
+                            }
                             unset($content);
                         }
                         $row->pushContent($cell);
@@ -96,7 +100,11 @@ extends WikiPlugin
             if (substr($line,0,1) == "|" and isset($row)) {
                 if (isset($cell)) {
                     if (isset ($content)) {
-                        $cell->pushContent(TransformText($content, $markup, $basepage));
+                        if (is_numeric(trim($content))) {
+                            $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
+                        } else {
+                            $cell->pushContent(TransformText($content, $markup, $basepage));
+                        }
                         unset($content);
                     }
                     $row->pushContent($cell);
@@ -124,8 +132,13 @@ extends WikiPlugin
         }
         if (isset($row)) {
             if (isset($cell)) {
-                if (isset($content))
-                    $cell->pushContent(TransformText($content, $markup, $basepage));
+                if (isset($content)) {
+                    if (is_numeric(trim($content))) {
+                        $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
+                    } else {
+                        $cell->pushContent(TransformText($content, $markup, $basepage));
+                    }
+                }
                 $row->pushContent($cell);
             }
             $table->pushContent($row);
