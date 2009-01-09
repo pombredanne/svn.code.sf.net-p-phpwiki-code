@@ -2361,21 +2361,132 @@ function is_image ($filename) {
 function compute_tablecell ($table, $i, $j, $imax, $jmax) {
 
     // What is implemented:
-    // @@SUM(R)@@ : sum of cells in current row
-    // @@SUM(C)@@ : sum of cells in current column
+    // @@=SUM(R)@@ : sum of cells in current row
+    // @@=SUM(C)@@ : sum of cells in current column
+    // @@=AVERAGE(R)@@ : average of cells in current row
+    // @@=AVERAGE(C)@@ : average of cells in current column
+    // @@=MAX(R)@@ : maximum value of cells in current row
+    // @@=MAX(C)@@ : maximum value of cells in current column
+    // @@=MIN(R)@@ : minimum value of cells in current row
+    // @@=MIN(C)@@ : minimum value of cells in current column
+    // @@=COUNT(R)@@ : number of cells in current row
+    //                (numeric or not, excluding headers and current cell)
+    // @@=COUNT(C)@@ : number of cells in current column
+    //                (numeric or not, excluding headers and current cell)
 
     $result=0;
-    if (trim($table[$i][$j]) == "@@SUM(C)@@") {
+    $counter=0;
+    $found=false;
+    if (trim($table[$i][$j]) == "@@=SUM(C)@@") {
         for ($index=0; $index<$imax; $index++) {
-            $result += $table[$index][$j];
+            if (is_numeric($table[$index][$j])) {
+                $result += $table[$index][$j];
+            }
         }
-    }
-    if (trim($table[$i][$j]) == "@@SUM(R)@@") {
+        return $result;
+    } else if (trim($table[$i][$j]) == "@@=SUM(R)@@") {
         for ($index=0; $index<$jmax; $index++) {
-            $result += $table[$i][$index];
+            if (is_numeric($table[$i][$index])) {
+                $result += $table[$i][$index];
+            }
         }
+        return $result;
+    } else if (trim($table[$i][$j]) == "@@=AVERAGE(C)@@") {
+        for ($index=0; $index<$imax; $index++) {
+            if (is_numeric($table[$index][$j])) {
+                $result += $table[$index][$j];
+                $counter++;
+            }
+        }
+        return $result/$counter;
+    } else if (trim($table[$i][$j]) == "@@=AVERAGE(R)@@") {
+        for ($index=0; $index<$jmax; $index++) {
+            if (is_numeric($table[$i][$index])) {
+                $result += $table[$i][$index];
+                $counter++;
+            }
+        }
+        return $result/$counter;
+    } else if (trim($table[$i][$j]) == "@@=MAX(C)@@") {
+        for ($index=0; $index<$imax; $index++) {
+            if (is_numeric($table[$index][$j])) {
+                if (!$found) {
+                    $found=true;
+                    $result=$table[$index][$j];
+                } else {
+                    $result = max($result, $table[$index][$j]);
+                }
+            }
+        }
+        if ($found) {
+            return $result;
+        } else {
+            return "";
+        }
+    } else if (trim($table[$i][$j]) == "@@=MAX(R)@@") {
+        for ($index=0; $index<$jmax; $index++) {
+            if (is_numeric($table[$i][$index])) {
+                if (!$found) {
+                    $found=true;
+                    $result=$table[$i][$index];
+                } else {
+                    $result = max($result, $table[$i][$index]);
+                }
+            }
+        }
+        if ($found) {
+            return $result;
+        } else {
+            return "";
+        }
+    } else if (trim($table[$i][$j]) == "@@=MIN(C)@@") {
+        for ($index=0; $index<$imax; $index++) {
+            if (is_numeric($table[$index][$j])) {
+                if (!$found) {
+                    $found=true;
+                    $result=$table[$index][$j];
+                } else {
+                    $result = min($result, $table[$index][$j]);
+                }
+            }
+        }
+        if ($found) {
+            return $result;
+        } else {
+            return "";
+        }
+    } else if (trim($table[$i][$j]) == "@@=MIN(R)@@") {
+        for ($index=0; $index<$jmax; $index++) {
+            if (is_numeric($table[$i][$index])) {
+                if (!$found) {
+                    $found=true;
+                    $result=$table[$i][$index];
+                } else {
+                    $result = min($result, $table[$i][$index]);
+                }
+            }
+        }
+        if ($found) {
+            return $result;
+        } else {
+            return "";
+        }
+    } else if (trim($table[$i][$j]) == "@@=COUNT(C)@@") {
+        for ($index=0; $index<$imax; $index++) {
+            if (!string_starts_with($table[$index][$j], "=")) { // exclude header
+                $counter++;
+            }
+        }
+        return $counter-1; // exclude self
+    } else if (trim($table[$i][$j]) == "@@=COUNT(R)@@") {
+        for ($index=0; $index<$jmax; $index++) {
+            if (!string_starts_with($table[$i][$index], "=")) { // exclude header
+                $counter++;
+            }
+        }
+        return $counter-1; // exclude self
     }
-    return $result;
+    return "";
 }
 
 // (c-file-style: "gnu")
