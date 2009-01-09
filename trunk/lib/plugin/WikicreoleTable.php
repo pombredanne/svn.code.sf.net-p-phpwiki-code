@@ -101,7 +101,7 @@ extends WikiPlugin
         for ($i=0; $i<$nbrows; $i++) {
             for ($j=0; $j<$nbcols; $j++) {
                 if ($table[$i][$j][0] == '@') {
-                    $table[$i][$j] = $this->_compute($table, $i, $j, $nbrows, $nbcols);
+                    $table[$i][$j] = compute_tablecell($table, $i, $j, $nbrows, $nbcols);
                 }
             }
         }
@@ -142,25 +142,6 @@ extends WikiPlugin
         return $row;
     }
 
-    function _compute ($mytable, $i, $j, $imax, $jmax) {
-
-        // What is implemented:
-        // @@SUM(R)@@ : sum of cells in current row
-        // @@SUM(C)@@ : sum of cells in current column
-
-        $result=0;
-        if (trim($mytable[$i][$j]) == "@@SUM(C)@@") {
-            for ($index=0; $index<$imax; $index++) {
-                $result += $mytable[$index][$j];
-            }
-        }
-        if (trim($mytable[$i][$j]) == "@@SUM(R)@@") {
-            for ($index=0; $index<$jmax; $index++) {
-                $result += $mytable[$i][$index];
-            }
-        }
-        return $result;
-    }
 }
 
 // For emacs users
