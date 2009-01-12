@@ -8,25 +8,87 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-Chart plugin allows to easily draw simple graphs.
+The **Chart** [[Help:WikiPlugin|plugin]] allows to easily draw simple graphs on a wiki page.
 
-== Line chart ==
+The browser must support SVG in order graphs to be displayed.
+
+== Usage ==
+<verbatim>
+<<Chart width=200 height=200 type=line color=green data="5, 7, 11, 3, 15" >>
+</verbatim>
+
+== Arguments ==
+
+{| class="bordered"
+|-
+| Argument
+| Description
+| Default value
+|-
+| <b>width</b>
+| Graph width in pixels
+| 200
+|-
+| <b>height</b>
+| Graph height in pixels
+| 200
+|-
+| <b>type</b>
+| line, bar or pie
+| line
+|-
+| <b>data</b>
+| Graph data: a list of numbers separated by comma
+| //none//
+|}
+
+== Examples ==
+
+=== Line chart ===
+
+<verbatim>
+<<Chart type=line
+        data="5, 7, 11, 3, 15"
+>>
+</verbatim>
 
 <<Chart type=line
         data="5, 7, 11, 3, 15"
 >>
 
-== Bar chart ==
+=== Bar chart ===
+
+<verbatim>
+<<Chart type=bar
+        color=red
+        data="5, 7, 11, 3, 15"
+>>
+</verbatim>
 
 <<Chart type=bar
         color=red
         data="5, 7, 11, 3, 15"
 >>
 
-== Pie chart ==
+=== Pie chart ===
+
+<verbatim>
+<<Chart type=pie
+        color=blue
+        data="5, 7, 11, 3, 15"
+>>
+</verbatim>
 
 <<Chart type=pie
         color=blue
         data="5, 7, 11, 3, 15"
 >>
+
+== Author ==
+* Marc-Etienne Vargenau
+
+== See Also ==
+
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
 
