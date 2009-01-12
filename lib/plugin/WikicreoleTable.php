@@ -100,7 +100,7 @@ extends WikiPlugin
 
         for ($i=0; $i<$nbrows; $i++) {
             for ($j=0; $j<$nbcols; $j++) {
-                if ($table[$i][$j][0] == '@') {
+                if (preg_match('/@@/', $table[$i][$j])) {
                     $table[$i][$j] = compute_tablecell($table, $i, $j, $nbrows, $nbcols);
                 }
             }
@@ -110,7 +110,7 @@ extends WikiPlugin
         foreach ($table as $row) {
             $htmlrow = HTML::tr();
             foreach ($row as $cell) {
-                if ($cell[0] == '=') {
+                if ($cell && $cell[0] == '=') {
                     $cell = trim(substr($cell, 1));
                     $htmlrow->pushContent(HTML::th(TransformInline($cell, 2.0, $basepage)));
                 } else {
