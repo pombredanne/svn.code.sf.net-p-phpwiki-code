@@ -153,7 +153,8 @@ extends WikiPlugin
 
         array_pop($included_pages);
 
-        return HTML::div(array('class' => 'template'), $content);
+        return $content;
+        // return HTML::div(array('class' => 'template'), $content);
     }
 
     /**
