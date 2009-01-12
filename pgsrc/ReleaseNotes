@@ -1,4 +1,4 @@
-Date: Mon, 17 Oct 2008 4:15:24 +0000
+Date: Mon, 12 Oct 2009 4:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 <?plugin CreateToc with_toclink||=1 headers||=1,2,3 ?>
 
-!!! 1.3.15 ?? 2008 Reini Urban, Sabri Labbenes, Marc-Etienne Vargenau
+!!! 1.3.15 ?? 2009 Reini Urban, Sabri Labbenes, Marc-Etienne Vargenau
 
 Improved dumping, pageset handling for format= with ~ActionPages.
 e.g. dump pagesets or multi-page pdf's.
@@ -33,8 +33,14 @@ e.g. dump pagesets or multi-page pdf's.
 * ~FileInfo: fix Upload: links
 * XHTML validation corrections (vargenau)
 * avoid recursive modification when renaming a page like '~PageFoo to '~PageFooTwo' (vargenau)
+* fix Bug#1808002 Table of contents plugin does not nest numbering (vargenau)
+* fix Bug#1903815 Cannot put "0" in ~RichTable cell, cell becomes empty (vargenau) 
 * fix Bug#1904088  Some brackets links with \n cause the parser to crash
 * fixed incorrect numbering in Table of Contents numbering (vargenau)
+* fix Bug#1967147 ~FileInfoPlugin does not allow display=owner
+* fix Bug#1992172 Interwiki link does not work in ~RichTable (vargenau)
+* fix Bug#2010748 Missing image
+* fix Bug#1831881 Fatal database error when sorting columns (vargenau)
 
 !! Changes
 * changed ~SemanticSearch query semantics: all regex=auto terms with no regex chars (.+*?^$")
@@ -60,6 +66,7 @@ e.g. dump pagesets or multi-page pdf's.
 * more icons for toolbar (vargenau)
 * UserPreferences: specific message when only one preference is updated (vargenau)
 * renamed class Theme to ~WikiTheme to avoid Gforge name clash (vargenau)
+* numeric cells in tables are now right-aligned by default
 
 !! New
 * ~PageList supports listtype=ul,ol,dl. dl used by FullTextSearch
@@ -75,7 +82,10 @@ e.g. dump pagesets or multi-page pdf's.
 * new pages: SpecialPages, LockedPages (vargenau)
 * implemented Mediawiki-like syntax for tables (vargenau)
 * enable ~RecentChangesCached as box, improve performance.
-* implemented Wikicreole syntax for links, headers (including ~CreateToc), tables, images, pre, subscript (vargenau)
+* implemented Wikicreole 1.0 syntax, including additions (vargenau)
+* implemented simple [[Help:Spreadsheet|spreadsheet]] functions for Wikicreole tables (vargenau)
+* new plugin: [[Help:CurrentTimePlugin|CurrentTime]] (vargenau)
+* new plugin: [[Help:ChartPlugin|Chart]] (vargenau)
 
 !!! 1.3.14 July, 1 2007, Reini Urban
 
