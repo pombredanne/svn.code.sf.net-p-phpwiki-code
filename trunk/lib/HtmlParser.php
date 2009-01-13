@@ -267,6 +267,7 @@ extends HtmlParser
                   'sub'    => "wikify_default",
                   'nowiki' => "wikify_verbatim",
                   'verbatim' => "wikify_default",
+                  'noinclude' => "wikify_noinclude",
                   );
     }
 
@@ -326,6 +327,10 @@ extends HtmlParser
     function wikify_verbatim( $node ) {
         $contents = $this->elem_contents( $node );
         return "\n<verbatim>\n$contents\n</verbatim>";
+    }
+
+    function wikify_noinclude( $node ) {
+        return $this->elem_contents( $node );
     }
 
     function wikify_img( $node ) {

@@ -919,7 +919,7 @@ class Block_oldlists extends Block_list
 
 class Block_pre extends BlockMarkup
 {
-    var $_re = '<(?:pre|verbatim|nowiki)>';
+    var $_re = '<(?:pre|verbatim|nowiki|noinclude)>';
 
     function _match (&$input, $m) {
         $endtag = '</' . substr($m->match, 1);
@@ -943,9 +943,13 @@ class Block_pre extends BlockMarkup
         
         // FIXME: no <img>, <big>, <small>, <sup>, or <sub>'s allowed
         // in a <pre>.
-        if ($m->match == '<pre>')
+        if ($m->match == '<pre>') {
             $text = TransformInline($text);
-	if ($m->match == '<nowiki>') {
+        }
+	if ($m->match == '<noinclude>') {
+	    $text = TransformText($text);
+	    $this->_element = new Block_HtmlElement('div', false, $text);
+	} else if ($m->match == '<nowiki>') {
             $text = TransformInlineNowiki($text);
 	    $this->_element = new Block_HtmlElement('p', false, $text);
 	} else {
