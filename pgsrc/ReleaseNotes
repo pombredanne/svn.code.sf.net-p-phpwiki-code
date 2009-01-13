@@ -67,6 +67,7 @@ e.g. dump pagesets or multi-page pdf's.
 * UserPreferences: specific message when only one preference is updated (vargenau)
 * renamed class Theme to ~WikiTheme to avoid Gforge name clash (vargenau)
 * numeric cells in tables are now right-aligned by default
+* <noinclude> and </noinclude> should not appear even when not included
 
 !! New
 * ~PageList supports listtype=ul,ol,dl. dl used by FullTextSearch
