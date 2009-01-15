@@ -68,6 +68,7 @@ e.g. dump pagesets or multi-page pdf's.
 * renamed class Theme to ~WikiTheme to avoid Gforge name clash (vargenau)
 * numeric cells in tables are now right-aligned by default
 * <noinclude> and </noinclude> should not appear even when not included
+* split PhpWikiAdministration in two pages: PhpWikiAdministration and PhpWikiDebug
 
 !! New
 * ~PageList supports listtype=ul,ol,dl. dl used by FullTextSearch
