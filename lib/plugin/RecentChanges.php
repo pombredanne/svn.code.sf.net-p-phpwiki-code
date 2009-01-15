@@ -45,13 +45,23 @@ class _RecentChanges_Formatter
     function title () {
 	global $request;
         extract($this->_args);
-	if ($author == '[]') $author = $request->_user->getID();
-	if ($owner  == '[]') $owner = $request->_user->getID();
-        if ($author) $title = _("UserContribs").":$author";
-        elseif ($owner) $title = _("UserContribs").":$owner";
-        elseif ($only_new) $title = _("RecentNewPages");
-        elseif ($show_minor) $title = _("RecentEdits");
-        else $title = _("RecentChanges");
+        if ($author) {
+            $title = $author;
+            if ($title == '[]') {
+                $title = $request->_user->getID();
+            }
+            $title = _("UserContribs").": $title";
+        } elseif ($owner) {
+            $title = $owner;
+            if ($title == '[]') {
+                $title = $request->_user->getID();
+            }
+            $title = _("UserContribs").": $title";
+        } elseif ($only_new) {
+            $title = _("RecentNewPages");
+        } elseif ($show_minor) {
+            $title = _("RecentEdits");
+        } else $title = _("RecentChanges");
 
         if (!empty($category))
             $title = $category;
@@ -408,8 +418,9 @@ extends _RecentChanges_Formatter
         if (($desc = $this->description()))
             $html->pushContent($desc);
         
-        if ($this->_args['daylist'])
-            $html->pushContent(new DayButtonBar($this->_args));
+        if ($this->_args['daylist']) {
+            $html->pushContent(new OptionsButtonBars($this->_args));
+        }
 
         $last_date = '';
         $lines = false;
@@ -528,8 +539,9 @@ extends _RecentChanges_HtmlFormatter
         $this->_args['limit'] = $count;
         if (($desc = $this->description()))
             $html->pushContent($desc);
-        if ($this->_args['daylist'])
-            $html->pushContent(new DayButtonBar($this->_args));
+        if ($this->_args['daylist']) {
+            $html->pushContent(new OptionsButtonBars($this->_args));
+        }
         if ($first)
             $html->pushContent(HTML::p(array('class' => 'rc-empty'),
                                        $this->empty_message()));
@@ -855,10 +867,9 @@ extends _RecentChanges_RssFormatter {
             if (mayAccessPage('view', $rev->_pagename)) {
                 $rss->addItem($this->item_properties($rev),
                               $this->pageURI($rev));
-                if ($first) {
+                if ($first)
                     $this->setValidators($rev);
-                    $first = false;
-                }
+                $first = false;
             }
         }
 
@@ -1323,42 +1334,70 @@ extends WikiPlugin
 
 };
 
+class OptionsButtonBars extends HtmlElement {
 
-class DayButtonBar extends HtmlElement {
+    function OptionsButtonBars ($plugin_args) {
+        $this->__construct('fieldset', array('class' => 'wiki-rc-action'));
 
-    function DayButtonBar ($plugin_args) {
-        $this->__construct('p', array('class' => 'wiki-rc-action'));
-
-        // Display days selection buttons
+        // Display selection buttons
         extract($plugin_args);
 
         // Custom caption
         if (! $caption) {
-            if ($show_minor)
-                $caption = _("Show minor edits for:");
-            elseif ($show_all)
-                $caption = _("Show all changes for:");
-            else
-                $caption = _("Show changes for:");
-	    if ($only_new)
-                $caption = _("All new pages since:");
+            $caption = _("Show changes for:");
         }
 
-        $this->pushContent($caption, ' ');
+        $this->pushContent(HTML::legend($caption));
+        $table = HTML::table();
 
-        global $WikiTheme;
-        $sep = $WikiTheme->getButtonSeparator();
-
-        $n = 0;
+        $first = true;
         foreach (explode(",", $daylist) as $days) {
-            if ($n++)
-                $this->pushContent($sep);
-            $this->pushContent($this->_makeDayButton($days));
+            if ($first) {
+                $td = $this->_makeDayButton($days);
+                $first = false;
+            } else {
+                $td->pushContent($this->_makeDayButton($days));
+            }
         }
+        $tr = HTML::tr();
+        $tr->pushContent($td);
+        $table->pushContent($tr);
+
+        $td = $this->_makeUsersButton(0);
+        $td->pushContent($this->_makeUsersButton(1));
+        $tr = HTML::tr();
+        $tr->pushContent($td);
+        $table->pushContent($tr);
+
+        $td = $this->_makePagesButton(0);
+        $td->pushContent($this->_makePagesButton(1));
+        $tr = HTML::tr();
+        $tr->pushContent($td);
+        $table->pushContent($tr);
+
+        $td = $this->_makeMinorButton(1);
+        $td->pushContent($this->_makeMinorButton(0));
+        $tr = HTML::tr();
+        $tr->pushContent($td);
+        $table->pushContent($tr);
+
+        $td = $this->_makeShowAllButton(1);
+        $td->pushContent($this->_makeShowAllButton(0));
+        $tr = HTML::tr();
+        $tr->pushContent($td);
+        $table->pushContent($tr);
+
+        $td = $this->_makeNewPagesButton(0);
+        $td->pushContent($this->_makeNewPagesButton(1));
+        $tr = HTML::tr();
+        $tr->pushContent($td);
+        $table->pushContent($tr);
+
+        $this->pushContent($table);
     }
 
     function _makeDayButton ($days) {
-        global $WikiTheme, $request;
+        global $request;
 
         if ($days == 1)
             $label = _("1 day");
@@ -1367,9 +1406,108 @@ class DayButtonBar extends HtmlElement {
         else
             $label = sprintf(_("%s days"), abs($days));
 
+        $selfurl = $request->getURLtoSelf(array('action' => $request->getArg('action')));
         $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'days' => $days));
+        if ($url == $selfurl) {
+            return HTML::td(array('class'=>'tdselected'), $label);
+        }
+        return HTML::td(array('class'=>'tdunselected'),
+                        HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+    }
 
-        return $WikiTheme->makeButton($label, $url, 'wiki-rc-action');
+    function _makeUsersButton ($users) {
+        global $request;
+
+        if ($users == 0) {
+            $label = _("All users");
+            $author = "";
+        } else {
+            $label = _("My modifications only");
+            $author = "[]";
+        }
+
+        $selfurl = $request->getURLtoSelf(array('action' => $request->getArg('action')));
+        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'author' => $author));
+        if ($url == $selfurl) {
+            return HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
+        }
+        return HTML::td(array('colspan'=>3, 'class'=>'tdunselected'), 
+                        HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+    }
+
+    function _makePagesButton ($pages) {
+        global $request;
+
+        if ($pages == 0) {
+            $label = _("All pages");
+            $owner = "";
+        } else {
+            $label = _("My pages only");
+            $owner = "[]";
+        }
+
+        $selfurl = $request->getURLtoSelf(array('action' => $request->getArg('action')));
+        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'owner' => $owner));
+        if ($url == $selfurl) {
+            return HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
+        }
+        return HTML::td(array('colspan'=>3, 'class'=>'tdunselected'),
+                        HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+    }
+
+    function _makeMinorButton ($minor) {
+        global $request;
+
+        if ($minor == 0) {
+            $label = _("Major modifications only");
+        } else {
+            $label = _("All modifications");
+        }
+
+        $selfurl = $request->getURLtoSelf(array('action' => $request->getArg('action')));
+        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'show_minor' => $minor));
+        if ($url == $selfurl) {
+            return HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
+        }
+        return HTML::td(array('colspan'=>3, 'class'=>'tdunselected'),
+                        HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+    }
+
+    function _makeShowAllButton ($showall) {
+        global $request;
+
+        if ($showall == 0) {
+            $label = _("Page once only");
+        } else {
+            $label = _("Full changes");
+        }
+
+        $selfurl = $request->getURLtoSelf(array('action' => $request->getArg('action')));
+        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'show_all' => $showall));
+        if ($url == $selfurl) {
+            return HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
+        }
+        return HTML::td(array('colspan'=>3, 'class'=>'tdunselected'),
+                        HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+    }
+
+    function _makeNewPagesButton ($newpages) {
+        global $request;
+
+        if ($newpages == 0) {
+            $label = _("Old and new pages");
+        } else {
+            $label = _("New pages only");
+        }
+
+        $selfurl = $request->getURLtoSelf(array('action' => $request->getArg('action')));
+        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'only_new' => $newpages));
+        if ($url == $selfurl) {
+            return HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
+        }
+
+        return HTML::td(array('colspan'=>3, 'class'=>'tdunselected'),
+                        HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
     }
 }
 
