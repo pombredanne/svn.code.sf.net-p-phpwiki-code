@@ -1363,7 +1363,7 @@ class DayButtonBar extends HtmlElement {
         if ($days == 1)
             $label = _("1 day");
         elseif ($days < 1)
-            $label = "..."; //alldays
+            $label = _("All time");
         else
             $label = sprintf(_("%s days"), abs($days));
 
