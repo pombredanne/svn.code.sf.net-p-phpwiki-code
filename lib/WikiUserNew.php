@@ -1164,18 +1164,18 @@ extends _AnonUser
             	// FIXME: strange why this should be needed...
             	include_once("lib/WikiUser/Db.php");
             	include_once("lib/WikiUser/AdoDb.php");
-                _AdoDbPassUser::_AdoDbPassUser($this->_userid, $this->_prefs);
-                return _AdoDbPassUser::getPreferences();
+                $user = new _AdoDbPassUser($this->_userid, $this->_prefs);
+                return $user->getPreferences();
             } elseif ($this->_prefs->_method == 'SQL') {
             	include_once("lib/WikiUser/Db.php");
             	include_once("lib/WikiUser/PearDb.php");
-                _PearDbPassUser::_PearDbPassUser($this->_userid, $this->_prefs);
-                return _PearDbPassUser::getPreferences();
+                $user = new _PearDbPassUser($this->_userid, $this->_prefs);
+                return $user->getPreferences();
             } elseif ($this->_prefs->_method == 'PDO') {
             	include_once("lib/WikiUser/Db.php");
             	include_once("lib/WikiUser/PdoDb.php");
-                _PdoDbPassUser::_PdoDbPassUser($this->_userid, $this->_prefs);
-                return _PdoDbPassUser::getPreferences();
+                $user = new _PdoDbPassUser($this->_userid, $this->_prefs);
+                return $user->getPreferences();
             }
         }
 
@@ -1202,20 +1202,20 @@ extends _AnonUser
             	// FIXME: strange why this should be needed...
             	include_once("lib/WikiUser/Db.php");
             	include_once("lib/WikiUser/AdoDb.php");
-                _AdoDbPassUser::_AdoDbPassUser($this->_userid, $prefs);
-                return _AdoDbPassUser::setPreferences($prefs, $id_only);
+                $user = new _AdoDbPassUser($this->_userid, $prefs);
+                return $user->setPreferences($prefs, $id_only);
             }
             elseif ($this->_prefs->_method == 'SQL') {
             	include_once("lib/WikiUser/Db.php");
             	include_once("lib/WikiUser/PearDb.php");
-                _PearDbPassUser::_PearDbPassUser($this->_userid, $prefs);
-                return _PearDbPassUser::setPreferences($prefs, $id_only);
+                $user = new _PearDbPassUser($this->_userid, $prefs);
+                return $user->setPreferences($prefs, $id_only);
             }
             elseif ($this->_prefs->_method == 'PDO') {
             	include_once("lib/WikiUser/Db.php");
             	include_once("lib/WikiUser/PdoDb.php");
-                _PdoDbPassUser::_PdoDbPassUser($this->_userid, $prefs);
-                return _PdoDbPassUser::setPreferences($prefs, $id_only);
+                $user = new _PdoDbPassUser($this->_userid, $prefs);
+                return $user->setPreferences($prefs, $id_only);
             }
         }
         if ($updated = _AnonUser::setPreferences($prefs, $id_only)) {
