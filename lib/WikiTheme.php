@@ -200,9 +200,21 @@ class WikiTheme {
         $this->_themes_dir = NormalizeLocalFileName("themes");
         $this->_path  = defined('PHPWIKI_DIR') ? NormalizeLocalFileName("") : "";
         $this->_theme = "themes/$theme_name";
+        $this->_parents = array();
 
-        if ($theme_name != 'default')
-            $this->_default_theme = new WikiTheme('default',true);
+        if ($theme_name != 'default') {
+            $parent = $this;
+            /* derived classes should search all parent classes */
+            while ($parent = get_parent_class($parent)) {
+                if ($parent == 'WikiTheme') {
+                    $this->_default_theme = new WikiTheme('default', true);
+                    $this->_parents[] = $this->_default_theme;
+                } elseif ($parent) {
+                    $this->_parents[] = new WikiTheme
+                      (preg_replace("/^WikiTheme_/i", "", $parent), true);
+                }
+            }
+        }
         if ($noinit) return;
 
 	$script_url = deduce_script_name();
@@ -242,14 +254,23 @@ class WikiTheme {
         if (file_exists($this->_path . $file))
             return $file;
 
+        /* Derived classes should search all parent classes */
+        foreach ($this->_parents as $parent) {
+	    $path = $parent->_findFile($file, 1);
+            if ($path) {
+                return $path;
+            } elseif (DEBUG & _DEBUG_VERBOSE) {
+                ; //trigger_error("$parent->_theme/$file: not found", E_USER_NOTICE);
+            }
+        }
         if (isset($this->_default_theme)) {
             return $this->_default_theme->_findFile($file, $missing_okay);
         }
         else if (!$missing_okay) {
-            if (DEBUG & function_exists('debug_backtrace')) { // >= 4.3.0
+            trigger_error("$this->_theme/$file: not found", E_USER_NOTICE);
+            if (DEBUG & _DEBUG_TRACE && function_exists('debug_backtrace')) { // >= 4.3.0
                 echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
             }
-            trigger_error("$this->_theme/$file: not found", E_USER_NOTICE);
         }
         return false;
     }
@@ -1143,12 +1164,11 @@ class WikiTheme {
             return $this->_path . $tmp;
         else {
             $f1 = $this->file("templates/$name.tmpl");
-            //trigger_error("findTemplate($name) pwd: ".getcwd(), E_USER_ERROR);
-            if (isset($this->_default_theme)) {
-               $f2 = $this->_default_theme->file("templates/$name.tmpl");
-               //trigger_error("$f1 nor $f2 found", E_USER_ERROR);
-            } else 
-               trigger_error("$f1 not found", E_USER_ERROR);
+            foreach ($this->_parents as $parent) {
+            	if ($tmp = $parent->_findFile("templates/$name.tmpl", 1))
+            	    return $this->_path . $tmp;
+            }
+            trigger_error("$f1 not found", E_USER_ERROR);
             return false;
         }
     }
