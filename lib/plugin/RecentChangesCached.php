@@ -86,7 +86,7 @@ extends WikiPluginCached
     // This does not use ->run, to avoid pi construction and deconstruction
     function box($args = false, $request = false, $basepage = false, $do_save = false) {
         if (!$request) $request =& $GLOBALS['request'];
-        if (!isset($args['limit'])) $args['limit'] = 15;
+        if (!isset($args['limit'])) $args['limit'] = 12;
         $args['format'] = 'box';
         $args['show_minor'] = false;
         $args['show_major'] = true;
