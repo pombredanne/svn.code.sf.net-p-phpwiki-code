@@ -17,6 +17,7 @@ rcs_id('$Id$');
  * and convert back and forth.
  */
 require_once('lib/WikiTheme.php');
+require_once('themes/wikilens/themeinfo.php');
 if (!defined("ENABLE_MARKUP_TEMPLATE"))
     define("ENABLE_MARKUP_TEMPLATE", true);
 if (!defined("ENABLE_MARKUP_MEDIAWIKI_TABLE"))
@@ -45,7 +46,10 @@ function ActionButton ($action, $label = false, $page_or_rev = false, $options =
                     $WikiTheme->makeActionButton($action, $label, $page_or_rev, $options));
 }
 
-class WikiTheme_MonoBook extends WikiTheme {
+class WikiTheme_MonoBook 
+/* extends WikiTheme */
+extends WikiTheme_Wikilens
+{
     
     /* this adds selected to the class */
     function makeActionButton ($action, $label = false, $page_or_rev = false, $options = false) {

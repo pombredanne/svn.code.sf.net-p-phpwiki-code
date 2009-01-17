@@ -9,7 +9,6 @@ rcs_id('$Id$');
  * This uses the dynamic jscalendar, which doesn't need extra requests per month/year change.
  *
  * Changes to MonoBook:
- *  makeActionButton
  *  folderArrow
  *  special login, search and tags
  *  CbNewUserEdit - when a new user creates or edits a page, a Userpage template is created
@@ -23,13 +22,12 @@ if (!defined("CLAMDSCAN_VIRUS"))
 
 require_once('lib/WikiTheme.php');
 require_once('themes/MonoBook/themeinfo.php');
-//require_once('lib/WikiPlugin.php');
 
 class WikiTheme_Sidebar extends WikiTheme_MonoBook {
 
     function WikiTheme_Sidebar ($theme_name='Sidebar') {
         $this->WikiTheme($theme_name);
-        $this->calendarInit(true);
+        //$this->calendarInit(true);
     }
 
     /* Display up/down button with persistent state */
@@ -46,19 +44,6 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook {
 	                       'onClick' => "showHideFolder('$id')",
 			       'title'  => _("Click to hide/show")));
     }
-
-    /*
-    function findTemplate ($name) {
-        // hack for navbar.tmpl to hide the buttonseparator
-        if ($name == "navbar") {
-            $this->setButtonSeparator(HTML::Raw("<br />\n&nbsp;&middot;&nbsp;"));
-        }
-        if ($name == "actionbar" || $name == "signin") {
-            $this->setButtonSeparator(" ");
-        }
-        return parent::findTemplate($name);
-    }
-    */
 
     /* Callback when a new user creates or edits a page */
     function CbNewUserEdit (&$request, $userid) {
@@ -82,7 +67,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook {
      */
     function CbUpload (&$request, $pathname) {
         $cmdline = CLAMDSCAN_PATH . " --nosummary --move=" . CLAMDSCAN_VIRUS;
-	$report = `$cmdline $pathname"`;
+	$report = `$cmdline "$pathname"`;
 	if (!$report) {
 	    trigger_error("clamdscan failed", E_USER_WARNING);
 	    return true;
@@ -99,6 +84,14 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook {
 }
 
 $WikiTheme = new WikiTheme_Sidebar('Sidebar');
+
+/*if (ENABLE_RATEIT) {
+    require_once("lib/wikilens/CustomPrefs.php");
+    require_once("lib/wikilens/PageListColumns.php");
+    $plugin = new WikiPlugin_RateIt;
+    $plugin->head();
+}*/
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // (c-file-style: "gnu")
