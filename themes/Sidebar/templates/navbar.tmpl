@@ -32,7 +32,7 @@ $p = $WikiTheme->tooltipAccessKeyPrefix();
   <h5><?= _("Search")?></h5>
   <div class="pBody">
 <?= Template("search",
-             array('SEARCH_BEFORE' => HTML::h5(_("Search")), /*WikiLink(_("FindPage")*/
+             array('SEARCH_BEFORE' => ''/*HTML::h5(WikiLink(_("FindPage")))*/,
 		   'SEARCH_AFTER'  => HTML::Raw('<br /><input type="submit" name="searchtype" value="title" class="searchButton" title="Press to perform a wiki title search">&nbsp;<input type="submit" name="searchtype" value="fulltext" class="searchButton" title="Wiki fulltext search">'))) ?>
   </div>
 </div>
