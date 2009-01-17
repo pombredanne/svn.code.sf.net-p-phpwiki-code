@@ -1493,10 +1493,13 @@ class WikiTheme {
                 $js_exist = '{"'.join('":1,"',$existing).'":1}';
                 //var SPECIAL_DAYS = {"2004-05-11":1,"2004-05-12":1,"2004-06-01":1}
                 $this->addMoreHeaders(JavaScript('
-// This table holds the existing calender entries for the current user
-// calculated from the database
-var SPECIAL_DAYS = '.$js_exist.';
-// This function returns true if the date exists in SPECIAL_DAYS
+/* This table holds the existing calender entries for the current user
+ *  calculated from the database 
+ */
+
+var SPECIAL_DAYS = '.javascript_quote_string($js_exist).';
+
+/* This function returns true if the date exists in SPECIAL_DAYS */
 function dateExists(date, y, m, d) {
     var year = date.getFullYear();
     m = m + 1;
@@ -1513,7 +1516,8 @@ function dateExists(date, y, m, d) {
 function dateStatusFunc(date, y, m, d) {
     if (dateExists(date, y, m, d)) return "existing";
     else return false;
-}'));
+}
+'));
             }
             else {
                 $this->addMoreHeaders(JavaScript('
