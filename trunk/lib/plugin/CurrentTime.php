@@ -71,8 +71,7 @@ extends WikiPlugin
 
     // Establish default values for each of this plugin's arguments.
     function getDefaultArguments() {
-        return array('timezone' => '',
-                     'format'  => '%Y-%m-%d %T');
+        return array('format'  => '%Y-%m-%d %T');
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
