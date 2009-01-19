@@ -148,13 +148,19 @@ extends WikiPlugin
 	$this->doVariableExpansion($initial_content, $vars, $basepage, $request);
 
         array_push($included_pages, $page);
-        include_once('lib/BlockParser.php');
-        $content = TransformText($initial_content, $r->get('markup'), $page);
+
+        // If content is single-line, call TransformInline, else call TransformText
+        if (preg_match("/\n/", $initial_content)) {
+            include_once('lib/BlockParser.php');
+            $content = TransformText($initial_content, $r->get('markup'), $page);
+        } else {
+            include_once('lib/InlineParser.php');
+            $content = TransformInline($initial_content, $r->get('markup'), $page);
+        }
 
         array_pop($included_pages);
 
         return $content;
-        // return HTML::div(array('class' => 'template'), $content);
     }
 
     /**
@@ -208,38 +214,6 @@ extends WikiPlugin
 	return $content;
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.10  2007/06/07 17:03:38  rurban
-// minor optimization: move explode("\n", $initial_content) to section code
-//
-// Revision 1.9  2007/03/04 14:09:13  rurban
-// silence missing page warning
-//
-// Revision 1.8  2007/01/25 07:42:29  rurban
-// Changed doVariableExpansion API. Uppercase default vars. Use str_replace.
-//
-// Revision 1.7  2007/01/04 16:42:41  rurban
-// Improve vars passing. Use new method allow_undeclared_arg to allow arbitrary args for the template. Fix doVariableExpansion: use a ref. Fix pagename. Put away \b in regex.
-//
-// Revision 1.6  2007/01/03 21:24:06  rurban
-// protect page in links. new doVariableExpansion() for CreatePage. preg_quote custom vars.
-//
-// Revision 1.5  2006/04/17 17:28:21  rurban
-// honor getWikiPageLinks change linkto=>relation
-//
-// Revision 1.4  2005/09/11 13:30:22  rurban
-// improve comments
-//
-// Revision 1.3  2005/09/10 20:43:19  rurban
-// support <noinclude>
-//
-// Revision 1.2  2005/09/10 20:07:16  rurban
-// fix BASE_URL
-//
-// Revision 1.1  2005/09/10 19:59:38  rurban
-// Parametrized page inclusion ala mediawiki
-//
 
 // For emacs users
 // Local Variables:
