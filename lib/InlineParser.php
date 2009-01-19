@@ -855,9 +855,19 @@ class Markup_plugin extends SimpleMarkup
     var $_match_regexp = '<\?plugin(?:-form)?\s[^\n]+?\?>';
 
     function markup ($match) {
-	//$xml = new Cached_PluginInvocation($match);
-	//$xml->setTightness(true,true);
 	return new Cached_PluginInvocation($match);
+    }
+}
+
+// Special version for single-line Wikicreole plugins formatting.
+class Markup_plugin_wikicreole extends SimpleMarkup
+{
+    var $_match_regexp = '<<[^\n]+?>>';
+
+    function markup ($match) {
+        $pi = str_replace("<<", "<?plugin ", $match);
+        $pi = str_replace(">>", " ?>", $pi);
+	return new Cached_PluginInvocation($pi);
     }
 }
 
@@ -1056,7 +1066,7 @@ class InlineTransformer
                  'wikicreole_italics', 'wikicreole_bold',
                  'wikicreole_monospace', 'wikicreole_superscript',
                  'wikicreole_subscript', 'old_emphasis', 'nestled_emphasis',
-                 'html_emphasis', 'html_abbr', 'plugin',
+                 'html_emphasis', 'html_abbr', 'plugin', 'plugin_wikicreole',
                  'isonumchars', 'isohexchars', /*'html_entities'*/
                  );
 	    if (DISABLE_MARKUP_WIKIWORD)
@@ -1199,7 +1209,7 @@ class NowikiTransformer extends InlineTransformer
     function NowikiTransformer () {
         $this->InlineTransformer
             (array('linebreak',
-                   'html_emphasis', 'html_abbr', 'plugin',
+                   'html_emphasis', 'html_abbr', 'plugin', 'plugin_wikicreole',
                    'isonumchars', 'isohexchars', /*'html_entities',*/
                    ));
     }
