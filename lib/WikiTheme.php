@@ -206,7 +206,7 @@ class WikiTheme {
             $parent = $this;
             /* derived classes should search all parent classes */
             while ($parent = get_parent_class($parent)) {
-                if ($parent == 'WikiTheme') {
+                if (strtolower($parent) == 'wikitheme') {
                     $this->_default_theme = new WikiTheme('default', true);
                     $this->_parents[] = $this->_default_theme;
                 } elseif ($parent) {
@@ -220,10 +220,13 @@ class WikiTheme {
 	$script_url = deduce_script_name();
 	if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
 	    $script_url .= ("?start_debug=".$_GET['start_debug']);
-	$this->addMoreHeaders(JavaScript("var data_path = '". javascript_quote_string(DATA_PATH) ."';\n"
-					 ."var pagename  = '". javascript_quote_string($GLOBALS['request']->getArg('pagename')) ."';\n"
-					 ."var script_url= '". javascript_quote_string($script_url) ."';\n"
-					 ."var stylepath = '". javascript_quote_string(DATA_PATH) . '/'.$this->_theme."/';\n"));
+	$pagename = $GLOBALS['request']->getArg('pagename');
+	$this->addMoreHeaders
+	    (JavaScript
+	     ("var data_path = '". javascript_quote_string(DATA_PATH) ."';\n"
+	      ."var pagename  = '". javascript_quote_string($pagename) ."';\n"
+	      ."var script_url= '". javascript_quote_string($script_url) ."';\n"
+	      ."var stylepath = '". javascript_quote_string(DATA_PATH) . '/'.$this->_theme."/';\n"));
         // by pixels
         if ((is_object($GLOBALS['request']) // guard against unittests
              and $GLOBALS['request']->getPref('doubleClickEdit'))
@@ -260,7 +263,7 @@ class WikiTheme {
             if ($path) {
                 return $path;
             } elseif (DEBUG & _DEBUG_VERBOSE) {
-                ; //trigger_error("$parent->_theme/$file: not found", E_USER_NOTICE);
+                trigger_error("$parent->_theme/$file: not found", E_USER_NOTICE);
             }
         }
         if (isset($this->_default_theme)) {
@@ -891,7 +894,9 @@ class WikiTheme {
      *
      * @return object A Button object.
      */
-    function makeActionButton ($action, $label = false, $page_or_rev = false, $options = false) {
+    function makeActionButton ($action, $label = false, 
+                               $page_or_rev = false, $options = false) 
+    {
         extract($this->_get_name_and_rev($page_or_rev));
 
         if (is_array($action)) {
@@ -1389,7 +1394,7 @@ class WikiTheme {
     // define ENABLE_DOUBLECLICKEDIT
     function initDoubleClickEdit() {
         if (!$this->HTML_DUMP_SUFFIX)
-            $this->addMoreAttr('body', 'DoubleClickEdit', HTML::Raw(" ondblclick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
+            $this->addMoreAttr('body', 'DoubleClickEdit', HTML::Raw(" OnDblClick=\"url = document.URL; url2 = url; if (url.indexOf('?') != -1) url2 = url.slice(0, url.indexOf('?')); if ((url.indexOf('action') == -1) || (url.indexOf('action=browse') != -1)) document.location = url2 + '?action=edit';\""));
     }
 
     // Immediate title search results via XMLHTML(HttpRequest)
