@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: CurrentTime.php 6185 2008-08-22 11:40:14Z vargenau $');
+rcs_id('$Id$');
 /*
  * Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
  *
