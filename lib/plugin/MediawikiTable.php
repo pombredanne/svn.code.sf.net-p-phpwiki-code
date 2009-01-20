@@ -211,6 +211,7 @@ extends WikiPlugin
                         }
                     }
                     $line=substr($line, $pospipe+1);
+                    if (empty($content)) $content = '';
                     if (is_numeric(trim($content))) {
                         $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
                     } else {
