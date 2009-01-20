@@ -211,11 +211,10 @@ extends WikiPlugin
                         }
                     }
                     $line=substr($line, $pospipe+1);
-                    if (empty($content)) $content = '';
-                    if (is_numeric(trim($content))) {
-                        $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($content)));
+                    if (is_numeric(trim($line))) {
+                        $cell->pushContent(HTML::p(array('style' => "text-align:right"), trim($line)));
                     } else {
-                        $cell->pushContent(TransformText(trim($content), $markup, $basepage));
+                        $cell->pushContent(TransformText(trim($line), $markup, $basepage));
                     }
                     continue;
                 }
