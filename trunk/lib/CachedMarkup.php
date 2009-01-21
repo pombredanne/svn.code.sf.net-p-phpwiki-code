@@ -2,7 +2,6 @@
 rcs_id('$Id$');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2008 $ThePhpWikiProgrammingTeam
- * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  * 
@@ -36,12 +35,8 @@ class CacheableMarkup extends XmlContent {
     }
 
     function pack() {
-        // This causes a strange bug when a comment containing
-        // a single quote is entered in the Summary box:
-        // - the history is wrong (user and comment missing)
-        // - the table of contents plugin no longer works
-        // if (function_exists('gzcompress'))
-        //     return gzcompress(serialize($this), 9);
+        if (function_exists('gzcompress'))
+            return gzcompress(serialize($this), 9);
         return serialize($this);
 
         // FIXME: probably should implement some sort of "compression"
@@ -760,6 +755,9 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
         }
     }
 
+    function setTightness($top, $bottom) {
+    }
+    
     function isInlineElement() {
 	return false;
     }
@@ -790,6 +788,69 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
         return $loader;
     }
 }
+
+// $Log: not supported by cvs2svn $
+// Revision 1.64  2008/03/21 20:35:52  rurban
+// Improve upon embedded ImgObject, such as [ *.mp3 ], objects.
+// Object tags now render as label correctly and param tags are also added.
+//
+// Revision 1.63  2008/03/17 19:03:08  rurban
+// protect $WikiTheme->VALID_LINKS
+//
+// Revision 1.62  2008/02/14 18:40:32  rurban
+// fix DUMP_MODE with LINKS
+//
+// Revision 1.61  2008/01/30 19:08:59  vargenau
+// Valid HTML code: we need a div, it might contain a table
+//
+// Revision 1.60  2007/09/15 12:28:46  rurban
+// Improve multi-page format handling: abstract _DumpHtmlToDir. get rid of non-external pdf, non-global VALID_LINKS
+//
+// Revision 1.59  2007/09/12 19:32:29  rurban
+// link only VALID_LINKS with pagelist HTML_DUMP
+//
+// Revision 1.58  2007/07/14 12:30:53  rurban
+// include => require
+//
+// Revision 1.57  2007/05/28 20:13:46  rurban
+// Overwrite all attributes at once at page->save to delete dangling meta
+//
+// Revision 1.56  2007/04/08 16:39:40  rurban
+// fix when DISABLE_UNITS = true (thanks to Walter Rafelsberger)
+// simplify title calculation
+//
+// Revision 1.55  2007/03/18 17:35:14  rurban
+// Fix :DontStoreLink
+//
+// Revision 1.54  2007/01/25 07:41:41  rurban
+// Print attribute in title. Use CSS formatting for ::=
+//
+// Revision 1.53  2007/01/21 23:26:52  rurban
+// Translate Found by
+//
+// Revision 1.52  2007/01/20 15:53:51  rurban
+// Rewrite of SearchHighlight: through ActionPage and InlineParser
+//
+// Revision 1.51  2007/01/20 11:24:53  rurban
+// add SpellCheck support
+//
+// Revision 1.50  2007/01/07 18:41:51  rurban
+// Fix fallback ZipReader syntax error. Use label=false. Add parsed plugin names to the stored tree.
+//
+// Revision 1.49  2007/01/04 16:40:35  rurban
+// Remove units object from CachedMarkup links, Store parsed linkinfo only: basevalue, baseunit.
+//
+// Revision 1.48  2007/01/03 21:22:08  rurban
+// Use Units for attributes. Store the unified base value as Cached_SemanticLink->_attribute_base in the wikimarkup and display it as title.
+//
+// Revision 1.47  2007/01/02 13:17:57  rurban
+// fix semantic page links and attributes, esp. attributes. they get stored as link to empty page also. tighten semantic url expander regex, omit want_content if not necessary
+//
+// Revision 1.46  2006/12/22 00:11:38  rurban
+// add seperate expandurl method, to simplify pagename parsing
+//
+// Revision 1.45  2006/10/12 06:33:50  rurban
+// decide later with which class to render this link (fixes interwiki link layout)
 
 // (c-file-style: "gnu")
 // Local Variables:
