@@ -767,34 +767,13 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 
     function expand($basepage, &$markup) {
         $loader = $this->_getLoader();
-
         $xml = $loader->expandPI($this->_pi, $GLOBALS['request'], $markup, $basepage);
-        $div = HTML::div(array('class' => 'plugin'));
-        if (isset($this->name))
-            $id = GenerateId($this->name . 'Plugin');
-   
-	if (isset($this->_tightenable)) {
-	    if ($this->_tightenable == 3) {
-                // We need a div here, it might contain a table
-                $span = HTML::div(array('class' => 'plugin'), $xml);
-                if (!empty($id))
-                    $span->setAttr('id', $id);
-	        return $span;
-            }
-	    $div->setInClass('tightenable');
-	    $div->setInClass('top', ($this->_tightenable & 1) != 0);
-	    $div->setInClass('bottom', ($this->_tightenable & 2) != 0);
-	}
-        if (!empty($id))
-            $div->setAttr('id', $id);
-	$div->pushContent($xml);
-	return $div;
+        return $xml;
     }
 
     function asString() {
         return $this->_pi;
     }
-
 
     function getWikiPageLinks($basepage) {
         $loader = $this->_getLoader();
