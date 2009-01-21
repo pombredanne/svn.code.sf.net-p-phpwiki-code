@@ -172,7 +172,6 @@ extends WikiPlugin
             if (empty($code))
                 return $this->error(fmt("Couldn't start commandline '%s'",$commandLine));
             $pre = HTML::pre(HTML::raw($code));
-            $pre->setAttr('class','tightenable top bottom');
             $html->pushContent($pre);
             return HTML($html);
         } else {

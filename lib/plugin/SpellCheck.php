@@ -148,7 +148,6 @@ extends WikiPlugin
 		}
 	    }
             /*$pre = HTML::pre(HTML::raw($code));
-            $pre->setAttr('class','tightenable top bottom');
             $html->pushContent($pre);*/
         } else {
             $sugg = pspell_check($source, $lang);
