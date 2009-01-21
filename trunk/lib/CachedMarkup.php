@@ -36,8 +36,12 @@ class CacheableMarkup extends XmlContent {
     }
 
     function pack() {
-        if (function_exists('gzcompress'))
-            return gzcompress(serialize($this), 9);
+        // This causes a strange bug when a comment containing
+        // a single quote is entered in the Summary box:
+        // - the history is wrong (user and comment missing)
+        // - the table of contents plugin no longer works
+        // if (function_exists('gzcompress'))
+        //     return gzcompress(serialize($this), 9);
         return serialize($this);
 
         // FIXME: probably should implement some sort of "compression"
