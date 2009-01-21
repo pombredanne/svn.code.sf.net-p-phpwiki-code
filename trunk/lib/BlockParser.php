@@ -262,7 +262,6 @@ class BlockParser_InputSubBlock extends BlockParser_Input
     function skipSpace () {
         // In contrast to the case for top-level blocks,
         // for sub-blocks, there never appears to be any trailing space.
-        // (The last block in the sub-block should always be of class tight-bottom.)
         while ($this->_line === '')
             $this->advance();
 
@@ -407,6 +406,7 @@ class ParsedBlock extends Block_HtmlElement {
             	//$block->_text = $line;
                 if (DEBUG & _DEBUG_PARSER)
                     $input->_debug('<', get_class($block));
+                $input->skipSpace();
                 return $block;
             }
             if (DEBUG & _DEBUG_PARSER)
@@ -493,8 +493,6 @@ class Block_blockquote extends BlockMarkup
         if (get_class($nextBlock) == get_class($this)) {
             assert ($nextBlock->_depth < $this->_depth);
             $nextBlock->_element->unshiftContent($this->_element);
-	    if (!empty($this->_tight_top))
-            $nextBlock->_tight_top = $this->_tight_top;
             return $nextBlock;
         }
         return false;
@@ -592,8 +590,6 @@ class Block_dl extends Block_list
     }
 }
 
-
-
 class Block_table_dl_defn extends XmlContent
 {
     var $nrows;
@@ -604,7 +600,6 @@ class Block_table_dl_defn extends XmlContent
         if (!is_array($defn))
             $defn = $defn->getContent();
 
-	$this->_next_tight_top = false; // value irrelevant - gets fixed later
         $this->_ncols = $this->_ComputeNcols($defn);
         $this->_nrows = 0;
 
@@ -631,12 +626,10 @@ class Block_table_dl_defn extends XmlContent
         $this->_accum->pushContent($item);
     }
 
-    function _flushRow ($tight_bottom=false) {
+    function _flushRow () {
         if (!empty($this->_accum)) {
             $row = new Block_HtmlElement('tr', false, $this->_accum);
 
-            $this->_next_tight_top = $tight_bottom;
-            
             $this->pushContent($row);
             $this->_accum = false;
             $this->_nrows++;
@@ -647,12 +640,11 @@ class Block_table_dl_defn extends XmlContent
         if (!($table_rows = $table->getContent()))
             return;
 
-        $this->_flushRow($table_rows[0]->_tight_top);
-            
+        $this->_flushRow();
+
         foreach ($table_rows as $subdef) {
             $this->pushContent($subdef);
             $this->_nrows += $subdef->nrows();
-            $this->_next_tight_top = $subdef->_tight_bot;
         }
     }
 
@@ -975,9 +967,8 @@ class Block_p extends BlockMarkup
 
     function merge ($nextBlock) {
         $class = get_class($nextBlock);
-        if (strtolower($class) == 'block_p' and $this->_tight_bot) {
+        if (strtolower($class) == 'block_p') {
             $this->_text .= "\n" . $nextBlock->_text;
-            $this->_tight_bot = $nextBlock->_tight_bot;
             return $this;
         }
         return false;
