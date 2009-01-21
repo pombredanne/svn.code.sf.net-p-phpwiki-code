@@ -1,6 +1,7 @@
 <?php rcs_id('$Id$');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
+ * Copyright (C) 2008 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  * 
@@ -21,10 +22,6 @@
 require_once('lib/HtmlElement.php');
 require_once('lib/CachedMarkup.php');
 require_once('lib/InlineParser.php');
-
-////////////////////////////////////////////////////////////////
-//
-//
 
 /**
  * Deal with paragraphs and proper, recursive block indents 
@@ -332,9 +329,6 @@ class Block_HtmlElement extends HtmlElement
     function Block_HtmlElement($tag /*, ... */) {
         $this->_init(func_get_args());
     }
-
-    function setTightness($top, $bottom) {
-    }
 }
 
 class ParsedBlock extends Block_HtmlElement {
@@ -402,7 +396,6 @@ class ParsedBlock extends Block_HtmlElement {
         if ($line === false or $line === '') { // allow $line === '0' 
             return false;
         }
-        $tight_top = !$this->_atSpace;
         $re_set = &$this->_regexpset;
         //FIXME: php5 fails to advance here!
         for ($m = $re_set->match($line); $m; $m = $re_set->nextMatch($line, $m)) {
@@ -414,8 +407,6 @@ class ParsedBlock extends Block_HtmlElement {
             	//$block->_text = $line;
                 if (DEBUG & _DEBUG_PARSER)
                     $input->_debug('<', get_class($block));
-                $tight_bottom = ! $input->skipSpace();
-                $block->_setTightness($tight_top, $tight_bottom);
                 return $block;
             }
             if (DEBUG & _DEBUG_PARSER)
@@ -474,10 +465,6 @@ class BlockMarkup {
 
     function _match (&$input, $match) {
         trigger_error('pure virtual', E_USER_ERROR);
-    }
-
-    function _setTightness ($top, $bot) {
-        $this->_element->setTightness($top, $bot);
     }
 
     function merge ($followingBlock) {
@@ -546,11 +533,6 @@ class Block_list extends BlockMarkup
         return true;
     }
 
-    function _setTightness($top, $bot) {
-        $li = &$this->_content[0];
-        $li->setTightness($top, $bot);
-    }
-    
     function merge ($nextBlock) {
         if (isa($nextBlock, 'Block_list') and $this->_tag == $nextBlock->_tag) {
             if ($nextBlock->_content === $this->_content) {
@@ -586,14 +568,6 @@ class Block_dl extends Block_list
         $this->_content[] = $defn;
         $this->_tight_defn = !$loose;
         return true;
-    }
-
-    function _setTightness($top, $bot) {
-        $dt = &$this->_content[0];
-        $dd = &$this->_content[1];
-
-        $dt->setTightness($top, $this->_tight_defn);
-        $dd->setTightness($this->_tight_defn, $bot);
     }
 
     function _do_match (&$input, $m) {
@@ -648,19 +622,6 @@ class Block_table_dl_defn extends XmlContent
         $this->_setTerm($th);
     }
 
-    function setTightness($tight_top, $tight_bot) {
-        $this->_tight_top = $tight_top;
-	$this->_tight_bot = $tight_bot;
-	$first = &$this->firstTR();
-	$last  = &$this->lastTR();
-	$first->setInClass('top', $tight_top);
-        if (!empty($last)) {
-            $last->setInClass('bottom', $tight_bot);
-        } else {
-            trigger_error(sprintf("no lastTR: %s",AsXML($this->_content[0])), E_USER_WARNING);
-        }
-    }
-    
     function _addToRow ($item) {
         if (empty($this->_accum)) {
             $this->_accum = HTML::td();
@@ -674,7 +635,6 @@ class Block_table_dl_defn extends XmlContent
         if (!empty($this->_accum)) {
             $row = new Block_HtmlElement('tr', false, $this->_accum);
 
-            $row->setTightness($this->_next_tight_top, $tight_bottom);
             $this->_next_tight_top = $tight_bottom;
             
             $this->pushContent($row);
@@ -784,10 +744,6 @@ class Block_table_dl extends Block_dl
         return true;
     }
 
-    function _setTightness($top, $bot) {
-        $this->_content[0]->setTightness($top, $bot);
-    }
-    
     function finish () {
 
         $defs = &$this->_content;
@@ -848,68 +804,6 @@ class Block_oldlists extends Block_list
 
         $this->_content[] = new TightSubBlock($input, $indent, $m->match, $itemtag);
         return true;
-    }
-
-    function _setTightness($top, $bot) {
-        if (count($this->_content) == 1) {
-            $li = &$this->_content[0];
-            $li->setTightness($top, $bot);
-        }
-        else {
-            // This is where php5 usually brakes.
-            // wrong duplicated <li> contents
-            if (DEBUG and DEBUG & _DEBUG_PARSER and check_php_version(5)) {
-                if (count($this->_content) != 2) {
-                    echo "<pre>";
-                    /*
-                    $class = new Reflection_Class('XmlElement');
-                    // Print out basic information
-                    printf(
-                           "===> The %s%s%s %s '%s' [extends %s]\n".
-                           "     declared in %s\n".
-                           "     lines %d to %d\n".
-                           "     having the modifiers %d [%s]\n",
-                           $class->isInternal() ? 'internal' : 'user-defined',
-                           $class->isAbstract() ? ' abstract' : '',
-                           $class->isFinal() ? ' final' : '',
-                           $class->isInterface() ? 'interface' : 'class',
-                           $class->getName(),
-                           var_export($class->getParentClass(), 1),
-                           $class->getFileName(),
-                           $class->getStartLine(),
-                           $class->getEndline(),
-                           $class->getModifiers(),
-                           implode(' ', Reflection::getModifierNames($class->getModifiers()))
-                           );
-                    // Print class properties
-                    printf("---> Properties: %s\n", var_export($class->getProperties(), 1));
-                    */
-                    echo 'count($this->_content): ', count($this->_content),"\n";
-                    echo "\$this->_content[0]: "; var_dump ($this->_content[0]);
-                    
-                    for ($i=1; $i < min(5, count($this->_content)); $i++) {
-                        $c =& $this->_content[$i];
-                        echo '$this->_content[',$i,"]: \n";
-                        echo "_tag: "; var_dump ($c->_tag);
-                        echo "_content: "; var_dump ($c->_content);
-                        echo "_properties: "; var_dump ($c->_properties);
-                    }
-                    debug_print_backtrace();
-                    if (DEBUG & _DEBUG_APD) {
-                        if (function_exists("xdebug_get_function_stack")) {
-                            var_dump (xdebug_get_function_stack());
-                        }
-                    }
-                    echo "</pre>";
-                }
-            }
-            if (!check_php_version(5))
-                assert(count($this->_content) == 2);
-            $dt = &$this->_content[0];
-            $dd = &$this->_content[1];
-            $dt->setTightness($top, false);
-            $dd->setTightness(false, $bot);
-        }
     }
 }
 
@@ -1031,10 +925,6 @@ class Block_hr extends BlockMarkup
         $this->_element = new Block_HtmlElement('hr');
         return true;
     }
-
-    function _setTightness($top, $bot) {
-	// Don't tighten <hr/>s
-    }
 }
 
 class Block_heading extends BlockMarkup
@@ -1049,10 +939,6 @@ class Block_heading extends BlockMarkup
         $this->_element = new Block_HtmlElement($tag, false, $text);
         
         return true;
-    }
-
-    function _setTightness($top, $bot) {
-	// Don't tighten headers.
     }
 }
 
@@ -1073,10 +959,6 @@ class Block_heading_wikicreole extends BlockMarkup
         
         return true;
     }
-
-    function _setTightness($top, $bot) {
-	// Don't tighten headers.
-    }
 }
 
 class Block_p extends BlockMarkup
@@ -1089,11 +971,6 @@ class Block_p extends BlockMarkup
         $this->_text = $m->match;
         $input->advance();
         return true;
-    }
-
-    function _setTightness ($top, $bot) {
-        $this->_tight_top = $top;
-        $this->_tight_bot = $bot;
     }
 
     function merge ($nextBlock) {
@@ -1109,7 +986,6 @@ class Block_p extends BlockMarkup
     function finish () {
         $content = TransformInline(trim($this->_text));
         $p = new Block_HtmlElement('p', false, $content);
-        $p->setTightness($this->_tight_top, $this->_tight_bot);
         return $p;
     }
 }
@@ -1163,14 +1039,9 @@ class Block_divspan extends BlockMarkup
             }
         }
         $this->_element = new Block_HtmlElement($tag, $args, $content);
-        //$this->_element->setTightness($tag == 'span', $tag == 'span');
         return true;
     }
-    function _setTightness($top, $bot) {
-	// Don't tighten user <div|span>
-    }
 }
-
 
 ////////////////////////////////////////////////////////////////
 //
