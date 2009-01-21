@@ -1,6 +1,6 @@
 /**
  *15 dec 2003
- *css crée pour le site http://www.crao.net
+ *css cree pour le site http://www.crao.net
  *L Lunati
  *
  */
@@ -597,15 +597,6 @@ h4, h5, h6 {  /* MODIFY-TXT */
  *****RSS
  ******************************
  */
-
-/*
-*le lien rss HEADING
-*/
-.tightenable h2 {/* MODIFY-TXT */
-	font-size: 12px;
-	color: #888;
-	font-weight: bold;
-}
 
 /* rss feed */
 

@@ -681,47 +681,6 @@ span.redirectfrom {
   padding-left: 1em;
 }
 
-
-/*
- * Vertical margins around block elements.
- */
-
-p { margin: 1em 0; }		/* Normal ("loose") paragraphs */
-li p, dd p, td p { margin: 1ex 0; } /* Paragraphs within lists are a little tighter. */
-  
-/* ul, ol, dl { margin: 0.2ex 0; }	/* A little room around lists. */
-/* li ul, li ol, li dl,
-dd ul, dd ol, dd dl { margin: 0 0; } /* but not around sub-lists. */
-
-/* Normal ("loose") list elements */
-li.tightenable { margin: 1em 0; }
-dt.tightenable { margin-top: 1em; }
-dd.tightenable { margin-bottom: 1.5ex; }
-
-  
-li.tightenable.top,
-dt.tightenable.top,
-dd.tightenable.top {
-  margin-top: 0.2ex;
-}
-li li.tightenable.top {
-  margin-top: 0;
-}
-li.tightenable.bottom,
-dd.tightenable.bottom {
-  margin-bottom: 0.2ex;
-}
-li li.tightenable.bottom {
-  margin-bottom: 0;
-}
-
-.tightenable.top {
-  margin-top: 0;
-}
-.tightenable.bottom {
-  margin-bottom: 0;
-}
-
 /*
  * "DL tables"
  */
@@ -734,12 +693,6 @@ li li.tightenable.bottom {
   border-bottom: 2px #444 solid;
   border-left: none; 
   border-right: none; 
-}
-.wiki-dl-table tr.tightenable.top {
-  border-top: 1px #444 solid;
-}
-.wiki-dl-table tr.tightenable.bottom {
-  border-bottom: 1px #444 solid;
 }
 .wiki-dl-table th,
 .wiki-dl-table td {

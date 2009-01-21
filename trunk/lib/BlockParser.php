@@ -334,9 +334,6 @@ class Block_HtmlElement extends HtmlElement
     }
 
     function setTightness($top, $bottom) {
-	$this->setInClass('tightenable');
-	$this->setInClass('top', $top);
-	$this->setInClass('bottom', $bottom);
     }
 }
 
@@ -466,7 +463,6 @@ class TightSubBlock extends SubBlock {
         if (count($this->_content) == 1) {
             $elem = $this->_content[0];
             if (isa($elem, 'XmlElement') and $elem->getTag() == 'p') {
-                assert($elem->getAttr('class') == 'tightenable top bottom');
                 $this->setContent($elem->getContent());
             }
         }

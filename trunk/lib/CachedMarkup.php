@@ -756,9 +756,6 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
     }
 
     function setTightness($top, $bottom) {
-        $this->_tightenable = 0;
-        if ($top) $this->_tightenable |= 1;
-        if ($bottom) $this->_tightenable |= 2;
     }
     
     function isInlineElement() {
