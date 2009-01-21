@@ -27,6 +27,8 @@ rcs_id('$Id$');
  * @package Markup
  * @author Geoffrey T. Dairiki, Reini Urban
  */
+/**
+ */
 
 /**
  * This is the character used in wiki markup to escape characters with
@@ -1136,6 +1138,7 @@ class InlineTransformer
                     and isa($markup,'Markup_plugin')) 
                 {
                     $current =& $output->_content[count($output->_content)-1];
+                    $current->setTightness(true,true);
                 }
                 $output->pushContent($match->prematch);
                 $text = $match->postmatch;
@@ -1159,6 +1162,11 @@ class InlineTransformer
             else
                 $current = $markup->markup($match->match, $body);
             $input = $match->postmatch;
+            if (isset($markup) and is_object($markup) 
+                and isa($markup,'Markup_plugin')) 
+            {
+                $current->setTightness(true,true);
+            }
             $output->pushContent($match->prematch, $current);
 
             $match = $regexps->match($input);
