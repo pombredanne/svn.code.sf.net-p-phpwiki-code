@@ -150,6 +150,7 @@ extends WikiPlugin
         array_push($included_pages, $page);
 
         // If content is single-line, call TransformInline, else call TransformText
+        $initial_content = trim($initial_content, "\n");
         if (preg_match("/\n/", $initial_content)) {
             include_once('lib/BlockParser.php');
             $content = TransformText($initial_content, $r->get('markup'), $page);
