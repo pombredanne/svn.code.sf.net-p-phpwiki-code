@@ -919,7 +919,7 @@ class Markup_wikicreole_preformatted extends SimpleMarkup
 
     function markup ($match) {
         // Remove {{{ and }}}
-        return new HtmlElement('pre', substr($match, 3, -3));
+        return new HtmlElement('tt', substr($match, 3, -3));
     }
 }
 
