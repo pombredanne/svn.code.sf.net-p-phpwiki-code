@@ -84,7 +84,7 @@ extends WikiPlugin
             $format = '%T';
         }
 
-        return HTML::span(strftime($format, time()));
+        return HTML::raw(strftime($format, time()));
     }
 };
 
