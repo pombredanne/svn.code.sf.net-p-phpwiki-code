@@ -368,7 +368,7 @@ class ParsedBlock extends Block_HtmlElement {
     	if (!is_object($_regexpset)) {
 	    $Block_types = array
 		    ('oldlists', 'list', 'dl', 'table_dl', 'table_wikicreole', 'table_mediawiki',
-                     'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre', 'email_blockquote',
+                     'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre', 'nowiki_wikicreole', 'email_blockquote',
 		     'plugin', 'plugin_wikicreole', 'p');
             // insert it before p!
             if (ENABLE_MARKUP_DIVSPAN) {
@@ -948,6 +948,30 @@ class Block_pre extends BlockMarkup
 	} else {
             $this->_element = new Block_HtmlElement('pre', false, $text);
 	}
+        return true;
+    }
+}
+class Block_nowiki_wikicreole extends BlockMarkup
+{
+    var $_re = '{{{';
+
+    function _match (&$input, $m) {
+        $endtag = '}}}';
+        $text = array();
+        $pos = $input->getPos();
+
+        $line = $m->postmatch;
+        while (ltrim($line) != $endtag) {
+            $text[] = $line;
+            if (($line = $input->nextLine()) === false) {
+                $input->setPos($pos);
+                return false;
+            }
+        }
+        $input->advance();
+
+        $text = join("\n", $text);
+        $this->_element = new Block_HtmlElement('pre', false, $text);
         return true;
     }
 }
