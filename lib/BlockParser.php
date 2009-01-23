@@ -367,7 +367,7 @@ class ParsedBlock extends Block_HtmlElement {
 
     	if (!is_object($_regexpset)) {
 	    $Block_types = array
-		    ('oldlists', 'list', 'dl', 'table_dl', 'table_wikicreole', 'table_mediawiki',
+		    ('template_plugin', 'oldlists', 'list', 'dl', 'table_dl', 'table_wikicreole', 'table_mediawiki',
                      'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre', 'nowiki_wikicreole', 'email_blockquote',
 		     'plugin', 'plugin_wikicreole', 'p');
             // insert it before p!
@@ -1087,6 +1087,65 @@ class Block_table_mediawiki extends Block_pre
 
         $pi = str_replace("\|}", "", $pi);
         $pi = '<'.'?plugin MediawikiTable ' . $pi . '?'.'>';
+        $this->_element = new Cached_PluginInvocation($pi);
+        return true;
+    }
+}
+
+class Block_template_plugin extends Block_pre
+{
+    var $_re = '{{';
+
+    function _match (&$input, $m) {
+        $pos = $input->getPos();
+        // $pi = "<?plugin Template page=" . $m->postmatch;
+        $pi = $m->postmatch;
+        while (!preg_match('/(?<!'.ESCAPE_CHAR.')}}\s*$/', $pi)) {
+            if (($line = $input->nextLine()) === false) {
+                $input->setPos($pos);
+                return false;
+            }
+            $pi .= "\n$line";
+        }
+        $input->advance();
+
+        $pi = trim($pi);
+        $pi = trim($pi, "}}");
+
+        if (strpos($pi, "|") === false) {
+            $imagename = $pi;
+            $alt = "";
+        } else {
+            $imagename = substr($pi, 0, strpos($pi, "|"));
+            $alt = ltrim(strstr($pi, "|"), "|");
+        }
+
+        // It's not a Mediawiki template, it's a Wikicreole image
+        if (is_image($imagename)) {
+            $this->_element = LinkImage(UPLOAD_DATA_PATH . $imagename, $alt);
+            return true;
+        }
+
+        $pi = str_replace("\n", "", $pi);
+        $vars = '';
+
+        if (preg_match('/^(\S+?)\|(.*)$/', $pi, $_m)) {
+            $pi = $_m[1];
+            $vars = '"' . preg_replace('/\|/', '" "', $_m[2]) . '"';
+            $vars = preg_replace('/"(\S+)=([^"]*)"/', '\\1="\\2"', $vars);
+        }
+
+        // pi may contain a version number
+        // {{foo?version=5}}
+        // in that case, output is "page=foo rev=5"
+        if (strstr($pi, "?")) {
+            $pi = str_replace("?version=", "\" rev=\"", $page);
+        }
+
+        if ($vars)
+            $pi = '<'.'?plugin Template page="'.$pi.'" '.$vars . ' ?>';
+        else
+            $pi = '<'.'?plugin Template page="' . $pi . '" ?>';
         $this->_element = new Cached_PluginInvocation($pi);
         return true;
     }
