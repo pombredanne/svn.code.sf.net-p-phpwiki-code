@@ -367,7 +367,7 @@ class ParsedBlock extends Block_HtmlElement {
 
     	if (!is_object($_regexpset)) {
 	    $Block_types = array
-		    ('oldlists', 'list', 'dl', 'table_dl', 'table_wikicreole',
+		    ('oldlists', 'list', 'dl', 'table_dl', 'table_wikicreole', 'table_mediawiki',
                      'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre', 'email_blockquote',
 		     'plugin', 'plugin_wikicreole', 'p');
             // insert it before p!
@@ -1033,6 +1033,36 @@ class Block_table_wikicreole extends Block_pre
 
         $pi = '<'.'?plugin WikicreoleTable ' . $pi . '?'.'>';
 
+        $this->_element = new Cached_PluginInvocation($pi);
+        return true;
+    }
+}
+
+/** ENABLE_MARKUP_MEDIAWIKI_TABLE
+ *  Table syntax similar to Mediawiki
+ *  {|
+ * => <?plugin MediawikiTable
+ *  |}
+ * => ?>
+ */
+class Block_table_mediawiki extends Block_pre
+{
+    var $_re = '{\|';
+
+    function _match (&$input, $m) {
+        $pos = $input->getPos();
+        $pi = $m->postmatch;
+        while (!preg_match('/(?<!'.ESCAPE_CHAR.')\|}\s*$/', $pi)) {
+            if (($line = $input->nextLine()) === false) {
+                $input->setPos($pos);
+                return false;
+            }
+            $pi .= "\n$line";
+        }
+        $input->advance();
+
+        $pi = str_replace("\|}", "", $pi);
+        $pi = '<'.'?plugin MediawikiTable ' . $pi . '?'.'>';
         $this->_element = new Cached_PluginInvocation($pi);
         return true;
     }
