@@ -1,6 +1,7 @@
 <?php rcs_id('$Id$');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004,2005 Reini Urban
+ * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  * 
@@ -21,10 +22,6 @@
 require_once('lib/HtmlElement.php');
 require_once('lib/CachedMarkup.php');
 require_once('lib/InlineParser.php');
-
-////////////////////////////////////////////////////////////////
-//
-//
 
 /**
  * Deal with paragraphs and proper, recursive block indents 
@@ -370,7 +367,7 @@ class ParsedBlock extends Block_HtmlElement {
 
     	if (!is_object($_regexpset)) {
 	    $Block_types = array
-		    ('oldlists', 'list', 'dl', 'table_dl',
+		    ('oldlists', 'list', 'dl', 'table_dl', 'table_wikicreole',
                      'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre', 'email_blockquote',
 		     'plugin', 'plugin_wikicreole', 'p');
             // insert it before p!
@@ -1002,6 +999,39 @@ class Block_plugin_wikicreole extends Block_pre
         $input->advance();
 
         $pi = str_replace(">>", "?>", $pi);
+
+        $this->_element = new Cached_PluginInvocation($pi);
+        return true;
+    }
+}
+
+class Block_table_wikicreole extends Block_pre
+{
+    var $_re = '\s*\|';
+
+    function _match (&$input, $m) {
+        $pos = $input->getPos();
+        $pi = "|" . $m->postmatch;
+
+        $intable = true;
+        while ($intable) {
+            if (($line = $input->nextLine()) === false) {
+                $input->setPos($pos);
+                return false;
+            } 
+            if (!$line) {
+                $intable = false;
+                $trimline = $line;
+            } else {
+                $trimline = trim($line);
+                if ($trimline[0] != "|") {
+                    $intable = false;
+                }
+            }
+            $pi .= "\n$trimline";
+        }
+
+        $pi = '<'.'?plugin WikicreoleTable ' . $pi . '?'.'>';
 
         $this->_element = new Cached_PluginInvocation($pi);
         return true;
