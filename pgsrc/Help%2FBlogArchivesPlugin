@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 8:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,13 +10,13 @@ Content-Transfer-Encoding: binary
 
 The *~BlogArchives* [plugin|Help:WikiPlugin] lists monthly links for the current users blog if signed, or the ADMIN_USER's blog if not.
 
-!!! Usage
+== Usage
 
 <verbatim>
 <?plugin BlogArchives ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 {| class="bordered"
 |-
@@ -33,7 +33,7 @@ The *~BlogArchives* [plugin|Help:WikiPlugin] lists monthly links for the current
 | empty
 |}
 
-!!! Example
+== Example
 
 <verbatim>
 <?plugin BlogArchives ?>
@@ -41,10 +41,10 @@ The *~BlogArchives* [plugin|Help:WikiPlugin] lists monthly links for the current
 
 <?plugin BlogArchives ?>
 
-!!! Author
+== Author
 * [Reini Urban|PhpWiki:ReiniUrban]
 
-!!! See Also
+== See Also
 
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]

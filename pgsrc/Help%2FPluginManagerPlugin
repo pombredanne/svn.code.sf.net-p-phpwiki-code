@@ -1,4 +1,4 @@
-Date: Sat, 2 Aug 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,23 +10,23 @@ Content-Transfer-Encoding: binary
 
 The *~PluginManager* [plugin|Help:WikiPlugin] provides a dynamic list of plugins on this wiki.
 
-!!! Usage
+== Usage
 
 <verbatim>
   <?plugin PluginManager info=args ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 info _(default: args)_:
   Display the arguments also. Default: enabled
   To disable use something like info=0
 
-!!! Configuration
+== Configuration
 
 define('REQUIRE_ADMIN', true) in the sourcecode to disable general usage.
 
-!!! Example
+== Example
 
 <verbatim>
 <?plugin PluginManager ?>
@@ -43,7 +43,7 @@ information, the best place to go is the source of the plugin. Under
 your wiki's root directory, the folder <tt>lib/plugin</tt> contains all the PHP
 files for the plugins.
 
-!!! External Requirements
+== External Requirements
 Some plugins require correctly configured PLUGIN_CACHED and external libraries 
 not provided with PhpWiki or PHP, such as 
 * [PHP with GD support | php-function:ref.image] for the [Help:text2pngPlugin], 
@@ -62,7 +62,7 @@ not provided with PhpWiki or PHP, such as
 * optionally apache/mod_log_{my}sql for fast, external log analysis if ACCESS_LOG_SQL=1 (Referer, Abuse Prevention).
   See <tt>lib/Request.php</tt> and http://www.outoforder.cc/projects/apache/mod_log_sql/
 
-!!! Author
+== Author
 [Jeff Dairiki|PhpWiki:JeffDairiki] ?
 
 ----

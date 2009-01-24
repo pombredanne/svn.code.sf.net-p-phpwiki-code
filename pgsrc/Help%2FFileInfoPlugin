@@ -1,4 +1,4 @@
-Date: Mon, 20 Oct 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -16,7 +16,7 @@ For exe files the *version* argument might work to display the VERSIONINFO resso
 
 Since v1.3.13.
 
-!!! Typical Usage
+== Typical Usage
 
 <verbatim>
   <?plugin FileInfo file=uploads/setup.exe display=version,date ?>
@@ -24,7 +24,7 @@ Since v1.3.13.
                     format="%s (version: %s, date: %s)" ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 __file__:
   relative path from PHPWIKI_DIR. (required)
@@ -36,7 +36,7 @@ __display__:
 __format__:
   printf format string with %s only, all display modes from above vars return strings (optional)
 
-!!! Examples
+== Examples
 
 This wiki was installed at <?plugin FileInfo file=config/config.ini display=date ?>.
 

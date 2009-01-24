@@ -1,4 +1,4 @@
-Date: Mon, 20 Oct 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -16,24 +16,24 @@ which is of no real use.
 Warning! This may display db and user passwords in cleartext. We think we 
 cleared everything out though.
 
-!!! Usage
+== Usage
 <verbatim>
 <?plugin _GroupInfo ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 page _(default: current pagename)_:
   The page to execute upon.
 
-!!! Example
+== Example
 
 See [DebugGroupInfo]
 
-!!! Author
+== Author
 [Charles Corrigan|PhpWiki:CharlesCorrigan]
 
-!!! See Also
+== See Also
 
 * [DebugGroupInfo] is the corresponding [Help:ActionPage].
 * [Help:_AuthInfoPlugin]

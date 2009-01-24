@@ -1,4 +1,4 @@
-Date: Mon, 26 Jun 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -17,7 +17,7 @@ A small number of queries that may (or might not) use the ~MySQL
 specific dialect of SQL are provided in <tt>lib/plugin/~AnalyseAccessLogSql.php</tt>. 
 For more information, please see the section *Adding new queries* below.
 
-!!! Usage
+== Usage
 
 Experimental! Will change a lot.
 
@@ -25,7 +25,7 @@ Experimental! Will change a lot.
   <?plugin AnalyseAccessLogSql mode=<QUERY NAME> ?>
 </verbatim>
 
-!!! Parameters
+== Parameters
 
 mode _(required parameter)_:
   The name of the query to execute. See *Adding new queries* below.
@@ -57,7 +57,7 @@ referrer:
 local_referrers:
   If set (the default), return all referrers. If not set, return only external referring sites, excluding references from within the wiki.
 
-!!!Adding new queries
+==Adding new queries
 
 The file <tt>lib/plugin/~AnalyseAccessLogSql.php</tt> contains a default set of queries against the SQL access log.
 Feel free to change this file to suit your own needs, but please note that this requires filesystem access to the web server where PhpWiki is running.
@@ -77,7 +77,7 @@ To add a new query, add a new section towards the end of the file, using one of 
 
 If you do add a query, please consider contributing it back to the PhpWiki project at http://sourceforge.net/projects/phpwiki
 
-!!! API for ~AnalyseAccessLogSql
+== API for ~AnalyseAccessLogSql
 
 * input arguments:
   - *$mode* contains the name of the query requested in the plugin parameters.
@@ -102,7 +102,7 @@ If you do add a query, please consider contributing it back to the PhpWiki proje
   - strings enclosed in single quotes may not contain substrings enclosed in single quotes (actually the truth is more complex but let's leave it like that here), and
   - strings enclosed in double quotes will evaluate and replace variable names so that, for example, *"FROM $accesslog "* might be evaluated to *"FROM phpwiki_accesslog "*.
 
-!!! Author
+== Author
 
 [Charles Corrigan|PhpWiki:CharlesCorrigan] %%%
 Changes by [Reini Urban|PhpWiki:ReiniUrban]

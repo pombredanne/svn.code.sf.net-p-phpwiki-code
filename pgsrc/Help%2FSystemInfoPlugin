@@ -1,4 +1,4 @@
-Date: Mon, 20 Oct 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 The *~SystemInfo* [plugin|Help:WikiPlugin] provides access to lower level system information for the platform PhpWiki is installed on.
 
-!!! Usage 
+== Usage 
 
 <verbatim>
          <?plugin SystemInfo all ?>
@@ -20,7 +20,7 @@ The *~SystemInfo* [plugin|Help:WikiPlugin] provides access to lower level system
       or <?plugin SystemInfo PHPWIKI_DIR ?>
 </verbatim>
 
-!!! Example
+== Example
 
 <?plugin SystemInfo all ?>
 

@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 8:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 The *~WhoIsOnline* [plugin|Help:WikiPlugin] shows summary information of the current user sessions.
 
-!!! Usage
+== Usage
 <verbatim>
 <?plugin WhoIsOnline ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 {| class="bordered"
 |-
@@ -40,7 +40,7 @@ The *~WhoIsOnline* [plugin|Help:WikiPlugin] shows summary information of the cur
 | false
 |}
 
-!!! Example
+== Example
 
 <verbatim>
 <?plugin WhoIsOnline ?>
@@ -48,10 +48,10 @@ The *~WhoIsOnline* [plugin|Help:WikiPlugin] shows summary information of the cur
 
 <?plugin WhoIsOnline ?>
 
-!!! Author
+== Author
 [Reini Urban|PhpWiki:ReiniUrban]
 
-!!! See Also
+== See Also
 
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]

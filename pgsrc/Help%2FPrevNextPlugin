@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 8:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 The *~PrevLink* [plugin|Help:WikiPlugin] allows to display Previous and Next buttons on a wiki page for easy navigation.
 
-!!! Usage
+== Usage
 <verbatim>
 <?plugin PrevNext prev=PrevLink next=NextLink ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 {| class="bordered"
 |-
@@ -68,7 +68,7 @@ The *~PrevLink* [plugin|Help:WikiPlugin] allows to display Previous and Next but
 | wikiaction
 |}
 
-!!! Examples
+== Examples
 
 <verbatim>
 <?plugin PrevNext prev="Help/CreateTocPlugin" next="Help/MediawikiTablePlugin" ?>
@@ -172,10 +172,10 @@ The *~PrevLink* [plugin|Help:WikiPlugin] allows to display Previous and Next but
                   order="first,last,prev,next"
 ?>
 
-!!! Author
+== Author
 * [Reini Urban|PhpWiki:ReiniUrban]
 
-!!! See Also
+== See Also
 * [PageGroup|Help:PageGroupPlugin], [plugin|Help:WikiPlugin] which automatically tries to extract the various links.
 
 ----

@@ -1,4 +1,4 @@
-Date: Mon, 16 Aug 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,7 +11,7 @@ Content-Transfer-Encoding: binary
 The *~ExternalSearch* [plugin|Help:WikiPlugin] creates a form to query InterWiki~s or other
 internet sites.
 
-!!! Usage
+== Usage
 
 <verbatim>
 <?plugin ExternalSearch
@@ -20,7 +20,7 @@ internet sites.
 ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 __url__:
   Specify a wiki from the InterWikiMap or a url. Any text entered by
@@ -40,7 +40,7 @@ __debug__:
   Don't really redirect to the external site, just print out the url
   that would be redirected to.
 
-!!! Examples
+== Examples
 
 <verbatim>
   url="http://sunir.org/apps/meta.pl?"       name="Metawiki Search"
