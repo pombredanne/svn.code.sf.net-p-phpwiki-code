@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 19:18:24 +0100
+Date: Sat, 24 Jan 2009 20:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~RedirectTo* [plugin|Help:WikiPlugin] can be used to redirect a user to another page.
+The *~RedirectTo* [[Help:WikiPlugin|plugin]] can be used to redirect a user to another page.
 In other words it makes a page an _alias_ for another page.
 
 == Arguments
@@ -37,4 +37,4 @@ A page may be made a alias for the HomePage by placing this code at the top:
 To see the example in action, visit HomePageAlias.
 
 ----
-[PhpWikiDocumentation] [CategoryWikiPlugin]
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
