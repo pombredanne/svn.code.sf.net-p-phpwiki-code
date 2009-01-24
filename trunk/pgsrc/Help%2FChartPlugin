@@ -1,4 +1,4 @@
-Date: Mon, 12 Jan 2009 18:18:24 +0100
+Date: Sat, 24 Jan 2009 8:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -21,9 +21,9 @@ The browser must support SVG in order graphs to be displayed.
 
 {| class="bordered"
 |-
-| Argument
-| Description
-| Default value
+! Argument
+! Description
+! Default value
 |-
 | <b>width</b>
 | Graph width in pixels

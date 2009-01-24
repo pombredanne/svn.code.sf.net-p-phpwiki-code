@@ -1,4 +1,4 @@
-Date: Mon, 12 Dec 2008 12:19:24 +0000
+Date: Sat, 24 Jan 2009 8:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -19,9 +19,9 @@ The *~PrevLink* [plugin|Help:WikiPlugin] allows to display Previous and Next but
 
 {| class="bordered"
 |-
-| Argument
-| Description
-| Default value
+! Argument
+! Description
+! Default value
 |-
 | <b>prev</b>
 | Link to the *Previous* page

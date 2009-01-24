@@ -1,4 +1,4 @@
-Date: Mon, 2 Oct 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 8:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 The *~RssFeed* [plugin|Help:WikiPlugin] allows to display external RSS feeds.
 
-!!!  Usage
+!!! Usage
 
 <verbatim>
 <?plugin RssFeed url=http://somesite.tld/linktofeed.rss ?>
@@ -20,9 +20,9 @@ The *~RssFeed* [plugin|Help:WikiPlugin] allows to display external RSS feeds.
 
 {| class="bordered"
 |-
-| Argument
-| Description
-| Default value
+! Argument
+! Description
+! Default value
 |-
 | url
 | RSS Feed URL
