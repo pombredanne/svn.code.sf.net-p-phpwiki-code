@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 19:18:24 +0100
+Date: Sat, 24 Jan 2009 20:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~FrameInclude* [plugin|Help:WikiPlugin] will create an HTML frame that will fill the entire display area of the page (that is, the whole area the user is allowed to edit). All other text will be discarded when the page is rendered (anything outside the call to plugin, that is). In the language of hypertext this is called <i>transclusion</i>.
+The *~FrameInclude* [[Help:WikiPlugin|plugin]] will create an HTML frame that will fill the entire display area of the page (that is, the whole area the user is allowed to edit). All other text will be discarded when the page is rendered (anything outside the call to plugin, that is). In the language of hypertext this is called <i>transclusion</i>.
 
 You might also be interested in the [IncludePage|Help:IncludePagePlugin] plugin.
 
@@ -29,4 +29,4 @@ To include a page from within this wiki, use the <b>page</b> attribute:
 For more information on this plugin please read the PHP source code in the /lib/plugin directory.
 
 -----
-[PhpWikiDocumentation] [CategoryWikiPlugin]
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]

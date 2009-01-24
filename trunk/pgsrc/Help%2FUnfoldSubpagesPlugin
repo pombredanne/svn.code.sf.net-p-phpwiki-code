@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 19:18:24 +0100
+Date: Sat, 24 Jan 2009 20:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~UnfoldSubpages* [plugin|Help:WikiPlugin] is used to display all or some subpages
+The *~UnfoldSubpages* [[Help:WikiPlugin|plugin]] is used to display all or some subpages
 of the current or a given page.  This gives a overview for a
 WikiBlogPlugin, CalendarPlugin or similar subpages.
 
@@ -66,4 +66,4 @@ The section extractor is currently quite unstable.
 <?plugin UnfoldSubpages pagename=PgsrcTranslation limit=20 ?>
 
 ----
-[PhpWikiDocumentation] [CategoryWikiPlugin]
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]

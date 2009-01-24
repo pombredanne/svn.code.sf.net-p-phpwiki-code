@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 19:18:24 +0100
+Date: Sat, 24 Jan 2009 20:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~TeX2png* [plugin|Help:WikiPlugin] allows to display mathematical formulae in a Wiki page.
+The *~TeX2png* [[Help:WikiPlugin|plugin]] allows to display mathematical formulae in a Wiki page.
 
 == Usage
 
@@ -40,7 +40,7 @@ possible to display raw text as <?plugin TeX2png text="$\textrm{\LaTeX}$" ?> by 
 <?plugin TeX2png text="$\textrm{\LaTeX}$" ?>
 </verbatim>
 
-This [plugin|Help:WikiPlugin] is not able to produce sophisticated mathematicals texts
+This [[Help:WikiPlugin|plugin]] is not able to produce sophisticated mathematicals texts
 with links, cross references... For that, you can use for example
 [LaTeX2html|http://www.latex2html.org/].
 
@@ -62,4 +62,4 @@ Some Greeks letters : <?plugin TeX2png text="$\alpha$" ?>, <?plugin TeX2png text
 #Hence find the limit of <?plugin TeX2png text="$f(x)$" ?> as x tends <?plugin TeX2png text="to $\infty$" ?>.
 
 ----
-[PhpWikiDocumentation] [CategoryWikiPlugin]
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]

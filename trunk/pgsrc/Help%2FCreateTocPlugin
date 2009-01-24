@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 8:15:24 +0000
+Date: Sat, 24 Jan 2009 20:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~CreateToc* [plugin|Help:WikiPlugin] allows to create a dynamical *Table of Contents* of all headers. It also allows to number the headers in the page.
+The *~CreateToc* [[Help:WikiPlugin|plugin]] allows to create a dynamical *Table of Contents* of all headers. It also allows to number the headers in the page.
 
 The headers might be in classic Phpwiki syntax or in Wikicreole/Mediawiki syntax (see below).
 
@@ -142,5 +142,5 @@ See also [PhpWikiDemo:en/TextFormattingRules]
 * If you display an old revision of a page, the Table of Contents will not be correct. The Table of Contents will be taken from the last saved revision.
 
 ----
-[PhpWikiDocumentation] [CategoryWikiPlugin]
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
 

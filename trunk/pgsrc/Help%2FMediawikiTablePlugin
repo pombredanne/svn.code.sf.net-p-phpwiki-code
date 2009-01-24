@@ -1,4 +1,4 @@
-Date: Mon, 22 Dec 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 20:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~MediawikiTable* [plugin|Help:WikiPlugin] takes off from the [RichTable|Help:RichTablePlugin] plugin. It allows a user to specify a <tt><table></tt> with (a subset of) the syntax used by Mediawiki.
+The *~MediawikiTable* [[Help:WikiPlugin|plugin]] takes off from the [RichTable|Help:RichTablePlugin] plugin. It allows a user to specify a <tt><table></tt> with (a subset of) the syntax used by Mediawiki.
 
 * The table starts with a line <b>{~|</b> and ends with a line <b>|~}</b>.
 * An optional table caption is made with a line starting with a pipe and a plus sign <b>|+</b> followed by the caption.
@@ -142,5 +142,5 @@ Second paragraph.
 Marc-Etienne Vargenau, Alcatel-Lucent
 
 ----
-[PhpWikiDocumentation] [CategoryWikiPlugin]
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
 
