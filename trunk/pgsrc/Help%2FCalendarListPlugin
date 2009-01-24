@@ -1,4 +1,4 @@
-Date: Mon, 12 Aug 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -19,14 +19,14 @@ this page. The event should be listed below the calendar.
 Honors now year + month args as start base - together with Calendar navigation.
 The behaviour before 2007 with last/next_n_days was to start now.
 
-!!! Usage
+== Usage
 
 <verbatim>
 <?plugin Calendar ?>
 <?plugin CalendarList ?>
 </verbatim>
 
-!!! Example 
+== Example 
 
 _Click any date and edit it, then return to this page_:
 
@@ -34,7 +34,7 @@ _Click any date and edit it, then return to this page_:
 
 <?plugin CalendarList ?>
 
-!!! Arguments
+== Arguments
 
 <strong>year</strong>:
 
@@ -63,7 +63,7 @@ _Click any date and edit it, then return to this page_:
 
    => 0,
 
-!! Support ranges: next or last N days/events
+=== Support ranges: next or last N days/events
 
 <strong>next_n_days</strong>:
 
@@ -108,7 +108,7 @@ _Click any date and edit it, then return to this page_:
   Start the week at Sunday or Monday<br>
   Default: 1 for Monday
 
-!!! Config Options
+== Config Options
 
 * PLUGIN_CALENDARLIST_ORDER       = normal
 * PLUGIN_CALENDARLIST_NEXT_N_DAYS = ''
@@ -116,7 +116,7 @@ _Click any date and edit it, then return to this page_:
 * PLUGIN_CALENDARLIST_LAST_N_DAYS = ''
 * PLUGIN_CALENDARLIST_LAST_N      = ''
 
-!!! Author
+== Author
 
 Derived from [Calendar|Help:CalendarPlugin] plugin by [Martin Norbäck|mailto:martin@safelogic.se].
 

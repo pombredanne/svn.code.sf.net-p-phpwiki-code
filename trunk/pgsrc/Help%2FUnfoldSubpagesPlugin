@@ -1,4 +1,4 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -15,7 +15,7 @@ WikiBlogPlugin, CalendarPlugin or similar subpages.
 Warning: Don't use it with subpages with non-existant sections! 
 The section extractor is currently quite unstable.
 
-!!! Usage
+== Usage
 <verbatim>
      <?plugin UnfoldSubpages ?>
   or <?plugin UnfoldSubpages sortby=-mtime words=50 maxpages=5 ?>
@@ -26,7 +26,7 @@ The section extractor is currently quite unstable.
               section="Plugin Arguments" sectionhead=1 ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 <strong>pagename</strong>:
   Any pagename or if empty the current page. Default: ""
 <strong>quiet</strong>:
@@ -56,13 +56,13 @@ The section extractor is currently quite unstable.
 <strong>bytes</strong>:
   Maximum number of bytes per page to include. Default: false
 
-!! Deprecated Arguments
+=== Deprecated Arguments
 <strong>pages</strong>:
   deprecated. renamed to maxpages.
 <strong>sort</strong>:
   'asc' or 'desc'. deprecated: use "+" or "-" before the column name with sortby.
 
-!!! Example
+== Example
 <?plugin UnfoldSubpages pagename=PgsrcTranslation limit=20 ?>
 
 ----

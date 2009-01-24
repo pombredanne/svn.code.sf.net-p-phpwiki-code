@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 8:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 The *~IncludePage* [plugin|Help:WikiPlugin] will "include" other pages in this wiki. In the language of hypertext this is called <i>transclusion</i>. The pages will render in distinct tables. You can also load external pages in a more limited fashion with the [FrameInclude|Help:FrameIncludePlugin] plugin.
 
-!!! Usage
+== Usage
 <verbatim>
 <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6 ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 {| class="bordered"
 |-
@@ -60,35 +60,35 @@ The *~IncludePage* [plugin|Help:WikiPlugin] will "include" other pages in this w
 | false
 |}
 
-!!! Examples
+== Examples
 
-!! ~IncludePage page=Help/~AllPagesPlugin
+=== ~IncludePage page=Help/~AllPagesPlugin
 <?plugin IncludePage page=Help/AllPagesPlugin ?>
 
-!! ~IncludePage page=Help/~AllPagesPlugin lines=6
+=== ~IncludePage page=Help/~AllPagesPlugin lines=6
 <?plugin IncludePage page=Help/AllPagesPlugin lines=6 ?>
 
-!! ~IncludePage page=Help/~AllPagesPlugin section="Arguments"
+=== ~IncludePage page=Help/~AllPagesPlugin section="Arguments"
 <?plugin IncludePage page=Help/AllPagesPlugin section="Arguments" ?>
 
-!! ~IncludePage page=Help/~AllPagesPlugin section="Arguments" sectionhead=true
+=== ~IncludePage page=Help/~AllPagesPlugin section="Arguments" sectionhead=true
 <?plugin IncludePage page=Help/AllPagesPlugin section="Arguments" sectionhead=true ?>
 
-!! ~IncludePage page=Help/~AllPagesPlugin sections=2
+=== ~IncludePage page=Help/~AllPagesPlugin sections=2
 <?plugin IncludePage page=Help/AllPagesPlugin sections=2 ?>
 
-!!! Known bugs
+== Known bugs
 
 * [~RedirectTo|Help:RedirectToPlugin] plugin is not handled correctly.
 * Line and word limit doesn't work if the included page itself includes a plugin.
 
-!!! Authors
+== Authors
 
 * Joe Edelman
 * bug fixes by [Reini Urban|PhpWiki:ReiniUrban]
 * "sections" parameter implemented by Marc-Etienne Vargenau, Alcatel-Lucent
 
-!!! See Also
+== See Also
 
 * [Help:IncludePagesPlugin] (to include multiple pages)
 * [Help:TemplatePlugin] (to include a page with parameters)

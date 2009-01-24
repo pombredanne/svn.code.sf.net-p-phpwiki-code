@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 8:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -15,7 +15,7 @@ A template can be seen as a parametrized block. It is similiar to [CreatePage] w
 There are two syntaxes to call a template, the usual Phpwiki syntax for plugins, and a more
 concise syntax similar to Mediawiki templates.
 
-!!! Usage
+== Usage
 
 <verbatim>
 <?plugin Template page=Templates/Footer?>
@@ -38,7 +38,7 @@ to
 <?plugin Template page=TemplateFilm vars="title=Some Good Film&year=1999" ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 {| class="bordered"
 |-
@@ -67,7 +67,7 @@ to
 | (empty)
 |}
 
-!! Parameter expansion
+=== Parameter expansion
 
   vars="var1=value1&var2=value2"
 
@@ -114,13 +114,13 @@ The following predefined variables are automatically expanded if existing:
 |
 |}
 
-!!! Inclusion
+== Inclusion
 
 <noinclude> .. </noinclude> is stripped.
 
 <includeonly> .. </includeonly> is only expanded in pages using the template, not in the template itself.
 
-!!! Examples
+== Examples
 
 Standard syntax:
 <verbatim>

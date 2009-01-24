@@ -1,4 +1,4 @@
-Date: Mon, 16 Oct 2008 4:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$ 
 Content-Type: application/x-phpwiki;
@@ -37,7 +37,7 @@ What will not work is style with comma inside, e. g.
 style="font-family: Verdana, Arial, Helvetica, sans-serif"
 </verbatim>
 
-!!! Example
+== Example
 
 <?plugin RichTable
 
@@ -107,10 +107,10 @@ This cell uses the row color
 ?>
 </verbatim>
 
-!!! Known Bugs
+== Known Bugs
 * The plugin can't nest itself yet. Thus nested tables are currently not possible.
 
-!!! Author
+== Author
 * [Sameer D. Sahasrabuddhe|http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin]
 
 ----

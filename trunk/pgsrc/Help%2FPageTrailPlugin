@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 8:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 The *~PageTrail* [plugin|Help:WikiPlugin] displays the recently visited pages.
 
-!!! Usage
+== Usage
 
 Typically add to some template at the top or at the bottom. See themes/blog.
 
@@ -20,7 +20,7 @@ Typically add to some template at the top or at the bottom. See themes/blog.
 <?plugin PageTrail invisible=1 ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 {| class="bordered"
 |-
@@ -41,11 +41,11 @@ Typically add to some template at the top or at the bottom. See themes/blog.
 | false
 |}
 
-!!! Optional Configuration
+== Optional Configuration
 
 define('PAGETRAIL_ARROW', " => ") in the sourcecode or add it to config.ini
 
-!!! Example
+== Example
 
 <verbatim>
 <?plugin PageTrail ?>
@@ -53,10 +53,10 @@ define('PAGETRAIL_ARROW', " => ") in the sourcecode or add it to config.ini
 
 <?plugin PageTrail ?>
 
-!!! Author
+== Author
 * [Carsten Klapp|PhpWiki:CarstenKlapp]
 
-!!! See Also
+== See Also
 
 ----
 [PhpWikiDocumentation] [CategoryWikiPlugin]

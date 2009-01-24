@@ -1,4 +1,4 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 Plugin to display the current preferences without auth check.
 
-!!! Usage
+== Usage
 <verbatim>
   <?plugin _PreferencesInfo ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 page _(default: current pagename)_:
   The page to execute upon.
@@ -23,7 +23,7 @@ page _(default: current pagename)_:
 userid _(default: current userid)_:
   The user name.
 
-!!! Example
+== Example
 
 <verbatim>
   <?plugin _PreferencesInfo ?>
@@ -31,10 +31,10 @@ userid _(default: current userid)_:
 
 <?plugin _PreferencesInfo ?>
 
-!!! Author
+== Author
 [Reini Urban|PhpWiki:ReiniUrban]
 
-!!! See Also
+== See Also
 
 UserPreferences
 ----

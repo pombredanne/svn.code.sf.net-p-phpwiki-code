@@ -1,4 +1,4 @@
-Date: Mon, 21 Oct 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 Some special actions for [PhpWikiAdministration].
 
-!!! Usage
+== Usage
 <verbatim>
 <?plugin WikiAdminUtils purge-cache ?>
 <?plugin WikiAdminUtils purge-bad-pagenames ?>
@@ -22,14 +22,14 @@ Some special actions for [PhpWikiAdministration].
 <?plugin WikiAdminUtils db-rebuild ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 action:
   special name.
 label:
   button text.
 
-!!! Example
+== Example
 
 <verbatim>
 <?plugin WikiAdminUtils purge-bad-pagenames ?>
@@ -37,11 +37,11 @@ label:
 
 <?plugin WikiAdminUtils purge-bad-pagenames ?>
 
-!!! Authors
+== Authors
 * [Jeff Dairiki|PhpWiki:JeffDairiki] 
 * [Reini Urban|PhpWiki:ReiniUrban]
 
-!!! See Also
+== See Also
 * [PhpWikiAdministration]
 
 ----

@@ -1,4 +1,4 @@
-Date: Mon, 15 Dec 2008 4:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,7 +12,7 @@ _*Note:*_  _Most of the actions on this page require administrative privileges._
 
 <?plugin CreateToc jshide||=0 with_toclink||=1 position=right with_counter=1 ?>
 
-!!! Page Explorer
+== Page Explorer
 
 First select pages and then define the action:
 
@@ -26,13 +26,13 @@ or call the available ~WikiAdmin actions directly:
       [/SetAcl] |
         [/Chown]
 
-!!! User Management
+== User Management
 
-!! Reset a users password
+=== Reset a users password
 
 <?plugin-form PasswordReset textinput=user method=post ?>
 
-!! Email Verification
+=== Email Verification
 
 This is currently non-strict, leaving some possible holes in not being able to
 connect to certain mail hosts, which can be overridden below. See [PhpWiki:EmailVerification].
@@ -44,7 +44,7 @@ This button will show a list of all users with registered emails and buttons to 
          label="Email Verification"
 ?>
 
-!! Access Restrictions (disabled)
+=== Access Restrictions (disabled)
 
 To prevent from robots eating all possible ressources in a short time, blocking from certain IPs
 or not-well-behaving user agents can be defined below. See [PhpWiki:HowToBlockRobots] and
@@ -55,16 +55,16 @@ or not-well-behaving user agents can be defined below. See [PhpWiki:HowToBlockRo
          label="Access Restrictions"
 ?>
 
-!!! Cleanup
+== Cleanup
 
 A Wiki SandBox is very easy to clean. Here you can restore it to
 pristine condition by loading the default from pgsrc.
 
 [Rake the SandBox|phpwiki:?action=loadfile&source=pgsrc/SandBox].
 
-!!! Making Snapshots or Backups
+== Making Snapshots or Backups
 
-!! ZIP files of database
+=== ZIP files of database
 
 These links lead to zip files, generated on the fly, which contain all
 the pages in your Wiki. The zip file will be downloaded to your local
@@ -77,7 +77,7 @@ latest versions of each page, while this *[ZIP Dump | phpwiki:?action=zip&includ
 
 If your php has _zlib_ support, the files in the archive will be compressed, otherwise they will just be stored.
 
-!! Dump to directory
+=== Dump to directory
 
 Here you can dump pages of your Wiki into a directory of your choice.
 
@@ -85,7 +85,7 @@ Here you can dump pages of your Wiki into a directory of your choice.
 
 The most recent version of each page will written out to the directory, one page per file. Your server must have write permissions to the directory!
 
-!!! Restoring
+== Restoring
 
 If you have dumped a set of pages from [PhpWiki|PhpWiki:PhpWiki], you can reload them
 here. Note that pages in your database will be overwritten; thus, if
@@ -94,14 +94,14 @@ overwrite the one in your database now. If you want to be selective
 just delete the pages from the directory (or zip file) which you don't
 want to load.
 
-!! Upload File
+=== Upload File
 
 Here you can upload ZIP archives, or individual files from your
 (client) machine.
 
 <?plugin WikiForm action=upload?>
 
-!! Load File
+=== Load File
 
 Here you can load ZIP archives, individual files or entire
 directories. The file or directory must be local to the http
@@ -110,7 +110,7 @@ server. You can also use this form to load from an http: or ftp: URL.
 <?plugin WikiForm action=loadfile?>
 <?plugin WikiForm action=loadfile buttontext="Load & Overwrite" overwrite=1?>
 
-!! Upgrade
+=== Upgrade
 
 Do some verification checks and upgrade changes automatically, after having installed a
 new phpwiki engine update:
@@ -119,9 +119,9 @@ new phpwiki engine update:
 
 [ Upgrade | phpwiki:HomePage?action=upgrade ]
 
-!!! Format of the files
+== Format of the files
 
-!! Current Format
+=== Current Format
 
 Currently the pages are stored, one per file, as MIME (RFC:2045)
 e-mail (RFC:822) messages. The content-type _application/x-phpwiki_
@@ -131,15 +131,15 @@ have type _multipart/mixed_, and contain several sub-parts, each
 with type _application/x-phpwiki_.)  The message body contains the
 page text.
 
-!! Old Formats
+=== Old Formats
 
-! Serialized Files
+==== Serialized Files
 
 The dump to directory command used to dump the pages as PHP
 _serialized()_ strings. For humans, this made the files very hard
 to read, and nearly impossible to edit.
 
-! Plain Files
+==== Plain Files
 
 Before that the page text was just dumped to a file--this means that
 all page meta-data was lost. Note that when loading _plain files_,
@@ -148,7 +148,7 @@ the page name is deduced from the file name.
 The upload and load functions will automatically recognize each of
 these three types of files, and handle them accordingly.
 
-!!! Dump pages as XHTML
+== Dump pages as XHTML
 
 <?plugin WikiForm action=dumphtml?>
 

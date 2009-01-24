@@ -1,4 +1,4 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -26,14 +26,14 @@ can be fully processed with tools that support OWL DL or OWL Lite,
 but which can also be treated in a meaningful way by software that
 supports RDF, RDFS or XML.
 
-!!! Relations
+== Relations
 
 Relations (link-types) are defined as link with the following syntax:
 <verbatim>
   relation::pagename
 </verbatim>
 
-!!! Attributes
+== Attributes
 
 Attributes are defined as link to numbers (understandable by 
 [GNU Units|http://www.gnu.org/software/units/units.html]) with 
@@ -48,7 +48,7 @@ page is the subject, the relation the predicate, the linked page the
 object in a RDF triple. Relations always refer to another page,
 attributes not.
 
-!!! Example
+== Example
 
 <em>Sample taken from http://wiki.ontoworld.org/index.php/San_Diego</em>
 
@@ -74,7 +74,7 @@ Chargers.
 <?plugin SemanticRelations ?>
 </verbatim>
 
-!!! See Also
+== See Also
 
 See PhpWiki:SemanticWeb, 
 SemanticRelations, ListRelations, SemanticSearch, SemanticSearchAdvanced,

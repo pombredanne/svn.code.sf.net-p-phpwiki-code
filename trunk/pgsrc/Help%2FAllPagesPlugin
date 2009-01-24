@@ -1,4 +1,4 @@
-Date: Mon, 24 Jun 2008 14:15:24 +0000
+Date: Sat, 24 Jan 2009 19:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 The *~AllPages* [plugin|Help:WikiPlugin] lists all pages in this wiki.
 
-!!! Usage
+== Usage
 <verbatim>
   <?plugin AllPages [pagelist args] ?>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 All [PageList|Help:PageList] options.<br>
 Plus:
@@ -24,7 +24,7 @@ Plus:
         'info'          => '',
         'debug'         => false
 
-!!! Example
+== Example
 
 <verbatim>
 <?plugin AllPages limit=20 cols=3 ?>
@@ -32,10 +32,10 @@ Plus:
 
 <?plugin AllPages  limit=20 cols=3 ?>
 
-!!! Author
+== Author
 [Reini Urban|PhpWiki:ReiniUrban]
 
-!!! See Also
+== See Also
 * [AllPages]
 * [Help:ListPagesPlugin]
 
