@@ -782,9 +782,10 @@ class Markup_html_divspan extends BalancedMarkup
     	    $tag = 'div';
     	$rest = substr($match,1+strlen($tag),-1);
     	if (!empty($rest)) {
-    	    list($key,$val) = explode("=",$rest);
-    	    $args = array($key => $val);
-    	} else $args = array();
+            $args = parse_attributes($rest);
+    	} else {
+            $args = array();
+        }
         return new HtmlElement($tag, $args, $body);
     }
 }
