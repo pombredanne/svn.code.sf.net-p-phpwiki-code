@@ -1,4 +1,4 @@
-Date: Sat, 25 Jan 2009 10:18:24 +0100
+Date: Sat, 25 Jan 2009 15:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -143,6 +143,9 @@ Second paragraph.
 == Author
 
 Marc-Etienne Vargenau, Alcatel-Lucent
+
+== See Also
+* [[http://meta.wikimedia.org/wiki/Help:Table|Mediawiki table help page]]
 
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
