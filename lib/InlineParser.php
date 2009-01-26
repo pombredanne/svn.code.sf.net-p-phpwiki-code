@@ -849,6 +849,17 @@ class Markup_color extends BalancedMarkup {
     }
 }
 
+// Single-line HTML comment
+// <!-- This is a comment -->
+class Markup_html_comment extends SimpleMarkup
+{
+    var $_match_regexp = '<!--.*?-->';
+
+    function markup ($match) {
+        return HTML::raw('');
+    }
+}
+
 // Special version for single-line plugins formatting, 
 //  like: '<small>< ?plugin PopularNearby ? ></small>'
 class Markup_plugin extends SimpleMarkup
@@ -1036,6 +1047,7 @@ class InlineTransformer
             $non_default = false;
             $markup_types = array
                 ('escape', 'wikicreolebracketlink', 'bracketlink', 'url',
+                 'html_comment',
                  'interwiki',  'semanticlink', 'wikiword', 'linebreak',
                  'wikicreole_italics', 'wikicreole_bold',
                  'wikicreole_monospace', 'wikicreole_superscript',
