@@ -354,6 +354,15 @@ function LinkBracketLink($bracketlink) {
         $rawlink = $temp;
     }
 
+    // Mediawiki compatibility: allow "Image:" and "File:"
+    // as synonyms of "Upload:"
+    if (string_starts_with($rawlink, "Image:")) {
+        $rawlink = str_replace("Image:", "Upload:", $rawlink);
+    }
+    if (string_starts_with($rawlink, "File:")) {
+        $rawlink = str_replace("File:", "Upload:", $rawlink);
+    }
+
     $label = UnWikiEscape($label);
     /*
      * Check if the user has typed a explicit URL. This solves the
