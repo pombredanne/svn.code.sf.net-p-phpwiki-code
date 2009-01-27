@@ -475,7 +475,7 @@ class BlockMarkup {
     }
 
     function _setTightness ($top, $bot) {
-        $this->_element->setTightness($top, $bot);
+        // $this->_element->setTightness($top, $bot);
     }
 
     function merge ($followingBlock) {
