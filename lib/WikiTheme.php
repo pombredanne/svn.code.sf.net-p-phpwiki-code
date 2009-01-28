@@ -1,5 +1,5 @@
 <?php rcs_id('$Id$');
-/* Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
+/* Copyright (C) 2002,2004,2005,2006,2008,2009 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -254,6 +254,7 @@ class WikiTheme {
 
         // FIXME: this is a short-term hack.  Delete this after all files
         // get moved into themes/...
+        // Needed for button paths in parent themes
         if (file_exists($this->_path . $file))
             return $file;
 
@@ -262,7 +263,7 @@ class WikiTheme {
 	    $path = $parent->_findFile($file, 1);
             if ($path) {
                 return $path;
-            } elseif (DEBUG & _DEBUG_VERBOSE) {
+            } elseif (0 and DEBUG & (_DEBUG_VERBOSE + _DEBUG_REMOTE)) {
                 trigger_error("$parent->_theme/$file: not found", E_USER_NOTICE);
             }
         }
@@ -271,7 +272,7 @@ class WikiTheme {
         }
         else if (!$missing_okay) {
             trigger_error("$this->_theme/$file: not found", E_USER_NOTICE);
-            if (DEBUG & _DEBUG_TRACE && function_exists('debug_backtrace')) { // >= 4.3.0
+            if ((DEBUG & _DEBUG_TRACE) && function_exists('debug_backtrace')) { // >= 4.3.0
                 echo "<pre>", printSimpleTrace(debug_backtrace()), "</pre>\n";
             }
         }
@@ -279,7 +280,19 @@ class WikiTheme {
     }
 
     function _findData ($file, $missing_okay = false) {
-        $path = $this->_findFile($file, $missing_okay);
+    	if (!string_starts_with($file, "themes")) { // common case
+    	    $path = $this->_findFile($file, $missing_okay);
+    	} else {
+    	    // _findButton only
+    	    if (file_exists($file)) {
+    	        $path = $file;
+    	    } elseif (defined('DATA_PATH') 
+    	              and file_exists(DATA_PATH . "/$file")) {
+    	        $path = $file;
+    	    } else { // fallback for buttons in parent themes
+                $path = $this->_findFile($file, $missing_okay);
+    	    }
+    	}
         if (!$path)
             return false;
 
