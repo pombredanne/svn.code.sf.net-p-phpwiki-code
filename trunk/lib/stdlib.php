@@ -86,6 +86,19 @@
     isExternalReferrer()
     
     charset_convert($from, $to, $data)
+    string_starts_with($string, $prefix)
+    string_ends_with($string, $suffix)
+    array_remove($arr,$value)
+    longer_timeout($secs=30)
+    printSimpleTrace($bt)
+    getMemoryUsage()
+    binary_search($needle, $haystack)
+    is_localhost($url)
+    javascript_quote_string($s)
+    isSerialized($s)
+    parse_attributes($line)
+    is_image ($filename)
+    compute_tablecell ($table, $i, $j, $imax, $jmax)
 
   function: LinkInterWikiLink($link, $linktext)
   moved to: lib/interwiki.php
@@ -414,7 +427,7 @@ function LinkImage($url, $alt = "") {
     } else {
         // support new syntax: [prefix/image.jpg size=50% border=n]
         //if (!preg_match("/\.(".$force_img.")/i", $url))
-        if (empty($alt)) $alt = "";
+        if (empty($alt)) $alt = basename($url);
 	$arr = split(' ',$url);
 	if (!empty($arr)) $url = $arr[0];
         if ($alt == "") {
