@@ -1908,3 +1908,8 @@ td.tdunselected {
      border-color: green;
      padding: 0.5em;
 }
+
+#edit-public, h1.firstHeading-public, h1.firstHeading-rating-public {
+	background-color: #ffce7b;
+	border: 1px solid #ffa500;
+}

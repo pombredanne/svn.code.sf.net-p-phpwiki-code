@@ -996,6 +996,11 @@ table.bordered th,
     background-color: #d8d8d8;
 }
 
+#edit-public, h1.firstHeading-public, h1.firstHeading-rating-public {
+	background-color: #ffce7b;
+	border: 1px solid #ffa500;
+}
+
 /* For emacs users
  *
  * Local Variables:
