@@ -416,6 +416,7 @@ function LinkImage($url, $alt = "") {
         //if (!preg_match("/\.(".$force_img.")/i", $url))
         if (empty($alt)) $alt = "";
 	$arr = split(' ',$url);
+	if (!empty($arr)) $url = $arr[0];
         if ($alt == "") {
             $link = HTML::img(array('src' => $url, 'alt' => $alt));
         } else {
@@ -2319,6 +2320,7 @@ function isSerialized($s) {
  / style="font-family: Verdana, Arial, Helvetica, sans-serif"
  */
 function parse_attributes($line) {
+    if (empty($line)) return array();
     $line = strtolower($line);
     $line = str_replace(",", "", $line);
     $attr_chunks = preg_split("/\s* \s*/", $line);
