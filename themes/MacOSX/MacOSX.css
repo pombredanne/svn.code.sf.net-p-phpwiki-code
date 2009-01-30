@@ -949,8 +949,7 @@ table.boxed caption, table.bordered caption {
     padding-top: 0.8em;
 }
 
-table.boxed th,
-table.bordered th,
+table.boxed th, table.bordered th {
     font-weight: bold;
     background-color: #d8d8d8;
 }
