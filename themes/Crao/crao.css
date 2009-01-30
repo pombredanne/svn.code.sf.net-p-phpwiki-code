@@ -304,7 +304,6 @@ div.toolbar{
   border: 1px solid ButtonFace;
 }
 
-
 #navbuttons {
 	display: inline;
 }
@@ -661,7 +660,7 @@ th.gridbutton {
   font-size: small;
   font-weight: normal;
   /*font-style: menu;*/
-  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
   height: 18px;
   margin: 5px 0px;
   float: none;
@@ -677,7 +676,7 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   font-size: small;
   font-weight: normal;
   /*font-style: menu;*/
-  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
   background-color: threedlightshadow;
   color: black;
 }
@@ -758,13 +757,12 @@ textarea.wikiedit {
 	background-color: #ccc;
 }
 .editarea legend{
-	font-family: Verdana, Helvetica, Arial;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
 	font-size: 1em;
 	line-height: 1em;
 	padding: 0.2em;
 	border: 1px solid #333;
 	background-color: #eee;
-	text-align:;
 }
 fieldset.editarea {
 	margin : 1ex;
@@ -802,7 +800,7 @@ fieldset.toolbar {
 	font-size: smaller;
 }
 .transclusion {
-	border: 1px solid grey;/* MODIFY-color */
+	border: 1px solid gray;/* MODIFY-color */
 	padding-left:  0.8em; 
 	padding-right: 0.8em; 
 	padding-top:     0px;
@@ -1021,7 +1019,7 @@ td.pageinfo { font-weight: bold; }
 	text-align			: center;
 	color				: #000;
 	background-color	: #FFF;
-	border				: solid 0px none;
+	border				: solid 0px;
 }
 /* reset post NN4 */
 /*/*/
@@ -1069,7 +1067,7 @@ strong > img.inlineimage{
 h2.wikiblog-heading {
 	font-size: 2em;
 	padding-bottom: 0.5em;
-	border-bottom: 2px solid grey;/* MODIFY-color */
+	border-bottom: 2px solid gray;/* MODIFY-color */
 }
 
 
