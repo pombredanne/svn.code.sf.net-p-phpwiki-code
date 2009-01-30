@@ -1350,47 +1350,35 @@ class OptionsButtonBars extends HtmlElement {
         $this->pushContent(HTML::legend($caption));
         $table = HTML::table();
 
-        $first = true;
+        $tr = HTML::tr();
         foreach (explode(",", $daylist) as $days) {
-            if ($first) {
-                $td = $this->_makeDayButton($days);
-                $first = false;
-            } else {
-                $td->pushContent($this->_makeDayButton($days));
-            }
+            $tr->pushContent($this->_makeDayButton($days));
         }
-        $tr = HTML::tr();
-        $tr->pushContent($td);
         $table->pushContent($tr);
 
-        $td = $this->_makeUsersButton(0);
-        $td->pushContent($this->_makeUsersButton(1));
         $tr = HTML::tr();
-        $tr->pushContent($td);
+        $tr->pushContent($this->_makeUsersButton(0));
+        $tr->pushContent($this->_makeUsersButton(1));
         $table->pushContent($tr);
 
-        $td = $this->_makePagesButton(0);
-        $td->pushContent($this->_makePagesButton(1));
         $tr = HTML::tr();
-        $tr->pushContent($td);
+        $tr->pushContent($this->_makePagesButton(0));
+        $tr->pushContent($this->_makePagesButton(1));
         $table->pushContent($tr);
 
-        $td = $this->_makeMinorButton(1);
-        $td->pushContent($this->_makeMinorButton(0));
         $tr = HTML::tr();
-        $tr->pushContent($td);
+        $tr->pushContent($this->_makeMinorButton(1));
+        $tr->pushContent($this->_makeMinorButton(0));
         $table->pushContent($tr);
 
-        $td = $this->_makeShowAllButton(1);
-        $td->pushContent($this->_makeShowAllButton(0));
         $tr = HTML::tr();
-        $tr->pushContent($td);
+        $tr->pushContent($this->_makeShowAllButton(1));
+        $tr->pushContent($this->_makeShowAllButton(0));
         $table->pushContent($tr);
 
-        $td = $this->_makeNewPagesButton(0);
-        $td->pushContent($this->_makeNewPagesButton(1));
         $tr = HTML::tr();
-        $tr->pushContent($td);
+        $tr->pushContent($this->_makeNewPagesButton(0));
+        $tr->pushContent($this->_makeNewPagesButton(1));
         $table->pushContent($tr);
 
         $this->pushContent($table);
