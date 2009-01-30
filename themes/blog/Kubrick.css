@@ -12,7 +12,7 @@ body {
   margin: 20px auto;
   padding: 0; 
   font-size: 75%; /* Resets 1em to 10px */
-  font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
+  font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
   background-color: #d5d6d7;
   color: #333;
   background: url("images/kubrickbgcolor.png"); 
@@ -247,25 +247,25 @@ div.comments {
 }
 
 small {
-  font-family: Arial, Helvetica, Sans-Serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 0.9em;
   line-height: 1.5em;
 }
 
 tt {
-  font-family: 'Andale Mono', 'Lucida Console', 'Courier New', monospaced;
+  font-family: 'Andale Mono', 'Lucida Console', 'Courier New', monospace;
   font-size: 1.05em;
 }
 
 pre {
   width: 486px;
   font-size: 10px;
-  font-family: 'Andale Mono', 'Lucida Console', 'Courier New', monospaced;
+  font-family: 'Andale Mono', 'Lucida Console', 'Courier New', monospace;
   overflow: hidden;
 }
 
 h1, h2, h3 {
-  font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+  font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, sans-serif;
   font-weight: bold;
 }
 
@@ -286,7 +286,7 @@ h2 {
 }
 
 #sidebar h2, #sidebar .box-title {
-  font-family: 'Lucida Grande', Verdana, Sans-Serif;
+  font-family: 'Lucida Grande', Verdana, sans-serif;
   font-size: 1.2em;
 }
 
@@ -329,7 +329,7 @@ tr.evenrow {
 }
 /* ie quirks */
 #sidebar {
-  font: 1em 'Lucida Grande', Verdana, Arial, Sans-Serif;
+  font: 1em 'Lucida Grande', Verdana, Arial, sans-serif;
   left:585px;
   position:absolute;
   z-index: 2;
@@ -342,7 +342,7 @@ tr.evenrow {
   color: black;
 }
 #moz-sidebar {
-  font: 1em 'Lucida Grande', Verdana, Arial, Sans-Serif;
+  font: 1em 'Lucida Grande', Verdana, Arial, sans-serif;
   margin-left: 560px;
   position:absolute;
   z-index: 2;
@@ -381,7 +381,7 @@ small, #sidebar ul ul li, #sidebar ul ol li, .nocomments, .postmetadata, blockqu
   }
   
 code {
-  font: 1.1em 'Courier New', Courier, Fixed;
+  font: 1.1em 'Courier New', Courier, monospace;
 }
 
 acronym, abbr, span.caps
