@@ -3,6 +3,7 @@ rcs_id('$Id$');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
+ Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -1058,7 +1059,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
 // action=revert (by diff)
 function RevertPage (&$request)
 {
-    $mesg = HTML::p();
+    $mesg = HTML::div();
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
     if (!$version) {
@@ -1092,9 +1093,7 @@ function RevertPage (&$request)
         return;
     }
     if (!$request->getArg('verify')) {
-        $mesg->pushContent(HTML::br(),
-                           _("Are you sure?"),
-                           HTML::br(),
+        $mesg->pushContent(HTML::p(_("Are you sure?")),
                            HTML::form(array('action' => $request->getPostURL(),
                                             'method' => 'post'),
                                       HiddenInputs($request->getArgs(), false, array('verify')),
