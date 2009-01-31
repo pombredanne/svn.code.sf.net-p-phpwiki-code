@@ -1058,9 +1058,11 @@ class InlineTransformer
                 ('escape', 'wikicreolebracketlink', 'bracketlink', 'url',
                  'html_comment',
                  'interwiki',  'semanticlink', 'wikiword', 'linebreak',
+                 'wikicreole_superscript',
+                 'wikicreole_subscript',
                  'wikicreole_italics', 'wikicreole_bold',
-                 'wikicreole_monospace', 'wikicreole_superscript',
-                 'wikicreole_subscript', 'old_emphasis', 'nestled_emphasis',
+                 'wikicreole_monospace', 
+                 'old_emphasis', 'nestled_emphasis',
                  'html_emphasis', 'html_abbr', 'plugin', 'plugin_wikicreole',
                  'isonumchars', 'isohexchars', /*'html_entities'*/
                  );
