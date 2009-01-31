@@ -1018,10 +1018,6 @@ input.wikiaction, input.wikiadmin, input.wikiunsafe, input.button {
   padding: 0.05ex 0.25em 0.1ex 0.25em;
   height: auto;
   width: auto;
-/* These gecko-specific give CSS parse error: */
-  -moz-appearance: none;
-  -moz-box-sizing: content-box;
-  -moz-border-radius: 1ex;
   /* Prevent buttons from overlapping when the toolbar is wrapped. */
   line-height: 2.6ex;
   /*margin: 2ex 0.2em;*/
@@ -1061,9 +1057,6 @@ div#actionbuttons a#btn-edit {
 a.wikibutton, a.wikibutton:visited, input.wikibutton  { 
   background-color: white;
   border: 0;
-  -moz-appearance: none;
-  -moz-box-sizing: content-box;
-  -moz-border-radius: 0;
 }
 
 /**
