@@ -516,7 +516,7 @@ class PageEditor
 				       ']'));
 	}
 	else {
-	    // New CSS formatted unified diffs (ugly in NS4).
+	    // New CSS formatted unified diffs
 	    $fmt = new HtmlUnifiedDiffFormatter;
 	    // Use this for old table-formatted diffs.
 	    //$fmt = new TableUnifiedDiffFormatter;
@@ -613,11 +613,6 @@ class PageEditor
                                          'cols' => $request->getPref('editWidth'),
                                          'readonly' => (bool) $readonly),
                                    $this->_content);
-        /** <textarea wrap="virtual"> is not valid XHTML but Netscape 4 requires it
-         * to wrap long lines.
-         */
-        if (isBrowserNS4())
-            $textarea->setAttr('wrap', 'virtual');
         if (ENABLE_WYSIWYG) {
             return $this->WysiwygEdit->Textarea($textarea, $this->_wikicontent, 
                                                 $textarea->getAttr('name'));

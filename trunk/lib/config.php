@@ -99,14 +99,6 @@ function isBrowserNetscape($version = false) {
     if ($version) return $agent and browserVersion() >= $version; 
     else return $agent;
 }
-// NS3 or less
-function isBrowserNS3() {
-    return (isBrowserNetscape() and browserVersion() < 4.0);
-}
-// NS4 or less
-function isBrowserNS4() {
-    return (isBrowserNetscape() and browserVersion() < 5.0);
-}
 // must omit display alternate stylesheets: konqueror 3.1.4
 // http://sourceforge.net/tracker/index.php?func=detail&aid=945154&group_id=6121&atid=106121
 function isBrowserKonqueror($version = false) {
