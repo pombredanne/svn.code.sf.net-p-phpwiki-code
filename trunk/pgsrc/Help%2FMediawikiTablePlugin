@@ -1,4 +1,4 @@
-Date: Sat, 25 Jan 2009 15:18:24 +0100
+Date: Mon, 2 Feb 2009 5:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -18,7 +18,7 @@ The plugin is not meant to be called directly, just use the syntax below to inse
 * An optional table summary is made with a line starting with a pipe and an equal sign <b>|=</b> followed by the summary.
 * A table row starts with a pipe and a hyphen: <b>|-</b>.
 * A table cell starts with a pipe on a new line, or a double bar <b>||</b> on the same line.
-* A header table cell starts with an exclamation mark, or a double exclamation mark <b>!!</b> on the same line (works only with an explicit plugin call).
+* A header table cell starts with an exclamation mark, or a double exclamation mark <b>!!</b> on the same line.
 
 The summary syntax is an extension to the Mediawiki syntax. 
 You can also simply put the summary as an attribute to the table.
@@ -28,7 +28,7 @@ The summary is necessary to be able to create accessible tables.
 
 <?plugin RichTable
 * class="bordered"
--
+- style="font-weight:bold;background-color:#d8d8d8;", align=center
 |
 Attribute
 |
@@ -59,13 +59,15 @@ The attributes might be put with or without double quotes.
 
 == Examples
 
+=== Example 1: simple table
+
 {| border="1", style="width: 100%"
 |+ style="font-weight: bold; font-size: 150%;" | This is the table caption
 |= This is the table summary
 |- style="white-space: nowrap"
-| <b>Header 1</b>
-| <b>Header 2</b>
-| <b>Header 3</b>
+! Header 1
+! Header 2
+! Header 3
 |- style=height:100px
 | Cell I
 | <b>Cell II</b>,  in bold
@@ -81,9 +83,9 @@ The above table is rendered from:
 |+ style="font-weight: bold; font-size: 150%;" | This is the table caption
 |= This is the table summary
 |- style="white-space: nowrap"
-| <b>Header 1</b>
-| <b>Header 2</b>
-| <b>Header 3</b>
+! Header 1
+! Header 2
+! Header 3
 |- style=height:100px
 | Cell I
 | <b>Cell II</b>,  in bold
@@ -93,14 +95,8 @@ The above table is rendered from:
 |}
 </verbatim>
 
-In this example, there is no explicit call to the plugin. You have the same syntax as in Mediawiki.
+=== Example 2: table with paragraphs, lists and plugins in cells
 
-You can also explictly call the plugin. This will allow you:
-* to use the Mediawiki header syntax (!),
-* to use multiple paragraphs in a cell,
-* to use lists in a cell.
-
-<?plugin MediawikiTable
 {|
 |- style="white-space: nowrap"
 ! Header 1
@@ -114,14 +110,13 @@ Second paragraph.
 * Two
 * Three
 |- bgcolor=#f0f0ff, align=center
-|Cell 1||Cell 2
+|Current date || <<CurrentTime format=date>>
 |}
 ?>
 
 The above table is rendered from:
 
 <verbatim>
-<?plugin MediawikiTable
 {|
 |- style="white-space: nowrap"
 ! Header 1
@@ -135,9 +130,86 @@ Second paragraph.
 * Two
 * Three
 |- bgcolor=#f0f0ff, align=center
-|Cell 1||Cell 2
+|Current date || <<CurrentTime format=date>>
 |}
-?>
+</verbatim>
+
+=== Example 3: nested tables
+
+<<MediawikiTable
+{| class="bordered", align=center
+|+ Outer table caption
+|-
+! Header A !! Header B
+|-
+| A numbered list:
+# one
+# two
+# three
+|
+This cell contains a nested table.
+ {| class="bordered"
+ |+ Inner table caption
+ |-
+ ! Header A
+ ! Header B
+ |-
+ | Inner A1
+ | Inner B1
+ |-
+ | Inner A2
+ | Inner B2
+ |}
+|-
+| A paragraph
+
+Another paragraph
+
+| A plain list:
+* apple
+* pear
+* apricot
+|}
+>>
+
+The above table is rendered from:
+
+<verbatim>
+<<MediawikiTable
+{| class="bordered", align=center
+|+ Outer table caption
+|-
+! Header A !! Header B
+|-
+| A numbered list:
+# one
+# two
+# three
+|
+This cell contains a nested table.
+ {| class="bordered"
+ |+ Inner table caption
+ |-
+ ! Header A
+ ! Header B
+ |-
+ | Inner A1
+ | Inner B1
+ |-
+ | Inner A2
+ | Inner B2
+ |}
+|-
+| A paragraph
+
+Another paragraph
+
+| A plain list:
+* apple
+* pear
+* apricot
+|}
+>>
 </verbatim>
 
 == Author
@@ -149,4 +221,3 @@ Marc-Etienne Vargenau, Alcatel-Lucent
 
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
-
