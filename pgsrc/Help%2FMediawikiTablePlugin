@@ -112,7 +112,6 @@ Second paragraph.
 |- bgcolor=#f0f0ff, align=center
 |Current date || <<CurrentTime format=date>>
 |}
-?>
 
 The above table is rendered from:
 
