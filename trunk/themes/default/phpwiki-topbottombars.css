@@ -20,7 +20,7 @@ body {
  * #navbar and #actionbar, such as in editpage and removepage
  */
 div#header, div#footer {
-  background: ivory;
+  background: #FFFFF0; /* ivory */
   margin: 0px;
   padding: 0px;
   position: fixed;
