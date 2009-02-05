@@ -75,8 +75,8 @@
 \set pageperm_tbl 	:prefix 'pageperm'
 \set pageperm_id_idx	:prefix 'pageperm_id_idx'
 \set pageperm_access_idx :prefix 'pageperm_access_idx'
-\set existing_page_view :prefix 'existing_page'
-\set curr_page_view	:prefix 'curr_page'
+-- \set existing_page_view :prefix 'existing_page'
+-- \set curr_page_view	:prefix 'curr_page'
 
 \set session_tbl 	:prefix 'session'
 \set sess_id_idx 	:prefix 'sess_id_idx'
@@ -180,19 +180,19 @@ CREATE TABLE :pageperm_tbl (
 CREATE INDEX :pageperm_id_idx ON pageperm (id);
 CREATE INDEX :pageperm_access_idx ON pageperm (access);
 
-\echo Creating experimental page views (not yet used)
-
+-- \echo Creating experimental page views (not yet used)
+-- 
 -- nonempty versiondata
-CREATE VIEW :existing_page_view AS
-  SELECT * FROM :page_tbl P INNER JOIN :nonempty_tbl N USING (id);
-
+-- CREATE VIEW :existing_page_view AS
+--   SELECT * FROM :page_tbl P INNER JOIN :nonempty_tbl N USING (id);
+-- 
 -- latest page version
-CREATE VIEW :curr_page_view AS
-  SELECT P.id,P.pagename,P.hits,P.pagedata,P.cached_html,
-	 V.version,V.mtime,V.minor_edit,V.content,V.versiondata
-  FROM :page_tbl P 
-    JOIN :version_tbl V USING (id)
-    JOIN :recent_tbl  R ON (V.id=R.id AND V.version=R.latestversion);
+-- CREATE VIEW :curr_page_view AS
+--  SELECT P.id,P.pagename,P.hits,P.pagedata,P.cached_html,
+--	 V.version,V.mtime,V.minor_edit,V.content,V.versiondata
+--  FROM :page_tbl P 
+--    JOIN :version_tbl V USING (id)
+--    JOIN :recent_tbl  R ON (V.id=R.id AND V.version=R.latestversion);
 
 \echo Creating :link_tbl
 CREATE TABLE :link_tbl (
