@@ -236,7 +236,7 @@ extends WikiPlugin
                     $form->pushContent($WikiTheme->getButtonSeparator());
                 }
             }
-            $form->pushContent(Button('submit:cancel', _("Cancel"), 'button'));
+            // $form->pushContent(Button('submit:cancel', _("Cancel"), 'button'));
         }
         if (! $request->getArg('select')) {
             return $form;
