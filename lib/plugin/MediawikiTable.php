@@ -78,8 +78,8 @@ extends WikiPlugin
         // We allow the compact Mediawiki syntax with:
         // - multiple cells on the same line (separated by "||"),
         // - multiple header cells on the same line (separated by "!!").
-        $argstr = str_replace("||", "\n|", $argstr);
-        $argstr = str_replace("!!", "\n!", $argstr);
+        $argstr = str_replace("||", "\n| ", $argstr);
+        $argstr = str_replace("!!", "\n! ", $argstr);
 
         $lines = preg_split('/\n/', $argstr);
         $table = HTML::table();
