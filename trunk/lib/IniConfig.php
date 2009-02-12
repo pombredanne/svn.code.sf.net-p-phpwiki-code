@@ -629,9 +629,11 @@ function fixup_static_configs($file) {
       .'PhpWikiAdministration:'
       .'PhpWikiAdministration/Chmod:'
       .'PhpWikiAdministration/Chown:'
+      .'PhpWikiAdministration/Markup:'
+      .'PhpWikiAdministration/Purge:'
       .'PhpWikiAdministration/Remove:'
       .'PhpWikiAdministration/Rename:'
-      .'PhpWikiAdministration/Replace:'
+      .'PhpWikiAdministration/SearchReplace:'
       .'PhpWikiAdministration/SetAcl:'
       .'RecentChangesMyPages:RecentEdits:RecentNewPages:'
       .'UserContribs');
