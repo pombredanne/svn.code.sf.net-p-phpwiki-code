@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
- Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -39,7 +39,7 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function getDescription() {
-        return _("Chown selected pages.");
+        return _("Change owner of selected pages.");
     }
 
     function getVersion() {
@@ -64,19 +64,25 @@ extends WikiPlugin_WikiAdminSelect
         $count = 0;
         foreach ($pages as $name) {
             $page = $dbi->getPage($name);
+            $current = $page->getCurrentRevision();
             if ( ($owner = $page->getOwner()) and 
                  $newowner != $owner ) {
                 if (!mayAccessPage('change', $name)) {
                     $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",
                                                   WikiLink($name))));
                 } else {
+                    $version = $current->getVersion();
+                    $meta = $current->_data;
+                    $text = $current->getPackedContent();
+                    $meta['summary'] = sprintf(_("Change page owner from %s to %s"), $owner, $newowner);
                     $page->set('owner', $newowner);
+                    $page->save($text, $version + 1, $meta);
                     if ($page->get('owner') === $newowner) {
-                        $ul->pushContent(HTML::li(fmt("Chown page '%s' to '%s'.",
+                        $ul->pushContent(HTML::li(fmt("Change owner of page '%s' to '%s'.",
                                                       WikiLink($name), WikiLink($newowner))));
                         $count++;
                     } else {
-                        $ul->pushContent(HTML::li(fmt("Couldn't chown page '%s' to '%s'.", 
+                        $ul->pushContent(HTML::li(fmt("Could not change owner of page '%s' to '%s'.", 
                                                       WikiLink($name), $newowner)));
                     }
                 }
@@ -154,11 +160,11 @@ extends WikiPlugin_WikiAdminSelect
             $button_label = _("Yes");
             $header->pushContent(
               HTML::p(HTML::strong(
-                _("Are you sure you want to permanently chown the selected files?"))));
+                _("Are you sure you want to permanently change the owner of the selected pages?"))));
             $header = $this->chownForm($header, $post_args);
         }
         else {
-            $button_label = _("Chown selected pages");
+            $button_label = _("Change owner of selected pages");
             $header->pushContent(HTML::p(_("Select the pages to change the owner:")));
             $header = $this->chownForm($header, $post_args);
         }
@@ -181,7 +187,7 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function chownForm(&$header, $post_args) {
-        $header->pushContent(_("Chown")." ");
+        $header->pushContent(_("Change owner")." ");
         $header->pushContent(' '._("to").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_chown[user]',
                                                'value' => $post_args['user'])));
