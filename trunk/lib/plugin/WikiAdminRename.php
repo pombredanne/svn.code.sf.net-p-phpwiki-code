@@ -92,6 +92,9 @@ extends WikiPlugin_WikiAdminSelect
                     $meta = $current->_data;
                     $text = $current->getPackedContent();
                     $meta['summary'] = sprintf(_("Renamed page from '%s' to '%s'"), $name, $newname);
+                    $meta['is_minor_edit'] = 0;
+                    $meta['author'] =  $request->_user->UserName();
+                    unset($meta['mtime']); // force new date
                     $page->save($text, $version + 1, $meta);
                     $ul->pushContent(HTML::li(fmt("Renamed page '%s' to '%s'.",
                                                   $name, WikiLink($newname))));
