@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
- Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -58,7 +58,7 @@ extends WikiPlugin_WikiAdminSelect
                    ));
     }
 
-    function replaceHelper(&$dbi, $pagename, $from, $to, $case_exact=true, $regex=false) {
+    function replaceHelper(&$dbi, &$request, $pagename, $from, $to, $case_exact=true, $regex=false) {
         $page = $dbi->getPage($pagename);
         if ($page->exists()) {// don't replace default contents
             $current = $page->getCurrentRevision();
@@ -80,7 +80,10 @@ extends WikiPlugin_WikiAdminSelect
             }
             if ($text != $newtext) {
                 $meta = $current->_data;
-                $meta['summary'] = sprintf(_("WikiAdminSearchReplace %s by %s"),$from,$to);
+                $meta['summary'] = sprintf(_("Replace '%s' by '%s'"), $from, $to);
+                $meta['is_minor_edit'] = 0;
+                $meta['author'] =  $request->_user->UserName();
+                unset($meta['mtime']); // force new date
                 return $page->save($newtext, $version + 1, $meta);
             }
         }
@@ -97,7 +100,7 @@ extends WikiPlugin_WikiAdminSelect
         foreach ($pages as $pagename) {
             if (!mayAccessPage('edit', $pagename)) {
 		$ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
-            } elseif (($result = $this->replaceHelper($dbi, $pagename, $from, $to, 
+            } elseif (($result = $this->replaceHelper($dbi, $request, $pagename, $from, $to, 
                                                       $case_exact, $regex))) 
             {
                 $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", 
@@ -179,7 +182,7 @@ extends WikiPlugin_WikiAdminSelect
 
         $pagelist->addPageList($pages);
 
-        $header = HTML::p();
+        $header = HTML::div();
         if (empty($post_args['from']))
             $header->pushContent(
               HTML::p(HTML::em(_("Warning: The search string cannot be empty!"))));
