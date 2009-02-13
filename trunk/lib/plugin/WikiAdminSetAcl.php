@@ -138,7 +138,7 @@ extends WikiPlugin_WikiAdminSelect
             $pages = $p;
         elseif ($this->_list)
             $pages = $this->_list;
-        $header = HTML::p();
+        $header = HTML::div();
         if ($p && $request->isPost() &&
             !empty($post_args['acl']) && empty($post_args['cancel'])) {
             // without individual PagePermissions:
