@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2005 $ThePhpWikiProgrammingTeam
- Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -76,7 +76,10 @@ extends WikiPlugin_WikiAdminSelect
                     $meta['markup'] = $newmarkup;
                     // convert text?
                     $text = $current->getPackedContent();
-                    $meta['summary'] = sprintf(_("WikiAdminMarkup from %s to %s"), $markup, $newmarkup);
+                    $meta['summary'] = sprintf(_("Change markup type from %s to %s"), $markup, $newmarkup);
+                    $meta['is_minor_edit'] = 0;
+                    $meta['author'] =  $request->_user->UserName();
+                    unset($meta['mtime']); // force new date
                     $page->save($text, $version + 1, $meta);
                     $current = $page->getCurrentRevision();
                     if ($current->get('markup') === $newmarkup) {
@@ -145,7 +148,7 @@ extends WikiPlugin_WikiAdminSelect
         $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
         $pagelist->addPageList($pages);
 
-        $header = HTML::p();
+        $header = HTML::div();
         if ($next_action == 'verify') {
             $button_label = _("Yes");
             $header->pushContent(
