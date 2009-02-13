@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2004,2005,2007 $ThePhpWikiProgrammingTeam
- Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -86,6 +86,13 @@ extends WikiPlugin_WikiAdminSelect
                                                   WikiLink($name))));
                 elseif ( $dbi->renamePage($name, $newname, $updatelinks)) {
                     /* not yet implemented for all backends */
+                    $page = $dbi->getPage($newname);
+                    $current = $page->getCurrentRevision();
+                    $version = $current->getVersion();
+                    $meta = $current->_data;
+                    $text = $current->getPackedContent();
+                    $meta['summary'] = sprintf(_("Renamed page from '%s' to '%s'"), $name, $newname);
+                    $page->save($text, $version + 1, $meta);
                     $ul->pushContent(HTML::li(fmt("Renamed page '%s' to '%s'.",
                                                   $name, WikiLink($newname))));
                     $count++;
