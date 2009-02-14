@@ -292,7 +292,6 @@ class _PageList_Column_checkbox extends _PageList_Column {
         $this->_name = $name;
         $heading = HTML::input(array('type'  => 'button',
                                      'title' => _("Click to de-/select all pages"),
-                                     //'width' => '100%',
                                      'name'  => $default_heading,
                                      'value' => $default_heading,
                                      'onclick' => "flipAll(this.form)"
@@ -1411,11 +1410,11 @@ class PageList {
         $table = HTML::table(array('cellpadding' => 0,
                                    'cellspacing' => 1,
                                    'border'      => 0,
+                                   'width'       => '100%', 
                                    'class'       => 'pagelist', 
 				   ));
         if ($caption) {
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
-            $table->setAttr('width', '100%');
 	}
 
         //Warning: This is quite fragile. It depends solely on a private variable
