@@ -234,14 +234,18 @@ class PageEditor
 
     function updateLock() {
         $changed = false;
-        if (!ENABLE_PAGE_PUBLIC) {
-            if ((bool)$this->page->get('locked') == (bool)$this->locked)
-                return false;       // Not changed.
-        }
-
         if (!$this->user->isAdmin()) {
             // FIXME: some sort of message
             return false;         // not allowed.
+        }
+
+        if ((bool)$this->page->get('locked') != (bool)$this->locked) {
+            $this->page->set('locked', (bool)$this->locked);
+            $this->tokens['LOCK_CHANGED_MSG']
+                .= $this->locked
+                ? _("Page now locked.") 
+                : _("Page now unlocked.");
+            $changed = true;
         }
 
         if (ENABLE_PAGE_PUBLIC) {
@@ -253,13 +257,6 @@ class PageEditor
                        : _("Page now not-public.")) . " ";
                 $changed = true;
             }
-
-            $this->page->set('locked', (bool)$this->locked);
-            $this->tokens['LOCK_CHANGED_MSG']
-                .= $this->locked 
-                ? _("Page now locked.") 
-                : _("Page now unlocked.");
-            $changed = true;
         }
         return $changed;            // lock changed.
     }
