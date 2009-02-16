@@ -84,6 +84,11 @@ extends WikiPlugin
         $lines = preg_split('/\n/', $argstr);
         $table = HTML::table();
 
+        // We always generate an Id for the table.
+        // This is convenient for tables of class "sortable".
+        // If user provides an Id, the generated Id will be overwritten below.
+        $table->setAttr("id", GenerateId("MediawikiTable"));
+
         if (substr($lines[0],0,2) == "{|") {
             // Start of table
             $lines[0] = substr($lines[0],2);
