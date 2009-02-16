@@ -1120,6 +1120,7 @@ function RevertPage (&$request)
     $new = $page->save($content, $currversion + 1, $versiondata);
     $dbi->touch();
     
+    $mesg = HTML::span();
     $pagelink = WikiLink($pagename);
     $mesg->pushContent(fmt("Revert: %s", $pagelink), 
                        fmt("- version %d saved to database as version %d",
