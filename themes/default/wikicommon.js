@@ -1,5 +1,5 @@
 // Common Javascript support functions.
-// $Id: toolbar.js 6204 2008-08-26 15:12:03Z vargenau $
+// $Id$
 
 function flipAll(formObj) {
   var isFirstSet = -1;
