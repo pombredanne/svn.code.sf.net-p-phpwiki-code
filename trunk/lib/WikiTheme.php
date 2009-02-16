@@ -218,6 +218,7 @@ class WikiTheme {
         if ($noinit) return;
 
         $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("wikicommon.js"))));
+        $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("sortable.js"))));
 	$script_url = deduce_script_name();
 	if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
 	    $script_url .= ("?start_debug=".$_GET['start_debug']);
