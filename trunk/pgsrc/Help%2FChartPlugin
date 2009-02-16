@@ -11,6 +11,9 @@ Content-Transfer-Encoding: binary
 The **Chart** [[Help:WikiPlugin|plugin]] allows to easily draw simple graphs on a wiki page.
 
 The browser must support SVG in order graphs to be displayed.
+If you are using Internet Explorer 6 + Adobe SVGviewer (often included
+by default with Windows XP) or SVG-enabled Firefox (2.0 or above)
+then you should see the examples.
 
 == Usage ==
 <verbatim>
@@ -83,6 +86,11 @@ The browser must support SVG in order graphs to be displayed.
         color=blue
         data="5, 7, 11, 3, 15"
 >>
+
+== Known Problems
+
+With multiple Chart plugins on the same page the 2nd and
+subsequent ones will have the same width and height.
 
 == Author ==
 * Marc-Etienne Vargenau
