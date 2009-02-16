@@ -75,6 +75,7 @@ class PageEditor
         $saveFailed = false;
         $tokens = &$this->tokens;
         $tokens['PAGE_LOCKED_MESSAGE'] = '';
+        $tokens['LOCK_CHANGED_MSG'] = '';
         $tokens['CONCURRENT_UPDATE_MESSAGE'] = '';
         $r =& $this->request;
 
