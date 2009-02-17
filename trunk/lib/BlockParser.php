@@ -368,7 +368,7 @@ class ParsedBlock extends Block_HtmlElement {
     	if (!is_object($_regexpset)) {
             // nowiki_wikicreole must be before template_plugin
 	    $Block_types = array
-		    ('nowiki_wikicreole', 'template_plugin', 'oldlists', 'list', 'dl', 'table_dl', 'table_wikicreole', 'table_mediawiki',
+		    ('nowiki_wikicreole', 'template_plugin', 'placeholder', 'oldlists', 'list', 'dl', 'table_dl', 'table_wikicreole', 'table_mediawiki',
                      'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre', 'email_blockquote',
 		     'plugin', 'plugin_wikicreole', 'p');
             // insert it before p!
@@ -952,6 +952,35 @@ class Block_pre extends BlockMarkup
         return true;
     }
 }
+
+// Wikicreole placeholder
+// <<<placeholder>>>
+class Block_placeholder extends BlockMarkup
+{
+    var $_re = '<<<';
+
+    function _match (&$input, $m) {
+        $endtag = '>>>';
+        $text = array();
+        $pos = $input->getPos();
+
+        $line = $m->postmatch;
+        while (ltrim($line) != $endtag) {
+            $text[] = $line;
+            if (($line = $input->nextLine()) === false) {
+                $input->setPos($pos);
+                return false;
+            }
+        }
+        $input->advance();
+
+        $text = join("\n", $text);
+        $text = '<<<' . $text . '>>>';
+        $this->_element = new Block_HtmlElement('div', false, $text);
+        return true;
+    }
+}
+
 class Block_nowiki_wikicreole extends BlockMarkup
 {
     var $_re = '{{{';

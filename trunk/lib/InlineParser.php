@@ -858,6 +858,17 @@ class Markup_color extends BalancedMarkup {
     }
 }
 
+// Wikicreole placeholder
+// <<<placeholder>>>
+class Markup_placeholder extends SimpleMarkup
+{
+    var $_match_regexp = '<<<.*?>>>';
+
+    function markup ($match) {
+        return HTML::span($match);
+    }
+}
+
 // Single-line HTML comment
 // <!-- This is a comment -->
 class Markup_html_comment extends SimpleMarkup
@@ -1056,7 +1067,7 @@ class InlineTransformer
             $non_default = false;
             $markup_types = array
                 ('escape', 'wikicreolebracketlink', 'bracketlink', 'url',
-                 'html_comment',
+                 'html_comment', 'placeholder',
                  'interwiki',  'semanticlink', 'wikiword', 'linebreak',
                  'wikicreole_superscript',
                  'wikicreole_subscript',
