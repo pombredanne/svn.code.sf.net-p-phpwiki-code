@@ -2326,25 +2326,69 @@ function isSerialized($s) {
  *
  * We allow attributes with or without double quotes (")
  * Attribute-value pairs may be separated by space or comma
+ * Space is normal HTML attributes, comma is for RichTable compatibility
  * border=1, cellpadding="5"
  * border=1 cellpadding="5"
  * style="font-family: sans-serif; border-top:1px solid #dddddd;"
- * What will not work is style with comma inside, e. g.
- / style="font-family: Verdana, Arial, Helvetica, sans-serif"
+ * style="font-family: Verdana, Arial, Helvetica, sans-serif"
  */
 function parse_attributes($line) {
-    if (empty($line)) return array();
-    $line = strtolower($line);
-    $line = str_replace(",", "", $line);
-    $attr_chunks = preg_split("/\s* \s*/", $line);
+
     $options = array();
-    foreach ($attr_chunks as $attr_pair) {
-        if (empty($attr_pair)) continue;
-        $key_val = preg_split("/\s*=\s*/", $attr_pair);
-        if (!empty($key_val[1]))
-            $options[trim($key_val[0])] = trim(str_replace("\"", "", $key_val[1]));
+
+    if (empty($line)) return $options;
+    $line = trim($line);
+    if (empty($line)) return $options;
+    $line = trim($line, ",");
+    if (empty($line)) return $options;
+
+    // First we have an attribute name.
+    $attribute = "";
+    $value = "";
+
+    $i = 0;
+    while (($i < strlen($line)) && ($line[$i] != '=')) {
+        $i++;
     }
-    return $options;
+    $attribute = substr($line, 0, $i);
+    $attribute = strtolower($attribute);
+
+    $line = substr($line, $i+1);
+    $line = trim ($line);
+    $line = trim ($line, "=");
+    $line = trim ($line);
+
+    // Then we have the attribute value.
+
+    $i = 0;
+    // Attribute value might be between double quotes
+    // In that case we have to find the closing double quote
+    if ($line[0] == '"') {
+        $i++; // skip first '"'
+        while (($i < strlen($line)) && ($line[$i] != '"')) {
+            $i++;
+        }
+        $value = substr($line, 0, $i);
+        $value = trim ($value, '"');
+        $value = trim ($value);
+
+    // If there are no double quotes, we have to find the next space or comma
+    } else {
+        while (($i < strlen($line)) && (($line[$i] != ' ') && ($line[$i] != ','))) {
+            $i++;
+        }
+        $value = substr($line, 0, $i);
+        $value = trim ($value);
+        $value = trim ($value, ",");
+        $value = trim ($value);
+    }
+
+    $options[$attribute] = $value;
+    
+    $line = substr($line, $i+1);
+    $line = trim ($line);
+
+    return $options + parse_attributes($line);
 }
 
 /**
