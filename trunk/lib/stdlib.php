@@ -2387,6 +2387,8 @@ function parse_attributes($line) {
     
     $line = substr($line, $i+1);
     $line = trim ($line);
+    $line = trim ($line, ",");
+    $line = trim ($line);
 
     return $options + parse_attributes($line);
 }
