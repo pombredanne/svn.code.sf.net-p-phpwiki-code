@@ -8,12 +8,12 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~RecentChanges* [[Help:WikiPlugin|plugin]] lists the most recent 
+The *~RecentChanges* [[Help:WikiPlugin|plugin]] lists the most recent
 modifications in the wiki.
 
 == Usage
 {{{
-<<RecentChanges arguments>> 
+<<RecentChanges arguments>>
 }}}
 
 == Arguments
@@ -28,90 +28,90 @@ modifications in the wiki.
 | The page to execute upon
 | current pagename
 |-
-| days         
-|
+| days
+| Number of days. Specifying 0 will display modifications since wiki creation.
 | 2
 |-
-| show_minor   
-|
+| show_minor
+| Show minor modifications
 | false
 |-
-| show_major   
-|
+| show_major
+| Show major modifications
 | true
 |-
-| show_all     
-|
+| show_all
+| Display a page multiple times if it was modified more that once.
 | false
 |-
-| show_deleted 
-|
+| show_deleted
+| Show deleted pages
 | sometimes
 |-
-| only_new     
+| only_new
+| Show only new pages
+| false
+|-
+| author
+| Show only modifications from a specific author
+| false
+|-
+| owner
+| Show only pages from a specific owner
+| false
+|-
+| limit
+| Do not show more pages that the limit.
+| false
+|-
+| format
 |
 | false
 |-
-| author       
+| daylist
 |
 | false
 |-
-| owner        
-|
-| false
-|-
-| limit        
-|
-| false
-|-
-| format       
-|
-| false
-|-
-| daylist      
-|
-| false
-|-
-| difflinks    
+| difflinks
 |
 | true
 |-
-| historylinks 
+| historylinks
 |
 | false
 |-
-| caption      
+| caption
 |
 |
 |-
-| category     
+| category
 |
 |
 |-
-| pagematch    
+| pagematch
 |
-| 
+|
 |}
 
-== Examples
+== Example
 
 {{{
-<<RecentChanges>> 
+<<RecentChanges>>
 }}}
 
-<<RecentChanges>> 
+<<RecentChanges>>
 
 {{{
-<<RecentChanges show_minor=1>> 
+<<RecentChanges show_minor=1>>
 }}}
 
-<<RecentChanges show_minor=1>> 
+<<RecentChanges show_minor=1>>
 
 {{{
-<<RecentChanges days=30>> 
+<<RecentChanges days=30>>
 }}}
 
-<<RecentChanges days=30>> 
+<<RecentChanges days=30>>
 
 == Author
 [Reini Urban|PhpWiki:ReiniUrban]
