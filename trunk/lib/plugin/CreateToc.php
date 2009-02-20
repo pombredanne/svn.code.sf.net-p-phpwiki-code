@@ -371,14 +371,15 @@ extends WikiPlugin
 	    }
         }
         $content = $current->getContent();
-        $html = HTML::div(array('class' => 'toc', 'id'=>'toc'));
+        $html = HTML::div(array('class' => 'toc', 'id'=> GenerateId("toc")));
         if ($notoc) {
             $html->setAttr('style','display:none;');
         }
         if (($position == "left") or ($position == "right")) {
             $html->setAttr('style','float:'.$position.'; width:'.$width.';');
         }
-        $list = HTML::div(array('id'=>'toclist'));
+        $toclistid = GenerateId("toclist");
+        $list = HTML::div(array('id'=>$toclistid, 'class'=>toclist));
         if (!strstr($headers,",")) {
             $headers = array($headers);	
         } else {
@@ -415,33 +416,18 @@ extends WikiPlugin
 	$list->setAttr('style','display:'.($jshide?'none;':'block;'));
         $open = DATA_PATH.'/'.$WikiTheme->_findFile("images/folderArrowOpen.png");
         $close = DATA_PATH.'/'.$WikiTheme->_findFile("images/folderArrowClosed.png");
-	$html->pushContent(Javascript("
-function toggletoc(a) {
-  var toc=document.getElementById('toclist')
-  //toctoggle=document.getElementById('toctoggle')
-  var open='".$open."'
-  var close='".$close."'
-  if (toc.style.display=='none') {
-    toc.style.display='block'
-    a.title='"._("Click to hide the TOC")."'
-    a.src = open
-  } else {
-    toc.style.display='none';
-    a.title='"._("Click to display")."'
-    a.src = close
-  }
-}"));
       if ($noheader) {
       } else {
+        $toctoggleid = GenerateId("toctoggle");
 	if ($extracollapse)
 	    $toclink = HTML(_("Table of Contents"),
 			    " ",
                             HTML::a(array('name'=>'TOC')),
 			    HTML::img(array(
-                                            'id'=>'toctoggle',
+                                            'id'=>$toctoggleid,
                                             'class'=>'wikiaction',
                                             'title'=>_("Click to display to TOC"),
-                                            'onclick'=>"toggletoc(this)",
+                                            'onclick'=>"toggletoc(this, '".$open."', '".$close."', '".$toclistid."')",
                                             'border' => 0,
                                             'alt' => 'toctoggle',
                                             'src' => $jshide ? $close : $open )));
@@ -449,11 +435,11 @@ function toggletoc(a) {
 	    $toclink = HTML::a(array('name'=>'TOC',
 				     'class'=>'wikiaction',
 				     'title'=>_("Click to display"),
-				     'onclick'=>"toggletoc(this)"),
+				     'onclick'=>"toggletoc(this, '".$open."', '".$close."', '".$toclistid."')"),
 			       _("Table of Contents"),
 			       HTML::span(array('style'=>'display:none',
-						'id'=>'toctoggle')," "));
-	$html->pushContent(HTML::p(array('id'=>'toctitle'), $toclink));
+						'id'=>$toctoggleid)," "));
+	$html->pushContent(HTML::p(array('class'=>'toctitle'), $toclink));
       }
       $html->pushContent($list);
       if (count($headers) == 0) {

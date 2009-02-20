@@ -372,6 +372,7 @@ table.small {
 	font-size: 100%;
 	font-weight: bold;
 }
+.toc .toclist,
 .toc #toclist {
 	width: auto;
 	border: none;
