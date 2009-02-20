@@ -144,6 +144,36 @@ extends WikiPlugin
                                    HTML::input(array('type' => 'submit',
                                                      'name' => 'WikiAdminSelect',
                                                      'value' => _("Go")))));
+        if (! $request->getArg('verify')) {
+            $form->pushContent(HTML::input(array('type' => 'hidden',
+                                                 'name' => 'action',
+                                                 'value' => 'verify')));
+            $form->pushContent(Button('submit:verify', _("Select pages"),
+                                      'wikiadmin'),
+                               Button('submit:cancel', _("Cancel"), 'button'));
+        } else {
+            global $WikiTheme;
+            $form->pushContent(HTML::input(array('type' => 'hidden',
+                                                 'name' => 'action',
+                                                 'value' => 'WikiAdminSelect'))
+                               );
+            // Add the Buttons for all registered WikiAdmin plugins
+            $plugin_dir = 'lib/plugin';
+            if (defined('PHPWIKI_DIR'))
+                $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
+            $fs = new fileSet($plugin_dir, 'WikiAdmin*.php');
+            $actions = $fs->getFiles();
+            foreach ($actions as $f) {
+                $f = preg_replace('/.php$/','', $f);
+                $s = preg_replace('/^WikiAdmin/','', $f);
+                if (!in_array($s,array("Select","Utils"))) { // disable Select and Utils
+                    $form->pushContent(Button("submit:wikiadmin[$f]", _($s), "wikiadmin"));
+                    $form->pushContent($WikiTheme->getButtonSeparator());
+                }
+            }
+            // $form->pushContent(Button('submit:cancel', _("Cancel"), 'button'));
+        }
+
         if ($request->isPost() 
             && ! $request->getArg('wikiadmin')
             && !empty($p)) {
@@ -209,35 +239,6 @@ extends WikiPlugin
                 $form->pushContent(HiddenInputs(array($k => $v))); // debugging params, ...
         }
         */
-        if (! $request->getArg('verify')) {
-            $form->pushContent(HTML::input(array('type' => 'hidden',
-                                                 'name' => 'action',
-                                                 'value' => 'verify')));
-            $form->pushContent(Button('submit:verify', _("Select pages"),
-                                      'wikiadmin'),
-                               Button('submit:cancel', _("Cancel"), 'button'));
-        } else {
-            global $WikiTheme;
-            $form->pushContent(HTML::input(array('type' => 'hidden',
-                                                 'name' => 'action',
-                                                 'value' => 'WikiAdminSelect'))
-                               );
-            // Add the Buttons for all registered WikiAdmin plugins
-            $plugin_dir = 'lib/plugin';
-            if (defined('PHPWIKI_DIR'))
-                $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
-            $fs = new fileSet($plugin_dir, 'WikiAdmin*.php');
-            $actions = $fs->getFiles();
-            foreach ($actions as $f) {
-                $f = preg_replace('/.php$/','', $f);
-                $s = preg_replace('/^WikiAdmin/','', $f);
-                if (!in_array($s,array("Select","Utils"))) { // disable Select and Utils
-                    $form->pushContent(Button("submit:wikiadmin[$f]", _($s), "wikiadmin"));
-                    $form->pushContent($WikiTheme->getButtonSeparator());
-                }
-            }
-            // $form->pushContent(Button('submit:cancel', _("Cancel"), 'button'));
-        }
         if (! $request->getArg('select')) {
             return $form;
         } else {
