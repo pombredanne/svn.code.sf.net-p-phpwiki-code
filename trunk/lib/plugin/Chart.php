@@ -87,17 +87,24 @@ extends WikiPlugin
 
         // x_min = 0
         // x_max = number of elements in data
-        // y_min = 0
+        // y_min = 0 or smallest element in data if negative
         // y_max = biggest element in data
 
-        $x_max = sizeof($values);
+        $x_max = sizeof($values) + 1;
+        $y_min = min($values);
+        if ($y_min > 0) {
+            $y_min = 0;
+        }
         $y_max = max($values);
+        // sum is used for the pie only, so we ignore negative values
         $sum = 0;
         foreach ($values as $value) {
-            $sum += $value;
+            if ($value > 0) {
+                $sum += $value;
+            }
         }
 
-        $source = 'initPicture(0,'.$x_max.',0,'.$y_max.'); axes(); stroke = "'.$color.'"; strokewidth = 5;';
+        $source = 'initPicture(0,'.$x_max.','.$y_min.','.$y_max.'); axes(); stroke = "'.$color.'"; strokewidth = 5;';
 
         if ($type == "bar") {
             $abscisse = 1;
@@ -126,8 +133,10 @@ extends WikiPlugin
                     . 'point = [1, 0]; line(center, point);';
             $angle = 0;
             foreach ($values as $value) {
-                $angle += $value/$sum;
-                $source .= 'point = [cos(2*pi*'.$angle.'), sin(2*pi*'.$angle.')]; line(center, point);';
+                if ($value > 0) {
+                    $angle += $value/$sum;
+                    $source .= 'point = [cos(2*pi*'.$angle.'), sin(2*pi*'.$angle.')]; line(center, point);';
+                }
             }
         }
 
