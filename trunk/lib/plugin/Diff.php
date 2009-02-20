@@ -50,7 +50,6 @@ extends WikiPlugin {
     // todo: makes only sense with more args.
     function getDefaultArguments() {
         return array('pagename' => '[pagename]',
-                     'name'     => _("World"),
                      'versions' => false,
                      'version'  => false,
                      'previous' => 'major', // author, minor or major
@@ -182,45 +181,16 @@ extends WikiPlugin {
                 $html->pushContent(HTML::hr(),
                                    HTML::p('[', _("Versions are identical"),
                                            ']'));
-            }
-            else {
-                // New CSS formatted unified diffs (ugly in NS4).
+            } else {
+                // New CSS formatted unified diffs
                 $fmt = new HtmlUnifiedDiffFormatter;
-
-                // Use this for old table-formatted diffs.
-                //$fmt = new TableUnifiedDiffFormatter;
                 $html->pushContent($fmt->format($diff));
             }
         }
 
-        //$html = HTML::tt(fmt('%s: %s', $salutation, WikiLink($name, 'auto')),
-        //                 THE_END);
-        
         return $html;
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.3  2005/09/30 18:53:10  uckelman
-// 'final' is a reserved keyword as of PHP5, so shouldn't be used as a
-//  function name here.
-//
-// Revision 1.2  2004/06/14 11:31:39  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.1  2004/02/26 23:02:17  rurban
-// lib/diff.php converted to a plugin by electrawn,
-// plugin cleaned up by rurban,
-// code by dairiki
-//
-// Would make sense to see arbitrary diff's between any files or revisions.
-//
-//
 
 // For emacs users
 // Local Variables:
