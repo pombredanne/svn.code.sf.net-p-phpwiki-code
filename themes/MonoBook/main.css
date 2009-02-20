@@ -350,6 +350,7 @@ table.small {
   	clear: right;
 }
 #toc #toctitle,
+.toc .toctitle,
 .toc #toctitle {
 	display: inline;
 	border: none;
@@ -357,6 +358,7 @@ table.small {
 	font-size: 110%;
 	font-weight: bold;
 }
+.toc .toclist,
 .toc #toclist {
 	width: auto;
 	border: none;
