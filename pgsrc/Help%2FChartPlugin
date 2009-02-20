@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 8:15:24 +0000
+Date: Fri, 20 Feb 2009 8:15:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -9,6 +9,8 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 The **Chart** [[Help:WikiPlugin|plugin]] allows to easily draw simple graphs on a wiki page.
+
+Three graph formats are possible: line, bar and pie. In pie mode, negative values are ignored.
 
 The browser must support SVG in order graphs to be displayed.
 If you are using Internet Explorer 6 + Adobe SVGviewer (often included
