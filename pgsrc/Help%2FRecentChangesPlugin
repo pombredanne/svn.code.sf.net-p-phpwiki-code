@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Fri, 20 Feb 2009 10:18:24 +0100
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,25 +8,110 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-_short description_
+The *~RecentChanges* [[Help:WikiPlugin|plugin]] lists the most recent 
+modifications in the wiki.
 
 == Usage
-<verbatim>
-  <?plugin RecentChanges ?>
-</verbatim>
+{{{
+<<RecentChanges arguments>> 
+}}}
 
 == Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| pagename
+| The page to execute upon
+| current pagename
+|-
+| days         
+|
+| 2
+|-
+| show_minor   
+|
+| false
+|-
+| show_major   
+|
+| true
+|-
+| show_all     
+|
+| false
+|-
+| show_deleted 
+|
+| sometimes
+|-
+| only_new     
+|
+| false
+|-
+| author       
+|
+| false
+|-
+| owner        
+|
+| false
+|-
+| limit        
+|
+| false
+|-
+| format       
+|
+| false
+|-
+| daylist      
+|
+| false
+|-
+| difflinks    
+|
+| true
+|-
+| historylinks 
+|
+| false
+|-
+| caption      
+|
+|
+|-
+| category     
+|
+|
+|-
+| pagematch    
+|
+| 
+|}
 
-== Example
+== Examples
 
-<verbatim>
-<?plugin RecentChanges ?>
-</verbatim>
+{{{
+<<RecentChanges>> 
+}}}
 
-<?plugin RecentChanges ?>
+<<RecentChanges>> 
+
+{{{
+<<RecentChanges show_minor=1>> 
+}}}
+
+<<RecentChanges show_minor=1>> 
+
+{{{
+<<RecentChanges days=30>> 
+}}}
+
+<<RecentChanges days=30>> 
 
 == Author
 [Reini Urban|PhpWiki:ReiniUrban]
