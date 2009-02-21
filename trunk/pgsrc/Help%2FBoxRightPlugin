@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sat, 21 Feb 2009 21:18:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -26,26 +26,26 @@ If ENABLE_MARKUP_DIVSPAN is enabled then you can produce the same result with a 
 == Typical Usage
 
 <verbatim>
-<?plugin BoxRight
+<<BoxRight
 <strong>This Wiki</strong> ([What is a Wiki?|WikiWikiWeb]) is a place where problems and
 solutions are being documented.
 
 See [How to use this Wiki|Help/HowToUseWiki] for instructions.
 
 <em>Don't be afraid - it's easy and you can't break anything!</em>
-?>
+>>
 </verbatim>
 
 == Examples
 
-<?plugin BoxRight
+<<BoxRight
 <strong>This Wiki</strong> ([What is a Wiki?|WikiWikiWeb]) is a place where problems and
 solutions are being documented.
 
 See [How to use this Wiki|Help/HowToUseWiki] for instructions.
 
 <em>Don't be afraid - it's easy and you can't break anything!</em>
-?>
+>>
 
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
