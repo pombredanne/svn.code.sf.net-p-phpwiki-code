@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sat, 21 Feb 2009 21:33:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,7 +12,7 @@ With this [[Help:WikiPlugin|plugin]] you can embed raw unfiltered HTML in the pa
 
 For this plugin to work, the page must be locked by the administrator. If you are seeing the raw HTML being displayed below, instead of rendered, try locking the page (log in as the administrator first).
 
-<?plugin RawHtml
+<<RawHtml
 
 <!-- Keep link lines at 72 characters or lynx will break them poorly. -->
 <!-- Obviously, we list ONLY the most useful/important URLs here. -->
@@ -49,7 +49,7 @@ For this plugin to work, the page must be locked by the administrator. If you ar
 </td>
 </tr>
 </table>
-?>
+>>
 
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
