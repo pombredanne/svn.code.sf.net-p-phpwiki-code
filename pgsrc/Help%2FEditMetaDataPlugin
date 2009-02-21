@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sat, 21 Feb 2009 21:18:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,15 +14,15 @@ The *~EditMetaData* [[Help:WikiPlugin|plugin]] allows you to add/edit/delete met
 
 Editing the metadata for the [HomePage] would look like this:
 <verbatim>
-<?plugin EditMetaData page="HomePage" ?>
+<<EditMetaData page="HomePage">>
 </verbatim>
-<?plugin EditMetaData page="HomePage" ?>
+<<EditMetaData page="HomePage">>
 
 With no arguments the plugin defaults to the current page:
 <verbatim>
-<?plugin EditMetaData ?>
+<<EditMetaData>>
 <verbatim>
-<?plugin EditMetaData ?>
+<<EditMetaData>>
 
 -----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]

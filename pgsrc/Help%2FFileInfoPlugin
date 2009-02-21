@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sat, 21 Feb 2009 21:18:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -19,9 +19,9 @@ Since v1.3.13.
 == Typical Usage
 
 <verbatim>
-  <?plugin FileInfo file=uploads/setup.exe display=version,date ?>
-  <?plugin FileInfo file=uploads/setup.exe display=name,version,date 
-                    format="%s (version: %s, date: %s)" ?>
+  <<FileInfo file=uploads/setup.exe display=version,date>>
+  <<FileInfo file=uploads/setup.exe display=name,version,date 
+                    format="%s (version: %s, date: %s)">>
 </verbatim>
 
 == Arguments
@@ -38,7 +38,7 @@ __format__:
 
 == Examples
 
-This wiki was installed at <?plugin FileInfo file=config/config.ini display=date ?>.
+This wiki was installed at <<FileInfo file=config/config.ini display=date>>.
 
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]

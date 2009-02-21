@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sat, 21 Feb 2009 21:18:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,7 +14,7 @@ wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer
 
 == Usage
 <verbatim>
-<?plugin AddComment order||=normal jshide||=0 mode||=show,add noheader||=0 ?>
+<<AddComment order||=normal jshide||=0 mode||=show,add noheader||=0>>
 </verbatim>
 
 == Arguments
@@ -35,7 +35,7 @@ jshide does not work yet. Not very well tested.
 
 == Examples
 
-<?plugin AddComment jshide||=1 ?>
+<<AddComment jshide||=1>>
 
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]

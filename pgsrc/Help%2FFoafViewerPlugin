@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sat, 21 Feb 2009 21:18:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,7 +12,7 @@ The *~FoafViewer* [[Help:WikiPlugin|plugin]] is written to facilitate the viewin
 
 == Usage
 <verbatim>
-<?plugin FoafViewer foaf=http://www.myfoaf.com/foaf.rdf ?>
+<<FoafViewer foaf=http://www.myfoaf.com/foaf.rdf>>
 /FoafViewerPlugin?foaf=http://www.myfoaf.com/foaf.rdf
 </verbatim>
 
@@ -20,7 +20,7 @@ The *~FoafViewer* [[Help:WikiPlugin|plugin]] is written to facilitate the viewin
 http://www.ahsonline.com.au/dod/FoafViewerPlugin.zip
 
 == Example
-<?plugin FoafViewer foaf=http://www.ahsonline.com.au/dod/FOAF.rdf ?>
+<<FoafViewer foaf=http://www.ahsonline.com.au/dod/FOAF.rdf>>
 
 -----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
