@@ -1,4 +1,4 @@
-Date: Mon, 25 Sep 2008 4:15:24 +0000
+Date: Sat, 21 Feb 2009 18:11:05 +0000
 X-Rcs-Id: $Id$
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
@@ -8,8 +8,8 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-<?plugin RecentChanges days||=90 daylist=1,3,7,30,90,360,0 show_deleted||=1 
-                       format=contribs author||=[] ?>
+<<RecentChanges days||=90 daylist=1,3,7,30,90,360,0 show_deleted||=1 
+                       format=contribs author||=[]>>
 
 ----
-[CategoryActionPage]
+[[CategoryActionPage]]
