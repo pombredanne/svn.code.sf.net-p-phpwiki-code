@@ -1,4 +1,4 @@
-Date: Fri, 20 Feb 2009 10:18:24 +0100
+Date: Sat, 21 Feb 2009 21:01:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,7 +12,7 @@ The *~PrevLink* [[Help:WikiPlugin|plugin]] allows to display Previous and Next b
 
 == Usage
 <verbatim>
-<?plugin PrevNext prev=PrevLink next=NextLink ?>
+<<PrevNext prev=PrevLink next=NextLink>>
 </verbatim>
 
 == Arguments
@@ -71,106 +71,106 @@ The *~PrevLink* [[Help:WikiPlugin|plugin]] allows to display Previous and Next b
 == Examples
 
 <verbatim>
-<?plugin PrevNext prev="Help/CreateTocPlugin" next="Help/MediawikiTablePlugin" ?>
+<<PrevNext prev="Help/CreateTocPlugin" next="Help/MediawikiTablePlugin">>
 </verbatim>
 
-<?plugin PrevNext prev="Help/CreateTocPlugin" next="Help/MediawikiTablePlugin" ?>
+<<PrevNext prev="Help/CreateTocPlugin" next="Help/MediawikiTablePlugin">>
 
 <verbatim>
-<?plugin PrevNext prev="Help/CreateTocPlugin"
+<<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   contents="Help"
-?>
+>>
 </verbatim>
 
-<?plugin PrevNext prev="Help/CreateTocPlugin"
+<<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   contents="Help"
-?>
+>>
 
 <verbatim>
-<?plugin PrevNext prev="Help/CreateTocPlugin"
-                  next="Help/MediawikiTablePlugin"
-                  contents="Help"
-                  align="right"
-?>
-</verbatim>
-
-<?plugin PrevNext prev="Help/CreateTocPlugin"
+<<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   contents="Help"
                   align="right"
-?>
+>>
+</verbatim>
+
+<<PrevNext prev="Help/CreateTocPlugin"
+                  next="Help/MediawikiTablePlugin"
+                  contents="Help"
+                  align="right"
+>>
 
 <verbatim>
-<?plugin PrevNext prev="Help/CreateTocPlugin"
+<<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   contents="Help"
                   align="center"
-?>
+>>
 </verbatim>
 
-<?plugin PrevNext prev="Help/CreateTocPlugin"
+<<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   contents="Help"
                   align="center"
-?>
+>>
 
 <verbatim>
-<?plugin PrevNext prev="Help/CreateTocPlugin"
+<<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   up="Help"
                   style="text"
-?>
+>>
 </verbatim>
 
-<?plugin PrevNext prev="Help/CreateTocPlugin"
+<<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   up="Help"
                   style="text"
-?>
+>>
 
 <verbatim>
-<?plugin PrevNext prev="Help/CreateTocPlugin"
+<<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   index="Help"
-?>
+>>
 </verbatim>
 
-<?plugin PrevNext prev="Help/CreateTocPlugin"
+<<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   index="Help"
-?>
+>>
 
 <verbatim>
-<?plugin PrevNext first="Help/AddCommentPlugin"
+<<PrevNext first="Help/AddCommentPlugin"
                   prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   last="Help/YouTubePlugin"
-?>
+>>
 </verbatim>
 
-<?plugin PrevNext first="Help/AddCommentPlugin"
+<<PrevNext first="Help/AddCommentPlugin"
                   prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   last="Help/YouTubePlugin"
-?>
+>>
 
 <verbatim>
-<?plugin PrevNext first="Help/AddCommentPlugin"
+<<PrevNext first="Help/AddCommentPlugin"
                   prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   last="Help/YouTubePlugin"
                   order="first,last,prev,next"
-?>
+>>
 </verbatim>
 
-<?plugin PrevNext first="Help/AddCommentPlugin"
+<<PrevNext first="Help/AddCommentPlugin"
                   prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   last="Help/YouTubePlugin"
                   order="first,last,prev,next"
-?>
+>>
 
 == Author
 * [Reini Urban|PhpWiki:ReiniUrban]

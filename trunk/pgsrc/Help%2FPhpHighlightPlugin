@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sat, 21 Feb 2009 21:01:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -19,9 +19,9 @@ You specify options for the plugin on the same line as the =<?plugin=,
 and put the code on the following lines, until the final =?>=:
 
 <verbatim>
-<?plugin PhpHighlight [wrap?] [color options]
+<<PhpHighlight [wrap?] [color options]
 code to be highlighted
-?>
+>>
 </verbatim>
 
 == Description
@@ -61,18 +61,18 @@ Color Options:
 
 === PHP with default colors from =php.ini=:
 
-<?plugin PhpHighlight
+<<PhpHighlight
 function hello() {
     echo "Hello World<p>";
 }
-?>
+>>
 
 === HTML with embedded PHP
 
 Here we have to use =wrap=0= to prevent automatic wrapping, and escape
 '=?>=' as '=? >=':
 
-<?plugin PhpHighlight wrap=0 html='#000000' bg='#dddddd'
+<<PhpHighlight wrap=0 html='#000000' bg='#dddddd'
 <html>
   <head>
     <title>PHP Test</title>
@@ -81,7 +81,7 @@ Here we have to use =wrap=0= to prevent automatic wrapping, and escape
     < ?php echo "<p>Hello World</p>\n"; ? >
   </body>
 </html>
-?>
+>>
 
 === C Source
 
@@ -89,7 +89,7 @@ Although =highlight_string()= was designed with PHP code in mind it is
 suitable for basic syntax-highlighting of most C code because the two
 syntax are similar.
 
-<?plugin PhpHighlight default=black string=blue comment=gray keyword=purple
+<<PhpHighlight default=black string=blue comment=gray keyword=purple
 #include <stdio.h>
 /* Get load */
 int
@@ -102,7 +102,7 @@ getload(void)
     }
     fclose(fp);
 }
-?>
+>>
 
 == Authors
 

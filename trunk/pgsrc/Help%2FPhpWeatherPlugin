@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sat, 21 Feb 2009 21:01:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,7 +12,7 @@ The *~PhpWeather* [[Help:WikiPlugin|plugin]] is a [[Help:WikiPlugin|plugin]] tha
 a block of text with the current weather for some airport in the
 world. It looks like this:
 
-<?plugin PhpWeather menu=true ?>
+<<PhpWeather menu=true>>
 
 == Arguments
 
@@ -27,12 +27,12 @@ __icao__:
   default one which is <tt>EKAH</tt>. If you want the user to be able
   to change the station using the menu, then you have to use this as
   <verbatim>
-  <?plugin PhpWeather menu=true icao||=EKYT ?>
+  <<PhpWeather menu=true icao||=EKYT>>
   </verbatim>
   so that the value can be overwritten when the user submits the
   form. If you just use
   <verbatim>
-  <?plugin PhpWeather menu=true icao=EKYT ?>
+  <<PhpWeather menu=true icao=EKYT>>
   </verbatim>
   then nothing will happen when the user selects another station from
   the list.
@@ -41,7 +41,7 @@ __cc__:
   Specify the country code. You can use this if you want pre-select a
   different country than the one specified in the ICAO. So using
   <verbatim>
-  <?plugin PhpWeather menu=true cc||=GB icao||=KTTS ?>
+  <<PhpWeather menu=true cc||=GB icao||=KTTS>>
   </verbatim>
   will show the current weather at the NASA Shuttle Facility, United
   States (<tt>KTTS</tt>) and at the same time give the user a list of
