@@ -1,4 +1,4 @@
-Date: Mon, 26 Jun 2008 14:15:24 +0000
+Date: Sat, 21 Feb 2009 18:11:05 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -16,21 +16,21 @@ Here are some good starting points for browsing.
 
 Here's a title search. Try something like <tt>wiki or sandwich</tt>.
 
-<?plugin WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
+<<WikiFormRich action=TitleSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql" ?>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
 
 Use the following for a full text search. This takes a few seconds.
 The results will show all lines on a given page which contain a
 match.
 
-<?plugin WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
+<<WikiFormRich action=FullTextSearch method=GET nobr=1 class=wikiaction
   editbox[] name=s text=""
   submit[]
   checkbox[] name=case_exact
-  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql" ?>
+  pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
 
 In a fuzzy pages search the titles of all pages are examined to find
 those which are similarly spelled or similar sounding (english).
@@ -56,4 +56,4 @@ Example: 'wiki text -php' looks for all pages containing the words 'wiki' and 't
          but not containing the word 'php'.
 
 ----
-[CategoryActionPage]
+[[CategoryActionPage]]
