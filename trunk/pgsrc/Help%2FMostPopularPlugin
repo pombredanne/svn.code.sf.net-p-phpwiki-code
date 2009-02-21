@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sat, 21 Feb 2009 21:33:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -13,7 +13,7 @@ have the most number of hits.
 
 == Usage
 <verbatim>
-<?plugin MostPopular ?>
+<<MostPopular>>
 </verbatim>
 
 == Arguments
@@ -24,10 +24,10 @@ limit:
 == Example
 
 <verbatim>
-<?plugin MostPopular ?>
+<<MostPopular>>
 </verbatim>
 
-<?plugin MostPopular ?>
+<<MostPopular>>
 
 == Author
 [Reini Urban|PhpWiki:ReiniUrban]

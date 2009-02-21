@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sat, 21 Feb 2009 21:33:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -103,12 +103,12 @@ A search plugin invoked with *<?plugin* instead of *<?plugin-form*
 simply inserts the search results of the plugin:
 
 <verbatim>
-<?plugin TitleSearch s=wiki noheader=true ?>
+<<TitleSearch s=wiki noheader=true>>
 </verbatim>
 
 Search results for Page titles containing 'wiki':
 
-<?plugin TitleSearch s=wiki noheader=true ?>
+<<TitleSearch s=wiki noheader=true>>
 
 <verbatim>
 <?plugin-form FullTextSearch ?>
