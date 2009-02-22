@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 21:18:47 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -17,9 +17,9 @@ date to the pagename on which the calendar appears.
 
 == Usage
 
-<verbatim>
+{{{
 <<Calendar>>
-</verbatim>
+}}}
 
 will get you:
 <<Calendar>>
@@ -74,16 +74,16 @@ will get you:
 
 == Examples
 
-<verbatim>
+{{{
 <<Calendar month_offset=+1>>
-</verbatim>
+}}}
 
 will get you:
 <<Calendar month_offset=+1>>
 
-<verbatim>
+{{{
 <<Calendar start_wday=0>>
-</verbatim>
+}}}
 
 will get you:
 <<Calendar start_wday=0>>
@@ -94,10 +94,10 @@ Help:CalendarListPlugin.
 
 Often used together like this:
 
-<verbatim>
+{{{
 <<Calendar>>
 <<CalendarList>>
-</verbatim>
+}}}
 
 == Authors
 

@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 21:33:56 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$ 
 Content-Type: application/x-phpwiki;
@@ -28,14 +28,14 @@ The contents of each cell are individually processed by the ~BlockParser. This m
 *The two special characters <tt>"~~"</tt> and <tt>"?>"</tt> should be escaped as <tt>"\~~"</tt> and <tt>"?\>"</tt>. I havn't discovered any other characters yet that might need to be escaped. This is required for the block parser to work.
 
 We allow attributes with or without quotes (")
-<verbatim>
+{{{
 border=1, cellpadding="5"
 style="font-family: sans-serif; border-top:1px solid #dddddd;"
-</verbatim>
+}}}
 What will not work is style with comma inside, e. g.
-<verbatim>
+{{{
 style="font-family: Verdana, Arial, Helvetica, sans-serif"
-</verbatim>
+}}}
 
 == Example
 
@@ -73,7 +73,7 @@ This cell uses the row color
 
 The above table is rendered from:
 
-<verbatim>
+{{{
 <<RichTable
 
 *border=1, cellpadding=5, bgcolor=#f0f8f8, width=75%, align=center
@@ -105,7 +105,7 @@ Another paragraph?
 This cell uses the row color
 | I wish this cell had a nested table inside it! :(
 >>
-</verbatim>
+}}}
 
 == Known Bugs
 * The plugin can't nest itself yet. Thus nested tables are currently not possible.

@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 21:33:56 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -69,9 +69,9 @@ The _phpwiki-url_ is a *phpwiki:* URL as described above.
 
 ==== Some examples
 
-<verbatim>
+{{{
 [ Edit the SandBox | phpwiki:SandBox?action=edit ]
-</verbatim>
+}}}
 will generate a link which will take you directly to editing the
 SandBox, like so: [Edit the SandBox | phpwiki:SandBox?action=edit].
 
@@ -102,17 +102,17 @@ and the plugin supports searching, then it will be rendered as a form.
 A search plugin invoked with *<?plugin* instead of *<?plugin-form*
 simply inserts the search results of the plugin:
 
-<verbatim>
+{{{
 <<TitleSearch s=wiki noheader=true>>
-</verbatim>
+}}}
 
 Search results for Page titles containing 'wiki':
 
 <<TitleSearch s=wiki noheader=true>>
 
-<verbatim>
+{{{
 <?plugin-form FullTextSearch ?>
-</verbatim>
+}}}
 
 gives
 
@@ -120,9 +120,9 @@ gives
 
 While
 
-<verbatim>
+{{{
 <?plugin-form TitleSearch formsize=12 ?>
-</verbatim>
+}}}
 
 yields
 

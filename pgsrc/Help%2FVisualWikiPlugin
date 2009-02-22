@@ -1,4 +1,4 @@
-Date: Sun, 22 Feb 2009 18:49:18 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,9 +14,9 @@ It produces a graphical sitemap of ~PhpWiki by calling the <code>dot</code> comm
 
 == Usage
 
-<verbatim>
+{{{
 <<VisualWiki>>
-</verbatim>
+}}}
 
 == Arguments
 
@@ -25,9 +25,9 @@ page _(default: current pagename)_:
 
 == Example
 
-<verbatim>
+{{{
 <<VisualWiki>>
-</verbatim>
+}}}
 
 <<VisualWiki>>
 

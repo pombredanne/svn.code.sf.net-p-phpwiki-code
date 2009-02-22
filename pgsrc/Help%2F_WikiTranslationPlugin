@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,11 +14,11 @@ Can also be used to let a favorite translation service translate a whole page.
 Current favorite: translate.google.com if from_lang = en or fr
 
 == Usage
-<verbatim>
+{{{
   <?plugin _WikiTranslation languages=de,en,sv string="" page="" 
                             what=pages from_lang=0 nolinks=0 noT=0 debug=0
   ?>
-</verbatim>
+}}}
 
 == Arguments
 
@@ -41,7 +41,7 @@ noT:
   
 == Example
 
-<verbatim>
+{{{
   <?plugin _WikiTranslation page=HomePage languages=fr ?>
      Translation service for HomePage into french (redirect to translate.google.com)
   <?plugin _WikiTranslation what=pages ?>
@@ -54,7 +54,7 @@ noT:
      Translation matrix for all supported languages
   <?plugin _WikiTranslation string=HomePage languages=fr ?>
      Just return the translated string for this language.
-</verbatim>
+}}}
 
 == Author
 [Reini Urban|PhpWiki:ReiniUrban]

@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 21:18:47 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -20,11 +20,11 @@ by default with Windows XP) or SVG-enabled Firefox (2.0 or above)
 then you should see the examples.
 
 == Usage
-<verbatim>
+{{{
 <<AsciiSVG width= height= onmousemove="" script="" 
          code...  
 >>
-</verbatim>
+}}}
 
 == Arguments
 
@@ -37,7 +37,7 @@ See [[http://www1.chapman.edu/~jipsen/svg/asciisvg.html]]
 
 == Example
 
-<verbatim>
+{{{
 <<AsciiSVG width="117" height="117" 
   border = 0
   initPicture(-10,10)
@@ -49,7 +49,7 @@ See [[http://www1.chapman.edu/~jipsen/svg/asciisvg.html]]
       p[p.length] = [t*cos(PI*t), t*sin(PI*t)]
   path(p)
 >>
-</verbatim>
+}}}
 
 <<AsciiSVG width="117" height="117" 
   border = 0
