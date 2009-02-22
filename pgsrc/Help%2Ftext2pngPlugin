@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sun, 22 Feb 2009 18:49:18 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -16,7 +16,7 @@ This is a really simple and stupid plugin, which might need some work.
 
 == Usage
 <verbatim>
-  <?plugin text2png text="some text" ?>
+  <<text2png text="some text">>
 </verbatim>
 
 == Arguments
@@ -46,10 +46,10 @@ See the sourcecode. You'd probably need to adjust $ttfont and text2png_debug.
 == Example
 
 <verbatim>
-<?plugin text2png text='Hello WikiWorld!' ?>
+<<text2png text='Hello WikiWorld!'>>
 </verbatim>
 would produce:
-<?plugin text2png text='Hello WikiWorld!' ?>
+<<text2png text='Hello WikiWorld!'>>
 
 == See Also
 * [Help:TeX2PngPlugin]
