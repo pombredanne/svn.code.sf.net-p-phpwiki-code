@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 21:11:24 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,7 +11,7 @@ Content-Transfer-Encoding: binary
 Some special actions for [PhpWikiAdministration].
 
 == Usage
-<verbatim>
+{{{
 <<WikiAdminUtils purge-cache>>
 <<WikiAdminUtils purge-bad-pagenames>>
 <<WikiAdminUtils purge-empty-pages>>
@@ -20,7 +20,7 @@ Some special actions for [PhpWikiAdministration].
 <<WikiAdminUtils convert-cached-html>>
 <<WikiAdminUtils db-check>>
 <<WikiAdminUtils db-rebuild>>
-</verbatim>
+}}}
 
 == Arguments
 
@@ -31,9 +31,9 @@ label:
 
 == Example
 
-<verbatim>
+{{{
 <<WikiAdminUtils purge-bad-pagenames>>
-</verbatim>
+}}}
 
 <<WikiAdminUtils purge-bad-pagenames>>
 

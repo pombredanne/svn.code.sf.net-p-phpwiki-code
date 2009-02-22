@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 21:33:56 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -30,9 +30,9 @@ For most purposes it makes any other content on the page inaccessible.
 == Example
 
 A page may be made a alias for the HomePage by placing this code at the top:
-<verbatim>
+{{{
 <<RedirectTo page="HomePage">>
-</verbatim>
+}}}
 
 To see the example in action, visit HomePageAlias.
 

@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 21:18:47 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -13,12 +13,12 @@ internet sites.
 
 == Usage
 
-<verbatim>
+{{{
 <<ExternalSearch
          url="InterWiki or URL"
          name="button text"
 ?>
-</verbatim>
+}}}
 
 == Arguments
 
@@ -42,13 +42,13 @@ __debug__:
 
 == Examples
 
-<verbatim>
+{{{
   url="http://sunir.org/apps/meta.pl?"       name="Metawiki Search"
   url="http://www.usemod.com/cgi-bin/mb.pl?" name="MeatBall Search"
   url=php-lookup
   url=php-function
   url=PhpWiki
-</verbatim>
+}}}
 
 Perform a full-text search on multiple wiki's:
 <<ExternalSearch url="http://sunir.org/apps/meta.pl?" name="Metawiki Search">>

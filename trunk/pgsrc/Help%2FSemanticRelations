@@ -1,4 +1,4 @@
-Date: Sun, 22 Feb 2009 18:49:18 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -29,9 +29,9 @@ supports RDF, RDFS or XML.
 == Relations
 
 Relations (link-types) are defined as link with the following syntax:
-<verbatim>
+{{{
   relation::pagename
-</verbatim>
+}}}
 
 == Attributes
 
@@ -39,9 +39,9 @@ Attributes are defined as link to numbers (understandable by
 [GNU Units|http://www.gnu.org/software/units/units.html]) with 
 the following markup syntax:
  
-<verbatim>
+{{{
   attribute:=value
-</verbatim>
+}}}
 
 Attributes and relations refer only to the current page - the current
 page is the subject, the relation the predicate, the linked page the
@@ -52,7 +52,7 @@ attributes not.
 
 <em>Sample taken from http://wiki.ontoworld.org/index.php/San_Diego</em>
 
-<verbatim>
+{{{
 San Diego [is_a::city] located in the southwestern corner of
 [California|located_in::California], the extreme southwestern corner
 of the [United States|country::United States]. It is the county seat
@@ -72,7 +72,7 @@ Symposium on Wikis 2005, and the San Diego Zoo, and the San Diego
 Chargers.
 
 <<SemanticRelations>>
-</verbatim>
+}}}
 
 == See Also
 

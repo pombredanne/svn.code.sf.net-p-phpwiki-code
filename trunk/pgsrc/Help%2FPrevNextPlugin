@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 21:01:06 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,9 +11,9 @@ Content-Transfer-Encoding: binary
 The *~PrevLink* [[Help:WikiPlugin|plugin]] allows to display Previous and Next buttons on a wiki page for easy navigation.
 
 == Usage
-<verbatim>
+{{{
 <<PrevNext prev=PrevLink next=NextLink>>
-</verbatim>
+}}}
 
 == Arguments
 
@@ -70,31 +70,31 @@ The *~PrevLink* [[Help:WikiPlugin|plugin]] allows to display Previous and Next b
 
 == Examples
 
-<verbatim>
+{{{
 <<PrevNext prev="Help/CreateTocPlugin" next="Help/MediawikiTablePlugin">>
-</verbatim>
+}}}
 
 <<PrevNext prev="Help/CreateTocPlugin" next="Help/MediawikiTablePlugin">>
 
-<verbatim>
+{{{
 <<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   contents="Help"
 >>
-</verbatim>
+}}}
 
 <<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   contents="Help"
 >>
 
-<verbatim>
+{{{
 <<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   contents="Help"
                   align="right"
 >>
-</verbatim>
+}}}
 
 <<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
@@ -102,13 +102,13 @@ The *~PrevLink* [[Help:WikiPlugin|plugin]] allows to display Previous and Next b
                   align="right"
 >>
 
-<verbatim>
+{{{
 <<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   contents="Help"
                   align="center"
 >>
-</verbatim>
+}}}
 
 <<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
@@ -116,13 +116,13 @@ The *~PrevLink* [[Help:WikiPlugin|plugin]] allows to display Previous and Next b
                   align="center"
 >>
 
-<verbatim>
+{{{
 <<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   up="Help"
                   style="text"
 >>
-</verbatim>
+}}}
 
 <<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
@@ -130,25 +130,25 @@ The *~PrevLink* [[Help:WikiPlugin|plugin]] allows to display Previous and Next b
                   style="text"
 >>
 
-<verbatim>
+{{{
 <<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   index="Help"
 >>
-</verbatim>
+}}}
 
 <<PrevNext prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   index="Help"
 >>
 
-<verbatim>
+{{{
 <<PrevNext first="Help/AddCommentPlugin"
                   prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   last="Help/YouTubePlugin"
 >>
-</verbatim>
+}}}
 
 <<PrevNext first="Help/AddCommentPlugin"
                   prev="Help/CreateTocPlugin"
@@ -156,14 +156,14 @@ The *~PrevLink* [[Help:WikiPlugin|plugin]] allows to display Previous and Next b
                   last="Help/YouTubePlugin"
 >>
 
-<verbatim>
+{{{
 <<PrevNext first="Help/AddCommentPlugin"
                   prev="Help/CreateTocPlugin"
                   next="Help/MediawikiTablePlugin"
                   last="Help/YouTubePlugin"
                   order="first,last,prev,next"
 >>
-</verbatim>
+}}}
 
 <<PrevNext first="Help/AddCommentPlugin"
                   prev="Help/CreateTocPlugin"

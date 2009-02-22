@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 21:33:56 +0000
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -96,7 +96,7 @@ If you specify ##class="sortable"##, the table columns will be sortable.
 
 The above table is rendered from:
 
-<verbatim>
+{{{
 {| border="1", style="width: 100%"
 |+ style="font-weight: bold; font-size: 150%;" | This is the table caption
 |= This is the table summary
@@ -111,7 +111,7 @@ The above table is rendered from:
 |- bgcolor=#f0f0ff, align=center
 |Cell 1||Cell 2||Cell 3
 |}
-</verbatim>
+}}}
 
 === Example 2: table with paragraphs, lists and plugins in cells
 
@@ -133,7 +133,7 @@ Second paragraph.
 
 The above table is rendered from:
 
-<verbatim>
+{{{
 {|
 |- style="white-space: nowrap"
 ! Header 1
@@ -149,7 +149,7 @@ Second paragraph.
 |- bgcolor=#f0f0ff, align=center
 |Current date || <<CurrentTime format=date>>
 |}
-</verbatim>
+}}}
 
 === Example 3: sortable table
 
@@ -169,7 +169,7 @@ Clicking a second time will reverse the sorting order.
 
 The above table is rendered from:
 
-<verbatim>
+{{{
 {| class="bordered sortable"
 |-
 ! First name !! Name !! Age
@@ -180,7 +180,7 @@ The above table is rendered from:
 |-
 | Sam || Adam || 102
 |}
-</verbatim>
+}}}
 
 === Example 4: nested tables
 
@@ -222,7 +222,7 @@ Another paragraph
 
 The above table is rendered from:
 
-<verbatim>
+{{{
 <<MediawikiTable
 {| class="bordered", align=center
 |+ Outer table caption
@@ -258,7 +258,7 @@ Another paragraph
 * apricot
 |}
 >>
-</verbatim>
+}}}
 
 == Author
 

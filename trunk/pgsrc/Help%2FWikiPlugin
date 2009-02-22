@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Sun, 22 Feb 2009 19:16:30 +0000
 X-Rcs-Id: $Id$
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
@@ -38,9 +38,9 @@ entirely.)
 
 Currently, one invokes a plugin by putting something like:
 
-<verbatim>
+{{{
 <?plugin AllPages limit=20 cols=3 ?>
-</verbatim>
+}}}
 
 into a regular wiki-page.  That particular example produces a list
 of the first 20 existing pages in 3 columns, via the PhpWiki:PageList
@@ -55,29 +55,29 @@ these arguments can be determined four different ways.  In order of
 precedence:
 
 # The plugin invocation can specify the value for an argument, like so:
-  <verbatim>
+  {{{
   <?plugin BackLinks page=OtherPage ?>
-  </verbatim>
+  }}}
 
 # The argument can be specified via an HTTP query argument.  This
   doesn't happen (is not allowed) unless the argument is mentioned in
   the plugin invocation:
 
-  <verbatim>
+  {{{
   <?plugin BackLinks page ?>
-  </verbatim>
+  }}}
 
 # Default values specified in the plugin invocation:
 
-  <verbatim>
+  {{{
   <?plugin BackLinks page||=OtherPage ?>
-  </verbatim>
+  }}}
 
 # The plugin must supply default values for each argument it uses.
   Such default args may be overriden by URL arguments like so:
-  <verbatim>
+  {{{
     BackLinks?page=ThisPage&sortby=-mtime
-  </verbatim>
+  }}}
   (The BackLinks plugin uses the current page as the default value for
   the *page* argument.)
 
@@ -124,17 +124,17 @@ getDescription, getVersion, getDefaultArguments. See the
   *plugin-list* is used as argument to provide a dynamic list of
   pagenames.
 
-  <verbatim>
+  {{{
     <?plugin PluginName [args...] ?>
-  </verbatim>
+  }}}
 
-  <verbatim>
+  {{{
     <?plugin-form PluginName [args...] ?>
-  </verbatim>
+  }}}
 
-  <verbatim>
+  {{{
     <?plugin PluginName args=<!plugin-list pluginname [args...] !> ?>
-  </verbatim>
+  }}}
 
 ==== The box Method
 
