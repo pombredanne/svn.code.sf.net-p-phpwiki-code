@@ -8,14 +8,14 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-PhpWiki is written in the server-side scripting language PHP,
+~PhpWiki is written in the server-side scripting language PHP,
 available from http://www.php.net/. PHP resembles C and Perl in its
 syntax, and functions much like ASP, ~EmbPerl or JSP.
 
-PhpWiki consists of a dozen or so files of mixed PHP and HTML. The web
-pages that make up a [WikiWikiWeb] based on PHP live in a database with
+~PhpWiki consists of a dozen or so files of mixed PHP and HTML. The web
+pages that make up a [[Help:WikiWikiWeb|WikiWikiWeb]] based on PHP live in a database with
 backup copies of previous versions of pages stored as well. (For the
-database, PhpWiki works with DBM, MySQL, PostgreSQL or text files.)
+database, ~PhpWiki works with DBM, MySQL, PostgreSQL or text files.)
 
 Every time a user hits the site, the page requested is pulled from the
 database and rendered on the fly. The user only really ever requests
@@ -36,7 +36,7 @@ is how easily external URLs link, like this:
 Combined with one namespace and a simple markup, a Wiki exhibits many
 of the characteristics of [WabiSabi|Help:WabiSabi].
 
-PhpWiki is licensed under the GNU General Public license, which you
+~PhpWiki is licensed under the GNU General Public license, which you
 should be able to see here: http://www.gnu.org/copyleft/gpl.txt.
 
 ----

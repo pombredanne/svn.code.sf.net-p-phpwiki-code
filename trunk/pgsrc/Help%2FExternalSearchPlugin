@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~ExternalSearch* [[Help:WikiPlugin|plugin]] creates a form to query InterWiki~s or other
+The *~ExternalSearch* [[Help:WikiPlugin|plugin]] creates a form to query [[Help:InterWiki|InterWikis]] or other
 internet sites.
 
 == Usage
@@ -29,7 +29,7 @@ __url__:
   than appending it.
 
 __name__:
-  Text to display in the submit button. For InterWiki sites the
+  Text to display in the submit button. For ~InterWiki sites the
   default is the wiki name, for other urls the default is the text
   "External Search".
 
@@ -62,7 +62,7 @@ Search the PHP web site for a function name:
 Enter the name of a PHP function to view the documentation page:%%%
 <<ExternalSearch url=php-function>>
 
-Enter any existing page name on PhpWiki to jump to that page:
+Enter any existing page name on ~PhpWiki to jump to that page:
 <<ExternalSearch url=PhpWiki>>
 
 ----

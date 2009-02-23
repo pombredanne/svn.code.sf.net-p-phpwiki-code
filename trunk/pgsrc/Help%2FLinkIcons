@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-~LinkIcons are an optional new feature of PhpWiki. When activated,
+~LinkIcons are an optional new feature of ~PhpWiki. When activated,
 icons will be displayed in front of URLs to indicate the type of link.
 
 * [themes/default/images/http.png]
@@ -36,8 +36,8 @@ the administrator has enabled this feature.
 
 === InterWiki links
 
-* InterWiki link PhpWiki:InterWiki
-* A named InterWiki [read WhyWikiWorks at c2|Wiki:WhyWikiWorks].
+* ~InterWiki link PhpWiki:InterWiki
+* A named ~InterWiki [read WhyWikiWorks at c2|Wiki:WhyWikiWorks].
 
 ===URLs
 
@@ -51,9 +51,9 @@ the administrator has enabled this feature.
 * news://nntp.news.com
 * gopher://gopher.caltech.cmu.edu
 
-~LinkIcons will only display when the URL protocol is one which PhpWiki
+~LinkIcons will only display when the URL protocol is one which ~PhpWiki
 is allowed to link to. The following examples won't show any icons and
-PhpWiki won't automatically provide double-clickable links either,
+~PhpWiki won't automatically provide double-clickable links either,
 unless the administrator adds them:
 
 * bogus://oedipus.nostradamus.com

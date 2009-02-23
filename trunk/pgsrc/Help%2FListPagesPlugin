@@ -20,7 +20,7 @@ See the [PhpWiki:PageList] options.
 == Usage
 
 {{{
-  <<ListPages pages=HomePage,FindPage,WikiWikiWeb>>
+  <<ListPages pages=HomePage,FindPage>>
 
   <<ListPages info=hits sortby=hits pages=<!plugin-list BackLink page=[] !> exclude=ListPagesPlugin,WikiPlugin>>
 }}}
