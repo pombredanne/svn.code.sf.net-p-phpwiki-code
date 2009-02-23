@@ -1,4 +1,4 @@
-Date: Sun, 22 Feb 2009 19:16:30 +0000
+Date: Mon, 23 Feb 2009 15:16:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,28 +8,44 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-_short description_
+The **~FuzzyPages** [[Help:WikiPlugin|plugin]] will search for similar page titles.
+
+Pages are considered similar by averaging the similarity scores of
+the spelling comparison and the metaphone comparison for each page
+title in the database (PHP's metaphone() is an improved soundex
+function).
+
+* http://www.php.net/manual/en/function.similar-text.php
+* http://www.php.net/manual/en/function.metaphone.php
 
 == Usage
 {{{
-  <<FuzzyPages>>
+<<FuzzyPages s=pagename>>
 }}}
 
 == Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| s
+| Pagename to look for
+| empty
+|}
 
 == Example
 
 {{{
-<<FuzzyPages>>
+<<FuzzyPages s=HomePage>>
 }}}
 
-<<FuzzyPages>>
+<<FuzzyPages s=HomePage>>
 
 == Author
-[Reini Urban|PhpWiki:ReiniUrban]
+* [Reini Urban|PhpWiki:ReiniUrban]
 
 == See Also
 
