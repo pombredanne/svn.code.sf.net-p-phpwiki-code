@@ -704,7 +704,7 @@ In short: paging support, adodb rewrite, permission problem fixed.
 * ~PopularNearby plugin: same as the classic most popular footer
 * formatted single-line plugins supported
 * RelatedChanges plugin: only those which are links at the current page
-* new GoogleLink pref: add "~[G]" lookup on unknown links
+* new ~GoogleLink pref: add "~[G]" lookup on unknown links
 * added chinese language support, by Yan-ren Tsai (druryl)
 * added missing MacOSX buttons, by Carsten Klapp.
 * new Crao theme from http://wiki.crao.net, by Arnaud Fontaine and Laurent Lunati

@@ -32,7 +32,7 @@ define('REQUIRE_ADMIN', true) in the sourcecode to disable general usage.
 <<PluginManager>>
 }}}
 
-PhpWiki lets you extend it with new functionality via a plugin
+~PhpWiki lets you extend it with new functionality via a plugin
 mechanism. In short, you extend a PHP class we provide and customize
 it to print out the content you want. For more information see
 [Help:WikiPlugin], [Help:HelloWorldPlugin], and view the source of the files in
@@ -45,7 +45,7 @@ files for the plugins.
 
 == External Requirements
 Some plugins require correctly configured PLUGIN_CACHED and external libraries 
-not provided with PhpWiki or PHP, such as 
+not provided with ~PhpWiki or PHP, such as 
 * [PHP with GD support | php-function:ref.image] for the [Help:text2pngPlugin], 
 * [LaTeX2HTML | ftp://ftp.dante.de/tex-archive/support/latex2html ] for the [Help:TexToPngPlugin] and [Help:TeX2pngPlugin],
 * [graphviz | http://graphviz.org/] for the [Help:GraphVizPlugin] and [Help:VisualWikiPlugin], 

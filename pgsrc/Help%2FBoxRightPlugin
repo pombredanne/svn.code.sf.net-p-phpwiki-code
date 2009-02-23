@@ -15,19 +15,19 @@ If ENABLE_MARKUP_DIVSPAN is enabled then you can produce the same result with a 
 
 ~<~div class=boxright~> <br>
 <strong>Example text</strong>
-([What is a Wiki?|WikiWikiWeb])
+([What is a Wiki?|Help:WikiWikiWeb])
 ~</div~>
 
 <div class=boxright>
 <strong>Example text</strong>
-([What is a Wiki?|WikiWikiWeb])
+([What is a Wiki?|Help:WikiWikiWeb])
 </div>
 
 == Typical Usage
 
 {{{
 <<BoxRight
-<strong>This Wiki</strong> ([What is a Wiki?|WikiWikiWeb]) is a place where problems and
+<strong>This Wiki</strong> ([What is a Wiki?|Help:WikiWikiWeb]) is a place where problems and
 solutions are being documented.
 
 See [How to use this Wiki|Help/HowToUseWiki] for instructions.
@@ -39,7 +39,7 @@ See [How to use this Wiki|Help/HowToUseWiki] for instructions.
 == Examples
 
 <<BoxRight
-<strong>This Wiki</strong> ([What is a Wiki?|WikiWikiWeb]) is a place where problems and
+<strong>This Wiki</strong> ([What is a Wiki?|Help:WikiWikiWeb]) is a place where problems and
 solutions are being documented.
 
 See [How to use this Wiki|Help/HowToUseWiki] for instructions.

@@ -60,7 +60,7 @@ local_referrers:
 ==Adding new queries
 
 The file <tt>lib/plugin/~AnalyseAccessLogSql.php</tt> contains a default set of queries against the SQL access log.
-Feel free to change this file to suit your own needs, but please note that this requires filesystem access to the web server where PhpWiki is running.
+Feel free to change this file to suit your own needs, but please note that this requires filesystem access to the web server where ~PhpWiki is running.
 In particular, this file may need to be modified to correctly query databases other than MySQL.
 The queries supplied by default are: "*Referring URLs*", "*Referring Domains*", "*Remote Hosts*", "*Users*" and "*Host Users*".
 
@@ -75,7 +75,7 @@ To add a new query, add a new section towards the end of the file, using one of 
         ."GROUP BY User";
 </pre>
 
-If you do add a query, please consider contributing it back to the PhpWiki project at http://sourceforge.net/projects/phpwiki
+If you do add a query, please consider contributing it back to the ~PhpWiki project at http://sourceforge.net/projects/phpwiki
 
 == API for ~AnalyseAccessLogSql
 
@@ -104,8 +104,8 @@ If you do add a query, please consider contributing it back to the PhpWiki proje
 
 == Author
 
-[Charles Corrigan|PhpWiki:CharlesCorrigan] %%%
-Changes by [Reini Urban|PhpWiki:ReiniUrban]
+* [Charles Corrigan|PhpWiki:CharlesCorrigan]
+* Changes by [Reini Urban|PhpWiki:ReiniUrban]
 
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
