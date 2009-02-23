@@ -1243,7 +1243,6 @@ fieldset.operaprefsection { margin-left: 15em }
 * > html #f-copyrightico { width: 88px; }
 * > html #bodyContent,
 * > html #bodyContent pre {
-	overflow-x: auto;
 	width: 100%;
 	padding-bottom: 25px;
 }
@@ -1560,7 +1559,6 @@ div.multipageimagenavbox {
 	 border: solid 1px silver;
 	 padding: 4px;
 	 margin: 1em;
-	 -moz-border-radius: 6px;
 	 background: #f0f0f0;
 }
 
@@ -1913,4 +1911,39 @@ td.tdunselected {
 #edit-public, h1.firstHeading-public, h1.firstHeading-rating-public {
 	background-color: #ffce7b;
 	border: 1px solid #ffa500;
+}
+
+/* IncludePage plugin */
+.transclusion-title {
+  text-align: right;
+  font-style: oblique;
+  font-size:  smaller;
+  text-decoration: underline;
+  margin-bottom: 0.25ex;
+  margin-right:  0.25em;
+}
+.transclusion, .wiki-edithelp {
+  font-size: smaller;
+}
+.transclusion {
+  border: 1px solid gray;
+  padding-left:  0.8em;
+  padding-right: 0.8em;
+  padding-top:     0px;
+  padding-bottom:  0px;
+  margin-left:   0.25em;
+  margin-right:  0.25em;
+  margin-bottom: 0.1ex;
+}
+.wiki-edithelp {
+  background: white;
+  border: medium solid #fff8dc; /* darker ivory */
+  padding-left:  0.5em;
+  padding-right: 0.5em;
+  padding-top:    0.75ex;
+  padding-bottom: 0.75ex;
+  margin-left:  0;
+  margin-right: 0;
+  margin-top: 1ex;
+  margin-bottom: 1ex;
 }
