@@ -160,6 +160,7 @@ change:
         return $perm;
 }}}
 
-Source: [PhpWikiCvs:lib/PagePerm.php]
------
+<noinclude>
+----
 [[PhpWikiDocumentation]]
+</noinclude>

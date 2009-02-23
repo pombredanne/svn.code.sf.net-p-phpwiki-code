@@ -245,5 +245,7 @@ _Term~:~<new-line> definition_ for definition lists.<br>
 * For more information on plugins see [WikiPlugin|Help:WikiPlugin], and [PluginManager] for a list of all
   plugins.
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]]
+</noinclude>

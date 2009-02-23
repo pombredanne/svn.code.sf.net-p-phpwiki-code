@@ -82,5 +82,7 @@ SemanticRelations, ListRelations, SemanticSearch, SemanticSearchAdvanced,
 PhpWiki:ImportRdf, PhpWiki:ImportRdfs, PhpWiki:ImportOwl, 
 PhpWiki::ExportRdf, PhpWiki::ExportRdfs, PhpWiki::ExportOwl
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]]
+</noinclude>

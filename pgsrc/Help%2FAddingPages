@@ -30,6 +30,7 @@ simple as possible to encourage use.
 Note that there is a feature that your system administrator can enable
 to allow embedded HTML, but there are security risks involved.
 
+<noinclude>
 ----
-
 [[PhpWikiDocumentation]]
+</noinclude>
