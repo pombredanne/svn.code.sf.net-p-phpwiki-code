@@ -17,8 +17,28 @@ The *~BackLinks* [[Help:WikiPlugin|plugin]] lists all pages which link to a give
 
 == Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| page
+| Page from which the back links are calculated.
+| Current page
+|-
+| include_self
+| Include yourself in the results.
+| false
+|-
+| noheader
+| Do not display header.
+| false
+|-
+| linkmore
+| If count > 0 and limit > 0 display a link with the number of all results, linked to the given pagename. 
+|
+|}
 
 == Example
 
@@ -29,7 +49,7 @@ page _(default: current pagename)_:
 <<BackLinks page=HomePage>>
 
 == Author
-[Reini Urban|PhpWiki:ReiniUrban]
+* [Reini Urban|PhpWiki:ReiniUrban]
 
 == See Also
 
