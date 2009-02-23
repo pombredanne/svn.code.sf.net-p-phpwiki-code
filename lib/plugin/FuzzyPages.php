@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -19,8 +20,6 @@ rcs_id('$Id$');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-//require_once('lib/PageList.php');
 
 /**
  * FuzzyPages is plugin which searches for similar page titles.
@@ -149,8 +148,9 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        if (empty($s))
-            return '';
+        if (empty($s)) {
+            return HTML::div(array('class' => "error"), "Please provide 's' argument to the plugin.");
+        }
         $this->debug = $debug;
 
         $this->_searchterm = $s;
@@ -182,19 +182,6 @@ extends WikiPlugin
                           HTML::td($debug_metaphone));
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.11  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.10  2003/02/22 20:49:55  dairiki
-// Fixes for "Call-time pass by reference has been deprecated" errors.
-//
-// Revision 1.9  2003/01/18 21:41:02  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
 
 // Local Variables:
 // mode: php
