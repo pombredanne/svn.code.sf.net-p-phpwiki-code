@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -96,7 +97,7 @@ extends WikiPlugin
         }
         $table = HTML::table($table_args);
         if (!empty($caption))
-            $table->pushContent(HTML::caption(array('valign'=>'top'),$caption));
+            $table->pushContent(HTML::caption($caption));
         if (preg_match("/^\s*(cellpadding|cellspacing|border|caption|summary)/", $lines[0])) 
             $lines[0] = '';
         foreach ($lines as $line) {
@@ -151,37 +152,6 @@ extends WikiPlugin
         return $row;
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.10  2004/06/14 11:31:39  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.9  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.8  2004/01/24 23:37:08  rurban
-// Support more options: caption (seperate tag), border, summary, cellpadding,
-// cellspacing
-// Fixes some errors from the version from the mailinglist.
-//
-// Revision 1.7  2003/02/21 23:00:35  dairiki
-// Fix SF bug #676309.
-//
-// Also fix new bugs introduced with cached markup changes.
-//
-// Revision 1.6  2003/02/21 04:12:06  dairiki
-// Minor fixes for new cached markup.
-//
-// Revision 1.5  2003/01/18 21:48:59  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
 
 // (c-file-style: "gnu")
 // Local Variables:
