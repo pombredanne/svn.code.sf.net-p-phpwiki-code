@@ -11,5 +11,7 @@ Content-Transfer-Encoding: binary
 All pages (except search results) have an ''Edit'' link.
 You can edit the page you are reading by clicking that link.
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]]
+</noinclude>

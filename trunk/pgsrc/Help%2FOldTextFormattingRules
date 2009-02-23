@@ -114,5 +114,8 @@ will not work''
 ! Footnotes:
 
 #[|ftnt_1]~[[1|#ftnt_ref_1]~]  By using ~[1] a second time (in the first column) the footnote itself is <em>defined</em>.  You may refer to a footnote as many times as you want, but you may only define it once on the page.  Note the the ~[1] in the footnote links back to the first reference, if there are multiple references there will be +'s after the ~[1] which will link to the other references.  (References which come <em>after</em> the footnote <em>definition</em> will not be linked to.)
+
+<noinclude>
 ----
 [[PhpWikiDocumentation]]
+</noinclude>

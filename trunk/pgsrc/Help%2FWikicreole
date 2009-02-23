@@ -275,5 +275,7 @@ Plugins use double angle brackets.
 
 <<CurrentTime format="date">>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]]
+</noinclude>

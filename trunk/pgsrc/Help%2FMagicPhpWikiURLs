@@ -128,5 +128,7 @@ yields
 
 <?plugin-form TitleSearch formsize=12 ?>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]]
+</noinclude>

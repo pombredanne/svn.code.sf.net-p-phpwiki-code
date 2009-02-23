@@ -74,5 +74,7 @@ markup that you can read about in [Help:TextFormattingRules].
 If you don't like the size of the text editing window you get, you can
 change it.  See [UserPreferences].
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]]
+</noinclude>
