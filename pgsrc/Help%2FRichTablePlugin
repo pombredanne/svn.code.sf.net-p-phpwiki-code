@@ -31,9 +31,6 @@ We allow attributes with or without quotes (")
 {{{
 border=1, cellpadding="5"
 style="font-family: sans-serif; border-top:1px solid #dddddd;"
-}}}
-What will not work is style with comma inside, e. g.
-{{{
 style="font-family: Verdana, Arial, Helvetica, sans-serif"
 }}}
 
