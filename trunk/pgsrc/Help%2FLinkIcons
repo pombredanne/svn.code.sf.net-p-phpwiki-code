@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-~LinkIcons are an optional new feature of ~PhpWiki. When activated,
+**~LinkIcons** are an optional new feature of ~PhpWiki. When activated,
 icons will be displayed in front of URLs to indicate the type of link.
 
 * [themes/default/images/http.png]
@@ -24,7 +24,7 @@ icons will be displayed in front of URLs to indicate the type of link.
 * [themes/default/images/ftp.png]
   ftp link
 
-__Note__: Some of the default icons use the alpha channel feature of
+**Note**: Some of the default icons use the alpha channel feature of
 the [PNG | http://www.libpng.org/pub/png/png-sitemap.html] image format
 for smooth rendering on any page color or textured background. Older
 browsers may not display all the images properly.
@@ -34,7 +34,7 @@ browsers may not display all the images properly.
 The following examples will display with the above link icons only if
 the administrator has enabled this feature.
 
-=== InterWiki links
+=== ~InterWiki links
 
 * ~InterWiki link PhpWiki:InterWiki
 * A named ~InterWiki [read WhyWikiWorks at c2|Wiki:WhyWikiWorks].
