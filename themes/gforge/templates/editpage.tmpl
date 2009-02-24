@@ -77,9 +77,11 @@
 </tr>
 <tr>
   <td>
-    <?php if ($user->isAdmin()) { ?> 
-    <?= $LOCKED_CB ?> <label for="edit-locked"><?=_("Locked")?></label>
-    <?php } ?>
+    <?php if ($user->isAdmin()) { ?>
+    <?= $LOCKED_CB ?> <label for="edit-locked" title="<?=_("Make the page read-only?")?>"><?=_("Locked")?></label>
+    <?php if (ENABLE_PAGE_PUBLIC) { ?>
+    &nbsp;&nbsp;<?= $PUBLIC_CB ?> <label for="edit-public" title="<?=_("Make the page public?")?>"><?=_("Public")?></label>
+    <?php }} ?>
   </td>
   <td colspan="2" align="right">
     <?php if (!$user->isAuthenticated()) { ?>
