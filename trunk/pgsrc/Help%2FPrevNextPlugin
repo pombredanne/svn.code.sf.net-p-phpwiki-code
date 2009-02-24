@@ -173,7 +173,7 @@ The *~PrevLink* [[Help:WikiPlugin|plugin]] allows to display Previous and Next b
 >>
 
 == Author
-* [Reini Urban|PhpWiki:ReiniUrban]
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 == See Also
 * [PageGroup|Help:PageGroupPlugin], [[Help:WikiPlugin|plugin]] which automatically tries to extract the various links.

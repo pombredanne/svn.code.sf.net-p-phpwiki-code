@@ -38,7 +38,7 @@ args are optional arguments, space seperated, for the method.<br>
 A combobox is a pulldown with autocomplete=1.<br>
 
 == Author
- [Reini Urban|PhpWiki:ReiniUrban]
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 - Values which are constants are evaluated.
 - The cancel button must be supported by the action.
