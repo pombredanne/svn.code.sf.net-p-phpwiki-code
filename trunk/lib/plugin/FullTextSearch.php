@@ -71,8 +71,9 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
 
         $args = $this->getArgs($argstr, $request);
-        if (empty($args['s']))
-            return '';
+        if (empty($args['s'])) {
+            return HTML::div(array('class' => "error"), "Please provide 's' argument to the plugin.");
+        }
         extract($args);
 
         $query = new TextSearchQuery($s, $case_exact, $regex);
@@ -165,68 +166,6 @@ class _PageList_Column_hilight extends _PageList_Column {
 			fmt("(%d Links)", $count));
     }
 }
-
-
-// $Log: not supported by cvs2svn $
-// Revision 1.28  2007/06/07 17:02:42  rurban
-// fix display of pagenames containing ":" in certain lists
-//
-// Revision 1.27  2007/01/04 16:46:40  rurban
-// Only notes
-//
-// Revision 1.26  2005/11/14 22:33:04  rurban
-// print ignored stoplist words
-//
-// Revision 1.25  2005/09/11 14:55:05  rurban
-// implement fulltext stoplist
-//
-// Revision 1.24  2004/11/26 18:39:02  rurban
-// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
-//
-// Revision 1.23  2004/11/23 15:17:19  rurban
-// better support for case_exact search (not caseexact for consistency),
-// plugin args simplification:
-//   handle and explode exclude and pages argument in WikiPlugin::getArgs
-//     and exclude in advance (at the sql level if possible)
-//   handle sortby and limit from request override in WikiPlugin::getArgs
-// ListSubpages: renamed pages to maxpages
-//
-// Revision 1.22  2004/05/28 11:01:58  rurban
-// support to disable highlighting
-// example: s=ReiniUrban&hilight=0&noheader=1
-//
-// Revision 1.21  2004/04/18 01:11:52  rurban
-// more numeric pagename fixes.
-// fixed action=upload with merge conflict warnings.
-// charset changed from constant to global (dynamic utf-8 switching)
-//
-// Revision 1.20  2004/02/28 21:14:08  rurban
-// generally more PHPDOC docs
-//   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
-// fxied WikiUserNew pref handling: empty theme not stored, save only
-//   changed prefs, sql prefs improved, fixed password update,
-//   removed REPLACE sql (dangerous)
-// moved gettext init after the locale was guessed
-// + some minor changes
-//
-// Revision 1.19  2004/02/26 04:27:39  rurban
-// wrong limit notification
-//
-// Revision 1.18  2004/02/26 04:24:03  rurban
-// simplify quiet handling by using PageList
-//
-// Revision 1.17  2004/02/26 04:03:39  rurban
-// added quiet, limit and exclude to FullTextSearch,
-// fixed explodePageList with previously unloaded PageList
-//
-// Revision 1.16  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.15  2003/01/18 21:41:01  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
 
 // Local Variables:
 // mode: php
