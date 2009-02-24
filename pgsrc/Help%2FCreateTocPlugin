@@ -86,10 +86,10 @@ Syntax: a comma-separated list of levels. !!!,!!,! also allowed
 
 {| class="bordered"
 |-
-| Level
-| Phpwiki syntax
-| Wikicreole/Mediawiki syntax
-| HTML rendering
+! Level
+! Phpwiki syntax
+! Wikicreole/Mediawiki syntax
+! HTML rendering
 |-
 | 1 || ~!~!~! || ~=~= || h2
 |-
