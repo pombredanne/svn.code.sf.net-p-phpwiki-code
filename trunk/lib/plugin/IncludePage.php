@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -19,7 +20,6 @@ rcs_id('$Id$');
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
 
 /**
  * IncludePage:  include text from another wiki page in this one
@@ -117,6 +117,13 @@ extends WikiPlugin
         
         $ct = $this->extractParts ($c, $page, $args);
 
+        // exclude from expansion
+        if (preg_match('/<noinclude>.+<\/noinclude>/s', $ct)) {
+            $ct = preg_replace("/<noinclude>.+?<\/noinclude>/s", "", $ct);
+        }
+        // only in expansion
+        $ct = preg_replace("/<includeonly>(.+)<\/includeonly>/s", "\\1", $ct);
+
         array_push($included_pages, $page);
 
         include_once('lib/BlockParser.php');
@@ -189,52 +196,6 @@ extends WikiPlugin
 //   padding-bottom: 0px;
 //   margin: 0.5ex 0px;
 // }
-
-// KNOWN ISSUES:
-// - line & word limit doesn't work if the included page itself
-//   includes a plugin
-
-
-// $Log: not supported by cvs2svn $
-// Revision 1.30  2008/07/02 17:48:01  vargenau
-// Fix mix-up of bytes and lines
-//
-// Revision 1.29  2007/06/03 21:58:51  rurban
-// Fix for Bug #1713784
-// Includes this patch and a refactoring.
-// RedirectTo is still not handled correctly.
-//
-// Revision 1.28  2006/04/17 17:28:21  rurban
-// honor getWikiPageLinks change linkto=>relation
-//
-// Revision 1.27  2004/11/17 20:07:18  rurban
-// just whitespace
-//
-// Revision 1.26  2004/09/25 16:35:09  rurban
-// use stdlib firstNWordsOfContent, extractSection
-//
-// Revision 1.25  2004/07/08 20:30:07  rurban
-// plugin->run consistency: request as reference, added basepage.
-// encountered strange bug in AllPages (and the test) which destroys ->_dbi
-//
-// Revision 1.24  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.23  2003/03/25 21:01:52  dairiki
-// Remove debugging cruft.
-//
-// Revision 1.22  2003/03/13 18:57:56  dairiki
-// Hack so that (when using the IncludePage plugin) the including page shows
-// up in the BackLinks of the included page.
-//
-// Revision 1.21  2003/02/21 04:12:06  dairiki
-// Minor fixes for new cached markup.
-//
-// Revision 1.20  2003/01/18 21:41:02  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
 
 // For emacs users
 // Local Variables:
