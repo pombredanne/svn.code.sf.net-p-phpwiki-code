@@ -14,27 +14,34 @@ can be handled.
 
 For exe files the *version* argument might work to display the VERSIONINFO ressource string. (highly experimental).
 
-Since v1.3.13.
-
 == Typical Usage
 
 {{{
   <<FileInfo file=uploads/setup.exe display=version,date>>
-  <<FileInfo file=uploads/setup.exe display=name,version,date 
+  <<FileInfo file=uploads/setup.exe display=name,version,date
                     format="%s (version: %s, date: %s)">>
 }}}
 
 == Arguments
 
-__file__:
-  relative path from PHPWIKI_DIR. (required)
-
-__display__:
-  Comma-seperated string of version,size,phonysize,date,mtime,owner,name,path,dirname,
-  link,mime-typ,magic. (required)
-
-__format__:
-  printf format string with %s only, all display modes from above vars return strings (optional)
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| file
+| Relative path from PHPWIKI_DIR.
+| (required)
+|-
+| display
+| Comma-seperated string of version ,size, phonysize, date, mtime, owner, name, path, dirname, link, mime-typ, magic.
+| (required)
+|-
+| format
+|  printf format string with %s only, all display modes from above vars return strings
+| (optional)
+|}
 
 == Examples
 
