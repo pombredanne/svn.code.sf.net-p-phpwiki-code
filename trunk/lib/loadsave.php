@@ -3,7 +3,7 @@ rcs_id('$Id$');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
- Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -1472,9 +1472,7 @@ function LoadFileOrDir (&$request)
     	HTML(dirname($source),
              dirname($source) ? "/" : "",
              WikiLink($page,'auto'))));
-    echo "<dl>\n";
     LoadAny($request, $source);
-    echo "</dl>\n";
     EndLoadDump($request);
 }
 
@@ -1556,10 +1554,8 @@ function LoadPostFile (&$request)
     if (!$upload)
         $request->finish(_("No uploaded file to upload?")); // FIXME: more concise message
 
-
     // Dump http headers.
     StartLoadDump($request, sprintf(_("Uploading %s"), $upload->getName()));
-    echo "<dl>\n";
 
     $fd = $upload->open();
     if (IsZipFile($fd))
@@ -1567,7 +1563,6 @@ function LoadPostFile (&$request)
     else
         LoadFile($request, $upload->getName(), $upload->getContents());
 
-    echo "</dl>\n";
     EndLoadDump($request);
 }
 
