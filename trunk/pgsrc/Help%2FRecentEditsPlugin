@@ -23,10 +23,10 @@ page _(default: current pagename)_:
 == Example
 
 {{{
-<<RecentEdits>>
+<<RecentEdits limit=10>>
 }}}
 
-<<RecentEdits>>
+<<RecentEdits limit=10>>
 
 == Author
 [Reini Urban|PhpWiki:ReiniUrban]

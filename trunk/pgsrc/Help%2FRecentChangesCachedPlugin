@@ -23,10 +23,10 @@ page _(default: current pagename)_:
 == Example
 
 {{{
-<<RecentChangesCached>>
+<<RecentChangesCached limit=10>>
 }}}
 
-<<RecentChangesCached>>
+<<RecentChangesCached limit=10>>
 
 == Author
 [Reini Urban|PhpWiki:ReiniUrban]
