@@ -49,7 +49,7 @@ The **~PopularNearby** [[Help:WikiPlugin|plugin]] will list the most popular pag
 <<PopularNearby pagename=HomePage limit=3>>
 
 == Author
-* [Reini Urban|PhpWiki:ReiniUrban]
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 == See Also
 
