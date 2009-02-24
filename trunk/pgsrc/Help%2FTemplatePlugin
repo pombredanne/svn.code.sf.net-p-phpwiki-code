@@ -77,8 +77,8 @@ the placeholder is %%var%% and not ~{~{~{var~}~}~} as in Mediawiki.
 The following predefined variables are automatically expanded if existing:
 {| class="bordered"
 |-
-| Variable
-| Description
+! Variable
+! Description
 |-
 | pagename
 |
