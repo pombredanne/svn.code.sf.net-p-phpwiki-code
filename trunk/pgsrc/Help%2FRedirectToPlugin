@@ -36,5 +36,7 @@ A page may be made a alias for the HomePage by placing this code at the top:
 
 To see the example in action, visit HomePageAlias.
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

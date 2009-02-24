@@ -37,5 +37,7 @@ jshide does not work yet. Not very well tested.
 
 <<AddComment jshide||=1>>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

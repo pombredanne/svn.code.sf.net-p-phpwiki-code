@@ -120,5 +120,7 @@ _Click any date and edit it, then return to this page_:
 
 Derived from [Calendar|Help:CalendarPlugin] plugin by [Martin Norbäck|mailto:martin@safelogic.se].
 
------
+<noinclude>
+----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

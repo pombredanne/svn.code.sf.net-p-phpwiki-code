@@ -61,5 +61,7 @@ will get you
 
 <<Transclude src="http://phpwiki.sourceforge.net/demo/ChangeLog">>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

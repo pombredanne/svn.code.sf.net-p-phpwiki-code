@@ -25,5 +25,8 @@ See the [PhpWiki:PageList] options.
   <<ListPages info=hits sortby=hits pages=<!plugin-list BackLink page=[] !> exclude=ListPagesPlugin,WikiPlugin>>
 }}}
 
+ 
+<noinclude>
 ----
-[[PhpWikiDocumentation]] [[CategoryWikiPlugin]] 
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

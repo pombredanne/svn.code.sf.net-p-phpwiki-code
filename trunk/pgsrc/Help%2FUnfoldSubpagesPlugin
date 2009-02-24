@@ -65,5 +65,7 @@ The section extractor is currently quite unstable.
 == Example
 <<UnfoldSubpages pagename=PgsrcTranslation limit=20>>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

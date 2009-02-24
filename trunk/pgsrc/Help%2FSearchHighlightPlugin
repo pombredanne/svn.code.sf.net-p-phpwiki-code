@@ -23,5 +23,7 @@ __case_exact__:  |
 __regex__:  |
   boolean.
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

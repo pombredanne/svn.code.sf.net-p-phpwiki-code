@@ -53,5 +53,7 @@ The *~BackLinks* [[Help:WikiPlugin|plugin]] lists all pages which link to a give
 
 == See Also
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

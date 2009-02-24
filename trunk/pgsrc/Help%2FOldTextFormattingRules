@@ -27,7 +27,6 @@ Content-Transfer-Encoding: binary
 * Four or more minus signs make a horizontal rule
 * %%<em></em>% makes a linebreak (in headings and lists too)
 
-
 ! Lists
 
 * asterisk for first level
@@ -100,14 +99,12 @@ will not work''
 ;:Note that multiple <strong>|</strong>'s lead to spanned columns, and <strong>v</strong>'s can be used to span rows.  A <strong>></strong> generates a right justified column, <strong><</strong> a left justified column and <strong>^</strong> a centered column (which is the default.)
 ;:With the new [Help:TextFormatingsRules] tables are only supported with the [Help:OldStyleTablePlugin].
 
-
 ! HTML Mark-Up Language
 
 * Don't bother
 * < and > are themselves
 * The & characters will not work
 * If you really must use HTML, your system administrator can enable this feature. Start each line with a bar (|). Note that this feature is disabled by default.
-
 
 -----
 
@@ -118,4 +115,8 @@ will not work''
 <noinclude>
 ----
 [[PhpWikiDocumentation]]
+</noinclude>
+<noinclude>
+----
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
 </noinclude>

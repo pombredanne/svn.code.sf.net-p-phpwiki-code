@@ -107,5 +107,7 @@ If you do add a query, please consider contributing it back to the ~PhpWiki proj
 * [Charles Corrigan|PhpWiki:CharlesCorrigan]
 * Changes by [Reini Urban|PhpWiki:ReiniUrban]
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

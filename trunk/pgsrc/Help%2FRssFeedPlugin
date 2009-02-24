@@ -54,5 +54,7 @@ The *~RssFeed* [[Help:WikiPlugin|plugin]] allows to display external RSS feeds.
 
 [PhpWikiDemo:sidebar/]
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

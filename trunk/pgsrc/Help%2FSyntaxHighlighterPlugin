@@ -58,5 +58,8 @@ Fixes by [Reini Urban|PhpWiki:ReiniUrban]:
 * php version switch
 * HIGHLIGHT_DATA_DIR, HIGHLIGHT_EXE constants
 
+ 
+<noinclude>
 ----
-[[PhpWikiDocumentation]] [[CategoryWikiPlugin]] 
+[[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

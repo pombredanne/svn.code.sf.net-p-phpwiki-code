@@ -40,5 +40,8 @@ Add from a list of all available Categories to the current page.
   	   pulldown[] name=s text="Categories: " value=<!plugin-list TitleSearch s=Category !>
   	  >>
 }}}
+
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

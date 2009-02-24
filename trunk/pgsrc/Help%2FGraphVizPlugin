@@ -80,5 +80,7 @@ digraph automata_0 {
 == Author
 * [Reini Urban|PhpWiki:ReiniUrban]
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

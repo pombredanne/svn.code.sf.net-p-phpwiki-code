@@ -94,5 +94,7 @@ The *~IncludePage* [[Help:WikiPlugin|plugin]] will "include" other pages in this
 * [Help:TemplatePlugin] (to include a page with parameters)
 * [Help:FrameIncludePlugin] (to include an external page)
 
------
+<noinclude>
+----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

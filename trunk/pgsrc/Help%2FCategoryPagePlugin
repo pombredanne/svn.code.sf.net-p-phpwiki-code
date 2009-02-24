@@ -33,5 +33,8 @@ WikiLens:DanFr
 
 == See Also
 [TemplatePlugin|Help:TemplatePlugin] [CreatePagePlugin|Help:CreatePagePlugin]
+
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

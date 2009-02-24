@@ -59,5 +59,7 @@ The *~CurrentTime* [[Help:WikiPlugin|plugin]] displays current time and date (wh
 
 == See Also
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

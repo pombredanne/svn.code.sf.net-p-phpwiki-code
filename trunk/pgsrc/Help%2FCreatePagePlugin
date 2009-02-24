@@ -65,8 +65,12 @@ Dan Frankowski, [Reini Urban|PhpWiki:ReiniUrban]
 
 <?plugin-form CreatePage s=MyHomePage ?>
 
-See also PhpWiki:EasilyCreateNewPages, PhpWiki:WikiFormRichPlugin, PhpWiki:SqlResultPlugin
+== See also
+* PhpWiki:EasilyCreateNewPages
+* PhpWiki:WikiFormRichPlugin
+* PhpWiki:SqlResultPlugin
 
--------------
-
+<noinclude>
+----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

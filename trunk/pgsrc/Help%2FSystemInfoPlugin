@@ -24,5 +24,7 @@ The *~SystemInfo* [[Help:WikiPlugin|plugin]] provides access to lower level syst
 
 <<SystemInfo all>>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

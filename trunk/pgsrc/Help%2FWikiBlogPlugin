@@ -12,5 +12,7 @@ This simple [[Help:WikiPlugin|plugin]] allows blog-style entries on a page. Try 
 
 <<WikiBlog>>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

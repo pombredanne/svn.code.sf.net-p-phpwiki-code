@@ -46,5 +46,7 @@ The *~ListSubpages* [[Help:WikiPlugin|plugin]] lists the names of all sub-pages 
 
 == See Also
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

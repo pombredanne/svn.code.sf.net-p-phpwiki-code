@@ -178,6 +178,7 @@ The *~PrevLink* [[Help:WikiPlugin|plugin]] allows to display Previous and Next b
 == See Also
 * [PageGroup|Help:PageGroupPlugin], [[Help:WikiPlugin|plugin]] which automatically tries to extract the various links.
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
-
+</noinclude>
