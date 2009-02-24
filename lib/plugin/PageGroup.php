@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /**
  Copyright 1999,2000,2001,2002,2004 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -95,15 +96,13 @@ extends WikiPlugin
 
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        $html="";
         if (empty($parent)) {
             // FIXME: WikiPlugin has no way to report when
             // required args are missing?
             $error_text = fmt("%s: %s", "WikiPlugin_" .$this->getName(),
                               $error_text);
             $error_text .= " " . sprintf(_("A required argument '%s' is missing."), 'parent');
-            $html = $error_text;
-            return $html;
+            return HTML::div(array('class' => "error"), $error_text);
         }
         $directions = array ('next'     => _("Next"),
                              'previous' => _("Previous"),
@@ -208,28 +207,6 @@ extends WikiPlugin
         return $links;
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.8  2004/06/14 11:31:39  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.7  2004/05/03 15:53:20  rurban
-// Support [] links, but no [name|page] links yet
-// Support subpages
-//
-// Revision 1.6  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.5  2003/01/18 21:49:00  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
 
 // Local Variables:
 // mode: php

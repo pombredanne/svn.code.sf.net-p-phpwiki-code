@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /**
  Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -72,8 +73,9 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        if (empty($args['s']))
-            return '';
+        if (empty($args['s'])) {
+            return HTML::div(array('class' => "error"), "Please provide 's' argument to the plugin.");
+        }
 
         $query = new TextSearchQuery($args['s'], $args['case_exact'], $args['regex']);
         $pages = $dbi->titleSearch($query,$args['sortby'],$args['limit'],$args['exclude']);
@@ -116,64 +118,6 @@ extends WikiPlugin
         return $pagelist;
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.29  2007/01/02 13:23:30  rurban
-// note to deprecate livesearch hack
-//
-// Revision 1.28  2005/09/10 21:33:08  rurban
-// support enhanced API
-//
-// Revision 1.27  2005/02/03 05:09:57  rurban
-// livesearch.js support
-//
-// Revision 1.26  2004/11/27 14:39:05  rurban
-// simpified regex search architecture:
-//   no db specific node methods anymore,
-//   new sql() method for each node
-//   parallel to regexp() (which returns pcre)
-//   regex types bitmasked (op's not yet)
-// new regex=sql
-// clarified WikiDB::quote() backend methods:
-//   ->quote() adds surrounsing quotes
-//   ->qstr() (new method) assumes strings and adds no quotes! (in contrast to ADODB)
-//   pear and adodb have now unified quote methods for all generic queries.
-//
-// Revision 1.25  2004/11/26 18:39:02  rurban
-// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
-//
-// Revision 1.24  2004/11/25 08:30:58  rurban
-// dont extract args
-//
-// Revision 1.23  2004/11/23 15:17:19  rurban
-// better support for case_exact search (not caseexact for consistency),
-// plugin args simplification:
-//   handle and explode exclude and pages argument in WikiPlugin::getArgs
-//     and exclude in advance (at the sql level if possible)
-//   handle sortby and limit from request override in WikiPlugin::getArgs
-// ListSubpages: renamed pages to maxpages
-//
-// Revision 1.22  2004/11/23 13:35:49  rurban
-// add case_exact search
-//
-// Revision 1.21  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.20  2003/11/02 20:42:35  carstenklapp
-// Allow for easy page creation when search returns no matches.
-// Based on cuthbertcat's patch, SF#655090 2002-12-17.
-//
-// Revision 1.19  2003/03/07 02:50:16  dairiki
-// Fixes for new javascript redirect.
-//
-// Revision 1.18  2003/02/21 04:16:51  dairiki
-// Don't NORETURN from redirect.
-//
-// Revision 1.17  2003/01/18 22:08:01  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
 
 // Local Variables:
 // mode: php
