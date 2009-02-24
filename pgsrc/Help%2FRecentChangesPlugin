@@ -96,22 +96,18 @@ modifications in the wiki.
 == Example
 
 {{{
-<<RecentChanges>>
+<<RecentChanges limit=10>>
 }}}
 
-<<RecentChanges>>
+<<RecentChanges limit=10>>
 
 {{{
 <<RecentChanges show_minor=1>>
 }}}
 
-<<RecentChanges show_minor=1>>
-
 {{{
 <<RecentChanges days=30>>
 }}}
-
-<<RecentChanges days=30>>
 
 == Author
 [Reini Urban|PhpWiki:ReiniUrban]
