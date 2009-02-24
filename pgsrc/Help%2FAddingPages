@@ -21,7 +21,7 @@ If you wish to add documents with complex markup to the Wiki, you
 might be better off providing a URL to it than trying to add the text
 of the document here, like so:
 
-PhpWiki project homepage: http://phpwiki.sourceforge.net/
+~PhpWiki project homepage: http://phpwiki.sourceforge.net/
 
 The Wiki does not support most HTML tags, only the simpliest. See [TextFormattingRules|Help:TextFormattingRules].
 <tags>They will just render like text.</tags> Wiki is meant to be as

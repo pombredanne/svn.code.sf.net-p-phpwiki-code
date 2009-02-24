@@ -162,7 +162,7 @@ See the config.ini PLUGIN_CACHED_* settings and PhpWiki:WikiPluginCached
 The term *[ActionPage|Help:ActionPage]* refers to a page containing a plugin
 invocation with the same or translated pluginname as the pagename.
 An *action* is together with the *pagename* argument the basic
-PhpWiki argument.
+~PhpWiki argument.
 It can both be GET or POST actions. Actions are untranslated, always
 english, pagenames can be localized.
 Basic (and old) actions are all lowercase, like edit, browse, remove, ...
@@ -178,7 +178,7 @@ reasons:
 # Split simple plugins into multiple actions, like RecentChanges/RecentEdits, 
   MostPopular/LeastPopular, AllPages/AllPagesCreatedByMe/AllPagesLastEditedByMe/
   AllPagesOwnedByMe which differ only in one argument.
-# Simplify the syntax for actions on another actions using a PageList
+# Simplify the syntax for actions on another actions using a ~PageList
   as result of an actionpage as input parameter for another action or
   format.
 
