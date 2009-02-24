@@ -28,5 +28,7 @@ To include a page from within this wiki, use the <b>page</b> attribute:
 
 For more information on this plugin please read the PHP source code in the /lib/plugin directory.
 
------
+<noinclude>
+----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

@@ -61,5 +61,7 @@ Some Greeks letters : <<TeX2png text="$\alpha$">>, <<TeX2png text="$\beta$">>, .
 #Show that for all r > 0 :<<TeX2png text="$$\frac{\pi}{2}\int_0^r t  e^{-t^2}\,dt \leq \int_0^r e^{-x^2}\,dx \int_0^r e^{-y^2}\,dy \leq \frac{\pi}{2} \int_0^{\sqrt{2} r} t e^{-t^2}\,dt$$">> *Help* : you can use polar coordinates.
 #Hence find the limit of <<TeX2png text="$f(x)$">> as x tends <<TeX2png text="to $\infty$">>.
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

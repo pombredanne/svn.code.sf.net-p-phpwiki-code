@@ -22,5 +22,7 @@ http://www.ahsonline.com.au/dod/FoafViewerPlugin.zip
 == Example
 <<FoafViewer foaf=http://www.ahsonline.com.au/dod/FOAF.rdf>>
 
------
+<noinclude>
+----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

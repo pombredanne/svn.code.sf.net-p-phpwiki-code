@@ -33,5 +33,7 @@ page _(default: current pagename)_:
 
 == See Also
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

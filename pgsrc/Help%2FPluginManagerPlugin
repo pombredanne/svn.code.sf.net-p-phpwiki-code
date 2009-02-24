@@ -65,5 +65,7 @@ not provided with ~PhpWiki or PHP, such as
 == Author
 [Jeff Dairiki|PhpWiki:JeffDairiki] ?
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

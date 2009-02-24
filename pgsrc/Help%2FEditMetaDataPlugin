@@ -21,8 +21,10 @@ Editing the metadata for the [HomePage] would look like this:
 With no arguments the plugin defaults to the current page:
 {{{
 <<EditMetaData>>
-{{{
+}}}
 <<EditMetaData>>
 
------
+<noinclude>
+----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

@@ -68,5 +68,7 @@ The *Diff* [[Help:WikiPlugin|plugin]] displays differences between revisions of 
 
 == See Also
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

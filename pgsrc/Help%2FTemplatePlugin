@@ -132,5 +132,7 @@ Shorter syntax:
 {{TemplateExample|title=TestTitle}}
 }}}
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

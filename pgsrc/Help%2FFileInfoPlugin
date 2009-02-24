@@ -40,5 +40,7 @@ __format__:
 
 This wiki was installed at <<FileInfo file=config/config.ini display=date>>.
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

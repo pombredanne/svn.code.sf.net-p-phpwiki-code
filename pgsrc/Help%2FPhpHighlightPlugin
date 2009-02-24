@@ -106,9 +106,10 @@ getload(void)
 
 == Authors
 
-Martin Geisler mailto:gimpster@gimpster.com and Carsten Klapp
-mailto:carstenklapp@users.sourceforge.net.
+* Martin Geisler mailto:gimpster@gimpster.com 
+* Carsten Klapp mailto:carstenklapp@users.sourceforge.net.
 
------
-
+<noinclude>
+----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

@@ -44,5 +44,7 @@ __page__:
 == Example
 <<UpLoad>>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

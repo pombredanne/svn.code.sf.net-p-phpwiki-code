@@ -51,5 +51,7 @@ For this plugin to work, the page must be locked by the administrator. If you ar
 </table>
 >>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

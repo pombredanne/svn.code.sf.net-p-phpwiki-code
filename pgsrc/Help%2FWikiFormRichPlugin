@@ -110,5 +110,7 @@ A combobox is a pulldown with autocomplete=1.<br>
            submit[]
   	  >>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

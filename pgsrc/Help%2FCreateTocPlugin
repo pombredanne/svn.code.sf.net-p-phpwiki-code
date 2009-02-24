@@ -141,6 +141,7 @@ See also [PhpWikiDemo:en/TextFormattingRules]
 * If you preview the page, the Table of Contents will not be correct if you modified headers. The Table of Contents will be taken from the last saved revision.
 * If you display an old revision of a page, the Table of Contents will not be correct. The Table of Contents will be taken from the last saved revision.
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
-
+</noinclude>

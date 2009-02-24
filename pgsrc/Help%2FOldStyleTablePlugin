@@ -68,5 +68,7 @@ table cells.
 include multi-line plugin invocations using the old-style markup
 rules.)
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

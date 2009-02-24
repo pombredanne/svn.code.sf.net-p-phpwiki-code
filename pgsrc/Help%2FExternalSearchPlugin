@@ -65,5 +65,7 @@ Enter the name of a PHP function to view the documentation page:%%%
 Enter any existing page name on ~PhpWiki to jump to that page:
 <<ExternalSearch url=PhpWiki>>
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

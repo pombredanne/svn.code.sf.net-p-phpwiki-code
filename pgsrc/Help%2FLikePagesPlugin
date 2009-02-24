@@ -39,5 +39,7 @@ suffix _(default: false)_:
 
 == See Also
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

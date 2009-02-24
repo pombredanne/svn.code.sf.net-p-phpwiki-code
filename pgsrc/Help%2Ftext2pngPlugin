@@ -38,7 +38,6 @@ shadowcolor:
 backcolor:
   #ffffff
 
-
 === Configurable Options
 
 See the sourcecode. You'd probably need to adjust $ttfont and text2png_debug.
@@ -55,5 +54,7 @@ would produce:
 * [Help:TeX2PngPlugin]
 * [Help:TexToPngPlugin]
 
+<noinclude>
 ----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>

@@ -22,6 +22,7 @@ The second example will default to the current page. We can't provide
 examples for you since we don't know any potential usernames for your
 wiki.
 
--------------
-
+<noinclude>
+----
 [[PhpWikiDocumentation]] [[CategoryWikiPlugin]]
+</noinclude>
