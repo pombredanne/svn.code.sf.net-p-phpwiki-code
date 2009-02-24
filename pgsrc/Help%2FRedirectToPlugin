@@ -15,14 +15,22 @@ In other words it makes a page an _alias_ for another page.
 
 Use only one of these arguments at a time.
 
-page |
-  The page to redirect to (a wiki page name).
-href |
-  An external URL to redirect to.  Redirection to external URLs will only work
-  on locked pages.  (If the URL contains funny characters, you'll probably have
-  to put quotes around the URL.)
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| page
+| The page to redirect to (a wiki page name).
+| none
+|-
+| href
+| An external URL to redirect to.  Redirection to external URLs will only work on locked pages. (If the URL contains funny characters, you'll probably have to put quotes around the URL.)
+| none
+|}
 
-=== Caveats
+== Caveats
 
 The ~RedirectToPlugin invocation must be the first thing on a page.
 For most purposes it makes any other content on the page inaccessible.
