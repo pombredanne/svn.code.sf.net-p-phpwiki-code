@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 20:18:24 +0100
+Date: Wed, 25 Feb 2009 21:52:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -46,7 +46,7 @@ the administrator has enabled this feature.
 * Secure http link [PhpWiki's Home Page|https://phpwiki.sourceforge.net/phpwiki/]
 * File transfer ftp://ftp.sourceforge.net/
 
-''A generic icon is shown for other less common link types.''
+//A generic icon is shown for other less common link types.//
 
 * news://nntp.news.com
 * gopher://gopher.caltech.cmu.edu

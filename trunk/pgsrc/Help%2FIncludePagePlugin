@@ -1,4 +1,4 @@
-Date: Sun, 22 Feb 2009 19:16:30 +0000
+Date: Wed, 25 Feb 2009 21:52:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -25,7 +25,7 @@ The *~IncludePage* [[Help:WikiPlugin|plugin]] will "include" other pages in this
 |-
 | <b>page</b>
 | The page to include
-| ''None'' (mandatory argument)
+| //None// (mandatory argument)
 |-
 | <b>rev</b>
 | the revision
@@ -37,23 +37,23 @@ The *~IncludePage* [[Help:WikiPlugin|plugin]] will "include" other pages in this
 |-
 | <b>bytes</b>
 | maximum number of bytes to include
-| ''None'' (include all page)
+| //None// (include all page)
 |-
 | <b>words</b>
 | maximum number of words to include
-| ''None'' (include all page)
+| //None// (include all page)
 |-
 | <b>lines</b>
 | maximum number of lines to include
-| ''None'' (include all page)
+| //None// (include all page)
 |-
 | <b>sections</b>
 | maximum number of sections to include
-| ''None'' (include all sections)
+| //None// (include all sections)
 |-
 | <b>section</b>
 | include a named section
-| ''None''
+| //None//
 |-
 | <b>sectionhead</b>
 | when including a named section show the heading
