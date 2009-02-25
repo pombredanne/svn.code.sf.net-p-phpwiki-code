@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /**
  Copyright (C) 2006 $ThePhpWikiProgrammingTeam
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -94,6 +95,8 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
+        global $WikiTheme;
+
         $args = $this->getArgs($argstr, $request);
         if (isa($request,'MockRequest'))
             return '';
@@ -146,6 +149,10 @@ extends WikiPlugin
                     $request->_setUser($user);
                     $request->setArg("verify",false);
                     $request->setArg("add",false);
+                    // No alert for Gforge
+                    if (isa($WikiTheme, 'WikiTheme_gforge')) {
+                        return;
+                    }
                     $alert = new Alert(
                      _("Message"),
                      _("E-Mail Notification for the current page successfully stored in your preferences."));
@@ -156,11 +163,6 @@ extends WikiPlugin
         }
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2006/12/22 01:28:23  rurban
-// new plugin similar to mediawiki
-//
 
 // For emacs users
 // Local Variables:
