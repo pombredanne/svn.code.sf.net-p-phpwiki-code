@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -78,7 +79,7 @@ extends WikiPlugin
         if ($info == 'args')
             $headings []= _("Arguments");
         foreach ($headings as $title) {
-            $tr->pushContent(HTML::td($title));
+            $tr->pushContent(HTML::th($title));
         }
         $table->pushContent(HTML::thead($tr));
     }
