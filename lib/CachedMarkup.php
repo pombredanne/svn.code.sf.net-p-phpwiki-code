@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
  * Copyright (C) 2004-2008 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  * 
@@ -35,6 +36,17 @@ class CacheableMarkup extends XmlContent {
     }
 
     function pack() {
+
+        // Gforge hack
+        // This causes a strange bug when a comment containing
+        // a single quote is entered in the Summary box:
+        // - the history is wrong (user and comment missing)
+        // - the table of contents plugin no longer works
+        global $WikiTheme;
+        if (isa($WikiTheme, 'WikiTheme_gforge')) {
+            return serialize($this);
+        }
+
         if (function_exists('gzcompress'))
             return gzcompress(serialize($this), 9);
         return serialize($this);
