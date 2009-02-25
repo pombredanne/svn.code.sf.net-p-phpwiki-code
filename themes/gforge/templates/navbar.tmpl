@@ -19,8 +19,8 @@ $curuserprefs = $user->getPreferences();
     <?php } ?>
    <tr><td class="submenu"><?= WikiLink(_("UpLoad"), "","Upload File") ?></td></tr>
     <?php if (!empty($user) && $user->isAdmin()) { ?>
-     <tr><td class="submenu"><?= WikiLink(_("PhpWikiAdministration"), "","Admin") ?></td></tr>
+     <tr><td class="submenu"><?= WikiLink(_("PhpWikiAdministration"), "","Wiki Admin") ?></td></tr>
     <?php } ?>
     <?php if (!empty($user) && $user->isSignedIn()) { ?>
-     <tr><td class="submenu"><?= WikiLink(_("UserPreferences"), "","Preferences") ?></td></tr>
+     <tr><td class="submenu"><?= WikiLink(_("UserPreferences"), "","User Preferences") ?></td></tr>
     <?php } ?>
