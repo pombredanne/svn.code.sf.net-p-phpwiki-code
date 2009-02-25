@@ -1069,10 +1069,10 @@ class Block_table_wikicreole extends Block_pre
 
         $intable = true;
         while ($intable) {
-            if (($line = $input->nextLine()) === false) {
+            if ((($line = $input->nextLine()) === false) && !$intable) {
                 $input->setPos($pos);
                 return false;
-            } 
+            }
             if (!$line) {
                 $intable = false;
                 $trimline = $line;
