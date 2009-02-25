@@ -1,4 +1,4 @@
-Date: Sun, 22 Feb 2009 19:16:30 +0000
+Date: Wed, 25 Feb 2009 21:52:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -38,7 +38,7 @@ will get you:
 
 <strong>month_offset</strong>:
 
-  Added to ''month''. Can be used to include several months worth of
+  Added to //month//. Can be used to include several months worth of
   calendars on a single wiki page.
 
 === "Day Page" Names
@@ -51,7 +51,7 @@ will get you:
 
 <strong>prefix</strong>:
 
-  Prepended to the date (formatted per ''date_format'') to generate
+  Prepended to the date (formatted per //date_format//) to generate
   the "day page" names. The default value is =~[pagename]/=.
 
 === Appearance

@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 18:33:08 +0000
+Date: Wed, 25 Feb 2009 21:52:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -905,7 +905,7 @@ best be the enemy of the good.")
 
 Postgresql support has been added and the markup language is evolving, now allowing !!! for <h2>, !! for <h3>, ! for <h4> tags and ~__a new way to make text bold__, and of course the ~[new linking scheme].
 
-There is a new feature on all pages called ''more info'' that gives
+There is a new feature on all pages called //more info// that gives
 you a low level detailed view of a page, which is probably more useful
 for debugging than anything.
 
