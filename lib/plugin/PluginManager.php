@@ -54,7 +54,6 @@ extends WikiPlugin
             $h->pushContent(HTML::h2(_("Plugins")));
 
             $table = HTML::table(array('class' => "pagelist"));
-            $this->_generateColgroups($info, $table);
             $this->_generateColheadings($info, $table);
             $this->_generateTableBody($info, $dbi, $request, $table);
             $h->pushContent($table);
@@ -70,18 +69,6 @@ extends WikiPlugin
 
     function _generatePageheader(&$info, &$html) {
         $html->pushContent(HTML::p($this->getDescription()));
-    }
-
-    function _generateColgroups(&$info, &$table) {
-        // specify last two column widths
-        $colgroup = HTML::colgroup();
-        $colgroup->pushContent(HTML::col(array('width' => '0*')));
-        $colgroup->pushContent(HTML::col(array('width' => '0*',
-                                               'align' => 'right')));
-        $colgroup->pushContent(HTML::col(array('width' => '9*')));
-        if ($info == 'args')
-            $colgroup->pushContent(HTML::col(array('width' => '2*')));
-        $table->pushcontent($colgroup);
     }
 
     function _generateColheadings(&$info, &$table) {
