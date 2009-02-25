@@ -2,8 +2,9 @@
 rcs_id('$Id$');
 /**
  Copyright 2004 Nicolas Noble <pixels@users.sf.net>
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
- This file is (not yet) part of PhpWiki.
+ This file is part of PhpWiki.
 
  PhpWiki is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -78,7 +79,7 @@ extends WikiPlugin
         extract($this->getArgs($argstr, $request));
         return HTML::a(array('href' => WikiURL($link),
 	                      'target' => "_blank",
-	                      'onClick' => ($close == "yes" ? "window.close()" : ("window.open('" .
+	                      'onclick' => ($close == "yes" ? "window.close()" : ("window.open('" .
 			          WikiURL($link) . "', '" .
 				  ($title == "" ? ($text == "" ? $link : $text) : $title) . "', '" .
 				  "width=$width," .
@@ -97,9 +98,6 @@ extends WikiPlugin
 		       );
     }
 };
-
-// $Log: not supported by cvs2svn $
-//
 
 // For emacs users
 // Local Variables:
