@@ -601,33 +601,28 @@ function fixup_static_configs($file) {
     // or contain basic functionality.
     /*
       All pages containing plugins of the same name as the filename:
-      cd pgsrc
-      grep -l '\?plugin ' *| perl -ne'$/=0;chop; s/%([\da-fA-F]{2})/pack("C",hex($1))/ge; next LINE if m{^(Help/|Template|Pgsrc)}; print "$_\n"; {local $/;open F,"<$_"; $f=join("",<F>);} push @a,$_ if $f=~/plugin $_/; END{print join(":",@a)};'
      */
     $AllActionPages = explode(':',
       'AllPages:AllUsers:AppendText:AuthorHistory:'
       .'BackLinks:BlogArchives:BlogJournal:'
       .'CreatePage:'
-      .'EditMetaData:'
       .'FindPage:FullTextSearch:FuzzyPages:'
       .'InterWikiSearch:'
       .'LdapSearch:LikePages:LinkDatabase:LinkSearch:ListRelations:'
       .'ModeratedPage:MostPopular:'
       .'OrphanedPages:'
       .'PageDump:PageHistory:PageInfo:PasswordReset:PluginManager:'
-      .'RandomPage:RateIt:RecentChanges:RecentComments:RelatedChanges:'
-      .'SearchHighlight:SemanticRelations:SemanticSearch:SpellCheck:SystemInfo:'
+      .'RateIt:RecentChanges:RecentComments:RelatedChanges:'
+      .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
       .'TitleSearch:TranslateText:'
       .'UpLoad:UriResolver:UserPreferences:'
       .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:WikiBlog:'
       // plus some derivations
       .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages:'
-      .'DebugInfo:'
       .'FullRecentChanges:'
       .'LeastPopular:LockedPages:'
       .'MyRecentEdits:MyRecentChanges:'
       .'PhpWikiAdministration:'
-      .'PhpWikiAdministration/Chmod:'
       .'PhpWikiAdministration/Chown:'
       .'PhpWikiAdministration/Markup:'
       .'PhpWikiAdministration/Purge:'
@@ -637,6 +632,16 @@ function fixup_static_configs($file) {
       .'PhpWikiAdministration/SetAcl:'
       .'RecentChangesMyPages:RecentEdits:RecentNewPages:'
       .'UserContribs');
+
+    // Add some some action pages depending on configuration
+    if (defined('DEBUG') and DEBUG) {
+       $AllActionPages[] = 'DebugInfo';
+       $AllActionPages[] = 'EditMetaData';
+       $AllActionPages[] = 'RandomPage'; // RandomPage does not work
+       $AllActionPages[] = 'SpellCheck'; // SpellCheck does not work
+       $AllActionPages[] = 'PhpWikiAdministration/Chmod';
+    }
+
     // If user has not defined PHPWIKI_DIR, and we need it
     if (!defined('PHPWIKI_DIR') and !file_exists("themes/default")) {
     	$themes_dir = FindFile("themes");
