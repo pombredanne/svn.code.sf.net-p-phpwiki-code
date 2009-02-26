@@ -14,6 +14,7 @@ rcs_id('$Id$');
  */
 /*
  * Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
+ * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -608,13 +609,13 @@ function fixup_static_configs($file) {
       .'CreatePage:'
       .'FindPage:FullTextSearch:FuzzyPages:'
       .'InterWikiSearch:'
-      .'LdapSearch:LikePages:LinkDatabase:LinkSearch:ListRelations:'
+      .'LikePages:LinkDatabase:LinkSearch:ListRelations:'
       .'ModeratedPage:MostPopular:'
       .'OrphanedPages:'
-      .'PageDump:PageHistory:PageInfo:PasswordReset:PluginManager:'
-      .'RateIt:RecentChanges:RecentComments:RelatedChanges:'
+      .'PageDump:PageHistory:PageInfo:PluginManager:'
+      .'RecentChanges:RecentComments:RelatedChanges:'
       .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
-      .'TitleSearch:TranslateText:'
+      .'TitleSearch:'
       .'UpLoad:UriResolver:UserPreferences:'
       .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:WikiBlog:'
       // plus some derivations
@@ -640,6 +641,12 @@ function fixup_static_configs($file) {
        $AllActionPages[] = 'RandomPage'; // RandomPage does not work
        $AllActionPages[] = 'SpellCheck'; // SpellCheck does not work
        $AllActionPages[] = 'PhpWikiAdministration/Chmod';
+    }
+    if (!defined('GFORGE') or !GFORGE) {
+       $AllActionPages[] = 'LdapSearch';
+       $AllActionPages[] = 'PasswordReset';
+       $AllActionPages[] = 'RateIt'; // RateIt works only in wikilens theme
+       $AllActionPages[] = 'TranslateText';
     }
 
     // If user has not defined PHPWIKI_DIR, and we need it
