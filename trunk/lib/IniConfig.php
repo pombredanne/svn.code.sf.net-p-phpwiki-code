@@ -778,7 +778,14 @@ function fixup_dynamic_configs($file) {
     if (!defined('DEFAULT_LANGUAGE'))   // not needed anymore
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
-    update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
+    // Gforge hack
+    if (!defined('GFORGE') or !GFORGE) {
+        // Disable update_locale because Zend Debugger crash
+        if(! extension_loaded('Zend Debugger')) {
+            update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
+        }
+    }
+
     if (empty($LANG)) {
         if (!defined("DEFAULT_LANGUAGE") or !DEFAULT_LANGUAGE) {
             // TODO: defer this to WikiRequest::initializeLang()
