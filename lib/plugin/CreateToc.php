@@ -379,7 +379,7 @@ extends WikiPlugin
             $html->setAttr('style','float:'.$position.'; width:'.$width.';');
         }
         $toclistid = GenerateId("toclist");
-        $list = HTML::div(array('id'=>$toclistid, 'class'=>toclist));
+        $list = HTML::div(array('id'=>$toclistid, 'class'=>'toclist'));
         if (!strstr($headers,",")) {
             $headers = array($headers);	
         } else {
