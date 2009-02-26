@@ -50,7 +50,7 @@ or not-well-behaving user agents can be defined below. See [[PhpWiki:HowToBlockR
 A Wiki SandBox is very easy to clean. Here you can restore it to
 pristine condition by loading the default from pgsrc.
 
-**[[phpwiki:?action=loadfile&source=pgsrc/SandBox|Rake the SandBox]]**
+**[[phpwiki:?action=loadfile&overwrite=1&source=pgsrc/SandBox|Rake the SandBox]]**
 
 == Making Snapshots or Backups
 
