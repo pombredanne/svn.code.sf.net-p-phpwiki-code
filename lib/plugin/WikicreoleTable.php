@@ -98,6 +98,11 @@ extends WikiPlugin
         $nbrows = sizeof($table);
         $nbcols = sizeof($table[0]);
 
+        // If table is empty, do not generate table markup
+        if ($nbrows == 0) {
+            return HTML::raw('');
+        }
+
         for ($i=0; $i<$nbrows; $i++) {
             for ($j=0; $j<$nbcols; $j++) {
                 if (preg_match('/@@/', $table[$i][$j])) {
