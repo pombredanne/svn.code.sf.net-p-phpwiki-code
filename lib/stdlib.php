@@ -1,7 +1,7 @@
 <?php //rcs_id('$Id$');
 /*
  Copyright 1999-2008 $ThePhpWikiProgrammingTeam
- Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -2406,7 +2406,7 @@ function is_image ($filename) {
     }
 
     foreach (explode("|", $inline_images) as $suffix) {
-        if (string_ends_with($filename, "." . $suffix)) {
+        if (string_ends_with(strtolower($filename), "." . $suffix)) {
             return true;
         }
     }
