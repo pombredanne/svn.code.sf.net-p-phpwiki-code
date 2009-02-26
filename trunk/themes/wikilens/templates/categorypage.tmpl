@@ -3,13 +3,10 @@
 ?>
 <div class="categorypage categorypage-form">
 
-This page represents the <?=$SINGULAR?> category.
+<p>This page represents the <?=$SINGULAR?> category.</p>
 
-<br/>
+<p>All pages that are in the <?=$SINGULAR?> category refer to this page.</p>
 
-All pages that are in the <?=$SINGULAR?> category refer to this page.
-
-<br/><br/>
 <?php
 
 $this->_printPlugin("<" . "?plugin UserRatings nobuds=" . ($SHOWBUDS ? 0 : 1) . " category=\"" . $PAGENAME . "\" ?" . ">");
@@ -47,7 +44,6 @@ duplicate pages.  You can use this FuzzyPages search:
 <?plugin-form FuzzyPages ?>
 
 </li>
-<br/>
 
 <li>
 
@@ -69,7 +65,6 @@ $link ?> for more ways to navigate or create pages.
 ?>
 
 </li>
-<br/>
 
 <li>
 Once you have created a page, it will simply appear in the list above.  If you would
@@ -82,4 +77,3 @@ brackets to be safe).
 </ol>
 
 </div>
-
