@@ -1,4 +1,4 @@
-Date: Mon, 23 Feb 2009 14:11:05 +0000
+Date: Fri, 27 Feb 2009 21:18:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,10 +8,9 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
- 
-This wiki stores *all* changes as new versions. Deleting a page just empties the content, all previous versions are not lost.
+This wiki stores **all** changes as new versions. Deleting a page just empties the content, all previous versions are not lost.
 
-Click on two checkbox to see the <strong>diff</strong>, the changes between those two versions.
+Click on two checkbox to see the **diff**, the changes between those two versions.
 
 <<PageHistory>>
 
