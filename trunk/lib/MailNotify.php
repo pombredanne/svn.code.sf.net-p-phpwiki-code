@@ -1,5 +1,23 @@
-<?php //-*-php-*-
-rcs_id('$Id$');
+<?php rcs_id('$Id$');
+ * Copyright (C) 2006-2007 Reini Urban
+ * Copyright (C) 2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /**
  * Handle the pagelist pref[notifyPages] logic for users
@@ -47,6 +65,12 @@ class MailNotify {
 
     function userEmail($userid, $doverify = true) {
         global $request;
+
+        // Disable verification of emails for corporate env.
+        if (defined('GFORGE') and GFORGE) {
+            $doverify = false;
+        }
+
         $u = $request->getUser();
         if ($u->UserName() == $userid) { // lucky: current user
             $prefs = $u->getPreferences();
@@ -379,41 +403,6 @@ will expire at %s.",
                     HTML::p("Your e-mail address has now been confirmed."));
     }
 }
-
-
-// $Log: not supported by cvs2svn $
-// Revision 1.10  2007/05/01 16:14:21  rurban
-// fix cache
-//
-// Revision 1.9  2007/03/10 18:22:51  rurban
-// Patch 1677950 by Erwann Penet
-//
-// Revision 1.8  2007/01/25 07:41:54  rurban
-// Add wikimail.log default on unix
-//
-// Revision 1.7  2007/01/20 11:25:38  rurban
-// Fix onDeletePage warning and content
-//
-// Revision 1.6  2007/01/09 12:34:55  rurban
-// Fix typo (syntax error)
-//
-// Revision 1.5  2007/01/07 18:42:58  rurban
-// Add MAILER_LOG logfile
-//
-// Revision 1.4  2007/01/04 16:47:49  rurban
-// improve text
-//
-// Revision 1.3  2006/12/24 13:35:43  rurban
-// added experimental EMailConfirm auth. (not yet tested)
-// requires actionpage ConfirmEmail
-// TBD: purge expired cookies
-//
-// Revision 1.2  2006/12/23 11:50:45  rurban
-// added missing result init
-//
-// Revision 1.1  2006/12/22 17:59:55  rurban
-// Move mailer functions into seperate MailNotify.php
-//
 
 // Local Variables:
 // mode: php
