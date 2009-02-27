@@ -1519,7 +1519,7 @@ function SetupWiki (&$request)
 
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder;
-    foreach (array_merge(explode(':','Help/OldTextFormattingRules:Help/TextFormattingRules:PhpWikiAdministration'),
+    foreach (array_merge(explode(':','SandBox:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:Help/OldTextFormattingRules:Help/TextFormattingRules:PhpWikiAdministration'),
                          $GLOBALS['AllActionPages'],
                          array(constant('HOME_PAGE'))) as $f) 
     {
