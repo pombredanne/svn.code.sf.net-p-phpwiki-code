@@ -116,8 +116,6 @@ $locale["(Pages which have been deleted at least %s days are already checked.)"]
    "(列出過去 %s 天內已被刪除且檢查過的頁面.)";
 $locale["(Redirected from %s)"] =
    "(已從 %s 重導向)";
-$locale["(User: %s)"] =
-   "(user: %s)";
 $locale["(Your preferences are stored as hidden data within this page)."] =
    "(你的偏好設定已經存放並隱藏在此頁面中).";
 $locale["(diff)"] =
@@ -402,8 +400,6 @@ $locale["Describe %s here."] =
    "在這兒描述 %s.";
 $locale["Description"] =
    "描述";
-$locale["Description: Provides a list of plugins on this wiki."] =
-   "描述: 提供在此 wiki 上的 plugin 列表.";
 $locale["Dialog"] =
    "對話盒";
 $locale["Diff"] =
@@ -538,8 +534,6 @@ $locale["FrameIncludePlugin"] =
    "FrameIncludePlugin";
 $locale["From english to %s: "] =
    "從英文到 %s:";
-$locale["Full Search"] =
-   "完整搜尋";
 $locale["Full text search results for '%s'"] =
    "以 '%s' 全文搜尋的結果";
 $locale["FullDump"] =
@@ -1146,8 +1140,6 @@ $locale["Set individual page permissions."] =
    "設定個別頁面的權限.";
 $locale["SetAcl"] =
    "SetAcl";
-$locale["Show all changes for:"] =
-   "顯示所有變更:";
 $locale["Show and add blogs for %s"] =
    "顯示並增加 blogs - %s";
 $locale["Show and add comments for %s"] =
@@ -1156,8 +1148,6 @@ $locale["Show changes for:"] =
    "顯示變更:";
 $locale["Show extra page Info and statistics for %s."] =
    "顯示額外的頁面資訊與統計 - %s.";
-$locale["Show minor edits for:"] =
-   "顯示次要編輯:";
 $locale["Show relative dates using 'Today' and 'Yesterday'"] =
    "使用'今天'和'昨天'來顯示相對日期.";
 $locale["Show summary information of the current user sessions."] =
@@ -1310,8 +1300,6 @@ $locale["This internal action page cannot viewed."] =
    "內部動作頁面無法瀏覽.";
 $locale["This is a minor change."] =
    "這是次要變更.";
-$locale["This page already exists"] =
-   "此頁面已經存在";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "此頁面已經被管理者鎖定,並且無法編輯.";
 $locale["This page has been locked by the administrator so your changes can not be saved."] =
@@ -1402,8 +1390,6 @@ $locale["User preferences for user '%s':"] =
    "使用者 '%s' 的偏好設定:";
 $locale["User statistics"] =
    "使用者統計";
-$locale["User: %s"] =
-   "User: %s";
 $locale["UserId"] =
    "帳號";
 $locale["UserId:"] =
@@ -1480,8 +1466,6 @@ $locale["WikiAdminRename"] =
    "WikiAdminRename";
 $locale["WikiAdminSearchReplace"] =
    "WikiAdminSearchReplace";
-$locale["WikiAdminSearchReplace %s by %s"] =
-   "WikiAdminSearchReplace %s 被 %s";
 $locale["WikiAdminSelect"] =
    "WikiAdminSelect";
 $locale["WikiAdminSetAcl"] =
@@ -1508,8 +1492,6 @@ $locale["Wikiname regexp"] =
    "Wikiname regexp";
 $locale["With the current offset, this would be reported as %s."] =
    "以目前時差,這將被顯示為 %s.";
-$locale["World"] =
-   "World";
 $locale["Wrong password. Try again."] =
    "錯誤的密碼.再試一次.";
 $locale["XML-RPC access"] =

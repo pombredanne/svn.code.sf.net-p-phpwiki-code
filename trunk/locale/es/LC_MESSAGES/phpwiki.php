@@ -664,12 +664,8 @@ $locale["Set USE_DB_SESSION to false."] =
    "Fije USE_DB_SESSION a falso.";
 $locale["SetAcl"] =
    "Fije El Acl";
-$locale["Show all changes for:"] =
-   "Demuestre todos los cambios para:";
 $locale["Show changes for:"] =
    "Demuestre los cambios para:";
-$locale["Show minor edits for:"] =
-   "El menor de edad de la demostración corrige para:";
 $locale["Sign In"] =
    "Muestra Adentro";
 $locale["Sign Out"] =
@@ -832,8 +828,6 @@ $locale["Uploading %s"] =
    "%s uploading";
 $locale["User preferences for user '%s':"] =
    "Preferencias por usuario '%s':";
-$locale["User: %s"] =
-   "Usuario: %s";
 $locale["UserPreferences"] =
    "UsuarioPreferencias";
 $locale["UserRatings"] =
@@ -976,10 +970,6 @@ $locale["no page content"] =
    "ningún contenido de la página";
 $locale["not authenticated"] =
    "non authenticado";
-$locale["optional label | PageName"] =
-   "etiqueta opcional | NombreDePágina";
-$locale["optional label | http://www.example.com"] =
-   "etiqueta opcional | http://www.example.com";
 $locale["plain file %s"] =
    "archivo llano %s";
 $locale["predecessor to the previous major change"] =

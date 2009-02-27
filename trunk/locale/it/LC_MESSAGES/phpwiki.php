@@ -346,8 +346,6 @@ $locale["Search"] =
    "Ricerca";
 $locale["See %s tips for editing."] =
    "Vedere %s consigli per le modifiche.";
-$locale["Show minor edits for:"] =
-   "Mostrare le modifiche secondarie per:";
 $locale["Sign In"] =
    "Login";
 $locale["Sign Out"] =
