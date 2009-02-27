@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2005,2007 $ThePhpWikiProgrammingTeam
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  
  This file is part of PhpWiki.
 
@@ -40,7 +41,7 @@ extends WikiPlugin
     }
 
     function getDescription () {
-        return _("Display file information like version,size,date,... of uploaded files.");
+        return _("Display file information like version, size, date... of uploaded files.");
     }
 
     function getVersion() {
@@ -74,10 +75,11 @@ extends WikiPlugin
             chdir(PHPWIKI_DIR);
         }
 	if (!file_exists($file)) {
-	    if ($quiet)
-		return '';
-	    else
-		trigger_error("file \"$file\" not found", E_USER_WARNING);
+	    if ($quiet) {
+		return HTML::raw('');
+	    } else {
+                return $this->error(sprintf(_("File '%s' not found."), $file));
+	    }
 	}
 	// sanify $file name
 	$realfile = realpath($file);
@@ -123,9 +125,11 @@ extends WikiPlugin
 		}
 		break;
 	    default:
-		if (!$quiet)
+		if (!$quiet) {
 		    return $this->error(sprintf(_("Unsupported argument: %s=%s"), 'display', $mode)); 
-		else return '';
+		} else {
+                    return HTML::raw('');
+                }
 		break;
 	    }
 	}
@@ -141,7 +145,7 @@ extends WikiPlugin
 	    require_once("lib/InlineParser.php");
 	    return TransformInline($result, 2, $basepage);
 	} else {
-	    return $result;
+	    return HTML::raw($result);
 	}
     }
 
@@ -308,29 +312,6 @@ struct VS_VERSIONINFO { struct VS_VERSIONINFO
 	
     }
 };
-
-/* 
- $Log: not supported by cvs2svn $
- Revision 1.8  2008/05/17 06:26:57  vargenau
- Check PHPWIKI_DIR is defined
-
- Revision 1.7  2007/08/25 18:06:05  rurban
- fix Upload: links
-
- Revision 1.6  2007/01/04 16:42:31  rurban
- Add quiet argument. Allow local files if owner == ADMIN and page == locked.
-
- Revision 1.5  2006/08/25 22:10:16  rurban
- fix docs: FileVersion => FileInfo
-
- Revision 1.4  2005/10/29 14:18:47  rurban
- add display=phonysize
-
- Revision 1.3  2005/10/29 13:35:00  rurban
- fix Log:, add chdir() if not in PHPWIKI_DIR, fix ->warning
-
-
-*/
 
 // For emacs users
 // Local Variables:
