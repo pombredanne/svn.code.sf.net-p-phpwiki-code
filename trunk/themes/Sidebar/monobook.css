@@ -1693,15 +1693,15 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 .wikipaging { font-size: 80% }
 .wikipaging-disabled { color: #999 }
 
-/* <?plugin RawHtml <div class="boxright"> </div> */
-
+/* plugin BoxRight */
 div.boxright {
-	width: 200px; 
-	right: 10px;
-	float: right;
-	border: thin solid #888888;
-	padding: 0.5em 0.5em 0.5em 0.5em;
-	margin: 0;
+  background-color: #e9fbff;
+  width: 200px; 
+  right: 10px;
+  float: right;
+  border: thin solid #888888;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  margin: 0;
 }
 
 div.boxright > blockquote {
