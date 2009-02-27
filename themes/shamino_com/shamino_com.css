@@ -148,7 +148,15 @@ div#logo {
   float: right;
 }
 
-div.boxright { width: 200px; right: 10px; padding: 0.5em; float: right; border: thin solid #888888; padding: 0.5em; }
+/* plugin BoxRight */
+div.boxright {
+  width: 200px;
+  right: 10px;
+  padding: 0.5em;
+  float: right;
+  border: thin solid #888888;
+  padding: 0.5em;
+}
 
 /**
  * Search Results
