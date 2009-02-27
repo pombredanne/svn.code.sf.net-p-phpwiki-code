@@ -158,8 +158,6 @@ $locale["(Pages which have been deleted at least %s days are already checked.)"]
    "(Seiten, die in den letzten %s Tagen gelöscht wurden, sind bereits ausgewählt)";
 $locale["(Redirected from %s)"] =
    "(Weitergeleitet von %s)";
-$locale["(User: %s)"] =
-   "(Benutzer: %s)";
 $locale["(Your preferences are stored as hidden data within this page)."] =
    "(Ihre Einstellungen sind als versteckte Daten in dieser Seite hintergelegt).";
 $locale["(diff)"] =
@@ -320,8 +318,6 @@ $locale["Are you sure you want to permanently change the markup type of the sele
    "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?";
 $locale["Are you sure you want to permanently change the selected files?"] =
    "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?";
-$locale["Are you sure you want to permanently chown the selected files?"] =
-   "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?";
 $locale["Are you sure you want to permanently remove the selected files?"] =
    "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich löschen wollen?";
 $locale["Are you sure you want to permanently search & replace text in the selected files?"] =
@@ -468,12 +464,6 @@ $locale["Chmod to permission:"] =
    "Ändere auf Berechtigung:";
 $locale["Chown"] =
    "Chown";
-$locale["Chown page '%s' to '%s'."] =
-   "Besitzer der Seite '%s' auf '%s' geändert.";
-$locale["Chown selected pages"] =
-   "Den Besitzer der ausgewählte Seiten ändern";
-$locale["Chown selected pages."] =
-   "Den Besitzer ausgewählte Seiten ändern.";
 $locale["Click to authenticate as %s"] =
    "Hier klicken um sich anzumelden als %s";
 $locale["Click to de-/select all pages"] =
@@ -482,8 +472,6 @@ $locale["Click to display"] =
    "Klicken um anzuzeigen";
 $locale["Click to display all comments"] =
    "Klicken um Kommentare anzuzeigen";
-$locale["Click to hide the TOC"] =
-   "Hier klicken um zu verstecken";
 $locale["Click to hide the comments"] =
    "Klicken um Kommentare zu verstecken";
 $locale["Click to reverse sort order"] =
@@ -530,8 +518,6 @@ $locale["Couldn't change page '%s' to markup type '%s'."] =
    "Konnte die Formatierung der Seite '%s' nicht auf '%s' ändern.";
 $locale["Couldn't chmod page '%s' to '%s'."] =
    "Konnte die Berechtigung der Seite '%s' nicht auf '%s' ändern.";
-$locale["Couldn't chown page '%s' to '%s'."] =
-   "Konnte den Besitzer der Seite '%s' nicht in '%s' ändern.";
 $locale["Couldn't connect to %s"] =
    "Kann nicht zu »%s« verbinden";
 $locale["Couldn't rename page '%s' to '%s'."] =
@@ -614,8 +600,6 @@ $locale["Describe %s here."] =
    "Beschreiben Sie %s hier.";
 $locale["Description"] =
    "Beschreibung";
-$locale["Description: Provides a list of plugins on this wiki."] =
-   "Beschreibung: Liste aller Zusatzprogramme in diesem Wiki.";
 $locale["Dialog"] =
    "Dialog";
 $locale["Didn't removed page '%s'. Access denied."] =
@@ -774,8 +758,6 @@ $locale["FrameIncludePlugin"] =
    "FrameEinbettenPlugin";
 $locale["From english to %s: "] =
    "Von Englisch nach %s: ";
-$locale["Full Search"] =
-   "VolltextSuche";
 $locale["Full text search results for '%s'"] =
    "Volltext-Suchresultate nach »%s«";
 $locale["FullDump"] =
@@ -1626,8 +1608,6 @@ $locale["Set individual page permissions."] =
    "Setze individuelle Zugangsrechte.";
 $locale["SetAcl"] =
    "AclSetzen";
-$locale["Show all changes for:"] =
-   "Zeige alle Änderungen innerhalb von:";
 $locale["Show and add blogs for %s"] =
    "Blogs für %s zeigen und hinzufügen";
 $locale["Show and add comments for %s"] =
@@ -1636,8 +1616,6 @@ $locale["Show changes for:"] =
    "Zeige Änderungen innerhalb von:";
 $locale["Show extra page Info and statistics for %s."] =
    "Zusätzliche Seiten-Info und Statistiken über %s zeigen.";
-$locale["Show minor edits for:"] =
-   "Zeige kleinere Änderungen innerhalb von:";
 $locale["Show relative dates using 'Today' and 'Yesterday'"] =
    "Datum mit relativen Bezeichnungen, wie »Heute« und »Gestern«";
 $locale["Show summary information from the access log table."] =
@@ -1646,8 +1624,6 @@ $locale["Show summary information of the current user sessions."] =
    "Zeige Überblick über alle aktuellen Benutzersessions.";
 $locale["Show translations of various words or pages"] =
    "Zeige Übersetzungen für verschiedene Wörter oder Seiten";
-$locale["Sidebar"] =
-   "Sidebar";
 $locale["Sign In"] =
    "Anmelden";
 $locale["Sign Out"] =
@@ -1818,8 +1794,6 @@ $locale["This data is based on users active over the past %s."] =
    "Diese Daten basieren auf den Benutzern für die letzten %s.";
 $locale["This is a minor change."] =
    "Kleinere Änderung.";
-$locale["This page already exists"] =
-   "Diese Seite existiert bereits";
 $locale["This page edit seems to contain spam and was therefore not saved."] =
    "Diese Bearbeitung scheint Spam beinzuhalten und wurde ignoriert.";
 $locale["This page has been locked by the administrator and cannot be edited."] =
@@ -1954,8 +1928,6 @@ $locale["User preferences for user '%s':"] =
    "Einstellungen für Benutzer '%s':";
 $locale["User statistics"] =
    "Benutzer Statistiken";
-$locale["User: %s"] =
-   "Benutzer: %s";
 $locale["UserId"] =
    "Benutzername";
 $locale["UserId:"] =
@@ -2044,16 +2016,12 @@ $locale["WikiAdminChown"] =
    "WikiAdminChown";
 $locale["WikiAdminMarkup"] =
    "WikiAdminFormatierung";
-$locale["WikiAdminMarkup from %s to %s"] =
-   "WikiAdminFormatierung von %s auf %s";
 $locale["WikiAdminRemove"] =
    "WikiAdminLöschen";
 $locale["WikiAdminRename"] =
    "WikiAdminUmbenennen";
 $locale["WikiAdminSearchReplace"] =
    "WikiAdminSuchenErsetzen";
-$locale["WikiAdminSearchReplace %s by %s"] =
-   "WikiAdminSuchenErsetzen %s mit %s";
 $locale["WikiAdminSelect"] =
    "WikiAdminAuswahl";
 $locale["WikiAdminSetAcl"] =
@@ -2084,8 +2052,6 @@ $locale["Wikiname regexp"] =
    "Wikiname regexp";
 $locale["With the current offset, this would be reported as %s."] =
    "Mit dem eingegebenen Zeit-Unterschied, würde die Zeit %s angezeigt.";
-$locale["World"] =
-   "Welt";
 $locale["Wrong password. Try again."] =
    "Falsches Password. Noch einmal eingeben.";
 $locale["XML-RPC access"] =
@@ -2308,10 +2274,6 @@ $locale["older than the existing page."] =
    "älter als die bestehende Seite.";
 $locale["only %d pages displayed"] =
    "nur %d Seiten angezeigt";
-$locale["optional label | PageName"] =
-   "optionaler Name | SeitenName";
-$locale["optional label | http://www.example.com"] =
-   "optionaler Name | http://www.example.com";
 $locale["page permission inherited from %s"] =
    "Zugriffsrecht geerbt von %s";
 $locale["plain file %s"] =
