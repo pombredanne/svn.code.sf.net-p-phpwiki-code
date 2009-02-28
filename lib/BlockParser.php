@@ -1042,7 +1042,11 @@ class Block_plugin_wikicreole extends Block_pre
 
     function _match (&$input, $m) {
         $pos = $input->getPos();
-        $pi = "<?plugin " . $m->postmatch;
+        $pi = $m->postmatch;
+        if ($pi[0] == '<') {
+            return false;
+        }
+        $pi = "<?plugin " . $pi;
         while (!preg_match('/(?<!'.ESCAPE_CHAR.')>>\s*$/', $pi)) {
             if (($line = $input->nextLine()) === false) {
                 $input->setPos($pos);
@@ -1128,8 +1132,10 @@ class Block_template_plugin extends Block_pre
 
     function _match (&$input, $m) {
         $pos = $input->getPos();
-        // $pi = "<?plugin Template page=" . $m->postmatch;
         $pi = $m->postmatch;
+        if ($pi[0] == '{') {
+            return false;
+        }
         while (!preg_match('/(?<!'.ESCAPE_CHAR.')}}\s*$/', $pi)) {
             if (($line = $input->nextLine()) === false) {
                 $input->setPos($pos);
