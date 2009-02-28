@@ -8,52 +8,41 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~MediawikiTable* [[Help:WikiPlugin|plugin]] allows a user to specify a ##<table>## with (a subset of) the syntax used by Mediawiki.
+The **~MediawikiTable** [[Help:WikiPlugin|plugin]] allows a user to specify a ##<table>## with (a subset of) the syntax used by Mediawiki.
 The plugin is not meant to be called directly, just use the syntax below to insert your table.
 
 == Mediawiki table syntax
 
-* The table starts with a line <b>{~|</b> and ends with a line <b>|~}</b>.
-* An optional table caption is made with a line starting with a pipe and a plus sign <b>|+</b> followed by the caption.
-* An optional table summary is made with a line starting with a pipe and an equal sign <b>|=</b> followed by the summary.
-* A table row starts with a pipe and a hyphen: <b>|-</b>.
-* A table cell starts with a pipe on a new line, or a double bar <b>||</b> on the same line.
-* A header table cell starts with an exclamation mark, or a double exclamation mark <b>!!</b> on the same line.
+* The table starts with a line ##{|## and ends with a line ##|}##.
+* An optional table caption is made with a line starting with a pipe and a plus sign ##|+## followed by the caption.
+* An optional table summary is made with a line starting with a pipe and an equal sign ##|=## followed by the summary.
+* A table row starts with a pipe and a hyphen: ##|-##.
+* A table cell starts with a pipe on a new line, or a double bar ##||## on the same line.
+* A header table cell starts with an exclamation mark, or a double exclamation mark ##!!## on the same line.
 
-The summary syntax is an extension to the Mediawiki syntax. 
+The summary syntax is an extension to the Mediawiki syntax.
 You can also simply put the summary as an attribute to the table.
 The summary is necessary to be able to create accessible tables.
 
 === HTML attributes
 
-<<RichTable
-* class="bordered"
-- style="font-weight:bold;background-color:#d8d8d8;", align=center
-|
-Attribute
-|
-Syntax
--
-|
-For the table
-|
-{| border="1"
--
-|
-For the caption
-|
-~|+ style="font-weight: bold;"
--
-|
-For a row
-|
-~|- style="height:100px"
--
-|
-For a cell
-|
-~| align="right" | Cell 2 (right aligned)
->>
+{| class="bordered"
+|-
+! Attribute
+! Syntax
+|-
+| For the table
+| {{{ {| border="1" }}}
+|-
+| For the caption
+| {{{ |+ style="font-weight: bold;" }}}
+|-
+| For a row
+| {{{ |- style="height:100px" }}}
+|-
+| For a cell
+| {{{ | align="right" | Cell 2 (right aligned) }}}
+|}
 
 The attributes might be put with or without double quotes.
 
@@ -79,7 +68,7 @@ If you specify ##class="sortable"##, the table columns will be sortable.
 
 === Example 1: simple table
 
-{| border="1", style="width: 100%"
+{| border="1" style="width: 100%"
 |+ style="font-weight: bold; font-size: 150%;" | This is the table caption
 |= This is the table summary
 |- style="white-space: nowrap"
@@ -97,7 +86,7 @@ If you specify ##class="sortable"##, the table columns will be sortable.
 The above table is rendered from:
 
 {{{
-{| border="1", style="width: 100%"
+{| border="1" style="width: 100%"
 |+ style="font-weight: bold; font-size: 150%;" | This is the table caption
 |= This is the table summary
 |- style="white-space: nowrap"
@@ -185,7 +174,7 @@ The above table is rendered from:
 === Example 4: nested tables
 
 <<MediawikiTable
-{| class="bordered", align=center
+{| class="bordered" align=center
 |+ Outer table caption
 |-
 ! Header A !! Header B
@@ -224,7 +213,7 @@ The above table is rendered from:
 
 {{{
 <<MediawikiTable
-{| class="bordered", align=center
+{| class="bordered" align=center
 |+ Outer table caption
 |-
 ! Header A !! Header B
