@@ -197,16 +197,20 @@ extends WikiPlugin
                 // If there is a "|" in the line, the start of line
                 // (before the "|") is made of attributes.
                 // The end of the line (after the "|") is the cell content
-                // This is not true if the pipe is inside []
+                // This is not true if the pipe is inside [], {{}} or {{{}}}
                 // | [foo|bar] 
                 // The following cases must work:
                 // | foo    
                 // | [foo|bar]
                 // | class="xxx" | foo
                 // | class="xxx" | [foo|bar]
+                // | {{tmpl|arg=val}}
+                // | {{image.png|alt}}
+                // | {{{ xxx | yyy }}}
                 $pospipe = strpos($line, "|");
                 $posbracket = strpos($line, "[");
-                if (($pospipe !== false) && (($posbracket === false) || ($posbracket > $pospipe))) {
+                $poscurly = strpos($line, "{");
+                if (($pospipe !== false) && (($posbracket === false) || ($posbracket > $pospipe)) && (($poscurly === false) || ($poscurly > $pospipe))) {
                     $attrs = parse_attributes(substr($line, 0, $pospipe));
                     foreach ($attrs as $key => $value) {
                         if (in_array ($key, array("id", "class", "title", "style",
