@@ -524,7 +524,7 @@ function IniConfig($file) {
             $rs['PLUGIN_CACHED_CACHE_DIR'] = TEMP_DIR . '/cache';
             if (!FindFile($rs['PLUGIN_CACHED_CACHE_DIR'], 1)) { // [29ms]
                 FindFile(TEMP_DIR, false, 1);            // TEMP must exist!
-                mkdir($rs['PLUGIN_CACHED_CACHE_DIR'], 777);
+                mkdir($rs['PLUGIN_CACHED_CACHE_DIR'], 0777);
             }
             // will throw an error if not exists.
             define('PLUGIN_CACHED_CACHE_DIR', FindFile($rs['PLUGIN_CACHED_CACHE_DIR'],false,1)); 
