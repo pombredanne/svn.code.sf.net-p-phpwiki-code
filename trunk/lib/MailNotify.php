@@ -1,5 +1,6 @@
-<?php rcs_id('$Id$');
- * Copyright (C) 2006-2007 Reini Urban
+<?php 
+rcs_id('$Id$');
+/* Copyright (C) 2006-2007 Reini Urban
  * Copyright (C) 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
