@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
 Copyright 2005 $ThePhpWikiProgrammingTeam
+Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
 This file is part of PhpWiki.
 
@@ -20,7 +21,11 @@ along with PhpWiki; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-require_once("lib/ASCIIMathPHP/ASCIIMathPHP.class.php");
+if (phpversion() >= '5') {
+    require_once("lib/ASCIIMathPHP/ASCIIMathPHP-2.0.class.php");
+} else {
+    require_once("lib/ASCIIMathPHP/ASCIIMathPHP.class.php");
+}
 
 /** 
  * Render ASCII math as MathML
@@ -62,20 +67,20 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-        if (empty($this->source))
-            return '';
+        if (empty($this->source)) {
+            return HTML::div(array('class' => "error"), "Please provide a formula to AsciiMath plugin");
+        }
 
-        include("lib/ASCIIMathPHP/ASCIIMathPHP.cfg.php");
+        if (phpversion() >= '5') {
+            include("lib/ASCIIMathPHP/ASCIIMathPHP-2.0.cfg.php");
+        } else {
+            include("lib/ASCIIMathPHP/ASCIIMathPHP.cfg.php");
+        }
         $ascii_math = new ASCIIMathPHP($symbol_arr, $this->source);
         $ascii_math->genMathML();
-        return HTML::Raw($ascii_math->getMathML());
+        return HTML::raw($ascii_math->getMathML());
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2005/01/29 21:50:38  rurban
-// new MathML plugin and lib
-//
 
 // Local Variables:
 // mode: php
