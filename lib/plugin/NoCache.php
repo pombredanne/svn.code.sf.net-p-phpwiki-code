@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -56,20 +57,10 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         // works regardless of WIKIDB_NOCACHE_MARKUP
         // if WIKIDB_NOCACHE_MARKUP is false it doesn't hurt
-        return $request->setArg('nocache', $args['nocache']);
+        $request->setArg('nocache', $args['nocache']);
+        return HTML::raw('');
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2004/02/25 16:21:25  rurban
-// fixed parse error on line 71
-//
-// Revision 1.1  2004/02/24 17:34:26  rurban
-// Don't cache the following page. Mostly used for plugins, which
-// display dynamic content.
-//
-// ----------------------------------------------------------------------
-//
 
 // For emacs users
 // Local Variables:
