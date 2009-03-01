@@ -1,4 +1,4 @@
-Date: Thu, 26 Feb 2009 09:50:32 +0000
+Date: Sun,  1 Mar 2009 19:45:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,17 +11,13 @@ Content-Transfer-Encoding: binary
 //"Wiki wiki"// means "quick" in Hawai'ian.
 
 **All you really need to know is:**
-* To edit any page click on the Edit link at the bottom of the page.
-  You should do that right now, and read the source code of this page.
-  It will make more sense.
-* You get italics by surrounding words with two slashes on either side
-  //like this//.
+* To edit any page click on the //Edit//. You should do that right now, and read the source code of this page. It will make more sense.
+* You get italics by surrounding words with two slashes on either side //like this//.
 * You get **bold text** by using two asterisks on either side.
-* And, **_bold italics_** by using both.
+* And, **//bold italics//** by using both.
 * You get ##monospaced text## by using two hash signs on either side.
 * You get bullets by using an asterisk * at the start of the line.
-* To have a paragraph in plain monospaced font, start it with ~{~{~{
-  and end it with ~}~}~}:
+* To have a paragraph in plain monospaced font, start it with ~{~{~{ and end it with ~}~}~}:
 {{{
   this is a poem for sure
   about monospacing
@@ -36,7 +32,7 @@ Content-Transfer-Encoding: binary
 
 * You can get horizontal rules with four or more dashes like this:
 
-  ---------
+---------
 
 * To create hyperlinks you just capitalize the words and string them
   together. Let's say you want to create a page about how Steve
@@ -60,7 +56,7 @@ markup that you can read about in [[Help:TextFormattingRules]].
 ----
 
 If you don't like the size of the text editing window you get, you can
-change it.  See [[UserPreferences]].
+change it. See [[UserPreferences]].
 
 <noinclude>
 ----
