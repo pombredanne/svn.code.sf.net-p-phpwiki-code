@@ -1352,7 +1352,9 @@ class PageList {
         $pagename = $request->getArg('pagename');
         $defargs = array_merge(array('id' => $this->id), $request->args);
         if (USE_PATH_INFO) unset($defargs['pagename']);
-        if ($defargs['action'] == 'browse') unset($defargs['action']);
+        if (isset($defargs['action']) and ($defargs['action'] == 'browse')) {
+            unset($defargs['action']);
+        }
         $prev = $defargs;
 
         $tokens = array();
