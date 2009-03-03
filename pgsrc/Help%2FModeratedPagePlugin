@@ -1,4 +1,4 @@
-Date: Sun, 22 Feb 2009 19:16:30 +0000
+Date: Tue,  3 Mar 2009 15:32:44 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -37,14 +37,14 @@ In case of multiple moderators: first comes, first serves.
 
 == Usage
 {{{
-  <<ModeratedPage>>
+<<ModeratedPage>>
 }}}
 
 == Arguments
 
 * moderators: comma seperated list of registered usernames or groups.
   Each user should have his email defined in his prefs. Default: "Administrators" or 
-  <<SystemInfo ADMIN_USER>>
+<<SystemInfo ADMIN_USER>>
 * requirelevel: one of 0, 1, 2 or 10 on which moderation is used. Default: false (use requireaccess instead)
 * requireaccess: comma separated list of access perms, on which the moderation is used
   "view,edit,create,list,remove,change"

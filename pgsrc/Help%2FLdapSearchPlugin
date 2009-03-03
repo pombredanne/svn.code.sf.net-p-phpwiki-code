@@ -1,4 +1,4 @@
-Date: Sun, 22 Feb 2009 19:16:30 +0000
+Date: Tue,  3 Mar 2009 15:32:44 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,23 +8,23 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~LdapSearch* [[Help:WikiPlugin|plugin]] displays a LDAP query as table.
+The **~LdapSearch** [[Help:WikiPlugin|plugin]] displays a LDAP query as table.
 
 == Usage
 {{{
-  <<LdapSearch>>
-  <<LdapSearch
+<<LdapSearch>>
+<<LdapSearch
            host="localhost"
            port=389
            basedn=""
  	   filter="(cn=*)"
            attributes=""  
  >>
-  <<LdapSearch host=ldap.example.com filter="(ou=web-team)" 
+<<LdapSearch host=ldap.example.com filter="(ou=web-team)" 
                       attributes="sn cn telephonenumber">>
-  <<LdapSearch host="ldap.itd.umich.edu" basedn="" filter="(sn=jensen)" attributes="cn drink">>
-  <<LdapSearch host=ldap.example.com attributes="cn sn telephonenumber">>
-  <<LdapSearch host=bugs.debian.org port=10101 basedn="dc=current,dc=bugs,dc=debian,dc=org"
+<<LdapSearch host="ldap.itd.umich.edu" basedn="" filter="(sn=jensen)" attributes="cn drink">>
+<<LdapSearch host=ldap.example.com attributes="cn sn telephonenumber">>
+<<LdapSearch host=bugs.debian.org port=10101 basedn="dc=current,dc=bugs,dc=debian,dc=org"
                       filter="(debbugsPackage=phpwiki)" 
                       attributes="debbugsSeverity debbugsState debbugsTitle">>
 }}}

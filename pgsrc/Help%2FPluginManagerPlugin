@@ -1,4 +1,4 @@
-Date: Sun, 22 Feb 2009 19:16:30 +0000
+Date: Tue,  3 Mar 2009 15:32:44 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,12 +8,12 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The *~PluginManager* [[Help:WikiPlugin|plugin]] provides a dynamic list of plugins on this wiki.
+The **~PluginManager** [[Help:WikiPlugin|plugin]] provides a dynamic list of plugins on this wiki.
 
 == Usage
 
 {{{
-  <<PluginManager info=args>>
+<<PluginManager info=args>>
 }}}
 
 == Arguments
