@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2007 Reini Urban
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -148,17 +149,20 @@ extends WikiPlugin
 			    (array('border' => 0,'cellspacing' => 2),
 			     HTML::colgroup(array('span' => 6)),
 			     HTML::thead
-			     (HTML::th(''),HTML::th('Pagefilter'),HTML::th('Relation'),
-			      HTML::th(''),HTML::th(array('span' => 2),'Links')),
+			     (HTML::tr(
+                                       HTML::th('Pagefilter'),
+                                       HTML::th('Relation'),
+                                       HTML::th(),
+                                       HTML::th('Links'),
+                                       HTML::th()
+                                      )),
 			     HTML::tbody
 			     (HTML::tr(
-				       HTML::td($nbsp,$nbsp,$nbsp),
 				       HTML::td($pagefilter, ": "),
 				       HTML::td($relation),
 				       HTML::td(HTML::strong(HTML::tt('  ::  '))), 
 				       HTML::td($queryrel),
-				       HTML::td($nbsp, $relsubmit, 
-						$nbsp, $enhancements)))));
+				       HTML::td($nbsp, $relsubmit, $nbsp, $enhancements)))));
 
 	$allattrs = $dbi->listRelations(false,true,true);
 	if (empty($allrelations) and empty($allattrs)) // be nice to the dummy.
@@ -228,17 +232,20 @@ extends WikiPlugin
 			    (array('border' => 0,'cellspacing' => 2),
 			     HTML::colgroup(array('span' => 6)),
 			     HTML::thead
-			     (HTML::th(''),HTML::th('Pagefilter'),HTML::th('Attribute'),
-			      HTML::th('Op'),HTML::th(array('span' => 2),'Value')),
+			     (HTML::tr(
+                                       HTML::th('Pagefilter'),
+                                       HTML::th('Attribute'),
+                                       HTML::th('Op'),
+                                       HTML::th('Value'),
+                                       HTML::th()
+                                      )),
 			     HTML::tbody
 			     (HTML::tr(
-				       HTML::td($nbsp,$nbsp,$nbsp),
 				       HTML::td($pagefilter, ": "),
 				       HTML::td($attribute), 
 				       HTML::td($attr_op),
 				       HTML::td($queryatt),
-				       HTML::td($nbsp, $attsubmit,
-						$nbsp, $enhancements)))));
+				       HTML::td($nbsp, $attsubmit, $nbsp, $enhancements)))));
 	
 	return HTML($form1, $form2);
     }
@@ -453,20 +460,6 @@ extends _PageList_Column_SemanticSearch_relation
 	    return $link['linkvalue'];
     }
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2007/01/04 16:44:22  rurban
-// Fix the info argument: e.g. try info=pagename or info=relation,linkto. Sorry, the pagename is always there.
-//
-// Revision 1.3  2007/01/03 21:23:15  rurban
-// Use Units and SemanticWeb: "population > 0.5 million or area < 100m^2" will work. Add help link if no relations are defined yet. Add attr_op=~ to attribute livesearch
-//
-// Revision 1.2  2007/01/02 13:23:06  rurban
-// add SemanticSearch with internal form
-//
-// Revision 1.1  2006/03/07 20:52:01  rurban
-// not yet working good enough
-//
 
 // Local Variables:
 // mode: php
