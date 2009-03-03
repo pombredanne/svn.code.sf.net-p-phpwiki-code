@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2003,2004,2005,2007 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  
  This file is part of PhpWiki.
 
@@ -340,24 +341,27 @@ display_slides();"));
                 if ($mode == 'normal' || $mode == 'slide') {
                     if(!@empty($params['location'])) $params['src'] = $params['location'];
                     unset ($params['location'],$params['src_tile']);
-                    $url_image = $link ? HTML::a(array("id" => basename($value["name"])),
-                                         HTML::a(array("href" => "$url"), HTML::img($params))) :  HTML::img($params);
+                    $url_image = $link ? HTML::a(array("id" => basename($value["name"]), 
+                                                       "href" => "$url"), HTML::img($params))
+                                       : HTML::img($params);
                 } else {
                     $keep = $params; 
                     if (!@empty ($params['src_tile']))
                         $params['src'] = $params['src_tile'] ;
                     unset ($params['location'],$params['src_tile']);
-                    $url_image = $link ? HTML::a(array("id" => basename($value["name"])),
-                                         HTML::a(array("href" => "$url"),
-                                                 ImageTile::image_tile($params))) : HTML::img($params);
+                    $url_image = $link ? HTML::a(array("id" => basename($value["name"]),
+                                                       "href" => "$url"),
+                                                 ImageTile::image_tile($params))
+                                       : HTML::img($params);
                     $params = $keep;
                     unset ($keep);
                 }
             } else {
                 if(!@empty($params['location'])) $params['src'] = $params['location'];
                 unset ($params['location'],$params['src_tile']);
-                $url_image = $link ? HTML::a(array("id" =>  basename($value["name"])),
-                                     HTML::a(array("href" => "$b_url"), HTML::img($params))) : HTML::img($params);
+                $url_image = $link ? HTML::a(array("id" =>  basename($value["name"]),
+                                                   "href" => "$b_url"), HTML::img($params))
+                                   : HTML::img($params);
             }
             if ($mode == 'list')
 		$url_text = HTML::a(array("id" => basename($value["name"])),
@@ -368,10 +372,10 @@ display_slides();"));
                     HTML::td($cell,
 			     HTML::div(array('valign' => 'top'), $url_image),
 			     HTML::div(array('valign' => 'bottom'),
-				       HTML::span(array('class'=>'boldsmall'),
+				       HTML::div(array('class'=>'boldsmall'),
 						  ($url_text)),
 				       HTML::br(),
-				       HTML::span(array('class'=>'gensmall'),
+				       HTML::div(array('class'=>'gensmall'),
 						  ($size[0].
 						   " x ".
 						   $size[1].
@@ -383,12 +387,12 @@ display_slides();"));
                     HTML::td(array("valign"  => "top",
                                    "nowrap"  => 0,
                                    "bgcolor" => $color),
-                                   HTML::span(array('class'=>'boldsmall'),($url_text))));
+                                   HTML::div(array('class'=>'boldsmall'),($url_text))));
                 $row->pushContent(
                     HTML::td(array("valign"  => "top",
                                    "nowrap"  => 0,
                                    "bgcolor" => $color),
-                                   HTML::span(array('class'=>'gensmall'),
+                                   HTML::div(array('class'=>'gensmall'),
                                               ($size[0].
                                                " x ".
                                                $size[1].
@@ -399,7 +403,7 @@ display_slides();"));
                         HTML::td(array("valign"  => "top",
                                        "nowrap"  => 0,
                                        "bgcolor" => $color),
-                                       HTML::span(array('class'=>'gensmall'),$desc)));
+                                       HTML::div(array('class'=>'gensmall'),$desc)));
     
             } elseif ($mode == 'thumbs') {
                 $desc = ($showdesc != 'none') ?
@@ -411,7 +415,7 @@ display_slides();"));
                                   // FIXME: no HtmlElement for fontsizes?
                                   // rurban: use ->setAttr("style","font-size:small;")
                                   //         but better use a css class
-                                  HTML::span(array('class'=>'gensmall'),$desc)
+                                  HTML::div(array('class'=>'gensmall'),$desc)
                                   )));
             } elseif ($mode == 'normal') {
                 $desc = ($showdesc != 'none') ? HTML::p($value["desc"]) : '';
@@ -419,7 +423,7 @@ display_slides();"));
                         (HTML::td($cell,
                                   $url_image,
                                   // FIXME: no HtmlElement for fontsizes?
-                                  HTML::span(array('class'=>'gensmall'),$desc)
+                                  HTML::div(array('class'=>'gensmall'),$desc)
                                   )));
             } elseif ($mode == 'slide') {
                 if ($newwidth == 'auto' || !$newwidth) 
@@ -461,7 +465,7 @@ display_slides();"));
                 $row->pushContent(
                                   (HTML::td($cell,
                                             $url_image,
-                                            HTML::span(array('class'=>'gensmall'), $desc)
+                                            HTML::div(array('class'=>'gensmall'), $desc)
                                             )));
                 $count ++;
             } elseif ($mode == 'row') {
@@ -484,7 +488,7 @@ display_slides();"));
                  ($key + 1) == count($photos) ||
                  $p) {
                     if ($mode == 'row')
-                        $html->pushcontent(HTML::span($row));
+                        $html->pushcontent(HTML::div($row));
                     else
                         $html->pushcontent(HTML::tr($row));
                     $row->setContent('');
@@ -658,81 +662,6 @@ display_slides();"));
         }
     }
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.14  2005/10/12 06:19:07  rurban
-// protect unsafe calls
-//
-// Revision 1.13  2005/09/26 06:39:55  rurban
-// re-add lost mode=column|row. by Thomas Harding
-//
-// Revision 1.12  2005/09/20 19:34:51  rurban
-// slide and thumbs mode by Thomas Harding
-//
-//
-// Revision 1.14  2005/09/19 23:49:00 tharding
-// added slide mode, correct url retrieving with url_get_contents
-//
-// Revision 1.13  2005/09/17 18:17:00 tharding
-// add resized thumbnails (see ImageTile.php at top-level)
-// comment url_get_contents (fopen can open a web location)
-//
-// Revision 1.11  2004/12/06 19:50:05  rurban
-// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
-// renamed delete_page to purge_page.
-// enable action=edit&version=-1 to force creation of a new version.
-// added BABYCART_PATH config
-// fixed magiqc in adodb.inc.php
-// and some more docs
-//
-// Revision 1.10  2004/12/01 19:34:13  rurban
-// Cleanup of CONSTANT pollution.
-// renamed weblocation to url.
-// allow any url.
-// use fixed ";" CSV seperator
-// fix substr_replace usage bug.
-//
-// Revision 1.9  2004/07/08 20:30:07  rurban
-// plugin->run consistency: request as reference, added basepage.
-// encountered strange bug in AllPages (and the test) which destroys ->_dbi
-//
-// Revision 1.8  2004/06/01 15:28:01  rurban
-// AdminUser only ADMIN_USER not member of Administrators
-// some RateIt improvements by dfrankow
-// edit_toolbar buttons
-//
-// Revision 1.7  2004/05/03 20:44:55  rurban
-// fixed gettext strings
-// new SqlResult plugin
-// _WikiTranslation: fixed init_locale
-//
-// Revision 1.6  2004/04/18 00:19:30  rurban
-// better default example with local src, don't require weblocation for
-// the default setup, better docs, fixed ini_get => get_cfg_var("allow_url_fopen"),
-// no HttpClient lib yet.
-//
-// Revision 1.5  2004/03/09 12:10:23  rurban
-// fixed getimagesize problem with local dir.
-//
-// Revision 1.4  2004/02/28 21:14:08  rurban
-// generally more PHPDOC docs
-//   see http://xarch.tu-graz.ac.at/home/rurban/phpwiki/xref/
-// fxied WikiUserNew pref handling: empty theme not stored, save only
-//   changed prefs, sql prefs improved, fixed password update,
-//   removed REPLACE sql (dangerous)
-// moved gettext init after the locale was guessed
-// + some minor changes
-//
-// Revision 1.3  2004/02/27 08:03:35  rurban
-// Update from version 1.2 by Ted Vinke
-// implemented the localdir support
-//
-// Revision 1.2  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.1  2003/01/05 04:21:06  carstenklapp
-// New plugin by Ted Vinke (sf tracker patch #661189)
-//
 
 // For emacs users
 // Local Variables:
