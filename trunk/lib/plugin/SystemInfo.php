@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /**
  Copyright (C) 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -512,7 +513,7 @@ extends WikiPluginCached
                     continue;
                 if (!$desc)
                     $desc = _($arg);
-                $table->pushContent(HTML::tr(HTML::td(HTML::strong($desc . ':')),
+                $table->pushContent(HTML::tr(HTML::th(array('style' => "white-space:nowrap"), $desc),
                                              HTML::td(HTML($this->call($arg, $availableargs)))));
             }
             return $table;
