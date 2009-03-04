@@ -1204,7 +1204,7 @@ function SplitPagename ($page) {
             $RE[] = "/(?<= |${sep}|^)([AI])([[:upper:]][[:lower:]])/";
             break;
         case 'fr': 
-            $RE[] = "/(?<= |${sep}|^)([�])([[:upper:]][[:lower:]])/";
+            $RE[] = "/(?<= |${sep}|^)([À])([[:upper:]][[:lower:]])/";
             break;
         }
         // Split numerals from following letters.
@@ -2561,6 +2561,16 @@ function compute_tablecell ($table, $i, $j, $imax, $jmax) {
     return $table[$i][$j];
 }
 
+/**
+ * Remove accents from given text.
+ */
+function strip_accents($text) {
+    $res = utf8_decode($text);
+    $res = strtr($res,
+		utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'),
+					'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+    return utf8_encode($res);
+}
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
