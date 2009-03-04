@@ -225,7 +225,7 @@ ws[cfh]");
                 $message->pushContent(HTML::p(fmt("Only files with the extension %s are allowed.",
                                               join(", ", $this->allowed_extensions))));
             }
-            elseif (preg_match("/[^._a-zA-Z0-9- ]/", $userfile_name))
+            elseif (preg_match("/[^._a-zA-Z0-9- ]/", strip_accents($userfile_name)))
             {
             	$message->pushContent($err_header);
                 $message->pushContent(HTML::p(_("Invalid filename. File names may only contain alphanumeric characters and dot, underscore, space or dash.")));
