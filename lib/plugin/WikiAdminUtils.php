@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /**
  Copyright 2003,2004,2006 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -60,8 +61,9 @@ extends WikiPlugin
         
         if (!$action)
             $this->error("No action specified");
-        if (!($default_label = $this->_getLabel($action)))
-            $this->error("Bad action");
+        if (!($default_label = $this->_getLabel($action))) {
+            return HTML::div(array('class' => "error"), fmt("Bad action requested: %s", $action));
+        }
         if ($request->getArg('action') != 'browse')
             return $this->disabled("(action != 'browse')");
         
