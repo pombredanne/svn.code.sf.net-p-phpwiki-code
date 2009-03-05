@@ -1,4 +1,4 @@
-Date: Sat, 11 Feb 2009 22:22:24 +0100
+Date: Thu,  5 Mar 2009 12:02:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -107,7 +107,9 @@ new phpwiki engine update:
 * Upgrade new or changed page revisions from pgsrc,
 * Upgrade the database schema (mysql //page.id auto_increment//, ADD //session.sess_ip//),
 
-Do the **[[phpwiki:HomePage?action=upgrade|Upgrade]]**
+You can force overwrite or not:
+* **[[phpwiki:HomePage?action=upgrade|Upgrade]]**
+* **[[phpwiki:HomePage?action=upgrade&overwrite=1|Upgrade & Overwrite]]**
 
 == Format of the files
 
