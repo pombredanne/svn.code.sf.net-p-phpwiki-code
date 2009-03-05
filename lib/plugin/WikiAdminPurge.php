@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: WikiAdminPurge.php 6286 2008-10-02 10:01:29Z vargenau $');
+rcs_id('$Id$');
 /*
  Copyright 2002,2004 $ThePhpWikiProgrammingTeam
  Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -40,7 +40,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
-                            "\$Revision: 6286 $");
+                            "\$Revision$");
     }
 
     function getDefaultArguments() {
