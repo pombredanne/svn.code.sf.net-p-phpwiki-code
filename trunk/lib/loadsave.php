@@ -1039,7 +1039,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
                               _("Overwrite All"),
                               _("PhpWikiAdministration"),
                               'wikiunsafe');
-                $mesg->pushContent(HTML::div(array('class' => 'hint'), $owb));
+                $mesg->pushContent(HTML::span(array('class' => 'hint'), $owb));
                 $overwite_all = true;
             }
         } else {
