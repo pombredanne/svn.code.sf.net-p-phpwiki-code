@@ -22,7 +22,7 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <h1><?=$HEADER?></h1>
 
 <div class="message"><?=$CONTENT?></div>
-<p class="buttons"><?=$BUTTONS?></a></p>
+<p class="buttons"><?=$BUTTONS?></p>
 </div>
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
   <?= empty($WARNINGS) ? '' : $WARNINGS ?>
