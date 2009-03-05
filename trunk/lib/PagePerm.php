@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2004,2007 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -204,6 +205,7 @@ function action2access ($action) {
     case 'loadfile': 
 	// probably create/edit but we cannot check all page permissions, can we?
     case 'remove':
+    case 'purge':
     case 'lock':
     case 'unlock':
     case 'upgrade':
@@ -309,6 +311,7 @@ function getAccessDescription($access) {
                                     'dump'     => _("Download page contents"),
                                     'change'   => _("Change page attributes"),
                                     'remove'   => _("Remove this page"),
+                                    'purge'    => _("Purge this page"),
                                     );
     }
     if (in_array($access, array_keys($accessDescriptions)))
@@ -447,6 +450,8 @@ class PagePermission {
                       'create' => array(ACL_EVERY => true),
                       'list'   => array(ACL_EVERY => true),
                       'remove' => array(ACL_ADMIN => true,
+                                        ACL_OWNER => true),
+                      'purge'  => array(ACL_ADMIN => true,
                                         ACL_OWNER => true),
                       'dump'   => array(ACL_ADMIN => true,
                                         ACL_OWNER => true),
@@ -746,211 +751,6 @@ class PagePermission {
         return $s;
     }
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.44  2007/09/12 19:34:31  rurban
-// revise INSECURE_ACTIONS_LOCALHOST_ONLY actions
-//
-// Revision 1.43  2007/09/01 13:24:23  rurban
-// add INSECURE_ACTIONS_LOCALHOST_ONLY. advanced security settings
-//
-// Revision 1.42  2007/08/25 18:03:34  rurban
-// change rename action from access perm change to edit: allow the signed in user to rename.
-//
-// Revision 1.41  2007/07/14 12:03:25  rurban
-// fix for mult. group membership: not a member and undecided: check other groups
-//
-// Revision 1.40  2005/10/29 14:16:58  rurban
-// unify message
-//
-// Revision 1.39  2005/05/06 16:57:54  rurban
-// support captcha
-//
-// Revision 1.38  2004/11/30 17:48:38  rurban
-// just comments
-//
-// Revision 1.37  2004/11/23 13:06:30  rurban
-// several fixes and suggestions by Charles Corrigan:
-// * fix GROUP_BOGO_USER check
-// * allow group pages to have the link to the user page in [ ] brackets
-// * fix up the implementation of GroupWikiPage::getMembersOf and allow the
-//   user page to be linked in [ ] brackets
-// * added _OWNER and _CREATOR to special wikigroups
-// * check against those two for group membership also, not only the user.
-//
-// Revision 1.36  2004/11/21 11:59:16  rurban
-// remove final \n to be ob_cache independent
-//
-// Revision 1.35  2004/11/15 15:56:40  rurban
-// don't load PagePerm on ENABLE_PAGEPERM = false to save memory. Move mayAccessPage() to main.php
-//
-// Revision 1.34  2004/11/01 10:43:55  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-// Revision 1.33  2004/09/26 11:47:52  rurban
-// fix another reecursion loop when . exists: deny if ACL not defined; implement pageperm cache
-//
-// Revision 1.32  2004/09/25 18:56:09  rurban
-// avoid recursion bug on setacl for "."
-//
-// Revision 1.31  2004/09/25 18:34:45  rurban
-// fix and warn on too restrictive ACL handling without ACL in existing . (dotpage)
-//
-// Revision 1.30  2004/09/25 16:24:02  rurban
-// fix interesting PagePerm problem: -1 == true
-//
-// Revision 1.29  2004/07/03 08:04:19  rurban
-// fixed implicit PersonalPage login (e.g. on edit), fixed to check against create ACL on create, not edit
-//
-// Revision 1.28  2004/06/25 14:29:17  rurban
-// WikiGroup refactoring:
-//   global group attached to user, code for not_current user.
-//   improved helpers for special groups (avoid double invocations)
-// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
-// fixed a XHTML validation error on userprefs.tmpl
-//
-// Revision 1.27  2004/06/16 10:38:58  rurban
-// Disallow refernces in calls if the declaration is a reference
-// ("allow_call_time_pass_reference clean").
-//   PhpWiki is now allow_call_time_pass_reference = Off clean,
-//   but several external libraries may not.
-//   In detail these libs look to be affected (not tested):
-//   * Pear_DB odbc
-//   * adodb oracle
-//
-// Revision 1.26  2004/06/14 11:31:36  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.25  2004/06/08 13:51:57  rurban
-// some comments only
-//
-// Revision 1.24  2004/06/08 10:54:46  rurban
-// better acl dump representation, read back acl and owner
-//
-// Revision 1.23  2004/06/08 10:05:11  rurban
-// simplified admin action shortcuts
-//
-// Revision 1.22  2004/06/07 22:44:14  rurban
-// added simplified chown, setacl actions
-//
-// Revision 1.21  2004/06/07 22:28:03  rurban
-// add acl field to mimified dump
-//
-// Revision 1.20  2004/06/07 18:39:03  rurban
-// support for SetAclSimple
-//
-// Revision 1.19  2004/06/06 17:12:28  rurban
-// fixed PagePerm non-object problem (mayAccessPage), also bug #967150
-//
-// Revision 1.18  2004/05/27 17:49:05  rurban
-// renamed DB_Session to DbSession (in CVS also)
-// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
-// remove leading slash in error message
-// added force_unlock parameter to File_Passwd (no return on stale locks)
-// fixed adodb session AffectedRows
-// added FileFinder helpers to unify local filenames and DATA_PATH names
-// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
-//
-// Revision 1.17  2004/05/16 23:10:44  rurban
-// update_locale wrongly resetted LANG, which broke japanese.
-// japanese now correctly uses EUC_JP, not utf-8.
-// more charset and lang headers to help the browser.
-//
-// Revision 1.16  2004/05/16 22:32:53  rurban
-// setacl icons
-//
-// Revision 1.15  2004/05/16 22:07:35  rurban
-// check more config-default and predefined constants
-// various PagePerm fixes:
-//   fix default PagePerms, esp. edit and view for Bogo and Password users
-//   implemented Creator and Owner
-//   BOGOUSERS renamed to BOGOUSER
-// fixed syntax errors in signin.tmpl
-//
-// Revision 1.14  2004/05/15 22:54:49  rurban
-// fixed important WikiDB bug with DEBUG > 0: wrong assertion
-// improved SetAcl (works) and PagePerms, some WikiGroup helpers.
-//
-// Revision 1.13  2004/05/15 19:48:33  rurban
-// fix some too loose PagePerms for signed, but not authenticated users
-//  (admin, owner, creator)
-// no double login page header, better login msg.
-// moved action_pdf to lib/pdf.php
-//
-// Revision 1.12  2004/05/04 22:34:25  rurban
-// more pdf support
-//
-// Revision 1.11  2004/05/02 21:26:38  rurban
-// limit user session data (HomePageHandle and auth_dbi have to invalidated anyway)
-//   because they will not survive db sessions, if too large.
-// extended action=upgrade
-// some WikiTranslation button work
-// revert WIKIAUTH_UNOBTAINABLE (need it for main.php)
-// some temp. session debug statements
-//
-// Revision 1.10  2004/04/29 22:32:56  zorloc
-// Slightly more elegant fix.  Instead of WIKIAUTH_FORBIDDEN, the current user's level + 1 is returned on a false.
-//
-// Revision 1.9  2004/04/29 17:18:19  zorloc
-// Fixes permission failure issues.  With PagePermissions and Disabled Actions when user did not have permission WIKIAUTH_FORBIDDEN was returned.  In WikiUser this was ok because WIKIAUTH_FORBIDDEN had a value of 11 -- thus no user could perform that action.  But WikiUserNew has a WIKIAUTH_FORBIDDEN value of -1 -- thus a user without sufficent permission to do anything.  The solution is a new high value permission level (WIKIAUTH_UNOBTAINABLE) to be the default level for access failure.
-//
-// Revision 1.8  2004/03/14 16:24:35  rurban
-// authenti(fi)cation spelling
-//
-// Revision 1.7  2004/02/28 22:25:07  rurban
-// First PagePerm implementation:
-//
-// $WikiTheme->setAnonEditUnknownLinks(false);
-//
-// Layout improvement with dangling links for mostly closed wiki's:
-// If false, only users with edit permissions will be presented the
-// special wikiunknown class with "?" and Tooltip.
-// If true (default), any user will see the ?, but will be presented
-// the PrintLoginForm on a click.
-//
-// Revision 1.6  2004/02/24 15:20:05  rurban
-// fixed minor warnings: unchecked args, POST => Get urls for sortby e.g.
-//
-// Revision 1.5  2004/02/23 21:30:25  rurban
-// more PagePerm stuff: (working against 1.4.0)
-//   ACL editing and simplification of ACL's to simple rwx------ string
-//   not yet working.
-//
-// Revision 1.4  2004/02/12 13:05:36  rurban
-// Rename functional for PearDB backend
-// some other minor changes
-// SiteMap comes with a not yet functional feature request: includepages (tbd)
-//
-// Revision 1.3  2004/02/09 03:58:12  rurban
-// for now default DB_SESSION to false
-// PagePerm:
-//   * not existing perms will now query the parent, and not
-//     return the default perm
-//   * added pagePermissions func which returns the object per page
-//   * added getAccessDescription
-// WikiUserNew:
-//   * added global ->prepare (not yet used) with smart user/pref/member table prefixing.
-//   * force init of authdbh in the 2 db classes
-// main:
-//   * fixed session handling (not triple auth request anymore)
-//   * don't store cookie prefs with sessions
-// stdlib: global obj2hash helper from _AuthInfo, also needed for PagePerm
-//
-// Revision 1.2  2004/02/08 13:17:48  rurban
-// This should be the functionality. Needs testing and some minor todos.
-//
-// Revision 1.1  2004/02/08 12:29:30  rurban
-// initial version, not yet hooked into lib/main.php
-//
-//
 
 // Local Variables:
 // mode: php
