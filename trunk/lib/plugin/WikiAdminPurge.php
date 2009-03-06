@@ -123,7 +123,7 @@ extends WikiPlugin_WikiAdminSelect
             // List all pages to select from.
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
-        $pagelist = new PageList_UnSelectable($args['info'], $args['exclude'], array());
+        $pagelist = new PageList_Selectable($args['info'], $args['exclude'], array());
         $pagelist->addPageList($pages);
 
         $header = HTML::p();
