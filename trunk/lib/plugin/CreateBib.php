@@ -134,8 +134,7 @@ extends WikiPlugin
 
         $html = HTML::div(array('class' => 'bib','align' => 'left'));
 	$html->pushContent($dump_button, ' ');
-        $list = HTML::pre(array('name'=>'biblist','id'=>'biblist',
-				'class' => 'bib'));
+        $list = HTML::pre(array('id'=>'biblist', 'class' => 'bib'));
 
         // Let's find the subpages
         if ($articles = $this->extractArticles($content)) {
