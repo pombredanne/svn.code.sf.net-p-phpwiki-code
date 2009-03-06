@@ -1,4 +1,4 @@
-Date: Tue,  3 Mar 2009 15:32:44 +0000
+Date: Fri,  6 Mar 2009 09:48:31 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -23,47 +23,47 @@ The **~PrevLink** [[Help:WikiPlugin|plugin]] allows to display Previous and Next
 ! Description
 ! Default value
 |-
-| <b>prev</b>
-| Link to the *Previous* page
+| **prev**
+| Link to the **Previous** page
 | empty
 |-
-| <b>next</b>
-| Link to the *Next* page
+| **next**
+| Link to the **Next** page
 | empty
 |-
-| <b>up</b>
-| Link to the *Up* page
+| **up**
+| Link to the **Up** page
 | empty
 |-
-| <b>contents</b>
-| Link to the *Contents* page
+| **contents**
+| Link to the **Contents** page
 | empty
 |-
-| <b>index</b>
-| Link to the *Index* page
+| **index**
+| Link to the **Index** page
 | empty
 |-
-| <b>first</b>
-| Link to the *First* page
+| **first**
+| Link to the **First** page
 | empty
 |-
-| <b>last</b>
-| Link to the *Last* page
+| **last**
+| Link to the **Last** page
 | empty
 |-
-| <b>order</b>
+| **order**
 | Reorder the buttons: comma-delimited
 | empty
 |-
-| <b>align</b>
+| **align**
 | Can be //left//, //right// or //center//
 | left
 |-
-| <b>style</b>
+| **style**
 | Can be //button// or //text//
 | button
 |-
-| <b>class</b>
+| **class**
 | Can be //wikiaction// or another class
 | wikiaction
 |}

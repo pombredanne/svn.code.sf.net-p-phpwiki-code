@@ -1,4 +1,4 @@
-Date: Tue,  3 Mar 2009 15:32:44 +0000
+Date: Fri,  6 Mar 2009 09:48:31 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -23,39 +23,39 @@ The **~IncludePage** [[Help:WikiPlugin|plugin]] will "include" other pages in th
 ! Description
 ! Default value
 |-
-| <b>page</b>
+| **page**
 | The page to include
 | //None// (mandatory argument)
 |-
-| <b>rev</b>
+| **rev**
 | the revision
 | defaults to most recent
 |-
-| <b>quiet</b>
+| **quiet**
 | if set, inclusion appears as normal content
 | false
 |-
-| <b>bytes</b>
+| **bytes**
 | maximum number of bytes to include
 | //None// (include all page)
 |-
-| <b>words</b>
+| **words**
 | maximum number of words to include
 | //None// (include all page)
 |-
-| <b>lines</b>
+| **lines**
 | maximum number of lines to include
 | //None// (include all page)
 |-
-| <b>sections</b>
+| **sections**
 | maximum number of sections to include
 | //None// (include all sections)
 |-
-| <b>section</b>
+| **section**
 | include a named section
 | //None//
 |-
-| <b>sectionhead</b>
+| **sectionhead**
 | when including a named section show the heading
 | false
 |}
