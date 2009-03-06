@@ -1,4 +1,4 @@
-Date: Fri,  6 Mar 2009 09:48:31 +0000
+Date: Fri,  6 Mar 2009 11:20:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -75,12 +75,15 @@ The **~IncludePage** [[Help:WikiPlugin|plugin]] will "include" other pages in th
 <<IncludePage page=Help/AllPagesPlugin section="Arguments" sectionhead=true>>
 
 === ~IncludePage page=Help/~AllPagesPlugin sections=2
-<<IncludePage page=Help/AllPagesPlugin sections=2>>
+
+Does not work.
+<!-- <<IncludePage page=Help/AllPagesPlugin sections=2>> -->
 
 == Known bugs
 
 * [~RedirectTo|Help:RedirectToPlugin] plugin is not handled correctly.
 * Line and word limit doesn't work if the included page itself includes a plugin.
+* "sections" parameter does not work if sections to include are in Wikicreole syntax
 
 == Authors
 
