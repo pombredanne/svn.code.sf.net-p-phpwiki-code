@@ -1,4 +1,4 @@
-Date: Sat, 24 Jan 2009 19:18:24 +0100
+Date: Fri,  6 Mar 2009 17:27:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,29 +8,37 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
+{| cellpadding=5
+|- valign=top
+|
+== Help
+* [[Help:Help|Help]]
+* [[Help:PhpWikiManual|PhpWikiManual]]
+|
 == Pages
-* [AllPages]
-* [AllPagesCreatedByMe]
-* [AllPagesOwnedByMe]
-* [AllPagesLastEditedByMe]
-* [AllUserPages]
-* [LockedPages]
-* [OrphanedPages]
-* [MostPopular]
-* [LeastPopular]
-* [WantedPages]
-
+* [[AllPages]]
+* [[AllUserPages]]
+* [[AllPagesCreatedByMe]]
+* [[AllPagesOwnedByMe]]
+* [[AllPagesLastEditedByMe]]
+* [[LockedPages]]
+* [[OrphanedPages]]
+* [[MostPopular]]
+* [[LeastPopular]]
+* [[WantedPages]]
+|
 == Users
-* [AllUsers]
+* [[AllUsers]]
 
 == Categories
-* [CategoryCategory]
-
+* [[CategoryCategory]]
+|
 == Changes
-* [RecentChanges]
-* [FullRecentChanges]
-* [RecentEdits]
-* [MyRecentChanges]
-* [MyRecentEdits]
-* [RecentChangesMyPages]
-* [RecentNewPages]
+* [[RecentChanges]]
+* [[FullRecentChanges]]
+* [[RecentEdits]]
+* [[MyRecentChanges]]
+* [[MyRecentEdits]]
+* [[RecentChangesMyPages]]
+* [[RecentNewPages]]
+|}
