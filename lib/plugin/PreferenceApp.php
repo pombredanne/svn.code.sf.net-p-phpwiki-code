@@ -24,7 +24,7 @@ require_once('lib/wikilens/RatingsDb.php');
  * Author: mcassano circa April 2004
  *
  * Usage:
- * <?plugin PreferenceApp category="Soda" pageLabel="TotalSoda" roundCalc="true" ?>
+ * <<PreferenceApp category="Soda" pageTextLabel="TotalSoda" roundCalc="true" >>
  */
 
 class WikiPlugin_PreferenceApp
@@ -64,8 +64,7 @@ extends WikiPlugin
             $group = $category;
         }
         if($category == null || $pageTextLabel == null){
-        	$html = HTML("PreferencesApp Error: You must declare at least parameters category and pageTextLabel.");
-        	return $html;
+                return HTML::div(array('class' => "error"), "PreferencesApp Error: You must declare at least parameters category and pageTextLabel.");
         }
       	
         $dbi = $request->getDbh();
