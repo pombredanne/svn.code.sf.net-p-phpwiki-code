@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2004,2005 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  
  This file is part of PhpWiki.
 
@@ -90,7 +91,7 @@ extends WikiPlugin
                 }
             }
         }
-        return '';
+        return HTML::raw('');
     }
 
     /**
@@ -445,31 +446,6 @@ extends WikiPlugin
     }
     
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.6  2007/01/07 18:45:46  rurban
-// Finish 3/3 of the functionality, the Moderators approve and reject, Fix some logical flaws with !empty($status[emails]). Generate a better ID
-//
-// Revision 1.5  2006/08/15 13:41:08  rurban
-// just aesthetics
-//
-// Revision 1.4  2005/01/29 19:52:09  rurban
-// more work on the last part
-//
-// Revision 1.3  2004/12/06 19:50:05  rurban
-// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
-// renamed delete_page to purge_page.
-// enable action=edit&version=-1 to force creation of a new version.
-// added BABYCART_PATH config
-// fixed magiqc in adodb.inc.php
-// and some more docs
-//
-// Revision 1.2  2004/11/30 17:46:49  rurban
-// added ModeratedPage POST action hook (part 2/3)
-//
-// Revision 1.1  2004/11/19 19:22:35  rurban
-// ModeratePage part1: change status
-//
 
 // For emacs users
 // Local Variables:
