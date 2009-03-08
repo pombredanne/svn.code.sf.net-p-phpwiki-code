@@ -1,4 +1,4 @@
-Date: Sat, 21 Feb 2009 18:33:08 +0000
+Date: Sun,  8 Mar 2009 10:12:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,17 +8,17 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-San Diego [is_a::city] located in the southwestern corner of
-[California|located_in::California], the extreme southwestern corner
+San Diego [[is_a::city]] located in the southwestern corner of
+[[located_in::California|California]], the extreme southwestern corner
 of the United States. It is the county seat of San Diego County. As of
 the 2000 census, the city had a total population of
-[1,223,400|population:=1,223,400]; as of 2005, the California Department
+[[population:=1,223,400|1,223,400]]; as of 2005, the California Department
 of Finance estimated the city to have 1,305,736 residents. The city is
 the second-largest in California and the seventh-largest in the United
 States and is noted for its temperate climate and many beaches.
 
 According to the United States Census Bureau, the city has a total
-area of [area:=963.6km^2] (372.0 mi²). 840.0 km² (324.3 mi²) of it is land and
+area of [[area:=963.6km^2]] (372.0 mi²). 840.0 km² (324.3 mi²) of it is land and
 123.5 km² (47.7 mi²) of it is water. The total area is 12.82% water.
 
 Most notably, San Diego is the location of the 2005 International

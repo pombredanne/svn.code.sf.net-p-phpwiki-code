@@ -1,4 +1,4 @@
-Date: Tue,  3 Mar 2009 15:32:44 +0000
+Date: Sun,  8 Mar 2009 10:12:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -20,9 +20,9 @@ enter the name of the page to create, then click the button.
 == Usage
 
 {{{
-     <?plugin-form CreatePage ?>
-     <?plugin-form CreatePage template=CategoryHomePage ?>
-     <?plugin-form CreatePage template=SomeTemplatePage vars="year=2004&name=None" ?>
+<?plugin-form CreatePage ?>
+<?plugin-form CreatePage template=CategoryHomePage ?>
+<?plugin-form CreatePage template=SomeTemplatePage vars="year=2004&name=None" ?>
 }}}
 
 == Arguments
@@ -59,7 +59,8 @@ optionally the PhpWiki:SqlResultPlugin a framework to create templated pages.
 
 == Authors
 
-Dan Frankowski, [Reini Urban|PhpWiki:ReiniUrban]
+* Dan Frankowski
+* [[PhpWiki:ReiniUrban|Reini Urban]]
 
 == Examples
 

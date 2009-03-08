@@ -1,4 +1,4 @@
-Date: Fri,  6 Mar 2009 11:20:34 +0000
+Date: Sun,  8 Mar 2009 10:12:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -88,7 +88,7 @@ Does not work.
 == Authors
 
 * Joe Edelman
-* bug fixes by [Reini Urban|PhpWiki:ReiniUrban]
+* bug fixes by [[PhpWiki:ReiniUrban|Reini Urban]]
 * "sections" parameter implemented by Marc-Etienne Vargenau, Alcatel-Lucent
 
 == See Also
