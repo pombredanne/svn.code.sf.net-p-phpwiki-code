@@ -1,4 +1,4 @@
-Date: Mon, 16 Jun 2008 14:15:24 +0000
+Date: Sun,  8 Mar 2009 10:12:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,7 +12,7 @@ Content-Transfer-Encoding: binary
 
   <?plugin SemanticSearch page="*" relation="%%LINKTO%%$" s="%%PAGENAME%%$" case_exact=1 noform=1 ?>
 
-Note: Relations are created implicitly by using the <tt>~:~:</tt> syntax. See [SemanticRelations|Help:SemanticRelations]. This is from the [Template/Linkto].
+Note: Relations are created implicitly by using the <tt>~:~:</tt> syntax. See [[Help:SemanticRelations|SemanticRelations]]. This is from the [[Template/Linkto]].
 
 Create a new relation target page:
   <?plugin-form CreatePage initial_content={{Template/Linkto}} ?>
