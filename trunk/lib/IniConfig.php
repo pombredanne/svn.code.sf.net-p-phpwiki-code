@@ -613,6 +613,7 @@ function fixup_static_configs($file) {
       .'ModeratedPage:MostPopular:'
       .'OrphanedPages:'
       .'PageDump:PageHistory:PageInfo:PluginManager:'
+      .'RandomPage:'
       .'RecentChanges:RecentComments:RelatedChanges:'
       .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
       .'TitleSearch:'
@@ -638,7 +639,6 @@ function fixup_static_configs($file) {
     if (defined('DEBUG') and DEBUG) {
        $AllActionPages[] = 'DebugInfo';
        $AllActionPages[] = 'EditMetaData';
-       $AllActionPages[] = 'RandomPage'; // RandomPage does not work
        $AllActionPages[] = 'SpellCheck'; // SpellCheck does not work
        $AllActionPages[] = 'PhpWikiAdministration/Chmod';
     }
