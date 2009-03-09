@@ -1,4 +1,4 @@
-Date: Tue,  3 Mar 2009 15:32:44 +0000
+Date: Mon,  9 Mar 2009 15:07:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,9 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-_short description_
+The **~WantedPages** [[Help:WikiPlugin|plugin]] returns a list of referenced pages which do not exist yet.
+
+All empty pages which are linked from any page - with an ending question mark, or for just a single page, when the page argument is present.
 
 == Usage
 {{{
@@ -17,8 +19,36 @@ _short description_
 
 == Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **page**
+| just for a single page
+| pagename
+|-
+| **withlinks**
+| display links
+| 0
+|-
+| **noheader**
+| do not display header
+| false
+|-
+| **exclude_from**
+| pages to exclude
+| PgsrcTranslation, InterWikiMap
+|-
+| **limit**
+| maximum number of wanted pages to display
+| 100
+|-
+| **paging**
+| 
+| auto
+|}
 
 == Example
 
