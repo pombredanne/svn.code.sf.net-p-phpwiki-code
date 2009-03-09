@@ -253,9 +253,13 @@ IHDR         Ä‰   IDATx^À	   Â0ízçX	ÿ7-`    IEND®B`‚';
         //$this->_dbi = & $dbi;
         $user = $request->getUser();
         //FIXME: fails on test with DumpHtml:RateIt
-        if (!is_object($user)) return HTML();
+        if (!is_object($user)) {
+            return HTML::raw('');
+        }
         $this->userid = $user->getId();
-        if (!$this->userid) return HTML();
+        if (!$this->userid) {
+            return HTML::raw('');
+        }
         $args = $this->getArgs($argstr, $request);
         $this->dimension = $args['dimension'];
         $this->imgPrefix = $args['imgPrefix'];
@@ -482,116 +486,6 @@ IHDR         Ä‰   IDATx^À	   Â0ízçX	ÿ7-`    IEND®B`‚';
     }
 
 };
-
-
-// $Log: not supported by cvs2svn $
-// Revision 1.24  2008/03/17 19:14:43  rurban
-// add mode=text: just text, no widget, for dumps
-//
-// Revision 1.23  2008/01/24 19:19:35  rurban
-// support multiple plugins per page (e.g. in plugin lists), added show=top, fixed RATING_STORAGE=WIKIPAGE, fixes smart caching
-//
-// Revision 1.22  2007/02/17 14:15:14  rurban
-// noborder for the recycle bin
-//
-// Revision 1.21  2007/01/22 23:50:48  rurban
-// Do not display if not signed in
-//
-// Revision 1.20  2006/03/04 13:57:28  rurban
-// rename hash for php-5.1
-//
-// Revision 1.19  2004/11/15 16:00:01  rurban
-// enable RateIt imgPrefix: '' or 'Star' or 'BStar',
-// enable blue prediction icons,
-// enable buddy predictions.
-//
-// Revision 1.18  2004/11/01 10:43:59  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-// Revision 1.17  2004/08/05 17:31:52  rurban
-// more xhtml conformance fixes
-//
-// Revision 1.16  2004/08/05 17:23:54  rurban
-// add alt tag for xhtml conformance
-//
-// Revision 1.15  2004/07/09 12:50:50  rurban
-// references are declared, not enforced
-//
-// Revision 1.14  2004/07/08 20:30:07  rurban
-// plugin->run consistency: request as reference, added basepage.
-// encountered strange bug in AllPages (and the test) which destroys ->_dbi
-//
-// Revision 1.12  2004/06/30 19:59:07  dfrankow
-// Make changes suitable so that wikilens theme (and wikilens.org) work properly.
-// + Remove predictions (for now)
-// + Use new RatingsDb singleton.
-// + Change RatingWidgetHtml() to use parameters like a normal PHP function
-//   so we can have PHP check that we are passing the right # of them.
-// + Change RatingWidgetHtml() to be callable static-ally
-//   (without a plugin object)
-// + Remove the "RateIt" button for now, because we don't use it on wikilens.org.
-//   Maybe if someone wants the button, there can be an arg or flag for it.
-// + Always show the cancel button, because UI widgets should not hide.
-// + Remove the "No opinion" button for now, because we don't yet store that.
-//   This is a useful thing, tho, for the future.
-//
-// Revision 1.11  2004/06/19 10:22:41  rurban
-// outcomment the pear specific methods to let all pages load
-//
-// Revision 1.10  2004/06/18 14:42:17  rurban
-// added wikilens libs (not yet merged good enough, some work for DanFr)
-//
-// Revision 1.9  2004/06/14 11:31:39  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.8  2004/06/01 15:28:01  rurban
-// AdminUser only ADMIN_USER not member of Administrators
-// some RateIt improvements by dfrankow
-// edit_toolbar buttons
-//
-// Revision _1.2  2004/04/29 17:55:03  dfrankow
-// Check in escape() changes to protect against leading spaces in pagename.
-// This is untested with Reini's _("RateIt") additions to this plugin.
-//
-// Revision 1.7  2004/04/21 04:29:50  rurban
-// write WikiURL consistently (not WikiUrl)
-//
-// Revision 1.6  2004/04/12 14:07:12  rurban
-// more docs
-//
-// Revision 1.5  2004/04/11 10:42:02  rurban
-// pgsrc/CreatePagePlugin
-//
-// Revision 1.4  2004/04/06 20:00:11  rurban
-// Cleanup of special PageList column types
-// Added support of plugin and theme specific Pagelist Types
-// Added support for theme specific UserPreferences
-// Added session support for ip-based throttling
-//   sql table schema change: ALTER TABLE session ADD sess_ip CHAR(15);
-// Enhanced postgres schema
-// Added DB_Session_dba support
-//
-// Revision 1.3  2004/04/01 06:29:51  rurban
-// better wording
-// RateIt also for ADODB
-//
-// Revision 1.2  2004/03/31 06:22:22  rurban
-// shorter javascript,
-// added prediction buttons and display logic,
-// empty HTML if not signed in.
-// fixed deleting (empty dimension => 0)
-//
-// Revision 1.1  2004/03/30 02:38:06  rurban
-// RateIt support (currently no recommendation engine yet)
-//
 
 // For emacs users
 // Local Variables:

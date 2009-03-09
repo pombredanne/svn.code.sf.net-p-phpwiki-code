@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /**
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -115,13 +116,14 @@ extends WikiPlugin
             /* Remove "<?php\n" and "\n?>" again: */
             $str = str_replace(array('&lt;?php<br />', '?&gt;'), '', $str);
 
-        /**
-         * We might have made some empty font tags. (The following
-         * str_replace string does not produce results on my system,
-         * maybe a php bug? '<font color="$color"></font>')
-         */
+        /* We might have made some empty font tags. */
         foreach (array($string, $comment, $keyword, $bg, $default, $html) as $color) {
             $search = "<font color=\"$color\"></font>";
+            $str = str_replace($search, '', $str);
+        }
+        /* Remove also empty span tags. */
+        foreach (array($string, $comment, $keyword, $bg, $default, $html) as $color) {
+            $search = "<span style=\"color: $color\"></span>";
             $str = str_replace($search, '', $str);
         }
 
@@ -186,16 +188,6 @@ extends WikiPlugin
     }
 
 };
-
-// $Log: not supported by cvs2svn $
-// Revision 1.8  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.7  2003/01/18 22:01:43  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
 
 // For emacs users
 // Local Variables:

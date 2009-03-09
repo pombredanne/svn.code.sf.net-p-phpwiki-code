@@ -107,27 +107,6 @@ extends WikiPlugin
     }
 };
 
-
-// $Log: not supported by cvs2svn $
-// Revision 1.12  2004/11/25 08:30:15  rurban
-// dont mess around with spaces
-//
-// Revision 1.11  2004/10/04 23:42:42  rurban
-// fix for pages=1
-//
-// Revision 1.10  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.9  2003/01/18 22:01:43  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-// Revision 1.8  2003/01/04 02:25:41  carstenklapp
-// Added copyleft and plugin description & version, tweaked default
-// exclude list code to allow spaces (a cosmetic workaround for
-// PluginManager plugin).
-
 // Local Variables:
 // mode: php
 // tab-width: 8
