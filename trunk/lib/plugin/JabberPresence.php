@@ -51,7 +51,8 @@ extends WikiPlugin
 	  $html = HTML::img(array('src' => urlencode($scripturl).
 				  '&jid='.urlencode($jid).
 				  '&type='.urlencode($type).
-				  '&iconset='.($iconset)));
+				  '&iconset='.($iconset),
+                                  'alt' =>""));
         return $html;
     }
 };
