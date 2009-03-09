@@ -1,4 +1,4 @@
-Date: Sun,  8 Mar 2009 10:12:36 +0000
+Date: Mon,  9 Mar 2009 15:27:36 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,15 +8,15 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-<em>SemanticSearch for pages with the *%%PAGENAME%%* attribute:</em>
+//SemanticSearch for pages with the *%%PAGENAME%%* attribute://
 
-<?plugin SemanticSearch attribute=%%PAGENAME%% s="*" page="*" case_exact=1 noform=1 ?>
+<<SemanticSearch attribute=%%PAGENAME%% s="*" page="*" case_exact=1 noform=1 >>
 
 List of all other used attributes:
-  <?plugin ListRelations mode=attributes ?>
+<<ListRelations mode=attributes>>
 
 ----
 Create a new attribute page:
-  <?plugin-form CreatePage initial_content="{{Template/Attribute}}" ?>
+<?plugin-form CreatePage initial_content="{{Template/Attribute}}" ?>
 
 Note: Attributes are created implicitly by using the <tt>~:~=</tt> syntax. See [[Help:SemanticRelations|SemanticRelations]]
