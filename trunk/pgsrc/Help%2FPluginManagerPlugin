@@ -1,4 +1,4 @@
-Date: Tue,  3 Mar 2009 15:32:44 +0000
+Date: Mon,  9 Mar 2009 17:21:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -36,11 +36,11 @@ define('REQUIRE_ADMIN', true) in the sourcecode to disable general usage.
 mechanism. In short, you extend a PHP class we provide and customize
 it to print out the content you want. For more information see
 [Help:WikiPlugin], [Help:HelloWorldPlugin], and view the source of the files in
-<tt>lib/plugin</tt>.
+##lib/plugin##.
 
 If there is no example page for the plugin, or you need more
 information, the best place to go is the source of the plugin. Under
-your wiki's root directory, the folder <tt>lib/plugin</tt> contains all the PHP
+your wiki's root directory, the folder ##lib/plugin## contains all the PHP
 files for the plugins.
 
 == External Requirements
@@ -60,7 +60,7 @@ not provided with ~PhpWiki or PHP, such as
 * a [Google license key | http://www.google.com/apis/] for the [Help:GooglePlugin], 
 * optionally an external recommender engine (none yet, php only so far) and the wikilens theme for the RateIt plugin,
 * optionally apache/mod_log_{my}sql for fast, external log analysis if ACCESS_LOG_SQL=1 (Referer, Abuse Prevention).
-  See <tt>lib/Request.php</tt> and http://www.outoforder.cc/projects/apache/mod_log_sql/
+  See ##lib/Request.php## and http://www.outoforder.cc/projects/apache/mod_log_sql/
 
 == Author
 [Jeff Dairiki|PhpWiki:JeffDairiki] ?

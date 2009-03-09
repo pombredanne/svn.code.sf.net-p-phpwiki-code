@@ -1,4 +1,4 @@
-Date: Sun,  8 Mar 2009 10:12:36 +0000
+Date: Mon,  9 Mar 2009 17:21:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,7 +14,7 @@ This information may be sensitive and therefore this plugin is limited to
 administrator access only.
 
 A small number of queries that may (or might not) use the ~MySQL
-specific dialect of SQL are provided in <tt>lib/plugin/~AnalyseAccessLogSql.php</tt>. 
+specific dialect of SQL are provided in ##lib/plugin/~AnalyseAccessLogSql.php##. 
 For more information, please see the section *Adding new queries* below.
 
 == Usage
@@ -59,7 +59,7 @@ local_referrers:
 
 ==Adding new queries
 
-The file <tt>lib/plugin/~AnalyseAccessLogSql.php</tt> contains a default set of queries against the SQL access log.
+The file ##lib/plugin/~AnalyseAccessLogSql.php## contains a default set of queries against the SQL access log.
 Feel free to change this file to suit your own needs, but please note that this requires filesystem access to the web server where ~PhpWiki is running.
 In particular, this file may need to be modified to correctly query databases other than MySQL.
 The queries supplied by default are: "*Referring URLs*", "*Referring Domains*", "*Remote Hosts*", "*Users*" and "*Host Users*".

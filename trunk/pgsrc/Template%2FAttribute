@@ -1,4 +1,4 @@
-Date: Mon,  9 Mar 2009 15:27:36 +0000
+Date: Mon,  9 Mar 2009 17:21:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -19,4 +19,4 @@ List of all other used attributes:
 Create a new attribute page:
 <?plugin-form CreatePage initial_content="{{Template/Attribute}}" ?>
 
-Note: Attributes are created implicitly by using the <tt>~:~=</tt> syntax. See [[Help:SemanticRelations|SemanticRelations]]
+Note: Attributes are created implicitly by using the ##~:~=## syntax. See [[Help:SemanticRelations|SemanticRelations]]
