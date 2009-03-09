@@ -1,4 +1,4 @@
-Date: Tue,  3 Mar 2009 15:32:44 +0000
+Date: Mon,  9 Mar 2009 18:33:55 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=iso-8859-1
 Content-Transfer-Encoding: binary
 
-The **~AsciiSVGPlugin** [[Help:WikiPlugin|plugin]] is an interface to 
+The **~AsciiSVGPlugin** [[Help:WikiPlugin|plugin]] is an interface to
 [[http://www1.chapman.edu/~jipsen/svg/asciisvg.html]]
 
 Requires ENABLE_XHTML_XML = true
@@ -21,43 +21,61 @@ then you should see the examples.
 
 == Usage
 {{{
-<<AsciiSVG width= height= onmousemove="" script="" 
-         code...  
+<<AsciiSVG width= height= onmousemove="" script=""
+         code...
 >>
 }}}
 
 == Arguments
 
-width, height, script, onmouseover
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **height**
+| graph width
+| 200
+|-
+| **height**
+| graph height
+| 200
+|-
+| **script**
+|
+| false
+|-
+| **onmouseover**
+|
+| false
+|}
 
-All other arguments are passed to the ASCIISvg javascript library and
-rendered as SVG.
+All other arguments are passed to the ASCIISvg javascript library and rendered as SVG.
 
 See [[http://www1.chapman.edu/~jipsen/svg/asciisvg.html]]
 
 == Example
 
 {{{
-<<AsciiSVG width="117" height="117" 
-  border = 0
+<<AsciiSVG width="117" height="117"
   initPicture(-10,10)
   axes()
   stroke = "red"
   p = []
-  with (Math) 
+  with (Math)
     for (t = 0; t < 10.01; t += 0.05)
       p[p.length] = [t*cos(PI*t), t*sin(PI*t)]
   path(p)
 >>
 }}}
 
-<<AsciiSVG width="117" height="117" 
-  border = 0
+<<AsciiSVG width="117" height="117"
   initPicture(-10,10)
   axes()
   stroke = "red"
   p = []
-  with (Math) 
+  with (Math)
     for (t = 0; t < 10.01; t += 0.05)
       p[p.length] = [t*cos(PI*t), t*sin(PI*t)]
   path(p)
@@ -65,8 +83,7 @@ See [[http://www1.chapman.edu/~jipsen/svg/asciisvg.html]]
 
 == Known Problems
 
-With multiple ~AsciiSVG plugins on the same page the 2nd and
-subsequent ones will have the same width and height.
+With multiple ~AsciiSVG plugins on the same page the second and subsequent ones will have the same width and height.
 
 == Author
 * [[PhpWiki:ReiniUrban|Reini Urban]]
