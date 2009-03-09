@@ -1,4 +1,4 @@
-Date: Sun, 22 Feb 2009 19:16:30 +0000
+Date: Mon,  9 Mar 2009 17:21:33 +0000
 X-Rcs-Id: $Id$
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
@@ -95,7 +95,7 @@ library. ~PageList provides automatic support for those arguments.
   For details see the PhpWiki:PageList library documentation.
 
 *exclude* and *pages* accept a list of pages. Either as comma-seperated list,
-supporting glob-style wildcards, or via the <tt><!plugin-list pluginname ~[args~] !></tt>
+supporting glob-style wildcards, or via the ##<!plugin-list pluginname ~[args~] !>##
 invocation syntax, where pluginname might be any plugin returning a PhpWiki:PageList.
 See PhpWiki:PluginList.
 
@@ -104,7 +104,7 @@ input parameter for other plugins, actions or formats.
 
 === Basic Plugin Types
 
-All these plugins derive from the <tt>WikiPlugin</tt> class extending the
+All these plugins derive from the ##WikiPlugin## class extending the
 run method,
 which returns a object tree of HTML objects, and may react on any
 provided arguments from the ~WikiPage (see the args below) or
