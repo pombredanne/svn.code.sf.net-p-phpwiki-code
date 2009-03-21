@@ -35,7 +35,7 @@ extends WikiDB_backend_PearDB
                 //http://dev.mysql.com/doc/mysql/en/charset-connection.html
                 if (isset($aliases[strtolower($charset)])) {
                     // mysql needs special unusual names and doesn't resolve aliases
-                    mysql_query("SET NAMES '". $aliases[$charset] . "'");
+                    mysql_query("SET NAMES '". $aliases[strtolower($charset)] . "'");
                 } else {
                     mysql_query("SET NAMES '$charset'");
                 }
