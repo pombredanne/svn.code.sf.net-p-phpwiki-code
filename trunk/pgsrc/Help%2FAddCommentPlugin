@@ -1,4 +1,4 @@
-Date: Tue,  3 Mar 2009 15:32:44 +0000
+Date: Sat, 21 Mar 2009 21:40:44 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -18,20 +18,37 @@ wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer
 }}}
 
 == Arguments
-__jshide__: |
-  Boolean if the comments and/or textbox should be initially hidden and on click expanded. Default: 0
-__order__:  |
-  List comments in chronological (order=normal) or reverse order (order=reverse)
-__mode__:  |
-  List of add and/or show.  Default: add,show
-__noheader__:  |
-  Boolean if the "Comments" header should be omitted. Default: 0
-__pagename__:  |
-  Attach to which page? Default: current pagename
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **jshide**
+| Boolean if the comments and/or textbox should be initially hidden and on click expanded. 
+| 0
+|-
+| **order**
+| List comments in chronological (order=normal) or reverse order (order=reverse)
+| normal
+|-
+| **mode**
+| List of add and/or show.  
+| add,show
+|-
+| **noheader**
+| Boolean if the "Comments" header should be omitted. 
+| 0
+|-
+| **pagename**
+| Attach to which page? 
+| current pagename
+|}
 
 == Known Problems
 
-jshide does not work yet. Not very well tested.
+* jshide does not work yet. Not very well tested.
 
 == Examples
 
