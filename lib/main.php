@@ -979,16 +979,10 @@ class WikiRequest extends Request {
     }
     
     function _isActionPage ($pagename, $verbose = true) {
-        $dbi = $this->getDbh();
-        $page = $dbi->getPage($pagename);
-        if (!$page) return false;
-        $rev = $page->getCurrentRevision();
-        // FIXME: more restrictive check for sane plugin?
-        if (strstr($rev->getPackedContent(), '<?plugin'))
-            return true;
-        if ($verbose and !$rev->hasDefaultContents())
-            trigger_error("$pagename: Does not appear to be an 'action page'", E_USER_NOTICE);
-        return false;
+
+        global $AllActionPages;
+ 
+        return (in_array($pagename, $AllActionPages));
     }
 
     function findActionPage ($action) {
