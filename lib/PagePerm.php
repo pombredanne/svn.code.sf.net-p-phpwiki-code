@@ -558,7 +558,7 @@ class PagePermission {
     function asTable($type) {
         $table = HTML::table();
         foreach ($this->perm as $access => $perms) {
-            $td = HTML::table(array('class' => 'cal','valign' => 'top'));
+            $td = HTML::table(array('class' => 'cal'));
             foreach ($perms as $group => $bool) {
                 $td->pushContent(HTML::tr(HTML::td(array('align'=>'right'),$group),
                                                    HTML::td($bool ? '[X]' : '[ ]')));
@@ -601,7 +601,7 @@ class PagePermission {
         $addsrc = $WikiTheme->_findData('images/add.png');
         $nbsp = HTML::raw('&nbsp;');
         foreach ($this->perm as $access => $groups) {
-            //$permlist = HTML::table(array('class' => 'cal','valign' => 'top'));
+            //$permlist = HTML::table(array('class' => 'cal'));
             $first_only = true;
             $newperm = HTML::input(array('type' => 'checkbox',
                                          'name' => "acl[_new_perm][$access]",
