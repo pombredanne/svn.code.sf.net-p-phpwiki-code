@@ -268,7 +268,20 @@ extends WikiPlugin_WikiAdminSelect
 class _PageList_Column_acl extends _PageList_Column {
     function _getValue ($page_handle, &$revision_handle) {
         $perm_tree = pagePermissions($page_handle->_pagename);
-        return pagePermissionsAclFormat($perm_tree);
+
+        list($type, $perm) = pagePermissionsAcl($perm_tree[0], $perm_tree);
+        if ($type == 'inherited') {
+            $type = sprintf(_("page permission inherited from %s"), $perm_tree[1][0]);
+        } elseif ($type == 'page') {
+            $type = _("invidual page permission");
+        } elseif ($type == 'default') {
+            $type = _("default page permission");
+        }
+        $result = HTML::span();
+        $result->pushContent($type);
+        $result->pushContent(HTML::br());
+        $result->pushContent($perm->asAclLines());
+        return $result;
     }
 };
 
