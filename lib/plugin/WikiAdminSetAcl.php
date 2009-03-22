@@ -224,7 +224,7 @@ extends WikiPlugin_WikiAdminSelect
         if ($type == 'inherited')
             $type = sprintf(_("page permission inherited from %s"), $perm_tree[1][0]);
         elseif ($type == 'page')
-            $type = _("invidual page permission");
+            $type = _("individual page permission");
         elseif ($type == 'default')
             $type = _("default page permission");
         $header->pushContent(HTML::strong(_("Type").': '), HTML::tt($type),HTML::br());
@@ -273,7 +273,7 @@ class _PageList_Column_acl extends _PageList_Column {
         if ($type == 'inherited') {
             $type = sprintf(_("page permission inherited from %s"), $perm_tree[1][0]);
         } elseif ($type == 'page') {
-            $type = _("invidual page permission");
+            $type = _("individual page permission");
         } elseif ($type == 'default') {
             $type = _("default page permission");
         }
