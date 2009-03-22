@@ -228,7 +228,6 @@ extends WikiPlugin_WikiAdminSelect
         elseif ($type == 'default')
             $type = _("default page permission");
         $header->pushContent(HTML::strong(_("Type").': '), HTML::tt($type),HTML::br());
-        $header->pushContent(HTML::strong(_("getfacl").': '), pagePermissionsSimpleFormat($perm_tree, $owner),HTML::br());
         $header->pushContent(HTML::strong(_("ACL").': '), HTML::tt($perm->asAclGroupLines()),HTML::br());
         
         $header->pushContent(HTML::p(HTML::strong(_("Description").': '),
@@ -236,7 +235,7 @@ extends WikiPlugin_WikiAdminSelect
                                      _("To ignore delete the line."),
                                      _("To add check 'Add' near the dropdown list.")
                                      ));
-        $header->pushContent(HTML::blockquote($table));
+        $header->pushContent($table);
         //
         // display array of checkboxes for existing perms
         // and a dropdown for user/group to add perms.
