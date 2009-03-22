@@ -195,6 +195,7 @@ extends WikiPlugin_WikiAdminSelect
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           $header,
+                          $buttons,
                           $pagelist->getContent(),
                           HiddenInputs($request->getArgs(),
                                         false,
@@ -202,8 +203,7 @@ extends WikiPlugin_WikiAdminSelect
                           HiddenInputs(array('admin_setacl[action]' => $next_action)),
                           ENABLE_PAGEPERM
                           ? ''
-                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)),
-                          $buttons);
+                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
     }
 
     function setaclForm(&$header, $post_args, $pagehash) {
@@ -260,7 +260,7 @@ extends WikiPlugin_WikiAdminSelect
                   HTML::br(),HTML::em(_("(Currently not working)"))
                                );
         }
-        $header->pushContent(HTML::hr(),HTML::p());
+        $header->pushContent(HTML::hr());
         return $header;
     }
 }
