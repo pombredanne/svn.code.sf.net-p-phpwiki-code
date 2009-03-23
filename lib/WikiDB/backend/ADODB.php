@@ -761,7 +761,7 @@ extends WikiDB_backend
         else
             list($have,$want) = array('linker', 'linkee');
         $orderby = $this->sortby($sortby, 'db', array('pagename'));
-        if ($orderby) $orderby = ' ORDER BY $want.' . $orderby;
+        if ($orderby) $orderby = " ORDER BY $want." . $orderby;
         if ($exclude) // array of pagenames
             $exclude = " AND $want.pagename NOT IN ".$this->_sql_set($exclude);
         else 
