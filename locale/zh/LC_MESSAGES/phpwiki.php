@@ -1596,8 +1596,6 @@ $locale["has edit conflicts - skipped"] =
    "編輯衝突 - 跳過";
 $locale["home page"] =
    "首頁";
-$locale["invidual page permission"] =
-   "個別頁面權限";
 $locale["load files into this wiki"] =
    "載入檔案到此 wiki";
 $locale["lock this page"] =

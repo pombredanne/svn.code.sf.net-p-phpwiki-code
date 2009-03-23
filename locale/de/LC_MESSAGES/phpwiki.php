@@ -2208,8 +2208,6 @@ $locale["from"] =
    "von";
 $locale["from %s"] =
    "von %s";
-$locale["getfacl"] =
-   "getfacl";
 $locale["has edit conflicts - overwriting anyway"] =
    "hat unauflösbare Konflikte beim Speichern - wird ungeprüft überschrieben";
 $locale["has edit conflicts - skipped"] =
@@ -2222,8 +2220,6 @@ $locale["invalid %s ignored"] =
    "ungültiges %s ignoriert";
 $locale["invalid argument %s"] =
    "Ungültiger Parameter %s";
-$locale["invidual page permission"] =
-   "individuelles Zugriffsrecht";
 $locale["latest comment by "] =
    "Letzter Kommentar von ";
 $locale["load files into this wiki"] =
