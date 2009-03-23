@@ -2306,8 +2306,6 @@ $locale["from"] =
    "de";
 $locale["from %s"] =
    "du %s";
-$locale["getfacl"] =
-   "getfacl";
 $locale["has edit conflicts - overwriting anyway"] =
    "conflits d'édition - écraser quand même ";
 $locale["has edit conflicts - skipped"] =
@@ -2318,8 +2316,6 @@ $locale["invalid %s ignored"] =
    "%s non valable ignoré";
 $locale["invalid argument %s"] =
    "Argument non valable : %s";
-$locale["invidual page permission"] =
-   "Permission de page individuelle";
 $locale["latest comment by "] =
    "dernier commentaire by ";
 $locale["load files into this wiki"] =

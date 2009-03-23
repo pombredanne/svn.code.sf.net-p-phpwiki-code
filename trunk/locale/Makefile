@@ -383,7 +383,6 @@ ${POT_FILE}: ../themes/MonoBook/templates/body.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/browse-footer.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/browse.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/editpage.tmpl
-${POT_FILE}: ../themes/MonoBook/templates/info.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/logo.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/navbar.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/signin.tmpl
@@ -501,6 +500,7 @@ ${POT_FILE}: ../themes/gforge/templates/login.tmpl
 ${POT_FILE}: ../themes/gforge/templates/navbar.tmpl
 ${POT_FILE}: ../themes/gforge/templates/pagelink.tmpl
 ${POT_FILE}: ../themes/gforge/templates/userprefs.tmpl
+${POT_FILE}: ../themes/gforge/themeinfo.php
 ${POT_FILE}: ../themes/shamino_com/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/shamino_com/templates/browse-footer.tmpl
 ${POT_FILE}: ../themes/shamino_com/templates/debug.tmpl
