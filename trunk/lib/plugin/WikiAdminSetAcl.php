@@ -99,6 +99,18 @@ extends WikiPlugin_WikiAdminSelect
                 elseif (mayAccessPage('change', $pagename)) {
                     setPagePermissions ($page, $perm);
                     $ul->pushContent(HTML::li(fmt("ACL changed for page '%s'.",$pagename)));
+
+                    // Create new revision so that ACL change appears in history.
+                    $current = $page->getCurrentRevision();
+                    $version = $current->getVersion();
+                    $meta = $current->_data;
+                    $text = $current->getPackedContent();
+                    $meta['summary'] = sprintf(_("ACL changed for page '%s'."), $pagename);
+                    $meta['is_minor_edit'] = 0;
+                    $meta['author'] =  $request->_user->UserName();
+                    unset($meta['mtime']); // force new date
+                    $page->save($text, $version + 1, $meta);
+
                     $count++;
                 } else {
                     $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
