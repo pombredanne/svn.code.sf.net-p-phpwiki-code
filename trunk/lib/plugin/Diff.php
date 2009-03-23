@@ -179,10 +179,16 @@ extends WikiPlugin {
             
             if ($diff->isEmpty()) {
                 $html->pushContent(HTML::hr(),
-                                   HTML::p('[', _("Versions are identical"),
-                                           ']'));
+                                   HTML::p(_("Content of versions "), $old->getVersion(),
+                                           _(" and "), $new->getVersion(), _(" is identical.")));
+                // If two consecutive versions have the same content, it is because the page was
+                // renamed, or metadata changed: ACL, owner, markup.
+                // We give the reason by printing the summary.
+                if (($new->getVersion() - $old->getVersion()) == 1) {
+                    $html->pushContent(HTML::p(_("Version "), $new->getVersion(),
+                                               _(" was created because: "), $new->get('summary')));
+                }
             } else {
-                // New CSS formatted unified diffs
                 $fmt = new HtmlUnifiedDiffFormatter;
                 $html->pushContent($fmt->format($diff));
             }
