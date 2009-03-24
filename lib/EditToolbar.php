@@ -63,7 +63,7 @@ msg_repl_close     = '"._("Close")."'
         $dbi = $GLOBALS['request']->getDbh();
         // regenerate if number of pages changes (categories, pages, templates)
         $key = $dbi->numPages();
-        $key .= '+categories+plugin';
+        $key .= '+categories+plugin' . (isBrowserSafari() ? '+safari' : '');
         if (TOOLBAR_PAGELINK_PULLDOWN) {
             $key .= "+pages";
         }
@@ -210,9 +210,12 @@ msg_repl_close     = '"._("Close")."'
                 $title = addslashes( $tool["title"] );
                 $toolbar .= ("addTagButton('$image','$title','$open','$close','$sample');\n");
             }
-            $toolbar .= ("addInfobox('" 
-                         . addslashes( _("Click a button to get an example text") ) 
-                         . "');\n");
+            /* Fails with Chrome */
+            if (!isBrowserSafari()) {
+                $toolbar .= ("addInfobox('" 
+                             . addslashes( _("Click a button to get an example text") ) 
+                             . "');\n");
+            }
         }
 
         if (JS_SEARCHREPLACE) {
@@ -281,7 +284,10 @@ msg_repl_close     = '"._("Close")."'
             $categories = array();
             while ($p = $pages->next()) {
 		$page = $p->getName();
-		$categories[] = "['$page', '%5B%5B".$page."%5D%5D']";
+		if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($page)))
+		    $categories[] = "['$page', '%5B".$page."%5D']";
+		else
+		    $categories[] = "['$page', '$page']";
             }
             if (!$categories) return '';
 	    // Ensure this to be inserted at the very end. Hence we added the id to the function.
