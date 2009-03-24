@@ -52,7 +52,7 @@ extends WikiTheme_Wikilens
 {
     
     /* this adds selected to the class */
-    function makeActionButton ($action, $label = false, $page_or_rev = false, $options = false) {
+    function makeActionButton ($action, $label=false, $page_or_rev=false, $options=false) {
         extract($this->_get_name_and_rev($page_or_rev));
 
         if (is_array($action)) {

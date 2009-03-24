@@ -12,7 +12,7 @@
   <h5><?= _("Views") ?></h5>
   <ul>
     <?php if (!string_ends_with($pagename, _("/Discussion"))) { ?>
-    <?php $talk = new WikiPageName('Talk:'.$pagename); ?>
+      <?php $talk = new WikiPageName('Talk:'.$pagename); ?>
       <?= ActionButton(array(),
 		       $isActionPage ? _("ActionPage") : _("Article"), 
 		       $talk->getParent(), array('class'=>$isBrowse ? "selected" : "", 'title' => "View the page [alt-c]")) ?>
