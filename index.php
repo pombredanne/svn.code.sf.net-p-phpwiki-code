@@ -2,7 +2,7 @@
 // iso-8859-1
 
 /*
-Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam 
+Copyright 1999,2000,2001,2002,2003,2004,2009 $ThePhpWikiProgrammingTeam 
 = array(
 "Steve Wainstead", "Clifford A. Adams", "Lawrence Akka", 
 "Scott R. Anderson", "Jon Åslund", "Neil Brown", "Jeff Dairiki",
@@ -10,7 +10,8 @@ Copyright 1999,2000,2001,2002,2003,2004 $ThePhpWikiProgrammingTeam
 "Antti Kaihola", "Jeremie Kass", "Carsten Klapp", "Marco Milanesi",
 "Grant Morgan", "Jan Nieuwenhuizen", "Aredridel Niothke", 
 "Pablo Roca Rozas", "Sandino Araico Sánchez", "Joel Uckelman", 
-"Reini Urban", "Joby Walker", "Tim Voght", "Jochen Kalmbach");
+"Reini Urban", "Marc-Etienne Vargenau", "Joby Walker", "Tim Voght", 
+"Jochen Kalmbach");
 
 This file is part of PhpWiki.
 
@@ -49,7 +50,7 @@ IniConfig(dirname(__FILE__)."/config/config.ini");
 // is enough in the wiki file, plus the action definition in a .htaccess file
 ////////////////////////////////////////////////////////////////
 
-// If any page is empty, comment the if ... line out,
+// If every page is just empty, comment the if (@is_dir line out,
 // to force include "lib/main.php".
 // Without the dir check it might fail for index.php via DirectoryIndex 
 if (@is_dir(SCRIPT_FILENAME) or realpath(SCRIPT_FILENAME) == realpath(__FILE__))
