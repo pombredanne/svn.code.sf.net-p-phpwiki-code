@@ -70,7 +70,7 @@ function browserAgent() {
     return $HTTP_USER_AGENT;
 }
 function browserDetect($match) {
-    return strstr(strtolower(browserAgent()), strtolower($match));
+    return (strpos(strtolower(browserAgent()), strtolower($match)) !== false);
 }
 // returns a similar number for Netscape/Mozilla (gecko=5.0)/IE/Opera features.
 function browserVersion() {
@@ -108,7 +108,8 @@ function isBrowserKonqueror($version = false) {
 // MacOSX Safari has certain limitations. Need detection and patches.
 // * no <object>, only <embed>
 function isBrowserSafari($version = false) {
-    $found = browserDetect('spoofer') or browserDetect('applewebkit');
+    $found = browserDetect('Spoofer/');
+    $found = browserDetect('AppleWebKit/') or $found;
     if ($version) return $found and browserVersion() >= $version; 
     return $found;
 }
@@ -324,6 +325,32 @@ function update_locale($loc) {
     return $loc;
 }
 
+/** string pcre_fix_posix_classes (string $regexp)
+*
+* Older version (pre 3.x?) of the PCRE library do not support
+* POSIX named character classes (e.g. [[:alnum:]]).
+*
+* This is a helper function which can be used to convert a regexp
+* which contains POSIX named character classes to one that doesn't.
+*
+* All instances of strings like '[:<class>:]' are replaced by the equivalent
+* enumerated character class.
+*
+* Implementation Notes:
+*
+* Currently we use hard-coded values which are valid only for
+* ISO-8859-1.  Also, currently on the classes [:alpha:], [:alnum:],
+* [:upper:] and [:lower:] are implemented.  (The missing classes:
+* [:blank:], [:cntrl:], [:digit:], [:graph:], [:print:], [:punct:],
+* [:space:], and [:xdigit:] could easily be added if needed.)
+*
+* This is a hack.  I tried to generate these classes automatically
+* using ereg(), but discovered that in my PHP, at least, ereg() is
+* slightly broken w.r.t. POSIX character classes.  (It includes
+* "\xaa" and "\xba" in [:alpha:].)
+*
+* So for now, this will do.  --Jeff <dairiki@dairiki.org> 14 Mar, 2001
+*/
 function pcre_fix_posix_classes ($regexp) {
     return $regexp;
 }
