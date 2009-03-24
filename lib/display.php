@@ -362,126 +362,12 @@ function displayPage(&$request, $template=false) {
     
     $page->increaseHitCount();
 
-    if ($request->getArg('action') != 'pdf')
+    if ($request->getArg('action') != 'pdf') {
         $request->checkValidators();
-    flush();
+    	flush();
+    }
     return '';
 }
-
-// $Log: not supported by cvs2svn $
-// Revision 1.78  2008/02/14 18:48:42  rurban
-// VALID_LINKS only for existing pages
-//
-// Revision 1.77  2007/09/12 19:32:29  rurban
-// link only VALID_LINKS with pagelist HTML_DUMP
-//
-// Revision 1.76  2007/08/10 21:59:27  rurban
-// fix missing PageList dependency
-// add format=rdfs
-//
-// Revision 1.75  2007/07/01 09:17:45  rurban
-// add ATOM support, a very questionable format
-//
-// Revision 1.74  2007/06/07 17:01:27  rurban
-// actionPage has no toks: fix format=rss* on actionpages
-//
-// Revision 1.73  2007/05/30 20:43:31  rurban
-// added MonoBook UserContribs
-//
-// Revision 1.72  2007/05/13 18:13:12  rurban
-// LinkDatabase format exceptions
-//
-// Revision 1.71  2007/02/17 22:39:05  rurban
-// format=rss overhaul
-//
-// Revision 1.70  2007/01/22 23:43:06  rurban
-// Add RecentChanges format=sidebar
-//
-// Revision 1.69  2007/01/20 15:53:51  rurban
-// Rewrite of SearchHighlight: through ActionPage and InlineParser
-//
-// Revision 1.68  2007/01/20 11:25:19  rurban
-// actionPage: request is already global
-//
-// Revision 1.67  2007/01/07 18:44:20  rurban
-// Support format handlers for single- and multi-page: pagelists from actionpage plugins. Use USE_SEARCHHIGHLIGHT. Fix InlineHighlight (still experimental).
-//
-// Revision 1.66  2006/03/19 14:26:29  rurban
-// sf.net patch by Matt Brown: Add rel=nofollow to more actions
-//
-// Revision 1.65  2005/05/05 08:54:40  rurban
-// fix pagename split for title and header
-//
-// Revision 1.64  2005/04/23 11:21:55  rurban
-// honor theme-specific SplitWikiWord in the HEADER
-//
-// Revision 1.63  2004/11/30 17:48:38  rurban
-// just comments
-//
-// Revision 1.62  2004/11/30 09:51:35  rurban
-// changed KEYWORDS from pageprefix to search term. added installer detection.
-//
-// Revision 1.61  2004/11/21 11:59:19  rurban
-// remove final \n to be ob_cache independent
-//
-// Revision 1.60  2004/11/19 19:22:03  rurban
-// ModeratePage part1: change status
-//
-// Revision 1.59  2004/11/17 20:03:58  rurban
-// Typo: call SearchHighlight not SearchHighLight
-//
-// Revision 1.58  2004/11/09 17:11:16  rurban
-// * revert to the wikidb ref passing. there's no memory abuse there.
-// * use new wikidb->_cache->_id_cache[] instead of wikidb->_iwpcache, to effectively
-//   store page ids with getPageLinks (GleanDescription) of all existing pages, which
-//   are also needed at the rendering for linkExistingWikiWord().
-//   pass options to pageiterator.
-//   use this cache also for _get_pageid()
-//   This saves about 8 SELECT count per page (num all pagelinks).
-// * fix passing of all page fields to the pageiterator.
-// * fix overlarge session data which got broken with the latest ACCESS_LOG_SQL changes
-//
-// Revision 1.57  2004/11/01 10:43:57  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-// Revision 1.56  2004/10/14 13:44:14  rurban
-// fix lib/display.php:159: Warning[2]: Argument to array_reverse() should be an array
-//
-// Revision 1.55  2004/09/26 14:58:35  rurban
-// naive SearchHighLight implementation
-//
-// Revision 1.54  2004/09/17 14:19:41  rurban
-// disable Content-Type header for now, until it is fixed
-//
-// Revision 1.53  2004/06/25 14:29:20  rurban
-// WikiGroup refactoring:
-//   global group attached to user, code for not_current user.
-//   improved helpers for special groups (avoid double invocations)
-// new experimental config option ENABLE_XHTML_XML (fails with IE, and document.write())
-// fixed a XHTML validation error on userprefs.tmpl
-//
-// Revision 1.52  2004/06/14 11:31:37  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.51  2004/05/18 16:23:39  rurban
-// rename split_pagename to SplitPagename
-//
-// Revision 1.50  2004/05/04 22:34:25  rurban
-// more pdf support
-//
-// Revision 1.49  2004/04/18 01:11:52  rurban
-// more numeric pagename fixes.
-// fixed action=upload with merge conflict warnings.
-// charset changed from constant to global (dynamic utf-8 switching)
-//
 
 // For emacs users
 // Local Variables:
