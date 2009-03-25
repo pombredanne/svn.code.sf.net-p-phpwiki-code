@@ -794,7 +794,7 @@ class PageList {
     /* ignore from, but honor limit */
     function addPages ($page_iter) {
         // TODO: if limit check max(strlen(pagename))
-	$i = 0;
+	$i = 0; $from = 0;
 	if (isa($page_iter->_iter, "WikiDB_backend_dbaBase_pageiter")) {
             $limit = 0;
 	}
