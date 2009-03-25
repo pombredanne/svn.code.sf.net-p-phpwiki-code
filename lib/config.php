@@ -99,6 +99,14 @@ function isBrowserNetscape($version = false) {
     if ($version) return $agent and browserVersion() >= $version; 
     else return $agent;
 }
+// NS3 or less
+function isBrowserNS3() {
+    return (isBrowserNetscape() and browserVersion() < 4.0);
+}
+// NS4 or less
+function isBrowserNS4() {
+    return (isBrowserNetscape() and browserVersion() < 5.0);
+}
 // must omit display alternate stylesheets: konqueror 3.1.4
 // http://sourceforge.net/tracker/index.php?func=detail&aid=945154&group_id=6121&atid=106121
 function isBrowserKonqueror($version = false) {
@@ -352,7 +360,46 @@ function update_locale($loc) {
 * So for now, this will do.  --Jeff <dairiki@dairiki.org> 14 Mar, 2001
 */
 function pcre_fix_posix_classes ($regexp) {
-    return $regexp;
+    global $charset;
+    if (!isset($charset))
+        $charset = CHARSET; // get rid of constant. pref is dynamic and language specific
+    if (in_array($GLOBALS['LANG'], array('zh')))
+        $charset = 'utf-8';
+    if (strstr($GLOBALS['LANG'],'.utf-8'))
+        $charset = 'utf-8';
+    elseif (strstr($GLOBALS['LANG'],'.euc-jp'))
+        $charset = 'euc-jp';
+    elseif (strstr($GLOBALS['LANG'], 'ja'))
+        $charset = 'euc-jp';
+
+    if (strtolower($charset) == 'utf-8') { // thanks to John McPherson
+        // until posix class names/pcre work with utf-8
+	if (preg_match('/[[:upper:]]/', '\xc4\x80'))
+            return $regexp;    
+        // utf-8 non-ascii chars: most common (eg western) latin chars are 0xc380-0xc3bf
+        // we currently ignore other less common non-ascii characters
+        // (eg central/east european) latin chars are 0xc432-0xcdbf and 0xc580-0xc5be
+        // and indian/cyrillic/asian languages
+        
+        // this replaces [[:lower:]] with utf-8 match (Latin only)
+        $regexp = preg_replace('/\[\[\:lower\:\]\]/','(?:[a-z]|\xc3[\x9f-\xbf]|\xc4[\x81\x83\x85\x87])',
+                               $regexp);
+        // this replaces [[:upper:]] with utf-8 match (Latin only)
+        $regexp = preg_replace('/\[\[\:upper\:\]\]/','(?:[A-Z]|\xc3[\x80-\x9e]|\xc4[\x80\x82\x84\x86])',
+                               $regexp);
+    } elseif (preg_match('/[[:upper:]]/', 'Ä')) {
+        // First check to see if our PCRE lib supports POSIX character
+        // classes.  If it does, there's nothing to do.
+        return $regexp;
+    }
+    static $classes = array(
+                            'alnum' => "0-9A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
+                            'alpha' => "A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
+                            'upper' => "A-Z\xc0-\xd6\xd8-\xde",
+                            'lower' => "a-z\xdf-\xf6\xf8-\xff"
+                            );
+    $keys = join('|', array_keys($classes));
+    return preg_replace("/\[:($keys):]/e", '$classes["\1"]', $regexp);
 }
 
 function deduce_script_name() {
