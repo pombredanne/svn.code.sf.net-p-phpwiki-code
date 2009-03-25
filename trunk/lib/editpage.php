@@ -235,29 +235,30 @@ class PageEditor
 
     function updateLock() {
         $changed = false;
+        if (!ENABLE_PAGE_PUBLIC) {
+            if ((bool)$this->page->get('locked') == (bool)$this->locked)
+                return false;       // Not changed.
+        }
+
         if (!$this->user->isAdmin()) {
             // FIXME: some sort of message
             return false;         // not allowed.
         }
-
         if ((bool)$this->page->get('locked') != (bool)$this->locked) {
             $this->page->set('locked', (bool)$this->locked);
             $this->tokens['LOCK_CHANGED_MSG']
-                .= $this->locked
-                ? _("Page now locked.") 
-                : _("Page now unlocked.");
+                .= ($this->locked
+                    ? _("Page now locked.") 
+                    : _("Page now unlocked.") . " ");
             $changed = true;
         }
-
-        if (ENABLE_PAGE_PUBLIC) {
-            if ((bool)$this->page->get('public') != (bool)$this->public) {
-                $this->page->set('public', (bool)$this->public);
-                $this->tokens['LOCK_CHANGED_MSG']
-                    = ($this->public 
-                       ? _("Page now public.")
-                       : _("Page now not-public.")) . " ";
-                $changed = true;
-            }
+        if (ENABLE_PAGE_PUBLIC and (bool)$this->page->get('public') != (bool)$this->public) {
+            $this->page->set('public', (bool)$this->public);
+            $this->tokens['LOCK_CHANGED_MSG']
+                .= ($this->public 
+                ? _("Page now public.")
+                : _("Page now not-public."));
+            $changed = true;
         }
         return $changed;            // lock changed.
     }
@@ -514,7 +515,7 @@ class PageEditor
 				       ']'));
 	}
 	else {
-	    // New CSS formatted unified diffs
+	    // New CSS formatted unified diffs (ugly in NS4).
 	    $fmt = new HtmlUnifiedDiffFormatter;
 	    // Use this for old table-formatted diffs.
 	    //$fmt = new TableUnifiedDiffFormatter;
@@ -611,6 +612,11 @@ class PageEditor
                                          'cols' => $request->getPref('editWidth'),
                                          'readonly' => (bool) $readonly),
                                    $this->_content);
+        /** <textarea wrap="virtual"> is not valid XHTML but Netscape 4 requires it
+         * to wrap long lines.
+         */
+        if (isBrowserNS4())
+            $textarea->setAttr('wrap', 'virtual');
         if (ENABLE_WYSIWYG) {
             return $this->WysiwygEdit->Textarea($textarea, $this->_wikicontent, 
                                                 $textarea->getAttr('name'));
@@ -660,9 +666,8 @@ class PageEditor
             = HTML::input(array('type' => 'checkbox',
                                 'name' => 'edit[locked]',
                                 'id'   => 'edit-locked',
-                                'disabled' => (bool) !$this->user->isadmin(),
+                                'disabled' => (bool) !$this->user->isAdmin(),
                                 'checked'  => (bool) $this->locked));
-
         if (ENABLE_PAGE_PUBLIC) {
             $el['PUBLIC_CB']
             = HTML::input(array('type' => 'checkbox',
