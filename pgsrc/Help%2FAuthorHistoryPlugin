@@ -1,4 +1,4 @@
-Date: Tue,  3 Mar 2009 15:32:44 +0000
+Date: Wed, 25 Mar 2009 11:27:19 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -9,18 +9,59 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 The **~AuthorHistory** [[Help:WikiPlugin|plugin]] allows you to list the history of edits by a particular
-author; you can specify the page name as well (default is the current
-page).
+author; you can specify the page name as well (default is the current page).
 
+== Usage
 {{{
-<<AuthorHistory user="test">>
-
-<<AuthorHistory page=HomePage>>
+<<AuthorHistory arguments>>
 }}}
 
-The second example will default to the current page. We can't provide
-examples for you since we don't know any potential usernames for your
-wiki.
+== Arguments
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **exclude**
+| Pages to exclude
+| none
+|-
+| **noheader**
+| Do not display page header
+| false
+|-
+| **includeminor**
+| Include minor modifications
+| false
+|-
+| **includedeleted**
+| Include deleted pages
+| false
+|-
+| **author**
+| Display modification by this author
+| Current user
+|-
+| **page**
+| Give a page name or "all"
+| Current page
+|-
+| **info**
+| Info to display in the table
+| version, minor, author, summary, mtime
+|}
+
+== Examples
+
+{{{
+<<AuthorHistory page=HomePage includeminor=1>>
+}}}
+
+{{{
+<<AuthorHistory page=all>>
+}}}
 
 <noinclude>
 ----
