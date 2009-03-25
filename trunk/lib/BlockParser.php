@@ -368,7 +368,8 @@ class ParsedBlock extends Block_HtmlElement {
     	if (!is_object($_regexpset)) {
             // nowiki_wikicreole must be before template_plugin
 	    $Block_types = array
-		    ('nowiki_wikicreole', 'template_plugin', 'placeholder', 'oldlists', 'list', 'dl', 'table_dl', 'table_wikicreole', 'table_mediawiki',
+		    ('nowiki_wikicreole', 'template_plugin', 'placeholder', 'oldlists', 'list', 'dl',
+                     'table_dl', 'table_wikicreole', 'table_mediawiki',
                      'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre', 'email_blockquote',
 		     'plugin', 'plugin_wikicreole', 'p');
             // insert it before p!
