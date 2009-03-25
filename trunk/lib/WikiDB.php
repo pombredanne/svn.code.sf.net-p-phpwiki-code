@@ -280,6 +280,8 @@ class WikiDB {
         }
         $result = $this->_backend->get_all_pages($include_empty, $sortby, $limit, 
                                                  $exclude);
+        if (isa($this->_backend, "WikiDB_backend_dba")) 
+            $limit = false;
         return new WikiDB_PageIterator($this, $result, 
                                        array('include_empty' => $include_empty, 
                                              'exclude' => $exclude,
