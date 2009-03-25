@@ -110,19 +110,19 @@ extends WikiPlugin
 
         global $WikiTheme; // date & time formatting
 
+        $table = HTML::table(array('class'=> 'pagelist'));
+        $thead = HTML::thead();
+        $tbody = HTML::tbody();
+
         if (! ($page == 'all')) {
             $p = $dbi->getPage($page);
 
-            $t = HTML::table(array('class'=> 'pagelist'));
-            $th = HTML::thead();
-            $tb = HTML::tbody();
-
-            $th->pushContent(HTML::tr(HTML::td(array('align'=> 'right'),
+            $thead->pushContent(HTML::tr(HTML::th(array('align'=> 'right'),
                                                _("Version")),
-                                      $includeminor ? HTML::td(_("Minor")) : "",
-                                      HTML::td(_("Author")),
-                                      HTML::td(_("Summary")),
-                                      HTML::td(_("Modified"))
+                                      $includeminor ? HTML::th(_("Minor")) : "",
+                                      HTML::th(_("Author")),
+                                      HTML::th(_("Summary")),
+                                      HTML::th(_("Modified"))
                                       ));
 
             $allrevisions_iter = $p->getAllRevisions();
@@ -147,38 +147,28 @@ extends WikiPlugin
 
                     $class = $isminor ? 'evenrow' : 'oddrow';
                     $tr->setAttr('class', $class);
-                    $tb->pushContent($tr);
+                    $tbody->pushContent($tr);
                     //$pagelist->addPage($rev->getPage());
                 }
             }
             $captext = fmt($includeminor ? "History of all major and minor edits by %s to page %s."  : "History of all major edits by %s to page %s." ,
                            WikiLink($author, 'auto'),
                            WikiLink($page, 'auto'));
-            $t->pushContent(HTML::caption($captext));
-            $t->pushContent($th, $tb);
         }
         else {
 
             //search all pages for all edits by this author
 
-            /////////////////////////////////////////////////////////////
-
-            $t = HTML::table(array('class'=> 'pagelist'));
-            $th = HTML::thead();
-            $tb = HTML::tbody();
-
-            $th->pushContent(HTML::tr(HTML::td(_("Page Name")),
-                                      HTML::td(array('align'=> 'right'),
+            $thead->pushContent(HTML::tr(HTML::th(_("Page Name")),
+                                      HTML::th(array('align'=> 'right'),
                                                _("Version")),
-                                      $includeminor ? HTML::td(_("Minor")) : "",
-                                      HTML::td(_("Summary")),
-                                      HTML::td(_("Modified"))
+                                      $includeminor ? HTML::th(_("Minor")) : "",
+                                      HTML::th(_("Summary")),
+                                      HTML::th(_("Modified"))
                                       ));
-            /////////////////////////////////////////////////////////////
 
             $allpages_iter = $dbi->getAllPages($includedeleted);
             while ($p = $allpages_iter->next()) {
-                /////////////////////////////////////////////////////////////
 
                 $allrevisions_iter = $p->getAllRevisions();
                 while ($rev = $allrevisions_iter->next()) {
@@ -202,25 +192,23 @@ extends WikiPlugin
 
                         $class = $isminor ? 'evenrow' : 'oddrow';
                         $tr->setAttr('class', $class);
-                        $tb->pushContent($tr);
+                        $tbody->pushContent($tr);
                         //$pagelist->addPage($rev->getPage());
                     }
                 }
-
-                /////////////////////////////////////////////////////////////
-
             }
 
             $captext = fmt($includeminor ? "History of all major and minor modifications for any page edited by %s."  : "History of major modifications for any page edited by %s." ,
                            WikiLink($author, 'auto'));
-            $t->pushContent(HTML::caption($captext));
-            $t->pushContent($th, $tb);
         }
+
+        $table->pushContent(HTML::caption($captext));
+        $table->pushContent($thead, $tbody);
 
         //        if (!$noheader) {
         // total minor, major edits. if include minoredits was specified
         //        }
-        return $t;
+        return $table;
 
         //        if (!$noheader) {
         //            $pagelink = WikiLink($page, 'auto');
