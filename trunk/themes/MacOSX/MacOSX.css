@@ -411,13 +411,15 @@ div.wiki-message {
 /**
  * PageList output
  */
+.pagelist {
+  font-size: smaller;
+}
 .pagelist tr.evenrow { background: #f8f8f8; }
 .pagelist tr.oddrow  { background: #eee; }
 .pagelist thead td {
   background: #e8e8e8;
   text-decoration: none;
   font-weight: bold;
-  font-size: smaller;
 }
 .pagelist thead td u { text-decoration: none; }
 /* Yellow highlight for every td of mouseover'd tr in pagelist tbody

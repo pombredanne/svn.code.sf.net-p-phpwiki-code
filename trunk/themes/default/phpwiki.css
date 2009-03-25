@@ -209,12 +209,13 @@ h1 { margin: 0; font-size: 140% }
  */
 table, td { font-family: Arial, Helvetica, sans-serif; }
 caption { font-family: Arial, Helvetica, sans-serif; }
-.pagelist { }
+.pagelist { 
+  font-size: smaller;
+}
 .pagelist thead td {
   background: #e8e8e8;
   text-decoration: none;
   font-weight: bold;
-  font-size: smaller;
 }
 .pagelist thead td u { text-decoration: none; }
 .pagelist tr.evenrow { background: #eee; }
