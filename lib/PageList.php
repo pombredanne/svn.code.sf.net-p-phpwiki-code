@@ -795,7 +795,10 @@ class PageList {
     function addPages ($page_iter) {
         // TODO: if limit check max(strlen(pagename))
 	$i = 0;
-        if (isset($this->_options['limit'])) { // extract from,count from limit
+	if (isa($page_iter->_iter, "WikiDB_backend_dbaBase_pageiter")) {
+            $limit = 0;
+	}
+        elseif (isset($this->_options['limit'])) { // extract from,count from limit
 	    list($from, $limit) = WikiDB_backend::limit($this->_options['limit']);
 	    $limit += $from;
         } else {
@@ -1393,7 +1396,8 @@ class PageList {
         if (count($this->_sortby) > 0) $this->_sortPages();
         
         // wikiadminutils hack. that's a way to pagelist non-pages
-        $rows = isset($this->_rows) ? $this->_rows : array(); $i = 0;
+        $rows = isset($this->_rows) ? $this->_rows : array();
+        $i = 0;
         $count = $this->getTotal();
         $do_paging = ( isset($this->_options['paging']) 
         	       and !empty($this->_options['limit']) 
@@ -1418,6 +1422,12 @@ class PageList {
         if ($caption) {
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
 	}
+
+        //Warning: This is quite fragile. It depends solely on a private variable
+        //         in ->_addColumn()
+        if (!empty($this->_columns_seen['checkbox'])) {
+            $table->pushContent($this->_jsFlipAll());
+        }
 
         $row = HTML::tr();
         $table_summary = array();
@@ -1458,6 +1468,21 @@ class PageList {
                                 HTML::tbody(false, $rows));
             return $table;
         }
+    }
+
+    function _jsFlipAll() {
+      return JavaScript("
+function flipAll(formObj) {
+  var isFirstSet = -1;
+  for (var i=0; i < formObj.length; i++) {
+      fldObj = formObj.elements[i];
+      if ((fldObj.type == 'checkbox') && (fldObj.name.substring(0,2) == 'p[')) { 
+         if (isFirstSet == -1)
+           isFirstSet = (fldObj.checked) ? true : false;
+         fldObj.checked = (isFirstSet) ? false : true;
+       }
+   }
+}");
     }
 
     /* recursive stack for private sublist options (azhead, cols) */
