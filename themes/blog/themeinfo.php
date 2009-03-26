@@ -156,7 +156,7 @@ class WikiTheme_blog extends WikiTheme {
 }
 
 $WikiTheme = new WikiTheme_blog('blog');
-define("PAGETRAIL_ARROW", " » ");
+define("PAGETRAIL_ARROW", " Â» ");
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
