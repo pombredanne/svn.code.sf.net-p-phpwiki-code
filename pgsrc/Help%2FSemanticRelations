@@ -1,11 +1,11 @@
-Date: Sun, 22 Feb 2009 19:16:30 +0000
+Date: Thu, 26 Mar 2009 11:34:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Help%2FSemanticRelations;
   flags=PAGE_LOCKED;
   markup=2;
-  charset=iso-8859-1
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 The PhpWiki:SemanticWeb implementation follows closely the
@@ -63,8 +63,8 @@ is the second-largest in California and the seventh-largest in the
 United States and is noted for its temperate climate and many beaches.
 
 According to the United States Census Bureau, the city has a total
-area of [963.6 km²|area:=963.6 km^2] (372.0 mi²). 840.0 km² 
-(324.3 mi²) of it is land and 123.5 km² (47.7 mi²) of it is water.
+area of [963.6 kmÂ²|area:=963.6 km^2] (372.0 miÂ²). 840.0 kmÂ² 
+(324.3 miÂ²) of it is land and 123.5 kmÂ² (47.7 miÂ²) of it is water.
 The total area is 12.82% water.
 
 Most notably, San Diego is the location of the 2005 International
