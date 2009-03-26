@@ -5,11 +5,11 @@
 Copyright 1999,2000,2001,2002,2003,2004,2009 $ThePhpWikiProgrammingTeam 
 = array(
 "Steve Wainstead", "Clifford A. Adams", "Lawrence Akka", 
-"Scott R. Anderson", "Jon Åslund", "Neil Brown", "Jeff Dairiki",
-"Stéphane Gourichon", "Jan Hidders", "Arno Hollosi", "John Jorgensen",
+"Scott R. Anderson", "Jon Ã…slund", "Neil Brown", "Jeff Dairiki",
+"StÃ©phane Gourichon", "Jan Hidders", "Arno Hollosi", "John Jorgensen",
 "Antti Kaihola", "Jeremie Kass", "Carsten Klapp", "Marco Milanesi",
 "Grant Morgan", "Jan Nieuwenhuizen", "Aredridel Niothke", 
-"Pablo Roca Rozas", "Sandino Araico Sánchez", "Joel Uckelman", 
+"Pablo Roca Rozas", "Sandino Araico SÃ¡nchez", "Joel Uckelman", 
 "Reini Urban", "Marc-Etienne Vargenau", "Joby Walker", "Tim Voght", 
 "Jochen Kalmbach");
 
