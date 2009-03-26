@@ -426,6 +426,10 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('param');
         return $el->_init2(func_get_args());
     }
+    function fieldset (/*...*/) {
+        $el = new HtmlElement('fieldset');
+        return $el->_init2(func_get_args());
+    }
     function legend (/*...*/) {
         $el = new HtmlElement('legend');
         return $el->_init2(func_get_args());
