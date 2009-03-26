@@ -5,7 +5,7 @@ Content-Type: application/x-phpwiki;
   pagename=San%20Diego;
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=UTF-8
 Content-Transfer-Encoding: binary
 
 San Diego [[is_a::city]] located in the southwestern corner of
@@ -18,8 +18,8 @@ the second-largest in California and the seventh-largest in the United
 States and is noted for its temperate climate and many beaches.
 
 According to the United States Census Bureau, the city has a total
-area of [[area:=963.6km^2]] (372.0 mi²). 840.0 km² (324.3 mi²) of it is land and
-123.5 km² (47.7 mi²) of it is water. The total area is 12.82% water.
+area of [[area:=963.6km^2]] (372.0 miÂ²). 840.0 kmÂ² (324.3 miÂ²) of it is land and
+123.5 kmÂ² (47.7 miÂ²) of it is water. The total area is 12.82% water.
 
 Most notably, San Diego is the location of the 2005 International
 Symposium on Wikis 2005, and the San Diego Zoo, and the San Diego
