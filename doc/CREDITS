@@ -52,7 +52,7 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ; Joseph (Joby) Walker  :
 ;: configuration libs and tools, WikiGroup architecture
 
-; Johannes Groﬂe :
+; Johannes Gro√üe :
 ;: WikiPluginCached plugins and architecture
 
 ! Localization
@@ -61,11 +61,11 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ;: built architecture to support internationalization
 ;: contributed Dutch translation
 
-;[ Sandino Araico S·nchez | mailto:sandino@sandino.net ] :
+;[ Sandino Araico S√°nchez | mailto:sandino@sandino.net ] :
 ;: contributed Spanish translation
-;: Updates by Pablo Roca (proca@clavo.net), J.RamÛn Palacios
+;: Updates by Pablo Roca (proca@clavo.net), J.Ram√≥n Palacios
 
-;[ Jon ≈slund | mailto:d98-jas@nada.kth.se ] :
+;[ Jon √Öslund | mailto:d98-jas@nada.kth.se ] :
 ;: contributed Swedish translation
 
 ; [ Arno Hollosi <ahollosi@mail.com> ] :
@@ -78,7 +78,7 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 
 ;[ Pierrick Meignen <meignen.pierrick@wanadoo.fr> ] :
 ;: contributed and maintains the French translation
-;: Updates by Trique <roland.trique@free.fr>, StÈphane Gourichon 
+;: Updates by Trique <roland.trique@free.fr>, St√©phane Gourichon 
 ;: <stephane.gourichon@lip6.fr>, Pascal <pascal@phpfrance.com>, 
 ;: Benoit Masson, Jean-Philippe Georget <jpgeorget@ouvaton.org> 
 
@@ -88,7 +88,7 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ;[ DruryL <druryl@user.sourceforge.net> ] :
 ;: contributed the Chinese translation, updates by ShiningRay <ShiningRay@users.sf.net>
 
-; Jon ≈slund
+; Jon √Öslund
 ;: contributed the Swedish translation
 
 ! Patches (mainly for 1.2.x)
@@ -141,7 +141,7 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ; Jason Buberel (HttpAuth patch)
 ; Mikhail Vladimirov (auth patches)
 ; Hendrik Scheider (some patches)
-; JÈrÙme WAGNER (copypage idea)
+; J√©r√¥me WAGNER (copypage idea)
 ; John Lines (LdapSearch plugin)
 ; Mike Pickering (Wordpress theme)
 ; Walter Rafelsberger (Shamino_com theme, FraktalNavigation)
@@ -150,7 +150,7 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ; Olivier Korn
 ; Cuthbert Cat (several patches, SiteMapPlugin, IncludeSiteMapPlugin)
 ; Roy Sutton
-; S¯ren Jacobi
+; S√∏ren Jacobi
 ; Paul Pearson (PageTrailPlugin)
 ; Ken MacCuish (PageTrail Duplicates Patch (1.3.4))
 ; Jim Hurne
@@ -162,7 +162,7 @@ Please report bugs to mailto:phpwiki-talk@lists.sourceforge.net
 ; Sameer D. Sahasrabuddhe (RichTablePlugin)
 ; NathanGass <gass@iogram.ch>, qubit <rtryon@dartmouth.edu> (UpLoadPlugin)
 ; electrawn (several patches, WikiSettingsPlugin)
-; Martin Norb‰ck (CalendarListPlugin)
+; Martin Norb√§ck (CalendarListPlugin)
 ; Alister Bulman (Calendar patch)
 ; Sebastien Delahaye (locale)
 ; Manuel Vacelet 
@@ -190,7 +190,7 @@ and many more (will be updated later)
 
 ! External credits:
 <pre>
-Olivier PLATHEY for fpdf, Don Seb‡ for fpdf
+Olivier PLATHEY for fpdf, Don Seb√† for fpdf
 Mircho Mirev for acdropdown (livesearch)
 Peter Jipsen, Kee-Lin Steven Chan for AsciiMath
 Simon Willison for HttpClient (RssFeed)
