@@ -371,7 +371,7 @@ class _PageList_Column_content extends _PageList_Column {
                 $this->search = $HTTP_POST_VARS['admin_replace']['from'];
             }
             $this->_heading .= sprintf(_(" ... around %s"),
-                                      '»'.$this->search.'«');
+                                      'Â»'.$this->search.'Â«');
         }
     }
     
@@ -409,7 +409,7 @@ class _PageList_Column_content extends _PageList_Column {
             	if (strpos($c," "))
             	    $c = "";
             	else    
-                    $c = sprintf(_("%s not found"), '»'.$search.'«');
+                    $c = sprintf(_("%s not found"), 'Â»'.$search.'Â«');
                 return HTML::div(array('style' => 'font-size:x-small','align'=>'center'),
                                  $c." ".($score ? sprintf("[%0.1f]",$score):""));
             }

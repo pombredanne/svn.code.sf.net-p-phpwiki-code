@@ -7,7 +7,7 @@ rcs_id('$Id$');
 // | text to image conversion.                                           |
 // | This is a usage example of WikiPluginCached.                        |
 // |                                                                     |
-// | Copyright (C) 2002 Johannes Groﬂe (Johannes Gro&szlig;e)            |
+// | Copyright (C) 2002 Johannes Gro√üe (Johannes Gro&szlig;e)            |
 // | You may copy this code freely under the conditions of the GPL       |
 // +---------------------------------------------------------------------+
 

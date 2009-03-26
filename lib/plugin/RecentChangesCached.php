@@ -23,7 +23,7 @@ rcs_id('$Id$');
 // +---------------------------------------------------------------------+
 // | WikiPluginCached.php                                                |
 // +---------------------------------------------------------------------+
-// | Copyright (C) 2002 Johannes Groﬂe (Johannes Gro&szlig;e)            |
+// | Copyright (C) 2002 Johannes Gro√üe                                   |
 // | You may copy this code freely under the conditions of the GPL       |
 // +---------------------------------------------------------------------+
 

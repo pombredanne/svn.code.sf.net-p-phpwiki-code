@@ -137,7 +137,7 @@ function actionPage(&$request, $action) {
 	    $request->setArg('zipname', FilenameForPage($pagename).".zip");
 	    $request->setArg('pages', $args['VALID_LINKS']);
 	    MakeWikiZipHtml($request);
-	} // time-sorted RDF แ la RecentChanges 
+	} // time-sorted RDF รก la RecentChanges 
 	elseif (in_array($format, array("rss91","rss2","rss","atom"))) {
             $args = $request->getArgs();
             if ($pagename == _("RecentChanges")) {

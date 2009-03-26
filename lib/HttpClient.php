@@ -5,7 +5,7 @@ rcs_id('$Id$');
    Version 0.9, 6th April 2003 - Simon Willison ( http://simon.incutio.com/ )
    Manual: http://scripts.incutio.com/httpclient/
 
-   Copyright © 2003 Incutio Limited
+   Copyright Â© 2003 Incutio Limited
    License: http://www.opensource.org/licenses/artistic-license.php
 
    File upload and xmlrpc support by Reini Urban for PhpWiki, 2006-12-28 18:12:47 

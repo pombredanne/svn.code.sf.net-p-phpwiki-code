@@ -1,6 +1,6 @@
 <?php rcs_id('$Id$');
 /*
- Copyright (C) 2002 Johannes Groﬂe (Johannes Gro&szlig;e)
+ Copyright (C) 2002 Johannes Gro√üe
  Copyright (C) 2004,2007 Reini Urban
 
  This file is part of PhpWiki.
@@ -54,7 +54,7 @@ define('PLUGIN_CACHED_STATIC', 128); 	 // make it available via /uploads/, not v
  *     <li>plugin/Ploticus.php</li>
  * </ul>
  *
- * @author  Johannes Groﬂe, Reini Urban
+ * @author  Johannes Gro√üe, Reini Urban
  */                                                                
 class WikiPluginCached extends WikiPlugin
 {   
