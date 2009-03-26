@@ -1356,7 +1356,7 @@ class FPDF
 
     function _parsegif ($file) 
     { 
-        //Function by Jérôme Fenal
+        //Function by JÃ©rÃ´me Fenal
         //GIF class in pure PHP from Yamasoft (http://www.yamasoft.com/php-gif.zip)
         require_once 'lib/gif.php'; 
 

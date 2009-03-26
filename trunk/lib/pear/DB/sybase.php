@@ -14,7 +14,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 // | Authors: Sterling Hughes <sterling@php.net>                          |
-// |          Antônio Carlos Venâncio Júnior <floripa@php.net>            |
+// |          AntÃ´nio Carlos VenÃ¢ncio JÃºnior <floripa@php.net>            |
 // | Maintainer: Daniel Convissor <danielc@php.net>                       |
 // +----------------------------------------------------------------------+
 //
@@ -36,7 +36,7 @@ require_once 'DB/common.php';
  * @version  $Id$
  * @category Database
  * @author   Sterling Hughes <sterling@php.net>
- * @author   Antônio Carlos Venâncio Júnior <floripa@php.net>
+ * @author   AntÃ´nio Carlos VenÃ¢ncio JÃºnior <floripa@php.net>
  */
 class DB_sybase extends DB_common
 {

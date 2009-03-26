@@ -1,6 +1,6 @@
 <?php rcs_id('$Id$');
 /*
- Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
+ Copyright (C) 2002 Johannes GroÃŸe
 
  This file is part of PhpWiki.
 
@@ -21,7 +21,7 @@
 /**
  * Gets an image from the cache and prints it to the browser.
  * This file belongs to WikiPluginCached.
- * @author  Johannes Große
+ * @author  Johannes GroÃŸe
  * @version 0.8
  */
 

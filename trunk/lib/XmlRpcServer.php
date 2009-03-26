@@ -842,36 +842,36 @@ Return Value
 Faults
     If an error condition occurs, then the appropriate fault code from
     the following list should be used. Clients can quickly determine
-    the kind of error from bits 5-8. 0×001x fault codes are used for
-    problems with the source URI, 0×002x codes are for problems with
-    the target URI, and 0×003x codes are used when the URIs are fine
+    the kind of error from bits 5-8. 0Ã—001x fault codes are used for
+    problems with the source URI, 0Ã—002x codes are for problems with
+    the target URI, and 0Ã—003x codes are used when the URIs are fine
     but the pingback cannot be acknowledged for some other reaon.
 
     0 
     	A generic fault code. Servers MAY use this error code instead
     	of any of the others if they do not have a way of determining
     	the correct fault code.
-    0×0010 (16)
+    0Ã—0010 (16)
         The source URI does not exist.
-    0×0011 (17)
+    0Ã—0011 (17)
         The source URI does not contain a link to the target URI, and
         so cannot be used as a source.
-    0×0020 (32)
+    0Ã—0020 (32)
         The specified target URI does not exist. This MUST only be
         used when the target definitely does not exist, rather than
         when the target may exist but is not recognised. See the next
         error.
-    0×0021 (33)
+    0Ã—0021 (33)
         The specified target URI cannot be used as a target. It either
         doesn't exist, or it is not a pingback-enabled resource. For
         example, on a blog, typically only permalinks are
         pingback-enabled, and trying to pingback the home page, or a
         set of posts, will fail with this error.
-    0×0030 (48)
+    0Ã—0030 (48)
         The pingback has already been registered.
-    0×0031 (49)
+    0Ã—0031 (49)
         Access denied.
-    0×0032 (50)
+    0Ã—0032 (50)
         The server could not communicate with an upstream server, or
         received an error from an upstream server, and therefore could
         not complete the request. This is similar to HTTP's 402 Bad

@@ -32,7 +32,7 @@ extends _UserPreference
          'itemProb', // Item-based Top-N recommendation algorithm with probability-based similarity function. 
                      // This algorithms tends to outperform the rest.
          'userCos',  // User-based Top-N recommendation algorithm with cosine-based similarity function.
-         'bayes');   // Naïve Bayesian Classifier
+         'bayes');   // NaÃ¯ve Bayesian Classifier
     var $default_value = 'itemProb';
 
     function sanify ($value) {

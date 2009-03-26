@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright (C) 2003 Olivier PLATHEY
- Copyright (C) 200? Don Seb‡
+ Copyright (C) 200? Don Seb√†
  Copyright (C) 2004,2006,2007 Reini Urban
 
  This file is part of PhpWiki.

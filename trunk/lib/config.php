@@ -224,7 +224,7 @@ function guessing_setlocale ($category, $locale) {
                                'german', 'ge'),
                  'es' => array('es_ES', 'es_MX', 'es_AR', 'spanish'),
                  'nl' => array('nl_NL', 'dutch'),
-                 'fr' => array('fr_FR', 'français', 'french'),
+                 'fr' => array('fr_FR', 'franÃ§ais', 'french'),
                  'it' => array('it_IT'),
                  'sv' => array('sv_SE'),
                  'ja.utf-8'  => array('ja_JP','ja_JP.utf-8','japanese'),
@@ -307,7 +307,7 @@ function update_locale($loc) {
     }
 
     // To get the POSIX character classes in the PCRE's (e.g.
-    // [[:upper:]]) to match extended characters (e.g. GrüßGott), we have
+    // [[:upper:]]) to match extended characters (e.g. GrÃ¼ÃŸGott), we have
     // to set the locale, using setlocale().
     //
     // The problem is which locale to set?  We would like to recognize all
@@ -387,7 +387,7 @@ function pcre_fix_posix_classes ($regexp) {
         // this replaces [[:upper:]] with utf-8 match (Latin only)
         $regexp = preg_replace('/\[\[\:upper\:\]\]/','(?:[A-Z]|\xc3[\x80-\x9e]|\xc4[\x80\x82\x84\x86])',
                                $regexp);
-    } elseif (preg_match('/[[:upper:]]/', 'Ä')) {
+    } elseif (preg_match('/[[:upper:]]/', 'Ã„')) {
         // First check to see if our PCRE lib supports POSIX character
         // classes.  If it does, there's nothing to do.
         return $regexp;

@@ -28,7 +28,7 @@ rcs_id('$Id$');
 // | engines into a gif, png or jpeg file.                               |
 // | TexToPng is usage example for WikiPluginCached.                     |
 // |                                                                     |
-// | Copyright (C) 2002 Johannes Groﬂe (Johannes Gro&szlig;e)            |
+// | Copyright (C) 2002 Johannes Gro√üe (Johannes Gro&szlig;e)            |
 // | You may copy this code freely under the conditions of the GPL       |
 // +---------------------------------------------------------------------+
 

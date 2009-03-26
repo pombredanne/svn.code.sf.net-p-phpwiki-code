@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 rcs_id('$Id$');
 /*
- Copyright (C) 2002 Johannes Groﬂe (Johannes Gro&szlig;e)
+ Copyright (C) 2002 Johannes Gro√üe (Johannes Gro&szlig;e)
 
  This file is part of PhpWiki.
 
@@ -25,7 +25,7 @@ rcs_id('$Id$');
  * Example for an image map creating plugin. It produces a graphical
  * sitemap of PhpWiki by calling the <code>dot</code> commandline tool
  * from graphviz (http://www.graphviz.org).
- * @author Johannes Groﬂe
+ * @author Johannes Gro√üe
  * @version 0.9
  */
 /* define('VISUALWIKI_ALLOWOPTIONS', true); */

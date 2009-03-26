@@ -37,7 +37,7 @@ if (!defined('PLUGIN_CALENDARLIST_LAST_N'))
  * This is a list of calendar appointments. 
  * Same arguments as Calendar, so no one is confused
  * Uses <dl><dd>DATE<dt>page contents...
- * Derived from Calendar.php by Martin Norb‰ck <martin@safelogic.se>
+ * Derived from Calendar.php by Martin Norb√§ck <martin@safelogic.se>
  *
  * Insert this plugin into your Calendar page, for example in WikiUser/Calendar:
  *   <?plugin Calendar ?>
