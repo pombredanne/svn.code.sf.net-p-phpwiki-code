@@ -60,6 +60,7 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function chmarkupPages(&$dbi, &$request, $pages, $newmarkup) {
+        $result = HTML::div();
         $ul = HTML::ul();
         $count = 0;
         foreach ($pages as $name) {
@@ -68,7 +69,8 @@ extends WikiPlugin_WikiAdminSelect
             $markup = $current->get('markup');
             if ( !$markup or $newmarkup != $markup ) {
                 if (!mayAccessPage('change', $name)) {
-                    $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",
+                    $result->setAttr('class', 'error');
+                    $result->pushContent(HTML::p(fmt("Access denied to change page '%s'.",
                                                   WikiLink($name))));
                 } else {
                     $version = $current->getVersion();
@@ -95,10 +97,14 @@ extends WikiPlugin_WikiAdminSelect
         }
         if ($count) {
             $dbi->touch();
-            return HTML($ul, HTML::p(fmt("%s pages have been permanently changed.",
-                                         $count)));
+            $result->setAttr('class', 'feedback');
+            $result->pushContent(HTML::p(fmt("%s pages have been permanently changed:", $count)));
+            $result->pushContent($ul);
+            return $result;
         } else {
-            return HTML($ul, HTML::p(fmt("No pages changed.")));
+            $result->setAttr('class', 'error');
+            $result->pushContent(HTML::p("No pages changed."));
+            return $result;
         }
     }
     
@@ -148,7 +154,7 @@ extends WikiPlugin_WikiAdminSelect
         $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
         $pagelist->addPageList($pages);
 
-        $header = HTML::div();
+        $header = HTML::fieldset();
         if ($next_action == 'verify') {
             $button_label = _("Yes");
             $header->pushContent(
@@ -158,17 +164,17 @@ extends WikiPlugin_WikiAdminSelect
         }
         else {
             $button_label = _("Change markup type");
-            $header->pushContent(HTML::p(_("Select the pages to change the markup type:")));
+            $header->pushContent(HTML::legend(_("Select the pages to change the markup type")));
             $header = $this->chmarkupForm($header, $post_args);
         }
 
         $buttons = HTML::p(Button('submit:admin_markup[button]', $button_label, 'wikiadmin'),
                            Button('submit:admin_markup[cancel]', _("Cancel"), 'button'));
+        $header->pushContent($buttons);
 
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           $header,
-                          $buttons,
                           $pagelist->getContent(),
                           HiddenInputs($request->getArgs(),
                                         false,
@@ -184,7 +190,6 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(' '._("to").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_markup[markup]',
                                                'value' => $post_args['markup'])));
-        $header->pushContent(HTML::p());
         return $header;
     }
 }
