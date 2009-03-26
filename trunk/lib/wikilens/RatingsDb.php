@@ -24,7 +24,7 @@ rcs_id('$Id$');
 */
 
 // For other than SQL backends. dba + adodb SQL ratings are allowed but deprecated.
-// We will probablöy drop this hack.
+// We will probably drop this hack.
 if (!defined('RATING_STORAGE'))
     // for DATABASE_TYPE=dba and forced RATING_STORAGE=SQL we must use ADODB,
     // but this is problematic.
