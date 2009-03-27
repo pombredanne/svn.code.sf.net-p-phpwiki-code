@@ -75,3 +75,9 @@ hr {
     color: black;
     background-color: black;
 }
+
+/* Do not cut tables with class "nobreak" */
+
+table.nobreak {
+    page-break-inside: avoid !important;
+}
