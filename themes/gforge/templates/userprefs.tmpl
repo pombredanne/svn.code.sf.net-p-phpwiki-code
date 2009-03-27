@@ -306,19 +306,13 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 
   <tr><td colspan="3"><h3><?=_("Appearance")?></h3></td></tr>
 
-  <tr><td colspan="2"><?=_("Here you can override site-specific default values.") ?></td>
-      <td><p class="hint"><?= _("Currently not recommended!") ?></p></td></tr>
-  <?php /* Alternatively this could be done with <fieldset> and <legend>. */ ?>
+  <tr><td colspan="3"><?=_("Here you can override site-specific default values.") ?></td></tr>
       <tr><td align="right"><?=fmt("Hide %s:", WikiLink("LinkIcons"))?></td>
           <td><?=$NoLinkIconsCB?></td>
           <td><p class="hint"><?=_("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p></td></tr>
       <tr><td align="right"><?=fmt("Add %s:", WikiLink("GoogleLink"))?></td>
           <td><?=$GoogleLinkCB?></td>
           <td><p class="hint"><?=fmt("Add Google links to unknown pages behind the '?', and the create action behind the pagename instead. See %s.", WikiLink("MeatBall:GooglePrompt"))?></p></td></tr>
-      <tr><td align="right"><?=fmt("Enable DoubleClick Edit")?></td>
-          <td><?=$DoubleClickCB?></td>
-  <td><p class="hint"><?=fmt("Enabled makes it hard to double-click words and sentences for cut and paste. See %s.", WikiLink("PhpWiki:DoubleClickToEditPage"))?></p></td></tr>
-
 
   <tr><td colspan="3"><h3><?=_("Edit Area Size")?></h3></td></tr>
 
