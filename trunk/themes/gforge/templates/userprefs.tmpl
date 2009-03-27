@@ -307,10 +307,10 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   <tr><td colspan="3"><h3><?=_("Appearance")?></h3></td></tr>
 
   <tr><td colspan="3"><?=_("Here you can override site-specific default values.") ?></td></tr>
-      <tr><td align="right"><?=fmt("Hide %s:", WikiLink("LinkIcons"))?></td>
+      <tr><td align="right"><?=fmt("Hide %s:", WikiLink("Help:LinkIcons"))?></td>
           <td><?=$NoLinkIconsCB?></td>
-          <td><p class="hint"><?=_("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p></td></tr>
-      <tr><td align="right"><?=fmt("Add %s:", WikiLink("GoogleLink"))?></td>
+          <td><p class="hint"><?=_("Hide or show LinkIcons.")?></p></td></tr>
+      <tr><td align="right"><?=fmt("Add %s:", WikiLink("Help:GoogleLink"))?></td>
           <td><?=$GoogleLinkCB?></td>
           <td><p class="hint"><?=fmt("Add Google links to unknown pages behind the '?', and the create action behind the pagename instead. See %s.", WikiLink("MeatBall:GooglePrompt"))?></p></td></tr>
 
