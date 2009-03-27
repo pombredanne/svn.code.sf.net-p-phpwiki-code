@@ -41,6 +41,9 @@
  * ALONE BASIS."
  */
 
+/* Because in some cases there is a <p> in nested lists */
+li p { margin:0; }
+
 /* Hide the elements we put in just to get around NS4 bugs. */
 div.br { display: none; }
 
