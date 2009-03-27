@@ -361,6 +361,11 @@ function update_locale($loc) {
 */
 function pcre_fix_posix_classes ($regexp) {
     global $charset;
+
+    if (defined('GFORGE') and GFORGE) {
+        return $regexp;
+    }
+
     if (!isset($charset))
         $charset = CHARSET; // get rid of constant. pref is dynamic and language specific
     if (in_array($GLOBALS['LANG'], array('zh')))
