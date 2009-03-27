@@ -83,11 +83,6 @@
     &nbsp;&nbsp;<?= $PUBLIC_CB ?> <label for="edit-public" title="<?=_("Make the page public?")?>"><?=_("Public")?></label>
     <?php }} ?>
   </td>
-  <td colspan="2" align="right">
-    <?php if (!$user->isAuthenticated()) { ?>
-    <?= Template('signin', array('FORMNAME' => 'editpage')) ?>
-    <?php } ?>
-  </td>
 </tr>
 </table>
 <?=$HIDDEN_INPUTS?>
