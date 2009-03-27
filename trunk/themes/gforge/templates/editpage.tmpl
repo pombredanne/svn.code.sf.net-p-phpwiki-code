@@ -41,11 +41,7 @@
     <label for="pref-editWidth"><b><?=_("W")?></b></label> <?=$WIDTH_PREF?>
     <noscript><?=Button("submit:", _("Adjust"), 'wikiaction')?></noscript>
   </div></td></tr></table>
-<?php if (!empty($WYSIWYG_B)) { ?>
-  <br /><div class="hint"><strong>Warning:</strong> Switching to the Wysiwyg editor will not keep your changes.</div>
-<?php } ?>
   <a name="editarea"></a><?=$EDIT_TEXTAREA?>
-<!-- FIXME: fix layout, move CSS to CSS -->
 <div class="toolbar" style="text-align: center;">
   <label for="edit-summary"><?=_("Summary").':'?></label> <?=$SUMMARY_INPUT?>
 </div>
@@ -56,10 +52,6 @@
     <?=$MINOR_EDIT_CB ?> <label for="edit-minor_edit"><?=_("This is a minor change.")?></label><br />
   </td>
   <td align="center">
-    <?php if (!empty($WYSIWYG_B)){ ?>
-    <?=$WYSIWYG_B?>
-    <?=$SEP?>
-    <?php } ?>
     <?= $PREVIEW_B ?>
     <?php if ($SAVE_B)  { ?> 
       <?=$SEP?><?= $SAVE_B ?>
