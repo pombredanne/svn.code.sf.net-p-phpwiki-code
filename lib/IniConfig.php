@@ -608,7 +608,6 @@ function fixup_static_configs($file) {
       .'BackLinks:BlogArchives:BlogJournal:'
       .'CreatePage:'
       .'FindPage:FullTextSearch:FuzzyPages:'
-      .'InterWikiSearch:'
       .'LikePages:LinkDatabase:LinkSearch:ListRelations:'
       .'ModeratedPage:MostPopular:'
       .'OrphanedPages:'
@@ -617,7 +616,7 @@ function fixup_static_configs($file) {
       .'RecentChanges:RecentComments:RelatedChanges:'
       .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
       .'TitleSearch:'
-      .'UpLoad:UriResolver:UserPreferences:'
+      .'UpLoad:UserPreferences:'
       .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:WikiBlog:'
       // plus some derivations
       .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages:'
@@ -643,10 +642,12 @@ function fixup_static_configs($file) {
        $AllActionPages[] = 'PhpWikiAdministration/Chmod';
     }
     if (!defined('GFORGE') or !GFORGE) {
+       $AllActionPages[] = 'InterWikiSearch';
        $AllActionPages[] = 'LdapSearch';
        $AllActionPages[] = 'PasswordReset';
        $AllActionPages[] = 'RateIt'; // RateIt works only in wikilens theme
        $AllActionPages[] = 'TranslateText';
+       $AllActionPages[] = 'UriResolver';
     }
 
     // If user has not defined PHPWIKI_DIR, and we need it
