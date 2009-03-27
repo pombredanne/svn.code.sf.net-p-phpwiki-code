@@ -173,15 +173,14 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 
   <tr><td colspan="3"><h2><?=_("Appearance")?></h2></td></tr>
 
-  <tr><td colspan="2"><?=_("Here you can override site-specific default values.") ?></td>
-      <td><span class="hint"><?= _("Currently not recommended!") ?></span></td></tr>
+  <tr><td colspan="3"><?=_("Here you can override site-specific default values.") ?></td></tr>
   <?php /* Alternatively this could be done with <fieldset> and <legend>. */ ?>
       <tr><td align="right"><?=$SelectThemesDesc?></td>
           <td><?= $SelectThemes ?></td>
-          <td><span class="hint"><?=_("System default:")?> <?= THEME ?></span></td></tr>
+          <td><p class="hint"><?=_("System default:")?> <?= THEME ?></span></td></tr>
       <tr><td align="right"><?=$SelectLanguagesDesc?></td>
           <td><?= $SelectLanguages ?></td>
-	  <td><span class="hint"><?=_("System default:")?> <?= DEFAULT_LANGUAGE ?></span></td></tr>
+	  <td><p class="hint"><?=_("System default:")?> <?= DEFAULT_LANGUAGE ?></span></td></tr>
       <tr><td align="right"><?=fmt("Hide %s:", WikiLink("LinkIcons"))?></td>
           <td><?=$NoLinkIconsCB?></td>
           <td><p class="hint"><?=_("Hide or show LinkIcons (if supported by the current theme). Useful for text-only browsers or slow connections.")?></p></td></tr>
