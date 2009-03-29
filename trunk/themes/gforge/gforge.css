@@ -271,6 +271,7 @@ h1, h1 .backlinks, h2, .wikitext h2 a, h3, .wikitext h3 a, h4, .wikitext h4 a, h
   font-weight: bold;
 }
 .pagelist thead td u { text-decoration: none; }
+.pagelist tr { vertical-align: top; }
 .pagelist tr.evenrow { background: #eee; }
 .pagelist tr.oddrow  { background: white; }
 th.gridbutton {
