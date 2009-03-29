@@ -1611,6 +1611,7 @@ table.multipageimage td {
 	font-weight: bold;
 }
 .pagelist thead td u { text-decoration: none; }
+.pagelist tr { vertical-align: top; }
 .pagelist tr.evenrow { background: #eee; }
 .pagelist tr.oddrow  { background: white; }
 th.gridbutton {
