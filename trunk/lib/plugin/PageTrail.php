@@ -82,7 +82,8 @@ extends WikiPlugin
 
         $numberlinks = min(count($Pages), $numberlinks);
         if (! $invisible and $numberlinks) {
-            $html = HTML::tt(WikiLink($Pages[$numberlinks-1], 'auto'));
+            $html = HTML::div(array('class' => 'pagetrail'));
+            $html->pushContent(WikiLink($Pages[$numberlinks-1], 'auto'));
             for ($i = $numberlinks - 2; $i >= 0; $i--) {
                 if (!empty($Pages[$i]))
                     $html->pushContent(PAGETRAIL_ARROW, 

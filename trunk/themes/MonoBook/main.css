@@ -1915,6 +1915,12 @@ td.tdunselected {
 	border: 1px solid #ffa500;
 }
 
+/* PageTrail plugin */
+.pagetrail {
+     background-color: #FFFF99;
+     padding: 0.2em;
+}
+
 /* IncludePage plugin */
 .transclusion-title {
   text-align: right;
