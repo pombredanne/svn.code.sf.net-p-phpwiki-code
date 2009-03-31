@@ -505,8 +505,12 @@ class PagePermission {
      * do a recursive comparison
      */
     function equal($otherperm) {
-        $diff = array_diff_assoc_recursive($this->perm, $otherperm);
-        return empty($diff);
+    	// The equal function seems to be unable to detect removed perm.
+    	// Use case is when a rule is removed.
+    	return (print_r($this->perm, true) === print_r($otherperm, true));
+
+//    	$diff = array_diff_assoc_recursive($this->perm, $otherperm);
+//        return empty($diff);
     }
     
     /**
@@ -725,7 +729,11 @@ class PagePermission {
                         $none = false;
                         $s .= "$group:";
                     }
-                    $s .= " $action";
+                    if ($perm[$action][$group]) {
+                    	$s .= " $action";
+                    } else {
+                    	$s .= " -$action";
+                    }
                 }
             }
             if (!($none)) {
