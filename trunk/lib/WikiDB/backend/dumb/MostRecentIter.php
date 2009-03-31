@@ -79,11 +79,6 @@ function WikiDB_backend_dumb_MostRecentIter_sortf_rev($a, $b) {
     return $acreated - $bcreated;
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.8  2006/12/22 00:27:37  rurban
-// just add Log
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

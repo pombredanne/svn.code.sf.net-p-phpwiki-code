@@ -49,26 +49,6 @@ class WikiDB_file extends WikiDB
     }
 }
 
-
-// $Log: not supported by cvs2svn $
-// Revision 1.5  2005/02/18 20:41:28  uckelman
-// Re-enabled /tmp warnings to save those who choose not to read the
-//  instructions.
-//
-// Revision 1.4  2003/01/04 03:41:46  wainstead
-// Added copyleft flowerboxes
-//
-// Revision 1.3  2003/01/04 03:29:02  wainstead
-// ok, this time log tag for sure.
-//
-// revision 1.2
-// Added credits, php emacs stuff, log tag for CVS.
-//
-// revision 1.1
-// date: 2003/01/04 03:21:00;  author: wainstead;  state: Exp;
-// New flat file database for the 1.3 branch thanks to Jochen Kalmbach.
-
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

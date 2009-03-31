@@ -97,20 +97,6 @@ extends _PassUser
 
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.3  2005/06/10 06:11:56  rurban
-// special validname method
-//
-// Revision 1.2  2004/12/26 17:11:15  rurban
-// just copyright
-//
-// Revision 1.1  2004/11/01 10:43:58  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

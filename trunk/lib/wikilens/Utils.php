@@ -97,11 +97,6 @@ function notEmptyName($var) {
     return $var != "";
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2004/06/18 14:42:17  rurban
-// added wikilens libs (not yet merged good enough, some work for DanFr)
-// 
-
 // Local Variables:
 // mode: php
 // tab-width: 8

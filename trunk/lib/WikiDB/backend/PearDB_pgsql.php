@@ -317,17 +317,6 @@ select * from stat('select idxfti from version') order by ndoc desc, nentry desc
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.26  2007/01/04 16:45:49  rurban
-// Clarify API: sortby,limit and exclude are strings.
-//
-// Revision 1.25  2006/12/23 11:56:17  rurban
-// note about vacuum permissions
-//
-// Revision 1.24  2006/12/22 00:27:37  rurban
-// just add Log
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

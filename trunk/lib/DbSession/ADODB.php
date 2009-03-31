@@ -258,14 +258,6 @@ extends DbSession
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2005/11/21 20:48:48  rurban
-// fix ref warnings reported by schorni
-//
-// Revision 1.1  2005/02/11 14:41:40  rurban
-// seperate DbSession classes: less memory, a bit slower
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

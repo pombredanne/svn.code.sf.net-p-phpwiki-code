@@ -137,20 +137,6 @@ extends DbSession
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2006/02/22 20:56:24  rurban
-// fix more refs
-//
-// Revision 1.3  2005/08/07 10:49:57  rurban
-// do not connect/disconnect each time. fix refs
-//
-// Revision 1.2  2005/08/07 10:07:55  rurban
-// dba simplification: use default timeout
-//
-// Revision 1.1  2005/02/11 14:41:40  rurban
-// seperate DbSession classes: less memory, a bit slower
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8
