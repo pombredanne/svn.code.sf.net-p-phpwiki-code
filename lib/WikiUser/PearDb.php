@@ -237,51 +237,6 @@ extends _DbPassUser
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.11  2007/05/30 21:53:52  rurban
-// add userid to authcreate
-//
-// Revision 1.10  2006/03/19 16:26:40  rurban
-// fix DBAUTH arguments to be position independent, fixes bug #1358973
-//
-// Revision 1.9  2005/10/10 19:43:49  rurban
-// add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
-//
-// Revision 1.8  2005/08/06 13:21:09  rurban
-// switch to natural order password, userid
-//
-// Revision 1.7  2005/02/14 12:28:27  rurban
-// fix policy strict. Thanks to Mikhail Vladimirov
-//
-// Revision 1.6  2005/01/06 15:44:22  rurban
-// move password length checker to correct method. thanks to Charles Corrigan
-//
-// Revision 1.5  2004/12/26 17:11:17  rurban
-// just copyright
-//
-// Revision 1.4  2004/12/20 16:05:01  rurban
-// gettext msg unification
-//
-// Revision 1.3  2004/12/19 00:58:02  rurban
-// Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
-// Provide an errormessage if so. Just PersonalPage and BogoLogin not.
-// Simplify httpauth logout handling and set sessions for all methods.
-// fix main.php unknown index "x" getLevelDescription() warning.
-//
-// Revision 1.2  2004/11/10 15:29:21  rurban
-// * requires newer Pear_DB (as the internal one): quote() uses now escapeSimple for strings
-// * ACCESS_LOG_SQL: fix cause request not yet initialized
-// * WikiDB: moved SQL specific methods upwards
-// * new Pear_DB quoting: same as ADODB and as newer Pear_DB.
-//   fixes all around: WikiGroup, WikiUserNew SQL methods, SQL logging
-//
-// Revision 1.1  2004/11/01 10:43:58  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

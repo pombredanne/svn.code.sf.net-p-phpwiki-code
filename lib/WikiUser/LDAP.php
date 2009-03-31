@@ -233,43 +233,6 @@ extends _PassUser
 
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.9  2007/06/13 12:48:14  rurban
-// fix wrong fix from 1.3.13p1
-//
-// Revision 1.8  2007/06/07 16:31:33  rurban
-// Important! Fixes bug #1732882 ldap_bind with empty password
-// Adds diagnostics on other ldap failures
-// Fix password quoting
-//
-// Revision 1.7  2007/05/30 21:56:17  rurban
-// Back to default uid for LDAP
-//
-// Revision 1.6  2007/05/29 16:56:15  rurban
-// Allow more password und userid chars. uid => cn: default for certain testusers
-//
-// Revision 1.5  2005/10/10 19:43:49  rurban
-// add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
-//
-// Revision 1.4  2004/12/26 17:11:17  rurban
-// just copyright
-//
-// Revision 1.3  2004/12/20 16:05:01  rurban
-// gettext msg unification
-//
-// Revision 1.2  2004/12/19 00:58:02  rurban
-// Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
-// Provide an errormessage if so. Just PersonalPage and BogoLogin not.
-// Simplify httpauth logout handling and set sessions for all methods.
-// fix main.php unknown index "x" getLevelDescription() warning.
-//
-// Revision 1.1  2004/11/01 10:43:58  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

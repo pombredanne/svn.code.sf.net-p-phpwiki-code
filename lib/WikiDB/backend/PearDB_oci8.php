@@ -119,15 +119,6 @@ extends WikiDB_backend_PearDB_search
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.13  2007/01/04 16:41:14  rurban
-// Allow missing connection permissions on upgrade::_try_dbadmin_user.
-//
-// Revision 1.12  2006/12/22 00:27:37  rurban
-// just add Log
-//
-
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

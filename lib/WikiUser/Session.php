@@ -55,20 +55,6 @@ extends _PassUser
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2004/12/19 00:58:02  rurban
-// Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
-// Provide an errormessage if so. Just PersonalPage and BogoLogin not.
-// Simplify httpauth logout handling and set sessions for all methods.
-// fix main.php unknown index "x" getLevelDescription() warning.
-//
-// Revision 1.1  2004/11/01 10:43:58  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

@@ -196,12 +196,6 @@ extends WikiDB_backend_file
 
 //class WikiDB_backend_flatfile_iter extends WikiDB_backend_file_iter {};
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2007/01/02 13:19:47  rurban
-// new flatfile backend (readable page files)
-//
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

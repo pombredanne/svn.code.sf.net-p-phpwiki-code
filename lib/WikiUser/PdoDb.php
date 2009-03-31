@@ -277,14 +277,6 @@ extends _DbPassUser
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2005/06/10 06:12:36  rurban
-// finish missing db calls
-//
-// Revision 1.1  2005/05/06 16:56:48  rurban
-// add PdoDbPassUser
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

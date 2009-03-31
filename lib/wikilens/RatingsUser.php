@@ -427,25 +427,6 @@ class _UserRating
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.5  2004/11/15 16:00:02  rurban
-// enable RateIt imgPrefix: '' or 'Star' or 'BStar',
-// enable blue prediction icons,
-// enable buddy predictions.
-//
-// Revision 1.4  2004/07/08 19:04:49  rurban
-// more unittest fixes (file backend, metadata RatingsDb)
-//
-// Revision 1.3  2004/06/30 20:06:44  dfrankow
-// Use RatingsDb singleton.
-//
-// Revision 1.2  2004/06/21 17:01:41  rurban
-// fix typo and rating method call
-//
-// Revision 1.1  2004/06/18 14:42:17  rurban
-// added wikilens libs (not yet merged good enough, some work for DanFr)
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

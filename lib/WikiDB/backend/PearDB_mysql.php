@@ -225,11 +225,6 @@ extends WikiDB_backend_PearDB_search
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.26  2006/12/22 17:49:05  rurban
-// add Log
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

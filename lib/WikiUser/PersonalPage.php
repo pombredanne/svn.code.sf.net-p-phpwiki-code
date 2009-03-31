@@ -63,33 +63,6 @@ extends _PassUser
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.6  2005/06/22 05:36:52  rurban
-// looser isValidName method
-//
-// Revision 1.5  2005/02/14 12:28:27  rurban
-// fix policy strict. Thanks to Mikhail Vladimirov
-//
-// Revision 1.4  2004/12/26 17:11:17  rurban
-// just copyright
-//
-// Revision 1.3  2004/11/05 22:09:39  rurban
-// empty passwd PersonalPage case
-//
-// Revision 1.2  2004/11/05 20:53:36  rurban
-// login cleanup: better debug msg on failing login,
-// checked password less immediate login (bogo or anon),
-// checked olduser pref session error,
-// better PersonalPage without password warning on minimal password length=0
-//   (which is default now)
-//
-// Revision 1.1  2004/11/01 10:43:58  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

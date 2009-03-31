@@ -133,36 +133,6 @@ extends _PassUser
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.7  2006/09/03 10:10:00  rurban
-// oops: reset this->_userid also
-//
-// Revision 1.6  2006/09/03 09:57:19  rurban
-// Support AUTH_TYPE=NTLM (Windows domain\username)
-// Workaround PHP _SERVER bug adding \\ => \\\\
-//
-// Revision 1.5  2005/02/28 20:35:45  rurban
-// linebreaks
-//
-// Revision 1.4  2004/12/26 17:11:16  rurban
-// just copyright
-//
-// Revision 1.3  2004/12/19 00:58:02  rurban
-// Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
-// Provide an errormessage if so. Just PersonalPage and BogoLogin not.
-// Simplify httpauth logout handling and set sessions for all methods.
-// fix main.php unknown index "x" getLevelDescription() warning.
-//
-// Revision 1.2  2004/12/17 12:31:57  rurban
-// better logout, fake httpauth not yet
-//
-// Revision 1.1  2004/11/01 10:43:58  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

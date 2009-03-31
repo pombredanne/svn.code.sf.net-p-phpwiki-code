@@ -16,11 +16,6 @@ extends _ForbiddenUser
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2004/11/05 18:11:38  rurban
-// required dummy file
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

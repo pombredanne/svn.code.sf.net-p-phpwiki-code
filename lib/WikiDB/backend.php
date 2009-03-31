@@ -764,29 +764,6 @@ class WikiDB_backend_search_sql extends WikiDB_backend_search
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.36  2008/03/17 19:13:22  rurban
-// define default $backend_type
-//
-// Revision 1.35  2007/08/25 18:17:46  rurban
-// rearrange access_log columns into natural order: request_args
-//
-// Revision 1.34  2007/07/14 12:03:51  rurban
-// just typo
-//
-// Revision 1.33  2007/06/07 21:35:04  rurban
-// fixed backend asArray access to iterators (DebugInfo with SQL)
-//
-// Revision 1.32  2007/02/17 14:14:41  rurban
-// enforce accesslog types
-//
-// Revision 1.31  2007/01/28 22:49:55  rurban
-// use backend specific SQL write_accesslog
-//
-// Revision 1.30  2007/01/02 13:20:26  rurban
-// added link_search. Clarify API: sortby,limit and exclude are strings.
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

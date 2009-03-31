@@ -276,47 +276,6 @@ extends _DbPassUser
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.11  2007/08/25 18:51:25  rurban
-// protect _HomePagehandle
-//
-// Revision 1.10  2007/05/30 21:53:52  rurban
-// add userid to authcreate
-//
-// Revision 1.9  2006/12/22 17:25:23  rurban
-// forgot why
-//
-// Revision 1.8  2006/03/19 16:26:40  rurban
-// fix DBAUTH arguments to be position independent, fixes bug #1358973
-//
-// Revision 1.7  2005/10/10 19:43:49  rurban
-// add DBAUTH_PREF_INSERT: self-creating users. by John Stevens
-//
-// Revision 1.6  2005/08/06 13:21:09  rurban
-// switch to natural order password, userid
-//
-// Revision 1.5  2005/02/14 12:28:26  rurban
-// fix policy strict. Thanks to Mikhail Vladimirov
-//
-// Revision 1.4  2004/12/26 17:11:15  rurban
-// just copyright
-//
-// Revision 1.3  2004/12/20 16:05:01  rurban
-// gettext msg unification
-//
-// Revision 1.2  2004/12/19 00:58:02  rurban
-// Enforce PASSWORD_LENGTH_MINIMUM in almost all PassUser checks,
-// Provide an errormessage if so. Just PersonalPage and BogoLogin not.
-// Simplify httpauth logout handling and set sessions for all methods.
-// fix main.php unknown index "x" getLevelDescription() warning.
-//
-// Revision 1.1  2004/11/01 10:43:58  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

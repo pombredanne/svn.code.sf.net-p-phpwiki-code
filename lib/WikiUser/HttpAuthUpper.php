@@ -143,9 +143,6 @@ extends _PassUser
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.7  2006/09/03 10:10:00  rurban
-
 // Local Variables:
 // mode: php
 // tab-width: 8

@@ -1491,45 +1491,6 @@ class WikiDB_backend_PDO_search extends WikiDB_backend_search_sql {}
         return $parsed;
     }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.11  2007/01/04 16:57:32  rurban
-// Clarify API: sortby,limit and exclude are strings. fix upgrade test connection
-//
-// Revision 1.10  2006/12/22 01:04:12  rurban
-// fix syntax error
-//
-// Revision 1.9  2006/11/19 14:04:39  rurban
-// Oops. Syntax error in prev commit
-//
-// Revision 1.8  2006/11/19 14:03:32  rurban
-// Replace IF by CASE in exists_link()
-//
-// Revision 1.7  2006/05/14 12:28:03  rurban
-// mysql 5.x fix for wantedpages join
-//
-// Revision 1.6  2005/11/14 22:24:33  rurban
-// fix fulltext search,
-// Eliminate stoplist words,
-// don't extract %pagedate twice in ADODB,
-// add SemanticWeb support: link(relation),
-// major postgresql update: stored procedures, tsearch2 for fulltext
-//
-// Revision 1.5  2005/09/14 06:04:43  rurban
-// optimize searching for ALL (ie %), use the stoplist on PDO
-//
-// Revision 1.4  2005/09/11 13:25:12  rurban
-// enhance LIMIT support
-//
-// Revision 1.3  2005/09/10 21:30:16  rurban
-// enhance titleSearch
-//
-// Revision 1.2  2005/02/11 14:45:45  rurban
-// support ENABLE_LIVESEARCH, enable PDO sessions
-//
-// Revision 1.1  2005/02/10 19:01:22  rurban
-// add PDO support
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

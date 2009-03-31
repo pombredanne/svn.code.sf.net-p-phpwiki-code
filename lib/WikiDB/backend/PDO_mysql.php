@@ -150,14 +150,6 @@ extends WikiDB_backend_PDO
 
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2005/04/10 10:43:25  rurban
-// more mysql-4.1 quirks: add utf8 to the charset aliases table. (Bug #1180108)
-//
-// Revision 1.1  2005/02/10 19:01:24  rurban
-// add PDO support
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
