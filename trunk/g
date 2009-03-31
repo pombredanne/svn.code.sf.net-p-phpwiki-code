@@ -96,8 +96,8 @@ if (!$group_id || !$project) {
     // Disable VACUUM (they are performed every night)
     define('DATABASE_OPTIMISE_FREQUENCY', 0);
 
-    // It is not used by it is required by libs.
-    define('ADMIN_USER', 'Project Administrators');
+    // It is not used but it is required by libs.
+    define('ADMIN_USER', 'The PhpWiki programming team');
     define('ADMIN_PASSWD', 'xxx');
 
     // Allow ".jpeg" as extension
