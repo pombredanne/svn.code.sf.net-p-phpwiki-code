@@ -41,12 +41,6 @@ extends _PageHistory_HtmlFormatter
 }
 */
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2004/12/15 17:47:32  rurban
-// fix RecentChanges links
-// fix footer layout
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
