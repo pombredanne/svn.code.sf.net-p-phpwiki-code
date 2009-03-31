@@ -451,6 +451,12 @@ li.LSRow {
   list-style-image: none;
 }
 
+/* PageTrail plugin */
+.pagetrail {
+     background-color: #FFFF99;
+     padding: 0.2em;
+}
+
 /* IncludePage plugin */
 .transclusion-title {
   text-align: right;
