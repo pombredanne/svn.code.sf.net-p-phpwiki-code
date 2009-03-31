@@ -196,7 +196,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 
 <fieldset>
 <legend><strong>User preferences for this project</strong></legend>
-<table border="0">
+<table border="0" width="100%">
 <?php if ($isForm and $user->mayChangePass()) { ?>
   <tr><td colspan="3"><h3><?= ($request->getPref('passwd') ?  _("Change Password") :  _("Set Password")) ?></h3></td></tr>
 
@@ -212,9 +212,11 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   <tr><td colspan="3"><h3><?=_("E-mail Notification")?></h3></td></tr>
 
    <tr><td colspan="2">
-    <?=_("Get an email notification at changes of the following pages:")?><br />
+    <?=_("Get an email notification at changes of the following pages:")?>
+   </td></tr>
+   <tr>
     <?php if ($isForm) { ?>
-      <blockquote><textarea name="pref[notifyPages]" cols="30" rows="4"><?=$pref->get('notifyPages')?></textarea></blockquote></td>
+      <td><textarea name="pref[notifyPages]" cols="40" rows="6"><?=$pref->get('notifyPages')?></textarea></td>
     <td><p class="hint"><?=_("Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed.")?></p></td>
     <?php } else { ?>
      <td><?=$pref->get('notifyPages')?></td><td></td>
@@ -228,7 +230,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 <fieldset>
 <legend><strong>Global user preferences (for all projects)</strong></legend>
 
-<table border="0">
+<table border="0" width="100%">
 
   <tr><td colspan="3"><h3><?=_("E-mail Notification")?></h3></td></tr>
 
