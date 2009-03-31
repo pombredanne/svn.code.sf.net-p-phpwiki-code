@@ -153,16 +153,6 @@ if ($debug) {
     echo "</pre>\n";
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2004/08/24 00:27:29  rurban
-// Turn recursion on
-//
-// Revision 1.1  2004/08/24 00:21:57  rurban
-// Print the PHP compatibility info for phpwiki.
-// per file and per project,
-// (which function is dependend on which php version?)
-// 
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

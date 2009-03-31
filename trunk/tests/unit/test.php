@@ -659,20 +659,6 @@ foreach ($run_database_backends as $dbtype) {
 if (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
     echo "</pre>\n";
 
-// $Log: not supported by cvs2svn $
-// Revision 1.46  2007/01/21 12:26:38  rurban
-// Improve UI (label, button)
-//
-// Revision 1.45  2007/01/04 16:48:15  rurban
-// Do sqlite
-//
-// Revision 1.44  2006/12/23 11:44:56  rurban
-// deal with strict references and the order of deletion
-//
-// Revision 1.43  2006/06/05 09:35:02  rurban
-// add experimental backend flatfile, minor fixes
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
