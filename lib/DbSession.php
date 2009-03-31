@@ -62,17 +62,6 @@ class DbSession
     function quote($string) { return $string; }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.34  2005/08/07 10:08:33  rurban
-// dba simplification: no _backend in the subclass
-//
-// Revision 1.33  2005/02/27 19:40:36  rurban
-// fix for php4 and case-sensitive filesystems
-//
-// Revision 1.32  2005/02/11 14:41:57  rurban
-// seperate DbSession classes: less memory, a bit slower
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

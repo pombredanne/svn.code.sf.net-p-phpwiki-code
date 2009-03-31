@@ -397,11 +397,6 @@ class ReasonerBackend_Racer extends ReasonerBackend {
 class ReasonerBackend_KM extends ReasonerBackend {
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.10  2007/07/14 12:03:32  rurban
-// add rcs Log
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

@@ -383,29 +383,6 @@ class HttpClient {
     }   
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.9  2007/03/18 10:16:30  rurban
-// Fix POST redirects
-//
-// Revision 1.8  2007/01/02 13:18:35  rurban
-// added postfile and xmlrpc support. added ContentType arg to buildRequest
-//
-// Revision 1.7  2006/06/18 11:02:01  rurban
-// assume https <>80
-//
-// Revision 1.6  2004/11/01 10:43:55  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-// Revision 1.5  2004/04/29 19:34:24  rurban
-// omit "socket_set_timeout() is not supported in this PHP build" warning
-//
-// Revision 1.4  2004/04/12 18:15:28  rurban
-// standard footer
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

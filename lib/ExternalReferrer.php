@@ -115,20 +115,6 @@ class SearchEngines {
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2007/01/07 18:42:29  rurban
-// Update comment only
-//
-// Revision 1.3  2004/10/12 14:22:14  rurban
-// lib/ExternalReferrer.php:99: Notice[8]: Undefined index: query
-//
-// Revision 1.2  2004/09/26 14:55:55  rurban
-// fixed warning
-//
-// Revision 1.1  2004/09/26 12:20:28  rurban
-// Detect external referrers, handle search engines
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

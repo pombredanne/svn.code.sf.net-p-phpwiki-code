@@ -1161,58 +1161,6 @@ class WikiPluginCached extends WikiPlugin
 
 } // WikiPluginCached
 
-
-// $Log: not supported by cvs2svn $
-// Revision 1.24  2007/09/22 12:38:57  rurban
-// smaller cached args footprint
-//
-// Revision 1.23  2007/09/12 19:38:41  rurban
-// improve tempnam on windows, cleanup zero-sized files
-//
-// Revision 1.22  2007/01/25 07:42:09  rurban
-// Remove early Cache.php loader. Do it later and better.
-//
-// Revision 1.21  2007/01/20 11:24:23  rurban
-// Use cat/type for text pipe commands if input > 255 chars
-//
-// Revision 1.20  2005/09/26 06:28:46  rurban
-// beautify tempnam() on Windows. Move execute() from above here
-//
-// Revision 1.19  2004/12/16 18:30:59  rurban
-// avoid ugly img border
-//
-// Revision 1.18  2004/11/01 10:43:57  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-// Revision 1.17  2004/10/12 15:06:02  rurban
-// fixes for older php, removed warnings
-//
-// Revision 1.16  2004/10/12 14:56:57  rurban
-// lib/WikiPluginCached.php:731: Notice[8]: Undefined property: _static
-//
-// Revision 1.15  2004/09/26 17:09:23  rurban
-// add SVG support for Ploticus (and hopefully all WikiPluginCached types)
-// SWF not yet.
-//
-// Revision 1.14  2004/09/25 16:26:08  rurban
-// some plugins use HTML
-//
-// Revision 1.13  2004/09/22 13:46:25  rurban
-// centralize upload paths.
-// major WikiPluginCached feature enhancement:
-//   support _STATIC pages in uploads/ instead of dynamic getimg.php? subrequests.
-//   mainly for debugging, cache problems and action=pdf
-//
-// Revision 1.12  2004/09/07 13:26:31  rurban
-// new WikiPluginCached option debug=static and some more sf.net defaults for VisualWiki
-//
-// Revision 1.11  2004/09/06 09:12:46  rurban
-// improve pear handling with silent fallback to ours
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

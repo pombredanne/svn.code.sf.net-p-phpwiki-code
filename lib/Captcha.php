@@ -175,18 +175,6 @@ class Captcha {
 
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.5  2005/10/31 16:44:13  rurban
-// fallback to PNG or GIF if JPEG support does not exist
-//
-// Revision 1.4  2005/10/30 14:20:42  rurban
-// move Captcha specific vars and methods into a Captcha object
-// randomize Captcha chars positions and angles (smoothly)
-//
-// Revision 1.3  2005/10/29 07:37:56  rurban
-// USE_CAPTCHA_RANDOM_WORD by Dan Frankowski
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8
