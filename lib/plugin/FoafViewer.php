@@ -216,28 +216,6 @@ extends WikiPlugin
     }
 }
 
-
-// $Log: not supported by cvs2svn $
-// Revision 1.3  2004/06/16 10:38:59  rurban
-// Disallow refernces in calls if the declaration is a reference
-// ("allow_call_time_pass_reference clean").
-//   PhpWiki is now allow_call_time_pass_reference = Off clean,
-//   but several external libraries may not.
-//   In detail these libs look to be affected (not tested):
-//   * Pear_DB odbc
-//   * adodb oracle
-//
-// Revision 1.2  2004/06/13 13:54:25  rurban
-// Catch fatals on the four dump calls (as file and zip, as html and mimified)
-// FoafViewer: Check against external requirements, instead of fatal.
-// Change output for xhtmldumps: using file:// urls to the local fs.
-// Catch SOAP fatal by checking for GOOGLE_LICENSE_KEY
-// Import GOOGLE_LICENSE_KEY and FORTUNE_DIR from config.ini.
-//
-// Revision 1.1  2004/06/08 21:38:21  rurban
-// based on dans version 0.0.2 - simplified
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

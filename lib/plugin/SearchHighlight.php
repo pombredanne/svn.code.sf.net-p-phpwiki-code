@@ -109,15 +109,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2007/01/20 15:53:51  rurban
-// Rewrite of SearchHighlight: through ActionPage and InlineParser
-//
-// Revision 1.1  2004/09/26 14:58:36  rurban
-// naive SearchHighLight implementation
-//
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

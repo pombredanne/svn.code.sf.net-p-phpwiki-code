@@ -151,45 +151,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.7  2005/04/02 03:05:43  uckelman
-// Removed & from vars passed by reference (not needed, causes PHP to complain).
-//
-// Revision 1.6  2005/02/12 17:24:23  rurban
-// locale update: missing . : fixed. unified strings
-// proper linebreaks
-//
-// Revision 1.5  2004/11/26 18:39:02  rurban
-// new regex search parser and SQL backends (90% complete, glob and pcre backends missing)
-//
-// Revision ext-1.4  2004/11/25 15:39:40  Pascal Giard <evilynux@gmail.com>
-// * Directly including modified page when AppendText got called from 
-//   the page to be modified.
-// * Translatable link to page.
-//
-// Revision ext-1.3  2004/11/25  9:44:45  Pascal Giard <evilynux@gmail.com>
-// * text modified to s to workaround mozilla bug.
-// * Added redirect parameter allowing you to be redirected to the modified page.
-//
-// Revision 1.4  2004/11/25 17:20:52  rurban
-// and again a couple of more native db args: backlinks
-//
-// Revision 1.3  2004/11/25 13:56:23  rurban
-// renamed text to s because of nasty mozilla radio button bug
-//
-// Revision 1.2  2004/11/25 08:29:43  rurban
-// update from Pascal
-//
-// Revision ext-1.2  2004/11/24 11:22:30  Pascal Giard <evilynux@gmail.com>
-// * Integrated rurban's modifications.
-//
-// Revision 1.1  2004/11/24 09:25:35  rurban
-// simple plugin by Pascal Giard (QC/EMC)
-//
-// Revision 1.0  2004/11/23 09:43:35  epasgia
-// * Initial version.
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

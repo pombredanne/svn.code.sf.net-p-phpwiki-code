@@ -108,11 +108,6 @@ class AsciiSVG_HTML extends HtmlElement {
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2007/01/21 23:14:55  rurban
-// new plugin. see license in the .js
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

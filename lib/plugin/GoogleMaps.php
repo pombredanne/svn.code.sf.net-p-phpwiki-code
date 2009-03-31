@@ -153,15 +153,6 @@ var marker = createMarker(point, '".$markertext->asXml()."'); map.addOverlay(mar
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2005/09/11 13:29:56  rurban
-// remove InfoLink, wiki parse Infotext instead
-//
-// Revision 1.1  2005/09/07 16:53:46  rurban
-// initial version, idea from http://www.giswiki.de/index.php/Google_Maps_Extensions
-//
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

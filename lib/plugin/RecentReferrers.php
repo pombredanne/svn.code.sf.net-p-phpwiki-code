@@ -60,11 +60,6 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2004/11/06 04:52:29  rurban
-// simple version at first
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

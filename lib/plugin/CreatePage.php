@@ -127,62 +127,6 @@ extends WikiPlugin_Template
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.12  2007/08/10 22:03:34  rurban
-// Cannot create page with empty name
-//
-// Revision 1.11  2007/01/27 21:36:52  rurban
-// Overwrite empty or deleted pages
-//
-// Revision 1.10  2007/01/25 07:42:16  rurban
-// Changed doVariableExpansion API.
-//
-// Revision 1.9  2007/01/04 16:42:23  rurban
-// Expand even if no vars are given. They may be defaults, i.e %%pagename%%
-//
-// Revision 1.8  2007/01/03 21:23:32  rurban
-// Derive from Template. Use same variable expansion. Support <noinclude> as in Template.
-//
-// Revision 1.7  2004/09/06 10:22:15  rurban
-// oops, forgot global request
-//
-// Revision 1.6  2004/09/06 08:35:32  rurban
-// support template variables (not yet working)
-//
-// Revision 1.5  2004/07/08 20:30:07  rurban
-// plugin->run consistency: request as reference, added basepage.
-// encountered strange bug in AllPages (and the test) which destroys ->_dbi
-//
-// Revision 1.4  2004/04/21 16:14:50  zorloc
-// Prevent spaces at the start and end of a created page name -- submitted by Dan Frankowski (dfrankow).
-//
-// Revision 1.3  2004/03/24 19:41:04  rurban
-// fixed the name
-//
-// Revision 1.2  2004/03/17 15:37:41  rurban
-// properly support initial_content and template with URI length overflow workaround
-//
-// Revision 1.3  2004/03/16 16:25:05  dfrankow
-// Support initial_content parameter
-//
-// Revision 1.2  2004/03/09 16:28:45  dfrankow
-// Merge the RATING branch onto the main line
-//
-// Revision 1.1  2004/03/08 18:57:59  rurban
-// Allow WikiForm overrides, such as method => POST, targetpage => [pagename]
-// in the plugin definition.
-// New simple CreatePage plugin by dfrankow.
-//
-// Revision 1.1.2.2  2004/02/23 21:22:29  dfrankow
-// Add a little doc
-//
-// Revision 1.1.2.1  2004/02/21 15:29:19  dfrankow
-// Allow a CreatePage edit box, as GUI syntactic sugar
-//
-// Revision 1.1.1.1  2004/01/29 14:30:28  dfrankow
-// Right out of the 1.3.7 package
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

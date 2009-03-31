@@ -198,25 +198,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.11  2004/05/01 15:59:29  rurban
-// more php-4.0.6 compatibility: superglobals
-//
-// Revision 1.10  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.9  2003/01/28 21:10:38  zorloc
-// Better error messages from PhpWeather Plugin -- Martin Geisler
-//
-// Revision 1.8  2003/01/18 22:01:43  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-// Revision 1.7  2002/12/31 20:53:40  carstenklapp
-// Bugfixes: Fixed menu language selection (incorrect parameters to
-// $w->get_languages_select() & form input 'language' instead of 'lang').
-
 // For emacs users
 // Local Variables:
 // mode: php

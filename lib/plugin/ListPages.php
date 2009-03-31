@@ -145,42 +145,6 @@ class _PageList_Column_ListPages_count extends _PageList_Column {
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.9  2004/11/23 15:17:19  rurban
-// better support for case_exact search (not caseexact for consistency),
-// plugin args simplification:
-//   handle and explode exclude and pages argument in WikiPlugin::getArgs
-//     and exclude in advance (at the sql level if possible)
-//   handle sortby and limit from request override in WikiPlugin::getArgs
-// ListSubpages: renamed pages to maxpages
-//
-// Revision 1.8  2004/10/14 19:19:34  rurban
-// loadsave: check if the dumped file will be accessible from outside.
-// and some other minor fixes. (cvsclient native not yet ready)
-//
-// Revision 1.7  2004/09/25 16:33:52  rurban
-// add support for all PageList options
-//
-// Revision 1.6  2004/09/14 10:33:39  rurban
-// simplify exclude, add numbacklinks+numpagelinks
-//
-// Revision 1.5  2004/09/06 08:37:31  rurban
-// plugin-list support for pages and exclude args
-//
-// Revision 1.4  2004/07/08 20:30:07  rurban
-// plugin->run consistency: request as reference, added basepage.
-// encountered strange bug in AllPages (and the test) which destroys ->_dbi
-//
-// Revision 1.3  2004/06/28 18:58:18  rurban
-// fixed another pass-by-reference
-//
-// Revision 1.2  2004/06/18 14:42:17  rurban
-// added wikilens libs (not yet merged good enough, some work for DanFr)
-//
-// Revision 1.1  2004/06/08 13:49:43  rurban
-// List pages that are explicitly given as the pages argument, by DanFr
-// 
-
 // Local Variables:
 // mode: php
 // tab-width: 8

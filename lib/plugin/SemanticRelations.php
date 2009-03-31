@@ -140,23 +140,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2007/01/25 07:42:22  rurban
-// Use CSS formatting for ::=
-//
-// Revision 1.3  2007/01/03 21:23:06  rurban
-// Clarify description: "on this page".
-//
-// Revision 1.2  2007/01/02 13:22:41  rurban
-// default pagename: current. improve output: class, linked attributes. switch to SemanticSearch argument s
-//
-// Revision 1.1  2005/11/21 20:14:20  rurban
-// Plugin to display the list of SemanticRelations - list of relations and
-// attributes of given page(s).
-// Relations are stored in the link table.
-// Attributes as simple page meta-data.
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

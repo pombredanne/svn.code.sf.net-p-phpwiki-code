@@ -135,26 +135,6 @@ extends WikiPlugin_WikiBlog
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.3  2004/06/14 11:31:39  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.2  2004/04/19 18:27:46  rurban
-// Prevent from some PHP5 warnings (ref args, no :: object init)
-//   php5 runs now through, just one wrong XmlElement object init missing
-// Removed unneccesary UpgradeUser lines
-// Changed WikiLink to omit version if current (RecentChanges)
-//
-// Revision 1.1  2004/04/18 05:43:12  rurban
-// .
-//
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

@@ -444,32 +444,6 @@ extends WikiPluginCached
 
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.8  2007/01/10 22:28:43  rurban
-// use temp dotfile on windows
-//
-// Revision 1.7  2006/12/22 17:55:06  rurban
-// fix source handling
-//
-// Revision 1.6  2005/10/12 06:19:07  rurban
-// protect unsafe calls
-//
-// Revision 1.5  2005/09/26 06:39:14  rurban
-// use cached img and map - again. Remove execute from here
-//
-// Revision 1.4  2005/05/06 16:54:59  rurban
-// add failing cmdline for .map
-//
-// Revision 1.3  2004/12/17 16:49:52  rurban
-// avoid Invalid username message on Sign In button click
-//
-// Revision 1.2  2004/12/14 21:34:22  rurban
-// fix syntax error
-//
-// Revision 1.1  2004/12/13 14:45:33  rurban
-// new generic GraphViz plugin: similar to Ploticus
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

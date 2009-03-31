@@ -205,34 +205,6 @@ extends WikiPlugin
 
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.27  2007/05/13 18:13:48  rurban
-// base class for EditmetaData
-//
-// Revision 1.26  2007/01/07 18:44:47  rurban
-// Add notallversion argument. Support more types: objects, serialized objects. split overlong strings
-//
-// Revision 1.25  2006/09/06 06:02:36  rurban
-// print linkinfo also
-//
-// Revision 1.24  2005/01/29 19:47:43  rurban
-// support bool
-//
-// Revision 1.23  2005/01/21 14:13:23  rurban
-// stabilize on numeric keys (strange php problem)
-//
-// Revision 1.22  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.21  2003/02/21 04:22:28  dairiki
-// Make this work for array-valued data.  Make display of cached markup
-// readable.  Some code cleanups.  (This still needs more work.)
-//
-// Revision 1.20  2003/01/18 21:19:24  carstenklapp
-// Code cleanup:
-// Reformatting; added copyleft, getVersion, getDescription
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

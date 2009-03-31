@@ -99,28 +99,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.9  2004/07/09 12:49:46  rurban
-// no limit, no sorting
-//
-// Revision 1.8  2004/04/20 00:56:00  rurban
-// more paging support and paging fix for shorter lists
-//
-// Revision 1.7  2004/04/20 00:34:15  rurban
-// more paging support
-//
-// Revision 1.6  2004/04/18 01:44:02  rurban
-// more sortby+limit support
-//
-// Revision 1.5  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.4  2003/01/18 21:49:00  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

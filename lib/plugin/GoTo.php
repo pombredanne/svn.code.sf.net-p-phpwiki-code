@@ -70,20 +70,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2004/07/08 20:30:07  rurban
-// plugin->run consistency: request as reference, added basepage.
-// encountered strange bug in AllPages (and the test) which destroys ->_dbi
-//
-// Revision 1.3  2004/04/18 01:11:52  rurban
-// more numeric pagename fixes.
-// fixed action=upload with merge conflict warnings.
-// charset changed from constant to global (dynamic utf-8 switching)
-//
-// Revision 1.2  2004/04/12 16:21:01  rurban
-// fix lib/plugin/RssFeed.php:81: Notice[8]: Undefined variable: th
-//
-        
 // Local Variables:
 // mode: php
 // tab-width: 8

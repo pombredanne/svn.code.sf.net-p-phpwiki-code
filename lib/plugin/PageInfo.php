@@ -73,23 +73,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2003/02/17 02:18:30  dairiki
-// Fix so that PageInfo will work when current version of page
-// has been "deleted".
-//
-// Fix so that PageInfo will work on an old version of a page.
-//
-// Revision 1.3  2003/01/18 21:49:01  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-// Revision 1.2  2003/01/04 23:27:39  carstenklapp
-// New: Gracefully handle non-existant pages. Added copyleft;
-// getVersion() for PluginManager.
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

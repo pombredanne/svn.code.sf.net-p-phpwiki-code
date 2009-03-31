@@ -200,27 +200,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.6  2007/08/25 18:06:46  rurban
-// use default basedn
-//
-// Revision 1.5  2007/01/22 23:50:00  rurban
-// Improve Table for no attributes
-//
-// Revision 1.4  2007/01/21 23:23:49  rurban
-// Improve LdapSearch
-//
-// Revision 1.3  2004/12/20 16:05:14  rurban
-// gettext msg unification
-//
-// Revision 1.2  2004/10/04 23:39:34  rurban
-// just aesthetics
-//
-// Revision 1.1  2004/09/23 12:28:12  rurban
-// initial checkin from http://phpwiki.org/LdapSearchPlugin
-//   by John Lines
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

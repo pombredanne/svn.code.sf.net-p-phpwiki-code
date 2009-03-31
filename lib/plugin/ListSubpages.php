@@ -122,34 +122,6 @@ class _PageList_Column_ListSubpages_count extends _PageList_Column {
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.6  2004/11/23 15:17:19  rurban
-// better support for case_exact search (not caseexact for consistency),
-// plugin args simplification:
-//   handle and explode exclude and pages argument in WikiPlugin::getArgs
-//     and exclude in advance (at the sql level if possible)
-//   handle sortby and limit from request override in WikiPlugin::getArgs
-// ListSubpages: renamed pages to maxpages
-//
-// Revision 1.5  2004/09/13 14:59:56  rurban
-// info=count: number of backlinks for this subpage
-//
-// Revision 1.4  2004/08/18 11:15:11  rurban
-// added basepage argument. Default current
-//
-// Revision 1.3  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.2  2003/11/30 18:23:48  carstenklapp
-// Code housekeeping: PEAR coding standards reformatting only.
-//
-// Revision 1.1  2003/11/23 16:33:02  carstenklapp
-// New plugin to list names of SubPages of the currrent
-// page. (Unfortunately this plugin reveals a bug in
-// stdlib/explodePageList(), the function doesn't seem to work as
-// expected when there are no subpages (see also UnfoldSubPages plugin).
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

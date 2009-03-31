@@ -188,17 +188,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.3  2006/08/25 22:13:56  rurban
-// display init form
-//
-// Revision 1.2  2006/06/18 11:04:50  rurban
-// unify gettext msg
-//
-// Revision 1.1  2006/03/19 16:31:57  rurban
-// I would have needed that very often
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

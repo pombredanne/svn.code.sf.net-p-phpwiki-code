@@ -283,54 +283,6 @@ extends WikiPluginCached
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.13  2007/01/02 13:22:33  rurban
-// support PLOTICUS_PREFABS config.ini setting
-//
-// Revision 1.12  2004/12/13 14:37:22  rurban
-// simplify msg for new GraphViz plugin
-//
-// Revision 1.11  2004/10/14 13:48:07  rurban
-// wait for fs and print failing cmdline
-//
-// Revision 1.10  2004/10/04 23:43:35  rurban
-// honor _ENV PLOTICUS_PREFABS
-//
-// Revision 1.9  2004/09/26 17:09:23  rurban
-// add SVG support for Ploticus (and hopefully all WikiPluginCached types)
-// SWF not yet.
-//
-// Revision 1.8  2004/09/22 15:23:56  rurban
-// support <!plugin-list !> pagelist data
-// add -prefab arg support
-//
-// Revision 1.7  2004/09/22 13:46:26  rurban
-// centralize upload paths.
-// major WikiPluginCached feature enhancement:
-//   support _STATIC pages in uploads/ instead of dynamic getimg.php? subrequests.
-//   mainly for debugging, cache problems and action=pdf
-//
-// Revision 1.6  2004/09/07 13:26:31  rurban
-// new WikiPluginCached option debug=static and some more sf.net defaults for VisualWiki
-//
-// Revision 1.5  2004/06/28 16:35:12  rurban
-// prevent from shell commands
-//
-// Revision 1.4  2004/06/19 10:06:38  rurban
-// Moved lib/plugincache-config.php to config/*.ini
-// use PLUGIN_CACHED_* constants instead of global $CacheParams
-//
-// Revision 1.3  2004/06/03 09:40:57  rurban
-// WikiPluginCache improvements
-//
-// Revision 1.2  2004/06/02 19:37:07  rurban
-// extended description
-//
-// Revision 1.1  2004/06/02 19:12:42  rurban
-// new Ploticus plugin
-//
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

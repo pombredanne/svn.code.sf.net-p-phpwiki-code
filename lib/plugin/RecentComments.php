@@ -136,11 +136,6 @@ class RecentCommentsRevisionIterator extends WikiDB_PageRevisionIterator
 
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.3  2004/05/14 20:55:03  rurban
-// simplified RecentComments
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

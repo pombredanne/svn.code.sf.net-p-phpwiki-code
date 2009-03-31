@@ -144,21 +144,6 @@ extends WikiPluginCached
     
 } // WikiPlugin_RecentChangesCached
 
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2004/03/08 18:17:10  rurban
-// added more WikiGroup::getMembersOf methods, esp. for special groups
-// fixed $LDAP_SET_OPTIONS
-// fixed _AuthInfo group methods
-//
-// Revision 1.3  2003/02/21 23:01:10  dairiki
-// Fixes to support new $basepage argument of WikiPlugin::run().
-//
-// Revision 1.2  2003/01/18 22:01:44  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

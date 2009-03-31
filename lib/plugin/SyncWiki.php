@@ -357,14 +357,6 @@ extends WikiPlugin_WikiAdminUtils
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2007/01/20 11:24:46  rurban
-// Be more strict: link to merge conflicts (not yet handled)
-//
-// Revision 1.1  2007/01/02 13:22:57  rurban
-// add SyncWiki
-//
-
 // For emacs users
 // Local Variables:
 // mode: php
