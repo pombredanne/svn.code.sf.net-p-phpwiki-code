@@ -164,11 +164,6 @@ class ArchiveCleaner_Counter
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.7  2005/10/29 08:57:57  rurban
-// added (c)
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

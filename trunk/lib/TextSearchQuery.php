@@ -1186,41 +1186,6 @@ class TextSearchQuery_Lexer {
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.33  2008/05/21 04:28:38  rurban
-// for the previous pcre short-cut
-//
-// Revision 1.32  2008/05/06 19:25:55  rurban
-// perfomance optimisation: do numeric checks. Change EXACT semantics: ignore case_exact, always do strcmp. Change WORD match to use \b word boundary checks
-//
-// Revision 1.31  2007/09/12 19:36:47  rurban
-// Fix Bug#1792170: Handle " ( " or "(test" without closing ")" as plain word. Allow single string token "0"
-//
-// Revision 1.30  2007/07/14 12:31:00  rurban
-// fix bug#1752172 undefined method TextSearchQuery_node_or::_sql_quote()
-//
-// Revision 1.29  2007/07/14 12:03:38  rurban
-// support ranked search: simple score() function
-//
-// Revision 1.28  2007/03/18 17:35:26  rurban
-// Improve comments
-//
-// Revision 1.27  2007/01/21 23:27:32  rurban
-// Fix ->_backend->qstr()
-//
-// Revision 1.26  2007/01/04 16:41:52  rurban
-// Improve error description. Fix the function parser for illegal functions, when the tokenizer cannot be used.
-//
-// Revision 1.25  2007/01/03 21:22:34  rurban
-// add getType(). NumericSearchQuery::check Improve hacker detection using token_get_all(). Better support for multiple attributes. Add getVars().
-//
-// Revision 1.24  2007/01/02 13:19:05  rurban
-// add NumericSearchQuery. change on pcre: no parsing done, detect modifiers
-//
-// Revision 1.23  2006/04/13 19:30:44  rurban
-// make TextSearchQuery->_stoplist localizable and overridable within config.ini
-// 
-
 // Local Variables:
 // mode: php
 // tab-width: 8

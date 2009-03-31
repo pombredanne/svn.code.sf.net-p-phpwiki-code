@@ -103,50 +103,6 @@ function ConvertAndDisplayPdf (&$request) {
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.13  2007/09/15 12:28:46  rurban
-// Improve multi-page format handling: abstract _DumpHtmlToDir. get rid of non-external pdf, non-global VALID_LINKS
-//
-// Revision 1.12  2007/09/12 19:41:38  rurban
-// Enable format=pdf for pagelists (not yet finished)
-//
-// Revision 1.11  2007/02/17 14:14:55  rurban
-// fix pagename for lists
-//
-// Revision 1.10  2007/01/07 18:44:39  rurban
-// Add ConvertAndDisplayPdfPageList
-//
-// Revision 1.9  2006/09/06 06:02:05  rurban
-// omit actionbar from pdf
-//
-// Revision 1.8  2006/08/25 22:09:00  rurban
-// print pdf header earlier
-//
-// Revision 1.7  2004/09/22 13:46:26  rurban
-// centralize upload paths.
-// major WikiPluginCached feature enhancement:
-//   support _STATIC pages in uploads/ instead of dynamic getimg.php? subrequests.
-//   mainly for debugging, cache problems and action=pdf
-//
-// Revision 1.6  2004/09/20 13:40:19  rurban
-// define all config.ini settings, only the supported will be taken from -default.
-// support USE_EXTERNAL_HTML2PDF renderer (htmldoc tested)
-//
-// Revision 1.5  2004/09/17 14:19:02  rurban
-// default pdf dest: browser
-//
-// Revision 1.4  2004/06/14 11:31:37  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.3  2004/05/15 19:49:09  rurban
-// moved action_pdf to lib/pdf.php
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

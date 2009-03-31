@@ -174,17 +174,6 @@ class DbaDatabase
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.21  2006/09/06 05:42:54  rurban
-// unify dbh arg
-//
-// Revision 1.20  2006/08/15 13:35:33  rurban
-// just aesthetics
-//
-// Revision 1.19  2006/06/18 11:01:25  rurban
-// add rcsid log
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

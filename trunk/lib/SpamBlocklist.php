@@ -119,13 +119,6 @@ function BlackListDebug($host) {
 }
 */
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2005/10/29 08:21:58  rurban
-// ENABLE_SPAMBLOCKLIST:
-//   Check for links to blocked external tld domains in new edits, against
-//   multi.surbl.org and bl.spamcop.net.
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

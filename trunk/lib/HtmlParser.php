@@ -414,18 +414,6 @@ extends HtmlParser
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.3  2004/12/26 17:10:44  rurban
-// just docs or whitespace
-//
-// Revision 1.2  2004/10/19 13:23:06  rurban
-// fixed: Unknown modifier "g"
-//
-// Revision 1.1  2004/05/24 17:31:31  rurban
-// new XmlParser and HtmlParser, RssParser based on that.
-//
-//
-
 // For emacs users
 // Local Variables:
 // mode: php
