@@ -219,34 +219,6 @@ extends WikiPlugin
 
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.7  2005/02/27 12:37:14  rurban
-// update comments
-//
-// Revision 1.6  2005/02/27 12:24:25  rurban
-// prevent SqlResult.ini from being imported
-//
-// Revision 1.5  2004/09/24 18:50:46  rurban
-// fix paging of SqlResult
-//
-// Revision 1.4  2004/09/17 14:23:21  rurban
-// support paging, force limit 50
-//
-// Revision 1.3  2004/09/06 08:36:28  rurban
-// support templates, with some vars
-//
-// Revision 1.2  2004/05/03 21:57:47  rurban
-// locale updates: we previously lost some words because of wrong strings in
-//   PhotoAlbum, german rewording.
-// fixed $_SESSION registering (lost session vars, esp. prefs)
-// fixed ending slash in listAvailableLanguages/Themes
-//
-// Revision 1.1  2004/05/03 20:44:58  rurban
-// fixed gettext strings
-// new SqlResult plugin
-// _WikiTranslation: fixed init_locale
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

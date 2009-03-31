@@ -94,29 +94,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.8  2005/08/06 13:23:14  rurban
-// improved empty cookie
-//
-// Revision 1.7  2005/02/28 21:24:34  rurban
-// ignore forbidden ini_set warnings. Bug #1117254 by Xavier Roche
-//
-// Revision 1.6  2005/02/27 21:34:10  rurban
-// Fix error with : in pagenames. Thanks to Dan Frankowski. bug #1115479
-//
-// Revision 1.5  2005/02/02 19:38:42  rurban
-// shorter default trail
-//
-// Revision 1.4  2004/02/27 02:49:40  rurban
-// patch #680562 "PageTrail Duplicates Patch (1.3.4)"
-//
-// Revision 1.3  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.2  2003/01/18 22:22:36  carstenklapp
-// defined constant for arrow, eliminate use of fmt()
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

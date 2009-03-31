@@ -59,11 +59,6 @@ extends WikiPlugin
 
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2007/01/02 13:23:22  rurban
-// simple lister for relations and/or attributes
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

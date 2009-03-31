@@ -220,14 +220,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.3  2004/11/01 10:43:59  rurban
-// seperate PassUser methods into seperate dir (memory usage)
-// fix WikiUser (old) overlarge data session
-// remove wikidb arg from various page class methods, use global ->_dbi instead
-// ...
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

@@ -186,12 +186,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2007/01/20 11:23:26  rurban
-// New plugin and ActionPage
-//
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

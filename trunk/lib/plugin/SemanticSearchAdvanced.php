@@ -215,11 +215,6 @@ extends WikiPlugin_SemanticSearch
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2007/05/24 18:40:43  rurban
-// new plugin
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

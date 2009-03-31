@@ -249,37 +249,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.34  2007/08/25 18:52:21  rurban
-// Calendar weekday: change from Sunday to start now with Monday
-//
-// Revision 1.33  2007/01/22 23:48:54  rurban
-// Fix Calendar %U: weeknum starting with 1
-//
-// Revision 1.32  2007/01/03 21:23:24  rurban
-// add display_weeknum support.
-//
-// Revision 1.31  2006/03/19 14:26:29  rurban
-// sf.net patch by Matt Brown: Add rel=nofollow to more actions
-//
-// Revision 1.30  2005/04/02 03:05:44  uckelman
-// Removed & from vars passed by reference (not needed, causes PHP to complain).
-//
-// Revision 1.29  2004/12/06 19:15:04  rurban
-// save edit-time links as requested in #946679
-//
-// Revision 1.28  2004/05/08 14:06:13  rurban
-// new support for inlined image attributes: [image.jpg size=50x30 align=right]
-// minor stability and portability fixes
-//
-// Revision 1.27  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.26  2003/01/18 21:19:25  carstenklapp
-// Code cleanup:
-// Reformatting; added copyleft, getVersion, getDescription
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

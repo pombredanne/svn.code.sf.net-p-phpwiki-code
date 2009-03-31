@@ -175,65 +175,6 @@ class _PageList_Column_WantedPages_links extends _PageList_Column {
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.16  2004/11/23 15:17:19  rurban
-// better support for case_exact search (not caseexact for consistency),
-// plugin args simplification:
-//   handle and explode exclude and pages argument in WikiPlugin::getArgs
-//     and exclude in advance (at the sql level if possible)
-//   handle sortby and limit from request override in WikiPlugin::getArgs
-// ListSubpages: renamed pages to maxpages
-//
-// Revision 1.15  2004/11/23 13:35:49  rurban
-// add case_exact search
-//
-// Revision 1.14  2004/11/20 17:35:58  rurban
-// improved WantedPages SQL backends
-// PageList::sortby new 3rd arg valid_fields (override db fields)
-// WantedPages sql pager inexact for performance reasons:
-//   assume 3 wantedfrom per page, to be correct, no getTotal()
-// support exclude argument for get_all_pages, new _sql_set()
-//
-// Revision 1.13  2004/11/20 11:28:49  rurban
-// fix a yet unused PageList customPageListColumns bug (merge class not decl to _types)
-// change WantedPages to use PageList
-// change WantedPages to print the list of referenced pages, not just the count.
-//   the old version was renamed to WantedPagesOld
-//   fix and add handling of most standard PageList arguments (limit, exclude, ...)
-// TODO: pagename sorting, dumb/WantedPagesIter and SQL optimization
-//
-// Revision 1.12  2004/10/04 23:39:34  rurban
-// just aesthetics
-//
-// Revision 1.11  2004/04/20 00:56:00  rurban
-// more paging support and paging fix for shorter lists
-//
-// Revision 1.10  2004/04/18 01:44:02  rurban
-// more sortby+limit support
-//
-// Revision 1.9  2004/04/10 04:15:06  rurban
-// sf.net 927122 Suggestion
-//
-// Revision 1.8  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.7  2003/12/19 06:57:49  carstenklapp
-// Bugfix: Enclose FullTextSearch query with quotes when the [Wiki Word]
-// contains spaces.
-//
-// Revision 1.6  2003/11/19 17:08:23  carstenklapp
-// New feature: Clicking on the number of citations in the links column
-// now does a FullTextSearch for the WantedPage link!
-//
-// Revision 1.5  2003/03/25 21:05:27  dairiki
-// Ensure pagenames are strings.
-//
-// Revision 1.4  2003/01/18 22:14:24  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

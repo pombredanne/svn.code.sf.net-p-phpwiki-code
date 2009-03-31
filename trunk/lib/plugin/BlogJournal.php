@@ -92,24 +92,6 @@ extends WikiPlugin_WikiBlog
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2005/11/21 20:56:23  rurban
-// no duplicate headline and no direct page link anymore
-//
-// Revision 1.3  2005/11/21 20:47:21  rurban
-// fix count error
-//
-// Revision 1.2  2005/10/29 09:06:37  rurban
-// move common blog methods to WikiBlog
-//
-// Revision 1.1  2005/10/29 09:03:17  rurban
-// Include the latest blog entries for the current users blog if signed,
-// or the ADMIN_USER's Blog if not.
-// UnfoldSubpages for blogs.
-// Rui called this plugin "JournalLast", but this was written completely
-// independently, without having seen the src (yet).
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

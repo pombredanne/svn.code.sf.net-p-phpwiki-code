@@ -195,45 +195,6 @@ extends WikiPlugin__BackendInfo
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.13  2007/05/15 16:32:25  rurban
-// Recursive array editing: support global_data
-//
-// Revision 1.12  2007/01/04 16:46:31  rurban
-// Make the header a h3
-//
-// Revision 1.11  2004/06/01 16:48:11  rurban
-// dbi->touch
-// security fix to allow post admin only.
-//
-// Revision 1.10  2004/04/18 01:11:52  rurban
-// more numeric pagename fixes.
-// fixed action=upload with merge conflict warnings.
-// charset changed from constant to global (dynamic utf-8 switching)
-//
-// Revision 1.9  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.8  2003/11/27 17:05:41  carstenklapp
-// Update: Omit page cache object ('_cached_html') from metadata display.
-//
-// Revision 1.7  2003/11/22 17:41:42  carstenklapp
-// Minor internal change: Removed redundant call to gettext within
-// fmt(). (locale make: EditMetaData.php:113: warning: keyword nested in
-// keyword arg)
-//
-// Revision 1.6  2003/02/26 01:56:52  dairiki
-// Tuning/fixing of POST action URLs and hidden inputs.
-//
-// Revision 1.5  2003/02/21 04:17:13  dairiki
-// Delete now irrelevant comment.
-//
-// Revision 1.4  2003/01/18 21:41:01  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

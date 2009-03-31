@@ -122,50 +122,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2004/06/13 14:15:28  rurban
-// GooglePlugin now actually works (templated result missing)
-//
-// Revision 1.3  2004/06/13 13:54:25  rurban
-// Catch fatals on the four dump calls (as file and zip, as html and mimified)
-// FoafViewer: Check against external requirements, instead of fatal.
-// Change output for xhtmldumps: using file:// urls to the local fs.
-// Catch SOAP fatal by checking for GOOGLE_LICENSE_KEY
-// Import GOOGLE_LICENSE_KEY and FORTUNE_DIR from config.ini.
-//
-// Revision 1.2  2004/04/18 01:11:52  rurban
-// more numeric pagename fixes.
-// fixed action=upload with merge conflict warnings.
-// charset changed from constant to global (dynamic utf-8 switching)
-//
-// Revision 1.1  2004/02/29 01:37:59  rurban
-// New experimental feature: use the Google API directly
-// Needs a free license key and the soap library nosoap,
-// Todo: templates for search and results, some proxy debugging
-//
-// Revision 1.7  2004/02/22 23:20:33  rurban
-// fixed DumpHtmlToDir,
-// enhanced sortby handling in PageList
-//   new button_heading th style (enabled),
-// added sortby and limit support to the db backends and plugins
-//   for paging support (<<prev, next>> links on long lists)
-//
-// Revision 1.6  2004/02/19 22:06:53  rurban
-// use new class, to be able to get rid of lib/interwiki.php
-//
-// Revision 1.5  2003/02/26 01:56:52  dairiki
-// Tuning/fixing of POST action URLs and hidden inputs.
-//
-// Revision 1.4  2003/01/30 02:46:46  carstenklapp
-// Bugfix: Plugin was redirecting to nonexistant local wiki page named
-// "ExternalSearch" instead of the invoked url. Reported by Arthur Chereau.
-//
-// Revision 1.3  2003/01/18 21:41:01  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

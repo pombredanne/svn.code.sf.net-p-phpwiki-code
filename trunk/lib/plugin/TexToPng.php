@@ -302,13 +302,6 @@ class WikiPlugin_TexToPng extends WikiPluginCached
     } // TexToImg
 } // WikiPlugin_TexToPng
 
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2003/01/18 22:08:01  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

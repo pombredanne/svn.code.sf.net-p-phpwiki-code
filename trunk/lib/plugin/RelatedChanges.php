@@ -129,24 +129,6 @@ class RelatedChangesRevisionIterator extends WikiDB_PageRevisionIterator
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.4  2005/01/24 23:15:27  uckelman
-// The extra description for RelatedChanges was appearing in RecentChanges
-// and PageHistory due to a bad test in _RecentChanges_HtmlFormatter. Fixed.
-//
-// Revision 1.3  2004/06/03 18:58:27  rurban
-// days links requires action=RelatedChanges arg
-//
-// Revision 1.2  2004/05/08 14:06:13  rurban
-// new support for inlined image attributes: [image.jpg size=50x30 align=right]
-// minor stability and portability fixes
-//
-// Revision 1.1  2004/04/21 04:29:10  rurban
-// Two convenient RecentChanges extensions
-//   RelatedChanges (only links from current page)
-//   RecentEdits (just change the default args)
-//
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

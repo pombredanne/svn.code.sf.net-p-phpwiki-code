@@ -387,14 +387,6 @@ extends WikiPlugin
 
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2005/02/12 17:26:24  rurban
-// renamed to Sql. Added translations (inc not yet)
-//
-// Revision 1.1  2005/02/02 20:41:02  rurban
-// Accesslog sql queries
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

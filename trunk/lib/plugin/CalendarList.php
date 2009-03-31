@@ -230,61 +230,6 @@ extends WikiPlugin
     }
 };
 
-
-// $Log: not supported by cvs2svn $
-// Revision 1.12  2008/08/17 07:45:03  vargenau
-// No comma in default
-//
-// Revision 1.11  2008/02/14 18:58:15  rurban
-// provide mday default
-//
-// Revision 1.10  2007/09/01 13:39:46  rurban
-//  CalendarList pages now in parallel with Calendar: year + month args as start base, The behaviour before 2007 with last/next_n_days was to start now.
-//
-// Revision 1.9  2006/05/14 17:40:31  rurban
-// Patch #1232730 by banjo
-//
-// Revision 1.8  2005/10/12 06:18:31  rurban
-// dont overdo constants
-//
-// Revision 1.7  2005/07/21 18:55:55  rurban
-// applied mpullen patch (Revised to work on all date range combinations...),
-// but still does not work as documented.
-//
-// Revision 1.6.2  2005/06/24 12:00:00  mpullen
-//   Corrected bug in the main WHILE loop to detect proper termination point in time
-//   {it was stopping one day too soon in either direction}.
-//
-// Revision 1.6.1  2005/06/23 12:00:00  mpullen
-//   Revised to work on all date range combinations (past and future, by days or count of events)
-//   Externalized five control parameter constants to the config.ini file (new section 8 for PLUGINs)
-//
-// Revision 1.6  2005/04/02 03:05:44  uckelman
-// Removed & from vars passed by reference (not needed, causes PHP to complain).
-//
-// Revision 1.5  2004/12/06 19:15:04  rurban
-// save edit-time links as requested in #946679
-//
-// Revision 1.4  2004/12/06 18:32:39  rurban
-// added order=reverse: feature request from #981109
-//
-// Revision 1.3  2004/09/22 13:36:45  rurban
-// Support ranges, based on a simple patch by JoshWand
-//   next_n_days, last_n_days, next_n
-//   last_n not yet
-//
-// Revision 1.2  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far,
-//	because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed.
-//	(InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.1  2003/11/18 19:06:03  carstenklapp
-// New plugin to be used in conjunction with the Calendar plugin.
-// Upgraded to use SUBPAGE_SEPARATOR for subpages. SF patch tracker
-// submission 565369.
-//
-
-
 // For emacs users
 // Local Variables:
 // mode: php

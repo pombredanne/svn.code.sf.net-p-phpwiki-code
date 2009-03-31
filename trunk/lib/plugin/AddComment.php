@@ -142,38 +142,6 @@ function togglecomments(a) {
    
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.8  2004/06/13 09:45:23  rurban
-// display bug workaround for MacIE browsers, jshide: 0
-//
-// Revision 1.7  2004/03/29 21:33:32  rurban
-// possible fix for problem reported by Whit Blauvelt
-//   Message-ID: <20040327211707.GA22374@free.transpect.com>
-// create intermediate redirect subpages for blog/comment/forum
-//
-// Revision 1.6  2004/03/16 15:44:34  rurban
-// jshide not default as in CreateToc
-//
-// Revision 1.5  2004/03/15 09:52:59  rurban
-// jshide button: dynamic titles
-//
-// Revision 1.4  2004/03/14 20:30:21  rurban
-// jshide button
-//
-// Revision 1.3  2004/03/14 16:26:21  rurban
-// copyright line
-//
-// Revision 1.2  2004/03/12 20:59:18  rurban
-// important cookie fix by Konstantin Zadorozhny
-// new editpage feature: JS_SEARCHREPLACE
-//
-// Revision 1.1  2004/03/12 17:32:41  rurban
-// new base class PageType_attach as base class for WikiBlog, Comment, and WikiForum.
-// new plugin AddComment, which is a WikiBlog with different pagetype and template,
-//   based on WikiBlog. WikiForum comes later.
-//
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

@@ -135,24 +135,6 @@ extends WikiPlugin_WikiBlog
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.5  2005/10/29 09:06:37  rurban
-// move common blog methods to WikiBlog
-//
-// Revision 1.4  2004/12/16 18:29:00  rurban
-// allow empty Blog prefix
-//
-// Revision 1.3  2004/12/15 17:45:08  rurban
-// fix box method
-//
-// Revision 1.2  2004/12/14 21:35:15  rurban
-// support new BLOG_EMPTY_DEFAULT_PREFIX
-//
-// Revision 1.1  2004/12/13 13:22:57  rurban
-// new BlogArchives plugin for the new blog theme. enable default box method
-// for all plugins. Minor search improvement.
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

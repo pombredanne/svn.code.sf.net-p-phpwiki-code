@@ -217,39 +217,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.12  2004/10/04 23:39:34  rurban
-// just aesthetics
-//
-// Revision 1.11  2004/04/20 00:56:00  rurban
-// more paging support and paging fix for shorter lists
-//
-// Revision 1.10  2004/04/18 01:44:02  rurban
-// more sortby+limit support
-//
-// Revision 1.9  2004/04/10 04:15:06  rurban
-// sf.net 927122 Suggestion
-//
-// Revision 1.8  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.7  2003/12/19 06:57:49  carstenklapp
-// Bugfix: Enclose FullTextSearch query with quotes when the [Wiki Word]
-// contains spaces.
-//
-// Revision 1.6  2003/11/19 17:08:23  carstenklapp
-// New feature: Clicking on the number of citations in the links column
-// now does a FullTextSearch for the WantedPage link!
-//
-// Revision 1.5  2003/03/25 21:05:27  dairiki
-// Ensure pagenames are strings.
-//
-// Revision 1.4  2003/01/18 22:14:24  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

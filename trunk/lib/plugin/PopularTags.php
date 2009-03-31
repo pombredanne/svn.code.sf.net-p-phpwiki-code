@@ -91,12 +91,6 @@ function cmp_by_count($a, $b) {
      return $a['count'] < $b['count'] ? 1 : -1;
 }
 
-
-// $Log: not supported by cvs2svn $
-// Revision 1.1  2007/03/10 18:30:51  rurban
-// Most popular list of Categories
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

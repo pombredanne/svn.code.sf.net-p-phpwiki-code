@@ -232,23 +232,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.14  2007/01/03 21:24:15  rurban
-// Improve ttfont handling, we would really need an TTFONT cfg. add more options. Calc size. Parse hexcolor. Handle text2png_debug. urlencode filename and l for security. Changed to use the uploads/ path for the images.
-//
-// Revision 1.13  2004/02/17 12:11:36  rurban
-// added missing 4th basepage arg at plugin->run() to almost all plugins. This caused no harm so far, because it was silently dropped on normal usage. However on plugin internal ->run invocations it failed. (InterWikiSearch, IncludeSiteMap, ...)
-//
-// Revision 1.12  2003/02/22 19:21:47  dairiki
-// If DATA_PATH is not defined (by user in index.php), then use
-// relative URLs to data.
-//
-// Revision 1.11  2003/01/18 22:08:01  carstenklapp
-// Code cleanup:
-// Reformatting & tabs to spaces;
-// Added copyleft, getVersion, getDescription, rcs_id.
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

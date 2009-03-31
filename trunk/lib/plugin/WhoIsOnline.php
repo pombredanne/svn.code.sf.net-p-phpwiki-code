@@ -200,68 +200,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-// Revision 1.11  2005/02/02 19:39:42  rurban
-// better box layout
-//
-// Revision 1.10  2005/02/01 16:22:58  rurban
-// avoid __PHP_incomplete_Class notice
-//
-// Revision 1.9  2004/12/18 17:04:24  rurban
-// stabilize not to call UserName() of an incomplete (not loaded) object
-//
-// Revision 1.8  2004/06/14 11:31:39  rurban
-// renamed global $Theme to $WikiTheme (gforge nameclash)
-// inherit PageList default options from PageList
-//   default sortby=pagename
-// use options in PageList_Selectable (limit, sortby, ...)
-// added action revert, with button at action=diff
-// added option regex to WikiAdminSearchReplace
-//
-// Revision 1.7  2004/05/27 17:49:06  rurban
-// renamed DB_Session to DbSession (in CVS also)
-// added WikiDB->getParam and WikiDB->getAuthParam method to get rid of globals
-// remove leading slash in error message
-// added force_unlock parameter to File_Passwd (no return on stale locks)
-// fixed adodb session AffectedRows
-// added FileFinder helpers to unify local filenames and DATA_PATH names
-// editpage.php: new edit toolbar javascript on ENABLE_EDIT_TOOLBAR
-//
-// Revision 1.6  2004/05/02 15:10:08  rurban
-// new finally reliable way to detect if /index.php is called directly
-//   and if to include lib/main.php
-// new global AllActionPages
-// SetupWiki now loads all mandatory pages: HOME_PAGE, action pages, and warns if not.
-// WikiTranslation what=buttons for Carsten to create the missing MacOSX buttons
-// PageGroupTestOne => subpages
-// renamed PhpWikiRss to PhpWikiRecentChanges
-// more docs, default configs, ...
-//
-// Revision 1.5  2004/04/06 20:27:05  rurban
-// fixed guests (no wiki_user session)
-// added ip (to help in ip-throttling)
-//
-// Revision 1.4  2004/03/30 02:14:04  rurban
-// fixed yet another Prefs bug
-// added generic PearDb_iter
-// $request->appendValidators no so strict as before
-// added some box plugin methods
-// PageList commalist for condensed output
-//
-// Revision 1.3  2004/03/12 15:48:08  rurban
-// fixed explodePageList: wrong sortby argument order in UnfoldSubpages
-// simplified lib/stdlib.php:explodePageList
-//
-// Revision 1.2  2004/03/10 15:38:49  rurban
-// store current user->page and ->action in session for WhoIsOnline
-// better WhoIsOnline icon
-// fixed WhoIsOnline warnings
-//
-// Revision 1.1  2004/02/26 19:15:37  rurban
-// new WhoIsOnline plugin: session explorer (postnuke style)
-//
-//
-
 // For emacs users
 // Local Variables:
 // mode: php
