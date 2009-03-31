@@ -186,36 +186,6 @@ class _PageList_Column_LinkDatabase_links extends _PageList_Column {
     }
 }
 
-// $Log: not supported by cvs2svn $
-// Revision 1.7  2004/12/26 17:17:25  rurban
-// announce dumps - mult.requests to avoid request::finish, e.g. LinkDatabase, PdfOut, ...
-//
-// Revision 1.6  2004/12/22 18:48:10  rurban
-// default format=html for unit-tests and DumpHtml/Zip breakage
-//
-// Revision 1.5  2004/12/17 16:39:03  rurban
-// minor reformatting
-//
-// Revision 1.4  2004/12/06 19:50:05  rurban
-// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
-// renamed delete_page to purge_page.
-// enable action=edit&version=-1 to force creation of a new version.
-// added BABYCART_PATH config
-// fixed magiqc in adodb.inc.php
-// and some more docs
-//
-// Revision 1.3  2004/11/30 23:44:00  rurban
-// some comments
-//
-// Revision 1.2  2004/11/30 23:02:45  rurban
-// format=xml for hypergraph.sf.net applet
-//
-// Revision 1.1  2004/11/30 21:02:16  rurban
-// A simple plugin for WikiBrowser at http://touchgraph.sourceforge.net/
-// List all pages with all links as text file (with some caching tricks).
-//   format=html currently unstable.
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8
