@@ -1,4 +1,4 @@
-<?php
+<?php // -*-php-*- $Id$
 
 /*
  * Copyright (C) 2008-2009 Alcatel-Lucent
