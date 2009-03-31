@@ -546,67 +546,6 @@ class PageFormatter_MediaWiki extends PageFormatter
 }
 
 
-// $Log: not supported by cvs2svn $
-// Revision 1.54  2007/09/12 19:35:29  rurban
-// Windows fix for local path detection
-//
-// Revision 1.53  2007/07/14 17:55:29  rurban
-// SemanticWeb.php
-//
-// Revision 1.52  2007/02/17 14:17:41  rurban
-// localize Upload:links for WIKIDUMP: esp. for pdf images
-//
-// Revision 1.51  2007/01/07 18:43:17  rurban
-// Disallow ":" as interwikmap and use it as proper LinkedBracket match.
-//
-// Revision 1.50  2007/01/04 16:44:57  rurban
-// Force interwiki updates and page edits
-//
-// Revision 1.49  2006/10/12 06:25:09  rurban
-// use the same class for $moniker == ""
-//
-// Revision 1.48  2006/10/08 12:38:11  rurban
-// New special interwiki link markup [:LinkTo] without storing the backlink
-//
-// Revision 1.47  2005/08/07 09:14:38  rurban
-// fix comments
-//
-// Revision 1.46  2005/08/06 13:09:33  rurban
-// allow spaces in interwiki paths, even implicitly. fixes bug #1218733
-//
-// Revision 1.45  2005/05/06 16:48:41  rurban
-// support %u, %b, %d expansion for Upload: User: and Talk: interwiki monikers
-//
-// Revision 1.44  2005/04/23 11:07:34  rurban
-// cache map
-//
-// Revision 1.43  2005/02/02 20:40:12  rurban
-// fix Talk: and User: names and links
-//
-// Revision 1.42  2005/02/02 19:36:56  rurban
-// more plans
-//
-// Revision 1.41  2005/02/02 19:34:09  rurban
-// more maps: Talk, User
-//
-// Revision 1.40  2005/01/31 12:15:08  rurban
-// avoid some cornercase intermap warning. Thanks to Stefan <sonstiges@bayern-mail.de>
-//
-// Revision 1.39  2005/01/25 06:59:35  rurban
-// fix bogus InterWikiMap warning
-//
-// Revision 1.38  2004/12/26 17:10:44  rurban
-// just docs or whitespace
-//
-// Revision 1.37  2004/12/06 19:49:55  rurban
-// enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
-// renamed delete_page to purge_page.
-// enable action=edit&version=-1 to force creation of a new version.
-// added BABYCART_PATH config
-// fixed magiqc in adodb.inc.php
-// and some more docs
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

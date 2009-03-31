@@ -57,28 +57,6 @@ function run_install($part = '') {
 
 init_install();
 
-/**
- $Log: not supported by cvs2svn $
- Revision 1.3  2005/02/28 20:24:23  rurban
- _GET is different from HTPP_GET_VARS. use the correct one
-
- Revision 1.2  2005/02/26 17:47:57  rurban
- configurator: add (c), support show=_part1 initial expand, enable
-   ENABLE_FILE_OUTPUT, use part.id not name
- install.php: fixed for multiple invocations (on various missing vars)
- IniConfig: call install.php on more errors with expanded part.
-
- Revision 1.1  2004/12/06 19:49:58  rurban
- enable action=remove which is undoable and seeable in RecentChanges: ADODB ony for now.
- renamed delete_page to purge_page.
- enable action=edit&version=-1 to force creation of a new version.
- added BABYCART_PATH config
- fixed magiqc in adodb.inc.php
- and some more docs
-
-
- */
-
 // For emacs users
 // Local Variables:
 // mode: php
