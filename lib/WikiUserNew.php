@@ -557,6 +557,9 @@ class _WikiUser
     function isValidName ($userid = false) {
         if (!$userid) $userid = $this->_userid;
         if (!$userid) return false;
+        if (defined('GFORGE') and GFORGE) {
+            return true;
+        }
         return preg_match("/^[\-\w\.@ ]+$/U", $userid) and strlen($userid) < 32;
     }
 
