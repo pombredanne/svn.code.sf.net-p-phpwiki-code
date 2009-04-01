@@ -594,14 +594,19 @@ function fixup_static_configs($file) {
     // Even on simple 8bit charsets, where just <>& need to be replaced. For iso-8859-[2-4] e.g.
     // See <php-src>/ext/standard/html.c
     // For performance reasons we require a magic constant to ignore this warning.
-    if (defined('IGNORE_CHARSET_NOT_SUPPORTED_WARNING') and IGNORE_CHARSET_NOT_SUPPORTED_WARNING) {
-        $ErrorManager->pushErrorHandler(new WikiFunctionCb('_ignore_unknown_charset_warning'));
+    if (defined('IGNORE_CHARSET_NOT_SUPPORTED_WARNING')
+        and IGNORE_CHARSET_NOT_SUPPORTED_WARNING) 
+    {
+        $ErrorManager->pushErrorHandler
+            (new WikiFunctionCb('_ignore_unknown_charset_warning'));
     }
     // Used by SetupWiki to pull in required pages, if not translated, then in english.
     // Also used by _WikiTranslation. Really important are only those which return pagelists 
     // or contain basic functionality.
     /*
       All pages containing plugins of the same name as the filename:
+      cd pgsrc
+      grep -l '\?plugin ' *| perl -ne'$/=0;chop; s/%([\da-fA-F]{2})/pack("C",hex($1))/ge; next LINE if m{^(Help/|Template|Pgsrc)}; print "$_\n"; {local $/;open F,"<$_"; $f=join("",<F>);} push @a,$_ if $f=~/plugin $_/; END{print join(":",@a)};'
      */
     $AllActionPages = explode(':',
       'AllPages:AllUsers:AppendText:AuthorHistory:'
@@ -612,8 +617,7 @@ function fixup_static_configs($file) {
       .'ModeratedPage:MostPopular:'
       .'OrphanedPages:'
       .'PageDump:PageHistory:PageInfo:PluginManager:'
-      .'RandomPage:'
-      .'RecentChanges:RecentComments:RelatedChanges:'
+      .'RandomPage:RecentChanges:RecentComments:RelatedChanges:'
       .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
       .'TitleSearch:'
       .'UpLoad:UserPreferences:'
