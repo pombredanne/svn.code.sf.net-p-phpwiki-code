@@ -362,16 +362,17 @@ class ErrorManager
  * 
  * @access private
  */
-function ErrorManager_errorHandler($errno, $errstr, $errfile, $errline) 
+function ErrorManager_errorHandler($errno, $errstr, $errfile, $errline)
 {
     if (!isset($GLOBALS['ErrorManager'])) {
       $GLOBALS['ErrorManager'] = new ErrorManager;
     }
-	
-    if (defined('DEBUG') and DEBUG)
-        $error = new PhpWikiError($errno, $errstr, $errfile, $errline);
-    else
-	$error = new PhpErrorOnce($errno, $errstr, $errfile, $errline);
+
+    if (defined('DEBUG') and DEBUG) {
+        $error = new PhpError($errno, $errstr, $errfile, $errline);
+    } else {
+        $error = new PhpErrorOnce($errno, $errstr, $errfile, $errline);
+    }
     $GLOBALS['ErrorManager']->handleError($error);
 }
 
