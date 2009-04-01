@@ -1,0 +1,28 @@
+<?php // -*-html-*-
+rcs_id('$Id$');
+?>
+
+<?php if ($revision and !$revision->isCurrent()) { ?>
+  <p><strong><?=_("Note:")?></strong>
+     <?=_("You are viewing an old revision of this page.")?>
+  <?= Button('browse', _("View the current version"), $page)?>.
+  </p>
+<?php } ?>
+<?php if (!empty($redirected)) { ?>
+  <p><?= $redirected ?></p>
+<?php } ?>
+
+<?php if (WIKI_NAME == "cssforge") { ?>
+<table width="100%" bgcolor="#e9fbff" style="border-style:solid;border-color:blue;border-width:2px">
+<tr>
+<td><p align="center"><em><b>This Help page is located in the main Forge wiki. You are not in your project's wiki.</b></em></p>
+</td>
+</tr>
+</table>
+<?php } ?>
+
+<?=$CONTENT?>
+
+<div id="footer"><?php // for top & bottom toolbars stylesheet ?>
+  <?=Template('browse-footer')?>
+</div>
