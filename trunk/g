@@ -90,7 +90,7 @@ if (!$group_id || !$project) {
     // Disable access log (already in apache & gforge).
     define('ACCESS_LOG_SQL', 0);
 
-    define('DEBUG', false);
+    define('DEBUG', ($sys_install_type != 'production'));
     // define('_DEBUG_LOGIN', true);
 
     // Disable VACUUM (they are performed every night)
