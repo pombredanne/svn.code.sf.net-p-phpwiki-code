@@ -1024,6 +1024,21 @@ td.tdunselected {
    background-color: #e9e8de;
 }
 
+/* Main wiki browse banner */
+.browsebanner table {
+   width: 100%;
+   background-color: #e9fbff;
+   border-style: solid;
+   border-color: blue;
+   border-width: 2px;
+}
+
+.browsebanner table td {
+   text-align: center;
+   font-weight: bold;
+   font-style: oblique;
+}
+
 /* For emacs users
  *
  * Local Variables:
