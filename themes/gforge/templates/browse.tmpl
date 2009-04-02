@@ -1,6 +1,9 @@
 <?php // -*-html-*-
 rcs_id('$Id$');
 ?>
+<?php
+$curuserprefs = $user->getPreferences();
+?>
 
 <?php if ($revision and !$revision->isCurrent()) { ?>
   <p><strong><?=_("Note:")?></strong>
@@ -13,12 +16,17 @@ rcs_id('$Id$');
 <?php } ?>
 
 <?php if (WIKI_NAME == "cssforge") { ?>
-<table width="100%" bgcolor="#e9fbff" style="border-style:solid;border-color:blue;border-width:2px">
+<div class="browsebanner">
+<table>
 <tr>
-<td><p align="center"><em><b>This Help page is located in the main Forge wiki. You are not in your project's wiki.</b></em></p>
-</td>
+<td>This Help page is located in the Forge main wiki. You are not in your project's wiki.</td>
 </tr>
 </table>
+</div>
+<?php } ?>
+
+<?php if ($curuserprefs->get('pageTrail')) { ?>
+<?plugin PageTrail ?>
 <?php } ?>
 
 <?=$CONTENT?>
