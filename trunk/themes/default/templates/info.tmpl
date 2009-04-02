@@ -36,13 +36,7 @@ $markupVersion = ($markupVersion = $revision->get('markup'))
                ? fmt("Version %s", $markupVersion)
                : _("Original (1.2 or 1.0)");
 
-$summary = HTML::textarea(array('name' => 'summary',
-                                'class' => 'summary',
-                                'rows' => 3,
-                                'cols' => intval($request->getPref('editWidth')/2),
-                                'readonly' => 'readonly'
-                                ),
-                          $revision->get('summary'));
+$summary = $revision->get('summary');
 
 if ($is_current = $revision->isCurrent()) {
 
