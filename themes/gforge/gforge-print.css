@@ -43,6 +43,12 @@
 /* Do not print the wiki navigation and edition bars */
 .toolpalettes { display: none; }
 
+/* Do not print Page Trail line */
+.pagetrail { display: none; }
+
+/* Do not print main wiki browse banner */
+.browsebanner { display: none; }
+
 /* Do not print icons in front of hyperlinks */
 a.interwiki img { display: none; }
 a.named-interwiki img { display: none; }
