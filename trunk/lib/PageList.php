@@ -1,4 +1,24 @@
-<?php rcs_id('$Id$');
+<?php
+rcs_id('$Id$');
+/* Copyright (C) 2004-2008 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /**
  * List a number of pagenames, optionally as table with various columns.
@@ -1520,7 +1540,12 @@ class PageList {
         // need a recursive switch here for the azhead and cols grouping.
         if (!empty($this->_options['cols']) and $this->_options['cols'] > 1) {
             $count = count($this->_pages);
-            $length = $count / $this->_options['cols'];
+            $length = intval($count / ($this->_options['cols']));
+            // If division does not give an integer, we need one more line
+            // E.g. 13 pages to display in 3 columns.
+            if (($length * ($this->_options['cols'])) != $count) {
+                $length += 1;
+            }
             $width = sprintf("%d", 100 / $this->_options['cols']).'%';
             $cols = HTML::tr(array('valign' => 'top'));
             for ($i=0; $i < $count; $i += $length) {
