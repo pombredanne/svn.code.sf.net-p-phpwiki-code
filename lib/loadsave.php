@@ -1519,7 +1519,13 @@ function SetupWiki (&$request)
 
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder;
-    foreach (array_merge(explode(':','SandBox:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:Help/OldTextFormattingRules:Help/TextFormattingRules:PhpWikiAdministration'),
+
+    if (defined('GFORGE') and GFORGE) {
+        $mandatory = explode(':','SandBox:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:TextFormattingRules:PhpWikiAdministration');
+    } else {
+        $mandatory = explode(':','SandBox:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:Help/OldTextFormattingRules:Help/TextFormattingRules:PhpWikiAdministration');
+    }
+    foreach (array_merge($mandatory,
                          $GLOBALS['AllActionPages'],
                          array(constant('HOME_PAGE'))) as $f) 
     {
