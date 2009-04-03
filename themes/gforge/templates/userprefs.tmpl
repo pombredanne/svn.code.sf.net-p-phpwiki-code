@@ -89,6 +89,10 @@ $SearchMenuItem = HTML::input(array('type' => 'checkbox',
                                      'name' => 'pref[searchMenuItem]',
                                      'value' => '1',
                                      'checked' => (bool) $pref->get('searchMenuItem')));
+$RandomPageMenuItem = HTML::input(array('type' => 'checkbox',
+                                     'name' => 'pref[randomPageMenuItem]',
+                                     'value' => '1',
+                                     'checked' => (bool) $pref->get('randomPageMenuItem')));
 $SpecialPagesMenuItem = HTML::input(array('type' => 'checkbox',
                                      'name' => 'pref[specialPagesMenuItem]',
                                      'value' => '1',
@@ -97,6 +101,10 @@ $RelativeDatesCB = HTML::input(array('type' => 'checkbox',
                                      'name' => 'pref[relativeDates]',
                                      'value' => '1',
                                      'checked' => (bool) $pref->get('relativeDates')));
+$PageTrailCB = HTML::input(array('type' => 'checkbox',
+                                 'name' => 'pref[pageTrail]',
+                                 'value' => '1',
+                                 'checked' => (bool) $pref->get('pageTrail')));
 $NoLinkIconsCB = HTML::input(array('type' => 'checkbox',
                                    'name' => 'pref[noLinkIcons]',
                                    'value' => '1',
@@ -246,6 +254,18 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
       </td>
   </tr>
 
+  <tr>
+      <td>
+         <p><?=_("Do not send minor modifications:")?></p>
+      </td>
+      <td>
+         <p><?= $MajorModificationsOnlyCB ?></p>
+      </td>
+      <td>
+         <p class="hint"><?=_("Check if you do not want to be notified of minor modifications.")?></p>
+      </td>
+  </tr>
+
   <tr><td colspan="3"><h3><?=_("Menus")?></h3></td></tr>
   <tr>
      <td>
@@ -297,6 +317,11 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
                <p><?= $SearchMenuItem ?> <?=_("Search")?></p>
             </td>
          </tr>
+         <tr>
+            <td>
+               <p><?= $RandomPageMenuItem ?> <?=_("RandomPage")?></p>
+            </td>
+         </tr>
        </table>
        </fieldset>
     </td>
@@ -309,6 +334,9 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   <tr><td colspan="3"><h3><?=_("Appearance")?></h3></td></tr>
 
   <tr><td colspan="3"><?=_("Here you can override site-specific default values.") ?></td></tr>
+      <tr><td align="right"><?= _("Show Page Trail")?></td>
+          <td><?=$PageTrailCB?></td>
+          <td><p class="hint"><?=_("Show Page Trail at top of page.")?></p></td></tr>
       <tr><td align="right"><?=fmt("Hide %s:", WikiLink("Help:LinkIcons"))?></td>
           <td><?=$NoLinkIconsCB?></td>
           <td><p class="hint"><?=_("Hide or show LinkIcons.")?></p></td></tr>
