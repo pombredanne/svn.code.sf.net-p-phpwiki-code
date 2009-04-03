@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -18,9 +19,6 @@ rcs_id('$Id$');
  You should have received a copy of the GNU General Public License
  along with PhpWiki; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-
-/**
  */
 
 require_once('lib/PageList.php');
@@ -83,8 +81,7 @@ extends WikiPlugin
         $pagelist = new PageList($columns, $exclude, $args);
         while ($page = $pages->next()) {
             $hits = $page->get('hits');
-            // don't show pages with no hits if most popular pages
-            // wanted
+            // don't show pages with no hits if most popular pages wanted
             if ($hits == 0 && $limit > 0) {
                 break;
             }
@@ -94,13 +91,12 @@ extends WikiPlugin
 
         if (! $noheader) {
             if ($limit > 0) {
-                $pagelist->setCaption(_("The %d most popular pages of this wiki:"));
+                $pagelist->setCaption(fmt("The %d most popular pages of this wiki:", $limit));
+            } else if ($limit < 0) {
+                $pagelist->setCaption(fmt("The %d least popular pages of this wiki:", -$limit));
             } else {
-                if ($limit < 0) {
-                    $pagelist->setCaption(_("The %d least popular pages of this wiki:"));
-                } else {
-                    $pagelist->setCaption(_("Visited pages on this wiki, ordered by popularity:"));
-                }}
+                $pagelist->setCaption(_("Visited pages on this wiki, ordered by popularity:"));
+            }
         }
 
         return $pagelist;
