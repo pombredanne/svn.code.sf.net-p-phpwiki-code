@@ -50,7 +50,9 @@ $no_gz_buffer=true;
 require_once('pre.php');
 
 if (!$group_id || !$project) {
-    exit_error("Invalid Project","Invalid Project");
+    exit_error("Invalid Project", "Invalid Project");
+} else if (!($project->usesPlugin("wiki"))) {
+    exit_error("Wiki plugin not activated in project", $project->getPublicName());
 } else {
 
     $group_name = $project->getUnixName();
