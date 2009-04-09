@@ -102,8 +102,8 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
     	$this->vars = array();
         $args = $this->getArgs($argstr, $request);
-	$vars = $args['vars'] ? $args['vars'] : $this->vars;
-	$page = $args['page'];
+        $vars = $args['vars'] ? $args['vars'] : $this->vars;
+        $page = $args['page'];
         if ($page) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);
@@ -120,6 +120,12 @@ extends WikiPlugin
                                         $page));
         }
 
+        // Check if user is allowed to get the Page.
+        if (!mayAccessPage ('view', $page)) {
+        	return $this->error(sprintf(_("Illegal inclusion of page %s: no read access"),
+                                        $page));
+        }
+        
         $p = $dbi->getPage($page);
         if ($args['rev']) {
             $r = $p->getRevision($args['rev']);

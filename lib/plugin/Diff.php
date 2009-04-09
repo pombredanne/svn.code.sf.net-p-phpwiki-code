@@ -87,6 +87,12 @@ extends WikiPlugin {
             list ($version, $previous) = $versions;
         }
 
+        // Check if user is allowed to get the Page.
+        if (!mayAccessPage ('view', $pagename)) {
+        	return $this->error(sprintf(_("Illegal access to page %s: no read access"),
+                                        $pagename));
+        }
+        
         // abort if page doesn't exist
         $page = $request->getPage($pagename);
         $current = $page->getCurrentRevision();
