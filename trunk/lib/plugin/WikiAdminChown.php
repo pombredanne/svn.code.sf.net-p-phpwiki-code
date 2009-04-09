@@ -135,7 +135,7 @@ extends WikiPlugin_WikiAdminSelect
             if ($post_args['action'] == 'verify') {
                 // Real action
                 return $this->chownPages($dbi, $request, array_keys($p), 
-                                          $post_args['user']);
+                                          trim($post_args['user']));
             }
             if ($post_args['action'] == 'select') {
                 if (!empty($post_args['user']))
