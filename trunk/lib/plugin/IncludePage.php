@@ -88,6 +88,12 @@ extends WikiPlugin
                                         $page));
         }
 
+        // Check if user is allowed to get the Page.
+        if (!mayAccessPage ('view', $page)) {
+        	return $this->error(sprintf(_("Illegal inclusion of page %s: no read access"),
+                                        $page));
+        }
+        
         $p = $dbi->getPage($page);
         if ($rev) {
             $r = $p->getRevision($rev);

@@ -361,6 +361,13 @@ extends WikiPlugin
         if (($notoc) or ($liststyle == 'ol')) {
             $with_counter = 1;
         }
+
+        // Check if user is allowed to get the Page.
+        if (!mayAccessPage ('view', $pagename)) {
+        	return $this->error(sprintf(_("Illegal access to page %s: no read access"),
+        	$pagename));
+        }
+
         $page = $dbi->getPage($pagename);
         $current = $page->getCurrentRevision();
         //FIXME: I suspect this only to crash with Apache2

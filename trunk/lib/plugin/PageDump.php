@@ -65,6 +65,12 @@ extends WikiPlugin
             return fmt("Page %s not found.",
                        WikiLink($page, 'unknown'));
 
+        // Check if user is allowed to get the Page.
+        if (!mayAccessPage ('view', $page)) {
+        	return $this->error(sprintf(_("Illegal access to page %s: no read access"),
+                                        $page));
+        }
+        
         $p = $dbi->getPage($page);
         include_once("lib/loadsave.php");
         $mailified = MailifyPage($p, ($format == 'backup') ? 99 : 1);

@@ -108,6 +108,13 @@ extends WikiPlugin_IncludePage
                                                       $cpagename)));
                 continue;
             }
+
+            // Check if user is allowed to get the Page.
+            if (!mayAccessPage ('view', $cpagename)) {
+            	return $this->error(sprintf(_("Illegal inclusion of page %s: no read access"),
+            	$cpagename));
+            }
+
             // trap any remaining nonexistant subpages
             if ($page->exists()) {
                 $r = $page->getCurrentRevision();
@@ -124,8 +131,15 @@ extends WikiPlugin_IncludePage
                                                 $cpagename.' => '.$m[1])));
                         continue;
                     }
-	            $cpagename = $m[1];
-	            $page = $dbi->getPage($cpagename);
+	                $cpagename = $m[1];
+	            
+            		// Check if user is allowed to get the Page.
+            		if (!mayAccessPage ('view', $cpagename)) {
+            			return $this->error(sprintf(_("Illegal inclusion of page %s: no read access"),
+            			$cpagename));
+            		}
+
+	                $page = $dbi->getPage($cpagename);
                     $r = $page->getCurrentRevision();
                     $c = $r->getContent();   // array of lines
                 }
