@@ -1,6 +1,6 @@
 <?php
 rcs_id('$Id$');
-/* Copyright (C) 2004-2008 $ThePhpWikiProgrammingTeam
+/* Copyright (C) 2004-2009 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
@@ -957,10 +957,11 @@ class PageList {
             	trigger_error("flip $order $column ".$this->id,  E_USER_NOTICE); 
             return ($order == '+' ? '-' : '+') . $column;
         } elseif ($action == 'init') { // only allowed from PageList::PageList
-            if ($this->sortby($column, 'clicked')) {
-            	if (0 and DEBUG)
+            if (0 and DEBUG) {
+                if ($this->sortby($column, 'clicked')) {
             	    trigger_error("clicked $order $column $this->id",  E_USER_NOTICE); 
                 //$order = ($order == '+' ? '-' : '+'); // $this->sortby($sortby, 'flip_order');
+                }
             }
             $this->_sortby[$column] = $order; // forces show icon
             return $order . $column;
@@ -1309,7 +1310,9 @@ class PageList {
                     elseif (isset($this->_types[$colNum]))
                         $col = $this->_types[$colNum];
                 }
-
+                if (empty($col)){
+                    return 0;
+                }
                 assert(isset($col));
                 $revision_handle = false;
                 $aval = $col->_getSortableValue($pagea, $revision_handle);
