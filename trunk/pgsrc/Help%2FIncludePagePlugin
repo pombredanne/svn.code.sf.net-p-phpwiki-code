@@ -1,4 +1,4 @@
-Date: Thu, 26 Mar 2009 11:34:32 +0000
+Date: Sat, 18 Apr 2009 18:17:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,8 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~IncludePage** [[Help:WikiPlugin|plugin]] will "include" other pages in this wiki. In the language of hypertext this is called //transclusion//. The pages will render in distinct tables. You can also load external pages in a more limited fashion with the [FrameInclude|Help:FrameIncludePlugin] plugin.
+The **~IncludePage** [[Help:WikiPlugin|plugin]] will "include" other pages in this wiki. In the language of hypertext this is called //transclusion//.
+The pages will render in distinct tables. You can also load external pages in a more limited fashion with the [[Help:FrameIncludePlugin|FrameInclude]] plugin.
 
 == Usage
 {{{
@@ -76,12 +77,12 @@ The **~IncludePage** [[Help:WikiPlugin|plugin]] will "include" other pages in th
 
 === ~IncludePage page=Help/~AllPagesPlugin sections=2
 
-Does not work.
+Does not work in Wikicreole syntax
 <!-- <<IncludePage page=Help/AllPagesPlugin sections=2>> -->
 
 == Known bugs
 
-* [~RedirectTo|Help:RedirectToPlugin] plugin is not handled correctly.
+* [[Help:RedirectToPlugin|~RedirectTo]] plugin is not handled correctly.
 * Line and word limit doesn't work if the included page itself includes a plugin.
 * "sections" parameter does not work if sections to include are in Wikicreole syntax
 
@@ -93,9 +94,9 @@ Does not work.
 
 == See Also
 
-* [Help:IncludePagesPlugin] (to include multiple pages)
-* [Help:TemplatePlugin] (to include a page with parameters)
-* [Help:FrameIncludePlugin] (to include an external page)
+* [[Help:IncludePagesPlugin]] (to include multiple pages)
+* [[Help:TemplatePlugin]] (to include a page with parameters)
+* [[Help:FrameIncludePlugin]] (to include an external page)
 
 <noinclude>
 ----

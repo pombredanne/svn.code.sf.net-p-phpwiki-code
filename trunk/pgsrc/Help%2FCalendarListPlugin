@@ -1,4 +1,4 @@
-Date: Thu, 26 Mar 2009 11:34:32 +0000
+Date: Sat, 18 Apr 2009 18:17:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,10 +8,8 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~CalendarList** [[Help:WikiPlugin|plugin]] is used in conjunction
-with the [Calendar|Help:CalendarPlugin] plugin.
-It was written for those who use a wiki as a
-[personal information manager|PhpWiki:PersonalWiki].
+The **~CalendarList** [[Help:WikiPlugin|plugin]] is used in conjunction with the [[Help:CalendarPlugin|Calendar]] plugin.
+It was written for those who use a wiki as a [[PhpWiki:PersonalWiki|personal information manager]].
 
 Just click any date in the calendar, edit the for that date, then come back to
 this page. The event should be listed below the calendar.
@@ -28,7 +26,7 @@ The behaviour before 2007 with last/next_n_days was to start now.
 
 == Example 
 
-_Click any date and edit it, then return to this page_:
+//Click any date and edit it, then return to this page//:
 
 <<Calendar>>
 
@@ -118,7 +116,7 @@ _Click any date and edit it, then return to this page_:
 
 == Author
 
-Derived from [Calendar|Help:CalendarPlugin] plugin by [Martin Norbäck|mailto:martin@safelogic.se].
+Derived from [[Help:CalendarPlugin|Calendar]] plugin by [[mailto:martin@safelogic.se|Martin Norbäck]].
 
 <noinclude>
 ----

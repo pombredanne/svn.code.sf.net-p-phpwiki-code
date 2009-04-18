@@ -1,4 +1,4 @@
-Date: Thu, 26 Mar 2009 11:34:32 +0000
+Date: Sat, 18 Apr 2009 18:17:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -9,11 +9,11 @@ Content-Type: application/x-phpwiki;
 Content-Transfer-Encoding: binary
 
 * What is a [[Help:WikiWikiWeb|WikiWikiWeb]]? A description of this application.
-* Learn [HowToUseWiki|Help:HowToUseWiki] and learn about [AddingPages|Help:AddingPages].
-* Use the [SandBox] page to experiment with Wiki pages.
-* Please sign your name in [RecentVisitors].
-* See [RecentChanges] for the latest page additions and changes.
-* Find out which pages are [MostPopular].
-* Read the [ReleaseNotes] and [RecentReleases].
-* Administer this wiki via [PhpWikiAdministration].
+* Learn [[Help:HowToUseWiki|HowToUseWiki]] and learn about [[Help:AddingPages|AddingPages]].
+* Use the [[SandBox]] page to experiment with Wiki pages.
+* Please sign your name in [[RecentVisitors]].
+* See [[RecentChanges]] for the latest page additions and changes.
+* Find out which pages are [[MostPopular]].
+* Read the [[ReleaseNotes]] and [[RecentReleases]].
+* Administer this wiki via [[PhpWikiAdministration]].
 * See more [[PhpWikiDocumentation]].
