@@ -39,8 +39,16 @@
 
     <?php if ($dbh->isWikiPage($page->getName())) { ?>
 
-    <?= ActionButton(_("PageHistory"),_("History"),false,array('title'=>"Past versions of this page. [alt-h]")) ?>
-    <?= ActionButton("diff") ?> 
+      <?= ActionButton(_("PageHistory"),_("History"),false,array('title'=>"Past versions of this page. [alt-h]")) ?>
+
+      <?php if (!empty($revision) and ($isAdmin or mayAccessPage('purge', $pagename))) { ?>
+        <?= ActionButton("purge") ?>
+      <?php } ?>
+
+      <?php if ($isAdmin or mayAccessPage('change', $pagename)) { ?>
+        <?= ActionButton('rename') ?>
+        <?= ActionButton($page->get('locked') ? 'unlock' : 'lock') ?> 
+      <?php } ?>
 
     <?php } ?>
 
@@ -54,10 +62,8 @@
   <h5><?= _("Special Actions") ?></h5>
   <div class="pBody">
   <ul>
-    <? if ( $user->isSignedIn() ) { ?>
+    <?php if ( $user->isSignedIn() ) { ?>
      <?php if ($isAdmin or mayAccessPage('change', $pagename)) { ?>
-      <?= ActionButton($page->get('locked') ? 'unlock' : 'lock') ?>
-      <?= ActionButton('rename') ?>
       <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $pagename)) { ?>
        <?= ActionButton('chown') ?>
        <?= ActionButton('setacl') ?>
@@ -65,11 +71,9 @@
      <?php if (!empty($revision) and ($isAdmin or mayAccessPage('remove', $pagename))) { ?>
       <?= ActionButton('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
       <?= ActionButton('remove') ?>
-      <?= ActionButton('purge') ?>
      <?php } ?>
     <?php } ?>
-    <?= ActionButton(array('action'=>_("PageInfo")), _("Info"), $pagename) ?>
-    <?= ActionButton(array('action'=>_("PageHistory")), _("Page history"), $pagename) ?>
+    <?= ActionButton(array('action'=>_("PageInfo")), _("Page info"), $pagename) ?>
     <?= ActionButton(array('action'=>_("AuthorHistory")), _("Author history"), $pagename) ?>
     <?= ActionButton("diff") ?> 
     <?= ActionButton(array('action'=>_("PageDump")), _("Page dump"), $pagename) ?>
