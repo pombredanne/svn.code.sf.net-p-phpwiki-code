@@ -107,7 +107,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 ?>
 <?= $errmsg ?>
 
-<?= fmt("User preferences for user '%s':", $user->UserName()) ?>
+<?= fmt("User preferences for user %s", WikiLink($user->UserName())) ?>
 
 <?php if ($isForm) { ?>
 <form action="<?=$request->getPostURL()?>" method="post">
