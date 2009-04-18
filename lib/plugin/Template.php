@@ -113,6 +113,15 @@ extends WikiPlugin
             return $this->error(_("no page specified"));
         }
 
+        // If "Template:$page" exists, use it
+        // else if "Template/$page" exists, use it
+        // else use "$page"
+        if ($dbi->isWikiPage("Template:" . $page)) {
+            $page = "Template:" . $page;
+        } elseif ($dbi->isWikiPage("Template/" . $page)) {
+            $page = "Template/" . $page;
+        }
+
         // Protect from recursive inclusion. A page can include itself once
         static $included_pages = array();
         if (in_array($page, $included_pages)) {
