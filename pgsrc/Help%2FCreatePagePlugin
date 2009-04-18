@@ -1,4 +1,4 @@
-Date: Thu, 26 Mar 2009 11:34:32 +0000
+Date: Sat, 18 Apr 2009 18:17:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,11 +10,11 @@ Content-Transfer-Encoding: binary
 
 The **~CreatePage** [[Help:WikiPlugin|plugin]] allows to easily create new pages, optionally with default content.
 
-This allows you to create a page geting the new pagename from a 
-forms-based interface, and optionally with the initial content from 
+This allows you to create a page geting the new pagename from a
+forms-based interface, and optionally with the initial content from
 some template.
 
-Put a "<~?plugin-form ~CreatePage ?~>" at some page, browse this page, 
+Put a {{{<?plugin-form CreatePage ?>}}} at some page, browse this page,
 enter the name of the page to create, then click the button.
 
 == Usage
@@ -27,35 +27,52 @@ enter the name of the page to create, then click the button.
 
 == Arguments
 
-*s*: |
-  The pagename, which will passed to the plugin. Default: ""
-*initial_content*:  |
-  The new page will be pre-filled with this content. Default: ""
-*template*:  |
-  The new page will be pre-filled with the content of this page. Default: ""
-*vars*: |
-  variables to be expanded. Default: ""
-*overwrite*: |
-  Whether to overwrite an existing page. Default: "" 
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **s**
+| The pagename, which will passed to the plugin.
+|
+|-
+| **initial_content**
+| The new page will be pre-filled with this content.
+|
+|-
+| **template**
+| The new page will be pre-filled with the content of this page.
+|
+|-
+| **vars**
+| Variables to be expanded.
+|
+|-
+| **overwrite**
+| Whether to overwrite an existing page.
+|
+|}
 
 == Variable Expansion
 
-The content (either initial_content or template) might hold some variables, which will be 
-expanded on creation. Unassigned variables will stay as %%<var>%%, assigned variables without 
+The content (either initial_content or template) might hold some variables, which will be
+expanded on creation. Unassigned variables will stay as %%<var>%%, assigned variables without
 matching %%<var>%% placeholder will be ignored, without any warning.
 
-A variable in a template is denoted as ##%%var%%##, which will be expanded by the 
+A variable in a template is denoted as ##%%var%%##, which will be expanded by the
 value of ##var## given to the vars argument (in urlencoded php notation).
 
 Some special variables are automatically assigned:
+{| class="bordered"
+|-
+| %%ctime%%  || $~WikiTheme->formatDateTime(time())
+|-
+| %%author%% || $user->getId()
+|}
 
-%%ctime%% | 
-  $~WikiTheme->formatDateTime(time())
-%%author%% | 
-  $user->getId()
-
-This forms together with page templates and the PhpWiki:WikiFormRichPlugin and 
-optionally the PhpWiki:SqlResultPlugin a framework to create templated pages.
+This forms together with page templates and the [[Help:WikiFormRichPlugin]] and
+optionally the [[Help:SqlResultPlugin]] a framework to create templated pages.
 
 == Authors
 
@@ -64,12 +81,15 @@ optionally the PhpWiki:SqlResultPlugin a framework to create templated pages.
 
 == Examples
 
+{{{
+<?plugin-form CreatePage s=MyHomePage ?>
+}}}
 <?plugin-form CreatePage s=MyHomePage ?>
 
 == See also
-* PhpWiki:EasilyCreateNewPages
-* PhpWiki:WikiFormRichPlugin
-* PhpWiki:SqlResultPlugin
+* [[PhpWiki:EasilyCreateNewPages]]
+* [[Help:WikiFormRichPlugin]]
+* [[Help:SqlResultPlugin]]
 
 <noinclude>
 ----
