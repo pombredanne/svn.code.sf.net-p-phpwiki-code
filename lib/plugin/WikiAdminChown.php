@@ -194,7 +194,6 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(' '._("to").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_chown[user]',
                                                'value' => $post_args['user'])));
-        $header->pushContent(HTML::p());
         return $header;
     }
 }
