@@ -94,8 +94,8 @@ extends WikiPlugin
             list($offset, $maxcount) = $pagelist->limit($limit);
             $wanted_iter = $dbi->wantedPages($exclude_from, $exclude, $sortby, $limit);
             while ($row = $wanted_iter->next()) {
-            	$wanted = $row['pagename'];
-            	$wantedfrom = $row['wantedfrom'];
+            	$wantedfrom = $row['pagename'];
+            	$wanted = $row['wantedfrom'];
             	// ignore duplicates:
             	if (empty($pagelist->_wpagelist[$wanted]))
             	    $pagelist->addPage($wanted);
@@ -113,7 +113,8 @@ extends WikiPlugin
             $page_handle = $dbi->getPage($page);
             $links = $page_handle->getPageLinks(true); // include_empty
             while ($link_handle = $links->next()) {
-                if (! $dbi->isWikiPage($linkname = $link_handle->getName())) {
+                $linkname = $link_handle->getName();
+                if (! $dbi->isWikiPage($linkname)) {
                     $pagelist->addPage($linkname);
                     //if (!array_key_exists($linkname, $this->_wpagelist))
                     $pagelist->_wpagelist[$linkname][] = 1;
