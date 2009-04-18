@@ -1,4 +1,4 @@
-Date: Thu, 26 Mar 2009 11:34:32 +0000
+Date: Sat, 18 Apr 2009 18:17:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -65,7 +65,7 @@ and _read_, _write_, _execute_ perms, in cygwin fashion.
 See WikiGroup how to enable and where to store user-specific group membership.
 Group methods: database, file, ldap, wikipage, none
 
-ToDo: _explain better._
+To do: _explain better._
 
 The following special groups are always predefined, even if no other group methods are provided:
 
@@ -80,12 +80,12 @@ The following special groups are always predefined, even if no other group metho
 * _CREATOR
 
 Those special groups are stored in a page acl as locale-independent string.
-  *Todo*: See the available translations for these special groups.
+  *To do*: See the available translations for these special groups.
 Other group names are safed as defined by the group methods. (e.g. "Other Users")
 
 == Perms - mapping of actions to permissions
 
-PhpWiki supports individual actions, the default is browse. To simplify ACL's these
+~PhpWiki supports individual actions, the default is browse. To simplify ACL's these
 actions are mapped to some special permissions (vulgo _'perms'_).
 
 We currently support the following permissions which can be stored in every page, for every group.
