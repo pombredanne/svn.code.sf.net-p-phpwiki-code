@@ -691,13 +691,7 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
     }
 
     function getWikiPageLinks($basepage) {
-        if ($basepage == '') return false;
-	/* ":DontStoreLink" */
-	if (substr($this->_link,0,1) == ':') return false;
-	/* store only links to valid pagenames */
-        if ($link = $this->getPagename($basepage)) 
-            return array(array('linkto' => $link, 'relation' => 0));
-        else return false; // dont store external links
+        return false; // do not store external links
     }
 
     function _getName($basepage) {
