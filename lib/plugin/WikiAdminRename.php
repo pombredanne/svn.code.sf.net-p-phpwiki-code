@@ -231,16 +231,18 @@ extends WikiPlugin_WikiAdminSelect
         }
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
-                          $header,
-                          $buttons,
-                          $list,
-                          HiddenInputs($request->getArgs(),
-                                        false,
-                                        array('admin_rename')),
-                          HiddenInputs(array('admin_rename[action]' => $next_action)),
-                          ENABLE_PAGEPERM
-                          ? ''
-                          : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN)));
+                          HTML::fieldset(
+                              HTML::legend("Rename page"),
+                              $header,
+                              $buttons,
+                              $list,
+                              HiddenInputs($request->getArgs(),
+                                            false,
+                                            array('admin_rename')),
+                              HiddenInputs(array('admin_rename[action]' => $next_action)),
+                              ENABLE_PAGEPERM
+                              ? ''
+                              : HiddenInputs(array('require_authority_for_post' => WIKIAUTH_ADMIN))));
     }
 
     function checkBox (&$post_args, $name, $msg) {
