@@ -27,8 +27,6 @@ rcs_id('$Id$');
  * @package Markup
  * @author Geoffrey T. Dairiki, Reini Urban
  */
-/**
- */
 
 /**
  * This is the character used in wiki markup to escape characters with
@@ -980,7 +978,12 @@ class Markup_template_plugin  extends SimpleMarkup
 
         // It's not a Mediawiki template, it's a Wikicreole image
         if (is_image($imagename)) {
-            return LinkImage(UPLOAD_DATA_PATH . $imagename, $alt);
+            if ($imagename[0] == '/') {
+                // We should not hardcode "/phpwiki"
+                return LinkImage(SERVER_URL . "/phpwiki" . $imagename, $alt);
+            } else {
+                return LinkImage(UPLOAD_DATA_PATH . $imagename, $alt);
+            }
         }
 
         $page = str_replace("\n", "", $page); 
