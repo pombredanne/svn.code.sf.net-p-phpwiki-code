@@ -180,7 +180,7 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 <?= $errmsg ?>
 
 <h2>
-<?= fmt("User preferences for user %s", WikiLink($user->UserName()) ?>
+<?= fmt("User preferences for user %s", WikiLink($user->UserName())) ?>
 </h2>
 
 <?php if ($isForm) { ?>
