@@ -74,7 +74,7 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s'])) {
-            return HTML::div(array('class' => "error"), "Please provide 's' argument to the plugin.");
+            return HTML();
         }
 
         $query = new TextSearchQuery($args['s'], $args['case_exact'], $args['regex']);
