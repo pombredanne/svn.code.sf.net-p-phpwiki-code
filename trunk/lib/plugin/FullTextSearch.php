@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 rcs_id('$Id$');
 /*
-Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
+Copyright 1999,2000,2001,2002,2004,2005,2007 $ThePhpWikiProgrammingTeam
 
 This file is part of PhpWiki.
 
@@ -28,15 +28,16 @@ require_once("lib/PageList.php");
  * Options: case_exact, regex, hilight
  *          Stoplist
  *
- * TODO: Hooks to search in external documents: ExternalTextSearch
+ * See also:
+ *   Hooks to search in external documents: ExternalTextSearch
  *   Only uploaded: textfiles, PDF, HTML, DOC, XLS, ... or 
- *   External apps: xapian-omages seems to be the best, over lucene.net, 
- *   swish, nakamazu, ...
+ *   External apps: xapian-omages seems to be the better than lucene, 
+ *   lucene.net, swish, nakamazu, ...
  *
  * See http://sf.net/tracker/index.php?aid=927395&group_id=6121&atid=106121
  * Wordaround to let the dead locks occur somewhat later:
- * increased the memory limit of PHP4 from 8 MB to 32 MB
- * php.ini: memory_limit = 32 MB
+ *   Increase the memory limit of PHP from 8 MB to 32 MB
+ *   php.ini: memory_limit = 32 MB
  */
 class WikiPlugin_FullTextSearch
 extends WikiPlugin
@@ -72,7 +73,7 @@ extends WikiPlugin
 
         $args = $this->getArgs($argstr, $request);
         if (empty($args['s'])) {
-            return HTML::div(array('class' => "error"), "Please provide 's' argument to the plugin.");
+            return HTML();
         }
         extract($args);
 
