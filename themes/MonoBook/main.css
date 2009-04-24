@@ -267,10 +267,6 @@ span.subpages { display: block; }
 	margin: 0;
 	padding: 0;
 }
-.error {
-	color: red;
-	font-size: larger;
-}
 .errorbox, .successbox {
 	font-size: larger;
 	border: 2px solid;
@@ -1687,8 +1683,6 @@ div.warning {
 	border: thin solid blue;
 	clear: both;
 }
-.error { font-family: monospace; font-size: 120%; }
-.error ul { font-family: monospace; }
 
 /* Debug */
 .debug {
@@ -1908,6 +1902,19 @@ td.tdunselected {
      background-color: #DFD;
      border-color: green;
      padding: 0.5em;
+}
+
+/* style for error messages
+   Use this style if you need to display an error, e.g:
+     User does not exist
+*/
+.error {
+    font-weight: bold;
+    border-width: 2px;
+    border-style: solid;
+    background-color: #ffc0cb; /* pink */
+    border-color: red;
+    padding: 0.5em;
 }
 
 #edit-public, h1.firstHeading-public, h1.firstHeading-rating-public {
