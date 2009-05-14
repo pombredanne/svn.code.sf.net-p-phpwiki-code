@@ -456,63 +456,6 @@ msg_repl_close     = '"._("Close")."'
 
 }
 
-/*
-$Log: not supported by cvs2svn $
-Revision 1.17  2008/08/06 09:25:56  vargenau
-Button to add images, display in extra window as popup and insert
-
-Revision 1.16  2008/08/03 15:21:45  vargenau
-Less arguments for CreateToc button
-
-Revision 1.15  2008/04/02 18:07:05  vargenau
-New Edit Toolbar icons for TOC and Color text
-
-Revision 1.14  2008/02/19 19:07:23  vargenau
-More icons for toolbar
-
-Revision 1.13  2007/07/14 12:03:12  rurban
-just aesthetics
-
-Revision 1.12  2007/06/02 18:23:36  rurban
-Added accesskeys
-
-Revision 1.11  2007/02/17 14:16:21  rurban
-move define_f after toolbar.js
-
-Revision 1.10  2007/01/07 18:42:19  rurban
-Improve id: edit: to edit-. Move search&replace js from body (defined in EditToolbar) to the toolbar.js. Support actionpages. Add tb-name argument to showPulldown
-
-Revision 1.9  2007/01/02 13:18:26  rurban
-fix id to edit:content
-
-Revision 1.8  2006/12/22 00:17:06  rurban
-add time to signature
-
-Revision 1.7  2006/09/06 05:45:26  rurban
-use html tags for emphasis. workaround ^* problem
-
-Revision 1.6  2006/08/30 05:25:40  rurban
-Handle inserting DISABLE_MARKUP_WIKIWORD and non wikiword links.
-
-Revision 1.5  2005/10/29 14:16:17  rurban
-fix typo
-
-Revision 1.4  2005/09/29 23:07:58  rurban
-cache toolbar
-
-Revision 1.3  2005/09/26 06:25:50  rurban
-EditToolbar enhancements by Thomas Harding: add plugins args, properly quote control chars. added plugin method getArgumentsDescription to override the default description string
-
-Revision 1.3  2005/09/22 13:40:00 tharding
-add modules arguments
- 
-Revision 1.2  2005/05/06 18:43:41  rurban
-add AddTemplate EditToolbar icon
-
-Revision 1.1  2005/01/25 15:19:09  rurban
-extract Toolbar code from editpage.php
-*/
-
 // Local Variables:
 // mode: php
 // tab-width: 8
