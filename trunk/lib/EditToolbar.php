@@ -110,7 +110,6 @@ msg_repl_close     = '"._("Close")."'
         global $WikiTheme, $request;
 
         $toolbar = "document.writeln(\"<div class=\\\"edit-toolbar\\\" id=\\\"toolbar\\\">\");\n";
-        $accessKeyPrefix = $WikiTheme->tooltipAccessKeyPrefix();
 
         if (ENABLE_EDIT_TOOLBAR) {
             $username = $request->_user->UserName();
@@ -119,7 +118,7 @@ msg_repl_close     = '"._("Close")."'
             } else if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($username))) {
                 $username = '['.$username.']';
             }
-	    $signature = " --".$username." ".CTime();
+	    $signature = " ––".$username." ".CTime();
             $toolarray = array(
                            array(
                                  "image"=>"ed_format_bold.png",
@@ -257,8 +256,7 @@ msg_repl_close     = '"._("Close")."'
                             (array('class'=>"toolbar",
                                    'src'  => $sr_btn,
                                    'alt'  =>_("Search & Replace"),
-                                   'title'=>_("Search & Replace")." [$accessKeyPrefix-h]",
-                                   'accesskey' => 'h',
+                                   'title'=>_("Search & Replace"),
                                    'onclick'=>"replace()")));
         } else {
             $sr_html = '';
