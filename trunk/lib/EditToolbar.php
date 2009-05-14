@@ -114,7 +114,9 @@ msg_repl_close     = '"._("Close")."'
 
         if (ENABLE_EDIT_TOOLBAR) {
             $username = $request->_user->UserName();
-            if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($username))) {
+            if (defined('GFORGE') and GFORGE) {
+                $username = '[['.$username.']]';
+            } else if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($username))) {
                 $username = '['.$username.']';
             }
 	    $signature = " --".$username." ".CTime();
