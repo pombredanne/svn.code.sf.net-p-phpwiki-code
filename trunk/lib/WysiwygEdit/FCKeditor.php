@@ -106,15 +106,6 @@ oFCKeditor.Create();"),
 
 }
 
-
-/*
- $Log: not supported by cvs2svn $
- Revision 1.1  2005/10/31 16:41:46  rurban
- added FCKeditor + spaw
-
-
-*/
-
 // Local Variables:
 // mode: php
 // tab-width: 8

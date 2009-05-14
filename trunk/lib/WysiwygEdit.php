@@ -132,20 +132,6 @@ class HtmlTransformer extends InlineTransformer
     }
 }
 
-/*
- $Log: not supported by cvs2svn $
- Revision 1.3  2005/10/31 17:20:40  rurban
- fix ConvertBefore
-
- Revision 1.2  2005/10/31 16:46:13  rurban
- move old default transformers to baseclass
-
- Revision 1.1  2005/10/30 14:22:15  rurban
- refactor WysiwygEdit
-
-
-*/
-
 // Local Variables:
 // mode: php
 // tab-width: 8

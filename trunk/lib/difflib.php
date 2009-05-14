@@ -908,32 +908,6 @@ class BlockDiffFormatter extends DiffFormatter
     }
 }
 
-/**
- $Log: not supported by cvs2svn $
- Revision 1.11  2004/11/21 11:59:19  rurban
- remove final \n to be ob_cache independent
-
- Revision 1.10  2004/04/08 01:22:53  rurban
- fixed PageChange Notification
-
- Revision 1.9  2003/11/30 18:43:18  carstenklapp
- Fixed careless mistakes in my last optimization commit.
-
- Revision 1.8  2003/11/30 18:20:34  carstenklapp
- Minor code optimization: reduce invariant loops
-
- Revision 1.7  2003/01/03 22:27:17  carstenklapp
- Minor adjustments to diff block markers ("<<<<<<<"). Source reformatting.
-
- Revision 1.6  2003/01/02 22:51:43  carstenklapp
- Specifying a leading diff context size larger than the available
- context now returns the available number of lines instead of the
- default. (Prevent negative offsets to array_slice() when $nlead >
- sizeof($context)). Added BlockDiffFormatter, to be used by future
- enhancements to reload / upgrade pgsrc.
-
- */
-
 // Local Variables:
 // mode: php
 // tab-width: 8

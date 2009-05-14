@@ -61,14 +61,6 @@ if (win_ie_ver >= 5.5) {
 
 }
 
-/*
- $Log: not supported by cvs2svn $
- Revision 1.1  2005/10/30 14:22:15  rurban
- refactor WysiwygEdit
-
-
-*/
-
 // Local Variables:
 // mode: php
 // tab-width: 8
