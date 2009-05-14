@@ -112,19 +112,6 @@ function wiki_xmlrpc_post($method, $args = null, $url = null, $auth = null) {
     return $result;
 }
 
-/*
- $Log: not supported by cvs2svn $
- Revision 1.3  2007/01/22 23:42:13  rurban
- Back to WIKI_XMLRPC_VERSION 1. Explain why
-
- Revision 1.2  2007/01/03 21:25:43  rurban
- use explicit RPC2 url because of still unresolved dba problem.
-
- Revision 1.1  2007/01/02 13:21:12  rurban
- split client from server
-
- */
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

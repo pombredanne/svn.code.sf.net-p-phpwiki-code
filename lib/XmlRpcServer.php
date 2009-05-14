@@ -966,44 +966,6 @@ class XmlRpcServer extends xmlrpc_server
     }
 }
 
-/*
- $Log: not supported by cvs2svn $
- Revision 1.24  2007/01/22 23:42:13  rurban
- Back to WIKI_XMLRPC_VERSION 1. Explain why
-
- Revision 1.23  2007/01/10 20:47:45  rurban
- change int to string because of acdropdown
-
- Revision 1.22  2007/01/07 18:44:11  rurban
- Add summary to getRecentChanges result
-
- Revision 1.21  2007/01/04 16:42:13  rurban
- Use require, not include!
-
- Revision 1.20  2007/01/03 21:25:52  rurban
- add option argument to listRelations.
-
- Revision 1.19  2007/01/02 13:21:21  rurban
- split client from server. added getUploadedFileInfo (for SyncWiki), callPlugin (for WikiFormRich)
-
- Revision 1.18  2006/05/18 06:10:45  rurban
- add xmlrpc listRelations signature
-
- Revision 1.17  2005/10/31 16:49:31  rurban
- fix doc
-
- Revision 1.16  2005/10/29 14:17:51  rurban
- fix doc
-
- Revision 1.15  2005/10/29 08:57:12  rurban
- fix for !register_long_arrays
- new: array wiki.listPlugins()
-      String wiki.getPluginSynopsis(String plugin)
-      String pingback.ping(String sourceURI, String targetURI) (preliminary)
-
-
- */
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

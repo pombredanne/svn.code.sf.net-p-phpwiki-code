@@ -63,16 +63,6 @@ tinyMCE.init({
     }
 }
 
-/*
- $Log: not supported by cvs2svn $
- Revision 1.2  2005/10/31 16:41:46  rurban
- added FCKeditor + spaw
-
- Revision 1.1  2005/10/30 14:22:15  rurban
- refactor WysiwygEdit
-
-*/
-
 // Local Variables:
 // mode: php
 // tab-width: 8

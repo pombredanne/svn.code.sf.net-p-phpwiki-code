@@ -141,16 +141,6 @@ function show_plain () {
     exit();
 }
 
-/*
- $Log: not supported by cvs2svn $
- Revision 1.5  2007/01/04 16:44:18  rurban
- mkdir 0775
-
- Revision 1.4  2005/10/31 17:03:19  rurban
- fix "r"
-
-*/
-
 // Local Variables:
 // mode: php
 // tab-width: 8
