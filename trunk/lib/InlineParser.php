@@ -393,6 +393,19 @@ function LinkBracketLink($bracketlink) {
     } else if (preg_match('/^(\.\.\/|\/)/', $link)) {
         return new Cached_ExternalLink($link, $label);
     }
+
+    // Handle "[[SandBox|{{image.jpg}}]]" and "[[SandBox|{{image.jpg|alt text}}]]"
+    if (string_starts_with($label, "{{")) {
+        $imgurl = substr($label, 2, -2); // Remove "{{" and "}}"
+        $pipe = strpos($imgurl, '|');
+        if ($pipe === false) {
+            $label = LinkImage(UPLOAD_DATA_PATH . $imgurl, $link);
+        } else {
+            list($img, $alt) = explode("|", $imgurl);
+            $label = LinkImage(UPLOAD_DATA_PATH . $img, $alt);
+        }
+    } else
+    
     // [label|link]
     // If label looks like a url to an image or object, we want an image link.
     if (isImageLink($label)) {
