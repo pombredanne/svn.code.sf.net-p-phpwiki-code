@@ -1159,7 +1159,7 @@ class Block_template_plugin extends Block_pre
 
         // It's not a Mediawiki template, it's a Wikicreole image
         if (is_image($imagename)) {
-            $this->_element = LinkImage(UPLOAD_DATA_PATH . $imagename, $alt);
+            $this->_element = LinkImage(getUploadDataPath() . $imagename, $alt);
             return true;
         }
 
