@@ -399,10 +399,10 @@ function LinkBracketLink($bracketlink) {
         $imgurl = substr($label, 2, -2); // Remove "{{" and "}}"
         $pipe = strpos($imgurl, '|');
         if ($pipe === false) {
-            $label = LinkImage(UPLOAD_DATA_PATH . $imgurl, $link);
+            $label = LinkImage(getUploadDataPath() . $imgurl, $link);
         } else {
             list($img, $alt) = explode("|", $imgurl);
-            $label = LinkImage(UPLOAD_DATA_PATH . $img, $alt);
+            $label = LinkImage(getUploadDataPath() . $img, $alt);
         }
     } else
     
@@ -995,7 +995,7 @@ class Markup_template_plugin  extends SimpleMarkup
                 // We should not hardcode "/phpwiki"
                 return LinkImage(SERVER_URL . "/phpwiki" . $imagename, $alt);
             } else {
-                return LinkImage(UPLOAD_DATA_PATH . $imagename, $alt);
+                return LinkImage(getUploadDataPath() . $imagename, $alt);
             }
         }
 
