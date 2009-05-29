@@ -1,4 +1,4 @@
-Date: Thu, 26 Mar 2009 11:34:32 +0000
+Date: Fri, 29 May 2009 10:00:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,17 +8,49 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-_short description_
+The **~SyncWiki** [[Help:WikiPlugin|plugin]] allows to synchronize pages with external [[Help:PhpWiki|PhpWiki]].
 
 == Usage
 {{{
-<<SyncWiki>>
+<<SyncWiki arguments>>
 }}}
 
 == Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **url**
+|
+|
+|-
+| **noimport**
+|
+| 0
+|-
+| **noexport**
+|
+| 0
+|-
+| **noupload**
+|
+| 0
+|-
+| **label**
+|
+|
+|-
+| **passwd**
+|
+| false
+|-
+| **sid**
+|
+| false
+|}
 
 == Example
 
