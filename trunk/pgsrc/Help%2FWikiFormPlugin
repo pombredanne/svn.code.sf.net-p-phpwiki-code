@@ -8,25 +8,49 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-_short description_
+The **~WikiForm** [[Help:WikiPlugin|plugin]] provides generic input buttons.
 
 == Usage
 {{{
-<<WikiForm>>
+<<WikiForm arguments>>
 }}}
 
 == Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **action**
+| upload, loadfile or dumpserial
+| upload
+|-
+| **default**
+|
+| false
+|-
+| **buttontext**
+|
+| false
+|-
+| **overwrite**
+|
+| false
+|-
+| **size**
+|
+| 50
+|}
 
 == Example
 
 {{{
-<<WikiForm>>
+<<WikiForm action="loadfile" buttontext="Load File">>
 }}}
 
-<<WikiForm>>
+<<WikiForm action="loadfile" buttontext="Load File">>
 
 == Author
 * [[PhpWiki:ReiniUrban|Reini Urban]]
