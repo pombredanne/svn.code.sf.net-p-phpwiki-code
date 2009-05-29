@@ -51,6 +51,10 @@ include_once("lib/plugin/SqlResult.php");
 class WikiPlugin_Imdb
 extends WikiPlugin_SqlResult
 {
+    function getName () {
+        return _("Imdb");
+    }
+
     function getDescription () {
         return _("Query a local imdb database");
     }
