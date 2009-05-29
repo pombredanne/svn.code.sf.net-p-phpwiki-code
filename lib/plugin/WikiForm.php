@@ -34,6 +34,10 @@ extends WikiPlugin
         return _("WikiForm");
     }
 
+    function getDescription () {
+        return _("Provide generic WikiForm input buttons");
+    }
+
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");

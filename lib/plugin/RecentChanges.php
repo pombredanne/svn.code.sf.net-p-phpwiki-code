@@ -23,8 +23,6 @@ rcs_id('$Id$');
 
 include_once("lib/WikiPlugin.php");
 
-/**
- */
 class _RecentChanges_Formatter
 {
     var $_absurls = false;
@@ -1142,6 +1140,10 @@ extends WikiPlugin
 {
     function getName () {
         return _("RecentChanges");
+    }
+
+    function getDescription () {
+        return _("List all recent changes in this wiki.");
     }
 
     function getVersion() {

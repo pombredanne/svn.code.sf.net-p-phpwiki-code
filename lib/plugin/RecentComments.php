@@ -16,10 +16,16 @@ extends WikiPlugin_RecentChanges
     function getName () {
         return _("RecentComments");
     }
+
+    function getDescription () {
+        return _("List basepages with recently added comments.");
+    }
+
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");
     }
+
     function getDefaultArguments() {
     	//php-4.0.4pl1 breaks at the parent:: line even if the 
     	// code doesn't reach this line

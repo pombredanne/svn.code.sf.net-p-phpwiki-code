@@ -38,6 +38,10 @@ extends WikiPlugin
         return _("UserPreferences");
     }
 
+    function getDescription () {
+        return _("Allow any user to adjust his own preferences.");
+    }
+
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");

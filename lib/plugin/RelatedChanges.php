@@ -27,6 +27,10 @@ extends WikiPlugin_RecentChanges
         return _("RecentEdits");
     }
 
+    function getDescription () {
+        return _("List of changes on all pages which are linked to from this page.");
+    }
+
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");
