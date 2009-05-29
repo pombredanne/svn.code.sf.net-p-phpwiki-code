@@ -36,6 +36,10 @@ extends WikiPlugin
         return _("WatchPage");
     }
 
+    function getDescription () {
+        return _("Manage notifications emails per page.");
+    }
+
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");

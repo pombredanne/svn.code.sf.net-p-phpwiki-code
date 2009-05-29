@@ -14,6 +14,10 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
         return _("RecentReferrers");
     }
 
+    function getDescription () {
+        return _("Analyse access log.");
+    }
+
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");

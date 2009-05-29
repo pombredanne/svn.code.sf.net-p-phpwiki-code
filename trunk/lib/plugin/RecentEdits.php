@@ -10,6 +10,10 @@ extends WikiPlugin_RecentChanges
         return _("RecentEdits");
     }
 
+    function getDescription () {
+        return _("List all recent edits in this wiki.");
+    }
+
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");

@@ -28,7 +28,7 @@ rcs_id('$Id$');
  *    => "No email stored for user %s.
  *        You need to ask an Administrator to reset this password."
  *       Problem: How to contact Admin? Present a link to ADMIN_USER
-
+ *
  *    If no email exists but is not verified, 
  *    => "Warning: This users email address is unverified!"
  *
@@ -40,6 +40,10 @@ extends WikiPlugin
 {
     function getName () {
         return _("PasswordReset");
+    }
+
+    function getDescription () {
+        return _("Allow admin to reset any users password, allow user to request his password by e-mail.");
     }
 
     function getVersion() {
