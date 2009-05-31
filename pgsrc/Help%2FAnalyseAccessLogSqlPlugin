@@ -1,4 +1,4 @@
-Date: Sat, 18 Apr 2009 18:17:26 +0000
+Date: Sat, 31 May 2009 19:17:26 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -27,35 +27,52 @@ Experimental! Will change a lot.
 
 == Parameters
 
-mode _(required parameter)_:
-  The name of the query to execute. See *Adding new queries* below.
-
-period:
-  Use in combination with the _count_ parameter. The type of history period to retrieve from the SQL access log. Blank (the default) for all history, or one of "*weeks*", "*days*", "*hours*", or "*minutes*".
-
-count:
-  Use in combination with the _period_ parameter. Must be a number. The number of periods to retrieve from the access log.
-
-caption:
-  The value of this parameter is used as the caption for the output. If not set, the caption on the table defaults to the mode.
-
-center:
-  If set, the table is centered on the page, otherwise left justified.
-
-debugShowQuery:
-  If set, the SQL will be displayed in the table footer. Useful while debugging new queries or just for interest.
-
-user:
-  Blank (the default) to retrieve all users, or a specific user, or "*<NONE>*" for SQL access log entries with no user.
-
-host:
-  Blank (the default) to retrieve all remote_hosts, or a specific host.
-
-referrer:
-  Blank (the default) to retrieve all referrers, "*<NONE>*" to retrieve entries with no referrer, otherwise any referrer that matches this parameter, truncating longer referrers before matching. So a parameter of referrer='~http://localhost' will match '~http://localhost/wiki/index.php', '~http://localhost/wiki/index.php/~HomePage' etc.
-
-local_referrers:
-  If set (the default), return all referrers. If not set, return only external referring sites, excluding references from within the wiki.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **mode**
+| The name of the query to execute. See *Adding new queries* below. Required parameter.
+| referring_domains
+|-
+| **period**
+| Use in combination with the _count_ parameter. The type of history period to retrieve from the SQL access log. Blank (the default) for all history, or one of "*weeks*", "*days*", "*hours*", or "*minutes*".
+|
+|-
+| **count**
+| Use in combination with the _period_ parameter. Must be a number. The number of periods to retrieve from the access log.
+| 0
+|-
+| **caption**
+| The value of this parameter is used as the caption for the output. If not set, the caption on the table defaults to the mode.
+|
+|-
+| **center**
+| If set, the table is centered on the page, otherwise left justified.
+|
+|-
+| **debugShowQuery**
+| If set, the SQL will be displayed in the table footer. Useful while debugging new queries or just for interest.
+|
+|-
+| **user**
+| Blank (the default) to retrieve all users, or a specific user, or "*<NONE>*" for SQL access log entries with no user.
+|
+|-
+| **host**
+| Blank (the default) to retrieve all remote_hosts, or a specific host.
+|
+|-
+| **referrer**
+| Blank (the default) to retrieve all referrers, "*<NONE>*" to retrieve entries with no referrer, otherwise any referrer that matches this parameter, truncating longer referrers before matching. So a parameter of referrer='~http://localhost' will match '~http://localhost/wiki/index.php', '~http://localhost/wiki/index.php/~HomePage' etc.
+|
+|-
+| **local_referrers**
+| If set (the default), return all referrers. If not set, return only external referring sites, excluding references from within the wiki.
+| true
+|}
 
 ==Adding new queries
 
