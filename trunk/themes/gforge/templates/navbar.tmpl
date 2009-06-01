@@ -7,23 +7,19 @@ $curuserprefs = $user->getPreferences();
 ?>
 
    <tr><td class="submenu"><?= WikiLink(_("HomePage"), "","Home Page") ?></td></tr>
-      <tr><td class="submenu"><?= WikiLink(_("RecentChanges"), "","Recent Changes") ?></td></tr>
-      <tr><td class="submenu"><?= WikiLink(_("SpecialPages"), "","Special Pages") ?></td></tr>
-   <?php if ($curuserprefs->get('searchMenuItem')) { ?>
-     <tr><td class="submenu"><?= WikiLink(_("FindPage"), "","Search") ?></td></tr>
-   <?php } ?>
+   <tr><td class="submenu"><?= WikiLink(_("RecentChanges"), "","Recent Changes") ?></td></tr>
+   <tr><td class="submenu"><?= WikiLink(_("SpecialPages"), "","Special Pages") ?></td></tr>
+   <tr><td class="submenu"><?= WikiLink(_("FindPage"), "","Search") ?></td></tr>
    <?php if ($curuserprefs->get('randomPageMenuItem')) { ?>
      <tr><td class="submenu"><?= WikiLink(_("RandomPage"), "","Random Page") ?></td></tr>
    <?php } ?>
-    <?php if (!empty($revision)) { ?>
-     <?php if (0) { ?>
-       <tr><td class="submenu"><?= Button(array('action'=>'LikePages'),_("Like Pages"),$page->getName()) ?></td></tr>
-     <?php } ?>
-    <?php } ?>
+   <?php if ($curuserprefs->get('likePagesMenuItem')) { ?>
+     <tr><td class="submenu"><?= Button(array('action'=>'LikePages'),_("Like Pages"),$page->getName()) ?></td></tr>
+   <?php } ?>
    <tr><td class="submenu"><?= WikiLink(_("UpLoad"), "","Upload File") ?></td></tr>
-    <?php if (!empty($user) && $user->isAdmin()) { ?>
+   <?php if (!empty($user) && $user->isAdmin()) { ?>
      <tr><td class="submenu"><?= WikiLink(_("PhpWikiAdministration"), "","Wiki Admin") ?></td></tr>
-    <?php } ?>
-    <?php if (!empty($user) && $user->isSignedIn()) { ?>
+   <?php } ?>
+   <?php if (!empty($user) && $user->isSignedIn()) { ?>
      <tr><td class="submenu"><?= WikiLink(_("UserPreferences"), "","User Preferences") ?></td></tr>
-    <?php } ?>
+   <?php } ?>
