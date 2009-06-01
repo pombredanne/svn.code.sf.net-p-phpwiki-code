@@ -70,7 +70,6 @@ extends WikiPlugin
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-    	global $WikiTheme;
         include_once("lib/BlockParser.php");
         // MediawikiTablePlugin markup is new.
         $markup = 2.0;
@@ -104,6 +103,10 @@ extends WikiPlugin
                     $table->setAttr($key, $value);
                 }
             }
+        }
+
+        if (count($lines) == 1) { // empty table, we only have closing "|}" line
+            return HTML::raw('');
         }
 
         foreach ($lines as $line){
