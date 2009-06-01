@@ -57,6 +57,7 @@ if (!$group_id || !$project) {
 
     $group_name = $project->getUnixName();
     $group_public_name = $project->getPublicName();
+    $is_external = $project->getIsExternal();
 
     define('VIRTUAL_PATH', '/wiki/g/'.$group_name);
     define('PAGE_PREFIX', '_g'.$group_id.'_');
@@ -64,8 +65,8 @@ if (!$group_id || !$project) {
     define('THEME', 'gforge');
 
     // For Gforge, we create some specific pages, located in the theme
-    // except for project "cssforge"
-    if ($group_name == "cssforge") {
+    // except for project "help"
+    if ($group_name == "help") {
         define('WIKI_PGSRC', 'pgsrc/');
     } else {
         define('WIKI_PGSRC', 'themes/gforge/pgsrc/');
@@ -144,6 +145,9 @@ if (!$group_id || !$project) {
 
     // Disable public pages
     define('ENABLE_PAGE_PUBLIC', false);
+    
+    // Enable external pages
+    define('ENABLE_EXTERNAL_PAGES', $is_external);
 
     // Let all revisions be stored. Default since 1.3.11
     define('MAJOR_MIN_KEEP', 2147483647);
