@@ -235,7 +235,7 @@ class PageEditor
 
     function updateLock() {
         $changed = false;
-        if (!ENABLE_PAGE_PUBLIC) {
+        if (!ENABLE_PAGE_PUBLIC && !ENABLE_EXTERNAL_PAGES) {
             if ((bool)$this->page->get('locked') == (bool)$this->locked)
                 return false;       // Not changed.
         }
@@ -259,6 +259,17 @@ class PageEditor
                 ? _("Page now public.")
                 : _("Page now not-public."));
             $changed = true;
+        }
+        
+    	if (ENABLE_EXTERNAL_PAGES) {
+            if ((bool)$this->page->get('external') != (bool)$this->external) {
+                $this->page->set('external', (bool)$this->external);
+                $this->tokens['LOCK_CHANGED_MSG']
+                    = ($this->external 
+                       ? _("Page now external.")
+                       : _("Page now not-external.")) . " ";
+                $changed = true;
+            }
         }
         return $changed;            // lock changed.
     }
@@ -676,6 +687,14 @@ class PageEditor
                                 'disabled' => (bool) !$this->user->isAdmin(),
                                 'checked'  => (bool) $this->page->get('public')));
         }
+    	if (ENABLE_EXTERNAL_PAGES) {
+            $el['EXTERNAL_CB']
+            = HTML::input(array('type' => 'checkbox',
+                                'name' => 'edit[external]',
+                                'id'   => 'edit-external',
+                                'disabled' => (bool) !$this->user->isAdmin(),
+                                'checked'  => (bool) $this->page->get('external')));
+        }
         if (ENABLE_WYSIWYG) {
 	    if (($this->version == 0) and ($request->getArg('mode') != 'wysiwyg')) {
 		$el['WYSIWYG_B'] = Button(array("action" => "edit", "mode" => "wysiwyg"), "Wysiwyg Editor");
@@ -770,6 +789,8 @@ class PageEditor
         $this->locked = !empty($posted['locked']);
         if (ENABLE_PAGE_PUBLIC)
             $this->public = !empty($posted['public']);
+        if (ENABLE_EXTERNAL_PAGES)
+            $this->external = !empty($posted['external']);
 
 	foreach (array('preview','save','edit_convert',
 		       'keep_old','overwrite','diff','upload') as $o) 
