@@ -85,14 +85,14 @@ $RecentChangesMenuItem = HTML::input(array('type' => 'checkbox',
                                      'name' => 'pref[recentChangesMenuItem]',
                                      'value' => '1',
                                      'checked' => (bool) $pref->get('recentChangesMenuItem')));
-$SearchMenuItem = HTML::input(array('type' => 'checkbox',
-                                     'name' => 'pref[searchMenuItem]',
-                                     'value' => '1',
-                                     'checked' => (bool) $pref->get('searchMenuItem')));
 $RandomPageMenuItem = HTML::input(array('type' => 'checkbox',
                                      'name' => 'pref[randomPageMenuItem]',
                                      'value' => '1',
                                      'checked' => (bool) $pref->get('randomPageMenuItem')));
+$LikePagesPageMenuItem = HTML::input(array('type' => 'checkbox',
+                                     'name' => 'pref[likePagesMenuItem]',
+                                     'value' => '1',
+                                     'checked' => (bool) $pref->get('likePagesMenuItem')));
 $SpecialPagesMenuItem = HTML::input(array('type' => 'checkbox',
                                      'name' => 'pref[specialPagesMenuItem]',
                                      'value' => '1',
@@ -314,12 +314,12 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
        <table cellpadding="0" cellspacing="0">
          <tr>
             <td>
-               <p><?= $SearchMenuItem ?> <?=_("Search")?></p>
+               <p><?= $RandomPageMenuItem ?> <?=_("Random Page")?></p>
             </td>
          </tr>
          <tr>
             <td>
-               <p><?= $RandomPageMenuItem ?> <?=_("RandomPage")?></p>
+               <p><?= $LikePagesPageMenuItem ?> <?=_("Like Pages")?></p>
             </td>
          </tr>
        </table>
