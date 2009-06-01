@@ -1182,6 +1182,8 @@ function ParseSerializedPage($text, $default_pagename, $user)
 
     if (!defined('FLAG_PAGE_LOCKED'))
         define('FLAG_PAGE_LOCKED', 1);
+    if (!defined('FLAG_PAGE_EXTERNAL'))
+        define('FLAG_PAGE_EXTERNAL', 1);
     $pageinfo = array('pagedata'    => array(),
                       'versiondata' => array());
 
@@ -1208,6 +1210,8 @@ function ParseSerializedPage($text, $default_pagename, $user)
             case 'flags':
                 if (($value & FLAG_PAGE_LOCKED) != 0)
                     $pagedata['locked'] = 'yes';
+                if (($value & FLAG_PAGE_EXTERNAL) != 0)
+                    $pagedata['external'] = 'yes';
                 break;
             case 'owner':
             case 'created':

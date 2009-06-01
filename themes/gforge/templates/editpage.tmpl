@@ -66,6 +66,9 @@
     <?= $LOCKED_CB ?> <label for="edit-locked" title="<?=_("Make the page read-only?")?>"><?=_("Locked")?></label>
     <?php if (ENABLE_PAGE_PUBLIC) { ?>
     &nbsp;&nbsp;<?= $PUBLIC_CB ?> <label for="edit-public" title="<?=_("Make the page public?")?>"><?=_("Public")?></label>
+    <?php } ?>
+    <?php if (ENABLE_EXTERNAL_PAGES) { ?>
+    &nbsp;&nbsp;<?= $EXTERNAL_CB ?> <label for="edit-external" title="<?=_("Make the page external?")?>"><?=_("External")?></label>
     <?php }} ?>
   </td>
 </tr>

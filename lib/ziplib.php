@@ -603,6 +603,8 @@ function MimeifyPageRevision (&$page, &$revision) {
         $params['created'] = $page->get('mtime');
     if ($page->get('locked'))
         $params['flags'] = 'PAGE_LOCKED';
+    if (ENABLE_EXTERNAL_PAGES && $page->get('external'))
+        $params['flags'] = ($params['flags'] ? $params['flags'] . ',EXTERNAL_PAGE' : 'EXTERNAL_PAGE');
     if ($revision->get('author_id'))
         $params['author_id'] = $revision->get('author_id');
     if ($revision->get('markup')) // what is the default? we must use 1
@@ -830,6 +832,8 @@ function ParseMimeifiedPages ($data)
         case 'flags':
             if (preg_match('/PAGE_LOCKED/', $value))
                 $pagedata['locked'] = 'yes';
+            if (ENABLE_EXTERNAL_PAGES && preg_match('/EXTERNAL_PAGE/', $value))
+                $pagedata['external'] = 'yes';
             break;
         case 'owner':
         case 'created':

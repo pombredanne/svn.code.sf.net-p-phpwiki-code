@@ -6,7 +6,7 @@ require_once('lib/WikiTheme.php');
 class WikiTheme_gforge extends WikiTheme {
 
     function header() {
-        global $HTML, $group_id, $group_public_name, $request, $project;
+        global $HTML, $group_id, $group_public_name, $request, $project, $Language;
 
         $pagename = $request->getArg('pagename');
 
@@ -28,6 +28,24 @@ class WikiTheme_gforge extends WikiTheme {
             'pagename'=> $pagename, 'group' => $group_id, 'toptab' => 'wiki',
             'css' => 'gforge.css" />'."\n".'    <base href="'.PHPWIKI_BASE_URL,
             'submenu' => $submenu->asXML()));
+
+        // Display a warning banner for internal users when the wiki is opened
+        // to external users.
+        if ($project->getIsExternal()) {
+        	$external_user = false;
+        	if (session_loggedin()) {
+        		$user = session_get_user();
+        		$external_user = $user->getIsExternal();
+        	}
+        	if (!$external_user) {
+	        	$page = $request->getPage();
+	        	if ($page->get('external')) {
+	    			$external_msg = 'This page is external.';
+	    		}
+	    		echo $HTML->warning_msg($Language->getText('project_admin','external_project') .
+	    								(isset($external_msg) ? ' ' . $external_msg : ''));
+			}
+        }
     }
     
     function footer() {
