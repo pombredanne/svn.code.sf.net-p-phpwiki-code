@@ -202,7 +202,8 @@ function IniConfig($file) {
          'ENABLE_MARKUP_DIVSPAN', 'USE_BYTEA', 'UPLOAD_USERDIR', 'DISABLE_UNITS',
 	 'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS',
          'ENABLE_AUTH_OPENID', 'INSECURE_ACTIONS_LOCALHOST_ONLY',
-         'ENABLE_MAILNOTIFY', 'ENABLE_RECENTCHANGESBOX', 'ENABLE_PAGE_PUBLIC'
+         'ENABLE_MAILNOTIFY', 'ENABLE_RECENTCHANGESBOX', 'ENABLE_PAGE_PUBLIC',
+         'ENABLE_EXTERNAL_PAGES'
          );
 
     $rs = @parse_ini_file($file);
@@ -621,7 +622,7 @@ function fixup_static_configs($file) {
       .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
       .'TitleSearch:'
       .'UpLoad:UserPreferences:'
-      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:WikiBlog:'
+      .'WantedPages:WhoIsOnline:WikiAdminSelect:WikiBlog:'
       // plus some derivations
       .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages:'
       .'FullRecentChanges:'
@@ -652,6 +653,12 @@ function fixup_static_configs($file) {
        $AllActionPages[] = 'RateIt'; // RateIt works only in wikilens theme
        $AllActionPages[] = 'TranslateText';
        $AllActionPages[] = 'UriResolver';
+       $AllActionPages[] = 'WatchPage';
+    }
+    if (defined('GFORGE') and GFORGE) {
+       if (defined('ENABLE_EXTERNAL_PAGES') and ENABLE_EXTERNAL_PAGES) {
+          $AllActionPages[] = 'ExternalPages';
+       }
     }
 
     // If user has not defined PHPWIKI_DIR, and we need it
