@@ -65,7 +65,7 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function setaclPages(&$request, $pages, $acl) {
-        $ul = HTML::ul();
+        $result = HTML::div();
         $count = 0;
         $dbi =& $request->_dbi; 
         // check new_group and new_perm
@@ -94,18 +94,28 @@ extends WikiPlugin_WikiAdminSelect
             	$oldperm = getPagePermissions($page);
                 if ($oldperm)
                     $oldperm->sanify();
-            	if ($oldperm and $perm->equal($oldperm->perm)) // (serialize($oldperm->perm) == serialize($perm->perm))
-                    $ul->pushContent(HTML::li(fmt("ACL not changed for page '%s'.",$pagename)));
-                elseif (mayAccessPage('change', $pagename)) {
+            	if ($oldperm and $perm->equal($oldperm->perm)) {
+                    $result->setAttr('class', 'error');
+                    $result->pushContent(HTML::p(fmt("ACL not changed for page '%s'.",$pagename)));
+                } elseif (mayAccessPage('change', $pagename)) {
                     setPagePermissions ($page, $perm);
-                    $ul->pushContent(HTML::li(fmt("ACL changed for page '%s'.",$pagename)));
+                    $result->setAttr('class', 'feedback');
+                    $result->pushContent(HTML::p(fmt("ACL changed for page '%s'",
+                                                     $pagename)));
+                    $result->pushContent(HTML::p(fmt("from '%s'",
+                                                     $oldperm ? $oldperm->asAclGroupLines() : "None")));
+                    $result->pushContent(HTML::p(fmt("to '%s'.",
+                                                     $perm->asAclGroupLines())));
 
                     // Create new revision so that ACL change appears in history.
                     $current = $page->getCurrentRevision();
                     $version = $current->getVersion();
                     $meta = $current->_data;
                     $text = $current->getPackedContent();
-                    $meta['summary'] = sprintf(_("ACL changed for page '%s'."), $pagename);
+                    $meta['summary'] = sprintf(_("ACL changed for page '%s' from '%s' to '%s'."), 
+                                               $pagename,
+                                               $oldperm ? $oldperm->asAclGroupLines() : "None",
+                                               $perm->asAclGroupLines());
                     $meta['is_minor_edit'] = 0;
                     $meta['author'] =  $request->_user->UserName();
                     unset($meta['mtime']); // force new date
@@ -113,20 +123,24 @@ extends WikiPlugin_WikiAdminSelect
 
                     $count++;
                 } else {
-                    $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
+                    $result->setAttr('class', 'error');
+                    $result->pushContent(HTML::p(fmt("Access denied to change page '%s'.",$pagename)));
                 }
             }
         } else {
-            $ul->pushContent(HTML::li(fmt("Invalid ACL")));
+            $result->pushContent(HTML::p(fmt("Invalid ACL")));
         }
         if ($count) {
             $dbi->touch();
-            return HTML($ul,
-                        HTML::p(fmt("%s pages have been changed.",$count)));
+            $result->setAttr('class', 'feedback');
+            if ($count > 1) {
+                $result->pushContent(HTML::p(fmt("%s pages have been changed.",$count)));
+            }
         } else {
-            return HTML($ul,
-                        HTML::p(fmt("No pages changed.")));
+            $result->setAttr('class', 'error');
+            $result->pushContent(HTML::p(fmt("No pages changed.")));
         }
+        return $result;
     }
     
     function run($dbi, $argstr, &$request, $basepage) {
