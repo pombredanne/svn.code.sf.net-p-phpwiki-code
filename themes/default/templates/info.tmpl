@@ -50,7 +50,6 @@ if ($is_current = $revision->isCurrent()) {
         $lockunlock = $page->get('locked') ? 'unlock' : 'lock';
         $clickcheckbUrl = WikiURL($revision, array('action' => $lockunlock));
         $clickcheckb = "location.href='$clickcheckbUrl'";
-
         $LOCKED_CB->setAttr('onclick', $clickcheckb);
     }
 
@@ -128,6 +127,12 @@ if ($type == 'inherited') {
     <td align="right"><?= $LOCKED_CB ?></td>
     <td class="pageinfo"><?=_("Locked")?></td>
   </tr>
+<?php if (ENABLE_EXTERNAL_PAGES) { ?>
+  <tr>
+    <td align="right" class="pageinfo">Is External:</td>
+    <td><?= $page->get('external') ? _("Yes") : _("No") ?></td>
+  </tr>
+<?php } ?>
   <tr>
     <td align="right" class="pageinfo">ACL type</td>
     <td><?= $type ?></td>
