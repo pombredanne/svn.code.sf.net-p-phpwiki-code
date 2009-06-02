@@ -420,109 +420,113 @@ function LinkImage($url, $alt = "") {
     // FIXME: Is this needed (or sufficient?)
     // FIXED: This was broken for moniker:TP30 test/image.png => url="moniker:TP30" attr="test/image.png"
     $ori_url = $url;
-    if(! IsSafeURL($url)) {
+    // support new syntax: [prefix/image.jpg size=50% border=n]
+    if (empty($alt)) $alt = "";
+
+    // Extract URL
+    $arr = split(' ',$url);
+    if (!empty($arr)) $url = $arr[0];
+    if (! IsSafeURL($url)) {
         $link = HTML::strong(HTML::u(array('class' => 'baduri'),
                                      _("BAD URL -- remove all of <, >, \"")));
         return $link;
-    } else {
-        // support new syntax: [prefix/image.jpg size=50% border=n]
-        //if (!preg_match("/\.(".$force_img.")/i", $url))
-        if (empty($alt)) $alt = basename($url);
-	$arr = split(' ',$url);
-	if (!empty($arr)) $url = $arr[0];
-        if ($alt == "") {
-            $link = HTML::img(array('src' => $url, 'alt' => $alt));
-        } else {
-            $link = HTML::img(array('src' => $url, 
-                                    'alt' => $alt, 'title' => $alt));
+    }
+    $link = HTML::img(array('src' => $url));
+
+    // Extract attributes
+    $arr = parse_attributes(strstr($ori_url, " "));
+    foreach ($arr as $attr => $value) {
+        // These attributes take strings: lang, id, title, alt
+        if (($attr == "lang")
+          || ($attr == "id")
+          || ($attr == "title")
+          || ($attr == "alt")) {
+            $link->setAttr($attr, $value);
         }
-        if (count($arr) > 1) {
-	    $url = $arr[0];
-            array_shift($arr);
-            foreach ($arr as $attr) {
-                if (preg_match('/^size=(\d+%)$/',$attr,$m)) {
-                    $link->setAttr('width',$m[1]);
-                    $link->setAttr('height',$m[1]);
-                }
-                elseif (preg_match('/^size=(\d+)x(\d+)$/',$attr,$m)) {
-                    $link->setAttr('width',$m[1]);
-                    $link->setAttr('height',$m[2]);
-                }
-                elseif (preg_match('/^width=(\d+[%p]?x?)$/',$attr,$m))
-                    $link->setAttr('width',$m[1]);
-                elseif (preg_match('/^height=(\d+[%p]?x?)$/',$attr,$m))
-                    $link->setAttr('height',$m[1]);
-                elseif (preg_match('/^border=(\d+)$/',$attr,$m))
-                    $link->setAttr('border',$m[1]);
-                elseif (preg_match('/^align=(\w+)$/',$attr,$m))
-                    $link->setAttr('align',$m[1]);
-                elseif (preg_match('/^hspace=(\d+)$/',$attr,$m))
-                    $link->setAttr('hspace',$m[1]);
-                elseif (preg_match('/^vspace=(\d+)$/',$attr,$m))
-                    $link->setAttr('vspace',$m[1]);
-		else {
-		    $url .= ' '.$attr;
-		    if(! IsSafeURL($url)) {
-			$link = HTML::strong(HTML::u(array('class' => 'baduri'),
-						     _("BAD URL -- remove all of <, >, \"")));
-			return $link;
-		    } else {
-			$link->setAttr('src', $url);
-		    }
-		}
+        // align = bottom|middle|top|left|right
+        if (($attr == "align")
+          && (($value == "bottom")
+            || ($value == "middle")
+            || ($value == "top")
+            || ($value == "left")
+            || ($value == "right"))) {
+            $link->setAttr($attr, $value);
+        }
+        // These attributes take a number (pixels): border, hspace, vspace
+        if ((($attr == "border") || ($attr == "hspace") || ($attr == "vspace"))
+           && (is_int($value))) {
+            $link->setAttr($attr, $value);
+        }
+        // These attributes take a number (pixels) or a percentage: height, width
+        if ((($attr == "border") || ($attr == "hspace") || ($attr == "vspace"))
+           && (preg_match('/\d+[%p]?x?/', $value))) {
+            $link->setAttr($attr, $value);
+        }
+        // We allow size=50% and size=20x30
+        // We replace this with "width" and "height" HTML attributes
+        if ($attr == "size") {
+            if (preg_match('/(\d+)%/', $value, $m)) {
+                $link->setAttr('width',$m[1]);
+                $link->setAttr('height',$m[1]);
+            } elseif (preg_match('/(\d+)x(\d+)/', $value, $m)) {
+                $link->setAttr('width',$m[1]);
+                $link->setAttr('height',$m[2]);
             }
         }
-        // Check width and height as spam countermeasure
-        if (($width  = $link->getAttr('width')) and ($height = $link->getAttr('height'))) {
-            //$width  = (int) $width; // px or % or other suffix
-            //$height = (int) $height;
-            if (($width < 3 and $height < 10) or 
-                ($height < 3 and $width < 20) or 
-                ($height < 7 and $width < 7))
+    }
+    if (!$link->getAttr('alt')) {
+        $link->setAttr('alt', $alt);
+    }
+    // Check width and height as spam countermeasure
+    if (($width  = $link->getAttr('width')) and ($height = $link->getAttr('height'))) {
+        //$width  = (int) $width; // px or % or other suffix
+        //$height = (int) $height;
+        if (($width < 3 and $height < 10) or 
+            ($height < 3 and $width < 20) or 
+            ($height < 7 and $width < 7))
+        {
+            trigger_error(_("Invalid image size"), E_USER_WARNING);
+            return '';
+        }
+    } else {
+        $size = 0;
+        // Prepare for getimagesize($url)
+        // $url only valid for external urls, otherwise local path
+        // Older php versions crash here with certain png's: 
+        // confirmed for 4.1.2, 4.1.3, 4.2.3; 4.3.2 and 4.3.7 are ok
+        //   http://phpwiki.sourceforge.net/demo/themes/default/images/http.png
+        // See http://bugs.php.net/search.php?cmd=display&search_for=getimagesize
+        if (DISABLE_GETIMAGESIZE)
+            ;
+        elseif (! preg_match("/\.$force_img$/i", $url))
+            ;  // only valid image extensions or scripts assumed to generate images
+        elseif (!check_php_version(4,3) and preg_match("/^http.+\.png$/i",$url))
+            ; // it's safe to assume that this will fail.
+        elseif (preg_match("/^http/",$url)) { // external url
+            $size = @getimagesize($url); 
+        } else { // local file
+            if (file_exists($file = NormalizeLocalFileName($url))) {  // here
+                $size = @getimagesize($file);
+            } elseif (file_exists(NormalizeLocalFileName(urldecode($url)))) {
+                $size = @getimagesize($file);
+                $link->setAttr('src', rawurldecode($url));
+            } elseif (string_starts_with($url, getUploadDataPath())) { // there
+                $file = substr($file, strlen(getUploadDataPath()));
+                $size = @getimagesize(getUploadFilePath().rawurldecode($file));
+                $link->setAttr('src', getUploadDataPath() . rawurldecode($file));
+            } else { // elsewhere
+                $size = @getimagesize($request->get('DOCUMENT_ROOT').urldecode($url));
+            }
+        }
+        if ($size) {
+            $width  = $size[0];
+            $height = $size[1];
+            if (($width < 3 and $height < 10) 
+                or ($height < 3 and $width < 20)
+                or ($height < 7 and $width < 7))
             {
                 trigger_error(_("Invalid image size"), E_USER_WARNING);
                 return '';
-            }
-        } else {
-            $size = 0;	
-            // Prepare for getimagesize($url)
-            // $url only valid for external urls, otherwise local path
-            // Older php versions crash here with certain png's: 
-            // confirmed for 4.1.2, 4.1.3, 4.2.3; 4.3.2 and 4.3.7 are ok
-            //   http://phpwiki.sourceforge.net/demo/themes/default/images/http.png
-            // See http://bugs.php.net/search.php?cmd=display&search_for=getimagesize
-            if (DISABLE_GETIMAGESIZE)
-                ;
-            elseif (! preg_match("/\.$force_img$/i", $url))
-            	;  // only valid image extensions or scripts assumed to generate images
-            elseif (!check_php_version(4,3) and preg_match("/^http.+\.png$/i",$url))
-                ; // it's safe to assume that this will fail.
-            elseif (preg_match("/^http/",$url)) { // external url
-            	$size = @getimagesize($url); 
-            } else { // local file
-                if (file_exists($file = NormalizeLocalFileName($url))) {  // here
-            	    $size = @getimagesize($file);
-                } elseif (file_exists(NormalizeLocalFileName(urldecode($url)))) {
-            	    $size = @getimagesize($file);
-            	    $link->setAttr('src', rawurldecode($url));
-                } elseif (string_starts_with($url, getUploadDataPath())) { // there
-            	    $file = substr($file, strlen(getUploadDataPath()));	
-            	    $size = @getimagesize(getUploadFilePath().rawurldecode($file));
-            	    $link->setAttr('src', getUploadDataPath() . rawurldecode($file));
-            	} else { // elsewhere
-            	    $size = @getimagesize($request->get('DOCUMENT_ROOT').urldecode($url));
-            	}
-            }
-            if ($size) {
-                $width  = $size[0];
-                $height = $size[1];
-                if (($width < 3 and $height < 10) 
-                    or ($height < 3 and $width < 20)
-                    or ($height < 7 and $width < 7))
-                {
-                    trigger_error(_("Invalid image size"), E_USER_WARNING);
-                    return '';
-                }
             }
         }
     }
