@@ -1207,6 +1207,9 @@ function SplitPagename ($page) {
             $RE[] = "/(?<= |${sep}|^)([À])([[:upper:]][[:lower:]])/";
             break;
         }
+        // Split at underscore
+        $RE[] = '/(_)([[:alpha:]])/';
+        $RE[] = '/([[:alpha:]])(_)/';
         // Split numerals from following letters.
         $RE[] = '/(\d)([[:alpha:]])/';
         // Split at subpage seperators. TBD in WikiTheme.php
