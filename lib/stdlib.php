@@ -2358,6 +2358,8 @@ function parse_attributes($line) {
     $line = trim ($line, "=");
     $line = trim ($line);
 
+    if (empty($line)) return $options;
+
     // Then we have the attribute value.
 
     $i = 0;
