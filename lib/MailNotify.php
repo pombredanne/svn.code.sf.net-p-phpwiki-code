@@ -1,4 +1,4 @@
-<?php 
+<?php
 rcs_id('$Id$');
 /* Copyright (C) 2006-2007 Reini Urban
  * Copyright (C) 2009 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -61,7 +61,11 @@ class MailNotify {
 
     function fromId() {
         global $request;
-        return $request->_user->getId() . '@' .  $request->get('REMOTE_HOST');
+        if (defined('GFORGE') and GFORGE) {
+            return $request->_user->getId();
+        } else {
+            return $request->_user->getId() . '@' .  $request->get('REMOTE_HOST');
+        }
     }
 
     function userEmail($userid, $doverify = true) {
