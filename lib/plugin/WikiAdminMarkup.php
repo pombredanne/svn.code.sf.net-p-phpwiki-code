@@ -151,7 +151,12 @@ extends WikiPlugin_WikiAdminSelect
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], 
                                          $args['exclude']);
         }
-        $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
+    
+        if ($next_action == 'select') {
+            $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
+        } else {
+            $pagelist = new PageList_Unselectable($args['info'], $args['exclude'], $args);
+        }
         $pagelist->addPageList($pages);
 
         $header = HTML::fieldset();
