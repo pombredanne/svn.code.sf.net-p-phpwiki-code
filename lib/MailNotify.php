@@ -238,6 +238,8 @@ class MailNotify {
             $content = $this->pagename . " " . $version . " " .  
                 Iso8601DateTime($meta['mtime']) . "\n";
             $content .= _("New page");
+            $content .= "\n\n";
+            $content .= $wikitext;
         }
         $editedby = sprintf(_("Edited by: %s"), $this->from);
         //$editedby = sprintf(_("Edited by: %s"), $meta['author']);
