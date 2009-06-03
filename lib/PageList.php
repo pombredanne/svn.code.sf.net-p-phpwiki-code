@@ -1725,6 +1725,31 @@ extends PageList {
     }
 }
 
+class PageList_Unselectable
+extends PageList {
+
+    function PageList_Unselectable ($columns=false, $exclude='', $options = false) {
+        if ($columns) {
+            if (!is_array($columns))
+                $columns = explode(',', $columns);
+        } else {
+            $columns = array('pagename');
+        }
+        $this->PageList($columns, $exclude, $options);
+    }
+
+    function addPageList ($array) {
+        while (list($pagename,$selected) = each($array)) {
+            if ($selected) $this->addPageSelected((string)$pagename);
+            $this->addPage((string)$pagename);
+        }
+    }
+
+    function addPageSelected ($pagename) {
+        $this->_selected[$pagename] = 1;
+    }
+}
+
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
