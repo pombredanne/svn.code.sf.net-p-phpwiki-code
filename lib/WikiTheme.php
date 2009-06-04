@@ -216,19 +216,14 @@ class WikiTheme {
             }
         }
         if ($noinit) return;
-
+        $this->_css = array();
+        
+        // on derived classes do not add headers twice
+        if (count($this->_parents) > 1) {
+            return;
+        }
         $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("wikicommon.js"))));
-        $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("sortable.js"))));
-	$script_url = deduce_script_name();
-	if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
-	    $script_url .= ("?start_debug=".$_GET['start_debug']);
-	$pagename = $GLOBALS['request']->getArg('pagename');
-	$this->addMoreHeaders
-	    (JavaScript
-	     ("var data_path = '". javascript_quote_string(DATA_PATH) ."';\n"
-	      ."var pagename  = '". javascript_quote_string($pagename) ."';\n"
-	      ."var script_url= '". javascript_quote_string($script_url) ."';\n"
-	      ."var stylepath = '". javascript_quote_string(DATA_PATH) . '/'.$this->_theme."/';\n"));
+        //$this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("sortable.js"))));
         // by pixels
         if ((is_object($GLOBALS['request']) // guard against unittests
              and $GLOBALS['request']->getPref('doubleClickEdit'))
@@ -240,10 +235,12 @@ class WikiTheme {
             $this->initLiveSearch();
         }
         // replaces external LiveSearch
-        if (defined("ENABLE_ACDROPDOWN") and ENABLE_ACDROPDOWN) { 
+        // enable ENABLE_AJAX for DynamicIncludePage
+        if (ENABLE_ACDROPDOWN or ENABLE_AJAX) {
             $this->initMoAcDropDown();
+            if (ENABLE_AJAX)
+                $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("ajax.js"))));
         }
-        $this->_css = array();
     }
 
     function file ($file) {
@@ -1193,9 +1190,9 @@ class WikiTheme {
         }
     }
 
-    var $_MoreHeaders = array();
+    //$GLOBALS['request']->_MoreHeaders = array();
     function addMoreHeaders ($element) {
-        $this->_MoreHeaders[] = $element;
+        $GLOBALS['request']->_MoreHeaders[] = $element;
         if (!empty($this->_headers_printed) and $this->_headers_printed) {
 	    trigger_error(_("Some action(page) wanted to add more headers, but they were already printed.")
 			  ."\n". $element->asXML(),
@@ -1207,14 +1204,15 @@ class WikiTheme {
       * Singleton. Only called once, by the head template. See the warning above.
       */
     function getMoreHeaders () {
+    	global $request;
     	// actionpages cannot add headers, because recursive template expansion
     	// already expanded the head template before.
     	$this->_headers_printed = 1;
-        if (empty($this->_MoreHeaders))
+        if (empty($request->_MoreHeaders))
             return '';
         $out = '';
         //$out = "<!-- More Headers -->\n";
-        foreach ($this->_MoreHeaders as $h) {
+        foreach ($request->_MoreHeaders as $h) {
             if (is_object($h))
                 $out .= printXML($h);
             else
@@ -1223,26 +1221,28 @@ class WikiTheme {
         return $out;
     }
 
-    var $_MoreAttr = array();
+    //$GLOBALS['request']->_MoreAttr = array();
     // new arg: named elements to be able to remove them. such as DoubleClickEdit for htmldumps
     function addMoreAttr ($tag, $name, $element) {
+    	global $request;
         // protect from duplicate attr (body jscript: themes, prefs, ...)
         static $_attr_cache = array();
         $hash = md5($tag."/".$element);
         if (!empty($_attr_cache[$hash])) return;
         $_attr_cache[$hash] = 1;
 
-        if (empty($this->_MoreAttr) or !is_array($this->_MoreAttr[$tag]))
-            $this->_MoreAttr[$tag] = array($name => $element);
+        if (empty($request->_MoreAttr) or !is_array($request->_MoreAttr[$tag]))
+            $request->_MoreAttr[$tag] = array($name => $element);
         else
-            $this->_MoreAttr[$tag][$name] = $element;
+            $request->_MoreAttr[$tag][$name] = $element;
     }
 
     function getMoreAttr ($tag) {
-        if (empty($this->_MoreAttr[$tag]))
+    	global $request;
+        if (empty($request->_MoreAttr[$tag]))
             return '';
         $out = '';
-        foreach ($this->_MoreAttr[$tag] as $name => $element) {
+        foreach ($request->_MoreAttr[$tag] as $name => $element) {
             if (is_object($element))
                 $out .= printXML($element);
             else
@@ -1257,10 +1257,13 @@ class WikiTheme {
 
     /**
      * The ->load() method replaces the formerly global code in themeinfo.php.
+     * This is run only once for the selected theme, and not for the parent themes.
      * Without this you would not be able to derive from other themes.
      */
     function load() {
 
+        $this->initGlobals();
+        
 	// CSS file defines fonts, colors and background images for this
 	// style.  The companion '*-heavy.css' file isn't defined, it's just
 	// expected to be in the same directory that the base style is in.
@@ -1401,6 +1404,24 @@ class WikiTheme {
         if (empty($customPageListColumns)) $customPageListColumns = array();
         foreach ($array as $column => $obj) {
             $customPageListColumns[$column] = $obj;
+        }
+    }
+
+    function initGlobals() {
+        global $request;
+	static $already = 0;
+        if (!$already) {
+            $script_url = deduce_script_name();
+            if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
+                $script_url .= ("?start_debug=".$_GET['start_debug']);
+            $pagename = $request->getArg('pagename');
+            $js = "var data_path = '". javascript_quote_string(DATA_PATH) ."';\n"
+                ."var pagename  = '". javascript_quote_string($pagename) ."';\n"
+                ."var script_url= '". javascript_quote_string($script_url) ."';\n"
+                ."var stylepath = data_path+'/".javascript_quote_string($this->_theme)."/';\n"
+                ."var use_path_info = " . (USE_PATH_INFO ? "true" : "false") .";\n";
+            $this->addMoreHeaders(JavaScript($js));
+	    $already = 1;
         }
     }
 
