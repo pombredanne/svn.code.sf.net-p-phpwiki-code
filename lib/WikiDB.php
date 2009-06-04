@@ -1400,7 +1400,7 @@ class WikiDB_Page
     // May be empty. Either the stored owner (/Chown), or the first authorized author
     function getOwner() {
         if ($owner = $this->get('owner'))
-            return ($owner == _("The PhpWiki programming team")) ? ADMIN_USER : $owner;
+            return $owner;
         // check all revisions forwards for the first author_id
         $backend = &$this->_wikidb->_backend;
         $pagename = &$this->_pagename;
@@ -1408,7 +1408,7 @@ class WikiDB_Page
         for ($v=1; $v <= $latestversion; $v++) {
             $rev = $this->getRevision($v,false);
             if ($rev and $owner = $rev->get('author_id')) {
-            	return ($owner == _("The PhpWiki programming team")) ? ADMIN_USER : $owner;
+            	return $owner;
             }
         }
         return '';

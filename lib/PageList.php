@@ -1111,7 +1111,7 @@ class PageList {
         return $allPages;
     }
 
-    // UserPages are pages NOT created by "The PhpWiki programming team"
+    // UserPages are pages NOT created by ADMIN_USER
     function allUserPages($include_empty=false, $sortby='',
                           $limit='', $exclude='') {
         $dbi = $GLOBALS['request']->getDbh();
@@ -1120,7 +1120,7 @@ class PageList {
         while ($pagehandle = $allPagehandles->next()) {
             $name = $pagehandle->getName();
             $creator = $pagehandle->getCreator();
-            if ($creator !== _("The PhpWiki programming team")) {
+            if ($creator !== ADMIN_USER) {
                  $allPages[] = $name;
             }
         }
