@@ -182,7 +182,7 @@ function IniConfig($file) {
     // List of all valid config options to be define()d which take booleans.
     $_IC_VALID_BOOL = array
         ('ENABLE_USER_NEW', 'ENABLE_PAGEPERM', 'ENABLE_EDIT_TOOLBAR', 'JS_SEARCHREPLACE',
-         'ENABLE_XHTML_XML', 'ENABLE_DOUBLECLICKEDIT', 'ENABLE_LIVESEARCH',
+         'ENABLE_XHTML_XML', 'ENABLE_DOUBLECLICKEDIT', 'ENABLE_LIVESEARCH', 'ENABLE_ACDROPDOWN',
          'USECACHE', 'WIKIDB_NOCACHE_MARKUP',
          'ENABLE_REVERSE_DNS', 'ENCRYPTED_PASSWD', 'ZIPDUMP_AUTH', 
          'ENABLE_RAW_HTML', 'ENABLE_RAW_HTML_LOCKEDONLY', 'ENABLE_RAW_HTML_SAFE', 
@@ -203,7 +203,7 @@ function IniConfig($file) {
 	 'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS',
          'ENABLE_AUTH_OPENID', 'INSECURE_ACTIONS_LOCALHOST_ONLY',
          'ENABLE_MAILNOTIFY', 'ENABLE_RECENTCHANGESBOX', 'ENABLE_PAGE_PUBLIC',
-         'ENABLE_EXTERNAL_PAGES'
+         'ENABLE_AJAX', 'ENABLE_EXTERNAL_PAGES'
          );
 
     $rs = @parse_ini_file($file);
@@ -646,11 +646,12 @@ function fixup_static_configs($file) {
        $AllActionPages[] = 'SpellCheck'; // SpellCheck does not work
        $AllActionPages[] = 'PhpWikiAdministration/Chmod';
     }
+    // The GFORGE theme omits them
     if (!defined('GFORGE') or !GFORGE) {
        $AllActionPages[] = 'InterWikiSearch';
        $AllActionPages[] = 'LdapSearch';
        $AllActionPages[] = 'PasswordReset';
-       $AllActionPages[] = 'RateIt'; // RateIt works only in wikilens theme
+       $AllActionPages[] = 'RateIt'; // RateIt works only in wikilens derived themes
        $AllActionPages[] = 'TranslateText';
        $AllActionPages[] = 'UriResolver';
        $AllActionPages[] = 'WatchPage';
