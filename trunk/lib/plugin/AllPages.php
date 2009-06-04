@@ -132,9 +132,11 @@ extends WikiPlugin
 
         if ($pages !== false)
             $pagelist->addPageList($pages);
-        else
-            $pagelist->addPages( $dbi->getAllPages($args['include_empty'], $args['sortby'], 
-                                                   $args['limit']) );
+        else {
+            $result = $dbi->getAllPages($args['include_empty'], $args['sortby'], 
+                                        $args['limit']);
+            $pagelist->addPages( $result );
+        }
         if ($args['debug']) {
             return HTML($pagelist,
                         HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
@@ -142,6 +144,7 @@ extends WikiPlugin
             return $pagelist;
         }
     }
+
 };
 
 // Local Variables:
