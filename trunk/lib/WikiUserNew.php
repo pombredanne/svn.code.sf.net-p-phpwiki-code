@@ -1941,6 +1941,8 @@ class UserPreferences
                     'timeOffset'    => new _UserPreference_numeric(TIMEOFFSET_DEFAULT_HOURS,
                                                                    TIMEOFFSET_MIN_HOURS,
                                                                    TIMEOFFSET_MAX_HOURS),
+                    'ownModifications' => new _UserPreference_bool(),
+                    'majorModificationsOnly' => new _UserPreference_bool(),
                     'relativeDates' => new _UserPreference_bool(),
                     'googleLink'    => new _UserPreference_bool(), // 1.3.10
                     'doubleClickEdit' => new _UserPreference_bool(), // 1.3.11

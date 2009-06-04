@@ -111,7 +111,37 @@ class MailNotify {
         $emails = array(); $userids = array();
         foreach ($notify as $page => $users) {
             if (glob_match($page, $this->pagename)) {
+
+                global $request;
+                $curuser = $request->getUser();
+                $curusername = $curuser->UserName();
+                $curuserprefs = $curuser->getPreferences();
+                $curuserprefsemail = $curuserprefs->get('email');
+                $ownModifications = $curuserprefs->get('ownModifications');
+                $majorModificationsOnly = $curuserprefs->get('majorModificationsOnly');
+
                 foreach ($users as $userid => $user) {
+
+                    $usermail = $user['email'];
+
+                    if (($usermail == $curuserprefsemail)
+                        and ($ownModifications)) {
+                        // It's my own modification
+                        // and I do not want to receive it
+                        continue;
+                    }
+
+                    if ($majorModificationsOnly) {
+                        $backend = &$request->_dbi->_backend;
+                        $version = $backend->get_latest_version($this->pagename);
+                        $versiondata = $backend->get_versiondata($this->pagename, $version, true);
+                        if ($versiondata['is_minor_edit']) {
+                            // It's a minor modification
+                            // and I do not want to receive it
+                            continue;
+                        }
+                    }
+
                     if (!$user) { // handle the case for ModeratePage: 
                         	  // no prefs, just userid's.
                         $emails[] = $this->userEmail($userid, false);
