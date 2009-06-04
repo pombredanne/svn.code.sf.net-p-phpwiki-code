@@ -155,6 +155,12 @@ class MailNotify {
 	    $silent = true;
         $emails = $this->emails;
         $from = $this->from;
+        // Do not send if modification is from Gforge admin
+        if (defined('GFORGE') and GFORGE) {
+            if ($from == ADMIN_USER) {
+                return;
+            }
+        }
         if (!$notice) $notice = _("PageChange Notification of %s");
         $ok = mail(($to = array_shift($emails)),
                  "[".WIKI_NAME."] ".$subject, 
