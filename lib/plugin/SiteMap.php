@@ -71,7 +71,9 @@ extends WikiPlugin
                      'direction'      => 'back',
                      'firstreversed'  => false,
                      'excludeunknown' => true,
-                     'includepages'   => '' // to be used only from the IncludeSiteMap plugin
+                     'includepages'   => '', // only for IncludeSiteMap and IncludeTree
+                     'category'       => '', // optional category filter (comma-delimited)
+                     'dtree'          => false, // optional for IncludeTree
                      );
     }
     // info arg allows multiple columns
@@ -175,8 +177,7 @@ extends WikiPlugin
 
         $pagearr = array();
         if ($direction == 'back') {
-            $pagearr = $this->recursivelyGetBackLinks($p, $pagearr, "*",
-                                                      $limit);
+            $pagearr = $this->recursivelyGetBackLinks($p, $pagearr, "*", $limit);
         }
         else {
             $this->dbi = $dbi;
@@ -189,12 +190,12 @@ extends WikiPlugin
         reset($pagearr);
         if (!empty($includepages)) { 
             // disallow direct usage, only via child class IncludeSiteMap
-            if (!isa($this,"WikiPlugin_IncludeSiteMap"))
+            if (!isa($this,"WikiPlugin_IncludeSiteMap") and !isa($this,"WikiPlugin_IncludeTree"))
                 $includepages = '';
             if (!is_string($includepages))
                 $includepages = ' '; // avoid plugin loader problems
             $loader = new WikiPluginLoader();
-            $plugin = $loader->getPlugin('IncludePage',false);
+            $plugin = $loader->getPlugin($dtree ? 'DynamicIncludePage' : 'IncludePage', false);
             $nothing = '';
         }
         
