@@ -57,6 +57,7 @@ extends WikiPlugin_Template
                      'template'     => false,
                      'vars'         => false,
                      'overwrite'    => false,
+                     'verify'       => false, // true or a pagename
                      //'buttontext' => false,
                      //'method'     => 'POST'
                      );
@@ -70,6 +71,28 @@ extends WikiPlugin_Template
             return $this->error(_("Cannot create page with empty name!"));
 	}
 	// TODO: javascript warning if "/" or SUBPAGE_SEPARATOR in s
+	if ($verify) {
+	    $head = _("CreatePage failed");
+	    if ($dbi->isWikiPage($verify)) {
+		$msg = _("Do you really want to create the page '%s'?");
+	    } else {
+		$msg = _("Do you really want to create the page '%s'?");
+	    }
+	    if (isSubPage($s)) {
+		$main = subPageSlice(0);
+		if (!$dbi->isWikiPage(subPageSlice(0))) {
+		    $msg .= "\n" . _("The new page you want to create will be a subpage.")
+			 .  "\n" . _("Subpages cannot be created unless the parent page exists.");
+		    return alert($head, $msg);
+		} else {
+		    $msg .= "\n" . _("The new page you want to create will be a subpage.");
+		}
+	    }
+	    if (strpos($s, " \/")) {
+		$msg .= "\n" . _("Subpages with ending space are not allowed as directory name on Windows.");
+		return alert($head, $msg);
+	    }
+	}
 
         $param = array('action' => 'edit');
         if ($template and $dbi->isWikiPage($template)) {
