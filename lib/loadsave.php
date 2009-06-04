@@ -205,7 +205,8 @@ function FilenameForPage ($pagename, $action = false)
 	$enc = preg_replace('/%2F/', '/', $enc);
     }
     $enc = preg_replace('/^\./', '%2E', $enc);
-    $enc = preg_replace('/%20/', ' ', $enc);
+    $enc = preg_replace('/%20/', ' ',   $enc);
+    $enc = preg_replace('/\.$/', '%2E', $enc);
     return $enc;
 }
 
