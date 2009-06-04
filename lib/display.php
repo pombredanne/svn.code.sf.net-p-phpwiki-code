@@ -37,7 +37,7 @@ function RedirectorLink($pagename) {
                    $pagename);
 }
 
-    
+/* only on ?action= */    
 function actionPage(&$request, $action) {
     global $WikiTheme;
 
@@ -112,7 +112,6 @@ function actionPage(&$request, $action) {
 	            break;
 	    }
 	}
-        $args['VALID_LINKS'] = array($pagename);
         if (!$pagelist or !is_a($pagelist, 'PageList')) {
 	    if (!in_array($format, array("rss91","rss2","rss","atom","rdf")))
 		trigger_error(sprintf("Format %s requires an actionpage returning a pagelist.", 
@@ -120,7 +119,8 @@ function actionPage(&$request, $action) {
 			      ."\n".("Fall back to single page mode"), E_USER_WARNING);
 	    require_once('lib/PageList.php');
 	    $pagelist = new PageList();
-	    $pagelist->addPage($page);
+	    if ($format == 'pdf')
+	        $pagelist->addPage($page);
 	} else {
             foreach ($pagelist->_pages as $page) {
             	$name = $page->getName();
@@ -130,10 +130,12 @@ function actionPage(&$request, $action) {
 	}
 	if ($format == 'pdf') {
 	    require_once("lib/pdf.php");
+	    array_unshift($args['VALID_LINKS'], $pagename);
 	    ConvertAndDisplayPdfPageList($request, $pagelist, $args);
 	}
 	elseif ($format == 'ziphtml') { // need to fix links
 	    require_once('lib/loadsave.php');
+	    array_unshift($args['VALID_LINKS'], $pagename);
 	    $request->setArg('zipname', FilenameForPage($pagename).".zip");
 	    $request->setArg('pages', $args['VALID_LINKS']);
 	    MakeWikiZipHtml($request);
@@ -147,6 +149,22 @@ function actionPage(&$request, $action) {
 	        $plugin = new WikiPlugin_RecentChanges();
                 return $plugin->format($plugin->getChanges($request->_dbi, $args), $args);
 	    }
+	} elseif ($format == 'json') { // for faster autocompletion on searches
+	    $req_args = $request->args;
+	    unset($req_args['format']);
+            $json = array('count' => count($pagelist->_pages),
+                          'list'  => $args['VALID_LINKS'],
+                          'args'  => $req_args,
+                          'phpwiki-version' => PHPWIKI_VERSION);
+            if (loadPhpExtension('json')) {
+                $json_enc = json_encode($json);
+            } else {
+                require_once("lib/pear/JSON.php");
+                $j = new Services_JSON(); 
+                $json_enc = $j->encode($json);
+            }
+            header("Content-Type: application/json");
+            die($json_enc);
 	} elseif ($format == 'rdf') { // all semantic relations and attributes
 	    require_once("lib/SemanticWeb.php");
 	    $rdf = new RdfWriter($request, $pagelist);
@@ -186,6 +204,26 @@ function displayPage(&$request, $template=false) {
     }
     else {
         $revision = $page->getCurrentRevision();
+    }
+    $format = $request->getArg('format');
+    if ($format == 'xml') {  // fast ajax: include page content asynchronously
+        global $charset;
+	//header("Content-Type: application/xhtml+xml; charset=$charset");
+        header("Content-Type: text/xml");
+	if ($page->exists()) {
+	    header("Last-Modified: " . Rfc1123DateTime($revision->get('mtime')));
+	    $request->cacheControl();
+            echo "<","?xml version=\"1.0\" encoding=\"$charset\"?", ">\n";
+            $page_content = $revision->getTransformedContent();
+            $page_content->printXML();
+            $request->finish();
+        }
+        else {
+	    $request->cacheControl();
+            echo('<div style="display:none;" />');
+            $request->finish();
+            exit();
+        }
     }
 
     if (isSubPage($pagename)) {
@@ -318,13 +356,9 @@ function displayPage(&$request, $template=false) {
     // pdf is a special action, but should be a format to dump multiple pages
     // if the actionpage plugin returns a pagelist.
     // rdf, owl, kbmodel, daml, ... are handled by SemanticWeb.
-    $format = $request->getArg('format');
     /* Only single page versions. rss only if not already handled by RecentChanges.
      */
     if (!$format or $format == 'html' or $format == 'sidebar' or $format == 'contribs') {
-	$template->printExpansion($toks);
-    } elseif ($format == 'xml') {
-        $template = new Template('htmldump', $request);
 	$template->printExpansion($toks);
     } else {
 	// No pagelist here. Single page version only
@@ -352,6 +386,26 @@ function displayPage(&$request, $template=false) {
 	    require_once("lib/SemanticWeb.php");
 	    $rdf = new OwlWriter($request, $pagelist);
 	    $rdf->format();
+	} elseif ($format == 'json') { // include page content asynchronously
+	    if ($page->exists())
+            	$content = $page_content->asXML();
+            else
+                $content = '';
+	    $req_args = $request->args;
+	    unset($req_args['format']);
+	    // no meta-data so far, just the content
+            $json = array('content' => $content,
+                          'args'    => $req_args,
+                          'phpwiki-version' => PHPWIKI_VERSION);
+            if (loadPhpExtension('json')) {
+                $json_enc = json_encode($json);
+            } else {
+                require_once("lib/pear/JSON.php");
+                $j = new Services_JSON(); 
+                $json_enc = $j->encode($json);
+            }
+            header("Content-Type: application/json");
+            die($json_enc);
 	} else {
 	    if (!in_array($pagename, array(_("LinkDatabase"))))
 		trigger_error(sprintf(_("Unsupported argument: %s=%s"),"format",$format),
