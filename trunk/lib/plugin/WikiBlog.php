@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 rcs_id('$Id$');
 /*
- Copyright 2002,2003,2007 $ThePhpWikiProgrammingTeam
+ Copyright 2002,2003,2007,2009 $ThePhpWikiProgrammingTeam
  
  This file is part of PhpWiki.
 
@@ -213,6 +213,9 @@ extends WikiPlugin
 
         // Version meta-data
         $summary = trim($posted['summary']);
+        // edit: private only
+        $perm = new PagePermission();
+        $perm->perm['edit'] = $perm->perm['remove'];
         $version_meta = array('author'    => $blog_meta['creator'],
                               'author_id' => $blog_meta['creator_id'],
                               'markup'    => 2.0,   // assume new markup
@@ -220,6 +223,7 @@ extends WikiPlugin
                               'mtime'     => $now,
                               'pagetype'  => $type,
                               $type       => $blog_meta,
+                              'perm'      => $perm->perm,
                               );
         if ($type == 'comment')
             unset($version_meta['summary']);
@@ -287,12 +291,6 @@ extends WikiPlugin
             // have just created a blog with the same name,
             // we'll have locked it before we discover that the name
             // is taken.
-            /*
-             * FIXME:  For now all blogs are locked.  It would be
-             * nice to allow only the 'creator' to edit by default.
-             */
-            $p->set('locked', true); //lock by default
-	    // TOOD: use ACL perms
             $saved = $p->save($body, 1, $version_meta);
 
             $now++;
