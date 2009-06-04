@@ -77,6 +77,8 @@ extends WikiPlugin
             return HTML();
         }
 
+        // ^S != S*   ^  matches only beginning of phrase, not of word. 
+        //            x* matches any word beginning with x
         $query = new TextSearchQuery($args['s'], $args['case_exact'], $args['regex']);
         $pages = $dbi->titleSearch($query,$args['sortby'],$args['limit'],$args['exclude']);
 
