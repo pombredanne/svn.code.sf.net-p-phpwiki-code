@@ -208,12 +208,14 @@ function displayPage(&$request, $template=false) {
     $format = $request->getArg('format');
     if ($format == 'xml') {  // fast ajax: include page content asynchronously
         global $charset;
-	//header("Content-Type: application/xhtml+xml; charset=$charset");
         header("Content-Type: text/xml");
+        echo "<","?xml version=\"1.0\" encoding=\"$charset\"?", ">\n";
+        // DOCTYPE html needed to allow unencoded entities like &nbsp; without !CDATA[]
+        echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 	if ($page->exists()) {
 	    header("Last-Modified: " . Rfc1123DateTime($revision->get('mtime')));
 	    $request->cacheControl();
-            echo "<","?xml version=\"1.0\" encoding=\"$charset\"?", ">\n";
             $page_content = $revision->getTransformedContent();
             $page_content->printXML();
             $request->finish();
