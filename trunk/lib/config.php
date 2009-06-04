@@ -5,7 +5,7 @@ rcs_id('$Id$');
  * The user-configurable settings have been moved to IniConfig.php
  * The run-time code has been moved to lib/IniConfig.php:fix_configs()
  */
- 
+
 if (!defined("LC_ALL")) {
     // Backward compatibility (for PHP < 4.0.5)
     if (!check_php_version(4,0,5)) {
@@ -16,7 +16,7 @@ if (!defined("LC_ALL")) {
         define("LC_CTYPE", 2);
     }
 }
-// debug flags: 
+// debug flags:
 define ('_DEBUG_VERBOSE',   1); // verbose msgs and add validator links on footer
 define ('_DEBUG_PAGELINKS', 2); // list the extraced pagelinks at the top of each pages
 define ('_DEBUG_PARSER',    4); // verbose parsing steps
@@ -47,7 +47,7 @@ if (isCGI()) {
 // essential internal stuff
 set_magic_quotes_runtime(0);
 
-/** 
+/**
  * Browser Detection Functions
  *
  * Current Issues:
