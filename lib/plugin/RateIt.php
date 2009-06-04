@@ -109,8 +109,9 @@ extends WikiPlugin
         $js_globals = "var rateit_imgsrc = '".$img."';
 var rateit_action = '".urlencode("RateIt")."';
 ";
-        $WikiTheme->addMoreHeaders(JavaScript('', array
-                                              ('src' => $WikiTheme->_findData('wikilens.js'))));
+        $WikiTheme->addMoreHeaders
+        	(JavaScript('', 
+        	            array('src' => $WikiTheme->_findData('themes/wikilens/wikilens.js'))));
         return JavaScript($js_globals);
     }
 
