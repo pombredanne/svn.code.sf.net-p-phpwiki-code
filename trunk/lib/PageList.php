@@ -417,7 +417,7 @@ class _PageList_Column_content extends _PageList_Column {
 	        $score = $page_handle->score;
 	    elseif (!empty($page_handle['score']))
 	        $score = $page_handle['score'];
-            if ($search and ($i = strpos(strtolower($c), strtolower($search)))) {
+            if ($search and ($i = strpos(strtolower($c), strtolower($search))) !== false) {
                 $l = strlen($search);
                 $j = max(0, $i - ($this->bytes / 2));
                 return HTML::div(array('style' => 'font-size:x-small'),
@@ -426,7 +426,7 @@ class _PageList_Column_content extends _PageList_Column {
                                            HTML::span(array("style"=>"background:yellow"),substr($c, $i, $l)),
                                            HTML::span(substr($c, $i+$l, ($this->bytes / 2))."..."." ".($score ? sprintf("[%0.1f]",$score):""))));
             } else {
-            	if (strpos($c," "))
+            	if (strpos($c," ") !== false)
             	    $c = "";
             	else    
                     $c = sprintf(_("%s not found"), '»'.$search.'«');
