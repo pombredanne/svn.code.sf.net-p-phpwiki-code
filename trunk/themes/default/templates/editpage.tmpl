@@ -79,7 +79,7 @@
     <?php if ($user->isAdmin()) { ?> 
     <?= $LOCKED_CB ?> <label for="edit-locked" title="<?=_("Make the page read-only?")?>"><?=_("Locked")?></label>
     <?php if (ENABLE_PAGE_PUBLIC) { ?>
-    &nbsp;&nbsp;<?= $PUBLIC_CB ?> <label id="edit-public" for="edit-public" title="<?=_("Export to a seperate public area?")?>"><?=_("Public")?></label>
+    &nbsp;&nbsp;<?= $PUBLIC_CB ?> <label for="edit-public" title="<?=_("Export to a seperate public area?")?>"><?=_("Public")?></label>
     <?php }} ?>
   </td>
   <td colspan="2" align="right">
