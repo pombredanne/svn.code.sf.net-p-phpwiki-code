@@ -117,7 +117,7 @@ class RssWriter extends XmlElement
      */
     function __spew() {
         header("Content-Type: application/xml; charset=" . RSS_ENCODING);
-        printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", RSS_ENCODING);
+        echo('<'.'?xml version="1.0" encoding="'.RSS_ENCODING.'"?'.">\n");
         //printf("<!-- generator=\"PhpWiki-%s\" -->\n", PHPWIKI_VERSION);
         $this->printXML();
     }
@@ -209,7 +209,7 @@ class AtomFeed extends RssWriter {
      */
     function __spew() {
         header("Content-Type: application/atom+xml; charset=" . RSS_ENCODING);
-        printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", RSS_ENCODING);
+        echo('<'.'?xml version="1.0" encoding="'.RSS_ENCODING.'"?'.">\n");
         //printf("<!-- generator=\"PhpWiki-%s\" -->\n", PHPWIKI_VERSION);
         $this->printXML();
     }
