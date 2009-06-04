@@ -1,6 +1,6 @@
 <?php //-*-php-*-
 rcs_id('$Id$');
-/* Copyright (C) 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
+/* Copyright (C) 2004,2005,2006,2007,2009 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
