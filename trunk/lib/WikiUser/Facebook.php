@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: Facebook.php 6184 2008-08-22 10:33:41Z vargenau $');
+rcs_id('$Id$');
 /* Copyright (C) 2009 Reini Urban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  *
