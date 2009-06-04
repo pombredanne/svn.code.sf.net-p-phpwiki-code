@@ -48,7 +48,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($page))
-            return '';
+            return $this->error("page missing");
 
         $backend = &$dbi->_backend;
         $this->chunk_split = true;
