@@ -735,11 +735,7 @@ class PagePermission {
                         $none = false;
                         $s .= "$group:";
                     }
-                    if ($perm[$action][$group]) {
-                    	$s .= " $action";
-                    } else {
-                    	$s .= " -$action";
-                    }
+                    $s .= (($perm[$action][$group] ? " " : " -") . $action);
                 }
             }
             if (!($none)) {
