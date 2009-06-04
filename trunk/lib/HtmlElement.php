@@ -4,6 +4,9 @@
  * @author: Jeff Dairiki
  *
  * This code is now php5 compatible. --2004-04-19 23:51:43 rurban
+ *
+ * Todo: Add support for a JavaScript backend, a php2js compiler.
+ * HTML::div(array('onClick' => 'HTML::div(...)'))
  */
 if (!class_exists("XmlElement"))
     require_once(dirname(__FILE__)."/XmlElement.php");
