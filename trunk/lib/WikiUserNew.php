@@ -426,7 +426,7 @@ class _WikiUser
     // 
     function createHomePage() {
         global $request;
-        $versiondata = array('author' => _("The PhpWiki programming team"));
+        $versiondata = array('author' => ADMIN_USER);
         $request->_dbi->save(_("Automatically created user homepage to be able to store UserPreferences.").
         		     "\n{{Template/UserPage}}",
                              1, $versiondata);

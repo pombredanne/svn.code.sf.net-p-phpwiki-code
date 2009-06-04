@@ -974,7 +974,7 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
                                    fmt("has edit conflicts - overwriting anyway"));
                 $skip = false;
                 if (substr_count($source, 'pgsrc')) {
-                    $versiondata['author'] = _("The PhpWiki programming team");
+                    $versiondata['author'] = ADMIN_USER;
                     // but leave authorid as userid who loaded the file
                 }
             }
@@ -1497,17 +1497,16 @@ function SetupWiki (&$request)
     // This is a bogo-bogo-login:  Login without
     // saving login information in session state.
     // This avoids logging in the unsuspecting
-    // visitor as "The PhpWiki programming team".
+    // visitor as ADMIN_USER
     //
     // This really needs to be cleaned up...
     // (I'm working on it.)
     $real_user = $request->_user;
     if (ENABLE_USER_NEW)
-        $request->_user = new _BogoUser(_("The PhpWiki programming team"));
+        $request->_user = new _BogoUser(ADMIN_USER);
 
     else
-        $request->_user = new WikiUser($request, _("The PhpWiki programming team"),
-                                       WIKIAUTH_BOGO);
+        $request->_user = new WikiUser($request, ADMIN_USER, WIKIAUTH_BOGO);
 
     StartLoadDump($request, _("Loading up virgin wiki"));
 
