@@ -1,5 +1,5 @@
 // Wikilens Javascript functions.
-// $Id: wikilens.js 6521 2009-02-20 16:20:24Z vargenau $
+// $Id$
 
 /* Globals:
 
