@@ -1,4 +1,5 @@
-// Ajax Javascript support functions, based on moacdropdown
+// Ajax Javascript support functions, based on moacdropdown XmlHttp
+// Written from scratch by Reini Urban
 // $Id: ajax.js 6521 2009-02-20 16:20:24Z vargenau $
 
 function showHide( id ) {
@@ -16,10 +17,11 @@ showHide.prototype.onXmlHttpLoad = function( ) {
             var body = document.getElementById(this.id+'-body');
             var newbody = this.hXMLHttp.responseXML;
             if (newbody != null) {
+                // DOM quirks with text/xml and DOCTYPE xhtml
                 // msie: newbody = document, newbody.firstChild.nodeName = xml
                 if (newbody.firstChild && newbody.firstChild.nodeName == 'xml')
                     newbody = newbody.firstChild.nextSibling.nextSibling;
-                // gecko + chrome: skip firstChild = DOCTYPE html
+                // gecko + chrome no xml: skip only firstChild = DOCTYPE html
                 if (newbody.firstChild && newbody.firstChild.nodeName == 'html')
                     newbody = newbody.childNodes[1];
                 if (newbody == null) {
