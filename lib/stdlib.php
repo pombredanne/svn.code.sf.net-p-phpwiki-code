@@ -2580,6 +2580,7 @@ function strip_accents($text) {
 					'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
     return utf8_encode($res);
 }
+
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php
