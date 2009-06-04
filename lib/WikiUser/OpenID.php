@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id: OpenID.php,v 1.1 2006/12/24 13:35:43 rurban Exp $');
+rcs_id('$Id$');
 /* Copyright (C) 2007 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  *
