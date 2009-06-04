@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: DynamicIncludePage.php 6547 2009-02-24 15:42:01Z vargenau $');
+rcs_id('$Id$');
 /*
  Copyright 2009 $ThePhpWikiProgrammingTeam
 
