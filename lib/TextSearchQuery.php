@@ -13,8 +13,11 @@
  *        'word' OR the substring 'page'.
  * <dt> auto-detect regex hints, glob-style or regex-style, and converts them 
  *      to PCRE and SQL matchers:
- *   <dd> "^word$" => EXACT(word)
- *   <dd> "^word"  => STARTS_WITH(word)
+ *   <dd> "^word$" => EXACT(phrase)
+ *   <dd> "^word"  => STARTS_WITH(phrase)
+ *   <dd> "word$"  => ENDS_WITH(phrase)
+ *   <dd> "^word" ... => STARTS_WITH(word)
+ *   <dd> "word$" ... => ENDS_WITH(word)
  *   <dd> "word*"  => STARTS_WITH(word)
  *   <dd> "*word"  => ENDS_WITH(word)
  *   <dd> "/^word.* /" => REGEX(^word.*)
@@ -651,7 +654,7 @@ class TextSearchQuery_node
 }
 
 /**
- * A word. exact or substring?
+ * A word. Exact or substring?
  */
 class TextSearchQuery_node_word
 extends TextSearchQuery_node
@@ -678,6 +681,7 @@ extends TextSearchQuery_node {
     function regexp() { return '(?=.*)'; }
     function sql()    { return '%'; }
 }
+
 class TextSearchQuery_node_starts_with
 extends TextSearchQuery_node_word {
     var $op = "STARTS_WITH";
@@ -686,12 +690,24 @@ extends TextSearchQuery_node_word {
     function sql ()   { return $this->_sql_quote($this->word).'%'; }
 }
 
+// ^word: full phrase starts with
+class TextSearchQuery_phrase_starts_with
+extends TextSearchQuery_node_starts_with {
+    function regexp() { return '(?=^' . preg_quote($this->word, '/') . ')'; }
+}
+
 class TextSearchQuery_node_ends_with
 extends TextSearchQuery_node_word {
     var $op = "ENDS_WITH";
     var $_op = TSQ_TOK_ENDS_WITH;
     function regexp() { return '(?=.*' . preg_quote($this->word, '/') . '\b)'; }
     function sql ()   { return '%'.$this->_sql_quote($this->word); }
+}
+
+// word$: full phrase ends with
+class TextSearchQuery_phrase_ends_with
+extends TextSearchQuery_node_ends_with {
+    function regexp() { return '(?=' . preg_quote($this->word, '/') . '$)'; }
 }
 
 class TextSearchQuery_node_exact
@@ -935,7 +951,7 @@ class TextSearchQuery_Parser
      * /"[^"]*"/	  WORD
      * /'[^']*'/	  WORD
      *
-     * ^WORD              STARTS_WITH
+     * ^WORD              TextSearchQuery_phrase_starts_with
      * WORD*              STARTS_WITH
      * *WORD              ENDS_WITH
      * ^WORD$             EXACT
@@ -971,6 +987,12 @@ class TextSearchQuery_Parser
                 return new TextSearchQuery_node;
             else
                 return false;
+        }
+        if ($is_toplevel and count($list) == 1) {
+            if ($this->lexer->query_str[0] == '^')
+                return new TextSearchQuery_phrase_starts_with($list[0]->word);
+            else
+                return $list[0];
         }
         return new TextSearchQuery_node_and($list);
     }
@@ -1038,7 +1060,14 @@ class TextSearchQuery_Parser
             if ( $accept & $const and 
                 (($word = $this->lexer->get($const)) !== false))
             {
-                $classname = "TextSearchQuery_node_".strtolower($tok);
+                // phrase or word level?
+                if ($tok == 'STARTS_WITH' and $this->lexer->query_str[0] == '^')
+                    $classname = "TextSearchQuery_phrase_".strtolower($tok);
+                elseif ($tok == 'ENDS_WITH' and 
+                        string_ends_with($this->lexer->query_str,'$'))
+                    $classname = "TextSearchQuery_phrase_".strtolower($tok);
+                else
+                    $classname = "TextSearchQuery_node_".strtolower($tok);
                 return new $classname($word);
             }
         }
@@ -1051,6 +1080,7 @@ class TextSearchQuery_Lexer {
                                     $regex=TSQ_REGEX_AUTO) 
     {
         $this->tokens = $this->tokenize($query_str, $case_exact, $regex);
+        $this->query_str = $query_str;
         $this->pos = 0;
     }
 
