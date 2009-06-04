@@ -243,7 +243,8 @@ class CacheableMarkup extends XmlContent {
             {  	// give the content the chance to know about itself or even 
             	// to change itself
                 $val = $item->expand($basepage, $this);
-                $val->printXML();
+                if ($val) $val->printXML();
+                else trigger_error("empty item $item");
             }
             else {
                 $item->printXML();
@@ -691,7 +692,13 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
     }
 
     function getWikiPageLinks($basepage) {
-        return false; // do not store external links
+        if ($basepage == '') return false;
+	/* ":DontStoreLink" */
+	if (substr($this->_link,0,1) == ':') return false;
+	/* store only links to valid pagenames */
+        if ($link = $this->getPagename($basepage)) 
+            return array(array('linkto' => $link, 'relation' => 0));
+        else return false; // dont store external links
     }
 
     function _getName($basepage) {
