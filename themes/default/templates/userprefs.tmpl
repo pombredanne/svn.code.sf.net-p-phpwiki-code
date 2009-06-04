@@ -29,6 +29,14 @@ if ( $isForm )
 else
     $timeOffsetInput = $pref->get('timeOffset');
 
+$OwnModificationsCB = HTML::input(array('type' => 'checkbox',
+                                     'name' => 'pref[ownModifications]',
+                                     'value' => '1',
+                                     'checked' => (bool) $pref->get('ownModifications')));
+$MajorModificationsOnlyCB = HTML::input(array('type' => 'checkbox',
+                                     'name' => 'pref[majorModificationsOnly]',
+                                     'value' => '1',
+                                     'checked' => (bool) $pref->get('majorModificationsOnly')));
 $RelativeDatesCB = HTML::input(array('type' => 'checkbox',
                                      'name' => 'pref[relativeDates]',
                                      'value' => '1',
@@ -169,6 +177,31 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
      <td><?=$pref->get('notifyPages')?></td><td></td>
     <?php } ?>
    </tr>
+
+  <tr>
+      <td>
+         <p><?=_("Do not send my own modifications:")?></p>
+      </td>
+      <td>
+         <p><?= $OwnModificationsCB ?></p>
+      </td>
+      <td>
+         <p class="hint"><?=_("Check if you do not want to be notified of your own modifications.")?></p>
+      </td>
+  </tr>
+
+  <tr>
+      <td>
+         <p><?=_("Do not send minor modifications:")?></p>
+      </td>
+      <td>
+         <p><?= $MajorModificationsOnlyCB ?></p>
+      </td>
+      <td>
+         <p class="hint"><?=_("Check if you do not want to be notified of minor modifications.")?></p>
+      </td>
+  </tr>
+
 <?php } ?>
 
   <tr><td colspan="3"><h2><?=_("Appearance")?></h2></td></tr>
