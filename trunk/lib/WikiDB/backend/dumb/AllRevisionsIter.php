@@ -46,13 +46,14 @@ extends WikiDB_backend_iterator
         if ($version == 0)
             return false;
             
-	if (is_string($vdata)) {
-    	    $vdata =  @unserialize($vdata);
-    	    if (empty($vdata)) {
-    	    	if (DEBUG)
-    	    	    trigger_error ("broken page $pagename ignored", E_USER_WARNING);
+	if (is_string($vdata) and !empty($vdata)) {
+    	    $vdata1 =  @unserialize($vdata);
+    	    if (empty($vdata1)) {
+    	    	if (DEBUG) // string but unseriazible
+    	    	    trigger_error ("Broken page $pagename ignored. Run Check WikiDB", E_USER_WARNING);
     		return false;
     	    }
+    	    $vdata = $vdata1;
 	}
         $rev = array('versiondata' => $vdata,
                      'pagename' => $pagename,
