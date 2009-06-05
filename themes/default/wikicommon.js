@@ -69,6 +69,7 @@ function hookEvent(hookName, hookFunct) {
 // Todo: onloadhook to re-establish folder state in pure js, no cookies. same for toc.
 function showHideFolder(id) {
     var div = document.getElementById(id+'-body');
+    if ( div == null) return;
     var img = document.getElementById(id+'-img');
     var expires = new Date(); // 30 days
     expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
@@ -93,9 +94,10 @@ function setupshowHideFolder() {
             var cookieStr = "folder_"+id+"=";
             var cookiePos = document.cookie.indexOf(cookieStr);
             if (cookiePos > -1) {
-                document.getElementById(id+'-body').style.display = document.cookie.charAt(cookiePos + cookieStr.length) == "C" ? 'block' : 'none';
-                showHideFolder(id)
-                    }
+                var body = document.getElementById(id+'-body');
+                if (body) body.style.display = document.cookie.charAt(cookiePos + cookieStr.length) == "C" ? 'block' : 'none';
+                showHideFolder(id);
+            }
         }
     }
 }
