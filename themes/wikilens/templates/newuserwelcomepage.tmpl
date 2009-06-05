@@ -1,0 +1,28 @@
+<?php // -*-php-*-
+  rcs_id('$Id$');
+  $dbi = $request->getDbh();
+?>
+<div>
+<h2>Welcome <?= $FRIEND ?></h2>
+<p>Welcome to <?= WIKI_NAME ?>.  A good place to learn about <?= WIKI_NAME ?> is to check out the <a href="<?= WikiUrl(WIKI_NAME.'/'
+._("Tutorial"), '', true); ?>"><?= WIKI_NAME ?> Tutorial</a></p>
+<br />
+<?php if ($PAGE1 || $PAGE2 || $PAGE3) { ?>
+Here are pages on <?= WIKI_NAME ?> that <?= $SENDER ?> thinks you will be interested in:<br />
+<?php
+    foreach (array($PAGE1, $PAGE2, $PAGE3) as $pagename) {
+      if ($dbi->isWikiPage($pagename)) {
+?>
+        <a href="<?= WikiUrl($pagename, '', true); ?>"><?= $pagename ?></a><br>
+<?php
+      }
+    }
+  }
+?>
+<br />
+<?php if ($dbi->isWikiPage($SENDERUSERNAME)) { ?>
+<p>Also, <?= $SENDER; ?> has his own homepage at <?= WIKI_NAME ?>: <a href="<?= WikiUrl($SENDERUSERNAME, '', true); ?>"><?= $SENDER ?>'s page</a></p> 
+<?php } ?>
+<br>
+<p>To create your own login on <?= WIKI_NAME ?>, you can <a href="<?= WikiUrl('NewUserRegister', '', true) ?>">Register</a></p> 
+</div>
