@@ -413,9 +413,9 @@ class _PageList_Column_content extends _PageList_Column {
             }
             $search = $this->search;
             $score = '';
-            if (!empty($page_handle->score))
+            if (is_object($page_handle) and !empty($page_handle->score))
 	        $score = $page_handle->score;
-	    elseif (!empty($page_handle['score']))
+	    elseif (is_array($page_handle) and !empty($page_handle['score']))
 	        $score = $page_handle['score'];
             if ($search and ($i = strpos(strtolower($c), strtolower($search))) !== false) {
                 $l = strlen($search);
@@ -448,9 +448,9 @@ class _PageList_Column_content extends _PageList_Column {
                            ByteFormatter($len, /*$longformat = */true));
     }
     function _getSortableValue ($page_handle, &$revision_handle) {
-	if (!empty($page_handle->score))
+	if (is_object($page_handle) and !empty($page_handle->score))
 	    return $page_handle->score;
-	elseif (!empty($page_handle['score']))
+	elseif (is_array($page_handle) and !empty($page_handle['score']))
 	    return $page_handle['score'];
 	else
 	    return substr(_PageList_Column::_getValue($page_handle, $revision_handle),0,50);
