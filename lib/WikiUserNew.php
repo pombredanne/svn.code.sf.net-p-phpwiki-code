@@ -815,14 +815,16 @@ extends _WikiUser
                 //                       COOKIE_EXPIRATION_DAYS, COOKIE_DOMAIN);
             }
         }
-        $packed = $prefs->store();
-        $unpacked = $prefs->unpack($packed);
-        if (count($unpacked)) {
-            foreach (array('_method','_select','_update','_insert') as $param) {
-            	if (!empty($this->_prefs->{$param}))
-            	    $prefs->{$param} = $this->_prefs->{$param};
+        if (is_object($prefs)) {
+            $packed = $prefs->store();
+            $unpacked = $prefs->unpack($packed);
+            if (count($unpacked)) {
+                foreach (array('_method','_select','_update','_insert') as $param) {
+            	    if (!empty($this->_prefs->{$param}))
+            	        $prefs->{$param} = $this->_prefs->{$param};
+                }
+                $this->_prefs = $prefs;
             }
-            $this->_prefs = $prefs;
         }
         return $updated;
     }
