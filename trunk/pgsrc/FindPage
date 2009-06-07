@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Sun,  7 Jun 2009 09:10:04 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -33,7 +33,7 @@ match.
   pulldown[] name=regex value="auto,none,glob,posix,pcre,sql">>
 
 In a fuzzy pages search the titles of all pages are examined to find
-those which are similarly spelled or similar sounding (english).
+those which are similarly spelled or similar sounding (English).
 
 <?plugin-form FuzzyPages ?>
 
@@ -42,17 +42,18 @@ those which are similarly spelled or similar sounding (english).
 == Tips
 
 * Separate words with a space. All words have to match as substrings.
-* 'OR', grouping with parenthesis, string-quoting and some glob-style wildcard characters are also supported.
-* To exclude words from a title search or full text search, prepend a '-'.
-* Use '^xx' or 'xx~*' to match words starting with 'xx'.
-* Use '~*xx' or 'xx$' to match words ending with 'xx'.
-* Use '^word$' to match exact words.
-* Use regex=auto and 're:' like 're:word.*xx' or regex=posix to use posix regular expressions. (not yet)
-* Use regex=auto and '//' like '/^word$/' or regex=pcre to match using perl-style regular expressions.
-* Use regex=sql to match using SQL-style wildcards '%' and '_'.
-* Use regex=none to match any wildcards verbatim.
+* '##OR##', grouping with parenthesis, string-quoting and some glob-style wildcard characters are also supported.
+* To exclude words from a title search or full text search, prepend a '##-##'.
+* Use '##^xx##' or '##xx~*##' to match words starting with '##xx##'.
+* Use '##~*xx##' or '##xx$##' to match words ending with '##xx##'.
+* Use '##^word$##' to match exact words.
+* Use //regex=auto// and '##re:##' like '##re:word.*xx##' or //regex=posix// to use Posix regular expressions. (not yet)
+* Use //regex=auto// and '##//##' like '##/^word$/##' or //regex=pcre// to match using Perl-style regular expressions.
+* Use //regex=sql// to match using SQL-style wildcards '##%##' and '##_##'.
+* Use //regex=none// to match any wildcards verbatim.
 
-Example: 'wiki text -php' looks for all pages containing the words 'wiki' and 'text', but not containing the word 'php'.
+=== Example
+* '##wiki text -php##' looks for all pages containing the words '##wiki##' and '##text##', but not containing the word '##php##'.
 
 ----
 [[CategoryActionPage]]
