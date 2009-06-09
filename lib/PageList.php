@@ -422,7 +422,7 @@ class _PageList_Column_content extends _PageList_Column {
                 $j = max(0, $i - ($this->bytes / 2));
                 return HTML::div(array('style' => 'font-size:x-small'),
                                  HTML::div(array('class' => 'transclusion'),
-                                           HTML::span("...".substr($c, $j, ($this->bytes / 2))),
+                                           HTML::span(($j ? '...' : '').substr($c, $j, ($j ? $this->bytes / 2 : $i))),
                                            HTML::span(array("style"=>"background:yellow"),substr($c, $i, $l)),
                                            HTML::span(substr($c, $i+$l, ($this->bytes / 2))."..."." ".($score ? sprintf("[%0.1f]",$score):""))));
             } else {
