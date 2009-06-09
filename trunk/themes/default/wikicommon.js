@@ -252,13 +252,6 @@ function runOnloadHook() {
 	// might cause the function to terminate prematurely
 	doneOnloadHook = true;
 
-	histrowinit();
-	unhidetzbutton();
-	tabbedprefs();
-	updateTooltipAccessKeys( null );
-	akeytt( null );
-	scrollEditBox();
-	setupCheckboxShiftClick();
 	sortables_init();
 
 	// Run any added-on functions
