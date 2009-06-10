@@ -700,6 +700,7 @@ class PageList {
 		     'size'     => null,
 		     'version'  => null,
 		     'markup'   => null,
+		     'external' => null,
                      );
     }
     
@@ -1183,6 +1184,9 @@ class PageList {
                   'locked'
                   => new _PageList_Column_bool('locked', _("Locked"),
                                                _("locked")),
+                  'external'
+                  => new _PageList_Column_bool('external', _("External"),
+                                               _("external")),
                   'minor'
                   => new _PageList_Column_bool('rev:is_minor_edit',
                                                _("Minor Edit"), _("minor")),
