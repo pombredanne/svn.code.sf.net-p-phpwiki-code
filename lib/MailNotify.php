@@ -192,10 +192,16 @@ class MailNotify {
             }
         }
         if (!$notice) $notice = _("PageChange Notification of %s");
+        $headers = "From: $from\r\n" .
+                   "Bcc: ".join(',', $emails)."\r\n" .
+                   "MIME-Version: 1.0\r\n" .
+                   "Content-Type: text/plain; charset=".CHARSET."; format=flowed\r\n" .
+                   "Content-Transfer-Encoding: 8bit";
+
         $ok = mail(($to = array_shift($emails)),
                  "[".WIKI_NAME."] ".$subject, 
 		   $subject."\n".$content,
-		   "From: $from\r\nBcc: ".join(',', $emails)
+		   $headers
 		   );
 	if (MAILER_LOG and is_writable(MAILER_LOG)) {
 	    $f = fopen(MAILER_LOG, "a");
