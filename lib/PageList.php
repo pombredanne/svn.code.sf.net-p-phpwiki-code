@@ -1112,7 +1112,7 @@ class PageList {
         return $allPages;
     }
 
-    // UserPages are pages NOT created by ADMIN_USER
+    // UserPages are pages NOT owned by ADMIN_USER
     function allUserPages($include_empty=false, $sortby='',
                           $limit='', $exclude='') {
         $dbi = $GLOBALS['request']->getDbh();
@@ -1120,8 +1120,8 @@ class PageList {
         $allPages = array();
         while ($pagehandle = $allPagehandles->next()) {
             $name = $pagehandle->getName();
-            $creator = $pagehandle->getCreator();
-            if ($creator !== ADMIN_USER) {
+            $owner = $pagehandle->getOwner();
+            if ($owner !== ADMIN_USER) {
                  $allPages[] = $name;
             }
         }
