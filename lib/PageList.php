@@ -174,7 +174,6 @@ class _PageList_Column_base {
                                                               'id' => $pagelist->id)),
                                'class' => 'gridbutton', 
                                'title' => sprintf(_("Click to sort by %s"), $reverse . $this->_field)),
-                         $nbsp, $noimg,
                          $nbsp, $this->_heading,
                          $nbsp, $img,
                          $nbsp);
