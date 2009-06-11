@@ -1436,8 +1436,11 @@ class PageList {
             if ($tokens)                               
                 $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['COUNT']);
         }
+        $nb_row = 0;
         foreach ($this->_pages as $pagenum => $page) {
-            $rows[] = $this->_renderPageRow($page, $i++);
+        	$one_row = $this->_renderPageRow($page, $i++);
+            $rows[] = $one_row;
+            if ($one_row) $nb_row++;
         }
         $table = HTML::table(array('cellpadding' => 0,
                                    'cellspacing' => 1,
@@ -1446,6 +1449,7 @@ class PageList {
                                    'class'       => 'pagelist', 
 				   ));
         if ($caption) {
+        	$caption = preg_replace('/{total}/', $nb_row, asString($caption));
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
 	}
 
@@ -1520,9 +1524,17 @@ class PageList {
     	if (empty($this->_pages)) return; // stop recursion
 	if (!isset($this->_options['listtype'])) 
 	    $this->_options['listtype'] = '';
+	    $nb_row = 0;
+	    foreach ($this->_pages as $pagenum => $page) {
+	    	$one_row = $this->_renderPageRow($page);
+            $rows[] = array('header' => WikiLink($page), 'render' => $one_row);
+            if ($one_row) $nb_row++;
+	    }
         $out = HTML();
-        if ($caption)
+        if ($caption) {
+        	$caption = preg_replace('/{total}/', $nb_row, asString($caption));
             $out->pushContent(HTML::p($caption));
+        }
 	// Semantic Search et al: only unique list entries, esp. with nopage
 	if (!is_array($this->_pages[0]) and is_string($this->_pages[0])) {
 	    $this->_pages = array_unique($this->_pages);
@@ -1626,15 +1638,15 @@ class PageList {
             list($offset, $pagesize) = $this->limit($this->_options['limit']);
         else 
 	    $pagesize=0;
-        foreach ($this->_pages as $pagenum => $page) {
-            $pagehtml = $this->_renderPageRow($page);
+	    foreach (array_reverse($rows) as $one_row) {
+	    	$pagehtml = $one_row['render'];
             if (!$pagehtml) continue;
             $group = ($i++ / $this->_group_rows);
             //TODO: here we switch every row, in tables every third. 
             //      unification or parametrized?
             $class = ($group % 2) ? 'oddrow' : 'evenrow';
             if ($this->_options['listtype'] == 'dl') {
-                $header = WikiLink($page);
+                $header = $one_row['header'];
                 //if ($this->_sortby['hi_content']) 
                 $list->pushContent(HTML::dt(array('class' => $class), $header),
                                    HTML::dd(array('class' => $class), $pagehtml));
@@ -1688,8 +1700,10 @@ class PageList {
     
     function _emptyList($caption) {
         $html = HTML();
-        if ($caption)
+        if ($caption) {
+        	$caption = preg_replace('/{total}/', '0', asString($caption));
             $html->pushContent(HTML::p($caption));
+        }
         if ($this->_messageIfEmpty)
             $html->pushContent(HTML::blockquote(HTML::p($this->_messageIfEmpty)));
         return $html;
