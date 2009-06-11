@@ -153,15 +153,9 @@ extends WikiPlugin
                     $request->_setUser($user);
                     $request->setArg("verify",false);
                     $request->setArg("add",false);
-                    // No alert for Gforge
-                    if (isa($WikiTheme, 'WikiTheme_gforge')) {
-                        return;
-                    }
-                    $alert = new Alert(
-                     _("Message"),
-                     _("E-Mail Notification for the current page successfully stored in your preferences."));
-                    $alert->show();
-                    return;
+                    $errmsg .= _("E-Mail Notification for the current page successfully stored in your preferences.");
+                    $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
+                    return Template('userprefs', $args);
                 }
             }
         }
