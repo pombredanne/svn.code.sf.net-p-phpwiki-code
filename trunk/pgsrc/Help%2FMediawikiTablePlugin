@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Thu, 11 Jun 2009 20:56:23 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -13,12 +13,13 @@ The plugin is not meant to be called directly, just use the syntax below to inse
 
 == Mediawiki table syntax
 
-* The table starts with a line ##{|## and ends with a line ##|}##.
+* The table starts with a line ##{|##.
 * An optional table caption is made with a line starting with a pipe and a plus sign ##|+## followed by the caption.
 * An optional table summary is made with a line starting with a pipe and an equal sign ##|=## followed by the summary.
 * A table row starts with a pipe and a hyphen: ##|-##.
 * A table cell starts with a pipe on a new line, or a double bar ##||## on the same line.
 * A header table cell starts with an exclamation mark, or a double exclamation mark ##!!## on the same line.
+* The table ends with a line ##|}##.
 
 The summary syntax is an extension to the Mediawiki syntax.
 You can also simply put the summary as an attribute to the table.
