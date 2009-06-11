@@ -168,15 +168,17 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
   <?php } ?>
   </td><td><p class="hint"><?=_("Note, that user accounts with bouncing emails will be disabled.")?></p></td></tr>
 
-   <tr><td colspan="2">
-    <?=_("Get an email notification at changes of the following pages:")?><br />
+  <tr><td colspan="3">
+    <?=_("Get an email notification at changes of the following pages:")?>
+  </td></tr>
+  <tr>
     <?php if ($isForm) { ?>
-      <blockquote><textarea name="pref[notifyPages]" cols="50" rows="4"><?=$pref->get('notifyPages')?></textarea></blockquote></td>
+      <td colspan="2"><textarea name="pref[notifyPages]" cols="40" rows="6"><?=$pref->get('notifyPages')?></textarea></td>
     <td><p class="hint"><?=_("Enter pages seperated by space or comma. Wildcards (fileglobbing) allowed.")?></p></td>
     <?php } else { ?>
-     <td><?=$pref->get('notifyPages')?></td><td></td>
+     <td colspan="3"><?=$pref->get('notifyPages')?></td>
     <?php } ?>
-   </tr>
+  </tr>
 
   <tr>
       <td>
