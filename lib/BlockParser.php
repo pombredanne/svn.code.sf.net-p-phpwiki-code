@@ -650,14 +650,6 @@ class Block_table_dl_defn extends XmlContent
     function setTightness($tight_top, $tight_bot) {
         $this->_tight_top = $tight_top;
 	$this->_tight_bot = $tight_bot;
-	$first = &$this->firstTR();
-	$last  = &$this->lastTR();
-	$first->setInClass('top', $tight_top);
-        if (!empty($last)) {
-            $last->setInClass('bottom', $tight_bot);
-        } else {
-            trigger_error(sprintf("no lastTR: %s",AsXML($this->_content[0])), E_USER_WARNING);
-        }
     }
     
     function _addToRow ($item) {
