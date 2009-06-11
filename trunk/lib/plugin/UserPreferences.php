@@ -105,11 +105,6 @@ extends WikiPlugin
                     $request->_setUser($user);
                     $request->setArg("verify",false);
                     $request->setArg("delete",false);
-// Alert message removed, display directly the Preference form with the message.
-//                    $alert = new Alert(_("Message"),
-//                                       _("Your UserPreferences have been successfully reset to default."));
-//                    $alert->show();
-//                    return;
                     $errmsg .= _("Your UserPreferences have been successfully reset to default.");
                     $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
                     return Template('userprefs', $args);
