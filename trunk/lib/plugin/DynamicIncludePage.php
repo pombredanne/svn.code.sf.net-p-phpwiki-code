@@ -76,10 +76,11 @@ extends WikiPlugin_IncludePage
                                     '.png');
 	$icon = HTML::img(array('id'  => $id.'-img',
                                 'src' => $png,
-                                'onClick' => ENABLE_AJAX
+                                'onclick' => ENABLE_AJAX
                                   ? "showHideAsync('".$ajaxuri."','$id')" 
                                   : "showHideFolder('$id')",
                                 'border' => 0,
+                                'alt' => _("Click to hide/show"), 
                                 'title'  => _("Click to hide/show"))); 
         $header = HTML::p(array('class' => 'transclusion-title', 
                                 'style' => "text-decoration: none;"),
