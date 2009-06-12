@@ -622,7 +622,7 @@ function fixup_static_configs($file) {
       .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
       .'TitleSearch:'
       .'UpLoad:UserPreferences:'
-      .'WantedPages:WhoIsOnline:WikiAdminSelect:WikiBlog:'
+      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:WikiBlog:'
       // plus some derivations
       .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages:'
       .'FullRecentChanges:'
@@ -654,7 +654,6 @@ function fixup_static_configs($file) {
        $AllActionPages[] = 'RateIt'; // RateIt works only in wikilens derived themes
        $AllActionPages[] = 'TranslateText';
        $AllActionPages[] = 'UriResolver';
-       $AllActionPages[] = 'WatchPage';
     }
     if (defined('GFORGE') and GFORGE) {
        if (defined('ENABLE_EXTERNAL_PAGES') and ENABLE_EXTERNAL_PAGES) {
