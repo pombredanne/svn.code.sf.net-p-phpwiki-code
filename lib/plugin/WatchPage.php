@@ -67,7 +67,7 @@ extends WikiPlugin
             if ($this->contains($pagelist, $page))
                 return "$pagelist";
             else
-                return "$pagelist,$page";
+                return "$pagelist, $page";
         } else
             return "$page";
     }
