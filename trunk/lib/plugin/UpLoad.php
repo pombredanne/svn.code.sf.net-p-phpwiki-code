@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2003,2004,2007 $ThePhpWikiProgrammingTeam
- Copyright 2008 Marc-Etienne Vargenau, Alcatel-Lucent
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -74,6 +74,7 @@ c
 cfg
 diff
 doc
+docx
 gif
 h
 ini
@@ -89,11 +90,13 @@ patch
 pdf
 png
 ppt
+pptx
 rar
 tar
 tar.gz
 txt
 xls
+xlsx
 xml
 xsd
 zip");
