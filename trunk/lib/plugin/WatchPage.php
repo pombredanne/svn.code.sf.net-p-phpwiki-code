@@ -80,11 +80,11 @@ extends WikiPlugin
 	     HiddenInputs(array('verify' => 1)),
 	     HiddenInputs($request->getArgs(),false,array('verify')),
 	     $messages,
-	     HTML::p(_("Your current watchlist: "), $this->showWatchList($pagelist)),
-	     HTML::p(_("New watchlist: "), 
-	             $this->showWatchList($this->addpagelist($page, $pagelist))));
+	     HTML::p(_("Your current watchlist: "), $this->showWatchList($pagelist)));
 	if ($isNecessary) {
-	    $form->pushContent(HTML::p(sprintf(_("Do you %s want to add this page \"%s\" to your WatchList?"), 
+	    $form->pushContent(HTML::p(_("New watchlist: "), 
+	                               $this->showWatchList($this->addpagelist($page, $pagelist))),
+	                       HTML::p(sprintf(_("Do you %s want to add this page \"%s\" to your WatchList?"), 
                                                ($verified ? _("really") : ""), $page)),
 			       HTML::p(Button('submit:add', _("Yes")),
 				       HTML::Raw('&nbsp;'),
