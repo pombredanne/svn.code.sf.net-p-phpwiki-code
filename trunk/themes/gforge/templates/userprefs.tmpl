@@ -185,38 +185,12 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
 
 <?php if ($isForm) { ?>
 <form action="<?=$request->getPostURL()?>" method="post">
-<?php } else { 
-  $fill = "&nbsp;";
-  // See also plugin _AuthInfo
-  $authmethod = ENABLE_USER_NEW ? @$user->_authmethod : @$user->auth_how;
-?>
-<?= HTML::pre(sprintf("%12s: [% 10s]  %s\n",_("UserId"),$pref->get('userid'), " from " . $authmethod),
-	      sprintf("%12s: [% 10s]  %16s: [% 10s] | %8s: [%2s]\n","getId",$user->getId(),"getAuthenticatedId",$user->getAuthenticatedId(),"isSignedIn", $user->isSignedIn()),
-	      //sprintf("%12s: [% 10s]\n",_("Password"),empty($pref->get('passwd')) ? _("<empty>") : _("<not empty>")),
-	      sprintf("%12s: [% 10s]  %15s: [% 8s]\n",
-		      _("Auth Level"),$user->_level,_("Auth Method"),$authmethod),
-	      sprintf("%12s: [% 10s]\n",_("HomePage"),$user->hasHomePage() ? (ENABLE_USER_NEW ? $user->_HomePagehandle->_pagename : $user->_homepage->_pagename ) : ''),
-	      sprintf("%12s: [% 10s]\n",_("E-Mail"),$pref->get('email')),
-	      //sprintf("%12s: [% 10s]\n",_("Notify"),$pref->get('notifyPages')),
-	      sprintf("%12s: [% 10s] %16s: [% 10s] \n",_("Language"),$pref->get('lang'),_("Current Language"),$GLOBALS['LANG'])
-	      ) ?>
 <?php } ?>
 
 <fieldset>
 <legend><strong>User preferences for this project</strong></legend>
 <table border="0" width="100%">
-<?php if ($isForm and $user->mayChangePass()) { ?>
-  <tr><td colspan="3"><h3><?= ($request->getPref('passwd') ?  _("Change Password") :  _("Set Password")) ?></h3></td></tr>
 
-    <tr><td align="right"><?=_("New password")?>:</td>
-        <td><input type="password" name="pref[passwd]" size="16" maxlength="16" class="text" value="" /></td>
-        <td></td></tr>
-    <tr><td align="right"><?=_("Type it again")?>:</td>
-        <td><input type="password" name="pref[passwd2]" size="16" maxlength="16" class="text" value="" /></td>
-        <td></td></tr>
-<?php } ?>
-
-<?php if (ENABLE_USER_NEW) { ?>
   <tr><td colspan="3"><h3><?=_("E-mail Notification")?></h3></td></tr>
 
    <tr><td colspan="2">
@@ -230,7 +204,6 @@ if ($errmsg) $msg = HTML(HTML::h4(array('class' => 'errors'), $errmsg),HTML::hr(
      <td><?=$pref->get('notifyPages')?></td><td></td>
     <?php } ?>
    </tr>
-<?php } ?>
 
 </table>
 </fieldset>
