@@ -36,7 +36,7 @@ class WikiPlugin_IncludeTree
 extends WikiPlugin_SiteMap
 {
   function getName () {
-    return _("IncludeSiteMap");
+    return _("IncludeTree");
   }
 
   function getDescription () {
