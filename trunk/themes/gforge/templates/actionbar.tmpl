@@ -123,19 +123,6 @@ $isBrowse = $request->getArg('action') == 'browse';
       <td class="spacer">&nbsp;</td>
       <td><?= Button("WatchPage", _("Watch Page")) ?></td>
 
-<?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?> 
-    <!-- Buttons really only for debugging -->
-<?php
-    if (DEBUG & _DEBUG_SQL and USECACHE) {
-      $PurgeCache = Button(array('nocache' => 'purge'),
-                     _("PurgeHtmlCache"), $page->getName());
-      $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
-?>
-      <td><?= $PurgeCache ?></td>
-<?php } ?>
-    <!-- End debugging buttons -->
-<?php } ?>
-    <?php } ?>
   </tr>
   </table>
   </div>
