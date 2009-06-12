@@ -114,18 +114,21 @@ extends WikiPlugin
         } else {
             $pref = &$request->_prefs;
             $messages = "";
-	    $email = $pref->get("email");
-	    if (empty($email))
-	        return HTML::div(
-	        	array('class' => 'errors'),
-	        	_("ERROR: No email defined! You need to do this in your "), 
-	        	WikiLink(_("UserPreferences")));
-	        
-	    $emailVerified = $pref->get("emailVerified");
-	    if (empty($emailVerified))
-	        $messages = HTML::div(array('class' => 'mw-warning'),
-				      HTML::p("WARNING! Your email address was not verifed yet!"),
-				      HTML::p("EmailNotifications currently disabled. <TODO>"));
+            if (!defined('GFORGE') or !GFORGE) {
+	        $email = $pref->get("email");
+                if (empty($email)) {
+                    return HTML::div(
+                             array('class' => 'errors'),
+                             _("ERROR: No email defined! You need to do this in your "), 
+                             WikiLink(_("UserPreferences")));
+                }
+                $emailVerified = $pref->get("emailVerified");
+                if (empty($emailVerified)) {
+                    $messages = HTML::div(array('class' => 'mw-warning'),
+                                HTML::p("WARNING! Your email address was not verifed yet!"),
+                                HTML::p("EmailNotifications currently disabled. <TODO>"));
+                }
+            }
 	    $pagelist = $pref->get("notifyPages");
             if (! $request->isPost() ) {
 		return $this->showNotify($request, $messages, $page, $pagelist, false);
