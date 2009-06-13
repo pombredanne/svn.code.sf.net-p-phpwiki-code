@@ -14,6 +14,7 @@ showHide.prototype.onXmlHttpLoad = function( ) {
             alert( hError.reason );
         } else {
             // insert external, same-domain XML tree into id-body as HTML
+            // we get this from any page&format=xml
             var body = document.getElementById(this.id+'-body');
             var newbody = this.hXMLHttp.responseXML;
             if (newbody != null) {
@@ -27,6 +28,11 @@ showHide.prototype.onXmlHttpLoad = function( ) {
                 if (newbody == null) {
                     alert("showHideDone "+this.id+"\nno xml children from "+this.hXMLHttp.responseText);
                 }
+                // We cannot just insert the responseXML into the DOM. 
+                // well gecko can, but the others not. 
+                // So convert the XML tree it on the fly into HTML nodes. 
+                // I never saw this before, I needed that, so I think I 
+                // invented that sort of rich mashup.
                 var hContainer = CreateHtmlFromXml(newbody);
                 hContainer.className = 'wikitext';
                 body.appendChild( hContainer );
@@ -49,12 +55,15 @@ showHide.prototype.init = function (id) {
 
 var cShowHide;
 
+/* recursive xml => html converter. This might need a attribute type checker
+   in a bad world. e.g. disable all on* events */
 function CreateHtmlFromXml (xml) {
     if (xml == null) {
         return document.createElement('xml');
     }
     var xmltype = xml.nodeName;
     var html;
+    // we have either text or node elements
     if (xmltype == '#text') {
         html = document.createTextNode( xml.nodeValue );
         html.nodeValue = xml.nodeValue;
