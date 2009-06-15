@@ -61,6 +61,10 @@ img { vertical-align: baseline; }
 input { margin: 0.1em; }
 input.numeric { text-align: right; }
 
+fieldset {
+    background-color: #e0f3f7;
+}
+
 /**
  * Wiki Forms
  * 
