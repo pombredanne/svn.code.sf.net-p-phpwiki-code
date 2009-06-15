@@ -45,7 +45,8 @@ if (isCGI()) {
 */
 
 // essential internal stuff
-set_magic_quotes_runtime(0);
+if (!check_php_version(6))
+    set_magic_quotes_runtime(0);
 
 /**
  * Browser Detection Functions
@@ -279,6 +280,7 @@ function guessing_setlocale ($category, $locale) {
 
 // [99ms]
 function update_locale($loc) {
+    if ($loc == 'C' or $loc == 'en') return;
     // $LANG or DEFAULT_LANGUAGE is too less information, at least on unix for
     // setlocale(), for bindtextdomain() to succeed.
     $setlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
