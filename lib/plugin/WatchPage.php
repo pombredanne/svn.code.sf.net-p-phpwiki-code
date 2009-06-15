@@ -74,13 +74,12 @@ extends WikiPlugin
 
     function showNotify(&$request, $messages, $page, $pagelist, $verified) {
 	$isNecessary = ! $this->contains($pagelist, $page);
-        $form = HTML::fieldset(HTML::legend("Watch Page"), 
-                               HTML::form(array('action' => $request->getPostURL(),
-		                                'method' => 'post'),
+        $form = HTML::form(array('action' => $request->getPostURL(),
+		                 'method' => 'post'),
 	     HiddenInputs(array('verify' => 1)),
 	     HiddenInputs($request->getArgs(),false,array('verify')),
 	     $messages,
-	     HTML::p(_("Your current watchlist: "), $this->showWatchList($pagelist))));
+	     HTML::p(_("Your current watchlist: "), $this->showWatchList($pagelist)));
 	if ($isNecessary) {
 	    $form->pushContent(HTML::p(_("New watchlist: "), 
 	                               $this->showWatchList($this->addpagelist($page, $pagelist))),
@@ -95,7 +94,8 @@ extends WikiPlugin
                                        HTML::Raw('&nbsp;'),
                                        Button('submit:cancel', _("Cancel"))));
 	}
-	return $form;
+        $fieldset = HTML::fieldset(HTML::legend("Watch Page"), $form);
+	return $fieldset;
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
