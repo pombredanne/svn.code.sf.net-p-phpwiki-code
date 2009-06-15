@@ -1015,7 +1015,7 @@ class PageList {
             $iter = $dbi->titleSearch($search, $sortby, $limit, $exclude);
             $pages = array();
             while ($pagehandle = $iter->next()) {
-                $pages[] = $pagehandle->getName();
+                $pages[] = trim($pagehandle->getName());
             }
             return $pages;
             /*
@@ -1029,7 +1029,7 @@ class PageList {
             */
         } else {
             //TODO: do the sorting, normally not needed if used for exclude only
-            return explode(',', $input);
+            return array_map("trim", explode(',', $input));
         }
     }
 
