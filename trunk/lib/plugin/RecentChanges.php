@@ -444,9 +444,14 @@ extends _RecentChanges_Formatter
         }
         if ($lines)
             $html->pushContent($lines);
-        if ($first)
+        if ($first) {
+            if ($this->_args['daylist'])
+                $html->pushContent // force display of OptionsButtonBars
+                    (JavaScript
+                     ("document.getElementById('rc-action-body').style.display='block';"));
             $html->pushContent(HTML::p(array('class' => 'rc-empty'),
                                        $this->empty_message()));
+        }
         
         return $html;
     }
@@ -1341,6 +1346,13 @@ class OptionsButtonBars extends HtmlElement {
     function OptionsButtonBars ($plugin_args) {
         $this->__construct('fieldset', array('class' => 'wiki-rc-action'));
 
+    	// Add ShowHideFolder button
+	$icon = $GLOBALS['WikiTheme']->_findData('images/folderArrowOpen.png');
+        $img = HTML::img(array('id' => 'rc-action-img',
+                               'src' => $icon,
+                               'onClick' => "showHideFolder('rc-action')",
+                               'title'  => _("Click to hide/show")));
+
         // Display selection buttons
         extract($plugin_args);
 
@@ -1349,8 +1361,9 @@ class OptionsButtonBars extends HtmlElement {
             $caption = _("Show changes for:");
         }
 
-        $this->pushContent(HTML::legend($caption));
-        $table = HTML::table();
+        $this->pushContent(HTML::legend($caption,' ',$img));
+        $table = HTML::table(array('id' => 'rc-action-body',
+                                   'style' => 'display:none'));
 
         $tr = HTML::tr();
         foreach (explode(",", $daylist) as $days) {
