@@ -74,8 +74,6 @@ $locale["%s pages changed."] =
    "%s 個頁面已經變更.";
 $locale["%s pages have been changed."] =
    "%s 頁面已經變更.";
-$locale["%s pages have been permanently renamed."] =
-   "%s pages 已經永久更名了.";
 $locale["%s pages link to %s:"] =
    "%s 個頁面連結到 %s:";
 $locale["%s pages would link to %s:"] =
@@ -374,8 +372,6 @@ $locale["Current language: '%s'"] =
    "目前語言: '%s'";
 $locale["Current theme: '%s'"] =
    "目前佈景主題: '%s'";
-$locale["Currently not recommended!"] =
-   "現在不建議使用!";
 $locale["Database"] =
    "資料庫";
 $locale["Date Format"] =
@@ -794,8 +790,6 @@ $locale["No pagename specified"] =
    "沒有指定頁面名稱";
 $locale["No pages changed."] =
    "沒有頁面被變更.";
-$locale["No pages renamed."] =
-   "沒有頁面被更名";
 $locale["No revisions found"] =
    "沒找到修訂";
 $locale["No uploaded file to upload?"] =
@@ -1238,6 +1232,8 @@ $locale["SystemInfoPlugin"] =
    "SystemInfoPlugin";
 $locale["TODO: Google can only translate from english and french. Find a translation service for %s to language %s"] =
    "TODO: Google 只能從英文與法文轉換. 為 %s 尋找轉換到語言 %s 的服務.";
+$locale["TextFormattingRules"] =
+   "TextFormattingRules";
 $locale["Thank you for editing %s."] =
    "謝謝你編輯了 %s.";
 $locale["Thanks for adding this translation!"] =
@@ -1268,8 +1264,6 @@ $locale["The PhpWeather plugin provides weather reports from the Internet."] =
    "PhpWeather plugin 由網路取得資訊並提供天氣報告";
 $locale["The PhpWiki access log file"] =
    "PhpWiki 存取日誌檔案";
-$locale["The PhpWiki programming team"] =
-   "PhpWiki 開發團隊";
 $locale["The crypt function is not available in this version of PHP."] =
    "此版本的 PHP 沒有 crypt 函數.";
 $locale["The current page has no subpages defined."] =
@@ -1386,8 +1380,6 @@ $locale["Use old markup"] =
    "使用舊標記";
 $locale["User page"] =
    "使用者頁面";
-$locale["User preferences for user '%s':"] =
-   "使用者 '%s' 的偏好設定:";
 $locale["User statistics"] =
    "使用者統計";
 $locale["UserId"] =

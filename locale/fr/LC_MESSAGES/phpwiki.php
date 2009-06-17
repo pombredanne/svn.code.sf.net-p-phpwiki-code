@@ -110,8 +110,6 @@ $locale["%s pages have been changed."] =
    "Les pages %s ont été changées.";
 $locale["%s pages have been permanently changed."] =
    "%s pages ont été définitivement modifiées.";
-$locale["%s pages have been permanently renamed."] =
-   "%s pages ont été définitivement renommées.";
 $locale["%s pages link to %s:"] =
    "%s pages pointent vers %s :";
 $locale["%s pages would link to %s:"] =
@@ -216,8 +214,6 @@ $locale["ACCESS DENIED: You must log in to upload files."] =
    "ACCES REFUSE: Vous devez être connecté pour uploader.";
 $locale["ACL"] =
    "ACL";
-$locale["ACL changed for page '%s'."] =
-   "ACL modifié pour la page %s.";
 $locale["ACL not changed for page '%s'."] =
    "ACL inchangé pour la page %s.";
 $locale["ADDING"] =
@@ -284,8 +280,6 @@ $locale["All %s are listed below."] =
    "Toutes les %s sont énumérées ci-dessous.";
 $locale["All pages"] =
    "Toutes les pages";
-$locale["All pages in this wiki (%d total):"] =
-   "Pages dans ce wiki (%d au total) :";
 $locale["All pages with all links in this wiki (%d total):"] =
    "Tout pages avec tous les liens dans ce wiki (%d au total) :";
 $locale["AllPages"] =
@@ -550,8 +544,6 @@ $locale["Current language: '%s'"] =
    "Langage actuel : %s";
 $locale["Current theme: '%s'"] =
    "Thème actuel : '%s'";
-$locale["Currently not recommended!"] =
-   "Non recommandé !";
 $locale["DB admin password:"] =
    "DB admin mot de passe :";
 $locale["DB admin user:"] =
@@ -666,8 +658,6 @@ $locale["E-mail"] =
    "Adresse électronique";
 $locale["E-mail Notification"] =
    "Courriel de notification";
-$locale["ERROR: No email defined! You need to do this in your "] =
-   "ERREUR : pas d'adresse électronique definie! Vous devez le faire dans vos ";
 $locale["Easy navigation buttons for %s"] =
    "Boutons de navigation rapide pour %s";
 $locale["Edit"] =
@@ -1170,8 +1160,6 @@ $locale["No pagename specified"] =
    "Aucun nom de page indiqué";
 $locale["No pages changed."] =
    "Aucune page changée.";
-$locale["No pages renamed."] =
-   "Aucune page renommée.";
 $locale["No pages with bad names had to be deleted."] =
    "Aucune page supprimées avec un nom invalide.";
 $locale["No revisions found"] =
@@ -1264,8 +1252,6 @@ $locale["Page Version:"] =
    "Version de la page :";
 $locale["Page dump"] =
    "Cliché de la page";
-$locale["Page history"] =
-   "Historique de la page";
 $locale["Page names with prefix '%s'"] =
    "Noms de page ayant le préfixe ' %s '";
 $locale["Page names with suffix '%s'"] =
@@ -1798,6 +1784,8 @@ $locale["TeX2png"] =
    "TeX2png";
 $locale["Template"] =
    "Modèle";
+$locale["TextFormattingRules"] =
+   "RèglesDeFormatageDesTextes";
 $locale["Thank you for editing %s."] =
    "Merci d'avoir édité %s.";
 $locale["Thanks for adding this translation!"] =
@@ -1832,8 +1820,6 @@ $locale["The PhpWeather plugin provides weather reports from the Internet."] =
    "Le plugin de météo importée d'internet.";
 $locale["The PhpWiki access log file"] =
    "Le journal d'évènement de PhpWiki";
-$locale["The PhpWiki programming team"] =
-   "L'équipe de développement de PhpWiki";
 $locale["The crypt function is not available in this version of PHP."] =
    "La fonction de cryptage n'est pas disponible dans cette version de PHP.";
 $locale["The current page has no subpages defined."] =
@@ -2008,10 +1994,6 @@ $locale["Use old markup"] =
    "Anciennes règles";
 $locale["User page"] =
    "Page de l'utilisateur";
-$locale["User preferences for user '%s'"] =
-   "Préférences de l'utilisateur %s";
-$locale["User preferences for user '%s':"] =
-   "Préférences de l'utilisateur %s :";
 $locale["User statistics"] =
    "Statistiques d'utilisateur";
 $locale["UserId"] =

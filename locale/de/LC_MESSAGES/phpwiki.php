@@ -106,8 +106,6 @@ $locale["%s pages have been changed."] =
    "%s Seiten wurden geändert.";
 $locale["%s pages have been permanently changed."] =
    "%s Seiten wurden geändert.";
-$locale["%s pages have been permanently renamed."] =
-   "%s Seiten wurden umbenannt.";
 $locale["%s pages link to %s:"] =
    "%s Seiten sind mit %s verlinkt:";
 $locale["%s pages would link to %s:"] =
@@ -216,8 +214,6 @@ $locale["ACCESS DENIED: You must log in to upload files."] =
    "ZUGRIFF VERWEIGERT: Bitte melden Sie sich erst an, um Dateien hochzuladen.";
 $locale["ACL"] =
    "ACL";
-$locale["ACL changed for page '%s'."] =
-   "ACL für Seite '%s' geändert.";
 $locale["ACL not changed for page '%s'."] =
    "ACL für Seite '%s' nicht geändert.";
 $locale["ADDING"] =
@@ -268,8 +264,6 @@ $locale["Administrators"] =
    "Administratoren";
 $locale["All %s are listed below."] =
    "Alle %s sind unten aufgelistet.";
-$locale["All pages in this wiki (%d total):"] =
-   "Alle Seiten in diesem Wiki (%d insgesamt):";
 $locale["All pages with all links in this wiki (%d total):"] =
    "Alle Seiten mit allen Links in diesem Wiki (%d insgesamt):";
 $locale["AllPages"] =
@@ -558,8 +552,6 @@ $locale["Current language: '%s'"] =
    "Ihre Sprache: »%s«";
 $locale["Current theme: '%s'"] =
    "Ihre Benutzeroberfläche: »%s«";
-$locale["Currently not recommended!"] =
-   "Momentan nicht empfohlen!";
 $locale["DB admin password:"] =
    "DB Admin passwort:";
 $locale["DB admin user:"] =
@@ -1138,8 +1130,6 @@ $locale["No pagename specified"] =
    "Keine Seite angegeben";
 $locale["No pages changed."] =
    "Keine Änderungen.";
-$locale["No pages renamed."] =
-   "Keine Seiten umbenannt.";
 $locale["No pages with bad names had to be deleted."] =
    "Keine Seiten mit ungültigen Namen mußten gelöscht werden.";
 $locale["No revisions found"] =
@@ -1572,8 +1562,6 @@ $locale["See: %s"] =
    "Siehe: %s";
 $locale["Select pages"] =
    "Seiten auswählen";
-$locale["Select the pages to change the markup type:"] =
-   "Wählen Sie die Seiten zum Ändern:";
 $locale["Select the pages to change the owner:"] =
    "Wählen Sie die Seiten zum Ändern:";
 $locale["Select the pages to change:"] =
@@ -1722,6 +1710,8 @@ $locale["Template"] =
    "Benutzeroberfläche";
 $locale["TermsOfUse"] =
    "BenutzungsBedingungen";
+$locale["TextFormattingRules"] =
+   "TextFormatierungsRegeln";
 $locale["Thank you for editing %s."] =
    "Danke für das Bearbeiten von %s.";
 $locale["Thanks for adding this translation!"] =
@@ -1756,8 +1746,6 @@ $locale["The PhpWeather plugin provides weather reports from the Internet."] =
    "Der PhpWetter plugin gibt Auskunft zur Wetterlage vom Internet.";
 $locale["The PhpWiki access log file"] =
    "Die PhpWiki Zugriffslog Datei";
-$locale["The PhpWiki programming team"] =
-   "Das PhpWiki Programmierer-Team";
 $locale["The SQL_ACCESS_LOG is not enabled."] =
    "SQL_ACCESS_LOG ist nicht aktiviert.";
 $locale["The current page has no subpages defined."] =
@@ -1924,8 +1912,6 @@ $locale["Use old markup"] =
    "Alte Formatierungssyntax verwenden";
 $locale["User page"] =
    "Benutzer Seite";
-$locale["User preferences for user '%s':"] =
-   "Einstellungen für Benutzer '%s':";
 $locale["User statistics"] =
    "Benutzer Statistiken";
 $locale["UserId"] =

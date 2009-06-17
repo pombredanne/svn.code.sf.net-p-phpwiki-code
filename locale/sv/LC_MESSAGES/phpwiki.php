@@ -138,6 +138,8 @@ $locale["String \"%s\" not found."] =
    "\"%s\" ingen funna.";
 $locale["Synopsis"] =
    "Översikt";
+$locale["TextFormattingRules"] =
+   "Textformateringsregler";
 $locale["Thank you for editing %s."] =
    "Tack för att du redigerade %s.";
 $locale["The %d most popular pages of this wiki:"] =

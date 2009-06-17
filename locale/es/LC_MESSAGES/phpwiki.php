@@ -704,6 +704,8 @@ $locale["Supported handlers are: %s"] =
    "Los tratantes apoyados son: %s";
 $locale["Synopsis"] =
    "Sinopsis";
+$locale["TextFormattingRules"] =
+   "ReglasDeFormatoDeTexto";
 $locale["Thank you for editing %s."] =
    "Gracias por editar %s.";
 $locale["Thanks for participating!"] =
@@ -728,8 +730,6 @@ $locale["The DBA handler %s is unsupported!"] =
    "¡El tratante %s del DBA está sin apoyo!";
 $locale["The PhpWiki access log file"] =
    "El fichero de diario del acceso de PhpWiki";
-$locale["The PhpWiki programming team"] =
-   "El equipo de programación de PhpWiki";
 $locale["The crypt function is not available in this version of PHP."] =
    "La función de la cripta no está disponible en esta versión de PHP.";
 $locale["The length of the password is shorter than the system policy allows."] =
@@ -826,8 +826,6 @@ $locale["Upload error: unknown error #"] =
    "Error del upload: error desconocido #";
 $locale["Uploading %s"] =
    "%s uploading";
-$locale["User preferences for user '%s':"] =
-   "Preferencias por usuario '%s':";
 $locale["UserPreferences"] =
    "UsuarioPreferencias";
 $locale["UserRatings"] =
