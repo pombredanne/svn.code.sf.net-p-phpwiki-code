@@ -148,14 +148,14 @@ $locale["Skipping"] =
    "Overgeslagen";
 $locale["Sorry for the inconvenience."] =
    "Excuses voor het ongemak.";
+$locale["TextFormattingRules"] =
+   "TekstFormatteringsRegels";
 $locale["Thank you for editing %s."] =
    "Bedankt voor het veranderen van %s.";
 $locale["The %d most popular pages of this wiki:"] =
    "De %d meestbezochte pagina's van deze Wiki:";
 $locale["The %d most recent %s are listed below."] =
    "De %d meest recent %s staan hieronder.";
-$locale["The PhpWiki programming team"] =
-   "Het PhpWiki programmeerteam";
 $locale["This page has been locked by the administrator and cannot be edited."] =
    "Deze pagina is afgesloten door de beheerder en kan niet veranderd worden.";
 $locale["This page has been locked by the administrator so your changes can not be saved."] =

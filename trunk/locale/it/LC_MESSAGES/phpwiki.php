@@ -372,6 +372,8 @@ $locale["Summary"] =
    "Commenti";
 $locale["Synopsis"] =
    "Sommario";
+$locale["TextFormattingRules"] =
+   "RegoleFormattazioneTesto";
 $locale["Thank you for editing %s."] =
    "La pagina %s <E8> stata modificata.";
 $locale["Thanks for adding this translation!"] =

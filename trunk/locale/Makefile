@@ -172,6 +172,7 @@ ${POT_FILE}: ../lib/WikiUser/AdoDb.php
 ${POT_FILE}: ../lib/WikiUser/BogoLogin.php
 ${POT_FILE}: ../lib/WikiUser/Db.php
 ${POT_FILE}: ../lib/WikiUser/EMailConfirm.php
+${POT_FILE}: ../lib/WikiUser/Facebook.php
 ${POT_FILE}: ../lib/WikiUser/File.php
 ${POT_FILE}: ../lib/WikiUser/Forbidden.php
 ${POT_FILE}: ../lib/WikiUser/HttpAuth.php
@@ -179,6 +180,7 @@ ${POT_FILE}: ../lib/WikiUser/HttpAuthUpper.php
 ${POT_FILE}: ../lib/WikiUser/IMAP.php
 ${POT_FILE}: ../lib/WikiUser/LDAP.php
 ${POT_FILE}: ../lib/WikiUser/LdapUpper.php
+${POT_FILE}: ../lib/WikiUser/OpenID.php
 ${POT_FILE}: ../lib/WikiUser/POP3.php
 ${POT_FILE}: ../lib/WikiUser/PdoDb.php
 ${POT_FILE}: ../lib/WikiUser/PearDb.php
@@ -234,6 +236,7 @@ ${POT_FILE}: ../lib/plugin/CreateToc.php
 ${POT_FILE}: ../lib/plugin/CurrentTime.php
 ${POT_FILE}: ../lib/plugin/DeadEndPages.php
 ${POT_FILE}: ../lib/plugin/Diff.php
+${POT_FILE}: ../lib/plugin/DynamicIncludePage.php
 ${POT_FILE}: ../lib/plugin/EditMetaData.php
 ${POT_FILE}: ../lib/plugin/ExternalSearch.php
 ${POT_FILE}: ../lib/plugin/FileInfo.php
@@ -251,6 +254,7 @@ ${POT_FILE}: ../lib/plugin/Imdb.php
 ${POT_FILE}: ../lib/plugin/IncludePage.php
 ${POT_FILE}: ../lib/plugin/IncludePages.php
 ${POT_FILE}: ../lib/plugin/IncludeSiteMap.php
+${POT_FILE}: ../lib/plugin/IncludeTree.php
 ${POT_FILE}: ../lib/plugin/InterWikiSearch.php
 ${POT_FILE}: ../lib/plugin/JabberPresence.php
 ${POT_FILE}: ../lib/plugin/LdapSearch.php
@@ -330,6 +334,7 @@ ${POT_FILE}: ../lib/plugin/WikiAdminRename.php
 ${POT_FILE}: ../lib/plugin/WikiAdminSearchReplace.php
 ${POT_FILE}: ../lib/plugin/WikiAdminSelect.php
 ${POT_FILE}: ../lib/plugin/WikiAdminSetAcl.php
+${POT_FILE}: ../lib/plugin/WikiAdminSetExternal.php
 ${POT_FILE}: ../lib/plugin/WikiAdminUtils.php
 ${POT_FILE}: ../lib/plugin/WikiBlog.php
 ${POT_FILE}: ../lib/plugin/WikiForm.php
@@ -383,6 +388,7 @@ ${POT_FILE}: ../themes/MonoBook/templates/body.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/browse-footer.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/browse.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/editpage.tmpl
+${POT_FILE}: ../themes/MonoBook/templates/info.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/logo.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/navbar.tmpl
 ${POT_FILE}: ../themes/MonoBook/templates/signin.tmpl
@@ -492,6 +498,7 @@ ${POT_FILE}: ../themes/default/themeinfo.php
 ${POT_FILE}: ../themes/gforge/templates/actionbar.tmpl
 ${POT_FILE}: ../themes/gforge/templates/body.tmpl
 ${POT_FILE}: ../themes/gforge/templates/browse-footer.tmpl
+${POT_FILE}: ../themes/gforge/templates/browse.tmpl
 ${POT_FILE}: ../themes/gforge/templates/editpage.tmpl
 ${POT_FILE}: ../themes/gforge/templates/head.tmpl
 ${POT_FILE}: ../themes/gforge/templates/html.tmpl
@@ -516,5 +523,6 @@ ${POT_FILE}: ../themes/smaller/themeinfo.php
 ${POT_FILE}: ../themes/wikilens/templates/body.tmpl
 ${POT_FILE}: ../themes/wikilens/templates/head.tmpl
 ${POT_FILE}: ../themes/wikilens/templates/navbar.tmpl
+${POT_FILE}: ../themes/wikilens/templates/ratings.tmpl
 ${POT_FILE}: ../themes/wikilens/templates/top.tmpl
 ${POT_FILE}: ../themes/wikilens/themeinfo.php
