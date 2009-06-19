@@ -223,7 +223,7 @@ class WikiTheme {
             return;
         }
         $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("wikicommon.js"))));
-        //$this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("sortable.js"))));
+        $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("sortable.js"))));
         // by pixels
         if ((is_object($GLOBALS['request']) // guard against unittests
              and $GLOBALS['request']->getPref('doubleClickEdit'))
