@@ -1364,7 +1364,7 @@ class OptionsButtonBars extends HtmlElement {
 
         $this->pushContent(HTML::legend($caption,' ',$img));
         $table = HTML::table(array('id' => 'rc-action-body',
-                                   'style' => 'display:none'));
+                                   'style' => 'display:block'));
 
         $tr = HTML::tr();
         foreach (explode(",", $daylist) as $days) {
