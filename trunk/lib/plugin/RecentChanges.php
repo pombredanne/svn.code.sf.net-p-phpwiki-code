@@ -1350,7 +1350,8 @@ class OptionsButtonBars extends HtmlElement {
 	$icon = $GLOBALS['WikiTheme']->_findData('images/folderArrowOpen.png');
         $img = HTML::img(array('id' => 'rc-action-img',
                                'src' => $icon,
-                               'onClick' => "showHideFolder('rc-action')",
+                               'onclick' => "showHideFolder('rc-action')",
+                               'alt'  => _("Click to hide/show"),
                                'title'  => _("Click to hide/show")));
 
         // Display selection buttons
