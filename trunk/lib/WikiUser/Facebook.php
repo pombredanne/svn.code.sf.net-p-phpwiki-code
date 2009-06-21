@@ -19,22 +19,24 @@ extends _PassUser {
     function checkPass($password) {
         $userid = $this->_userid;
         if (!loadPhpExtension('openssl')) {
-            trigger_error(_("The PECL openssl extension cannot be loaded"),
+            trigger_error(_("The PECL openssl extension cannot be loaded. Facebook AUTH ignored."),
                           E_USER_WARNING);
             return $this->_tryNextUser();
         }
         $web = new HttpClient("www.facebook.com", 80);
         if (DEBUG & _DEBUG_LOGIN) $web->setDebug(true);
         // collect cookies from http://www.facebook.com/login.php
+        $web->persist_cookies = true;
+        $web->cookie_host = 'www.facebook.com';
         $firstlogin = $web->get("/login.php");
         if (!$firstlogin) {
             trigger_error(_("Facebook connect failed with %d %s", $this->status, $this->errormsg),
                           E_USER_WARNING);
         }
         // Switch from http to https://login.facebook.com/login.php
-        $web->post = 443;
-        if (!$web->post("/login.php", array('user'=>$userid, 'pass'=>$password))) {
-            trigger_error(_("Facebook login failed with %d %s", $this->status, $this->errormsg),
+        $web->port = 443;
+        if (!($retval = $web->post("/login.php", array('user'=>$userid, 'pass'=>$password)))) {
+            trigger_error(_("Facebook login failed with %d %s", $web->status, $web->errormsg),
                           E_USER_WARNING);
         }
         $this->_authmethod = 'Facebook';
@@ -48,8 +50,15 @@ extends _PassUser {
         return $this->_level;
     }
 
+    // TODO: msearch facebook for the username
     function userExists() {
-	if (DEBUG & _DEBUG_LOGIN) trigger_error(get_class($this)."::userExists => true (dummy)", E_USER_WARNING);
+        if (!loadPhpExtension('openssl')) {
+            trigger_error(_("The PECL openssl extension cannot be loaded. Facebook AUTH ignored."),
+                          E_USER_WARNING);
+            return $this->_tryNextUser();
+        }
+	if (DEBUG & _DEBUG_LOGIN) 
+	    trigger_error(get_class($this)."::userExists => true (dummy)", E_USER_WARNING);
         return true;
     }
 }
