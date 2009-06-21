@@ -1383,18 +1383,18 @@ class OptionsButtonBars extends HtmlElement {
         $table->pushContent($tr);
 
         $tr = HTML::tr();
-        $tr->pushContent($this->_makeMinorButton(1));
-        $tr->pushContent($this->_makeMinorButton(0));
+        $tr->pushContent($this->_makeMinorButton(1, $show_minor));
+        $tr->pushContent($this->_makeMinorButton(0, $show_minor));
         $table->pushContent($tr);
 
         $tr = HTML::tr();
-        $tr->pushContent($this->_makeShowAllButton(1));
-        $tr->pushContent($this->_makeShowAllButton(0));
+        $tr->pushContent($this->_makeShowAllButton(1, $show_all));
+        $tr->pushContent($this->_makeShowAllButton(0, $show_all));
         $table->pushContent($tr);
 
         $tr = HTML::tr();
-        $tr->pushContent($this->_makeNewPagesButton(0));
-        $tr->pushContent($this->_makeNewPagesButton(1));
+        $tr->pushContent($this->_makeNewPagesButton(0, $only_new));
+        $tr->pushContent($this->_makeNewPagesButton(1, $only_new));
         $table->pushContent($tr);
 
         $this->pushContent($table);
@@ -1459,59 +1459,37 @@ class OptionsButtonBars extends HtmlElement {
                         HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
     }
 
-    function _makeMinorButton ($minor) {
+    function _makeMinorButton ($minor_button, $show_minor) {
         global $request;
 
-        if ($minor == 0) {
-            $label = _("Major modifications only");
-        } else {
-            $label = _("All modifications");
-        }
-
-        $selfurl = $request->getURLtoSelf(array('action' => $request->getArg('action')));
-        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'show_minor' => $minor));
-        if ($url == $selfurl) {
-            return HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
-        }
-        return HTML::td(array('colspan'=>3, 'class'=>'tdunselected'),
-                        HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'show_minor' => $minor_button));
+        $label = ($minor_button == 0) ? _("Major modifications only") : _("All modifications");
+        $selected = HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
+        $unselected = HTML::td(array('colspan'=>3, 'class'=>'tdunselected'),
+                      HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+        return ($minor_button == $show_minor) ? $selected : $unselected;
     }
 
-    function _makeShowAllButton ($showall) {
+    function _makeShowAllButton ($showall_button, $show_all) {
         global $request;
 
-        if ($showall == 0) {
-            $label = _("Page once only");
-        } else {
-            $label = _("Full changes");
-        }
-
-        $selfurl = $request->getURLtoSelf(array('action' => $request->getArg('action')));
-        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'show_all' => $showall));
-        if ($url == $selfurl) {
-            return HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
-        }
-        return HTML::td(array('colspan'=>3, 'class'=>'tdunselected'),
-                        HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'show_all' => $showall_button));
+        $label = ($showall_button == 0) ? _("Page once only") : _("Full changes");
+        $selected = HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
+        $unselected = HTML::td(array('colspan'=>3, 'class'=>'tdunselected'),
+                      HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+        return ($showall_button == $show_all) ? $selected : $unselected;
     }
 
-    function _makeNewPagesButton ($newpages) {
+    function _makeNewPagesButton ($newpages_button, $only_new) {
         global $request;
 
-        if ($newpages == 0) {
-            $label = _("Old and new pages");
-        } else {
-            $label = _("New pages only");
-        }
-
-        $selfurl = $request->getURLtoSelf(array('action' => $request->getArg('action')));
-        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'only_new' => $newpages));
-        if ($url == $selfurl) {
-            return HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
-        }
-
-        return HTML::td(array('colspan'=>3, 'class'=>'tdunselected'),
-                        HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'only_new' => $newpages_button));
+        $label = ($newpages_button == 0) ? _("Old and new pages") : _("New pages only");
+        $selected = HTML::td(array('colspan'=>3, 'class'=>'tdselected'), $label);
+        $unselected = HTML::td(array('colspan'=>3, 'class'=>'tdunselected'),
+                      HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+        return ($newpages_button == $only_new) ? $selected : $unselected;
     }
 }
 
