@@ -117,7 +117,7 @@ extends WikiPlugin_WikiAdminSelect
                 $ul->pushContent(HTML::li(fmt("Removed page '%s' successfully.", $name)));
                 $count++;
             } else {
-            	$ul->pushContent(HTML::li(fmt("Didn't removed page '%s'. Access denied.", $name)));
+            	$ul->pushContent(HTML::li(fmt("Didn't remove page '%s'. Access denied.", $name)));
             }
         }
         if ($count) $dbi->touch();
