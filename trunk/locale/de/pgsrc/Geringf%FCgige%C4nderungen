@@ -5,9 +5,9 @@ Content-Type: application/x-phpwiki;
   pagename=Geringf%FCgige%C4nderungen;
   flags=PAGE_LOCKED;
   pgsrc_version="2 $Revision$";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Hier ist eine Liste der vor kurzem bearbeiteten Seiten in diesem Wiki. Alle geringfügigen Änderungen werden gezeigt, nicht nur die neuesten Änderungen. (Siehe NeuesteÄnderungen für die neuesten Hauptänderungen).
+Hier ist eine Liste der vor kurzem bearbeiteten Seiten in diesem Wiki. Alle geringfÃ¼gigen Ã„nderungen werden gezeigt, nicht nur die neuesten Ã„nderungen. (Siehe NeuesteÃ„nderungen fÃ¼r die neuesten HauptÃ¤nderungen).
 --------
 <?plugin RecentChanges days||=3 show_all||=1 show_minor=1 daylist=1,3,7,30,90,0 ?>

@@ -4,7 +4,7 @@ X-Rcs-Id: $Id: CategoryWikiPlugin 6184 2008-08-22 10:33:41Z vargenau $
 Content-Type: application/x-phpwiki;
   pagename=CategoryWikiPlugin;
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 <?plugin BackLinks info||=pagename,mtime,hits,author sortby||=pagename ?>

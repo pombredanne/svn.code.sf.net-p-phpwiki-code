@@ -4,10 +4,10 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=PhpWiki;
   flags="";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Du använder PhpWiki just nu. Otroligt eller hur?
+Du anvÃ¤nder PhpWiki just nu. Otroligt eller hur?
 
-Besök vår hemsida på http://phpwiki.sourceforge.net/ och se hur
-PhpWiki fungerar på http://phpwiki.sourceforge.net/phpwiki/.
+BesÃ¶k vÃ¥r hemsida pÃ¥ http://phpwiki.sourceforge.net/ och se hur
+PhpWiki fungerar pÃ¥ http://phpwiki.sourceforge.net/phpwiki/.

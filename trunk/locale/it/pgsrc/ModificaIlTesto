@@ -4,7 +4,7 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=ModificaIlTesto;
   flags="";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 Tutte le pagine (eccetto i risultati della ricerca) hanno un collegamento ModificaIlTesto in basso. Puoi modificare la pagina che stai leggendo cliccando su quel link

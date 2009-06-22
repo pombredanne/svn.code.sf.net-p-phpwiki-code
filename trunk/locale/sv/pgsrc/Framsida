@@ -4,13 +4,13 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=Framsida;
   flags="";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-* Vad är WikiWikiWeb? En beskrivning av dess användning.
-* Lär dig [HurManAnvänderWiki] och lär dig att [LäggaTillSidor].
-* Använd [Sandlådan] för att experimentera med Wiki-sidor.
-* Signera gärna ditt namn i [Gästboken].
-* Se [SenasteÄndringar] för nya sidor och de senaste ändringarna.
-* Kolla vilken sida som är [MestPopulär].
-* Läs ReleaseNotes (på engelska).
+* Vad Ã¤r WikiWikiWeb? En beskrivning av dess anvÃ¤ndning.
+* LÃ¤r dig [HurManAnvÃ¤nderWiki] och lÃ¤r dig att [LÃ¤ggaTillSidor].
+* AnvÃ¤nd [SandlÃ¥dan] fÃ¶r att experimentera med Wiki-sidor.
+* Signera gÃ¤rna ditt namn i [GÃ¤stboken].
+* Se [SenasteÃ„ndringar] fÃ¶r nya sidor och de senaste Ã¤ndringarna.
+* Kolla vilken sida som Ã¤r [MestPopulÃ¤r].
+* LÃ¤s ReleaseNotes (pÃ¥ engelska).

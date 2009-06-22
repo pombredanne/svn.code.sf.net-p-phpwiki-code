@@ -7,7 +7,7 @@ Content-Type: application/x-phpwiki;
   flags=LOCKED;
   markup=2;
   acl="view:_AUTHENTICATED; edit:_AUTHENTICATED; create:_AUTHENTICATED,_BOGOUSER; list:_AUTHENTICATED; remove:_ADMIN,_OWNER; change:_ADMIN,_OWNER; dump:_EVERY";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 <?plugin _AuthInfo ?>

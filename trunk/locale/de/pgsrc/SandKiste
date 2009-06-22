@@ -6,11 +6,11 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="2 $Revision$";
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 <?plugin RedirectTo page=SandKasten ?>
 
-Der ganze Inhalt der österreichischen SandKiste wurde in den
-deutschen SandKasten hinein geschüttet. Bitte das Wiki im SandKasten
+Der ganze Inhalt der Ã¶sterreichischen SandKiste wurde in den
+deutschen SandKasten hinein geschÃ¼ttet. Bitte das Wiki im SandKasten
 ausprobieren. :)

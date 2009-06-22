@@ -4,7 +4,7 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=MeerOverTechnieken;
   flags="";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 PhpWiki is geschreven in de server-zijde scripttaal PHP, die

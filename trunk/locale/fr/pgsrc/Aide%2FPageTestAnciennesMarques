@@ -5,10 +5,10 @@ Content-Type: application/x-phpwiki;
   pagename=PageTestAnciennesMarques;
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
- Nouvelles listes : astÈrisques, diËses et ";text:def" 
+ Nouvelles listes : ast√©risques, di√®ses et ";text:def" 
 * gros point
 * l1
 ** l2
@@ -17,13 +17,13 @@ Content-Transfer-Encoding: binary
 # un
 #deux
 #trois
-;Terme1:dÈfinition1.1
-;:dÈfinition1.2
-;Terme2:dÈfinition2
-;; Terme3:dÈfinition3
-;;;Terme4: dÈfinition4
-;;; : dÈfinition4.2
-;;; Terme5 : dÈfinition5
+;Terme1:d√©finition1.1
+;:d√©finition1.2
+;Terme2:d√©finition2
+;; Terme3:d√©finition3
+;;;Terme4: d√©finition4
+;;; : d√©finition4.2
+;;; Terme5 : d√©finition5
 
 Mixte :
 *ul1
@@ -35,7 +35,7 @@ Mixte :
 *#**ul1-ol2-ul2-ul2
 
 *l1
- texte prÈ-formatÈ
+ texte pr√©-format√©
 **    l2
 ----
  anciennnes listes
@@ -61,32 +61,32 @@ Mixte :
 		# un
 		# deux
 
- texte prÈ-formatÈ
- texte supplÈmentaire
+ texte pr√©-format√©
+ texte suppl√©mentaire
 
 	*l1
 				*l2
-	# numÈro
-	# numÈro
+	# num√©ro
+	# num√©ro
 C'est un paragraphe simple
 	* gros point
 C'est toujours un paragraphe simple
-	# numÈro
+	# num√©ro
 ----
 __Tests de liens__
 # normal : PageAccueil
-# avec crochets : [PageAccueil] -- nommÈ : [la page d'accueil|PageAccueil]
+# avec crochets : [PageAccueil] -- nomm√© : [la page d'accueil|PageAccueil]
 # lien avec crochets : [http://phpwiki.sourceforge.net/]
 # lien sans crochets : http://phpwiki.sourceforge.net/
 # lien avec un mot Wiki : http://phpwiki.sourceforge.net/phpwiki/index.php?HomePage
-# deux lien sconsÈcutifs: http://phpwiki.sourceforge.net/ http://phpwiki.sourceforge.net/phpwiki/
-# [PhpWiki ‡ Sourceforge | http://phpwiki.sourceforge.net/]
+# deux lien scons√©cutifs: http://phpwiki.sourceforge.net/ http://phpwiki.sourceforge.net/phpwiki/
+# [PhpWiki √† Sourceforge | http://phpwiki.sourceforge.net/]
 # [URL avec un mot Wiki | http://phpwiki.sourceforge.net/phpwiki/index.php?RecentChanges]
-# Javascript: [boo! | javascript:alert('oops') ]  (c'est dÈsormais un lien nommÈ interne)
+# Javascript: [boo! | javascript:alert('oops') ]  (c'est d√©sormais un lien nomm√© interne)
 # un [[Lien] produit un [Lien]
-# un [Lien] ressemble ‡ ceci : [[Lien]
+# un [Lien] ressemble √† ceci : [[Lien]
 # [%%%] est un lien vers un changement de ligne
-# aussi cette page [[n'est pas liÈe ‡], et celle-ci est !PasLiÈe¿ et celle-l‡ !http://not.linked.to/ non plus.
+# aussi cette page [[n'est pas li√©e √†], et celle-ci est !PasLi√©e√Ä et celle-l√† !http://not.linked.to/ non plus.
 #* WikiName - WikiNameSameStem -- !!WikiName - !!WikiNameSameStem
 #* !!WikiName - !!WikiNameSameStem -- WikiName - WikiNameSameStem
 #* WikiNameSameStem - WikiName -- !!WikiNameSameStem - !!WikiName
@@ -107,9 +107,9 @@ __''underscores pour l'italique gras''__
 
 ''''''six apostrophes''''''
 
-'''''italique gras''' et italique'' (‡ Èviter)
+'''''italique gras''' et italique'' (√† √©viter)
 
-'''gras et ''italique gras''''' (‡ Èviter)
+'''gras et ''italique gras''''' (√† √©viter)
 
 !!! h1
 
@@ -125,7 +125,7 @@ Aller voir <a href="http://phpwiki.sourceforge.net/">les marques</a>
 Vous ne pouvez pas utiliser &, < ou >
 
 ----
-Usage en texte prÈ-formatÈ :
+Usage en texte pr√©-format√© :
 
  __underscores pour le gras__
  '''apostrophes pour le gras'''
@@ -133,8 +133,8 @@ Usage en texte prÈ-formatÈ :
  __''underscores pour l'italique gras''__
  '''''cinq apostrophes pour l'italique gras'''''
  ''''''six apostrophes''''''
- '''''italique gras''' et italique'' (‡ Èviter)
- '''gras et ''italique gras''''' (‡ Èviter)
+ '''''italique gras''' et italique'' (√† √©viter)
+ '''gras et ''italique gras''''' (√† √©viter)
  !!! h1
  !! h2
  ! h3

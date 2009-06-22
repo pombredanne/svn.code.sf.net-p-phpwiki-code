@@ -4,7 +4,7 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=TrovaPagina;
   flags=PAGE_LOCKED;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 Ecco alcuni buoni punti di partenza per iniziare ad usare Wiki.
@@ -13,7 +13,7 @@ Ecco alcuni buoni punti di partenza per iniziare ad usare Wiki.
 * CambiamentiRecenti sono registrati automaticamente
 * VarieSulFunzionamento di browsing e modifica sul server
 
-Questo è un titolo di ricerca. Prova qualcosa come ''wiki'' o ''sandwich''.
+Questo Ã¨ un titolo di ricerca. Prova qualcosa come ''wiki'' o ''sandwich''.
 
 <?plugin-form TitleSearch?>
 

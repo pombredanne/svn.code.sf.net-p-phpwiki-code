@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="2 $Revision$";
   flags="LOCKED";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 <?plugin ModeratedPage ?>
@@ -16,7 +16,7 @@ Content-Transfer-Encoding: binary
 !!! Was ist eine ModerierteSeite?
 
 Eine ModerierteSeite ist ein seitenspezifische Einstellung, die gewisse Aktionen auf moderierten 
-Seiten einschr‰nkt. 
+Seiten einschr√§nkt. 
 The requested action and page is stored internally and an email is sent to the moderators
 described in the linked and locked ModeratedPage action page. 
 Any moderator may approve or reject the action by simply clicking an url. 

@@ -4,7 +4,7 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiAdministration;
   flags=PAGE_LOCKED;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 __Note__: Most of the actions on this page require administrative privileges.
@@ -109,48 +109,48 @@ three types of files, and handle them accordingly.
 PhpWikiDocumentation
 
 OLD TEXT
-!!! Detta fungerar bara om du är inloggad som ADMIN
+!!! Detta fungerar bara om du Ã¤r inloggad som ADMIN
 
 -----------
 
 ! ZIP-filer av databasen
 
- __[ZIP Snapshot | phpwiki:zip=snapshot]__ : innehåller endast den senaste versionen
+ __[ZIP Snapshot | phpwiki:zip=snapshot]__ : innehÃ¥ller endast den senaste versionen
 
- __[ZIP Dump | phpwiki:?zip=all]__ : innehåller alla arkiverade versioner
+ __[ZIP Dump | phpwiki:?zip=all]__ : innehÃ¥ller alla arkiverade versioner
 
-De här länkarna leder till zipfilerna, som genereras direkt, och
-innehåller den senaste versionen av alla sidor på denna
+De hÃ¤r lÃ¤nkarna leder till zipfilerna, som genereras direkt, och
+innehÃ¥ller den senaste versionen av alla sidor pÃ¥ denna
 PhpWiki. Sidorna lagras, en per fil, som MIME (RFC2045)
 e-postmeddelanden (RFC822), med "content type" application/x-phpwiki
-för den senaste versionen och multipart/mixed för den arkiverade
+fÃ¶r den senaste versionen och multipart/mixed fÃ¶r den arkiverade
 versionen. I det senare fallet finns det en underdel (med "content
-type" application/x-phpwiki) för varje version av sidan (i kronlogisk
-ordning). Brevkroppen innehåller texten till sidan medan sidans
+type" application/x-phpwiki) fÃ¶r varje version av sidan (i kronlogisk
+ordning). Brevkroppen innehÃ¥ller texten till sidan medan sidans
 metadata finns som parametrar till Content-Type i brevhuvudet.
 
 -----------
 
 ! Ladda / Dumpa serialiserade sidor
 
-Här kan du ladda eller dumpa sidor av din Wiki i valfri katalog.
+HÃ¤r kan du ladda eller dumpa sidor av din Wiki i valfri katalog.
 
 __Dump__
 
 %%ADMIN-INPUT-dumpserial-Dumpa_serialiserade_sidor%%
 
-Sidor kommer att skrivas som serialiserade strängar av PHP-associativa
-vektorer, vilket betyder att de inte är läsbara. Om katalogen inte
-existerar kommer PhpWiki att försöka skapa en åt dig. Se till att din
-webbserver har skrivrättigheter i katalogen!
+Sidor kommer att skrivas som serialiserade strÃ¤ngar av PHP-associativa
+vektorer, vilket betyder att de inte Ã¤r lÃ¤sbara. Om katalogen inte
+existerar kommer PhpWiki att fÃ¶rsÃ¶ka skapa en Ã¥t dig. Se till att din
+webbserver har skrivrÃ¤ttigheter i katalogen!
 
 __Ladda__
 
 %%ADMIN-INPUT-loadserial-Ladda_serialiserade_sidor%%
 
-Om du har dumpat en mängd med sidor från PhpWiki kan du ladda dem här.
-Observera att sidorna i din databas kommer att skrivas över. Om du
-vill kan du bara ta bort de sidor från katalogen som du inte vill
+Om du har dumpat en mÃ¤ngd med sidor frÃ¥n PhpWiki kan du ladda dem hÃ¤r.
+Observera att sidorna i din databas kommer att skrivas Ã¶ver. Om du
+vill kan du bara ta bort de sidor frÃ¥n katalogen som du inte vill
 ladda.
 
 -----------

@@ -4,7 +4,7 @@ Content-Type: application/x-phpwiki;
   pagename=Hilfe%2FPhotoAlbumPlugin;
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 !!! Zusammenfassung
@@ -103,7 +103,7 @@ _Nur der ='src'= Parameter ist verpflichtend._
 
 !!! Beispiele
 !! Textdatei
-Möglicher Inhalt einer Definitionsdatei:
+MÃ¶glicher Inhalt einer Definitionsdatei:
 
 <verbatim>
 photo-01.jpg; Meine Freundin und Ich

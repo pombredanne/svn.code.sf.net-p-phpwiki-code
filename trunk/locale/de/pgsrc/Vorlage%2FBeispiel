@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="1 $Revision$";
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 <noinclude>
@@ -25,9 +25,9 @@ Titel: %%title%%   Jahr: %%year%%
 ---
 * Seitenname: %%pagename%%
 * Autor: %%author%%
-* Datum der letzten Änderung: %%mtime%%
+* Datum der letzten Ã„nderung: %%mtime%%
 * Datum der Erzeugung: %%ctime%%
-* Eigentümer: %%owner%%
+* EigentÃ¼mer: %%owner%%
 * Erzeuger: %%creator%%
 
 * SERVER_URL: %%SERVER_URL%%

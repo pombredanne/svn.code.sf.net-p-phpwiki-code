@@ -4,27 +4,27 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=S%F6kEfterSida;
   flags=PAGE_LOCKED;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Här är några bra startpunkter för att leta.
+HÃ¤r Ã¤r nÃ¥gra bra startpunkter fÃ¶r att leta.
 
-* [HurManAnvänderWiki] är en snabb introduktion till hur man skriver i Wiki.
-* [SenasteÄndringar] ändras automatiskt.
-* MerOmMekanismerna om hur man söker och ändrar på den här servern.
+* [HurManAnvÃ¤nderWiki] Ã¤r en snabb introduktion till hur man skriver i Wiki.
+* [SenasteÃ„ndringar] Ã¤ndras automatiskt.
+* MerOmMekanismerna om hur man sÃ¶ker och Ã¤ndrar pÃ¥ den hÃ¤r servern.
 
-Här är titelsökningen. Försök med ord wom ''wiki'' eller ''smörgås''.
+HÃ¤r Ã¤r titelsÃ¶kningen. FÃ¶rsÃ¶k med ord wom ''wiki'' eller ''smÃ¶rgÃ¥s''.
 
 <?plugin-form TitleSearch?>
 
-Använd följande för fulltextsökning. Det kan ta några
-sekunder. Resultatet visar alla rader på en sidan som innehåller
-en träff.
+AnvÃ¤nd fÃ¶ljande fÃ¶r fulltextsÃ¶kning. Det kan ta nÃ¥gra
+sekunder. Resultatet visar alla rader pÃ¥ en sidan som innehÃ¥ller
+en trÃ¤ff.
 
 <?plugin-form FullTextSearch?>
 
 ------
-Separera ord med mellanslag. Alla ord måste matcha.
-%%%För att exkludera ord sätt ett "-" framför.
-%%%Exempel: "wiki text -php" söker på alla sidor som innehåller orden "wiki"
-__och__ "text", men __inte__ innehåller ordet "php".
+Separera ord med mellanslag. Alla ord mÃ¥ste matcha.
+%%%FÃ¶r att exkludera ord sÃ¤tt ett "-" framfÃ¶r.
+%%%Exempel: "wiki text -php" sÃ¶ker pÃ¥ alla sidor som innehÃ¥ller orden "wiki"
+__och__ "text", men __inte__ innehÃ¥ller ordet "php".

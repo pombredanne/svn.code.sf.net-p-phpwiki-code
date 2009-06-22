@@ -77,7 +77,7 @@ $locale["Loading up virgin wiki"] =
 $locale["Lock Page"] =
    "Open Pagina";
 $locale["Locked"] =
-   "Låst";
+   "LÃ¥st";
 $locale["MIME file %s"] =
    "MIME bestand %s";
 $locale["MostPopular"] =
@@ -91,7 +91,7 @@ $locale["Next"] =
 $locale["None"] =
    "Geen";
 $locale["Page Locked"] =
-   "Sidan är Låst";
+   "Sidan Ã¤r LÃ¥st";
 $locale["Page Name"] =
    "Pagina Naam";
 $locale["Page removed %s"] =
@@ -209,7 +209,7 @@ $locale["diff"] =
 $locale["from %s"] =
    "van %s";
 $locale["locked"] =
-   "låst";
+   "lÃ¥st";
 $locale["plain file %s"] =
    "plat bestand %s";
 $locale["saved as %s"] =

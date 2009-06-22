@@ -4,11 +4,11 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=PhpWiki;
   flags=PAGE_LOCKED;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Esta usando PhpWiki en este momento. ¿No es increible?
+Esta usando PhpWiki en este momento. Â¿No es increible?
 
 Visite nuestra web en http://phpwiki.sourceforge.net/ y vea PhpWiki
-en acción en http://phpwiki.sourceforge.net/phpwiki/.
+en acciÃ³n en http://phpwiki.sourceforge.net/phpwiki/.
 

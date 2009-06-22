@@ -6,9 +6,9 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="2 $Revision$";
   flags=PAGE_LOCKED;
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Die Liste aller Seiten, die Ihnen gehören. (Wenn Sie sich authentifiziert haben)
+Die Liste aller Seiten, die Ihnen gehÃ¶ren. (Wenn Sie sich authentifiziert haben)
 
 <?plugin AllPages owner=[] ?>
