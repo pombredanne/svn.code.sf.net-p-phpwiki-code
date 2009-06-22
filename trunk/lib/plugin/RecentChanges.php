@@ -1367,8 +1367,8 @@ class OptionsButtonBars extends HtmlElement {
                                    'style' => 'display:block'));
 
         $tr = HTML::tr();
-        foreach (explode(",", $daylist) as $days) {
-            $tr->pushContent($this->_makeDayButton($days));
+        foreach (explode(",", $daylist) as $days_button) {
+            $tr->pushContent($this->_makeDayButton($days_button, $days));
         }
         $table->pushContent($tr);
 
@@ -1400,23 +1400,21 @@ class OptionsButtonBars extends HtmlElement {
         $this->pushContent($table);
     }
 
-    function _makeDayButton ($days) {
+    function _makeDayButton ($days_button, $days) {
         global $request;
 
-        if ($days == 1)
+        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'days' => $days_button));
+        if ($days_button == 1) {
             $label = _("1 day");
-        elseif ($days < 1)
+        } elseif ($days_button < 1) {
             $label = _("All time");
-        else
-            $label = sprintf(_("%s days"), abs($days));
-
-        $selfurl = $request->getURLtoSelf(array('action' => $request->getArg('action')));
-        $url = $request->getURLtoSelf(array('action' => $request->getArg('action'), 'days' => $days));
-        if ($url == $selfurl) {
-            return HTML::td(array('class'=>'tdselected'), $label);
+        } else {
+            $label = sprintf(_("%s days"), abs($days_button));
         }
-        return HTML::td(array('class'=>'tdunselected'),
-                        HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+        $selected = HTML::td(array('class'=>'tdselected'), $label);
+        $unselected = HTML::td(array('class'=>'tdunselected'),
+                      HTML::a(array('href'  => $url, 'class' => 'wiki-rc-action'), $label));
+        return ($days_button == $days) ? $selected : $unselected;
     }
 
     function _makeUsersButton ($users) {
