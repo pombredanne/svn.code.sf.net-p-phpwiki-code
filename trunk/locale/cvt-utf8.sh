@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # convert all locales to utf-8
-for po in po/??xx.po; do
+for po in po/??.po; do
   to="`echo $po|sed -e's/\.po/.utf8.po/'`"
   from=iso-8859-1
   if [ "$po" = "po/ja.po" ]; then from=euc-jp; fi
