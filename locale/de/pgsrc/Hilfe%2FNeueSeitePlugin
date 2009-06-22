@@ -6,12 +6,12 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="2 $Revision$";
   flags=PAGE_LOCKED;
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 WikiPlugin um leicht neue Seiten zu erzeugen, optional mit vorgegebenem Inhalt. Seit v1.3.8
 
-Sie können den neuen Seitennamen von einer Eingabebox bekommen, optional mit 
+Sie kÃ¶nnen den neuen Seitennamen von einer Eingabebox bekommen, optional mit 
 neuem Inhalt von einer bestehenden Vorgabe oder Kategorieseite.
 
 Schreibe "<~?plugin-form ~CreatePage ?~>" in eine Seite, zeige diese Seite an, 
@@ -25,7 +25,7 @@ gebe den Namen der neuen Seite an und klicke auf den NeueSeite Knopf.
 
 !! Argumente
 __s__: |
-  Der Name für die neue Seite. Vorgabe: ""
+  Der Name fÃ¼r die neue Seite. Vorgabe: ""
 __initial_content__:  |
   Die neue Seite wird mit diesem Inhalt erzeugt. Vorgabe: ""
 __template__:  |
@@ -35,7 +35,7 @@ __template__:  |
 
 Keine
 
-!! Pläne
+!! PlÃ¤ne
 
 The content might hold some variables, which will be expanded on creation. 
 The syntax is not clear yet.

@@ -6,18 +6,18 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="2 $Revision$";
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Das HochLaden Hilfe:WikiPlugin zeigt eine Eingabebox und zwei Knöpfe. 
+Das HochLaden Hilfe:WikiPlugin zeigt eine Eingabebox und zwei KnÃ¶pfe. 
 Mit dem ersten Knopf "Durchsuchen..." kann man eine Datei aus dem 
-lokalem Dateisystem auswählen, die man hochladen möchte. 
-Der Textwert dieses Knopfes ("Durchsuchen...") hängt von Ihrem Browser ab. 
-Der zweite "HochLaden" Knopf lädt die Datei dann in das upload Verzeichnis auf dem 
+lokalem Dateisystem auswÃ¤hlen, die man hochladen mÃ¶chte. 
+Der Textwert dieses Knopfes ("Durchsuchen...") hÃ¤ngt von Ihrem Browser ab. 
+Der zweite "HochLaden" Knopf lÃ¤dt die Datei dann in das upload Verzeichnis auf dem 
 Server hoch.
 Der Inhalt dieses Verzeichnis ist geheim, jede Datei dort kann mit dem "Upload~:" 
 [InterWikiKarte]n Prefix zum Dateinamen verwendet werden.
-So können Sie z.B. leicht hochgeladene Bilder anzeigen. Siehe PhpWiki:InlineUploadedImages
+So kÃ¶nnen Sie z.B. leicht hochgeladene Bilder anzeigen. Siehe PhpWiki:InlineUploadedImages
 
 ! Benutzung:
 <verbatim>
@@ -27,10 +27,10 @@ So können Sie z.B. leicht hochgeladene Bilder anzeigen. Siehe PhpWiki:InlineUplo
 !! Argumente:
 __logfile__:
   Lokaler Pfad. Vorgabe: "phpwiki-upload.log"
-  Das Format ist momentan HTML - eine neue <tr> Zeile per Datei - und nicht die sonst übliche 
+  Das Format ist momentan HTML - eine neue <tr> Zeile per Datei - und nicht die sonst Ã¼bliche 
   Log Datei Syntax.
 __autolink__:
-  Füge den hochgeladene Dateinamen zur Liste der hochgeladenen Dateien auf der Seite 'page' dazu.
+  FÃ¼ge den hochgeladene Dateinamen zur Liste der hochgeladenen Dateien auf der Seite 'page' dazu.
   Vorgabe: true
 __page__:
   Die Seite auf der hochgeladene Dateien aufgelistet werden, wenn 'autolink' 

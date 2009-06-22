@@ -4,21 +4,21 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=BuscarP%E1gina;
   flags=PAGE_LOCKED;
-  charset=iso-8859-1;
+  charset=utf-8;
   markup=2
 Content-Transfer-Encoding: binary
 
-Aquí hay algunos buenos consejos para comenzar la búsqueda.
+AquÃ­ hay algunos buenos consejos para comenzar la bÃºsqueda.
 
-* ComoUsarWiki tiene una rápida introducción sobre el lenguaje de códigos de Wiki.
-* CambiosRecientes grabada automáticamente
+* ComoUsarWiki tiene una rÃ¡pida introducciÃ³n sobre el lenguaje de cÃ³digos de Wiki.
+* CambiosRecientes grabada automÃ¡ticamente
 * MasAcercadeLaMecanica sobre navegar y editar en este servidor
 
-Aquí hay una búsqueda de títulos. Intente con algo como _wiki_ o _sandwich_.
+AquÃ­ hay una bÃºsqueda de tÃ­tulos. Intente con algo como _wiki_ o _sandwich_.
 
 <?plugin-form TitleSearch?>
 
-Use lo siguiente para una búsqueda completa de texto. Esto tarda unos pocos segundos. Los resultados mostrarán todas las líneas en una página dada que contengan un acierto.
+Use lo siguiente para una bÃºsqueda completa de texto. Esto tarda unos pocos segundos. Los resultados mostrarÃ¡n todas las lÃ­neas en una pÃ¡gina dada que contengan un acierto.
 
 <?plugin-form FullTextSearch?>
 

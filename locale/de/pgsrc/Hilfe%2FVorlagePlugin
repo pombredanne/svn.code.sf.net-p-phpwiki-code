@@ -6,12 +6,12 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="1 $Revision$";
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 !! Synopsis
 
-Vorlage = Parametrische Blöcke.
+Vorlage = Parametrische BlÃ¶cke.
 
 Include text from a wiki page and replace certain placeholders by parameters.
 Similiar to CreatePage with the template argument, but at run-time.

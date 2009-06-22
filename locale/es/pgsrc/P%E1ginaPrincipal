@@ -4,14 +4,14 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=P%E1ginaPrincipal;
   flags="";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-* ¿Qué es un WikiWikiWeb? Una descripción de esta aplicación.
+* Â¿QuÃ© es un WikiWikiWeb? Una descripciÃ³n de esta aplicaciÃ³n.
 * Aprenda ComoUsarWiki y aprenda acerca como AgregarPaginas.
-* Use la página de CajaDeArena para experimentar con las páginas Wiki.
+* Use la pÃ¡gina de CajaDeArena para experimentar con las pÃ¡ginas Wiki.
 * Por favor firme en los VisitantesRecientes.
-* Vea en los CambiosRecientes las últimas modificaciones.
-* Averigüe que paginas son MasPopulares.
+* Vea en los CambiosRecientes las Ãºltimas modificaciones.
+* AverigÃ¼e que paginas son MasPopulares.
 * Lea las NotasDeLiberacion
 * Administer this wiki via PhpWikiAdministration.

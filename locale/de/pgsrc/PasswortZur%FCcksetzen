@@ -6,20 +6,20 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="2 $Revision$";
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Jeder Administrator darf jedes Passwort jedes Benutzers zurücksetzen oder löschen. Der Benutzer darf sich dann 
+Jeder Administrator darf jedes Passwort jedes Benutzers zurÃ¼cksetzen oder lÃ¶schen. Der Benutzer darf sich dann 
 z.B. mit einem leerem Passwort anmelden oder ein neues beim Anmelden vergeben.
 
-Ein normaler Benutzer darf nur sein eigenes Passwort zurücksetzen, wenn er seine E-Mail Addresse in den 
+Ein normaler Benutzer darf nur sein eigenes Passwort zurÃ¼cksetzen, wenn er seine E-Mail Addresse in den 
 BenutzerEinstellungen definiert hat. 
-Für Benutzer mit undefinierter oder ungeprüfter E-Mail Addresse müssen sie einen Administrator 
-benachrichtigen, um das Passwort zurücksetzen zu lassen.
+FÃ¼r Benutzer mit undefinierter oder ungeprÃ¼fter E-Mail Addresse mÃ¼ssen sie einen Administrator 
+benachrichtigen, um das Passwort zurÃ¼cksetzen zu lassen.
 
 Authenticated users should change their passwords at their UserPreferences page.
 
-Achtung: Gewisse externe Authentifizierungsmethoden lassen keine Passwort Änderung zu. Sie müssen das dann dort tun.
+Achtung: Gewisse externe Authentifizierungsmethoden lassen keine Passwort Ã„nderung zu. Sie mÃ¼ssen das dann dort tun.
 ----
 
 <?plugin PasswordReset ?>

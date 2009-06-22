@@ -6,11 +6,11 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="2 $Revision$";
   flags=PAGE_LOCKED;
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Sie können einige Einstellungen jetzt bestimmen. Die Werte werden in
-einer __Cookie__ Ihres Browsers gespeichert, daher müssen Cookies in
+Sie kÃ¶nnen einige Einstellungen jetzt bestimmen. Die Werte werden in
+einer __Cookie__ Ihres Browsers gespeichert, daher mÃ¼ssen Cookies in
 Ihrem Browser aktiviert sein.
 
 <?plugin UserPreferences?>

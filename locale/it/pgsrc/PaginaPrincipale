@@ -4,10 +4,10 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=PaginaPrincipale;
   flags="";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-* Che cosa è WikiWikiWeb? Una descrizione di questa applicazione.
+* Che cosa Ã¨ WikiWikiWeb? Una descrizione di questa applicazione.
 * Impara ComeUsareWiki e ad AggiungerePagine.
 * Usa la ScatolaDiSabbia per sperimentare con le pagine Wiki
 * Per favore metti il tuo nome nei VisitatoriRecenti.

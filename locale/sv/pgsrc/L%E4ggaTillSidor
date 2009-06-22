@@ -4,29 +4,29 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=L%E4ggaTillSidor;
   flags="";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Allt du behöver göra för att skapa en sida i Wiki är att komma på en
-meningsfull titel, skriva alla ord med stor bokstav i början av ordet
-och [SättaIhopDemSåHär]. Wiki kommer automatiskt att känna igen det som
-en hyperlänk. Alternativt kan du sätt vad som helst innanför
-[hakparenteser]. Wiki känner inte igen länkar med sammansatta ord om
-orden innehåller å,ä eller ö, t.ex. GratisÖlÅtAllaÄlgar. I dessa fall
-måste hakparenteser användas.
+Allt du behÃ¶ver gÃ¶ra fÃ¶r att skapa en sida i Wiki Ã¤r att komma pÃ¥ en
+meningsfull titel, skriva alla ord med stor bokstav i bÃ¶rjan av ordet
+och [SÃ¤ttaIhopDemSÃ¥HÃ¤r]. Wiki kommer automatiskt att kÃ¤nna igen det som
+en hyperlÃ¤nk. Alternativt kan du sÃ¤tt vad som helst innanfÃ¶r
+[hakparenteser]. Wiki kÃ¤nner inte igen lÃ¤nkar med sammansatta ord om
+orden innehÃ¥ller Ã¥,Ã¤ eller Ã¶, t.ex. GratisÃ–lÃ…tAllaÃ„lgar. I dessa fall
+mÃ¥ste hakparenteser anvÃ¤ndas.
 
-Sedan kan du [KlickaPåFrågetecknet] efter hyperlänken så öppnar Wiki ett
-fönster där du kan beskriva den nya sidan.
+Sedan kan du [KlickaPÃ¥FrÃ¥getecknet] efter hyperlÃ¤nken sÃ¥ Ã¶ppnar Wiki ett
+fÃ¶nster dÃ¤r du kan beskriva den nya sidan.
 
-Vill du lägga till ett dokument med komplicerad design till Wiki är det
-bättre om du ger en URL istället för att försöka skriva dokumentet här. Det
-gör du på det här sättet:
+Vill du lÃ¤gga till ett dokument med komplicerad design till Wiki Ã¤r det
+bÃ¤ttre om du ger en URL istÃ¤llet fÃ¶r att fÃ¶rsÃ¶ka skriva dokumentet hÃ¤r. Det
+gÃ¶r du pÃ¥ det hÃ¤r sÃ¤ttet:
 
-Projekthemsidan för PhpWiki: http://phpwiki.sourceforge.net
+Projekthemsidan fÃ¶r PhpWiki: http://phpwiki.sourceforge.net
 
-Wiki stöder inte HTML-taggar (se [Textformateringsregler]). <taggar>De
-kommer att rendreras som text.</taggar> Wiki är menat att vara så
-enkelt som möjligt för att uppmuntra dess användning.
+Wiki stÃ¶der inte HTML-taggar (se [Textformateringsregler]). <taggar>De
+kommer att rendreras som text.</taggar> Wiki Ã¤r menat att vara sÃ¥
+enkelt som mÃ¶jligt fÃ¶r att uppmuntra dess anvÃ¤ndning.
 
-Observera att det är möjligt för systemadministratören att tillåta
-inbäddad HTML, men det innebär säkerhetsrisker.
+Observera att det Ã¤r mÃ¶jligt fÃ¶r systemadministratÃ¶ren att tillÃ¥ta
+inbÃ¤ddad HTML, men det innebÃ¤r sÃ¤kerhetsrisker.

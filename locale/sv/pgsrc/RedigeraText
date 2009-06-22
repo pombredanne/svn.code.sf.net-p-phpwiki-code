@@ -4,8 +4,8 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=RedigeraText;
   flags="";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Alla sidor (utom sökresultatsidan) har en RedigeraText-länk längst
-ned. Du kan ändra sidan du läser genom att klicka på den länken.
+Alla sidor (utom sÃ¶kresultatsidan) har en RedigeraText-lÃ¤nk lÃ¤ngst
+ned. Du kan Ã¤ndra sidan du lÃ¤ser genom att klicka pÃ¥ den lÃ¤nken.

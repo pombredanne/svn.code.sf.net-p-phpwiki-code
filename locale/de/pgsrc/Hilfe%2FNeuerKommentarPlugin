@@ -6,13 +6,13 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="2 $Revision$";
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 <?plugin CreateToc jshide||=1 ?>
 
-Hilfe:WikiPlugin um Benutzer Kommentare zu Seiten ans Ende einer Seite anhängen zu lassen. Seit v1.3.8.
-Anpassungs des Layouts über die Vorlagen comment.tmpl und addcomment.tmpl, und die CSS Klassen
+Hilfe:WikiPlugin um Benutzer Kommentare zu Seiten ans Ende einer Seite anhÃ¤ngen zu lassen. Seit v1.3.8.
+Anpassungs des Layouts Ã¼ber die Vorlagen comment.tmpl und addcomment.tmpl, und die CSS Klassen
 wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer
 
 !! Benutzung
@@ -30,9 +30,9 @@ __order__:  |
 __mode__:  |
   Liste von "add" und/oder "show".  Vorgabe: "add,show"
 __noheader__:  |
-  Bool'sche Variable, ob die "Kommentare" h2 Überschrift weggelassen soll. Vorgabe: 0
+  Bool'sche Variable, ob die "Kommentare" h2 Ãœberschrift weggelassen soll. Vorgabe: 0
 __pagename__:  |
-  Hänge Kommentare an welche Seite an? Vorgabe: Aktueller Seitenname
+  HÃ¤nge Kommentare an welche Seite an? Vorgabe: Aktueller Seitenname
 
 !! Beispiele
 

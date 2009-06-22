@@ -4,7 +4,7 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=ThuisPagina;
   flags="";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 * Wat is een WikiWikiWeb? Een beschrijving van deze toepassing.

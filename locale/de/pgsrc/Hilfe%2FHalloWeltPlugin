@@ -6,7 +6,7 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="2 $Revision$";
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 Ein einfaches Beispiels-Plugin.
@@ -20,23 +20,23 @@ Vom Quellcode dieser Seite:
 </verbatim>
 
 -----
-PhpWiki's Plugin Architektur erlaubt dir benutzerdefinierte HTML Elemente deinem Wiki hinzuzufügen. Du mußt nur eine neue Klasse (Unterklasse) von der ~WikiPlugin Klasse ableiten, wie mit dem Namen unterhalb, und mit der run() Methode ja nach Wiki- oder Request Argumenten die HTML Ausgabe zu erzeugen. 
+PhpWiki's Plugin Architektur erlaubt dir benutzerdefinierte HTML Elemente deinem Wiki hinzuzufÃ¼gen. Du muÃŸt nur eine neue Klasse (Unterklasse) von der ~WikiPlugin Klasse ableiten, wie mit dem Namen unterhalb, und mit der run() Methode ja nach Wiki- oder Request Argumenten die HTML Ausgabe zu erzeugen. 
 
-* Entweder man erzeugt sie über die HTML Klassen, 
-* oder über ein theme Template (Vorlage). Templates sind unübersichtlicher, und Verleiten zum 
-  Erzeugen von ungültigem XHTML code, sind aber leichter anpassbar.
+* Entweder man erzeugt sie Ã¼ber die HTML Klassen, 
+* oder Ã¼ber ein theme Template (Vorlage). Templates sind unÃ¼bersichtlicher, und Verleiten zum 
+  Erzeugen von ungÃ¼ltigem XHTML code, sind aber leichter anpassbar.
 
 <?plugin PhpHighlight
 
 /**
  * Ein einfaches Beispiels-WikiPlugin. 
  * Name, Argumente und Texte bitte auf englisch, und erst in locale/po/de.po
- * auf Deutsch übersetzen.
+ * auf Deutsch Ã¼bersetzen.
  *
  * Aufruf:
  * <?plugin HelloWorld?&gt;
  * <?plugin HelloWorld
- *          salutation="Grüße, "
+ *          salutation="GrÃ¼ÃŸe, "
  *          name=Wikimeister
  * ? >
  * <?plugin HelloWorld salutation=Hallo ? >
@@ -50,7 +50,7 @@ if (!defined('THE_END'))
 class WikiPlugin_HelloWorld
 extends WikiPlugin
 {
-    // Fünf notwendige Funktionen in einem WikiPlugin.
+    // FÃ¼nf notwendige Funktionen in einem WikiPlugin.
 
     function getName () {
         return _("HelloWorld");

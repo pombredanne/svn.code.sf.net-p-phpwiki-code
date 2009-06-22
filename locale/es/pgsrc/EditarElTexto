@@ -4,7 +4,7 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=EditarElTexto;
   flags="";
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Todas las p·ginas (excepto los resultados de b˙squedas) tienen una enlace hacia EditarElTexto en la parte inferior. Al hacer click sobre este enlace se puede editar el texto que se est· leyendo.
+Todas las p√°ginas (excepto los resultados de b√∫squedas) tienen una enlace hacia EditarElTexto en la parte inferior. Al hacer click sobre este enlace se puede editar el texto que se est√° leyendo.

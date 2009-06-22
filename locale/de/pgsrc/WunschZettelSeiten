@@ -6,17 +6,17 @@ Content-Type: application/x-phpwiki;
   flags="";
   pgsrc_version="2 $Revision$";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
 Das ist eine Liste von Seiten, die in diesem Wiki zitiert werden, aber
-nicht noch nicht erzeugt wurden. Obwohl sie anscheinend benötigt werden, 
+nicht noch nicht erzeugt wurden. Obwohl sie anscheinend benÃ¶tigt werden, 
 kann es auch sein, dass sie falsch geschriebene existierende Seiten sind, 
 oder einfach zu triviale Seiten, um erzeugt zu werden.
 
-Am besten wäre es natürlich, dass solche Seiten nicht erzeugt werden,
+Am besten wÃ¤re es natÃ¼rlich, dass solche Seiten nicht erzeugt werden,
 sondern die Referenz so auszubessern, dass sie nicht mehr als ~WikiWort
-verlinkt werden.  Sie können entweder die Großschreibung anpassen,
+verlinkt werden.  Sie kÃ¶nnen entweder die GroÃŸschreibung anpassen,
 oder den Link mit "~~" verhindern.
 
 <?plugin WantedPages ?>

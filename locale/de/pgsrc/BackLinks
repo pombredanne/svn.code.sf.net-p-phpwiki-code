@@ -4,9 +4,9 @@ X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
   pagename=BackLinks;
   flags=PAGE_LOCKED;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Der Titel der aktuellen Seite ist mit einem Suchbefehl nach allen Seiten verbunden, die einen Link auf die aktuelle Seite enthalten. Die BackLinks Funktion beantwortet also die Frage: »Wo wird der Name dieser Seite verwendet?«.
+Der Titel der aktuellen Seite ist mit einem Suchbefehl nach allen Seiten verbunden, die einen Link auf die aktuelle Seite enthalten. Die BackLinks Funktion beantwortet also die Frage: Â»Wo wird der Name dieser Seite verwendet?Â«.
 ----
 <?plugin BackLinks exclude||='' include_self||=1 noheader||=0 page||='' info||='' ?>

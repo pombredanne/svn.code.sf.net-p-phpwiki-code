@@ -6,10 +6,10 @@ Content-Type: application/x-phpwiki;
   pgsrc_version="2 $Revision$";
   flags="";
   markup=2;
-  charset=iso-8859-1
+  charset=utf-8
 Content-Transfer-Encoding: binary
 
-Hier können Sie das Wiki ausprobieren.
+Hier kÃ¶nnen Sie das Wiki ausprobieren.
 
-Viel Spaß :-)
+Viel SpaÃŸ :-)
 ----
