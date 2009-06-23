@@ -82,7 +82,11 @@ extends WikiPlugin_WikiAdminSelect
         if ($count) {
             $dbi->touch();
             $result->setAttr('class', 'feedback');
-            $result->pushContent(HTML::p(fmt("%s pages have been permanently changed:", $count)));
+            if ($count == 1) {
+                $result->pushContent(HTML::p("One page has been permanently changed:"));
+            } else {
+                $result->pushContent(HTML::p(fmt("%s pages have been permanently changed:", $count)));
+            }
             $result->pushContent($ul);
             return $result;
         } else {

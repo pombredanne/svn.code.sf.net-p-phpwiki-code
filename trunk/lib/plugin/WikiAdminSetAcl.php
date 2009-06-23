@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2004 $ThePhpWikiProgrammingTeam
+ Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -164,7 +165,7 @@ extends WikiPlugin_WikiAdminSelect
             $pages = $p;
         elseif ($this->_list)
             $pages = $this->_list;
-        $header = HTML::div();
+        $header = HTML::fieldset();
         if ($p && $request->isPost() &&
             !empty($post_args['acl']) && empty($post_args['cancel'])) {
             // without individual PagePermissions:
@@ -174,9 +175,7 @@ extends WikiPlugin_WikiAdminSelect
             }
             if ($post_args['action'] == 'verify') {
                 // Real action
-                $header->pushContent(
-                    $this->setaclPages($request, array_keys($p),
-                                       $request->getArg('acl')));
+                return $this->setaclPages($request, array_keys($p), $request->getArg('acl'));
             }
             if ($post_args['action'] == 'select') {
                 if (!empty($post_args['acl']))
@@ -207,21 +206,21 @@ extends WikiPlugin_WikiAdminSelect
             $header = $this->setaclForm($header, $post_args, $pages);
             $header->pushContent(
               HTML::p(HTML::strong(
-                  _("Are you sure you want to permanently change access to the selected files?"))));
+                  _("Are you sure you want to permanently change access rights to the selected files?"))));
         }
         else {
-            $button_label = _("SetAcl");
+            $button_label = _("Change Access Rights");
             $header = $this->setaclForm($header, $post_args, $pages);
-            $header->pushContent(HTML::p(_("Select the pages to change:")));
+            $header->pushContent(HTML::legend(_("Select the pages where to change access rights")));
         }
 
         $buttons = HTML::p(Button('submit:admin_setacl[acl]', $button_label, 'wikiadmin'),
                            Button('submit:admin_setacl[cancel]', _("Cancel"), 'button'));
+        $header->pushContent($buttons);
 
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           $header,
-                          $buttons,
                           $pagelist->getContent(),
                           HiddenInputs($request->getArgs(),
                                         false,

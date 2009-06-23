@@ -60,6 +60,7 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function chownPages(&$dbi, &$request, $pages, $newowner) {
+        $result = HTML::div();
         $ul = HTML::ul();
         $count = 0;
         foreach ($pages as $name) {
@@ -74,7 +75,7 @@ extends WikiPlugin_WikiAdminSelect
                     $version = $current->getVersion();
                     $meta = $current->_data;
                     $text = $current->getPackedContent();
-                    $meta['summary'] = sprintf(_("Change page owner from %s to %s"), $owner, $newowner);
+                    $meta['summary'] = "Change page owner from '".$owner."' to '".$newowner."'";
                     $meta['is_minor_edit'] = 0;
                     $meta['author'] =  $request->_user->UserName();
                     unset($meta['mtime']); // force new date
@@ -93,10 +94,18 @@ extends WikiPlugin_WikiAdminSelect
         }
         if ($count) {
             $dbi->touch();
-            return HTML($ul, HTML::p(fmt("%s pages have been permanently changed.",
-                                         $count)));
+            $result->setAttr('class', 'feedback');
+            if ($count == 1) {
+                $result->pushContent(HTML::p("One page has been permanently changed:"));
+            } else {
+                $result->pushContent(HTML::p(fmt("%s pages have been permanently changed:", $count)));
+            }
+            $result->pushContent($ul);
+            return $result;
         } else {
-            return HTML($ul, HTML::p(fmt("No pages changed.")));
+            $result->setAttr('class', 'error');
+            $result->pushContent(HTML::p("No pages changed."));
+            return $result;
         }
     }
     
@@ -155,10 +164,14 @@ extends WikiPlugin_WikiAdminSelect
             $args['info'] = "checkbox,pagename,owner,mtime";
         }
         */
-        $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
+        if ($next_action == 'select') {
+            $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
+        } else {
+            $pagelist = new PageList_Unselectable($args['info'], $args['exclude'], $args);
+        }
         $pagelist->addPageList($pages);
 
-        $header = HTML::div();
+        $header = HTML::fieldset();
         if ($next_action == 'verify') {
             $button_label = _("Yes");
             $header->pushContent(
@@ -168,17 +181,17 @@ extends WikiPlugin_WikiAdminSelect
         }
         else {
             $button_label = _("Change owner of selected pages");
-            $header->pushContent(HTML::p(_("Select the pages to change the owner:")));
+            $header->pushContent(HTML::legend(_("Select the pages to change the owner")));
             $header = $this->chownForm($header, $post_args);
         }
 
         $buttons = HTML::p(Button('submit:admin_chown[chown]', $button_label, 'wikiadmin'),
                            Button('submit:admin_chown[cancel]', _("Cancel"), 'button'));
+        $header->pushContent($buttons);
 
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           $header,
-                          $buttons,
                           $pagelist->getContent(),
                           HiddenInputs($request->getArgs(),
                                         false,
@@ -193,7 +206,8 @@ extends WikiPlugin_WikiAdminSelect
         $header->pushContent(_("Change owner")." ");
         $header->pushContent(' '._("to").': ');
         $header->pushContent(HTML::input(array('name' => 'admin_chown[user]',
-                                               'value' => $post_args['user'])));
+                                               'value' => $post_args['user'],
+                                               'size' => 40)));
         return $header;
     }
 }
