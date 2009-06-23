@@ -81,7 +81,7 @@ extends WikiPlugin_WikiAdminSelect
                  and $newname != $name )
             {
                 if ($dbi->isWikiPage($newname))
-                    $ul->pushContent(HTML::li(fmt("Page %s already exists. Ignored.",
+                    $ul->pushContent(HTML::li(fmt("Page '%s' already exists. Ignored.",
                                                   WikiLink($newname))));
                 elseif (! mayAccessPage('edit', $name))
                     $ul->pushContent(HTML::li(fmt("Access denied to rename page '%s'.",
@@ -121,17 +121,21 @@ extends WikiPlugin_WikiAdminSelect
         if ($count) {
             $dbi->touch();
             $result->setAttr('class', 'feedback');
-            $result->pushContent(HTML::p(fmt("%s pages have been permanently renamed:", $count)));
+            if ($count == 1) {
+                $result->pushContent(HTML::p("One page has been permanently renamed:"));
+            } else {
+                $result->pushContent(HTML::p(fmt("%s pages have been permanently renamed:", $count)));
+            }
             $result->pushContent($ul);
             return $result;
         } else {
             $result->setAttr('class', 'error');
-            $result->pushContent(HTML::p(fmt("No pages renamed:")));
+            $result->pushContent(HTML::p(fmt("No pages renamed.")));
             $result->pushContent($ul);
             return $result;
         }
     }
-    
+
     function run($dbi, $argstr, &$request, $basepage) {
     	$action = $request->getArg('action');
         if ($action != 'browse' and $action != 'rename' 

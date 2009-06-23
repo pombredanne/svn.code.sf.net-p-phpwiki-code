@@ -92,6 +92,7 @@ extends WikiPlugin_WikiAdminSelect
 
     function searchReplacePages(&$dbi, &$request, $pages, $from, $to) {
         if (empty($from)) return HTML::p(HTML::strong(fmt("Error: Empty search string.")));
+        $result = HTML::div();
         $ul = HTML::ul();
         $count = 0;
         $post_args = $request->getArg('admin_replace');
@@ -100,8 +101,7 @@ extends WikiPlugin_WikiAdminSelect
         foreach ($pages as $pagename) {
             if (!mayAccessPage('edit', $pagename)) {
 		$ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
-            } elseif (($result = $this->replaceHelper($dbi, $request, $pagename, $from, $to, 
-                                                      $case_exact, $regex))) 
+            } elseif ($this->replaceHelper($dbi, $request, $pagename, $from, $to, $case_exact, $regex))
             {
                 $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", 
                                               $from, $to, WikiLink($pagename))));
@@ -113,11 +113,18 @@ extends WikiPlugin_WikiAdminSelect
         }
         if ($count) {
             $dbi->touch();
-            return HTML($ul,
-                        HTML::p(fmt("%s pages changed.",$count)));
+            $result->setAttr('class', 'feedback');
+            if ($count == 1) {
+                $result->pushContent(HTML::p("One page has been permanently changed:"));
+            } else {
+                $result->pushContent(HTML::p(fmt("%s pages have been permanently changed:", $count)));
+            }
+            $result->pushContent($ul);
+            return $result;
         } else {
-            return HTML($ul,
-                        HTML::p(fmt("No pages changed.")));
+            $result->setAttr('class', 'error');
+            $result->pushContent(HTML::p("No pages changed."));
+            return $result;
         }
     }
     
@@ -182,7 +189,7 @@ extends WikiPlugin_WikiAdminSelect
 
         $pagelist->addPageList($pages);
 
-        $header = HTML::div();
+        $header = HTML::fieldset();
         if (empty($post_args['from']))
             $header->pushContent(
               HTML::p(HTML::em(_("Warning: The search string cannot be empty!"))));
@@ -196,7 +203,7 @@ extends WikiPlugin_WikiAdminSelect
         else {
             $button_label = _("Search & Replace");
             $this->replaceForm($header, $post_args);
-            $header->pushContent(HTML::p(_("Select the pages to search:")));
+            $header->pushContent(HTML::legend(_("Select the pages to search and replace")));
         }
 
 
