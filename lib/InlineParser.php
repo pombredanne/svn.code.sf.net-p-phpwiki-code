@@ -314,12 +314,13 @@ class Markup_escape  extends SimpleMarkup
  *   size=<precent>%, size=<width>x<height>
  *   border=n, align=\w+, hspace=n, vspace=n
  *   width=n, height=n
+ *   title, lang, id, alt
  */
 function isImageLink($link) {
     if (!$link) return false;
     assert(defined('INLINE_IMAGES'));
     return preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $link)
-        or preg_match("/\\.(" . INLINE_IMAGES . ")\s+(size|border|align|hspace|vspace|type|data|width|height)=/i", $link);
+        or preg_match("/\\.(" . INLINE_IMAGES . ")\s+(size|border|align|hspace|vspace|type|data|width|height|title|lang|id|alt)=/i", $link);
 }
 
 function LinkBracketLink($bracketlink) {
