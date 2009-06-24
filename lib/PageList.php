@@ -416,6 +416,7 @@ class _PageList_Column_content extends _PageList_Column {
 	        $score = $page_handle->score;
 	    elseif (is_array($page_handle) and !empty($page_handle['score']))
 	        $score = $page_handle['score'];
+                // Remove special characters so that highlighting works
 	        $search = preg_replace('/^[\^\*]/', '', $search);
 	        $search = preg_replace('/[\^\*]$/', '', $search);
             if ($search and ($i = strpos(strtolower($c), strtolower($search))) !== false) {
