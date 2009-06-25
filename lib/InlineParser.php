@@ -864,9 +864,9 @@ class Markup_color extends BalancedMarkup {
                   and (strspn(substr($color,1),'0123456789ABCDEF') == strlen($color)-1)) {
             return new HtmlElement('font', array('color' => $color), $body);
         } else {
-            trigger_error(sprintf(_("unknown color %s ignored"), substr($match, 7, -1)), E_USER_WARNING);
+            return new HtmlElement('span', array('class' => 'error'), 
+                                   sprintf(_("unknown color %s ignored"), substr($match, 7, -1)));
         }
-        	
     }
 }
 
