@@ -857,7 +857,31 @@ class Markup_color extends BalancedMarkup {
     function markup ($match, $body) {
     	$color = strtolower(substr($match, 7, -1));
 
-        if (in_array($color, array('red', 'blue', 'gray', 'yellow', 'green', 'cyan', 'black'))
+        $morecolors = array('beige' => '#f5f5dc',
+                            'brown' => '#a52a2a',
+                            'chocolate' => '#d2691e',
+                            'cyan' => '#00ffff',
+                            'gold' => '#ffd700',
+                            'ivory' => '#fffff0',
+                            'indigo' => '#4b0082',
+                            'magenta' => '#ff00ff',
+                            'orange' => '#ffa500',
+                            'pink' => '#ffc0cb',
+                            'salmon' => '#fa8072',
+                            'snow' => '#fffafa',
+                            'turquoise' => '#40e0d0',
+                            'violet' => '#ee82ee',
+                           );
+
+        if (isset($morecolors[$color])) {
+            $color = $morecolors[$color];
+        }
+
+        // HTML 4 defines the following 16 colors
+        if (in_array($color, array('aqua', 'black', 'blue', 'fuchsia', 
+                                   'gray', 'green', 'lime', 'maroon',
+                                   'navy', 'olive', 'purple', 'red',
+                                   'silver', 'teal', 'white', 'yellow'))
               or ((substr($color,0,1) == '#') 
                   and ((strlen($color) == 4) or (strlen($color) == 7))
                   and (strspn(substr($color,1),'0123456789abcdef') == strlen($color)-1))) {
