@@ -856,12 +856,11 @@ class Markup_color extends BalancedMarkup {
     
     function markup ($match, $body) {
     	$color = strtolower(substr($match, 7, -1));
-        if (strlen($color) != 7 
-            and in_array($color, array('red', 'blue', 'gray', 'yellow', 'green', 'cyan', 'black')))
-	{   // must be a valid color name
-            return new HtmlElement('span', array('style' => "color: $color"), $body);
-        } elseif ((substr($color,0,1) == '#') 
-                  and (strspn(substr($color,1),'0123456789abcdef') == strlen($color)-1)) {
+
+        if (in_array($color, array('red', 'blue', 'gray', 'yellow', 'green', 'cyan', 'black'))
+              or ((substr($color,0,1) == '#') 
+                  and ((strlen($color) == 4) or (strlen($color) == 7))
+                  and (strspn(substr($color,1),'0123456789abcdef') == strlen($color)-1))) {
             return new HtmlElement('span', array('style' => "color: $color"), $body);
         } else {
             return new HtmlElement('span', array('class' => 'error'), 
