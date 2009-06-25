@@ -91,11 +91,46 @@ will give:
 %color=green% green text %% and back to normal
 
 The easiest way to do it is to use the COLOR button in the Edit Toolbar.
-The text will be in green by default. You can change the color.
+The text will be in green by default. You can then change the color.
 
 Allowed colors are:
-* %color=red% red %%, %color=blue% blue %%, %color=gray% gray %%, %color=yellow% yellow %%, %color=green% green %%, %color=cyan% cyan %%, %color=black% black %%;
-* an HTML color number (# followed by 3 or 6 digits).
+* an HTML color number (# followed by 3 or 6 digits),
+* the following predefined color names:
+{| class="bordered"
+|-
+| %color=aqua% aqua %%
+| bgcolor="#565c5e" | %color=beige% beige %%
+| %color=black% black %%
+| %color=blue% blue %%
+| %color=brown% brown %%
+| %color=chocolate% chocolate %%
+| %color=cyan% cyan %%
+| %color=fuchsia% fuchsia %%
+| %color=gold% gold %%
+| %color=gray% gray %%
+|-
+| %color=green% green %%
+| bgcolor="#565c5e" | %color=ivory% ivory %%
+| %color=indigo% indigo %%
+| %color=lime% lime %%
+| %color=magenta% magenta %%
+| %color=maroon% maroon %%
+| %color=navy% navy %%
+| %color=olive% olive %%
+| %color=orange% orange %%
+| %color=pink% pink %%
+|-
+| %color=purple% purple %%
+| %color=red% red %%
+| %color=salmon% salmon %%
+| %color=silver% silver %%
+| bgcolor="#565c5e" | %color=snow% snow %%
+| %color=teal% teal %%
+| %color=turquoise% turquoise %%
+| %color=violet% violet %%
+| bgcolor="#565c5e" | %color=white% white %%
+| %color=yellow% yellow %%
+|}
 
 Note: you can put the headers in color, but only if you do not have a table of content. For now, the table of content is incompatible with color headers.
 
