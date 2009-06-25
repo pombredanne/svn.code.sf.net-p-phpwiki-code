@@ -1,4 +1,4 @@
-Date: Wed, 27 May 2009 18:31:01 +0000
+Date: Thu, 25 Jun 2009 11:58:58 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -78,6 +78,26 @@ Water is H,,2,,O.
 === Fonts ===
 
 There's no syntax for font tags.
+
+=== Color Text ===
+
+Is it possible to write text in color.
+
+{{{
+%color=green% green text %% and back to normal
+}}}
+will give:
+%%%
+%color=green% green text %% and back to normal
+
+The easiest way to do it is to use the COLOR button in the Edit Toolbar.
+The text will be in green by default. You can change the color.
+
+Allowed colors are:
+* %color=red% red %%, %color=blue% blue %%, %color=gray% gray %%, %color=yellow% yellow %%, %color=green% green %%, %color=cyan% cyan %%, %color=black% black %%;
+* an HTML color number (# followed by 3 or 6 digits).
+
+Note: you can put the headers in color, but only if you do not have a table of content. For now, the table of content is incompatible with color headers.
 
 === Escape Character
 
