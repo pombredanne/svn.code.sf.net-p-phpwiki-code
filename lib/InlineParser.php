@@ -855,14 +855,14 @@ class Markup_color extends BalancedMarkup {
     var $_end_regexp = "%%";
     
     function markup ($match, $body) {
-    	$color = strtoupper(substr($match, 7, -1));
+    	$color = strtolower(substr($match, 7, -1));
         if (strlen($color) != 7 
-            and in_array($color, array('RED', 'BLUE', 'GRAY', 'YELLOW', 'GREEN', 'CYAN', 'BLACK'))) 
+            and in_array($color, array('red', 'blue', 'gray', 'yellow', 'green', 'cyan', 'black')))
 	{   // must be a valid color name
-            return new HtmlElement('font', array('color' => $color), $body);
+            return new HtmlElement('span', array('style' => "color: $color"), $body);
         } elseif ((substr($color,0,1) == '#') 
-                  and (strspn(substr($color,1),'0123456789ABCDEF') == strlen($color)-1)) {
-            return new HtmlElement('font', array('color' => $color), $body);
+                  and (strspn(substr($color,1),'0123456789abcdef') == strlen($color)-1)) {
+            return new HtmlElement('span', array('style' => "color: $color"), $body);
         } else {
             return new HtmlElement('span', array('class' => 'error'), 
                                    sprintf(_("unknown color %s ignored"), substr($match, 7, -1)));
