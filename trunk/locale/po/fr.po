@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-27 22:04+0200\n"
+"POT-Creation-Date: 2009-06-27 22:10+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -223,7 +223,6 @@ msgid "Redirect"
 msgstr "Redirection"
 
 #: ../lib/EditToolbar.php:202
-#, fuzzy
 msgid "Template Name"
 msgstr "nom du modèle"
 
@@ -339,18 +338,18 @@ msgid "PageChange Notification of %s"
 msgstr "Les notifications de changement de la page %s ont été envoyés à %s"
 
 #: ../lib/MailNotify.php:227
-#, fuzzy, php-format
+#, php-format
 msgid "sent to %s"
-msgstr "Retour à la %s"
+msgstr "envoyé à %s"
 
 #: ../lib/MailNotify.php:233
-#, fuzzy, php-format
+#, php-format
 msgid "Error: Couldn't send %s to %s"
-msgstr "Impossible d'établir une connexion à la base de données : %s"
+msgstr "Erreur : impossible d'envoyer %s à %s"
 
 #: ../lib/MailNotify.php:255
 msgid "Page change"
-msgstr ""
+msgstr "Modification de page"
 
 #: ../lib/MailNotify.php:282 ../lib/loadsave.php:966
 #: ../lib/plugin/RecentChanges.php:137
@@ -504,14 +503,12 @@ msgid "locked"
 msgstr "verrouillée"
 
 #: ../lib/PageList.php:1190 ../themes/gforge/templates/editpage.tmpl:71
-#, fuzzy
 msgid "External"
-msgstr "Liens externes"
+msgstr "Externe"
 
 #: ../lib/PageList.php:1191
-#, fuzzy
 msgid "external"
-msgstr "Liens externes"
+msgstr "externe"
 
 #: ../lib/PageList.php:1194
 msgid "Minor Edit"
@@ -595,9 +592,8 @@ msgid "Remove this page"
 msgstr "Supprimer la page"
 
 #: ../lib/PagePerm.php:320
-#, fuzzy
 msgid "Purge this page"
-msgstr "créer cette page"
+msgstr "Purger cette page"
 
 #: ../lib/PagePerm.php:369
 #, php-format
@@ -755,13 +751,12 @@ msgstr ""
 
 #: ../lib/SemanticWeb.php:151 ../lib/plugin/SemanticSearch.php:330
 #: ../lib/plugin/SemanticSearchAdvanced.php:189
-#, fuzzy
 msgid "Relation"
-msgstr "Liens correspondants"
+msgstr "Relation"
 
 #: ../lib/SemanticWeb.php:153 ../lib/plugin/SemanticSearch.php:406
 msgid "Attribute"
-msgstr ""
+msgstr "Attribut"
 
 #: ../lib/Template.php:179
 #, php-format
@@ -1076,9 +1071,8 @@ msgid "Sign In"
 msgstr "Connexion"
 
 #: ../lib/WikiTheme.php:1028
-#, fuzzy
 msgid "Rename Page"
-msgstr "Supprimer la page"
+msgstr "Renommer la page"
 
 #: ../lib/WikiTheme.php:1029 ../themes/MacOSX/themeinfo.php:133
 msgid "Lock Page"
@@ -1093,9 +1087,8 @@ msgid "Remove Page"
 msgstr "Supprimer la page"
 
 #: ../lib/WikiTheme.php:1032 ../lib/purgepage.php:22 ../lib/purgepage.php:59
-#, fuzzy
 msgid "Purge Page"
-msgstr "Nouvelle page."
+msgstr "Purger la page"
 
 #: ../lib/WikiTheme.php:1197
 msgid ""
@@ -1281,18 +1274,17 @@ msgid "Could not search in LDAP"
 msgstr ""
 
 #: ../lib/WikiUser/LDAP.php:156
-#, fuzzy
 msgid "User not found in LDAP"
-msgstr "%s non trouvé"
+msgstr "Utilisateur non trouvé dans l'annuaire LDAP"
 
 #: ../lib/WikiUser/LDAP.php:191
 msgid "Wrong password: "
 msgstr "Mot de passe invalide, essayez encore."
 
 #: ../lib/WikiUser/LDAP.php:197
-#, fuzzy, php-format
+#, php-format
 msgid "Could not connect to LDAP host %s"
-msgstr "Impossible d'établir une connexion à la base de données : %s"
+msgstr "Impossible de se connecter à l'annuaire LDAP de l'hôte %s"
 
 #: ../lib/WikiUser/POP3.php:61
 #, php-format
@@ -1415,7 +1407,6 @@ msgid "Title 2"
 msgstr "Titre 2"
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:73
-#, fuzzy
 msgid "Title 3"
 msgstr "Titre 3"
 
@@ -1536,25 +1527,22 @@ msgid "Content of versions "
 msgstr "revenir à la version %d"
 
 #: ../lib/diff.php:379 ../lib/plugin/Diff.php:189
-#, fuzzy
 msgid " and "
-msgstr "ajouter"
+msgstr " et "
 
 # lib/diff.php:1037
 #: ../lib/diff.php:379 ../lib/plugin/Diff.php:189
-#, fuzzy
 msgid " is identical."
-msgstr "Les versions sont identiques"
+msgstr " est identique."
 
 # lib/diff.php:1001 lib/diff.php:1019
 #: ../lib/diff.php:384 ../lib/plugin/Diff.php:194
-#, fuzzy
 msgid "Version "
 msgstr "Version"
 
 #: ../lib/diff.php:385 ../lib/plugin/Diff.php:195
 msgid " was created because: "
-msgstr ""
+msgstr " a été créé car : "
 
 #: ../lib/display.php:54 ../lib/display.php:310
 #: ../lib/plugin/HelloWorld.php:70 ../lib/plugin/PageGroup.php:164
@@ -1653,24 +1641,20 @@ msgid "Page now unlocked."
 msgstr "La page est maintenant déverrouillée."
 
 #: ../lib/editpage.php:259
-#, fuzzy
 msgid "Page now public."
-msgstr "La page est maintenant déverrouillée."
+msgstr "La page est maintenant publique."
 
 #: ../lib/editpage.php:260
-#, fuzzy
 msgid "Page now not-public."
-msgstr "La page est maintenant déverrouillée."
+msgstr "La page n'est maintenant plus publique."
 
 #: ../lib/editpage.php:269
-#, fuzzy
 msgid "Page now external."
-msgstr "La page est maintenant déverrouillée."
+msgstr "La page est maintenant externe."
 
 #: ../lib/editpage.php:270
-#, fuzzy
 msgid "Page now not-external."
-msgstr "La page est maintenant déverrouillée."
+msgstr "La page n'est maintenant plus externe."
 
 #: ../lib/editpage.php:379
 #, php-format
@@ -1985,9 +1969,8 @@ msgid "Empty pagename!"
 msgstr "La page n'a aucun titre !"
 
 #: ../lib/loadsave.php:896
-#, fuzzy
 msgid "Invalid pagename!"
-msgstr "Mot de identifiant d'utilisateur invalide."
+msgstr "Nom de page invalide."
 
 #: ../lib/loadsave.php:959
 #, php-format
@@ -2071,13 +2054,12 @@ msgid "same version page"
 msgstr "même version de page"
 
 #: ../lib/loadsave.php:1090
-#, fuzzy
 msgid "Cancelled"
-msgstr "Annuler"
+msgstr "Annulé"
 
 #: ../lib/loadsave.php:1097
 msgid "Are you sure?"
-msgstr ""
+msgstr "Êtes-vous sûr ?"
 
 #: ../lib/loadsave.php:1102 ../lib/plugin/PasswordReset.php:107
 #: ../lib/plugin/PasswordReset.php:150 ../lib/plugin/UserPreferences.php:117
@@ -2244,9 +2226,8 @@ msgid "edit this page"
 msgstr "éditer cette page"
 
 #: ../lib/main.php:558
-#, fuzzy
 msgid "rename this page"
-msgstr "créer cette page"
+msgstr "renommer cette page"
 
 #: ../lib/main.php:559
 msgid "revert to a previous version of this page"
@@ -2265,9 +2246,8 @@ msgid "lock this page"
 msgstr "verrouiller cette page"
 
 #: ../lib/main.php:563
-#, fuzzy
 msgid "purge this page"
-msgstr "créer cette page"
+msgstr "purger cette page"
 
 #: ../lib/main.php:564
 msgid "remove this page"
@@ -2348,9 +2328,8 @@ msgid "Locking pages"
 msgstr "Verrouillage des pages"
 
 #: ../lib/main.php:605
-#, fuzzy
 msgid "Purging pages"
-msgstr "Navigation en cours"
+msgstr "Purge des pages"
 
 #: ../lib/main.php:606
 msgid "Removing pages"
@@ -2358,7 +2337,7 @@ msgstr "Suppression des pages"
 
 #: ../lib/main.php:607
 msgid "Unlocking pages"
-msgstr "Déverrouiller les pages"
+msgstr "Déverrouillage des pages"
 
 #: ../lib/main.php:608
 msgid "Uploading zip dumps"
@@ -2496,9 +2475,8 @@ msgid "List all pages in this wiki."
 msgstr "Afficher la liste de toutes les pages de ce wiki."
 
 #: ../lib/plugin/AllPages.php:72
-#, fuzzy
 msgid "All pages in this wiki ({total} total):"
-msgstr "Pages dans ce wiki (%d au total) :"
+msgstr "Toutes les pages dans ce wiki ({total} au total) :"
 
 #: ../lib/plugin/AllPages.php:78
 #, fuzzy
@@ -2981,14 +2959,12 @@ msgid "CreateToc disabled for old markup"
 msgstr ""
 
 #: ../lib/plugin/CreateToc.php:436
-#, fuzzy
 msgid "Click to display to TOC"
-msgstr "Cliquez pour afficher"
+msgstr "Cliquez pour afficher la table des matières"
 
 #: ../lib/plugin/CurrentTime.php:59
-#, fuzzy
 msgid "CurrentTime"
-msgstr "Thème courant"
+msgstr "Heure actuelle"
 
 #: ../lib/plugin/CurrentTime.php:63
 msgid "A simple plugin that displays current time and date"
@@ -3023,9 +2999,8 @@ msgstr "%s b"
 #: ../lib/plugin/DynamicIncludePage.php:84
 #: ../lib/plugin/RecentChanges.php:1354 ../lib/plugin/RecentChanges.php:1355
 #: ../themes/Sidebar/themeinfo.php:45
-#, fuzzy
 msgid "Click to hide/show"
-msgstr "Cliquez pour afficher"
+msgstr "Cliquez pour masquer/afficher"
 
 #: ../lib/plugin/EditMetaData.php:48 ../lib/plugin/_WikiTranslation.php:61
 msgid "EditMetaData"
@@ -3037,9 +3012,9 @@ msgid "Edit metadata for %s"
 msgstr "Éditer les métadonnées pour %s"
 
 #: ../lib/plugin/EditMetaData.php:132
-#, fuzzy, php-format
+#, php-format
 msgid "No metadata for %s"
-msgstr "Éditer les métadonnées pour %s"
+msgstr "Pas de métadonnées pour %s"
 
 #: ../lib/plugin/EditMetaData.php:146
 msgid ""
