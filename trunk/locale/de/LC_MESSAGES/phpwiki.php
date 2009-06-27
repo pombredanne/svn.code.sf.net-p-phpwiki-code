@@ -44,8 +44,6 @@ $locale["%d page(s) with more than %d hits (>%d%%)."] =
    "%d Seite(n) die mehr als %d aufgerufen haben (>%d%%).";
 $locale["%d pages"] =
    "%d Seiten";
-$locale["%d pages have been permanently removed."] =
-   "%d Seiten wurden unwiderruflich gelöscht.";
 $locale["%d pages with less than %d hits (<%d%%)."] =
    "%d Seiten die weniger als %d aufgerufen haben (<%d%%).";
 $locale["%s %s %s is disallowed on this wiki for %s user '%s' (level: %s)."] =
@@ -100,11 +98,7 @@ $locale["%s on %s:"] =
    "%s um %s:";
 $locale["%s or %s parameter missing"] =
    "%s oder %s Argument fehlt";
-$locale["%s pages changed."] =
-   "%s Seiten geändert.";
 $locale["%s pages have been changed."] =
-   "%s Seiten wurden geändert.";
-$locale["%s pages have been permanently changed."] =
    "%s Seiten wurden geändert.";
 $locale["%s pages link to %s:"] =
    "%s Seiten sind mit %s verlinkt:";
@@ -152,8 +146,6 @@ $locale["(Copy your changes to the clipboard. You can try editing a different pa
    "(Kopieren Sie Ihre Veränderungen in die Zwischenablage. Sie können versuchen eine andere Seite zu edieren oder Ihr Text in einem Texteditor speichern.)";
 $locale["(Currently not working)"] =
    "(Funktioniert momentan nicht)";
-$locale["(Pages which have been deleted at least %s days are already checked.)"] =
-   "(Seiten, die in den letzten %s Tagen gelöscht wurden, sind bereits ausgewählt)";
 $locale["(Redirected from %s)"] =
    "(Weitergeleitet von %s)";
 $locale["(Your preferences are stored as hidden data within this page)."] =
@@ -306,8 +298,6 @@ $locale["Application size: %d Kb"] =
    "Anwendungsplatzbedarf: %d KB";
 $locale["Approve"] =
    "Akzeptieren";
-$locale["Are you sure you want to permanently change access to the selected files?"] =
-   "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?";
 $locale["Are you sure you want to permanently change the markup type of the selected files?"] =
    "Sind Sie sicher, dass Sie die ausgewählen Seiten wirklich ändern wollen?";
 $locale["Are you sure you want to permanently change the selected files?"] =
@@ -594,8 +584,6 @@ $locale["Description"] =
    "Beschreibung";
 $locale["Dialog"] =
    "Dialog";
-$locale["Didn't removed page '%s'. Access denied."] =
-   "Seite »%s« wurde nicht gelöscht. Zugriff verweigert.";
 $locale["Diff"] =
    "Diff";
 $locale["Diff previous Author"] =
@@ -982,8 +970,6 @@ $locale["List all pages in this wiki."] =
    "Alle Seiten in diesem Wiki auflisten.";
 $locale["List all pages which link to %s."] =
    "Alle Seiten, die mit %s verlinkt sind.";
-$locale["List all pages."] =
-   "Alle Seiten auflisten.";
 $locale["List of pages created by [%s] (%d total):"] =
    "Liste der Seiten erzeugt von [%s] (%d insgesamt):";
 $locale["List of pages last edited by [%s] (%d total):"] =
@@ -1196,8 +1182,6 @@ $locale["PHP syntax highlighting"] =
    "Hervorhebung der PHP-Syntax (Syntax highlighting)";
 $locale["PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details."] =
    "PHP konnte keinen neues GD Bild erzeugen. Lesen Sie 'lib/plugin/text2png.php' für Details.";
-$locale["Page %s already exists. Ignored."] =
-   "Seite %s existiert bereits. Ignoriert.";
 $locale["Page %s not found."] =
    "Seite %s nicht gefunden.";
 $locale["Page Content: "] =
@@ -1278,8 +1262,6 @@ $locale["Perform searches on InterWiki sites listed in InterWikiMap."] =
    "Durchsuchen im InterWiki sites die im InterWikiMap verzeichnet sind.";
 $locale["Permanently remove all selected pages."] =
    "Endgültige Löschung aller ausgewählten Seiten.";
-$locale["Permanently remove the selected files:"] =
-   "Lösche alle ausgewählten Seiten endgültig:";
 $locale["Permission"] =
    "Zugriffsrecht";
 $locale["Personal Auth Settings for '%s'"] =
@@ -1562,14 +1544,10 @@ $locale["See: %s"] =
    "Siehe: %s";
 $locale["Select pages"] =
    "Seiten auswählen";
-$locale["Select the pages to change the owner:"] =
-   "Wählen Sie die Seiten zum Ändern:";
 $locale["Select the pages to change:"] =
    "Wählen Sie die Seiten zum Ändern:";
 $locale["Select the pages to rename:"] =
    "Wähle Seiten zum Umbenennen aus:";
-$locale["Select the pages to search:"] =
-   "Seiten auswählen:";
 $locale["Select: "] =
    "Auswahl: ";
 $locale["Selected Grant checkboxes allow access, unselected checkboxes deny access."] =

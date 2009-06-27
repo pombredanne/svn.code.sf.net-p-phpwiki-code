@@ -70,8 +70,6 @@ $locale["%s of this page"] =
    "此頁面的 %s";
 $locale["%s or %s parameter missing"] =
    "%s 或 %s 參數遺漏";
-$locale["%s pages changed."] =
-   "%s 個頁面已經變更.";
 $locale["%s pages have been changed."] =
    "%s 頁面已經變更.";
 $locale["%s pages link to %s:"] =
@@ -110,8 +108,6 @@ $locale["'%s': corrupt file"] =
    "'%s': 壞檔";
 $locale["(Copy your changes to the clipboard. You can try editing a different page or save your text in a text editor.)"] =
    "(複製你的更動到剪貼簿中. 你可以試著編輯另一個不同的頁面或存到文字編輯器中.)";
-$locale["(Pages which have been deleted at least %s days are already checked.)"] =
-   "(列出過去 %s 天內已被刪除且檢查過的頁面.)";
 $locale["(Redirected from %s)"] =
    "(已從 %s 重導向)";
 $locale["(Your preferences are stored as hidden data within this page)."] =
@@ -684,8 +680,6 @@ $locale["List all pages in this wiki."] =
    "在此 wiki 列出所有頁面.";
 $locale["List all pages which link to %s."] =
    "列出所有連結到 %s 的頁面.";
-$locale["List all pages."] =
-   "列出所有頁面.";
 $locale["List page names which share an initial or final title word with '%s'."] =
    "列出分享為 '%s' 開頭或結尾的標題字的頁面名稱";
 $locale["List pages which are not linked to by any other page."] =
@@ -900,8 +894,6 @@ $locale["Perform searches on InterWiki sites listed in InterWikiMap."] =
    "在列在 InterWikiMap 清單中的 InterWiki 站台進行搜尋.";
 $locale["Permanently remove all selected pages."] =
    "永久移除選定的頁面.";
-$locale["Permanently remove the selected files:"] =
-   "永久移除選定的檔案:";
 $locale["Permission"] =
    "權限";
 $locale["Personal Auth Settings for '%s'"] =
@@ -1122,8 +1114,6 @@ $locale["Select the pages to change:"] =
    "選擇頁面以進行更名:";
 $locale["Select the pages to rename:"] =
    "選擇頁面以進行更名:";
-$locale["Select the pages to search:"] =
-   "選擇頁面以進行搜尋:";
 $locale["Select: "] =
    "選擇";
 $locale["Selected page '%s' passed to '%s'."] =
