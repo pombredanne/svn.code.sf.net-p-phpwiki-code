@@ -48,8 +48,6 @@ $locale["%d page(s) with more than %d hits (>%d%%)."] =
    "%d pages ayant eu plus de %d visiteurs (>%d%%).";
 $locale["%d pages"] =
    "%d pages";
-$locale["%d pages have been permanently removed."] =
-   "%d pages ont été définitivement supprimées.";
 $locale["%d pages with less than %d hits (<%d%%)."] =
    "%d pages ayant eu moins de %d visiteurs (<%d%%).";
 $locale["%s %s %s is disallowed on this wiki for %s user '%s' (level: %s)."] =
@@ -104,12 +102,8 @@ $locale["%s on %s:"] =
    "%s on %s :";
 $locale["%s or %s parameter missing"] =
    "%s ou %s paramètre manquant";
-$locale["%s pages changed."] =
-   "%s pages modifiées.";
 $locale["%s pages have been changed."] =
    "Les pages %s ont été changées.";
-$locale["%s pages have been permanently changed."] =
-   "%s pages ont été définitivement modifiées.";
 $locale["%s pages link to %s:"] =
    "%s pages pointent vers %s :";
 $locale["%s pages would link to %s:"] =
@@ -150,8 +144,6 @@ $locale["(Copy your changes to the clipboard. You can try editing a different pa
    "(Copiez vos modifications dans le presse-papier. Vous pouvez essayer d'éditer une page différente ou sauver votre texte dans un éditeur).";
 $locale["(Currently not working)"] =
    "(Non recommandé !)";
-$locale["(Pages which have been deleted at least %s days are already checked.)"] =
-   "(Les pages qui ont été supprimées il y a au plus %s jours sont déjà vérifiées.)";
 $locale["(Redirected from %s)"] =
    "(Redirigé de %s)";
 $locale["(Your preferences are stored as hidden data within this page)."] =
@@ -312,8 +304,6 @@ $locale["Application size: %d Kb"] =
    "Taille de l'application : %d Kb";
 $locale["Apply changes"] =
    "Appliquer les changements.";
-$locale["Are you sure you want to permanently change access to the selected files?"] =
-   "Ëtes-vous sûr de vouloir définitivement modifier l'accès aux fichiers sélectionnés ?";
 $locale["Are you sure you want to permanently change the selected files?"] =
    "Supprimer la page maintenant";
 $locale["Are you sure you want to permanently remove the selected files?"] =
@@ -584,8 +574,6 @@ $locale["Description"] =
    "Description";
 $locale["Dialog"] =
    "Dialogue";
-$locale["Didn't removed page '%s'. Access denied."] =
-   "Page '%s' non supprimée. Accès refusé.";
 $locale["Diff"] =
    "Diff";
 $locale["Diff previous Author"] =
@@ -658,8 +646,6 @@ $locale["E-mail"] =
    "Adresse électronique";
 $locale["E-mail Notification"] =
    "Courriel de notification";
-$locale["ERROR: No email defined! You need to do this in your "] =
-   "ERREUR : pas d'adresse électronique definie! Vous devez le faire dans vos ";
 $locale["Easy navigation buttons for %s"] =
    "Boutons de navigation rapide pour %s";
 $locale["Edit"] =
@@ -998,8 +984,6 @@ $locale["List all pages in this wiki."] =
    "Afficher la liste de toutes les pages de ce wiki.";
 $locale["List all pages which link to %s."] =
    "Affiche toutes les pages liée à %s.";
-$locale["List all pages."] =
-   "Liste de toutes les pages.";
 $locale["List of pages created by [%s] (%d total):"] =
    "Liste des pages créé près [%s] (%d au total) :";
 $locale["List of pages last edited by [%s] (%d total):"] =
@@ -1232,8 +1216,6 @@ $locale["PHP was unable to create a new GD image stream. Read 'lib/plugin/text2p
    "PHP n'a pas pu créer un nouveau flux d'image GD. Lisez 'lib/plugin/text2png.php' pour plus de détails.";
 $locale["Page"] =
    "Page";
-$locale["Page %s already exists. Ignored."] =
-   "La page %s existe déjà. Ignoré.";
 $locale["Page %s not found."] =
    "Page %s non trouvée.";
 $locale["Page Content: "] =
@@ -1314,8 +1296,6 @@ $locale["Perform searches on InterWiki sites listed in InterWikiMap."] =
    "Effectuer une recherche sur les sites InterWiki contenu dans la carte InterWiki.";
 $locale["Permanently remove all selected pages."] =
    "Supprimer toutes les pages sélectionnées en permanence.";
-$locale["Permanently remove the selected files:"] =
-   "Supprimer définitivement les fichiers sélectionnés :";
 $locale["Permission"] =
    "Permission";
 $locale["Personal Auth Settings for '%s'"] =
@@ -1628,14 +1608,10 @@ $locale["See: %s"] =
    "Voir : %s";
 $locale["Select pages"] =
    "Sélectionner les pages";
-$locale["Select the pages to change the owner:"] =
-   "Sélectionnez les pages qui vont chnager de propriétaire :";
 $locale["Select the pages to change:"] =
    "Sélectionnez les pages à modifier :";
 $locale["Select the pages to rename:"] =
    "Sélectionner les pages à renommer :";
-$locale["Select the pages to search:"] =
-   "Sélectionner ci-dessous les pages dans lesquelles la recherche sera effectuée :";
 $locale["Select: "] =
    "Sélectionner : ";
 $locale["Selected Grant checkboxes allow access, unselected checkboxes deny access."] =
