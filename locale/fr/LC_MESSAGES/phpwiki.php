@@ -22,10 +22,16 @@ $locale[" Keep up to %d minor edits, but keep them no longer than %d days."] =
    "Garder jusqu'à %d édition mineures, mais pas plus que %d jours.";
 $locale[" Sorry, cannot merge."] =
    " Désolé, impossible de fusionner.";
+$locale[" and "] =
+   " et ";
+$locale[" is identical."] =
+   " est identique.";
 $locale[" replace "] =
    " remplace ";
 $locale[" skipped"] =
    " ignoré";
+$locale[" was created because: "] =
+   " a été créé car : ";
 $locale["%4d  %s\n"] =
    "%4d  %s\n";
 $locale["%d UserPreferences fields successfully updated."] =
@@ -272,6 +278,8 @@ $locale["All %s are listed below."] =
    "Toutes les %s sont énumérées ci-dessous.";
 $locale["All pages"] =
    "Toutes les pages";
+$locale["All pages in this wiki ({total} total):"] =
+   "Toutes les pages dans ce wiki ({total} au total) :";
 $locale["All pages with all links in this wiki (%d total):"] =
    "Tout pages avec tous les liens dans ce wiki (%d au total) :";
 $locale["AllPages"] =
@@ -310,12 +318,16 @@ $locale["Are you sure you want to permanently remove the selected files?"] =
    "Êtes-vous certain de vouloir supprimer définitivement les fichiers sélectionnés ?";
 $locale["Are you sure you want to permanently search & replace text in the selected files?"] =
    "Etes-vous sur de vouloir rechercher et remplacer dans les fichiers sélectionnées ?";
+$locale["Are you sure?"] =
+   "Êtes-vous sûr ?";
 $locale["Argument '%s' not declared by plugin."] =
    "argument '%s' non déclaré par le plugin.";
 $locale["Arguments"] =
    "Arguments";
 $locale["Attempting to use the directory '%s' instead."] =
    "Tentative d'utilisation du répertoire '%s' à la place.";
+$locale["Attribute"] =
+   "Attribut";
 $locale["Auth Level"] =
    "Niveau de l'authentification";
 $locale["Auth Method"] =
@@ -396,6 +408,8 @@ $locale["Can't open zip file '%s' for reading"] =
    "Impossible d'ouvrir le fichier zip '%s' en lecture";
 $locale["Cancel"] =
    "Annuler";
+$locale["Cancelled"] =
+   "Annulé";
 $locale["Cannot create directory '%s'"] =
    "Impossible de créer le répertoire '%s'";
 $locale["Cannot open AUTH_GROUP_FILE %s"] =
@@ -448,6 +462,10 @@ $locale["Click to display"] =
    "Cliquez pour afficher";
 $locale["Click to display all comments"] =
    "Cliquez pour afficher tout commente";
+$locale["Click to display to TOC"] =
+   "Cliquez pour afficher la table des matières";
+$locale["Click to hide/show"] =
+   "Cliquez pour masquer/afficher";
 $locale["Click to reverse sort order"] =
    "Cliquer pour inverser l'ordre de tri";
 $locale["Click to sort by %s"] =
@@ -492,6 +510,8 @@ $locale["Converts TeX to an image. May be used to embed formulas in PhpWiki."] =
    "Pour convertir des formules TeX en image.";
 $locale["Copyrights"] =
    "Copyrights";
+$locale["Could not connect to LDAP host %s"] =
+   "Impossible de se connecter à l'annuaire LDAP de l'hôte %s";
 $locale["Couldn't chmod page '%s' to '%s'."] =
    "Impossible de changer le mode '%s' à '%s'.";
 $locale["Couldn't connect to %s"] =
@@ -534,6 +554,8 @@ $locale["Current language: '%s'"] =
    "Langage actuel : %s";
 $locale["Current theme: '%s'"] =
    "Thème actuel : '%s'";
+$locale["CurrentTime"] =
+   "Heure actuelle";
 $locale["DB admin password:"] =
    "DB admin mot de passe :";
 $locale["DB admin user:"] =
@@ -704,6 +726,8 @@ $locale["Enter your UserId to sign in"] =
    "Entrez votre identifiant utilisateur pour vous connecter";
 $locale["Enumeration"] =
    "Énumération";
+$locale["Error: Couldn't send %s to %s"] =
+   "Erreur : impossible d'envoyer %s à %s";
 $locale["Error: Empty search string."] =
    "Erreur: chaîne vide invalide.";
 $locale["Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."] =
@@ -712,6 +736,8 @@ $locale["Every"] =
    "Toutes";
 $locale["Expiry parameters"] =
    "Expiration des paramètres";
+$locale["External"] =
+   "Externe";
 $locale["External Links"] =
    "Liens externes";
 $locale["External link (remember http:// prefix)"] =
@@ -912,6 +938,8 @@ $locale["Invalid color: %s"] =
    "Couleur non valable : %s";
 $locale["Invalid image size"] =
    "Taille d'image non valables";
+$locale["Invalid pagename!"] =
+   "Nom de page invalide.";
 $locale["Invalid password or userid."] =
    "Mot de passe ou identifiant d'utilisateur invalide.";
 $locale["Invalid password."] =
@@ -1132,6 +1160,8 @@ $locale["No comments found"] =
    "Aucun commentaire trouvé";
 $locale["No empty, unreferenced pages were found."] =
    "Aucune page trouvée avec un nom invalide.";
+$locale["No metadata for %s"] =
+   "Pas de métadonnées pour %s";
 $locale["No or not enough GROUP_DB SQL statements defined"] =
    "Aucun ou pas assez de GROUP_DB définis pour SQL";
 $locale["No or unsupported GROUP_METHOD defined"] =
@@ -1234,14 +1264,24 @@ $locale["Page Type:"] =
    "Type de Page :";
 $locale["Page Version:"] =
    "Version de la page :";
+$locale["Page change"] =
+   "Modification de page";
 $locale["Page dump"] =
    "Cliché de la page";
 $locale["Page names with prefix '%s'"] =
    "Noms de page ayant le préfixe ' %s '";
 $locale["Page names with suffix '%s'"] =
    "Noms de page ayant le suffixe ' %s '";
+$locale["Page now external."] =
+   "La page est maintenant externe.";
 $locale["Page now locked."] =
    "La page est maintenant verrouillée.";
+$locale["Page now not-external."] =
+   "La page n'est maintenant plus externe.";
+$locale["Page now not-public."] =
+   "La page n'est maintenant plus publique.";
+$locale["Page now public."] =
+   "La page est maintenant publique.";
 $locale["Page now unlocked."] =
    "La page est maintenant déverrouillée.";
 $locale["Page removed %s"] =
@@ -1436,10 +1476,16 @@ $locale["Purge HTML cache for this page. Regenerate from WikiMarkup when next ac
    "Purge le cache HTML pour cette page. Régénère depuis WikiMarkup lors du prochain accès.";
 $locale["Purge Markup Cache"] =
    "Purger le cache";
+$locale["Purge Page"] =
+   "Purger la page";
 $locale["Purge all Pages With Invalid Names"] =
    "Supprimer les pages dont le nom n'est pas valide";
+$locale["Purge this page"] =
+   "Purger cette page";
 $locale["PurgeHtmlCache"] =
    "PurgerLeCache";
+$locale["Purging pages"] =
+   "Purge des pages";
 $locale["Querying backend directly for '%s'"] =
    "Requête directe au backend pour '%s'";
 $locale["Quick Search"] =
@@ -1512,6 +1558,8 @@ $locale["Related changes"] =
    "Changements liés";
 $locale["RelatedChanges"] =
    "ChangementsLiés";
+$locale["Relation"] =
+   "Relation";
 $locale["ReleaseNotes"] =
    "NotesDeVersion";
 $locale["Remove"] =
@@ -1532,6 +1580,8 @@ $locale["Removing pages"] =
    "Suppression des pages";
 $locale["Rename"] =
    "Renommer";
+$locale["Rename Page"] =
+   "Renommer la page";
 $locale["Rename selected pages"] =
    "Renommer les pages sélectionnées.";
 $locale["Rename to"] =
@@ -1762,6 +1812,8 @@ $locale["TeX2png"] =
    "TeX2png";
 $locale["Template"] =
    "Modèle";
+$locale["Template Name"] =
+   "nom du modèle";
 $locale["TextFormattingRules"] =
    "RèglesDeFormatageDesTextes";
 $locale["Thank you for editing %s."] =
@@ -1850,6 +1902,8 @@ $locale["Title 1"] =
    "Titre 1";
 $locale["Title 2"] =
    "Titre 2";
+$locale["Title 3"] =
+   "Titre 3";
 $locale["Title Search"] =
    "Recherche par titre";
 $locale["Title search results for '%s'"] =
@@ -1937,7 +1991,7 @@ $locale["Unlock"] =
 $locale["Unlock Page"] =
    "Déverrouiller la page";
 $locale["Unlocking pages"] =
-   "Déverrouiller les pages";
+   "Déverrouillage des pages";
 $locale["Unsupported ACL access type %s ignored."] =
    "Le type d'accès ACL %s n'est pas supporté. -- Ignoré.";
 $locale["Up"] =
@@ -1970,6 +2024,8 @@ $locale["Uploading zip dumps"] =
    "Déposer la sauvegarde compressée";
 $locale["Use old markup"] =
    "Anciennes règles";
+$locale["User not found in LDAP"] =
+   "Utilisateur non trouvé dans l'annuaire LDAP";
 $locale["User page"] =
    "Page de l'utilisateur";
 $locale["User statistics"] =
@@ -1991,6 +2047,8 @@ $locale["Verification Status"] =
 $locale["Verify the current action"] =
    "Vérifier l'action actuelle";
 $locale["Version"] =
+   "Version";
+$locale["Version "] =
    "Version";
 $locale["Version %d"] =
    "Version %d";
@@ -2262,6 +2320,8 @@ $locale["edits"] =
    "éditions";
 $locale["empty source"] =
    "source vide";
+$locale["external"] =
+   "externe";
 $locale["from"] =
    "de";
 $locale["from %s"] =
@@ -2332,6 +2392,8 @@ $locale["predecessor to the previous major change"] =
    "prédécesseur de la modification majeure précédente";
 $locale["previous revision"] =
    "révision précédente";
+$locale["purge this page"] =
+   "purger cette page";
 $locale["really"] =
    "vraiment";
 $locale["recursive inclusion of page %s"] =
@@ -2342,6 +2404,8 @@ $locale["recursive inclusion of url %s"] =
    "insertion récursive de l'URL %s";
 $locale["remove this page"] =
    "supprimer cette page";
+$locale["rename this page"] =
+   "renommer cette page";
 $locale["renamed from %s"] =
    "renommée à partir de %s";
 $locale["revert to a previous version of this page"] =
@@ -2356,6 +2420,8 @@ $locale["saved as "] =
    "enregistrée sous ";
 $locale["saved as %s"] =
    "enregistrée sous %s";
+$locale["sent to %s"] =
+   "envoyé à %s";
 $locale["sortby=mtime not supported with MostPopular"] =
    "sortby=mtime non supporté avec MostPopular";
 $locale["stddev: %2.3f"] =
