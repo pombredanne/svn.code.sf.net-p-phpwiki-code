@@ -1,0 +1,18 @@
+Date: Sat, 5 Jun 2004 16:49:53 +0200
+Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
+X-Rcs-Id: $Id$
+Content-Type: application/x-phpwiki;
+  pagename=Cat%C3%A9goriePagesAccueil;
+  pgsrc_version="2 $Revision$";
+  flags="";
+  markup=2;
+  charset=utf-8
+Content-Transfer-Encoding: binary
+
+<?plugin AllUsers include_empty=0 ?>
+
+----
+
+CatégorieCatégorie
+
+
