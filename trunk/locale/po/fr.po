@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PhpWiki-1.3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-27 22:10+0200\n"
+"POT-Creation-Date: 2009-07-04 01:30+0200\n"
 "PO-Revision-Date: 2004-06-22 21:10+0200\n"
 "Last-Translator: Pierrick Meignen <meignen.pierrick@wanadoo.fr>, Roland "
 "Trique <roland.trique@free.fr>, Stéphane Gourichon <stephane.gourichon@lip6."
@@ -2479,24 +2479,23 @@ msgid "All pages in this wiki ({total} total):"
 msgstr "Toutes les pages dans ce wiki ({total} au total) :"
 
 #: ../lib/plugin/AllPages.php:78
-#, fuzzy
 msgid "List of user-created pages ({total} total):"
-msgstr "Liste des pages créé près [%s] (%d au total) :"
+msgstr "Liste des pages créées par les utilisateurs ({total} au total) :"
 
 #: ../lib/plugin/AllPages.php:84
-#, fuzzy, php-format
+#, php-format
 msgid "List of pages owned by [%s] ({total} total):"
-msgstr "Liste des pages possédé près [%s] (%d au total) :"
+msgstr "Liste des pages possédées par [%s] ({total} au total) :"
 
 #: ../lib/plugin/AllPages.php:95
-#, fuzzy, php-format
+#, php-format
 msgid "List of pages last edited by [%s] ({total} total):"
-msgstr "Liste des pages bout édité près [%s] (%d au total) :"
+msgstr "Liste des pages modifiées par [%s] ({total} au total) :"
 
 #: ../lib/plugin/AllPages.php:106
-#, fuzzy, php-format
+#, php-format
 msgid "List of pages created by [%s] ({total} total):"
-msgstr "Liste des pages créé près [%s] (%d au total) :"
+msgstr "Liste des pages créées par [%s] ({total} au total) :"
 
 #: ../lib/plugin/AllPages.php:137 ../lib/plugin/AllUsers.php:105
 #, php-format
@@ -3478,12 +3477,12 @@ msgstr "Tout pages avec tous les liens dans ce wiki (%d au total) :"
 #: ../lib/plugin/LinkDatabase.php:84
 #, php-format
 msgid "List of pages owned by [%s] (%d total):"
-msgstr "Liste des pages possédé près [%s] (%d au total) :"
+msgstr "Liste des pages possédées par [%s] (%d au total) :"
 
 #: ../lib/plugin/LinkDatabase.php:91
 #, php-format
 msgid "List of pages last edited by [%s] (%d total):"
-msgstr "Liste des pages bout édité près [%s] (%d au total) :"
+msgstr "Liste des pages modifiées en dernier par [%s] (%d au total) :"
 
 #: ../lib/plugin/LinkDatabase.php:98
 #, php-format
@@ -4438,12 +4437,12 @@ msgstr "créer cette page"
 #: ../lib/plugin/RecentChanges.php:285
 #, fuzzy, php-format
 msgid " for pages changed by %s"
-msgstr "Aucune page changée."
+msgstr " pour les pages modifiées par %s"
 
 #: ../lib/plugin/RecentChanges.php:291
-#, fuzzy, php-format
+#, php-format
 msgid " for pages owned by %s"
-msgstr "Liste des pages possédé près [%s] (%d au total) :"
+msgstr " pour les pages possédées par %s"
 
 #: ../lib/plugin/RecentChanges.php:294
 #, fuzzy, php-format
@@ -4541,7 +4540,7 @@ msgstr "1 jour"
 
 #: ../lib/plugin/RecentChanges.php:1410
 msgid "All time"
-msgstr ""
+msgstr "Depuis le début"
 
 #: ../lib/plugin/RecentChanges.php:1412
 #, php-format
@@ -4549,13 +4548,12 @@ msgid "%s days"
 msgstr "%s jours"
 
 #: ../lib/plugin/RecentChanges.php:1424
-#, fuzzy
 msgid "All users"
-msgstr "TousLesUtilisateurs"
+msgstr "Tous les utilisateurs"
 
 #: ../lib/plugin/RecentChanges.php:1427
 msgid "My modifications only"
-msgstr ""
+msgstr "Mes modifications uniquement"
 
 #: ../lib/plugin/RecentChanges.php:1444
 #: ../themes/MonoBook/templates/navbar.tmpl:77
@@ -4564,37 +4562,32 @@ msgstr "Toutes les pages"
 
 #: ../lib/plugin/RecentChanges.php:1447
 msgid "My pages only"
-msgstr ""
+msgstr "Mes pages uniquement"
 
 #: ../lib/plugin/RecentChanges.php:1464
 msgid "Major modifications only"
-msgstr ""
+msgstr "Modifications majeures uniquement"
 
 #: ../lib/plugin/RecentChanges.php:1464
-#, fuzzy
 msgid "All modifications"
-msgstr "Courriel de notification"
+msgstr "Toutes les modifications"
 
 #: ../lib/plugin/RecentChanges.php:1475
-#, fuzzy
 msgid "Page once only"
-msgstr "Contenu de la page : "
+msgstr "Une seule fois la page"
 
 # lib/stdlib.php:384 lib/stdlib.php:445
 #: ../lib/plugin/RecentChanges.php:1475
-#, fuzzy
 msgid "Full changes"
-msgstr "DernièresModifs"
+msgstr "Plusieurs fois la page"
 
 #: ../lib/plugin/RecentChanges.php:1486
-#, fuzzy
 msgid "Old and new pages"
-msgstr "créer cette page"
+msgstr "Pages anciennes et nouvelles"
 
 #: ../lib/plugin/RecentChanges.php:1486
-#, fuzzy
 msgid "New pages only"
-msgstr "Nouvelle page"
+msgstr "Nouvelles pages uniquement"
 
 #: ../lib/plugin/RecentComments.php:17 ../lib/plugin/RecentComments.php:43
 #: ../themes/MonoBook/templates/navbar.tmpl:16
@@ -4607,16 +4600,15 @@ msgstr ""
 
 #: ../lib/plugin/RecentComments.php:98
 msgid "latest comment by "
-msgstr "dernier commentaire by "
+msgstr "dernier commentaire par "
 
 #: ../lib/plugin/RecentEdits.php:14
-#, fuzzy
 msgid "List all recent edits in this wiki."
-msgstr "Afficher la liste de toutes les pages de ce wiki."
+msgstr "Afficher les dernières modifications de ce wiki."
 
 #: ../lib/plugin/RecentEdits.php:40
 msgid "Recent Edits"
-msgstr "Éditions Récentes"
+msgstr "Éditions récentes"
 
 #: ../lib/plugin/RecentReferrers.php:14
 msgid "RecentReferrers"
@@ -8593,16 +8585,14 @@ msgstr ""
 
 #: ../themes/default/templates/userprefs.tmpl:197
 #: ../themes/gforge/templates/userprefs.tmpl:232
-#, fuzzy
 msgid "Do not send minor modifications:"
-msgstr "Ne pas envoyer mes propres modifications :"
+msgstr "Ne pas envoyer les modifications mineures :"
 
 #: ../themes/default/templates/userprefs.tmpl:203
 #: ../themes/gforge/templates/userprefs.tmpl:238
-#, fuzzy
 msgid "Check if you do not want to be notified of minor modifications."
 msgstr ""
-"Cochez la case si vous ne voulez pas recevoir vos propres modifications"
+"Cochez la case si vous ne voulez pas recevoir les modifications mineures"
 
 #: ../themes/default/templates/userprefs.tmpl:209
 #: ../themes/gforge/templates/userprefs.tmpl:307
