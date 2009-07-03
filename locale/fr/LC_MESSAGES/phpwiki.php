@@ -24,6 +24,8 @@ $locale[" Sorry, cannot merge."] =
    " Désolé, impossible de fusionner.";
 $locale[" and "] =
    " et ";
+$locale[" for pages owned by %s"] =
+   " pour les pages possédées par %s";
 $locale[" is identical."] =
    " est identique.";
 $locale[" replace "] =
@@ -276,12 +278,18 @@ $locale["Administrators"] =
    "Administrateures";
 $locale["All %s are listed below."] =
    "Toutes les %s sont énumérées ci-dessous.";
+$locale["All modifications"] =
+   "Toutes les modifications";
 $locale["All pages"] =
    "Toutes les pages";
 $locale["All pages in this wiki ({total} total):"] =
    "Toutes les pages dans ce wiki ({total} au total) :";
 $locale["All pages with all links in this wiki (%d total):"] =
    "Tout pages avec tous les liens dans ce wiki (%d au total) :";
+$locale["All time"] =
+   "Depuis le début";
+$locale["All users"] =
+   "Tous les utilisateurs";
 $locale["AllPages"] =
    "ToutesLesPages";
 $locale["AllPagesOwnedByMe"] =
@@ -442,6 +450,8 @@ $locale["Check any two boxes then %s."] =
    "Cochez une boîte puis %s.";
 $locale["Check any two boxes to compare revisions."] =
    "Cochez une des boîtes pour comparer les révisions.";
+$locale["Check if you do not want to be notified of minor modifications."] =
+   "Cochez la case si vous ne voulez pas recevoir les modifications mineures";
 $locale["Check if you do not want to be notified of your own modifications."] =
    "Cochez la case si vous ne voulez pas recevoir vos propres modifications";
 $locale["Check to add this ACL"] =
@@ -622,6 +632,8 @@ $locale["Displays a set of photos listed in a text file with optional descriptio
    "Affiche un groupe de photos listées dans un fichier texte avec des descriptions facultatives.";
 $locale["Displays a url in a seperate frame inside our body. Only one frame allowed."] =
    "Affiche une url dans une cadre interne à la page. Un seul cadre autorisé.";
+$locale["Do not send minor modifications:"] =
+   "Ne pas envoyer les modifications mineures :";
 $locale["Do not send my own modifications:"] =
    "Ne pas envoyer mes propres modifications :";
 $locale["Do you %s want to add this page \"%s\" to your WatchList?"] =
@@ -774,6 +786,8 @@ $locale["FrameIncludePlugin"] =
    "PluginInclureUnCadre";
 $locale["From english to %s: "] =
    "De l'Anglais au %s: ";
+$locale["Full changes"] =
+   "Plusieurs fois la page";
 $locale["Full text search results for '%s'"] =
    "Résultats de la recherche en texte intégral de ' %s '";
 $locale["FullDump"] =
@@ -1012,12 +1026,22 @@ $locale["List all pages in this wiki."] =
    "Afficher la liste de toutes les pages de ce wiki.";
 $locale["List all pages which link to %s."] =
    "Affiche toutes les pages liée à %s.";
+$locale["List all recent edits in this wiki."] =
+   "Afficher les dernières modifications de ce wiki.";
 $locale["List of pages created by [%s] (%d total):"] =
    "Liste des pages créé près [%s] (%d au total) :";
+$locale["List of pages created by [%s] ({total} total):"] =
+   "Liste des pages créées par [%s] ({total} au total) :";
 $locale["List of pages last edited by [%s] (%d total):"] =
-   "Liste des pages bout édité près [%s] (%d au total) :";
+   "Liste des pages modifiées en dernier par [%s] (%d au total) :";
+$locale["List of pages last edited by [%s] ({total} total):"] =
+   "Liste des pages modifiées par [%s] ({total} au total) :";
 $locale["List of pages owned by [%s] (%d total):"] =
-   "Liste des pages possédé près [%s] (%d au total) :";
+   "Liste des pages possédées par [%s] (%d au total) :";
+$locale["List of pages owned by [%s] ({total} total):"] =
+   "Liste des pages possédées par [%s] ({total} au total) :";
+$locale["List of user-created pages ({total} total):"] =
+   "Liste des pages créées par les utilisateurs ({total} au total) :";
 $locale["List page names which share an initial or final title word with '%s'."] =
    "Affiche la liste des pages qui partagent un mot initial ou final dans leur titre avec %s.";
 $locale["List pages that are explicitly given as the pages argument."] =
@@ -1070,6 +1094,8 @@ $locale["MISSING"] =
    "MANQUANT";
 $locale["MagicPhpWikiURLs"] =
    "URLMagiquesPhpWiki";
+$locale["Major modifications only"] =
+   "Modifications majeures uniquement";
 $locale["Make use of the Google API"] =
    "Faire usage de l'API Google";
 $locale["Markup"] =
@@ -1118,6 +1144,10 @@ $locale["Most users ever online was %d at %s."] =
    "Record du nombre d'utilisateur: %d le %s.";
 $locale["MostPopular"] =
    "LesPlusVisitées";
+$locale["My modifications only"] =
+   "Mes modifications uniquement";
+$locale["My pages only"] =
+   "Mes pages uniquement";
 $locale["Name"] =
    "Nom";
 $locale["Navigation"] =
@@ -1130,6 +1160,8 @@ $locale["New comment."] =
    "Nouveau commentaire.";
 $locale["New page"] =
    "Nouvelle page";
+$locale["New pages only"] =
+   "Nouvelles pages uniquement";
 $locale["New password"] =
    "Nouveau mot de passe";
 $locale["New users may use an empty password."] =
@@ -1206,6 +1238,8 @@ $locale["Okay"] =
    "OK";
 $locale["Old UserPage %s without stored password updated with empty password. Set a password in your UserPreferences."] =
    "L'anciene page %s sans mot de passe attribué a été mise à jour avec un mot de passe vide. Définissez un mot de passe dans vos PréférencesUtilisateurs.";
+$locale["Old and new pages"] =
+   "Pages anciennes et nouvelles";
 $locale["OldMarkupTestPage"] =
    "PageTestAnciennesMarques";
 $locale["OldStyleTable"] =
@@ -1284,6 +1318,8 @@ $locale["Page now public."] =
    "La page est maintenant publique.";
 $locale["Page now unlocked."] =
    "La page est maintenant déverrouillée.";
+$locale["Page once only"] =
+   "Une seule fois la page";
 $locale["Page removed %s"] =
    "Page enlevée %s";
 $locale["Page rename %s to %s"] =
@@ -1511,7 +1547,7 @@ $locale["RawHtmlPlugin"] =
 $locale["Recent Comments"] =
    "Derniers commentaires";
 $locale["Recent Edits"] =
-   "Éditions Récentes";
+   "Éditions récentes";
 $locale["Recent changes"] =
    "Dernières modifications";
 $locale["Recent comments"] =
@@ -2337,7 +2373,7 @@ $locale["invalid %s ignored"] =
 $locale["invalid argument %s"] =
    "Argument non valable : %s";
 $locale["latest comment by "] =
-   "dernier commentaire by ";
+   "dernier commentaire par ";
 $locale["load files into this wiki"] =
    "chargement des fichiers sur ce wiki";
 $locale["lock this page"] =
