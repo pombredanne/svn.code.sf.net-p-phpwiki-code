@@ -10,13 +10,13 @@ code of one of the supported languages, like this:
     // Select your language/locale - default language "en": English
     // English "en"  (English    - HomePage)
     // Dutch   "nl" (Nederlands - ThuisPagina)
-    // Spanish "es" (EspaÒol    - P·ginaPrincipal)
-    // French  "fr" (FranÁais   - PageAccueil))
+    // Spanish "es" (Espa√±ol    - P√°ginaPrincipal)
+    // French  "fr" (Fran√ßais   - PageAccueil))
     // German  "de" (Deutsch    - StartSeite)
     // Swedish "sv" (Svenska    - Framsida)
     // Italian "it" (Italiano   - PaginaPrincipale)
-    // Japanese "ja" (Japanese   - •€°º•‡•⁄°º•∏)
-    // Chinese  "zh" (Chinese   - ?)
+    // Japanese "ja" (Japanese   - „Éõ„Éº„É†„Éö„Éº„Ç∏)
+    // Chinese  "zh" (Chinese   - È¶ñÈ†Å)
     $LANG="it";
 
 Phpwiki uses the DEFAULT_LANGUAGE internally, when no $GLOBALS['LANG'] is given.
@@ -159,7 +159,7 @@ illustrate how to handle special cases, should they arise:
 
 
 #msgid "Page version '%d' named '%s' is not available."
-#msgstr "Xyqlmn vvvm ª %2$s ´ mnqee ª %1$d ´ Gvbbbnbhkkk eeek."
+#msgstr "Xyqlmn vvvm ¬ª %2$s ¬´ mnqee ¬ª %1$d ¬´ Gvbbbnbhkkk eeek."
 
 The %s and %d are reversed, so '2$' and '1$' have been used to
 indicate the new ordering. The punctuation marks for this language
@@ -229,7 +229,7 @@ before you can edit them.
    to uppercase hex codes as shown in the pagename= line of the
    Content-Type header.
 
-   (e.g. "G‰steBuch" => "G%E4steBuch")
+   (e.g. "G√§steBuch" => "G%E4steBuch")
 
  - Translate body text and rename plugin pages to match changes
    specified in the '.po' file. Leave plugin code as english.
@@ -337,13 +337,13 @@ and...
     #: ../lib/Toolbar.php:160 ../templates/browse.html:54
     #, fuzzy
     msgid "Lock page"
-    msgstr "Bloquear p·gina"
+    msgstr "Bloquear p√°gina"
 
 should become:
 
     #: ../lib/Toolbar.php:160 ../templates/browse.html:54
     msgid "Lock page"
-    msgstr "Bloquear p·gina"
+    msgstr "Bloquear p√°gina"
 
 
 HTML Templates
@@ -376,7 +376,7 @@ After you have finished translating, you will want to see the result
 of your efforts. Change the LANG setting in 'config.ini' to the
 two-letter code for your language.
 
-Et voil‡, Phpwiki should now speak Islandic!
+Et voil√†, Phpwiki should now speak Islandic!
 
 If your translation was a success, you may also want to add a
 translation of these instructions for translating PhpWiki ;-)
