@@ -1,4 +1,4 @@
-Date: Fri,  3 Jul 2009 22:21:47 +0000
+Date: Sun,  5 Jul 2009 16:46:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,7 +14,7 @@ PluginMétéoPhp est un PluginWiki qui utilise [PhpWeather|http://phpweather.sou
 pour afficher un bout de texte avec la météo actuelle pour n'importe quel aéroport
 dans le monde. Cela ressemble à ça :
 
-<?plugin PhpWeather menu=true ?>
+<<PhpWeather menu=true >>
 
 !!Arguments 
 
@@ -30,12 +30,12 @@ __icao__:
   l'utilisateur puisse changer la station en utilisant le menu alors
   lancer le plugin comme ceci : 
   <verbatim>
-  <?plugin PhpWeather menu=true icao||=EKYT ?>
+  <<PhpWeather menu=true icao||=EKYT >>
   </verbatim>
   de telle sorte que la valeur peut être ré-écrite lorsque l'utilisateur
   soumet le formulaire. Si vous mettez seulement :
   <verbatim>
-  <?plugin PhpWeather menu=true icao=EKYT ?>
+  <<PhpWeather menu=true icao=EKYT >>
   </verbatim>
   alors rien ne se produira lorsque l'utilisateur sélectionnera une autre 
   station depuis la liste.
@@ -45,7 +45,7 @@ __cc__:
   souhaitez pré-sélectionner un pays différent de celui spécifié dans le 
   ICAO. Ainsi :  
   <verbatim>
-  <?plugin PhpWeather menu=true cc||=GB icao||=KTTS ?>
+  <<PhpWeather menu=true cc||=GB icao||=KTTS >>
   </verbatim>
   affichera la météo courante à NASA Shuttle Facility, États-Unis
   (<tt>KTTS</tt>) et en même temps donnera à l'utilisateur une liste des 
@@ -72,11 +72,11 @@ __units__:
 Le temps chez les Bretons :
 
 <verbatim>
-<?plugin PhpWeather cc=FR icao=LFRN language=fr units=only_metric?>
+<<PhpWeather cc=FR icao=LFRN language=fr units=only_metric>>
 </verbatim>
 
 et qui est actuellement :
-<?plugin PhpWeather cc=FR icao=LFRN language=fr units=only_metric?>
+<<PhpWeather cc=FR icao=LFRN language=fr units=only_metric>>
 
 ----
 [CategoryPluginWiki]

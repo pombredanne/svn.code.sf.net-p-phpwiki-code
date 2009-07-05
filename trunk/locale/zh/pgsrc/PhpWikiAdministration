@@ -1,4 +1,4 @@
-Date: Sat,  4 Jul 2009 17:26:40 +0000
+Date: Sun,  5 Jul 2009 16:45:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.7pre)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -49,7 +49,7 @@ Wiki SandBox 是很容易被清理的. 你可以藉著直接回存 pgsrc 中的�
 
 你可以選擇傾印 Wiki 頁面到目錄中.
 
-  <?plugin WikiForm action=dumpserial?>
+  <<WikiForm action=dumpserial>>
 
 每個頁面較新的版本將會被寫到目錄中,一個檔案一個頁面. 
 該目錄必須要有寫的權限方能寫入!
@@ -66,14 +66,14 @@ Wiki SandBox 是很容易被清理的. 你可以藉著直接回存 pgsrc 中的�
 
 你可以上傳 ZIP 文件,或你本地端的個別檔案.
 
-  <?plugin WikiForm action=upload?>
+  <<WikiForm action=upload>>
 
 !! 載入檔案
 
 你可以載入 ZIP 文件,個別檔案或整個目錄. 檔案或目錄必須在 http 伺服器上.
 你也可以利用這個表單載入位 http: 或 ftp: URL 上的檔案.
 
-  <?plugin WikiForm action=loadfile?>
+  <<WikiForm action=loadfile>>
 
 -----------
 
@@ -103,7 +103,7 @@ __Plain Files__
 
 !!! #[|Dump pages as XHTML][傾印頁面為 XHTML Dump pages as XHTML|#Contents]
 
-  <?plugin WikiForm action=dumphtml?>
+  <<WikiForm action=dumphtml>>
 
 這將會產生包含靜態頁面的目錄,以便於儲存於磁片上,並在沒有 web server 存
 在的環境上使用. 頁面編輯與巡覽的連結將會從頁面上移除.
@@ -127,10 +127,10 @@ __Plain Files__
   點擊這個按鈕將會清除所有快取的轉換內容. (每個頁面內容在下次有人想看這些頁面時
   進行轉換並重新放到快取裡面去.)
 
-  <?plugin WikiAdminUtils
+  <<WikiAdminUtils
            action=purge-cache
            label="Purge Cache"
-   ?>
+   >>
 
 !! 清理 WikiDB 裡的非法檔案名稱 Clean WikiDB of Illegal Filenames
 
@@ -139,10 +139,10 @@ __Plain Files__
 
   這個按鈕將會刪除任何有非法頁面名稱的頁面.
 
-  <?plugin WikiAdminUtils
+  <<WikiAdminUtils
            action=purge-bad-pagenames
            label="Exorcise WikiDB"
-   ?>
+   >>
 
 ----
 

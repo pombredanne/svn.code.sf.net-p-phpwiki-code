@@ -1,4 +1,4 @@
-Date: Sat,  4 Jul 2009 17:26:40 +0000
+Date: Sun,  5 Jul 2009 16:45:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -19,11 +19,11 @@ CalendarPlugin 可以用來在 wiki 頁面的月曆. 對 PersonalWiki~s 來說�
 !!用法:
 
 <verbatim>
-<?plugin Calendar?>
+<<Calendar>>
 </verbatim>
 
 你將會得到:
-<?plugin Calendar?>
+<<Calendar>>
 
 --------
 
@@ -43,7 +43,7 @@ __month_offset__:
 
   加到 ''month''. 可以用來含括好幾個月的月曆到一個 wiki 頁面.
 
-  <?plugin Calendar month_offset=+1?>
+  <<Calendar month_offset=+1>>
 
 !"Day Page" (日頁面)名稱
 
@@ -73,7 +73,7 @@ __start_wday__:
 
   每週是由那一天開始.  這會是一個介於 0 (Sunday)到 6(Saturday) 的整數.
 
-  <?plugin Calendar start_wday=1 ?>
+  <<Calendar start_wday=1 >>
 
 -----
 

@@ -1,4 +1,4 @@
-Date: Sat,  4 Jul 2009 17:26:21 +0000
+Date: Sun,  5 Jul 2009 16:45:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.8)
 Content-Type: application/x-phpwiki;
   pagename=PhpWikiUmfrage;
@@ -7,8 +7,8 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-<?plugin NoCache ?>
-<?plugin WikiPoll require_all=0 require_least=2
+<<NoCache >>
+<<WikiPoll require_all=0 require_least=2
            question[1]="Gefällt Dir PhpWiki?"
              answer[1][1]="Ja" answer[1][2]="Weiß nicht" answer[1][3]="Nein"
            question[2]="Hast Du selber PhpWiki installiert?"
@@ -22,4 +22,4 @@ Content-Transfer-Encoding: binary
            question[5]="Welche PhpWiki Version benutzt Du?"
              answer[5][1]="1.2.x" answer[5][2]="1.3.0, .1 oder .2" answer[5][3]="1.3.3 oder .4"
              answer[5][4]="1.3.5 bis .8"
-?>
+>>

@@ -1,4 +1,4 @@
-Date: Sat, 15 Nov 2003 17:23:27 -0500
+Date: Sun,  5 Jul 2009 16:45:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.5pre)
 Content-Type: application/x-phpwiki;
   pagename=HelloWorldPlugin;
@@ -14,17 +14,19 @@ Content-Transfer-Encoding: binary
 
 簡單的範例 plugin.
 
-<?plugin HelloWorld salutation="Hello," name="WikiUser" ?>
+<<HelloWorld salutation="Hello," name="WikiUser" >>
 
 From the source of this page:
 
 <verbatim>
-<?plugin HelloWorld salutation="Hello," name="WikiUser" ?>
+<<HelloWorld salutation="Hello," name="WikiUser" >>
 </verbatim>
 
 -----
 PhpWiki 的 plugin 架構允許你加入自訂的頁面元素. 你所要做的就是繼承 ~WikiPlugin
 類別並實作你的 run() 方法.
+
+<<PhpHighlight
 
 /**
  * A simple demonstration WikiPlugin.
@@ -78,4 +80,4 @@ extends WikiPlugin
         return $html;
     }
 };
-?>
+>>

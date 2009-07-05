@@ -1,4 +1,4 @@
-Date: Fri,  3 Jul 2009 22:21:47 +0000
+Date: Sun,  5 Jul 2009 16:46:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -18,11 +18,11 @@ Les dates individuelles dans le calendrier sont liées à des pages wiki spécia
 !!! Usage
 
 <verbatim>
-<?plugin Calendar?>
+<<Calendar>>
 </verbatim>
 
 vous donnera :
-<?plugin Calendar?>
+<<Calendar>>
 
 !!! Arguments
 
@@ -37,7 +37,7 @@ __month_offset__ |
 
 Le calendrier suivant affiche systématiquement le mois suivant le mois courant :
 
-<?plugin Calendar month_offset=+1?>
+<<Calendar month_offset=+1>>
 
 !! Nom de la "Page du Jour"
 
@@ -57,7 +57,7 @@ __start_wday__ |
 
 Par exemple, le calendrier suivant commence les semaines le lundi :
 
-<?plugin Calendar start_wday=1 ?>
+<<Calendar start_wday=1 >>
 
 !!! Auteur
 

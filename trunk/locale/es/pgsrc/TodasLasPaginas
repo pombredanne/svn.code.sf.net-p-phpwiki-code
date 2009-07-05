@@ -1,4 +1,4 @@
-Date: Sun, 27 Jan 2002 17:28:55 -0500
+Date: Sun,  5 Jul 2009 16:47:06 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -7,4 +7,4 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-<?plugin AllPages noheader||=0 include_empty||=0 info||='' ?>
+<<AllPages noheader||=0 include_empty||=0 info||='' >>

@@ -1,4 +1,4 @@
-Date: Sat, 8 Jan 2005 22:55:20 +0100
+Date: Sun,  5 Jul 2009 16:45:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre-20041223)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -84,12 +84,12 @@ funktioniert nicht''
       |> Marco      |< Polo      | billiger    |< nicht verfügbar
 </pre>
 ;:will generate
-<?plugin OldStyleTable
+<<OldStyleTable
 ||  <strong>Namen</strong>              |v <strong>Kost</strong>    |v <strong>Bemerkungen</strong>
 | <strong>Vor.</strong>    | <strong>Nach.</strong>
 |> Jeff       |< Dairiki   |^  billig     |< nicht preiswert
 |> Marco      |< Polo      | billiger     |< nicht verfügbar
-?>
+>>
 
 ;:Note that multiple <strong>|</strong>'s lead to spanned columns, and <strong>v</strong>'s can be used to span rows.  A <strong>></strong> generates a right justified column, <strong><</strong> a left justified column and <strong>^</strong> a centered column (which is the default.)
 

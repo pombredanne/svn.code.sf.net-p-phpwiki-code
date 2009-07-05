@@ -1,4 +1,4 @@
-Date: Sat,  4 Jul 2009 17:25:46 +0000
+Date: Sun,  5 Jul 2009 16:47:27 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -93,12 +93,12 @@ regelbreuken niet oversteken.
       |> Marco      |< Polo      | Cheaper     |< Not available
 </pre>
 ;:will generate
-<?plugin OldStyleTable
+<<OldStyleTable
 ||  <strong>Name</strong>               |v <strong>Cost</strong>   |v <strong>Notes</strong>
 | <strong>First</strong>   | <strong>Last</strong>
 |> Jeff       |< Dairiki   |^  Cheap     |< Not worth it
 |> Marco      |< Polo      | Cheaper     |< Not available
-?>
+>>
 
 ;:Note that multiple <strong>|</strong>'s lead to spanned columns, and <strong>v</strong>'s can be used to span rows.  A <strong>></strong> generates a right justified column, <strong><</strong> a left justified column and <strong>^</strong> a centered column (which is the default.)
 

@@ -1,4 +1,4 @@
-Date: Sat,  4 Jul 2009 17:26:21 +0000
+Date: Sun,  5 Jul 2009 16:45:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,7 +12,7 @@ _*Beachte:*_ _Du mußt den Systemverwalter-Zugang zuerst mit einem
 Passwort schützen, sonst werden die meisten Links auf dieser Seite
 nicht funktionieren._
 
-<?plugin CreateToc jshide||=1 with_toclink||=1 ?>
+<<CreateToc jshide||=1 with_toclink||=1 >>
 ----
 !!! Seiten Explorer
 
@@ -46,19 +46,19 @@ Email Verification:
   Dieser Link zeigt eine Liste aller mit E-Mail registrierten Benutzer, und Checkboxes um die 
   Verifizierung manuell zu ändern.
 
-  <?plugin WikiAdminUtils
+  <<WikiAdminUtils
            action=email-verification
            label="E-Mail Verifizierung"
-   ?>
+   >>
 
 Zugangsbeschränkungen (disabled):
 
   To prevent from robots eating all possible ressources in a short time, blocking from certain IP's or not-well-behaving user agents can be defined below. See PhpWiki:HowToBlockRobots and MeatBall:SurgeProtector. _Note: Not yet enabled._
 
-  <?plugin WikiAdminUtils
+  <<WikiAdminUtils
            action=access-restrictions
            label="Zugangsbeschränkungen"
-   ?>
+   >>
 
 ----------
 !!! Aufräumen
@@ -92,7 +92,7 @@ gespeichert.
 Hier kannst du alle Seiten aus deinem Wiki in eine lokales Verzeichnis
 deiner Wahl herunterladen.
 
-  <?plugin WikiForm action=dumpserial?>
+  <<WikiForm action=dumpserial>>
 
 Nur die neuesten Versionen aller Seiten wird als Einzeldatei in dieses
 Verzeichnis geschrieben. Beachte, dass evtl. deine Benutzerrechte dazu
@@ -113,7 +113,7 @@ Archiv insosoweit anpassen.
 
 Hier kannst du ein ZIP Archiv hochladen, oder einzelne Dateien von deinem Computer.
 
-  <?plugin WikiForm action=upload?>
+  <<WikiForm action=upload>>
 
 ! Datei Laden
 
@@ -122,8 +122,8 @@ ins Wiki laden. Die Dateien oder Verzeichnisse müssen lokal auf dem
 HTTP Server bestehen. Du kannst den Pfad allerdings auch mit der http:
 oder einer ftp: URL von externen Quellen laden.
 
-  <?plugin WikiForm action=loadfile?>
-  <?plugin WikiForm action=loadfile buttontext="Laden & Überschreiben" overwrite=1?>
+  <<WikiForm action=loadfile>>
+  <<WikiForm action=loadfile buttontext="Laden & Überschreiben" overwrite=1>>
 
 
 !! Updaten
@@ -171,7 +171,7 @@ einfache Textdatei.)
 
 !!! Seiten als XHTML Dateien speichern
 
-  <?plugin WikiForm action=dumphtml?>
+  <<WikiForm action=dumphtml>>
 
 Erzeugt ein Verzeichnis aller Wiki Dateien als statische XHTML Dateien, die 
 auch ohne Webserver und Datenbank betrachtbar sind.
@@ -199,10 +199,10 @@ rendering since parsing of the wiki-text takes a fair amount of juice.
   content. (Each pages content will be transformed and re-cached next
   time someone views it.)
 
-  <?plugin WikiAdminUtils
+  <<WikiAdminUtils
            action=purge-cache
            label="Cache Löschen"
-   ?>
+   >>
 
 !! Clean WikiDB of Illegal Filenames
 
@@ -212,10 +212,10 @@ might create one....
 
   This button will delete any pages with illegal page names.
 
-  <?plugin WikiAdminUtils
+  <<WikiAdminUtils
            action=purge-bad-pagenames
            label="WikiDB Bereinigen"
-   ?> 
+   >> 
 
 
 !! Clean WikiDB of empty and unreferenced pages
@@ -223,10 +223,10 @@ might create one....
   *Warning!* This button will delete every empty and unreferenced page, without any possibility to restore them again.
   This will disable the possibility to revert or get back any deleted page.
 
-  <?plugin WikiAdminUtils
+  <<WikiAdminUtils
            action=purge-empty-pages
            label="Purge all empty unreferenced pages"
-   ?>
+   >>
 
 !! Convert cached_html to new SQL column
 
@@ -234,30 +234,30 @@ might create one....
   new page.cached_html field seperately, and now you want to move this data from 
   page.pagedata over to page.cached_html.
 
-  <?plugin WikiAdminUtils
+  <<WikiAdminUtils
            action=convert-cached-html
            label="Convert cached_html"
-   ?>
+   >>
 
 
 !! Check WikiDB
 
   This button will check the Wiki page database for consistency. This can last several minutes.
 
-  <?plugin WikiAdminUtils
+  <<WikiAdminUtils
            action=db-check
            label="Check WikiDB"
-   ?>
+   >>
 
 !! Rebuild WikiDB
 
   This will retransform all pages and rebuild the Wiki database on consistency errors or parser updates. 
   This can last several minutes, eat a lot of memory and possibly times out!!
 
-  <?plugin WikiAdminUtils
+  <<WikiAdminUtils
            action=db-rebuild
            label="Rebuild WikiDB"
-   ?>
+   >>
 
 ----
 PhpWikiDokumentation

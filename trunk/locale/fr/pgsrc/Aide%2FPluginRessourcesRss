@@ -1,4 +1,4 @@
-Date: Fri,  3 Jul 2009 22:21:47 +0000
+Date: Sun,  5 Jul 2009 16:46:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -20,8 +20,8 @@ PluginRessourcesRss est un plugin wiki pour afficher des ressources RSS.
 !!  Usage
 
 <verbatim>
-  <?plugin RssFeed?>
-  <?plugin RssFeed url=http://somesite.tld/linktofeed.rss ?>
+  <<RssFeed>>
+  <<RssFeed url=http://somesite.tld/linktofeed.rss >>
 </verbatim>
 
 !! Arguments
@@ -53,8 +53,8 @@ maxitem|
 
 * sources ~PhpWikiRss pour PhpWiki:RecentChanges :
 <verbatim>
-  <?plugin RssFeed feed=PhpWikiRss description="PhpWiki:RecentChanges"
-	           url=http://phpwiki.sourceforge.net/phpwiki/RecentChanges?format=rss ?>
+  <<RssFeed feed=PhpWikiRss description="PhpWiki:RecentChanges"
+	           url=http://phpwiki.sourceforge.net/phpwiki/RecentChanges?format=rss >>
 </verbatim>
 
 * [PhpWikiDemo:sidebar/]  _Exemple barre verticale_

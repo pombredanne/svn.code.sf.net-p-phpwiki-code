@@ -1,4 +1,4 @@
-Date: Fri,  3 Jul 2009 22:21:47 +0000
+Date: Sun,  5 Jul 2009 16:46:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -24,13 +24,13 @@ un peu instable
 !! Usage
 
 <verbatim>
-     <?plugin UnfoldSubpages ?>
-  ou <?plugin UnfoldSubpages sortby=-mtime words=50 maxpages=5 ?>
-  ou <?plugin UnfoldSubpages quiet=1 smalltitle=1 ?>
-  ou <?plugin UnfoldSubpages sections=2 words=100 ?>
-  ou <?plugin UnfoldSubpages lines=3 ?>
-  ou <?plugin UnfoldSubpages pagename="AdministrationDePhpWiki" 
-              section="Arguments" sectionhead=1 ?>
+     <<UnfoldSubpages >>
+  ou <<UnfoldSubpages sortby=-mtime words=50 maxpages=5 >>
+  ou <<UnfoldSubpages quiet=1 smalltitle=1 >>
+  ou <<UnfoldSubpages sections=2 words=100 >>
+  ou <<UnfoldSubpages lines=3 >>
+  ou <<UnfoldSubpages pagename="AdministrationDePhpWiki" 
+              section="Arguments" sectionhead=1 >>
 </verbatim>
 
 !!Arguments
@@ -75,10 +75,10 @@ __sort__:
 La ligne
 
 <verbatim>
-<?plugin UnfoldSubpages pagename=AdministrationDePhpWiki ?>
+<<UnfoldSubpages pagename=AdministrationDePhpWiki >>
 </verbatim>
 
 affiche toutes les pages qui dépendent de AdministrationDePhpWiki :
 
-<?plugin UnfoldSubpages pagename=AdministrationDePhpWiki ?>
+<<UnfoldSubpages pagename=AdministrationDePhpWiki >>
 

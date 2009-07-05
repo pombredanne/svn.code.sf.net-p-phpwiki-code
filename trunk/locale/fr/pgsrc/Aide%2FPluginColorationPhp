@@ -1,4 +1,4 @@
-Date: Fri,  3 Jul 2009 22:21:47 +0000
+Date: Sun,  5 Jul 2009 16:46:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -16,17 +16,17 @@ en utilisant la fonction php-function: highlight-string
 !!Usage
 
 Vous devez spécifier les options de ce plugin sur la même ligne que 
-=<?plugin= puis écrire le code sur les lignes suivantes jusqu'au 
-=?>= final :
+=<<= puis écrire le code sur les lignes suivantes jusqu'au 
+=>>= final :
 
 <verbatim>
-<?plugin PhpHighlight [wrap?] [color options]
+<<PhpHighlight [wrap?] [color options]
 code devant être coloré
-?>
+>>
 </verbatim>
 
 Dépendant de l'option =wrap=, le code prendra soin d'ajouter =<?php=
-et =?>= au code avant de la passer à la fonction highlight-string. Si 
+et =>>= au code avant de la passer à la fonction highlight-string. Si 
 les délimiteurs php sont déjà présents alors le plugin les enlèvera
 encore de la chaîne colorée avant de les afficher.
 
@@ -59,18 +59,18 @@ Options des couleurs :
 
 !Code PHP avec les couleurs par défaut de =php.ini= :
 
-<?plugin PhpHighlight
+<<PhpHighlight
 function hello() {
     echo "Hello World<p>";
 }
-?>
+>>
 
 !HTML avec PHP inclus
 
 Ici nous devons utiliser =wrap=0= pour prévenir l'enveloppement automatique
 et fermer '=?>=' comme '=? >=' :
 
-<?plugin PhpHighlight wrap=0 html='#000000' bg='#dddddd'
+<<PhpHighlight wrap=0 html='#000000' bg='#dddddd'
 <html>
   <head>
     <title>PHP Test</title>
@@ -79,7 +79,7 @@ et fermer '=?>=' comme '=? >=' :
     < ?php echo "<p>Hello World</p>\n"; ? >
   </body>
 </html>
-?>
+>>
 
 !Source en C
 
@@ -88,7 +88,7 @@ il est utilisable pour des colorations syntaxique de code C car les deux
 syntaxe sont similaires.
 
 
-<?plugin PhpHighlight default=black string=blue comment=gray keyword=purple
+<<PhpHighlight default=black string=blue comment=gray keyword=purple
 #include <stdio.h>
 /* Get load */
 int
@@ -101,7 +101,7 @@ getload(void)
     }
     fclose(fp);
 }
-?>
+>>
 
 !!Auteurs
 
@@ -109,5 +109,4 @@ Martin Geisler mailto:gimpster@gimpster.com et Carsten Klapp
 mailto:carstenklapp@users.sourceforge.net.
 
 ----
-
 [CategoryPluginWiki]
