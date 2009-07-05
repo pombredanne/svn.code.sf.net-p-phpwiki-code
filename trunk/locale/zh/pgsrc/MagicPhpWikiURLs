@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-!!! About phpwiki: URLs
+== About phpwiki: URLs
 
 一種特別的 URL, 用來建立連結以執行管理和 PhpWiki 裡的其他特殊功能.
 這裡是它們如何運作的簡短描述.
@@ -52,7 +52,7 @@ __setprefs__:
 
   接受 __edit_area_width__, __edit_area_height__.
 
-!! Writing Magic Links in Wiki Pages
+=== Writing Magic Links in Wiki Pages
 
 一個 magic 連結看起來會是:
 
@@ -64,7 +64,7 @@ __~[__ ''text'' __|__ ''phpwiki-url'' __]__
 
 _phpwiki-url_ 就如同上面描述的一樣,是一個 *phpwiki:* URL.
 
-!Some examples
+==== Some examples
 
 <verbatim>
 [ Edit the SandBox | phpwiki:SandBox?action=edit ]
@@ -78,7 +78,7 @@ _phpwiki-url_ 就如同上面描述的一樣,是一個 *phpwiki:* URL.
 * [ Get a Full Zip Dump | phpwiki:?action=zip&include=all ],
 * Search for [ Page titles containing 'wiki' | phpwiki:?action=TitleSearch&s=wiki ]
 
-!! Writing Magic Forms in Wiki Pages
+=== Writing Magic Forms in Wiki Pages
 
 ''__Note__: 舊的 Magic forms 語法將不再支援.
 他們需以 =<?plugin-form>= 代替.''
@@ -94,7 +94,7 @@ and the plugin supports searching, then it will be rendered as a form.
 
   Specifies the default value for the input.
 
-!Examples:
+==== Examples:
 
 A search plugin invoked with *<?plugin* instead of *<?plugin-form*
 simply inserts the search results of the plugin:

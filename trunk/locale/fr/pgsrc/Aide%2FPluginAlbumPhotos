@@ -8,12 +8,12 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!!! Description
+== Description
 
 Faire un album en affichant un ensemble de photos dont la liste est
 un fichier de texte avec des descriptions optionnelles.
 
-!!Usage
+===Usage
 
 <verbatim>
 <<PhotoAlbum
@@ -28,7 +28,7 @@ un fichier de texte avec des descriptions optionnelles.
 >>
 </verbatim>
 
-!!! Arguments
+== Arguments
 
 ''='src'= est le seul paramètre obligatoire.''
 
@@ -63,9 +63,9 @@ __height__, __width__:
   retrieved by [php-function:getimagesize] and can be absolute or a
   percentage (e.g. "50%").
 
-!!! Exemples
+== Exemples
 
-!! Fichier texte
+=== Fichier texte
 Contenu possible d'une fichier texte valide :
 
 <verbatim>
@@ -74,7 +74,7 @@ photo-02.jpg
 jn.gif; Joyeux Noël !
 </verbatim>
 
-!! Exemple d'album
+=== Exemple d'album
 Dossier local :
 <<PhotoAlbum
          src="themes/Hawaiian/images/pictures/"
@@ -86,7 +86,7 @@ ou par une adresse extérieure :
 </verbatim>
 >>
 
-!!! Auteur
+== Auteur
 
 [Ted Vinke|mailto:teddy@jouwfeestje.com] <teddy@jouwfeestje.com>
 

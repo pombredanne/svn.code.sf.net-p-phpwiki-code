@@ -7,10 +7,10 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!!! Zusammenfassung
+== Zusammenfassung
 Zeigt eine Liste von Bilder aus einer Definitionsdatei mit optionaler Beschreibung als Album an. 
 
-!!! Benutzung 
+== Benutzung 
 <verbatim>
 <<PhotoAlbum
          src=http://server/textfile
@@ -24,7 +24,7 @@ Zeigt eine Liste von Bilder aus einer Definitionsdatei mit optionaler Beschreibu
 >>
 </verbatim>
 
-!!! Argumente
+== Argumente
 _Nur der ='src'= Parameter ist verpflichtend._
 
 *src*:
@@ -101,8 +101,8 @@ _Nur der ='src'= Parameter ist verpflichtend._
 *h*: (Optional)
   "highlightcolorofthisphoto.jpg" only
 
-!!! Beispiele
-!! Textdatei
+== Beispiele
+=== Textdatei
 Möglicher Inhalt einer Definitionsdatei:
 
 <verbatim>
@@ -111,7 +111,7 @@ photo-02.jpg
 christmas.gif; Frohe Weihnachten!
 </verbatim>
 
-!! Beispiel Alben
+=== Beispiel Alben
 Lokales Verzeichnis:
 <<PhotoAlbum
          src="themes/Hawaiian/images/pictures/"
@@ -125,7 +125,7 @@ oder via externe URL:
 
 [ /Diashow ]
 
-!!! Plugin Autoren
+== Plugin Autoren
 * [Ted Vinke|mailto:teddy@jouwfeestje.com] Originaler Autor
 * [ReiniUrban|PhpWiki:ReiniUrban] Lokales Dateisystem
 * [ThomasHarding|PhpWiki:ThomasHarding] Diashow und thumbs

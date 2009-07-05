@@ -14,13 +14,13 @@ PageGroupTest 是 !PageGroup plugin 的測試.
 
 點擊第一頁以起始這個實驗性 plugin 的旅程.
 
-!Table of Contents
+==== Table of Contents
 PageGroupTestOne
 PageGroupTestTwo
 PageGroupTestThree
 PageGroupTestFour
 
-! TODO
+==== TODO
 
 Page names currently must be listed one per line. An ordered or
 unordered list would be better.

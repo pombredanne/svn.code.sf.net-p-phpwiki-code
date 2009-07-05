@@ -8,11 +8,11 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-!! Synopsis
+=== Synopsis
 
 ExternalSearchPlugin 建立可以查詢 InterWiki 或其他內部站台的表單.
 
-!! Typical Usage
+=== Typical Usage
 <verbatim>
 <<ExternalSearch
          url="InterWiki or URL"
@@ -21,7 +21,7 @@ ExternalSearchPlugin 建立可以查詢 InterWiki 或其他內部站台的表單
 </verbatim>
 
 
-!! Arguments
+=== Arguments
 __url__:
   指定來自 InterWikiMap 或 url 的 wiki. 任何被使用者輸入的文字將會附加在
   搜尋 url 後面. 這段替代字串 '__=%s=__' 將會被用來在 url 裡插入搜尋查詢,
@@ -38,7 +38,7 @@ __debug__:
   不要真的重導向到外部站台, 只要印出要被重導向到的 url.
 
 
-!! Examples
+=== Examples
 在 MeatBall wiki 上執行全文搜索:
 
 <<ExternalSearch

@@ -8,12 +8,12 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!! Descrition
+=== Descrition
 
 Le PluginRechercheExterne crée un formulaire pour interroger les
 InterWiki~s ou autres sites Internet.
 
-!! Usage
+=== Usage
 
 <verbatim>
 <<ExternalSearch
@@ -23,7 +23,7 @@ InterWiki~s ou autres sites Internet.
 </verbatim>
 
 
-!! Arguments
+=== Arguments
 __url__:
   Spécifie un wiki depuis la CarteInterWiki ou une url. N'importe quel
   texte saisi par l'utilisateur sera ajouté à l'url de recherche. La 
@@ -42,7 +42,7 @@ __debug__:
   Ne redirige pas réellement vers le site externe mais affiche juste 
   l'url vers lequel il devrait l'être.
 
-!! Exemples
+=== Exemples
 
 <verbatim>
   url="http://sunir.org/apps/meta.pl?"       name="Metawiki Search"

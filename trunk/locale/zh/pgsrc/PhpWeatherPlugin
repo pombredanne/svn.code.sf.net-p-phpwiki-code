@@ -8,14 +8,14 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-!!! Synopsis
+== Synopsis
 
 ~PhpWeatherPlugin 是個 WikiPlugin, 他使用 PhpWeather 來顯示目前世界上
 某些機場的氣象. 它看起來像是這樣:
 
 <<PhpWeather menu=true >>
 
-!!! Plugin Arguments
+== Plugin Arguments
 
 __menu__:
   設定為 =true= 是讓 plugin 在報告之後產生選單. 使用者將可以從這個選單

@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!! Description
+=== Description
 
 RSS (Really Simple Syndication) est un moyen pour extraire d'un site web 
 du contenu régulièrement mis à jour. Un fichier RSS est un simple fichier 
@@ -17,14 +17,14 @@ texte comportant la description synthétique du contenu.
 PluginRessourcesRss est un plugin wiki pour afficher des ressources RSS.
 
 
-!!  Usage
+===  Usage
 
 <verbatim>
   <<RssFeed>>
   <<RssFeed url=http://somesite.tld/linktofeed.rss >>
 </verbatim>
 
-!! Arguments
+=== Arguments
 Argument|
   Valeur par défaut|
     Description
@@ -45,11 +45,11 @@ maxitem|
   0|
     nombre maximum d'entrées (0 = illimitée)
 
-!! Code source (depuis v1.3.8):
+=== Code source (depuis v1.3.8):
 * [PhpWikiCvs:lib/plugin/RssFeed.php]
 * [PhpWikiCvs:lib/RssParser.php] _révisé pour allow_url_fopen=Off_
 
-!! Exemples
+=== Exemples
 
 * sources ~PhpWikiRss pour PhpWiki:RecentChanges :
 <verbatim>

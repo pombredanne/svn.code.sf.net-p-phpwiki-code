@@ -11,7 +11,7 @@ Content-Transfer-Encoding: binary
 TestDeCache est un simple test de la classe ~WikiPluginCached
 qui convertit un texte en image.
 
-!Exemple :
+==== Exemple :
 
 <verbatim>
 <<CacheTest text="What a wonderful test!" >>

@@ -8,12 +8,12 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!!Description
+===Description
 
 Ce plugin est utilisé avec PluginCalendrier. Il a été écrit pour ceux qui
 veulent utilisé wiki comme un gestionnaire d'informations personnelles. 
 
-!!Usage
+===Usage
 
 Il suffit de cliquer sur une date du calendrier, d'éditer la tâche pour ce jour 
 puis de revenir sur la page courante. L'évènement doit apparaître dans une liste
@@ -24,7 +24,7 @@ sous le calendrier.
 <<CalendarList >>
 </verbatim>
 
-!!Exemple
+===Exemple
 
 Cliquez sur une date, éditer puis revenir sur cette page :
 

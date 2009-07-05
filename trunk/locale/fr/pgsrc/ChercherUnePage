@@ -27,7 +27,7 @@ ceux qui s'épellent ou sonnent de façon similaire (en anglais).
 
 <?plugin-form FuzzyPages?>
 ------
-! Trucs
+==== Trucs
 Séparez les mots par des espaces.
 __Tous__ les mots doivent correspondre (c'est le ET logique)%%%
 Pour exclure un mot, faites-le précéder d'un '-'.%%%

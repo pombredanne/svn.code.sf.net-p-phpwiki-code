@@ -8,12 +8,12 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!!Description
+===Description
 
 PluginColorationPhp affiche le code PHP en coloration syntaxique
 en utilisant la fonction php-function: highlight-string
 
-!!Usage
+===Usage
 
 Vous devez spécifier les options de ce plugin sur la même ligne que 
 =<<= puis écrire le code sur les lignes suivantes jusqu'au 
@@ -30,7 +30,7 @@ et =>>= au code avant de la passer à la fonction highlight-string. Si
 les délimiteurs php sont déjà présents alors le plugin les enlèvera
 encore de la chaîne colorée avant de les afficher.
 
-!!Options
+===Options
 
 Enveloppement automatique :
 
@@ -55,9 +55,9 @@ Options des couleurs :
 
   =string=, =comment=, =keyword=, =bg=, =default=, and =html=
 
-!!Exemples
+===Exemples
 
-!Code PHP avec les couleurs par défaut de =php.ini= :
+==== Code PHP avec les couleurs par défaut de =php.ini= :
 
 <<PhpHighlight
 function hello() {
@@ -65,7 +65,7 @@ function hello() {
 }
 >>
 
-!HTML avec PHP inclus
+==== HTML avec PHP inclus
 
 Ici nous devons utiliser =wrap=0= pour prévenir l'enveloppement automatique
 et fermer '=?>=' comme '=? >=' :
@@ -81,7 +81,7 @@ et fermer '=?>=' comme '=? >=' :
 </html>
 >>
 
-!Source en C
+==== Source en C
 
 Bien que =highlight_string()= ait été conçu avec du code PHP à l'esprit,
 il est utilisable pour des colorations syntaxique de code C car les deux 
@@ -103,7 +103,7 @@ getload(void)
 }
 >>
 
-!!Auteurs
+===Auteurs
 
 Martin Geisler mailto:gimpster@gimpster.com et Carsten Klapp
 mailto:carstenklapp@users.sourceforge.net.

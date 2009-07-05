@@ -11,7 +11,7 @@ Content-Transfer-Encoding: binary
 PhpHighlightPlugin 使用了 php-function:highlight-string 來優雅印出
 PHP 程式碼.
 
-!!! Usage
+== Usage
 
 在同一行指定 plugin 的選項,簡單說就是在 =<?plugin= 與 =?>= 之間置放選項.
 
@@ -21,13 +21,13 @@ code to be highlighted
 >>
 </verbatim>
 
-!!! Description
+== Description
 
 plugin 將視 =wrap= 選項決定是否要在傳入 php-function:highlight-string 之前
 適切地加入 =<?php= 與 =?>= . 如果加入了 PHP 分隔子,那麼 plugin 在輸出之前, 
 會從 highlighted 字串再次移除他們. 
 
-!!! Options
+== Options
 
 Automatic Wrapping (自動分行):
 
@@ -48,9 +48,9 @@ Color Options:
 
   =string=, =comment=, =keyword=, =bg=, =default=, and =html=
 
-!!! Examples
+== Examples
 
-!! PHP 和預設顏色(從 =php.ini= 來的):
+=== PHP 和預設顏色(從 =php.ini= 來的):
 
 <<PhpHighlight
 function hello() {
@@ -58,7 +58,7 @@ function hello() {
 }
 >>
 
-!! HTML 與嵌入的 PHP
+=== HTML 與嵌入的 PHP
 
 這兒我們必須使用 =wrap=0= 以避免自動折行並替換 '=?>=' 為 '=? >=':
 
@@ -73,7 +73,7 @@ function hello() {
 </html>
 >>
 
-!! C Source
+=== C Source
 
 雖然 =highlight_string() 是為 PHP 程式碼所設計,但他也適用於大部分 C 的基本
 語法 highlight ,因為這兩個語言的語法是很接近的.
@@ -93,7 +93,7 @@ getload(void)
 }
 >>
 
-!!! Authors
+== Authors
 
 Martin Geisler mailto:gimpster@gimpster.com and Carsten Klapp
 mailto:carstenklapp@users.sourceforge.net.

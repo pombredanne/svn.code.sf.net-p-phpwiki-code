@@ -16,7 +16,7 @@ CalendarPlugin 可以用來在 wiki 頁面的月曆. 對 PersonalWiki~s 來說�
 ''此功能是從 [Manila|http://manila.userland.com/] 得到啟示,
 並且首先由 GaryBenson 所實作. 後來則被 JeffDairiki 實作為 WikiPlugin.''
 
-!!用法:
+===用法:
 
 <verbatim>
 <<Calendar>>
@@ -27,9 +27,9 @@ CalendarPlugin 可以用來在 wiki 頁面的月曆. 對 PersonalWiki~s 來說�
 
 --------
 
-!! Plugin 引數
+=== Plugin 引數
 
-!月份的選擇
+==== 月份的選擇
 
 __year__:
 
@@ -45,7 +45,7 @@ __month_offset__:
 
   <<Calendar month_offset=+1>>
 
-!"Day Page" (日頁面)名稱
+==== "Day Page" (日頁面)名稱
 
 __date_format__:
 
@@ -57,7 +57,7 @@ __prefix__:
   Prepended to the date (formatted per ''date_format'') to generate
   the "day page" names. The default value is =~[pagename]/=.
 
-!Appearance
+==== Appearance
 
 __month_format__:
 
@@ -77,7 +77,7 @@ __start_wday__:
 
 -----
 
-! Patch for 1.2
+==== Patch for 1.2
 
 GaryBenson wrote the first calendar implementation for PhpWiki 1.2.
 (Since 1.2 doesn't support plugins, it uses a =###CALENDAR###= token

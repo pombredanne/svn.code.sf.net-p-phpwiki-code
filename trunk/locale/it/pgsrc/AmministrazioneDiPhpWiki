@@ -15,7 +15,7 @@ password in the PhpWiki config file._
 <<CreateToc jshide||=1 with_toclink||=1 >>
 
 ----
-!!! Page Explorer
+== Page Explorer
 
 First select pages and then define the action:
 
@@ -31,7 +31,7 @@ or call the available ~WikiAdmin actions directly:
           [/Chown]
 
 ----
-!!! User Management
+== User Management
 
 PhpWiki:EmailVerification is currently non-strict, leaving some possible holes, which can be administrated below.
 
@@ -50,7 +50,7 @@ To prevent from robots eating all possible ressources in a short time, blocking 
    >>
 
 ----
-!!! Cleanup
+== Cleanup
 
 A Wiki SandBox is very easy to clean. Here you can restore it to
 pristine condition by loading the default from pgsrc.
@@ -59,9 +59,9 @@ pristine condition by loading the default from pgsrc.
 
 ----------
 
-!!! Making Snapshots or Backups
+== Making Snapshots or Backups
 
-!! ZIP files of database
+=== ZIP files of database
 
 These links lead to zip files, generated on the fly, which contain all
 the pages in your Wiki. The zip file will be downloaded to your local
@@ -77,7 +77,7 @@ computer.
 If your php has ''zlib'' support, the files in the archive will be
 compressed, otherwise they will just be stored.
 
-!! Dump to directory
+=== Dump to directory
 
 Here you can dump pages of your Wiki into a directory of your choice.
 
@@ -88,7 +88,7 @@ directory, one page per file. Your server must have write permissions
 to the directory!
 
 -----------
-!!! Restoring
+== Restoring
 
 If you have dumped a set of pages from PhpWiki, you can reload them
 here. Note that pages in your database will be overwritten; thus, if
@@ -97,14 +97,14 @@ overwrite the one in your database now. If you want to be selective
 just delete the pages from the directory (or zip file) which you don't
 want to load.
 
-!! Upload File
+=== Upload File
 
 Here you can upload ZIP archives, or individual files from your
 (client) machine.
 
   <<WikiForm action=upload>>
 
-!! Load File
+=== Load File
 
 Here you can load ZIP archives, individual files or entire
 directories. The file or directory must be local to the http
@@ -113,7 +113,7 @@ server. You can also use this form to load from an http: or ftp: URL.
   <<WikiForm action=loadfile>>
   <<WikiForm action=loadfile buttontext="Load & Overwrite" overwrite=1>>
 
-!! Upgrade
+=== Upgrade
 
 Do some verification checks and upgrade changes automatically, after having installed a 
 new phpwiki engine update:
@@ -124,7 +124,7 @@ new phpwiki engine update:
 
 -----------
 
-!!! Format of the files
+== Format of the files
 
 Currently the pages are stored, one per file, as MIME (RFC:2045)
 e-mail (RFC:822) messages. The content-type ''application/x-phpwiki''
@@ -134,7 +134,7 @@ have type ''multipart/mixed'', and contain several sub-parts, each
 with type ''application/x-phpwiki''.)  The message body contains the
 page text.
 
-!! Old Formats
+=== Old Formats
 
 __Serialized Files__
 
@@ -153,7 +153,7 @@ these three types of files, and handle them accordingly.
 
 ----
 
-!!! Dump pages as XHTML
+== Dump pages as XHTML
 
   <<WikiForm action=dumphtml>>
 
@@ -167,7 +167,7 @@ pages.
 
 ----
 
-!!! Phpwiki Internals
+== Phpwiki Internals
 
 These are here mostly for debugging purposes (at least, that's the
 hope.)
@@ -175,7 +175,7 @@ hope.)
 In normal use, you shouldn't need to use these, though, then again,
 they shouldn't really do any harm.
 
-!! Purge Markup Cache
+=== Purge Markup Cache
 
 (If your wiki is so configured,) the transformed (almost-HTML) content
 of the most recent version of each page is cached. This speeds up page
@@ -190,7 +190,7 @@ rendering since parsing of the wiki-text takes a fair amount of juice.
            label="Purge Cache"
    >>
 
-!! Clean WikiDB of Illegal Filenames
+=== Clean WikiDB of Illegal Filenames
 
 Page names beginning with the subpage-separator, usually a slash
 (=/=), are not allowed. Sometimes though an errant plugin or something

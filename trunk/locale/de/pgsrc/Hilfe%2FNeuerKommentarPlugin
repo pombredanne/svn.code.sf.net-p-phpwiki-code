@@ -14,13 +14,13 @@ Hilfe:WikiPlugin um Benutzer Kommentare zu Seiten ans Ende einer Seite anhängen
 Anpassungs des Layouts über die Vorlagen comment.tmpl und addcomment.tmpl, und die CSS Klassen
 wikicomment, wikicomment-header, wikicomment-body, wikicomment-footer
 
-!! Benutzung
+=== Benutzung
 
 <verbatim>
      <<AddComment order||=normal jshide||=0 mode||=show,add noheader||=0 >>
 </verbatim>
 
-!! Argumente
+=== Argumente
 
 __jshide__: |
   Bool'sche Variable, ob die Kommentare oder Eingabe-Textbox zuerst versteckt sein soll, und erst auf Klick erscheint. Vorgabe: 0
@@ -33,7 +33,7 @@ __noheader__:  |
 __pagename__:  |
   Hänge Kommentare an welche Seite an? Vorgabe: Aktueller Seitenname
 
-!! Beispiele
+=== Beispiele
 
 <<AddComment jshide||=1 >>
 ----

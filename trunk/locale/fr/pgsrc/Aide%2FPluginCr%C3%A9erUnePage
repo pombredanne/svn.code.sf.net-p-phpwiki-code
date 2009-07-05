@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!!Description
+===Description
 
 PluginCréerUnePage vous permet (depuis v1.3.8) de créer facilement de nouvelles 
 pages, éventuellement avec un contenu par défaut
@@ -16,7 +16,7 @@ pages, éventuellement avec un contenu par défaut
 Il vous permet de créer une page avec un nouveau nom depuis un formulaire et éventuellement
 avec un contenu initial à partir d'un modèle.
 
-!!Usage
+===Usage
 
 Mettez un "<~?plugin-form ~CreatePage ?~>" sur une page, affichez cette page, entrez le nom
 de la page à créer puis cliquez sur le bouton.
@@ -26,7 +26,7 @@ de la page à créer puis cliquez sur le bouton.
      <?plugin-form CreatePage template=CategoryHomePage ?>
 </verbatim>
 
-!!Arguments
+===Arguments
 __s__: |
   Le nom de la page qui sera passé au plugin. Par défaut : ""
 __initial_content__:  |
@@ -35,16 +35,16 @@ __template__:  |
   La nouvelle page sera pré-remplie avec ce contenu de cette page. Par défaut : "" 
 
 
-!!Projets
+===Projets
 
 Le contenu peut avoir des variables qui seront déployées lors de la création. 
 La syntaxe n'est pas encore claire.
 
-!!Auteur
+===Auteur
 
 Dan Frankowski
 
-!!Exemples
+===Exemples
 
 <?plugin-form CreatePage s=MaPagePersonnelle ?>
 

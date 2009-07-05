@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!! Sommaire
+=== Sommaire
 
 <<SiteMap
          noheader=true
@@ -18,7 +18,7 @@ Content-Transfer-Encoding: binary
          firstreversed=1
 >>
 
-! Pages dans cette catégorie :
+==== Pages dans cette catégorie :
 
 <<BackLinks
          exclude||=''

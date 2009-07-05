@@ -8,19 +8,19 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-!!! Synopsis
+== Synopsis
 
 CommentPlugin 可以讓你隱藏部份 Wiki 頁面而無須刪除這些文字. 註解將只會在
 編輯或查看源碼的時候顯現出來.
 
-!!! Usage
+== Usage
 
 簡單的把 =<<Comment= 和 =>>= 放在要註解的文字前後.
 
 <verbatim>
 <<Comment
 
-!!! A Hidden Section
+== A Hidden Section
 
 這段文字將不會顯示在產生出的 HTML 頁面中, 但在你編輯 WikiMarkup 時,它仍然可以
 被看到.
@@ -28,13 +28,13 @@ CommentPlugin 可以讓你隱藏部份 Wiki 頁面而無須刪除這些文字. �
 >>
 </verbatim>
 
-!!! Author
+== Author
 
 Martin Geisler mailto:gimpster@gimpster.com.
 
 <<Comment
 
-!!! "Fuzzy" Logic
+== "Fuzzy" Logic
 Theorem: a cat has nine tails.
 Proof:
     No cat has eight tails. A cat has one tail more than no cat.
