@@ -1,4 +1,4 @@
-Date: Sat, 18 Apr 2009 18:17:26 +0000
+Date: Sun,  5 Jul 2009 18:51:55 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -36,7 +36,7 @@ to. If you click on a "T" you can contribute a missing translation.
    Diferencia de: |
     Diff : |
      Differenza di: |
-      º¹Ê¬: |
+      差分: |
        Diff van: |
         Diff av:
  Edit: |
@@ -44,7 +44,7 @@ to. If you click on a "T" you can contribute a missing translation.
    Editar: |
     Éditer : |
      Modifica: |
-      ÊÔ½¸: |
+      編集: |
        Verander: |
         Redigera:
  Remove Page |
@@ -52,7 +52,7 @@ to. If you click on a "T" you can contribute a missing translation.
    Borrar Página |
     Supprimer la Page |
      Rimuovi la Pagina |
-      ¥Ú¡¼¥¸ºï½ü |
+      ページ削除 |
        Verwijder Pagina |
         Ta bort Sida
  Sign In |
@@ -60,7 +60,7 @@ to. If you click on a "T" you can contribute a missing translation.
    _ |
     S'inscrire |
      _ |
-      ¥µ¥¤¥ó¥¤¥ó |
+      サインイン |
        _ |
         _
  View Source: |
@@ -68,7 +68,7 @@ to. If you click on a "T" you can contribute a missing translation.
    _ |
     Afficher la Source : |
      _ |
-      ¥½¡¼¥¹¤ò¸«¤ë: |
+      ソースを見る: |
        _ |
         Bron Tekst:
 
