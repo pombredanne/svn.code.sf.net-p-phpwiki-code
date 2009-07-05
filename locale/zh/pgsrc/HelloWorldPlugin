@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:45:34 +0000
+Date: Sun,  5 Jul 2009 20:06:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.5pre)
 Content-Type: application/x-phpwiki;
   pagename=HelloWorldPlugin;
@@ -32,13 +32,13 @@ PhpWiki 的 plugin 架構允許你加入自訂的頁面元素. 你所要做的�
  * A simple demonstration WikiPlugin.
  *
  * Usage:
- * <?plugin HelloWorld?&gt;
- * <?plugin HelloWorld
+ * <<HelloWorld> >
+ * <<HelloWorld
  *          salutation="Greetings, "
  *          name=Wikimeister
- * ? >
- * <?plugin HelloWorld salutation=Hi ? >
- * <?plugin HelloWorld name=WabiSabi ? >
+ * > >
+ * <<HelloWorld salutation=Hi > >
+ * <<HelloWorld name=WabiSabi > >
  */
 
 // Constants are defined before the class.
