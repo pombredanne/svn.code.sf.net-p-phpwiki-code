@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:46:45 +0000
+Date: Sun,  5 Jul 2009 21:04:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -74,7 +74,7 @@ Cette cellule utilise la couleur de ligne
 
 Le tableau ci-dessus a été construit avec :
 
-<verbatim>
+{{{
 <<RichTable
 
 *border=1, cellpadding=5, bgcolor=#f0f8f8, width=75%, align=center
@@ -106,7 +106,7 @@ Un autre paragraphe ?
 Cette cellule utilise la couleur de ligne
 | J'espère pouvoir insérer un tableau ! :(
 >>
-</verbatim>
+}}}
 
 == Auteur
 

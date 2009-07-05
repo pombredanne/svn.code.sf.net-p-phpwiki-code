@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:46:45 +0000
+Date: Sun,  5 Jul 2009 21:04:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -23,7 +23,7 @@ un peu instable
 
 === Usage
 
-<verbatim>
+{{{
      <<UnfoldSubpages >>
   ou <<UnfoldSubpages sortby=-mtime words=50 maxpages=5 >>
   ou <<UnfoldSubpages quiet=1 smalltitle=1 >>
@@ -31,7 +31,7 @@ un peu instable
   ou <<UnfoldSubpages lines=3 >>
   ou <<UnfoldSubpages pagename="AdministrationDePhpWiki" 
               section="Arguments" sectionhead=1 >>
-</verbatim>
+}}}
 
 ===Arguments
 
@@ -74,9 +74,9 @@ __sort__:
 
 La ligne
 
-<verbatim>
+{{{
 <<UnfoldSubpages pagename=AdministrationDePhpWiki >>
-</verbatim>
+}}}
 
 affiche toutes les pages qui dépendent de AdministrationDePhpWiki :
 

@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:45:34 +0000
+Date: Sun,  5 Jul 2009 21:04:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.5pre)
 Content-Type: application/x-phpwiki;
   pagename=SystemInfoPlugin;
@@ -14,13 +14,13 @@ Content-Transfer-Encoding: binary
 
 SystemInfoPlugin 提供了存取 PhpWiki 所在平台上的低階系統資訊.
 
-<verbatim>
+{{{
  Usage:  <<SystemInfo all >>
       or <<SystemInfo pagestats cachestats discspace hitstats >>
       or <<SystemInfo version >>
       or <<SystemInfo current_theme >>
       or <<SystemInfo PHPWIKI_DIR >>
-</verbatim>
+}}}
 
 範例:
 

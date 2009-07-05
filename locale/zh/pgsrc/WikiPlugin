@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:45:34 +0000
+Date: Sun,  5 Jul 2009 21:04:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -21,9 +21,9 @@ The latest hacks include support for ~WikiPlugins.
 
 現在,有人放了這麼一行字想要使用 plugin:
 
-<verbatim>
+{{{
 <<BackLinks>>
-</verbatim>
+}}}
 
 到一個一般的 wiki-page. 這個特有的範例產生了連結到此頁面的頁面列表.
 結果如下:
@@ -42,23 +42,23 @@ these arguments can be determined four different ways.  In order of
 precedence:
 
 # The plugin invocation can specify the value for an argument, like so:
-  <verbatim>
+  {{{
   <<BackLinks page=OtherPage >>
-  </verbatim>
+  }}}
 
 # The argument can be specified via an HTTP query argument.  This
   doesn't happen (is not allowed) unless the argument is mentioned in
   the plugin invocation:
 
-  <verbatim>
+  {{{
   <<BackLinks page >>
-  </verbatim>
+  }}}
 
 # Default values specified in the plugin invocation:
 
-  <verbatim>
+  {{{
   <<BackLinks page||=OtherPage >>
-  </verbatim>
+  }}}
 
 # The plugin must supply default values for each argument it uses.
   (The BackLinks plugin uses the current page as the default value for

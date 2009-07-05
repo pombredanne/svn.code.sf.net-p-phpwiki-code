@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:46:45 +0000
+Date: Sun,  5 Jul 2009 21:04:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -19,7 +19,7 @@ dans l'édition de la source de la page.
 Placez simplement le texte à commenter entre =<<Comment=
 et =>>= :
 
-<verbatim>
+{{{
 <<Comment
 
 == Une section cachée :
@@ -28,7 +28,7 @@ Ce texte ne sera pas visible dans la page HTML générée mais il sera encore
 visible en éditant la source.
 
 >>
-</verbatim>
+}}}
 
 == Auteur
 
