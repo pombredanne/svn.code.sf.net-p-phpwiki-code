@@ -1,4 +1,4 @@
-Date: Thu, 31 Jan 2002 02:53:30 -0500
+Date: Sun,  5 Jul 2009 16:45:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,10 +10,10 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<?plugin PageGroup
+<<PageGroup
          parent=PageGroupTest
          section="Table of Contents"
-?>
+>>
 
 ----
 

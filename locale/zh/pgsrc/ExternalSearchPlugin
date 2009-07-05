@@ -1,4 +1,4 @@
-Date: Sat,  4 Jul 2009 17:26:40 +0000
+Date: Sun,  5 Jul 2009 16:45:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.4)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,10 +14,10 @@ ExternalSearchPlugin 建立可以查詢 InterWiki 或其他內部站台的表單
 
 !! Typical Usage
 <verbatim>
-<?plugin ExternalSearch
+<<ExternalSearch
          url="InterWiki or URL"
          name="button text"
-?>
+>>
 </verbatim>
 
 
@@ -41,18 +41,18 @@ __debug__:
 !! Examples
 在 MeatBall wiki 上執行全文搜索:
 
-<?plugin ExternalSearch
+<<ExternalSearch
          url="http://www.usemod.com/cgi-bin/mb.pl?search="
          name="MeatBall Search"
-?>
+>>
 
 在 PHP 站台上搜索 function 名稱:
-<?plugin ExternalSearch url=php-lookup name="PHP Lookup" ?>
+<<ExternalSearch url=php-lookup name="PHP Lookup" >>
 
 輸入 PHP 函數以查看文件頁:%%%
-<?plugin ExternalSearch url=php-function ?>
+<<ExternalSearch url=php-function >>
 
 輸入PhpWiki上任何已存在的頁面名稱,以直接跳到該頁面.
-<?plugin ExternalSearch url=PhpWiki ?>
+<<ExternalSearch url=PhpWiki >>
 ----
 PhpWikiDocumentation WikiPlugin

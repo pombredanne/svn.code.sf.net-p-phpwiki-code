@@ -1,4 +1,4 @@
-Date: Tue, 2 Jan 2007 13:30:17 +0000
+Date: Sun,  5 Jul 2009 16:45:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,10 +10,10 @@ Content-Transfer-Encoding: binary
 
 [ Back | PhotoAlbumPlugin ]
 
-<?plugin PhotoAlbum
+<<PhotoAlbum
          src="themes/Hawaiian/images/pictures/"
          mode=slide
          duration=1
-?>
+>>
 ----
 PhpWikiDokumentation

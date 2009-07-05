@@ -1,4 +1,4 @@
-Date: Sat,  4 Jul 2009 17:26:21 +0000
+Date: Sun,  5 Jul 2009 16:45:56 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -34,13 +34,13 @@ are implemented using plugins, and some lowercased convenience actions also. (re
 Currently, one invokes a plugin by putting something like:
 
 <verbatim>
-<?plugin AllPages limit=5?>
+<<AllPages limit=5>>
 </verbatim>
 
 into a regular wiki-page.  That particular example produces a list of
 the first 5 existing pages (via the ~PageList library).
 
-<?plugin AllPages limit=5 ?>
+<<AllPages limit=5 >>
 
 !!!Details
 
@@ -50,7 +50,7 @@ precedence:
 
 # The plugin invocation can specify the value for an argument, like so:
   <verbatim>
-  <?plugin BackLinks page=OtherPage ?>
+  <<BackLinks page=OtherPage >>
   </verbatim>
 
 # The argument can be specified via an HTTP query argument.  This
@@ -58,13 +58,13 @@ precedence:
   the plugin invocation:
 
   <verbatim>
-  <?plugin BackLinks page ?>
+  <<BackLinks page >>
   </verbatim>
 
 # Default values specified in the plugin invocation:
 
   <verbatim>
-  <?plugin BackLinks page||=OtherPage ?>
+  <<BackLinks page||=OtherPage >>
   </verbatim>
 
 # The plugin must supply default values for each argument it uses.
@@ -111,7 +111,7 @@ getDescription, getVersion, getDefaultArguments. See the Help:HelloWorldPlugin f
   *plugin-list* is used as argument to provide a dynamic list of pagenames.
 
   <verbatim>
-    <?plugin PluginName  Help:s ...] ?>
+    <<PluginName  Help:s ...] >>
   </verbatim>
 
   <verbatim>
@@ -119,7 +119,7 @@ getDescription, getVersion, getDefaultArguments. See the Help:HelloWorldPlugin f
   </verbatim>
 
   <verbatim>
-    <?plugin PluginName args=<!plugin-list pluginname  Help:s ] !> ?>
+    <<PluginName args=<!plugin-list pluginname  Help:s ] !> >>
   </verbatim>
 
 ! The box Method
@@ -170,13 +170,13 @@ So for a hypothetical new ~MyActionPage plugin ~MyActionPage will invoke the plu
 See PluginManager for a detailed list. Most plugins should have their own description page with the name 
 *Plugin* appended.
 
-<?plugin BackLinks noheader=1 ?>
+<<BackLinks noheader=1 >>
 
 !!! Contributed Plugins 
 
 See PhpWiki:CategoryContributedPlugin.
 
-<?plugin Backlinks page=CategoryContributedPlugin ?>
+<<Backlinks page=CategoryContributedPlugin >>
 
 -----
 PhpWikiDokumentation

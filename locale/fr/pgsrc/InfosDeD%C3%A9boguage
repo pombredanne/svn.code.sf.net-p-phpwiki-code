@@ -1,4 +1,4 @@
-Date: Fri,  3 Jul 2009 22:07:52 +0000
+Date: Sun,  5 Jul 2009 16:46:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,4 +11,4 @@ Content-Transfer-Encoding: binary
 Vue détaillée d'une page, ce qui est probablement plus utile que n'importe 
 quoi d'autre pour le déboguage.
 
-<?plugin _BackendInfo page||='' ?>
+<<_BackendInfo page||='' >>

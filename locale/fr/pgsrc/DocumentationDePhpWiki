@@ -1,4 +1,4 @@
-Date: Fri,  3 Jul 2009 22:07:52 +0000
+Date: Sun,  5 Jul 2009 16:46:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.13)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,20 +10,20 @@ Content-Transfer-Encoding: binary
 
 !! Sommaire
 
-<?plugin SiteMap
+<<SiteMap
          noheader=true
          exclude=PageAccueil
          reclimit=1
          direction=forward
          firstreversed=1
-?>
+>>
 
 ! Pages dans cette catégorie :
 
-<?plugin BackLinks
+<<BackLinks
          exclude||=''
          include_self||=1
          noheader||=0
          page||=[pagename]
          info||=pagename,mtime
-?>
+>>

@@ -1,4 +1,4 @@
-Date: Sat,  4 Jul 2009 17:26:40 +0000
+Date: Sun,  5 Jul 2009 16:45:34 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.5pre)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,6 +11,6 @@ Content-Transfer-Encoding: binary
 所有已經登入, 已經建立自己首頁以及已經儲存 UserPreferences (偏好設定)至少一次
 的使用者列表.
 ----
-<?plugin AllUsers?>
+<<AllUsers>>
 ----
 WikiPlugin PluginManager

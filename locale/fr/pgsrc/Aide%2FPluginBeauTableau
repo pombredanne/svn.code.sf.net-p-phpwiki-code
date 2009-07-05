@@ -1,4 +1,4 @@
-Date: Fri,  3 Jul 2009 22:21:47 +0000
+Date: Sun,  5 Jul 2009 16:46:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -32,7 +32,7 @@ de chaque cellule !
   *une ligne de cellule qui <tt>"*"</tt> après <tt>"|"</tt> est traitée comme du contenu normal
   *tout le contenu des lignes qui suivent une ligne de cellule est ajouté à la cellule. À l'exception des cas considérés plus haut, le texte peut être quelconque.
   *s'il n'y a pas de cellule dans la ligne du tableau courante alors le contenu est ignoré 
-*les deux caractères spéciaux <tt>"~~"</tt> et <tt>"?>"</tt> doivent être neutralisés comme <tt>"\~~"</tt> and <tt>"?\>"</tt>. Je n'ai pas trouvé d'autres caractères devant être neutralisés. Il faut le faire pour le filtrage du texte.
+*les deux caractères spéciaux <tt>"~~"</tt> et <tt>">>"</tt> doivent être neutralisés comme <tt>"\~~"</tt> and <tt>"?\>"</tt>. Je n'ai pas trouvé d'autres caractères devant être neutralisés. Il faut le faire pour le filtrage du texte.
 
 !!! Avertissements
 * code source à revoir
@@ -40,7 +40,7 @@ de chaque cellule !
 
 !!! Exemple
 
-<?plugin RichTable
+<<RichTable
 
 *border=1, cellpadding=5, bgcolor=#f0f8f8, width=75%, align=center
 -
@@ -70,12 +70,12 @@ Un autre paragraphe ?
 |* align=left
 Cette cellule utilise la couleur de ligne
 | J'espère pouvoir insérer un tableau ! :(
-?>
+>>
 
 Le tableau ci-dessus a été construit avec :
 
 <verbatim>
-<?plugin RichTable
+<<RichTable
 
 *border=1, cellpadding=5, bgcolor=#f0f8f8, width=75%, align=center
 -
@@ -105,7 +105,7 @@ Un autre paragraphe ?
 |* align=left
 Cette cellule utilise la couleur de ligne
 | J'espère pouvoir insérer un tableau ! :(
-?>
+>>
 </verbatim>
 
 !!! Auteur

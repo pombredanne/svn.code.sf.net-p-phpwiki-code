@@ -1,4 +1,4 @@
-Date: Fri,  3 Jul 2009 22:21:47 +0000
+Date: Sun,  5 Jul 2009 16:46:45 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -196,10 +196,10 @@ _Terme<b>:</b>~<nouvelle ligne> définition_ pour les listes de définitions.%%%
 
 * quelques plugins embarqués dans les pages ajoutent des possibilités au Wiki. Par exemple,
   <verbatim>
-  <?plugin BackLinks page=PageAccueil info=hits ?>
+  <<BackLinks page=PageAccueil info=hits >>
   </verbatim>
   donne
-  <?plugin BackLinks page=PageAccueil info=hits ?>
+  <<BackLinks page=PageAccueil info=hits >>
 
 * pour plus d'informations sur les plugins, voir PluginWiki, et GestionPlugin pour 
   la liste des plugins.
