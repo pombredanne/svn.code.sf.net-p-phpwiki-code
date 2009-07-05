@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Sun,  5 Jul 2009 20:02:04 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,33 +10,33 @@ Content-Transfer-Encoding: binary
 
 A simple example plugin.
 
-<?plugin HelloWorld salutation="Hello," name="Wiki User" ?>
+<<HelloWorld salutation="Hello," name="Wiki User" >>
 
 From the source of this page:
 
 {{{
-<?plugin HelloWorld salutation="Hello," name="Wiki User" ?>
+<<HelloWorld salutation="Hello," name="Wiki User" >>
 }}}
 
 ----
-~PhpWiki's plugin architecture allows you to add custom page elements to your wiki. All you have to do is extend (subclass) the ~WikiPlugin class and create your output via the run() method, dependend on the Wiki- or Request arguments, 
+~PhpWiki's plugin architecture allows you to add custom page elements to your wiki. All you have to do is extend (subclass) the ~WikiPlugin class and create your output via the run() method, dependend on the Wiki- or Request arguments,
 
 * either with the predefined HTML classes to create valid XHTML,
 * or by using templates, which are easier customizable, but generally more a mess to use and easier to create invalid XHTML.
 
-<?plugin PhpHighlight
+<<PhpHighlight
 
 /**
  * A simple demonstration WikiPlugin.
  *
  * Usage:
- * <?plugin HelloWorld?&gt;
- * <?plugin HelloWorld
+ * <<HelloWorld> >
+ * <<HelloWorld
  *          salutation="Greetings, "
  *          name=Wikimeister
- * ? >
- * <?plugin HelloWorld salutation=Hi ? >
- * <?plugin HelloWorld name=WabiSabi ? >
+ * > >
+ * <<HelloWorld salutation=Hi > >
+ * <<HelloWorld name=WabiSabi > >
  */
 
 // Constants are defined before the class.
@@ -78,7 +78,7 @@ extends WikiPlugin
         return $html;
     }
 };
-?>
+>>
 
 <noinclude>
 ----
