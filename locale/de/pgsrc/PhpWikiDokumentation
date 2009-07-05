@@ -7,5 +7,5 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!!Seiten in dieser Kategorie:
+===Seiten in dieser Kategorie:
 <<BackLinks exclude||='' include_self||=1 noheader||=0 page||=[pagename] info||=mtime >>

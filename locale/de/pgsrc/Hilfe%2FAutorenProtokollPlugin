@@ -21,7 +21,7 @@ Dieses experimentelle Hilfe:WikiPlugin erlaubt nur die Änderungen eines bestimm
 Das erste Beispiel zeigt alle Änderungen der Seite "StartSeite" für jeweils andere Benutzer,
 das zweite Beispiel alle Änderungen des Autors "test" im gesamten Wiki.
 
-!! Benutzung
+=== Benutzung
 
 <verbatim>
 <<AuthorHistory page=StartSeite >>
@@ -32,7 +32,7 @@ ergibt:
 
 ----
 
-!! Argumente
+=== Argumente
 
 __author__ |
   Benutzername. Vorgabe: aktueller Benutzername

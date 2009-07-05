@@ -16,13 +16,13 @@ neuem Inhalt von einer bestehenden Vorgabe oder Kategorieseite.
 Schreibe "<~?plugin-form ~CreatePage ?~>" in eine Seite, zeige diese Seite an, 
 gebe den Namen der neuen Seite an und klicke auf den NeueSeite Knopf.
 
-!! Benutzung
+=== Benutzung
 <verbatim>
      <?plugin-form CreatePage ?>
      <?plugin-form CreatePage template=KategorieStartSeite ?>
 </verbatim>
 
-!! Argumente
+=== Argumente
 __s__: |
   Der Name für die neue Seite. Vorgabe: ""
 __initial_content__:  |
@@ -30,20 +30,20 @@ __initial_content__:  |
 __template__:  |
   Die neue Seite wird mit dem Inhalt dieser Seite erzeugt. Vorgabe: ""
 
-!! Bekannte Probleme
+=== Bekannte Probleme
 
 Keine
 
-!! Pläne
+=== Pläne
 
 The content might hold some variables, which will be expanded on creation. 
 The syntax is not clear yet.
 
-!! Autor
+=== Autor
 
 Dan Frankowski
 
-!! Beispiel
+=== Beispiel
 
 <?plugin-form CreatePage s=MyHomePage ?>
 

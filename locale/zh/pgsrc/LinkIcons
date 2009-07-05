@@ -29,16 +29,16 @@ __注意__: 部份預設圖示使用了
 alpha channel 特色以便能夠平順的在任何有顏色或有背景頁面被畫出來.
 舊的瀏覽器可能無法顯示圖片.
 
-!!!Examples
+== Examples
 
 如果管理者有啟始這個特色的話,以下的範例將會只以上面的連結圖示顯示.
 
-!! InterWiki links
+=== InterWiki links
 
 * InterWiki link PhpWiki:InterWiki
 * A named InterWiki [read WhyWikiWorks at c2|Wiki:WhyWikiWorks].
 
-!!URLs
+===URLs
 
 * Email address [PhpWiki-talk mailing list|mailto:phpwiki-talk@lists.sourceforge.net]
 * Normal http link [PhpWiki's Home Page|http://phpwiki.sourceforge.net/phpwiki/]

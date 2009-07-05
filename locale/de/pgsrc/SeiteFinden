@@ -35,7 +35,7 @@ ausgesprochen werden.
 <?plugin-form FuzzyPages?>
 
 ------
-! Tips
+==== Tips
 Wörter mit Leerzeichen trennen. Alle Wörter müssen enthalten sein.
 (UND-Verknüpfung)
 %%%Um Seiten zu finden, in denen ein Wort nicht vorkommt, ein '-'

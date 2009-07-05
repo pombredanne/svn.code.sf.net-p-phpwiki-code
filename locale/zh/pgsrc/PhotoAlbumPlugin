@@ -8,10 +8,10 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-!!! Summary
+== Summary
 藉著顯示帶有說明以及相片檔名的文字檔以製作相簿.
 
-!!! Usage
+== Usage
 <verbatim>
 <<PhotoAlbum
          src=http://server/textfile
@@ -24,7 +24,7 @@ Content-Transfer-Encoding: binary
 >>
 </verbatim>
 
-!!! Arguments
+== Arguments
 ''只有 ='src'= 參數是必要的.''
 
 __src__:
@@ -47,8 +47,8 @@ __height__, __width__:
   高度與寬度用來與用 [php-function:getimagesize] 取得的原始高度與寬度做比較,
   可以指定絕對值或百分比 (例如 "50%").
 
-!!! Examples
-!! Text file
+== Examples
+=== Text file
 正確文字檔的內容應該是:
 
 <verbatim>
@@ -57,12 +57,12 @@ photo-02.jpg
 christmas.gif; Merry Christmas!
 </verbatim>
 
-!! Sample Album
+=== Sample Album
 <<PhotoAlbum
          src="http://phpwiki.sourceforge.net/demo/themes/Hawaiian/images/pictures/PhotoAlbum"
 >>
 
-!!! Plugin Author
+== Plugin Author
 [Ted Vinke|mailto:teddy@jouwfeestje.com] <teddy@jouwfeestje.com>
 ----
 PhpWikiDocumentation WikiPlugin

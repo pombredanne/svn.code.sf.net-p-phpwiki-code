@@ -12,14 +12,14 @@ Content-Transfer-Encoding: binary
 
 Hilfe:WikiPlugin um ein dynamisches *Inhaltsverzeichnis* aller Überschriften anzuzeigen. Seit v1.3.8
 
-!! Benutzung
+=== Benutzung
 
 <verbatim>
      <<CreateToc >>
      <<CreateToc jshide||=1 with_toclink||=1 >>
 </verbatim>
 
-!! Argumente
+=== Argumente
 
 __jshide__: |
   Bool'sche Variable, ob das Inhaltsverzeichnis (TOC) zuerst versteckt sein soll, und erst auf Klick erscheint. Vorgabe: 0
@@ -28,7 +28,7 @@ __with_toclink__:  |
 __with_counter__:  |
   Bool'sche Variable, ob hierarchische Prefixes verwendet sollen. Vorgabe: nein
 __headers__:  |
-  Welche Überschriften?  Vorgabe: !!!,!!,!    1,2,3 auch erlaubt
+  Welche Überschriften?  Vorgabe: ==,===,!    1,2,3 auch erlaubt
 __noheader__:  |
   Bool'sche Variable, ob die "Inhaltsverzeichnis" h2 Überschrift weggelassen soll. Vorgabe: 0
 __liststyle__:  |
@@ -38,7 +38,7 @@ __indentstr__:  |
 __pagename__:  |
   TOC welcher Seite? Vorgabe: Aktueller Seitenname
 
-!! Beispiele
+=== Beispiele
 
 Siehe zB. TextFormatierungsRegeln
 ----

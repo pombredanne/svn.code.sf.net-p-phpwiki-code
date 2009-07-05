@@ -18,7 +18,7 @@ des autres pages indexées sont toutes implémentées en utilisant les plugins.
 À plus ou moins court terme, l'ancien style phpwiki [URLMagiquesPhpWiki] sera
 remplacé par des plugins également.
 
-!!!Exemple
+== Exemple
 
 Habituellement, on appelle un plugin en écrivant quelque chose comme ceci :
 
@@ -34,7 +34,7 @@ pages qui sont liées à la page courante. Ici on a :
 (C'est intéressant pour les pages Catégorie ou Sujets. Vous pouvez l'utiliser
 pour en obtenir une liste automatique)
 
-!!!Détails
+== Détails
 
 Les plugins peuvent être utilisés avec une liste d'arguments. Il existe 
 quatre moyens pour spécifier leur valeur. Dans l'ordre de priorité :
@@ -66,7 +66,7 @@ quatre moyens pour spécifier leur valeur. Dans l'ordre de priorité :
   (Le plugin RétroLiens utilise la page courante comme valeur par défaut
   pour l'argument ''page'')
 
-!!! Il y a quatre types de base pour les plugins :
+== Il y a quatre types de base pour les plugins :
 
 Tous les plugins viennent de la classe PluginWiki étendant la méthode run
 qui retourne un objet arbre des objets HTML, et doivent réagir sur chaque 
@@ -100,7 +100,7 @@ passé par l'URL (arguments GET et POST définit via '||=').
 ;:Ce n'est plus utilisé.
 
 
-!!!Plugins existants :
+== Plugins existants :
 
 Voir GestionDesPlugins pour la liste actuelle. La plupart des plugins ont leur 
 propre page de documentation avec le mot *Plugin* ajouté.

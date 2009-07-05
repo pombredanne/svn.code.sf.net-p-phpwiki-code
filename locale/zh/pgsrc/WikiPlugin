@@ -17,7 +17,7 @@ The latest hacks include support for ~WikiPlugins.
 我期盼搜尋結果頁面或是 PhpWikiAdministration 等能夠很快地以 plugin 形式被實
 作出來. (我想 oh-so-ugly [MagicPhpWikiURLs] 也能被 plugins 替代.)
 
-!!!Example
+== Example
 
 現在,有人放了這麼一行字想要使用 plugin:
 
@@ -33,7 +33,7 @@ The latest hacks include support for ~WikiPlugins.
 (這對分類與主題頁面來說是很棒的. 你可以使用它取得自動 in-line 的存在於分
 類或主題的頁面列表.)
 
-!!!Details
+== Details
 
 (This is all subject to change.)
 
@@ -64,7 +64,7 @@ precedence:
   (The BackLinks plugin uses the current page as the default value for
   the ''page'' argument.
 
-!!!Existing Plugins
+== Existing Plugins
 
 * BackLinks
 * CalendarPlugin
@@ -81,7 +81,7 @@ precedence:
 * walkabout
 * PhpHighlightPlugin
 
-!!!More Ideas for Plugins
+== More Ideas for Plugins
 
 * Integrate Search form with individual InterWiki map entries
   e.g. Search Php Website for:[ ] (Search)

@@ -29,7 +29,7 @@ are implemented using plugins, and some lowercased convenience actions also. (re
 
 (The old-style  Help:MagicPhpWikiURLs have been replaced by plugins entirely.)
 
-!!!Example
+== Example
 
 Currently, one invokes a plugin by putting something like:
 
@@ -42,7 +42,7 @@ the first 5 existing pages (via the ~PageList library).
 
 <<AllPages limit=5 >>
 
-!!!Details
+== Details
 
 Plugins can take certain named arguments (most do).  The values of
 these arguments can be determined four different ways.  In order of
@@ -78,7 +78,7 @@ precedence:
   Most plugins using the ~PageListLibrary inherit their default arguments 
   from the PhpWiki:PageListLibrary.
 
-!! Standard Arguments
+=== Standard Arguments
 
 Most plugins display a list of pages, via the ~PageListLibrary.
 ~PageList provides automatic support for those arguments.
@@ -93,7 +93,7 @@ supporting glob-style wildcards, or via the <tt><!plugin-list pluginname ~[args~
 invocation syntax, where pluginname might be any plugin returning a pagelist.
 See PhpWiki:PluginList.
 
-!! Basic Plugin Types
+=== Basic Plugin Types
 
 All these plugins derive from the Help:WikiPlugin class extending the run method,
 which returns a object tree of HTML objects, and may react on any
@@ -122,12 +122,12 @@ getDescription, getVersion, getDefaultArguments. See the Help:HelloWorldPlugin f
     <<PluginName args=<!plugin-list pluginname  Help:s ] !> >>
   </verbatim>
 
-! The box Method
+==== The box Method
 
 Themes based on the "sidebar" theme may use the box method of any plugin, which displays a *title* 
 and a condensed *content* in a box.
 
-! ~WikiPluginCached
+==== ~WikiPluginCached
 
 Plugins deriving from the class ~WikiPluginCached must also define the methods getPluginType(), 
 optionally getExpire(), managesValidators(), and dependent of the getPluginType the methods 
@@ -141,7 +141,7 @@ optionally also
 
 See the config.ini PLUGIN_CACHED_* settings and PhpWiki:WikiPluginCached
 
-!! Aktions Seiten
+=== Aktions Seiten
 
 The term *~ActionPage* refers to a page containing a plugin invocation.
 An *action* is together with the *pagename* argument the a basic PhpWiki argument. 
@@ -165,14 +165,14 @@ We decoupled actions from plugins via action pages for the following reasons:
 So for a hypothetical new ~MyActionPage plugin ~MyActionPage will invoke the plugin and 
 ~MyActionPagePlugin is the the description.
 
-!!! Existing Plugins
+== Existing Plugins
 
 See PluginManager for a detailed list. Most plugins should have their own description page with the name 
 *Plugin* appended.
 
 <<BackLinks noheader=1 >>
 
-!!! Contributed Plugins 
+== Contributed Plugins 
 
 See PhpWiki:CategoryContributedPlugin.
 

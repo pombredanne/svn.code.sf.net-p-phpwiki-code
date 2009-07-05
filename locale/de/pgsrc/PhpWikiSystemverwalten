@@ -14,7 +14,7 @@ nicht funktionieren._
 
 <<CreateToc jshide||=1 with_toclink||=1 >>
 ----
-!!! Seiten Explorer
+== Seiten Explorer
 
 Entweder wähle zuerst die Seiten und führe dann die Aktion aus:
 
@@ -30,7 +30,7 @@ oder rufe die möglichen ~WikiAdmin Aktionen direkt auf:
           [/Chmod]
 
 ----
-!!! Benutzerverwaltung
+== Benutzerverwaltung
 
 
 Setze ein Benutzer Passwort zurück:
@@ -61,7 +61,7 @@ Zugangsbeschränkungen (disabled):
    >>
 
 ----------
-!!! Aufräumen
+== Aufräumen
 
 Räume die Wiki SandKiste auf. Hiermit kann man die Seite mit der
 Version von locale/de/pgsrc/SandKiste erneut initialisieren: 
@@ -69,9 +69,9 @@ Version von locale/de/pgsrc/SandKiste erneut initialisieren:
 [ SandKiste löschen | phpwiki:?action=loadfile&overwrite=1&source=locale/de/pgsrc/SandKiste ].
 
 ----------
-!!! Speichern und Archivieren
+== Speichern und Archivieren
 
-! Backup der PhpWiki Datenbank als ZIP Dateien
+==== Backup der PhpWiki Datenbank als ZIP Dateien
 
 Diese Links erzeugen automatisch ZIP Archive, mit allen Seiten in
 deinem Wiki. Die ZIP Datei wird auf deinen lokalen Computer
@@ -87,7 +87,7 @@ Wenn von diesem PHP die _zlib_ Bibliothek unterstützt wird, werden
 alle Seiten in dem Archiv komprimiert, ansonsten nur unkomprimiert
 gespeichert.
 
-! Wiki Seiten als Dateien in lokales Verzeichnis speichern
+==== Wiki Seiten als Dateien in lokales Verzeichnis speichern
 
 Hier kannst du alle Seiten aus deinem Wiki in eine lokales Verzeichnis
 deiner Wahl herunterladen.
@@ -100,7 +100,7 @@ ausreichen müssen.
 
 -----------
 
-!!! Wiederherstellen
+== Wiederherstellen
 
 Wenn du ein PhpWiki Backup besitzt, kannst du dieses hier wieder
 restaurieren. Beachte das alle Seiten in der Datenbank damit
@@ -109,13 +109,13 @@ StartSeite überschreibt die aktuelle Seite in der Datenbank. Um nur
 einzelne Dateien zu restaurieren, musst du dein Verzeichnis oder ZIP
 Archiv insosoweit anpassen.
 
-! Datei Hochladen
+==== Datei Hochladen
 
 Hier kannst du ein ZIP Archiv hochladen, oder einzelne Dateien von deinem Computer.
 
   <<WikiForm action=upload>>
 
-! Datei Laden
+==== Datei Laden
 
 Hier kann man ZIP Archive, einzelne Dateien oder ganze Verzeichnisse
 ins Wiki laden. Die Dateien oder Verzeichnisse müssen lokal auf dem
@@ -126,7 +126,7 @@ oder einer ftp: URL von externen Quellen laden.
   <<WikiForm action=loadfile buttontext="Laden & Überschreiben" overwrite=1>>
 
 
-!! Updaten
+=== Updaten
 
 Führe einige Systemchecks aus und bringe geänderte Seiten auf den letzten Stand,
 nachdem Sie die PhpWiki Version auf den letzten Stand gebracht haben:
@@ -137,7 +137,7 @@ nachdem Sie die PhpWiki Version auf den letzten Stand gebracht haben:
 
 -----------
 
-!!! Daten-Format
+== Daten-Format
 
 Momentan werden alle Seiten dateiweise als MIME (RFC:2045) E-Mail's
 (RFC:822) gespeichert. Der Content-type _application/x-phpwiki_ wird
@@ -148,7 +148,7 @@ _application/x-phpwiki_ codiert). Der Email Body enthält die aktuelle
 Version des Seiteninhaltes, der Kopf die anderen Daten aus der
 Datenbank. (Datum, Autor, ...)
 
-! Alte Daten-Formate
+==== Alte Daten-Formate
 
 __Serialisierte Dateien__
 
@@ -169,7 +169,7 @@ einfache Textdatei.)
 
 ----
 
-!!! Seiten als XHTML Dateien speichern
+== Seiten als XHTML Dateien speichern
 
   <<WikiForm action=dumphtml>>
 
@@ -181,7 +181,7 @@ auch ohne Webserver und Datenbank betrachtbar sind.
 
 ----
 
-!!! PhpWiki Internals
+== PhpWiki Internals
 
 These are here mostly for debugging purposes (at least, that's the
 hope.)
@@ -189,7 +189,7 @@ hope.)
 In normal use, you shouldn't need to use these, though, then again,
 they shouldn't really do any harm.
 
-!! Purge Markup Cache
+=== Purge Markup Cache
 
 (If your wiki is so configured,) the transformed (almost-HTML) content
 of the most recent version of each page is cached. This speeds up page
@@ -204,7 +204,7 @@ rendering since parsing of the wiki-text takes a fair amount of juice.
            label="Cache Löschen"
    >>
 
-!! Clean WikiDB of Illegal Filenames
+=== Clean WikiDB of Illegal Filenames
 
 Page names beginning with the subpage-separator, usually a slash
 (=/=), are not allowed. Sometimes though an errant plugin or something
@@ -218,7 +218,7 @@ might create one....
    >> 
 
 
-!! Clean WikiDB of empty and unreferenced pages
+=== Clean WikiDB of empty and unreferenced pages
 
   *Warning!* This button will delete every empty and unreferenced page, without any possibility to restore them again.
   This will disable the possibility to revert or get back any deleted page.
@@ -228,7 +228,7 @@ might create one....
            label="Purge all empty unreferenced pages"
    >>
 
-!! Convert cached_html to new SQL column
+=== Convert cached_html to new SQL column
 
   This is only needed on SQL or ADODB if you didn't do action=upgrade, but created the 
   new page.cached_html field seperately, and now you want to move this data from 
@@ -240,7 +240,7 @@ might create one....
    >>
 
 
-!! Check WikiDB
+=== Check WikiDB
 
   This button will check the Wiki page database for consistency. This can last several minutes.
 
@@ -249,10 +249,10 @@ might create one....
            label="Check WikiDB"
    >>
 
-!! Rebuild WikiDB
+=== Rebuild WikiDB
 
   This will retransform all pages and rebuild the Wiki database on consistency errors or parser updates. 
-  This can last several minutes, eat a lot of memory and possibly times out!!
+  This can last several minutes, eat a lot of memory and possibly times out===
 
   <<WikiAdminUtils
            action=db-rebuild

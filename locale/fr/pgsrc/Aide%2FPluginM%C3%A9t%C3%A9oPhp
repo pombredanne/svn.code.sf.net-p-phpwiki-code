@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!!Description
+===Description
 
 PluginMétéoPhp est un PluginWiki qui utilise [PhpWeather|http://phpweather.sourceforge.net/]
 pour afficher un bout de texte avec la météo actuelle pour n'importe quel aéroport
@@ -16,7 +16,7 @@ dans le monde. Cela ressemble à ça :
 
 <<PhpWeather menu=true >>
 
-!!Arguments 
+===Arguments 
 
 __menu__:
   Mettre ceci sur =true= pour que le plugin affiche un menu après le 
@@ -67,7 +67,7 @@ __units__:
   Si vous voulez l'une ou l'autre seulement alors mettez  __units__ sur 
   =only_metric= ou =only_imperial= et ça le fera.
 
-!!Exemple
+===Exemple
 
 Le temps chez les Bretons :
 

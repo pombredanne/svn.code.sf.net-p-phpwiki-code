@@ -12,7 +12,7 @@ Content-Transfer-Encoding: binary
 
 ----
 
-!!! Was ist eine ModerierteSeite?
+== Was ist eine ModerierteSeite?
 
 Eine ModerierteSeite ist ein seitenspezifische Einstellung, die gewisse Aktionen auf moderierten 
 Seiten einschränkt. 
@@ -25,7 +25,7 @@ In both cases the author is notified, so it's recommended for the
 moderator to click on either the approve or reject links in the moderation email. 
 In case of multiple moderators: first comes, first serves.
 
-!!! How to enable ModerierteSeite on a single page?
+== How to enable ModerierteSeite on a single page?
 
 * Check the status of this action page, esp. the moderators in the
   plugin line, if they had their emails stored in their
@@ -34,13 +34,13 @@ In case of multiple moderators: first comes, first serves.
 * Save the page.
 * Lock the page to actually change the moderation status. You may want to unlock it then.
 
-!!! How to disable ModerierteSeite on a single page?
+== How to disable ModerierteSeite on a single page?
 
 * Remove the link to this action page in the page(s) in question.
 * Save the page.
 * Lock the page to actually change the moderation status. You may want to unlock it then.
 
-!!! Plugin Arguments
+== Plugin Arguments
 
 * moderators: comma seperated list of registered usernames or groups.
   Each user should have his email defined in his prefs. Default: "Administrators" or 
@@ -50,7 +50,7 @@ In case of multiple moderators: first comes, first serves.
   "view,edit,create,list,remove,change"
   Default: edit,remove,change
 
-!!! How does it work internally?
+== How does it work internally?
 
 You need to lock the page additionally, so that the link parser performs 
 some magic whether the ModerierteSeite link is present or not, for efficiency 
@@ -65,7 +65,7 @@ There's no timeout on moderated actions, so the actions may stack up.
 The delayed actions may be performed in any order, there's no strict ordering to 
 follow for the moderator.
 
-!!! How to enable ModerierteSeite on multiple/all pages?
+== How to enable ModerierteSeite on multiple/all pages?
 
 If you enable the config option ENABLE_MODERATEDPAGE_ALL, the page moderation status on 
 every page is automatically set to check this action page ModeratedPage.

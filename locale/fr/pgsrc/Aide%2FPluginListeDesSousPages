@@ -8,20 +8,20 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!!Description
+===Description
 
 PluginListeSousPages est utilisé pour afficher le contenu d'une partie ou 
 de toutes les sous-pages de la page courante ou d'une page donnée. Ceci peut 
 être utilisé pour obtenir un aperçu pour PluginWikiBlog, PluginCalendrier
 ou des ensembles de sous-pages similaires.
 
-!!Avertissements
+===Avertissements
 
 Ne pas l'utiliser avec des sous-pages où PluginRedirection est utilisé 
 ou avec des sections non-existantes ! L'extracteur de partie est encore
 un peu instable
 
-!! Usage
+=== Usage
 
 <verbatim>
      <<UnfoldSubpages >>
@@ -33,7 +33,7 @@ un peu instable
               section="Arguments" sectionhead=1 >>
 </verbatim>
 
-!!Arguments
+===Arguments
 
 __pagename__:
   Un nom de page ou le page courante lorsque le nom est vide : Par défaut : ""
@@ -63,14 +63,14 @@ __lines__:
 __bytes__:
   Nombre maximum d'octets par pages à inclure. Par défaut : false
 
-!!Arguments obsolètes
+===Arguments obsolètes
 __pages__:
   obsolète, renommé en maxpages
 __sort__:
   'asc' ou 'desc'. Obsolète : utiliser "+" ou "-" avant le nom de la 
   colonne avec sortby.
 
-!!Exemple
+===Exemple
 
 La ligne
 

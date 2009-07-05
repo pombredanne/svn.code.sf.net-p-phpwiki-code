@@ -8,12 +8,12 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!!Description
+===Description
 
 PluginInsérer peut être utilisé pour embarquer en inclusion
 des pages (extérieures) dans une page wiki.
 
-!!Arguments
+===Arguments
 
 =src= |
   URL de la page à importer
@@ -23,7 +23,7 @@ des pages (extérieures) dans une page wiki.
   re-dimensionné via javascript de telle sorte qu'il remplisse
   entièrement la page d'importation (voir plus bas pour plus d'info).
 
-!! Bugs / Avertissements
+=== Bugs / Avertissements
 
 o Les pages sont incorporées en utilisant les balises =<iframe>=. Les anciens 
   navigateurs ne supportent pas les ''iframe''. Dans ce cas l'utilisateur 
@@ -39,7 +39,7 @@ o Le code de détection de récursivité ne fonctionne pas encore. Soyez prudent
   en évitant les imporation récusives ou vous serez désolé (ou au moins
   amusé).
 
-! Exemple
+==== Exemple
 
 <verbatim>
 <<Transclude src="http://phpwiki.sourceforge.net/demo/ChangeLog" >>

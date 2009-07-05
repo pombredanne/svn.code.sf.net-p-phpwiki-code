@@ -13,13 +13,13 @@ TestGroupeDePages est un test pour le plugin ~PageGroup
 Cliquez sur la première page pour lancer la visite de ce plugin
 expérimental.
 
-!Table des matières
+==== Table des matières
 # [TestGroupeDePages/Un]
 # [TestGroupeDePages/Deux]
 # [TestGroupeDePages/Trois]
 # [TestGroupeDePages/Quatre]
 
-!À faire
+==== À faire
 
 * Accepter les liens ~[ nom | page ~]
 * Accepter  Précédent, Suivant... et les boutons images.

@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=utf-8
 Content-Transfer-Encoding: binary
 
-!! Synopsis
+=== Synopsis
 
 Vorlage = Parametrische Blöcke.
 
@@ -18,7 +18,7 @@ Similiar to CreatePage with the template argument, but at run-time.
 Similiar to the mediawiki templates but not with the "|" parameter seperator. 
 Note: The mediawiki syntax is also supported.
 
-!! Usage
+=== Usage
 <verbatim>
   <<Template page=Template/Footer>>
 
@@ -27,7 +27,7 @@ Note: The mediawiki syntax is also supported.
   {{Template/Film|title=SomeFilm|year=1999}}
 </verbatim>
 
-!! Plugin Argumente
+=== Plugin Argumente
 Argument|
   Vorgabewert|
     Beschreibung
@@ -40,7 +40,7 @@ vars|
   (empty)|
     optional parameters to be expanded inside the template
 
-! Parameter expansion:
+==== Parameter expansion:
   vars="var1=value1&var2=value2"
 
 We only support named parameters, not numbered ones as in mediawiki, and 
@@ -59,7 +59,7 @@ The following predefined variables are automatically expanded if existing:
 
 <noinclude> .. </noinclude> is stripped
 
-! In work:
+==== In work:
 * ENABLE_MARKUP_TEMPLATE = true: (lib/InlineParser.php)
   Support a mediawiki-style syntax extension which maps 
 <verbatim>
@@ -70,7 +70,7 @@ The following predefined variables are automatically expanded if existing:
     <<Template page=Template/Film vars="title=Some Good Film&year=1999" >>
 </verbatim>
 
-!! Examples
+=== Examples
 
 <verbatim>
   <<Template page=Vorlage/Beispiel vars="title=TestTitle" >>
