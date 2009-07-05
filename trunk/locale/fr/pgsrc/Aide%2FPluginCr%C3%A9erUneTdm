@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:46:45 +0000
+Date: Sun,  5 Jul 2009 21:04:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -17,10 +17,10 @@ une *Table des matières* dynamique de tous les en-têtes (titres et sous-titres
 
 ===Usage
 
-<verbatim>
+{{{
      <<CreateToc >>
      <<CreateToc jshide||=1 with_toclink||=1 >>
-</verbatim>
+}}}
 
 ===Arguments
 

@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:46:45 +0000
+Date: Sun,  5 Jul 2009 21:04:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -13,9 +13,9 @@ qui convertit un texte en image.
 
 ==== Exemple :
 
-<verbatim>
+{{{
 <<CacheTest text="What a wonderful test!" >>
-</verbatim>
+}}}
 
 will generate 
 

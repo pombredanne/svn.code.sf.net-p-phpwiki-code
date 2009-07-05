@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:45:34 +0000
+Date: Sun,  5 Jul 2009 21:04:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.4pre)
 Content-Type: application/x-phpwiki;
   pagename=RedirectToPlugin;
@@ -28,9 +28,9 @@ RedirectToPlugin 必須處於頁面的一開頭. 此外也會使得頁面的其�
 ==== Example
 
 要製作一個連到 HomePage 的別名,就在頁面最上面放上:
-<verbatim>
+{{{
 <<RedirectTo page="HomePage" >>
-</verbatim>
+}}}
 
 要看這個範例的話,請參訪 HomePageAlias.
 -----

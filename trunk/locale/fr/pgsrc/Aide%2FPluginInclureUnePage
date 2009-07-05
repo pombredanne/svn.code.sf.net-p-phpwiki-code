@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:46:45 +0000
+Date: Sun,  5 Jul 2009 21:04:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -13,11 +13,11 @@ Ce plugin inclura d'autres pages dans ce wiki. Dans le langage de l'hypertexte,
 Vous pouvez aussi charger des pages externes sur un mode plus limité avec 
 PluginInclureUnCadre. Par exemple, les lignes suivantes :
 
-<verbatim>
+{{{
 <<IncludePage page="PageAccueil" >>
 
 <<IncludePage page="WabiSabi" >>
-</verbatim>
+}}}
 
 donne :
 

@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:46:45 +0000
+Date: Sun,  5 Jul 2009 21:04:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -56,9 +56,9 @@ __setprefs__:
 
 Un lien magique a cette allure :
 
-<verbatim>
+{{{
 [ texte | url-phpwiki ]
-</verbatim>
+}}}
 
 La partie ''texte'' est optionnelle mais est habituellement recommandée.
 S'il est donné, il fournira le label du lien. L' ''url-phpwiki'' est 
@@ -66,9 +66,9 @@ un URL __phpwiki:__ comme décrit plus haut.
 
 ===Exemples
 
-<verbatim>
+{{{
 [ Éditer le BacÀSable | phpwiki:BacÀSable?action=edit ]
-</verbatim>
+}}}
 générera un lien qui vous emmènera directement à l'édition du [BacÀSable], comme ceci :
 [ Éditer le BacÀSable | phpwiki:BacÀSable?action=edit ].
 
@@ -99,17 +99,17 @@ que le plugin supporte les recherches alors sera rendu comme un formulaire.
 Un plugin de recherche appelé avec *<?plugin* au lieu de *<?plugin-form*
 insère simplement le résultat de la recherche du plugin :
 
-<verbatim>
+{{{
 <<TitleSearch s=wiki noheader=true >>
-</verbatim>
+}}}
 
 Résultats de recherche pour les pages dont le titre contient 'wiki' :
 
 <<TitleSearch s=wiki noheader=true >>
 
-<verbatim>
+{{{
 <?plugin-form FullTextSearch ?>
-</verbatim>
+}}}
 
 donne
 
@@ -117,9 +117,9 @@ donne
 
 Tandis que
 
-<verbatim>
+{{{
 <?plugin-form TitleSearch formsize=12 ?>
-</verbatim>
+}}}
 
 donne
 

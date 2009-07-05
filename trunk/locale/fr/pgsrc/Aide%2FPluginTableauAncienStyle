@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:46:45 +0000
+Date: Sun,  5 Jul 2009 21:04:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -15,14 +15,14 @@ des marques pour les tableaux.
 
 ===Usage:
 
-<verbatim>
+{{{
 <<OldStyleTable caption="Tableau ancien style" border||=2
 ||^  *Identité*             |v *Prix*       |v *Notes*
 | *Prénom*     | *Nom*
 |> Jeff        |< Dairiki   |^ Bon marché   |< Sans valeur
 |> Marco       |< Polo      |  Moins cher   |< Pas disponible
 >>
-</verbatim>
+}}}
 
 affichera
 

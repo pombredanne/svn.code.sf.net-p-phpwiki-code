@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:46:45 +0000
+Date: Sun,  5 Jul 2009 21:04:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -15,9 +15,9 @@ Wiki.
 
 ===Usage
 
-<verbatim>
+{{{
 <<TeX2png text="$$(a+b)^n=\sum_{k=0}^n{n\choose k}a^k b^{n-k}$$" >>
-</verbatim>
+}}}
 
 donne
 
@@ -40,9 +40,9 @@ pas encadrée de dollar n'est pas validée. Elle est remplacée à l'affichage
 par le texte en rouge. Il est malgré tout possible d'afficher du texte
 comme <<TeX2png text="$\textrm{\LaTeX}$" >> en utilisant :
 
-<verbatim>
+{{{
 <<TeX2png text="$\textrm{\LaTeX}$" >>
-</verbatim>
+}}}
 
 
 Ce plugin n'est pas adapté à la production de documents mathématiques Web

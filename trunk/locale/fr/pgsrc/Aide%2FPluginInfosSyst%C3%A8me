@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 16:46:45 +0000
+Date: Sun,  5 Jul 2009 21:04:37 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -15,13 +15,13 @@ concernant PhpWiki relativement au système sur lequel il est installé.
 
 ===Usage
 
-<verbatim>
+{{{
  Usage:  <<SystemInfo all >>
       ou <<SystemInfo pagestats cachestats discspace hitstats >>
       ou <<SystemInfo version >>
       ou <<SystemInfo current_theme >>
       ou <<SystemInfo PHPWIKI_DIR >>
-</verbatim>
+}}}
 
 
 ===Exemple
