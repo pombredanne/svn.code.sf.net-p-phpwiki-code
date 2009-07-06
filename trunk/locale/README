@@ -96,26 +96,9 @@ a handy "po translation mode" for you. See README.coding in the doc folder.
 Character Encoding
 ------------------
 
-Currently most of the language files are saved using the ISO-8859-1
+Currently all language files except Japanese are saved using the UTF-8
 character encoding to preserve accented characters. Make sure the text
-editor you use is capable of performing the appropriate Latin-1
-translation. Strictly speaking, ISO-8859-1 is *different* than Windows
-code page 1252 or MacRoman. Upon quick inspection one will notice that
-many of the letters do occupy the same positions in each of their'
-respective encoding tables, so it is easy to understand how people can
-make this false assumption.
-
-Limitation:
-PhpWiki is not able to translate between different character sets on the 
-fly (iconv). Certain languages, like Japanese or Chinese use special character 
-sets (euc-jp, utf-8), which must be defined in part four in config/config.ini.
-Therefore other languages in different character sets will not be correctly 
-displayed.
-PhpWiki is not yet properly utf-8 safe. That means that certain valid utf-8 multichar 
-sequences with \0 in it, will break the traditional php string or pcre functions or 
-that the length of the string will be miscalculated.
-There's an experimental utf-8 patch on the sf.net patches site if you want to try that.
-See http://phpwiki.org/Utf8Migration
+editor you use is capable of handling UTF-8 text.
 
 Word Reordering
 ---------------
@@ -216,26 +199,27 @@ before you can edit them.
    Use action=PageDump - "Preview as developer format" for this.
    Example:
 
-   Date: Sun, 27 Jan 2002 17:28:55 -0500
-   Mime-Version: 1.0 (Produced by PhpWiki 1.3.2-jeffs-hacks)
+   Date: Sat,  4 Jul 2009 19:09:38 +0000
+   Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
    X-Rcs-Id: $Id$
    Content-Type: application/x-phpwiki;
-     pagename=Neueste%C4nderungen;
-     flags=PAGE_LOCKED;
-     charset=iso-8859-1
+     pagename=G%C3%A4steBuch;
+     flags="";
+     markup=2;
+     charset=utf-8
    Content-Transfer-Encoding: binary
 
  - Make sure to rename files with accents in the page name converted
    to uppercase hex codes as shown in the pagename= line of the
    Content-Type header.
 
-   (e.g. "GästeBuch" => "G%E4steBuch")
+   (e.g. "GästeBuch" => "G%C3%A4steBuch")
 
  - Translate body text and rename plugin pages to match changes
-   specified in the '.po' file. Leave plugin code as english.
+   specified in the '.po' file. Leave plugin code as English.
    Example:
 
-   <?plugin RecentChanges days||=30 show_all||=0 show_minor||=0 ?>
+   <<RecentChanges days||=30 show_all||=0 show_minor||=0 >> 
 
 </FIXME>
 
