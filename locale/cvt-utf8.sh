@@ -4,7 +4,7 @@
 for po in po/??.po; do
   to="`echo $po|sed -e's/\.po/.utf8.po/'`"
   from=iso-8859-1
-  if [ "$po" = "po/ja.po" ]; then from=euc-jp; fi
+  if [ "$po" = "po/ja.po" ]; then from=utf-8; fi
   if [ "$po" = "po/zh.po" ]
   then 
     from=utf-8
@@ -19,7 +19,7 @@ done
 for po in ??; do
   to="$po.utf8"
   from=iso-8859-1
-  if [ "$po" = "ja" ]; then from=euc-jp; fi
+  if [ "$po" = "ja" ]; then from=utf-8; fi
   if [ "$po" = "zh" ]
   then 
     from=utf-8
