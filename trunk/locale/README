@@ -21,7 +21,7 @@ code of one of the supported languages, like this:
 
 Phpwiki uses the DEFAULT_LANGUAGE internally, when no $GLOBALS['LANG'] is given.
 With certain starter script which set $LANG you can easily provide a multi-lingual wiki.
-For convenience provide some InterWikiMap entries for easier switching to the other 
+For convenience provide some InterWikiMap entries for easier switching to the other
 languages then. See http://phpwiki.org/MultiLingualWiki
 
 Phpwiki uses GNU gettext tools to provide and maintain multi-lingual
@@ -96,9 +96,9 @@ a handy "po translation mode" for you. See README.coding in the doc folder.
 Character Encoding
 ------------------
 
-Currently all language files except Japanese are saved using the UTF-8
-character encoding to preserve accented characters. Make sure the text
-editor you use is capable of handling UTF-8 text.
+All language files are saved using the UTF-8 character encoding to
+preserve accented characters. Make sure the text editor you use is
+capable of handling UTF-8 text.
 
 Word Reordering
 ---------------
@@ -117,7 +117,7 @@ Take the following English phrase as an example. This message would be
 displayed in the browser when someone wants to compare two revisions
 of a Wiki page. The corresponding entry for the German translation for
 this phrase (from the file 'de.po') reads:
- 
+
     #: ../lib/diff.php:251
     #, c-format
     msgid "Differences between %s and %s of %s."
@@ -219,13 +219,13 @@ before you can edit them.
    specified in the '.po' file. Leave plugin code as English.
    Example:
 
-   <<RecentChanges days||=30 show_all||=0 show_minor||=0 >> 
+   <<RecentChanges days||=30 show_all||=0 show_minor||=0 >>
 
 </FIXME>
 
 
 Makefile
--------- 
+--------
 The Makefile calls 'xgettext' to automatically perform a number of
 important translation tasks:
 
@@ -262,12 +262,12 @@ When a new language module is added to PhpWiki, the 'Makefile' in the
 
  2. If you've created a new .po file (or if there are new .php source files
     containing translatable strings,) update the Makefile:
- 
+
       make depend
 
  3. To make sure the list of translatable strings in the .po is in sync
     with the actual php source code:
- 
+
       make po
 
  4. Edit the translations in the .po file.  If you have emacs available,
