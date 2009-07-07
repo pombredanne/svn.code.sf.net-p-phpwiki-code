@@ -976,6 +976,20 @@ class Markup_xml_plugin extends BalancedMarkup
 }
 
 /**
+ *  Mediawiki <nowiki>
+ *  <nowiki>...</nowiki>
+ */
+class Markup_nowiki extends SimpleMarkup
+{
+    var $_match_regexp = '<nowiki>.*?<\/nowiki>';
+
+    function markup ($match) {
+        // Remove <nowiki> and </nowiki>
+        return HTML::raw(substr($match, 8, -9));
+    }
+}
+
+/**
  *  Wikicreole preformatted
  *  {{{
  *  }}}
@@ -1137,6 +1151,7 @@ class InlineTransformer
             $class = "Markup_$mtype";
             $this->_addMarkup(new $class);
         }
+        $this->_addMarkup(new Markup_nowiki);
         if (ENABLE_MARKUP_DIVSPAN and !$non_default)
             $this->_addMarkup(new Markup_html_divspan);
         if (ENABLE_MARKUP_COLOR and !$non_default)
