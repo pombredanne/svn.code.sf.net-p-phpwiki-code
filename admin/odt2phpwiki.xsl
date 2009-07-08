@@ -426,7 +426,7 @@
 			-->
 			<choose>
 				<when test="boolean(ancestor::text:list-item)">
-					<text>&lt;br/&gt; </text>
+					<text> \\ </text>
 				</when>
 				<when test="$code">
 					<variable name="style-right">
