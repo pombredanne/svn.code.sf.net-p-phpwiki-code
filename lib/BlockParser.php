@@ -370,7 +370,8 @@ class ParsedBlock extends Block_HtmlElement {
 	    $Block_types = array
 		    ('nowiki_wikicreole', 'template_plugin', 'placeholder', 'oldlists', 'list', 'dl',
                      'table_dl', 'table_wikicreole', 'table_mediawiki',
-                     'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre', 'email_blockquote',
+                     'blockquote', 'heading', 'heading_wikicreole', 'hr', 'pre',
+                     'email_blockquote', 'wikicreole_indented',
 		     'plugin', 'plugin_wikicreole', 'p');
             // insert it before p!
             if (ENABLE_MARKUP_DIVSPAN) {
@@ -1190,6 +1191,19 @@ class Block_email_blockquote extends BlockMarkup
         $indent = $this->_re;
         $this->_element = new SubBlock($input, $indent, $m->match,
                                        'blockquote', $this->_attr);
+        return true;
+    }
+}
+
+class Block_wikicreole_indented extends BlockMarkup
+{
+    var $_attr = array('style' => 'margin-left:2em');
+    var $_re = ':\ ?';
+
+    function _match (&$input, $m) {
+        $indent = $this->_re;
+        $this->_element = new SubBlock($input, $indent, $m->match,
+                                       'div', $this->_attr);
         return true;
     }
 }
