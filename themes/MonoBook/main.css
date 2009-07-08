@@ -1838,6 +1838,19 @@ h1 .backlinks { text-decoration: underline; }
 .interwiki .wikipage, i .interwiki, em .interwiki { font-style: normal; }
 
 /*
+ * "E-mail" style blockquote
+ */
+blockquote.mail-style-quote {
+  border-left: medium #284 solid;
+  padding-left: 1em;
+  margin-left: 0;
+  margin-right: 0;
+}
+.mail-style-quote blockquote.mail-style-quote {
+  margin-left: -0.6em;
+}
+
+/*
  * table class="boxed"
  * will put a border around the table (but not around the cells)
  *
