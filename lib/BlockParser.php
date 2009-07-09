@@ -550,13 +550,9 @@ class Block_list extends BlockMarkup
         $li = &$this->_content[0];
         $li->setTightness($top, $bot);
     }
-    
+
     function merge ($nextBlock) {
         if (isa($nextBlock, 'Block_list') and $this->_tag == $nextBlock->_tag) {
-            if ($nextBlock->_content === $this->_content) {
-            	trigger_error("Internal Error: no block advance", E_USER_NOTICE);
-            	return false;
-            }
             array_splice($this->_content, count($this->_content), 0,
                          $nextBlock->_content);
             return $this;
