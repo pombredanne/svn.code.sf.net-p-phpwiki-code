@@ -8,7 +8,11 @@
   if (empty($revision)) $revision = $page->getCurrentRevision(false);
 //MSIE needs sticky.js
 ?>
-<div <?= isBrowserIE() ? "class=\"ie-actionbuttons\"" : "id=\"actionbuttons\""?>>
+<?php if (isBrowserIE()) { ?>
+<div class="ie-actionbuttons">
+<?php } else { ?>
+<div id="actionbuttons">
+<?php } ?>
 <?= $EditB ?>
 <?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>
 <?=$SEP?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
