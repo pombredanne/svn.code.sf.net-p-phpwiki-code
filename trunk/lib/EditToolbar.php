@@ -408,9 +408,7 @@ msg_repl_close     = '"._("Close")."'
     function imagePulldown($query, $case_exact=false, $regex='auto') {
         global $WikiTheme;
 
-        $image_dir = '.';
-        if (defined('UPLOAD_FILE_PATH'))
-            $image_dir = UPLOAD_FILE_PATH . "/$image_dir";
+        $image_dir = getUploadFilePath();
         $pd = new fileSet($image_dir, '*');
         $images = $pd->getFiles();
         unset($pd);
