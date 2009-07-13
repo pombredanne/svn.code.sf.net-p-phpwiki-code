@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Mon, 13 Jul 2009 05:39:09 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -17,7 +17,7 @@ implementation of the semantic mediawiki extension. It features:
 * Support for using physical units of measurement in all numerical attributes, 
   without need for prior configuration.
 
-Relations can be searched for with regular experssions, attributes can be 
+Relations can be searched for with regular expressions, attributes can be 
 searched for with full mathematical expressions.
 
 The annotation data will be combined with annotations from the current
@@ -76,11 +76,11 @@ Chargers.
 
 == See Also
 
-See PhpWiki:SemanticWeb, 
-SemanticRelations, ListRelations, SemanticSearch, SemanticSearchAdvanced,
-[SemanticRelationsPlugin|Help:SemanticRelationsPlugin], [SemanticSearchPlugin|Help:SemanticSearchPlugin], 
-PhpWiki:ImportRdf, PhpWiki:ImportRdfs, PhpWiki:ImportOwl, 
-PhpWiki::ExportRdf, PhpWiki::ExportRdfs, PhpWiki::ExportOwl
+* [[PhpWiki:SemanticWeb]]
+* [[SemanticRelations]], [[ListRelations]], [[SemanticSearch]], [[SemanticSearchAdvanced]]
+* [[Help:SemanticRelationsPlugin|SemanticRelationsPlugin]], [[Help:SemanticSearchPlugin|SemanticSearchPlugin]]
+* [[PhpWiki:ImportRdf]], [[PhpWiki:ImportRdfs]], [[PhpWiki:ImportOwl]]
+* [[PhpWiki:ExportRdf]], [[PhpWiki:ExportRdfs]], [[PhpWiki:ExportOwl]]
 
 <noinclude>
 ----
