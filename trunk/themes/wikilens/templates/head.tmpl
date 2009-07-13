@@ -71,7 +71,7 @@ _("SandBox"))?>" />
 _("WikiWikiWeb")?>" href="<?=WikiURL(
 _("WikiWikiWeb"))?>" />
 <?php } ?>
-
+<link rel="alternate" type="application/x-wiki" title="Edit this page!" href="<?= WikiURL($page,array('action'=>'edit')) ?>" />
 <?php if ($user->isadmin()) {
       /* Only for the Administrator */ ?>
 <link rel="bookmark" title="<?=
