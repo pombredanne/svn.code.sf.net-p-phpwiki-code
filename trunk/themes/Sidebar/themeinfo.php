@@ -41,7 +41,8 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook {
 	return HTML::img(array('id' => $id.'-img',
 	                       'src' => $png,
 			       //'align' => 'right',
-	                       'onClick' => "showHideFolder('$id')",
+	                       'onclick' => "showHideFolder('$id')",
+			       'alt'  => _("Click to hide/show"),
 			       'title'  => _("Click to hide/show")));
     }
 
