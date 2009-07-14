@@ -161,6 +161,7 @@ class WikiRequest extends Request {
             update_locale($user_lang);
             FindLocalizedButtonFile(".",'missing_ok','reinit');
         }
+        //if (empty($_lang->lang) and $GLOBALS['LANG'] != $_lang->default_value) ;
     }
 
     function initializeTheme ($when = 'default') {
@@ -745,6 +746,7 @@ class WikiRequest extends Request {
             return;             // Homepage exists.
 
         include_once('lib/loadsave.php');
+        $this->setArg('action', 'loadfile');
         SetupWiki($this);
         $this->finish();        // NORETURN
     }
@@ -1363,10 +1365,6 @@ function main () {
         $_PEAR_destructor_object_list = array();
     $request->possiblyDeflowerVirginWiki();
     
-// hack! define proper actions for these.
-//if (defined('WIKI_XMLRPC') and WIKI_XMLRPC) return;
-//if (defined('WIKI_SOAP')   and WIKI_SOAP)   return;
-
     $validators = array('wikiname' => WIKI_NAME,
                         'args'     => wikihash($request->getArgs()),
                         'prefs'    => wikihash($request->getPrefs()));
