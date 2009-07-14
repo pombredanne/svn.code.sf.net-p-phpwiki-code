@@ -828,26 +828,30 @@ function fixup_dynamic_configs($file) {
         }
     }
     else {
-        // Working around really weird gettext problems: (4.3.2, 4.3.6 win)
-        // bindtextdomain() returns the current domain path.
-        // 1. If the script is not index.php but something like "de", on a different path
-        //    then bindtextdomain() fails, but after chdir to the correct path it will work okay.
-        // 2. But the weird error "Undefined variable: bindtextdomain" is generated then.
-        $bindtextdomain_path = FindFile("locale", false, true);
         $chback = 0;
-        if (isWindows())
-            $bindtextdomain_path = str_replace("/", "\\", $bindtextdomain_path);
-        $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
-        if (realpath($bindtextdomain_real) != realpath($bindtextdomain_path)) {
-            // this will happen with virtual_paths. chdir and try again.
-            chdir($bindtextdomain_path);
-            $chback = 1;
+    	if ($LANG != 'en') {
+
+            // Working around really weird gettext problems: (4.3.2, 4.3.6 win)
+            // bindtextdomain() in returns the current domain path.
+            // 1. If the script is not index.php but something like "de", on a different path
+            //    then bindtextdomain() fails, but after chdir to the correct path it will work okay.
+            // 2. But the weird error "Undefined variable: bindtextdomain" is generated then.
+            $bindtextdomain_path = FindFile("locale", false, true);
+            if (isWindows())
+                $bindtextdomain_path = str_replace("/", "\\", $bindtextdomain_path);
             $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
+            if (realpath($bindtextdomain_real) != realpath($bindtextdomain_path)) {
+                // this will happen with virtual_paths. chdir and try again.
+                chdir($bindtextdomain_path);
+                $chback = 1;
+                $bindtextdomain_real = @bindtextdomain("phpwiki", $bindtextdomain_path);
+            }
         }
         // tell gettext not to use unicode. PHP >= 4.2.0. Thanks to Kai Krakow.
         if (defined('CHARSET') and function_exists('bind_textdomain_codeset'))
             @bind_textdomain_codeset("phpwiki", CHARSET);
-        textdomain("phpwiki");
+        if ($LANG != 'en')
+            textdomain("phpwiki");
         if ($chback) { // change back
             chdir($bindtextdomain_real . (isWindows() ? "\\.." : "/.."));
         }
