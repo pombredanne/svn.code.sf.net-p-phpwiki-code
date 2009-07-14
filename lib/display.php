@@ -87,6 +87,7 @@ function actionPage(&$request, $action) {
 	$template = Template('browse', array('CONTENT' => $transformedContent));
 	GeneratePage($template, $pagetitle, $revision, $args);
     } elseif ($format == 'xml') {
+    	$request->setArg('format','');
 	$template = new Template('browse', $request,
                                  array('revision' => $revision,
                                        'CONTENT'  => $transformedContent,
@@ -138,10 +139,12 @@ function actionPage(&$request, $action) {
 	    array_unshift($args['VALID_LINKS'], $pagename);
 	    $request->setArg('zipname', FilenameForPage($pagename).".zip");
 	    $request->setArg('pages', $args['VALID_LINKS']);
+	    $request->setArg('format','');
 	    MakeWikiZipHtml($request);
 	} // time-sorted RDF á la RecentChanges 
 	elseif (in_array($format, array("rss91","rss2","rss","atom"))) {
             $args = $request->getArgs();
+            //$request->setArg('format','');
             if ($pagename == _("RecentChanges")) {
                 $template->printExpansion($args);
 	    } else {
@@ -150,7 +153,7 @@ function actionPage(&$request, $action) {
                 return $plugin->format($plugin->getChanges($request->_dbi, $args), $args);
 	    }
 	} elseif ($format == 'json') { // for faster autocompletion on searches
-	    $req_args = $request->args;
+	    $req_args =& $request->args;
 	    unset($req_args['format']);
             $json = array('count' => count($pagelist->_pages),
                           'list'  => $args['VALID_LINKS'],
@@ -212,17 +215,20 @@ function displayPage(&$request, $template=false) {
         echo "<","?xml version=\"1.0\" encoding=\"$charset\"?", ">\n";
         // DOCTYPE html needed to allow unencoded entities like &nbsp; without !CDATA[]
         echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',"\n";
 	if ($page->exists()) {
 	    header("Last-Modified: " . Rfc1123DateTime($revision->get('mtime')));
 	    $request->cacheControl();
+	    $request->setArg('format','');
             $page_content = $revision->getTransformedContent();
             $page_content->printXML();
+            $request->_is_buffering_output = false; // avoid wrong Content-Length with errors
             $request->finish();
         }
         else {
 	    $request->cacheControl();
             echo('<div style="display:none;" />');
+            $request->_is_buffering_output = false; // avoid wrong Content-Length with errors
             $request->finish();
             exit();
         }
@@ -369,9 +375,11 @@ function displayPage(&$request, $template=false) {
 	$pagelist->addPage($page);
 	if ($format == 'pdf') {
 	    require_once("lib/pdf.php");
+	    $request->setArg('format','');
 	    ConvertAndDisplayPdfPageList($request, $pagelist);
 	// time-sorted rdf a la RecentChanges
 	} elseif (in_array($format, array("rss91","rss2","rss","atom"))) {
+	    //$request->setArg('format','');
             if ($pagename == _("RecentChanges"))
                 $template->printExpansion($toks);
             else {    
@@ -389,6 +397,7 @@ function displayPage(&$request, $template=false) {
 	    $rdf = new OwlWriter($request, $pagelist);
 	    $rdf->format();
 	} elseif ($format == 'json') { // include page content asynchronously
+	    $request->setArg('format','');
 	    if ($page->exists())
             	$content = $page_content->asXML();
             else
