@@ -26,18 +26,23 @@ extends _PassUser {
         $web = new HttpClient("www.facebook.com", 80);
         if (DEBUG & _DEBUG_LOGIN) $web->setDebug(true);
         // collect cookies from http://www.facebook.com/login.php
-        $web->persist_cookies = true;
+        $web->persist_cookies = true;  
         $web->cookie_host = 'www.facebook.com';
         $firstlogin = $web->get("/login.php");
         if (!$firstlogin) {
-            trigger_error(_("Facebook connect failed with %d %s", $this->status, $this->errormsg),
-                          E_USER_WARNING);
+            if (DEBUG & (_DEBUG_LOGIN | _DEBUG_VERBOSE))
+                trigger_error(sprintf(_("Facebook connect failed with %d %s"), 
+                                      $web->status, $web->errormsg),
+                              E_USER_WARNING);
         }
         // Switch from http to https://login.facebook.com/login.php
         $web->port = 443;
+        $web->host = 'login.facebook.com';
         if (!($retval = $web->post("/login.php", array('user'=>$userid, 'pass'=>$password)))) {
-            trigger_error(_("Facebook login failed with %d %s", $web->status, $web->errormsg),
-                          E_USER_WARNING);
+            if (DEBUG & (_DEBUG_LOGIN | _DEBUG_VERBOSE))
+                trigger_error(sprintf(_("Facebook login failed with %d %s"),
+                                      $web->status, $web->errormsg),
+                              E_USER_WARNING);
         }
         $this->_authmethod = 'Facebook';
 	if (DEBUG & _DEBUG_LOGIN) trigger_error(get_class($this)."::checkPass => $retval",
