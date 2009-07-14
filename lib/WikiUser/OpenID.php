@@ -36,8 +36,6 @@ extends _PassUser
     }
 }
 
-// $Log: OpenID.php,v $
-
 // Local Variables:
 // mode: php
 // tab-width: 8
