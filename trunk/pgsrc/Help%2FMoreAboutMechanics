@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Wed, 15 Jul 2009 01:12:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -34,7 +34,7 @@ is how easily external URLs link, like this:
 # http://theregister.co.uk/
 
 Combined with one namespace and a simple markup, a Wiki exhibits many
-of the characteristics of [WabiSabi|Help:WabiSabi].
+of the characteristics of [[Help:WabiSabi|WabiSabi]].
 
 ~PhpWiki is licensed under the GNU General Public license, which you
 should be able to see here: http://www.gnu.org/copyleft/gpl.txt.
