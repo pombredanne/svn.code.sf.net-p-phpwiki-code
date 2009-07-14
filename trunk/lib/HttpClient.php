@@ -148,6 +148,10 @@ class HttpClient {
     	    if ($atStart) {
     	        // Deal with first line of returned data
     	        $atStart = false;
+    	        if ($line === false) {
+    	            $this->errormsg = "Empty ". $this->method. " response";
+    	            return false;
+    	        }    
     	        if (!preg_match('/HTTP\/(\\d\\.\\d)\\s*(\\d+)\\s*(.*)/', $line, $m)) {
     	            $this->errormsg = "Status code line invalid: ".htmlentities($line);
     	            $this->debug($this->errormsg);
