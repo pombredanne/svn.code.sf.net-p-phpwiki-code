@@ -1094,19 +1094,17 @@ function RevertPage (&$request)
         return;
     }
     if (!$request->getArg('verify')) {
-        $mesg->pushContent(HTML::p(_("Are you sure?")),
+        $mesg->pushContent(HTML::p(fmt("Are you sure to revert %s to version $version?", WikiLink($pagename))),
                            HTML::form(array('action' => $request->getPostURL(),
                                             'method' => 'post'),
                                       HiddenInputs($request->getArgs(), false, array('verify')),
                                       HiddenInputs(array('verify' => 1)),
                                       Button('submit:verify', _("Yes"), 'button'),
                                       HTML::Raw('&nbsp;'),
-                                      Button('submit:cancel', _("Cancel"), 'button')),
-                           HTML::hr());
+                                      Button('submit:cancel', _("Cancel"), 'button'))
+                           );
         $rev = $page->getRevision($version);
-        $html = HTML(HTML::p(fmt("Revert %s to version $version", WikiLink($pagename))), 
-                     $mesg,
-                     $rev->getTransformedContent()); 
+        $html = HTML(HTML::fieldset($mesg), HTML::hr(), $rev->getTransformedContent()); 
         $template = Template('browse', 
                              array('CONTENT' => $html));
         GeneratePage($template, $pagename, $rev);
