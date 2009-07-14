@@ -1233,7 +1233,7 @@ function ParseSerializedPage($text, $default_pagename, $user)
         }
     }
     if (empty($pagehash['charset']))
-        $pagehash['charset'] = 'iso-8859-1';
+        $pagehash['charset'] = 'utf-8';
     // compare to target charset
     if (strtolower($pagehash['charset']) != strtolower($GLOBALS['charset'])) {
         $pageinfo['content'] = charset_convert($params['charset'], $GLOBALS['charset'], $pageinfo['content']);
@@ -1305,7 +1305,7 @@ function LoadFile (&$request, $filename, $text = false, $mtime = false)
         // plain old file
         $user = $request->getUser();
 
-        $file_charset = 'iso-8859-1';
+        $file_charset = 'utf-8';
         // compare to target charset
         if ($file_charset != strtolower($GLOBALS['charset'])) {
             $text = charset_convert($file_charset, $GLOBALS['charset'], $text);
