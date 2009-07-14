@@ -9,7 +9,7 @@ rcs_id('$Id$');
  */
 class _GForgePassUser extends _PassUser {
 
-	var $_is_external = 0;
+    var $_is_external = 0;
 	
     function _GForgePassUser($UserName='',$prefs=false) {
         if ($prefs) $this->_prefs = $prefs;        
@@ -29,44 +29,44 @@ class _GForgePassUser extends _PassUser {
     function userExists() {
     	global $group_id;
 
-		// Mapping (phpWiki vs GForge) performed is:
-		//     ANON  for non logged or non member
-		//     USER  for member of the project.
-		//     ADMIN for member having admin rights
-		if (session_loggedin()){
+        // Mapping (phpWiki vs GForge) performed is:
+        //     ANON  for non logged or non member
+        //     USER  for member of the project.
+        //     ADMIN for member having admin rights
+        if (session_loggedin()){
 
-			// Get project object (if error => ANON)
-			$project =& group_get_object($group_id);
+            // Get project object (if error => ANON)
+            $project =& group_get_object($group_id);
 			
-			if (!$project || !is_object($project)) {
-		       	$this->_level = WIKIAUTH_ANON;
-				return false;
-			} elseif ($project->isError()) {
-		       	$this->_level = WIKIAUTH_ANON;
-				return false;
-			}
+            if (!$project || !is_object($project)) {
+                $this->_level = WIKIAUTH_ANON;
+                return false;
+            } elseif ($project->isError()) {
+                $this->_level = WIKIAUTH_ANON;
+                return false;
+            }
 
-			$member = false ;
-			$user = session_get_user();
-			$perm =& $project->getPermission($user);
-			if (!$perm || !is_object($perm)) {
-		       	$this->_level = WIKIAUTH_ANON;
-				return false;
-			} elseif (!$perm->isError()) {
-				$member = $perm->isMember();
-			}
+            $member = false ;
+            $user = session_get_user();
+            $perm =& $project->getPermission($user);
+            if (!$perm || !is_object($perm)) {
+                $this->_level = WIKIAUTH_ANON;
+                return false;
+            } elseif (!$perm->isError()) {
+                $member = $perm->isMember();
+            }
 
-			if ($member) {			
-				$this->_userid = $user->getRealName();
-				$this->_is_external = $user->getIsExternal();
-				if ($perm->isAdmin()) {
-					$this->_level = WIKIAUTH_ADMIN;
-				} else {
-        			$this->_level = WIKIAUTH_USER;
-				}
-        		return $this;
-        	}
-		}
+            if ($member) {			
+                $this->_userid = $user->getRealName();
+                $this->_is_external = $user->getIsExternal();
+                if ($perm->isAdmin()) {
+                    $this->_level = WIKIAUTH_ADMIN;
+                } else {
+                    $this->_level = WIKIAUTH_USER;
+                }
+                return $this;
+            }
+        }
        	$this->_level = WIKIAUTH_ANON;
        	return false;
     }
