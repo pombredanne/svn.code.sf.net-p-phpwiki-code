@@ -90,13 +90,6 @@ a:hover {
 a.stub {
 	color: #772233;
 }
-a.new, #p-personal a.new {
-	color: #ba0000;
-}
-a.new:visited, #p-personal a.new:visited {
-	color: #a55858;
-}
-
 img {
 	border: none;
 	vertical-align: middle;
