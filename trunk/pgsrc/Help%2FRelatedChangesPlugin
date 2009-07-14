@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Wed, 15 Jul 2009 01:01:24 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,17 +8,16 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-_short description_
+The **~RelatedChanges** [[Help:WikiPlugin|plugin]] gives a list of changes on all pages which are linked to from this page.
 
 == Usage
 {{{
-<<RelatedChanges>>
+<<RelatedChanges arguments>>
 }}}
 
 == Arguments
 
-page _(default: current pagename)_:
-  The page to execute upon.
+The arguments are the same as for [[Help:RecentChanges|RecentChanges]] plugin.
 
 == Example
 
