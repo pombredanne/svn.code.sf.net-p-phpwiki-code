@@ -1030,7 +1030,11 @@ class WikiDB_Page
             $newrevision->_transformedContent = $formatted;
         }
         // more pagechange callbacks: (in a hackish manner for now)
-        if (ENABLE_RECENTCHANGESBOX and empty($meta['is_minor_edit'])) {
+        if (ENABLE_RECENTCHANGESBOX 
+            and empty($meta['is_minor_edit'])
+            and !in_array($GLOBALS['request']->getArg('action'), 
+                          array('loadfile','upgrade')))
+        {
             require_once("lib/WikiPlugin.php");
             $w = new WikiPluginLoader;
             $p = $w->getPlugin("RecentChangesCached", false);
