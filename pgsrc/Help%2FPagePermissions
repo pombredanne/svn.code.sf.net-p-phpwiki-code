@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Wed, 15 Jul 2009 01:12:11 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -103,7 +103,7 @@ and it would be only specific for certain plugins, which check permissions by th
 
 === Action <=> Perm mapping
 
-Those perms are mapped to those actions. [ActionPages|Help:ActionPage] (plugins) check their access restrictions by themselves.
+Those perms are mapped to those actions. [[Help:ActionPage|Action Pages]] (plugins) check their access restrictions by themselves.
 
 list:
   _none, 'list' is checked for every pagename listed in PageList, to prevent from being listed in AllPages._
