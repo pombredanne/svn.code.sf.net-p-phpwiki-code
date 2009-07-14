@@ -876,7 +876,7 @@ function ParseMimeifiedPages ($data)
         ExitWiki( sprintf("Unknown %s", 'encoding type: $encoding') );
 
     if (empty($params['charset']))
-        $params['charset'] = 'iso-8859-1';
+        $params['charset'] = 'utf-8';
 
     // compare to target charset
     if (strtolower($params['charset']) != strtolower($GLOBALS['charset'])) {
