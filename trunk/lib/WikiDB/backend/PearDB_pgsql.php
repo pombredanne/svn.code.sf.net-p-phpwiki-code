@@ -5,8 +5,8 @@ require_once('lib/ErrorManager.php');
 require_once('lib/WikiDB/backend/PearDB.php');
 
 if (!defined("USE_BYTEA")) // see schemas/psql-initialize.sql
-    //define("USE_BYTEA", true);
-    define("USE_BYTEA", false);
+    define("USE_BYTEA", true);
+    //define("USE_BYTEA", false);
 
 /*
 Since 1.3.12 changed to use:
