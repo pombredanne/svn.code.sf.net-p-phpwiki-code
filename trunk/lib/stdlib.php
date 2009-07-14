@@ -431,6 +431,7 @@ function LinkImage($url, $alt = "") {
                                      _("BAD URL -- remove all of <, >, \"")));
         return $link;
     }
+    // spaces in inline images must be %20 encoded!
     $link = HTML::img(array('src' => $url));
 
     // Extract attributes
@@ -444,7 +445,7 @@ function LinkImage($url, $alt = "") {
             $link->setAttr($attr, $value);
         }
         // align = bottom|middle|top|left|right
-        if (($attr == "align")
+        elseif (($attr == "align")
           && (($value == "bottom")
             || ($value == "middle")
             || ($value == "top")
@@ -453,18 +454,18 @@ function LinkImage($url, $alt = "") {
             $link->setAttr($attr, $value);
         }
         // These attributes take a number (pixels): border, hspace, vspace
-        if ((($attr == "border") || ($attr == "hspace") || ($attr == "vspace"))
+        elseif ((($attr == "border") || ($attr == "hspace") || ($attr == "vspace"))
            && (is_int($value))) {
             $link->setAttr($attr, $value);
         }
         // These attributes take a number (pixels) or a percentage: height, width
-        if ((($attr == "border") || ($attr == "hspace") || ($attr == "vspace"))
+        elseif ((($attr == "border") || ($attr == "hspace") || ($attr == "vspace"))
            && (preg_match('/\d+[%p]?x?/', $value))) {
             $link->setAttr($attr, $value);
         }
         // We allow size=50% and size=20x30
         // We replace this with "width" and "height" HTML attributes
-        if ($attr == "size") {
+        elseif ($attr == "size") {
             if (preg_match('/(\d+)%/', $value, $m)) {
                 $link->setAttr('width',$m[1]);
                 $link->setAttr('height',$m[1]);
@@ -472,6 +473,25 @@ function LinkImage($url, $alt = "") {
                 $link->setAttr('width',$m[1]);
                 $link->setAttr('height',$m[2]);
             }
+        } 
+        else {
+            trigger_error(sprintf(_("Invalid image attribute %s %s=%s"),
+                                  $url, $attr, $value), E_USER_WARNING);
+        }
+    }
+    // Correct silently the most common error
+    if ($url != $ori_url and empty($arr) and !preg_match("/^http/",$url)) {
+	// space belongs to the path
+	$file = NormalizeLocalFileName($ori_url);
+        if (file_exists($file)) {
+             $link = HTML::img(array('src' => $ori_url));
+        } elseif (string_starts_with($ori_url, getUploadDataPath())) {
+             $file = substr($file, strlen(getUploadDataPath()));
+             $path = getUploadFilePath().$file;
+             if (file_exists($path)) {
+                 $link->setAttr('src', getUploadDataPath() . $file);
+                 $url = $ori_url;
+             }
         }
     }
     if (!$link->getAttr('alt')) {
@@ -512,7 +532,8 @@ function LinkImage($url, $alt = "") {
                 $link->setAttr('src', rawurldecode($url));
             } elseif (string_starts_with($url, getUploadDataPath())) { // there
                 $file = substr($file, strlen(getUploadDataPath()));
-                $size = @getimagesize(getUploadFilePath().rawurldecode($file));
+                $path = getUploadFilePath().rawurldecode($file);
+                $size = @getimagesize($path);
                 $link->setAttr('src', getUploadDataPath() . rawurldecode($file));
             } else { // elsewhere
                 $size = @getimagesize($request->get('DOCUMENT_ROOT').urldecode($url));
@@ -2576,8 +2597,8 @@ function compute_tablecell ($table, $i, $j, $imax, $jmax) {
 function strip_accents($text) {
     $res = utf8_decode($text);
     $res = strtr($res,
-		utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'),
-					'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+                 utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'),
+                             'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
     return utf8_encode($res);
 }
 
