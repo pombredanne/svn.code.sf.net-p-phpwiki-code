@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id: Processing.php 6185 2008-08-22 11:40:14Z vargenau $');
+rcs_id('$Id$');
 /*
 Copyright 2009 $ThePhpWikiProgrammingTeam
 
