@@ -87,6 +87,9 @@ if (!$group_id || !$project) {
     // Do not use a directory per user but only one (per project)
     define('UPLOAD_USERDIR', false);
 
+    // Use black list of extensions instead of white list
+    define('DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS', true);
+
     // GForge is UTF-8, so use the same.
     define('CHARSET', 'UTF-8');
 
