@@ -77,6 +77,7 @@ doc
 docx
 gif
 h
+ics
 ini
 jpeg
 jpg
