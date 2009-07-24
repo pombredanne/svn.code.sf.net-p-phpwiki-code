@@ -1,10 +1,10 @@
 # Deutsche PhpWiki locale
 # This file is part of PhpWiki.
-# Copyright (C) Copyright 1999, 2000, 2001, 2002, 2003, 2004
+# Copyright (C) Copyright 1999, 2000, 2001, 2002, 2003, 2004, 2006, 2007, 2009
 # ThePhpWikiProgrammingTeam.
 msgid ""
 msgstr ""
-"Project-Id-Version: PhpWiki-1.3.11\n"
+"Project-Id-Version: PhpWiki-1.3.15\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-04 01:30+0200\n"
 "PO-Revision-Date: 2000-10-31 02:23+0200\n"
@@ -20,24 +20,24 @@ msgstr ""
 msgid "BAD semantic relation link"
 msgstr ""
 
-#: ../lib/CachedMarkup.php:569
-#, fuzzy, php-format
+#: ../lib/CachedMarkup.php:505
+#, php-format
 msgid "Attribute %s, base value: %s"
-msgstr "Attribute für %s"
+msgstr "Attribut %s, Basis: %s"
 
-#: ../lib/CachedMarkup.php:570
-#, fuzzy, php-format
+#: ../lib/CachedMarkup.php:506
+#, php-format
 msgid "Attribute %s, value: %s"
-msgstr "Attribute für %s"
+msgstr "Attribut %s, Wert: %s"
 
-#: ../lib/CachedMarkup.php:578
-#, fuzzy, php-format
+#: ../lib/CachedMarkup.php:514
+#, php-format
 msgid "Relation %s to page %s"
-msgstr "Löschen in %s fehlgeschlagen: %s"
+msgstr "Relation %s zu Seite %s"
 
 #: ../lib/CachedMarkup.php:633
 msgid "Found by "
-msgstr ""
+msgstr "Gefunden von "
 
 #: ../lib/Captcha.php:32
 msgid "Typed in verification word mismatch ... are you a bot?"
@@ -80,9 +80,8 @@ msgid "Operation undone"
 msgstr "Aktion rückgängig gemacht"
 
 #: ../lib/EditToolbar.php:52
-#, fuzzy
 msgid "Substring \"\\1\" found \\2 times. Replace with \"\\3\"?"
-msgstr "Substring \"%s\" %s mal gefunden. Ersetze mit \"%s\"?"
+msgstr "Substring \"\\1\" \\2 mal gefunden. Ersetze mit \"\\3\"?"
 
 #: ../lib/EditToolbar.php:53
 #, php-format
@@ -95,9 +94,8 @@ msgid "Search & Replace"
 msgstr "Suchen & Ersetzen"
 
 #: ../lib/EditToolbar.php:55
-#, fuzzy
 msgid "Search for"
-msgstr "Suche"
+msgstr "Suche nach"
 
 #: ../lib/EditToolbar.php:56
 msgid "Replace with"
@@ -126,41 +124,36 @@ msgid "Bold text"
 msgstr "Fetter Text"
 
 #: ../lib/EditToolbar.php:128
-#, fuzzy
 msgid "Bold text [alt-b]"
-msgstr "Fetter Text"
+msgstr "Fetter Text [alt-f]"
 
 #: ../lib/EditToolbar.php:132
 msgid "Italic text"
 msgstr "Kursiver Text"
 
 #: ../lib/EditToolbar.php:133
-#, fuzzy
 msgid "Italic text [alt-i]"
-msgstr "Kursiver Text"
+msgstr "Kursiver Text [alt-k]"
 
 #: ../lib/EditToolbar.php:137
 msgid "Strike-through text"
-msgstr ""
+msgstr "Durchgestrichen"
 
 #: ../lib/EditToolbar.php:138
-#, fuzzy
 msgid "Strike"
-msgstr "Größe"
+msgstr "Durchstreichen"
 
 #: ../lib/EditToolbar.php:142
-#, fuzzy
 msgid "Color text"
-msgstr "Fetter Text"
+msgstr "Farbiger Text"
 
 #: ../lib/EditToolbar.php:143
-#, fuzzy
 msgid "Color"
-msgstr "Schließen"
+msgstr "Farbe"
 
 #: ../lib/EditToolbar.php:147
 msgid "PageName|optional label"
-msgstr ""
+msgstr "SeitenName|optionaler Name"
 
 #: ../lib/EditToolbar.php:148
 msgid "Link to page"
@@ -168,7 +161,7 @@ msgstr "Link auf Seite"
 
 #: ../lib/EditToolbar.php:152
 msgid "http://www.example.com|optional label"
-msgstr ""
+msgstr "http://www.example.com|optionaler Name"
 
 #: ../lib/EditToolbar.php:153
 msgid "External link (remember http:// prefix)"
@@ -200,21 +193,18 @@ msgstr "Horizontale Trennlinie"
 
 #: ../lib/EditToolbar.php:178
 msgid "Sample table"
-msgstr ""
+msgstr "Beispieltabelle"
 
 #: ../lib/EditToolbar.php:183
-#, fuzzy
 msgid "Enumeration"
-msgstr "E-Mail Bestätigung"
+msgstr "Num. Liste"
 
 #: ../lib/EditToolbar.php:188
-#, fuzzy
 msgid "List"
-msgstr "Letzte"
+msgstr "Liste"
 
 #: ../lib/EditToolbar.php:193 ../lib/plugin/CreateToc.php:430
 #: ../lib/plugin/CreateToc.php:446
-#, fuzzy
 msgid "Table of Contents"
 msgstr "Inhaltsverzeichnis"
 
@@ -229,14 +219,13 @@ msgid "Redirect"
 msgstr "Weiterleiten"
 
 #: ../lib/EditToolbar.php:202
-#, fuzzy
 msgid "Template Name"
-msgstr "Benutzeroberfläche"
+msgstr "Vorlagenname"
 
 #: ../lib/EditToolbar.php:203 ../lib/plugin/PopularTags.php:64
 #: ../lib/plugin/Template.php:62
 msgid "Template"
-msgstr "Benutzeroberfläche"
+msgstr "Vorlage"
 
 #: ../lib/EditToolbar.php:205 ../lib/EditToolbar.php:207
 #: ../lib/WysiwygEdit/Wikiwyg.php:80 ../lib/editpage.php:711
@@ -287,14 +276,12 @@ msgid "Insert PageLink (double-click)"
 msgstr "SeitenLink einfügen (Doppelklick)"
 
 #: ../lib/EditToolbar.php:430 ../lib/EditToolbar.php:431
-#, fuzzy
 msgid "AddImage"
-msgstr "SeitenLink einfügen"
+msgstr "Bild einf�gen"
 
 #: ../lib/EditToolbar.php:433
-#, fuzzy
 msgid "Insert Image (double-click)"
-msgstr "SeitenLink einfügen (Doppelklick)"
+msgstr "Bild einf�gen (Doppelklick)"
 
 #: ../lib/EditToolbar.php:465 ../lib/EditToolbar.php:466
 msgid "AddTemplate"
@@ -341,19 +328,19 @@ msgid "unknown color %s ignored"
 msgstr "unbekannte Farbe %s ignoriert"
 
 #: ../lib/MailNotify.php:194
-#, fuzzy, php-format
+#, php-format
 msgid "PageChange Notification of %s"
-msgstr "SeitenÄnderung Benachrichtigung von %s an %s gesendet"
+msgstr "Seiten�nderung Benachrichtigung von %s"
 
 #: ../lib/MailNotify.php:227
-#, fuzzy, php-format
+#, php-format
 msgid "sent to %s"
-msgstr "Zurück zu %s"
+msgstr "an %s gesendet"
 
 #: ../lib/MailNotify.php:233
-#, fuzzy, php-format
+#, php-format
 msgid "Error: Couldn't send %s to %s"
-msgstr "Kann nicht zu »%s« verbinden"
+msgstr "Fehler: Konnte nicht %s an %s senden"
 
 #: ../lib/MailNotify.php:255
 msgid "Page change"
@@ -389,7 +376,6 @@ msgid "Page removed %s"
 msgstr "Seite gelöscht %s"
 
 #: ../lib/MailNotify.php:393
-#, fuzzy
 msgid "e-mail address confirmation"
 msgstr "E-Mail Bestätigung"
 
@@ -414,9 +400,8 @@ msgid "Sort by %s"
 msgstr "Sortiere nach %s"
 
 #: ../lib/PageList.php:157
-#, fuzzy
 msgid "reverse"
-msgstr "Zurückspeichern"
+msgstr "umdrehen"
 
 #: ../lib/PageList.php:169
 msgid "Click to reverse sort order"
@@ -573,9 +558,8 @@ msgid "Rename"
 msgstr "Umbenennen"
 
 #: ../lib/PagePerm.php:191 ../lib/plugin/WikiAdminSearchReplace.php:243
-#, fuzzy
 msgid "Replace"
-msgstr "Ersetze: "
+msgstr "Ersetze"
 
 #: ../lib/PagePerm.php:313
 msgid "List this page and all subpages"
@@ -595,7 +579,6 @@ msgid "Create a new (sub)page"
 msgstr "Erzeuge eine neue (Unter)Seite"
 
 #: ../lib/PagePerm.php:317
-#, fuzzy
 msgid "Download page contents"
 msgstr "Runterladen der Seite"
 
@@ -607,11 +590,9 @@ msgstr "Ändern von Eigenschaften"
 msgid "Remove this page"
 msgstr "Löschen der Seite"
 
-# Erzeugen??
 #: ../lib/PagePerm.php:320
-#, fuzzy
 msgid "Purge this page"
-msgstr "um diese Seite zu erzeugen"
+msgstr "L�sche diese Seite endg�ltig"
 
 #: ../lib/PagePerm.php:369
 #, php-format
@@ -770,14 +751,12 @@ msgstr ""
 
 #: ../lib/SemanticWeb.php:151 ../lib/plugin/SemanticSearch.php:330
 #: ../lib/plugin/SemanticSearchAdvanced.php:189
-#, fuzzy
 msgid "Relation"
-msgstr "Verwandte Links"
+msgstr ""
 
 #: ../lib/SemanticWeb.php:153 ../lib/plugin/SemanticSearch.php:406
-#, fuzzy
 msgid "Attribute"
-msgstr "Attribute für %s"
+msgstr "Attribut"
 
 #: ../lib/Template.php:179
 #, php-format
@@ -1090,9 +1069,8 @@ msgid "Sign In"
 msgstr "Anmelden"
 
 #: ../lib/WikiTheme.php:1028
-#, fuzzy
 msgid "Rename Page"
-msgstr "Seite Löschen"
+msgstr "Seite Umbenennen"
 
 #: ../lib/WikiTheme.php:1029 ../themes/MacOSX/themeinfo.php:133
 msgid "Lock Page"
@@ -1107,9 +1085,8 @@ msgid "Remove Page"
 msgstr "Seite Löschen"
 
 #: ../lib/WikiTheme.php:1032 ../lib/purgepage.php:22 ../lib/purgepage.php:59
-#, fuzzy
 msgid "Purge Page"
-msgstr "Seiten Änderung"
+msgstr "Seiten endg�ltig l�schen"
 
 #: ../lib/WikiTheme.php:1197
 msgid ""
@@ -1297,19 +1274,17 @@ msgid "Could not search in LDAP"
 msgstr ""
 
 #: ../lib/WikiUser/LDAP.php:156
-#, fuzzy
 msgid "User not found in LDAP"
-msgstr "%s nicht gefunden"
+msgstr "Benutzer in LDAP nicht gefunden"
 
 #: ../lib/WikiUser/LDAP.php:191
-#, fuzzy
 msgid "Wrong password: "
-msgstr "Falsches Password. Noch einmal eingeben."
+msgstr "Falsches Password: "
 
 #: ../lib/WikiUser/LDAP.php:197
-#, fuzzy, php-format
+#, php-format
 msgid "Could not connect to LDAP host %s"
-msgstr "Kann nicht zu »%s« verbinden"
+msgstr "Kann nicht zu LDAP host �%s� verbinden"
 
 #: ../lib/WikiUser/POP3.php:61
 #, php-format
@@ -1419,36 +1394,30 @@ msgid "E-Mail address '%s' is properly formatted"
 msgstr ""
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:69
-#, fuzzy
 msgid "Apply changes"
-msgstr "Keine Änderungen."
+msgstr "�nderungen anwenden"
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:70
-#, fuzzy
 msgid "Exit toolbar"
-msgstr "Werkzeugleiste"
+msgstr "Beende Werkzeugleiste"
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:71
-#, fuzzy
 msgid "Title 1"
-msgstr "Titel"
+msgstr "Titel 1"
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:72
-#, fuzzy
 msgid "Title 2"
-msgstr "Titel"
+msgstr "Titel 2"
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:73
-#, fuzzy
 msgid "Title 3"
-msgstr "Titel"
+msgstr "Titel 3"
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:74
 msgid "Verbatim"
 msgstr ""
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:75
-#, fuzzy
 msgid "Table of content"
 msgstr "Inhaltsverzeichnis"
 
@@ -1457,14 +1426,13 @@ msgid "Insert Wikitext section"
 msgstr ""
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:77
-#, fuzzy
 msgid "Sup"
-msgstr "Unterseite"
+msgstr ""
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:78
 #, fuzzy
 msgid "Sub"
-msgstr "Eingeben"
+msgstr ""
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:106
 msgid "Warning: This Wikiwyg editor has only Beta quality!"
@@ -1678,14 +1646,12 @@ msgid "Page now unlocked."
 msgstr "Seite jetzt freigegeben."
 
 #: ../lib/editpage.php:259
-#, fuzzy
 msgid "Page now public."
-msgstr "Seite jetzt freigegeben."
+msgstr "Seite jetzt �ffentlich freigegeben."
 
 #: ../lib/editpage.php:260
-#, fuzzy
 msgid "Page now not-public."
-msgstr "Seite jetzt freigegeben."
+msgstr "Seite jetzt nicht mehr �ffentlich freigegeben."
 
 #: ../lib/editpage.php:269
 #, fuzzy
@@ -1715,9 +1681,9 @@ msgid "External links contain blocked domains:"
 msgstr ""
 
 #: ../lib/editpage.php:473
-#, fuzzy, php-format
+#, php-format
 msgid "%s is listed at %s with %s"
-msgstr "%s blockiert von %s"
+msgstr "%s ist gelistet auf %s mit %s"
 
 #: ../lib/editpage.php:497
 msgid "Spam Prevention"
@@ -2006,9 +1972,8 @@ msgid "Empty pagename!"
 msgstr "Leerer Seitenname!"
 
 #: ../lib/loadsave.php:896
-#, fuzzy
 msgid "Invalid pagename!"
-msgstr "Ungültiger Benutzername."
+msgstr "Ung�ltiger Seitenname!"
 
 #: ../lib/loadsave.php:959
 #, php-format
@@ -2270,17 +2235,14 @@ msgstr "um von diesem Wiki die Seiten lokal abzuspeichern"
 msgid "edit this page"
 msgstr "um diese Seite zu bearbeiten"
 
-# Erzeugen??
 #: ../lib/main.php:558
-#, fuzzy
 msgid "rename this page"
-msgstr "um diese Seite zu erzeugen"
+msgstr "um diese Seite umzubennen"
 
 #: ../lib/main.php:559
 msgid "revert to a previous version of this page"
 msgstr "Zurückspeichern einer älteren Version dieser Seite."
 
-# Erzeugen??
 #: ../lib/main.php:560
 msgid "create this page"
 msgstr "um diese Seite zu erzeugen"
@@ -2293,11 +2255,9 @@ msgstr "um Seiten in dieses Wiki zu laden"
 msgid "lock this page"
 msgstr "um diese Seite zu sperren"
 
-# Erzeugen??
 #: ../lib/main.php:563
-#, fuzzy
 msgid "purge this page"
-msgstr "um diese Seite zu erzeugen"
+msgstr "um diese Seite endg�ltig zu l�schen"
 
 #: ../lib/main.php:564
 msgid "remove this page"
@@ -2337,9 +2297,8 @@ msgid "download a html zip dump from this wiki"
 msgstr "um alle HTML Seiten als Zipdatei von diesem Wiki herunterzuladen"
 
 #: ../lib/main.php:578
-#, fuzzy
 msgid "use"
-msgstr "Benutzer"
+msgstr "benutze"
 
 #: ../lib/main.php:596
 msgid "Browsing pages"
@@ -2365,21 +2324,19 @@ msgstr "Ändern in diesem Wiki"
 msgid "Reverting to a previous version of pages"
 msgstr "Zurückspeichern einer älteren Version"
 
-# Erzeugen??
 #: ../lib/main.php:602
 msgid "Creating pages"
-msgstr "Das Seitenerzeugung in diesem Wiki"
+msgstr "Neue Seiten erzeugen"
 
 #: ../lib/main.php:603
 msgid "Loading files"
-msgstr "Das Dateienladen in diesem Wiki"
+msgstr "Dateien hinaufladen"
 
 #: ../lib/main.php:604
 msgid "Locking pages"
-msgstr "Das Seitensperrung in diesem Wiki"
+msgstr "Seiten sperren"
 
 #: ../lib/main.php:605
-#, fuzzy
 msgid "Purging pages"
 msgstr "Das Durchblättern der Seiten dieses Wikis"
 
@@ -2530,19 +2487,19 @@ msgid "All pages in this wiki ({total} total):"
 msgstr "Alle Seiten in diesem Wiki (%d insgesamt):"
 
 #: ../lib/plugin/AllPages.php:78
-#, fuzzy
-msgid "List of user-created pages ({total} total):"
-msgstr "Liste der Seiten erzeugt von [%s] (%d insgesamt):"
+#, php-format
+msgid "List of user-created pages (%d total):"
+msgstr "Liste der Benutzer erzeugten Seiten (%d insgesamt):"
 
 #: ../lib/plugin/AllPages.php:84
 #, fuzzy, php-format
 msgid "List of pages owned by [%s] ({total} total):"
-msgstr "Liste der Seiten owned by [%s] (%d insgesamt):"
+msgstr "Liste der Seiten im Besitz von [%s] (%d insgesamt):"
 
 #: ../lib/plugin/AllPages.php:95
 #, fuzzy, php-format
 msgid "List of pages last edited by [%s] ({total} total):"
-msgstr "Liste der Seiten last edited by [%s] (%d insgesamt):"
+msgstr "Liste der Seiten zuletzt ge�ndert von [%s] (%d insgesamt):"
 
 #: ../lib/plugin/AllPages.php:106
 #, fuzzy, php-format
@@ -2827,9 +2784,8 @@ msgid "One page links to %s:"
 msgstr "Eine Seite ist mit %s verlinkt:"
 
 #: ../lib/plugin/BackLinks.php:168
-#, fuzzy
 msgid "Those"
-msgstr "Schließen"
+msgstr "Diese"
 
 #: ../lib/plugin/BackLinks.php:167
 #, php-format
@@ -2872,9 +2828,8 @@ msgid "Include latest blog entries for the current or ADMIN user"
 msgstr ""
 
 #: ../lib/plugin/BlogJournal.php:84
-#, fuzzy
 msgid "New entry"
-msgstr "Neuer Kommentar."
+msgstr "Neuer Eintrag"
 
 #: ../lib/plugin/BlogJournal.php:86
 msgid "No Blog Entries"
@@ -2893,9 +2848,8 @@ msgid "Next Month"
 msgstr "Nächster Monat"
 
 #: ../lib/plugin/Calendar.php:132
-#, fuzzy
 msgid "Wk"
-msgstr "Br."
+msgstr "Cw"
 
 #: ../lib/plugin/Calendar.php:173 ../lib/plugin/CalendarList.php:143
 #, php-format
@@ -2931,9 +2885,8 @@ msgid "Embed hidden comments in WikiPages."
 msgstr "Kommentar in WikiText verstecken."
 
 #: ../lib/plugin/CreateBib.php:36
-#, fuzzy
 msgid "CreateBib"
-msgstr "InhaltsVerzeichnis"
+msgstr ""
 
 #: ../lib/plugin/CreateBib.php:40
 msgid "Automatically create a Bibtex file from linked pages"
@@ -2954,9 +2907,8 @@ msgid "Create a Wiki page by the provided name."
 msgstr "Erzeuge neue Wiki-Seite mit dem angegebenem Namen."
 
 #: ../lib/plugin/CreatePage.php:71
-#, fuzzy
 msgid "Cannot create page with empty name!"
-msgstr "Das Verzeichnis »%s« kann nicht erzeugt werden"
+msgstr "Kann Seite mit leerem Namen nicht erzeugen"
 
 #: ../lib/plugin/CreatePage.php:75
 #, fuzzy
@@ -3010,14 +2962,12 @@ msgid "CreateToc disabled for old markup"
 msgstr "InhaltsVerzeichnis deaktiviert für altes Markup"
 
 #: ../lib/plugin/CreateToc.php:436
-#, fuzzy
 msgid "Click to display to TOC"
-msgstr "Klicken um anzuzeigen"
+msgstr "Klicken um TOC anzuzeigen"
 
 #: ../lib/plugin/CurrentTime.php:59
-#, fuzzy
 msgid "CurrentTime"
-msgstr "Ausgewählte Darstellung"
+msgstr "AktuelleZeit"
 
 #: ../lib/plugin/CurrentTime.php:63
 msgid "A simple plugin that displays current time and date"
@@ -3066,9 +3016,9 @@ msgid "Edit metadata for %s"
 msgstr "Meta-Daten für %s bearbeiten"
 
 #: ../lib/plugin/EditMetaData.php:132
-#, fuzzy, php-format
+#, php-format
 msgid "No metadata for %s"
-msgstr "Meta-Daten für %s bearbeiten"
+msgstr "Keine Meta-Daten f�r %s"
 
 #: ../lib/plugin/EditMetaData.php:146
 msgid ""
@@ -3115,9 +3065,9 @@ msgid "A required argument '%s' is missing."
 msgstr "Erforderliches Argument »%s« fehlt."
 
 #: ../lib/plugin/FileInfo.php:81
-#, fuzzy, php-format
+#, php-format
 msgid "File '%s' not found."
-msgstr "%s nicht gefunden"
+msgstr "Datei '%s' nicht gefunden"
 
 #: ../lib/plugin/FileInfo.php:95
 msgid ""
@@ -3125,9 +3075,8 @@ msgid ""
 msgstr ""
 
 #: ../lib/plugin/FileInfo.php:96
-#, fuzzy
 msgid "page not locked"
-msgstr "Seite jetzt gesperrt."
+msgstr "Seite nicht gesperrt"
 
 #: ../lib/plugin/FoafViewer.php:52
 msgid "FoafViewer"
@@ -3221,9 +3170,9 @@ msgid "Ignored stoplist words '%s'"
 msgstr ""
 
 #: ../lib/plugin/FullTextSearch.php:167 ../lib/plugin/WantedPages.php:175
-#, fuzzy, php-format
+#, php-format
 msgid "(%d Links)"
-msgstr "Links"
+msgstr "(%d Verweise)"
 
 #: ../lib/plugin/FuzzyPages.php:39
 msgid "FuzzyPages"
@@ -3470,18 +3419,16 @@ msgid "Search an LDAP directory"
 msgstr "Durchsuche ein LDAP Verzeichnis"
 
 #: ../lib/plugin/LdapSearch.php:81
-#, fuzzy
 msgid "Missing ldap extension"
-msgstr "Fehlende Zugriffsberechtigung:"
+msgstr "Fehlende php LDAP extension"
 
 #: ../lib/plugin/LdapSearch.php:104
-#, fuzzy
 msgid "Failed to connect to LDAP host"
 msgstr "LDAP Server nicht gefunden"
 
 #: ../lib/plugin/LdapSearch.php:137
 msgid "Failed to bind LDAP host"
-msgstr ""
+msgstr "Konnte nicht mit LDAP Host verbinden"
 
 # "ÄhnlicheSeiten" (LikePages sind keine SamePages; die korrekte
 # deutsche Übersetzung ist "ÄhnlicheSeiten" which would be the best.
@@ -3553,9 +3500,8 @@ msgid "Unsupported format argument %s"
 msgstr "Nicht unterstützter format Parameter %s"
 
 #: ../lib/plugin/LinkSearch.php:35 ../lib/plugin/LinkSearch.php:113
-#, fuzzy
 msgid "LinkSearch"
-msgstr "LiveSuche"
+msgstr "LinkSuche"
 
 #: ../lib/plugin/LinkSearch.php:38
 msgid "Search page and link names"
@@ -3571,13 +3517,12 @@ msgid "Filter by this link. These are pagenames. With autocompletion."
 msgstr ""
 
 #: ../lib/plugin/LinkSearch.php:98
-#, fuzzy
 msgid "outgoing"
-msgstr "Anmelden"
+msgstr "ausgehend"
 
 #: ../lib/plugin/LinkSearch.php:99
 msgid "incoming"
-msgstr ""
+msgstr "eingehend"
 
 #: ../lib/plugin/LinkSearch.php:114
 msgid "Search in pages for links with the matching name."
@@ -3585,9 +3530,8 @@ msgstr ""
 
 #: ../lib/plugin/LinkSearch.php:148 ../lib/plugin/SemanticSearch.php:333
 #: ../lib/plugin/SemanticSearchAdvanced.php:191
-#, fuzzy
 msgid "Link"
-msgstr "Links"
+msgstr "Verweis"
 
 #: ../lib/plugin/LinkSearch.php:158
 #, php-format
@@ -3610,9 +3554,8 @@ msgid "You must be logged in to view ratings."
 msgstr "Sie müssen sich anmelden um die Bewertungen zu sehen."
 
 #: ../lib/plugin/ListRelations.php:34
-#, fuzzy
 msgid "ListRelations"
-msgstr "SemantischeBeziehungen"
+msgstr "ListeRelationen"
 
 #: ../lib/plugin/ListRelations.php:37
 msgid ""
@@ -3622,7 +3565,7 @@ msgstr ""
 
 #: ../lib/plugin/ListSubpages.php:34
 msgid "ListSubpages"
-msgstr "UnterseitenListe"
+msgstr "ListeUnterseiten"
 
 #: ../lib/plugin/ListSubpages.php:38
 msgid "Lists the names of all SubPages of the current page."
@@ -3697,7 +3640,7 @@ msgstr ""
 
 #: ../lib/plugin/ModeratedPage.php:405
 msgid "Reason: "
-msgstr ""
+msgstr "Grund: "
 
 #: ../lib/plugin/ModeratedPage.php:406
 msgid "Approve"
@@ -3748,9 +3691,8 @@ msgid "NewPagesPerUser"
 msgstr ""
 
 #: ../lib/plugin/NewPagesPerUser.php:23
-#, fuzzy
 msgid "List all new pages per month per user"
-msgstr "Liste alle eingetragenen Benutzer."
+msgstr "Liste aller neuen Seiten pro Monat und Benutzer"
 
 #: ../lib/plugin/NoCache.php:40
 msgid "NoCache"
@@ -4815,9 +4757,8 @@ msgid "Filter by this relation. With autocompletion."
 msgstr ""
 
 #: ../lib/plugin/SemanticSearch.php:126
-#, fuzzy
 msgid "Relations"
-msgstr "Verwandte Links"
+msgstr "Relationen"
 
 #: ../lib/plugin/SemanticSearch.php:134 ../lib/plugin/SemanticSearch.php:213
 msgid "Add an AND query"
