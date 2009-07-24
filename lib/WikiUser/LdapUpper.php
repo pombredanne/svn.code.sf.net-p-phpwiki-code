@@ -16,13 +16,12 @@ extends _LDAPPassUser
 {
 
     function checkPass($submitted_password) {
-        $userid = strtolower($this->_userid);
 	return parent::checkPass($submitted_password);
     }
 
     function UserName() {
         if (!empty($this->_userid)) {
-	    $this->_userid = strtoupper($this->_userid);
+	    $this->_userid = trim(strtoupper($this->_userid));
 	    if (!empty($this->_HomePagehandle) and is_object($this->_HomePagehandle))
 	        $this->_HomePagehandle->_pagename = $this->_userid;
             return strtoupper($this->_userid);
@@ -31,8 +30,7 @@ extends _LDAPPassUser
 
     function userExists() {
 	// lowercase check and uppercase visibility 
-        $userid = strtolower($this->_userid);
-	$this->_userid = strtoupper($this->_userid);
+	$this->_userid = trim(strtoupper($this->_userid));
 	return parent::userExists();
     }
 }
