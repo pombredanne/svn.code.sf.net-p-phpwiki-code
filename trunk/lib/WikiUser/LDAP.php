@@ -119,6 +119,7 @@ extends _PassUser
     function checkPass($submitted_password) {
 
         $this->_authmethod = 'LDAP';
+	$this->_userid = trim($this->_userid);
         $userid = $this->_userid;
         if (!$this->isValidName()) {
             trigger_error(_("Invalid username."), E_USER_WARNING);
@@ -202,12 +203,13 @@ extends _PassUser
 
 
     function userExists() {
+	$this->_userid = trim($this->_userid);
         $userid = $this->_userid;
-        /*if (strstr($userid, '*')) {
+        if (strstr($userid, '*')) {
             trigger_error(fmt("Invalid username '%s' for LDAP Auth", $userid),
                           E_USER_WARNING);
             return false;
-	}*/
+	}
         if ($ldap = $this->_init()) {
             // Need to set the right root search information. see ../index.php
 	    $st_search = $this->_searchparam($userid);
