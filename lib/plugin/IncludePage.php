@@ -59,6 +59,8 @@ extends WikiPlugin
     function getWikiPageLinks($argstr, $basepage) {
         extract($this->getArgs($argstr));
 
+        if (!isset($page))
+            return false;
         if ($page) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);
