@@ -101,14 +101,10 @@ extends WikiPlugin_WikiAdminSelect
         foreach ($pages as $pagename) {
             if (!mayAccessPage('edit', $pagename)) {
 		$ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
-            } elseif ($this->replaceHelper($dbi, $request, $pagename, $from, $to, $case_exact, $regex))
-            {
+            } elseif ($this->replaceHelper($dbi, $request, $pagename, $from, $to, $case_exact, $regex)) {
                 $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", 
                                               $from, $to, WikiLink($pagename))));
                 $count++;
-            } else {
-                $ul->pushContent(HTML::li(fmt("Search string '%s' not found in content of page '%s'.", 
-                                              $from, WikiLink($pagename))));
             }
         }
         if ($count) {
@@ -120,12 +116,11 @@ extends WikiPlugin_WikiAdminSelect
                 $result->pushContent(HTML::p(fmt("%s pages have been permanently changed:", $count)));
             }
             $result->pushContent($ul);
-            return $result;
         } else {
             $result->setAttr('class', 'error');
             $result->pushContent(HTML::p("No pages changed."));
-            return $result;
         }
+        return $result;
     }
     
     function run($dbi, $argstr, &$request, $basepage) {
