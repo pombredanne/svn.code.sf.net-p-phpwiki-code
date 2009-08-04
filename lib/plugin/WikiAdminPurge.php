@@ -43,16 +43,7 @@ extends WikiPlugin_WikiAdminSelect
                             "\$Revision$");
     }
 
-    function getDefaultArguments() {
-        return array_merge
-            (
-             PageList::supportedArgs(),
-             array(
-                   's' 	=> false,
-                     /* Columns to include in listing */
-                     'info'     => 'most',
-                   ));
-    }
+    /* getDefaultArguments() is inherited from WikiAdminSelect class */ 
 
     function collectPages(&$list, &$dbi, $sortby, $limit=0) {
 

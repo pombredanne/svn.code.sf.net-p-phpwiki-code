@@ -53,9 +53,8 @@ extends WikiPlugin_WikiAdminSelect
     function getDefaultArguments() {
         return array_merge
             (
-             PageList::supportedArgs(),
+             WikiPlugin_WikiAdminSelect::getDefaultArguments(),
              array(
-                   's' 	=> false,
                      /*
                       * Show only pages which have been 'deleted' this
                       * long (in days).  (negative or non-numeric

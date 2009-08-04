@@ -56,10 +56,9 @@ extends WikiPlugin_WikiAdminSelect
     function getDefaultArguments() {
         return array_merge
             (
-             PageList::supportedArgs(),
+             WikiPlugin_WikiAdminSelect::getDefaultArguments(),
              array(
                      'p'        => "[]",  // list of pages
-                     's' 	=> false, /* select by pagename */
                      /* Columns to include in listing */
                      'info'     => 'pagename,perm,mtime,owner,author',
                      ));
