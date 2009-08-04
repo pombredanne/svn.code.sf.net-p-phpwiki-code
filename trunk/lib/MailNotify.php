@@ -176,13 +176,11 @@ class MailNotify {
         return array($this->emails, $this->userids);
     }
     
-    function sendMail($subject, $content, 
+    function sendMail($subject,
+                      $content,
                       $notice = false,
-                      $silent = 0)
+                      $silent = true)
     {
-        global $request;
-	if (!DEBUG and $silent === 0)
-	    $silent = true;
         $emails = $this->emails;
         $from = $this->from;
         // Do not send if modification is from Gforge admin
