@@ -50,9 +50,8 @@ extends WikiPlugin_WikiAdminSelect
     function getDefaultArguments() {
         return array_merge 
             (
-             PageList::supportedArgs(),
+             WikiPlugin_WikiAdminSelect::getDefaultArguments(),
              array(
-                   's' 		=> false,
                    'markup' 	=> 2,
                    /* Columns to include in listing */
                    'info'     => 'pagename,markup,mtime',
