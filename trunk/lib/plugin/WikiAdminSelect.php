@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2002 $ThePhpWikiProgrammingTeam
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -55,12 +56,12 @@ extends WikiPlugin
                      'author'   => false,
                      'owner'    => false,
                      'creator'  => false,
-
                      'only'    => '',
                      'exclude' => '',
                      'info'    => 'most',
                      'sortby'  => 'pagename',
-                     'limit'    => 150,
+                     'limit'   => 0,
+                     'paging'  => 'none',
                      'debug'   => false);
     }
 
