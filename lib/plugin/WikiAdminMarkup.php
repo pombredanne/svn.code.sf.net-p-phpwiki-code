@@ -78,7 +78,7 @@ extends WikiPlugin_WikiAdminSelect
                     // convert text?
                     $text = $current->getPackedContent();
                     $meta['summary'] = sprintf(_("Change markup type from %s to %s"), $markup, $newmarkup);
-                    $meta['is_minor_edit'] = 0;
+                    $meta['is_minor_edit'] = 1;
                     $meta['author'] =  $request->_user->UserName();
                     unset($meta['mtime']); // force new date
                     $page->save($text, $version + 1, $meta);
