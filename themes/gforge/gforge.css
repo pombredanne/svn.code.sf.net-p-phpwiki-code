@@ -200,9 +200,13 @@ body.sidebar h2 { margin-top: 0; }
 a.wikiaction, a.wiki-rc-action, a.wikiunsafe,
 input.wikiaction, input.button, input.wikiadmin {
   text-decoration: none;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   /* don't wrap text buttons */
   white-space: nowrap;
+}
+
+input.wikiaction, input.button, input.wikiadmin {
+  margin-right: 1em;
+  margin-left: 1em;
 }
 
 .wikiunsafe { background-color: #fcc; }

@@ -224,7 +224,6 @@ extends WikiPlugin_WikiAdminSelect
         }
 
         $buttons = HTML::p(Button('submit:admin_rename[rename]', $button_label, 'wikiadmin'),
-			   HTML::Raw('&nbsp;&nbsp;'),
                            Button('submit:admin_rename[cancel]', _("Cancel"), 'button'));
 
         if ($singlepage === false) {
