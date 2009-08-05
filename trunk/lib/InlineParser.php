@@ -1019,6 +1019,36 @@ class Markup_template_plugin  extends SimpleMarkup
     function markup ($match) {
 
         $page = substr($match,2,-2);
+
+        // Check for predefined icons.
+        $predefinedicons = array(":)" => "ic_smile.png",
+                                 ":(" => "ic_sad.png",
+                                 ":P" => "ic_tongue.png",
+                                 ":D" => "ic_biggrin.png",
+                                 ";)" => "ic_wink.png",
+                                 "(y)" => "ic_handyes.png",
+                                 "(n)" => "ic_handno.png",
+                                 "(i)" => "ic_info.png",
+                                 "(/)" => "ic_check.png",
+                                 "(x)" => "ic_cross.png",
+                                 "(!)" => "ic_danger.png",
+                                 "(+)" => "ic_plus.png",
+                                 "(-)" => "ic_minus.png",
+                                 "(?)" => "ic_help.png",
+                                 "(on)" => "ic_lighton.png",
+                                 "(off)" => "ic_lightoff.png",
+                                 "(*)" => "ic_yellowstar.png",
+                                 "(*r)" => "ic_redstar.png",
+                                 "(*g)" => "ic_greenstar.png",
+                                 "(*b)" => "ic_bluestar.png",
+                                 "(*y)" => "ic_yellowstar.png",
+                                );
+        foreach ($predefinedicons as $ascii => $icon) {
+            if (trim($page) == $ascii) {
+                return LinkImage("/wiki/themes/default/images/$icon", $page);
+            }
+        }
+
         if (strpos($page, "|") === false) {
             $imagename = $page;
             $alt = "";
