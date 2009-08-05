@@ -164,6 +164,7 @@ extends WikiPlugin
                 $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
             $fs = new fileSet($plugin_dir, 'WikiAdmin*.php');
             $actions = $fs->getFiles();
+            sort($actions);
             foreach ($actions as $f) {
                 $f = preg_replace('/.php$/','', $f);
                 $s = preg_replace('/^WikiAdmin/','', $f);
