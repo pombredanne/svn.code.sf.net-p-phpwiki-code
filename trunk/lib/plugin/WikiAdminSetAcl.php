@@ -116,7 +116,7 @@ extends WikiPlugin_WikiAdminSelect
                                                $pagename,
                                                $oldperm ? $oldperm->asAclGroupLines() : "None",
                                                $perm->asAclGroupLines());
-                    $meta['is_minor_edit'] = 0;
+                    $meta['is_minor_edit'] = 1;
                     $meta['author'] =  $request->_user->UserName();
                     unset($meta['mtime']); // force new date
                     $page->save($text, $version + 1, $meta);

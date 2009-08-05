@@ -75,7 +75,7 @@ extends WikiPlugin_WikiAdminSelect
                     $meta = $current->_data;
                     $text = $current->getPackedContent();
                     $meta['summary'] = "Change page owner from '".$owner."' to '".$newowner."'";
-                    $meta['is_minor_edit'] = 0;
+                    $meta['is_minor_edit'] = 1;
                     $meta['author'] =  $request->_user->UserName();
                     unset($meta['mtime']); // force new date
                     $page->set('owner', $newowner);
