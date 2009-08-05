@@ -463,8 +463,14 @@ extends _RecentChanges_Formatter
         $class = 'rc-' . $this->importance($rev);
 
         $time = $this->time($rev);
-        if (! $rev->get('is_minor_edit'))
+        if ($rev->get('is_minor_edit')) {
+            $minor_flag = HTML(" ",
+                               HTML::span(array('class' => 'pageinfo-minoredit'),
+                                          "(" . _("minor edit") . ")"));
+        } else {
             $time = HTML::span(array('class' => 'pageinfo-majoredit'), $time);
+            $minor_flag = '';
+        }
 
         $line = HTML::li(array('class' => $class));
 
@@ -488,7 +494,8 @@ extends _RecentChanges_Formatter
 			       $time, ' . . ',
 			       $this->authorLink($rev),' ',
 			       $this->authorContribs($rev),' ',
-			       $this->summaryAsHTML($rev));
+                               $this->summaryAsHTML($rev),' ',
+                               $minor_flag);
 	} else {
 	    $line->pushContent($linkorname, ' ',
 			       $time, ' ',
