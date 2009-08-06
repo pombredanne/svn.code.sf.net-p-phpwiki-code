@@ -330,7 +330,7 @@ function LinkBracketLink($bracketlink) {
     
    $wikicreolesyntax = false;
 
-   if (string_starts_with($bracketlink, "[[")) {
+   if (string_starts_with($bracketlink, "[[") or string_starts_with($bracketlink, "#[[")) {
        $wikicreolesyntax = true;
        $bracketlink = str_replace("[[", "[", $bracketlink);
        $bracketlink = str_replace("]]", "]", $bracketlink);
