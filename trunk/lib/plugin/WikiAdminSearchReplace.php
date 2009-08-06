@@ -169,7 +169,9 @@ extends WikiPlugin_WikiAdminSelect
         }
 
         if ($next_action == 'verify') {
-            $args['info'] = "checkbox,pagename,hi_content";
+            $args['info'] = "checkbox,pagename";
+        } else {
+            $args['info'] = "checkbox,pagename,hi_content,mtime,author";
         }
         $pagelist = new PageList_Selectable
 	    ($args['info'], $args['exclude'],
@@ -191,23 +193,21 @@ extends WikiPlugin_WikiAdminSelect
             $button_label = _("Yes");
             $header->pushContent(
               HTML::p(HTML::strong(
-                                   _("Are you sure you want to permanently search & replace text in the selected files?"))));
+                                   _("Are you sure you want to permanently replace text in the selected files?"))));
             $this->replaceForm($header, $post_args);
-        }
-        else {
+        } else {
             $button_label = _("Search & Replace");
             $this->replaceForm($header, $post_args);
             $header->pushContent(HTML::legend(_("Select the pages to search and replace")));
         }
 
-
-        $buttons = HTML::p(Button('submit:admin_replace[rename]', $button_label, 'wikiadmin'),
+        $buttons = HTML::p(Button('submit:admin_replace[replace]', $button_label, 'wikiadmin'),
                            Button('submit:admin_replace[cancel]', _("Cancel"), 'button'));
+        $header->pushContent($buttons);
 
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
                           $header,
-                          $buttons,
                           $pagelist->getContent(),
                           HiddenInputs($request->getArgs(),
                                         false,
@@ -245,7 +245,6 @@ extends WikiPlugin_WikiAdminSelect
         $this->_tablePush($table, '', $this->checkBox($post_args, 'case_exact', _("Case exact?")));
 	$this->_tablePush($table, '', $this->checkBox($post_args, 'regex', _("Regex?")));
         $header->pushContent($table);
-        $header->pushContent(HTML::br());
         return $header;
     }
 }
