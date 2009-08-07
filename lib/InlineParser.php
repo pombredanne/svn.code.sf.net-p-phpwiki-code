@@ -1045,7 +1045,11 @@ class Markup_template_plugin  extends SimpleMarkup
                                 );
         foreach ($predefinedicons as $ascii => $icon) {
             if (trim($page) == $ascii) {
-                return LinkImage("/wiki/themes/default/images/$icon", $page);
+                if (defined('GFORGE') and GFORGE) {
+                    return LinkImage("/wiki/themes/default/images/$icon", $page);
+                } else {
+                    return LinkImage(SERVER_URL . "/phpwiki/themes/default/images/$icon", $page);
+                }
             }
         }
 
