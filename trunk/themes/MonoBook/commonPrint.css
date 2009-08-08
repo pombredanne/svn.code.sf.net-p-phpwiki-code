@@ -10,6 +10,50 @@
 ** Copyright Alexander Limi
 */
 
+@page { 
+  size: A4 portrait; 
+  margin: 17mm 10mm 17mm 10mm;
+} 
+
+h1 {
+  string-set: header content();
+}
+
+@page :left {
+  @top-left {
+    content: "Phpwiki";
+  }
+  @top-right {
+    content: string(header); 
+  }
+  @bottom-left {
+    content: "Page " counter(page);
+  }
+}
+
+@page :right {
+  @top-left {
+    content: string(header); 
+  }
+  @top-right {
+    content: "Phpwiki";
+  }
+  @bottom-right {
+    content: "Page " counter(page);
+  }
+}
+
+@page :first {
+  @top-right {
+    content: normal;
+  }
+  @top-left {
+    content: normal;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 { page-break-after: avoid; } 
+
 /* Thanks to A List Apart (http://alistapart.com/) for useful extras */
 a.stub,
 a.new{ color:#ba0000; text-decoration:none; }
