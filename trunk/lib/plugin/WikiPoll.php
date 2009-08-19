@@ -266,7 +266,7 @@ extends WikiPlugin
                                               'name' => "answer[$i]",
                                               'value' => $a));
                 if ($result >= 0)
-                    $checkbox->setAttr('checked',1);
+                    $checkbox->setAttr('checked', "checked");
 	        if (!$readonly)
                     list($percent,$count,$all) = $this->storeResult($page, $i, $result ? 1 : 0);
                 else 
@@ -290,7 +290,7 @@ extends WikiPlugin
                                                    'name' => "answer[$i]",
                                                    'value' => $j));
                         if ($result == $j)
-                            $radio->setAttr('checked',1);
+                            $radio->setAttr('checked', "checked");
                         $row->pushContent(HTML::tr(HTML::td($radio),
                         		           HTML::td($a[$j]),
                         		           HTML::td($this->bar($percent)),
