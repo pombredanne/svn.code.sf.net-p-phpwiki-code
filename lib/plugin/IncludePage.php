@@ -109,9 +109,16 @@ extends WikiPlugin
         $c = $r->getContent();
         
         // follow redirects
-        if (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\w+)\s+\?'.'>/', 
+        if ((preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\S+)\s*\?'.'>/', 
                        implode("\n", $c), $m))
+          or (preg_match('/<<\s*RedirectTo\s+page=(\S+)\s*>>/',
+                       implode("\n", $c), $m)))
         {
+            // Strip quotes (simple or double) from page name if any
+            if ((string_starts_with($m[1], "'"))
+              or (string_starts_with($m[1], "\""))) {
+                $m[1] = substr($m[1], 1, -1);
+            }
             // trap recursive redirects
             if (in_array($m[1], $included_pages)) {
                 return $this->error(sprintf(_("recursive inclusion of page %s ignored"),
@@ -122,7 +129,7 @@ extends WikiPlugin
             $r = $p->getCurrentRevision();
             $c = $r->getContent();   // array of lines
         }
-        
+
         $ct = $this->extractParts ($c, $page, $args);
 
         // exclude from expansion
