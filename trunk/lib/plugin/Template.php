@@ -147,6 +147,29 @@ extends WikiPlugin
         }
         $initial_content = $r->getPackedContent();
 
+        $content = $r->getContent();
+        // follow redirects
+        if ((preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\S+)\s*\?'.'>/',
+                       implode("\n", $content), $m))
+          or (preg_match('/<<\s*RedirectTo\s+page=(\S+)\s*>>/',
+                       implode("\n", $content), $m)))
+        {
+            // Strip quotes (simple or double) from page name if any
+            if ((string_starts_with($m[1], "'")) 
+              or (string_starts_with($m[1], "\""))) {
+                $m[1] = substr($m[1], 1, -1);
+            }
+            // trap recursive redirects
+            if (in_array($m[1], $included_pages)) {
+                return $this->error(sprintf(_("recursive inclusion of page %s ignored"),
+                                                $page.' => '.$m[1]));
+            }
+            $page = $m[1];
+            $p = $dbi->getPage($page);
+            $r = $p->getCurrentRevision();
+            $initial_content = $r->getPackedContent();
+        }
+
         if ($args['section']) {
             $c = explode("\n", $initial_content);
             $c = extractSection($args['section'], $c, $page, $quiet, $args['sectionhead']);
