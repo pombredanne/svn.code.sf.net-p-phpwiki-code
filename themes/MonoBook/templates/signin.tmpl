@@ -7,7 +7,9 @@ rcs_id('$Id$'); ?>
  <ul>
   <?php if ($user->isAuthenticated()) { ?>
   <li id="pt-userpage"><?= WikiLink($id, 'auto', HTML($sp,$id,$sp)) ?></li>
-  <li><?= WikiLink(_("UserPreferences"), "",_("Preferences")) ?></li>
+  <li><?= WikiLink($id . "/Discussion", 'auto' ,_("My Discussion")) ?></li>
+  <li><?= WikiLink(_("UserPreferences"), "",_("My Preferences")) ?></li>
+  <li><?= WikiLink(_("MyRecentChanges"), "",_("My Changes")) ?></li>
   <li><?= HTML::a(array('href'=>'?auth[logout]=1'),$sp,_("Logout"),$sp) ?></li>
   <?php } else { ?>
   <!-- Login or Register -->
