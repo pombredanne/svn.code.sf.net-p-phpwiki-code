@@ -48,7 +48,7 @@ extends WikiPlugin
     }
 
     function getDescription() {
-        return _("Redirects to another url or page.");
+        return _("Redirects to another URL or page.");
     }
 
     function getVersion() {
@@ -58,7 +58,6 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array( 'href' => '',
-                      // 'type' => 'Temp' // or 'Permanent' // so far ignored
                       'page' => false,
                       );
     }
@@ -79,8 +78,7 @@ extends WikiPlugin
             $url = preg_replace('/%\d\d/','',strip_tags($href));
             $thispage = $request->getPage();
             if (! $thispage->get('locked')) {
-                return $this->disabled(fmt("%s is only allowed in locked pages.",
-                                           _("Redirect to an external url")));
+                return $this->disabled(_("Redirect to an external URL is only allowed in locked pages."));
             }
         }
         else if ($page) {
@@ -89,8 +87,7 @@ extends WikiPlugin
                            'abs_path');
         }
         else {
-            return $this->error(fmt("%s or %s parameter missing",
-                                    "'href'", "'page'"));
+            return $this->error(_("'href' or 'page' parameter missing."));
         }
 
         if ($page == $request->getArg('pagename')) {
