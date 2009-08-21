@@ -55,6 +55,8 @@ div.br { display: none; }
 /* This breaks NS4, but is necessary for IE4. */
 div.wikitext { width: auto; }
 
+div.wikitext table p { margin-top: 0.3em;  margin-bottom: 0.3em;}
+
 /**
  * General
  */
@@ -155,8 +157,6 @@ caption {
  * Wiki
  */
 
-div.wikitext hr { height: 1px; }
-
 div.wikitext pre { 
   font-family: monospace; 
   border-width: 1px;
@@ -229,7 +229,7 @@ input.wikiaction, input.button, input.wikiadmin {
 .backlinks {
   text-decoration: underline;
 }
-h1 .backlinks { text-decoration: none; }
+h1 .backlinks { text-decoration: none; color: inherit; }
 
 /* Interwiki links */
 .wikipage  { font-weight: normal; }
@@ -263,10 +263,6 @@ div.toc p.toctitle, h1, h2, h3, h4, h5, h6 {
 }
 
 h1 { margin: 0; }
-
-h1, h1 .backlinks, h2, h3, h4, h5, h6 {
-    color: #565c5e; /* Alcatel-Lucent grey */
-}
 
 h1, h1 .backlinks, h2, .wikitext h2 a, h3, .wikitext h3 a, h4, .wikitext h4 a, h5, h6 {
     text-decoration: none;

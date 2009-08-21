@@ -51,6 +51,9 @@
 /* Do not print main wiki browse banner */
 .browsebanner { display: none; }
 
+/* Print links in black */
+a { color: black; }
+
 /* Do not print icons in front of hyperlinks */
 a.interwiki img { display: none; }
 a.named-interwiki img { display: none; }
@@ -66,7 +69,7 @@ div.toc {
 /* Do not print TOC toggle image */
 #toctoggle { display: none; }
 
-div.toc p#toctitle, h1, h2, h3, h4, h5, h6 {
+div.toc p.toctitle, h1, h2, h3, h4, h5, h6 {
     border-bottom: 1px solid black;
 }
 
@@ -77,11 +80,6 @@ table.boxed, table.bordered, table.bordered th, table.bordered td {
 #content {
     background: white;
     border: none;
-}
-
-hr {
-    color: black;
-    background-color: black;
 }
 
 /* Do not cut tables with class "nobreak" */
