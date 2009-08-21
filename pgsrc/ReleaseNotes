@@ -66,9 +66,24 @@ e.g. dump pagesets or multi-page pdf's.
 * more icons for toolbar (vargenau)
 * UserPreferences: specific message when only one preference is updated (vargenau)
 * renamed class Theme to ~WikiTheme to avoid Gforge name clash (vargenau)
-* numeric cells in tables are now right-aligned by default
-* <noinclude> and </noinclude> should not appear even when not included
-* split PhpWikiAdministration in two pages: PhpWikiAdministration and PhpWikiDebug
+* numeric cells in tables are now right-aligned by default (vargenau)
+* <noinclude> and </noinclude> should not appear even when not included (vargenau)
+* split PhpWikiAdministration in two pages: PhpWikiAdministration and PhpWikiDebug (vargenau)
+* Improve handling of color text (especially in case of errors). More color names are allowed. (vargenau)
+* ~SetAcl, Chown, Markup and Rename are marked as minor edits. (vargenau)
+* Display "minor edit" for minor edits in ~RecentChanges (like in ~PageHistory). (vargenau)
+* In WikiAdminSelect, put buttons in alphabetic order like in page ~PhpWikiAdministration. (vargenau)
+* In ~PhpWikiAdministration, all pages are shown instead of first 50. No paging is done. (vargenau)
+* In ~WikiAdminSearchReplace, only pages where a replacement was done are shown as feedback. (vargenau)
+* In ~WikiAdminSearchReplace, show pages where replacement will be done. (vargenau)
+* For file upload, use black list of extensions instead of white list. (vargenau)
+* It is now possible to insert predefined icons in wiki text. See [[Help:PredefinedIcons]]. (vargenau)
+* Allow "{{{#[[}}}" syntax for anchors. (vargenau)
+* Handle redirections in Template plugin. (vargenau)
+* Allow Wikicreole syntax for redirections in ~IncludePage plugin. (vargenau)
+* New preference to avoid e-mail notifications for minor edits on Wiki (vargenau)
+* No decoration for abbreviations when printing (vargenau)
+* Add CSS3 code for page headers and footers (works for PDF generation with Prince XML) (vargenau)
 
 === New
 * ~PageList supports listtype=ul,ol,dl. dl used by FullTextSearch
