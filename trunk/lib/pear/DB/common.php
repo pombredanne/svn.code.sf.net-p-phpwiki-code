@@ -944,7 +944,7 @@ class DB_common extends PEAR
      * @see DB_common::prepare()
      * @access public
      */
-    function &execute($stmt, $data = array())
+    function execute($stmt, $data = array())
     {
         $realquery = $this->executeEmulateQuery($stmt, $data);
         if (DB::isError($realquery)) {
@@ -955,7 +955,7 @@ class DB_common extends PEAR
         if (DB::isError($result) || $result === DB_OK) {
             return $result;
         } else {
-            $tmp =& new DB_result($this, $result);
+            $tmp = new DB_result($this, $result);
             return $tmp;
         }
     }
