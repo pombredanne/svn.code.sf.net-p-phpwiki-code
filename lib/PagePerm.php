@@ -234,12 +234,20 @@ function _requiredAuthorityForPagename($access, $pagename) {
         
     global $request;
     $page = $request->getPage($pagename);
+
+    // Exceptions:
     if (defined('GFORGE') and GFORGE) {
     	if ($pagename != '.' && isset($request->_user->_is_external) && $request->_user->_is_external && ! $page->get('external')) {
     		$permcache[$pagename][$access] = 0;
     		return 0;
     	}
     }
+    if ((READONLY or $request->_dbi->readonly)
+        and in_array($access, array('edit','create','change')))
+    {
+        return 0;
+    }
+
     // Page not found; check against default permissions
     if (! $page->exists() ) {
         $perm = new PagePermission();

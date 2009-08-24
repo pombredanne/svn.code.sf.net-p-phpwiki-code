@@ -203,7 +203,8 @@ function IniConfig($file) {
 	 'ENABLE_SEARCHHIGHLIGHT', 'DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS',
          'ENABLE_AUTH_OPENID', 'INSECURE_ACTIONS_LOCALHOST_ONLY',
          'ENABLE_MAILNOTIFY', 'ENABLE_RECENTCHANGESBOX', 'ENABLE_PAGE_PUBLIC',
-         'ENABLE_AJAX', 'ENABLE_EXTERNAL_PAGES'
+         'ENABLE_AJAX', 'ENABLE_EXTERNAL_PAGES',
+         'READONLY'
          );
 
     $rs = @parse_ini_file($file);
@@ -267,7 +268,7 @@ function IniConfig($file) {
                                   'ALLOW_IMAP_LOGIN', 'ALLOW_USER_LOGIN',
                                   'REQUIRE_SIGNIN_BEFORE_EDIT',
                                   'WIKIDB_NOCACHE_MARKUP',
-                                  'COMPRESS_OUTPUT', 'USE_BYTEA'
+                                  'COMPRESS_OUTPUT', 'USE_BYTEA', 'READONLY',
                                   )))
         {
             ;
@@ -331,6 +332,8 @@ function IniConfig($file) {
                           E_USER_ERROR);
         }
     }
+    // Detect readonly database, e.g. system mounted read-only for maintenance
+    // via dbh->readonly later. Unfortunately not possible as constant.
         
     // USE_DB_SESSION default logic:
     if (!defined('USE_DB_SESSION')) {

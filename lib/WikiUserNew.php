@@ -930,7 +930,11 @@ extends _AnonUser
         // Check the configured Prefs methods
         $dbi = $this->getAuthDbh();
         $dbh = $GLOBALS['request']->getDbh();
-        if ( $dbi and !isset($this->_prefs->_select) and $dbh->getAuthParam('pref_select')) {
+        if ( $dbi 
+             and !$dbh->readonly 
+             and !isset($this->_prefs->_select) 
+             and $dbh->getAuthParam('pref_select')) 
+        {
             if (!$this->_prefs) {
             	$this->_prefs = new UserPreferences();
             	$need_pref = true;
