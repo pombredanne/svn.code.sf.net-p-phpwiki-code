@@ -17,8 +17,8 @@ syntax, including additions.
 
 The "classic" Phpwiki syntax is still supported.
 
-The documenation pages found in pgsrc have been mostly converted to Wikicreole
-syntax (with the addition of tables in Mediawiki syntax, since Wikicreole 1.0
+The documentation pages found in pgsrc have been mostly converted to utf-8 and 
+Wikicreole syntax (with the addition of tables in Mediawiki syntax, since Wikicreole 1.0
 does not support "complex" tables with block elements in cells, like lists or
 paragraphs).
 
@@ -106,6 +106,7 @@ e.g. dump pagesets or multi-page pdf's.
 * RecentChanges: add category, pagematch arguments
 * add UriResolver needed for external rdf access
 * AppendText: support pages argument: append to multiple pages
+* new readonly database detection for dba, and optional config READONLY for maintenance
 * new pages: SpecialPages, LockedPages (vargenau)
 * implemented Mediawiki-like syntax for tables (vargenau)
 * enable ~RecentChangesCached as box, improve performance.
