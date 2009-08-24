@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 rcs_id('$Id$');
 /*
- Copyright (C) 2002,2004,2005,2006 $ThePhpWikiProgrammingTeam
+ Copyright (C) 2002,2004,2005,2006,2009 $ThePhpWikiProgrammingTeam
  
  This file is part of PhpWiki.
 
@@ -344,7 +344,8 @@ class Request {
         elseif (isCGI()) // necessary?
             $compress = false;
             
-        if ($this->getArg('start_debug') or $this->getArg('nocache'))
+        if ($this->getArg('start_debug')) $compress = false;
+        if ($this->getArg('nocache'))
             $compress = false;
         
         // Should we compress even when apache_note is not available?
