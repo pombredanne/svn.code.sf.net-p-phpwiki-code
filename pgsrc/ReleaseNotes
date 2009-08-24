@@ -53,7 +53,7 @@ e.g. dump pagesets or multi-page pdf's.
 * fix Bug#1831881 Fatal database error when sorting columns (vargenau)
 
 === Changes
-* changed ~SemanticSearch query semantics: all regex=auto terms with no regex chars (.+*?^$")
+- changed ~SemanticSearch query semantics: all regex=auto terms with no regex chars (.+*?^$")
   will be searched exact, and not with regex=auto. This means no word splitting, no substrings.
 * ranked search for title and fulltext for non-SQL backends. Simple score function.
 * allow comments in ~WikiGroup lists after username
@@ -560,30 +560,28 @@ Because of SQL changes you'd need to ?action=upgrade to update for SQL.
 ** ENABLE_PAGEPERM to turn off ACL (no owner at the statusline if off)
 ** FORTUNE_DIR to enable random quotes for new pages
 ** GOOGLE_LINKS_NOFOLLOW, ACCESS_LOG_SQL, BABYCART_PATH, BLOG_DEFAULT_EMPTY_PREFIX,
-   CATEGORY_GROUP_PAGE, DATABASE_PERSISTENT, DBADMIN_PASSWD, DBADMIN_USER,
-   DEFAULT_DUMP_DIR, DISABLE_GETIMAGESIZE, ENABLE_DOUBLECLICKEDIT,
-   ENABLE_LIVESEARCH, ENABLE_MODERATEDPAGE_ALL, ENABLE_RAW_HTML_LOCKEDONLY,
-   ENABLE_RAW_HTML_SAFE, ENABLE_SPAMASSASSIN, ENABLE_XHTML_XML,
-   GOOGLE_LICENSE_KEY, HTML_DUMP_DIR, LDAP_OU_GROUP, LDAP_OU_USERS
-   PLUGIN_CACHED_CACHE_DIR, PLUGIN_CACHED_DATABASE, PLUGIN_CACHED_FILENAME_PREFIX,
-   PLUGIN_CACHED_FORCE_SYNCMAP, PLUGIN_CACHED_HIGHWATER,
-   PLUGIN_CACHED_IMGTYPES, PLUGIN_CACHED_LOWWATER, PLUGIN_CACHED_MAXARGLEN,
-   PLUGIN_CACHED_MAXLIFETIME, PLUGIN_CACHED_USECACHE, TEMP_DIR, USECACHE,
-   USE_EXTERNAL_HTML2PDF, ENABLE_MARKUP_COLOR, ENABLE_MARKUP_TEMPLATE
+    CATEGORY_GROUP_PAGE, DATABASE_PERSISTENT, DBADMIN_PASSWD, DBADMIN_USER,
+    DEFAULT_DUMP_DIR, DISABLE_GETIMAGESIZE, ENABLE_DOUBLECLICKEDIT,
+    ENABLE_LIVESEARCH, ENABLE_MODERATEDPAGE_ALL, ENABLE_RAW_HTML_LOCKEDONLY,
+    ENABLE_RAW_HTML_SAFE, ENABLE_SPAMASSASSIN, ENABLE_XHTML_XML,
+    GOOGLE_LICENSE_KEY, HTML_DUMP_DIR, LDAP_OU_GROUP, LDAP_OU_USERS
+    PLUGIN_CACHED_CACHE_DIR, PLUGIN_CACHED_DATABASE, PLUGIN_CACHED_FILENAME_PREFIX,
+    PLUGIN_CACHED_FORCE_SYNCMAP, PLUGIN_CACHED_HIGHWATER,
+    PLUGIN_CACHED_IMGTYPES, PLUGIN_CACHED_LOWWATER, PLUGIN_CACHED_MAXARGLEN,
+    PLUGIN_CACHED_MAXLIFETIME, PLUGIN_CACHED_USECACHE, TEMP_DIR, USECACHE,
+    USE_EXTERNAL_HTML2PDF, ENABLE_MARKUP_COLOR, ENABLE_MARKUP_TEMPLATE
 * implemented WikiDB page creator and ownership
 * added paging support for simple one-column pagelists
-* added new ~PageList options: cols, azhead, comma, commasep, ordered
-  and enabled the new args on most plugins.
+* added new ~PageList options: cols, azhead, comma, commasep, ordered and enabled the new args on most plugins.
 * new pagename utf8 detection logic (from mediawiki)
 * added action revert, with button from action=diff
 * added new <!plugin-list ~PluginName args!> syntax within plugin args
 * new plugin ~IncludePages, esp. for <!plugin-list !>
 * added template variable expansion support to the ~CreatePagePlugin
 * ~WikiSpam prevention:
-  ** On GOOGLE_LINKS_NOFOLLOW add rel=nowfollow to all external
-     links, unless the author was authenticated.
-  ** max 20 new links hardcoded
-  ** new babycart module interfacing ~SpamAssassin
+** On GOOGLE_LINKS_NOFOLLOW add rel=nowfollow to all external links, unless the author was authenticated.
+** max 20 new links hardcoded
+** new babycart module interfacing ~SpamAssassin
 * added ~WikiPluginCached support for image maps, static cache in uploads/ and SVG
 * added case-sensitive/insensitive and regex searching, replace also
 * added action=pdf: only page formatter missing, use USE_EXTERNAL_HTML2PDF instead
@@ -656,8 +654,8 @@ Because of SQL changes you'd need to ?action=upgrade to update for SQL.
 * lib/zipfile.php: Content-Disposition: attachment
 * lib/config.php, lib/stdlib.php: support new USE_LINK_ICONS and AUTOSPLIT_WIKIWORDS,
   better i18n $!~WikiNameRegexp
-* re-added images/* LINK_ICONS, pre-calculate DATA_PATH
-* locale/*: fix and update strings and templates esp. for german,
+- re-added images/* LINK_ICONS, pre-calculate DATA_PATH
+- locale/*: fix and update strings and templates esp. for german,
 * index.php: urlparser extended to omit &start_debug=1 and other args
 * added minor_edit checkbox
 * print more meta tags: robots, favicon, language and PHPWIKI_VERSION
