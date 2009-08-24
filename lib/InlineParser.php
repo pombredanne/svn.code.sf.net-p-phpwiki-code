@@ -1,7 +1,7 @@
 <?php 
 rcs_id('$Id$');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004-2008 Reini Urban
+ * Copyright (C) 2004-2009 Reini Urban
  * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
@@ -202,7 +202,7 @@ class RegexpSet
             var_dump($regexps); 
             if (_INLINE_OPTIMIZATION)
             	var_dump($matched);
-            var_dump($matched_inc); 
+            var_dump($matched_ind); 
           }
           $_already_dumped = 1;
           PrintXML(HTML::dl(HTML::dt("input"),
@@ -816,8 +816,7 @@ class Markup_html_abbr extends BalancedMarkup
 {
     //rurban: abbr|acronym need an optional title tag.
     //sf.net bug #728595
-    // allowed attributes: title and lang
-    var $_start_regexp = "<(?: abbr|acronym )(?: [^>]*)?>"; 
+    var $_start_regexp = "<(?: abbr|acronym )(?: [^>]*)?>";
 
     function getEndRegexp ($match) {
     	if (substr($match,1,4) == 'abbr')
@@ -1045,11 +1044,7 @@ class Markup_template_plugin  extends SimpleMarkup
                                 );
         foreach ($predefinedicons as $ascii => $icon) {
             if (trim($page) == $ascii) {
-                if (defined('GFORGE') and GFORGE) {
-                    return LinkImage("/wiki/themes/default/images/$icon", $page);
-                } else {
-                    return LinkImage(SERVER_URL . "/phpwiki/themes/default/images/$icon", $page);
-                }
+                return LinkImage(DATA_PATH . "/themes/default/images/$icon", $page);
             }
         }
 
@@ -1064,12 +1059,7 @@ class Markup_template_plugin  extends SimpleMarkup
         // It's not a Mediawiki template, it's a Wikicreole image
         if (is_image($imagename)) {
             if ($imagename[0] == '/') {
-                if (defined('GFORGE') and GFORGE) {
-                    return LinkImage("/wiki" . $imagename, $alt);
-                } else {
-                    // We should not hardcode "/phpwiki"
-                    return LinkImage(SERVER_URL . "/phpwiki" . $imagename, $alt);
-                }
+                return LinkImage(DATA_PATH . '/' . $imagename, $alt);
             } else {
                 return LinkImage(getUploadDataPath() . $imagename, $alt);
             }
@@ -1096,6 +1086,33 @@ class Markup_template_plugin  extends SimpleMarkup
     	else
     	    $s = '<'.'?plugin Template page="' . $page . '" ?'.'>';
 	return new Cached_PluginInvocation($s);
+    }
+}
+
+/** ENABLE_MARKUP_MEDIAWIKI_TABLE
+ *  Table syntax similar to Mediawiki
+ *  {|
+ * => <?plugin MediawikiTable
+ *  |}
+ * => ?>
+ */
+class Markup_mediawikitable_plugin extends SimpleMarkup
+{
+    var $_match_regexp = '\{\|.*?\|\}';
+
+    function markup ($match) {
+      $s = '<'.'?plugin MediawikiTable ' . $match . '?'.'>';
+      return new Cached_PluginInvocation($s);
+    }
+}
+
+class Markup_wikicreoletable_plugin extends SimpleMarkup
+{
+    var $_match_regexp = '^\|=.*?\?>';
+
+    function markup ($match) {
+      $s = '<'.'?plugin WikicreoleTable ' . $match . '?'.'>';
+      return new Cached_PluginInvocation($s);
     }
 }
 
@@ -1194,10 +1211,13 @@ class InlineTransformer
             $this->_addMarkup(new Markup_html_divspan);
         if (ENABLE_MARKUP_COLOR and !$non_default)
             $this->_addMarkup(new Markup_color);
+        $this->_addMarkup(new Markup_wikicreoletable_plugin);
         // Markup_wikicreole_preformatted must be before Markup_template_plugin
         $this->_addMarkup(new Markup_wikicreole_preformatted);
         if (ENABLE_MARKUP_TEMPLATE and !$non_default)
             $this->_addMarkup(new Markup_template_plugin);
+        if (ENABLE_MARKUP_MEDIAWIKI_TABLE)
+            $this->_addMarkup(new Markup_mediawikitable_plugin);
         // This does not work yet
         if (0 and PLUGIN_MARKUP_MAP and !$non_default)
             $this->_addMarkup(new Markup_xml_plugin);
