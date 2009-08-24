@@ -91,6 +91,10 @@ class WikiDB {
      *
      *      Which dba handler to use. Good choices are probably either
      *      'gdbm' or 'db2'.
+     *
+     * <dt> readonly
+     * <dd> Either set by config.ini: READONLY = true or detected automatically
+     *      when a database can be read but cannot be updated.
      * </dl>
      *
      * @return WikiDB A WikiDB object.
@@ -126,6 +130,8 @@ class WikiDB {
         if ((int)DEBUG & _DEBUG_SQL) {
             $this->_backend->check();
 	}
+        // might be changed when opening the database fails
+        $this->readonly = defined("READONLY") ? READONLY : false;
     }
     
     /**
@@ -210,6 +216,7 @@ class WikiDB {
      * @see purgePage
      */
     function deletePage($pagename) {
+        if ($this->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
     	// don't create empty revisions of already purged pages.
         if ($this->_backend->get_latest_version($pagename))
             $result = $this->_cache->delete_page($pagename);
@@ -242,6 +249,7 @@ class WikiDB {
      * @see deletePage
      */
     function purgePage($pagename) {
+        if ($this->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         $result = $this->_cache->purge_page($pagename);
         $this->deletePage($pagename); // just for the notification
         return $result;
@@ -511,6 +519,7 @@ class WikiDB {
      * @return boolean     true or false
      */
     function renamePage($from, $to, $updateWikiLinks = false) {
+        if ($this->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         assert(is_string($from) && $from != '');
         assert(is_string($to) && $to != '');
         $result = false;
@@ -662,6 +671,7 @@ class WikiDB {
      * @param string $newval  New value.
      */
     function set($key, $newval) {
+        if ($this->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         if (!$key || $key[0] == '%')
             return;
         
@@ -790,6 +800,7 @@ class WikiDB_Page
      *  use a WikiDB_PageRevision object here.)
      */
     function deleteRevision($version) {
+        if ($this->_wikidb->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         $backend = &$this->_wikidb->_backend;
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
@@ -839,6 +850,7 @@ class WikiDB_Page
      * </ul>
      */
     function mergeRevision($version) {
+        if ($this->_wikidb->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         $backend = &$this->_wikidb->_backend;
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
@@ -905,6 +917,7 @@ class WikiDB_Page
      * $version was incorrect, returns false
      */
     function createRevision($version, &$content, $metadata, $links) {
+        if ($this->_wikidb->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         $backend = &$this->_wikidb->_backend;
         $cache = &$this->_wikidb->_cache;
         $pagename = &$this->_pagename;
@@ -983,6 +996,7 @@ class WikiDB_Page
      * @param hash $meta  Meta-data for new revision.
      */
     function save($wikitext, $version, $meta, $formatted = null) {
+        if ($this->_wikidb->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
 	if (is_null($formatted))
 	    $formatted = new TransformedText($this, $wikitext, $meta);
         $type = $formatted->getType();
@@ -1317,6 +1331,7 @@ class WikiDB_Page
             and $key == '_cached_html' 
             and method_exists($backend, 'set_cached_html'))
         {
+            if ($this->_wikidb->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
             return $backend->set_cached_html($pagename, $newval);
         }
 
@@ -1331,6 +1346,7 @@ class WikiDB_Page
                 return;         // values identical, skip update.
         }
 
+        if ($this->_wikidb->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         $cache->update_pagedata($pagename, array($key => $newval));
     }
 
@@ -1351,6 +1367,7 @@ class WikiDB_Page
      * @access public
      */
     function increaseHitCount() {
+        if ($this->_wikidb->readonly) { trigger_error("readonly database", E_USER_NOTICE); return; }
         if (method_exists($this->_wikidb->_backend, 'increaseHitCount'))
             $this->_wikidb->_backend->increaseHitCount($this->_pagename);
         else {
@@ -2084,6 +2101,9 @@ class WikiDB_cache
         array_push ($this->_versiondata_cache, array());
         $this->_glv_cache = array();
         $this->_id_cache = array(); // formerly ->_dbi->_iwpcache (nonempty pages => id)
+
+        if (isset($GLOBALS['request']->_dbi))
+            $this->readonly = $GLOBALS['request']->_dbi->readonly;
     }
     
     function close() {
@@ -2110,6 +2130,7 @@ class WikiDB_cache
     
     function update_pagedata($pagename, $newdata) {
         assert(is_string($pagename) && $pagename != '');
+        if ($this->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
        
         $this->_backend->update_pagedata($pagename, $newdata);
 
@@ -2134,12 +2155,14 @@ class WikiDB_cache
     }
     
     function delete_page($pagename) {
+        if ($this->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         $result = $this->_backend->delete_page($pagename);
         $this->invalidate_cache($pagename);
         return $result;
     }
 
     function purge_page($pagename) {
+        if ($this->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         $result = $this->_backend->purge_page($pagename);
         $this->invalidate_cache($pagename);
         return $result;
@@ -2192,6 +2215,7 @@ class WikiDB_cache
     function set_versiondata($pagename, $version, $data) {
         //unset($this->_versiondata_cache[$pagename][$version]);
         
+        if ($this->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         $new = $this->_backend->set_versiondata($pagename, $version, $data);
         // Update the cache
         $this->_versiondata_cache[$pagename][$version]['1'] = $data;
@@ -2201,6 +2225,7 @@ class WikiDB_cache
     }
 
     function update_versiondata($pagename, $version, $data) {
+        if ($this->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         $new = $this->_backend->update_versiondata($pagename, $version, $data);
         // Update the cache
         $this->_versiondata_cache[$pagename][$version]['1'] = $data;
@@ -2211,6 +2236,7 @@ class WikiDB_cache
     }
 
     function delete_versiondata($pagename, $version) {
+        if ($this->readonly) { trigger_error("readonly database", E_USER_WARNING); return; }
         $new = $this->_backend->delete_versiondata($pagename, $version);
         if (isset($this->_versiondata_cache[$pagename][$version]))
             unset ($this->_versiondata_cache[$pagename][$version]);

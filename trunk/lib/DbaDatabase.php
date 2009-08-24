@@ -19,6 +19,7 @@ class DbaDatabase
                     	    _("Supported handlers are: %s"), 
                     	    $handler, join(",",dba_handlers())));
         }
+        $this->readonly = false;
         if ($mode)
             $this->open($mode);
     }
@@ -42,6 +43,10 @@ class DbaDatabase
             echo "You don't seem to have DBA support compiled into PHP.";
         }
 	
+        if (READONLY) {
+            $mode = 'r';
+        }
+
         // lock supported since 4.3.0:
         if (check_php_version(4,3,0) and (strlen($mode) == 1)) {
             // PHP 4.3.x Windows lock bug workaround: http://bugs.php.net/bug.php?id=23975
@@ -54,9 +59,19 @@ class DbaDatabase
         while (($dbh = dba_open($this->_file, $mode, $this->_handler)) < 1) {
             if ($watchdog <= 0)
                 break;
-            flush();
             // "c" failed, try "w" instead.
-            if (substr($mode,0,1) == "c" and file_exists($this->_file))
+            if ($mode == "w" 
+                and file_exists($this->_file) 
+                and (isWindows() or !is_writable($this->_file)))
+            {
+                // try to continue with read-only
+                if (!defined("READONLY")) 
+                    define("READONLY", true);
+                $GLOBALS['request']->_dbi->readonly = true;
+                $this->readonly = true;
+                $mode = "r";
+            }
+            if (substr($mode,0,1) == "c" and file_exists($this->_file) and !READONLY)
                 $mode = "w";
             // conflict: wait some random time to unlock (as with ethernet)
             $secs = 0.5 + ((double)rand(1,32767)/32767);
@@ -72,7 +87,15 @@ class DbaDatabase
                 $error->errstr .= "\nfile: " . $this->_file
                                .  "\nmode: " . $mode
                                .  "\nhandler: " . $this->_handler;
-                $ErrorManager->handleError($error);
+                // try to continue with read-only
+                if (!defined("READONLY"))
+                    define("READONLY", true);
+                $GLOBALS['request']->_dbi->readonly = true;
+                $this->readonly = true;
+                if (!file_exist($this->_file)) {
+                    $ErrorManager->handleError($error);
+	            flush();
+                }
             }
             else {
                 trigger_error("dba_open failed", E_USER_ERROR);
@@ -119,6 +142,7 @@ class DbaDatabase
     }
 
     function delete($key) {
+        if ($this->readonly) return;
         if (!dba_delete($key, $this->_dbh))
             return $this->_error("delete($key)");
     }
@@ -129,6 +153,7 @@ class DbaDatabase
 
     function set($key, $val) {
         $dbh = &$this->_dbh;
+        if ($this->readonly) return;
         if (dba_exists($key, $dbh)) {
             if ($val !== false) {
                 if (!dba_replace($key, $val, $dbh))
