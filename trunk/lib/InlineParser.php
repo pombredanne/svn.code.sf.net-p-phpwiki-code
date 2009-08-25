@@ -1089,33 +1089,6 @@ class Markup_template_plugin  extends SimpleMarkup
     }
 }
 
-/** ENABLE_MARKUP_MEDIAWIKI_TABLE
- *  Table syntax similar to Mediawiki
- *  {|
- * => <?plugin MediawikiTable
- *  |}
- * => ?>
- */
-class Markup_mediawikitable_plugin extends SimpleMarkup
-{
-    var $_match_regexp = '\{\|.*?\|\}';
-
-    function markup ($match) {
-      $s = '<'.'?plugin MediawikiTable ' . $match . '?'.'>';
-      return new Cached_PluginInvocation($s);
-    }
-}
-
-class Markup_wikicreoletable_plugin extends SimpleMarkup
-{
-    var $_match_regexp = '^\|=.*?\?>';
-
-    function markup ($match) {
-      $s = '<'.'?plugin WikicreoleTable ' . $match . '?'.'>';
-      return new Cached_PluginInvocation($s);
-    }
-}
-
 // "..." => "&#133;"  browser specific display (not cached?)
 // Support some HTML::Entities: (C) for copy, --- for mdash, -- for ndash
 // TODO: "--" => "&emdash;" browser specific display (not cached?)
@@ -1211,13 +1184,10 @@ class InlineTransformer
             $this->_addMarkup(new Markup_html_divspan);
         if (ENABLE_MARKUP_COLOR and !$non_default)
             $this->_addMarkup(new Markup_color);
-        $this->_addMarkup(new Markup_wikicreoletable_plugin);
         // Markup_wikicreole_preformatted must be before Markup_template_plugin
         $this->_addMarkup(new Markup_wikicreole_preformatted);
         if (ENABLE_MARKUP_TEMPLATE and !$non_default)
             $this->_addMarkup(new Markup_template_plugin);
-        if (ENABLE_MARKUP_MEDIAWIKI_TABLE)
-            $this->_addMarkup(new Markup_mediawikitable_plugin);
         // This does not work yet
         if (0 and PLUGIN_MARKUP_MAP and !$non_default)
             $this->_addMarkup(new Markup_xml_plugin);
