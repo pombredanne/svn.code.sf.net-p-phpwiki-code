@@ -54,6 +54,12 @@ h1 {
 
 h1, h2, h3, h4, h5, h6 { page-break-after: avoid; } 
 
+/* Do not cut tables with class "nobreak" */
+
+table.nobreak {
+    page-break-inside: avoid !important;
+}
+
 /* Thanks to A List Apart (http://alistapart.com/) for useful extras */
 a.stub,
 a.new{ color:#ba0000; text-decoration:none; }
