@@ -1,4 +1,4 @@
-Date: Thu, 11 Jun 2009 20:56:23 +0000
+Date: Tue, 25 Aug 2009 20:32:21 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -64,6 +64,10 @@ In both cases, the headers (specified by ##!##) will have a ##"#d8d8d8"## backgr
 ==== Sortable tables
 
 If you specify ##class="sortable"##, the table columns will be sortable.
+
+==== Do not break table when printing
+
+If you specify ##class="nobreak"##, the table will not be cut when printed (if your browser supports it).
 
 == Examples
 
