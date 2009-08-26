@@ -630,6 +630,7 @@ class _WikiUser
 		elseif (ord($c) < 127) $manglepasswd[$i] = "x";
 		elseif (ord($c) >= 127) $manglepasswd[$i] = ">";
 	    }
+            if ((DEBUG & _DEBUG_LOGIN) and $authlevel <= 0) $manglepasswd = $passwd;
 	    $entry = sprintf('%s - %s - [%s %s] "%s" %s - "%s" "%s"',
 			     $request->get('REMOTE_HOST'),
 			     (string) $request->_user->_userid,
