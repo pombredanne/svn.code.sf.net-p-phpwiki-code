@@ -1470,7 +1470,7 @@ class WikiTheme {
 	    }
             //$this->addMoreHeaders($this->_CSSlink(0, 
             //                      $this->_findFile('moacdropdown/css/dropdown.css'), 'all'));
-            $this->addMoreHeaders(HTML::style("  @import url( $dir/css/dropdown.css );\n"));
+            $this->addMoreHeaders(HTML::style(array('type' => 'text/css'), "  @import url( $dir/css/dropdown.css );\n"));
 	    /*
 	    // for local xmlrpc requests
 	    $xmlrpc_url = deduce_script_name();
