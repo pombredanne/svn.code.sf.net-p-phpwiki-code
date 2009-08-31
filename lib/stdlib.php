@@ -475,7 +475,7 @@ function LinkImage($url, $alt = "") {
             }
         } 
         else {
-            trigger_error(sprintf(_("Invalid image attribute %s %s=%s"),
+            trigger_error(sprintf(_("Invalid image attribute \"%s\" %s=%s"),
                                   $url, $attr, $value), E_USER_WARNING);
         }
     }
@@ -485,10 +485,15 @@ function LinkImage($url, $alt = "") {
 	$file = NormalizeLocalFileName($ori_url);
         if (file_exists($file)) {
              $link = HTML::img(array('src' => $ori_url));
+             trigger_error(
+               sprintf(_("Invalid image link fixed %s => %s. Spaces must be quoted with %%20."),
+                                       $url, $ori_url), E_USER_WARNING);
         } elseif (string_starts_with($ori_url, getUploadDataPath())) {
              $file = substr($file, strlen(getUploadDataPath()));
              $path = getUploadFilePath().$file;
              if (file_exists($path)) {
+             	 trigger_error(sprintf(_("Invalid image link fixed \"%s\" => \"%s\".\n Spaces must be quoted with %%20."),
+                                       $url, $ori_url), E_USER_WARNING);
                  $link->setAttr('src', getUploadDataPath() . $file);
                  $url = $ori_url;
              }
@@ -554,7 +559,7 @@ function LinkImage($url, $alt = "") {
     $link->setAttr('class', 'inlineimage');
 
     /* Check for inlined objects. Everything allowed in INLINE_IMAGES besides
-     * png|jpg|gif|jpeg|bmp|pl|cgi
+     * png|jpg|gif|jpeg|bmp|pl|cgi.  If no image it is an object to embed.
      * Note: Allow cgi's (pl,cgi) returning images.
      */
     if (!preg_match("/\.(".$force_img.")/i", $url)) {
