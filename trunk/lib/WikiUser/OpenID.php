@@ -1,6 +1,6 @@
 <?php //-*-php-*-
 rcs_id('$Id$');
-/* Copyright (C) 2007 ReiniUrban
+/* Copyright (C) 2007,2009 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  *
  * See http://openid.net/specs/openid-authentication-1_1.html
@@ -29,10 +29,12 @@ extends _PassUser
             return $this->_tryNextUser();
         }
         $this->_authmethod = 'OpenID';
-        // check the prefs for emailVerified
-        if ($this->_prefs->get('emailVerified'))
-            return true;
         return $this->_tryNextUser();
+    }
+    // no quotes and shorter than 128
+    function isValidName() {
+        if (!$this->_userid) return false;
+        return !preg_match('/[\"\']/', $this->_userid) and strlen($this->_userid) < 128;
     }
 }
 
