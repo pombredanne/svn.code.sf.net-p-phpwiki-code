@@ -1527,15 +1527,15 @@ class PageList {
     	if (empty($this->_pages)) return; // stop recursion
 	if (!isset($this->_options['listtype'])) 
 	    $this->_options['listtype'] = '';
-	    $nb_row = 0;
-	    foreach ($this->_pages as $pagenum => $page) {
-	    	$one_row = $this->_renderPageRow($page);
+	$nb_row = 0;
+	foreach ($this->_pages as $pagenum => $page) {
+	    $one_row = $this->_renderPageRow($page);
             $rows[] = array('header' => WikiLink($page), 'render' => $one_row);
             if ($one_row) $nb_row++;
-	    }
+	}
         $out = HTML();
         if ($caption) {
-        	$caption = preg_replace('/{total}/', $nb_row, asString($caption));
+            $caption = preg_replace('/{total}/', $nb_row, asString($caption));
             $out->pushContent(HTML::p($caption));
         }
 	// Semantic Search et al: only unique list entries, esp. with nopage
@@ -1558,9 +1558,13 @@ class PageList {
             }
         }
 
+        if (!empty($this->_options['limit']))
+            list($offset, $count) = $this->limit($this->_options['limit']);
+        else {
+            $offset = 0; $count = count($this->_pages);
+        }
         // need a recursive switch here for the azhead and cols grouping.
         if (!empty($this->_options['cols']) and $this->_options['cols'] > 1) {
-            $count = count($this->_pages);
             $length = intval($count / ($this->_options['cols']));
             // If division does not give an integer, we need one more line
             // E.g. 13 pages to display in 3 columns.
@@ -1569,7 +1573,7 @@ class PageList {
             }
             $width = sprintf("%d", 100 / $this->_options['cols']).'%';
             $cols = HTML::tr(array('valign' => 'top'));
-            for ($i=0; $i < $count; $i += $length) {
+            for ($i=$offset; $i < $offset+$count; $i += $length) {
                 $this->_saveOptions(array('cols' => 0, 'paging' => 'none'));
                 $this->_pages = array_slice($this->_pages, $i, $length);
                 $cols->pushContent(HTML::td(/*array('width' => $width),*/ 
@@ -1577,9 +1581,10 @@ class PageList {
                 $this->_restoreOptions();
             }
             // speed up table rendering by defining colgroups
-            $out->pushContent(HTML::table(HTML::colgroup(array('span' => $this->_options['cols'],
-            						       'width' => $width)),
-                                          $cols));
+            $out->pushContent(HTML::table(HTML::colgroup
+            	(array('span' => $this->_options['cols'],
+            	       'width' => $width)),
+                $cols));
             return $out;
         }
         
@@ -1596,7 +1601,7 @@ class PageList {
                 $page =& $this->_pages[$i];
                 $h = substr($page->getName(), 0, 1);
                 if ($h != $cur_h and $i > $j) {
-                    $this->_saveOptions(array('cols' => 0, 'azhead' => 0));
+                    $this->_saveOptions(array('cols' => 0, 'azhead' => 0, 'ordered' => $j+1));
                     $this->_pages = array_slice($this->_pages, $j, $i - $j);
                     $out->pushContent($this->_generateList());
                     $this->_restoreOptions();
@@ -1606,7 +1611,7 @@ class PageList {
                 }
             }
             if ($i > $j) { // flush the rest
-                $this->_saveOptions(array('cols' => 0, 'azhead' => 0));
+                $this->_saveOptions(array('cols' => 0, 'azhead' => 0, 'ordered' => $j+1));
                 $this->_pages = array_slice($this->_pages, $j, $i - $j);
                 $out->pushContent($this->_generateList());
                 $this->_restoreOptions();
@@ -1624,13 +1629,16 @@ class PageList {
             return $out;
         }
 
-        if ($this->_options['listtype'] == 'ol')
-            $this->_options['ordered'] = 1;
-        elseif ($this->_options['listtype'] == 'ul')
+        if ($this->_options['listtype'] == 'ol') {
+            if (empty($this->_options['ordered'])) {
+                $this->_options['ordered'] = $offset+1;
+            }
+        } elseif ($this->_options['listtype'] == 'ul')
             $this->_options['ordered'] = 0;
-        if (!empty($this->_options['ordered']))
-	    $list = HTML::ol(array('class' => 'pagelist'));
-	elseif ($this->_options['listtype'] == 'dl') {
+        if ($this->_options['listtype'] == 'ol' and !empty($this->_options['ordered'])) {
+	    $list = HTML::ol(array('class' => 'pagelist', 
+	                           'start' => $this->_options['ordered']));
+        } elseif ($this->_options['listtype'] == 'dl') {
             $list = HTML::dl(array('class' => 'pagelist'));
 	} else {
             $list = HTML::ul(array('class' => 'pagelist'));
