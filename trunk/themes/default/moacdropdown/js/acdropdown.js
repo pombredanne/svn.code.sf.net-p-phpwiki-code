@@ -128,8 +128,9 @@ if( cAutocomplete.CB_AUTOINIT )
 
 cAutocomplete.prototype.init = function( sInputId )
 {
-    this.bDebug = false
-    /*this.bDebug = true*/
+  /*this.bDebug = false*/
+  /*this.bDebug = true*/
+  this.bDebug = true
 	this.sInputId = sInputId
 	this.sListId = cAutocomplete.CS_LIST_PREFIX + sInputId
 
@@ -673,14 +674,14 @@ cAutocomplete.prototype.loadXMLRPCListArray = function()
 	sStartWith = sStartWith.replace( /\s$/, '' )
 
 	if( sMethodName.indexOf( '?' ) > 0 )
-	    {
+        {
 		sMethodName = sMethodName.replace( '/^.+\?/', '' )
 		sURL = sURL.replace( '/\?.+$/', '' )
-	    }
+	}
 	else
-	    {
+        {
 		sURL = xmlrpc_url
-	    }
+	}
 
 	if (sMethodName.length < 1) 
 	    { 
@@ -701,26 +702,30 @@ cAutocomplete.prototype.loadXMLRPCListArray = function()
 	    {
 		sRequest += '<params>\n'
 		for( var nI = 1; nI < aMethodArgs.length; nI++ )
-		    {
+		{
 			var sArg = aMethodArgs[ nI ];
 			//this.debug('sMethodName: "'+sMethodName+'" sArg['+nI+']: "'+sArg+'"')
 			if( sArg.indexOf( '[S]' ) >= 0 )
-			    {
+                        {
 				//this.debug('sArg['+nI+']: "'+sArg+'" sStartWith: "'+sStartWith+'"')
 				sArg = sArg.replace( '[S]', sStartWith )
-			    }
+                        }
 			// We could parse a prepended "(int)" cast.
 			// Can only do string args so far
-			sRequest += '<param><value><string>'
-			sRequest += sArg
-			sRequest += '</string></value></param>\n'
-		    }
+                        if (sArg == 'debug') {
+                          this.bDebug = true;
+                        } else {
+                          sRequest += '<param><value><string>'
+                          sRequest += sArg
+                          sRequest += '</string></value></param>\n'
+                        }
+		}
 		sRequest += '</params>\n'
 	    }
 	sRequest += '</methodCall>'
 	if (this.bDebug) {
+	    sURL += '?start_debug=1'
 	    this.debug('url: "'+sURL+'" sRequest: "'+sRequest.substring(20)+'"')
-	    /*sURL += '?start_debug=1'*/
 	}
 	this.hXMLHttp.open( 'POST', sURL, true )
 	var hAC = this
@@ -1366,7 +1371,11 @@ cAutocomplete.prototype.debug = function(s)
 	var hContainer = document.createElement( 'DIV' )
 	hContainer.className = 'debug'
 	hContainer.innerHTML = s
-	hInput.form.appendChild( hContainer )
+        var hDiv = hInput.form.parentNode
+        /*if (hDiv.childNodes[1] && hDiv.childNodes[1].className == 'debug')
+          hDiv.insertBefore( hContainer, hDiv.childNodes[1] )
+          else*/
+          hDiv.appendChild( hContainer )
 	/*alert(s)*/
     }
 }
@@ -1448,22 +1457,22 @@ cAutocomplete.onInputKeyDown = function ( hEvent )
 	if( hInput.form )
 	{
 		hInput.form.bLocked = true
-		if (hAC.bDebug) { hAC.debug ("onInputKeyDown form blocked") }
+		//if (hAC.bDebug) { hAC.debug ("onInputKeyDown form blocked") }
 	}
 	if ( hEvent.keyCode == 13 || hEvent.keyCode == 27 || hEvent.keyCode == 38 || hEvent.keyCode == 40 )
 	{
 		if( hEvent.preventDefault )
 		{
 		    hEvent.preventDefault()
-		    /*
-		    if (hEvent.keyCode == 13) {
-			if (hAC.bDebug) { hAC.debug ("preventDefault: return true") }
-			return true
-		    }
-		    */
 		} else {
 		    if (hAC.bDebug) { hAC.debug ("no preventDefault return false") }
 		}
+                if (hEvent.keyCode == 13) {
+                  /*if (hAC.bDebug) { hAC.debug ("Enter") }*/
+                  hEvent.cancelBubble = true
+                  hEvent.returnValue = true
+                  return true
+                }
 		hEvent.cancelBubble = true
 		hEvent.returnValue = false
 		return false
@@ -1527,11 +1536,13 @@ cAutocomplete.onInputKeyUp = function ( hEvent )
 		    {
 			hEvent.preventDefault()
 		    }
-		    /*
-		    if (hEvent.keyCode == 13) {
-			return true
-		    }
-		    */
+                    if (hEvent.keyCode == 13) {
+                      if (hAC.bDebug) { hAC.debug ("Enter KeyUp: returnValue = true") }
+                      hEvent.cancelBubble = true
+                      hEvent.returnValue = true
+                      hInput.form.submit;  
+                      return true
+                    }
 		    if (hAC.bDebug) { hAC.debug ("keyUp: hEvent.returnValue = false") }
 		    hEvent.cancelBubble = true
 		    hEvent.returnValue = false
