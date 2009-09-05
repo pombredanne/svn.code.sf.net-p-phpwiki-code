@@ -189,8 +189,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         if ($allowedtags=="") {
             $allowedtags= array ( "p"=>1, "br"=>0, "a"=>1, "img"=>0, "li"=>1, 
                 "ol"=>1, "ul"=>1, "b"=>1, "i"=>1, "em"=>1, "strong"=>1, "del"=>1, "ins"=>1, 
-                "u"=>1, "blockquote"=>1, "pre"=>1, "hr"=>0,
-                "table"=>1, "tr"=>1, "td"=>1,
+                "sub"=>1, "sup"=>1, "u"=>1, "blockquote"=>1, "pre"=>1, "hr"=>0,
+                "table"=>1, "thead"=>1, "tfoot"=>1, "tbody"=>1, "tr"=>1, "td"=>1, "th"=>1,
                 );
         }
         elseif (!is_array($allowedtags)) {
