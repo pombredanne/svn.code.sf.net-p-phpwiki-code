@@ -477,7 +477,6 @@ class BlockMarkup {
     }
 
     function _setTightness ($top, $bot) {
-        // $this->_element->setTightness($top, $bot);
     }
 
     function merge ($followingBlock) {
@@ -1213,10 +1212,6 @@ class Block_hr extends BlockMarkup
         $this->_element = new Block_HtmlElement('hr');
         return true;
     }
-
-    function _setTightness($top, $bot) {
-	// Don't tighten <hr/>s
-    }
 }
 
 class Block_heading extends BlockMarkup
@@ -1231,10 +1226,6 @@ class Block_heading extends BlockMarkup
         $this->_element = new Block_HtmlElement($tag, false, $text);
         
         return true;
-    }
-
-    function _setTightness($top, $bot) {
-	// Don't tighten headers.
     }
 }
 
@@ -1254,10 +1245,6 @@ class Block_heading_wikicreole extends BlockMarkup
         $this->_element = new Block_HtmlElement($tag, false, $text);
         
         return true;
-    }
-
-    function _setTightness($top, $bot) {
-	// Don't tighten headers.
     }
 }
 
@@ -1345,11 +1332,7 @@ class Block_divspan extends BlockMarkup
             }
         }
         $this->_element = new Block_HtmlElement($tag, $args, $content);
-        //$this->_element->setTightness($tag == 'span', $tag == 'span');
         return true;
-    }
-    function _setTightness($top, $bot) {
-	// Don't tighten user <div|span>
     }
 }
 
