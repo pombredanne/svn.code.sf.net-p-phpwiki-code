@@ -122,6 +122,7 @@ if (!$group_id || !$project) {
 
     // Disable ENABLE_ACDROPDOWN, it creates a <style> in the <body> (illegal)
     define('ENABLE_ACDROPDOWN', false);
+    define('ENABLE_AJAX', false);
 
     define('TOOLBAR_PAGELINK_PULLDOWN', false);
     define('TOOLBAR_TEMPLATE_PULLDOWN', false);
