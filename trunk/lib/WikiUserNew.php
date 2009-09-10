@@ -1171,9 +1171,9 @@ extends _AnonUser
     function getPreferences() {
         if (!empty($this->_prefs->_method)) {
             if ($this->_prefs->_method == 'ADODB') {
-            	// FIXME: strange why this should be needed...
-            	include_once("lib/WikiUser/Db.php");
-            	include_once("lib/WikiUser/AdoDb.php");
+                // FIXME: strange why this should be needed...
+                include_once("lib/WikiUser/Db.php");
+                include_once("lib/WikiUser/AdoDb.php");
                 if (check_php_version(5)) {
                     $user = new _AdoDbPassUser($this->_userid, $this->_prefs);
                     return $user->getPreferences();
@@ -1182,8 +1182,8 @@ extends _AnonUser
                     return _AdoDbPassUser::getPreferences();
                 }
             } elseif ($this->_prefs->_method == 'SQL') {
-            	include_once("lib/WikiUser/Db.php");
-            	include_once("lib/WikiUser/PearDb.php");
+                include_once("lib/WikiUser/Db.php");
+                include_once("lib/WikiUser/PearDb.php");
                 if (check_php_version(5)) {
                     $user = new _PearDbPassUser($this->_userid, $this->_prefs);
                     return $user->getPreferences();
@@ -1192,8 +1192,8 @@ extends _AnonUser
                     return _PearDbPassUser::getPreferences();
                 }
             } elseif ($this->_prefs->_method == 'PDO') {
-            	include_once("lib/WikiUser/Db.php");
-            	include_once("lib/WikiUser/PdoDb.php");
+                include_once("lib/WikiUser/Db.php");
+                include_once("lib/WikiUser/PdoDb.php");
                 if (check_php_version(5)) {
                     $user = new _PdoDbPassUser($this->_userid, $this->_prefs);
                     return $user->getPreferences();
@@ -1224,9 +1224,9 @@ extends _AnonUser
     function setPreferences($prefs, $id_only=false) {
         if (!empty($this->_prefs->_method)) {
             if ($this->_prefs->_method == 'ADODB') {
-            	// FIXME: strange why this should be needed...
-            	include_once("lib/WikiUser/Db.php");
-            	include_once("lib/WikiUser/AdoDb.php");
+                // FIXME: strange why this should be needed...
+                include_once("lib/WikiUser/Db.php");
+                include_once("lib/WikiUser/AdoDb.php");
                 if (check_php_version(5)) {
                     $user = new _AdoDbPassUser($this->_userid, $prefs);
                     return $user->setPreferences($prefs, $id_only);
@@ -1236,8 +1236,8 @@ extends _AnonUser
                 }
             }
             elseif ($this->_prefs->_method == 'SQL') {
-            	include_once("lib/WikiUser/Db.php");
-            	include_once("lib/WikiUser/PearDb.php");
+                include_once("lib/WikiUser/Db.php");
+                include_once("lib/WikiUser/PearDb.php");
                 if (check_php_version(5)) {
                     $user = new _PearDbPassUser($this->_userid, $prefs);
                     return $user->setPreferences($prefs, $id_only);
@@ -1247,8 +1247,8 @@ extends _AnonUser
                 }
             }
             elseif ($this->_prefs->_method == 'PDO') {
-            	include_once("lib/WikiUser/Db.php");
-            	include_once("lib/WikiUser/PdoDb.php");
+                include_once("lib/WikiUser/Db.php");
+                include_once("lib/WikiUser/PdoDb.php");
                 if (check_php_version(5)) {
                     $user = new _PdoDbPassUser($this->_userid, $prefs);
                     return $user->setPreferences($prefs, $id_only);
@@ -2112,9 +2112,9 @@ class UserPreferences
         if (!is_array($packed)) return false;
         $prefs = array();
         foreach ($packed as $name => $packed_pref) {
-            if (is_string($packed_pref) 
-                and isSerialized($packed_pref) 
-                and substr($packed_pref, 0, 2) == "O:") 
+            if (is_string($packed_pref)
+                and isSerialized($packed_pref)
+                and substr($packed_pref, 0, 2) == "O:")
             {
                 //legacy: check if it's an old array of objects
                 // Looks like a serialized object. 
@@ -2130,7 +2130,7 @@ class UserPreferences
             	    $prefs[$name] = $value;
             	}
             } else {
-            	if (isSerialized($packed_pref))
+                if (isSerialized($packed_pref))
                     $prefs[$name] = @unserialize($packed_pref);
                 if (empty($prefs[$name]) and isSerialized(base64_decode($packed_pref)))
                     $prefs[$name] = @unserialize(base64_decode($packed_pref));
