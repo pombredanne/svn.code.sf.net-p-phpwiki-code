@@ -53,9 +53,6 @@ $WikiTheme->customUserPreferences
           'recnnbr'   => new _UserPreference_recnnbr(10,14,80),
           ));
 
-
-// $Log: not supported by cvs2svn $ 
-
 // Local Variables:
 // mode: php
 // tab-width: 8
