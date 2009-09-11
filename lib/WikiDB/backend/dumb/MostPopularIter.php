@@ -66,8 +66,6 @@ function WikiDB_backend_dumb_MostPopularIter_sortf_rev($a,$b) {
     return $ahits - $bhits;
 }
 
-// $Log: not supported by cvs2svn $
-
 // For emacs users
 // Local Variables:
 // mode: php

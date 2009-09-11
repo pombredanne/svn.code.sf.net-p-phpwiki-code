@@ -110,9 +110,6 @@ extends WikiPlugin_SqlResult
     }
 };
 
-// $Log: not supported by cvs2svn $
-//
-
 // For emacs users
 // Local Variables:
 // mode: php

@@ -180,9 +180,6 @@ extends _PageList_Column
     }
 }
 
-// $Log: not supported by cvs2svn $
-//
-
 // Local Variables:
 // mode: php
 // tab-width: 8

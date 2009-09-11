@@ -116,12 +116,6 @@ extends WikiPlugin
     }
 };
 
-//function cmp_by_num($a, $b) { // larger first
-//  return $a < $b ? 1 : 0;
-//}
-
-// $Log: not supported by cvs2svn $
-
 // Local Variables:
 // mode: php
 // tab-width: 8

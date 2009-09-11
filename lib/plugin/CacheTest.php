@@ -150,8 +150,6 @@ extends WikiPluginCached
 
 } // WikiPlugin_CacheTest
 
-// $Log: not supported by cvs2svn $
-
 // For emacs users
 // Local Variables:
 // mode: php

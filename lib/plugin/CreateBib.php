@@ -168,7 +168,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
 // Based on CreateTOC
 
 // For emacs users
