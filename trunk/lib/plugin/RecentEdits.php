@@ -42,8 +42,6 @@ extends WikiPlugin_RecentChanges
     }
 }
 
-// $Log: not supported by cvs2svn $
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

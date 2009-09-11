@@ -357,8 +357,6 @@ SELECT m.title, m.date, n.name, c.role
 
 };
 
-// $Log: not supported by cvs2svn $
-
 // (c-file-style: "gnu")
 // Local Variables:
 // mode: php

@@ -40,8 +40,6 @@ extends _PassUser
     }
 }
 
-// $Log: not supported by cvs2svn $
-
 // Local Variables:
 // mode: php
 // tab-width: 8

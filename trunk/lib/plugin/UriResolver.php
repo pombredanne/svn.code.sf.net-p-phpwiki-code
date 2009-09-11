@@ -65,8 +65,6 @@ extends WikiPlugin
     }
 };
 
-// $Log: not supported by cvs2svn $
-
 // For emacs users
 // Local Variables:
 // mode: php
