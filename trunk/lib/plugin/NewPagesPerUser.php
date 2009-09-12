@@ -92,7 +92,10 @@ extends WikiPlugin
 		   (HTML::tr(HTML::td($nbsp,$nbsp,
 				      HTML::img(array('id'  => "$id-img",
 						      'src' => $WikiTheme->_findData("images/folderArrowClosed.png"),
-						      'onClick'=> "showHideFolder('$id')")),$nbsp,
+						      'onclick'=> "showHideFolder('$id')",
+                                                       'alt'  => _("Click to hide/show"),
+                                                       'title'  => _("Click to hide/show"))),
+                                      $nbsp,
 				      $user),
 			     HTML::td($count)
 			     ));
