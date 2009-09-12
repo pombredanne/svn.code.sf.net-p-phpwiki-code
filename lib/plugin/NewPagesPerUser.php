@@ -62,7 +62,7 @@ extends WikiPlugin
 	    $date = $rev->get('mtime');
 	    //$author = $rev->get('author_id');
 	    $author = $page->getOwner();
-	    if ($debug) echo "<i>$pagename, ",strftime("%Y-%m-%d %h:%m:%s", $date),", $author</i><br>\n";
+	    if ($debug) echo "<i>$pagename, ",strftime("%Y-%m-%d %h:%m:%s", $date),", $author</i><br />\n";
 	    if ($userid and (!preg_match("/".$userid."/", $author))) continue;
 	    if ($since and $date < $since) continue;
 	    if ($until and $date > $until) continue;
