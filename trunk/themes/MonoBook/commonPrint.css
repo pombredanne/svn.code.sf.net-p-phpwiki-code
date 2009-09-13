@@ -27,7 +27,7 @@ h1 {
     content: string(header); 
   }
   @bottom-left {
-    content: "Page " counter(page);
+    content: "Page " counter(page) " of " counter(pages);
   }
 }
 
@@ -39,7 +39,7 @@ h1 {
     content: "Phpwiki";
   }
   @bottom-right {
-    content: "Page " counter(page);
+    content: "Page " counter(page) " of " counter(pages);
   }
 }
 
