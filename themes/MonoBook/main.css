@@ -709,6 +709,13 @@ td.pageinfo { font-weight: bold; }
 	font-style: oblique;
 }
 
+/* RssFeed */
+div.rss { margin: 1em; padding: 1em; font-size: 0.9em; background-color: #eeeeee; border: thin dashed #aaaaaa; }
+div.feed { color: #333; margin: -0.5em; margin-bottom: 0em; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 1.2em; }
+div.itemdesc {  padding-left: 1em; }
+div.rssitem { border-top: thin dashed #aaaaaa; }
+a.rssicon { font-weight:normal; font-size:small; vertical-align:middle; }
+
 /**
  * Calendar plugin
  */
