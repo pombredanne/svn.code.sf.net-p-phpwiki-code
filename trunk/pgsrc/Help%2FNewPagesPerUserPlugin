@@ -52,10 +52,10 @@ per month per user in the wiki.
 == Example
 
 {{{
-<<~NewPagesPerUser links=0>>
+<<NewPagesPerUser links=0>>
 }}}
 
-<<~NewPagesPerUser links=0>>
+<<NewPagesPerUser links=0>>
 
 == Author
 * [[PhpWiki:ReiniUrban|Reini Urban]]
