@@ -113,7 +113,11 @@ CREATE TABLE rating (
         rateepage INT(11) NOT NULL,
         ratingvalue FLOAT NOT NULL,
         rateeversion INT(11) NOT NULL,
-        tstamp TIMESTAMP(14) NOT NULL,
+        tstamp TIMESTAMP,
+-- before:
+--      tstamp TIMESTAMP(14) NOT NULL,
+-- since mysql 5.1 better use:
+--      tstamp TIMESTAMP DEFAULT 0,
         PRIMARY KEY (dimension, raterpage, rateepage)
 );
 -- for empty dimensions use extra indices. see lib/wikilens/RatingsDb.php
