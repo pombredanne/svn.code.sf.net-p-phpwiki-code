@@ -619,6 +619,7 @@ function fixup_static_configs($file) {
       .'FindPage:FullTextSearch:FuzzyPages:'
       .'LikePages:LinkDatabase:LinkSearch:ListRelations:'
       .'ModeratedPage:MostPopular:'
+      .'NewPagesPerUser:'
       .'OrphanedPages:'
       .'PageDump:PageHistory:PageInfo:PluginManager:'
       .'RandomPage:RecentChanges:RecentComments:RelatedChanges:'
