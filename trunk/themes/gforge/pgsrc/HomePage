@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:44:45 +0000
+Date: Wed, 16 Sep 2009 15:50:33 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20070828)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,6 +14,16 @@ Content-Transfer-Encoding: binary
 |bordercolor=green
 }}
 
-{{titlebar|title=What is a wiki?}}
+{| cellpadding=5
+|- valign=top
+| width=50% | {{titlebar|title=What is a wiki?}}
 
 The wiki will allow you to easily create web pages to share information about your project. You can experiment in the [[SandBox]].
+
+| width=50% | {{titlebar|title=I need help}}
+
+* Learn about [[Help:AddingPages|adding pages]].
+* Check [[Help:TextFormattingRules|text formatting rules]].
+* Browse all [[Help:../Help|Help pages]].
+
+|}
