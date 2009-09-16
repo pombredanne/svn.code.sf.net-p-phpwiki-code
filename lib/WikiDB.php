@@ -1481,7 +1481,9 @@ class WikiDB_PageRevision
 {
     //var $_transformedContent = false; // set by WikiDB_Page::save()
     
-    function WikiDB_PageRevision(&$wikidb, $pagename, $version, $versiondata = false) {
+    function WikiDB_PageRevision(&$wikidb, $pagename, $version, 
+                                 $versiondata = false) 
+    {
         $this->_wikidb = &$wikidb;
         $this->_pagename = $pagename;
         $this->_version = $version;
@@ -1527,7 +1529,9 @@ class WikiDB_PageRevision
      */
     function hasDefaultContents() {
         $data = &$this->_data;
-        return empty($data['%content']); // FIXME: what if it's the number 0? <>'' or === false
+        if (!isset($data['%content'])) return true;
+        if ($data['%content'] === true) return false;
+        return $data['%content'] === false or $data['%content'] === "";
     }
 
     /**
