@@ -68,9 +68,6 @@
        <?= ActionButton('chown') ?>
        <?= ActionButton('setacl') ?>
      <?php }} ?>
-     <?php if ($isAdmin or mayAccessPage('edit', $pagename)) { ?>
-      <?= ActionButton('rename') ?>
-     <?php } ?>
      <?php if (!empty($revision) and ($isAdmin or mayAccessPage('remove', $pagename))) { ?>
       <?= ActionButton('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
       <?= ActionButton('remove') ?>
