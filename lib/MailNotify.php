@@ -1,6 +1,6 @@
 <?php
 rcs_id('$Id$');
-/* Copyright (C) 2006-2007 Reini Urban
+/* Copyright (C) 2006-2007,2009 Reini Urban
  * Copyright (C) 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
@@ -181,10 +181,8 @@ class MailNotify {
                       $notice = false,
                       $silent = true)
     {
-        if (defined('GFORGE') and GFORGE) {
-            // Add WIKI_NAME to Subject
-            $subject = "[".WIKI_NAME."] ".$subject;
-        }
+        // Add WIKI_NAME to Subject
+        $subject = "[".WIKI_NAME."] ".$subject;
         // Encode $subject if needed
         $encoded_subject = $this->subject_encode($subject);
         $emails = $this->emails;
@@ -213,7 +211,8 @@ class MailNotify {
 	    if (!$ok) {
 		global $ErrorManager;
 		// get last error message
-		$last_err = $ErrorManager->_postponed_errors[count($ErrorHandler->_postponed_errors)-1];
+		$last_err = 
+                    $ErrorManager->_postponed_errors[count($ErrorHandler->_postponed_errors)-1];
 		fwrite($f, "\nX-MailFailure: " . $last_err);
 	    }
 	    fwrite($f, "\nDate: " . CTime());
@@ -304,7 +303,6 @@ class MailNotify {
                 array($this->pagename, $to, $meta, $this->emails, $this->userids);
         } else {
             $pagename = $this->pagename;
-            //$editedby = sprintf(_("Edited by: %s"), $meta['author']) . ' ' . $meta['author_id'];
             $editedby = sprintf(_("Edited by: %s"), $this->from);
             $subject = sprintf(_("Page rename %s to %s"), $pagename, $to);
             $link = WikiURL($to, true);
@@ -379,7 +377,7 @@ class MailNotify {
         while(!empty($data[$id])) { // id collision
             $id = rand_ascii_readable(16);
         }
-        $subject = WIKI_NAME . " " . _("e-mail address confirmation");
+        $subject = _("E-Mail address confirmation");
         $ip = $request->get('REMOTE_HOST');
         $expire_date = time() + 7*86400;
         $content = fmt("Someone, probably you from IP address %s, has registered an
