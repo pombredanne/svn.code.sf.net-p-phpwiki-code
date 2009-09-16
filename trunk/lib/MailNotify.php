@@ -287,7 +287,6 @@ class MailNotify {
             $content .= $wikitext;
         }
         $editedby = sprintf(_("Edited by: %s"), $this->from);
-        //$editedby = sprintf(_("Edited by: %s"), $meta['author']);
         $this->sendMail($subject, 
                         $editedby."\n".$difflink."\n\n".$content);
     }
@@ -334,19 +333,19 @@ class MailNotify {
 
     function onDeletePage (&$wikidb, $pagename) {
         $result = true;
-	/* Generate notification emails? */
-	if (! $wikidb->isWikiPage($pagename) and !isa($GLOBALS['request'],'MockRequest')) {
-	    $notify = $wikidb->get('notify');
-	    if (!empty($notify) and is_array($notify)) {
-		//TODO: deferr it (quite a massive load if you remove some pages).
-		$this->getPageChangeEmails($notify);
-		if (!empty($this->emails)) {
+        /* Generate notification emails? */
+        if (! $wikidb->isWikiPage($pagename) and !isa($GLOBALS['request'],'MockRequest')) {
+            $notify = $wikidb->get('notify');
+            if (!empty($notify) and is_array($notify)) {
+                //TODO: deferr it (quite a massive load if you remove some pages).
+                $this->getPageChangeEmails($notify);
+                if (!empty($this->emails)) {
                     $subject = sprintf(_("User %s removed page %s"), $this->from, $pagename);
                     $result = $this->sendMail($subject, $subject."\n\n");
-		}
-	    }
-	}
-	return $result;
+                }
+            }
+        }
+        return $result;
     }
 
     function onRenamePage (&$wikidb, $oldpage, $new_pagename) {
