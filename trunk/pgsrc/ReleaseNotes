@@ -51,6 +51,9 @@ e.g. dump pagesets or multi-page pdf's.
 * fix Bug#1992172 Interwiki link does not work in ~RichTable (vargenau)
 * fix Bug#2010748 Missing image
 * fix Bug#1831881 Fatal database error when sorting columns (vargenau)
+* fix PageList prev/next links on multi-columns lists, improve handling of ordered lists
+* allow single "0" as not-empty page content
+* fix action=rename, support new optional argument to=newpagename
 
 === Changes
 - changed ~SemanticSearch query semantics: all regex=auto terms with no regex chars (.+*?^$")
@@ -94,6 +97,7 @@ e.g. dump pagesets or multi-page pdf's.
 * New preference to avoid e-mail notifications for minor edits on Wiki (vargenau)
 * No decoration for abbreviations when printing (vargenau)
 * Add CSS3 code for page headers and footers (works for PDF generation with Prince XML) (vargenau)
+* Remove superfluous scrollbar from printable pre's
 
 === New
 * ~PageList supports listtype=ul,ol,dl. dl used by FullTextSearch
