@@ -343,26 +343,11 @@ class MailNotify {
 		//TODO: deferr it (quite a massive load if you remove some pages).
 		$this->getPageChangeEmails($notify);
 		if (!empty($this->emails)) {
-		    $editedby = sprintf(_("Removed by: %s"), $this->from); // Todo: host_id
-		    //$emails = join(',', $this->emails);
-		    $subject = sprintf(_("Page removed %s"), $pagename);
-		    $page = $wikidb->getPage($pagename);
-		    $rev = $page->getCurrentRevision(true);
-		    $content = $rev->getPackedContent();
-                    $result = $this->sendMail($subject, 
-                                              $editedby."\n"."Deleted $pagename"."\n\n".$content);
+                    $subject = sprintf(_("User %s removed page %s"), $this->from, $pagename);
+                    $result = $this->sendMail($subject, $subject."\n\n");
 		}
 	    }
 	}
-	//How to create a RecentChanges entry with explaining summary? Dynamically
-	/*
-	  $page = $this->getPage($pagename);
-	  $current = $page->getCurrentRevision();
-	  $meta = $current->_data;
-	  $version = $current->getVersion();
-	  $meta['summary'] = _("removed");
-	  $page->save($current->getPackedContent(), $version + 1, $meta);
-	*/
 	return $result;
     }
 
