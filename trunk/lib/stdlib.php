@@ -1980,6 +1980,14 @@ function obj2hash ($obj, $exclude = false, $fields = false) {
 }
 
 /**
+ * isAsciiString($string)
+ */
+function isAsciiString($s) {
+    $ptrASCII  = '[\x00-\x7F]';
+    return preg_match("/^($ptrASCII)*$/s", $s);
+}
+
+/**
  * isUtf8String($string) - cheap utf-8 detection
  *
  * segfaults for strings longer than 10kb!

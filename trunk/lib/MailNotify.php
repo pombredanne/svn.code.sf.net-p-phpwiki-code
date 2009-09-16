@@ -181,6 +181,12 @@ class MailNotify {
                       $notice = false,
                       $silent = true)
     {
+        if (defined('GFORGE') and GFORGE) {
+            // Add WIKI_NAME to Subject
+            $subject = "[".WIKI_NAME."] ".$subject;
+        }
+        // Encode $subject if needed
+        $encoded_subject = $this->subject_encode($subject);
         $emails = $this->emails;
         $from = $this->from;
         // Do not send if modification is from Gforge admin
@@ -197,7 +203,7 @@ class MailNotify {
                    "Content-Transfer-Encoding: 8bit";
 
         $ok = mail(($to = array_shift($emails)),
-                 "[".WIKI_NAME."] ".$subject, 
+                   $encoded_subject, 
 		   $subject."\n".$content,
 		   $headers
 		   );
@@ -211,7 +217,7 @@ class MailNotify {
 		fwrite($f, "\nX-MailFailure: " . $last_err);
 	    }
 	    fwrite($f, "\nDate: " . CTime());
-	    fwrite($f, "\nSubject: $subject");
+	    fwrite($f, "\nSubject: $encoded_subject");
 	    fwrite($f, "\nFrom: $from");
 	    fwrite($f, "\nTo: $to");
 	    fwrite($f, "\nBcc: ".join(',', $emails));
@@ -250,7 +256,7 @@ class MailNotify {
             return;
         }
         $backend = &$request->_dbi->_backend;
-        $subject = _("Page change").' '.urlencode($this->pagename);
+        $subject = _("Page change").' '.($this->pagename);
         $previous = $backend->get_previous_version($this->pagename, $version);
         if (!isset($meta['mtime'])) $meta['mtime'] = time();
         if ($previous) {
@@ -300,7 +306,7 @@ class MailNotify {
             $pagename = $this->pagename;
             //$editedby = sprintf(_("Edited by: %s"), $meta['author']) . ' ' . $meta['author_id'];
             $editedby = sprintf(_("Edited by: %s"), $this->from);
-            $subject = sprintf(_("Page rename %s to %s"), urlencode($pagename), urlencode($to));
+            $subject = sprintf(_("Page rename %s to %s"), $pagename, $to);
             $link = WikiURL($to, true);
             $this->sendMail($subject, 
                             $editedby."\n".$link."\n\n"."Renamed $pagename to $to");
@@ -339,7 +345,7 @@ class MailNotify {
 		if (!empty($this->emails)) {
 		    $editedby = sprintf(_("Removed by: %s"), $this->from); // Todo: host_id
 		    //$emails = join(',', $this->emails);
-		    $subject = sprintf(_("Page removed %s"), urlencode($pagename));
+		    $subject = sprintf(_("Page removed %s"), $pagename);
 		    $page = $wikidb->getPage($pagename);
 		    $rev = $page->getCurrentRevision(true);
 		    $content = $rev->getPackedContent();
@@ -448,6 +454,25 @@ will expire at %s.",
         $wikidb->set('ConfirmEmail', $data);
         return HTML(HTML::h1("Confirm E-mail address"),
                     HTML::p("Your e-mail address has now been confirmed."));
+    }
+
+    function subject_encode ($subject) {
+        // We need to encode the subject if it contains non-ASCII characters
+        // The page name may contain non-ASCII characters, as well as
+        // the translation of the messages, e.g. _("PageChange Notification of %s");
+
+        // If all characters are ASCII, do nothing
+        if (isAsciiString($subject)) {
+            return $subject;
+        }
+
+        // Let us try quoted printable first
+        if (function_exists('quoted_printable_encode')) { // PHP 5.3
+            return quoted_printable_encode($subject);
+        }
+
+        // If not, encode in base64 (less human-readable)
+        return base64_encode($subject);
     }
 }
 
