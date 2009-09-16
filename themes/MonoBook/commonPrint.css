@@ -201,7 +201,7 @@ pre {
     white-space: pre;
     font-size: 8pt;
     overflow: auto;
-    padding: 1em 0;
+    padding: 0;
 }
 
 table.listing,
