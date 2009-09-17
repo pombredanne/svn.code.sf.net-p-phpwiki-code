@@ -37,7 +37,7 @@ function displayRating(imgId, imgPrefix, ratingvalue, pred, init) {
       title = title+' '+msg_curr_prediction+ curr_pred+' '+ratings[curr_pred*2];
     }
   }
-  for (i=1; i<=10; i++) {
+  for (var i=1; i<=10; i++) {
     var imgName = imgId + i;
     var imgSrc = rateit_imgsrc;
     if (init) {
