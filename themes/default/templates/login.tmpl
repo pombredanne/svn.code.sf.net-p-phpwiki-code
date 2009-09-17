@@ -9,6 +9,13 @@
 <br class="clear-floats" />
 
 <?php 
+$dbh = $request->getDbh();
+if (READONLY) {
+  echo asXML(HTML::h2("System is locked as read-only for maintenance"));
+} elseif ($dbh->readonly) {
+  echo asXML(HTML::h2("Database is locked as read-only for maintenance"));
+}
+
 if (DEBUG & _DEBUG_LOGIN) {
   $t = sprintf("  DEBUG: ALLOW_ANON_EDIT = %s, ALLOW_BOGO_LOGIN = %s, ALLOW_USER_PASSWORDS = %s, ENABLE_PAGEPERM = %s, ", 
 	       ALLOW_ANON_EDIT ? "true" : "false",
