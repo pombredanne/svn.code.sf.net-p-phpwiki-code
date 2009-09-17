@@ -450,11 +450,11 @@ will expire at %s.",
 
         // Let us try quoted printable first
         if (function_exists('quoted_printable_encode')) { // PHP 5.3
-            return quoted_printable_encode($subject);
+            return "=?UTF-8?Q?".quoted_printable_encode($subject)."?=";
         }
 
         // If not, encode in base64 (less human-readable)
-        return base64_encode($subject);
+        return "=?UTF-8?B?".base64_encode($subject)."?=";
     }
 }
 
