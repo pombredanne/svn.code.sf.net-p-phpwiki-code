@@ -28,10 +28,10 @@ showHide.prototype.onXmlHttpLoad = function( ) {
                 if (newbody == null) {
                     alert("showHideDone "+this.id+"\nno xml children from "+this.hXMLHttp.responseText);
                 }
-                // We cannot just insert the responseXML into the DOM. 
-                // well gecko can, but the others not. 
-                // So convert the XML tree it on the fly into HTML nodes. 
-                // I never saw this before, I needed that, so I think I 
+                // We cannot just insert the responseXML into the DOM.
+                // well gecko can, but the others not.
+                // So convert the XML tree it on the fly into HTML nodes.
+                // I never saw this before. I needed that, so I think I
                 // invented that sort of rich mashup.
                 var hContainer = CreateHtmlFromXml(newbody);
                 hContainer.className = 'wikitext';
@@ -41,8 +41,10 @@ showHide.prototype.onXmlHttpLoad = function( ) {
                 alert("showHideDone "+this.id+"\nerror no xml from "+this.hXMLHttp.responseText);
             }
         }
-        if (img)
-            img.src = stylepath + 'images/folderArrowOpen.png';
+        if (img) {
+            if (!folderArrowPath) folderArrowPath = stylepath + 'images/';
+            img.src = folderArrowPath + 'folderArrowOpen.png';
+        }
     }
 }
 
@@ -55,15 +57,15 @@ showHide.prototype.init = function (id) {
 
 var cShowHide;
 
-/* recursive xml => html converter. This might need a attribute type checker
-   in a bad world. e.g. disable all on* events */
+/* recursive xml => html converter. 
+   This might need a attribute type checker in a bad world. 
+   e.g. disable all on* events */
 function CreateHtmlFromXml (xml) {
     if (xml == null) {
         return document.createElement('xml');
     }
     var xmltype = xml.nodeName;
     var html;
-    // we have either text or node elements
     if (xmltype == '#text') {
         html = document.createTextNode( xml.nodeValue );
         html.nodeValue = xml.nodeValue;
@@ -99,10 +101,11 @@ function showHideAsync(uri, id) {
         showHideFolder(id);
     }
     else {
+        if (!folderArrowPath) folderArrowPath = stylepath + 'images/';
         //alert("showHideAsync "+uri+" "+id+"\nloading...");
         var img = document.getElementById(id+'-img');
         if (img)
-            img.src = stylepath + 'images/folderArrowLoading.gif';
+            img.src = folderArrowPath + 'folderArrowLoading.gif';
         cShowHide = new showHide(id)
         cShowHide.hXMLHttp.open( 'GET', uri, true )
         cShowHide.hXMLHttp.send( null )
