@@ -20,7 +20,7 @@ if (! USE_PATH_INFO) { ?>
    class="dropdown" id="searchInput" title="<?=_("LiveSearch") . " [$p-f]"?>" 
    style="width:115px;"
    acdropdown="true" autocomplete_complete="false" autocomplete_matchsubstring="false"
-   autocomplete_list="xmlrpc:wiki.titleSearch [S] 4<?= $request->getArg("start_debug") ? " debug" : "" ?>" />
+   autocomplete_list="xmlrpc:wiki.titleSearch [S] 20<?= $request->getArg("start_debug") ? " debug" : "" ?>" />
 <?php } elseif (ENABLE_LIVESEARCH) { ?>
    type="text" id="livesearch" title="<?=_("LiveSearch") . " [$p-f]"?>" 
    onKeypress="liveSearchStart()"

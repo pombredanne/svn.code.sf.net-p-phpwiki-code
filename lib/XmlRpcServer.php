@@ -636,7 +636,7 @@ function mailPasswordToUser($params)
 $wiki_dmap['titleSearch']
 = array('signature'     => array(array($xmlrpcArray, $xmlrpcString, $xmlrpcString)),
         'documentation' => "Return matching pagenames. 
-Option 1: caseexact, 2: regex, 4: starts_with, 8: exact",
+Option 1: caseexact, 2: regex, 4: starts_with, 8: exact, 16: fallback",
         'function'      => 'titleSearch');
 
 function titleSearch($params)
@@ -653,6 +653,7 @@ function titleSearch($params)
 
     $case_exact = $option & 1;
     $regex      = $option & 2;
+    $fallback   = $option & 16;
     if (!$regex) {
         if ($option & 4) { // STARTS_WITH
             $regex = true;
@@ -675,7 +676,17 @@ function titleSearch($params)
     $pages = array();
     while ($page = $iterator->next()) {
         $pages[] = short_string($page->getName());
-    } 
+    }
+    // On failure try again broader (substring + case inexact)
+    if ($fallback and empty($pages)) {
+        $query = new TextSearchQuery(short_string_decode($ParamPageName->scalarval()), false, 
+                                     $regex ? 'auto' : 'none');
+        $dbh = $request->getDbh();
+        $iterator = $dbh->titleSearch($query);
+        while ($page = $iterator->next()) {
+            $pages[] = short_string($page->getName());
+        }
+    }
     return new xmlrpcresp(new xmlrpcval($pages, "array"));
 }
 
