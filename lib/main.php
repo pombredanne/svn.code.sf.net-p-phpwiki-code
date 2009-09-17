@@ -898,9 +898,10 @@ class WikiRequest extends Request {
                 return 'soap';
             // Detect XML-RPC requests.
             if ($this->isPost()
-                && ($this->get('CONTENT_TYPE') == 'text/xml' 
-                    or $this->get('CONTENT_TYPE') == 'application/xml')
-                && strstr($GLOBALS['HTTP_RAW_POST_DATA'], '<methodCall>')
+                && ((defined("WIKI_XMLRPC") and WIKI_XMLRPC)
+                    or ($this->get('CONTENT_TYPE') == 'text/xml' 
+                        or $this->get('CONTENT_TYPE') == 'application/xml')
+                    && strstr($GLOBALS['HTTP_RAW_POST_DATA'], '<methodCall>'))
                )
             {
                 return 'xmlrpc';
@@ -1057,9 +1058,15 @@ class WikiRequest extends Request {
         if ($action) {
             if (!$this->getArg('s'))
                 $this->setArg('s', $this->getArg('pagename'));
-            $this->setArg('verify',1);
+            $this->setArg('verify', 1); // only for POST
             if ($this->getArg('action') != 'rename')
                 $this->setArg('action',  $action);
+            elseif($this->getArg('to') && empty($this->args['admin_rename'])) {
+                $this->args['admin_rename']
+                  = array('from'   => $this->getArg('s'),
+                          'to'     => $this->getArg('to'),
+                          'action' => 'select');
+            }
             $this->actionpage($action);
         } else {
             trigger_error($page.": Cannot find action page", E_USER_WARNING);
