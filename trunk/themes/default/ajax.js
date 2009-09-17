@@ -43,7 +43,7 @@ showHide.prototype.onXmlHttpLoad = function( ) {
         }
         if (img) {
             if (!folderArrowPath) folderArrowPath = stylepath + 'images/';
-            img.src = folderArrowPath + 'folderArrowOpen.png';
+            img.src = folderArrowPath + '/folderArrowOpen.png';
         }
     }
 }
@@ -105,7 +105,7 @@ function showHideAsync(uri, id) {
         //alert("showHideAsync "+uri+" "+id+"\nloading...");
         var img = document.getElementById(id+'-img');
         if (img)
-            img.src = folderArrowPath + 'folderArrowLoading.gif';
+            img.src = folderArrowPath + '/folderArrowLoading.gif';
         cShowHide = new showHide(id)
         cShowHide.hXMLHttp.open( 'GET', uri, true )
         cShowHide.hXMLHttp.send( null )
