@@ -1414,11 +1414,13 @@ class WikiTheme {
             $script_url = deduce_script_name();
             if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
                 $script_url .= ("?start_debug=".$_GET['start_debug']);
+            $folderArrowPath = dirname($this->_findData('images/folderArrowLoading.gif'));
             $pagename = $request->getArg('pagename');
             $js = "var data_path = '". javascript_quote_string(DATA_PATH) ."';\n"
                 ."var pagename  = '". javascript_quote_string($pagename) ."';\n"
                 ."var script_url= '". javascript_quote_string($script_url) ."';\n"
                 ."var stylepath = data_path+'/".javascript_quote_string($this->_theme)."/';\n"
+                ."var folderArrowPath = '".javascript_quote_string($folderArrowPath)."';\n"
                 ."var use_path_info = " . (USE_PATH_INFO ? "true" : "false") .";\n";
             $this->addMoreHeaders(JavaScript($js));
 	    $already = 1;
