@@ -1347,7 +1347,7 @@ function main () {
      * Allow for disabling of markup cache.
      * (Mostly for debugging ... hopefully.)
      *
-     * See also <?plugin WikiAdminUtils action=purge-cache ?>
+     * See also <<WikiAdminUtils action=purge-cache>>
      */
     if (!defined('WIKIDB_NOCACHE_MARKUP')) {
         if ($request->getArg('nocache')) // 1 or purge
