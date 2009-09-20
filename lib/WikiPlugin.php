@@ -411,13 +411,13 @@ class WikiPlugin
     // provide a sample usage text for automatic edit-toolbar insertion
     function getUsage() {
         $args = $this->getDefaultArguments();
-        $string = '<'.'?plugin '.$this->getName().' ';
+        $string = '<<'.$this->getName().' ';
         if ($args) {
             foreach ($args as $key => $value) {
                 $string .= ($key."||=".(string)$value." ");
             }
         }
-        return $string . '?'.'>';
+        return $string . '>>';
     }
 
     function getArgumentsDescription() {
