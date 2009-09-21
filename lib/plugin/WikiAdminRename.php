@@ -89,6 +89,17 @@ extends WikiPlugin_WikiAdminSelect
                     $ul->pushContent(HTML::li(fmt("Access denied to rename page '%s'.",
                                                   WikiLink($name))));
                 elseif ( $dbi->renamePage($name, $newname, $updatelinks)) {
+                    /* not yet implemented for all backends */
+                    $page = $dbi->getPage($newname);
+                    $current = $page->getCurrentRevision();
+                    $version = $current->getVersion();
+                    $meta = $current->_data;
+                    $text = $current->getPackedContent();
+                    $meta['summary'] = sprintf(_("Renamed page from '%s' to '%s'"), $name, $newname);
+                    $meta['is_minor_edit'] = 1;
+                    $meta['author'] = $request->_user->UserName();
+                    unset($meta['mtime']); // force new date
+                    $page->save($text, $version + 1, $meta);
                     if ($createredirect) {
                         $page = $dbi->getPage($name);
                         $text = "<<RedirectTo page=\"" . $newname . "\">>";
