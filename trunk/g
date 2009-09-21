@@ -81,7 +81,6 @@ if (!$group_id || !$project) {
 
     define('UPLOAD_FILE_PATH', '/opt/groups/'.WIKI_NAME.'/www/uploads/');
     // define('UPLOAD_DATA_PATH', SERVER_URL . '/www/'.WIKI_NAME.'/uploads/');
-    // define('UPLOAD_DATA_PATH', SERVER_URL . '/www/'.WIKI_NAME.'/uploads/');
     define('UPLOAD_DATA_PATH', '/www/'.WIKI_NAME.'/uploads/');
 
     // Do not use a directory per user but only one (per project)
@@ -130,20 +129,7 @@ if (!$group_id || !$project) {
 
     // Disable WYSIWYG
     define('ENABLE_WYSIWYG', false);
-
-    // Which backend? Might need to be seperately installed. See lib/WysiwygEdit/
-    // Recommended is only Wikiwyg.
-    //
-    //  Wikiwyg     http://openjsan.org/doc/i/in/ingy/Wikiwyg/
-    //  tinymce     http://tinymce.moxiecode.com/
-    //  FCKeditor   http://fckeditor.net/
-    //  spaw        http://sourceforge.net/projects/spaw
-    //  htmlarea3
-    //  htmlarea2
     define('WYSIWYG_BACKEND', 'tinymce');
-    //
-    // Store all WYSIWYG pages as HTML? Will loose most link and plugin options.
-    // Not recommended, but presented here to test several WYSIWYG backends.
     define('WYSIWYG_DEFAULT_PAGETYPE_HTML', false);
 
     // Disable public pages
@@ -192,8 +178,6 @@ if (!$group_id || !$project) {
     define('INTERWIKI_MAP_FILE', 'themes/gforge/interwiki.map');
 
     define('DEFAULT_WIKI_PAGES', "");
-
-    define('ERROR_REPORTING', E_ERROR);
 
     define('DBAUTH_AUTH_CHECK', "SELECT IF(passwd='\$password',1,0) as ok FROM plugin_wiki_pref WHERE userid='\$userid'");
     define('DBAUTH_AUTH_USER_EXISTS', "SELECT userid FROM plugin_wiki_pref WHERE userid='\$userid'");
