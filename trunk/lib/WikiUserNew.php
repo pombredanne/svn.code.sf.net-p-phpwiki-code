@@ -1,6 +1,7 @@
 <?php //-*-php-*-
 rcs_id('$Id$');
 /* Copyright (C) 2004,2005,2006,2007,2009 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  * 
@@ -1920,6 +1921,8 @@ function ValidateMail($email, $noconnect=false) {
  */
 class UserPreferences
 {
+    var $notifyPagesAll;
+	
     function UserPreferences($saved_prefs = false) {
         // userid stored too, to ensure the prefs are being loaded for
         // the correct (currently signing in) userid if stored in a
@@ -1954,6 +1957,31 @@ class UserPreferences
                     'googleLink'    => new _UserPreference_bool(), // 1.3.10
                     'doubleClickEdit' => new _UserPreference_bool(), // 1.3.11
                     );
+
+        // This should be probably be done with $customUserPreferenceColumns
+        // For now, we use GFORGE define
+        if (defined('GFORGE') and GFORGE) {
+            $gforgeprefs = array(
+                    'pageTrail'     => new _UserPreference_bool(),
+                    'diffMenuItem' => new _UserPreference_bool(),
+                    'pageInfoMenuItem' => new _UserPreference_bool(),
+                    'pdfMenuItem' => new _UserPreference_bool(),
+                    'lockMenuItem' => new _UserPreference_bool(),
+                    'chownMenuItem' => new _UserPreference_bool(),
+                    'setaclMenuItem' => new _UserPreference_bool(),
+                    'removeMenuItem' => new _UserPreference_bool(),
+                    'renameMenuItem' => new _UserPreference_bool(),
+                    'revertMenuItem' => new _UserPreference_bool(),
+                    'backLinksMenuItem' => new _UserPreference_bool(),
+                    'watchPageMenuItem' => new _UserPreference_bool(),
+                    'recentChangesMenuItem' => new _UserPreference_bool(),
+                    'randomPageMenuItem' => new _UserPreference_bool(),
+                    'likePagesMenuItem' => new _UserPreference_bool(),
+                    'specialPagesMenuItem' => new _UserPreference_bool(),
+                    );
+            $this->_prefs = array_merge($this->_prefs, $gforgeprefs);
+        }
+
         // add custom theme-specific pref types:
         // FIXME: on theme changes the wiki_user session pref object will fail. 
         // We will silently ignore this.
@@ -2101,6 +2129,17 @@ class UserPreferences
                     $prefs['passwd'] = $value;
             }
         }
+
+        if (defined('GFORGE') and GFORGE) {
+            // Merge current notifyPages with notifyPagesAll
+            // notifyPages are pages to notify in the current project
+            // while $notifyPagesAll is used to store all the monitored pages.
+            if (isset($prefs['notifyPages'])) {
+                $this->notifyPagesAll[PAGE_PREFIX] = $prefs['notifyPages'];
+                $prefs['notifyPages'] = @serialize($this->notifyPagesAll);
+            }
+        }
+
         return $this->pack($prefs);
     }
 
@@ -2139,6 +2178,21 @@ class UserPreferences
                     $prefs[$name] = $packed_pref;
             }
         }
+        
+        if (defined('GFORGE') and GFORGE) {
+            // Restore notifyPages from notifyPagesAll
+            // notifyPages are pages to notify in the current project
+            // while $notifyPagesAll is used to store all the monitored pages.
+            if (isset($prefs['notifyPages'])) {
+                $this->notifyPagesAll = $prefs['notifyPages'];
+                if (isset($this->notifyPagesAll[PAGE_PREFIX])) {
+                    $prefs['notifyPages'] = $this->notifyPagesAll[PAGE_PREFIX];
+                } else {
+                    $prefs['notifyPages'] = '';
+                }
+            }
+        }
+
         return $prefs;
     }
 
