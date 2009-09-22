@@ -1523,6 +1523,7 @@ function SetupWiki (&$request)
     $finder = new FileFinder;
 
     if (defined('GFORGE') and GFORGE) {
+    if (defined('GFORGE') and GFORGE) {
         $mandatory = explode(':','SandBox:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:TextFormattingRules:PhpWikiAdministration');
     } else {
         $mandatory = explode(':','SandBox:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:Help/OldTextFormattingRules:Help/TextFormattingRules:PhpWikiAdministration');
