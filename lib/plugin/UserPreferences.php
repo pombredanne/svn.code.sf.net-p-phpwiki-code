@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /**
  Copyright (C) 2001,2002,2003,2004,2005 $ThePhpWikiProgrammingTeam
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -109,7 +110,8 @@ extends WikiPlugin
                     $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));
                     return Template('userprefs', $args);
                 } elseif ($delete and !$request->getArg('verify')) {
-                    return HTML::form(array('action' => $request->getPostURL(),
+                    return HTML::fieldset(
+                                 HTML::form(array('action' => $request->getPostURL(),
                                             'method' => 'post'),
                                        HiddenInputs(array('verify' => 1)),
                                        HiddenInputs($request->getArgs()),
@@ -117,7 +119,7 @@ extends WikiPlugin
                                        HTML::p(Button('submit:delete', _("Yes"), 'delete'),
                                                HTML::Raw('&nbsp;'),
                                                Button('cancel', _("Cancel")))
-                                       );
+                                       ));
                 } elseif ($rp = $request->getArg('pref')) {
                     // replace only changed prefs in $pref with those from request
                     if (!empty($rp['passwd']) and ($rp['passwd2'] != $rp['passwd'])) {
