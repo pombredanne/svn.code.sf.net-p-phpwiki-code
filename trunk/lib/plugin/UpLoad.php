@@ -75,6 +75,7 @@ cfg
 diff
 doc
 docx
+flv
 gif
 h
 ics
