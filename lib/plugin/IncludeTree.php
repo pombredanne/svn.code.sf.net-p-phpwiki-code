@@ -45,7 +45,7 @@ extends WikiPlugin_SiteMap
 
   function getVersion() {
       return preg_replace("/[Revision: $]/", '',
-                          "\$Revision: 6186 $");
+                          "\$Revision$");
   }
 
   function getDefaultArguments() {
