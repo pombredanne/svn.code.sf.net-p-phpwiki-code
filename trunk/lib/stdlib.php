@@ -98,6 +98,7 @@
     isSerialized($s)
     parse_attributes($line)
     is_image ($filename)
+    is_video ($filename)
     compute_tablecell ($table, $i, $j, $imax, $jmax)
 
   function: LinkInterWikiLink($link, $linktext)
@@ -2455,6 +2456,16 @@ function is_image ($filename) {
     }
     return false;
 }
+
+/**
+ * Returns true if the filename ends with an video suffix.
+ * Currently only FLV
+ */
+function is_video ($filename) {
+
+    return string_ends_with(strtolower($filename), ".flv");
+}
+
 
 /**
  * Compute cell in spreadsheet table

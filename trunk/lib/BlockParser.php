@@ -1151,6 +1151,13 @@ class Block_template_plugin extends Block_pre
             return true;
         }
 
+        // It's a video
+        if (is_video($imagename)) {
+            $pi = '<'.'?plugin Video file="' . $pi . '" ?>';
+            $this->_element = new Cached_PluginInvocation($pi);
+            return true;
+        }
+
         $pi = str_replace("\n", "", $pi);
         $vars = '';
 
