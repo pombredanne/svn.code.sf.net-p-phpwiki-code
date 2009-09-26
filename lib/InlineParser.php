@@ -1065,6 +1065,12 @@ class Markup_template_plugin  extends SimpleMarkup
             }
         }
 
+        // It's a video
+        if (is_video($imagename)) {
+    	    $s = '<'.'?plugin Video file="' . $imagename . '" ?'.'>';
+	    return new Cached_PluginInvocation($s);
+        }
+
         $page = str_replace("\n", "", $page); 
         $vars = '';
 
