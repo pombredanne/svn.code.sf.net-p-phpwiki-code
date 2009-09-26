@@ -614,60 +614,6 @@ function getUploadDataPath() {
 	 . DATA_PATH . '/uploads/';
 }
 
-/**
- * htmlspecialchars doesn't support some special 8bit charsets, which we do want to support.
- * Well it just prints a warning which we could circumvent.
- * Note: unused, since php htmlspecialchars does the same, just prints a warning which we silence
- */
-/*
-function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859-1') {
-    if (in_array(strtolower($charset), 
-                 array('iso-8859-2', 'iso8859-2', 'latin-2', 'latin2'))) 
-    {
-        if (! ($quote & ENT_NOQUOTES)) {
-            $str = str_replace("\"", "&quot;",
-                               $str);
-        }
-        if ($quote & ENT_QUOTES) {
-            $str = str_replace("\'", "&#039;",
-                               $str);
-        }
-        return str_replace(array("<", ">", "&"),
-                           array("&lt;", "&gt;", "&amp;"), $str);
-    }
-    else {
-        return htmlspecialchars($str, $quote, $charset);
-    }
-}
-*/
-
-/**
- * htmlspecialchars doesn't support some special 8bit charsets, which we do want to support.
- * Well it just prints a warning which we could circumvent.
- * Note: unused, since php htmlspecialchars does the same, just prints a warning which we silence
- */
-/*
-function htmlspecialchars_workaround($str, $quote=ENT_COMPAT, $charset='iso-8859-1') {
-    if (in_array(strtolower($charset), 
-                 array('iso-8859-2', 'iso8859-2', 'latin-2', 'latin2'))) 
-    {
-        if (! ($quote & ENT_NOQUOTES)) {
-            $str = str_replace("\"", "&quot;",
-                               $str);
-        }
-        if ($quote & ENT_QUOTES) {
-            $str = str_replace("\'", "&#039;",
-                               $str);
-        }
-        return str_replace(array("<", ">", "&"),
-                           array("&lt;", "&gt;", "&amp;"), $str);
-    }
-    else {
-        return htmlspecialchars($str, $quote, $charset);
-    }
-}
-*/
-
 // For emacs users
 // Local Variables:
 // mode: php
