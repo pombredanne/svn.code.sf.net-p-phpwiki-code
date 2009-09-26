@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Sat, 26 Sep 2009 19:20:54 +0000
 X-Rcs-Id: $Id$
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 Content-Type: application/x-phpwiki;
@@ -8,19 +8,19 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-A *plugin* is some PHP code that:
-* lives in =phpwiki/lib/plugin/<pluginname>.php=
+A **plugin** is some PHP code that:
+* lives in ##phpwiki/lib/plugin/<pluginname>.php##
 * implements the ~WikiPlugin interface by extending that class.
 
 There are many plugins already distributed with ~PhpWiki. Simply look
-in the =lib/plugin= directory or see the [PluginManager] list or see all the
-[Help/*Plugin pages|phpwiki:TitleSearch?s=Help/*Plugin].
+in the ##lib/plugin## directory or see the [[PluginManager]] list or see all the
+[[phpwiki:TitleSearch?s=Help/*Plugin|Help/*Plugin pages]].
 
-To write your own, look at the [Help:HelloWorldPlugin] (~HelloWorld.php
+To write your own, look at the [[Help:HelloWorldPlugin]] (~HelloWorld.php
 in that directory), which is a minimal example of a plugin.
 Publish your self-written plugin at a new ~PhpWiki page with
-~PluginName + *Plugin* appended
-and add a link to [CategoryContributedPlugin | PhpWiki:CategoryContributedPlugin].
+~PluginName + **Plugin** appended
+and add a link to [[PhpWiki:CategoryContributedPlugin|CategoryContributedPlugin]].
 
 A ~WikiPlugin allows one to easily add new types of dynamic
 content (as well as other functionality) to wiki pages within ~PhpWiki.
@@ -31,7 +31,7 @@ actions also.
 
 Note that you can NOT extend the markup syntax with a plugin, as in other wiki engines.
 
-(The old-style [MagicPhpWikiURLs|Help:MagicPhpWikiURLs] have been replaced by plugins
+(The old-style [[Help:MagicPhpWikiURLs|MagicPhpWikiURLs]] have been replaced by plugins
 entirely.)
 
 == Example
@@ -43,7 +43,7 @@ Currently, one invokes a plugin by putting something like:
 }}}
 
 into a regular wiki-page.  That particular example produces a list
-of the first 20 existing pages in 3 columns, via the PhpWiki:PageList
+of the first 20 existing pages in 3 columns, via the [[PhpWiki:PageList]]
 library.
 
 <<AllPages limit=20 cols=3>> 
@@ -55,29 +55,29 @@ these arguments can be determined four different ways.  In order of
 precedence:
 
 # The plugin invocation can specify the value for an argument, like so:
-{{{
+  {{{
   <?plugin BackLinks page=OtherPage ?>
-}}}
+  }}}
 
 # The argument can be specified via an HTTP query argument.  This
   doesn't happen (is not allowed) unless the argument is mentioned in
   the plugin invocation:
 
-{{{
+  {{{
   <?plugin BackLinks page ?>
-}}}
+  }}}
 
 # Default values specified in the plugin invocation:
 
-{{{
+  {{{
   <?plugin BackLinks page||=OtherPage ?>
-}}}
+  }}}
 
 # The plugin must supply default values for each argument it uses.
   Such default args may be overriden by URL arguments like so:
-{{{
+  {{{
     BackLinks?page=ThisPage&sortby=-mtime
-}}}
+  }}}
   (The BackLinks plugin uses the current page as the default value for
   the *page* argument.)
 
@@ -104,7 +104,7 @@ input parameter for other plugins, actions or formats.
 
 === Basic Plugin Types
 
-All these plugins derive from the ##WikiPlugin## class extending the
+All these plugins derive from the ##~WikiPlugin## class extending the
 run method,
 which returns a object tree of HTML objects, and may react on any
 provided arguments from the ~WikiPage (see the args below) or
@@ -113,15 +113,15 @@ if defined via '||='.
 
 A basic plugin just needs the run() method, and optionally getName,
 getDescription, getVersion, getDefaultArguments. See the
-[Help:HelloWorldPlugin] for a short introduction.
+[[Help:HelloWorldPlugin]] for a short introduction.
 
-  *plugin* reacts on its arguments and the request and displays
+  **plugin** reacts on its arguments and the request and displays
   arbitrary HTML.
 
-  *plugin-form* is used to display a input type=text box for the
-  default argument *s*.
+  **plugin-form** is used to display a input type=text box for the
+  default argument **s**.
 
-  *plugin-list* is used as argument to provide a dynamic list of
+  **plugin-list** is used as argument to provide a dynamic list of
   pagenames.
 
   {{{
@@ -139,15 +139,15 @@ getDescription, getVersion, getDefaultArguments. See the
 ==== The box Method
 
 Themes based on the "sidebar" theme may use the box method of any
-plugin, which displays a *title*
-and a condensed *content* in a box.
+plugin, which displays a **title**
+and a condensed **content** in a box.
 
 ==== ~WikiPluginCached
 
 Plugins deriving from the class ~WikiPluginCached must also define
 the methods getPluginType(),
 optionally getExpire(), managesValidators(), and dependent of the
-getPluginType the methods to display the *possibly cached* result.
+getPluginType the methods to display the **possibly cached** result.
 
   getImage(), getMap() or getHtml(),
 
@@ -159,14 +159,14 @@ See the config.ini PLUGIN_CACHED_* settings and PhpWiki:WikiPluginCached
 
 === Action Pages
 
-The term *[ActionPage|Help:ActionPage]* refers to a page containing a plugin
+The term **[[Help:ActionPage|ActionPage]]** refers to a page containing a plugin
 invocation with the same or translated pluginname as the pagename.
-An *action* is together with the *pagename* argument the basic
+An **action** is together with the **pagename** argument the basic
 ~PhpWiki argument.
 It can both be GET or POST actions. Actions are untranslated, always
 English, pagenames can be localized.
 Basic (and old) actions are all lowercase, like edit, browse, remove, ...
-Newer actions in PhpWiki:CamelCase are invoked via plugins on their
+Newer actions in [[PhpWiki:CamelCase]] are invoked via plugins on their
 specific action page.
 
 We decoupled actions from plugins via action pages for the following
@@ -195,17 +195,17 @@ invoke the plugin and ~Help:~MyActionPagePlugin should be the description page.
 
 == Existing Plugins
 
-See [PluginManager] for a detailed list. Most plugins should have their
-own description page as subpage of *Help/* with the name *Plugin*
+See [[PluginManager]] for a detailed list. Most plugins should have their
+own description page as subpage of **Help/** with the name **Plugin**
 appended.
 
 <?plugin BackLinks noheader=1 ?>
 
 == Contributed Plugins
 
-See PhpWiki:CategoryContributedPlugin.
+See [[PhpWiki:CategoryContributedPlugin]].
 
-<?plugin Backlinks page=CategoryContributedPlugin ?>
+<<Backlinks page=CategoryContributedPlugin >>
 
 -----
 [[PhpWikiDocumentation]]
