@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Mon,  11 Aug 2009 15:05:05 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -13,23 +13,23 @@ page using the old-style markup syntax for tables.
 
 == Usage
 
-<verbatim>
-<?plugin OldStyleTable caption="OldStyleTable" border||=2
+{{{
+<<OldStyleTable caption="OldStyleTable" border||=2
 ||^  *Name*                |v *Cost*   |v *Notes*
 | *First*     | *Last*
 |> Jeff       |< Dairiki   |^  Cheap   |< Not worth it
 |> Marco      |< Polo      | Cheaper   |< Not available
-?>
-</verbatim>
+>>
+}}}
 
 will get you
 
-<?plugin OldStyleTable caption="OldStyleTable" border||=2
+<<OldStyleTable caption="OldStyleTable" border||=2
 ||^  *Name*                |v *Cost*   |v *Notes*
 | *First*     | *Last*
 |> Jeff       |< Dairiki   |^  Cheap   |< Not worth it
 |> Marco      |< Polo      | Cheaper   |< Not available
-?>
+>>
 
 Note that multiple __|__s lead to spanned columns, and __v__s can be
 used to span rows.  A __>__ generates a right justified column, __<__
