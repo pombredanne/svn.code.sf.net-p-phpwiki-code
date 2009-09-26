@@ -39,14 +39,14 @@ entirely.)
 Currently, one invokes a plugin by putting something like:
 
 {{{
-<?plugin AllPages limit=20 cols=3 ?>
+<<AllPages limit=20 cols=3>> 
 }}}
 
 into a regular wiki-page.  That particular example produces a list
 of the first 20 existing pages in 3 columns, via the PhpWiki:PageList
 library.
 
-<?plugin AllPages limit=20 cols=3 ?>
+<<AllPages limit=20 cols=3>> 
 
 == Details
 
@@ -55,29 +55,29 @@ these arguments can be determined four different ways.  In order of
 precedence:
 
 # The plugin invocation can specify the value for an argument, like so:
-  {{{
+{{{
   <?plugin BackLinks page=OtherPage ?>
-  }}}
+}}}
 
 # The argument can be specified via an HTTP query argument.  This
   doesn't happen (is not allowed) unless the argument is mentioned in
   the plugin invocation:
 
-  {{{
+{{{
   <?plugin BackLinks page ?>
-  }}}
+}}}
 
 # Default values specified in the plugin invocation:
 
-  {{{
+{{{
   <?plugin BackLinks page||=OtherPage ?>
-  }}}
+}}}
 
 # The plugin must supply default values for each argument it uses.
   Such default args may be overriden by URL arguments like so:
-  {{{
+{{{
     BackLinks?page=ThisPage&sortby=-mtime
-  }}}
+}}}
   (The BackLinks plugin uses the current page as the default value for
   the *page* argument.)
 
