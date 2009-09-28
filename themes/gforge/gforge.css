@@ -69,6 +69,11 @@ fieldset {
     background-color: #e0f3f7;
 }
 
+legend {
+    border: 1px solid #d8d8e7;
+    background-color: white;
+}
+
 /**
  * Wiki Forms
  * 
