@@ -643,15 +643,15 @@ function fixup_static_configs($file) {
       .'RecentChangesMyPages:RecentEdits:RecentNewPages:'
       .'UserContribs');
 
-    // Add some some action pages depending on configuration
-    if (defined('DEBUG') and DEBUG) {
-       $AllActionPages[] = 'DebugInfo';
-       $AllActionPages[] = 'EditMetaData';
-       $AllActionPages[] = 'SpellCheck'; // SpellCheck does not work
-       $AllActionPages[] = 'PhpWikiAdministration/Chmod';
-    }
     // The GFORGE theme omits them
     if (!defined('GFORGE') or !GFORGE) {
+       // Add some some action pages depending on configuration
+       if (defined('DEBUG') and DEBUG) {
+          $AllActionPages[] = 'DebugInfo';
+          $AllActionPages[] = 'EditMetaData';
+          $AllActionPages[] = 'SpellCheck'; // SpellCheck does not work
+          $AllActionPages[] = 'PhpWikiAdministration/Chmod';
+       }
        $AllActionPages[] = 'InterWikiSearch';
        $AllActionPages[] = 'LdapSearch';
        $AllActionPages[] = 'PasswordReset';
