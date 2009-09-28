@@ -271,7 +271,7 @@ extends WikiPlugin_WikiAdminSelect
         //$header->pushContent(HTML::input(array('name' => 'admin_setacl[acl]',
         //                                       'value' => $post_args['acl'])));
         $header->pushContent(HTML::br());
-        if (!empty($pages) and DEBUG) {
+        if (!empty($pages) and defined('EXPERIMENTAL') and EXPERIMENTAL) {
           $checkbox = HTML::input(array('type' => 'checkbox',
                                         'name' => 'admin_setacl[updatechildren]',
                                         'value' => 1));

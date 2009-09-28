@@ -284,7 +284,7 @@ extends WikiPlugin_WikiAdminSelect
             $this->_tablePush($table, '', 
                               $this->checkBox($post_args, 'icase', _("Case insensitive?")));
         }
-	if (DEBUG) // not yet stable
+	if (defined('EXPERIMENTAL') and EXPERIMENTAL) // not yet stable
 	    $this->_tablePush($table, '', 
                               $this->checkBox($post_args, 'updatelinks', 
                                 _("Change pagename in all linked pages also?")));
