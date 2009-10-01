@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Thu,  1 Oct 2009 19:27:41 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,15 +10,20 @@ Content-Transfer-Encoding: binary
 
 This is the base Category.
 
-<<BackLinks info||=pagename,mtime,hits,author sortby||=pagename>>
+The following pages are part of this category:
+<<BackLinks sortby||=pagename noheader||=1 exclude="Category*" limit=1000 >>
 
------
+This category has the following subcategories:
+<<BackLinks sortby||=pagename noheader||=1 exclude="-Category*" limit=1000 >>
+
 == Category
 
-//This is a Category. Adding a link to this page puts the page under this Category. 
-When [[Help:EditText|editing]] a page, point your cursor to the end and use the ~[C~] Button 
-to insert a Category into your page.//
+This is a Category. Adding a link to this page puts the page under this Category.
+When [[Help:EditText|editing]] a page, use the {{/themes/default/images/ed_category.png|[C]}}
+button of the edit toolbar to insert a category into your page.
 
 == Create a new Category
+
+To create a new category, enter its name (starting with "Category") and hit button.
 
 <?plugin-form CreatePage s=CategoryBla template=Template/Category ?>
