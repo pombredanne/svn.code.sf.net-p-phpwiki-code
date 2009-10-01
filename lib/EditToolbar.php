@@ -304,11 +304,11 @@ msg_repl_close     = '"._("Close")."'
             while ($p = $pages->next()) {
 		$page = $p->getName();
                 if (defined('GFORGE') and GFORGE) {
-                    $categories[] = "['$page', '%5B%5B".$page."%5D%5D']";
+                    $categories[] = "['$page', '%0A----%0A%5B%5B".$page."%5D%5D']";
 		} else if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($page))) {
-		    $categories[] = "['$page', '%5B".$page."%5D']";
+		    $categories[] = "['$page', '%0A----%0A%5B".$page."%5D']";
 		} else {
-		    $categories[] = "['$page', '$page']";
+		    $categories[] = "['$page', '%0A----%0A".$page."']";
                 }
             }
             if (!$categories) return '';
