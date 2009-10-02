@@ -180,7 +180,6 @@ div.wikitext {
   margin-top:    1ex;
   margin-bottom: 0.5ex;
   background: white;
-  border-bottom: 1px #aaaaaa solid;
   padding-bottom: 1em;
   clear: both;
 }
@@ -383,7 +382,8 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
-  padding-top: 0.25ex;
+  padding-top: 0.5ex;
+  border-top: 1px #aaaaaa solid;
 }
 
 #logo img {
@@ -650,11 +650,6 @@ td.pageinfo { font-weight: bold; }
   font-size: smaller;
   font-style: oblique;
 }
-
-/**
- * Other
- */
-.printer, .no-css { display: none; }
 
 /* PHP Warnings */
 div.errors {
