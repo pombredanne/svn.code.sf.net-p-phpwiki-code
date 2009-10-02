@@ -59,6 +59,9 @@ a.interwiki img { display: none; }
 a.named-interwiki img { display: none; }
 a.namedurl img { display: none; }
 
+/* Do not print "none" sorting icon */
+.sortarrow img[src="/images/sort_none.gif"] { display: none; }
+
 /**
  * Table of content
  */
