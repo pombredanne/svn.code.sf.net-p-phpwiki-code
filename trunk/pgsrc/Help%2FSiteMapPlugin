@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Fri,  2 Oct 2009 10:42:01 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,9 +8,9 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-This is a quick mod of BackLinks to do the job recursively. If your
+This is a quick mod of [[Help:BackLinksPlugin|BackLinks plugin]] to do the job recursively. If your
 site is categorized correctly, and all the categories are listed in
-CategoryCategory, then a recursive BackLinks there will produce a contents
+[[:CategoryCategory|CategoryCategory]], then a recursive ~BackLinks there will produce a contents
 page for the entire site.
 
 The list is as deep as the recursion level.
