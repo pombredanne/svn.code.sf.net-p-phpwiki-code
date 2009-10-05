@@ -1293,7 +1293,7 @@ $properties["Ignore Charset Not Supported Warning"] =
 $properties["Language"] =
 new _define_selection_optional('DEFAULT_LANGUAGE',
                array('en' => "English",
-                     ''   => "<empty> (user-specific)",
+                     ''   => "&lt;empty&gt; (user-specific)",
                      'fr' => "Français",
                      'de' => "Deutsch",
                      'nl' => "Nederlands",
@@ -1401,7 +1401,7 @@ The default behavior is to match Category* or Topic* links.");
 $properties["Author and Copyright Site Navigation Links"] =
 new _define_commented_optional('COPYRIGHTPAGE_TITLE', "GNU General Public License", "
 
-These will be inserted as <link rel> tags in the html header of
+These will be inserted as &lt;link rel&gt; tags in the html header of
 every page, for search engines and for browsers like Mozilla which
 take advantage of link rel site navigation.
 
