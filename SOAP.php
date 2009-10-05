@@ -1,4 +1,4 @@
-<?php
+<?php // -*-php-*- $Id$
 /**
  * SOAP server
  * Taken from http://www.wlug.org.nz/archive/

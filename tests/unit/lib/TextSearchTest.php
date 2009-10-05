@@ -1,4 +1,4 @@
-<?php
+<?php // $Id$
 
 require_once 'lib/TextSearchQuery.php';
 require_once 'PHPUnit.php';

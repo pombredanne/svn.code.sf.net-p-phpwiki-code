@@ -1,4 +1,4 @@
-<?php
+<?php // $Id$
 
 require_once 'lib/WikiPlugin.php';
 require_once 'lib/plugin/WantedPages.php';

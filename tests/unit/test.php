@@ -1,6 +1,7 @@
 <?php // #!/usr/local/bin/php -Cq
 /* Copyright (C) 2004 Dan Frankowski <dfrankow@cs.umn.edu>
  * Copyright (C) 2004,2005,2006 Reini Urban <rurban@x-ray.at>
+ * $Id$
  *
  * This file is part of PhpWiki.
  * 
