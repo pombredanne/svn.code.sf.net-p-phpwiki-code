@@ -524,42 +524,35 @@ This controls how PhpWiki sets the HTTP cache control
 headers (Expires: and Cache-Control:) 
 
 Choose one of:
-
 <dl>
 <dt>NO_CACHE</dt>
 <dd>This is roughly the old (pre 1.3.4) behaviour.  PhpWiki will
     instruct proxies and browsers never to cache PhpWiki output.</dd>
-
 <dt>STRICT</dt>
 <dd>Cached pages will be invalidated whenever the database global
     timestamp changes.  This should behave just like NONE (modulo
     bugs in PhpWiki and your proxies and browsers), except that
     things will be slightly more efficient.</dd>
-
 <dt>LOOSE</dt>
 <dd>Cached pages will be invalidated whenever they are edited,
     or, if the pages include plugins, when the plugin output could
     concievably have changed.
-
     <p>Behavior should be much like STRICT, except that sometimes
        wikilinks will show up as undefined (with the question mark)
        when in fact they refer to (recently) created pages.
        (Hitting your browsers reload or perhaps shift-reload button
        should fix the problem.)</p></dd>
-
 <dt>ALLOW_STALE</dt>
 <dd>Proxies and browsers will be allowed to used stale pages.
     (The timeout for stale pages is controlled by CACHE_CONTROL_MAX_AGE.)
-
     <p>This setting will result in quirky behavior.  When you edit a
        page your changes may not show up until you shift-reload the
        page, etc...</p>
-
     <p>This setting is generally not advisable, however it may be useful
        in certain cases (e.g. if your wiki gets lots of page views,
        and few edits by knowledgable people who won't freak over the quirks.)</p>
 </dd>
-
+</dl>
 The default is currently LOOSE.");
 
 $properties["HTTP Cache Control Max Age"] =
@@ -724,7 +717,7 @@ new _define_selection('DATABASE_DBA_HANDLER',
                     'db2'  => "DB2 - BerkeleyDB (Sleepycat) DB2",
                     'db3'  => "DB3 - BerkeleyDB (Sleepycat) DB3. Default on Windows but not on every Linux",
                     'db4'  => "DB4 - BerkeleyDB (Sleepycat) DB4."), "
-Use 'gdbm', 'dbm', 'db2', 'db3' or 'db4' depending on your DBA handler methods supported: <br >  "
+Use 'gdbm', 'dbm', 'db2', 'db3' or 'db4' depending on your DBA handler methods supported: <br />  "
                       . (function_exists("dba_handlers") ? join(", ",dba_handlers()) : "")
 		      . "\n\nBetter not use other hacks such as inifile, flatfile or cdb");
 
