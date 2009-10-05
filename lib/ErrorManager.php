@@ -260,9 +260,20 @@ class ErrorManager
         // Handle it ourself.
         if ($error->isFatal()) {
             $this->_noCacheHeaders();
-            echo "<html><body><div style=\"font-weight:bold; color:red\">Fatal Error:</div>\n";
+            echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+            echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n";
+	    echo "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
+            echo "<html>\n";
+            echo "<head>\n";
+            echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n";
+            echo "<title>Fatal Error</title>\n";
+            echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"themes/default/phpwiki.css\" />\n";
+            echo "</head>\n";
+            echo "<body>\n";
+            echo "<div style=\"font-weight:bold; color:red\">Fatal Error:</div>\n";
+
             if (defined('DEBUG') and (DEBUG & _DEBUG_TRACE)) {
-                echo "error_reporting=",error_reporting(),"\n<br>";
+                echo "error_reporting=",error_reporting(),"\n<br />";
                 if (function_exists("debug_backtrace")) // >= 4.3.0
                     $error->printSimpleTrace(debug_backtrace());
             }
