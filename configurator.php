@@ -1294,25 +1294,25 @@ $properties["Language"] =
 new _define_selection_optional('DEFAULT_LANGUAGE',
                array('en' => "English",
                      ''   => "<empty> (user-specific)",
-                     'fr' => "Fran~is",
+                     'fr' => "Français",
                      'de' => "Deutsch",
                      'nl' => "Nederlands",
-                     'es' => "Espa~l",
+                     'es' => "Español",
                      'sv' => "Svenska",
                      'it' => "Italiano",
                      'ja' => "Japanese",
                      'zh' => "Chinese"), "
 Select your language/locale - default language is \"en\" for English.
 Other languages available:<pre>
-English \"en\"  (English    - HomePage)
-German  \"de\" (Deutsch    - StartSeite)
-French  \"fr\" (Fran~is   - Accueil)
-Dutch   \"nl\" (Nederlands - ThuisPagina)
-Spanish \"es\" (Espa~l    - P~inaPrincipal)
-Swedish \"sv\" (Svenska    - Framsida)
-Italian \"it\" (Italiano   - PaginaPrincipale)
-Japanese \"ja\" (Japanese   - ~~~~~~)
-Chinese  \"zh\" (Chinese)
+English  \"en\" (English    - HomePage)
+German   \"de\" (Deutsch    - StartSeite)
+French   \"fr\" (Français   - Accueil)
+Dutch    \"nl\" (Nederlands - ThuisPagina)
+Spanish  \"es\" (Español    - PáginaPrincipal)
+Swedish  \"sv\" (Svenska    - Framsida)
+Italian  \"it\" (Italiano   - PaginaPrincipale)
+Japanese \"ja\" (Japanese   - ホームページ)
+Chinese  \"zh\" (Chinese    - 首頁)
 </pre>
 If you set DEFAULT_LANGUAGE to the empty string, your systems default language
 (as determined by the applicable environment variables) will be
