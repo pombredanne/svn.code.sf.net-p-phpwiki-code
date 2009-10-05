@@ -1,4 +1,4 @@
-<?php
+<?php // -*-php-*- $Id$
 // FIXME! This is a mess. Everything.
 require_once('lib/stdlib.php');
 

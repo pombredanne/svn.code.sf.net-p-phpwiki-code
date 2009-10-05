@@ -1,4 +1,4 @@
-<?php
+<?php // $Id$
 
 $symbol_arr = array(
 

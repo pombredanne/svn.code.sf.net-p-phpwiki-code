@@ -1,4 +1,4 @@
-<?php
+<?php // $Id$
 /**
  * 1st important test: Check if all pgsrc files import without failure
  */
