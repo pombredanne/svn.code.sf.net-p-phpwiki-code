@@ -81,6 +81,10 @@ a.new{ color:#ba0000; text-decoration:none; }
 	font-size: smaller;
 }
 
+div.toclist a::after {
+    content: leader('.') target-counter(attr(href), page);
+}
+
 /* images */
 div.floatright { 
     float: right; 
