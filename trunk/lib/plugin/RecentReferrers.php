@@ -30,7 +30,6 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
              array(
                    'limit' 	   => 15,
                    'noheader'      => false,
-                   'debug'         => false
                    ));
     }
 
