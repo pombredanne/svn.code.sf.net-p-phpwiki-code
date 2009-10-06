@@ -12,7 +12,6 @@ rcs_id('$Id$');
     <?=$SEP?><?= Button(array('action'=>'diff','previous' => 'author'),_("Diff previous Author"),$page->getName()) ?>
     <?=$SEP?><?= Button("PageDump", _("PageDump")) ?>
   <?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?>
-    <!-- Buttons really only for debugging -->
     <?=$SEP?><?= Button("DebugInfo", _("DebugInfo")) ?>
 <?php
     $PurgeCache = Button(array('nocache' => 'purge'),
@@ -21,6 +20,5 @@ rcs_id('$Id$');
 ?>
     <?=$SEP?><?= $PurgeCache ?>
     </p>
-    <!-- End debugging buttons -->
   <?php } ?>
 </div>

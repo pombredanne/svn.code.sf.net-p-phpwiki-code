@@ -3,9 +3,6 @@ rcs_id('$Id$');
 ?>
 <?php if (isset($PREVIEW_CONTENT)) { ?>
   <p><strong><?=_("Preview only!  Changes not saved.")?></strong>
-<!-- FIXME: it would be nice to put a link to the #editarea anchor below,
-     but it does not work currently with the <base> declared in top.tmpl.
-     I think we need to do away with using <base> altogether... -->
      <?= fmt("Please continue editing.  (You'll find your %s at the bottom of the page.)",
           /* HTML::a(array("href" => "#editarea"), */ _("edit area") /*)  */) ?>
   </p>
