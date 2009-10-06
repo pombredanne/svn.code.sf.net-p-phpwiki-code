@@ -67,8 +67,9 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         $pages = false;
         // Todo: extend given _GET args
-        if ($args['debug'])
+        if (defined('DEBUG') && DEBUG && $args['debug']) {
             $timer = new DebugTimer;
+        }
         $caption = _("All pages in this wiki ({total} total):");
         
         if ( !empty($args['userpages']) ) {
@@ -132,7 +133,7 @@ extends WikiPlugin
         else
             $pagelist->addPages( $dbi->getAllPages($args['include_empty'], $args['sortby'], 
                                                    $args['limit']) );
-        if ($args['debug']) {
+        if (defined('DEBUG') && DEBUG && $args['debug']) {
             return HTML($pagelist,
                         HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
         } else {
