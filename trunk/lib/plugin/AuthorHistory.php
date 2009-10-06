@@ -56,12 +56,7 @@ rcs_id('$Id$');
  WikiDB_PageRevisionIterator(&$wikidb, &$revisions)
 */
 
-
-/**
- */
 require_once('lib/PageList.php');
-
-//include_once('lib/debug.php');
 
 class WikiPlugin_AuthorHistory
 extends WikiPlugin
