@@ -1,0 +1,10 @@
+<?php // -*-php-*-
+rcs_id('$Id$');
+?>
+<?php if (!$WikiTheme->DUMP_MODE) { ?>
+<?php if (defined('DEBUG') and DEBUG) { ?>
+<?= empty($WARNINGS) ? '' : $WARNINGS ?>
+<?= $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
+<?= Template('debug') ?>
+<?php } ?>
+<?php } ?>
