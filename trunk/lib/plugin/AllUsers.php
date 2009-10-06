@@ -67,14 +67,15 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
-        if ($debug)
+        if (defined('DEBUG') && DEBUG && $debug) {
             $timer = new DebugTimer;
+        }
 
         $group = $request->getGroup();
         if (method_exists($group,'_allUsers')) {
             $allusers = $group->_allUsers();
         } else {
-        	$allusers = array();
+            $allusers = array();
         }
         $args['count'] = count($allusers);
         // deleted pages show up as version 0.
@@ -88,7 +89,7 @@ extends WikiPlugin
             $pagelist->addPageList($allusers);
         } else {
             for ($i=$offset; $i < $offset + $pagesize - 1; $i++) {
-            	if ($i >= $args['count']) break;
+                if ($i >= $args['count']) break;
                 $pagelist->addPage(trim($allusers[$i]));
             }
         }
@@ -100,7 +101,7 @@ extends WikiPlugin
         }
         */
 
-        if ($debug) {
+        if (defined('DEBUG') && DEBUG and $debug) {
             return HTML($pagelist,
                         HTML::p(fmt("Elapsed time: %s s", $timer->getStats())));
         } else {

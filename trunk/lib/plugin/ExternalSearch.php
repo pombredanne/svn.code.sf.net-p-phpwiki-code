@@ -93,7 +93,7 @@ extends WikiPlugin
                 $this->_url = sprintf($this->_url, $s);
             } else
                 $this->_url .= $s;
-            if ($debug) {
+            if (defined('DEBUG') && DEBUG && $debug) {
                 trigger_error("redirect url: " . $this->_url);
             } else {
                 $request->redirect($this->_url); //no return!

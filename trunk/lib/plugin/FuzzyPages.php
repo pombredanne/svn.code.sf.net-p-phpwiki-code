@@ -105,8 +105,10 @@ extends WikiPlugin
     function addTableHead(&$table) {
         $row = HTML::tr(HTML::th(_("Name")),
                         HTML::th(array('align' => 'right'), _("Score")));
-        if ($this->debug)
+
+        if (defined('DEBUG') && DEBUG && $this->debug) {
             $this->_pushDebugHeadingTDinto($row);
+        }
 
         $table->pushContent(HTML::thead($row));
     }
@@ -124,8 +126,9 @@ extends WikiPlugin
                             HTML::td(array('align' => 'right'),
                                      round($score)));
 
-            if ($this->debug)
+            if (defined('DEBUG') && DEBUG && $this->debug) {
                 $this->_pushDebugTDinto($row, $found_pagename);
+            }
 
             $tbody->pushContent($row);
         }
@@ -151,7 +154,10 @@ extends WikiPlugin
         if (empty($s)) {
             return HTML::div(array('class' => "error"), "Please provide 's' argument to the plugin.");
         }
-        $this->debug = $debug;
+
+        if (defined('DEBUG') && DEBUG) {
+            $this->debug = $debug;
+        }
 
         $this->_searchterm = $s;
         $this->_list = array();
@@ -160,8 +166,6 @@ extends WikiPlugin
         $this->sortCollectedPages($this->_list);
         return $this->formatTable($this->_list, $dbi);
     }
-
-
 
     function _pushDebugHeadingTDinto(&$row) {
         $row->pushContent(HTML::td(_("Spelling Score")),
