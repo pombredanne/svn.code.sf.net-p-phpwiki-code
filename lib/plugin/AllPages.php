@@ -65,6 +65,11 @@ extends WikiPlugin
     // 2004-07-08 22:05:35 rurban: turned off &$request to prevent from strange bug below
     function run($dbi, $argstr, $request, $basepage) {
         $args = $this->getArgs($argstr, $request);
+
+        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
+            return $this->error(_("Illegal 'limit' argument: must be numeric"));
+        }
+
         $pages = false;
         // Todo: extend given _GET args
         if (defined('DEBUG') && DEBUG && $args['debug']) {

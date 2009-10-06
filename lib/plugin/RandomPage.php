@@ -56,6 +56,11 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
+
+        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
+            return $this->error(_("Illegal 'limit' argument: must be numeric"));
+        }
+
         extract($args);
 
         // fix deprecated arg

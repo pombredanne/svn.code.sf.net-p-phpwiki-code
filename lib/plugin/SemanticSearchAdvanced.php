@@ -133,6 +133,11 @@ extends WikiPlugin_SemanticSearch
 
 	$this->_supported_operators = array(':=','<','<=','>','>=','!=','==','=~'); 
         $args = $this->getArgs($argstr, $request);
+
+        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
+            return $this->error(_("Illegal 'limit' argument: must be numeric"));
+        }
+
         $posted = $request->getArg('semsearch');
         $request->setArg('semsearch', false);
 	if ($request->isPost() and isset($posted['help'])) {

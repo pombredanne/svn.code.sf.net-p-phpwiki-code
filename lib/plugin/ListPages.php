@@ -67,6 +67,11 @@ extends WikiPlugin
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
+
+        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
+            return $this->error(_("Illegal 'limit' argument: must be numeric"));
+        }
+
         extract($args);
         // If the ratings table does not exist, or on dba it will break otherwise. 
         // Check if WikiTheme isa 'wikilens'
