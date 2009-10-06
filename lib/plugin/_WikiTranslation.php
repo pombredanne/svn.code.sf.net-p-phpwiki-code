@@ -158,9 +158,8 @@ extends WikiPlugin
                     //'limit'         => 0,
                     'nolinks'       => false,  // don't display any links 
                     			       // (for development only)
-                    'noT'           => false,  // don't display the T link 
-                   			      // (for development only)
-                    'debug'         => false
+                    'noT'           => false   // don't display the T link 
+                   			       // (for development only)
                     ));
     }
 
