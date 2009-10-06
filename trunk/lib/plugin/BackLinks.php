@@ -59,6 +59,11 @@ extends WikiPlugin
     // page=foo,bar : backlinks to both pages
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
+
+        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
+            return $this->error(_("Illegal 'limit' argument: must be numeric"));
+        }
+
         extract($args);
         if (empty($page) and $page != '0')
             return '';

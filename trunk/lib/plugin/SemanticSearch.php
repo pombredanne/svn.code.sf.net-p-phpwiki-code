@@ -276,6 +276,11 @@ extends WikiPlugin
 	$this->_supported_operators = array(':=','<','<=','>','>=','!=','==','=~'); 
         $this->_text_operators = array(':=','==','=~','!=');
         $args = $this->getArgs($argstr, $request);
+
+        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
+            return $this->error(_("Illegal 'limit' argument: must be numeric"));
+        }
+
         if (empty($args['page']))
             $args['page'] = "*";
         if (!isset($args['s'])) // it might be (integer) 0

@@ -82,6 +82,11 @@ extends WikiPlugin_IncludePage
         if (!$included_pages) $included_pages = array($basepage);
         
         $args = $this->getArgs($argstr, $request);
+
+        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
+            return $this->error(_("Illegal 'limit' argument: must be numeric"));
+        }
+
         extract($args);
         $query = new TextSearchQuery($pagename . SUBPAGE_SEPARATOR . '*', true, 'glob');
         $subpages = $dbi->titleSearch($query, $sortby, $limit, $exclude);
