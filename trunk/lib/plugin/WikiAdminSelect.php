@@ -61,8 +61,8 @@ extends WikiPlugin
                      'info'    => 'most',
                      'sortby'  => 'pagename',
                      'limit'   => 0,
-                     'paging'  => 'none',
-                     'debug'   => false);
+                     'paging'  => 'none'
+                    );
     }
 
     /**
@@ -125,7 +125,6 @@ extends WikiPlugin
         $this->preSelectS($args, $request);
 
         $info = $args['info'];
-        $this->debug = $args['debug'];
 
         // array_multisort($this->_list, SORT_NUMERIC, SORT_DESC);
         $pagename = $request->getArg('pagename');
@@ -235,12 +234,6 @@ extends WikiPlugin
             if (!in_array($k,array('s','WikiAdminSelect','action','verify')))
                 $form->pushContent(HiddenInputs(array($k => $v))); // plugin params
         }
-        /*
-        foreach ($_GET as $k => $v) {
-            if (!in_array($k,array('s','WikiAdminSelect','action')))
-                $form->pushContent(HiddenInputs(array($k => $v))); // debugging params, ...
-        }
-        */
         if (! $request->getArg('select')) {
             return $form;
         } else {
