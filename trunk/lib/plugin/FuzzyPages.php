@@ -137,6 +137,9 @@ extends WikiPlugin
 
     function formatTable(&$list, &$dbi) {
 
+        if (empty($list)) {
+           return HTML::p(fmt("No fuzzy matches with '%s'", $this->_searchterm));
+        }
         $table = HTML::table(array('cellpadding' => 2,
                                    'cellspacing' => 1,
                                    'border'      => 0,
