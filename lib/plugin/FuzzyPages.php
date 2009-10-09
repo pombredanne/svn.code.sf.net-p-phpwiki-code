@@ -152,7 +152,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($s)) {
-            return HTML::div(array('class' => "error"), "Please provide 's' argument to the plugin.");
+            return HTML();
         }
 
         if (defined('DEBUG') && DEBUG) {
