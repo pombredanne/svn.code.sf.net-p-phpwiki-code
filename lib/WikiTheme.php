@@ -388,7 +388,12 @@ class WikiTheme {
      * @return string The date and time.
      */
     function formatDateTime ($time_t) {
-        return $this->formatDate($time_t) . ' ' . $this->formatTime($time_t);
+        if ($time_t == 0) {
+            // Do not display "01 January 1970 1:00" for nonexistent pages
+            return "";
+        } else {
+            return $this->formatDate($time_t) . ' ' . $this->formatTime($time_t);
+        }
     }
 
     /**
