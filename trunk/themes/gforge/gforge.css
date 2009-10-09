@@ -136,12 +136,6 @@ img.inlineimage { vertical-align: middle; }
 }
 
 /**
- * Other
- */
-/* PHP Warnings */
-div.errors { font-size: smaller }
-
-/**
  * General
  */ 
 img { border: 0ex; }
@@ -651,25 +645,15 @@ td.pageinfo { font-weight: bold; }
   font-style: oblique;
 }
 
-/* PHP Warnings */
 div.errors {
-  color: black;
-  background: #eee;
-  margin-top:    1em;
-  margin-bottom: 1em;
-  padding-left:  0.8em; 
-  padding-right: 0.8em; 
-  padding-top:    0.8ex;
-  padding-bottom: 0;
-  border: medium solid red;
-  clear: both;
+    font-weight: bold;
+    border-width: 2px;
+    border-style: solid;
+    background-color: #ffc0cb; /* pink */
+    border-color: red;
+    padding: 0.5em;
 }
-h4.errors {
-  color: red;
-  margin:  0;
-  padding: 0;
-  text-decoration: underline;
-}
+
 div.warning {
   color: black;
   background: #eee;
