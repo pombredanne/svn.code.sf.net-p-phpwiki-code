@@ -88,6 +88,7 @@ odg
 odp
 ods
 odt
+ogg
 patch
 pdf
 png

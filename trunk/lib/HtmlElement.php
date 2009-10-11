@@ -437,6 +437,12 @@ class HTML extends HtmlElement {
         $el = new HtmlElement('legend');
         return $el->_init2(func_get_args());
     }
+
+    /****************************************/
+    function video (/*...*/) {
+        $el = new HtmlElement('video');
+        return $el->_init2(func_get_args());
+    }
 }
 
 define('HTMLTAG_EMPTY', 1);
@@ -460,7 +466,7 @@ HTML::_setTagProperty(HTMLTAG_ACCEPTS_INLINE,
                       . 'div fieldset frameset'
 
                       // other with inline content
-                      . 'caption dt label legend '
+                      . 'caption dt label legend video '
                       // other with either inline or block
                       . 'dd del ins li td th colgroup');
 

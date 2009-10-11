@@ -2463,7 +2463,8 @@ function is_image ($filename) {
  */
 function is_video ($filename) {
 
-    return string_ends_with(strtolower($filename), ".flv");
+    return string_ends_with(strtolower($filename), ".flv")
+        or string_ends_with(strtolower($filename), ".ogg");
 }
 
 
