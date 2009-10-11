@@ -73,6 +73,20 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         extract($args);
 
+        if (! $url && ! $file) {
+            return $this->error(_("Both 'url' or 'file' parameters missing."));
+        } elseif ($url && $file) {
+            return $this->error(_("Choose only one of 'url' or 'page' parameters."));
+        } elseif ($file) {
+            // $url = SERVER_URL . getUploadDataPath() . '/' . $file;
+            $url = getUploadDataPath() . '/' . $file;
+        }
+
+        if (string_ends_with($url, ".ogg")) {
+            return HTML::video(array('autoplay' => 'true', 'controls' => 'true', 'src' => $url),
+                               _("Your browser does not understand the HTML 5 video tag."));
+        }
+
         $html = HTML();
 
         $object = HTML::object(array('data' => SERVER_URL . $WikiTheme->_findData('flowplayer-3.1.3.swf'),
@@ -88,15 +102,6 @@ extends WikiPlugin
                                    'value' => "false"));
         $object->pushContent($param);
         
-        if (! $url && ! $file) {
-            return $this->error(_("Both 'url' or 'file' parameters missing."));
-        }
-        elseif ($url && $file) {
-            return $this->error(_("Choose only one of 'url' or 'page' parameters."));
-        }
-        elseif ($file) {
-            $url = SERVER_URL . getUploadDataPath() . '/' . $file;
-        }
         $value = "config={'clip':{'url':'" . $url . "','autoPlay':" . $autoplay . "}}";
         $param = HTML::param(array('name' => "flashvars",
                                    'value' => $value));
