@@ -2,10 +2,12 @@
 // $Id$
 
 /* Globals:
-var data_path = '/phpwiki-cvs';
+var data_path = '/phpwiki';
 var pagename  = 'HomePage';
-var script_url= '/wikicvs';
+var script_url= '/wiki';
 var stylepath = data_path+'/themes/MonoBook/';
+var folderArrowPath = data_path+'/themes/default/images';
+var use_path_info = true;
 */
 
 function WikiURL(page) {
@@ -77,11 +79,11 @@ function showHideFolder(id) {
     //todo: invalidate cache header
     if ( div.style.display == 'none' ) {
         div.style.display = 'block';
-        img.src = stylepath + 'images/folderArrowOpen.png';
+        img.src = folderArrowPath + '/folderArrowOpen.png';
         document.cookie = "folder_"+id+"=Open;"+suffix;
     } else {
         div.style.display = 'none';
-        img.src = stylepath + 'images/folderArrowClosed.png';
+        img.src = folderArrowPath + '/folderArrowClosed.png';
         document.cookie = "folder_"+id+"=Closed;"+suffix;
     }
 }
