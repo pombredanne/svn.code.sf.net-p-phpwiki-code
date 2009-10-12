@@ -24,7 +24,7 @@ class WikiTheme_gforge extends WikiTheme {
             session_require(array('group'=>'1'));
         }
 
-        $HTML->header(array('title'=> $group_public_name.': '.$pagename ,
+        $HTML->header(array('title'=> $group_public_name.': '.htmlspecialchars($pagename) ,
             'pagename'=> $pagename, 'group' => $group_id, 'toptab' => 'wiki',
             'css' => 'gforge.css" />'."\n".'    <base href="'.PHPWIKI_BASE_URL,
             'submenu' => $submenu->asXML()));
