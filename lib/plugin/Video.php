@@ -89,26 +89,60 @@ extends WikiPlugin
 
         $html = HTML();
 
-        $object = HTML::object(array('data' => SERVER_URL . $WikiTheme->_findData('flowplayer-3.1.3.swf'),
-                                     'type' => "application/x-shockwave-flash",
-                                     'width' => $width,
-                                     'height' => $height));
-        
-        $param = HTML::param(array('name' => "allowfullscreen",
-                                   'value' => "true"));
-        $object->pushContent($param);
-        
-        $param = HTML::param(array('name' => "allowscriptaccess",
-                                   'value' => "false"));
-        $object->pushContent($param);
-        
-        $value = "config={'clip':{'url':'" . $url . "','autoPlay':" . $autoplay . "}}";
-        $param = HTML::param(array('name' => "flashvars",
-                                   'value' => $value));
-        $object->pushContent($param);
+        if (isBrowserIE()) {
+            $object = HTML::object(array('id' => 'flowplayer',
+                                         'classid' => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000',
+                                         'width' => $width,
+                                         'height' => $height));
 
-        $html->pushContent($object);
+            $param = HTML::param(array('name' => 'movie',
+                                       'value' => SERVER_URL . $WikiTheme->_findData('flowplayer-3.1.3.swf')));
+            $object->pushContent($param);
 
+            $param = HTML::param(array('name' => "allowfullscreen",
+                                       'value' => "true"));
+            $object->pushContent($param);
+
+            $param = HTML::param(array('name' => "allowscriptaccess",
+                                       'value' => "false"));
+            $object->pushContent($param);
+
+            $flashvars = "config={'clip':{'url':'" . $url . "','autoPlay':" . $autoplay . "}}";
+
+            $param = HTML::param(array('name' => 'flashvars',
+                                       'value' => $flashvars));
+            $object->pushContent($param);
+
+            $embed = HTML::embed(array('type' => 'application/x-shockwave-flash',
+                                       'width' => $width,
+                                       'height' => $height,
+                                       'src' => SERVER_URL . $WikiTheme->_findData('flowplayer-3.1.3.swf'),
+                                       'flashvars' => $flashvars));
+            $object->pushContent($embed);
+
+            $html->pushContent($object);
+
+        } else {
+            $object = HTML::object(array('data' => SERVER_URL . $WikiTheme->_findData('flowplayer-3.1.3.swf'),
+                                         'type' => "application/x-shockwave-flash",
+                                         'width' => $width,
+                                         'height' => $height));
+
+            $param = HTML::param(array('name' => "allowfullscreen",
+                                       'value' => "true"));
+            $object->pushContent($param);
+
+            $param = HTML::param(array('name' => "allowscriptaccess",
+                                       'value' => "false"));
+            $object->pushContent($param);
+
+            $value = "config={'clip':{'url':'" . $url . "','autoPlay':" . $autoplay . "}}";
+            $param = HTML::param(array('name' => "flashvars",
+                                       'value' => $value));
+            $object->pushContent($param);
+
+            $html->pushContent($object);
+        }
         return $html;
     }
 };
