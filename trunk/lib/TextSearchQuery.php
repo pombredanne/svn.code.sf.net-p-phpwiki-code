@@ -1104,19 +1104,10 @@ class TextSearchQuery_Lexer {
         $tokens = array();
         $buf = $case_exact ? ltrim($string) : strtolower(ltrim($string));
         while (!empty($buf)) {
-            if (preg_match('/^(and|or)\b\s*/i', $buf, $m)) {
-                $val = strtolower($m[1]);
-                $type = TSQ_TOK_BINOP;
-            }
-            elseif (preg_match('/^(-|not\b)\s*/i', $buf, $m)) {
-                $val = strtolower($m[1]);
-                $type = TSQ_TOK_NOT;
-            }
-            elseif (preg_match('/^([()])\s*/', $buf, $m)) {
+            if (preg_match('/^([()])\s*/', $buf, $m)) {
                 $val = $m[1];
                 $type = $m[1] == '(' ? TSQ_TOK_LPAREN : TSQ_TOK_RPAREN;
             }
-            
             // * => ALL
             elseif ($regex & (TSQ_REGEX_AUTO|TSQ_REGEX_POSIX|TSQ_REGEX_GLOB)
                     and preg_match('/^\*\s*/', $buf, $m)) {
@@ -1165,6 +1156,14 @@ class TextSearchQuery_Lexer {
                     and preg_match('/^\^([^-()][^()\s]*)\$\s*/', $buf, $m)) {
                 $val = $m[1];
                 $type = TSQ_TOK_EXACT;
+            }
+            elseif (preg_match('/^(and|or)\b\s*/i', $buf, $m)) {
+                $val = strtolower($m[1]);
+                $type = TSQ_TOK_BINOP;
+            }
+            elseif (preg_match('/^(-|not\b)\s*/i', $buf, $m)) {
+                $val = strtolower($m[1]);
+                $type = TSQ_TOK_NOT;
             }
             
             // "words "
