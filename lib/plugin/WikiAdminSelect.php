@@ -120,11 +120,6 @@ extends WikiPlugin
         //if ($request->getArg('action') != 'browse')
         //    return $this->disabled("(action != 'browse')");
         $args = $this->getArgs($argstr, $request);
-
-        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
-            return $this->error(_("Illegal 'limit' argument: must be numeric"));
-        }
-
         $this->_args = $args;
         extract($args);
         $this->preSelectS($args, $request);

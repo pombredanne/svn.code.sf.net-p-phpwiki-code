@@ -76,10 +76,6 @@ extends WikiPluginCached
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
 
-        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
-            return $this->error(_("Illegal 'limit' argument: must be numeric"));
-        }
-
         $caption = _("All pages with all links in this wiki (%d total):");
         
         if ( !empty($args['owner']) ) {

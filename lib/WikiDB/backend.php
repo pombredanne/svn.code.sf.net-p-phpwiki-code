@@ -524,10 +524,19 @@ class WikiDB_backend
      *   list($offset,$count) = $this->limit($args['limit']);
      */
     function limit($limit) {
-        if (strstr($limit, ','))
-            return split(',', $limit);
-        else
+        if (strstr($limit, ',')) {
+            list($from, $limit) = split(',', $limit);
+            if ((!empty($from) && !is_numeric($from)) or (!empty($limit) && !is_numeric($limit))) {
+                return $this->error(_("Illegal 'limit' argument: must be numeric"));
+            }
+            return array($from, $limit);
+        }
+        else {
+            if (!empty($limit) && !is_numeric($limit)) {
+                return $this->error(_("Illegal 'limit' argument: must be numeric"));
+            }
             return array(0, $limit);
+        }
     }
     
     /** 

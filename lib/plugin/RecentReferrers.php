@@ -38,11 +38,6 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
             return HTML::div(array('class' => "error"), "Error: no ACCESS_LOG");
         }
         $args = $this->getArgs($argstr, $request); 
-
-        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
-            return $this->error(_("Illegal 'limit' argument: must be numeric"));
-        }
-
         $table = HTML::table(array('cellpadding' => 1,
                                    'cellspacing' => 2,
                                    'border'      => 0,
