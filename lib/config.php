@@ -77,11 +77,13 @@ function browserDetect($match) {
 function browserVersion() {
     $agent = browserAgent();
     if (strstr($agent, "Mozilla/4.0 (compatible; MSIE"))
-        return (float) substr($agent, 30);
+        return (float)substr($agent, 30);
     elseif (strstr($agent, "Mozilla/5.0 (compatible; Konqueror/"))
-        return (float) substr($agent, 36);
+        return (float)substr($agent, 36);
+    elseif (strstr($agent, "AppleWebKit/"))
+        return (float)substr($agent, strpos($agent, "AppleWebKit/") + 12);
     else
-        return (float) substr($agent, 8);
+        return (float)substr($agent, 8);
 }
 function isBrowserIE() {
     return (browserDetect('Mozilla/') and 
