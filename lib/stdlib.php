@@ -601,29 +601,58 @@ function LinkImage($url, $alt = "") {
  */
 function ImgObject($img, $url) {
     // get the url args: data="sample.svgz" type="image/svg+xml" width="400" height="300"
-    $args = split(' ', $url);
-    $params = array();
-    if (count($args) >= 1) {
-        $url = array_shift($args);
-	$found = array();
-        foreach ($args as $attr) {
-	    foreach (explode(",","data,classid,archive,codebase,name,usemap,type,".
-			     "codetype,standby,tabindex,declare") as $param)
-	    {
-		if (preg_match("/^$param=(\S+)$/i",$attr,$m)) {
-		    $img->setAttr($param, $m[1]);
-		    $found[$attr]++;
+    $params = explode(",","data,classid,archive,codebase,name,usemap,type,".
+			  "codetype,standby,tabindex,declare");
+    if (is_array($url)) {
+    	$args = $url;
+ 	$found = array();
+        foreach ($args as $attr => $value) {
+	    foreach ($params as $param) {
+		if ($param == $attr) {
+		    $img->setAttr($param, $value);
+		    if (isset($found[$param])) $found[$param]++;
+		    else $found[$param] = 1;
 		    break;
 		}
 	    }
         }
-	// now all remaing args are added as <param> to the object
+	// now all remaining args are added as <param> to the object
+	$params = array();
+        foreach ($args as $attr => $value) {
+	    if (!isset($found[$attr])) {
+		$params[] = HTML::param(array('name'  => $attr,
+                                              'value' => $value));
+	    }
+	}
+	$url = $img->getAttr('src');
+        $force_img = "png|jpg|gif|jpeg|bmp";
+        if (!preg_match("/\.(".$force_img.")/i", $url)) {
+            $img->setAttr('src', false);
+        }
+    } else {
+        $args = split(' ', $url);
+        if (count($args) >= 1) {
+          $url = array_shift($args);
+          $found = array();
+          foreach ($args as $attr) {
+	    foreach ($params as $param) {
+		if (preg_match("/^$param=(\S+)$/i",$attr,$m)) {
+		    $img->setAttr($param, $m[1]);
+		    if (isset($found[$param])) $found[$param]++;
+		    else $found[$param] = 1;
+		    break;
+		}
+	    }
+        }
+	// now all remaining args are added as <param> to the object
+	$params = array();
         foreach ($args as $attr) {
-	    if (!$found[$attr] and preg_match("/^(\S+)=(\S+)$/i",$attr,$m)) {
+	    if (!isset($found[$attr]) and preg_match("/^(\S+)=(\S+)$/i",$attr,$m)) {
 		$params[] = HTML::param(array('name'  => $m[1],
                                               'value' => $m[2]));
 	    }
 	}
+      }
     }
     $type = $img->getAttr('type');
     if (!$type) {
@@ -631,13 +660,14 @@ function ImgObject($img, $url) {
         if (function_exists('mime_content_type'))
             $type = mime_content_type($url);
     }
-    $object = HTML::object(array_merge($img->_attr, array('src' => $url, 'type' => $type)),
+    $object = HTML::object(array_merge($img->_attr, 
+                                       array('type' => $type)), //'src' => $url
     			$img->_content);
     $object->setAttr('class', 'inlineobject');
     if ($params) {
 	foreach ($params as $param) $object->pushContent($param);
     }
-    if (isBrowserSafari()) {
+    if (isBrowserSafari() and !isBrowserSafari(532)) { // recent chrome can do OBJECT
         return HTML::embed($object->_attr, $object->_content);
     }
     $object->pushContent(HTML::embed($object->_attr));
@@ -1235,7 +1265,7 @@ function SplitPagename ($page) {
             $RE[] = "/(?<= |${sep}|^)([AI])([[:upper:]][[:lower:]])/";
             break;
         case 'fr': 
-            $RE[] = "/(?<= |${sep}|^)([À])([[:upper:]][[:lower:]])/";
+            $RE[] = "/(?<= |${sep}|^)([�])([[:upper:]][[:lower:]])/";
             break;
         }
         // Split at underscore
@@ -2622,7 +2652,7 @@ function compute_tablecell ($table, $i, $j, $imax, $jmax) {
 function strip_accents($text) {
     $res = utf8_decode($text);
     $res = strtr($res,
-                 utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'),
+                 utf8_decode('�áâãäçèéêëìíîïñòóôõöùúûüýÿ��?ÂÃÄÇÈÉÊËÌ�?Î�?ÑÒÓÔÕÖÙÚÛÜ�?'),
                              'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
     return utf8_encode($res);
 }
