@@ -64,8 +64,8 @@ extends WikiPlugin
                      'height'   => 320,
                      'url'      => '',
                      'file'     => '',
-                     'autoplay' => 'false'
-                     'image'    => '',
+                     'autoplay' => 'false',
+                     'image'    => ''
                      );
     }
 
