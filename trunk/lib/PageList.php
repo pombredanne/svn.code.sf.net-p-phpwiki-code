@@ -1359,11 +1359,26 @@ class PageList {
     }
 
     function limit($limit) {
-    	if (is_array($limit)) return $limit;
-        if (strstr($limit, ','))
-            return split(',', $limit);
-        else
+    	if (is_array($limit)) {
+            list($from, $count) = $limit;
+            if ((!empty($from) && !is_numeric($from)) or (!empty($count) && !is_numeric($count))) {
+                return $this->error(_("Illegal 'limit' argument: must be numeric"));
+            }
+            return $limit;
+        }
+        if (strstr($limit, ',')) {
+            list($from, $limit) = split(',', $limit);
+            if ((!empty($from) && !is_numeric($from)) or (!empty($limit) && !is_numeric($limit))) {
+                return $this->error(_("Illegal 'limit' argument: must be numeric"));
+            }
+            return array($from, $limit);
+        }
+        else {
+            if (!empty($limit) && !is_numeric($limit)) {
+                return $this->error(_("Illegal 'limit' argument: must be numeric"));
+            }
             return array(0, $limit);
+        }
     }
 
     function pagingTokens($numrows = false, $ncolumns = false, $limit = false) {

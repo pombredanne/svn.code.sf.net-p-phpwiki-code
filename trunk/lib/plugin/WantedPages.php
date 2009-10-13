@@ -62,11 +62,6 @@ extends WikiPlugin
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
-
-        if (!empty($args['limit']) && !is_numeric($args['limit'])) {
-            return $this->error(_("Illegal 'limit' argument: must be numeric"));
-        }
-
         if (!empty($args['exclude_from']))
             $args['exclude_from'] = is_string($args['exclude_from'])
                 ? explodePageList($args['exclude_from']) 
