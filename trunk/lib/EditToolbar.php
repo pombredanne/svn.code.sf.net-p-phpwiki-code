@@ -416,8 +416,8 @@ msg_repl_close     = '"._("Close")."'
         if (!empty($images)) {
             $image_js = '';
             foreach ($images as $image) {
-                // Select only files ending in ".png", ".gif", ".jpg", ".jpeg"
-                if (is_image($image)) {
+                // Select only image and video files
+                if (is_image($image) or is_video($image)) {
                     $image_js .= ",['$image','{{".$image."}}']";
                 }
             }
@@ -425,10 +425,10 @@ msg_repl_close     = '"._("Close")."'
             $more_buttons = HTML::img(array('class'=>"toolbar",
 					    'id' => 'tb-images',
                                             'src'  => $WikiTheme->getImageURL("ed_image.png"),
-                                            'title'=>_("AddImage"),
-                                            'alt'=>_("AddImage"),
+                                            'title'=>_("Add Image or Video"),
+                                            'alt'=>_("Add Image or Video"),
                                             'onclick'=>"showPulldown('".
-                                            _("Insert Image (double-click)")
+                                            _("Insert Image or Video (double-click)")
                                             ."',[".$image_js."],'"
                                             ._("Insert")."','"
                                             ._("Close")."','tb-images')"));
