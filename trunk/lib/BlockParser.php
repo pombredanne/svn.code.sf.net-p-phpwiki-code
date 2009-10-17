@@ -1085,7 +1085,7 @@ class Block_table_wikicreole extends Block_pre
     }
 }
 
-/** ENABLE_MARKUP_MEDIAWIKI_TABLE
+/**
  *  Table syntax similar to Mediawiki
  *  {|
  * => <?plugin MediawikiTable

@@ -110,9 +110,6 @@ if (!$group_id || !$project) {
     // Allow template with MediaWiki syntax
     define('ENABLE_MARKUP_TEMPLATE', true);
 
-    // Allow tables with MediaWiki syntax
-    define('ENABLE_MARKUP_MEDIAWIKI_TABLE', true);
-
     // Allow parsing of headers for CreateToc
     define('TOC_FULL_SYNTAX', true);
 
