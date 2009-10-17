@@ -1197,8 +1197,7 @@ class InlineTransformer
             $this->_addMarkup(new Markup_color);
         // Markup_wikicreole_preformatted must be before Markup_template_plugin
         $this->_addMarkup(new Markup_wikicreole_preformatted);
-        if (ENABLE_MARKUP_TEMPLATE and !$non_default)
-            $this->_addMarkup(new Markup_template_plugin);
+        $this->_addMarkup(new Markup_template_plugin);
         // This does not work yet
         if (0 and PLUGIN_MARKUP_MAP and !$non_default)
             $this->_addMarkup(new Markup_xml_plugin);
