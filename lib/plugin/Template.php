@@ -2,6 +2,7 @@
 rcs_id('$Id$');
 /*
  Copyright 2005,2007 $ThePhpWikiProgrammingTeam
+ Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
 
  This file is part of PhpWiki.
 
@@ -47,9 +48,7 @@ rcs_id('$Id$');
  * <includeonly> .. </includeonly> is only expanded in pages using the template, 
  *                                 not in the template itself.
  *
- * See also:
- * - ENABLE_MARKUP_TEMPLATE = true: (lib/InlineParser.php)
- *   Support a mediawiki-style syntax extension which maps 
+ *   We support a mediawiki-style syntax extension which maps 
  *     {{TemplateFilm|title=Some Good Film|year=1999}}
  *   to 
  *     <?plugin Template page=TemplateFilm vars="title=Some Good Film&year=1999" ?>

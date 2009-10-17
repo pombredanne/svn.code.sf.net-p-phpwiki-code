@@ -1115,6 +1115,17 @@ class Block_table_mediawiki extends Block_pre
     }
 }
 
+/**
+ *  Template syntax similar to Mediawiki
+ *  {{template}}
+ * => < ? plugin Template page=template ? >
+ *  {{template|var1=value1|var2=value|...}}
+ * => < ? plugin Template page=template var=value ... ? >
+ *
+ * The {{...}} syntax is also used for:
+ *  - Wikicreole images
+ *  - videos
+ */
 class Block_template_plugin extends Block_pre
 {
     var $_re = '{{';

@@ -1003,12 +1003,17 @@ class Markup_wikicreole_preformatted extends SimpleMarkup
     }
 }
 
-/** ENABLE_MARKUP_TEMPLATE
+/**
  *  Template syntax similar to Mediawiki
  *  {{template}}
  * => < ? plugin Template page=template ? >
  *  {{template|var1=value1|var2=value|...}}
  * => < ? plugin Template page=template var=value ... ? >
+ *
+ * The {{...}} syntax is also used for:
+ *  - Wikicreole images
+ *  - videos
+ *  - predefined icons
  */
 class Markup_template_plugin  extends SimpleMarkup
 {
