@@ -27,10 +27,6 @@ short-term TODO:
 TODO for 1.4.0:
 architecture:
 * Optimization: try template_lite or try simple regex replacements as before.
-* Evaluate some xml syntax for plugins (as in MediaWiki): 
-  <IncludePages pages=<plugin-list BackLinks/> />
-  <BackLink include_self=false />
-  And/or fix PLUGIN_MARKUP_MAP aliases which break the InlineParser.
 * Fix postgresql stored procedures.
 * Move serialized data from page_data / version_data to seperate SQL columns.
 * WikiDB hooks. (?)
