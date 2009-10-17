@@ -120,6 +120,12 @@ function EndLoadDump(&$request)
         echo "</td></tr>\n";
         echo "</table>\n";
     }
+    if (isa($WikiTheme, 'WikiTheme_MonoBook')) {
+        echo "</div>\n";
+        echo "</div>\n";
+        echo "</div>\n";
+        echo "</div>\n";
+    }
     echo "</body></html>\n";
 }
 
