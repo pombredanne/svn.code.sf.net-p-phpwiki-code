@@ -20,8 +20,6 @@ require_once('lib/WikiTheme.php');
 require_once('themes/wikilens/themeinfo.php');
 if (!defined("ENABLE_MARKUP_TEMPLATE"))
     define("ENABLE_MARKUP_TEMPLATE", true);
-if (!defined("ENABLE_MARKUP_MEDIAWIKI_TABLE"))
-    define("ENABLE_MARKUP_MEDIAWIKI_TABLE", true);
 
 function ActionButton ($action, $label = false, $page_or_rev = false, $options = false) {
     global $WikiTheme;

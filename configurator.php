@@ -1435,9 +1435,6 @@ new boolean_define_optional('ENABLE_MARKUP_COLOR');
 $properties["ENABLE_MARKUP_TEMPLATE"] =
 new boolean_define_optional('ENABLE_MARKUP_TEMPLATE');
 
-$properties["ENABLE_MARKUP_MEDIAWIKI_TABLE"] =
-new boolean_define_optional('ENABLE_MARKUP_MEDIAWIKI_TABLE');
-
 $properties["DISABLE_MARKUP_WIKIWORD"] =
 new boolean_define_optional('DISABLE_MARKUP_WIKIWORD');
 
