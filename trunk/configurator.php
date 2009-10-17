@@ -1432,9 +1432,6 @@ new boolean_define_optional('TOC_FULL_SYNTAX');
 $properties["ENABLE_MARKUP_COLOR"] =
 new boolean_define_optional('ENABLE_MARKUP_COLOR');
 
-$properties["ENABLE_MARKUP_TEMPLATE"] =
-new boolean_define_optional('ENABLE_MARKUP_TEMPLATE');
-
 $properties["DISABLE_MARKUP_WIKIWORD"] =
 new boolean_define_optional('DISABLE_MARKUP_WIKIWORD');
 
