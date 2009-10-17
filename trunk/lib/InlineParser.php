@@ -937,43 +937,6 @@ class Markup_plugin_wikicreole extends SimpleMarkup
     }
 }
 
-// Special version for plugins in xml syntax 
-// <name arg=value>body</name> or <name /> => < ? plugin pluginname arg=value body ? >
-// PLUGIN_MARKUP_MAP = "html:RawHtml dot:GraphViz toc:CreateToc amath:AsciiMath richtable:RichTable include:IncludePage tex:TexToPng"
-class Markup_xml_plugin extends BalancedMarkup
-{
-    //var $_start_regexp = "<(?: ".join('|',PLUGIN_MARKUP_MAP)." )(?: \s[^>]*)>";
-
-    function getStartRegexp () {
-	global $PLUGIN_MARKUP_MAP;
-        static $_start_regexp;
-        if ($_start_regexp) return $_start_regexp;
-        if (empty($PLUGIN_MARKUP_MAP))
-            return '';
-        //"<(?: html|dot|toc|amath|richtable|include|tex )(?: \s[^>]*)>"
-	$_start_regexp = "<(?: ".join('|',array_keys($PLUGIN_MARKUP_MAP))." )(?: \s[^>]* | / )>";
-        return $_start_regexp;
-    }
-    function getEndRegexp ($match) {
-        return "<\\/" . $match . '>';
-    }
-    function markup ($match, $body) {
-	global $PLUGIN_MARKUP_MAP;
-        $name = substr($match,2,-2); 
-	$vars = '';
-        if (preg_match('/^(\S+)\|(.*)$/', $name, $_m)) {
-            $name = $_m[1];
-            $vars = $_m[2]; //str_replace(' ', '&', $_m[2]);
-        }
-        if (!isset($PLUGIN_MARKUP_MAP[$name])) {
-            trigger_error("No plugin for $name $vars defined.", E_USER_WARNING);
-            return "";
-        }
-        $plugin = $PLUGIN_MARKUP_MAP[$name];
-	return new Cached_PluginInvocation("<"."?plugin $plugin $vars $body ?".">");
-    }
-}
-
 /**
  *  Mediawiki <nowiki>
  *  <nowiki>...</nowiki>
@@ -1198,9 +1161,6 @@ class InlineTransformer
         // Markup_wikicreole_preformatted must be before Markup_template_plugin
         $this->_addMarkup(new Markup_wikicreole_preformatted);
         $this->_addMarkup(new Markup_template_plugin);
-        // This does not work yet
-        if (0 and PLUGIN_MARKUP_MAP and !$non_default)
-            $this->_addMarkup(new Markup_xml_plugin);
     }
 
     function _addMarkup ($markup) {
