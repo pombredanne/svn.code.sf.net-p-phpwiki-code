@@ -11,7 +11,7 @@ rcs_id('$Id$');
     <?=$SEP?><?= Button(array('action'=>'diff','previous' => 'minor'),_("Diff previous Revision"),$page->getName()) ?>
     <?=$SEP?><?= Button(array('action'=>'diff','previous' => 'author'),_("Diff previous Author"),$page->getName()) ?>
     <?=$SEP?><?= Button("PageDump", _("PageDump")) ?>
-  <?php if ((defined('DEBUG') && DEBUG) || $user->isAdmin()) { ?>
+  <?php if (defined('DEBUG') && DEBUG) { ?>
     <?=$SEP?><?= Button("DebugInfo", _("DebugInfo")) ?>
 <?php
     $PurgeCache = Button(array('nocache' => 'purge'),
