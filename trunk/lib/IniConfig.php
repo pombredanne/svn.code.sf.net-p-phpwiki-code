@@ -601,7 +601,7 @@ function fixup_static_configs($file) {
      */
     $AllActionPages = explode(':',
       'AllPages:AllUsers:AppendText:AuthorHistory:'
-      .'BackLinks:BlogArchives:BlogJournal:'
+      .'BackLinks:'
       .'CreatePage:'
       .'FindPage:FullTextSearch:FuzzyPages:'
       .'LikePages:LinkDatabase:LinkSearch:ListRelations:'
@@ -609,11 +609,11 @@ function fixup_static_configs($file) {
       .'NewPagesPerUser:'
       .'OrphanedPages:'
       .'PageDump:PageHistory:PageInfo:PluginManager:'
-      .'RandomPage:RecentChanges:RecentComments:RelatedChanges:'
+      .'RandomPage:RecentChanges:RelatedChanges:'
       .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
       .'TitleSearch:'
       .'UpLoad:UserPreferences:'
-      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:WikiBlog:'
+      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:'
       // plus some derivations
       .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages:'
       .'FullRecentChanges:'
@@ -621,7 +621,6 @@ function fixup_static_configs($file) {
       .'MyRecentEdits:MyRecentChanges:'
       .'PhpWikiAdministration:'
       .'PhpWikiAdministration/Chown:'
-      .'PhpWikiAdministration/Markup:'
       .'PhpWikiAdministration/Purge:'
       .'PhpWikiAdministration/Remove:'
       .'PhpWikiAdministration/Rename:'
@@ -639,12 +638,17 @@ function fixup_static_configs($file) {
           $AllActionPages[] = 'SpellCheck'; // SpellCheck does not work
           $AllActionPages[] = 'PhpWikiAdministration/Chmod';
        }
+       $AllActionPages[] = 'BlogArchives';
+       $AllActionPages[] = 'BlogJournal';
        $AllActionPages[] = 'InterWikiSearch';
        $AllActionPages[] = 'LdapSearch';
        $AllActionPages[] = 'PasswordReset';
+       $AllActionPages[] = 'PhpWikiAdministration/Markup';
        $AllActionPages[] = 'RateIt'; // RateIt works only in wikilens derived themes
+       $AllActionPages[] = 'RecentComments';
        $AllActionPages[] = 'TranslateText';
        $AllActionPages[] = 'UriResolver';
+       $AllActionPages[] = 'WikiBlog';
     }
     if (defined('GFORGE') and GFORGE) {
        if (defined('ENABLE_EXTERNAL_PAGES') and ENABLE_EXTERNAL_PAGES) {
