@@ -94,8 +94,6 @@ $locale["Page Locked"] =
    "Sidan är Låst";
 $locale["Page Name"] =
    "Pagina Naam";
-$locale["Page removed %s"] =
-   "Verwijder %s";
 $locale["PageHistory"] =
    "PaginaGeschiedenis";
 $locale["PhpWikiAdministration"] =
@@ -124,8 +122,6 @@ $locale["ReleaseNotes"] =
    "UitgaveNoten";
 $locale["Remove Page"] =
    "Verwijder Pagina";
-$locale["Removed by: %s"] =
-   "Verwijder von: %s";
 $locale["Removed page '%s' successfully."] =
    "Pagina '%s' verwijderd.";
 $locale["Return to %s"] =

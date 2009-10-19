@@ -258,8 +258,6 @@ $locale["AddComment"] =
    "AjouterDesCommentaires";
 $locale["AddCommentPlugin"] =
    "AjoutDesCommentaires";
-$locale["AddImage"] =
-   "Ajouter l'image";
 $locale["AddPageLink"] =
    "AjouterDesPagesLien";
 $locale["AddPlugin"] =
@@ -324,10 +322,6 @@ $locale["Are you sure you want to permanently change the selected files?"] =
    "Supprimer la page maintenant";
 $locale["Are you sure you want to permanently remove the selected files?"] =
    "Êtes-vous certain de vouloir supprimer définitivement les fichiers sélectionnés ?";
-$locale["Are you sure you want to permanently search & replace text in the selected files?"] =
-   "Etes-vous sur de vouloir rechercher et remplacer dans les fichiers sélectionnées ?";
-$locale["Are you sure?"] =
-   "Êtes-vous sûr ?";
 $locale["Argument '%s' not declared by plugin."] =
    "argument '%s' non déclaré par le plugin.";
 $locale["Arguments"] =
@@ -680,6 +674,8 @@ $locale["E-mail"] =
    "Adresse électronique";
 $locale["E-mail Notification"] =
    "Courriel de notification";
+$locale["ERROR: No email defined! You need to do this in your "] =
+   "ERREUR : pas d'adresse électronique definie! Vous devez le faire dans vos ";
 $locale["Easy navigation buttons for %s"] =
    "Boutons de navigation rapide pour %s";
 $locale["Edit"] =
@@ -958,6 +954,8 @@ $locale["Invalid password or userid."] =
    "Mot de passe ou identifiant d'utilisateur invalide.";
 $locale["Invalid password."] =
    "Mauvais mot de passe.";
+$locale["Invalid username '%s' for LDAP Auth"] =
+   "Mot de identifiant d'utilisateur '%s' pour LDAP Auth invalide.";
 $locale["Invalid username."] =
    "Identifiant d'utilisateur invalide.";
 $locale["Italic text"] =
@@ -1320,8 +1318,6 @@ $locale["Page now unlocked."] =
    "La page est maintenant déverrouillée.";
 $locale["Page once only"] =
    "Une seule fois la page";
-$locale["Page removed %s"] =
-   "Page enlevée %s";
 $locale["Page rename %s to %s"] =
    "retitrez la page de '%s' à '%s'";
 $locale["Page statistics"] =
@@ -1568,16 +1564,12 @@ $locale["Recursively get BackLinks or links"] =
    "Obtenir récursivement des RétroLiens ou liens";
 $locale["Redirect"] =
    "Redirection";
-$locale["Redirect to an external url"] =
-   "Redirige vers une url d'un site extérieur";
 $locale["RedirectTo"] =
    "RedirigerVers";
 $locale["RedirectToPlugin"] =
    "PluginRedirection";
 $locale["Redirects to an external web site based on form input"] =
    "Redirige vers un site externe basé sur un formulaire";
-$locale["Redirects to another url or page."] =
-   "Redirige vers une autre url ou page.";
 $locale["References"] =
    "Références";
 $locale["Regex?"] =
@@ -1608,8 +1600,6 @@ $locale["Remove selected pages"] =
    "Supprimer les pages sélectionnées";
 $locale["Remove this page"] =
    "Supprimer la page";
-$locale["Removed by: %s"] =
-   "Enlevé près : %s";
 $locale["Removed page '%s' successfully."] =
    "Page '%s' supprimée avec succès.";
 $locale["Removing pages"] =
@@ -1678,8 +1668,6 @@ $locale["Search for"] =
    "Chercher";
 $locale["Search for page titles similar to %s."] =
    "Rechercher le titre de page similaire à %s.";
-$locale["Search string '%s' not found in content of page '%s'."] =
-   "La chaîne '%s' ne se trouve pas dans la page '%s'.";
 $locale["Search the content of all pages in this wiki."] =
    "Rechercher le contenu de toutes les pages de ce wiki.";
 $locale["Search the titles of all pages in this wiki."] =
@@ -2346,8 +2334,6 @@ $locale["dump html pages"] =
    "récupération des pages HTML";
 $locale["dump serial pages"] =
    "récupération des pages sérialisées";
-$locale["e-mail address confirmation"] =
-   "Vérification de l'adresse électronique";
 $locale["edit area"] =
    "Zone d'édition";
 $locale["edit this page"] =

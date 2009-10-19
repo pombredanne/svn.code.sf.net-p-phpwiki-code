@@ -392,6 +392,8 @@ $locale["Invalid password or userid."] =
    "Contraseña o userid inválida.";
 $locale["Invalid password."] =
    "Contraseña inválido.";
+$locale["Invalid username '%s' for LDAP Auth"] =
+   "Username inválido ' %s' para LDAP Auth";
 $locale["Invalid username."] =
    "Username inválido.";
 $locale["Italic text"] =
@@ -538,8 +540,6 @@ $locale["Page now locked."] =
    "Página bloqueada.";
 $locale["Page now unlocked."] =
    "Página desbloquear.";
-$locale["Page removed %s"] =
-   "Página borrar %s";
 $locale["Page rename %s to %s"] =
    "La página retitula %s a %s";
 $locale["Page successfully updated."] =
@@ -624,8 +624,6 @@ $locale["Remove Page"] =
    "Borrar Página";
 $locale["Remove this page"] =
    "Quite esta página";
-$locale["Removed by: %s"] =
-   "Borrar par: %s";
 $locale["Removed page '%s' successfully."] =
    "Página '%s' borrada satisfactoriamente.";
 $locale["Removing pages"] =

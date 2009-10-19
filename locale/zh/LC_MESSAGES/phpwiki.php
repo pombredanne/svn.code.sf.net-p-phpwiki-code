@@ -200,8 +200,6 @@ $locale["Are you sure you want to permanently change the selected files?"] =
    "你確定你想要永久變更選定的檔案?";
 $locale["Are you sure you want to permanently remove the selected files?"] =
    "你確定你想要永久移除選定的檔案?";
-$locale["Are you sure you want to permanently search & replace text in the selected files?"] =
-   "你確定你想要永久新增並取代選定檔案中的文字?";
 $locale["Arguments"] =
    "引數";
 $locale["Attempting to use the directory '%s' instead."] =
@@ -1020,16 +1018,12 @@ $locale["Recursively get BackLinks or links"] =
    "遞迴地取得 BackLinks 或連結";
 $locale["Redirect"] =
    "重導向";
-$locale["Redirect to an external url"] =
-   "重導向到另一個外部 url";
 $locale["RedirectTo"] =
    "RedirectTo";
 $locale["RedirectToPlugin"] =
    "RedirectToPlugin";
 $locale["Redirects to an external web site based on form input"] =
    "以表單輸入方式重導向到另外一個外部站台";
-$locale["Redirects to another url or page."] =
-   "重導向到另一個 url 或頁面.";
 $locale["References"] =
    "偏好設定";
 $locale["Registered Users"] =
