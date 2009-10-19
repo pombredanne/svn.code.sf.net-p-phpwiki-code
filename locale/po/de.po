@@ -277,11 +277,11 @@ msgstr "SeitenLink einfÃ¼gen (Doppelklick)"
 
 #: ../lib/EditToolbar.php:430 ../lib/EditToolbar.php:431
 msgid "AddImage"
-msgstr "Bild einfügen"
+msgstr "Bild einfÃ¼gen"
 
 #: ../lib/EditToolbar.php:433
 msgid "Insert Image (double-click)"
-msgstr "Bild einfügen (Doppelklick)"
+msgstr "Bild einfÃ¼gen (Doppelklick)"
 
 #: ../lib/EditToolbar.php:465 ../lib/EditToolbar.php:466
 msgid "AddTemplate"
@@ -330,7 +330,7 @@ msgstr "unbekannte Farbe %s ignoriert"
 #: ../lib/MailNotify.php:194
 #, php-format
 msgid "PageChange Notification of %s"
-msgstr "SeitenÄnderung Benachrichtigung von %s"
+msgstr "SeitenÃ„nderung Benachrichtigung von %s"
 
 #: ../lib/MailNotify.php:227
 #, php-format
@@ -592,7 +592,7 @@ msgstr "LÃ¶schen der Seite"
 
 #: ../lib/PagePerm.php:320
 msgid "Purge this page"
-msgstr "Lösche diese Seite endgültig"
+msgstr "LÃ¶sche diese Seite endgÃ¼ltig"
 
 #: ../lib/PagePerm.php:369
 #, php-format
@@ -1086,7 +1086,7 @@ msgstr "Seite LÃ¶schen"
 
 #: ../lib/WikiTheme.php:1032 ../lib/purgepage.php:22 ../lib/purgepage.php:59
 msgid "Purge Page"
-msgstr "Seiten endgültig löschen"
+msgstr "Seiten endgÃ¼ltig lÃ¶schen"
 
 #: ../lib/WikiTheme.php:1197
 msgid ""
@@ -1284,7 +1284,7 @@ msgstr "Falsches Password: "
 #: ../lib/WikiUser/LDAP.php:197
 #, php-format
 msgid "Could not connect to LDAP host %s"
-msgstr "Kann nicht zu LDAP host »%s« verbinden"
+msgstr "Kann nicht zu LDAP host Â»%sÂ« verbinden"
 
 #: ../lib/WikiUser/POP3.php:61
 #, php-format
@@ -1395,7 +1395,7 @@ msgstr ""
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:69
 msgid "Apply changes"
-msgstr "Änderungen anwenden"
+msgstr "Ã„nderungen anwenden"
 
 #: ../lib/WysiwygEdit/Wikiwyg.php:70
 msgid "Exit toolbar"
@@ -1647,11 +1647,11 @@ msgstr "Seite jetzt freigegeben."
 
 #: ../lib/editpage.php:259
 msgid "Page now public."
-msgstr "Seite jetzt öffentlich freigegeben."
+msgstr "Seite jetzt Ã¶ffentlich freigegeben."
 
 #: ../lib/editpage.php:260
 msgid "Page now not-public."
-msgstr "Seite jetzt nicht mehr öffentlich freigegeben."
+msgstr "Seite jetzt nicht mehr Ã¶ffentlich freigegeben."
 
 #: ../lib/editpage.php:269
 #, fuzzy
@@ -1973,7 +1973,7 @@ msgstr "Leerer Seitenname!"
 
 #: ../lib/loadsave.php:896
 msgid "Invalid pagename!"
-msgstr "Ungültiger Seitenname!"
+msgstr "UngÃ¼ltiger Seitenname!"
 
 #: ../lib/loadsave.php:959
 #, php-format
@@ -2257,7 +2257,7 @@ msgstr "um diese Seite zu sperren"
 
 #: ../lib/main.php:563
 msgid "purge this page"
-msgstr "um diese Seite endgültig zu löschen"
+msgstr "um diese Seite endgÃ¼ltig zu lÃ¶schen"
 
 #: ../lib/main.php:564
 msgid "remove this page"
@@ -2499,7 +2499,7 @@ msgstr "Liste der Seiten im Besitz von [%s] (%d insgesamt):"
 #: ../lib/plugin/AllPages.php:95
 #, fuzzy, php-format
 msgid "List of pages last edited by [%s] ({total} total):"
-msgstr "Liste der Seiten zuletzt geändert von [%s] (%d insgesamt):"
+msgstr "Liste der Seiten zuletzt geÃ¤ndert von [%s] (%d insgesamt):"
 
 #: ../lib/plugin/AllPages.php:106
 #, fuzzy, php-format
@@ -3018,7 +3018,7 @@ msgstr "Meta-Daten fÃ¼r %s bearbeiten"
 #: ../lib/plugin/EditMetaData.php:132
 #, php-format
 msgid "No metadata for %s"
-msgstr "Keine Meta-Daten für %s"
+msgstr "Keine Meta-Daten fÃ¼r %s"
 
 #: ../lib/plugin/EditMetaData.php:146
 msgid ""
