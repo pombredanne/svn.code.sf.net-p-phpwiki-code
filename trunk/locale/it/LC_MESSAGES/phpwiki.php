@@ -272,8 +272,6 @@ $locale["Page now locked."] =
    "Pagina bloccata.";
 $locale["Page now unlocked."] =
    "Pagina sbloccata.";
-$locale["Page removed %s"] =
-   "Pagina rimosso %s";
 $locale["Page rename %s to %s"] =
    "La pagina cambia titolo %s a %s";
 $locale["PageChange Notification Error: Couldn't send %s to %s"] =
@@ -328,8 +326,6 @@ $locale["Remove Page"] =
    "Cancella la Pagina";
 $locale["Remove this page"] =
    "Rimuovi la pagina";
-$locale["Removed by: %s"] =
-   "Rimosso vicino: %s";
 $locale["Removed page '%s' successfully."] =
    "La pagina '%s' è stata rimossa correttamente.";
 $locale["Removing pages"] =
