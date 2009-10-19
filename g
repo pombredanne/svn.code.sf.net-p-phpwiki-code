@@ -89,6 +89,9 @@ if (!$group_id || !$project) {
     // Use black list of extensions instead of white list
     define('DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS', true);
 
+    // Get the maximum upload filesize from PHP config
+    define('MAX_UPLOAD_SIZE', octets(ini_get('upload_max_filesize')));
+
     // GForge is UTF-8, so use the same.
     define('CHARSET', 'UTF-8');
 
@@ -203,11 +206,10 @@ if (!$group_id || !$project) {
 
     define('STRICT_MAILABLE_PAGEDUMPS', false);
 
-    define('DEFAULT_DUMP_DIR', "/tmp/wikidump");
-    define('HTML_DUMP_DIR', "/tmp/wikidumphtml");
+    // Perhaps propose Web DAV location ?
+    define('DEFAULT_DUMP_DIR', "");
+    define('HTML_DUMP_DIR', "");
     define('HTML_DUMP_SUFFIX', ".html");
-
-    define('MAX_UPLOAD_SIZE', 16777216);
 
     define('MINOR_EDIT_TIMEOUT', 604800);
 
@@ -262,5 +264,23 @@ if (!$group_id || !$project) {
 
     // Start the wiki
     include "lib/main.php";
+}
+
+/**
+ * Return a number of octets from a string like "300M"
+ */
+function octets($val) {
+    $val = trim($val);
+    $last = strtolower($val[strlen($val)-1]);
+    switch($last) {
+        // The 'G' modifier is available since PHP 5.1.0
+        case 'g':
+            $val *= 1024;
+        case 'm':
+            $val *= 1024;
+        case 'k':
+            $val *= 1024;
+    }
+    return $val;
 }
 ?>
