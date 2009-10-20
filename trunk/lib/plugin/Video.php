@@ -98,7 +98,7 @@ extends WikiPlugin
         if (preg_match("/'/", $url))
             return $this->error(fmt("Invalid argument %s", "url"));
 
-        $params = array("data" => SERVER_URL . $WikiTheme->_findData('flowplayer-3.1.3.swf'),
+        $params = array("data" => SERVER_URL . $WikiTheme->_findData('flowplayer-3.1.4.swf'),
                         "type"              => "application/x-shockwave-flash",
                         "width"             => $width,
                         "height"            => $height,
