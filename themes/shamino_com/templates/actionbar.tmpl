@@ -1,7 +1,9 @@
 <?php // -*-php-*-
+rcs_id('$Id$');
+?>
+<?php
 if (empty($revision)) $revision = $page->getCurrentRevision(false);
 ?>
-<!-- $Id$ -->
 <?= Button(array('action'=>'PageInfo'),_("PageInfo"),$page->getName()) ?>
 <?=$SEP?><?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision")) ?>
 <?php if ($user->isAdmin() or mayAccessPage('change',$page->getName())) { ?>
