@@ -109,8 +109,12 @@ extends WikiPlugin
         $page = $args['page'];
         if (!$user->isAuthenticated() or empty($userid)) {
             // wrong or unauthenticated user
+            if (defined('GFORGE') and GFORGE) {
+                // No login banner for Gforge
+                return HTML::div(array('class' => 'error'),
+                                 HTML::p(_("You must sign in to watch pages.")));
+            }
             return $request->_notAuthorized(WIKIAUTH_BOGO);
-            //return $user->PrintLoginForm ($request, $args, false, false);
         } else {
             $pref = &$request->_prefs;
             $messages = "";
