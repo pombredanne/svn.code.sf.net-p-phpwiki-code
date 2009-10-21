@@ -1,12 +1,9 @@
-<?php  // -*-html-*-
-/* $Id$
- *
- * This template is used for the FrameInclude plugin.
- */
+<?php // -*-php-*-
+rcs_id('$Id$');
+// This template is used for the FrameInclude plugin.
 
 $topurl = $request->getURLtoSelf(array('frame' => 'header'));
 $boturl = $request->getURLtoSelf(array('frame' => 'footer'));
-
 
 printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 ?>
