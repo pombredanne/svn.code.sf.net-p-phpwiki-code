@@ -53,40 +53,34 @@ See http://www.xapian.org/
   </form>
 
   This displays the result not in a wiki layout. However the omega layout can be tuned.
-
-!!! Open Office to Phpwiki converter
+== Open Office to Phpwiki converter
 
 Convert Open Office 2.3 (or later), Star Office, MS Word or MS Office Documents to Phpwiki.
 
-!! Installation
+=== Installation
 
 You first have to install (once for all) the Open Office to Phpwiki converter.
 
 To install the export filter:
-* Start Open Office 2.3 (or above)
-* From Tool choose "XML Filter Settings"
-* Choose "New" and in "General" fill the form with the following data:
-** Filter name: "Phpwiki"
-** Application: ~OpenOffice.org Writer (.odt)
-** Name of file type: "Phpwiki"
-** File extention: txt
-* Choose Transformation and fill the form with the following data:
-** XSLT for Export: put the full path to <strong>phpwiki/admin/odt2phpwiki.xsl</strong>
+* Start Open Office 2.3 (or later)
+* From //Tool// choose //XML Filter Settings//
+* Choose //New// and in //General// fill the form with the following data:
+** Filter name: //Phpwiki//
+** Application: //~OpenOffice.org Writer (.odt)//
+** Name of file type: //Phpwiki//
+** File extention: //txt//
+* Choose //Transformation// and fill the form with the following data:
+** //XSLT for Export//: put the full path to **phpwiki/admin/odt2phpwiki.xsl**
 
-!! Open Office Converter Usage
+=== Open Office Converter Usage
 
-Open your Word document in Open Office 2.3.
+Open your Word document in Open Office.
 
-Select ''Export...'' in the ''File'' menu, then select ''Phpwiki'' in ''File format'' menu.
+Select //Export...// in the //File// menu, then select //Phpwiki// in //File format// menu.
 
-You will get a text file (.txt). Copy and paste the content of this file in your wiki page.
+You will get a text file ({{{.txt}}}). Copy and paste the content of this file in your wiki page.
 
-Everything should work, except:
-* centered text and right-aligned text (will be left-aligned),
-* the wiki only supports 3 levels of titles,
-* tables will always be bordered (class="bordered"), regardless they are or not in Word; you might want to change this in the generated content,
-* some <nowiki> and </nowiki> tags might remain in the code.
-
-If there was a table of contents in your Word file, you can delete it and replace it with the ~CreateToc plugin (use the TOC button from the Edit Toolbar).
-
-You should also upload the images in your document.
+Please note the following:
+* Tables will always be bordered ({{{class="bordered"}}}), regardless they are or not in Word; you might want to change this in the generated content.
+* If there was a table of contents in your Word file, you can delete it and replace it with the ~CreateToc plugin (use the TOC button from the Edit Toolbar).
+* If there were images in your document, you should also upload them in the wiki.
