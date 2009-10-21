@@ -42,8 +42,7 @@ class CacheableMarkup extends XmlContent {
         // a single quote is entered in the Summary box:
         // - the history is wrong (user and comment missing)
         // - the table of contents plugin no longer works
-        global $WikiTheme;
-        if (isa($WikiTheme, 'WikiTheme_gforge')) {
+        if (defined('GFORGE') and GFORGE) {
             return serialize($this);
         }
 

@@ -86,8 +86,6 @@ extends WikiPlugin
 
     function _generateTableBody(&$info, &$dbi, &$request, &$table) {
 
-        global $WikiTheme;
-
         $plugin_dir = 'lib/plugin';
         if (defined('PHPWIKI_DIR'))
             $plugin_dir = PHPWIKI_DIR . "/$plugin_dir";
@@ -124,7 +122,7 @@ extends WikiPlugin
             // make a link if an actionpage exists
             $pluginNamelink = $pluginName;
             $pluginDocPageName = _("Help")."/" . $pluginName . "Plugin";
-            if (isa($WikiTheme, 'WikiTheme_gforge')) {
+            if (defined('GFORGE') and GFORGE) {
                 $pluginDocPageName = _("Help").":" . $pluginName . "Plugin";
             }
 
@@ -152,7 +150,7 @@ extends WikiPlugin
                     $pluginDocPageNamelink = WikiLink($pluginDocPageName,'if_known');
             }
 
-            if (isa($WikiTheme, 'WikiTheme_gforge')) {
+            if (defined('GFORGE') and GFORGE) {
                 $pluginDocPageNamelink = WikiLink($pluginDocPageName, 'known');
             }
 
