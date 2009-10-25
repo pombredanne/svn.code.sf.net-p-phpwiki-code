@@ -761,7 +761,7 @@ class Cached_PluginInvocation extends Cached_DynamicContent {
 	$this->_pi = $pi;
 	$loader = $this->_getLoader();
         if (is_array($plugin_cmdline = $loader->parsePI($pi)) and $plugin_cmdline[1]) {
-            $this->pi_name = $plugin_cmdline[0]; // plugin, plugin-form, plugin-list, plugin-link
+            $this->pi_name = $plugin_cmdline[0]; // plugin, plugin-form, plugin-list
             $this->name = $plugin_cmdline[1]->getName();
             $this->args = $plugin_cmdline[2];
         }

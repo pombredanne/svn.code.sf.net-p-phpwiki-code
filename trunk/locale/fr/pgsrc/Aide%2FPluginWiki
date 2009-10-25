@@ -76,11 +76,6 @@ passé par l'URL (arguments GET et POST définit via '||=').
   *plugin-form* est utilisé pour afficher une boîte input type=text box 
    comme argument par défaut.
 
-  *plugin-head* n'existe plus !
-
-  *plugin-link* peut être utilisé pour changer les liens sortants pour 
-  cette page.
-
 {{{
 <<PluginName [args...] >>
 }}}
@@ -88,17 +83,6 @@ passé par l'URL (arguments GET et POST définit via '||=').
 {{{
 <?plugin-form PluginName [args...] ?>
 }}}
-
-{{{
-<?plugin-link PluginName [args...] ?>
-}}}
-;:Ce n'est pas utilisé.
-
-{{{
-<?plugin-head PluginName [args...] ?>
-}}}
-;:Ce n'est plus utilisé.
-
 
 == Plugins existants :
 

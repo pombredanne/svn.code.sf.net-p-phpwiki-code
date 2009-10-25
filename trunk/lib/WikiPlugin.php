@@ -266,29 +266,6 @@ class WikiPlugin
                      'class'       => 'wikiaction');
     }
 
-    function makeLink($argstr, $request) {
-        $defaults = $this->getDefaultArguments();
-        $link_defaults = $this->getDefaultLinkArguments();
-        $defaults = array_merge($defaults, $link_defaults);
-    
-        $args = $this->getArgs($argstr, $request, $defaults);
-        $plugin = $this->getName();
-    
-        $query_args = array();
-        foreach ($args as $arg => $val) {
-            if (isset($link_defaults[$arg]))
-                continue;
-            if ($val != $defaults[$arg])
-                $query_args[$arg] = $val;
-        }
-    
-        $link = Button($query_args, $args['linktext'], $args['targetpage']);
-        if (!empty($args['description']))
-            $link->addTooltip($args['description']);
-    
-        return $link;
-    }
-    
     function getDefaultFormArguments() {
         return array('targetpage' => $this->getName(),
                      'buttontext' => $this->getName(),
@@ -449,7 +426,7 @@ class WikiPluginLoader {
         list($pi_name, $plugin, $plugin_args) = $ppi;
 
         if (!is_object($plugin)) {
-            return new HtmlElement($pi_name == 'plugin-link' ? 'span' : 'p',
+            return new HtmlElement('p',
                                    array('class' => 'plugin-error'),
                                    $this->getErrorDetail());
         }
@@ -482,8 +459,6 @@ class WikiPluginLoader {
                 return $plugin->run($dbi, $plugin_args, $request, $basepage);
             case 'plugin-list':
                 return $plugin->makeList($plugin_args, $request, $basepage);
-            case 'plugin-link':
-                return $plugin->makeLink($plugin_args, $request);
             case 'plugin-form':
                 return $plugin->makeForm($plugin_args, $request);
         }

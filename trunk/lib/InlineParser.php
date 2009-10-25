@@ -1107,8 +1107,6 @@ class Markup_isohexchars extends SimpleMarkup {
 }
 
 // FIXME: Do away with magic phpwiki forms.  (Maybe phpwiki: links too?)
-// FIXME: Do away with plugin-links.  They seem not to be used.
-//Plugin link
 
 class InlineTransformer
 {
