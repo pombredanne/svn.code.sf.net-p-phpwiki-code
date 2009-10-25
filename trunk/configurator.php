@@ -905,6 +905,9 @@ separate the name of each one with colons.
   USER_AUTH_ORDER = 'BogoLogin : PersonalPage'
 </pre>");
 
+$properties["ENABLE_AUTH_OPENID"] =
+new boolean_define('ENABLE_AUTH_OPENID');
+
 $properties["PASSWORD_LENGTH_MINIMUM"] =
 new numeric_define('PASSWORD_LENGTH_MINIMUM', PASSWORD_LENGTH_MINIMUM);
 
