@@ -70,6 +70,9 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   <p><?= _("New users may use an empty password.") ?></p>
 <?php } ?>
 <form method="post" action="<?= $request->getPostURL() ?>" accept-charset="<?=CHARSET?>" name="login">
+<table>
+<tr>
+<td>
 <fieldset>
 <legend>Sign In</legend>
 <table cellspacing="4">
@@ -97,6 +100,9 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
 <input type="hidden" name="auth[login]" value="1" />
 <?= HiddenInputs($request->getArgs(), false, array('auth')) ?>
 </fieldset>
+</td>
+</tr>
+</table>
 </form>
 
 <script language="JavaScript" type="text/javascript">
