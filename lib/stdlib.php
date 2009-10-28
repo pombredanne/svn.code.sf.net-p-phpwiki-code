@@ -460,7 +460,7 @@ function LinkImage($url, $alt = "") {
             $link->setAttr($attr, $value);
         }
         // These attributes take a number (pixels) or a percentage: height, width
-        elseif ((($attr == "border") || ($attr == "hspace") || ($attr == "vspace"))
+        elseif ((($attr == "height") || ($attr == "width"))
            && (preg_match('/\d+[%p]?x?/', $value))) {
             $link->setAttr($attr, $value);
         }
