@@ -532,9 +532,7 @@ class Cached_SemanticLink extends Cached_WikiLink {
     function _expandurl($url) {
         $m = array();
         if (!preg_match('/^ ([^:]+) (:[:=]) (.+) $/x', $url, $m)) {
-            return HTML::strong(array('class' => 'rawurl'),
-                                HTML::u(array('class' => 'baduri'),
-                                        _("BAD semantic relation link")));
+            return HTML::span(array('class' => 'error'), _("BAD semantic relation link"));
         }
 	$this->_relation = urldecode($m[1]);
         $is_attribute = ($m[2] == ':=');
