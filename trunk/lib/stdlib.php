@@ -467,7 +467,7 @@ function LinkImage($url, $alt = "") {
         // We allow size=50% and size=20x30
         // We replace this with "width" and "height" HTML attributes
         elseif ($attr == "size") {
-            if (preg_match('/(\d+)%/', $value, $m)) {
+            if (preg_match('/(\d+%)/', $value, $m)) {
                 $link->setAttr('width',$m[1]);
                 $link->setAttr('height',$m[1]);
             } elseif (preg_match('/(\d+)x(\d+)/', $value, $m)) {
