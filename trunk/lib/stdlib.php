@@ -475,8 +475,10 @@ function LinkImage($url, $alt = "") {
             }
         } 
         else {
-            trigger_error(sprintf(_("Invalid image attribute \"%s\" %s=%s"),
-                                  $url, $attr, $value), E_USER_WARNING);
+            $link = HTML::span(array('class' => 'error'),
+                          sprintf(_("Invalid image attribute \"%s\" %s=%s"),
+                                  $url, $attr, $value));
+            return $link;
         }
     }
     // Correct silently the most common error
@@ -510,8 +512,9 @@ function LinkImage($url, $alt = "") {
             ($height < 3 and $width < 20) or 
             ($height < 7 and $width < 7))
         {
-            trigger_error(_("Invalid image size"), E_USER_WARNING);
-            return '';
+            $link = HTML::span(array('class' => 'error'), 
+                               _("Invalid image size"));
+            return $link;
         }
     } else {
         $size = 0;
@@ -551,8 +554,9 @@ function LinkImage($url, $alt = "") {
                 or ($height < 3 and $width < 20)
                 or ($height < 7 and $width < 7))
             {
-                trigger_error(_("Invalid image size"), E_USER_WARNING);
-                return '';
+                $link = HTML::span(array('class' => 'error'), 
+                                   _("Invalid image size"));
+                return $link;
             }
         }
     }
