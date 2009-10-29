@@ -311,7 +311,7 @@ class Markup_escape  extends SimpleMarkup
 /**
  * [image.jpg size=50% border=5], [image.jpg size=50x30]
  * Support for the following attributes: see stdlib.php:LinkImage()
- *   size=<precent>%, size=<width>x<height>
+ *   size=<percent>%, size=<width>x<height>
  *   border=n, align=\w+, hspace=n, vspace=n
  *   width=n, height=n
  *   title, lang, id, alt
@@ -471,7 +471,7 @@ function LinkBracketLink($bracketlink) {
         if (empty($label) and isImageLink($link)) {
             // if without label => inlined image [File:xx.gif]
             $imgurl = $intermap->link($link);
-            return LinkImage($imgurl->getAttr('href'), $link);
+            return LinkImage($imgurl->getAttr('href'));
         }
         return new Cached_InterwikiLink($link, $label);
     } else {
