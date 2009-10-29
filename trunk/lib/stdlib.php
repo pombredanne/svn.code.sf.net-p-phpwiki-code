@@ -391,8 +391,8 @@ function IsSafeURL($url) {
 function LinkURL($url, $linktext = '') {
     // FIXME: Is this needed (or sufficient?)
     if(! IsSafeURL($url)) {
-        $link = HTML::strong(HTML::u(array('class' => 'baduri'),
-                                     _("BAD URL -- remove all of <, >, \"")));
+        $link = HTML::span(array('class' => 'error'), _("BAD URL -- remove all of <, >, \""));
+        return $link;
     }
     else {
         if (!$linktext)
@@ -428,8 +428,7 @@ function LinkImage($url, $alt = "") {
     $arr = split(' ',$url);
     if (!empty($arr)) $url = $arr[0];
     if (! IsSafeURL($url)) {
-        $link = HTML::strong(HTML::u(array('class' => 'baduri'),
-                                     _("BAD URL -- remove all of <, >, \"")));
+        $link = HTML::span(array('class' => 'error'), _("BAD URL -- remove all of <, >, \""));
         return $link;
     }
     // spaces in inline images must be %20 encoded!
@@ -725,9 +724,7 @@ function LinkPhpwikiURL($url, $text = '', $basepage = false) {
     $args = array();
     
     if (!preg_match('/^ phpwiki: ([^?]*) [?]? (.*) $/x', $url, $m)) {
-        return HTML::strong(array('class' => 'rawurl'),
-                            HTML::u(array('class' => 'baduri'),
-                                    _("BAD phpwiki: URL")));
+        return HTML::span(array('class' => 'error'), _("BAD phpwiki: URL"));
     }
 
     if ($m[1])
