@@ -1,4 +1,4 @@
-Date: Sun,  5 Jul 2009 21:04:37 +0000
+Date: Fri, 30 Oct 2009 20:42:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -64,4 +64,4 @@ Par exemple, le calendrier suivant commence les semaines le lundi :
 Cette fonctionnalité a été inspirée par [Manila|http://manila.userland.com/], et a été tout d'abord implémentée par Gary Benson. Elle fut par la suite implémentée sous forme de PluginWiki par JeffDairiki.
 
 ----
-[DocumentationDePhpWiki] [CategoryPluginWiki]
+[[DocumentationDePhpWiki]] [[CategoryPluginWiki]]

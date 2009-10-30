@@ -1,4 +1,4 @@
-Date: Fri,  3 Jul 2009 22:21:47 +0000
+Date: Fri, 30 Oct 2009 20:42:08 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.11pre)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -114,4 +114,4 @@ Voire [URLMagiquesPhpWiki] pour des détails sur comment écrire toutes sortes d
 [1] En utilisant [[1] une seconde fois (dans une première colonne) la note de bas de page elle-même est ''référencée''. Vous pouvez vous référer à une note autant de fois que vous le souhaiter mais vous ne pouvez la définir qu'une seule fois dans la page. Notez que le [[1] est lié à la première référence, s'il y a de multiples références alors ce sera des + après le [[1] qui appeleront les autres références (les références qui viennent  ''après'' la ''définition'' de la note ne seront pas liées)
 
 ----
-[DocumentationDePhpWiki]
+[[DocumentationDePhpWiki]]
