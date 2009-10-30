@@ -1,4 +1,4 @@
-Date: Fri, 30 Oct 2009 20:42:08 +0000
+Date: Fri, 30 Oct 2009 20:49:35 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.10)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -16,8 +16,7 @@ dans l'édition de la source de la page.
 
 == Usage
 
-Placez simplement le texte à commenter entre =<<Comment=
-et =>>= :
+Placez simplement le texte à commenter entre {{{<<Comment}}} et {{{>>}}} :
 
 {{{
 <<Comment
@@ -38,10 +37,11 @@ Martin Geisler mailto:gimpster@gimpster.com.
 
 == Logique "floue"
 Theorème : un chat a neuf queues.
-Preuve :
+Démonstration :
     Aucun chat n'a huit queues. Un chat a une queue de plus qu'aucun chat.
-    Par conséquent, un chat à neuf queue.
+    Par conséquent, un chat a neuf queues.
 
 >>
+
 ----
 [[CategoryPluginWiki]]
