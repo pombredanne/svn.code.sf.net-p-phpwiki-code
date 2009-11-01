@@ -1,14 +1,9 @@
 <?php // -*-php-*-
 rcs_id('$Id$');
-/**
-  MediawikiTablePlugin
-  A PhpWiki plugin that allows insertion of tables using a Mediawiki-like
-  syntax.
-*/
 /*
  * Copyright (C) 2003 Sameer D. Sahasrabuddhe
  * Copyright (C) 2005 $ThePhpWikiProgrammingTeam
- * Copyright (C) 2008-2009 Alcatel-Lucent
+ * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -49,6 +44,11 @@ rcs_id('$Id$');
  * ALONE BASIS."
  */
 
+/**
+ * MediawikiTablePlugin
+ * A PhpWiki plugin that allows insertion of tables using a Mediawiki-like
+ * syntax.
+*/
 class WikiPlugin_MediawikiTable
 extends WikiPlugin
 {
