@@ -1,12 +1,7 @@
 <?php // -*-php-*-
 rcs_id('$Id$');
-/**
-  WikicreoleTablePlugin
-  A PhpWiki plugin that allows insertion of tables using the Wikicreole
-  syntax.
-*/
 /*
- * Copyright (C) 2008-2009 Alcatel-Lucent
+ * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -23,7 +18,7 @@ rcs_id('$Id$');
  * You should have received a copy of the GNU General Public License
  * along with PhpWiki; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ */
 
 /*
  * Standard Alcatel-Lucent disclaimer for contributing to open source
@@ -45,6 +40,12 @@ rcs_id('$Id$');
  * CONTRIBUTION OR THE USE OR OTHER DEALINGS IN THE CONTRIBUTION, WHETHER 
  * TOGETHER WITH THE SOFTWARE TO WHICH THE CONTRIBUTION RELATES OR ON A STAND 
  * ALONE BASIS."
+ */
+
+/**
+ * WikicreoleTablePlugin
+ * A PhpWiki plugin that allows insertion of tables using the Wikicreole
+ * syntax.
  */
 
 class WikiPlugin_WikicreoleTable

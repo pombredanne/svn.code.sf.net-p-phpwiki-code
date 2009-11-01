@@ -1,9 +1,5 @@
 <?php // -*-php-*-
 rcs_id('$Id$');
-/**
-  RichTablePlugin
-  A PhpWiki plugin that allows insertion of tables using a richer syntax.
-*/
 /* 
  * Copyright (C) 2003 Sameer D. Sahasrabuddhe
  * Copyright (C) 2005 $ThePhpWikiProgrammingTeam
@@ -26,7 +22,10 @@ rcs_id('$Id$');
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-// error_reporting (E_ALL & ~E_NOTICE);
+/**
+ * RichTablePlugin
+ * A PhpWiki plugin that allows insertion of tables using a richer syntax.
+*/
 
 class WikiPlugin_RichTable
 extends WikiPlugin

@@ -1,13 +1,24 @@
 <?php //-*-php-*-
 rcs_id('$Id$');
-
-require_once('lib/PageList.php');
-require_once('lib/InlineParser.php');
-
-require_once('lib/wikilens/Utils.php');
-require_once('lib/WikiTheme.php');
-require_once('lib/wikilens/Buddy.php');
-require_once('lib/wikilens/RatingsDb.php');
+/*
+ * Copyright (C) 2004 $ThePhpWikiProgrammingTeam
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /**
  * PreferenceApp is used to analyze a category of items that a group
@@ -26,6 +37,14 @@ require_once('lib/wikilens/RatingsDb.php');
  * Usage:
  * <<PreferenceApp category="Soda" pageTextLabel="TotalSoda" roundCalc="true" >>
  */
+
+require_once('lib/PageList.php');
+require_once('lib/InlineParser.php');
+
+require_once('lib/wikilens/Utils.php');
+require_once('lib/WikiTheme.php');
+require_once('lib/wikilens/Buddy.php');
+require_once('lib/wikilens/RatingsDb.php');
 
 class WikiPlugin_PreferenceApp
 extends WikiPlugin
