@@ -1,31 +1,25 @@
 <?php // -*-php-*-
 rcs_id('$Id$');
 /**
- Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
-
- This file is part of PhpWiki.
-
- PhpWiki is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- PhpWiki is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with PhpWiki; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2002 Johannes Große                                   |
+ *
+ * This file is part of PhpWiki.
+ *
+ * PhpWiki is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * PhpWiki is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PhpWiki; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-// +---------------------------------------------------------------------+
-// | WikiPluginCached.php                                                |
-// +---------------------------------------------------------------------+
-// | Copyright (C) 2002 Johannes Große                                   |
-// | You may copy this code freely under the conditions of the GPL       |
-// +---------------------------------------------------------------------+
 
 /* There is a bug in it:
    When the cache is empty and you safe the wikipages,
@@ -33,7 +27,6 @@ rcs_id('$Id$');
    RecentChanges will at the rss-image-link include
    an action=edit
 */
-
 
 require_once "lib/WikiPluginCached.php";
 require_once "lib/plugin/RecentChanges.php";
