@@ -4,7 +4,7 @@ rcs_id('$Id$');
 /*
  * Copyright (C) 2003 Martin Geisler
  * Copyright (C) 2003-2004 $ThePhpWikiProgrammingTeam
- * Copyright (C) 2009 Alcatel-Lucent, Alcatel-Lucent
+ * Copyright (C) 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -27,20 +27,18 @@ rcs_id('$Id$');
  * A WikiPlugin for putting comments in WikiPages
  *
  * Usage:
- * <?plugin Comment
+ * <<Comment
  *
- * !!! My Secret Text
+ * == My Secret Text
  *
  * This is some WikiText that won't show up on the page.
  *
- * ?>
+ * >>
  */
 
 class WikiPlugin_Comment
 extends WikiPlugin
 {
-    // Five required functions in a WikiPlugin.
-
     function getName() {
         return _("Comment");
     }
