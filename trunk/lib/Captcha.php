@@ -1,26 +1,26 @@
 <?php
 rcs_id('$Id$');
 /**
-  Session Captcha v1.0
-    by Gavin M. Roy <gmr@bteg.net>
-  Modified by Benjamin Drieu <bdrieu@april.org> - 2005 for PhpWiki
-  get_captcha_random_word() contributed by Dan Frankowski 2005 for PhpWiki
-  objectified and randomized 2005 by Reini Urban
-
-  This File is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-  
-  This File is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with This File; if not, write to the Free Software Foundation,
-  Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-*/
+ * Session Captcha v1.0
+ *   by Gavin M. Roy <gmr@bteg.net>
+ * Modified by Benjamin Drieu <bdrieu@april.org> - 2005 for PhpWiki
+ * get_captcha_random_word() contributed by Dan Frankowski 2005 for PhpWiki
+ * objectified and randomized 2005 by Reini Urban
+ *
+ * This File is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This File is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with This File; if not, write to the Free Software Foundation,
+ * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
 class Captcha {
 
