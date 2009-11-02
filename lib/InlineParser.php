@@ -319,8 +319,7 @@ class Markup_escape  extends SimpleMarkup
 function isImageLink($link) {
     if (!$link) return false;
     assert(defined('INLINE_IMAGES'));
-    return preg_match("/\\.(" . INLINE_IMAGES . ")$/i", $link)
-        or preg_match("/\\.(" . INLINE_IMAGES . ")\s+(size|border|align|hspace|vspace|type|data|width|height|title|lang|id|alt)=/i", $link);
+    return preg_match("/\\.(" . INLINE_IMAGES . ")/i", $link);
 }
 
 function LinkBracketLink($bracketlink) {
@@ -458,7 +457,7 @@ function LinkBracketLink($bracketlink) {
      * [File:my_image.gif] inlines the image,
      * File:my_image.gif shows a plain inter-wiki link,
      * [what a pic|File:my_image.gif] shows a named inter-wiki link to the gif
-     * [File:my_image.gif|what a pic] shows a inlimed image linked to the page "what a pic"
+     * [File:my_image.gif|what a pic] shows an inlined image linked to the page "what a pic"
      *
      * Note that for simplicity we will accept embedded object tags (non-images) 
      * here also, and seperate them later in LinkImage()
