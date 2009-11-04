@@ -98,9 +98,9 @@ extends WikiPluginCached
             $s .= (DATABASE_TYPE == 'SQL') ? 'PearDB' : 'ADODB';
             if (preg_match('/^(\w+):/', $dsn, $m)) {
                 $backend = $m[1];
-                $s .= " $backend, ";
+                $s .= " $backend";
             }
-            $s .= "DATABASE_PREFIX: \"".DATABASE_PREFIX."\", ";
+            $s .= ", DATABASE_PREFIX: \"".DATABASE_PREFIX."\", ";
             break;
         case 'dba':
             $s .= "DATABASE_DBA_HANDLER: ".DATABASE_DBA_HANDLER.", ";
@@ -115,7 +115,7 @@ extends WikiPluginCached
             break;
         }
         // hack: suppress error when using sql, so no timeout
-        @$s .= "DATABASE_TIMEOUT: " . DATABASE_TIMEOUT . ", ";
+        @$s .= "DATABASE_TIMEOUT: " . DATABASE_TIMEOUT;
         return $s;
     }
     function cachestats() {
@@ -506,8 +506,7 @@ extends WikiPluginCached
 //                           '' => _(""),
                              '' => ""
                              );
-            $table = HTML::table(array('border' => 1,'cellspacing' => 3,
-                                       'cellpadding' => 3));
+            $table = HTML::table(array('class' => 'bordered'));
             foreach ($allargs as $arg => $desc) {
                 if (!$arg)
                     continue;
