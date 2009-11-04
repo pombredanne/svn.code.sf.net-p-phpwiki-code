@@ -101,6 +101,9 @@ if (!$group_id || !$project) {
     define('DEBUG', ($sys_install_type != 'production'));
     // define('_DEBUG_LOGIN', true);
 
+    // Postgesql
+    define('DATABASE_TYPE', 'SQL');
+
     // Disable VACUUM (they are performed every night)
     define('DATABASE_OPTIMISE_FREQUENCY', 0);
 
