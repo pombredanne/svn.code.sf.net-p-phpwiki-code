@@ -424,8 +424,7 @@ class _PageList_Column_content extends _PageList_Column {
                 $html = array();
                 foreach (array_slice($matches,0,5) as $line) {
                     $line = WikiPlugin_FullTextSearch::highlight_line($line, $hilight_re);
-                    $html[] = HTML::dd(HTML::small(array('class' => 'search-context'),
-                                                   $line));
+                    $html[] = HTML::p(HTML::small(array('class' => 'search-context'), $line));
                 }
                 if ($score)
                     $html[] = sprintf("... [%0.1f]",$score);
