@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 rcs_id('$Id$');
 /*
- * Copyright 1999,2000,2001,2002,2004,2005,2007 $ThePhpWikiProgrammingTeam
+ * Copyright 1999-2002,2004,2005,2007,2009 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  *
@@ -88,7 +88,7 @@ extends WikiPlugin
             unset($args['info']);
             $args['listtype'] = 'dl';
 	    $args['types'] = array(new _PageList_Column_content
-	      ('rev:hi_content', _("Content"), "left", $s));
+	      ('rev:hi_content', _("Content"), "left", $s, $hilight_re));
             $list = new PageList(false, $exclude, $args);
             $list->setCaption(fmt("Full text search results for '%s'", $s));
             while ($page = $pages->next()) {

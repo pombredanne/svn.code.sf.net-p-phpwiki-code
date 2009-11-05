@@ -377,10 +377,13 @@ class _PageList_Column_version extends _PageList_Column {
 // on very large Wikis this will fail if used with AllPages
 // (PHP memory limit exceeded)
 class _PageList_Column_content extends _PageList_Column {
-    function _PageList_Column_content ($field, $default_heading, $align = false, $search = false) {
+    function _PageList_Column_content ($field, $default_heading, $align=false, 
+                                       $search=false, $hilight_re=false) 
+    {
         $this->_PageList_Column($field, $default_heading, $align);
         $this->bytes = 50;
         $this->search = $search;
+        $this->hilight_re = $hilight_re;
         if ($field == 'content') {
             $this->_heading .= sprintf(_(" ... first %d bytes"),
                                        $this->bytes);
@@ -399,11 +402,8 @@ class _PageList_Column_content extends _PageList_Column {
                                   or $revision_handle->_data['%content'] === true)) {
             $revision_handle = $page_handle->getCurrentRevision(true);
         }
-        // Not sure why implode is needed here, I thought
-        // getContent() already did this, but it seems necessary.
-        $c = implode("\n", $revision_handle->getContent());
-        if (empty($pagelist->_sortby[$this->_field]))
-            unset($revision_handle->_data['%content']);
+        //if (!empty($pagelist->_sortby) and empty($pagelist->_sortby[$this->_field]))
+        //    unset($revision_handle->_data['%content']);
         if ($this->_field == 'hi_content') {
             if (!empty($revision_handle->_data['%pagedata'])) {
                 $revision_handle->_data['%pagedata']['_cached_html'] = '';
@@ -416,19 +416,41 @@ class _PageList_Column_content extends _PageList_Column {
 	        $score = $page_handle->score;
 	    elseif (is_array($page_handle) and !empty($page_handle['score']))
 	        $score = $page_handle['score'];
-                // Remove special characters so that highlighting works
-	        $search = preg_replace('/^[\^\*]/', '', $search);
-	        $search = preg_replace('/[\^\*]$/', '', $search);
+	        
+	    $hilight_re = $this->hilight_re;
+	    // use the TextSearchQuery highlighter
+            if ($search and $hilight_re) {
+                $matches = preg_grep("/$hilight_re/i", $revision_handle->getContent());
+                $html = array();
+                foreach (array_slice($matches,0,5) as $line) {
+                    $line = WikiPlugin_FullTextSearch::highlight_line($line, $hilight_re);
+                    $html[] = HTML::dd(HTML::small(array('class' => 'search-context'),
+                                                   $line));
+                }
+                if ($score)
+                    $html[] = sprintf("... [%0.1f]",$score);
+                return HTML::div(array('style' => 'font-size:x-small'),
+                                 HTML::div(array('class' => 'transclusion'),
+                                           $html));
+            }
+            // Remove special characters so that highlighting works
+	    $search = preg_replace('/^[\^\*]/', '', $search);
+	    $search = preg_replace('/[\^\*]$/', '', $search);
+            $c =& $revision_handle->getPackedContent();
             if ($search and ($i = strpos(strtolower($c), strtolower($search))) !== false) {
                 $l = strlen($search);
                 $j = max(0, $i - ($this->bytes / 2));
                 return HTML::div(array('style' => 'font-size:x-small'),
                                  HTML::div(array('class' => 'transclusion'),
-                                           HTML::span(($j ? '...' : '').substr($c, $j, ($j ? $this->bytes / 2 : $i))),
-                                           HTML::span(array("style"=>"background:yellow"),substr($c, $i, $l)),
-                                           HTML::span(substr($c, $i+$l, ($this->bytes / 2))."..."." ".($score ? sprintf("[%0.1f]",$score):""))));
+                                           HTML::span(($j ? '...' : '')
+                                                      .substr($c, $j, ($j ? $this->bytes / 2 : $i))),
+                                           HTML::span(array("style"=>"background:yellow"),
+                                                      substr($c, $i, $l)),
+                                           HTML::span(substr($c, $i+$l, ($this->bytes / 2))
+                                                      ."..."." "
+                                                      .($score ? sprintf("[%0.1f]",$score):""))));
             } else {
-            	if (strpos($c," ") !== false)
+                if (strpos($c," ") !== false)
             	    $c = "";
             	else    
                     $c = sprintf(_("%s not found"), '»'.$search.'«');
