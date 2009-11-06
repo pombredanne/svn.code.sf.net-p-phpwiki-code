@@ -95,6 +95,7 @@ png
 ppt
 pptx
 rar
+svg
 tar
 tar.gz
 txt

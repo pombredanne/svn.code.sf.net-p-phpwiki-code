@@ -110,8 +110,8 @@ if (!$group_id || !$project) {
     define('ADMIN_USER', 'ACOS Forge Administrator');
     define('ADMIN_PASSWD', 'xxx');
 
-    // Allow ".jpeg" as extension
-    define('INLINE_IMAGES', 'png|jpg|jpeg|gif');
+    // Allow ".svg" as extension
+    define('INLINE_IMAGES', 'png|jpg|jpeg|gif|svg');
 
     // Allow parsing of headers for CreateToc
     define('TOC_FULL_SYNTAX', true);
