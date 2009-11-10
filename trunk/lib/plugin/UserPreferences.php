@@ -72,6 +72,12 @@ extends WikiPlugin
         $user =& $request->_user;
         if (isa($request,'MockRequest'))
             return '';
+        if (defined('GFORGE') and GFORGE) {
+            if (!($user->isAuthenticated())) {
+                return HTML::div(array('class' => 'errors'),
+                                 _("Error: You are not logged in, cannot display UserPreferences."));
+            }
+        }
         if ((!$request->isActionPage($request->getArg('pagename')) 
              and (!isset($user->_prefs->_method) 
                   or !in_array($user->_prefs->_method, array('ADODB','SQL','PDO'))))
@@ -83,7 +89,8 @@ extends WikiPlugin
 //            foreach ($no_args as $key => $value) {
 //                $no_args[$value] = false;
 //            }
-            $no_args['errmsg'] = HTML(HTML::h2(_("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."),HTML::hr()));
+            $no_args['errmsg'] = HTML::div(array('class' => 'errors'), 
+                                           _("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."));
             $no_args['isForm'] = false;
             return Template('userprefs', $no_args);
         }
