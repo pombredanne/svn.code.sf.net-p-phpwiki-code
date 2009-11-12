@@ -427,10 +427,8 @@ class _PageList_Column_content extends _PageList_Column {
                     $html[] = HTML::p(HTML::small(array('class' => 'search-context'), $line));
                 }
                 if ($score)
-                    $html[] = sprintf("... [%0.1f]",$score);
-                return HTML::div(array('style' => 'font-size:x-small'),
-                                 HTML::div(array('class' => 'transclusion'),
-                                           $html));
+                    $html[] = HTML::small(sprintf("... [%0.1f]", $score));
+                return $html;
             }
             // Remove special characters so that highlighting works
 	    $search = preg_replace('/^[\^\*]/', '', $search);
@@ -731,12 +729,18 @@ class PageList {
     	return array('sortby','limit','paging','count','dosort');
     }
 
-    function setCaption ($caption_string) {
-        $this->_caption = $caption_string;
+    /**
+     * @param	caption	string or HTML
+     */
+    function setCaption ($caption) {
+        $this->_caption = $caption;
     }
 
-    function addCaption ($caption_string) {
-        $this->_caption = HTML($this->_caption," ",$caption_string);
+    /**
+     * @param	caption	string or HTML
+     */
+    function addCaption ($caption) {
+        $this->_caption = HTML($this->_caption," ",$caption);
     }
 
     function getCaption () {
@@ -1488,7 +1492,8 @@ class PageList {
                                    'class'       => 'pagelist', 
 				   ));
         if ($caption) {
-        	$caption = preg_replace('/{total}/', $nb_row, asString($caption));
+            if (is_string($caption))
+                $caption = preg_replace('/{total}/', $nb_row, asString($caption));
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
 	}
 
@@ -1571,7 +1576,8 @@ class PageList {
 	}
         $out = HTML();
         if ($caption) {
-            $caption = preg_replace('/{total}/', $nb_row, asString($caption));
+            if (is_string($caption))
+                $caption = preg_replace('/{total}/', $nb_row, asString($caption));
             $out->pushContent(HTML::p($caption));
         }
 	// Semantic Search et al: only unique list entries, esp. with nopage
@@ -1748,6 +1754,7 @@ class PageList {
     function _emptyList($caption) {
         $html = HTML();
         if ($caption) {
+            if (is_string($caption))
         	$caption = preg_replace('/{total}/', '0', asString($caption));
             $html->pushContent(HTML::p($caption));
         }
