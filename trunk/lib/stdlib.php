@@ -2167,7 +2167,7 @@ function firstNWordsOfContent( $n, $content ) {
 function extractSection ($section, $content, $page, $quiet = false, $sectionhead = false) {
     $qsection = preg_replace('/\s+/', '\s+', preg_quote($section, '/'));
 
-    if (preg_match("/ ^(!{1,}|={2,})\\s*$qsection" // section header
+    if (preg_match("/ ^(!{1,}|={2,})\\s*$qsection\s*=*" // section header
                    . "  \\s*$\\n?"           // possible blank lines
                    . "  ( (?: ^.*\\n? )*? )" // some lines
                    . "  (?= ^\\1 | \\Z)/xm", // sec header (same or higher level) (or EOF)
