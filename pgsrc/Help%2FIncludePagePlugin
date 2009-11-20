@@ -1,4 +1,4 @@
-Date: Mon,  1 Jun 2009 15:05:05 +0000
+Date: Fri, 20 Nov 2009 18:30:13 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.3.14-20080124)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -82,9 +82,9 @@ Does not work in Wikicreole syntax
 
 == Known bugs
 
-* [[Help:RedirectToPlugin|~RedirectTo]] plugin is not handled correctly.
 * Line and word limit doesn't work if the included page itself includes a plugin.
-* "sections" parameter does not work if sections to include are in Wikicreole syntax
+* "sections" parameter does not work if sections to include are in Wikicreole syntax.
+* "section" parameter does not always work if sections to include use both Wikicreole/Mediawiki and classic Phpwiki syntax.
 
 == Authors
 
