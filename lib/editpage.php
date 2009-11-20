@@ -407,7 +407,8 @@ class PageEditor
      * Need to check dynamically some blacklist wikipage settings 
      * (plugin WikiAccessRestrictions) and some static blacklist.
      * DONE: 
-     *   Always: More then 20 new external links
+     *   More than NUM_SPAM_LINKS (default: 20) new external links. 
+     *        Disabled if NUM_SPAM_LINKS is 0
      *   ENABLE_SPAMASSASSIN:  content patterns by babycart (only php >= 4.3 for now)
      *   ENABLE_SPAMBLOCKLIST: content domain blacklist
      */
@@ -422,8 +423,8 @@ class PageEditor
         // FIXME: in longer texts the NUM_SPAM_LINKS number should be increased.
         //        better use a certain text : link ratio.
 
-        // 1. Not more then 20 new external links
-        if ($newlinks >= NUM_SPAM_LINKS)
+        // 1. Not more than NUM_SPAM_LINKS (default: 20) new external links
+        if ((NUM_SPAM_LINKS > 0) and ($newlinks >= NUM_SPAM_LINKS))
         {
             // Allow strictly authenticated users?
             // TODO: mail the admin?
