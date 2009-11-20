@@ -2194,7 +2194,7 @@ function extractSections ($sections, $content, $page, $quiet = false, $sectionhe
 
     while ($sections > 0) {
 
-        if (preg_match("/ ^(!{1,})\\s*(.*)\\n"   // section header
+        if (preg_match("/ ^(!{1,}|={2,})\\s*(.*)\\n"   // section header
                        . "  \\s*$\\n?"           // possible blank lines
                        . "  ( (?: ^.*\\n? )*? )" // some lines
                        . "  ( ^\\1 (.|\\n)* | \\Z)/xm", // sec header (same or higher level) (or EOF)
