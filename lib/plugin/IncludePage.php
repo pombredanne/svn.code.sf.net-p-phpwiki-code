@@ -109,10 +109,10 @@ extends WikiPlugin
         $c = $r->getContent();
         
         // follow redirects
-        if ((preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\S+)\s*\?'.'>/', 
-                       implode("\n", $c), $m))
-          or (preg_match('/<<\s*RedirectTo\s+page=(\S+)\s*>>/',
-                       implode("\n", $c), $m)))
+        if ((preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\S+)\s*\?'.'>/', implode("\n", $c), $m))
+          or (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(.*?)\s*\?'.'>/', implode("\n", $c), $m))
+          or (preg_match('/<<\s*RedirectTo\s+page=(\S+)\s*>>/', implode("\n", $c), $m))
+          or (preg_match('/<<\s*RedirectTo\s+page="(.*?)"\s*>>/', implode("\n", $c), $m)))
         {
             // Strip quotes (simple or double) from page name if any
             if ((string_starts_with($m[1], "'"))
