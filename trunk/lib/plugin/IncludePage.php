@@ -90,9 +90,14 @@ extends WikiPlugin
                                         $page));
         }
 
+        // Check if page exists
+        if (!($dbi->isWikiPage($page))) {
+            return $this->error(sprintf(_("Page '%s' does not exist"), $page));
+        }
+
         // Check if user is allowed to get the Page.
         if (!mayAccessPage ('view', $page)) {
-        	return $this->error(sprintf(_("Illegal inclusion of page %s: no read access"),
+            return $this->error(sprintf(_("Illegal inclusion of page %s: no read access"),
                                         $page));
         }
         
@@ -124,8 +129,8 @@ extends WikiPlugin
                 return $this->error(sprintf(_("recursive inclusion of page %s ignored"),
                                                 $page.' => '.$m[1]));
             }
-	    $page = $m[1];
-	    $p = $dbi->getPage($page);
+            $page = $m[1];
+            $p = $dbi->getPage($page);
             $r = $p->getCurrentRevision();
             $c = $r->getContent();   // array of lines
         }
