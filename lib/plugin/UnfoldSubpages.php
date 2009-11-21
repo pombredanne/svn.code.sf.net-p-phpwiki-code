@@ -170,7 +170,7 @@ extends WikiPlugin_IncludePage
                                                      false, $ct)));
             }
         }
-        if (! $cpagename ) {
+        if (! isset($cpagename)) {
             return $this->error(sprintf(_("%s has no subpages defined."), $pagename));
         }
         return $content;
