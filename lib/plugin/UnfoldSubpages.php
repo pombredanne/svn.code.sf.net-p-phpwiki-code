@@ -27,8 +27,6 @@ rcs_id('$Id$');
  *	      The section extractor is currently quite unstable.
  * Usage:   <?plugin UnfoldSubpages sortby=-mtime words=50 maxpages=5 ?>
  * Author:  Reini Urban <rurban@x-ray.at>
- * 
- * Todo: follow RedirectTo
  */
 
 require_once("lib/PageList.php");
@@ -120,9 +118,16 @@ extends WikiPlugin_IncludePage
                 $r = $page->getCurrentRevision();
                 $c = $r->getContent();   // array of lines
                 // follow redirects
-                if (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\w+)\s+\?'.'>/', 
-                               implode("\n", $c), $m)) 
+                if ((preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\S+)\s*\?'.'>/', implode("\n", $c), $m))
+                  or (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(.*?)\s*\?'.'>/', implode("\n", $c), $m))
+                  or (preg_match('/<<\s*RedirectTo\s+page=(\S+)\s*>>/', implode("\n", $c), $m))
+                  or (preg_match('/<<\s*RedirectTo\s+page="(.*?)"\s*>>/', implode("\n", $c), $m)))
                 {
+                    // Strip quotes (simple or double) from page name if any
+                    if ((string_starts_with($m[1], "'"))
+                      or (string_starts_with($m[1], "\""))) {
+                        $m[1] = substr($m[1], 1, -1);
+                    }
                     // trap recursive redirects
                     if (in_array($m[1], $included_pages)) {
                     	if (!$quiet)
