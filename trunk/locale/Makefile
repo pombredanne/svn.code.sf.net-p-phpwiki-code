@@ -487,7 +487,7 @@ ${POT_FILE}: ../themes/gforge/templates/browse.tmpl
 ${POT_FILE}: ../themes/gforge/templates/debug.tmpl
 ${POT_FILE}: ../themes/gforge/templates/editpage.tmpl
 ${POT_FILE}: ../themes/gforge/templates/html.tmpl
-${POT_FILE}: ../themes/gforge/templates/info.tmpl
+${POT_FILE}: ../themes/gforge/templates/login.tmpl
 ${POT_FILE}: ../themes/gforge/templates/navbar.tmpl
 ${POT_FILE}: ../themes/gforge/templates/pagelink.tmpl
 ${POT_FILE}: ../themes/gforge/templates/userprefs.tmpl
