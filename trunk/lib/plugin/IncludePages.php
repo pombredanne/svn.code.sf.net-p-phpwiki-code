@@ -24,8 +24,6 @@ rcs_id('$Id$');
  * IncludePages: Include a list of multiple pages, based on IncludePage.
  * usage:   <?plugin IncludePages pages=<!plugin-list BackLinks !> ?>
  * author:  ReiniUrban
- * 
- * Todo: follow RedirectTo
  */
 
 include_once("lib/plugin/IncludePage.php");
