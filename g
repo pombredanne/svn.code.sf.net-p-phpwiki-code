@@ -103,11 +103,14 @@ if (!$group_id || !$project) {
 
     // Postgesql
     define('DATABASE_TYPE', 'SQL');
+    // Dummy value (to avoid warning in SystemInfo plugin)
+    define('DATABASE_DSN', 'pgsql://localhost/user_phpwiki');
 
     // Disable VACUUM (they are performed every night)
     define('DATABASE_OPTIMISE_FREQUENCY', 0);
 
     define('ADMIN_USER', 'ACOS Forge Administrator');
+    // Dummy value
     define('ADMIN_PASSWD', 'xxx');
 
     // Allow ".svg" as extension
@@ -134,7 +137,7 @@ if (!$group_id || !$project) {
 
     // Disable public pages
     define('ENABLE_PAGE_PUBLIC', false);
-    
+
     // Enable external pages
     define('ENABLE_EXTERNAL_PAGES', $is_external);
 
@@ -194,7 +197,7 @@ if (!$group_id || !$project) {
     define('USE_BYTEA', true);
 
     define('ENABLE_SPAMBLOCKLIST', false);
-    
+
     define('ENCRYPTED_PASSWD', true);
 
     define('ENABLE_REVERSE_DNS', true);
@@ -233,8 +236,8 @@ if (!$group_id || !$project) {
     define('DISABLE_GETIMAGESIZE', true);
 
     if (isset($sys_use_selenium) && $sys_use_selenium) {
-    	// Temporary disabled for selenium based tests.
-    	define('ENABLE_EDIT_TOOLBAR', false);
+        // Temporary disabled for selenium based tests.
+        define('ENABLE_EDIT_TOOLBAR', false);
     }
 
     // If the user is logged in, let the Wiki know
