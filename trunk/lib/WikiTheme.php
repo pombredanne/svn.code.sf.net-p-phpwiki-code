@@ -309,7 +309,7 @@ class WikiTheme {
     //
     ////////////////////////////////////////////////////////////////
 
-    // Note:  Windows' implemetation of strftime does not include certain
+    // Note:  Windows' implementation of strftime does not include certain
 	// format specifiers, such as %e (for date without leading zeros).  In
 	// general, see:
 	// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vclib/html/_crt_strftime.2c_.wcsftime.asp
@@ -355,11 +355,12 @@ class WikiTheme {
      */
     function formatDate ($time_t) {
         global $request;
-        
+
         $offset_time = $time_t + 3600 * $request->getPref('timeOffset');
-        // strip leading zeros from date elements (ie space followed by zero)
-        return preg_replace('/ 0/', ' ', 
-                            strftime($this->_dateFormat, $offset_time));
+        // strip leading zeros from date elements (ie space followed by zero
+        // or leading 0 as in French "09 mai 2009")
+        return preg_replace('/ 0/', ' ', preg_replace('/^0/', ' ',
+                            strftime($this->_dateFormat, $offset_time)));
     }
 
     /**
