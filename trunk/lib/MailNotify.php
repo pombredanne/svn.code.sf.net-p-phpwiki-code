@@ -287,8 +287,9 @@ class MailNotify {
             $content .= $wikitext;
         }
         $editedby = sprintf(_("Edited by: %s"), $this->from);
+        $summary = sprintf(_("Summary: %s"), $meta['summary']);
         $this->sendMail($subject, 
-                        $editedby."\n".$difflink."\n\n".$content);
+                        $editedby."\n".$summary."\n".$difflink."\n\n".$content);
     }
 
     /** 
