@@ -45,6 +45,8 @@ class RSSParser
 extends XmlParser {
 
     var $title = "";
+    var $author = "";
+    var $pubDate = "";
     var $link  = "";
     var $description = "";
     var $inside_item = false;
@@ -81,6 +83,8 @@ extends XmlParser {
                 $GLOBALS['rss_parser_items'] =& $this->items;
             }
             $this->items[] = array("title"       => $this->item['TITLE'],
+                                   "author"      => $this->item['AUTHOR'],
+                                   "pubDate"     => $this->item['PUBDATE'],
                                    "description" => @$this->item['DESCRIPTION'],
                                    "link"        => $this->item['LINK']);
             $this->item = array("TITLE"       => "",

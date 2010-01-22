@@ -98,6 +98,11 @@ extends WikiPlugin
                                         HTML::a(array('href'=>$item['link']),
                                                 HTML::raw($item['title'])));
                 $cell->pushContent($cell_title);
+                $cell_author = HTML::raw($item['author']);
+                $cell_pubDate = HTML::raw($item['pubDate']);
+                $cell_authordate = HTML::div(array('class'=> 'authordate'), 
+                                             $cell_author, HTML::raw(" - "), $cell_pubDate);
+                $cell->pushContent($cell_authordate);
                 if (!empty($item['description']))
                     $cell->pushContent(HTML::div(array('class'=> 'itemdesc'),
                                                  HTML::raw($item['description'])));
