@@ -40,7 +40,7 @@ class XmlContent
     }
 
     function _pushContent ($item) {
-        if (strtolower(get_class($item)) == 'xmlcontent')
+        if (is_object($item) && strtolower(get_class($item)) == 'xmlcontent')
             array_splice($this->_content, count($this->_content), 0,
                          $item->_content);
         else
