@@ -2,6 +2,8 @@
 rcs_id('$Id$');
 /*
  * Copyright 1999-2008 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright (C) 2009 Roger Guignard, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -1330,7 +1332,7 @@ function main () {
     // Postpone warnings
     global $ErrorManager;
     if (defined('E_STRICT')) // and (E_ALL & E_STRICT)) // strict php5?
-        $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING|E_STRICT);
+        $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING|E_STRICT|((check_php_version(5,3)) ? E_DEPRECATED : 0));
     else
         $ErrorManager->setPostponedErrorMask(E_NOTICE|E_USER_NOTICE|E_USER_WARNING|E_WARNING);
     $request = new WikiRequest();
