@@ -47,7 +47,9 @@ ini_set("memory_limit", "64M");
 // Disable compression, seems needed to get all the messages.
 $no_gz_buffer=true;
 
-require_once('pre.php');
+require_once('../env.inc.php');
+require_once $gfwww.'include/pre.php';
+require_once $gfplugins.'wiki/include/wikiconfig.class.php';
 
 if (!$group_id || !$project) {
     exit_error("Invalid Project", "Invalid Project");
@@ -58,6 +60,8 @@ if (!$group_id || !$project) {
     $group_name = $project->getUnixName();
     $group_public_name = $project->getPublicName();
     $is_external = $project->getIsExternal();
+
+    $wc = new WikiConfig($group_id);
 
     define('VIRTUAL_PATH', '/wiki/g/'.$group_name);
     define('PAGE_PREFIX', '_g'.$group_id.'_');
@@ -78,6 +82,10 @@ if (!$group_id || !$project) {
     define('USE_PATH_INFO', true);
 
     define('WIKI_NAME', $group_name);
+
+    define('DISABLE_MARKUP_WIKIWORD', $wc->getWikiConfig('DISABLE_MARKUP_WIKIWORD'));
+
+    define('NUM_SPAM_LINKS', 20 * ($wc->getWikiConfig('NUM_SPAM_LINKS')));
 
     define('UPLOAD_FILE_PATH', '/opt/groups/'.WIKI_NAME.'/www/uploads/');
     // define('UPLOAD_DATA_PATH', SERVER_URL . '/www/'.WIKI_NAME.'/uploads/');
@@ -101,7 +109,7 @@ if (!$group_id || !$project) {
     define('DEBUG', ($sys_install_type != 'production'));
     // define('_DEBUG_LOGIN', true);
 
-    // Postgesql
+    // Postgresql
     define('DATABASE_TYPE', 'SQL');
     // Dummy value (to avoid warning in SystemInfo plugin)
     define('DATABASE_DSN', 'pgsql://localhost/user_phpwiki');
@@ -109,7 +117,9 @@ if (!$group_id || !$project) {
     // Disable VACUUM (they are performed every night)
     define('DATABASE_OPTIMISE_FREQUENCY', 0);
 
-    define('ADMIN_USER', 'ACOS Forge Administrator');
+    // TBD: the name should be taken from Gforge
+    // define('ADMIN_USER', 'ACOS Forge Administrator');
+    define('ADMIN_USER', 'The PhpWiki programming team');
     // Dummy value
     define('ADMIN_PASSWD', 'xxx');
 
@@ -258,7 +268,7 @@ if (!$group_id || !$project) {
     }
 
     // Load the default configuration.
-    include "index.php";
+    include dirname(__FILE__).'/index.php';
 
     // Override the default configuration for VARIABLES after index.php:
     // E.g. Use another DB:
@@ -269,7 +279,7 @@ if (!$group_id || !$project) {
     $DBParams['prefix'] = "plugin_wiki_";
 
     // Start the wiki
-    include "lib/main.php";
+    include dirname(__FILE__).'/lib/main.php';
 }
 
 /**
