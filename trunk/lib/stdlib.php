@@ -425,7 +425,7 @@ function LinkImage($url, $alt = "") {
     if (empty($alt)) $alt = "";
 
     // Extract URL
-    $arr = split(' ',$url);
+    $arr = explode(' ',$url);
     if (!empty($arr)) $url = $arr[0];
     if (! IsSafeURL($url)) {
         $link = HTML::span(array('class' => 'error'), _("BAD URL -- remove all of <, >, \""));
@@ -633,7 +633,7 @@ function ImgObject($img, $url) {
             $img->setAttr('src', false);
         }
     } else {
-        $args = split(' ', $url);
+        $args = explode(' ', $url);
         if (count($args) >= 1) {
           $url = array_shift($args);
           $found = array();
@@ -716,7 +716,7 @@ class Stack {
 function SplitQueryArgs ($query_args = '') 
 {
     // FIXME: use the arg-seperator which might not be &
-    $split_args = split('&', $query_args);
+    $split_args = explode('&', $query_args);
     $args = array();
     while (list($key, $val) = each($split_args))
         if (preg_match('/^ ([^=]+) =? (.*) /x', $val, $m))
@@ -827,7 +827,7 @@ class WikiPageName
         if (is_string($name)) {
             $this->shortName = $name;
             if (strstr($name, ':')) {
-                list($moniker, $shortName) = split (":", $name, 2);
+                list($moniker, $shortName) = explode (":", $name, 2);
 	  	$map = getInterwikiMap(); // allow overrides to custom maps
                 if (isset($map->_map[$moniker])) {
                     $url = $map->_map[$moniker];
@@ -846,7 +846,7 @@ class WikiPageName
                         $name = $url;
                     }
                     if (strstr($shortName, '?')) {
-                        list($shortName, $dummy) = split("\?", $shortName, 2);
+                        list($shortName, $dummy) = explode("\?", $shortName, 2);
 		    }
                     $this->shortName = $shortName;
                 }
@@ -1212,7 +1212,7 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
  * @return string
  */
 function expand_tabs($str, $tab_width = 8) {
-    $split = split("\t", $str);
+    $split = explode("\t", $str);
     $tail = array_pop($split);
     $expanded = "\n";
     foreach ($split as $hunk) {
