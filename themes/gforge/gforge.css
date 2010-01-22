@@ -894,14 +894,19 @@ td.spacerow{background:#cad9ea;color:#000000}
 td.sidebar { border-spacing: 0px; margin: 0ex;}
 
 /* RssFeed */
-div.rss { margin: 1em; padding: 1em; font-size: 0.9em; background-color: #eeeeee; border: thin dashed #aaaaaa; }
-div.feed { color: #333; margin: -0.5em; margin-bottom: 0em; padding: 0.3em; font-weight: bold; background-color: #f2f2f2; font-size: 1.2em; }
-div.itemdesc {  padding-left: 1em; }
-div.rssitem { border-top: thin dashed #aaaaaa; }
+div.rss { margin: 1em; padding: 1em; }
+div.feed { margin: -0.5em; margin-bottom: 0em; padding: 0.3em;
+           font-weight: bold; font-size: 1.2em; }
+.chandesc { font-weight: bold; }
+div.rssitem { padding-top:1em; padding-bottom: 1em;
+              border-top: 2px solid #565c5e; /* Alcatel-Lucent grey */ }
+div.itemname { padding-bottom: 1em; font-weight: bold; }
+div.itemdesc { padding-left: 1em; }
+div.authordate { font-style: italic; }
 a.rssicon { font-weight:normal; font-size:small; vertical-align:middle; }
 
 /* SqlResult */
-table.sqlresult { 
+table.sqlresult {
   border: 1px outset gray;
   background: white;
   margin: 0.5ex 0.5em;
