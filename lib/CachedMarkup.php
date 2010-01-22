@@ -682,7 +682,7 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
     }
 
     function getPagename($basepage) {
-        list ($moniker, $page) = split (":", $this->_link, 2);
+        list ($moniker, $page) = explode (":", $this->_link, 2);
 	$page = new WikiPageName($page, $basepage);
 	if ($page->isValid()) return $page->name;
 	else return false;
