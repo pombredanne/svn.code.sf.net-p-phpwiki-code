@@ -245,10 +245,7 @@ if (!$group_id || !$project) {
 
     define('DISABLE_GETIMAGESIZE', true);
 
-    if (isset($sys_use_selenium) && $sys_use_selenium) {
-        // Temporary disabled for selenium based tests.
-        define('ENABLE_EDIT_TOOLBAR', false);
-    }
+    define('ENABLE_EDIT_TOOLBAR', true);
 
     // If the user is logged in, let the Wiki know
     if (session_loggedin()){
