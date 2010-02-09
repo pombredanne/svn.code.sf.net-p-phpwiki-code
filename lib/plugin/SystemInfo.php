@@ -456,7 +456,7 @@ extends WikiPluginCached
         if (!empty($availableargs[$arg]))
             return $availableargs[$arg]();
         elseif (method_exists($this, $arg)) // any defined SystemInfo->method()
-            return call_user_func_array(array(&$this, $arg), '');
+            return call_user_func_array(array(&$this, $arg), array());
         elseif (defined($arg) && // any defined constant
                 !in_array($arg,array('ADMIN_PASSWD','DATABASE_DSN','DBAUTH_AUTH_DSN')))
             return constant($arg);
