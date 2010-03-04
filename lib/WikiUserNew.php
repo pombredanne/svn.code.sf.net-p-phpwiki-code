@@ -1731,6 +1731,11 @@ class _UserPreference_email
 extends _UserPreference
 {
     function sanify($value) {
+
+        // email address is already checked by Gforge
+        if (defined('GFORGE') and GFORGE) {
+            return $value;
+        }
         // check for valid email address
         if ($this->get('email') == $value and $this->getraw('emailVerified'))
             return $value;
