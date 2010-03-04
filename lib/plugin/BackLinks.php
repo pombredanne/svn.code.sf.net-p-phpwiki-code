@@ -30,16 +30,16 @@ extends WikiPlugin
     function getName() {
         return _("BackLinks");
     }
-    
+
     function getDescription() {
         return sprintf(_("List all pages which link to %s."), '[pagename]');
     }
-    
+
     function getVersion() {
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");
     }
-    
+
     function getDefaultArguments() {
         return array_merge
             (
@@ -47,8 +47,8 @@ extends WikiPlugin
              array('include_self' => false,
                    'noheader'     => false,
                    'page'         => '[pagename]',
-		   'linkmore'     => '',  // If count>0 and limit>0 display a link with 
-		     // the number of all results, linked to the given pagename.
+                   'linkmore'     => '',  // If count>0 and limit>0 display a link with
+                     // the number of all results, linked to the given pagename.
                    ));
     }
 
@@ -70,39 +70,39 @@ extends WikiPlugin
         if ($info) {
             $info = explode(",", $info);
             if (in_array('count',$info))
-                $args['types']['count'] = 
+                $args['types']['count'] =
                     new _PageList_Column_BackLinks_count('count', _("#"), 'center');
         }
-	if (!empty($limit))
-	    $args['limit'] = $limit;
+        if (!empty($limit))
+            $args['limit'] = $limit;
         $args['dosort'] = !empty($args['sortby']); // override DB sort (??)
         $pagelist = new PageList($info, $exclude, $args);
 
         // support logical AND: page1,page2
-	$pages = explodePageList($page);
-	$count = count($pages);
-	if (count($pages) > 1) {
-	    // AND: the intersection of all these pages
-	    $bl = array();
-	    foreach ($pages as $p) {
-		$dp = $dbi->getPage($p);
-		$bi = $dp->getBackLinks(false, $sortby, 0, $exclude);
-		while ($b = $bi->next()) {
-		    $name = $b->getName();
-	            if (isset($bl[$name]))
-	                $bl[$name]++;
-	            else 
-	                $bl[$name] = 1;   
-                } 
-	    }
-	    foreach ($bl as $b => $v)
-	        if ($v == $count)
-	            $pagelist->addPage($b);
-	} else {
-	    $p = $dbi->getPage($page);
-	    $pagelist->addPages($p->getBackLinks(false, $sortby, 0, $exclude));
-	}
-	$total = $pagelist->getTotal();
+        $pages = explodePageList($page);
+        $count = count($pages);
+        if (count($pages) > 1) {
+            // AND: the intersection of all these pages
+            $bl = array();
+            foreach ($pages as $p) {
+                $dp = $dbi->getPage($p);
+                $bi = $dp->getBackLinks(false, $sortby, 0, $exclude);
+                while ($b = $bi->next()) {
+                    $name = $b->getName();
+                    if (isset($bl[$name]))
+                        $bl[$name]++;
+                    else
+                        $bl[$name] = 1;
+                }
+            }
+            foreach ($bl as $b => $v)
+                if ($v == $count)
+                    $pagelist->addPage($b);
+        } else {
+            $p = $dbi->getPage($page);
+            $pagelist->addPages($p->getBackLinks(false, $sortby, 0, $exclude));
+        }
+        $total = $pagelist->getTotal();
 
         // Localization note: In English, the differences between the
         // various phrases spit out here may seem subtle or negligible
@@ -112,8 +112,8 @@ extends WikiPlugin
         // distinction as it does with English in this case. :)
         if (!$noheader) {
             if ($page == $request->getArg('pagename')
-                and !$dbi->isWikiPage($page)) 
-	    {
+                and !$dbi->isWikiPage($page))
+            {
                     // BackLinks plugin is more than likely being called
                     // upon for an empty page on said page, while either
                     // 'browse'ing, 'create'ing or 'edit'ing.
@@ -122,10 +122,10 @@ extends WikiPlugin
                     // the Un~WikiLink~ified (plain) name of the uncreated
                     // page currently being viewed.
                     $pagelink = $page;
-                    
+
                     if ($pagelist->isEmpty())
                         return HTML::p(fmt("No other page links to %s yet.", $pagelink));
-                    
+
                     if ($total == 1)
                         $pagelist->setCaption(fmt("One page would link to %s:",
                                                   $pagelink));
@@ -140,21 +140,21 @@ extends WikiPlugin
                                                   $total, $pagelink));
             }
             else {
-		if ($count) {
-		    $tmp_pages = $pages;
-		    $p = array_shift($tmp_pages);
-		    $pagelink = HTML(WikiLink($p, 'auto'));
-		    foreach ($tmp_pages as $p)
-		        $pagelink->pushContent(" ",_("AND")," ",WikiLink($p, 'auto')); 
-		} else
-            	    // BackLinks plugin is being displayed on a normal page.
+                if ($count) {
+                    $tmp_pages = $pages;
+                    $p = array_shift($tmp_pages);
+                    $pagelink = HTML(WikiLink($p, 'auto'));
+                    foreach ($tmp_pages as $p)
+                        $pagelink->pushContent(" ",_("AND")," ",WikiLink($p, 'auto'));
+                } else
+                        // BackLinks plugin is being displayed on a normal page.
                     $pagelink = WikiLink($page, 'auto');
-                
+
                 if ($pagelist->isEmpty())
                     return HTML::p(fmt("No page links to %s.", $pagelink));
-                
+
                 //trigger_error("DEBUG: " . $pagelist->getTotal());
-                
+
                 if ($total == 1)
                     $pagelist->setCaption(fmt("One page links to %s:",
                                               $pagelink));
@@ -166,18 +166,18 @@ extends WikiPlugin
                 //                               $pagelink));
                 else
                     $pagelist->setCaption(fmt("%s pages link to %s:",
-                                              $limit > 0 ? $total : _("Those"), 
-					      $pagelink));
+                                              $limit > 0 ? $total : _("Those"),
+                                              $pagelink));
             }
         }
-	if (!empty($args['linkmore']) 
-	    and $dbi->isWikiPage($args['linkmore'])
-	    and $limit > 0 and $total > $limit
-	    )
-	    $pagelist->addCaption(WikiLink($args['linkmore'], "auto", _("More...")));
+        if (!empty($args['linkmore'])
+            and $dbi->isWikiPage($args['linkmore'])
+            and $limit > 0 and $total > $limit
+            )
+            $pagelist->addCaption(WikiLink($args['linkmore'], "auto", _("More...")));
         return $pagelist;
     }
-    
+
 };
 
 // how many links from this backLink to other pages

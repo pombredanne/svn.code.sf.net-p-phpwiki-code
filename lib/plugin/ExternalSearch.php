@@ -72,8 +72,8 @@ extends WikiPlugin
                      'width'    => false,
                      'height'   => false,
                      'debug'    => false,
-		     'button_position' => EXTERNALSEARCH_DEFAULT_BUTTON_POSITION,
-		     // 'left' or 'right'
+                     'button_position' => EXTERNALSEARCH_DEFAULT_BUTTON_POSITION,
+                     // 'left' or 'right'
                      );
     }
 
@@ -114,10 +114,10 @@ extends WikiPlugin
         $form->pushContent(HTML::input(array('type' => 'hidden',
                                              'name'  => 'url',
                                              'value' => $this->_url)));
-	$s = HTML::input(array('type' => 'text',
-			       'value' => $this->_s,
-			       'name'  => 's',
-			       'size'  => $formsize));
+        $s = HTML::input(array('type' => 'text',
+                               'value' => $this->_s,
+                               'name'  => 's',
+                               'size'  => $formsize));
         if (!empty($args["useimage"])) {
             //FIXME: This does not work with Gecko
             $button = HTML::img(array('src' => $useimage, 'alt' => 'imagebutton'));
@@ -126,29 +126,29 @@ extends WikiPlugin
             if (!empty($height))
                 $button->setAttr('height',$height);
             // on button_position => none display no input form
-	    if ($button_position == 'right')
-		$form->pushContent($s);
+            if ($button_position == 'right')
+                $form->pushContent($s);
             $form->pushContent(HTML::button(array('type' => 'button',
                                                   'class' => 'button',
                                                   'value' => $this->_name,
                                                   ),
                                             $button));
-	    if ($button_position == 'left')
-		$form->pushContent($s);
+            if ($button_position == 'left')
+                $form->pushContent($s);
         } else {
             if ($button_position != 'left' and $button_position != 'right')
-                return $this->error(fmt("Invalid argument: %s=%s", 
+                return $this->error(fmt("Invalid argument: %s=%s",
                                         'button_position', $button_position));
             $button = HTML::input(array('type' => 'submit',
                                         'class' => 'button',
                                         'value' => $this->_name));
-	    if ($button_position == 'left') {
-		$form->pushContent($button);
-		$form->pushContent($s);
-	    } elseif ($button_position == 'right') {
-		$form->pushContent($s);
-		$form->pushContent($button);
-	    }
+            if ($button_position == 'left') {
+                $form->pushContent($button);
+                $form->pushContent($s);
+            } elseif ($button_position == 'right') {
+                $form->pushContent($s);
+                $form->pushContent($button);
+            }
         }
         return $form;
     }

@@ -27,12 +27,12 @@ rcs_id('$Id$');
 
  * Hint: You need to sign up for a Google Maps API key!
  *         http://www.google.com/apis/maps/signup.html
- *       Then enter the key in config/config.ini under GOOGLE_LICENSE_KEY= 
+ *       Then enter the key in config/config.ini under GOOGLE_LICENSE_KEY=
  *
  * Usage:
  *  <?plugin GoogleMaps
  *           Latitude=53.053
- *	     Longitude=7.803
+ *             Longitude=7.803
  *           ZoomFactor=10
  *           Marker=true
  *           InfoText=
@@ -47,7 +47,7 @@ rcs_id('$Id$');
  * @see plugin/GooglePlugin
  *      http://www.giswiki.de/index.php/Google_Maps_Extensions
  *      http://www.google.com/apis/maps/, http://maps.google.com/
- *      http://libgmail.sourceforge.net/googlemaps.html 
+ *      http://libgmail.sourceforge.net/googlemaps.html
  *
  * NOT YET SUPPORTED:
  *   Search for keywords (search=)
@@ -73,16 +73,16 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array( 
-		     'Longitude' => 	'',
-		     'Latitude'  => 	'',
-		     'ZoomFactor'=>	5,
-		     'Marker'    =>	true,
-		     'InfoText'  => 	'',
-		     'MapType'   =>  	'Hybrid', // Map|Satellite|Hybrid,
-		     'SmallMapControl' => false,  // large or small
-		     'width'     =>	'500px',
-		     'height'    =>	'400px',
+        return array(
+                     'Longitude' =>         '',
+                     'Latitude'  =>         '',
+                     'ZoomFactor'=>        5,
+                     'Marker'    =>        true,
+                     'InfoText'  =>         '',
+                     'MapType'   =>          'Hybrid', // Map|Satellite|Hybrid,
+                     'SmallMapControl' => false,  // large or small
+                     'width'     =>        '500px',
+                     'height'    =>        '400px',
                     );
     }
 
@@ -99,21 +99,21 @@ extends WikiPlugin
             return $this->error(fmt("%s parameter missing", "'Latitude'"));
         }
 
-	$maps = JavaScript('',array('src'=>"http://maps.google.com/maps?file=api&v=1&key=" . GOOGLE_LICENSE_KEY));
-	$id = GenerateId("googlemap");
-	switch ($MapType) {
-	case "Satellite": $type = "_SATELLITE_TYPE"; break;
-	case "Map":       $type = "_MAP_TYPE"; break;
-	case "Hybrid":    $type = "_HYBRID_TYPE"; break;
-	default: return $this->error(sprintf(_("invalid argument %s"), $MapType));
-	}
-	$div = HTML::div(array('id'=>$id,'style'=>'width: '.$width.'; height: '.$height));
+        $maps = JavaScript('',array('src'=>"http://maps.google.com/maps?file=api&v=1&key=" . GOOGLE_LICENSE_KEY));
+        $id = GenerateId("googlemap");
+        switch ($MapType) {
+        case "Satellite": $type = "_SATELLITE_TYPE"; break;
+        case "Map":       $type = "_MAP_TYPE"; break;
+        case "Hybrid":    $type = "_HYBRID_TYPE"; break;
+        default: return $this->error(sprintf(_("invalid argument %s"), $MapType));
+        }
+        $div = HTML::div(array('id'=>$id,'style'=>'width: '.$width.'; height: '.$height));
 
         // TODO: Check for multiple markers or polygons
-        if (!$InfoText) 
+        if (!$InfoText)
             $Marker = false;
         // Create a marker whose info window displays the given text
-	if ($Marker) {
+        if ($Marker) {
             if ($InfoText) {
                 include_once("lib/BlockParser.php");
                 $page = $dbi->getPage($request->getArg('pagename'));
@@ -121,26 +121,26 @@ extends WikiPlugin
                 $markup = $rev->get('markup');
                 $markertext = TransformText($InfoText, $markup, $basepage);
             }
-	    $markerjs = JavaScript("
+            $markerjs = JavaScript("
 function createMarker(point, text) {
   var marker = new GMarker(point);
-  var html = text + \"<br><br><font size='-1'>[" . 
+  var html = text + \"<br><br><font size='-1'>[" .
                                                _("new&nbsp;window") .
                                                "]</font>\";
   GEvent.addListener(marker, \"click\", function() {marker.openInfoWindowHtml(html);});
   return marker;
 }");
-	}
+        }
 
-	$run = JavaScript("
+        $run = JavaScript("
 var map = new GMap(document.getElementById('".$id."'));\n" .
-($SmallMapControl 
+($SmallMapControl
  ? "map.addControl(new GSmallMapControl());\n"
  : "map.addControl(new GLargeMapControl());\n") . "
 map.addControl(new GMapTypeControl());
 map.centerAndZoom(new GPoint(".$Longitude.", ".$Latitude."), ".$ZoomFactor.");
-map.setMapType(".$type.");" . 
-($Marker 
+map.setMapType(".$type.");" .
+($Marker
  ? "
 var point = new GPoint(".$Longitude.",".$Latitude.");
 var marker = createMarker(point, '".$markertext->asXml()."'); map.addOverlay(marker);"

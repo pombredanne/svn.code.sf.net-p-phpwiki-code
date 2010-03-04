@@ -45,11 +45,11 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function getDefaultArguments() {
-        return array_merge 
+        return array_merge
             (
              WikiPlugin_WikiAdminSelect::getDefaultArguments(),
              array(
-                   'external' 	=> 1,
+                   'external'         => 1,
                    /* Columns to include in listing */
                    'info'     => 'pagename,external,mtime',
                    ));
@@ -94,12 +94,12 @@ extends WikiPlugin_WikiAdminSelect
             return $result;
         }
     }
-    
+
     function run($dbi, $argstr, &$request, $basepage) {
         if ($request->getArg('action') != 'browse')
             if (!$request->getArg('action') == _("PhpWikiAdministration/SetExternal"))
                 return $this->disabled("(action != 'browse')");
-        
+
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
         $this->preSelectS($args, $request);

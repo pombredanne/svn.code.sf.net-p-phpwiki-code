@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -21,9 +21,9 @@ rcs_id('$Id$');
  */
 
 /**
- * This plugin displays results of arbitrary SQL select statements 
+ * This plugin displays results of arbitrary SQL select statements
  * in table form.
- * The database definition, the DSN, must be defined in the local file 
+ * The database definition, the DSN, must be defined in the local file
  * config/SqlResult.ini
  *   A simple textfile with alias = dsn lines.
  *
@@ -37,9 +37,9 @@ rcs_id('$Id$');
  *                   PASSWORD('xx')
  *   ?>
  *   <?plugin SqlResult alias=videos template=videos
- *            SELECT rating,title,date 
- *                   FROM video 
- *                   ORDER BY rating DESC 
+ *            SELECT rating,title,date
+ *                   FROM video
+ *                   ORDER BY rating DESC
  *                   LIMIT 5
  *   ?>
  *   <?plugin SqlResult alias=imdb template=imdbmovies where||="Davies, Jeremy%"
@@ -61,8 +61,8 @@ require_once("lib/PageList.php");
 class WikiPlugin_SqlResult
 extends WikiPlugin
 {
-    var $_args;	
-    
+    var $_args;
+
     function getName () {
         return _("SqlResult");
     }
@@ -83,7 +83,7 @@ extends WikiPlugin
                      'template'    => false, // use a custom <theme>/template.tmpl
                      'where'       => false, // custom filter for the query
                      'sortby'      => false, // for paging, default none
-                     'limit'       => "0,50", // for paging, default: only the first 50 
+                     'limit'       => "0,50", // for paging, default: only the first 50
                     );
     }
 
@@ -95,17 +95,17 @@ extends WikiPlugin
     /** Get the SQL statement from the rest of the lines
      */
     function handle_plugin_args_cruft($argstr, $args) {
-    	$this->_sql = str_replace("\n"," ",$argstr);
+            $this->_sql = str_replace("\n"," ",$argstr);
         return;
     }
-   
+
     function run($dbi, $argstr, &$request, $basepage) {
         global $DBParams;
-    	//$request->setArg('nocache','1');
+            //$request->setArg('nocache','1');
         extract($this->getArgs($argstr, $request));
         if (!$alias)
             return $this->error(_("No DSN alias for SqlResult.ini specified"));
-	$sql = $this->_sql;
+        $sql = $this->_sql;
 
         // apply custom filters
         if ($where and strstr($sql, "%%where%%"))
@@ -137,23 +137,23 @@ extends WikiPlugin
         if (!$inidsn)
             return $this->error(sprintf(_("No DSN for alias %s in SqlResult.ini found"),
                                         $alias));
-        // adodb or pear? adodb as default, since we distribute per default it. 
+        // adodb or pear? adodb as default, since we distribute per default it.
         // for pear there may be overrides.
         // TODO: native PDO support (for now we use ADODB)
         if ($DBParams['dbtype'] == 'SQL') {
             $dbh = DB::connect($inidsn);
             $all = $dbh->getAll($sql);
             if (DB::isError($all)) {
-            	return $this->error($all->getMessage(). ' ' . $all->userinfo);
+                    return $this->error($all->getMessage(). ' ' . $all->userinfo);
             }
         } else { // unless PearDB use the included ADODB, regardless if dba, file or PDO, ...
             if ($DBParams['dbtype'] != 'ADODB') {
                 require_once('lib/WikiDB/backend/ADODB.php');
             }
             $parsed = parseDSN($inidsn);
-            $dbh = &ADONewConnection($parsed['phptype']); 
-            $conn = $dbh->Connect($parsed['hostspec'],$parsed['username'], 
-                                  $parsed['password'], $parsed['database']); 
+            $dbh = &ADONewConnection($parsed['phptype']);
+            $conn = $dbh->Connect($parsed['hostspec'],$parsed['username'],
+                                  $parsed['password'], $parsed['database']);
             if (!$conn)
                 return $this->error($dbh->errorMsg());
             $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_ASSOC;
@@ -175,11 +175,11 @@ extends WikiPlugin
         if ($template) {
             $args = array_merge(
                       array('SqlResult' => $all,   // the resulting array of rows
-                            'ordered' => $ordered, // whether to display as <ul>/<dt> or <ol> 
+                            'ordered' => $ordered, // whether to display as <ul>/<dt> or <ol>
                             'where'   => $where,
-                            'sortby'  => $sortby,  
+                            'sortby'  => $sortby,
                             'limit'   => $limit),
-                      $args);		// paging params override given params
+                      $args);                // paging params override given params
             return Template($template, $args);
         } else {
             if ($ordered) {

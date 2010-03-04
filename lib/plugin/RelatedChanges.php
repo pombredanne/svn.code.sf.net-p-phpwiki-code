@@ -56,8 +56,8 @@ extends WikiPlugin_RecentChanges
     }
 
     function getDefaultArguments() {
-    	//php-4.0.4pl1 breaks at the parent:: line even if the 
-    	// code doesn't reach this line
+            //php-4.0.4pl1 breaks at the parent:: line even if the
+            // code doesn't reach this line
         //if (!check_php_version(4,0,6))
         $args = WikiPlugin_RecentChanges::getDefaultArguments();
         //else $args = parent::getDefaultArguments();
@@ -118,7 +118,7 @@ extends WikiPlugin_RecentChanges
             else
                 $fmt_class = '_RelatedChanges_HtmlFormatter';
         }
-  
+
         $fmt = new $fmt_class($args);
         return $fmt->format($changes);
     }

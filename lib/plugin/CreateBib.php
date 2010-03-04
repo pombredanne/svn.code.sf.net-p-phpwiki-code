@@ -23,9 +23,9 @@ rcs_id('$Id$');
 /**
  * CreateBib:  Automatically create a BibTex file from page
  *
- * Usage:   
+ * Usage:
  *  <?plugin CreateBib pagename||=whatever ?>
- *                     
+ *
  * @author:  Lea Viljanen
  */
 
@@ -52,18 +52,18 @@ extends WikiPlugin
 
     function preg_quote ($heading) {
         return str_replace(array("/",".","?","*"),
-    		           array('\/','\.','\?','\*'), $heading);
+                               array('\/','\.','\?','\*'), $heading);
     }
-    
+
 
     // Have to include the $starttag and $endtag to the regexps...
-    function extractBibTeX (&$content, $starttag, $endtag) 
+    function extractBibTeX (&$content, $starttag, $endtag)
     {
         $bib = array();
 
         $start = false;
         $stop = false;
-        for ($i=0; $i<count($content); $i++) 
+        for ($i=0; $i<count($content); $i++)
         {
             // $starttag shows when to start
             if (preg_match('/^@/',$content[$i],$match)) {
@@ -87,7 +87,7 @@ extends WikiPlugin
         $articles = array();
         for ($i=0; $i<count($content); $i++) {
             // Should match "* [WikiPageName] whatever"
-            //if (preg_match('/^\s*\*\s+(\[.+\])/',$content[$i],$match)) 
+            //if (preg_match('/^\s*\*\s+(\[.+\])/',$content[$i],$match))
             if (preg_match('/^\s*\*\s+\[(.+)\]/',$content[$i],$match))
             {
                 $articles[] = $match[1];
@@ -95,7 +95,7 @@ extends WikiPlugin
         }
         return $articles;
     }
-                
+
 
     function dumpFile(&$thispage, $filename) {
       include_once("lib/loadsave.php");
@@ -126,14 +126,14 @@ extends WikiPlugin
         $current = $page->getCurrentRevision();
         $content = $current->getContent();
 
-	// Prepare the button to trigger dumping
-	$dump_url = $request->getURLtoSelf(array("file" => "tube.bib"));
+        // Prepare the button to trigger dumping
+        $dump_url = $request->getURLtoSelf(array("file" => "tube.bib"));
         global $WikiTheme;
-        $dump_button = $WikiTheme->makeButton("To File", 
-					  $dump_url , 'foo');
+        $dump_button = $WikiTheme->makeButton("To File",
+                                          $dump_url , 'foo');
 
         $html = HTML::div(array('class' => 'bib','align' => 'left'));
-	$html->pushContent($dump_button, ' ');
+        $html->pushContent($dump_button, ' ');
         $list = HTML::pre(array('id'=>'biblist', 'class' => 'bib'));
 
         // Let's find the subpages
@@ -162,7 +162,7 @@ extends WikiPlugin
             $c = $p->getCurrentRevision();
             $pagedata = $c->getContent();
             $this->dumpFile($pagedata, $request->getArg('file'));
-	}
+        }
 
         return $html;
     }

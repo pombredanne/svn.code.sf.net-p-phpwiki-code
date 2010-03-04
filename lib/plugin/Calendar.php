@@ -59,21 +59,21 @@ extends WikiPlugin
                      'month_format'     => '%B %Y',
                      'wday_format'      => '%a',
                      'start_wday'       => '1', // start now with Monday
-		     'display_weeknum'  => 0);
+                     'display_weeknum'  => 0);
     }
 
     /**
-     * return links (static only as of action=edit) 
+     * return links (static only as of action=edit)
      *
      * @param string $argstr The plugin argument string.
      * @param string $basepage The pagename the plugin is invoked from.
      * @return array List of pagenames linked to (or false).
      */
     function getWikiPageLinks ($argstr, $basepage) {
-        if (isset($this->_links)) 
+        if (isset($this->_links))
             return $this->_links;
         else {
-            global $request;	
+            global $request;
             $this->run($request->_dbi, $argstr, $request, $basepage);
             return $this->_links;
         }
@@ -126,7 +126,7 @@ extends WikiPlugin
         $fs = $this->args['wday_format'];
         $row = HTML::tr();
         $row->setattr('class', 'cal-dayname');
-	if ($this->args['display_weeknum'])
+        if ($this->args['display_weeknum'])
             $row->pushContent(HTML::td(array('class' => 'cal-dayname',
                                              'align' => 'center'),
                                        _("Wk")));
@@ -197,7 +197,7 @@ extends WikiPlugin
                        1,                                      // mday (1-31)
                        $args['year']);
 
-	$colnum = $args['display_weeknum'] ? 8 : 7;
+        $colnum = $args['display_weeknum'] ? 8 : 7;
         $cal = HTML::table(array('cellspacing' => 0,
                                  'cellpadding' => 2,
                                  'class'       => 'cal'),
@@ -216,9 +216,9 @@ extends WikiPlugin
         $tbody = HTML::tbody();
         $row = HTML::tr();
 
-	if ($args['display_weeknum'])
+        if ($args['display_weeknum'])
             $row->pushContent(HTML::td(array('class' => 'cal-weeknum'),
-				       ((int)strftime("%U", $time))+1)); // %U problem. starts with 0
+                                       ((int)strftime("%U", $time))+1)); // %U problem. starts with 0
         $col = (7 + $t['tm_wday'] - $args['start_wday']) % 7;
         if ($col > 0)
             $row->pushContent(HTML::td(array('colspan' => $col)));
@@ -235,9 +235,9 @@ extends WikiPlugin
             $time += SECONDS_PER_DAY;
             $t     = localtime($time, 1);
             $done  = $t['tm_mday'] == 1;
-	    if (!$col and !$done and $args['display_weeknum'])
-		$row->pushContent(HTML::td(array('class' => 'cal-weeknum'),
-					   ((int)strftime("%U", $time))+1)); // starts with 0
+            if (!$col and !$done and $args['display_weeknum'])
+                $row->pushContent(HTML::td(array('class' => 'cal-weeknum'),
+                                           ((int)strftime("%U", $time))+1)); // starts with 0
         }
 
         if ($row->getContent()) {

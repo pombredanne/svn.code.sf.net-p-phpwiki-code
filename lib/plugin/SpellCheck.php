@@ -28,11 +28,11 @@ rcs_id('$Id$');
  * The pspell extension is better, because it's easier to store corrections.
  * Enchant looks more promising, because it supports multiple speller backends.
  *
- * Currently we do use aspell (via pspell or cmdline) in ispell mode. 
+ * Currently we do use aspell (via pspell or cmdline) in ispell mode.
  * Maybe enchant later.
  * cmdline preparation:
   do autosplit wikiwords && sed s,^,\^^, $pagename | aspell --lang=$LANG -a
-    or 
+    or
   sed s,^,\^^, $pagename | aspell --lang=$LANG -a -C
 =>
   & phpwiki 62 30: pipework, paprika, Popek, Phip, Pike, Viki, pike, ...
@@ -55,10 +55,10 @@ if (!function_exists('pspell_new_config')) {
     // new library interface through the pspell extension:
     // "/var/dictionaries/custom.pws"
     if (!defined('PSPELL_PWL'))
-	define('PSPELL_PWL', '');  // phpwiki-special wordlist
+        define('PSPELL_PWL', '');  // phpwiki-special wordlist
     // "/var/dictionaries/custom.repl"
     if (!defined('PSPELL_REPL'))
-	define('PSPELL_REPL', ''); // phpwiki-special replacement list (persistent replacements)
+        define('PSPELL_REPL', ''); // phpwiki-special replacement list (persistent replacements)
 }
 
 class WikiPlugin_SpellCheck
@@ -88,7 +88,7 @@ extends WikiPlugin
         $words = preg_split('/[\W]+?/', $text);
 
         $misspelled = $return = array();
-        $pspell_config = pspell_config_create($lang, "", "", $charset, 
+        $pspell_config = pspell_config_create($lang, "", "", $charset,
                                               PSPELL_NORMAL|PSPELL_RUN_TOGETHER);
         //pspell_config_runtogether($pspell_config, true);
         if (PSPELL_PWL)
@@ -116,73 +116,73 @@ extends WikiPlugin
     function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         $page = $dbi->getPage($pagename);
-        $current = $page->getCurrentRevision(); 
+        $current = $page->getCurrentRevision();
         $source = $current->getPackedContent();
 
         if (empty($source))
             return $this->error(fmt("empty source"));
-	if ($basepage == _("SpellCheck"))
+        if ($basepage == _("SpellCheck"))
             return $this->error(fmt("Cannot SpellCheck myself"));
-	$lang = $page->get('lang');
-	if (empty($lang)) $lang = $GLOBALS['LANG'];
-	$html = HTML();
+        $lang = $page->get('lang');
+        if (empty($lang)) $lang = $GLOBALS['LANG'];
+        $html = HTML();
         if (!function_exists('pspell_new_config')) {
-	    // use the aspell commandline interface
+            // use the aspell commandline interface
             include_once("lib/WikiPluginCached.php");
             $args = "";
             $source = preg_replace("/^/m", "^", $source);
             if (ASPELL_DATA_DIR)
                 $args .= " --data-dir=" . ASPELL_DATA_DIR;
-	    // MAYBE TODO: do we have the language dictionary?
-	    $args .= " --lang=" . $lang;
+            // MAYBE TODO: do we have the language dictionary?
+            $args .= " --lang=" . $lang;
             // use -C or autosplit wikiwords in the text
             $commandLine = ASPELL_EXE . " -a -C $args ";
             $cache = new WikiPluginCached;
             $code = $cache->filterThroughCmd($source, $commandLine);
             if (empty($code))
                 return $this->error(fmt("Couldn't start commandline '%s'",$commandLine));
-	    $sugg = array();
-	    foreach (preg_split("/\n/", $code) as $line) {
-		if (preg_match("/^& (\w+) \d+ \d+: (.+)$/", $line, $m)) {
-		    $sugg[$m[1]] = preg_split("/, /", $m[2]);
-		}
-	    }
+            $sugg = array();
+            foreach (preg_split("/\n/", $code) as $line) {
+                if (preg_match("/^& (\w+) \d+ \d+: (.+)$/", $line, $m)) {
+                    $sugg[$m[1]] = preg_split("/, /", $m[2]);
+                }
+            }
             /*$pre = HTML::pre(HTML::raw($code));
             $html->pushContent($pre);*/
         } else {
             $sugg = pspell_check($source, $lang);
         }
-	//$html->pushContent(HTML::hr(),HTML::h1(_("Spellcheck")));
-	$page = $request->getPage();
-	if ($version) {
-	    $revision = $page->getRevision($version);
-	    if (!$revision)
-		NoSuchRevision($request, $page, $version);
-	}
-	else {
-	    $revision = $page->getCurrentRevision();
-	}
-	$GLOBALS['request']->setArg('suggestions', $sugg);
+        //$html->pushContent(HTML::hr(),HTML::h1(_("Spellcheck")));
+        $page = $request->getPage();
+        if ($version) {
+            $revision = $page->getRevision($version);
+            if (!$revision)
+                NoSuchRevision($request, $page, $version);
+        }
+        else {
+            $revision = $page->getCurrentRevision();
+        }
+        $GLOBALS['request']->setArg('suggestions', $sugg);
         include_once("lib/BlockParser.php");
-	$ori_html = TransformText($revision, $revision->get('markup'), $page);
-	$GLOBALS['request']->setArg('suggestions', false);
+        $ori_html = TransformText($revision, $revision->get('markup'), $page);
+        $GLOBALS['request']->setArg('suggestions', false);
 
         $html->pushContent($ori_html, HTML::hr(), HTML::h1(_("SpellCheck result")));
 
-	$list = HTML::ul();
-	foreach ($sugg as $word => $suggs) {
-	    $w = HTML::span(array('class' => 'spell-wrong'), $word);
-	    // TODO: optional replace-link. jscript or request button with word replace.
-	    $r = HTML();
-	    foreach ($suggs as $s) {
-		$r->pushContent(HTML::a(array('class' => 'spell-sugg',
-					      'href' => "javascript:do_replace('$word','$s')"), 
-					$s),", ");
-	    }
-	    $list->pushContent(HTML::li($w, ": ", $r));
-	}
-	$html->pushContent($list);
-	return $html;
+        $list = HTML::ul();
+        foreach ($sugg as $word => $suggs) {
+            $w = HTML::span(array('class' => 'spell-wrong'), $word);
+            // TODO: optional replace-link. jscript or request button with word replace.
+            $r = HTML();
+            foreach ($suggs as $s) {
+                $r->pushContent(HTML::a(array('class' => 'spell-sugg',
+                                              'href' => "javascript:do_replace('$word','$s')"),
+                                        $s),", ");
+            }
+            $list->pushContent(HTML::li($w, ": ", $r));
+        }
+        $html->pushContent($list);
+        return $html;
     }
 };
 

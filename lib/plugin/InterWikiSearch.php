@@ -43,7 +43,7 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('s' => '',
                      'formsize' => 30,
-        	    );
+                    );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -70,17 +70,17 @@ extends WikiPlugin
  * @desc
  */
 if (defined('DEBUG') && DEBUG) {
-class PageFormatter_searchableInterWikiMap 
+class PageFormatter_searchableInterWikiMap
 extends PageFormatter_interwikimap {}
 
 class PageType_searchableInterWikiMap
 extends PageType_interwikimap
 {
     function format($text) {
-	return HTML::div(array('class' => 'wikitext'),
-			 $this->_transform($this->_getHeader($text)),
-			 $this->_formatMap(),
-			 $this->_transform($this->_getFooter($text)));
+        return HTML::div(array('class' => 'wikitext'),
+                         $this->_transform($this->_getHeader($text)),
+                         $this->_formatMap(),
+                         $this->_transform($this->_getFooter($text)));
     }
 
     function _formatMap() {

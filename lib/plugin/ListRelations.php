@@ -40,19 +40,19 @@ extends WikiPlugin
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");
     }
-    function getDefaultArguments() { 
+    function getDefaultArguments() {
         return array_merge
             (
              PageList::supportedArgs(), // paging and more.
-	     array(
-		   'mode' => "relations" // or "attributes" or "all"
-		   ));
+             array(
+                   'mode' => "relations" // or "attributes" or "all"
+                   ));
     }
     function run ($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
         $pagelist = new PageList($info, $exclude, $args);
-	// should attributes be listed as pagename here? 
+        // should attributes be listed as pagename here?
         $pagelist->addPageList($dbi->listRelations($mode == 'all', $mode == 'attributes', !empty($sortby)));
         return $pagelist;
     }

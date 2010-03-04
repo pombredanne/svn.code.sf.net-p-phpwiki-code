@@ -87,9 +87,9 @@ extends WikiPlugin
         $lines = preg_split('/\s*?\n\s*/', $argstr);
         $table_args = array();
         $default_args = array_keys($default);
-        foreach ($default_args as $arg) { 
-            if ($args[$arg] == '' and $default[$arg] == '')  
-                continue;			// ignore '' arguments
+        foreach ($default_args as $arg) {
+            if ($args[$arg] == '' and $default[$arg] == '')
+                continue;                        // ignore '' arguments
             if ($arg == 'caption')
                 $caption = $args[$arg];
             else
@@ -98,18 +98,18 @@ extends WikiPlugin
         $table = HTML::table($table_args);
         if (!empty($caption))
             $table->pushContent(HTML::caption($caption));
-        if (preg_match("/^\s*(cellpadding|cellspacing|border|caption|summary)/", $lines[0])) 
+        if (preg_match("/^\s*(cellpadding|cellspacing|border|caption|summary)/", $lines[0]))
             $lines[0] = '';
         foreach ($lines as $line) {
             if (!$line)
                 continue;
             if (strstr($line,"=")) {
-            	$tmp = explode("=",$line);
-            	if (in_array(trim($tmp[0]),$default_args))
+                    $tmp = explode("=",$line);
+                    if (in_array(trim($tmp[0]),$default_args))
                     continue;
             }
             if ($line[0] != '|') {
-            	// bogus error if argument
+                    // bogus error if argument
                 trigger_error(sprintf(_("Line %s does not begin with a '|'."), $line), E_USER_WARNING);
             } else {
                 $table->pushContent($this->_parse_row($line, $basepage));
@@ -122,7 +122,7 @@ extends WikiPlugin
     function _parse_row ($line, $basepage) {
         $brkt_link = "\\[ .*? [^]\s] .*? \\]";
         $cell_content  = "(?: [^[] | ".ESCAPE_CHAR."\\[ | $brkt_link )*?";
-        
+
         preg_match_all("/(\\|+) (v*) ([<>^]?) \s* ($cell_content) \s* (?=\\||\$)/x",
                        $line, $matches, PREG_SET_ORDER);
 

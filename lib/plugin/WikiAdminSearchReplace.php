@@ -99,9 +99,9 @@ extends WikiPlugin_WikiAdminSelect
         $regex = !empty($post_args['regex']);
         foreach ($pages as $pagename) {
             if (!mayAccessPage('edit', $pagename)) {
-		$ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
+                $ul->pushContent(HTML::li(fmt("Access denied to change page '%s'.",$pagename)));
             } elseif ($this->replaceHelper($dbi, $request, $pagename, $from, $to, $case_exact, $regex)) {
-                $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.", 
+                $ul->pushContent(HTML::li(fmt("Replaced '%s' with '%s' in page '%s'.",
                                               $from, $to, WikiLink($pagename))));
                 $count++;
             }
@@ -121,15 +121,15 @@ extends WikiPlugin_WikiAdminSelect
         }
         return $result;
     }
-    
+
     function run($dbi, $argstr, &$request, $basepage) {
-    	// no action=replace support yet
+            // no action=replace support yet
         if ($request->getArg('action') != 'browse')
             return $this->disabled("(action != 'browse')");
-        
+
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
-            
+
         //TODO: support p from <!plugin-list !>
         $this->preSelectS($args, $request);
 
@@ -150,7 +150,7 @@ extends WikiPlugin_WikiAdminSelect
 
             if ($post_args['action'] == 'verify' and !empty($post_args['from'])) {
                 // Real action
-                return $this->searchReplacePages($dbi, $request, array_keys($p), 
+                return $this->searchReplacePages($dbi, $request, array_keys($p),
                                                  $post_args['from'], $post_args['to']);
             }
             if ($post_args['action'] == 'select') {
@@ -164,7 +164,7 @@ extends WikiPlugin_WikiAdminSelect
         if ($next_action == 'select' and empty($pages)) {
             // List all pages to select from.
             //TODO: check for permissions and list only the allowed
-            $pages = $this->collectPages($pages, $dbi, $args['sortby'], 
+            $pages = $this->collectPages($pages, $dbi, $args['sortby'],
                                          $args['limit'], $args['exclude']);
         }
 
@@ -174,14 +174,14 @@ extends WikiPlugin_WikiAdminSelect
             $args['info'] = "checkbox,pagename,hi_content,mtime,author";
         }
         $pagelist = new PageList_Selectable
-	    ($args['info'], $args['exclude'],
-	     array_merge
-	     (
-	      $args,
-	      array('types' => array
-		    (
-		     'hi_content' // with highlighted search for SearchReplace
-		     => new _PageList_Column_content('rev:hi_content', _("Content"))))));
+            ($args['info'], $args['exclude'],
+             array_merge
+             (
+              $args,
+              array('types' => array
+                    (
+                     'hi_content' // with highlighted search for SearchReplace
+                     => new _PageList_Column_content('rev:hi_content', _("Content"))))));
 
         $pagelist->addPageList($pages);
 
@@ -219,8 +219,8 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function checkBox (&$post_args, $name, $msg) {
-    	$id = 'admin_replace-'.$name;
-    	$checkbox = HTML::input(array('type' => 'checkbox',
+            $id = 'admin_replace-'.$name;
+            $checkbox = HTML::input(array('type' => 'checkbox',
                                       'name' => 'admin_replace['.$name.']',
                                       'id'   => $id,
                                       'value' => 1));
@@ -235,15 +235,15 @@ extends WikiPlugin_WikiAdminSelect
                              HTML::br());
         $table = HTML::table();
         $this->_tablePush($table, _("Replace").": ",
-			  HTML::input(array('name' => 'admin_replace[from]',
-					    'size' => 90,
-					    'value' => $post_args['from'])));
+                          HTML::input(array('name' => 'admin_replace[from]',
+                                            'size' => 90,
+                                            'value' => $post_args['from'])));
         $this->_tablePush($table, _("by").': ',
-			  HTML::input(array('name' => 'admin_replace[to]',
-					    'size' => 90,
-					    'value' => $post_args['to'])));
+                          HTML::input(array('name' => 'admin_replace[to]',
+                                            'size' => 90,
+                                            'value' => $post_args['to'])));
         $this->_tablePush($table, '', $this->checkBox($post_args, 'case_exact', _("Case exact?")));
-	$this->_tablePush($table, '', $this->checkBox($post_args, 'regex', _("Regex?")));
+        $this->_tablePush($table, '', $this->checkBox($post_args, 'regex', _("Regex?")));
         $header->pushContent($table);
         return $header;
     }
@@ -252,7 +252,7 @@ extends WikiPlugin_WikiAdminSelect
 function stri_replace($find,$replace,$string) {
     if (!is_array($find)) $find = array($find);
     if (!is_array($replace))  {
-        if (!is_array($find)) 
+        if (!is_array($find))
             $replace = array($replace);
         else {
             // this will duplicate the string into an array the size of $find

@@ -1,4 +1,4 @@
-<?php 
+<?php
 rcs_id('$Id$');
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam

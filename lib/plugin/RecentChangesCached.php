@@ -60,20 +60,20 @@ extends WikiPluginCached
         return '+900'; // 15 minutes
     }
 
-    // We don't go through pi parsing, instead we go directly to the 
+    // We don't go through pi parsing, instead we go directly to the
     // better plugin methods.
     function getHtml($dbi, $args, $request, $basepage) {
-	$plugin = new WikiPlugin_RecentChanges();
-	$changes = $plugin->getChanges($dbi, $args);
-	return $plugin->format($changes, $args);
-	/*
+        $plugin = new WikiPlugin_RecentChanges();
+        $changes = $plugin->getChanges($dbi, $args);
+        return $plugin->format($changes, $args);
+        /*
         $loader = new WikiPluginLoader;
         return $loader->expandPI('<?plugin RecentChanges '
             . WikiPluginCached::glueArgs($argarray)
                                  . ' ?>', $request, $this, $basepage);
         */
     }
-    
+
     // ->box is used to display a fixed-width, narrow version with common header.
     // Just a limited list of pagenames, without date.
     // This does not use ->run, to avoid pi construction and deconstruction
@@ -86,7 +86,7 @@ extends WikiPluginCached
         $args['show_deleted'] = 'sometimes';
         $args['show_all'] = false;
         $args['days'] = 90;
-        
+
         $cache = $this->newCache();
         if (is_array($args))
             ksort($args);
@@ -98,7 +98,7 @@ extends WikiPluginCached
 
         /* OLD: */
         //list($id, $url) = $this->genUrl($cache, $args);
-        
+
         /* NEW: This cache entry needs an update on major changes.
          * So we should rather use an unique ID, because there will only be
          * one global cached box.
@@ -106,11 +106,11 @@ extends WikiPluginCached
         $id = $cache->generateId(serialize(array("RecentChangesCachedBox", $argscopy)));
         $content = $cache->get($id, 'imagecache');
         if ($do_save || !$content || !$content['html']) {
-	    $this->resetError();
-	    $plugin = new WikiPlugin_RecentChanges();
-	    $title = WikiLink($this->getName(), '', SplitPagename($this->getName()));
-	    $changes = $plugin->getChanges($request->_dbi, $args);
-            $content['html'] = 
+            $this->resetError();
+            $plugin = new WikiPlugin_RecentChanges();
+            $title = WikiLink($this->getName(), '', SplitPagename($this->getName()));
+            $changes = $plugin->getChanges($request->_dbi, $args);
+            $content['html'] =
                       $this->makeBox($title,
                                      $plugin->format($changes, $args));
             if ($errortext = $this->getError()) {
@@ -131,10 +131,10 @@ extends WikiPluginCached
 
     // force box cache update on major changes.
     function box_update($args = false, $request = false, $basepage = false) {
-    	$this->box($args, $request, $basepage, true);
+            $this->box($args, $request, $basepage, true);
     }
-    
-    
+
+
 } // WikiPlugin_RecentChangesCached
 
 // For emacs users

@@ -43,7 +43,7 @@ extends WikiPlugin_WikiAdminSelect
                             "\$Revision$");
     }
 
-    /* getDefaultArguments() is inherited from WikiAdminSelect class */ 
+    /* getDefaultArguments() is inherited from WikiAdminSelect class */
 
     function collectPages(&$list, &$dbi, $sortby, $limit=0) {
 
@@ -72,7 +72,7 @@ extends WikiPlugin_WikiAdminSelect
                 $ul->pushContent(HTML::li(fmt("Purged page '%s' successfully.", $name)));
                 $count++;
             } else {
-            	$ul->pushContent(HTML::li(fmt("Didn't purge page '%s'. Access denied.", $name)));
+                    $ul->pushContent(HTML::li(fmt("Didn't purge page '%s'. Access denied.", $name)));
             }
         }
         if ($count) {
@@ -96,7 +96,7 @@ extends WikiPlugin_WikiAdminSelect
         if ($request->getArg('action') != 'browse')
             if ($request->getArg('action') != _("PhpWikiAdministration/Purge"))
                 return $this->disabled("(action != 'browse')");
-        
+
         $args = $this->getArgs($argstr, $request);
         $this->_args =& $args;
         $this->preSelectS($args, $request);

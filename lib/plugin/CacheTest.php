@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright (C) 2002 Johannes Große
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify

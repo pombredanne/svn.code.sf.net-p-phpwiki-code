@@ -45,15 +45,15 @@ extends WikiPlugin_IncludePage
     }
 
     function getDefaultArguments() {
-    	return array_merge
+            return array_merge
             (WikiPlugin_IncludePage::getDefaultArguments(),
-             array( 
+             array(
                    'state'   => false, // initial state: false <=> [+], true <=> [-]
                   ));
     }
-                
+
     function run($dbi, $argstr, &$request, $basepage) {
-    	global $WikiTheme;
+            global $WikiTheme;
         $args = $this->getArgs($argstr, $request, false);
         $page =& $args['page'];
         if (ENABLE_AJAX) {
@@ -74,15 +74,15 @@ extends WikiPlugin_IncludePage
         $png = $WikiTheme->_findData('images/folderArrow'.
                                     ($args['state'] ? 'Open' : 'Closed').
                                     '.png');
-	$icon = HTML::img(array('id'  => $id.'-img',
+        $icon = HTML::img(array('id'  => $id.'-img',
                                 'src' => $png,
                                 'onclick' => ENABLE_AJAX
-                                  ? "showHideAsync('".$ajaxuri."','$id')" 
+                                  ? "showHideAsync('".$ajaxuri."','$id')"
                                   : "showHideFolder('$id')",
                                 'border' => 0,
-                                'alt' => _("Click to hide/show"), 
-                                'title'  => _("Click to hide/show"))); 
-        $header = HTML::p(array('class' => 'transclusion-title', 
+                                'alt' => _("Click to hide/show"),
+                                'title'  => _("Click to hide/show")));
+        $header = HTML::p(array('class' => 'transclusion-title',
                                 'style' => "text-decoration: none;"),
                           $icon,
                           fmt(" %s :", WikiLink($page)));
@@ -93,7 +93,7 @@ extends WikiPlugin_IncludePage
             $body->setAttr('style', 'display:none');
             if (ENABLE_AJAX)
                 return HTML($header, $body); // async (load in background and insert)
-            else    
+            else
                 return HTML($header, $body); // sync (load but display:none)
         }
     }

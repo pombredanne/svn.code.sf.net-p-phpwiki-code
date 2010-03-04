@@ -52,14 +52,14 @@ extends WikiPlugin
                    //'paging'   => 'auto'
                    ));
     }
-    
+
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
     // sortby: only pagename or hits. mtime not!
 
     function run($dbi, $argstr, &$request, $basepage) {
-    	$args = $this->getArgs($argstr, $request);
+            $args = $this->getArgs($argstr, $request);
         extract($args);
         if (strstr($sortby,'mtime')) {
             trigger_error(_("sortby=mtime not supported with MostPopular"),
@@ -68,7 +68,7 @@ extends WikiPlugin
         }
         $columns = $info ? explode(",", $info) : array();
         array_unshift($columns, 'hits');
-        
+
         if (! $request->getArg('count')) {
             //$args['count'] = $dbi->numPages(false,$exclude);
             $allpages = $dbi->mostPopular(0, $sortby);

@@ -20,7 +20,7 @@ rcs_id('$Id$');
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/** Re-implement the classic phpwiki-1.2 feature of the 
+/** Re-implement the classic phpwiki-1.2 feature of the
  *  popular nearby pages, specific to the from/to links:
  *    5 best incoming links: xx, xx, xx, ...
  *    5 best outgoing links: xx, xx, xx, ...
@@ -33,7 +33,7 @@ rcs_id('$Id$');
 * <small><?plugin PopularNearby mode=nearby ?></small>
 
 */
- 
+
 
 require_once('lib/PageList.php');
 
@@ -61,26 +61,26 @@ extends WikiPlugin
                      'noheader' => 0,
                     );
     }
-    
+
     function run($dbi, $argstr, &$request, $basepage) {
-    	$args = $this->getArgs($argstr, $request);
+            $args = $this->getArgs($argstr, $request);
         extract($args);
         $header = '';
         $page = $dbi->getPage($pagename);
         switch ($mode) {
         case 'incoming': // not the hits, but the number of links
             if (! $noheader )
-                $header = sprintf(_("%d best incoming links: "),$limit); 
+                $header = sprintf(_("%d best incoming links: "),$limit);
             $links = $this->sortedLinks($page->getLinks("reversed"),"reversed",$limit);
             break;
         case 'outgoing': // not the hits, but the number of links
             if (! $noheader )
-                $header = sprintf(_("%d best outgoing links: "),$limit); 
+                $header = sprintf(_("%d best outgoing links: "),$limit);
             $links = $this->sortedLinks($page->getLinks(),false,$limit);
             break;
-        case 'nearby':  // all linksfrom and linksto, sorted by hits 
+        case 'nearby':  // all linksfrom and linksto, sorted by hits
             if (! $noheader )
-                $header = sprintf(_("%d most popular nearby: "),$limit); 
+                $header = sprintf(_("%d most popular nearby: "),$limit);
             $inlinks = $page->getLinks();
             $outlinks = $page->getLinks('reversed');
             // array_merge doesn't sort out duplicate page objects here.
@@ -106,11 +106,11 @@ extends WikiPlugin
      *
      * @param $pages array of WikiDB_Page's or a Page_iterator
      * @param $direction boolean: true if incoming links
-     * 
+     *
      * @return Array of sorted links
      */
     function sortedLinks($pages, $direction=false, $limit=5) {
-    	$links = array();
+            $links = array();
         if (is_array($pages)) {
             $already = array(); // need special duplicate check
             foreach ($pages as $page) {
@@ -125,7 +125,7 @@ extends WikiPlugin
             }
         } else {
             while ($page = $pages->next()) {
-                // different score algorithm: 
+                // different score algorithm:
                 //   the number of links to/from the page
                 $l = $page->getLinks(!$direction);
                 $score = $l->count();

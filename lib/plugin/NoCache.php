@@ -22,11 +22,11 @@ rcs_id('$Id$');
  */
 
 /**
- * Don't cache the following page. Mostly used for plugins, which 
+ * Don't cache the following page. Mostly used for plugins, which
  * display dynamic content.
  *
  * Usage:
- *   <?plugin NoCache ?> 
+ *   <?plugin NoCache ?>
  * or to delete the whole cache for this page:
  *   <?plugin NoCache nocache||=purge ?>
  *

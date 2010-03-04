@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is (not yet) part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -72,7 +72,7 @@ extends WikiPlugin_SqlResult
                      'title'       => false, // custom filter for the query
                      'name'        => false, // custom filter for the query
                      'sortby'      => false, // for paging, default none
-                     'limit'       => false, // for paging, default: only the first 50 
+                     'limit'       => false, // for paging, default: only the first 50
                     );
     }
 

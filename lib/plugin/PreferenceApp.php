@@ -23,13 +23,13 @@ rcs_id('$Id$');
 /**
  * PreferenceApp is used to analyze a category of items that a group
  * of people have rated.  A user is grouped to be analyzed in the group by
- * 1) having rated at least one item in the database and 2) matching the optional 
- * criteria for declaring a budget on their homepage.  
+ * 1) having rated at least one item in the database and 2) matching the optional
+ * criteria for declaring a budget on their homepage.
  *
  * An example of a budget decleration would be "TotalSoda: 50" on my homepage.
  *
- * PreferenceApp will output a matrix style table shows "how much" fractionally 
- * a group of people prefer an item over other items.  For example, if my soda 
+ * PreferenceApp will output a matrix style table shows "how much" fractionally
+ * a group of people prefer an item over other items.  For example, if my soda
  * budget is 100 then PreferenceApp might assign 20 units of my budget to Moutain Dew.
  *
  * Author: mcassano circa April 2004
@@ -70,14 +70,14 @@ extends WikiPlugin
                      'group' => null,
                      'roundCalc' => "true",
                      'neutralRating' => "3",
-                     'declareBudget' => "true");            
+                     'declareBudget' => "true");
     }
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
     // exclude arg allows multiple pagenames exclude=HomePage,RecentChanges
 
     function run($dbi, $argstr, &$request, $basepage) {
-    	
+
         extract($this->getArgs($argstr, $request));
         if($pageTextLabel == null && $category != null && $group == null){
             $group = $category;
@@ -85,19 +85,19 @@ extends WikiPlugin
         if($category == null || $pageTextLabel == null){
                 return HTML::div(array('class' => "error"), "PreferencesApp Error: You must declare at least parameters category and pageTextLabel.");
         }
-      	
+
         $dbi = $request->getDbh();
         $rdbi = RatingsDb::getTheRatingsDb();
-        
+
         $CATEGORY = $category;
         $PAGE_TEXT_LABEL = $pageTextLabel;
         $NEUTRAL_RATING = (int)$neutralRating;
-        
+
         $active_user   = $request->getUser();
         $active_userid = $active_user->_userid;
         $html = HTML();
         $html->pushContent("");
-		
+
         //Load participating Users
         $users_array = array();
         if($group != null){
@@ -105,7 +105,7 @@ extends WikiPlugin
         } else {
             $people_iter = $rdbi->sql_get_users_rated();
             while($people_array = $people_iter->next()){
-                $users_array[] = $people_array['pagename'];	
+                $users_array[] = $people_array['pagename'];
             }
         }
         $people = array();
@@ -119,11 +119,11 @@ extends WikiPlugin
                     } else {
                         $canBudget[$person_indv] = 0;
                     }
-                    $people[] = $person_indv;	
-                }	
+                    $people[] = $person_indv;
+                }
             } else {
                 $canBudget[$person_indv] = $lockedBudget;
-                $people[] = $person_indv;	
+                $people[] = $person_indv;
             }
         }
         if(count($people) < 1){
@@ -138,32 +138,32 @@ extends WikiPlugin
         }
         $ratingTotals = array();
         foreach ($people as $person){
-    		$ratings_iter = $rdbi->sql_get_rating(0, $person, $pageids);
-    		$ratingTotals[$person] = 0;
+                    $ratings_iter = $rdbi->sql_get_rating(0, $person, $pageids);
+                    $ratingTotals[$person] = 0;
                 while($ratings_array = $ratings_iter->next()){
                     $can_rating = $ratings_array['ratingvalue'];
                     if($can_rating >= $NEUTRAL_RATING){
                         $ratingTotals[$person] += $can_rating;
                     }
-                }		
+                }
         }
-		
+
         //Generate numbers
         $canTotals = array();
         $peopleTotals = array();
         foreach($pageids as $soda){
-            $canTotals[$soda] = 0;	
+            $canTotals[$soda] = 0;
         }
         foreach($people as $person){
             foreach($pageids as $soda){
                 $peopleTotals[$person][$soda] = 0;
-            }	
+            }
         }
         foreach($people as $person){
             foreach($pageids as $page){
                 $can_rating_iter = $rdbi->sql_get_rating(0, $person, $page);
                 $can_rating_array = $can_rating_iter->next();
-                $can_rating = $can_rating_array['ratingvalue'];	
+                $can_rating = $can_rating_array['ratingvalue'];
                 if($can_rating >= $NEUTRAL_RATING){
                     $calc = (($can_rating / $ratingTotals[$person]) * $canBudget[$person]);
                     if($roundCalc == "true"){
@@ -172,7 +172,7 @@ extends WikiPlugin
                         $adjustedCans = round($calc, 2);
                     }
                     $peopleTotals[$person][$page] = $adjustedCans;
-                    
+
                     $canTotals[$page] = $canTotals[$page] + $adjustedCans;
                 }
             }
@@ -183,13 +183,13 @@ extends WikiPlugin
                 $outputArray[$person][$page] = 0;
             }
         }
-	
+
         $table = HTML::table(array('cellpadding' => '5', 'cellspacing' => '1', 'border' => '0'));
         $tr = HTML::tr();
         $td = HTML::td(array('bgcolor' => '#FFFFFF'));
         $td->pushContent(" ");
         $tr->pushContent($td);
-		
+
         foreach($people as $person){
             $td = HTML::td(array('bgcolor' => '#FFFFFF'));
             $td->pushContent(HTML::a(array('href' => WikiURL($person),
@@ -197,16 +197,16 @@ extends WikiPlugin
                                            ),
                                      SplitPagename($person)));
             //$td->pushContent(WikiLink(" $person "));
-            $tr->pushContent($td);	
+            $tr->pushContent($td);
         }
         $td = HTML::td(array('bgcolor' => '#FFFFFF'));
         $td->pushContent(_("Total Units"));
-        $tr->pushContent($td);	
+        $tr->pushContent($td);
         $td = HTML::td(array('bgcolor' => '#FFFFFF'));
         $td->pushContent(_("Total Voters"));
-        $tr->pushContent($td);	
+        $tr->pushContent($td);
         $table->pushContent($tr);
-		
+
         for($i = 0; $i < count($pageids); $i++){
             $total_cans = 0;
             for($j = 0; $j < count($people); $j++){
@@ -214,10 +214,10 @@ extends WikiPlugin
                 $cans_per_soda = $peopleTotals[$people[$j]][$pageids[$i]];
                 $total_cans = $total_cans + $cans_per_soda;
                 $outputArray[$people[$j]][$pageids[$i]] = $cans_per_soda;
-            }			
+            }
         }
-	
-		
+
+
         foreach($people as $person){
             $min_soda = "";
             $min_cans = 9999999; //9 million, serving as "infinity"
@@ -229,7 +229,7 @@ extends WikiPlugin
                     $min_soda = $page;
                 }
                 $total_cans = $total_cans + $cur_soda_cans;
-            }	
+            }
             if($total_cans != $canBudget[$person] && $total_cans > 0){
                 $diff = $canBudget[$person] - $total_cans;
                 $outputArray[$person][$min_soda] = $outputArray[$person][$min_soda] + $diff;
@@ -256,22 +256,22 @@ extends WikiPlugin
                 }
                 $td->pushContent($output);
                 $tr->pushContent($td);
-            }	
+            }
             if($total_cans == ""){
-                $total_cans = "-";	
+                $total_cans = "-";
             }
             if($total_voters == ""){
-                $total_voters = "-";	
+                $total_voters = "-";
             }
             $td = HTML::td(array('align' => 'right'));
-            $td->pushContent($total_cans); 
-            $tr->pushContent($td);	
+            $td->pushContent($total_cans);
+            $tr->pushContent($td);
             $td = HTML::td(array('align' => 'right'));
-            $td->pushContent($total_voters); 
-            $tr->pushContent($td);	
-            $table->pushContent($tr);	
+            $td->pushContent($total_voters);
+            $tr->pushContent($td);
+            $table->pushContent($tr);
         }
-		
+
         $tr = HTML::tr();
         $td = HTML::td(array('align' => 'left'));
         $td->pushContent(HTML::strong(_("Total Budget")));
@@ -301,14 +301,14 @@ extends WikiPlugin
         $td->pushContent(HTML::strong($total_voters));
         $tr->pushContent($td);
         $table->pushContent($tr);
-		
+
         $table2 = HTML::table(array('bgcolor' => '#dedfdf'));
         $table2->pushContent(HTML::tr(HTML::td($table)));
         $html->pushContent($table2);
-		
+
         return $html;
     }
-    
+
 };
 
 // Local Variables:

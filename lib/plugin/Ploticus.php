@@ -21,18 +21,18 @@ rcs_id('$Id$');
  */
 
 /**
- * The Ploticus plugin passes all its arguments to the ploticus 
+ * The Ploticus plugin passes all its arguments to the ploticus
  * binary and displays the result as PNG, GIF, EPS, SVG or SWF.
- * Ploticus is a free, GPL, non-interactive software package 
+ * Ploticus is a free, GPL, non-interactive software package
  * for producing plots, charts, and graphics from data.
  * See http://ploticus.sourceforge.net/doc/welcome.html
  *
  * @Author: Reini Urban
  *
- * Note: 
- * - For windows you need either a gd library with GIF support or 
+ * Note:
+ * - For windows you need either a gd library with GIF support or
  *   a ploticus with PNG support. This comes e.g. with the cygwin build.
- * - We support only images supported by GD so far (PNG most likely). 
+ * - We support only images supported by GD so far (PNG most likely).
  *   No EPS, PS, SWF, SVG or SVGZ support yet, due to limitations in WikiPluginCached.
  *   This will be fixed soon.
  *
@@ -55,7 +55,7 @@ if (!defined("PLOTICUS_EXE"))
     define('PLOTICUS_EXE','/usr/local/bin/pl');
 //TODO: check $_ENV['PLOTICUS_PREFABS'] and default directory
 
-require_once "lib/WikiPluginCached.php"; 
+require_once "lib/WikiPluginCached.php";
 
 class WikiPlugin_Ploticus
 extends WikiPluginCached
@@ -66,27 +66,27 @@ extends WikiPluginCached
      * or IMG_INLINE if device = png, gif or jpeg
      */
     function getPluginType() {
-    	if (!empty($this->_args['-csmap']))
-    	    return PLUGIN_CACHED_MAP; // not yet tested
-        // produce these on-demand so far, uncached. 
+            if (!empty($this->_args['-csmap']))
+                return PLUGIN_CACHED_MAP; // not yet tested
+        // produce these on-demand so far, uncached.
         // will get better support in WikiPluginCached soon.
         // FIXME: html also? what about ''?
         $type = $this->decideImgType($this->_args['device']);
         if ($type == $this->_args['device'])
             return PLUGIN_CACHED_IMG_INLINE;
         $device = strtolower($this->_args['device']);
-    	if (in_array($device, array('svg','swf','svgz','eps','ps','pdf','html'))) {
+            if (in_array($device, array('svg','swf','svgz','eps','ps','pdf','html'))) {
             switch ($this->_args['device']) {
-            	case 'svg':
-            	case 'svgz':
+                    case 'svg':
+                    case 'svgz':
                    return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_SVG_PNG;
-            	case 'swf':
+                    case 'swf':
                    return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_SWF;
-                default: 
+                default:
                    return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_HTML;
             }
         }
-    	else
+            else
             return PLUGIN_CACHED_IMG_INLINE; // normal cached libgd image handles
     }
     function getName () {
@@ -161,7 +161,7 @@ extends WikiPluginCached
         //unset ($other_imgtypes[$def['imgtype']]);
         $helparr = array(
             '<?plugin Ploticus ' .
-            'device'           => ' = "' . $def['device'] . "(default)|" 
+            'device'           => ' = "' . $def['device'] . "(default)|"
                                   . join('|',$GLOBALS['PLUGIN_CACHED_IMGTYPES']).'"',
             'data'             => ' <!plugin-list !>: pagelist as input',
             'alt'              => ' = "alternate text"',
@@ -187,7 +187,7 @@ extends WikiPluginCached
     function withShellCommand($script) {
         $findme  = 'shell';
         $pos = strpos($script, $findme); // uppercase?
-        if ($pos === false) 
+        if ($pos === false)
             return 0;
         return 1;
     }
@@ -219,67 +219,67 @@ extends WikiPluginCached
             $gif = $argarray['device'];
             $args = "-$gif -o $tempfile.$gif";
             if (!empty($argarray['-csmap'])) {
-            	$args .= " -csmap -mapfile $tempfile.map";
-            	$this->_mapfile = "$tempfile.map";
+                    $args .= " -csmap -mapfile $tempfile.map";
+                    $this->_mapfile = "$tempfile.map";
             }
             if (!empty($argarray['-prefab'])) {
-            	//check $_ENV['PLOTICUS_PREFABS'] and default directory
+                    //check $_ENV['PLOTICUS_PREFABS'] and default directory
                 global $HTTP_ENV_VARS;
                 if (empty($HTTP_ENV_VARS['PLOTICUS_PREFABS'])) {
                     if (file_exists("/usr/share/ploticus"))
                         $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = "/usr/share/ploticus";
-		    elseif (defined('PLOTICUS_PREFABS'))
+                    elseif (defined('PLOTICUS_PREFABS'))
                         $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = constant('PLOTICUS_PREFABS');
                 }
-            	$args .= (" -prefab " . $argarray['-prefab']);
+                    $args .= (" -prefab " . $argarray['-prefab']);
             }
-	    if (isWindows()) {
-		$fp = fopen("$tempfile.plo", "w");
-		fwrite ($fp, $source);
-		fclose($fp);
-		$code = $this->execute(PLOTICUS_EXE . " $tempfile.plo $args", $tempfile.".$gif");
-	    } else {
-		$code = $this->filterThroughCmd($source, PLOTICUS_EXE . " -stdin $args");
-		sleep(1);
-	    }
+            if (isWindows()) {
+                $fp = fopen("$tempfile.plo", "w");
+                fwrite ($fp, $source);
+                fclose($fp);
+                $code = $this->execute(PLOTICUS_EXE . " $tempfile.plo $args", $tempfile.".$gif");
+            } else {
+                $code = $this->filterThroughCmd($source, PLOTICUS_EXE . " -stdin $args");
+                sleep(1);
+            }
             //if (empty($code))
             //    return $this->error(fmt("Couldn't start commandline '%s'", $commandLine));
             if (! file_exists($tempfile.".$gif") ) {
-                $this->_errortext .= sprintf(_("%s error: outputfile '%s' not created"), 
+                $this->_errortext .= sprintf(_("%s error: outputfile '%s' not created"),
                                              "Ploticus", "$tempfile.$gif");
                 if (isWindows())
                     $this->_errortext .= ("\ncmd-line: " .PLOTICUS_EXE . " $tempfile.plo $args");
-                else    
-                    $this->_errortext .= ("\ncmd-line: cat script | ".PLOTICUS_EXE . " $args");    
+                else
+                    $this->_errortext .= ("\ncmd-line: cat script | ".PLOTICUS_EXE . " $args");
                 @unlink("$tempfile.pl");
-		@unlink("$tempfile");
+                @unlink("$tempfile");
                 return false;
             }
             $ImageCreateFromFunc = "ImageCreateFrom$gif";
             if (function_exists($ImageCreateFromFunc)) {
                 $handle = $ImageCreateFromFunc( "$tempfile.$gif" );
-		if ($handle) {
-		    @unlink("$tempfile.$gif");
-		    @unlink("$tempfile.plo");
-		    @unlink("$tempfile");
-		    return $handle;
-		}    
-	    }
+                if ($handle) {
+                    @unlink("$tempfile.$gif");
+                    @unlink("$tempfile.plo");
+                    @unlink("$tempfile");
+                    return $handle;
+                }
+            }
             return "$tempfile.$gif";
         } else {
             return $this->error(fmt("empty source"));
         }
     }
-    
+
     // which argument must be set to 'png', for the fallback image when svg will fail on the client.
     // type: SVG_PNG
     function pngArg() {
-    	return 'device';
+            return 'device';
     }
-    
+
     function getMap($dbi, $argarray, $request) {
-    	$img = $this->getImage($dbi, $argarray, $request);
-    	return array($this->_mapfile, $img);
+            $img = $this->getImage($dbi, $argarray, $request);
+            return array($this->_mapfile, $img);
     }
 };
 

@@ -50,38 +50,38 @@ extends WikiPlugin
                      'noheader' => 0,
                     );
     }
-    
+
 
     function run($dbi, $argstr, &$request, $basepage) {
-    	$args = $this->getArgs($argstr, $request);
+            $args = $this->getArgs($argstr, $request);
         extract($args);
 
-	$maincat = $dbi->getPage(_("CategoryCategory"));
-	$bi = $maincat->getBackLinks(false);
-	$bl = array();
-	while ($b = $bi->next()) {
-	    $name = $b->getName();
-	    if (preg_match("/^"._("Template")."/", $name)) continue;
-	    $pages = $b->getBackLinks(false);
-	    $bl[] = array('name' => $name,
-			  'count' => $pages->count());
-	}
+        $maincat = $dbi->getPage(_("CategoryCategory"));
+        $bi = $maincat->getBackLinks(false);
+        $bl = array();
+        while ($b = $bi->next()) {
+            $name = $b->getName();
+            if (preg_match("/^"._("Template")."/", $name)) continue;
+            $pages = $b->getBackLinks(false);
+            $bl[] = array('name' => $name,
+                          'count' => $pages->count());
+        }
 
-	usort($bl, 'cmp_by_count');
-	$html = HTML::ul(); $i = 0;
-	foreach ($bl as $b) {
-	    $i++;
-	    $name  = $b['name'];
-	    $count = $b['count'];
-	    if ($count < $mincount) break;
-	    if ($i > $limit) break;
-	    $wo = preg_replace("/^("._("Category")."|"
-			       ._("Topic").")/", "", $name);
-	    $wo = HTML(HTML::span($wo),HTML::raw("&nbsp;"),HTML::small("(".$count.")"));
-	    $link = WikiLink($name, 'auto', $wo);
-	    $html->pushContent(HTML::li($link));
-	}
-	return $html;
+        usort($bl, 'cmp_by_count');
+        $html = HTML::ul(); $i = 0;
+        foreach ($bl as $b) {
+            $i++;
+            $name  = $b['name'];
+            $count = $b['count'];
+            if ($count < $mincount) break;
+            if ($i > $limit) break;
+            $wo = preg_replace("/^("._("Category")."|"
+                               ._("Topic").")/", "", $name);
+            $wo = HTML(HTML::span($wo),HTML::raw("&nbsp;"),HTML::small("(".$count.")"));
+            $link = WikiLink($name, 'auto', $wo);
+            $html->pushContent(HTML::li($link));
+        }
+        return $html;
     }
 }
 

@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -22,7 +22,7 @@ rcs_id('$Id$');
 
 /**
  * Show summary information of the current user sessions.
- * We support two modes: summary and detail. The optional page argument 
+ * We support two modes: summary and detail. The optional page argument
  * links to the page with the other mode.
  *
  * Formatting and idea borrowed from postnuke. Requires USE_DB_SESSION.
@@ -50,7 +50,7 @@ extends WikiPlugin
     function getDefaultArguments() {
         // two modes: summary and detail, page links to the page with the other mode
         return array(
-                     'mode' 	    => 'summary',    // or "detail"
+                     'mode'             => 'summary',    // or "detail"
                      'pagename'     => '[pagename]', // refer to the page with the other mode
                      'allow_detail' => false,        // if false, page is ignored
                      'dispose_admin' => false,
@@ -69,7 +69,7 @@ extends WikiPlugin
                                    'alt' => $this->getName(),
                                    'border' => 0));
         else $img = '';
-        $other = array(); 
+        $other = array();
         $other['ONLINE_ICON'] = $img;
         return new Template('online', $request, array_merge($args, $stats, $other));
     }
@@ -102,8 +102,8 @@ extends WikiPlugin
         $num_online = 0; $num_guests = 0; $num_registered = 0;
         $registered = array(); $guests = array();
         $admins = array(); $uniquenames = array();
-	$sess_time = ini_get('session.gc_maxlifetime'); // in seconds
-	if (!$sess_time) $sess_time = 24*60;
+        $sess_time = ini_get('session.gc_maxlifetime'); // in seconds
+        if (!$sess_time) $sess_time = 24*60;
         if (isset($request->_dbsession)) { // only ADODB and SQL backends
             $dbsession =& $request->_dbsession;
             if (method_exists($dbsession->_backend, "gc"))
@@ -116,7 +116,7 @@ extends WikiPlugin
                 $date = $row['date'];
                 //Todo: Security issue: Expose REMOTE_ADDR?
                 //      Probably only to WikiAdmin
-                $ip   = $row['ip'];  
+                $ip   = $row['ip'];
                 if (empty($date)) continue;
                 $num_online++;
                 $user = @unserialize($data);
@@ -127,8 +127,8 @@ extends WikiPlugin
                     if ($mode == 'summary' and in_array($userid, $uniquenames)) continue;
                     $uniquenames[] = $userid;
                     $page = _("<unknown>");  // where is he?
-	            $action = 'browse';
-	            $objvars = array_keys(get_object_vars($user));
+                    $action = 'browse';
+                    $objvars = array_keys(get_object_vars($user));
                     if (in_array('action',$objvars))
                         $action = @$user->action;
                     if (in_array('page',$objvars))
@@ -184,18 +184,18 @@ extends WikiPlugin
             $dbi->set('stats',$stats);
         }
         return array('SESSDATA_BOOL'    => !empty($dbsession),
-                     'NUM_PAGES' 	=> $num_pages,
-                     'NUM_USERS'  	=> $num_users,
-                     'NUM_ONLINE' 	=> $num_online,
-                     'NUM_REGISTERED' 	=> $num_registered,
-                     'NUM_GUESTS'	=> $num_guests,
-                     'NEWEST_USER' 	=> '', // todo
-                     'MAX_ONLINE_NUM' 	=> $stats['max_online_num'],
-                     'MAX_ONLINE_TIME' 	=> $stats['max_online_time'],
-                     'REGISTERED' 	=> $registered,
-                     'ADMINS' 	        => $admins,
+                     'NUM_PAGES'         => $num_pages,
+                     'NUM_USERS'          => $num_users,
+                     'NUM_ONLINE'         => $num_online,
+                     'NUM_REGISTERED'         => $num_registered,
+                     'NUM_GUESTS'        => $num_guests,
+                     'NEWEST_USER'         => '', // todo
+                     'MAX_ONLINE_NUM'         => $stats['max_online_num'],
+                     'MAX_ONLINE_TIME'         => $stats['max_online_time'],
+                     'REGISTERED'         => $registered,
+                     'ADMINS'                 => $admins,
                      'GUESTS'           => $guests,
-                     'SESSION_TIME' 	=> sprintf(_("%d minutes"),$sess_time / 60),
+                     'SESSION_TIME'         => sprintf(_("%d minutes"),$sess_time / 60),
                      );
     }
 };

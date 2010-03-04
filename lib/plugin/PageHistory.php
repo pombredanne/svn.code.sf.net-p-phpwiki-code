@@ -92,9 +92,9 @@ extends _RecentChanges_HtmlFormatter
                          WikiLink($this->_args['page'])),
                      "\n",
                      $this->rss_icon(),
-		     $this->rss2_icon(),
-		     $this->atom_icon(),
-		     $this->rdf_icon());
+                     $this->rss2_icon(),
+                     $this->atom_icon(),
+                     $this->rdf_icon());
     }
 
     function title() {
@@ -125,8 +125,8 @@ extends _RecentChanges_HtmlFormatter
         $pagename = $this->_args['page'];
 
         $fmt = _RecentChanges_HtmlFormatter::format($changes);
-	$fmt->action = _("PageHistory");
-	$html[] = $fmt;
+        $fmt->action = _("PageHistory");
+        $html[] = $fmt;
 
         $html[] = HTML::input(array('type'  => 'hidden',
                                     'name'  => 'action',
@@ -177,7 +177,7 @@ extends _RecentChanges_HtmlFormatter
     }
 
     function format_revision ($rev) {
-	global $WikiTheme;
+        global $WikiTheme;
         $class = 'rc-' . $this->importance($rev);
 
         $time = $this->time($rev);
@@ -191,26 +191,26 @@ extends _RecentChanges_HtmlFormatter
             $minor_flag = '';
         }
         $line = HTML::li(array('class' => $class));
-	if (isa($WikiTheme,'WikiTheme_MonoBook')) {
-	    $line->pushContent(
-			       $this->diffLink($rev), ' ',
-			       $this->pageLink($rev), ' ',
-			       $time,' ',$this->date($rev), ' . . ',
-			       $this->authorLink($rev),' ',
-			       $this->authorContribs($rev),' ',
-			       $this->summaryAsHTML($rev),' ',
-			       $minor_flag);
-	} else {
-	    $line->pushContent(
-			       $this->diffLink($rev), ' ',
-			       $this->pageLink($rev), ' ',
-			       $time, ' ',
-			       $this->summaryAsHTML($rev),
-			       ' ... ',
-			       $this->authorLink($rev),
-			       $minor_flag);
-	}
-	return $line;
+        if (isa($WikiTheme,'WikiTheme_MonoBook')) {
+            $line->pushContent(
+                               $this->diffLink($rev), ' ',
+                               $this->pageLink($rev), ' ',
+                               $time,' ',$this->date($rev), ' . . ',
+                               $this->authorLink($rev),' ',
+                               $this->authorContribs($rev),' ',
+                               $this->summaryAsHTML($rev),' ',
+                               $minor_flag);
+        } else {
+            $line->pushContent(
+                               $this->diffLink($rev), ' ',
+                               $this->pageLink($rev), ' ',
+                               $time, ' ',
+                               $this->summaryAsHTML($rev),
+                               ' ... ',
+                               $this->authorLink($rev),
+                               $minor_flag);
+        }
+        return $line;
     }
 }
 
@@ -320,7 +320,7 @@ extends WikiPlugin_RecentChanges
         }
 
         $fmt = new $fmt_class($args);
-	$fmt->action = _("PageHistory");
+        $fmt->action = _("PageHistory");
         return $fmt->format($changes);
     }
 

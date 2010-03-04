@@ -234,7 +234,7 @@ extends WikiPluginCached
                      'treshold'    => $treshold,
                      'nmin'        => $nmin,
                      'mintreshold' => $mintreshold,
-                     'nmax'        => $nmax, 
+                     'nmax'        => $nmax,
                      'maxtreshold' => $maxtreshold);
     }
 
@@ -319,22 +319,22 @@ extends WikiPluginCached
             $stats['sum']['major'] += $stats['page']['major'];
             $stats['sum']['minor'] += $stats['page']['minor'];
             $stats['page'] = array();
-*/            
+*/
         }
         $page_iter->free();
         $stats['numpages'] = $stats['latest']['major'] + $stats['latest']['minor'];
         $stats['latest']['major_perc'] = $stats['latest']['major'] * 100.0 / $stats['numpages'];
         $stats['latest']['minor_perc'] = $stats['latest']['minor'] * 100.0 / $stats['numpages'];
-        $empty = sprintf("empty pages: %d (%02.1f%%) / %d (100%%)\n", 
+        $empty = sprintf("empty pages: %d (%02.1f%%) / %d (100%%)\n",
                          $stats['empty'], $stats['empty'] * 100.0 / $stats['numpages'],
                          $stats['numpages']);
-        $latest = sprintf("latest revision: major %d (%02.1f%%) / minor %d (%02.1f%%) / all %d (100%%)\n", 
-                          $stats['latest']['major'], $stats['latest']['major_perc'], 
+        $latest = sprintf("latest revision: major %d (%02.1f%%) / minor %d (%02.1f%%) / all %d (100%%)\n",
+                          $stats['latest']['major'], $stats['latest']['major_perc'],
                           $stats['latest']['minor'], $stats['latest']['minor_perc'], $stats['numpages']);
-/*                          
+/*
         $stats['sum']['major_perc'] = $stats['sum']['major'] * 100.0 / $stats['sum']['all'];
         $stats['sum']['minor_perc'] = $stats['sum']['minor'] * 100.0 / $stats['sum']['all'];
-        $sum = sprintf("number of revisions: major %d (%02.1f%%) / minor %d (%02.1f%%) / all %d (100%%)\n", 
+        $sum = sprintf("number of revisions: major %d (%02.1f%%) / minor %d (%02.1f%%) / all %d (100%%)\n",
                        $stats['sum']['major'], $stats['sum']['major_perc'],
                        $stats['sum']['minor'], $stats['sum']['minor_perc'], $stats['sum']['all']);
 
@@ -344,7 +344,7 @@ extends WikiPluginCached
         $stats['perpage']['minor_perc'] = 100 - $stats['perpage']['major_perc'];
         $stats['perpage_minor']['sum']  = $stats['perpage']['sum'] - $stats['perpage_major']['sum'];
         $stats['perpage_minor']['mean'] = $stats['perpage_minor']['sum'] / ($stats['perpage']['n'] - $stats['perpage_major']['n']);
-        $perpage = sprintf("revisions per page: all %d, mean %02.1f / major %d (%02.1f%%) / minor %d (%02.1f%%)\n", 
+        $perpage = sprintf("revisions per page: all %d, mean %02.1f / major %d (%02.1f%%) / minor %d (%02.1f%%)\n",
                            $stats['perpage']['sum'], $stats['perpage']['mean'],
                            $stats['perpage_major']['mean'], $stats['perpage']['major_perc'],
                            $stats['perpage_minor']['mean'], $stats['perpage']['minor_perc']);
@@ -357,12 +357,12 @@ extends WikiPluginCached
         $content = $empty . $latest;
 
         // regenerate cache every 30 minutes
-        $cache->save($id, $content, '+1800', $cachedir); 
+        $cache->save($id, $content, '+1800', $cachedir);
         return $content;
     }
     // Size of databases/files/cvs are possible plus the known size of the app.
-    // Cache this costly operation. 
-    // Even if the whole plugin call is stored internally, we cache this 
+    // Cache this costly operation.
+    // Even if the whole plugin call is stored internally, we cache this
     // seperately with a seperate key.
     function discspace() {
         global $DBParams, $request;
@@ -396,7 +396,7 @@ extends WikiPluginCached
             $content = array('appsize' => $appsize,
                              'pagesize' => $pagesize);
             // regenerate cache every 30 minutes
-            $cache->save($id, $content, '+1800', $cachedir); 
+            $cache->save($id, $content, '+1800', $cachedir);
         } else {
             $appsize = $content['appsize'];
             $pagesize = $content['pagesize'];

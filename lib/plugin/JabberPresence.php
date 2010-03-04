@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright (C) 2004 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -26,7 +26,7 @@ rcs_id('$Id$');
  * http://edgar.netflint.net/howto.php
  *
  * Usage:
- *  <?plugin JabberPresence scripturl=http://edgar.netflint.net/status.php 
+ *  <?plugin JabberPresence scripturl=http://edgar.netflint.net/status.php
  *                          jid=yourid@jabberserver type=html iconset=phpbb ?>
  *
  * @author: Arnaud Fontaine
@@ -57,7 +57,7 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('scripturl' => "http://edgar.netflint.net/status.php",
                      'jid'       => MY_JABBER_ID,
-		     'type'      => 'image',
+                     'type'      => 'image',
                      'iconset'   => "gabber");
     }
 
@@ -66,12 +66,12 @@ extends WikiPlugin
         // Any text that is returned will not be further transformed,
         // so use html where necessary.
         if (empty($jid))
-	    $html = HTML();
+            $html = HTML();
         else
-	  $html = HTML::img(array('src' => urlencode($scripturl).
-				  '&jid='.urlencode($jid).
-				  '&type='.urlencode($type).
-				  '&iconset='.($iconset),
+          $html = HTML::img(array('src' => urlencode($scripturl).
+                                  '&jid='.urlencode($jid).
+                                  '&type='.urlencode($type).
+                                  '&iconset='.($iconset),
                                   'alt' =>""));
         return $html;
     }

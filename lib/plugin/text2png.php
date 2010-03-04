@@ -26,10 +26,10 @@ rcs_id('$Id$');
  * image was saved to or loaded from the cache and what the path is.
  *
  * Convert text into a png image using GD without using [WikiPluginCached|Help:WikiPlugin].
- * The images are stored in a private <PHPWIKI_DIR>/images/<LANG> subdirectory instead, 
+ * The images are stored in a private <PHPWIKI_DIR>/images/<LANG> subdirectory instead,
  * which are not timestamp checked at all. Delete the .png file(s) if you change anything.
- * 
- * This is a really simple and stupid plugin, which needs some work. 
+ *
+ * This is a really simple and stupid plugin, which needs some work.
  * No size and color options, no change check.
  *
  * We'd need a ButtonCreator for the MacOSX theme buttons also.
@@ -64,15 +64,15 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         global $LANG;
-	// TODO: add fixed size and center.
+        // TODO: add fixed size and center.
         return array('text'    => "text2png testtext",
-                     'lang'    => $LANG, 
+                     'lang'    => $LANG,
                      '_force'      => 0,
-		     'fontsize'    => 18, // with GD1 it's the pixelsize, with GD2 the pointsize
-		     'with_shadow' => 1,
-		     'fontcolor'   => '#000000',
-		     'shadowcolor' => '#AFAFAF',
-		     'backcolor'   => '#ffffff');
+                     'fontsize'    => 18, // with GD1 it's the pixelsize, with GD2 the pointsize
+                     'with_shadow' => 1,
+                     'fontcolor'   => '#000000',
+                     'shadowcolor' => '#AFAFAF',
+                     'backcolor'   => '#ffffff');
         }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -89,24 +89,24 @@ extends WikiPlugin
             return;
         }
     }
-    
+
    /**
     * Parse hexcolor into ordinal rgb array.
     * '#000'    => array(0,0,0)
     * '#000000' => array(0,0,0)
     */
     function hexcolor($h, $default=false) {
-	if ($h[0] != '#') return $default;
-	$rgb = substr($h,1);
-	if (strlen($rgb) == 3)
-	    return array(hexdec($rgb{0}),hexdec($rgb{1}),hexdec($rgb{2}));
-	elseif (strlen($rgb) == 6)
-	    return array(hexdec(substr($rgb,0,2)),hexdec(substr($rgb,2,2)),hexdec(substr($rgb,4,2)));
-	return $default;
+        if ($h[0] != '#') return $default;
+        $rgb = substr($h,1);
+        if (strlen($rgb) == 3)
+            return array(hexdec($rgb{0}),hexdec($rgb{1}),hexdec($rgb{2}));
+        elseif (strlen($rgb) == 6)
+            return array(hexdec(substr($rgb,0,2)),hexdec(substr($rgb,2,2)),hexdec(substr($rgb,4,2)));
+        return $default;
     }
 
     function text2png($args) {
-	extract ($args);
+        extract ($args);
         /**
          * Basic image creation and caching
          *
@@ -127,7 +127,7 @@ extends WikiPlugin
         } else {
             $l = urlencode ($l); // who on earth forgot his?
         }
-	$basedir = "text2png-image";
+        $basedir = "text2png-image";
         $filepath = getUploadFilePath() . "$basedir/$l";
         if ($_force or !file_exists($filepath.$filename)) {
             if (!file_exists($filepath)) {
@@ -145,17 +145,17 @@ extends WikiPlugin
              *        width and height
              */
 
-	    // got this logic from GraphViz
-	    if (defined('TTFONT'))
-		$ttfont = TTFONT;
-	    elseif (PHP_OS == "Darwin") // Mac OS X
-		$ttfont   = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/LucidaSansRegular.ttf";
-	    elseif (isWindows()) {
-		$ttfont = $_ENV['windir'].'\Fonts\Arial.ttf';
-	    } else {
-		$ttfont = 'luximr'; // This is the only what sourceforge offered.
-		//$ttfont = 'Helvetica';
-	    }
+            // got this logic from GraphViz
+            if (defined('TTFONT'))
+                $ttfont = TTFONT;
+            elseif (PHP_OS == "Darwin") // Mac OS X
+                $ttfont   = "/System/Library/Frameworks/JavaVM.framework/Versions/1.3.1/Home/lib/fonts/LucidaSansRegular.ttf";
+            elseif (isWindows()) {
+                $ttfont = $_ENV['windir'].'\Fonts\Arial.ttf';
+            } else {
+                $ttfont = 'luximr'; // This is the only what sourceforge offered.
+                //$ttfont = 'Helvetica';
+            }
 
             /* http://download.php.net/manual/en/function.imagettftext.php
              * array imagettftext (int im, int size, int angle, int x, int y,
@@ -163,7 +163,7 @@ extends WikiPlugin
              */
 
             // get ready to draw
-	    $s = ImageTTFBBox($fontsize, 0, $ttfont, $text);
+            $s = ImageTTFBBox($fontsize, 0, $ttfont, $text);
             $im = @ImageCreate(abs($s[4])+20, abs($s[7])+10);
             if (empty($im)) {
                 $error_html = _("PHP was unable to create a new GD image stream. Read 'lib/plugin/text2png.php' for details.");
@@ -174,16 +174,16 @@ extends WikiPlugin
                 trigger_error( $error_html, E_USER_NOTICE );
                 return;
             }
-	    $rgb = $this->hexcolor($backcolor, array(255,255,255));
+            $rgb = $this->hexcolor($backcolor, array(255,255,255));
             $bg_color = ImageColorAllocate($im, $rgb[0], $rgb[1], $rgb[2]);
             if ($with_shadow) {
-	        $rgb = $this->hexcolor($shadowcolor, array(175,175,175));
+                $rgb = $this->hexcolor($shadowcolor, array(175,175,175));
                 $text_color = ImageColorAllocate($im, $rgb[0], $rgb[1], $rgb[2]);
                 // shadow is 1 pixel down and 2 pixels right
                 ImageTTFText($im, $fontsize, 0, 12, abs($s[7])+6, $text_color, $ttfont, $text);
             }
             // draw text
-	    $rgb = $this->hexcolor($fontcolor, array(0,0,0));
+            $rgb = $this->hexcolor($fontcolor, array(0,0,0));
             $text_color = ImageColorAllocate($im, $rgb[0], $rgb[1], $rgb[2]);
             ImageTTFText($im, $fontsize, 0, 10, abs($s[7])+5, $text_color, $ttfont, $text);
 

@@ -26,7 +26,7 @@ require_once('lib/PageList.php');
  * ListPages - List pages that are explicitly given as the pages argument.
  *
  * Mainly used to see some ratings and recommendations.
- * But also possible to list some Categories or Users, or as generic 
+ * But also possible to list some Categories or Users, or as generic
  * frontend for plugin-list page lists.
  *
  * @author: Dan Frankowski
@@ -60,7 +60,7 @@ extends WikiPlugin
 
     // info arg allows multiple columns
     // info=mtime,hits,summary,version,author,locked,minor
-    // additional info args: 
+    // additional info args:
     //   top3recs      : recommendations
     //   numbacklinks  : number of backlinks (links to the given page)
     //   numpagelinks  : number of forward links (links at the given page)
@@ -69,10 +69,10 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
 
         extract($args);
-        // If the ratings table does not exist, or on dba it will break otherwise. 
+        // If the ratings table does not exist, or on dba it will break otherwise.
         // Check if WikiTheme isa 'wikilens'
-	if ($info == 'pagename' and isa($GLOBALS['WikiTheme'], 'wikilens'))
-	    $info .= ",top3recs";
+        if ($info == 'pagename' and isa($GLOBALS['WikiTheme'], 'wikilens'))
+            $info .= ",top3recs";
         if ($info)
             $info = split(',', $info);
         else
@@ -89,10 +89,10 @@ extends WikiPlugin
             if (!isset($userids) || !is_array($userids) || !count($userids)) {
                 // TKL: moved getBuddies call inside if statement because it was
                 // causing the userids[] parameter to be ignored
-                if (is_string($active_userid) 
-		    and strlen($active_userid) 
-		    and $active_user->isSignedIn()) 
-		{
+                if (is_string($active_userid)
+                    and strlen($active_userid)
+                    and $active_user->isSignedIn())
+                {
                     $userids = getBuddies($active_userid, $dbi);
                 } else {
                     $userids = array();
@@ -112,7 +112,7 @@ extends WikiPlugin
                 // out is... odd)
                 unset($user);
             }
-            $options = array('dimension' => $dimension, 
+            $options = array('dimension' => $dimension,
                              'users' => $allowed_users);
             $args = array_merge($options, $args);
         }

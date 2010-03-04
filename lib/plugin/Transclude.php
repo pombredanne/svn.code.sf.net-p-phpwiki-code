@@ -77,15 +77,15 @@ extends WikiPlugin
         if (!$src) {
             return $this->error(fmt("%s parameter missing", "'src'"));
         }
-	// Expand possible interwiki link for src
-	if (strstr($src,':')
+        // Expand possible interwiki link for src
+        if (strstr($src,':')
             and (!strstr($src,'://'))
-            and ($intermap = getInterwikiMap()) 
-            and preg_match("/^" . $intermap->getRegexp() . ":/", $src)) 
+            and ($intermap = getInterwikiMap())
+            and preg_match("/^" . $intermap->getRegexp() . ":/", $src))
         {
-	    $link = $intermap->link($src);
-	    $src = $link->getAttr('href');
-	}
+            $link = $intermap->link($src);
+            $src = $link->getAttr('href');
+        }
 
         // FIXME: Better recursion detection.
         // FIXME: Currently this doesnt work at all.

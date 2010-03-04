@@ -62,12 +62,12 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('width'  => 200,
                      'height' => 200,
-		     'type' => 'line', // or 'area', 'bar', 'pie'
+                     'type' => 'line', // or 'area', 'bar', 'pie'
                      // 'xlabel' => 'x', // TODO
                      // 'ylabel' => 'y', // TODO
-		     'color' => 'green',
-		     // 'legend' => false, // TODO
-		     'data' => false // mandatory
+                     'color' => 'green',
+                     // 'legend' => false, // TODO
+                     'data' => false // mandatory
                      );
     }
     function handle_plugin_args_cruft(&$argstr, &$args) {
@@ -140,9 +140,9 @@ extends WikiPlugin
             }
         }
 
-	$embedargs = array('width'  => $args['width'],
-			   'height' => $args['height'],
-			   'script' => $source);
+        $embedargs = array('width'  => $args['width'],
+                           'height' => $args['height'],
+                           'script' => $source);
         $embed = new SVG_HTML("embed", $embedargs);
         $html->pushContent($embed);
         return $html;

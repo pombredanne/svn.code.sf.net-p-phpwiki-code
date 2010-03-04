@@ -25,16 +25,16 @@ require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
 
 /**
- * Display results of pagename search. 
+ * Display results of pagename search.
  * Provides no own input box, just <?plugin-form TitleSearch ?> is enough.
  * Fancier Inputforms can be made using WikiForm Rich, to support regex and case_exact args.
  *
- * If only one pages is found and auto_redirect is true, this page is displayed immediatly, 
+ * If only one pages is found and auto_redirect is true, this page is displayed immediatly,
  * otherwise the found pagelist is displayed.
- * The workhorse TextSearchQuery converts the query string from google-style words 
+ * The workhorse TextSearchQuery converts the query string from google-style words
  * to the required DB backend expression.
  *   (word and word) OR word, -word, "two words"
- * regex=auto tries to detect simple glob-style wildcards and expressions, 
+ * regex=auto tries to detect simple glob-style wildcards and expressions,
  * like xx*, *xx, ^xx, xx$, ^word$.
  */
 class WikiPlugin_TitleSearch
@@ -63,8 +63,8 @@ extends WikiPlugin
                    'exclude'       => false,
                    'info'          => false,
                    'case_exact'    => false,
-                   'regex'     	   => 'auto',
-                   'format'    	   => false,
+                   'regex'                => 'auto',
+                   'format'               => false,
                    ));
     }
     // info arg allows multiple columns
@@ -77,14 +77,14 @@ extends WikiPlugin
             return HTML();
         }
 
-        // ^S != S*   ^  matches only beginning of phrase, not of word. 
+        // ^S != S*   ^  matches only beginning of phrase, not of word.
         //            x* matches any word beginning with x
         $query = new TextSearchQuery($args['s'], $args['case_exact'], $args['regex']);
         $pages = $dbi->titleSearch($query,$args['sortby'],$args['limit'],$args['exclude']);
 
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         $pagelist->addPages($pages);
-	// this hack will go away
+        // this hack will go away
         if ($args['format'] == 'livesearch') {
             $request->discardOutput();
             $request->buffer_output(false);
@@ -105,7 +105,7 @@ extends WikiPlugin
                 $s = WikiLink($args['s'], 'auto');
             }
             if ($total) {
-            	$pagelist->setCaption(fmt("Title search results for '%s' (%d total)", $s, $total));
+                    $pagelist->setCaption(fmt("Title search results for '%s' (%d total)", $s, $total));
             } else {
                 $pagelist->setCaption(fmt("Title search results for '%s'", $s));
             }

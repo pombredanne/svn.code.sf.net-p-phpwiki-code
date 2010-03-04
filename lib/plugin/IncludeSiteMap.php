@@ -28,7 +28,7 @@ rcs_id('$Id$');
  *
  * This is a quick mod of BackLinks to do the job recursively. If your
  * site is categorized correctly, and all the categories are listed in
- * CategoryCategory, then a RecBackLinks there will produce one BIG(!) 
+ * CategoryCategory, then a RecBackLinks there will produce one BIG(!)
  * contents page for the entire site.
  * The list is as deep as the recursion level ('reclimit').
  *
@@ -54,7 +54,7 @@ extends WikiPlugin_SiteMap
 
   function getDescription () {
     return sprintf(_("Include recursively all linked pages starting at %s"),
-		   $this->_pagename);
+                   $this->_pagename);
   }
 
   function getVersion() {

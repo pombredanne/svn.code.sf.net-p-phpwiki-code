@@ -49,13 +49,13 @@ extends WikiPlugin
         // validators have already been handled by displayPage.
         return true;
     }
-    
+
     function run($dbi, $argstr, &$request, $basepage) {
         if (!$basepage) {
             return $this->error("$basepage unset?");
         }
         include_once("lib/BlockParser.php");
-	$page = $request->getPage($basepage);
+        $page = $request->getPage($basepage);
         return HTML::div(array('class'=>'boxright'), TransformText($argstr));
     }
 

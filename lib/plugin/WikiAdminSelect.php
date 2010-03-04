@@ -175,7 +175,7 @@ extends WikiPlugin
             // $form->pushContent(Button('submit:cancel', _("Cancel"), 'button'));
         }
 
-        if ($request->isPost() 
+        if ($request->isPost()
             && ! $request->getArg('wikiadmin')
             && !empty($p)) {
             $this->_list = array();
@@ -185,7 +185,7 @@ extends WikiPlugin
             }
         }
         elseif ($request->isPost()
-        	and $request->_user->isAdmin()
+                and $request->_user->isAdmin()
                 and !empty($p)
                 //and $request->getArg('verify')
                 and ($request->getArg('action') == 'WikiAdminSelect')
@@ -243,9 +243,9 @@ extends WikiPlugin
 
     function _tablePush(&$table, $first, $second) {
         $table->pushContent(
-			    HTML::tr(
-				     HTML::td($first),
-				     HTML::td($second)));
+                            HTML::tr(
+                                     HTML::td($first),
+                                     HTML::td($second)));
     }
 
 }

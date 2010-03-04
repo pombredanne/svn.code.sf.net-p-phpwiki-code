@@ -41,7 +41,7 @@ extends WikiPlugin
         return preg_replace("/[Revision: $]/", '',
                             "\$Revision$");
     }
-    function getDefaultArguments() { 
+    function getDefaultArguments() {
         return array(
                      'page'       => "[pagename]", // which pages (glob allowed), default: current
                      'relations'  => '', // which relations. default all
@@ -51,21 +51,21 @@ extends WikiPlugin
                      'nohelp'     => false
                      );
     }
-    function run ($dbi, $argstr, &$request, $basepage) { 
+    function run ($dbi, $argstr, &$request, $basepage) {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
         extract($args);
         if (empty($page))
             $page = $request->getArg('pagename');
         $relhtml = HTML();
-	if ($args['relations'] != '') {
+        if ($args['relations'] != '') {
             $relfilter = explode(",", $args['relations']);
-	} else 
-	    $relfilter = array();
+        } else
+            $relfilter = array();
         if ($args['attributes'] != '') {
             $attfilter = explode(",", $args['attributes']);
         } else
-	    $attfilter = array();
+            $attfilter = array();
         foreach (explodePageList($page) as $pagename) {
             $p = $dbi->getPage($pagename);
             if ($args['relations'] != '0') {
@@ -74,16 +74,16 @@ extends WikiPlugin
               while ($object = $links->next()) {
                 if ($related = $object->get('linkrelation')) { // a page name
                     if ($relfilter and !in_array($related, $relfilter)) {
-                    	 continue;
+                             continue;
                     }
                     $rellink = WikiLink($related, false, $related);
                     $rellink->setAttr('class', $rellink->getAttr('class').' relation');
                     $relhtml->pushContent
                         ($pagename . " ",
                          // Link to a special "Relation:" InterWiki link?
-                         $rellink, 
+                         $rellink,
                          HTML::span(array('class'=>'relation-symbol'), "::"), // use spaces?
-                         WikiLink($object->_pagename), 
+                         WikiLink($object->_pagename),
                          " ",
                          // Link to SemanticSearch
                          $WikiTheme->makeActionButton(array('relation' => $related,
@@ -106,24 +106,24 @@ extends WikiPlugin
                     $rellink = WikiLink($att, false, $att);
                     $rellink->setAttr('class', $rellink->getAttr('class').' relation');
                     $searchlink = $WikiTheme->makeActionButton
-			(array('attribute' => $att,
-			       's'         => $val),
-			 $val,
-			 _("SemanticSearch"));
-	            $searchlink->setAttr('class', $searchlink->getAttr('class').' attribute');
+                        (array('attribute' => $att,
+                               's'         => $val),
+                         $val,
+                         _("SemanticSearch"));
+                    $searchlink->setAttr('class', $searchlink->getAttr('class').' attribute');
                     if (!$noheader)
                         $atthtml->pushContent("$pagename  ");
-		    $atthtml->pushContent(HTML::span(array('class' => 'attribute '.$att),
-		                                     $rellink, 
-						     HTML::span(array('class'=>'relation-symbol'), 
-								":="), 
-						     $searchlink),
-					  (count($attfilter) > 3 ? HTML::br() : " "));
+                    $atthtml->pushContent(HTML::span(array('class' => 'attribute '.$att),
+                                                     $rellink,
+                                                     HTML::span(array('class'=>'relation-symbol'),
+                                                                ":="),
+                                                     $searchlink),
+                                          (count($attfilter) > 3 ? HTML::br() : " "));
                 }
                 if (!$noheader)
                     $relhtml = HTML($relhtml,
                                     HTML::hr(),
-                                    HTML::h3(fmt("Attributes of %s", $pagename)), 
+                                    HTML::h3(fmt("Attributes of %s", $pagename)),
                                     $atthtml);
                 else
                     $relhtml = HTML($relhtml, $atthtml);
@@ -131,8 +131,8 @@ extends WikiPlugin
            }
         }
         if ($nohelp) return $relhtml;
-        return HTML($relhtml, 
-                    HTML::hr(), 
+        return HTML($relhtml,
+                    HTML::hr(),
                     WikiLink(_("Help/SemanticRelations"), false,
                              HTML::em(_("Help/SemanticRelations"))),
                     " - ",

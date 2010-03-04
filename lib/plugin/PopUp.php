@@ -59,43 +59,43 @@ extends WikiPlugin
     }
     function getDefaultArguments() {
         return array('link'        => "HomePage",
-	             'title'       => "",
-	             'text'        => "",
-		     'width'       => "500",
-		     'height'      => "400",
-		     'resizable'   => "no",
-		     'scrollbars'  => "no",
-		     'toolbar'     => "no",
-		     'location'    => "no",
-		     'directories' => "no",
-		     'status'      => "no",
-		     'menubar'     => "no",
-		     'copyhistory' => "no",
-		     'close'       => "no",
-		    );
+                     'title'       => "",
+                     'text'        => "",
+                     'width'       => "500",
+                     'height'      => "400",
+                     'resizable'   => "no",
+                     'scrollbars'  => "no",
+                     'toolbar'     => "no",
+                     'location'    => "no",
+                     'directories' => "no",
+                     'status'      => "no",
+                     'menubar'     => "no",
+                     'copyhistory' => "no",
+                     'close'       => "no",
+                    );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         return HTML::a(array('href' => WikiURL($link),
-	                      'target' => "_blank",
-	                      'onclick' => ($close == "yes" ? "window.close()" : ("window.open('" .
-			          WikiURL($link) . "', '" .
-				  ($title == "" ? ($text == "" ? $link : $text) : $title) . "', '" .
-				  "width=$width," .
-				  "height=$height," .
-				  "resizable=$resizable," .
-				  "scrollbars=$scrollbars," .
-				  "toolbar=$toolbar," .
-				  "location=$location," .
-				  "directories=$directories," .
-				  "status=$status," .
-				  "menubar=$menubar," .
-				  "copyhistory=$copyhistory')"
-				  )) . ";return false;"
-	                     ),
-		        ($text == "" ? ($close == "yes" ? "Close window" : $link) : $text)
-		       );
+                              'target' => "_blank",
+                              'onclick' => ($close == "yes" ? "window.close()" : ("window.open('" .
+                                  WikiURL($link) . "', '" .
+                                  ($title == "" ? ($text == "" ? $link : $text) : $title) . "', '" .
+                                  "width=$width," .
+                                  "height=$height," .
+                                  "resizable=$resizable," .
+                                  "scrollbars=$scrollbars," .
+                                  "toolbar=$toolbar," .
+                                  "location=$location," .
+                                  "directories=$directories," .
+                                  "status=$status," .
+                                  "menubar=$menubar," .
+                                  "copyhistory=$copyhistory')"
+                                  )) . ";return false;"
+                             ),
+                        ($text == "" ? ($close == "yes" ? "Close window" : $link) : $text)
+                       );
     }
 };
 

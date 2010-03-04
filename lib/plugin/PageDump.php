@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright (C) 2003 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@ rcs_id('$Id$');
  * PhpWikiPlugin for PhpWiki developers to generate single page dumps
  * for checking into cvs, or for users or the admin to produce a
  * downloadable page dump of a single page.
- * 
+ *
  * This plugin will also be useful to (semi-)automatically sync pages
  * directly between two wikis. First the LoadFile function of
  * PhpWikiAdministration needs to be updated to handle URLs again, and
@@ -87,10 +87,10 @@ extends WikiPlugin
 
         // Check if user is allowed to get the Page.
         if (!mayAccessPage ('view', $page)) {
-        	return $this->error(sprintf(_("Illegal access to page %s: no read access"),
+                return $this->error(sprintf(_("Illegal access to page %s: no read access"),
                                         $page));
         }
-        
+
         $p = $dbi->getPage($page);
         include_once("lib/loadsave.php");
         $mailified = MailifyPage($p, ($format == 'backup') ? 99 : 1);
@@ -113,7 +113,7 @@ extends WikiPlugin
             $this->fixup_headers($mailified);
 
         if ($download) {
-            // TODO: we need a way to hook into the generated headers, to override 
+            // TODO: we need a way to hook into the generated headers, to override
             // Content-Type, Set-Cookie, Cache-control, ...
             $request->discardOutput(); // Hijack the http request from PhpWiki.
             ob_end_clean();            // clean up after hijacking $request
@@ -128,7 +128,7 @@ extends WikiPlugin
             if (!$charset) $charset = $GLOBALS['charset'];
             // We generate 3 Content-Type headers! first in loadsave,
             // then here and the mimified string $mailified also has it!
-	    // This one is correct and overwrites the others.
+            // This one is correct and overwrites the others.
             Header("Content-Type: application/octet-stream; name=\""
                    . $filename . "\"; charset=\"" . $charset
                    . "\"");
@@ -136,7 +136,7 @@ extends WikiPlugin
             // let $request provide last modified & etag
             Header("Content-Id: <" . $this->MessageId . ">");
             // be nice to http keepalive~s
-            Header("Content-Length: " . strlen($mailified)); 
+            Header("Content-Length: " . strlen($mailified));
 
             // Here comes our prepared mime file
             echo $mailified;

@@ -23,7 +23,7 @@ rcs_id('$Id$');
 require_once("lib/Google.php");
 
 /**
- * This module is a wrapper for the Google Web APIs. It allows you to do Google searches, 
+ * This module is a wrapper for the Google Web APIs. It allows you to do Google searches,
  * retrieve pages from the Google cache, and ask Google for spelling suggestions.
  *
  * Note: You must first obtain a license key at http://www.google.com/apis/
@@ -79,7 +79,7 @@ extends WikiPlugin
                 case 'cache':  $result = $google->doGetCachedPage($q); break;
                 case 'spell':  $result = $google->doSpellingSuggestion($q); break;
                 default:
-                	trigger_error("Invalid mode");
+                        trigger_error("Invalid mode");
             }
             if (isa($result,'HTML'))
                 $html->pushContent($result);
@@ -88,13 +88,13 @@ extends WikiPlugin
                 if (!empty($result->resultElements)) {
                     $list = HTML::ol();
                     foreach ($result->resultElements as $res) {
-                    	$li = HTML::li(LinkURL($res['URL'],$res['directoryTitle']),HTML::br(),
-                    	               $res['directoryTitle'] ? HTML(HTML::raw('&nbsp;&nbsp;'),HTML::em($res['summary']),' -- ',LinkURL($res['URL'])) : '');
+                            $li = HTML::li(LinkURL($res['URL'],$res['directoryTitle']),HTML::br(),
+                                           $res['directoryTitle'] ? HTML(HTML::raw('&nbsp;&nbsp;'),HTML::em($res['summary']),' -- ',LinkURL($res['URL'])) : '');
                         $list->pushContent($li);
                     }
                     $html->pushContent($list);
                 }
-                else 
+                else
                     return _("Nothing found");
             }
             if (is_string($result)) {

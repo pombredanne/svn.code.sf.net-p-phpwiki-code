@@ -41,8 +41,8 @@ extends WikiPlugin_GraphViz
      * Sets plugin type to map production
      */
     function getPluginType() {
-        return ($GLOBALS['request']->getArg('debug')) ? PLUGIN_CACHED_IMG_ONDEMAND 
-	    					      : PLUGIN_CACHED_MAP;
+        return ($GLOBALS['request']->getArg('debug')) ? PLUGIN_CACHED_IMG_ONDEMAND
+                                                          : PLUGIN_CACHED_MAP;
     }
 
     /**
@@ -162,7 +162,7 @@ extends WikiPlugin_GraphViz
         $this->extract_wikipages($dbi, $argarray);
         /* ($dbi,  $large, $recent, $refined, $backlink,
             $neighbour, $excludelist, $includelist, $color); */
-    	$result = $this->invokeDot($argarray);
+            $result = $this->invokeDot($argarray);
         if (isa($result, 'HtmlElement'))
             return array(false, $result);
         else
@@ -299,9 +299,9 @@ extends WikiPlugin_GraphViz
 
         // remove INCLUDED from EXCLUDED, includes override excludes.
         if ($exclude_list and $include_list) {
-        	$diff = array_diff($exclude_list, $include_list);
-        	if ($diff)
-        	    $exclude_list = $diff;
+                $diff = array_diff($exclude_list, $include_list);
+                if ($diff)
+                    $exclude_list = $diff;
         }
 
         // collect all pages
@@ -313,7 +313,7 @@ extends WikiPlugin_GraphViz
 
             // skip excluded pages
             if (in_array($name, $exclude_list)) {
-            	$page->free();	
+                    $page->free();
                 continue;
             }
 
@@ -508,7 +508,7 @@ extends WikiPlugin_GraphViz
                 $legend[] = $name;
             }
             $dot .= '        '. join(' -> ', $legend)
-		. ";\n    }\n";
+                . ";\n    }\n";
         }
 
         // {
@@ -522,8 +522,8 @@ extends WikiPlugin_GraphViz
     }
 
 
-    /** 
-     * static workaround on broken Cache or broken dot executable, 
+    /**
+     * static workaround on broken Cache or broken dot executable,
      * called only if debug=static.
      *
      * @access private
@@ -531,10 +531,10 @@ extends WikiPlugin_GraphViz
      * @param  map      string  &lt;area&gt; tags defining active
      *                          regions in the map
      * @param  dbi      WikiDB  database abstraction class
-     * @param  argarray array   complete (!) arguments to produce 
-     *                          image. It is not necessary to call 
+     * @param  argarray array   complete (!) arguments to produce
+     *                          image. It is not necessary to call
      *                          WikiPlugin->getArgs anymore.
-     * @param  request  Request ??? 
+     * @param  request  Request ???
      * @return          string  html output
      */
     function embedImg($url,&$dbi,$argarray,&$request) {
@@ -551,7 +551,7 @@ extends WikiPlugin_GraphViz
         $file_dir = getUploadFilePath();
         $upload_dir = getUploadDataPath();
         $tmpfile = tempnam($file_dir,"VisualWiki").".".$argarray['imgtype'];
-        WikiPluginCached::writeImage($argarray['imgtype'], $imagehandle, $tmpfile);             
+        WikiPluginCached::writeImage($argarray['imgtype'], $imagehandle, $tmpfile);
         ImageDestroy($imagehandle);
         return WikiPluginCached::embedMap(1,$upload_dir.basename($tmpfile),$content['html'],
                                           $dbi,$argarray,$request);

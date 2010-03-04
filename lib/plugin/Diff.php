@@ -20,7 +20,7 @@ rcs_id('$Id$');
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 /**
- * lib/diff.php converted to a plugin by electrawn, 
+ * lib/diff.php converted to a plugin by electrawn,
  * plugin cleaned up by rurban,
  * code by dairiki
  *
@@ -67,7 +67,7 @@ extends WikiPlugin {
 
             $iswikipage = (isWikiWord($author) && $dbi->isWikiPage($author));
             $authorlink = $iswikipage ? WikiLink($author) : $author;
-            
+
             $linked_version = WikiLink($rev, 'existing', $rev->getVersion());
             $row->pushContent(HTML::td(fmt("version %s", $linked_version)),
                               HTML::td($WikiTheme->getLastModifiedMessage($rev,
@@ -78,7 +78,7 @@ extends WikiPlugin {
         }
         return $row;
     }
-    
+
     function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         if (is_array($versions)) {
@@ -89,10 +89,10 @@ extends WikiPlugin {
 
         // Check if user is allowed to get the Page.
         if (!mayAccessPage ('view', $pagename)) {
-        	return $this->error(sprintf(_("Illegal access to page %s: no read access"),
+                return $this->error(sprintf(_("Illegal access to page %s: no read access"),
                                         $pagename));
         }
-        
+
         // abort if page doesn't exist
         $page = $request->getPage($pagename);
         $current = $page->getCurrentRevision();
@@ -147,11 +147,11 @@ extends WikiPlugin {
                 break;
             }
         }
-        
+
         $new_link = WikiLink($new, '', $new_version);
         $old_link = $old ? WikiLink($old, '', $old_version) : $old_version;
         $page_link = WikiLink($page);
-        
+
         $html = HTML(HTML::p(fmt("Differences between %s and %s of %s.",
                                  $new_link, $old_link, $page_link)));
 
@@ -171,7 +171,7 @@ extends WikiPlugin {
         }
         $html->pushContent($otherdiffs);
 
-        
+
         if ($old and $old->getVersion() == 0)
             $old = false;
 
@@ -182,7 +182,7 @@ extends WikiPlugin {
 
         if ($new && $old) {
             $diff = new Diff($old->getContent(), $new->getContent());
-            
+
             if ($diff->isEmpty()) {
                 $html->pushContent(HTML::hr(),
                                    HTML::p(_("Content of versions "), $old->getVersion(),

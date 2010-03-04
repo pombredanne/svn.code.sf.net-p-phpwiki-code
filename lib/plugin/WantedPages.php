@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright (C) 2002, 2004 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -50,7 +50,7 @@ extends WikiPlugin
             (
              PageList::supportedArgs(),
              array('page'     => '[pagename]', // just for a single page.
-		   'withlinks' => 0,
+                   'withlinks' => 0,
                    'noheader' => false,
                    'exclude_from'  => _("PgsrcTranslation").','._("InterWikiMap"),
                    'limit'    => '100',
@@ -64,7 +64,7 @@ extends WikiPlugin
         $args = $this->getArgs($argstr, $request);
         if (!empty($args['exclude_from']))
             $args['exclude_from'] = is_string($args['exclude_from'])
-                ? explodePageList($args['exclude_from']) 
+                ? explodePageList($args['exclude_from'])
                 : $args['exclude_from']; // <! plugin-list !>
         extract($args);
         if ($page == _("WantedPages")) $page = "";
@@ -77,16 +77,16 @@ extends WikiPlugin
         if (!$page and $withlinks) {
             $GLOBALS['WikiTheme']->addPageListColumn(
                 array('wanted' => array('_PageList_Column_WantedPages_wanted', 'custom:wanted', _("Wanted From"), 'left')));
-	    $info = "pagename,wanted";
-	} elseif ($page) {
+            $info = "pagename,wanted";
+        } elseif ($page) {
             //only get WantedPages links for one page
-	    $info = "";
-	} else {
+            $info = "";
+        } else {
             // just link to links
             $GLOBALS['WikiTheme']->addPageListColumn(
                 array('links' => array('_PageList_Column_WantedPages_links', 'custom:links', _("Links"), 'left')));
-	    $info = "pagename,links";
-	}
+            $info = "pagename,links";
+        }
         $pagelist = new PageList($info, $exclude, $args); // search button?
         $pagelist->_wpagelist = array();
 
@@ -94,15 +94,15 @@ extends WikiPlugin
             list($offset, $maxcount) = $pagelist->limit($limit);
             $wanted_iter = $dbi->wantedPages($exclude_from, $exclude, $sortby, $limit);
             while ($row = $wanted_iter->next()) {
-            	$wantedfrom = $row['pagename'];
-            	$wanted = $row['wantedfrom'];
-            	// ignore duplicates:
-            	if (empty($pagelist->_wpagelist[$wanted]))
-            	    $pagelist->addPage($wanted);
-            	if (!isset($pagelist->_wpagelist[$wanted]))
-            	    $pagelist->_wpagelist[$wanted][] = $wantedfrom;
-            	elseif (!in_array($wantedfrom, $pagelist->_wpagelist[$wanted]))
-            	    $pagelist->_wpagelist[$wanted][] = $wantedfrom;
+                    $wantedfrom = $row['pagename'];
+                    $wanted = $row['wantedfrom'];
+                    // ignore duplicates:
+                    if (empty($pagelist->_wpagelist[$wanted]))
+                        $pagelist->addPage($wanted);
+                    if (!isset($pagelist->_wpagelist[$wanted]))
+                        $pagelist->_wpagelist[$wanted][] = $wantedfrom;
+                    elseif (!in_array($wantedfrom, $pagelist->_wpagelist[$wanted]))
+                        $pagelist->_wpagelist[$wanted][] = $wantedfrom;
             }
             $wanted_iter->free();
             unset($wanted_iter);
@@ -133,7 +133,7 @@ extends WikiPlugin
                 $pagelist->setCaption(sprintf(_("Wanted Pages in this wiki:")));
         }
         // reference obviously doesn't work, so force an update to add _wpagelist to parentobj
-        if (isset($pagelist->_columns[1]) 
+        if (isset($pagelist->_columns[1])
             and in_array($pagelist->_columns[1]->_field, array('wanted','links')))
             $pagelist->_columns[1]->parentobj =& $pagelist;
         return $pagelist;
@@ -147,12 +147,12 @@ class _PageList_Column_WantedPages_wanted extends _PageList_Column {
         $this->_PageList_Column($params[0],$params[1],$params[2]);
     }
     function _getValue(&$page, $revision_handle) {
-    	$html = false;
-	$pagename = $page->getName();
+            $html = false;
+        $pagename = $page->getName();
         foreach ($this->parentobj->_wpagelist[$pagename] as $page) {
             if ($html)
                 $html->pushContent(', ', WikiLink($page));
-            else 
+            else
                 $html = HTML(WikiLink($page));
         }
         return $html;
@@ -168,11 +168,11 @@ class _PageList_Column_WantedPages_links extends _PageList_Column {
         $this->_PageList_Column($params[0],$params[1],$params[2]);
     }
     function _getValue(&$page, $revision_handle) {
-    	$html = false;
-	$pagename = $page->getName();
-	$count = count($this->parentobj->_wpagelist[$pagename]);
-        return LinkURL(WikiURL($page, array('action' => 'BackLinks'), false), 
-			fmt("(%d Links)", $count));
+            $html = false;
+        $pagename = $page->getName();
+        $count = count($this->parentobj->_wpagelist[$pagename]);
+        return LinkURL(WikiURL($page, array('action' => 'BackLinks'), false),
+                        fmt("(%d Links)", $count));
     }
 }
 

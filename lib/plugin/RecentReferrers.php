@@ -47,16 +47,16 @@ class WikiPlugin_RecentReferrers extends WikiPlugin
             (
              PageList::supportedArgs(),
              array(
-                   'limit' 	   => 15,
+                   'limit'            => 15,
                    'noheader'      => false,
                    ));
     }
 
-    function run($dbi, $argstr, &$request, $basepage) { 
+    function run($dbi, $argstr, &$request, $basepage) {
         if (!ACCESS_LOG) {
             return HTML::div(array('class' => "error"), "Error: no ACCESS_LOG");
         }
-        $args = $this->getArgs($argstr, $request); 
+        $args = $this->getArgs($argstr, $request);
         $table = HTML::table(array('cellpadding' => 1,
                                    'cellspacing' => 2,
                                    'border'      => 0,
