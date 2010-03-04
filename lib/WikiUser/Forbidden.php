@@ -4,8 +4,8 @@ rcs_id('$Id$');
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
 
-/** 
- * The PassUser name gets created automatically. 
+/**
+ * The PassUser name gets created automatically.
  * That's why this class is empty, but must exist.
  */
 class _ForbiddenPassUser

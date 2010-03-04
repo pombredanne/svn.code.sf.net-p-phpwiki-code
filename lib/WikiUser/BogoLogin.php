@@ -4,13 +4,13 @@ rcs_id('$Id$');
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
 
-/** Without stored password. A _BogoLoginPassUser with password 
+/** Without stored password. A _BogoLoginPassUser with password
  *  is automatically upgraded to a PersonalPagePassUser.
  */
 class _BogoLoginPassUser extends _PassUser {
 
     var $_authmethod = 'BogoLogin';
-    
+
     function userExists() {
         if (isWikiWord($this->_userid)) {
             $this->_level = WIKIAUTH_BOGO;

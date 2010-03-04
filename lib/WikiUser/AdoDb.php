@@ -12,7 +12,7 @@ extends _DbPassUser
  * ADODB methods
  * Simple sprintf, no prepare.
  *
- * Warning: Since we use FETCH_MODE_ASSOC (string hash) and not the also faster 
+ * Warning: Since we use FETCH_MODE_ASSOC (string hash) and not the also faster
  * FETCH_MODE_ROW (numeric), we have to use the correct aliases in auth_* sql statements!
  *
  * TODO: Change FETCH_MODE in adodb WikiDB sublasses.
@@ -78,28 +78,28 @@ extends _DbPassUser
             if (!$id_only and isset($this->_prefs->_update)) {
                 $this->getAuthDbh();
                 $dbh = &$this->_auth_dbi;
-		// check if the user already exists (not needed with mysql REPLACE)
-		$rs = $dbh->Execute(sprintf($this->_prefs->_select, $dbh->qstr($this->_userid)));
-		if ($rs->EOF) {
-		    $rs->Close();
-		    $prefs_blob = false;
-		} else {
-		    $prefs_blob = @$rs->fields['prefs'];
-		    $rs->Close();
-		}
-		if ($prefs_blob) {
-		    $db_result = $dbh->Execute(sprintf($this->_prefs->_update,
-						       $dbh->qstr($packed),
-						       $dbh->qstr($this->_userid)));
-		} else {
-		    // Otherwise, insert a record for them and set it to the defaults.
-		    $dbi = $request->getDbh();
-		    $this->_prefs->_insert = $this->prepare($dbi->getAuthParam('pref_insert'),
-							    array("pref_blob", "userid"));
-		    $db_result = $dbh->Execute(sprintf($this->_prefs->_insert,
-						       $dbh->qstr($packed),
-						       $dbh->qstr($this->_userid)));
-		}
+                // check if the user already exists (not needed with mysql REPLACE)
+                $rs = $dbh->Execute(sprintf($this->_prefs->_select, $dbh->qstr($this->_userid)));
+                if ($rs->EOF) {
+                    $rs->Close();
+                    $prefs_blob = false;
+                } else {
+                    $prefs_blob = @$rs->fields['prefs'];
+                    $rs->Close();
+                }
+                if ($prefs_blob) {
+                    $db_result = $dbh->Execute(sprintf($this->_prefs->_update,
+                                                       $dbh->qstr($packed),
+                                                       $dbh->qstr($this->_userid)));
+                } else {
+                    // Otherwise, insert a record for them and set it to the defaults.
+                    $dbi = $request->getDbh();
+                    $this->_prefs->_insert = $this->prepare($dbi->getAuthParam('pref_insert'),
+                                                            array("pref_blob", "userid"));
+                    $db_result = $dbh->Execute(sprintf($this->_prefs->_insert,
+                                                       $dbh->qstr($packed),
+                                                       $dbh->qstr($this->_userid)));
+                }
                 $db_result->Close();
                 // delete pageprefs:
                 if ($this->_HomePagehandle and $this->_HomePagehandle->get('pref'))
@@ -113,7 +113,7 @@ extends _DbPassUser
         }
         return 0;
     }
- 
+
     function userExists() {
         $this->getAuthDbh();
         $dbh = &$this->_auth_dbi;
@@ -126,11 +126,11 @@ extends _DbPassUser
         $dbi =& $GLOBALS['request']->_dbi;
         // Prepare the configured auth statements
         if ($dbi->getAuthParam('auth_check') and empty($this->_authselect)) {
-            $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'), 
+            $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'),
                                                 array("password", "userid"));
         }
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
-        if ( !$dbi->getAuthParam('auth_user_exists') 
+        if ( !$dbi->getAuthParam('auth_user_exists')
              and $this->_auth_crypt_method == 'crypt'
              and $this->_authselect)
         {
@@ -146,7 +146,7 @@ extends _DbPassUser
             if (! $dbi->getAuthParam('auth_user_exists'))
                 trigger_error(fmt("%s is missing", 'DBAUTH_AUTH_USER_EXISTS'),
                               E_USER_WARNING);
-            $this->_authcheck = $this->prepare($dbi->getAuthParam('auth_user_exists'), 
+            $this->_authcheck = $this->prepare($dbi->getAuthParam('auth_user_exists'),
                                                'userid');
             $rs = $dbh->Execute(sprintf($this->_authcheck, $dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
@@ -157,16 +157,16 @@ extends _DbPassUser
             }
         }
         // User does not exist yet.
-        // Maybe the user is allowed to create himself. Generally not wanted in 
-        // external databases, but maybe wanted for the wiki database, for performance 
+        // Maybe the user is allowed to create himself. Generally not wanted in
+        // external databases, but maybe wanted for the wiki database, for performance
         // reasons
         if (empty($this->_authcreate) and $dbi->getAuthParam('auth_create')) {
             $this->_authcreate = $this->prepare($dbi->getAuthParam('auth_create'),
                                                 array("password", "userid"));
         }
-        if (!empty($this->_authcreate) and 
+        if (!empty($this->_authcreate) and
             isset($GLOBALS['HTTP_POST_VARS']['auth']) and
-            isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) 
+            isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd']))
         {
             $passwd = $GLOBALS['HTTP_POST_VARS']['auth']['passwd'];
             $dbh->Execute(sprintf($this->_authcreate,
@@ -174,7 +174,7 @@ extends _DbPassUser
                                   $dbh->qstr($this->_userid)));
             return true;
         }
-        
+
         return $this->_tryNextUser();
     }
 
@@ -205,8 +205,8 @@ extends _DbPassUser
                           E_USER_WARNING);
         //NOTE: for auth_crypt_method='crypt'  defined('ENCRYPTED_PASSWD',true) must be set
         if ($this->_auth_crypt_method == 'crypt') {
-            $rs = $dbh->Execute(sprintf($this->_authselect, 
-            				$dbh->qstr($this->_userid)));
+            $rs = $dbh->Execute(sprintf($this->_authselect,
+                                            $dbh->qstr($this->_userid)));
             if (!$rs->EOF) {
                 $stored_password = $rs->fields['password'];
                 $rs->Close();
@@ -233,7 +233,7 @@ extends _DbPassUser
             $result = !empty($okay);
         }
 
-        if ($result) { 
+        if ($result) {
             $this->_level = WIKIAUTH_USER;
             return $this->_level;
         } elseif (USER_AUTH_POLICY === 'strict') {
