@@ -23,22 +23,22 @@ rcs_id('$Id$');
 /*
  * Standard Alcatel-Lucent disclaimer for contributing to open source
  *
- * "The WikicreoleTablePlugin ("Contribution") has not been tested and/or 
+ * "The WikicreoleTablePlugin ("Contribution") has not been tested and/or
  * validated for release as or in products, combinations with products or
- * other commercial use. Any use of the Contribution is entirely made at 
+ * other commercial use. Any use of the Contribution is entirely made at
  * the user's own responsibility and the user can not rely on any features,
- * functionalities or performances Alcatel-Lucent has attributed to the 
+ * functionalities or performances Alcatel-Lucent has attributed to the
  * Contribution.
  *
- * THE CONTRIBUTION BY ALCATEL-LUCENT IS PROVIDED AS IS, WITHOUT WARRANTY 
- * OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
+ * THE CONTRIBUTION BY ALCATEL-LUCENT IS PROVIDED AS IS, WITHOUT WARRANTY
+ * OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, COMPLIANCE,
- * NON-INTERFERENCE AND/OR INTERWORKING WITH THE SOFTWARE TO WHICH THE 
- * CONTRIBUTION HAS BEEN MADE, TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL 
- * ALCATEL-LUCENT BE LIABLE FOR ANY DAMAGES OR OTHER LIABLITY, WHETHER IN 
- * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
- * CONTRIBUTION OR THE USE OR OTHER DEALINGS IN THE CONTRIBUTION, WHETHER 
- * TOGETHER WITH THE SOFTWARE TO WHICH THE CONTRIBUTION RELATES OR ON A STAND 
+ * NON-INTERFERENCE AND/OR INTERWORKING WITH THE SOFTWARE TO WHICH THE
+ * CONTRIBUTION HAS BEEN MADE, TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL
+ * ALCATEL-LUCENT BE LIABLE FOR ANY DAMAGES OR OTHER LIABLITY, WHETHER IN
+ * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * CONTRIBUTION OR THE USE OR OTHER DEALINGS IN THE CONTRIBUTION, WHETHER
+ * TOGETHER WITH THE SOFTWARE TO WHICH THE CONTRIBUTION RELATES OR ON A STAND
  * ALONE BASIS."
  */
 
@@ -134,7 +134,7 @@ extends WikiPlugin
     function _parse_row ($line, $basepage) {
         $brkt_link = "\\[ .*? [^]\s] .*? \\]";
         $cell_content  = "(?: [^[] | ".ESCAPE_CHAR."\\[ | $brkt_link )*?";
-        
+
         preg_match_all("/(\\|+) \s* ($cell_content) \s* (?=\\||\$)/x",
                        $line, $matches, PREG_SET_ORDER);
 

@@ -41,7 +41,7 @@ rcs_id('$Id$');
 
 require_once('lib/plugin/_BackendInfo.php');
 
-class WikiPlugin_EditMetaData 
+class WikiPlugin_EditMetaData
 extends WikiPlugin__BackendInfo
 {
     function getName () {
@@ -74,68 +74,68 @@ extends WikiPlugin__BackendInfo
         $p = $dbi->getPage($page);
         $pagemeta = $p->getMetaData();
         $this->chunk_split = false;
-        
+
         // Look at arguments to see if submit was entered. If so,
         // process this request before displaying.
         //
-        if ($request->isPost() 
-	    and $request->_user->isAdmin() 
-	    and $request->getArg('metaedit')) 
-	{
+        if ($request->isPost()
+            and $request->_user->isAdmin()
+            and $request->getArg('metaedit'))
+        {
             $metafield = trim($request->getArg('metafield'));
             $metavalue = trim($request->getArg('metavalue'));
             $meta = $request->getArg('meta');
             $changed = 0;
             // meta[__global[_upgrade][name]] => 1030.13
             foreach ($meta as $key => $val) {
-            	if ($val != $pagemeta[$key] 
-		    and !in_array($key, $this->readonly_pagemeta)) 
-		{
-            	    $changed++;
+                    if ($val != $pagemeta[$key]
+                    and !in_array($key, $this->readonly_pagemeta))
+                {
+                        $changed++;
                     $p->set($key, $val);
                 }
             }
             if ($metafield and !in_array($metafield, $this->readonly_pagemeta)) {
-            	// __global[_upgrade][name] => 1030.13
+                    // __global[_upgrade][name] => 1030.13
                 if (preg_match('/^(.*?)\[(.*?)\]$/', $metafield, $matches)) {
                     list(, $array_field, $array_key) = $matches;
                     $array_value = $pagemeta[$array_field];
                     $array_value[$array_key] = $metavalue;
                     if ($pagemeta[$array_field] != $array_value) {
-	            	$changed++;
-                    	$p->set($array_field, $array_value);
+                            $changed++;
+                            $p->set($array_field, $array_value);
                     }
                 } elseif ($pagemeta[$metafield] != $metavalue) {
-	            $changed++;
+                    $changed++;
                     $p->set($metafield, $metavalue);
                 }
             }
             if ($changed) {
                 $dbi->touch();
-		$url = $request->getURLtoSelf(false, 
+                $url = $request->getURLtoSelf(false,
                                           array('meta','metaedit','metafield','metavalue'));
-		$request->redirect($url);
-		// The rest of the output will not be seen due to the
-		// redirect.
-		return '';
-	    }
+                $request->redirect($url);
+                // The rest of the output will not be seen due to the
+                // redirect.
+                return '';
+            }
         }
 
         // Now we show the meta data and provide entry box for new data.
         $html = HTML();
         //$html->pushContent(HTML::h3(fmt("Existing page-level metadata for %s:",
-	//				$page)));
-	//$dl = $this->_display_values('', $pagemeta);
+        //                                $page)));
+        //$dl = $this->_display_values('', $pagemeta);
         //$html->pushContent($dl);
         if (!$pagemeta) {
             // FIXME: invalid HTML
             $html->pushContent(HTML::p(fmt("No metadata for %s", $page)));
-	    $table = HTML();
+            $table = HTML();
         }
         else {
-	    $table = HTML::table(array('border' => 1,
-				       'cellpadding' => 2,
-				       'cellspacing' => 0));
+            $table = HTML::table(array('border' => 1,
+                                       'cellpadding' => 2,
+                                       'cellspacing' => 0));
             $this->_fixupData($pagemeta);
             $table->pushContent($this->_showhash("MetaData('$page')", $pagemeta));
         }
@@ -151,9 +151,9 @@ extends WikiPlugin__BackendInfo
                                      'method' => 'post',
                                      'accept-charset' => $GLOBALS['charset']),
                                $hiddenfield,
-			       // edit existing fields
-			       $table,
-			       // add new ones
+                               // edit existing fields
+                               $table,
+                               // add new ones
                                $instructions, HTML::br(),
                                $keyfield, ' => ', $valfield,
                                HTML::raw('&nbsp;'), $button
@@ -167,31 +167,31 @@ extends WikiPlugin__BackendInfo
     }
 
     function _showvalue ($key, $val, $prefix='') {
-    	if (is_array($val) or is_object($val)) return $val;
-	if (in_array($key, $this->hidden_pagemeta)) return '';
-	if ($prefix) {
-	    $fullkey = $prefix . '[' . $key . ']';
-	    if (substr($fullkey,0,1) == '[') {
-	    	$meta = "meta".$fullkey;
-	    	$fullkey = preg_replace("/\]\[/", "[", substr($fullkey, 1), 1);
-	    } else {
-		$meta = preg_replace("/^([^\[]+)\[/", "meta[$1][", $fullkey, 1);
-	    }
-	} else {
-	    $fullkey = $key;
-	    $meta = "meta[".$key."]";
-	}
-	//$meta = "meta[".$fullkey."]";
+            if (is_array($val) or is_object($val)) return $val;
+        if (in_array($key, $this->hidden_pagemeta)) return '';
+        if ($prefix) {
+            $fullkey = $prefix . '[' . $key . ']';
+            if (substr($fullkey,0,1) == '[') {
+                    $meta = "meta".$fullkey;
+                    $fullkey = preg_replace("/\]\[/", "[", substr($fullkey, 1), 1);
+            } else {
+                $meta = preg_replace("/^([^\[]+)\[/", "meta[$1][", $fullkey, 1);
+            }
+        } else {
+            $fullkey = $key;
+            $meta = "meta[".$key."]";
+        }
+        //$meta = "meta[".$fullkey."]";
         $arr = array('name' => $meta, 'value' => $val);
-	if (strlen($val) > 20)
-	    $arr['size'] = strlen($val);
-	if (in_array($key, $this->readonly_pagemeta)) {
-	    $arr['readonly'] = 'readonly';
-	    return HTML::input($arr);
-	} else {
-	    return HTML(HTML::em($fullkey), HTML::br(),
-	    		HTML::input($arr));
-	}
+        if (strlen($val) > 20)
+            $arr['size'] = strlen($val);
+        if (in_array($key, $this->readonly_pagemeta)) {
+            $arr['readonly'] = 'readonly';
+            return HTML::input($arr);
+        } else {
+            return HTML(HTML::em($fullkey), HTML::br(),
+                            HTML::input($arr));
+        }
     }
 };
 

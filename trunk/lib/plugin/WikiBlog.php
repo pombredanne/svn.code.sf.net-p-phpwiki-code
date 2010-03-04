@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright 2002,2003,2007,2009 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -31,10 +31,10 @@ require_once('lib/TextSearchQuery.php');
  * particular page and provides an input form for adding a new blog.
  *
  * USAGE:
- * Add <?plugin WikiBlog ?> at your PersonalPage and BlogArchive and 
+ * Add <?plugin WikiBlog ?> at your PersonalPage and BlogArchive and
  * BlogJournal will find the Blog entries automatically.
  *
- * Now it is also the base class for all attachable pagetypes: 
+ * Now it is also the base class for all attachable pagetypes:
  *    "wikiblog", "comment" and "wikiforum"
  *
  * HINTS/COMMENTS:
@@ -47,9 +47,9 @@ require_once('lib/TextSearchQuery.php');
  *
  * To have the main ADMIN_USER Blog appear under Blog and not under WikiBlog/Blog
  * or UserName/Blog as for other users blogs,
- * define BLOG_DEFAULT_EMPTY_PREFIX=true 
+ * define BLOG_DEFAULT_EMPTY_PREFIX=true
  * use the page Blog as basepage
- * and user="" (as default for ADMIN or current user) and pagename="Blog" 
+ * and user="" (as default for ADMIN or current user) and pagename="Blog"
  * in the various blog plugins (BlogArchives, BlogJournal)
  *
  * TODO:
@@ -134,11 +134,11 @@ extends WikiPlugin
         // Get our form args.
         $blog = $request->getArg("edit");
         $request->setArg("edit", false);
-            
+
         if ($request->isPost() and !empty($blog['save'])) {
             $this->add($request, $blog, 'wikiblog', $basepage); // noreturn
         }
-	//TODO: preview
+        //TODO: preview
 
         // Now we display previous comments and/or provide entry box
         // for new comments
@@ -147,7 +147,7 @@ extends WikiPlugin
             if (!empty($seen[$show]))
                 continue;
             $seen[$show] = 1;
-                
+
             switch ($show) {
             case 'show':
                 $html->pushContent($this->showAll($request, $args));
@@ -166,23 +166,23 @@ extends WikiPlugin
      * posted: required: pagename, content. optional: summary
      */
     function add (&$request, $posted, $type='wikiblog') {
-	// This is similar to editpage. Shouldn't we use just this for preview?
+        // This is similar to editpage. Shouldn't we use just this for preview?
         $parent = $posted['pagename'];
         if (empty($parent)) {
             $prefix = "";   // allow empty parent for default "Blog/day"
             $parent = HOME_PAGE;
         } elseif (($parent == 'Blog' or $parent == 'WikiBlog') and $type == 'wikiblog')
-	{ // avoid Blog/Blog/2003-01-11/14:03:02+00:00
+        { // avoid Blog/Blog/2003-01-11/14:03:02+00:00
             $prefix = "";
-	    $parent = ''; // 'Blog';
+            $parent = ''; // 'Blog';
         } elseif ($parent == 'Comment' and $type == "comment")
-	{
+        {
             $prefix = "";
-	    $parent = ''; // 'Comment';
+            $parent = ''; // 'Comment';
         } elseif ($parent == 'Forum' and $type == "wikiforum")
-	{
+        {
             $prefix = "";
-	    $parent = ''; // 'Forum';
+            $parent = ''; // 'Forum';
         } else {
             $prefix = $parent . SUBPAGE_SEPARATOR;
         }
@@ -191,7 +191,7 @@ extends WikiPlugin
         $now = time();
         $dbi = $request->getDbh();
         $user = $request->getUser();
-        
+
         /*
          * Page^H^H^H^H Blog meta-data
          * This method is reused for all attachable pagetypes: wikiblog, comment and wikiforum
@@ -209,7 +209,7 @@ extends WikiPlugin
                            'creator'    => $user->getId(),
                            'creator_id' => $user->getAuthenticatedId(),
                            );
-        
+
 
         // Version meta-data
         $summary = trim($posted['summary']);
@@ -232,29 +232,29 @@ extends WikiPlugin
         $body = trim($posted['content']);
 
         $saved = false;
-	if ($type != 'wikiforum')
-	    $pagename = $this->_blogPrefix($type);
-	else {
-	    $pagename = substr($summary,0,12);
-	    if (empty($pagename)) {
-		$saved = true;
-		trigger_error("Empty title", E_USER_WARNING);
-	    }
-	}
+        if ($type != 'wikiforum')
+            $pagename = $this->_blogPrefix($type);
+        else {
+            $pagename = substr($summary,0,12);
+            if (empty($pagename)) {
+                $saved = true;
+                trigger_error("Empty title", E_USER_WARNING);
+            }
+        }
         while (!$saved) {
             // Generate the page name.  For now, we use the format:
             //   Rootname/Blog/2003-01-11/14:03:02+00:00
-	    // Rootname = $prefix, Blog = $pagename, 
+            // Rootname = $prefix, Blog = $pagename,
             // This gives us natural chronological order when sorted
             // alphabetically. "Rootname/" is optional.
-	    // Esp. if Rootname is named Blog, it is omitted.
+            // Esp. if Rootname is named Blog, it is omitted.
 
             $time = Iso8601DateTime();
             // Check intermediate pages. If not existing they should RedirectTo the parent page.
             // Maybe add the BlogArchives plugin instead for the new interim subpage.
             $redirected = $prefix . $pagename;
             if (!$dbi->isWikiPage($redirected)) {
-            	if (!$parent) $parent = HOME_PAGE;
+                    if (!$parent) $parent = HOME_PAGE;
                 require_once('lib/loadsave.php');
                 $pageinfo = array('pagename' => $redirected,
                                   'content'  => '<?plugin RedirectTo page="'.$parent.'" ?>',
@@ -265,7 +265,7 @@ extends WikiPlugin
             }
             $redirected = $prefix . $pagename . SUBPAGE_SEPARATOR . preg_replace("/T.*/", "", "$time");
             if (!$dbi->isWikiPage($redirected)) {
-            	if (!$parent) $parent = HOME_PAGE;
+                    if (!$parent) $parent = HOME_PAGE;
                 require_once('lib/loadsave.php');
                 $pageinfo = array('pagename' => $redirected,
                                   'content'  => '<?plugin RedirectTo page="'.$parent.'" ?>',
@@ -275,7 +275,7 @@ extends WikiPlugin
                 SavePage($request, $pageinfo, '', '');
             }
 
-            $p = $dbi->getPage($prefix . $pagename . SUBPAGE_SEPARATOR 
+            $p = $dbi->getPage($prefix . $pagename . SUBPAGE_SEPARATOR
                                . str_replace("T", SUBPAGE_SEPARATOR, "$time"));
             $pr = $p->getCurrentRevision();
 
@@ -295,7 +295,7 @@ extends WikiPlugin
 
             $now++;
         }
-        
+
         $dbi->touch();
         $request->setArg("mode", "show");
         $request->redirect($request->getURLtoSelf()); // noreturn
@@ -310,9 +310,9 @@ extends WikiPlugin
         // get results, so results are in alphabetical order.
         // When PageTypes fully implemented, could have smarter
         // blogSearch implementation / naming scheme.
-        
+
         $dbi = $request->getDbh();
-	$basepage = $args['pagename'];
+        $basepage = $args['pagename'];
         $blogs = $this->findBlogs($dbi, $basepage, $type);
         $html = HTML();
         if ($blogs) {
@@ -336,12 +336,12 @@ extends WikiPlugin
                 }
                 $html->pushContent($content);
             }
-            
+
         }
         return $html;
     }
 
-    // Subpage for the basepage. All Blogs/Forum/Comment entries are 
+    // Subpage for the basepage. All Blogs/Forum/Comment entries are
     // Subpages under this pagename, to find them faster.
     function _blogPrefix($type='wikiblog') {
         if ($type == 'wikiblog')
@@ -349,8 +349,8 @@ extends WikiPlugin
         elseif ($type == 'comment')
             $basepage = "Comment";
         elseif ($type == 'wikiforum')
-	    $basepage = substr($summary,0,12);
-	    //$basepage = _("Message"); // FIXME: we use now the first 12 chars of the summary
+            $basepage = substr($summary,0,12);
+            //$basepage = _("Message"); // FIXME: we use now the first 12 chars of the summary
         return $basepage;
     }
 
@@ -367,9 +367,9 @@ extends WikiPlugin
     }
 
     function findBlogs (&$dbi, $basepage='', $type='wikiblog') {
-        $prefix = (empty($basepage) 
-		   ? "" 
-		   :  $basepage . SUBPAGE_SEPARATOR) . $this->_blogPrefix($type);
+        $prefix = (empty($basepage)
+                   ? ""
+                   :  $basepage . SUBPAGE_SEPARATOR) . $this->_blogPrefix($type);
         $pages = $dbi->titleSearch(new TextSearchQuery('"'.$prefix.'"', true, 'none'));
 
         $blogs = array();
@@ -388,30 +388,30 @@ extends WikiPlugin
         return(strcmp($a->get('mtime'),
                       $b->get('mtime')));
     }
-    
+
     function showForm (&$request, $args, $template='blogform') {
         // Show blog-entry form.
-	$args = array('PAGENAME' => $args['pagename'],
-		      'HIDDEN_INPUTS' => 
-		      HiddenInputs($request->getArgs()));
-	if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG and ($template != 'addcomment')) {
+        $args = array('PAGENAME' => $args['pagename'],
+                      'HIDDEN_INPUTS' =>
+                      HiddenInputs($request->getArgs()));
+        if (ENABLE_EDIT_TOOLBAR and !ENABLE_WYSIWYG and ($template != 'addcomment')) {
             include_once("lib/EditToolbar.php");
             $toolbar = new EditToolbar();
             $args = array_merge($args, $toolbar->getTokens());
-	}
-	return new Template($template, $request, $args);
+        }
+        return new Template($template, $request, $args);
     }
 
     // "2004-12" => "December 2004"
     function _monthTitle($month){
-    	if (!$month) $month = strftime("%Y-%m");
+            if (!$month) $month = strftime("%Y-%m");
         //list($year,$mon) = explode("-",$month);
         return strftime("%B %Y", strtotime($month."-01"));
     }
 
     // "UserName/Blog/2004-12-13/12:28:50+01:00" => array('month' => "2004-12", ...)
     function _blog($rev_or_page) {
-    	$pagename = $rev_or_page->getName();
+            $pagename = $rev_or_page->getName();
         if (preg_match("/^(.*Blog)\/(\d\d\d\d-\d\d)-(\d\d)\/(.*)/", $pagename, $m))
             list(,$prefix,$month,$day,$time) = $m;
         return array('pagename' => $pagename,
@@ -425,7 +425,7 @@ extends WikiPlugin
     }
 
     function _nonDefaultArgs($args) {
-    	return array_diff_assoc($args, $this->getDefaultArguments());
+            return array_diff_assoc($args, $this->getDefaultArguments());
     }
 
 };

@@ -44,11 +44,11 @@ extends WikiPlugin
 
     // Establish default values for each of this plugin's arguments.
     function getDefaultArguments() {
-        return array('feed' 		=> "",
-                     'description' 	=> "",
-                     'url' 		=> "", //"http://phpwiki.org/RecentChanges?format=rss",
-                     'maxitem' 		=> 0,
-                     'debug' 		=> false,
+        return array('feed'                 => "",
+                     'description'         => "",
+                     'url'                 => "", //"http://phpwiki.org/RecentChanges?format=rss",
+                     'maxitem'                 => 0,
+                     'debug'                 => false,
                      );
    }
 
@@ -56,22 +56,22 @@ extends WikiPlugin
         extract($this->getArgs($argstr, $request));
 
         if (defined('CHARSET'))
-        	$rss_parser = new RSSParser(CHARSET);
+                $rss_parser = new RSSParser(CHARSET);
         else
-        	$rss_parser = new RSSParser();
-        
+                $rss_parser = new RSSParser();
+
         if (!empty($url))
             $rss_parser->parse_url( $url, $debug );
 
         if (!empty($rss_parser->channel['title'])) $feed = $rss_parser->channel['title'];
         if (!empty($rss_parser->channel['link']))  $url  = $rss_parser->channel['link'];
-        if (!empty($rss_parser->channel['description'])) 
+        if (!empty($rss_parser->channel['description']))
             $description = $rss_parser->channel['description'];
-        
+
         if (!empty($feed)) {
             if (!empty($url)) {
                 $titre = HTML::span(HTML::a(array('href'=>$rss_parser->channel['link']),
-                                            $rss_parser->channel['title'])); 
+                                            $rss_parser->channel['title']));
             } else {
                 $titre = HTML::span($rss_parser->channel['title']);
             }
@@ -86,7 +86,7 @@ extends WikiPlugin
         if (!empty($rss_parser->channel['date']))
             $th->pushContent(HTML::raw("<!--".$rss_parser->channel['date']."-->"));
         $html = HTML::div(array('class'=> 'rss'), $th);
-        if ($rss_parser->items) { 
+        if ($rss_parser->items) {
             // only maxitem's
             if ( $maxitem > 0 )
                 $rss_parser->items = array_slice($rss_parser->items, 0, $maxitem);
@@ -100,7 +100,7 @@ extends WikiPlugin
                 $cell->pushContent($cell_title);
                 $cell_author = HTML::raw($item['author']);
                 $cell_pubDate = HTML::raw($item['pubDate']);
-                $cell_authordate = HTML::div(array('class'=> 'authordate'), 
+                $cell_authordate = HTML::div(array('class'=> 'authordate'),
                                              $cell_author, HTML::raw(" - "), $cell_pubDate);
                 $cell->pushContent($cell_authordate);
                 if (!empty($item['description']))

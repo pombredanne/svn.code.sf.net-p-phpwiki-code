@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright (C) 2004 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -59,7 +59,7 @@ extends WikiPlugin_WikiBlog
     //         'add'      - only show entry box for new comment
     //         'show,add' - show old comments, then entry box
     //         'add,show' - show entry box followed by list of comments
-    //  jshide - boolean  - quick javascript expansion of the comments 
+    //  jshide - boolean  - quick javascript expansion of the comments
     //                      and addcomment box
 
     function getDefaultArguments() {
@@ -80,7 +80,7 @@ extends WikiPlugin_WikiBlog
         // Get our form args.
         $comment = $request->getArg("comment");
         $request->setArg('comment', false);
-            
+
         if ($request->isPost() and !empty($comment['addcomment'])) {
             $this->add($request, $comment, 'comment'); // noreturn
         }
@@ -125,12 +125,12 @@ function togglecomments(a) {
                 $div->pushContent($show);
                 break;
             case 'add':
-		global $WikiTheme;
-		if (!$WikiTheme->DUMP_MODE) {
-		    $add = $this->showForm($request, $args, 'addcomment');
-		    //if ($args['jshide']) $add->setAttr('style','display:none;');
-		    $div->pushContent($add);
-		}
+                global $WikiTheme;
+                if (!$WikiTheme->DUMP_MODE) {
+                    $add = $this->showForm($request, $args, 'addcomment');
+                    //if ($args['jshide']) $add->setAttr('style','display:none;');
+                    $div->pushContent($add);
+                }
                 break;
             default:
                 return $this->error(sprintf("Bad mode ('%s')", $show));
@@ -139,7 +139,7 @@ function togglecomments(a) {
         $html->pushContent($div);
         return $html;
     }
-   
+
 };
 
 // For emacs users

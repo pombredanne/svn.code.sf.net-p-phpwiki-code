@@ -58,7 +58,7 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array('dimension' => '0',
-                     // array of userids to display ratings for; null/empty for 
+                     // array of userids to display ratings for; null/empty for
                      // active user only
                      'userids'  => null,
                      // array of pageids to display ratings for; null for all
@@ -90,7 +90,7 @@ extends WikiPlugin
 
         $active_user   = $request->getUser();
         $active_userid = $active_user->_userid;
-        
+
         // check for request to display a category's ratings
         if(isset($category) && is_string($category) && strlen($category))
         {
@@ -101,10 +101,10 @@ extends WikiPlugin
             {
                 array_push($pageids, $item->getName());
             }
-            // XXX: is there a way to retrieve the preferred plural 
+            // XXX: is there a way to retrieve the preferred plural
             // representation of a category name?
             // XXX: should the category text be a link?  can it be one easily?
-            
+
             $caption = sprintf(_("Showing all %ss (%%d):"), $category);
         }
         // if null is passed as the pageids argument and no category was passed,
@@ -112,13 +112,13 @@ extends WikiPlugin
         elseif(!isset($pageids) || !is_array($pageids))
         {
             // XXX: need support for sorted ratings
-            // bug: pages excluded from the PageList via the "exclude" argument 
+            // bug: pages excluded from the PageList via the "exclude" argument
             // count toward the limit!
             $pageids = array();
-            
+
             $active_user_ratings_user = & RatingsUserFactory::getUser($active_user->getId());
             $current_user_ratings = $active_user_ratings_user->get_ratings();
-            
+
             if ($userPage){
                 //we're on a user's homepage, get *their* ratings
                 $this_page_user = & RatingsUserFactory::getUser($userPage);
@@ -127,9 +127,9 @@ extends WikiPlugin
             } else {
                 $caption = _("Here are your %d page ratings:");
                 $ratings = $current_user_ratings;
-            }    
-            
-            
+            }
+
+
             $i = 0;
             foreach($ratings as $pagename => $page_ratings)
             {
@@ -160,13 +160,13 @@ extends WikiPlugin
                     $userids = getBuddies($active_userid, $dbi, $category_page->getName());
                 } else {
                    $userids = getBuddies($active_userid, $dbi);
-                } 
+                }
             }
             elseif ($userPage)
             {
                 //we're on a user page, show that user's ratings as the only column
                 $userids = array();
-                array_push($userids, $userPage);   
+                array_push($userids, $userPage);
             }
             else
             {
@@ -177,7 +177,7 @@ extends WikiPlugin
         }
 
         // find out which users we should show ratings for
-        
+
         // users allowed in the prediction calculation
         $allowed_users = array();
         // users actually allowed to be shown to the user
@@ -196,22 +196,22 @@ extends WikiPlugin
             unset($user);
         }
         // if no buddies, use allusers in prediction calculation
-        
+
         if (count($userids) == 0 || $userPage){
            $allowed_users = array();
            //$people_iter = $dbi->get_users_rated();
             $people_dbi = RatingsDb::getTheRatingsDb();
             $people_iter = $people_dbi->sql_get_users_rated();
             while ($people_array = $people_iter->next()) {
-		if (isset($people_array['pagename'])) {
-		    $userid = $people_array['pagename']; 
-		    $user = & RatingsUserFactory::getUser($userid);
-		    array_push($allowed_users, $user);
-		}
+                if (isset($people_array['pagename'])) {
+                    $userid = $people_array['pagename'];
+                    $user = & RatingsUserFactory::getUser($userid);
+                    array_push($allowed_users, $user);
+                }
             }
-            
+
          }
-        
+
 
         $columns = $info ? explode(",", $info) : array();
         // build our table...
@@ -221,11 +221,11 @@ extends WikiPlugin
         //$preds = new _PageList_Column_prediction('prediction', _("Pred"), 'right', $dimension, $allowed_users);
         $preds = array('_PageList_column_prediction','custom:prediction', _("Pred"),'right',' ' , $allowed_users);
         $pagelist->addColumnObject($preds);
-        
-        //$widget = new _PageList_Column_ratingwidget('ratingwidget', _("Rate"), 'left', $dimension);        
+
+        //$widget = new _PageList_Column_ratingwidget('ratingwidget', _("Rate"), 'left', $dimension);
         $widget = array('_PageList_column_ratingwidget','custom:ratingwidget', _("Rate"), 'center');
         $pagelist->addColumnObject($widget);
-        
+
         $noRatingUsers = array();
         if (!$nobuds){
             foreach($allowed_users_toshow as $idx => $user) {
@@ -243,11 +243,11 @@ extends WikiPlugin
             // addPage can deal with cases where it is passed a string
             $pagelist->addPage($pagename);
         }
-        
+
         if (! $noheader) {
             $pagelist->setCaption(_($caption));
         }
-        
+
 
         return $pagelist;
     }

@@ -21,12 +21,12 @@ rcs_id('$Id$');
  */
 
 /**
- * This allows you to create a page getting the new pagename from a 
- * forms-based interface, and optionally with the initial content from 
- * some template, plus expansion of some variables via %%variable%% statements 
+ * This allows you to create a page getting the new pagename from a
+ * forms-based interface, and optionally with the initial content from
+ * some template, plus expansion of some variables via %%variable%% statements
  * in the template.
  *
- * Put <?plugin-form CreatePage ?> at some page, browse this page, 
+ * Put <?plugin-form CreatePage ?> at some page, browse this page,
  * enter the name of the page to create, then click the button.
  *
  * Usage: <?plugin-form CreatePage template=SomeTemplatePage vars="year=2004&name=None" ?>
@@ -69,45 +69,45 @@ extends WikiPlugin_Template
         $s = trim($s);
         if (!$s) {
             return $this->error(_("Cannot create page with empty name!"));
-	}
-	// TODO: javascript warning if "/" or SUBPAGE_SEPARATOR in s
-	if ($verify) {
-	    $head = _("CreatePage failed");
-	    if ($dbi->isWikiPage($verify)) {
-		$msg = _("Do you really want to create the page '%s'?");
-	    } else {
-		$msg = _("Do you really want to create the page '%s'?");
-	    }
-	    if (isSubPage($s)) {
-		$main = subPageSlice(0);
-		if (!$dbi->isWikiPage(subPageSlice(0))) {
-		    $msg .= "\n" . _("The new page you want to create will be a subpage.")
-			 .  "\n" . _("Subpages cannot be created unless the parent page exists.");
-		    return alert($head, $msg);
-		} else {
-		    $msg .= "\n" . _("The new page you want to create will be a subpage.");
-		}
-	    }
-	    if (strpos($s, " \/")) {
-		$msg .= "\n" . _("Subpages with ending space are not allowed as directory name on Windows.");
-		return alert($head, $msg);
-	    }
-	}
+        }
+        // TODO: javascript warning if "/" or SUBPAGE_SEPARATOR in s
+        if ($verify) {
+            $head = _("CreatePage failed");
+            if ($dbi->isWikiPage($verify)) {
+                $msg = _("Do you really want to create the page '%s'?");
+            } else {
+                $msg = _("Do you really want to create the page '%s'?");
+            }
+            if (isSubPage($s)) {
+                $main = subPageSlice(0);
+                if (!$dbi->isWikiPage(subPageSlice(0))) {
+                    $msg .= "\n" . _("The new page you want to create will be a subpage.")
+                         .  "\n" . _("Subpages cannot be created unless the parent page exists.");
+                    return alert($head, $msg);
+                } else {
+                    $msg .= "\n" . _("The new page you want to create will be a subpage.");
+                }
+            }
+            if (strpos($s, " \/")) {
+                $msg .= "\n" . _("Subpages with ending space are not allowed as directory name on Windows.");
+                return alert($head, $msg);
+            }
+        }
 
         $param = array('action' => 'edit');
         if ($template and $dbi->isWikiPage($template)) {
             $param['template'] = $template;
-        } elseif (!empty($initial_content)) { 
+        } elseif (!empty($initial_content)) {
             // Warning! Potential URI overflow here on the GET redirect. Better use template.
             $param['initial_content'] = $initial_content;
         }
-        // If the initial_content is too large, pre-save the content in the page 
+        // If the initial_content is too large, pre-save the content in the page
         // and redirect without that argument.
         // URI length limit:
         //   http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.2.1
         $url = WikiURL($s, $param, 'absurl');
         // FIXME: expand vars in templates here.
-        if (strlen($url) > 255 
+        if (strlen($url) > 255
             or ($param['template'])
             or preg_match('/%%\w+%%/', $initial_content)) // need variable expansion
         {
@@ -116,7 +116,7 @@ extends WikiPlugin_Template
             $page = $dbi->getPage($s);
             $current = $page->getCurrentRevision();
             $version = $current->getVersion();
-	    // overwrite empty (deleted) pages
+            // overwrite empty (deleted) pages
             if ($version and !$current->hasDefaultContents() and !$overwrite) {
                 return $this->error(fmt("%s already exists", WikiLink($s)));
             } else {
@@ -129,15 +129,15 @@ extends WikiPlugin_Template
                     $initial_content = $currenttmpl->getPackedContent();
                     $meta['markup'] = $currenttmpl->_data['markup'];
 
-		    if (preg_match('/<noinclude>.+<\/noinclude>/s', $initial_content)) {
-			$initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "", 
-							$initial_content);
-		    }
+                    if (preg_match('/<noinclude>.+<\/noinclude>/s', $initial_content)) {
+                        $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "",
+                                                        $initial_content);
+                    }
                 }
                 $meta['summary'] = _("Created by CreatePage");
-		$content = $this->doVariableExpansion($initial_content, $vars, $s, $request);
+                $content = $this->doVariableExpansion($initial_content, $vars, $s, $request);
 
-		if ($content !== $initial_content) {
+                if ($content !== $initial_content) {
                     // need to destroy the template so that editpage doesn't overwrite it.
                     unset($param['template']);
                     $url = WikiURL($s, $param, 'absurl');

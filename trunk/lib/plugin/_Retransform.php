@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array('page' => '[pagename]',
-		     );
+                     );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -53,36 +53,36 @@ extends WikiPlugin
         $html = HTML(HTML::h3(fmt("Retransform page '%s'",
                                   $page)));
 
-	// bypass WikiDB and cache, go directly through the backend.
+        // bypass WikiDB and cache, go directly through the backend.
         $backend = &$dbi->_backend;
         //$pagedata = $backend->get_pagedata($page);
         $version = $backend->get_latest_version($page);
         $vdata = $backend->get_versiondata($page, $version, true);
 
         include_once('lib/PageType.php');
-	$formatted = new TransformedText($dbi->getPage($page), $vdata['%content'], $vdata);
-	$content =& $formatted->_content;
-	$html->pushContent($this->_DebugPrintArray($content));
-	$links = $formatted->getWikiPageLinks();
+        $formatted = new TransformedText($dbi->getPage($page), $vdata['%content'], $vdata);
+        $content =& $formatted->_content;
+        $html->pushContent($this->_DebugPrintArray($content));
+        $links = $formatted->getWikiPageLinks();
         if (count($links) > 0) {
-          $html->pushContent(HTML::h3("Links"));	
-	  $html->pushContent($this->_DebugPrintArray($links));
+          $html->pushContent(HTML::h3("Links"));
+          $html->pushContent($this->_DebugPrintArray($links));
         }
-        return $html;	
+        return $html;
     }
 
     function _DebugPrintArray(&$array) {
-    	$html = HTML();
-    	foreach ($array as $line) {
-  	  ob_start();
+            $html = HTML();
+            foreach ($array as $line) {
+            ob_start();
           print_r($line);
           $s = HTML::pre(ob_get_contents());
           ob_end_clean();
-	  $html->pushContent($s);
-	}
-	return $html;
+          $html->pushContent($s);
+        }
+        return $html;
     }
-    
+
 };
 
 // (c-file-style: "gnu")

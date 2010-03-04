@@ -33,15 +33,15 @@
            host="localhost"
            port=389
            basedn=""
- 	   filter="(cn=*)"
-           attributes=""  
+            filter="(cn=*)"
+           attributes=""
   ?>
-  <?plugin LdapSearch host=ldap.example.com filter="(ou=web-team)" 
+  <?plugin LdapSearch host=ldap.example.com filter="(ou=web-team)"
                       attributes="sn cn telephonenumber" ?>
   <?plugin LdapSearch host="ldap.itd.umich.edu" basedn="" filter="(sn=jensen)" attributes="cn drink" ?>
   <?plugin LdapSearch host=ldap.example.com attributes="cn sn telephonenumber" ?>
   <?plugin LdapSearch host=bugs.debian.org port=10101 basedn="dc=current,dc=bugs,dc=debian,dc=org"
-                      filter="(debbugsPackage=phpwiki)" 
+                      filter="(debbugsPackage=phpwiki)"
                       attributes="debbugsSeverity debbugsState debbugsTitle" ?>
 
  * @author John Lines
@@ -62,11 +62,11 @@ extends WikiPlugin
                             "\$Revision$");
     }
     function getDefaultArguments() {
-        return array('host' 	=> "", 		// default: LDAP_AUTH_HOST
-		     'port' 	=> 389,		// ignored if host = full uri
-		     'basedn' 	=> "",		// LDAP_BASE_DN
+        return array('host'         => "",                 // default: LDAP_AUTH_HOST
+                     'port'         => 389,                // ignored if host = full uri
+                     'basedn'         => "",                // LDAP_BASE_DN
                      'filter'   => "(cn=*)",
-		     'attributes' => "",
+                     'attributes' => "",
                      'user'     => '',
                      'password' => '',
                      'options'   => "",
@@ -95,7 +95,7 @@ extends WikiPlugin
             if (strstr($host, '://'))
                 $port = null;
         }
-	$html = HTML();
+        $html = HTML();
         if (is_null($port))
             $connect = ldap_connect($host);
         else
@@ -113,7 +113,7 @@ extends WikiPlugin
                     $this->error(_("Failed to set LDAP $key $value"));
             }
         }
-	
+
         // special convenience: if host = LDAP_AUTH_HOST
         // then take user and password from config.ini also
         if ($user) {
@@ -126,77 +126,77 @@ extends WikiPlugin
             if (LDAP_AUTH_USER)
                 if (LDAP_AUTH_PASSWORD)
                     // Windows Active Directory Server is strict
-                    $r = ldap_bind($connect, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD); 
+                    $r = ldap_bind($connect, LDAP_AUTH_USER, LDAP_AUTH_PASSWORD);
                 else
-                    $r = ldap_bind($connect, LDAP_AUTH_USER); 
+                    $r = ldap_bind($connect, LDAP_AUTH_USER);
             else // anonymous bind
                 $bind = ldap_bind($connect);
         } else { // other anonymous bind
             $bind = ldap_bind($connect);
         }
         if (!$bind) return $this->error(_("Failed to bind LDAP host"));
-	if (!$basedn) $basedn = LDAP_BASE_DN;
-	$attr_array = array("");
-	if (!$attributes) {
+        if (!$basedn) $basedn = LDAP_BASE_DN;
+        $attr_array = array("");
+        if (!$attributes) {
             $res = ldap_search($connect, $basedn, $filter);
         } else {
             $attr_array = split (" ",$attributes);
             $res = ldap_search($connect, $basedn, $filter, $attr_array);
         }
-	$entries = ldap_get_entries($connect, $res);
- 
+        $entries = ldap_get_entries($connect, $res);
+
         // If we were given attributes then we return them in the order given
-	// else take all 
+        // else take all
         if ( !$attributes ) {
-	    $attr_array = array();
+            $attr_array = array();
             for ($ii=0; $ii < $entries[0]["count"]; $ii++) {
                     $data = $entries[0][$ii];
-		    $attr_array[] = $data;
-	    }
-	}
-	for ($i=0; $i < count($attr_array) ; $i++) { $attrcols[$i] = 0; }
-	// Work out how many columns we need for each attribute. objectclass has more
+                    $attr_array[] = $data;
+            }
+        }
+        for ($i=0; $i < count($attr_array) ; $i++) { $attrcols[$i] = 0; }
+        // Work out how many columns we need for each attribute. objectclass has more
         for ($i=0; $i<$entries[0]["count"]; $i++) {
-		$data = $entries[0][$i];
-		$datalen = $entries[0][$data]["count"];
-		if ($attrcols[$i] < $datalen) {
-		    $attrcols[$i] = $datalen;
-		}
-	}
-	// Print the headers
-	$row = HTML::tr(); 
-	for ($i=0; $i < count($attr_array) ; $i++) {
-	    // span subcolumns, like objectclass
-	    if ($attrcols[$i] > 1)
-		$row->pushContent(HTML::th(array('colspan' => $attrcols[$i]), $attr_array[$i]));
-	    else
-		$row->pushContent(HTML::th(array(), $attr_array[$i]));
-	}
-	$html->pushContent($row);
+                $data = $entries[0][$i];
+                $datalen = $entries[0][$data]["count"];
+                if ($attrcols[$i] < $datalen) {
+                    $attrcols[$i] = $datalen;
+                }
+        }
+        // Print the headers
+        $row = HTML::tr();
+        for ($i=0; $i < count($attr_array) ; $i++) {
+            // span subcolumns, like objectclass
+            if ($attrcols[$i] > 1)
+                $row->pushContent(HTML::th(array('colspan' => $attrcols[$i]), $attr_array[$i]));
+            else
+                $row->pushContent(HTML::th(array(), $attr_array[$i]));
+        }
+        $html->pushContent($row);
 
-	// Print the data rows
-	for ($currow = 0; $currow < $entries["count"]; $currow++) {
-	    $row = HTML::tr(); $nc=0;
-	    // columns
-	    for ($i=0; $i < count($attr_array); $i++){
-	    	$colname = $attr_array[$i];
-		$data = @$entries[$currow][$colname];
-		if ($data and $data["count"] > 0) {
-		    // subcolumns, e.g. for objectclass
-		    for ($iii=0; $iii < $data["count"]; $iii++) {
-		      $row->pushContent(HTML::td($data[$iii])); $nc++;
-		    }
-		} else {
-		    $row->pushContent(HTML::td("")); $nc++;
-		}
-		// Make up some blank cells if required to pad this row
-		/*for ( $j=0 ; $j < ($attrcols[$ii] - $nc); $j++ ) {
-		    $row->pushContent(HTML::td(""));
-		}*/
-	    }
-	    $html->pushContent($row);
-	}
-	return HTML::table(array('cellpadding' => 1,'cellspacing' => 1, 'border' => 1), $html);
+        // Print the data rows
+        for ($currow = 0; $currow < $entries["count"]; $currow++) {
+            $row = HTML::tr(); $nc=0;
+            // columns
+            for ($i=0; $i < count($attr_array); $i++){
+                    $colname = $attr_array[$i];
+                $data = @$entries[$currow][$colname];
+                if ($data and $data["count"] > 0) {
+                    // subcolumns, e.g. for objectclass
+                    for ($iii=0; $iii < $data["count"]; $iii++) {
+                      $row->pushContent(HTML::td($data[$iii])); $nc++;
+                    }
+                } else {
+                    $row->pushContent(HTML::td("")); $nc++;
+                }
+                // Make up some blank cells if required to pad this row
+                /*for ( $j=0 ; $j < ($attrcols[$ii] - $nc); $j++ ) {
+                    $row->pushContent(HTML::td(""));
+                }*/
+            }
+            $html->pushContent($row);
+        }
+        return HTML::table(array('cellpadding' => 1,'cellspacing' => 1, 'border' => 1), $html);
     }
 };
 

@@ -26,7 +26,7 @@ rcs_id('$Id$');
  * mode = add or edit
  * pagename = pagename to be added
  *
- * Prefs are stored in metadata in the current session, 
+ * Prefs are stored in metadata in the current session,
  *  within the user's home page or in a database.
  */
 class WikiPlugin_WatchPage
@@ -47,14 +47,14 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array('page' => '[pagename]',
-		     'mode'   => 'add',
-		     );
+                     'mode'   => 'add',
+                     );
     }
 
     function contains($pagelist, $page) {
-	if (!isset($this->_explodePageList))
-	    $this->_explodePageList = explodePageList($pagelist);
-	return in_array($page, $this->_explodePageList);
+        if (!isset($this->_explodePageList))
+            $this->_explodePageList = explodePageList($pagelist);
+        return in_array($page, $this->_explodePageList);
     }
 
     // This could be expanded as in Mediawiki to a list of each page with a remove button.
@@ -73,29 +73,29 @@ extends WikiPlugin
     }
 
     function showNotify(&$request, $messages, $page, $pagelist, $verified) {
-	$isNecessary = ! $this->contains($pagelist, $page);
+        $isNecessary = ! $this->contains($pagelist, $page);
         $form = HTML::form(array('action' => $request->getPostURL(),
-		                 'method' => 'post'),
-	     HiddenInputs(array('verify' => 1)),
-	     HiddenInputs($request->getArgs(),false,array('verify')),
-	     $messages,
-	     HTML::p(_("Your current watchlist: "), $this->showWatchList($pagelist)));
-	if ($isNecessary) {
-	    $form->pushContent(HTML::p(_("New watchlist: "), 
-	                               $this->showWatchList($this->addpagelist($page, $pagelist))),
-	                       HTML::p(sprintf(_("Do you %s want to add this page \"%s\" to your WatchList?"), 
+                                 'method' => 'post'),
+             HiddenInputs(array('verify' => 1)),
+             HiddenInputs($request->getArgs(),false,array('verify')),
+             $messages,
+             HTML::p(_("Your current watchlist: "), $this->showWatchList($pagelist)));
+        if ($isNecessary) {
+            $form->pushContent(HTML::p(_("New watchlist: "),
+                                       $this->showWatchList($this->addpagelist($page, $pagelist))),
+                               HTML::p(sprintf(_("Do you %s want to add this page \"%s\" to your WatchList?"),
                                                ($verified ? _("really") : ""), $page)),
-			       HTML::p(Button('submit:add', _("Yes")),
-				       HTML::Raw('&nbsp;'),
-				       Button('submit:cancel', _("Cancel"))));
-	} else {
+                               HTML::p(Button('submit:add', _("Yes")),
+                                       HTML::Raw('&nbsp;'),
+                                       Button('submit:cancel', _("Cancel"))));
+        } else {
             $form->pushContent(HTML::p(fmt("The page %s is already watched!", $page)),
                                HTML::p(Button('submit:edit', _("Edit")),
                                        HTML::Raw('&nbsp;'),
                                        Button('submit:cancel', _("Cancel"))));
-	}
+        }
         $fieldset = HTML::fieldset(HTML::legend("Watch Page"), $form);
-	return $fieldset;
+        return $fieldset;
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -119,11 +119,11 @@ extends WikiPlugin
             $pref = &$request->_prefs;
             $messages = "";
             if (!defined('GFORGE') or !GFORGE) {
-	        $email = $pref->get("email");
+                $email = $pref->get("email");
                 if (empty($email)) {
                     return HTML::div(
                              array('class' => 'errors'),
-                             _("ERROR: No email defined! You need to do this in your "), 
+                             _("ERROR: No email defined! You need to do this in your "),
                              WikiLink(_("UserPreferences")));
                 }
                 $emailVerified = $pref->get("emailVerified");
@@ -133,24 +133,24 @@ extends WikiPlugin
                                 HTML::p("EmailNotifications currently disabled. <TODO>"));
                 }
             }
-	    $pagelist = $pref->get("notifyPages");
+            $pagelist = $pref->get("notifyPages");
             if (! $request->isPost() ) {
-		return $this->showNotify($request, $messages, $page, $pagelist, false);
+                return $this->showNotify($request, $messages, $page, $pagelist, false);
             } else { // POST
-            	$errmsg = '';
+                    $errmsg = '';
                 if ($request->getArg('cancel')) {
-		    $request->redirect(WikiURL($request->getArg('pagename'), 
+                    $request->redirect(WikiURL($request->getArg('pagename'),
                                                false, 'absolute_url')); // noreturn
-		    return;
-		}
+                    return;
+                }
                 if ($request->getArg('edit')) {
-		    $request->redirect(WikiURL(_("UserPreferences"), 
+                    $request->redirect(WikiURL(_("UserPreferences"),
                                                false, 'absolute_url')); // noreturn
-		    return;
-		}
+                    return;
+                }
                 $add = $request->getArg('add');
                 if ($add and !$request->getArg('verify')) {
-		    return $this->showNotify($request, $messages, $page, $pagelist, true); 
+                    return $this->showNotify($request, $messages, $page, $pagelist, true);
                 }
                 elseif ($add and $request->getArg('verify')) { // this is not executed so far.
                     // add page to watchlist, verified

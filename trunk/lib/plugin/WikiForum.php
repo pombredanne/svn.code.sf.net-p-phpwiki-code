@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright 2004 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -22,7 +22,7 @@ rcs_id('$Id$');
 
 /**
  * This plugin handles a threaded list of comments/news associated with a
- * particular page (one page per topic) and provides an input form for 
+ * particular page (one page per topic) and provides an input form for
  * adding a new message.
  *
  *   <?plugin WikiForum ?>
@@ -90,7 +90,7 @@ extends WikiPlugin_WikiBlog
             if (!empty($seen[$show]))
                 continue;
             $seen[$show] = 1;
-                
+
             switch ($show) {
             case 'summary': // main page: list of all titles
                 $html->pushContent($this->showTopics($request, $args));

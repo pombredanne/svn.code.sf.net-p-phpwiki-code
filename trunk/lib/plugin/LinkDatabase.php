@@ -28,10 +28,10 @@ require_once('lib/WikiPluginCached.php');
  *   Only via a static text file yet. (format=text)
  * - Or the Hypergraph applet (format=xml)
  *   http://hypergraph.sourceforge.net/
- *   So far also only for a static xml file, but I'll fix the applet and test 
+ *   So far also only for a static xml file, but I'll fix the applet and test
  *   the RPC2 interface.
  *
- * TODO: Currently the meta-head tags disturb the touchgraph java browser a bit. 
+ * TODO: Currently the meta-head tags disturb the touchgraph java browser a bit.
  * Maybe add a theme without that much header tags.
  * DONE: Convert " " to %20
  */
@@ -71,44 +71,44 @@ extends WikiPluginCached
     function getHtml($dbi, $argarray, $request, $basepage) {
         $this->run($dbi, WikiPluginCached::glueArgs($argarray), $request, $basepage);
     }
-    
+
     function run($dbi, $argstr, $request, $basepage) {
         global $WikiTheme;
         $args = $this->getArgs($argstr, $request);
 
         $caption = _("All pages with all links in this wiki (%d total):");
-        
+
         if ( !empty($args['owner']) ) {
             $pages = PageList::allPagesByOwner($args['owner'],$args['include_empty'],
                                                $args['sortby'],$args['limit']);
             if ($args['owner'])
-                $caption = fmt("List of pages owned by [%s] (%d total):", 
+                $caption = fmt("List of pages owned by [%s] (%d total):",
                                WikiLink($args['owner'], 'if_known'),
                                count($pages));
         } elseif ( !empty($args['author']) ) {
             $pages = PageList::allPagesByAuthor($args['author'],$args['include_empty'],
                                                 $args['sortby'],$args['limit']);
             if ($args['author'])
-                $caption = fmt("List of pages last edited by [%s] (%d total):", 
-                               WikiLink($args['author'], 'if_known'), 
+                $caption = fmt("List of pages last edited by [%s] (%d total):",
+                               WikiLink($args['author'], 'if_known'),
                                count($pages));
         } elseif ( !empty($args['creator']) ) {
             $pages = PageList::allPagesByCreator($args['creator'],$args['include_empty'],
                                                  $args['sortby'],$args['limit']);
             if ($args['creator'])
-                $caption = fmt("List of pages created by [%s] (%d total):", 
-                               WikiLink($args['creator'], 'if_known'), 
+                $caption = fmt("List of pages created by [%s] (%d total):",
+                               WikiLink($args['creator'], 'if_known'),
                                count($pages));
         } else {
-            if (! $request->getArg('count'))  
+            if (! $request->getArg('count'))
                 $args['count'] = $dbi->numPages($args['include_empty'], $args['exclude_from']);
-            else 
+            else
                 $args['count'] = $request->getArg('count');
-            $pages = $dbi->getAllPages($args['include_empty'], $args['sortby'], 
+            $pages = $dbi->getAllPages($args['include_empty'], $args['sortby'],
                                        $args['limit'], $args['exclude_from']);
         }
         if ($args['format'] == 'html') {
-            $args['types']['links'] = 
+            $args['types']['links'] =
                 new _PageList_Column_LinkDatabase_links('links', _("Links"), 'left');
             $pagelist = new PageList($args['info'], $args['exclude_from'], $args);
             //$pagelist->_addColumn("links");
@@ -123,7 +123,7 @@ extends WikiPluginCached
             $request->checkValidators();
             while ($page = $pages->next()) {
                 echo preg_replace("/ /","%20",$page->getName());
-                $links = $page->getPageLinks(false, $args['sortby'], $args['limit'], 
+                $links = $page->getPageLinks(false, $args['sortby'], $args['limit'],
                                              $args['exclude']);
                 while ($link = $links->next()) {
                     echo " ", preg_replace("/ /","%20",$link->getName());
@@ -146,13 +146,13 @@ extends WikiPluginCached
             echo "<?xml version=\"1.0\" encoding=\"$charset\"?>";
             // As applet it prefers only "GraphXML.dtd", but then we must copy it to the webroot.
             $dtd = $WikiTheme->_findData("GraphXML.dtd");
-	    echo "<!DOCTYPE GraphXML SYSTEM \"$dtd\">\n";
-	    echo "<GraphXML xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n";
-	    echo "<graph id=\"",MangleXmlIdentifier(WIKI_NAME),"\">\n";
+            echo "<!DOCTYPE GraphXML SYSTEM \"$dtd\">\n";
+            echo "<GraphXML xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n";
+            echo "<graph id=\"",MangleXmlIdentifier(WIKI_NAME),"\">\n";
             echo '<style><line tag="node" class="main" colour="#ffffff"/><line tag="node" class="child" colour="blue"/><line tag="node" class="relation" colour="green"/></style>',"\n\n";
             while ($page = $pages->next()) {
-            	$pageid = MangleXmlIdentifier($page->getName());
-            	$pagename = $page->getName();
+                    $pageid = MangleXmlIdentifier($page->getName());
+                    $pagename = $page->getName();
                 echo "<node name=\"$pageid\"";
                 if ($pagename == $currpage) echo " class=\"main\"";
                 echo "><label>$pagename</label>";
@@ -164,8 +164,8 @@ extends WikiPluginCached
                 }
                 echo "\n";
             }
-	    echo "</graph>\n";
-	    echo "</GraphXML>\n";
+            echo "</graph>\n";
+            echo "</GraphXML>\n";
             if (empty($WikiTheme->DUMP_MODE)) {
                 unset($GLOBALS['ErrorManager']->_postponed_errors);
                 $request->finish();

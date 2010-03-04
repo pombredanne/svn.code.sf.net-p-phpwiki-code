@@ -22,7 +22,7 @@ rcs_id('$Id$');
  */
 
 /**
- * Set individual PagePermissions, simplifying effective ACLs to 
+ * Set individual PagePermissions, simplifying effective ACLs to
  * unix-like rwxr--r--+ permissions. (as in cygwin)
  *
  * Usage:   <?plugin WikiAdminChmod ?> or called via WikiAdminSelect
@@ -55,14 +55,14 @@ extends WikiPlugin_WikiAdminSelect
             (
              PageList::supportedArgs(),
              array(
-                   's' 		=> false,
-                   'perm' 	=> false,
+                   's'                 => false,
+                   'perm'         => false,
                    /* Columns to include in listing */
                    'info'     => 'pagename,perm,mtime,author',
                    ));
     }
 
-    // todo: change permstring to some kind of default ACL hash. 
+    // todo: change permstring to some kind of default ACL hash.
     // See PagePermission class
     function chmodHelper($permstring) {
         $perm = array();
@@ -94,11 +94,11 @@ extends WikiPlugin_WikiAdminSelect
                         HTML::p(fmt("No pages changed.")));
         }
     }
-    
+
     function run($dbi, $argstr, &$request, $basepage) {
         if (!DEBUG)
             return $this->disabled("WikiAdminChmod not yet enabled. Set DEBUG to try it.");
-        
+
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
         $this->preSelectS($args, $request);
@@ -120,7 +120,7 @@ extends WikiPlugin_WikiAdminSelect
 
             if ($post_args['action'] == 'verify') {
                 // Real action
-                return $this->chmodPages($dbi, $request, array_keys($p), 
+                return $this->chmodPages($dbi, $request, array_keys($p),
                                           $post_args['perm']);
             }
             if ($post_args['action'] == 'select') {
@@ -187,9 +187,9 @@ extends WikiPlugin_WikiAdminSelect
                                       'value' => 1));
         if (!empty($post_args['updatechildren']))  $checkbox->setAttr('checked','checked');
         $header->pushContent($checkbox, HTML::raw("&nbsp;"),
-        	_("Propagate new permissions to all subpages?"),
-        	HTML::raw("&nbsp;&nbsp;"),
-        	HTML::em(_("(disable individual page permissions, enable inheritance)?")));
+                _("Propagate new permissions to all subpages?"),
+                HTML::raw("&nbsp;&nbsp;"),
+                HTML::em(_("(disable individual page permissions, enable inheritance)?")));
         $header->pushContent(HTML::hr(),HTML::p());
         return $header;
     }

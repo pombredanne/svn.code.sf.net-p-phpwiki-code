@@ -43,8 +43,8 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('width'  => 200,
                      'height' => 200,
-		     'script' => false, // one line script. not very likely
-		     'onmousemove' => false
+                     'script' => false, // one line script. not very likely
+                     'onmousemove' => false
                      );
     }
     function handle_plugin_args_cruft(&$argstr, &$args) {
@@ -66,21 +66,21 @@ extends WikiPlugin
                 $html->pushContent($js);
             $WikiTheme->_processing = 1; // prevent duplicates
         }
-	// extract <script>
-	if (preg_match("/^(.*)<script>(.*)<\/script>/ism", $this->source, $m)) {
-	    $this->source = $m[1];
-	    $args['script'] = $m[2];
-	}
-	$embedargs = array('width'  => $args['width'],
-			   'height' => $args['height'],
-			   //'src'    => "d.svg",
-			   'script' => $this->source);
-	// additional onmousemove argument
-	if ($args['onmousemove']) $embedargs['onmousemove'] = $args['onmousemove'];
+        // extract <script>
+        if (preg_match("/^(.*)<script>(.*)<\/script>/ism", $this->source, $m)) {
+            $this->source = $m[1];
+            $args['script'] = $m[2];
+        }
+        $embedargs = array('width'  => $args['width'],
+                           'height' => $args['height'],
+                           //'src'    => "d.svg",
+                           'script' => $this->source);
+        // additional onmousemove argument
+        if ($args['onmousemove']) $embedargs['onmousemove'] = $args['onmousemove'];
         // we need script='data' and not script="data"
         $embed = new Processing_HTML("embed", $embedargs);
         $html->pushContent($embed);
-	if ($args['script']) $html->pushContent(JavaScript($args['script']));
+        if ($args['script']) $html->pushContent(JavaScript($args['script']));
         return $html;
     }
 };
@@ -88,7 +88,7 @@ extends WikiPlugin
 class Processing_HTML extends HtmlElement {
     function startTag() {
         $start = "<" . $this->_tag;
-	$this->_setClasses();
+        $this->_setClasses();
         foreach ($this->_attr as $attr => $val) {
             if (is_bool($val)) {
                 if (!$val)
@@ -97,7 +97,7 @@ class Processing_HTML extends HtmlElement {
             }
             $qval = str_replace("\"", '&quot;', $this->_quote((string)$val));
             if ($attr == 'script')
-		// note the ' not "
+                // note the ' not "
                 $start .= " $attr='$qval'";
             else
                 $start .= " $attr=\"$qval\"";

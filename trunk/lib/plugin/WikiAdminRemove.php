@@ -80,7 +80,7 @@ extends WikiPlugin_WikiAdminSelect
         extract($this->_args);
 
         $now = time();
-        
+
         $allPages = $dbi->getAllPages('include_empty',$sortby,$limit);
         while ($pagehandle = $allPages->next()) {
             $pagename = $pagehandle->getName();
@@ -117,7 +117,7 @@ extends WikiPlugin_WikiAdminSelect
                 $ul->pushContent(HTML::li(fmt("Removed page '%s' successfully.", $name)));
                 $count++;
             } else {
-            	$ul->pushContent(HTML::li(fmt("Didn't remove page '%s'. Access denied.", $name)));
+                    $ul->pushContent(HTML::li(fmt("Didn't remove page '%s'. Access denied.", $name)));
             }
         }
         if ($count) {
@@ -136,12 +136,12 @@ extends WikiPlugin_WikiAdminSelect
             return $result;
         }
     }
-    
+
     function run($dbi, $argstr, &$request, $basepage) {
         if ($request->getArg('action') != 'browse')
             if ($request->getArg('action') != _("PhpWikiAdministration/Remove"))
                 return $this->disabled("(action != 'browse')");
-        
+
         $args = $this->getArgs($argstr, $request);
         if (!is_numeric($args['min_age']))
             $args['min_age'] = -1;
@@ -190,8 +190,8 @@ extends WikiPlugin_WikiAdminSelect
             // List all pages to select from.
             $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], $args['exclude']);
         }
-        $pagelist = new PageList_Selectable($args['info'], $args['exclude'], 
-                                            array('types' => 
+        $pagelist = new PageList_Selectable($args['info'], $args['exclude'],
+                                            array('types' =>
                                                   array('remove'
                                                         => new _PageList_Column_remove('remove', _("Remove")))));
         $pagelist->addPageList($pages);

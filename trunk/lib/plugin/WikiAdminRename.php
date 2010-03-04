@@ -52,34 +52,34 @@ extends WikiPlugin_WikiAdminSelect
             (
              WikiPlugin_WikiAdminSelect::getDefaultArguments(),
              array(
-		   /* Columns to include in listing */
-		   'info'     => 'pagename,mtime',
-		   'updatelinks' => 0,
-		   'createredirect' => 0
-		   ));
+                   /* Columns to include in listing */
+                   'info'     => 'pagename,mtime',
+                   'updatelinks' => 0,
+                   'createredirect' => 0
+                   ));
     }
 
     function renameHelper($name, $from, $to, $options = false) {
-    	if ($options['regex'])
-    	    return preg_replace('/'.$from.'/'.($options['icase']?'i':''), $to, $name);
-    	elseif ($options['icase'])
-    	    return str_ireplace($from, $to, $name);
-    	else
+            if ($options['regex'])
+                return preg_replace('/'.$from.'/'.($options['icase']?'i':''), $to, $name);
+            elseif ($options['icase'])
+                return str_ireplace($from, $to, $name);
+            else
             return str_replace($from, $to, $name);
     }
 
-    function renamePages(&$dbi, &$request, $pages, $from, $to, $updatelinks=false, 
-                         $createredirect=false) 
+    function renamePages(&$dbi, &$request, $pages, $from, $to, $updatelinks=false,
+                         $createredirect=false)
     {
         $result = HTML::div();
         $ul = HTML::ul();
         $count = 0;
         $post_args = $request->getArg('admin_rename');
-        $options = 
+        $options =
           array('regex' => isset($post_args['regex']) ? $post_args['regex'] : null,
                 'icase' => isset($post_args['icase']) ? $post_args['icase'] : null);
         foreach ($pages as $name) {
-            if ( ($newname = $this->renameHelper($name, $from, $to, $options)) 
+            if ( ($newname = $this->renameHelper($name, $from, $to, $options))
                  and $newname != $name )
             {
                 if ($dbi->isWikiPage($newname))
@@ -103,7 +103,7 @@ extends WikiPlugin_WikiAdminSelect
                     if ($createredirect) {
                         $page = $dbi->getPage($name);
                         $text = "<<RedirectTo page=\"" . $newname . "\">>";
-                        $meta['summary'] = 
+                        $meta['summary'] =
                             sprintf(_("Renaming created redirect page from '%s' to '%s'"),
                                     $name, $newname);
                         $meta['is_minor_edit'] = 0;
@@ -114,11 +114,11 @@ extends WikiPlugin_WikiAdminSelect
                                                   $name, WikiLink($newname))));
                     $count++;
                 } else {
-                    $ul->pushContent(HTML::li(fmt("Couldn't rename page '%s' to '%s'.", 
+                    $ul->pushContent(HTML::li(fmt("Couldn't rename page '%s' to '%s'.",
                                                   $name, $newname)));
                 }
             } else {
-                $ul->pushContent(HTML::li(fmt("Couldn't rename page '%s' to '%s'.", 
+                $ul->pushContent(HTML::li(fmt("Couldn't rename page '%s' to '%s'.",
                                               $name, $newname)));
             }
         }
@@ -143,8 +143,8 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-    	$action = $request->getArg('action');
-        if ($action != 'browse' and $action != 'rename' 
+            $action = $request->getArg('action');
+        if ($action != 'browse' and $action != 'rename'
                                 and $action != _("PhpWikiAdministration")."/"._("Rename"))
             return $this->disabled("(action != 'browse')");
 
@@ -178,8 +178,8 @@ extends WikiPlugin_WikiAdminSelect
             // DONE: error message if not allowed.
             if ($post_args['action'] == 'verify') {
                 // Real action
-                return $this->renamePages($dbi, $request, array_keys($p), 
-                                          $post_args['from'], $post_args['to'], 
+                return $this->renamePages($dbi, $request, array_keys($p),
+                                          $post_args['from'], $post_args['to'],
                                           !empty($post_args['updatelinks']),
                                           !empty($post_args['createredirect']));
             }
@@ -202,7 +202,7 @@ extends WikiPlugin_WikiAdminSelect
         $pagelist = new PageList_Selectable
             (
              $args['info'], $args['exclude'],
-             array('types' => 
+             array('types' =>
                    array('renamed_pagename'
                          => new _PageList_Column_renamed_pagename('rename', _("Rename to")),
                          )));
@@ -238,7 +238,7 @@ extends WikiPlugin_WikiAdminSelect
         if ($singlepage === false) {
             $list = $pagelist->getContent();
         } else {
-            $list = ""; 
+            $list = "";
         }
         return HTML::form(array('action' => $request->getPostURL(),
                                 'method' => 'post'),
@@ -258,8 +258,8 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function checkBox (&$post_args, $name, $msg) {
-    	$id = 'admin_rename-'.$name;
-    	$checkbox = HTML::input(array('type' => 'checkbox',
+            $id = 'admin_rename-'.$name;
+            $checkbox = HTML::input(array('type' => 'checkbox',
                                       'name' => 'admin_rename['.$name.']',
                                       'id'   => $id,
                                       'value' => 1));
@@ -271,25 +271,25 @@ extends WikiPlugin_WikiAdminSelect
     function renameForm(&$header, $post_args, $singlepage) {
         $table = HTML::table();
         $this->_tablePush($table, _("Rename"). " ". _("from").': ',
-			  HTML::input(array('name' => 'admin_rename[from]',
-					    'size' => 90,
-					    'value' => $post_args['from'])));
+                          HTML::input(array('name' => 'admin_rename[from]',
+                                            'size' => 90,
+                                            'value' => $post_args['from'])));
         $this->_tablePush($table, _("to").': ',
-			  HTML::input(array('name' => 'admin_rename[to]',
-					    'size' => 90,
-					    'value' => $post_args['to'])));
+                          HTML::input(array('name' => 'admin_rename[to]',
+                                            'size' => 90,
+                                            'value' => $post_args['to'])));
         if ($singlepage === false) {
-	    $this->_tablePush($table, '', 
+            $this->_tablePush($table, '',
                               $this->checkBox($post_args, 'regex', _("Regex?")));
-            $this->_tablePush($table, '', 
+            $this->_tablePush($table, '',
                               $this->checkBox($post_args, 'icase', _("Case insensitive?")));
         }
-	if (defined('EXPERIMENTAL') and EXPERIMENTAL) // not yet stable
-	    $this->_tablePush($table, '', 
-                              $this->checkBox($post_args, 'updatelinks', 
+        if (defined('EXPERIMENTAL') and EXPERIMENTAL) // not yet stable
+            $this->_tablePush($table, '',
+                              $this->checkBox($post_args, 'updatelinks',
                                 _("Change pagename in all linked pages also?")));
-	$this->_tablePush($table, '', 
-                          $this->checkBox($post_args, 'createredirect', 
+        $this->_tablePush($table, '',
+                          $this->checkBox($post_args, 'createredirect',
                                           _("Create redirect from old to new name?")));
         $header->pushContent($table);
         return $header;
@@ -307,13 +307,13 @@ class _PageList_Column_renamed_pagename extends _PageList_Column {
         $post_args = $request->getArg('admin_rename');
         $options = array('regex' => @$post_args['regex'],
                          'icase' => @$post_args['icase']);
-                         
-        $value = $post_args 
+
+        $value = $post_args
             ? WikiPlugin_WikiAdminRename::renameHelper
-                ($page_handle->getName(), 
+                ($page_handle->getName(),
                  $post_args['from'], $post_args['to'],
                  $options)
-            : $page_handle->getName();                              
+            : $page_handle->getName();
         $div = HTML::div(" => ",HTML::input(array('type' => 'text',
                                                   'name' => 'rename[]',
                                                   'value' => $value)));

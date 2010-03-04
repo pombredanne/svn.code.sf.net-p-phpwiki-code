@@ -62,7 +62,7 @@ extends WikiPlugin
         if (is_integer($pages)) {
             $numpages = $pages;
             $pages = false;
-        // fix new pages handling in arg preprozessor.    
+        // fix new pages handling in arg preprozessor.
         } elseif (is_array($pages)) {
             $numpages = (int)$pages[0];
             if ($numpages > 0 and !$dbi->isWikiPage($numpages)) $pages = false;
@@ -92,7 +92,7 @@ extends WikiPlugin
                 if (isset($pagearray[$i])) $pagelist->addPage($pagearray[$i]);
         } else { // if $numpages = 1
              if (isset($pagearray[$shuffle]))
-	         $pagelist->addPage($pagearray[$shuffle]);
+                 $pagelist->addPage($pagearray[$shuffle]);
         }
         return $pagelist;
     }

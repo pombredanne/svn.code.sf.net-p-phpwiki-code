@@ -41,7 +41,7 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array('page' => '[pagename]',
-		     'notallversions' => 0);
+                     'notallversions' => 0);
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -70,25 +70,25 @@ extends WikiPlugin
             $this->_fixupData($pagedata);
             $table->pushContent($this->_showhash("get_pagedata('$page')", $pagedata));
         }
-	if (!$notallversions) {
-	    $version = $backend->get_latest_version($page);
-	    $vdata = $backend->get_versiondata($page, $version, true);
-	    $this->_fixupData($vdata);
-	    $table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
-	    $table->pushContent($this->_showhash("get_versiondata('$page',$version)",
-						 $vdata));
-	} else {
-	    for ($version = $backend->get_latest_version($page);
-		 $version;
-		 $version = $backend->get_previous_version($page, $version))
-		{
-		    $vdata = $backend->get_versiondata($page, $version, true);
-		    $this->_fixupData($vdata);
-		    $table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
-		    $table->pushContent($this->_showhash("get_versiondata('$page',$version)",
-							 $vdata));
-		}
-	}
+        if (!$notallversions) {
+            $version = $backend->get_latest_version($page);
+            $vdata = $backend->get_versiondata($page, $version, true);
+            $this->_fixupData($vdata);
+            $table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
+            $table->pushContent($this->_showhash("get_versiondata('$page',$version)",
+                                                 $vdata));
+        } else {
+            for ($version = $backend->get_latest_version($page);
+                 $version;
+                 $version = $backend->get_previous_version($page, $version))
+                {
+                    $vdata = $backend->get_versiondata($page, $version, true);
+                    $this->_fixupData($vdata);
+                    $table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
+                    $table->pushContent($this->_showhash("get_versiondata('$page',$version)",
+                                                         $vdata));
+                }
+        }
 
         $linkdata = $backend->get_links($page, false);
         if ($linkdata->count())
@@ -112,14 +112,14 @@ extends WikiPlugin
      * also used in plugin/EditMetaData
      */
     function _fixupData(&$data, $prefix='') {
-	if (!is_array($data)) return;
-	
+        if (!is_array($data)) return;
+
         global $request;
         $user = $request->getUser();
         foreach ($data as $key => $val) {
             $fullkey = $prefix . '[' . $key . ']';
             if (is_integer($key)) {
-            	;
+                    ;
             } elseif ($key == 'passwd' and !$user->isAdmin()) {
                 $data[$key] = $val ? _("<not displayed>") : _("<empty>");
             } elseif ($key and $key == '_cached_html') {
@@ -130,11 +130,11 @@ extends WikiPlugin
                 ob_end_clean();
             }
             elseif (is_bool($val)) {
-            	$data[$key] = $this->_showvalue($key, $val ? "true" : "false", $prefix);
+                    $data[$key] = $this->_showvalue($key, $val ? "true" : "false", $prefix);
             }
-            elseif (is_string($val) && ((substr($val, 0, 2) == 'a:' 
-					 or (substr($val, 0, 2) == 'O:')))) 
-	    {
+            elseif (is_string($val) && ((substr($val, 0, 2) == 'a:'
+                                         or (substr($val, 0, 2) == 'O:'))))
+            {
                 // how to indent this table?
                 $val = unserialize($val);
                 $this->_fixupData($val, $fullkey);
@@ -181,10 +181,10 @@ extends WikiPlugin
                                HTML::td(array('colspan' => 2,
                                               'style' => 'color:#000000'),
                                         $heading));
-	if (!is_array($hash)) return array();
+        if (!is_array($hash)) return array();
         ksort($hash);
         foreach ($hash as $key => $val) {
-            if ($this->chunk_split and is_string($val)) $val = chunk_split($val);	
+            if ($this->chunk_split and is_string($val)) $val = chunk_split($val);
             $rows[] = HTML::tr(HTML::td(array('align' => 'right',
                                               'bgcolor' => '#cccccc',
                                               'style' => 'color:#000000'),
@@ -200,7 +200,7 @@ extends WikiPlugin
 
     /* also used in plugin/EditMetaData */
     function _showvalue ($key, $val, $prefix='') {
-	return $val ? $val : HTML::raw('&nbsp;');
+        return $val ? $val : HTML::raw('&nbsp;');
     }
 
 };

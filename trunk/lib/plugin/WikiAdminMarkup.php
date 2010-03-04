@@ -48,11 +48,11 @@ extends WikiPlugin_WikiAdminSelect
     }
 
     function getDefaultArguments() {
-        return array_merge 
+        return array_merge
             (
              WikiPlugin_WikiAdminSelect::getDefaultArguments(),
              array(
-                   'markup' 	=> 2,
+                   'markup'         => 2,
                    /* Columns to include in listing */
                    'info'     => 'pagename,markup,mtime',
                    ));
@@ -88,7 +88,7 @@ extends WikiPlugin_WikiAdminSelect
                                                       WikiLink($name), $newmarkup)));
                         $count++;
                     } else {
-                        $ul->pushContent(HTML::li(fmt("Couldn't change page '%s' to markup type '%s'.", 
+                        $ul->pushContent(HTML::li(fmt("Couldn't change page '%s' to markup type '%s'.",
                                                       WikiLink($name), $newmarkup)));
                     }
                 }
@@ -110,12 +110,12 @@ extends WikiPlugin_WikiAdminSelect
             return $result;
         }
     }
-    
+
     function run($dbi, $argstr, &$request, $basepage) {
         if ($request->getArg('action') != 'browse')
             if (!$request->getArg('action') == _("PhpWikiAdministration/Markup"))
                 return $this->disabled("(action != 'browse')");
-        
+
         $args = $this->getArgs($argstr, $request);
         $this->_args = $args;
         $this->preSelectS($args, $request);
@@ -139,7 +139,7 @@ extends WikiPlugin_WikiAdminSelect
             // DONE: error message if not allowed.
             if ($post_args['action'] == 'verify') {
                 // Real action
-                return $this->chmarkupPages($dbi, $request, array_keys($p), 
+                return $this->chmarkupPages($dbi, $request, array_keys($p),
                                             $post_args['markup']);
             }
             if ($post_args['action'] == 'select') {
@@ -151,10 +151,10 @@ extends WikiPlugin_WikiAdminSelect
             }
         }
         if ($next_action == 'select' and empty($pages)) {
-            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'], 
+            $pages = $this->collectPages($pages, $dbi, $args['sortby'], $args['limit'],
                                          $args['exclude']);
         }
-    
+
         if ($next_action == 'select') {
             $pagelist = new PageList_Selectable($args['info'], $args['exclude'], $args);
         } else {

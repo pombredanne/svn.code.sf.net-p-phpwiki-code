@@ -43,7 +43,7 @@ rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
  * both_metric, or both_imperial.
  */
 
-// We require the base class from PHP Weather. Try some default directories. 
+// We require the base class from PHP Weather. Try some default directories.
 // Better define PHPWEATHER_BASE_DIR to the directory on your server:
 if (!defined('PHPWEATHER_BASE_DIR')) {
     /* PhpWeather has not been loaded before. We include the base

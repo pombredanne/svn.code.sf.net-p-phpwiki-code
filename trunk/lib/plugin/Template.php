@@ -32,7 +32,7 @@ rcs_id('$Id$');
  *
  * Parameter expansion:
  *   vars="var1=value1&var2=value2"
- * We only support named parameters, not numbered ones as in mediawiki, and 
+ * We only support named parameters, not numbered ones as in mediawiki, and
  * the placeholder is %%var%% and not {{{var}}} as in mediawiki.
  *
  * The following predefined uppercase variables are automatically expanded if existing:
@@ -40,17 +40,17 @@ rcs_id('$Id$');
  *   MTIME     - last modified date + time
  *   CTIME     - creation date + time
  *   AUTHOR    - last author
- *   OWNER     
+ *   OWNER
  *   CREATOR   - first author
  *   SERVER_URL, DATA_PATH, SCRIPT_NAME, PHPWIKI_BASE_URL and BASE_URL
  *
  * <noinclude> .. </noinclude>     is stripped from the template expansion.
- * <includeonly> .. </includeonly> is only expanded in pages using the template, 
+ * <includeonly> .. </includeonly> is only expanded in pages using the template,
  *                                 not in the template itself.
  *
- *   We support a mediawiki-style syntax extension which maps 
+ *   We support a mediawiki-style syntax extension which maps
  *     {{TemplateFilm|title=Some Good Film|year=1999}}
- *   to 
+ *   to
  *     <?plugin Template page=TemplateFilm vars="title=Some Good Film&year=1999" ?>
  */
 
@@ -71,7 +71,7 @@ extends WikiPlugin
     }
 
     function getDefaultArguments() {
-        return array( 
+        return array(
                      'page'    => false, // the page to include
                      'vars'    => false, // TODO: get rid of this, all remaining args should be vars
                      'rev'     => false, // the revision (defaults to most recent)
@@ -80,15 +80,15 @@ extends WikiPlugin
                      );
     }
     function allow_undeclared_arg($name, $value) {
-    	// either just allow it or you can store it here away also. 
-    	$this->vars[$name] = $value;
-    	return $name != 'action';
+            // either just allow it or you can store it here away also.
+            $this->vars[$name] = $value;
+            return $name != 'action';
     }
 
-    // TODO: check if page can really be pulled from the args, or if it is just the basepage. 
+    // TODO: check if page can really be pulled from the args, or if it is just the basepage.
     function getWikiPageLinks($argstr, $basepage) {
         $args = $this->getArgs($argstr);
-	$page = @$args['page'];
+        $page = @$args['page'];
         if ($page) {
             // Expand relative page names.
             $page = new WikiPageName($page, $basepage);
@@ -97,9 +97,9 @@ extends WikiPlugin
             return false;
         return array(array('linkto' => $page->name, 'relation' => 0));
     }
-                
+
     function run($dbi, $argstr, &$request, $basepage) {
-    	$this->vars = array();
+            $this->vars = array();
         $args = $this->getArgs($argstr, $request);
         $vars = $args['vars'] ? $args['vars'] : $this->vars;
         $page = $args['page'];
@@ -135,10 +135,10 @@ extends WikiPlugin
 
         // Check if user is allowed to get the Page.
         if (!mayAccessPage ('view', $page)) {
-        	return $this->error(sprintf(_("Illegal inclusion of page %s: no read access"),
+                return $this->error(sprintf(_("Illegal inclusion of page %s: no read access"),
                                         $page));
         }
-        
+
         $p = $dbi->getPage($page);
         if ($args['rev']) {
             $r = $p->getRevision($args['rev']);
@@ -159,7 +159,7 @@ extends WikiPlugin
           or (preg_match('/<<\s*RedirectTo\s+page="(.*?)"\s*>>/', implode("\n", $content), $m)))
         {
             // Strip quotes (simple or double) from page name if any
-            if ((string_starts_with($m[1], "'")) 
+            if ((string_starts_with($m[1], "'"))
               or (string_starts_with($m[1], "\""))) {
                 $m[1] = substr($m[1], 1, -1);
             }
@@ -179,15 +179,15 @@ extends WikiPlugin
             $c = extractSection($args['section'], $c, $page, $quiet, $args['sectionhead']);
             $initial_content = implode("\n", $c);
         }
-	// exclude from expansion
+        // exclude from expansion
         if (preg_match('/<noinclude>.+<\/noinclude>/s', $initial_content)) {
-            $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "", 
+            $initial_content = preg_replace("/<noinclude>.+?<\/noinclude>/s", "",
                                             $initial_content);
         }
-	// only in expansion
-	$initial_content = preg_replace("/<includeonly>(.+)<\/includeonly>/s", "\\1",
-					$initial_content);
-	$this->doVariableExpansion($initial_content, $vars, $basepage, $request);
+        // only in expansion
+        $initial_content = preg_replace("/<includeonly>(.+)<\/includeonly>/s", "\\1",
+                                        $initial_content);
+        $this->doVariableExpansion($initial_content, $vars, $basepage, $request);
 
         array_push($included_pages, $page);
 
@@ -220,13 +220,13 @@ extends WikiPlugin
                     $var[$key] = $val;
                 }
             } elseif (is_array($vars)) {
-		$var =& $vars;
-	    }
+                $var =& $vars;
+            }
             $thispage = $dbi->getPage($basepage);
             // pagename and userid are not overridable
             $var['PAGENAME'] = $thispage->getName();
             if (preg_match('/%%USERID%%/', $content))
-		$var['USERID'] = $request->_user->getId();
+                $var['USERID'] = $request->_user->getId();
             if (empty($var['MTIME']) and preg_match('/%%MTIME%%/', $content)) {
                 $thisrev  = $thispage->getCurrentRevision(false);
                 $var['MTIME'] = $GLOBALS['WikiTheme']->formatDateTime($thisrev->get('mtime'));
@@ -254,7 +254,7 @@ extends WikiPlugin
                 $content = str_replace("%%".$key."%%", $val, $content);
             }
         }
-	return $content;
+        return $content;
     }
 };
 

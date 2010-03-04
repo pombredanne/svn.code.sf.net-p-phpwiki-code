@@ -55,13 +55,13 @@ extends WikiPlugin
 
     function getDefaultArguments() {
         return array('logfile'  => 'phpwiki-upload.log',
-        	     // add a link of the fresh file automatically to the 
-        	     // end of the page (or current page)
-        	     'autolink' => true, 
-        	     'page'     => '[pagename]',
-        	     'size'     => 50,
-        	     'mode'     => 'actionpage', // or edit
-        	     );
+                     // add a link of the fresh file automatically to the
+                     // end of the page (or current page)
+                     'autolink' => true,
+                     'page'     => '[pagename]',
+                     'size'     => 50,
+                     'mode'     => 'actionpage', // or edit
+                     );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
@@ -198,65 +198,65 @@ ws[cfh]");
                 return $result;
             }
         }
-        
+
         $userfile = $request->getUploadedFile('userfile');
         if ($userfile) {
             $userfile_name = $userfile->getName();
             $userfile_name = trim(basename($userfile_name));
-	    if (UPLOAD_USERDIR) {
-		$file_dir .= $request->_user->_userid;
-		if (!file_exists($file_dir))
-		    mkdir($file_dir, 0775);
-		$file_dir .= "/";
-		$u_userfile = $request->_user->_userid . "/" . $userfile_name;
-	    } else {
-		$u_userfile = $userfile_name;
-	    }
-	    $u_userfile = preg_replace("/ /", "%20", $u_userfile);
+            if (UPLOAD_USERDIR) {
+                $file_dir .= $request->_user->_userid;
+                if (!file_exists($file_dir))
+                    mkdir($file_dir, 0775);
+                $file_dir .= "/";
+                $u_userfile = $request->_user->_userid . "/" . $userfile_name;
+            } else {
+                $u_userfile = $userfile_name;
+            }
+            $u_userfile = preg_replace("/ /", "%20", $u_userfile);
             $userfile_tmpname = $userfile->getTmpName();
-	    $err_header = HTML::div(array('class' => 'error'),
+            $err_header = HTML::div(array('class' => 'error'),
                                 HTML::p(fmt("ERROR uploading '%s'", $userfile_name)));
             if (preg_match("/(\." . join("|\.", $this->disallowed_extensions) . ")(\.|\$)/i",
                            $userfile_name))
             {
-            	$message->pushContent($err_header);
+                    $message->pushContent($err_header);
                 $message->pushContent(HTML::p(fmt("Files with extension %s are not allowed.",
                                               join(", ", $this->disallowed_extensions))));
             }
-            elseif (! DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS and 
-                    ! preg_match("/(\." . join("|\.", $this->allowed_extensions) . ")\$/i", 
+            elseif (! DISABLE_UPLOAD_ONLY_ALLOWED_EXTENSIONS and
+                    ! preg_match("/(\." . join("|\.", $this->allowed_extensions) . ")\$/i",
                                $userfile_name))
             {
-            	$message->pushContent($err_header);
+                    $message->pushContent($err_header);
                 $message->pushContent(HTML::p(fmt("Only files with the extension %s are allowed.",
                                               join(", ", $this->allowed_extensions))));
             }
             elseif (preg_match("/[^._a-zA-Z0-9- ]/", strip_accents($userfile_name)))
             {
-            	$message->pushContent($err_header);
+                    $message->pushContent($err_header);
                 $message->pushContent(HTML::p(_("Invalid filename. File names may only contain alphanumeric characters and dot, underscore, space or dash.")));
             }
             elseif (file_exists($file_dir . $userfile_name)) {
-            	$message->pushContent($err_header);
+                    $message->pushContent($err_header);
                 $message->pushContent(HTML::p(fmt("There is already a file with name %s uploaded.",
                                                   $u_userfile)));
             }
             elseif ($userfile->getSize() > (MAX_UPLOAD_SIZE)) {
-            	$message->pushContent($err_header);
+                    $message->pushContent($err_header);
                 $message->pushContent(HTML::p(_("Sorry but this file is too big.")));
             }
             elseif (move_uploaded_file($userfile_tmpname, $file_dir . $userfile_name) or
                     (IsWindows() and rename($userfile_tmpname, $file_dir . $userfile_name))
                     )
             {
-            	$interwiki = new PageType_interwikimap();
-		$link = $interwiki->link("Upload:$u_userfile");
+                    $interwiki = new PageType_interwikimap();
+                $link = $interwiki->link("Upload:$u_userfile");
                 $message->pushContent(HTML::div(array('class' => 'feedback'),
                                                 HTML::p(_("File successfully uploaded.")),
                                                 HTML::p($link)));
 
                 // the upload was a success and we need to mark this event in the "upload log"
-                if ($logfile) { 
+                if ($logfile) {
                     $upload_log = $file_dir . basename($logfile);
                     $this->log($userfile, $upload_log, $message);
                 }
@@ -274,7 +274,7 @@ ws[cfh]");
                     }
                 }
             } else {
-            	$message->pushContent($err_header);
+                    $message->pushContent($err_header);
                 $message->pushContent(HTML::br(),_("Uploading failed."),HTML::br());
             }
         }
@@ -290,8 +290,8 @@ ws[cfh]");
     }
 
     function log ($userfile, $upload_log, &$message) {
-    	global $WikiTheme;
-    	$user = $GLOBALS['request']->_user;
+            global $WikiTheme;
+            $user = $GLOBALS['request']->_user;
         if (file_exists($upload_log) and (!is_writable($upload_log))) {
             trigger_error(_("The upload logfile exists but is not writable."), E_USER_WARNING);
         }

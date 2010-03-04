@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright (C) 2004 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -32,7 +32,7 @@ rcs_id('$Id$');
 * @author Davey Shafik <http://pear.php.net/user/davey>
 * @date 2004-06-07
 * @version 0.0.2
-* @bug XML_FOAF 0.2 has problems with named RDF nodes (ie, http://www.ahsonline.com.au/dod/FOAF.rdf). 
+* @bug XML_FOAF 0.2 has problems with named RDF nodes (ie, http://www.ahsonline.com.au/dod/FOAF.rdf).
 *      Davey knows, will be fixing this soon.
 * @todo "Friends" component
 * @todo Named URLs (DC metadata)
@@ -44,10 +44,10 @@ rcs_id('$Id$');
  * FoafViewer:  Parse an RDF FOAF file and extract information to render as HTML
  * usage:   &lt;?plugin FoafViewer foaf=http://www.ahsonline.com.au/dod/rawksuga.rdf original=true?&gt;
  * author:  Daniel O'Connor <http://www.ahsonline.com.au/dod/FOAF.rdf>
- * 
+ *
  * phpwiki version based on version 0.0.2 by Daniel O'Connor
  *
- * TODO: 
+ * TODO:
  *  - use a template.
  *  - use the phpwiki internal user foaf data (stored by a UserPreferences extension)
  *  - fix the pear FOAF Parser or we'll write our own (based on our XmlParser)
@@ -55,7 +55,7 @@ rcs_id('$Id$');
 class WikiPlugin_FoafViewer
 extends WikiPlugin
 {
-    // The handler is handled okay. The only problem is that it still 
+    // The handler is handled okay. The only problem is that it still
     // throws a fatal.
     function _error_handler($error) {
         if (strstr($error->errstr,"Failed opening required 'XML/FOAF/Parser.php'"))
@@ -84,7 +84,7 @@ extends WikiPlugin
                       'original' => false
                       );
     }
-                
+
     function run($dbi, $argstr, &$request, $basepage) {
 
         /* ignore fatal on loading */
@@ -123,11 +123,11 @@ extends WikiPlugin
             if (substr($foaf,0,7) != "http://") {
                 return $this->error(_("foaf must be a URI starting with http://"));
             }
-	    // Start of output
-   	    if (!empty($original)) {
+            // Start of output
+               if (!empty($original)) {
                 $request->redirect($foaf);
-	    }
-	    else {
+            }
+            else {
                 $foaffile = url_get_contents($foaf);
                 if (!$foaffile) {
                     //TODO: get errormsg
@@ -138,29 +138,29 @@ extends WikiPlugin
                 // Parser FOAF into $foaffile
                 $parser->parseFromMem($foaffile);
                 $a = $parser->toArray();
-			
+
                 $html = HTML(HTML::h1(@$a[0]["name"]),
                             HTML::table(
                                         HTML::thead(),
                                         HTML::tbody(
-                                                    @$a[0]["title"] ? 
+                                                    @$a[0]["title"] ?
                                                         HTML::tr(HTML::td(_("Title")),
                                                                  HTML::td($a[0]["title"])) : null,
-                                                    (@$a[0]["homepage"][0]) ? 
+                                                    (@$a[0]["homepage"][0]) ?
                                                         $this->iterateHTML($a[0],"homepage",$a["dc"]) : null,
                                                     (@$a[0]["weblog"][0]) ?
                                                         $this->iterateHTML($a[0],"weblog",$a["dc"]) : null,
                                                     //This seems broken?
                                                     /*
                                                      HTML::tr(HTML::td("Full Name"),
-							               (@$a[0]["name"][0]) ?					
+                                                                       (@$a[0]["name"][0]) ?
                                                                        HTML::td(@$a[0]["name"]) :
                                                                        (@$a[0]["firstname"][0] && @$a[0]["surname"][0]) ?
                                                                        HTML::td(@$a[0]["firstname"][0] . " " . @$a[0]["surname"][0])
                                                                        : null
                                                     */
                                                     HTML::tr(HTML::td("Full Name"),
-                                                             (@$a[0]["name"][0]) ?					
+                                                             (@$a[0]["name"][0]) ?
                                                              HTML::td(@$a[0]["name"]) : null
                                                              ),
                                                     (@$a[0]["nick"][0]) ?
@@ -208,12 +208,12 @@ extends WikiPlugin
                 $string = '<a href="http://beta.plink.org/profile/' . $array[$index][$i] . '">'
                     .'<img src="http://beta.plink.org/images/plink.png" alt="Plink - ' . $array[$index][$i] . '" /></a>';
             }
-            else if ($index == "depiction") { 
+            else if ($index == "depiction") {
                 $string = '<img src="' . $array[$index][$i] . '" />';
             }
-            else if ((substr($array[$index][$i],0,7) == "http://") || (substr($array[$index][$i],0,7) == "mailto:")) { 
+            else if ((substr($array[$index][$i],0,7) == "http://") || (substr($array[$index][$i],0,7) == "mailto:")) {
                 $string = '<a href="' . $array[$index][$i] . '"';
-				
+
                 if (@$dc["description"][$array[$index][$i]]) {
                     $string .= ' title="' . $dc["description"][$array[$index][$i]] . '"';
                 }
@@ -223,12 +223,12 @@ extends WikiPlugin
                 }
                 else {
                     $string .= $array[$index][$i];
-                }				
+                }
                 $string .= '</a>';
             }
             @$html .= "<tr><td>" . $index . "</td><td>" . $string . "</td></tr>";
         }
-	
+
         return HTML::raw($html);
     }
 }

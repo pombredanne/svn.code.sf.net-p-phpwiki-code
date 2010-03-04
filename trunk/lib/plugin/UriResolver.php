@@ -21,7 +21,7 @@ rcs_id('$Id$');
  */
 
 /**
- * UriResolver/uri => xml-id 
+ * UriResolver/uri => xml-id
  *   This function transforms a valid url-encoded URI into a string
  *   that can be used as an XML-ID. The mapping should be injective.
  * Inverse to RdfWriter::makeURIfromXMLExportId()
@@ -50,17 +50,17 @@ extends WikiPlugin
     }
 
     function allow_undeclared_arg() {
-	return true;
+        return true;
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
-	$args = $request->getArgs();
-	unset($args['pagename']);
-	unset($args['action']);
-	unset($args['start_debug']);
-	// FIXME: ?Test=1 => Test
-	$arg = join("/",array_keys($args));
-	$xmlid = RdfWriter::makeXMLExportId($arg);
+        $args = $request->getArgs();
+        unset($args['pagename']);
+        unset($args['action']);
+        unset($args['start_debug']);
+        // FIXME: ?Test=1 => Test
+        $arg = join("/",array_keys($args));
+        $xmlid = RdfWriter::makeXMLExportId($arg);
         return $xmlid;
     }
 };

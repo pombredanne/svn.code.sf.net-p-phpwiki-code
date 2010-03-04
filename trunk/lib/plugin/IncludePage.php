@@ -69,7 +69,7 @@ extends WikiPlugin
             return false;
         return array(array('linkto' => $page->name, 'relation' => 0));
     }
-                
+
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
@@ -100,7 +100,7 @@ extends WikiPlugin
             return $this->error(sprintf(_("Illegal inclusion of page %s: no read access"),
                                         $page));
         }
-        
+
         $p = $dbi->getPage($page);
         if ($rev) {
             $r = $p->getRevision($rev);
@@ -112,7 +112,7 @@ extends WikiPlugin
             $r = $p->getCurrentRevision();
         }
         $c = $r->getContent();
-        
+
         // follow redirects
         if ((preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(\S+)\s*\?'.'>/', implode("\n", $c), $m))
           or (preg_match('/<'.'\?plugin\s+RedirectTo\s+page=(.*?)\s*\?'.'>/', implode("\n", $c), $m))
@@ -160,8 +160,8 @@ extends WikiPlugin
                     HTML::div(array('class' => 'transclusion'),
                               false, $content));
     }
-    
-    /** 
+
+    /**
      * handles the arguments: section, sectionhead, lines, words, bytes,
      * for UnfoldSubpages, IncludePage, ...
      */
@@ -169,7 +169,7 @@ extends WikiPlugin
         extract($args);
 
         if ($section) {
-            if ($sections) { 
+            if ($sections) {
                 $c = extractSection($section, $c, $pagename, $quiet, 1);
             } else {
                 $c = extractSection($section, $c, $pagename, $quiet, $sectionhead);

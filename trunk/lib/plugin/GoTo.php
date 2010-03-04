@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright (C) 2004 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -67,13 +67,13 @@ extends WikiPlugin
             $request->redirect($url);
             // User should see nothing after redirect
             return '';
-        } 
+        }
 
         $action = $request->getURLtoSelf();
         $form = HTML::form(array('action'=>$action,
                                  'method'=>'post'
                           ));
- 
+
         $form->pushContent(HiddenInputs($request->getArgs()));
 
         $textfield = HTML::input(array('type' => 'text',
@@ -95,5 +95,5 @@ extends WikiPlugin
 // c-basic-offset: 4
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
-// End:   
+// End:
 ?>

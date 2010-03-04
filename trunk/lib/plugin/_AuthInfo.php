@@ -23,7 +23,7 @@ rcs_id('$Id$');
 require_once('lib/Template.php');
 /**
  * Used to debug auth problems and settings.
- * This plugin is only testing purposes. 
+ * This plugin is only testing purposes.
  * if DEBUG is false, only admin can call it, which is of no real use.
  *
  * Warning! This may display db and user passwords in cleartext.
@@ -66,23 +66,23 @@ extends WikiPlugin
         $table = HTML::table(array('border' => 1,
                                   'cellpadding' => 2,
                                   'cellspacing' => 0));
-        $table->pushContent($this->_showhash("AUTH DEFINES", 
+        $table->pushContent($this->_showhash("AUTH DEFINES",
                                 $this->_buildConstHash(
                                     array("ENABLE_USER_NEW","ALLOW_ANON_USER",
                                           "ALLOW_ANON_EDIT","ALLOW_BOGO_LOGIN",
                                           "REQUIRE_SIGNIN_BEFORE_EDIT","ALLOW_USER_PASSWORDS",
                                           "PASSWORD_LENGTH_MINIMUM","USE_DB_SESSION"))));
         if ((defined('ALLOW_LDAP_LOGIN') && ALLOW_LDAP_LOGIN) or in_array("LDAP",$GLOBALS['USER_AUTH_ORDER']))
-            $table->pushContent($this->_showhash("LDAP DEFINES", 
+            $table->pushContent($this->_showhash("LDAP DEFINES",
                                                  $this->_buildConstHash(array("LDAP_AUTH_HOST","LDAP_BASE_DN"))));
         if ((defined('ALLOW_IMAP_LOGIN') && ALLOW_IMAP_LOGIN) or in_array("IMAP",$GLOBALS['USER_AUTH_ORDER']))
             $table->pushContent($this->_showhash("IMAP DEFINES", array("IMAP_AUTH_HOST" => IMAP_AUTH_HOST)));
         if (defined('AUTH_USER_FILE') or in_array("File",$GLOBALS['USER_AUTH_ORDER']))
-            $table->pushContent($this->_showhash("AUTH_USER_FILE", 
+            $table->pushContent($this->_showhash("AUTH_USER_FILE",
                                     $this->_buildConstHash(array("AUTH_USER_FILE",
                                                                  "AUTH_USER_FILE_STORABLE"))));
         if (defined('GROUP_METHOD'))
-            $table->pushContent($this->_showhash("GROUP_METHOD", 
+            $table->pushContent($this->_showhash("GROUP_METHOD",
                                     $this->_buildConstHash(array("GROUP_METHOD","AUTH_GROUP_FILE","GROUP_LDAP_QUERY"))));
         $table->pushContent($this->_showhash("\$USER_AUTH_ORDER[]", $GLOBALS['USER_AUTH_ORDER']));
         $table->pushContent($this->_showhash("USER_AUTH_POLICY", array("USER_AUTH_POLICY"=>USER_AUTH_POLICY)));
@@ -107,9 +107,9 @@ extends WikiPlugin
             //$table->pushContent(HTML::tr(HTML::td(array('colspan' => 2))));
             $userdata = obj2hash($user, array('_dbi','_request', 'password', 'passwd'));
             if (isa($user, "_FilePassUser")) {
-            	foreach ($userdata['_file']->users as $u => $p) {
-            	    $userdata['_file']->users[$u] = "<hidden>";
-            	}
+                    foreach ($userdata['_file']->users as $u => $p) {
+                        $userdata['_file']->users[$u] = "<hidden>";
+                    }
             }
             $table->pushContent($this->_showhash("User: Object of ".get_class($user), $userdata));
             if (ENABLE_USER_NEW) {
@@ -132,12 +132,12 @@ extends WikiPlugin
     }
 
     function _showhash ($heading, $hash, $depth = 0) {
-    	static $seen = array();
-    	static $maxdepth = 0;
+            static $seen = array();
+            static $maxdepth = 0;
         $rows = array();
         $maxdepth++;
         if ($maxdepth > 35) return $heading;
-        
+
         if ($heading)
             $rows[] = HTML::tr(array('bgcolor' => '#ffcccc',
                                      'style' => 'color:#000000'),
@@ -190,7 +190,7 @@ extends WikiPlugin
         }
         return $rows;
     }
-    
+
     function _buildConstHash($constants) {
         $hash = array();
         foreach ($constants as $c) {

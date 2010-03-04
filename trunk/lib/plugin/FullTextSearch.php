@@ -30,8 +30,8 @@ require_once("lib/PageList.php");
  *
  * See also:
  *   Hooks to search in external documents: ExternalTextSearch
- *   Only uploaded: textfiles, PDF, HTML, DOC, XLS, ... or 
- *   External apps: xapian-omages seems to be the better than lucene, 
+ *   Only uploaded: textfiles, PDF, HTML, DOC, XLS, ... or
+ *   External apps: xapian-omages seems to be the better than lucene,
  *   lucene.net, swish, nakamazu, ...
  *
  * See http://sf.net/tracker/index.php?aid=927395&group_id=6121&atid=106121
@@ -63,7 +63,7 @@ extends WikiPlugin
                    'hilight'  => true,
                    'case_exact' => false,
                    'regex'    => 'auto',
-		   'sortby'   => '-hi_content',
+                   'sortby'   => '-hi_content',
                    'noheader' => false,
                    'exclude'  => false,   // comma-seperated list of glob
                    'quiet'    => true));  // be less verbose
@@ -87,8 +87,8 @@ extends WikiPlugin
         if ($quiet) { // see how easy it is with PageList...
             unset($args['info']);
             $args['listtype'] = 'dl';
-	    $args['types'] = array(new _PageList_Column_content
-	      ('rev:hi_content', _("Content"), "left", $s, $hilight_re));
+            $args['types'] = array(new _PageList_Column_content
+              ('rev:hi_content', _("Content"), "left", $s, $hilight_re));
             $list = new PageList(false, $exclude, $args);
             $list->setCaption(fmt("Full text search results for '%s'", $s));
             while ($page = $pages->next()) {
@@ -104,7 +104,7 @@ extends WikiPlugin
         if (!$limit or !is_int($limit))
             $limit = 0;
         // expand all page wildcards to a list of pages which should be ignored
-        if ($exclude) $exclude = explodePageList($exclude); 
+        if ($exclude) $exclude = explodePageList($exclude);
         while ($page = $pages->next() and (!$limit or ($count < $limit))) {
             $name = $page->getName();
             if ($exclude and in_array($name,$exclude)) continue;
@@ -120,8 +120,8 @@ extends WikiPlugin
             $list->pushContent(HTML::dd(_("<no matches>")));
 
         if (!empty($pages->stoplisted))
-            $list = HTML(HTML::p(fmt(_("Ignored stoplist words '%s'"), 
-                                     join(', ', $pages->stoplisted))), 
+            $list = HTML(HTML::p(fmt(_("Ignored stoplist words '%s'"),
+                                     join(', ', $pages->stoplisted))),
                          $list);
         if ($noheader)
             return $list;
@@ -161,11 +161,11 @@ class _PageList_Column_hilight extends _PageList_Column {
         $this->_PageList_Column($params[0],$params[1],$params[2]);
     }
     function _getValue(&$page, $revision_handle) {
-    	$html = false;
-	$pagename = $page->getName();
-	$count = count($this->parentobj->_wpagelist[$pagename]);
-        return LinkURL(WikiURL($page, array('action' => 'BackLinks'), false), 
-			fmt("(%d Links)", $count));
+            $html = false;
+        $pagename = $page->getName();
+        $count = count($this->parentobj->_wpagelist[$pagename]);
+        return LinkURL(WikiURL($page, array('action' => 'BackLinks'), false),
+                        fmt("(%d Links)", $count));
     }
 }
 

@@ -26,8 +26,8 @@ rcs_id('$Id$');
  *
  * @Author: Reini Urban
  *
- * Note: 
- * - We support only images supported by GD so far (PNG most likely). 
+ * Note:
+ * - We support only images supported by GD so far (PNG most likely).
  *   EPS, PS, SWF, SVG or SVGZ and imagemaps need to be tested.
  *
  * Usage:
@@ -37,7 +37,7 @@ rcs_id('$Id$');
 
  * See also: VisualWiki, which depends on GraphViz and WikiPluginCached.
  *
- * TODO: 
+ * TODO:
  * - neato binary ?
  * - expand embedded <!plugin-list pagelist !> within the digraph script.
  */
@@ -61,7 +61,7 @@ elseif (isWindows()) {
     if (!defined("GRAPHVIZ_EXE"))
         define('GRAPHVIZ_EXE','/home/groups/p/ph/phpwiki/bin/dot');
     if (!defined('VISUALWIKIFONT'))
-        define('VISUALWIKIFONT', 'luximr'); 
+        define('VISUALWIKIFONT', 'luximr');
 } else { // other os
     if (!defined("GRAPHVIZ_EXE"))
         define('GRAPHVIZ_EXE','/usr/local/bin/dot');
@@ -75,14 +75,14 @@ elseif (isWindows()) {
     //$fontpath = "/usr/share/fonts/default/TrueType/";
 }
 
-require_once "lib/WikiPluginCached.php"; 
+require_once "lib/WikiPluginCached.php";
 
 class WikiPlugin_GraphViz
 extends WikiPluginCached
 {
 
     function _mapTypes() {
-    	return array("imap", "cmapx", "ismap", "cmap");
+            return array("imap", "cmapx", "ismap", "cmap");
     }
 
     /**
@@ -95,20 +95,20 @@ extends WikiPluginCached
         if ($type == $this->_args['imgtype'])
             return PLUGIN_CACHED_IMG_INLINE;
         $device = strtolower($this->_args['imgtype']);
-    	if (in_array($device, $this->_mapTypes()))
-    	    return PLUGIN_CACHED_MAP;
-    	if (in_array($device, array('svg','swf','svgz','eps','ps'))) {
+            if (in_array($device, $this->_mapTypes()))
+                return PLUGIN_CACHED_MAP;
+            if (in_array($device, array('svg','swf','svgz','eps','ps'))) {
             switch ($this->_args['imgtype']) {
-            	case 'svg':
-            	case 'svgz':
+                    case 'svg':
+                    case 'svgz':
                    return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_SVG_PNG;
-            	case 'swf':
+                    case 'swf':
                    return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_SWF;
-                default: 
+                default:
                    return PLUGIN_CACHED_STATIC | PLUGIN_CACHED_HTML;
             }
         }
-    	else
+            else
             return PLUGIN_CACHED_IMG_INLINE; // normal cached libgd image handles
     }
     function getName () {
@@ -213,8 +213,8 @@ extends WikiPluginCached
             $source = "digraph GraphViz {\n";  // }
             foreach ($argarray['pages'] as $name) { // support <!plugin-list !> pagelists
                 // allow Page/SubPage
-                $url = str_replace(urlencode(SUBPAGE_SEPARATOR), SUBPAGE_SEPARATOR, 
-				   rawurlencode($name));
+                $url = str_replace(urlencode(SUBPAGE_SEPARATOR), SUBPAGE_SEPARATOR,
+                                   rawurlencode($name));
                 $source .= "  \"$name\" [URL=\"$url\"];\n";
             }
             // {
@@ -234,7 +234,7 @@ extends WikiPluginCached
              $source = $src;
         }
         */
-	return $source;
+        return $source;
     }
 
     function createDotFile($tempfile='', $argarray=false) {
@@ -259,7 +259,7 @@ extends WikiPluginCached
         if (in_array($gif, array("imap", "cmapx", "ismap", "cmap"))) {
             $this->_mapfile = "$tempfiles.map";
             $gif = $this->decideImgType($argarray['imgtype']);
-	    if ($gif == $argarray['imgtype']) $gif = 'png';
+            if ($gif == $argarray['imgtype']) $gif = 'png';
         }
 
         $ImageCreateFromFunc = "ImageCreateFrom$gif";
@@ -291,39 +291,39 @@ extends WikiPluginCached
           sleep(0.1);
         }
         if (! file_exists($outfile) ) {
-            $this->complain(sprintf(_("%s error: outputfile '%s' not created"), 
+            $this->complain(sprintf(_("%s error: outputfile '%s' not created"),
                                     "GraphViz", $outfile));
             $this->complain("\ncmd-line: $cmdline");
             return false;
         }
         if (function_exists($ImageCreateFromFunc)) {
             $img = $ImageCreateFromFunc( $outfile );
-	    // clean up tempfiles
-	    @unlink($tempfiles);
-	    if (empty($argarray['debug']))
-		foreach (array(".$gif",'.dot') as $ext) {
-		    //if (file_exists($tempfiles.$ext))
-		    @unlink($tempfiles.$ext);
-		}
-	    return $img;
-	}
+            // clean up tempfiles
+            @unlink($tempfiles);
+            if (empty($argarray['debug']))
+                foreach (array(".$gif",'.dot') as $ext) {
+                    //if (file_exists($tempfiles.$ext))
+                    @unlink($tempfiles.$ext);
+                }
+            return $img;
+        }
         return $outfile;
     }
-    
+
     // which argument must be set to 'png', for the fallback image when svg will fail on the client.
     // type: SVG_PNG
     function pngArg() {
-    	return 'imgtype';
+            return 'imgtype';
     }
-    
+
     function getMap($dbi, $argarray, $request) {
-    	$result = $this->invokeDot($argarray);
+            $result = $this->invokeDot($argarray);
         if (isa($result, 'HtmlElement'))
             return array(false, $result);
         else
             return $result;
         // $img = $this->getImage($dbi, $argarray, $request);
-    	//return array($this->_mapfile, $img);
+            //return array($this->_mapfile, $img);
     }
 
     /**
@@ -355,24 +355,24 @@ extends WikiPluginCached
             $this->complain("No dot graph given");
             return array(false, $this->GetError());
         }
-	//$ok = $ok and $this->createDotFile($tempfiles.'.dot', $argarray);
+        //$ok = $ok and $this->createDotFile($tempfiles.'.dot', $argarray);
 
         $args = "-T$gif $tempfiles.dot -o $outfile";
         $cmdline1 = "$dotbin $args";
         if ($debug) $cmdline1 .= " > $tempout";
-	$ok = $ok and $this->filterThroughCmd($source, $cmdline1);
-	//$ok = $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" . 
-	//		     ($debug ? " > $tempout 2>&1" : " 2>&1"), $outfile)
+        $ok = $ok and $this->filterThroughCmd($source, $cmdline1);
+        //$ok = $this->execute("$dotbin -T$gif $tempfiles.dot -o $outfile" .
+        //                     ($debug ? " > $tempout 2>&1" : " 2>&1"), $outfile)
 
         $args = "-Timap $tempfiles.dot -o $tempfiles.map";
         $cmdline2 = "$dotbin $args";
         if ($debug) $cmdline2 .= " > $tempout";
         $ok = $ok and $this->filterThroughCmd($source, $cmdline2);
-	// $this->execute("$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map" . 
+        // $this->execute("$dotbin -Timap $tempfiles.dot -o ".$tempfiles.".map" .
         //                    ($debug ? " > $tempout 2>&1" : " 2>&1"), $tempfiles.".map")
-	$ok = $ok and file_exists( $outfile );
-	$ok = $ok and file_exists( $tempfiles.'.map' );
-	$ok = $ok and ($img = $ImageCreateFromFunc($outfile));
+        $ok = $ok and file_exists( $outfile );
+        $ok = $ok and file_exists( $tempfiles.'.map' );
+        $ok = $ok and ($img = $ImageCreateFromFunc($outfile));
         $ok = $ok and ($fp = fopen($tempfiles.'.map', 'r'));
 
         $map = HTML();
@@ -389,7 +389,7 @@ extends WikiPluginCached
                 $map = $tempdir . "/".$this->getName().".map";
             $img = $ImageCreateFromFunc($img);
             $fp = fopen($map, 'r');
-            $map = HTML();	
+            $map = HTML();
             $ok = true;
         }
         if ($ok and $fp) {
@@ -433,7 +433,7 @@ extends WikiPluginCached
         @unlink($tempfiles);
         if ($ok and !$argarray['debug'])
             foreach (array('',".$gif",'.map','.dot') as $ext) {
-		@unlink($tempfiles.$ext);
+                @unlink($tempfiles.$ext);
             }
 
         if ($ok)

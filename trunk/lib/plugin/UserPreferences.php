@@ -24,10 +24,10 @@ rcs_id('$Id$');
 /**
  * Plugin to allow any user to adjust his own preferences.
  * This must be used in the page "UserPreferences".
- * Prefs are stored in metadata in the current session, 
+ * Prefs are stored in metadata in the current session,
  *  within the user's home page or in a database.
  *
- * WikiTheme extension: WikiThemes are able to extend the predefined list 
+ * WikiTheme extension: WikiThemes are able to extend the predefined list
  * of preferences.
  */
 class WikiPlugin_UserPreferences
@@ -52,8 +52,8 @@ extends WikiPlugin
         global $request;
         $pagename = $request->getArg('pagename');
         $user = $request->getUser();
-        if ( isset($user->_prefs) and 
-             isset($user->_prefs->_prefs) and 
+        if ( isset($user->_prefs) and
+             isset($user->_prefs->_prefs) and
              isset($user->_prefs->_method) ) {
             $pref =& $user->_prefs;
         } else {
@@ -78,8 +78,8 @@ extends WikiPlugin
                                  _("Error: You are not logged in, cannot display UserPreferences."));
             }
         }
-        if ((!$request->isActionPage($request->getArg('pagename')) 
-             and (!isset($user->_prefs->_method) 
+        if ((!$request->isActionPage($request->getArg('pagename'))
+             and (!isset($user->_prefs->_method)
                   or !in_array($user->_prefs->_method, array('ADODB','SQL','PDO'))))
             or (in_array($request->getArg('action'), array('zip','ziphtml','dumphtml')))
             or (isa($user,'_ForbiddenUser')))
@@ -89,7 +89,7 @@ extends WikiPlugin
 //            foreach ($no_args as $key => $value) {
 //                $no_args[$value] = false;
 //            }
-            $no_args['errmsg'] = HTML::div(array('class' => 'errors'), 
+            $no_args['errmsg'] = HTML::div(array('class' => 'errors'),
                                            _("Error: The user HomePage must be a valid WikiWord. Sorry, UserPreferences cannot be saved."));
             $no_args['isForm'] = false;
             return Template('userprefs', $no_args);
@@ -101,9 +101,9 @@ extends WikiPlugin
             $pref = &$request->_prefs;
             $args['isForm'] = true;
             //trigger_error("DEBUG: reading prefs from getPreferences".print_r($pref));
- 
+
             if ($request->isPost()) {
-            	$errmsg = '';
+                    $errmsg = '';
                 $delete = $request->getArg('delete');
                 if ($delete and $request->getArg('verify')) {
                     // deleting prefs, verified
@@ -161,12 +161,12 @@ extends WikiPlugin
                             $errmsg .= " " ._("No changes.");
                         } else {
                             $request->_setUser($user);
-                            $pref = $user->_prefs;	
+                            $pref = $user->_prefs;
                             if ($num == 1) {
                                 $errmsg .= _("One UserPreferences field successfully updated.");
-                            } else { 
+                            } else {
                             $errmsg .= sprintf(_("%d UserPreferences fields successfully updated."), $num);
-                        }  
+                        }
                     }
                     }
                     $args['errmsg'] = HTML::div(array('class' => 'feedback'), HTML::p($errmsg));

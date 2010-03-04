@@ -87,7 +87,7 @@ extends WikiPlugin
             return $this->disabled("(action != 'browse')");
         if (! $request->isGetOrHead())
             return $this->disabled("(method != 'GET')");
-        
+
         if (!$src and $page) {
             if ($page == $request->get('pagename')) {
                 return $this->error(sprintf(_("recursive inclusion of page %s"),
@@ -129,12 +129,12 @@ extends WikiPlugin
                                    'scrolling' => (string)$scrolling,
                                    'noresize' => (bool)$noresize,
                                    ));
-        
+
         if ($marginwidth)
             $frame->setArg('marginwidth', $marginwidth);
         if ($marginheight)
             $frame->setArg('marginheight', $marginheight);
-        
+
         $tokens = array('CONTENT_FRAME' => $frame,
                         'ROWS' => $rows,
                         'COLS' => $cols,

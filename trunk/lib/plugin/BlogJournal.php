@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright (C) 2005 $ThePhpWikiProgrammingTeam
- * 
+ *
  * This file is part of PhpWiki.
  *
  * PhpWiki is free software; you can redistribute it and/or modify
@@ -23,10 +23,10 @@ rcs_id('$Id$');
 require_once('lib/plugin/WikiBlog.php');
 
 /**
- * BlogJournal - Include the latest blog entries for the current users blog if signed, 
+ * BlogJournal - Include the latest blog entries for the current users blog if signed,
  *               or the ADMIN_USER's Blog if not.
  * UnfoldSubpages for blogs.
- * Rui called this plugin "JournalLast", but this was written completely independent, 
+ * Rui called this plugin "JournalLast", but this was written completely independent,
  * without having seen the src.
  *
  * @author: Reini Urban
@@ -73,9 +73,9 @@ extends WikiPlugin_WikiBlog
         }
         if (!$args['user'] or $args['user'] == ADMIN_USER) {
             if (BLOG_DEFAULT_EMPTY_PREFIX) {
-                $args['user'] = ''; 	    // "Blogs/day" pages 
+                $args['user'] = '';             // "Blogs/day" pages
             } else {
-                $args['user'] = ADMIN_USER; // "Admin/Blogs/day" pages 
+                $args['user'] = ADMIN_USER; // "Admin/Blogs/day" pages
             }
         }
         $parent = (empty($args['user']) ? '' : $args['user'] . SUBPAGE_SEPARATOR);
@@ -96,8 +96,8 @@ extends WikiPlugin_WikiBlog
         }
         if ($args['user'] == $user->UserName() or $args['user'] == '')
             $html->pushContent(Button(array('action'=>'WikiBlog',
-					    'mode'=>'add'), 
-				      _("New entry"), $base));
+                                            'mode'=>'add'),
+                                      _("New entry"), $base));
         if (!$i)
             return HTML(HTML::h3(_("No Blog Entries")), $html);
         if (!$args['noheader'])
