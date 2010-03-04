@@ -7,7 +7,7 @@ rcs_id('$Id$');
 class _EMailConfirmPassUser
 extends _PassUser
 /**
- * Unconfirmed users have ANON access, 
+ * Unconfirmed users have ANON access,
  * confirmed users are equal to passusers WIKIAUTH_USER.
  *
  * Users give their email at registration, phpwiki sends a link per email,
@@ -16,7 +16,7 @@ extends _PassUser
  * Preferences are handled in _PassUser
  */
 {
-    // This can only be called from _PassUser, because the parent class 
+    // This can only be called from _PassUser, because the parent class
     // sets the pref methods, before this class is initialized.
     function _EMailConfirmPassUser($UserName='', $prefs=false, $file='') {
         if (!$this->_prefs and isa($this, "_EMailPassUser")) {

@@ -16,22 +16,22 @@ extends _LDAPPassUser
 {
 
     function checkPass($submitted_password) {
-	return parent::checkPass($submitted_password);
+        return parent::checkPass($submitted_password);
     }
 
     function UserName() {
         if (!empty($this->_userid)) {
-	    $this->_userid = trim(strtoupper($this->_userid));
-	    if (!empty($this->_HomePagehandle) and is_object($this->_HomePagehandle))
-	        $this->_HomePagehandle->_pagename = $this->_userid;
+            $this->_userid = trim(strtoupper($this->_userid));
+            if (!empty($this->_HomePagehandle) and is_object($this->_HomePagehandle))
+                $this->_HomePagehandle->_pagename = $this->_userid;
             return strtoupper($this->_userid);
-	}
+        }
     }
 
     function userExists() {
-	// lowercase check and uppercase visibility 
-	$this->_userid = trim(strtoupper($this->_userid));
-	return parent::userExists();
+        // lowercase check and uppercase visibility
+        $this->_userid = trim(strtoupper($this->_userid));
+        return parent::userExists();
     }
 }
 

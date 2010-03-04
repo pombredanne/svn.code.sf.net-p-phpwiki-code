@@ -31,14 +31,14 @@ extends _DbPassUser
             return false;
         }
         $this->_userid = $UserName;
-        // make use of session data. generally we only initialize this every time, 
+        // make use of session data. generally we only initialize this every time,
         // but do auth checks only once
         $this->_auth_crypt_method = $GLOBALS['request']->_dbi->getAuthParam('auth_crypt_method');
         return $this;
     }
 
     function getPreferences() {
-        // override the generic slow method here for efficiency and not to 
+        // override the generic slow method here for efficiency and not to
         // clutter the homepage metadata with prefs.
         _AnonUser::getPreferences();
         $this->getAuthDbh();
@@ -47,7 +47,7 @@ extends _DbPassUser
             $db_result = $dbh->query(sprintf($this->_prefs->_select, $dbh->quote($this->_userid)));
             // patched by frederik@pandora.be
             $prefs = $db_result->fetch(PDO_FETCH_BOTH);
-            $prefs_blob = @$prefs["prefs"]; 
+            $prefs_blob = @$prefs["prefs"];
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
                 $updated = $this->_prefs->updatePrefs($restored_from_db);
                 //$this->_prefs = new UserPreferences($restored_from_db);
@@ -116,7 +116,7 @@ extends _DbPassUser
             }
         }
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
-        if ( !$dbi->getAuthParam('auth_user_exists') 
+        if ( !$dbi->getAuthParam('auth_user_exists')
              and $this->_auth_crypt_method == 'crypt'
              and $this->_authselect)
         {
@@ -142,8 +142,8 @@ extends _DbPassUser
                 return true;
         }
         // User does not exist yet.
-        // Maybe the user is allowed to create himself. Generally not wanted in 
-        // external databases, but maybe wanted for the wiki database, for performance 
+        // Maybe the user is allowed to create himself. Generally not wanted in
+        // external databases, but maybe wanted for the wiki database, for performance
         // reasons
         if (empty($this->_authcreate) and $dbi->getAuthParam('auth_create')) {
             try {
@@ -154,9 +154,9 @@ extends _DbPassUser
                 return false;
             }
         }
-        if (!empty($this->_authcreate) and 
+        if (!empty($this->_authcreate) and
             isset($GLOBALS['HTTP_POST_VARS']['auth']) and
-            isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) 
+            isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd']))
         {
             $passwd = $GLOBALS['HTTP_POST_VARS']['auth']['passwd'];
             try {
@@ -173,7 +173,7 @@ extends _DbPassUser
         }
         return $this->_tryNextUser();
     }
- 
+
     function checkPass($submitted_password) {
         //global $DBAuthParams;
         $this->getAuthDbh();

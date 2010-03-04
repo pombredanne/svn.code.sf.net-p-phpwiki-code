@@ -28,14 +28,14 @@ extends _DbPassUser
             return false;
         }
         $this->_userid = $UserName;
-        // make use of session data. generally we only initialize this every time, 
+        // make use of session data. generally we only initialize this every time,
         // but do auth checks only once
         $this->_auth_crypt_method = $GLOBALS['request']->_dbi->getAuthParam('auth_crypt_method');
         return $this;
     }
 
     function getPreferences() {
-        // override the generic slow method here for efficiency and not to 
+        // override the generic slow method here for efficiency and not to
         // clutter the homepage metadata with prefs.
         _AnonUser::getPreferences();
         $this->getAuthDbh();
@@ -44,7 +44,7 @@ extends _DbPassUser
             $db_result = $dbh->query(sprintf($this->_prefs->_select, $dbh->quote($this->_userid)));
             // patched by frederik@pandora.be
             $prefs = $db_result->fetchRow();
-            $prefs_blob = @$prefs["prefs"]; 
+            $prefs_blob = @$prefs["prefs"];
             if ($restored_from_db = $this->_prefs->retrieve($prefs_blob)) {
                 $updated = $this->_prefs->updatePrefs($restored_from_db);
                 //$this->_prefs = new UserPreferences($restored_from_db);
@@ -74,25 +74,25 @@ extends _DbPassUser
             $packed = $this->_prefs->store();
             if (!$id_only and isset($this->_prefs->_update)) {
                 $dbh = &$this->_auth_dbi;
-		// check if the user already exists (not needed with mysql REPLACE)
-		$db_result = $dbh->query(sprintf($this->_prefs->_select, 
-						 $dbh->quote($this->_userid)));
-		$prefs = $db_result->fetchRow();
-		$prefs_blob = @$prefs["prefs"]; 
-		// If there are prefs for the user, update them.
-		if($prefs_blob != "" ){
-		    $dbh->simpleQuery(sprintf($this->_prefs->_update,
-					      $dbh->quote($packed),
-					      $dbh->quote($this->_userid)));
-		} else {
-		    // Otherwise, insert a record for them and set it to the defaults.
-		    // johst@deakin.edu.au
-		    $dbi = $GLOBALS['request']->getDbh();
-		    $this->_prefs->_insert = $this->prepare($dbi->getAuthParam('pref_insert'),
-							    array("pref_blob", "userid"));
-		    $dbh->simpleQuery(sprintf($this->_prefs->_insert, 
-		                              $dbh->quote($packed), $dbh->quote($this->_userid)));
-		}
+                // check if the user already exists (not needed with mysql REPLACE)
+                $db_result = $dbh->query(sprintf($this->_prefs->_select,
+                                                 $dbh->quote($this->_userid)));
+                $prefs = $db_result->fetchRow();
+                $prefs_blob = @$prefs["prefs"];
+                // If there are prefs for the user, update them.
+                if($prefs_blob != "" ){
+                    $dbh->simpleQuery(sprintf($this->_prefs->_update,
+                                              $dbh->quote($packed),
+                                              $dbh->quote($this->_userid)));
+                } else {
+                    // Otherwise, insert a record for them and set it to the defaults.
+                    // johst@deakin.edu.au
+                    $dbi = $GLOBALS['request']->getDbh();
+                    $this->_prefs->_insert = $this->prepare($dbi->getAuthParam('pref_insert'),
+                                                            array("pref_blob", "userid"));
+                    $dbh->simpleQuery(sprintf($this->_prefs->_insert,
+                                              $dbh->quote($packed), $dbh->quote($this->_userid)));
+                }
                 //delete pageprefs:
                 if ($this->_HomePagehandle and $this->_HomePagehandle->get('pref'))
                     $this->_HomePagehandle->set('pref', '');
@@ -120,13 +120,13 @@ extends _DbPassUser
         $dbi =& $GLOBALS['request']->_dbi;
         // Prepare the configured auth statements
         if ($dbi->getAuthParam('auth_check') and empty($this->_authselect)) {
-            $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'), 
+            $this->_authselect = $this->prepare($dbi->getAuthParam('auth_check'),
                                                 array("password", "userid"));
         }
         //NOTE: for auth_crypt_method='crypt' no special auth_user_exists is needed
-        if (!$dbi->getAuthParam('auth_user_exists') 
-            and $this->_auth_crypt_method == 'crypt' 
-            and $this->_authselect) 
+        if (!$dbi->getAuthParam('auth_user_exists')
+            and $this->_auth_crypt_method == 'crypt'
+            and $this->_authselect)
         {
             $rs = $dbh->query(sprintf($this->_authselect, $dbh->quote($this->_userid)));
             if ($rs->numRows())
@@ -142,16 +142,16 @@ extends _DbPassUser
                 return true;
         }
         // User does not exist yet.
-        // Maybe the user is allowed to create himself. Generally not wanted in 
-        // external databases, but maybe wanted for the wiki database, for performance 
+        // Maybe the user is allowed to create himself. Generally not wanted in
+        // external databases, but maybe wanted for the wiki database, for performance
         // reasons
         if (empty($this->_authcreate) and $dbi->getAuthParam('auth_create')) {
             $this->_authcreate = $this->prepare($dbi->getAuthParam('auth_create'),
                                                 array("password", "userid"));
         }
-        if (!empty($this->_authcreate) and 
+        if (!empty($this->_authcreate) and
             isset($GLOBALS['HTTP_POST_VARS']['auth']) and
-            isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd'])) 
+            isset($GLOBALS['HTTP_POST_VARS']['auth']['passwd']))
         {
             $passwd = $GLOBALS['HTTP_POST_VARS']['auth']['passwd'];
             $dbh->simpleQuery(sprintf($this->_authcreate,
@@ -161,7 +161,7 @@ extends _DbPassUser
         }
         return $this->_tryNextUser();
     }
- 
+
     function checkPass($submitted_password) {
         //global $DBAuthParams;
         $this->getAuthDbh();

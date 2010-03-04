@@ -4,9 +4,9 @@ rcs_id('$Id$');
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
 
-/** 
+/**
  * Support reuse of existing user session from another application.
- * You have to define which session variable holds the userid, and 
+ * You have to define which session variable holds the userid, and
  * at what level is that user then. 1: BogoUser, 2: PassUser
  *   define('AUTH_SESS_USER','userid');
  *   define('AUTH_SESS_LEVEL',2);

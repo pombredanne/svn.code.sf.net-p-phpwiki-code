@@ -13,7 +13,7 @@ extends _PassUser
 {
     var $_authmethod = 'PersonalPage';
 
-    /* Very loose checking, since we properly quote the PageName. 
+    /* Very loose checking, since we properly quote the PageName.
        Just trim spaces, ... See lib/stdlib.php
     */
     function isValidName ($userid = false) {
@@ -27,14 +27,14 @@ extends _PassUser
     }
 
     /** A PersonalPagePassUser requires PASSWORD_LENGTH_MINIMUM.
-     *  BUT if the user already has a homepage with an empty password 
+     *  BUT if the user already has a homepage with an empty password
      *  stored, allow login but warn him to change it.
      */
     function checkPass($submitted_password) {
         if ($this->userExists()) {
             $stored_password = $this->_prefs->get('passwd');
             if (empty($stored_password)) {
-            	if (PASSWORD_LENGTH_MINIMUM > 0) {
+                    if (PASSWORD_LENGTH_MINIMUM > 0) {
                   trigger_error(sprintf(
                     _("PersonalPage login method:")."\n".
                     _("You stored an empty password in your '%s' page.")."\n".
@@ -42,8 +42,8 @@ extends _PassUser
                     _("Please set a password in UserPreferences."),
                                         $this->_userid), E_USER_WARNING);
                   $this->_level = WIKIAUTH_BOGO;
-            	} else {
-            	  if (!empty($submitted_password))
+                    } else {
+                      if (!empty($submitted_password))
                     trigger_error(sprintf(
                       _("PersonalPage login method:")."\n".
                       _("You stored an empty password in your '%s' page.")."\n".
@@ -51,7 +51,7 @@ extends _PassUser
                       _("Please set a password in UserPreferences."),
                                         $this->_userid), E_USER_WARNING);
                   $this->_level = WIKIAUTH_USER;
-            	}
+                    }
                 return $this->_level;
             }
             if ($this->_checkPass($submitted_password, $stored_password))

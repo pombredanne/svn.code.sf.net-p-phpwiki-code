@@ -4,30 +4,30 @@ rcs_id('$Id$');
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */
 
-/** Call the gforge functions to get the username 
- *  
+/** Call the gforge functions to get the username
+ *
  */
 class _GForgePassUser extends _PassUser {
 
     var $_is_external = 0;
-	
+
     function _GForgePassUser($UserName='',$prefs=false) {
-        if ($prefs) $this->_prefs = $prefs;        
+        if ($prefs) $this->_prefs = $prefs;
         if (!isset($this->_prefs->_method))
            _PassUser::_PassUser($UserName);
         if ($UserName) $this->_userid = $UserName;
         $this->_authmethod = 'GForge';
-        
-        // Is this double check really needed? 
+
+        // Is this double check really needed?
         // It is not expensive so we keep it for now.
         if ($this->userExists())
             return $this;
-        else 
+        else
             return $GLOBALS['ForbiddenUser'];
     }
 
     function userExists() {
-    	global $group_id;
+            global $group_id;
 
         // Mapping (phpWiki vs GForge) performed is:
         //     ANON  for non logged or non member
@@ -37,7 +37,7 @@ class _GForgePassUser extends _PassUser {
 
             // Get project object (if error => ANON)
             $project =& group_get_object($group_id);
-			
+
             if (!$project || !is_object($project)) {
                 $this->_level = WIKIAUTH_ANON;
                 return false;
@@ -56,7 +56,7 @@ class _GForgePassUser extends _PassUser {
                 $member = $perm->isMember();
             }
 
-            if ($member) {			
+            if ($member) {
                 $this->_userid = $user->getRealName();
                 $this->_is_external = $user->getIsExternal();
                 if ($perm->isAdmin()) {
@@ -67,12 +67,12 @@ class _GForgePassUser extends _PassUser {
                 return $this;
             }
         }
-       	$this->_level = WIKIAUTH_ANON;
-       	return false;
+               $this->_level = WIKIAUTH_ANON;
+               return false;
     }
 
     function checkPass($submitted_password) {
-        return $this->userExists() 
+        return $this->userExists()
             ? ($this->isAdmin() ? WIKIAUTH_ADMIN : WIKIAUTH_USER)
             : WIKIAUTH_ANON;
     }

@@ -15,7 +15,7 @@ extends _PassUser
 {
     var $_file, $_may_change;
 
-    // This can only be called from _PassUser, because the parent class 
+    // This can only be called from _PassUser, because the parent class
     // sets the pref methods, before this class is initialized.
     function _FilePassUser($UserName='', $prefs=false, $file='') {
         if (!$this->_prefs and isa($this, "_FilePassUser")) {
@@ -29,7 +29,7 @@ extends _PassUser
         if (empty($file) and defined('AUTH_USER_FILE'))
             $file = AUTH_USER_FILE;
         // same style as in main.php
-        include_once(dirname(__FILE__)."/../pear/File_Passwd.php"); 
+        include_once(dirname(__FILE__)."/../pear/File_Passwd.php");
         // "__PHP_Incomplete_Class"
         if (!empty($file) or empty($this->_file) or !isa($this->_file, "File_Passwd"))
             $this->_file = new File_Passwd($file, false, $file.'.lock');
@@ -37,7 +37,7 @@ extends _PassUser
             return false;
         return $this;
     }
- 
+
     function mayChangePass() {
         return $this->_may_change;
     }
@@ -49,7 +49,7 @@ extends _PassUser
         $this->_authmethod = 'File';
         if (isset($this->_file->users[$this->_userid]))
             return true;
-            
+
         return $this->_tryNextUser();
     }
 
@@ -69,7 +69,7 @@ extends _PassUser
                 $this->_level = WIKIAUTH_ADMIN;
             return $this->_level;
         }
-        
+
         return $this->_tryNextPass($submitted_password);
     }
 
@@ -78,7 +78,7 @@ extends _PassUser
             return false;
         }
         if ($this->_may_change) {
-            $this->_file = new File_Passwd($this->_file->filename, true, 
+            $this->_file = new File_Passwd($this->_file->filename, true,
                                            $this->_file->filename.'.lock');
             $result = $this->_file->modUser($this->_userid, $submitted_password);
             $this->_file->close();

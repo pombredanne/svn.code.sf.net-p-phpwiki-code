@@ -12,7 +12,7 @@ extends _PassUser
  * Preferences are handled in _PassUser
  */
 {
-    // This can only be called from _PassUser, because the parent class 
+    // This can only be called from _PassUser, because the parent class
     // sets the pref methods, before this class is initialized.
     function _OpenIDPassUser($UserName='', $prefs=false, $file='') {
         if (!$this->_prefs and isa($this, "_OpenIDPassUser")) {
