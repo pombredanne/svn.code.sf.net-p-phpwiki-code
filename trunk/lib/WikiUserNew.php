@@ -1,8 +1,8 @@
 <?php //-*-php-*-
 rcs_id('$Id$');
 /* Copyright (C) 2004,2005,2006,2007,2009 $ThePhpWikiProgrammingTeam
- * Copyright (C) 2009 Marc-Etienne Vargenau, Alcatel-Lucent
- * Copyright (C) 2009 Roger Guignard, Alcatel-Lucent
+ * Copyright (C) 2009-2010 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright (C) 2009-2010 Roger Guignard, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  * 
@@ -1756,6 +1756,10 @@ extends _UserPreference
      * For true verification (value = 2), we'd need a mailserver hook.
      */
     function update($value) {
+        // email address is already checked by Gforge
+        if (defined('GFORGE') and GFORGE) {
+            return;
+        }
     	if (!empty($this->_init)) return;
         $verified = $this->getraw('emailVerified');
         // hack!
@@ -1772,6 +1776,17 @@ extends _UserPreference
             }
         }
     }
+
+    function get($name) {
+        // get email address from Gforge
+        if (defined('GFORGE') && GFORGE && session_loggedin()) {
+            $user = session_get_user();
+            return $user->getEmail();
+        } else {
+            parent::get($name);
+        }
+    }
+
 }
 
 /** Check for valid email address
