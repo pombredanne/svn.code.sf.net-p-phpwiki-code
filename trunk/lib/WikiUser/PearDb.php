@@ -51,7 +51,7 @@ extends _DbPassUser
                 return $this->_prefs;
             }
         }
-        if (isset($this->_HomePagehandle)) {
+        if (isset($this->_HomePagehandle) && $this->_HomePagehandle) {
             if ($restored_from_page = $this->_prefs->retrieve
                 ($this->_HomePagehandle->get('pref'))) {
                 $updated = $this->_prefs->updatePrefs($restored_from_page);
@@ -94,11 +94,11 @@ extends _DbPassUser
                                               $dbh->quote($packed), $dbh->quote($this->_userid)));
                 }
                 //delete pageprefs:
-                if ($this->_HomePagehandle and $this->_HomePagehandle->get('pref'))
+                if (isset($this->_HomePagehandle) && $this->_HomePagehandle and $this->_HomePagehandle->get('pref'))
                     $this->_HomePagehandle->set('pref', '');
             } else {
                 //store prefs in homepage, not in cookie
-                if ($this->_HomePagehandle and !$id_only)
+                if (isset($this->_HomePagehandle) && $this->_HomePagehandle and !$id_only)
                     $this->_HomePagehandle->set('pref', $packed);
             }
             return $count; //count($this->_prefs->unpack($packed));
