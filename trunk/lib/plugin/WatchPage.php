@@ -154,7 +154,7 @@ extends WikiPlugin
                 }
                 elseif ($add and $request->getArg('verify')) { // this is not executed so far.
                     // add page to watchlist, verified
-                    $rp = $user->getPreferences();
+                    $rp = clone($user->getPreferences());
                     $rp->set('notifyPages', $this->addpagelist($page, $pagelist));
                     $user->setPreferences($rp);
                     $request->_setUser($user);

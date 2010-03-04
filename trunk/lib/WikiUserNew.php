@@ -1964,6 +1964,14 @@ class UserPreferences
         }
     }
 
+    function __clone() {
+        foreach ($this as $key => $val) {
+            if (is_object($val) || (is_array($val))) {
+                $this->{$key} = unserialize(serialize($val));
+            }
+        }
+    }
+
     function _getPref($name) {
     	if ($name == 'emailVerified')
     	    $name = 'email';
