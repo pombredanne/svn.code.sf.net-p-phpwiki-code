@@ -44,11 +44,12 @@ extends WikiPlugin
 
     // Establish default values for each of this plugin's arguments.
     function getDefaultArguments() {
-        return array('feed'                 => "",
-                     'description'         => "",
-                     'url'                 => "", //"http://phpwiki.org/RecentChanges?format=rss",
-                     'maxitem'                 => 0,
-                     'debug'                 => false,
+        return array('feed'        => "",
+                     'description' => "",
+                     'url'         => "", //"http://phpwiki.org/RecentChanges?format=rss",
+                     'maxitem'     => 0,
+                     'titleonly'   => false,
+                     'debug'       => false,
                      );
    }
 
@@ -103,7 +104,7 @@ extends WikiPlugin
                 $cell_authordate = HTML::div(array('class'=> 'authordate'),
                                              $cell_author, HTML::raw(" - "), $cell_pubDate);
                 $cell->pushContent($cell_authordate);
-                if (!empty($item['description']))
+                if ((!$titleonly) && (!empty($item['description'])))
                     $cell->pushContent(HTML::div(array('class'=> 'itemdesc'),
                                                  HTML::raw($item['description'])));
                 $html->pushContent($cell);
