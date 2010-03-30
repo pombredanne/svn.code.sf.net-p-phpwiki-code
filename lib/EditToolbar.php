@@ -1,6 +1,6 @@
 <?php
 rcs_id('$Id$');
-/* Copyright 2004-2009 $ThePhpWikiProgrammingTeam
+/* Copyright 2004-2010 $ThePhpWikiProgrammingTeam
  * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
@@ -306,9 +306,9 @@ msg_repl_close     = '"._("Close")."'
                 if (defined('GFORGE') and GFORGE) {
                     $categories[] = "['$page', '%0A----%0A%5B%5B".$page."%5D%5D']";
 		} else if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($page))) {
-		    $categories[] = "['$page', '%0A----%0A%5B".$page."%5D']";
+		    $categories[] = "['$page', '%0A%5B".$page."%5D']";
 		} else {
-		    $categories[] = "['$page', '%0A----%0A".$page."']";
+		    $categories[] = "['$page', '%0A".$page."']";
                 }
             }
             if (!$categories) return '';
