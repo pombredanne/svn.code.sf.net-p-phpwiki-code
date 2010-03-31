@@ -455,8 +455,8 @@ function LinkImage($url, $alt = "") {
         }
         // These attributes take a number (pixels): border, hspace, vspace
         elseif ((($attr == "border") || ($attr == "hspace") || ($attr == "vspace"))
-           && (is_int($value))) {
-            $link->setAttr($attr, $value);
+           && (is_numeric($value))) {
+            $link->setAttr($attr, (int)$value);
         }
         // These attributes take a number (pixels) or a percentage: height, width
         elseif ((($attr == "height") || ($attr == "width"))
