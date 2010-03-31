@@ -254,14 +254,12 @@ div.toc p { margin: 0; }
 /**
  * headings
  */
-div.toc p.toctitle, h1, h2, h3, h4, h5, h6 { 
+div.toc p.toctitle, h2, h3, h4, h5, h6 { 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
         padding-top: .5em;
         padding-bottom: .17em;
         border-bottom: 1px solid #aaaaaa;
 }
-
-h1 { margin: 0; }
 
 h1, h1 .backlinks, h2, .wikitext h2 a, h3, .wikitext h3 a, h4, .wikitext h4 a, h5, h6 {
     text-decoration: none;

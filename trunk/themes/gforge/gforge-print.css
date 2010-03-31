@@ -63,7 +63,7 @@ a.named-interwiki img { display: none; }
 a.namedurl img { display: none; }
 
 /* Do not print "none" sorting icon */
-.sortarrow img[src="/images/sort_none.gif"] { display: none; }
+img[src="/wiki/themes/gforge/buttons/no_order.png"] { display: none; }
 
 /**
  * Table of content
@@ -79,9 +79,11 @@ div.toc p.toctitle, h1, h2, h3, h4, h5, h6 {
     border-bottom: 1px solid black;
 }
 
+/*
 div.toclist a::after {
     content: leader('.') target-counter(attr(href), page);
 }
+*/
 
 table.boxed, table.bordered, table.bordered th, table.bordered td {
     border-color: black;
