@@ -12,7 +12,7 @@ function rcs_id ($id) {
 rcs_id('$Id$');
 
 // see lib/stdlib.php: phpwiki_version()
-define('PHPWIKI_VERSION', '1.3.14-20090604');
+define('PHPWIKI_VERSION', '1.4.0RC-20100431');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
