@@ -1,4 +1,11 @@
 <?php
+// Avoid direct call to this file.
+// PHPWIKI_VERSION is defined in lib/prepend.php
+if (!defined('PHPWIKI_VERSION')) {
+    header("Location: /");
+    exit;
+}
+
 rcs_id('$Id$');
 /**
  * The wikilens theme is just a normal WikiTheme (can be based on any, here based on default),
