@@ -2,7 +2,7 @@
 rcs_id('$Id$');
 /*
  * Copyright 2004,2005 $ThePhpWikiProgrammingTeam
- * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -275,10 +275,12 @@ extends WikiPlugin
                 if ($level < 1 or $level > 5) continue;
                 $phpwikiclassiclevel = 4 -$level;
                 $wikicreolelevel = $level + 1;
-                if ($phpwikiclassiclevel < 1 or $phpwikiclassiclevel > 3) continue;
-                if ((preg_match('/^\s*(!{'.$phpwikiclassiclevel.','.$phpwikiclassiclevel.'})([^!].*)$/', $content[$i], $match))
-                 or (preg_match('/^\s*(={'.$wikicreolelevel.','.$wikicreolelevel.'})([^=].*)$/', $content[$i], $match)) )
-                {
+                $trim = trim($content[$i]);
+
+                if ((((strpos($trim, '=') === 0))
+                      && (preg_match('/^\s*(={'.$wikicreolelevel.','.$wikicreolelevel.'})([^=].*)$/', $content[$i], $match)))
+                   or (((strpos($trim, '!') === 0))
+                      && ((preg_match('/^\s*(!{'.$phpwikiclassiclevel.','.$phpwikiclassiclevel.'})([^!].*)$/', $content[$i], $match))))) {
                     $this->_tocCounter($tocCounter, $level);
                     if (!strstr($content[$i],'#[')) {
                         $s = trim($match[2]);
