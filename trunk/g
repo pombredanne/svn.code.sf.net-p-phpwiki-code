@@ -1,7 +1,7 @@
 <?php // -*-php-*- $Id$
 
 /*
- * Copyright (C) 2008-2009 Alcatel-Lucent
+ * Copyright (C) 2008-2010 Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -270,7 +270,7 @@ if (!$group_id || !$project) {
     // Override the default configuration for VARIABLES after index.php:
     // E.g. Use another DB:
     $DBParams['dbtype'] = 'SQL';
-    $DBParams['dsn']    = 'pgsql://' . $sys_dbuser . ':' .
+    $DBParams['dsn']    = 'ffpgsql://' . $sys_dbuser . ':' .
         $sys_dbpasswd . '@' . $sys_dbhost .'/' . $sys_dbname;
 
     $DBParams['prefix'] = "plugin_wiki_";
