@@ -114,7 +114,8 @@ class WikiRequest extends Request {
                 // revive db handle, because these don't survive sessions
                 if (isset($this->_user) and 
                      ( ! isa($this->_user, WikiUserClassname())
-                       or (strtolower(get_class($this->_user)) == '_passuser')))
+                       or (strtolower(get_class($this->_user)) == '_passuser')
+                       or (strtolower(get_class($this->_user)) == '_gforgepassuser')))
                 {
                     $this->_user = WikiUser($userid, $this->_user->_prefs);
                 }
