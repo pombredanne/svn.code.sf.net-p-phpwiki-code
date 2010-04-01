@@ -47,7 +47,7 @@ ini_set("memory_limit", "64M");
 // Disable compression, seems needed to get all the messages.
 $no_gz_buffer=true;
 
-require_once('../env.inc.php');
+require_once('../../env.inc.php');
 require_once $gfwww.'include/pre.php';
 require_once $gfplugins.'wiki/include/wikiconfig.class.php';
 
