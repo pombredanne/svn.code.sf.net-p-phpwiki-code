@@ -362,17 +362,17 @@ IHDR         Ä‰   IDATx^À           Â0ízçX        ÿ7-`    IEND®B`‚'
             $img_attr['src'] = $nk[$i%2];
             if ($this->rating) {
                 $img_attr['src'] = $ok[$i%2];
-                $img_attr['onMouseOver'] = "displayRating('$reImgId','$reImgPrefix',$j,0,1)";
-                $img_attr['onMouseOut']  = "displayRating('$reImgId','$reImgPrefix',$this->rating,0,1)";
+                $img_attr['onmouseover'] = "displayRating('$reImgId','$reImgPrefix',$j,0,1)";
+                $img_attr['onmouseout']  = "displayRating('$reImgId','$reImgPrefix',$this->rating,0,1)";
             }
             else if (!$this->rating and $this->pred) {
                 $img_attr['src'] = $rk[$i%2];
-                $img_attr['onMouseOver'] = "displayRating('$reImgId','$reImgPrefix',$j,1,1)";
-                $img_attr['onMouseOut']  = "displayRating('$reImgId','$reImgPrefix',$this->pred,1,1)";
+                $img_attr['onmouseover'] = "displayRating('$reImgId','$reImgPrefix',$j,1,1)";
+                $img_attr['onmouseout']  = "displayRating('$reImgId','$reImgPrefix',$this->pred,1,1)";
             }
             else {
-                $img_attr['onMouseOver'] = "displayRating('$reImgId','$reImgPrefix',$j,0,1)";
-                $img_attr['onMouseOut']  = "displayRating('$reImgId','$reImgPrefix',0,0,1)";
+                $img_attr['onmouseover'] = "displayRating('$reImgId','$reImgPrefix',$j,0,1)";
+                $img_attr['onmouseout']  = "displayRating('$reImgId','$reImgPrefix',0,0,1)";
             }
             //$imgName = 'RateIt'.$reImgId.$i;
             $img_attr['name'] = $imgId . $i;
