@@ -17,7 +17,7 @@ bgcolor:
 <script type="text/javascript"><!--
 for (var n = 0; n < backgroundcolor.length; n++)
 { document.write(
-' <a href="#" onMouseOver="javascript:changebg(' + n + ')">' + backgroundcolor[n] + '</a>'
+' <a href="#" onmouseover="javascript:changebg(' + n + ')">' + backgroundcolor[n] + '</a>'
 ); }
 //--></script>
 <?
@@ -57,7 +57,7 @@ bgcolor:
 <script type="text/javascript"><!--
 for (var n = 0; n < backgroundcolor.length; n++)
 { document.write(
-' <a href="#" onMouseOver="javascript:changebg(' + n + ')">' + backgroundcolor[n] + '</a>'
+' <a href="#" onmouseover="javascript:changebg(' + n + ')">' + backgroundcolor[n] + '</a>'
 ); }
 //--></script>
 <hr>
