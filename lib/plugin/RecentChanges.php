@@ -228,7 +228,14 @@ extends _RecentChanges_Formatter
             return '';
         return  HTML::span( array('class' => 'wiki-summary'),
                             "(",
-                            TransformLinks($summary, $rev->get('markup'), $rev->getPageName()),
+                            // TransformLinks($summary, $rev->get('markup'), $rev->getPageName()),
+                            // We do parse the summary:
+                            // 1) if the summary contains {{foo}}, the template must no be 
+                            //    expanded
+                            // 2) if the summary contains camel case, and DISABLE_MARKUP_WIKIWORD
+                            //    is true, the camel case must not be linked.
+                            // Side-effect: brackets are not linked. TBD.
+                            $summary,
                             ")");
     }
 
