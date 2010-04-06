@@ -177,10 +177,8 @@ var msg_rating_deleted = '"._("Rating deleted!")."';
             readfile($actionImg);
         } else {
             header('Content-type: image/png');
-            echo '‰PNG
-
-
-IHDR         Ä‰   IDATx^À           Â0ízçX        ÿ7-`    IEND®B`‚';
+            echo base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAAA1BMVEX///'
+			         .'+nxBvIAAAAAXRSTlMAQObYZgAAABNJREFUeF4NwAEBAAAAgJD+r5YGAAQAAXHhfPAAAAAASUVORK5CYII=');
         }
         exit;
     }
