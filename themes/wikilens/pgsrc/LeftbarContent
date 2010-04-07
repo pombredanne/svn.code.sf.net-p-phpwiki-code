@@ -1,0 +1,10 @@
+<strong>Categories:</strong>
+
+<?plugin BackLinks page="CategoryCategory" noheader="true" info="" exclude="InterWikiMap,Category*Template" ?>
+
+<?plugin Comment
+<strong>Lists this is on:</strong>
+<~?~plugin CategoryFieldSearch category="List" field="items" value="[pagename]" search_style="list" header=" " ~?~>
+
+<~?~plugin AddToListForm ~?~>
+?>
