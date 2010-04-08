@@ -49,7 +49,7 @@ $no_gz_buffer=true;
 
 require_once('../../env.inc.php');
 require_once $gfwww.'include/pre.php';
-require_once $gfplugins.'wiki/include/wikiconfig.class.php';
+require_once $gfplugins.'wiki/common/wikiconfig.class.php';
 
 if (!$group_id || !$project) {
     exit_error("Invalid Project", "Invalid Project");
