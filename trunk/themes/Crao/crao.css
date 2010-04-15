@@ -655,7 +655,7 @@ caption {
 .pagelist tr.oddrow  { background-color: white; }
 .pagelist td { padding:3px; }
 th.gridbutton {
-  background-color: threedlightshadow;
+  background-color: ThreeDLightShadow;
   color: black;
   font-size: small;
   font-weight: normal;
@@ -669,7 +669,7 @@ th.gridbutton {
   padding: 5px 0px 5px 0px;
   border-width: 1px;
   border-style: solid;
-  border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
+  border-color: ThreeDHighlight ThreeDDarkShadow ThreeDDarkShadow ThreeDHighlight;
 }
 input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   text-decoration: none;
@@ -677,7 +677,7 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   font-weight: normal;
   /*font-style: menu;*/
   font-family: Tahoma, Arial, Helvetica, sans-serif;
-  background-color: threedlightshadow;
+  background-color: ThreeDLightShadow;
   color: black;
 }
 
