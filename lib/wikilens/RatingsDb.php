@@ -517,7 +517,7 @@ class RatingsDb extends WikiDB {
                . " FROM $rating_tbl r, $page_tbl p "
                . $where
                . $orderbyStr;
-        $result = $dbi->query($query);
+        $result = $dbi->_dbh->query($query);
         return $result;
     }
 

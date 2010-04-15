@@ -10,6 +10,16 @@ var folderArrowPath = data_path+'/themes/default/images';
 var use_path_info = true;
 */
 
+function escapeQuotes(text) {
+  var re=new RegExp("'","g");
+  text=text.replace(re,"\\'");
+  re=new RegExp('"',"g");
+  text=text.replace(re,'&quot;');
+  re=new RegExp("\\n","g");
+  text=text.replace(re,"\\n");
+  return text;
+}
+
 function WikiURL(page) {
     if (typeof page == "undefined")
         page = pagename;

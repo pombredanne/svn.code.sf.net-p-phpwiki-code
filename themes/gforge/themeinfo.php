@@ -9,8 +9,9 @@ if (!defined('PHPWIKI_VERSION')) {
 rcs_id('$Id$');
 
 require_once('lib/WikiTheme.php');
+require_once('themes/wikilens/themeinfo.php');
 
-class WikiTheme_gforge extends WikiTheme {
+class WikiTheme_gforge extends WikiTheme_Wikilens {
 
     function header() {
         global $HTML, $group_id, $group_public_name, $request, $project;
@@ -64,6 +65,28 @@ class WikiTheme_gforge extends WikiTheme {
 
     }
 
+    function initGlobals() {
+        global $request;
+		static $already = 0;
+        if (!$already) {
+            $script_url = deduce_script_name();
+            $script_url .= '/'. $GLOBALS['group_name'] ;
+            if ((DEBUG & _DEBUG_REMOTE) and isset($_GET['start_debug']))
+                $script_url .= ("?start_debug=".$_GET['start_debug']);
+            $folderArrowPath = dirname($this->_findData('images/folderArrowLoading.gif'));
+            $pagename = $request->getArg('pagename');
+            $this->addMoreHeaders(JavaScript('', array('src' => $this->_findData("wikilens.js"))));
+            $js = "var data_path = '". javascript_quote_string(DATA_PATH) ."';\n"
+            // Temp remove pagename because of XSS warning
+            //	."var pagename  = '". javascript_quote_string($pagename) ."';\n"
+                ."var script_url= '". javascript_quote_string($script_url) ."';\n"
+                ."var stylepath = data_path+'/".javascript_quote_string($this->_theme)."/';\n"
+                ."var folderArrowPath = '".javascript_quote_string($folderArrowPath)."';\n"
+                ."var use_path_info = " . (USE_PATH_INFO ? "true" : "false") .";\n";
+            $this->addMoreHeaders(JavaScript($js));
+	    $already = 1;
+        }
+    }
     function load() {
 
         $this->initGlobals();
