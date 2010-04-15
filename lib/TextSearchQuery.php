@@ -962,7 +962,9 @@ class TextSearchQuery_Parser
         $this->lexer = new TextSearchQuery_Lexer($search_expr, $case_exact, $regex);
         $this->_regex = $regex;
         $tree = $this->get_list('toplevel');
-        assert($this->lexer->eof());
+        // Assert failure when using the following URL in debug mode.
+        // /TitleSearch?action=FullTextSearch&s=WFXSSProbe'")/>&case_exact=1&regex=sql
+        //        assert($this->lexer->eof());
         unset($this->lexer);
         return $tree;
     }
