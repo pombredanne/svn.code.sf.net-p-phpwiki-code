@@ -283,10 +283,9 @@ caption { font-family: Arial, Helvetica, sans-serif; }
 th.gridbutton {
   background-color: ThreeDLightShadow;
   color: black;
-  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
   font-size: small;
   font-weight: normal;
-  /*font-style: menu;*/
   margin: 5px 0px;
   white-space: nowrap;
   max-height: 24px;
@@ -299,8 +298,7 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   text-decoration: none;
   font-size: small;
   font-weight: normal;
-  /*font-style: menu;*/
-  font-family: Tahoma, sans-serif, Arial, Helvetica;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
   background-color: ThreeDLightShadow;
   color: black;
 }

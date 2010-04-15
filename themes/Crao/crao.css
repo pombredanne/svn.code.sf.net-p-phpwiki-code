@@ -659,7 +659,6 @@ th.gridbutton {
   color: black;
   font-size: small;
   font-weight: normal;
-  /*font-style: menu;*/
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   height: 18px;
   margin: 5px 0px;
@@ -675,7 +674,6 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
   text-decoration: none;
   font-size: small;
   font-weight: normal;
-  /*font-style: menu;*/
   font-family: Tahoma, Arial, Helvetica, sans-serif;
   background-color: ThreeDLightShadow;
   color: black;
