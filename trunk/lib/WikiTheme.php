@@ -1426,7 +1426,8 @@ class WikiTheme {
             $folderArrowPath = dirname($this->_findData('images/folderArrowLoading.gif'));
             $pagename = $request->getArg('pagename');
             $js = "var data_path = '". javascript_quote_string(DATA_PATH) ."';\n"
-                ."var pagename  = '". javascript_quote_string($pagename) ."';\n"
+            // Temp remove pagename because of XSS warning
+            //  ."var pagename  = '". javascript_quote_string($pagename) ."';\n"
                 ."var script_url= '". javascript_quote_string($script_url) ."';\n"
                 ."var stylepath = data_path+'/".javascript_quote_string($this->_theme)."/';\n"
                 ."var folderArrowPath = '".javascript_quote_string($folderArrowPath)."';\n"
