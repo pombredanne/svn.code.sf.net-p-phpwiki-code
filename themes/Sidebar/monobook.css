@@ -996,7 +996,7 @@ button.searchButton {
 	cursor: pointer;
 	width: 18px;
 	height: 18px;
-	border: 1px solid buttonshadow;
+	border: 1px solid ButtonShadow;
 }
 input.searchButton {
 	margin-top: 1px;
