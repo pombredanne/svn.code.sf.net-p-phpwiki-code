@@ -692,7 +692,9 @@ class PageList {
                       * These options may also be given to _generate(List|Table) later
                       * But limit and offset might help the query WikiDB::getAllPages()
                       */
-                     'limit'    => 50,       // number of rows (pagesize)
+                     // Use big value since paging does not work.
+                     // 'limit'    => 50,   // number of rows (pagesize)
+                     'limit'    => 5000,    // number of rows (pagesize)
                      'paging'   => 'auto',  // 'auto'   top + bottom rows if applicable
                      //			    // 'top'    top only if applicable
                      //			    // 'bottom' bottom only if applicable
