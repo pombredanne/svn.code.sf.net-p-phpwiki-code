@@ -32,8 +32,8 @@ td.leftnav {
   padding-top:    0.5ex;
   padding-bottom: 0.5ex;
   margin: 0px;
-  border-right: 1px lavender solid;
-  border-bottom: 1px lavender solid;
+  border-right: 1px #e6e6fa solid; /* lavender */
+  border-bottom: 1px #e6e6fa solid; /* lavender */
 }
 
 #logo img {
