@@ -55,11 +55,12 @@ function getBuddies($fromUser, $dbi, $thePage = ""){
 	    extract($dbh->_table_names);
 	    $query = "SELECT raterpage, COUNT(rateepage) as numrating"
 		. " FROM $rating_tbl r, $page_tbl p "
-		. " WHERE ratingvalue > 0 AND numrating > 5"
+//		. " WHERE ratingvalue > 0 AND numrating > 5"
+		. " WHERE ratingvalue > 0"
 		. " GROUP BY raterpage"
 		. " ORDER BY numrating"
 		. " LIMIT 10";
-	    $result = $dbh->query($query);
+	    $result = $dbh->_dbh->query($query);
 	} else {
 	    // from 10 random raters of this page (non-SQL)
 	    ;

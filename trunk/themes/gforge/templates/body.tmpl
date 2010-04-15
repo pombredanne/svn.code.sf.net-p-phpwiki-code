@@ -15,7 +15,24 @@ if (!$HIDE_TOOLBARS) {
 </div>
 <?php } ?>
 <div id="content">
-<h1><?= $HEADER ?></h1>
+<?php
+if (ENABLE_RATEIT && !empty($user) && $user->isAuthenticated() && $page->exists())
+    $rating = 1;
+else
+    $rating = 0;
+?>
+<!-- Page title -->
+<a name="top" id="contentTop"></a>
+<h1 class="firstHeading<?= $rating ? '-rating' : '' ?>"><?= $HEADER ?></h1>
+<?php if ($rating && $request->getArg('action') == 'browse') { ?>
+<?= Template('ratings') ?>
+<?php } elseif ($rating && $WikiTheme->DUMP_MODE) { ?>
+<div id="rateit-widget-top">
+<?php
+  $loader = new WikiPluginLoader();
+  printXML($loader->expandPI("<"."?plugin RateIt show=text ?".">", $request, $dbi->_markup));
+?></div>
+<?php } ?>
 <br />
 <?= $CONTENT ?>
 </div>
