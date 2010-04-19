@@ -7,7 +7,7 @@ DBADMIN_USER=root
 DBADMIN_PASS=secret
 
 # etags (GNU Emacs 21.4.x)
-ETAGS_21_5=$(shell etags --version|egrep "Ctags 5.[67]")
+ETAGS_21_5=$(shell etags --version|egrep "Ctags 5.[6789]")
 ifeq ("$(ETAGS_21_5)", "")
   ETAGS_STDIN = /usr/bin/etags -
 else
