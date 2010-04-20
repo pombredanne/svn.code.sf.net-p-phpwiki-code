@@ -1,5 +1,5 @@
 <?php rcs_id('$Id$');
-/* Copyright (C) 2002,2004,2005,2006,2008,2009 $ThePhpWikiProgrammingTeam
+/* Copyright (C) 2002,2004,2005,2006,2008,2009,2010 $ThePhpWikiProgrammingTeam
  *
  * This file is part of PhpWiki.
  * 
@@ -223,8 +223,8 @@ class WikiTheme {
             return;
         }
         $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("wikicommon.js"))));
-        if (! defined('GFORGE') or !GFORGE) {
-            // Gforge already loads this
+        if (!DEBUG and (!defined('GFORGE') or !GFORGE)) {
+            // Gforge and non-debug already load this
             $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("sortable.js"))));
         }
         // by pixels
@@ -241,7 +241,7 @@ class WikiTheme {
         // enable ENABLE_AJAX for DynamicIncludePage
         if (ENABLE_ACDROPDOWN or ENABLE_AJAX) {
             $this->initMoAcDropDown();
-            if (ENABLE_AJAX)
+            if (ENABLE_AJAX and DEBUG) // minified all together
                 $this->addMoreHeaders(JavaScript('',array('src' => $this->_findData("ajax.js"))));
         }
     }
@@ -288,7 +288,7 @@ class WikiTheme {
     	    // _findButton only
     	    if (file_exists($file)) {
     	        $path = $file;
-    	    } elseif (defined('DATA_PATH') 
+    	    } elseif (defined('DATA_PATH')
     	              and file_exists(DATA_PATH . "/$file")) {
     	        $path = $file;
     	    } else { // fallback for buttons in parent themes
@@ -297,6 +297,10 @@ class WikiTheme {
     	}
         if (!$path)
             return false;
+        if (!DEBUG) {
+            $min = preg_replace("/\.(css|js)$/", "-min.\\1", $file);
+            if ($min and ($x = $this->_findFile($min, true))) $path = $x;
+        }
 
         if (defined('DATA_PATH'))
             return DATA_PATH . "/$path";
@@ -1199,6 +1203,11 @@ class WikiTheme {
         }
     }
 
+    /**
+     * Add a random header element to head
+     * TODO: first css, then js. Maybe seperate it into addJSHeaders/addCSSHeaders
+     * or use an optional type argument, and seperate it within _MoreHeaders[]
+     */
     //$GLOBALS['request']->_MoreHeaders = array();
     function addMoreHeaders ($element) {
         $GLOBALS['request']->_MoreHeaders[] = $element;
@@ -1220,6 +1229,21 @@ class WikiTheme {
         if (empty($request->_MoreHeaders))
             return '';
         $out = '';
+        if (false and ($file = $this->_findData('delayed.js'))) {
+            $request->_MoreHeaders[] = JavaScript('
+// Add a script element as a child of the body
+function downloadJSAtOnload() {
+var element = document.createElement("script");
+element.src = "' . $file . '";
+document.body.appendChild(element);
+}
+// Check for browser support of event handling capability
+if (window.addEventListener)
+window.addEventListener("load", downloadJSAtOnload, false);
+else if (window.attachEvent)
+window.attachEvent("onload", downloadJSAtOnload);
+else window.onload = downloadJSAtOnload;');
+        }
         //$out = "<!-- More Headers -->\n";
         foreach ($request->_MoreHeaders as $h) {
             if (is_object($h))
@@ -1426,8 +1450,8 @@ class WikiTheme {
             $folderArrowPath = dirname($this->_findData('images/folderArrowLoading.gif'));
             $pagename = $request->getArg('pagename');
             $js = "var data_path = '". javascript_quote_string(DATA_PATH) ."';\n"
-            // Temp remove pagename because of XSS warning
-            //  ."var pagename  = '". javascript_quote_string($pagename) ."';\n"
+                // XSS warning with pagename
+                ."var pagename  = '". javascript_quote_string($pagename) ."';\n"
                 ."var script_url= '". javascript_quote_string($script_url) ."';\n"
                 ."var stylepath = data_path+'/".javascript_quote_string($this->_theme)."/';\n"
                 ."var folderArrowPath = '".javascript_quote_string($folderArrowPath)."';\n"
@@ -1469,6 +1493,11 @@ class WikiTheme {
 	static $already = 0;
         if (!$this->HTML_DUMP_SUFFIX and !$already) {
             $dir = $this->_findData('moacdropdown');
+            if (!DEBUG and ($css = $this->_findFile('moacdropdown/css/dropdown-min.css'))) {
+                $this->addMoreHeaders($this->_CSSlink(0, $css, 'all'));
+            } else {
+                $this->addMoreHeaders(HTML::style(array('type' => 'text/css'), "  @import url( $dir/css/dropdown.css );\n"));
+            }
             // if autocomplete_remote is used: (getobject2 also for calc. the showlist width)
 	    if (DEBUG) {
 		foreach (array("mobrowser.js","modomevent3.js","modomt.js",
@@ -1478,11 +1507,9 @@ class WikiTheme {
 		}
 		$this->addMoreHeaders(JavaScript('', array('src' => "$dir/js/acdropdown.js")));
 	    } else {
-		$this->addMoreHeaders(JavaScript('', array('src' => DATA_PATH . "/themes/default/moacdropdown.js")));
+                // already in wikicommon-min.js
+		; //$this->addMoreHeaders(JavaScript('', array('src' => DATA_PATH . "/themes/default/moacdropdown.js")));
 	    }
-            //$this->addMoreHeaders($this->_CSSlink(0, 
-            //                      $this->_findFile('moacdropdown/css/dropdown.css'), 'all'));
-            $this->addMoreHeaders(HTML::style(array('type' => 'text/css'), "  @import url( $dir/css/dropdown.css );\n"));
 	    /*
 	    // for local xmlrpc requests
 	    $xmlrpc_url = deduce_script_name();
