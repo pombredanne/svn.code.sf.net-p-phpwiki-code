@@ -1,0 +1,20 @@
+# $Id: Makefile 6691 2009-03-23 07:43:49Z rurban $
+#
+# themes/MacOSX/Makefile
+#
+# minify CSS and JS
+#
+# TODO: resolve @import
+
+CSS_SRC = MacOSX.css MacOSX-heavy.css MacOSX-topbottombars.css
+#MAIN    = MacOSX
+#JS_MAIN = MacOSX.js
+JS_REST = 
+
+CSS_FILES = $(patsubst %.css,%-min.css,$(CSS_SRC))
+
+all	: css
+
+include ../Makefile.global
+
+
