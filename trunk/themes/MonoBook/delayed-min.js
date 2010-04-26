@@ -1,0 +1,1 @@
+var rslt=navigator.appVersion.match(/MSIE (\d+\.\d+)/,"");if(rslt!=null){window.attachEvent("onload",hookit)};
