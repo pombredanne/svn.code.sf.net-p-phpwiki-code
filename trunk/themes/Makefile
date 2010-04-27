@@ -7,7 +7,7 @@
 
 .PHONY: all css js
 
-THEMES =AVL default MonoBook wikilens Sidebar SpaceWiki blog MacOSX gforge \
+THEMES = default MonoBook wikilens Sidebar SpaceWiki blog MacOSX gforge \
 	Portland shamino_com Crao Wordpress smaller Hawaiian
 
 # http://developer.yahoo.com/yui/compressor/
