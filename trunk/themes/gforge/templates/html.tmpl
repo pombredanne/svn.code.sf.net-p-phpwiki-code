@@ -10,10 +10,3 @@ rcs_id('$Id$');
 <?= $WikiTheme->getMoreHeaders() ?>
 <?= Template('body') ?>
 <?php $WikiTheme->footer() ?>
-<?php 
-if (defined('DEBUG') and DEBUG) {
-    echo "<!-- phpwiki source: \n";
-    echo $RCS_IDS;
-    echo "-->\n";
-}
-?>
