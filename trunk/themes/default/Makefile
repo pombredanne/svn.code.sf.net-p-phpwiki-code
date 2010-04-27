@@ -6,11 +6,11 @@
 #
 
 CSS_SRC = IEFixes.css    phpwiki-modern-heavy.css  phpwiki-printer.css        phpwiki.css \
-	  highlight.css  phpwiki-modern.css        phpwiki-topbottombars.css  wikiwyg.css \
+	  highlight.css  phpwiki-modern.css        phpwiki-topbottombars.css  \
 	  moacdropdown/css/dropdown.css
 MAIN    = wikicommon
 JS_MAIN = wikicommon.js  sortable.js ajax.js moacdropdown.js toolbar.js
-JS_REST = ASCIIsvg.js awstats_misc_tracker.js # delayed.js
+JS_REST = ASCIIsvg.js
 
 CSS_FILES = $(patsubst %.css,%-min.css,$(CSS_SRC))
 
