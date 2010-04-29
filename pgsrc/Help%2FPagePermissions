@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Thu, 29 Apr 2010 17:58:32 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,23 +10,23 @@ Content-Transfer-Encoding: binary
 
 == Full recursive ACL page permissions support (Solaris / Windows style)
 
-Boolean permissions per page and action (*granted* or *denied*) based on the current users
+Boolean permissions per page and action (**granted** or **denied**) based on the current users
 group membership is implemented with ACL's (Access Control Lists).
-Opposed to the simplier unix like ugo:rwx system. <br>
+Opposed to the simplier unix like ugo:rwx system. \\
 The previous system was only based on action and current user, independent of pages.
 
 A individual page permission may be inherited from its parent pages, and
-from an optional master page ("." or _dotpage'). <br>
-Use predefined default permissions, if a "." page does not exist. <br>
+from an optional master page ("." or _dotpage'). \\
+Use predefined default permissions, if a "." page does not exist. \\
 Pagenames starting with "." have tighter default permissions. (edit, change, list disallowed)
 
 === Order of Evaluation (denial overrides granted, or vice versa?)
 
-The array of permissions is evaluated from top to bottom. <br>
-Access is granted if the next matching *group membership* returns true, denied if false. <br>
-If the group membership is false, the next group is tried. <br>
-If no group membership matches the upper permissions are tried recursively: <br>
-  current page => basepage => "." page => default perms. <br>
+The array of permissions is evaluated from top to bottom. \\
+Access is granted if the next matching **group membership** returns true, denied if false. \\
+If the group membership is false, the next group is tried. \\
+If no group membership matches the upper permissions are tried recursively: \\
+  current page => basepage => "." page => default perms. \\
 If no group-perm pair grants access, access is denied.
 
 Consider the following perm:
@@ -68,7 +68,6 @@ Group methods: database, file, ldap, wikipage, none
 To do: _explain better._
 
 The following special groups are always predefined, even if no other group methods are provided:
-
 * _EVERY
 * _ANONYMOUS
 * _BOGOUSER
@@ -80,7 +79,9 @@ The following special groups are always predefined, even if no other group metho
 * _CREATOR
 
 Those special groups are stored in a page acl as locale-independent string.
-  *To do*: See the available translations for these special groups.
+
+**To do**: See the available translations for these special groups.
+
 Other group names are safed as defined by the group methods. (e.g. "Other Users")
 
 == Perms - mapping of actions to permissions
@@ -90,13 +91,13 @@ actions are mapped to some special permissions (vulgo _'perms'_).
 
 We currently support the following permissions which can be stored in every page, for every group.
 
-* 'list'     List this page and all subpages (for PageList)
-* 'view'     View this page and all subpages
-* 'edit'     Edit this page and all subpages
-* 'create'   Create a new (sub)page
-* 'dump'     Download the page contents
-* 'change'   Change page attributes
-* 'remove'   Remove this page
+|= list   | List this page and all subpages (for PageList)
+|= view   | View this page and all subpages
+|= edit   | Edit this page and all subpages
+|= create | Create a new (sub)page
+|= dump   | Download the page contents
+|= change | Change page attributes
+|= remove | Remove this page
 
 There are no plans to support additional custom perms. The API can handle that, but there's no UI,
 and it would be only specific for certain plugins, which check permissions by their own.
@@ -105,24 +106,12 @@ and it would be only specific for certain plugins, which check permissions by th
 
 Those perms are mapped to those actions. [[Help:ActionPage|Action Pages]] (plugins) check their access restrictions by themselves.
 
-list:
-  _none, 'list' is checked for every pagename listed in PageList, to prevent from being listed in AllPages._
-
-view:
-  browse, viewsource, diff, select, xmlrpc, search, pdf
-
-dump:
-  zip, ziphtml, dumpserial, dumphtml
-
-edit:
-  revert, edit
-
-create:
-  _edit or create, if the page doesn't exist yet_
-
-change:
-  upload, loadfile, remove, lock, unlock, upgrade, chown, setacl, rename. %%%
-  all other actionpages which are not wikiwords.
+|= list   | //none, 'list' is checked for every pagename listed in PageList, to prevent from being listed in AllPages.//
+|= view   | browse, viewsource, diff, select, xmlrpc, search, pdf 
+|= dump   | zip, ziphtml, dumpserial, dumphtml 
+|= edit   | revert, edit 
+|= create | //edit or create, if the page doesn't exist yet//
+|= change | upload, loadfile, remove, lock, unlock, upgrade, chown, setacl, rename. \\ All other actionpages which are not wikiwords.
 
 === Default Permissions
 
