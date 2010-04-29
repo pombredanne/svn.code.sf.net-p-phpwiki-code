@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Thu, 29 Apr 2010 15:31:30 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== Usage
+== Usage ==
 {{{
   <<YouTube v=-dnL00TdmLY
 	   width=425 height=350
@@ -27,7 +27,7 @@ Content-Transfer-Encoding: binary
  >>
 }}}
 
-== Arguments
+== Arguments ==
 
   * v=... (required, or define browse)
     key of the video
@@ -53,9 +53,9 @@ Content-Transfer-Encoding: binary
   * size=medium or small or large (optional. Default: medium).
     Overrides width and height.
 
-== Examples
+== Examples ==
 
-=== Link
+=== Link ===
 
 {{{
 <<YouTube v=-dnL00TdmLY style=link>>
@@ -63,7 +63,7 @@ Content-Transfer-Encoding: binary
 
 <<YouTube v=-dnL00TdmLY style=link>>
 
-=== Inline
+=== Inline ===
 
 {{{
 <<YouTube v=-dnL00TdmLY>>
@@ -71,7 +71,7 @@ Content-Transfer-Encoding: binary
 
 <<YouTube v=-dnL00TdmLY>>
 
-=== Daily Pick
+=== Daily Pick ===
 
 {{{
 <<YouTube browse="Daily Pick">>
@@ -79,7 +79,7 @@ Content-Transfer-Encoding: binary
 
 <<YouTube browse="Daily Pick">>
 
-=== Top Rated (This Month)
+=== Top Rated (This Month) ===
 
 {{{
 <<YouTube browse="Top Rated" time="This Month">>
@@ -87,11 +87,11 @@ Content-Transfer-Encoding: binary
 
 <<YouTube browse="Top Rated" time="This Month">>
 
-== See also
+== See also ==
 
-* [LisaNova]
+* [[LisaNova]]
 
-== Author
+== Author ==
 
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
