@@ -16,11 +16,11 @@ here but it does because of the bug described in Help:PageGroupTestOne.
 %%% %%% %%% %%% %%% %%% %%%
 ----
 
-<?plugin PageGroup
+<<PageGroup
         parent=Help:PageGroupTest
         section="Table of Contents"
         loop=false
-?>
+>>
 
 ----
 

@@ -18,7 +18,7 @@ If you click on a "T" you can contribute a missing translation.
 
 === Translated Page Name Matrix (dynamic)
 
-<?plugin _WikiTranslation languages=en,es ?>
+<<_WikiTranslation languages=en,es>>
 
 ----
 

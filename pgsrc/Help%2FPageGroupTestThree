@@ -12,11 +12,11 @@ You're almost there!
 
 %%% %%% %%% %%% %%% %%% %%%
 
-<?plugin PageGroup
+<<PageGroup
          label="Go!"
          parent=Help:PageGroupTest
          section="Table of Contents"
-?>
+>>
 
 Note that the navigation bar can be anywhere, it doesn't have to be at
 the bottom or even consistent from page to page. The label can also
