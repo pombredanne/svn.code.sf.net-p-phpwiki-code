@@ -30,4 +30,4 @@ Click the first page to start the tour of this experimental plugin.
 For reference, here are all the pages that link to [Help:PageGroupTest]
 (note that one is missing):
 
-<?plugin BackLinks page=Help:PageGroupTest ?>
+<<BackLinks page=Help:PageGroupTest>>

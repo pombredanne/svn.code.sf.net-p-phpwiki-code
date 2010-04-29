@@ -18,7 +18,7 @@ to. If you click on a "T" you can contribute a missing translation.
 
 === Translated Page Name Matrix (dynamic)
 
-<?plugin ListSubpages ?>
+<<ListSubpages>>
 
 === More important translations (static)
 

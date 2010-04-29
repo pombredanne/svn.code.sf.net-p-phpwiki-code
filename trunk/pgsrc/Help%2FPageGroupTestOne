@@ -19,12 +19,12 @@ page. Click Next.
 
 %%% %%% %%% %%% %%% %%% %%%
 
-<?plugin PageGroup
+<<PageGroup
          label="Other pages in this group"
          loop=1
          parent=Help:PageGroupTest
          section="Table of Contents"
-?>
+>>
 
 ----
 

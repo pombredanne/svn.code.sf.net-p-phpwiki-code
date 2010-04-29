@@ -8,10 +8,10 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-<?plugin PageGroup
+<<PageGroup
          parent=Help:PageGroupTest
          section="Table of Contents"
-?>
+>>
 
 ----
 
