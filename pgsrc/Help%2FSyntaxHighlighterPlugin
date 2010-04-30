@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Fri, 30 Apr 2010 10:38:49 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,16 +12,33 @@ The **~SyntaxHighlighter** [[Help:WikiPlugin|plugin]] passes all its arguments t
 highlighter called "highlight" (available at http://www.andre-simon.de/).
 
 == Arguments
-syntax |
-  (required), See http://www.andre-simon.de/doku/highlight/highlight.html 
-style |
-  ~[ "ansi", "gnu", "kr", "java", "linux" ~] (required)
-color |
-  null (optional), see =highlight/themes=
-number |
-  0  (optional)
-wrap |
-  0  (optional)
+
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **syntax**
+| 
+| (required), See http://www.andre-simon.de/doku/highlight/highlight.html
+|-
+| **style**
+| 
+| ~[ "ansi", "gnu", "kr", "java", "linux" ~] (required)
+|-
+| **color**
+| 
+| null (optional), see ##highlight/themes##
+|-
+| **number**
+| 
+| 0  (optional)
+|-
+| **wrap**
+| 
+| 0  (optional)
+|}
 
 == Example
 
