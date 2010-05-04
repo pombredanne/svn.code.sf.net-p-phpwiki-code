@@ -87,6 +87,8 @@ if (!$group_id || !$project) {
 
     define('NUM_SPAM_LINKS', 20 * ($wc->getWikiConfig('NUM_SPAM_LINKS')));
 
+    define('ENABLE_RATEIT', $wc->getWikiConfig('ENABLE_RATEIT'));
+
     define('UPLOAD_FILE_PATH', '/opt/groups/'.WIKI_NAME.'/www/uploads/');
     // define('UPLOAD_DATA_PATH', SERVER_URL . '/www/'.WIKI_NAME.'/uploads/');
     define('UPLOAD_DATA_PATH', '/www/'.WIKI_NAME.'/uploads/');
