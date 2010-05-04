@@ -21,19 +21,23 @@ if (ENABLE_RATEIT && !empty($user) && $user->isAuthenticated() && $page->exists(
 else
     $rating = 0;
 ?>
-<!-- Page title -->
 <a name="top" id="contentTop"></a>
-<h1 class="firstHeading<?= $rating ? '-rating' : '' ?>"><?= $HEADER ?></h1>
+<h1>
+<span class="firstHeading<?= $rating ? '-rating' : '' ?>">
+<span style="float: left;"><?= $HEADER ?></span>
 <?php if ($rating && $request->getArg('action') == 'browse') { ?>
+<span style="float: right;">
 <?= Template('ratings') ?>
+</span>
 <?php } elseif ($rating && $WikiTheme->DUMP_MODE) { ?>
-<div id="rateit-widget-top">
+<span id="rateit-widget-top">
 <?php
   $loader = new WikiPluginLoader();
   printXML($loader->expandPI("<"."?plugin RateIt show=text ?".">", $request, $dbi->_markup));
-?></div>
+?></span>
 <?php } ?>
-<br />
+</span>
+</h1>
 <?= $CONTENT ?>
 </div>
 </td>
