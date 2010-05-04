@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Tue,  4 May 2010 18:03:55 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -28,17 +28,17 @@ page _(default: current pagename)_:
 
 == Example
 
-See [DebugInfo]
+See [[DebugInfo]]
 
 == Author
-* [Jeff Dairiki|PhpWiki:JeffDairiki]
+* [[PhpWiki:JeffDairiki|Jeff Dairiki]]
 
 == See Also
-* [DebugInfo] is the corresponding [Help:ActionPage]
-* [EditMetaData]
-* [Help:EditMetaDataPlugin]
-* [Help:_AuthInfoPlugin]
-* [Help:_GroupInfoPlugin]
+* [[DebugInfo]] is the corresponding [[Help:ActionPage]]
+* [[EditMetaData]]
+* [[Help:EditMetaDataPlugin]]
+* [[Help:_AuthInfoPlugin]]
+* [[Help:_GroupInfoPlugin]]
 
 <noinclude>
 ----
