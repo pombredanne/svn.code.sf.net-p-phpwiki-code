@@ -11,11 +11,15 @@ Content-Transfer-Encoding: binary
 _short description_
 
 == Usage
+
 {{{
 <<RecentReferrers>>
 }}}
 
 == Arguments
+
+All [[Help:PageList|PageList]] arguments, plus the following ones.
+
 
 page _(default: current pagename)_:
   The page to execute upon.

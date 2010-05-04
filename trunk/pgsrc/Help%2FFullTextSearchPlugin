@@ -17,6 +17,8 @@ _short description_
 
 == Arguments
 
+All [[Help:PageList|PageList]] arguments, plus the following ones.
+
 page _(default: current pagename)_:
   The page to execute upon.
 

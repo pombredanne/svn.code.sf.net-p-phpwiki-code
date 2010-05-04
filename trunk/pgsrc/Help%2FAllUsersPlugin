@@ -11,11 +11,14 @@ Content-Transfer-Encoding: binary
 The **~AllUsers** [[Help:WikiPlugin|plugin]] lists all once authenticated users.
 
 == Usage
+
 {{{
 <<AllUsers arguments>>
 }}}
 
 == Arguments
+
+All [[Help:PageList|PageList]] arguments, plus the following ones.
 
 {| class="bordered"
 |-

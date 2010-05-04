@@ -17,6 +17,8 @@ The **~RandomPage** [[Help:WikiPlugin|plugin]] displays a list of randomly chose
 
 == Arguments
 
+All [[Help:PageList|PageList]] arguments, plus the following ones.
+
 {| class="bordered"
 |-
 ! Argument

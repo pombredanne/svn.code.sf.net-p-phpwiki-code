@@ -27,4 +27,5 @@ Content-Transfer-Encoding: binary
 <<IncludePage page="Help/PagePermissions">>
 <<IncludePage page="Help/SemanticRelations">>
 <<IncludePage page="Help/Spreadsheet">>
+<<IncludePage page="Help/PageList">>
 <<IncludePages pages=<!plugin-list BackLinks page=CategoryWikiPlugin sortby=pagename exclude="Template/*" !> >>

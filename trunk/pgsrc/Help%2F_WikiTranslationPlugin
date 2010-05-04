@@ -22,6 +22,8 @@ Current favorite: translate.google.com if from_lang = en or fr
 
 == Arguments
 
+All [[Help:PageList|PageList]] arguments, plus the following ones.
+
 languages:
   comma delimited string of de,en,sv,...
 string:

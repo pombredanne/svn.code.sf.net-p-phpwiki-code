@@ -43,7 +43,7 @@ Currently, one invokes a plugin by putting something like:
 }}}
 
 into a regular wiki-page.  That particular example produces a list
-of the first 20 existing pages in 3 columns, via the [[PhpWiki:PageList]]
+of the first 20 existing pages in 3 columns, via the [[Help:PageList|PageList]]
 library.
 
 <<AllPages limit=20 cols=3>> 
@@ -81,22 +81,22 @@ precedence:
   (The BackLinks plugin uses the current page as the default value for
   the *page* argument.)
 
-  Most plugins using the PhpWiki:PageList library inherit their 
+  Most plugins using the [[Help:PageList|PageList]] library inherit their 
   default arguments from the ~PageList.
 
 === Standard Arguments
 
-Most plugins display a list of pages, via the PhpWiki:PageList
+Most plugins display a list of pages, via the [[Help:PageList|PageList]]
 library. ~PageList provides automatic support for those arguments.
 
   info, exclude, author, owner, creator, sortby, limit, paging, cols, azhead,
   comma, commasep, ordered
 
-  For details see the PhpWiki:PageList library documentation.
+  For details see the [[Help:PageList|PageList]] library documentation.
 
 *exclude* and *pages* accept a list of pages. Either as comma-seperated list,
 supporting glob-style wildcards, or via the ##<!plugin-list pluginname ~[args~] !>##
-invocation syntax, where pluginname might be any plugin returning a PhpWiki:PageList.
+invocation syntax, where pluginname might be any plugin returning a [[Help:PageList|PageList]].
 See PhpWiki:PluginList.
 
 Since most plugins return a ~PageList, this ~PageList is also a common

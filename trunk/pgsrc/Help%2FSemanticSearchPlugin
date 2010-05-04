@@ -29,11 +29,14 @@ The Advanced query can do a freeform query expression with multiple comparison a
 * "(is_a::city or is_a::country) and population < 10.000.000"
 
 == Usage
+
 {{{
 <<SemanticSearch arguments>>
 }}}
 
 == Arguments
+
+All [[Help:PageList|PageList]] arguments, plus the following ones.
 
 {| class="bordered"
 |-
