@@ -609,6 +609,7 @@ function fixup_static_configs($file) {
       .'NewPagesPerUser:'
       .'OrphanedPages:'
       .'PageDump:PageHistory:PageInfo:PluginManager:'
+      .'RateIt:' // RateIt works only in wikilens derived themes
       .'RandomPage:RecentChanges:RelatedChanges:'
       .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
       .'TitleSearch:'
@@ -644,7 +645,6 @@ function fixup_static_configs($file) {
        $AllActionPages[] = 'LdapSearch';
        $AllActionPages[] = 'PasswordReset';
        $AllActionPages[] = 'PhpWikiAdministration/Markup';
-       $AllActionPages[] = 'RateIt'; // RateIt works only in wikilens derived themes
        $AllActionPages[] = 'RecentComments';
        $AllActionPages[] = 'TranslateText';
        $AllActionPages[] = 'UriResolver';
