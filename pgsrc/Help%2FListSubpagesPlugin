@@ -18,7 +18,7 @@ The **~ListSubpages** [[Help:WikiPlugin|plugin]] lists the names of all sub-page
 
 == Arguments
 
-All ~PageList arguments, plus the following ones.
+All [[Help:PageList|PageList]] arguments, plus the following ones.
 
 {| class="bordered"
 |-
