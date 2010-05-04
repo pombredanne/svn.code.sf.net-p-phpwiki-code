@@ -1033,6 +1033,12 @@ td.tdunselected {
    font-style: oblique;
 }
 
+.rateit {
+   font-size: 60%;
+   font-weight: bold;
+   vertical-align: middle;
+}
+
 /* For emacs users
  *
  * Local Variables:
