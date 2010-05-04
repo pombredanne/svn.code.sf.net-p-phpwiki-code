@@ -210,7 +210,7 @@ if (!$group_id || !$project) {
 
     define('ENCRYPTED_PASSWD', true);
 
-    define('ENABLE_REVERSE_DNS', true);
+    define('ENABLE_REVERSE_DNS', false);
 
     define('ZIPDUMP_AUTH', false);
 
