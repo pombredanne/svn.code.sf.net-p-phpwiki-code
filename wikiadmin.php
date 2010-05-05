@@ -1,5 +1,4 @@
-<?php // -*-php-*-
-rcs_id('$Id$');
+<?php // -*-php-*- $Id$
 /*
  * Copyright (C) 2009 Alain Peyrat, Alcatel-Lucent
  * Copyright (C) 2009 Marc-Etienne Vargenau, Alcatel-Lucent
