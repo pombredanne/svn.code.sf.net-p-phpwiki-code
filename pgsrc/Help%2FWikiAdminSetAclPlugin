@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Fri,  7 May 2010 11:59:55 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,19 +8,31 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-The **~WikiAdminChmod** [[Help:WikiPlugin|plugin]] allows to change access rights on pages.
+The **~WikiAdminSetAcl** [[Help:WikiPlugin|plugin]] allows to change access rights on pages.
 
-== Usage
+== Usage ==
 {{{
 <<WikiAdminSetAcl arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
-page _(default: current pagename)_:
-  The page to execute upon.
+{| class="bordered"
+|-
+! Argument
+! Description
+! Default value
+|-
+| **p**
+| Pages to select
+| //None//
+|-
+| **info**
+| Columns to include in listing
+| pagename, perm, mtime, owner, author
+|}
 
-== Example
+== Example ==
 
 {{{
 <<WikiAdminSetAcl s=Temp*>>
@@ -28,10 +40,10 @@ page _(default: current pagename)_:
 
 <<WikiAdminSetAcl s=Temp*>>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 * [[PhpWikiAdministration]]
 
 <noinclude>
