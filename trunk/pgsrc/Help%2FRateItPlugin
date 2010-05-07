@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Fri,  7 May 2010 15:13:31 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -51,7 +51,7 @@ Recommender Engines:
 ** Autoclass: simple public domain C library
 ** MLC++: C++ library http://www.sgi.com/tech/mlc/
 
-== Usage
+== Usage ==
 
 Note: The wikilens theme or any derivate must be enabled, to enable this plugin!
 
@@ -64,7 +64,7 @@ TODO:   <<RateIt show=buddies>> to show my buddies
 TODO:   <<RateIt show=text>> just text, no widget, for dumps
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -109,19 +109,20 @@ TODO:   <<RateIt show=text>> just text, no widget, for dumps
 | false
 |}
 
-== Example
+== Example ==
 
 {{{
 <<RateIt>>
 }}}
 
-== Author
+== Author ==
 * Dan Frankowski (wikilens author),
 * [[PhpWiki:ReiniUrban|Reini Urban]] (as plugin)
 
-== See Also
+== See Also ==
+* [[Help:UserRatingsPlugin]]
 
-== To do
+== To do ==
 * finish mysuggest.c (external engine with data from mysql)
 
 <noinclude>
