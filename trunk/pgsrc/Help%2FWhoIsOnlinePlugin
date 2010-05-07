@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Fri,  7 May 2010 12:03:52 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,10 +12,10 @@ The **~WhoIsOnline** [[Help:WikiPlugin|plugin]] shows summary information of the
 
 == Usage
 {{{
-<<WhoIsOnline>>
+<<WhoIsOnline arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -28,11 +28,11 @@ The **~WhoIsOnline** [[Help:WikiPlugin|plugin]] shows summary information of the
 | summary
 |-
 | **pagename**
-| refer to the page with the other mode
+| Refer to the page with the other mode
 | [pagename]
 |-
 | **allow_detail**
-| if false, page is ignored
+| If false, page is ignored
 | false
 |-
 | **mode**
@@ -40,7 +40,7 @@ The **~WhoIsOnline** [[Help:WikiPlugin|plugin]] shows summary information of the
 | false
 |}
 
-== Example
+== Example ==
 
 {{{
 <<WhoIsOnline>>
@@ -48,10 +48,10 @@ The **~WhoIsOnline** [[Help:WikiPlugin|plugin]] shows summary information of the
 
 <<WhoIsOnline>>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 
 <noinclude>
 ----
