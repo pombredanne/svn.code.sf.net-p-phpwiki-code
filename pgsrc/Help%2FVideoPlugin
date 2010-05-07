@@ -11,9 +11,9 @@ Content-Transfer-Encoding: binary
 The **~Video** [[Help:WikiPlugin|plugin]] allows to include video in a wiki page.
 Video file must be encoded in FLV format.
 
-The Video plugin can also be called withe the ~{~{video.flv~}~} syntax.
+The Video plugin can also be called with the ~{~{video.flv~}~} syntax.
 
-== Arguments
+== Arguments ==
 
 Use only one of ##url## or ##file## arguments at a time.
 
@@ -44,7 +44,7 @@ Use only one of ##url## or ##file## arguments at a time.
 | false
 |}
 
-== Example
+== Example ==
 
 A video:
 {{{
@@ -61,7 +61,7 @@ This is equivalent to:
 {{another_video.flv}}
 }}}
 
-== Authors
+== Authors ==
 
 * Roger Guignard, Alcatel-Lucent
 * Marc-Etienne Vargenau, Alcatel-Lucent
