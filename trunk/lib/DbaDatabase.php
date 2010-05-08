@@ -92,7 +92,7 @@ class DbaDatabase
                     define("READONLY", true);
                 $GLOBALS['request']->_dbi->readonly = true;
                 $this->readonly = true;
-                if (!file_exist($this->_file)) {
+                if (!file_exists($this->_file)) {
                     $ErrorManager->handleError($error);
 	            flush();
                 }
