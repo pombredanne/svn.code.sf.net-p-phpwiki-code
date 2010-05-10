@@ -426,8 +426,8 @@ class WikiPluginLoader {
         list($pi_name, $plugin, $plugin_args) = $ppi;
 
         if (!is_object($plugin)) {
-            return new HtmlElement('p',
-                                   array('class' => 'plugin-error'),
+            return new HtmlElement('div',
+                                   array('class' => 'error'),
                                    $this->getErrorDetail());
         }
         switch ($pi_name) {
