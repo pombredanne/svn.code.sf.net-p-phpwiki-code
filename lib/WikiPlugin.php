@@ -498,11 +498,12 @@ class WikiPluginLoader {
             // $include_failed = !@include_once("lib/plugin/$plugin_name.php");
             $include_failed = !include_once("lib/plugin/$plugin_name.php");
             $ErrorManager->popErrorHandler();
-            
+
             if (!class_exists($plugin_class)) {
-                if ($include_failed)
-                    return $this->_error(sprintf(_("Include of '%s' failed."),
-                                                 $plugin_source));
+                if ($include_failed) {
+                    return $this->_error(sprintf(_("Plugin '%s' does not exist."),
+                                                 $plugin_name));
+                }
                 return $this->_error(sprintf(_("%s: no such class"), $plugin_class));
             }
         }
