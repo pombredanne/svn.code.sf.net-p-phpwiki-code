@@ -614,6 +614,7 @@ function fixup_static_configs($file) {
       .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
       .'TitleSearch:'
       .'UpLoad:UserPreferences:'
+      .'UserRatings:' // UserRatings works only in wikilens derived themes
       .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:'
       // plus some derivations
       .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages:'
