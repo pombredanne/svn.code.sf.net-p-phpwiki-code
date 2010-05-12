@@ -487,6 +487,12 @@ class WikiPluginLoader {
     
     function getPlugin($plugin_name, $pi=false) {
         global $ErrorManager;
+        global $AllAllowedPlugins;
+
+        if (in_array($plugin_name, $AllAllowedPlugins) === false) {
+            return $this->_error(sprintf(_("Plugin '%s' does not exist."),
+                                         $plugin_name));
+        }
 
         // Note that there seems to be no way to trap parse errors
         // from this include.  (At least not via set_error_handler().)
