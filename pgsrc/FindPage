@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 12 May 2010 10:23:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -39,7 +39,7 @@ those which are similarly spelled or similar sounding (English).
 
 ------
 
-== Tips
+== Tips ==
 
 * Separate words with a space. All words have to match as substrings.
 * '##OR##', grouping with parenthesis, string-quoting and some glob-style wildcard characters are also supported.
@@ -52,8 +52,8 @@ those which are similarly spelled or similar sounding (English).
 * Use //regex=sql// to match using SQL-style wildcards '##%##' and '##_##'.
 * Use //regex=none// to match any wildcards verbatim.
 
-=== Example
+=== Example ===
 * '##wiki text -php##' looks for all pages containing the words '##wiki##' and '##text##', but not containing the word '##php##'.
 
 ----
-[[CategoryActionPage]]
+[[PhpWikiDocumentation]]
