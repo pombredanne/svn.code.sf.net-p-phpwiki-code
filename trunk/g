@@ -52,7 +52,7 @@ require_once $gfwww.'include/pre.php';
 require_once $gfplugins.'wiki/common/wikiconfig.class.php';
 
 if (!$group_id || !$project) {
-    exit_error("Invalid Project", "Invalid Project");
+     exit_no_group();
 } else if (!($project->usesPlugin("wiki"))) {
     exit_error("Wiki plugin not activated in project", $project->getPublicName());
 } else {
