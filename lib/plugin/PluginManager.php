@@ -58,8 +58,6 @@ extends WikiPlugin
             $this->_generateColheadings($info, $table);
             $this->_generateTableBody($info, $dbi, $request, $table);
             $h->pushContent($table);
-
-            //$h->pushContent(HTML::h2(_("Disabled Plugins")));
         }
         else {
             $h->pushContent(fmt("You must be an administrator to %s.",
@@ -75,7 +73,7 @@ extends WikiPlugin
     function _generateColheadings(&$info, &$table) {
         // table headings
         $tr = HTML::tr();
-        $headings = array(_("Plugin"), _("Version"), _("Description"));
+        $headings = array(_("Plugin"), _("Description"));
         if ($info == 'args')
             $headings []= _("Arguments");
         foreach ($headings as $title) {
@@ -85,6 +83,8 @@ extends WikiPlugin
     }
 
     function _generateTableBody(&$info, &$dbi, &$request, &$table) {
+
+        global $AllAllowedPlugins;
 
         $plugin_dir = 'lib/plugin';
         if (defined('PHPWIKI_DIR'))
@@ -100,8 +100,12 @@ extends WikiPlugin
 
         $w = new WikiPluginLoader;
         foreach ($plugins as $pluginName) {
-            // instantiate a plugin
+
             $pluginName = str_replace(".php", "", $pluginName);
+            if (in_array($pluginName, $AllAllowedPlugins) === false) {
+                continue;
+            }
+            // instantiate a plugin
             $temppluginclass = "<? plugin $pluginName ?>"; // hackish
             $p = $w->getPlugin($pluginName, false); // second arg?
             // trap php files which aren't WikiPlugin~s
@@ -114,7 +118,6 @@ extends WikiPlugin
                 continue; // skip this non WikiPlugin file
             }
             $desc = $p->getDescription();
-            $ver = $p->getVersion();
             $arguments = $p->getArgumentsDescription();
             unset($p); //done querying plugin object, release from memory
 
@@ -170,7 +173,7 @@ extends WikiPlugin
                 // plugin just has an actionpage
                 $tr->pushContent(HTML::td($pluginNamelink));
             }
-            $tr->pushContent(HTML::td($ver), HTML::td($desc));
+            $tr->pushContent(HTML::td($desc));
             if ($info == 'args') {
                 // add Arguments column
                 $style = array('style'

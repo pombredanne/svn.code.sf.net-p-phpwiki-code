@@ -591,68 +591,148 @@ function fixup_static_configs($file) {
         $ErrorManager->pushErrorHandler
             (new WikiFunctionCb('_ignore_unknown_charset_warning'));
     }
-    // Used by SetupWiki to pull in required pages, if not translated, then in english.
-    // Also used by _WikiTranslation. Really important are only those which return pagelists 
-    // or contain basic functionality.
-    /*
-      All pages containing plugins of the same name as the filename:
-      cd pgsrc
-      grep -l '\?plugin ' *| perl -ne'$/=0;chop; s/%([\da-fA-F]{2})/pack("C",hex($1))/ge; next LINE if m{^(Help/|Template|Pgsrc)}; print "$_\n"; {local $/;open F,"<$_"; $f=join("",<F>);} push @a,$_ if $f=~/plugin $_/; END{print join(":",@a)};'
-     */
-    $AllActionPages = explode(':',
+
+    // All pages containing plugins of the same name as the filename
+    $ActionPages = explode(':',
       'AllPages:AllUsers:AppendText:AuthorHistory:'
       .'BackLinks:'
       .'CreatePage:'
-      .'FindPage:FullTextSearch:FuzzyPages:'
+      .'FullTextSearch:FuzzyPages:'
       .'LikePages:LinkDatabase:LinkSearch:ListRelations:'
       .'ModeratedPage:MostPopular:'
       .'NewPagesPerUser:'
       .'OrphanedPages:'
       .'PageDump:PageHistory:PageInfo:PluginManager:'
       .'RateIt:' // RateIt works only in wikilens derived themes
-      .'RandomPage:RecentChanges:RelatedChanges:'
+      .'RandomPage:RecentChanges:RelatedChanges:RecentEdits:'
       .'SearchHighlight:SemanticRelations:SemanticSearch:SystemInfo:'
       .'TitleSearch:'
       .'UpLoad:UserPreferences:'
       .'UserRatings:' // UserRatings works only in wikilens derived themes
-      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect:'
-      // plus some derivations
-      .'AllPagesCreatedByMe:AllPagesLastEditedByMe:AllPagesOwnedByMe:AllUserPages:'
-      .'FullRecentChanges:'
-      .'LeastPopular:LockedPages:'
-      .'MyRecentEdits:MyRecentChanges:'
-      .'PhpWikiAdministration:'
-      .'PhpWikiAdministration/Chown:'
-      .'PhpWikiAdministration/Purge:'
-      .'PhpWikiAdministration/Remove:'
-      .'PhpWikiAdministration/Rename:'
-      .'PhpWikiAdministration/SearchReplace:'
-      .'PhpWikiAdministration/SetAcl:'
-      .'RecentChangesMyPages:RecentEdits:RecentNewPages:'
-      .'UserContribs');
+      .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect');
 
     // The GFORGE theme omits them
     if (!defined('GFORGE') or !GFORGE) {
        // Add some some action pages depending on configuration
        if (defined('DEBUG') and DEBUG) {
-          $AllActionPages[] = 'DebugInfo';
-          $AllActionPages[] = 'EditMetaData';
-          $AllActionPages[] = 'SpellCheck'; // SpellCheck does not work
+          $ActionPages[] = 'DebugInfo';
+          $ActionPages[] = 'EditMetaData';
+          $ActionPages[] = 'SpellCheck'; // SpellCheck does not work
+       }
+       $ActionPages[] = 'BlogArchives';
+       $ActionPages[] = 'BlogJournal';
+       $ActionPages[] = 'InterWikiSearch';
+       $ActionPages[] = 'LdapSearch';
+       $ActionPages[] = 'PasswordReset';
+       $ActionPages[] = 'RecentComments';
+       $ActionPages[] = 'TranslateText';
+       $ActionPages[] = 'UriResolver';
+       $ActionPages[] = 'WikiBlog';
+    }
+
+    global $AllAllowedPlugins;
+    $AllAllowedPlugins = $ActionPages;
+    // Add plugins that have no corresponding action page
+    $AllAllowedPlugins[] = 'AsciiSVG';
+    $AllAllowedPlugins[] = 'BoxRight';
+    $AllAllowedPlugins[] = 'CalendarList';
+    $AllAllowedPlugins[] = 'Calendar';
+    $AllAllowedPlugins[] = 'CategoryPage';
+    $AllAllowedPlugins[] = 'Chart';
+    $AllAllowedPlugins[] = 'Comment';
+    $AllAllowedPlugins[] = 'CreateBib';
+    $AllAllowedPlugins[] = 'CreateToc';
+    $AllAllowedPlugins[] = 'CurrentTime';
+    $AllAllowedPlugins[] = 'DeadEndPages';
+    $AllAllowedPlugins[] = 'Diff';
+    $AllAllowedPlugins[] = 'DynamicIncludePage';
+    $AllAllowedPlugins[] = 'ExternalSearch';
+    $AllAllowedPlugins[] = 'FileInfo';
+    $AllAllowedPlugins[] = 'GoogleMaps';
+    $AllAllowedPlugins[] = 'GooglePlugin';
+    $AllAllowedPlugins[] = 'GoTo';
+    $AllAllowedPlugins[] = 'HelloWorld';
+    $AllAllowedPlugins[] = 'IncludePage';
+    $AllAllowedPlugins[] = 'IncludePages';
+    $AllAllowedPlugins[] = 'IncludeSiteMap';
+    $AllAllowedPlugins[] = 'IncludeTree';
+    $AllAllowedPlugins[] = 'ListPages';
+    $AllAllowedPlugins[] = 'ListSubpages';
+    $AllAllowedPlugins[] = 'MediawikiTable';
+    $AllAllowedPlugins[] = 'NoCache';
+    $AllAllowedPlugins[] = 'OldStyleTable';
+    $AllAllowedPlugins[] = 'PageGroup';
+    $AllAllowedPlugins[] = 'PageTrail';
+    $AllAllowedPlugins[] = 'PhotoAlbum';
+    $AllAllowedPlugins[] = 'PhpHighlight';
+    $AllAllowedPlugins[] = 'PopularTags';
+    $AllAllowedPlugins[] = 'PopUp';
+    $AllAllowedPlugins[] = 'PrevNext';
+    $AllAllowedPlugins[] = 'Processing';
+    $AllAllowedPlugins[] = 'RawHtml';
+    $AllAllowedPlugins[] = 'RecentChangesCached';
+    $AllAllowedPlugins[] = 'RecentReferrers';
+    $AllAllowedPlugins[] = 'RedirectTo';
+    $AllAllowedPlugins[] = 'RichTable';
+    $AllAllowedPlugins[] = 'RssFeed';
+    $AllAllowedPlugins[] = 'SemanticSearchAdvanced';
+    $AllAllowedPlugins[] = 'SiteMap';
+    $AllAllowedPlugins[] = 'SyncWiki';
+    $AllAllowedPlugins[] = 'SyntaxHighlighter';
+    $AllAllowedPlugins[] = 'Template';
+    $AllAllowedPlugins[] = 'Transclude';
+    $AllAllowedPlugins[] = 'UnfoldSubpages';
+    $AllAllowedPlugins[] = 'Video';
+    $AllAllowedPlugins[] = 'WikiAdminChown';
+    $AllAllowedPlugins[] = 'WikiAdminPurge';
+    $AllAllowedPlugins[] = 'WikiAdminRemove';
+    $AllAllowedPlugins[] = 'WikiAdminRename';
+    $AllAllowedPlugins[] = 'WikiAdminSearchReplace';
+    $AllAllowedPlugins[] = 'WikiAdminSetAcl';
+    $AllAllowedPlugins[] = 'WikiAdminUtils';
+    $AllAllowedPlugins[] = 'WikicreoleTable';
+    $AllAllowedPlugins[] = 'WikiForm';
+    $AllAllowedPlugins[] = 'WikiFormRich';
+    $AllAllowedPlugins[] = 'WikiPoll';
+    $AllAllowedPlugins[] = 'YouTube';
+
+    // Used by SetupWiki to pull in required pages, if not translated, then in english.
+    // Also used by _WikiTranslation. Really important are only those which return pagelists 
+    // or contain basic functionality.
+    $AllActionPages = $ActionPages;
+    $AllActionPages[] = 'AllPagesCreatedByMe';
+    $AllActionPages[] = 'AllPagesLastEditedByMe';
+    $AllActionPages[] = 'AllPagesOwnedByMe';
+    $AllActionPages[] = 'AllUserPages';
+    $AllActionPages[] = 'FullRecentChanges';
+    $AllActionPages[] = 'LeastPopular';
+    $AllActionPages[] = 'LockedPages';
+    $AllActionPages[] = 'MyRecentEdits';
+    $AllActionPages[] = 'MyRecentChanges';
+    $AllActionPages[] = 'PhpWikiAdministration';
+    $AllActionPages[] = 'PhpWikiAdministration/Chown';
+    $AllActionPages[] = 'PhpWikiAdministration/Purge';
+    $AllActionPages[] = 'PhpWikiAdministration/Remove';
+    $AllActionPages[] = 'PhpWikiAdministration/Rename';
+    $AllActionPages[] = 'PhpWikiAdministration/SearchReplace';
+    $AllActionPages[] = 'PhpWikiAdministration/SetAcl';
+    $AllActionPages[] = 'RecentChangesMyPages';
+    $AllActionPages[] = 'RecentEdits';
+    $AllActionPages[] = 'RecentNewPages';
+    $AllActionPages[] = 'UserContribs';
+
+    // The GFORGE theme omits them
+    if (!defined('GFORGE') or !GFORGE) {
+       // Add some some action pages depending on configuration
+       if (defined('DEBUG') and DEBUG) {
           $AllActionPages[] = 'PhpWikiAdministration/Chmod';
        }
-       $AllActionPages[] = 'BlogArchives';
-       $AllActionPages[] = 'BlogJournal';
-       $AllActionPages[] = 'InterWikiSearch';
-       $AllActionPages[] = 'LdapSearch';
-       $AllActionPages[] = 'PasswordReset';
        $AllActionPages[] = 'PhpWikiAdministration/Markup';
-       $AllActionPages[] = 'RecentComments';
-       $AllActionPages[] = 'TranslateText';
-       $AllActionPages[] = 'UriResolver';
-       $AllActionPages[] = 'WikiBlog';
     }
+
     if (defined('GFORGE') and GFORGE) {
        if (defined('ENABLE_EXTERNAL_PAGES') and ENABLE_EXTERNAL_PAGES) {
+          $AllAllowedPlugins[] = 'WikiAdminSetExternal';
           $AllActionPages[] = 'ExternalPages';
        }
     }
