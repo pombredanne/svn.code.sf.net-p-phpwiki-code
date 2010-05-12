@@ -696,6 +696,41 @@ function fixup_static_configs($file) {
     $AllAllowedPlugins[] = 'WikiPoll';
     $AllAllowedPlugins[] = 'YouTube';
 
+    // The GFORGE theme omits them
+    if (!defined('GFORGE') or !GFORGE) {
+        $AllAllowedPlugins[] = 'AddComment';
+        $AllAllowedPlugins[] = 'AnalyseAccessLogSql';
+        $AllAllowedPlugins[] = 'AsciiMath';
+        $AllAllowedPlugins[] = '_AuthInfo';
+        $AllAllowedPlugins[] = '_BackendInfo';
+        $AllAllowedPlugins[] = 'CacheTest';
+        $AllAllowedPlugins[] = 'CategoryPage';
+        $AllAllowedPlugins[] = 'FoafViewer';
+        $AllAllowedPlugins[] = 'FrameInclude';
+        $AllAllowedPlugins[] = 'GraphViz';
+        $AllAllowedPlugins[] = '_GroupInfo';
+        $AllAllowedPlugins[] = 'HtmlConverter';
+        $AllAllowedPlugins[] = 'Imdb';
+        $AllAllowedPlugins[] = 'JabberPresence';
+        $AllAllowedPlugins[] = 'ListPages';
+        $AllAllowedPlugins[] = 'PhpWeather';
+        $AllAllowedPlugins[] = 'Ploticus';
+        $AllAllowedPlugins[] = 'PopularNearby';
+        $AllAllowedPlugins[] = 'PreferenceApp';
+        $AllAllowedPlugins[] = '_PreferencesInfo';
+        $AllAllowedPlugins[] = '_Retransform';
+        $AllAllowedPlugins[] = 'SqlResult';
+        $AllAllowedPlugins[] = 'TeX2png';
+        $AllAllowedPlugins[] = 'text2png';
+        $AllAllowedPlugins[] = 'TexToPng';
+        $AllAllowedPlugins[] = 'VisualWiki';
+        $AllAllowedPlugins[] = 'WantedPagesOld';
+        $AllAllowedPlugins[] = 'WikiAdminChmod';
+        $AllAllowedPlugins[] = 'WikiAdminMarkup';
+        $AllAllowedPlugins[] = 'WikiForum';
+        $AllAllowedPlugins[] = '_WikiTranslation';
+    }
+
     // Used by SetupWiki to pull in required pages, if not translated, then in english.
     // Also used by _WikiTranslation. Really important are only those which return pagelists 
     // or contain basic functionality.
