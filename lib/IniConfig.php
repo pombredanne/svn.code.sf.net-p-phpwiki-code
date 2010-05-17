@@ -113,8 +113,8 @@ function IniConfig($file) {
     // check config/config.php dump for faster startup
     $dump = substr($file, 0, -3)."php";
     if (isWindows($dump)) $dump = str_replace("/","\\",$dump);
-    if (file_exists($dump) and is_readable($dump) and sort_file_mtime($dump, $file) < 0) {
-        @include($dump);
+    if (file_exists($dump) and is_readable($dump) and filesize($dump) > 0 and sort_file_mtime($dump, $file) < 0) {
+        @include($dump) or die("Error including " . $dump);
         if (function_exists('wiki_configrestore') and (wiki_configrestore() === 'noerr')) {
             fixup_dynamic_configs();
             return;
@@ -545,6 +545,8 @@ function IniConfig($file) {
     // The question is if reading this is faster then doing IniConfig() + fixup_static_configs()
     if (is_writable($dump)) {
         save_dump($dump);
+    } else {
+    	die($dump . " is not writable");
     }
     // store locale[] in config.php? This is too problematic.
     fixup_dynamic_configs($file); // [100ms]
