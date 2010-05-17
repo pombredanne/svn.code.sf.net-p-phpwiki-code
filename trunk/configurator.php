@@ -157,14 +157,14 @@ if (file_exists($fs_config_file)) {
     IniConfig($fs_def_file);
 }
 
-echo '<','?xml version="1.0" encoding="iso-8859-1"?',">\n";
+echo '<','?xml version="1.0" encoding="utf-8"?',">\n";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- $Id$ -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Configuration tool for PhpWiki <?php echo $config_file ?></title>
 <style type="text/css" media="screen">
 <!--
@@ -173,7 +173,7 @@ body { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 80%; }
 pre { font-size: 120%; }
 td { border: thin solid black }
 tr { border: none }
-div.hint { border: thin solid red, background-color: #eeeeee; }
+div.hint { background-color: #eeeeee; }
 tr.hidden { border: none; display: none; }
 td.part { background-color: #eeeeee; color: inherit; }
 td.instructions { background-color: #ffffee; width: <?php echo $tdwidth ?>px; color: inherit; }
@@ -272,6 +272,7 @@ function do_init() {
 </div>
 
 <?php
+define('DEBUG', 0);
 //define('DEBUG', 1);
 /**
  * The Configurator is a php script to aid in the configuration of PhpWiki.
@@ -638,8 +639,7 @@ new _variable_selection('_dsn_sqltype',
                     'mysqlt' => "mysqlt (only ADODB)",
                     'ODBC'   => "ODBC (only ADODB or PDO)",
                     'firebird' => "Firebird (only PDO)",
-                    'oracle'  => "Oracle (only PDO)",
-), "
+                    'oracle'  => "Oracle (only PDO)"), "
 SQL DB types. The DSN hosttype.");
 
 $properties["SQL User"] =
@@ -1719,6 +1719,10 @@ class _variable {
 	    $this->prefix = "";
     }
 
+    function _define($config_item_name, $default_value='', $description = '', $jscheck = '') {
+    	$this->_variable($config_item_name, $default_value, $description, $jscheck);
+    }
+
     function value() {
       global $HTTP_POST_VARS;
       if (isset($HTTP_POST_VARS[$this->config_item_name]))
@@ -1852,8 +1856,9 @@ extends _variable {
 	    $this->default_value = constant($this->get_config_item_name());
 	else
 	    $this->default_value = null;
-        while(list($option, $label) = each($values)) {
-	    if (!is_null($this->default_value) and $this->default_value === $option)
+
+        foreach ($values as $option => $label) {
+	    if (!is_null($this->default_value) && $this->default_value === $option)
 		$output .= "  <option value=\"$option\" selected=\"selected\">$label</option>\n";
 	    else
 		$output .= "  <option value=\"$option\">$label</option>\n";
@@ -2228,29 +2233,6 @@ extends _define {
     }
 }
 
-/*
-class _ini_set
-extends _variable {
-    function value() {
-        global $HTTP_POST_VARS;
-        if ($v = $HTTP_POST_VARS[$this->config_item_name])
-            return $v;
-        else {
-	    return ini_get($this->get_config_item_name);
-        }
-    }
-    function _config_format($value) {
-        return sprintf("ini_set('%s', '%s');", $this->get_config_item_name(), $value);
-    }
-    function _get_config_line($posted_value) {
-        if ($posted_value && ! $posted_value == $this->default_value)
-            return "\n" . $this->_config_format($posted_value);
-        else
-            return "\n;" . $this->_config_format($this->default_value);
-    }
-}
-*/
-
 class boolean_define
 extends _define {
 
@@ -2505,7 +2487,7 @@ if (!empty($HTTP_POST_VARS['action'])
     }
     
     if ($fp) {
-        fputs($fp, $config);
+        fputs($fp, utf8_encode($config));
         fclose($fp);
         echo "<p>The configuration was written to <code><b>$config_file</b></code>.</p>\n";
         if ($new_filename) {
@@ -2522,7 +2504,7 @@ if (!empty($HTTP_POST_VARS['action'])
     echo "<hr />\n<p>Here's the configuration file based on your answers:</p>\n";
     echo "<form method=\"get\" action=\"", $configurator, "\">\n";
     echo "<textarea id='config-output' readonly='readonly' style='width:100%;' rows='30' cols='100'>\n";
-    echo htmlentities($config);
+    echo htmlentities($config, ENT_COMPAT, "UTF-8");
     echo "</textarea></form>\n";
     echo "<hr />\n";
 
