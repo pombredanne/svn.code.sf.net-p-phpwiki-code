@@ -102,14 +102,10 @@ if (!$group_id || !$project) {
     // Get the maximum upload filesize from PHP config
     define('MAX_UPLOAD_SIZE', octets(ini_get('upload_max_filesize')));
 
-    // GForge is UTF-8, so use the same.
-    define('CHARSET', 'UTF-8');
-
     // Disable access log (already in apache & gforge).
     define('ACCESS_LOG_SQL', 0);
 
     define('DEBUG', ($sys_install_type != 'production'));
-    // define('_DEBUG_LOGIN', true);
 
     // Postgresql
     define('DATABASE_TYPE', 'SQL');
@@ -128,9 +124,6 @@ if (!$group_id || !$project) {
     // Allow ".svg" as extension
     define('INLINE_IMAGES', 'png|jpg|jpeg|gif|svg');
 
-    // Allow parsing of headers for CreateToc
-    define('TOC_FULL_SYNTAX', true);
-
     // Allow <div> and <span> in wiki code
     define('ENABLE_MARKUP_DIVSPAN', true);
 
@@ -141,14 +134,6 @@ if (!$group_id || !$project) {
     define('TOOLBAR_PAGELINK_PULLDOWN', false);
     define('TOOLBAR_TEMPLATE_PULLDOWN', false);
     define('TOOLBAR_IMAGE_PULLDOWN', true);
-
-    // Disable WYSIWYG
-    define('ENABLE_WYSIWYG', false);
-    define('WYSIWYG_BACKEND', 'tinymce');
-    define('WYSIWYG_DEFAULT_PAGETYPE_HTML', false);
-
-    // Disable public pages
-    define('ENABLE_PAGE_PUBLIC', false);
 
     // Enable external pages
     define('ENABLE_EXTERNAL_PAGES', $is_external);
@@ -169,15 +154,11 @@ if (!$group_id || !$project) {
     // Define access rights for the wiki.
     //
 
-    // Allow anonymous user to view the pages.
-    define('ALLOW_ANON_USER', true);
-
     // Do not allow anon users to edit pages
     define('ALLOW_ANON_EDIT', false);
 
     // Do not allow fake user
     define('ALLOW_BOGO_LOGIN', false);
-    define('ALLOW_USER_PASSWORDS', true);
 
     // A dedicated auth has been created to get auth from GForge
     $USER_AUTH_ORDER = array("GForge");
@@ -208,46 +189,19 @@ if (!$group_id || !$project) {
 
     define('USE_BYTEA', true);
 
-    define('ENABLE_SPAMBLOCKLIST', false);
-
-    define('ENCRYPTED_PASSWD', true);
-
     define('ENABLE_REVERSE_DNS', false);
-
-    define('ZIPDUMP_AUTH', false);
-
-    define('ENABLE_RAW_HTML', true);
-
-    define('ENABLE_RAW_HTML_LOCKEDONLY', true);
-
-    define('ENABLE_RAW_HTML_SAFE', true);
-
-    define('STRICT_MAILABLE_PAGEDUMPS', false);
 
     // Perhaps propose Web DAV location ?
     define('DEFAULT_DUMP_DIR', "");
     define('HTML_DUMP_DIR', "");
-    define('HTML_DUMP_SUFFIX', ".html");
-
-    define('MINOR_EDIT_TIMEOUT', 604800);
 
     define('COMPRESS_OUTPUT', false);
 
     define('CACHE_CONTROL', "NO_CACHE");
 
-    define('CACHE_CONTROL_MAX_AGE', 600);
-
-    define('COOKIE_EXPIRATION_DAYS', 365);
-
-    define('GROUP_METHOD', "WIKIPAGE");
-
-    define('DBAUTH_AUTH_CRYPT_METHOD', "plain");
-
     define('DEFAULT_LANGUAGE', "en");
 
     define('DISABLE_GETIMAGESIZE', true);
-
-    define('ENABLE_EDIT_TOOLBAR', true);
 
     // If the user is logged in, let the Wiki know
     if (session_loggedin()){
