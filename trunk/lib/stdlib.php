@@ -2490,14 +2490,13 @@ function is_image ($filename) {
 
 /**
  * Returns true if the filename ends with an video suffix.
- * Currently only FLV
+ * Currently only FLV and OGG
  */
 function is_video ($filename) {
 
     return string_ends_with(strtolower($filename), ".flv")
         or string_ends_with(strtolower($filename), ".ogg");
 }
-
 
 /**
  * Compute cell in spreadsheet table
