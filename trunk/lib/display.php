@@ -344,6 +344,9 @@ function displayPage(&$request, $template=false) {
     */
     if ($pagename == _("SandBox")) {
         $toks['ROBOTS_META']="noindex,nofollow";
+    } else if (isActionPage($pagename)) {
+        // AllPages must not be indexed, but must be followed to get all pages
+        $toks['ROBOTS_META']="noindex,follow";
     } else if (!isset($toks['ROBOTS_META'])) {
         $toks['ROBOTS_META'] = "index,follow";
     }
