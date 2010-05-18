@@ -14,7 +14,7 @@ rcs_id('$Id$');
  */
 /*
  * Copyright 2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
- * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -546,7 +546,9 @@ function IniConfig($file) {
     if (is_writable($dump)) {
         save_dump($dump);
     } else {
-    	die($dump . " is not writable");
+        if (! defined('GFORGE') or !GFORGE) {
+            die($dump . " is not writable");
+        }
     }
     // store locale[] in config.php? This is too problematic.
     fixup_dynamic_configs($file); // [100ms]
