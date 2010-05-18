@@ -73,6 +73,7 @@
     count_all ($arg)
     isSubPage ($pagename)
     subPageSlice ($pagename, $pos)
+    isActionPage ($filename)
 
     phpwiki_version ()
     isWikiWord ($word)
@@ -84,7 +85,7 @@
     firstNWordsOfContent ($n, $content)
     extractSection ($section, $content, $page, $quiet = false, $sectionhead = false)
     isExternalReferrer()
-    
+ 
     charset_convert($from, $to, $data)
     string_starts_with($string, $prefix)
     string_ends_with($string, $suffix)
@@ -177,7 +178,7 @@ function GetCookieName() {
 function WikiURL($pagename, $args = '', $get_abs_url = false) {
     global $request, $WikiTheme;
     $anchor = false;
-    
+ 
     if (is_object($pagename)) {
         if (isa($pagename, 'WikiDB_Page')) {
             $pagename = $pagename->getName();
@@ -1897,6 +1898,13 @@ function subPageSlice($pagename, $pos) {
     $pages = explode(SUBPAGE_SEPARATOR,$pagename);
     $pages = array_slice($pages,$pos,1);
     return $pages[0];
+}
+
+function isActionPage($filename) {
+
+    global $AllActionPages;
+
+    return (in_array($filename, $AllActionPages));
 }
 
 /**
