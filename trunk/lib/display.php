@@ -40,6 +40,7 @@ function RedirectorLink($pagename) {
 /* only on ?action= */    
 function actionPage(&$request, $action) {
     global $WikiTheme;
+    global $robots;
 
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
@@ -68,8 +69,10 @@ function actionPage(&$request, $action) {
       RecentChanges or AllPages might be an exception.
    */
     $args = array();
-    if (GOOGLE_LINKS_NOFOLLOW)
-	$args = array('ROBOTS_META' => "noindex,nofollow");
+    if (GOOGLE_LINKS_NOFOLLOW) {
+        $robots = "noindex,nofollow";
+	$args = array('ROBOTS_META' => $robots);
+    }
 
     /* Handle other formats: So far we had html only.
        xml is requested by loaddump, rss is handled by recentchanges, 
@@ -195,6 +198,7 @@ function actionPage(&$request, $action) {
 
 function displayPage(&$request, $template=false) {
     global $WikiTheme;
+    global $robots;
     $pagename = $request->getArg('pagename');
     $version = $request->getArg('version');
     $page = $request->getPage();
@@ -203,7 +207,8 @@ function displayPage(&$request, $template=false) {
         if (!$revision)
             NoSuchRevision($request, $page, $version);
         /* Tell Google (and others) to ignore old versions of pages */
-	$toks['ROBOTS_META'] = "noindex,nofollow";
+        $robots = "noindex,nofollow";
+	$toks['ROBOTS_META'] = $robots;
     }
     else {
         $revision = $page->getCurrentRevision();
@@ -339,16 +344,20 @@ function displayPage(&$request, $template=false) {
     /* Check for special pagenames, which are no actionpages. */
     /*
     if ( $pagename == _("RecentVisitors")) {
-        $toks['ROBOTS_META']="noindex,follow";
+        $robots = "noindex,follow";
+        $toks['ROBOTS_META'] = $robots;
     } else
     */
     if ($pagename == _("SandBox")) {
-        $toks['ROBOTS_META']="noindex,nofollow";
+        $robots = "noindex,nofollow";
+        $toks['ROBOTS_META'] = $robots;
     } else if (isActionPage($pagename)) {
         // AllPages must not be indexed, but must be followed to get all pages
-        $toks['ROBOTS_META']="noindex,follow";
+        $robots = "noindex,follow";
+        $toks['ROBOTS_META'] = $robots;
     } else if (!isset($toks['ROBOTS_META'])) {
-        $toks['ROBOTS_META'] = "index,follow";
+        $robots = "index,follow";
+        $toks['ROBOTS_META'] = $robots;
     }
     if (!isset($toks['CONTENT']))
         $toks['CONTENT'] = new Template('browse', $request, $page_content);
