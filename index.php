@@ -33,7 +33,11 @@ require_once (dirname(__FILE__).'/lib/prepend.php');
 rcs_id('$Id$');
 
 require_once(dirname(__FILE__).'/lib/IniConfig.php');
-IniConfig(dirname(__FILE__)."/config/config.ini");
+if (!defined('GFORGE') or !GFORGE) {
+    IniConfig(dirname(__FILE__)."/config/config.ini");
+} else {
+    IniConfig(dirname(__FILE__)."/config/config-default.ini");
+}
 
 ////////////////////////////////////////////////////////////////
 // PrettyWiki
