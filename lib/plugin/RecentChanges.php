@@ -1213,7 +1213,7 @@ extends WikiPlugin
         $args = WikiPlugin::getArgs($argstr, $request, $defaults);
 
         $action = $request->getArg('action');
-        if ($action != 'browse' && ! $request->isActionPage($action))
+        if ($action != 'browse' && !isActionPage($action))
             $args['format'] = false; // default -> HTML
 
         if ($args['format'] == 'rss' && empty($args['limit']))

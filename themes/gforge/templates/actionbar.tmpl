@@ -7,7 +7,7 @@ $curuserprefs = $user->getPreferences();
 $dbh = $request->getDbh();
 $isAdmin = $user->isAdmin();
 $pagename = $page->getName();
-$isActionPage = $request->_isActionPage($pagename, false);
+$isActionPage = isActionPage($pagename);
 $isBrowse = $request->getArg('action') == 'browse';
 ?>
 

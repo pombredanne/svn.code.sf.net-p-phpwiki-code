@@ -751,7 +751,6 @@ class Cached_UserLink extends Cached_WikiLink {
 /**
  * 1.3.13: Previously stored was only _pi. 
  * A fresh generated cache has now ->name and ->args also.
- * main::isActionPage only checks the raw content.
  */
 class Cached_PluginInvocation extends Cached_DynamicContent {
 
