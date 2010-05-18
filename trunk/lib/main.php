@@ -916,7 +916,7 @@ class WikiRequest extends Request {
             return $action;
 
         // Allow for, e.g. action=LikePages
-        if ($this->isActionPage($action))
+        if (isActionPage($action))
             return $action;
 
         // Handle untranslated actionpages in non-english
@@ -925,7 +925,7 @@ class WikiRequest extends Request {
             require_once("lib/plugin/_WikiTranslation.php");
             $trans = new WikiPlugin__WikiTranslation();
             $en_action = $trans->translate($action,'en',$GLOBALS['LANG']);
-            if ($this->isActionPage($en_action))
+            if (isActionPage($en_action))
                 return $en_action;
         }
 
@@ -985,13 +985,6 @@ class WikiRequest extends Request {
         return false;
     }
     
-    function _isActionPage ($pagename, $verbose = true) {
-
-        global $AllActionPages;
- 
-        return (in_array($pagename, $AllActionPages));
-    }
-
     function findActionPage ($action) {
         static $cache;
         if (!$action) return false;
@@ -1004,7 +997,7 @@ class WikiRequest extends Request {
             return $cache[$translation];
 
         // check for cached translated version
-        if ($translation and $this->_isActionPage($translation, false))
+        if ($translation and isActionPage($translation))
             return $cache[$action] = $translation;
 
         // Allow for, e.g. action=LikePages
@@ -1019,7 +1012,7 @@ class WikiRequest extends Request {
             $trans = new WikiPlugin__WikiTranslation();
             $trans->lang = $LANG;
 	    $default = $trans->translate_to_en($action, $LANG);
-            if ($default and $this->_isActionPage($default, false))
+            if ($default and isActionPage($default))
                 return $cache[$action] = $default;
         } else {
             $default = $translation;
@@ -1027,7 +1020,7 @@ class WikiRequest extends Request {
         
         // check for english version
         if ($action != $translation and $action != $default) {
-            if ($this->_isActionPage($action))
+            if (isActionPage($action))
                 return $cache[$action] = $action;
         }
 
@@ -1035,10 +1028,6 @@ class WikiRequest extends Request {
         return $cache[$action] = false;
     }
     
-    function isActionPage ($pagename) {
-        return $this->findActionPage($pagename);
-    }
-
     function action_browse () {
         $this->buffer_output();
         include_once("lib/display.php");

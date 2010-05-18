@@ -114,17 +114,6 @@ class Upgrade {
 	}
     }
 
-    /** 
-     *  If a matching pgsrc => pluginname exists
-     *  Need the English filename (required precondition: urlencode == urldecode).
-     */ 
-    function isActionPage($filename) {
-
-        global $AllActionPages;
-
-        return (in_array($filename, $AllActionPages));
-    }
-
     function CheckActionPageUpdate() {
 	echo "<h3>",sprintf(_("check for necessary %s updates"),
 			    _("ActionPage")),"</h3>\n";
@@ -143,7 +132,7 @@ class Upgrade {
 	    if (substr($filename,-1,1) == '~') continue;
 	    if (substr($filename,-5,5) == '.orig') continue;
 	    $pagename = urldecode($filename);
-	    if ($this->isActionPage($filename)) {
+	    if (isActionPage($filename)) {
 		$translation = gettext($pagename);
 		if ($translation == $pagename)
 		    $this->doPgsrcUpdate($pagename, $path, $filename);
@@ -169,7 +158,7 @@ class Upgrade {
 	    if (substr($filename,-1,1) == '~') continue;
 	    if (substr($filename,-5,5) == '.orig') continue;
 	    $pagename = urldecode($filename);
-	    if (!$this->isActionPage($filename)) {
+	    if (!isActionPage($filename)) {
 		// There're a lot of now unneeded pages around. 
 		// At first rename the BlaPlugin pages to Help/<pagename> and then to the update.
 		if ($this->db_version < 1030.12200612) {

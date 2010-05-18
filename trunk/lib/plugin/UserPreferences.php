@@ -78,7 +78,7 @@ extends WikiPlugin
                                  _("Error: You are not logged in, cannot display UserPreferences."));
             }
         }
-        if ((!$request->isActionPage($request->getArg('pagename'))
+        if ((!isActionPage($request->getArg('pagename'))
              and (!isset($user->_prefs->_method)
                   or !in_array($user->_prefs->_method, array('ADODB','SQL','PDO'))))
             or (in_array($request->getArg('action'), array('zip','ziphtml','dumphtml')))
