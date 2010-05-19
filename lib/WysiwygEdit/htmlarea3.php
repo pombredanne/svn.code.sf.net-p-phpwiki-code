@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /**
  * requires installation into themes/default/htmlarea3/
  * MSIE => 5.5,  Mozilla >= 1.3

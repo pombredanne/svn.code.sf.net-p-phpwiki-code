@@ -6,7 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-rcs_id('$Id$');
+// rcs_id('$Id$');
 
 require_once('lib/WikiTheme.php');
 require_once('themes/wikilens/themeinfo.php');

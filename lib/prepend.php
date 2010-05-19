@@ -3,13 +3,7 @@
  *
  * Things which must be done and defined before anything else.
  */
-$RCS_IDS = '';
-function rcs_id ($id) { 
-    // Save memory
-    if (defined('DEBUG') and DEBUG)
-        $GLOBALS['RCS_IDS'] .= "$id\n"; 
-}
-rcs_id('$Id$');
+// rcs_id('$Id$');
 
 // see lib/stdlib.php: phpwiki_version()
 define('PHPWIKI_VERSION', '1.4.0RC-20100415');

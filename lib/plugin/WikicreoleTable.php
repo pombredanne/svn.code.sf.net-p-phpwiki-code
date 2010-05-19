@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *

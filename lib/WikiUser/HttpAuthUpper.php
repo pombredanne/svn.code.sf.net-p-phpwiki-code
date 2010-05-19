@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /* Copyright (C) 2004,2007 ReiniUrban
  * This file is part of PhpWiki. Terms and Conditions see LICENSE. (GPL2)
  */

@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /*
  * Copyright 1999-2008 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
@@ -1206,9 +1206,6 @@ class WikiRequest extends Request {
     function action_zip () {
         include_once("lib/loadsave.php");
         MakeWikiZip($this);
-        // I don't think it hurts to add cruft at the end of the zip file.
-        //echo "\n========================================================\n";
-        //echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$GLOBALS[RCS_IDS]\n";
     }
 
     function action_ziphtml () {
@@ -1216,7 +1213,7 @@ class WikiRequest extends Request {
         MakeWikiZipHtml($this);
         // I don't think it hurts to add cruft at the end of the zip file.
         echo "\n========================================================\n";
-        echo "PhpWiki " . PHPWIKI_VERSION . " source:\n$GLOBALS[RCS_IDS]\n";
+        echo "PhpWiki " . PHPWIKI_VERSION . "\n";
     }
 
     function action_dumpserial () {

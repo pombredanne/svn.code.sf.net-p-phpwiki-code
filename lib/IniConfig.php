@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /**
  * A configurator intended to read its config from a PHP-style INI file,
  * instead of a PHP file.
@@ -77,7 +77,7 @@ function save_dump($file) {
         $ignore["HTTP_".$key."_VARS"]++;
         $ignore["_".$key]++;
     }
-    foreach (array("HTTP_POST_FILES","GLOBALS","RUNTIMER","ErrorManager",'RCS_IDS','LANG',
+    foreach (array("HTTP_POST_FILES","GLOBALS","RUNTIMER","ErrorManager",'LANG',
     		   'HOME_PAGE','request','SCRIPT_NAME','VIRTUAL_PATH','SCRIPT_FILENAME') as $key)
     	$ignore[$key]++;
     $fp = fopen($file, "wb");

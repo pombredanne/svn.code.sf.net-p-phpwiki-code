@@ -1,5 +1,5 @@
 <?php  // -*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /*
  * This template is responsible mainly for the outer level <html> stuff.
  *
@@ -12,11 +12,4 @@ if (browserVersion() >= 4.0)
 <html <?php /* xmlns="http://www.w3.org/1999/xhtml" */ ?> xml:lang="<?=$GLOBALS['LANG']?>" lang="<?=$GLOBALS['LANG']?>">
 <?= Template('head') ?>
 <?= Template('body') ?>
-<?php
-if (defined('DEBUG') and DEBUG) {
-    echo "<!-- phpwiki source: \n";
-    echo $RCS_IDS;
-    echo "-->\n";
-}
-?>
 </html>

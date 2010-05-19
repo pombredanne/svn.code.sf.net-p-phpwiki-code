@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 
 require_once("lib/ErrorManager.php");
 
@@ -137,7 +137,7 @@ class Template
         if (!isset($revision)) 
 	    $revision = false;
 
-        global $WikiTheme, $RCS_IDS, $charset; 
+        global $WikiTheme, $charset; 
         //$this->_dump_template();
         $SEP = $WikiTheme->getButtonSeparator();
 

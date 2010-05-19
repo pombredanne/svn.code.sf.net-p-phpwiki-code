@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 
 class WikiDB_backend_dumb_TextSearchIter
 extends WikiDB_backend_iterator

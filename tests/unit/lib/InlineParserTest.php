@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id$');
+// rcs_id('$Id$');
 
 /* Copyright (C) 2004 Dan Frankowski <dfrankow@cs.umn.edu>
  *           (C) 2006, 2007 Reini Urban <rurban@x-ray.at>

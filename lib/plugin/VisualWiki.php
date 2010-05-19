@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2002 Johannes Große (Johannes Gro&szlig;e)
  *

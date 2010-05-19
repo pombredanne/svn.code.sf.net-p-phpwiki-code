@@ -1,5 +1,5 @@
 <?php //-*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 
 /*
  Copyright 1999,2000,2001,2002,2004,2005,2006,2007 $ThePhpWikiProgrammingTeam
@@ -576,7 +576,6 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 
     $request_args = $request->args;
     $timeout = (! $request->getArg('start_debug')) ? 60 : 240;
-    $SAVE_RCS_IDS = $GLOBALS['RCS_IDS'];
     if ($directory) {
     	if (isWindows())
     	    $directory = str_replace("\\", "/", $directory); // no Win95 support.
@@ -728,8 +727,6 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 	    unset($template);
 	}
         unset($data);
-	if (DEBUG)
-	    $GLOBALS['RCS_IDS'] = $SAVE_RCS_IDS;
     }
     $page_iter->free();
 

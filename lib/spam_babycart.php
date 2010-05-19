@@ -1,5 +1,5 @@
 <?php
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /*
 * $Id$
 * Author: Bob Apthorpe <apthorpe+babycart@cynistar.net>

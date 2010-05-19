@@ -6,7 +6,7 @@ if (!defined('PHPWIKI_VERSION')) {
     exit;
 }
 
-rcs_id('$Id$');
+// rcs_id('$Id$');
 
 /**
  * A PhpWiki theme inspired by the Aqua appearance of Mac OS X.

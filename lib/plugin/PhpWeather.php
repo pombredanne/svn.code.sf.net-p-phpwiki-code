@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
+// rcs_id('$Id PhpWeather.php 2002-08-26 15:30:13 rurban$');
 /**
  * Copyright 1999, 2000, 2001, 2002 $ThePhpWikiProgrammingTeam
  *
