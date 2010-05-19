@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 
 /**
  * MS SQL extensions for the ADODB DB backend.

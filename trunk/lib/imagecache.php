@@ -1,4 +1,4 @@
-<?php rcs_id('$Id$');
+<?php // rcs_id('$Id$');
 /*
  * Copyright (C) 2002 Johannes Große
  *

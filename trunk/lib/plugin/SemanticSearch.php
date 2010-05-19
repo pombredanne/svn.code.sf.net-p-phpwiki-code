@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /*
  * Copyright 2007 Reini Urban
  * Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent

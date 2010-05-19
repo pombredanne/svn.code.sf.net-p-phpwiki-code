@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /* 
  * A "popup" dialog.  (Though it doesn't pop up yet.)
  */
@@ -29,9 +29,4 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
   <?= $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
 <?php } ?>
 </body>
-<?php
-if (defined('DEBUG') and DEBUG) {
-    printf("<!-- phpwiki source: \n%s-->\n", $RCS_IDS);
-}
-?>
 </html>

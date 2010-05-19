@@ -1,5 +1,5 @@
 <?php  // -*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /*
  * This template is used only for html file dumps, and is responsible
  * mainly for the outer level <html> stuff and the and <head>.
@@ -34,9 +34,4 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <title><?=WIKI_NAME.$pagetitle?></title>
 </head>
 <?= Template('body') ?>
-<?php
-if (defined('DEBUG') and DEBUG) {
-    printf("<!-- phpwiki source: \n%s-->\n", $RCS_IDS); 
-}
-?>
 </html>

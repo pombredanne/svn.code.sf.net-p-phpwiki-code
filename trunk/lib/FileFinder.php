@@ -1,4 +1,4 @@
-<?php rcs_id('$Id$');
+<?php // rcs_id('$Id$');
 
 require_once(dirname(__FILE__).'/stdlib.php');
 

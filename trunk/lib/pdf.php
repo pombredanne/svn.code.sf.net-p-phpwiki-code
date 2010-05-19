@@ -1,5 +1,5 @@
 <?php // -*-php-*-
-rcs_id('$Id$');
+// rcs_id('$Id$');
 /*
  * Copyright (C) 2003 Olivier PLATHEY
  * Copyright (C) 200? Don Sebà

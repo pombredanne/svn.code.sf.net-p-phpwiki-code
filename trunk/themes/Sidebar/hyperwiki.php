@@ -1,5 +1,5 @@
 <?php 
-  rcs_id('$Id$');
+  // rcs_id('$Id$');
   /* Download hyperwiki.jar and GraphXML.dtd from 
    *   http://hypergraph.sourceforge.net/download.html
    *   and place it into your theme directory.

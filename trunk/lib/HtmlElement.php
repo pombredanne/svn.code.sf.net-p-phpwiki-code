@@ -1,4 +1,4 @@
-<?php rcs_id('$Id$');
+<?php // rcs_id('$Id$');
 /**
  * Code for writing the HTML subset of XML.
  * @author: Jeff Dairiki

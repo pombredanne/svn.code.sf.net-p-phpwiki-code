@@ -1,4 +1,4 @@
-<?php rcs_id('$Id$');
+<?php // rcs_id('$Id$');
 
 if (isset($GLOBALS['ErrorManager'])) return;
 

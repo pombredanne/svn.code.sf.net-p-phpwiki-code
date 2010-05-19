@@ -1,4 +1,4 @@
-<?php rcs_id('$Id$');
+<?php // rcs_id('$Id$');
 /*
  * Code for creating RSS 2.0
  * Author: Reini Urban for PhpWiki
