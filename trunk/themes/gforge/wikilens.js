@@ -33,18 +33,23 @@ function displayRating(imgId, imgPrefix, ratingvalue, pred, init) {
   var curr_rating = rating[imgId];
   var curr_pred = prediction[imgId];
   var title = '';
+  var imgSrc = rateit_imgsrc;
   if (init) { // re-initialize titles
     title = msg_curr_rating+curr_rating+' '+ratings[curr_rating*2];
     var linebreak = '. '; //&#xD or &#13 within IE only;
     if (pred) {
       title = title+' '+msg_curr_prediction+ curr_pred+' '+ratings[curr_pred*2];
     }
+	if (curr_rating) {
+	  document[cancel].style.display = 'inline';
+	}
+	else {
+	  document[cancel].style.display = 'none';
+	}
   }
   for (var i=1; i<=10; i++) {
     var imgName = imgId + i;
-    var imgSrc = rateit_imgsrc;
     if (init) {
-      if (curr_rating) document[cancel].style.display = 'inline';
       document[imgName].title = title;
       var j = i/2;
       if (ratingvalue > 0) {
@@ -73,7 +78,8 @@ function displayRating(imgId, imgPrefix, ratingvalue, pred, init) {
   }
 }
 function sprintfRating(s, num, count) {
-    var num1 = num.toString().replace(/\.(\d).*/, '.$1');
+	var num1 = Math.round(num * 10) / 10;
+	if (count < 2) s = s.replace(/votes/, 'vote');
     return s.replace(/\%.1f/, num1).replace(/\%d/, count);
 }
 function clickRating(imgPrefix,pagename,version,imgId,dimension,newrating) {
@@ -83,50 +89,57 @@ function clickRating(imgPrefix,pagename,version,imgId,dimension,newrating) {
   var old_rating = rating[imgId];
   if (newrating == 'X') {
     deleteRating(actionImg,pagename,dimension);
-    displayRating(imgId,imgPrefix,0,0,1);
     if (top && nusers) {
         var sum1 = avg[imgId] * nusers;
         var new_avg;
-        if (nusers > 1)
-            new_avg = (sum1 - old_rating)  / (nusers-1);
-        else    
-            new_avg = 0.0;
+        if (old_rating && old_rating > 0) {
+		  if (nusers > 1) {
+		  	new_avg = (sum1 - old_rating) / (nusers - 1);
+		  	numusers[imgId]--;
+		  }
+		  else {
+		  	new_avg = 0;
+		  	numusers[imgId] = 0;
+		  }
+		}
         if (new_avg.toString() != "NaN") {
+			avg[imgId] = new_avg;
             top.childNodes[0].innerHTML = sprintfRating(msg_rating_votes, new_avg, nusers-1);
-            avg[imgId] = new_avg;
-            numusers[imgId]--;
         }
     }
     rating[imgId] = 0;
+	displayRating(imgId,imgPrefix,0,0,1);
   } else {
     submitRating(actionImg,pagename,version,dimension,newrating);
-    displayRating(imgId,imgPrefix,newrating,0,1);
     if (top && nusers) {
-        var new_avg;
         var sum1 = avg[imgId] * nusers;
+		var new_avg;
         if (old_rating && (old_rating > 0)) {
             new_avg = (sum1 + newrating - old_rating)  / nusers;
         } else {
             new_avg = (sum1 + newrating) / (nusers + 1);
-            avg[imgId] = new_avg;
             numusers[imgId]++;
         }
-        if ((rating != rating[imgId]) && (new_avg.toString() != "NaN")) {
-            top.childNodes[0].innerHTML = sprintfRating(msg_rating_votes, new_avg, numusers[imgId]);
-        }
+		if (new_avg.toString() != "NaN") {
+			avg[imgId] = new_avg;
+			if (newrating != rating[imgId]) {
+				top.childNodes[0].innerHTML = sprintfRating(msg_rating_votes, new_avg, numusers[imgId]);
+			}
+		}
     } else if (top) {
         top.childNodes[0].innerHTML = sprintfRating(msg_rating_votes, newrating, 1);
         avg[imgId] = newrating;
         numusers[imgId] = 1;
     }
     rating[imgId] = newrating;
+	displayRating(imgId,imgPrefix,newrating,0,1);
   }
 }
 function submitRating(actionImg,page,version,dimension,newrating) {
   //TODO: GET => PUT request
   // currently ratings are changed with side-effect, but GET should be side-effect free.
   var myRand = Math.round(Math.random()*(1000000));
-  var imgSrc = WikiURL(page) + 'version=' + version + '&action=' + rateit_action + '+&mode=add&rating=' + newrating + '&dimension=' + dimension + '&nocache=1&nopurge=1&rand=' + myRand;
+  var imgSrc = WikiURL(page) + 'version=' + version + '&action=' + rateit_action + '&mode=add&rating=' + newrating + '&dimension=' + dimension + '&nocache=1&nopurge=1&rand=' + myRand;
   //alert('submitRating("'+actionImg+'", "'+page+'", '+version+', '+dimension+', '+newrating+') => '+imgSrc);
   document[actionImg].title = msg_thanks;
   document[actionImg].src = imgSrc;
