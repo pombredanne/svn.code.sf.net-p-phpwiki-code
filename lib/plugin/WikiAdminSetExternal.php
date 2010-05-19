@@ -39,11 +39,6 @@ extends WikiPlugin_WikiAdminSelect
         return _("Mark selected pages as external.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

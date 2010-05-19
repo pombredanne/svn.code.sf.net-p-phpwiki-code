@@ -57,11 +57,6 @@ extends WikiPlugin
         return _("Analyzes preferences based on voting budget and ratings.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array(
                      'category' => null,

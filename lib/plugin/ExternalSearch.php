@@ -45,11 +45,6 @@ extends WikiPlugin
         //fixme: better description
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function _getInterWikiUrl(&$request) {
         $intermap = getInterwikiMap();
         $map = $intermap->_map;

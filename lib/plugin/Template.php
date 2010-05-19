@@ -65,11 +65,6 @@ extends WikiPlugin
         return _("Parametrized page inclusion.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array(
                      'page'    => false, // the page to include

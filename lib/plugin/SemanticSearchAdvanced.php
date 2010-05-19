@@ -64,10 +64,6 @@ extends WikiPlugin_SemanticSearch
     function getDescription() {
         return _("Parse and execute a full query expression");
     }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
     function getDefaultArguments() {
         return array_merge
             (

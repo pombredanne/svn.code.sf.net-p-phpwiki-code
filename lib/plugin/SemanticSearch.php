@@ -60,10 +60,6 @@ extends WikiPlugin
     function getDescription() {
         return _("Search relations and attributes");
     }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
     function getDefaultArguments() {
         return array_merge
             (

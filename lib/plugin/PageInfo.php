@@ -37,11 +37,6 @@ extends WikiPlugin
                        '[pagename]');
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('page' => '[pagename]',
                      'version' => '[version]');

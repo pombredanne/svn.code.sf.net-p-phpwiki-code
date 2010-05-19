@@ -37,11 +37,6 @@ extends WikiPlugin
         return _("Displays a list of randomly chosen pages or redirects to a random page.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

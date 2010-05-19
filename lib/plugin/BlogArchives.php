@@ -43,11 +43,6 @@ extends WikiPlugin_WikiBlog
         return _("List blog months links for the current or ADMIN user");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return //array_merge
                //(

@@ -43,11 +43,6 @@ extends WikiPlugin
         return _("Hilight referred search terms.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         // s, engine and engine_url are picked from the request
         return array('noheader' => false,    //don't print the header

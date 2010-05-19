@@ -47,10 +47,6 @@ extends WikiPluginCached
     function getDescription () {
         return _("List all pages with all links in various formats for some Java Visualization tools");
     }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
     function getExpire($dbi, $argarray, $request) {
         return '+900'; // 15 minutes
     }

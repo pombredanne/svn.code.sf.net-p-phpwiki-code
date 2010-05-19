@@ -39,11 +39,6 @@ extends WikiPlugin
         return _("Display general and user specific auth information.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('userid' => '');
     }

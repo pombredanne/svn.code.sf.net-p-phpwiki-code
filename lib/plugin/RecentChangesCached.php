@@ -34,7 +34,6 @@ require_once "lib/plugin/RecentChanges.php";
 class WikiPlugin_RecentChangesCached
 extends WikiPluginCached
 {
-    /* --------- overwrite virtual or abstract methods ---------------- */
     function getPluginType() {
         return PLUGIN_CACHED_HTML;
     }
@@ -45,11 +44,6 @@ extends WikiPluginCached
 
     function getDescription() {
         return 'Caches output of RecentChanges called with default arguments.';
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     function getDefaultArguments() {

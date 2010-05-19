@@ -64,11 +64,6 @@ extends WikiPlugin
         return _("Enable configurable polls");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('page'        => '[pagename]',
                      'admin'       => false,

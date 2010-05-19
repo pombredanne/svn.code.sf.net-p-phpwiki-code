@@ -43,11 +43,6 @@ extends WikiPlugin_SiteMap
     return _("Dynamic Category Tree");
   }
 
-  function getVersion() {
-      return preg_replace("/[Revision: $]/", '',
-                          "\$Revision$");
-  }
-
   function getDefaultArguments() {
       return array('exclude'        => '',
                    'include_self'   => 0,

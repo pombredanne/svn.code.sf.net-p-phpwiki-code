@@ -37,10 +37,6 @@ extends WikiPlugin
     function getDescription() {
         return _("Search page and link names");
     }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
     function getDefaultArguments() {
         return array_merge
             (

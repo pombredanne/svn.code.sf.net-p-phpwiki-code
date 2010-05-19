@@ -38,11 +38,6 @@ extends WikiPlugin
         return _("List the most popular tags.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('pagename' => '[pagename]',
                      'limit'    => 10,
@@ -50,7 +45,6 @@ extends WikiPlugin
                      'noheader' => 0,
                     );
     }
-
 
     function run($dbi, $argstr, &$request, $basepage) {
             $args = $this->getArgs($argstr, $request);

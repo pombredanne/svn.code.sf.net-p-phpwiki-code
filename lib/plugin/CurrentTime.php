@@ -53,8 +53,6 @@ rcs_id('$Id$');
 class WikiPlugin_CurrentTime
 extends WikiPlugin
 {
-    // Five required functions in a WikiPlugin.
-
     function getName () {
         return _("CurrentTime");
     }
@@ -62,11 +60,6 @@ extends WikiPlugin
     function getDescription () {
         return _("A simple plugin that displays current time and date");
 
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     // Establish default values for each of this plugin's arguments.

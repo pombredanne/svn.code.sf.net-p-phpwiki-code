@@ -50,11 +50,6 @@ extends WikiPlugin
         return _("Search the content of all pages in this wiki.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

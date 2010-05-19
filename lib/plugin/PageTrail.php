@@ -47,12 +47,6 @@ extends WikiPlugin
 
     function getDescription () {
         return _("PageTrail Plugin");
-
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     // default values

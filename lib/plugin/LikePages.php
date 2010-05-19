@@ -23,8 +23,6 @@ rcs_id('$Id$');
 require_once('lib/TextSearchQuery.php');
 require_once('lib/PageList.php');
 
-/**
- */
 class WikiPlugin_LikePages
 extends WikiPlugin
 {
@@ -35,11 +33,6 @@ extends WikiPlugin
     function getDescription() {
         return sprintf(_("List page names which share an initial or final title word with '%s'."),
                        '[pagename]');
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     function getDefaultArguments() {

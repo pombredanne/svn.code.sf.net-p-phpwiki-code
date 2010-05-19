@@ -38,19 +38,12 @@ if (!defined('MY_JABBER_ID'))
 class WikiPlugin_JabberPresence
 extends WikiPlugin
 {
-    // Five required functions in a WikiPlugin.
     function getName () {
         return _("JabberPresence");
     }
 
     function getDescription () {
         return _("Simple jabber presence plugin");
-
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     // Establish default values for each of this plugin's arguments.

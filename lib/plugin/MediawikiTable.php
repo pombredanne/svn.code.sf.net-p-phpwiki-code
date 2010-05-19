@@ -64,11 +64,6 @@ extends WikiPlugin
         return array();
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function run($dbi, $argstr, &$request, $basepage) {
         include_once("lib/BlockParser.php");
         // MediawikiTablePlugin markup is new.

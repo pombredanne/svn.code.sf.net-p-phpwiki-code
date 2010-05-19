@@ -46,11 +46,6 @@ extends WikiPlugin
         return _("Allow admin to reset any users password, allow user to request his password by e-mail.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('user' => '');
     }

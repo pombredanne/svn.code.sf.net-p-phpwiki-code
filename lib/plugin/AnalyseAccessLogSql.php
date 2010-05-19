@@ -256,11 +256,6 @@ extends WikiPlugin
         return _("Show summary information from the access log table.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function run($dbi, $argstr, &$request, $basepage) {
         // flag that the output may not be cached - i.e. it is dynamic
         $request->setArg('nocache', 1);

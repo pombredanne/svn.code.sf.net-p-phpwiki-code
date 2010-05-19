@@ -54,11 +54,6 @@ extends WikiPlugin
         return _("Display video in Flash");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('width'    => 460,
                      'height'   => 320,

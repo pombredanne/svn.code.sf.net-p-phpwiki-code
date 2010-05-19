@@ -34,11 +34,6 @@ extends WikiPlugin
         return sprintf(_("Get debugging information for %s."), '[pagename]');
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('page' => '[pagename]',
                      'notallversions' => 0);

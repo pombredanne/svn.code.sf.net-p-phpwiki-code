@@ -42,11 +42,6 @@ extends WikiPlugin
         return _("Show summary information of the current user sessions.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         // two modes: summary and detail, page links to the page with the other mode
         return array(

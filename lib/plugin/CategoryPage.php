@@ -48,11 +48,6 @@ extends WikiPlugin
         return _("Create a Wiki page.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array(// Assume the categories are listed on the HomePage
                      'exclude'              => false,

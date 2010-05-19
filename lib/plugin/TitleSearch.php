@@ -48,11 +48,6 @@ extends WikiPlugin
         return _("Search the titles of all pages in this wiki.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

@@ -39,11 +39,6 @@ extends WikiPlugin_IncludePage
         return _("Include multiple pages.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
             return array_merge(
                            array( 'pages'   => false,  // the pages to include

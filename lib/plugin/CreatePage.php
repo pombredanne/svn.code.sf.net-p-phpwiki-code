@@ -46,11 +46,6 @@ extends WikiPlugin_Template
         return _("Create a Wiki page by the provided name.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('s'            => false,
                      'initial_content' => '',

@@ -43,11 +43,6 @@ extends WikiPlugin_WikiBlog
         return sprintf(_("Show and add comments for %s"),'[pagename]');
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     // Arguments:
     //
     //  page - page where the comment is attached at (default current page)

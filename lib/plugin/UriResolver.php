@@ -40,11 +40,6 @@ extends WikiPlugin
         return _("Converts an uri-escaped identifier back to an unique XML-ID");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array();
     }

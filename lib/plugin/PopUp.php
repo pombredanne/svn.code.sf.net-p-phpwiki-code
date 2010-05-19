@@ -51,11 +51,6 @@ extends WikiPlugin
     }
     function getDescription () {
         return _("Used to create a clickable popup link.");
-
-    }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
     function getDefaultArguments() {
         return array('link'        => "HomePage",

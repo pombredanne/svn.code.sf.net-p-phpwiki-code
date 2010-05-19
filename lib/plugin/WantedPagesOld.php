@@ -34,11 +34,6 @@ extends WikiPlugin
         return _("Lists referenced page names which do not exist yet.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('noheader' => false,
                      'exclude'  => _("PgsrcTranslation"),

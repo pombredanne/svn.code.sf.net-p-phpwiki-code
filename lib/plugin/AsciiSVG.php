@@ -36,11 +36,6 @@ extends WikiPlugin
         return _("Render inline ASCII SVG");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('width'  => 200,
                      'height' => 200,

@@ -42,11 +42,6 @@ extends WikiPlugin
         return array();
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function run($dbi, $argstr, &$request, $basepage) {
             global $WikiTheme;
         include_once("lib/BlockParser.php");

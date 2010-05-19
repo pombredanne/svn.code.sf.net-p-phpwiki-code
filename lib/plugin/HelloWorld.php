@@ -40,7 +40,7 @@ if (!defined('THE_END'))
 class WikiPlugin_HelloWorld
 extends WikiPlugin
 {
-    // Five required functions in a WikiPlugin.
+    // Four required functions in a WikiPlugin.
 
     function getName () {
         return _("HelloWorld");
@@ -49,11 +49,6 @@ extends WikiPlugin
     function getDescription () {
         return _("Simple Sample Plugin");
 
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     // Establish default values for each of this plugin's arguments.

@@ -34,11 +34,6 @@ extends WikiPlugin
         return _("List the most popular pages.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

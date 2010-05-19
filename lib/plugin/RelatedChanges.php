@@ -38,7 +38,6 @@ extends _RecentChanges_HtmlFormatter
     }
 }
 
-
 class WikiPlugin_RelatedChanges
 extends WikiPlugin_RecentChanges
 {
@@ -48,11 +47,6 @@ extends WikiPlugin_RecentChanges
 
     function getDescription () {
         return _("List of changes on all pages which are linked to from this page.");
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     function getDefaultArguments() {

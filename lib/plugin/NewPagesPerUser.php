@@ -39,11 +39,6 @@ extends WikiPlugin
         return _("List all new pages per month per user");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('userid'   => '',
                      'month'    => 0,

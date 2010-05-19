@@ -42,11 +42,6 @@ extends WikiPlugin_WikiAdminSelect
         return _("Search and replace text in selected wiki pages.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

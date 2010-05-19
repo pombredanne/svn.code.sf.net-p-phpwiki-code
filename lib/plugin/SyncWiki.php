@@ -50,11 +50,6 @@ extends WikiPlugin_WikiAdminUtils
         return _("Synchronize pages with external PhpWiki");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('url'    => '',
                      'noimport' => 0,

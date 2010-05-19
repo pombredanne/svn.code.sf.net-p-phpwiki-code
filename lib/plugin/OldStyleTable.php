@@ -54,11 +54,6 @@ extends WikiPlugin
       return _("Layout tables using the old markup style.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array(
                      'caption'     => '',

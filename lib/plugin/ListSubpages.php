@@ -38,11 +38,6 @@ extends WikiPlugin
         return _("Lists the names of all SubPages of the current page.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

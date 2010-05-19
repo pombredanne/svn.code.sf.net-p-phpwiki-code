@@ -83,13 +83,6 @@ class WikiPlugin
         return $this->getName();
     }
     
-    // plugins should override this with the commented-out code
-    function getVersion() {
-        return _("n/a");
-        //return preg_replace("/[Revision: $]/", '',
-        //                    "\$Revision: 1.67 $");
-    }
-
     function getArgs($argstr, $request=false, $defaults=false) {
         if ($defaults === false) {
             $defaults = $this->getDefaultArguments();

@@ -56,11 +56,6 @@ extends WikiPlugin
         return _("Displays a url in a seperate frame inside our body. Only one frame allowed.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array( 'src'         => false,       // the src url to include
                       'page'        => false,

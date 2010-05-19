@@ -42,11 +42,6 @@ extends WikiPlugin_WikiBlog
         return _("Include latest blog entries for the current or ADMIN user");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('count'    => 7,
                      'user'     => '',

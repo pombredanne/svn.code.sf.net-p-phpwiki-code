@@ -40,11 +40,6 @@ extends WikiPlugin
         return _("Manage notifications emails per page.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('page' => '[pagename]',
                      'mode'   => 'add',

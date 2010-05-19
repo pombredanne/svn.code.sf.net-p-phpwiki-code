@@ -44,11 +44,6 @@ extends WikiPlugin_IncludePage
         return _("Includes the content of all SubPages of the current page.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

@@ -48,11 +48,6 @@ extends WikiPlugin__WikiTranslation
         return _("Define a translation for a specified text");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return
             array( 'lang'      => false,

@@ -27,7 +27,6 @@ rcs_id('$Id$');
  * Would make sense to see arbitrary diff's between any files or revisions.
  */
 
-//require_once('lib/difflib.php');
 require_once('lib/diff.php');
 
 class WikiPlugin_Diff
@@ -39,11 +38,6 @@ extends WikiPlugin {
 
     function getDescription () {
         return _("Display differences between revisions");
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     // Establish default values for each of this plugin's arguments.

@@ -56,11 +56,6 @@ extends WikiPluginCached
         return _("Provides access to PhpWiki's lower level system information.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     /* From lib/WikiPlugin.php:
      * If the plugin can deduce a modification time, or equivalent
      * sort of tag for it's content, then the plugin should

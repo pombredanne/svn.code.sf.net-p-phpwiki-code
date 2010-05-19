@@ -42,11 +42,6 @@ extends WikiPlugin_WikiAdminSelect
         return _("Change owner of selected pages.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

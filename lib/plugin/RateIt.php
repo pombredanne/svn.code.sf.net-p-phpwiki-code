@@ -90,10 +90,6 @@ extends WikiPlugin
     function getDescription() {
         return _("Rating system. Store user ratings per page");
     }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
 
     function RatingWidgetJavascript() {
         global $WikiTheme;
