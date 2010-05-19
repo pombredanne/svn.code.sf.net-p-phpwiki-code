@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,7 +11,7 @@ Content-Transfer-Encoding: binary
 The **~OldStyleTable** [[Help:WikiPlugin|plugin]] can be used to include tables within a wiki
 page using the old-style markup syntax for tables.
 
-== Usage
+== Usage ==
 
 {{{
 <<OldStyleTable caption="OldStyleTable" border||=2
@@ -36,7 +36,7 @@ used to span rows.  A __>__ generates a right justified column, __<__
 a left justified column and __^__ a centered column (which is the
 default.)
 
-== Arguments
+== Arguments ==
 
 __caption__:
 

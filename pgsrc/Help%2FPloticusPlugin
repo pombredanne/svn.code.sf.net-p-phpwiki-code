@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -16,7 +16,7 @@ See http://ploticus.sourceforge.net/doc/welcome.html
 
 Ploticus uses a cache expire date of days.
 
-== Usage
+== Usage ==
 {{{
 <<Ploticus device||=png [ploticus options...]
      multiline ploticus script ...
@@ -38,7 +38,7 @@ just in graphic form.
 For example to produce nice looking pagehit statistics or ratings statistics.
 Ploticus has its own sql support within #getproc data, but this would expose security information.
 
-== Arguments
+== Arguments ==
 __device__: |
   gif, png, jpeg, svg, svgz, eps, swf. Any -T parameter supported by ploticus. Default: png
 __data__:  |
@@ -55,13 +55,13 @@ __help__:  |
 
 All other arguments are used as source to ploticus.
 
-== Known Problems
+== Known Problems ==
 
 For Windows you need either a gd library with GIF support or
 a Ploticus with PNG support. This comes only with the Cygwin 
 build so far.
 
-== Optional Configuration
+== Optional Configuration ==
 
 config.ini:
   PLOTICUS_EXE = pl.exe (on windows)
@@ -72,7 +72,7 @@ Maybe also set by the config variable PLOTICUS_PREFABS.
 
 See also [WikiPluginCached|Help:WikiPluginCached] options in config.ini.
 
-== Examples
+== Examples ==
 
 <<Ploticus device||=png
 #proc page
@@ -143,11 +143,11 @@ labelfarout: 1.05
 >>
 }}}
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
-* Help:GraphVizPlugin
+== See Also ==
+* [[Help:GraphVizPlugin]]
 
 <noinclude>
 ----

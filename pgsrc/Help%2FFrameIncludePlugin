@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,7 +12,7 @@ The **~FrameInclude** [[Help:WikiPlugin|plugin]] will create an HTML frame that 
 
 You might also be interested in the [[Help:IncludePagePlugin|IncludePage]] plugin.
 
-== Examples 
+== Examples ==
 
 To include a page from another site, use the **src** attribute:
 

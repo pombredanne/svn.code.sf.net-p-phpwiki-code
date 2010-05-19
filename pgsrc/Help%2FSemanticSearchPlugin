@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -28,13 +28,13 @@ The Advanced query can do a freeform query expression with multiple comparison a
 * "is_a::city and population > 1.000.000 and population < 10.000.000"
 * "(is_a::city or is_a::country) and population < 10.000.000"
 
-== Usage
+== Usage ==
 
 {{{
 <<SemanticSearch arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 All [[Help:PageList|PageList]] arguments, plus the following ones.
 
@@ -89,7 +89,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones.
 | false
 |}
 
-== Example
+== Example ==
 
 {{{
 <<SemanticSearch>>
@@ -97,10 +97,10 @@ All [[Help:PageList|PageList]] arguments, plus the following ones.
 
 <<SemanticSearch>>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 
 <noinclude>
 ----

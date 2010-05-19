@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 The **~CacheTest** [[Help:WikiPlugin|plugin]] allows to test image caching.
 
-== Usage
+== Usage ==
 {{{
 <<CacheTest arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -36,7 +36,7 @@ The **~CacheTest** [[Help:WikiPlugin|plugin]] allows to test image caching.
 | png
 |}
 
-== Example
+== Example ==
 
 {{{
 <<CacheTest>>
@@ -44,10 +44,10 @@ The **~CacheTest** [[Help:WikiPlugin|plugin]] allows to test image caching.
 
 <<CacheTest>>
 
-== Author
+== Author ==
 * Johannes Große
 
-== See Also
+== See Also ==
 
 <noinclude>
 ----

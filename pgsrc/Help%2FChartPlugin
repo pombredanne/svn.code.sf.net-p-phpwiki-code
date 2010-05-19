@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -89,7 +89,7 @@ then you should see the examples.
         data="5, 7, 11, 3, 15"
 >>
 
-== Known Problems
+== Known Problems ==
 
 With multiple Chart plugins on the same page the 2nd and
 subsequent ones will have the same width and height.

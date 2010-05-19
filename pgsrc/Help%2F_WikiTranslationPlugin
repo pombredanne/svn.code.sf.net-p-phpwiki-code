@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -13,14 +13,14 @@ Display pagenames and other internal strings in various languages.
 Can also be used to let a favorite translation service translate a whole page. 
 Current favorite: translate.google.com if from_lang = en or fr
 
-== Usage
+== Usage ==
 {{{
   <<_WikiTranslation languages=de,en,sv string="" page="" 
                             what=pages from_lang=0 nolinks=0 noT=0 debug=0
  >>
 }}}
 
-== Arguments
+== Arguments ==
 
 All [[Help:PageList|PageList]] arguments, plus the following ones.
 
@@ -41,7 +41,7 @@ nolinks:
 noT:
   Do not display the T link (for development only)
   
-== Example
+== Example ==
 
 {{{
   <<_WikiTranslation page=HomePage languages=fr>>
@@ -58,10 +58,10 @@ noT:
      Just return the translated string for this language.
 }}}
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 
 <noinclude>
 ----

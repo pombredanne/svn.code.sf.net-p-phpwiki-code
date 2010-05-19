@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,14 +10,14 @@ Content-Transfer-Encoding: binary
 
 The **Comment** [[Help:WikiPlugin|plugin]] lets you hide parts of a Wiki page without actually deleting the text. Comments will only be visible in the Wiki markup when editing or viewing the source.
 
-== Usage
+== Usage ==
 
 Simply place the text to be commented out between {{{<<Comment}}} and {{{>>}}}:
 
 {{{
 <<Comment
 
-== A Hidden Section
+== A Hidden Section ==
 
 This text will not show up in the generated HTML page, but it is still
 visible when editing the WikiMarkup.
@@ -25,12 +25,12 @@ visible when editing the WikiMarkup.
 >>
 }}}
 
-== Author
+== Author ==
 * [[mailto:gimpster@gimpster.com|Martin Geisler]]
 
 <<Comment
 
-== "Fuzzy" Logic
+== "Fuzzy" Logic ==
 Theorem: a cat has nine tails.
 Proof:
     No cat has eight tails. A cat has one tail more than no cat.

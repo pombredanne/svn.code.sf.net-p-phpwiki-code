@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 The **~TeX2png** [[Help:WikiPlugin|plugin]] allows to display mathematical formulae in a Wiki page.
 
-== Usage
+== Usage ==
 
 {{{
 <<TeX2png text="$$(a+b)^n=\sum_{k=0}^n{n\choose k}a^k b^{n-k}$$">>
@@ -20,7 +20,8 @@ gives
 
 <<TeX2png text="$$(a+b)^n=\sum_{k=0}^n{n\choose k}a^k b^{n-k}$$">>
 
-== Arguments
+== Arguments ==
+
 There is only one argument which is the text of the mathematical
 expression. This text *must be* enclosed by a dollar $ within a
 paragraph or two dollars $$ on a separate line. In the last case,
@@ -29,7 +30,7 @@ all is centered.
 To write mathematical formulae, the syntax is the one
 of [LaTeX | http://www.latex-project.org].
 
-== Caveats
+== Caveats ==
 
 This plugin is only to produce readable mathematical formulae. Any
 other text is not allowed : so if an expression is not enclosed by
@@ -44,7 +45,7 @@ This* [[Help:WikiPlugin|plugin]] is not able to produce sophisticated mathematic
 with links, cross references... For that, you can use for example
 [LaTeX2html|http://www.latex2html.org/].
 
-== Examples
+== Examples ==
 
 Some Greeks letters : <<TeX2png text="$\alpha$">>, <<TeX2png text="$\beta$">>, ... and a formula <<TeX2png text="$\sum_{i=1}^n \frac1{i^2}=\frac{\pi^2}{6}$">> to test display in a paragraph.
 

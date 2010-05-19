@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 The **~ExternalSearch** [[Help:WikiPlugin|plugin]] creates a form to query [[Help:InterWiki|InterWikis]] or other internet sites.
 
-== Usage
+== Usage ==
 
 {{{
 <<ExternalSearch
@@ -19,7 +19,7 @@ The **~ExternalSearch** [[Help:WikiPlugin|plugin]] creates a form to query [[Hel
 >>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -47,7 +47,7 @@ than appending it.
 |
 |}
 
-== Examples
+== Examples ==
 
 {{{
   url="http://sunir.org/apps/meta.pl?"       name="Metawiki Search"

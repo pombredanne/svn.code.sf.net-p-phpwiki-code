@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 The **~PageHistory** [[Help:WikiPlugin|plugin]] lists history of a given page.
 
-== Usage
+== Usage ==
 {{{
 <<PageHistory>>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -48,7 +48,7 @@ The **~PageHistory** [[Help:WikiPlugin|plugin]] lists history of a given page.
 |
 |}
 
-== Example
+== Example ==
 
 {{{
 <<PageHistory>>
@@ -56,10 +56,10 @@ The **~PageHistory** [[Help:WikiPlugin|plugin]] lists history of a given page.
 
 <<PageHistory>>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 
 <noinclude>
 ----

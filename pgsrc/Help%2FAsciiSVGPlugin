@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -19,14 +19,14 @@ If you are using Internet Explorer 6 + Adobe SVGviewer (often included
 by default with Windows XP) or SVG-enabled Firefox (2.0 or above)
 then you should see the examples.
 
-== Usage
+== Usage ==
 {{{
 <<AsciiSVG width= height= onmousemove="" script=""
          code...
 >>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -55,7 +55,7 @@ All other arguments are passed to the ASCIISvg javascript library and rendered a
 
 See [[http://www1.chapman.edu/~jipsen/svg/asciisvg.html]]
 
-== Example
+== Example ==
 
 {{{
 <<AsciiSVG width="117" height="117"
@@ -81,14 +81,14 @@ See [[http://www1.chapman.edu/~jipsen/svg/asciisvg.html]]
   path(p)
 >>
 
-== Known Problems
+== Known Problems ==
 
 With multiple ~AsciiSVG plugins on the same page the second and subsequent ones will have the same width and height.
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 * [[Help:AsciiMathPlugin]]
 * [[Help:ChartPlugin]]
 

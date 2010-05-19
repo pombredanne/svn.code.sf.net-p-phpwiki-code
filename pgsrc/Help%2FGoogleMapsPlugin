@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -17,13 +17,13 @@ http://www.google.com/apis/maps/signup.html
 
 Then enter the key in {{{config/config.ini}}} under {{{GOOGLE_LICENSE_KEY=}}}
 
-== Usage
+== Usage ==
 
 {{{
 <<GoogleMaps arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -68,7 +68,7 @@ Then enter the key in {{{config/config.ini}}} under {{{GOOGLE_LICENSE_KEY=}}}
 | 400px
 |}
 
-== Example
+== Example ==
 
 {{{
 <<GoogleMaps
@@ -92,10 +92,10 @@ Then enter the key in {{{config/config.ini}}} under {{{GOOGLE_LICENSE_KEY=}}}
           height=400px
 >>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 
 <noinclude>
 ----

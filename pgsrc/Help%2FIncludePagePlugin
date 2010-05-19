@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,12 +11,13 @@ Content-Transfer-Encoding: binary
 The **~IncludePage** [[Help:WikiPlugin|plugin]] will "include" other pages in this wiki. In the language of hypertext this is called //transclusion//.
 The pages will render in distinct tables. You can also load external pages in a more limited fashion with the [[Help:FrameIncludePlugin|FrameInclude]] plugin.
 
-== Usage
+== Usage ==
+
 {{{
 <<IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6>>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -61,38 +62,38 @@ The pages will render in distinct tables. You can also load external pages in a 
 | false
 |}
 
-== Examples
+== Examples ==
 
-=== ~IncludePage page=Help/~AllPagesPlugin
+=== ~IncludePage page=Help/~AllPagesPlugin ===
 <<IncludePage page=Help/AllPagesPlugin>>
 
-=== ~IncludePage page=Help/~AllPagesPlugin lines=6
+=== ~IncludePage page=Help/~AllPagesPlugin lines=6 ===
 <<IncludePage page=Help/AllPagesPlugin lines=6>>
 
-=== ~IncludePage page=Help/~AllPagesPlugin section="Arguments"
+=== ~IncludePage page=Help/~AllPagesPlugin section="Arguments" ===
 <<IncludePage page=Help/AllPagesPlugin section="Arguments">>
 
-=== ~IncludePage page=Help/~AllPagesPlugin section="Arguments" sectionhead=true
+=== ~IncludePage page=Help/~AllPagesPlugin section="Arguments" sectionhead=true ===
 <<IncludePage page=Help/AllPagesPlugin section="Arguments" sectionhead=true>>
 
-=== ~IncludePage page=Help/~AllPagesPlugin sections=2
+=== ~IncludePage page=Help/~AllPagesPlugin sections=2 ===
 
 Does not work in Wikicreole syntax
 <!-- <<IncludePage page=Help/AllPagesPlugin sections=2>> -->
 
-== Known bugs
+== Known bugs ===
 
 * Line and word limit doesn't work if the included page itself includes a plugin.
 * "sections" parameter does not work if sections to include are in Wikicreole syntax.
 * "section" parameter does not always work if sections to include use both Wikicreole/Mediawiki and classic Phpwiki syntax.
 
-== Authors
+== Authors ==
 
 * Joe Edelman
 * bug fixes by [[PhpWiki:ReiniUrban|Reini Urban]]
 * "sections" parameter implemented by Marc-Etienne Vargenau, Alcatel-Lucent
 
-== See Also
+== See Also ==
 
 * [[Help:IncludePagesPlugin]] (to include multiple pages)
 * [[Help:TemplatePlugin]] (to include a page with parameters)
