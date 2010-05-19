@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -43,7 +43,7 @@ method="plugin:pluginname [optional args]"
 * improve layout by: nobr=1
 * some allow values as list from <!plugin-list pluginname args !>
 
-== Samples
+== Samples ==
 
 {{{
 <<WikiFormRich action=dumpserial method=get
@@ -216,7 +216,7 @@ method="plugin:pluginname [optional args]"
 >>
 }}}
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
 <noinclude>

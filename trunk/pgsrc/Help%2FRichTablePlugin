@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$ 
 Content-Type: application/x-phpwiki;
@@ -34,7 +34,7 @@ style="font-family: sans-serif; border-top:1px solid #dddddd;"
 style="font-family: Verdana, Arial, Helvetica, sans-serif"
 }}}
 
-== Example
+== Example ==
 
 <<RichTable
 
@@ -104,10 +104,10 @@ This cell uses the row color
 >>
 }}}
 
-== Known Bugs
+== Known Bugs ==
 * The plugin can't nest itself yet. Thus nested tables are currently not possible.
 
-== Author
+== Author ==
 * [Sameer D. Sahasrabuddhe|http://www.it.iitb.ac.in/~sameerds/phpwiki/index.php/RichTablePlugin]
 
 <noinclude>

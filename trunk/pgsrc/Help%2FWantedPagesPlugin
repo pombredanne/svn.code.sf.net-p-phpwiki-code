@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -12,13 +12,13 @@ The **~WantedPages** [[Help:WikiPlugin|plugin]] returns a list of referenced pag
 
 All empty pages which are linked from any page - with an ending question mark, or for just a single page, when the page argument is present.
 
-== Usage
+== Usage ==
 
 {{{
 <<WantedPages arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 All [[Help:PageList|PageList]] arguments, plus the following ones.
 
@@ -53,7 +53,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones.
 | auto
 |}
 
-== Example
+== Example ==
 
 {{{
 <<WantedPages>>
@@ -61,10 +61,10 @@ All [[Help:PageList|PageList]] arguments, plus the following ones.
 
 <<WantedPages>>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 
 <noinclude>
 ----

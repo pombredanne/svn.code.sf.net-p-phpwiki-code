@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,12 +14,13 @@ which are not timestamp checked at all. Delete the .png file(s) if you change an
 
 This is a really simple and stupid plugin, which might need some work.
 
-== Usage
+== Usage ==
+
 {{{
 <<text2png text="some text">>
 }}}
 
-== Arguments
+== Arguments ==
 
 text:
   some text to display
@@ -38,11 +39,11 @@ shadowcolor:
 backcolor:
   #ffffff
 
-=== Configurable Options
+=== Configurable Options ===
 
 See the sourcecode. You'd probably need to adjust $ttfont and text2png_debug.
 
-== Example
+== Example ==
 
 {{{
 <<text2png text='Hello WikiWorld!'>>
@@ -50,9 +51,9 @@ See the sourcecode. You'd probably need to adjust $ttfont and text2png_debug.
 would produce:
 <<text2png text='Hello WikiWorld!'>>
 
-== See Also
-* [Help:TeX2PngPlugin]
-* [Help:TexToPngPlugin]
+== See Also ==
+* [[Help:TeX2PngPlugin]]
+* [[Help:TexToPngPlugin]]
 
 <noinclude>
 ----

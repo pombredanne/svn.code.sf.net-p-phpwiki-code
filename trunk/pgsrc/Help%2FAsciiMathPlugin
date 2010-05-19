@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,19 +8,19 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== Usage
+== Usage ==
 {{{
 <<AsciiMath formula >>
 }}}
 
-== Arguments
+== Arguments ==
 
 All arguments are passed to the
 [[http://www1.chapman.edu/~jipsen/asciimath.html|ASCII Math PHP library]]
 and rendered as
 [[http://www.w3.org/Math/|Math ML]].
 
-== Example
+== Example ==
 
 {{{
 <<AsciiMath sum_(i=1)^n i = (n(n+1))/2 >>
@@ -28,10 +28,10 @@ and rendered as
 
 <<AsciiMath sum_(i=1)^n i = (n(n+1))/2 >>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 * Help:AsciiSVGPlugin
 
 <noinclude>

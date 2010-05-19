@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,16 +10,16 @@ Content-Transfer-Encoding: binary
 
 The **~RelatedChanges** [[Help:WikiPlugin|plugin]] gives a list of changes on all pages which are linked to from this page.
 
-== Usage
+== Usage ==
 {{{
 <<RelatedChanges arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 The arguments are the same as for [[Help:RecentChanges|RecentChanges]] plugin.
 
-== Example
+== Example ==
 
 {{{
 <<RelatedChanges>>
@@ -27,7 +27,7 @@ The arguments are the same as for [[Help:RecentChanges|RecentChanges]] plugin.
 
 <<RelatedChanges>>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
 <noinclude>

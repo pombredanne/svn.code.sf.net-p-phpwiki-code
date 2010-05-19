@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 Some special actions for [[PhpWikiAdministration]] and [[PhpWikiDebug]].
 
-== Usage
+== Usage ==
 {{{
 <<WikiAdminUtils action="purge-cache" >>
 <<WikiAdminUtils action="purge-bad-pagenames" >>
@@ -22,7 +22,7 @@ Some special actions for [[PhpWikiAdministration]] and [[PhpWikiDebug]].
 <<WikiAdminUtils action="db-rebuild" >>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -39,7 +39,7 @@ Some special actions for [[PhpWikiAdministration]] and [[PhpWikiDebug]].
 | Each action has a default button text
 |}
 
-== Example
+== Example ==
 
 {{{
 <<WikiAdminUtils action="purge-cache" >>
@@ -47,11 +47,11 @@ Some special actions for [[PhpWikiAdministration]] and [[PhpWikiDebug]].
 
 <<WikiAdminUtils action="purge-cache" >>
 
-== Authors
+== Authors ==
 * [[PhpWiki:JeffDairiki|Jeff Dairiki]]
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 * [[PhpWikiAdministration]]
 
 <noinclude>

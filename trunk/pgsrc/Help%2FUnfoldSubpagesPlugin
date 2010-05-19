@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -15,7 +15,8 @@ of the current or a given page.  This gives an overview for a
 Warning: Don't use it with subpages with non-existant sections!
 The section extractor is currently quite unstable.
 
-== Usage
+== Usage ==
+
 {{{
 <<UnfoldSubpages>>
 <<UnfoldSubpages sortby=-mtime words=50 maxpages=5>>
@@ -26,7 +27,7 @@ The section extractor is currently quite unstable.
                  section="Plugin Arguments" sectionhead=1>>
 }}}
 
-== Arguments
+== Arguments ==
 
 All [[Help:PageList|PageList]] arguments, plus the following ones.
 
@@ -81,7 +82,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones.
 | false
 |}
 
-=== Deprecated Arguments
+=== Deprecated Arguments ===
 
 {| class="bordered"
 |-
@@ -95,7 +96,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones.
 | 'asc' or 'desc'. Deprecated: use "+" or "-" before the column name with sortby.
 |}
 
-== Example
+== Example ==
 
 {{{
 <<UnfoldSubpages pagename=Help maxpages=5 lines=10>>

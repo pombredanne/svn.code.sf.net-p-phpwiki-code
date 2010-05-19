@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -8,7 +8,7 @@ Content-Type: application/x-phpwiki;
   charset=UTF-8
 Content-Transfer-Encoding: binary
 
-== About phpwiki: URLs
+== About phpwiki: URLs ==
 
 A special type of URL is available for making links to perform
 administrative and other special functions in ~PhpWiki.  Here is a
@@ -40,7 +40,7 @@ Some of the actions accept other parameters.
 | **save**                            | Accepts **editversion**, **minor_edit**, and  **content**.
 | **setprefs**                        | Accepts **edit_area_width**, **edit_area_height**.
 
-=== Writing Magic Links in Wiki Pages
+=== Writing Magic Links in Wiki Pages ===
 
 A magic link looks like:
 
@@ -53,7 +53,7 @@ will provide the label for the link.
 
 The //phpwiki-url// is a **phpwiki:** URL as described above.
 
-==== Some examples
+==== Some examples ====
 
 {{{
 [ Edit the SandBox | phpwiki:SandBox?action=edit ]
@@ -67,7 +67,7 @@ Other possibilites:
 * [ Get a Full Zip Dump | phpwiki:?action=zip&include=all ],
 * Search for [ Page titles containing 'wiki' | phpwiki:?action=TitleSearch&s=wiki ]
 
-=== Writing Magic Forms in Wiki Pages
+=== Writing Magic Forms in Wiki Pages ===
 
 **//Note://** //The old syntax for Magic forms is no longer supported.
 They are superseded by// ##<?plugin-form>##.
@@ -78,7 +78,7 @@ and the plugin supports searching, then it will be rendered as a form.
 | //size// | If given, specifies the size of the input area.
 | //s//    | Specifies the default value for the input.
 
-==== Examples
+==== Examples ====
 
 A search plugin invoked with **<?plugin** instead of **<?plugin-form**
 simply inserts the search results of the plugin:

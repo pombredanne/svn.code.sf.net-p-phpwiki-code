@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 The **~WikiAdminMarkup** [[Help:WikiPlugin|plugin]] allows to change the markup version of pages.
 
-== Usage
+== Usage ==
 {{{
 <<WikiAdminMarkup>>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -32,7 +32,7 @@ The **~WikiAdminMarkup** [[Help:WikiPlugin|plugin]] allows to change the markup 
 | 2
 |}
 
-== Example
+== Example ==
 
 {{{
 <<WikiAdminMarkup s=Temp*>>
@@ -40,10 +40,10 @@ The **~WikiAdminMarkup** [[Help:WikiPlugin|plugin]] allows to change the markup 
 
 <<WikiAdminMarkup s=Temp*>>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 * [[PhpWikiAdministration]]
 
 <noinclude>

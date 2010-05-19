@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc with_toclink||=1 position=right >>
 
-== Synopsis
+== Synopsis ==
 
 **Emphasis:** ##~/~/## for //italics//, ##~*~*## for **bold**, ##~*~*~/~/...~/~/~*~*## for **//both//**, ##~#~### for ##fixed width##. \\
 **Lists:** ##~*## for bullet lists, ##~### for numbered lists; use multiple ##~*## or ##~### for nested lists. \\
@@ -32,9 +32,9 @@ Content-Transfer-Encoding: binary
 
 More explanations: [[Help:TextFormattingRules]]
 
-== Character Formatting
+== Character Formatting ==
 
-== Emphasis
+=== Emphasis ===
 
 * Use a double slash (##~/~/##) for emphasis (usually //italics//)
 * Use a double asterisk (##~*~*##) for strong emphasis (usually **bold**)
@@ -134,7 +134,7 @@ Allowed colors are:
 
 Note: you can put the headers in color, but only if you do not have a table of content. For now, the table of content is incompatible with color headers.
 
-=== Escape Character
+=== Escape Character ===
 
 The tilde '~~' is the //Escape Character//:
 * A single tilde '~~' followed by nothing gets rendered as a single tilde. => ~
@@ -144,7 +144,7 @@ The tilde '~~' is the //Escape Character//:
 * A tilde inside an URL gets removed, unless it's formatted inside square brackets.
 * Two tildes inside an URL (without brackets) become a single tilde.  => [[http://foo.bar/~user]] or http://foo.bar/~~user
 
-=== Special Characters
+=== Special Characters ===
 
 All special non-whitespace HTML characters are displayed as-is. Exceptions below.
 
@@ -158,7 +158,7 @@ And with the plugin: <<RawHtml &#12363;&#12425; &#26032;&#35215;&#12506;&#12540;
 
 And this is how it should look: [[http://phpwiki.sourceforge.net/demo/images/chars-releasenotes-japanese.png]]
 
-== Paragraphs
+== Paragraphs ==
 
 * Don't indent paragraphs
 * Words wrap and fill as needed
@@ -166,9 +166,9 @@ And this is how it should look: [[http://phpwiki.sourceforge.net/demo/images/cha
 * Four or more minus signs make a horizontal rule
 * "##~\~\##", "##~%%%##" or "##~<br>##" makes a linebreak (in headings and lists too)
 
-== Lists
+== Lists ==
 
-=== Unordered lists
+=== Unordered lists ===
 
 Recommended syntax (Wikicreole):
 * asterisk for first level
@@ -178,7 +178,7 @@ Be sure to **put a space after the asterisk**.
 
 You can also use indented asterisk for second level (indent at least two spaces).
 
-=== Ordered lists
+=== Ordered lists ===
 
 Recommended syntax (Wikicreole):
 * ##~### for first level
@@ -188,7 +188,7 @@ Be sure to **put a space after the hash sign**.
 
 You can also use indented ##~### for second level (indent at least two spaces).
 
-=== Definition lists
+=== Definition lists ===
 
 {{{
 Term:
@@ -200,13 +200,13 @@ gives
 Term:
   definition
 
-=== Remark
+=== Remark ===
 
 Items may contain multiple paragraphs and other multi-lined content, just indent the items
 
-== Headings
+== Headings ==
 
-=== Wikicreole syntax (recommended)
+=== Wikicreole syntax (recommended) ===
 
 * '~=~=' at the start of a line makes a large heading (h2)
 * '~=~=~=' at the start of a line makes a medium heading (h3)
@@ -214,13 +214,13 @@ Items may contain multiple paragraphs and other multi-lined content, just indent
 * '~=~=~=~=~=' at the start of a line makes a smaller heading (h5)
 * '~=~=~=~=~=~=' at the start of a line makes a tiny heading (h6)
 
-=== Classic Phpwiki syntax
+=== Classic Phpwiki syntax ===
 
 * '##!!!##' at the start of a line makes a large heading (h2)
 * '##!!##' at the start of a line makes a medium heading (h3)
 * '##!##' at the start of a line makes a small heading (h4)
 
-== Preformatted text
+== Preformatted text ==
 
 Place the preformatted text between three opening curly brackets and three closing curly brackets:
 
@@ -250,7 +250,7 @@ gives
 Preformatted text. WikiLinks still work.
 </pre>
 
-== Indented Paragraphs
+== Indented Paragraphs ==
 
 Two or more whitespaces signal indented text. Indents may be nested.
 
@@ -266,7 +266,7 @@ renders as
 
 > This is block-quoted text.
 
-== References
+== References ==
 
 * Hyperlinks to other pages within the Wiki are made by placing the
   page name in double square brackets: [[this is a page link]].
@@ -303,9 +303,9 @@ An alternate text can be put after a pipe. If there is none, an empty alternate 
 [[http://example.com/|{{myimage.png|alt text}}]] - same with alternative
 }}}
 
-== Tables
+== Tables ==
 
-=== Wikicreole tables
+=== Wikicreole tables ===
 
 All cells are separated by single pipes.
 Leading spaces are permitted before the first cell of a row and trailing spaces are permitted at the end of a line.
@@ -328,11 +328,11 @@ will give:
 |Cell 1.1       |Two lines\\in Cell 1.2 |
 |Cell 2.1       |Cell 2.2               |
 
-=== Mediawiki tables
+=== Mediawiki tables ===
 
 See [[Help:MediawikiTablePlugin]].
 
-=== Definition list style tables
+=== Definition list style tables ===
 
 Definition list style tables are written just like definition lists,
 except that you replace the trailing colon on the term with a "pipe" (##|##).
@@ -361,7 +361,7 @@ Term 1 |
 Term 2 |
    Here's definition 2.
 
-== HTML Mark-Up Language
+== HTML Mark-Up Language ==
 
 * Some in-line markup is allowed through the use of HTML tags:
   <b>b</b>, <big>big</big>, <i>i</i>, <small>small</small>,
@@ -372,12 +372,12 @@ Term 2 |
 * < and > are themselves
 * The & characters will not work
 
-== Creating various kinds of special links
+== Creating various kinds of special links ==
 
 See [[Help:MagicPhpWikiURLs]] for gory details on how to write various kind
 of wiki maintenance and other special links.
 
-== Inserting plugins
+== Inserting plugins ==
 
 Several plugins permit embedding additional functionality to Wiki pages. For example,
 {{{

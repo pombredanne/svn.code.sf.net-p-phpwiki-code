@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 The **~LdapSearch** [[Help:WikiPlugin|plugin]] displays a LDAP query as table.
 
-== Usage
+== Usage ==
 {{{
 <<LdapSearch>>
 <<LdapSearch
@@ -29,7 +29,7 @@ The **~LdapSearch** [[Help:WikiPlugin|plugin]] displays a LDAP query as table.
                       attributes="debbugsSeverity debbugsState debbugsTitle">>
 }}}
 
-== Arguments
+== Arguments ==
 
 host _(default: from LDAP_AUTH_HOST or localhost)_:
 	hostname or ip or ldap:// uri to connect to.
@@ -56,7 +56,7 @@ password:
 	Default: LDAP_AUTH_PASSWORD if host == LDAP_AUTH_HOST
 	user and password are required for Windows Active directory.
 
-== Examples
+== Examples ==
 
 <<WikiFormRich action=LdapSearch 
         editbox[] name=host value=bugs.debian.org size=80
@@ -67,10 +67,10 @@ password:
 	submit[] reset[]
 >>
 
-== Author
+== Author ==
 * [[PhpWiki:JohnLines|John Lines]]
 
-== See Also
+== See Also ==
 
 <noinclude>
 ----

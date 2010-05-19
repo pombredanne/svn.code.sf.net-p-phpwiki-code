@@ -1,4 +1,4 @@
-Date: Thu, 29 Apr 2010 15:43:28 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,13 +10,13 @@ Content-Transfer-Encoding: binary
 
 The **~AllUsers** [[Help:WikiPlugin|plugin]] lists all once authenticated users.
 
-== Usage
+== Usage ==
 
 {{{
 <<AllUsers arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 All [[Help:PageList|PageList]] arguments, plus the following ones.
 
@@ -35,7 +35,7 @@ All [[Help:PageList|PageList]] arguments, plus the following ones.
 | true
 |}
 
-== Example
+== Example ==
 
 {{{
 <<AllUsers limit=10>>
@@ -43,10 +43,10 @@ All [[Help:PageList|PageList]] arguments, plus the following ones.
 
 <<AllUsers limit=10>>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 
 <noinclude>
 ----

@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,12 +11,12 @@ Content-Transfer-Encoding: binary
 The **~AuthorHistory** [[Help:WikiPlugin|plugin]] allows you to list the history of edits by a particular
 author; you can specify the page name as well (default is the current page).
 
-== Usage
+== Usage ==
 {{{
 <<AuthorHistory arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -53,7 +53,7 @@ author; you can specify the page name as well (default is the current page).
 | version, minor, author, summary, mtime
 |}
 
-== Examples
+== Examples ==
 
 {{{
 <<AuthorHistory page=HomePage includeminor=1>>

@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 The **~SyncWiki** [[Help:WikiPlugin|plugin]] allows to synchronize pages with external [[Help:PhpWiki|PhpWiki]].
 
-== Usage
+== Usage ==
 {{{
 <<SyncWiki arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -52,7 +52,7 @@ The **~SyncWiki** [[Help:WikiPlugin|plugin]] allows to synchronize pages with ex
 | false
 |}
 
-== Example
+== Example ==
 
 {{{
 <<SyncWiki>>
@@ -60,10 +60,10 @@ The **~SyncWiki** [[Help:WikiPlugin|plugin]] allows to synchronize pages with ex
 
 <<SyncWiki>>
 
-== Author
+== Author ==
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 
 <noinclude>
 ----

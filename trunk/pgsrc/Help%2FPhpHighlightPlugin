@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -11,9 +11,7 @@ Content-Transfer-Encoding: binary
 The **~PhpHighlight** [[Help:WikiPlugin|plugin]] pretty-prints PHP code using the
 php-function:highlight-string.
 
-See also [[Help:SyntaxHighlighterPlugin|SyntaxHighlighter]] plugin for highlighting other languages.
-
-== Usage
+== Usage ==
 
 You specify options for the plugin on the same line as ##~<~<~PhpHighlight##,
 and put the code on the following lines, until the final ##~>~>##:
@@ -24,7 +22,7 @@ code to be highlighted
 >>
 }}}
 
-== Description
+== Description ==
 
 Depending on the ##wrap## option, then the plugin will take care of
 adding ##<?php## and ##?>## to the code before passing it to
@@ -32,7 +30,7 @@ php-function:highlight-string. If the PHP delimiters were added, then
 the plugin removes them again from the highlighted string, before
 presenting it.
 
-== Options
+== Options ==
 
 Automatic Wrapping:
 
@@ -57,9 +55,9 @@ Color Options:
 
   ##string##, ##comment##, ##keyword##, ##bg##, ##default##, and ##html##
 
-== Examples
+== Examples ==
 
-=== PHP with default colors from ##php.ini##:
+=== PHP with default colors from ##php.ini##: ===
 
 <<PhpHighlight
 function hello() {
@@ -67,7 +65,7 @@ function hello() {
 }
 >>
 
-=== HTML with embedded PHP
+=== HTML with embedded PHP ===
 
 Here we have to use ##wrap=0## to prevent automatic wrapping, and escape
 '##?>##' as '##? >##':
@@ -83,7 +81,7 @@ Here we have to use ##wrap=0## to prevent automatic wrapping, and escape
 </html>
 >>
 
-=== C Source
+=== C Source ===
 
 Although ##highlight_string()## was designed with PHP code in mind it is
 suitable for basic syntax-highlighting of most C code because the two
@@ -104,10 +102,12 @@ getload(void)
 }
 >>
 
-== Authors
-
+== Authors ==
 * [[mailto:gimpster@gimpster.com|Martin Geisler]]
 * [[mailto:carstenklapp@users.sourceforge.net|Carsten Klapp]]
+
+== See Also ==
+* [[Help:SyntaxHighlighterPlugin|SyntaxHighlighter]] plugin for highlighting other languages.
 
 <noinclude>
 ----

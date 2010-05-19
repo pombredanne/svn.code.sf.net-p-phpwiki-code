@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -14,12 +14,12 @@ The headers might be in classic Phpwiki syntax or in Wikicreole/Mediawiki syntax
 
 The Table of Contents can easily be inserted by clicking on the TOC button in the Edit toolbar.
 
-== Usage
+== Usage ==
 {{{
 <<CreateToc arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -80,7 +80,7 @@ The Table of Contents can easily be inserted by clicking on the TOC button in th
 | false
 |}
 
-=== Headers
+=== Headers ===
 
 Syntax: a comma-separated list of levels. !!!,!!,! also allowed
 
@@ -102,36 +102,37 @@ Syntax: a comma-separated list of levels. !!!,!!,! also allowed
 | 5 || //None// || ~=~=~=~=~=~= || h6
 |}
 
-== Examples
+== Examples ==
 
-=== Default values
+=== Default values ===
 {{{
 <<CreateToc>>
 }}}
 
-=== Only two levels of headers
+=== Only two levels of headers ===
 {{{
 <<CreateToc headers=1,2>>
 }}}
 
-=== Table of Contents with hierarchical numbering
+=== Table of Contents with hierarchical numbering ===
 {{{
 <<CreateToc with_counter=1>>
 }}}
 
-=== No Table of Contents, but headers are numbered
+=== No Table of Contents, but headers are numbered ===
 {{{
 <<CreateToc notoc=1>>
 }}}
 
-=== Table of Contents with hierarchical numbering, first level in roman
+=== Table of Contents with hierarchical numbering, first level in roman ===
 {{{
 <<CreateToc with_counter=1 firstlevelstyle=roman>>
 }}}
 
-See also [[PhpWikiDemo:en/TextFormattingRules]]
+== See Also ==
+* [[PhpWikiDemo:en/TextFormattingRules]]
 
-== Known Problems
+== Known Problems ==
 
 * If you include pages via [[Help:TemplatePlugin|Template]] or [[Help:IncludePagePlugin|IncludePage]] plugins, the Table of Contents will not contain the headers of the included pages.
 * The Table of Contents will be incorrect if a header contains:

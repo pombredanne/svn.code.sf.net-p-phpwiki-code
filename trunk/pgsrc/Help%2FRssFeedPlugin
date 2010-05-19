@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,13 +10,13 @@ Content-Transfer-Encoding: binary
 
 The **~RssFeed** [[Help:WikiPlugin|plugin]] allows to display external RSS feeds.
 
-== Usage
+== Usage ==
 
 {{{
 <<RssFeed url=http://somesite.tld/linktofeed.rss>>
 }}}
 
-== Arguments
+== Arguments ==
 
 {| class="bordered"
 |-
@@ -45,16 +45,16 @@ The **~RssFeed** [[Help:WikiPlugin|plugin]] allows to display external RSS feeds
 | false
 |}
 
-== Examples
+== Examples ==
 
-=== ~PhpWikiRss feed for [[PhpWiki:RecentChanges]]
+=== ~PhpWikiRss feed for [[PhpWiki:RecentChanges]] ===
 
 {{{
 <<RssFeed feed=PhpWikiRss description="PhpWiki:RecentChanges"
                  url=http://phpwiki.sourceforge.net/phpwiki/RecentChanges?format=rss>>
 }}}
 
-=== Example as sidebar box
+=== Example as sidebar box ===
 
 [[PhpWikiDemo:sidebar/]]
 

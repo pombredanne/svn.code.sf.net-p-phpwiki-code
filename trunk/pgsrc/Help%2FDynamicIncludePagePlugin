@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Wed, 19 May 2010 18:15:54 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,12 +10,12 @@ Content-Transfer-Encoding: binary
 
 The **~DynamicIncludePage** [[Help:WikiPlugin|plugin]] will asynchronously "include" other pages in this wiki.
 
-== Usage
+== Usage ==
 {{{
 <<DynamicIncludePage arguments>>
 }}}
 
-== Arguments
+== Arguments ==
 
 All arguments from [[Help:IncludePagePlugin#Arguments|IncludePage]] plugin are supported, plus the following one.
 
@@ -30,7 +30,7 @@ All arguments from [[Help:IncludePagePlugin#Arguments|IncludePage]] plugin are s
 | false
 |}
 
-== Example
+== Example ==
 
 {{{
 <<DynamicIncludePage page=SandBox>>
@@ -38,11 +38,11 @@ All arguments from [[Help:IncludePagePlugin#Arguments|IncludePage]] plugin are s
 
 <<DynamicIncludePage page=SandBox>>
 
-== Author
+== Author ==
 
 * [[PhpWiki:ReiniUrban|Reini Urban]]
 
-== See Also
+== See Also ==
 
 * [[Help:IncludePagePlugin]] 
 
