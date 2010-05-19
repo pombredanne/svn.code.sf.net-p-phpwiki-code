@@ -57,11 +57,6 @@ extends WikiPlugin
         return _("Convert text into a png image using GD.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         global $LANG;
         // TODO: add fixed size and center.

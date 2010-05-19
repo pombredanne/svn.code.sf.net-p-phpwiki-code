@@ -63,11 +63,6 @@ extends WikiPlugin
         return array();
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function handle_plugin_args_cruft($argstr, $args) {
         return;
     }

@@ -55,11 +55,6 @@ extends WikiPlugin
       return _("Include an external web page within the body of a wiki page.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array( 'src'     => false, // the src url to include
                       'title'   =>  _("Transcluded page"), // title of the iframe

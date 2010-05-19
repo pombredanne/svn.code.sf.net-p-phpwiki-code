@@ -89,8 +89,6 @@ require_once "lib/WikiPluginCached.php";
 
 class WikiPlugin_TexToPng extends WikiPluginCached
 {
-    /* --------- overwrite virtual or abstract methods ---------------- */
-
     function getPluginType() {
         return PLUGIN_CACHED_IMG_ONDEMAND;
     }
@@ -101,11 +99,6 @@ class WikiPlugin_TexToPng extends WikiPluginCached
 
     function getDescription() {
         return _("Converts TeX to an image. May be used to embed formulas in PhpWiki.");
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     function getDefaultArguments() {

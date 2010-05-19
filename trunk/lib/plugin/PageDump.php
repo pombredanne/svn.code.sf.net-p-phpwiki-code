@@ -59,11 +59,6 @@ extends WikiPlugin
         return _("View a single page dump online.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('s'    => false,
                      'page' => '[pagename]',

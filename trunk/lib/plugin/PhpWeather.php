@@ -67,11 +67,6 @@ extends WikiPlugin
         return _("The PhpWeather plugin provides weather reports from the Internet.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         global $LANG;
         return array('icao'  => 'EKAH',

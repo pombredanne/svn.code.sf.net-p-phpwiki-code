@@ -57,11 +57,6 @@ extends WikiPlugin
         return _("A plugin to provide for raw HTML within wiki pages.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array();
     }

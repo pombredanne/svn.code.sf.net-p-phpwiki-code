@@ -44,11 +44,6 @@ extends WikiPlugin
         return _("Display file information like version, size, date... of uploaded files.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array(
                      'file'      => false, // relative path from PHPWIKI_DIR. (required)

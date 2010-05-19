@@ -68,11 +68,6 @@ extends WikiPluginCached
         return 'This is a simple example using WikiPluginCached.';
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('text' => $this->getDescription(),
                      'font' => '3',

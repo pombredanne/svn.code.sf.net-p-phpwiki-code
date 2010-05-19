@@ -50,10 +50,6 @@ extends WikiPlugin
                  " This is for small text");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',"\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('text' => "$$(a + b)^2 = a^2 + 2 ab + b^2$$");
     }

@@ -34,11 +34,6 @@ extends WikiPlugin
         return sprintf(_("Show a markup retransformation of page %s."), '[pagename]');
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('page' => '[pagename]',
                      );

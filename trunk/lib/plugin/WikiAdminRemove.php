@@ -45,11 +45,6 @@ extends WikiPlugin_WikiAdminSelect
         return _("Permanently remove all selected pages.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

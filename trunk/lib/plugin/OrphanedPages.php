@@ -27,8 +27,6 @@ rcs_id('$Id$');
  **/
 require_once('lib/PageList.php');
 
-/**
- */
 class WikiPlugin_OrphanedPages
 extends WikiPlugin
 {
@@ -38,11 +36,6 @@ extends WikiPlugin
 
     function getDescription () {
         return _("List pages which are not linked to by any other page.");
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     function getDefaultArguments() {

@@ -98,10 +98,6 @@ extends WikiPluginCached
     function managesValidators() {
         return true;
     }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
     function getDefaultArguments() {
         return array(
                      'device' => 'png', // png,gif,svgz,svg,...

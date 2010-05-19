@@ -54,11 +54,6 @@ extends WikiPlugin
         return _("Render SVG charts");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('width'  => 200,
                      'height' => 200,

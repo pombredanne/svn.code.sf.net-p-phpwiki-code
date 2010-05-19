@@ -136,11 +136,6 @@ extends WikiPlugin
         return _("Show translations of various words or pages");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

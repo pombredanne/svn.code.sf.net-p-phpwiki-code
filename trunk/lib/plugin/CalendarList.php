@@ -58,11 +58,6 @@ extends WikiPlugin
         return _("CalendarList");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('prefix'       => '[pagename]',
                      'date_format'  => '%Y-%m-%d',

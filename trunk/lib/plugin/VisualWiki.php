@@ -54,11 +54,6 @@ extends WikiPlugin_GraphViz
         return "VisualWiki";
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     /**
      * Sets textual description.
      */

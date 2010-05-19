@@ -38,11 +38,6 @@ extends WikiPlugin
         return _("List all pages in this wiki.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

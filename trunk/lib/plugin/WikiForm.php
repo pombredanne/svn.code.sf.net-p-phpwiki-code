@@ -38,11 +38,6 @@ extends WikiPlugin
         return _("Provide generic WikiForm input buttons");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('action' => 'upload', // 'upload', 'loadfile', or
                                            // 'dumpserial'
@@ -51,7 +46,6 @@ extends WikiPlugin
                      'overwrite' => false,
                      'size' => 50);
     }
-
 
     function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));

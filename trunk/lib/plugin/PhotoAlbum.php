@@ -102,11 +102,6 @@ extends WikiPlugin
         return _("Displays a set of photos listed in a text file with optional descriptions");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
 // Avoid nameclash, so it's disabled. We allow any url.
 // define('allow_album_location', true);
 // define('album_location', 'http://kw.jouwfeestje.com/foto/redactie');

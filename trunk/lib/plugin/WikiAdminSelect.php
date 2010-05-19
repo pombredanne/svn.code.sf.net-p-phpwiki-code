@@ -45,11 +45,6 @@ extends WikiPlugin
         return _("Allows selection of multiple pages which get passed to other WikiAdmin plugins.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('s'       => '', // preselect pages
                      /* select pages by meta-data: */

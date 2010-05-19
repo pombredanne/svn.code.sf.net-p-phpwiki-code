@@ -43,11 +43,6 @@ extends WikiPlugin
         return _("Allow any user to adjust his own preferences.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         global $request;
         $pagename = $request->getArg('pagename');

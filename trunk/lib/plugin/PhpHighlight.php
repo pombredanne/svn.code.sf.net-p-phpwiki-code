@@ -64,12 +64,6 @@ extends WikiPlugin
 
     function getDescription () {
         return _("PHP syntax highlighting");
-
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     // Establish default values for each of this plugin's arguments.

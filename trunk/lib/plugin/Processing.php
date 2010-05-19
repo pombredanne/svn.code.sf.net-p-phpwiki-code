@@ -35,11 +35,6 @@ extends WikiPlugin
         return _("Render inline Processing");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('width'  => 200,
                      'height' => 200,

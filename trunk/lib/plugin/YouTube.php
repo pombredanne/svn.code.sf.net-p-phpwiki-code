@@ -45,10 +45,6 @@ extends WikiPlugin
         return _("Embed YouTube videos");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',"\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('v' => "",
                      'browse' => '',      // see above

@@ -20,8 +20,6 @@ rcs_id('$Id$');
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/**
- */
 require_once('lib/PageList.php');
 
 class WikiPlugin_BackLinks
@@ -33,11 +31,6 @@ extends WikiPlugin
 
     function getDescription() {
         return sprintf(_("List all pages which link to %s."), '[pagename]');
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     function getDefaultArguments() {

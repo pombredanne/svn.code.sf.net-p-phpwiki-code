@@ -51,7 +51,7 @@ rcs_id('$Id$');
  *     AND c.job_id = j.job_id
  *     AND j.description = 'Actor'
  *     ORDER BY m.date DESC
-?>
+ *   ?>
  *
  * @author: ReiniUrban
  */
@@ -69,11 +69,6 @@ extends WikiPlugin
 
     function getDescription () {
         return _("Display arbitrary SQL result tables");
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     function getDefaultArguments() {

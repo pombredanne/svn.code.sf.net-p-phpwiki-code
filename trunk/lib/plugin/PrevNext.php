@@ -37,11 +37,6 @@ extends WikiPlugin
         return sprintf(_("Easy navigation buttons for %s"),'[pagename]');
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array(
                      'prev'    => '',

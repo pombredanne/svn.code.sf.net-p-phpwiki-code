@@ -105,10 +105,6 @@ extends WikiPlugin
     function getDescription () {
         return _("Provide generic WikiForm input buttons");
     }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
     function getDefaultArguments() {
         return array('action' => false,     // required argument
                      'method' => 'post',    // or get

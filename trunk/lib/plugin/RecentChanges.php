@@ -230,7 +230,7 @@ extends _RecentChanges_Formatter
                             "(",
                             // TransformLinks($summary, $rev->get('markup'), $rev->getPageName()),
                             // We do parse the summary:
-                            // 1) if the summary contains {{foo}}, the template must no be 
+                            // 1) if the summary contains {{foo}}, the template must no be
                             //    expanded
                             // 2) if the summary contains camel case, and DISABLE_MARKUP_WIKIWORD
                             //    is true, the camel case must not be linked.
@@ -1163,11 +1163,6 @@ extends WikiPlugin
 
     function getDescription () {
         return _("List all recent changes in this wiki.");
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     function managesValidators() {

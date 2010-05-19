@@ -91,11 +91,6 @@ extends WikiPlugin
         return sprintf(_("Show and add blogs for %s"),'[pagename]');
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     // Arguments:
     //  page - page which is blogged to (default current page)
     //

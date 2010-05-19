@@ -73,11 +73,6 @@ extends WikiPlugin
         return _("Parse an RDF FOAF file and extract information to render as HTML");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array( 'foaf'     => false, // the URI to parse
                       //'userid'   => false,

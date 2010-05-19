@@ -48,11 +48,6 @@ extends WikiPlugin_WikiAdminSelect
         return _("Set individual page permissions.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

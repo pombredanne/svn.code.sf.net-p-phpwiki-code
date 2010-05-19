@@ -73,10 +73,6 @@ extends WikiPlugin
     function managesValidators() {
         return true;
     }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
     function getDefaultArguments() {
         return array('pagename' => '[]', // button or preview highlight?
                      );

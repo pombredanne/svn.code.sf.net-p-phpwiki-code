@@ -51,11 +51,6 @@ extends WikiPlugin
         return _("Redirects to another URL or page.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array( 'href' => '',
                       'page' => false,

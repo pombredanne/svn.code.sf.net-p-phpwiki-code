@@ -43,11 +43,6 @@ extends WikiPlugin
         return _("Miscellaneous utility functions for the Administrator.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('action'           => '',
                      'label'                => '',

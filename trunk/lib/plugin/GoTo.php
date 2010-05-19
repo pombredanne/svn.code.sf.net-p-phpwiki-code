@@ -41,11 +41,6 @@ extends WikiPlugin
         return _("Go to or create page.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('size' => 32);
     }

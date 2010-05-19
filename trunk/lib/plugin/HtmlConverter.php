@@ -41,11 +41,6 @@ class WikiPlugin_HtmlConverter extends WikiPlugin
         return _("Convert HTML markup into wiki markup.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array();
     }

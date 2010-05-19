@@ -36,10 +36,6 @@ extends WikiPlugin
     function getDescription() {
         return _("Display the list of all defined relations and optionnally attributes in this entire wiki");
     }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
     function getDefaultArguments() {
         return array_merge
             (

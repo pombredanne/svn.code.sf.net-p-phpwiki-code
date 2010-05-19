@@ -42,11 +42,6 @@ extends WikiPlugin
         return _("List pages that are explicitly given as the pages argument.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array_merge
             (

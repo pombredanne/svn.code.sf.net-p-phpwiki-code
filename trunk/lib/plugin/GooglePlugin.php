@@ -47,11 +47,6 @@ extends WikiPlugin
         return _("Make use of the Google API");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('q'          => '',
                      'mode'       => 'search', // or 'cache' or 'spell'

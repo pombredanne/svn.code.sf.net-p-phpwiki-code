@@ -44,11 +44,6 @@ extends WikiPlugin
         return _("Don't cache this page.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array( 'nocache' => 1 );
     }

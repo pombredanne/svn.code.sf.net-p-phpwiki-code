@@ -55,11 +55,6 @@ extends WikiPlugin
     }
     function getDescription () {
         return _("Search an LDAP directory");
-
-    }
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
     function getDefaultArguments() {
         return array('host'         => "",                 // default: LDAP_AUTH_HOST

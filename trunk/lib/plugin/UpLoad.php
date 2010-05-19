@@ -48,11 +48,6 @@ extends WikiPlugin
         return _("Upload files to the local InterWiki Upload:<filename>");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('logfile'  => 'phpwiki-upload.log',
                      // add a link of the fresh file automatically to the

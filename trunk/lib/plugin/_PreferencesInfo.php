@@ -35,11 +35,6 @@ extends WikiPlugin
                        '[userid]');
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('page' => '[pagename]',
                      'userid' => '[userid]');

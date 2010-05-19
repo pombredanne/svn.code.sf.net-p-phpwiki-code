@@ -34,11 +34,6 @@ extends WikiPlugin
         return sprintf(_("Show Group Information"));
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array();
     }

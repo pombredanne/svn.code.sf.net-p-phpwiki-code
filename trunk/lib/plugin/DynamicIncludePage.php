@@ -39,11 +39,6 @@ extends WikiPlugin_IncludePage
         return _("Dynamicly include text from another wiki page.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
             return array_merge
             (WikiPlugin_IncludePage::getDefaultArguments(),

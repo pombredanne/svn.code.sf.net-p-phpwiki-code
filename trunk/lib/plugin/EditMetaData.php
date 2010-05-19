@@ -52,11 +52,6 @@ extends WikiPlugin__BackendInfo
         return sprintf(_("Edit metadata for %s"), '[pagename]');
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('page'       => '[pagename]'
                     );

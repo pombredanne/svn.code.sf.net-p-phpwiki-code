@@ -45,11 +45,6 @@ extends WikiPlugin
         return _("Calendar");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('prefix'           => '[pagename]' . SUBPAGE_SEPARATOR,
                      'date_format'      => '%Y-%m-%d',

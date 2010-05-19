@@ -53,11 +53,6 @@ extends WikiPlugin
         return _("Render ASCII Math as MathML");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array();
     }

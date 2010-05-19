@@ -38,11 +38,6 @@ extends WikiPlugin_WikiAdminSelect
         return _("Permanently purge all selected pages.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     /* getDefaultArguments() is inherited from WikiAdminSelect class */
 
     function collectPages(&$list, &$dbi, $sortby, $limit=0) {

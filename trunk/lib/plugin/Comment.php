@@ -45,12 +45,6 @@ extends WikiPlugin
 
     function getDescription() {
         return _("Embed hidden comments in WikiPages.");
-
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     // No arguments here.

@@ -36,11 +36,6 @@ extends WikiPlugin
         return _("List of plugins on this wiki");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('info' => 'args');
     }

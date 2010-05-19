@@ -35,11 +35,6 @@ extends WikiPlugin
         return _("Perform searches on InterWiki sites listed in InterWikiMap.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('s' => '',
                      'formsize' => 30,

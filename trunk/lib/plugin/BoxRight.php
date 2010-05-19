@@ -34,11 +34,6 @@ extends WikiPlugin
         return _("A simple plugin for <div class=boxright> with wikimarkup");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array();
     }

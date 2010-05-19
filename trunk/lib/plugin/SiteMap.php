@@ -55,11 +55,6 @@ extends WikiPlugin
         return _("Recursively get BackLinks or links");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('exclude'        => '',
                      'include_self'   => 0,

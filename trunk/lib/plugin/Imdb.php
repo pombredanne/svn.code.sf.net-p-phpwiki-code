@@ -59,11 +59,6 @@ extends WikiPlugin_SqlResult
         return _("Query a local imdb database");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array(
                      'query'       => false, // what

@@ -33,11 +33,6 @@ extends WikiPlugin_RecentChanges
         return _("List all recent edits in this wiki.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         $args = parent::getDefaultArguments();
         $args['show_minor'] = true;

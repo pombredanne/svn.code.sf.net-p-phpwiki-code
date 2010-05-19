@@ -67,11 +67,6 @@ extends WikiPlugin
       return _("Displays a marker with further infos (when clicking) on given coordinates");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array(
                      'Longitude' =>         '',

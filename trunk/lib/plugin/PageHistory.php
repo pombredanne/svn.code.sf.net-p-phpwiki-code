@@ -20,8 +20,6 @@ rcs_id('$Id$');
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/**
- */
 require_once("lib/plugin/RecentChanges.php");
 
 class _PageHistory_PageRevisionIter
@@ -271,11 +269,6 @@ extends WikiPlugin_RecentChanges
 
     function getDescription () {
         return sprintf(_("List PageHistory for %s"),'[pagename]');
-    }
-
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
     }
 
     function getDefaultArguments() {

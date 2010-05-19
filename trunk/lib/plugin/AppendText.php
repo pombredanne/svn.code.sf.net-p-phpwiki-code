@@ -41,11 +41,6 @@ extends WikiPlugin
         return _("Append text to any page in this wiki.");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('page'     => '[pagename]',
                      'pages'    => false,

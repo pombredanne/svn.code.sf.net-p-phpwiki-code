@@ -52,11 +52,6 @@ extends WikiPlugin
         return _("Create a Table of Contents and automatically link to headers");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('extracollapse' => 1,            // provide an entry +/- link to collapse
                      'firstlevelstyle' => 'number',   // 'number', 'letter' or 'roman'

@@ -56,11 +56,6 @@ extends WikiPlugin_WikiBlog
         return _("Handles threaded topics with comments/news and provide a input form");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array('pagename'   => '[pagename]',
                      'order'      => 'normal',   // oldest first

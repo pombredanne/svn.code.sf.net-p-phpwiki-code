@@ -40,11 +40,6 @@ extends WikiPlugin
         return _("Automatically create a Bibtex file from linked pages");
     }
 
-    function getVersion() {
-        return preg_replace("/[Revision: $]/", '',
-                            "\$Revision$");
-    }
-
     function getDefaultArguments() {
         return array( 'pagename'  => '[pagename]', // The page from which the BibTex file is generated
                       );
