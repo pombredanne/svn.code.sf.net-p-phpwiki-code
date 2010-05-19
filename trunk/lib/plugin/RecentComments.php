@@ -41,11 +41,7 @@ extends WikiPlugin_RecentChanges
     }
 
     function getDefaultArguments() {
-            //php-4.0.4pl1 breaks at the parent:: line even if the
-            // code doesn't reach this line
-        //if (!check_php_version(4,0,6))
-        $args = WikiPlugin_RecentChanges::getDefaultArguments();
-        //else $args = parent::getDefaultArguments();
+        $args = parent::getDefaultArguments();
         $args['show_minor'] = false;
         $args['show_all'] = true;
         $args['caption'] = _("Recent Comments");
