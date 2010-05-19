@@ -1,19 +1,20 @@
 <?php //-*-php-*-
 rcs_id('$Id$');
 /* Copyright (C) 2004 Dan Frankowski
+ * Copyright (C) 2010 Roger Guignard, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
- * 
+ *
  * PhpWiki is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * PhpWiki is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with PhpWiki; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -167,11 +168,11 @@ class RatingsUser {
     {
         // XXX: does this really want to do a full ratings load?  (scalability?)
         if (RATING_STORAGE == 'SQL')
-	    $this->_load_ratings();
-	else {
-	    $rdbi = $this->_get_rating_dbi();
-	    return $rdbi->metadata_get_rating($this->getId(), $pagename, $dimension);
-	}
+            $this->_load_ratings();
+        else {
+            $rdbi = $this->_get_rating_dbi();
+            return $rdbi->metadata_get_rating($this->getId(), $pagename, $dimension);
+        }
 
         if ($this->has_rated($pagename, $dimension))
         {
@@ -362,6 +363,9 @@ class RatingsUser {
 
             while($rating = $rating_iter->next())
             {
+                if (defined('GFORGE') and GFORGE) {
+                    $rating['pagename'] = preg_replace('/^'.PAGE_PREFIX.'/', '', $rating['pagename']);
+                }
                 $this->_num_ratings++;
                 $this->_ratings[$rating['pagename']][$rating['dimension']]
                   = new _UserRating($this->_userid, 
