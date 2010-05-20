@@ -1,4 +1,4 @@
-Date: Wed, 19 May 2010 18:15:54 +0000
+Date: Thu, 20 May 2010 14:09:22 +0000
 X-Rcs-Id: $Id$
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 Content-Type: application/x-phpwiki;
@@ -199,13 +199,13 @@ See [[PluginManager]] for a detailed list. Most plugins should have their
 own description page as subpage of **Help/** with the name **Plugin**
 appended.
 
-<?plugin BackLinks noheader=1 ?>
+<<BackLinks noheader=1 >>
 
 == Contributed Plugins ==
 
 See [[PhpWiki:CategoryContributedPlugin]].
 
-<<Backlinks page=CategoryContributedPlugin >>
+<<BackLinks page=CategoryContributedPlugin >>
 
 -----
 [[PhpWikiDocumentation]]
