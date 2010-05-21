@@ -6,7 +6,7 @@
 #
 # TODO: resolve @import
 
-CSS_SRC = MacOSX.css MacOSX-heavy.css MacOSX-topbottombars.css
+CSS_SRC = MacOSX.css MacOSX-topbottombars.css
 #MAIN    = MacOSX
 #JS_MAIN = MacOSX.js
 JS_REST = 
