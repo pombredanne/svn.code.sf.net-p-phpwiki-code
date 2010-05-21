@@ -5,7 +5,7 @@
 # minify CSS and JS
 #
 
-CSS_SRC = IEFixes.css    phpwiki-modern-heavy.css  phpwiki-printer.css        phpwiki.css \
+CSS_SRC = IEFixes.css    phpwiki-printer.css       phpwiki.css \
 	  highlight.css  phpwiki-modern.css        phpwiki-topbottombars.css  \
 	  moacdropdown/css/dropdown.css
 MAIN    = wikicommon
