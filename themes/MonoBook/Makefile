@@ -10,7 +10,7 @@ CSS_SRC = IE50Fixes.css  IE70Fixes.css   KHTMLFixes.css   commonPrint.css  rtl.c
 	  IE60Fixes.css  IEMacFixes.css  Opera7Fixes.css  monobook.css     wikistandard.css
 MAIN    = wikibits
 JS_MAIN = wikibits.js
-JS_REST = IEFixes.js
+# JS_REST = IEFixes.js
 
 CSS_FILES = $(patsubst %.css,%-min.css,$(CSS_SRC))
 
