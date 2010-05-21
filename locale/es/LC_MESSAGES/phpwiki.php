@@ -358,8 +358,6 @@ $locale["Image map expired. Reload wiki page to recreate its html part."] =
    "El mapa de imagen expiró.  Recargue la página del wiki para reconstruir su pieza del HTML.";
 $locale["In the time since you started editing this page, another user has saved a new version of it."] =
    "En el tiempo desde que usted comenzó a corregir esta página, otro usuario ha ahorrado una nueva versión de ella.";
-$locale["Include of '%s' failed."] =
-   "Inserción de '%s' falló.";
 $locale["Included from %s"] =
    "Inserción de '%s'";
 $locale["Included from %s:"] =
@@ -960,8 +958,6 @@ $locale["minutes"] =
    "minutas";
 $locale["missing required version argument"] =
    "parámetro requerido de la versión que falta";
-$locale["n/a"] =
-   "n/a";
 $locale["no page content"] =
    "ningún contenido de la página";
 $locale["not authenticated"] =

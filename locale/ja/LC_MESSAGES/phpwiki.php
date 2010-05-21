@@ -330,6 +330,8 @@ $locale["Select: "] =
    "選択:";
 $locale["Serialized file %s"] =
    "シリアライズファイル %s";
+$locale["Sidebar"] =
+   "スライドバー";
 $locale["Sign In"] =
    "サインイン";
 $locale["Sign Out"] =
