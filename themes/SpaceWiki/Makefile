@@ -5,7 +5,7 @@
 # minify CSS and JS
 #
 
-CSS_SRC = SpaceWiki.css SpaceWiki-gravimetric.css
+CSS_SRC = SpaceWiki.css
 CSS_FILES = $(patsubst %.css,%-min.css,$(CSS_SRC))
 
 all	: css
