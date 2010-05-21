@@ -6,10 +6,11 @@
 #
 
 CSS_SRC = gforge.css gforge-print.css gforge-autonumbering.css gforge-rereading.css gforge-fullscreen.css
-JS_REST = 
+MAIN = wikilens
+JS_MAIN = wikilens.js
 
 CSS_FILES = $(patsubst %.css,%-min.css,$(CSS_SRC))
 
-all	: css
+all	: css js
 
 include ../Makefile.global
