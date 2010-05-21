@@ -1592,8 +1592,6 @@ $locale["minor edit"] =
    "次要編輯";
 $locale["minor edits"] =
    "次要編輯";
-$locale["n/a"] =
-   "n/a";
 $locale["no cache used"] =
    "沒有快取被使用";
 $locale["no page specified"] =

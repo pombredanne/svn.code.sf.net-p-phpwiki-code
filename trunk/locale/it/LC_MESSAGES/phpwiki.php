@@ -168,8 +168,6 @@ $locale["HomePageAlias"] =
    "AliasPaginaPrincipale";
 $locale["In the time since you started editing this page, another user has saved a new version of it."] =
    "Nel tempo da quando avete cominciato pubblicare questa pagina, un altro utente ha conservato una nuova versione di esso.";
-$locale["Include of '%s' failed."] =
-   "Inserimento di '%s' fallito.";
 $locale["IncludePage"] =
    "InserireLaPagina";
 $locale["IncludePagePlugin"] =

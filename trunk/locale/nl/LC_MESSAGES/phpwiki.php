@@ -56,8 +56,6 @@ $locale["Home"] =
    "Thuis";
 $locale["HomePage"] =
    "ThuisPagina";
-$locale["Include of '%s' failed."] =
-   "Insert van '%s' gefaald.";
 $locale["Last Author"] =
    "Vorige Auteur";
 $locale["Last Modified"] =

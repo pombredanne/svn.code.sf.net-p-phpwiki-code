@@ -896,8 +896,6 @@ $locale["In total there are %d user sessions online. :: Unique %d Registered and
    "Au total: %d utilisateurs en ligne. :: %d enregistré(s) et %d invité(s)";
 $locale["Include an external web page within the body of a wiki page."] =
    "Inclure une page externe dans le corps de la WikiPage.";
-$locale["Include of '%s' failed."] =
-   "L'insertion de '%s' a échoué.";
 $locale["Include recursively all linked pages starting at %s"] =
    "Créer une carte du site commencer à %s";
 $locale["Include text from another wiki page."] =
@@ -1720,6 +1718,8 @@ $locale["Show summary information of the current user sessions."] =
    "Montre l'index de la table session. (utilisateurs en ligne).";
 $locale["Show translations of various words or pages"] =
    "Affiche la traduction de quelques mots dans certaines pages.";
+$locale["Sidebar"] =
+   "Barre verticale";
 $locale["Sign In"] =
    "Connexion";
 $locale["Sign Out"] =
@@ -2384,8 +2384,6 @@ $locale["minutes"] =
    "minutes";
 $locale["missing required version argument"] =
    "argument de version requis manquant";
-$locale["n/a"] =
-   "n/c";
 $locale["newer than the existing page."] =
    "plus récent que la page existante.";
 $locale["no cache used"] =

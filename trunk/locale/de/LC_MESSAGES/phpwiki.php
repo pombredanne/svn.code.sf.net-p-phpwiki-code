@@ -886,8 +886,6 @@ $locale["Include an external web page within the body of a wiki page."] =
    "Einbetten einer externen Webseite im Body dieser Wiki Seite.";
 $locale["Include multiple pages."] =
    "Füge mehrere Seiten ein.";
-$locale["Include of '%s' failed."] =
-   "Das Einfügen von »%s« ist fehlgeschlagen.";
 $locale["Include recursively all linked pages starting at %s"] =
    "Bette rekursiv alle verlinkten Seiten ein, angefangen mit %s";
 $locale["Include text from another wiki page."] =
@@ -1668,6 +1666,8 @@ $locale["Show summary information of the current user sessions."] =
    "Zeige Überblick über alle aktuellen Benutzersessions.";
 $locale["Show translations of various words or pages"] =
    "Zeige Übersetzungen für verschiedene Wörter oder Seiten";
+$locale["Sidebar"] =
+   "Sidebar";
 $locale["Sign In"] =
    "Anmelden";
 $locale["Sign Out"] =
@@ -2318,8 +2318,6 @@ $locale["minutes"] =
    "Minuten";
 $locale["missing required version argument"] =
    "Parameter version muß angegeben werden";
-$locale["n/a"] =
-   "k.A.";
 $locale["new&nbsp;window"] =
    "neues&nbsp;Fenster";
 $locale["newer than the existing page."] =
