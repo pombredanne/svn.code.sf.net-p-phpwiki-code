@@ -606,7 +606,7 @@ extends WikiDB_backend_PearDB_pgsql
 
             $search_clause .= "idxFTI @@ to_tsquery('$search_string')";
             if (!$orderby)
-               $orderby = " ORDER BY rank(idxFTI, to_tsquery('$search_string')) DESC";
+               $orderby = " ORDER BY ts_rank(idxFTI, to_tsquery('$search_string')) DESC";
         } else {
             $callback = new WikiMethodCb($searchobj, "_pagename_match_clause");
             $search_clause = "substring(plugin_wiki_page.pagename from 0 for $len) = '$pat') AND (";
