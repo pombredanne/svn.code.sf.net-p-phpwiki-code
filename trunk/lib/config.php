@@ -518,10 +518,6 @@ if (!function_exists('array_diff_assoc')) {
     }
 }
 
-function safe_wordwrap($str, $width=80, $break="\n", $cut=false) {
-    return wordwrap($str, $width, $break, $cut);
-}
-
 function getUploadFilePath() {
 
     if (defined('UPLOAD_FILE_PATH')) {

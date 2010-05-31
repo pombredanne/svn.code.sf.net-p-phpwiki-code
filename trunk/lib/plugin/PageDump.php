@@ -140,7 +140,7 @@ extends WikiPlugin
         }
         // We are displaing inline preview in a WikiPage, so wrap the
         // text if it is too long--unless quoted-printable (TODO).
-        $mailified = safe_wordwrap($mailified, 70);
+        $mailified = wordwrap($mailified, 70);
 
         $dlcvs = Button(array(//'page' => $page,
                               'action' => $this->getName(),
