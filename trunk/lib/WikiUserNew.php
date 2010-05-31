@@ -1080,7 +1080,7 @@ extends _AnonUser
                 $dbh = $request->getDbh(); // use phpwiki database 
             } elseif ($dbh->getAuthParam('auth_dsn') == $dbh->getParam('dsn')) {
                 $dbh = $request->getDbh(); // same phpwiki database 
-            } else { // use another external database handle. needs PHP >= 4.1
+            } else { // use another external database handle.
                 $local_params = array_merge($GLOBALS['DBParams'],$GLOBALS['DBAuthParams']);
                 $local_params['dsn'] = $local_params['auth_dsn'];
                 $dbh = WikiDB::open($local_params);

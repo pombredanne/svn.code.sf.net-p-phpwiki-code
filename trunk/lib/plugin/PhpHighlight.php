@@ -41,8 +41,6 @@
  *
  * Author: Martin Geisler <gimpster@gimpster.com>.
  *
- * Added compatibility for PHP < 4.2.0, where the highlight_string()
- * function has no second argument.
  * Added ability to override colors defined in php.ini --Carsten Klapp
  *
  * Known Problems:

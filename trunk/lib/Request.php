@@ -20,14 +20,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// backward compatibility for PHP < 4.2.0
-if (!function_exists('ob_clean')) {
-    function ob_clean() {
-        ob_end_clean();
-        ob_start();
-    }
-}
-
 class Request {
         
     function Request() {
