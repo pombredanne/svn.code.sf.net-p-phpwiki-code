@@ -423,27 +423,6 @@ function IsProbablyRedirectToIndex () {
     return preg_match("%^${requri}[^/]*$%", $GLOBALS['HTTP_SERVER_VARS']['SCRIPT_NAME']);
 }
 
-// >= php-4.1.0
-if (!function_exists('array_key_exists')) { // lib/IniConfig.php, sqlite, adodb, ...
-    function array_key_exists($item, $array) {
-        return isset($array[$item]);
-    }
-}
-
-// => php-4.0.5
-if (!function_exists('is_scalar')) { // lib/stdlib.php:wikihash()
-    function is_scalar($x) {
-        return is_numeric($x) or is_string($x) or is_float($x) or is_bool($x); 
-    }
-}
-
-// => php-4.2.0. pear wants to break old php's! DB uses it now.
-if (!function_exists('is_a')) {
-    function is_a($item,$class) {
-        return isa($item,$class); 
-    }
-}
-
 // needed < php5
 // by bradhuizenga at softhome dot net from the php docs
 if (!function_exists('str_ireplace')) {
