@@ -225,6 +225,7 @@ function FilenameForPage ($pagename, $action = false)
  */
 function MakeWikiZip (&$request)
 {
+    global $ErrorManager;
     if ($request->getArg('include') == 'all') {
         $zipname         = WIKI_NAME . _("FullDump") . date('Ymd-Hi') . '.zip';
         $include_archive = true;
@@ -241,10 +242,7 @@ function MakeWikiZip (&$request)
     $zip = new ZipWriter("Created by PhpWiki " . PHPWIKI_VERSION, $zipname);
 
     /* ignore fatals in plugins */
-    if (check_php_version(4,1)) {
-        global $ErrorManager;
-        $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
-    }
+    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
 
     $dbi =& $request->_dbi;
     $thispage = $request->getArg('pagename'); // for "Return to ..."
@@ -293,10 +291,8 @@ function MakeWikiZip (&$request)
                               $content, $attrib);
     }
     $zip->finish();
-    if (check_php_version(4,1)) {
-        global $ErrorManager;
-        $ErrorManager->popErrorHandler();
-    }
+
+    $ErrorManager->popErrorHandler();
 }
 
 function DumpToDir (&$request)
@@ -518,7 +514,7 @@ function MakeWikiZipHtml (&$request)
  */
 function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 {
-    global $WikiTheme, $request;
+    global $WikiTheme, $request, $ErrorManager;
     $silent = true; $zip = false; $directory = false;
     if ($WikiTheme->DUMP_MODE == 'HTML') {
 	$directory = $target;
@@ -549,10 +545,7 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
     $_bodyAttr = @$WikiTheme->_MoreAttr['body'];
     unset($WikiTheme->_MoreAttr['body']);
 
-    if (check_php_version(4,1)) {
-        global $ErrorManager;
-        $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
-    }
+    $ErrorManager->pushErrorHandler(new WikiFunctionCb('_dump_error_handler'));
 
     // check if the dumped file will be accessible from outside
     $doc_root = $request->get("DOCUMENT_ROOT");
@@ -862,10 +855,7 @@ function _DumpHtmlToDir ($target, $page_iter, $exclude = false)
 	}
     }
 
-    if (check_php_version(4,1)) {
-        global $ErrorManager;
-        $ErrorManager->popErrorHandler();
-    }
+    $ErrorManager->popErrorHandler();
 
     $WikiTheme->HTML_DUMP_SUFFIX = '';
     $WikiTheme->DUMP_MODE = false;

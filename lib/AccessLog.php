@@ -357,10 +357,7 @@ class Request_AccessLogEntry
             //$log_tbl =& $this->_accesslog->logtable;
             if ($request->get('REQUEST_METHOD') == "POST") {
                 // strangely HTTP_POST_VARS doesn't contain all posted vars.
-          	if (check_php_version(4,2))
-                    $args = $_POST; // copy not ref. clone not needed on hashes
-                else
-                    $args = $GLOBALS['HTTP_POST_VARS'];
+                $args = $_POST; // copy not ref. clone not needed on hashes
                 // garble passwords
                 if (!empty($args['auth']['passwd']))    $args['auth']['passwd'] = '<not displayed>';
                 if (!empty($args['dbadmin']['passwd'])) $args['dbadmin']['passwd'] = '<not displayed>';

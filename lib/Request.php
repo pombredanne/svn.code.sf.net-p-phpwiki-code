@@ -331,8 +331,6 @@ class Request {
             if (!COMPRESS_OUTPUT)
                 $compress = false;
         }
-        elseif (!check_php_version(4,2,3))
-            $compress = false;
         elseif (isCGI()) // necessary?
             $compress = false;
             
@@ -443,17 +441,6 @@ class Request {
         }
         
         if (!empty($this->_is_buffering_output)) {
-            /* This cannot work because it might destroy xml markup */
-            /*
-            if (0 and $GLOBALS['SearchHighLightQuery'] and check_php_version(4,2)) {
-                $html = str_replace($GLOBALS['SearchHighLightQuery'],
-                                    '<span class="search-term">'.$GLOBALS['SearchHighLightQuery'].'</span>',
-                                    ob_get_contents());
-                ob_clean();
-                header(sprintf("Content-Length: %d", strlen($html)));
-                echo $html;
-            } else {
-            */
             // if _is_compressing_output then ob_get_length() returns 
             // the uncompressed length, not the gzip'ed as required.
 	    if (!headers_sent() and !$this->_is_compressing_output) {
@@ -1137,10 +1124,7 @@ class Request_AccessLogEntry
             //$log_tbl =& $this->_accesslog->logtable;
             if ($request->get('REQUEST_METHOD') == "POST") {
                 // strangely HTTP_POST_VARS doesn't contain all posted vars.
-          	if (check_php_version(4,2))
-                    $args = $_POST; // copy not ref. clone not needed on hashes
-                else
-                    $args = $GLOBALS['HTTP_POST_VARS'];
+                $args = $_POST; // copy not ref. clone not needed on hashes
                 // garble passwords
                 if (!empty($args['auth']['passwd']))    $args['auth']['passwd'] = '<not displayed>';
                 if (!empty($args['dbadmin']['passwd'])) $args['dbadmin']['passwd'] = '<not displayed>';
