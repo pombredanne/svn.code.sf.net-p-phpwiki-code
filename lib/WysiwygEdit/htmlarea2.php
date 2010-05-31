@@ -16,8 +16,6 @@ require_once("lib/WysiwygEdit.php");
 class WysiwygEdit_htmlarea2 extends WysiwygEdit {
 
     function Head($name='edit[content]') {
-	//if (isBrowserIE() and browserVersion() >= 5.5) return $this->Head_IEonly();
-
         return JavaScript("
 _editor_url = \"".DATA_PATH."/themes/default/htmlarea2/\";
 var win_ie_ver = parseFloat(navigator.appVersion.split(\"MSIE\")[1]);
@@ -39,26 +37,11 @@ if (win_ie_ver >= 5.5) {
     // version 2
     function Textarea($textarea,$wikitext,$name='edit[content]') {
         $out = HTML($textarea);
-        // some more custom links 
-        //$out->pushContent(HTML::a(array('href'=>"javascript:editor_insertHTML('".$name."',\"<font style='background-color: yellow'>\",'</font>',1)"),_("Highlight selected text")));
-        //$out->pushContent(HTML("\n"));
         $out->pushContent(JavaScript("editor_generate('".$name."');",
                                      array('version' => 'JavaScript1.2',
                                            'defer' => 1)));
         return $out;
-        //return "\n".'<script language="JavaScript1.2" defer> editor_generate(\'CONTENT\'); </script>'."\n";
     }
-
-    // for testing only
-    function Head_IEonly() {
-        return HTML(JavaScript("_editor_url = \"".DATA_PATH."/themes/default/htmlarea2/\""),
-                    "\n",
-                    JavaScript("",
-                               array('version' => 'JavaScript1.2',
-                                     'type' => 'text/javascript',
-                                     'src' => DATA_PATH."/themes/default/htmlarea2/editor.js")));
-    }
-
 }
 
 // Local Variables:
