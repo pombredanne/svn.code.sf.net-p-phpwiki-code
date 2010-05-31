@@ -28,8 +28,6 @@
  * Usage:   <<WikiAdminChmod >> or called via WikiAdminSelect
  * Author:  Reini Urban <rurban@x-ray.at>
  *
- * KNOWN ISSUES:
- * Requires PHP 4.2 so far.
  */
 require_once('lib/PageList.php');
 require_once('lib/plugin/WikiAdminSelect.php');

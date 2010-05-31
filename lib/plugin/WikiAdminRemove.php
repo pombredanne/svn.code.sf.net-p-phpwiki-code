@@ -28,7 +28,6 @@
  * KNOWN ISSUES:
  * Currently we must be Admin.
  * Future versions will support PagePermissions.
- * requires PHP 4.2 so far.
  */
 // maybe display more attributes with this class...
 require_once('lib/PageList.php');

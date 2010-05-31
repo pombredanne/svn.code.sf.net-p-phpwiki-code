@@ -11,7 +11,6 @@
 
 // FIXME: possibly remove assert()'s for production version?
 
-// PHP3 does not have assert()
 define('USE_ASSERTS', function_exists('assert'));
 
 class _DiffOp {

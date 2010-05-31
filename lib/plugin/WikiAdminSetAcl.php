@@ -27,9 +27,6 @@
  * Usage:   <<WikiAdminSetAcl >> or called via WikiAdminSelect
  * Author:  Reini Urban <rurban@x-ray.at>
  *
- * KNOWN ISSUES:
- * Requires PHP 4.2 so far.
- *
  * TODO: UI to add custom group/username.
  * Currently it's easier to dump a page, fix it manually and
  * import it, than use Setacl
