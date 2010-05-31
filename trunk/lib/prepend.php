@@ -10,7 +10,7 @@ define('PHPWIKI_VERSION', '1.4.0RC-20100415');
 
 /** 
  * Returns true if current php version is at mimimum a.b.c 
- * Called: check_php_version(4,1)
+ * Called: check_php_version(5,2)
  */
 function check_php_version ($a = '0', $b = '0', $c = '0') {
     static $PHP_VERSION;

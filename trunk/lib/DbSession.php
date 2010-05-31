@@ -28,15 +28,6 @@ class DbSession
         // Check for existing DbSession handler
         $db_type = $dbh->getParam('dbtype');
         if (isa($dbh, 'WikiDB')) {
-            // will fail with php4 and case-sensitive filesystem
-            //$db_type = substr(get_class($dbh),7); 
-            
-            // < 4.1.2 crash on dba sessions at session_write_close(). 
-            // (Tested with 4.1.1 and 4.1.2)
-            // Didn't try postgres sessions.
-            if (!check_php_version(4,1,2) and $db_type == 'dba')
-                return false;
-
             @include_once("lib/DbSession/".$db_type.".php");
             
             $class = "DbSession_".$db_type;

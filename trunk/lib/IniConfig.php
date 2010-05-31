@@ -337,12 +337,8 @@ function IniConfig($file) {
     // USE_DB_SESSION default logic:
     if (!defined('USE_DB_SESSION')) {
         if ($DBParams['db_session_table']
-            and in_array($DBParams['dbtype'], array('SQL','ADODB','PDO'))) {
+            and in_array($DBParams['dbtype'], array('SQL','ADODB','PDO','dba'))) {
             define('USE_DB_SESSION', true);
-        } elseif ($DBParams['dbtype'] == 'dba' and check_php_version(4,1,2)) {
-            define('USE_DB_SESSION', true); // Depends on db handler as well. 
-            				    // BerkeleyDB on older php has problems 
-            				    // with multiple db handles.
         } else {
             define('USE_DB_SESSION', false);
         }
