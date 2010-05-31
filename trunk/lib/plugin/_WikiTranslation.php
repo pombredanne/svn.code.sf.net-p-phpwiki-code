@@ -26,17 +26,17 @@
  * Current favorite: translate.google.com if from_lang = en or fr
  *
  * Examples:
- *  <?plugin _WikiTranslation page=HomePage languages=fr ?>
+ *  <<_WikiTranslation page=HomePage languages=fr >>
  *     Translation service for HomePage into french (redirect to translate.google.com)
- *  <?plugin _WikiTranslation what=pages ?>
+ *  <<_WikiTranslation what=pages >>
  *     Translation matrix of all pages with proper translations (all in pgsrc)
- *  <?plugin _WikiTranslation what=wikiwords match="W*" limit=20 ?>
+ *  <<_WikiTranslation what=wikiwords match="W*" limit=20 >>
  *     Translation matrix of the first 20 wikiwords matching "W*"
- *  <?plugin _WikiTranslation string=HomePage languages=fr,de,sv ?>
+ *  <<_WikiTranslation string=HomePage languages=fr,de,sv >>
  *     Translation matrix for all given languages
- *  <?plugin _WikiTranslation string=HomePage ?>
+ *  <<_WikiTranslation string=HomePage >>
  *     Translation matrix for all supported languages
- *  <?plugin _WikiTranslation string=HomePage languages=fr ?>
+ *  <<_WikiTranslation string=HomePage languages=fr >>
  *     Just return the translated string for this language.
  *
  * @author:  Reini Urban

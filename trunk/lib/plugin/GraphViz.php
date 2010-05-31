@@ -31,9 +31,9 @@
  *   EPS, PS, SWF, SVG or SVGZ and imagemaps need to be tested.
  *
  * Usage:
-<?plugin GraphViz [options...]
+<<GraphViz [options...]
    multiline dot script ...
-?>
+>>
 
  * See also: VisualWiki, which depends on GraphViz and WikiPluginCached.
  *
@@ -176,7 +176,7 @@ extends WikiPluginCached
         $imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
         $imgtypes = array_merge($imgtypes, array("svg", "svgz", "ps"), $this->_mapTypes());
         $helparr = array(
-            '<?plugin GraphViz ' .
+            '<<GraphViz ' .
             'imgtype'          => ' = "' . $def['imgtype'] . "(default)|" . join('|',$imgtypes).'"',
             'alt'              => ' = "alternate image text"',
             'pages'            => ' = "pagenames,*" or <!plugin-list !> pagelist as input',

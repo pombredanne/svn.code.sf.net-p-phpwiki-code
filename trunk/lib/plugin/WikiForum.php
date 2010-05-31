@@ -25,13 +25,13 @@
  * particular page (one page per topic) and provides an input form for
  * adding a new message.
  *
- *   <?plugin WikiForum ?>
+ *   <<WikiForum>>
  *
  * To provide information for the MainForum page (CategoryForum)
  * summary output mode is possible.
  *
- *   <?plugin WikiForum page=SubTopic1 mode=summary info=title,numposts,ctime,author ?>
- *   <?plugin WikiForum page=SubTopic2 mode=summary info=title,numposts,ctime,author ?>
+ *   <<WikiForum page=SubTopic1 mode=summary info=title,numposts,ctime,author >>
+ *   <<WikiForum page=SubTopic2 mode=summary info=title,numposts,ctime,author >>
  *
  * TODO: For admin user, put checkboxes beside comments to allow for bulk removal.
  * threaded identation for level of reply

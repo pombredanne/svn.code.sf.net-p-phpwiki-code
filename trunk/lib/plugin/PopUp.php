@@ -25,7 +25,7 @@
  * Display a page in a clickable popup link.
  *
  * Usage:
- * <?plugin PopUp
+ * <<PopUp
  *     link="HomePage"
  *     title="PopUpped HomePage"
  *     text="Click here to popup the HomePage"
@@ -39,8 +39,8 @@
  *     status=no
  *     menubar=no
  *     copyhistory=no
- * ?>
- * <?plugin PopUp close=yes ?>
+ * >>
+ * <<PopUp close=yes >>
  */
 
 class WikiPlugin_PopUp

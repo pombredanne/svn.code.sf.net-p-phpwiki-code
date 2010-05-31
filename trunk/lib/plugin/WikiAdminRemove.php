@@ -22,7 +22,7 @@
  */
 
 /**
- * Usage:   <?plugin WikiAdminRemove?>
+ * Usage:   <<WikiAdminRemove>>
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:

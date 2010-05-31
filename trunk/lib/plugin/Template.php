@@ -26,7 +26,7 @@
  *    Include text from a wiki page and replace certain placeholders by parameters.
  *    Similiar to CreatePage with the template argument, but at run-time.
  *    Similiar to the mediawiki templates but not with the "|" parameter seperator.
- * Usage:   <?plugin Template page=TemplateFilm vars="title=rurban&year=1999" ?>
+ * Usage:   <<Template page=TemplateFilm vars="title=rurban&year=1999" >>
  * Author:  Reini Urban
  * See also: http://meta.wikimedia.org/wiki/Help:Template
  *
@@ -51,7 +51,7 @@
  *   We support a mediawiki-style syntax extension which maps
  *     {{TemplateFilm|title=Some Good Film|year=1999}}
  *   to
- *     <?plugin Template page=TemplateFilm vars="title=Some Good Film&year=1999" ?>
+ *     <<Template page=TemplateFilm vars="title=Some Good Film&year=1999" >>
  */
 
 class WikiPlugin_Template

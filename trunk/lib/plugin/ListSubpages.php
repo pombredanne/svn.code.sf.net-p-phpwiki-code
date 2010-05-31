@@ -23,7 +23,7 @@
 /**
  * ListSubpages:  Lists the names of all SubPages of the current page.
  *                Based on UnfoldSubpages.
- * Usage:   <?plugin ListSubpages noheader=1 info=pagename,hits,mtime ?>
+ * Usage:   <<ListSubpages noheader=1 info=pagename,hits,mtime >>
  */
 require_once('lib/PageList.php');
 

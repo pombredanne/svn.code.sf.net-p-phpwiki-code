@@ -26,12 +26,12 @@
  *
  * Usage:
  * <pre>
- *  <?plugin OldStyleTable border||=0 summary=""
+ *  <<OldStyleTable border||=0 summary=""
  *  ||  __Name__               |v __Cost__   |v __Notes__
  *  | __First__   | __Last__
  *  |> Jeff       |< Dairiki   |^  Cheap     |< Not worth it
  *  |> Marco      |< Polo      | Cheaper     |< Not available
- *  ?>
+ *  >>
  * </pre>
  *
  * Note that multiple <code>|</code>'s lead to spanned columns,

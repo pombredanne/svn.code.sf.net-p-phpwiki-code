@@ -40,8 +40,8 @@ if (!defined('PLUGIN_CALENDARLIST_LAST_N'))
  * Derived from Calendar.php by Martin Norbäck <martin@safelogic.se>
  *
  * Insert this plugin into your Calendar page, for example in WikiUser/Calendar:
- *   <?plugin Calendar ?>
- *   <?plugin CalendarList ?>
+ *   <<Calendar >>
+ *   <<CalendarList >>
  *
  * Honors now year + month args as start base - together with Calendar navigation.
  * The behaviour before 2007 with last/next_n_days was to start now.

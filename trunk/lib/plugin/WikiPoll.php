@@ -24,7 +24,7 @@
  * This plugin provides configurable polls.
  *
  * Usage:
-<?plugin WikiPoll require_all=0 require_least=2
+<<WikiPoll require_all=0 require_least=2
            question[1]="Do you like PhpWiki?"
              answer[1][1]="Yes" answer[1][2]="Do not know" answer[1][3]="No"
            question[2]="Do you have PhpWiki installed by your own?"
@@ -38,10 +38,10 @@
            question[5]="Which PhpWiki version do you use?"
              answer[5][1]="1.2.x" answer[5][2]="1.3.1-12" answer[5][3]="1.3.13"
              answer[5][4]="1.3.14"
-?>
+>>
  *
  * Administration:
- * <?plugin WikiPoll page=PhpWikiPoll admin=1 ?>
+ * <<WikiPoll page=PhpWikiPoll admin=1 >>
  * and protect this page properly (e.g. PhpWikiPoll/Admin)
  *
  * TODO:

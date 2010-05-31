@@ -24,9 +24,9 @@
  * Transclude:  Include an external web page within the body of a wiki page.
  *
  * Usage:
- *  <?plugin Transclude
+ *  <<Transclude
  *           src=http://www.internet-technology.de/fourwins_de.htm
- *  ?>
+ *  >>
  *
  * @author Geoffrey T. Dairiki
  *

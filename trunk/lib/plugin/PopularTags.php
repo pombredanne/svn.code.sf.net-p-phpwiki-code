@@ -21,8 +21,7 @@
  */
 
 /* Usage:
- * template tags.tmpl:
- *   <?plugin PopularTags ?>
+ *   <<PopularTags >>
  */
 
 require_once('lib/PageList.php');

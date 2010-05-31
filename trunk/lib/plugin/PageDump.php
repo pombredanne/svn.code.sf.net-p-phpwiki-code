@@ -40,9 +40,9 @@
  *   http://...phpwiki/index.php?PageDump&page=HomePage
  *   http://...phpwiki/index.php?PageDump&page=HomePage&download=1
  *  Static:
- *   <?plugin PageDump page=HomePage?>
+ *   <<PageDump page=HomePage>>
  *  Dynamic form (put both on the page):
- *   <?plugin PageDump?>
+ *   <<PageDump>>
  *   <?plugin-form PageDump?>
  *  Typical usage: as actionbar button
  */

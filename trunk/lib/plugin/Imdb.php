@@ -26,11 +26,11 @@
  * "imdb = mysql://user:pass@localhost/imdb" in lib/plugin/SqlResult.ini
  *
  * Queries:
- * <?plugin Imdb query=movie_main title||="Sample Movie (2002)" ?>
- * <?plugin Imdb query=movie_combined title||="Sample Movie (2002)" ?>
- * <?plugin Imdb query=movie_full title||="Sample Movie (2002)" ?>
- * <?plugin Imdb query=movie_company_credits title||="Sample Movie (2002)" ?>
- * <?plugin Imdb query=name name||="Lastname, Firstname (I)" ?>
+ * <<Imdb query=movie_main title||="Sample Movie (2002)" >>
+ * <<Imdb query=movie_combined title||="Sample Movie (2002)" >>
+ * <<Imdb query=movie_full title||="Sample Movie (2002)" >>
+ * <<Imdb query=movie_company_credits title||="Sample Movie (2002)" >>
+ * <<Imdb query=name name||="Lastname, Firstname (I)" >>
  * More title queries:
  *  business, moviebudgets, colorinfo, mpaaratingsreasons,
  *  akatitles, alternateversions, miscellaneouscompanies, moviecountries,

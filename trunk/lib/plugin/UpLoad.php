@@ -25,7 +25,7 @@
 /**
  * UpLoad:  Allow Administrator to upload files to a special directory,
  *          which should preferably be added to the InterWikiMap
- * Usage:   <?plugin UpLoad ?>
+ * Usage:   <<UpLoad >>
  * Author:  NathanGass <gass@iogram.ch>
  * Changes: ReiniUrban <rurban@x-ray.at>,
  *          qubit <rtryon@dartmouth.edu>

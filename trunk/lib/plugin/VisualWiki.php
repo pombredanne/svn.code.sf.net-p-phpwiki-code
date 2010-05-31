@@ -176,7 +176,7 @@ extends WikiPlugin_GraphViz
         $other_imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
         unset ($other_imgtypes[$def['imgtype']]);
         $helparr = array(
-            '<?plugin '.$this->getName() .
+            '<<'.$this->getName() .
             ' img'             => ' = "' . $def['imgtype'] . "(default)|" . join('|',$GLOBALS['PLUGIN_CACHED_IMGTYPES']).'"',
             'width'            => ' = "width in inches"',
             'height'           => ' = "height in inches"',
@@ -192,7 +192,7 @@ extends WikiPlugin_GraphViz
             'backlink_nb'      => ' = "number of pages with most backlinks"',
             'neighbour_list'   => ' = "find pages linked from and to these pages"',
             'exclude_list'     => ' = "colon separated list of pages to be excluded"',
-            'include_list'     => ' = "colon separated list"     ?>'
+            'include_list'     => ' = "colon separated list"     >>'
             );
         $length = 0;
         foreach($helparr as $alignright => $alignleft) {

@@ -26,8 +26,8 @@
  * http://edgar.netflint.net/howto.php
  *
  * Usage:
- *  <?plugin JabberPresence scripturl=http://edgar.netflint.net/status.php
- *                          jid=yourid@jabberserver type=html iconset=phpbb ?>
+ *  <<JabberPresence scripturl=http://edgar.netflint.net/status.php
+ *                          jid=yourid@jabberserver type=html iconset=phpbb >>
  *
  * @author: Arnaud Fontaine
  */

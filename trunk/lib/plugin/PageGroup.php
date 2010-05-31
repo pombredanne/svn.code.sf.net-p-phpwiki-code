@@ -24,16 +24,16 @@
 /**
  * Usage:
  *
- * <?plugin PageGroup parent=MyTableOfContents ?>
+ * <<PageGroup parent=MyTableOfContents >>
  *
- * <?plugin PageGroup
+ * <<PageGroup
  *          parent=MyTableOfContents
  *          label="Visit more pages in MyTableOfContents"
- * ?>
+ * >>
  *
- * <?plugin PageGroup parent=MyTableOfContents section=PartTwo loop=true ?>
+ * <<PageGroup parent=MyTableOfContents section=PartTwo loop=true >>
  *
- * <?plugin PageGroup parent=MyTableOfContents loop=1 ?>
+ * <<PageGroup parent=MyTableOfContents loop=1 >>
  *
  *
  * Updated to use new HTML(). It mostly works, but it's still a giant hackish mess.

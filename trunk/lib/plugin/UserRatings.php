@@ -32,7 +32,7 @@ else
 /**
  * Show a user's ratings in a table, using PageList.
  * Usage:
- * <?plugin UserRatings ?>
+ * <<UserRatings >>
  *
  * This only works with the "wikilens" theme.
  */

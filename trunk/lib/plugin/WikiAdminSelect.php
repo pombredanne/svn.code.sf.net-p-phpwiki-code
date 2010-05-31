@@ -25,7 +25,7 @@
  * Allows selection of multiple pages which get passed to other
  * WikiAdmin plugins then. Then do Rename, Remove, Chmod, Chown, ...
  *
- * Usage:   <?plugin WikiAdminSelect?>
+ * Usage:   <<WikiAdminSelect>>
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * This is the base class for most WikiAdmin* classes, using

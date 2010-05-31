@@ -23,7 +23,7 @@
 
 /**
  * IncludePage:  include text from another wiki page in this one
- * usage:   <?plugin IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6?>
+ * usage:   <<IncludePage page=OtherPage rev=6 quiet=1 words=50 lines=6>>
  * author:  Joe Edelman <joe@orbis-tertius.net>
  */
 

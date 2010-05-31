@@ -22,7 +22,7 @@
 
 /**
  * DynamicIncludePage - Include wikipage asynchronously. Icon to show/hide.
- * Usage:   <?plugin DynamicIncludePage page=OtherPage state=true ...?>
+ * Usage:   <<DynamicIncludePage page=OtherPage state=true ...>>
  * Author:  Reini Urban
  */
 

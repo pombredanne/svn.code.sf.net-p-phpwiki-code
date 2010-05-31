@@ -26,9 +26,9 @@
  * display dynamic content.
  *
  * Usage:
- *   <?plugin NoCache ?>
+ *   <<NoCache >>
  * or to delete the whole cache for this page:
- *   <?plugin NoCache nocache||=purge ?>
+ *   <<NoCache nocache||=purge >>
  *
  * Author:  Reini Urban <rurban@x-ray.at>
  *

@@ -36,7 +36,7 @@
  |
  | You may call this plugin as follows:
  |
- |        <?plugin CacheTest text="What a wonderful test!" ?>
+ |        <<CacheTest text="What a wonderful test!" >>
  |
 
 /*-----------------------------------------------------------------------

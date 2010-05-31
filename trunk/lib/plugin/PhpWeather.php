@@ -28,12 +28,12 @@
  *
  * Usage:
  *
- * <?plugin PhpWeather ?>
- * <?plugin PhpWeather menu=true ?>
- * <?plugin PhpWeather icao=KJFK ?>
- * <?plugin PhpWeather language=en ?>
- * <?plugin PhpWeather units=only_metric ?>
- * <?plugin PhpWeather icao||=CYYZ cc||=CA language||=en menu=true ?>
+ * <<PhpWeather >>
+ * <<PhpWeather menu=true >>
+ * <<PhpWeather icao=KJFK >>
+ * <<PhpWeather language=en >>
+ * <<PhpWeather units=only_metric >>
+ * <<PhpWeather icao||=CYYZ cc||=CA language||=en menu=true >>
  *
  * If you want a menu, and you also want to change the default station
  * or language, then you have to use the ||= form, or else the user

@@ -22,7 +22,7 @@
  */
 
 /**
- * Usage:   <?plugin WikiAdminMarkup s||=* ?> or called via WikiAdminSelect
+ * Usage:   <<WikiAdminMarkup s||=* >> or called via WikiAdminSelect
  * @author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:

@@ -26,7 +26,7 @@
  *          copied and pasted into a wiki page.
  *          Credit to an unknown programmer, who has provided the first
  *          version 0.01 on http://www.gpgstudy.com/striphtml.phps
- * Usage:   <?plugin HtmlConverter ?>
+ * Usage:   <<HtmlConverter >>
  * Author:  HendrikScheider <hendrik.scheider@wincor-nixdorf.com>
  */
 

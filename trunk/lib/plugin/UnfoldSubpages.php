@@ -25,7 +25,7 @@
  *   This is e.g. useful for the CalendarPlugin, to see all entries at once.
  *   Warning: Better don't use it with non-existant sections!
  *              The section extractor is currently quite unstable.
- * Usage:   <?plugin UnfoldSubpages sortby=-mtime words=50 maxpages=5 ?>
+ * Usage:   <<UnfoldSubpages sortby=-mtime words=50 maxpages=5 >>
  * Author:  Reini Urban <rurban@x-ray.at>
  */
 

@@ -46,8 +46,8 @@
  * A simple plugin that displays current time and date.
  *
  * Usage:
- * <?plugin CurrentTime?>
- * <?plugin CurrentTime format=XXX ?>
+ * <<CurrentTime>>
+ * <<CurrentTime format=XXX >>
  */
 
 class WikiPlugin_CurrentTime

@@ -24,8 +24,8 @@
  * FrameInclude:  Displays a url or page in a seperate frame inside our body.
  *
  * Usage:
- *  <?plugin FrameInclude src=http://www.internet-technology.de/fourwins_de.htm ?>
- *  <?plugin FrameInclude page=OtherPage ?>
+ *  <<FrameInclude src=http://www.internet-technology.de/fourwins_de.htm >>
+ *  <<FrameInclude page=OtherPage >>
  *  at the VERY BEGINNING in the content!
  *
  * Author:  Reini Urban <rurban@x-ray.at>, rewrite by Jeff Dairiki <dairiki@dairiki.org>

@@ -52,46 +52,46 @@
  * some allow values as list from from <!plugin-list !>
 
  Samples:
-   <?plugin WikiFormRich action=dumpserial method=get
+   <<WikiFormRich action=dumpserial method=get
             checkbox[] name=include value="all"
             editbox[] name=directory value=DEFAULT_DUMP_DIR
             editbox[] name=pages value=*
-            editbox[] name=exclude value="" ?>
-   <?plugin WikiFormRich action=dumphtml method=get
+            editbox[] name=exclude value="" >>
+   <<WikiFormRich action=dumphtml method=get
             editbox[] name=directory value=HTML_DUMP_DIR
             editbox[] name=pages value="*"
-            editbox[] name=exclude value="" ?>
-   <?plugin WikiFormRich action=loadfile method=get
+            editbox[] name=exclude value="" >>
+   <<WikiFormRich action=loadfile method=get
             editbox[]  name=source value=DEFAULT_WIKI_PGSRC
             checkbox[] name=overwrite value=1
-            editbox[]  name=exclude value="" ?>
-  <?plugin WikiFormRich action=TitleSearch method=get class=wikiadmin nobr=1
+            editbox[]  name=exclude value="" >>
+  <<WikiFormRich action=TitleSearch method=get class=wikiadmin nobr=1
              editbox[] name=s text=""
            submit[]
              checkbox[] name=case_exact
-             checkbox[] name=regex ?>
-  <?plugin WikiFormRich action=FullTextSearch method=get class=wikiadmin nobr=1
+             checkbox[] name=regex >>
+  <<WikiFormRich action=FullTextSearch method=get class=wikiadmin nobr=1
              editbox[] name=s text=""
            submit[]
              checkbox[] name=case_exact
-             checkbox[] name=regex ?>
-  <?plugin WikiFormRich action=FuzzyPages method=get class=wikiadmin nobr=1
+             checkbox[] name=regex >>
+  <<WikiFormRich action=FuzzyPages method=get class=wikiadmin nobr=1
              editbox[] name=s text=""
            submit[]
              checkbox[] name=case_exact ?>
-  <?plugin WikiFormRich action=AppendText buttontext="AddPlugin"
+  <<WikiFormRich action=AppendText buttontext="AddPlugin"
              radio[] name=s value=<!plugin-list BackLinks page=WikiPlugin limit=10 !>
              ?>
-  <?plugin WikiFormRich action=AppendText buttontext="AddPlugin"
+  <<WikiFormRich action=AppendText buttontext="AddPlugin"
              pulldown[] name=s text="Plugins: " value=<!plugin-list BackLinks page=WikiPlugin !>
              ?>
-  <?plugin WikiFormRich action=AppendText buttontext="AddCategory"
+  <<WikiFormRich action=AppendText buttontext="AddCategory"
              pulldown[] name=s text="Categories: " value=<!plugin-list TitleSearch s=Category !>
              ?>
-  <?plugin WikiFormRich action=SemanticSearch buttontext="AddRelation"
+  <<WikiFormRich action=SemanticSearch buttontext="AddRelation"
              combobox[] name=relation text="Relation: " method=listRelations
              ?>
-  <?plugin WikiFormRich action=AppendText buttontext="InsertTemplate"
+  <<WikiFormRich action=AppendText buttontext="InsertTemplate"
              combobox[] name=s text="Template: " method=titleSearch args="Template/"
              ?>
 */
