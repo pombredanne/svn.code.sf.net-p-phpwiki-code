@@ -56,8 +56,7 @@
  *
  * - Get rid of WikiNameRegexp and KeywordLinkRegexp as globals by finding
  *   everywhere that uses them as variables and modify the code to use
- *   them as constants. Will involve hacking around
- *   pcre_fix_posix_classes (probably with redefines()).
+ *   them as constants.
  */
 
 include_once (dirname(__FILE__)."/config.php");
@@ -969,8 +968,6 @@ function fixup_dynamic_configs($file) {
     }
 
     // language dependent updates:
-    $WikiNameRegexp = pcre_fix_posix_classes($WikiNameRegexp);
-    //if ($KeywordLinkRegexp) $KeywordLinkRegexp = pcre_fix_posix_classes($KeywordLinkRegexp);
     if (!defined('CATEGORY_GROUP_PAGE'))
         define('CATEGORY_GROUP_PAGE',_("CategoryGroup"));
     if (!defined('WIKI_NAME'))

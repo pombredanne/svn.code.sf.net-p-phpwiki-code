@@ -1280,7 +1280,7 @@ function SplitPagename ($page) {
         $RE[] = "/(${sep})([^${sep}]+)/";
         
         foreach ($RE as $key)
-            $RE[$key] = pcre_fix_posix_classes($key);
+            $RE[$key] = $key;
     }
 
     foreach ($RE as $regexp) {
