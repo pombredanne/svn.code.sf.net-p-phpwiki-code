@@ -83,14 +83,6 @@ function isBrowserIE() {
     return (browserDetect('Mozilla/') and 
             browserDetect('MSIE'));
 }
-// old Netscape prior to Mozilla
-function isBrowserNetscape($version = false) {
-    $agent = (browserDetect('Mozilla/') and 
-            ! browserDetect('Gecko/') and
-            ! browserDetect('MSIE'));
-    if ($version) return $agent and browserVersion() >= $version; 
-    else return $agent;
-}
 // must omit display alternate stylesheets: konqueror 3.1.4
 // http://sourceforge.net/tracker/index.php?func=detail&aid=945154&group_id=6121&atid=106121
 function isBrowserKonqueror($version = false) {
