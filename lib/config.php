@@ -83,11 +83,6 @@ function isBrowserIE() {
     return (browserDetect('Mozilla/') and 
             browserDetect('MSIE'));
 }
-// problem with transparent PNG's
-function isBrowserIE55() {
-    return (isBrowserIE() and 
-            browserVersion() > 5.1 and browserVersion() < 6.0);
-}
 // old Netscape prior to Mozilla
 function isBrowserNetscape($version = false) {
     $agent = (browserDetect('Mozilla/') and 
@@ -114,7 +109,6 @@ function isBrowserOpera($version = false) {
     if ($version) return browserDetect('Opera/') and browserVersion() >= $version; 
     return browserDetect('Opera/');
 }
-
 
 /**
  * If $LANG is undefined:
