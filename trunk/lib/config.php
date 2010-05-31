@@ -277,10 +277,6 @@ function update_locale($loc) {
     return $loc;
 }
 
-function pcre_fix_posix_classes ($regexp) {
-    return $regexp;
-}
-
 function deduce_script_name() {
     $s = &$GLOBALS['HTTP_SERVER_VARS'];
     $script = @$s['SCRIPT_NAME'];
