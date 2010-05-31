@@ -29,15 +29,6 @@ function isCGI() {
             @preg_match('/CGI/',$GLOBALS['HTTP_ENV_VARS']['GATEWAY_INTERFACE']));
 }
 
-/*
-// copy some $_ENV vars to $_SERVER for CGI compatibility. php does it automatically since when?
-if (isCGI()) {
-    foreach (explode(':','SERVER_SOFTWARE:SERVER_NAME:GATEWAY_INTERFACE:SERVER_PROTOCOL:SERVER_PORT:REQUEST_METHOD:HTTP_ACCEPT:PATH_INFO:PATH_TRANSLATED:SCRIPT_NAME:QUERY_STRING:REMOTE_HOST:REMOTE_ADDR:REMOTE_USER:AUTH_TYPE:CONTENT_TYPE:CONTENT_LENGTH') as $key) {
-        $GLOBALS['HTTP_SERVER_VARS'][$key] = &$GLOBALS['HTTP_ENV_VARS'][$key];
-    }
-}
-*/
-
 // essential internal stuff
 if (!check_php_version(6))
     set_magic_quotes_runtime(0);
@@ -45,12 +36,6 @@ if (!check_php_version(6))
 /**
  * Browser Detection Functions
  *
- * Current Issues:
- *  NS/IE < 4.0 doesn't accept < ? xml version="1.0" ? >
- *  NS/IE < 4.0 cannot display PNG
- *  NS/IE < 4.0 cannot display all XHTML tags
- *  NS < 5.0 needs textarea wrap=virtual
- *  IE55 has problems with transparent PNG's
  * @author: ReiniUrban
  */
 function browserAgent() {
@@ -114,23 +99,6 @@ function guessing_lang ($languages=false) {
     if (!$languages) {
     	// make this faster
     	$languages = array("en","de","es","fr","it","ja","zh","nl","sv");
-        // ignore possible "_<territory>" and codeset "ja.utf8"
-        /*
-        require_once("lib/WikiTheme.php");
-        $languages = listAvailableLanguages();
-        if (defined('DEFAULT_LANGUAGE') and in_array(DEFAULT_LANGUAGE, $languages))
-        {
-            // remove duplicates
-            if ($i = array_search(DEFAULT_LANGUAGE, $languages) !== false) {
-                array_splice($languages, $i, 1);
-            }
-            array_unshift($languages, DEFAULT_LANGUAGE);
-            foreach ($languages as $lang) {
-                $arr = FileFinder::locale_versions($lang);
-                $languages = array_merge($languages, $arr);
-            }
-        }
-        */
     }
 
     $accept = false; 
@@ -309,78 +277,8 @@ function update_locale($loc) {
     return $loc;
 }
 
-/** string pcre_fix_posix_classes (string $regexp)
-*
-* Older version (pre 3.x?) of the PCRE library do not support
-* POSIX named character classes (e.g. [[:alnum:]]).
-*
-* This is a helper function which can be used to convert a regexp
-* which contains POSIX named character classes to one that doesn't.
-*
-* All instances of strings like '[:<class>:]' are replaced by the equivalent
-* enumerated character class.
-*
-* Implementation Notes:
-*
-* Currently we use hard-coded values which are valid only for
-* ISO-8859-1.  Also, currently on the classes [:alpha:], [:alnum:],
-* [:upper:] and [:lower:] are implemented.  (The missing classes:
-* [:blank:], [:cntrl:], [:digit:], [:graph:], [:print:], [:punct:],
-* [:space:], and [:xdigit:] could easily be added if needed.)
-*
-* This is a hack.  I tried to generate these classes automatically
-* using ereg(), but discovered that in my PHP, at least, ereg() is
-* slightly broken w.r.t. POSIX character classes.  (It includes
-* "\xaa" and "\xba" in [:alpha:].)
-*
-* So for now, this will do.  --Jeff <dairiki@dairiki.org> 14 Mar, 2001
-*/
 function pcre_fix_posix_classes ($regexp) {
-    global $charset;
-
-    if (defined('GFORGE') and GFORGE) {
-        return $regexp;
-    }
-
-    if (!isset($charset))
-        $charset = CHARSET; // get rid of constant. pref is dynamic and language specific
-    if (in_array($GLOBALS['LANG'], array('zh')))
-        $charset = 'utf-8';
-    if (strstr($GLOBALS['LANG'],'.utf-8'))
-        $charset = 'utf-8';
-    elseif (strstr($GLOBALS['LANG'],'.euc-jp'))
-        $charset = 'euc-jp';
-    elseif (strstr($GLOBALS['LANG'], 'ja'))
-        $charset = 'euc-jp';
-
-    if (strtolower($charset) == 'utf-8') { // thanks to John McPherson
-        // until posix class names/pcre work with utf-8
-	if (preg_match('/[[:upper:]]/', '\xc4\x80'))
-            return $regexp;    
-        // utf-8 non-ascii chars: most common (eg western) latin chars are 0xc380-0xc3bf
-        // we currently ignore other less common non-ascii characters
-        // (eg central/east european) latin chars are 0xc432-0xcdbf and 0xc580-0xc5be
-        // and indian/cyrillic/asian languages
-        
-        // this replaces [[:lower:]] with utf-8 match (Latin only)
-        $regexp = preg_replace('/\[\[\:lower\:\]\]/','(?:[a-z]|\xc3[\x9f-\xbf]|\xc4[\x81\x83\x85\x87])',
-                               $regexp);
-        // this replaces [[:upper:]] with utf-8 match (Latin only)
-        $regexp = preg_replace('/\[\[\:upper\:\]\]/','(?:[A-Z]|\xc3[\x80-\x9e]|\xc4[\x80\x82\x84\x86])',
-                               $regexp);
-    } elseif (preg_match('/[[:upper:]]/', 'Ä')) {
-        // First check to see if our PCRE lib supports POSIX character
-        // classes.  If it does, there's nothing to do.
-        return $regexp;
-    }
-    static $classes = array(
-                            'alnum' => "0-9A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
-                            'alpha' => "A-Za-z\xc0-\xd6\xd8-\xf6\xf8-\xff",
-                            'upper' => "A-Z\xc0-\xd6\xd8-\xde",
-                            'lower' => "a-z\xdf-\xf6\xf8-\xff"
-                            );
-    $keys = join('|', array_keys($classes));
-    return preg_replace("/\[:($keys):]/e", '$classes["\1"]', $regexp);
+    return $regexp;
 }
 
 function deduce_script_name() {
