@@ -29,13 +29,13 @@
  * syntax: See http://www.andre-simon.de/doku/highlight/highlight.html
  * style = ["ansi", "gnu", "kr", "java", "linux"]
 
-<?plugin SyntaxHighlighter syntax=c style=kr color=emacs
+<<SyntaxHighlighter syntax=c style=kr color=emacs
  #include <stdio.h>
 
  int main() {
  printf("Lalala\n");
  }
-?>
+>>
 
  I did not use beautifier, because it used up more than 8M of memory on
  my system and PHP killed it. I'm not sure whether this is a problem

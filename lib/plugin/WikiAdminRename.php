@@ -22,7 +22,7 @@
  */
 
 /**
- * Usage:   <?plugin WikiAdminRename ?> or called via WikiAdminSelect
+ * Usage:   <<WikiAdminRename >> or called via WikiAdminSelect
  * @author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:

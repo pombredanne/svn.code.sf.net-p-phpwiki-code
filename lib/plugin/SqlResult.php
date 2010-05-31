@@ -32,17 +32,17 @@
  * TODO: paging
  *
  * Usage:
- *   <?plugin SqlResult alias=mysql
+ *   <<SqlResult alias=mysql
  *            SELECT 'mysql password for string "xx":',
  *                   PASSWORD('xx')
- *   ?>
- *   <?plugin SqlResult alias=videos template=videos
+ *   >>
+ *   <<SqlResult alias=videos template=videos
  *            SELECT rating,title,date
  *                   FROM video
  *                   ORDER BY rating DESC
  *                   LIMIT 5
- *   ?>
- *   <?plugin SqlResult alias=imdb template=imdbmovies where||="Davies, Jeremy%"
+ *   >>
+ *   <<SqlResult alias=imdb template=imdbmovies where||="Davies, Jeremy%"
  *   SELECT m.title, m.date, n.name, c.role
  *     FROM movies as m, names as n, jobs as j, characters as c
  *     WHERE n.name LIKE "%%where%%"
@@ -51,7 +51,7 @@
  *     AND c.job_id = j.job_id
  *     AND j.description = 'Actor'
  *     ORDER BY m.date DESC
- *   ?>
+ *   >>
  *
  * @author: ReiniUrban
  */

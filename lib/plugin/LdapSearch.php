@@ -28,21 +28,21 @@
  * TODO: Return a pagelist on certain attributes
  *
  * Usage Samples:
-  <?plugin LdapSearch?>
-  <?plugin LdapSearch
+  <<LdapSearch>>
+  <<LdapSearch
            host="localhost"
            port=389
            basedn=""
             filter="(cn=*)"
            attributes=""
-  ?>
-  <?plugin LdapSearch host=ldap.example.com filter="(ou=web-team)"
-                      attributes="sn cn telephonenumber" ?>
-  <?plugin LdapSearch host="ldap.itd.umich.edu" basedn="" filter="(sn=jensen)" attributes="cn drink" ?>
-  <?plugin LdapSearch host=ldap.example.com attributes="cn sn telephonenumber" ?>
-  <?plugin LdapSearch host=bugs.debian.org port=10101 basedn="dc=current,dc=bugs,dc=debian,dc=org"
+  >>
+  <<LdapSearch host=ldap.example.com filter="(ou=web-team)"
+                      attributes="sn cn telephonenumber" >>
+  <<LdapSearch host="ldap.itd.umich.edu" basedn="" filter="(sn=jensen)" attributes="cn drink" >>
+  <<LdapSearch host=ldap.example.com attributes="cn sn telephonenumber" >>
+  <<LdapSearch host=bugs.debian.org port=10101 basedn="dc=current,dc=bugs,dc=debian,dc=org"
                       filter="(debbugsPackage=phpwiki)"
-                      attributes="debbugsSeverity debbugsState debbugsTitle" ?>
+                      attributes="debbugsSeverity debbugsState debbugsTitle" >>
 
  * @author John Lines
  */

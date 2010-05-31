@@ -26,9 +26,9 @@
  * arguments to pretty-print PHP code.
  *
  * Usage:
- * <?plugin PhpHighlight default='#FF0000' comment='#0000CC'
+ * <<PhpHighlight default='#FF0000' comment='#0000CC'
  * code that should be highlighted
- * ?>
+ * >>
  *
  * You do not have to add '<?php' and '?>' to the code - the plugin
  * does this automatically if you do not set wrap to 0.
@@ -46,10 +46,10 @@
  * Added ability to override colors defined in php.ini --Carsten Klapp
  *
  * Known Problems:
- *   <?plugin PhpHighlight
+ *   <<PhpHighlight
  *   testing[somearray];
  *   testing~[badworkaround~];
- *   ?>
+ *   >>
  * will swallow "[somearray]"
  */
 

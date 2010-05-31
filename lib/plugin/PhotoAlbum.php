@@ -29,7 +29,7 @@
  *          Thomas Harding (slides mode, real thumbnails)
  *
  * Usage:
- * <?plugin PhotoAlbum
+ * <<PhotoAlbum
  *          src="http://server/textfile" or localfile or localdir
  *          mode=[normal|column|row|thumbs|tiles|list|slide]
  *          desc=true
@@ -39,7 +39,7 @@
  *          thumbswidth=80
  *          align=[center|left|right]
  *          duration=6
- * ?>
+ * >>
  *
  * "src": textfile of images or directory of images or a single image (local or remote)
  *      Local or remote e.g. http://myserver/images/MyPhotos.txt or http://myserver/images/

@@ -22,7 +22,7 @@
  */
 
 /**
- * Usage:   <?plugin WikiAdminSearchReplace ?> or called via WikiAdminSelect
+ * Usage:   <<WikiAdminSearchReplace >> or called via WikiAdminSelect
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:

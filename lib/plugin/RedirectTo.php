@@ -23,8 +23,8 @@
 /**
  * Redirect to another page or external uri. Kind of PageAlias.
  * Usage:
- * <?plugin RedirectTo href="http://www.internet-technology.de/fourwins_de.htm" ?>
- *      or  <?plugin RedirectTo page=AnotherPage ?>
+ * <<RedirectTo href="http://www.internet-technology.de/fourwins_de.htm" >>
+ *      or  <<RedirectTo page=AnotherPage >>
  * at the VERY FIRST LINE in the content! Otherwise it will be ignored.
  *
  * Author:  Reini Urban <rurban@x-ray.at>
@@ -65,7 +65,7 @@ extends WikiPlugin
         if ($href) {
             /*
              * Use quotes on the href argument value, like:
-             *   <?plugin RedirectTo href="http://funky.com/a b \" c.htm" ?>
+             *   <<RedirectTo href="http://funky.com/a b \" c.htm" ?>
              *
              * Do we want some checking on href to avoid malicious
              * uses of the plugin? Like stripping tags or hexcode.

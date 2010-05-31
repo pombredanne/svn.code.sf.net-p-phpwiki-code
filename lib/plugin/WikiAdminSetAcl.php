@@ -24,7 +24,7 @@
 /**
  * Set individual PagePermissions
  *
- * Usage:   <?plugin WikiAdminSetAcl ?> or called via WikiAdminSelect
+ * Usage:   <<WikiAdminSetAcl >> or called via WikiAdminSelect
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:

@@ -31,7 +31,7 @@ require_once('lib/TextSearchQuery.php');
  * particular page and provides an input form for adding a new blog.
  *
  * USAGE:
- * Add <?plugin WikiBlog ?> at your PersonalPage and BlogArchive and
+ * Add <<WikiBlog >> at your PersonalPage and BlogArchive and
  * BlogJournal will find the Blog entries automatically.
  *
  * Now it is also the base class for all attachable pagetypes:
@@ -41,9 +41,9 @@ require_once('lib/TextSearchQuery.php');
  *
  * To have the blog show up on a seperate page:
  * On TopPage, use
- *   <?plugin WikiBlog mode=add?>
+ *   <<WikiBlog mode=add>>
  * Create TopPage/Blog with this page as actionpage:
- *   <?plugin WikiBlog pagename=TopPage mode=show?>
+ *   <<WikiBlog pagename=TopPage mode=show>>
  *
  * To have the main ADMIN_USER Blog appear under Blog and not under WikiBlog/Blog
  * or UserName/Blog as for other users blogs,

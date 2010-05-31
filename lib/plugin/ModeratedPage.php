@@ -429,14 +429,14 @@ extends WikiPlugin
         if ($parsed = $loader->parsePI($pi)) {
             $plugin =& $parsed[1];
             if ($plugin->getName() != _("ModeratedPage"))
-                return $this->error(sprintf(_("<?plugin ModeratedPage ... ?> not found in first line of %s"),
+                return $this->error(sprintf(_("<<ModeratedPage ... >> not found in first line of %s"),
                                             $action_page->getName()));
             if (!$action_page->get('locked'))
                 return $this->error(sprintf(_("%s is not locked!"),
                                             $action_page->getName()));
             return $plugin->resolve_argstr($request, $parsed[2]);
         } else {
-            return $this->error(sprintf(_("<?plugin ModeratedPage ... ?> not found in first line of %s"),
+            return $this->error(sprintf(_("<<ModeratedPage ... >> not found in first line of %s"),
                                         $action_page->getName()));
         }
     }

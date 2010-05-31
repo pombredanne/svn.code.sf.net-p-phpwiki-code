@@ -22,7 +22,7 @@
  */
 
 /**
- * Usage: <?plugin PrevNext prev=PrevLink next=NextLink ?>
+ * Usage: <<PrevNext prev=PrevLink next=NextLink >>
  * See also PageGroup which automatically tries to extract the various links
  *
  */

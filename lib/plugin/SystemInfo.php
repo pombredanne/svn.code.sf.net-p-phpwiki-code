@@ -22,11 +22,11 @@
  */
 
 /**
- * Usage: <?plugin SystemInfo all ?>
- *        or <?plugin SystemInfo pagestats cachestats discspace hitstats ?>
- *        or <?plugin SystemInfo version ?>
- *        or <?plugin SystemInfo current_theme ?>
- *        or <?plugin SystemInfo PHPWIKI_DIR ?>
+ * Usage: <<SystemInfo all >>
+ *        or <<SystemInfo pagestats cachestats discspace hitstats >>
+ *        or <<SystemInfo version >>
+ *        or <<SystemInfo current_theme >>
+ *        or <<SystemInfo PHPWIKI_DIR >>
  *
  * Provide access to phpwiki's lower level system information.
  *
@@ -70,7 +70,7 @@ extends WikiPluginCached
     }
     function getHtml($dbi, $argarray, $request, $basepage) {
         $loader = new WikiPluginLoader;
-        return $loader->expandPI('<?plugin SystemInfo '
+        return $loader->expandPI('<<SystemInfo '
                                  . WikiPluginCached::glueArgs($argarray) // all
                                  . ' ?>', $request, $this, $basepage);
     }

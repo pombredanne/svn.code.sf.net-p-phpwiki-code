@@ -37,11 +37,11 @@
  *   This will be fixed soon.
  *
  * Usage:
-<?plugin Ploticus device=png [ploticus options...]
+<<Ploticus device=png [ploticus options...]
    multiline ploticus script ...
-?>
+>>
  * or without any script: (not tested)
-<?plugin Ploticus -prefab vbars data=myfile.dat delim=tab y=1 clickmapurl="http://mywiki.url/wiki/?pagename=@2" clickmaplabel="@3" -csmap ?>
+<<Ploticus -prefab vbars data=myfile.dat delim=tab y=1 clickmapurl="http://mywiki.url/wiki/?pagename=@2" clickmaplabel="@3" -csmap >>
  *
  * TODO: PloticusSql - create intermediate data from SQL. Similar to SqlResult, just in graphic form.
  * For example to produce nice looking pagehit statistics or ratings statistics.
@@ -156,7 +156,7 @@ extends WikiPluginCached
         //$other_imgtypes = $GLOBALS['PLUGIN_CACHED_IMGTYPES'];
         //unset ($other_imgtypes[$def['imgtype']]);
         $helparr = array(
-            '<?plugin Ploticus ' .
+            '<<Ploticus ' .
             'device'           => ' = "' . $def['device'] . "(default)|"
                                   . join('|',$GLOBALS['PLUGIN_CACHED_IMGTYPES']).'"',
             'data'             => ' <!plugin-list !>: pagelist as input',
@@ -165,7 +165,7 @@ extends WikiPluginCached
             'help'             => ' bool: displays this screen',
             '...'              => ' all further lines below the first plugin line ',
             ''                 => ' and inside the tags are the ploticus script.',
-            "\n  ?>"
+            "\n  >>"
             );
         $length = 0;
         foreach($helparr as $alignright => $alignleft) {

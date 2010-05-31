@@ -22,7 +22,7 @@
  */
 
 /**
- * Usage:   <?plugin WikiAdminPurge?>
+ * Usage:   <<WikiAdminPurge>>
  */
 require_once('lib/PageList.php');
 require_once('lib/plugin/WikiAdminSelect.php');

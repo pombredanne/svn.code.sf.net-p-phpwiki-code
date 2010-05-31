@@ -26,9 +26,9 @@
  * Only files relative and below to the uploads path can be handled.
  *
  * Usage:
- *   <?plugin FileInfo file=Upload:setup.exe display=version,date ?>
- *   <?plugin FileInfo file=Upload:setup.exe display=name,version,date
- *                     format="%s (version: %s, date: %s)" ?>
+ *   <<FileInfo file=Upload:setup.exe display=version,date >>
+ *   <<FileInfo file=Upload:setup.exe display=name,version,date
+ *                     format="%s (version: %s, date: %s)" >>
  *
  * @author: ReiniUrban
  */

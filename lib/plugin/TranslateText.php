@@ -24,9 +24,9 @@
  * TranslateText:  Translation helper
  * The (bogus) pagename is the text to be translated.
  * One required argument: lang
- * Requires that an action page with the <?plugin TranslateText ?> line exists.
+ * Requires that an action page with the <<TranslateText >> line exists.
  *
- * Usually called from <?plugin _WikiTranslation ?>
+ * Usually called from <<_WikiTranslation >>
  * Contributed translation are stored in UsersPage/ContributedTranslations
  *
  * Examples:

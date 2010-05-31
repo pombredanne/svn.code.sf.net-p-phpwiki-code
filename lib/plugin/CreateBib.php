@@ -24,7 +24,7 @@
  * CreateBib:  Automatically create a BibTex file from page
  *
  * Usage:
- *  <?plugin CreateBib pagename||=whatever ?>
+ *  <<CreateBib pagename||=whatever >>
  *
  * @author:  Lea Viljanen
  */

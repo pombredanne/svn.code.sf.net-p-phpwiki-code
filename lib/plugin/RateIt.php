@@ -64,13 +64,13 @@
  * - Autoclass: simple public domain C library
  * - MLC++: C++ library http://www.sgi.com/tech/mlc/
  *
- * Usage:    <?plugin RateIt ?>          just the widget without text
+ * Usage:    <<RateIt >>          just the widget without text
  *   Note: The wikilens theme or any derivate must be enabled, to enable this plugin!
- *           <?plugin RateIt show=top ?> text plus widget below
- *           <?plugin RateIt show=ratings ?> to show my ratings
- *   TODO:   <?plugin RateIt show=buddies ?> to show my buddies
- *           <?plugin RateIt show=ratings dimension=1 ?>
- *   TODO:   <?plugin RateIt show=text ?> just text, no widget, for dumps
+ *           <<RateIt show=top >> text plus widget below
+ *           <<RateIt show=ratings >> to show my ratings
+ *   TODO:   <<RateIt show=buddies >> to show my buddies
+ *           <<RateIt show=ratings dimension=1 >>
+ *   TODO:   <<RateIt show=text >> just text, no widget, for dumps
  *
  * @author:  Dan Frankowski (wikilens author), Reini Urban (as plugin)
  *

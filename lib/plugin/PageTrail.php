@@ -27,9 +27,9 @@
  * But Cache should be turned off then.
  *
  * Usage:
- * <?plugin PageTrail?>
- * <?plugin PageTrail numberlinks=5?>
- * <?plugin PageTrail invisible=1?>
+ * <<PageTrail>>
+ * <<PageTrail numberlinks=5>>
+ * <<PageTrail invisible=1>>
  */
 
 if (!defined('PAGETRAIL_ARROW'))

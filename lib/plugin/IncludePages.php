@@ -22,7 +22,7 @@
 
 /**
  * IncludePages: Include a list of multiple pages, based on IncludePage.
- * usage:   <?plugin IncludePages pages=<!plugin-list BackLinks !> ?>
+ * usage:   <<IncludePages pages=<!plugin-list BackLinks !> >>
  * author:  ReiniUrban
  */
 

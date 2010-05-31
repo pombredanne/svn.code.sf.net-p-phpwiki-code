@@ -28,9 +28,9 @@
  */
 /* Usage:
 
-* <small><?plugin PopularNearby mode=incoming ?></small>
-* <small><?plugin PopularNearby mode=outgoing ?></small>
-* <small><?plugin PopularNearby mode=nearby ?></small>
+* <<PopularNearby mode=incoming >>
+* <<PopularNearby mode=outgoing >>
+* <<PopularNearby mode=nearby >>
 
 */
 

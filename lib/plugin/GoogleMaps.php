@@ -30,7 +30,7 @@
  *       Then enter the key in config/config.ini under GOOGLE_LICENSE_KEY=
  *
  * Usage:
- *  <?plugin GoogleMaps
+ *  <<GoogleMaps
  *           Latitude=53.053
  *             Longitude=7.803
  *           ZoomFactor=10
@@ -40,7 +40,7 @@
  *           MapType=Map|Satellite|Hybrid
  *           width=500px
  *           height=400px
- *  ?>
+ *  >>
  *
  * @author Reini Urban
  *

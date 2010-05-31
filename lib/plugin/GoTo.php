@@ -26,7 +26,7 @@
  *  that page; if not, edit (create) that page.
  *  Note: pagenames are absolute, not relative to the actual subpage.
  *
- *  Usage: <?plugin GoTo ?>
+ *  Usage: <<GoTo >>
  *  @author: Michael van Dam
  */
 

@@ -25,7 +25,7 @@
  * Set individual PagePermissions, simplifying effective ACLs to
  * unix-like rwxr--r--+ permissions. (as in cygwin)
  *
- * Usage:   <?plugin WikiAdminChmod ?> or called via WikiAdminSelect
+ * Usage:   <<WikiAdminChmod >> or called via WikiAdminSelect
  * Author:  Reini Urban <rurban@x-ray.at>
  *
  * KNOWN ISSUES:

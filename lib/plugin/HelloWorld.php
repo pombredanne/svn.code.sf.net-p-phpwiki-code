@@ -24,13 +24,13 @@
  * A simple demonstration WikiPlugin.
  *
  * Usage:
- * <?plugin HelloWorld?>
- * <?plugin HelloWorld
+ * <<HelloWorld?>
+ * <<HelloWorld
  *          salutation="Greetings, "
  *          name=Wikimeister
- * ?>
- * <?plugin HelloWorld salutation=Hi ?>
- * <?plugin HelloWorld name=WabiSabi ?>
+ * >>
+ * <<HelloWorld salutation=Hi >>
+ * <<HelloWorld name=WabiSabi >>
  */
 
 // Constants are defined before the class.
