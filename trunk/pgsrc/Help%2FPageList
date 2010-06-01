@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Tue,  1 Jun 2010 17:01:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -16,7 +16,7 @@ This library relieves some work for these plugins:
 * LikePages,
 * MostPopular,
 * TitleSearch,
-- WikiAdmin* and more.
+- ~WikiAdmin* and more.
 
 It also allows dynamic expansion of those plugins to include more columns in their output.
 
@@ -112,7 +112,7 @@ Column 'info=' arguments:
 |= checkbox  | Selectable checkbox at the left
 |= content   | Page content
 
-Special, custom columns, either theme or plugin (WikiAdmin*) specific:
+Special, custom columns, either theme or plugin (~WikiAdmin*) specific:
 |= remove              | Remove
 |= perm                | Permission Mask
 |= acl                 | ACL
