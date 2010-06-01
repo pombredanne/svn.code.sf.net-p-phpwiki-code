@@ -1,4 +1,4 @@
-Date: Wed, 19 May 2010 18:15:54 +0000
+Date: Tue,  1 Jun 2010 17:01:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -51,7 +51,7 @@ e.g. dump pagesets or multi-page pdf's.
 * fix Bug#1992172 Interwiki link does not work in ~RichTable (vargenau)
 * fix Bug#2010748 Missing image
 * fix Bug#1831881 Fatal database error when sorting columns (vargenau)
-* fix PageList prev/next links on multi-columns lists, improve handling of ordered lists
+* fix ~PageList prev/next links on multi-columns lists, improve handling of ordered lists
 * allow single "0" as not-empty page content
 * fix action=rename, support new optional argument to=newpagename
 
@@ -431,11 +431,11 @@ Add various backports from cvs:
 
 Lots of bugfixes, and some feature and performance enhancements.
 
-A new EDIT_TOOLBAR from mediawiki, more page permission enhancements,
+A new EDIT_TOOLBAR from Mediawiki, more page permission enhancements,
 reduced memory usage for pagelists which need no page content,
 related improvement for ~OldMarkup crashes because of PCRE memory exhaustion.
 
-New <!plugin-list !> syntax and PhpWiki:PageListLibrary args.
+New <!plugin-list !> syntax and ~PhpWiki:~PageListLibrary args.
 
 Because of SQL changes you'd need to ?action=upgrade to update for SQL.
 
