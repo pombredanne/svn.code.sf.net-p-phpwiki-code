@@ -1,4 +1,4 @@
-Date: Wed, 19 May 2010 18:15:54 +0000
+Date: Tue,  1 Jun 2010 17:01:57 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -76,7 +76,7 @@ Chargers.
 
 == See Also ==
 * [[PhpWiki:SemanticWeb]]
-* [[SemanticRelations]], [[ListRelations]], [[SemanticSearch]], [[SemanticSearchAdvanced]]
+* [[SemanticRelations]], [[ListRelations]], [[SemanticSearch]]
 * [[Help:SemanticRelationsPlugin|SemanticRelationsPlugin]], [[Help:SemanticSearchPlugin|SemanticSearchPlugin]]
 * [[PhpWiki:ImportRdf]], [[PhpWiki:ImportRdfs]], [[PhpWiki:ImportOwl]]
 * [[PhpWiki:ExportRdf]], [[PhpWiki:ExportRdfs]], [[PhpWiki:ExportOwl]]
