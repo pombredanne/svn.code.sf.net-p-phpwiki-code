@@ -331,6 +331,7 @@ msg_repl_close     = '"._("Close")."'
     // result is cached. Esp. the args are expensive
     function pluginPulldown() {
         global $WikiTheme;
+        global $AllAllowedPlugins;
 
         $plugin_dir = 'lib/plugin';
         if (defined('PHPWIKI_DIR'))
@@ -345,18 +346,20 @@ msg_repl_close     = '"._("Close")."'
             $w = new WikiPluginLoader;
             foreach ($plugins as $plugin) {
                 $pluginName = str_replace(".php", "", $plugin);
-                $p = $w->getPlugin($pluginName, false); // second arg?
-                // trap php files which aren't WikiPlugin~s
-                if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
-                    $plugin_args = '';
-                    $desc = $p->getArgumentsDescription();
-                    $src = array("\n",'"',"'",'|','[',']','\\');
-                    $replace = array('%0A','%22','%27','%7C','%5B','%5D','%5C');
-                    $desc = str_replace("<br />",' ',$desc->asXML());
-                    if ($desc)
-                        $plugin_args = ' '.str_replace($src, $replace, $desc);
-                    $toinsert = "%0A<<".$pluginName.$plugin_args.">>"; // args?
-                    $plugin_js .= ",['$pluginName','$toinsert']";
+                if (in_array($pluginName, $AllAllowedPlugins)) {
+                    $p = $w->getPlugin($pluginName, false); // second arg?
+                    // trap php files which aren't WikiPlugin~s
+                    if (strtolower(substr(get_parent_class($p), 0, 10)) == 'wikiplugin') {
+                        $plugin_args = '';
+                        $desc = $p->getArgumentsDescription();
+                        $src = array("\n",'"',"'",'|','[',']','\\');
+                        $replace = array('%0A','%22','%27','%7C','%5B','%5D','%5C');
+                        $desc = str_replace("<br />",' ',$desc->asXML());
+                        if ($desc)
+                            $plugin_args = ' '.str_replace($src, $replace, $desc);
+                        $toinsert = "%0A<<".$pluginName.$plugin_args.">>"; // args?
+                        $plugin_js .= ",['$pluginName','$toinsert']";
+                    }
                 }
             }
             $plugin_js = substr($plugin_js, 1);
