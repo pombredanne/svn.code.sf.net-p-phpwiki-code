@@ -319,7 +319,7 @@ msg_repl_close     = '"._("Close")."'
                                             'title'=>_("AddCategory"),
                                             'alt'=>"AddCategory", // to detect this at js
                                             'onclick'=>"showPulldown('".
-                                            _("Insert Categories (double-click)")
+                                            _("Insert Categories")
                                             ."',[".join(",",$categories)."],'"
                                             ._("Insert")."','"
                                             ._("Close")."','tb-categories')"));
@@ -369,7 +369,7 @@ msg_repl_close     = '"._("Close")."'
                                             'title'=>_("AddPlugin"),
                                             'alt'=>_("AddPlugin"),
                                             'onclick'=>"showPulldown('".
-                                            _("Insert Plugin (double-click)")
+                                            _("Insert Plugin")
                                             ."',[".$plugin_js."],'"
                                             ._("Insert")."','"
                                             ._("Close")."','tb-plugins')"));
@@ -399,7 +399,7 @@ msg_repl_close     = '"._("Close")."'
                                               'title'=>_("AddPageLink"),
                                               'alt'=>_("AddPageLink"),
                                               'onclick'=>"showPulldown('".
-                                              _("Insert PageLink (double-click)")
+                                              _("Insert PageLink")
                                               ."',[".join(",",$pages)."],'"
                                               ._("Insert")."','"
                                               ._("Close")."','tb-pages')")));
@@ -431,7 +431,7 @@ msg_repl_close     = '"._("Close")."'
                                             'title'=>_("Add Image or Video"),
                                             'alt'=>_("Add Image or Video"),
                                             'onclick'=>"showPulldown('".
-                                            _("Insert Image or Video (double-click)")
+                                            _("Insert Image or Video")
                                             ."',[".$image_js."],'"
                                             ._("Insert")."','"
                                             ._("Close")."','tb-images')"));
@@ -466,7 +466,7 @@ msg_repl_close     = '"._("Close")."'
                                    'title'=>_("AddTemplate"),
                                    'alt'=>_("AddTemplate"),
                                    'onclick'=>"showPulldown('".
-                                   _("Insert Template (double-click)")
+                                   _("Insert Template")
                                    ."',[".$pages_js."],'"
                                    ._("Insert")."','"
                                    ._("Close")."','tb-templates')")));
