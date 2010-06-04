@@ -1,4 +1,4 @@
-Date: Thu, 15 Apr 2010 16:32:58 +0000
+Date: Fri,  4 Jun 2010 16:06:47 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -13,6 +13,14 @@ meaningful title and put it between {{{[[double brackets]]}}}.
 
 Then you can go ahead and click the question mark at the end of your new
 hyperlink, and the Wiki will give you a window for making the new page.
+
+The page name can contain any character, except:
+* angle brackets (<>),
+* square brackets ([]),
+* curly brackets ({}),
+* double quotes ("),
+* pipe (|),
+* and hash sign (#) that is used for anchors.
 
 If you wish to add documents with complex markup to the wiki, you
 might be better off providing a URL to it than trying to add the text
