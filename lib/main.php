@@ -757,6 +757,17 @@ class WikiRequest extends Request {
     
     // [574ms] mainly template:printexpansion: 393ms and template::expandsubtemplate [100+70+60ms]
     function handleAction () {
+        // Check illegal characters in page names: <>[]{}|"
+        require_once("lib/Template.php");
+        $page = $this->getPage();
+        $pagename = $page->getName();
+        if (preg_match("/[<\[\{\|\"\}\]>]/", $pagename, $matches) > 0) {
+            $CONTENT = HTML::div(
+                         array('class' => 'error'),
+                         _("Illegal character '"). $matches[0] . _("' in page name."));
+            GeneratePage($CONTENT, $pagename);
+            $this->finish();
+        }
         $action = $this->getArg('action');
         if ($this->isPost()  
             and !$this->_user->isAdmin()
@@ -764,7 +775,6 @@ class WikiRequest extends Request {
             and $action != 'wikitohtml' 
             )
         {
-            $page = $this->getPage();
             if ( $page->get('moderation') ) {
                 require_once("lib/WikiPlugin.php");
                 $loader = new WikiPluginLoader();
@@ -784,7 +794,6 @@ class WikiRequest extends Request {
                              _("You must wait for moderator approval."));
                     else
                         $plugin->_tokens['CONTENT'] = $CONTENT;
-            	    require_once("lib/Template.php");
             	    $title = WikiLink($page->getName());
             	    $title->pushContent(' : ', WikiLink(_("ModeratedPage")));
 	            GeneratePage(Template('browse', $plugin->_tokens), 
