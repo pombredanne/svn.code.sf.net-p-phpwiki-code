@@ -145,44 +145,7 @@ class HTML extends HtmlElement {
         }
     }
 
-    //
-    // Shell script to generate the following static methods:
-/*
-
-#!/bin/sh
-mkfuncs () {
-    for tag in "$@"
-    do
-        echo "    public static function $tag (/*...*/) {"
-        echo "        \$el = new HtmlElement('$tag');"
-        echo "        return \$el->_init2(func_get_args());"
-        echo "    }"
-    done
-}
-d='
-    /****************************************/'
-mkfuncs link meta style script noscript
-echo "$d"
-mkfuncs a img br span
-echo "$d"
-mkfuncs h1 h2 h3 h4 h5 h6
-echo "$d"
-mkfuncs hr div p pre blockquote
-echo "$d"
-mkfuncs em strong small
-echo "$d"
-mkfuncs tt u sup sub
-echo "$d"
-mkfuncs ul ol dl li dt dd
-echo "$d"
-mkfuncs table caption thead tbody tfoot tr td th colgroup col
-echo "$d"
-mkfuncs form input option select textarea label fieldset legend
-echo "$d"
-mkfuncs area map frame frameset iframe nobody object embed param
-echo "$d"
-mkfuncs video
-*/
+    // See admin/mkfuncs shell script to generate the following static methods
 
     function link (/*...*/) {
         $el = new HtmlElement('link');
