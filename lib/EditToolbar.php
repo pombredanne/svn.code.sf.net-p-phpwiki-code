@@ -68,12 +68,13 @@ msg_repl_close     = '"._("Close")."'
         }
     
         if (ENABLE_EDIT_TOOLBAR) {
-	    $js = JavaScript('',array('src' => $WikiTheme->_findData("toolbar.js")));
-            if (empty($WikiTheme->_headers_printed))
-		$WikiTheme->addMoreHeaders($js);
+            $js = JavaScript('',array('src' => $WikiTheme->_findData("toolbar.js")));
+            if (empty($WikiTheme->_headers_printed)) {
+                $WikiTheme->addMoreHeaders($js);
+            }
 	    else { // from an actionpage: WikiBlog, AddComment, WikiForum
-		printXML($js);
-		printXML(JavaScript('define_f()'));
+                printXML($js);
+                printXML(JavaScript('define_f()'));
 	    }
         }
 
@@ -96,8 +97,8 @@ msg_repl_close     = '"._("Close")."'
             $this->tokens['EDIT_TOOLBAR'] =& $content;
         } else {
             $content = $this->_generate();
-            // regenerate buttons every 3600 seconds
-            $cache->save($id, $content, '+3600', 'toolbarcache'); 
+            // regenerate buttons every 1 hr/6 hrs
+            $cache->save($id, $content, DEBUG ? '+3600' : '+21600', 'toolbarcache'); 
             $this->tokens['EDIT_TOOLBAR'] =& $content;
         }
     }
@@ -113,10 +114,8 @@ msg_repl_close     = '"._("Close")."'
 
         if (ENABLE_EDIT_TOOLBAR) {
             $username = $request->_user->UserName();
-            if (defined('GFORGE') and GFORGE) {
+            if (GFORGE or DISABLE_MARKUP_WIKIWORD or (!isWikiWord($username))) {
                 $username = '[['.$username.']]';
-            } else if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($username))) {
-                $username = '['.$username.']';
             }
 	    $signature = " ––".$username." ".CTime();
             $toolarray = array(
@@ -303,7 +302,7 @@ msg_repl_close     = '"._("Close")."'
             $categories = array();
             while ($p = $pages->next()) {
 		$page = $p->getName();
-                if (defined('GFORGE') and GFORGE) {
+                if (GFORGE) {
                     $categories[] = "['$page', '%0A----%0A%5B%5B".$page."%5D%5D']";
 		} else if (DISABLE_MARKUP_WIKIWORD or (!isWikiWord($page))) {
 		    $categories[] = "['$page', '%0A%5B".$page."%5D']";
@@ -383,7 +382,7 @@ msg_repl_close     = '"._("Close")."'
         require_once('lib/TextSearchQuery.php');
         $dbi =& $GLOBALS['request']->_dbi;
         $page_iter = $dbi->titleSearch(new TextSearchQuery($query, $case_exact, $regex));
-        if ($page_iter->count()) {
+        if ($page_iter->count() > 0) {
             global $WikiTheme;
             $pages = array();
             while ($p = $page_iter->next()) {
@@ -415,6 +414,12 @@ msg_repl_close     = '"._("Close")."'
         $pd = new fileSet($image_dir, '*');
         $images = $pd->getFiles();
         unset($pd);
+        if (UPLOAD_USERDIR) {
+            $image_dir .= "/" . $request->_user->_userid;
+            $pd = new fileSet($image_dir, '*');
+            $images = array_merge($images, $pd->getFiles());
+            unset($pd);
+        }
         sort($images);
         if (!empty($images)) {
             $image_js = '';
