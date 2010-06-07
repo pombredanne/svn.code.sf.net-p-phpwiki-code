@@ -1,6 +1,6 @@
 <?php // -*-php-*- $Id$
 /*
- * Copyright 2002,2003,2005 $ThePhpWikiProgrammingTeam
+ * Copyright 2002,2003,2005,2008-2010 $ThePhpWikiProgrammingTeam
  * Copyright 2002 Martin Geisler <gimpster@gimpster.com> 
  * Copyright 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
@@ -173,7 +173,7 @@ body { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 80%; }
 pre { font-size: 120%; }
 td { border: thin solid black }
 tr { border: none }
-div.hint { background-color: #eeeeee; }
+div.hint { border: thin solid red, background-color: #eeeeee; }
 tr.hidden { border: none; display: none; }
 td.part { background-color: #eeeeee; color: inherit; }
 td.instructions { background-color: #ffffee; width: <?php echo $tdwidth ?>px; color: inherit; }
@@ -634,12 +634,14 @@ new _variable_selection('_dsn_sqltype',
               array('mysql'  => "MySQL",
                     'pgsql'  => "PostgreSQL",
                     'mssql'  => "Microsoft SQL Server",
+                    'mssqlnative'  => "Microsoft SQL Server (native)",
                     'oci8'   => "Oracle 8",
                     'mysqli' => "mysqli (only ADODB)",
                     'mysqlt' => "mysqlt (only ADODB)",
                     'ODBC'   => "ODBC (only ADODB or PDO)",
                     'firebird' => "Firebird (only PDO)",
-                    'oracle'  => "Oracle (only PDO)"), "
+                    'oracle'  => "Oracle (only PDO)",
+), "
 SQL DB types. The DSN hosttype.");
 
 $properties["SQL User"] =
@@ -2233,6 +2235,29 @@ extends _define {
     }
 }
 
+/*
+class _ini_set
+extends _variable {
+    function value() {
+        global $HTTP_POST_VARS;
+        if ($v = $HTTP_POST_VARS[$this->config_item_name])
+            return $v;
+        else {
+	    return ini_get($this->get_config_item_name);
+        }
+    }
+    function _config_format($value) {
+        return sprintf("ini_set('%s', '%s');", $this->get_config_item_name(), $value);
+    }
+    function _get_config_line($posted_value) {
+        if ($posted_value && ! $posted_value == $this->default_value)
+            return "\n" . $this->_config_format($posted_value);
+        else
+            return "\n;" . $this->_config_format($this->default_value);
+    }
+}
+*/
+
 class boolean_define
 extends _define {
 
@@ -2487,7 +2512,7 @@ if (!empty($HTTP_POST_VARS['action'])
     }
     
     if ($fp) {
-        fputs($fp, utf8_encode($config));
+        fputs($fp, $config);
         fclose($fp);
         echo "<p>The configuration was written to <code><b>$config_file</b></code>.</p>\n";
         if ($new_filename) {
