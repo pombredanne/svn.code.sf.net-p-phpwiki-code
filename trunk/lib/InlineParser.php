@@ -947,10 +947,9 @@ class Markup_xml_plugin extends BalancedMarkup
 	global $PLUGIN_MARKUP_MAP;
         static $_start_regexp;
         if ($_start_regexp) return $_start_regexp;
-        if (empty($PLUGIN_MARKUP_MAP))
-            return '';
-        //"<(?: html|dot|toc|amath|richtable|include|tex )(?: \s[^>]*)>"
-	$_start_regexp = "<(?: ".join('|',array_keys($PLUGIN_MARKUP_MAP))." )(?: \s[^>]* | / )>";
+        if (empty($PLUGIN_MARKUP_MAP)) return '';
+        //"<(?: html|search|extsearch|dot|toc|math|richtable|include|tex )(?: \s[^>]*)>"
+	$_start_regexp = "<(?: ".join('|',array_keys($PLUGIN_MARKUP_MAP))." )(?: \s[^>]*|\\/ )>";
         return $_start_regexp;
     }
     function getEndRegexp ($match) {
