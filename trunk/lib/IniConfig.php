@@ -109,7 +109,7 @@ function _check_int_constant(&$c) {
 
 function IniConfig($file) {
 
-    // check config/config.php dump for faster startup
+    // Optionally check config/config.php dump for faster startup
     $dump = substr($file, 0, -3)."php";
     if (isWindows($dump)) $dump = str_replace("/","\\",$dump);
     if (file_exists($dump) and is_readable($dump) and filesize($dump) > 0 and sort_file_mtime($dump, $file) < 0) {
@@ -203,7 +203,7 @@ function IniConfig($file) {
          'ENABLE_AUTH_OPENID', 'INSECURE_ACTIONS_LOCALHOST_ONLY',
          'ENABLE_MAILNOTIFY', 'ENABLE_RECENTCHANGESBOX', 'ENABLE_PAGE_PUBLIC',
          'ENABLE_AJAX', 'ENABLE_EXTERNAL_PAGES',
-         'READONLY'
+         'READONLY', 'GFORGE'
          );
 
     $rs = @parse_ini_file($file);
@@ -553,10 +553,6 @@ function IniConfig($file) {
     // The question is if reading this is faster then doing IniConfig() + fixup_static_configs()
     if (is_writable($dump)) {
         save_dump($dump);
-    } else {
-        if (! defined('GFORGE') or !GFORGE) {
-            die($dump . " is not writable");
-        }
     }
     // store locale[] in config.php? This is too problematic.
     fixup_dynamic_configs($file); // [100ms]
@@ -624,9 +620,9 @@ function fixup_static_configs($file) {
       .'WantedPages:WatchPage:WhoIsOnline:WikiAdminSelect');
 
     // The GFORGE theme omits them
-    if (!defined('GFORGE') or !GFORGE) {
+    if (!GFORGE) {
        // Add some some action pages depending on configuration
-       if (defined('DEBUG') and DEBUG) {
+       if (DEBUG) {
           $ActionPages[] = 'DebugInfo';
           $ActionPages[] = 'EditMetaData';
           $ActionPages[] = 'SpellCheck'; // SpellCheck does not work
@@ -710,7 +706,7 @@ function fixup_static_configs($file) {
     $AllAllowedPlugins[] = 'YouTube';
 
     // The GFORGE theme omits them
-    if (!defined('GFORGE') or !GFORGE) {
+    if (!GFORGE) {
         $AllAllowedPlugins[] = 'AddComment';
         $AllAllowedPlugins[] = 'AnalyseAccessLogSql';
         $AllAllowedPlugins[] = 'AsciiMath';
@@ -770,16 +766,16 @@ function fixup_static_configs($file) {
     $AllActionPages[] = 'UserContribs';
 
     // The GFORGE theme omits them
-    if (!defined('GFORGE') or !GFORGE) {
+    if (!GFORGE) {
        // Add some some action pages depending on configuration
-       if (defined('DEBUG') and DEBUG) {
+       if (DEBUG) {
           $AllActionPages[] = 'PhpWikiAdministration/Chmod';
        }
        $AllActionPages[] = 'PhpWikiAdministration/Markup';
     }
 
-    if (defined('GFORGE') and GFORGE) {
-       if (defined('ENABLE_EXTERNAL_PAGES') and ENABLE_EXTERNAL_PAGES) {
+    if (GFORGE) {
+       if (ENABLE_EXTERNAL_PAGES) {
           $AllAllowedPlugins[] = 'WikiAdminSetExternal';
           $AllActionPages[] = 'ExternalPages';
        }
@@ -915,7 +911,7 @@ function fixup_dynamic_configs($file) {
         define('DEFAULT_LANGUAGE', ''); // detect from client
 
     // Gforge hack
-    if (!defined('GFORGE') or !GFORGE) {
+    if (!GFORGE) {
         // Disable update_locale because Zend Debugger crash
         if(! extension_loaded('Zend Debugger')) {
             update_locale(isset($LANG) ? $LANG : DEFAULT_LANGUAGE);
