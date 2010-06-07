@@ -191,11 +191,7 @@ class XmlContent
     
     function _quote ($string) {
     	if (!$string) return $string;
-        if (check_php_version(4,1) and isset($GLOBALS['charset'])) {
-            return htmlspecialchars($string, ENT_COMPAT, $GLOBALS['charset']);
-        } else {
-            return htmlspecialchars($string);
-        }
+	return htmlspecialchars($string, ENT_COMPAT, $GLOBALS['charset']);
     }
 };
 
