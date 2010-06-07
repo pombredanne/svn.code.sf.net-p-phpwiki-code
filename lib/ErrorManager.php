@@ -649,7 +649,11 @@ class PhpErrorOnce extends PhpError {
     }
 }
 
-require_once(dirname(__FILE__).'/HtmlElement.php');
+if (check_php_version(5,2)) {
+    require_once(dirname(__FILE__).'/HtmlElement5.php');
+} else {
+    require_once(dirname(__FILE__).'/HtmlElement.php');
+}
 
 if (!isset($GLOBALS['ErrorManager'])) {
     $GLOBALS['ErrorManager'] = new ErrorManager;
