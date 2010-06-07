@@ -9,7 +9,6 @@
 //
 
 require_once('lib/difflib.php');
-require_once('lib/HtmlElement.php');
 
 class _HWLDF_WordAccumulator {
     function _HWLDF_WordAccumulator () {
