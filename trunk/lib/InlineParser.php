@@ -1,7 +1,7 @@
 <?php 
 // rcs_id('$Id$');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004-2009 Reini Urban
+ * Copyright (C) 2004-2010 Reini Urban
  * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
