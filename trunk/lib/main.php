@@ -79,7 +79,7 @@ class WikiRequest extends Request {
         if (USE_DB_SESSION) {
             include_once('lib/DbSession.php');
             $dbi =& $this->_dbi;
-            if (!READONLY)
+            if (defined('READONLY') and !READONLY) // READONLY might be set later
                 $this->_dbsession = new DbSession($dbi, $dbi->getParam('prefix') 
                                                   . $dbi->getParam('db_session_table'));
         }
@@ -201,7 +201,8 @@ class WikiRequest extends Request {
         }
         if (empty($WikiTheme) and $user_theme) {
             if (strcspn($user_theme,"./\x00]") != strlen($user_theme)) {
-            	trigger_error(sprintf("invalid theme '%s': Invalid characters detected", $user_theme),
+            	trigger_error(sprintf("invalid theme '%s': Invalid characters detected",
+            	                      $user_theme),
             	              E_USER_WARNING);
                 $user_theme = "default";
             }
