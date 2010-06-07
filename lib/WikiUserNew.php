@@ -1,25 +1,25 @@
 <?php //-*-php-*-
-// rcs_id('$Id$');
-/* Copyright (C) 2004,2005,2006,2007,2009 $ThePhpWikiProgrammingTeam
- * Copyright (C) 2009-2010 Marc-Etienne Vargenau, Alcatel-Lucent
- * Copyright (C) 2009-2010 Roger Guignard, Alcatel-Lucent
- *
- * This file is part of PhpWiki.
- * 
- * PhpWiki is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * PhpWiki is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with PhpWiki; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+//rcs_id('$Id$');
+/* Copyright (C) 2004,2005,2006,2007,2009,2010 $ThePhpWikiProgrammingTeam
+* Copyright (C) 2009-2010 Marc-Etienne Vargenau, Alcatel-Lucent
+* Copyright (C) 2009-2010 Roger Guignard, Alcatel-Lucent
+*
+* This file is part of PhpWiki.
+*
+* PhpWiki is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* PhpWiki is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with PhpWiki; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 /**
  * This is a complete OOP rewrite of the old WikiUser code with various
  * configurable external authentication methods.
@@ -92,6 +92,10 @@
  *    but storage must be extended to the Get/SetPreferences methods.
  *    <theme>/themeinfo.php must provide CustomUserPreferences:
  *      A list of name => _UserPreference class pairs.
+ * 2010-06-07 rurban
+ *    Fixed a nasty recursion bug (i.e. php crash), when user = new class 
+ *    which returned false, did not return false on php-4.4.7. Check for 
+ *    a object member now.
  */
 
 define('WIKIAUTH_FORBIDDEN', -1); // Completely not allowed.
@@ -353,7 +357,7 @@ function UserExists ($UserName) {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-/** 
+/**
  * Base WikiUser class.
  */
 class _WikiUser
@@ -425,17 +429,16 @@ class _WikiUser
         return false;
     }
 
-    // 
     function createHomePage() {
         global $request;
         $versiondata = array('author' => ADMIN_USER);
         $request->_dbi->save(_("Automatically created user homepage to be able to store UserPreferences.").
-        		     "\n{{Template/UserPage}}",
+                             "\n{{Template/UserPage}}",
                              1, $versiondata);
-        $request->_dbi->touch();                             
+        $request->_dbi->touch();
         $this->_HomePagehandle = $request->getPage($this->_userid);
     }
-    
+
     // innocent helper: case-insensitive position in _auth_methods
     function array_position ($string, $array) {
         $string = strtolower($string);
@@ -559,7 +562,7 @@ class _WikiUser
     function isValidName ($userid = false) {
         if (!$userid) $userid = $this->_userid;
         if (!$userid) return false;
-        if (defined('GFORGE') and GFORGE) {
+        if (GFORGE) {
             return true;
         }
         return preg_match("/^[\-\w\.@ ]+$/U", $userid) and strlen($userid) < 32;
@@ -850,7 +853,7 @@ extends _WikiUser
 
 }
 
-/** 
+/**
  * Helper class to finish the PassUser auth loop. 
  * This is added automatically to USER_AUTH_ORDER.
  */
@@ -1080,7 +1083,7 @@ extends _AnonUser
                 $dbh = $request->getDbh(); // use phpwiki database 
             } elseif ($dbh->getAuthParam('auth_dsn') == $dbh->getParam('dsn')) {
                 $dbh = $request->getDbh(); // same phpwiki database 
-            } else { // use another external database handle.
+            } else { // use another external database handle. needs PHP >= 4.1
                 $local_params = array_merge($GLOBALS['DBParams'],$GLOBALS['DBAuthParams']);
                 $local_params['dsn'] = $local_params['auth_dsn'];
                 $dbh = WikiDB::open($local_params);
@@ -1176,15 +1179,33 @@ extends _AnonUser
                 // FIXME: strange why this should be needed...
                 include_once("lib/WikiUser/Db.php");
                 include_once("lib/WikiUser/AdoDb.php");
-                return _AdoDbPassUser::getPreferences();
+                if (check_php_version(5)) {
+                    $user = new _AdoDbPassUser($this->_userid, $this->_prefs);
+                    return $user->getPreferences();
+                } else {
+                    _AdoDbPassUser::_AdoDbPassUser($this->_userid, $this->_prefs);
+                    return _AdoDbPassUser::getPreferences();
+                }
             } elseif ($this->_prefs->_method == 'SQL') {
                 include_once("lib/WikiUser/Db.php");
                 include_once("lib/WikiUser/PearDb.php");
-                return _PearDbPassUser::getPreferences();
+                if (check_php_version(5)) {
+                    $user = new _PearDbPassUser($this->_userid, $this->_prefs);
+                    return $user->getPreferences();
+                } else {
+                    _PearDbPassUser::_PearDbPassUser($this->_userid, $this->_prefs);
+                    return _PearDbPassUser::getPreferences();
+                }
             } elseif ($this->_prefs->_method == 'PDO') {
                 include_once("lib/WikiUser/Db.php");
                 include_once("lib/WikiUser/PdoDb.php");
-                return _PdoDbPassUser::getPreferences();
+                if (check_php_version(5)) {
+                    $user = new _PdoDbPassUser($this->_userid, $this->_prefs);
+                    return $user->getPreferences();
+                } else {
+                    _PdoDbPassUser::_PdoDbPassUser($this->_userid, $this->_prefs);
+                    return _PdoDbPassUser::getPreferences();
+                }
             }
         }
 
@@ -1211,17 +1232,35 @@ extends _AnonUser
                 // FIXME: strange why this should be needed...
                 include_once("lib/WikiUser/Db.php");
                 include_once("lib/WikiUser/AdoDb.php");
-                return _AdoDbPassUser::setPreferences($prefs, $id_only);
+                if (check_php_version(5)) {
+                    $user = new _AdoDbPassUser($this->_userid, $prefs);
+                    return $user->setPreferences($prefs, $id_only);
+                } else {
+                    _AdoDbPassUser::_AdoDbPassUser($this->_userid, $prefs);
+                    return _AdoDbPassUser::setPreferences($prefs, $id_only);
+                }
             }
             elseif ($this->_prefs->_method == 'SQL') {
                 include_once("lib/WikiUser/Db.php");
                 include_once("lib/WikiUser/PearDb.php");
-                return _PearDbPassUser::setPreferences($prefs, $id_only);
+                if (check_php_version(5)) {
+                    $user = new _PearDbPassUser($this->_userid, $prefs);
+                    return $user->setPreferences($prefs, $id_only);
+                } else {
+                    _PearDbPassUser::_PearDbPassUser($this->_userid, $prefs);
+                    return _PearDbPassUser::setPreferences($prefs, $id_only);
+                }
             }
             elseif ($this->_prefs->_method == 'PDO') {
                 include_once("lib/WikiUser/Db.php");
                 include_once("lib/WikiUser/PdoDb.php");
-                return _PdoDbPassUser::setPreferences($prefs, $id_only);
+                if (check_php_version(5)) {
+                    $user = new _PdoDbPassUser($this->_userid, $prefs);
+                    return $user->setPreferences($prefs, $id_only);
+                } else {
+                    _PdoDbPassUser::_PdoDbPassUser($this->_userid, $prefs);
+                    return _PdoDbPassUser::setPreferences($prefs, $id_only);
+                }
             }
         }
         if ($updated = _AnonUser::setPreferences($prefs, $id_only)) {
@@ -1254,7 +1293,8 @@ extends _AnonUser
         } else {
             $user = $this;
         }
-        while ($user) {
+        /* new user => false does not return false, but the _userid is empty then */
+        while ($user and $user->_userid) {
             if (!check_php_version(5))
                 eval("\$this = \$user;");
             $user = UpgradeUser($this, $user);
@@ -1730,12 +1770,19 @@ extends _UserPreference
 class _UserPreference_email
 extends _UserPreference
 {
-    function sanify($value) {
-
-        // email address is already checked by Gforge
-        if (defined('GFORGE') and GFORGE) {
-            return $value;
+    function get($name) {
+        // get email address from Gforge
+        if (GFORGE && session_loggedin()) {
+            $user = session_get_user();
+            return $user->getEmail();
+        } else {
+            parent::get($name);
         }
+    }
+
+    function sanify($value) {
+        // email address is already checked by Gforge
+        if (GFORGE) return $value;
         // check for valid email address
         if ($this->get('email') == $value and $this->getraw('emailVerified'))
             return $value;
@@ -1757,9 +1804,7 @@ extends _UserPreference
      */
     function update($value) {
         // email address is already checked by Gforge
-        if (defined('GFORGE') and GFORGE) {
-            return;
-        }
+        if (GFORGE) return $value;
     	if (!empty($this->_init)) return;
         $verified = $this->getraw('emailVerified');
         // hack!
@@ -1776,17 +1821,6 @@ extends _UserPreference
             }
         }
     }
-
-    function get($name) {
-        // get email address from Gforge
-        if (defined('GFORGE') && GFORGE && session_loggedin()) {
-            $user = session_get_user();
-            return $user->getEmail();
-        } else {
-            parent::get($name);
-        }
-    }
-
 }
 
 /** Check for valid email address
@@ -1945,7 +1979,7 @@ class UserPreferences
 
         // This should be probably be done with $customUserPreferenceColumns
         // For now, we use GFORGE define
-        if (defined('GFORGE') and GFORGE) {
+        if (GFORGE) {
             $gforgeprefs = array(
                     'pageTrail'     => new _UserPreference_bool(),
                     'diffMenuItem' => new _UserPreference_bool(),
@@ -2123,7 +2157,7 @@ class UserPreferences
             }
         }
 
-        if (defined('GFORGE') and GFORGE) {
+        if (GFORGE) {
             // Merge current notifyPages with notifyPagesAll
             // notifyPages are pages to notify in the current project
             // while $notifyPagesAll is used to store all the monitored pages.
@@ -2172,7 +2206,7 @@ class UserPreferences
             }
         }
         
-        if (defined('GFORGE') and GFORGE) {
+        if (GFORGE) {
             // Restore notifyPages from notifyPagesAll
             // notifyPages are pages to notify in the current project
             // while $notifyPagesAll is used to store all the monitored pages.
