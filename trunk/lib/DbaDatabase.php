@@ -2,7 +2,10 @@
 
 require_once('lib/ErrorManager.php');
 
-define('DBA_DATABASE_DEFAULT_TIMEOUT', 5);
+if (isWindows())
+    define('DBA_DATABASE_DEFAULT_TIMEOUT', 60);
+else
+    define('DBA_DATABASE_DEFAULT_TIMEOUT', 5);
 
 class DbaDatabase
 {
