@@ -158,7 +158,9 @@ class FileFinder
     function _is_abs($path) {
         if (substr($path,0,1) == '/') {
             return true;
-        } elseif (isWindows() and (preg_match('#^[a-z]:[/\\]#i', $path))) {
+        } elseif (isWindows() and preg_match("/^[a-z]:/i", $path)
+                  and (substr($path,3,1) == "/" or substr($path,3,1) == "\\")) 
+        {
             return true;
         } else {
             return false;
