@@ -1515,7 +1515,7 @@ function SetupWiki (&$request)
     // Ensure that all mandatory pages are loaded
     $finder = new FileFinder;
 
-    if (! defined('GFORGE') or !GFORGE) {
+    if (!GFORGE) {
         $mandatory = explode(':','SandBox:Template/Category:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:Help/OldTextFormattingRules:Help/TextFormattingRules:PhpWikiAdministration');
     } else if (WIKI_NAME == "help") {
         $mandatory = explode(':','SandBox:Template/Category:TemplateTalk:SpecialPages:CategoryCategory:CategoryActionPage:Help/TextFormattingRules:PhpWikiAdministration');
