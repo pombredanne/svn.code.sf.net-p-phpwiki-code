@@ -61,7 +61,7 @@ class MailNotify {
 
     function fromId() {
         global $request;
-        if (defined('GFORGE') and GFORGE) {
+        if (GFORGE) {
             return $request->_user->getId();
         } else {
             return $request->_user->getId() . '@' .  $request->get('REMOTE_HOST');
@@ -72,7 +72,7 @@ class MailNotify {
         global $request;
 
         // Disable verification of emails for corporate env.
-        if (defined('GFORGE') and GFORGE) {
+        if (GFORGE) {
             $doverify = false;
         }
 
@@ -188,10 +188,8 @@ class MailNotify {
         $emails = $this->emails;
         $from = $this->from;
         // Do not send if modification is from Gforge admin
-        if (defined('GFORGE') and GFORGE) {
-            if ($from == ADMIN_USER) {
-                return;
-            }
+        if (GFORGE and $from == ADMIN_USER) {
+            return;
         }
         if (!$notice) $notice = _("PageChange Notification of %s");
         $headers = "From: $from\r\n" .
