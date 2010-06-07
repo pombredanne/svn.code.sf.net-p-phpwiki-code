@@ -400,6 +400,7 @@ $alltests = array(/* valid tests without clean virgin setup */
                   /* valid tests only with clean virgin setup */
                   'AllPagesTest','AllUsersTest','OrphanedPagesTest',
                   'WantedPagesTest','TextSearchTest','IncludePageTest',
+                  'AtomParserTest','AtomFeedTest',
                   /* final tests which require all valid pages and consumes > 32MB */
                   'DumpHtml');
 // support db=file db=dba test=SetupWiki test=DumpHtml debug=num -dconstant=value
