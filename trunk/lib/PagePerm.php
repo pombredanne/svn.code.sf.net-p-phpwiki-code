@@ -236,7 +236,7 @@ function _requiredAuthorityForPagename($access, $pagename) {
     $page = $request->getPage($pagename);
 
     // Exceptions:
-    if (defined('GFORGE') and GFORGE) {
+    if (GFORGE) {
     	if ($pagename != '.' && isset($request->_user->_is_external) && $request->_user->_is_external && ! $page->get('external')) {
     		$permcache[$pagename][$access] = 0;
     		return 0;
