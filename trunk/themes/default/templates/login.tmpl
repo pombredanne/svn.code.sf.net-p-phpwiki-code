@@ -73,15 +73,15 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
 <table cellspacing="4">
 <tr>
   <td align="right"><?= _("UserId:") ?></td>
-  <td><input type="text" name="auth[userid]" size="12" maxlength="256" value="<?=$userid?>" />
+  <td><input type="text" name="auth[userid]" size="12" maxlength="256" value="<?=$userid?>" tabindex="1" />
     <?php if (ENABLE_AUTH_OPENID) { ?>
-    &nbsp;&nbsp;<?= _("or")?> <a href="http://openid.net/"><?= _("OpenID") ?></a>:<input type="text" id="inp-openid" name="openid_url" size="32" maxlength="256" value="<?=$userid?>" />
+    &nbsp;&nbsp;<?= _("or")?> <a href="http://openid.net/"><?= _("OpenID") ?></a>:<input type="text" id="inp-openid" name="openid_url" size="32" maxlength="256" value="<?=$userid?>" tabindex="3" />
     <?php } ?>
 </td>
 </tr>
 <tr>
   <td align="right"><?= _("Password:") ?></td>
-  <td><input type="password" name="auth[passwd]" size="12" maxlength="256" /></td>
+  <td><input type="password" name="auth[passwd]" size="12" maxlength="256" tabindex="2" /></td>
 </tr>
 <tr><td></td><td align="left">
   <?=Button("submit:", _("Sign In"), 'wikiaction')?>
