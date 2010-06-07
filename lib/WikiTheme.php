@@ -23,7 +23,7 @@
  * and more formatting.
  */
 
-require_once(dirname(__FILE__).'/HtmlElement.php');
+//require_once(dirname(__FILE__).'/HtmlElement.php');
 
 /**
  * Make a link to a wiki page (in this wiki).
@@ -1247,7 +1247,7 @@ else window.onload = downloadJSAtOnload;');
         //$out = "<!-- More Headers -->\n";
         foreach ($request->_MoreHeaders as $h) {
             if (is_object($h))
-                $out .= printXML($h);
+                $out .= $h->printXML();
             else
                 $out .= "$h\n";
         }
@@ -1277,7 +1277,7 @@ else window.onload = downloadJSAtOnload;');
         $out = '';
         foreach ($request->_MoreAttr[$tag] as $name => $element) {
             if (is_object($element))
-                $out .= printXML($element);
+                $out .= $element->printXML();
             else
                 $out .= "$element";
         }
