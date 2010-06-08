@@ -695,9 +695,10 @@ extends WikiDB_backend
 
 class WikiDB_backend_file_iter extends WikiDB_backend_iterator
 {
-    function WikiDB_backend_file_iter(&$backend, &$query_result) {
+    function WikiDB_backend_file_iter(&$backend, &$query_result, $options=array()) {
         $this->_backend = &$backend;
         $this->_result = $query_result;
+        $this->_options = $options;
 
         if (count($this->_result) > 0)
             reset($this->_result);
