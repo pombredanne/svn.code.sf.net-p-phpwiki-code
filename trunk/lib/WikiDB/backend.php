@@ -692,6 +692,15 @@ class WikiDB_backend_iterator
             return $result;
     	}
     }
+    
+    /**
+     * limit - if empty the pagelist iterator will do nothing.
+     * Some backends limit the result set itself (dba, file, flatfile),
+     * Some SQL based leave it to WikiDB/PageList - deferred filtering in the iterator.
+     */
+    function limit() {
+    	return empty($this->_options['limit']) ? 0 : $this->_options['limit'];
+    }
 
     /**
      * Release resources held by this iterator.
