@@ -75,7 +75,7 @@ if (ALLOW_BOGO_LOGIN && $require_level <= WIKIAUTH_BOGO) {
   <td align="right"><?= _("UserId:") ?></td>
   <td><input type="text" name="auth[userid]" size="12" maxlength="256" value="<?=$userid?>" tabindex="1" />
     <?php if (ENABLE_AUTH_OPENID) { ?>
-    &nbsp;&nbsp;<?= _("or")?> <a href="http://openid.net/"><?= _("OpenID") ?></a>:<input type="text" id="inp-openid" name="openid_url" size="32" maxlength="256" value="<?=$userid?>" tabindex="3" />
+    &nbsp;&nbsp;<?= _("or")?> <a href="http://openid.net/"><?= _("OpenID") ?></a>:&nbsp;<input type="text" id="inp-openid" name="openid_url" size="32" maxlength="256" value="" tabindex="3" />
     <?php } ?>
 </td>
 </tr>
