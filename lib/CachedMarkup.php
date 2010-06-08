@@ -1,7 +1,7 @@
 <?php 
 // rcs_id('$Id$');
 /* Copyright (C) 2002 Geoffrey T. Dairiki <dairiki@dairiki.org>
- * Copyright (C) 2004-2008 $ThePhpWikiProgrammingTeam
+ * Copyright (C) 2004-2010 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
@@ -42,7 +42,8 @@ class CacheableMarkup extends XmlContent {
         // a single quote is entered in the Summary box:
         // - the history is wrong (user and comment missing)
         // - the table of contents plugin no longer works
-        if (defined('GFORGE') and GFORGE) {
+        global $WikiTheme;
+        if (isa($WikiTheme, 'WikiTheme_gforge')) {
             return serialize($this);
         }
 
@@ -364,7 +365,7 @@ class Cached_WikiLink extends Cached_Link {
         if ($basepage == '') return false;
 	if (isset($this->_nolink)) return false;
         if ($link = $this->getPagename($basepage)) 
-            return array(array('linkto' => $link, 'relation' => 0));
+            return array(array('linkto' => $link));
         else 
             return false;
     }
@@ -693,9 +694,12 @@ class Cached_InterwikiLink extends Cached_ExternalLink {
 	/* ":DontStoreLink" */
 	if (substr($this->_link,0,1) == ':') return false;
 	/* store only links to valid pagenames */
-        if ($link = $this->getPagename($basepage)) 
-            return array(array('linkto' => $link, 'relation' => 0));
-        else return false; // dont store external links
+	$dbi = $GLOBALS['request']->getDbh();
+        if ($link = $this->getPagename($basepage) and $dbi->isWikiPage($link)) {
+            return array(array('linkto' => $link));
+        } else {
+            return false; // dont store external links
+        }
     }
 
     function _getName($basepage) {
@@ -751,6 +755,7 @@ class Cached_UserLink extends Cached_WikiLink {
 /**
  * 1.3.13: Previously stored was only _pi. 
  * A fresh generated cache has now ->name and ->args also.
+ * main::isActionPage only checks the raw content.
  */
 class Cached_PluginInvocation extends Cached_DynamicContent {
 
