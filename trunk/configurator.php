@@ -173,7 +173,7 @@ body { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 80%; }
 pre { font-size: 120%; }
 td { border: thin solid black }
 tr { border: none }
-div.hint { border: thin solid red, background-color: #eeeeee; }
+div.hint { background-color: #eeeeee; }
 tr.hidden { border: none; display: none; }
 td.part { background-color: #eeeeee; color: inherit; }
 td.instructions { background-color: #ffffee; width: <?php echo $tdwidth ?>px; color: inherit; }
@@ -2512,7 +2512,7 @@ if (!empty($HTTP_POST_VARS['action'])
     }
     
     if ($fp) {
-        fputs($fp, $config);
+        fputs($fp, utf8_encode($config));
         fclose($fp);
         echo "<p>The configuration was written to <code><b>$config_file</b></code>.</p>\n";
         if ($new_filename) {
