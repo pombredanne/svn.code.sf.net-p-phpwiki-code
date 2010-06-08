@@ -4,6 +4,7 @@
  * @author: Jeff Dairiki
  *
  * This code is now php5 compatible. --2004-04-19 23:51:43 rurban
+ * php-5.3 uses now HtmlElement5.php with public static
  *
  * Todo: Add support for a JavaScript backend, a php2js compiler.
  * HTML::div(array('onClick' => 'HTML::div(...)'))
