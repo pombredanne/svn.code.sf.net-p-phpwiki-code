@@ -1,5 +1,5 @@
 <?php
-// rcs_id('$Id$');
+//rcs_id('$Id$');
 /* Copyright (C) 2004-2009 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
@@ -692,9 +692,7 @@ class PageList {
                       * These options may also be given to _generate(List|Table) later
                       * But limit and offset might help the query WikiDB::getAllPages()
                       */
-                     // Use big value since paging does not work.
-                     // 'limit'    => 50,   // number of rows (pagesize)
-                     'limit'    => 5000,    // number of rows (pagesize)
+                     'limit'    => 50,       // number of rows (pagesize)
                      'paging'   => 'auto',  // 'auto'   top + bottom rows if applicable
                      //			    // 'top'    top only if applicable
                      //			    // 'bottom' bottom only if applicable
@@ -844,23 +842,25 @@ class PageList {
     /* ignore from, but honor limit */
     function addPages ($page_iter) {
         // TODO: if limit check max(strlen(pagename))
-	$i = 0; $from = 0;
-	if (isa($page_iter->_iter, "WikiDB_backend_dbaBase_pageiter")) {
-            $limit = 0;
-	}
-        elseif (isset($this->_options['limit'])) { // extract from,count from limit
-	    list($from, $limit) = WikiDB_backend::limit($this->_options['limit']);
+	$limit = $page_iter->limit();
+	if ($limit) {
+	    list($from, $limit) = $this->limit($limit);
+	    $this->_options['slice'] = 0;
 	    $limit += $from;
-        } else {
-	    $limit = 0;
-        }
-        while ($page = $page_iter->next()) {
-            $i++;	
-            if ($from and $i < $from) 
-                continue;
-	    if (!$limit or ($limit and $i < $limit))
+	    $i = 0;
+            while ($page = $page_iter->next()) {
+                $i++;
+                if ($from and $i < $from) 
+                    continue;
+	        if (!$limit or ($limit and $i < $limit))
+		    $this->addPage($page);
+            }
+	} else {
+	    $this->_options['slice'] = 0;
+            while ($page = $page_iter->next()) {
 		$this->addPage($page);
-        }
+            }
+	}
         if (empty($this->_options['count']))
 	    $this->_options['count'] = $i;
     }
@@ -873,6 +873,7 @@ class PageList {
         } else {
 	    $limit = 0;
         }
+	$this->_options['slice'] = 0;
         $i = 0;
         foreach ($list as $page) {
             $i++;	
@@ -1445,18 +1446,19 @@ class PageList {
             $tokens['LIMIT'] = $prev['limit'];
             $tokens['PREV'] = true;
             $tokens['PREV_LINK'] = WikiURL($pagename, $prev);
-            $prev['limit'] = "0,$pagesize";
+            $prev['limit'] = "0,$pagesize"; // FIRST_LINK
             $tokens['FIRST_LINK'] = WikiURL($pagename, $prev);
         }
         $next = $defargs;
         $tokens['NEXT'] = false; $tokens['NEXT_LINK'] = "";
         if (($offset + $pagesize) < $numrows) {
-            $next['limit'] = min($offset + $pagesize, $numrows - $pagesize) . ",$pagesize";
+            $next['limit'] = min($offset + $pagesize, $numrows - $pagesize) 
+                             . ",$pagesize";
             $next['count'] = $numrows;
             $tokens['LIMIT'] = $next['limit'];
             $tokens['NEXT'] = true;
             $tokens['NEXT_LINK'] = WikiURL($pagename, $next);
-            $next['limit'] = $numrows - $pagesize . ",$pagesize";
+            $next['limit'] = $numrows - $pagesize . ",$pagesize"; // LAST_LINK
             $tokens['LAST_LINK'] = WikiURL($pagename, $next);
         }
         return $tokens;
@@ -1478,14 +1480,12 @@ class PageList {
             $tokens = $this->pagingTokens($count, 
                                            count($this->_columns), 
                                            $this->_options['limit']);
-            if ($tokens)                               
+            if ($tokens and $this->_options['slice'])
                 $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['COUNT']);
         }
-        $nb_row = 0;
         foreach ($this->_pages as $pagenum => $page) {
-        	$one_row = $this->_renderPageRow($page, $i++);
+            $one_row = $this->_renderPageRow($page, $i++);
             $rows[] = $one_row;
-            if ($one_row) $nb_row++;
         }
         $table = HTML::table(array('cellpadding' => 0,
                                    'cellspacing' => 1,
@@ -1494,8 +1494,6 @@ class PageList {
                                    'class'       => 'pagelist', 
 				   ));
         if ($caption) {
-            if (is_string($caption))
-                $caption = preg_replace('/{total}/', $nb_row, asString($caption));
             $table->pushContent(HTML::caption(array('align'=>'top'), $caption));
 	}
 
@@ -1570,16 +1568,12 @@ class PageList {
     	if (empty($this->_pages)) return; // stop recursion
 	if (!isset($this->_options['listtype'])) 
 	    $this->_options['listtype'] = '';
-	$nb_row = 0;
 	foreach ($this->_pages as $pagenum => $page) {
 	    $one_row = $this->_renderPageRow($page);
             $rows[] = array('header' => WikiLink($page), 'render' => $one_row);
-            if ($one_row) $nb_row++;
 	}
         $out = HTML();
         if ($caption) {
-            if (is_string($caption))
-                $caption = preg_replace('/{total}/', $nb_row, asString($caption));
             $out->pushContent(HTML::p($caption));
         }
 	// Semantic Search et al: only unique list entries, esp. with nopage
@@ -1602,7 +1596,7 @@ class PageList {
             }
         }
 
-        if (!empty($this->_options['limit']))
+        if (!empty($this->_options['limit']) and $this->_options['slice'])
             list($offset, $count) = $this->limit($this->_options['limit']);
         else {
             $offset = 0; $count = count($this->_pages);
@@ -1756,8 +1750,6 @@ class PageList {
     function _emptyList($caption) {
         $html = HTML();
         if ($caption) {
-            if (is_string($caption))
-        	$caption = preg_replace('/{total}/', '0', asString($caption));
             $html->pushContent(HTML::p($caption));
         }
         if ($this->_messageIfEmpty)
