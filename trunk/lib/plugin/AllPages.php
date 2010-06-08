@@ -127,8 +127,8 @@ extends WikiPlugin
         if (!$args['noheader']) $pagelist->setCaption($caption);
 
         // deleted pages show up as version 0.
-        if ($args['include_empty'])
-            $pagelist->_addColumn('version');
+        //if ($args['include_empty'])
+        //    $pagelist->_addColumn('version');
 
         if ($pages !== false)
             $pagelist->addPageList($pages);
