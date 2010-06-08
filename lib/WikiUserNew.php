@@ -1460,6 +1460,7 @@ extends _AnonUser
                     $user = UpgradeUser($this, $user);
                     return true;
                 }
+                if ($class == "_ForbiddenPassUser") return false;
                 $class = $this->nextClass();
             }
         }
