@@ -108,6 +108,9 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook {
     }
 
     function load() {
+
+        $this->initGlobals();
+
 	// CSS file defines fonts, colors and background images for this
 	// style.  The companion '*-heavy.css' file isn't defined, it's just
 	// expected to be in the same directory that the base style is in.
@@ -170,6 +173,27 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook {
 	 * user's time zone.
 	 */
 	//$this->setDateFormat("%B %d, %Y");
+
+	/**
+	 * Custom UserPreferences:
+	 * A list of name => _UserPreference class pairs.
+	 * Rationale: Certain themes should be able to extend the predefined list 
+	 * of preferences. Display/editing is done in the theme specific userprefs.tmpl
+	 * but storage/sanification/update/... must be extended to the Get/SetPreferences methods.
+	 * See themes/wikilens/themeinfo.php
+	 */
+	//$this->customUserPreference(); 
+
+	/**
+	 * Register custom PageList type and define custom PageList classes.
+	 * Rationale: Certain themes should be able to extend the predefined list 
+	 * of pagelist types. E.g. certain plugins, like MostPopular might use 
+	 * info=pagename,hits,rating
+	 * which displays the rating column whenever the wikilens theme is active.
+	 * See themes/wikilens/themeinfo.php
+	 */
+	//$this->addPageListColumn(); 
+
     }
 }
 
