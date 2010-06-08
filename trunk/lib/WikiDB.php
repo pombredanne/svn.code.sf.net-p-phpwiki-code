@@ -1,6 +1,4 @@
-<?php //-*-php-*-
-// rcs_id('$Id$');
-
+<?php //rcs_id('$Id$');
 require_once('lib/PageType.php');
 
 /**
@@ -1004,7 +1002,7 @@ class WikiDB_Page
 	$links = $formatted->getWikiPageLinks(); // linkto => relation
         $attributes = array();
         foreach ($links as $link) {
-            if ($link['linkto'] === "" and $link['relation']) {
+            if ($link['linkto'] === "" and !empty($link['relation'])) {
                 $attributes[$link['relation']] = $this->getAttribute($link['relation']);
             }
         }
@@ -1818,7 +1816,7 @@ class WikiDB_PageIterator
         $this->_iter = $iter; // a WikiDB_backend_iterator
         $this->_wikidb = &$wikidb;
         $this->_options = $options;
-    }
+     }
     
     function count () {
         return $this->_iter->count();
