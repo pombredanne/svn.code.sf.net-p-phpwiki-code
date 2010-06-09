@@ -135,7 +135,7 @@ extends WikiPlugin
         if (!$attributes) {
             $res = ldap_search($connect, $basedn, $filter);
         } else {
-            $attr_array = split (" ",$attributes);
+            $attr_array = explode(" ", $attributes);
             $res = ldap_search($connect, $basedn, $filter, $attr_array);
         }
         $entries = ldap_get_entries($connect, $res);

@@ -210,8 +210,8 @@ extends WikiPlugin
             $dbi =& $request->_dbi;
             $var = array();
             if (is_string($vars) and !empty($vars)) {
-                foreach (split("&",$vars) as $pair) {
-                    list($key,$val) = split("=",$pair);
+                foreach (explode("&", $vars) as $pair) {
+                    list($key,$val) = explode("=", $pair);
                     $var[$key] = $val;
                 }
             } elseif (is_array($vars)) {

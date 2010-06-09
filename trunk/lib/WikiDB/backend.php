@@ -525,7 +525,7 @@ class WikiDB_backend
      */
     function limit($limit) {
         if (strstr($limit, ',')) {
-            list($from, $limit) = split(',', $limit);
+            list($from, $limit) = explode(',', $limit);
             if ((!empty($from) && !is_numeric($from)) or (!empty($limit) && !is_numeric($limit))) {
                 return $this->error(_("Illegal 'limit' argument: must be numeric"));
             }

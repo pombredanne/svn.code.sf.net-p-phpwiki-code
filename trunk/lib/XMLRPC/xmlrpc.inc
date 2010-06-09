@@ -201,7 +201,7 @@
 	*/
 	function xmlrpc_entity_decode($string)
 	{
-		$top=split('&', $string);
+		$top=explode('&', $string);
 		$op='';
 		$i=0;
 		while($i<sizeof($top))
@@ -1500,7 +1500,7 @@
 					}
 				}
 				// be tolerant to line endings, and extra empty lines
-				$ar = split("\r?\n", trim(substr($data, 0, $pos)));
+				$ar = explode("\r?\n", trim(substr($data, 0, $pos)));
 				while (list(,$line) = @each($ar))
 				{
 					// take care of multi-line headers

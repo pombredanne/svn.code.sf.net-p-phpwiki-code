@@ -27,14 +27,14 @@ extends _PassUser
         if (strstr(AUTH_SESS_USER,"][")) {
             $sess = $GLOBALS['HTTP_SESSION_VARS'];
             // recurse into hashes: "[user][userid]", sess = sess[user] => sess = sess[userid]
-            foreach (split("][",AUTH_SESS_USER) as $v) {
+            foreach (explode("][", AUTH_SESS_USER) as $v) {
                 $v = str_replace(array("[","]"),'',$v);
                 $sess = $sess[$v];
             }
             $this->_userid = $sess;
         } elseif (strstr(AUTH_SESS_USER,"->")) {
             // object "user->id" (no objects inside hashes supported!)
-            list($obj,$key) = split("->",AUTH_SESS_USER);
+            list($obj,$key) = explode("->", AUTH_SESS_USER);
             $this->_userid = $sess[$obj]->$key;
         } else {
             $this->_userid = $sess[AUTH_SESS_USER];
