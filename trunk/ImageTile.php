@@ -11,7 +11,7 @@ if (preg_match('/^(http|ftp|https):\/\//i',$_REQUEST['url'])) {
     $fp = fopen('config/config.ini','r');
     while ($config = fgetcsv($fp,1024,';')) {
         if (preg_match('/DATA_PATH/',$config[0])) {
-            list($key,$value) = split('=',$config[0]);
+            list($key,$value) = explode('=', $config[0]);
             $data_path = trim($value).'/';
 	    break;
 	}
