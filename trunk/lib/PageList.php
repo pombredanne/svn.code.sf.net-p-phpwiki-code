@@ -843,11 +843,11 @@ class PageList {
     function addPages ($page_iter) {
         // TODO: if limit check max(strlen(pagename))
 	$limit = $page_iter->limit();
+        $i = 0;
 	if ($limit) {
 	    list($from, $limit) = $this->limit($limit);
 	    $this->_options['slice'] = 0;
 	    $limit += $from;
-	    $i = 0;
             while ($page = $page_iter->next()) {
                 $i++;
                 if ($from and $i < $from) 
@@ -861,7 +861,7 @@ class PageList {
 		$this->addPage($page);
             }
 	}
-        if (empty($this->_options['count']))
+        if ($i and empty($this->_options['count']))
 	    $this->_options['count'] = $i;
     }
 
@@ -1480,7 +1480,7 @@ class PageList {
             $tokens = $this->pagingTokens($count, 
                                            count($this->_columns), 
                                            $this->_options['limit']);
-            if ($tokens and $this->_options['slice'])
+            if ($tokens and !empty($this->_options['slice']))
                 $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['COUNT']);
         }
         foreach ($this->_pages as $pagenum => $page) {
