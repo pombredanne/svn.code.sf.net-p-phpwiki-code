@@ -28,7 +28,7 @@ extends _IMAPPassUser {
         if (defined('POP3_AUTH_PORT'))
             $port = POP3_AUTH_PORT;
         elseif (strstr($host,':')) {
-            list(,$port) = split(':',$host);
+            list(,$port) = explode(':', $host);
         } else {
             $port = 110;
         }

@@ -1883,7 +1883,7 @@ function ValidateMail($email, $noconnect=false) {
     if ($noconnect)
       return array(true, sprintf(_("E-Mail address '%s' is properly formatted"), $email));
 
-    list ( $Username, $Domain ) = split ("@", $email);
+    list ( $Username, $Domain ) = explode("@", $email);
     //Todo: getmxrr workaround on windows or manual input field to verify it manually
     if (!isWindows() and getmxrr($Domain, $MXHost)) { // avoid warning on Windows. 
         $ConnectAddress = $MXHost[0];

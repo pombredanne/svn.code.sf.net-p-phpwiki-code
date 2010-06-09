@@ -767,10 +767,10 @@ function ParseMimeifiedPerm($string) {
         return '';
     }
     $hash = array();
-    foreach (split(";",trim($string)) as $accessgroup) {
-        list($access,$groupstring) = split(":",trim($accessgroup));
+    foreach (explode(";", trim($string)) as $accessgroup) {
+        list($access,$groupstring) = explode(":", trim($accessgroup));
         $access = trim($access);
-        $groups = split(",",trim($groupstring));
+        $groups = explode(",", trim($groupstring));
         foreach ($groups as $group) {
             $group = trim($group);
             $bool = (boolean) (substr($group,0,1) != '-');

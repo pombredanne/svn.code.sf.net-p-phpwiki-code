@@ -425,7 +425,7 @@ function IniConfig($file) {
     if (defined('PLUGIN_MARKUP_MAP') and trim(PLUGIN_MARKUP_MAP) != "") {
 	$_map = preg_split('/\s+/', PLUGIN_MARKUP_MAP);
 	foreach ($_map as $v) {
-	    list($xml,$plugin) = split(':', $v);
+	    list($xml,$plugin) = explode(':', $v);
 	    if (!empty($xml) and !empty($plugin))
 	        $PLUGIN_MARKUP_MAP[$xml] = $plugin;
 	}

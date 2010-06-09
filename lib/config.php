@@ -178,7 +178,7 @@ function guessing_setlocale ($category, $locale) {
         // do the reverse: return the detected locale collapsed to our LANG
         $locale = setlocale($category, '');
         if ($locale) {
-            if (strstr($locale, '_')) list ($lang) = split('_', $locale);
+            if (strstr($locale, '_')) list ($lang) = explode('_', $locale);
             else $lang = $locale;
             if (strlen($lang) > 2) { 
                 foreach ($alt as $try => $locs) {
@@ -193,7 +193,7 @@ function guessing_setlocale ($category, $locale) {
     if (strlen($locale) == 2)
         $lang = $locale;
     else 
-        list ($lang) = split('_', $locale);
+        list ($lang) = explode('_', $locale);
     if (!isset($alt[$lang]))
         return false;
         
@@ -228,7 +228,7 @@ function update_locale($loc) {
     $setlocale = guessing_setlocale(LC_ALL, $loc); // [56ms]
     if (!$setlocale) { // system has no locale for this language, so gettext might fail
         $setlocale = FileFinder::_get_lang();
-        list ($setlocale,) = split('_', $setlocale, 2);
+        list ($setlocale,) = explode('_', $setlocale, 2);
         $setlocale = guessing_setlocale(LC_ALL, $setlocale); // try again
         if (!$setlocale) $setlocale = $loc;
     }

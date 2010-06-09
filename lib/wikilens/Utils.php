@@ -82,7 +82,7 @@ function getPageTextData($fromUser, $dbi, $START_DELIM, $DELIM) {
         $singles = $pageArray[$p];
         $singles = substr($singles, strpos($singles, $START_DELIM) + strlen($START_DELIM));
         
-        $retArray = split($DELIM, $singles);
+        $retArray = explode($DELIM, $singles);
     }    
     for ($i = 0; $i < count($retArray); $i++) {
         $retArray[$i] = trim($retArray[$i]);
