@@ -30,14 +30,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 require_once (dirname(__FILE__).'/lib/prepend.php');
-// rcs_id('$Id$');
+//rcs_id('$Id$');
 
 require_once(dirname(__FILE__).'/lib/IniConfig.php');
-if (!defined('GFORGE') or !GFORGE) {
-    IniConfig(dirname(__FILE__)."/config/config.ini");
-} else {
-    IniConfig(dirname(__FILE__)."/config/config-default.ini");
-}
+IniConfig(dirname(__FILE__)."/config/config.ini");
 
 ////////////////////////////////////////////////////////////////
 // PrettyWiki
