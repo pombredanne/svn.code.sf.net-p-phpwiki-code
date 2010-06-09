@@ -1,6 +1,6 @@
 <?php
 //rcs_id('$Id$');
-/* Copyright (C) 2004-2009 $ThePhpWikiProgrammingTeam
+/* Copyright (C) 2004-2010 $ThePhpWikiProgrammingTeam
  * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
@@ -71,7 +71,9 @@
  *   all columns are sortable. Thanks to the wikilens team.
  *   cols > 1, comma, azhead, ordered (OL lists)
  *   ->supportedArgs() which arguments are supported, so that the plugin 
- *                     doesn't explictly need to declare it 
+ *                     doesn't explictly need to declare it
+ *   added slice option when the page_iter (e.g. ->_pages) is already sliced.
+ *
  * TODO:
  *   fix sortby logic, fix multiple sortby and other paging args per page.
  *   info=relation,linkto nopage=1
