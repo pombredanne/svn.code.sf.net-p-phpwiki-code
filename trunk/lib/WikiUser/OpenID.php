@@ -189,7 +189,7 @@ extends _PassUser
         $userid = $this->_userid;
         if (!loadPhpExtension('openssl')) {
             trigger_error(
-                (sprintf(_("The PECL %s extension cannot be loaded."), "openssl") 
+                sprintf(_("The PECL %s extension cannot be loaded."), "openssl")
                  . sprintf(_(" %s AUTH ignored."), 'OpenID'),
                  E_USER_WARNING);
             return $this->_tryNextUser();
