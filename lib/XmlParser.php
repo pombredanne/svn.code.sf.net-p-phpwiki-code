@@ -57,8 +57,10 @@ class XmlParser {
         else
             $this->_parser = xml_parser_create(); 
 
-        if (isset($GLOBALS['charset']))
-            xml_parser_set_option($this->_parser, XML_OPTION_TARGET_ENCODING, $GLOBALS['charset']);
+        xml_parser_set_option($this->_parser, XML_OPTION_TARGET_ENCODING, $GLOBALS['charset']);
+
+        //This unfortunately does not work
+        //xml_set_object($this->_parser, &$this);
 
         xml_set_element_handler($this->_parser,
                                 array(&$this, 'tag_open'),
