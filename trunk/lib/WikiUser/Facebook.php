@@ -19,8 +19,10 @@ extends _PassUser {
     function checkPass($password) {
         $userid = $this->_userid;
         if (!loadPhpExtension('openssl')) {
-            trigger_error(_("The PECL openssl extension cannot be loaded. Facebook AUTH ignored."),
-                          E_USER_WARNING);
+            trigger_error(
+                (sprintf(_("The PECL %s extension cannot be loaded."), "openssl") 
+                 . sprintf(_(" %s AUTH ignored."), 'Facebook'),
+                 E_USER_WARNING);
             return $this->_tryNextUser();
         }
         $web = new HttpClient("www.facebook.com", 80);
@@ -58,8 +60,10 @@ extends _PassUser {
     // TODO: msearch facebook for the username
     function userExists() {
         if (!loadPhpExtension('openssl')) {
-            trigger_error(_("The PECL openssl extension cannot be loaded. Facebook AUTH ignored."),
-                          E_USER_WARNING);
+            trigger_error(
+                (sprintf(_("The PECL %s extension cannot be loaded."), "openssl") 
+                 . sprintf(_(" %s AUTH ignored."), 'Facebook'),
+                 E_USER_WARNING);
             return $this->_tryNextUser();
         }
         if (DEBUG & _DEBUG_LOGIN)
