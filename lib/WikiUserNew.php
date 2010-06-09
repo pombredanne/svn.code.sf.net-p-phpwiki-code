@@ -222,7 +222,8 @@ function _determineBogoUserOrPassUser($UserName) {
 	    	    $class = $_PassUser->nextClass();
 	    	else
 		    $class = get_class($_PassUser);
-    		if ($user = new $class($UserName, $_PassUser->_prefs)) {
+    		if ($user = new $class($UserName, $_PassUser->_prefs)
+    		    and $user->_userid) {
 	            return $user;
             	} else {
             	    return $_PassUser;
@@ -1293,19 +1294,19 @@ extends _AnonUser
         } else {
             $user = $this;
         }
+        $UserName = $this->_userid;
         /* new user => false does not return false, but the _userid is empty then */
-        while ($user and $user->_userid) {
+        if ($user and $user->_userid) {
             if (!check_php_version(5))
                 eval("\$this = \$user;");
             $user = UpgradeUser($this, $user);
-            if ($user->userExists()) {
-                $user = UpgradeUser($this, $user);
+            if ($user->userExists())
                 return true;
-            }
+        }
+        while (!$this->_tryNextUser($UserName)) {
             // prevent endless loop. does this work on all PHP's?
             // it just has to set the classname, what it correctly does.
-            $class = $user->nextClass();
-            if ($class == "_ForbiddenPassUser")
+            if ($this->nextClass() == "_ForbiddenPassUser")
                 return false;
         }
         return false;
@@ -1429,7 +1430,7 @@ extends _AnonUser
         }
         if (USER_AUTH_POLICY === 'strict') {
             $class = $this->nextClass();
-            if ($user = new $class($this->_userid,$this->_prefs)) {
+            if ($user = new $class($this->_userid, $this->_prefs)) {
                 if ($user->userExists()) {
                     return $user->checkPass($submitted_password);
                 }
@@ -1437,27 +1438,29 @@ extends _AnonUser
         }
         if (USER_AUTH_POLICY === 'stacked' or USER_AUTH_POLICY === 'old') {
             $class = $this->nextClass();
-            if ($user = new $class($this->_userid,$this->_prefs))
+            if ($user = new $class($this->_userid, $this->_prefs))
                 return $user->checkPass($submitted_password);
         }
         return $this->_level;
     }
 
-    function _tryNextUser() {
+    function _tryNextUser($username = false) {
         if (DEBUG & _DEBUG_LOGIN) {
             $class = strtolower(get_class($this));
             if (substr($class,-10) == "dbpassuser") $class = "_dbpassuser";
             $GLOBALS['USER_AUTH_ERROR'][$class] = 'nosuchuser';
         }
+        if (!$username) $username = $this->_userid;
         if (USER_AUTH_POLICY === 'strict'
-	    or USER_AUTH_POLICY === 'stacked') {
+	    or USER_AUTH_POLICY === 'stacked') 
+	{
             $class = $this->nextClass();
-            while ($user = new $class($this->_userid, $this->_prefs)) {
+            while ($user = new $class($username, $this->_prefs)) {
                 if (!check_php_version(5))
                     eval("\$this = \$user;");
 	        $user = UpgradeUser($this, $user);
                 if ($user->userExists()) {
-                    $user = UpgradeUser($this, $user);
+                    //$user = UpgradeUser($this, $user);
                     return true;
                 }
                 if ($class == "_ForbiddenPassUser") return false;
