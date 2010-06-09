@@ -233,11 +233,11 @@ extends XmlParser
         }
     }
 
-    private function trim_data($array) {
+    function trim_data($array) {
         return array_map(array("self", "trim_element"), $array);
     }
 
-    private function trim_element($element) {
+    function trim_element($element) {
         if (is_array($element)) {
             return $this->trim_data($element);
         } elseif (is_string($element)) {
@@ -245,7 +245,7 @@ extends XmlParser
         }
     }
     
-    private function serialize_tag($tag_name, $attributes) {
+    function serialize_tag($tag_name, $attributes) {
         $tag = "<" . $tag_name;
         foreach ($attributes as $k => $v) {
             $tag .= " " . strtolower($k). "=\"$v\"";
