@@ -16,7 +16,7 @@ if (!$HIDE_TOOLBARS) {
 <?php } ?>
 <div id="content">
 <?php
-if (ENABLE_RATEIT && !empty($user) && $user->isAuthenticated() && $page->exists())
+if (ENABLE_RATEIT && $page->exists())
     $rating = 1;
 else
     $rating = 0;
