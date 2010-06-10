@@ -25,6 +25,9 @@ paragraphs).
 Improved dumping, pageset handling for format= with ~ActionPages.
 e.g. dump pagesets or multi-page pdf's.
 
+The Sidebar theme is now an extension of the Monobook theme (known from wikipedia), 
+the new gforge theme is to be used together with gforge (the successor of Sourceforge).
+
 === Fixes ===
 * fix ~PagePerm for multiple groups: not a member and undecided: check other groups
 * fix rss button actions for special RecentChanges actions (UserContribs, PageHistory, ...)
@@ -52,8 +55,10 @@ e.g. dump pagesets or multi-page pdf's.
 * fix Bug#2010748 Missing image
 * fix Bug#1831881 Fatal database error when sorting columns (vargenau)
 * fix ~PageList prev/next links on multi-columns lists, improve handling of ordered lists
+  fixed slicing with list-based backends (dba, file).
 * allow single "0" as not-empty page content
 * fix action=rename, support new optional argument to=newpagename
+* fix multiple USER_AUTH_METHOD where the first method did not succeed.
 
 === Changes ===
 - changed ~SemanticSearch query semantics: all regex=auto terms with no regex chars (.+*?^$")
@@ -118,6 +123,7 @@ e.g. dump pagesets or multi-page pdf's.
 * implemented simple [[Help:Spreadsheet|spreadsheet]] functions for Wikicreole tables (vargenau)
 * new plugin: [[Help:CurrentTimePlugin|CurrentTime]] (vargenau)
 * new plugin: [[Help:ChartPlugin|Chart]] (vargenau)
+* new mssqlnative backend (MS SQL Server 2005+) (chrisdpucci)
 
 == 1.3.14 July, 1 2007, Reini Urban ==
 
