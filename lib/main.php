@@ -953,7 +953,11 @@ class WikiRequest extends Request {
             // Switched auth between sessions. 
             // Note: There's no way to demandload a missing class-definition 
             // afterwards! Stupid php.
-            if (isa($user, WikiUserClassname())) {
+            if (defined('GFORGE') and GFORGE) {
+                if (empty($HTTP_SERVER_VARS['PHP_AUTH_USER'])) {
+                    return false;
+                }
+            } else if (isa($user, WikiUserClassname())) {
                 $this->_user = $user;
                 $this->_user->_authhow = 'session';
                 return ENABLE_USER_NEW ? $user->UserName() : $this->_user;
