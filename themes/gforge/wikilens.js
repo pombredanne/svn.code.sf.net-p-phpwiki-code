@@ -15,7 +15,7 @@ var avg = new Array; var numusers = new Array;
 var msg_rating_votes = "Rating: %.1f (%d votes)";
 var msg_curr_rating = "Your current rating: ";
 var msg_curr_prediction = "Your current prediction: ";
-var msg_chg_rating = "Change your rating from ";
+//var msg_chg_rating = "Change your rating from ";
 var msg_to = " to ";
 var msg_add_rating = "Add your rating: ";
 var msg_thanks = "Thanks!";
@@ -50,19 +50,19 @@ function displayRating(imgId, imgPrefix, ratingvalue, pred, init) {
   for (var i=1; i<=10; i++) {
     var imgName = imgId + i;
     if (init) {
-      document[imgName].title = title;
+      //document[imgName].title = title;
       var j = i/2;
       if (ratingvalue > 0) {
         if (curr_rating) {
-	  document[imgName].onmouseout = function() { displayRating(imgId,imgPrefix,curr_rating,0,0) };
+	  document[imgName].onmouseout = function() { displayRating(imgId,imgPrefix,avg[imgId],0,0) };
         } else if (curr_pred) {
 	  document[imgName].onmouseout = function() { displayRating(imgId,imgPrefix,curr_pred,1,0) };
         }
-        if (curr_rating != ratingvalue) {
+        if (curr_rating != ratingvalue && typeof(msg_chg_rating) != "undefined") {
           document[imgName].title = msg_chg_rating+curr_rating+' '+ratings[curr_rating*2]+msg_to+j+' '+ratings[i];
 	} 
       } else {
-	document[imgName].onmouseout = function() { displayRating(imgId,imgPrefix,0,0,0) };
+	document[imgName].onmouseout = function() { displayRating(imgId,imgPrefix,avg[imgId],0,0) };
         document[imgName].title = msg_add_rating+j+' '+ratings[i];
       }
     }
@@ -77,6 +77,72 @@ function displayRating(imgId, imgPrefix, ratingvalue, pred, init) {
     document[imgName].src = imgSrc + imgPrefix + imgType + ((i%2) ? 'k1' : 'k0') + '.png';
   }
 }
+
+function displayRating2(imgId, imgPrefix, ratingvalue, pred, init) {
+  var ratings = new Array('Not Rated','Awful','Very Poor','Poor','Below Average',
+			  'Average','Above Average','Good','Very Good','Excellent','Outstanding');
+  var cancel = imgId + imgPrefix + 'Cancel';
+  var curr_rating = rating[imgId];
+  var curr_pred = prediction[imgId];
+  var title = '';
+  var imgSrc = rateit_imgsrc;
+  if (init) { // re-initialize titles
+    title = msg_curr_rating+curr_rating+' '+ratings[curr_rating*2];
+    var linebreak = '. '; //&#xD or &#13 within IE only;
+    if (pred) {
+      title = title+' '+msg_curr_prediction+ curr_pred+' '+ratings[curr_pred*2];
+    }
+	if (curr_rating) {
+	  document[cancel].style.display = 'inline';
+	}
+	else {
+	  document[cancel].style.display = 'none';
+	}
+  }
+  for (var i=1; i<=10; i++) {
+    var imgName = imgId + i;
+    if (init) {
+      //document[imgName].title = title;
+      var j = i/2;
+      if (ratingvalue > 0) {
+        if (curr_rating) {
+	  document[imgName].onmouseout = function() { displayRating(imgId,imgPrefix,avg[imgId],0,0) };
+        } else if (curr_pred) {
+	  document[imgName].onmouseout = function() { displayRating(imgId,imgPrefix,curr_pred,1,0) };
+        }
+        if (curr_rating != ratingvalue && typeof(msg_chg_rating) != "undefined") {
+          document[imgName].title = msg_chg_rating+curr_rating+' '+ratings[curr_rating*2]+msg_to+j+' '+ratings[i];
+	} 
+      } else {
+	document[imgName].onmouseout = function() { displayRating(imgId,imgPrefix,avg[imgId],0,0) };
+        document[imgName].title = msg_add_rating+j+' '+ratings[i];
+      }
+    }
+    var imgType = 'N';
+    if (pred) {
+      if (init)
+        document[imgName].title = title+linebreak+msg_add_rating+ratings[i];
+      imgType = 'R';
+	 } else {
+		if (ratingvalue <= curr_rating) {
+			if (i <= (ratingvalue * 2)) 
+				imgType = 'Rp';
+			else 
+				if (i <= (curr_rating * 2)) 
+					imgType = 'R';
+		}
+		else {
+			if (i <= (curr_rating * 2)) 
+				imgType = 'Rp';
+			else 
+				if (i <= (ratingvalue * 2)) 
+					imgType = 'Rm';
+		}
+    }
+    document[imgName].src = imgSrc + imgPrefix + imgType + ((i%2) ? 'k1' : 'k0') + '.png';
+  }
+}
+
 function sprintfRating(s, num, count) {
 	var num1 = Math.round(num * 10) / 10;
 	if (count < 2) s = s.replace(/votes/, 'vote');
