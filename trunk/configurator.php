@@ -1267,26 +1267,21 @@ Most of the page appearance is controlled by files in the theme
 subdirectory.
 
 There are a number of pre-defined themes shipped with PhpWiki.
-Or you may create your own, e.g. by copying and then modifying one of
-stock themes.
+Or you may create your own, deriving from existing ones.
 <pre>
+  THEME = Sidebar (default)
   THEME = default
   THEME = MacOSX
   THEME = MonoBook (WikiPedia)
   THEME = smaller
   THEME = Wordpress
   THEME = Portland
-  THEME = Sidebar
   THEME = Crao
   THEME = wikilens (with Ratings)
   THEME = Hawaiian
   THEME = SpaceWiki
   THEME = Hawaiian
-</pre>
-  
-Problems:
-<pre>
-  THEME = blog     (Kubrick)   [experimental. Several links missing]
+  THEME = blog     (Kubrick)   [experimental]
 </pre>");
 
 $properties["Character Set"] =
