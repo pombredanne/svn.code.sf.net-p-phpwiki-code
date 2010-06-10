@@ -752,6 +752,7 @@ function fixup_static_configs($file) {
     $AllActionPages[] = 'FullRecentChanges';
     $AllActionPages[] = 'LeastPopular';
     $AllActionPages[] = 'LockedPages';
+    $AllActionPages[] = 'MyRatings'; // MyRatings works only in wikilens derived themes
     $AllActionPages[] = 'MyRecentEdits';
     $AllActionPages[] = 'MyRecentChanges';
     $AllActionPages[] = 'PhpWikiAdministration';
