@@ -197,7 +197,8 @@ class Template
             ; //return $error;
         }
         elseif (strstr($error->errfile, "In template '")) { // merge
-            $error->errfile = preg_replace("/'(\w+)'\)$/", "'\\1' < '$this->_name')", $error->errfile);
+            $error->errfile = preg_replace("/'(\w+)'\)$/", "'\\1' < '$this->_name')", 
+                                           $error->errfile);
         }
         else {
             $error->errfile .= " (In template '$this->_name')";
