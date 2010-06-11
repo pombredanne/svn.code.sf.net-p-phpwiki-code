@@ -545,6 +545,7 @@ function LinkImage($url, $alt = "") {
                 $size = @getimagesize($path);
                 $link->setAttr('src', getUploadDataPath() . rawurldecode($file));
             } else { // elsewhere
+                global $request;
                 $size = @getimagesize($request->get('DOCUMENT_ROOT').urldecode($url));
             }
         }
