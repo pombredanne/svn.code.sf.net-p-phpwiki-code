@@ -126,6 +126,12 @@ function EndLoadDump(&$request)
         echo "</div>\n";
         echo "</div>\n";
     }
+    if (isa($WikiTheme, 'WikiTheme_wikilens')) {
+        echo "</div>\n";
+        echo "</td>\n";
+        echo "</tr>\n";
+        echo "</table>\n";
+    }
     echo "</body></html>\n";
 }
 
