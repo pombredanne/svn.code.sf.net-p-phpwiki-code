@@ -1189,9 +1189,9 @@ li#pt-login {
 	background-color: #fff;
 	padding-bottom: 0.3em;
 }
-/* http://www.aboutus.org/UniversalWikiEditButton */
+/* http://universaleditbutton.org */
 #p-cactions li a#btn-edit {
-	background:  url('images/Edit-chalk-10gs.png') top left no-repeat;
+	background:  url('images/UEB16.png') top left no-repeat;
 	background-repeat: no-repeat;
 	padding-left: 20px !important;
 	text-transform: none;
