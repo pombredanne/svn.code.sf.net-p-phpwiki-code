@@ -119,22 +119,29 @@ function EndLoadDump(&$request)
         echo "</table>\n";
         echo "</td></tr>\n";
         echo "</table>\n";
-    }
-    if (isa($WikiTheme, 'WikiTheme_MonoBook')) {
+    } else if (isa($WikiTheme, 'WikiTheme_Sidebar')
+           or isa($WikiTheme, 'WikiTheme_MonoBook')) {
         echo "</div>\n";
         echo "</div>\n";
         echo "</div>\n";
         echo "</div>\n";
-    }
-    if (isa($WikiTheme, 'WikiTheme_wikilens')) {
+    } else if (isa($WikiTheme, 'WikiTheme_wikilens')) {
         echo "</div>\n";
         echo "</td>\n";
         echo "</tr>\n";
         echo "</table>\n";
+    } else if (isa($WikiTheme, 'WikiTheme_blog')) {
+        echo "</div>\n";
+        echo "</div>\n";
+    } else if (isa($WikiTheme, 'WikiTheme_Crao')
+           or isa($WikiTheme, 'WikiTheme_Hawaiian')
+           or isa($WikiTheme, 'WikiTheme_MacOSX')
+           or isa($WikiTheme, 'WikiTheme_shamino_com')
+           or isa($WikiTheme, 'WikiTheme_smaller')) {
+        echo "</div>\n";
     }
     echo "</body></html>\n";
 }
-
 
 ////////////////////////////////////////////////////////////////
 //
