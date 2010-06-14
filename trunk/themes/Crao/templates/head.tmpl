@@ -110,5 +110,7 @@ _("UserPreferences"))?>" />
       $pagetitle = " - ". AsString($TITLE);
 ?>
 <title><?=WIKI_NAME.$pagetitle?></title>
+<meta property="og:title" content="<?= $TITLE ?>"/>
+<meta property="og:site_name" content="<?= WIKI_NAME ?>"/>
 <?= $WikiTheme->getMoreHeaders() ?>
 </head>

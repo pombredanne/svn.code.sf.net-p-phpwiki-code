@@ -110,6 +110,8 @@ _("UserPreferences"))?>" />
       $pagetitle = " - ". AsString($TITLE);
 ?>
 <title><?= WIKI_NAME.$pagetitle ?></title>
+<meta property="og:title" content="<?= $TITLE ?>"/>
+<meta property="og:site_name" content="<?= WIKI_NAME ?>"/>
 <?php
   require_once("lib/plugin/RateIt.php");
   $plugin = new WikiPlugin_RateIt;
