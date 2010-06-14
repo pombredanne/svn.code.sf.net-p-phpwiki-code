@@ -36,7 +36,7 @@ extends WikiPlugin_IncludePage
     }
 
     function getDescription() {
-        return _("Dynamicly include text from another wiki page.");
+        return _("Dynamically include the content from another wiki page.");
     }
 
     function getDefaultArguments() {
