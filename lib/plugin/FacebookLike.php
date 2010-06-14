@@ -38,32 +38,36 @@ extends WikiPlugin
     function getDefaultArguments() {
         return array('width'       => 450,
                      'height'      => 35,
-                     //'title'       => '',      // override WIKINAME
+                     //'title'       => '',    // override $TITLE (i.e. pagename)
                      'colorscheme' => 'light', // or "dark"
                      'show_faces'  => "false",
                      'layout'      => "standard", // or "button_count"
-		     'action'      => "like",   // or "recommend"
+                     'action'      => "like",   // or "recommend"
                      );
     }
 
     function run($dbi, $argstr, &$request, $basepage) {
         $args = $this->getArgs($argstr, $request);
         extract($args);
+        
     	//$iframe = "<iframe src=\"http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fexample.com%2Fpage%2Fto%2Flike&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;\" allowTransparency=\"true\"></iframe>";
-	$urlargs = array("href"       => $url,
-		   	 "layout"     => $layout,
-			 "show_faces" => $show_faces,
-			 "width"      => $width,
-			 "action"     => "like", // or "recommend"
-			 "colorscheme"=> $colorscheme,
-			 "height"     => $height
-	);
-	$url = "http://www.facebook.com/plugins/like.php?href=".htmlentities(WikiUrl($pagename,$urlargs,true));
+        $urlargs = array(
+                         "layout"     => $layout,
+                         "show_faces" => $show_faces,
+                         "width"      => $width,
+                         "action"     => "like", // or "recommend"
+                         "colorscheme"=> $colorscheme,
+                         "height"     => $height
+                         );
+        $pagename = $request->getArg('pagename');
+        $url = "http://www.facebook.com/plugins/like.php?"
+             . "href=" . urlencode(WikiUrl($pagename,$urlargs,true));
+        $url = str_replace("%3D","=",$url);
         $params = array("src"               => $url,
                         "scrolling"         => 'no',
                         "frameborder"       => '0',
                         "style"             => "border:none; overflow:hidden; "
-			     ."width:$width"."px; height:$height"."px;",
+                                             . "width:$width"."px; height:$height"."px;",
                         "allowtransparency" => "true");
         return HTML::iframe($params);
     }
