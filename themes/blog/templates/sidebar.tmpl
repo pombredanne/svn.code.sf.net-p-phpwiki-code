@@ -8,7 +8,7 @@ $id = isBrowserIE() ? 'sidebar' : 'moz-sidebar';
   $UserCalPageTitle = $user->getId() . SUBPAGE_SEPARATOR . _("Blog");
   $dbi = $request->getDbh();
   // display flat calender dhtml under the clock
-  if (!$dbi->isWikiPage($UserCalPageTitle) and BLOG_EMPTY_DEFAULT_PREFIX) {
+  if (!$dbi->isWikiPage($UserCalPageTitle) and BLOG_DEFAULT_EMPTY_PREFIX) {
       $UserCalPageTitle = _("Blog");
   }
 ?>
