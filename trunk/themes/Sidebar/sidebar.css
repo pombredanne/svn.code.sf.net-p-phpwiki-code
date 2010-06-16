@@ -1858,7 +1858,7 @@ span.relation-symbol {
 a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe,
 input.wikiaction, input.button, input.wikiadmin {
 	text-decoration: none;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: sans-serif, Arial, Helvetica;
 	/* don't wrap text buttons */
 	white-space: nowrap;
 	/*font-size: inherit; */
