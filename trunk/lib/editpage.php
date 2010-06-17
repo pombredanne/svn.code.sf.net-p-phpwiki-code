@@ -527,10 +527,8 @@ class PageEditor
 				       ']'));
 	}
 	else {
-	    // New CSS formatted unified diffs (ugly in NS4).
+	    // New CSS formatted unified diffs
 	    $fmt = new HtmlUnifiedDiffFormatter;
-	    // Use this for old table-formatted diffs.
-	    //$fmt = new TableUnifiedDiffFormatter;
 	    $html->pushContent($fmt->format($diff));
 	}
         return $html;
