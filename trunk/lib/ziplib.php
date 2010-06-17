@@ -268,10 +268,7 @@ class ZipWriter
     function addSrcFile ($target, $src, $attrib = false) {
 	if (empty($attrib['mtime']))
 	    $attrib = array('mtime' => filemtime($src), 'is_ascii' => 0);
-	if (check_php_version(4,3))
-	    $this->addRegularFile($target, file_get_contents($src), $attrib);
-	else
-	    $this->addRegularFile($target, join('', file($src)), $attrib);
+	$this->addRegularFile($target, file_get_contents($src), $attrib);
     }
     
   function addRegularFile ($filename, $content, $attrib = false) {

@@ -536,7 +536,7 @@ class FormattedText {
  */
 function XmlContent_quote ($string) {
     if (!$string) return $string;
-    if (check_php_version(4,1) and isset($GLOBALS['charset'])
+    if (isset($GLOBALS['charset'])
         and (!defined('IGNORE_CHARSET_NOT_SUPPORTED_WARNING') or !IGNORE_CHARSET_NOT_SUPPORTED_WARNING))
     {
         return htmlspecialchars($string, ENT_COMPAT, $GLOBALS['charset']);

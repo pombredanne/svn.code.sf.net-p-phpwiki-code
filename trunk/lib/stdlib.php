@@ -529,8 +529,6 @@ function LinkImage($url, $alt = "") {
             ;
         elseif (! preg_match("/\.$force_img$/i", $url))
             ;  // only valid image extensions or scripts assumed to generate images
-        elseif (!check_php_version(4,3) and preg_match("/^http.+\.png$/i",$url))
-            ; // it's safe to assume that this will fail.
         elseif (preg_match("/^http/",$url)) { // external url
             $size = @getimagesize($url); 
         } else { // local file
@@ -1050,11 +1048,9 @@ function ConvertOldMarkup ($text, $markup_type = "block") {
         global $WikiNameRegexp, $request;
         $bang_esc[] = "(?:" . ALLOWED_PROTOCOLS . "):[^\s<>\[\]\"'()]*[^\s<>\[\]\"'(),.?]";
         // before 4.3.9 pcre had a memory release bug, which might hit us here. so be safe.
-        if (check_php_version(4,3,9)) {
-          $map = getInterwikiMap();
-          if ($map_regex = $map->getRegexp())
+        $map = getInterwikiMap();
+        if ($map_regex = $map->getRegexp())
             $bang_esc[] = $map_regex . ":[^\\s.,;?()]+"; // FIXME: is this really needed?
-        }
         $bang_esc[] = $WikiNameRegexp;
         $orig[] = '/!((?:' . join(')|(', $bang_esc) . '))/';
         $repl[] = '~\\1';
@@ -1751,7 +1747,7 @@ function explodePageList($input, $include_empty=false, $sortby='pagename',
 function isa ($object, $class) {
     //if (check_php_version(5)) 
     //    return $object instanceof $class;
-    if (check_php_version(4,2) and !check_php_version(5)) 
+    if (!check_php_version(5)) 
         return is_a($object, $class);
 
     $lclass = check_php_version(5) ? $class : strtolower($class);
