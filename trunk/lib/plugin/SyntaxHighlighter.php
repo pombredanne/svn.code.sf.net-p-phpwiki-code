@@ -119,30 +119,6 @@ extends WikiPlugin
         }
     }
 
-    /* PHP versions < 4.3
-     * TODO: via temp file looks more promising
-     */
-    function OldFilterThroughCmd($input, $commandLine) {
-         $input = str_replace ("\\", "\\\\", $input);
-         $input = str_replace ("\"", "\\\"", $input);
-         $input = str_replace ("\$", "\\\$", $input);
-         $input = str_replace ("`", "\`", $input);
-         $input = str_replace ("'", "\'", $input);
-         //$input = str_replace (";", "\;", $input);
-
-         $pipe = popen("echo \"$input\"|$commandLine", 'r');
-         if (!$pipe) {
-            print "pipe failed.";
-            return "";
-         }
-         $output = '';
-         while (!feof($pipe)) {
-            $output .= fread($pipe, 1024);
-         }
-         pclose($pipe);
-         return $output;
-    }
-
     function run($dbi, $argstr, &$request, $basepage) {
         extract($this->getArgs($argstr, $request));
         $source =& $this->source;
