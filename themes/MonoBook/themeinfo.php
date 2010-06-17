@@ -105,19 +105,6 @@ extends WikiTheme_Wikilens
 	    $this->addMoreHeaders("\n");
 	    $this->addMoreHeaders(HTML::Raw('<meta http-equiv="imagetoolbar" content="no" />'));
 	} 
-	// better done in wikibits.js
-	/*elseif (isBrowserSafari()) {
-	  $this->addMoreHeaders($this->_CSSlink(0,$this->_findFile('IEMacFixes.css'),'all'));
-	  } elseif (isBrowserKonqueror()) {
-	  $this->addMoreHeaders($this->_CSSlink(0,$this->_findFile('KHTMLFixes.css'),'all'));
-	  } elseif (isBrowserOpera()) {
-	  $this->addMoreHeaders($this->_CSSlink
-	  (0,
-	  isBrowserOpera(7) ? $this->_findFile('Opera7Fixes.css')
-	  : $this->_findFile('Opera6Fixes.css'),'all'));
-	  }
-	*/
-	// TODO: IEMAC, KHTML, Opera6, Opera7
 	$this->addMoreAttr('body', "class-ns-0", HTML::Raw('class="ns-0"'));
 
 	// CSS file defines fonts, colors and background images for this
