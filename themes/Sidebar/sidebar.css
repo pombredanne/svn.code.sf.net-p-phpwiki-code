@@ -107,7 +107,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: black;
 	background: none;
 	font-weight: bold;
-	font-family: Tahoma, sans-serif;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	margin: 0;
 	padding-top: 0.5em;
 	padding-bottom: 0.17em;
@@ -146,10 +146,7 @@ ol {
 }
 li {	margin-bottom: 0.1em; }
 dt { 
-	/*font-family: Tahoma, sans-serif;*/
 	font-size: 115%;
-	/*font-weight: bolder;*/
-        /*background-color: #ddd;*/
 	margin-bottom: .5em;
 }
 dl {
@@ -923,7 +920,7 @@ span.logo {
         left: 18px;
 	top: 3px;
 	color: #ffffff;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
         font-size: 24pt;
 	font-weight: bolder;
 	text-decoration: none;
@@ -1684,7 +1681,7 @@ table.multipageimage td {
 th.gridbutton {
 	background-color: ThreedLightShadow;
 	color: black;
-	font-family: Tahoma, sans-serif, Arial, Helvetica;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: small;
 	font-weight: normal;
 	/*font-style: menu;*/
@@ -1700,8 +1697,7 @@ input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 	text-decoration: none;
 	font-size: small;
 	font-weight: normal;
-	/*font-style: menu;*/
-	font-family: Tahoma, sans-serif, Arial, Helvetica;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	background-color: ThreedLightShadow;
 	color: black;
 }
@@ -1761,7 +1757,6 @@ div.warning {
 .debug {
 	color: black;
 	background: white;
-	/*font-family: monospace;*/
 	font-size: smaller;
 	margin: 1ex 0;
 	padding: 0.5ex 0.5em;
@@ -1858,10 +1853,9 @@ span.relation-symbol {
 a.wikiaction, a.wikiadmin, a.wiki-rc-action, a.wikiunsafe,
 input.wikiaction, input.button, input.wikiadmin {
 	text-decoration: none;
-	font-family: sans-serif, Arial, Helvetica;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	/* don't wrap text buttons */
 	white-space: nowrap;
-	/*font-size: inherit; */
 }
 
 /*
@@ -1939,7 +1933,7 @@ div#rateit-widget-top {
 /* Top-page - RateIt */
 span.rateit {
   text-decoration: none;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
   font-size: 10px;
 }
 
@@ -1984,7 +1978,7 @@ div.public, span.public {
   /* color: #5454ff;*/
 }
 .wiki-edithelp p {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
   padding-left:  0.5em;
   padding-right: 0.5em;
   padding-top:    0.5ex;
