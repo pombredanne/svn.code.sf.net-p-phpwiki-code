@@ -349,26 +349,6 @@ if (!check_php_version(5)) {
     ');
 }
 
-/**
- * array_diff_assoc() returns an array containing all the values from array1 that are not
- * present in any of the other arguments. Note that the keys are used in the comparison 
- * unlike array_diff(). In core since php-4.3.0
- * Our fallback here supports only hashes and two args.
- * $array1 = array("a" => "green", "b" => "brown", "c" => "blue");
- * $array2 = array("a" => "green", "y" => "yellow", "r" => "red");
- * => b => brown, c => blue
- */
-if (!function_exists('array_diff_assoc')) {
-    function array_diff_assoc($a1, $a2) {
-    	$result = array();
-    	foreach ($a1 as $k => $v) {
-    	    if (!isset($a2[$k]) or !$a2[$k])
-    	        $result[$k] = $v;	
-    	}
-    	return $result;
-    }
-}
-
 function getUploadFilePath() {
 
     if (defined('UPLOAD_FILE_PATH')) {
