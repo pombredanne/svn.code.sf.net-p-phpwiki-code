@@ -102,14 +102,8 @@
     is_video ($filename)
     compute_tablecell ($table, $i, $j, $imax, $jmax)
 
-  function: LinkInterWikiLink($link, $linktext)
-  moved to: lib/interwiki.php
   function: linkExistingWikiWord($wikiword, $linktext, $version)
   moved to: lib/WikiTheme.php
-  function: LinkUnknownWikiWord($wikiword, $linktext)
-  moved to: lib/WikiTheme.php
-  function: UpdateRecentChanges($dbi, $pagename, $isnewpage) 
-  gone see: lib/plugin/RecentChanges.php
 */
 if (defined('_PHPWIKI_STDLIB_LOADED')) return;
 else define('_PHPWIKI_STDLIB_LOADED', true);
@@ -521,10 +515,6 @@ function LinkImage($url, $alt = "") {
         $size = 0;
         // Prepare for getimagesize($url)
         // $url only valid for external urls, otherwise local path
-        // Older php versions crash here with certain png's: 
-        // confirmed for 4.1.2, 4.1.3, 4.2.3; 4.3.2 and 4.3.7 are ok
-        //   http://phpwiki.sourceforge.net/demo/themes/default/images/http.png
-        // See http://bugs.php.net/search.php?cmd=display&search_for=getimagesize
         if (DISABLE_GETIMAGESIZE)
             ;
         elseif (! preg_match("/\.$force_img$/i", $url))
