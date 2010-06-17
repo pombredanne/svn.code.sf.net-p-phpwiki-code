@@ -1119,12 +1119,7 @@ class WikiPluginCached extends WikiPlugin
 
     // run "echo $source | $commandLine" and return result
     function filterThroughCmd($source, $commandLine) {
-        if (check_php_version(4,3,0))
-            return $this->newFilterThroughCmd($source, $commandLine);
-        elseif (strlen($source) < 255)
-            return $this->oldFilterThroughCmd($source, $commandLine);
-        else
-            return $this->oldFilterThroughCmd_File($source, $commandLine);
+        return $this->newFilterThroughCmd($source, $commandLine);
     }
 
     /**

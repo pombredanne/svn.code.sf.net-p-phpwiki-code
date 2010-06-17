@@ -121,8 +121,7 @@ class HttpClient {
             }
             return false;
         }
-        if (check_php_version(4,3,0))
-            socket_set_timeout($fp, $this->timeout);
+        socket_set_timeout($fp, $this->timeout);
 	if ( $this->method == 'POST' and preg_match("/\<methodCall\>/", $this->postdata))
 	    $request = $this->buildRequest("text/xml"); //xmlrpc
 	else if ( $this->method == 'POST' and strstr("\r\nContent-Disposition: form-data; filename=", 

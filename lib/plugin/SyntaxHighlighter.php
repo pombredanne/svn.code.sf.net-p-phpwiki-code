@@ -161,10 +161,7 @@ extends WikiPlugin
             if (!empty($color)) $args .= " --style $color --inline-css";
             if (!empty($style)) $args .= " -F $style";
             $commandLine = HIGHLIGHT_EXE . "$args -q -X -f -S $syntax";
-            if (check_php_version(4,3,0))
-                $code = $this->newFilterThroughCmd($source, $commandLine);
-            else
-                $code = $this->oldFilterThroughCmd($source, $commandLine);
+            $code = $this->newFilterThroughCmd($source, $commandLine);
             if (empty($code))
                 return $this->error(fmt("Couldn't start commandline '%s'",$commandLine));
             $pre = HTML::pre(HTML::raw($code));

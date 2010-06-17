@@ -50,8 +50,7 @@ class DbaDatabase
             $mode = 'r';
         }
 
-        // lock supported since 4.3.0:
-        if (check_php_version(4,3,0) and (strlen($mode) == 1)) {
+        if ((strlen($mode) == 1)) {
             // PHP 4.3.x Windows lock bug workaround: http://bugs.php.net/bug.php?id=23975
             if (isWindows()) {
                 $mode .= "-"; 			// suppress locking, or
