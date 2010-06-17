@@ -1072,51 +1072,6 @@ class WikiPluginCached extends WikiPlugin
         }
     }
 
-    function oldFilterThroughCmd_File($input, $commandLine) {
-	$ext = ".txt";
-	$tmpfile = tempnam(getUploadFilePath(), $ext);
-	$fp = fopen($tmpfile,'wb');
-	fwrite($fp, $input);
-	fclose($fp);
-	$cat = isWindows() ? 'cat' : 'type';
-	$pipe = popen("$cat \"$tmpfile\" | $commandLine", 'r');
-	if (!$pipe) {
-            print "pipe failed.";
-            return "";
-	}
-	$output = '';
-	while (!feof($pipe)) {
-            $output .= fread($pipe, 1024);
-	}
-	pclose($pipe);
-	unlink($tmpfile);
-	return $output;
-    }
-
-    /* PHP versions < 4.3
-     * TODO: via temp file looks more promising
-     */
-    function oldFilterThroughCmd($input, $commandLine) {
-         $input = str_replace ("\\", "\\\\", $input);
-         $input = str_replace ("\"", "\\\"", $input);
-         $input = str_replace ("\$", "\\\$", $input);
-         $input = str_replace ("`", "\`", $input);
-         $input = str_replace ("'", "\'", $input);
-         //$input = str_replace (";", "\;", $input);
-
-         $pipe = popen("echo \"$input\" | $commandLine", 'r');
-         if (!$pipe) {
-            print "pipe failed.";
-            return "";
-         }
-         $output = '';
-         while (!feof($pipe)) {
-            $output .= fread($pipe, 1024);
-         }
-         pclose($pipe);
-         return $output;
-    }
-
     // run "echo $source | $commandLine" and return result
     function filterThroughCmd($source, $commandLine) {
         return $this->newFilterThroughCmd($source, $commandLine);
