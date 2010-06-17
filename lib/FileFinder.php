@@ -63,8 +63,7 @@ class FileFinder
     	    return $result;
     	} else {
             if (isWindows() or $this->_isOtherPathsep()) {
-                if (isMac()) $from = ":";
-                elseif (isWindows()) $from = "\\";
+                if (isWindows()) $from = "\\";
                 else $from = "\\";
                 // PHP is stupid enough to use \\ instead of \
                 if (isWindows()) {
@@ -119,7 +118,6 @@ class FileFinder
     	if (!empty($this->_pathsep)) return $this->_pathsep;
         elseif (isWindowsNT()) return "/"; // we can safely use '/'
         elseif (isWindows()) return "\\";  // FAT might use '\'
-        elseif (isMac()) return ':';    // MacOsX is /
         // VMS or LispM is really weird, we ignore it.
         else return '/';
     }
@@ -140,9 +138,6 @@ class FileFinder
         if (isWindows95()) {
             if (empty($path)) return "\\";
             else return (strchr($path,"\\")) ? "\\" : '/';
-        } elseif (isMac()) {
-            if (empty($path)) return ":";
-            else return (strchr($path,":")) ? ":" : '/';
         } else {
             return $this->_get_syspath_separator();
         }
@@ -175,13 +170,8 @@ class FileFinder
      * @return bool New path (destructive)
      */
     function _strip_last_pathchar(&$path) {
-        if (isMac()) {
-            if (substr($path,-1) == ':' or substr($path,-1) == "/") 
-                $path = substr($path,0,-1);
-        } else {
-            if (substr($path,-1) == '/' or substr($path,-1) == "\\") 
-                $path = substr($path,0,-1);
-        }
+        if (substr($path,-1) == '/' or substr($path,-1) == "\\") 
+            $path = substr($path,0,-1);
         return $path;
     }
 
@@ -577,21 +567,6 @@ function isWindowsNT() {
     else
         $winnt = false;         // FIXME: punt.
     return $winnt;
-}
-
-/** 
- * This is for the OLD Macintosh OS, NOT MacOSX or Darwin!
- * This has really ugly pathname semantics.
- * ":path" is relative, "Desktop:path" (I think) is absolute. 
- * FIXME: Please fix this someone. So far not supported.
- */
-function isMac() {
-    return (substr(PHP_OS,0,9) == 'Macintosh'); // not tested!
-}
-
-// probably not needed, same behaviour as on unix.
-function isCygwin() {
-    return (substr(PHP_OS,0,6) == 'CYGWIN');
 }
 
 // Local Variables:
