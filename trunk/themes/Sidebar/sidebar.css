@@ -1009,7 +1009,7 @@ button.searchButton {
 	cursor: pointer;
 	width: 18px;
 	height: 18px;
-	border: 1px solid buttonshadow;
+	border: 1px solid ButtonShadow;
 }
 input.searchButton {
 	margin-top: 1px;
@@ -1679,7 +1679,7 @@ table.multipageimage td {
 .pagelist tr.evenrow { background: #eee; }
 .pagelist tr.oddrow  { background: white; }
 th.gridbutton {
-	background-color: ThreedLightShadow;
+	background-color: ThreeDLightShadow;
 	color: black;
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	font-size: small;
@@ -1691,14 +1691,14 @@ th.gridbutton {
 	padding: 5px 0px 5px 0px;
 	border-width: 1px;
 	border-style: solid;
-	border-color: ThreedHighlight ThreedDarkShadow ThreedDarkShadow ThreedHighlight;
+	border-color: ThreeDHighlight ThreeDDarkShadow ThreeDDarkShadow ThreeDHighlight;
 }
 input.gridbutton, a.gridbutton, a:hover.gridbutton, a:visited.gridbutton {
 	text-decoration: none;
 	font-size: small;
 	font-weight: normal;
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
-	background-color: ThreedLightShadow;
+	background-color: ThreeDLightShadow;
 	color: black;
 }
 
