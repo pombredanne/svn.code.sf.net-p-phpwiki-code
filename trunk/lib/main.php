@@ -1321,6 +1321,11 @@ function validateSessionPath() {
 }
 
 function main () {
+
+    if (version_compare(PHP_VERSION, '4.3.10', '<')) {
+        exit(_("Your PHP version is too old. You must have at least PHP 4.3.10"));
+    }
+
     if ( !USE_DB_SESSION )
         validateSessionPath();
 
