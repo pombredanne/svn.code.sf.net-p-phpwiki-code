@@ -1,7 +1,7 @@
 <?php // -*-php-*-
 // rcs_id('$Id$');
 /**
- * Copyright 1999,2000,2001,2002,2004,2005 $ThePhpWikiProgrammingTeam
+ * Copyright 1999,2000,2001,2002,2004,2005,2010 $ThePhpWikiProgrammingTeam
  * Copyright 2009 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
@@ -26,8 +26,8 @@ require_once('lib/PageList.php');
 
 /**
  * Display results of pagename search.
- * Provides no own input box, just <?plugin-form TitleSearch ?> is enough.
- * Fancier Inputforms can be made using WikiForm Rich, to support regex and case_exact args.
+ * Provides no own input box, just <<TitleSearch>> is enough.
+ * Fancier Inputforms can be made using <<WikiFormRich>> to support regex and case_exact args.
  *
  * If only one pages is found and auto_redirect is true, this page is displayed immediatly,
  * otherwise the found pagelist is displayed.
@@ -58,8 +58,8 @@ extends WikiPlugin
                    'exclude'       => false,
                    'info'          => false,
                    'case_exact'    => false,
-                   'regex'                => 'auto',
-                   'format'               => false,
+                   'regex'         => 'auto',
+                   'format'        => false,
                    ));
     }
     // info arg allows multiple columns
@@ -79,18 +79,7 @@ extends WikiPlugin
 
         $pagelist = new PageList($args['info'], $args['exclude'], $args);
         $pagelist->addPages($pages);
-        // this hack will go away
-        if ($args['format'] == 'livesearch') {
-            $request->discardOutput();
-            $request->buffer_output(false);
-            echo '<div class="LSRes">';
-            echo $pagelist->asXml();
-            echo '</div>';
-            if (empty($WikiTheme->DUMP_MODE)) {
-                unset($GLOBALS['ErrorManager']->_postponed_errors);
-                $request->finish();
-            }
-        }
+
         // Provide an unknown WikiWord link to allow for page creation
         // when a search returns no results
         if (!$args['noheader']) {
@@ -100,16 +89,15 @@ extends WikiPlugin
                 $s = WikiLink($args['s'], 'auto');
             }
             if ($total) {
-                    $pagelist->setCaption(fmt("Title search results for '%s' (%d total)", $s, $total));
+                $pagelist->setCaption(fmt("Title search results for '%s' (%d total)", $s, $total));
             } else {
                 $pagelist->setCaption(fmt("Title search results for '%s'", $s));
             }
         }
 
         if ($args['auto_redirect'] && ($pagelist->getTotal() == 1)) {
-            $page = $pages->next();
-            return HTML($request->redirect(WikiURL($page->getName(), false, 'absurl'), false),
-                        $pagelist);
+            $page = $pagelist->first();
+            $request->redirect(WikiURL($page->getName(), false, 'absurl'), false);
         }
 
         return $pagelist;
