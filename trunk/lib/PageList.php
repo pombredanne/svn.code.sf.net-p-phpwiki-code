@@ -904,6 +904,13 @@ class PageList {
             return false;
     }
 
+    function first() {
+        if (count($this->_pages) > 0) {
+            return $this->_pages[0];
+        }
+        return false;
+    }
+
     function getContent() {
         // Note that the <caption> element wants inline content.
         $caption = $this->getCaption();
