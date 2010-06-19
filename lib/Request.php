@@ -579,7 +579,8 @@ class Request_SessionVars {
         $vars[$key] = $val;
         if (isset($_SESSION)) // php-5.2
             $_SESSION[$key] = $val;
-        session_register($key);
+        if (!check_php_version(5,3))
+            session_register($key);
     }
     
     function delete($key) {
@@ -588,7 +589,10 @@ class Request_SessionVars {
             unset($GLOBALS[$key]);
         if (DEBUG) trigger_error("delete session $key", E_USER_WARNING);
         unset($vars[$key]);
-        session_unregister($key);
+        if (isset($_SESSION)) // php-5.2
+            unset($_SESSION[$key]);
+        if (!check_php_version(5,3))
+            session_unregister($key);
     }
 }
 
