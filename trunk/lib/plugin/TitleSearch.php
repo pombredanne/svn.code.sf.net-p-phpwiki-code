@@ -26,8 +26,8 @@ require_once('lib/PageList.php');
 
 /**
  * Display results of pagename search.
- * Provides no own input box, just <<TitleSearch>> is enough.
- * Fancier Inputforms can be made using <<WikiFormRich>> to support regex and case_exact args.
+ * Provides no own input box, just <?plugin-form TitleSearch?> is enough.
+ * Fancier Inputforms can be made using <<WikiFormRich ...>> to support regex and case_exact args.
  *
  * If only one pages is found and auto_redirect is true, this page is displayed immediatly,
  * otherwise the found pagelist is displayed.
