@@ -1746,16 +1746,6 @@ function isa ($object, $class) {
              || is_subclass_of($object, $lclass) );
 }
 
-/** Determine whether (possible) object has method.
- *
- * @param $object mixed Object
- * @param $method string Method name
- * @return bool True iff $object is an object with has method $method.
- */
-function can ($object, $method) {
-    return is_object($object) && method_exists($object, strtolower($method));
-}
-
 /** Determine whether a function is okay to use.
  *
  * Some providers (e.g. Lycos) disable some of PHP functions for
