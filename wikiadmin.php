@@ -1,7 +1,7 @@
 <?php // -*-php-*- $Id$
 /*
  * Copyright (C) 2009 Alain Peyrat, Alcatel-Lucent
- * Copyright (C) 2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright (C) 2009-2010 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -122,7 +122,7 @@ if (!$type) {
         }
         //only project admin can access here
         if ( $userperm->isAdmin() ) {
-            wiki_Project_Header(array('title'=>$pluginname . ' Project Plugin!','pagename'=>"$pluginname",'sectionvals'=>array(group_getname($id))));
+            wiki_Project_Header(array('title'=>"Configuration for your project's Wiki",'pagename'=>"$pluginname",'sectionvals'=>array(group_getname($id))));
 
             $wc = new WikiConfig($id);
 
