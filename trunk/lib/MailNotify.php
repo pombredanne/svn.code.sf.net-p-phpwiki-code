@@ -364,6 +364,79 @@ class MailNotify {
 	}
     }
 
+    /**
+     * Send mail to user and store the cookie in the db
+     * wikiurl?action=ConfirmEmail&id=bla
+     */
+    function sendEmailConfirmation ($email, $userid) {
+        $id = rand_ascii_readable(16);
+        $wikidb = $GLOBALS['request']->getDbh();
+        $data = $wikidb->get('ConfirmEmail');
+        while(!empty($data[$id])) { // id collision
+            $id = rand_ascii_readable(16);
+        }
+        $subject = _("E-Mail address confirmation");
+        $ip = $request->get('REMOTE_HOST');
+        $expire_date = time() + 7*86400;
+        $content = fmt("Someone, probably you from IP address %s, has registered an
+account \"%s\" with this e-mail address on %s.
+
+To confirm that this account really does belong to you and activate
+e-mail features on %s, open this link in your browser:
+
+%s
+
+If this is *not* you, don't follow the link. This confirmation code
+will expire at %s.", 
+                       $ip, $userid, WIKI_NAME, WIKI_NAME, 
+                       WikiURL(HOME_PAGE, array('action' => 'ConfirmEmail',
+                                                'id' => $id), 
+                               true),
+                       CTime($expire_date));
+        $this->sendMail($subject, $content, "", true);
+        $data[$id] = array('email' => $email,
+                           'userid' => $userid,
+                           'expire' => $expire_date);
+        $wikidb->set('ConfirmEmail', $data);
+        return '';
+    }
+
+    function checkEmailConfirmation () {
+        global $request;
+        $wikidb = $request->getDbh();
+        $data = $wikidb->get('ConfirmEmail');
+        $id = $request->getArg('id');
+        if (empty($data[$id])) { // id not found
+            return HTML(HTML::h1("Confirm E-mail address"),
+                        HTML::h1("Sorry! Wrong URL"));
+        }
+        // upgrade the user
+        $userid = $data['userid'];
+        $email = $data['email'];
+        $u = $request->getUser();
+        if ($u->UserName() == $userid) { // lucky: current user (session)
+            $prefs = $u->getPreferences();
+            $request->_user->_level = WIKIAUTH_USER;
+            $request->_prefs->set('emailVerified', true);
+        } else {  // not current user
+            if (ENABLE_USER_NEW) {
+                $u = WikiUser($userid);
+                $u->getPreferences();
+                $prefs = &$u->_prefs;
+            } else {
+                $u = new WikiUser($request, $userid);
+                $prefs = $u->getPreferences();
+            }
+            $u->_level = WIKIAUTH_USER;
+            $request->setUser($u);
+            $request->_prefs->set('emailVerified', true);
+        }
+        unset($data[$id]);
+        $wikidb->set('ConfirmEmail', $data);
+        return HTML(HTML::h1("Confirm E-mail address"),
+                    HTML::p("Your e-mail address has now been confirmed."));
+    }
+
     function subject_encode ($subject) {
         // We need to encode the subject if it contains non-ASCII characters
         // The page name may contain non-ASCII characters, as well as
