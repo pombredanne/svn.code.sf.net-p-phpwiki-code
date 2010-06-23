@@ -154,7 +154,7 @@ class WikiTheme_Sidebar extends WikiTheme_MonoBook {
 	 * WikiWords can automatically be split by inserting spaces between
 	 * the words. The default is to leave WordsSmashedTogetherLikeSo.
 	 */
-	$this->setAutosplitWikiWords(true);
+	//$this->setAutosplitWikiWords(true);
 
 	/**
 	 * If true (default) show create '?' buttons on not existing pages, even if the 
@@ -203,6 +203,9 @@ if (ENABLE_RATEIT) {
   require_once("lib/wikilens/PageListColumns.php");
   //require_once("lib/plugin/RateIt.php");
   $plugin = new WikiPlugin_RateIt;
+  // add parent to current theme to find the RateIt images
+  // $WikiTheme->addParent('wikilens', 'noinit');
+  $WikiTheme->_parents[] = new WikiTheme('wikilens', 'noinit');
   $plugin->head();
 }
 
