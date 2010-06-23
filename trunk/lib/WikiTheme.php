@@ -696,7 +696,6 @@ class WikiTheme {
     //
     ////////////////////////////////////////////////////////////////
     var $_imageAliases = array();
-    var $_imageAlt = array();
 
     /**
      *
@@ -708,13 +707,6 @@ class WikiTheme {
 	       and $this->_findFile("images/$image_name", true))
 	    or $image_name === false)
             $this->_imageAliases[$alias] = $image_name;
-    }
-
-    function addImageAlt ($alias, $alt_text) {
-        $this->_imageAlt[$alias] = $alt_text;
-    }
-    function getImageAlt ($alias) {
-        return $this->_imageAlt[$alias];
     }
 
     function getImageURL ($image) {
@@ -1521,11 +1513,6 @@ else window.onload = downloadJSAtOnload;');
 	    */
 	    $already = 1;
         }
-    }
-
-    function calendarLink($date = false) {
-        return $this->calendarBase() . SUBPAGE_SEPARATOR . 
-               strftime("%Y-%m-%d", $date ? $date : time());
     }
 
     function calendarBase() {
