@@ -138,6 +138,9 @@ var rateit_action = '".urlencode("RateIt")."';
 
     function head() { // early side-effects (before body)
         global $WikiTheme;
+        static $_already;
+        if (!empty($_already)) return;
+        $_already = 1;
         $WikiTheme->addMoreHeaders(JavaScript(
 "var prediction = new Array; var rating = new Array;
 var avg = new Array; var numusers = new Array;
