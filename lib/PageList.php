@@ -1,7 +1,7 @@
 <?php
 //rcs_id('$Id$');
 /* Copyright (C) 2004-2010 $ThePhpWikiProgrammingTeam
- * Copyright (C) 2008-2009 Marc-Etienne Vargenau, Alcatel-Lucent
+ * Copyright (C) 2008-2010 Marc-Etienne Vargenau, Alcatel-Lucent
  *
  * This file is part of PhpWiki.
  *
@@ -1302,10 +1302,13 @@ class PageList {
                 trigger_error(sprintf("%s: Bad column", $column), E_USER_NOTICE);
             return false;
         }
-        // FIXME: anon users might rate and see ratings also. 
-        // Defer this logic to the plugin.
-        if ($column == 'rating' and !$GLOBALS['request']->_user->isSignedIn())
-            return false;
+        if (!GFORGE) {
+            // FIXME: anon users might rate and see ratings also. 
+            // Defer this logic to the plugin.
+            if ($column == 'rating' and !$GLOBALS['request']->_user->isSignedIn()) {
+                return false;
+            }
+        }
 
         $this->addColumnObject($this->_types[$column]);
 
