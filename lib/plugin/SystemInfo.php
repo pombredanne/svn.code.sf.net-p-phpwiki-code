@@ -549,12 +549,6 @@ function mean(&$hits, $total = false) {
         $total = array_reduce($hits, 'rsum');
     return (float) $total / ($n * 1.0);
 }
-function gensym($prefix = "_gensym") {
-    $i = 0;
-    while (isset($GLOBALS[$prefix . $i]))
-        $i++;
-    return $prefix . $i;
-}
 
 function stddev(&$hits, $total = false) {
     $n = count($hits);
