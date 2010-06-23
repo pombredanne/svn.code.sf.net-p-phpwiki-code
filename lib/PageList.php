@@ -1605,9 +1605,9 @@ class PageList {
             }
         }
 
-        if (!empty($this->_options['limit']) and $this->_options['slice'])
+        if (!empty($this->_options['limit']) and !empty($this->_options['slice'])) {
             list($offset, $count) = $this->limit($this->_options['limit']);
-        else {
+        } else {
             $offset = 0; $count = count($this->_pages);
         }
         // need a recursive switch here for the azhead and cols grouping.
