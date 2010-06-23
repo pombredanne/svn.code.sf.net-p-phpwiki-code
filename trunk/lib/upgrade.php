@@ -1204,29 +1204,6 @@ class UpgradeThemeEntry extends UpgradeEntry {
     	$replace  =  $args[1];
     	$template = $args[2];
     }
-    
-    function fixThemeTemplate($match, $new, $template) {
-    	// for all custom themes
-    	$ourthemes = explode(":","blog:Crao:default:Hawaiian:MacOSX:MonoBook:Portland:shamino_com:SpaceWiki:wikilens:Wordpress");
-	$themedir = NormalizeLocalFileName("themes");
-	$dh = opendir($themedir);
-	while ($r = readdir($dh)) {
-	    if (filetype($r) == 'dir' and $r[0] != '.' and !is_array($r, $ourthemes))
-		$customthemes[] = $r;
-	}
-	$success = true;
-	$errors = '';
-	foreach ($customthemes as $customtheme) {
-	    $template = FindFile("themes/$customtheme/templates/$template");
-	    $do = $this->parent->fixLocalFile($match, $new, template);
-	    if (!$do[0]) {
-		$success = false;
-		$errors .= $do[1]." "; 
-		echo $do[1];
-	    }
-	}
-	return array($success, $errors);
-    }
 }
 
 /**
