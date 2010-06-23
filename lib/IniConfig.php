@@ -657,6 +657,7 @@ function fixup_static_configs($file) {
     $AllAllowedPlugins[] = 'Diff';
     $AllAllowedPlugins[] = 'DynamicIncludePage';
     $AllAllowedPlugins[] = 'ExternalSearch';
+    $AllAllowedPlugins[] = 'FacebookLike';
     $AllAllowedPlugins[] = 'FileInfo';
     $AllAllowedPlugins[] = 'GoogleMaps';
     $AllAllowedPlugins[] = 'GooglePlugin';
