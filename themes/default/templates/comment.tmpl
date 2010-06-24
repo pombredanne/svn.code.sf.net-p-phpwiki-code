@@ -26,13 +26,13 @@ if ($rev->get('mtime') != $COMMENT_CTIME) {
   <div class="wikicomment-footer">
     <span class="floatright">
       <?= fmt("%s by %s", WikiLink($page, 'known', $CDATE), WikiLink($COMMENT_CREATOR, 'if_known')) ?></span>
-    <br clear="all" class="clear-floats" />
+    <br class="clear-floats" />
   </div>
   <?php if ($buttons or $modified) { ?>
     <div class="floatright">
       <?= $buttons ?>
       <?= $modified ?>
-      <br clear="all" />
+      <br class="clear-floats" />
     </div>
   <?php } ?>
   <div class="wikicomment-body">

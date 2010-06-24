@@ -14,8 +14,7 @@
 <!-- Dummy form else NS4 does not like the textarea -->
 <form method="post" action="<?=$request->getPostURL()?>" accept-charset="<?=CHARSET?>">
 <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
-<br clear="all" class="clear-floats" />
-<!-- wrap=virtual is not HTML4, but without it NS4 does not wrap long lines -->
+<br class="clear-floats" />
 <textarea class="wikiedit"
 name="content"
 rows="<?=$request->getPref('editHeight')?>"
