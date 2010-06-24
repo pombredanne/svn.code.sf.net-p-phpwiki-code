@@ -181,7 +181,7 @@ td.unchangeable-variable-top   { border-bottom: none; background-color: #ffffee;
 td.unchangeable-variable-left  { border-top: none; background-color: #ffffee; color:inherit; }
 -->
 </style>
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 <!--
 function update(accepted, error, value, output) {
   var msg = document.getElementById(output);

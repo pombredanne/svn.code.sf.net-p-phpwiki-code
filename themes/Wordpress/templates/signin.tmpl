@@ -20,7 +20,7 @@ if ($user->isAuthenticated()) {
   <?= fmt("Authenticated as %s", WikiLink($user->getAuthenticatedId(), 'auto')) ?>
   <?=$SEP?>
 </span>
-  <script language="JavaScript" type="text/javascript"><!--
+  <script type="text/javascript"><!--
     document.write('<br /><input type="hidden" name="auth[logout]" value="0" />');
     function SignOut() {
       var form = document.forms["<?=$FORMNAME?>"];
