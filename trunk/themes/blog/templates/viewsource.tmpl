@@ -16,8 +16,7 @@ if ($page->get('locked') && !$user->isAdmin()) { ?>
 <!-- Dummy form else NS4 does not like the textarea -->
 <form method="post" id="editcontent" 
       action="<?=$request->getPostURL()?>" accept-charset="<?=CHARSET?>">
-<?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
-<!br clear="all" class="clear-floats" />
+<br class="clear-floats" />
 <textarea class="wikiedit"
 name="content" 
 rows="<?=$request->getPref('editHeight')?>"

@@ -29,7 +29,7 @@ if ($rev->get('mtime') != $BLOG_CTIME) {
   <div class="wikiblog-header">
     <strong class="floatleft"><?= WikiLink($page, 'known', $CDATE) ?></strong>
     <strong class="floatright"><?= WikiLink($BLOG_CREATOR, 'if_known') ?></strong>
-    <br clear="all" class="clear-floats" />
+    <br class="clear-floats" />
   </div>
   <div class="wikiblog-body">
     <?php if ($rev->get('summary')) { ?> 
@@ -42,7 +42,7 @@ if ($rev->get('mtime') != $BLOG_CTIME) {
     <div class="wikiblog-footer">
       <?= $buttons ?>
       <?= $modified ?>
-      <br clear="all" class="clear-floats" />
+      <br class="clear-floats" />
     </div>
   <?php } ?>
 
