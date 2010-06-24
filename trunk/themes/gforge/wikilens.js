@@ -12,6 +12,7 @@ var stylepath = data_path+'/themes/MonoBook/';
 
 var rating = new Array; var prediction = new Array;
 var avg = new Array; var numusers = new Array;
+var canRate = new Array;
 var msg_rating_votes = "Rating: %.1f (%d votes)";
 var msg_curr_rating = "Your current rating: ";
 var msg_curr_prediction = "Your current prediction: ";
@@ -24,6 +25,7 @@ var msg_rating_deleted = "Rating deleted!";
 //var rateit_imgsrc = '/phpwiki-cvs/themes/MonoBook/images/RateIt';
 var rateit_imgsrc = '/plugins/wiki/themes/gforge/images/RateIt';
 var rateit_action = 'RateIt';
+var idTop = '';
 //
 
 function displayRating(imgId, imgPrefix, ratingvalue, pred, init) {
@@ -40,11 +42,13 @@ function displayRating(imgId, imgPrefix, ratingvalue, pred, init) {
     if (pred) {
       title = title+' '+msg_curr_prediction+ curr_pred+' '+ratings[curr_pred*2];
     }
-	if (curr_rating) {
-	  document[cancel].style.display = 'inline';
-	}
-	else {
-	  document[cancel].style.display = 'none';
+	if (canRate[imgId]) {
+		if (curr_rating) {
+			document[cancel].style.display = 'inline';
+		}
+		else {
+			document[cancel].style.display = 'none';
+		}
 	}
   }
   for (var i=1; i<=10; i++) {
@@ -168,13 +172,13 @@ function clickRating(imgPrefix,pagename,version,imgId,dimension,newrating) {
 		  	numusers[imgId] = 0;
 		  }
 		}
-        if (new_avg.toString() != "NaN") {
+        if (new_avg.toString() != "NaN" && idTop == imgId) {
 			avg[imgId] = new_avg;
             top.childNodes[0].innerHTML = sprintfRating(msg_rating_votes, new_avg, nusers-1);
         }
     }
     rating[imgId] = 0;
-	displayRating(imgId,imgPrefix,0,0,1);
+	displayRating2(imgId,imgPrefix,0,0,1);
   } else {
     submitRating(actionImg,pagename,version,dimension,newrating);
     if (top && nusers) {
@@ -186,19 +190,19 @@ function clickRating(imgPrefix,pagename,version,imgId,dimension,newrating) {
             new_avg = (sum1 + newrating) / (nusers + 1);
             numusers[imgId]++;
         }
-		if (new_avg.toString() != "NaN") {
+		if (new_avg.toString() != "NaN" && idTop == imgId) {
 			avg[imgId] = new_avg;
 			if (newrating != rating[imgId]) {
 				top.childNodes[0].innerHTML = sprintfRating(msg_rating_votes, new_avg, numusers[imgId]);
 			}
 		}
-    } else if (top) {
+    } else if (top && idTop == imgId) {
         top.childNodes[0].innerHTML = sprintfRating(msg_rating_votes, newrating, 1);
         avg[imgId] = newrating;
         numusers[imgId] = 1;
     }
     rating[imgId] = newrating;
-	displayRating(imgId,imgPrefix,newrating,0,1);
+	displayRating2(imgId,imgPrefix,newrating,0,1);
   }
 }
 function submitRating(actionImg,page,version,dimension,newrating) {
