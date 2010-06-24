@@ -315,7 +315,7 @@ extends WikiPlugin
                                     else
                                         $anchorString = "<a href=\"$url\" name=\"$manchor\">\$2</a>";
                                 } else {
-                                    $anchorString = "<a name=\"$manchor\"></a>";
+                                    $anchorString = "<a id=\"$manchor\"></a>";
                                     if ($counter)
                                         $anchorString .= "$counterString - ";
                                 }
@@ -338,11 +338,11 @@ extends WikiPlugin
                                     } else {
                                         /* Not possible to make a backlink on a
                                          * title with a WikiWord */
-                                        $anchorString = "\$1<a name=\"$manchor\"></a>";
+                                        $anchorString = "\$1<a id=\"$manchor\"></a>";
                                     }
                                 }
                                 else {
-                                    $anchorString = "\$1<a name=\"$manchor\"></a>";
+                                    $anchorString = "\$1<a id=\"$manchor\"></a>";
                                     if ($counter)
                                         $anchorString .= "$counterString - ";
                                 }
