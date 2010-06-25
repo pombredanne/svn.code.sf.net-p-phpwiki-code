@@ -451,7 +451,7 @@ extends WikiPlugin
         if ($extracollapse)
             $toclink = HTML(_("Table of Contents"),
                             " ",
-                            HTML::a(array('name'=>'TOC')),
+                            HTML::a(array('id'=>'TOC')),
                             HTML::img(array(
                                             'id'=>$toctoggleid,
                                             'class'=>'wikiaction',
