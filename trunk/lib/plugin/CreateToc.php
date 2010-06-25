@@ -311,9 +311,9 @@ extends WikiPlugin
                             if (($hstart === 0) && is_string($markup->_content[$j])) {
                                 if ($backlink) {
                                     if ($counter)
-                                        $anchorString = "<a href=\"$url\" name=\"$manchor\">$counterString</a> - \$2";
+                                        $anchorString = "<a href=\"$url\" id=\"$manchor\">$counterString</a> - \$2";
                                     else
-                                        $anchorString = "<a href=\"$url\" name=\"$manchor\">\$2</a>";
+                                        $anchorString = "<a href=\"$url\" id=\"$manchor\">\$2</a>";
                                 } else {
                                     $anchorString = "<a id=\"$manchor\"></a>";
                                     if ($counter)
@@ -334,7 +334,7 @@ extends WikiPlugin
 
                                 if ($backlink) {
                                     if ($counter) {
-                                        $anchorString = "\$1<a href=\"$url\" name=\"$manchor\">$counterString</a> - ";
+                                        $anchorString = "\$1<a href=\"$url\" id=\"$manchor\">$counterString</a> - ";
                                     } else {
                                         /* Not possible to make a backlink on a
                                          * title with a WikiWord */
@@ -457,11 +457,10 @@ extends WikiPlugin
                                             'class'=>'wikiaction',
                                             'title'=>_("Click to display to TOC"),
                                             'onclick'=>"toggletoc(this, '".$open."', '".$close."', '".$toclistid."')",
-                                            'border' => 0,
                                             'alt' => 'toctoggle',
                                             'src' => $jshide ? $close : $open )));
         else
-            $toclink = HTML::a(array('name'=>'TOC',
+            $toclink = HTML::a(array('id'=>'TOC',
                                      'class'=>'wikiaction',
                                      'title'=>_("Click to display"),
                                      'onclick'=>"toggletoc(this, '".$open."', '".$close."', '".$toclistid."')"),
