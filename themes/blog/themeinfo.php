@@ -115,8 +115,6 @@ class WikiTheme_blog extends WikiTheme {
             $link->pushContent($this->maybeSplitWikiWord($default_text));
             $link->setAttr('class', 'wiki');
         }
-        if ($request->getArg('frame'))
-            $link->setAttr('target', '_top');
         return $link;
     }
 

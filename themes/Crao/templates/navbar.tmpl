@@ -2,8 +2,8 @@
 // rcs_id('$Id$');
 ?>
 <!-- The top navigation/search bar -->
-<form action="<?= WikiURL(_("TitleSearch"))?>" target="_top"
-      method="get" accept-charset="<?=$charset?>" id="searchform" name="searchform">
+<form action="<?= WikiURL(_("TitleSearch"))?>"
+      method="get" accept-charset="<?=$charset?>" id="searchform">
 <input type="hidden" name="auto_redirect" value="1" />
 <?php if (! USE_PATH_INFO) { ?>
   <input type="hidden" name="pagename" value="<?=_("TitleSearch")?>" />
