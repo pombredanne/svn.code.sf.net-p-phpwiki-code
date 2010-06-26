@@ -36,7 +36,7 @@ See http://www.xapian.org/
   This is a sample template section for search.tmpl to use xapian as external search engine.
 
   <h5>Fulltext Search</h5>
-  <form id="searchform2" name="searchform2" action="/cgi-bin/omega"
+  <form id="searchform2" action="/cgi-bin/omega"
       method="get" accept-charset="<?=$charset?>" style="display:inline" class="searchform">
     <?php $s = $request->getArg('s') ? $request->getArg('s') : _("Search"); ?>
     <input type="hidden" name="DEFAULTOP" value="AND" />
