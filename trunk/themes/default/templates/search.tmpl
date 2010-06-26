@@ -1,6 +1,6 @@
 <!--{{{ LiveSearch --> <? // -*- php -*- ?>
 <div id="searchholder">
-<form id="searchform" name="searchform" action="<?= WikiURL(_("TitleSearch"))?>"
+<form id="searchform" action="<?= WikiURL(_("TitleSearch"))?>"
       method="get" accept-charset="<?=$charset?>" style="display:inline" class="searchform">
 <?php 
 $s = $request->getArg('s') ? $request->getArg('s') : _("Search");
