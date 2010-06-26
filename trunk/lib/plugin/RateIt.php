@@ -372,9 +372,8 @@ var msg_rating_deleted = '"._("Rating deleted!")."';
                 $img_attr['onmouseout']  = "displayRating('$reImgId','$reImgPrefix',0,0,1)";
             }
             //$imgName = 'RateIt'.$reImgId.$i;
-            $img_attr['name'] = $imgId . $i;
-            $img_attr['alt'] = $img_attr['name'];
-            $img_attr['border'] = 0;
+            $img_attr['id'] = $imgId . $i;
+            $img_attr['alt'] = $img_attr['id'];
             $a1->pushContent(HTML::img($img_attr));
             //$a1->addToolTip(_("Rate the topic of this page"));
             $html->pushContent($a1);
@@ -388,8 +387,7 @@ var msg_rating_deleted = '"._("Rating deleted!")."';
                             ."'$reImgId','$dimension','X')"));
         $msg = _("Cancel your rating");
         $imgprops = array('src'   => $WikiTheme->getImageUrl("RateIt".$imgPrefix."Cancel"),
-                          'name'  => $imgId.$imgPrefix.'Cancel',
-                          'border'=> 0,
+                          'id'    => $imgId.$imgPrefix.'Cancel',
                           'alt'   => $msg,
                           'title' => $msg);
         if (!$this->rating)
@@ -401,16 +399,15 @@ var msg_rating_deleted = '"._("Rating deleted!")."';
         /*} elseif ($pred) {
             $msg = _("No opinion");
             $html->pushContent(HTML::img(array('src' => $WikiTheme->getImageUrl("RateItCancelN"),
-                                               'name'=> $imgPrefix.'Cancel',
+                                               'id'  => $imgPrefix.'Cancel',
                                                'alt' => $msg)));
             //$a0->addToolTip($msg);
             //$html->pushContent($a0);
         }*/
         $img_attr = array();
         $img_attr['src'] = $WikiTheme->_findData("images/spacer.png");
-        $img_attr['name'] = $actionImgName;
-        $img_attr['alt'] = $img_attr['name'];
-        $img_attr['border'] = 0;
+        $img_attr['id'] = $actionImgName;
+        $img_attr['alt'] = $img_attr['id'];
         $img_attr['height'] = 15;
         $img_attr['width'] = 20;
         $html->pushContent(HTML::img($img_attr));
