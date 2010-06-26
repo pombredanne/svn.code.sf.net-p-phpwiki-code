@@ -87,8 +87,6 @@ class WikiTheme_MacOSX extends WikiTheme {
             $link->unshiftContent(HTML::u($this->maybeSplitWikiWord($default_text)));
             $link->setAttr('class', 'wikiunknown');
         }
-        if ($request->getArg('frame'))
-            $link->setAttr('target', '_top');
 
         return $link;
     }
