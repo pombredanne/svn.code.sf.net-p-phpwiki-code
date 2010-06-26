@@ -606,8 +606,6 @@ class WikiTheme {
             $link->pushContent($this->maybeSplitWikiWord($default_text));
             $link->setAttr('class', 'wiki');
         }
-        if ($request->getArg('frame'))
-            $link->setAttr('target', '_top');
         return $link;
     }
 
@@ -662,8 +660,6 @@ class WikiTheme {
             $gbutton->addTooltip(sprintf(_("Google:%s"), $wikiword));
             $link->pushContent($gbutton);
         }
-        if ($request->getArg('frame'))
-            $link->setAttr('target', '_top');
 
         return $link;
     }
@@ -1670,8 +1666,6 @@ class Button extends HtmlElement {
         }
         if ($class)
             $this->setAttr('class', $class);
-        if ($request->getArg('frame'))
-            $this->setAttr('target', '_top');
         if (!empty($options) and is_array($options)) {
             foreach ($options as $key => $val)
                 $this->setAttr($key, $val);
