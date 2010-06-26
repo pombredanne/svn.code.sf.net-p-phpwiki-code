@@ -298,7 +298,7 @@ function IconForLink($protocol_or_url) {
         list ($proto) = explode(':', $protocol_or_url, 2);
         $src = $WikiTheme->getLinkIconURL($proto);
         if ($src)
-            return HTML::img(array('src' => $src, 'alt' => "", 'class' => 'linkicon', 'border' => 0));
+            return HTML::img(array('src' => $src, 'alt' => "", 'class' => 'linkicon'));
         else
             return false;
     }
