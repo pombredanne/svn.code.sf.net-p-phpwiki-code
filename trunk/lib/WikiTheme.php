@@ -624,7 +624,8 @@ class WikiTheme {
         }
         
         if ($this->DUMP_MODE) { // HTML, PDF or XML
-            $link = HTML::u( empty($linktext) ? $wikiword : $linktext);
+            $link = HTML::span( empty($linktext) ? $wikiword : $linktext);
+            $link->setAttr('style', 'text-decoration: underline');
             $link->addTooltip(sprintf(_("Empty link to: %s"), $wikiword));
             $link->setAttr('class', empty($linktext) ? 'wikiunknown' : 'named-wikiunknown');
             return $link;
@@ -646,11 +647,13 @@ class WikiTheme {
 
         $link = HTML::span();
         if (!empty($linktext)) {
-            $link->pushContent(HTML::u($linktext));
+            $link->pushContent(HTML::span($linktext));
+            $link->setAttr('style', 'text-decoration: underline');
             $link->setAttr('class', 'named-wikiunknown');
         }
         else {
-            $link->pushContent(HTML::u($this->maybeSplitWikiWord($default_text)));
+            $link->pushContent(HTML::span($this->maybeSplitWikiWord($default_text)));
+            $link->setAttr('style', 'text-decoration: underline');
             $link->setAttr('class', 'wikiunknown');
         }
         if (!isa($button, "ImageButton"))
