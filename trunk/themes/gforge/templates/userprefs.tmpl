@@ -187,7 +187,7 @@ if ( $isForm ) {
 <form action="<?=$request->getPostURL()?>" method="post">
 <?php } ?>
 
-<fieldset>
+<fieldset style="margin-bottom: 1em;">
 <legend><strong>User preferences for this project</strong></legend>
 <table border="0" width="100%">
 
@@ -207,8 +207,8 @@ if ( $isForm ) {
 
 </table>
 </fieldset>
-<br />
-<fieldset>
+
+<fieldset style="margin-bottom: 1em;">
 <legend><strong>Global user preferences (for all projects)</strong></legend>
 
 <table border="0" width="100%">
@@ -363,11 +363,11 @@ if ( $isForm ) {
 </fieldset>
 
 <?php if ($isForm) { ?>
-  <br />
-  <p><?=Button("submit:", _("Update Preferences"), 'wikiadmin')?>
+<p>
+  <?=Button("submit:", _("Update Preferences"), 'wikiadmin')?>
   <?=Button("submit:delete", _("Reset Preferences"), 'wikiadmin')?>
-  <?=Button("submit:cancel", _("Cancel"), 'button')?></p>
-
-<?= HiddenInputs($request->getArgs(), false, array('pref')) ?>
+  <?=Button("submit:cancel", _("Cancel"), 'button')?>
+  <?= HiddenInputs($request->getArgs(), false, array('pref')) ?>
+</p>
 </form>
 <?php } ?>
