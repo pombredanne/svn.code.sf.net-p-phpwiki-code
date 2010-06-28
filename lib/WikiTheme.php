@@ -1715,7 +1715,6 @@ class ImageButton extends Button {
         $img_attr['src'] = $img_url;
         $img_attr['alt'] = $text;
         $img_attr['class'] = 'wiki-button';
-        $img_attr['border'] = 0;
         $this->pushContent(HTML::img($img_attr));
     }
 };

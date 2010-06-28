@@ -605,7 +605,6 @@ extends _RecentChanges_HtmlFormatter
         //logo click opens the HomePage in the main browser frame
         global $WikiTheme;
         $img = HTML::img(array('src' => $WikiTheme->getImageURL('logo'),
-                               'border' => 0,
                                'align' => 'right',
                                'style' => 'height:2.5ex'
                                ));

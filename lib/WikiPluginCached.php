@@ -417,7 +417,6 @@ class WikiPluginCached extends WikiPlugin
         return HTML(HTML::map(array( 'name' => $key ), $map ),
                     HTML::img( array(
                    'src'    => $url, 
-                   'border' => 0,
                    //  'alt'    => htmlspecialchars($this->getAlt($dbi,$argarray,$request)) 
                    'usemap' => '#'.$key ))
                );
@@ -442,7 +441,6 @@ class WikiPluginCached extends WikiPlugin
     function embedImg($url, $dbi, $argarray, $request) {
         return HTML::img( array( 
             'src' => $url,
-            'border' => 0,
             'alt' => htmlspecialchars($this->getAlt($dbi, $argarray, $request)) ) );
     }
 

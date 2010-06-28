@@ -251,7 +251,6 @@ display_slides();"));
             // $params will be used for each <img > tag
             $params = array('src'    => $value["name"],
                             'src_tile' => $value["name_tile"],
-                            'border' => "0",
                             'alt'    => ($value["desc"] != "" and in_array("alt", $attributes))
                                             ? $value["desc"]
                                             : basename($value["name"]));
