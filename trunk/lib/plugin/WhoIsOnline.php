@@ -60,9 +60,7 @@ extends WikiPlugin
         // todo: check which arguments are really needed in the template.
         $stats = $this->getStats($dbi,$request,$args['mode']);
         if ($src = $WikiTheme->getImageURL("whosonline"))
-            $img = HTML::img(array('src' => $src,
-                                   'alt' => $this->getName(),
-                                   'border' => 0));
+            $img = HTML::img(array('src' => $src, 'alt' => $this->getName()));
         else $img = '';
         $other = array();
         $other['ONLINE_ICON'] = $img;
