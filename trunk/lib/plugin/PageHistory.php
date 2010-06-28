@@ -141,7 +141,7 @@ extends _RecentChanges_HtmlFormatter
 
         return HTML(HTML::form(array('method' => 'get',
                                      'action' => $action,
-                                     'name'   => 'diff-select'),
+                                     'id'     => 'diff-select'),
                                $html),
                     "\n",
                     JavaScript('
