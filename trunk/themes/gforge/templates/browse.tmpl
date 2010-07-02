@@ -6,7 +6,7 @@ $curuserprefs = $user->getPreferences();
 ?>
 
 <?php if ($revision and !$revision->isCurrent()) { ?>
-  <p><strong><?php echo _("Note:")?></strong>
+  <p class="warning_msg"><strong><?php echo _("Note:")?></strong>
      <?php echo _("You are viewing an old revision of this page.")?>
   <?php echo Button('browse', _("View the current version"), $page)?>.
   </p>
