@@ -32,11 +32,11 @@ Other file extensions are reserved for future use (i.e. .tpl for Smarty or
 Only one template is called, ususally the "html.tmpl" template, 
 which includes all other templates then.
 
-WikiTheme templates are regular xhtml, but the php parts within "<?" and "?>" 
+WikiTheme templates are regular xhtml, but the php parts within "<?php" and "?>" 
 are treated especially by phpwiki. HTML entities within the php parts 
 should be created by our HtmlElement methods, which create well-formed 
 HTML objects. 
-Pure HTML entities, e.g. <? echo "<br>" ?> will be escaped to &lt;br&gt;.
+Pure HTML entities, e.g. <?php echo "<br>" ?> will be escaped to &lt;br&gt;.
 
 You can easily embed other templates by your own, e.g. <?php echo Template('body') ?>
 

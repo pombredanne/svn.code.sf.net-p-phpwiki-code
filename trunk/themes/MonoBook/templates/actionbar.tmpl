@@ -53,7 +53,7 @@
 
     <?php } ?>
 
-    <? if ( $user->isSignedIn() ) { ?>
+    <?php if ( $user->isSignedIn() ) { ?>
       <?php echo ActionButton("WatchPage", _("Watch"), false, 
 		       array('title'=>"Add/Remove this to/from the list of pages you're monitoring for changes [alt-l]")) ?>
     <?php } ?>
