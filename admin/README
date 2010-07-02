@@ -37,16 +37,16 @@ See http://www.xapian.org/
 
   <h5>Fulltext Search</h5>
   <form id="searchform2" action="/cgi-bin/omega"
-      method="get" accept-charset="<?=$charset?>" style="display:inline" class="searchform">
+      method="get" accept-charset="<?php echo $charset?>" style="display:inline" class="searchform">
     <?php $s = $request->getArg('s') ? $request->getArg('s') : _("Search"); ?>
     <input type="hidden" name="DEFAULTOP" value="AND" />
     <input name="P" size="18" maxlength="256"
-      value="<?=$s?>"
-      onfocus="if (this.value == '<?=_("Search")?>') {this.value = '';}"
+      value="<?php echo $s?>"
+      onfocus="if (this.value == '<?php echo _("Search")?>') {this.value = '';}"
       onmouseout="window.status=''; return true;" 
-      onmouseover="window.status='<?=_("Quick Search")?>'; return true;"
+      onmouseover="window.status='<?php echo _("Quick Search")?>'; return true;"
       type="text" id="search2" 
-      title="<?=_("Search term(s)") ?>" />
+      title="<?php echo _("Search term(s)") ?>" />
     <div align="right" style="padding-right:10px;">
       <input type="submit" name="searchtype" value="fulltext" class="searchButton" title="External Fulltext Search">
     </div>

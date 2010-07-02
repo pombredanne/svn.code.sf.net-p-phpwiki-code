@@ -2,7 +2,7 @@
 // rcs_id('$Id$');
 ?>
 <div id="calendar"></div>
-<?= JavaScript('
+<?php echo JavaScript('
 function dateChanged(calendar) {
    if (calendar.dateClicked) {
       var y = calendar.date.getFullYear();

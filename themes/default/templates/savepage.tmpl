@@ -4,20 +4,20 @@
 <?php
     $signatureURL = $WikiTheme->getImageURL('signature');
 ?>
-<p><?=fmt("Thank you for editing %s.", WikiLink($page))?> 
-<?=_("Your careful attention to detail is much appreciated.")?></p>
+<p><?php echo fmt("Thank you for editing %s.", WikiLink($page))?> 
+<?php echo _("Your careful attention to detail is much appreciated.")?></p>
 
 <?php if (!empty($WARNINGS)) { ?>
-  <?= $WARNINGS ?>
+  <?php echo $WARNINGS ?>
 <?php } ?>
 
 <?php if ($signatureURL) { ?>
-  <p><img src="<?=$signatureURL?>" id="signature" alt="signature" /></p>
+  <p><img src="<?php echo $signatureURL?>" id="signature" alt="signature" /></p>
 <?php } ?>
 
 <?php if (!empty($LOCK_CHANGED_MSG)) { ?>
-  <p><?=$LOCK_CHANGED_MSG?></p>
+  <p><?php echo $LOCK_CHANGED_MSG?></p>
 <?php } ?>
 
 <hr />
-<?= Template('browse') ?>
+<?php echo Template('browse') ?>

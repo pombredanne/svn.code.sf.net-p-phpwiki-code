@@ -7,5 +7,5 @@
 
 
 
-<?= $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
-<?php if (defined('DEBUG') and DEBUG) { ?><?= Template('debug') ?><?php } ?>
+<?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
+<?php if (defined('DEBUG') and DEBUG) { ?><?php echo Template('debug') ?><?php } ?>

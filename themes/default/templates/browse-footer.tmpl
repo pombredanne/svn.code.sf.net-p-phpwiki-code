@@ -2,13 +2,13 @@
 // rcs_id('$Id$');
 ?>
 <hr class="printer" />
-<p class="editdate"><?= $WikiTheme->getOwnerMessage($page) ?>  <?= $WikiTheme->getLastModifiedMessage($revision) ?> <?= $WikiTheme->getAuthorMessage($revision) ?></p>
+<p class="editdate"><?php echo $WikiTheme->getOwnerMessage($page) ?>  <?php echo $WikiTheme->getLastModifiedMessage($revision) ?> <?php echo $WikiTheme->getAuthorMessage($revision) ?></p>
 <?php
 global $HIDE_TOOLBARS;
 if (!$HIDE_TOOLBARS) {
 ?>
 <hr class="toolbar" />
 <div class="toolbar">
-<?= Template('actionbar') ?>
+<?php echo Template('actionbar') ?>
 </div>
 <?php } ?>

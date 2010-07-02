@@ -3,17 +3,17 @@
 ?>
 
 <?php if ($revision and !$revision->isCurrent()) { ?>
-  <p><strong><?=_("Note:")?></strong>
-     <?=_("You are viewing an old revision of this page.")?>
-  <?= Button('browse', _("View the current version"), $page)?>.
+  <p><strong><?php echo _("Note:")?></strong>
+     <?php echo _("You are viewing an old revision of this page.")?>
+  <?php echo Button('browse', _("View the current version"), $page)?>.
   </p>
 <?php } ?>
 <?php if (!empty($redirected)) { ?>
-  <p><?= $redirected ?></p>
+  <p><?php echo $redirected ?></p>
 <?php } ?>
 
-<?=$CONTENT?>
+<?php echo $CONTENT?>
 
 <div id="footer"><?php // for top & bottom toolbars stylesheet ?>
-  <?=Template('browse-footer')?>
+  <?php echo Template('browse-footer')?>
 </div>

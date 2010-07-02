@@ -4,9 +4,9 @@
 <?php global $RUNTIMER; ?>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr><td>
-<span class="debug"><?= fmt("Page Execution took %s seconds", $RUNTIMER->getStats()) ?>
+<span class="debug"><?php echo fmt("Page Execution took %s seconds", $RUNTIMER->getStats()) ?>
 <?php $mem = @getMemoryUsage(); if ($mem) { ?>
-  <?= fmt(", Memory: %s", $mem) ?>
+  <?php echo fmt(", Memory: %s", $mem) ?>
 <?php } ?>
 </span>
 </td></tr></table>

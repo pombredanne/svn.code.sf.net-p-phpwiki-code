@@ -3,8 +3,8 @@
 ?>
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
 <?php if (defined('DEBUG') and DEBUG) { ?>
-<?= empty($WARNINGS) ? '' : $WARNINGS ?>
-<?= $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
-<?= Template('debug') ?>
+<?php echo empty($WARNINGS) ? '' : $WARNINGS ?>
+<?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
+<?php echo Template('debug') ?>
 <?php } ?>
 <?php } ?>

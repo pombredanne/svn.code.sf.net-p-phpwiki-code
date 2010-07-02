@@ -6,14 +6,14 @@ if (!$HIDE_TOOLBARS) {
 ?>
 <!-- The logo -->
 <div id="logo"><a class="wikilink" 
-    href="<?=WikiURL(HOME_PAGE)?>"
-    ><img src="<?=$WikiTheme->getImageURL('logo')?>" id="logo-img"
-      alt="<?=fmt(_("%s: %s"), WIKI_NAME, HOME_PAGE) ?>" /></a></div>
+    href="<?php echo WikiURL(HOME_PAGE)?>"
+    ><img src="<?php echo $WikiTheme->getImageURL('logo')?>" id="logo-img"
+      alt="<?php echo fmt(_("%s: %s"), WIKI_NAME, HOME_PAGE) ?>" /></a></div>
 <!-- The top navigation/search bar -->
 <div class="toolbar">
-  <?= Template('navbar') ?>
+  <?php echo Template('navbar') ?>
   </div>
 <?php } ?>
 
 <!-- Page title -->
-<h1><?= $HEADER ?></h1>
+<h1><?php echo $HEADER ?></h1>
