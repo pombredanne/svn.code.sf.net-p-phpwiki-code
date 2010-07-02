@@ -5,13 +5,13 @@
 <br class="clear-floats" />
 
 <?php if ($revision and !$revision->isCurrent()) { ?>
-  <p><strong><?=_("Note:")?></strong>
-     <?=_("You are viewing an old revision of this page.")?>
-     <?= WikiLink($page, 'existing', _("View the current version"))?>.</p>
+  <p><strong><?php echo _("Note:")?></strong>
+     <?php echo _("You are viewing an old revision of this page.")?>
+     <?php echo WikiLink($page, 'existing', _("View the current version"))?>.</p>
   <hr class="ignore" />
 <?php } ?>
 
-<?=$CONTENT?>
+<?php echo $CONTENT?>
 <hr />
-<?= Template('actionbar') ?>
+<?php echo Template('actionbar') ?>
 <!-- The bottom navigation/search bar -->

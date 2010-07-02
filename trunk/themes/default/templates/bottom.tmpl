@@ -3,7 +3,7 @@
 ?>
 <!-- Add your Disclaimer here -->
 <?php if (!$WikiTheme->DUMP_MODE) { ?>
-<?= empty($WARNINGS) ? '' : $WARNINGS ?>
-<?= $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
-<?php if (defined('DEBUG') and DEBUG & 1) { ?><?= Template('debug') ?><?php } ?>
+<?php echo empty($WARNINGS) ? '' : $WARNINGS ?>
+<?php echo $GLOBALS['ErrorManager']->getPostponedErrorsAsHTML() ?>
+<?php if (defined('DEBUG') and DEBUG & 1) { ?><?php echo Template('debug') ?><?php } ?>
 <?php } ?>

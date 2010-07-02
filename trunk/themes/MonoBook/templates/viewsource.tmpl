@@ -2,24 +2,24 @@
 // rcs_id('$Id$');
 ?>
 <?php if ($page->get('locked') && !$user->isAdmin()) { ?>
-  <p><strong><?=_("Note:")?></strong>
-  <?=_("This page has been locked by the administrator and cannot be edited.")?>
+  <p><strong><?php echo _("Note:")?></strong>
+  <?php echo _("This page has been locked by the administrator and cannot be edited.")?>
   </p>
   <?php } ?>
 <?php if ($revision and !$revision->isCurrent()) { ?>
-  <p><?=_("You are viewing an old revision of this page.")?>
-  <?= Button('edit', _("View the current version"), $page) ?>.
+  <p><?php echo _("You are viewing an old revision of this page.")?>
+  <?php echo Button('edit', _("View the current version"), $page) ?>.
   </p>
   <?php } ?>
 <!-- Dummy form else NS4 does not like the textarea -->
-<form method="post" action="<?=$request->getPostURL()?>" accept-charset="<?=CHARSET?>">
+<form method="post" action="<?php echo $request->getPostURL()?>" accept-charset="<?php echo CHARSET?>">
 <?php /* To clear beyond a larger logo, such as in the Hawaiian theme */ ?>
 <br class="clear-floats" />
 <textarea class="wikiedit"
 name="content"
-rows="<?=$request->getPref('editHeight')?>"
-cols="<?=$request->getPref('editWidth')?>"
+rows="<?php echo $request->getPref('editHeight')?>"
+cols="<?php echo $request->getPref('editWidth')?>"
 readonly="readonly"
-wrap="virtual"><?= $PAGE_SOURCE ?></textarea>
-<?=$HIDDEN_INPUTS?>
+wrap="virtual"><?php echo $PAGE_SOURCE ?></textarea>
+<?php echo $HIDDEN_INPUTS?>
 </form>

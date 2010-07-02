@@ -10,12 +10,12 @@ printf("<?xml version=\"1.0\" encoding=\"%s\"?>\n", CHARSET);
 <!DOCTYPE html   PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<?= Template('head') ?>
+<?php echo Template('head') ?>
 
-<frameset rows="<?=$ROWS?>">
-  <frame name="header" src="<?=$topurl?>" <?= $FRAMEARGS ?>/>
-  <?= $CONTENT_FRAME ?>
-  <frame name="footer" src="<?=$boturl?>" <?= $FRAMEARGS ?>/>
-  <noframes><?= Template('body') ?></noframes>
+<frameset rows="<?php echo $ROWS?>">
+  <frame name="header" src="<?php echo $topurl?>" <?php echo $FRAMEARGS ?>/>
+  <?php echo $CONTENT_FRAME ?>
+  <frame name="footer" src="<?php echo $boturl?>" <?php echo $FRAMEARGS ?>/>
+  <noframes><?php echo Template('body') ?></noframes>
 </frameset>
 </html>

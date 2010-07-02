@@ -13,43 +13,43 @@
   <td>
   <div id="actionbuttons">
     <?php if ((!$page->get('locked') || $user->isAdmin()) and $revision) { ?>
-      <?= Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"), false, array('id'=>'btn-edit')) ?>
+      <?php echo Button("edit", $revision->isCurrent() ? _("Edit") : _("Edit Old Revision"), false, array('id'=>'btn-edit')) ?>
       <? if (ENABLE_WYSIWYG) { ?>
-        <?=$SEP?><?= Button(array("action" => "edit", "mode"=> "wysiwyg"), "Wysiwyg Editor", false, array('id' => 'btn-wysiwyg-edit')) ?>
+        <?php echo $SEP?><?php echo Button(array("action" => "edit", "mode"=> "wysiwyg"), "Wysiwyg Editor", false, array('id' => 'btn-wysiwyg-edit')) ?>
       <?php } ?>
     <?php } else { ?>
-      <?= Button("viewsource", _("View Source")) ?>
+      <?php echo Button("viewsource", _("View Source")) ?>
     <?php } ?>
     <?php if ($user->isAdmin() or mayAccessPage('change', $page->getName())) { ?>
-      <?=$SEP?><?= Button($page->get('locked') ? 'unlock' : 'lock') ?>
+      <?php echo $SEP?><?php echo Button($page->get('locked') ? 'unlock' : 'lock') ?>
     <?php if (ENABLE_PAGEPERM and mayAccessPage('change', $page->getName())) { ?>
-      <?=$SEP?><?= Button('chown') ?>
-      <?=$SEP?><?= Button('setacl') ?>
-      <?=$SEP?><?= Button('rename') ?>
+      <?php echo $SEP?><?php echo Button('chown') ?>
+      <?php echo $SEP?><?php echo Button('setacl') ?>
+      <?php echo $SEP?><?php echo Button('rename') ?>
     <?php }} ?>
     <?php if ($revision and ($user->isAdmin() or mayAccessPage('remove', $page->getName()))) { ?>
-      <?=$SEP?><?= Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
-      <?=$SEP?><?= Button('remove') ?>
+      <?php echo $SEP?><?php echo Button('revert',_("Revert"), $revision->isCurrent() ? $page->GetRevisionBefore() : $revision) ?>
+      <?php echo $SEP?><?php echo Button('remove') ?>
     <?php } ?>
-    <?=$SEP?><?= Button("PageHistory", _("PageHistory")) ?>
-    <?=$SEP?><?= Button("diff") ?> 
-    <?=$SEP?><?= Button("PageInfo", _("PageInfo")) ?>
+    <?php echo $SEP?><?php echo Button("PageHistory", _("PageHistory")) ?>
+    <?php echo $SEP?><?php echo Button("diff") ?> 
+    <?php echo $SEP?><?php echo Button("PageInfo", _("PageInfo")) ?>
 <?php if ((DEBUG and $request->getArg('action') == 'browse') || $user->isAdmin()) { ?> 
     <!-- Buttons really only for debugging -->
-    <?=$SEP?><?= Button("DebugInfo", _("DebugInfo")) ?>
-    <?=$SEP?><?= Button("PageDump", _("PageDump")) ?>
+    <?php echo $SEP?><?php echo Button("DebugInfo", _("DebugInfo")) ?>
+    <?php echo $SEP?><?php echo Button("PageDump", _("PageDump")) ?>
 <?php
     if (DEBUG & _DEBUG_SQL and USECACHE) {
       $PurgeCache = Button(array('nocache' => 'purge'),
                      _("PurgeHtmlCache"), $page->getName());
       $PurgeCache->addTooltip(_("Purge HTML cache for this page. Regenerate from WikiMarkup when next accessed."));
 ?>
-      <?=$SEP?><?= $PurgeCache ?>
+      <?php echo $SEP?><?php echo $PurgeCache ?>
 <?php } ?>
     <!-- End debugging buttons -->
 <?php } ?>
 <?php if (defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
-      <?=$SEP?><?= Button("pdf","Pdf",'wikiclear',array('id'=>'btn-pdf')) ?>
+      <?php echo $SEP?><?php echo Button("pdf","Pdf",'wikiclear',array('id'=>'btn-pdf')) ?>
 <?php } ?>
   </div>
   </td>
@@ -59,7 +59,7 @@
    with the other action buttons in some browsers, like OmniWeb and Safari
    (therefore probably Konquorer too) */ ?>
   <td align="right" valign="top">
-    <div id="signin"><?= Template('signin') ?></div>
+    <div id="signin"><?php echo Template('signin') ?></div>
   </td>
 <?php } ?>
 </tr>

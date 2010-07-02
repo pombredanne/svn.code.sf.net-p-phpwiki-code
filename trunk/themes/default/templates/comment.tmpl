@@ -21,22 +21,22 @@ if ($rev->get('mtime') != $COMMENT_CTIME) {
 ?>
 
 <!-- FIXME: move table formatting to css -->
-<div title="<?= fmt("Comments on %s by %s.", $COMMENT_PARENT, $COMMENT_CREATOR)?>"
+<div title="<?php echo fmt("Comments on %s by %s.", $COMMENT_PARENT, $COMMENT_CREATOR)?>"
      class="wikicomment wikitext">
   <div class="wikicomment-footer">
     <span class="floatright">
-      <?= fmt("%s by %s", WikiLink($page, 'known', $CDATE), WikiLink($COMMENT_CREATOR, 'if_known')) ?></span>
+      <?php echo fmt("%s by %s", WikiLink($page, 'known', $CDATE), WikiLink($COMMENT_CREATOR, 'if_known')) ?></span>
     <br class="clear-floats" />
   </div>
   <?php if ($buttons or $modified) { ?>
     <div class="floatright">
-      <?= $buttons ?>
-      <?= $modified ?>
+      <?php echo $buttons ?>
+      <?php echo $modified ?>
       <br class="clear-floats" />
     </div>
   <?php } ?>
   <div class="wikicomment-body">
-    <?= $CONTENT ?>
+    <?php echo $CONTENT ?>
   </div>
 </div>
 <hr class="no-css" />

@@ -10,11 +10,11 @@
   $EditB = fmt("%s of this page", $EditB);
   if (empty($revision)) $revision = $page->getCurrentRevision(false);
 ?>
-<?= $EditB ?> 
-<a href="<?=WikiURL($revision,array('action'=>'diff'))?>"><?= $WikiTheme->getLastModifiedMessage($revision) ?></a>
-    <?=$SEP?><?= Button("PageHistory", _("PageHistory")) ?>
-    <?=$SEP?><?= Button("PageInfo", _("PageInfo")) ?>
+<?php echo $EditB ?> 
+<a href="<?php echo WikiURL($revision,array('action'=>'diff'))?>"><?php echo $WikiTheme->getLastModifiedMessage($revision) ?></a>
+    <?php echo $SEP?><?php echo Button("PageHistory", _("PageHistory")) ?>
+    <?php echo $SEP?><?php echo Button("PageInfo", _("PageInfo")) ?>
 <?php if (defined('DEBUG') && DEBUG || $user->isAdmin()) { ?>
-    <?=$SEP?><?= Button("DebugInfo", _("DebugInfo")) ?> <!-- For debugging only, really -->
+    <?php echo $SEP?><?php echo Button("DebugInfo", _("DebugInfo")) ?> <!-- For debugging only, really -->
 <?php } ?>
 <br />

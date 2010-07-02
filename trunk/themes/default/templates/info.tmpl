@@ -79,68 +79,68 @@ if ($type == 'inherited') {
 ?>
 
 <!-- FIXME: move table formatting to css -->
-<table summary="<?= $tableSummary ?>" class="pageinfo"
+<table summary="<?php echo $tableSummary ?>" class="pageinfo"
        border="0" cellspacing="0" cellpadding="3">
 
 <?php if (!$is_current) { ?>
   <tr>
-    <td align="right" class="pageinfo"><?=_("Supplanted on:")?></td>
-    <td><?= $WikiTheme->formatDateTime($revision->get('_supplanted')) ?></td>
+    <td align="right" class="pageinfo"><?php echo _("Supplanted on:")?></td>
+    <td><?php echo $WikiTheme->formatDateTime($revision->get('_supplanted')) ?></td>
   </tr>
 <?php } ?>
 
   <tr>
-    <td align="right" nowrap="nowrap" class="pageinfo"><?= $label['date'] ?></td>
-    <td><?= $modifed ?><?= $minor_flag ?></td>
+    <td align="right" nowrap="nowrap" class="pageinfo"><?php echo $label['date'] ?></td>
+    <td><?php echo $modifed ?><?php echo $minor_flag ?></td>
   </tr>
   <tr>
-    <td align="right" class="pageinfo"><?= $label['author'] ?></td>
-    <td><?= $authorLink ?>
+    <td align="right" class="pageinfo"><?php echo $label['author'] ?></td>
+    <td><?php echo $authorLink ?>
 <?php if (! ($author == $authorId)) { 
     if ($dbi->isWikiPage($authorId)) $authorId = WikiLink($authorId); ?>
-        <span class="pageinfo-authorid">(<?= $authorId ?>)</span>
+        <span class="pageinfo-authorid">(<?php echo $authorId ?>)</span>
       <?php } ?></td>
   </tr>
   <tr>
-    <td align="right" class="pageinfo"><?=_("Page Version:")?></td>
-    <td><?= $version ?></td>
+    <td align="right" class="pageinfo"><?php echo _("Page Version:")?></td>
+    <td><?php echo $version ?></td>
   </tr>
   <tr>
-    <td align="right" class="pageinfo"><?=_("Markup:")?></td>
-    <td><?= $markupVersion ?></td>
+    <td align="right" class="pageinfo"><?php echo _("Markup:")?></td>
+    <td><?php echo $markupVersion ?></td>
   </tr>
   <tr>
-    <td align="right" class="pageinfo"><?=_("Size:")?></td>
-    <td><?= $wordcount ?>, <?= $size ?></td>
+    <td align="right" class="pageinfo"><?php echo _("Size:")?></td>
+    <td><?php echo $wordcount ?>, <?php echo $size ?></td>
   </tr>
 <?php if ($is_current) { ?>
   <tr>
-    <td align="right" class="pageinfo"><?= _("Hits:") ?></td>
-    <td><?= $hits ?></td>
+    <td align="right" class="pageinfo"><?php echo _("Hits:") ?></td>
+    <td><?php echo $hits ?></td>
   </tr>
 <?php } ?>
   <tr>
-    <td align="right" nowrap="nowrap" valign="top" class="pageinfo"><?= $label['summary'] ?></td>
-    <td><?= $summary ?></td>
+    <td align="right" nowrap="nowrap" valign="top" class="pageinfo"><?php echo $label['summary'] ?></td>
+    <td><?php echo $summary ?></td>
   </tr>
 <?php if ($is_current) { ?>
   <tr>
-    <td align="right"><?= $LOCKED_CB ?></td>
-    <td class="pageinfo"><?=_("Locked")?></td>
+    <td align="right"><?php echo $LOCKED_CB ?></td>
+    <td class="pageinfo"><?php echo _("Locked")?></td>
   </tr>
 <?php if (ENABLE_EXTERNAL_PAGES) { ?>
   <tr>
     <td align="right" class="pageinfo">Is External:</td>
-    <td><?= $page->get('external') ? _("Yes") : _("No") ?></td>
+    <td><?php echo $page->get('external') ? _("Yes") : _("No") ?></td>
   </tr>
 <?php } ?>
   <tr>
     <td align="right" class="pageinfo">ACL type</td>
-    <td><?= $type ?></td>
+    <td><?php echo $type ?></td>
   </tr>
   <tr>
     <td align="right" valign="top" class="pageinfo">ACL</td>
-    <td><?= $perm->asAclGroupLines() ?></td>
+    <td><?php echo $perm->asAclGroupLines() ?></td>
   </tr>
 <?php } ?>
 
@@ -166,8 +166,8 @@ if (isSubPage($page->getName())) {
 
 <?php if (!empty($pagetype)) { $pagetype = implode(", ", $pagetype); ?>
   <tr>
-    <td align="right" class="pageinfo"><?=_("Page Type:")?></td>
-    <td align="left"><?=$pagetype?></td>
+    <td align="right" class="pageinfo"><?php echo _("Page Type:")?></td>
+    <td align="left"><?php echo $pagetype?></td>
   </tr>
 <?php } ?>
 

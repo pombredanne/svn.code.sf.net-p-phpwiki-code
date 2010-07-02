@@ -15,10 +15,10 @@ else
 <!-- Page title -->
 <a id="contentTop"></a>
 <?php if ($page->_pagename != "HomePage") { ?>
-<h1 class="firstHeading<?= $rating ? '-rating' : '' ?><?= $public ? '-public' : '' ?>"><?= $HEADER ?></h1>
+<h1 class="firstHeading<?php echo $rating ? '-rating' : '' ?><?php echo $public ? '-public' : '' ?>"><?php echo $HEADER ?></h1>
 <?php } ?>
 <?php if ($rating && $request->getArg('action') == 'browse') { ?>
-<?= Template('ratings') ?>
+<?php echo Template('ratings') ?>
 <?php } elseif ($rating && $WikiTheme->DUMP_MODE) { ?>
 <div id="rateit-widget-top">
 <?php

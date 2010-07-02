@@ -2,7 +2,7 @@
 // rcs_id('$Id$');
 $id = isBrowserIE() ? 'sidebar' : 'moz-sidebar';
 ?>
-<div id="<?=$id?>">
+<div id="<?php echo $id?>">
 <?php
   /* Today's Blogs page for the current or admin user, if the subpage is defined. */
   $UserCalPageTitle = $user->getId() . SUBPAGE_SEPARATOR . _("Blog");
@@ -13,9 +13,9 @@ $id = isBrowserIE() ? 'sidebar' : 'moz-sidebar';
   }
 ?>
 <div class="box">
-<div class="box-title"><?= WikiLink($UserCalPageTitle,'known',_("Calendar")) ?></div>
+<div class="box-title"><?php echo WikiLink($UserCalPageTitle,'known',_("Calendar")) ?></div>
 <div class="box-data">
-    <?= Template('calendar') ?>
+    <?php echo Template('calendar') ?>
 </div></div>
 <?php
 include_once("lib/WikiPlugin.php"); 
@@ -40,10 +40,10 @@ printXml($box->format());
 */
 ?>
 <?php if (0 and defined('USE_EXTERNAL_HTML2PDF') and USE_EXTERNAL_HTML2PDF) { ?> 
-&middot; <?= Button(array('action'=>'pdf'), "Pdf") ?>
+&middot; <?php echo Button(array('action'=>'pdf'), "Pdf") ?>
 <?php } ?>
 
 <!-- The top navigation/search bar -->
-<div class="toolbar"><?= Template('navbar') ?></div>
+<div class="toolbar"><?php echo Template('navbar') ?></div>
 
 </div>

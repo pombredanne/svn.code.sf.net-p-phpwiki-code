@@ -1,15 +1,15 @@
 <?php // -*-php-*-
 // rcs_id('$Id$');
 ?>
-<body<?= $WikiTheme->getMoreAttr('body') ?>>
+<body<?php echo $WikiTheme->getMoreAttr('body') ?>>
 
 <div id="header">
-  <?= Template('top') ?>
+  <?php echo Template('top') ?>
 </div>
 <div id="content">
 
-<?= $CONTENT ?>
+<?php echo $CONTENT ?>
 
 </div>
-<?= Template('bottom') ?>
+<?php echo Template('bottom') ?>
 </body>
