@@ -61,6 +61,10 @@ class Template
         $orig[] = '/<\?=(.*?)\?>/s';
         $repl[] = '<?php $this->_print(\1);?>';
         
+        // Convert < ?php echo expr ? > to < ?php $this->_print(expr); ? >
+        $orig[] = '/<\?php echo (.*?)\?>/s';
+        $repl[] = '<?php $this->_print(\1);?>';
+        
         return preg_replace($orig, $repl, $template);
     }
 
