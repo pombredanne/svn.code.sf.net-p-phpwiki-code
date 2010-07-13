@@ -520,7 +520,7 @@ extends WikiDB_backend
                 if ($linkto === "") { // ignore attributes
                     continue;
                 }
-                if ($link['relation'])
+                if (isset($link['relation']))
                     $relation = $this->_get_pageid($link['relation'], true);
                 else 
                     $relation = 0;
