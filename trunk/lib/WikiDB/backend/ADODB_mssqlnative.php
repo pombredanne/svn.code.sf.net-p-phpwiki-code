@@ -92,7 +92,7 @@ extends WikiDB_backend_ADODB
         if ($links) {
             foreach ($links as $link) {
                 $linkto = $link['linkto'];
-                if ($link['relation'])
+                if (isset($link['relation']))
                     $relation = $this->_get_pageid($link['relation'], true);
                 else 
                     $relation = 0;
