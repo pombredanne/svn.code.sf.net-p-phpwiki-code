@@ -994,11 +994,8 @@ function SavePage (&$request, &$pageinfo, $source, $filename)
                 $skip = true;
             }
         }
-        else if ($current->getPackedContent() == $content
-                 && $current->get('author') == $versiondata['author']) {
-            // The page metadata is already changed, we don't need a new revision.
-            // This was called previously "is identical to current version %d - skipped"
-            // which is wrong, since the pagedata was stored, not skipped.
+        else if ($current->getPackedContent() == $content) {
+            // The page content is the same, we don't need a new revision.
             $mesg->pushContent(' ',
                                fmt("content is identical to current version %d - no new revision created",
                                    $current->getVersion()));
