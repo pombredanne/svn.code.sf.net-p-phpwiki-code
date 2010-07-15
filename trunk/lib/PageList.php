@@ -861,7 +861,9 @@ class PageList {
 		$this->addPage($page);
             }
 	}
-        if ($i and empty($this->_options['count']))
+	if (! is_array($page_iter->_options) || ! array_key_exists('limit_by_db', $page_iter->_options) || ! $page_iter->_options['limit_by_db'])
+		$this->_options['slice'] = 1;
+	if ($i and empty($this->_options['count']))
 	    $this->_options['count'] = $i;
     }
 
@@ -1491,7 +1493,7 @@ class PageList {
                                            count($this->_columns), 
                                            $this->_options['limit']);
             if ($tokens and !empty($this->_options['slice']))
-                $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['COUNT']);
+                $this->_pages = array_slice($this->_pages, $tokens['OFFSET'], $tokens['SIZE']);
         }
         foreach ($this->_pages as $pagenum => $page) {
             $one_row = $this->_renderPageRow($page, $i++);
