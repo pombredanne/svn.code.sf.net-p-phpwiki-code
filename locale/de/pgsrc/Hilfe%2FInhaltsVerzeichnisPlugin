@@ -1,4 +1,4 @@
-Date: Thu, 15 Jul 2010 11:38:28 +0000
+Date: Thu, 15 Jul 2010 11:57:14 +0000
 Mime-Version: 1.0 (Produced by PhpWiki 1.4.0RC-20100415)
 X-Rcs-Id: $Id$
 Content-Type: application/x-phpwiki;
@@ -10,7 +10,7 @@ Content-Transfer-Encoding: binary
 
 <<CreateToc jshide||=1 >>
 
-Hilfe:WikiPlugin um ein dynamisches *Inhaltsverzeichnis* aller Überschriften anzuzeigen. Seit v1.3.8
+[[Hilfe:WikiPlugin|WikiPlugin]] um ein dynamisches *Inhaltsverzeichnis* aller Überschriften anzuzeigen. Seit v1.3.8
 
 === Benutzung
 
@@ -43,4 +43,4 @@ __pagename__:  |
 Siehe zB. TextFormatierungsRegeln
 
 ----
-[[PhpWikiDokumentation]] Hilfe:WikiPlugin
+[[PhpWikiDokumentation]] [[KategorieWikiPlugin]]
